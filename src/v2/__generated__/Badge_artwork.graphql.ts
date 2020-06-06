@@ -4,8 +4,6 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type Badge_artwork = {
     readonly is_biddable: boolean | null;
-    readonly is_acquireable: boolean | null;
-    readonly is_offerable: boolean | null;
     readonly href: string | null;
     readonly sale: {
         readonly is_preview: boolean | null;
@@ -32,20 +30,6 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "alias": "is_biddable",
       "name": "isBiddable",
-      "args": null,
-      "storageKey": null
-    },
-    {
-      "kind": "ScalarField",
-      "alias": "is_acquireable",
-      "name": "isAcquireable",
-      "args": null,
-      "storageKey": null
-    },
-    {
-      "kind": "ScalarField",
-      "alias": "is_offerable",
-      "name": "isOfferable",
       "args": null,
       "storageKey": null
     },
@@ -83,5 +67,5 @@ const node: ReaderFragment = {
     }
   ]
 };
-(node as any).hash = 'a9121adc9215e13663c65a5f61e8d209';
+(node as any).hash = 'c56c0d898e4433bfc5acdba932369f3f';
 export default node;

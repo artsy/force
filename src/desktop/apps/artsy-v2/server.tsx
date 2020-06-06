@@ -3,6 +3,7 @@ import express, { Request } from "express"
 import { buildServerApp } from "v2/Artsy/Router/server"
 import { getAppRoutes } from "v2/Apps/getAppRoutes"
 import { stitch } from "@artsy/stitch"
+import { flatten } from "lodash"
 
 import { buildServerAppContext } from "desktop/lib/buildServerAppContext"
 import { handleArtworkImageDownload } from "./apps/artwork/artworkMiddleware"
@@ -11,6 +12,23 @@ import { userRequiredMiddleware } from "./middleware/userRequiredMiddleware"
 import { searchMiddleware } from "./apps/search/searchMiddleware"
 
 export const app = express()
+
+const isAllowedRoute = route => route !== "/" && route !== "*"
+
+const topLevelMetaRoute = getAppRoutes()[0]
+const allRoutes = flatten(
+  topLevelMetaRoute.children.map(app => {
+    // Only supports one level of nesting per app.
+    // For instance, these are tabs on the artist page, etc.
+    const allChildPaths = app.children
+      ?.map(child => child.path)
+      .filter(isAllowedRoute)
+
+    return allChildPaths
+      ? allChildPaths.map(child => app.path + "/" + child).concat(app.path)
+      : app.path
+  })
+)
 
 /**
  * Mount non-Reaction routes that are relevant to specific global router routes
@@ -21,7 +39,7 @@ app.get("/artwork/:artworkID/download/:filename", handleArtworkImageDownload)
  * Mount routes that will connect to global SSR router
  */
 app.get(
-  "/*",
+  allRoutes,
   userRequiredMiddleware,
 
   /**

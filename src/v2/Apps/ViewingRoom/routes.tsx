@@ -35,7 +35,7 @@ export const routes: RouteConfig[] = [
         `,
       },
       {
-        path: "/works",
+        path: "works",
         Component: WorksRoute,
         ignoreScrollBehavior: true,
         query: graphql`

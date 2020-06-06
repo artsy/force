@@ -1,7 +1,7 @@
 import React from "react"
 import { AuctionHouseFilter } from "./AuctionHouseFilter"
 import { MediumFilter } from "./MediumFilter"
-import { SizeFilter } from "v2/Apps/Components/SizeFilter"
+import { SizeFilter } from "./SizeFilter"
 import { YearCreated } from "./YearCreated"
 import { useAuctionResultsFilterContext } from "v2/Apps/Artist/Routes/AuctionResults/AuctionResultsFilterContext"
 

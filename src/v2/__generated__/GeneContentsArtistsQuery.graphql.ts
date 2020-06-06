@@ -64,8 +64,6 @@ fragment Artists_gene on Gene {
 
 fragment Badge_artwork on Artwork {
   is_biddable: isBiddable
-  is_acquireable: isAcquireable
-  is_offerable: isOfferable
   href
   sale {
     is_preview: isPreview
@@ -152,6 +150,8 @@ fragment FillwidthItem_artwork on Artwork {
     url(version: "large")
     aspect_ratio: aspectRatio
   }
+  imageTitle
+  title
   href
   ...Metadata_artwork
   ...Save_artwork
@@ -440,7 +440,13 @@ return {
                                       }
                                     ]
                                   },
-                                  (v5/*: any*/),
+                                  {
+                                    "kind": "ScalarField",
+                                    "alias": null,
+                                    "name": "imageTitle",
+                                    "args": null,
+                                    "storageKey": null
+                                  },
                                   {
                                     "kind": "ScalarField",
                                     "alias": null,
@@ -448,6 +454,7 @@ return {
                                     "args": null,
                                     "storageKey": null
                                   },
+                                  (v5/*: any*/),
                                   {
                                     "kind": "ScalarField",
                                     "alias": null,
@@ -643,20 +650,6 @@ return {
                                     "name": "isBiddable",
                                     "args": null,
                                     "storageKey": null
-                                  },
-                                  {
-                                    "kind": "ScalarField",
-                                    "alias": "is_acquireable",
-                                    "name": "isAcquireable",
-                                    "args": null,
-                                    "storageKey": null
-                                  },
-                                  {
-                                    "kind": "ScalarField",
-                                    "alias": "is_offerable",
-                                    "name": "isOfferable",
-                                    "args": null,
-                                    "storageKey": null
                                   }
                                 ]
                               }
@@ -796,7 +789,7 @@ return {
     "operationKind": "query",
     "name": "GeneContentsArtistsQuery",
     "id": null,
-    "text": "query GeneContentsArtistsQuery(\n  $geneID: String!\n) {\n  gene(id: $geneID) {\n    ...Artists_gene\n    id\n  }\n}\n\nfragment ArtistRow_artist on Artist {\n  name\n  href\n  ...Follow_artist\n  artworks: artworksConnection(first: 6) {\n    ...Fillwidth_artworks\n  }\n}\n\nfragment Artists_gene on Gene {\n  id\n  artists: artistsConnection(first: 10, after: \"\") {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    edges {\n      node {\n        id\n        ...ArtistRow_artist\n        __typename\n      }\n      cursor\n    }\n  }\n  filter_aggregations: filterArtworksConnection(aggregations: [MEDIUM, TOTAL, PRICE_RANGE, DIMENSION_RANGE], size: 0, includeMediumFilterInAggregation: true) {\n    ...TotalCount_filter_artworks\n    aggregations {\n      slice\n      ...Dropdown_aggregation\n    }\n    id\n  }\n}\n\nfragment Badge_artwork on Artwork {\n  is_biddable: isBiddable\n  is_acquireable: isAcquireable\n  is_offerable: isOfferable\n  href\n  sale {\n    is_preview: isPreview\n    display_timely_at: displayTimelyAt\n    id\n  }\n}\n\nfragment Contact_artwork on Artwork {\n  href\n  is_inquireable: isInquireable\n  sale {\n    is_auction: isAuction\n    is_live_open: isLiveOpen\n    is_open: isOpen\n    is_closed: isClosed\n    id\n  }\n  partner(shallow: true) {\n    type\n    id\n  }\n  sale_artwork: saleArtwork {\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    counts {\n      bidder_positions: bidderPositions\n    }\n    id\n  }\n}\n\nfragment Details_artwork on Artwork {\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n}\n\nfragment Dropdown_aggregation on ArtworksAggregationResults {\n  slice\n  counts {\n    name\n    value\n    count\n  }\n}\n\nfragment FillwidthItem_artwork on Artwork {\n  image {\n    url(version: \"large\")\n    aspect_ratio: aspectRatio\n  }\n  href\n  ...Metadata_artwork\n  ...Save_artwork\n  ...Badge_artwork\n}\n\nfragment Fillwidth_artworks on ArtworkConnection {\n  edges {\n    node {\n      id\n      image {\n        aspect_ratio: aspectRatio\n      }\n      ...FillwidthItem_artwork\n    }\n  }\n}\n\nfragment Follow_artist on Artist {\n  id\n  internalID\n  name\n  is_followed: isFollowed\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  ...Contact_artwork\n  href\n}\n\nfragment Save_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n\nfragment TotalCount_filter_artworks on FilterArtworksConnection {\n  counts {\n    total\n  }\n}\n",
+    "text": "query GeneContentsArtistsQuery(\n  $geneID: String!\n) {\n  gene(id: $geneID) {\n    ...Artists_gene\n    id\n  }\n}\n\nfragment ArtistRow_artist on Artist {\n  name\n  href\n  ...Follow_artist\n  artworks: artworksConnection(first: 6) {\n    ...Fillwidth_artworks\n  }\n}\n\nfragment Artists_gene on Gene {\n  id\n  artists: artistsConnection(first: 10, after: \"\") {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    edges {\n      node {\n        id\n        ...ArtistRow_artist\n        __typename\n      }\n      cursor\n    }\n  }\n  filter_aggregations: filterArtworksConnection(aggregations: [MEDIUM, TOTAL, PRICE_RANGE, DIMENSION_RANGE], size: 0, includeMediumFilterInAggregation: true) {\n    ...TotalCount_filter_artworks\n    aggregations {\n      slice\n      ...Dropdown_aggregation\n    }\n    id\n  }\n}\n\nfragment Badge_artwork on Artwork {\n  is_biddable: isBiddable\n  href\n  sale {\n    is_preview: isPreview\n    display_timely_at: displayTimelyAt\n    id\n  }\n}\n\nfragment Contact_artwork on Artwork {\n  href\n  is_inquireable: isInquireable\n  sale {\n    is_auction: isAuction\n    is_live_open: isLiveOpen\n    is_open: isOpen\n    is_closed: isClosed\n    id\n  }\n  partner(shallow: true) {\n    type\n    id\n  }\n  sale_artwork: saleArtwork {\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    counts {\n      bidder_positions: bidderPositions\n    }\n    id\n  }\n}\n\nfragment Details_artwork on Artwork {\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n}\n\nfragment Dropdown_aggregation on ArtworksAggregationResults {\n  slice\n  counts {\n    name\n    value\n    count\n  }\n}\n\nfragment FillwidthItem_artwork on Artwork {\n  image {\n    url(version: \"large\")\n    aspect_ratio: aspectRatio\n  }\n  imageTitle\n  title\n  href\n  ...Metadata_artwork\n  ...Save_artwork\n  ...Badge_artwork\n}\n\nfragment Fillwidth_artworks on ArtworkConnection {\n  edges {\n    node {\n      id\n      image {\n        aspect_ratio: aspectRatio\n      }\n      ...FillwidthItem_artwork\n    }\n  }\n}\n\nfragment Follow_artist on Artist {\n  id\n  internalID\n  name\n  is_followed: isFollowed\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  ...Contact_artwork\n  href\n}\n\nfragment Save_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n\nfragment TotalCount_filter_artworks on FilterArtworksConnection {\n  counts {\n    total\n  }\n}\n",
     "metadata": {}
   }
 };

@@ -14,14 +14,13 @@ import { ArtistCollectionEntityFragmentContainer as ArtistCollectionEntity } fro
 
 interface ArtistCollectionsRailProps {
   collections: ArtistCollectionsRail_collections
-  includeTopSpacer?: boolean
 }
 
 @track(null, {
   dispatch: data => Events.postEvent(data),
 })
 export class ArtistCollectionsRail extends React.Component<
-ArtistCollectionsRailProps
+  ArtistCollectionsRailProps
 > {
   @track({
     action_type: Schema.ActionType.Impression,
@@ -43,22 +42,23 @@ ArtistCollectionsRailProps
     // noop
   }
 
-  static defaultProps = {
-    includeTopSpacer: true,
-  }
-
   render() {
-    const { collections, includeTopSpacer } = this.props
+    const { collections } = this.props
     if (collections.length > 3) {
       return (
         <Box>
           <Waypoint onEnter={once(this.trackImpression.bind(this))} />
 
-          {includeTopSpacer && <Separator my={3} />}
-
-          <Sans size="5" color="black100" mb={2}>
-            Iconic Collections
-          </Sans>
+          <Separator my={3} />
+          {/**
+           * The H2 tag was added for SEO purposes
+           * TODO: Remove when palette provides the ability to override typography element
+           */}
+          <H2>
+            <Sans size="4" color="black100" my={1}>
+              Iconic Collections
+            </Sans>
+          </H2>
 
           <Carousel
             height="200px"
@@ -101,6 +101,8 @@ ArtistCollectionsRailProps
     }
   }
 }
+
+const H2 = styled.h2``
 
 const ArrowContainer = styled(Box)`
   align-self: flex-start;

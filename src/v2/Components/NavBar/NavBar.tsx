@@ -1,5 +1,5 @@
 import cookie from "cookies-js"
-import React, { useContext, useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
 import styled from "styled-components"
 
 import {
@@ -18,7 +18,7 @@ import {
   themeProps,
 } from "@artsy/palette"
 
-import { SystemContext } from "v2/Artsy/SystemContext"
+import { useSystemContext } from "v2/Artsy/SystemContext"
 import { SearchBarQueryRenderer as SearchBar } from "v2/Components/Search/SearchBar"
 
 import {
@@ -54,7 +54,7 @@ export const NavBar: React.FC = track(
   }
 )(() => {
   const { trackEvent } = useTracking()
-  const { mediator, user } = useContext(SystemContext)
+  const { mediator, user } = useSystemContext()
   const [showMobileMenu, toggleMobileNav] = useState(false)
   const xs = useMatchMedia(themeProps.mediaQueries.xs)
   const sm = useMatchMedia(themeProps.mediaQueries.sm)
@@ -229,22 +229,14 @@ export const NavBar: React.FC = track(
                         new_notification_count: getNotificationCount(),
                       })
                     }
-                    return (
-                      <BellIcon
-                        top={3}
-                        fill={hover ? "purple100" : "black80"}
-                      />
-                    )
+                    return <BellIcon fill={hover ? "purple100" : "black80"} />
                   }}
                 </NavItem>
                 {conversationsEnabled && (
                   <NavItem href="/user/conversations">
                     {({ hover }) => {
                       return (
-                        <EnvelopeIcon
-                          top={3}
-                          fill={hover ? "purple100" : "black80"}
-                        />
+                        <EnvelopeIcon fill={hover ? "purple100" : "black80"} />
                       )
                     }}
                   </NavItem>
@@ -257,12 +249,7 @@ export const NavBar: React.FC = track(
                         subject: "User",
                       })
                     }
-                    return (
-                      <SoloIcon
-                        top={3}
-                        fill={hover ? "purple100" : "black80"}
-                      />
-                    )
+                    return <SoloIcon fill={hover ? "purple100" : "black80"} />
                   }}
                 </NavItem>
               </>

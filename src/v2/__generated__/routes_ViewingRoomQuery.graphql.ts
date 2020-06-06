@@ -30,7 +30,7 @@ fragment ViewingRoomApp_viewingRoom on ViewingRoom {
   ...ViewingRoomMeta_viewingRoom
   ...ViewingRoomHeader_viewingRoom
   ...ViewingRoomClosed_viewingRoom
-  formattedEndAt
+  status
 }
 
 fragment ViewingRoomClosed_viewingRoom on ViewingRoom {
@@ -164,6 +164,13 @@ return {
             "name": "formattedEndAt",
             "args": null,
             "storageKey": null
+          },
+          {
+            "kind": "ScalarField",
+            "alias": null,
+            "name": "status",
+            "args": null,
+            "storageKey": null
           }
         ]
       }
@@ -173,7 +180,7 @@ return {
     "operationKind": "query",
     "name": "routes_ViewingRoomQuery",
     "id": null,
-    "text": "query routes_ViewingRoomQuery(\n  $slug: ID!\n) {\n  viewingRoom(id: $slug) {\n    ...ViewingRoomApp_viewingRoom\n  }\n}\n\nfragment ViewingRoomApp_viewingRoom on ViewingRoom {\n  ...ViewingRoomMeta_viewingRoom\n  ...ViewingRoomHeader_viewingRoom\n  ...ViewingRoomClosed_viewingRoom\n  formattedEndAt\n}\n\nfragment ViewingRoomClosed_viewingRoom on ViewingRoom {\n  partner {\n    href\n    id\n  }\n}\n\nfragment ViewingRoomHeader_viewingRoom on ViewingRoom {\n  heroImageURL\n  title\n  partner {\n    name\n    id\n  }\n  formattedEndAt\n}\n\nfragment ViewingRoomMeta_viewingRoom on ViewingRoom {\n  title\n}\n",
+    "text": "query routes_ViewingRoomQuery(\n  $slug: ID!\n) {\n  viewingRoom(id: $slug) {\n    ...ViewingRoomApp_viewingRoom\n  }\n}\n\nfragment ViewingRoomApp_viewingRoom on ViewingRoom {\n  ...ViewingRoomMeta_viewingRoom\n  ...ViewingRoomHeader_viewingRoom\n  ...ViewingRoomClosed_viewingRoom\n  status\n}\n\nfragment ViewingRoomClosed_viewingRoom on ViewingRoom {\n  partner {\n    href\n    id\n  }\n}\n\nfragment ViewingRoomHeader_viewingRoom on ViewingRoom {\n  heroImageURL\n  title\n  partner {\n    name\n    id\n  }\n  formattedEndAt\n}\n\nfragment ViewingRoomMeta_viewingRoom on ViewingRoom {\n  title\n}\n",
     "metadata": {}
   }
 };

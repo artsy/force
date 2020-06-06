@@ -11,7 +11,7 @@ export const InstitutionFilter: FC = () => {
     return null
   }
 
-  const selectedItem = filterContext.filters.partnerID
+  const selectedItem = filterContext.currentlySelectedFilters().partnerID
 
   return (
     <Toggle label="Institution">

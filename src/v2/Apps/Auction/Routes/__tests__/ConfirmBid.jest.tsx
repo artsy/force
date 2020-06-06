@@ -48,6 +48,7 @@ import { stripeTokenResponse } from "../__fixtures__/Stripe"
 import { ConfirmBidRouteFragmentContainer } from "../ConfirmBid"
 import { ConfirmBidTestPage } from "./Utils/ConfirmBidTestPage"
 import { ValidFormValues } from "./Utils/RegisterTestPage"
+import { CreditCardInput } from "v2/Apps/Order/Components/CreditCardInput"
 
 jest.unmock("react-relay")
 jest.unmock("react-tracking")
@@ -709,6 +710,15 @@ describe("Routes/ConfirmBid", () => {
       }
     )
 
+    it("renders a form with a pre-selected country", async () => {
+      const env = setupTestEnv()
+      const page = await env.buildPage({
+        mockData: FixtureForUnregisteredUserWithoutCreditCard,
+      })
+
+      expect(page.find("select").at(1).props().value).toMatch("US")
+    })
+
     it("allows the user to place a bid after agreeing to terms", async () => {
       const env = setupTestEnv()
       const page = await env.buildPage({
@@ -786,13 +796,57 @@ describe("Routes/ConfirmBid", () => {
       expect(window.location.assign).not.toHaveBeenCalled()
     })
 
-    it("displays an error when Stripe returns an error", async () => {
+    it("displays an error as the user types invalid input", async () => {
       const env = setupTestEnv()
       const page = await env.buildPage({
         mockData: FixtureForUnregisteredUserWithoutCreditCard,
       })
 
-      createTokenMock.mockResolvedValue({ error: { message: "Card inlivad" } })
+      page
+        .find(CreditCardInput)
+        .props()
+        .onChange({ error: { message: "Your card number is invalid." } } as any)
+
+      expect(page.text()).toContain("Your card number is invalid.")
+    })
+
+    it("displays an error when the input in the credit card field is invalid", async () => {
+      const env = setupTestEnv()
+      const page = await env.buildPage({
+        mockData: FixtureForUnregisteredUserWithoutCreditCard,
+      })
+
+      createTokenMock.mockResolvedValue({
+        error: { message: "Your card number is incomplete." },
+      })
+
+      await page.fillFormWithValidValues()
+      await page.agreeToTerms()
+      await page.submitForm()
+
+      expect(window.location.assign).not.toHaveBeenCalled()
+      expect(page.text()).toContain("Your card number is incomplete.")
+
+      expect(mockPostEvent).toHaveBeenCalledTimes(1)
+      expect(mockPostEvent).toBeCalledWith({
+        action_type: AnalyticsSchema.ActionType.ConfirmBidFailed,
+        context_page: AnalyticsSchema.PageName.AuctionConfirmBidPage,
+        error_messages: ["Your card number is incomplete."],
+        auction_slug: "saleslug",
+        artwork_slug: "artworkslug",
+        bidder_id: null,
+        sale_id: "saleid",
+        user_id: "my-user-id",
+      })
+    })
+
+    it("displays an error when Stripe Element throws an error", async () => {
+      const env = setupTestEnv()
+      const page = await env.buildPage({
+        mockData: FixtureForUnregisteredUserWithoutCreditCard,
+      })
+
+      createTokenMock.mockRejectedValue(new TypeError("Network request failed"))
 
       await page.fillFormWithValidValues()
       await page.agreeToTerms()
@@ -807,7 +861,7 @@ describe("Routes/ConfirmBid", () => {
       expect(mockPostEvent).toBeCalledWith({
         action_type: AnalyticsSchema.ActionType.ConfirmBidFailed,
         context_page: AnalyticsSchema.PageName.AuctionConfirmBidPage,
-        error_messages: ["JavaScript error: Stripe error: Card inlivad"],
+        error_messages: ["JavaScript error: Network request failed"],
         auction_slug: "saleslug",
         artwork_slug: "artworkslug",
         bidder_id: null,

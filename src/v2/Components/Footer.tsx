@@ -60,13 +60,8 @@ const FooterContainer: React.SFC<FlexDirectionProps & Props> = props => {
             Buy
           </Sans>
           <Serif size="2">
-            <Link
-              onClick={() => props.mediator.trigger("openCollectorFAQModal")}
-            >
-              Buying from Galleries FAQ
-            </Link>
-            <Link onClick={() => props.mediator.trigger("openAuctionFAQModal")}>
-              Buying from Auctions FAQ
+            <Link href="https://support.artsy.net/hc/en-us/categories/360003689513-Buy">
+              Buying on Artsy
             </Link>
             <Link href="https://www.artsy.net/consign">Consign with Artsy</Link>
           </Serif>
@@ -93,9 +88,7 @@ const FooterContainer: React.SFC<FlexDirectionProps & Props> = props => {
             <Link href="https://artsy.github.com/open-source">Open Source</Link>
             <Link href="https://www.artsy.net/about/press">Press</Link>
             <Link href="https://www.artsy.net/contact">Contact</Link>
-            <Link onClick={() => props.mediator.trigger("openFeedbackModal")}>
-              Send us feedback
-            </Link>
+            <Link href="https://support.artsy.net">Visit our Help Center</Link>
           </Serif>
         </Flex>
         <Flex flexDirection="column" mb={1}>

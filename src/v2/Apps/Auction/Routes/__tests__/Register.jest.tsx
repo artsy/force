@@ -21,6 +21,7 @@ import {
 import { stripeTokenResponse } from "../__fixtures__/Stripe"
 import { RegisterRouteFragmentContainer } from "../Register"
 import { RegisterTestPage, ValidFormValues } from "./Utils/RegisterTestPage"
+import { CreditCardInput } from "v2/Apps/Order/Components/CreditCardInput"
 
 jest.unmock("react-relay")
 jest.unmock("react-tracking")
@@ -45,12 +46,9 @@ jest.mock("react-stripe-elements", () => {
   }
 })
 
-const setupCreateTokenMock = () => {
-  const createTokenMock = require("react-stripe-elements").__stripeMock
-    .createToken as jest.Mock
+const createTokenMock = require("react-stripe-elements").__stripeMock
+  .createToken as jest.Mock
 
-  createTokenMock.mockResolvedValue(stripeTokenResponse)
-}
 jest.mock("sharify", () => ({
   data: {
     APP_URL: "https://example.com",
@@ -162,7 +160,7 @@ describe("Routes/Register ", () => {
     const env = setupTestEnv()
     const page = await env.buildPage()
 
-    setupCreateTokenMock()
+    createTokenMock.mockResolvedValue(stripeTokenResponse)
 
     env.mutations.useResultsOnce(createCreditCardAndUpdatePhoneSuccessful)
     env.mutations.useResultsOnce(createBidderSuccessful)
@@ -190,7 +188,7 @@ describe("Routes/Register ", () => {
     const env = setupTestEnv()
     const page = await env.buildPage()
 
-    setupCreateTokenMock()
+    createTokenMock.mockResolvedValue(stripeTokenResponse)
 
     env.mutations.useResultsOnce(createCreditCardAndUpdatePhoneFailed)
 
@@ -227,8 +225,6 @@ describe("Routes/Register ", () => {
     const env = setupTestEnv()
     const page = await env.buildPage()
 
-    setupCreateTokenMock()
-
     const address = Object.assign({}, ValidFormValues)
     address.phoneNumber = "    "
 
@@ -236,5 +232,45 @@ describe("Routes/Register ", () => {
     await page.submitForm()
 
     expect(page.text()).toMatch("Telephone is required")
+  })
+
+  it("displays an error message as the user types invalid input", async () => {
+    const env = setupTestEnv()
+    const page = await env.buildPage()
+
+    page
+      .find(CreditCardInput)
+      .props()
+      .onChange({ error: { message: "Your card number is invalid." } } as any)
+
+    expect(page.text()).toContain("Your card number is invalid.")
+  })
+
+  it("displays an error message when the input in the credit card field is missing", async () => {
+    const env = setupTestEnv()
+    const page = await env.buildPage()
+
+    createTokenMock.mockResolvedValue({
+      error: { message: "Your card number is incomplete." },
+    })
+
+    await page.fillFormWithValidValues()
+    await page.submitForm()
+
+    expect(page.text()).toContain("Your card number is incomplete.")
+  })
+
+  it("displays an error message when Stripe Element throws an error", async () => {
+    const env = setupTestEnv()
+    const page = await env.buildPage()
+
+    createTokenMock.mockRejectedValue(new TypeError("Network request failed"))
+
+    await page.fillFormWithValidValues()
+    await page.submitForm()
+
+    expect(page.text()).toContain(
+      "Please make sure your internet connection is active and try again"
+    )
   })
 })

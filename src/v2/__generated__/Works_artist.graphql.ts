@@ -23,7 +23,7 @@ export type Works_artist = {
             } | null> | null;
         } | null> | null;
     } | null;
-    readonly " $fragmentRefs": FragmentRefs<"ArtistArtworkFilter_artist">;
+    readonly " $fragmentRefs": FragmentRefs<"ArtistTopWorksRail_artist" | "ArtistArtworkFilter_artist">;
     readonly " $refType": "Works_artist";
 };
 export type Works_artist$data = Works_artist;
@@ -150,6 +150,12 @@ return {
       "kind": "LocalArgument",
       "name": "priceRange",
       "type": "String",
+      "defaultValue": null
+    },
+    {
+      "kind": "LocalArgument",
+      "name": "sizes",
+      "type": "[ArtworkSizes]",
       "defaultValue": null
     },
     {
@@ -300,6 +306,11 @@ return {
     },
     {
       "kind": "FragmentSpread",
+      "name": "ArtistTopWorksRail_artist",
+      "args": null
+    },
+    {
+      "kind": "FragmentSpread",
       "name": "ArtistArtworkFilter_artist",
       "args": [
         {
@@ -374,6 +385,11 @@ return {
           "name": "priceRange",
           "variableName": "priceRange"
         },
+        {
+          "kind": "Variable",
+          "name": "sizes",
+          "variableName": "sizes"
+        },
         (v2/*: any*/),
         {
           "kind": "Variable",
@@ -385,5 +401,5 @@ return {
   ]
 };
 })();
-(node as any).hash = '6af1a5b23990ff0078e21cbef30eff9b';
+(node as any).hash = '9c0ffdff36a094cab9f45fcc97a02e71';
 export default node;

@@ -1,33 +1,4 @@
-/**
- * Set webpack public-path asset lookup to CDN in production, but only on
- * the client, as we use the assetMiddleware helper to map URLs on the server.
- * @see https://github.com/artsy/force/blob/master/src/lib/middleware/assetMiddleware.ts
- *
- * FIXME: Move this into Circle config and or Docker
- */
-if (process.env.NODE_ENV === "production") {
-  const { hostname } = window.location
-  let cdnUrl
-
-  // Production
-  if (hostname === "www.artsy.net") {
-    cdnUrl = "https://d1s2w0upia4e9w.cloudfront.net"
-
-    // Localhost
-  } else if (hostname === "localhost") {
-    cdnUrl = ""
-
-    // Everything else
-  } else {
-    cdnUrl = "https://d1rmpw1xlv9rxa.cloudfront.net"
-  }
-
-  __webpack_public_path__ = cdnUrl + "/assets/"
-
-  // @ts-ignore
-  window.__getPublicPath = () => __webpack_public_path__
-}
-
+import "./webpackPublicPath"
 import $ from "jquery"
 import Backbone from "backbone"
 import _ from "underscore"
@@ -126,7 +97,7 @@ function setupJquery() {
   // once you click it. For these cases do `$el.click -> $(@).hidehover()` and
   // the menu will hide and then remove the `display` property so the default
   // CSS will kick in again.
-  $.fn.hidehover = function() {
+  $.fn.hidehover = function () {
     const $el = $(this)
     $el.css({ display: "none" })
     return setTimeout(() => $el.css({ display: "" }), 200)

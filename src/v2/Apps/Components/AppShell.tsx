@@ -7,6 +7,7 @@ import { Match } from "found"
 import { isFunction } from "lodash"
 import React, { useEffect } from "react"
 import createLogger from "v2/Utils/logger"
+import { FlashBannerQueryRenderer as FlashBanner } from "v2/Components/FlashBanner"
 
 const logger = createLogger("Apps/Components/AppShell")
 
@@ -49,6 +50,7 @@ export const AppShell: React.FC<AppShellProps> = props => {
       <Box pb={6}>
         <Box left={0} position="fixed" width="100%" zIndex={100}>
           <NavBar />
+          <FlashBanner />
         </Box>
       </Box>
 
