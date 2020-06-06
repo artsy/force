@@ -2,15 +2,19 @@ import React, { FC } from "react"
 import styled from "styled-components"
 import {
   ArrowLeftIcon,
+  Box,
   Flex,
   FlexProps,
-  InfoCircleIcon,
+  Icon,
+  Path,
   Sans,
   Separator,
+  Title,
   color,
 } from "@artsy/palette"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import { Media } from "v2/Utils/Responsive"
+import { DETAIL_BOX_ANIMATION } from "./Details"
 
 interface BorderedFlexProps extends FlexProps {
   bordered?: boolean
@@ -30,11 +34,17 @@ const ConversationHeaderContainer = styled(Flex)`
   background: white;
 `
 
-interface ConversationHeaderProps {
+interface DetailsProps {
+  showDetails: boolean
+  setShowDetails: (boolean) => void
+}
+interface ConversationHeaderProps extends DetailsProps {
   partnerName: string
 }
 export const ConversationHeader: FC<ConversationHeaderProps> = ({
   partnerName,
+  showDetails,
+  setShowDetails,
 }) => {
   return (
     <ConversationHeaderContainer
@@ -50,12 +60,14 @@ export const ConversationHeader: FC<ConversationHeaderProps> = ({
       <Sans size="3t" weight="medium">
         Conversation with {partnerName}
       </Sans>
-      <InfoCircleIcon />
+      <DetailIcon showDetails={showDetails} setShowDetails={setShowDetails} />
     </ConversationHeaderContainer>
   )
 }
 
-export const MobileInboxHeader: FC<FlexProps> = props => {
+interface MobileInboxHeaderProps extends FlexProps, DetailsProps {}
+
+export const MobileInboxHeader: FC<Partial<MobileInboxHeaderProps>> = props => {
   return (
     <Flex
       justifyContent="flex-end"
@@ -82,14 +94,27 @@ export const InboxHeader: FC<BorderedFlexProps> = props => {
   )
 }
 
-export const DetailsHeader: FC<BorderedFlexProps> = props => {
+interface DetailsHeaderProps extends BorderedFlexProps {
+  showDetails: boolean
+}
+
+const AnimatedFlex = styled(Flex)`
+  ${DETAIL_BOX_ANIMATION}
+`
+
+export const DetailsHeader: FC<DetailsHeaderProps> = props => {
+  const { showDetails } = props
   return (
-    <Flex flexDirection="column" {...props}>
+    <AnimatedFlex
+      flexDirection="column"
+      width={showDetails ? "375px" : "0"}
+      {...props}
+    >
       <Sans size="4" ml={2}>
         Details
       </Sans>
       <Separator mt={1} />
-    </Flex>
+    </AnimatedFlex>
   )
 }
 
@@ -108,20 +133,54 @@ export const FullHeader: FC<Partial<ConversationHeaderProps>> = props => {
         width="100%"
         justifyContent="flex-end"
       >
-        {props.partnerName ? (
-          <Sans size="4" ml={2}>
-            Conversation with {props.partnerName}
-          </Sans>
-        ) : (
-          <>{props.children}</>
-        )}
+        <Flex justifyContent="space-between">
+          <Box>
+            {props.partnerName ? (
+              <Sans size="4" ml={2}>
+                Conversation with {props.partnerName}
+              </Sans>
+            ) : (
+              <>{props.children}</>
+            )}
+          </Box>
+          <DetailIcon
+            showDetails={props.showDetails}
+            setShowDetails={props.setShowDetails}
+          />
+        </Flex>
         <Separator mt={1} />
       </BorderedFlex>
       <Flex flexShrink={0} height="100%" alignItems="flex-end">
         <Media greaterThan="lg">
-          <DetailsHeader width="375px" />
+          <DetailsHeader showDetails={props.showDetails} />
         </Media>
       </Flex>
     </Flex>
   )
 }
+
+const DetailIcon: React.FC<DetailsProps> = props => {
+  const { showDetails, setShowDetails } = props
+  return (
+    <StatefulIcon
+      viewBox="0 0 28 28"
+      mr={1}
+      onClick={() => {
+        setShowDetails(!showDetails)
+      }}
+      active={showDetails}
+    >
+      <Title>Show details</Title>
+      <Path
+        d="M6.5 21.5V6.5H16L16 21.5H6.5ZM17.5 21.5H21.5V6.5H17.5L17.5 21.5ZM5 5.5C5 5.22386 5.22386 5 5.5 5H22.5C22.7761 5 23 5.22386 23 5.5V22.5C23 22.7761 22.7761 23 22.5 23H5.5C5.22386 23 5 22.7761 5 22.5V5.5Z"
+        fill={color("black100")}
+        fillRule="evenodd"
+      />
+    </StatefulIcon>
+  )
+}
+
+const StatefulIcon = styled(Icon)<{ active?: boolean }>`
+  background-color: ${({ active }) => (active ? color("black30") : "")};
+  cursor: pointer;
+`
