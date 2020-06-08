@@ -82,9 +82,11 @@ export const Details: FC<DetailsProps> = ({ conversation, ...props }) => {
               {item.__typename}
             </Sans>
             <Flex>
-              <Box height="80px" width="80px">
-                <ResponsiveImage src={item.image.thumbnailUrl} />
-              </Box>
+              <a href={item.href}>
+                <Box height="80px" width="80px">
+                  <ResponsiveImage src={item.image.thumbnailUrl} />
+                </Box>
+              </a>
               <Flex flexDirection="column" ml={1}>
                 {item.__typename === "Artwork" && (
                   <ArtworkDetails mt="-4px" artwork={item} />
@@ -127,12 +129,14 @@ export const DetailsFragmentContainer = createFragmentContainer(Details, {
         item {
           __typename
           ... on Artwork {
+            href
             ...Metadata_artwork
             image {
               thumbnailUrl: url(version: "small")
             }
           }
           ... on Show {
+            href
             image: coverImage {
               thumbnailUrl: url(version: "small")
             }

@@ -10,12 +10,14 @@ export type Details_conversation = {
     readonly items: ReadonlyArray<{
         readonly item: ({
             readonly __typename: "Artwork";
+            readonly href: string | null;
             readonly image: {
                 readonly thumbnailUrl: string | null;
             } | null;
             readonly " $fragmentRefs": FragmentRefs<"Metadata_artwork">;
         } | {
             readonly __typename: "Show";
+            readonly href: string | null;
             readonly image: {
                 readonly thumbnailUrl: string | null;
             } | null;
@@ -36,7 +38,14 @@ export type Details_conversation$key = {
 
 
 const node: ReaderFragment = (function(){
-var v0 = [
+var v0 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "href",
+  "args": null,
+  "storageKey": null
+},
+v1 = [
   {
     "kind": "ScalarField",
     "alias": "thumbnailUrl",
@@ -125,6 +134,7 @@ return {
               "kind": "InlineFragment",
               "type": "Artwork",
               "selections": [
+                (v0/*: any*/),
                 {
                   "kind": "LinkedField",
                   "alias": null,
@@ -133,7 +143,7 @@ return {
                   "args": null,
                   "concreteType": "Image",
                   "plural": false,
-                  "selections": (v0/*: any*/)
+                  "selections": (v1/*: any*/)
                 },
                 {
                   "kind": "FragmentSpread",
@@ -146,6 +156,7 @@ return {
               "kind": "InlineFragment",
               "type": "Show",
               "selections": [
+                (v0/*: any*/),
                 {
                   "kind": "LinkedField",
                   "alias": "image",
@@ -154,7 +165,7 @@ return {
                   "args": null,
                   "concreteType": "Image",
                   "plural": false,
-                  "selections": (v0/*: any*/)
+                  "selections": (v1/*: any*/)
                 }
               ]
             }
@@ -165,5 +176,5 @@ return {
   ]
 };
 })();
-(node as any).hash = 'ad5747bf0434bfe47d3d53615f280f2f';
+(node as any).hash = '2dd761847f272aa82aa89742fb2aac0d';
 export default node;
