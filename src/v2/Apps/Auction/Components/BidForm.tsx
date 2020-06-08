@@ -22,14 +22,15 @@ import { BidForm_saleArtwork } from "v2/__generated__/BidForm_saleArtwork.graphq
 import { CreditCardInstructions } from "v2/Apps/Auction/Components/CreditCardInstructions"
 import { PricingTransparencyQueryRenderer as PricingTransparency } from "v2/Apps/Auction/Components/PricingTransparency"
 import { CreditCardInput } from "v2/Apps/Order/Components/CreditCardInput"
-import { Address, AddressForm } from "v2/Components/AddressForm"
+import { AddressForm } from "v2/Components/AddressForm"
 import { ConditionsOfSaleCheckbox } from "v2/Components/Auction/ConditionsOfSaleCheckbox"
 import { OnSubmitValidationError, TrackErrors } from "./RegistrationForm"
 import {
   Bidding as BiddingValidationSchemas,
+  FormValuesForBidding,
   determineDisplayRequirements,
   getSelectedBid,
-  initialValuesForRegistration,
+  initialValuesForBidding,
 } from "v2/Apps/Auction/Components/Form"
 
 const {
@@ -47,13 +48,6 @@ interface Props {
   relay: RelayProp
   saleArtwork: BidForm_saleArtwork
   trackSubmissionErrors: TrackErrors
-}
-
-export interface FormValues {
-  address?: Address
-  agreeToTerms: boolean
-  creditCard?: string
-  selectedBid: string
 }
 
 export const BidForm: React.FC<Props> = ({
@@ -84,8 +78,8 @@ export const BidForm: React.FC<Props> = ({
 
   return (
     <Box maxWidth={550}>
-      <Formik<FormValues>
-        initialValues={{ ...initialValuesForRegistration, selectedBid }}
+      <Formik<FormValuesForBidding>
+        initialValues={{ ...initialValuesForBidding, selectedBid }}
         validationSchema={validationSchema}
         onSubmit={onSubmit}
       >

@@ -1,7 +1,7 @@
 import { Box, Button, Flex, Sans, Serif } from "@artsy/palette"
 import { CreditCardInstructions } from "v2/Apps/Auction/Components/CreditCardInstructions"
 import { CreditCardInput } from "v2/Apps/Order/Components/CreditCardInput"
-import { Address, AddressForm } from "v2/Components/AddressForm"
+import { AddressForm } from "v2/Components/AddressForm"
 import { ConditionsOfSaleCheckbox } from "v2/Components/Auction/ConditionsOfSaleCheckbox"
 import { ErrorModal } from "v2/Components/Modal/ErrorModal"
 import {
@@ -14,6 +14,7 @@ import React from "react"
 import { ReactStripeElements } from "react-stripe-elements"
 import createLogger from "v2/Utils/logger"
 import {
+  FormValuesForRegistration,
   Registration,
   createStripeWrapper,
   initialValuesForRegistration,
@@ -27,13 +28,7 @@ export interface FormResult {
   phoneNumber: string
 }
 
-export interface FormValues {
-  address: Address
-  creditCard: string
-  agreeToTerms: boolean
-}
-
-interface InnerFormProps extends FormikProps<FormValues> {
+interface InnerFormProps extends FormikProps<FormValuesForRegistration> {
   needsIdentityVerification: boolean
 }
 
@@ -147,7 +142,7 @@ export type TrackErrors = (errors: string[]) => void
  */
 export const OnSubmitValidationError: React.FC<{
   cb: TrackErrors
-  formikProps: Partial<FormikProps<FormValues>>
+  formikProps: Partial<FormikProps<FormValuesForRegistration>>
 }> = props => {
   const { cb, formikProps } = props
 
@@ -174,15 +169,18 @@ export const OnSubmitValidationError: React.FC<{
 
 export interface RegistrationFormProps
   extends ReactStripeElements.InjectedStripeProps {
-  onSubmit: (formikActions: FormikActions<object>, result: FormResult) => void
+  onSubmit: (
+    formikActions: FormikActions<FormValuesForRegistration>,
+    result: FormResult
+  ) => void
   trackSubmissionErrors: TrackErrors
   needsIdentityVerification: boolean
 }
 
 export const RegistrationForm: React.FC<RegistrationFormProps> = props => {
   async function createTokenAndSubmit(
-    values: FormValues,
-    actions: FormikActions<object>
+    values: FormValuesForRegistration,
+    actions: FormikActions<FormValuesForRegistration>
   ) {
     const address = toStripAddress(values.address)
     const { setFieldError, setSubmitting, setStatus } = actions
@@ -216,12 +214,12 @@ export const RegistrationForm: React.FC<RegistrationFormProps> = props => {
       <CreditCardInstructions />
 
       <Box mt={2}>
-        <Formik
+        <Formik<FormValuesForRegistration>
           initialValues={initialValuesForRegistration}
           onSubmit={createTokenAndSubmit}
           validationSchema={Registration.validationSchema}
         >
-          {(formikProps: FormikProps<FormValues>) => (
+          {formikProps => (
             <>
               <OnSubmitValidationError
                 cb={props.trackSubmissionErrors}

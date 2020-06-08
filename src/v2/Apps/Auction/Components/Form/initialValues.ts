@@ -1,5 +1,15 @@
 import { Address } from "v2/Components/AddressForm"
 
+export interface FormValuesForRegistration {
+  address?: Address
+  creditCard?: string
+  agreeToTerms: boolean
+}
+
+export interface FormValuesForBidding extends FormValuesForRegistration {
+  selectedBid: string
+}
+
 const address: Address = {
   name: "",
   addressLine1: "",
@@ -11,14 +21,13 @@ const address: Address = {
   phoneNumber: "",
 }
 
-export const initialValuesForRegistration = {
+export const initialValuesForRegistration: FormValuesForRegistration = {
   address,
   creditCard: undefined,
   agreeToTerms: false,
 }
 
-// TODO: Could we consolicate these two sets of `initialValues`?
-export const initialValuesForBidding = {
-  address,
-  agreeToTerms: false,
+export const initialValuesForBidding: FormValuesForBidding = {
+  ...initialValuesForRegistration,
+  selectedBid: undefined,
 }

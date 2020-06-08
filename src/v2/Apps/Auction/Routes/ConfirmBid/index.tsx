@@ -8,10 +8,7 @@ import {
   ConfirmBidCreateBidderPositionMutationResponse,
 } from "v2/__generated__/ConfirmBidCreateBidderPositionMutation.graphql"
 import { routes_ConfirmBidQueryResponse } from "v2/__generated__/routes_ConfirmBidQuery.graphql"
-import {
-  BidFormFragmentContainer as BidForm,
-  FormValues,
-} from "v2/Apps/Auction/Components/BidForm"
+import { BidFormFragmentContainer as BidForm } from "v2/Apps/Auction/Components/BidForm"
 import { LotInfoFragmentContainer as LotInfo } from "v2/Apps/Auction/Components/LotInfo"
 import { bidderPositionQuery } from "v2/Apps/Auction/Operations/BidderPositionQuery"
 import { createCreditCardAndUpdatePhone } from "v2/Apps/Auction/Operations/CreateCreditCardAndUpdatePhone"
@@ -32,6 +29,7 @@ import {
 import { ReactStripeElements } from "react-stripe-elements"
 import createLogger from "v2/Utils/logger"
 import {
+  FormValuesForBidding,
   createStripeWrapper,
   determineDisplayRequirements,
   toStripAddress,
@@ -39,7 +37,7 @@ import {
 
 const logger = createLogger("Apps/Auction/Routes/ConfirmBid")
 
-type BidFormActions = FormikActions<FormValues>
+type BidFormActions = FormikActions<FormValuesForBidding>
 
 interface ConfirmBidProps extends ReactStripeElements.InjectedStripeProps {
   artwork: routes_ConfirmBidQueryResponse["artwork"]
@@ -152,7 +150,10 @@ export const ConfirmBidRoute: React.FC<ConfirmBidProps> = props => {
     })
   }
 
-  async function handleSubmit(values: FormValues, actions: BidFormActions) {
+  async function handleSubmit(
+    values: FormValuesForBidding,
+    actions: BidFormActions
+  ) {
     const selectedBid = Number(values.selectedBid)
 
     if (requiresPaymentInformation) {
