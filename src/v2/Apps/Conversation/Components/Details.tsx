@@ -82,7 +82,7 @@ export const Details: FC<DetailsProps> = ({ conversation, ...props }) => {
               {item.__typename}
             </Sans>
             <Flex>
-              <Box height="60px" width="60px">
+              <Box height="80px" width="80px">
                 <ResponsiveImage src={item.image.thumbnailUrl} />
               </Box>
               <Flex flexDirection="column" ml={1}>
