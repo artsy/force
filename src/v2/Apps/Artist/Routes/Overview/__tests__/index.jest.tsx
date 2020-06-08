@@ -286,7 +286,8 @@ const defaultArtist: routes_OverviewQueryRawResponse["artist"] = {
     artworks: 50,
     has_make_offer_artworks: true,
   },
-  topWorksArtworks: {
+  filterArtworksConnection: {
+    id: "12345-abde",
     edges: [
       {
         node: {

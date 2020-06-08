@@ -34,7 +34,7 @@ describe("Artist Top Works Rail Component", () => {
 const topWorksContent: ArtistTopWorksRail_artist = {
   slug: "artist-slug",
   " $refType": null,
-  topWorksArtworks: {
+  filterArtworksConnection: {
     edges: [
       {
         node: {
