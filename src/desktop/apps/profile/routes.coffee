@@ -9,6 +9,7 @@ Following = require '../../components/follow_button/collection.coffee'
     success: -> res.redirect "/#{req.params.id}"
 
 @setProfile = (req, res, next) ->
+  return next() if req.params.id is 'assets'
   data = {}
   data.access_token = req.user.get('accessToken') if req.user
   return next() if res.locals.profile
