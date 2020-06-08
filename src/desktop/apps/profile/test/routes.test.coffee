@@ -51,3 +51,8 @@ describe 'Profile routes', ->
       @res.locals.profile = new Profile fabricate 'profile'
       routes.setProfile @req, @res, next = sinon.stub()
       next.called.should.be.ok()
+
+    it 'nexts for a request for an `asset` profile', ->
+      @req.params.id = 'assets'
+      routes.setProfile @req, @res, next = sinon.stub()
+      next.called.should.be.ok()
