@@ -8,14 +8,12 @@ export type Details_conversation = {
         readonly initials: string | null;
     };
     readonly items: ReadonlyArray<{
-        readonly title: string | null;
-        readonly permalink: string | null;
         readonly item: ({
             readonly __typename: "Artwork";
             readonly image: {
                 readonly thumbnailUrl: string | null;
             } | null;
-            readonly " $fragmentRefs": FragmentRefs<"Details_artwork">;
+            readonly " $fragmentRefs": FragmentRefs<"Metadata_artwork">;
         } | {
             readonly __typename: "Show";
             readonly image: {
@@ -108,20 +106,6 @@ return {
       "plural": true,
       "selections": [
         {
-          "kind": "ScalarField",
-          "alias": null,
-          "name": "title",
-          "args": null,
-          "storageKey": null
-        },
-        {
-          "kind": "ScalarField",
-          "alias": null,
-          "name": "permalink",
-          "args": null,
-          "storageKey": null
-        },
-        {
           "kind": "LinkedField",
           "alias": null,
           "name": "item",
@@ -153,7 +137,7 @@ return {
                 },
                 {
                   "kind": "FragmentSpread",
-                  "name": "Details_artwork",
+                  "name": "Metadata_artwork",
                   "args": null
                 }
               ]
@@ -181,5 +165,5 @@ return {
   ]
 };
 })();
-(node as any).hash = 'c555421af2736a691d51a7d855df74c7';
+(node as any).hash = 'ad5747bf0434bfe47d3d53615f280f2f';
 export default node;

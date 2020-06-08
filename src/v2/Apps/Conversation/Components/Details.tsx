@@ -1,10 +1,12 @@
 import {
+  Box,
   EntityHeader,
   Flex,
   FlexProps,
   Image,
   MessageIcon,
   QuestionCircleIcon,
+  ResponsiveImage,
   Sans,
   Separator,
   color,
@@ -14,7 +16,7 @@ import React, { FC } from "react"
 import styled from "styled-components"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Details_conversation } from "v2/__generated__/Details_conversation.graphql"
-import { DetailsFragmentContainer as ArtworkDetails } from "v2/Components/Artwork/Details"
+import ArtworkDetails from "v2/Components/Artwork/Metadata"
 
 export const DETAIL_BOX_ANIMATION = `transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);`
 const DETAIL_BOX_XS_ANIMATION = `transition: opacity 0.3s, z-index 0.3s;`
@@ -81,10 +83,12 @@ export const Details: FC<DetailsProps> = ({ conversation, ...props }) => {
               {item.__typename}
             </Sans>
             <Flex>
-              <Image src={item.image.thumbnailUrl} />
+              <Box height="60px" width="60px">
+                <ResponsiveImage src={item.image.thumbnailUrl} />
+              </Box>
               <Flex flexDirection="column" ml={1}>
                 {item.__typename === "Artwork" && (
-                  <ArtworkDetails artwork={item} showSaleLine={false} />
+                  <ArtworkDetails mt="-4px" artwork={item} />
                 )}
               </Flex>
             </Flex>
@@ -121,12 +125,10 @@ export const DetailsFragmentContainer = createFragmentContainer(Details, {
         initials
       }
       items {
-        title
-        permalink
         item {
           __typename
           ... on Artwork {
-            ...Details_artwork
+            ...Metadata_artwork
             image {
               thumbnailUrl: url(version: "small")
             }
