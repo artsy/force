@@ -20,7 +20,6 @@ const ViewingRoomApp: React.FC<ViewingRoomAppProps> = ({
   children,
   viewingRoom,
 }) => {
-  // FIXME: We should rely on state to determin if VR is closed.
   if (!viewingRoom) {
     return <ErrorPage code={404} />
   }
