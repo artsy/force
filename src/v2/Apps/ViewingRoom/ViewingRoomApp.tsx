@@ -9,6 +9,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { ViewingRoomApp_viewingRoom } from "v2/__generated__/ViewingRoomApp_viewingRoom.graphql"
 import { ViewingRoomMetaFragmentContainer as ViewingRoomMeta } from "./Components/ViewingRoomMeta"
 import { Footer } from "v2/Components/Footer"
+import { ErrorPage } from "v2/Components/ErrorPage"
 
 interface ViewingRoomAppProps {
   children: React.ReactNode
@@ -20,6 +21,9 @@ const ViewingRoomApp: React.FC<ViewingRoomAppProps> = ({
   viewingRoom,
 }) => {
   // FIXME: We should rely on state to determin if VR is closed.
+  if (!viewingRoom) {
+    return <ErrorPage code={404} />
+  }
 
   return (
     <>
@@ -31,11 +35,11 @@ const ViewingRoomApp: React.FC<ViewingRoomAppProps> = ({
         {viewingRoom.status === "closed" ? (
           <ViewingRoomClosed viewingRoom={viewingRoom} />
         ) : (
-          <>
-            <ViewingRoomTabBar mb={[2, 3]} />
-            {children}
-          </>
-        )}
+            <>
+              <ViewingRoomTabBar mb={[2, 3]} />
+              {children}
+            </>
+          )}
 
         <Box mx={2}>
           <Separator mt={6} mb={3} />
