@@ -104,7 +104,7 @@ describe("routes", () => {
       })
     })
 
-    xit("works even with the Metaphysics module throwing an error", async () => {
+    it("works even with the Metaphysics module throwing an error", async () => {
       metaphysics
         .mockReturnValueOnce({ sale: { is_auction: true } })
         .mockRejectedValue("oops!")
@@ -115,7 +115,7 @@ describe("routes", () => {
     })
   })
 
-  xdescribe("#redirectLive", async () => {
+  describe("#redirectLive", async () => {
     let req
     let res
     let next
