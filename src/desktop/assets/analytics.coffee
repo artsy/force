@@ -45,7 +45,7 @@ trackEvent = (data) ->
     trackingData = _.omit data, 'action_type'
     trackingOptions = {}
 
-    referrer = analytics.__artsyReferrer
+    referrer = analytics.__artsyClientSideRoutingReferrer
     # Grab referrer from our trackingMiddleware in Reaction, since we're in a
     # single-page-app context and the value will need to be refreshed on route
     # change. See: https://github.com/artsy/reaction/blob/master/src/Artsy/Analytics/trackingMiddleware.ts
