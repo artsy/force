@@ -33,8 +33,8 @@ import { Media } from "v2/Utils/Responsive"
 export interface Props {
   artwork: ArtworkApp_artwork
   tracking?: TrackingProp
-  routerPathname: string
   referrer: string
+  routerPathname: string
   shouldTrackPageView: boolean
   me: ArtworkApp_me
 }
@@ -73,22 +73,30 @@ export class ArtworkApp extends React.Component<Props> {
     } = this.props
 
     const path = window.location.pathname
-    // FIXME: This breaks our global pageview tracking in the router level.
-    // Can these props be tracked on mount using our typical @track() or
-    // trackEvent() patterns as used in other apps?
-    const properties = {
-      path,
-      acquireable: is_acquireable,
-      offerable: is_offerable,
-      availability,
-      price_listed: !!listPrice,
-      referrer,
-      url: sd.APP_URL + path,
-    }
 
     if (typeof window.analytics !== "undefined") {
+      const properties: any = {
+        path,
+        acquireable: is_acquireable,
+        offerable: is_offerable,
+        availability,
+        price_listed: !!listPrice,
+        url: sd.APP_URL + path,
+      }
+
+      const clientSideRoutingReferrer =
+        window.analytics.__artsyClientSideRoutingReferrer
+
+      if (clientSideRoutingReferrer) {
+        properties.referrer = clientSideRoutingReferrer
+      } else if (referrer) {
+        properties.referrer = referrer
+      }
+
+      // FIXME: This breaks our automatic global pageview tracking middleware
+      // patterns. Can these props be tracked on mount using our typical @track()
+      // or trackEvent() patterns as used in other apps?
       // See trackingMiddleware.ts
-      window.analytics.__artsyReferrer = referrer
       window.analytics.page(properties, { integrations: { Marketo: false } })
     }
   }
@@ -269,6 +277,8 @@ export const ArtworkAppFragmentContainer = createFragmentContainer(
       },
     } = useContext(RouterContext)
 
+    // Check to see if referrer comes from link interception.
+    // @see interceptLinks.ts
     const referrer = state && state.previousHref
     const shouldTrackPageView = useRouteTracking()
 

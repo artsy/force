@@ -7,7 +7,7 @@ interface Window {
       properties: object,
       getTrackingOptions?: object
     ) => void
-    __artsyReferrer?: string
+    __artsyClientSideRoutingReferrer?: string
   }
   __BOOTSTRAP__?: any
 }

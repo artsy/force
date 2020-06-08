@@ -138,7 +138,7 @@ describe("trackingMiddleware", () => {
           { integrations: { Marketo: false } }
         )
 
-        expect(window.analytics.__artsyReferrer).toEqual(
+        expect(window.analytics.__artsyClientSideRoutingReferrer).toEqual(
           "http://testing.com/referrer?with=queryparams"
         )
       })
