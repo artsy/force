@@ -1,4 +1,4 @@
-import { Box, Button, Flex, Sans, Serif } from "@artsy/palette"
+import { Box, Button, Flex, Sans, Serif, Spacer } from "@artsy/palette"
 import { CreditCardInstructions } from "v2/Apps/Auction/Components/CreditCardInstructions"
 import { CreditCardInput } from "v2/Apps/Order/Components/CreditCardInput"
 import { AddressForm } from "v2/Components/AddressForm"
@@ -51,45 +51,34 @@ const InnerForm: React.FC<InnerFormProps> = props => {
 
   return (
     <Form>
-      <Box mt={4}>
-        <Box mb={2}>
-          <Serif size="3t" mb={0.5}>
-            Credit card
-          </Serif>
-          <CreditCardInput
-            error={{ message: errors.creditCard } as stripe.Error}
-            onChange={({ error }) =>
-              setFieldError("creditCard", error?.message)
-            }
-          />
-        </Box>
-      </Box>
-      <Box mt={4}>
-        <Box mt={2}>
-          <AddressForm
-            value={values.address}
-            onChange={(address, _key) => {
-              setFieldValue("address", address)
-            }}
-            errors={errors.address}
-            touched={touched.address}
-            billing
-            showPhoneNumberInput
-          />
-        </Box>
-      </Box>
+      <Serif mt={4} mb={0.5} size="3t">
+        Credit card
+      </Serif>
+
+      <CreditCardInput
+        error={{ message: errors.creditCard } as stripe.Error}
+        onChange={({ error }) => setFieldError("creditCard", error?.message)}
+      />
+
+      <Spacer mt={4} />
+
+      <AddressForm
+        value={values.address}
+        onChange={(address, _key) => setFieldValue("address", address)}
+        errors={errors.address}
+        touched={touched.address}
+        billing
+        showPhoneNumberInput
+      />
 
       {needsIdentityVerification && (
-        <>
-          <Serif size="4t" pb={2}>
-            This auction requires Artsy to verify your identity before bidding.
-          </Serif>
-
-          <Serif size="4t">
-            After you register, you’ll receive an email with a link to complete
-            identity verification.
-          </Serif>
-        </>
+        <Serif size="4t">
+          This auction requires Artsy to verify your identity before bidding.
+          <br />
+          <br />
+          After you register, you’ll receive an email with a link to complete
+          identity verification.
+        </Serif>
       )}
 
       <Flex mt={4} mb={2} flexDirection="column" justifyContent="center">
@@ -122,7 +111,7 @@ const InnerForm: React.FC<InnerFormProps> = props => {
         size="large"
         width="100%"
         loading={isSubmitting}
-        {...({ type: "submit" } as any)}
+        type="submit"
       >
         Register
       </Button>
@@ -141,6 +130,8 @@ export interface RegistrationFormProps
 }
 
 export const RegistrationForm: React.FC<RegistrationFormProps> = props => {
+  const { needsIdentityVerification, trackSubmissionErrors } = props
+
   async function createTokenAndSubmit(
     values: FormValuesForRegistration,
     actions: FormikActions<FormValuesForRegistration>
@@ -173,36 +164,33 @@ export const RegistrationForm: React.FC<RegistrationFormProps> = props => {
   }
 
   return (
-    <Box maxWidth={550}>
-      <CreditCardInstructions />
+    <Formik<FormValuesForRegistration>
+      initialValues={initialValuesForRegistration}
+      onSubmit={createTokenAndSubmit}
+      validationSchema={Registration.validationSchema}
+    >
+      {formikProps => (
+        <>
+          <CreditCardInstructions />
+          <Spacer mt={2} />
 
-      <Box mt={2}>
-        <Formik<FormValuesForRegistration>
-          initialValues={initialValuesForRegistration}
-          onSubmit={createTokenAndSubmit}
-          validationSchema={Registration.validationSchema}
-        >
-          {formikProps => (
-            <>
-              <OnSubmitValidationError
-                cb={props.trackSubmissionErrors}
-                formikProps={formikProps}
-              />
-              <InnerForm
-                {...formikProps}
-                needsIdentityVerification={props.needsIdentityVerification}
-              />
-              <ErrorModal
-                show={formikProps.status === "submissionFailed"}
-                onClose={() => {
-                  formikProps.setStatus(null)
-                }}
-              />
-            </>
-          )}
-        </Formik>
-      </Box>
-    </Box>
+          <OnSubmitValidationError
+            cb={trackSubmissionErrors}
+            formikProps={formikProps}
+          />
+
+          <InnerForm
+            {...formikProps}
+            needsIdentityVerification={needsIdentityVerification}
+          />
+
+          <ErrorModal
+            show={formikProps.status === "submissionFailed"}
+            onClose={() => formikProps.setStatus(null)}
+          />
+        </>
+      )}
+    </Formik>
   )
 }
 
