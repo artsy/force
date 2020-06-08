@@ -67,10 +67,7 @@ describe("ArtistHeader", () => {
 
   it("opens auth modal with expected args when following an artist", async () => {
     const wrapper = await getWrapper()
-    wrapper
-      .find(FollowArtistButton)
-      .at(0)
-      .simulate("click")
+    wrapper.find(FollowArtistButton).at(0).simulate("click")
     expect(mediator.trigger).toBeCalledWith("open:auth", {
       afterSignUpAction: {
         action: "follow",
@@ -92,12 +89,9 @@ describe("ArtistHeader", () => {
 
   it("career stage links to cv page", async () => {
     const wrapper = await getWrapper()
-    expect(
-      wrapper
-        .find(ArtistIndicator)
-        .at(0)
-        .props().link
-    ).toEqual("/artist/cecily-brown/cv")
+    expect(wrapper.find(ArtistIndicator).at(0).props().link).toEqual(
+      "/artist/cecily-brown/cv"
+    )
   })
 
   it("renders auction record indicator when data is present", async () => {
@@ -108,12 +102,9 @@ describe("ArtistHeader", () => {
 
   it("auction record indicator links to auction results tab", async () => {
     const wrapper = await getWrapper()
-    expect(
-      wrapper
-        .find(ArtistIndicator)
-        .at(1)
-        .props().link
-    ).toEqual("/artist/cecily-brown/auction-results")
+    expect(wrapper.find(ArtistIndicator).at(1).props().link).toEqual(
+      "/artist/cecily-brown/auction-results"
+    )
   })
 
   it("hides auction record indicator when data is not present", async () => {

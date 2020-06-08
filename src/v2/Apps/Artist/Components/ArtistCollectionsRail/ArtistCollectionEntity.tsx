@@ -1,4 +1,4 @@
-import { Box, color, Flex, Image, Sans } from "@artsy/palette"
+import { Box, Flex, Image, Sans, color } from "@artsy/palette"
 import { ArtistCollectionEntity_collection } from "v2/__generated__/ArtistCollectionEntity_collection.graphql"
 import { track } from "v2/Artsy/Analytics"
 import * as Schema from "v2/Artsy/Analytics/Schema"

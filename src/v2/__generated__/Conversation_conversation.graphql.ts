@@ -16,7 +16,7 @@ export type Conversation_conversation = {
     readonly initialMessage: string;
     readonly lastMessageID: string | null;
     readonly unread: boolean | null;
-    readonly messages: {
+    readonly messagesConnection: {
         readonly pageInfo: {
             readonly startCursor: string | null;
             readonly endCursor: string | null;
@@ -110,7 +110,7 @@ return {
         "cursor": "after",
         "direction": "forward",
         "path": [
-          "messages"
+          "messagesConnection"
         ]
       }
     ]
@@ -193,8 +193,8 @@ return {
     },
     {
       "kind": "LinkedField",
-      "alias": "messages",
-      "name": "__Messages_messages_connection",
+      "alias": "messagesConnection",
+      "name": "__Messages_messagesConnection_connection",
       "storageKey": null,
       "args": null,
       "concreteType": "MessageConnection",
@@ -417,5 +417,5 @@ return {
   ]
 };
 })();
-(node as any).hash = 'a7fbc0b98a46e035ce1f6e70199ac8e3';
+(node as any).hash = '2b55ef84e7aa4bfd35bc7585eabc3c11';
 export default node;

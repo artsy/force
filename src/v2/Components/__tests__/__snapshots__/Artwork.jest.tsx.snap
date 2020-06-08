@@ -2,8 +2,8 @@
 
 exports[`Artwork renders correctly 1`] = `
 .c4 {
-  margin-top: 12px;
   text-align: left;
+  margin-top: 12px;
 }
 
 .c11 {

@@ -96,6 +96,7 @@ export const ConversationFragmentContainer = createFragmentContainer(
             name
           }
           ...Conversation_conversation
+          ...Details_conversation
         }
       }
     `,

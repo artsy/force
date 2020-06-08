@@ -27,6 +27,34 @@ query routes_DetailQuery(
   }
 }
 
+fragment Contact_artwork on Artwork {
+  href
+  is_inquireable: isInquireable
+  sale {
+    is_auction: isAuction
+    is_live_open: isLiveOpen
+    is_open: isOpen
+    is_closed: isClosed
+    id
+  }
+  partner(shallow: true) {
+    type
+    id
+  }
+  sale_artwork: saleArtwork {
+    highest_bid: highestBid {
+      display
+    }
+    opening_bid: openingBid {
+      display
+    }
+    counts {
+      bidder_positions: bidderPositions
+    }
+    id
+  }
+}
+
 fragment ConversationSnippet_conversation on Conversation {
   internalID
   to {
@@ -83,7 +111,7 @@ fragment Conversation_conversation on Conversation {
   initialMessage
   lastMessageID
   unread
-  messages(first: 30, sort: DESC) {
+  messagesConnection(first: 30, sort: DESC) {
     pageInfo {
       startCursor
       endCursor
@@ -142,6 +170,7 @@ fragment Conversation_me_3oGfhn on Me {
       id
     }
     ...Conversation_conversation
+    ...Details_conversation
     id
   }
 }
@@ -166,6 +195,71 @@ fragment Conversations_me on Me {
   }
 }
 
+fragment Details_artwork on Artwork {
+  href
+  title
+  date
+  sale_message: saleMessage
+  cultural_maker: culturalMaker
+  artists(shallow: true) {
+    id
+    href
+    name
+  }
+  collecting_institution: collectingInstitution
+  partner(shallow: true) {
+    name
+    href
+    id
+  }
+  sale {
+    is_auction: isAuction
+    is_closed: isClosed
+    id
+  }
+  sale_artwork: saleArtwork {
+    counts {
+      bidder_positions: bidderPositions
+    }
+    highest_bid: highestBid {
+      display
+    }
+    opening_bid: openingBid {
+      display
+    }
+    id
+  }
+}
+
+fragment Details_conversation on Conversation {
+  to {
+    name
+    initials
+    id
+  }
+  items {
+    item {
+      __typename
+      ... on Artwork {
+        href
+        ...Metadata_artwork
+        image {
+          thumbnailUrl: url(version: "small")
+        }
+      }
+      ... on Show {
+        href
+        image: coverImage {
+          thumbnailUrl: url(version: "small")
+        }
+      }
+      ... on Node {
+        id
+      }
+    }
+  }
+}
+
 fragment Message_message on Message {
   internalID
   body
@@ -182,6 +276,12 @@ fragment Message_message on Message {
     fileName
     downloadURL
   }
+}
+
+fragment Metadata_artwork on Artwork {
+  ...Details_artwork
+  ...Contact_artwork
+  href
 }
 */
 
@@ -271,68 +371,61 @@ v11 = [
   }
 ],
 v12 = {
-  "kind": "InlineFragment",
-  "type": "Show",
-  "selections": [
-    {
-      "kind": "LinkedField",
-      "alias": null,
-      "name": "fair",
-      "storageKey": null,
-      "args": null,
-      "concreteType": "Fair",
-      "plural": false,
-      "selections": (v5/*: any*/)
-    },
-    (v4/*: any*/),
-    {
-      "kind": "LinkedField",
-      "alias": null,
-      "name": "coverImage",
-      "storageKey": null,
-      "args": null,
-      "concreteType": "Image",
-      "plural": false,
-      "selections": (v11/*: any*/)
-    }
-  ]
+  "kind": "LinkedField",
+  "alias": null,
+  "name": "fair",
+  "storageKey": null,
+  "args": null,
+  "concreteType": "Fair",
+  "plural": false,
+  "selections": (v5/*: any*/)
 },
 v13 = {
+  "kind": "LinkedField",
+  "alias": null,
+  "name": "coverImage",
+  "storageKey": null,
+  "args": null,
+  "concreteType": "Image",
+  "plural": false,
+  "selections": (v11/*: any*/)
+},
+v14 = {
   "kind": "ScalarField",
   "alias": null,
   "name": "endCursor",
   "args": null,
   "storageKey": null
 },
-v14 = {
+v15 = {
   "kind": "ScalarField",
   "alias": null,
   "name": "hasNextPage",
   "args": null,
   "storageKey": null
 },
-v15 = {
+v16 = {
   "kind": "ScalarField",
   "alias": null,
   "name": "hasPreviousPage",
   "args": null,
   "storageKey": null
 },
-v16 = {
+v17 = {
   "kind": "ScalarField",
   "alias": null,
   "name": "startCursor",
   "args": null,
   "storageKey": null
 },
-v17 = {
+v18 = {
   "kind": "ScalarField",
   "alias": null,
   "name": "email",
   "args": null,
   "storageKey": null
 },
-v18 = [
+v19 = [
   {
     "kind": "Literal",
     "name": "first",
@@ -342,6 +435,42 @@ v18 = [
     "kind": "Literal",
     "name": "sort",
     "value": "DESC"
+  }
+],
+v20 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "href",
+  "args": null,
+  "storageKey": null
+},
+v21 = {
+  "kind": "ScalarField",
+  "alias": "thumbnailUrl",
+  "name": "url",
+  "args": [
+    {
+      "kind": "Literal",
+      "name": "version",
+      "value": "small"
+    }
+  ],
+  "storageKey": "url(version:\"small\")"
+},
+v22 = [
+  {
+    "kind": "Literal",
+    "name": "shallow",
+    "value": true
+  }
+],
+v23 = [
+  {
+    "kind": "ScalarField",
+    "alias": null,
+    "name": "display",
+    "args": null,
+    "storageKey": null
   }
 ];
 return {
@@ -491,7 +620,15 @@ return {
                                   }
                                 ]
                               },
-                              (v12/*: any*/)
+                              {
+                                "kind": "InlineFragment",
+                                "type": "Show",
+                                "selections": [
+                                  (v12/*: any*/),
+                                  (v4/*: any*/),
+                                  (v13/*: any*/)
+                                ]
+                              }
                             ]
                           }
                         ]
@@ -527,10 +664,10 @@ return {
                 "concreteType": "PageInfo",
                 "plural": false,
                 "selections": [
-                  (v13/*: any*/),
                   (v14/*: any*/),
                   (v15/*: any*/),
-                  (v16/*: any*/)
+                  (v16/*: any*/),
+                  (v17/*: any*/)
                 ]
               }
             ]
@@ -582,7 +719,7 @@ return {
                 "plural": false,
                 "selections": [
                   (v4/*: any*/),
-                  (v17/*: any*/),
+                  (v18/*: any*/),
                   (v2/*: any*/)
                 ]
               },
@@ -604,9 +741,9 @@ return {
               {
                 "kind": "LinkedField",
                 "alias": null,
-                "name": "messages",
-                "storageKey": "messages(first:30,sort:\"DESC\")",
-                "args": (v18/*: any*/),
+                "name": "messagesConnection",
+                "storageKey": "messagesConnection(first:30,sort:\"DESC\")",
+                "args": (v19/*: any*/),
                 "concreteType": "MessageConnection",
                 "plural": false,
                 "selections": [
@@ -619,10 +756,10 @@ return {
                     "concreteType": "PageInfo",
                     "plural": false,
                     "selections": [
+                      (v17/*: any*/),
+                      (v14/*: any*/),
                       (v16/*: any*/),
-                      (v13/*: any*/),
-                      (v15/*: any*/),
-                      (v14/*: any*/)
+                      (v15/*: any*/)
                     ]
                   },
                   {
@@ -676,7 +813,7 @@ return {
                             "plural": false,
                             "selections": [
                               (v4/*: any*/),
-                              (v17/*: any*/)
+                              (v18/*: any*/)
                             ]
                           },
                           {
@@ -724,10 +861,10 @@ return {
               {
                 "kind": "LinkedHandle",
                 "alias": null,
-                "name": "messages",
-                "args": (v18/*: any*/),
+                "name": "messagesConnection",
+                "args": (v19/*: any*/),
                 "handle": "connection",
-                "key": "Messages_messages",
+                "key": "Messages_messagesConnection",
                 "filters": []
               },
               {
@@ -757,13 +894,7 @@ return {
                           (v8/*: any*/),
                           (v9/*: any*/),
                           (v10/*: any*/),
-                          {
-                            "kind": "ScalarField",
-                            "alias": null,
-                            "name": "href",
-                            "args": null,
-                            "storageKey": null
-                          },
+                          (v20/*: any*/),
                           {
                             "kind": "LinkedField",
                             "alias": null,
@@ -787,12 +918,187 @@ return {
                                   }
                                 ],
                                 "storageKey": "url(version:[\"large\"])"
+                              },
+                              (v21/*: any*/)
+                            ]
+                          },
+                          {
+                            "kind": "ScalarField",
+                            "alias": "sale_message",
+                            "name": "saleMessage",
+                            "args": null,
+                            "storageKey": null
+                          },
+                          {
+                            "kind": "ScalarField",
+                            "alias": "cultural_maker",
+                            "name": "culturalMaker",
+                            "args": null,
+                            "storageKey": null
+                          },
+                          {
+                            "kind": "LinkedField",
+                            "alias": null,
+                            "name": "artists",
+                            "storageKey": "artists(shallow:true)",
+                            "args": (v22/*: any*/),
+                            "concreteType": "Artist",
+                            "plural": true,
+                            "selections": [
+                              (v2/*: any*/),
+                              (v20/*: any*/),
+                              (v4/*: any*/)
+                            ]
+                          },
+                          {
+                            "kind": "ScalarField",
+                            "alias": "collecting_institution",
+                            "name": "collectingInstitution",
+                            "args": null,
+                            "storageKey": null
+                          },
+                          {
+                            "kind": "LinkedField",
+                            "alias": null,
+                            "name": "partner",
+                            "storageKey": "partner(shallow:true)",
+                            "args": (v22/*: any*/),
+                            "concreteType": "Partner",
+                            "plural": false,
+                            "selections": [
+                              (v4/*: any*/),
+                              (v20/*: any*/),
+                              (v2/*: any*/),
+                              {
+                                "kind": "ScalarField",
+                                "alias": null,
+                                "name": "type",
+                                "args": null,
+                                "storageKey": null
                               }
                             ]
+                          },
+                          {
+                            "kind": "LinkedField",
+                            "alias": null,
+                            "name": "sale",
+                            "storageKey": null,
+                            "args": null,
+                            "concreteType": "Sale",
+                            "plural": false,
+                            "selections": [
+                              {
+                                "kind": "ScalarField",
+                                "alias": "is_auction",
+                                "name": "isAuction",
+                                "args": null,
+                                "storageKey": null
+                              },
+                              {
+                                "kind": "ScalarField",
+                                "alias": "is_closed",
+                                "name": "isClosed",
+                                "args": null,
+                                "storageKey": null
+                              },
+                              (v2/*: any*/),
+                              {
+                                "kind": "ScalarField",
+                                "alias": "is_live_open",
+                                "name": "isLiveOpen",
+                                "args": null,
+                                "storageKey": null
+                              },
+                              {
+                                "kind": "ScalarField",
+                                "alias": "is_open",
+                                "name": "isOpen",
+                                "args": null,
+                                "storageKey": null
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "LinkedField",
+                            "alias": "sale_artwork",
+                            "name": "saleArtwork",
+                            "storageKey": null,
+                            "args": null,
+                            "concreteType": "SaleArtwork",
+                            "plural": false,
+                            "selections": [
+                              {
+                                "kind": "LinkedField",
+                                "alias": null,
+                                "name": "counts",
+                                "storageKey": null,
+                                "args": null,
+                                "concreteType": "SaleArtworkCounts",
+                                "plural": false,
+                                "selections": [
+                                  {
+                                    "kind": "ScalarField",
+                                    "alias": "bidder_positions",
+                                    "name": "bidderPositions",
+                                    "args": null,
+                                    "storageKey": null
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "LinkedField",
+                                "alias": "highest_bid",
+                                "name": "highestBid",
+                                "storageKey": null,
+                                "args": null,
+                                "concreteType": "SaleArtworkHighestBid",
+                                "plural": false,
+                                "selections": (v23/*: any*/)
+                              },
+                              {
+                                "kind": "LinkedField",
+                                "alias": "opening_bid",
+                                "name": "openingBid",
+                                "storageKey": null,
+                                "args": null,
+                                "concreteType": "SaleArtworkOpeningBid",
+                                "plural": false,
+                                "selections": (v23/*: any*/)
+                              },
+                              (v2/*: any*/)
+                            ]
+                          },
+                          {
+                            "kind": "ScalarField",
+                            "alias": "is_inquireable",
+                            "name": "isInquireable",
+                            "args": null,
+                            "storageKey": null
                           }
                         ]
                       },
-                      (v12/*: any*/)
+                      {
+                        "kind": "InlineFragment",
+                        "type": "Show",
+                        "selections": [
+                          (v12/*: any*/),
+                          (v4/*: any*/),
+                          (v13/*: any*/),
+                          (v20/*: any*/),
+                          {
+                            "kind": "LinkedField",
+                            "alias": "image",
+                            "name": "coverImage",
+                            "storageKey": null,
+                            "args": null,
+                            "concreteType": "Image",
+                            "plural": false,
+                            "selections": [
+                              (v21/*: any*/)
+                            ]
+                          }
+                        ]
+                      }
                     ]
                   }
                 ]
@@ -808,7 +1114,7 @@ return {
     "operationKind": "query",
     "name": "routes_DetailQuery",
     "id": null,
-    "text": "query routes_DetailQuery(\n  $conversationID: String!\n) {\n  me {\n    ...Conversation_me_3oGfhn\n    id\n  }\n}\n\nfragment ConversationSnippet_conversation on Conversation {\n  internalID\n  to {\n    name\n    id\n  }\n  lastMessage\n  lastMessageAt\n  unread\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        date\n        title\n        artistNames\n        image {\n          url\n        }\n      }\n      ... on Show {\n        fair {\n          name\n          id\n        }\n        name\n        coverImage {\n          url\n        }\n      }\n      ... on Node {\n        id\n      }\n    }\n  }\n  messagesConnection {\n    totalCount\n  }\n}\n\nfragment Conversation_conversation on Conversation {\n  id\n  internalID\n  from {\n    name\n    email\n    id\n  }\n  to {\n    name\n    initials\n    id\n  }\n  initialMessage\n  lastMessageID\n  unread\n  messages(first: 30, sort: DESC) {\n    pageInfo {\n      startCursor\n      endCursor\n      hasPreviousPage\n      hasNextPage\n    }\n    edges {\n      node {\n        id\n        internalID\n        createdAt\n        isFromUser\n        ...Message_message\n        __typename\n      }\n      cursor\n    }\n  }\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        id\n        date\n        title\n        artistNames\n        href\n        image {\n          url(version: [\"large\"])\n        }\n      }\n      ... on Show {\n        id\n        fair {\n          name\n          id\n        }\n        name\n        coverImage {\n          url\n        }\n      }\n      ... on Node {\n        id\n      }\n    }\n  }\n}\n\nfragment Conversation_me_3oGfhn on Me {\n  ...Conversations_me\n  conversation(id: $conversationID) {\n    internalID\n    to {\n      name\n      id\n    }\n    ...Conversation_conversation\n    id\n  }\n}\n\nfragment Conversations_me on Me {\n  conversationsConnection(first: 10) {\n    edges {\n      cursor\n      node {\n        id\n        internalID\n        lastMessage\n        ...ConversationSnippet_conversation\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n\nfragment Message_message on Message {\n  internalID\n  body\n  createdAt\n  isFromUser\n  from {\n    name\n    email\n  }\n  attachments {\n    id\n    internalID\n    contentType\n    fileName\n    downloadURL\n  }\n}\n",
+    "text": "query routes_DetailQuery(\n  $conversationID: String!\n) {\n  me {\n    ...Conversation_me_3oGfhn\n    id\n  }\n}\n\nfragment Contact_artwork on Artwork {\n  href\n  is_inquireable: isInquireable\n  sale {\n    is_auction: isAuction\n    is_live_open: isLiveOpen\n    is_open: isOpen\n    is_closed: isClosed\n    id\n  }\n  partner(shallow: true) {\n    type\n    id\n  }\n  sale_artwork: saleArtwork {\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    counts {\n      bidder_positions: bidderPositions\n    }\n    id\n  }\n}\n\nfragment ConversationSnippet_conversation on Conversation {\n  internalID\n  to {\n    name\n    id\n  }\n  lastMessage\n  lastMessageAt\n  unread\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        date\n        title\n        artistNames\n        image {\n          url\n        }\n      }\n      ... on Show {\n        fair {\n          name\n          id\n        }\n        name\n        coverImage {\n          url\n        }\n      }\n      ... on Node {\n        id\n      }\n    }\n  }\n  messagesConnection {\n    totalCount\n  }\n}\n\nfragment Conversation_conversation on Conversation {\n  id\n  internalID\n  from {\n    name\n    email\n    id\n  }\n  to {\n    name\n    initials\n    id\n  }\n  initialMessage\n  lastMessageID\n  unread\n  messagesConnection(first: 30, sort: DESC) {\n    pageInfo {\n      startCursor\n      endCursor\n      hasPreviousPage\n      hasNextPage\n    }\n    edges {\n      node {\n        id\n        internalID\n        createdAt\n        isFromUser\n        ...Message_message\n        __typename\n      }\n      cursor\n    }\n  }\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        id\n        date\n        title\n        artistNames\n        href\n        image {\n          url(version: [\"large\"])\n        }\n      }\n      ... on Show {\n        id\n        fair {\n          name\n          id\n        }\n        name\n        coverImage {\n          url\n        }\n      }\n      ... on Node {\n        id\n      }\n    }\n  }\n}\n\nfragment Conversation_me_3oGfhn on Me {\n  ...Conversations_me\n  conversation(id: $conversationID) {\n    internalID\n    to {\n      name\n      id\n    }\n    ...Conversation_conversation\n    ...Details_conversation\n    id\n  }\n}\n\nfragment Conversations_me on Me {\n  conversationsConnection(first: 10) {\n    edges {\n      cursor\n      node {\n        id\n        internalID\n        lastMessage\n        ...ConversationSnippet_conversation\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n\nfragment Details_artwork on Artwork {\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n}\n\nfragment Details_conversation on Conversation {\n  to {\n    name\n    initials\n    id\n  }\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        href\n        ...Metadata_artwork\n        image {\n          thumbnailUrl: url(version: \"small\")\n        }\n      }\n      ... on Show {\n        href\n        image: coverImage {\n          thumbnailUrl: url(version: \"small\")\n        }\n      }\n      ... on Node {\n        id\n      }\n    }\n  }\n}\n\nfragment Message_message on Message {\n  internalID\n  body\n  createdAt\n  isFromUser\n  from {\n    name\n    email\n  }\n  attachments {\n    id\n    internalID\n    contentType\n    fileName\n    downloadURL\n  }\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  ...Contact_artwork\n  href\n}\n",
     "metadata": {}
   }
 };

@@ -2,19 +2,21 @@ import { Metadata_artwork } from "v2/__generated__/Metadata_artwork.graphql"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { DetailsFragmentContainer as Details } from "./Details"
-import { Box, Link } from "@artsy/palette"
+import { Box, BoxProps, Link } from "@artsy/palette"
 
-export interface MetadataProps extends React.HTMLProps<Metadata> {
+export interface MetadataProps extends BoxProps {
   artwork: Metadata_artwork
   extended?: boolean
   hidePartnerName?: boolean
   hideArtistName?: boolean
   useLighterFont?: boolean
+  className?: string
 }
 
 export class Metadata extends React.Component<MetadataProps> {
   static defaultProps = {
     extended: true,
+    mt: "12px",
   }
 
   render() {
@@ -25,11 +27,12 @@ export class Metadata extends React.Component<MetadataProps> {
       hidePartnerName,
       hideArtistName,
       useLighterFont,
+      ...boxProps
     } = this.props
 
     return (
       <Link href={artwork.href} underlineBehavior="none">
-        <Box mt="12px" textAlign="left" className={className}>
+        <Box textAlign="left" className={className} {...(boxProps as any)}>
           <Details
             includeLinks={false}
             showSaleLine={extended}

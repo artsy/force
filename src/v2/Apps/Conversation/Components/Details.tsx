@@ -1,7 +1,12 @@
 import {
+  Box,
   EntityHeader,
   Flex,
   FlexProps,
+  MessageIcon,
+  QuestionCircleIcon,
+  ResponsiveImage,
+  Sans,
   Separator,
   color,
   media,
@@ -10,6 +15,7 @@ import React, { FC } from "react"
 import styled from "styled-components"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Details_conversation } from "v2/__generated__/Details_conversation.graphql"
+import ArtworkDetails from "v2/Components/Artwork/Metadata"
 
 export const DETAIL_BOX_ANIMATION = `transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);`
 const DETAIL_BOX_XS_ANIMATION = `transition: opacity 0.3s, z-index 0.3s;`
@@ -43,6 +49,9 @@ interface DetailsProps extends FlexProps {
 }
 
 export const Details: FC<DetailsProps> = ({ conversation, ...props }) => {
+  const item =
+    conversation.items?.[0]?.item?.__typename !== "%other" &&
+    conversation.items?.[0]?.item
   return (
     <DetailsContainer
       flexDirection="column"
@@ -65,7 +74,42 @@ export const Details: FC<DetailsProps> = ({ conversation, ...props }) => {
         name={conversation.to.name}
         initials={conversation.to.initials}
       />
-      <Separator />
+      {item && (
+        <>
+          <Separator />
+          <Flex flexDirection="column" p={2}>
+            <Sans mb={2} size="3" weight="medium">
+              {item.__typename}
+            </Sans>
+            <Flex>
+              <a href={item.href}>
+                <Box height="80px" width="80px">
+                  <ResponsiveImage src={item.image.thumbnailUrl} />
+                </Box>
+              </a>
+              <Flex flexDirection="column" ml={1}>
+                {item.__typename === "Artwork" && (
+                  <ArtworkDetails mt="-4px" artwork={item} />
+                )}
+              </Flex>
+            </Flex>
+          </Flex>
+        </>
+      )}
+      <Separator my={2} />
+      <Flex flexDirection="column" px={2}>
+        <Sans size="3" weight="medium" mb={2}>
+          Support
+        </Sans>
+        <Flex alignItems="center" mb={1}>
+          <QuestionCircleIcon mr={1} />
+          <Sans size="3">Inquiries FAQ</Sans>
+        </Flex>
+        <Flex alignItems="center" mb={1}>
+          <MessageIcon mr={1} />
+          <Sans size="3">Contact an Artsy Specialist</Sans>
+        </Flex>
+      </Flex>
     </DetailsContainer>
   )
 }
@@ -80,6 +124,24 @@ export const DetailsFragmentContainer = createFragmentContainer(Details, {
       to {
         name
         initials
+      }
+      items {
+        item {
+          __typename
+          ... on Artwork {
+            href
+            ...Metadata_artwork
+            image {
+              thumbnailUrl: url(version: "small")
+            }
+          }
+          ... on Show {
+            href
+            image: coverImage {
+              thumbnailUrl: url(version: "small")
+            }
+          }
+        }
       }
     }
   `,
