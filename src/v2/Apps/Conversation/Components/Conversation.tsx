@@ -95,6 +95,7 @@ const groupMessages = (messages: Message[]): Message[][] => {
     const lastMessageCreatedAt = DateTime.fromISO(lastMessage.createdAt)
     const currentMessageCreatedAt = DateTime.fromISO(currentMessage.createdAt)
     const sameDay = lastMessageCreatedAt.hasSame(currentMessageCreatedAt, "day")
+
     const today = fromToday(currentMessageCreatedAt)
 
     if (sameDay && !today) {
@@ -102,6 +103,8 @@ const groupMessages = (messages: Message[]): Message[][] => {
     } else if (!today) {
       groups.push([currentMessage])
     } else if (lastMessage.isFromUser !== currentMessage.isFromUser) {
+      groups.push([currentMessage])
+    } else if (!sameDay && today) {
       groups.push([currentMessage])
     } else {
       lastGroup.push(currentMessage)
@@ -167,6 +170,7 @@ const Conversation: React.FC<ConversationProps> = props => {
                 />
                 {messageGroup.map((message, messageIndex) => {
                   const nextMessage = messageGroup[messageIndex + 1]
+
                   return (
                     <Message
                       message={message}
