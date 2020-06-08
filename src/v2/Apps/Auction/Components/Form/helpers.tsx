@@ -5,7 +5,7 @@ import { data as sd } from "sharify"
 
 import { Address } from "v2/Components/AddressForm"
 
-export const toStripAddress = (address: Address): stripe.TokenOptions => {
+export const toStripeAddress = (address: Address): stripe.TokenOptions => {
   return {
     name: address.name,
     address_line1: address.addressLine1,

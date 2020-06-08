@@ -32,7 +32,7 @@ import {
   FormValuesForBidding,
   createStripeWrapper,
   determineDisplayRequirements,
-  toStripAddress,
+  toStripeAddress,
 } from "v2/Apps/Auction/Components/Form"
 
 const logger = createLogger("Apps/Auction/Routes/ConfirmBid")
@@ -159,7 +159,7 @@ export const ConfirmBidRoute: React.FC<ConfirmBidProps> = props => {
     if (requiresPaymentInformation) {
       try {
         const { address } = values
-        const stripeAddress = toStripAddress(address)
+        const stripeAddress = toStripeAddress(address)
         const { error, token } = await stripe.createToken(stripeAddress)
 
         if (error) {

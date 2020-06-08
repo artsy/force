@@ -18,7 +18,7 @@ import {
   Registration,
   createStripeWrapper,
   initialValuesForRegistration,
-  toStripAddress,
+  toStripeAddress,
 } from "v2/Apps/Auction/Components/Form"
 import {
   OnSubmitValidationError,
@@ -145,7 +145,7 @@ export const RegistrationForm: React.FC<RegistrationFormProps> = props => {
     values: FormValuesForRegistration,
     actions: FormikActions<FormValuesForRegistration>
   ) {
-    const address = toStripAddress(values.address)
+    const address = toStripeAddress(values.address)
     const { setFieldError, setSubmitting, setStatus } = actions
     const { stripe } = props
 
