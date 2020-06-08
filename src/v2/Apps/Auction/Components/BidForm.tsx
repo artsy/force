@@ -24,7 +24,10 @@ import { PricingTransparencyQueryRenderer as PricingTransparency } from "v2/Apps
 import { CreditCardInput } from "v2/Apps/Order/Components/CreditCardInput"
 import { AddressForm } from "v2/Components/AddressForm"
 import { ConditionsOfSaleCheckbox } from "v2/Components/Auction/ConditionsOfSaleCheckbox"
-import { OnSubmitValidationError, TrackErrors } from "./RegistrationForm"
+import {
+  OnSubmitValidationError,
+  TrackErrors,
+} from "v2/Apps/Auction/Components/OnSubmitValidationError"
 import {
   Bidding as BiddingValidationSchemas,
   FormValuesForBidding,
