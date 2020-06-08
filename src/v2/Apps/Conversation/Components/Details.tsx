@@ -3,7 +3,6 @@ import {
   EntityHeader,
   Flex,
   FlexProps,
-  Image,
   MessageIcon,
   QuestionCircleIcon,
   ResponsiveImage,
