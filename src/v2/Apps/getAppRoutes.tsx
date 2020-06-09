@@ -10,6 +10,7 @@ import { routes as orderRoutes } from "v2/Apps/Order/routes"
 import { routes as purchasesRoutes } from "v2/Apps/Purchase/routes"
 import { routes as searchRoutes } from "v2/Apps/Search/routes"
 import { routes as viewingRoomRoutes } from "./ViewingRoom/routes"
+import { debugRoutes } from "./Debug/debugRoutes"
 
 export function getAppRoutes(): RouteConfig[] {
   return buildAppRoutes([
@@ -42,6 +43,11 @@ export function getAppRoutes(): RouteConfig[] {
     },
     {
       routes: viewingRoomRoutes,
+    },
+
+    // For debugging baseline app shell stuff
+    {
+      routes: debugRoutes,
     },
   ])
 }
