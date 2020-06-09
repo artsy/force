@@ -876,7 +876,7 @@ describe("Routes/ConfirmBid", () => {
 
       expect(window.location.assign).not.toHaveBeenCalled()
       expect(page.text()).toContain(
-        "Please make sure your internet connection is active and try again"
+        "Your card was declined. Please contact your bank or use a different card."
       )
 
       expect(mockPostEvent).toHaveBeenCalledTimes(1)
@@ -884,7 +884,7 @@ describe("Routes/ConfirmBid", () => {
         action_type: AnalyticsSchema.ActionType.ConfirmBidFailed,
         context_page: AnalyticsSchema.PageName.AuctionConfirmBidPage,
         error_messages: [
-          "JavaScript error: The `createCreditCard` mutation failed.",
+          "Your card was declined. Please contact your bank or use a different card.",
         ],
         auction_slug: "saleslug",
         artwork_slug: "artworkslug",

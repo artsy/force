@@ -10,8 +10,7 @@ import { RegistrationForm } from "v2/Apps/Auction/Components/RegistrationForm"
 import { AppContainer } from "v2/Apps/Components/AppContainer"
 import { track } from "v2/Artsy"
 import * as Schema from "v2/Artsy/Analytics/Schema"
-import { FormikHelpers as FormikActions } from "formik"
-import React from "react"
+import React, { ComponentProps } from "react"
 import { Title } from "react-head"
 import {
   RelayProp,
@@ -24,8 +23,8 @@ import { data as sd } from "sharify"
 import { bidderNeedsIdentityVerification } from "v2/Utils/identityVerificationRequirements"
 import createLogger from "v2/Utils/logger"
 import {
-  FormValuesForRegistration,
   createStripeWrapper,
+  errorMessageForCard,
   toStripeAddress,
 } from "v2/Apps/Auction/Components/Form"
 import { ReactStripeElements } from "react-stripe-elements"
@@ -61,6 +60,9 @@ const saleConfirmRegistrationPath = (saleSlug: string) => {
   return `${sd.APP_URL}/auction/${saleSlug}/confirm-registration`
 }
 
+type OnSubmitType = ComponentProps<typeof RegistrationForm>["onSubmit"]
+type FormikHelpers = Parameters<OnSubmitType>[1]
+
 interface RegisterProps extends ReactStripeElements.InjectedStripeProps {
   sale: Register_sale
   me: Register_me
@@ -95,7 +97,7 @@ export const RegisterRoute: React.FC<RegisterProps> = props => {
     })
   }
 
-  function handleMutationError(actions: FormikActions<object>, error: Error) {
+  function handleMutationError(helpers: FormikHelpers, error: Error) {
     logger.error(error)
 
     let errorMessages: string[]
@@ -108,16 +110,13 @@ export const RegisterRoute: React.FC<RegisterProps> = props => {
     }
 
     trackRegistrationFailed(errorMessages)
-    actions.setStatus("submissionFailed")
+    helpers.setStatus("submissionFailed")
   }
 
-  async function createTokenAndSubmit(
-    values: FormValuesForRegistration,
-    actions: FormikActions<FormValuesForRegistration>
-  ) {
+  const createTokenAndSubmit: OnSubmitType = async (values, helpers) => {
     const address = toStripeAddress(values.address)
     const { phoneNumber } = values.address
-    const { setFieldError, setSubmitting } = actions
+    const { setFieldError, setSubmitting } = helpers
 
     try {
       const { error, token } = await stripe.createToken(address)
@@ -127,13 +126,26 @@ export const RegisterRoute: React.FC<RegisterProps> = props => {
         return
       }
 
-      await createCreditCardAndUpdatePhone(environment, phoneNumber, token.id)
+      const { id } = token
+      const {
+        createCreditCard: { creditCardOrError },
+      } = await createCreditCardAndUpdatePhone(environment, phoneNumber, id)
+
+      // TODO: We are not handling errors for `updateMyUserProfile`. Should we?
+      if (creditCardOrError.mutationError) {
+        setFieldError(
+          "creditCard",
+          errorMessageForCard(creditCardOrError.mutationError.detail)
+        )
+        return
+      }
+
       const data = await createBidder(environment, sale.internalID)
 
       trackRegistrationSuccess(data.createBidder.bidder.internalID)
       window.location.assign(saleConfirmRegistrationPath(sale.slug))
     } catch (error) {
-      handleMutationError(actions, error)
+      handleMutationError(helpers, error)
     } finally {
       setSubmitting(false)
     }

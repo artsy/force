@@ -32,6 +32,7 @@ import {
   FormValuesForBidding,
   createStripeWrapper,
   determineDisplayRequirements,
+  errorMessageForCard,
   toStripeAddress,
 } from "v2/Apps/Auction/Components/Form"
 
@@ -157,22 +158,33 @@ export const ConfirmBidRoute: React.FC<ConfirmBidProps> = props => {
     const selectedBid = Number(values.selectedBid)
 
     if (requiresPaymentInformation) {
+      const stripeAddress = toStripeAddress(values.address)
+      const { phoneNumber } = values.address
+      const { setFieldError, setSubmitting } = actions
+
       try {
-        const { address } = values
-        const stripeAddress = toStripeAddress(address)
         const { error, token } = await stripe.createToken(stripeAddress)
 
         if (error) {
-          actions.setFieldError("creditCard", error.message)
-          actions.setSubmitting(false)
+          setFieldError("creditCard", error.message)
+          setSubmitting(false)
           return
         }
 
-        await createCreditCardAndUpdatePhone(
-          environment,
-          address.phoneNumber,
-          token.id
-        )
+        const { id } = token
+        const {
+          createCreditCard: { creditCardOrError },
+        } = await createCreditCardAndUpdatePhone(environment, phoneNumber, id)
+
+        // TODO: We are not handling errors for `updateMyUserProfile`. Should we?
+        if (creditCardOrError.mutationError) {
+          setFieldError(
+            "creditCard",
+            errorMessageForCard(creditCardOrError.mutationError.detail)
+          )
+          setSubmitting(false)
+          return
+        }
       } catch (error) {
         onJsError(actions, error)
         return

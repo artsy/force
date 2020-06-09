@@ -1,5 +1,5 @@
 import { Box, Button, Flex, Sans, Serif, Spacer } from "@artsy/palette"
-import { Form, Formik, FormikHelpers as FormikActions } from "formik"
+import { Form, Formik, FormikConfig } from "formik"
 import React from "react"
 
 import { CreditCardInstructions } from "v2/Apps/Auction/Components/CreditCardInstructions"
@@ -17,11 +17,8 @@ import {
   TrackErrors,
 } from "v2/Apps/Auction/Components/OnSubmitValidationError"
 
-export interface RegistrationFormProps {
-  onSubmit: (
-    values: FormValuesForRegistration,
-    actions: FormikActions<FormValuesForRegistration>
-  ) => void
+interface RegistrationFormProps {
+  onSubmit: FormikConfig<FormValuesForRegistration>["onSubmit"]
   trackSubmissionErrors: TrackErrors
   needsIdentityVerification: boolean
 }
