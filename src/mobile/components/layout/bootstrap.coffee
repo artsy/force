@@ -5,30 +5,15 @@
 # included across most apps and any uncessary bloat should be avoided.
 #
 
-require 'jquery'
-Backbone = require 'backbone'
-Backbone.$ = $
-
-_ = require 'underscore'
 FastClick = require 'fastclick'
-RavenClient = require 'raven-js'
 sd = require('sharify').data
 Cookies = require 'cookies-js'
 { parse } = require 'url'
 doc = window.document
-sharify = require('sharify')
 CurrentUser = require '../../models/current_user.coffee'
-Sentry = require("@sentry/browser")
-globalReactModules = require('../../../desktop/lib/global_react_modules.tsx')
-hydrateStitch = require('@artsy/stitch/dist/internal/hydrate').hydrate
 { globalClientSetup } = require('../../../desktop/lib/global_client_setup.tsx')
 
 module.exports = ->
-  # Add the Gravity XAPP or access token to all ajax requests
-  $.ajaxSettings.headers = {
-    "X-XAPP-TOKEN": sd.ARTSY_XAPP_TOKEN
-    "X-ACCESS-TOKEN": sd.CURRENT_USER?.accessToken
-  }
 
   # Setup inquiry referrer tracking
   referrerIsArtsy = if sd.APP_URL then doc.referrer.match(parse(sd.APP_URL).host)? else false
@@ -40,40 +25,9 @@ module.exports = ->
   if FastClick.attach
     FastClick.attach document.body
 
-  setupErrorReporting()
-  syncAuth()
   checkForAfterSignUpAction()
   globalClientSetup()
-
-  # Setup jQuery plugins
-  require 'jquery-on-infinite-scroll'
-  if sd.stitch?.renderQueue?
-    mountStitch()
-
   handleNavBarScroll()
-
-mountStitch = ->
-  hydrateStitch({
-    sharifyData: sd
-    modules: globalReactModules
-    wrapper: globalReactModules.StitchWrapper
-  })
-
-syncAuth = module.exports.syncAuth = ->
-  # Log out of Microgravity if you're not logged in to Gravity
-  if sd.CURRENT_USER
-    $.ajax
-      url: "#{sd.API_URL}/api/v1/me"
-      # success: ensureFreshUser # this can cause an endless reload
-      error: ->
-        $.ajax
-          method: 'DELETE'
-          url: '/users/sign_out'
-          complete: ->
-            window.location.reload()
-
-setupErrorReporting = ->
-  Sentry.init({ dsn: sd.SENTRY_PUBLIC_DSN })
 
 operations =
   save: (currentUser, objectId) ->
