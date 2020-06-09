@@ -1,199 +1,124 @@
 import { Box, Button, Flex, Sans, Serif, Spacer } from "@artsy/palette"
+import { Form, Formik, FormikHelpers as FormikActions } from "formik"
+import React from "react"
+
 import { CreditCardInstructions } from "v2/Apps/Auction/Components/CreditCardInstructions"
 import { CreditCardInput } from "v2/Apps/Order/Components/CreditCardInput"
 import { AddressForm } from "v2/Components/AddressForm"
 import { ConditionsOfSaleCheckbox } from "v2/Components/Auction/ConditionsOfSaleCheckbox"
 import { ErrorModal } from "v2/Components/Modal/ErrorModal"
 import {
-  Form,
-  Formik,
-  FormikHelpers as FormikActions,
-  FormikProps,
-} from "formik"
-import React from "react"
-import { ReactStripeElements } from "react-stripe-elements"
-import createLogger from "v2/Utils/logger"
-import {
   FormValuesForRegistration,
   Registration,
-  createStripeWrapper,
   initialValuesForRegistration,
-  toStripeAddress,
 } from "v2/Apps/Auction/Components/Form"
 import {
   OnSubmitValidationError,
   TrackErrors,
 } from "v2/Apps/Auction/Components/OnSubmitValidationError"
 
-const logger = createLogger("Apps/Auction/Components/RegistrationForm")
-
-export interface FormResult {
-  token: stripe.Token
-  phoneNumber: string
-}
-
-interface InnerFormProps extends FormikProps<FormValuesForRegistration> {
-  needsIdentityVerification: boolean
-}
-
-const InnerForm: React.FC<InnerFormProps> = props => {
-  const {
-    touched,
-    errors,
-    isSubmitting,
-    values,
-    setFieldError,
-    setFieldValue,
-    setFieldTouched,
-    status,
-    needsIdentityVerification,
-  } = props
-
-  return (
-    <Form>
-      <Serif mt={4} mb={0.5} size="3t">
-        Credit card
-      </Serif>
-
-      <CreditCardInput
-        error={{ message: errors.creditCard } as stripe.Error}
-        onChange={({ error }) => setFieldError("creditCard", error?.message)}
-      />
-
-      <Spacer mt={4} />
-
-      <AddressForm
-        value={values.address}
-        onChange={(address, _key) => setFieldValue("address", address)}
-        errors={errors.address}
-        touched={touched.address}
-        billing
-        showPhoneNumberInput
-      />
-
-      {needsIdentityVerification && (
-        <Serif size="4t">
-          This auction requires Artsy to verify your identity before bidding.
-          <br />
-          <br />
-          After you register, you’ll receive an email with a link to complete
-          identity verification.
-        </Serif>
-      )}
-
-      <Flex mt={4} mb={2} flexDirection="column" justifyContent="center">
-        <Box mx="auto">
-          <ConditionsOfSaleCheckbox
-            selected={values.agreeToTerms}
-            onSelect={value => {
-              // `setFieldTouched` needs to be called first otherwise it would cause race condition.
-              setFieldTouched("agreeToTerms")
-              setFieldValue("agreeToTerms", value)
-            }}
-          />
-        </Box>
-
-        {touched.agreeToTerms && errors.agreeToTerms && (
-          <Sans mt={1} color="red100" size="2" textAlign="center">
-            {errors.agreeToTerms}
-          </Sans>
-        )}
-      </Flex>
-
-      {status && (
-        <Sans textAlign="center" size="3" color="red100" mb={2}>
-          {status}.
-        </Sans>
-      )}
-
-      <Button
-        mt={1}
-        size="large"
-        width="100%"
-        loading={isSubmitting}
-        type="submit"
-      >
-        Register
-      </Button>
-    </Form>
-  )
-}
-
-export interface RegistrationFormProps
-  extends ReactStripeElements.InjectedStripeProps {
+export interface RegistrationFormProps {
   onSubmit: (
-    formikActions: FormikActions<FormValuesForRegistration>,
-    result: FormResult
+    values: FormValuesForRegistration,
+    actions: FormikActions<FormValuesForRegistration>
   ) => void
   trackSubmissionErrors: TrackErrors
   needsIdentityVerification: boolean
 }
 
-export const RegistrationForm: React.FC<RegistrationFormProps> = props => {
-  const { needsIdentityVerification, trackSubmissionErrors } = props
+export const RegistrationForm: React.FC<RegistrationFormProps> = props => (
+  <Formik<FormValuesForRegistration>
+    initialValues={initialValuesForRegistration}
+    onSubmit={props.onSubmit}
+    validationSchema={Registration.validationSchema}
+  >
+    {({
+      errors,
+      isSubmitting,
+      values,
+      isValid,
+      setFieldError,
+      setFieldValue,
+      setFieldTouched,
+      setStatus,
+      setSubmitting,
+      status,
+      submitCount,
+      touched,
+    }) => (
+      <Form>
+        <CreditCardInstructions />
+        <Spacer mt={2} />
 
-  async function createTokenAndSubmit(
-    values: FormValuesForRegistration,
-    actions: FormikActions<FormValuesForRegistration>
-  ) {
-    const address = toStripeAddress(values.address)
-    const { setFieldError, setSubmitting, setStatus } = actions
-    const { stripe } = props
+        <OnSubmitValidationError
+          cb={props.trackSubmissionErrors}
+          formikProps={{
+            errors,
+            isSubmitting,
+            isValid,
+            setSubmitting,
+            submitCount,
+          }}
+        />
 
-    try {
-      const { error, token } = await stripe.createToken(address)
+        <Serif mt={4} mb={0.5} size="3t">
+          Credit card
+        </Serif>
 
-      if (error) {
-        setFieldError("creditCard", error.message)
-        setSubmitting(false)
-      } else {
-        const result: FormResult = {
-          phoneNumber: values.address.phoneNumber,
-          token,
-        }
+        <CreditCardInput
+          error={{ message: errors.creditCard } as stripe.Error}
+          onChange={({ error }) => setFieldError("creditCard", error?.message)}
+        />
 
-        props.onSubmit(actions, result)
-      }
-    } catch (error) {
-      logger.error(error)
-      setSubmitting(false)
-      setStatus(
-        "Something went wrong while processing your bid. Please make sure your internet connection is active and try again"
-      )
-    }
-  }
+        <Spacer mt={4} />
 
-  return (
-    <Formik<FormValuesForRegistration>
-      initialValues={initialValuesForRegistration}
-      onSubmit={createTokenAndSubmit}
-      validationSchema={Registration.validationSchema}
-    >
-      {formikProps => (
-        <>
-          <CreditCardInstructions />
-          <Spacer mt={2} />
+        <AddressForm
+          value={values.address}
+          onChange={(address, _key) => setFieldValue("address", address)}
+          errors={errors.address}
+          touched={touched.address}
+          billing
+          showPhoneNumberInput
+        />
 
-          <OnSubmitValidationError
-            cb={trackSubmissionErrors}
-            formikProps={formikProps}
-          />
+        {props.needsIdentityVerification && (
+          <Serif size="4t">
+            This auction requires Artsy to verify your identity before bidding.
+            <br />
+            <br />
+            After you register, you’ll receive an email with a link to complete
+            identity verification.
+          </Serif>
+        )}
 
-          <InnerForm
-            {...formikProps}
-            needsIdentityVerification={needsIdentityVerification}
-          />
+        <Flex mt={4} mb={3} flexDirection="column" justifyContent="center">
+          <Box mx="auto">
+            <ConditionsOfSaleCheckbox
+              selected={values.agreeToTerms}
+              onSelect={value => {
+                // `setFieldTouched` needs to be called first otherwise it would cause race condition.
+                setFieldTouched("agreeToTerms")
+                setFieldValue("agreeToTerms", value)
+              }}
+            />
+          </Box>
 
-          <ErrorModal
-            show={formikProps.status === "submissionFailed"}
-            onClose={() => formikProps.setStatus(null)}
-          />
-        </>
-      )}
-    </Formik>
-  )
-}
+          {touched.agreeToTerms && errors.agreeToTerms && (
+            <Sans mt={1} color="red100" size="2" textAlign="center">
+              {errors.agreeToTerms}
+            </Sans>
+          )}
+        </Flex>
 
-export const StripeWrappedRegistrationForm = createStripeWrapper(
-  RegistrationForm
+        <Button size="large" width="100%" loading={isSubmitting} type="submit">
+          Register
+        </Button>
+
+        <ErrorModal
+          show={status === "submissionFailed"}
+          onClose={() => setStatus(null)}
+        />
+      </Form>
+    )}
+  </Formik>
 )

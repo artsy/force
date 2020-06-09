@@ -6,10 +6,7 @@ import {
   RegisterCreateBidderMutationResponse,
 } from "v2/__generated__/RegisterCreateBidderMutation.graphql"
 import { createCreditCardAndUpdatePhone } from "v2/Apps/Auction/Operations/CreateCreditCardAndUpdatePhone"
-import {
-  FormResult,
-  StripeWrappedRegistrationForm,
-} from "v2/Apps/Auction/Components/RegistrationForm"
+import { RegistrationForm } from "v2/Apps/Auction/Components/RegistrationForm"
 import { AppContainer } from "v2/Apps/Components/AppContainer"
 import { track } from "v2/Artsy"
 import * as Schema from "v2/Artsy/Analytics/Schema"
@@ -26,10 +23,45 @@ import { TrackingProp } from "react-tracking"
 import { data as sd } from "sharify"
 import { bidderNeedsIdentityVerification } from "v2/Utils/identityVerificationRequirements"
 import createLogger from "v2/Utils/logger"
+import {
+  FormValuesForRegistration,
+  createStripeWrapper,
+  toStripeAddress,
+} from "v2/Apps/Auction/Components/Form"
+import { ReactStripeElements } from "react-stripe-elements"
 
 const logger = createLogger("Apps/Auction/Routes/Register")
 
-interface RegisterProps {
+function createBidder(relayEnvironment: RelayProp.environment, saleID: string) {
+  return new Promise<RegisterCreateBidderMutationResponse>(
+    (resolve, reject) => {
+      commitMutation<RegisterCreateBidderMutation>(relayEnvironment, {
+        onCompleted: resolve,
+        onError: reject,
+        // TODO: Inputs to the mutation might have changed case of the keys!
+        mutation: graphql`
+          mutation RegisterCreateBidderMutation($input: CreateBidderInput!) {
+            createBidder(input: $input) {
+              bidder {
+                internalID
+              }
+            }
+          }
+        `,
+        variables: {
+          input: { saleID },
+        },
+      })
+    }
+  )
+}
+
+// TODO: Move it to helpers?
+const saleConfirmRegistrationPath = (saleSlug: string) => {
+  return `${sd.APP_URL}/auction/${saleSlug}/confirm-registration`
+}
+
+interface RegisterProps extends ReactStripeElements.InjectedStripeProps {
   sale: Register_sale
   me: Register_me
   relay: RelayProp
@@ -37,7 +69,8 @@ interface RegisterProps {
 }
 
 export const RegisterRoute: React.FC<RegisterProps> = props => {
-  const { me, relay, sale, tracking } = props
+  const { me, relay, sale, tracking, stripe } = props
+  const { environment } = relay
 
   const commonProperties = {
     auction_slug: sale.slug,
@@ -62,28 +95,6 @@ export const RegisterRoute: React.FC<RegisterProps> = props => {
     })
   }
 
-  function createBidder() {
-    return new Promise(async (resolve, reject) => {
-      commitMutation<RegisterCreateBidderMutation>(relay.environment, {
-        onCompleted: resolve,
-        onError: reject,
-        // TODO: Inputs to the mutation might have changed case of the keys!
-        mutation: graphql`
-          mutation RegisterCreateBidderMutation($input: CreateBidderInput!) {
-            createBidder(input: $input) {
-              bidder {
-                internalID
-              }
-            }
-          }
-        `,
-        variables: {
-          input: { saleID: sale.internalID },
-        },
-      })
-    })
-  }
-
   function handleMutationError(actions: FormikActions<object>, error: Error) {
     logger.error(error)
 
@@ -97,33 +108,35 @@ export const RegisterRoute: React.FC<RegisterProps> = props => {
     }
 
     trackRegistrationFailed(errorMessages)
-
-    actions.setSubmitting(false)
     actions.setStatus("submissionFailed")
   }
 
-  function handleSubmit(actions: FormikActions<object>, result: FormResult) {
-    createCreditCardAndUpdatePhone(
-      relay.environment,
-      result.phoneNumber,
-      result.token.id
-    )
-      .then(() => {
-        createBidder()
-          .then((data: RegisterCreateBidderMutationResponse) => {
-            trackRegistrationSuccess(data.createBidder.bidder.internalID)
+  async function createTokenAndSubmit(
+    values: FormValuesForRegistration,
+    actions: FormikActions<FormValuesForRegistration>
+  ) {
+    const address = toStripeAddress(values.address)
+    const { phoneNumber } = values.address
+    const { setFieldError, setSubmitting } = actions
 
-            window.location.assign(
-              `${sd.APP_URL}/auction/${sale.slug}/confirm-registration`
-            )
-          })
-          .catch(error => {
-            handleMutationError(actions, error)
-          })
-      })
-      .catch(error => {
-        handleMutationError(actions, error)
-      })
+    try {
+      const { error, token } = await stripe.createToken(address)
+
+      if (error) {
+        setFieldError("creditCard", error.message)
+        return
+      }
+
+      await createCreditCardAndUpdatePhone(environment, phoneNumber, token.id)
+      const data = await createBidder(environment, sale.internalID)
+
+      trackRegistrationSuccess(data.createBidder.bidder.internalID)
+      window.location.assign(saleConfirmRegistrationPath(sale.slug))
+    } catch (error) {
+      handleMutationError(actions, error)
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   return (
@@ -133,8 +146,8 @@ export const RegisterRoute: React.FC<RegisterProps> = props => {
         <Serif size="10">Register to Bid on Artsy</Serif>
         <Separator mt={1} mb={2} />
 
-        <StripeWrappedRegistrationForm
-          onSubmit={handleSubmit}
+        <RegistrationForm
+          onSubmit={createTokenAndSubmit}
           trackSubmissionErrors={trackRegistrationFailed}
           needsIdentityVerification={bidderNeedsIdentityVerification({
             sale,
@@ -146,9 +159,11 @@ export const RegisterRoute: React.FC<RegisterProps> = props => {
   )
 }
 
+const StripeWrappedRegisterRoute = createStripeWrapper(RegisterRoute)
+
 const TrackingWrappedRegisterRoute = track({
   context_page: Schema.PageName.AuctionRegistrationPage,
-})(RegisterRoute)
+})(StripeWrappedRegisterRoute)
 
 export const RegisterRouteFragmentContainer = createFragmentContainer(
   TrackingWrappedRegisterRoute,

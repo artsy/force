@@ -270,7 +270,7 @@ describe("Routes/Register ", () => {
     await page.submitForm()
 
     expect(page.text()).toContain(
-      "Please make sure your internet connection is active and try again"
+      "Something went wrong. Please try again or contact support@artsy.net."
     )
   })
 })
