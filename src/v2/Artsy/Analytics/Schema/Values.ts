@@ -238,7 +238,7 @@ export enum Subject {
    * Buy now checkout flow
    */
   BNMOAskSpecialist = "ask a specialist",
-  BNMOReadFAQ = "read faq",
+  BNMOReadFAQ = "Visit our help center",
   BNMOProvideShipping = "provide shipping address",
   BNMOArrangePickup = "arrange for pickup",
   BNMOUseShippingAddress = "use shipping address",
@@ -252,7 +252,7 @@ export enum Subject {
   AuctionAskSpecialist = "ask a specialist",
   AuctionBuyerPremium = "Buyer premium",
 
-  CollectorFAQ = "collector faq",
+  CollectorFAQ = "Visit our help center",
 
   ConsignLearnMore = "learn more",
 
