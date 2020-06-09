@@ -1,4 +1,4 @@
-import { Box, Flex, Sans, Serif, Spinner } from "@artsy/palette"
+import { Flex, Sans, Serif, Spinner } from "@artsy/palette"
 import React from "react"
 import { graphql } from "react-relay"
 
@@ -10,6 +10,11 @@ import {
 import { SystemContextProps, withSystemContext } from "v2/Artsy"
 import { SystemQueryRenderer as QueryRenderer } from "v2/Artsy/Relay/SystemQueryRenderer"
 
+const Text = props => <Serif size="3t" color="black100" {...props} />
+const Row = props => (
+  <Flex flexDirection="row" justifyContent="space-between" pb={1} {...props} />
+)
+
 export const PricingTransparency: React.FC<PricingTransparencyQueryResponse> = props => {
   const { calculatedCost } = props.artwork.saleArtwork
 
@@ -19,57 +24,18 @@ export const PricingTransparency: React.FC<PricingTransparencyQueryResponse> = p
         Summary
       </Serif>
 
-      <Flex
-        flexDirection="row"
-        justifyContent="space-between"
-        alignItems="baseline"
-        pb={1}
-      >
-        <Box>
-          <Serif size="3t" color="black100">
-            Your max bid
-          </Serif>
-        </Box>
-        <Box>
-          <Serif size="3t" color="black100">
-            {calculatedCost.bidAmount.display}
-          </Serif>
-        </Box>
-      </Flex>
-      <Flex
-        flexDirection="row"
-        justifyContent="space-between"
-        alignItems="baseline"
-        pb={2}
-      >
-        <Box>
-          <Serif size="3t" color="black100">
-            Buyer's Premium
-          </Serif>
-        </Box>
-        <Box>
-          <Serif size="3t" color="black100">
-            {calculatedCost.buyersPremium.display}
-          </Serif>
-        </Box>
-      </Flex>
-      <Flex
-        flexDirection="row"
-        justifyContent="space-between"
-        alignItems="baseline"
-        pb={1}
-      >
-        <Box>
-          <Serif size="3t" color="black100">
-            Subtotal
-          </Serif>
-        </Box>
-        <Box>
-          <Serif size="3t" color="black100">
-            {calculatedCost.subtotal.display}
-          </Serif>
-        </Box>
-      </Flex>
+      <Row>
+        <Text>Your max bid</Text>
+        <Text>{calculatedCost.bidAmount.display}</Text>
+      </Row>
+      <Row pb={2}>
+        <Text>Buyer's Premium</Text>
+        <Text>{calculatedCost.buyersPremium.display}</Text>
+      </Row>
+      <Row>
+        <Text>Subtotal</Text>
+        <Text>{calculatedCost.subtotal.display}</Text>
+      </Row>
       <Sans size="2" color="black60">
         Plus any applicable shipping, taxes, and fees.
       </Sans>
