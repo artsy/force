@@ -56,7 +56,13 @@ export const Details: FC<DetailsProps> = ({ conversation, ...props }) => {
     <DetailsContainer
       flexDirection="column"
       justifyContent="flex-start"
-      height="100%"
+      height={[
+        "calc(100% - 115px)",
+        "calc(100% - 145px)",
+        "calc(100% - 145px)",
+        "calc(100% - 145px)",
+        "100%",
+      ]}
       flexShrink={0}
       position={["absolute", "absolute", "absolute", "absolute", "static"]}
       right={[0, 0, 0, 0, "auto"]}

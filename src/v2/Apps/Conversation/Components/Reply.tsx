@@ -53,7 +53,7 @@ export const Reply: React.FC<ReplyProps> = props => {
   const textArea = useRef()
 
   return (
-    <StyledFlex p={1} right={[0, null]}>
+    <StyledFlex p={1} right={[0, null]} zIndex={2}>
       <FullWidthFlex width="100%">
         <StyledTextArea
           onInput={event => {
