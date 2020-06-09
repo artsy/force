@@ -21,6 +21,7 @@ CurrentUser = require '../../models/current_user.coffee'
 Sentry = require("@sentry/browser")
 globalReactModules = require('../../../desktop/lib/global_react_modules.tsx')
 hydrateStitch = require('@artsy/stitch/dist/internal/hydrate').hydrate
+{ globalClientSetup } = require('../../../desktop/lib/global_client_setup.tsx')
 
 module.exports = ->
   # Add the Gravity XAPP or access token to all ajax requests
@@ -42,6 +43,7 @@ module.exports = ->
   setupErrorReporting()
   syncAuth()
   checkForAfterSignUpAction()
+  globalClientSetup()
 
   # Setup jQuery plugins
   require 'jquery-on-infinite-scroll'
