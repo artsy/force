@@ -20,6 +20,10 @@ import { metaphysicsExtensionsLoggerMiddleware } from "./middleware/metaphysicsE
 import { principalFieldErrorHandlerMiddleware } from "./middleware/principalFieldErrorHandlerMiddleware"
 import { searchBarImmediateResolveMiddleware } from "./middleware/searchBarImmediateResolveMiddleware"
 
+import createLogger from "v2/Utils/logger"
+
+const logger = createLogger("v2/Artsy/Relay/createRelaySSREnvironment")
+
 const isServer = typeof window === "undefined"
 const isDevelopment =
   (isServer ? process.env.NODE_ENV : sd.NODE_ENV) === "development"
@@ -79,7 +83,7 @@ export function createRelaySSREnvironment(config: Config = {}) {
     timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone
     headers["X-TIMEZONE"] = timeZone
   } catch (error) {
-    console.warn("Browser does not support i18n API, not setting TZ header.")
+    logger.warn("Browser does not support i18n API, not setting TZ header.")
   }
 
   const middlewares = [
@@ -150,7 +154,7 @@ export function hydrateCacheFromSSR(queryResponseCache) {
         queryResponseCache.set(queryID, variables, json) // See: https://facebook.github.io/relay/docs/en/network-layer.html#caching
       })
     } catch (error) {
-      console.error("Relay/createEnvironment", error)
+      logger.error(error)
     }
   }
 }

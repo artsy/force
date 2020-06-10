@@ -22,7 +22,7 @@ export const ArtistTopWorksRail: React.FC<ArtistTopWorksRailProps> = ({
 }) => {
   const tracking = useTracking()
   const carouselHeight = 300
-  const artworks = artist?.topWorksArtworks?.edges ?? []
+  const artworks = artist?.filterArtworksConnection?.edges ?? []
   const handleViewWorksClick = overviewTab => {
     const ms = overviewTab ? 500 : 0
     return setTimeout(
@@ -106,7 +106,7 @@ export const ArtistTopWorksRailFragmentContainer = createFragmentContainer(
     artist: graphql`
       fragment ArtistTopWorksRail_artist on Artist {
         slug
-        topWorksArtworks: artworksConnection(first: 10, sort: ICONICITY_DESC) {
+        filterArtworksConnection(sort: "-weighted_iconicity", first: 10) {
           edges {
             node {
               id

@@ -4,7 +4,7 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ArtistTopWorksRail_artist = {
     readonly slug: string;
-    readonly topWorksArtworks: {
+    readonly filterArtworksConnection: {
         readonly edges: ReadonlyArray<{
             readonly node: {
                 readonly id: string;
@@ -47,9 +47,9 @@ const node: ReaderFragment = {
     },
     {
       "kind": "LinkedField",
-      "alias": "topWorksArtworks",
-      "name": "artworksConnection",
-      "storageKey": "artworksConnection(first:10,sort:\"ICONICITY_DESC\")",
+      "alias": null,
+      "name": "filterArtworksConnection",
+      "storageKey": "filterArtworksConnection(first:10,sort:\"-weighted_iconicity\")",
       "args": [
         {
           "kind": "Literal",
@@ -59,10 +59,10 @@ const node: ReaderFragment = {
         {
           "kind": "Literal",
           "name": "sort",
-          "value": "ICONICITY_DESC"
+          "value": "-weighted_iconicity"
         }
       ],
-      "concreteType": "ArtworkConnection",
+      "concreteType": "FilterArtworksConnection",
       "plural": false,
       "selections": [
         {
@@ -71,7 +71,7 @@ const node: ReaderFragment = {
           "name": "edges",
           "storageKey": null,
           "args": null,
-          "concreteType": "ArtworkEdge",
+          "concreteType": "FilterArtworksEdge",
           "plural": true,
           "selections": [
             {
@@ -166,5 +166,5 @@ const node: ReaderFragment = {
     }
   ]
 };
-(node as any).hash = 'c2b8d0f78fc7800e02094649d21fe20d';
+(node as any).hash = '5161b910a6a7413ad0d31f636c2a5f64';
 export default node;

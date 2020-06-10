@@ -17,19 +17,27 @@ interface TrackingMiddlewareOptions {
 }
 
 export function trackingMiddleware(options: TrackingMiddlewareOptions = {}) {
-  return (store) => (next) => (action) => {
+  return store => next => action => {
     const { excludePaths = [] } = options
     const { type, payload } = action
 
     switch (type) {
       case ActionTypes.UPDATE_LOCATION: {
         const { pathname } = payload
-        const referrer = get(
+
+        // Look in store to see if we've already performed a client-side route
+        // transition. If this is null that means we've entered from a SSR pass.
+        const clientSideRoutingReferrer = get(
           store.getState(),
-          (state) =>
+          state =>
             state.found.match.location.pathname +
             state.found.match.location.search
         )
+
+        const getFullReferrerUrl = () => {
+          const fullReferrerUrl = sd.APP_URL + clientSideRoutingReferrer
+          return fullReferrerUrl
+        }
 
         // Pluck segment analytics instance from force
         const analytics =
@@ -39,7 +47,24 @@ export function trackingMiddleware(options: TrackingMiddlewareOptions = {}) {
           // TODO: Pass referrer over to Artwork page if A/B test passes
           // window.sd.routerReferrer = referrer
 
-          const foundExcludedPath = excludePaths.some((excludedPath) => {
+          /**
+           * Store a global reference to the referrer. Since we're in an SPA
+           * context we'll need to use this to track referrers statefully across
+           * pages, since we don't do a hard reload.
+           *
+           * Attaching to the analytics object in the absence of a more
+           * "global" location.
+           *
+           * For our new reaction apps, all tracking goes through this location:
+           * https://github.com/damassi/force/blob/399919f7ef053701f0ed3b20b32dddf0490459b0/src/desktop/assets/analytics.coffee#L41
+           * which will read __artsyClientSideRoutingReferrer and update referrer appropriately.
+           */
+
+          if (clientSideRoutingReferrer) {
+            analytics.__artsyClientSideRoutingReferrer = getFullReferrerUrl()
+          }
+
+          const foundExcludedPath = excludePaths.some(excludedPath => {
             const matcher = match(excludedPath, { decode: decodeURIComponent })
             const foundMatch = !!matcher(pathname)
             return foundMatch
@@ -56,24 +81,9 @@ export function trackingMiddleware(options: TrackingMiddlewareOptions = {}) {
               url,
             }
 
-            if (referrer) {
-              trackingData.referrer = sd.APP_URL + referrer
+            if (clientSideRoutingReferrer) {
+              trackingData.referrer = getFullReferrerUrl()
             }
-
-            /**
-             * Store a global reference to the referrer. Since we're in an SPA
-             * context we'll need to use this to track referrers statefully across
-             * pages, since we don't do a hard reload.
-             *
-             * Attaching to the analytics object in the absence of a more
-             * "global" location.
-             *
-             * For our new reaction apps, all tracking goes through this location:
-             * https://github.com/damassi/force/blob/399919f7ef053701f0ed3b20b32dddf0490459b0/src/desktop/assets/analytics.coffee#L41
-             * which will read __artsyReferrer and update referrer appropriately.
-             */
-            const finalReferrer = trackingData.referrer
-            analytics.__artsyReferrer = finalReferrer
 
             analytics.page(trackingData, {
               integrations: {
@@ -89,7 +99,7 @@ export function trackingMiddleware(options: TrackingMiddlewareOptions = {}) {
             window.desktopPageTimeTrackers
 
           if (desktopPageTimeTrackers) {
-            desktopPageTimeTrackers.forEach((tracker) => {
+            desktopPageTimeTrackers.forEach(tracker => {
               // No need to reset the tracker if we're on the same page.
               if (pathname !== tracker.path) {
                 tracker.reset(pathname)

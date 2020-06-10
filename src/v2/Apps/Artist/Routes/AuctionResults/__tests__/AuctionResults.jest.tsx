@@ -8,9 +8,11 @@ import { act } from "react-dom/test-utils"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { Breakpoint } from "v2/Utils/Responsive"
+import { openAuthModal } from "v2/Utils/openAuthModal"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
+jest.mock("v2/Utils/openAuthModal")
 
 describe("AuctionResults", () => {
   let wrapper: ReactWrapper
@@ -36,15 +38,69 @@ describe("AuctionResults", () => {
   }
 
   const trackEvent = jest.fn()
+  const mockOpenAuthModal = openAuthModal as jest.Mock
+
   beforeAll(() => {
     ;(useTracking as jest.Mock).mockImplementation(() => {
       return {
         trackEvent,
       }
     })
+    mockOpenAuthModal.mockImplementation(() => {
+      return
+    })
   })
   afterEach(() => {
     trackEvent.mockReset()
+  })
+
+  describe("trigger auth modal for filtering and pagination", () => {
+    beforeEach(async () => {
+      wrapper = await getWrapper()
+    })
+    afterEach(() => {
+      mockOpenAuthModal.mockReset()
+    })
+
+    it("calls auth modal for 1st pagination but not for 2nd", done => {
+      const pagination = wrapper.find("Pagination")
+      pagination
+        .find("button")
+        .at(1)
+        .simulate("click")
+
+      setTimeout(() => {
+        expect(mockOpenAuthModal).toHaveBeenCalledTimes(1)
+      })
+
+      pagination
+        .find("button")
+        .at(2)
+        .simulate("click")
+
+      setTimeout(() => {
+        // expect no new call
+        expect(mockOpenAuthModal).toHaveBeenCalledTimes(1)
+        done()
+      })
+    })
+
+    it("calls auth modal for 1st medium selection but not for 2nd", done => {
+      const filter = wrapper.find("MediumFilter")
+      const checkboxes = filter.find("Checkbox")
+
+      checkboxes.at(1).simulate("click")
+      setTimeout(() => {
+        expect(openAuthModal).toHaveBeenCalledTimes(1)
+      })
+
+      checkboxes.at(2).simulate("click")
+      setTimeout(() => {
+        // expect no new call
+        expect(openAuthModal).toHaveBeenCalledTimes(1)
+        done()
+      })
+    })
   })
 
   describe("general behavior", () => {

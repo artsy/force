@@ -32,10 +32,7 @@ describe("Sticky footer", () => {
       <StickyFooter orderType="OFFER" artworkId="whatever" />
     )
 
-    component
-      .find("a")
-      .at(0)
-      .simulate("click")
+    component.find("a").at(0).simulate("click")
 
     expect(window.open).toHaveBeenCalledWith(
       "https://www.artsy.net/buy-now-feature-faq",
@@ -50,10 +47,7 @@ describe("Sticky footer", () => {
       </SystemContextProvider>
     )
 
-    component
-      .find("a")
-      .at(1)
-      .simulate("click")
+    component.find("a").at(1).simulate("click")
 
     expect(mediatorMock.trigger).toHaveBeenCalledWith(
       "openOrdersContactArtsyModal",
@@ -79,13 +73,10 @@ describe("Sticky footer", () => {
         const component = mount(
           <Component orderType="OFFER" artworkId="whatever" />
         )
-        component
-          .find(Link)
-          .at(0)
-          .simulate("click")
+        component.find(Link).at(0).simulate("click")
         expect(dispatch).toBeCalledWith({
           action_type: "Click",
-          subject: "read faq",
+          subject: "Visit our help center",
           flow: "make offer",
           type: "button",
         })
@@ -99,10 +90,7 @@ describe("Sticky footer", () => {
             <Component orderType="OFFER" artworkId="whatever" />
           </SystemContextProvider>
         )
-        component
-          .find(Link)
-          .last()
-          .simulate("click")
+        component.find(Link).last().simulate("click")
 
         expect(dispatch).toBeCalledWith({
           action_type: "Click",
@@ -120,13 +108,10 @@ describe("Sticky footer", () => {
         const component = mount(
           <Component orderType="BUY" artworkId="whatever" />
         )
-        component
-          .find(Link)
-          .at(0)
-          .simulate("click")
+        component.find(Link).at(0).simulate("click")
         expect(dispatch).toBeCalledWith({
           action_type: "Click",
-          subject: "read faq",
+          subject: "Visit our help center",
           flow: "buy now",
           type: "button",
         })
@@ -140,10 +125,7 @@ describe("Sticky footer", () => {
             <Component orderType="BUY" artworkId="whatever" />
           </SystemContextProvider>
         )
-        component
-          .find(Link)
-          .last()
-          .simulate("click")
+        component.find(Link).last().simulate("click")
 
         expect(dispatch).toBeCalledWith({
           action_type: "Click",

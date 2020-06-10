@@ -1,14 +1,14 @@
 import { Col, Row } from "@artsy/palette"
 import { ArtistAuctionResults_artist } from "v2/__generated__/ArtistAuctionResults_artist.graphql"
 import { PaginationFragmentContainer as Pagination } from "v2/Components/Pagination"
-import React, { useState } from "react"
+import React, { useContext, useState } from "react"
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
 import useDeepCompareEffect from "use-deep-compare-effect"
 import { AuctionResultItemFragmentContainer as AuctionResultItem } from "./ArtistAuctionResultItem"
 import { TableSidebar } from "./Components/TableSidebar"
-import { ContextModule } from "@artsy/cohesion"
+import { ContextModule, Intent } from "@artsy/cohesion"
 import { Box, Spacer } from "@artsy/palette"
-import { AnalyticsSchema } from "v2/Artsy"
+import { AnalyticsSchema, SystemContext } from "v2/Artsy"
 import { LoadingArea } from "v2/Components/LoadingArea"
 import { isEqual } from "lodash"
 import { useTracking } from "react-tracking"
@@ -24,6 +24,8 @@ import { AuctionFilters } from "./Components/AuctionFilters"
 import { AuctionResultHeaderFragmentContainer as AuctionResultHeader } from "./Components/AuctionResultHeader"
 import { AuctionResultsControls } from "./Components/AuctionResultsControls"
 import { auctionResultsFilterResetState } from "./AuctionResultsFilterContext"
+import { openAuthModal } from "v2/Utils/openAuthModal"
+import { ModalType } from "v2/Components/Authentication/Types"
 
 const logger = createLogger("ArtistAuctionResults.tsx")
 
@@ -38,9 +40,11 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
   artist,
   relay,
 }) => {
+  const { user, mediator } = useContext(SystemContext)
   const filterContext = useAuctionResultsFilterContext()
   const { pageInfo } = artist.auctionResultsConnection
   const { hasNextPage, endCursor } = pageInfo
+  const artistName = artist.name
 
   const loadNext = () => {
     const nextPageNum = filterContext.filters.pageAndCursor.page + 1
@@ -55,6 +59,8 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
 
   const [isLoading, setIsLoading] = useState(false)
   const [showMobileActionSheet, toggleMobileActionSheet] = useState(false)
+  const [authShownForFiltering, toggleAuthShowForFiltering] = useState(false)
+
   const tracking = useTracking()
 
   // Is current filter state different from the default (reset) state?
@@ -74,6 +80,18 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
 
         if (filtersHaveUpdated) {
           fetchResults()
+
+          // If user is not logged-in, show auth modal, but only if it was never shown before.
+          if (!user && !authShownForFiltering) {
+            openAuthModal(mediator, {
+              mode: ModalType.signup,
+              copy: `Sign up to see auction results for ${artistName}`,
+              contextModule: ContextModule.auctionResults,
+              intent: Intent.viewAuctionResults,
+            })
+            // Remember to not show auth modal again for this activity.
+            toggleAuthShowForFiltering(true)
+          }
 
           tracking.trackEvent({
             context_page: AnalyticsSchema.PageName.ArtistAuctionResults,
@@ -214,6 +232,7 @@ export const ArtistAuctionResultsRefetchContainer = createRefetchContainer(
           allowEmptyCreatedDates: { type: "Boolean" }
         ) {
         slug
+        name
         ...AuctionResultHeader_artist
         auctionResultsConnection(
           first: $first

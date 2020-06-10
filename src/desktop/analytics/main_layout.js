@@ -9,7 +9,7 @@ import { match } from "path-to-regexp"
 
 // Track pageview
 const pageType = window.sd.PAGE_TYPE || window.location.pathname.split("/")[1]
-var properties = { path: location.pathname }
+let properties = { path: location.pathname }
 
 // We exclude these routes from analytics.page calls because they're already
 // taken care of in Reaction.
@@ -49,7 +49,7 @@ if (pageType === "auction") {
   })
   const matchedBidRoute = matcher(window.location.pathname)
   if (!matchedBidRoute) {
-    window.addEventListener("load", function() {
+    window.addEventListener("load", function () {
       // distinct event required for marketing integrations (Criteo)
       const saleSlug = window.location.pathname.split("/")[2]
       window.analytics.track("Auction Pageview", { auction_slug: saleSlug })
@@ -63,10 +63,10 @@ if (
   window.performance.timing &&
   sd.TRACK_PAGELOAD_PATHS
 ) {
-  window.addEventListener("load", function() {
+  window.addEventListener("load", function () {
     if (sd.TRACK_PAGELOAD_PATHS.split("|").includes(pageType)) {
-      window.setTimeout(function() {
-        var deviceType = sd.IS_MOBILE ? "mobile" : "desktop"
+      window.setTimeout(function () {
+        let deviceType = sd.IS_MOBILE ? "mobile" : "desktop"
         reportLoadTimeToVolley(pageType, deviceType)
       }, 0)
     }
@@ -91,7 +91,7 @@ class PageTimeTracker {
     this.timer = setTimeout(() => {
       let trackingOptions = {}
 
-      const referrer = window.analytics.__artsyReferrer
+      const referrer = window.analytics.__artsyClientSideRoutingReferrer
       // Grab referrer from our trackingMiddleware in Reaction, since we're in a
       // single-page-app context and the value will need to be refreshed on route
       // change. See: https://github.com/artsy/reaction/blob/master/src/Artsy/Analytics/trackingMiddleware.ts
@@ -134,10 +134,10 @@ window.desktopPageTimeTrackers = [
 
 // debug tracking calls
 if (sd.SHOW_ANALYTICS_CALLS) {
-  analytics.on("track", function() {
+  analytics.on("track", function () {
     console.info("TRACKED: ", arguments[0], JSON.stringify(arguments[1]))
   })
-  analytics.on("page", function() {
+  analytics.on("page", function () {
     console.info(
       "PAGEVIEW TRACKED: ",
       arguments[2],
@@ -149,7 +149,7 @@ if (sd.SHOW_ANALYTICS_CALLS) {
 }
 
 if (sd.SHOW_ANALYTICS_CALLS) {
-  analyticsHooks.on("all", function(name, data) {
+  analyticsHooks.on("all", function (name, data) {
     console.info("ANALYTICS HOOK: ", name, data)
   })
 }
