@@ -8,22 +8,23 @@ import {
   useSystemContext,
   useTracking,
 } from "v2/Artsy"
-import { BellIcon, EnvelopeIcon, SoloIcon } from "@artsy/palette"
+import { BellIcon, Box, EnvelopeIcon, SoloIcon } from "@artsy/palette"
 import { graphql } from "relay-runtime"
-import {
-  LoadProgressRenderer,
-  renderWithLoadProgress,
-} from "v2/Artsy/Relay/renderWithLoadProgress"
 import { SystemQueryRenderer as QueryRenderer } from "v2/Artsy/Relay/SystemQueryRenderer"
 import { LoggedInActionsQuery } from "v2/__generated__/LoggedInActionsQuery.graphql"
 import { userHasLabFeature } from "v2/Utils/user"
 import cookie from "cookies-js"
+import { isServer } from "lib/environment"
 
 const getNotificationCount = () => cookie.get("notification-count") || 0
 
-export const LoggedInActions: React.FC<{}> = () => {
+export const LoggedInActions: React.FC<{ error?: any; relayProps?: any }> = ({
+  error,
+  relayProps,
+}) => {
   const { trackEvent } = useTracking()
   const { user } = useSystemContext()
+  console.log("relayProps", relayProps)
   const conversationsEnabled = userHasLabFeature(
     user,
     "User Conversations View"
@@ -76,18 +77,19 @@ export const LoggedInActions: React.FC<{}> = () => {
   )
 }
 
-export const LoggedInActionsQueryRenderer: React.FC<{
-  render: LoadProgressRenderer<any>
-}> = ({ render }) => {
+export const LoggedInActionsQueryRenderer: React.FC<{}> = () => {
   const { relayEnvironment } = useContext(SystemContext)
 
-  return (
+  return isServer ? (
+    <LoggedInActions />
+  ) : (
     <QueryRenderer<LoggedInActionsQuery>
       environment={relayEnvironment}
       query={graphql`
         query LoggedInActionsQuery {
           me {
             unreadNotificationsCount
+            unreadConversationsCount
             followsAndSaves {
               notifications: bundledArtworksByArtistConnection(
                 sort: PUBLISHED_AT_DESC
@@ -112,17 +114,8 @@ export const LoggedInActionsQueryRenderer: React.FC<{
         }
       `}
       variables={{}}
-      render={() => {
-        return (
-          <LoggedInActionsQueryRenderer
-            render={renderWithLoadProgress(
-              LoggedInActions,
-              {},
-              {},
-              { size: "small" }
-            )}
-          />
-        )
+      render={({ error, props }) => {
+        return <LoggedInActions error={error} relayProps={props} />
       }}
     />
   )

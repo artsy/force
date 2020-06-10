@@ -26,8 +26,6 @@ import {
   MobileNavMenu,
   MobileToggleIcon,
   MoreNavMenu,
-  NotificationsMenu,
-  UserMenu,
 } from "./Menus"
 
 import { ModalType } from "v2/Components/Authentication/Types"
@@ -35,7 +33,6 @@ import { MenuLinkData, menuData } from "v2/Components/NavBar/menuData"
 import { openAuthModal } from "v2/Utils/openAuthModal"
 
 import { NavItem } from "./NavItem"
-import { NotificationsBadge } from "./NotificationsBadge"
 
 import { ContextModule, Intent } from "@artsy/cohesion"
 import { AnalyticsSchema } from "v2/Artsy"
@@ -43,6 +40,7 @@ import { track, useTracking } from "v2/Artsy/Analytics"
 import Events from "v2/Utils/Events"
 import { useMatchMedia } from "v2/Utils/Hooks/useMatchMedia"
 import { userHasLabFeature } from "v2/Utils/user"
+import { LoggedInActionsQueryRenderer as LoggedInActions } from "./LoggedInActions"
 
 export const NavBar: React.FC = track(
   {
@@ -60,15 +58,9 @@ export const NavBar: React.FC = track(
   const sm = useMatchMedia(themeProps.mediaQueries.sm)
   const isMobile = xs || sm
   const isLoggedIn = Boolean(user)
-  const conversationsEnabled = userHasLabFeature(
-    user,
-    "User Conversations View"
-  )
   const {
     links: [artworks, artists],
   } = menuData
-
-  const getNotificationCount = () => cookie.get("notification-count") || 0
 
   // Close mobile menu if dragging window from small size to desktop
   useEffect(() => {
@@ -205,56 +197,7 @@ export const NavBar: React.FC = track(
             </NavItem>
           </NavSection>
 
-          <NavSection>
-            {isLoggedIn && (
-              <>
-                <NavItem
-                  href="/works-for-you"
-                  Menu={NotificationsMenu}
-                  Overlay={NotificationsBadge}
-                  onClick={() => {
-                    trackEvent({
-                      action_type: AnalyticsSchema.ActionType.Click,
-                      subject: AnalyticsSchema.Subject.NotificationBell,
-                      new_notification_count: getNotificationCount(),
-                      destination_path: "/works-for-you",
-                    })
-                  }}
-                >
-                  {({ hover }) => {
-                    if (hover) {
-                      trackEvent({
-                        action_type: AnalyticsSchema.ActionType.Hover,
-                        subject: AnalyticsSchema.Subject.NotificationBell,
-                        new_notification_count: getNotificationCount(),
-                      })
-                    }
-                    return <BellIcon fill={hover ? "purple100" : "black80"} />
-                  }}
-                </NavItem>
-                {conversationsEnabled && (
-                  <NavItem href="/user/conversations">
-                    {({ hover }) => {
-                      return (
-                        <EnvelopeIcon fill={hover ? "purple100" : "black80"} />
-                      )
-                    }}
-                  </NavItem>
-                )}
-                <NavItem Menu={UserMenu}>
-                  {({ hover }) => {
-                    if (hover) {
-                      trackEvent({
-                        action_type: AnalyticsSchema.ActionType.Hover,
-                        subject: "User",
-                      })
-                    }
-                    return <SoloIcon fill={hover ? "purple100" : "black80"} />
-                  }}
-                </NavItem>
-              </>
-            )}
-          </NavSection>
+          <NavSection>{isLoggedIn && <LoggedInActions />}</NavSection>
 
           {!isLoggedIn && (
             <NavSection>
