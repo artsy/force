@@ -4,7 +4,7 @@ import {
   createCreditCardAndUpdatePhoneSuccessful,
 } from "../__fixtures__/MutationResults/createCreditCardAndUpdatePhone"
 
-jest.mock("v2/Apps/Auction/Routes/ConfirmBid/BidderPositionQuery", () => ({
+jest.mock("v2/Apps/Auction/Operations/BidderPositionQuery", () => ({
   bidderPositionQuery: jest.fn(),
 }))
 
@@ -32,7 +32,7 @@ import { graphql } from "react-relay"
 
 import { routes_ConfirmBidQueryResponse } from "v2/__generated__/routes_ConfirmBidQuery.graphql"
 import { ConfirmBidQueryResponseFixture } from "v2/Apps/Auction/__fixtures__/routes_ConfirmBidQuery"
-import { bidderPositionQuery } from "v2/Apps/Auction/Routes/ConfirmBid/BidderPositionQuery"
+import { bidderPositionQuery } from "v2/Apps/Auction/Operations/BidderPositionQuery"
 import { AnalyticsSchema } from "v2/Artsy/Analytics"
 import { createMockFetchQuery } from "v2/DevTools/createMockNetworkLayer"
 import { TrackingProp } from "react-tracking"
@@ -61,15 +61,6 @@ const createTokenMock = require("react-stripe-elements").__stripeMock
   .createToken as jest.Mock
 
 const mockEnablePriceTransparency = jest.fn()
-
-jest.mock("sharify", () => ({
-  data: {
-    get ENABLE_PRICE_TRANSPARENCY() {
-      return mockEnablePriceTransparency()
-    },
-  },
-}))
-
 const mockLocation: Partial<Location> = {
   query: {
     bid: null,
@@ -574,7 +565,7 @@ describe("Routes/ConfirmBid", () => {
         context_page: AnalyticsSchema.PageName.AuctionConfirmBidPage,
         auction_slug: "saleslug",
         artwork_slug: "artworkslug",
-        bidder_id: null,
+        bidder_id: undefined,
         sale_id: "saleid",
         user_id: "my-user-id",
       })
@@ -584,7 +575,7 @@ describe("Routes/ConfirmBid", () => {
         error_messages: ["Sale Closed to Bids"],
         auction_slug: "saleslug",
         artwork_slug: "artworkslug",
-        bidder_id: null,
+        bidder_id: undefined,
         sale_id: "saleid",
         user_id: "my-user-id",
       })
@@ -607,7 +598,7 @@ describe("Routes/ConfirmBid", () => {
         error_messages: ["JavaScript error: failed to fetch"],
         auction_slug: "saleslug",
         artwork_slug: "artworkslug",
-        bidder_id: null,
+        bidder_id: undefined,
         sale_id: "saleid",
         user_id: "my-user-id",
       })
@@ -747,7 +738,7 @@ describe("Routes/ConfirmBid", () => {
       })
       expect(env.mutations.mockFetch).toHaveBeenCalledWith(
         expect.objectContaining({
-          name: "RegisterCreateCreditCardAndUpdatePhoneMutation",
+          name: "CreateCreditCardAndUpdatePhoneMutation",
         }),
         {
           creditCardInput: { token: "tok_abcabcabcabcabcabcabc" },
@@ -834,7 +825,7 @@ describe("Routes/ConfirmBid", () => {
         error_messages: ["Your card number is incomplete."],
         auction_slug: "saleslug",
         artwork_slug: "artworkslug",
-        bidder_id: null,
+        bidder_id: undefined,
         sale_id: "saleid",
         user_id: "my-user-id",
       })
@@ -864,7 +855,7 @@ describe("Routes/ConfirmBid", () => {
         error_messages: ["JavaScript error: Network request failed"],
         auction_slug: "saleslug",
         artwork_slug: "artworkslug",
-        bidder_id: null,
+        bidder_id: undefined,
         sale_id: "saleid",
         user_id: "my-user-id",
       })
@@ -897,7 +888,7 @@ describe("Routes/ConfirmBid", () => {
         ],
         auction_slug: "saleslug",
         artwork_slug: "artworkslug",
-        bidder_id: null,
+        bidder_id: undefined,
         sale_id: "saleid",
         user_id: "my-user-id",
       })
@@ -925,7 +916,7 @@ describe("Routes/ConfirmBid", () => {
         error_messages: ["Telephone is required"],
         auction_slug: "saleslug",
         artwork_slug: "artworkslug",
-        bidder_id: null,
+        bidder_id: undefined,
         sale_id: "saleid",
         user_id: "my-user-id",
       })
