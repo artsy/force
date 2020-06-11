@@ -13,17 +13,6 @@ describe 'MagazineView', ->
 
   beforeEach (done) ->
     benv.setup =>
-      benv.expose
-        $: benv.require 'jquery'
-        sd: ARTSY_EDITORIAL_CHANNEL: '123'
-      Backbone.$ = $
-      $.onInfiniteScroll = sinon.stub()
-      $.fn.error = sinon.stub()
-      sinon.stub request, 'post'
-        .returns
-          send: sinon.stub().returns
-            end: sinon.stub().yields(null, body: data: articles: @articles)
-
       @articles = [
         {
           "slug": "artsy-editorial-contemporary-istanbul-tests-turkish-market-rocked-by-terrorism-and-coup-attempt",
@@ -80,6 +69,17 @@ describe 'MagazineView', ->
       , =>
         filename = path.resolve(__dirname, '../../client/articles.coffee')
         { MagazineView } = module = benv.requireWithJadeify filename, ['articleTemplate']
+
+        benv.expose
+          $: benv.require 'jquery'
+          sd: ARTSY_EDITORIAL_CHANNEL: '123'
+        Backbone.$ = $
+        $.onInfiniteScroll = sinon.stub()
+        $.fn.error = sinon.stub()
+        sinon.stub request, 'post'
+          .returns
+            send: sinon.stub().returns
+              end: sinon.stub().yields(null, body: data: articles: @articles)
 
         @view = new MagazineView
           el: $ 'body'
