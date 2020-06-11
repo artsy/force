@@ -32,7 +32,7 @@ const TruncatedTitle = styled(Sans)`
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  max-width: 350px;
+  max-width: 140px;
 
   @media (max-width: 570px) {
     max-width: 270px;
