@@ -19,12 +19,12 @@ import {
   graphql,
 } from "react-relay"
 import { TrackingProp } from "react-tracking"
-import { data as sd } from "sharify"
 import { bidderNeedsIdentityVerification } from "v2/Utils/identityVerificationRequirements"
 import createLogger from "v2/Utils/logger"
 import {
   createStripeWrapper,
   errorMessageForCard,
+  saleConfirmRegistrationPath,
   toStripeAddress,
 } from "v2/Apps/Auction/Components/Form"
 import { ReactStripeElements } from "react-stripe-elements"
@@ -53,11 +53,6 @@ function createBidder(relayEnvironment: RelayProp.environment, saleID: string) {
       })
     }
   )
-}
-
-// TODO: Move it to helpers?
-const saleConfirmRegistrationPath = (saleSlug: string) => {
-  return `${sd.APP_URL}/auction/${saleSlug}/confirm-registration`
 }
 
 type OnSubmitType = ComponentProps<typeof RegistrationForm>["onSubmit"]

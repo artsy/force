@@ -29,6 +29,7 @@ import { createTestEnv } from "v2/DevTools/createTestEnv"
 import { Location, Match } from "found"
 import React from "react"
 import { graphql } from "react-relay"
+import { LargeSelect } from "@artsy/palette"
 
 import { routes_ConfirmBidQueryResponse } from "v2/__generated__/routes_ConfirmBidQuery.graphql"
 import { ConfirmBidQueryResponseFixture } from "v2/Apps/Auction/__fixtures__/routes_ConfirmBidQuery"
@@ -43,12 +44,16 @@ import {
   createBidderPositionFailed,
   createBidderPositionSuccessful,
   createBidderPositionSuccessfulAndBidder,
+  createBidderPositionWithBidderNotQualified,
+  createBidderPositionWithErrorBidNotPlaced,
+  createBidderPositionWithLiveBiddingStarted,
 } from "../__fixtures__/MutationResults/createBidderPosition"
 import { stripeTokenResponse } from "../__fixtures__/Stripe"
 import { ConfirmBidRouteFragmentContainer } from "../ConfirmBid"
 import { ConfirmBidTestPage } from "./Utils/ConfirmBidTestPage"
 import { ValidFormValues } from "./Utils/RegisterTestPage"
 import { CreditCardInput } from "v2/Apps/Order/Components/CreditCardInput"
+import { ErrorModal } from "v2/Components/Modal/ErrorModal"
 
 jest.unmock("react-relay")
 jest.unmock("react-tracking")
@@ -329,7 +334,7 @@ describe("Routes/ConfirmBid", () => {
       })
     })
 
-    it("displays an error message when the mutation returns a GraphQL error", async () => {
+    it("displays an error message when the sale is already closed", async () => {
       const env = setupTestEnv()
       const page = await env.buildPage()
 
@@ -337,7 +342,29 @@ describe("Routes/ConfirmBid", () => {
 
       await page.submitForm()
 
-      expect(page.text()).toContain("Sale Closed to Bids.")
+      const modalContent = page.find(ErrorModal).text()
+
+      expect(modalContent).toContain("Sale Closed")
+      expect(modalContent).toContain(
+        "This sale had been closed. Please browse other open sales."
+      )
+      expect(window.location.assign).not.toHaveBeenCalled()
+    })
+
+    it("displays an error message when the live sale has already started", async () => {
+      const env = setupTestEnv()
+      const page = await env.buildPage()
+
+      env.mutations.useResultsOnce(createBidderPositionWithLiveBiddingStarted)
+
+      await page.submitForm()
+
+      const modalContent = page.find(ErrorModal).text()
+
+      expect(modalContent).toContain("Live Auction in Progress")
+      expect(modalContent).toContain(
+        "Continue to the live sale to place your bid."
+      )
       expect(window.location.assign).not.toHaveBeenCalled()
     })
 
@@ -350,8 +377,8 @@ describe("Routes/ConfirmBid", () => {
       await page.submitForm()
 
       expect(window.location.assign).not.toHaveBeenCalled()
-      expect(page.text()).toContain(
-        "Please make sure your internet connection is active and try again"
+      expect(page.find(ErrorModal).text()).toContain(
+        "Something went wrong. Please try again"
       )
     })
 
@@ -366,7 +393,9 @@ describe("Routes/ConfirmBid", () => {
       await page.submitForm()
 
       expect(window.location.assign).not.toHaveBeenCalled()
-      expect(page.text()).toContain("Your bid wasn’t high enough.")
+      expect(page.find(LargeSelect).text()).toContain(
+        "Your bid wasn't high enough. Please select a higher bid."
+      )
     })
 
     it("tracks an error when the mutation returns a GraphQL error", async () => {
@@ -394,7 +423,7 @@ describe("Routes/ConfirmBid", () => {
       expect(mockPostEvent).toBeCalledWith({
         action_type: AnalyticsSchema.ActionType.ConfirmBidFailed,
         context_page: AnalyticsSchema.PageName.AuctionConfirmBidPage,
-        error_messages: ["Sale Closed to Bids"],
+        error_messages: ["Lot closed"],
         auction_slug: "saleslug",
         artwork_slug: "artworkslug",
         bidder_id: "existing-bidder-id",
@@ -572,7 +601,7 @@ describe("Routes/ConfirmBid", () => {
       expect(mockPostEvent.mock.calls[1][0]).toEqual({
         action_type: AnalyticsSchema.ActionType.ConfirmBidFailed,
         context_page: AnalyticsSchema.PageName.AuctionConfirmBidPage,
-        error_messages: ["Sale Closed to Bids"],
+        error_messages: ["Lot closed"],
         auction_slug: "saleslug",
         artwork_slug: "artworkslug",
         bidder_id: undefined,
@@ -637,6 +666,36 @@ describe("Routes/ConfirmBid", () => {
         sale_id: "saleid",
         user_id: "my-user-id",
       })
+    })
+
+    it("takes the user back to the /auction/:sale_slug/confirm-registration page when BIDDER_NOT_QUALIFIED is returned", async () => {
+      const env = setupTestEnv()
+      const page = await env.buildPage({
+        mockData: FixtureForUnregisteredUserWithCreditCard,
+      })
+      env.mutations.useResultsOnce(createBidderPositionWithBidderNotQualified)
+
+      await page.agreeToTerms()
+      await page.submitForm()
+
+      expect(window.location.assign).toHaveBeenCalledWith(
+        "/auction/saleslug/confirm-registration"
+      )
+    })
+
+    it("takes the user back to the /auction/:sale_slug/confirm-registration page when ERROR is returned with 'Bid not placed'", async () => {
+      const env = setupTestEnv()
+      const page = await env.buildPage({
+        mockData: FixtureForUnregisteredUserWithCreditCard,
+      })
+      env.mutations.useResultsOnce(createBidderPositionWithErrorBidNotPlaced)
+
+      await page.agreeToTerms()
+      await page.submitForm()
+
+      expect(window.location.assign).toHaveBeenCalledWith(
+        "/auction/saleslug/confirm-registration"
+      )
     })
 
     it("does not track registration submitted twice when newly registered bidder places two bids on the same page", async () => {
@@ -844,8 +903,8 @@ describe("Routes/ConfirmBid", () => {
       await page.submitForm()
 
       expect(window.location.assign).not.toHaveBeenCalled()
-      expect(page.text()).toContain(
-        "Please make sure your internet connection is active and try again"
+      expect(page.find(ErrorModal).text()).toContain(
+        "Something went wrong. Please try again"
       )
 
       expect(mockPostEvent).toHaveBeenCalledTimes(1)
