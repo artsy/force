@@ -25,7 +25,7 @@ if (!isCI && !fs.existsSync(cacheDirectory)) {
 
 exports.developmentConfig = {
   mode: NODE_ENV,
-  devtool: WEBPACK_DEVTOOL,
+  devtool: WEBPACK_DEVTOOL || "eval",
   stats: WEBPACK_STATS || "errors-only",
   module: {
     rules: [
