@@ -8,8 +8,8 @@ import { Media } from "v2/Utils/Responsive"
 import { StyledLink } from "v2/Apps/Artist/Components/StyledLink"
 import { scrollIntoView } from "v2/Utils/scrollHelpers"
 import { useTracking } from "v2/Artsy"
-import * as Schema from "v2/Artsy/Analytics/Schema"
 import styled from "styled-components"
+import { ContextModule, OwnerType, clickedEntityGroup } from "@artsy/cohesion"
 
 interface ArtistTopWorksRailProps {
   artist: ArtistTopWorksRail_artist
@@ -25,6 +25,20 @@ export const ArtistTopWorksRail: React.FC<ArtistTopWorksRailProps> = ({
   const artworks = artist?.filterArtworksConnection?.edges ?? []
   const handleViewWorksClick = overviewTab => {
     const ms = overviewTab ? 500 : 0
+
+    tracking.trackEvent(
+      clickedEntityGroup({
+        contextModule: ContextModule.topWorksRail,
+        contextPageOwnerType: OwnerType.artist,
+        destinationPageOwnerType: OwnerType.artist,
+        destinationPageOwnerId: artist.slug,
+        destinationPageOwnerSlug: artist.slug,
+        type: "viewAll",
+        contextPageOwnerSlug: artist.slug,
+        contextPageOwnerId: artist.id,
+      }) as any
+    )
+
     return setTimeout(
       () => scrollIntoView({ offset: 60, selector: "#jump--artworkFilter" }),
       ms
@@ -66,8 +80,8 @@ export const ArtistTopWorksRail: React.FC<ArtistTopWorksRailProps> = ({
         options={{
           pageDots: false,
         }}
-        render={({ node }) => {
-          const { image } = node
+        render={({ node }, index) => {
+          const { image, id, slug } = node
 
           return (
             <Box height={376} mb={3} width="auto">
@@ -83,11 +97,19 @@ export const ArtistTopWorksRail: React.FC<ArtistTopWorksRailProps> = ({
                 showMetadata
                 showExtended={false}
                 onClick={() => {
-                  tracking.trackEvent({
-                    action_type: Schema.ActionType.Click,
-                    subject: "carouselSlide",
-                    destination_path: image.href,
-                  })
+                  tracking.trackEvent(
+                    clickedEntityGroup({
+                      contextModule: ContextModule.topWorksRail,
+                      contextPageOwnerType: OwnerType.artist,
+                      destinationPageOwnerType: OwnerType.artwork,
+                      destinationPageOwnerId: id,
+                      destinationPageOwnerSlug: slug,
+                      horizontalSlidePosition: index + 1,
+                      type: "thumbnail",
+                      contextPageOwnerSlug: artist.slug,
+                      contextPageOwnerId: artist.id,
+                    }) as any
+                  )
                 }}
               />
             </Box>
@@ -106,10 +128,12 @@ export const ArtistTopWorksRailFragmentContainer = createFragmentContainer(
     artist: graphql`
       fragment ArtistTopWorksRail_artist on Artist {
         slug
+        id
         filterArtworksConnection(sort: "-weighted_iconicity", first: 10) {
           edges {
             node {
               id
+              slug
               image {
                 href
                 imageAspectRatio: aspectRatio
