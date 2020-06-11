@@ -18,6 +18,7 @@ import { AuthenticationInteraction, Interaction } from "./Interaction"
 import { Label } from "./Label"
 import { Failure, Success } from "./Result"
 import { Type } from "./Type"
+import { Event as CohesionEvent } from "@artsy/cohesion"
 
 interface Uncategorized {
   changed: any
@@ -46,6 +47,7 @@ export type Trackables =
   | Uncategorized
   | AuctionInfo
   | CriteoInfo
+  | CohesionEvent
 
 /**
  * A sentinel type used to signal that anything goes in order to be able to
