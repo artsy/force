@@ -17,8 +17,6 @@ describe 'PartnerArtistView', ->
     benv.setup =>
       @_location = global.location
       global.location = { search: '' }
-      benv.expose { $: benv.require 'jquery' }
-      Backbone.$ = $
       sinon.stub Backbone, 'sync'
       benv.render resolve(__dirname, '../templates/artist.jade'), {
         artist: new Artist(fabricate 'artist'),
@@ -27,6 +25,8 @@ describe 'PartnerArtistView', ->
         sd: {}
       }, =>
         { PartnerArtistView } = mod = benv.requireWithJadeify resolve(__dirname, '../client/artist'), ['artworksTemplate']
+        benv.expose { $: benv.require 'jquery' }
+        Backbone.$ = $
         mod.__set__ 'ShareView', @ShareView = sinon.stub()
         @view = new PartnerArtistView
           artist: new Artist(fabricate 'artist')
