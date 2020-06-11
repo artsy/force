@@ -37,8 +37,7 @@ describe("Artist Top Works Rail Component", () => {
 
   it("tracks the analytics properties when an artwork is clicked on the Top Works rail", () => {
     const component = mount(<ArtistTopWorksRail {...props} />)
-    const elem = component.find(FillwidthItem).first()
-    // @ts-ignore
+    const elem = component.find(FillwidthItem).first() as typeof FillwidthItem
     elem.props().onClick({})
 
     expect(trackEvent).toHaveBeenCalledWith({
@@ -58,9 +57,8 @@ describe("Artist Top Works Rail Component", () => {
   it("tracks the analytics properties when View All is clicked", () => {
     const component = mount(<ArtistTopWorksRail {...props} />)
     const elem = component.find(StyledLink).first()
+    elem.props().onClick(null)
 
-    // @ts-ignore
-    elem.props().onClick()
     expect(trackEvent).toHaveBeenCalledWith({
       action: "clickedArtistGroup",
       context_module: "topWorksRail",
