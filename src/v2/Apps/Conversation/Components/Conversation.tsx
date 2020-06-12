@@ -1,13 +1,4 @@
-import {
-  Box,
-  Flex,
-  Image,
-  Link,
-  Sans,
-  Serif,
-  Spacer,
-  color,
-} from "@artsy/palette"
+import { Box, Flex, Image, Link, Sans, Spacer, color } from "@artsy/palette"
 import { Conversation_conversation } from "v2/__generated__/Conversation_conversation.graphql"
 import { DateTime } from "luxon"
 import React, { useEffect, useRef } from "react"
@@ -24,7 +15,42 @@ interface ItemProps {
 
 const Item: React.FC<ItemProps> = props => {
   const { item } = props
-  if (item.__typename === "Artwork") {
+  const itemType = item.__typename
+
+  const getImage = item => {
+    if (itemType === "Artwork") {
+      return item.image?.url
+    } else if (itemType === "Show") {
+      return item.coverImage?.url
+    } else {
+      return null
+    }
+  }
+
+  const itemDetails = item => {
+    if (item.__typename === "Artwork") {
+      return [
+        <Sans size="4" weight="medium" color="white100">
+          {item.artistNames}
+        </Sans>,
+        <Sans size="2" color="white100">
+          {item.title} / {item.date}
+        </Sans>,
+      ]
+    } else if (item.__typename === "Show") {
+      const itemLocation = item.fair?.location?.city
+      return [
+        <Sans size="4" weight="medium" color="white100">
+          {item.fair.name}
+        </Sans>,
+        <Sans size="2" color="white100">
+          {itemLocation && `${itemLocation}, `} {item?.fair?.exhibitionPeriod}
+        </Sans>,
+      ]
+    }
+  }
+
+  if (itemType === "Artwork" || itemType === "Show") {
     return (
       <Link
         href={item.href}
@@ -34,7 +60,7 @@ const Item: React.FC<ItemProps> = props => {
       >
         <Flex flexDirection="column">
           <Image
-            src={item.image.url}
+            src={getImage(item)}
             width="350px"
             borderRadius="15px 15px 0 0"
           />
@@ -45,29 +71,10 @@ const Item: React.FC<ItemProps> = props => {
             background={color("black100")}
             borderRadius="0 0 15px 15px"
           >
-            <Sans size="4" weight="medium" color="white100">
-              {item.artistNames}
-            </Sans>
-            <Sans size="2" color="white100">
-              {item.title} / {item.date}
-            </Sans>
+            {itemDetails(item)}
           </Flex>
         </Flex>
       </Link>
-    )
-  } else if (item.__typename === "Show") {
-    // it's a partnerShow
-    return (
-      <Flex width="350px">
-        <Flex height="auto" alignItems="center" mr={2}>
-          <Image src={item.coverImage.url} width="55px" />
-        </Flex>
-        <Flex flexDirection="column" justifyContent="center">
-          <Serif size="2" weight="semibold">
-            {item.fair.name}
-          </Serif>
-        </Flex>
-      </Flex>
     )
   } else {
     return null
@@ -263,7 +270,12 @@ export const ConversationFragmentContainer = createFragmentContainer(
               id
               fair {
                 name
+                exhibitionPeriod
+                location {
+                  city
+                }
               }
+              href
               name
               coverImage {
                 url
