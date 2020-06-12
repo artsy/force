@@ -61,8 +61,20 @@ describe 'metaphysics2', ->
         data.should.eql artist: id: 'foo-bar'
 
   describe 'error', ->
+    beforeEach ->
+      sinon.stub(console, "error")
+
+    afterEach ->
+      console.error.restore()
+
     it 'rejects with the error', ->
-      @request.end.yields new Error 'some error'
+      serverError = {
+        status: 400,
+        response: {
+          text: '"some error"'
+        }
+      }
+      @request.end.yields serverError
 
       metaphysics2
         variables: id: 'foo-bar'
@@ -74,7 +86,8 @@ describe 'metaphysics2', ->
           }
         '
       .catch (err) ->
-        err.message.should.equal 'some error'
+        console.error.firstCall.args[0].should.containEql 'some error'
+        err.should.equal serverError
 
     it 'includes the data', ->
       @request.end.yields null,
