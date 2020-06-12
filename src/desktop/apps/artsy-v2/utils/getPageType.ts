@@ -9,7 +9,6 @@ type PageTypes =
   | "orders"
   | "search"
   | "identity-verification"
-  | "user"
 
 export function getPageType(
   req: Request
