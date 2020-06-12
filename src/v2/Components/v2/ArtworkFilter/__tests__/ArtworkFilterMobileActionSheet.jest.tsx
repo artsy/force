@@ -7,6 +7,7 @@ import {
 } from "../ArtworkFilterContext"
 import { ArtworkFilterMobileActionSheet } from "../ArtworkFilterMobileActionSheet"
 import { ArtworkFilters } from "../ArtworkFilters"
+import { flushPromiseQueue } from "v2/DevTools"
 
 describe("ArtworkFilterMobileActionSheet", () => {
   let context
@@ -88,17 +89,45 @@ describe("ArtworkFilterMobileActionSheet", () => {
     })
   })
 
-  it("counts the number of active filters", () => {
-    const wrapper = getWrapper()
+  it("counts the number of changing filters", async () => {
+    // Zero state: a medium and a way to buy are *already* selected
+    const wrapper = getWrapper({
+      filters: { medium: "painting", acquireable: true },
+    })
+
     expect(wrapper.find("ApplyButton").text()).toEqual("Apply (0)")
 
-    wrapper.find("WaysToBuyFilter").find("Checkbox").at(0).simulate("click")
+    // Select a different medium
+    wrapper
+      .find("MediumFilter")
+      .find("label")
+      .findWhere(label => label.text() === "Sculpture")
+      .first()
+      .simulate("click")
+    await flushPromiseQueue()
+
     expect(wrapper.find("ApplyButton").text()).toEqual("Apply (1)")
 
-    wrapper.find("WaysToBuyFilter").find("Checkbox").at(1).simulate("click")
+    // Select another way to buy
+    wrapper
+      .find("WaysToBuyFilter")
+      .find("div")
+      .findWhere(label => label.text() === "Make offer")
+      .first()
+      .simulate("click")
+    await flushPromiseQueue()
+
     expect(wrapper.find("ApplyButton").text()).toEqual("Apply (2)")
 
-    wrapper.find("WaysToBuyFilter").find("Checkbox").at(2).simulate("click")
+    // Select a price range
+    wrapper
+      .find("PriceRangeFilter")
+      .find("label")
+      .findWhere(label => label.text() === "$10k – $20k")
+      .first()
+      .simulate("click")
+    await flushPromiseQueue()
+
     expect(wrapper.find("ApplyButton").text()).toEqual("Apply (3)")
   })
 })
