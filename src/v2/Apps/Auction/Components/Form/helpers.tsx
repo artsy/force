@@ -5,7 +5,7 @@ import { data as sd } from "sharify"
 
 import { Address } from "v2/Components/AddressForm"
 
-const ERROR_PREFIX = {
+const ERROR_SUFFIX = {
   "Your card was declined.":
     "Please contact your bank or use a different card.",
   "Your card has insufficient funds.":
