@@ -23,6 +23,7 @@ globalReactModules = require('../../../desktop/lib/global_react_modules.tsx')
 hydrateStitch = require('@artsy/stitch/dist/internal/hydrate').hydrate
 analyticsHooks = require('../../lib/analytics_hooks.coffee')
 mediator = require('../../../desktop/lib/mediator.coffee')
+FlashMessage = require('../../../desktop/components/flash/index.coffee')
 
 module.exports = ->
   # Add the Gravity XAPP or access token to all ajax requests
@@ -48,6 +49,7 @@ module.exports = ->
 
   # Setup jQuery plugins
   require 'jquery-on-infinite-scroll'
+  require 'jquery.transition'
   if sd.stitch?.renderQueue?
     mountStitch()
 
@@ -119,4 +121,4 @@ logoutEventHandler = ->
       analyticsHooks.trigger 'auth:logged-out'
       window.location.reload()
     error: (xhr, status, errorMessage) ->
-      # TODO: Error message handling
+      new FlashMessage message: errorMessage
