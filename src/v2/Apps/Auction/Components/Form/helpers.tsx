@@ -15,7 +15,7 @@ const ERROR_SUFFIX = {
 }
 
 export const errorMessageForCard = (errorMessage: string) => {
-  return `${errorMessage} ${ERROR_PREFIX[errorMessage] || ""}`
+  return `${errorMessage} ${ERROR_SUFFIX[errorMessage] || ""}`
 }
 
 export const toStripeAddress = (address: Address): stripe.TokenOptions => {
