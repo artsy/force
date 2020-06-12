@@ -26,9 +26,9 @@ export const createCreditCardAndUpdatePhoneFailed: CreateCreditCardAndUpdatePhon
   createCreditCard: {
     creditCardOrError: {
       mutationError: {
-        message: "The `createCreditCard` mutation failed.",
-        type: "",
-        detail: "",
+        message: "Payment information could not be processed.",
+        type: "payment_error",
+        detail: "Your card was declined.",
       },
     },
   },

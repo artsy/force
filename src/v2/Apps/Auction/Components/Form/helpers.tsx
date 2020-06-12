@@ -5,6 +5,19 @@ import { data as sd } from "sharify"
 
 import { Address } from "v2/Components/AddressForm"
 
+const ERROR_SUFFIX = {
+  "Your card was declined.":
+    "Please contact your bank or use a different card.",
+  "Your card has insufficient funds.":
+    "Please contact your bank or use a different card.",
+  "Your card has expired.": "Please contact your bank or use a different card.",
+  "Your card's security code is incorrect.": "Please try again.",
+}
+
+export const errorMessageForCard = (errorMessage: string) => {
+  return `${errorMessage} ${ERROR_SUFFIX[errorMessage] || ""}`
+}
+
 export const toStripeAddress = (address: Address): stripe.TokenOptions => {
   return {
     name: address.name,
