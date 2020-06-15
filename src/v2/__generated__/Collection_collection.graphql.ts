@@ -7,6 +7,7 @@ export type Collection_collection = {
     readonly description: string | null;
     readonly headerImage: string | null;
     readonly slug: string;
+    readonly id: string;
     readonly title: string;
     readonly query: {
         readonly artist_id: string | null;
@@ -63,26 +64,33 @@ export type Collection_collection$key = {
 
 const node: ReaderFragment = (function(){
 var v0 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "id",
+  "args": null,
+  "storageKey": null
+},
+v1 = {
   "kind": "Variable",
   "name": "aggregations",
   "variableName": "aggregations"
 },
-v1 = {
+v2 = {
   "kind": "Literal",
   "name": "first",
   "value": 1
 },
-v2 = {
+v3 = {
   "kind": "Literal",
   "name": "includeMediumFilterInAggregation",
   "value": true
 },
-v3 = {
+v4 = {
   "kind": "Literal",
   "name": "size",
   "value": 1
 },
-v4 = {
+v5 = {
   "kind": "Literal",
   "name": "sort",
   "value": "-decayed_merch"
@@ -212,6 +220,7 @@ return {
       "args": null,
       "storageKey": null
     },
+    (v0/*: any*/),
     {
       "kind": "ScalarField",
       "alias": null,
@@ -288,11 +297,11 @@ return {
       "name": "artworksConnection",
       "storageKey": null,
       "args": [
-        (v0/*: any*/),
         (v1/*: any*/),
         (v2/*: any*/),
         (v3/*: any*/),
-        (v4/*: any*/)
+        (v4/*: any*/),
+        (v5/*: any*/)
       ],
       "concreteType": "FilterArtworksConnection",
       "plural": false,
@@ -362,19 +371,19 @@ return {
       "name": "artworksConnection",
       "storageKey": null,
       "args": [
-        (v0/*: any*/),
+        (v1/*: any*/),
         {
           "kind": "Literal",
           "name": "first",
           "value": 20
         },
-        (v2/*: any*/),
+        (v3/*: any*/),
         {
           "kind": "Literal",
           "name": "size",
           "value": 20
         },
-        (v4/*: any*/)
+        (v5/*: any*/)
       ],
       "concreteType": "FilterArtworksConnection",
       "plural": false,
@@ -447,10 +456,10 @@ return {
       "name": "artworksConnection",
       "storageKey": null,
       "args": [
-        (v0/*: any*/),
         (v1/*: any*/),
         (v2/*: any*/),
         (v3/*: any*/),
+        (v4/*: any*/),
         {
           "kind": "Literal",
           "name": "sort",
@@ -473,10 +482,10 @@ return {
       "name": "artworksConnection",
       "storageKey": null,
       "args": [
-        (v0/*: any*/),
         (v1/*: any*/),
         (v2/*: any*/),
         (v3/*: any*/),
+        (v4/*: any*/),
         {
           "kind": "Literal",
           "name": "sort",
@@ -504,7 +513,7 @@ return {
           "name": "acquireable",
           "variableName": "acquireable"
         },
-        (v0/*: any*/),
+        (v1/*: any*/),
         {
           "kind": "Variable",
           "name": "atAuction",
@@ -579,13 +588,7 @@ return {
       "concreteType": "FilterArtworksConnection",
       "plural": false,
       "selections": [
-        {
-          "kind": "ScalarField",
-          "alias": null,
-          "name": "id",
-          "args": null,
-          "storageKey": null
-        },
+        (v0/*: any*/),
         {
           "kind": "FragmentSpread",
           "name": "ArtworkFilterArtworkGrid2_filtered_artworks",
@@ -601,5 +604,5 @@ return {
   ]
 };
 })();
-(node as any).hash = '9a79aaa36ee30c7a323b3f7792ada223';
+(node as any).hash = '66d4cfde758ac48f948a0880e33e9ed4';
 export default node;
