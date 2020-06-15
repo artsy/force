@@ -13,6 +13,7 @@ import { userHasLabFeature } from "v2/Utils/user"
 import { ErrorPage } from "v2/Components/ErrorPage"
 import { Media } from "v2/Utils/Responsive"
 import { FullHeader, MobileInboxHeader } from "./Components/InboxHeaders"
+import { NoMessages } from "./Components/NoMessages"
 
 interface ConversationAppProps {
   me: ConversationApp_me
@@ -35,6 +36,7 @@ export const ConversationApp: React.FC<ConversationAppProps> = props => {
   const route = findCurrentRoute(props.match)
   let maxWidth
 
+  const isEmpty = me.conversationsConnection.edges.length === 0
   const conversation = me.conversationsConnection.edges[0]?.node
 
   useEffect(() => {
@@ -64,25 +66,32 @@ export const ConversationApp: React.FC<ConversationAppProps> = props => {
   if (route.displayFullPage) {
     maxWidth = "100%"
   }
+
   return (
     <AppContainer maxWidth={maxWidth}>
       <Title>Conversations | Artsy</Title>
-      <Media at="xs">
-        <MobileInboxHeader />
-      </Media>
-      <Media greaterThan="xs">
-        <FullHeader partnerName={conversation?.to?.name} />
-      </Media>
-      <Conversations me={me} />
-      <Flex
-        display={["none", "flex"]}
-        height="100%"
-        width="100%"
-        justifyContent="center"
-        alignItems="center"
-      >
-        <Spinner />
-      </Flex>
+      {isEmpty ? (
+        <NoMessages />
+      ) : (
+        <>
+          <Media at="xs">
+            <MobileInboxHeader />
+          </Media>
+          <Media greaterThan="xs">
+            <FullHeader partnerName={conversation?.to?.name} />
+          </Media>
+          <Conversations me={me} />
+          <Flex
+            display={["none", "flex"]}
+            height="100%"
+            width="100%"
+            justifyContent="center"
+            alignItems="center"
+          >
+            <Spinner />
+          </Flex>
+        </>
+      )}
     </AppContainer>
   )
 }
