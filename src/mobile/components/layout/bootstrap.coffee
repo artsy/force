@@ -21,6 +21,9 @@ CurrentUser = require '../../models/current_user.coffee'
 Sentry = require("@sentry/browser")
 globalReactModules = require('../../../desktop/lib/global_react_modules.tsx')
 hydrateStitch = require('@artsy/stitch/dist/internal/hydrate').hydrate
+analyticsHooks = require('../../lib/analytics_hooks.coffee')
+mediator = require('../../../desktop/lib/mediator.coffee')
+FlashMessage = require('../../../desktop/components/flash/index.coffee')
 
 module.exports = ->
   # Add the Gravity XAPP or access token to all ajax requests
@@ -42,9 +45,11 @@ module.exports = ->
   setupErrorReporting()
   syncAuth()
   checkForAfterSignUpAction()
+  mediator.on('auth:logout', logoutEventHandler)
 
   # Setup jQuery plugins
   require 'jquery-on-infinite-scroll'
+  require 'jquery.transition' # This is required for FlashMessage
   if sd.stitch?.renderQueue?
     mountStitch()
 
@@ -107,3 +112,13 @@ handleNavBarScroll = ->
       else
         $loginSignupBanner.css('display', 'block')
         $mainNav.css('position', 'relative')
+
+logoutEventHandler = ->
+  $.ajax
+    url: '/users/sign_out'
+    type: 'DELETE'
+    success: ->
+      analyticsHooks.trigger 'auth:logged-out'
+      window.location.reload()
+    error: (xhr, status, errorMessage) ->
+      new FlashMessage message: errorMessage
