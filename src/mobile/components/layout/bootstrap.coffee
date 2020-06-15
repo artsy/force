@@ -49,7 +49,7 @@ module.exports = ->
 
   # Setup jQuery plugins
   require 'jquery-on-infinite-scroll'
-  require 'jquery.transition'
+  require 'jquery.transition' # This is required for FlashMessage
   if sd.stitch?.renderQueue?
     mountStitch()
 
