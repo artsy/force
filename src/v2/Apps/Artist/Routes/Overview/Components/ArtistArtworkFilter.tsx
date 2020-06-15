@@ -7,6 +7,8 @@ import { Match, RouterState, withRouter } from "found"
 import React from "react"
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
 import { ZeroState } from "./ZeroState"
+import { OwnerType, clickedMainArtworkGrid } from "@artsy/cohesion"
+import { useTracking } from "v2/Artsy/Analytics"
 
 interface ArtistArtworkFilterProps {
   artist: ArtistArtworkFilter_artist
@@ -20,6 +22,8 @@ const ArtistArtworkFilter: React.FC<ArtistArtworkFilterProps> = props => {
   const { filtered_artworks } = artist
 
   const hasFilter = filtered_artworks && filtered_artworks.id
+
+  const tracking = useTracking()
 
   // If there was an error fetching the filter,
   // we still want to render the rest of the page.
@@ -40,6 +44,17 @@ const ArtistArtworkFilter: React.FC<ArtistArtworkFilterProps> = props => {
       aggregations={sidebarAggregations.aggregations as any}
       counts={artist.counts}
       onChange={updateUrl}
+      onArtworkBrickClick={artwork => {
+        tracking.trackEvent(
+          clickedMainArtworkGrid({
+            contextPageOwnerType: OwnerType.artist,
+            contextPageOwnerSlug: artist.slug,
+            contextPageOwnerId: artist.internalID,
+            destinationPageOwnerId: artwork.internalID,
+            destinationPageOwnerSlug: artwork.slug,
+          }) as any
+        )
+      }}
     >
       <BaseArtworkFilter
         relay={relay}
@@ -91,6 +106,8 @@ export const ArtistArtworkFilterRefetchContainer = createRefetchContainer(
           artworks
           has_make_offer_artworks: hasMakeOfferArtworks
         }
+        slug
+        internalID
         filtered_artworks: filterArtworksConnection(
           acquireable: $acquireable
           aggregations: $aggregations
