@@ -18,6 +18,8 @@ import { AuthenticationInteraction, Interaction } from "./Interaction"
 import { Label } from "./Label"
 import { Failure, Success } from "./Result"
 import { Type } from "./Type"
+import { Event } from "@artsy/cohesion"
+import { ActionType } from "v2/Artsy/Analytics/Schema/Values"
 
 interface Uncategorized {
   changed: any
@@ -31,6 +33,7 @@ interface Uncategorized {
   variation_id: string
   variation_name: string
   nonInteraction: number
+  action_type: ActionType | string
 }
 
 export type Trackables =
@@ -46,6 +49,7 @@ export type Trackables =
   | Uncategorized
   | AuctionInfo
   | CriteoInfo
+  | Event
 
 /**
  * A sentinel type used to signal that anything goes in order to be able to

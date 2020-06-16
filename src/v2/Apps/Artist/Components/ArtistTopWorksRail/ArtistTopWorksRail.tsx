@@ -36,7 +36,7 @@ export const ArtistTopWorksRail: React.FC<ArtistTopWorksRailProps> = ({
         type: "viewAll",
         contextPageOwnerSlug: artist.slug,
         contextPageOwnerId: artist.id,
-      }) as any
+      })
     )
 
     return setTimeout(
@@ -108,7 +108,7 @@ export const ArtistTopWorksRail: React.FC<ArtistTopWorksRailProps> = ({
                       type: "thumbnail",
                       contextPageOwnerSlug: artist.slug,
                       contextPageOwnerId: artist.id,
-                    }) as any
+                    })
                   )
                 }}
               />
