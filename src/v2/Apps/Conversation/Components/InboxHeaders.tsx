@@ -2,7 +2,6 @@ import React, { FC } from "react"
 import styled from "styled-components"
 import {
   ArrowLeftIcon,
-  BorderBox,
   Box,
   Flex,
   FlexProps,
@@ -68,12 +67,17 @@ export const ConversationHeader: FC<ConversationHeaderProps> = ({
 
 export const EmptyInboxHeader: FC<{}> = () => {
   return (
-    // TODO: Once Palette is updated, customize border for BorderBox.
-    <BorderBox height="85px" py={1} alignItems="flex-end">
+    <Flex
+      height="85px"
+      px={2}
+      py={1}
+      alignItems="flex-end"
+      borderBottom={`1px solid ${color("black10")}`}
+    >
       <Sans size="6" weight="medium">
         Inbox
       </Sans>
-    </BorderBox>
+    </Flex>
   )
 }
 
