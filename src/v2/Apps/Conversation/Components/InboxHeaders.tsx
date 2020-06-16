@@ -66,7 +66,7 @@ export const ConversationHeader: FC<ConversationHeaderProps> = ({
   )
 }
 
-export const EmptyInboxHeader = () => {
+export const EmptyInboxHeader: FC<{}> = () => {
   return (
     // TODO: Once Palette is updated, customize border for BorderBox.
     <BorderBox height="85px" py={1} alignItems="flex-end">
