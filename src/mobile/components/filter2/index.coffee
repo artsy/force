@@ -18,7 +18,7 @@ module.exports =
       page: 1
       size: 10
       aggregations: aggregations
-      for_sale: true
+      sort: '-decayed_merch'
 
     if stuckParam
       params.set stuckParam, stuckFacet.id
