@@ -24,7 +24,7 @@ export const FirstSuggestionItem: SFC<Props> = props => {
         <SuggestionWrapper>
           <InnerWrapper
             flexDirection="column"
-            flexGrow="1"
+            flexGrow={1}
             justifyContent="center"
           >
             See full results for "{query}"
@@ -44,7 +44,7 @@ export const SuggestionItem: SFC<Props> = props => {
         <SuggestionWrapper>
           <InnerWrapper
             flexDirection="column"
-            flexGrow="1"
+            flexGrow={1}
             justifyContent="center"
           >
             <DefaultSuggestion {...props} />

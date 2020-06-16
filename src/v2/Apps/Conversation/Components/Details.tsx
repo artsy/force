@@ -63,7 +63,7 @@ export const Details: FC<DetailsProps> = ({ conversation, ...props }) => {
       width={
         props.showDetails ? "376px" : ["376px", "376px", "376px", "376px", "0"]
       }
-      opacity={props.showDetails ? 1 : 0}
+      opacity={props.showDetails ? 1 : (0 as any)}
       transform={props.showDetails ? "translateX(0)" : "translateX(376px)"}
       zIndex={props.showDetails ? 1 : -1}
       {...props}
