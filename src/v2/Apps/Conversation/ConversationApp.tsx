@@ -21,10 +21,38 @@ interface ConversationAppProps {
   router: Router
 }
 
+interface InboxProps {
+  me: ConversationApp_me
+  selectedConversation: ConversationApp_me["conversationsConnection"]["edges"][0]["node"]
+}
+
 const getViewWidth = () => {
   return Math.max(
     window.document.documentElement.clientWidth,
     window.innerWidth || 0
+  )
+}
+
+const Inbox: React.FC<InboxProps> = ({ selectedConversation, me }) => {
+  return (
+    <>
+      <Media at="xs">
+        <MobileInboxHeader />
+      </Media>
+      <Media greaterThan="xs">
+        <FullHeader partnerName={selectedConversation?.to?.name} />
+      </Media>
+      <Conversations me={me} />
+      <Flex
+        display={["none", "flex"]}
+        height="100%"
+        width="100%"
+        justifyContent="center"
+        alignItems="center"
+      >
+        <Spinner />
+      </Flex>
+    </>
   )
 }
 
@@ -73,24 +101,7 @@ export const ConversationApp: React.FC<ConversationAppProps> = props => {
       {isEmpty ? (
         <NoMessages />
       ) : (
-        <>
-          <Media at="xs">
-            <MobileInboxHeader />
-          </Media>
-          <Media greaterThan="xs">
-            <FullHeader partnerName={conversation?.to?.name} />
-          </Media>
-          <Conversations me={me} />
-          <Flex
-            display={["none", "flex"]}
-            height="100%"
-            width="100%"
-            justifyContent="center"
-            alignItems="center"
-          >
-            <Spinner />
-          </Flex>
-        </>
+        <Inbox selectedConversation={conversation} me={me} />
       )}
     </AppContainer>
   )
