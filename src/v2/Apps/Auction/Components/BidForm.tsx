@@ -36,6 +36,7 @@ import {
   getSelectedBid,
   initialValuesForBidding,
 } from "v2/Apps/Auction/Components/Form"
+import { AuctionErrorModal } from "v2/Apps/Auction/Components/AuctionErrorModal"
 
 const {
   validationSchemaForRegisteredUsers,
@@ -95,6 +96,7 @@ export const BidForm: React.FC<Props> = ({
         setFieldError,
         setFieldValue,
         setFieldTouched,
+        setStatus,
         setSubmitting,
         status,
         submitCount,
@@ -123,13 +125,8 @@ export const BidForm: React.FC<Props> = ({
               setFieldTouched("selectedBid")
             }}
             options={displayIncrements}
+            error={touched.selectedBid && errors.selectedBid}
           />
-
-          {touched.selectedBid && errors.selectedBid && (
-            <Sans mt={1} color="red100" size="2">
-              {errors.selectedBid}
-            </Sans>
-          )}
 
           <PricingTransparency
             relayEnvironment={relay.environment}
@@ -169,36 +166,28 @@ export const BidForm: React.FC<Props> = ({
             </>
           )}
 
-          <Flex mb={3} flexDirection="column" justifyContent="center">
-            {requiresCheckbox && (
-              <>
-                <Separator mb={3} />
+          <Spacer mt={3} />
 
-                <Box mx="auto">
-                  <ConditionsOfSaleCheckbox
-                    selected={values.agreeToTerms}
-                    onSelect={value => {
-                      // `setFieldTouched` needs to be called first otherwise it would cause race condition.
-                      setFieldTouched("agreeToTerms")
-                      setFieldValue("agreeToTerms", value)
-                    }}
-                  />
-                </Box>
+          {requiresCheckbox && (
+            <Flex mb={3} flexDirection="column" justifyContent="center">
+              <Box mx="auto">
+                <ConditionsOfSaleCheckbox
+                  selected={values.agreeToTerms}
+                  onSelect={value => {
+                    // `setFieldTouched` needs to be called first otherwise it would cause race condition.
+                    setFieldTouched("agreeToTerms")
+                    setFieldValue("agreeToTerms", value)
+                  }}
+                />
+              </Box>
 
-                {touched.agreeToTerms && errors.agreeToTerms && (
-                  <Sans mt={1} color="red100" size="2" textAlign="center">
-                    {errors.agreeToTerms}
-                  </Sans>
-                )}
-              </>
-            )}
-
-            {status && (
-              <Sans textAlign="center" size="3" color="red100" mb={2}>
-                {status}.
-              </Sans>
-            )}
-          </Flex>
+              {touched.agreeToTerms && errors.agreeToTerms && (
+                <Sans mt={1} color="red100" size="2" textAlign="center">
+                  {errors.agreeToTerms}
+                </Sans>
+              )}
+            </Flex>
+          )}
 
           <Button
             size="large"
@@ -208,6 +197,12 @@ export const BidForm: React.FC<Props> = ({
           >
             Confirm bid
           </Button>
+
+          <AuctionErrorModal
+            show={!!status}
+            onClose={() => setStatus(null)}
+            status={status}
+          />
         </Form>
       )}
     </Formik>

@@ -45,8 +45,38 @@ export const createBidderPositionFailed: ConfirmBidCreateBidderPositionMutationR
   createBidderPosition: {
     result: {
       position: null,
-      status: "FAILED",
-      messageHeader: "Sale Closed to Bids",
+      status: "SALE_CLOSED",
+      messageHeader: "Lot closed",
+    },
+  },
+}
+
+export const createBidderPositionWithLiveBiddingStarted: ConfirmBidCreateBidderPositionMutationResponse = {
+  createBidderPosition: {
+    result: {
+      position: null,
+      status: "LIVE_BIDDING_STARTED",
+      messageHeader: "Live bidding has started",
+    },
+  },
+}
+
+export const createBidderPositionWithErrorBidNotPlaced: ConfirmBidCreateBidderPositionMutationResponse = {
+  createBidderPosition: {
+    result: {
+      position: null,
+      status: "ERROR",
+      messageHeader: "Bid not placed",
+    },
+  },
+}
+
+export const createBidderPositionWithBidderNotQualified: ConfirmBidCreateBidderPositionMutationResponse = {
+  createBidderPosition: {
+    result: {
+      position: null,
+      status: "BIDDER_NOT_QUALIFIED",
+      messageHeader: "Bid not placed",
     },
   },
 }
