@@ -8,7 +8,7 @@ export const PriceRangeFilter: React.FC = () => {
 
   return (
     <Toggle label="Price" expanded>
-      <Flex flexDirection="column" alignItems="left" my={1}>
+      <Flex flexDirection="column" alignItems="left">
         <RadioGroup
           deselectable
           defaultValue={initialRange}

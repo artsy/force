@@ -29,7 +29,7 @@ export const TimePeriodFilter: FC<TimePeriodFilterProps> = ({
 
   return (
     <Toggle label="Time period" expanded={expanded}>
-      <Flex flexDirection="column" my={1}>
+      <Flex flexDirection="column">
         <RadioGroup
           deselectable
           defaultValue={selectedPeriod}

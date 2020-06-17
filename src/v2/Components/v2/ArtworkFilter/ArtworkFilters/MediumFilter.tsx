@@ -16,7 +16,7 @@ export const MediumFilter: FC = () => {
 
   return (
     <Toggle label="Medium" expanded={isExpanded}>
-      <Flex flexDirection="column" alignItems="left" mb={1}>
+      <Flex flexDirection="column" alignItems="left">
         <RadioGroup
           deselectable
           defaultValue={selectedMedium}

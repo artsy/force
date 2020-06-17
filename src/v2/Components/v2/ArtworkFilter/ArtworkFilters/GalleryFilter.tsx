@@ -15,7 +15,7 @@ export const GalleryFilter: FC = () => {
 
   return (
     <Toggle label="Gallery">
-      <Flex flexDirection="column" alignItems="left" my={1}>
+      <Flex flexDirection="column" alignItems="left">
         <RadioGroup
           deselectable
           defaultValue={selectedGallery}
