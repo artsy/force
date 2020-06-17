@@ -88,7 +88,7 @@ describe("Conversation app", () => {
 
         const button = component.find("Button")
         expect(button.length).toBe(1)
-        expect(button.text()).toBe("Explore Artworks")
+        expect(button.text()).toBe("Explore artworks")
 
         const link = component.find("RouterLink")
         expect(link.html()).toContain(`href="/collect"`)

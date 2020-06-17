@@ -22,7 +22,7 @@ export const NoMessages = () => {
           conversations here.
         </Sans>
         <RouterLink to="/collect">
-          <Button>Explore Artworks</Button>
+          <Button>Explore artworks</Button>
         </RouterLink>
       </Flex>
     </Box>
