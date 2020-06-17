@@ -11,7 +11,7 @@ export const NoMessages = () => {
         flexDirection="column"
         justifyContent="center"
         alignItems="center"
-        height="calc(100vh - 145px)"
+        height={["calc(100vh - 250px)", "calc(100vh - 145px)"]}
         px={[2, 4, 1]}
       >
         <Sans size="6" weight="medium" mb={1} textAlign="center">
