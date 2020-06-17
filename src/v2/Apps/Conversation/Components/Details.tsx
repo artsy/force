@@ -114,7 +114,12 @@ export const Details: FC<DetailsProps> = ({ conversation, ...props }) => {
             </Sans>
             {attachments.map(attachment => {
               return (
-                <Link href={attachment.downloadURL} target="_blank" noUnderline>
+                <Link
+                  key={attachment.id}
+                  href={attachment.downloadURL}
+                  target="_blank"
+                  noUnderline
+                >
                   <Flex alignItems="center">
                     <DocumentIcon mr={0.5} />
                     <Sans size="3">{attachment.fileName}</Sans>
