@@ -13,7 +13,6 @@ export type Message_message = {
     } | null;
     readonly attachments: ReadonlyArray<{
         readonly id: string;
-        readonly internalID: string;
         readonly contentType: string;
         readonly fileName: string;
         readonly downloadURL: string;
@@ -28,22 +27,20 @@ export type Message_message$key = {
 
 
 
-const node: ReaderFragment = (function(){
-var v0 = {
-  "kind": "ScalarField",
-  "alias": null,
-  "name": "internalID",
-  "args": null,
-  "storageKey": null
-};
-return {
+const node: ReaderFragment = {
   "kind": "Fragment",
   "name": "Message_message",
   "type": "Message",
   "metadata": null,
   "argumentDefinitions": [],
   "selections": [
-    (v0/*: any*/),
+    {
+      "kind": "ScalarField",
+      "alias": null,
+      "name": "internalID",
+      "args": null,
+      "storageKey": null
+    },
     {
       "kind": "ScalarField",
       "alias": null,
@@ -106,7 +103,6 @@ return {
           "args": null,
           "storageKey": null
         },
-        (v0/*: any*/),
         {
           "kind": "ScalarField",
           "alias": null,
@@ -132,6 +128,5 @@ return {
     }
   ]
 };
-})();
-(node as any).hash = 'a0bb840faf9e20e16a5b20a7e14582aa';
+(node as any).hash = 'ca8c0d1402d6fa269ac0c6573884d489';
 export default node;
