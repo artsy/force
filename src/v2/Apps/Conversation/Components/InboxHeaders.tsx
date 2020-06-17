@@ -65,6 +65,22 @@ export const ConversationHeader: FC<ConversationHeaderProps> = ({
   )
 }
 
+export const EmptyInboxHeader: FC<{}> = () => {
+  return (
+    <Flex
+      height="85px"
+      px={2}
+      py={1}
+      alignItems="flex-end"
+      borderBottom={`1px solid ${color("black10")}`}
+    >
+      <Sans size="6" weight="medium">
+        Inbox
+      </Sans>
+    </Flex>
+  )
+}
+
 interface MobileInboxHeaderProps extends FlexProps, DetailsProps {}
 
 export const MobileInboxHeader: FC<Partial<MobileInboxHeaderProps>> = props => {
