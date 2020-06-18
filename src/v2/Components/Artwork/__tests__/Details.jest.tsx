@@ -41,7 +41,7 @@ describe("Details", () => {
     })
   }
 
-  describe("in artist top works rail", () => {
+  describe("in artist Notable Works rail", () => {
     it("removes artwork's partner and artist name metadata", async () => {
       props = {
         showSaleLine: false,
