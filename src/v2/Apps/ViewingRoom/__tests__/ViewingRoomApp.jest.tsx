@@ -68,7 +68,7 @@ describe("ViewingRoomApp", () => {
           const html = wrapper.html()
           expect(html).toContain("Guy Yanai")
           expect(html).toContain("Subscription Demo GG")
-          expect(html).toContain("Closes in about 1 month")
+          expect(html).toContain("Closes in 1 month")
         })
       })
 
@@ -79,7 +79,7 @@ describe("ViewingRoomApp", () => {
           const html = wrapper.html()
           expect(html).toContain("Guy Yanai")
           expect(html).toContain("Subscription Demo GG")
-          expect(html).toContain("Closes in about 1 month")
+          expect(html).toContain("Closes in 1 month")
         })
       })
     })
@@ -170,7 +170,7 @@ const OpenViewingRoomAppFixture: ViewingRoomApp_OpenTest_QueryRawResponse = {
       id: "UGFydG5lcjo1NTQxMjM3MzcyNjE2OTJiMTk4YzAzMDA=",
       href: "/partner-demo-gg",
     },
-    formattedEndAt: "Closes in about 1 month",
+    formattedEndAt: "Closes in 1 month",
     status: "live",
   },
 }

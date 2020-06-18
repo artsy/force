@@ -9,6 +9,7 @@ export type ViewingRoomHeader_viewingRoom = {
         readonly name: string | null;
     } | null;
     readonly formattedEndAt: string | null;
+    readonly status: string;
     readonly " $refType": "ViewingRoomHeader_viewingRoom";
 };
 export type ViewingRoomHeader_viewingRoom$data = ViewingRoomHeader_viewingRoom;
@@ -64,8 +65,15 @@ const node: ReaderFragment = {
       "name": "formattedEndAt",
       "args": null,
       "storageKey": null
+    },
+    {
+      "kind": "ScalarField",
+      "alias": null,
+      "name": "status",
+      "args": null,
+      "storageKey": null
     }
   ]
 };
-(node as any).hash = 'd30a37f7ed489d8f410d4b330b8d4489';
+(node as any).hash = 'ed9cc4125981063f922c1353569c3ad4';
 export default node;

@@ -34,6 +34,7 @@ export const ViewingRoomHeaderFragmentContainer = createFragmentContainer(
           name
         }
         formattedEndAt
+        status
       }
     `,
   }
@@ -150,6 +151,7 @@ const Metadata: React.FC<ViewingRoomHeaderProps> = props => {
     viewingRoom: {
       partner: { name },
       formattedEndAt,
+      status,
     },
   } = props
 
@@ -168,7 +170,11 @@ const Metadata: React.FC<ViewingRoomHeaderProps> = props => {
         p={2}
       >
         <Text>{name}</Text>
-        <Text>{formattedEndAt}</Text>
+        {status === "closed" ? (
+          <Text>Closed</Text>
+        ) : (
+          <Text>Closes in {formattedEndAt}</Text>
+        )}
       </Flex>
     </Box>
   )
