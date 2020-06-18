@@ -50,6 +50,7 @@ function ChooseArtist(props) {
     autoFocus: true,
     value: artistAutocompleteValue,
     onChange: updateArtistAutocompleteValueAction,
+    "data-test": "chooseArtist",
   }
 
   const renderInputComponent = inputProps => (
