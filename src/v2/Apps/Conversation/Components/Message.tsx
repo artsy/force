@@ -49,36 +49,28 @@ interface AttachmentProps {
 
 export const Attachment: React.FC<AttachmentProps> = props => {
   const { attachment, alignSelf, bgColor, textColor } = props
-  if (attachment.contentType.startsWith("image")) {
-    return (
-      <AttachmentLink href={attachment.downloadURL} target="_blank">
-        <AttachmentContainer
-          p={1}
-          mt={0.5}
-          alignSelf={alignSelf}
-          background={color(bgColor)}
-        >
+
+  return (
+    <AttachmentLink href={attachment.downloadURL} target="_blank">
+      <AttachmentContainer
+        p={1}
+        mt={0.5}
+        alignSelf={alignSelf}
+        background={color(bgColor)}
+      >
+        {attachment.contentType.startsWith("image") ? (
           <Image src={attachment.downloadURL} />
-        </AttachmentContainer>
-      </AttachmentLink>
-    )
-  } else {
-    return (
-      <AttachmentLink href={attachment.downloadURL} target="_blank">
-        <AttachmentContainer
-          alignSelf={alignSelf}
-          background={color(bgColor)}
-          p={1}
-          mt={0.5}
-        >
-          <Sans color={textColor} weight="medium" size="4" mr={2}>
-            {attachment.fileName}
-          </Sans>
-          <DownloadIcon width="24px" height="24px" />
-        </AttachmentContainer>
-      </AttachmentLink>
-    )
-  }
+        ) : (
+          <>
+            <Sans color={textColor} weight="medium" size="4" mr={2}>
+              {attachment.fileName}
+            </Sans>
+            <DownloadIcon width="24px" height="24px" />
+          </>
+        )}
+      </AttachmentContainer>
+    </AttachmentLink>
+  )
 }
 interface MessageProps extends Omit<BoxProps, "color"> {
   message: Message_message
