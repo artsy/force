@@ -20,7 +20,6 @@ interface FlashBannerProps {
  * The component responsible for selecting a determining and displaying a flash message
  */
 export const FlashBanner: React.FC<FlashBannerProps> = props => {
-  if (isServer) return null
   /**
    * Choose which flash message should be shown in the banner, if any
    */
@@ -84,6 +83,7 @@ const TrackedFlashBanner = track({
 
 export const FlashBannerQueryRenderer: React.FC = () => {
   const { relayEnvironment, user } = useSystemContext()
+  if (isServer) return null
 
   return user ? (
     <SystemQueryRenderer
