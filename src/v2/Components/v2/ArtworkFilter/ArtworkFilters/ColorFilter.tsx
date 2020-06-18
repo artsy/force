@@ -24,7 +24,7 @@ export const ColorFilter: FC<ColorFilterProps> = ({ expanded = false }) => {
   }
   return (
     <Toggle label="Color" expanded={expanded}>
-      <Flex flexDirection="column" alignItems="center" my={1}>
+      <Flex flexDirection="column" alignItems="center">
         <>
           <svg
             version="1.1"
