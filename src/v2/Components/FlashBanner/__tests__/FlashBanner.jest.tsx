@@ -322,8 +322,9 @@ describe("Email Confirmation CTA", () => {
           <FlashBannerQueryRenderer />
         </SystemContextProvider>
       )
-      expect(wrapper.find(SystemQueryRenderer).prop("query")).toBeNull()
+      expect(wrapper.find(SystemQueryRenderer).exists()).toBeFalsy()
     })
+
     it("does requests user-specific data from metaphysics if there is a user", () => {
       const wrapper = mount(
         <SystemContextProvider user={{ id: "someonespecial" }}>

@@ -6,6 +6,7 @@ import { useSystemContext } from "v2/Artsy"
 import { EmailConfirmationCTA } from "v2/Components/FlashBanner/EmailConfirmationCTA"
 import { AnalyticsSchema as Schema, track } from "v2/Artsy/Analytics"
 import { SystemQueryRenderer } from "v2/Artsy/Relay/SystemQueryRenderer"
+import { isServer } from "lib/environment"
 import { EmailConfirmationLinkExpired } from "./EmailConfirmationLinkExpired"
 
 interface FlashBannerProps {
@@ -17,9 +18,9 @@ interface FlashBannerProps {
 
 /**
  * The component responsible for selecting a determining and displaying a flash message
- *
  */
 export const FlashBanner: React.FC<FlashBannerProps> = props => {
+  if (isServer) return null
   /**
    * Choose which flash message should be shown in the banner, if any
    */
@@ -84,23 +85,22 @@ const TrackedFlashBanner = track({
 export const FlashBannerQueryRenderer: React.FC = () => {
   const { relayEnvironment, user } = useSystemContext()
 
-  return (
+  return user ? (
     <SystemQueryRenderer
       environment={relayEnvironment}
-      query={
-        user &&
-        graphql`
-          query FlashBannerQuery {
-            me {
-              canRequestEmailConfirmation
-            }
+      query={graphql`
+        query FlashBannerQuery {
+          me {
+            canRequestEmailConfirmation
           }
-        `
-      }
+        }
+      `}
       render={({ props, error }) => {
         if (error) console.error(error)
         return <TrackedFlashBanner {...props} />
       }}
     />
+  ) : (
+    <TrackedFlashBanner />
   )
 }
