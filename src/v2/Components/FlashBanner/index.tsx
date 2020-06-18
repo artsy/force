@@ -20,7 +20,6 @@ interface FlashBannerProps {
  *
  */
 export const FlashBanner: React.FC<FlashBannerProps> = props => {
-  if (typeof window === "undefined") return null
   /**
    * Choose which flash message should be shown in the banner, if any
    */
