@@ -41,6 +41,7 @@ export interface FillwidthItemContainerProps
   hidePartnerName?: boolean
   hideArtistName?: boolean
   useLighterFont?: boolean
+  leftMargin?: number
 }
 
 export class FillwidthItemContainer extends React.Component<
@@ -177,6 +178,7 @@ export const FillwidthItem = styled(FillwidthItemContainer).attrs<
   width: ${props => props.width}px;
   vertical-align: top;
   margin-right: ${props => props.margin || 0}px;
+  margin-left: ${props => props.leftMargin || 0}px;
 
   .artwork-save {
     opacity: 0;

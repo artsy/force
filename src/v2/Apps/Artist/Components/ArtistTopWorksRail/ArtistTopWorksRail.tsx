@@ -87,12 +87,7 @@ export const ArtistTopWorksRail: React.FC<ArtistTopWorksRailProps> = ({
             const { image, id, slug } = node
 
             return (
-              <Box
-                height={376}
-                mb={3}
-                width="auto"
-                ml={isMobile && index === 0 ? 2 : 0}
-              >
+              <Box height={376} mb={3} width="auto">
                 <FillwidthItem
                   artwork={node}
                   hidePartnerName
@@ -102,6 +97,7 @@ export const ArtistTopWorksRail: React.FC<ArtistTopWorksRailProps> = ({
                   imageHeight={image?.resized?.height}
                   width={image?.resized?.height * image?.imageAspectRatio}
                   margin={5}
+                  leftMargin={isMobile && index === 0 ? 20 : 0}
                   showMetadata
                   showExtended={false}
                   onClick={() => {
