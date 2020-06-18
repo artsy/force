@@ -11,10 +11,10 @@
     lodash "4.17.15"
     prettier "1.19.1"
 
-"@artsy/cohesion@1.2.0":
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/@artsy/cohesion/-/cohesion-1.2.0.tgz#cc65221b9add164794127a272e4f33befa209a41"
-  integrity sha512-gO4M/pyfOXeu7uqSRcXyuxLflyMwqhMqAoTMPd6et/CTjBbMqoZq0Pp4LRX+tx+SiSkf0GfAsAi1BBeBLedvNw==
+"@artsy/cohesion@1.12.0":
+  version "1.12.0"
+  resolved "https://registry.yarnpkg.com/@artsy/cohesion/-/cohesion-1.12.0.tgz#4ee91c83f53c9f59d18765ded3defc69ef47778f"
+  integrity sha512-TSU90e5j8mjK90mUkMZsXXt/qo9PtmPym6/CmzPf9gIKMTNS9wZbi6OD+Kb1li0C8S2ZIxWdKfc5pgfqxz4gfQ==
 
 "@artsy/detect-responsive-traits@^0.0.5":
   version "0.0.5"
@@ -40,10 +40,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/gemup/-/gemup-0.0.3.tgz#0397a472bb69432dab3d2d66ca30556815aa96e7"
   integrity sha512-W///stXDTz3jSQw8UtT0BClVk4DLOsVp7a8v12efsEZvrZNT+85YBqPWq2DP1EX3ILZR1hGZhbKr/Gl5uti56Q==
 
-"@artsy/palette@10.0.0":
-  version "10.0.0"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-10.0.0.tgz#91b37ae6ac614b256185fa835229a329e8f44dbb"
-  integrity sha512-VxGOcN6jd62V8PzNwEEL2i/3iMcm4s0/JsSXgk2/9lBn8LIpKQpijM/VZfizz2V0+oSIaeKVwbFDobXchxfWAA==
+"@artsy/palette@11.0.2":
+  version "11.0.2"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-11.0.2.tgz#82ebc99f7279dd89dc21e24ea581c301bfe518ea"
+  integrity sha512-YFdBIhh52tQTcMxCjQIwbcT2vx2ojb8zQ7Rcq5Ua9gMRo+m2Uac9F9UhVjAxv6sN0I2x9EGcxEiNMMKOladXUg==
   dependencies:
     "@styled-system/theme-get" "^5.1.2"
     babel-plugin-styled-components "^1.10.0"
@@ -92,10 +92,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/react-html-parser/-/react-html-parser-3.0.2.tgz#6213d662441acf0bd8c9ee953aa77ac8d9cf1cdd"
   integrity sha512-FXiRSqfSvwpz/QgwaqFvjJsbDmo9qMGpvUp/0p1V6muaJbGnfxkTSxAYWmYlFst6bmjhVxCYKxvgQhEVE03Wfg==
 
-"@artsy/reaction@26.52.0":
-  version "26.52.0"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-26.52.0.tgz#489e3e310b98176730e82a43477d4b77ad7c6e72"
-  integrity sha512-wLWBo3MA+cj72F27Lr6A/DP3RYE6BDKAVngbWfLdwX/bkIfIh3aK5IEBjOtCLZecI0WDIJWExNhEH7B/ibYQ4Q==
+"@artsy/reaction@26.53.0":
+  version "26.53.0"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-26.53.0.tgz#61cbeecedfba4b66256b68f427e7b7e094231f57"
+  integrity sha512-9/rUEas6sc+l4wuEwiozv7KcU/pGPQ+ujO9u+y0k/t3y4tXXYG04EQGlDmcPGgSFwbrlxqivLz0zkCRZMXl/yw==
   dependencies:
     "@artsy/detect-responsive-traits" "^0.0.5"
     "@artsy/fresnel" "^1.0.13"
@@ -3986,6 +3986,18 @@
   dependencies:
     "@types/prop-types" "*"
     csstype "^2.2.0"
+
+"@types/redis@2.8.22":
+  version "2.8.22"
+  resolved "https://registry.yarnpkg.com/@types/redis/-/redis-2.8.22.tgz#8935227cbe39080506b625276d64974ddbcb9ea4"
+  integrity sha512-O21YLcAtcSzax8wy4CfxMNjIMNf5X2c1pKTXDWLMa2p77Igvy7wuNjWVv+Db93wTvRvLLev6oq3IE7gxNKFZyg==
+  dependencies:
+    "@types/node" "*"
+
+"@types/relay-runtime@8.0.10":
+  version "8.0.10"
+  resolved "https://registry.yarnpkg.com/@types/relay-runtime/-/relay-runtime-8.0.10.tgz#df049d9f7d5ee5a77ea7d3a02c5ea94e09714387"
+  integrity sha512-tr+lJ8HsiePU1rsbUttEpwU3BerBZJerJy+mq2v1o0Jud88EvpXmK/jzrlcevzcLMvuJC2tpKMSFPlG3jOARfg==
 
 "@types/serve-static@*":
   version "1.13.1"
@@ -21894,10 +21906,10 @@ typescript-template-language-service-decorator@^2.2.0:
   resolved "https://registry.yarnpkg.com/typescript-template-language-service-decorator/-/typescript-template-language-service-decorator-2.2.0.tgz#4ee6d580f307fb9239978e69626f2775b8a59b2a"
   integrity sha512-xiolqt1i7e22rpqMaprPgSFVgU64u3b9n6EJlAaUYE61jumipKAdI1+O5khPlWslpTUj80YzjUKjJ2jxT0D74w==
 
-typescript@3.9.3:
-  version "3.9.3"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.9.3.tgz#d3ac8883a97c26139e42df5e93eeece33d610b8a"
-  integrity sha512-D/wqnB2xzNFIcoBG9FG8cXRDjiqSTbG2wd8DMZeQyJlP1vfTkIxH4GKveWaEBYySKIg+USu+E+EDIR47SqnaMQ==
+typescript@3.9.5:
+  version "3.9.5"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.9.5.tgz#586f0dba300cde8be52dd1ac4f7e1009c1b13f36"
+  integrity sha512-hSAifV3k+i6lEoCJ2k6R2Z/rp/H3+8sdmcn5NrS3/3kE7+RyZXm9aqvxWqjEXHAd8b0pShatpcdMTvEdvAJltQ==
 
 ua-parser-js@0.7.19, ua-parser-js@^0.7.18:
   version "0.7.19"
@@ -22767,9 +22779,9 @@ websocket-driver@>=0.5.1:
     websocket-extensions ">=0.1.1"
 
 websocket-extensions@>=0.1.1:
-  version "0.1.3"
-  resolved "https://registry.yarnpkg.com/websocket-extensions/-/websocket-extensions-0.1.3.tgz#5d2ff22977003ec687a4b87073dfbbac146ccf29"
-  integrity sha512-nqHUnMXmBzT0w570r2JpJxfiSD1IzoI+HGVdd3aZ0yNi3ngvQ4jv1dtHt5VGxfI2yj5yqImPhOK4vmIh2xMbGg==
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/websocket-extensions/-/websocket-extensions-0.1.4.tgz#7f8473bc839dfd87608adb95d7eb075211578a42"
+  integrity sha512-OqedPIGOfsDlo31UNwYbCFMSaO9m9G/0faIHj5/dZFDMFqPTcx6UwqyOy3COEaEOg/9VsGIpdqn62W5KhoKSpg==
 
 whatwg-encoding@^1.0.1, whatwg-encoding@^1.0.3:
   version "1.0.3"

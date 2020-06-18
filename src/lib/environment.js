@@ -9,6 +9,7 @@ const isStaging = NODE_ENV === "staging"
 const isProduction = NODE_ENV === "production"
 const isDeploy = isStaging || isProduction
 const isCI = CI === "true"
+const isServer = typeof window === "undefined"
 const basePath = process.cwd()
 
 module.exports = {
@@ -16,10 +17,11 @@ module.exports = {
   BUILD_SERVER,
   DEBUG,
   NODE_ENV,
-  isDevelopment,
-  isStaging,
-  isProduction,
-  isDeploy,
-  isCI,
   basePath,
+  isCI,
+  isDeploy,
+  isDevelopment,
+  isProduction,
+  isServer,
+  isStaging,
 }

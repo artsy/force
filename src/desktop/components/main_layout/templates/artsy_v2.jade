@@ -11,10 +11,6 @@ block head
   != styleTags
 
 block body
-  //- All hydration data should be loaded before React et al
-  script.
-    var __BOOTSTRAP__ = !{JSON.stringify(data)}
-
   #react-root
     != body
   if pageType == 'search'
@@ -25,7 +21,13 @@ block body
   if jsonLD
     include ./json_ld
 
+//- All hydration data should be loaded before React et al.
+block prepend scripts
+  script.
+    var __BOOTSTRAP__ = !{JSON.stringify(data)}
+  != scripts
+
 block append scripts
   script( src=asset("/assets/artsy-v2.js") )
-  != scripts
+
 

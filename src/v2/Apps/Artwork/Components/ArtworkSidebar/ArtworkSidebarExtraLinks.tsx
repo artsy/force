@@ -27,7 +27,7 @@ const Container = ({ children }) => (
   context_module: Schema.ContextModule.Sidebar,
 })
 class ArtworkSidebarExtraLinksContainer extends React.Component<
-ArtworkSidebarExtraLinksContainerProps
+  ArtworkSidebarExtraLinksContainerProps
 > {
   @track(() => ({
     action_type: Schema.ActionType.Click,
@@ -55,7 +55,10 @@ ArtworkSidebarExtraLinksContainerProps
     type: Schema.Type.Link,
   }))
   onClickBuyNowFAQ() {
-    window.open(sd.APP_URL + "/buy-now-feature-faq", "_blank")
+    window.open(
+      "https://support.artsy.net/hc/en-us/sections/360008203114-Buy-Now-and-Make-Offer",
+      "_blank"
+    )
   }
 
   @track(() => ({
@@ -64,9 +67,10 @@ ArtworkSidebarExtraLinksContainerProps
     type: Schema.Type.Link,
   }))
   onClickCollectorFAQ() {
-    this.props.mediator &&
-      this.props.mediator.trigger &&
-      this.props.mediator.trigger("openCollectorFAQModal")
+    window.open(
+      "https://support.artsy.net/hc/en-us/sections/360008203054-Contact-a-gallery",
+      "_blank"
+    )
   }
 
   @track(() => ({
@@ -150,7 +154,9 @@ ArtworkSidebarExtraLinksContainerProps
       return (
         <Container>
           Have a question?{" "}
-          <Link onClick={this.onClickBuyNowFAQ.bind(this)}>Read our FAQ</Link>{" "}
+          <Link onClick={this.onClickBuyNowFAQ.bind(this)}>
+            Visit our help center
+          </Link>{" "}
           or{" "}
           <Link onClick={this.onClickBuyNowAskSpecialist.bind(this)}>
             ask a specialist
@@ -164,7 +170,7 @@ ArtworkSidebarExtraLinksContainerProps
         <Container>
           Have a question?{" "}
           <Link onClick={this.onClickCollectorFAQ.bind(this)}>
-            Read our FAQ
+            Visit our help center
           </Link>
           .
         </Container>

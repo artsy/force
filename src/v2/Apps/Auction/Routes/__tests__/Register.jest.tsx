@@ -2,10 +2,7 @@ import React from "react"
 import { graphql } from "react-relay"
 
 import * as Schema from "v2/Artsy/Analytics/Schema"
-import { ErrorModal } from "v2/Components/Modal/ErrorModal"
-import { ModalButton } from "v2/Components/Modal/ModalDialog"
 import { createTestEnv } from "v2/DevTools/createTestEnv"
-import { expectOne } from "v2/DevTools/RootTestPage"
 
 import { routes_RegisterQueryRawResponse } from "v2/__generated__/routes_RegisterQuery.graphql"
 import {
@@ -180,35 +177,32 @@ describe("Routes/Register ", () => {
     expect(mockPostEvent).toHaveBeenCalledTimes(1)
 
     expect(window.location.assign).toHaveBeenCalledWith(
-      `https://example.com/auction/${RegisterQueryResponseFixture.sale.slug}/confirm-registration`
+      `/auction/${RegisterQueryResponseFixture.sale.slug}/confirm-registration`
     )
   })
 
-  it("displays an error modal if the `createCreditCard` mutation fails", async () => {
+  it("displays an error message if the `createCreditCard` mutation fails", async () => {
     const env = setupTestEnv()
     const page = await env.buildPage()
 
     createTokenMock.mockResolvedValue(stripeTokenResponse)
-
     env.mutations.useResultsOnce(createCreditCardAndUpdatePhoneFailed)
 
     await page.fillFormWithValidValues()
     await page.submitForm()
 
-    let errorModal = expectOne(page.find(ErrorModal))
-    expect(errorModal.props().show).toBe(true)
-
-    expectOne(errorModal.find(ModalButton)).simulate("click")
-
-    errorModal = expectOne(page.find(ErrorModal))
-    expect(errorModal.props().show).toBe(false)
+    expect(page.text()).toMatch(
+      "Your card was declined. Please contact your bank or use a different card."
+    )
 
     expect(mockPostEvent).toBeCalledWith({
       action_type: Schema.ActionType.RegistrationSubmitFailed,
       context_page: Schema.PageName.AuctionRegistrationPage,
       auction_slug: RegisterQueryResponseFixture.sale.slug,
       auction_state: RegisterQueryResponseFixture.sale.status,
-      error_messages: ["The `createCreditCard` mutation failed."],
+      error_messages: [
+        "Your card was declined. Please contact your bank or use a different card.",
+      ],
       sale_id: RegisterQueryResponseFixture.sale.internalID,
       user_id: RegisterQueryResponseFixture.me.internalID,
     })
@@ -270,7 +264,7 @@ describe("Routes/Register ", () => {
     await page.submitForm()
 
     expect(page.text()).toContain(
-      "Please make sure your internet connection is active and try again"
+      "Something went wrong. Please try again or contact support@artsy.net."
     )
   })
 })

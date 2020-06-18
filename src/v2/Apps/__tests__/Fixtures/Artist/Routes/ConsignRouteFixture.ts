@@ -9,6 +9,7 @@ export const ConsignRouteFixture: ConsignRoute_Test_QueryRawResponse = {
         artworks: [
           {
             artwork: {
+              imageTitle: "This Image Has a Title, A. Artist, 2020",
               image: {
                 imageURL:
                   "https://d32dm0rphc51dk.cloudfront.net/JB8GqSuSHtsDHDIQ9nyPUw/medium.jpg",
@@ -71,13 +72,12 @@ export const ConsignRouteFixture: ConsignRoute_Test_QueryRawResponse = {
               slug: "alex-katz-luna-park-2-maravell-67-schroder-68",
               is_saved: false,
               is_biddable: false,
-              is_acquireable: false,
-              is_offerable: false,
             },
             realizedPrice: "$1,300",
           },
           {
             artwork: {
+              imageTitle: "This Image Has a Title, A. Artist, 2020",
               image: {
                 imageURL:
                   "https://d32dm0rphc51dk.cloudfront.net/NcjBjx9Xz_pTqQp1G0gXWQ/medium.jpg",
@@ -121,13 +121,12 @@ export const ConsignRouteFixture: ConsignRoute_Test_QueryRawResponse = {
               slug: "alex-katz-rose-bud-30",
               is_saved: false,
               is_biddable: false,
-              is_acquireable: true,
-              is_offerable: true,
             },
             realizedPrice: "$5,000",
           },
           {
             artwork: {
+              imageTitle: "This Image Has a Title, A. Artist, 2020",
               image: {
                 imageURL:
                   "https://d32dm0rphc51dk.cloudfront.net/2PzNL_vTOOx3Py9zfe7upw/medium.jpg",
@@ -192,13 +191,12 @@ export const ConsignRouteFixture: ConsignRoute_Test_QueryRawResponse = {
                 "alex-katz-fog-and-night-from-the-northern-landscapes-series",
               is_saved: false,
               is_biddable: false,
-              is_acquireable: false,
-              is_offerable: false,
             },
             realizedPrice: "$8,500",
           },
           {
             artwork: {
+              imageTitle: "This Image Has a Title, A. Artist, 2020",
               image: {
                 imageURL:
                   "https://d32dm0rphc51dk.cloudfront.net/WNHtB_gQLN3HxPW4nNGAjA/medium.jpg",
@@ -242,8 +240,6 @@ export const ConsignRouteFixture: ConsignRoute_Test_QueryRawResponse = {
               slug: "alex-katz-laura-1-49",
               is_saved: false,
               is_biddable: false,
-              is_acquireable: true,
-              is_offerable: true,
             },
             realizedPrice: "$1,300",
           },

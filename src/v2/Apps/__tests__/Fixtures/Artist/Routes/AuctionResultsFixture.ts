@@ -4,6 +4,7 @@ export const AuctionResultsFixture: AuctionResults_Test_QueryRawResponse = {
   artist: {
     id: "QXJ0aXN0OnBhYmxvLXBpY2Fzc28=",
     slug: "pablo-picasso",
+    name: "Pablo Picasso",
     auctionResultsConnection: {
       pageInfo: { hasNextPage: true, endCursor: "YXJyYXljb25uZWN0aW9uOjk=" },
       pageCursors: {

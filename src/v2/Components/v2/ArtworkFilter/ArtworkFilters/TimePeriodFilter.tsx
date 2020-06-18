@@ -23,7 +23,7 @@ export const TimePeriodFilter: FC<TimePeriodFilterProps> = ({
   }
 
   const selectedPeriod = get(
-    filterContext.filters,
+    filterContext.currentlySelectedFilters(),
     f => f.majorPeriods[0] || ""
   )
 

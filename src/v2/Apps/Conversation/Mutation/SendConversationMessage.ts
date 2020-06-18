@@ -22,7 +22,7 @@ export const SendConversationMessage = (
     const conversationStore = store.get(conversation.id)
     const connection = ConnectionHandler.getConnection(
       conversationStore,
-      "Messages_messages"
+      "Messages_messagesConnection"
     )
     ConnectionHandler.insertEdgeBefore(connection, newMessageEdge)
   }
@@ -63,14 +63,14 @@ export const SendConversationMessage = (
         type: "RANGE_ADD",
         parentName: "conversation",
         parentID: "id",
-        connectionName: "messages",
+        connectionName: "messagesConnection",
         edgeName: "messageEdge",
         rangeBehaviors: {
           "": "append",
         },
         connectionInfo: [
           {
-            key: "Messages_messages",
+            key: "Messages_messagesConnection",
             rangeBehavior: "append",
           },
         ],

@@ -91,13 +91,8 @@ app.use(require("./apps/articles").app)
 app.use(require("./apps/page"))
 app.use(require("./apps/shortcuts"))
 
-// Apps that need to fetch a profile
-app.use(require("./apps/profile"))
-app.use(require("./apps/partner2"))
-app.use(require("./apps/partner"))
-app.use(require("./apps/fair"))
-app.use(require("./apps/fair_info"))
-app.use(require("./apps/fair_organizer"))
+// Mount all `v2/Apps`.
+app.use(require("./apps/artsy-v2/server").app)
 
 // User profiles
 app.use(require("./apps/user"))
@@ -105,6 +100,13 @@ app.use(require("./apps/user"))
 // Used to test various SSR configurations
 app.use(require("./apps/ssr-experiments/server").app)
 
-// Mount all `v2/Apps`. This ~must~ come last as it mounts our v2 apps in a
-// wild-card fashion.
-app.use(require("./apps/artsy-v2/server").app)
+// Apps that need to fetch a profile.
+// Because profile routes are usually top-level and use wild-card matchers in their routers,
+// it's best to keep them last. Otherwise it's easy for these to unexpectedly
+// catch conventional app routes.
+app.use(require("./apps/profile"))
+app.use(require("./apps/partner2"))
+app.use(require("./apps/partner"))
+app.use(require("./apps/fair"))
+app.use(require("./apps/fair_info"))
+app.use(require("./apps/fair_organizer"))

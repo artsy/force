@@ -48,6 +48,7 @@ global.Promise = require("bluebird")
 
 const artsyXapp = require("artsy-xapp")
 const cache = require("./lib/cache.coffee")
+const { setup: relayCacheSetup } = require("./lib/cacheClient")
 const express = require("express")
 const once = require("lodash").once
 const setup = require("./lib/setup").default
@@ -96,8 +97,12 @@ const startServer = once(() => {
   }
 })
 
+const initCache = cb => {
+  cache.setup(() => relayCacheSetup(cb))
+}
+
 // Connect to Redis
-cache.setup(() => {
+initCache(() => {
   // Add all of the middleware and global setup
   setup(app)
 

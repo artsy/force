@@ -76,8 +76,11 @@ export function confirmBidRedirect(
 const auctionPath = (sale: { slug: string }): string => `/auction/${sale.slug}`
 const registrationFlowPath = (sale: { slug: string }): string =>
   auctionPath(sale) + "/registration-flow"
+
+// TODO: Duplicate of `saleConfirmRegistrationPath` in `src/v2/Apps/Auction/Components/Form/helpers.tsx`
 const confirmRegistrationPath = (sale: { slug: string }): string =>
   auctionPath(sale) + "/confirm-registration"
+
 const artworkPath = (
   sale: { slug: string },
   artwork: { slug: string }

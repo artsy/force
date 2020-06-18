@@ -5,7 +5,7 @@ import colors from "../Assets/Colors"
 
 export interface LinkProps
   extends React.Props<TextLink>,
-  React.HTMLAttributes<TextLink> {
+    React.HTMLAttributes<TextLink> {
   href?: string
   underline?: boolean
   color?: string

@@ -13,6 +13,7 @@ import {
   Spacer,
 } from "@artsy/palette"
 import { Overview_artist } from "v2/__generated__/Overview_artist.graphql"
+import { ArtistTopWorksRailFragmentContainer as ArtistTopWorksRail } from "v2/Apps/Artist/Components/ArtistTopWorksRail/ArtistTopWorksRail"
 import { ArtistCollectionsRailContent as ArtistCollectionsRail } from "v2/Apps/Artist/Components/ArtistCollectionsRail"
 import { hasSections as showMarketInsights } from "v2/Apps/Artist/Components/MarketInsights/MarketInsights"
 import { GenesFragmentContainer as Genes } from "v2/Apps/Artist/Routes/Overview/Components/Genes"
@@ -183,6 +184,13 @@ export class OverviewRoute extends React.Component<OverviewRouteProps, {}> {
       <>
         <Media greaterThan="xs">
           <Row>
+            <Col>
+              <ArtistTopWorksRail artist={artist} onOverviewTab />
+            </Col>
+          </Row>
+          <Separator mt={5} mb={2} />
+
+          <Row>
             <Col sm={8}>
               <>
                 {showArtistBio && (
@@ -239,8 +247,12 @@ export class OverviewRoute extends React.Component<OverviewRouteProps, {}> {
         </Media>
 
         <Media at="xs">
+          <ArtistTopWorksRail artist={artist} onOverviewTab />
+
           {showArtistBio && (
             <>
+              <Separator mt={5} mb={2} />
+
               <Sans size="5">Biography</Sans>
               <Spacer mb={1} />
               <ArtistBio
@@ -441,6 +453,7 @@ export const OverviewRouteFragmentContainer = createFragmentContainer(
         ...FollowArtistButton_artist
         ...WorksForSaleRail_artist
         ...ArtistConsignButton_artist
+        ...ArtistTopWorksRail_artist
         slug
         id
         statuses {

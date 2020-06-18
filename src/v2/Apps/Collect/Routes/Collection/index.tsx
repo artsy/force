@@ -27,6 +27,7 @@ import {
 } from "v2/Components/v2/ArtworkFilter/ArtworkFilterContext"
 import { updateUrl } from "v2/Components/v2/ArtworkFilter/Utils/urlBuilder"
 import { TrackingProp } from "react-tracking"
+import { OwnerType, clickedMainArtworkGrid } from "@artsy/cohesion"
 
 interface CollectionAppProps extends SystemContextProps {
   collection: Collection_collection
@@ -56,6 +57,7 @@ export class CollectionApp extends Component<CollectionAppProps> {
       collection,
       match: { location },
       relay,
+      tracking,
     } = this.props
     const {
       title,
@@ -139,6 +141,17 @@ export class CollectionApp extends Component<CollectionAppProps> {
                     artworksConnection.aggregations as SharedArtworkFilterContextProps["aggregations"]
                   }
                   onChange={updateUrl}
+                  onArtworkBrickClick={artwork => {
+                    tracking.trackEvent(
+                      clickedMainArtworkGrid({
+                        contextPageOwnerType: OwnerType.collection,
+                        contextPageOwnerId: collection.id,
+                        contextPageOwnerSlug: collection.slug,
+                        destinationPageOwnerId: artwork.internalID,
+                        destinationPageOwnerSlug: artwork.slug,
+                      }) as any
+                    )
+                  }}
                 >
                   <BaseArtworkFilter
                     relay={relay}
@@ -198,6 +211,7 @@ export const CollectionRefetchContainer = createRefetchContainer(
         description
         headerImage
         slug
+        id
         title
         query {
           artist_id: artistID

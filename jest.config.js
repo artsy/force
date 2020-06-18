@@ -19,7 +19,8 @@ module.exports = {
      */
     {
       ...sharedConfig,
-      modulePathIgnorePatterns: ["v2"],
+      displayName: "v1",
+      testPathIgnorePatterns: ["<rootDir>/src/v2"],
       testRegex: ".*\\.jest\\.(ts|tsx|js|jsx)$",
       setupFiles: ["<rootDir>/test.config.js"],
       roots: ["<rootDir>/src"],
@@ -28,6 +29,7 @@ module.exports = {
     // Config for src/v2 (former Reaction code)
     {
       ...sharedConfig,
+      displayName: "v2",
       testMatch: ["**/src/v2/**/*.jest.(ts|tsx)"],
       moduleDirectories: ["node_modules", "<rootDir>/src/v2"],
       setupFilesAfterEnv: ["<rootDir>/src/v2/jest.envSetup.ts"],

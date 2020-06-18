@@ -9,15 +9,20 @@ import { data as sd } from "sharify"
 
 import {
   RelayNetworkLayer,
-  cacheMiddleware,
   errorMiddleware,
   loggerMiddleware,
   urlMiddleware,
 } from "react-relay-network-modern/node8"
+
+import { cacheMiddleware } from "./middleware/cache/cacheMiddleware"
 import { metaphysicsErrorHandlerMiddleware } from "./middleware/metaphysicsErrorHandlerMiddleware"
 import { metaphysicsExtensionsLoggerMiddleware } from "./middleware/metaphysicsExtensionsLoggerMiddleware"
 import { principalFieldErrorHandlerMiddleware } from "./middleware/principalFieldErrorHandlerMiddleware"
 import { searchBarImmediateResolveMiddleware } from "./middleware/searchBarImmediateResolveMiddleware"
+
+import createLogger from "v2/Utils/logger"
+
+const logger = createLogger("v2/Artsy/Relay/createRelaySSREnvironment")
 
 const isServer = typeof window === "undefined"
 const isDevelopment =
@@ -78,7 +83,7 @@ export function createRelaySSREnvironment(config: Config = {}) {
     timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone
     headers["X-TIMEZONE"] = timeZone
   } catch (error) {
-    console.warn("Browser does not support i18n API, not setting TZ header.")
+    logger.warn("Browser does not support i18n API, not setting TZ header.")
   }
 
   const middlewares = [
@@ -98,6 +103,7 @@ export function createRelaySSREnvironment(config: Config = {}) {
       size: 100, // max 100 requests
       ttl: 900000, // 15 minutes
       clearOnMutation: true,
+      disableServerSideCache: !!user, // disable server-side cache if logged in
       onInit: queryResponseCache => {
         if (!isServer) {
           hydrateCacheFromSSR(queryResponseCache)
@@ -148,7 +154,7 @@ export function hydrateCacheFromSSR(queryResponseCache) {
         queryResponseCache.set(queryID, variables, json) // See: https://facebook.github.io/relay/docs/en/network-layer.html#caching
       })
     } catch (error) {
-      console.error("Relay/createEnvironment", error)
+      logger.error(error)
     }
   }
 }

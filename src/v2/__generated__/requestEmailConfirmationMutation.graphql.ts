@@ -1,8 +1,8 @@
 /* tslint:disable */
 
 import { ConcreteRequest } from "relay-runtime";
-export type EmailConfirmationCTAMutationVariables = {};
-export type EmailConfirmationCTAMutationResponse = {
+export type requestEmailConfirmationMutationVariables = {};
+export type requestEmailConfirmationMutationResponse = {
     readonly sendConfirmationEmail: {
         readonly confirmationOrError: {
             readonly unconfirmedEmail?: string | null;
@@ -13,15 +13,15 @@ export type EmailConfirmationCTAMutationResponse = {
         } | null;
     } | null;
 };
-export type EmailConfirmationCTAMutation = {
-    readonly response: EmailConfirmationCTAMutationResponse;
-    readonly variables: EmailConfirmationCTAMutationVariables;
+export type requestEmailConfirmationMutation = {
+    readonly response: requestEmailConfirmationMutationResponse;
+    readonly variables: requestEmailConfirmationMutationVariables;
 };
 
 
 
 /*
-mutation EmailConfirmationCTAMutation {
+mutation requestEmailConfirmationMutation {
   sendConfirmationEmail(input: {}) {
     confirmationOrError {
       __typename
@@ -95,7 +95,7 @@ return {
   "kind": "Request",
   "fragment": {
     "kind": "Fragment",
-    "name": "EmailConfirmationCTAMutation",
+    "name": "requestEmailConfirmationMutation",
     "type": "Mutation",
     "metadata": null,
     "argumentDefinitions": [],
@@ -128,7 +128,7 @@ return {
   },
   "operation": {
     "kind": "Operation",
-    "name": "EmailConfirmationCTAMutation",
+    "name": "requestEmailConfirmationMutation",
     "argumentDefinitions": [],
     "selections": [
       {
@@ -166,12 +166,12 @@ return {
   },
   "params": {
     "operationKind": "mutation",
-    "name": "EmailConfirmationCTAMutation",
+    "name": "requestEmailConfirmationMutation",
     "id": null,
-    "text": "mutation EmailConfirmationCTAMutation {\n  sendConfirmationEmail(input: {}) {\n    confirmationOrError {\n      __typename\n      ... on SendConfirmationEmailMutationSuccess {\n        unconfirmedEmail\n      }\n      ... on SendConfirmationEmailMutationFailure {\n        mutationError {\n          error\n          message\n        }\n      }\n    }\n  }\n}\n",
+    "text": "mutation requestEmailConfirmationMutation {\n  sendConfirmationEmail(input: {}) {\n    confirmationOrError {\n      __typename\n      ... on SendConfirmationEmailMutationSuccess {\n        unconfirmedEmail\n      }\n      ... on SendConfirmationEmailMutationFailure {\n        mutationError {\n          error\n          message\n        }\n      }\n    }\n  }\n}\n",
     "metadata": {}
   }
 };
 })();
-(node as any).hash = '5e61b752f39c278e40b8fd9c5498f3b0';
+(node as any).hash = '4b0a1029678628b4e7d8f1af73795e3e';
 export default node;

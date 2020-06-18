@@ -54,10 +54,7 @@ describe("CollectionsRail", () => {
     it("Tracks impressions", () => {
       const { Component, dispatch } = mockTracking(ArtistCollectionsRail)
       const component = mount(<Component {...props} />)
-      component
-        .find(Waypoint)
-        .getElement()
-        .props.onEnter()
+      component.find(Waypoint).getElement().props.onEnter()
 
       expect(dispatch).toBeCalledWith({
         action_type: "Impression",
@@ -123,10 +120,7 @@ describe("CollectionsRail", () => {
       const updatedCollections = { collections: collectionsCopy }
       const { Component, dispatch } = mockTracking(ArtistCollectionsRail)
       const component = mount(<Component {...updatedCollections} />)
-      component
-        .find(ArrowButton)
-        .at(1)
-        .simulate("click")
+      component.find(ArrowButton).at(1).simulate("click")
       // Settimeout needed here for carousel render
       setTimeout(() => {
         expect(dispatch).toBeCalledWith({

@@ -33,19 +33,6 @@ export type ArtistHeader_artist = {
         readonly follows: number | null;
         readonly forSaleArtworks: number | null;
     } | null;
-    readonly statuses: {
-        readonly artworks: boolean | null;
-    } | null;
-    readonly carousel: {
-        readonly images: ReadonlyArray<{
-            readonly href: string | null;
-            readonly resized: {
-                readonly url: string | null;
-                readonly width: number | null;
-                readonly height: number | null;
-            } | null;
-        } | null> | null;
-    } | null;
     readonly " $fragmentRefs": FragmentRefs<"FollowArtistButton_artist">;
     readonly " $refType": "ArtistHeader_artist";
 };
@@ -301,91 +288,6 @@ return {
       ]
     },
     {
-      "kind": "LinkedField",
-      "alias": null,
-      "name": "statuses",
-      "storageKey": null,
-      "args": null,
-      "concreteType": "ArtistStatuses",
-      "plural": false,
-      "selections": [
-        {
-          "kind": "ScalarField",
-          "alias": null,
-          "name": "artworks",
-          "args": null,
-          "storageKey": null
-        }
-      ]
-    },
-    {
-      "kind": "LinkedField",
-      "alias": null,
-      "name": "carousel",
-      "storageKey": null,
-      "args": null,
-      "concreteType": "ArtistCarousel",
-      "plural": false,
-      "selections": [
-        {
-          "kind": "LinkedField",
-          "alias": null,
-          "name": "images",
-          "storageKey": null,
-          "args": null,
-          "concreteType": "Image",
-          "plural": true,
-          "selections": [
-            {
-              "kind": "ScalarField",
-              "alias": null,
-              "name": "href",
-              "args": null,
-              "storageKey": null
-            },
-            {
-              "kind": "LinkedField",
-              "alias": null,
-              "name": "resized",
-              "storageKey": "resized(height:200)",
-              "args": [
-                {
-                  "kind": "Literal",
-                  "name": "height",
-                  "value": 200
-                }
-              ],
-              "concreteType": "ResizedImageUrl",
-              "plural": false,
-              "selections": [
-                {
-                  "kind": "ScalarField",
-                  "alias": null,
-                  "name": "url",
-                  "args": null,
-                  "storageKey": null
-                },
-                {
-                  "kind": "ScalarField",
-                  "alias": null,
-                  "name": "width",
-                  "args": null,
-                  "storageKey": null
-                },
-                {
-                  "kind": "ScalarField",
-                  "alias": null,
-                  "name": "height",
-                  "args": null,
-                  "storageKey": null
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
       "kind": "FragmentSpread",
       "name": "FollowArtistButton_artist",
       "args": null
@@ -393,5 +295,5 @@ return {
   ]
 };
 })();
-(node as any).hash = 'ae811fc1342c868c7f512c4e371c7a38';
+(node as any).hash = '2a5daadf3e6c82010b50b022e3a24276';
 export default node;

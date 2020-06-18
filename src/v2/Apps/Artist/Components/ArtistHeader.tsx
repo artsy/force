@@ -1,21 +1,17 @@
 import { ContextModule, Intent } from "@artsy/cohesion"
-import { Box, Button, Flex, Image, Sans, Serif, Spacer } from "@artsy/palette"
+import { Box, Flex, Sans, Spacer } from "@artsy/palette"
 import { ArtistHeader_artist } from "v2/__generated__/ArtistHeader_artist.graphql"
-import { StyledLink } from "v2/Apps/Artist/Components/StyledLink"
 import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
 import { Mediator, SystemContextConsumer } from "v2/Artsy"
-import { Track, track } from "v2/Artsy/Analytics"
+import { track } from "v2/Artsy/Analytics"
 import * as Schema from "v2/Artsy/Analytics/Schema"
-import { RouterLink } from "v2/Artsy/Router/RouterLink"
-import { Carousel } from "v2/Components/Carousel"
 import { FollowArtistButtonFragmentContainer as FollowArtistButton } from "v2/Components/FollowButton/FollowArtistButton"
-import React, { Component, Fragment } from "react"
+import React, { Component } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { get } from "v2/Utils/get"
 import { openAuthToFollowSave } from "v2/Utils/openAuthModal"
 import { Media } from "v2/Utils/Responsive"
-import { userIsAdmin } from "v2/Utils/user"
 import { ArtistIndicator } from "./ArtistIndicator"
 import { highestCategory } from "./MarketInsights/MarketInsights"
 
@@ -40,17 +36,6 @@ const H1 = styled.h1`
 
 const H2 = H1.withComponent("h2")
 
-const WorksForSaleButtonWrapper = styled(Box)`
-  position: absolute;
-  top: 166px;
-  left: 12px;
-`
-
-export const WorksForSaleButton = styled(Box)`
-  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.1);
-  border-radius: 2px;
-`
-
 interface Props {
   artist: ArtistHeader_artist
   user?: User
@@ -61,16 +46,6 @@ const CATEGORIES = {
   "blue-chip": "Blue Chip Representation",
   "top-established": "Established Representation",
   "top-emerging": "Emerging Representation",
-}
-
-type Image = Props["artist"]["carousel"]["images"][0]
-
-const carouselSlideTrack: Track<null, null, [Image]> = track
-
-const shopAllWorksButtonText = (forSaleArtworksCount: number) => {
-  return forSaleArtworksCount > 0
-    ? `Shop works for sale (${forSaleArtworksCount.toLocaleString()})`
-    : `Browse artworks`
 }
 
 @track<Props>(
@@ -105,100 +80,30 @@ export class ArtistHeader extends Component<Props> {
   }
 }
 
-@track()
 export class LargeArtistHeader extends Component<Props> {
-  @carouselSlideTrack((_props, _state, [slide]) => {
-    return {
-      action_type: Schema.ActionType.Click,
-      // TODO: Or keep using ‘thumbnail’ as per old Force schema
-      subject: "carouselSlide",
-      // TODO: Are you sure this is no longer needed? Like, do we not need to
-      //       identify the specific slide?
-      destination_path: slide.href,
-    }
-  })
-  onClickSlide(slide) {
-    // no-op
-  }
-
-  @track<Props>(props => ({
-    action_type: Schema.ActionType.Click,
-    subject: "Shop all works for sale",
-    destination_path: `artist/${props.artist.slug}/works-for-sale`,
-  }))
-  handleBrowseWorksClick() {
-    // no-op
-  }
-
   render() {
     const { props } = this
-    const {
-      artist: { carousel, statuses },
-      user,
-    } = props
-
-    const hasImages = carousel && carousel.images
-    const isAdmin = userIsAdmin(user)
+    const { user } = props
 
     return (
       <HorizontalPadding>
         <Box width="100%" data-test={ContextModule.artistHeader}>
-          {hasImages && (
-            <>
-              <Carousel
-                height="200px"
-                options={{ pageDots: false }}
-                data={carousel.images as object[]}
-                render={(slide: Image, slideIndex: number) => {
-                  return (
-                    <RouterLink
-                      to={slide.href}
-                      onClick={() => this.onClickSlide(slide)}
-                    >
-                      <Image
-                        px={0.3}
-                        lazyLoad={slideIndex > 5}
-                        src={slide.resized.url}
-                        width={slide.resized.width}
-                        height={slide.resized.height}
-                        preventRightClick={!isAdmin}
-                      />
-                    </RouterLink>
-                  )
-                }}
-              />
-              {statuses.artworks && (
-                <WorksForSaleButtonWrapper pl={4}>
-                  <StyledLink
-                    onClick={() => this.handleBrowseWorksClick()}
-                    to={`/artist/${props.artist.slug}/works-for-sale`}
-                  >
-                    <WorksForSaleButton>
-                      <Button variant="primaryWhite" size="small">
-                        {shopAllWorksButtonText(
-                          props.artist.counts.forSaleArtworks
-                        )}
-                      </Button>
-                    </WorksForSaleButton>
-                  </StyledLink>
-                </WorksForSaleButtonWrapper>
-              )}
-            </>
-          )}
-          <Spacer my={2} />
+          <Spacer my={3} />
 
           <span id="jumpto-ArtistHeader" />
 
           <Flex justifyContent="space-between">
             <Box>
               <H1>
-                <Serif size="10">{props.artist.name}</Serif>
+                <Sans size="10" unstable_trackIn>
+                  {props.artist.name}
+                </Sans>
               </H1>
               <Flex>
                 <H2>
-                  <Serif size="3">
+                  <Sans size="3t">
                     {props.artist.formattedNationalityAndBirthday}
-                  </Serif>
+                  </Sans>
                 </H2>
                 <Spacer mr={2} />
               </Flex>
@@ -239,97 +144,27 @@ export class LargeArtistHeader extends Component<Props> {
   }
 }
 
-@track()
 export class SmallArtistHeader extends Component<Props> {
-  @carouselSlideTrack((_props, _state, [slide]) => {
-    return {
-      action_type: Schema.ActionType.Click,
-      // TODO: Or keep using ‘thumbnail’ as per old Force schema
-      subject: "carouselSlide",
-      // TODO: Are you sure this is no longer needed? Like, do we not need to
-      //       identify the specific slide?
-      destination_path: slide.href,
-    }
-  })
-  onClickSlide(slide) {
-    // no-op
-  }
-
-  @track<Props>(props => ({
-    action_type: Schema.ActionType.Click,
-    subject: "Clicked shop works for sale",
-    destination_path: `artist/${props.artist.slug}/works-for-sale`,
-  }))
-  handleBrowseWorksClick() {
-    // no-op
-  }
-
   render() {
     const props = this.props
-    const {
-      artist: { carousel, statuses },
-      user,
-    } = props
-
-    const hasImages = carousel && carousel.images
-    const isAdmin = userIsAdmin(user)
+    const { user } = props
 
     return (
       <Flex flexDirection="column" data-test={ContextModule.artistHeader}>
-        {hasImages && (
-          <Fragment>
-            <Carousel
-              data={carousel.images}
-              height="180px"
-              options={{ pageDots: false }}
-              render={slide => {
-                return (
-                  <RouterLink
-                    to={slide.href}
-                    onClick={() => this.onClickSlide(slide)}
-                  >
-                    <Image
-                      src={slide.resized.url}
-                      px={0.3}
-                      width={slide.resized.width}
-                      height={slide.resized.height}
-                      preventRightClick={!isAdmin}
-                    />
-                  </RouterLink>
-                )
-              }}
-            />
-            {statuses.artworks && (
-              <WorksForSaleButtonWrapper>
-                <StyledLink
-                  onClick={() => this.handleBrowseWorksClick()}
-                  to={`/artist/${props.artist.slug}/works-for-sale`}
-                >
-                  <WorksForSaleButton>
-                    <Button variant="primaryWhite" size="small">
-                      {shopAllWorksButtonText(
-                        props.artist.counts.forSaleArtworks
-                      )}
-                    </Button>
-                  </WorksForSaleButton>
-                </StyledLink>
-              </WorksForSaleButtonWrapper>
-            )}
-            <Spacer my={2} />
-          </Fragment>
-        )}
         <span id="jumpto-ArtistHeader" />
         <Box mx={2}>
           <Flex flexDirection="column" alignItems="center">
             <H1>
-              <Serif size="5">{props.artist.name}</Serif>
+              <Sans mt={3} size="8" unstable_trackIn>
+                {props.artist.name}
+              </Sans>
             </H1>
             <Flex>
               <Box mx={1}>
                 <H2>
-                  <Serif size="2">
+                  <Sans size="3t">
                     {props.artist.formattedNationalityAndBirthday}
-                  </Serif>
+                  </Sans>
                 </H2>
               </Box>
             </Flex>
@@ -398,7 +233,7 @@ const handleOpenAuth = (mediator, artist) => {
 const renderAuctionHighlight = artist => {
   const topAuctionResult = get(
     artist,
-    a => artist.auctionResultsConnection.edges[0].node.price_realized.display
+    () => artist.auctionResultsConnection.edges[0].node.price_realized.display
   )
   if (topAuctionResult) {
     const auctionLabel = topAuctionResult + " Auction Record"
@@ -483,19 +318,7 @@ export const ArtistHeaderFragmentContainer = createFragmentContainer(
           follows
           forSaleArtworks
         }
-        statuses {
-          artworks
-        }
-        carousel {
-          images {
-            href
-            resized(height: 200) {
-              url
-              width
-              height
-            }
-          }
-        }
+
         ...FollowArtistButton_artist
       }
     `,

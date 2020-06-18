@@ -12,6 +12,8 @@ export type ArtistArtworkFilter_artist = {
         readonly artworks: number | null;
         readonly has_make_offer_artworks: boolean | null;
     } | null;
+    readonly slug: string;
+    readonly internalID: string;
     readonly filtered_artworks: {
         readonly id: string;
         readonly " $fragmentRefs": FragmentRefs<"ArtworkFilterArtworkGrid2_filtered_artworks">;
@@ -209,6 +211,20 @@ const node: ReaderFragment = {
       ]
     },
     {
+      "kind": "ScalarField",
+      "alias": null,
+      "name": "slug",
+      "args": null,
+      "storageKey": null
+    },
+    {
+      "kind": "ScalarField",
+      "alias": null,
+      "name": "internalID",
+      "args": null,
+      "storageKey": null
+    },
+    {
       "kind": "LinkedField",
       "alias": "filtered_artworks",
       "name": "filterArtworksConnection",
@@ -339,5 +355,5 @@ const node: ReaderFragment = {
     }
   ]
 };
-(node as any).hash = '02c62c9770b9f883d3b6897af6e0c679';
+(node as any).hash = 'caa1cb1ee80638fc72aea4d53608a99d';
 export default node;

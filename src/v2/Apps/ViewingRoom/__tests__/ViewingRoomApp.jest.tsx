@@ -4,6 +4,7 @@ import ViewingRoomApp from "../ViewingRoomApp"
 import { graphql } from "react-relay"
 import { ViewingRoomApp_OpenTest_QueryRawResponse } from "v2/__generated__/ViewingRoomApp_OpenTest_Query.graphql"
 import { ViewingRoomApp_ClosedTest_QueryRawResponse } from "v2/__generated__/ViewingRoomApp_ClosedTest_Query.graphql"
+import { ViewingRoomApp_UnfoundTest_QueryRawResponse } from "v2/__generated__/ViewingRoomApp_UnfoundTest_Query.graphql"
 import { Breakpoint } from "@artsy/palette"
 
 jest.unmock("react-relay")
@@ -158,6 +159,41 @@ describe("ViewingRoomApp", () => {
       })
     })
   })
+
+  describe("with unfound viewing room", () => {
+    const getWrapper = async (
+      breakpoint: Breakpoint = "lg",
+      response: ViewingRoomApp_UnfoundTest_QueryRawResponse = UnfoundViewingRoomAppFixture
+    ) => {
+      return renderRelayTree({
+        Component: ({ viewingRoom }) => {
+          return (
+            <MockBoot breakpoint={breakpoint}>
+              <ViewingRoomApp viewingRoom={viewingRoom}>
+                some child
+              </ViewingRoomApp>
+            </MockBoot>
+          )
+        },
+        query: graphql`
+          query ViewingRoomApp_UnfoundTest_Query($slug: ID!) @raw_response_type {
+            viewingRoom(id: $slug) {
+              ...ViewingRoomApp_viewingRoom
+            }
+          }
+        `,
+        variables: {
+          slug,
+        },
+        mockData: response,
+      })
+    }
+    it("returns 404 page", async () => {
+      const wrapper = await getWrapper()
+      const html = wrapper.html()
+      expect(html).toContain("Sorry, the page you were looking for doesn’t exist at this URL.")
+    })
+  })
 })
 
 const OpenViewingRoomAppFixture: ViewingRoomApp_OpenTest_QueryRawResponse = {
@@ -188,4 +224,8 @@ const ClosedViewingRoomAppFixture: ViewingRoomApp_ClosedTest_QueryRawResponse = 
     formattedEndAt: "Closed",
     status: "closed",
   },
+}
+
+const UnfoundViewingRoomAppFixture: ViewingRoomApp_UnfoundTest_QueryRawResponse = {
+  viewingRoom: null,
 }
