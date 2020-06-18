@@ -20,6 +20,7 @@ interface FlashBannerProps {
  *
  */
 export const FlashBanner: React.FC<FlashBannerProps> = props => {
+  if (typeof window === "undefined") return null
   /**
    * Choose which flash message should be shown in the banner, if any
    */
@@ -82,18 +83,21 @@ const TrackedFlashBanner = track({
 })(FlashBanner)
 
 export const FlashBannerQueryRenderer: React.FC = () => {
-  const { relayEnvironment } = useSystemContext()
+  const { relayEnvironment, user } = useSystemContext()
 
   return (
     <SystemQueryRenderer
       environment={relayEnvironment}
-      query={graphql`
-        query FlashBannerQuery {
-          me {
-            canRequestEmailConfirmation
+      query={
+        user &&
+        graphql`
+          query FlashBannerQuery {
+            me {
+              canRequestEmailConfirmation
+            }
           }
-        }
-      `}
+        `
+      }
       render={({ props, error }) => {
         if (error) console.error(error)
         return <TrackedFlashBanner {...props} />
