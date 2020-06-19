@@ -121,11 +121,18 @@ export interface ConversationProps {
 const Conversation: React.FC<ConversationProps> = props => {
   const { conversation, relay } = props
 
-  const bottomOfPage = useRef()
+  const bottomOfPage = useRef(null)
+  const initialMount = useRef(true)
 
   const scrollToBottom = () => {
-    const bottomOfPageCurrent = bottomOfPage.current as any
-    bottomOfPageCurrent.scrollIntoView({ behavior: "smooth" })
+    if (bottomOfPage.current !== null) {
+      const scrollOptions = initialMount.current ? {} : { behavior: "smooth" }
+      bottomOfPage.current.scrollIntoView(scrollOptions)
+    }
+
+    if (initialMount.current) {
+      initialMount.current = false
+    }
   }
 
   useEffect(scrollToBottom, [conversation])
