@@ -128,10 +128,6 @@ const Conversation: React.FC<ConversationProps> = props => {
     bottomOfPageCurrent.scrollIntoView({ behavior: "smooth" })
   }
 
-  useEffect(() => {
-    scrollToBottom()
-  })
-
   useEffect(scrollToBottom, [conversation])
 
   useEffect(() => {
