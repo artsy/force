@@ -42,5 +42,6 @@ export const conversationRoutes: RouteConfig[] = [
     cacheConfig: {
       force: true,
     },
+    ignoreScrollBehavior: true,
   },
 ]
