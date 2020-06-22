@@ -170,6 +170,7 @@ const OpenViewingRoomAppFixture: ViewingRoomApp_OpenTest_QueryRawResponse = {
       id: "UGFydG5lcjo1NTQxMjM3MzcyNjE2OTJiMTk4YzAzMDA=",
       href: "/partner-demo-gg",
     },
+    distanceToOpen: null,
     distanceToClose: "Closes in 1 month",
     status: "live",
   },
@@ -185,7 +186,8 @@ const ClosedViewingRoomAppFixture: ViewingRoomApp_ClosedTest_QueryRawResponse = 
       id: "UGFydG5lcjo1NTQxMjM3MzcyNjE2OTJiMTk4YzAzMDA=",
       href: "/partner-demo-gg",
     },
-    distanceToClose: "Closed",
+    distanceToOpen: null,
+    distanceToClose: null,
     status: "closed",
   },
 }
