@@ -13,9 +13,12 @@ interface ItemProps {
   item: Conversation_conversation["items"][0]["item"]
 }
 
+type ItemType = "Artwork" | "Show"
+
 const Item: React.FC<ItemProps> = props => {
   const { item } = props
-  const itemType = item.__typename
+  if (item.__typename === "%other") return null
+  const itemType = item.__typename as ItemType
 
   const getImage = item => {
     if (itemType === "Artwork") {
