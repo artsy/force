@@ -13,9 +13,9 @@ interface ItemProps {
   item: Conversation_conversation["items"][0]["item"]
 }
 
-type ItemType = "Artwork" | "Show"
+export type ItemType = "Artwork" | "Show"
 
-const Item: React.FC<ItemProps> = props => {
+export const Item: React.FC<ItemProps> = props => {
   const { item } = props
   if (item.__typename === "%other") return null
   const itemType = item.__typename as ItemType
@@ -33,21 +33,22 @@ const Item: React.FC<ItemProps> = props => {
   const itemDetails = item => {
     if (item.__typename === "Artwork") {
       return [
-        <Sans size="4" weight="medium" color="white100">
+        <Sans key={1} size="4" weight="medium" color="white100">
           {item.artistNames}
         </Sans>,
-        <Sans size="2" color="white100">
+        <Sans key={2} size="2" color="white100">
           {item.title} / {item.date}
         </Sans>,
       ]
     } else if (item.__typename === "Show") {
       const itemLocation = item.fair?.location?.city
       return [
-        <Sans size="4" weight="medium" color="white100">
+        <Sans key={1} size="4" weight="medium" color="white100">
           {item.fair.name}
         </Sans>,
-        <Sans size="2" color="white100">
-          {itemLocation && `${itemLocation}, `} {item?.fair?.exhibitionPeriod}
+        <Sans key={2} size="2" color="white100">
+          {itemLocation && `${itemLocation}, `}
+          {item?.fair?.exhibitionPeriod}
         </Sans>,
       ]
     }
