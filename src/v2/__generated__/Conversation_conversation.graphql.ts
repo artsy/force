@@ -49,7 +49,12 @@ export type Conversation_conversation = {
             readonly id: string;
             readonly fair: {
                 readonly name: string | null;
+                readonly exhibitionPeriod: string | null;
+                readonly location: {
+                    readonly city: string | null;
+                } | null;
             } | null;
+            readonly href: string | null;
             readonly name: string | null;
             readonly coverImage: {
                 readonly url: string | null;
@@ -96,6 +101,13 @@ v3 = {
   "kind": "ScalarField",
   "alias": null,
   "name": "__typename",
+  "args": null,
+  "storageKey": null
+},
+v4 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "href",
   "args": null,
   "storageKey": null
 };
@@ -337,13 +349,7 @@ return {
                   "args": null,
                   "storageKey": null
                 },
-                {
-                  "kind": "ScalarField",
-                  "alias": null,
-                  "name": "href",
-                  "args": null,
-                  "storageKey": null
-                },
+                (v4/*: any*/),
                 {
                   "kind": "LinkedField",
                   "alias": null,
@@ -386,9 +392,35 @@ return {
                   "concreteType": "Fair",
                   "plural": false,
                   "selections": [
-                    (v2/*: any*/)
+                    (v2/*: any*/),
+                    {
+                      "kind": "ScalarField",
+                      "alias": null,
+                      "name": "exhibitionPeriod",
+                      "args": null,
+                      "storageKey": null
+                    },
+                    {
+                      "kind": "LinkedField",
+                      "alias": null,
+                      "name": "location",
+                      "storageKey": null,
+                      "args": null,
+                      "concreteType": "Location",
+                      "plural": false,
+                      "selections": [
+                        {
+                          "kind": "ScalarField",
+                          "alias": null,
+                          "name": "city",
+                          "args": null,
+                          "storageKey": null
+                        }
+                      ]
+                    }
                   ]
                 },
+                (v4/*: any*/),
                 (v2/*: any*/),
                 {
                   "kind": "LinkedField",
@@ -417,5 +449,5 @@ return {
   ]
 };
 })();
-(node as any).hash = '2b55ef84e7aa4bfd35bc7585eabc3c11';
+(node as any).hash = 'c7eb6ad394197b3f381a612ca7bbcb12';
 export default node;
