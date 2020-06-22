@@ -156,7 +156,6 @@ export class OverviewRoute extends React.Component<OverviewRouteProps, {}> {
     }
 
     const { artist } = this.props
-    console.log("OverviewRoute -> render -> this.props", this.props)
     const showArtistInsights =
       showMarketInsights(this.props.artist) || artist.insights.length > 0
     const showArtistBio = Boolean(artist.biographyBlurb.text)

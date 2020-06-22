@@ -12,7 +12,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { get } from "v2/Utils/get"
 import { openAuthToFollowSave } from "v2/Utils/openAuthModal"
-import { data as sd } from "sharify"
+import { getENV } from "v2/Utils/getENV"
 
 interface RecommendedArtistProps {
   artist: RecommendedArtist_artist
@@ -59,7 +59,7 @@ const RecommendedArtist: FC<
 > = ({ artist, onArtworkClicked, fullBleedRail }) => {
   const { user, mediator } = useContext(SystemContext)
   const artistData = get(artist, a => a.artworks_connection.edges, [])
-  const isMobile = sd?.IS_MOBILE
+  const isMobile = getENV("IS_MOBILE") === true
 
   return (
     <Box data-test={ContextModule.relatedArtistsRail}>
@@ -116,8 +116,8 @@ const RecommendedArtist: FC<
                 targetHeight={HEIGHT}
                 imageHeight={HEIGHT}
                 width={HEIGHT * aspect_ratio}
-                margin={10}
-                leftMargin={isMobile && fullBleedRail && index === 0 ? 20 : 0}
+                marginRight={10}
+                marginLeft={isMobile && fullBleedRail && index === 0 ? 20 : 0}
                 user={user}
                 mediator={mediator}
                 onClick={onArtworkClicked}

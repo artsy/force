@@ -29,19 +29,19 @@ export interface FillwidthItemContainerProps
     React.HTMLProps<FillwidthItemContainer> {
   artwork: FillwidthItem_artwork
   contextModule: AuthContextModule
+  hideArtistName?: boolean
+  hidePartnerName?: boolean
   imageHeight?: number
-  margin?: number
-  showExtended?: boolean
-  showMetadata?: boolean
+  lazyLoad?: boolean
+  marginLeft?: number
+  marginRight?: number
   mediator?: Mediator
   onClick?: () => void
+  showExtended?: boolean
+  showMetadata?: boolean
   targetHeight?: number
-  width?: number
-  lazyLoad?: boolean
-  hidePartnerName?: boolean
-  hideArtistName?: boolean
   useLighterFont?: boolean
-  leftMargin?: number
+  width?: number
 }
 
 export class FillwidthItemContainer extends React.Component<
@@ -177,8 +177,8 @@ export const FillwidthItem = styled(FillwidthItemContainer).attrs<
   display: inline-block;
   width: ${props => props.width}px;
   vertical-align: top;
-  margin-right: ${props => props.margin || 0}px;
-  margin-left: ${props => props.leftMargin || 0}px;
+  margin-right: ${props => props.marginRight || 0}px;
+  margin-left: ${props => props.marginLeft || 0}px;
 
   .artwork-save {
     opacity: 0;

@@ -7,10 +7,10 @@ import { once } from "lodash"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import Waypoint from "react-waypoint"
-import { data as sd } from "sharify"
 import styled from "styled-components"
 import Events from "v2/Utils/Events"
 import { ArtistCollectionEntityFragmentContainer as ArtistCollectionEntity } from "./ArtistCollectionEntity"
+import { getENV } from "v2/Utils/getENV"
 
 interface ArtistCollectionsRailProps {
   collections: ArtistCollectionsRail_collections
@@ -44,7 +44,7 @@ export class ArtistCollectionsRail extends React.Component<
 
   render() {
     const { collections } = this.props
-    const isMobile = sd?.IS_MOBILE
+    const isMobile = getENV("IS_MOBILE") === true
 
     if (collections.length > 3) {
       return (

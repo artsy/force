@@ -10,7 +10,7 @@ import { scrollIntoView } from "v2/Utils/scrollHelpers"
 import { useTracking } from "v2/Artsy"
 import styled from "styled-components"
 import { ContextModule, OwnerType, clickedEntityGroup } from "@artsy/cohesion"
-import { data as sd } from "sharify"
+import { getENV } from "v2/Utils/getENV"
 
 interface ArtistTopWorksRailProps {
   artist: ArtistTopWorksRail_artist
@@ -21,7 +21,7 @@ export const ArtistTopWorksRail: React.FC<ArtistTopWorksRailProps> = ({
   artist,
   onOverviewTab,
 }) => {
-  const isMobile = sd?.IS_MOBILE
+  const isMobile = getENV("IS_MOBILE") === true
   const tracking = useTracking()
   const carouselHeight = 300
   const artworks = artist?.filterArtworksConnection?.edges ?? []
@@ -96,8 +96,8 @@ export const ArtistTopWorksRail: React.FC<ArtistTopWorksRailProps> = ({
                   targetHeight={image?.resized?.height}
                   imageHeight={image?.resized?.height}
                   width={image?.resized?.height * image?.imageAspectRatio}
-                  margin={5}
-                  leftMargin={isMobile && index === 0 ? 20 : 0}
+                  marginRight={5}
+                  marginLeft={isMobile && index === 0 ? 20 : 0}
                   showMetadata
                   showExtended={false}
                   onClick={() => {
