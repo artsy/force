@@ -62,7 +62,7 @@ export class ArtistCollectionsRail extends React.Component<
             </Sans>
           </H2>
 
-          <Box mx={isMobile ? "-20px" : 0}>
+          <Box mx={[-20, 0]}>
             <Carousel
               height="200px"
               options={{

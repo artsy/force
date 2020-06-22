@@ -76,7 +76,7 @@ export const ArtistTopWorksRail: React.FC<ArtistTopWorksRailProps> = ({
           </Media>
         </StyledLink>
       </Flex>
-      <Box mx={isMobile ? "-20px" : 0}>
+      <Box mx={[-20, 0]}>
         <Carousel
           data={artworks}
           height={carouselHeight}

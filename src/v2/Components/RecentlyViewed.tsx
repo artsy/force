@@ -49,7 +49,7 @@ export class RecentlyViewed extends React.Component<RecentlyViewedProps> {
 
                 <Spacer mb={3} />
 
-                <Box mx={isMobile ? "-20px" : 0}>
+                <Box mx={[-20, 0]}>
                   <Carousel
                     data={me.recentlyViewedArtworksConnection.edges}
                     render={(artwork, index) => {

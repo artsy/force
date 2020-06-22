@@ -102,7 +102,7 @@ const RecommendedArtist: FC<
 
       <Spacer mb={3} />
 
-      <Box mx={isMobile && fullBleedRail ? "-20px" : 0}>
+      <Box mx={[-20, 0]}>
         <Carousel
           height="240px"
           data={artistData}
