@@ -33,8 +33,8 @@ export const ViewingRoomHeaderFragmentContainer = createFragmentContainer(
         partner {
           name
         }
-        distanceToStart
-        distanceToEnd
+        distanceToOpen
+        distanceToClose
         status
       }
     `,
@@ -151,8 +151,8 @@ const Metadata: React.FC<ViewingRoomHeaderProps> = props => {
   const {
     viewingRoom: {
       partner: { name },
-      distanceToStart,
-      distanceToEnd,
+      distanceToOpen,
+      distanceToClose,
       status,
     },
   } = props
@@ -168,9 +168,9 @@ const Metadata: React.FC<ViewingRoomHeaderProps> = props => {
       case "closed":
         return <Text>Closed</Text>
       case "live":
-        return <Text>Closes in {distanceToEnd}</Text>
+        return <Text>Closes in {distanceToClose}</Text>
       case "scheduled":
-        return <Text>Opens in {distanceToStart}</Text>
+        return <Text>Opens in {distanceToOpen}</Text>
       default:
         return null
     }
