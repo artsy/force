@@ -168,8 +168,10 @@ const Metadata: React.FC<ViewingRoomHeaderProps> = props => {
       case "closed":
         return <Text>Closed</Text>
       case "live":
+        if (distanceToClose === null) return null
         return <Text>Closes in {distanceToClose}</Text>
       case "scheduled":
+        if (distanceToOpen === null) return null
         return <Text>Opens in {distanceToOpen}</Text>
       default:
         return null
