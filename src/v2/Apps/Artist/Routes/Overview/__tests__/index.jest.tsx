@@ -247,8 +247,8 @@ describe("OverviewRoute", () => {
     })
   })
 
-  describe("Artist Top Works Rail", () => {
-    it("Displays Top Works rail", () => {
+  describe("Artist Notable Works Rail", () => {
+    it("Displays Notable Works rail", () => {
       const wrapper = getWrapper(defaultArtist)
 
       expect(wrapper.find(ArtistTopWorksRail).length).toEqual(2) // renders 2 because of multiple breakpoints
