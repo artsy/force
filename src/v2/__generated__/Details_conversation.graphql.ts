@@ -7,6 +7,18 @@ export type Details_conversation = {
         readonly name: string;
         readonly initials: string | null;
     };
+    readonly messagesConnection: {
+        readonly edges: ReadonlyArray<{
+            readonly node: {
+                readonly attachments: ReadonlyArray<{
+                    readonly id: string;
+                    readonly contentType: string;
+                    readonly fileName: string;
+                    readonly downloadURL: string;
+                } | null> | null;
+            } | null;
+        } | null> | null;
+    } | null;
     readonly items: ReadonlyArray<{
         readonly item: ({
             readonly __typename: "Artwork";
@@ -41,11 +53,18 @@ const node: ReaderFragment = (function(){
 var v0 = {
   "kind": "ScalarField",
   "alias": null,
+  "name": "__typename",
+  "args": null,
+  "storageKey": null
+},
+v1 = {
+  "kind": "ScalarField",
+  "alias": null,
   "name": "href",
   "args": null,
   "storageKey": null
 },
-v1 = [
+v2 = [
   {
     "kind": "ScalarField",
     "alias": "thumbnailUrl",
@@ -64,7 +83,18 @@ return {
   "kind": "Fragment",
   "name": "Details_conversation",
   "type": "Conversation",
-  "metadata": null,
+  "metadata": {
+    "connection": [
+      {
+        "count": "count",
+        "cursor": "after",
+        "direction": "forward",
+        "path": [
+          "messagesConnection"
+        ]
+      }
+    ]
+  },
   "argumentDefinitions": [
     {
       "kind": "LocalArgument",
@@ -107,6 +137,111 @@ return {
     },
     {
       "kind": "LinkedField",
+      "alias": "messagesConnection",
+      "name": "__Messages_messagesConnection_connection",
+      "storageKey": null,
+      "args": null,
+      "concreteType": "MessageConnection",
+      "plural": false,
+      "selections": [
+        {
+          "kind": "LinkedField",
+          "alias": null,
+          "name": "edges",
+          "storageKey": null,
+          "args": null,
+          "concreteType": "MessageEdge",
+          "plural": true,
+          "selections": [
+            {
+              "kind": "LinkedField",
+              "alias": null,
+              "name": "node",
+              "storageKey": null,
+              "args": null,
+              "concreteType": "Message",
+              "plural": false,
+              "selections": [
+                {
+                  "kind": "LinkedField",
+                  "alias": null,
+                  "name": "attachments",
+                  "storageKey": null,
+                  "args": null,
+                  "concreteType": "Attachment",
+                  "plural": true,
+                  "selections": [
+                    {
+                      "kind": "ScalarField",
+                      "alias": null,
+                      "name": "id",
+                      "args": null,
+                      "storageKey": null
+                    },
+                    {
+                      "kind": "ScalarField",
+                      "alias": null,
+                      "name": "contentType",
+                      "args": null,
+                      "storageKey": null
+                    },
+                    {
+                      "kind": "ScalarField",
+                      "alias": null,
+                      "name": "fileName",
+                      "args": null,
+                      "storageKey": null
+                    },
+                    {
+                      "kind": "ScalarField",
+                      "alias": null,
+                      "name": "downloadURL",
+                      "args": null,
+                      "storageKey": null
+                    }
+                  ]
+                },
+                (v0/*: any*/)
+              ]
+            },
+            {
+              "kind": "ScalarField",
+              "alias": null,
+              "name": "cursor",
+              "args": null,
+              "storageKey": null
+            }
+          ]
+        },
+        {
+          "kind": "LinkedField",
+          "alias": null,
+          "name": "pageInfo",
+          "storageKey": null,
+          "args": null,
+          "concreteType": "PageInfo",
+          "plural": false,
+          "selections": [
+            {
+              "kind": "ScalarField",
+              "alias": null,
+              "name": "endCursor",
+              "args": null,
+              "storageKey": null
+            },
+            {
+              "kind": "ScalarField",
+              "alias": null,
+              "name": "hasNextPage",
+              "args": null,
+              "storageKey": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "LinkedField",
       "alias": null,
       "name": "items",
       "storageKey": null,
@@ -123,18 +258,12 @@ return {
           "concreteType": null,
           "plural": false,
           "selections": [
-            {
-              "kind": "ScalarField",
-              "alias": null,
-              "name": "__typename",
-              "args": null,
-              "storageKey": null
-            },
+            (v0/*: any*/),
             {
               "kind": "InlineFragment",
               "type": "Artwork",
               "selections": [
-                (v0/*: any*/),
+                (v1/*: any*/),
                 {
                   "kind": "LinkedField",
                   "alias": null,
@@ -143,7 +272,7 @@ return {
                   "args": null,
                   "concreteType": "Image",
                   "plural": false,
-                  "selections": (v1/*: any*/)
+                  "selections": (v2/*: any*/)
                 },
                 {
                   "kind": "FragmentSpread",
@@ -156,7 +285,7 @@ return {
               "kind": "InlineFragment",
               "type": "Show",
               "selections": [
-                (v0/*: any*/),
+                (v1/*: any*/),
                 {
                   "kind": "LinkedField",
                   "alias": "image",
@@ -165,7 +294,7 @@ return {
                   "args": null,
                   "concreteType": "Image",
                   "plural": false,
-                  "selections": (v1/*: any*/)
+                  "selections": (v2/*: any*/)
                 }
               ]
             }
@@ -176,5 +305,5 @@ return {
   ]
 };
 })();
-(node as any).hash = '2dd761847f272aa82aa89742fb2aac0d';
+(node as any).hash = 'adf50c39a69901a855db9dd38c7176d4';
 export default node;
