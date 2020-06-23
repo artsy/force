@@ -34,11 +34,11 @@ const ViewingRoomApp: React.FC<ViewingRoomAppProps> = ({
         {viewingRoom.status === "closed" ? (
           <ViewingRoomClosed viewingRoom={viewingRoom} />
         ) : (
-            <>
-              <ViewingRoomTabBar mb={[2, 3]} />
-              {children}
-            </>
-          )}
+          <>
+            <ViewingRoomTabBar mb={[2, 3]} />
+            {children}
+          </>
+        )}
 
         <Box mx={2}>
           <Separator mt={6} mb={3} />
