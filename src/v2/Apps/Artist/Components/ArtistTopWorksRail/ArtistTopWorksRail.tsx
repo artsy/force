@@ -10,6 +10,7 @@ import { scrollIntoView } from "v2/Utils/scrollHelpers"
 import { useTracking } from "v2/Artsy"
 import styled from "styled-components"
 import { ContextModule, OwnerType, clickedEntityGroup } from "@artsy/cohesion"
+import { getENV } from "v2/Utils/getENV"
 
 interface ArtistTopWorksRailProps {
   artist: ArtistTopWorksRail_artist
@@ -20,6 +21,7 @@ export const ArtistTopWorksRail: React.FC<ArtistTopWorksRailProps> = ({
   artist,
   onOverviewTab,
 }) => {
+  const isMobile = getENV("IS_MOBILE") === true
   const tracking = useTracking()
   const carouselHeight = 300
   const artworks = artist?.filterArtworksConnection?.edges ?? []
@@ -54,7 +56,7 @@ export const ArtistTopWorksRail: React.FC<ArtistTopWorksRailProps> = ({
          */}
         <H2>
           <Sans size="4" color="black100">
-            Top Works
+            Notable Works
           </Sans>
         </H2>
         <StyledLink
@@ -74,48 +76,51 @@ export const ArtistTopWorksRail: React.FC<ArtistTopWorksRailProps> = ({
           </Media>
         </StyledLink>
       </Flex>
-      <Carousel
-        data={artworks}
-        height={carouselHeight}
-        options={{
-          pageDots: false,
-        }}
-        render={({ node }, index) => {
-          const { image, id, slug } = node
+      <Box mx={[-20, 0]}>
+        <Carousel
+          data={artworks}
+          height={carouselHeight}
+          options={{
+            pageDots: false,
+          }}
+          render={({ node }, index) => {
+            const { image, id, slug } = node
 
-          return (
-            <Box height={376} mb={3} width="auto">
-              <FillwidthItem
-                artwork={node}
-                hidePartnerName
-                hideArtistName
-                useLighterFont
-                targetHeight={image?.resized?.height}
-                imageHeight={image?.resized?.height}
-                width={image?.resized?.height * image?.imageAspectRatio}
-                margin={5}
-                showMetadata
-                showExtended={false}
-                onClick={() => {
-                  tracking.trackEvent(
-                    clickedEntityGroup({
-                      contextModule: ContextModule.topWorksRail,
-                      contextPageOwnerType: OwnerType.artist,
-                      destinationPageOwnerType: OwnerType.artwork,
-                      destinationPageOwnerId: id,
-                      destinationPageOwnerSlug: slug,
-                      horizontalSlidePosition: index + 1,
-                      type: "thumbnail",
-                      contextPageOwnerSlug: artist.slug,
-                      contextPageOwnerId: artist.id,
-                    })
-                  )
-                }}
-              />
-            </Box>
-          )
-        }}
-      />
+            return (
+              <Box height={376} mb={3} width="auto">
+                <FillwidthItem
+                  artwork={node}
+                  hidePartnerName
+                  hideArtistName
+                  useLighterFont
+                  targetHeight={image?.resized?.height}
+                  imageHeight={image?.resized?.height}
+                  width={image?.resized?.height * image?.imageAspectRatio}
+                  marginRight={5}
+                  marginLeft={isMobile && index === 0 ? 20 : 0}
+                  showMetadata
+                  showExtended={false}
+                  onClick={() => {
+                    tracking.trackEvent(
+                      clickedEntityGroup({
+                        contextModule: ContextModule.topWorksRail,
+                        contextPageOwnerType: OwnerType.artist,
+                        destinationPageOwnerType: OwnerType.artwork,
+                        destinationPageOwnerId: id,
+                        destinationPageOwnerSlug: slug,
+                        horizontalSlidePosition: index + 1,
+                        type: "thumbnail",
+                        contextPageOwnerSlug: artist.slug,
+                        contextPageOwnerId: artist.id,
+                      })
+                    )
+                  }}
+                />
+              </Box>
+            )
+          }}
+        />
+      </Box>
     </Flex>
   ) : null
 }

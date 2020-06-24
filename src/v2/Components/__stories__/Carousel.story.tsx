@@ -21,7 +21,7 @@ const MockFillWidthItem = ({ artwork }) => {
           targetHeight={200}
           imageHeight={200}
           width={200 * aspect_ratio}
-          margin={20}
+          marginRight={20}
           contextModule={ContextModule.header}
         />
       )}

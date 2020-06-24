@@ -19,9 +19,11 @@ interface WorksForSaleRailProps {
 }
 const HEIGHT = 150
 
-const WorksForSaleRail: React.FC<WorksForSaleRailProps & {
-  onArtworkClicked: () => void
-}> = ({ artist, onArtworkClicked }) => {
+const WorksForSaleRail: React.FC<
+  WorksForSaleRailProps & {
+    onArtworkClicked: () => void
+  }
+> = ({ artist, onArtworkClicked }) => {
   const { user, mediator } = useContext(SystemContext)
 
   const artistData = get(artist, a => a.artworksConnection.edges, [])
@@ -41,7 +43,7 @@ const WorksForSaleRail: React.FC<WorksForSaleRailProps & {
             targetHeight={HEIGHT}
             imageHeight={HEIGHT}
             width={HEIGHT * aspect_ratio}
-            margin={10}
+            marginRight={10}
             user={user}
             mediator={mediator}
             onClick={onArtworkClicked}
@@ -79,7 +81,7 @@ const ArrowContainer = styled(Box)`
   context_module: Schema.ContextModule.WorksForSale,
 })
 class WorksForSaleRailWithTracking extends React.Component<
-WorksForSaleRailProps
+  WorksForSaleRailProps
 > {
   @track({
     type: Schema.Type.Thumbnail,

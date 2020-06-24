@@ -29,7 +29,7 @@ const ViewingRoomsApp: React.FC<ViewingRoomsAppProps> = props => {
         ...vr.node,
       }
     })
-    .filter(vr => vr)
+    .filter(Boolean)
 
   return (
     <AppContainer maxWidth="100%">
