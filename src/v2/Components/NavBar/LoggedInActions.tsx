@@ -1,40 +1,72 @@
 import React, { useContext } from "react"
 import { NavItem } from "./NavItem"
 import { NotificationsMenu, UserMenu } from "./Menus"
-import { NotificationsBadge } from "./NotificationsBadge"
 import {
   AnalyticsSchema,
   SystemContext,
   useSystemContext,
   useTracking,
 } from "v2/Artsy"
-import { BellIcon, Box, EnvelopeIcon, SoloIcon } from "@artsy/palette"
+import { BellIcon, EnvelopeIcon, SoloIcon } from "@artsy/palette"
 import { graphql } from "relay-runtime"
 import { SystemQueryRenderer as QueryRenderer } from "v2/Artsy/Relay/SystemQueryRenderer"
-import { LoggedInActionsQuery } from "v2/__generated__/LoggedInActionsQuery.graphql"
+import {
+  LoggedInActionsQuery,
+  LoggedInActionsQueryResponse,
+} from "v2/__generated__/LoggedInActionsQuery.graphql"
 import { userHasLabFeature } from "v2/Utils/user"
 import cookie from "cookies-js"
 import { isServer } from "lib/environment"
+import { NotificationOverlay } from "./NotificationOverlay"
 
-const getNotificationCount = () => cookie.get("notification-count") || 0
+const getNotificationCount = () =>
+  (!isServer && cookie.get("notification-count")) || 0
 
-export const LoggedInActions: React.FC<{ error?: any; relayProps?: any }> = ({
-  error,
-  relayProps,
-}) => {
+const updateNotificationCache = (notificationCount?: number) => {
+  if (typeof notificationCount === "number") {
+    notificationCount === 0
+      ? cookie.expire("notification-count")
+      : cookie.set("notification-count", notificationCount)
+  }
+}
+
+const getConversationCount = () =>
+  (!isServer && cookie.get("conversation-count")) || 0
+
+const updateConversationCache = (conversationCount?: number) => {
+  if (typeof conversationCount === "number") {
+    conversationCount === 0
+      ? cookie.expire("conversation-count")
+      : cookie.set("conversation-count", conversationCount)
+  }
+}
+
+/** Displays action icons for logged in users such as inbox, profile, and notifications */
+export const LoggedInActions: React.FC<
+  { error?: any } & Partial<LoggedInActionsQueryResponse>
+> = ({ error, me }) => {
   const { trackEvent } = useTracking()
   const { user } = useSystemContext()
-  console.log("relayProps", relayProps)
+  const hasUnreadNotifications =
+    me?.unreadNotificationsCount > 0 || getNotificationCount() > 0
+  updateNotificationCache(me?.unreadNotificationsCount)
   const conversationsEnabled = userHasLabFeature(
     user,
     "User Conversations View"
   )
+  const hasUnreadConversations =
+    (conversationsEnabled && me?.unreadConversationCount > 0) ||
+    getConversationCount() > 0
+  updateConversationCache(me?.unreadConversationCount)
+
   return (
     <>
       <NavItem
         href="/works-for-you"
         Menu={NotificationsMenu}
-        Overlay={NotificationsBadge}
+        Overlay={() => (
+          <NotificationOverlay showOverlay={hasUnreadNotifications} />
+        )}
         onClick={() => {
           trackEvent({
             action_type: AnalyticsSchema.ActionType.Click,
@@ -56,9 +88,19 @@ export const LoggedInActions: React.FC<{ error?: any; relayProps?: any }> = ({
         }}
       </NavItem>
       {conversationsEnabled && (
-        <NavItem href="/user/conversations">
+        <NavItem
+          href="/user/conversations"
+          Overlay={() => (
+            <NotificationOverlay showOverlay={hasUnreadConversations} />
+          )}
+        >
           {({ hover }) => {
-            return <EnvelopeIcon fill={hover ? "purple100" : "black80"} />
+            return (
+              <EnvelopeIcon
+                title="Inbox"
+                fill={hover ? "purple100" : "black80"}
+              />
+            )
           }}
         </NavItem>
       )}
@@ -89,7 +131,7 @@ export const LoggedInActionsQueryRenderer: React.FC<{}> = () => {
         query LoggedInActionsQuery {
           me {
             unreadNotificationsCount
-            unreadConversationsCount
+            unreadConversationCount
             followsAndSaves {
               notifications: bundledArtworksByArtistConnection(
                 sort: PUBLISHED_AT_DESC
@@ -115,7 +157,7 @@ export const LoggedInActionsQueryRenderer: React.FC<{}> = () => {
       `}
       variables={{}}
       render={({ error, props }) => {
-        return <LoggedInActions error={error} relayProps={props} />
+        return <LoggedInActions error={error} {...props} />
       }}
     />
   )

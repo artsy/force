@@ -10,9 +10,7 @@ interface NavItemProps extends BoxProps {
   Menu?: React.FC<{
     setIsVisible: React.Dispatch<React.SetStateAction<boolean>>
   }>
-  Overlay?: React.FC<{
-    hover: boolean
-  }>
+  Overlay?: React.FC
   active?: boolean
   className?: string
   href?: string
@@ -147,7 +145,7 @@ export const NavItem: React.FC<NavItemProps> = ({
         </animated.div>
       )}
 
-      {showOverlay && <Overlay hover={hover} />}
+      {showOverlay && <Overlay />}
     </Box>
   )
 }

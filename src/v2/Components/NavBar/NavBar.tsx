@@ -1,17 +1,13 @@
-import cookie from "cookies-js"
 import React, { useEffect, useState } from "react"
 import styled from "styled-components"
 
 import {
   ArtsyMarkIcon,
-  BellIcon,
   Box,
   Button,
   ChevronIcon,
-  EnvelopeIcon,
   Flex,
   Link,
-  SoloIcon,
   Spacer,
   color,
   space,
@@ -39,7 +35,6 @@ import { AnalyticsSchema } from "v2/Artsy"
 import { track, useTracking } from "v2/Artsy/Analytics"
 import Events from "v2/Utils/Events"
 import { useMatchMedia } from "v2/Utils/Hooks/useMatchMedia"
-import { userHasLabFeature } from "v2/Utils/user"
 import { LoggedInActionsQueryRenderer as LoggedInActions } from "./LoggedInActions"
 
 export const NavBar: React.FC = track(
