@@ -200,6 +200,7 @@
     "react-relay": "7.1.0",
     "react-relay-network-modern": "2.5.1",
     "react-relay-network-modern-ssr": "1.2.2",
+    "react-remove-scroll": "^2.3.0",
     "react-router": "4.2.0",
     "react-router-redux": "4.0.8",
     "react-scrollspy": "3.3.3",
