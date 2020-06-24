@@ -50,6 +50,7 @@ function ChooseArtist(props) {
     autoFocus: true,
     value: artistAutocompleteValue,
     onChange: updateArtistAutocompleteValueAction,
+    "data-test": "chooseArtist",
   }
 
   const renderInputComponent = inputProps => (
@@ -84,7 +85,7 @@ function ChooseArtist(props) {
             inputProps={inputProps}
           />
         </div>
-        <div
+        <button
           className={b
             .builder()("next-button")
             .mix("avant-garde-button-black")()}
@@ -96,7 +97,7 @@ function ChooseArtist(props) {
           disabled={!nextEnabled}
         >
           Next
-        </div>
+        </button>
         {notConsigningArtist && (
           <div className={b("not-consigning")}>
             Unfortunately we are not accepting consignments for works by{" "}
