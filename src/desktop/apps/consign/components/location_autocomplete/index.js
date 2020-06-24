@@ -32,6 +32,7 @@ function LocationAutocomplete(props) {
     disabled: locationAutocompleteFrozen,
     onChange: updateLocationAutocompleteAction,
     value: locationAutocompleteValue,
+    "data-test": "location",
   }
 
   const renderInputComponent = inputProps => (

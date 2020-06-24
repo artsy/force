@@ -13,6 +13,7 @@ import React, { useContext } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { get } from "v2/Utils/get"
+import { getENV } from "v2/Utils/getENV"
 
 export interface RecentlyViewedProps {
   me: RecentlyViewed_me
@@ -34,6 +35,7 @@ export class RecentlyViewed extends React.Component<RecentlyViewedProps> {
 
   render() {
     const { me } = this.props
+    const isMobile = getENV("IS_MOBILE") === true
 
     return (
       <SystemContextConsumer>
@@ -47,47 +49,50 @@ export class RecentlyViewed extends React.Component<RecentlyViewedProps> {
 
                 <Spacer mb={3} />
 
-                <Carousel
-                  data={me.recentlyViewedArtworksConnection.edges}
-                  render={artwork => {
-                    const aspect_ratio = get(
-                      artwork,
-                      w => w.node.image.aspect_ratio,
-                      1
-                    )
+                <Box mx={[-20, 0]}>
+                  <Carousel
+                    data={me.recentlyViewedArtworksConnection.edges}
+                    render={(artwork, index) => {
+                      const aspect_ratio = get(
+                        artwork,
+                        w => w.node.image.aspect_ratio,
+                        1
+                      )
 
-                    return (
-                      <FillwidthItem
-                        lazyLoad={true}
-                        // @ts-ignore // TODO: Correct typing
-                        artwork={artwork.node}
-                        targetHeight={HEIGHT}
-                        imageHeight={HEIGHT}
-                        width={HEIGHT * aspect_ratio}
-                        margin={10}
-                        user={user}
-                        mediator={mediator}
-                        onClick={this.trackClick.bind(this)}
-                        contextModule={ContextModule.recentlyViewedRail}
-                      />
-                    )
-                  }}
-                  renderLeftArrow={({ Arrow }) => {
-                    return (
-                      <ArrowContainer>
-                        <Arrow />
-                      </ArrowContainer>
-                    )
-                  }}
-                  renderRightArrow={({ Arrow }) => {
-                    return (
-                      <ArrowContainer>
-                        {me.recentlyViewedArtworksConnection.edges.length >
-                          4 && <Arrow />}
-                      </ArrowContainer>
-                    )
-                  }}
-                />
+                      return (
+                        <FillwidthItem
+                          lazyLoad={true}
+                          // @ts-ignore // TODO: Correct typing
+                          artwork={artwork.node}
+                          targetHeight={HEIGHT}
+                          imageHeight={HEIGHT}
+                          width={HEIGHT * aspect_ratio}
+                          marginRight={10}
+                          marginLeft={isMobile && index === 0 ? 20 : 0}
+                          user={user}
+                          mediator={mediator}
+                          onClick={this.trackClick.bind(this)}
+                          contextModule={ContextModule.recentlyViewedRail}
+                        />
+                      )
+                    }}
+                    renderLeftArrow={({ Arrow }) => {
+                      return (
+                        <ArrowContainer>
+                          <Arrow />
+                        </ArrowContainer>
+                      )
+                    }}
+                    renderRightArrow={({ Arrow }) => {
+                      return (
+                        <ArrowContainer>
+                          {me.recentlyViewedArtworksConnection.edges.length >
+                            4 && <Arrow />}
+                        </ArrowContainer>
+                      )
+                    }}
+                  />
+                </Box>
               </React.Fragment>
             )
           )

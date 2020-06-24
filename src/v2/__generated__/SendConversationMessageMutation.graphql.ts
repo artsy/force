@@ -62,7 +62,6 @@ fragment Message_message on Message {
   }
   attachments {
     id
-    internalID
     contentType
     fileName
     downloadURL
@@ -254,7 +253,6 @@ return {
                     "plural": true,
                     "selections": [
                       (v5/*: any*/),
-                      (v6/*: any*/),
                       {
                         "kind": "ScalarField",
                         "alias": null,
@@ -290,7 +288,7 @@ return {
     "operationKind": "mutation",
     "name": "SendConversationMessageMutation",
     "id": null,
-    "text": "mutation SendConversationMessageMutation(\n  $input: SendConversationMessageMutationInput!\n) {\n  sendConversationMessage(input: $input) {\n    messageEdge {\n      node {\n        impulseID\n        isFromUser\n        body\n        id\n        internalID\n        ...Message_message\n      }\n    }\n  }\n}\n\nfragment Message_message on Message {\n  internalID\n  body\n  createdAt\n  isFromUser\n  from {\n    name\n    email\n  }\n  attachments {\n    id\n    internalID\n    contentType\n    fileName\n    downloadURL\n  }\n}\n",
+    "text": "mutation SendConversationMessageMutation(\n  $input: SendConversationMessageMutationInput!\n) {\n  sendConversationMessage(input: $input) {\n    messageEdge {\n      node {\n        impulseID\n        isFromUser\n        body\n        id\n        internalID\n        ...Message_message\n      }\n    }\n  }\n}\n\nfragment Message_message on Message {\n  internalID\n  body\n  createdAt\n  isFromUser\n  from {\n    name\n    email\n  }\n  attachments {\n    id\n    contentType\n    fileName\n    downloadURL\n  }\n}\n",
     "metadata": {}
   }
 };

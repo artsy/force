@@ -127,9 +127,6 @@ class PageTimeTracker {
 
 window.desktopPageTimeTrackers = [
   new PageTimeTracker(sd.CURRENT_PATH, 15000, "15 seconds"),
-  new PageTimeTracker(sd.CURRENT_PATH, 30000, "30 seconds"),
-  new PageTimeTracker(sd.CURRENT_PATH, 60000, "1 minute"),
-  new PageTimeTracker(sd.CURRENT_PATH, 180000, "3 minutes"),
 ]
 
 // debug tracking calls

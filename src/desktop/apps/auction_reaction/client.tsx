@@ -3,6 +3,7 @@ import { routes } from "v2/Apps/Auction/routes"
 import { data as sd } from "sharify"
 import React from "react"
 import ReactDOM from "react-dom"
+import { loadableReady } from "@loadable/component"
 
 buildClientApp({
   routes,
@@ -11,7 +12,9 @@ buildClientApp({
   },
 })
   .then(({ ClientApp }) => {
-    ReactDOM.hydrate(<ClientApp />, document.getElementById("react-root"))
+    loadableReady(() => {
+      ReactDOM.hydrate(<ClientApp />, document.getElementById("react-root"))
+    })
   })
   .catch(error => {
     console.error(error)

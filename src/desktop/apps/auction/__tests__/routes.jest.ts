@@ -1,17 +1,19 @@
 import Backbone from "backbone"
+import { stitch } from "@artsy/stitch"
 
-import metaphysics from "lib/metaphysics.coffee"
-import metaphysics2 from "lib/metaphysics2.coffee"
-import CurrentUser from "desktop/models/current_user.coffee"
+jest.mock("lib/metaphysics.coffee", () => jest.fn())
+jest.mock("lib/metaphysics2.coffee", () => jest.fn())
+
+const metaphysics = require("lib/metaphysics.coffee") as jest.Mock
+const metaphysics2 = require("lib/metaphysics2.coffee") as jest.Mock
+const CurrentUser = require("desktop/models/current_user.coffee")
+
 import * as routes from "../routes"
 
 import { meV1 } from "./fixtures/meV1"
 import { meV2 } from "./fixtures/meV2"
 import { saleV1 } from "./fixtures/saleV1"
 import { saleV2 } from "./fixtures/saleV2"
-
-jest.mock("lib/metaphysics.coffee")
-jest.mock("lib/metaphysics2.coffee")
 
 jest.mock("@artsy/stitch", () => ({
   stitch: jest.fn(),
@@ -26,13 +28,13 @@ jest.mock("desktop/apps/auction/actions/artworkBrowser", () => ({
   }),
 }))
 
-import { stitch } from "@artsy/stitch"
+const mockStitch = stitch as jest.Mock
 
 describe("routes", () => {
   beforeEach(() => {
     jest.clearAllMocks()
     Backbone.sync = jest.fn()
-    stitch.mockResolvedValue("<html />")
+    mockStitch.mockResolvedValue("<html />")
   })
 
   describe("#index", () => {
@@ -73,10 +75,10 @@ describe("routes", () => {
 
       await routes.index(req, res, next)
 
-      expect(stitch).toBeCalled()
+      expect(mockStitch).toBeCalled()
       expect(res.send).toBeCalledWith("<html />")
 
-      const { me } = stitch.mock.calls[0][0].data.app
+      const { me } = mockStitch.mock.calls[0][0].data.app
 
       expect(me).toEqual({
         ...meV1,
@@ -96,7 +98,7 @@ describe("routes", () => {
       expect(stitch).toBeCalled()
       expect(res.send).toBeCalledWith("<html />")
 
-      const sale = stitch.mock.calls[0][0].data.app.auction.toJSON()
+      const sale = mockStitch.mock.calls[0][0].data.app.auction.toJSON()
 
       expect(sale).toEqual({
         ...saleV1,
@@ -104,7 +106,7 @@ describe("routes", () => {
       })
     })
 
-    xit("works even with the Metaphysics module throwing an error", async () => {
+    it("works even with the Metaphysics module throwing an error", async () => {
       metaphysics
         .mockReturnValueOnce({ sale: { is_auction: true } })
         .mockRejectedValue("oops!")
@@ -115,7 +117,7 @@ describe("routes", () => {
     })
   })
 
-  xdescribe("#redirectLive", async () => {
+  describe("#redirectLive", () => {
     let req
     let res
     let next

@@ -154,7 +154,7 @@ module.exports = async ({ config, mode }) => {
     },
     {
       test: /\.tsx?$/,
-      include: [/src\/v2/],
+      include: [/src\/v2/, /src\/lib/],
       exclude: [/node_modules/],
       use: [
         {
@@ -178,6 +178,12 @@ module.exports = async ({ config, mode }) => {
       use: [],
     }
   )
+
+  config.externals = {
+    // Don't bundle modules and consider them external
+    redis: "redis",
+    request: "request",
+  }
 
   return config
 }

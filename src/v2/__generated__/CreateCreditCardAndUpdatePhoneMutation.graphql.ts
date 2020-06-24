@@ -26,11 +26,11 @@ export type EditableLocation = {
     readonly stateCode?: string | null;
     readonly summary?: string | null;
 };
-export type RegisterCreateCreditCardAndUpdatePhoneMutationVariables = {
+export type CreateCreditCardAndUpdatePhoneMutationVariables = {
     creditCardInput: CreditCardInput;
     profileInput: UpdateMyProfileInput;
 };
-export type RegisterCreateCreditCardAndUpdatePhoneMutationResponse = {
+export type CreateCreditCardAndUpdatePhoneMutationResponse = {
     readonly updateMyUserProfile: {
         readonly user: {
             readonly internalID: string;
@@ -51,15 +51,15 @@ export type RegisterCreateCreditCardAndUpdatePhoneMutationResponse = {
         } | null;
     } | null;
 };
-export type RegisterCreateCreditCardAndUpdatePhoneMutation = {
-    readonly response: RegisterCreateCreditCardAndUpdatePhoneMutationResponse;
-    readonly variables: RegisterCreateCreditCardAndUpdatePhoneMutationVariables;
+export type CreateCreditCardAndUpdatePhoneMutation = {
+    readonly response: CreateCreditCardAndUpdatePhoneMutationResponse;
+    readonly variables: CreateCreditCardAndUpdatePhoneMutationVariables;
 };
 
 
 
 /*
-mutation RegisterCreateCreditCardAndUpdatePhoneMutation(
+mutation CreateCreditCardAndUpdatePhoneMutation(
   $creditCardInput: CreditCardInput!
   $profileInput: UpdateMyProfileInput!
 ) {
@@ -184,7 +184,7 @@ return {
   "kind": "Request",
   "fragment": {
     "kind": "Fragment",
-    "name": "RegisterCreateCreditCardAndUpdatePhoneMutation",
+    "name": "CreateCreditCardAndUpdatePhoneMutation",
     "type": "Mutation",
     "metadata": null,
     "argumentDefinitions": (v0/*: any*/),
@@ -268,7 +268,7 @@ return {
   },
   "operation": {
     "kind": "Operation",
-    "name": "RegisterCreateCreditCardAndUpdatePhoneMutation",
+    "name": "CreateCreditCardAndUpdatePhoneMutation",
     "argumentDefinitions": (v0/*: any*/),
     "selections": [
       {
@@ -359,12 +359,12 @@ return {
   },
   "params": {
     "operationKind": "mutation",
-    "name": "RegisterCreateCreditCardAndUpdatePhoneMutation",
+    "name": "CreateCreditCardAndUpdatePhoneMutation",
     "id": null,
-    "text": "mutation RegisterCreateCreditCardAndUpdatePhoneMutation(\n  $creditCardInput: CreditCardInput!\n  $profileInput: UpdateMyProfileInput!\n) {\n  updateMyUserProfile(input: $profileInput) {\n    user {\n      internalID\n      id\n    }\n  }\n  createCreditCard(input: $creditCardInput) {\n    creditCardOrError {\n      __typename\n      ... on CreditCardMutationSuccess {\n        creditCardEdge {\n          node {\n            lastDigits\n            id\n          }\n        }\n      }\n      ... on CreditCardMutationFailure {\n        mutationError {\n          type\n          message\n          detail\n        }\n      }\n    }\n  }\n}\n",
+    "text": "mutation CreateCreditCardAndUpdatePhoneMutation(\n  $creditCardInput: CreditCardInput!\n  $profileInput: UpdateMyProfileInput!\n) {\n  updateMyUserProfile(input: $profileInput) {\n    user {\n      internalID\n      id\n    }\n  }\n  createCreditCard(input: $creditCardInput) {\n    creditCardOrError {\n      __typename\n      ... on CreditCardMutationSuccess {\n        creditCardEdge {\n          node {\n            lastDigits\n            id\n          }\n        }\n      }\n      ... on CreditCardMutationFailure {\n        mutationError {\n          type\n          message\n          detail\n        }\n      }\n    }\n  }\n}\n",
     "metadata": {}
   }
 };
 })();
-(node as any).hash = 'db9648ef9be0bfbc407720b6417d0472';
+(node as any).hash = '0e9a10ba21b3de4a4cfdd5c03d3b733b';
 export default node;

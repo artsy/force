@@ -4,6 +4,7 @@ request = require 'superagent'
 { extend, some } = require 'underscore'
 { METAPHYSICS_ENDPOINT, API_REQUEST_TIMEOUT, REQUEST_ID } = require('sharify').data
 ip = require 'ip'
+chalk = require 'chalk'
 
 resolveIPv4 = (ipAddress) ->
   if ip.isV6Format(ipAddress)? and ipAddress.indexOf('::ffff') >= 0
@@ -39,7 +40,11 @@ metaphysics2 = ({ query, variables, req } = {}) ->
         variables: variables
 
       .end (err, response) ->
-        return reject err if err?
+        if err?
+          errorObject = JSON.parse(err?.response?.text)
+          formattedError = JSON.stringify(errorObject, null, 2)
+          console.error chalk.red(formattedError)
+          return reject err
 
         if response.body.errors?
           error = new Error JSON.stringify response.body.errors

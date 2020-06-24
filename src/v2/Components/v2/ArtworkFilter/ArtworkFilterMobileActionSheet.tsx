@@ -14,7 +14,7 @@ import {
   useArtworkFilterContext,
 } from "./ArtworkFilterContext"
 import { isEqual, omit } from "lodash"
-import { countActiveFilters } from "./Utils/countActiveFilters"
+import { countChangedFilters } from "./Utils/countChangedFilters"
 
 export const ArtworkFilterMobileActionSheet: SFC<{
   children: JSX.Element
@@ -50,6 +50,12 @@ export const ArtworkFilterMobileActionSheet: SFC<{
       filterContext.setShouldStageFilterChanges(false)
     }
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
+
+  // enumerate the difference between prior and currently selected filters
+  const changedFilterCount = countChangedFilters(
+    filterContext.filters,
+    filterContext.stagedFilters
+  )
 
   return (
     <ModalBase
@@ -110,7 +116,7 @@ export const ArtworkFilterMobileActionSheet: SFC<{
             filterContext.setFilters(filterContext.stagedFilters)
             onClose()
           }}
-          activeFilterCount={countActiveFilters(filterContext.stagedFilters)}
+          changedFilterCount={changedFilterCount}
         />
       </Footer>
     </ModalBase>
@@ -118,17 +124,17 @@ export const ArtworkFilterMobileActionSheet: SFC<{
 }
 
 interface ApplyButtonProps {
-  activeFilterCount: number
+  changedFilterCount: number
   onClick: () => void
 }
 
 const ApplyButton: React.SFC<ApplyButtonProps> = ({
-  activeFilterCount,
+  changedFilterCount,
   onClick,
 }) => {
   return (
     <Button variant="primaryBlack" width="100%" onClick={onClick}>
-      Apply ({activeFilterCount})
+      Apply ({changedFilterCount})
     </Button>
   )
 }

@@ -34,7 +34,9 @@ export const ArtistRecommendations: React.FC<ArtistRecommendationsProps> = ({
     artist,
     a => a.related.artistsConnection.edges,
     []
-  ).map(edge => <RecommendedArtist artist={edge.node} key={edge.node.id} />)
+  ).map(edge => (
+    <RecommendedArtist artist={edge.node} key={edge.node.id} fullBleedRail />
+  ))
 
   const fetchData = () => {
     if (!relay.hasMore() || relay.isLoading()) {

@@ -66,7 +66,7 @@ const SingleLineTruncation = styled(Sans)`
 
 export const LargeArtistCard: SFC<ArtistCardProps> = props => (
   <BorderBox hover flexDirection="column" width="100%" height="254px">
-    <Flex flexDirection="column" flexGrow="0" alignItems="center" pt={1} mb={1}>
+    <Flex flexDirection="column" flexGrow={0} alignItems="center" pt={1} mb={1}>
       {props.artist.image && (
         <Box mb={1}>
           <Avatar

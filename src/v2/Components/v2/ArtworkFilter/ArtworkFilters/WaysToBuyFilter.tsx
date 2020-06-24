@@ -54,7 +54,7 @@ export const WaysToBuyFilter: FC = () => {
 
   return (
     <Toggle label="Ways to buy" expanded>
-      <Flex flexDirection="column" my={1}>
+      <Flex flexDirection="column">
         {checkboxes.map((checkbox, index) => {
           const props = {
             disabled: checkbox.disabled,

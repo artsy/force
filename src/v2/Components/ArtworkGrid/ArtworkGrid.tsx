@@ -42,7 +42,7 @@ export interface ArtworkGridContainerState {
 export class ArtworkGridContainer extends React.Component<
   ArtworkGridProps,
   ArtworkGridContainerState
-  > {
+> {
   static defaultProps = {
     columnCount: [3],
     sectionMargin: 20,
@@ -235,6 +235,7 @@ export default createFragmentContainer(ArtworkGrid, {
           id
           slug
           href
+          internalID
           image {
             aspect_ratio: aspectRatio
           }

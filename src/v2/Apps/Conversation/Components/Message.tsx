@@ -1,43 +1,76 @@
 import {
   Box,
   BoxProps,
+  Color,
+  DownloadIcon,
   Flex,
+  FlexProps,
   Image,
-  Link,
   Sans,
-  Serif,
   Spacer,
+  color,
 } from "@artsy/palette"
 import { Message_message } from "v2/__generated__/Message_message.graphql"
 import React from "react"
 import { createFragmentContainer } from "react-relay"
 import { graphql } from "relay-runtime"
 import { TimeSince } from "./TimeSince"
+import styled from "styled-components"
+import {
+  AlignSelfProps,
+  BackgroundProps,
+  alignSelf,
+  background,
+} from "styled-system"
+
+const AttachmentLink = styled.a`
+  width: min-content;
+  text-decoration: none;
+  max-width: 66.67%;
+`
+
+const AttachmentContainer = styled(Flex)<
+  FlexProps & AlignSelfProps & BackgroundProps
+>`
+  ${alignSelf};
+  ${background};
+  border-radius: 15px;
+  white-space: no-wrap;
+  width: min-content;
+  justify-content: space-between;
+`
 
 interface AttachmentProps {
-  item: Message_message["attachments"][0]
+  attachment: Message_message["attachments"][0]
+  alignSelf: string
+  bgColor: Color
+  textColor: Color
 }
 
 export const Attachment: React.FC<AttachmentProps> = props => {
-  const { item } = props
-  if (item.contentType.startsWith("image")) {
-    return (
-      <Flex flexDirection="column" m={2}>
-        <Image src={item.downloadURL} width="75px" title={item.fileName} />
-        <Link href={item.downloadURL}>
-          <Serif size="2">{item.fileName}</Serif>
-        </Link>
-      </Flex>
-    )
-  } else if (item.contentType === "application/pdf") {
-    return (
-      <Box>
-        <Link href={item.downloadURL}>{item.fileName}</Link>
-      </Box>
-    )
-  } else {
-    return null
-  }
+  const { attachment, alignSelf, bgColor, textColor } = props
+
+  return (
+    <AttachmentLink href={attachment.downloadURL} target="_blank">
+      <AttachmentContainer
+        p={1}
+        mt={0.5}
+        alignSelf={alignSelf}
+        background={color(bgColor)}
+      >
+        {attachment.contentType.startsWith("image") ? (
+          <Image src={attachment.downloadURL} />
+        ) : (
+          <>
+            <Sans color={textColor} weight="medium" size="4" mr={2}>
+              {attachment.fileName}
+            </Sans>
+            <DownloadIcon width="24px" height="24px" />
+          </>
+        )}
+      </AttachmentContainer>
+    </AttachmentLink>
+  )
 }
 interface MessageProps extends Omit<BoxProps, "color"> {
   message: Message_message
@@ -49,20 +82,6 @@ const Message: React.FC<MessageProps> = props => {
   const { message, initialMessage, isFirst, showTimeSince, ...boxProps } = props
   const { isFromUser, body } = message
   const text = isFirst ? initialMessage : body
-  // const createdAt = DateTime.fromISO(message.createdAt).toRelative()
-  // <Sans size="2">
-  //   From: {message.from.name} - {createdAt}
-  // </Sans>
-  // <Sans size="2">{isFirst ? initialMessage : message.body}</Sans>
-  // {message.attachments && message.attachments.length > 0 && (
-  //   <Serif size="3" mt={3}>
-  //     Attachments
-  //   </Serif>
-  // )}
-  // {message.attachments.map(a => (
-  //   <Attachment item={a} key={a.id} />
-  // ))}
-
   const bgColor = isFromUser ? "black100" : "black10"
   const textColor = isFromUser ? "white100" : "black100"
   const alignSelf = isFromUser ? "flex-end" : undefined
@@ -82,6 +101,18 @@ const Message: React.FC<MessageProps> = props => {
           {text}
         </Sans>
       </Box>
+      {message.attachments.length > 0 &&
+        message.attachments.map(attachment => {
+          return (
+            <Attachment
+              key={attachment.id}
+              attachment={attachment}
+              alignSelf={alignSelf}
+              textColor={textColor}
+              bgColor={bgColor}
+            />
+          )
+        })}
       {showTimeSince && (
         <TimeSince time={message.createdAt} style={{ alignSelf }} mt={0.5} />
       )}
@@ -103,7 +134,6 @@ export const MessageFragmentContainer = createFragmentContainer(Message, {
       }
       attachments {
         id
-        internalID
         contentType
         fileName
         downloadURL
