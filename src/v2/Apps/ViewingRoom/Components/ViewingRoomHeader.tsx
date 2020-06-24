@@ -33,9 +33,7 @@ export const ViewingRoomHeaderFragmentContainer = createFragmentContainer(
         partner {
           name
         }
-        distanceToOpen
-        distanceToClose
-        status
+        formattedEndAt
       }
     `,
   }
@@ -151,9 +149,7 @@ const Metadata: React.FC<ViewingRoomHeaderProps> = props => {
   const {
     viewingRoom: {
       partner: { name },
-      distanceToOpen,
-      distanceToClose,
-      status,
+      formattedEndAt,
     },
   } = props
 
@@ -162,21 +158,6 @@ const Metadata: React.FC<ViewingRoomHeaderProps> = props => {
       {children}
     </Sans>
   )
-
-  const CountdownText = () => {
-    switch (status) {
-      case "closed":
-        return <Text>Closed</Text>
-      case "live":
-        if (distanceToClose === null) return null
-        return <Text>Closes in {distanceToClose}</Text>
-      case "scheduled":
-        if (distanceToOpen === null) return null
-        return <Text>Opens in {distanceToOpen}</Text>
-      default:
-        return null
-    }
-  }
 
   return (
     <Box position="absolute" left={0} bottom={0} width="100%">
@@ -187,7 +168,7 @@ const Metadata: React.FC<ViewingRoomHeaderProps> = props => {
         p={2}
       >
         <Text>{name}</Text>
-        <CountdownText />
+        <Text>{formattedEndAt}</Text>
       </Flex>
     </Box>
   )

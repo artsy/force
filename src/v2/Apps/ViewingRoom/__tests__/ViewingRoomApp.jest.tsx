@@ -69,7 +69,7 @@ describe("ViewingRoomApp", () => {
           const html = wrapper.html()
           expect(html).toContain("Guy Yanai")
           expect(html).toContain("Subscription Demo GG")
-          expect(html).toContain("Closes in 1 month")
+          expect(html).toContain("Closes in about 1 month")
         })
       })
 
@@ -80,7 +80,7 @@ describe("ViewingRoomApp", () => {
           const html = wrapper.html()
           expect(html).toContain("Guy Yanai")
           expect(html).toContain("Subscription Demo GG")
-          expect(html).toContain("Closes in 1 month")
+          expect(html).toContain("Closes in about 1 month")
         })
       })
     })
@@ -176,8 +176,7 @@ describe("ViewingRoomApp", () => {
           )
         },
         query: graphql`
-          query ViewingRoomApp_UnfoundTest_Query($slug: ID!)
-            @raw_response_type {
+          query ViewingRoomApp_UnfoundTest_Query($slug: ID!) @raw_response_type {
             viewingRoom(id: $slug) {
               ...ViewingRoomApp_viewingRoom
             }
@@ -192,9 +191,7 @@ describe("ViewingRoomApp", () => {
     it("returns 404 page", async () => {
       const wrapper = await getWrapper()
       const html = wrapper.html()
-      expect(html).toContain(
-        "Sorry, the page you were looking for doesn’t exist at this URL."
-      )
+      expect(html).toContain("Sorry, the page you were looking for doesn’t exist at this URL.")
     })
   })
 })
@@ -209,8 +206,7 @@ const OpenViewingRoomAppFixture: ViewingRoomApp_OpenTest_QueryRawResponse = {
       id: "UGFydG5lcjo1NTQxMjM3MzcyNjE2OTJiMTk4YzAzMDA=",
       href: "/partner-demo-gg",
     },
-    distanceToOpen: null,
-    distanceToClose: "Closes in 1 month",
+    formattedEndAt: "Closes in about 1 month",
     status: "live",
   },
 }
@@ -225,8 +221,7 @@ const ClosedViewingRoomAppFixture: ViewingRoomApp_ClosedTest_QueryRawResponse = 
       id: "UGFydG5lcjo1NTQxMjM3MzcyNjE2OTJiMTk4YzAzMDA=",
       href: "/partner-demo-gg",
     },
-    distanceToOpen: null,
-    distanceToClose: null,
+    formattedEndAt: "Closed",
     status: "closed",
   },
 }
