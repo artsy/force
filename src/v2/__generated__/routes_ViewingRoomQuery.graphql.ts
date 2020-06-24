@@ -47,9 +47,7 @@ fragment ViewingRoomHeader_viewingRoom on ViewingRoom {
     name
     id
   }
-  distanceToOpen
-  distanceToClose
-  status
+  formattedEndAt
 }
 
 fragment ViewingRoomMeta_viewingRoom on ViewingRoom {
@@ -163,14 +161,7 @@ return {
           {
             "kind": "ScalarField",
             "alias": null,
-            "name": "distanceToOpen",
-            "args": null,
-            "storageKey": null
-          },
-          {
-            "kind": "ScalarField",
-            "alias": null,
-            "name": "distanceToClose",
+            "name": "formattedEndAt",
             "args": null,
             "storageKey": null
           },
@@ -189,7 +180,7 @@ return {
     "operationKind": "query",
     "name": "routes_ViewingRoomQuery",
     "id": null,
-    "text": "query routes_ViewingRoomQuery(\n  $slug: ID!\n) {\n  viewingRoom(id: $slug) {\n    ...ViewingRoomApp_viewingRoom\n  }\n}\n\nfragment ViewingRoomApp_viewingRoom on ViewingRoom {\n  ...ViewingRoomMeta_viewingRoom\n  ...ViewingRoomHeader_viewingRoom\n  ...ViewingRoomClosed_viewingRoom\n  status\n}\n\nfragment ViewingRoomClosed_viewingRoom on ViewingRoom {\n  partner {\n    href\n    id\n  }\n}\n\nfragment ViewingRoomHeader_viewingRoom on ViewingRoom {\n  heroImageURL\n  title\n  partner {\n    name\n    id\n  }\n  distanceToOpen\n  distanceToClose\n  status\n}\n\nfragment ViewingRoomMeta_viewingRoom on ViewingRoom {\n  title\n}\n",
+    "text": "query routes_ViewingRoomQuery(\n  $slug: ID!\n) {\n  viewingRoom(id: $slug) {\n    ...ViewingRoomApp_viewingRoom\n  }\n}\n\nfragment ViewingRoomApp_viewingRoom on ViewingRoom {\n  ...ViewingRoomMeta_viewingRoom\n  ...ViewingRoomHeader_viewingRoom\n  ...ViewingRoomClosed_viewingRoom\n  status\n}\n\nfragment ViewingRoomClosed_viewingRoom on ViewingRoom {\n  partner {\n    href\n    id\n  }\n}\n\nfragment ViewingRoomHeader_viewingRoom on ViewingRoom {\n  heroImageURL\n  title\n  partner {\n    name\n    id\n  }\n  formattedEndAt\n}\n\nfragment ViewingRoomMeta_viewingRoom on ViewingRoom {\n  title\n}\n",
     "metadata": {}
   }
 };
