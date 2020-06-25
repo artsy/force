@@ -33,8 +33,6 @@
     "start:prod": "yarn assets && yarn build:server && NODE_ENV=production yarn start",
     "start": "scripts/start.sh",
     "storybook": "concurrently --raw --kill-others 'yarn relay --watch' 'start-storybook --quiet -s ./public -p 9001'",
-    "sync-schema": "curl https://raw.githubusercontent.com/artsy/metaphysics/master/_schemaV2.graphql -o data/schema.graphql; yarn prettier --write --parser graphql data/schema.graphql",
-    "sync-schema:localhost": "cd ../metaphysics && yarn dump-schema v2 ../reaction/data/",
     "test:smoke": "scripts/smoke_test.sh",
     "test": "scripts/test.sh",
     "test:jest": "node node_modules/.bin/jest",
