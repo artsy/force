@@ -15,6 +15,9 @@ const ArtistSeriesHeader: React.FC<ArtistSeriesHeaderProps> = props => {
       <Media greaterThanOrEqual="sm">
         <ArtistSeriesHeaderLarge {...props} />
       </Media>
+      <Media lessThan="sm">
+        <ArtistSeriesHeaderSmall {...props} />
+      </Media>
     </>
   )
 }
@@ -33,16 +36,44 @@ const ArtistSeriesHeaderLarge: React.FC<ArtistSeriesHeaderProps> = props => {
               flexDirection="column"
               justifyContent="space-between"
             >
-              <Sans size="8">{title}</Sans>
+              <Sans size="8" element="h1" unstable_trackIn>
+                {title}
+              </Sans>
               <Sans size="3t">{description}</Sans>
             </Flex>
           </Col>
           <Col sm={6}>
-            <Box bg="black10" width={1} height={400}></Box>
+            <Box
+              // FIXME: Use Image
+              bg="black10"
+              width={1}
+              height={400}
+            ></Box>
           </Col>
         </Row>
       </Grid>
     </Box>
+  )
+}
+
+const ArtistSeriesHeaderSmall: React.FC<ArtistSeriesHeaderProps> = props => {
+  const {
+    artistSeries: { title, description },
+  } = props
+  return (
+    <>
+      <Box
+        // FIXME: Use Image
+        mx="auto"
+        bg="black10"
+        width={180}
+        height={180}
+      ></Box>
+      <Sans size="8" element="h1" my={1} unstable_trackIn>
+        {title}
+      </Sans>
+      <Sans size="3t">{description}</Sans>
+    </>
   )
 }
 
