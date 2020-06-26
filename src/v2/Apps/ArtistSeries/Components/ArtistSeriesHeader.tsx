@@ -39,7 +39,7 @@ const ArtistSeriesHeaderLarge: React.FC<ArtistSeriesHeaderProps> = props => {
               <Sans size="8" element="h1" unstable_trackIn>
                 {title}
               </Sans>
-              <Sans lineHeight={1.5} size="3t">
+              <Sans lineHeight={1.5} size="3t" pr={1}>
                 {description}
               </Sans>
             </Flex>
