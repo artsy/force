@@ -6,7 +6,10 @@ import styled from "styled-components"
 import { SendConversationMessage } from "../Mutation/SendConversationMessage"
 import { RightProps, right } from "styled-system"
 import { useTracking } from "v2/Artsy/Analytics"
-import { focusedOnConversationMessageInput } from "@artsy/cohesion"
+import {
+  focusedOnConversationMessageInput,
+  sentConversationMessage,
+} from "@artsy/cohesion"
 
 const StyledFlex = styled(Flex)<FlexProps & RightProps>`
   ${right};
@@ -65,11 +68,22 @@ export const Reply: React.FC<ReplyProps> = props => {
         conversation,
         // @ts-ignore
         textArea?.current?.value,
-        _response => {
+        response => {
           // @ts-ignore
           textArea.current.value = ""
           setLoading(false)
           setButtonDisabled(true)
+
+          const {
+            internalID,
+          } = response?.sendConversationMessage?.messageEdge?.node
+
+          trackEvent(
+            sentConversationMessage({
+              impulse_conversation_id: conversation.internalID,
+              impulse_message_id: internalID,
+            })
+          )
         },
         _error => {
           setLoading(false)
