@@ -2,27 +2,37 @@ import React from "react"
 import { AppContainer } from "v2/Apps/Components/AppContainer"
 import { Box, Separator } from "@artsy/palette"
 
+import { SystemContext } from "v2/Artsy"
 import { Footer } from "v2/Components/Footer"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtistSeriesApp_artistSeries } from "v2/__generated__/ArtistSeriesApp_artistSeries.graphql"
 import { ArtistSeriesHeaderFragmentContainer as ArtistSeriesHeader } from "./Components/ArtistSeriesHeader"
+import { userHasLabFeature } from "v2/Utils/user"
+import { ErrorPage } from "v2/Components/ErrorPage"
 
 interface ArtistSeriesAppProps {
   artistSeries: ArtistSeriesApp_artistSeries
 }
 
 const ArtistSeriesApp: React.FC<ArtistSeriesAppProps> = ({ artistSeries }) => {
-  return (
-    <>
-      <AppContainer maxWidth="100%">
-        <Box m={4}>
-          <ArtistSeriesHeader artistSeries={artistSeries} />
-          <Separator mt={6} mb={3} />
-          <Footer />
-        </Box>
-      </AppContainer>
-    </>
-  )
+  const { user } = React.useContext(SystemContext)
+  const isEnabled = userHasLabFeature(user, "Artist Series")
+
+  if (isEnabled) {
+    return (
+      <>
+        <AppContainer maxWidth="100%">
+          <Box m={4}>
+            <ArtistSeriesHeader artistSeries={artistSeries} />
+            <Separator mt={6} mb={3} />
+            <Footer />
+          </Box>
+        </AppContainer>
+      </>
+    )
+  } else {
+    return <ErrorPage code={404} />
+  }
 }
 
 export default createFragmentContainer(ArtistSeriesApp, {
