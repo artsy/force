@@ -1,10 +1,16 @@
 module.exports = """
   query($artist_id: String!) {
-    me{
-      suggested_artists(artist_id: $artist_id, exclude_followed_artists: true, exclude_artists_without_artworks: true, size: 5){
-        ... artistCell
+    artist(id: $artist_id) {
+      related {
+        suggestedConnection(excludeFollowedArtists: true, excludeArtistsWithoutArtworks: true, first: 5) {
+          edges {
+            node {
+              ... artistCell
+            }
+          }
+        }
       }
     }
   }
-  #{require '../../../../components/artist_cell/query.coffee'}
+  #{require '../../../../components/artist_cell/query2.coffee'}
 """

@@ -1,9 +1,9 @@
 module.exports = """
   query HomePageQuery($showHeroUnits: Boolean!, $showCollectionsHubs: Boolean!) {
-    home_page {
-      artwork_modules(
-        max_rails: -1,
-        max_followed_gene_rails: -1,
+    home_page: homePage {
+      artwork_modules: artworkModules(
+        maxRails: -1,
+        maxFollowedGeneRails: -1,
         order: [
           ACTIVE_BIDS,
           RECENTLY_VIEWED_WORKS,
@@ -20,22 +20,22 @@ module.exports = """
           GENERIC_GENES]) {
         key
         params {
-          id
-          related_artist_id
-          followed_artist_id
+          id: internalID
+          related_artist_id: relatedArtistID
+          followed_artist_id: followedArtistID
         }
       }
-      hero_units(platform: DESKTOP) @include(if: $showHeroUnits){
+      hero_units: heroUnits(platform: DESKTOP) @include(if: $showHeroUnits){
         mode
         heading
         title
-        title_image_url
-        retina_title_image_url: title_image_url(retina: true)
+        title_image_url: titleImageURL
+        retina_title_image_url: titleImageURL(retina: true)
         subtitle
-        link_text
+        link_text: linkText
         href
-        background_image_url
-        credit_line
+        background_image_url: backgroundImageURL
+        credit_line: creditLine
       }
     }
 

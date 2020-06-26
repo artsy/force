@@ -2,7 +2,7 @@
 moment = require 'moment-timezone'
 { USER_HOME_PAGE } = require('sharify').data
 User = require '../../../models/user.coffee'
-metaphysics = require '../../../../lib/metaphysics.coffee'
+metaphysics = require '../../../../lib/metaphysics2.coffee'
 query = require '../queries/module.coffee'
 MyActiveBids = require '../../../components/my_active_bids/view.coffee'
 ArtworkBrickRailView = require '../../../components/artwork_brick_rail/view.coffee'

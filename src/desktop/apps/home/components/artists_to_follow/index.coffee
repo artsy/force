@@ -1,5 +1,5 @@
 Backbone = require 'backbone'
-metaphysics = require '../../../../../lib/metaphysics.coffee'
+metaphysics = require '../../../../../lib/metaphysics2.coffee'
 query = require './query.coffee'
 ArtistsToFollowView = require './view.coffee'
 
