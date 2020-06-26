@@ -320,8 +320,8 @@ export const NavBar: React.FC = track(
 
       {showMobileMenu && (
         <>
-          <MobileNavCover onClick={() => toggleMobileNav(false)} />
           <MobileNavMenu
+            onClose={() => toggleMobileNav(false)}
             isOpen={showMobileMenu}
             menuData={menuData}
             onNavButtonClick={handleMobileNavClick}
@@ -354,14 +354,4 @@ const MobileNavDivider = styled(Box)`
   height: 63px;
   position: absolute;
   left: -12px;
-`
-
-const MobileNavCover = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  background: rgba(194, 194, 194, 0.3);
-  z-index: 0;
 `
