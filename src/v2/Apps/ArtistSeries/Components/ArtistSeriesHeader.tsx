@@ -39,7 +39,9 @@ const ArtistSeriesHeaderLarge: React.FC<ArtistSeriesHeaderProps> = props => {
               <Sans size="8" element="h1" unstable_trackIn>
                 {title}
               </Sans>
-              <Sans size="3t">{description}</Sans>
+              <Sans lineHeight={1.5} size="3t">
+                {description}
+              </Sans>
             </Flex>
           </Col>
           <Col sm={6}>
@@ -72,7 +74,9 @@ const ArtistSeriesHeaderSmall: React.FC<ArtistSeriesHeaderProps> = props => {
       <Sans size="8" element="h1" my={1} unstable_trackIn>
         {title}
       </Sans>
-      <Sans size="3t">{description}</Sans>
+      <Sans lineHeight={1.5} size="3t">
+        {description}
+      </Sans>
     </>
   )
 }
