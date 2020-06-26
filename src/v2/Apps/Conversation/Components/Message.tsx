@@ -7,7 +7,6 @@ import {
   FlexProps,
   Image,
   Sans,
-  Spacer,
   color,
 } from "@artsy/palette"
 import { Message_message } from "v2/__generated__/Message_message.graphql"
@@ -116,7 +115,6 @@ const Message: React.FC<MessageProps> = props => {
       {showTimeSince && (
         <TimeSince time={message.createdAt} style={{ alignSelf }} mt={0.5} />
       )}
-      <Spacer mb={showTimeSince ? 1 : 0.5} />
     </>
   )
 }
