@@ -95,7 +95,7 @@ const Message: React.FC<MessageProps> = props => {
           borderRadius: "15px",
           alignSelf,
         }}
-        width="66.67%"
+        maxWidth="66.67%"
       >
         <Sans size="4" color={textColor}>
           {text}
