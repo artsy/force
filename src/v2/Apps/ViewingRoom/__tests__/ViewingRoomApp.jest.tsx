@@ -1,5 +1,6 @@
 import React from "react"
 import { MockBoot, renderRelayTree } from "v2/DevTools"
+import { SystemContextProvider } from "v2/Artsy"
 import ViewingRoomApp from "../ViewingRoomApp"
 import { graphql } from "react-relay"
 import { ViewingRoomApp_OpenTest_QueryRawResponse } from "v2/__generated__/ViewingRoomApp_OpenTest_Query.graphql"
@@ -20,7 +21,14 @@ jest.mock("v2/Artsy/Router/useRouter", () => ({
 }))
 
 describe("ViewingRoomApp", () => {
+  let user
+  const mediator = { trigger: jest.fn() }
   const slug = "subscription-demo-gg-guy-yanai"
+
+  beforeEach(() => {
+    user = { id: "blah" }
+    window.history.pushState({}, "Viewing Room Title", slug)
+  })
 
   describe("with open viewing room", () => {
     const getWrapper = async (
@@ -31,9 +39,11 @@ describe("ViewingRoomApp", () => {
         Component: ({ viewingRoom }) => {
           return (
             <MockBoot breakpoint={breakpoint}>
-              <ViewingRoomApp viewingRoom={viewingRoom}>
-                some child
-              </ViewingRoomApp>
+              <SystemContextProvider mediator={mediator} user={user}>
+                <ViewingRoomApp viewingRoom={viewingRoom}>
+                  some child
+                </ViewingRoomApp>
+              </SystemContextProvider>
             </MockBoot>
           )
         },
@@ -105,9 +115,11 @@ describe("ViewingRoomApp", () => {
         Component: ({ viewingRoom }) => {
           return (
             <MockBoot breakpoint={breakpoint}>
-              <ViewingRoomApp viewingRoom={viewingRoom}>
-                some child
-              </ViewingRoomApp>
+              <SystemContextProvider mediator={mediator} user={user}>
+                <ViewingRoomApp viewingRoom={viewingRoom}>
+                  some child
+                </ViewingRoomApp>
+              </SystemContextProvider>
             </MockBoot>
           )
         },
@@ -169,9 +181,11 @@ describe("ViewingRoomApp", () => {
         Component: ({ viewingRoom }) => {
           return (
             <MockBoot breakpoint={breakpoint}>
-              <ViewingRoomApp viewingRoom={viewingRoom}>
-                some child
-              </ViewingRoomApp>
+              <SystemContextProvider mediator={mediator} user={user}>
+                <ViewingRoomApp viewingRoom={viewingRoom}>
+                  some child
+                </ViewingRoomApp>
+              </SystemContextProvider>
             </MockBoot>
           )
         },
