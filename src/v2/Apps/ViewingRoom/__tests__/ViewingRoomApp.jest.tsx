@@ -1,12 +1,13 @@
 import React from "react"
 import { MockBoot, renderRelayTree } from "v2/DevTools"
-import { SystemContextProvider } from "v2/Artsy"
+import { Mediator, SystemContextProvider } from "v2/Artsy"
 import ViewingRoomApp from "../ViewingRoomApp"
 import { graphql } from "react-relay"
 import { ViewingRoomApp_OpenTest_QueryRawResponse } from "v2/__generated__/ViewingRoomApp_OpenTest_Query.graphql"
 import { ViewingRoomApp_ClosedTest_QueryRawResponse } from "v2/__generated__/ViewingRoomApp_ClosedTest_Query.graphql"
 import { ViewingRoomApp_UnfoundTest_QueryRawResponse } from "v2/__generated__/ViewingRoomApp_UnfoundTest_Query.graphql"
 import { Breakpoint } from "@artsy/palette"
+import { act } from "react-dom/test-utils"
 
 jest.unmock("react-relay")
 jest.mock("v2/Artsy/Router/useRouter", () => ({
@@ -22,11 +23,12 @@ jest.mock("v2/Artsy/Router/useRouter", () => ({
 
 describe("ViewingRoomApp", () => {
   let user
-  const mediator = { trigger: jest.fn() }
+  let mediator: Mediator
   const slug = "subscription-demo-gg-guy-yanai"
 
   beforeEach(() => {
     user = { id: "blah" }
+    mediator = { trigger: jest.fn() }
     window.history.pushState({}, "Viewing Room Title", slug)
   })
 
@@ -209,6 +211,51 @@ describe("ViewingRoomApp", () => {
       expect(html).toContain(
         "Sorry, the page you were looking for doesn’t exist at this URL."
       )
+    })
+  })
+
+  describe("with logged out user", () => {
+    const getWrapper = async (
+      breakpoint: Breakpoint = "lg",
+      response: ViewingRoomApp_OpenTest_QueryRawResponse = OpenViewingRoomAppFixture
+    ) => {
+      return renderRelayTree({
+        Component: ({ viewingRoom }) => {
+          return (
+            <MockBoot breakpoint={breakpoint}>
+              <SystemContextProvider mediator={mediator} user={{}}>
+                <ViewingRoomApp viewingRoom={viewingRoom}>
+                  some child
+                </ViewingRoomApp>
+              </SystemContextProvider>
+            </MockBoot>
+          )
+        },
+        query: graphql`
+          query ViewingRoomApp_OpenTest_Query($slug: ID!) @raw_response_type {
+            viewingRoom(id: $slug) {
+              ...ViewingRoomApp_viewingRoom
+            }
+          }
+        `,
+        variables: {
+          slug,
+        },
+        mockData: response,
+      })
+    }
+    it("shows sign up modal", async () => {
+      const wrapper = await getWrapper()
+      act(() => {
+        const html = wrapper.html()
+        console.log(html)
+        expect(mediator.trigger).toBeCalledWith("open:auth", {
+          mode: "signup",
+          redirectTo: "http://localhost/" + slug,
+          contextModule: "viewingRoom",
+          intent: "viewViewingRoom",
+        })
+      })
     })
   })
 })
