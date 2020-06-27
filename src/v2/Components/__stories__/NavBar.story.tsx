@@ -81,7 +81,7 @@ storiesOf("Components/NavBar/Menus", module)
     return <Menus.UserMenu />
   })
   .add("MobileNavMenu", () => {
-    return <Menus.MobileNavMenu isOpen menuData={menuData} />
+    return <Menus.MobileNavMenu isOpen menuData={menuData} onClose={() => {}} />
   })
 
 const Container = ({ children }) => {
