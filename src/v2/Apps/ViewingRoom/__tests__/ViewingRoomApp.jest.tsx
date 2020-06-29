@@ -6,6 +6,7 @@ import { graphql } from "react-relay"
 import { ViewingRoomApp_OpenTest_QueryRawResponse } from "v2/__generated__/ViewingRoomApp_OpenTest_Query.graphql"
 import { ViewingRoomApp_ClosedTest_QueryRawResponse } from "v2/__generated__/ViewingRoomApp_ClosedTest_Query.graphql"
 import { ViewingRoomApp_UnfoundTest_QueryRawResponse } from "v2/__generated__/ViewingRoomApp_UnfoundTest_Query.graphql"
+import { ViewingRoomApp_LoggedOutTest_QueryRawResponse } from "v2/__generated__/ViewingRoomApp_LoggedOutTest_Query.graphql.ts"
 import { Breakpoint } from "@artsy/palette"
 import { act } from "react-dom/test-utils"
 
@@ -217,7 +218,7 @@ describe("ViewingRoomApp", () => {
   describe("with logged out user", () => {
     const getWrapper = async (
       breakpoint: Breakpoint = "lg",
-      response: ViewingRoomApp_OpenTest_QueryRawResponse = OpenViewingRoomAppFixture
+      response: ViewingRoomApp_LoggedOutTest_QueryRawResponse = LoggedOutViewingRoomAppFixture
     ) => {
       return renderRelayTree({
         Component: ({ viewingRoom }) => {
@@ -232,7 +233,8 @@ describe("ViewingRoomApp", () => {
           )
         },
         query: graphql`
-          query ViewingRoomApp_OpenTest_Query($slug: ID!) @raw_response_type {
+          query ViewingRoomApp_LoggedOutTest_Query($slug: ID!)
+            @raw_response_type {
             viewingRoom(id: $slug) {
               ...ViewingRoomApp_viewingRoom
             }
@@ -294,4 +296,20 @@ const ClosedViewingRoomAppFixture: ViewingRoomApp_ClosedTest_QueryRawResponse = 
 
 const UnfoundViewingRoomAppFixture: ViewingRoomApp_UnfoundTest_QueryRawResponse = {
   viewingRoom: null,
+}
+
+const LoggedOutViewingRoomAppFixture: ViewingRoomApp_LoggedOutTest_QueryRawResponse = {
+  viewingRoom: {
+    title: "Guy Yanai",
+    heroImageURL:
+      "https://d7hftxdivxxvm.cloudfront.net/?resize_to=width&src=https%3A%2F%2Fartsy-media-uploads.s3.amazonaws.com%2F0RnxWDsVmKuALfpmd75YyA%2FCTPHSEPT19_018_JO_Guy_Yanai_TLV_031_20190913.jpg&width=1200&quality=80",
+    partner: {
+      name: "Subscription Demo GG",
+      id: "UGFydG5lcjo1NTQxMjM3MzcyNjE2OTJiMTk4YzAzMDA=",
+      href: "/partner-demo-gg",
+    },
+    distanceToOpen: null,
+    distanceToClose: "Closes in 1 month",
+    status: "live",
+  },
 }
