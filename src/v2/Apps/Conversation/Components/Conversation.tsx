@@ -39,6 +39,11 @@ export const Item: React.FC<ItemProps> = props => {
         <Sans key={2} size="2" color="white100">
           {item.title} / {item.date}
         </Sans>,
+        item.listPrice?.display && (
+          <Sans key={3} size="2" color="white100">
+            {item.listPrice?.display}
+          </Sans>
+        ),
       ]
     } else if (item.__typename === "Show") {
       const itemLocation = item.fair?.location?.city
@@ -270,6 +275,15 @@ export const ConversationFragmentContainer = createFragmentContainer(
               href
               image {
                 url(version: ["large"])
+              }
+              listPrice {
+                __typename
+                ... on Money {
+                  display
+                }
+                ... on PriceRange {
+                  display
+                }
               }
             }
             ... on Show {
