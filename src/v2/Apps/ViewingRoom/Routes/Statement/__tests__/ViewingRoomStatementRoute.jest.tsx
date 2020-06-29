@@ -55,6 +55,7 @@ describe("ViewingRoomStatementRoute", () => {
     expect(wrapper.find("ViewingRoomIntro").length).toBe(1)
     expect(wrapper.find("ViewingRoomWorks").length).toBe(1)
     expect(wrapper.find("ViewingRoomPullQuote").length).toBe(1)
+    expect(wrapper.find("ViewingRoomBody").length).toBe(1)
     expect(wrapper.find("ViewingRoomSubsections").length).toBe(1)
   })
 
@@ -122,11 +123,7 @@ describe("ViewingRoomStatementRoute", () => {
     })
 
     it("tracks artwork image clicks", () => {
-      wrapper
-        .find("ArtworkItem")
-        .first()
-        .find("RouterLink")
-        .simulate("click")
+      wrapper.find("ArtworkItem").first().find("RouterLink").simulate("click")
       expect(trackEvent).toHaveBeenCalledWith({
         action_type: "clickedArtworkGroup",
         context_module: "viewingRoomArtworkRail",
@@ -153,6 +150,15 @@ describe("ViewingRoomStatementRoute", () => {
     it("displays the correct text", async () => {
       const wrapper = (await getWrapper()).find("ViewingRoomPullQuote")
       expect(wrapper.html()).toContain("I have everything I need right here")
+    })
+  })
+
+  describe("ViewingRoomBody", () => {
+    it("displays the correct text", async () => {
+      const wrapper = (await getWrapper()).find("ViewingRoomBody")
+      expect(wrapper.html()).toContain(
+        "Life can only be understood backwards; but it must be lived forwards."
+      )
     })
   })
 
@@ -200,6 +206,8 @@ const ViewingRoomStatmentRouteFixture: ViewingRoomStatementRoute_Test_QueryRawRe
     },
     pullQuote:
       "I have everything I need right here. I have this kind of self-sufficiency, and now it’s even more valuable.",
+    body:
+      "Life can only be understood backwards; but it must be lived forwards.",
     subsections: [
       {
         internalID: "0ea3e292-8bf4-48c4-815a-f342cb4eaf65",
