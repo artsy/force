@@ -987,6 +987,9 @@ type ArtistRelatedData {
 }
 
 type ArtistSeries {
+  # List of Mongo IDs for associated Artists
+  artistIDs: [String!]!
+  artists(page: Int, size: Int): [Artist]
   description: String
   featured: Boolean!
 

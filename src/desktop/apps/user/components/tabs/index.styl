@@ -1,7 +1,7 @@
 .settings-tabs
   clearfix()
+  display flex
   margin gutter 0 0 0
-  border-bottom 2px solid gray-lighter-color
   &__tab
     display block
     float left
@@ -9,7 +9,6 @@
     padding (gutter / 2)
     color gray-darker-color
     border-bottom 2px solid gray-lighter-color
-    margin-bottom -2px
     transition color 0.25s, border-color 0.25s
     text-decoration none
     &:hover
@@ -18,3 +17,8 @@
       border-bottom-color gray-darker-color
     &:first-child
       padding-left 0
+  
+@media screen and (max-width 768px)
+  .settings-tabs
+    overflow-x scroll
+    position relative
