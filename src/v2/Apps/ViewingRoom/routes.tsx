@@ -6,8 +6,26 @@ import { ViewingRoomStatementRouteFragmentContainer as StatementRoute } from "./
 import { ViewingRoomWorksRouteFragmentContainer as WorksRoute } from "./Routes/Works/ViewingRoomWorksRoute"
 
 const ViewingRoomApp = loadable(() => import("./ViewingRoomApp"))
+const ViewingRoomsApp = loadable(() => import("./ViewingRoomsApp"))
 
 export const routes: RouteConfig[] = [
+  {
+    path: "/viewing-rooms",
+    getComponent: () => ViewingRoomsApp,
+    prepare: () => {
+      ViewingRoomsApp.preload()
+    },
+    query: graphql`
+      query routes_ViewingRoomsAppQuery {
+        viewingRooms {
+          ...ViewingRoomsApp_viewingRooms
+        }
+      }
+    `,
+    cacheConfig: {
+      force: true,
+    },
+  },
   {
     path: "/viewing-room/:slug",
     getComponent: () => ViewingRoomApp,
