@@ -40,10 +40,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/gemup/-/gemup-0.0.3.tgz#0397a472bb69432dab3d2d66ca30556815aa96e7"
   integrity sha512-W///stXDTz3jSQw8UtT0BClVk4DLOsVp7a8v12efsEZvrZNT+85YBqPWq2DP1EX3ILZR1hGZhbKr/Gl5uti56Q==
 
-"@artsy/palette@11.1.0":
-  version "11.1.0"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-11.1.0.tgz#b309e51e033ecf06dd03523dfa4bff64a62f3331"
-  integrity sha512-SGE5d7pDLM+BRawcUATh2zDeI6ilcI+buJiWyukZJzZbaTmtsgoysP7hE/Rxj4wWqWavpVQMIj9ACWrnX9MpsQ==
+"@artsy/palette@11.3.0":
+  version "11.3.0"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-11.3.0.tgz#7b7717f1ee3aaa23196fe10546243423ee2302c4"
+  integrity sha512-doW9nDI1HQlt1D6Z48nVCqG8CwXLTK6BIWmrLN3hoWJhIxt6wApTzMhqs+CevfC173nNBASR5cxDZOT5MSRH2A==
   dependencies:
     "@styled-system/theme-get" "^5.1.2"
     babel-plugin-styled-components "^1.10.0"
@@ -51,7 +51,7 @@
     d3-shape "^1.3.5"
     luxon "^1.15"
     rc-slider "^8.6.2"
-    react-lazy-load-image-component "^1.4.1-beta.0"
+    react-lazy-load-image-component "1.5.0"
     react-live "^1.12.0"
     react-powerplug "^1.0.0"
     react-remove-scroll "^2.3.0"
@@ -18122,6 +18122,14 @@ react-is@16.8.3, react-is@^16.12.0, react-is@^16.3.2, react-is@^16.6.0, react-is
   version "16.8.3"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.8.3.tgz#4ad8b029c2a718fc0cfc746c8d4e1b7221e5387d"
   integrity sha512-Y4rC1ZJmsxxkkPuMLwvKvlL1Zfpbcu+Bf4ZigkHup3v9EfdYhAlWAaVyA19olXq2o2mGn0w+dFKvk3pVVlYcIA==
+
+react-lazy-load-image-component@1.5.0:
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/react-lazy-load-image-component/-/react-lazy-load-image-component-1.5.0.tgz#48939f86cb262b93b345c6fa6322f75ede55160d"
+  integrity sha512-dAvuueTq0FNjswHEII8tcd0FRRHZgPoIdVhE1fcAfCdqY7LZ37IHd0xWb2c6rCl+dsSm9Z4AloEffM8JYPxTlA==
+  dependencies:
+    lodash.debounce "^4.0.8"
+    lodash.throttle "^4.1.1"
 
 react-lazy-load-image-component@^1.4.1-beta.0:
   version "1.4.1-beta.0"
