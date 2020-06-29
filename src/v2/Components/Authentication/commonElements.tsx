@@ -47,7 +47,7 @@ export const BackButton = styled.div`
   cursor: pointer;
 `
 
-export const ErrorContainer = styled(Box) <{ show: boolean }>`
+export const ErrorContainer = styled(Box)<{ show: boolean }>`
   margin-top: ${p => (p.show ? "auto" : "0")};
   visibility: ${p => (p.show ? "visible" : "hidden")};
   transition: visibility 0.2s linear;
@@ -66,12 +66,12 @@ export const Error = (props: { children: any; show: boolean }) => (
 export const MobileHeader = (props: {
   children: React.ReactElement | string
 }) => (
-    <Flex p={1} mt={2} justifyContent="center">
-      <Serif size="5t" weight="semibold" textAlign="center">
-        {props.children}
-      </Serif>
-    </Flex>
-  )
+  <Flex p={1} mt={2} justifyContent="center">
+    <Serif size="5t" weight="semibold" textAlign="center">
+      {props.children}
+    </Serif>
+  </Flex>
+)
 
 export const FooterText = (props: { children: any; mt?: number }) => (
   <Sans size="2" color="black60" mt={props.mt || 1} mr={0.5} textAlign="center">
@@ -81,7 +81,7 @@ export const FooterText = (props: { children: any; mt?: number }) => (
 
 export const ForgotPassword = (props: { onClick: () => void }) => (
   <Sans size="2">
-    <Link color="black60" {...props}>
+    <Link color="black60" {...props} data-test="forgot">
       Forgot Password?
     </Link>
   </Sans>
