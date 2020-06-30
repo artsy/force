@@ -39,6 +39,11 @@ export const Item: React.FC<ItemProps> = props => {
         <Sans key={2} size="2" color="white100">
           {item.title} / {item.date}
         </Sans>,
+        item.listPrice?.display && (
+          <Sans key={3} size="2" color="white100">
+            {item.listPrice?.display}
+          </Sans>
+        ),
       ]
     } else if (item.__typename === "Show") {
       const itemLocation = item.fair?.location?.city
@@ -60,7 +65,7 @@ export const Item: React.FC<ItemProps> = props => {
         href={item.href}
         underlineBehavior="none"
         style={{ alignSelf: "flex-end" }}
-        my={1}
+        mb={1}
       >
         <Flex flexDirection="column">
           <Image
@@ -155,7 +160,7 @@ const Conversation: React.FC<ConversationProps> = props => {
   return (
     <Flex flexDirection="column" width="100%">
       <Box>
-        <Spacer mt="45px" />
+        <Spacer mt={["75px", 2]} />
         <Flex flexDirection="column" width="100%" px={1}>
           {conversation.items.map((i, idx) => (
             <Item
@@ -179,36 +184,38 @@ const Conversation: React.FC<ConversationProps> = props => {
                   style={{ alignSelf: "center" }}
                   time={messageGroup[0].createdAt}
                   exact
-                  mt={0.5}
                   mb={1}
                 />
                 {messageGroup.map((message, messageIndex) => {
                   const nextMessage = messageGroup[messageIndex + 1]
+                  const senderChanges =
+                    nextMessage && nextMessage.isFromUser !== message.isFromUser
+                  const lastMessageInGroup =
+                    messageIndex === messageGroup.length - 1
+                  const spaceAfter =
+                    senderChanges || lastMessageInGroup ? 2 : 0.5
 
                   return (
-                    <Message
-                      message={message}
-                      initialMessage={conversation.initialMessage}
-                      key={message.internalID}
-                      isFirst={groupIndex + messageIndex === 0}
-                      showTimeSince={
-                        message.createdAt &&
-                        today &&
-                        messageGroup.length - 1 === messageIndex
-                      }
-                      mb={
-                        nextMessage &&
-                        nextMessage.isFromUser !== message.isFromUser
-                          ? 1
-                          : undefined
-                      }
-                    />
+                    <>
+                      <Message
+                        message={message}
+                        initialMessage={conversation.initialMessage}
+                        key={message.internalID}
+                        isFirst={groupIndex + messageIndex === 0}
+                        showTimeSince={
+                          message.createdAt &&
+                          today &&
+                          messageGroup.length - 1 === messageIndex
+                        }
+                      />
+                      <Spacer mb={spaceAfter} />
+                    </>
                   )
                 })}
               </React.Fragment>
             )
           })}
-          <Spacer mb={9} />
+          <Spacer mb={[undefined, 6]} />
           <Box ref={bottomOfPage}></Box>
         </Flex>
       </Box>
@@ -268,6 +275,15 @@ export const ConversationFragmentContainer = createFragmentContainer(
               href
               image {
                 url(version: ["large"])
+              }
+              listPrice {
+                __typename
+                ... on Money {
+                  display
+                }
+                ... on PriceRange {
+                  display
+                }
               }
             }
             ... on Show {
