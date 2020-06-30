@@ -80,8 +80,8 @@ export const Reply: React.FC<ReplyProps> = props => {
 
           trackEvent(
             sentConversationMessage({
-              impulse_conversation_id: conversation.internalID,
-              impulse_message_id: internalID,
+              impulseConversationId: conversation.internalID,
+              impulseMessageId: internalID,
             })
           )
         },
@@ -129,7 +129,7 @@ export const Reply: React.FC<ReplyProps> = props => {
             onFocus={() => {
               trackEvent(
                 focusedOnConversationMessageInput({
-                  impulse_conversation_id: conversation.internalID,
+                  impulseConversationId: conversation.internalID,
                 })
               )
             }}
