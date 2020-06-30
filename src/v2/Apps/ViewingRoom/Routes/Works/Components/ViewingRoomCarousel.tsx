@@ -110,7 +110,8 @@ export const ViewingRoomCarouselFragmentContainer = createFragmentContainer(
       fragment ViewingRoomCarousel_artwork on Artwork {
         images {
           internalID
-          resized(height: 550) {
+          # requesting the largest size and resizing it down to 550*2 for retina
+          resized(height: 1100, version: "normalized") {
             url
             width
             height

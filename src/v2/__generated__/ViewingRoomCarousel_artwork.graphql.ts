@@ -48,12 +48,17 @@ const node: ReaderFragment = {
           "kind": "LinkedField",
           "alias": null,
           "name": "resized",
-          "storageKey": "resized(height:550)",
+          "storageKey": "resized(height:1100,version:\"normalized\")",
           "args": [
             {
               "kind": "Literal",
               "name": "height",
-              "value": 550
+              "value": 1100
+            },
+            {
+              "kind": "Literal",
+              "name": "version",
+              "value": "normalized"
             }
           ],
           "concreteType": "ResizedImageUrl",
@@ -86,5 +91,5 @@ const node: ReaderFragment = {
     }
   ]
 };
-(node as any).hash = '7d40049fd00ee2782a206073dac8ce39';
+(node as any).hash = '524817080b0184d197042f5882caec14';
 export default node;

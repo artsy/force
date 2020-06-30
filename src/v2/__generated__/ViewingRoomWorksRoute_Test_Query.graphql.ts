@@ -66,7 +66,7 @@ fragment ViewingRoomArtworkDetails_artwork on Artwork {
 fragment ViewingRoomCarousel_artwork on Artwork {
   images {
     internalID
-    resized(height: 550) {
+    resized(height: 1100, version: "normalized") {
       url
       width
       height
@@ -194,12 +194,17 @@ return {
                             "kind": "LinkedField",
                             "alias": null,
                             "name": "resized",
-                            "storageKey": "resized(height:550)",
+                            "storageKey": "resized(height:1100,version:\"normalized\")",
                             "args": [
                               {
                                 "kind": "Literal",
                                 "name": "height",
-                                "value": 550
+                                "value": 1100
+                              },
+                              {
+                                "kind": "Literal",
+                                "name": "version",
+                                "value": "normalized"
                               }
                             ],
                             "concreteType": "ResizedImageUrl",
@@ -293,7 +298,7 @@ return {
     "operationKind": "query",
     "name": "ViewingRoomWorksRoute_Test_Query",
     "id": null,
-    "text": "query ViewingRoomWorksRoute_Test_Query(\n  $slug: ID!\n) {\n  viewingRoom(id: $slug) {\n    ...ViewingRoomWorksRoute_viewingRoom\n  }\n}\n\nfragment ViewingRoomArtworkDetails_artwork on Artwork {\n  id\n  additionalInformation\n  artistNames\n  title\n  date\n  href\n  saleMessage\n}\n\nfragment ViewingRoomCarousel_artwork on Artwork {\n  images {\n    internalID\n    resized(height: 550) {\n      url\n      width\n      height\n    }\n  }\n}\n\nfragment ViewingRoomWorksRoute_viewingRoom on ViewingRoom {\n  artworksConnection {\n    edges {\n      node {\n        internalID\n        ...ViewingRoomCarousel_artwork\n        ...ViewingRoomArtworkDetails_artwork\n        id\n      }\n    }\n  }\n}\n",
+    "text": "query ViewingRoomWorksRoute_Test_Query(\n  $slug: ID!\n) {\n  viewingRoom(id: $slug) {\n    ...ViewingRoomWorksRoute_viewingRoom\n  }\n}\n\nfragment ViewingRoomArtworkDetails_artwork on Artwork {\n  id\n  additionalInformation\n  artistNames\n  title\n  date\n  href\n  saleMessage\n}\n\nfragment ViewingRoomCarousel_artwork on Artwork {\n  images {\n    internalID\n    resized(height: 1100, version: \"normalized\") {\n      url\n      width\n      height\n    }\n  }\n}\n\nfragment ViewingRoomWorksRoute_viewingRoom on ViewingRoom {\n  artworksConnection {\n    edges {\n      node {\n        internalID\n        ...ViewingRoomCarousel_artwork\n        ...ViewingRoomArtworkDetails_artwork\n        id\n      }\n    }\n  }\n}\n",
     "metadata": {}
   }
 };
