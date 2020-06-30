@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useContext, useEffect } from "react"
 import { AppContainer } from "v2/Apps/Components/AppContainer"
 import { Box, Separator } from "@artsy/palette"
 import { ViewingRoomHeaderFragmentContainer as ViewingRoomHeader } from "./Components/ViewingRoomHeader"
@@ -10,6 +10,10 @@ import { ViewingRoomApp_viewingRoom } from "v2/__generated__/ViewingRoomApp_view
 import { ViewingRoomMetaFragmentContainer as ViewingRoomMeta } from "./Components/ViewingRoomMeta"
 import { Footer } from "v2/Components/Footer"
 import { ErrorPage } from "v2/Components/ErrorPage"
+import { openAuthModal } from "v2/Utils/openAuthModal"
+import { SystemContext } from "v2/Artsy"
+import { ModalType } from "v2/Components/Authentication/Types"
+import { ContextModule, Intent } from "@artsy/cohesion"
 
 interface ViewingRoomAppProps {
   children: React.ReactNode
@@ -20,8 +24,35 @@ const ViewingRoomApp: React.FC<ViewingRoomAppProps> = ({
   children,
   viewingRoom,
 }) => {
+  const { mediator, user } = useContext(SystemContext)
+  useEffect(() => {
+    if (!user || !user.id) {
+      openAuthModal(mediator, {
+        mode: ModalType.signup,
+        redirectTo: window.location.href,
+        contextModule: ContextModule.viewingRoom,
+        intent: Intent.viewViewingRoom,
+      })
+    }
+  }, [user, mediator])
+
   if (!viewingRoom) {
     return <ErrorPage code={404} />
+  }
+
+  const getView = () => {
+    if (!user) {
+      return
+    } else if (viewingRoom.status === "closed") {
+      return <ViewingRoomClosed viewingRoom={viewingRoom} />
+    } else {
+      return (
+        <>
+          <ViewingRoomTabBar mb={[2, 3]} />
+          {children}
+        </>
+      )
+    }
   }
 
   return (
@@ -30,16 +61,7 @@ const ViewingRoomApp: React.FC<ViewingRoomAppProps> = ({
 
       <AppContainer maxWidth="100%">
         <ViewingRoomHeader viewingRoom={viewingRoom} />
-
-        {viewingRoom.status === "closed" ? (
-          <ViewingRoomClosed viewingRoom={viewingRoom} />
-        ) : (
-          <>
-            <ViewingRoomTabBar mb={[2, 3]} />
-            {children}
-          </>
-        )}
-
+        {getView()}
         <Box mx={2}>
           <Separator mt={6} mb={3} />
           <Footer />
