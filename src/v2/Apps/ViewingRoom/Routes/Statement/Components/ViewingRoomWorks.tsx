@@ -95,7 +95,7 @@ const ArtworkItem: React.FC<ArtworkNode> = ({
       }}
     >
       <Box width="95%">
-        <Box>
+        <Box mb={0.5}>
           <Image width="100%" src={imageUrl} />
         </Box>
         <Box>

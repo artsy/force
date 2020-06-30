@@ -51,7 +51,12 @@ const ViewingRoomCarousel: React.FC<ViewingRoomCarouselProps> = ({
           onDragEnd={({ flickity }) => update(flickity.selectedIndex)}
           render={({ resized: { url, width, height }, internalID }) => {
             return (
-              <Box key={internalID} width="auto" height={CarouselHeight}>
+              <Box
+                key={internalID}
+                width="auto"
+                height={CarouselHeight}
+                mr="2px"
+              >
                 <Image src={url} width="auto" height={CarouselHeight} />
               </Box>
             )
