@@ -1,8 +1,8 @@
 module.exports = """
-  fragment followed_artist_context on HomePageModuleContextFollowedArtist {
+  fragment followed_artist_context on HomePageFollowedArtistArtworkModule {
     artist {
       href
-      id
+      id: slug
     }
   }
 """
