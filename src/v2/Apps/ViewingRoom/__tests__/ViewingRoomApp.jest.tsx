@@ -8,7 +8,6 @@ import { ViewingRoomApp_ClosedTest_QueryRawResponse } from "v2/__generated__/Vie
 import { ViewingRoomApp_UnfoundTest_QueryRawResponse } from "v2/__generated__/ViewingRoomApp_UnfoundTest_Query.graphql"
 import { ViewingRoomApp_LoggedOutTest_QueryRawResponse } from "v2/__generated__/ViewingRoomApp_LoggedOutTest_Query.graphql.ts"
 import { Breakpoint } from "@artsy/palette"
-import { act } from "react-dom/test-utils"
 
 jest.unmock("react-relay")
 jest.mock("v2/Artsy/Router/useRouter", () => ({
@@ -248,15 +247,13 @@ describe("ViewingRoomApp", () => {
     }
     it("shows sign up modal", async () => {
       const wrapper = await getWrapper()
-      act(() => {
-        const html = wrapper.html()
-        console.log(html)
-        expect(mediator.trigger).toBeCalledWith("open:auth", {
-          mode: "signup",
-          redirectTo: "http://localhost/" + slug,
-          contextModule: "viewingRoom",
-          intent: "viewViewingRoom",
-        })
+      const html = wrapper.html()
+      console.log(html)
+      expect(mediator.trigger).toBeCalledWith("open:auth", {
+        mode: "signup",
+        redirectTo: "http://localhost/" + slug,
+        contextModule: "viewingRoom",
+        intent: "viewViewingRoom",
       })
     })
   })
