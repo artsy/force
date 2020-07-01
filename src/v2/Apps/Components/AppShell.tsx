@@ -54,8 +54,8 @@ export const AppShell: React.FC<AppShellProps> = props => {
         </Box>
       </Box>
 
-      <Box>
-        <Box>{children}</Box>
+      <Box as="main" id="main">
+        {children}
       </Box>
 
       <NetworkOfflineMonitor />
