@@ -36,6 +36,7 @@ export const MobileNavMenu: React.FC<Props> = props => {
     onNavButtonClick,
   } = props
   const { user } = useSystemContext()
+  const account = props.menuData.links.find(md => md.text === "Account")
 
   return (
     <NavigatorContextProvider>
@@ -59,7 +60,7 @@ export const MobileNavMenu: React.FC<Props> = props => {
             <MobileLink href="/gallery-partnerships">
               Artsy for Galleries
             </MobileLink>
-            {user ? <LoggedInLinks /> : <AuthenticateLinks />}
+            {user ? <LoggedInLinks account={account} /> : <AuthenticateLinks />}
           </ul>
         </AnimatingMenuWrapper>
       </MenuViewport>
@@ -186,7 +187,11 @@ const NavLink: React.FC<any> = ({ link }) => {
   } else {
     return (
       <React.Fragment key={link.href}>
-        <MobileLink href={link.href} contextModule={contextModule}>
+        <MobileLink
+          contextModule={contextModule}
+          href={link.href}
+          onClick={link.onClick}
+        >
           {link.text}
         </MobileLink>
         {link.dividerBelow && <Separator my={1} color={color("black10")} />}
@@ -251,36 +256,37 @@ const AuthenticateLinks: React.FC = () => {
     <Box>
       <Separator my={1} color={color("black10")} />
       <MobileLink href={authLink(ModalType.signup)}>Sign Up</MobileLink>
-      <MobileLink href={authLink(ModalType.login)}>Login</MobileLink>
+      <MobileLink href={authLink(ModalType.login)}>Log In</MobileLink>
     </Box>
   )
 }
 
-const LoggedInLinks: React.FC = () => {
+export const LoggedInLinks: React.FC<any> = ({ account }) => {
   const { mediator, user } = useSystemContext()
   const conversationsEnabled = userHasLabFeature(
     user,
     "User Conversations View"
   )
-  return (
-    <Box>
-      <Separator my={1} color={color("black10")} />
-      {conversationsEnabled && (
-        <MobileLink href="/user/conversations">Inbox</MobileLink>
-      )}
-      <MobileLink href="/works-for-you">Works for you</MobileLink>
-      <MobileLink href="/user/edit">Account</MobileLink>
-      <MobileLink
-        href="#"
-        onClick={event => {
-          event.preventDefault()
-          mediator.trigger("auth:logout")
-        }}
-      >
-        Log out
-      </MobileLink>
-    </Box>
-  )
+  const logOut = {
+    href: "#logout",
+    onClick: event => {
+      event.preventDefault()
+      mediator.trigger("auth:logout")
+    },
+    text: "Log Out",
+  }
+  const inbox = {
+    href: "/user/conversations",
+    text: "Inbox",
+  }
+  let menu = (account as MenuLinkData).menu
+  if (!menu.links.find(l => l.text === logOut.text)) {
+    menu.links.push(logOut)
+  }
+  if (conversationsEnabled && !menu.links.find(l => l.text === inbox.text)) {
+    menu.links.unshift(inbox)
+  }
+  return <MobileSubmenuLink menu={menu}>{menu.title}</MobileSubmenuLink>
 }
 
 export const MobileToggleIcon: React.FC<{ open: boolean }> = ({ open }) => {
