@@ -4,7 +4,7 @@ import { garamond, unica } from "v2/Assets/Fonts"
 import React from "react"
 import styled from "styled-components"
 import { block } from "./Helpers"
-import { borderedInput } from "./Mixins"
+import { borderedInputMixin } from "./Mixins"
 
 export interface InputProps extends React.HTMLProps<HTMLInputElement> {
   block?: boolean
@@ -32,7 +32,7 @@ export const Input: React.ExoticComponent<InputProps> = React.forwardRef(
 )
 
 export const StyledInput = styled.input`
-  ${borderedInput};
+  ${borderedInputMixin};
   ${block(24)};
 
   /* Remove shadow and default border radius on iOS */

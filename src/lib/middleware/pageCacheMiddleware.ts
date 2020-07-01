@@ -82,7 +82,7 @@ export const pageCacheMiddleware = async (
   try {
     await new Promise((resolve, reject) => {
       // Cache timeout handler, will reject if hit.
-      let timeoutId: NodeJS.Timer | null = setTimeout(() => {
+      let timeoutId = setTimeout(() => {
         timeoutId = null
         const error = new Error(
           `Timeout of ${PAGE_CACHE_RETRIEVAL_TIMEOUT_MS}ms, skipping...`

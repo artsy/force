@@ -1,7 +1,7 @@
 import { InquiryArtwork_artwork } from "v2/__generated__/InquiryArtwork_artwork.graphql"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import styled, { StyledFunction } from "styled-components"
+import styled from "styled-components"
 import colors from "../Assets/Colors"
 import Artwork, { ArtworkProps, OverlayProps } from "./Artwork"
 import Icon from "./Icon"
@@ -25,8 +25,7 @@ const OverlayBackground = styled.div`
   justify-content: center;
   align-items: center;
 `
-const Div: StyledFunction<CircleProps> = styled.div
-const Circle = Div`
+const Circle = styled.div<CircleProps>`
   width: 80px;
   height: 80px;
   border-radius: 100%;
@@ -47,9 +46,11 @@ const Overlay: React.SFC<OverlayProps> = props => (
   </OverlayBackground>
 )
 
-export const InquiryArtwork: React.SFC<ArtworkProps & {
-  artwork: InquiryArtwork_artwork
-}> = props => {
+export const InquiryArtwork: React.SFC<
+  ArtworkProps & {
+    artwork: InquiryArtwork_artwork
+  }
+> = props => {
   return (
     <Artwork {...props} extended={false} Overlay={Overlay} showOverlayOnHover />
   )
