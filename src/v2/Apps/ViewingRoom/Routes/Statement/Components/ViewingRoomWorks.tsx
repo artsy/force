@@ -58,6 +58,7 @@ export const ViewingRoomWorksFragmentContainer = createFragmentContainer(
               artistNames
               title
               date
+              saleMessage
             }
           }
         }
@@ -76,6 +77,7 @@ const ArtworkItem: React.FC<ArtworkNode> = ({
   imageUrl,
   navigateTo,
   title,
+  saleMessage,
 }) => {
   const tracking = useTracking()
 
@@ -106,6 +108,13 @@ const ArtworkItem: React.FC<ArtworkNode> = ({
             {[title, date].filter(s => s).join(", ")}
           </Sans>
         </Box>
+        {saleMessage && (
+          <Box>
+            <Sans size="3t" color="black60">
+              {saleMessage}
+            </Sans>
+          </Box>
+        )}
       </Box>
     </RouterLink>
   )

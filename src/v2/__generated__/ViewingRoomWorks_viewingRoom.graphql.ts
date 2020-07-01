@@ -11,6 +11,7 @@ export type ViewingRoomWorks_viewingRoom = {
                 readonly artistNames: string | null;
                 readonly title: string | null;
                 readonly date: string | null;
+                readonly saleMessage: string | null;
             } | null;
         } | null> | null;
     } | null;
@@ -92,6 +93,13 @@ const node: ReaderFragment = {
                   "name": "date",
                   "args": null,
                   "storageKey": null
+                },
+                {
+                  "kind": "ScalarField",
+                  "alias": null,
+                  "name": "saleMessage",
+                  "args": null,
+                  "storageKey": null
                 }
               ]
             }
@@ -101,5 +109,5 @@ const node: ReaderFragment = {
     }
   ]
 };
-(node as any).hash = '01e8cc1929a810017ffbb8eb3d2b940c';
+(node as any).hash = 'fffb4a8df458a9188446bfe3cc917ed1';
 export default node;
