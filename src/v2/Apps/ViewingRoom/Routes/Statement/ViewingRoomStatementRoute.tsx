@@ -25,7 +25,9 @@ const StatementRoute: React.FC<ViewingRoomStatementRouteProps> = ({
           <ViewingRoomPullQuote viewingRoom={viewingRoom} />
           <ViewingRoomBody viewingRoom={viewingRoom} />
           <ViewingRoomSubsections viewingRoom={viewingRoom} />
-          <ViewWorksButton />
+          <ViewWorksButton
+            artworksCount={viewingRoom.artworksConnection.totalCount}
+          />
         </Join>
       </Box>
       <Spacer mt={4} mb={[4, 9]} />
@@ -43,6 +45,9 @@ export const ViewingRoomStatementRouteFragmentContainer = createFragmentContaine
         ...ViewingRoomPullQuote_viewingRoom
         ...ViewingRoomBody_viewingRoom
         ...ViewingRoomSubsections_viewingRoom
+        artworksConnection(first: 2) {
+          totalCount
+        }
       }
     `,
   }

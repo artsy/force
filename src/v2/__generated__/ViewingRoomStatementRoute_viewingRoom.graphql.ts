@@ -3,6 +3,9 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ViewingRoomStatementRoute_viewingRoom = {
+    readonly artworksConnection: {
+        readonly totalCount: number | null;
+    } | null;
     readonly " $fragmentRefs": FragmentRefs<"ViewingRoomIntro_viewingRoom" | "ViewingRoomWorks_viewingRoom" | "ViewingRoomPullQuote_viewingRoom" | "ViewingRoomBody_viewingRoom" | "ViewingRoomSubsections_viewingRoom">;
     readonly " $refType": "ViewingRoomStatementRoute_viewingRoom";
 };
@@ -21,6 +24,30 @@ const node: ReaderFragment = {
   "metadata": null,
   "argumentDefinitions": [],
   "selections": [
+    {
+      "kind": "LinkedField",
+      "alias": null,
+      "name": "artworksConnection",
+      "storageKey": "artworksConnection(first:2)",
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "first",
+          "value": 2
+        }
+      ],
+      "concreteType": "ArtworkConnection",
+      "plural": false,
+      "selections": [
+        {
+          "kind": "ScalarField",
+          "alias": null,
+          "name": "totalCount",
+          "args": null,
+          "storageKey": null
+        }
+      ]
+    },
     {
       "kind": "FragmentSpread",
       "name": "ViewingRoomIntro_viewingRoom",
@@ -48,5 +75,5 @@ const node: ReaderFragment = {
     }
   ]
 };
-(node as any).hash = 'f407bc7c23d72df0e083441cdbd5bece';
+(node as any).hash = 'eb89dc547a16f9d2e7413352b51ab944';
 export default node;

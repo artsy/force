@@ -59,6 +59,16 @@ describe("ViewingRoomStatementRoute", () => {
     expect(wrapper.find("ViewingRoomSubsections").length).toBe(1)
   })
 
+  it("renders view works", async () => {
+    const wrapper = await getWrapper()
+    const buttons = wrapper.find("ViewWorksButton")
+    expect(buttons.length).toBe(2)
+    const a = buttons.at(0).html()
+    expect(a).toContain("View works (5)")
+    const b = buttons.at(0).html()
+    expect(b).toContain("View works (5)")
+  })
+
   describe("ViewingRoomIntro", () => {
     it("renders an intro statement", async () => {
       const wrapper = (await getWrapper()).find("ViewingRoomIntro")
@@ -179,6 +189,7 @@ const ViewingRoomStatmentRouteFixture: ViewingRoomStatementRoute_Test_QueryRawRe
     introStatement:
       "Checked into a Club Med in the French Alps, and quickly discovered it was not what he expected. The hotel was an outdated ski lodge without any snow. “It was this horrible vacation,” the fortysomething artist said of his family trip there, a few years back. Still, he wanted to paint the drab resort—maybe so he could get a do-over of his vacation, this time in colorful and glorious surroundings.",
     artworksConnection: {
+      totalCount: 5,
       edges: [
         {
           node: {

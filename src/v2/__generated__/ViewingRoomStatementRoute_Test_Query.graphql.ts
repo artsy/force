@@ -14,6 +14,7 @@ export type ViewingRoomStatementRoute_Test_QueryRawResponse = {
     readonly viewingRoom: ({
         readonly introStatement: string | null;
         readonly artworksConnection: ({
+            readonly totalCount: number | null;
             readonly edges: ReadonlyArray<({
                 readonly node: ({
                     readonly internalID: string;
@@ -72,6 +73,9 @@ fragment ViewingRoomStatementRoute_viewingRoom on ViewingRoom {
   ...ViewingRoomPullQuote_viewingRoom
   ...ViewingRoomBody_viewingRoom
   ...ViewingRoomSubsections_viewingRoom
+  artworksConnection(first: 2) {
+    totalCount
+  }
 }
 
 fragment ViewingRoomSubsections_viewingRoom on ViewingRoom {
@@ -85,7 +89,8 @@ fragment ViewingRoomSubsections_viewingRoom on ViewingRoom {
 }
 
 fragment ViewingRoomWorks_viewingRoom on ViewingRoom {
-  artworksConnection {
+  artworksConnection(first: 2) {
+    totalCount
     edges {
       node {
         internalID
@@ -190,11 +195,24 @@ return {
             "kind": "LinkedField",
             "alias": null,
             "name": "artworksConnection",
-            "storageKey": null,
-            "args": null,
+            "storageKey": "artworksConnection(first:2)",
+            "args": [
+              {
+                "kind": "Literal",
+                "name": "first",
+                "value": 2
+              }
+            ],
             "concreteType": "ArtworkConnection",
             "plural": false,
             "selections": [
+              {
+                "kind": "ScalarField",
+                "alias": null,
+                "name": "totalCount",
+                "args": null,
+                "storageKey": null
+              },
               {
                 "kind": "LinkedField",
                 "alias": null,
@@ -300,7 +318,7 @@ return {
     "operationKind": "query",
     "name": "ViewingRoomStatementRoute_Test_Query",
     "id": null,
-    "text": "query ViewingRoomStatementRoute_Test_Query(\n  $slug: ID!\n) {\n  viewingRoom(id: $slug) {\n    ...ViewingRoomStatementRoute_viewingRoom\n  }\n}\n\nfragment ViewingRoomBody_viewingRoom on ViewingRoom {\n  body\n}\n\nfragment ViewingRoomIntro_viewingRoom on ViewingRoom {\n  introStatement\n}\n\nfragment ViewingRoomPullQuote_viewingRoom on ViewingRoom {\n  pullQuote\n}\n\nfragment ViewingRoomStatementRoute_viewingRoom on ViewingRoom {\n  ...ViewingRoomIntro_viewingRoom\n  ...ViewingRoomWorks_viewingRoom\n  ...ViewingRoomPullQuote_viewingRoom\n  ...ViewingRoomBody_viewingRoom\n  ...ViewingRoomSubsections_viewingRoom\n}\n\nfragment ViewingRoomSubsections_viewingRoom on ViewingRoom {\n  subsections {\n    internalID\n    title\n    body\n    imageURL\n    caption\n  }\n}\n\nfragment ViewingRoomWorks_viewingRoom on ViewingRoom {\n  artworksConnection {\n    edges {\n      node {\n        internalID\n        imageUrl\n        artistNames\n        title\n        date\n        saleMessage\n        id\n      }\n    }\n  }\n}\n",
+    "text": "query ViewingRoomStatementRoute_Test_Query(\n  $slug: ID!\n) {\n  viewingRoom(id: $slug) {\n    ...ViewingRoomStatementRoute_viewingRoom\n  }\n}\n\nfragment ViewingRoomBody_viewingRoom on ViewingRoom {\n  body\n}\n\nfragment ViewingRoomIntro_viewingRoom on ViewingRoom {\n  introStatement\n}\n\nfragment ViewingRoomPullQuote_viewingRoom on ViewingRoom {\n  pullQuote\n}\n\nfragment ViewingRoomStatementRoute_viewingRoom on ViewingRoom {\n  ...ViewingRoomIntro_viewingRoom\n  ...ViewingRoomWorks_viewingRoom\n  ...ViewingRoomPullQuote_viewingRoom\n  ...ViewingRoomBody_viewingRoom\n  ...ViewingRoomSubsections_viewingRoom\n  artworksConnection(first: 2) {\n    totalCount\n  }\n}\n\nfragment ViewingRoomSubsections_viewingRoom on ViewingRoom {\n  subsections {\n    internalID\n    title\n    body\n    imageURL\n    caption\n  }\n}\n\nfragment ViewingRoomWorks_viewingRoom on ViewingRoom {\n  artworksConnection(first: 2) {\n    totalCount\n    edges {\n      node {\n        internalID\n        imageUrl\n        artistNames\n        title\n        date\n        saleMessage\n        id\n      }\n    }\n  }\n}\n",
     "metadata": {}
   }
 };
