@@ -25,7 +25,9 @@ const StatementRoute: React.FC<ViewingRoomStatementRouteProps> = ({
           <ViewingRoomPullQuote viewingRoom={viewingRoom} />
           <ViewingRoomBody viewingRoom={viewingRoom} />
           <ViewingRoomSubsections viewingRoom={viewingRoom} />
-          <ViewWorksButton artworksCount={viewingRoom.artworkIDs.length} />
+          <ViewWorksButton
+            artworksCount={viewingRoom.artworksConnection.totalCount}
+          />
         </Join>
       </Box>
       <Spacer mt={4} mb={[4, 9]} />
@@ -38,12 +40,14 @@ export const ViewingRoomStatementRouteFragmentContainer = createFragmentContaine
   {
     viewingRoom: graphql`
       fragment ViewingRoomStatementRoute_viewingRoom on ViewingRoom {
-        artworkIDs
         ...ViewingRoomIntro_viewingRoom
         ...ViewingRoomWorks_viewingRoom
         ...ViewingRoomPullQuote_viewingRoom
         ...ViewingRoomBody_viewingRoom
         ...ViewingRoomSubsections_viewingRoom
+        artworksConnection(first: 2) {
+          totalCount
+        }
       }
     `,
   }

@@ -39,12 +39,14 @@ fragment ViewingRoomPullQuote_viewingRoom on ViewingRoom {
 }
 
 fragment ViewingRoomStatementRoute_viewingRoom on ViewingRoom {
-  artworkIDs
   ...ViewingRoomIntro_viewingRoom
   ...ViewingRoomWorks_viewingRoom
   ...ViewingRoomPullQuote_viewingRoom
   ...ViewingRoomBody_viewingRoom
   ...ViewingRoomSubsections_viewingRoom
+  artworksConnection(first: 2) {
+    totalCount
+  }
 }
 
 fragment ViewingRoomSubsections_viewingRoom on ViewingRoom {
@@ -58,8 +60,8 @@ fragment ViewingRoomSubsections_viewingRoom on ViewingRoom {
 }
 
 fragment ViewingRoomWorks_viewingRoom on ViewingRoom {
-  artworkIDs
   artworksConnection(first: 2) {
+    totalCount
     edges {
       node {
         internalID
@@ -156,13 +158,6 @@ return {
           {
             "kind": "ScalarField",
             "alias": null,
-            "name": "artworkIDs",
-            "args": null,
-            "storageKey": null
-          },
-          {
-            "kind": "ScalarField",
-            "alias": null,
             "name": "introStatement",
             "args": null,
             "storageKey": null
@@ -182,6 +177,13 @@ return {
             "concreteType": "ArtworkConnection",
             "plural": false,
             "selections": [
+              {
+                "kind": "ScalarField",
+                "alias": null,
+                "name": "totalCount",
+                "args": null,
+                "storageKey": null
+              },
               {
                 "kind": "LinkedField",
                 "alias": null,
@@ -287,7 +289,7 @@ return {
     "operationKind": "query",
     "name": "routes_ViewingRoomStatementRouteQuery",
     "id": null,
-    "text": "query routes_ViewingRoomStatementRouteQuery(\n  $slug: ID!\n) {\n  viewingRoom(id: $slug) {\n    ...ViewingRoomStatementRoute_viewingRoom\n  }\n}\n\nfragment ViewingRoomBody_viewingRoom on ViewingRoom {\n  body\n}\n\nfragment ViewingRoomIntro_viewingRoom on ViewingRoom {\n  introStatement\n}\n\nfragment ViewingRoomPullQuote_viewingRoom on ViewingRoom {\n  pullQuote\n}\n\nfragment ViewingRoomStatementRoute_viewingRoom on ViewingRoom {\n  artworkIDs\n  ...ViewingRoomIntro_viewingRoom\n  ...ViewingRoomWorks_viewingRoom\n  ...ViewingRoomPullQuote_viewingRoom\n  ...ViewingRoomBody_viewingRoom\n  ...ViewingRoomSubsections_viewingRoom\n}\n\nfragment ViewingRoomSubsections_viewingRoom on ViewingRoom {\n  subsections {\n    internalID\n    title\n    body\n    imageURL\n    caption\n  }\n}\n\nfragment ViewingRoomWorks_viewingRoom on ViewingRoom {\n  artworkIDs\n  artworksConnection(first: 2) {\n    edges {\n      node {\n        internalID\n        imageUrl\n        artistNames\n        title\n        date\n        saleMessage\n        id\n      }\n    }\n  }\n}\n",
+    "text": "query routes_ViewingRoomStatementRouteQuery(\n  $slug: ID!\n) {\n  viewingRoom(id: $slug) {\n    ...ViewingRoomStatementRoute_viewingRoom\n  }\n}\n\nfragment ViewingRoomBody_viewingRoom on ViewingRoom {\n  body\n}\n\nfragment ViewingRoomIntro_viewingRoom on ViewingRoom {\n  introStatement\n}\n\nfragment ViewingRoomPullQuote_viewingRoom on ViewingRoom {\n  pullQuote\n}\n\nfragment ViewingRoomStatementRoute_viewingRoom on ViewingRoom {\n  ...ViewingRoomIntro_viewingRoom\n  ...ViewingRoomWorks_viewingRoom\n  ...ViewingRoomPullQuote_viewingRoom\n  ...ViewingRoomBody_viewingRoom\n  ...ViewingRoomSubsections_viewingRoom\n  artworksConnection(first: 2) {\n    totalCount\n  }\n}\n\nfragment ViewingRoomSubsections_viewingRoom on ViewingRoom {\n  subsections {\n    internalID\n    title\n    body\n    imageURL\n    caption\n  }\n}\n\nfragment ViewingRoomWorks_viewingRoom on ViewingRoom {\n  artworksConnection(first: 2) {\n    totalCount\n    edges {\n      node {\n        internalID\n        imageUrl\n        artistNames\n        title\n        date\n        saleMessage\n        id\n      }\n    }\n  }\n}\n",
     "metadata": {}
   }
 };

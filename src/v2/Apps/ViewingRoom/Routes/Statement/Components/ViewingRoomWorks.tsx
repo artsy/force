@@ -15,8 +15,7 @@ interface ViewingRoomWorksProps {
 
 const ViewingRoomWorks: React.FC<ViewingRoomWorksProps> = ({
   viewingRoom: {
-    artworkIDs,
-    artworksConnection: { edges },
+    artworksConnection: { totalCount, edges },
   },
 }) => {
   const {
@@ -41,7 +40,7 @@ const ViewingRoomWorks: React.FC<ViewingRoomWorksProps> = ({
         })}
       </Flex>
       <Spacer my={4} />
-      <ViewWorksButton artworksCount={artworkIDs.length} />
+      <ViewWorksButton artworksCount={totalCount} />
     </>
   )
 }
@@ -51,8 +50,8 @@ export const ViewingRoomWorksFragmentContainer = createFragmentContainer(
   {
     viewingRoom: graphql`
       fragment ViewingRoomWorks_viewingRoom on ViewingRoom {
-        artworkIDs
         artworksConnection(first: 2) {
+          totalCount
           edges {
             node {
               internalID
