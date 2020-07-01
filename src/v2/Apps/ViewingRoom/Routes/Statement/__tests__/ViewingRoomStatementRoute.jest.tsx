@@ -57,7 +57,16 @@ describe("ViewingRoomStatementRoute", () => {
     expect(wrapper.find("ViewingRoomPullQuote").length).toBe(1)
     expect(wrapper.find("ViewingRoomBody").length).toBe(1)
     expect(wrapper.find("ViewingRoomSubsections").length).toBe(1)
-    expect(wrapper.find("ViewWorksButton").length).toBe(2)
+  })
+
+  it("renders view works", async () => {
+    const wrapper = await getWrapper()
+    const buttons = wrapper.find("ViewWorksButton")
+    expect(buttons.length).toBe(2)
+    const a = buttons.at(0).html()
+    expect(a).toContain("View works (5)")
+    const b = buttons.at(0).html()
+    expect(b).toContain("View works (5)")
   })
 
   describe("ViewingRoomIntro", () => {
