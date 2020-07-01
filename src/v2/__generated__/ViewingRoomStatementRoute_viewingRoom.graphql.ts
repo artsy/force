@@ -3,6 +3,7 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ViewingRoomStatementRoute_viewingRoom = {
+    readonly artworkIDs: ReadonlyArray<string>;
     readonly " $fragmentRefs": FragmentRefs<"ViewingRoomIntro_viewingRoom" | "ViewingRoomWorks_viewingRoom" | "ViewingRoomPullQuote_viewingRoom" | "ViewingRoomBody_viewingRoom" | "ViewingRoomSubsections_viewingRoom">;
     readonly " $refType": "ViewingRoomStatementRoute_viewingRoom";
 };
@@ -21,6 +22,13 @@ const node: ReaderFragment = {
   "metadata": null,
   "argumentDefinitions": [],
   "selections": [
+    {
+      "kind": "ScalarField",
+      "alias": null,
+      "name": "artworkIDs",
+      "args": null,
+      "storageKey": null
+    },
     {
       "kind": "FragmentSpread",
       "name": "ViewingRoomIntro_viewingRoom",
@@ -48,5 +56,5 @@ const node: ReaderFragment = {
     }
   ]
 };
-(node as any).hash = 'f407bc7c23d72df0e083441cdbd5bece';
+(node as any).hash = '8f189f22d2939cfece7cf0e73ccd3f35';
 export default node;

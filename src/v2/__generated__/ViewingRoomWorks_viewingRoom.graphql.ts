@@ -3,6 +3,7 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ViewingRoomWorks_viewingRoom = {
+    readonly artworkIDs: ReadonlyArray<string>;
     readonly artworksConnection: {
         readonly edges: ReadonlyArray<{
             readonly node: {
@@ -33,11 +34,24 @@ const node: ReaderFragment = {
   "argumentDefinitions": [],
   "selections": [
     {
+      "kind": "ScalarField",
+      "alias": null,
+      "name": "artworkIDs",
+      "args": null,
+      "storageKey": null
+    },
+    {
       "kind": "LinkedField",
       "alias": null,
       "name": "artworksConnection",
-      "storageKey": null,
-      "args": null,
+      "storageKey": "artworksConnection(first:2)",
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "first",
+          "value": 2
+        }
+      ],
       "concreteType": "ArtworkConnection",
       "plural": false,
       "selections": [
@@ -109,5 +123,5 @@ const node: ReaderFragment = {
     }
   ]
 };
-(node as any).hash = 'fffb4a8df458a9188446bfe3cc917ed1';
+(node as any).hash = '966149e90d3526761ae079aa41581a7b';
 export default node;

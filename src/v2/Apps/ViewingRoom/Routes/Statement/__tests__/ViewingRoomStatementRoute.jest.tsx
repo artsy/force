@@ -57,6 +57,7 @@ describe("ViewingRoomStatementRoute", () => {
     expect(wrapper.find("ViewingRoomPullQuote").length).toBe(1)
     expect(wrapper.find("ViewingRoomBody").length).toBe(1)
     expect(wrapper.find("ViewingRoomSubsections").length).toBe(1)
+    expect(wrapper.find("ViewWorksButton").length).toBe(2)
   })
 
   describe("ViewingRoomIntro", () => {
@@ -176,6 +177,7 @@ describe("ViewingRoomStatementRoute", () => {
 
 const ViewingRoomStatmentRouteFixture: ViewingRoomStatementRoute_Test_QueryRawResponse = {
   viewingRoom: {
+    artworkIDs: ["5de6b49aa665fc000db78197", "5de6b3a46882b7000eee31f8"],
     introStatement:
       "Checked into a Club Med in the French Alps, and quickly discovered it was not what he expected. The hotel was an outdated ski lodge without any snow. “It was this horrible vacation,” the fortysomething artist said of his family trip there, a few years back. Still, he wanted to paint the drab resort—maybe so he could get a do-over of his vacation, this time in colorful and glorious surroundings.",
     artworksConnection: {
