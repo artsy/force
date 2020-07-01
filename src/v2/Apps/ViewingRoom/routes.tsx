@@ -43,7 +43,6 @@ export const routes: RouteConfig[] = [
       {
         path: "/",
         Component: StatementRoute,
-        ignoreScrollBehavior: true,
         query: graphql`
           query routes_ViewingRoomStatementRouteQuery($slug: ID!) {
             viewingRoom(id: $slug) {
