@@ -6932,6 +6932,17 @@ enum PartnerClassification {
   PRIVATE_DEALER
 }
 
+# A connection to a list of items.
+type PartnerConnection {
+  # A list of edges.
+  edges: [PartnerEdge]
+  pageCursors: PageCursors!
+
+  # Information to aid in pagination.
+  pageInfo: PageInfo!
+  totalCount: Int
+}
+
 type PartnerCounts {
   artistDocuments(
     # Returns a `String` when format is specified. e.g.`'0,0.0000''`
@@ -6988,6 +6999,15 @@ type PartnerCounts {
     format: String
     label: String
   ): FormattedNumber
+}
+
+# An edge in a connection.
+type PartnerEdge {
+  # A cursor for use in pagination
+  cursor: String!
+
+  # The item at the end of the edge
+  node: Partner
 }
 
 enum PartnerShowPartnerType {
@@ -7405,6 +7425,15 @@ type Query {
     id: String!
   ): Partner
 
+  # A list of Partners
+  partnersConnection(
+    after: String
+    before: String
+    first: Int
+    ids: [String]
+    last: Int
+  ): PartnerConnection
+
   # A Sale
   sale(
     # The slug or ID of the Sale
@@ -7486,6 +7515,15 @@ type Query {
     # The slug or ID of the Show
     id: String!
   ): Show
+
+  # A list of Shows
+  showsConnection(
+    after: String
+    before: String
+    first: Int
+    ids: [String]
+    last: Int
+  ): ShowConnection
 
   # Content for a specific page or view
   staticContent(
@@ -9257,6 +9295,15 @@ type Viewer {
     id: String!
   ): Partner
 
+  # A list of Partners
+  partnersConnection(
+    after: String
+    before: String
+    first: Int
+    ids: [String]
+    last: Int
+  ): PartnerConnection
+
   # A Sale
   sale(
     # The slug or ID of the Sale
@@ -9338,6 +9385,15 @@ type Viewer {
     # The slug or ID of the Show
     id: String!
   ): Show
+
+  # A list of Shows
+  showsConnection(
+    after: String
+    before: String
+    first: Int
+    ids: [String]
+    last: Int
+  ): ShowConnection
 
   # Content for a specific page or view
   staticContent(
