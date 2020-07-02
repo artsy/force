@@ -2,7 +2,7 @@ import { BorderBox, Sans, color, themeProps } from "@artsy/palette"
 import { fontFamily } from "@artsy/palette/dist/platform/fonts"
 import {
   BorderProps as InputBorderProps,
-  border as inputBorder,
+  borderMixin as inputBorder,
 } from "v2/Components/Mixins"
 import React from "react"
 import { CardElement } from "react-stripe-elements"
@@ -14,7 +14,7 @@ export const StyledCardElement = styled(CardElement)`
 `
 
 // Re-uses old input border behavior
-const StyledBorderBox = styled(BorderBox).attrs<InputBorderProps>({})`
+const StyledBorderBox = styled(BorderBox)<InputBorderProps>`
   ${inputBorder};
   padding: 0;
   height: 40px;

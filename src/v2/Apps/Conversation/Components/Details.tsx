@@ -19,6 +19,7 @@ import styled from "styled-components"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Details_conversation } from "v2/__generated__/Details_conversation.graphql"
 import ArtworkDetails from "v2/Components/Artwork/Metadata"
+import { zIndex } from "styled-system"
 
 export const DETAIL_BOX_ANIMATION = `transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);`
 const DETAIL_BOX_XS_ANIMATION = `transition: opacity 0.3s, z-index 0.3s;`
@@ -34,16 +35,16 @@ const DetailsContainer = styled(Flex)<{ opacity?: 0 | 1; transform?: string }>`
   transform: none;
   ${DETAIL_BOX_ANIMATION}
   ${media.xl`
-    transform: ${({ transform }) => transform};
+    transform: ${({ transform }: { transform?: string }) => transform};
     ${DETAIL_BOX_MD_ANIMATION}
     z-index: 0;
   `}
   ${media.xs`
     ${DETAIL_BOX_XS_ANIMATION}
     transform: none;
-    opacity: ${({ opacity }) => opacity};
+    opacity: ${({ opacity }: { opacity?: 0 | 1 }) => opacity};
     top: 114px;
-    z-index: ${({ zIndex }) => zIndex};
+    ${zIndex}
   `}
 `
 

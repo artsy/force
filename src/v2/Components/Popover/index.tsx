@@ -34,7 +34,7 @@ const PopoverContainer = styled.div`
   display: inline-block;
 `
 
-const PopoverArrow = styled.div.attrs<PopoverArrowPositionProps>({})`
+const PopoverArrow = styled.div<PopoverArrowPositionProps>`
   position: absolute;
   width: 0;
   height: 0;

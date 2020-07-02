@@ -27,7 +27,7 @@ export const ModalCta: SFC<{
   )
 }
 
-const Cta = styled.div.attrs<{ isFixed?: boolean; hasImage?: boolean }>({})`
+const Cta = styled.div<{ isFixed?: boolean; hasImage?: boolean }>`
   padding: ${space(2)}px 0 ${space(3)}px 0;
 
   button {
@@ -47,7 +47,7 @@ const Cta = styled.div.attrs<{ isFixed?: boolean; hasImage?: boolean }>({})`
 
   ${media.sm`
     padding-bottom: ${space(2)}px;
-    ${props =>
+    ${(props: { isFixed?: boolean }) =>
       props.isFixed &&
       `
       right: ${space(2)}px;
