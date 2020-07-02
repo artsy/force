@@ -29,7 +29,7 @@ export class LargeCurrentEvent extends Component<CurrentEventProps> {
     subject:
       props.artist.currentEvent.event.__typename === "Sale"
         ? // TODO: These are not action names!
-        Schema.ActionName.InSale
+          Schema.ActionName.InSale
         : Schema.ActionName.InShow,
     destination_path: props.artist.currentEvent.href,
   }))
@@ -55,7 +55,7 @@ export class LargeCurrentEvent extends Component<CurrentEventProps> {
         <Flex flexDirection="column">
           {image && (
             <Box width="100%" height="auto">
-              <Image src={image.resized.url} width="100%" mb={1} />
+              <Image src={image.resized.url} alt={name} width="100%" mb={1} />
             </Box>
           )}
           <Sans size="2" weight="medium" my={0.5}>

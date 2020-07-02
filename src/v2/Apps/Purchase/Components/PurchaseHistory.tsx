@@ -35,7 +35,11 @@ const OrderRow = (props: OrderRowProps) => {
       >
         <Flex width="350px">
           <Flex height="auto" alignItems="center" mr={2}>
-            <Image src={get(artwork, a => a.image.resized.url)} width="55px" />
+            <Image
+              src={get(artwork, a => a.image.resized.url)}
+              alt={artwork.title}
+              width="55px"
+            />
           </Flex>
           <Flex flexDirection="column" justifyContent="center">
             <Link
