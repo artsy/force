@@ -6,10 +6,13 @@ import { ConversationSnippetFragmentContainer as ConversationSnippet } from "./C
 import styled from "styled-components"
 
 const Container = styled(Box)`
-  min-height: 100vh;
+  height: 100%;
+  overflow-y: scroll;
+  border-bottom: 30px solid ${color("white100")};
   border-right: 1px solid ${color("black10")};
   ${media.xs`
     border-right: none;
+    border-bottom: none;
   `};
 `
 
@@ -28,25 +31,23 @@ const Conversations: React.FC<ConversationsProps> = props => {
     .indexOf(selectedConversationID)
 
   return (
-    <>
-      <Container width={["100%", "375px"]}>
-        <Box>
-          {conversations.map(edge => (
-            <ConversationSnippet
-              selectedConversationID={selectedConversationID}
-              isSelected={edge.node.internalID === selectedConversationID}
-              conversation={edge.node}
-              key={edge.cursor}
-              hasDivider={
-                conversations.indexOf(edge) !== selectedConversationIndex &&
-                conversations.indexOf(edge) !== selectedConversationIndex - 1 &&
-                conversations.indexOf(edge) !== conversations.length - 1
-              }
-            />
-          ))}
-        </Box>
-      </Container>
-    </>
+    <Container width={["100%", "375px"]}>
+      <Box>
+        {conversations.map(edge => (
+          <ConversationSnippet
+            selectedConversationID={selectedConversationID}
+            isSelected={edge.node.internalID === selectedConversationID}
+            conversation={edge.node}
+            key={edge.cursor}
+            hasDivider={
+              conversations.indexOf(edge) !== selectedConversationIndex &&
+              conversations.indexOf(edge) !== selectedConversationIndex - 1 &&
+              conversations.indexOf(edge) !== conversations.length - 1
+            }
+          />
+        ))}
+      </Box>
+    </Container>
   )
 }
 
