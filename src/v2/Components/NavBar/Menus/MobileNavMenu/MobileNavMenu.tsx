@@ -6,12 +6,12 @@ import {
   CloseIcon,
   Flex,
   MenuIcon,
+  ModalBase,
   Sans,
   Separator,
   color,
   space,
 } from "@artsy/palette"
-import { RemoveScroll } from "react-remove-scroll"
 import { AnalyticsSchema, useSystemContext } from "v2/Artsy"
 import { useTracking } from "v2/Artsy/Analytics"
 import { ModalType } from "v2/Components/Authentication/Types"
@@ -58,7 +58,13 @@ export const MobileNavMenu: React.FC<Props> = ({
 
   return (
     <NavigatorContextProvider>
-      <RemoveScroll>
+      <ModalBase
+        dialogProps={{
+          width: "100%",
+          height: "100%",
+          background: color("white100"),
+        }}
+      >
         <MenuViewport onClick={onNavButtonClick}>
           <Close onClick={onClose}>
             <MobileToggleIcon open />
@@ -87,7 +93,7 @@ export const MobileNavMenu: React.FC<Props> = ({
             </ul>
           </AnimatingMenuWrapper>
         </MenuViewport>
-      </RemoveScroll>
+      </ModalBase>
     </NavigatorContextProvider>
   )
 }
