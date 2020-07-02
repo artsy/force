@@ -6,7 +6,6 @@ import React from "react"
 import {
   AnimatingMenuWrapper,
   BackLink,
-  LoggedInLinks,
   MobileNavMenu,
   MobileSubmenuLink,
 } from "../../MobileNavMenu/MobileNavMenu"
@@ -26,6 +25,12 @@ describe("MobileNavMenu", () => {
       </SystemContextProvider>
     )
   }
+  const getMobileMenuLinkContainer = (userType = null, lab_features = []) =>
+    getWrapper({ user: { userType, lab_features } })
+      .find(AnimatingMenuWrapper)
+      .filterWhere(element => element.props().isOpen)
+      .find("ul")
+      .at(0)
 
   beforeEach(() => {
     ;(useTracking as jest.Mock).mockImplementation(() => {
@@ -39,19 +44,14 @@ describe("MobileNavMenu", () => {
 
   it("calls logout auth action on logout menu click", () => {
     const wrapper = getWrapper({ user: { type: "NotAdmin" } })
-    wrapper.find("MobileLink").last().simulate("click")
+    const logOut = wrapper.find("MobileLink").last()
+    logOut.simulate("click")
     expect(mediator.trigger).toBeCalledWith("auth:logout")
   })
 
   describe("nav structure", () => {
     it("renders the correct items when logged out", () => {
-      const wrapper = getWrapper({ user: null })
-      const animatingMenuWrapper = wrapper.find(AnimatingMenuWrapper)
-
-      const openWrapper = animatingMenuWrapper.filterWhere(
-        element => element.props().isOpen
-      )
-      const linkContainer = openWrapper.find("ul").at(0)
+      const linkContainer = getMobileMenuLinkContainer()
       const mobileSubmenuLinks = linkContainer.children(MobileSubmenuLink)
 
       expect(mobileSubmenuLinks.length).toBe(2)
@@ -81,50 +81,35 @@ describe("MobileNavMenu", () => {
     })
 
     it("renders the account subnav when logged in", () => {
-      const wrapper = getWrapper({
-        user: { type: "NotAdmin" },
-      })
-      const animatingMenuWrapper = wrapper.find(AnimatingMenuWrapper)
-
-      const openWrapper = animatingMenuWrapper.filterWhere(
-        element => element.props().isOpen
-      )
-      const linkContainer = openWrapper.find("ul").at(0)
+      const linkContainer = getMobileMenuLinkContainer("notAdmin")
       const mobileSubmenuLinks = linkContainer.children()
       let linkText = mobileSubmenuLinks.last().text()
       expect(linkText).toContain("Account")
 
-      const loggedInLinks = linkContainer.children(LoggedInLinks)
-
+      const loggedInLinks = linkContainer.children("LoggedInLinks")
       expect(loggedInLinks.length).toBe(1)
     })
   })
 
   describe("lab features", () => {
     it("hides inbox menu option if lab feature not enabled", () => {
-      // const wrapper = getWrapper({
-      //   user: { type: "NotAdmin", lab_features: [] },
-      // })
-      console.log(menuData.links)
+      const linkContainer = getMobileMenuLinkContainer("notAdmin")
+      expect(linkContainer.html()).not.toContain("Inbox")
     })
 
     it("shows inbox menu option if lab feature enabled", () => {
-      // const wrapper = getWrapper({
-      //   user: { type: "NotAdmin", lab_features: ["User Conversations View"] },
-      // })
-      // expect(wrapper.html()).toContain("Inbox")
+      const linkContainer = getMobileMenuLinkContainer("notAdmin", [
+        "User Conversations View",
+      ])
+      expect(linkContainer.html()).toContain("Inbox")
     })
   })
 
   describe("Analytics tracking", () => {
     it("tracks back button click", () => {
-      const wrapper = mount(
-        <SystemContextProvider user={null}>
-          <MobileNavMenu isOpen menuData={menuData} />
-        </SystemContextProvider>
-      )
+      const linkContainer = getMobileMenuLinkContainer("notAdmin")
 
-      const backLink = wrapper.find(BackLink)
+      const backLink = linkContainer.find(BackLink)
       backLink.first().simulate("click")
       expect(trackEvent).toBeCalledWith({
         action_type: "Click",
@@ -135,17 +120,8 @@ describe("MobileNavMenu", () => {
     })
 
     it("tracks MobileSubmenuLink click", () => {
-      const wrapper = mount(
-        <SystemContextProvider user={null}>
-          <MobileNavMenu isOpen menuData={menuData} />
-        </SystemContextProvider>
-      )
-
-      const mobileSubmenuLinks = wrapper
-        .find(MobileSubmenuLink)
-        .first()
-        .find("Flex")
-      mobileSubmenuLinks.first().simulate("click")
+      const linkContainer = getMobileMenuLinkContainer("notAdmin")
+      linkContainer.children().first().find("Flex").first().simulate("click")
       expect(trackEvent).toHaveBeenCalledWith({
         action_type: "Click",
         context_module: "Header",
