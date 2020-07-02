@@ -5,48 +5,45 @@ import FeaturedGene from "../FeaturedGene"
 
 describe("FeaturedGenes", () => {
   let component
-  let featuredGenes
+  let featuredGeneLinks
 
   beforeEach(() => {
-    featuredGenes = {
-      name: "Materials",
-      genes: [
-        {
-          id: "gold",
-          title: "Gold",
-          href: "/gene/gold",
-          image: {
-            url: "gold.jpg",
-          },
+    featuredGeneLinks = [
+      {
+        id: "gold",
+        title: "Gold",
+        href: "/gene/gold",
+        image: {
+          url: "gold.jpg",
         },
-        {
-          id: "silver",
-          title: "Silver",
-          href: "/gene/silver",
-          image: {
-            url: "silver.jpg",
-          },
+      },
+      {
+        id: "silver",
+        title: "Silver",
+        href: "/gene/silver",
+        image: {
+          url: "silver.jpg",
         },
-        {
-          id: "bronze",
-          title: "Bronze",
-          href: "/gene/bronze",
-          image: {
-            url: "bronze.jpg",
-          },
+      },
+      {
+        id: "bronze",
+        title: "Bronze",
+        href: "/gene/bronze",
+        image: {
+          url: "bronze.jpg",
         },
-        {
-          id: "wood",
-          title: "Wood",
-          href: "/gene/wood",
-          image: {
-            url: "wood.jpg",
-          },
+      },
+      {
+        id: "wood",
+        title: "Wood",
+        href: "/gene/wood",
+        image: {
+          url: "wood.jpg",
         },
-      ],
-    }
+      },
+    ]
 
-    component = shallow(<FeaturedGenes featuredGenes={featuredGenes} />)
+    component = shallow(<FeaturedGenes featuredGeneLinks={featuredGeneLinks} />)
   })
 
   it("renders up to three featured genes", () => {
