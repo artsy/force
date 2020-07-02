@@ -29,7 +29,6 @@ export const SendConversationMessage = (
   return commitMutation<SendConversationMessageMutation>(environment, {
     onError,
     onCompleted,
-    optimisticUpdater: storeUpdater,
     updater: storeUpdater,
     variables: {
       input: {
@@ -76,25 +75,5 @@ export const SendConversationMessage = (
         ],
       },
     ],
-
-    optimisticResponse: {
-      sendConversationMessage: {
-        messageEdge: {
-          node: {
-            id: null,
-            internalID: null,
-            impulseID: null,
-            body: text,
-            from: {
-              email: conversation.from.email,
-              name: null,
-            },
-            isFromUser: true,
-            createdAt: null, // Intentionally left blank so Message can recognize this as an optimistic response.
-            attachments: [],
-          } as any,
-        },
-      },
-    },
   })
 }

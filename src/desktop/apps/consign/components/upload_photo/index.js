@@ -63,7 +63,7 @@ function UploadPhoto(props) {
         {uploadedImages.map((file, index) => (
           <UploadedImage file={file} key={`${file.fileName}-${index}`} />
         ))}
-        <div
+        <button
           className={b
             .builder()("submit-button")
             .mix("avant-garde-button-black")()}
@@ -71,7 +71,7 @@ function UploadPhoto(props) {
           disabled={!nextEnabled}
         >
           {isLoading ? <div className="loading-spinner-white" /> : "Submit"}
-        </div>
+        </button>
         {error && <div className={b("error")}>{error}</div>}
       </div>
     </div>

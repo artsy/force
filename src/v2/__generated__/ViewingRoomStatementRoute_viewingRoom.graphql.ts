@@ -3,7 +3,10 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ViewingRoomStatementRoute_viewingRoom = {
-    readonly " $fragmentRefs": FragmentRefs<"ViewingRoomIntro_viewingRoom" | "ViewingRoomWorks_viewingRoom" | "ViewingRoomPullQuote_viewingRoom" | "ViewingRoomSubsections_viewingRoom">;
+    readonly artworksConnection: {
+        readonly totalCount: number | null;
+    } | null;
+    readonly " $fragmentRefs": FragmentRefs<"ViewingRoomIntro_viewingRoom" | "ViewingRoomWorks_viewingRoom" | "ViewingRoomPullQuote_viewingRoom" | "ViewingRoomBody_viewingRoom" | "ViewingRoomSubsections_viewingRoom">;
     readonly " $refType": "ViewingRoomStatementRoute_viewingRoom";
 };
 export type ViewingRoomStatementRoute_viewingRoom$data = ViewingRoomStatementRoute_viewingRoom;
@@ -22,6 +25,30 @@ const node: ReaderFragment = {
   "argumentDefinitions": [],
   "selections": [
     {
+      "kind": "LinkedField",
+      "alias": null,
+      "name": "artworksConnection",
+      "storageKey": "artworksConnection(first:2)",
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "first",
+          "value": 2
+        }
+      ],
+      "concreteType": "ArtworkConnection",
+      "plural": false,
+      "selections": [
+        {
+          "kind": "ScalarField",
+          "alias": null,
+          "name": "totalCount",
+          "args": null,
+          "storageKey": null
+        }
+      ]
+    },
+    {
       "kind": "FragmentSpread",
       "name": "ViewingRoomIntro_viewingRoom",
       "args": null
@@ -38,10 +65,15 @@ const node: ReaderFragment = {
     },
     {
       "kind": "FragmentSpread",
+      "name": "ViewingRoomBody_viewingRoom",
+      "args": null
+    },
+    {
+      "kind": "FragmentSpread",
       "name": "ViewingRoomSubsections_viewingRoom",
       "args": null
     }
   ]
 };
-(node as any).hash = '2b5a5a60797e4077ec07fc1c1ce009db';
+(node as any).hash = 'eb89dc547a16f9d2e7413352b51ab944';
 export default node;

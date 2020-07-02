@@ -10,7 +10,7 @@ describe '#index', ->
     @res = { render: sinon.stub(), locals: { sd: {} } }
     @next = sinon.stub()
     routes.__set__ 'metaphysics', @metaphysics = sinon.stub()
-    @metaphysics.returns Promise.resolve home_page: hero_units: [{
+    @metaphysics.returns Promise.resolve homePage: heroUnits: [{
       title: 'Foo'
     }]
 

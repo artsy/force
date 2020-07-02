@@ -51,7 +51,12 @@ const ViewingRoomCarousel: React.FC<ViewingRoomCarouselProps> = ({
           onDragEnd={({ flickity }) => update(flickity.selectedIndex)}
           render={({ resized: { url, width, height }, internalID }) => {
             return (
-              <Box key={internalID} width="auto" height={CarouselHeight}>
+              <Box
+                key={internalID}
+                width="auto"
+                height={CarouselHeight}
+                mr="2px"
+              >
                 <Image src={url} width="auto" height={CarouselHeight} />
               </Box>
             )
@@ -105,7 +110,8 @@ export const ViewingRoomCarouselFragmentContainer = createFragmentContainer(
       fragment ViewingRoomCarousel_artwork on Artwork {
         images {
           internalID
-          resized(height: 550) {
+          # requesting the largest size and resizing it down to 550*2 for retina
+          resized(height: 1100, version: "normalized") {
             url
             width
             height

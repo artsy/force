@@ -187,30 +187,3 @@ describe 'Vanity route', ->
     @web.args[0][3]('Error')
     @res.redirect.args[0][0].should.equal 301
     @res.redirect.args[0][1].should.equal '/articles'
-
-describe 'SMS route', ->
-  twilioConstructorArgs = null
-  twilioSendSmsArgs = null
-  send = null
-  status = null
-  json = null
-
-  beforeEach ->
-    @req = body: to: '+1 555 111 2222', message: 'Explore Venice in 360°: link'
-    @res = send: send = sinon.stub(), json: json = sinon.stub(), status: status = sinon.stub()
-    twilio = routes.__get__ 'twilio'
-    twilio.RestClient = class TwilioClientStub
-      constructor: -> twilioConstructorArgs = arguments
-      sendSms: -> twilioSendSmsArgs = arguments
-    routes.sendSMS @req, @res
-
-  it 'sends a link with a valid phone number', ->
-    twilioSendSmsArgs[0].to.should.equal '+15551112222'
-    twilioSendSmsArgs[0].body.should.match 'Explore Venice in 360°: link'
-    twilioSendSmsArgs[1] null, 'SUCCESS!'
-    send.args[0][0].should.equal 201
-    send.args[0][1].msg.should.containEql 'success'
-
-  it 'throws an error if twilio doesnt like it', ->
-    twilioSendSmsArgs[1] message: 'Error!'
-    send.args[0][1].msg.should.equal 'Error!'

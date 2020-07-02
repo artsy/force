@@ -54,6 +54,7 @@ export const Footer = (props: FooterProps) => {
             <Link
               color="black60"
               onClick={() => handleTypeChange("signup" as ModalType)}
+              data-test="signup"
             >
               Sign up.
             </Link>
@@ -69,6 +70,7 @@ export const Footer = (props: FooterProps) => {
             <Link
               color="black60"
               onClick={() => handleTypeChange("login" as ModalType)}
+              data-test="login"
             >
               Log in
             </Link>
@@ -76,6 +78,7 @@ export const Footer = (props: FooterProps) => {
             <Link
               color="black60"
               onClick={() => handleTypeChange("signup" as ModalType)}
+              data-test="signup"
             >
               sign up.
             </Link>
@@ -120,6 +123,7 @@ export const Footer = (props: FooterProps) => {
               <Link
                 color="black60"
                 onClick={() => handleTypeChange("login" as ModalType)}
+                data-test="login"
               >
                 Log in.
               </Link>

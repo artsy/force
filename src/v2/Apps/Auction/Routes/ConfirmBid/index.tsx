@@ -183,6 +183,10 @@ export const ConfirmBidRoute: React.FC<ConfirmBidProps> = props => {
     values: FormValuesForBidding,
     actions: BidFormActions
   ) {
+    // FIXME: workaround for Formik calling `setSubmitting(false)` when the
+    //  `onSubmit` function does not block.
+    setTimeout(() => actions.setSubmitting(true), 0)
+
     const selectedBid = Number(values.selectedBid)
 
     if (requiresPaymentInformation) {

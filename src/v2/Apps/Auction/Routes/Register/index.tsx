@@ -109,6 +109,10 @@ export const RegisterRoute: React.FC<RegisterProps> = props => {
   }
 
   const createTokenAndSubmit: OnSubmitType = async (values, helpers) => {
+    // FIXME: workaround for Formik calling `setSubmitting(false)` when the
+    //  `onSubmit` function does not block.
+    setTimeout(() => helpers.setSubmitting(true), 0)
+
     const address = toStripeAddress(values.address)
     const { phoneNumber } = values.address
     const { setFieldError, setSubmitting } = helpers

@@ -15,7 +15,7 @@ describe("Home page", () => {
     positron.get("/api/articles", (req, res) => {
       res.send(require("./fixtures/gravity/home"))
     })
-    metaphysics.post("/", (req, res) => {
+    metaphysics.post("/v2", (req, res) => {
       res.send(require("./fixtures/metaphysics/home"))
     })
   })

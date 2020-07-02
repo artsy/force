@@ -16,7 +16,7 @@ const ViewingRoomPullQuote: React.FC<ViewingRoomPullQuoteProps> = ({
 
   return (
     <Box>
-      <Sans size="8" textAlign="center">
+      <Sans size="8" textAlign="center" style={{ whiteSpace: "pre-line" }}>
         {pullQuote}
       </Sans>
     </Box>

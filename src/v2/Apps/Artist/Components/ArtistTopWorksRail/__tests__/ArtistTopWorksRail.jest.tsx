@@ -9,7 +9,7 @@ import { StyledLink } from "v2/Apps/Artist/Components/StyledLink"
 
 jest.mock("v2/Artsy/Analytics/useTracking")
 
-describe("Artist Top Works Rail Component", () => {
+describe("Artist Notable Works Rail Component", () => {
   let props
   const trackEvent = jest.fn()
 
@@ -26,16 +26,16 @@ describe("Artist Top Works Rail Component", () => {
     jest.clearAllMocks()
   })
 
-  it("renders the Top Works Rail", () => {
+  it("renders the Notable Works Rail", () => {
     const component = mount(<ArtistTopWorksRail {...props} />)
 
-    expect(component.text()).toMatch("Top Works")
+    expect(component.text()).toMatch("Notable Works")
     expect(component.text()).toMatch("View all works")
     expect(component.find(Carousel)).toHaveLength(1)
     expect(component.find(FillwidthItem)).toHaveLength(2)
   })
 
-  it("tracks the analytics properties when an artwork is clicked on the Top Works rail", () => {
+  it("tracks the analytics properties when an artwork is clicked on the Notable Works rail", () => {
     const component = mount(<ArtistTopWorksRail {...props} />)
     const elem = component.find(FillwidthItem).first() as typeof FillwidthItem
     elem.props().onClick({})

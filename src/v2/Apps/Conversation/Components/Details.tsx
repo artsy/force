@@ -1,8 +1,10 @@
 import {
   Box,
+  DocumentIcon,
   EntityHeader,
   Flex,
   FlexProps,
+  Link,
   MessageIcon,
   QuestionCircleIcon,
   ResponsiveImage,
@@ -40,6 +42,7 @@ const DetailsContainer = styled(Flex)<{ opacity?: 0 | 1; transform?: string }>`
     transform: none;
     opacity: ${({ opacity }) => opacity};
     top: 114px;
+    z-index: ${({ zIndex }) => zIndex};
   `}
 `
 
@@ -52,6 +55,13 @@ export const Details: FC<DetailsProps> = ({ conversation, ...props }) => {
   const item =
     conversation.items?.[0]?.item?.__typename !== "%other" &&
     conversation.items?.[0]?.item
+
+  const attachments = conversation.messagesConnection.edges
+    .map(({ node }) => node.attachments)
+    .filter(attachments => attachments.length > 0)
+    .reduce((previous, current) => previous.concat(current), [])
+    .filter(attachment => !attachment.contentType.includes("image"))
+
   return (
     <DetailsContainer
       flexDirection="column"
@@ -102,6 +112,31 @@ export const Details: FC<DetailsProps> = ({ conversation, ...props }) => {
           </Flex>
         </>
       )}
+      {attachments?.length > 0 && (
+        <>
+          <Separator my={2} />
+          <Box px={2}>
+            <Sans size="3" weight="medium" mb={2}>
+              Attachments
+            </Sans>
+            {attachments.map(attachment => {
+              return (
+                <Link
+                  key={attachment.id}
+                  href={attachment.downloadURL}
+                  target="_blank"
+                  noUnderline
+                >
+                  <Flex alignItems="center">
+                    <DocumentIcon mr={0.5} />
+                    <Sans size="3">{attachment.fileName}</Sans>
+                  </Flex>
+                </Link>
+              )
+            })}
+          </Box>
+        </>
+      )}
       <Separator my={2} />
       <Flex flexDirection="column" px={2}>
         <Sans size="3" weight="medium" mb={2}>
@@ -130,6 +165,19 @@ export const DetailsFragmentContainer = createFragmentContainer(Details, {
       to {
         name
         initials
+      }
+      messagesConnection(first: $count, after: $after, sort: DESC)
+        @connection(key: "Messages_messagesConnection", filters: []) {
+        edges {
+          node {
+            attachments {
+              id
+              contentType
+              fileName
+              downloadURL
+            }
+          }
+        }
       }
       items {
         item {

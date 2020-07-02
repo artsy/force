@@ -19,12 +19,6 @@ routes =
   ''': require('../apps/auction/client.js').default
 
   '''
-  /artist/.*/auction-results
-  /artist/.*/auction-result/.*
-  /artwork/.*/auction-results
-  ''': require('../apps/auction_lots/client/index.coffee').init
-
-  '''
   /auction-registration/.*
   /auction/.*/bid/.*
   /auction/.*/buyers-premium

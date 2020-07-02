@@ -12,9 +12,11 @@ import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { get } from "v2/Utils/get"
 import { openAuthToFollowSave } from "v2/Utils/openAuthModal"
+import { getENV } from "v2/Utils/getENV"
 
 interface RecommendedArtistProps {
   artist: RecommendedArtist_artist
+  fullBleedRail?: boolean
 }
 const HEIGHT = 150
 
@@ -50,11 +52,14 @@ class RecommendedArtistWithTracking extends React.Component<
   }
 }
 
-const RecommendedArtist: FC<RecommendedArtistProps & {
-  onArtworkClicked: () => void
-}> = ({ artist, onArtworkClicked }) => {
+const RecommendedArtist: FC<
+  RecommendedArtistProps & {
+    onArtworkClicked: () => void
+  }
+> = ({ artist, onArtworkClicked, fullBleedRail }) => {
   const { user, mediator } = useContext(SystemContext)
   const artistData = get(artist, a => a.artworks_connection.edges, [])
+  const isMobile = getENV("IS_MOBILE") === true
 
   return (
     <Box data-test={ContextModule.relatedArtistsRail}>
@@ -97,42 +102,45 @@ const RecommendedArtist: FC<RecommendedArtistProps & {
 
       <Spacer mb={3} />
 
-      <Carousel
-        height="240px"
-        data={artistData}
-        options={{ pageDots: false }}
-        render={artwork => {
-          const aspect_ratio = get(artwork, a => a.node.image.aspect_ratio, 1)
-          return (
-            <FillwidthItem
-              artwork={artwork.node}
-              contextModule={ContextModule.relatedArtistsRail}
-              targetHeight={HEIGHT}
-              imageHeight={HEIGHT}
-              width={HEIGHT * aspect_ratio}
-              margin={10}
-              user={user}
-              mediator={mediator}
-              onClick={onArtworkClicked}
-              lazyLoad
-            />
-          )
-        }}
-        renderLeftArrow={({ Arrow }) => {
-          return (
-            <ArrowContainer>
-              <Arrow />
-            </ArrowContainer>
-          )
-        }}
-        renderRightArrow={({ Arrow }) => {
-          return (
-            <ArrowContainer>
-              <Arrow />
-            </ArrowContainer>
-          )
-        }}
-      />
+      <Box mx={[-20, 0]}>
+        <Carousel
+          height="240px"
+          data={artistData}
+          options={{ pageDots: false }}
+          render={(artwork, index) => {
+            const aspect_ratio = get(artwork, a => a.node.image.aspect_ratio, 1)
+            return (
+              <FillwidthItem
+                artwork={artwork.node}
+                contextModule={ContextModule.relatedArtistsRail}
+                targetHeight={HEIGHT}
+                imageHeight={HEIGHT}
+                width={HEIGHT * aspect_ratio}
+                marginRight={10}
+                marginLeft={isMobile && fullBleedRail && index === 0 ? 20 : 0}
+                user={user}
+                mediator={mediator}
+                onClick={onArtworkClicked}
+                lazyLoad
+              />
+            )
+          }}
+          renderLeftArrow={({ Arrow }) => {
+            return (
+              <ArrowContainer>
+                <Arrow />
+              </ArrowContainer>
+            )
+          }}
+          renderRightArrow={({ Arrow }) => {
+            return (
+              <ArrowContainer>
+                <Arrow />
+              </ArrowContainer>
+            )
+          }}
+        />
+      </Box>
     </Box>
   )
 }

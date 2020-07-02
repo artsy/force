@@ -37,7 +37,7 @@ class FillwidthContainer extends React.Component<Props, null> {
         targetHeight={artworkSize.height}
         imageHeight={artworkSize.height}
         width={artworkSize.width}
-        margin={i === dimensions.length - 1 ? 0 : gutter}
+        marginRight={i === dimensions.length - 1 ? 0 : gutter}
         mediator={mediator}
       />
     )

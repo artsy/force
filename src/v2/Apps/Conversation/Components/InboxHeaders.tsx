@@ -178,6 +178,8 @@ export const FullHeader: FC<Partial<ConversationHeaderProps>> = props => {
 const DetailIcon: React.FC<DetailsProps> = props => {
   const { showDetails, setShowDetails } = props
   return (
+    // TODO: Fix <Icon /> typings in Palette
+    // @ts-ignore
     <StatefulIcon
       viewBox="0 0 28 28"
       mr={1}

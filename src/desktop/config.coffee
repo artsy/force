@@ -71,7 +71,6 @@ module.exports =
   INTERCOM_BUYER_ENABLED: false
   IMAGE_LAZY_LOADING: true
   IMAGE_PROXY: 'GEMINI'
-  IPHONE_APP_COPY: 'Download the iPhone app: https://itunes.apple.com/us/app/artsy-art-world-in-your-pocket/id703796080?ls=1&mt=8'
   IP_DENYLIST: ''
   LINKEDIN_KEY: null
   LINKEDIN_SECRET: null
@@ -130,9 +129,6 @@ module.exports =
   TEAM_BLOGS: '^\/life-at-artsy$|^\/artsy-education$|^\/buying-with-artsy$'
   TARGET_CAMPAIGN_URL: '/seattle-art-fair-2017'
   TRACK_PAGELOAD_PATHS: null
-  TWILIO_ACCOUNT_SID: null
-  TWILIO_AUTH_TOKEN: null
-  TWILIO_NUMBER: null
   VANITY_BUCKET: null
   VOLLEY_ENDPOINT: null
   WEBFONT_URL: 'http://webfonts.artsy.net'

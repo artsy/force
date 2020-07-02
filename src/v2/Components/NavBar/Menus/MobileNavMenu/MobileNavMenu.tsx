@@ -2,13 +2,16 @@ import { ContextModule, Intent } from "@artsy/cohesion"
 import {
   Box,
   ChevronIcon,
+  Clickable,
   CloseIcon,
   Flex,
   MenuIcon,
   Sans,
   Separator,
   color,
+  space,
 } from "@artsy/palette"
+import { RemoveScroll } from "react-remove-scroll"
 import { AnalyticsSchema, useSystemContext } from "v2/Artsy"
 import { useTracking } from "v2/Artsy/Analytics"
 import { ModalType } from "v2/Components/Authentication/Types"
@@ -22,75 +25,106 @@ import {
   NavigatorContextProvider,
   useNavigation,
 } from "./NavigatorContextProvider"
+
+const Close = styled(Clickable)`
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Position menu toggle *just so* because the values in the actual navbar are hardcoded */
+  width: ${space(6) + 2}px;
+  height: ${space(6) - 2}px;
+`
+
 interface Props {
   isOpen: boolean
   menuData: MenuData
-  onNavButtonClick?: (event) => void
+  onClose: () => void
+  onNavButtonClick?: (event: React.MouseEvent<HTMLElement, MouseEvent>) => void
 }
 
-export const MobileNavMenu: React.FC<Props> = props => {
-  const {
-    menuData: {
-      links: [artworks, artists],
-    },
-    onNavButtonClick,
-  } = props
+export const MobileNavMenu: React.FC<Props> = ({
+  isOpen,
+  menuData: {
+    links: [artworks, artists],
+  },
+  onNavButtonClick,
+  onClose,
+}) => {
   const { user } = useSystemContext()
 
   return (
     <NavigatorContextProvider>
-      <MenuViewport onClick={onNavButtonClick}>
-        <AnimatingMenuWrapper isOpen={props.isOpen}>
-          <ul>
-            <MobileSubmenuLink menu={(artworks as MenuLinkData).menu}>
-              {(artworks as MenuLinkData).menu.title}
-            </MobileSubmenuLink>
+      <RemoveScroll>
+        <MenuViewport onClick={onNavButtonClick}>
+          <Close onClick={onClose}>
+            <MobileToggleIcon open />
+          </Close>
 
-            <MobileSubmenuLink menu={(artists as MenuLinkData).menu}>
-              {(artists as MenuLinkData).menu.title}
-            </MobileSubmenuLink>
-            <MobileLink href="/auctions">Auctions</MobileLink>
-            <MobileLink href="/articles">Editorial</MobileLink>
-            <MobileLink href="/galleries">Galleries</MobileLink>
-            <MobileLink href="/fairs">Fairs</MobileLink>
-            <MobileLink href="/shows">Shows</MobileLink>
-            <MobileLink href="/institutions">Museums</MobileLink>
-            <MobileLink href="/consign">Consign</MobileLink>
-            <MobileLink href="/gallery-partnerships">
-              Artsy for Galleries
-            </MobileLink>
-            {user ? <LoggedInLinks /> : <AuthenticateLinks />}
-          </ul>
-        </AnimatingMenuWrapper>
-      </MenuViewport>
+          <AnimatingMenuWrapper isOpen={isOpen}>
+            <ul>
+              <MobileSubmenuLink menu={(artworks as MenuLinkData).menu}>
+                {(artworks as MenuLinkData).menu.title}
+              </MobileSubmenuLink>
+
+              <MobileSubmenuLink menu={(artists as MenuLinkData).menu}>
+                {(artists as MenuLinkData).menu.title}
+              </MobileSubmenuLink>
+              <MobileLink href="/auctions">Auctions</MobileLink>
+              <MobileLink href="/articles">Editorial</MobileLink>
+              <MobileLink href="/galleries">Galleries</MobileLink>
+              <MobileLink href="/fairs">Fairs</MobileLink>
+              <MobileLink href="/shows">Shows</MobileLink>
+              <MobileLink href="/institutions">Museums</MobileLink>
+              <MobileLink href="/consign">Consign</MobileLink>
+              <MobileLink href="/gallery-partnerships">
+                Artsy for Galleries
+              </MobileLink>
+              {user ? <LoggedInLinks /> : <AuthenticateLinks />}
+            </ul>
+          </AnimatingMenuWrapper>
+        </MenuViewport>
+      </RemoveScroll>
     </NavigatorContextProvider>
   )
 }
 
 const MenuViewport = styled.nav`
   width: 100vw;
-  height: 100vh;
-  overflow: hidden;
-  position: relative;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
 `
 
 export const AnimatingMenuWrapper = styled.div<{
   isOpen: boolean
 }>`
   background: white;
-
   position: absolute;
   width: 100vw;
   height: 100vh;
   overflow-x: hidden;
-  z-index: ${p => (p.isOpen ? 9999 : 0)};
-
   top: 0;
-  left: 0; /* might be simpler to just animate this instead of the transform3d business */
+  left: 0;
   padding: 1em 20px;
-
-  transform: translate3d(${p => (p.isOpen ? "0" : "100%")}, 0, 0);
   transition: transform 0.15s;
+  ${({ isOpen }) =>
+    isOpen
+      ? `
+    z-index: 1;
+    transform: translate3d(0, 0, 0);
+  `
+      : `
+    z-index: 0;
+    transform: translate3d(100%, 0, 0);
+  `}
 
   ul {
     margin-bottom: 100px;
@@ -118,7 +152,7 @@ const Menu: React.FC<MenuProps> = ({
           {title}
         </Sans>
       </Flex>
-      <ul>{links.map(link => NavLink({ link }))}</ul>
+      <ul>{[...links].map(link => NavLink({ link }))}</ul>
     </AnimatingMenuWrapper>
   )
 }
@@ -284,6 +318,6 @@ const LoggedInLinks: React.FC = () => {
 }
 
 export const MobileToggleIcon: React.FC<{ open: boolean }> = ({ open }) => {
-  const style = { transform: "scale(1.5)", top: 2 }
+  const style = { transform: "scale(1.5)" }
   return open ? <CloseIcon style={style} /> : <MenuIcon style={style} />
 }
