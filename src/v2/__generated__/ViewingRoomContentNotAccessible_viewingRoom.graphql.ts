@@ -2,27 +2,35 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type ViewingRoomClosed_viewingRoom = {
+export type ViewingRoomContentNotAccessible_viewingRoom = {
+    readonly status: string;
     readonly partner: {
         readonly href: string | null;
     } | null;
-    readonly " $refType": "ViewingRoomClosed_viewingRoom";
+    readonly " $refType": "ViewingRoomContentNotAccessible_viewingRoom";
 };
-export type ViewingRoomClosed_viewingRoom$data = ViewingRoomClosed_viewingRoom;
-export type ViewingRoomClosed_viewingRoom$key = {
-    readonly " $data"?: ViewingRoomClosed_viewingRoom$data;
-    readonly " $fragmentRefs": FragmentRefs<"ViewingRoomClosed_viewingRoom">;
+export type ViewingRoomContentNotAccessible_viewingRoom$data = ViewingRoomContentNotAccessible_viewingRoom;
+export type ViewingRoomContentNotAccessible_viewingRoom$key = {
+    readonly " $data"?: ViewingRoomContentNotAccessible_viewingRoom$data;
+    readonly " $fragmentRefs": FragmentRefs<"ViewingRoomContentNotAccessible_viewingRoom">;
 };
 
 
 
 const node: ReaderFragment = {
   "kind": "Fragment",
-  "name": "ViewingRoomClosed_viewingRoom",
+  "name": "ViewingRoomContentNotAccessible_viewingRoom",
   "type": "ViewingRoom",
   "metadata": null,
   "argumentDefinitions": [],
   "selections": [
+    {
+      "kind": "ScalarField",
+      "alias": null,
+      "name": "status",
+      "args": null,
+      "storageKey": null
+    },
     {
       "kind": "LinkedField",
       "alias": null,
@@ -43,5 +51,5 @@ const node: ReaderFragment = {
     }
   ]
 };
-(node as any).hash = '6bd511c97fcfdf50711b53bcf45cc54c';
+(node as any).hash = 'fee7534dccbfac831698452070776d03';
 export default node;

@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from "react"
 import { AppContainer } from "v2/Apps/Components/AppContainer"
 import { Box, Separator } from "@artsy/palette"
 import { ViewingRoomHeaderFragmentContainer as ViewingRoomHeader } from "./Components/ViewingRoomHeader"
-import { ViewingRoomClosedFragmentContainer as ViewingRoomClosed } from "./Components/ViewingRoomClosed"
+import { ViewingRoomContentNotAccessibleFragmentContainer as ViewingRoomContentNotAccessible } from "./Components/ViewingRoomContentNotAccessible"
 import { ViewingRoomTabBar } from "./Components/ViewingRoomTabBar"
 import { createFragmentContainer, graphql } from "react-relay"
 
@@ -48,9 +48,9 @@ const ViewingRoomApp: React.FC<ViewingRoomAppProps> = ({
   const getView = () => {
     if (!user) {
       return
-    } else if (viewingRoom.status === "closed") {
-      return <ViewingRoomClosed viewingRoom={viewingRoom} />
-    } else {
+    }
+
+    if (viewingRoom.status === "live") {
       return (
         <>
           <ViewingRoomTabBar mb={[2, 3]} />
@@ -58,6 +58,8 @@ const ViewingRoomApp: React.FC<ViewingRoomAppProps> = ({
         </>
       )
     }
+
+    return <ViewingRoomContentNotAccessible viewingRoom={viewingRoom} />
   }
 
   return (
@@ -82,7 +84,7 @@ export default createFragmentContainer(ViewingRoomApp, {
     fragment ViewingRoomApp_viewingRoom on ViewingRoom {
       ...ViewingRoomMeta_viewingRoom
       ...ViewingRoomHeader_viewingRoom
-      ...ViewingRoomClosed_viewingRoom
+      ...ViewingRoomContentNotAccessible_viewingRoom
       status
     }
   `,
