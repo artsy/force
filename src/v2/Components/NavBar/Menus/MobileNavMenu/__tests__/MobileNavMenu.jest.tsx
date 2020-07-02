@@ -22,10 +22,11 @@ describe("MobileNavMenu", () => {
     trigger: jest.fn(),
   }
   const trackEvent = jest.fn()
+  const noop = () => {}
   const getWrapper = props => {
     return mount(
       <SystemContextProvider mediator={mediator} user={props.user}>
-        <MobileNavMenu isOpen menuData={menuData} />
+        <MobileNavMenu isOpen menuData={menuData} onClose={noop} />
       </SystemContextProvider>
     )
   }
@@ -110,7 +111,7 @@ describe("MobileNavMenu", () => {
     it("tracks back button click", () => {
       const wrapper = mount(
         <SystemContextProvider user={null}>
-          <MobileNavMenu isOpen menuData={menuData} />
+          <MobileNavMenu isOpen menuData={menuData} onClose={noop} />
         </SystemContextProvider>
       )
 
@@ -127,7 +128,7 @@ describe("MobileNavMenu", () => {
     it("tracks MobileSubmenuLink click", () => {
       const wrapper = mount(
         <SystemContextProvider user={null}>
-          <MobileNavMenu isOpen menuData={menuData} />
+          <MobileNavMenu isOpen menuData={menuData} onClose={noop} />
         </SystemContextProvider>
       )
 

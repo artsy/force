@@ -1,8 +1,8 @@
 module.exports = """
-  fragment popular_artists_context on HomePageModuleContextTrending {
+  fragment popular_artists_context on TrendingArtists {
     artists {
       name
-      id
+      id: slug
     }
   }
 """

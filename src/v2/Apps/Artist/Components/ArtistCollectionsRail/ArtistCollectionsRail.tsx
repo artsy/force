@@ -1,4 +1,4 @@
-import { Box, Sans, Separator } from "@artsy/palette"
+import { Box, Sans } from "@artsy/palette"
 import { ArtistCollectionsRail_collections } from "v2/__generated__/ArtistCollectionsRail_collections.graphql"
 import { track } from "v2/Artsy/Analytics"
 import * as Schema from "v2/Artsy/Analytics/Schema"
@@ -48,10 +48,9 @@ export class ArtistCollectionsRail extends React.Component<
 
     if (collections.length > 3) {
       return (
-        <Box>
+        <Box my={3}>
           <Waypoint onEnter={once(this.trackImpression.bind(this))} />
 
-          <Separator my={3} />
           {/**
            * The H2 tag was added for SEO purposes
            * TODO: Remove when palette provides the ability to override typography element

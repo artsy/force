@@ -16,6 +16,10 @@ describe("Conversation", () => {
         image: {
           url: "image.com/banksy-image",
         },
+        listPrice: {
+          __typename: "Money",
+          display: "$2000",
+        },
       }
 
       it("renders the artwork item", () => {
@@ -23,12 +27,14 @@ describe("Conversation", () => {
         const imageSrc = wrapper.find("Image").first().prop("src")
         const linkHref = wrapper.find("Link").first().prop("href")
         const name = wrapper.find("Sans").first()
-        const title = wrapper.find("Sans").last()
+        const title = wrapper.find("Sans").at(1)
+        const price = wrapper.find("Sans").last()
 
         expect(imageSrc).toBe("image.com/banksy-image")
         expect(linkHref).toBe("site.com/banksy")
         expect(name.text()).toContain("Banksy")
         expect(title.text()).toContain("Untitled / June 22, 2020")
+        expect(price.text()).toContain("$2000")
       })
     })
 

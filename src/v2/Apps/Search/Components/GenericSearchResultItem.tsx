@@ -72,7 +72,7 @@ export class GenericSearchResultItem extends React.Component<
                 alignItems="center"
               >
                 {imageUrl && entityType !== "City" ? (
-                  <Image width={70} height={70} src={imageUrl} />
+                  <Image width={70} height={70} src={imageUrl} alt={name} />
                 ) : (
                   <FallbackIcon entityType={entityType} />
                 )}

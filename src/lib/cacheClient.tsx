@@ -23,7 +23,7 @@ const safeCacheCommand = async (func, ...args) => {
     await new Promise((resolve, reject) => {
       // Will reject promise after configured timeout if the
       // cache command has not completed yet.
-      let timeoutId: NodeJS.Timer | null = setTimeout(() => {
+      let timeoutId = setTimeout(() => {
         timeoutId = null
         const error = new Error(
           `Timeout of ${cacheAccessTimeoutMs}ms, skipping...`

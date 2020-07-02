@@ -3,14 +3,14 @@ export const partnerQuery = id => {
     {
       partner(id: "${id}")
       {
-        default_profile_id
+        default_profile_id: defaultProfileID
         name
         type
         profile {
-          id
+          id: internalID
           href
           image {
-            cropped(width: 250 height: 165 version: "large_rectangle"){
+            cropped(width: 250, height: 165, version: "large_rectangle"){
               url
             }
           }
@@ -25,10 +25,10 @@ export const auctionQuery = id => {
     {
       sale(id: "${id}")
       {
-        id
+        id: internalID
         name
         href
-        cover_image {
+        cover_image: coverImage {
           cropped(width: 250 height: 165 version: "large_rectangle"){
             url
           }

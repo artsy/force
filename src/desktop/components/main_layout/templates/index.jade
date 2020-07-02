@@ -15,11 +15,11 @@ html(
     include head
     block head
 
-    link( type='text/css', rel='stylesheet', href=asset('/assets/main_layout.css') )
+    link( type='text/css' rel='stylesheet', href=asset('/assets/main_layout.css') )
 
     unless styledComponents
       if assetPackage
-        link( type='text/css', rel='stylesheet', href=asset('/assets/#{assetPackage}.css') )
+        link( type='text/css' rel='stylesheet', href=asset('/assets/#{assetPackage}.css') )
 
   body( class=bodyClass )
     //- Global component mixins
@@ -29,8 +29,9 @@ html(
     //- Header, body block, footer
     include ../header/templates/index
 
-    #main-layout-container.responsive-layout-container(role='main')
-      block body
+    main#main
+      #main-layout-container.responsive-layout-container
+        block body
 
     #scroll-frame-spinner: .loading-spinner
     include ../footer/template

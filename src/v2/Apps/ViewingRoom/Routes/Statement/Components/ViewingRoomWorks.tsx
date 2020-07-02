@@ -1,5 +1,5 @@
 import React from "react"
-import { Box, Button, Flex, Image, Sans, Spacer } from "@artsy/palette"
+import { Box, Flex, Image, Sans, Spacer } from "@artsy/palette"
 import { useRouter } from "v2/Artsy/Router/useRouter"
 import { createFragmentContainer, graphql } from "react-relay"
 
@@ -7,6 +7,7 @@ import { ViewingRoomWorks_viewingRoom } from "v2/__generated__/ViewingRoomWorks_
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import { AnalyticsSchema, useTracking } from "v2/Artsy"
 import { scrollToId } from "../Utils/scrollToId"
+import { ViewWorksButton } from "./ViewWorksButton"
 
 interface ViewingRoomWorksProps {
   viewingRoom: ViewingRoomWorks_viewingRoom
@@ -14,11 +15,9 @@ interface ViewingRoomWorksProps {
 
 const ViewingRoomWorks: React.FC<ViewingRoomWorksProps> = ({
   viewingRoom: {
-    artworksConnection: { edges },
+    artworksConnection: { totalCount, edges },
   },
 }) => {
-  const tracking = useTracking()
-
   const {
     match: {
       params: { slug },
@@ -30,7 +29,7 @@ const ViewingRoomWorks: React.FC<ViewingRoomWorksProps> = ({
   return (
     <>
       <Flex>
-        {edges.map(({ node: artwork }, index) => {
+        {edges.map(({ node: artwork }) => {
           return (
             <ArtworkItem
               key={artwork.internalID}
@@ -41,24 +40,7 @@ const ViewingRoomWorks: React.FC<ViewingRoomWorksProps> = ({
         })}
       </Flex>
       <Spacer my={4} />
-      <RouterLink
-        to={navigateTo}
-        data-test="viewingRoomWorksButton"
-        onClick={() => {
-          scrollToId("viewingRoomTabBarAnchor")
-          tracking.trackEvent({
-            action_type: AnalyticsSchema.ActionType.ClickedArtworkGroup,
-            context_module:
-              AnalyticsSchema.ContextModule.ViewingRoomArtworkRail,
-            subject: AnalyticsSchema.Subject.ViewWorks,
-            destination_path: navigateTo,
-          })
-        }}
-      >
-        <Button size="large" width="100%">
-          View works
-        </Button>
-      </RouterLink>
+      <ViewWorksButton artworksCount={totalCount} />
     </>
   )
 }
@@ -68,7 +50,8 @@ export const ViewingRoomWorksFragmentContainer = createFragmentContainer(
   {
     viewingRoom: graphql`
       fragment ViewingRoomWorks_viewingRoom on ViewingRoom {
-        artworksConnection {
+        artworksConnection(first: 2) {
+          totalCount
           edges {
             node {
               internalID
@@ -76,6 +59,7 @@ export const ViewingRoomWorksFragmentContainer = createFragmentContainer(
               artistNames
               title
               date
+              saleMessage
             }
           }
         }
@@ -94,6 +78,7 @@ const ArtworkItem: React.FC<ArtworkNode> = ({
   imageUrl,
   navigateTo,
   title,
+  saleMessage,
 }) => {
   const tracking = useTracking()
 
@@ -113,8 +98,8 @@ const ArtworkItem: React.FC<ArtworkNode> = ({
       }}
     >
       <Box width="95%">
-        <Box>
-          <Image width="100%" src={imageUrl} />
+        <Box mb={0.5}>
+          <Image width="100%" src={imageUrl} alt={title} />
         </Box>
         <Box>
           <Sans size="3t">{artistNames}</Sans>
@@ -124,6 +109,13 @@ const ArtworkItem: React.FC<ArtworkNode> = ({
             {[title, date].filter(s => s).join(", ")}
           </Sans>
         </Box>
+        {saleMessage && (
+          <Box>
+            <Sans size="3t" color="black60">
+              {saleMessage}
+            </Sans>
+          </Box>
+        )}
       </Box>
     </RouterLink>
   )

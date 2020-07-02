@@ -44,6 +44,17 @@ export type Conversation_conversation = {
             readonly image: {
                 readonly url: string | null;
             } | null;
+            readonly listPrice: ({
+                readonly __typename: "Money";
+                readonly display: string | null;
+            } | {
+                readonly __typename: "PriceRange";
+                readonly display: string | null;
+            } | {
+                /*This will never be '%other', but we need some
+                value in case none of the concrete values match.*/
+                readonly __typename: "%other";
+            }) | null;
         } | {
             readonly __typename: "Show";
             readonly id: string;
@@ -110,7 +121,16 @@ v4 = {
   "name": "href",
   "args": null,
   "storageKey": null
-};
+},
+v5 = [
+  {
+    "kind": "ScalarField",
+    "alias": null,
+    "name": "display",
+    "args": null,
+    "storageKey": null
+  }
+];
 return {
   "kind": "Fragment",
   "name": "Conversation_conversation",
@@ -375,6 +395,28 @@ return {
                       "storageKey": "url(version:[\"large\"])"
                     }
                   ]
+                },
+                {
+                  "kind": "LinkedField",
+                  "alias": null,
+                  "name": "listPrice",
+                  "storageKey": null,
+                  "args": null,
+                  "concreteType": null,
+                  "plural": false,
+                  "selections": [
+                    (v3/*: any*/),
+                    {
+                      "kind": "InlineFragment",
+                      "type": "Money",
+                      "selections": (v5/*: any*/)
+                    },
+                    {
+                      "kind": "InlineFragment",
+                      "type": "PriceRange",
+                      "selections": (v5/*: any*/)
+                    }
+                  ]
                 }
               ]
             },
@@ -449,5 +491,5 @@ return {
   ]
 };
 })();
-(node as any).hash = 'c7eb6ad394197b3f381a612ca7bbcb12';
+(node as any).hash = '16e46b2371551650adfb83bb45fb436d';
 export default node;

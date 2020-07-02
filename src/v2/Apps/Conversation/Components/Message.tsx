@@ -7,7 +7,6 @@ import {
   FlexProps,
   Image,
   Sans,
-  Spacer,
   color,
 } from "@artsy/palette"
 import { Message_message } from "v2/__generated__/Message_message.graphql"
@@ -59,7 +58,7 @@ export const Attachment: React.FC<AttachmentProps> = props => {
         background={color(bgColor)}
       >
         {attachment.contentType.startsWith("image") ? (
-          <Image src={attachment.downloadURL} />
+          <Image src={attachment.downloadURL} alt={attachment.fileName} />
         ) : (
           <>
             <Sans color={textColor} weight="medium" size="4" mr={2}>
@@ -95,7 +94,7 @@ const Message: React.FC<MessageProps> = props => {
           borderRadius: "15px",
           alignSelf,
         }}
-        width="66.67%"
+        maxWidth="66.67%"
       >
         <Sans size="4" color={textColor}>
           {text}
@@ -116,7 +115,6 @@ const Message: React.FC<MessageProps> = props => {
       {showTimeSince && (
         <TimeSince time={message.createdAt} style={{ alignSelf }} mt={0.5} />
       )}
-      <Spacer mb={showTimeSince ? 1 : 0.5} />
     </>
   )
 }

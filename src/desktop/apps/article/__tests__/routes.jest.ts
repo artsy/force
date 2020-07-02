@@ -10,7 +10,7 @@ jest.mock("desktop/lib/positronql", () => ({
   positronql: jest.fn(),
 }))
 
-jest.mock("lib/metaphysics.coffee", () => jest.fn())
+jest.mock("lib/metaphysics2.coffee", () => jest.fn())
 
 jest.mock("sharify", () => ({
   data: {
@@ -29,7 +29,7 @@ jest.mock("@artsy/stitch", () => ({
 
 const positronql = require("desktop/lib/positronql").positronql as jest.Mock
 const stitch = require("@artsy/stitch").stitch as jest.Mock
-const metaphysics = require("lib/metaphysics.coffee") as jest.Mock
+const metaphysics = require("lib/metaphysics2.coffee") as jest.Mock
 
 describe("Article Routes", () => {
   let req

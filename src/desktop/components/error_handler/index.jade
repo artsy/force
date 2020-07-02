@@ -15,31 +15,32 @@ block body
       a.error-handler-logo( href='/' )
         include ../main_layout/public/icons/logo.svg
     - }
-    #main-layout-container.responsive-layout-container.error-handler-layout
-      .error-handler-container( data-code=code )
-        h1.error-handler-headline
-          if code === 404
-            | Sorry, the page you were looking for doesn’t exist at this URL.
-          else
-            | Internal Error
+    main#main
+      #main-layout-container.responsive-layout-container.error-handler-layout
+        .error-handler-container( data-code=code )
+          h1.error-handler-headline
+            if code === 404
+              | Sorry, the page you were looking for doesn’t exist at this URL.
+            else
+              | Internal Error
 
-        .error-handler-inner
-          if code !== 404
-            if message
-              pre.error-handler-trace
-                | Error Message: #{message}
-            if detail
-              pre.error-handler-trace
-                = detail
-          p
-            | Please contact
-            = ' '
-            a.fine-faux-underline( href='mailto:support@artsy.net' )
-              | support@artsy.net
-            = ' '
-            | with any questions.
+          .error-handler-inner
+            if code !== 404
+              if message
+                pre.error-handler-trace
+                  | Error Message: #{message}
+              if detail
+                pre.error-handler-trace
+                  = detail
+            p
+              | Please contact
+              = ' '
+              a.fine-faux-underline( href='mailto:support@artsy.net' )
+                | support@artsy.net
+              = ' '
+              | with any questions.
 
-        .error-handler-return: a( href='/' )
-          | Go to Artsy homepage
+          .error-handler-return: a( href='/' )
+            | Go to Artsy homepage
 
   include ../main_layout/footer/template

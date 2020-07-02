@@ -12,7 +12,6 @@ page = new JSONPage name: 'about', paths: show: '/about', edit: '/about/edit'
 
 app.get page.paths.show, routes.index
 app.get /^\/about((?!\/edit).)*$/, routes.index # Scroll routes
-app.post '/about/sms', routes.sendSMS
 app.get page.paths.show + '/data', data
 app.get page.paths.edit, adminOnly, edit
 app.post page.paths.edit, adminOnly, upload

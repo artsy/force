@@ -55,6 +55,7 @@ export const DefaultHeaderArtwork: React.FC<DefaultHeaderArtworkProps> = ({
         width={artwork.node.image[small ? "small" : "large"].width}
         height={artwork.node.image[small ? "small" : "large"].height}
         src={artwork.node.image[small ? "small" : "large"].url}
+        alt={artwork.node.title}
         preventRightClick
         mr={1}
       />
@@ -69,6 +70,7 @@ export const DefaultHeaderArtworkFragmentContainer = createFragmentContainer(
       fragment DefaultHeaderArtwork_artwork on FilterArtworksEdge {
         node {
           id
+          title
           href
           slug
           image {

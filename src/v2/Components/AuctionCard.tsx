@@ -100,8 +100,8 @@ export const LargeAuctionCard = props => (
         {!props.isGalleryAuction && !props.isBenefit ? (
           props.subHeadline
         ) : (
-            <>&nbsp;</>
-          )}
+          <>&nbsp;</>
+        )}
       </Truncator>
     </Serif>
     {props.src && (
@@ -132,7 +132,9 @@ export const SmallAuctionCard = props => (
         <Truncator maxLineCount={1}>{props.badge}</Truncator>
       </Sans>
     </Flex>
-    {props.src && <Image src={props.src} height="82px" ml={2} />}
+    {props.src && (
+      <Image src={props.src} alt={props.headline} height="82px" ml={2} />
+    )}
   </BorderBox>
 )
 

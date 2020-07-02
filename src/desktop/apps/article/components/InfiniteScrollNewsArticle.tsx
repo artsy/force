@@ -253,6 +253,6 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
   }
 }
 
-const NewsContainer = styled.div.attrs<{ isMobile: boolean }>({})`
+const NewsContainer = styled.div<{ isMobile: boolean }>`
   margin-top: ${props => (props.isMobile ? "100" : "200")}px;
 `

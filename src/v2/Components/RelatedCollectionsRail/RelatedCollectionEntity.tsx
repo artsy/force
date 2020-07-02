@@ -80,7 +80,7 @@ export class RelatedCollectionEntity extends React.Component<CollectionProps> {
                 )
               })
             ) : (
-              <ArtworkImage src={headerImage} width={262} />
+              <ArtworkImage src={headerImage} alt={title} width={262} />
             )}
           </ImgWrapper>
           <CollectionTitle size="3">{title}</CollectionTitle>

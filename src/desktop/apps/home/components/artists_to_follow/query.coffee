@@ -1,7 +1,7 @@
 module.exports = """
   query HomeArtistsToFollowQuery($type: HomePageArtistModuleTypes){
-    home_page {
-      artist_module(key: $type){
+    home_page: homePage {
+      artist_module: artistModule(key: $type){
         key
         results {
           ... artistCell
@@ -9,5 +9,5 @@ module.exports = """
       }
     }
   }
-  #{require '../../../../components/artist_cell/query.coffee'}
+  #{require '../../../../components/artist_cell/query2.coffee'}
 """

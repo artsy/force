@@ -9,6 +9,7 @@ import {
   Flex,
   Link,
   Spacer,
+  Text,
   color,
   space,
   themeProps,
@@ -38,6 +39,19 @@ import { track, useTracking } from "v2/Artsy/Analytics"
 import Events from "v2/Utils/Events"
 import { useMatchMedia } from "v2/Utils/Hooks/useMatchMedia"
 import { LoggedInActionsQueryRenderer as LoggedInActions } from "./LoggedInActions"
+
+const SkipLink = styled.a`
+  position: absolute;
+  top: -100%;
+  left: 0;
+  color: ${color("black100")};
+  background-color: ${color("white100")};
+  z-index: 9999;
+
+  &:focus {
+    top: 0;
+  }
+`
 
 export const NavBar: React.FC = track(
   {
@@ -86,197 +100,204 @@ export const NavBar: React.FC = track(
   }
 
   return (
-    <header>
-      <NavBarContainer px={1}>
-        <NavSection>
-          <Link href="/" style={{ display: "flex" }}>
-            <ArtsyMarkIcon height={40} width={40} />
-          </Link>
-        </NavSection>
+    <>
+      <SkipLink href="#main">
+        <Text variant="text">Skip to content</Text>
+      </SkipLink>
 
-        <Spacer mr={1} />
-
-        <NavSection width="100%">
-          <Box width="100%">
-            <SearchBar />
-          </Box>
-        </NavSection>
-
-        <Spacer mr={2} />
-
-        {/*
-          Desktop. Collapses into mobile at `sm` breakpoint.
-        */}
-        <NavSection display={["none", "none", "flex"]}>
+      <header>
+        <NavBarContainer as="nav" px={1}>
           <NavSection>
-            <NavItem
-              label="Artworks"
-              isFullScreenDropDown
-              Menu={({ setIsVisible }) => {
-                return (
-                  <Box>
-                    <DropDownNavMenu
-                      width="100vw"
-                      menu={(artworks as MenuLinkData).menu}
-                      contextModule={
-                        AnalyticsSchema.ContextModule.HeaderArtworksDropdown
-                      }
-                      onClick={() => {
-                        setIsVisible(false)
-                      }}
-                    />
-                  </Box>
-                )
-              }}
-            >
-              <Flex>
-                Artworks
-                <ChevronIcon
-                  direction="down"
-                  color={color("black100")}
-                  height="15px"
-                  width="15px"
-                  top="5px"
-                  left="4px"
-                />
-              </Flex>
-            </NavItem>
+            <Link href="/" style={{ display: "flex" }}>
+              <ArtsyMarkIcon height={40} width={40} />
+            </Link>
+          </NavSection>
 
-            <NavItem
-              label="Artists"
-              isFullScreenDropDown
-              Menu={({ setIsVisible }) => {
-                return (
-                  <Box>
-                    <DropDownNavMenu
-                      width="100vw"
-                      menu={(artists as MenuLinkData).menu}
-                      contextModule={
-                        AnalyticsSchema.ContextModule.HeaderArtistsDropdown
-                      }
-                      onClick={() => {
-                        setIsVisible(false)
-                      }}
-                    />
-                  </Box>
-                )
-              }}
-            >
-              <Flex>
-                Artists
-                <ChevronIcon
-                  direction="down"
-                  color={color("black100")}
-                  height="15px"
-                  width="15px"
-                  top="5px"
-                  left="4px"
-                />
-              </Flex>
-            </NavItem>
+          <Spacer mr={1} />
 
-            <NavItem href="/auctions">Auctions</NavItem>
-            <NavItem href="/articles">Editorial</NavItem>
+          <NavSection width="100%">
+            <Box width="100%">
+              <SearchBar />
+            </Box>
+          </NavSection>
+
+          <Spacer mr={2} />
+
+          {/*
+            Desktop. Collapses into mobile at `sm` breakpoint.
+        */}
+          <NavSection display={["none", "none", "flex"]}>
+            <NavSection>
+              <NavItem
+                label="Artworks"
+                isFullScreenDropDown
+                Menu={({ setIsVisible }) => {
+                  return (
+                    <Box>
+                      <DropDownNavMenu
+                        width="100vw"
+                        menu={(artworks as MenuLinkData).menu}
+                        contextModule={
+                          AnalyticsSchema.ContextModule.HeaderArtworksDropdown
+                        }
+                        onClick={() => {
+                          setIsVisible(false)
+                        }}
+                      />
+                    </Box>
+                  )
+                }}
+              >
+                <Flex>
+                  Artworks
+                  <ChevronIcon
+                    direction="down"
+                    color={color("black100")}
+                    height="15px"
+                    width="15px"
+                    top="5px"
+                    left="4px"
+                  />
+                </Flex>
+              </NavItem>
+
+              <NavItem
+                label="Artists"
+                isFullScreenDropDown
+                Menu={({ setIsVisible }) => {
+                  return (
+                    <Box>
+                      <DropDownNavMenu
+                        width="100vw"
+                        menu={(artists as MenuLinkData).menu}
+                        contextModule={
+                          AnalyticsSchema.ContextModule.HeaderArtistsDropdown
+                        }
+                        onClick={() => {
+                          setIsVisible(false)
+                        }}
+                      />
+                    </Box>
+                  )
+                }}
+              >
+                <Flex>
+                  Artists
+                  <ChevronIcon
+                    direction="down"
+                    color={color("black100")}
+                    height="15px"
+                    width="15px"
+                    top="5px"
+                    left="4px"
+                  />
+                </Flex>
+              </NavItem>
+
+              <NavItem href="/auctions">Auctions</NavItem>
+              <NavItem href="/articles">Editorial</NavItem>
+              <NavItem
+                label="More"
+                Menu={() => {
+                  return (
+                    <Box mr={-150}>
+                      <MoreNavMenu width={160} />
+                    </Box>
+                  )
+                }}
+              >
+                <Flex>
+                  More
+                  <ChevronIcon
+                    direction="down"
+                    color={color("black100")}
+                    height="15px"
+                    width="15px"
+                    top="5px"
+                    left="4px"
+                  />
+                </Flex>
+              </NavItem>
+            </NavSection>
+
+            <NavSection>{isLoggedIn && <LoggedInActions />}</NavSection>
+
+            {!isLoggedIn && (
+              <NavSection>
+                <Spacer mr={2} />
+                <Button
+                  variant="secondaryOutline"
+                  onClick={() => {
+                    openAuthModal(mediator, {
+                      mode: ModalType.login,
+                      intent: Intent.login,
+                      contextModule: ContextModule.header,
+                    })
+                  }}
+                >
+                  Log in
+                </Button>
+                <Spacer mr={1} />
+                <Button
+                  onClick={() => {
+                    openAuthModal(mediator, {
+                      mode: ModalType.signup,
+                      intent: Intent.signup,
+                      contextModule: ContextModule.header,
+                    })
+                  }}
+                >
+                  Sign up
+                </Button>
+              </NavSection>
+            )}
+          </NavSection>
+
+          {/*
+          Mobile. Triggers at the `sm` breakpoint.
+        */}
+          <NavSection display={["flex", "flex", "none"]}>
             <NavItem
-              label="More"
-              Menu={() => {
-                return (
-                  <Box mr={-150}>
-                    <MoreNavMenu width={160} />
-                  </Box>
-                )
+              className="mobileHamburgerButton"
+              onClick={() => {
+                const showMenu = !showMobileMenu
+                if (showMenu) {
+                  trackEvent({
+                    action_type: AnalyticsSchema.ActionType.Click,
+                    subject:
+                      AnalyticsSchema.Subject.SmallScreenMenuSandwichIcon,
+                  })
+                }
+
+                toggleMobileNav(showMenu)
               }}
             >
-              <Flex>
-                More
-                <ChevronIcon
-                  direction="down"
-                  color={color("black100")}
-                  height="15px"
-                  width="15px"
-                  top="5px"
-                  left="4px"
-                />
+              <Flex
+                alignItems="center"
+                justifyContent="center"
+                width={22}
+                height={22}
+              >
+                <MobileNavDivider />
+                <MobileToggleIcon open={showMobileMenu} />
+                {showNotificationCount && <InboxNotificationCount />}
               </Flex>
             </NavItem>
           </NavSection>
+        </NavBarContainer>
 
-          <NavSection>{isLoggedIn && <LoggedInActions />}</NavSection>
-
-          {!isLoggedIn && (
-            <NavSection>
-              <Spacer mr={2} />
-              <Button
-                variant="secondaryOutline"
-                onClick={() => {
-                  openAuthModal(mediator, {
-                    mode: ModalType.login,
-                    intent: Intent.login,
-                    contextModule: ContextModule.header,
-                  })
-                }}
-              >
-                Log in
-              </Button>
-              <Spacer mr={1} />
-              <Button
-                onClick={() => {
-                  openAuthModal(mediator, {
-                    mode: ModalType.signup,
-                    intent: Intent.signup,
-                    contextModule: ContextModule.header,
-                  })
-                }}
-              >
-                Sign up
-              </Button>
-            </NavSection>
-          )}
-        </NavSection>
-
-        {/*
-          Mobile. Triggers at the `sm` breakpoint.
-        */}
-        <NavSection display={["flex", "flex", "none"]}>
-          <NavItem
-            className="mobileHamburgerButton"
-            onClick={() => {
-              const showMenu = !showMobileMenu
-              if (showMenu) {
-                trackEvent({
-                  action_type: AnalyticsSchema.ActionType.Click,
-                  subject: AnalyticsSchema.Subject.SmallScreenMenuSandwichIcon,
-                })
-              }
-
-              toggleMobileNav(showMenu)
-            }}
-          >
-            <Flex
-              alignItems="center"
-              justifyContent="center"
-              width={22}
-              height={22}
-            >
-              <MobileNavDivider />
-              <MobileToggleIcon open={showMobileMenu} />
-              {showNotificationCount && <InboxNotificationCount />}
-            </Flex>
-          </NavItem>
-        </NavSection>
-      </NavBarContainer>
-
-      {showMobileMenu && (
-        <>
-          <MobileNavCover onClick={() => toggleMobileNav(false)} />
-          <MobileNavMenu
-            isOpen={showMobileMenu}
-            menuData={menuData}
-            onNavButtonClick={handleMobileNavClick}
-          />
-        </>
-      )}
-    </header>
+        {showMobileMenu && (
+          <>
+            <MobileNavMenu
+              onClose={() => toggleMobileNav(false)}
+              isOpen={showMobileMenu}
+              menuData={menuData}
+              onNavButtonClick={handleMobileNavClick}
+            />
+          </>
+        )}
+      </header>
+    </>
   )
 })
 
@@ -302,14 +323,4 @@ const MobileNavDivider = styled(Box)`
   height: 63px;
   position: absolute;
   left: -12px;
-`
-
-const MobileNavCover = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  background: rgba(194, 194, 194, 0.3);
-  z-index: 0;
 `

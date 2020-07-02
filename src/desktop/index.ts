@@ -40,7 +40,6 @@ app.use(require("./apps/apply"))
 app.use(require("./apps/auction_reaction/server").app)
 app.use(require("./apps/auctions"))
 app.use(require("./apps/auctions2").app)
-app.use(require("./apps/auction_lots"))
 
 // FIXME: Remove once JSONPage + new app shell is worked out
 app.use(require("./apps/art_keeps_going/server").app)

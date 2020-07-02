@@ -58,8 +58,8 @@ export const FeatureSet: React.FC<FeatureSetProps> = ({ set, ...rest }) => {
           )}
         </Box>
       ) : (
-          <Spacer my={4} />
-        )}
+        <Spacer my={4} />
+      )}
 
       {(() => {
         // Set is being utilized for layout text instead of rendering items
@@ -91,7 +91,7 @@ export const FeatureSet: React.FC<FeatureSetProps> = ({ set, ...rest }) => {
                     <FeatureFeaturedLink
                       size={
                         { 1: "large", 2: "medium" }[
-                        set.orderedItems.edges.length
+                          set.orderedItems.edges.length
                         ] ?? "small"
                       }
                       key={node.id}
@@ -142,7 +142,7 @@ export const FeatureSetFragmentContainer = createFragmentContainer(FeatureSet, {
       description(format: HTML)
       itemType
       # TODO: Handle pagination
-      orderedItems: orderedItemsConnection(first: 20) {
+      orderedItems: orderedItemsConnection(first: 35) {
         edges {
           node {
             __typename

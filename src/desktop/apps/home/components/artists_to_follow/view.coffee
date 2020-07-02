@@ -1,5 +1,5 @@
 Backbone = require 'backbone'
-metaphysics = require '../../../../../lib/metaphysics.coffee'
+metaphysics = require '../../../../../lib/metaphysics2.coffee'
 mediator = require '../../../../lib/mediator.coffee'
 tabQuery = require './query.coffee'
 artistSuggestionQuery = require './artist_suggestion_query.coffee'
@@ -73,7 +73,8 @@ module.exports = class ArtistsToFollowView extends Backbone.View
       query: artistSuggestionQuery
       variables: artist_id: model.id
       req: { user: @user }
-    .then ({ me: { suggested_artists } }) =>
+    .then ({ artist: { related: { suggestedConnection: { edges } } } }) =>
+      suggested_artists = edges.map (e) -> e.node
       $cell = $(el).closest('.mgr-cell')
       $cell.fadeOut 'slow', =>
         @carousel.cells.flickity.remove $(el).closest('.mgr-cell')

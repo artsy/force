@@ -2,8 +2,7 @@ import React from "react"
 
 import Icon from "./Icon"
 
-// @ts-ignore
-import styled, { StyledComponentClass } from "styled-components"
+import styled from "styled-components"
 import colors from "../Assets/Colors"
 import { garamond } from "../Assets/Fonts"
 

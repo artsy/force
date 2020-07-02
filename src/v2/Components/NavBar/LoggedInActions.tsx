@@ -60,6 +60,62 @@ export const LoggedInActions: React.FC<
   updateConversationCache(me?.unreadConversationCount)
 
   return (
+    // <>
+    //   <NavItem
+    //     href="/works-for-you"
+    //     Menu={NotificationsMenu}
+    //     Overlay={() => (
+    //       <NotificationOverlay showOverlay={hasUnreadNotifications} />
+    //     )}
+    //     onClick={() => {
+    //       trackEvent({
+    //         action_type: AnalyticsSchema.ActionType.Click,
+    //         subject: AnalyticsSchema.Subject.NotificationBell,
+    //         new_notification_count: getNotificationCount(),
+    //         destination_path: "/works-for-you",
+    //       })
+    //     }}
+    //   >
+    //     {({ hover }) => {
+    //       if (hover) {
+    //         trackEvent({
+    //           action_type: AnalyticsSchema.ActionType.Hover,
+    //           subject: AnalyticsSchema.Subject.NotificationBell,
+    //           new_notification_count: getNotificationCount(),
+    //         })
+    //       }
+    //       return <BellIcon fill={hover ? "purple100" : "black80"} />
+    //     }}
+    //   </NavItem>
+    //   {conversationsEnabled && (
+    //     <NavItem
+    //       href="/user/conversations"
+    //       Overlay={() => (
+    //         <NotificationOverlay showOverlay={hasUnreadConversations} />
+    //       )}
+    //     >
+    //       {({ hover }) => {
+    //         return (
+    //           <EnvelopeIcon
+    //             title="Inbox"
+    //             fill={hover ? "purple100" : "black80"}
+    //           />
+    //         )
+    //       }}
+    //     </NavItem>
+    //   )}
+    //   <NavItem Menu={UserMenu}>
+    //     {({ hover }) => {
+    //       if (hover) {
+    //         trackEvent({
+    //           action_type: AnalyticsSchema.ActionType.Hover,
+    //           subject: "User",
+    //         })
+    //       }
+    //       return <SoloIcon fill={hover ? "purple100" : "black80"} />
+    //     }}
+    //   </NavItem>
+    // </>
     <>
       <NavItem
         href="/works-for-you"
@@ -88,19 +144,9 @@ export const LoggedInActions: React.FC<
         }}
       </NavItem>
       {conversationsEnabled && (
-        <NavItem
-          href="/user/conversations"
-          Overlay={() => (
-            <NotificationOverlay showOverlay={hasUnreadConversations} />
-          )}
-        >
+        <NavItem href="/user/conversations">
           {({ hover }) => {
-            return (
-              <EnvelopeIcon
-                title="Inbox"
-                fill={hover ? "purple100" : "black80"}
-              />
-            )
+            return <EnvelopeIcon fill={hover ? "purple100" : "black80"} />
           }}
         </NavItem>
       )}
