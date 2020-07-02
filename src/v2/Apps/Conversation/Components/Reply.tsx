@@ -94,7 +94,7 @@ export const Reply: React.FC<ReplyProps> = props => {
           text: "Discard message",
         }}
       />
-      <StyledFlex p={1} right={[0, null]} zIndex={2}>
+      <StyledFlex p={1} right={[0, null]} zIndex={[null, 2]}>
         <FullWidthFlex width="100%">
           <StyledTextArea
             onInput={event => {

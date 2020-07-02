@@ -4,12 +4,13 @@ import {
   EntityHeader,
   Flex,
   FlexProps,
+  Join,
   Link,
-  MessageIcon,
   QuestionCircleIcon,
   ResponsiveImage,
   Sans,
   Separator,
+  Spacer,
   color,
   media,
 } from "@artsy/palette"
@@ -61,6 +62,22 @@ export const Details: FC<DetailsProps> = ({ conversation, ...props }) => {
     .filter(attachments => attachments.length > 0)
     .reduce((previous, current) => previous.concat(current), [])
     .filter(attachment => !attachment.contentType.includes("image"))
+
+  const attachmentItems = attachments?.map(attachment => {
+    return (
+      <Link
+        key={attachment.id}
+        href={attachment.downloadURL}
+        target="_blank"
+        noUnderline
+      >
+        <Flex alignItems="center">
+          <DocumentIcon mr={0.5} />
+          <Sans size="3">{attachment.fileName}</Sans>
+        </Flex>
+      </Link>
+    )
+  })
 
   return (
     <DetailsContainer
@@ -119,21 +136,7 @@ export const Details: FC<DetailsProps> = ({ conversation, ...props }) => {
             <Sans size="3" weight="medium" mb={2}>
               Attachments
             </Sans>
-            {attachments.map(attachment => {
-              return (
-                <Link
-                  key={attachment.id}
-                  href={attachment.downloadURL}
-                  target="_blank"
-                  noUnderline
-                >
-                  <Flex alignItems="center">
-                    <DocumentIcon mr={0.5} />
-                    <Sans size="3">{attachment.fileName}</Sans>
-                  </Flex>
-                </Link>
-              )
-            })}
+            <Join separator={<Spacer mb={1} />}>{attachmentItems}</Join>
           </Box>
         </>
       )}
@@ -145,10 +148,6 @@ export const Details: FC<DetailsProps> = ({ conversation, ...props }) => {
         <Flex alignItems="center" mb={1}>
           <QuestionCircleIcon mr={1} />
           <Sans size="3">Inquiries FAQ</Sans>
-        </Flex>
-        <Flex alignItems="center" mb={1}>
-          <MessageIcon mr={1} />
-          <Sans size="3">Contact an Artsy Specialist</Sans>
         </Flex>
       </Flex>
     </DetailsContainer>

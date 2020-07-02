@@ -3,6 +3,7 @@ import styled from "styled-components"
 import {
   ArrowLeftIcon,
   Box,
+  CloseIcon,
   Flex,
   FlexProps,
   Icon,
@@ -49,7 +50,7 @@ export const ConversationHeader: FC<ConversationHeaderProps> = ({
   return (
     <ConversationHeaderContainer
       height="55px"
-      px={2}
+      px={[1, 2]}
       alignItems="center"
       justifyContent="space-between"
       width="100%"
@@ -57,8 +58,11 @@ export const ConversationHeader: FC<ConversationHeaderProps> = ({
       <RouterLink to={`/user/conversations`}>
         <ArrowLeftIcon />
       </RouterLink>
-      <Sans size="3t" weight="medium">
+      <Sans size="3t" weight="medium" display={["none", "auto"]}>
         Conversation with {partnerName}
+      </Sans>
+      <Sans size="3t" weight="medium" display={["auto", "none"]}>
+        Inquiry with {partnerName}
       </Sans>
       <DetailIcon showDetails={showDetails} setShowDetails={setShowDetails} />
     </ConversationHeaderContainer>
@@ -110,25 +114,31 @@ export const InboxHeader: FC<BorderedFlexProps> = props => {
   )
 }
 
-interface DetailsHeaderProps extends BorderedFlexProps {
-  showDetails: boolean
-}
+interface DetailsHeaderProps extends BorderedFlexProps, DetailsProps {}
 
 const AnimatedFlex = styled(Flex)`
   ${DETAIL_BOX_ANIMATION}
 `
 
 export const DetailsHeader: FC<DetailsHeaderProps> = props => {
-  const { showDetails } = props
+  const { showDetails, setShowDetails } = props
   return (
     <AnimatedFlex
       flexDirection="column"
       width={showDetails ? "375px" : "0"}
       {...props}
     >
-      <Sans size="4" ml={2}>
-        Details
-      </Sans>
+      <Flex flexDirection="row" justifyContent="space-between">
+        <Sans size="4" ml={2}>
+          Details
+        </Sans>
+        <CloseIcon
+          mr={1}
+          mt={0.5}
+          cursor="pointer"
+          onClick={() => setShowDetails(false)}
+        />
+      </Flex>
       <Separator mt={1} />
     </AnimatedFlex>
   )
@@ -168,7 +178,10 @@ export const FullHeader: FC<Partial<ConversationHeaderProps>> = props => {
       </BorderedFlex>
       <Flex flexShrink={0} height="100%" alignItems="flex-end">
         <Media greaterThan="lg">
-          <DetailsHeader showDetails={props.showDetails} />
+          <DetailsHeader
+            showDetails={props.showDetails}
+            setShowDetails={props.setShowDetails}
+          />
         </Media>
       </Flex>
     </Flex>
@@ -181,8 +194,10 @@ const DetailIcon: React.FC<DetailsProps> = props => {
     // TODO: Fix <Icon /> typings in Palette
     // @ts-ignore
     <StatefulIcon
+      width="28"
+      height="28"
       viewBox="0 0 28 28"
-      mr={1}
+      mr={[0, 1]}
       onClick={() => {
         setShowDetails(!showDetails)
       }}
