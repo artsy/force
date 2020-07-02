@@ -29,7 +29,7 @@ const ViewingRoomWorks: React.FC<ViewingRoomWorksProps> = ({
   return (
     <>
       <Flex>
-        {edges.map(({ node: artwork }, index) => {
+        {edges.map(({ node: artwork }) => {
           return (
             <ArtworkItem
               key={artwork.internalID}
@@ -99,7 +99,7 @@ const ArtworkItem: React.FC<ArtworkNode> = ({
     >
       <Box width="95%">
         <Box mb={0.5}>
-          <Image width="100%" src={imageUrl} />
+          <Image width="100%" src={imageUrl} alt={title} />
         </Box>
         <Box>
           <Sans size="3t">{artistNames}</Sans>

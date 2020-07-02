@@ -3,6 +3,7 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ViewingRoomCarousel_artwork = {
+    readonly title: string | null;
     readonly images: ReadonlyArray<{
         readonly internalID: string | null;
         readonly resized: {
@@ -28,6 +29,13 @@ const node: ReaderFragment = {
   "metadata": null,
   "argumentDefinitions": [],
   "selections": [
+    {
+      "kind": "ScalarField",
+      "alias": null,
+      "name": "title",
+      "args": null,
+      "storageKey": null
+    },
     {
       "kind": "LinkedField",
       "alias": null,
@@ -91,5 +99,5 @@ const node: ReaderFragment = {
     }
   ]
 };
-(node as any).hash = '524817080b0184d197042f5882caec14';
+(node as any).hash = '63242270c9bf9d6e2ba2bb9f55c3cf9b';
 export default node;

@@ -75,6 +75,7 @@ const LargeArticleItem: SFC<ArticleItemProps> = props => {
                 objectFit: "fill",
               }}
               src={imageUrl}
+              alt={title}
               mb={2}
             />
           </a>
@@ -114,7 +115,7 @@ const SmallArticleItem: SFC<ArticleItemProps> = props => {
             {author}
           </Credit>
         </Box>
-        <Image width="70px" height="100%" src={imageUrl} />
+        <Image width="70px" height="100%" src={imageUrl} alt={title} />
       </Flex>
       {/* FIXME: Weird block height issue... */}
       <Spacer mt={2} />

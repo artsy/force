@@ -16,6 +16,7 @@ export type ViewingRoomWorksRoute_Test_QueryRawResponse = {
             readonly edges: ReadonlyArray<({
                 readonly node: ({
                     readonly internalID: string;
+                    readonly title: string | null;
                     readonly images: ReadonlyArray<({
                         readonly internalID: string | null;
                         readonly resized: ({
@@ -27,7 +28,6 @@ export type ViewingRoomWorksRoute_Test_QueryRawResponse = {
                     readonly id: string;
                     readonly additionalInformation: string | null;
                     readonly artistNames: string | null;
-                    readonly title: string | null;
                     readonly date: string | null;
                     readonly href: string | null;
                     readonly saleMessage: string | null;
@@ -64,6 +64,7 @@ fragment ViewingRoomArtworkDetails_artwork on Artwork {
 }
 
 fragment ViewingRoomCarousel_artwork on Artwork {
+  title
   images {
     internalID
     resized(height: 1100, version: "normalized") {
@@ -181,6 +182,13 @@ return {
                     "selections": [
                       (v2/*: any*/),
                       {
+                        "kind": "ScalarField",
+                        "alias": null,
+                        "name": "title",
+                        "args": null,
+                        "storageKey": null
+                      },
+                      {
                         "kind": "LinkedField",
                         "alias": null,
                         "name": "images",
@@ -259,13 +267,6 @@ return {
                       {
                         "kind": "ScalarField",
                         "alias": null,
-                        "name": "title",
-                        "args": null,
-                        "storageKey": null
-                      },
-                      {
-                        "kind": "ScalarField",
-                        "alias": null,
                         "name": "date",
                         "args": null,
                         "storageKey": null
@@ -298,7 +299,7 @@ return {
     "operationKind": "query",
     "name": "ViewingRoomWorksRoute_Test_Query",
     "id": null,
-    "text": "query ViewingRoomWorksRoute_Test_Query(\n  $slug: ID!\n) {\n  viewingRoom(id: $slug) {\n    ...ViewingRoomWorksRoute_viewingRoom\n  }\n}\n\nfragment ViewingRoomArtworkDetails_artwork on Artwork {\n  id\n  additionalInformation\n  artistNames\n  title\n  date\n  href\n  saleMessage\n}\n\nfragment ViewingRoomCarousel_artwork on Artwork {\n  images {\n    internalID\n    resized(height: 1100, version: \"normalized\") {\n      url\n      width\n      height\n    }\n  }\n}\n\nfragment ViewingRoomWorksRoute_viewingRoom on ViewingRoom {\n  artworksConnection {\n    edges {\n      node {\n        internalID\n        ...ViewingRoomCarousel_artwork\n        ...ViewingRoomArtworkDetails_artwork\n        id\n      }\n    }\n  }\n}\n",
+    "text": "query ViewingRoomWorksRoute_Test_Query(\n  $slug: ID!\n) {\n  viewingRoom(id: $slug) {\n    ...ViewingRoomWorksRoute_viewingRoom\n  }\n}\n\nfragment ViewingRoomArtworkDetails_artwork on Artwork {\n  id\n  additionalInformation\n  artistNames\n  title\n  date\n  href\n  saleMessage\n}\n\nfragment ViewingRoomCarousel_artwork on Artwork {\n  title\n  images {\n    internalID\n    resized(height: 1100, version: \"normalized\") {\n      url\n      width\n      height\n    }\n  }\n}\n\nfragment ViewingRoomWorksRoute_viewingRoom on ViewingRoom {\n  artworksConnection {\n    edges {\n      node {\n        internalID\n        ...ViewingRoomCarousel_artwork\n        ...ViewingRoomArtworkDetails_artwork\n        id\n      }\n    }\n  }\n}\n",
     "metadata": {}
   }
 };

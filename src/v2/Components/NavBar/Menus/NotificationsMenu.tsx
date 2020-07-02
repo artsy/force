@@ -62,6 +62,7 @@ export const NotificationMenuItems: React.FC<NotificationsMenuQueryResponse> = p
                   style={{
                     objectFit: "cover",
                   }}
+                  alt={summary}
                 />
               </Box>
               <Box>

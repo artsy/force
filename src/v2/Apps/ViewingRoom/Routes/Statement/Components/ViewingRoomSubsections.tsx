@@ -41,7 +41,7 @@ const ViewingRoomSubsections: React.FC<ViewingRoomSubsectionsProps> = ({
                   <Spacer my={4} />
                   <Box>
                     <Box width="100%">
-                      <Image width="100%" src={imageURL} />
+                      <Image width="100%" src={imageURL} alt={title} />
                     </Box>
                     {caption && (
                       <>

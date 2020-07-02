@@ -82,6 +82,7 @@ export class ArtistCollectionEntity extends React.Component<CollectionProps> {
             ) : (
               <ArtworkImage
                 src={headerImage}
+                alt={formattedTitle}
                 lazyLoad={this.props.lazyLoad}
                 width={262}
                 style={{ objectFit: "cover", objectPosition: "center" }}

@@ -22,7 +22,7 @@ export const ArtistShowBlockItem: SFC<ArtistShowBlockItemProps> = props => {
   return (
     <Box width={props.blockWidth} height="auto" pr={pr} pb={pb}>
       <a href={sd.APP_URL + href} className="noUnderline">
-        <Image width="100%" src={imageUrl} />
+        <Image width="100%" src={imageUrl} alt={exhibitionInfo} />
         <Spacer my={1} />
         <Serif size="3">{props.name}</Serif>
       </a>
