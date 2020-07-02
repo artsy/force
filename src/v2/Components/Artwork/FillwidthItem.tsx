@@ -171,9 +171,9 @@ export class FillwidthItemContainer extends React.Component<
   }
 }
 
-export const FillwidthItem = styled(FillwidthItemContainer).attrs<
+export const FillwidthItem = styled(FillwidthItemContainer)<
   FillwidthItemContainerProps
->({})`
+>`
   display: inline-block;
   width: ${props => props.width}px;
   vertical-align: top;

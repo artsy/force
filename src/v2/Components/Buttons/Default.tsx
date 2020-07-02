@@ -1,8 +1,7 @@
 import colors from "v2/Assets/Colors"
 import { avantgarde } from "v2/Assets/Fonts"
 import React from "react"
-// @ts-ignore
-import styled, { StyledComponentClass } from "styled-components"
+import styled from "styled-components"
 import { block } from "../Helpers"
 import { IconProps } from "../Icon"
 
@@ -36,11 +35,11 @@ export class Button extends React.Component<ButtonProps, any> {
         <span>{this.props.children}</span>
       </a>
     ) : (
-        <button className={this.props.className} {...newProps}>
-          {this.props.icon}
-          <span>{this.props.children}</span>
-        </button>
-      )
+      <button className={this.props.className} {...newProps}>
+        {this.props.icon}
+        <span>{this.props.children}</span>
+      </button>
+    )
   }
 }
 
@@ -74,11 +73,11 @@ export const StyledButton = styled(Button)`
   &:hover:not(:disabled) {
     cursor: pointer;
     background: ${props => {
-    if (props.state === ButtonState.Success) return colors.greenBold
-    if (props.state === ButtonState.Failure) return colors.redBold
+      if (props.state === ButtonState.Success) return colors.greenBold
+      if (props.state === ButtonState.Failure) return colors.redBold
 
-    return colors.grayMedium
-  }};
+      return colors.grayMedium
+    }};
   }
 
   ${block()};

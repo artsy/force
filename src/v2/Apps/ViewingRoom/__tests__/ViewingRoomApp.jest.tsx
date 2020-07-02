@@ -246,9 +246,7 @@ describe("ViewingRoomApp", () => {
       })
     }
     it("shows sign up modal", async () => {
-      const wrapper = await getWrapper()
-      const html = wrapper.html()
-      console.log(html)
+      await getWrapper()
       expect(mediator.trigger).toBeCalledWith("open:auth", {
         mode: "signup",
         redirectTo: "http://localhost/" + slug,
