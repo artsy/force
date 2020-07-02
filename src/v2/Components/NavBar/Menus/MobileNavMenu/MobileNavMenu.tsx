@@ -36,7 +36,6 @@ export const MobileNavMenu: React.FC<Props> = props => {
     onNavButtonClick,
   } = props
   const { user } = useSystemContext()
-  const account = props.menuData.links.find(md => md.text === "Account")
 
   return (
     <NavigatorContextProvider>
@@ -60,7 +59,7 @@ export const MobileNavMenu: React.FC<Props> = props => {
             <MobileLink href="/gallery-partnerships">
               Artsy for Galleries
             </MobileLink>
-            {user ? <LoggedInLinks account={account} /> : <AuthenticateLinks />}
+            {user ? <LoggedInLinks /> : <AuthenticateLinks />}
           </ul>
         </AnimatingMenuWrapper>
       </MenuViewport>
@@ -261,29 +260,50 @@ const AuthenticateLinks: React.FC = () => {
   )
 }
 
-export const LoggedInLinks: React.FC<any> = ({ account }) => {
+export const LoggedInLinks: React.FC<any> = () => {
   const { mediator, user } = useSystemContext()
+  let menu = {
+    title: "Account",
+    links: [
+      {
+        text: "Saves & Follows",
+        href: "/user/saves",
+      },
+      {
+        text: "Auctions",
+        href: "/user/auctions",
+      },
+      {
+        text: "Collector Profile",
+        href: "/profile/edit",
+      },
+      {
+        text: "Settings",
+        href: "/user/edit",
+      },
+      {
+        text: "Payments",
+        href: "/user/payments",
+      },
+      {
+        text: "Log Out",
+        href: "#logout",
+        onClick: event => {
+          event.preventDefault()
+          mediator.trigger("auth:logout")
+        },
+      },
+    ],
+  }
   const conversationsEnabled = userHasLabFeature(
     user,
     "User Conversations View"
   )
-  const logOut = {
-    href: "#logout",
-    onClick: event => {
-      event.preventDefault()
-      mediator.trigger("auth:logout")
-    },
-    text: "Log Out",
-  }
   const inbox = {
     href: "/user/conversations",
     text: "Inbox",
   }
-  let menu = (account as MenuLinkData).menu
-  if (!menu.links.find(l => l.text === logOut.text)) {
-    menu.links.push(logOut)
-  }
-  if (conversationsEnabled && !menu.links.find(l => l.text === inbox.text)) {
+  if (conversationsEnabled) {
     menu.links.unshift(inbox)
   }
   return <MobileSubmenuLink menu={menu}>{menu.title}</MobileSubmenuLink>
