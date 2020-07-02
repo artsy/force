@@ -36,7 +36,7 @@ const updateConversationCache = (conversationCount?: number) => {
   }
 }
 
-const InboxNotificationCount: React.FC<
+export const InboxNotificationCount: React.FC<
   { error?: any } & Partial<InboxNotificationCountQueryResponse>
 > = ({ error, me }) => {
   const conversationCount =

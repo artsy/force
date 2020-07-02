@@ -59,7 +59,9 @@ export const NavBar: React.FC = track(
     user,
     "User Conversations View"
   )
+  // ToDo: replace check for conversationsEnabled with check for user when ready to launch
   const showNotificationCount = !showMobileMenu && conversationsEnabled
+
   const {
     links: [artworks, artists],
   } = menuData

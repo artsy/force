@@ -4,6 +4,7 @@ import { useTracking } from "v2/Artsy/Analytics/useTracking"
 import { mount } from "enzyme"
 import React from "react"
 import { NavBar } from "../NavBar"
+import { InboxNotificationCount } from "../Menus/MobileNavMenu/InboxNotificationCount"
 
 jest.mock("v2/Components/Search/SearchBar", () => {
   return {
@@ -152,6 +153,13 @@ describe("NavBar", () => {
       expect(wrapper.find("MobileNavMenu").length).toEqual(1)
       toggle()
       expect(wrapper.find("MobileNavMenu").length).toEqual(0)
+    })
+
+    it("shows InboxNotificationCount when there are conversations", () => {
+      const wrapper = getWrapper({
+        user: { type: "NotAdmin", lab_features: ["User Conversations View"] },
+      })
+      expect(wrapper.find(InboxNotificationCount).length).toBe(1)
     })
   })
 })

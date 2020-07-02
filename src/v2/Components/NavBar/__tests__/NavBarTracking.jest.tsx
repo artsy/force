@@ -14,6 +14,10 @@ jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
   useMatchMedia: () => ({ sm: false }),
 }))
 
+jest.mock("lib/environment", () => ({
+  isServer: true,
+}))
+
 describe("NavBarTracking", () => {
   const trackEvent = jest.fn()
 
