@@ -23,10 +23,12 @@ import {
   MobileToggleIcon,
   MoreNavMenu,
 } from "./Menus"
+import { InboxNotificationCountQueryRenderer as InboxNotificationCount } from "./Menus/MobileNavMenu/InboxNotificationCount"
 
 import { ModalType } from "v2/Components/Authentication/Types"
 import { MenuLinkData, menuData } from "v2/Components/NavBar/menuData"
 import { openAuthModal } from "v2/Utils/openAuthModal"
+import { userHasLabFeature } from "v2/Utils/user"
 
 import { NavItem } from "./NavItem"
 
@@ -53,6 +55,11 @@ export const NavBar: React.FC = track(
   const sm = useMatchMedia(themeProps.mediaQueries.sm)
   const isMobile = xs || sm
   const isLoggedIn = Boolean(user)
+  const conversationsEnabled = userHasLabFeature(
+    user,
+    "User Conversations View"
+  )
+  const showNotificationCount = !showMobileMenu && conversationsEnabled
   const {
     links: [artworks, artists],
   } = menuData
@@ -251,6 +258,7 @@ export const NavBar: React.FC = track(
             >
               <MobileNavDivider />
               <MobileToggleIcon open={showMobileMenu} />
+              {showNotificationCount && <InboxNotificationCount />}
             </Flex>
           </NavItem>
         </NavSection>

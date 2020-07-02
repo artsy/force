@@ -16,6 +16,10 @@ jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
   useMatchMedia: () => ({}),
 }))
 
+jest.mock("lib/environment", () => ({
+  isServer: true,
+}))
+
 describe("NavBar", () => {
   const mediator = {
     trigger: jest.fn(),
@@ -61,12 +65,7 @@ describe("NavBar", () => {
       const wrapper = getWrapper()
 
       // Logo
-      expect(
-        wrapper
-          .find("Link")
-          .first()
-          .prop("href")
-      ).toEqual("/")
+      expect(wrapper.find("Link").first().prop("href")).toEqual("/")
 
       const links = wrapper.find("NavItem")
 
@@ -117,10 +116,7 @@ describe("NavBar", () => {
 
     it("calls login auth action on login button click", () => {
       const wrapper = getWrapper()
-      wrapper
-        .find("Button")
-        .first()
-        .simulate("click")
+      wrapper.find("Button").first().simulate("click")
       expect(mediator.trigger).toBeCalledWith("open:auth", {
         contextModule: "header",
         intent: "login",
@@ -130,10 +126,7 @@ describe("NavBar", () => {
 
     it("calls signup auth action on signup button click", () => {
       const wrapper = getWrapper()
-      wrapper
-        .find("Button")
-        .last()
-        .simulate("click")
+      wrapper.find("Button").last().simulate("click")
       expect(mediator.trigger).toBeCalledWith("open:auth", {
         contextModule: "header",
         intent: "signup",
