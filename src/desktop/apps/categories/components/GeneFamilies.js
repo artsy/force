@@ -6,24 +6,13 @@ import { featuredGenesForFamily } from "../utils.js"
 
 const propTypes = {
   geneFamilies: PropTypes.array.isRequired,
-  allFeaturedGenesByFamily: PropTypes.array.isRequired,
 }
 
-const GeneFamilies = ({ geneFamilies, allFeaturedGenesByFamily }) => {
+const GeneFamilies = ({ geneFamilies }) => {
   return (
     <div>
       {geneFamilies.map(geneFamily => {
-        const featuredGenes = featuredGenesForFamily(
-          geneFamily.name,
-          allFeaturedGenesByFamily
-        )
-        return (
-          <GeneFamily
-            key={geneFamily.id}
-            featuredGenes={featuredGenes}
-            {...geneFamily}
-          />
-        )
+        return <GeneFamily key={geneFamily.id} {...geneFamily} />
       })}
     </div>
   )
