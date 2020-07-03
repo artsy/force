@@ -35,7 +35,7 @@ export type ViewingRoomStatementRoute_Test_QueryRawResponse = {
             readonly body: string | null;
             readonly imageURL: string | null;
             readonly caption: string | null;
-        }> | null;
+        }>;
     }) | null;
 };
 export type ViewingRoomStatementRoute_Test_Query = {

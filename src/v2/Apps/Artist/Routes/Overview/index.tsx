@@ -348,6 +348,7 @@ export class OverviewRoute extends React.Component<OverviewRouteProps, {}> {
                     >
                       <Image
                         src={get(slide, i => i.coverImage.cropped.url)}
+                        alt={slide.name}
                         width={get(slide, i => i.coverImage.cropped.width)}
                         height={get(slide, i => i.coverImage.cropped.height)}
                       />
@@ -397,6 +398,7 @@ export class OverviewRoute extends React.Component<OverviewRouteProps, {}> {
                     <Box maxWidth={["90px", "120px"]}>
                       <Image
                         src={get(article, i => i.thumbnailImage.cropped.url)}
+                        alt={article.thumbnailTitle}
                         width="100%"
                       />
                     </Box>

@@ -5,6 +5,7 @@ import { FragmentRefs } from "relay-runtime";
 export type DefaultHeaderArtwork_artwork = {
     readonly node: {
         readonly id: string;
+        readonly title: string | null;
         readonly href: string | null;
         readonly slug: string;
         readonly image: {
@@ -80,6 +81,13 @@ return {
         {
           "kind": "ScalarField",
           "alias": null,
+          "name": "title",
+          "args": null,
+          "storageKey": null
+        },
+        {
+          "kind": "ScalarField",
+          "alias": null,
           "name": "href",
           "args": null,
           "storageKey": null
@@ -139,5 +147,5 @@ return {
   ]
 };
 })();
-(node as any).hash = '24e6e5115f0261e709f2bfd2b6b69148';
+(node as any).hash = '7a8740af565bf4a832317bf08ee0a588';
 export default node;

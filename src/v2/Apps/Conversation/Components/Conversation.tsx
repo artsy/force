@@ -70,6 +70,7 @@ export const Item: React.FC<ItemProps> = props => {
         <Flex flexDirection="column">
           <Image
             src={getImage(item)}
+            alt={item.__typename === "Artwork" ? item.title : item.name}
             width="350px"
             borderRadius="15px 15px 0 0"
           />

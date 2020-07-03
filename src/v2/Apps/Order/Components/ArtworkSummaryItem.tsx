@@ -43,7 +43,7 @@ const ArtworkSummaryItem: React.SFC<ArtworkSummaryItemProps> = ({
   return (
     <StackableBorderBox flexDirection="row" {...others}>
       <Box height="auto">
-        {imageURL && <Image src={imageURL} width="55px" mr={1} />}
+        {imageURL && <Image src={imageURL} alt={title} width="55px" mr={1} />}
       </Box>
       <Flex flexDirection="column" style={{ overflow: "hidden" }}>
         <Serif

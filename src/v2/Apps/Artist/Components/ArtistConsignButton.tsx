@@ -56,8 +56,9 @@ interface Tracking {
   trackGetStartedClick: (props: { destinationPath: string }) => void
 }
 
-export const ArtistConsignButtonLarge: React.FC<ArtistConsignButtonProps &
-  Tracking> = props => {
+export const ArtistConsignButtonLarge: React.FC<
+  ArtistConsignButtonProps & Tracking
+> = props => {
   const { showImage, imageURL, headline, consignURL } = getData(props)
 
   return (
@@ -76,7 +77,13 @@ export const ArtistConsignButtonLarge: React.FC<ArtistConsignButtonProps &
         <Flex alignItems="center" width="100%" justifyContent="space-between">
           <Flex>
             {showImage && (
-              <Image src={imageURL} width={50} height={50} mr={1} />
+              <Image
+                src={imageURL}
+                alt={headline}
+                width={50}
+                height={50}
+                mr={1}
+              />
             )}
             <Flex flexDirection="column" justifyContent="center">
               <Sans size="3t" weight="medium">
@@ -98,8 +105,9 @@ export const ArtistConsignButtonLarge: React.FC<ArtistConsignButtonProps &
   )
 }
 
-export const ArtistConsignButtonSmall: React.FC<ArtistConsignButtonProps &
-  Tracking> = props => {
+export const ArtistConsignButtonSmall: React.FC<
+  ArtistConsignButtonProps & Tracking
+> = props => {
   const { showImage, imageURL, headline, consignURL } = getData(props)
 
   return (
@@ -116,7 +124,7 @@ export const ArtistConsignButtonSmall: React.FC<ArtistConsignButtonProps &
     >
       <BorderBox p={1}>
         <Flex alignItems="center">
-          {showImage && <Image src={imageURL} mr={2} />}
+          {showImage && <Image src={imageURL} alt={headline} mr={2} />}
           <Flex flexDirection="column" justifyContent="center">
             <Sans size="3t" weight="medium">
               {headline}
