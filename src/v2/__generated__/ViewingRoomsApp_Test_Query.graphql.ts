@@ -35,6 +35,10 @@ query ViewingRoomsApp_Test_Query {
 }
 
 fragment ViewingRoomsApp_viewingRooms on ViewingRoomConnection {
+  ...ViewingRoomsLatestGrid_viewingRooms
+}
+
+fragment ViewingRoomsLatestGrid_viewingRooms on ViewingRoomConnection {
   edges {
     node {
       slug
@@ -137,7 +141,7 @@ const node: ConcreteRequest = {
     "operationKind": "query",
     "name": "ViewingRoomsApp_Test_Query",
     "id": null,
-    "text": "query ViewingRoomsApp_Test_Query {\n  viewingRooms {\n    ...ViewingRoomsApp_viewingRooms\n  }\n}\n\nfragment ViewingRoomsApp_viewingRooms on ViewingRoomConnection {\n  edges {\n    node {\n      slug\n      status\n      title\n    }\n  }\n}\n",
+    "text": "query ViewingRoomsApp_Test_Query {\n  viewingRooms {\n    ...ViewingRoomsApp_viewingRooms\n  }\n}\n\nfragment ViewingRoomsApp_viewingRooms on ViewingRoomConnection {\n  ...ViewingRoomsLatestGrid_viewingRooms\n}\n\nfragment ViewingRoomsLatestGrid_viewingRooms on ViewingRoomConnection {\n  edges {\n    node {\n      slug\n      status\n      title\n    }\n  }\n}\n",
     "metadata": {}
   }
 };
