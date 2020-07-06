@@ -94,6 +94,16 @@ const Message: React.FC<MessageProps> = props => {
   const bgColor = isFromUser ? "black100" : "black10"
   const textColor = isFromUser ? "white100" : "black100"
   const alignSelf = isFromUser ? "flex-end" : undefined
+
+  // react-linkify v1.0.0-alpha has a bug that `properties` doesn't work.
+  // This is a workaround to specify target for now.
+  // https://github.com/tasti/react-linkify/issues/78#issuecomment-514754050
+  const linkTargetDecorator = (href, text, key) => (
+    <a href={href} key={key} target="_blank">
+      {text}
+    </a>
+  )
+
   return (
     <>
       <Box
@@ -107,7 +117,7 @@ const Message: React.FC<MessageProps> = props => {
         maxWidth="66.67%"
       >
         <MessageText size="4" color={textColor}>
-          <Linkify properties={{ target: "_blank" }}>{text}</Linkify>
+          <Linkify componentDecorator={linkTargetDecorator}>{text}</Linkify>
         </MessageText>
       </Box>
       {message.attachments.length > 0 &&
