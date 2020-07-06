@@ -21,6 +21,7 @@ import {
   alignSelf,
   background,
 } from "styled-system"
+import Linkify from "react-linkify"
 
 const AttachmentLink = styled.a`
   width: min-content;
@@ -41,6 +42,11 @@ const AttachmentContainer = styled(Flex)<
 
 const MessageText = styled(Sans)`
   white-space: pre-line;
+  && {
+    a:hover {
+      color: currentcolor;
+    }
+  }
 `
 
 interface AttachmentProps {
@@ -101,7 +107,7 @@ const Message: React.FC<MessageProps> = props => {
         maxWidth="66.67%"
       >
         <MessageText size="4" color={textColor}>
-          {text}
+          <Linkify properties={{ target: "_blank" }}>{text}</Linkify>
         </MessageText>
       </Box>
       {message.attachments.length > 0 &&
