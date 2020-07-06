@@ -241,13 +241,6 @@ export const NavBar: React.FC = track(
                     }}
                   >
                     {({ hover }) => {
-                      if (hover) {
-                        trackEvent({
-                          action_type: AnalyticsSchema.ActionType.Hover,
-                          subject: AnalyticsSchema.Subject.NotificationBell,
-                          new_notification_count: getNotificationCount(),
-                        })
-                      }
                       return <BellIcon fill={hover ? "purple100" : "black80"} />
                     }}
                   </NavItem>
@@ -264,12 +257,6 @@ export const NavBar: React.FC = track(
                   )}
                   <NavItem Menu={UserMenu}>
                     {({ hover }) => {
-                      if (hover) {
-                        trackEvent({
-                          action_type: AnalyticsSchema.ActionType.Hover,
-                          subject: "User",
-                        })
-                      }
                       return <SoloIcon fill={hover ? "purple100" : "black80"} />
                     }}
                   </NavItem>
