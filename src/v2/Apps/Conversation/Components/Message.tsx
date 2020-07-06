@@ -39,6 +39,10 @@ const AttachmentContainer = styled(Flex)<
   justify-content: space-between;
 `
 
+const MessageText = styled(Sans)`
+  white-space: pre-line;
+`
+
 interface AttachmentProps {
   attachment: Message_message["attachments"][0]
   alignSelf: string
@@ -96,9 +100,9 @@ const Message: React.FC<MessageProps> = props => {
         }}
         maxWidth="66.67%"
       >
-        <Sans size="4" color={textColor}>
+        <MessageText size="4" color={textColor}>
           {text}
-        </Sans>
+        </MessageText>
       </Box>
       {message.attachments.length > 0 &&
         message.attachments.map(attachment => {
