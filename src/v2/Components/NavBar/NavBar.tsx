@@ -46,15 +46,17 @@ import { useMatchMedia } from "v2/Utils/Hooks/useMatchMedia"
 import { userHasLabFeature } from "v2/Utils/user"
 
 const SkipLink = styled.a`
+  display: block;
   position: absolute;
   top: -100%;
   left: 0;
   color: ${color("black100")};
-  background-color: ${color("white100")};
-  z-index: 9999;
+  background-color: ${color("black10")};
 
   &:focus {
+    position: relative;
     top: 0;
+    padding: ${space(1)}px;
   }
 `
 
@@ -106,7 +108,7 @@ export const NavBar: React.FC = track(
   return (
     <>
       <SkipLink href="#main">
-        <Text variant="text">Skip to content</Text>
+        <Text variant="text">Skip to Main Content</Text>
       </SkipLink>
 
       <header>
