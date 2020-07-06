@@ -87,7 +87,7 @@ interface MessageProps extends Omit<BoxProps, "color"> {
   isFirst: boolean
   showTimeSince?: boolean
 }
-const Message: React.FC<MessageProps> = props => {
+export const Message: React.FC<MessageProps> = props => {
   const { message, initialMessage, isFirst, showTimeSince, ...boxProps } = props
   const { isFromUser, body } = message
   const text = isFirst ? initialMessage : body
