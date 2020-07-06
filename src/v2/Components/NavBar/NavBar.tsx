@@ -74,7 +74,8 @@ export const NavBar: React.FC = track(
     "User Conversations View"
   )
   // ToDo: replace check for conversationsEnabled with check for user when ready to launch
-  const showNotificationCount = !showMobileMenu && conversationsEnabled
+  const showNotificationCount =
+    isLoggedIn && !showMobileMenu && conversationsEnabled
 
   const {
     links: [artworks, artists],
@@ -220,7 +221,11 @@ export const NavBar: React.FC = track(
               </NavItem>
             </NavSection>
 
-            <NavSection>{isLoggedIn && <LoggedInActions />}</NavSection>
+            {isLoggedIn && (
+              <NavSection>
+                <LoggedInActions />
+              </NavSection>
+            )}
 
             {!isLoggedIn && (
               <NavSection>

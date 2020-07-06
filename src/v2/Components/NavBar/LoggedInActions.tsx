@@ -15,31 +15,14 @@ import {
   LoggedInActionsQueryResponse,
 } from "v2/__generated__/LoggedInActionsQuery.graphql"
 import { userHasLabFeature } from "v2/Utils/user"
-import cookie from "cookies-js"
 import { isServer } from "lib/environment"
 import { NotificationOverlay } from "./NotificationOverlay"
-
-const getNotificationCount = () =>
-  (!isServer && cookie.get("notification-count")) || 0
-
-const updateNotificationCache = (notificationCount?: number) => {
-  if (typeof notificationCount === "number") {
-    notificationCount === 0
-      ? cookie.expire("notification-count")
-      : cookie.set("notification-count", notificationCount)
-  }
-}
-
-const getConversationCount = () =>
-  (!isServer && cookie.get("conversation-count")) || 0
-
-const updateConversationCache = (conversationCount?: number) => {
-  if (typeof conversationCount === "number") {
-    conversationCount === 0
-      ? cookie.expire("conversation-count")
-      : cookie.set("conversation-count", conversationCount)
-  }
-}
+import {
+  getConversationCount,
+  getNotificationCount,
+  updateConversationCache,
+  updateNotificationCache,
+} from "./helpers"
 
 /** Displays action icons for logged in users such as inbox, profile, and notifications */
 export const LoggedInActions: React.FC<

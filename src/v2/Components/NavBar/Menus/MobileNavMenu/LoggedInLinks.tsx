@@ -1,6 +1,5 @@
 import React, { useContext } from "react"
 import { Box, Flex, Sans, Separator, color } from "@artsy/palette"
-import cookie from "cookies-js"
 import { isServer } from "lib/environment"
 import { SystemContext, useSystemContext } from "v2/Artsy"
 import { userHasLabFeature } from "v2/Utils/user"
@@ -11,17 +10,7 @@ import {
   LoggedInLinksQuery,
   LoggedInLinksQueryResponse,
 } from "v2/__generated__/LoggedInLinksQuery.graphql.ts"
-
-const getConversationCount = () =>
-  (!isServer && cookie.get("conversation-count")) || 0
-
-const updateConversationCache = (conversationCount?: number) => {
-  if (typeof conversationCount === "number") {
-    conversationCount === 0
-      ? cookie.expire("conversation-count")
-      : cookie.set("conversation-count", conversationCount)
-  }
-}
+import { getConversationCount, updateConversationCache } from "../../helpers"
 
 export const LoggedInLinks: React.FC<
   { error?: any } & Partial<LoggedInLinksQueryResponse>

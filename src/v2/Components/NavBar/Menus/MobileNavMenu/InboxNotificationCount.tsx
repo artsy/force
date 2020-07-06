@@ -1,6 +1,5 @@
 import React, { useContext } from "react"
 import { graphql } from "relay-runtime"
-import cookie from "cookies-js"
 import { isServer } from "lib/environment"
 import styled from "styled-components"
 
@@ -10,6 +9,7 @@ import {
 } from "v2/__generated__/InboxNotificationCountQuery.graphql"
 import { SystemContext } from "v2/Artsy/SystemContext"
 import { SystemQueryRenderer as QueryRenderer } from "v2/Artsy/Relay/SystemQueryRenderer"
+import { getConversationCount, updateConversationCache } from "../../helpers"
 
 import { Flex, Sans, color } from "@artsy/palette"
 
@@ -24,17 +24,6 @@ const FloatingDot = styled(Flex)`
   top: 16px;
   left: 19px;
 `
-
-const getConversationCount = () =>
-  (!isServer && cookie.get("conversation-count")) || 0
-
-const updateConversationCache = (conversationCount?: number) => {
-  if (typeof conversationCount === "number") {
-    conversationCount === 0
-      ? cookie.expire("conversation-count")
-      : cookie.set("conversation-count", conversationCount)
-  }
-}
 
 export const InboxNotificationCount: React.FC<
   { error?: any } & Partial<InboxNotificationCountQueryResponse>
