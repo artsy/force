@@ -40,10 +40,10 @@ const minutesSinceDate = (time: string | DateTime): number => {
     return null
   }
   const date = typeof time === "string" ? DateTime.fromISO(time) : time
-  return Math.floor(Math.abs(date.diffNow("minutes").toObject().minutes))
+  return Math.floor(Math.abs(date.diffNow("minutes").minutes))
 }
 
-const relativeDate = (time: string) => {
+export const relativeDate = (time: string) => {
   if (!time) return null
   const date = DateTime.fromISO(time)
   const minutesSince = minutesSinceDate(date)
