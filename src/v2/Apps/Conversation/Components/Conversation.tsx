@@ -158,64 +158,64 @@ const Conversation: React.FC<ConversationProps> = props => {
     UpdateConversation(relay.environment, conversation)
   }, [conversation, relay.environment, conversation.lastMessageID])
 
+  const inquiryItemBox = conversation.items.map((i, idx) => (
+    <Item
+      item={i.item}
+      key={
+        i.item.__typename === "Artwork" || i.item.__typename === "Show"
+          ? i.item.id
+          : idx
+      }
+    />
+  ))
+
+  const messageGroups = groupMessages(
+    conversation.messagesConnection.edges.map(edge => edge.node)
+  ).map((messageGroup, groupIndex) => {
+    const today = fromToday(messageGroup[0].createdAt)
+    return (
+      <React.Fragment key={`group-${groupIndex}-${messageGroup[0].internalID}`}>
+        <TimeSince
+          style={{ alignSelf: "center" }}
+          time={messageGroup[0].createdAt}
+          exact
+          mb={1}
+        />
+        {messageGroup.map((message, messageIndex) => {
+          const nextMessage = messageGroup[messageIndex + 1]
+          const senderChanges =
+            nextMessage && nextMessage.isFromUser !== message.isFromUser
+          const lastMessageInGroup = messageIndex === messageGroup.length - 1
+          const spaceAfter = senderChanges || lastMessageInGroup ? 2 : 0.5
+
+          return (
+            <>
+              <Message
+                message={message}
+                initialMessage={conversation.initialMessage}
+                key={message.internalID}
+                isFirst={groupIndex + messageIndex === 0}
+                showTimeSince={
+                  message.createdAt &&
+                  today &&
+                  messageGroup.length - 1 === messageIndex
+                }
+              />
+              <Spacer mb={spaceAfter} />
+            </>
+          )
+        })}
+      </React.Fragment>
+    )
+  })
+
   return (
     <Flex flexDirection="column" width="100%">
       <Box>
         <Spacer mt={["75px", 2]} />
         <Flex flexDirection="column" width="100%" px={1}>
-          {conversation.items.map((i, idx) => (
-            <Item
-              item={i.item}
-              key={
-                i.item.__typename === "Artwork" || i.item.__typename === "Show"
-                  ? i.item.id
-                  : idx
-              }
-            />
-          ))}
-          {groupMessages(
-            conversation.messagesConnection.edges.map(edge => edge.node)
-          ).map((messageGroup, groupIndex) => {
-            const today = fromToday(messageGroup[0].createdAt)
-            return (
-              <React.Fragment
-                key={`group-${groupIndex}-${messageGroup[0].internalID}`}
-              >
-                <TimeSince
-                  style={{ alignSelf: "center" }}
-                  time={messageGroup[0].createdAt}
-                  exact
-                  mb={1}
-                />
-                {messageGroup.map((message, messageIndex) => {
-                  const nextMessage = messageGroup[messageIndex + 1]
-                  const senderChanges =
-                    nextMessage && nextMessage.isFromUser !== message.isFromUser
-                  const lastMessageInGroup =
-                    messageIndex === messageGroup.length - 1
-                  const spaceAfter =
-                    senderChanges || lastMessageInGroup ? 2 : 0.5
-
-                  return (
-                    <>
-                      <Message
-                        message={message}
-                        initialMessage={conversation.initialMessage}
-                        key={message.internalID}
-                        isFirst={groupIndex + messageIndex === 0}
-                        showTimeSince={
-                          message.createdAt &&
-                          today &&
-                          messageGroup.length - 1 === messageIndex
-                        }
-                      />
-                      <Spacer mb={spaceAfter} />
-                    </>
-                  )
-                })}
-              </React.Fragment>
-            )
-          })}
+          {inquiryItemBox}
+          {messageGroups}
           <Spacer mb={[undefined, 6]} />
           <Box ref={bottomOfPage}></Box>
         </Flex>
