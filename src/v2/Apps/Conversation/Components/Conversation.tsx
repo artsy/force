@@ -8,6 +8,7 @@ import { MessageFragmentContainer as Message } from "./Message"
 import { Reply } from "./Reply"
 import { TimeSince, fromToday } from "./TimeSince"
 import { UpdateConversation } from "../Mutation/UpdateConversationMutation"
+import styled from "styled-components"
 
 interface ItemProps {
   item: Conversation_conversation["items"][0]["item"]
@@ -210,20 +211,32 @@ const Conversation: React.FC<ConversationProps> = props => {
   })
 
   return (
-    <Flex flexDirection="column" width="100%">
-      <Box>
-        <Spacer mt={["75px", 2]} />
-        <Flex flexDirection="column" width="100%" px={1}>
-          {inquiryItemBox}
-          {messageGroups}
-          <Spacer mb={[undefined, 6]} />
-          <Box ref={bottomOfPage}></Box>
-        </Flex>
-      </Box>
+    <NoScrollFlex flexDirection="column" width="100%">
+      <MessageContainer>
+        <Box>
+          <Spacer mt={["75px", 2]} />
+          <Flex flexDirection="column" width="100%" px={1}>
+            {inquiryItemBox}
+            {messageGroups}
+            <Box ref={bottomOfPage}></Box>
+          </Flex>
+        </Box>
+      </MessageContainer>
       <Reply conversation={conversation} environment={relay.environment} />
-    </Flex>
+    </NoScrollFlex>
   )
 }
+
+const MessageContainer = styled(Box)`
+  height: calc(100% - 300px);
+  flex-grow: 1;
+  overflow-y: scroll;
+  overflow-x: hidden;
+`
+
+const NoScrollFlex = styled(Flex)`
+  overflow: hidden;
+`
 
 export const ConversationFragmentContainer = createFragmentContainer(
   Conversation,

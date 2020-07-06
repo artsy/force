@@ -4,19 +4,11 @@ import React, { useRef, useState } from "react"
 import { Environment } from "react-relay"
 import styled from "styled-components"
 import { SendConversationMessage } from "../Mutation/SendConversationMessage"
-import { RightProps, right } from "styled-system"
+import { RightProps } from "styled-system"
 
 const StyledFlex = styled(Flex)<FlexProps & RightProps>`
-  ${right};
   border-top: 1px solid ${color("black10")};
-  position: fixed;
   background: white;
-  bottom: 0;
-  left: 375px;
-  ${media.xs`
-    width: 100%;
-    left: 0;
-  `}
 `
 
 const FullWidthFlex = styled(Flex)<{ height?: string }>`

@@ -95,6 +95,7 @@ const Message: React.FC<MessageProps> = props => {
           alignSelf,
         }}
         maxWidth="66.67%"
+        width="fit-content"
       >
         <Sans size="4" color={textColor}>
           {text}

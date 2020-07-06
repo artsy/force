@@ -1,4 +1,4 @@
-import { Flex, Title } from "@artsy/palette"
+import { Flex, Title, media } from "@artsy/palette"
 import { Conversation_me } from "v2/__generated__/Conversation_me.graphql"
 import { AppContainer } from "v2/Apps/Components/AppContainer"
 import { ConversationFragmentContainer as Conversation } from "v2/Apps/Conversation/Components/Conversation"
@@ -25,6 +25,9 @@ interface ConversationRouteProps {
 
 const ConstrainedHeightFlex = styled(Flex)`
   height: calc(100vh - 145px);
+  ${media.xs`
+    height: calc(100vh - 55px);
+  `}
   & > * {
     overflow-y: scroll;
     overflow-x: hidden;
