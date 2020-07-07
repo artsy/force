@@ -33,6 +33,14 @@ fragment ArtistSeriesApp_artistSeries on ArtistSeries {
 fragment ArtistSeriesHeader_artistSeries on ArtistSeries {
   title
   description
+  artists(size: 1) {
+    id
+    name
+    isFollowed
+    image {
+      url
+    }
+  }
 }
 */
 
@@ -106,6 +114,62 @@ return {
             "name": "description",
             "args": null,
             "storageKey": null
+          },
+          {
+            "kind": "LinkedField",
+            "alias": null,
+            "name": "artists",
+            "storageKey": "artists(size:1)",
+            "args": [
+              {
+                "kind": "Literal",
+                "name": "size",
+                "value": 1
+              }
+            ],
+            "concreteType": "Artist",
+            "plural": true,
+            "selections": [
+              {
+                "kind": "ScalarField",
+                "alias": null,
+                "name": "id",
+                "args": null,
+                "storageKey": null
+              },
+              {
+                "kind": "ScalarField",
+                "alias": null,
+                "name": "name",
+                "args": null,
+                "storageKey": null
+              },
+              {
+                "kind": "ScalarField",
+                "alias": null,
+                "name": "isFollowed",
+                "args": null,
+                "storageKey": null
+              },
+              {
+                "kind": "LinkedField",
+                "alias": null,
+                "name": "image",
+                "storageKey": null,
+                "args": null,
+                "concreteType": "Image",
+                "plural": false,
+                "selections": [
+                  {
+                    "kind": "ScalarField",
+                    "alias": null,
+                    "name": "url",
+                    "args": null,
+                    "storageKey": null
+                  }
+                ]
+              }
+            ]
           }
         ]
       }
@@ -115,7 +179,7 @@ return {
     "operationKind": "query",
     "name": "routes_ArtistSeriesQuery",
     "id": null,
-    "text": "query routes_ArtistSeriesQuery(\n  $slug: ID!\n) {\n  artistSeries(id: $slug) {\n    ...ArtistSeriesApp_artistSeries\n  }\n}\n\nfragment ArtistSeriesApp_artistSeries on ArtistSeries {\n  ...ArtistSeriesHeader_artistSeries\n}\n\nfragment ArtistSeriesHeader_artistSeries on ArtistSeries {\n  title\n  description\n}\n",
+    "text": "query routes_ArtistSeriesQuery(\n  $slug: ID!\n) {\n  artistSeries(id: $slug) {\n    ...ArtistSeriesApp_artistSeries\n  }\n}\n\nfragment ArtistSeriesApp_artistSeries on ArtistSeries {\n  ...ArtistSeriesHeader_artistSeries\n}\n\nfragment ArtistSeriesHeader_artistSeries on ArtistSeries {\n  title\n  description\n  artists(size: 1) {\n    id\n    name\n    isFollowed\n    image {\n      url\n    }\n  }\n}\n",
     "metadata": {}
   }
 };
