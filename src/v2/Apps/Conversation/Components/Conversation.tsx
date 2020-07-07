@@ -223,7 +223,7 @@ const Conversation: React.FC<ConversationProps> = props => {
         </Box>
       </MessageContainer>
       <Reply
-        handleScroll={scrollToBottom}
+        onScroll={scrollToBottom}
         conversation={conversation}
         environment={relay.environment}
       />

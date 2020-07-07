@@ -37,17 +37,17 @@ const StyledButton = styled(Button)``
 interface ReplyProps {
   conversation: Conversation_conversation
   environment: Environment
-  handleScroll: () => void
+  onScroll: () => void
 }
 
 export const Reply: React.FC<ReplyProps> = props => {
-  const { environment, conversation, handleScroll } = props
+  const { environment, conversation, onScroll } = props
   const [buttonDisabled, setButtonDisabled] = useState(true)
   const [loading, setLoading] = useState(false)
   const [showModal, setShowModal] = useState(false)
   const textArea = useRef()
 
-  const setupAndSendMessage = (handleScroll = null) => {
+  const setupAndSendMessage = (onScroll = null) => {
     {
       setLoading(true)
       return SendConversationMessage(
@@ -60,7 +60,7 @@ export const Reply: React.FC<ReplyProps> = props => {
           textArea.current.value = ""
           setLoading(false)
           setButtonDisabled(true)
-          handleScroll()
+          onScroll()
         },
         _error => {
           setLoading(false)
@@ -112,7 +112,7 @@ export const Reply: React.FC<ReplyProps> = props => {
             disabled={buttonDisabled}
             loading={loading}
             onClick={_event => {
-              setupAndSendMessage(handleScroll)
+              setupAndSendMessage(onScroll)
             }}
           >
             Send
