@@ -14,19 +14,35 @@ import { MobileLink } from "../MobileLink"
 jest.mock("v2/Artsy/Analytics/useTracking")
 
 describe("MobileNavMenu", () => {
+  // const mediator = {
+  //   trigger: args => {
+  //     console.log(args)
+  //   }, //jest.fn(),
+  // }
+  // const trackEvent = jest.fn()
+  // const getWrapper = props => {
+  //   return mount(
+  //     <SystemContextProvider mediator={mediator} user={props.user}>
+  //       <MobileNavMenu isOpen menuData={menuData} />
+  //     </SystemContextProvider>
+  //   )
+  // }
+
   const mediator = {
     trigger: jest.fn(),
   }
   const trackEvent = jest.fn()
+  const noop = () => {}
   const getWrapper = props => {
     return mount(
       <SystemContextProvider mediator={mediator} user={props.user}>
-        <MobileNavMenu isOpen menuData={menuData} />
+        <MobileNavMenu isOpen menuData={menuData} onClose={noop} />
       </SystemContextProvider>
     )
   }
+
   const getMobileMenuLinkContainer = (userType = null, lab_features = []) =>
-    getWrapper({ user: { userType, lab_features } })
+    getWrapper({ user: userType ? { userType, lab_features } : null })
       .find(AnimatingMenuWrapper)
       .filterWhere(element => element.props().isOpen)
       .find("ul")
@@ -43,9 +59,12 @@ describe("MobileNavMenu", () => {
   })
 
   it("calls logout auth action on logout menu click", () => {
+    // const wrapper = getWrapper({ user: { type: "NotAdmin" } })
+    // const logOut = wrapper.find("MobileLink").last()
+    // logOut.simulate("click")
+    // expect(mediator.trigger).toBeCalledWith("auth:logout")
     const wrapper = getWrapper({ user: { type: "NotAdmin" } })
-    const logOut = wrapper.find("MobileLink").last()
-    logOut.simulate("click")
+    wrapper.find("MobileLink").last().simulate("click")
     expect(mediator.trigger).toBeCalledWith("auth:logout")
   })
 
@@ -65,7 +84,6 @@ describe("MobileNavMenu", () => {
       expect(linkText).not.toContain("Career Stages")
 
       const simpleLinks = linkContainer.children(MobileLink)
-
       expect(simpleLinks.length).toBe(8)
       ;(menuData.links as SimpleLinkData[])
         .slice(2)
