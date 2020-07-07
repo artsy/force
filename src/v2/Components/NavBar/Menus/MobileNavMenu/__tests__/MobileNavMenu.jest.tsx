@@ -18,7 +18,6 @@ describe("MobileNavMenu", () => {
     trigger: jest.fn(),
   }
   const trackEvent = jest.fn()
-  const noop = () => {}
   const getWrapper = props => {
     return mount(
       <SystemContextProvider mediator={mediator} user={props.user}>
