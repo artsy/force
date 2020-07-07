@@ -2,7 +2,7 @@ import { SystemContextProvider } from "v2/Artsy"
 import { useTracking } from "v2/Artsy/Analytics/useTracking"
 import { SimpleLinkData, menuData } from "v2/Components/NavBar/menuData"
 import { mount } from "enzyme"
-import React from "react"
+import React, { MouseEvent } from "react"
 import {
   AnimatingMenuWrapper,
   BackLink,
@@ -14,20 +14,6 @@ import { MobileLink } from "../MobileLink"
 jest.mock("v2/Artsy/Analytics/useTracking")
 
 describe("MobileNavMenu", () => {
-  // const mediator = {
-  //   trigger: args => {
-  //     console.log(args)
-  //   }, //jest.fn(),
-  // }
-  // const trackEvent = jest.fn()
-  // const getWrapper = props => {
-  //   return mount(
-  //     <SystemContextProvider mediator={mediator} user={props.user}>
-  //       <MobileNavMenu isOpen menuData={menuData} />
-  //     </SystemContextProvider>
-  //   )
-  // }
-
   const mediator = {
     trigger: jest.fn(),
   }
@@ -59,12 +45,11 @@ describe("MobileNavMenu", () => {
   })
 
   it("calls logout auth action on logout menu click", () => {
-    // const wrapper = getWrapper({ user: { type: "NotAdmin" } })
-    // const logOut = wrapper.find("MobileLink").last()
-    // logOut.simulate("click")
-    // expect(mediator.trigger).toBeCalledWith("auth:logout")
     const wrapper = getWrapper({ user: { type: "NotAdmin" } })
-    wrapper.find("MobileLink").last().simulate("click")
+    const event = {
+      preventDefault: () => {},
+    } as any
+    wrapper.find("MobileLink").last().props().onClick(event)
     expect(mediator.trigger).toBeCalledWith("auth:logout")
   })
 
