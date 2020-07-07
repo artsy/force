@@ -46,10 +46,6 @@ const ViewingRoomApp: React.FC<ViewingRoomAppProps> = ({
   }
 
   const getView = () => {
-    if (!user) {
-      return
-    }
-
     if (viewingRoom.status === "live") {
       return (
         <>
@@ -58,7 +54,6 @@ const ViewingRoomApp: React.FC<ViewingRoomAppProps> = ({
         </>
       )
     }
-
     return <ViewingRoomContentNotAccessible viewingRoom={viewingRoom} />
   }
 
@@ -68,7 +63,7 @@ const ViewingRoomApp: React.FC<ViewingRoomAppProps> = ({
 
       <AppContainer maxWidth="100%">
         <ViewingRoomHeader viewingRoom={viewingRoom} />
-        {getView()}
+        {user && getView()}
         <Box mx={2}>
           <Separator mt={6} mb={3} />
           <Footer />

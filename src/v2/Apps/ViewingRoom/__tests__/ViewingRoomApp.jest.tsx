@@ -294,7 +294,7 @@ describe("ViewingRoomApp", () => {
         Component: ({ viewingRoom }) => {
           return (
             <MockBoot breakpoint={breakpoint}>
-              <SystemContextProvider mediator={mediator} user={{}}>
+              <SystemContextProvider mediator={mediator} user={null}>
                 <ViewingRoomApp viewingRoom={viewingRoom}>
                   some child
                 </ViewingRoomApp>
@@ -321,9 +321,9 @@ describe("ViewingRoomApp", () => {
       expect(wrapper.find("ViewingRoomMeta").length).toBe(1)
       expect(wrapper.find("AppContainer").length).toBe(1)
       expect(wrapper.find("ViewingRoomHeader").length).toBe(1)
-      // expect(wrapper.find("ViewingRoomTabBar").length).toBe(0)
-      // expect(wrapper.find("ViewingRoomContentNotAccessible").length).toBe(0)
-      // expect(wrapper.html()).not.toContain("some child")
+      expect(wrapper.find("ViewingRoomTabBar").length).toBe(0)
+      expect(wrapper.find("ViewingRoomContentNotAccessible").length).toBe(0)
+      expect(wrapper.html()).not.toContain("some child")
 
       expect(mediator.trigger).toBeCalledWith("open:auth", {
         mode: "signup",
