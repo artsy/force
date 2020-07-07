@@ -1,17 +1,13 @@
-import cookie from "cookies-js"
 import React, { useEffect, useState } from "react"
 import styled from "styled-components"
 
 import {
   ArtsyMarkIcon,
-  BellIcon,
   Box,
   Button,
   ChevronIcon,
-  EnvelopeIcon,
   Flex,
   Link,
-  SoloIcon,
   Spacer,
   Text,
   color,
@@ -27,23 +23,22 @@ import {
   MobileNavMenu,
   MobileToggleIcon,
   MoreNavMenu,
-  NotificationsMenu,
-  UserMenu,
 } from "./Menus"
+import { InboxNotificationCountQueryRenderer as InboxNotificationCount } from "./Menus/MobileNavMenu/InboxNotificationCount"
 
 import { ModalType } from "v2/Components/Authentication/Types"
 import { MenuLinkData, menuData } from "v2/Components/NavBar/menuData"
 import { openAuthModal } from "v2/Utils/openAuthModal"
+import { userHasLabFeature } from "v2/Utils/user"
 
 import { NavItem } from "./NavItem"
-import { NotificationsBadge } from "./NotificationsBadge"
 
 import { ContextModule, Intent } from "@artsy/cohesion"
 import { AnalyticsSchema } from "v2/Artsy"
 import { track, useTracking } from "v2/Artsy/Analytics"
 import Events from "v2/Utils/Events"
 import { useMatchMedia } from "v2/Utils/Hooks/useMatchMedia"
-import { userHasLabFeature } from "v2/Utils/user"
+import { LoggedInActionsQueryRenderer as LoggedInActions } from "./LoggedInActions"
 
 const SkipLink = styled.a`
   display: block;
@@ -80,11 +75,13 @@ export const NavBar: React.FC = track(
     user,
     "User Conversations View"
   )
+  // ToDo: replace check for conversationsEnabled with check for user when ready to launch
+  const showNotificationCount =
+    isLoggedIn && !showMobileMenu && conversationsEnabled
+
   const {
     links: [artworks, artists],
   } = menuData
-
-  const getNotificationCount = () => cookie.get("notification-count") || 0
 
   // Close mobile menu if dragging window from small size to desktop
   useEffect(() => {
@@ -130,7 +127,7 @@ export const NavBar: React.FC = track(
           <Spacer mr={2} />
 
           {/*
-          Desktop. Collapses into mobile at `sm` breakpoint.
+            Desktop. Collapses into mobile at `sm` breakpoint.
         */}
           <NavSection display={["none", "none", "flex"]}>
             <NavSection>
@@ -226,45 +223,11 @@ export const NavBar: React.FC = track(
               </NavItem>
             </NavSection>
 
-            <NavSection>
-              {isLoggedIn && (
-                <>
-                  <NavItem
-                    href="/works-for-you"
-                    Menu={NotificationsMenu}
-                    Overlay={NotificationsBadge}
-                    onClick={() => {
-                      trackEvent({
-                        action_type: AnalyticsSchema.ActionType.Click,
-                        subject: AnalyticsSchema.Subject.NotificationBell,
-                        new_notification_count: getNotificationCount(),
-                        destination_path: "/works-for-you",
-                      })
-                    }}
-                  >
-                    {({ hover }) => {
-                      return <BellIcon fill={hover ? "purple100" : "black80"} />
-                    }}
-                  </NavItem>
-                  {conversationsEnabled && (
-                    <NavItem href="/user/conversations">
-                      {({ hover }) => {
-                        return (
-                          <EnvelopeIcon
-                            fill={hover ? "purple100" : "black80"}
-                          />
-                        )
-                      }}
-                    </NavItem>
-                  )}
-                  <NavItem Menu={UserMenu}>
-                    {({ hover }) => {
-                      return <SoloIcon fill={hover ? "purple100" : "black80"} />
-                    }}
-                  </NavItem>
-                </>
-              )}
-            </NavSection>
+            {isLoggedIn && (
+              <NavSection>
+                <LoggedInActions />
+              </NavSection>
+            )}
 
             {!isLoggedIn && (
               <NavSection>
@@ -324,6 +287,7 @@ export const NavBar: React.FC = track(
               >
                 <MobileNavDivider />
                 <MobileToggleIcon open={showMobileMenu} />
+                {showNotificationCount && <InboxNotificationCount />}
               </Flex>
             </NavItem>
           </NavSection>
