@@ -63,6 +63,8 @@ export const Reply: React.FC<ReplyProps> = props => {
         response => {
           // @ts-ignore
           textArea.current.value = ""
+          // @ts-ignore
+          textArea.current.style.height = "inherit"
           setLoading(false)
           setButtonDisabled(true)
 
