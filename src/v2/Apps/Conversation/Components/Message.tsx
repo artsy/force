@@ -21,6 +21,7 @@ import {
   alignSelf,
   background,
 } from "styled-system"
+import Linkify from "react-linkify"
 
 const AttachmentLink = styled.a`
   width: min-content;
@@ -37,6 +38,15 @@ const AttachmentContainer = styled(Flex)<
   white-space: no-wrap;
   width: min-content;
   justify-content: space-between;
+`
+
+const MessageText = styled(Sans)`
+  white-space: pre-line;
+  && {
+    a:hover {
+      color: currentcolor;
+    }
+  }
 `
 
 interface AttachmentProps {
@@ -77,13 +87,23 @@ interface MessageProps extends Omit<BoxProps, "color"> {
   isFirst: boolean
   showTimeSince?: boolean
 }
-const Message: React.FC<MessageProps> = props => {
+export const Message: React.FC<MessageProps> = props => {
   const { message, initialMessage, isFirst, showTimeSince, ...boxProps } = props
   const { isFromUser, body } = message
   const text = isFirst ? initialMessage : body
   const bgColor = isFromUser ? "black100" : "black10"
   const textColor = isFromUser ? "white100" : "black100"
   const alignSelf = isFromUser ? "flex-end" : undefined
+
+  // react-linkify v1.0.0-alpha has a bug that `properties` doesn't work.
+  // This is a workaround to specify target for now.
+  // https://github.com/tasti/react-linkify/issues/78#issuecomment-514754050
+  const linkTargetDecorator = (href, text, key) => (
+    <a href={href} key={key} target="_blank">
+      {text}
+    </a>
+  )
+
   return (
     <>
       <Box
@@ -97,9 +117,9 @@ const Message: React.FC<MessageProps> = props => {
         maxWidth="66.67%"
         width="fit-content"
       >
-        <Sans size="4" color={textColor}>
-          {text}
-        </Sans>
+        <MessageText size="4" color={textColor}>
+          <Linkify componentDecorator={linkTargetDecorator}>{text}</Linkify>
+        </MessageText>
       </Box>
       {message.attachments.length > 0 &&
         message.attachments.map(attachment => {
