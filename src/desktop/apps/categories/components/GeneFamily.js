@@ -29,11 +29,11 @@ const GeneList = styled.ul`
   }
 `
 
-const GeneFamily = ({ id, name, genes, featuredGeneLinks }) => {
+const GeneFamily = ({ slug, name, genes, featuredGeneLinks }) => {
   const publishedGenes = genes.filter(g => g.is_published)
   const sortedGenes = alphabetizeGenes(publishedGenes)
   return (
-    <div id={id}>
+    <div id={slug}>
       <GeneFamilyName>{name}</GeneFamilyName>
       <FeaturedGenes featuredGeneLinks={featuredGeneLinks} />
       <GeneList>
