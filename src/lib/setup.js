@@ -43,7 +43,6 @@ import marketingModals from "./middleware/marketing_modals"
 import { addIntercomUserHash } from "./middleware/intercom"
 import compression from "compression"
 import { assetMiddleware } from "./middleware/assetMiddleware"
-import { isDevelopment, isProduction } from "lib/environment"
 import { unsupportedBrowserCheck } from "lib/middleware/unsupportedBrowser"
 import { pageCacheMiddleware } from "lib/middleware/pageCacheMiddleware"
 
@@ -85,7 +84,7 @@ export default function (app) {
   }
 
   // Timeout middleware
-  if (isProduction) {
+  if (process.env.NODE_ENV === "production") {
     app.use(timeout(APP_TIMEOUT || "29s"))
   }
 
@@ -135,10 +134,10 @@ export default function (app) {
   app.use(
     session({
       secret: SESSION_SECRET,
-      domain: isDevelopment ? "" : COOKIE_DOMAIN,
+      domain: process.env.NODE_ENV === "development" ? "" : COOKIE_DOMAIN,
       name: SESSION_COOKIE_KEY,
       maxAge: SESSION_COOKIE_MAX_AGE,
-      secure: isProduction || NODE_ENV === "staging",
+      secure: process.env.NODE_ENV === "production" || NODE_ENV === "staging",
       httpOnly: false,
     })
   )
@@ -184,7 +183,7 @@ export default function (app) {
   })
 
   // Development servers
-  if (isDevelopment) {
+  if (process.env.NODE_ENV === "development") {
     app.use(require("./webpack-dev-server").app)
 
     app.use(
@@ -246,7 +245,7 @@ export default function (app) {
   }
 
   // Setup hot-swap loader. See https://github.com/artsy/express-reloadable
-  if (isDevelopment) {
+  if (process.env.NODE_ENV === "development") {
     const { createReloadable } = require("@artsy/express-reloadable")
     const mountAndReload = createReloadable(app, require)
 

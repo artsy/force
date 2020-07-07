@@ -1,12 +1,12 @@
-const chalk = require("chalk")
-
 // @ts-check
+
+const chalk = require("chalk")
 const glob = require("glob")
 const fs = require("fs")
 const path = require("path")
 const crypto = require("crypto")
 const { execSync } = require("child_process")
-const { baseConfig } = require("../envs/baseConfig")
+const { clientCommonConfig } = require("../envs")
 
 // Ouput
 const DEST = "public/assets"
@@ -18,6 +18,11 @@ function clean() {
 
 function compile() {
   console.log(chalk.green(`[Force compileCSS] Compiling...`))
+  try {
+    fs.mkdirSync(DEST, { recursive: true })
+  } catch {
+    // Create the output directory, ignore if already exists.
+  }
   const files = glob.sync("src/{desktop,mobile}/assets/*.styl", {
     nodir: true,
   })
@@ -51,7 +56,7 @@ function fingerprint(file) {
 function createManifest() {
   const manifest = glob.sync(`${DEST}/*.css`).reduce((acc, file) => {
     const { original, fingerprinted } = fingerprint(file)
-    const { publicPath } = baseConfig.output
+    const { publicPath } = clientCommonConfig.output
     return {
       ...acc,
       [original]: publicPath + fingerprinted,
@@ -60,7 +65,7 @@ function createManifest() {
   return manifest
 }
 
-exports.getCSSManifest = () => {
+export function getCSSManifest() {
   try {
     clean()
     compile()

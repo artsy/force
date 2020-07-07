@@ -1,6 +1,6 @@
 import createLogger from "v2/Utils/logger"
 import RelayQueryResponseCache from "relay-runtime/lib/network/RelayQueryResponseCache"
-import { isServer } from "lib/environment"
+import { isServer } from "lib/isServer"
 import { cache } from "lib/cacheClient"
 
 import {

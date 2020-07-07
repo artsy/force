@@ -1,12 +1,11 @@
 import path from "path"
 import fs from "fs"
 import chalk from "chalk"
-import { isProduction } from "lib/environment"
 
-const { CDN_URL } = process.env
+const { CDN_URL, NODE_ENV } = process.env
 
-export const assetMiddleware = () => {
-  if (isProduction) {
+export function assetMiddleware() {
+  if (NODE_ENV === "production") {
     const manifestPath = path.resolve(process.cwd(), "manifest.json")
 
     let manifest = {}

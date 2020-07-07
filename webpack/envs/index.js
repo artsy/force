@@ -1,17 +1,13 @@
 // @ts-check
 
-const { baseConfig } = require("./baseConfig")
-const { ciConfig } = require("./ciConfig")
-const { debugConfig } = require("./debugConfig")
-const { developmentConfig } = require("./developmentConfig")
-const { productionConfig } = require("./productionConfig")
+const { clientCommonConfig } = require("./clientCommonConfig")
+const { clientDevelopmentConfig } = require("./clientDevelopmentConfig")
+const { clientProductionConfig } = require("./clientProductionConfig")
 const { serverConfig } = require("./serverConfig")
 
-module.exports = {
-  baseConfig,
-  ciConfig,
-  debugConfig,
-  developmentConfig,
-  productionConfig,
+export {
+  clientCommonConfig,
+  clientDevelopmentConfig,
+  clientProductionConfig,
   serverConfig,
 }

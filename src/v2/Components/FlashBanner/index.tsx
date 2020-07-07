@@ -6,7 +6,7 @@ import { useSystemContext } from "v2/Artsy"
 import { EmailConfirmationCTA } from "v2/Components/FlashBanner/EmailConfirmationCTA"
 import { AnalyticsSchema as Schema, track } from "v2/Artsy/Analytics"
 import { SystemQueryRenderer } from "v2/Artsy/Relay/SystemQueryRenderer"
-import { isServer } from "lib/environment"
+import { isServer } from "lib/isServer"
 import { EmailConfirmationLinkExpired } from "./EmailConfirmationLinkExpired"
 
 interface FlashBannerProps {

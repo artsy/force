@@ -5,15 +5,10 @@ const webpack = require("webpack")
 const LoadablePlugin = require("@loadable/webpack-plugin")
 const { RetryChunkLoadPlugin } = require("webpack-retry-chunk-load-plugin")
 const { getEntrypoints } = require("../utils/getEntrypoints")
-const {
-  BUILD_SERVER,
-  NODE_ENV,
-  basePath,
-  isCI,
-} = require("../../src/lib/environment")
+const { basePath, env } = require("../utils/env")
 
-exports.baseConfig = {
-  mode: NODE_ENV,
+export const clientCommonConfig = {
+  mode: env.nodeEnv,
   devtool: "source-map",
   stats: "normal", // or, `errors-only`
   entry: getEntrypoints(),
@@ -27,6 +22,7 @@ exports.baseConfig = {
       {
         test: /\.coffee$/,
         include: path.resolve(basePath, "src"),
+        exclude: /(node_modules)/,
         use: [
           {
             loader: "cache-loader",
@@ -53,12 +49,13 @@ exports.baseConfig = {
       {
         test: /(\.(js|ts)x?$)/,
         include: path.resolve(basePath, "src"),
+        exclude: /(node_modules)/,
         use: [
           {
             loader: "babel-loader",
             options: {
               cacheDirectory:
-                !isCI && path.join(basePath, ".cache", "babel/force"),
+                !env.onCi && path.join(basePath, ".cache", "babel/force"),
             },
           },
         ],
@@ -74,25 +71,23 @@ exports.baseConfig = {
   plugins: [
     new webpack.DefinePlugin({
       "process.env": {
-        NODE_ENV: JSON.stringify(NODE_ENV),
+        NODE_ENV: JSON.stringify(env.nodeEnv),
       },
     }),
     // Remove moment.js localization files
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
     // Remove server-only modules from client bundles
-    ...(BUILD_SERVER
-      ? []
-      : [
-          // Remove server side of relay network layer.
-          new webpack.IgnorePlugin(
-            /^react-relay-network-modern-ssr\/node8\/server/
-          ),
-          // No matter what, we don't want the graphql-js package in client
-          // bundles. This /may/ lead to a broken build when e.g. a reaction
-          // module that's used on the client side imports something from
-          // graphql-js, but that's better than silently including this.
-          new webpack.IgnorePlugin(/^graphql(\/.*)?$/),
-        ]),
+    ...[
+      // Remove server side of relay network layer.
+      new webpack.IgnorePlugin(
+        /^react-relay-network-modern-ssr\/node8\/server/
+      ),
+      // No matter what, we don't want the graphql-js package in client
+      // bundles. This /may/ lead to a broken build when e.g. a reaction
+      // module that's used on the client side imports something from
+      // graphql-js, but that's better than silently including this.
+      new webpack.IgnorePlugin(/^graphql(\/.*)?$/),
+    ],
     new webpack.NamedModulesPlugin(),
     new webpack.ProvidePlugin({
       $: "jquery",

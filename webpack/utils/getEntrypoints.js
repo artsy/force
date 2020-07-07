@@ -2,9 +2,9 @@
 
 const path = require("path")
 const fs = require("fs")
-const { isDevelopment, basePath } = require("../../src/lib/environment")
+const { basePath, env } = require("./env")
 
-exports.getEntrypoints = () => {
+export function getEntrypoints() {
   return {
     ...findAssets("src/desktop/assets"),
     ...findAssets("src/mobile/assets"),
@@ -35,7 +35,7 @@ function findAssets(folder) {
 
     // Load old global module dependencies
     asset[fileName].unshift(path.join(basePath, "./src/lib/global_modules"))
-    if (isDevelopment) {
+    if (env.isDevelopment) {
       asset[fileName].unshift("webpack-hot-middleware/client?reload=true")
     }
 

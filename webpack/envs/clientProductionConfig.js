@@ -5,19 +5,11 @@ const WebpackManifestPlugin = require("webpack-manifest-plugin")
 const { HashedModuleIdsPlugin } = require("webpack")
 const { getCSSManifest } = require("../utils/getCSSManifest")
 const TerserPlugin = require("terser-webpack-plugin")
+const { basePath, env } = require("../utils/env")
 
-const {
-  BUILD_SERVER,
-  DEBUG,
-  NODE_ENV,
-  isProduction,
-} = require("../../src/lib/environment")
-
-const buildCSS = isProduction && !BUILD_SERVER
-
-exports.productionConfig = {
+export const clientProductionConfig = {
   parallelism: 75,
-  mode: DEBUG ? "development" : NODE_ENV,
+  mode: env.webpackDebug ? "development" : env.nodeEnv,
   devtool: "source-map",
   output: {
     filename: "[name].22820.[contenthash].js",
@@ -28,12 +20,12 @@ exports.productionConfig = {
   plugins: [
     new HashedModuleIdsPlugin(),
     new WebpackManifestPlugin({
-      fileName: path.resolve(__dirname, "../../manifest.json"),
+      fileName: path.resolve(basePath, "manifest.json"),
       basePath: "/assets/",
-      seed: buildCSS ? getCSSManifest() : {},
+      seed: env.isProduction ? getCSSManifest() : {},
     }),
   ],
-  optimization: DEBUG
+  optimization: env.webpackDebug
     ? {}
     : {
         minimizer: [

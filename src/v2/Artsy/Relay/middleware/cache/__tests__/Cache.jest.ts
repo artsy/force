@@ -3,7 +3,7 @@
  */
 
 import { Cache } from "../Cache"
-jest.mock("lib/environment")
+jest.mock("lib/isServer")
 jest.mock("lib/cacheClient", () => {
   return {
     cache: {

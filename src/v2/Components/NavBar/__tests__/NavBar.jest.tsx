@@ -17,7 +17,7 @@ jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
   useMatchMedia: () => ({}),
 }))
 
-jest.mock("lib/environment", () => ({
+jest.mock("lib/isServer", () => ({
   isServer: true,
 }))
 

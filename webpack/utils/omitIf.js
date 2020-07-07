@@ -1,6 +1,6 @@
 // @ts-check
 
-exports.omitIf = (condition, loader) => {
+export function omitIf(condition, loader) {
   if (condition) {
     return []
   } else {

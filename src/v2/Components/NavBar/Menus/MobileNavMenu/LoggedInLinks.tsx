@@ -1,6 +1,6 @@
 import React, { useContext } from "react"
 import { Box, Flex, Sans, Separator, color } from "@artsy/palette"
-import { isServer } from "lib/environment"
+import { isServer } from "lib/isServer"
 import { SystemContext, useSystemContext } from "v2/Artsy"
 import { userHasLabFeature } from "v2/Utils/user"
 import { MobileLink } from "./MobileLink"

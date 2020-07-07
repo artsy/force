@@ -10,7 +10,7 @@ import {
 } from "../../MobileNavMenu/MobileNavMenu"
 
 jest.mock("v2/Artsy/Analytics/useTracking")
-jest.mock("lib/environment", () => ({
+jest.mock("lib/isServer", () => ({
   isServer: true,
 }))
 

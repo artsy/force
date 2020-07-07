@@ -1,13 +1,13 @@
 // @ts-check
 
+const nodeExternals = require("webpack-node-externals")
 const path = require("path")
 const webpack = require("webpack")
-const nodeExternals = require("webpack-node-externals")
-const { NODE_ENV, basePath } = require("../../src/lib/environment")
-const { baseConfig } = require("./baseConfig")
+const { removeEmpty } = require("webpack-config-utils")
+const { basePath, env } = require("../utils/env")
 
-exports.serverConfig = {
-  mode: NODE_ENV,
+export const serverConfig = {
+  mode: env.nodeEnv,
   devtool: "source-map",
   target: "node",
   externals: [nodeExternals()],
@@ -17,13 +17,17 @@ exports.serverConfig = {
   entry: path.join(basePath, "src/index.js"),
   output: {
     filename: "server.dist.js",
+    chunkFilename: "[name].bundle.js",
     path: path.resolve(basePath),
   },
   module: {
     rules: [
       {
         test: /\.coffee$/,
-        include: [path.resolve(basePath, "node_modules/artsy-ezel-components")],
+        include: [
+          path.resolve(basePath, "src"),
+          path.resolve(basePath, "node_modules/artsy-ezel-components"),
+        ],
         use: ["coffee-loader"],
       },
       {
@@ -38,14 +42,28 @@ exports.serverConfig = {
           },
         ],
       },
-      ...baseConfig.module.rules,
+      {
+        test: /\.(jade|pug)$/,
+        include: path.resolve(basePath, "src"),
+        use: [
+          {
+            loader: "pug-loader",
+            options: {
+              doctype: "html",
+              root: __dirname,
+            },
+          },
+        ],
+      },
     ],
   },
-  plugins: [
-    new webpack.optimize.LimitChunkCountPlugin({
-      maxChunks: 1,
-    }),
-  ],
+  plugins: removeEmpty([
+    env.enableWebpackAnalyze
+      ? undefined
+      : new webpack.optimize.LimitChunkCountPlugin({
+          maxChunks: 1,
+        }),
+  ]),
   resolve: {
     extensions: [".js", ".jsx", ".ts", ".tsx", ".json", ".coffee"],
     modules: [path.resolve(basePath, "src"), "node_modules"],
