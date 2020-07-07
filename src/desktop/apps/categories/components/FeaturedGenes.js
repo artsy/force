@@ -26,7 +26,7 @@ const FeaturedGenes = ({ featuredGeneLinks }) => {
         featuredGeneLinks.length > 0 &&
         featuredGeneLinks
           .map(featuredGene => (
-            <FeaturedGene key={featuredGene.id} {...featuredGene} />
+            <FeaturedGene key={featuredGene.href} {...featuredGene} />
           ))
           .slice(0, 3)}
     </Layout>
