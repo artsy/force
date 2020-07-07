@@ -18,7 +18,9 @@ interface ArtistSeriesHeaderProps {
   artistSeries: ArtistSeriesHeader_artistSeries
 }
 
-const ArtistInfo = (artist: ArtistSeriesHeader_artistSeries["artists"][0]) => {
+const ArtistsInfo = (artists: ArtistSeriesHeader_artistSeries["artists"]) => {
+  // We're guaranteed to have at most one artist in an artist series for now.
+  const artist = artists[0] ?? null
   if (artist) {
     return (
       <EntityHeader
@@ -54,7 +56,6 @@ const ArtistSeriesHeaderLarge: React.FC<ArtistSeriesHeaderProps> = props => {
   const {
     artistSeries: { title, description, artists },
   } = props
-  const artist = artists[0] ?? null
   return (
     <>
       <Flex
@@ -64,7 +65,7 @@ const ArtistSeriesHeaderLarge: React.FC<ArtistSeriesHeaderProps> = props => {
         p={2}
       >
         <Flex position="absolute" left={3}>
-          {ArtistInfo(artist)}
+          {ArtistsInfo(artists)}
         </Flex>
         <Sans size="3">Series</Sans>
       </Flex>
@@ -103,23 +104,32 @@ const ArtistSeriesHeaderLarge: React.FC<ArtistSeriesHeaderProps> = props => {
 
 const ArtistSeriesHeaderSmall: React.FC<ArtistSeriesHeaderProps> = props => {
   const {
-    artistSeries: { title, description },
+    artistSeries: { title, description, artists },
   } = props
   return (
     <>
-      <Box
-        // FIXME: Use Image
-        mx="auto"
-        bg="black10"
-        width={180}
-        height={180}
-      ></Box>
-      <Sans size="8" element="h1" my={1} unstable_trackIn>
-        {title}
-      </Sans>
-      <Sans lineHeight={1.5} size="3t">
-        {description}
-      </Sans>
+      <Box textAlign="center" p={1}>
+        <Sans size="3">Series</Sans>
+      </Box>
+      <Separator />
+      <Box m={3}>
+        <Box
+          // FIXME: Use Image
+          mx="auto"
+          bg="black10"
+          width={180}
+          height={180}
+        ></Box>
+        <Sans size="8" element="h1" my={1} unstable_trackIn>
+          {title}
+        </Sans>
+        {ArtistsInfo(artists)}
+        <Box my={1}>
+          <Sans lineHeight={1.5} size="3t">
+            {description}
+          </Sans>
+        </Box>
+      </Box>
     </>
   )
 }
