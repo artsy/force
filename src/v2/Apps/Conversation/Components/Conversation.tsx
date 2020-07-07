@@ -8,6 +8,7 @@ import { MessageFragmentContainer as Message } from "./Message"
 import { Reply } from "./Reply"
 import { TimeSince, fromToday } from "./TimeSince"
 import { UpdateConversation } from "../Mutation/UpdateConversationMutation"
+import styled from "styled-components"
 
 interface ItemProps {
   item: Conversation_conversation["items"][0]["item"]
@@ -70,6 +71,7 @@ export const Item: React.FC<ItemProps> = props => {
         <Flex flexDirection="column">
           <Image
             src={getImage(item)}
+            alt={item.__typename === "Artwork" ? item.title : item.name}
             width="350px"
             borderRadius="15px 15px 0 0"
           />
@@ -157,72 +159,84 @@ const Conversation: React.FC<ConversationProps> = props => {
     UpdateConversation(relay.environment, conversation)
   }, [conversation, relay.environment, conversation.lastMessageID])
 
-  return (
-    <Flex flexDirection="column" width="100%">
-      <Box>
-        <Spacer mt={["75px", 2]} />
-        <Flex flexDirection="column" width="100%" px={1}>
-          {conversation.items.map((i, idx) => (
-            <Item
-              item={i.item}
-              key={
-                i.item.__typename === "Artwork" || i.item.__typename === "Show"
-                  ? i.item.id
-                  : idx
-              }
-            />
-          ))}
-          {groupMessages(
-            conversation.messagesConnection.edges.map(edge => edge.node)
-          ).map((messageGroup, groupIndex) => {
-            const today = fromToday(messageGroup[0].createdAt)
-            return (
-              <React.Fragment
-                key={`group-${groupIndex}-${messageGroup[0].internalID}`}
-              >
-                <TimeSince
-                  style={{ alignSelf: "center" }}
-                  time={messageGroup[0].createdAt}
-                  exact
-                  mb={1}
-                />
-                {messageGroup.map((message, messageIndex) => {
-                  const nextMessage = messageGroup[messageIndex + 1]
-                  const senderChanges =
-                    nextMessage && nextMessage.isFromUser !== message.isFromUser
-                  const lastMessageInGroup =
-                    messageIndex === messageGroup.length - 1
-                  const spaceAfter =
-                    senderChanges || lastMessageInGroup ? 2 : 0.5
+  const inquiryItemBox = conversation.items.map((i, idx) => (
+    <Item
+      item={i.item}
+      key={
+        i.item.__typename === "Artwork" || i.item.__typename === "Show"
+          ? i.item.id
+          : idx
+      }
+    />
+  ))
 
-                  return (
-                    <>
-                      <Message
-                        message={message}
-                        initialMessage={conversation.initialMessage}
-                        key={message.internalID}
-                        isFirst={groupIndex + messageIndex === 0}
-                        showTimeSince={
-                          message.createdAt &&
-                          today &&
-                          messageGroup.length - 1 === messageIndex
-                        }
-                      />
-                      <Spacer mb={spaceAfter} />
-                    </>
-                  )
-                })}
-              </React.Fragment>
-            )
-          })}
-          <Spacer mb={[undefined, 6]} />
-          <Box ref={bottomOfPage}></Box>
-        </Flex>
-      </Box>
+  const messageGroups = groupMessages(
+    conversation.messagesConnection.edges.map(edge => edge.node)
+  ).map((messageGroup, groupIndex) => {
+    const today = fromToday(messageGroup[0].createdAt)
+    return (
+      <React.Fragment key={`group-${groupIndex}-${messageGroup[0].internalID}`}>
+        <TimeSince
+          style={{ alignSelf: "center" }}
+          time={messageGroup[0].createdAt}
+          exact
+          mb={1}
+        />
+        {messageGroup.map((message, messageIndex) => {
+          const nextMessage = messageGroup[messageIndex + 1]
+          const senderChanges =
+            nextMessage && nextMessage.isFromUser !== message.isFromUser
+          const lastMessageInGroup = messageIndex === messageGroup.length - 1
+          const spaceAfter = senderChanges || lastMessageInGroup ? 2 : 0.5
+
+          return (
+            <>
+              <Message
+                message={message}
+                initialMessage={conversation.initialMessage}
+                key={message.internalID}
+                isFirst={groupIndex + messageIndex === 0}
+                showTimeSince={
+                  message.createdAt &&
+                  today &&
+                  messageGroup.length - 1 === messageIndex
+                }
+              />
+              <Spacer mb={spaceAfter} />
+            </>
+          )
+        })}
+      </React.Fragment>
+    )
+  })
+
+  return (
+    <NoScrollFlex flexDirection="column" width="100%">
+      <MessageContainer>
+        <Box>
+          <Spacer mt={["75px", 2]} />
+          <Flex flexDirection="column" width="100%" px={1}>
+            {inquiryItemBox}
+            {messageGroups}
+            <Box ref={bottomOfPage}></Box>
+          </Flex>
+        </Box>
+      </MessageContainer>
       <Reply conversation={conversation} environment={relay.environment} />
-    </Flex>
+    </NoScrollFlex>
   )
 }
+
+const MessageContainer = styled(Box)`
+  height: calc(100% - 300px);
+  flex-grow: 1;
+  overflow-y: scroll;
+  overflow-x: hidden;
+`
+
+const NoScrollFlex = styled(Flex)`
+  overflow: hidden;
+`
 
 export const ConversationFragmentContainer = createFragmentContainer(
   Conversation,

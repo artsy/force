@@ -179,6 +179,9 @@ module.exports = class Sale extends Backbone.Model
     _.extend event, CalendarUrls({ title: 'name' })
     event
 
+  overviewStartDate: ->
+    moment(@get('start_at')).tz('America/New_York').format('MMMM Do')
+
   upcomingLabel: ->
     timeFormat = 'MMM D h:mm A z'
     label = if @isClosed()

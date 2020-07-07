@@ -155,7 +155,7 @@ xdescribe 'afterSignUpAction', ->
     }
     @bootstrap()
     @Cookies.expire.callCount.should.equal 0
-  
+
   it 'saves an artwork', ->
     @getCookie.returns(
       JSON.stringify({
@@ -204,7 +204,13 @@ describe 'logoutEventHandler', ->
       @bootstrap.__set__('FlashMessage', @FlashMessage)
       @logoutEventHandler = @bootstrap.__get__('logoutEventHandler')
       done()
-  
+
+  after ->
+    window.location.reload.restore()
+    $.ajax.restore()
+    benv.teardown()
+
+
   it 'logs out the user and tracks the logout event', ->
     @logoutEventHandler()
     $.ajax.args[0][0].url.should.be.eql '/users/sign_out'

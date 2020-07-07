@@ -11,10 +11,10 @@
     lodash "4.17.15"
     prettier "1.19.1"
 
-"@artsy/cohesion@1.16.0":
-  version "1.16.0"
-  resolved "https://registry.yarnpkg.com/@artsy/cohesion/-/cohesion-1.16.0.tgz#04c414b847ff3af0fba10a6c7ce571e884a2aa21"
-  integrity sha512-t/i3FnrapE2qvHgWIgB1b5YxbN/XS/GCxGrBf2utc8sDqC2hZVWuNX9ZjUmwpTdagIR19FpS/xdU0ODzlpiwZQ==
+"@artsy/cohesion@1.19.0":
+  version "1.19.0"
+  resolved "https://registry.yarnpkg.com/@artsy/cohesion/-/cohesion-1.19.0.tgz#b24f2809733e66baf9cf4b741340d7d119f273c5"
+  integrity sha512-2sW0ZsJ56ZRvDC4Ayagky3eOYEwdxlR6XPs3KFTU3dLfzc5zXLG36VNSI5tT2G827LnmJun+xXgImVBNuBXf5Q==
 
 "@artsy/detect-responsive-traits@^0.0.5":
   version "0.0.5"
@@ -40,10 +40,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/gemup/-/gemup-0.0.3.tgz#0397a472bb69432dab3d2d66ca30556815aa96e7"
   integrity sha512-W///stXDTz3jSQw8UtT0BClVk4DLOsVp7a8v12efsEZvrZNT+85YBqPWq2DP1EX3ILZR1hGZhbKr/Gl5uti56Q==
 
-"@artsy/palette@11.3.0":
-  version "11.3.0"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-11.3.0.tgz#7b7717f1ee3aaa23196fe10546243423ee2302c4"
-  integrity sha512-doW9nDI1HQlt1D6Z48nVCqG8CwXLTK6BIWmrLN3hoWJhIxt6wApTzMhqs+CevfC173nNBASR5cxDZOT5MSRH2A==
+"@artsy/palette@11.6.0":
+  version "11.6.0"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-11.6.0.tgz#b860134c1c434cc5104122d49a4e4e3b915915e6"
+  integrity sha512-zX5j1fN5t6oUHvoAymh2dBOvXeyYJVCMX7p1qd3eSNLujQVyNzb367vYji59qEsV05BEnAMNRmfXsp6xeRkEEA==
   dependencies:
     "@styled-system/theme-get" "^5.1.2"
     babel-plugin-styled-components "^1.10.0"
@@ -21709,10 +21709,10 @@ typescript-template-language-service-decorator@^2.2.0:
   resolved "https://registry.yarnpkg.com/typescript-template-language-service-decorator/-/typescript-template-language-service-decorator-2.2.0.tgz#4ee6d580f307fb9239978e69626f2775b8a59b2a"
   integrity sha512-xiolqt1i7e22rpqMaprPgSFVgU64u3b9n6EJlAaUYE61jumipKAdI1+O5khPlWslpTUj80YzjUKjJ2jxT0D74w==
 
-typescript@3.9.5:
-  version "3.9.5"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.9.5.tgz#586f0dba300cde8be52dd1ac4f7e1009c1b13f36"
-  integrity sha512-hSAifV3k+i6lEoCJ2k6R2Z/rp/H3+8sdmcn5NrS3/3kE7+RyZXm9aqvxWqjEXHAd8b0pShatpcdMTvEdvAJltQ==
+typescript@3.9.6:
+  version "3.9.6"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.9.6.tgz#8f3e0198a34c3ae17091b35571d3afd31999365a"
+  integrity sha512-Pspx3oKAPJtjNwE92YS05HQoY7z2SFyOpHo9MqJor3BXAGNaPUs83CuVp9VISFkSjyRfiTpmKuAYGJB7S7hOxw==
 
 ua-parser-js@0.7.19, ua-parser-js@^0.7.18:
   version "0.7.19"

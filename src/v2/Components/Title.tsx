@@ -1,7 +1,6 @@
 import { garamond } from "v2/Assets/Fonts"
 import React from "react"
-// @ts-ignore
-import styled, { StyledComponentClass } from "styled-components"
+import styled from "styled-components"
 import { media } from "./Helpers"
 
 export type TitleSize = "xxsmall" | "small" | "medium" | "large" | "xlarge"

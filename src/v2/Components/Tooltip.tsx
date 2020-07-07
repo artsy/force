@@ -1,6 +1,6 @@
 import { unica } from "v2/Assets/Fonts"
 import React from "react"
-import styled, { StyledFunction } from "styled-components"
+import styled from "styled-components"
 import colors from "../Assets/Colors"
 
 interface Props extends React.HTMLProps<HTMLDivElement> {
@@ -10,9 +10,7 @@ interface Props extends React.HTMLProps<HTMLDivElement> {
   verticalAlign?: string
 }
 
-const Div: StyledFunction<Props & React.HTMLProps<HTMLDivElement>> = styled.div
-
-const TooltipContainer = Div`
+const TooltipContainer = styled.div<Props>`
   ${unica("s12", "regular")};
   display: inline-block;
   position: relative;
@@ -34,7 +32,6 @@ const TooltipContainer = Div`
     border-radius: 50%;
     line-height: 15px;
     text-align: center;
-    vertical-align: middle;
     color: white;
   }
   &:hover {
@@ -49,10 +46,10 @@ const TooltipContainer = Div`
   }
   &::after {
     display: block;
-    top: ${props => (props.verticalAlign === "top" ? `0` : "inherit")}
-    bottom: ${props => (props.verticalAlign === "bottom" ? `-7px` : "inherit")}
-    left: ${props => (props.horizontalAlign === "right" ? `0` : "inherit")}
-    right: ${props => (props.horizontalAlign === "left" ? `-7px` : "inherit")}
+    top: ${props => (props.verticalAlign === "top" ? `0` : "inherit")};
+    bottom: ${props => (props.verticalAlign === "bottom" ? `-7px` : "inherit")};
+    left: ${props => (props.horizontalAlign === "right" ? `0` : "inherit")};
+    right: ${props => (props.horizontalAlign === "left" ? `-7px` : "inherit")};
     position: absolute;
     visibility: hidden;
     text-align: left;

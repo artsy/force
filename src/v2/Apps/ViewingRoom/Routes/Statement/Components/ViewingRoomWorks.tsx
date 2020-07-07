@@ -15,7 +15,7 @@ interface ViewingRoomWorksProps {
 
 const ViewingRoomWorks: React.FC<ViewingRoomWorksProps> = ({
   viewingRoom: {
-    artworksConnection: { edges },
+    artworksConnection: { totalCount, edges },
   },
 }) => {
   const {
@@ -29,7 +29,7 @@ const ViewingRoomWorks: React.FC<ViewingRoomWorksProps> = ({
   return (
     <>
       <Flex>
-        {edges.slice(0, 2).map(({ node: artwork }, index) => {
+        {edges.map(({ node: artwork }) => {
           return (
             <ArtworkItem
               key={artwork.internalID}
@@ -40,7 +40,7 @@ const ViewingRoomWorks: React.FC<ViewingRoomWorksProps> = ({
         })}
       </Flex>
       <Spacer my={4} />
-      <ViewWorksButton />
+      <ViewWorksButton artworksCount={totalCount} />
     </>
   )
 }
@@ -50,7 +50,8 @@ export const ViewingRoomWorksFragmentContainer = createFragmentContainer(
   {
     viewingRoom: graphql`
       fragment ViewingRoomWorks_viewingRoom on ViewingRoom {
-        artworksConnection {
+        artworksConnection(first: 2) {
+          totalCount
           edges {
             node {
               internalID
@@ -58,6 +59,7 @@ export const ViewingRoomWorksFragmentContainer = createFragmentContainer(
               artistNames
               title
               date
+              saleMessage
             }
           }
         }
@@ -76,6 +78,7 @@ const ArtworkItem: React.FC<ArtworkNode> = ({
   imageUrl,
   navigateTo,
   title,
+  saleMessage,
 }) => {
   const tracking = useTracking()
 
@@ -96,7 +99,7 @@ const ArtworkItem: React.FC<ArtworkNode> = ({
     >
       <Box width="95%">
         <Box mb={0.5}>
-          <Image width="100%" src={imageUrl} />
+          <Image width="100%" src={imageUrl} alt={title} />
         </Box>
         <Box>
           <Sans size="3t">{artistNames}</Sans>
@@ -106,6 +109,13 @@ const ArtworkItem: React.FC<ArtworkNode> = ({
             {[title, date].filter(s => s).join(", ")}
           </Sans>
         </Box>
+        {saleMessage && (
+          <Box>
+            <Sans size="3t" color="black60">
+              {saleMessage}
+            </Sans>
+          </Box>
+        )}
       </Box>
     </RouterLink>
   )

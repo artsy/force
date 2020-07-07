@@ -1,4 +1,5 @@
 import React from "react"
+import { Title } from "react-head"
 
 /**
  * This route is just for testing baseline page shell stuff -- Lighthouse,
@@ -12,7 +13,12 @@ export const debugRoutes = [
     children: [
       {
         path: "baseline",
-        Component: () => <div>Baseline</div>,
+        Component: () => (
+          <>
+            <Title>Baseline</Title>
+            <div>Baseline</div>
+          </>
+        ),
       },
     ],
   },

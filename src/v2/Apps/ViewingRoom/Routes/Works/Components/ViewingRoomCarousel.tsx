@@ -18,7 +18,7 @@ interface ViewingRoomCarouselProps {
 }
 
 const ViewingRoomCarousel: React.FC<ViewingRoomCarouselProps> = ({
-  artwork: { images },
+  artwork: { title, images },
 }) => {
   const computeScrollPercent = selectedIndex =>
     ((selectedIndex + 1) / images.length) * 100
@@ -57,7 +57,12 @@ const ViewingRoomCarousel: React.FC<ViewingRoomCarouselProps> = ({
                 height={CarouselHeight}
                 mr="2px"
               >
-                <Image src={url} width="auto" height={CarouselHeight} />
+                <Image
+                  src={url}
+                  alt={title}
+                  width="auto"
+                  height={CarouselHeight}
+                />
               </Box>
             )
           }}
@@ -108,6 +113,7 @@ export const ViewingRoomCarouselFragmentContainer = createFragmentContainer(
   {
     artwork: graphql`
       fragment ViewingRoomCarousel_artwork on Artwork {
+        title
         images {
           internalID
           # requesting the largest size and resizing it down to 550*2 for retina

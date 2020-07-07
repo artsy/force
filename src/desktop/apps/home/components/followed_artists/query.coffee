@@ -1,10 +1,10 @@
 module.exports = """
-  fragment followed_artists_context on HomePageModuleContextFollowArtists {
+  fragment followed_artists_context on FollowArtists {
     counts {
       artists
     }
     artists {
-      id
+      id: slug
       name
     }
   }

@@ -74,7 +74,7 @@ export class MinimalCtaBanner extends React.Component<
   }
 }
 
-const BannerContainer = styled.div.attrs<MinimalCtaBannerProps>({})`
+const BannerContainer = styled.div<MinimalCtaBannerProps>`
   width: 100%;
   height: inherit;
   background-color: ${props => props.backgroundColor || "white"};
@@ -87,7 +87,7 @@ const BannerContainer = styled.div.attrs<MinimalCtaBannerProps>({})`
   }};
 `
 
-const Banner = styled.div.attrs<{ textColor: string }>({})`
+const Banner = styled.div<{ textColor: string }>`
   display: inline-flex;
   align-items: center;
   height: 100%;

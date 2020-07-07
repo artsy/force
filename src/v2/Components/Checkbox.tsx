@@ -104,7 +104,7 @@ const CheckboxInput = styled.input`
     background-color: ${colors.white};
     border: 2px solid
       ${({ error }: { error?: boolean }) =>
-    error ? colors.redMedium : colors.grayRegular};
+        error ? colors.redMedium : colors.grayRegular};
   }
 
   &:checked::after {
@@ -118,7 +118,7 @@ const CheckboxInput = styled.input`
   }
 `
 
-const Label = styled.label.attrs<CheckboxProps>({})`
+const Label = styled.label<CheckboxProps>`
   ${garamond("s16")};
   position: relative;
   line-height: 135%;

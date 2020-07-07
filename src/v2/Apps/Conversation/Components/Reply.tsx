@@ -4,24 +4,16 @@ import React, { useRef, useState } from "react"
 import { Environment } from "react-relay"
 import styled from "styled-components"
 import { SendConversationMessage } from "../Mutation/SendConversationMessage"
-import { RightProps, right } from "styled-system"
 import { useTracking } from "v2/Artsy/Analytics"
 import {
   focusedOnConversationMessageInput,
   sentConversationMessage,
 } from "@artsy/cohesion"
+import { RightProps } from "styled-system"
 
 const StyledFlex = styled(Flex)<FlexProps & RightProps>`
-  ${right};
   border-top: 1px solid ${color("black10")};
-  position: fixed;
   background: white;
-  bottom: 0;
-  left: 375px;
-  ${media.xs`
-    width: 100%;
-    left: 0;
-  `}
 `
 
 const FullWidthFlex = styled(Flex)<{ height?: string }>`
@@ -111,7 +103,7 @@ export const Reply: React.FC<ReplyProps> = props => {
           text: "Discard message",
         }}
       />
-      <StyledFlex p={1} right={[0, null]} zIndex={2}>
+      <StyledFlex p={1} right={[0, null]} zIndex={[null, 2]}>
         <FullWidthFlex width="100%">
           <StyledTextArea
             onInput={event => {

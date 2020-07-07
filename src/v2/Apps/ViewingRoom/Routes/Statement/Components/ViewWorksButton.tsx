@@ -5,7 +5,13 @@ import { AnalyticsSchema, useTracking } from "v2/Artsy"
 import { Button } from "@artsy/palette"
 import { useRouter } from "v2/Artsy/Router/useRouter"
 
-export const ViewWorksButton: React.FC = () => {
+interface ViewWorksButtonProps {
+  artworksCount: number
+}
+
+export const ViewWorksButton: React.FC<ViewWorksButtonProps> = ({
+  artworksCount,
+}) => {
   const tracking = useTracking()
 
   const {
@@ -15,6 +21,10 @@ export const ViewWorksButton: React.FC = () => {
   } = useRouter()
 
   const navigateTo = `/viewing-room/${slug}/works`
+
+  if (artworksCount === 0) {
+    return null
+  }
 
   return (
     <RouterLink
@@ -31,7 +41,7 @@ export const ViewWorksButton: React.FC = () => {
       }}
     >
       <Button size="large" width="100%">
-        View works
+        View works ({artworksCount})
       </Button>
     </RouterLink>
   )

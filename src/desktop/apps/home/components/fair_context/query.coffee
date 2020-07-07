@@ -1,10 +1,10 @@
 module.exports = """
-  fragment fair_context on HomePageModuleContextFair {
+  fragment fair_context on Fair {
     href
     name
     tagline
-    start_at(format: "MMM D")
-    end_at(format: "MMM D")
+    start_at: startAt(format: "MMM D")
+    end_at: endAt(format: "MMM D")
     location {
       city
     }

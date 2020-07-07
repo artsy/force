@@ -58,7 +58,7 @@ export const Attachment: React.FC<AttachmentProps> = props => {
         background={color(bgColor)}
       >
         {attachment.contentType.startsWith("image") ? (
-          <Image src={attachment.downloadURL} />
+          <Image src={attachment.downloadURL} alt={attachment.fileName} />
         ) : (
           <>
             <Sans color={textColor} weight="medium" size="4" mr={2}>
@@ -95,6 +95,7 @@ const Message: React.FC<MessageProps> = props => {
           alignSelf,
         }}
         maxWidth="66.67%"
+        width="fit-content"
       >
         <Sans size="4" color={textColor}>
           {text}

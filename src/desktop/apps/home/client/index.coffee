@@ -1,7 +1,6 @@
 Q = require 'bluebird-q'
 Backbone = require 'backbone'
 Cookies = require 'cookies-js'
-metaphysics = require '../../../../lib/metaphysics.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
 HeroUnitView = require './hero_unit_view.coffee'
 JumpView = require '../../../components/jump/view.coffee'

@@ -9,8 +9,7 @@ import React, { ReactNode } from "react"
 import ReactDOM from "react-dom"
 // @ts-ignore
 import { ComponentRef, createFragmentContainer, graphql } from "react-relay"
-// @ts-ignore
-import styled, { StyledComponentClass } from "styled-components"
+import styled from "styled-components"
 import { Media, valuesWithBreakpointProps } from "v2/Utils/Responsive"
 import GridItem from "../Artwork/GridItem"
 
