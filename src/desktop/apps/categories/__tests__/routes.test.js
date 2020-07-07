@@ -14,10 +14,7 @@ describe("#index", () => {
   beforeEach(() => {
     req = {
       app: {
-        get: sinon
-          .stub()
-          .withArgs("views")
-          .returns("components"),
+        get: sinon.stub().withArgs("views").returns("components"),
       },
     }
     res = {}
@@ -46,7 +43,7 @@ describe("#index", () => {
     }
 
     rewire.__set__(
-      "metaphysics",
+      "metaphysics2",
       sinon.stub().returns(Promise.resolve(geneFamiliesQuery))
     )
 
