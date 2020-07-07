@@ -2,7 +2,7 @@ import { SystemContextProvider } from "v2/Artsy"
 import { useTracking } from "v2/Artsy/Analytics/useTracking"
 import { SimpleLinkData, menuData } from "v2/Components/NavBar/menuData"
 import { mount } from "enzyme"
-import React, { MouseEvent } from "react"
+import React from "react"
 import {
   AnimatingMenuWrapper,
   BackLink,
@@ -22,7 +22,7 @@ describe("MobileNavMenu", () => {
   const getWrapper = props => {
     return mount(
       <SystemContextProvider mediator={mediator} user={props.user}>
-        <MobileNavMenu isOpen menuData={menuData} onClose={noop} />
+        <MobileNavMenu isOpen menuData={menuData} />
       </SystemContextProvider>
     )
   }
