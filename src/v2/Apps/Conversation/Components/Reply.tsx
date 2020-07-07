@@ -4,6 +4,11 @@ import React, { useRef, useState } from "react"
 import { Environment } from "react-relay"
 import styled from "styled-components"
 import { SendConversationMessage } from "../Mutation/SendConversationMessage"
+import { useTracking } from "v2/Artsy/Analytics"
+import {
+  focusedOnConversationMessageInput,
+  sentConversationMessage,
+} from "@artsy/cohesion"
 import { RightProps } from "styled-system"
 
 const StyledFlex = styled(Flex)<FlexProps & RightProps>`
@@ -45,6 +50,7 @@ export const Reply: React.FC<ReplyProps> = props => {
   const [loading, setLoading] = useState(false)
   const [showModal, setShowModal] = useState(false)
   const textArea = useRef()
+  const { trackEvent } = useTracking()
 
   const setupAndSendMessage = () => {
     {
@@ -54,11 +60,22 @@ export const Reply: React.FC<ReplyProps> = props => {
         conversation,
         // @ts-ignore
         textArea?.current?.value,
-        _response => {
+        response => {
           // @ts-ignore
           textArea.current.value = ""
           setLoading(false)
           setButtonDisabled(true)
+
+          const {
+            internalID,
+          } = response?.sendConversationMessage?.messageEdge?.node
+
+          trackEvent(
+            sentConversationMessage({
+              impulseConversationId: conversation.internalID,
+              impulseMessageId: internalID,
+            })
+          )
         },
         _error => {
           setLoading(false)
@@ -100,6 +117,13 @@ export const Reply: React.FC<ReplyProps> = props => {
               }
               const height = field.scrollHeight
               field.style.height = height + "px"
+            }}
+            onFocus={() => {
+              trackEvent(
+                focusedOnConversationMessageInput({
+                  impulseConversationId: conversation.internalID,
+                })
+              )
             }}
             placeholder="Type your message"
             ref={textArea}
