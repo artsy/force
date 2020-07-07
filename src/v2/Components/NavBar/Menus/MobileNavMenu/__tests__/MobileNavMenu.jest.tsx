@@ -10,8 +10,12 @@ import {
   MobileSubmenuLink,
 } from "../../MobileNavMenu/MobileNavMenu"
 import { MobileLink } from "../MobileLink"
+import { LoggedInLinks } from "../LoggedInLinks"
 
 jest.mock("v2/Artsy/Analytics/useTracking")
+jest.mock("lib/environment", () => ({
+  isServer: true,
+}))
 
 describe("MobileNavMenu", () => {
   const mediator = {
@@ -39,7 +43,13 @@ describe("MobileNavMenu", () => {
 
   it("calls logout auth action on logout menu click", () => {
     const wrapper = getWrapper({ user: { type: "NotAdmin" } })
-    wrapper.find("MobileLink").last().simulate("click")
+
+    wrapper
+      .find(LoggedInLinks)
+      .first()
+      .find("MobileLink")
+      .last()
+      .simulate("click")
     expect(mediator.trigger).toBeCalledWith("auth:logout")
   })
 

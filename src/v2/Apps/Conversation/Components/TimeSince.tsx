@@ -35,9 +35,38 @@ const exactDate = (time: string) => {
   }
 }
 
-const relativeDate = (time: string) => {
+const minutesSinceDate = (time: string | DateTime): number => {
+  if (!time) {
+    return null
+  }
+  const date = typeof time === "string" ? DateTime.fromISO(time) : time
+  return Math.floor(Math.abs(date.diffNow("minutes").minutes))
+}
+
+export const relativeDate = (time: string) => {
   if (!time) return null
-  return DateTime.fromISO(time).toRelative()
+  const date = DateTime.fromISO(time)
+  const minutesSince = minutesSinceDate(date)
+
+  if (minutesSince <= 1) {
+    return "Just now"
+  } else if (minutesSince <= 300) {
+    return date.toRelative()
+  } else if (minutesSince <= 1440) {
+    return date.toFormat("t")
+  } else if (minutesSince <= 10080) {
+    return date.toRelative()
+  } else if (minutesSince <= 40320) {
+    const numberOfWeeksAgo = Math.floor(Math.abs(minutesSince / 10080))
+    const formattedDate =
+      numberOfWeeksAgo == 1
+        ? `${numberOfWeeksAgo} week ago`
+        : `${numberOfWeeksAgo} weeks ago`
+
+    return formattedDate
+  } else {
+    return date.toFormat("D")
+  }
 }
 
 interface TimeSinceProps extends Omit<BoxProps, "color"> {

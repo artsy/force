@@ -4,6 +4,7 @@ import { useTracking } from "v2/Artsy/Analytics/useTracking"
 import { mount } from "enzyme"
 import React from "react"
 import { NavBar } from "../NavBar"
+import { InboxNotificationCount } from "../Menus/MobileNavMenu/InboxNotificationCount"
 
 jest.mock("v2/Components/Search/SearchBar", () => {
   return {
@@ -14,6 +15,10 @@ jest.mock("v2/Components/Search/SearchBar", () => {
 jest.mock("v2/Artsy/Analytics/useTracking")
 jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
   useMatchMedia: () => ({}),
+}))
+
+jest.mock("lib/environment", () => ({
+  isServer: true,
 }))
 
 describe("NavBar", () => {
@@ -61,12 +66,7 @@ describe("NavBar", () => {
       const wrapper = getWrapper()
 
       // Logo
-      expect(
-        wrapper
-          .find("Link")
-          .first()
-          .prop("href")
-      ).toEqual("/")
+      expect(wrapper.find("Link").first().prop("href")).toEqual("/")
 
       const links = wrapper.find("NavItem")
 
@@ -117,10 +117,7 @@ describe("NavBar", () => {
 
     it("calls login auth action on login button click", () => {
       const wrapper = getWrapper()
-      wrapper
-        .find("Button")
-        .first()
-        .simulate("click")
+      wrapper.find("Button").first().simulate("click")
       expect(mediator.trigger).toBeCalledWith("open:auth", {
         contextModule: "header",
         intent: "login",
@@ -130,10 +127,7 @@ describe("NavBar", () => {
 
     it("calls signup auth action on signup button click", () => {
       const wrapper = getWrapper()
-      wrapper
-        .find("Button")
-        .last()
-        .simulate("click")
+      wrapper.find("Button").last().simulate("click")
       expect(mediator.trigger).toBeCalledWith("open:auth", {
         contextModule: "header",
         intent: "signup",
@@ -159,6 +153,13 @@ describe("NavBar", () => {
       expect(wrapper.find("MobileNavMenu").length).toEqual(1)
       toggle()
       expect(wrapper.find("MobileNavMenu").length).toEqual(0)
+    })
+
+    it("shows InboxNotificationCount when there are conversations", () => {
+      const wrapper = getWrapper({
+        user: { type: "NotAdmin", lab_features: ["User Conversations View"] },
+      })
+      expect(wrapper.find(InboxNotificationCount).length).toBe(1)
     })
   })
 })

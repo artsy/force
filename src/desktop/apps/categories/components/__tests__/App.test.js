@@ -5,7 +5,6 @@ import App from "../App"
 describe("Categories App", () => {
   let app
   let geneFamilies
-  let allFeaturedGenesByFamily
 
   beforeEach(() => {
     geneFamilies = [
@@ -15,6 +14,9 @@ describe("Categories App", () => {
         genes: [
           /* … */
         ],
+        featuredGeneLinks: [
+          /* … */
+        ],
       },
       {
         id: "styles",
@@ -22,30 +24,13 @@ describe("Categories App", () => {
         genes: [
           /* … */
         ],
-      },
-    ]
-
-    allFeaturedGenesByFamily = [
-      {
-        name: "Materials",
-        genes: [
-          /* … */
-        ],
-      },
-      {
-        name: "Styles",
-        genes: [
+        featuredGeneLinks: [
           /* … */
         ],
       },
     ]
 
-    app = shallow(
-      <App
-        geneFamilies={geneFamilies}
-        allFeaturedGenesByFamily={allFeaturedGenesByFamily}
-      />
-    )
+    app = shallow(<App geneFamilies={geneFamilies} />)
   })
 
   it("renders navigation", () => {
