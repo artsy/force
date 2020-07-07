@@ -18156,7 +18156,7 @@ react-lines-ellipsis@^0.14.0:
   resolved "https://registry.yarnpkg.com/react-lines-ellipsis/-/react-lines-ellipsis-0.14.0.tgz#954459e68d8f9fc5a40498cabc5f47d63cbefd21"
   integrity sha512-zJf+evlugAQ42zwHYbsR/P9SSx2UrT4opWwY8JXPNIZTVVxjqTt2+91Csx3ya0xSesj7E/EgfUbtDfU03uylXQ==
 
-react-linkify@^1.0.0-alpha:
+react-linkify@1.0.0-alpha:
   version "1.0.0-alpha"
   resolved "https://registry.yarnpkg.com/react-linkify/-/react-linkify-1.0.0-alpha.tgz#b391c7b88e3443752fafe76a95ca4434e82e70d5"
   integrity sha512-7gcIUvJkAXXttt1fmBK9cwn+1jTa4hbKLGCZ9J1U6EOkyb2/+LKL1Z28d9rtDLMnpvImlNlLPdTPooorl5cpmg==
