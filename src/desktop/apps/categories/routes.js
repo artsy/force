@@ -1,24 +1,19 @@
 import App from "./components/App"
 import GeneFamiliesQuery from "./queries/geneFamilies"
-import FeaturedGenesQuery from "./queries/featuredGenes"
-import _metaphysics from "lib/metaphysics.coffee"
+import _metaphysics2 from "lib/metaphysics2.coffee"
 import { stitch as _stitch } from "@artsy/stitch"
 import { geneFamiliesFromConnection } from "./utils"
 
 // FIXME: Rewire
-let metaphysics = _metaphysics
+let metaphysics2 = _metaphysics2
 let stitch = _stitch
 
 export const index = async (req, res, next) => {
   try {
-    const geneFamilyConnection = await metaphysics({
+    const geneFamilyConnection = await metaphysics2({
       query: GeneFamiliesQuery(),
     })
     const geneFamilies = geneFamiliesFromConnection(geneFamilyConnection)
-
-    const { gene_families: allFeaturedGenesByFamily } = await metaphysics({
-      query: FeaturedGenesQuery(),
-    })
 
     const layout = await stitch({
       basePath: req.app.get("views"),
@@ -36,7 +31,6 @@ export const index = async (req, res, next) => {
       },
       data: {
         geneFamilies,
-        allFeaturedGenesByFamily,
       },
     })
 
