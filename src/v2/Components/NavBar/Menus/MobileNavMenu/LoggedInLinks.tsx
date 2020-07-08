@@ -74,15 +74,6 @@ export const LoggedInLinks: React.FC<
       )}
       <MobileLink href="/works-for-you">Works for you</MobileLink>
       <MobileSubmenuLink menu={menu}>{menu.title}</MobileSubmenuLink>
-      <MobileLink
-        href="#"
-        onClick={event => {
-          event.preventDefault()
-          mediator.trigger("auth:logout")
-        }}
-      >
-        Log out
-      </MobileLink>
     </Box>
   )
 }
