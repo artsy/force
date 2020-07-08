@@ -11,14 +11,18 @@ import {
 } from "@artsy/palette"
 import { Media } from "v2/Utils/Responsive"
 import { createFragmentContainer, graphql } from "react-relay"
-
+import { FollowArtistButtonFragmentContainer as FollowArtistButton } from "v2/Components/FollowButton/FollowArtistButton"
+import { openAuthToFollowSave } from "v2/Utils/openAuthModal"
 import { ArtistSeriesHeader_artistSeries } from "v2/__generated__/ArtistSeriesHeader_artistSeries.graphql"
+import { useSystemContext } from "v2/Artsy"
+import { Intent } from "@artsy/cohesion"
 
 interface ArtistSeriesHeaderProps {
   artistSeries: ArtistSeriesHeader_artistSeries
 }
 
 const ArtistsInfo = (artists: ArtistSeriesHeader_artistSeries["artists"]) => {
+  const { user, mediator } = useSystemContext()
   // We're guaranteed to have at most one artist in an artist series for now.
   const artist = artists[0] ?? null
   if (artist) {
@@ -26,11 +30,35 @@ const ArtistsInfo = (artists: ArtistSeriesHeader_artistSeries["artists"]) => {
       <EntityHeader
         smallVariant
         name={artist.name}
-        imageUrl={artist.image?.url as string}
+        imageUrl={artist.image?.url}
         FollowButton={
-          <Sans style={{ textDecorationLine: "underline" }} size="3">
-            {artist.isFollowed ? "Following" : "Follow"}
-          </Sans>
+          <FollowArtistButton
+            artist={artist}
+            user={user}
+            onOpenAuthModal={() =>
+              openAuthToFollowSave(mediator, {
+                entity: artist,
+                // FIXME: Add artist series to Cohesion
+                contextModule: null,
+                intent: Intent.followArtist,
+              })
+            }
+            render={({ is_followed }) => {
+              return (
+                <Sans
+                  size="3"
+                  color="black"
+                  data-test="followArtistButton"
+                  style={{
+                    cursor: "pointer",
+                    textDecoration: "underline",
+                  }}
+                >
+                  {is_followed ? "Following" : "Follow"}
+                </Sans>
+              )
+            }}
+          />
         }
       />
     )
@@ -142,12 +170,13 @@ export const ArtistSeriesHeaderFragmentContainer = createFragmentContainer(
         title
         description
         artists(size: 1) {
-          id
           name
           isFollowed
           image {
             url
           }
+          slug
+          ...FollowArtistButton_artist
         }
       }
     `,

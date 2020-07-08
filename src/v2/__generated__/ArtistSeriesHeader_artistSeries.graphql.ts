@@ -6,12 +6,13 @@ export type ArtistSeriesHeader_artistSeries = {
     readonly title: string;
     readonly description: string | null;
     readonly artists: ReadonlyArray<{
-        readonly id: string;
         readonly name: string | null;
         readonly isFollowed: boolean | null;
         readonly image: {
             readonly url: string | null;
         } | null;
+        readonly slug: string;
+        readonly " $fragmentRefs": FragmentRefs<"FollowArtistButton_artist">;
     } | null> | null;
     readonly " $refType": "ArtistSeriesHeader_artistSeries";
 };
@@ -62,13 +63,6 @@ const node: ReaderFragment = {
         {
           "kind": "ScalarField",
           "alias": null,
-          "name": "id",
-          "args": null,
-          "storageKey": null
-        },
-        {
-          "kind": "ScalarField",
-          "alias": null,
           "name": "name",
           "args": null,
           "storageKey": null
@@ -97,10 +91,22 @@ const node: ReaderFragment = {
               "storageKey": null
             }
           ]
+        },
+        {
+          "kind": "ScalarField",
+          "alias": null,
+          "name": "slug",
+          "args": null,
+          "storageKey": null
+        },
+        {
+          "kind": "FragmentSpread",
+          "name": "FollowArtistButton_artist",
+          "args": null
         }
       ]
     }
   ]
 };
-(node as any).hash = '06bd69d5d8ec27ed7c5996f38d68e8db';
+(node as any).hash = '2719ef99b459b54107debe4c3296b1a2';
 export default node;

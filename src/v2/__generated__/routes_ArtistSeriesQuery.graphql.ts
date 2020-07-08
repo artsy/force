@@ -34,12 +34,24 @@ fragment ArtistSeriesHeader_artistSeries on ArtistSeries {
   title
   description
   artists(size: 1) {
-    id
     name
     isFollowed
     image {
       url
     }
+    slug
+    ...FollowArtistButton_artist
+    id
+  }
+}
+
+fragment FollowArtistButton_artist on Artist {
+  id
+  internalID
+  name
+  is_followed: isFollowed
+  counts {
+    follows
   }
 }
 */
@@ -133,13 +145,6 @@ return {
               {
                 "kind": "ScalarField",
                 "alias": null,
-                "name": "id",
-                "args": null,
-                "storageKey": null
-              },
-              {
-                "kind": "ScalarField",
-                "alias": null,
                 "name": "name",
                 "args": null,
                 "storageKey": null
@@ -168,6 +173,52 @@ return {
                     "storageKey": null
                   }
                 ]
+              },
+              {
+                "kind": "ScalarField",
+                "alias": null,
+                "name": "slug",
+                "args": null,
+                "storageKey": null
+              },
+              {
+                "kind": "ScalarField",
+                "alias": null,
+                "name": "id",
+                "args": null,
+                "storageKey": null
+              },
+              {
+                "kind": "ScalarField",
+                "alias": null,
+                "name": "internalID",
+                "args": null,
+                "storageKey": null
+              },
+              {
+                "kind": "ScalarField",
+                "alias": "is_followed",
+                "name": "isFollowed",
+                "args": null,
+                "storageKey": null
+              },
+              {
+                "kind": "LinkedField",
+                "alias": null,
+                "name": "counts",
+                "storageKey": null,
+                "args": null,
+                "concreteType": "ArtistCounts",
+                "plural": false,
+                "selections": [
+                  {
+                    "kind": "ScalarField",
+                    "alias": null,
+                    "name": "follows",
+                    "args": null,
+                    "storageKey": null
+                  }
+                ]
               }
             ]
           }
@@ -179,7 +230,7 @@ return {
     "operationKind": "query",
     "name": "routes_ArtistSeriesQuery",
     "id": null,
-    "text": "query routes_ArtistSeriesQuery(\n  $slug: ID!\n) {\n  artistSeries(id: $slug) {\n    ...ArtistSeriesApp_artistSeries\n  }\n}\n\nfragment ArtistSeriesApp_artistSeries on ArtistSeries {\n  ...ArtistSeriesHeader_artistSeries\n}\n\nfragment ArtistSeriesHeader_artistSeries on ArtistSeries {\n  title\n  description\n  artists(size: 1) {\n    id\n    name\n    isFollowed\n    image {\n      url\n    }\n  }\n}\n",
+    "text": "query routes_ArtistSeriesQuery(\n  $slug: ID!\n) {\n  artistSeries(id: $slug) {\n    ...ArtistSeriesApp_artistSeries\n  }\n}\n\nfragment ArtistSeriesApp_artistSeries on ArtistSeries {\n  ...ArtistSeriesHeader_artistSeries\n}\n\nfragment ArtistSeriesHeader_artistSeries on ArtistSeries {\n  title\n  description\n  artists(size: 1) {\n    name\n    isFollowed\n    image {\n      url\n    }\n    slug\n    ...FollowArtistButton_artist\n    id\n  }\n}\n\nfragment FollowArtistButton_artist on Artist {\n  id\n  internalID\n  name\n  is_followed: isFollowed\n  counts {\n    follows\n  }\n}\n",
     "metadata": {}
   }
 };
