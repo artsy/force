@@ -41,7 +41,7 @@ export const LoggedInLinks: React.FC<
         href: "/user/payments",
       },
       {
-        text: "Log Out",
+        text: "Log out",
         href: "#logout",
         onClick: event => {
           event.preventDefault()

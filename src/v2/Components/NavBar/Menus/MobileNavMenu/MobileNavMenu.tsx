@@ -294,8 +294,8 @@ const AuthenticateLinks: React.FC = () => {
   return (
     <Box>
       <Separator my={1} color={color("black10")} />
-      <MobileLink href={authLink(ModalType.signup)}>Sign Up</MobileLink>
-      <MobileLink href={authLink(ModalType.login)}>Log In</MobileLink>
+      <MobileLink href={authLink(ModalType.signup)}>Sign up</MobileLink>
+      <MobileLink href={authLink(ModalType.login)}>Log in</MobileLink>
     </Box>
   )
 }
