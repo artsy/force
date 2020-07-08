@@ -95,8 +95,7 @@ describe("MobileNavMenu", () => {
       let linkText = mobileSubmenuLinks.last().text()
       expect(linkText).toContain("Account")
 
-      const loggedInLinks = linkContainer.children("LoggedInLinks")
-      expect(loggedInLinks.length).toBe(1)
+      expect(linkText).toContain("Works for you")
     })
   })
 
