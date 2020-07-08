@@ -85,7 +85,7 @@ describe("MobileNavMenu", () => {
         })
 
       linkText = linkContainer.text()
-      expect(linkText).toContain("Sign Up")
+      expect(linkText).toContain("Sign up")
       expect(linkText).not.toContain("Works for you")
     })
 
