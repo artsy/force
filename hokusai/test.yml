@@ -1,4 +1,5 @@
-version: "2"
+---
+version: "3.8"
 services:
   force:
     command: yarn test

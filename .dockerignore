@@ -1,23 +1,36 @@
-.git
-.gitignore
-.dockerignore
-Dockerfile
-hokusai
+# Prefer excluding all assets by default. It prevents large artifacts from
+# accidentally becomming part of the Docker context.
+*
 
-README.md
-LICENSE
-VERSION
-docs
+# CI
+!scripts/
 
-.DS_Store
-.AppleDouble
-.LSOverride
+# Source
+!data/
+!patches/
+!src/
+!webpack/
 
-.env
-.env.*
+# Testing
+!__mocks__/
+!cypress/
 !.env.oss
-log
-tmp
-node_modules
-.vscode
-redis.conf
+!.env.test
+
+# Build Configuration
+!.eslintrc.js
+!.nvmrc
+!.prettierignore
+!apollo.config.js
+!babel.config.js
+!coffeelint.json
+!cypress.json
+!dangerfile.ts
+!jest.config.js
+!package.json
+!relay.config.js
+!renovate.json
+!test.config.js
+!test.mocha.js
+!tsconfig.json
+!yarn.lock

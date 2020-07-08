@@ -6,92 +6,45 @@ orbs:
   horizon: artsy/release@0.0.1
   node: artsy/node@1.0.0
   yarn: artsy/yarn@5.1.3
+  artsy-remote-docker: artsy/remote-docker@dev:612b35f7058aed43d189438a46cdeee8
 
 jobs:
-  run_deepcrawl_automator:
-    docker:
-      - image: cimg/base:2020.09
-    environment:
-      AUTOMATOR_START_ONLY: true
-    steps:
-      - run:
-          name: Download automator script
-          command: curl https://raw.githubusercontent.com/deepcrawl/automator-sdk/master/ci.sh --output automator.sh
-      - run:
-          name: Start automator crawl
-          command: chmod +x automator.sh && ./automator.sh
-  acceptance_cypress:
-    docker:
-      - image: circleci/node:12-stretch-browsers
-    steps:
-      - yarn/setup
-      - run:
-          name: Cypress Tests
-          command: yarn test:smoke
-
-  validate_production_schema:
-    executor: node/build
-    steps:
-      - yarn/setup
-      - run:
-          name: Validate Production Schema
-          command: node scripts/validateSchemas.js production
-
-  build:
-    executor: node/build
-    steps:
-      - yarn/setup
-      - run:
-          name: Build force assets
-          command: yarn assets
-      - store_artifacts:
-          path: ~/project/.artifacts
-      - run:
-          name: Duplicates Report
-          command: curl "https://artsy-dupe-report.now.sh/packages/dupe-report/now.js?owner=artsy&repo=force&buildNum=$CIRCLE_BUILD_NUM"
-
-  # FIXME: Reenable after https://github.com/artsy/force/pull/5673 is addressed
-  # danger:
-  #   executor: node/build
-  #   steps:
-  #     - yarn/setup
-  #     - run:
-  #         name: Danger
-  #         # Formatted this way to prevent GitHub's token detection. This is intended to be committed and public.
-  #         command: DANGER_GITHUB_API_TOKEN="3f715685d9d032e17""48c3368dc8f22c672849136" yarn danger ci
-
-  create_or_update_review_app:
+  mocha:
     executor: hokusai/deploy
     steps:
       - hokusai/setup-docker
-      - hokusai/install-aws-iam-authenticator
-      - hokusai/configure-hokusai
-      - run:
-          name: Install jq
-          command: curl -L https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64 > /usr/local/bin/jq
-      - run:
-          name: Make jq executable
-          command: chmod u+x /usr/local/bin/jq
-      - run:
-          name: "Create or update review app"
-          command: |
-            review_app_name=$(echo $CIRCLE_BRANCH | sed 's/review-app-//')
+      - run: hokusai registry pull --tag "$CIRCLE_SHA1"
+      - run: docker run --rm -e NODE_ENV=test --entrypoint /bin/bash "hokusai_force" /usr/local/bin/yarn test:mocha
 
-            kubectl config use-context staging
+  jest:
+    executor: hokusai/deploy
+    steps:
+      - hokusai/setup-docker
+      - run: hokusai registry pull --tag "$CIRCLE_SHA1"
+      - run: docker run --rm -e NODE_ENV=test --entrypoint /bin/bash "hokusai_force" /usr/local/bin/yarn test:jest
 
-            if $(kubectl get namespace | grep -qi $review_app_name); then
-              ./scripts/update_review_app.sh $review_app_name
-            else
-              ./scripts/build_review_app.sh $review_app_name
-            fi
+  type-check:
+    executor: hokusai/deploy
+    steps:
+      - hokusai/setup-docker
+      - run: hokusai registry pull --tag "$CIRCLE_SHA1"
+      - run: docker run --rm -e NODE_ENV=test --entrypoint /bin/bash "hokusai_force" /usr/local/bin/yarn type-check
 
-not_master_or_staging_or_release: &not_master_or_staging_or_release
-  filters:
-    branches:
-      ignore:
-        - master
-        - staging
-        - release
+  acceptance:
+    executor: hokusai/deploy
+    steps:
+      - hokusai/setup-docker
+      - run: hokusai registry pull --tag "$CIRCLE_SHA1"
+      - run: docker build -t electron-runner -f electron.Dockerfile .
+      - run: docker run --rm --entrypoint /app/scripts/xvfb-run.sh electron-runner /usr/local/bin/yarn test:acceptance
+
+  acceptance-cypress:
+    executor: hokusai/deploy
+    steps:
+      - hokusai/setup-docker
+      - run: hokusai registry pull --tag "$CIRCLE_SHA1"
+      - run: docker build -t electron-runner -f electron.Dockerfile .
+      - run: docker run --rm --entrypoint /app/scripts/xvfb-run.sh electron-runner /usr/local/bin/yarn test:smoke
 
 not_staging_or_release: &not_staging_or_release
   filters:
@@ -100,108 +53,57 @@ not_staging_or_release: &not_staging_or_release
         - staging
         - release
 
-only_master: &only_master
-  context: hokusai
-  filters:
-    branches:
-      only: master
-
-only_release: &only_release
-  context: hokusai
-  filters:
-    branches:
-      only: release
-
 workflows:
-  default:
+  build-deploy:
     jobs:
-      - horizon/block:
-          <<: *only_release
-          context: horizon
-          project_id: 11
-
-      # Pre-staging
-      - yarn/jest:
+      - artsy-remote-docker/build:
           <<: *not_staging_or_release
-          args: --runInBand
+          context: hokusai
+          name: build
+          pre-steps:
+            - run:
+                command: echo 'export BUILD_TARGET="builder"; export DOCKER_BUILDKIT=1; export BUILDKIT_PROGRESS=plain; export COMPOSE_DOCKER_CLI_BUILD=1;' >> $BASH_ENV
 
-      - yarn/run:
+      - mocha:
           <<: *not_staging_or_release
-          name: test:mocha
-          script: "test:mocha"
-
-      # TODO: Disabled due to memory issues. Can we use our workflows above and
-      # upload coverage that way (similar to reaction). We save a lot of time
-      # by running outside of an unnecessary docker context.
-
-      # - hokusai/test:
-      #     name: test
-      #     <<: *not_staging_or_release
-      #     post-steps:
-      #       - run: mkdir -p ./coverage ./.nyc_output ./reports
-      #       - run:
-      #           name: Copy jest coverage artifacts
-      #           command: docker cp hokusai_force_1:/app/coverage ./
-      #           when: always
-      #       - codecov/upload:
-      #           file: ./coverage/lcov.info
-      #       - run:
-      #           name: Copy mocha coverage artifacts
-      #           command: docker cp hokusai_force_1:/app/.nyc_output ./
-      #           when: always
-      #       - codecov/upload:
-      #           file: ./.nyc_output/lcov.info
-      #       - run:
-      #           name: Copy coverage reports
-      #           command: docker cp hokusai_force_1:/app/reports ./
-      #           when: always
-      #       - store_test_results:
-      #           path: ./reports
-
-      - yarn/update-cache:
-          <<: *not_staging_or_release
-      - yarn/type-check:
-          <<: *not_staging_or_release
-      - acceptance_cypress:
-          <<: *not_master_or_staging_or_release
-      - build:
-          <<: *not_staging_or_release
-      # - danger:
-      #     <<: *not_staging_or_release
-
-      # Staging
-      - hokusai/push:
-          name: push-staging-image
-          <<: *only_master
+          context: hokusai
           requires:
-            - yarn/jest
-            - test:mocha
             - build
 
-      - hokusai/deploy-staging:
-          <<: *only_master
-          name: deploy-staging
-          project-name: force
-          requires:
-            - push-staging-image
-
-      # Release
-      - validate_production_schema:
-          <<: *only_release
-      - hokusai/deploy-production:
-          <<: *only_release
-          name: deploy-production
-          requires:
-            - horizon/block
-            - validate_production_schema
-
-      - run_deepcrawl_automator:
-          context: deepcrawl-automator
-          requires:
-            - deploy-production
-
-      - create_or_update_review_app:
+      - jest:
+          <<: *not_staging_or_release
           context: hokusai
-          filters:
-            branches:
-              only: /^review-app-.*/
+          requires:
+            - build
+
+      - type-check:
+          <<: *not_staging_or_release
+          context: hokusai
+          requires:
+            - build
+
+      - acceptance:
+          <<: *not_staging_or_release
+          context: hokusai
+          requires:
+            - build
+
+      - acceptance-cypress:
+          <<: *not_staging_or_release
+          context: hokusai
+          requires:
+            - build
+
+      - artsy-remote-docker/build:
+          <<: *not_staging_or_release
+          context: hokusai
+          name: push-staging-image
+          requires:
+            - mocha
+            - jest
+            - type-check
+            - acceptance
+            - acceptance-cypress
+          pre-steps:
+            - run:
+                command: echo 'export BUILD_TARGET="production"' >> $BASH_ENV

@@ -35,15 +35,15 @@ export const setup = async () => {
   positron = await startApp(POSITRON_PORT)
   metaphysics = await startApp(METAPHYSICS_PORT)
   force = await startForce(FORCE_PORT)
-  browser = mixinBrowserHelpers(
-    Nightmare({
-      waitTimeout: TIMEOUT,
-      gotoTimeout: TIMEOUT,
-      loadTimeout: TIMEOUT,
-      executionTimeout: TIMEOUT,
-      typeInterval: 10,
-    })
-  )
+  browser = Nightmare({
+    waitTimeout: TIMEOUT,
+    gotoTimeout: TIMEOUT,
+    loadTimeout: TIMEOUT,
+    executionTimeout: TIMEOUT,
+    typeInterval: 10,
+  })
+
+  initializeBrowser(browser)
 
   // Make sure cancelling the process cleans up the servers/Electron
   process.on("exit", teardown)
@@ -77,7 +77,7 @@ export const sleep = ms =>
     setTimeout(resolve, ms)
   })
 
-const mixinBrowserHelpers = browser => {
+function initializeBrowser(browser) {
   // Steps to log in through the auth modal
   browser.login = async () => {
     await browser.el(".mlh-login")
@@ -104,10 +104,10 @@ const mixinBrowserHelpers = browser => {
     }, selector)
     return html
   }
-  return browser
 }
 
-const warn = e => console.log(chalk.red(e))
+// eslint-disable-next-line
+const warn = e => console.log("warning", chalk.yellow(e))
 
 const startForce = port =>
   new Promise((resolve, reject) => {
@@ -142,10 +142,7 @@ const startGravity = port =>
     app.get("/api/v1/xapp_token", (req, res) => {
       res.send({
         xapp_token: "xapp-token",
-        expires_in: moment()
-          .add(100, "days")
-          .utc()
-          .format(),
+        expires_in: moment().add(100, "days").utc().format(),
       })
     })
     app.get("/api/v1/profile/pace-gallery", (req, res) => {
