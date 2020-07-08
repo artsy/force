@@ -59,26 +59,62 @@ describe("ArtistSeriesApp", () => {
 
       describe("ArtistSeriesHeader", () => {
         describe("desktop", () => {
-          it("renders correctly", async () => {
-            const wrapper = await getWrapper()
-            // TODO: expect(wrapper.find("ResponsiveImage").length).toBe(1)
-            expect(wrapper.find("ArtistSeriesHeaderLarge").length).toBe(1)
-            expect(wrapper.find("ArtistSeriesHeaderSmall").length).toBe(0)
-            const html = wrapper.html()
-            expect(html).toContain("Pumpkins")
-            expect(html).toContain("All of the pumpkins")
+          describe("with an artist", () => {
+            it("renders correctly", async () => {
+              const wrapper = await getWrapper()
+              // TODO: expect(wrapper.find("ResponsiveImage").length).toBe(1)
+              expect(wrapper.find("ArtistSeriesHeaderLarge").length).toBe(1)
+              expect(wrapper.find("ArtistSeriesHeaderSmall").length).toBe(0)
+              expect(wrapper.find("EntityHeader").length).toBe(1)
+              expect(wrapper.find("FollowArtistButton").length).toBe(1)
+              const html = wrapper.html()
+              expect(html).toContain("Pumpkins")
+              expect(html).toContain("All of the pumpkins")
+              expect(html).toContain("Yayoi Kusama")
+              expect(html).toContain("https://test.artsy.net/yayoi-kusama.jpg")
+            })
+          })
+
+          describe("without an artist", () => {
+            it("renders the header without artist info", async () => {
+              const wrapper = await getWrapper(
+                "lg",
+                ArtistSeriesWithoutArtistAppFixture
+              )
+              expect(wrapper.find("ArtistSeriesHeaderLarge").length).toBe(1)
+              expect(wrapper.find("EntityHeader").length).toBe(0)
+              expect(wrapper.find("FollowArtistButton").length).toBe(0)
+            })
           })
         })
 
         describe("mobile", () => {
-          it("renders correctly", async () => {
-            const wrapper = await getWrapper("xs")
-            // TODO: expect(wrapper.find("ResponsiveImage").length).toBe(1)
-            expect(wrapper.find("ArtistSeriesHeaderLarge").length).toBe(0)
-            expect(wrapper.find("ArtistSeriesHeaderSmall").length).toBe(1)
-            const html = wrapper.html()
-            expect(html).toContain("Pumpkins")
-            expect(html).toContain("All of the pumpkins")
+          describe("with an artist", () => {
+            it("renders correctly", async () => {
+              const wrapper = await getWrapper("xs")
+              // TODO: expect(wrapper.find("ResponsiveImage").length).toBe(1)
+              expect(wrapper.find("ArtistSeriesHeaderLarge").length).toBe(0)
+              expect(wrapper.find("ArtistSeriesHeaderSmall").length).toBe(1)
+              expect(wrapper.find("EntityHeader").length).toBe(1)
+              expect(wrapper.find("FollowArtistButton").length).toBe(1)
+              const html = wrapper.html()
+              expect(html).toContain("Pumpkins")
+              expect(html).toContain("All of the pumpkins")
+              expect(html).toContain("Yayoi Kusama")
+              expect(html).toContain("https://test.artsy.net/yayoi-kusama.jpg")
+            })
+          })
+
+          describe("without an artist", () => {
+            it("renders the header without artist info", async () => {
+              const wrapper = await getWrapper(
+                "xs",
+                ArtistSeriesWithoutArtistAppFixture
+              )
+              expect(wrapper.find("ArtistSeriesHeaderSmall").length).toBe(1)
+              expect(wrapper.find("EntityHeader").length).toBe(0)
+              expect(wrapper.find("FollowArtistButton").length).toBe(0)
+            })
           })
         })
       })
@@ -127,6 +163,29 @@ const ArtistSeriesAppFixture: ArtistSeriesApp_QueryRawResponse = {
   artistSeries: {
     title: "Pumpkins",
     description: "All of the pumpkins",
+    artists: [
+      {
+        name: "Yayoi Kusama",
+        image: {
+          url: "https://test.artsy.net/yayoi-kusama.jpg",
+        },
+        slug: "yayoi-kusama",
+        internalID: "abc123",
+        id: "abc123",
+        is_followed: false,
+        counts: {
+          follows: 222,
+        },
+      },
+    ],
+  },
+}
+
+const ArtistSeriesWithoutArtistAppFixture: ArtistSeriesApp_QueryRawResponse = {
+  artistSeries: {
+    title: "Pumpkins",
+    description: "All of the pumpkins",
+    artists: [],
   },
 }
 

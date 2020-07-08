@@ -35,7 +35,6 @@ fragment ArtistSeriesHeader_artistSeries on ArtistSeries {
   description
   artists(size: 1) {
     name
-    isFollowed
     image {
       url
     }
@@ -150,13 +149,6 @@ return {
                 "storageKey": null
               },
               {
-                "kind": "ScalarField",
-                "alias": null,
-                "name": "isFollowed",
-                "args": null,
-                "storageKey": null
-              },
-              {
                 "kind": "LinkedField",
                 "alias": null,
                 "name": "image",
@@ -230,7 +222,7 @@ return {
     "operationKind": "query",
     "name": "routes_ArtistSeriesQuery",
     "id": null,
-    "text": "query routes_ArtistSeriesQuery(\n  $slug: ID!\n) {\n  artistSeries(id: $slug) {\n    ...ArtistSeriesApp_artistSeries\n  }\n}\n\nfragment ArtistSeriesApp_artistSeries on ArtistSeries {\n  ...ArtistSeriesHeader_artistSeries\n}\n\nfragment ArtistSeriesHeader_artistSeries on ArtistSeries {\n  title\n  description\n  artists(size: 1) {\n    name\n    isFollowed\n    image {\n      url\n    }\n    slug\n    ...FollowArtistButton_artist\n    id\n  }\n}\n\nfragment FollowArtistButton_artist on Artist {\n  id\n  internalID\n  name\n  is_followed: isFollowed\n  counts {\n    follows\n  }\n}\n",
+    "text": "query routes_ArtistSeriesQuery(\n  $slug: ID!\n) {\n  artistSeries(id: $slug) {\n    ...ArtistSeriesApp_artistSeries\n  }\n}\n\nfragment ArtistSeriesApp_artistSeries on ArtistSeries {\n  ...ArtistSeriesHeader_artistSeries\n}\n\nfragment ArtistSeriesHeader_artistSeries on ArtistSeries {\n  title\n  description\n  artists(size: 1) {\n    name\n    image {\n      url\n    }\n    slug\n    ...FollowArtistButton_artist\n    id\n  }\n}\n\nfragment FollowArtistButton_artist on Artist {\n  id\n  internalID\n  name\n  is_followed: isFollowed\n  counts {\n    follows\n  }\n}\n",
     "metadata": {}
   }
 };

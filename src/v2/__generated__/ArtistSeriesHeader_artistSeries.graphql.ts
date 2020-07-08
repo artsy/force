@@ -7,7 +7,6 @@ export type ArtistSeriesHeader_artistSeries = {
     readonly description: string | null;
     readonly artists: ReadonlyArray<{
         readonly name: string | null;
-        readonly isFollowed: boolean | null;
         readonly image: {
             readonly url: string | null;
         } | null;
@@ -68,13 +67,6 @@ const node: ReaderFragment = {
           "storageKey": null
         },
         {
-          "kind": "ScalarField",
-          "alias": null,
-          "name": "isFollowed",
-          "args": null,
-          "storageKey": null
-        },
-        {
           "kind": "LinkedField",
           "alias": null,
           "name": "image",
@@ -108,5 +100,5 @@ const node: ReaderFragment = {
     }
   ]
 };
-(node as any).hash = '2719ef99b459b54107debe4c3296b1a2';
+(node as any).hash = '0a41a576291fd93d3c5572d257135d30';
 export default node;

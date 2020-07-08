@@ -171,7 +171,6 @@ export const ArtistSeriesHeaderFragmentContainer = createFragmentContainer(
         description
         artists(size: 1) {
           name
-          isFollowed
           image {
             url
           }
