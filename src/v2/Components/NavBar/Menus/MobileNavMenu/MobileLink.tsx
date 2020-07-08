@@ -48,7 +48,10 @@ export const MobileLink: React.FC<MobileLinkProps> = ({
           <Link
             href={href}
             underlineBehavior="none"
-            onClick={onClick || (() => handleClickTracking(href))}
+            onClick={evt => {
+              onClick && onClick(evt)
+              handleClickTracking(href)
+            }}
           >
             <Sans size={["5t", "6"]} color={color("black60")}>
               {children}
