@@ -21,50 +21,51 @@ interface ArtistSeriesHeaderProps {
   artistSeries: ArtistSeriesHeader_artistSeries
 }
 
-const ArtistsInfo = (artists: ArtistSeriesHeader_artistSeries["artists"]) => {
+interface ArtistsInfoProps {
+  artist: ArtistSeriesHeader_artistSeries["artists"][0]
+}
+
+const ArtistInfo: React.FC<ArtistsInfoProps> = props => {
+  /* Displays artist name, avatar and follow button. We currently assume
+     that an artist series will have one artist. */
   const { user, mediator } = useSystemContext()
-  // We're guaranteed to have at most one artist in an artist series for now.
-  const artist = artists[0] ?? null
-  if (artist) {
-    return (
-      <EntityHeader
-        smallVariant
-        name={artist.name}
-        imageUrl={artist.image?.url}
-        FollowButton={
-          <FollowArtistButton
-            artist={artist}
-            user={user}
-            onOpenAuthModal={() =>
-              openAuthToFollowSave(mediator, {
-                entity: artist,
-                // FIXME: Add artist series to Cohesion
-                contextModule: null,
-                intent: Intent.followArtist,
-              })
-            }
-            render={({ is_followed }) => {
-              return (
-                <Sans
-                  size="3"
-                  color="black"
-                  data-test="followArtistButton"
-                  style={{
-                    cursor: "pointer",
-                    textDecoration: "underline",
-                  }}
-                >
-                  {is_followed ? "Following" : "Follow"}
-                </Sans>
-              )
-            }}
-          />
-        }
-      />
-    )
-  } else {
-    return null
-  }
+  const { artist } = props
+  return (
+    <EntityHeader
+      smallVariant
+      name={artist.name}
+      imageUrl={artist.image?.url}
+      FollowButton={
+        <FollowArtistButton
+          artist={artist}
+          user={user}
+          onOpenAuthModal={() =>
+            openAuthToFollowSave(mediator, {
+              entity: artist,
+              // FIXME: Add artist series to Cohesion
+              contextModule: null,
+              intent: Intent.followArtist,
+            })
+          }
+          render={({ is_followed }) => {
+            return (
+              <Sans
+                size="3"
+                color="black"
+                data-test="followArtistButton"
+                style={{
+                  cursor: "pointer",
+                  textDecoration: "underline",
+                }}
+              >
+                {is_followed ? "Following" : "Follow"}
+              </Sans>
+            )
+          }}
+        />
+      }
+    />
+  )
 }
 
 const ArtistSeriesHeader: React.FC<ArtistSeriesHeaderProps> = props => {
@@ -93,7 +94,7 @@ const ArtistSeriesHeaderLarge: React.FC<ArtistSeriesHeaderProps> = props => {
         p={2}
       >
         <Flex position="absolute" left={3}>
-          {ArtistsInfo(artists)}
+          {artists.length > 0 ? <ArtistInfo artist={artists[0]} /> : null}
         </Flex>
         <Sans size="3">Series</Sans>
       </Flex>
@@ -151,7 +152,7 @@ const ArtistSeriesHeaderSmall: React.FC<ArtistSeriesHeaderProps> = props => {
         <Sans size="8" element="h1" my={1} unstable_trackIn>
           {title}
         </Sans>
-        {ArtistsInfo(artists)}
+        {artists.length > 0 ? <ArtistInfo artist={artists[0]} /> : null}
         <Box my={1}>
           <Sans lineHeight={1.5} size="3t">
             {description}
