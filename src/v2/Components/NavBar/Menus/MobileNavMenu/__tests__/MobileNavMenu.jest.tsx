@@ -10,7 +10,6 @@ import {
   MobileSubmenuLink,
 } from "../../MobileNavMenu/MobileNavMenu"
 import { MobileLink } from "../MobileLink"
-import { LoggedInLinks } from "../LoggedInLinks"
 
 jest.mock("v2/Artsy/Analytics/useTracking")
 jest.mock("lib/environment", () => ({
