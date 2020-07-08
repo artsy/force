@@ -37,7 +37,6 @@ exports[`MarketInsights snapshots renders correctly 1`] = `
   border-radius: 50%;
   line-height: 15px;
   text-align: center;
-  vertical-align: middle;
   color: white;
 }
 

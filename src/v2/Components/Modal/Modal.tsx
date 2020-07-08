@@ -91,10 +91,10 @@ export class Modal extends React.Component<ModalProps> {
   }
 }
 
-export const ModalContent = styled.div.attrs<{
+export const ModalContent = styled.div<{
   cta: CtaProps
   hasImage: boolean
-}>({})`
+}>`
   padding: ${props =>
     props.cta
       ? props.cta.isFixed
@@ -107,7 +107,7 @@ export const ModalContent = styled.div.attrs<{
   ${media.sm`
     width: 100%;
     margin: 0px;
-    padding: ${props =>
+    padding: ${(props: { cta: CtaProps }) =>
       props.cta && props.cta.isFixed ? "20px 20px 110px" : "20px"};
   `};
 `
@@ -131,7 +131,7 @@ export const CloseButton = styled(Icon).attrs({
   cursor: pointer;
 `
 
-export const Image = styled.div.attrs<{ image: string }>({})`
+export const Image = styled.div<{ image: string }>`
   background-image: url(${props => props.image});
   background-size: cover;
   background-position: center;

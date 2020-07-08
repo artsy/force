@@ -10,18 +10,23 @@ import {
   MobileSubmenuLink,
 } from "../../MobileNavMenu/MobileNavMenu"
 import { MobileLink } from "../MobileLink"
+import { LoggedInLinks } from "../LoggedInLinks"
 
 jest.mock("v2/Artsy/Analytics/useTracking")
+jest.mock("lib/environment", () => ({
+  isServer: true,
+}))
 
 describe("MobileNavMenu", () => {
   const mediator = {
     trigger: jest.fn(),
   }
   const trackEvent = jest.fn()
+  const noop = () => {}
   const getWrapper = props => {
     return mount(
       <SystemContextProvider mediator={mediator} user={props.user}>
-        <MobileNavMenu isOpen menuData={menuData} />
+        <MobileNavMenu isOpen menuData={menuData} onClose={noop} />
       </SystemContextProvider>
     )
   }
@@ -45,10 +50,13 @@ describe("MobileNavMenu", () => {
 
   it("calls logout auth action on logout menu click", () => {
     const wrapper = getWrapper({ user: { type: "NotAdmin" } })
-    const event = {
-      preventDefault: () => {},
-    } as any
-    wrapper.find("MobileLink").last().props().onClick(event)
+    wrapper
+      .find("MobileLink")
+      .last()
+      .props()
+      .onClick({
+        preventDefault: () => {},
+      } as any)
     expect(mediator.trigger).toBeCalledWith("auth:logout")
   })
 

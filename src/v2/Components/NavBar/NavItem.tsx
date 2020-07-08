@@ -2,7 +2,7 @@ import { Box, BoxProps, Link, Sans, space } from "@artsy/palette"
 import { AnalyticsSchema } from "v2/Artsy"
 import { useTracking } from "v2/Artsy/Analytics/useTracking"
 import { isFunction, isString } from "lodash"
-import React, { useCallback, useEffect, useState } from "react"
+import React, { useState } from "react"
 import { animated, config, useSpring } from "react-spring"
 import styled from "styled-components"
 
@@ -10,9 +10,7 @@ interface NavItemProps extends BoxProps {
   Menu?: React.FC<{
     setIsVisible: React.Dispatch<React.SetStateAction<boolean>>
   }>
-  Overlay?: React.FC<{
-    hover: boolean
-  }>
+  Overlay?: React.FC
   active?: boolean
   className?: string
   href?: string
@@ -68,20 +66,6 @@ export const NavItem: React.FC<NavItemProps> = ({
       })
     }
   }
-
-  const trackHover = useCallback(() => {
-    if (isString(navItemLabel) || label)
-      trackEvent({
-        action_type: AnalyticsSchema.ActionType.Hover,
-        subject: label || navItemLabel.toString(),
-      })
-  }, [label, navItemLabel, trackEvent])
-
-  useEffect(() => {
-    if (hover) {
-      trackHover()
-    }
-  }, [hover, trackHover])
 
   return (
     <Box
@@ -147,7 +131,7 @@ export const NavItem: React.FC<NavItemProps> = ({
         </animated.div>
       )}
 
-      {showOverlay && <Overlay hover={hover} />}
+      {showOverlay && <Overlay />}
     </Box>
   )
 }

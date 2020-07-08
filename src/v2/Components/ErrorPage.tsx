@@ -72,7 +72,7 @@ const ErrorInner = styled.div`
   word-break: break-word;
 `
 
-const ErrorCodeBackground = styled<ErrorCodeBackgroundProps, any>("div")`
+const ErrorCodeBackground = styled.div<ErrorCodeBackgroundProps>`
   position: absolute;
   text-align: center;
   width: 100%;
@@ -83,7 +83,7 @@ const ErrorCodeBackground = styled<ErrorCodeBackgroundProps, any>("div")`
   transform: translate(-50%, -50%);
 
   &::before {
-    content: "${(props: ErrorCodeBackgroundProps) => `${props.code}`}";
+    content: "${props => `${props.code}`}";
     display: block;
     position: absolute;
     top: calc(50% \+ 30px);

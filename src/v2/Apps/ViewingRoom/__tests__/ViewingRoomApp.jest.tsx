@@ -1,10 +1,12 @@
 import React from "react"
 import { MockBoot, renderRelayTree } from "v2/DevTools"
+import { Mediator, SystemContextProvider } from "v2/Artsy"
 import ViewingRoomApp from "../ViewingRoomApp"
 import { graphql } from "react-relay"
 import { ViewingRoomApp_OpenTest_QueryRawResponse } from "v2/__generated__/ViewingRoomApp_OpenTest_Query.graphql"
 import { ViewingRoomApp_ClosedTest_QueryRawResponse } from "v2/__generated__/ViewingRoomApp_ClosedTest_Query.graphql"
 import { ViewingRoomApp_UnfoundTest_QueryRawResponse } from "v2/__generated__/ViewingRoomApp_UnfoundTest_Query.graphql"
+import { ViewingRoomApp_LoggedOutTest_QueryRawResponse } from "v2/__generated__/ViewingRoomApp_LoggedOutTest_Query.graphql.ts"
 import { Breakpoint } from "@artsy/palette"
 
 jest.unmock("react-relay")
@@ -20,7 +22,15 @@ jest.mock("v2/Artsy/Router/useRouter", () => ({
 }))
 
 describe("ViewingRoomApp", () => {
+  let user
+  let mediator: Mediator
   const slug = "subscription-demo-gg-guy-yanai"
+
+  beforeEach(() => {
+    user = { id: "blah" }
+    mediator = { trigger: jest.fn() }
+    window.history.pushState({}, "Viewing Room Title", slug)
+  })
 
   describe("with open viewing room", () => {
     const getWrapper = async (
@@ -31,9 +41,11 @@ describe("ViewingRoomApp", () => {
         Component: ({ viewingRoom }) => {
           return (
             <MockBoot breakpoint={breakpoint}>
-              <ViewingRoomApp viewingRoom={viewingRoom}>
-                some child
-              </ViewingRoomApp>
+              <SystemContextProvider mediator={mediator} user={user}>
+                <ViewingRoomApp viewingRoom={viewingRoom}>
+                  some child
+                </ViewingRoomApp>
+              </SystemContextProvider>
             </MockBoot>
           )
         },
@@ -105,9 +117,11 @@ describe("ViewingRoomApp", () => {
         Component: ({ viewingRoom }) => {
           return (
             <MockBoot breakpoint={breakpoint}>
-              <ViewingRoomApp viewingRoom={viewingRoom}>
-                some child
-              </ViewingRoomApp>
+              <SystemContextProvider mediator={mediator} user={user}>
+                <ViewingRoomApp viewingRoom={viewingRoom}>
+                  some child
+                </ViewingRoomApp>
+              </SystemContextProvider>
             </MockBoot>
           )
         },
@@ -169,9 +183,11 @@ describe("ViewingRoomApp", () => {
         Component: ({ viewingRoom }) => {
           return (
             <MockBoot breakpoint={breakpoint}>
-              <ViewingRoomApp viewingRoom={viewingRoom}>
-                some child
-              </ViewingRoomApp>
+              <SystemContextProvider mediator={mediator} user={user}>
+                <ViewingRoomApp viewingRoom={viewingRoom}>
+                  some child
+                </ViewingRoomApp>
+              </SystemContextProvider>
             </MockBoot>
           )
         },
@@ -195,6 +211,48 @@ describe("ViewingRoomApp", () => {
       expect(html).toContain(
         "Sorry, the page you were looking for doesn’t exist at this URL."
       )
+    })
+  })
+
+  describe("with logged out user", () => {
+    const getWrapper = async (
+      breakpoint: Breakpoint = "lg",
+      response: ViewingRoomApp_LoggedOutTest_QueryRawResponse = LoggedOutViewingRoomAppFixture
+    ) => {
+      return renderRelayTree({
+        Component: ({ viewingRoom }) => {
+          return (
+            <MockBoot breakpoint={breakpoint}>
+              <SystemContextProvider mediator={mediator} user={{}}>
+                <ViewingRoomApp viewingRoom={viewingRoom}>
+                  some child
+                </ViewingRoomApp>
+              </SystemContextProvider>
+            </MockBoot>
+          )
+        },
+        query: graphql`
+          query ViewingRoomApp_LoggedOutTest_Query($slug: ID!)
+            @raw_response_type {
+            viewingRoom(id: $slug) {
+              ...ViewingRoomApp_viewingRoom
+            }
+          }
+        `,
+        variables: {
+          slug,
+        },
+        mockData: response,
+      })
+    }
+    it("shows sign up modal", async () => {
+      await getWrapper()
+      expect(mediator.trigger).toBeCalledWith("open:auth", {
+        mode: "signup",
+        redirectTo: "http://localhost/" + slug,
+        contextModule: "viewingRoom",
+        intent: "viewViewingRoom",
+      })
     })
   })
 })
@@ -233,4 +291,20 @@ const ClosedViewingRoomAppFixture: ViewingRoomApp_ClosedTest_QueryRawResponse = 
 
 const UnfoundViewingRoomAppFixture: ViewingRoomApp_UnfoundTest_QueryRawResponse = {
   viewingRoom: null,
+}
+
+const LoggedOutViewingRoomAppFixture: ViewingRoomApp_LoggedOutTest_QueryRawResponse = {
+  viewingRoom: {
+    title: "Guy Yanai",
+    heroImageURL:
+      "https://d7hftxdivxxvm.cloudfront.net/?resize_to=width&src=https%3A%2F%2Fartsy-media-uploads.s3.amazonaws.com%2F0RnxWDsVmKuALfpmd75YyA%2FCTPHSEPT19_018_JO_Guy_Yanai_TLV_031_20190913.jpg&width=1200&quality=80",
+    partner: {
+      name: "Subscription Demo GG",
+      id: "UGFydG5lcjo1NTQxMjM3MzcyNjE2OTJiMTk4YzAzMDA=",
+      href: "/partner-demo-gg",
+    },
+    distanceToOpen: null,
+    distanceToClose: "Closes in 1 month",
+    status: "live",
+  },
 }

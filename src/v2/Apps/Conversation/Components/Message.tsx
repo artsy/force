@@ -7,7 +7,6 @@ import {
   FlexProps,
   Image,
   Sans,
-  Spacer,
   color,
 } from "@artsy/palette"
 import { Message_message } from "v2/__generated__/Message_message.graphql"
@@ -22,6 +21,7 @@ import {
   alignSelf,
   background,
 } from "styled-system"
+import Linkify from "react-linkify"
 
 const AttachmentLink = styled.a`
   width: min-content;
@@ -38,6 +38,15 @@ const AttachmentContainer = styled(Flex)<
   white-space: no-wrap;
   width: min-content;
   justify-content: space-between;
+`
+
+const MessageText = styled(Sans)`
+  white-space: pre-line;
+  && {
+    a:hover {
+      color: currentcolor;
+    }
+  }
 `
 
 interface AttachmentProps {
@@ -59,7 +68,7 @@ export const Attachment: React.FC<AttachmentProps> = props => {
         background={color(bgColor)}
       >
         {attachment.contentType.startsWith("image") ? (
-          <Image src={attachment.downloadURL} />
+          <Image src={attachment.downloadURL} alt={attachment.fileName} />
         ) : (
           <>
             <Sans color={textColor} weight="medium" size="4" mr={2}>
@@ -78,13 +87,23 @@ interface MessageProps extends Omit<BoxProps, "color"> {
   isFirst: boolean
   showTimeSince?: boolean
 }
-const Message: React.FC<MessageProps> = props => {
+export const Message: React.FC<MessageProps> = props => {
   const { message, initialMessage, isFirst, showTimeSince, ...boxProps } = props
   const { isFromUser, body } = message
   const text = isFirst ? initialMessage : body
   const bgColor = isFromUser ? "black100" : "black10"
   const textColor = isFromUser ? "white100" : "black100"
   const alignSelf = isFromUser ? "flex-end" : undefined
+
+  // react-linkify v1.0.0-alpha has a bug that `properties` doesn't work.
+  // This is a workaround to specify target for now.
+  // https://github.com/tasti/react-linkify/issues/78#issuecomment-514754050
+  const linkTargetDecorator = (href, text, key) => (
+    <a href={href} key={key} target="_blank">
+      {text}
+    </a>
+  )
+
   return (
     <>
       <Box
@@ -95,11 +114,12 @@ const Message: React.FC<MessageProps> = props => {
           borderRadius: "15px",
           alignSelf,
         }}
-        width="66.67%"
+        maxWidth="66.67%"
+        width="fit-content"
       >
-        <Sans size="4" color={textColor}>
-          {text}
-        </Sans>
+        <MessageText size="4" color={textColor}>
+          <Linkify componentDecorator={linkTargetDecorator}>{text}</Linkify>
+        </MessageText>
       </Box>
       {message.attachments.length > 0 &&
         message.attachments.map(attachment => {
@@ -116,7 +136,6 @@ const Message: React.FC<MessageProps> = props => {
       {showTimeSince && (
         <TimeSince time={message.createdAt} style={{ alignSelf }} mt={0.5} />
       )}
-      <Spacer mb={showTimeSince ? 1 : 0.5} />
     </>
   )
 }

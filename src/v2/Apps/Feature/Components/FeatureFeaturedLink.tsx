@@ -71,10 +71,10 @@ export const FeatureFeaturedLink: React.FC<FeatureFeaturedLinkProps> = ({
           </Title>
         </Figure>
       ) : (
-          <Sans size="6" color="black100" my={2}>
-            <RouterLink to={href}>{title || "—"}</RouterLink>
-          </Sans>
-        )}
+        <Sans size="6" color="black100" my={2}>
+          <RouterLink to={href}>{title || "—"}</RouterLink>
+        </Sans>
+      )}
 
       <Flex flexDirection={size === "large" ? ["column", "row"] : "column"}>
         {subtitle && (

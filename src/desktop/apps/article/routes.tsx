@@ -38,7 +38,7 @@ const markdown = require("desktop/components/util/markdown.coffee")
 const { crop, resize } = require("desktop/components/resizer/index.coffee")
 const Article = require("desktop/models/article.coffee")
 const { stringifyJSONForWeb } = require("desktop/components/util/json.coffee")
-const metaphysics = require("lib/metaphysics.coffee")
+const metaphysics = require("lib/metaphysics2.coffee")
 
 export const index = async (req, res, next) => {
   let articleId = req.params.slug
@@ -49,9 +49,9 @@ export const index = async (req, res, next) => {
 
     if (!req.path.includes(`/series/`)) {
       return res.redirect(
-        `/series/artsy-vanguard-2019${(req.params.slug &&
-          `/${req.params.slug}`) ||
-          ""}`
+        `/series/artsy-vanguard-2019${
+          (req.params.slug && `/${req.params.slug}`) || ""
+        }`
       )
     }
   }

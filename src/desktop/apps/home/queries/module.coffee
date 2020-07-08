@@ -1,7 +1,7 @@
 module.exports = """
   query HomePageModuleQuery($key: String, $id: String, $related_artist_id: String, $followed_artist_id: String, $timezone: String) {
-    home_page {
-      artwork_module(key: $key, id: $id, related_artist_id: $related_artist_id, followed_artist_id: $followed_artist_id) {
+    home_page: homePage {
+      artwork_module: artworkModule(key: $key, id: $id, relatedArtistID: $related_artist_id, followedArtistID: $followed_artist_id) {
         title
         key
         results {
@@ -26,7 +26,7 @@ module.exports = """
       }
     }
   }
-  #{require '../../../components/artwork_brick/query.coffee'}
+  #{require '../../../components/artwork_brick/query2.coffee'}
   #{require '../components/auction_context/query.coffee'}
   #{require '../components/fair_context/query.coffee'}
   #{require '../components/popular_artists_context/query.coffee'}

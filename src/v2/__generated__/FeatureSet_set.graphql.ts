@@ -76,12 +76,12 @@ return {
       "kind": "LinkedField",
       "alias": "orderedItems",
       "name": "orderedItemsConnection",
-      "storageKey": "orderedItemsConnection(first:20)",
+      "storageKey": "orderedItemsConnection(first:35)",
       "args": [
         {
           "kind": "Literal",
           "name": "first",
-          "value": 20
+          "value": 35
         }
       ],
       "concreteType": "OrderedSetItemConnection",
@@ -141,5 +141,5 @@ return {
   ]
 };
 })();
-(node as any).hash = '8cd3e0647c2e862cef0c144dd6dc313a';
+(node as any).hash = 'ab3d81270da7110cd400fd1e454f2248';
 export default node;

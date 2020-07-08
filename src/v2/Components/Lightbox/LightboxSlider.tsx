@@ -27,8 +27,6 @@ const StyledSlider = styled.input`
     /* stylelint-disable-next-line property-no-vendor-prefix */
     -webkit-appearance: none;
     margin-top: -9px; /* You need to specify a margin in Chrome, but in Firefox and IE it is automatic */
-
-    /* prettier-ignore */
     ${knobStyles}
   }
 
@@ -159,7 +157,7 @@ export const Slider: SFC<SliderProps> = props => (
         max={props.max.toString()}
         step={props.step.toString()}
         onChange={props.onChange}
-        ref={element => element && (element.value = props.value)}
+        ref={element => element && (element.value = String(props.value))}
       />
       <ZoomInButton onClick={props.onZoomInClicked} />
     </Flex>

@@ -1,10 +1,10 @@
 module.exports = """
-  fragment related_artists_context on HomePageModuleContextRelatedArtist {
+  fragment related_artists_context on HomePageRelatedArtistArtworkModule {
     artist {
       href
-      id
+      id: slug
     }
-    based_on {
+    based_on: basedOn {
       name
       href
     }

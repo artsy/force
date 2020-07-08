@@ -663,6 +663,7 @@ type Artist implements EntityWithFilterArtworksConnectionInterface & Node & Sear
     aggregations: [ArtworkAggregation]
     artistID: String
     artistIDs: [String]
+    artistSeriesID: String
     atAuction: Boolean
     attributionClass: [String]
     before: String
@@ -987,8 +988,53 @@ type ArtistRelatedData {
 }
 
 type ArtistSeries {
+  # List of Mongo IDs for associated Artists
+  artistIDs: [String!]!
+  artists(page: Int, size: Int): [Artist]
   description: String
   featured: Boolean!
+  filterArtworksConnection(
+    acquireable: Boolean
+    after: String
+    aggregationPartnerCities: [String]
+    aggregations: [ArtworkAggregation]
+    artistID: String
+    artistIDs: [String]
+    artistSeriesID: String
+    atAuction: Boolean
+    attributionClass: [String]
+    before: String
+    color: String
+    dimensionRange: String
+    extraAggregationGeneIDs: [String]
+    first: Int
+    forSale: Boolean
+    geneID: String
+    geneIDs: [String]
+    height: String
+    includeArtworksByFollowedArtists: Boolean
+    includeMediumFilterInAggregation: Boolean
+    inquireableOnly: Boolean
+    keyword: String
+    keywordMatchExact: Boolean
+    last: Int
+    majorPeriods: [String]
+    marketable: Boolean
+    medium: String
+    offerable: Boolean
+    page: Int
+    partnerCities: [String]
+    partnerID: ID
+    period: String
+    periods: [String]
+    priceRange: String
+    saleID: ID
+    size: Int
+    sizes: [ArtworkSizes]
+    sort: String
+    tagID: String
+    width: String
+  ): FilterArtworksConnection
 
   # Unique ID for this artist series
   internalID: ID!
@@ -4570,6 +4616,7 @@ interface EntityWithFilterArtworksConnectionInterface {
     aggregations: [ArtworkAggregation]
     artistID: String
     artistIDs: [String]
+    artistSeriesID: String
     atAuction: Boolean
     attributionClass: [String]
     before: String
@@ -4710,6 +4757,7 @@ type Fair implements EntityWithFilterArtworksConnectionInterface & Node {
     aggregations: [ArtworkAggregation]
     artistID: String
     artistIDs: [String]
+    artistSeriesID: String
     atAuction: Boolean
     attributionClass: [String]
     before: String
@@ -4917,6 +4965,14 @@ type Feature {
   # A slug ID.
   slug: ID!
   subheadline(format: Format): String
+}
+
+# An illustrated link chosen to highlight a Gene from a given GeneFamily
+type FeaturedGeneLink {
+  href: String!
+  image: Image
+  internalID: String!
+  title: String!
 }
 
 type FeaturedLink {
@@ -5312,6 +5368,7 @@ type Gene implements Node & Searchable {
     aggregations: [ArtworkAggregation]
     artistID: String
     artistIDs: [String]
+    artistSeriesID: String
     atAuction: Boolean
     attributionClass: [String]
     before: String
@@ -5400,6 +5457,40 @@ type GeneEdge {
 
   # The item at the end of the edge
   node: Gene
+}
+
+# A user-facing thematic grouping of Genes
+type GeneFamily {
+  featuredGeneLinks: [FeaturedGeneLink]
+  genes: [Gene]
+
+  # A globally unique ID.
+  id: ID!
+
+  # A type-specific ID likely used as a database ID.
+  internalID: ID!
+  name: String!
+
+  # A slug ID.
+  slug: ID!
+}
+
+# A connection to a list of items.
+type GeneFamilyConnection {
+  # A list of edges.
+  edges: [GeneFamilyEdge]
+
+  # Information to aid in pagination.
+  pageInfo: PageInfo!
+}
+
+# An edge in a connection.
+type GeneFamilyEdge {
+  # A cursor for use in pagination
+  cursor: String!
+
+  # The item at the end of the edge
+  node: GeneFamily
 }
 
 type GravityMutationError {
@@ -5919,6 +6010,7 @@ type MarketingCollection {
     aggregations: [ArtworkAggregation]
     artistID: String
     artistIDs: [String]
+    artistSeriesID: String
     atAuction: Boolean
     attributionClass: [String]
     before: String
@@ -6785,7 +6877,7 @@ type Partner implements Node {
   # A slug ID.
   slug: ID!
   type: String
-  viewingRoomsConnection: ViewingRoomConnection
+  viewingRoomsConnection(published: Boolean = true): ViewingRoomConnection
 
   # The gallery partner's web address
   website: String
@@ -6929,6 +7021,17 @@ enum PartnerClassification {
   PRIVATE_DEALER
 }
 
+# A connection to a list of items.
+type PartnerConnection {
+  # A list of edges.
+  edges: [PartnerEdge]
+  pageCursors: PageCursors!
+
+  # Information to aid in pagination.
+  pageInfo: PageInfo!
+  totalCount: Int
+}
+
 type PartnerCounts {
   artistDocuments(
     # Returns a `String` when format is specified. e.g.`'0,0.0000''`
@@ -6985,6 +7088,15 @@ type PartnerCounts {
     format: String
     label: String
   ): FormattedNumber
+}
+
+# An edge in a connection.
+type PartnerEdge {
+  # A cursor for use in pagination
+  cursor: String!
+
+  # The item at the end of the edge
+  node: Partner
 }
 
 enum PartnerShowPartnerType {
@@ -7149,6 +7261,7 @@ type Query {
     aggregations: [ArtworkAggregation]
     artistID: String
     artistIDs: [String]
+    artistSeriesID: String
     atAuction: Boolean
     attributionClass: [String]
     before: String
@@ -7318,6 +7431,14 @@ type Query {
     id: String!
   ): Gene
 
+  # A list of Gene Families
+  geneFamiliesConnection(
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): GeneFamilyConnection
+
   # A list of Genes
   genes(
     size: Int
@@ -7389,11 +7510,41 @@ type Query {
     id: String!
   ): OrderedSet
 
+  # A collection of OrderedSets
+  orderedSets(
+    # Key to the OrderedSet or group of OrderedSets
+    key: String!
+    public: Boolean = true
+  ): [OrderedSet]
+
   # A Partner
   partner(
     # The slug or ID of the Partner
     id: String!
   ): Partner
+
+  # A list of Artworks for a partner
+  partnerArtworks(
+    after: String
+    before: String
+    first: Int
+    last: Int
+    partnerID: String!
+    private: Boolean
+    viewingRoomID: String
+  ): ArtworkConnection
+    @deprecated(
+      reason: "This is only for use in resolving stitched queries, not for first-class client use."
+    )
+
+  # A list of Partners
+  partnersConnection(
+    after: String
+    before: String
+    first: Int
+    ids: [String]
+    last: Int
+  ): PartnerConnection
 
   # A Sale
   sale(
@@ -7477,6 +7628,15 @@ type Query {
     id: String!
   ): Show
 
+  # A list of Shows
+  showsConnection(
+    after: String
+    before: String
+    first: Int
+    ids: [String]
+    last: Int
+  ): ShowConnection
+
   # Content for a specific page or view
   staticContent(
     # The slug or id for the view
@@ -7541,13 +7701,15 @@ type Query {
 
     # Returns the elements in the list that come before the specified cursor.
     before: String
+    featured: Boolean
 
     # Returns the first _n_ elements from the list.
     first: Int
 
     # Returns the last _n_ elements from the list.
     last: Int
-    partnerId: ID
+    partnerID: ID
+    published: Boolean = true
   ): ViewingRoomConnection
 }
 
@@ -8341,6 +8503,7 @@ type Show implements EntityWithFilterArtworksConnectionInterface & Node {
     aggregations: [ArtworkAggregation]
     artistID: String
     artistIDs: [String]
+    artistSeriesID: String
     atAuction: Boolean
     attributionClass: [String]
     before: String
@@ -8721,6 +8884,7 @@ type Tag implements Node {
     aggregations: [ArtworkAggregation]
     artistID: String
     artistIDs: [String]
+    artistSeriesID: String
     atAuction: Boolean
     attributionClass: [String]
     before: String
@@ -8978,6 +9142,7 @@ type UpdateSubmissionMutationPayload {
 
 # Autogenerated input type of UpdateViewingRoom
 input UpdateViewingRoomInput {
+  artworks: [ViewingRoomArtworkAttributes!]
   attributes: ViewingRoomAttributes!
 
   # A unique identifier for the client performing the mutation.
@@ -9104,6 +9269,7 @@ type Viewer {
     aggregations: [ArtworkAggregation]
     artistID: String
     artistIDs: [String]
+    artistSeriesID: String
     atAuction: Boolean
     attributionClass: [String]
     before: String
@@ -9197,6 +9363,14 @@ type Viewer {
     id: String!
   ): Gene
 
+  # A list of Gene Families
+  geneFamiliesConnection(
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): GeneFamilyConnection
+
   # A list of Genes
   genes(
     size: Int
@@ -9234,11 +9408,41 @@ type Viewer {
     id: String!
   ): OrderedSet
 
+  # A collection of OrderedSets
+  orderedSets(
+    # Key to the OrderedSet or group of OrderedSets
+    key: String!
+    public: Boolean = true
+  ): [OrderedSet]
+
   # A Partner
   partner(
     # The slug or ID of the Partner
     id: String!
   ): Partner
+
+  # A list of Artworks for a partner
+  partnerArtworks(
+    after: String
+    before: String
+    first: Int
+    last: Int
+    partnerID: String!
+    private: Boolean
+    viewingRoomID: String
+  ): ArtworkConnection
+    @deprecated(
+      reason: "This is only for use in resolving stitched queries, not for first-class client use."
+    )
+
+  # A list of Partners
+  partnersConnection(
+    after: String
+    before: String
+    first: Int
+    ids: [String]
+    last: Int
+  ): PartnerConnection
 
   # A Sale
   sale(
@@ -9322,6 +9526,15 @@ type Viewer {
     id: String!
   ): Show
 
+  # A list of Shows
+  showsConnection(
+    after: String
+    before: String
+    first: Int
+    ids: [String]
+    last: Int
+  ): ShowConnection
+
   # Content for a specific page or view
   staticContent(
     # The slug or id for the view
@@ -9371,6 +9584,12 @@ type ViewingRoom {
   # Introductory paragraph
   introStatement: String
   partner: Partner
+  partnerArtworksConnection(
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): ArtworkConnection
 
   # ID of the partner associated with this viewing room
   partnerID: String!
@@ -9383,11 +9602,17 @@ type ViewingRoom {
 
   # Calculated field to reflect visibility and state of this viewing room
   status: String!
-  subsections: [ViewingRoomSubsection!]
+  subsections: [ViewingRoomSubsection!]!
   timeZone: String
 
   # Viewing room name
   title: String!
+}
+
+# Viewing Room artwork attributes
+input ViewingRoomArtworkAttributes {
+  artworkID: String!
+  position: Int!
 }
 
 # Basic viewing room attributes

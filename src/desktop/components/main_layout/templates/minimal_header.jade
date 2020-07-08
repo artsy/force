@@ -10,9 +10,9 @@ html( data-useragent= userAgent lang="en")
   head
     include head
     block head
-    link( type='text/css', rel='stylesheet', href=asset('/assets/main_layout.css') )
+    link( type='text/css' rel='stylesheet', href=asset('/assets/main_layout.css') )
     if assetPackage
-      link( type='text/css', rel='stylesheet', href=asset('/assets/#{assetPackage}.css') )
+      link( type='text/css' rel='stylesheet', href=asset('/assets/#{assetPackage}.css') )
 
   body( class=bodyClass )&attributes(attributes)
     -if (!hideHeaderOnEigen)
@@ -20,8 +20,9 @@ html( data-useragent= userAgent lang="en")
     include ../../modal/template
     include ../../flash/template
 
-    #main-layout-container
-      block body
+    main#main
+      #main-layout-container
+        block body
 
     #scripts
       //- Don't replace this block, rather prepend or append!
