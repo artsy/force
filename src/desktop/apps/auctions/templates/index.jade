@@ -68,5 +68,5 @@ block body
                 a.fine-faux-underline.au-name( href= auction.href() ) Sotheby's Input/Output
               else
                 a.fine-faux-underline.au-name( href= auction.href() )= auction.get('name')
-              .au-date Opens #{auction.date('start_at').format('MMMM Do')}
+              .au-date Opens #{auction.overviewStartDate()}
 

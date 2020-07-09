@@ -40,10 +40,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/gemup/-/gemup-0.0.3.tgz#0397a472bb69432dab3d2d66ca30556815aa96e7"
   integrity sha512-W///stXDTz3jSQw8UtT0BClVk4DLOsVp7a8v12efsEZvrZNT+85YBqPWq2DP1EX3ILZR1hGZhbKr/Gl5uti56Q==
 
-"@artsy/palette@11.6.0":
-  version "11.6.0"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-11.6.0.tgz#b860134c1c434cc5104122d49a4e4e3b915915e6"
-  integrity sha512-zX5j1fN5t6oUHvoAymh2dBOvXeyYJVCMX7p1qd3eSNLujQVyNzb367vYji59qEsV05BEnAMNRmfXsp6xeRkEEA==
+"@artsy/palette@11.7.0":
+  version "11.7.0"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-11.7.0.tgz#e8d21e8499363aab5ab74769296829598fb5dbba"
+  integrity sha512-tZ8P7GozQNeXGAuGXlrOal1ufrzfe8PxylPoieYB0/HYqBrd4DpqZbSVkvyJZwn63QVLoA7T2isa8u05W0IA/w==
   dependencies:
     "@styled-system/theme-get" "^5.1.2"
     babel-plugin-styled-components "^1.10.0"
@@ -10561,6 +10561,11 @@ focus-lock@^0.6.3, focus-lock@^0.6.7:
   resolved "https://registry.yarnpkg.com/focus-lock/-/focus-lock-0.6.8.tgz#61985fadfa92f02f2ee1d90bc738efaf7f3c9f46"
   integrity sha512-vkHTluRCoq9FcsrldC0ulQHiyBYgVJB2CX53I8r0nTC6KnEij7Of0jpBspjt3/CuNb6fyoj3aOh9J2HgQUM0og==
 
+focus-visible@5.1.0:
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/focus-visible/-/focus-visible-5.1.0.tgz#4b9d40143b865f53eafbd93ca66672b3bf9e7b6a"
+  integrity sha512-nPer0rjtzdZ7csVIu233P2cUm/ks/4aVSI+5KUkYrYpgA7ujgC3p6J7FtFU+AIMWwnwYQOB/yeiOITxFeYIXiw==
+
 for-each@~0.3.2:
   version "0.3.2"
   resolved "https://registry.yarnpkg.com/for-each/-/for-each-0.3.2.tgz#2c40450b9348e97f281322593ba96704b9abd4d4"
@@ -14139,6 +14144,13 @@ lines-and-columns@^1.1.6:
   version "1.1.6"
   resolved "https://registry.yarnpkg.com/lines-and-columns/-/lines-and-columns-1.1.6.tgz#1c00c743b433cd0a4e80758f7b64a57440d9ff00"
   integrity sha1-HADHQ7QzzQpOgHWPe2SldEDZ/wA=
+
+linkify-it@^2.0.3:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/linkify-it/-/linkify-it-2.2.0.tgz#e3b54697e78bf915c70a38acd78fd09e0058b1cf"
+  integrity sha512-GnAl/knGn+i1U/wjBz3akz2stz+HrHLsxMwHQGofCDfPvlf+gDKN58UtfmUquTY4/MXeE2x7k19KQmeoZi94Iw==
+  dependencies:
+    uc.micro "^1.0.1"
 
 lint-staged@10.2.6:
   version "10.2.6"
@@ -18149,6 +18161,14 @@ react-lines-ellipsis@^0.14.0:
   resolved "https://registry.yarnpkg.com/react-lines-ellipsis/-/react-lines-ellipsis-0.14.0.tgz#954459e68d8f9fc5a40498cabc5f47d63cbefd21"
   integrity sha512-zJf+evlugAQ42zwHYbsR/P9SSx2UrT4opWwY8JXPNIZTVVxjqTt2+91Csx3ya0xSesj7E/EgfUbtDfU03uylXQ==
 
+react-linkify@1.0.0-alpha:
+  version "1.0.0-alpha"
+  resolved "https://registry.yarnpkg.com/react-linkify/-/react-linkify-1.0.0-alpha.tgz#b391c7b88e3443752fafe76a95ca4434e82e70d5"
+  integrity sha512-7gcIUvJkAXXttt1fmBK9cwn+1jTa4hbKLGCZ9J1U6EOkyb2/+LKL1Z28d9rtDLMnpvImlNlLPdTPooorl5cpmg==
+  dependencies:
+    linkify-it "^2.0.3"
+    tlds "^1.199.0"
+
 react-live@^1.12.0:
   version "1.12.0"
   resolved "https://registry.yarnpkg.com/react-live/-/react-live-1.12.0.tgz#2876d4e913331002b66dfa73cf58051376bc2518"
@@ -21407,6 +21427,11 @@ tiny-warning@^1.0.2:
   resolved "https://registry.yarnpkg.com/tiny-warning/-/tiny-warning-1.0.3.tgz#94a30db453df4c643d0fd566060d60a875d84754"
   integrity sha512-lBN9zLN/oAf68o3zNXYrdCt1kP8WsiGW8Oo2ka41b2IM5JL/S1CTyX1rW0mb/zSuJun0ZUrDxx4sqvYS2FWzPA==
 
+tlds@^1.199.0:
+  version "1.207.0"
+  resolved "https://registry.yarnpkg.com/tlds/-/tlds-1.207.0.tgz#459264e644cf63ddc0965fece3898913286b1afd"
+  integrity sha512-k7d7Q1LqjtAvhtEOs3yN14EabsNO8ZCoY6RESSJDB9lst3bTx3as/m1UuAeCKzYxiyhR1qq72ZPhpSf+qlqiwg==
+
 tmp@0.0.x, tmp@^0.0.33:
   version "0.0.33"
   resolved "https://registry.yarnpkg.com/tmp/-/tmp-0.0.33.tgz#6d34335889768d21b2bcda0aa277ced3b1bfadf9"
@@ -21718,6 +21743,11 @@ ua-parser-js@0.7.19, ua-parser-js@^0.7.18:
   version "0.7.19"
   resolved "https://registry.yarnpkg.com/ua-parser-js/-/ua-parser-js-0.7.19.tgz#94151be4c0a7fb1d001af7022fdaca4642659e4b"
   integrity sha512-T3PVJ6uz8i0HzPxOF9SWzWAlfN/DavlpQqepn22xgve/5QecC+XMCAtmUNnY7C9StehaV6exjUCI801lOI7QlQ==
+
+uc.micro@^1.0.1:
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/uc.micro/-/uc.micro-1.0.6.tgz#9c411a802a409a91fc6cf74081baba34b24499ac"
+  integrity sha512-8Y75pvTYkLJW2hWQHXxoqRgV7qb9B+9vFEtidML+7koHUFapnVJAZ6cKs+Qjz5Aw3aZWHMC6u0wJE3At+nSGwA==
 
 uglify-js@^2.4.19, uglify-js@^2.6.1:
   version "2.8.29"

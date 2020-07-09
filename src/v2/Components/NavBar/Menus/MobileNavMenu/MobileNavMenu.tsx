@@ -19,7 +19,7 @@ import { LinkData, MenuData, MenuLinkData } from "v2/Components/NavBar/menuData"
 import React from "react"
 import styled from "styled-components"
 import { getMobileAuthLink } from "v2/Utils/openAuthModal"
-import { userHasLabFeature } from "v2/Utils/user"
+import { LoggedInLinksQueryRenderer as LoggedInLinks } from "./LoggedInLinks"
 import { MobileLink } from "./MobileLink"
 import {
   NavigatorContextProvider,
@@ -226,7 +226,11 @@ const NavLink: React.FC<any> = ({ link }) => {
   } else {
     return (
       <React.Fragment key={link.href}>
-        <MobileLink href={link.href} contextModule={contextModule}>
+        <MobileLink
+          contextModule={contextModule}
+          href={link.href}
+          onClick={link.onClick}
+        >
           {link.text}
         </MobileLink>
         {link.dividerBelow && <Separator my={1} color={color("black10")} />}
@@ -290,35 +294,8 @@ const AuthenticateLinks: React.FC = () => {
   return (
     <Box>
       <Separator my={1} color={color("black10")} />
-      <MobileLink href={authLink(ModalType.signup)}>Sign Up</MobileLink>
-      <MobileLink href={authLink(ModalType.login)}>Login</MobileLink>
-    </Box>
-  )
-}
-
-const LoggedInLinks: React.FC = () => {
-  const { mediator, user } = useSystemContext()
-  const conversationsEnabled = userHasLabFeature(
-    user,
-    "User Conversations View"
-  )
-  return (
-    <Box>
-      <Separator my={1} color={color("black10")} />
-      {conversationsEnabled && (
-        <MobileLink href="/user/conversations">Inbox</MobileLink>
-      )}
-      <MobileLink href="/works-for-you">Works for you</MobileLink>
-      <MobileLink href="/user/edit">Account</MobileLink>
-      <MobileLink
-        href="#"
-        onClick={event => {
-          event.preventDefault()
-          mediator.trigger("auth:logout")
-        }}
-      >
-        Log out
-      </MobileLink>
+      <MobileLink href={authLink(ModalType.signup)}>Sign up</MobileLink>
+      <MobileLink href={authLink(ModalType.login)}>Log in</MobileLink>
     </Box>
   )
 }

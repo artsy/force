@@ -41,33 +41,6 @@ describe("#alphabetizeGenes", () => {
   })
 })
 
-describe("#featuredGenesForFamily", () => {
-  it("pulls out featured genes for the given family", () => {
-    const featuredGenesByFamily = [
-      {
-        name: "Materials",
-        genes: [
-          { id: "aluminum", href: "/gene/aluminum" },
-          { id: "gold", href: "/gene/gold" },
-        ],
-      },
-      {
-        name: "Styles",
-        genes: [
-          { id: "impressionism", href: "/gene/impressionism" },
-          { id: "photorealism", href: "/gene/photorealism" },
-        ],
-      },
-    ]
-
-    const result = featuredGenesForFamily("Materials", featuredGenesByFamily)
-    result.should.be.of.type.Object
-    result.name.should.equal("Materials")
-    result.genes[0].id.should.equal("aluminum")
-    result.genes[1].id.should.equal("gold")
-  })
-})
-
 describe("#geneFamiliesFromConnection", () => {
   it("maps the connection to a simple list of gene families", () => {
     const dataFromGeneFamilyConnection = {

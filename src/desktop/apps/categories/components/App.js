@@ -15,7 +15,6 @@ const Layout = styled.div`
 class App extends Component {
   static propTypes = {
     geneFamilies: PropTypes.array.isRequired,
-    allFeaturedGenesByFamily: PropTypes.array.isRequired,
   }
 
   render() {
@@ -23,10 +22,7 @@ class App extends Component {
     return (
       <Layout>
         <GeneFamilyNav geneFamilies={geneFamilies} />
-        <TAGPContent
-          geneFamilies={geneFamilies}
-          allFeaturedGenesByFamily={allFeaturedGenesByFamily}
-        />
+        <TAGPContent geneFamilies={geneFamilies} />
       </Layout>
     )
   }

@@ -1,16 +1,24 @@
 export default function GeneFamiliesQuery() {
   return `
   query GeneFamiliesQuery {
-    gene_families(first: 20) {
+    gene_families: geneFamiliesConnection(first: 20) {
       edges {
         node {
           id
+          slug
           name
           genes {
             id
             name
-            display_name
-            is_published
+            display_name: displayName
+            is_published: isPublished
+          }
+          featuredGeneLinks {
+            href
+            title
+            image {
+              url(version: "large_rectangle")
+            }
           }
         }
       }

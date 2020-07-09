@@ -5,7 +5,7 @@ import styled from "styled-components"
 import FeaturedGene from "./FeaturedGene"
 
 const propTypes = {
-  featuredGenes: PropTypes.object,
+  featuredGeneLinks: PropTypes.array,
 }
 
 const Layout = styled.div`
@@ -19,14 +19,14 @@ const Layout = styled.div`
   }
 `
 
-const FeaturedGenes = ({ featuredGenes }) => {
+const FeaturedGenes = ({ featuredGeneLinks }) => {
   return (
     <Layout>
-      {featuredGenes &&
-        featuredGenes.genes.length > 0 &&
-        featuredGenes.genes
+      {featuredGeneLinks &&
+        featuredGeneLinks.length > 0 &&
+        featuredGeneLinks
           .map(featuredGene => (
-            <FeaturedGene key={featuredGene.id} {...featuredGene} />
+            <FeaturedGene key={featuredGene.href} {...featuredGene} />
           ))
           .slice(0, 3)}
     </Layout>

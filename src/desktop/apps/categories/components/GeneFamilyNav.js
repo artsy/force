@@ -81,9 +81,9 @@ class GeneFamilyNav extends React.Component {
           offset={-1 * TOP_BUFFER}
         >
           {geneFamilies.map(geneFamily => (
-            <GeneFamilyItem key={geneFamily.id}>
+            <GeneFamilyItem key={geneFamily.slug}>
               <GeneFamilyLink
-                href={`#${geneFamily.id}`}
+                href={`#${geneFamily.slug}`}
                 onClick={this.handleClick}
               >
                 {geneFamily.name}
