@@ -7787,6 +7787,11 @@ type ResizedImageUrl {
   width: Int
 }
 
+enum Role {
+  OPERATOR
+  PARTICIPANT
+}
+
 # The conditions for uploading assets to media.artsy.net
 type S3PolicyConditionsType {
   # The assigned access control
@@ -7903,6 +7908,7 @@ type Sale implements Node {
   saleArtwork(id: String!): SaleArtwork
   saleArtworksConnection(
     after: String
+    all: Boolean = false
     before: String
     first: Int
 
@@ -8849,6 +8855,14 @@ type SubmissionEdge {
 }
 
 type System {
+  # Creates, and authorizes, a JWT custom for Causality
+  causalityJWT(
+    role: Role
+
+    # The id of the auction to participate in
+    saleID: String!
+  ): String
+
   # The schema for difference micro-service settings
   services: Services
 
