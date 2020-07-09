@@ -1,5 +1,5 @@
 import React from "react"
-import { Box, CSSGrid, Sans } from "@artsy/palette"
+import { Box, CSSGrid, Link, Sans, SmallCard } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ViewingRoomsLatestGrid_viewingRooms } from "v2/__generated__/ViewingRoomsLatestGrid_viewingRooms.graphql"
 
@@ -47,10 +47,25 @@ export const ViewingRoomsLatestGrid: React.FC<ViewingRoomsLatestGridProps> = pro
           gridRowGap={6}
         >
           {viewingRoomsForLatestGrid.map(vr => {
+            const {
+              slug,
+              title,
+              heroImageURL,
+              partner,
+              artworksConnection,
+            } = vr
+            const artworksCount = artworksConnection.totalCount
+            const artworkImages = artworksConnection.edges.map(({ node }) =>
+              artworksCount < 2 ? node.image.regular : node.image.square
+            )
             return (
-              <Sans size="3t" key={vr.slug}>
-                {vr.title}
-              </Sans>
+              <Link href={`/viewing-room/${slug}`} noUnderline>
+                <SmallCard
+                  title={title}
+                  subtitle={partner.name}
+                  images={[heroImageURL].concat(artworkImages)}
+                />
+              </Link>
             )
           })}
         </CSSGrid>
@@ -69,6 +84,21 @@ export const ViewingRoomsLatestGridFragmentContainer = createFragmentContainer(
             slug
             status
             title
+            heroImageURL
+            partner {
+              name
+            }
+            artworksConnection(first: 2) {
+              totalCount
+              edges {
+                node {
+                  image {
+                    square: url(version: "square")
+                    regular: url(version: "large")
+                  }
+                }
+              }
+            }
           }
         }
       }

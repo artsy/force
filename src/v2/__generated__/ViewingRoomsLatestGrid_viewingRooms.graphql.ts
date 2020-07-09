@@ -8,6 +8,21 @@ export type ViewingRoomsLatestGrid_viewingRooms = {
             readonly slug: string;
             readonly status: string;
             readonly title: string;
+            readonly heroImageURL: string | null;
+            readonly partner: {
+                readonly name: string | null;
+            } | null;
+            readonly artworksConnection: {
+                readonly totalCount: number | null;
+                readonly edges: ReadonlyArray<{
+                    readonly node: {
+                        readonly image: {
+                            readonly square: string | null;
+                            readonly regular: string | null;
+                        } | null;
+                    } | null;
+                } | null> | null;
+            } | null;
         } | null;
     } | null> | null;
     readonly " $refType": "ViewingRoomsLatestGrid_viewingRooms";
@@ -65,6 +80,114 @@ const node: ReaderFragment = {
               "name": "title",
               "args": null,
               "storageKey": null
+            },
+            {
+              "kind": "ScalarField",
+              "alias": null,
+              "name": "heroImageURL",
+              "args": null,
+              "storageKey": null
+            },
+            {
+              "kind": "LinkedField",
+              "alias": null,
+              "name": "partner",
+              "storageKey": null,
+              "args": null,
+              "concreteType": "Partner",
+              "plural": false,
+              "selections": [
+                {
+                  "kind": "ScalarField",
+                  "alias": null,
+                  "name": "name",
+                  "args": null,
+                  "storageKey": null
+                }
+              ]
+            },
+            {
+              "kind": "LinkedField",
+              "alias": null,
+              "name": "artworksConnection",
+              "storageKey": "artworksConnection(first:2)",
+              "args": [
+                {
+                  "kind": "Literal",
+                  "name": "first",
+                  "value": 2
+                }
+              ],
+              "concreteType": "ArtworkConnection",
+              "plural": false,
+              "selections": [
+                {
+                  "kind": "ScalarField",
+                  "alias": null,
+                  "name": "totalCount",
+                  "args": null,
+                  "storageKey": null
+                },
+                {
+                  "kind": "LinkedField",
+                  "alias": null,
+                  "name": "edges",
+                  "storageKey": null,
+                  "args": null,
+                  "concreteType": "ArtworkEdge",
+                  "plural": true,
+                  "selections": [
+                    {
+                      "kind": "LinkedField",
+                      "alias": null,
+                      "name": "node",
+                      "storageKey": null,
+                      "args": null,
+                      "concreteType": "Artwork",
+                      "plural": false,
+                      "selections": [
+                        {
+                          "kind": "LinkedField",
+                          "alias": null,
+                          "name": "image",
+                          "storageKey": null,
+                          "args": null,
+                          "concreteType": "Image",
+                          "plural": false,
+                          "selections": [
+                            {
+                              "kind": "ScalarField",
+                              "alias": "square",
+                              "name": "url",
+                              "args": [
+                                {
+                                  "kind": "Literal",
+                                  "name": "version",
+                                  "value": "square"
+                                }
+                              ],
+                              "storageKey": "url(version:\"square\")"
+                            },
+                            {
+                              "kind": "ScalarField",
+                              "alias": "regular",
+                              "name": "url",
+                              "args": [
+                                {
+                                  "kind": "Literal",
+                                  "name": "version",
+                                  "value": "large"
+                                }
+                              ],
+                              "storageKey": "url(version:\"large\")"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
             }
           ]
         }
@@ -72,5 +195,5 @@ const node: ReaderFragment = {
     }
   ]
 };
-(node as any).hash = '0b203b09d2d786bbd3bc5cdc527ece37';
+(node as any).hash = '38006f4308d90ed29829d02998f26279';
 export default node;

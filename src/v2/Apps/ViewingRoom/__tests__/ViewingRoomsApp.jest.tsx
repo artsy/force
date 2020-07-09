@@ -68,6 +68,15 @@ const ViewingRoomsAppFixture: ViewingRoomsApp_Test_QueryRawResponse = {
           status: "draft",
           slug: "test-draft",
           title: "Draft VR",
+          heroImageURL: "https://www.example.com/rikki.jpg",
+          partner: {
+            id: "rikki",
+            name: "Rikki",
+          },
+          artworksConnection: {
+            totalCount: 0,
+            edges: [],
+          },
         },
       },
       {
@@ -75,6 +84,25 @@ const ViewingRoomsAppFixture: ViewingRoomsApp_Test_QueryRawResponse = {
           status: "scheduled",
           slug: "test-scheduled",
           title: "Scheduled VR",
+          heroImageURL: "https://www.example.com/tikki.jpg",
+          partner: {
+            id: "tikki",
+            name: "Tikki",
+          },
+          artworksConnection: {
+            totalCount: 1,
+            edges: [
+              {
+                node: {
+                  id: "hello",
+                  image: {
+                    square: "https://www.example.com/square-mat.jpg",
+                    regular: "https://www.example.com/regular-mat.jpg",
+                  },
+                },
+              },
+            ],
+          },
         },
       },
       {
@@ -82,6 +110,34 @@ const ViewingRoomsAppFixture: ViewingRoomsApp_Test_QueryRawResponse = {
           status: "live",
           slug: "test-live",
           title: "Live VR",
+          heroImageURL: "https://www.example.com/tavi.jpg",
+          partner: {
+            id: "tavi",
+            name: "Tavi",
+          },
+          artworksConnection: {
+            totalCount: 2,
+            edges: [
+              {
+                node: {
+                  id: "hello",
+                  image: {
+                    square: "https://www.example.com/square-fat.jpg",
+                    regular: "https://www.example.com/regular-fat.jpg",
+                  },
+                },
+              },
+              {
+                node: {
+                  id: "there",
+                  image: {
+                    square: "https://www.example.com/square-pet.jpg",
+                    regular: "https://www.example.com/regular-pet.jpg",
+                  },
+                },
+              },
+            ],
+          },
         },
       },
       {
@@ -89,6 +145,34 @@ const ViewingRoomsAppFixture: ViewingRoomsApp_Test_QueryRawResponse = {
           status: "closed",
           slug: "test-closed",
           title: "Closed VR",
+          heroImageURL: "https://www.example.com/nag.jpg",
+          partner: {
+            id: "nag",
+            name: "Nag",
+          },
+          artworksConnection: {
+            totalCount: 3,
+            edges: [
+              {
+                node: {
+                  id: "hello",
+                  image: {
+                    square: "https://www.example.com/square-cat.jpg",
+                    regular: "https://www.example.com/regular-cat.jpg",
+                  },
+                },
+              },
+              {
+                node: {
+                  id: "there",
+                  image: {
+                    square: "https://www.example.com/square-bat.jpg",
+                    regular: "https://www.example.com/regular-bat.jpg",
+                  },
+                },
+              },
+            ],
+          },
         },
       },
     ],
