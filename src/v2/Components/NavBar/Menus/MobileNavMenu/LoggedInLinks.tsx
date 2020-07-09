@@ -4,6 +4,7 @@ import { isServer } from "lib/environment"
 import { SystemContext, useSystemContext } from "v2/Artsy"
 import { userHasLabFeature } from "v2/Utils/user"
 import { MobileLink } from "./MobileLink"
+import { MobileSubmenuLink } from "./MobileNavMenu"
 import { graphql } from "relay-runtime"
 import { SystemQueryRenderer as QueryRenderer } from "v2/Artsy/Relay/SystemQueryRenderer"
 import {
@@ -16,6 +17,39 @@ export const LoggedInLinks: React.FC<
   { error?: any } & Partial<LoggedInLinksQueryResponse>
 > = ({ error, me }) => {
   const { mediator, user } = useSystemContext()
+  const menu = {
+    title: "Account",
+    links: [
+      {
+        text: "Saves & Follows",
+        href: "/user/saves",
+      },
+      {
+        text: "Auctions",
+        href: "/user/auctions",
+      },
+      {
+        text: "Collector Profile",
+        href: "/profile/edit",
+      },
+      {
+        text: "Settings",
+        href: "/user/edit",
+      },
+      {
+        text: "Payments",
+        href: "/user/payments",
+      },
+      {
+        text: "Log out",
+        href: "#logout",
+        onClick: event => {
+          event.preventDefault()
+          mediator.trigger("auth:logout")
+        },
+      },
+    ],
+  }
   const conversationsEnabled = userHasLabFeature(
     user,
     "User Conversations View"
@@ -39,16 +73,7 @@ export const LoggedInLinks: React.FC<
         </Flex>
       )}
       <MobileLink href="/works-for-you">Works for you</MobileLink>
-      <MobileLink href="/user/edit">Account</MobileLink>
-      <MobileLink
-        href="#"
-        onClick={event => {
-          event.preventDefault()
-          mediator.trigger("auth:logout")
-        }}
-      >
-        Log out
-      </MobileLink>
+      <MobileSubmenuLink menu={menu}>{menu.title}</MobileSubmenuLink>
     </Box>
   )
 }

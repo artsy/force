@@ -226,7 +226,11 @@ const NavLink: React.FC<any> = ({ link }) => {
   } else {
     return (
       <React.Fragment key={link.href}>
-        <MobileLink href={link.href} contextModule={contextModule}>
+        <MobileLink
+          contextModule={contextModule}
+          href={link.href}
+          onClick={link.onClick}
+        >
           {link.text}
         </MobileLink>
         {link.dividerBelow && <Separator my={1} color={color("black10")} />}
@@ -290,8 +294,8 @@ const AuthenticateLinks: React.FC = () => {
   return (
     <Box>
       <Separator my={1} color={color("black10")} />
-      <MobileLink href={authLink(ModalType.signup)}>Sign Up</MobileLink>
-      <MobileLink href={authLink(ModalType.login)}>Login</MobileLink>
+      <MobileLink href={authLink(ModalType.signup)}>Sign up</MobileLink>
+      <MobileLink href={authLink(ModalType.login)}>Log in</MobileLink>
     </Box>
   )
 }

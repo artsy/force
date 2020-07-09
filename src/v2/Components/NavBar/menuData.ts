@@ -451,6 +451,7 @@ export const menuData: MenuData = {
       text: "Artsy for Galleries",
       href: "/gallery-partnerships",
     },
-    // TODO: links here for logged-in vs. logged-out state
+    // NB. that desktop and mobile currently handle logged-in/out state links
+    // such as "log in" or "account" separately
   ],
 }
