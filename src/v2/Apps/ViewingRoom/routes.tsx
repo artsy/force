@@ -20,6 +20,9 @@ export const routes: RouteConfig[] = [
         viewingRooms {
           ...ViewingRoomsApp_viewingRooms
         }
+        featuredViewingRooms: viewingRooms(featured: true) {
+          ...ViewingRoomsApp_featuredViewingRooms
+        }
       }
     `,
     cacheConfig: {
