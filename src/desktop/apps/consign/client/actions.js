@@ -298,7 +298,7 @@ export function fetchLocationSuggestions(value) {
       if (status !== window.google.maps.places.PlacesServiceStatus.OK) {
         console.error("Unable to reach maps API", status)
       } else {
-        dispatch(updateLocationSuggestions(predictions))
+        dispatch(updateLocationSuggestions(value, predictions))
       }
     }
 
@@ -667,10 +667,11 @@ export function updateLocationFromSubmissionAndFreeze(city, state, country) {
   }
 }
 
-export function updateLocationSuggestions(suggestions) {
+export function updateLocationSuggestions(searchText, suggestions) {
   return {
     type: UPDATE_LOCATION_SUGGESTIONS,
     payload: {
+      searchText,
       suggestions,
     },
   }
