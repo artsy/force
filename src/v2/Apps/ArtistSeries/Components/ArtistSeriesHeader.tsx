@@ -35,6 +35,7 @@ const ArtistInfo: React.FC<ArtistsInfoProps> = props => {
       smallVariant
       name={artist.name}
       imageUrl={artist.image?.url}
+      href={artist.href}
       FollowButton={
         <FollowArtistButton
           artist={artist}
@@ -94,7 +95,7 @@ const ArtistSeriesHeaderLarge: React.FC<ArtistSeriesHeaderProps> = props => {
         p={2}
       >
         <Flex position="absolute" left={3}>
-          {artists.length > 0 ? <ArtistInfo artist={artists[0]} /> : null}
+          {artists.length && <ArtistInfo artist={artists[0]} />}
         </Flex>
         <Sans size="3">Series</Sans>
       </Flex>
@@ -152,7 +153,7 @@ const ArtistSeriesHeaderSmall: React.FC<ArtistSeriesHeaderProps> = props => {
         <Sans size="8" element="h1" my={1} unstable_trackIn>
           {title}
         </Sans>
-        {artists.length > 0 ? <ArtistInfo artist={artists[0]} /> : null}
+        {artists.length && <ArtistInfo artist={artists[0]} />}
         <Box my={1}>
           <Sans lineHeight={1.5} size="3t">
             {description}
@@ -175,6 +176,7 @@ export const ArtistSeriesHeaderFragmentContainer = createFragmentContainer(
           image {
             url
           }
+          href
           slug
           ...FollowArtistButton_artist
         }

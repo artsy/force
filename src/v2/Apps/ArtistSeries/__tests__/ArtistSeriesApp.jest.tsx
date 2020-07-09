@@ -72,6 +72,9 @@ describe("ArtistSeriesApp", () => {
               expect(html).toContain("All of the pumpkins")
               expect(html).toContain("Yayoi Kusama")
               expect(html).toContain("https://test.artsy.net/yayoi-kusama.jpg")
+              expect(html).toContain(
+                "https://test.artsy.net/artist/yayoi-kusama"
+              )
             })
           })
 
@@ -101,6 +104,9 @@ describe("ArtistSeriesApp", () => {
               expect(html).toContain("All of the pumpkins")
               expect(html).toContain("Yayoi Kusama")
               expect(html).toContain("https://test.artsy.net/yayoi-kusama.jpg")
+              expect(html).toContain(
+                "https://test.artsy.net/artist/yayoi-kusama"
+              )
             })
           })
 
@@ -167,6 +173,7 @@ const ArtistSeriesAppFixture: ArtistSeriesApp_QueryRawResponse = {
         image: {
           url: "https://test.artsy.net/yayoi-kusama.jpg",
         },
+        href: "https://test.artsy.net/artist/yayoi-kusama",
         slug: "yayoi-kusama",
         internalID: "abc123",
         id: "abc123",
