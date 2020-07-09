@@ -25,6 +25,7 @@ import {
   NavigatorContextProvider,
   useNavigation,
 } from "./NavigatorContextProvider"
+import { NAV_BAR_BORDER_OFFSET, NAV_BAR_HEIGHT } from "v2/Components/NavBar"
 
 const Close = styled(Clickable)`
   position: absolute;
@@ -34,9 +35,8 @@ const Close = styled(Clickable)`
   display: flex;
   align-items: center;
   justify-content: center;
-  /* Position menu toggle *just so* because the values in the actual navbar are hardcoded */
-  width: ${space(6) + 2}px;
-  height: ${space(6) - 2}px;
+  width: ${space(6)}px;
+  height: ${NAV_BAR_HEIGHT - NAV_BAR_BORDER_OFFSET}px;
 `
 
 interface Props {

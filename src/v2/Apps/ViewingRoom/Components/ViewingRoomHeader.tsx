@@ -1,6 +1,6 @@
 import React from "react"
 import { Box, Flex, ResponsiveImage, Sans, color } from "@artsy/palette"
-import { NavBarHeight } from "v2/Components/NavBar"
+import { NAV_BAR_HEIGHT } from "v2/Components/NavBar"
 import { Media } from "v2/Utils/Responsive"
 import { createFragmentContainer, graphql } from "react-relay"
 
@@ -58,7 +58,7 @@ const ViewingRoomHeaderLarge: React.FC<ViewingRoomHeaderProps> = props => {
   return (
     <Flex
       style={{
-        height: `calc(90vh - ${NavBarHeight}px)`,
+        height: `calc(90vh - ${NAV_BAR_HEIGHT}px)`,
         borderBottom: `1px solid ${color("black10")}`,
       }}
     >
@@ -99,7 +99,7 @@ const ViewingRoomHeaderSmall: React.FC<ViewingRoomHeaderProps> = props => {
     viewingRoom: { heroImageURL, title },
   } = props
 
-  const HeaderHeight = `calc(100vh - ${NavBarHeight * 2.8}px)`
+  const HeaderHeight = `calc(100vh - ${NAV_BAR_HEIGHT * 2.8}px)`
 
   return (
     <Flex

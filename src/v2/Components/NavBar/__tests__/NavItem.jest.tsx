@@ -12,13 +12,23 @@ jest.mock("v2/Artsy/Analytics/useTracking", () => {
 
 jest.mock("v2/Utils/Hooks/useMatchMedia")
 
+jest.useFakeTimers()
+
 describe("NavItem", () => {
+  beforeEach(() => {
+    jest.spyOn(console, "error").mockImplementation(() => {})
+  })
+
+  afterEach(() => {
+    jest.restoreAllMocks()
+  })
+
   it("renders proper content", () => {
     const wrapper = mount(
       <NavItem href="/some-link">hello how are you</NavItem>
     )
     expect(wrapper.html()).toContain("hello how are you")
-    expect(wrapper.find("Link").prop("href")).toContain("/some-link")
+    expect(wrapper.find("a").prop("href")).toContain("/some-link")
   })
 
   it("renders a Menu", () => {
@@ -30,7 +40,7 @@ describe("NavItem", () => {
     expect(wrapper.html()).toContain("Menu Item")
   })
 
-  it("passes a setIsVisible toggle to Menu component", done => {
+  it("passes a setIsVisible toggle to Menu component", () => {
     let toggle
     const wrapper = mount(
       <NavItem
@@ -45,12 +55,8 @@ describe("NavItem", () => {
       </NavItem>
     )
     expect(wrapper.html()).toContain("Menu Item")
-    setTimeout(() => {
-      toggle()
-      wrapper.update()
-      expect(wrapper.html()).not.toContain("Menu Item")
-      done()
-    })
+    toggle()
+    expect(wrapper.html()).not.toContain("Menu Item")
   })
 
   it("shows / hides Menu on mouse interactions", () => {
@@ -61,8 +67,23 @@ describe("NavItem", () => {
     )
     expect(wrapper.html()).not.toContain("Menu Item")
     wrapper.simulate("mouseenter")
+    jest.runAllTimers()
     expect(wrapper.html()).toContain("Menu Item")
     wrapper.simulate("mouseleave")
+    jest.runAllTimers()
+    expect(wrapper.html()).not.toContain("Menu Item")
+  })
+
+  it("shows / hides Menu on button click", () => {
+    const wrapper = mount(
+      <NavItem href="/some-link" Menu={() => <div>Menu Item</div>}>
+        hello how are you
+      </NavItem>
+    )
+    expect(wrapper.html()).not.toContain("Menu Item")
+    wrapper.find("button").simulate("click")
+    expect(wrapper.html()).toContain("Menu Item")
+    wrapper.find("button").simulate("click")
     expect(wrapper.html()).not.toContain("Menu Item")
   })
 
@@ -82,7 +103,7 @@ describe("NavItem", () => {
         hello how are you
       </NavItem>
     )
-    wrapper.find("Link").simulate("click")
+    wrapper.find("a").simulate("click")
     expect(spy).toHaveBeenCalled()
   })
 
