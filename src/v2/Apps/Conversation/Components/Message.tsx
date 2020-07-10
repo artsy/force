@@ -41,6 +41,7 @@ const AttachmentContainer = styled(Flex)<
 `
 
 const MessageText = styled(Sans)`
+  word-break: break-word;
   white-space: pre-line;
   && {
     a:hover {

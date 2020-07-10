@@ -360,6 +360,9 @@ function submissionFlow(state = initialState, action) {
       )
     }
     case actions.UPDATE_LOCATION_SUGGESTIONS: {
+      if (action.payload.searchText !== state.locationAutocompleteValue) {
+        return state
+      }
       return u(
         {
           locationAutocompleteSuggestions: action.payload.suggestions,

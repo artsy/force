@@ -59,7 +59,7 @@ export const ViewingRoomsLatestGrid: React.FC<ViewingRoomsLatestGridProps> = pro
               artworksCount < 2 ? node.image.regular : node.image.square
             )
             return (
-              <Link href={`/viewing-room/${slug}`} noUnderline>
+              <Link href={`/viewing-room/${slug}`} key={slug} noUnderline>
                 <SmallCard
                   title={title}
                   subtitle={partner.name}

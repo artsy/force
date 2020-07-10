@@ -85,7 +85,7 @@ const ViewingRoomHeaderLarge: React.FC<ViewingRoomHeaderProps> = props => {
           {title}
         </Sans>
 
-        <Metadata {...props} />
+        <RoomInfo {...props} />
       </Flex>
     </Flex>
   )
@@ -142,12 +142,12 @@ const ViewingRoomHeaderSmall: React.FC<ViewingRoomHeaderProps> = props => {
         </Sans>
       </Box>
 
-      <Metadata {...props} />
+      <RoomInfo {...props} />
     </Flex>
   )
 }
 
-const Metadata: React.FC<ViewingRoomHeaderProps> = props => {
+const RoomInfo: React.FC<ViewingRoomHeaderProps> = props => {
   const {
     viewingRoom: {
       partner: { name },
@@ -157,22 +157,22 @@ const Metadata: React.FC<ViewingRoomHeaderProps> = props => {
     },
   } = props
 
-  const Text = ({ children }) => (
+  const InfoText: React.FC = ({ children }) => (
     <Sans size={["3", "4"]} color={["white100", "black100"]}>
       {children}
     </Sans>
   )
 
-  const CountdownText = () => {
+  const TimingInfo: React.FC = () => {
     switch (status) {
       case "closed":
-        return <Text>Closed</Text>
+        return <InfoText>Closed</InfoText>
       case "live":
         if (distanceToClose === null) return null
-        return <Text>Closes in {distanceToClose}</Text>
+        return <InfoText>Closes in {distanceToClose}</InfoText>
       case "scheduled":
         if (distanceToOpen === null) return null
-        return <Text>Opens in {distanceToOpen}</Text>
+        return <InfoText>Opens in {distanceToOpen}</InfoText>
       default:
         return null
     }
@@ -186,8 +186,8 @@ const Metadata: React.FC<ViewingRoomHeaderProps> = props => {
         width="100%"
         p={2}
       >
-        <Text>{name}</Text>
-        <CountdownText />
+        <InfoText>{name}</InfoText>
+        <TimingInfo />
       </Flex>
     </Box>
   )

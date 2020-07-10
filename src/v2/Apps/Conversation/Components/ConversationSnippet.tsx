@@ -36,12 +36,15 @@ const TimeSinceFlex = styled(Flex)`
 const StyledSans = styled(Sans)`
   word-break: break-word;
 `
+const TextContainer = styled(Box)`
+  overflow: hidden;
+`
 
 const TruncatedTitle = styled(Sans)`
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  max-width: 140px;
+  max-width: 130px;
 
   @media (max-width: 570px) {
     max-width: 270px;
@@ -122,7 +125,7 @@ const ConversationSnippet: React.FC<ConversationSnippetProps> = props => {
             )}
           </StyledFlex>
           <Flex pt={2} pl={1} width="100%" height="100%">
-            <Box width="100%">
+            <TextContainer width="100%">
               <Row mb="2px">
                 <Flex width="100%" justifyContent="space-between">
                   <Flex>
@@ -156,7 +159,7 @@ const ConversationSnippet: React.FC<ConversationSnippetProps> = props => {
                   <Truncator maxLineCount={3}>{conversationText}</Truncator>
                 </StyledSans>
               </Row>
-            </Box>
+            </TextContainer>
           </Flex>
         </Flex>
       </Link>

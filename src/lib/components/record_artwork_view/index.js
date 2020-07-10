@@ -1,4 +1,4 @@
-import _metaphysics from "../../../lib/metaphysics.coffee"
+import _metaphysics from "../../../lib/metaphysics2.coffee"
 import query from "./mutation"
 
 // FIXME: Rewire

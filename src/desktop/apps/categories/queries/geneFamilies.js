@@ -5,6 +5,7 @@ export default function GeneFamiliesQuery() {
       edges {
         node {
           id
+          slug
           name
           genes {
             id
