@@ -21,8 +21,8 @@ const ArtistSeriesApp: React.FC<ArtistSeriesAppProps> = ({ artistSeries }) => {
   if (isEnabled) {
     return (
       <AppContainer maxWidth="100%">
+        <ArtistSeriesHeader artistSeries={artistSeries} />
         <Box m={3}>
-          <ArtistSeriesHeader artistSeries={artistSeries} />
           <Separator mt={6} mb={3} />
           <Footer />
         </Box>

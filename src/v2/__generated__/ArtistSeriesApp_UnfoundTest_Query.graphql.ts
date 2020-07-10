@@ -14,6 +14,20 @@ export type ArtistSeriesApp_UnfoundTest_QueryRawResponse = {
     readonly artistSeries: ({
         readonly title: string;
         readonly description: string | null;
+        readonly artists: ReadonlyArray<({
+            readonly name: string | null;
+            readonly image: ({
+                readonly url: string | null;
+            }) | null;
+            readonly href: string | null;
+            readonly slug: string;
+            readonly id: string;
+            readonly internalID: string;
+            readonly is_followed: boolean | null;
+            readonly counts: ({
+                readonly follows: number | null;
+            }) | null;
+        }) | null> | null;
     }) | null;
 };
 export type ArtistSeriesApp_UnfoundTest_Query = {
@@ -40,6 +54,26 @@ fragment ArtistSeriesApp_artistSeries on ArtistSeries {
 fragment ArtistSeriesHeader_artistSeries on ArtistSeries {
   title
   description
+  artists(size: 1) {
+    name
+    image {
+      url
+    }
+    href
+    slug
+    ...FollowArtistButton_artist
+    id
+  }
+}
+
+fragment FollowArtistButton_artist on Artist {
+  id
+  internalID
+  name
+  is_followed: isFollowed
+  counts {
+    follows
+  }
 }
 */
 
@@ -113,6 +147,101 @@ return {
             "name": "description",
             "args": null,
             "storageKey": null
+          },
+          {
+            "kind": "LinkedField",
+            "alias": null,
+            "name": "artists",
+            "storageKey": "artists(size:1)",
+            "args": [
+              {
+                "kind": "Literal",
+                "name": "size",
+                "value": 1
+              }
+            ],
+            "concreteType": "Artist",
+            "plural": true,
+            "selections": [
+              {
+                "kind": "ScalarField",
+                "alias": null,
+                "name": "name",
+                "args": null,
+                "storageKey": null
+              },
+              {
+                "kind": "LinkedField",
+                "alias": null,
+                "name": "image",
+                "storageKey": null,
+                "args": null,
+                "concreteType": "Image",
+                "plural": false,
+                "selections": [
+                  {
+                    "kind": "ScalarField",
+                    "alias": null,
+                    "name": "url",
+                    "args": null,
+                    "storageKey": null
+                  }
+                ]
+              },
+              {
+                "kind": "ScalarField",
+                "alias": null,
+                "name": "href",
+                "args": null,
+                "storageKey": null
+              },
+              {
+                "kind": "ScalarField",
+                "alias": null,
+                "name": "slug",
+                "args": null,
+                "storageKey": null
+              },
+              {
+                "kind": "ScalarField",
+                "alias": null,
+                "name": "id",
+                "args": null,
+                "storageKey": null
+              },
+              {
+                "kind": "ScalarField",
+                "alias": null,
+                "name": "internalID",
+                "args": null,
+                "storageKey": null
+              },
+              {
+                "kind": "ScalarField",
+                "alias": "is_followed",
+                "name": "isFollowed",
+                "args": null,
+                "storageKey": null
+              },
+              {
+                "kind": "LinkedField",
+                "alias": null,
+                "name": "counts",
+                "storageKey": null,
+                "args": null,
+                "concreteType": "ArtistCounts",
+                "plural": false,
+                "selections": [
+                  {
+                    "kind": "ScalarField",
+                    "alias": null,
+                    "name": "follows",
+                    "args": null,
+                    "storageKey": null
+                  }
+                ]
+              }
+            ]
           }
         ]
       }
@@ -122,7 +251,7 @@ return {
     "operationKind": "query",
     "name": "ArtistSeriesApp_UnfoundTest_Query",
     "id": null,
-    "text": "query ArtistSeriesApp_UnfoundTest_Query(\n  $slug: ID!\n) {\n  artistSeries(id: $slug) {\n    ...ArtistSeriesApp_artistSeries\n  }\n}\n\nfragment ArtistSeriesApp_artistSeries on ArtistSeries {\n  ...ArtistSeriesHeader_artistSeries\n}\n\nfragment ArtistSeriesHeader_artistSeries on ArtistSeries {\n  title\n  description\n}\n",
+    "text": "query ArtistSeriesApp_UnfoundTest_Query(\n  $slug: ID!\n) {\n  artistSeries(id: $slug) {\n    ...ArtistSeriesApp_artistSeries\n  }\n}\n\nfragment ArtistSeriesApp_artistSeries on ArtistSeries {\n  ...ArtistSeriesHeader_artistSeries\n}\n\nfragment ArtistSeriesHeader_artistSeries on ArtistSeries {\n  title\n  description\n  artists(size: 1) {\n    name\n    image {\n      url\n    }\n    href\n    slug\n    ...FollowArtistButton_artist\n    id\n  }\n}\n\nfragment FollowArtistButton_artist on Artist {\n  id\n  internalID\n  name\n  is_followed: isFollowed\n  counts {\n    follows\n  }\n}\n",
     "metadata": {}
   }
 };
