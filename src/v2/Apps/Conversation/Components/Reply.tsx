@@ -37,7 +37,6 @@ const StyledTextArea = styled.textarea<{ height?: string }>`
     max-height: calc(60vh - 115px);
   `};
 `
-const StyledButton = styled(Button)``
 
 interface ReplyProps {
   conversation: Conversation_conversation
@@ -132,7 +131,8 @@ export const Reply: React.FC<ReplyProps> = props => {
           />
         </FullWidthFlex>
         <Flex alignItems="flex-end">
-          <StyledButton
+          <Button
+            ml={1}
             disabled={buttonDisabled}
             loading={loading}
             onClick={_event => {
@@ -140,7 +140,7 @@ export const Reply: React.FC<ReplyProps> = props => {
             }}
           >
             Send
-          </StyledButton>
+          </Button>
         </Flex>
       </StyledFlex>
     </>
