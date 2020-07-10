@@ -75,7 +75,9 @@ export const Attachment: React.FC<AttachmentProps> = props => {
             <Sans color={textColor} weight="medium" size="4" mr={2}>
               {attachment.fileName}
             </Sans>
-            <DownloadIcon width="24px" height="24px" />
+            <Box flexShrink={0}>
+              <DownloadIcon width="24px" height="24px" viewBox="0 0 24 24" />
+            </Box>
           </>
         )}
       </AttachmentContainer>
