@@ -3,6 +3,7 @@ import { MockBoot, renderRelayTree } from "v2/DevTools"
 import { Mediator, SystemContextProvider } from "v2/Artsy"
 import ViewingRoomApp from "../ViewingRoomApp"
 import { graphql } from "react-relay"
+import { ViewingRoomApp_ScheduledTest_QueryRawResponse } from "v2/__generated__/ViewingRoomApp_ScheduledTest_Query.graphql"
 import { ViewingRoomApp_OpenTest_QueryRawResponse } from "v2/__generated__/ViewingRoomApp_OpenTest_Query.graphql"
 import { ViewingRoomApp_ClosedTest_QueryRawResponse } from "v2/__generated__/ViewingRoomApp_ClosedTest_Query.graphql"
 import { ViewingRoomApp_UnfoundTest_QueryRawResponse } from "v2/__generated__/ViewingRoomApp_UnfoundTest_Query.graphql"
@@ -32,6 +33,75 @@ describe("ViewingRoomApp", () => {
     window.history.pushState({}, "Viewing Room Title", slug)
   })
 
+  // SCHEDULED viewing room
+  describe("with scheduled viewing room", () => {
+    const getWrapper = async (
+      breakpoint: Breakpoint = "lg",
+      response: ViewingRoomApp_ScheduledTest_QueryRawResponse = ScheduledViewingRoomAppFixture
+    ) => {
+      return renderRelayTree({
+        Component: ({ viewingRoom }) => {
+          return (
+            <MockBoot breakpoint={breakpoint}>
+              <SystemContextProvider mediator={mediator} user={user}>
+                <ViewingRoomApp viewingRoom={viewingRoom}>
+                  some child
+                </ViewingRoomApp>
+              </SystemContextProvider>
+            </MockBoot>
+          )
+        },
+        query: graphql`
+          query ViewingRoomApp_ScheduledTest_Query($slug: ID!)
+            @raw_response_type {
+            viewingRoom(id: $slug) {
+              ...ViewingRoomApp_viewingRoom
+            }
+          }
+        `,
+        variables: {
+          slug,
+        },
+        mockData: response,
+      })
+    }
+
+    it("renders the correct components", async () => {
+      const wrapper = await getWrapper()
+      expect(wrapper.find("ViewingRoomMeta").length).toBe(1)
+      expect(wrapper.find("AppContainer").length).toBe(1)
+      expect(wrapper.find("ViewingRoomHeader").length).toBe(1)
+      expect(wrapper.find("ViewingRoomTabBar").length).toBe(0)
+      expect(wrapper.find("ViewingRoomContentNotAccessible").length).toBe(1)
+      expect(wrapper.html()).not.toContain("some child")
+    })
+
+    describe("ViewingRoomHeader", () => {
+      describe("desktop", () => {
+        it("renders correctly", async () => {
+          const wrapper = await getWrapper()
+          expect(wrapper.find("ResponsiveImage").length).toBe(1)
+          const html = wrapper.html()
+          expect(html).toContain("Guy Yanai")
+          expect(html).toContain("Subscription Demo GG")
+          expect(html).toContain("Opens in 8 days")
+        })
+      })
+
+      describe("mobile", () => {
+        it("renders correctly", async () => {
+          const wrapper = await getWrapper()
+          expect(wrapper.find("ResponsiveImage").length).toBe(1)
+          const html = wrapper.html()
+          expect(html).toContain("Guy Yanai")
+          expect(html).toContain("Subscription Demo GG")
+          expect(html).toContain("Opens in 8 days")
+        })
+      })
+    })
+  })
+
+  // OPEN Viewing Room
   describe("with open viewing room", () => {
     const getWrapper = async (
       breakpoint: Breakpoint = "lg",
@@ -69,7 +139,7 @@ describe("ViewingRoomApp", () => {
       expect(wrapper.find("AppContainer").length).toBe(1)
       expect(wrapper.find("ViewingRoomHeader").length).toBe(1)
       expect(wrapper.find("ViewingRoomTabBar").length).toBe(1)
-      expect(wrapper.find("ViewingRoomClosed").length).toBe(0)
+      expect(wrapper.find("ViewingRoomContentNotAccessible").length).toBe(0)
       expect(wrapper.html()).toContain("some child")
     })
 
@@ -108,6 +178,7 @@ describe("ViewingRoomApp", () => {
     })
   })
 
+  // CLOSED viewing room
   describe("with closed viewing room", () => {
     const getWrapper = async (
       breakpoint: Breakpoint = "lg",
@@ -145,7 +216,7 @@ describe("ViewingRoomApp", () => {
       expect(wrapper.find("AppContainer").length).toBe(1)
       expect(wrapper.find("ViewingRoomHeader").length).toBe(1)
       expect(wrapper.find("ViewingRoomTabBar").length).toBe(0)
-      expect(wrapper.find("ViewingRoomClosed").length).toBe(1)
+      expect(wrapper.find("ViewingRoomContentNotAccessible").length).toBe(1)
       expect(wrapper.html()).not.toContain("some child")
     })
 
@@ -223,7 +294,7 @@ describe("ViewingRoomApp", () => {
         Component: ({ viewingRoom }) => {
           return (
             <MockBoot breakpoint={breakpoint}>
-              <SystemContextProvider mediator={mediator} user={{}}>
+              <SystemContextProvider mediator={mediator} user={null}>
                 <ViewingRoomApp viewingRoom={viewingRoom}>
                   some child
                 </ViewingRoomApp>
@@ -246,7 +317,14 @@ describe("ViewingRoomApp", () => {
       })
     }
     it("shows sign up modal", async () => {
-      await getWrapper()
+      const wrapper = await getWrapper()
+      expect(wrapper.find("ViewingRoomMeta").length).toBe(1)
+      expect(wrapper.find("AppContainer").length).toBe(1)
+      expect(wrapper.find("ViewingRoomHeader").length).toBe(1)
+      expect(wrapper.find("ViewingRoomTabBar").length).toBe(0)
+      expect(wrapper.find("ViewingRoomContentNotAccessible").length).toBe(0)
+      expect(wrapper.html()).not.toContain("some child")
+
       expect(mediator.trigger).toBeCalledWith("open:auth", {
         mode: "signup",
         redirectTo: "http://localhost/" + slug,
@@ -256,6 +334,22 @@ describe("ViewingRoomApp", () => {
     })
   })
 })
+
+const ScheduledViewingRoomAppFixture: ViewingRoomApp_ScheduledTest_QueryRawResponse = {
+  viewingRoom: {
+    title: "Guy Yanai",
+    heroImageURL:
+      "https://d7hftxdivxxvm.cloudfront.net/?resize_to=width&src=https%3A%2F%2Fartsy-media-uploads.s3.amazonaws.com%2F0RnxWDsVmKuALfpmd75YyA%2FCTPHSEPT19_018_JO_Guy_Yanai_TLV_031_20190913.jpg&width=1200&quality=80",
+    partner: {
+      name: "Subscription Demo GG",
+      id: "UGFydG5lcjo1NTQxMjM3MzcyNjE2OTJiMTk4YzAzMDA=",
+      href: "/partner-demo-gg",
+    },
+    distanceToOpen: "8 days",
+    distanceToClose: null,
+    status: "scheduled",
+  },
+}
 
 const OpenViewingRoomAppFixture: ViewingRoomApp_OpenTest_QueryRawResponse = {
   viewingRoom: {
@@ -268,7 +362,7 @@ const OpenViewingRoomAppFixture: ViewingRoomApp_OpenTest_QueryRawResponse = {
       href: "/partner-demo-gg",
     },
     distanceToOpen: null,
-    distanceToClose: "Closes in 1 month",
+    distanceToClose: "1 month",
     status: "live",
   },
 }

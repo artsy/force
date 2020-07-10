@@ -2,15 +2,15 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type ViewingRoomApp_LoggedOutTest_QueryVariables = {
+export type ViewingRoomApp_ScheduledTest_QueryVariables = {
     slug: string;
 };
-export type ViewingRoomApp_LoggedOutTest_QueryResponse = {
+export type ViewingRoomApp_ScheduledTest_QueryResponse = {
     readonly viewingRoom: {
         readonly " $fragmentRefs": FragmentRefs<"ViewingRoomApp_viewingRoom">;
     } | null;
 };
-export type ViewingRoomApp_LoggedOutTest_QueryRawResponse = {
+export type ViewingRoomApp_ScheduledTest_QueryRawResponse = {
     readonly viewingRoom: ({
         readonly title: string;
         readonly heroImageURL: string | null;
@@ -24,16 +24,16 @@ export type ViewingRoomApp_LoggedOutTest_QueryRawResponse = {
         readonly status: string;
     }) | null;
 };
-export type ViewingRoomApp_LoggedOutTest_Query = {
-    readonly response: ViewingRoomApp_LoggedOutTest_QueryResponse;
-    readonly variables: ViewingRoomApp_LoggedOutTest_QueryVariables;
-    readonly rawResponse: ViewingRoomApp_LoggedOutTest_QueryRawResponse;
+export type ViewingRoomApp_ScheduledTest_Query = {
+    readonly response: ViewingRoomApp_ScheduledTest_QueryResponse;
+    readonly variables: ViewingRoomApp_ScheduledTest_QueryVariables;
+    readonly rawResponse: ViewingRoomApp_ScheduledTest_QueryRawResponse;
 };
 
 
 
 /*
-query ViewingRoomApp_LoggedOutTest_Query(
+query ViewingRoomApp_ScheduledTest_Query(
   $slug: ID!
 ) {
   viewingRoom(id: $slug) {
@@ -93,7 +93,7 @@ return {
   "kind": "Request",
   "fragment": {
     "kind": "Fragment",
-    "name": "ViewingRoomApp_LoggedOutTest_Query",
+    "name": "ViewingRoomApp_ScheduledTest_Query",
     "type": "Query",
     "metadata": null,
     "argumentDefinitions": (v0/*: any*/),
@@ -118,7 +118,7 @@ return {
   },
   "operation": {
     "kind": "Operation",
-    "name": "ViewingRoomApp_LoggedOutTest_Query",
+    "name": "ViewingRoomApp_ScheduledTest_Query",
     "argumentDefinitions": (v0/*: any*/),
     "selections": [
       {
@@ -203,12 +203,12 @@ return {
   },
   "params": {
     "operationKind": "query",
-    "name": "ViewingRoomApp_LoggedOutTest_Query",
+    "name": "ViewingRoomApp_ScheduledTest_Query",
     "id": null,
-    "text": "query ViewingRoomApp_LoggedOutTest_Query(\n  $slug: ID!\n) {\n  viewingRoom(id: $slug) {\n    ...ViewingRoomApp_viewingRoom\n  }\n}\n\nfragment ViewingRoomApp_viewingRoom on ViewingRoom {\n  ...ViewingRoomMeta_viewingRoom\n  ...ViewingRoomHeader_viewingRoom\n  ...ViewingRoomContentNotAccessible_viewingRoom\n  status\n}\n\nfragment ViewingRoomContentNotAccessible_viewingRoom on ViewingRoom {\n  status\n  partner {\n    href\n    id\n  }\n}\n\nfragment ViewingRoomHeader_viewingRoom on ViewingRoom {\n  heroImageURL\n  title\n  partner {\n    name\n    id\n  }\n  distanceToOpen\n  distanceToClose\n  status\n}\n\nfragment ViewingRoomMeta_viewingRoom on ViewingRoom {\n  title\n}\n",
+    "text": "query ViewingRoomApp_ScheduledTest_Query(\n  $slug: ID!\n) {\n  viewingRoom(id: $slug) {\n    ...ViewingRoomApp_viewingRoom\n  }\n}\n\nfragment ViewingRoomApp_viewingRoom on ViewingRoom {\n  ...ViewingRoomMeta_viewingRoom\n  ...ViewingRoomHeader_viewingRoom\n  ...ViewingRoomContentNotAccessible_viewingRoom\n  status\n}\n\nfragment ViewingRoomContentNotAccessible_viewingRoom on ViewingRoom {\n  status\n  partner {\n    href\n    id\n  }\n}\n\nfragment ViewingRoomHeader_viewingRoom on ViewingRoom {\n  heroImageURL\n  title\n  partner {\n    name\n    id\n  }\n  distanceToOpen\n  distanceToClose\n  status\n}\n\nfragment ViewingRoomMeta_viewingRoom on ViewingRoom {\n  title\n}\n",
     "metadata": {}
   }
 };
 })();
-(node as any).hash = 'a776017f1a7e8b9dba99b5335a74d057';
+(node as any).hash = 'f0712f4bd7f1887b835f68512a651d16';
 export default node;
