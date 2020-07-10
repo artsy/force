@@ -96,10 +96,8 @@ export const NavBar: React.FC = track(
    *
    * TODO: Find a less naive way to check if route is in appshell
    */
-  const handleMobileNavClick = event => {
-    if (event.target?.parentNode?.href?.includes("/collect")) {
-      toggleMobileNav(false)
-    }
+  const handleMobileNavClick = () => {
+    toggleMobileNav(false)
   }
 
   return (
