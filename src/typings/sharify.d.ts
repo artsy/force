@@ -70,6 +70,9 @@ declare module "sharify" {
       PC_ARTSY_CHANNEL: string
       PC_AUCTION_CHANNEL: string
       POSITRON_URL: string
+      SUBMISSION: string
+      SUBMISSION_ID: string
+      SUBMISSION_ARTIST_NAME: string
       TARGET_CAMPAIGN_URL: string
 
       // FIXME: reaction migration

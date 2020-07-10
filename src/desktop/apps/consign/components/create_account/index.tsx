@@ -52,7 +52,6 @@ export class CreateAccount extends React.Component<CreateAccountProps> {
   }
 
   render() {
-    console.log(this.props.artistId)
     return (
       <Box mx="auto" maxWidth={550}>
         <ModalHeader title={this.props.title} />

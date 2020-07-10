@@ -460,7 +460,10 @@ function submissionFlow(state = initialState, action) {
 }
 
 export default combineReducers({
-  submissionFlow: composeReducers(responsiveWindowReducer, submissionFlow),
+  submissionFlow: composeReducers(
+    responsiveWindowReducer,
+    submissionFlow
+  ) as any,
   router: routerReducer,
   form: formReducer,
-})
+}) as any

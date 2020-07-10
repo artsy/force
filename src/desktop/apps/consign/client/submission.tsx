@@ -2,7 +2,6 @@ import analyticsMiddleware from "./analytics_middleware"
 import ResponsiveWindow from "../../../components/react/responsive_window"
 import React from "react"
 import SubmissionFlow from "../components/submission_flow"
-import geo from "../../../components/geo/index.coffee"
 import reducers from "./reducers"
 import createHistory from "history/createBrowserHistory"
 import createLogger from "redux-logger"
@@ -26,6 +25,8 @@ import { render } from "react-dom"
 import { routerMiddleware } from "react-router-redux"
 import { SystemContextProvider } from "v2/Artsy"
 import queryString from "query-string"
+
+const geo = require("../../../components/geo/index.coffee")
 
 function setupSubmissionFlow() {
   // load google maps for autocomplete
