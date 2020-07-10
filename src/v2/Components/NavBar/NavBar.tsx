@@ -90,12 +90,6 @@ export const NavBar: React.FC = track(
     }
   }, [isMobile])
 
-  /**
-   * Check to see if we're clicking a link that lives within the new app shell
-   * and close the navbar.
-   *
-   * TODO: Find a less naive way to check if route is in appshell
-   */
   const handleMobileNavClick = () => {
     toggleMobileNav(false)
   }
