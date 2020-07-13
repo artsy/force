@@ -9,6 +9,7 @@ export default function GeneFamiliesQuery() {
           name
           genes {
             id
+            slug
             name
             display_name: displayName
             is_published: isPublished
