@@ -140,6 +140,7 @@ export const NavItem: React.FC<NavItemProps> = ({
   }
 
   const containerRef = useRef<null | HTMLDivElement>(null)
+  const hitAreaRef = useRef<null | HTMLButtonElement | HTMLAnchorElement>(null)
 
   // Close the subnav if it is open and our focus moves outside of it
   useEffect(() => {
@@ -182,6 +183,20 @@ export const NavItem: React.FC<NavItemProps> = ({
     }, 150)
   }
 
+  const handleEscape = (event: KeyboardEvent) => {
+    if (event.key !== "Escape" || !hitAreaRef?.current) return
+    setIsVisible(false) // Close panel
+    hitAreaRef.current.focus() // Return focus
+  }
+
+  useEffect(() => {
+    if (!isVisible) return // Only bind to open menus
+    window.addEventListener("keydown", handleEscape)
+    return () => {
+      window.removeEventListener("keydown", handleEscape)
+    }
+  }, [isVisible])
+
   return (
     <Container
       ref={containerRef as any}
@@ -193,6 +208,7 @@ export const NavItem: React.FC<NavItemProps> = ({
       {...rest}
     >
       <HitArea
+        ref={hitAreaRef as any}
         {...(!!Menu
           ? {
               as: Clickable,
