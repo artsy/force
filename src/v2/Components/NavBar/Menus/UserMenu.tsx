@@ -64,26 +64,41 @@ export const UserMenu: React.FC = () => {
       )}
 
       {isAdmin && (
-        <MenuItem href="/user/purchases" onClick={trackClick}>
-          <TagIcon mr={1} title="View your purchases" /> Purchases
+        <MenuItem
+          aria-label="View your purchases"
+          href="/user/purchases"
+          onClick={trackClick}
+        >
+          <TagIcon mr={1} aria-hidden="true" /> Purchases
         </MenuItem>
       )}
 
-      <MenuItem href="/user/saves" onClick={trackClick}>
-        <HeartIcon mr={1} title="View your Saves &amp; Follows" /> Saves &amp;
-        Follows
-      </MenuItem>
-
-      <MenuItem href="/profile/edit" onClick={trackClick}>
-        <SoloIcon mr={1} title="View your Collector Profile" /> Collector
-        Profile
-      </MenuItem>
-
-      <MenuItem href="/user/edit" onClick={trackClick}>
-        <SettingsIcon mr={1} title="Edit your settings" /> Settings
+      <MenuItem
+        aria-label="View your Saves &amp; Follows"
+        href="/user/saves"
+        onClick={trackClick}
+      >
+        <HeartIcon mr={1} aria-hidden="true" /> Saves &amp; Follows
       </MenuItem>
 
       <MenuItem
+        aria-label="View your Collector Profile"
+        href="/profile/edit"
+        onClick={trackClick}
+      >
+        <SoloIcon mr={1} aria-hidden="true" /> Collector Profile
+      </MenuItem>
+
+      <MenuItem
+        aria-label="Edit your settings"
+        href="/user/edit"
+        onClick={trackClick}
+      >
+        <SettingsIcon mr={1} aria-hidden="true" /> Settings
+      </MenuItem>
+
+      <MenuItem
+        aria-label="Log out of your account"
         tabIndex={0}
         onKeyPress={event => {
           if (event.key === "Enter" || event.key === " ") {
@@ -94,7 +109,7 @@ export const UserMenu: React.FC = () => {
           mediator.trigger("auth:logout")
         }}
       >
-        <PowerIcon mr={1} title="Log out of your account" /> Log out
+        <PowerIcon mr={1} aria-hidden="true" /> Log out
       </MenuItem>
     </Menu>
   )
