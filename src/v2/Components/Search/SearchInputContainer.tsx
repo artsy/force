@@ -16,9 +16,10 @@ const SearchButton = styled.button`
   background: none;
   padding: 0;
 
-  :focus {
+  &:focus {
     background: ${color("purple100")};
     border-radius: 50%;
+    outline: none;
 
     svg > path {
       fill: ${color("white100")};

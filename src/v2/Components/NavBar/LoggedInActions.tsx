@@ -47,6 +47,7 @@ export const LoggedInActions: React.FC<
       <NavItem
         href="/works-for-you"
         Menu={NotificationsMenu}
+        menuAnchor="right"
         Overlay={() => (
           <NotificationOverlay showOverlay={hasUnreadNotifications} />
         )}
@@ -60,7 +61,12 @@ export const LoggedInActions: React.FC<
         }}
       >
         {({ hover }) => {
-          return <BellIcon fill={hover ? "purple100" : "black80"} />
+          return (
+            <BellIcon
+              fill={hover ? "purple100" : "black80"}
+              title="Notifications"
+            />
+          )
         }}
       </NavItem>
       {conversationsEnabled && (
@@ -80,9 +86,14 @@ export const LoggedInActions: React.FC<
           }}
         </NavItem>
       )}
-      <NavItem Menu={UserMenu}>
+      <NavItem Menu={UserMenu} menuAnchor="right">
         {({ hover }) => {
-          return <SoloIcon fill={hover ? "purple100" : "black80"} />
+          return (
+            <SoloIcon
+              fill={hover ? "purple100" : "black80"}
+              title="Your account"
+            />
+          )
         }}
       </NavItem>
     </>

@@ -26,9 +26,9 @@ describe("UserMenu", () => {
 
   // Label also includes SVG image title
   const defaultLinks = [
-    ["/user/saves", "Save Saves & Follows"],
-    ["/profile/edit", "User Collector Profile"],
-    ["/user/edit", "Settings Settings"],
+    ["/user/saves", "View your Saves & Follows Saves & Follows"],
+    ["/profile/edit", "View your Collector Profile Collector Profile"],
+    ["/user/edit", "Edit your settings Settings"],
   ]
 
   it("renders correct menu items", () => {
@@ -41,20 +41,12 @@ describe("UserMenu", () => {
       expect(linkLabel).toEqual(navLink.text())
     })
 
-    expect(
-      wrapper
-        .find("MenuItem")
-        .last()
-        .text()
-    ).toContain("Log out")
+    expect(wrapper.find("MenuItem").last().text()).toContain("Log out")
   })
 
   it("calls logout auth action on logout menu click", () => {
     const wrapper = getWrapper()
-    wrapper
-      .find("MenuItem")
-      .last()
-      .simulate("click")
+    wrapper.find("MenuItem").last().simulate("click")
     expect(mediator.trigger).toBeCalledWith("auth:logout")
   })
 

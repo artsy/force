@@ -146,10 +146,16 @@ export const Details: FC<DetailsProps> = ({ conversation, ...props }) => {
         <Sans size="3" weight="medium" mb={2}>
           Support
         </Sans>
-        <Flex alignItems="center" mb={1}>
-          <QuestionCircleIcon mr={1} />
-          <Sans size="3">Inquiries FAQ</Sans>
-        </Flex>
+        <Link
+          href="https://support.artsy.net/hc/en-us/sections/360008203054-Contact-a-gallery"
+          target="_blank"
+          noUnderline
+        >
+          <Flex alignItems="center" mb={1}>
+            <QuestionCircleIcon mr={1} />
+            <Sans size="3">Inquiries FAQ</Sans>
+          </Flex>
+        </Link>
       </Flex>
     </DetailsContainer>
   )

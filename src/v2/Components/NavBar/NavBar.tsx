@@ -1,23 +1,16 @@
 import React, { useEffect, useState } from "react"
 import styled from "styled-components"
-
 import {
-  ArtsyMarkIcon,
   Box,
   Button,
   ChevronIcon,
   Flex,
-  Link,
-  Spacer,
-  Text,
+  FlexProps,
   color,
-  space,
   themeProps,
 } from "@artsy/palette"
-
 import { useSystemContext } from "v2/Artsy/SystemContext"
 import { SearchBarQueryRenderer as SearchBar } from "v2/Components/Search/SearchBar"
-
 import {
   DropDownNavMenu,
   MobileNavMenu,
@@ -25,35 +18,20 @@ import {
   MoreNavMenu,
 } from "./Menus"
 import { InboxNotificationCountQueryRenderer as InboxNotificationCount } from "./Menus/MobileNavMenu/InboxNotificationCount"
-
+import { userHasLabFeature } from "v2/Utils/user"
 import { ModalType } from "v2/Components/Authentication/Types"
 import { MenuLinkData, menuData } from "v2/Components/NavBar/menuData"
 import { openAuthModal } from "v2/Utils/openAuthModal"
-import { userHasLabFeature } from "v2/Utils/user"
-
 import { NavItem } from "./NavItem"
-
 import { ContextModule, Intent } from "@artsy/cohesion"
 import { AnalyticsSchema } from "v2/Artsy"
 import { track, useTracking } from "v2/Artsy/Analytics"
 import Events from "v2/Utils/Events"
 import { useMatchMedia } from "v2/Utils/Hooks/useMatchMedia"
+import { NavBarPrimaryLogo } from "./NavBarPrimaryLogo"
+import { NavBarSkipLink } from "./NavBarSkipLink"
 import { LoggedInActionsQueryRenderer as LoggedInActions } from "./LoggedInActions"
-
-const SkipLink = styled.a`
-  display: block;
-  position: absolute;
-  top: -100%;
-  left: 0;
-  color: ${color("black100")};
-  background-color: ${color("black10")};
-
-  &:focus {
-    position: relative;
-    top: 0;
-    padding: ${space(1)}px;
-  }
-`
+import { NAV_BAR_HEIGHT } from "./constants"
 
 export const NavBar: React.FC = track(
   {
@@ -104,19 +82,13 @@ export const NavBar: React.FC = track(
 
   return (
     <>
-      <SkipLink href="#main">
-        <Text variant="text">Skip to Main Content</Text>
-      </SkipLink>
+      <NavBarSkipLink />
 
       <header>
-        <NavBarContainer as="nav" px={1}>
-          <NavSection>
-            <Link href="/" style={{ display: "flex" }}>
-              <ArtsyMarkIcon height={40} width={40} />
-            </Link>
+        <NavBarContainer as="nav">
+          <NavSection mx={0.5}>
+            <NavBarPrimaryLogo />
           </NavSection>
-
-          <Spacer mr={1} />
 
           <NavSection width="100%">
             <Box width="100%">
@@ -124,30 +96,24 @@ export const NavBar: React.FC = track(
             </Box>
           </NavSection>
 
-          <Spacer mr={2} />
-
-          {/*
-            Desktop. Collapses into mobile at `sm` breakpoint.
-        */}
+          {/* Desktop. Collapses into mobile at `sm` breakpoint. */}
           <NavSection display={["none", "none", "flex"]}>
-            <NavSection>
+            <NavSection alignItems="center" ml={2}>
               <NavItem
                 label="Artworks"
-                isFullScreenDropDown
+                menuAnchor="full"
                 Menu={({ setIsVisible }) => {
                   return (
-                    <Box>
-                      <DropDownNavMenu
-                        width="100vw"
-                        menu={(artworks as MenuLinkData).menu}
-                        contextModule={
-                          AnalyticsSchema.ContextModule.HeaderArtworksDropdown
-                        }
-                        onClick={() => {
-                          setIsVisible(false)
-                        }}
-                      />
-                    </Box>
+                    <DropDownNavMenu
+                      width="100vw"
+                      menu={(artworks as MenuLinkData).menu}
+                      contextModule={
+                        AnalyticsSchema.ContextModule.HeaderArtworksDropdown
+                      }
+                      onClick={() => {
+                        setIsVisible(false)
+                      }}
+                    />
                   )
                 }}
               >
@@ -166,21 +132,19 @@ export const NavBar: React.FC = track(
 
               <NavItem
                 label="Artists"
-                isFullScreenDropDown
+                menuAnchor="full"
                 Menu={({ setIsVisible }) => {
                   return (
-                    <Box>
-                      <DropDownNavMenu
-                        width="100vw"
-                        menu={(artists as MenuLinkData).menu}
-                        contextModule={
-                          AnalyticsSchema.ContextModule.HeaderArtistsDropdown
-                        }
-                        onClick={() => {
-                          setIsVisible(false)
-                        }}
-                      />
-                    </Box>
+                    <DropDownNavMenu
+                      width="100vw"
+                      menu={(artists as MenuLinkData).menu}
+                      contextModule={
+                        AnalyticsSchema.ContextModule.HeaderArtistsDropdown
+                      }
+                      onClick={() => {
+                        setIsVisible(false)
+                      }}
+                    />
                   )
                 }}
               >
@@ -201,12 +165,9 @@ export const NavBar: React.FC = track(
               <NavItem href="/articles">Editorial</NavItem>
               <NavItem
                 label="More"
+                menuAnchor="center"
                 Menu={() => {
-                  return (
-                    <Box mr={-150}>
-                      <MoreNavMenu width={160} />
-                    </Box>
-                  )
+                  return <MoreNavMenu width={160} />
                 }}
               >
                 <Flex>
@@ -223,49 +184,49 @@ export const NavBar: React.FC = track(
               </NavItem>
             </NavSection>
 
-            {isLoggedIn && (
-              <NavSection>
+            <NavSection mr={1}>
+              {isLoggedIn ? (
                 <LoggedInActions />
-              </NavSection>
-            )}
-
-            {!isLoggedIn && (
-              <NavSection>
-                <Spacer mr={2} />
-                <Button
-                  variant="secondaryOutline"
-                  onClick={() => {
-                    openAuthModal(mediator, {
-                      mode: ModalType.login,
-                      intent: Intent.login,
-                      contextModule: ContextModule.header,
-                    })
-                  }}
-                >
-                  Log in
-                </Button>
-                <Spacer mr={1} />
-                <Button
-                  onClick={() => {
-                    openAuthModal(mediator, {
-                      mode: ModalType.signup,
-                      intent: Intent.signup,
-                      contextModule: ContextModule.header,
-                    })
-                  }}
-                >
-                  Sign up
-                </Button>
-              </NavSection>
-            )}
+              ) : (
+                <>
+                  <Button
+                    ml={2}
+                    mr={1}
+                    variant="secondaryOutline"
+                    onClick={() => {
+                      openAuthModal(mediator, {
+                        mode: ModalType.login,
+                        intent: Intent.login,
+                        contextModule: ContextModule.header,
+                      })
+                    }}
+                  >
+                    Log in
+                  </Button>
+                  <Button
+                    onClick={() => {
+                      openAuthModal(mediator, {
+                        mode: ModalType.signup,
+                        intent: Intent.signup,
+                        contextModule: ContextModule.header,
+                      })
+                    }}
+                  >
+                    Sign up
+                  </Button>
+                </>
+              )}
+            </NavSection>
           </NavSection>
 
-          {/*
-          Mobile. Triggers at the `sm` breakpoint.
-        */}
+          {/* Mobile. Triggers at the `sm` breakpoint. */}
           <NavSection display={["flex", "flex", "none"]}>
             <NavItem
               className="mobileHamburgerButton"
+              borderLeft="1px solid"
+              borderColor="black10"
+              px={1}
+              ml={1}
               onClick={() => {
                 const showMenu = !showMobileMenu
                 if (showMenu) {
@@ -279,16 +240,8 @@ export const NavBar: React.FC = track(
                 toggleMobileNav(showMenu)
               }}
             >
-              <Flex
-                alignItems="center"
-                justifyContent="center"
-                width={22}
-                height={22}
-              >
-                <MobileNavDivider />
-                <MobileToggleIcon open={showMobileMenu} />
-                {showNotificationCount && <InboxNotificationCount />}
-              </Flex>
+              <MobileToggleIcon open={showMobileMenu} />
+              {showNotificationCount && <InboxNotificationCount />}
             </NavItem>
           </NavSection>
         </NavBarContainer>
@@ -308,26 +261,20 @@ export const NavBar: React.FC = track(
   )
 })
 
-export const NavBarHeight = space(6) - 1 // border offset
-
-const NavSection = ({ children, ...props }) => (
-  <Flex alignItems="center" {...props}>
-    {children}
-  </Flex>
-)
+const NavSection: React.FC<FlexProps> = ({ children, ...rest }) => {
+  return (
+    <Flex alignItems="stretch" height="100%" bg={rest.bg} {...rest}>
+      <Flex width="100%" height="100%" alignItems="center">
+        {children}
+      </Flex>
+    </Flex>
+  )
+}
 
 const NavBarContainer = styled(Flex)`
   background-color: ${color("white100")};
   border-bottom: 1px solid ${color("black10")};
   position: relative;
   z-index: 3;
-  height: ${NavBarHeight}px;
-`
-
-// FIXME: This needs to be cleaned up once we get proper icons
-const MobileNavDivider = styled(Box)`
-  border-left: 1px solid ${color("black10")};
-  height: 63px;
-  position: absolute;
-  left: -12px;
+  height: ${NAV_BAR_HEIGHT}px;
 `

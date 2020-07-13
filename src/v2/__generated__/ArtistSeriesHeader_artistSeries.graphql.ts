@@ -5,6 +5,15 @@ import { FragmentRefs } from "relay-runtime";
 export type ArtistSeriesHeader_artistSeries = {
     readonly title: string;
     readonly description: string | null;
+    readonly artists: ReadonlyArray<{
+        readonly name: string | null;
+        readonly image: {
+            readonly url: string | null;
+        } | null;
+        readonly href: string | null;
+        readonly slug: string;
+        readonly " $fragmentRefs": FragmentRefs<"FollowArtistButton_artist">;
+    } | null> | null;
     readonly " $refType": "ArtistSeriesHeader_artistSeries";
 };
 export type ArtistSeriesHeader_artistSeries$data = ArtistSeriesHeader_artistSeries;
@@ -35,8 +44,69 @@ const node: ReaderFragment = {
       "name": "description",
       "args": null,
       "storageKey": null
+    },
+    {
+      "kind": "LinkedField",
+      "alias": null,
+      "name": "artists",
+      "storageKey": "artists(size:1)",
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "size",
+          "value": 1
+        }
+      ],
+      "concreteType": "Artist",
+      "plural": true,
+      "selections": [
+        {
+          "kind": "ScalarField",
+          "alias": null,
+          "name": "name",
+          "args": null,
+          "storageKey": null
+        },
+        {
+          "kind": "LinkedField",
+          "alias": null,
+          "name": "image",
+          "storageKey": null,
+          "args": null,
+          "concreteType": "Image",
+          "plural": false,
+          "selections": [
+            {
+              "kind": "ScalarField",
+              "alias": null,
+              "name": "url",
+              "args": null,
+              "storageKey": null
+            }
+          ]
+        },
+        {
+          "kind": "ScalarField",
+          "alias": null,
+          "name": "href",
+          "args": null,
+          "storageKey": null
+        },
+        {
+          "kind": "ScalarField",
+          "alias": null,
+          "name": "slug",
+          "args": null,
+          "storageKey": null
+        },
+        {
+          "kind": "FragmentSpread",
+          "name": "FollowArtistButton_artist",
+          "args": null
+        }
+      ]
     }
   ]
 };
-(node as any).hash = '56ec2250328a1b89ce4ce14781aa6e51';
+(node as any).hash = 'b7f8ca35258c57e6400d162d1413cc34';
 export default node;

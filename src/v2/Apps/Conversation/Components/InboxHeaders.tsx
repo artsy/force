@@ -33,6 +33,7 @@ const ConversationHeaderContainer = styled(Flex)`
   right: 0;
   border-bottom: 1px solid ${color("black10")};
   background: white;
+  z-index: 1;
 `
 
 interface DetailsProps {
@@ -126,6 +127,7 @@ export const DetailsHeader: FC<DetailsHeaderProps> = props => {
     <AnimatedFlex
       flexDirection="column"
       width={showDetails ? "375px" : "0"}
+      maxWidth={showDetails ? "auto" : "0"}
       {...props}
     >
       <Flex flexDirection="row" justifyContent="space-between">

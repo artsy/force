@@ -23,10 +23,10 @@ import {
 } from "styled-system"
 import Linkify from "react-linkify"
 
-const AttachmentLink = styled.a`
-  width: min-content;
+const AttachmentLink = styled.a<{ isImage: boolean }>`
   text-decoration: none;
   max-width: 66.67%;
+  width: ${({ isImage }) => (isImage ? "100%" : "min-content")};
 `
 
 const AttachmentContainer = styled(Flex)<
@@ -36,7 +36,6 @@ const AttachmentContainer = styled(Flex)<
   ${background};
   border-radius: 15px;
   white-space: no-wrap;
-  width: min-content;
   justify-content: space-between;
 `
 
@@ -59,23 +58,35 @@ interface AttachmentProps {
 
 export const Attachment: React.FC<AttachmentProps> = props => {
   const { attachment, alignSelf, bgColor, textColor } = props
+  const isImage = attachment.contentType.startsWith("image")
 
   return (
-    <AttachmentLink href={attachment.downloadURL} target="_blank">
+    <AttachmentLink
+      href={attachment.downloadURL}
+      target="_blank"
+      isImage={isImage}
+    >
       <AttachmentContainer
         p={1}
         mt={0.5}
         alignSelf={alignSelf}
         background={color(bgColor)}
+        width={isImage ? "100%" : "min-content"}
       >
-        {attachment.contentType.startsWith("image") ? (
-          <Image src={attachment.downloadURL} alt={attachment.fileName} />
+        {isImage ? (
+          <Image
+            src={attachment.downloadURL}
+            alt={attachment.fileName}
+            width="100%"
+          />
         ) : (
           <>
             <Sans color={textColor} weight="medium" size="4" mr={2}>
               {attachment.fileName}
             </Sans>
-            <DownloadIcon width="24px" height="24px" />
+            <Box flexShrink={0}>
+              <DownloadIcon width="24px" height="24px" viewBox="0 0 24 24" />
+            </Box>
           </>
         )}
       </AttachmentContainer>

@@ -22,10 +22,10 @@ const GeneLink = styled.a`
     color: ${colors.purpleRegular};
   }
 `
-const Gene = ({ id, name, display_name }) => {
+const Gene = ({ slug, name, display_name }) => {
   return (
     <GeneItem>
-      <GeneLink href={`/gene/${id}`}>{display_name || name}</GeneLink>
+      <GeneLink href={`/gene/${slug}`}>{display_name || name}</GeneLink>
     </GeneItem>
   )
 }

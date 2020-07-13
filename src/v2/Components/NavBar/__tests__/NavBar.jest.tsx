@@ -37,6 +37,7 @@ describe("NavBar", () => {
   }
 
   beforeEach(() => {
+    jest.spyOn(console, "error").mockImplementation(() => {})
     ;(useTracking as jest.Mock).mockImplementation(() => {
       return {
         trackEvent,
@@ -65,8 +66,12 @@ describe("NavBar", () => {
     it("renders correct lg, xl nav items", () => {
       const wrapper = getWrapper()
 
-      // Logo
-      expect(wrapper.find("Link").first().prop("href")).toEqual("/")
+      // Should always be first
+      expect(wrapper.find("a").first().text()).toEqual("Skip to Main Content")
+
+      expect(wrapper.find("NavBarPrimaryLogo").find("a").prop("href")).toEqual(
+        "/"
+      )
 
       const links = wrapper.find("NavItem")
 
@@ -139,13 +144,14 @@ describe("NavBar", () => {
   describe("mobile", () => {
     it("toggles menu", () => {
       const wrapper = getWrapper()
+
       expect(wrapper.find("MobileToggleIcon").length).toEqual(1)
 
       const toggle = () =>
         wrapper
           .find("NavSection")
           .find("NavItem")
-          .find("Link")
+          .find("a")
           .last()
           .simulate("click")
 

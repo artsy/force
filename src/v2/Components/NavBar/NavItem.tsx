@@ -1,10 +1,81 @@
-import { Box, BoxProps, Link, Sans, space } from "@artsy/palette"
+import {
+  Box,
+  BoxProps,
+  Clickable,
+  Flex,
+  Link,
+  Sans,
+  color,
+} from "@artsy/palette"
 import { AnalyticsSchema } from "v2/Artsy"
 import { useTracking } from "v2/Artsy/Analytics/useTracking"
 import { isFunction, isString } from "lodash"
-import React, { useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { animated, config, useSpring } from "react-spring"
-import styled from "styled-components"
+import styled, { css } from "styled-components"
+import { position } from "styled-system"
+import { RouterLink } from "v2/Artsy/Router/RouterLink"
+
+const Container = styled(Flex)`
+  height: 100%;
+  align-items: center;
+`
+
+const HitArea = styled(Link)`
+  ${position}
+  display: flex;
+  align-items: center;
+  height: 100%;
+  user-select: none;
+
+  /* Utilize content-box sizing so that the bottom-border overlays
+  the nav border, rather than stacking */
+  box-sizing: content-box;
+  border-bottom: 1px solid transparent;
+
+  &:focus {
+    outline: 0;
+    border-bottom-color: ${color("black100")};
+    text-decoration: underline;
+    z-index: 1;
+  }
+`
+
+type MenuAnchor = "left" | "right" | "center" | "full"
+
+const AnimatedPanel = styled(animated.div)<{
+  menuAnchor: MenuAnchor
+}>`
+  position: absolute;
+  top: 100%;
+  ${({ menuAnchor }) =>
+    ({
+      right: css`
+        right: 0;
+      `,
+      left: css`
+        left: 0;
+      `,
+      center: css`
+        left: 0;
+        margin-left: -50%;
+      `,
+      full: css`
+        left: 0;
+        right: 0;
+      `,
+    }[menuAnchor])}
+`
+
+const UnfocusableAnchor = styled(RouterLink).attrs({ tabIndex: -1 })`
+  display: block;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+`
 
 interface NavItemProps extends BoxProps {
   Menu?: React.FC<{
@@ -15,11 +86,9 @@ interface NavItemProps extends BoxProps {
   className?: string
   href?: string
   onClick?: () => void
-  isFullScreenDropDown?: boolean
   label?: string
+  menuAnchor?: MenuAnchor
 }
-
-type Position = React.CSSProperties["position"]
 
 export const NavItem: React.FC<NavItemProps> = ({
   Menu,
@@ -30,24 +99,26 @@ export const NavItem: React.FC<NavItemProps> = ({
   display = "block",
   href,
   onClick,
-  isFullScreenDropDown,
-  label,
+  menuAnchor = "left",
+  ...rest
 }) => {
   const navItemLabel = children
+
   const { trackEvent } = useTracking()
-  const [hover, setIsVisible] = useState(active)
-  const showMenu = Boolean(Menu && hover)
+  const [isVisible, setIsVisible] = useState(active)
+
+  const showMenu = Boolean(Menu && isVisible)
   const showOverlay = Boolean(Overlay)
-  const hoverColor = hover ? "purple100" : "black80"
-  const getAnimation = h => ({
-    opacity: h ? 0 : 1,
-    transform: `translate3d(0, ${h ? -90 : -65}px, 0)`,
-    position: isFullScreenDropDown ? ("absolute" as Position) : "static",
-    left: "0px",
+  const hoverColor = isVisible ? "purple100" : "black80"
+
+  const getAnimation = (hover: boolean) => ({
+    opacity: hover ? 0 : 1,
+    transform: `translate3d(0, ${hover ? -25 : 0}px, 0)`,
   })
+
   const animatedStyle = useSpring({
-    from: getAnimation(hover),
-    ...getAnimation(!hover),
+    from: getAnimation(isVisible),
+    ...getAnimation(!isVisible),
     config: name =>
       name === "opacity"
         ? config.stiff
@@ -67,80 +138,92 @@ export const NavItem: React.FC<NavItemProps> = ({
     }
   }
 
+  const containerRef = useRef<null | HTMLDivElement>(null)
+
+  // Close the subnav if it is open and our focus moves outside of it
+  useEffect(() => {
+    const checkFocus = () => {
+      if (!containerRef?.current) return // Not mounted
+      if (!isVisible) return // Isn't open
+      if (containerRef.current.contains(document.activeElement)) return // Focus is within sub-nav
+
+      setIsVisible(false)
+    }
+
+    document.addEventListener("focus", checkFocus, true)
+    return () => {
+      document.removeEventListener("focus", checkFocus)
+    }
+  }, [isVisible])
+
+  const handleClick = () => {
+    onClick && onClick()
+    !!Menu && setIsVisible(prevIsVisible => !prevIsVisible)
+    trackClick()
+  }
+
+  // Add a very short delay to avoid trapping the mouse and capturing intent
+  const openDelayRef = useRef<null | ReturnType<typeof setTimeout>>(null)
+  // Add a slightly longer delay to improve UX when moving at an angle off HitArea
+  const closeDelayRef = useRef<null | ReturnType<typeof setTimeout>>(null)
+
+  const handleMouseEnter = () => {
+    openDelayRef.current = setTimeout(() => {
+      setIsVisible(true)
+    }, 50)
+    closeDelayRef?.current && clearTimeout(closeDelayRef.current)
+  }
+
+  const handleMouseLeave = () => {
+    openDelayRef?.current && clearTimeout(openDelayRef.current)
+    closeDelayRef.current = setTimeout(() => {
+      setIsVisible(false)
+    }, 150)
+  }
+
   return (
-    <Box
-      position={showOverlay ? "relative" : "static"}
-      onMouseEnter={() => setIsVisible(true)}
-      onMouseLeave={() => setIsVisible(false)}
+    <Container
+      ref={containerRef as any}
+      // When fullscreen: position relative to outer container
+      // When not fullscreen: position relative to immediate container
+      position={menuAnchor === "full" ? undefined : "relative"}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      {...rest}
     >
-      <Link
-        href={href}
+      <HitArea
+        as={Menu ? Clickable : RouterLink}
+        {...(Menu ? {} : { to: href })}
         color={hoverColor}
         underlineBehavior="none"
         px={1}
-        py={2}
         className={className}
         display={display}
-        position="relative"
-        style={{ cursor: "pointer", zIndex: 9 }}
-        onClick={() => {
-          trackClick()
-          onClick && onClick()
-        }}
+        onClick={handleClick}
       >
+        {!!Menu && href && <UnfocusableAnchor to={href} />}
         <Sans size="3" weight="medium" color={hoverColor}>
           <NavItemInner height={25}>
             {isFunction(navItemLabel)
               ? // NavItem children can be called as renderProps so that contents
                 // can operate on UI behaviors (such as changing the color of an
                 // icon on hover).
-                navItemLabel({
-                  hover,
-                })
+                navItemLabel({ hover: isVisible })
               : navItemLabel}
           </NavItemInner>
         </Sans>
-      </Link>
-
-      {/* Very hacky fix to prevent mouse out from triggering a close on the
-          first Artworks nav item. Create a box, position and extend it out a
-          ways and then hide it.
-
-          FIXME: Come up with a better way to do this
-       */}
-      {isFullScreenDropDown && label === "Artworks" && showMenu && (
-        <Box
-          position="absolute"
-          style={{
-            background: "green",
-            zIndex: 1,
-            width: 300,
-            height: 50,
-            marginTop: -50, // using margin because we can't use relative positioning here
-            marginLeft: -220,
-            opacity: 0,
-          }}
-        />
-      )}
+      </HitArea>
 
       {showMenu && (
-        <animated.div style={animatedStyle}>
-          <MenuContainer top={space(6)} isFullScreen={isFullScreenDropDown}>
-            <Menu setIsVisible={setIsVisible} />
-          </MenuContainer>
-        </animated.div>
+        <AnimatedPanel style={animatedStyle} menuAnchor={menuAnchor}>
+          <Menu setIsVisible={setIsVisible} />
+        </AnimatedPanel>
       )}
 
       {showOverlay && <Overlay />}
-    </Box>
+    </Container>
   )
 }
-
-const MenuContainer = styled(Box)<{ isFullScreen?: boolean }>`
-  position: absolute;
-  margin-top: ${p => (p.isFullScreen ? "1px" : "-1px")}; /* Offset border */
-  transform: translateX(${p => (p.isFullScreen ? 0 : "-78%")});
-`
 
 const NavItemInner = styled(Box)`
   display: flex;

@@ -43,10 +43,9 @@ export const DropDownNavMenu: React.FC<DropDownNavMenuProps> = ({
   }
 
   return (
-    <Menu onClick={handleClick} width={width} m={0} py={0}>
+    <Menu onClick={handleClick} width={width} py={0}>
       <Flex justifyContent="center">
         <SimpleLinksContainer
-          mt={0.5}
           py={3}
           mr={[3, 3, 3, "50px"]}
           viewAllTopMargin={viewAllTopMargin[contextModule]}
