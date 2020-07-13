@@ -14,7 +14,14 @@ import { get } from "v2/Utils/get"
  * `
  */
 
-export const RouterLink: React.FC<LinkProps> = ({ to, children, ...props }) => {
+export type RouterLinkProps = LinkProps &
+  React.HTMLAttributes<HTMLAnchorElement>
+
+export const RouterLink: React.FC<RouterLinkProps> = ({
+  to,
+  children,
+  ...props
+}) => {
   const context = useContext(RouterContext)
   const routes = get(context, c => c.router.matcher.routeConfig, [])
   const isSupportedInRouter = !!get(context, c =>

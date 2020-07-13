@@ -28,14 +28,13 @@ interface MenuProps {
 /** Menu */
 export const Menu: React.FC<MenuProps> = ({
   children,
-  m = "2px",
   py = 1,
   title,
   width = 230,
   ...props
 }) => {
   return (
-    <MenuContainer width={width} m={m} {...props}>
+    <MenuContainer width={width} {...props}>
       <BorderBox p={0} py={py} background="white">
         <Flex flexDirection="column" width="100%">
           {title && (
@@ -61,7 +60,9 @@ const MenuContainer = styled(Box)`
 
 // Menu Item
 
-interface MenuItemProps extends BoxProps {
+interface MenuItemProps
+  extends BoxProps,
+    React.HTMLAttributes<HTMLAnchorElement> {
   children: React.ReactNode
   fontSize?: SansSize
   href?: string
@@ -107,9 +108,11 @@ const MenuLink = styled(RouterLink)<{ hasLighterTextColor: boolean }>`
 
   ${display};
 
-  &:hover {
-    background-color: ${p =>
-      p.hasLighterTextColor ? color("black10") : color("black5")};
+  &:hover,
+  &:focus {
+    outline: none;
+    background-color: ${({ hasLighterTextColor }) =>
+      hasLighterTextColor ? color("black10") : color("black5")};
   }
 
   ${Sans} {

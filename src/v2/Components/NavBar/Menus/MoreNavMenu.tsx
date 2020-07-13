@@ -21,9 +21,7 @@ export const MoreNavMenu: React.FC<{ width?: number }> = ({ width = 160 }) => {
 
   return (
     <Menu onClick={trackClick} width={width}>
-      {/*
-        Hide nav items at md / lg as they appear in the top nav
-      */}
+      {/* Hide nav items at md / lg as they appear in the top nav */}
       <MenuItem href="/galleries">Galleries</MenuItem>
       <MenuItem href="/fairs">Fairs</MenuItem>
       <MenuItem href="/shows">Shows</MenuItem>

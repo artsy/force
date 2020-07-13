@@ -11,7 +11,7 @@ import {
 } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FeatureHeader_feature } from "v2/__generated__/FeatureHeader_feature.graphql"
-import { NavBarHeight } from "v2/Components/NavBar"
+import { NAV_BAR_HEIGHT } from "v2/Components/NavBar"
 
 const Container = styled(Flex)`
   width: 100%;
@@ -46,7 +46,7 @@ export const FeatureHeader: React.FC<FeatureHeaderProps> = ({
   return (
     <Container
       display={["block", "flex"]}
-      height={["auto", !!image ? `calc(95vh - ${NavBarHeight}px)` : "50vh"]}
+      height={["auto", !!image ? `calc(95vh - ${NAV_BAR_HEIGHT}px)` : "50vh"]}
       {...rest}
     >
       {image && (

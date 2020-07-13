@@ -30,6 +30,7 @@ describe("NavBarTracking", () => {
   }
 
   beforeEach(() => {
+    jest.spyOn(console, "error").mockImplementation(() => {})
     ;(useTracking as jest.Mock).mockImplementation(() => {
       return { trackEvent }
     })
@@ -46,8 +47,9 @@ describe("NavBarTracking", () => {
           <NavBar />
         </Wrapper>
       )
+
       wrapper
-        .find("Link")
+        .find("a")
         .find({ href: "/works-for-you" })
         .first()
         .simulate("click")
@@ -94,16 +96,11 @@ describe("NavBarTracking", () => {
           <UserMenu />
         </Wrapper>
       )
+
       const menuItems = wrapper.find("MenuItem")
-      menuItems.first().simulate("click", {
-        target: {
-          parentNode: {
-            parentNode: {
-              getAttribute: () => "/user/saves",
-            },
-          },
-        },
-      })
+
+      menuItems.first().simulate("click")
+
       expect(trackEvent).toBeCalledWith({
         action_type: AnalyticsSchema.ActionType.Click,
         context_module: AnalyticsSchema.ContextModule.HeaderUserDropdown,
@@ -120,7 +117,7 @@ describe("NavBarTracking", () => {
         </Wrapper>
       )
 
-      wrapper.find("Link").simulate("click")
+      wrapper.find("a").simulate("click")
 
       expect(trackEvent).toBeCalledWith({
         action_type: AnalyticsSchema.ActionType.Click,
@@ -137,11 +134,7 @@ describe("NavBarTracking", () => {
           <NavBar />
         </Wrapper>
       )
-      wrapper
-        .find(".mobileHamburgerButton")
-        .find("Link")
-        .first()
-        .simulate("click")
+      wrapper.find(".mobileHamburgerButton").find("a").first().simulate("click")
 
       expect(trackEvent).toBeCalledWith({
         action_type: AnalyticsSchema.ActionType.Click,
