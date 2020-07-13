@@ -10,6 +10,7 @@ import React from "react"
 import { ChangeEvents } from "../fixtures"
 import { flushPromiseQueue } from "v2/DevTools"
 import { Link } from "@artsy/palette"
+import { URL } from "url"
 
 jest.mock("sharify", () => ({
   data: { RECAPTCHA_KEY: "recaptcha-api-key" },
@@ -19,9 +20,21 @@ jest.mock("v2/Components/Authentication/helpers", () => ({
   checkEmail: jest.fn().mockResolvedValue(true),
 }))
 
+function setLocation(partial) {
+  const url = new URL(partial, window.location.origin || "http://localhost")
+  window.location.host = url.host
+  window.location.hostname = url.hostname
+  window.location.href = url.href
+  window.location.pathname = url.pathname
+  window.location.port = url.port
+  window.location.protocol = url.protocol
+  window.location.search = url.search
+}
+
 // FIXME: mock Formik async and remove setTimeout
 describe("MobileLoginForm", () => {
   let props
+  let originalWindowLocation
 
   beforeEach(() => {
     props = {
@@ -32,7 +45,24 @@ describe("MobileLoginForm", () => {
       onAppleLogin: jest.fn(),
     }
     window.grecaptcha.execute.mockClear()
-    location.assign = jest.fn()
+
+    originalWindowLocation = window.location
+    delete window.location
+    // @ts-ignore
+    window.location = {
+      ...originalWindowLocation,
+      assign: jest.fn(),
+    }
+
+    window.history.pushState = jest
+      .fn()
+      .mockImplementationOnce((_1, _2, partial) => {
+        setLocation(partial)
+      })
+  })
+
+  afterAll(() => {
+    window.location = originalWindowLocation
   })
 
   const getWrapper = (passedProps = props) => {
@@ -126,10 +156,7 @@ describe("MobileLoginForm", () => {
     await flushPromiseQueue()
     wrapper.update()
 
-    wrapper
-      .find(ForgotPassword)
-      .find(Link)
-      .simulate("click")
+    wrapper.find(ForgotPassword).find(Link).simulate("click")
     expect(location.assign).toBeCalledWith(
       "/forgot?intent=login&contextModule=header&destination=/"
     )
@@ -145,10 +172,7 @@ describe("MobileLoginForm", () => {
     await flushPromiseQueue()
     wrapper.update()
 
-    wrapper
-      .find(ForgotPassword)
-      .find(Link)
-      .simulate("click")
+    wrapper.find(ForgotPassword).find(Link).simulate("click")
     expect(location.assign).toBeCalledWith("/forgot")
   })
 

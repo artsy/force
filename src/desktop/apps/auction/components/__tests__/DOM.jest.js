@@ -14,15 +14,30 @@ jest.mock("desktop/lib/mediator.coffee", x => ({
 jest.useFakeTimers()
 
 describe("DOM Interactions", () => {
+  let originalWindowLocation
+
   // spyOn required to restore global mocks' original implementations
   // may not be necessary?
   beforeAll(() => {
     jest.spyOn(history, "replaceState")
+    delete window.location
+    // @ts-ignore
+    window.location = {
+      reload: jest.fn(),
+      assign: jest.fn(),
+    }
+    originalWindowLocation = window.location
+    delete window.location
+    // @ts-ignore
+    window.location = {
+      ...originalWindowLocation,
+    }
     jest.spyOn(location, "assign")
   })
 
   afterAll(() => {
     jest.restoreAllMocks()
+    window.location = originalWindowLocation
   })
 
   const mockDispatch = jest.fn()

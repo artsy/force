@@ -33,7 +33,6 @@ describe("Authentication Helpers", () => {
   beforeEach(() => {
     // @ts-ignore
     window.addEventListener = jest.fn((_type, cb) => cb())
-    window.location.assign = jest.fn()
     sd.IS_MOBILE = false
     sd.CURRENT_USER = null
   })
@@ -438,7 +437,6 @@ describe("Authentication Helpers", () => {
     it("Returns window.location by default", () => {
       window.history.pushState({}, "", "/magazine")
       const redirectTo = getRedirect("login")
-
       expect(redirectTo.toString()).toBe("https://artsy.net/magazine")
     })
   })

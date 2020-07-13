@@ -26,7 +26,12 @@ describe("Authentication Helpers", () => {
   beforeEach(() => {
     // @ts-ignore
     window.addEventListener = jest.fn((_type, cb) => cb())
-    window.location.assign = jest.fn()
+    delete window.location
+    // @ts-ignore
+    window.location = {
+      reload: jest.fn(),
+      assign: jest.fn(),
+    }
     sd.IS_MOBILE = false
     sd.CURRENT_USER = null
   })
