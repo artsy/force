@@ -85,9 +85,9 @@ interface NavItemProps extends BoxProps {
   active?: boolean
   className?: string
   href?: string
-  onClick?: () => void
   label?: string
   menuAnchor?: MenuAnchor
+  onClick?: () => void
 }
 
 export const NavItem: React.FC<NavItemProps> = ({
@@ -98,8 +98,9 @@ export const NavItem: React.FC<NavItemProps> = ({
   className,
   display = "block",
   href,
-  onClick,
+  label,
   menuAnchor = "left",
+  onClick,
   ...rest
 }) => {
   const navItemLabel = children
@@ -109,7 +110,7 @@ export const NavItem: React.FC<NavItemProps> = ({
 
   const showMenu = Boolean(Menu && isVisible)
   const showOverlay = Boolean(Overlay)
-  const hoverColor = isVisible ? "purple100" : "black80"
+  const color = isVisible ? "purple100" : "black80"
 
   const getAnimation = (hover: boolean) => ({
     opacity: hover ? 0 : 1,
@@ -192,17 +193,23 @@ export const NavItem: React.FC<NavItemProps> = ({
       {...rest}
     >
       <HitArea
-        as={Menu ? Clickable : RouterLink}
-        {...(Menu ? {} : { to: href })}
-        color={hoverColor}
+        {...(!!Menu
+          ? {
+              as: Clickable,
+              "aria-haspopup": true,
+              "aria-expanded": showMenu,
+            }
+          : { as: RouterLink, to: href })}
+        color={color}
         underlineBehavior="none"
         px={1}
         className={className}
         display={display}
         onClick={handleClick}
+        aria-label={label}
       >
         {!!Menu && href && <UnfocusableAnchor to={href} />}
-        <Sans size="3" weight="medium" color={hoverColor}>
+        <Sans size="3" weight="medium" color={color}>
           <NavItemInner height={25}>
             {isFunction(navItemLabel)
               ? // NavItem children can be called as renderProps so that contents

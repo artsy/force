@@ -340,6 +340,7 @@ export class SearchBar extends Component<Props, State> {
     const { viewer } = this.props
 
     const inputProps = {
+      "aria-label": "Search Artsy",
       onChange: this.searchTextChanged,
       onFocus: this.onFocus.bind(this),
       onBlur: this.onBlur,
