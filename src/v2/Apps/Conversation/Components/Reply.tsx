@@ -42,7 +42,7 @@ const StyledButton = styled(Button)``
 interface ReplyProps {
   conversation: Conversation_conversation
   environment: Environment
-  onScroll: () => void
+  onScroll?: () => void
 }
 
 export const Reply: React.FC<ReplyProps> = props => {
