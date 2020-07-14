@@ -93,6 +93,7 @@ export const NotificationMenuItems: React.FC<NotificationsMenuQueryResponse> = p
           <Box pt={2}>
             <Sans size="2">
               <Link
+                aria-label="View all notifications"
                 href="/works-for-you"
                 onClick={() => {
                   handleClick("/works-for-you", AnalyticsSchema.Subject.ViewAll)
