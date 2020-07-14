@@ -38,6 +38,7 @@ import { ArtistArtworkFilter_artist } from "v2/__generated__/ArtistArtworkFilter
 import { Collection_collection } from "v2/__generated__/Collection_collection.graphql"
 import { SystemQueryRenderer as QueryRenderer } from "v2/Artsy/Relay/SystemQueryRenderer"
 import { ArtworkQueryFilter } from "./ArtworkQueryFilter"
+import { ArtistSeriesArtworksFilter_artistSeries } from "v2/__generated__/ArtistSeriesArtworksFilter_artistSeries.graphql"
 
 /**
  * Primary ArtworkFilter which is wrapped with a context and refetch container.
@@ -84,6 +85,7 @@ export const BaseArtworkFilter: React.FC<{
     | ArtworkFilter_viewer
     | Collection_collection
     | ArtistArtworkFilter_artist
+    | ArtistSeriesArtworksFilter_artistSeries
 }> = ({ relay, viewer, relayVariables = {}, ...props }) => {
   const { filtered_artworks } = viewer
   const hasFilter = filtered_artworks && filtered_artworks.id
