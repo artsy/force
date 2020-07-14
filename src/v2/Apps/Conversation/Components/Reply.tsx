@@ -68,7 +68,9 @@ export const Reply: React.FC<ReplyProps> = props => {
           textArea.current.style.height = "inherit"
           setLoading(false)
           setButtonDisabled(true)
-          onScroll()
+          if (onScroll) {
+            onScroll()
+          }
           const {
             internalID,
           } = response?.sendConversationMessage?.messageEdge?.node
