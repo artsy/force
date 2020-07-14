@@ -51,10 +51,29 @@ describe("ViewingRoomsApp", () => {
       it("renders correct viewing rooms", async () => {
         const wrapper = await getWrapper()
         const html = wrapper.html()
+        expect(wrapper.find("SmallCard").length).toBe(2)
         expect(html).not.toContain("Draft VR")
         expect(html).toContain("Scheduled VR")
         expect(html).toContain("Live VR")
         expect(html).not.toContain("Closed VR")
+      })
+
+      it("renders proper tags", async () => {
+        const wrapper = await getWrapper()
+        const html = wrapper.html()
+        expect(wrapper.find("CardTag").length).toBe(2)
+        expect(html).toContain("Opening soon")
+        expect(html).toContain("3 days left")
+        expect(html).not.toContain("Closed")
+      })
+
+      it("renders proper links to VRs", async () => {
+        const wrapper = await getWrapper()
+        const html = wrapper.html()
+        expect(html).not.toContain(`href="/viewing-room/test-draft"`)
+        expect(html).toContain(`href="/viewing-room/test-scheduled"`)
+        expect(html).toContain(`href="/viewing-room/test-live"`)
+        expect(html).not.toContain(`href="/viewing-room/test-closed"`)
       })
     })
   })

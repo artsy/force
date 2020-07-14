@@ -131,6 +131,8 @@ export const ViewingRoomsLatestGridFragmentContainer = createFragmentContainer(
             slug
             status
             title
+            # TODO: Need to either figure out how to get dimensions here
+            # or request a square vervion
             heroImageURL
             distanceToOpen(short: true)
             distanceToClose(short: true)
