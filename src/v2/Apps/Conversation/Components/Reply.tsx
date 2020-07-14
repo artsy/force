@@ -41,17 +41,18 @@ const StyledTextArea = styled.textarea<{ height?: string }>`
 interface ReplyProps {
   conversation: Conversation_conversation
   environment: Environment
+  onScroll?: () => void
 }
 
 export const Reply: React.FC<ReplyProps> = props => {
-  const { environment, conversation } = props
+  const { environment, conversation, onScroll } = props
   const [buttonDisabled, setButtonDisabled] = useState(true)
   const [loading, setLoading] = useState(false)
   const [showModal, setShowModal] = useState(false)
   const textArea = useRef()
   const { trackEvent } = useTracking()
 
-  const setupAndSendMessage = () => {
+  const setupAndSendMessage = (onScroll = null) => {
     {
       setLoading(true)
       return SendConversationMessage(
@@ -66,7 +67,9 @@ export const Reply: React.FC<ReplyProps> = props => {
           textArea.current.style.height = "inherit"
           setLoading(false)
           setButtonDisabled(true)
-
+          if (onScroll) {
+            onScroll()
+          }
           const {
             internalID,
           } = response?.sendConversationMessage?.messageEdge?.node
@@ -136,7 +139,7 @@ export const Reply: React.FC<ReplyProps> = props => {
             disabled={buttonDisabled}
             loading={loading}
             onClick={_event => {
-              setupAndSendMessage()
+              setupAndSendMessage(onScroll)
             }}
           >
             Send

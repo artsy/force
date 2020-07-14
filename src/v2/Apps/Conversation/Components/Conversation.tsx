@@ -222,7 +222,11 @@ const Conversation: React.FC<ConversationProps> = props => {
           </Flex>
         </Box>
       </MessageContainer>
-      <Reply conversation={conversation} environment={relay.environment} />
+      <Reply
+        onScroll={scrollToBottom}
+        conversation={conversation}
+        environment={relay.environment}
+      />
     </NoScrollFlex>
   )
 }
