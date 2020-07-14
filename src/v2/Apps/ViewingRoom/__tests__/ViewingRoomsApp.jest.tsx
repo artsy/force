@@ -69,6 +69,8 @@ const ViewingRoomsAppFixture: ViewingRoomsApp_Test_QueryRawResponse = {
           slug: "test-draft",
           title: "Draft VR",
           heroImageURL: "https://www.example.com/rikki.jpg",
+          distanceToClose: null,
+          distanceToOpen: null,
           partner: {
             id: "rikki",
             name: "Rikki",
@@ -85,6 +87,8 @@ const ViewingRoomsAppFixture: ViewingRoomsApp_Test_QueryRawResponse = {
           slug: "test-scheduled",
           title: "Scheduled VR",
           heroImageURL: "https://www.example.com/tikki.jpg",
+          distanceToOpen: "soon",
+          distanceToClose: null,
           partner: {
             id: "tikki",
             name: "Tikki",
@@ -111,6 +115,8 @@ const ViewingRoomsAppFixture: ViewingRoomsApp_Test_QueryRawResponse = {
           slug: "test-live",
           title: "Live VR",
           heroImageURL: "https://www.example.com/tavi.jpg",
+          distanceToOpen: null,
+          distanceToClose: "3 days",
           partner: {
             id: "tavi",
             name: "Tavi",
@@ -146,6 +152,8 @@ const ViewingRoomsAppFixture: ViewingRoomsApp_Test_QueryRawResponse = {
           slug: "test-closed",
           title: "Closed VR",
           heroImageURL: "https://www.example.com/nag.jpg",
+          distanceToOpen: null,
+          distanceToClose: null,
           partner: {
             id: "nag",
             name: "Nag",

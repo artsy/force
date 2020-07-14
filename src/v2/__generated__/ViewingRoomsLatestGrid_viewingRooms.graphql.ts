@@ -9,6 +9,8 @@ export type ViewingRoomsLatestGrid_viewingRooms = {
             readonly status: string;
             readonly title: string;
             readonly heroImageURL: string | null;
+            readonly distanceToOpen: string | null;
+            readonly distanceToClose: string | null;
             readonly partner: {
                 readonly name: string | null;
             } | null;
@@ -35,7 +37,15 @@ export type ViewingRoomsLatestGrid_viewingRooms$key = {
 
 
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = [
+  {
+    "kind": "Literal",
+    "name": "short",
+    "value": true
+  }
+];
+return {
   "kind": "Fragment",
   "name": "ViewingRoomsLatestGrid_viewingRooms",
   "type": "ViewingRoomConnection",
@@ -87,6 +97,20 @@ const node: ReaderFragment = {
               "name": "heroImageURL",
               "args": null,
               "storageKey": null
+            },
+            {
+              "kind": "ScalarField",
+              "alias": null,
+              "name": "distanceToOpen",
+              "args": (v0/*: any*/),
+              "storageKey": "distanceToOpen(short:true)"
+            },
+            {
+              "kind": "ScalarField",
+              "alias": null,
+              "name": "distanceToClose",
+              "args": (v0/*: any*/),
+              "storageKey": "distanceToClose(short:true)"
             },
             {
               "kind": "LinkedField",
@@ -195,5 +219,6 @@ const node: ReaderFragment = {
     }
   ]
 };
-(node as any).hash = '38006f4308d90ed29829d02998f26279';
+})();
+(node as any).hash = '00e9bb2d655e0e32465c4b1328731ef9';
 export default node;

@@ -1,10 +1,51 @@
 import React from "react"
-import { Box, CSSGrid, Link, Sans, SmallCard } from "@artsy/palette"
+import {
+  Box,
+  CSSGrid,
+  CardTagProps,
+  Link,
+  Sans,
+  SmallCard,
+} from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ViewingRoomsLatestGrid_viewingRooms } from "v2/__generated__/ViewingRoomsLatestGrid_viewingRooms.graphql"
 
 export interface ViewingRoomsLatestGridProps {
   viewingRooms: ViewingRoomsLatestGrid_viewingRooms
+}
+
+const getTagProps = (
+  status: string,
+  distanceToOpen: string | null,
+  distanceToClose: string | null
+): CardTagProps | null => {
+  switch (status) {
+    case "closed":
+      return {
+        text: "Closed",
+        textColor: "white100",
+        color: "black100",
+        borderColor: "black100",
+      }
+    case "live":
+      return distanceToClose
+        ? {
+            text: `${distanceToClose} left`,
+            textColor: "black60",
+            color: "white100",
+            borderColor: "black5",
+          }
+        : null
+    case "scheduled":
+      return distanceToOpen
+        ? {
+            text: "Opening soon",
+            textColor: "white100",
+            color: "black100",
+            borderColor: "black100",
+          }
+        : null
+  }
 }
 
 export const ViewingRoomsLatestGrid: React.FC<ViewingRoomsLatestGridProps> = props => {
@@ -50,20 +91,26 @@ export const ViewingRoomsLatestGrid: React.FC<ViewingRoomsLatestGridProps> = pro
             const {
               slug,
               title,
+              status,
               heroImageURL,
               partner,
+              distanceToOpen,
+              distanceToClose,
               artworksConnection,
             } = vr
             const artworksCount = artworksConnection.totalCount
             const artworkImages = artworksConnection.edges.map(({ node }) =>
               artworksCount < 2 ? node.image.regular : node.image.square
             )
+            const tag = getTagProps(status, distanceToOpen, distanceToClose)
+
             return (
               <Link href={`/viewing-room/${slug}`} key={slug} noUnderline>
                 <SmallCard
                   title={title}
                   subtitle={partner.name}
                   images={[heroImageURL].concat(artworkImages)}
+                  tag={tag}
                 />
               </Link>
             )
@@ -85,6 +132,8 @@ export const ViewingRoomsLatestGridFragmentContainer = createFragmentContainer(
             status
             title
             heroImageURL
+            distanceToOpen(short: true)
+            distanceToClose(short: true)
             partner {
               name
             }

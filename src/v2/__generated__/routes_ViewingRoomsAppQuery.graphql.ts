@@ -33,6 +33,8 @@ fragment ViewingRoomsLatestGrid_viewingRooms on ViewingRoomConnection {
       status
       title
       heroImageURL
+      distanceToOpen(short: true)
+      distanceToClose(short: true)
       partner {
         name
         id
@@ -55,7 +57,14 @@ fragment ViewingRoomsLatestGrid_viewingRooms on ViewingRoomConnection {
 */
 
 const node: ConcreteRequest = (function(){
-var v0 = {
+var v0 = [
+  {
+    "kind": "Literal",
+    "name": "short",
+    "value": true
+  }
+],
+v1 = {
   "kind": "ScalarField",
   "alias": null,
   "name": "id",
@@ -150,6 +159,20 @@ return {
                     "storageKey": null
                   },
                   {
+                    "kind": "ScalarField",
+                    "alias": null,
+                    "name": "distanceToOpen",
+                    "args": (v0/*: any*/),
+                    "storageKey": "distanceToOpen(short:true)"
+                  },
+                  {
+                    "kind": "ScalarField",
+                    "alias": null,
+                    "name": "distanceToClose",
+                    "args": (v0/*: any*/),
+                    "storageKey": "distanceToClose(short:true)"
+                  },
+                  {
                     "kind": "LinkedField",
                     "alias": null,
                     "name": "partner",
@@ -165,7 +188,7 @@ return {
                         "args": null,
                         "storageKey": null
                       },
-                      (v0/*: any*/)
+                      (v1/*: any*/)
                     ]
                   },
                   {
@@ -245,7 +268,7 @@ return {
                                   }
                                 ]
                               },
-                              (v0/*: any*/)
+                              (v1/*: any*/)
                             ]
                           }
                         ]
@@ -264,7 +287,7 @@ return {
     "operationKind": "query",
     "name": "routes_ViewingRoomsAppQuery",
     "id": null,
-    "text": "query routes_ViewingRoomsAppQuery {\n  viewingRooms {\n    ...ViewingRoomsApp_viewingRooms\n  }\n}\n\nfragment ViewingRoomsApp_viewingRooms on ViewingRoomConnection {\n  ...ViewingRoomsLatestGrid_viewingRooms\n}\n\nfragment ViewingRoomsLatestGrid_viewingRooms on ViewingRoomConnection {\n  edges {\n    node {\n      slug\n      status\n      title\n      heroImageURL\n      partner {\n        name\n        id\n      }\n      artworksConnection(first: 2) {\n        totalCount\n        edges {\n          node {\n            image {\n              square: url(version: \"square\")\n              regular: url(version: \"large\")\n            }\n            id\n          }\n        }\n      }\n    }\n  }\n}\n",
+    "text": "query routes_ViewingRoomsAppQuery {\n  viewingRooms {\n    ...ViewingRoomsApp_viewingRooms\n  }\n}\n\nfragment ViewingRoomsApp_viewingRooms on ViewingRoomConnection {\n  ...ViewingRoomsLatestGrid_viewingRooms\n}\n\nfragment ViewingRoomsLatestGrid_viewingRooms on ViewingRoomConnection {\n  edges {\n    node {\n      slug\n      status\n      title\n      heroImageURL\n      distanceToOpen(short: true)\n      distanceToClose(short: true)\n      partner {\n        name\n        id\n      }\n      artworksConnection(first: 2) {\n        totalCount\n        edges {\n          node {\n            image {\n              square: url(version: \"square\")\n              regular: url(version: \"large\")\n            }\n            id\n          }\n        }\n      }\n    }\n  }\n}\n",
     "metadata": {}
   }
 };
