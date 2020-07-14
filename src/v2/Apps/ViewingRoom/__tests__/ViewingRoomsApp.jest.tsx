@@ -24,10 +24,13 @@ describe("ViewingRoomsApp", () => {
       response: ViewingRoomsApp_Test_QueryRawResponse = ViewingRoomsAppFixture
     ) => {
       return renderRelayTree({
-        Component: ({ viewingRooms }) => {
+        Component: ({ viewingRooms, featuredViewingRooms }) => {
           return (
             <MockBoot breakpoint={breakpoint}>
-              <ViewingRoomsApp viewingRooms={viewingRooms} />
+              <ViewingRoomsApp
+                viewingRooms={viewingRooms}
+                featuredViewingRooms={featuredViewingRooms}
+              />
             </MockBoot>
           )
         },
@@ -35,6 +38,9 @@ describe("ViewingRoomsApp", () => {
           query ViewingRoomsApp_Test_Query @raw_response_type {
             viewingRooms {
               ...ViewingRoomsApp_viewingRooms
+            }
+            featuredViewingRooms: viewingRooms(featured: true) {
+              ...ViewingRoomsApp_featuredViewingRooms
             }
           }
         `,
@@ -74,6 +80,14 @@ describe("ViewingRoomsApp", () => {
         expect(html).toContain(`href="/viewing-room/test-scheduled"`)
         expect(html).toContain(`href="/viewing-room/test-live"`)
         expect(html).not.toContain(`href="/viewing-room/test-closed"`)
+      })
+    })
+
+    describe("Viewing rooms rail", () => {
+      it("renders correct viewing rooms", async () => {
+        const wrapper = await getWrapper()
+        const html = wrapper.html()
+        expect(html).toContain("Featured Live VR")
       })
     })
   })
@@ -200,6 +214,17 @@ const ViewingRoomsAppFixture: ViewingRoomsApp_Test_QueryRawResponse = {
               },
             ],
           },
+        },
+      },
+    ],
+  },
+  featuredViewingRooms: {
+    edges: [
+      {
+        node: {
+          status: "live",
+          slug: "test-featured-live",
+          title: "Featured Live VR",
         },
       },
     ],
