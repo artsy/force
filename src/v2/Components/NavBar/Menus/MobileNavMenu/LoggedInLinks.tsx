@@ -63,14 +63,16 @@ export const LoggedInLinks: React.FC<
     <Box>
       <Separator my={1} color={color("black10")} />
       {conversationsEnabled && (
-        <Flex justifyContent="space-between">
-          <MobileLink href="/user/conversations">Inbox</MobileLink>
-          {conversationCount > 0 && (
-            <Sans size="5t" color={color("purple100")} py="4px">
-              {`${conversationCount} new`}
-            </Sans>
-          )}
-        </Flex>
+        <MobileLink href="/user/conversations">
+          <Flex justifyContent="space-between">
+            Inbox
+            {conversationCount > 0 && (
+              <Sans size="5t" color={color("purple100")}>
+                {`${conversationCount} new`}
+              </Sans>
+            )}
+          </Flex>
+        </MobileLink>
       )}
       <MobileLink href="/works-for-you">Works for you</MobileLink>
       <MobileSubmenuLink menu={menu}>{menu.title}</MobileSubmenuLink>

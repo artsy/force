@@ -90,7 +90,7 @@ export const Reply: React.FC<ReplyProps> = props => {
     <>
       <Dialog
         show={showModal}
-        title="We coudln’t deliver your message."
+        title="We couldn’t deliver your message."
         detail="Sorry, something went wrong while sending your message. Try and resend the message or discard it."
         primaryCta={{
           action: () => {

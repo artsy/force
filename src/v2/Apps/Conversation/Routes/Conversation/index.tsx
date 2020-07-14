@@ -54,14 +54,14 @@ export const ConversationRoute: React.FC<ConversationRouteProps> = props => {
       <AppContainer maxWidth={maxWidth}>
         <Title>Inbox | Artsy</Title>
 
-        <Media at="xs">
+        <Media at="sm">
           <ConversationHeader
             showDetails={showDetails}
             setShowDetails={setShowDetails}
             partnerName={me.conversation.to.name}
           />
         </Media>
-        <Media greaterThan="xs">
+        <Media greaterThan="sm">
           <FullHeader
             showDetails={showDetails}
             setShowDetails={setShowDetails}
@@ -69,7 +69,7 @@ export const ConversationRoute: React.FC<ConversationRouteProps> = props => {
           />
         </Media>
         <ConstrainedHeightFlex>
-          <Media greaterThan="xs">
+          <Media greaterThan="sm">
             <Conversations
               me={me as any}
               selectedConversationID={me.conversation.internalID}
