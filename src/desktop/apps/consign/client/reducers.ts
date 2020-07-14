@@ -405,13 +405,22 @@ function submissionFlow(state = initialState, action) {
         state
       )
     }
+    case actions.UPDATE_STEPS_AFTER_CREATE_USER: {
+      return u(
+        {
+          currentStep: describeWorkStep,
+          steps: [chooseArtistStep, describeWorkStep, uploadPhotosStep],
+        },
+        state
+      )
+    }
     case actions.UPDATE_STEPS_WITHOUT_USER: {
       return u(
         {
-          currentStep: createAccountStep,
+          currentStep: chooseArtistStep,
           steps: [
-            createAccountStep,
             chooseArtistStep,
+            createAccountStep,
             describeWorkStep,
             uploadPhotosStep,
           ],
@@ -451,7 +460,10 @@ function submissionFlow(state = initialState, action) {
 }
 
 export default combineReducers({
-  submissionFlow: composeReducers(responsiveWindowReducer, submissionFlow),
+  submissionFlow: composeReducers(
+    responsiveWindowReducer,
+    submissionFlow
+  ) as any,
   router: routerReducer,
   form: formReducer,
-})
+}) as any

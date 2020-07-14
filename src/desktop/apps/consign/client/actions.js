@@ -52,6 +52,7 @@ export const UPDATE_LOCATION_SUGGESTIONS = "UPDATE_LOCATION_SUGGESTIONS"
 export const UPDATE_LOCATION_VALUES = "UPDATE_LOCATION_VALUES"
 export const UPDATE_PROGRESS_BAR = "UPDATE_PROGRESS_BAR"
 export const UPDATE_STEPS_WITH_USER = "UPDATE_STEPS_WITH_USER"
+export const UPDATE_STEPS_AFTER_CREATE_USER = "UPDATE_STEPS_AFTER_CREATE_USER"
 export const UPDATE_STEPS_WITHOUT_USER = "UPDATE_STEPS_WITHOUT_USER"
 export const UPDATE_SUBMISSION = "UPDATE_SUBMISSION"
 export const UPDATE_USER = "UPDATE_USER"
@@ -87,7 +88,11 @@ export function chooseArtist(value) {
 export function chooseArtistAdvance() {
   return dispatch => {
     dispatch(submitArtist())
-    dispatch(push(stepsConfig.describeWork.path))
+    if (sd.CURRENT_USER) {
+      dispatch(push(stepsConfig.describeWork.path))
+    } else {
+      dispatch(push(stepsConfig.createAccount.path))
+    }
   }
 }
 
@@ -280,7 +285,7 @@ export function fetchArtistSuggestions(value) {
       const res = await request
         .get(`${sd.API_URL}/api/v1/match/artists`)
         .query({ visible_to_public: "true", term: value })
-        .set("X-ACCESS-TOKEN", user.accessToken)
+        .set("X-XAPP-TOKEN", sd.ARTSY_XAPP_TOKEN)
       dispatch(updateArtistSuggestions(res.body))
       dispatch(hideNotConsigningMessage())
     } catch (err) {
@@ -690,6 +695,12 @@ export function updateProgressBar(fileName, percent) {
 export function updateStepsWithUser() {
   return {
     type: UPDATE_STEPS_WITH_USER,
+  }
+}
+
+export function updateStepsAfterCreateUser() {
+  return {
+    type: UPDATE_STEPS_AFTER_CREATE_USER,
   }
 }
 

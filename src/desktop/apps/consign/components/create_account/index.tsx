@@ -9,6 +9,8 @@ import { ModalType } from "v2/Components/Authentication/Types"
 import { ContextModule, Intent } from "@artsy/cohesion"
 
 interface CreateAccountProps {
+  artistId: string
+  artistName: string
   contextPath: string
   subject: string
   title: string
@@ -18,12 +20,22 @@ interface CreateAccountProps {
 
 export class CreateAccount extends React.Component<CreateAccountProps> {
   get redirectUrl() {
-    const { contextPath, subject } = this.props
-    let analyticsParams = ""
-    if (contextPath && subject) {
-      analyticsParams = `?contextPath=${contextPath}&subject=${subject}`
+    const { artistId, artistName, contextPath, subject } = this.props
+
+    let analyticsParams = []
+    if (artistId && artistName) {
+      analyticsParams.push(`artistId=${artistId}`, `artistName=${artistName}`)
     }
-    return `/consign/submission${analyticsParams}`
+    if (contextPath && subject) {
+      analyticsParams.push(`contextPath=${contextPath}`, `subject=${subject}`)
+    }
+
+    let joinedParams = ""
+    if (analyticsParams.length) {
+      joinedParams = "?" + analyticsParams.join("&")
+    }
+
+    return `/consign/submission${joinedParams}`
   }
 
   handleSubmit = (values, formikBag) => {
@@ -77,7 +89,13 @@ export class CreateAccount extends React.Component<CreateAccountProps> {
 
 const mapStateToProps = state => {
   const {
-    submissionFlow: { authFormState, contextPath, subject },
+    submissionFlow: {
+      inputs: { artist_id },
+      artistName,
+      authFormState,
+      contextPath,
+      subject,
+    },
   } = state
 
   const stateToTitle = {
@@ -87,6 +105,8 @@ const mapStateToProps = state => {
   }
 
   return {
+    artistId: artist_id,
+    artistName,
     contextPath,
     subject,
     type: authFormState,

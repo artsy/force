@@ -5,9 +5,9 @@ import block from "bem-cn-lite"
 import { connect } from "react-redux"
 import { get } from "lodash"
 import {
-  clearArtistSuggestions,
   chooseArtist,
   chooseArtistAdvance,
+  clearArtistSuggestions,
   fetchArtistSuggestions,
   showNotConsigningMessage,
   updateArtistAutocompleteValue,
@@ -57,9 +57,7 @@ function ChooseArtist(props) {
     <div>
       <input
         {...inputProps}
-        className={b
-          .builder()("input")
-          .mix("bordered-input")()}
+        className={b.builder()("input").mix("bordered-input")()}
       />
     </div>
   )

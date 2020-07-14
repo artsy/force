@@ -1,6 +1,7 @@
 import * as actions from "./actions"
-import _analyticsHooks from "../../../lib/analytics_hooks.coffee"
 import { data as sd } from "sharify"
+
+const _analyticsHooks = require("../../../lib/analytics_hooks.coffee")
 
 // FIXME: Rewire
 let analyticsHooks = _analyticsHooks

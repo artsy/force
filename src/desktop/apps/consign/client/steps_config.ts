@@ -6,17 +6,17 @@ import UploadPhoto from "../components/upload_photo"
 import UploadPhotoLanding from "../components/upload_photo_landing"
 
 const stepsConfig = {
-  createAccount: {
-    component: CreateAccount,
-    label: "Create Account",
-    path: "/consign/submission/create-account",
-    shortLabel: "Create",
-  },
   chooseArtist: {
     component: ChooseArtist,
     label: "Confirm Artist/Designer",
     path: "/consign/submission/choose-artist",
     shortLabel: "Confirm",
+  },
+  createAccount: {
+    component: CreateAccount,
+    label: "Create Account",
+    path: "/consign/submission/create-account",
+    shortLabel: "Create",
   },
   describeWork: {
     component: DescribeWorkContainer,

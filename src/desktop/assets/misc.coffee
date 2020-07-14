@@ -15,7 +15,7 @@ routes =
 
   '/unsubscribe': require('../apps/unsubscribe/client/index.coffee').init
 
-  '/consign/submission': require('../apps/consign/client/submission.js').default
+  '/consign/submission': require('../apps/consign/client/submission').default
 
   '/consign': require('../apps/consign/client/index.js').default
 

@@ -32,7 +32,7 @@ export function validate(values) {
     width,
     year,
   } = values
-  const errors = {}
+  const errors: any = {}
 
   // The order of these errors are important, as it determines which field to scroll to
   // when there is an error on submission.
