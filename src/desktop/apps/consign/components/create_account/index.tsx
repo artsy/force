@@ -21,13 +21,21 @@ interface CreateAccountProps {
 export class CreateAccount extends React.Component<CreateAccountProps> {
   get redirectUrl() {
     const { artistId, artistName, contextPath, subject } = this.props
-    let analyticsParams = ""
-    if (contextPath && subject) {
-      analyticsParams = `?contextPath=${contextPath}&subject=${subject}&artistId=${artistId}&artistName=${artistName}`
-    } else {
-      analyticsParams = `?artistId=${artistId}&artistName=${artistName}`
+
+    let analyticsParams = []
+    if (artistId && artistName) {
+      analyticsParams.push(`artistId=${artistId}`, `artistName=${artistName}`)
     }
-    return `/consign/submission${analyticsParams}`
+    if (contextPath && subject) {
+      analyticsParams.push(`contextPath=${contextPath}`, `subject=${subject}`)
+    }
+
+    let joinedParams = ""
+    if (analyticsParams.length) {
+      joinedParams = "?" + analyticsParams.join("&")
+    }
+
+    return `/consign/submission${joinedParams}`
   }
 
   handleSubmit = (values, formikBag) => {

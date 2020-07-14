@@ -46,12 +46,7 @@ describe("React components", () => {
       it("renders the log in form", () => {
         initialStore.dispatch(actions.updateAuthFormState("login"))
         const wrapper = getWrapper()
-        expect(
-          wrapper
-            .find(ModalHeader)
-            .at(0)
-            .text()
-        ).toBe("Log in")
+        expect(wrapper.find(ModalHeader).at(0).text()).toBe("Log in")
         expect(wrapper.find(LoginForm).length).toBe(1)
       })
     })
@@ -60,12 +55,9 @@ describe("React components", () => {
       it("renders the forgot password form", () => {
         initialStore.dispatch(actions.updateAuthFormState("forgot"))
         const wrapper = getWrapper()
-        expect(
-          wrapper
-            .find(ModalHeader)
-            .at(0)
-            .text()
-        ).toBe("Enter the email address associated with your account")
+        expect(wrapper.find(ModalHeader).at(0).text()).toBe(
+          "Enter the email address associated with your account"
+        )
         expect(wrapper.find(ForgotPasswordForm).length).toBe(1)
       })
     })
@@ -73,12 +65,7 @@ describe("React components", () => {
     describe("sign up", () => {
       it("the signup form", () => {
         const wrapper = getWrapper()
-        expect(
-          wrapper
-            .find(ModalHeader)
-            .at(0)
-            .text()
-        ).toBe("Create an account")
+        expect(wrapper.find(ModalHeader).at(0).text()).toBe("Create an account")
         expect(wrapper.find(SignUpForm).length).toBe(1)
       })
     })
@@ -92,51 +79,118 @@ describe("React components", () => {
     expect(props.updateAuthFormStateAndClearErrorAction).toBeCalledWith("login")
   })
 
-  it("#handleSubmit calls props.handleSubmit with expected args", () => {
-    const wrapper = mount(
-      <UnconnectedCreateAccount {...props} />
-    ).instance() as UnconnectedCreateAccount
-    wrapper.handleSubmit(
-      {
-        email: "user@email.com",
-        password: "mypassword",
-      },
-      {}
-    )
-    expect(handleSubmitMock).toBeCalledWith(
-      "login",
-      {
-        contextModule: "consignSubmissionFlow",
-        copy: "Log In",
-        intent: "consign",
-        redirectTo: "/consign/submission",
-      },
-      { email: "user@email.com", password: "mypassword" },
-      {}
-    )
+  describe("with query params", () => {
+    afterEach(() => {
+      jest.clearAllMocks()
+    })
 
-    const wrapperWithTrackingParams = mount(
-      <UnconnectedCreateAccount {...props} contextPath="foo" subject="bar" />
-    ).instance() as UnconnectedCreateAccount
+    it("#handleSubmit calls props.handleSubmit with expected args", () => {
+      const wrapper = mount(
+        <UnconnectedCreateAccount {...props} />
+      ).instance() as UnconnectedCreateAccount
+      wrapper.handleSubmit(
+        {
+          email: "user@email.com",
+          password: "mypassword",
+        },
+        {}
+      )
+      expect(handleSubmitMock).toBeCalledWith(
+        "login",
+        {
+          contextModule: "consignSubmissionFlow",
+          copy: "Log In",
+          intent: "consign",
+          redirectTo: "/consign/submission",
+        },
+        { email: "user@email.com", password: "mypassword" },
+        {}
+      )
+    })
 
-    wrapperWithTrackingParams.handleSubmit(
-      {
-        email: "user@email.com",
-        password: "mypassword",
-      },
-      {}
-    )
+    it("passes along context module and subject", () => {
+      const wrapperWithTrackingParams = mount(
+        <UnconnectedCreateAccount {...props} contextPath="foo" subject="bar" />
+      ).instance() as UnconnectedCreateAccount
 
-    expect(handleSubmitMock).toBeCalledWith(
-      "login",
-      {
-        contextModule: "consignSubmissionFlow",
-        copy: "Log In",
-        intent: "consign",
-        redirectTo: "/consign/submission?contextPath=foo&subject=bar",
-      },
-      { email: "user@email.com", password: "mypassword" },
-      {}
-    )
+      wrapperWithTrackingParams.handleSubmit(
+        {
+          email: "user@email.com",
+          password: "mypassword",
+        },
+        {}
+      )
+
+      expect(handleSubmitMock).toBeCalledWith(
+        "login",
+        {
+          contextModule: "consignSubmissionFlow",
+          copy: "Log In",
+          intent: "consign",
+          redirectTo: "/consign/submission?contextPath=foo&subject=bar",
+        },
+        { email: "user@email.com", password: "mypassword" },
+        {}
+      )
+    })
+
+    it("passes along artistName and artistId", () => {
+      const wrapperWithTrackingParams = mount(
+        <UnconnectedCreateAccount {...props} artistName="Andy" artistId="111" />
+      ).instance() as UnconnectedCreateAccount
+
+      wrapperWithTrackingParams.handleSubmit(
+        {
+          email: "user@email.com",
+          password: "mypassword",
+        },
+        {}
+      )
+
+      expect(handleSubmitMock).toBeCalledWith(
+        "login",
+        {
+          contextModule: "consignSubmissionFlow",
+          copy: "Log In",
+          intent: "consign",
+          redirectTo: "/consign/submission?artistId=111&artistName=Andy",
+        },
+        { email: "user@email.com", password: "mypassword" },
+        {}
+      )
+    })
+
+    it("passes along all query params", () => {
+      const wrapperWithTrackingParams = mount(
+        <UnconnectedCreateAccount
+          {...props}
+          contextPath="foo"
+          subject="bar"
+          artistName="Andy"
+          artistId="111"
+        />
+      ).instance() as UnconnectedCreateAccount
+
+      wrapperWithTrackingParams.handleSubmit(
+        {
+          email: "user@email.com",
+          password: "mypassword",
+        },
+        {}
+      )
+
+      expect(handleSubmitMock).toBeCalledWith(
+        "login",
+        {
+          contextModule: "consignSubmissionFlow",
+          copy: "Log In",
+          intent: "consign",
+          redirectTo:
+            "/consign/submission?artistId=111&artistName=Andy&contextPath=foo&subject=bar",
+        },
+        { email: "user@email.com", password: "mypassword" },
+        {}
+      )
+    })
   })
 })
