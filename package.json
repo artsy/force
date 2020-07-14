@@ -20,7 +20,7 @@
     "cypress:run": "./node_modules/.bin/cypress run",
     "cypress": "./node_modules/.bin/cypress open",
     "integrate": "./scripts/quicklink-to-project.sh",
-    "jest": "JEST_JUNIT_OUTPUT=reports/junit/js-test-results.xml jest --runInBand",
+    "jest": "JEST_JUNIT_OUTPUT=reports/junit/js-test-results.xml node --max_old_space_size=4096 ./node_modules/.bin/jest --no-cache --runInBand --logHeapUsage",
     "lint": "eslint --cache --cache-location '.cache/eslint/' --ext ts,tsx --ignore-pattern 'src/v2/__generated__'",
     "mocha": "scripts/mocha.sh",
     "prepare": "patch-package",
