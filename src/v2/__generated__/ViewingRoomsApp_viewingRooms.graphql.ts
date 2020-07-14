@@ -3,13 +3,7 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ViewingRoomsApp_viewingRooms = {
-    readonly edges: ReadonlyArray<{
-        readonly node: {
-            readonly slug: string;
-            readonly status: string;
-            readonly title: string;
-        } | null;
-    } | null> | null;
+    readonly " $fragmentRefs": FragmentRefs<"ViewingRoomsLatestGrid_viewingRooms">;
     readonly " $refType": "ViewingRoomsApp_viewingRooms";
 };
 export type ViewingRoomsApp_viewingRooms$data = ViewingRoomsApp_viewingRooms;
@@ -28,49 +22,11 @@ const node: ReaderFragment = {
   "argumentDefinitions": [],
   "selections": [
     {
-      "kind": "LinkedField",
-      "alias": null,
-      "name": "edges",
-      "storageKey": null,
-      "args": null,
-      "concreteType": "ViewingRoomEdge",
-      "plural": true,
-      "selections": [
-        {
-          "kind": "LinkedField",
-          "alias": null,
-          "name": "node",
-          "storageKey": null,
-          "args": null,
-          "concreteType": "ViewingRoom",
-          "plural": false,
-          "selections": [
-            {
-              "kind": "ScalarField",
-              "alias": null,
-              "name": "slug",
-              "args": null,
-              "storageKey": null
-            },
-            {
-              "kind": "ScalarField",
-              "alias": null,
-              "name": "status",
-              "args": null,
-              "storageKey": null
-            },
-            {
-              "kind": "ScalarField",
-              "alias": null,
-              "name": "title",
-              "args": null,
-              "storageKey": null
-            }
-          ]
-        }
-      ]
+      "kind": "FragmentSpread",
+      "name": "ViewingRoomsLatestGrid_viewingRooms",
+      "args": null
     }
   ]
 };
-(node as any).hash = '2b68ac862b09713726f8f1bb9c442c1f';
+(node as any).hash = 'f3e002162e70aa67c9c98ad0e0760ef3';
 export default node;
