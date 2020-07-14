@@ -9,7 +9,6 @@ import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
 interface ArtistSeriesArtworksFilterProps {
   artistSeries: ArtistSeriesArtworksFilter_artistSeries
   relay: RelayRefetchProp
-  // sidebarAggregations: Works_artist["sidebarAggregations"]
   match?: Match
 }
 
