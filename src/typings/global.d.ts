@@ -1,5 +1,6 @@
 interface Window {
   analytics?: {
+    on: (eventName: string, callback?: () => void) => void
     page: (object, object) => void
     identify: (userId: string, email: string, object) => void
     track: (
