@@ -1036,6 +1036,7 @@ type ArtistSeries {
     tagID: String
     width: String
   ): FilterArtworksConnection
+  image: Image
   imageHeight: Int
   imageURL: String
   imageWidth: Int
@@ -7181,6 +7182,9 @@ type ProfileCounts {
 }
 
 type Query {
+  # Do not use (only used internally for stitching)
+  _do_not_use_image: Image
+
   # Autocomplete resolvers.
   _unused_gravity_match_partners(
     match_type: String
@@ -9280,6 +9284,9 @@ type UserEdge {
 
 # A wildcard used to support complex root queries in Relay
 type Viewer {
+  # Do not use (only used internally for stitching)
+  _do_not_use_image: Image
+
   # An Article
   article(
     # The ID of the Article
