@@ -33,10 +33,7 @@ export const LoggedInActions: React.FC<
   const hasUnreadNotifications =
     me?.unreadNotificationsCount > 0 || getNotificationCount() > 0
   updateNotificationCache(me?.unreadNotificationsCount)
-  const conversationsEnabled = userHasLabFeature(
-    user,
-    "User Conversations View"
-  )
+  const conversationsEnabled = user ? true : false
   const hasUnreadConversations =
     (conversationsEnabled && me?.unreadConversationCount > 0) ||
     getConversationCount() > 0

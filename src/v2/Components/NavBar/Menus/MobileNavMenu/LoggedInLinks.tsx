@@ -50,10 +50,7 @@ export const LoggedInLinks: React.FC<
       },
     ],
   }
-  const conversationsEnabled = userHasLabFeature(
-    user,
-    "User Conversations View"
-  )
+  const conversationsEnabled = user ? true : false
   const conversationCount =
     me?.unreadConversationCount || getConversationCount()
 

@@ -18,7 +18,6 @@ import {
   MoreNavMenu,
 } from "./Menus"
 import { InboxNotificationCountQueryRenderer as InboxNotificationCount } from "./Menus/MobileNavMenu/InboxNotificationCount"
-import { userHasLabFeature } from "v2/Utils/user"
 import { ModalType } from "v2/Components/Authentication/Types"
 import { MenuLinkData, menuData } from "v2/Components/NavBar/menuData"
 import { openAuthModal } from "v2/Utils/openAuthModal"
@@ -49,10 +48,8 @@ export const NavBar: React.FC = track(
   const sm = useMatchMedia(themeProps.mediaQueries.sm)
   const isMobile = xs || sm
   const isLoggedIn = Boolean(user)
-  const conversationsEnabled = userHasLabFeature(
-    user,
-    "User Conversations View"
-  )
+  const conversationsEnabled = user ? true : false
+
   // ToDo: replace check for conversationsEnabled with check for user when ready to launch
   const showNotificationCount =
     isLoggedIn && !showMobileMenu && conversationsEnabled
