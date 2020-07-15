@@ -1,8 +1,8 @@
 diff --git a/node_modules/relay-compiler/bin/relay-compiler b/node_modules/relay-compiler/bin/relay-compiler
-index 78b40a3..8d05a9a 100755
+index ceb3be3..c9eaffe 100755
 --- a/node_modules/relay-compiler/bin/relay-compiler
 +++ b/node_modules/relay-compiler/bin/relay-compiler
-@@ -308,7 +308,7 @@ function highlightSourceAtLocation(source, location) {
+@@ -291,7 +291,7 @@ function highlightSourceAtLocation(source, location) {
    var columnOffset = location.line === 1 ? firstLineColumnOffset : 0;
    var columnNum = location.column + columnOffset;
    var lines = body.split(/\r\n|[\n\r]/g);
@@ -11,7 +11,7 @@ index 78b40a3..8d05a9a 100755
    ["".concat(lineNum - 1, ": "), lines[lineIndex - 1]], ["".concat(lineNum, ": "), lines[lineIndex]], ['', whitespace(columnNum - 1) + '^'], ["".concat(lineNum + 1, ": "), lines[lineIndex + 1]]]);
  }
  
-@@ -17391,10 +17391,10 @@ module.exports = function (tagFinder) {
+@@ -18131,10 +18131,10 @@ module.exports = function (tagFinder, getFileFilter) {
  
      var astDefinitions = [];
      var sources = [];
@@ -25,7 +25,7 @@ index 78b40a3..8d05a9a 100755
        sources.push(source.body);
        astDefinitions.push.apply(astDefinitions, (0, _toConsumableArray2["default"])(ast.definitions));
      });
-@@ -17478,9 +17478,7 @@ function find(tagFinder, text, absPath) {
+@@ -18219,9 +18219,7 @@ function find(tagFinder, text, absPath) {
    tags.forEach(function (tag) {
      return validateTemplate(tag, moduleName, absPath);
    });
