@@ -34,7 +34,6 @@ if (sd.SHOW_ANALYTICS_CALLS) {
 }
 if (sd.SHOW_ANALYTICS_CALLS) {
   analyticsHooks.on("all", function (name, data) {
-    // debugger;
     console.info("ANALYTICS HOOK: ", name, data)
   })
 }
