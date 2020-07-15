@@ -1,11 +1,16 @@
 import "jest-styled-components"
 import React from "react"
-import { FlashBanner } from "v2/Components/FlashBanner"
+import {
+  FlashBanner,
+  FlashBannerQueryRenderer,
+} from "v2/Components/FlashBanner"
 import { graphql } from "react-relay"
 import { Banner } from "@artsy/palette"
 import { flushPromiseQueue, renderRelayTree } from "v2/DevTools"
 import { mount } from "enzyme"
 import { useTracking } from "v2/Artsy/Analytics/useTracking"
+import { SystemContextProvider } from "v2/Artsy/SystemContext"
+import { SystemQueryRenderer } from "v2/Artsy/Relay/SystemQueryRenderer"
 
 jest.mock("v2/Artsy/Analytics/useTracking")
 jest.unmock("react-relay")
@@ -309,6 +314,24 @@ describe("Email Confirmation CTA", () => {
       })
 
       expect(wrapper.text()).toContain("An error has occurred.")
+    })
+
+    it("does not request user-specific data from metaphysics if there is no user", () => {
+      const wrapper = mount(
+        <SystemContextProvider user={null}>
+          <FlashBannerQueryRenderer />
+        </SystemContextProvider>
+      )
+      expect(wrapper.find(SystemQueryRenderer).exists()).toBeFalsy()
+    })
+
+    it("does requests user-specific data from metaphysics if there is a user", () => {
+      const wrapper = mount(
+        <SystemContextProvider user={{ id: "someonespecial" }}>
+          <FlashBannerQueryRenderer />
+        </SystemContextProvider>
+      )
+      expect(wrapper.find(SystemQueryRenderer).prop("query")).not.toBeNull()
     })
   })
 })

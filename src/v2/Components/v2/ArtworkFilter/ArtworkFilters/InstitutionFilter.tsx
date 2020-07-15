@@ -15,7 +15,7 @@ export const InstitutionFilter: FC = () => {
 
   return (
     <Toggle label="Institution">
-      <Flex flexDirection="column" alignItems="left" my={1}>
+      <Flex flexDirection="column" alignItems="left">
         <RadioGroup
           deselectable
           defaultValue={selectedItem}

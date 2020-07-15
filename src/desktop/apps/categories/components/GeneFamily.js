@@ -10,7 +10,7 @@ const propTypes = {
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   genes: PropTypes.array.isRequired,
-  featuredGenes: PropTypes.object,
+  featuredGeneLinks: PropTypes.array,
 }
 
 const GeneFamilyName = styled.h2`
@@ -29,15 +29,17 @@ const GeneList = styled.ul`
   }
 `
 
-const GeneFamily = ({ id, name, genes, featuredGenes }) => {
+const GeneFamily = ({ slug, name, genes, featuredGeneLinks }) => {
   const publishedGenes = genes.filter(g => g.is_published)
   const sortedGenes = alphabetizeGenes(publishedGenes)
   return (
-    <div id={id}>
+    <div id={slug}>
       <GeneFamilyName>{name}</GeneFamilyName>
-      <FeaturedGenes featuredGenes={featuredGenes} />
+      <FeaturedGenes featuredGeneLinks={featuredGeneLinks} />
       <GeneList>
-        {sortedGenes.map(gene => <Gene key={gene.id} {...gene} />)}
+        {sortedGenes.map(gene => (
+          <Gene key={gene.id} {...gene} />
+        ))}
       </GeneList>
     </div>
   )

@@ -62,6 +62,7 @@ export const NotificationMenuItems: React.FC<NotificationsMenuQueryResponse> = p
                   style={{
                     objectFit: "cover",
                   }}
+                  alt={summary}
                 />
               </Box>
               <Box>
@@ -92,6 +93,7 @@ export const NotificationMenuItems: React.FC<NotificationsMenuQueryResponse> = p
           <Box pt={2}>
             <Sans size="2">
               <Link
+                aria-label="View all notifications"
                 href="/works-for-you"
                 onClick={() => {
                   handleClick("/works-for-you", AnalyticsSchema.Subject.ViewAll)
@@ -127,7 +129,7 @@ export const NotificationsMenu: React.FC = () => {
 }
 
 /**
- * This QueryRenderer is also shared with NotificationBadge. Once the request
+ * This QueryRenderer is also shared with LoggedInActions. Once the request
  * is performed the data is cached at the network layer so menu data appears
  * immediately and doesn't require a second request.
  */

@@ -155,7 +155,7 @@ xdescribe 'afterSignUpAction', ->
     }
     @bootstrap()
     @Cookies.expire.callCount.should.equal 0
-  
+
   it 'saves an artwork', ->
     @getCookie.returns(
       JSON.stringify({
@@ -189,3 +189,37 @@ xdescribe 'afterSignUpAction', ->
     )
     @bootstrap()
     @Cookies.expire.args[0][0].should.equal 'afterSignUpAction'
+
+describe 'logoutEventHandler', ->
+  before (done) ->
+    benv.setup =>
+      benv.expose { $: benv.require 'jquery' }
+      sinon.stub $, 'ajax'
+      sinon.stub window.location, 'reload'
+      @analyticsHooks = sinon.stub()
+      @analyticsHooks.trigger = sinon.stub()
+      @FlashMessage = sinon.stub()
+      @bootstrap = rewire '../bootstrap'
+      @bootstrap.__set__('analyticsHooks', @analyticsHooks)
+      @bootstrap.__set__('FlashMessage', @FlashMessage)
+      @logoutEventHandler = @bootstrap.__get__('logoutEventHandler')
+      done()
+
+  after ->
+    window.location.reload.restore()
+    $.ajax.restore()
+    benv.teardown()
+
+
+  it 'logs out the user and tracks the logout event', ->
+    @logoutEventHandler()
+    $.ajax.args[0][0].url.should.be.eql '/users/sign_out'
+    $.ajax.args[0][0].type.should.be.eql 'DELETE'
+    $.ajax.args[0][0].success()
+    @analyticsHooks.trigger.args[0][0].should.be.eql 'auth:logged-out'
+    window.location.reload.should.be.called
+
+  it 'flashes an error message if an error occurs', ->
+    @logoutEventHandler()
+    $.ajax.args[0][0].error(null, null, 'some error')
+    @FlashMessage.args[0][0].message.should.be.eql 'some error'

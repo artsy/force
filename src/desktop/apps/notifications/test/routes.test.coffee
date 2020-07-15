@@ -29,7 +29,7 @@ describe 'Notification Routing', ->
     it 'redirects to artist works page without a user, when linked to from email', ->
       @req = { url: '/works-for-you', query: { artist_id: 'percy-the-cat', from_email: true } }
       routes.worksForYou @req, @res
-      @res.redirect.args[0][0].should.equal '/artist/percy-the-cat/works?sort=-published_at'
+      @res.redirect.args[0][0].should.equal '/artist/percy-the-cat/works-for-sale?sort=-published_at'
 
     it 'redirects to login without a user, when not linked to from email', ->
       @req = { url: '/works-for-you', query: { artist_id: 'percy-the-cat' } }

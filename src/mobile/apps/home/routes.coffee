@@ -1,16 +1,16 @@
 { resize } = require '../../components/resizer/index.coffee'
-metaphysics = require '../../../lib/metaphysics.coffee'
+metaphysics = require '../../../lib/metaphysics2.coffee'
 
 query = """
   query HomePageModulesQuery($showCollectionsHubs:Boolean!) {
-    home_page {
-      hero_units(platform: MARTSY) {
+    homePage {
+      heroUnits(platform: MARTSY) {
         mode
         heading
         title
         subtitle
         href
-        background_image_url
+        backgroundImageURL
       }
     }
 
@@ -29,9 +29,9 @@ module.exports.index = (req, res, next) ->
   showCollectionsHubs = !res.locals.sd.CURRENT_USER
 
   metaphysics(query: query, variables: {showCollectionsHubs: showCollectionsHubs})
-    .then ({ home_page, marketingHubCollections }) ->
+    .then ({ homePage, marketingHubCollections }) ->
       res.render 'page', 
-        heroUnits: home_page.hero_units, 
+        heroUnits: homePage.heroUnits, 
         resize: resize, 
         collectionsHubs: marketingHubCollections
     .catch next

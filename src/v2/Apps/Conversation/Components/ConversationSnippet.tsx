@@ -1,4 +1,13 @@
-import { Box, Flex, Link, Row, Sans, Separator, color } from "@artsy/palette"
+import {
+  Box,
+  Flex,
+  Link,
+  Row,
+  Sans,
+  Separator,
+  color,
+  space,
+} from "@artsy/palette"
 import { ConversationSnippet_conversation } from "v2/__generated__/ConversationSnippet_conversation.graphql"
 import {
   ImageWithFallback,
@@ -27,12 +36,15 @@ const TimeSinceFlex = styled(Flex)`
 const StyledSans = styled(Sans)`
   word-break: break-word;
 `
+const TextContainer = styled(Box)`
+  overflow: hidden;
+`
 
 const TruncatedTitle = styled(Sans)`
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  max-width: 350px;
+  max-width: 130px;
 
   @media (max-width: 570px) {
     max-width: 270px;
@@ -88,7 +100,12 @@ const ConversationSnippet: React.FC<ConversationSnippetProps> = props => {
         underlineBehavior="none"
       >
         <Flex alignItems="center" px="5px" width="100%" height="120px">
-          <Flex alignItems="center" width="20px" height="100%">
+          <Flex
+            alignItems="center"
+            width={space(2)}
+            flexShrink={0}
+            height="100%"
+          >
             {conversation.unread && <PurpleCircle />}
           </Flex>
           <StyledFlex alignItems="center" height="80px" width="80px">
@@ -108,7 +125,7 @@ const ConversationSnippet: React.FC<ConversationSnippetProps> = props => {
             )}
           </StyledFlex>
           <Flex pt={2} pl={1} width="100%" height="100%">
-            <Box width="100%">
+            <TextContainer width="100%">
               <Row mb="2px">
                 <Flex width="100%" justifyContent="space-between">
                   <Flex>
@@ -142,7 +159,7 @@ const ConversationSnippet: React.FC<ConversationSnippetProps> = props => {
                   <Truncator maxLineCount={3}>{conversationText}</Truncator>
                 </StyledSans>
               </Row>
-            </Box>
+            </TextContainer>
           </Flex>
         </Flex>
       </Link>

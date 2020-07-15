@@ -1,4 +1,4 @@
-import { Flex, Title } from "@artsy/palette"
+import { Flex, Title, media } from "@artsy/palette"
 import { Conversation_me } from "v2/__generated__/Conversation_me.graphql"
 import { AppContainer } from "v2/Apps/Components/AppContainer"
 import { ConversationFragmentContainer as Conversation } from "v2/Apps/Conversation/Components/Conversation"
@@ -25,6 +25,9 @@ interface ConversationRouteProps {
 
 const ConstrainedHeightFlex = styled(Flex)`
   height: calc(100vh - 145px);
+  ${media.xs`
+    height: calc(100vh - 55px);
+  `}
   & > * {
     overflow-y: scroll;
     overflow-x: hidden;
@@ -51,14 +54,14 @@ export const ConversationRoute: React.FC<ConversationRouteProps> = props => {
       <AppContainer maxWidth={maxWidth}>
         <Title>Inbox | Artsy</Title>
 
-        <Media at="xs">
+        <Media at="sm">
           <ConversationHeader
             showDetails={showDetails}
             setShowDetails={setShowDetails}
             partnerName={me.conversation.to.name}
           />
         </Media>
-        <Media greaterThan="xs">
+        <Media greaterThan="sm">
           <FullHeader
             showDetails={showDetails}
             setShowDetails={setShowDetails}
@@ -66,7 +69,7 @@ export const ConversationRoute: React.FC<ConversationRouteProps> = props => {
           />
         </Media>
         <ConstrainedHeightFlex>
-          <Media greaterThan="xs">
+          <Media greaterThan="sm">
             <Conversations
               me={me as any}
               selectedConversationID={me.conversation.internalID}

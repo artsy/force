@@ -5,7 +5,6 @@ import GeneFamily from "../GeneFamily"
 describe("GeneFamily", () => {
   let rendered
   let geneFamily
-  let featuredGenes
 
   beforeEach(() => {
     geneFamily = {
@@ -31,11 +30,7 @@ describe("GeneFamily", () => {
           is_published: true,
         },
       ],
-    }
-
-    featuredGenes = {
-      name: "Materials",
-      genes: [
+      featuredGeneLinks: [
         {
           id: "gold",
           title: "Gold",
@@ -71,16 +66,11 @@ describe("GeneFamily", () => {
       ],
     }
 
-    rendered = render(
-      <GeneFamily featuredGenes={featuredGenes} {...geneFamily} />
-    )
+    rendered = render(<GeneFamily {...geneFamily} />)
   })
 
   it("renders a family name heading", () => {
-    rendered
-      .find("h2")
-      .text()
-      .should.equal("Materials")
+    rendered.find("h2").text().should.equal("Materials")
   })
 
   it("renders image links for featured genes", () => {
@@ -93,20 +83,8 @@ describe("GeneFamily", () => {
   })
 
   it("alphabetizes the genes by display name", () => {
-    rendered
-      .find("li a")
-      .eq(0)
-      .text()
-      .should.equal("Bigly Gold")
-    rendered
-      .find("li a")
-      .eq(1)
-      .text()
-      .should.equal("Bronze")
-    rendered
-      .find("li a")
-      .eq(2)
-      .text()
-      .should.equal("Silver")
+    rendered.find("li a").eq(0).text().should.equal("Bigly Gold")
+    rendered.find("li a").eq(1).text().should.equal("Bronze")
+    rendered.find("li a").eq(2).text().should.equal("Silver")
   })
 })

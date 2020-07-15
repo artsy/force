@@ -14,6 +14,10 @@ jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
   useMatchMedia: () => ({ sm: false }),
 }))
 
+jest.mock("lib/environment", () => ({
+  isServer: true,
+}))
+
 describe("NavBarTracking", () => {
   const trackEvent = jest.fn()
 
@@ -26,6 +30,7 @@ describe("NavBarTracking", () => {
   }
 
   beforeEach(() => {
+    jest.spyOn(console, "error").mockImplementation(() => {})
     ;(useTracking as jest.Mock).mockImplementation(() => {
       return { trackEvent }
     })
@@ -42,8 +47,9 @@ describe("NavBarTracking", () => {
           <NavBar />
         </Wrapper>
       )
+
       wrapper
-        .find("Link")
+        .find("a")
         .find({ href: "/works-for-you" })
         .first()
         .simulate("click")
@@ -90,16 +96,11 @@ describe("NavBarTracking", () => {
           <UserMenu />
         </Wrapper>
       )
+
       const menuItems = wrapper.find("MenuItem")
-      menuItems.first().simulate("click", {
-        target: {
-          parentNode: {
-            parentNode: {
-              getAttribute: () => "/user/saves",
-            },
-          },
-        },
-      })
+
+      menuItems.first().simulate("click")
+
       expect(trackEvent).toBeCalledWith({
         action_type: AnalyticsSchema.ActionType.Click,
         context_module: AnalyticsSchema.ContextModule.HeaderUserDropdown,
@@ -116,39 +117,12 @@ describe("NavBarTracking", () => {
         </Wrapper>
       )
 
-      wrapper.find("Link").simulate("click")
+      wrapper.find("a").simulate("click")
 
       expect(trackEvent).toBeCalledWith({
         action_type: AnalyticsSchema.ActionType.Click,
         subject: "Fairs",
         destination_path: "/art-fairs",
-      })
-    })
-
-    it("tracks navItem on hover", () => {
-      mount(
-        <Wrapper>
-          <NavItem href="/art-fairs" active>
-            {({ hover }) => {
-              if (hover) {
-                trackEvent({
-                  action_type: AnalyticsSchema.ActionType.Hover,
-                  subject: AnalyticsSchema.Subject.NotificationBell,
-                  destination_path: "/works-for-you",
-                  new_notification_count: 0,
-                })
-              }
-              return <div>hi</div>
-            }}
-          </NavItem>
-        </Wrapper>
-      )
-
-      expect(trackEvent).toBeCalledWith({
-        action_type: AnalyticsSchema.ActionType.Hover,
-        subject: AnalyticsSchema.Subject.NotificationBell,
-        destination_path: "/works-for-you",
-        new_notification_count: 0,
       })
     })
   })
@@ -160,11 +134,7 @@ describe("NavBarTracking", () => {
           <NavBar />
         </Wrapper>
       )
-      wrapper
-        .find(".mobileHamburgerButton")
-        .find("Link")
-        .first()
-        .simulate("click")
+      wrapper.find(".mobileHamburgerButton").find("a").first().simulate("click")
 
       expect(trackEvent).toBeCalledWith({
         action_type: AnalyticsSchema.ActionType.Click,

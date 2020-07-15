@@ -163,6 +163,7 @@ export const FeaturedRailCarousel: React.FC<FeaturedRailCarouselProps> = props =
                 src={croppedImageUrl}
                 width={imgWidth}
                 height={imgHeight}
+                alt={item.title}
               />
               <Sans size="2" weight="medium" mt={1}>
                 {item.title}

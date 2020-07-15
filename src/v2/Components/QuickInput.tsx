@@ -4,7 +4,7 @@ import Colors from "v2/Assets/Colors"
 import { garamond, unica } from "v2/Assets/Fonts"
 import React from "react"
 import styled from "styled-components"
-import { borderedInput } from "./Mixins"
+import { borderedInputMixin } from "./Mixins"
 
 import { ExtractProps } from "v2/Utils/ExtractProps"
 import { InputError } from "./Input"
@@ -31,7 +31,7 @@ export interface QuickInputState {
 export class QuickInput extends React.Component<
   QuickInputProps,
   QuickInputState
-  > {
+> {
   state = {
     focused: false,
     value: (this.props.value as string) || "",
@@ -142,11 +142,11 @@ const InputComponent = styled.input`
     props.showLabel && `padding: ${space(1)}px ${space(1)}px 0 ${space(1)}px`};
 `
 
-const InputContainer = styled.div.attrs<{
+const InputContainer = styled.div<{
   hasLabel?: boolean
   hasError: boolean
-}>({})`
-  ${borderedInput};
+}>`
+  ${borderedInputMixin}
   margin-right: 0;
   margin-top: ${space(0.5)}px;
   margin-bottom: ${space(1)}px;
@@ -158,7 +158,7 @@ const InputContainer = styled.div.attrs<{
   box-sizing: content-box;
 `
 
-const Label = styled.label.attrs<{ out: boolean }>({})`
+const Label = styled.label<{ out: boolean }>`
   ${unica("s12", "medium")};
   position: absolute;
   left: ${space(1)}px;

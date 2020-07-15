@@ -2,12 +2,15 @@ import { ContextModule, Intent } from "@artsy/cohesion"
 import {
   Box,
   ChevronIcon,
+  Clickable,
   CloseIcon,
   Flex,
   MenuIcon,
+  ModalBase,
   Sans,
   Separator,
   color,
+  space,
 } from "@artsy/palette"
 import { AnalyticsSchema, useSystemContext } from "v2/Artsy"
 import { useTracking } from "v2/Artsy/Analytics"
@@ -16,81 +19,118 @@ import { LinkData, MenuData, MenuLinkData } from "v2/Components/NavBar/menuData"
 import React from "react"
 import styled from "styled-components"
 import { getMobileAuthLink } from "v2/Utils/openAuthModal"
-import { userHasLabFeature } from "v2/Utils/user"
+import { LoggedInLinksQueryRenderer as LoggedInLinks } from "./LoggedInLinks"
 import { MobileLink } from "./MobileLink"
 import {
   NavigatorContextProvider,
   useNavigation,
 } from "./NavigatorContextProvider"
+import { NAV_BAR_BORDER_OFFSET, NAV_BAR_HEIGHT } from "v2/Components/NavBar"
+
+const Close = styled(Clickable)`
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: ${space(6)}px;
+  height: ${NAV_BAR_HEIGHT - NAV_BAR_BORDER_OFFSET}px;
+`
+
 interface Props {
   isOpen: boolean
   menuData: MenuData
-  onNavButtonClick?: (event) => void
+  onClose: () => void
+  onNavButtonClick?: (event: React.MouseEvent<HTMLElement, MouseEvent>) => void
 }
 
-export const MobileNavMenu: React.FC<Props> = props => {
-  const {
-    menuData: {
-      links: [artworks, artists],
-    },
-    onNavButtonClick,
-  } = props
+export const MobileNavMenu: React.FC<Props> = ({
+  isOpen,
+  menuData: {
+    links: [artworks, artists],
+  },
+  onNavButtonClick,
+  onClose,
+}) => {
   const { user } = useSystemContext()
 
   return (
     <NavigatorContextProvider>
-      <MenuViewport onClick={onNavButtonClick}>
-        <AnimatingMenuWrapper isOpen={props.isOpen}>
-          <ul>
-            <MobileSubmenuLink menu={(artworks as MenuLinkData).menu}>
-              {(artworks as MenuLinkData).menu.title}
-            </MobileSubmenuLink>
+      <ModalBase
+        dialogProps={{
+          width: "100%",
+          height: "100%",
+          background: color("white100"),
+        }}
+      >
+        <MenuViewport onClick={onNavButtonClick}>
+          <Close onClick={onClose}>
+            <MobileToggleIcon open />
+          </Close>
 
-            <MobileSubmenuLink menu={(artists as MenuLinkData).menu}>
-              {(artists as MenuLinkData).menu.title}
-            </MobileSubmenuLink>
-            <MobileLink href="/auctions">Auctions</MobileLink>
-            <MobileLink href="/articles">Editorial</MobileLink>
-            <MobileLink href="/galleries">Galleries</MobileLink>
-            <MobileLink href="/fairs">Fairs</MobileLink>
-            <MobileLink href="/shows">Shows</MobileLink>
-            <MobileLink href="/institutions">Museums</MobileLink>
-            <MobileLink href="/consign">Consign</MobileLink>
-            <MobileLink href="/gallery-partnerships">
-              Artsy for Galleries
-            </MobileLink>
-            {user ? <LoggedInLinks /> : <AuthenticateLinks />}
-          </ul>
-        </AnimatingMenuWrapper>
-      </MenuViewport>
+          <AnimatingMenuWrapper isOpen={isOpen}>
+            <ul>
+              <MobileSubmenuLink menu={(artworks as MenuLinkData).menu}>
+                {(artworks as MenuLinkData).menu.title}
+              </MobileSubmenuLink>
+
+              <MobileSubmenuLink menu={(artists as MenuLinkData).menu}>
+                {(artists as MenuLinkData).menu.title}
+              </MobileSubmenuLink>
+              <MobileLink href="/auctions">Auctions</MobileLink>
+              <MobileLink href="/articles">Editorial</MobileLink>
+              <MobileLink href="/galleries">Galleries</MobileLink>
+              <MobileLink href="/fairs">Fairs</MobileLink>
+              <MobileLink href="/shows">Shows</MobileLink>
+              <MobileLink href="/institutions">Museums</MobileLink>
+              <MobileLink href="/consign">Consign</MobileLink>
+              <MobileLink href="/gallery-partnerships">
+                Artsy for Galleries
+              </MobileLink>
+              {user ? <LoggedInLinks /> : <AuthenticateLinks />}
+            </ul>
+          </AnimatingMenuWrapper>
+        </MenuViewport>
+      </ModalBase>
     </NavigatorContextProvider>
   )
 }
 
 const MenuViewport = styled.nav`
   width: 100vw;
-  height: 100vh;
-  overflow: hidden;
-  position: relative;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
 `
 
 export const AnimatingMenuWrapper = styled.div<{
   isOpen: boolean
 }>`
   background: white;
-
   position: absolute;
   width: 100vw;
   height: 100vh;
   overflow-x: hidden;
-  z-index: ${p => (p.isOpen ? 9999 : 0)};
-
   top: 0;
-  left: 0; /* might be simpler to just animate this instead of the transform3d business */
+  left: 0;
   padding: 1em 20px;
-
-  transform: translate3d(${p => (p.isOpen ? "0" : "100%")}, 0, 0);
   transition: transform 0.15s;
+  ${({ isOpen }) =>
+    isOpen
+      ? `
+    z-index: 1;
+    transform: translate3d(0, 0, 0);
+  `
+      : `
+    z-index: 0;
+    transform: translate3d(100%, 0, 0);
+  `}
 
   ul {
     margin-bottom: 100px;
@@ -118,7 +158,7 @@ const Menu: React.FC<MenuProps> = ({
           {title}
         </Sans>
       </Flex>
-      <ul>{links.map(link => NavLink({ link }))}</ul>
+      <ul>{[...links].map(link => NavLink({ link }))}</ul>
     </AnimatingMenuWrapper>
   )
 }
@@ -186,7 +226,11 @@ const NavLink: React.FC<any> = ({ link }) => {
   } else {
     return (
       <React.Fragment key={link.href}>
-        <MobileLink href={link.href} contextModule={contextModule}>
+        <MobileLink
+          contextModule={contextModule}
+          href={link.href}
+          onClick={link.onClick}
+        >
           {link.text}
         </MobileLink>
         {link.dividerBelow && <Separator my={1} color={color("black10")} />}
@@ -250,40 +294,13 @@ const AuthenticateLinks: React.FC = () => {
   return (
     <Box>
       <Separator my={1} color={color("black10")} />
-      <MobileLink href={authLink(ModalType.signup)}>Sign Up</MobileLink>
-      <MobileLink href={authLink(ModalType.login)}>Login</MobileLink>
-    </Box>
-  )
-}
-
-const LoggedInLinks: React.FC = () => {
-  const { mediator, user } = useSystemContext()
-  const conversationsEnabled = userHasLabFeature(
-    user,
-    "User Conversations View"
-  )
-  return (
-    <Box>
-      <Separator my={1} color={color("black10")} />
-      {conversationsEnabled && (
-        <MobileLink href="/user/conversations">Inbox</MobileLink>
-      )}
-      <MobileLink href="/works-for-you">Works for you</MobileLink>
-      <MobileLink href="/user/edit">Account</MobileLink>
-      <MobileLink
-        href="#"
-        onClick={event => {
-          event.preventDefault()
-          mediator.trigger("auth:logout")
-        }}
-      >
-        Log out
-      </MobileLink>
+      <MobileLink href={authLink(ModalType.signup)}>Sign up</MobileLink>
+      <MobileLink href={authLink(ModalType.login)}>Log in</MobileLink>
     </Box>
   )
 }
 
 export const MobileToggleIcon: React.FC<{ open: boolean }> = ({ open }) => {
-  const style = { transform: "scale(1.5)", top: 2 }
+  const style = { transform: "scale(1.5)" }
   return open ? <CloseIcon style={style} /> : <MenuIcon style={style} />
 }

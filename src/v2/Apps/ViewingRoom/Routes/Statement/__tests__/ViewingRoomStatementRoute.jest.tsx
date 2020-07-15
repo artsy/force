@@ -55,7 +55,18 @@ describe("ViewingRoomStatementRoute", () => {
     expect(wrapper.find("ViewingRoomIntro").length).toBe(1)
     expect(wrapper.find("ViewingRoomWorks").length).toBe(1)
     expect(wrapper.find("ViewingRoomPullQuote").length).toBe(1)
+    expect(wrapper.find("ViewingRoomBody").length).toBe(1)
     expect(wrapper.find("ViewingRoomSubsections").length).toBe(1)
+  })
+
+  it("renders view works", async () => {
+    const wrapper = await getWrapper()
+    const buttons = wrapper.find("ViewWorksButton")
+    expect(buttons.length).toBe(2)
+    const a = buttons.at(0).html()
+    expect(a).toContain("View works (5)")
+    const b = buttons.at(0).html()
+    expect(b).toContain("View works (5)")
   })
 
   describe("ViewingRoomIntro", () => {
@@ -122,11 +133,7 @@ describe("ViewingRoomStatementRoute", () => {
     })
 
     it("tracks artwork image clicks", () => {
-      wrapper
-        .find("ArtworkItem")
-        .first()
-        .find("RouterLink")
-        .simulate("click")
+      wrapper.find("ArtworkItem").first().find("RouterLink").simulate("click")
       expect(trackEvent).toHaveBeenCalledWith({
         action_type: "clickedArtworkGroup",
         context_module: "viewingRoomArtworkRail",
@@ -156,6 +163,15 @@ describe("ViewingRoomStatementRoute", () => {
     })
   })
 
+  describe("ViewingRoomBody", () => {
+    it("displays the correct text", async () => {
+      const wrapper = (await getWrapper()).find("ViewingRoomBody")
+      expect(wrapper.html()).toContain(
+        "Life can only be understood backwards; but it must be lived forwards."
+      )
+    })
+  })
+
   describe("ViewingRoomSubsections", () => {
     it("displays the correct text", async () => {
       const wrapper = (await getWrapper()).find("ViewingRoomSubsections")
@@ -173,6 +189,7 @@ const ViewingRoomStatmentRouteFixture: ViewingRoomStatementRoute_Test_QueryRawRe
     introStatement:
       "Checked into a Club Med in the French Alps, and quickly discovered it was not what he expected. The hotel was an outdated ski lodge without any snow. “It was this horrible vacation,” the fortysomething artist said of his family trip there, a few years back. Still, he wanted to paint the drab resort—maybe so he could get a do-over of his vacation, this time in colorful and glorious surroundings.",
     artworksConnection: {
+      totalCount: 5,
       edges: [
         {
           node: {
@@ -182,6 +199,7 @@ const ViewingRoomStatmentRouteFixture: ViewingRoomStatementRoute_Test_QueryRawRe
             artistNames: "Bill Miles",
             title: "Beep Beep",
             date: "2015",
+            saleMessage: "Sell me",
             id: "QXJ0d29yazo1ZGU2YjQ5YWE2NjVmYzAwMGRiNzgxOTc=",
           },
         },
@@ -193,6 +211,7 @@ const ViewingRoomStatmentRouteFixture: ViewingRoomStatementRoute_Test_QueryRawRe
             artistNames: "Emma Johnson",
             title: "Please Do Not Touch",
             date: "2018",
+            saleMessage: "Buy me",
             id: "QXJ0d29yazo1ZGU2YjNhNDY4ODJiNzAwMGVlZTMxZjg=",
           },
         },
@@ -200,6 +219,8 @@ const ViewingRoomStatmentRouteFixture: ViewingRoomStatementRoute_Test_QueryRawRe
     },
     pullQuote:
       "I have everything I need right here. I have this kind of self-sufficiency, and now it’s even more valuable.",
+    body:
+      "Life can only be understood backwards; but it must be lived forwards.",
     subsections: [
       {
         internalID: "0ea3e292-8bf4-48c4-815a-f342cb4eaf65",

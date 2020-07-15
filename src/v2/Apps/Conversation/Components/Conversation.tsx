@@ -1,13 +1,4 @@
-import {
-  Box,
-  Flex,
-  Image,
-  Link,
-  Sans,
-  Serif,
-  Spacer,
-  color,
-} from "@artsy/palette"
+import { Box, Flex, Image, Link, Sans, Spacer, color } from "@artsy/palette"
 import { Conversation_conversation } from "v2/__generated__/Conversation_conversation.graphql"
 import { DateTime } from "luxon"
 import React, { useEffect, useRef } from "react"
@@ -17,24 +8,70 @@ import { MessageFragmentContainer as Message } from "./Message"
 import { Reply } from "./Reply"
 import { TimeSince, fromToday } from "./TimeSince"
 import { UpdateConversation } from "../Mutation/UpdateConversationMutation"
+import styled from "styled-components"
 
 interface ItemProps {
   item: Conversation_conversation["items"][0]["item"]
 }
 
-const Item: React.FC<ItemProps> = props => {
+export type ItemType = "Artwork" | "Show"
+
+export const Item: React.FC<ItemProps> = props => {
   const { item } = props
-  if (item.__typename === "Artwork") {
+  if (item.__typename === "%other") return null
+  const itemType = item.__typename as ItemType
+
+  const getImage = item => {
+    if (itemType === "Artwork") {
+      return item.image?.url
+    } else if (itemType === "Show") {
+      return item.coverImage?.url
+    } else {
+      return null
+    }
+  }
+
+  const itemDetails = item => {
+    if (item.__typename === "Artwork") {
+      return [
+        <Sans key={1} size="4" weight="medium" color="white100">
+          {item.artistNames}
+        </Sans>,
+        <Sans key={2} size="2" color="white100">
+          {item.title} / {item.date}
+        </Sans>,
+        item.listPrice?.display && (
+          <Sans key={3} size="2" color="white100">
+            {item.listPrice?.display}
+          </Sans>
+        ),
+      ]
+    } else if (item.__typename === "Show") {
+      const itemLocation = item.fair?.location?.city
+      return [
+        <Sans key={1} size="4" weight="medium" color="white100">
+          {item.fair.name}
+        </Sans>,
+        <Sans key={2} size="2" color="white100">
+          {itemLocation && `${itemLocation}, `}
+          {item?.fair?.exhibitionPeriod}
+        </Sans>,
+      ]
+    }
+  }
+
+  if (itemType === "Artwork" || itemType === "Show") {
     return (
       <Link
         href={item.href}
         underlineBehavior="none"
         style={{ alignSelf: "flex-end" }}
-        my={1}
+        mb={1}
       >
         <Flex flexDirection="column">
           <Image
-            src={item.image.url}
+            src={getImage(item)}
+            alt={item.__typename === "Artwork" ? item.title : item.name}
             width="350px"
             borderRadius="15px 15px 0 0"
           />
@@ -45,29 +82,10 @@ const Item: React.FC<ItemProps> = props => {
             background={color("black100")}
             borderRadius="0 0 15px 15px"
           >
-            <Sans size="4" weight="medium" color="white100">
-              {item.artistNames}
-            </Sans>
-            <Sans size="2" color="white100">
-              {item.title} / {item.date}
-            </Sans>
+            {itemDetails(item)}
           </Flex>
         </Flex>
       </Link>
-    )
-  } else if (item.__typename === "Show") {
-    // it's a partnerShow
-    return (
-      <Flex width="350px">
-        <Flex height="auto" alignItems="center" mr={2}>
-          <Image src={item.coverImage.url} width="55px" />
-        </Flex>
-        <Flex flexDirection="column" justifyContent="center">
-          <Serif size="2" weight="semibold">
-            {item.fair.name}
-          </Serif>
-        </Flex>
-      </Flex>
     )
   } else {
     return null
@@ -121,16 +139,19 @@ export interface ConversationProps {
 const Conversation: React.FC<ConversationProps> = props => {
   const { conversation, relay } = props
 
-  const bottomOfPage = useRef()
+  const bottomOfPage = useRef(null)
+  const initialMount = useRef(true)
 
   const scrollToBottom = () => {
-    const bottomOfPageCurrent = bottomOfPage.current as any
-    bottomOfPageCurrent.scrollIntoView({ behavior: "smooth" })
-  }
+    if (bottomOfPage.current !== null) {
+      const scrollOptions = initialMount.current ? {} : { behavior: "smooth" }
+      bottomOfPage.current.scrollIntoView(scrollOptions)
+    }
 
-  useEffect(() => {
-    scrollToBottom()
-  })
+    if (initialMount.current) {
+      initialMount.current = false
+    }
+  }
 
   useEffect(scrollToBottom, [conversation])
 
@@ -138,70 +159,88 @@ const Conversation: React.FC<ConversationProps> = props => {
     UpdateConversation(relay.environment, conversation)
   }, [conversation, relay.environment, conversation.lastMessageID])
 
-  return (
-    <Flex flexDirection="column" width="100%">
-      <Box>
-        <Spacer mt="45px" />
-        <Flex flexDirection="column" width="100%" px={1}>
-          {conversation.items.map((i, idx) => (
-            <Item
-              item={i.item}
-              key={
-                i.item.__typename === "Artwork" || i.item.__typename === "Show"
-                  ? i.item.id
-                  : idx
-              }
-            />
-          ))}
-          {groupMessages(
-            conversation.messagesConnection.edges.map(edge => edge.node)
-          ).map((messageGroup, groupIndex) => {
-            const today = fromToday(messageGroup[0].createdAt)
-            return (
-              <React.Fragment
-                key={`group-${groupIndex}-${messageGroup[0].internalID}`}
-              >
-                <TimeSince
-                  style={{ alignSelf: "center" }}
-                  time={messageGroup[0].createdAt}
-                  exact
-                  mt={0.5}
-                  mb={1}
-                />
-                {messageGroup.map((message, messageIndex) => {
-                  const nextMessage = messageGroup[messageIndex + 1]
+  const inquiryItemBox = conversation.items.map((i, idx) => (
+    <Item
+      item={i.item}
+      key={
+        i.item.__typename === "Artwork" || i.item.__typename === "Show"
+          ? i.item.id
+          : idx
+      }
+    />
+  ))
 
-                  return (
-                    <Message
-                      message={message}
-                      initialMessage={conversation.initialMessage}
-                      key={message.internalID}
-                      isFirst={groupIndex + messageIndex === 0}
-                      showTimeSince={
-                        message.createdAt &&
-                        today &&
-                        messageGroup.length - 1 === messageIndex
-                      }
-                      mb={
-                        nextMessage &&
-                        nextMessage.isFromUser !== message.isFromUser
-                          ? 1
-                          : undefined
-                      }
-                    />
-                  )
-                })}
-              </React.Fragment>
-            )
-          })}
-          <Spacer mb={9} />
-          <Box ref={bottomOfPage}></Box>
-        </Flex>
-      </Box>
-      <Reply conversation={conversation} environment={relay.environment} />
-    </Flex>
+  const messageGroups = groupMessages(
+    conversation.messagesConnection.edges.map(edge => edge.node)
+  ).map((messageGroup, groupIndex) => {
+    const today = fromToday(messageGroup[0].createdAt)
+    return (
+      <React.Fragment key={`group-${groupIndex}-${messageGroup[0].internalID}`}>
+        <TimeSince
+          style={{ alignSelf: "center" }}
+          time={messageGroup[0].createdAt}
+          exact
+          mb={1}
+        />
+        {messageGroup.map((message, messageIndex) => {
+          const nextMessage = messageGroup[messageIndex + 1]
+          const senderChanges =
+            nextMessage && nextMessage.isFromUser !== message.isFromUser
+          const lastMessageInGroup = messageIndex === messageGroup.length - 1
+          const spaceAfter = senderChanges || lastMessageInGroup ? 2 : 0.5
+
+          return (
+            <>
+              <Message
+                message={message}
+                initialMessage={conversation.initialMessage}
+                key={message.internalID}
+                isFirst={groupIndex + messageIndex === 0}
+                showTimeSince={
+                  message.createdAt &&
+                  today &&
+                  messageGroup.length - 1 === messageIndex
+                }
+              />
+              <Spacer mb={spaceAfter} />
+            </>
+          )
+        })}
+      </React.Fragment>
+    )
+  })
+
+  return (
+    <NoScrollFlex flexDirection="column" width="100%">
+      <MessageContainer>
+        <Box>
+          <Spacer mt={["75px", 2]} />
+          <Flex flexDirection="column" width="100%" px={1}>
+            {inquiryItemBox}
+            {messageGroups}
+            <Box ref={bottomOfPage}></Box>
+          </Flex>
+        </Box>
+      </MessageContainer>
+      <Reply
+        onScroll={scrollToBottom}
+        conversation={conversation}
+        environment={relay.environment}
+      />
+    </NoScrollFlex>
   )
 }
+
+const MessageContainer = styled(Box)`
+  height: calc(100% - 300px);
+  flex-grow: 1;
+  overflow-y: scroll;
+  overflow-x: hidden;
+`
+
+const NoScrollFlex = styled(Flex)`
+  overflow: hidden;
+`
 
 export const ConversationFragmentContainer = createFragmentContainer(
   Conversation,
@@ -255,12 +294,26 @@ export const ConversationFragmentContainer = createFragmentContainer(
               image {
                 url(version: ["large"])
               }
+              listPrice {
+                __typename
+                ... on Money {
+                  display
+                }
+                ... on PriceRange {
+                  display
+                }
+              }
             }
             ... on Show {
               id
               fair {
                 name
+                exhibitionPeriod
+                location {
+                  city
+                }
               }
+              href
               name
               coverImage {
                 url

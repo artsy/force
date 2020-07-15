@@ -20,10 +20,10 @@ const Placeholder = styled.div`
   background-color: ${color("black10")};
   position: relative;
   width: 100%;
-  overflow: hidden;
 `
 
-const Image = styled(BaseImage)`
+const Link = styled(RouterLink)`
+  display: block;
   width: 100%;
   height: 100%;
   position: absolute;
@@ -31,15 +31,12 @@ const Image = styled(BaseImage)`
   right: 0;
   bottom: 0;
   left: 0;
+`
 
-  /**
-   * HACK: the border here is to hack around an issue where Chrome doesn't
-   * pick up the lazyLoad intersection observer unless there's a border around
-   * the element or some modification to the sub-tree occurs. 'box-sizing' is set
-   * to 'content-box' so the image appears to be the same dimensions.
-   */
-  border: 1px solid transparent;
-  box-sizing: content-box;
+const Image = styled(BaseImage)`
+  display: block;
+  width: 100%;
+  height: 100%;
 `
 
 interface Props extends React.HTMLProps<ArtworkGridItemContainer> {
@@ -125,7 +122,7 @@ class ArtworkGridItemContainer extends React.Component<Props, State> {
         style={style}
       >
         <Placeholder style={{ paddingBottom: artwork.image.placeholder }}>
-          <RouterLink
+          <Link
             to={artwork.href}
             onClick={() => {
               if (this.props.onClick) {
@@ -140,7 +137,7 @@ class ArtworkGridItemContainer extends React.Component<Props, State> {
               lazyLoad={IMAGE_LAZY_LOADING && lazyLoad}
               preventRightClick={!isAdmin}
             />
-          </RouterLink>
+          </Link>
 
           <Badge artwork={artwork} />
 

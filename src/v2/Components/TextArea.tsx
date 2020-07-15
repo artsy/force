@@ -1,7 +1,7 @@
 import React from "react"
 import styled from "styled-components"
 import { block } from "./Helpers"
-import { borderedInput } from "./Mixins"
+import { borderedInputMixin } from "./Mixins"
 
 interface TextAreaProps extends React.HTMLProps<HTMLTextAreaElement> {
   error?: boolean
@@ -19,6 +19,6 @@ const TextArea: React.SFC<TextAreaProps> = props => {
 }
 
 export default styled(TextArea)`
-  /* stylelint-disable-next-line */
-  ${borderedInput} ${block(24)};
+  ${borderedInputMixin}
+  ${block(24)}
 `

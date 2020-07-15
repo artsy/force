@@ -1,13 +1,16 @@
 import {
   Box,
+  DocumentIcon,
   EntityHeader,
   Flex,
   FlexProps,
-  MessageIcon,
+  Join,
+  Link,
   QuestionCircleIcon,
   ResponsiveImage,
   Sans,
   Separator,
+  Spacer,
   color,
   media,
 } from "@artsy/palette"
@@ -16,6 +19,7 @@ import styled from "styled-components"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Details_conversation } from "v2/__generated__/Details_conversation.graphql"
 import ArtworkDetails from "v2/Components/Artwork/Metadata"
+import { zIndex } from "styled-system"
 
 export const DETAIL_BOX_ANIMATION = `transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);`
 const DETAIL_BOX_XS_ANIMATION = `transition: opacity 0.3s, z-index 0.3s;`
@@ -31,15 +35,16 @@ const DetailsContainer = styled(Flex)<{ opacity?: 0 | 1; transform?: string }>`
   transform: none;
   ${DETAIL_BOX_ANIMATION}
   ${media.xl`
-    transform: ${({ transform }) => transform};
+    transform: ${({ transform }: { transform?: string }) => transform};
     ${DETAIL_BOX_MD_ANIMATION}
     z-index: 0;
   `}
   ${media.xs`
     ${DETAIL_BOX_XS_ANIMATION}
     transform: none;
-    opacity: ${({ opacity }) => opacity};
+    opacity: ${({ opacity }: { opacity?: 0 | 1 }) => opacity};
     top: 114px;
+    ${zIndex}
   `}
 `
 
@@ -52,18 +57,47 @@ export const Details: FC<DetailsProps> = ({ conversation, ...props }) => {
   const item =
     conversation.items?.[0]?.item?.__typename !== "%other" &&
     conversation.items?.[0]?.item
+
+  const attachments = conversation.messagesConnection.edges
+    .map(({ node }) => node.attachments)
+    .filter(attachments => attachments.length > 0)
+    .reduce((previous, current) => previous.concat(current), [])
+    .filter(attachment => !attachment.contentType.includes("image"))
+
+  const attachmentItems = attachments?.map(attachment => {
+    return (
+      <Link
+        key={attachment.id}
+        href={attachment.downloadURL}
+        target="_blank"
+        noUnderline
+      >
+        <Flex alignItems="center">
+          <DocumentIcon mr={0.5} />
+          <Sans size="3">{attachment.fileName}</Sans>
+        </Flex>
+      </Link>
+    )
+  })
+
   return (
     <DetailsContainer
       flexDirection="column"
       justifyContent="flex-start"
-      height="100%"
+      height={[
+        "calc(100% - 115px)",
+        "calc(100% - 145px)",
+        "calc(100% - 145px)",
+        "calc(100% - 145px)",
+        "100%",
+      ]}
       flexShrink={0}
       position={["absolute", "absolute", "absolute", "absolute", "static"]}
       right={[0, 0, 0, 0, "auto"]}
       width={
         props.showDetails ? "376px" : ["376px", "376px", "376px", "376px", "0"]
       }
-      opacity={props.showDetails ? 1 : 0}
+      opacity={props.showDetails ? 1 : (0 as any)}
       transform={props.showDetails ? "translateX(0)" : "translateX(376px)"}
       zIndex={props.showDetails ? 1 : -1}
       {...props}
@@ -96,19 +130,32 @@ export const Details: FC<DetailsProps> = ({ conversation, ...props }) => {
           </Flex>
         </>
       )}
+      {attachments?.length > 0 && (
+        <>
+          <Separator my={2} />
+          <Box px={2}>
+            <Sans size="3" weight="medium" mb={2}>
+              Attachments
+            </Sans>
+            <Join separator={<Spacer mb={1} />}>{attachmentItems}</Join>
+          </Box>
+        </>
+      )}
       <Separator my={2} />
       <Flex flexDirection="column" px={2}>
         <Sans size="3" weight="medium" mb={2}>
           Support
         </Sans>
-        <Flex alignItems="center" mb={1}>
-          <QuestionCircleIcon mr={1} />
-          <Sans size="3">Inquiries FAQ</Sans>
-        </Flex>
-        <Flex alignItems="center" mb={1}>
-          <MessageIcon mr={1} />
-          <Sans size="3">Contact an Artsy Specialist</Sans>
-        </Flex>
+        <Link
+          href="https://support.artsy.net/hc/en-us/sections/360008203054-Contact-a-gallery"
+          target="_blank"
+          noUnderline
+        >
+          <Flex alignItems="center" mb={1}>
+            <QuestionCircleIcon mr={1} />
+            <Sans size="3">Inquiries FAQ</Sans>
+          </Flex>
+        </Link>
       </Flex>
     </DetailsContainer>
   )
@@ -124,6 +171,19 @@ export const DetailsFragmentContainer = createFragmentContainer(Details, {
       to {
         name
         initials
+      }
+      messagesConnection(first: $count, after: $after, sort: DESC)
+        @connection(key: "Messages_messagesConnection", filters: []) {
+        edges {
+          node {
+            attachments {
+              id
+              contentType
+              fileName
+              downloadURL
+            }
+          }
+        }
       }
       items {
         item {

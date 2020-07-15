@@ -109,8 +109,8 @@ describe("Works Route", () => {
     })
   })
 
-  describe("Artist Top Works", () => {
-    it("Displays Top Works rail", () => {
+  describe("Artist Notable Works", () => {
+    it("Displays Notable Works rail", () => {
       expect(wrapper.find(ArtistTopWorksRail).length).toEqual(1)
     })
   })

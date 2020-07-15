@@ -19,12 +19,12 @@ import {
   graphql,
 } from "react-relay"
 import { TrackingProp } from "react-tracking"
-import { data as sd } from "sharify"
 import { bidderNeedsIdentityVerification } from "v2/Utils/identityVerificationRequirements"
 import createLogger from "v2/Utils/logger"
 import {
   createStripeWrapper,
   errorMessageForCard,
+  saleConfirmRegistrationPath,
   toStripeAddress,
 } from "v2/Apps/Auction/Components/Form"
 import { ReactStripeElements } from "react-stripe-elements"
@@ -53,11 +53,6 @@ function createBidder(relayEnvironment: RelayProp.environment, saleID: string) {
       })
     }
   )
-}
-
-// TODO: Move it to helpers?
-const saleConfirmRegistrationPath = (saleSlug: string) => {
-  return `${sd.APP_URL}/auction/${saleSlug}/confirm-registration`
 }
 
 type OnSubmitType = ComponentProps<typeof RegistrationForm>["onSubmit"]
@@ -114,6 +109,10 @@ export const RegisterRoute: React.FC<RegisterProps> = props => {
   }
 
   const createTokenAndSubmit: OnSubmitType = async (values, helpers) => {
+    // FIXME: workaround for Formik calling `setSubmitting(false)` when the
+    //  `onSubmit` function does not block.
+    setTimeout(() => helpers.setSubmitting(true), 0)
+
     const address = toStripeAddress(values.address)
     const { phoneNumber } = values.address
     const { setFieldError, setSubmitting } = helpers

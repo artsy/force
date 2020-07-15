@@ -5,7 +5,22 @@ import { data as sd } from "sharify"
 
 import { Address } from "v2/Components/AddressForm"
 
-const ERROR_SUFFIX = {
+// TODO: Duplicate of `confirmRegistrationPath` in `src/v2/Apps/Auction/getRedirect.ts`
+export const saleConfirmRegistrationPath = (saleSlug: string) => {
+  return `/auction/${saleSlug}/confirm-registration`
+}
+
+// From https://github.com/artsy/metaphysics/blob/d6257e33/src/schema/v2/me/bidder_position_messages.ts#L3-L10
+export type BiddingStatus =
+  | "BIDDER_NOT_QUALIFIED"
+  | "ERROR"
+  | "LIVE_BIDDING_STARTED"
+  | "OUTBID"
+  | "RESERVE_NOT_MET"
+  | "SALE_CLOSED"
+  | string
+
+const CARD_ERROR_MAPPING = {
   "Your card was declined.":
     "Please contact your bank or use a different card.",
   "Your card has insufficient funds.":
@@ -14,8 +29,25 @@ const ERROR_SUFFIX = {
   "Your card's security code is incorrect.": "Please try again.",
 }
 
-export const errorMessageForCard = (errorMessage: string) => {
-  return `${errorMessage} ${ERROR_SUFFIX[errorMessage] || ""}`
+const BIDDING_STATE_TO_MESSAGE_MAPPING = {
+  // In case of bidder not qualified, the user would be redirected back to the
+  // sale top page (same behaviour as registration form) and we do not have to
+  // display error messages on the form.
+  BIDDER_NOT_QUALIFIED: null,
+  ERROR: null,
+
+  LIVE_BIDDING_STARTED: "Continue to the live sale to place your bid.",
+  OUTBID: "Your bid wasn't high enough. Please select a higher bid.",
+  RESERVE_NOT_MET: "Your bid wasn't high enough. Please select a higher bid.",
+  SALE_CLOSED: "This sale had been closed. Please browse other open sales.",
+}
+
+export const errorMessageForCard = (errorMessage: BiddingStatus) => {
+  return `${errorMessage} ${CARD_ERROR_MAPPING[errorMessage] || ""}`
+}
+
+export const errorMessageForBidding = (errorMessage: BiddingStatus) => {
+  return BIDDING_STATE_TO_MESSAGE_MAPPING[errorMessage]
 }
 
 export const toStripeAddress = (address: Address): stripe.TokenOptions => {

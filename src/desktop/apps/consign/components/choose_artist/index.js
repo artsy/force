@@ -5,9 +5,9 @@ import block from "bem-cn-lite"
 import { connect } from "react-redux"
 import { get } from "lodash"
 import {
-  clearArtistSuggestions,
   chooseArtist,
   chooseArtistAdvance,
+  clearArtistSuggestions,
   fetchArtistSuggestions,
   showNotConsigningMessage,
   updateArtistAutocompleteValue,
@@ -50,15 +50,14 @@ function ChooseArtist(props) {
     autoFocus: true,
     value: artistAutocompleteValue,
     onChange: updateArtistAutocompleteValueAction,
+    "data-test": "chooseArtist",
   }
 
   const renderInputComponent = inputProps => (
     <div>
       <input
         {...inputProps}
-        className={b
-          .builder()("input")
-          .mix("bordered-input")()}
+        className={b.builder()("input").mix("bordered-input")()}
       />
     </div>
   )
@@ -84,7 +83,7 @@ function ChooseArtist(props) {
             inputProps={inputProps}
           />
         </div>
-        <div
+        <button
           className={b
             .builder()("next-button")
             .mix("avant-garde-button-black")()}
@@ -96,7 +95,7 @@ function ChooseArtist(props) {
           disabled={!nextEnabled}
         >
           Next
-        </div>
+        </button>
         {notConsigningArtist && (
           <div className={b("not-consigning")}>
             Unfortunately we are not accepting consignments for works by{" "}

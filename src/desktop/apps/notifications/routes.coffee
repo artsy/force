@@ -13,7 +13,7 @@ qs = require 'qs'
     return res.redirect("/log_in?redirect_uri=#{req.url}") unless artist_id and from_email
     params = _.extend sort: '-published_at', _.pick req.query, 'utm_content', 'utm_medium', 'utm_source', 'utm_campaign'
     queryString = qs.stringify params
-    return res.redirect("/artist/#{artist_id}/works?#{queryString}")
+    return res.redirect("/artist/#{artist_id}/works-for-sale?#{queryString}")
 
   Q.allSettled([
     req.user.followingArtists()

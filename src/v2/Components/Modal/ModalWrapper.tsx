@@ -40,7 +40,7 @@ const KEYBOARD_EVENT = "keyup"
 export class ModalWrapper extends React.Component<
   ModalWrapperProps,
   ModalWrapperState
-  > {
+> {
   static defaultProps = {
     show: false,
     blurContainerSelector: "",
@@ -164,7 +164,7 @@ export class ModalWrapper extends React.Component<
   }
 }
 
-const Wrapper = styled.div.attrs<{ isShown?: boolean }>({})`
+const Wrapper = styled.div<{ isShown?: boolean }>`
   ${props =>
     props.isShown &&
     `
@@ -199,12 +199,12 @@ export const ModalOverlay = styled.div`
   background: rgba(0, 0, 0, 0.6);
 `
 
-export const ModalContainer = styled.div.attrs<{
+export const ModalContainer = styled.div<{
   width?: ModalWidth
   fullscreenResponsiveModal?: boolean
   image?: string
   viewportWidth?: number
-}>({})`
+}>`
   position: fixed;
   top: 50%;
   left: 50%;
@@ -234,9 +234,9 @@ export const ModalContainer = styled.div.attrs<{
         `};
 `
 
-const ModalInner = styled.div.attrs<{
+const ModalInner = styled.div<{
   fullscreenResponsiveModal?: boolean
-}>({})`
+}>`
   max-height: calc(100vh - 80px);
   overflow-y: auto;
   ${props =>

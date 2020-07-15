@@ -1,7 +1,7 @@
 import Colors from "v2/Assets/Colors"
 import { unica } from "v2/Assets/Fonts"
 import React from "react"
-import styled, { StyledFunction } from "styled-components"
+import styled from "styled-components"
 
 interface Props {
   handleFollow?: any
@@ -50,10 +50,7 @@ interface DivProps {
   isFollowed: boolean
 }
 
-const Div: StyledFunction<DivProps & React.HTMLProps<HTMLDivElement>> =
-  styled.div
-
-const FollowButtonContainer = Div`
+const FollowButtonContainer = styled.div<DivProps>`
   border: 1px solid ${Colors.grayRegular};
   ${unica("s12", "medium")};
   width: 80px;
@@ -61,14 +58,14 @@ const FollowButtonContainer = Div`
   display: flex;
   justify-content: center;
   align-items: center;
-  color: ${props => (props.isFollowed ? Colors.grayMedium : "black")}
+  color: ${props => (props.isFollowed ? Colors.grayMedium : "black")};
   cursor: pointer;
   &:hover {
     ${props =>
-    !props.isFollowed &&
-    `
+      !props.isFollowed &&
+      `
       border-color: black;`}
-    background: ${props => (props.isFollowed ? "white" : "black")}
+    background: ${props => (props.isFollowed ? "white" : "black")};
     color: ${props => (props.isFollowed ? Colors.redMedium : "white")}
   }
 `

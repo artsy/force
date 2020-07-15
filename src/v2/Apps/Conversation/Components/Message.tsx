@@ -1,43 +1,97 @@
 import {
   Box,
   BoxProps,
+  Color,
+  DownloadIcon,
   Flex,
+  FlexProps,
   Image,
-  Link,
   Sans,
-  Serif,
-  Spacer,
+  color,
 } from "@artsy/palette"
 import { Message_message } from "v2/__generated__/Message_message.graphql"
 import React from "react"
 import { createFragmentContainer } from "react-relay"
 import { graphql } from "relay-runtime"
 import { TimeSince } from "./TimeSince"
+import styled from "styled-components"
+import {
+  AlignSelfProps,
+  BackgroundProps,
+  alignSelf,
+  background,
+} from "styled-system"
+import Linkify from "react-linkify"
+
+const AttachmentLink = styled.a<{ isImage: boolean }>`
+  text-decoration: none;
+  max-width: 66.67%;
+  width: ${({ isImage }) => (isImage ? "100%" : "min-content")};
+`
+
+const AttachmentContainer = styled(Flex)<
+  FlexProps & AlignSelfProps & BackgroundProps
+>`
+  ${alignSelf};
+  ${background};
+  border-radius: 15px;
+  white-space: no-wrap;
+  justify-content: space-between;
+`
+
+const MessageText = styled(Sans)`
+  word-break: break-word;
+  white-space: pre-line;
+  && {
+    a:hover {
+      color: currentcolor;
+    }
+  }
+`
 
 interface AttachmentProps {
-  item: Message_message["attachments"][0]
+  attachment: Message_message["attachments"][0]
+  alignSelf: string
+  bgColor: Color
+  textColor: Color
 }
 
 export const Attachment: React.FC<AttachmentProps> = props => {
-  const { item } = props
-  if (item.contentType.startsWith("image")) {
-    return (
-      <Flex flexDirection="column" m={2}>
-        <Image src={item.downloadURL} width="75px" title={item.fileName} />
-        <Link href={item.downloadURL}>
-          <Serif size="2">{item.fileName}</Serif>
-        </Link>
-      </Flex>
-    )
-  } else if (item.contentType === "application/pdf") {
-    return (
-      <Box>
-        <Link href={item.downloadURL}>{item.fileName}</Link>
-      </Box>
-    )
-  } else {
-    return null
-  }
+  const { attachment, alignSelf, bgColor, textColor } = props
+  const isImage = attachment.contentType.startsWith("image")
+
+  return (
+    <AttachmentLink
+      href={attachment.downloadURL}
+      target="_blank"
+      isImage={isImage}
+    >
+      <AttachmentContainer
+        p={1}
+        mt={0.5}
+        alignSelf={alignSelf}
+        background={color(bgColor)}
+        width={isImage ? "100%" : "min-content"}
+      >
+        {isImage ? (
+          <Image
+            src={attachment.downloadURL}
+            alt={attachment.fileName}
+            width="100%"
+          />
+        ) : (
+          <>
+            <Sans color={textColor} weight="medium" size="4" mr={2}>
+              {attachment.fileName}
+            </Sans>
+            <Box flexShrink={0}>
+              <DownloadIcon width="24px" height="24px" viewBox="0 0 24 24" />
+            </Box>
+          </>
+        )}
+      </AttachmentContainer>
+    </AttachmentLink>
+  )
 }
 interface MessageProps extends Omit<BoxProps, "color"> {
   message: Message_message
@@ -45,27 +99,23 @@ interface MessageProps extends Omit<BoxProps, "color"> {
   isFirst: boolean
   showTimeSince?: boolean
 }
-const Message: React.FC<MessageProps> = props => {
+export const Message: React.FC<MessageProps> = props => {
   const { message, initialMessage, isFirst, showTimeSince, ...boxProps } = props
   const { isFromUser, body } = message
   const text = isFirst ? initialMessage : body
-  // const createdAt = DateTime.fromISO(message.createdAt).toRelative()
-  // <Sans size="2">
-  //   From: {message.from.name} - {createdAt}
-  // </Sans>
-  // <Sans size="2">{isFirst ? initialMessage : message.body}</Sans>
-  // {message.attachments && message.attachments.length > 0 && (
-  //   <Serif size="3" mt={3}>
-  //     Attachments
-  //   </Serif>
-  // )}
-  // {message.attachments.map(a => (
-  //   <Attachment item={a} key={a.id} />
-  // ))}
-
   const bgColor = isFromUser ? "black100" : "black10"
   const textColor = isFromUser ? "white100" : "black100"
   const alignSelf = isFromUser ? "flex-end" : undefined
+
+  // react-linkify v1.0.0-alpha has a bug that `properties` doesn't work.
+  // This is a workaround to specify target for now.
+  // https://github.com/tasti/react-linkify/issues/78#issuecomment-514754050
+  const linkTargetDecorator = (href, text, key) => (
+    <a href={href} key={key} target="_blank">
+      {text}
+    </a>
+  )
+
   return (
     <>
       <Box
@@ -76,16 +126,28 @@ const Message: React.FC<MessageProps> = props => {
           borderRadius: "15px",
           alignSelf,
         }}
-        width="66.67%"
+        maxWidth="66.67%"
+        width="fit-content"
       >
-        <Sans size="4" color={textColor}>
-          {text}
-        </Sans>
+        <MessageText size="4" color={textColor}>
+          <Linkify componentDecorator={linkTargetDecorator}>{text}</Linkify>
+        </MessageText>
       </Box>
+      {message.attachments.length > 0 &&
+        message.attachments.map(attachment => {
+          return (
+            <Attachment
+              key={attachment.id}
+              attachment={attachment}
+              alignSelf={alignSelf}
+              textColor={textColor}
+              bgColor={bgColor}
+            />
+          )
+        })}
       {showTimeSince && (
         <TimeSince time={message.createdAt} style={{ alignSelf }} mt={0.5} />
       )}
-      <Spacer mb={showTimeSince ? 1 : 0.5} />
     </>
   )
 }
@@ -103,7 +165,6 @@ export const MessageFragmentContainer = createFragmentContainer(Message, {
       }
       attachments {
         id
-        internalID
         contentType
         fileName
         downloadURL

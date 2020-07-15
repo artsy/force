@@ -69,7 +69,7 @@ export interface LightboxState {
   slider: SliderProps
   showZoomSlider: boolean
   promisedDragon: Promise<any>
-  activityTimer?: NodeJS.Timer
+  activityTimer?: number | NodeJS.Timeout
 }
 
 @track({ context_module: Schema.ContextModule.Zoom })

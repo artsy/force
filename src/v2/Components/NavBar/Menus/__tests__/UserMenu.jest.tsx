@@ -41,20 +41,12 @@ describe("UserMenu", () => {
       expect(linkLabel).toEqual(navLink.text())
     })
 
-    expect(
-      wrapper
-        .find("MenuItem")
-        .last()
-        .text()
-    ).toContain("Log out")
+    expect(wrapper.find("MenuItem").last().text()).toContain("Log out")
   })
 
   it("calls logout auth action on logout menu click", () => {
     const wrapper = getWrapper()
-    wrapper
-      .find("MenuItem")
-      .last()
-      .simulate("click")
+    wrapper.find("MenuItem").last().simulate("click")
     expect(mediator.trigger).toBeCalledWith("auth:logout")
   })
 

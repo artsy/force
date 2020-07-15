@@ -5,7 +5,6 @@ import GeneFamilies from "../GeneFamilies"
 describe("GeneFamilies", () => {
   let component
   let geneFamilies
-  let allFeaturedGenesByFamily
 
   beforeEach(() => {
     geneFamilies = [
@@ -15,6 +14,9 @@ describe("GeneFamilies", () => {
         genes: [
           /* … */
         ],
+        featuredGeneLinks: [
+          /* … */
+        ],
       },
       {
         id: "styles",
@@ -22,29 +24,13 @@ describe("GeneFamilies", () => {
         genes: [
           /* … */
         ],
+        featuredGeneLinks: [
+          /* … */
+        ],
       },
     ]
 
-    allFeaturedGenesByFamily = [
-      {
-        name: "Materials",
-        genes: [
-          /* … */
-        ],
-      },
-      {
-        name: "Styles",
-        genes: [
-          /* … */
-        ],
-      },
-    ]
-    component = shallow(
-      <GeneFamilies
-        geneFamilies={geneFamilies}
-        allFeaturedGenesByFamily={allFeaturedGenesByFamily}
-      />
-    )
+    component = shallow(<GeneFamilies geneFamilies={geneFamilies} />)
   })
 
   it("renders each GeneFamily", () => {

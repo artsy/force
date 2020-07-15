@@ -11,6 +11,7 @@ import { BreakpointVisualizer } from "v2/Utils/BreakpointVisualizer"
 import Events from "v2/Utils/Events"
 import { getENV } from "v2/Utils/getENV"
 import { ErrorBoundary } from "./ErrorBoundary"
+import { FocusVisible } from "v2/Components/FocusVisible"
 
 import {
   MatchingMediaQueries,
@@ -71,6 +72,7 @@ export const Boot = track(null, {
                 >
                   <Grid fluid maxWidth="100%">
                     <GlobalStyles />
+                    <FocusVisible />
                     {children}
                     {process.env.NODE_ENV === "development" && (
                       <BreakpointVisualizer />

@@ -97,6 +97,7 @@ const FeaturedArticles: React.FC<FeaturedArticlesProps> = props => {
                         src={article.tinyImage.cropped.url}
                         width="60px"
                         height={60}
+                        alt={article.thumbnailTitle}
                       />
                     </Box>
                   </Flex>

@@ -9,8 +9,7 @@ import React, { ReactNode } from "react"
 import ReactDOM from "react-dom"
 // @ts-ignore
 import { ComponentRef, createFragmentContainer, graphql } from "react-relay"
-// @ts-ignore
-import styled, { StyledComponentClass } from "styled-components"
+import styled from "styled-components"
 import { Media, valuesWithBreakpointProps } from "v2/Utils/Responsive"
 import GridItem from "../Artwork/GridItem"
 
@@ -42,7 +41,7 @@ export interface ArtworkGridContainerState {
 export class ArtworkGridContainer extends React.Component<
   ArtworkGridProps,
   ArtworkGridContainerState
-  > {
+> {
   static defaultProps = {
     columnCount: [3],
     sectionMargin: 20,
@@ -235,6 +234,7 @@ export default createFragmentContainer(ArtworkGrid, {
           id
           slug
           href
+          internalID
           image {
             aspect_ratio: aspectRatio
           }

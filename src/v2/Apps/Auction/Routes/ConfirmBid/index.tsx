@@ -32,13 +32,20 @@ import {
   FormValuesForBidding,
   createStripeWrapper,
   determineDisplayRequirements,
+  errorMessageForBidding,
   errorMessageForCard,
+  saleConfirmRegistrationPath,
   toStripeAddress,
 } from "v2/Apps/Auction/Components/Form"
 
 const logger = createLogger("Apps/Auction/Routes/ConfirmBid")
 
 type BidFormActions = FormikActions<FormValuesForBidding>
+// TODO: Replace with a GraphQL type
+interface BidderPosition {
+  status: string
+  messageHeader: string
+}
 
 interface ConfirmBidProps extends ReactStripeElements.InjectedStripeProps {
   artwork: routes_ConfirmBidQueryResponse["artwork"]
@@ -110,9 +117,30 @@ export const ConfirmBidRoute: React.FC<ConfirmBidProps> = props => {
     logger.error(error)
     trackConfirmBidFailed([`JavaScript error: ${error.message}`])
     actions.setSubmitting(false)
-    actions.setStatus(
-      "Something went wrong while processing your bid. Please make sure your internet connection is active and try again"
-    )
+    actions.setStatus("ERROR")
+  }
+
+  function handleMutationError(
+    helpers: BidFormActions,
+    bidderPosition: BidderPosition
+  ) {
+    const { status, messageHeader } = bidderPosition
+
+    trackConfirmBidFailed([messageHeader])
+
+    if (status === "OUTBID" || status === "RESERVE_NOT_MET") {
+      helpers.setFieldError("selectedBid", errorMessageForBidding(status))
+      helpers.setSubmitting(false)
+    } else if (
+      status === "BIDDER_NOT_QUALIFIED" ||
+      (status === "ERROR" && messageHeader === "Bid not placed")
+    ) {
+      // The found router does not seem to work with a non-found route.
+      window.location.assign(saleConfirmRegistrationPath(sale.slug))
+    } else {
+      helpers.setStatus(status)
+      helpers.setSubmitting(false)
+    }
   }
 
   function trackConfirmBidFailed(errors: string[]) {
@@ -155,6 +183,10 @@ export const ConfirmBidRoute: React.FC<ConfirmBidProps> = props => {
     values: FormValuesForBidding,
     actions: BidFormActions
   ) {
+    // FIXME: workaround for Formik calling `setSubmitting(false)` when the
+    //  `onSubmit` function does not block.
+    setTimeout(() => actions.setSubmitting(true), 0)
+
     const selectedBid = Number(values.selectedBid)
 
     if (requiresPaymentInformation) {
@@ -206,7 +238,7 @@ export const ConfirmBidRoute: React.FC<ConfirmBidProps> = props => {
     selectedBid: number
   }) {
     const { result } = data.createBidderPosition
-    const { position, messageHeader } = result
+    const { position } = result
 
     if (!bidderId && !registrationTracked) {
       const newBidderId =
@@ -229,9 +261,7 @@ export const ConfirmBidRoute: React.FC<ConfirmBidProps> = props => {
         .then(res => checkBidderPosition({ actions, data: res, selectedBid }))
         .catch(error => onJsError(actions, error))
     } else {
-      actions.setStatus(messageHeader)
-      actions.setSubmitting(false)
-      trackConfirmBidFailed([messageHeader])
+      handleMutationError(actions, result)
     }
   }
 
@@ -245,7 +275,7 @@ export const ConfirmBidRoute: React.FC<ConfirmBidProps> = props => {
     selectedBid: number
   }) {
     const { bidderPosition } = data.me
-    const { status, position, messageHeader } = bidderPosition
+    const { status, position } = bidderPosition
 
     if (status === "PENDING" && pollCount < MAX_POLL_ATTEMPTS) {
       // initiating new request here (vs setInterval) to make sure we wait for
@@ -265,12 +295,9 @@ export const ConfirmBidRoute: React.FC<ConfirmBidProps> = props => {
       pollCount += 1
     } else if (status === "WINNING") {
       trackConfirmBidSuccess(position.internalID, selectedBid)
-      const href = `/artwork/${artwork.slug}`
-      window.location.assign(href)
+      window.location.assign(`/artwork/${artwork.slug}`)
     } else {
-      actions.setStatus(messageHeader)
-      actions.setSubmitting(false)
-      trackConfirmBidFailed([messageHeader])
+      handleMutationError(actions, bidderPosition)
     }
   }
 

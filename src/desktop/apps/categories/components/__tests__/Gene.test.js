@@ -8,20 +8,15 @@ describe("Gene", () => {
 
   beforeEach(() => {
     gene = {
-      id: "gold",
+      id: "42",
+      slug: "gold",
       name: "Gold",
     }
     rendered = render(<Gene {...gene} />)
   })
 
   it("renders a link to the gene", () => {
-    rendered
-      .find("a")
-      .text()
-      .should.equal("Gold")
-    rendered
-      .find("a")
-      .attr("href")
-      .should.equal("/gene/gold")
+    rendered.find("a").text().should.equal("Gold")
+    rendered.find("a").attr("href").should.equal("/gene/gold")
   })
 })

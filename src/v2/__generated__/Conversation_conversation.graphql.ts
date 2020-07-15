@@ -44,12 +44,28 @@ export type Conversation_conversation = {
             readonly image: {
                 readonly url: string | null;
             } | null;
+            readonly listPrice: ({
+                readonly __typename: "Money";
+                readonly display: string | null;
+            } | {
+                readonly __typename: "PriceRange";
+                readonly display: string | null;
+            } | {
+                /*This will never be '%other', but we need some
+                value in case none of the concrete values match.*/
+                readonly __typename: "%other";
+            }) | null;
         } | {
             readonly __typename: "Show";
             readonly id: string;
             readonly fair: {
                 readonly name: string | null;
+                readonly exhibitionPeriod: string | null;
+                readonly location: {
+                    readonly city: string | null;
+                } | null;
             } | null;
+            readonly href: string | null;
             readonly name: string | null;
             readonly coverImage: {
                 readonly url: string | null;
@@ -98,7 +114,23 @@ v3 = {
   "name": "__typename",
   "args": null,
   "storageKey": null
-};
+},
+v4 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "href",
+  "args": null,
+  "storageKey": null
+},
+v5 = [
+  {
+    "kind": "ScalarField",
+    "alias": null,
+    "name": "display",
+    "args": null,
+    "storageKey": null
+  }
+];
 return {
   "kind": "Fragment",
   "name": "Conversation_conversation",
@@ -337,13 +369,7 @@ return {
                   "args": null,
                   "storageKey": null
                 },
-                {
-                  "kind": "ScalarField",
-                  "alias": null,
-                  "name": "href",
-                  "args": null,
-                  "storageKey": null
-                },
+                (v4/*: any*/),
                 {
                   "kind": "LinkedField",
                   "alias": null,
@@ -369,6 +395,28 @@ return {
                       "storageKey": "url(version:[\"large\"])"
                     }
                   ]
+                },
+                {
+                  "kind": "LinkedField",
+                  "alias": null,
+                  "name": "listPrice",
+                  "storageKey": null,
+                  "args": null,
+                  "concreteType": null,
+                  "plural": false,
+                  "selections": [
+                    (v3/*: any*/),
+                    {
+                      "kind": "InlineFragment",
+                      "type": "Money",
+                      "selections": (v5/*: any*/)
+                    },
+                    {
+                      "kind": "InlineFragment",
+                      "type": "PriceRange",
+                      "selections": (v5/*: any*/)
+                    }
+                  ]
                 }
               ]
             },
@@ -386,9 +434,35 @@ return {
                   "concreteType": "Fair",
                   "plural": false,
                   "selections": [
-                    (v2/*: any*/)
+                    (v2/*: any*/),
+                    {
+                      "kind": "ScalarField",
+                      "alias": null,
+                      "name": "exhibitionPeriod",
+                      "args": null,
+                      "storageKey": null
+                    },
+                    {
+                      "kind": "LinkedField",
+                      "alias": null,
+                      "name": "location",
+                      "storageKey": null,
+                      "args": null,
+                      "concreteType": "Location",
+                      "plural": false,
+                      "selections": [
+                        {
+                          "kind": "ScalarField",
+                          "alias": null,
+                          "name": "city",
+                          "args": null,
+                          "storageKey": null
+                        }
+                      ]
+                    }
                   ]
                 },
+                (v4/*: any*/),
                 (v2/*: any*/),
                 {
                   "kind": "LinkedField",
@@ -417,5 +491,5 @@ return {
   ]
 };
 })();
-(node as any).hash = '2b55ef84e7aa4bfd35bc7585eabc3c11';
+(node as any).hash = '16e46b2371551650adfb83bb45fb436d';
 export default node;

@@ -21,7 +21,7 @@ const MockFillWidthItem = ({ artwork }) => {
           targetHeight={200}
           imageHeight={200}
           width={200 * aspect_ratio}
-          margin={20}
+          marginRight={20}
           contextModule={ContextModule.header}
         />
       )}
@@ -50,6 +50,7 @@ storiesOf("Styleguide/Components/Carousel", module)
                 src={props.resized.url}
                 width={props.resized.width}
                 height={props.resized.height}
+                alt="Carousel example slide"
               />
             )
           }}
@@ -70,6 +71,7 @@ storiesOf("Styleguide/Components/Carousel", module)
                 src={props.resized.url}
                 width={props.resized.width}
                 height={props.resized.height}
+                alt="Carousel example slide"
               />
             )
           }}
@@ -91,6 +93,7 @@ storiesOf("Styleguide/Components/Carousel", module)
                 src={props.resized.url}
                 width={props.resized.width}
                 height={props.resized.height}
+                alt="Carousel example slide"
               />
             )
           }}
@@ -114,6 +117,7 @@ storiesOf("Styleguide/Components/Carousel", module)
                 src={props.resized.url}
                 width={props.resized.width}
                 height={props.resized.height}
+                alt="Carousel example slide"
               />
             )
           }}
@@ -147,6 +151,7 @@ storiesOf("Styleguide/Components/Carousel", module)
                 src={props.resized.url}
                 width={props.resized.width}
                 height={props.resized.height}
+                alt="Carousel example slide"
               />
             )
           }}
@@ -181,6 +186,7 @@ storiesOf("Styleguide/Components/Carousel", module)
                 src={props.resized.url}
                 width={props.resized.width}
                 height={props.resized.height}
+                alt="Carousel example slide"
               />
             )
           }}
@@ -228,6 +234,7 @@ storiesOf("Styleguide/Components/Carousel", module)
                   src={props.resized.url}
                   width={props.resized.width}
                   height={props.resized.height}
+                  alt="Carousel example slide"
                 />
               </Box>
             )

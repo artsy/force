@@ -29,11 +29,11 @@ describe("PriceRangeFilter", () => {
     act(() => {
       wrapper
         .find("Radio")
-        .filterWhere(n => n.text() === "$20k – $40k")
+        .filterWhere(n => n.text() === "$25k – $50k")
         .simulate("click")
 
       setTimeout(() => {
-        expect(context.filters.priceRange).toEqual("20000-40000")
+        expect(context.filters.priceRange).toEqual("25000-50000")
         done()
       }, 0)
     })

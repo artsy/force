@@ -39,12 +39,12 @@ describe("StepMarker", () => {
         wrapper.find(".consignments-step-marker__step_active").length
       ).toBe(1)
       const activeText = wrapper.text()
-      expect(activeText).toBe("CreateConfirmDescribeUpload")
+      expect(activeText).toBe("ConfirmCreateDescribeUpload")
     })
   })
 
   describe("logged-in user", () => {
-    it("displays thruee steps", () => {
+    it("displays three steps", () => {
       initialStore.dispatch(actions.updateStepsWithUser())
       const wrapper = mount(<StepMarker store={initialStore} />)
       expect(wrapper.find(".consignments-step-marker__step").length).toBe(3)

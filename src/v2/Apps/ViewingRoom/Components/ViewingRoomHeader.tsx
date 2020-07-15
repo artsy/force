@@ -1,6 +1,6 @@
 import React from "react"
 import { Box, Flex, ResponsiveImage, Sans, color } from "@artsy/palette"
-import { NavBarHeight } from "v2/Components/NavBar"
+import { NAV_BAR_HEIGHT } from "v2/Components/NavBar"
 import { Media } from "v2/Utils/Responsive"
 import { createFragmentContainer, graphql } from "react-relay"
 
@@ -33,7 +33,9 @@ export const ViewingRoomHeaderFragmentContainer = createFragmentContainer(
         partner {
           name
         }
-        formattedEndAt
+        distanceToOpen
+        distanceToClose
+        status
       }
     `,
   }
@@ -56,7 +58,7 @@ const ViewingRoomHeaderLarge: React.FC<ViewingRoomHeaderProps> = props => {
   return (
     <Flex
       style={{
-        height: `calc(90vh - ${NavBarHeight}px)`,
+        height: `calc(90vh - ${NAV_BAR_HEIGHT}px)`,
         borderBottom: `1px solid ${color("black10")}`,
       }}
     >
@@ -83,7 +85,7 @@ const ViewingRoomHeaderLarge: React.FC<ViewingRoomHeaderProps> = props => {
           {title}
         </Sans>
 
-        <Metadata {...props} />
+        <RoomInfo {...props} />
       </Flex>
     </Flex>
   )
@@ -97,7 +99,7 @@ const ViewingRoomHeaderSmall: React.FC<ViewingRoomHeaderProps> = props => {
     viewingRoom: { heroImageURL, title },
   } = props
 
-  const HeaderHeight = `calc(100vh - ${NavBarHeight * 2.8}px)`
+  const HeaderHeight = `calc(100vh - ${NAV_BAR_HEIGHT * 2.8}px)`
 
   return (
     <Flex
@@ -140,24 +142,41 @@ const ViewingRoomHeaderSmall: React.FC<ViewingRoomHeaderProps> = props => {
         </Sans>
       </Box>
 
-      <Metadata {...props} />
+      <RoomInfo {...props} />
     </Flex>
   )
 }
 
-const Metadata: React.FC<ViewingRoomHeaderProps> = props => {
+const RoomInfo: React.FC<ViewingRoomHeaderProps> = props => {
   const {
     viewingRoom: {
       partner: { name },
-      formattedEndAt,
+      distanceToOpen,
+      distanceToClose,
+      status,
     },
   } = props
 
-  const Text = ({ children }) => (
+  const InfoText: React.FC = ({ children }) => (
     <Sans size={["3", "4"]} color={["white100", "black100"]}>
       {children}
     </Sans>
   )
+
+  const TimingInfo: React.FC = () => {
+    switch (status) {
+      case "closed":
+        return <InfoText>Closed</InfoText>
+      case "live":
+        if (distanceToClose === null) return null
+        return <InfoText>Closes in {distanceToClose}</InfoText>
+      case "scheduled":
+        if (distanceToOpen === null) return null
+        return <InfoText>Opens in {distanceToOpen}</InfoText>
+      default:
+        return null
+    }
+  }
 
   return (
     <Box position="absolute" left={0} bottom={0} width="100%">
@@ -167,8 +186,8 @@ const Metadata: React.FC<ViewingRoomHeaderProps> = props => {
         width="100%"
         p={2}
       >
-        <Text>{name}</Text>
-        <Text>{formattedEndAt}</Text>
+        <InfoText>{name}</InfoText>
+        <TimingInfo />
       </Flex>
     </Box>
   )

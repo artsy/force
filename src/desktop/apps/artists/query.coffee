@@ -1,10 +1,10 @@
 module.exports = """
   query ArtistsQuery {
-    featured_artists: ordered_sets(key: "homepage:featured-artists") {
+    featured_artists: orderedSets(key: "homepage:featured-artists") {
       name
       artists: items {
-        ... on FeaturedLinkItem {
-          id
+        ... on FeaturedLink {
+          id: internalID
           title
           subtitle
           href
@@ -18,19 +18,19 @@ module.exports = """
         }
       }
     }
-    featured_genes: ordered_sets(key: "artists:featured-genes") {
+    featured_genes: orderedSets(key: "artists:featured-genes") {
       name
       genes: items {
-        ... on GeneItem {
-          id
+        ... on Gene {
+          id: internalID
           name
           href
-          trending_artists(sample: 4) {
+          trending_artists: trendingArtists(sample: 4) {
             ... artistCell
           }
         }
       }
     }
   }
-  #{require '../../components/artist_cell/query.coffee'}
+  #{require '../../components/artist_cell/query2.coffee'}
 """

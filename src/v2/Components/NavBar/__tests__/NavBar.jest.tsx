@@ -4,6 +4,7 @@ import { useTracking } from "v2/Artsy/Analytics/useTracking"
 import { mount } from "enzyme"
 import React from "react"
 import { NavBar } from "../NavBar"
+import { InboxNotificationCount } from "../Menus/MobileNavMenu/InboxNotificationCount"
 
 jest.mock("v2/Components/Search/SearchBar", () => {
   return {
@@ -14,6 +15,10 @@ jest.mock("v2/Components/Search/SearchBar", () => {
 jest.mock("v2/Artsy/Analytics/useTracking")
 jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
   useMatchMedia: () => ({}),
+}))
+
+jest.mock("lib/environment", () => ({
+  isServer: true,
 }))
 
 describe("NavBar", () => {
@@ -32,6 +37,7 @@ describe("NavBar", () => {
   }
 
   beforeEach(() => {
+    jest.spyOn(console, "error").mockImplementation(() => {})
     ;(useTracking as jest.Mock).mockImplementation(() => {
       return {
         trackEvent,
@@ -60,13 +66,12 @@ describe("NavBar", () => {
     it("renders correct lg, xl nav items", () => {
       const wrapper = getWrapper()
 
-      // Logo
-      expect(
-        wrapper
-          .find("Link")
-          .first()
-          .prop("href")
-      ).toEqual("/")
+      // Should always be first
+      expect(wrapper.find("a").first().text()).toEqual("Skip to Main Content")
+
+      expect(wrapper.find("NavBarPrimaryLogo").find("a").prop("href")).toEqual(
+        "/"
+      )
 
       const links = wrapper.find("NavItem")
 
@@ -117,10 +122,7 @@ describe("NavBar", () => {
 
     it("calls login auth action on login button click", () => {
       const wrapper = getWrapper()
-      wrapper
-        .find("Button")
-        .first()
-        .simulate("click")
+      wrapper.find("Button").first().simulate("click")
       expect(mediator.trigger).toBeCalledWith("open:auth", {
         contextModule: "header",
         intent: "login",
@@ -130,10 +132,7 @@ describe("NavBar", () => {
 
     it("calls signup auth action on signup button click", () => {
       const wrapper = getWrapper()
-      wrapper
-        .find("Button")
-        .last()
-        .simulate("click")
+      wrapper.find("Button").last().simulate("click")
       expect(mediator.trigger).toBeCalledWith("open:auth", {
         contextModule: "header",
         intent: "signup",
@@ -145,13 +144,14 @@ describe("NavBar", () => {
   describe("mobile", () => {
     it("toggles menu", () => {
       const wrapper = getWrapper()
+
       expect(wrapper.find("MobileToggleIcon").length).toEqual(1)
 
       const toggle = () =>
         wrapper
           .find("NavSection")
           .find("NavItem")
-          .find("Link")
+          .find("a")
           .last()
           .simulate("click")
 
@@ -159,6 +159,13 @@ describe("NavBar", () => {
       expect(wrapper.find("MobileNavMenu").length).toEqual(1)
       toggle()
       expect(wrapper.find("MobileNavMenu").length).toEqual(0)
+    })
+
+    it("shows InboxNotificationCount when there are conversations", () => {
+      const wrapper = getWrapper({
+        user: { type: "NotAdmin", lab_features: ["User Conversations View"] },
+      })
+      expect(wrapper.find(InboxNotificationCount).length).toBe(1)
     })
   })
 })
