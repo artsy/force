@@ -33,10 +33,8 @@ export const LoggedInActions: React.FC<
   const hasUnreadNotifications =
     me?.unreadNotificationsCount > 0 || getNotificationCount() > 0
   updateNotificationCache(me?.unreadNotificationsCount)
-  const conversationsEnabled = user ? true : false
   const hasUnreadConversations =
-    (conversationsEnabled && me?.unreadConversationCount > 0) ||
-    getConversationCount() > 0
+    me?.unreadConversationCount > 0 || getConversationCount() > 0
   updateConversationCache(me?.unreadConversationCount)
 
   return (
@@ -66,23 +64,21 @@ export const LoggedInActions: React.FC<
           )
         }}
       </NavItem>
-      {conversationsEnabled && (
-        <NavItem
-          href="/user/conversations"
-          Overlay={() => (
-            <NotificationOverlay showOverlay={hasUnreadConversations} />
-          )}
-        >
-          {({ hover }) => {
-            return (
-              <EnvelopeIcon
-                title="Inbox"
-                fill={hover ? "purple100" : "black80"}
-              />
-            )
-          }}
-        </NavItem>
-      )}
+      <NavItem
+        href="/user/conversations"
+        Overlay={() => (
+          <NotificationOverlay showOverlay={hasUnreadConversations} />
+        )}
+      >
+        {({ hover }) => {
+          return (
+            <EnvelopeIcon
+              title="Inbox"
+              fill={hover ? "purple100" : "black80"}
+            />
+          )
+        }}
+      </NavItem>
       <NavItem Menu={UserMenu} menuAnchor="right">
         {({ hover }) => {
           return (

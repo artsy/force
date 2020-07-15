@@ -48,11 +48,8 @@ export const NavBar: React.FC = track(
   const sm = useMatchMedia(themeProps.mediaQueries.sm)
   const isMobile = xs || sm
   const isLoggedIn = Boolean(user)
-  const conversationsEnabled = user ? true : false
 
-  // ToDo: replace check for conversationsEnabled with check for user when ready to launch
-  const showNotificationCount =
-    isLoggedIn && !showMobileMenu && conversationsEnabled
+  const showNotificationCount = isLoggedIn && !showMobileMenu
 
   const {
     links: [artworks, artists],
