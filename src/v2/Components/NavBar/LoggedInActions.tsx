@@ -14,7 +14,6 @@ import {
   LoggedInActionsQuery,
   LoggedInActionsQueryResponse,
 } from "v2/__generated__/LoggedInActionsQuery.graphql"
-import { userHasLabFeature } from "v2/Utils/user"
 import { isServer } from "lib/environment"
 import { NotificationOverlay } from "./NotificationOverlay"
 import {
@@ -29,7 +28,6 @@ export const LoggedInActions: React.FC<
   { error?: any } & Partial<LoggedInActionsQueryResponse>
 > = ({ error, me }) => {
   const { trackEvent } = useTracking()
-  const { user } = useSystemContext()
   const hasUnreadNotifications =
     me?.unreadNotificationsCount > 0 || getNotificationCount() > 0
   updateNotificationCache(me?.unreadNotificationsCount)
