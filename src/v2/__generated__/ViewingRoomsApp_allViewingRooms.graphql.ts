@@ -2,21 +2,21 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type ViewingRoomsApp_viewingRooms = {
+export type ViewingRoomsApp_allViewingRooms = {
     readonly " $fragmentRefs": FragmentRefs<"ViewingRoomsLatestGrid_viewingRooms">;
-    readonly " $refType": "ViewingRoomsApp_viewingRooms";
+    readonly " $refType": "ViewingRoomsApp_allViewingRooms";
 };
-export type ViewingRoomsApp_viewingRooms$data = ViewingRoomsApp_viewingRooms;
-export type ViewingRoomsApp_viewingRooms$key = {
-    readonly " $data"?: ViewingRoomsApp_viewingRooms$data;
-    readonly " $fragmentRefs": FragmentRefs<"ViewingRoomsApp_viewingRooms">;
+export type ViewingRoomsApp_allViewingRooms$data = ViewingRoomsApp_allViewingRooms;
+export type ViewingRoomsApp_allViewingRooms$key = {
+    readonly " $data"?: ViewingRoomsApp_allViewingRooms$data;
+    readonly " $fragmentRefs": FragmentRefs<"ViewingRoomsApp_allViewingRooms">;
 };
 
 
 
 const node: ReaderFragment = {
   "kind": "Fragment",
-  "name": "ViewingRoomsApp_viewingRooms",
+  "name": "ViewingRoomsApp_allViewingRooms",
   "type": "ViewingRoomConnection",
   "metadata": null,
   "argumentDefinitions": [],
@@ -28,5 +28,5 @@ const node: ReaderFragment = {
     }
   ]
 };
-(node as any).hash = 'f3e002162e70aa67c9c98ad0e0760ef3';
+(node as any).hash = '3b354e454f4f9e239b57a6c272cd42ae';
 export default node;

@@ -1,32 +1,22 @@
 import React from "react"
 import { Box, Sans } from "@artsy/palette"
-import { ViewingRoomsRail_featuredViewingRooms } from "v2/__generated__/ViewingRoomsRail_featuredViewingRooms.graphql"
+import { ViewingRoomsFeaturedRail_featuredViewingRooms } from "v2/__generated__/ViewingRoomsFeaturedRail_featuredViewingRooms.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 
-interface ViewingRoomsRailProps {
-  featuredViewingRooms: ViewingRoomsRail_featuredViewingRooms
+interface ViewingRoomsFeaturedRailProps {
+  featuredViewingRooms: ViewingRoomsFeaturedRail_featuredViewingRooms
 }
 
-export const ViewingRoomsRail: React.FC<ViewingRoomsRailProps> = props => {
+export const ViewingRoomsFeaturedRail: React.FC<ViewingRoomsFeaturedRailProps> = props => {
   const featuredViewingRooms = props.featuredViewingRooms
 
   const featuredViewingRoomsForRail = featuredViewingRooms.edges
     .map(vr => {
-      if (!vr.node) {
-        return null
-      }
-
-      if (vr.node.status != "scheduled" && vr.node.status != "live") {
-        return null
-      }
-
-      return {
-        ...vr.node,
-      }
+      return vr.node ? vr.node : null
     })
     .filter(Boolean)
 
-  return (
+  return featuredViewingRoomsForRail.length > 0 && (
     <Box>
       <Sans size="5">Featured</Sans>
       <Box>
@@ -41,11 +31,11 @@ export const ViewingRoomsRail: React.FC<ViewingRoomsRailProps> = props => {
     </Box>
   )
 }
-export const ViewingRoomsRailFragmentContainer = createFragmentContainer(
-  ViewingRoomsRail,
+export const ViewingRoomsFeaturedRailFragmentContainer = createFragmentContainer(
+  ViewingRoomsFeaturedRail,
   {
     featuredViewingRooms: graphql`
-      fragment ViewingRoomsRail_featuredViewingRooms on ViewingRoomConnection {
+      fragment ViewingRoomsFeaturedRail_featuredViewingRooms on ViewingRoomConnection {
         edges {
           node {
             slug
@@ -58,4 +48,4 @@ export const ViewingRoomsRailFragmentContainer = createFragmentContainer(
   }
 )
 
-export default ViewingRoomsRailFragmentContainer
+export default ViewingRoomsFeaturedRailFragmentContainer

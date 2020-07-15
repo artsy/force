@@ -14,7 +14,7 @@
     "editor.formatOnSave": false
   },
   "typescript.tsdk": "./node_modules/typescript/lib",
-  "debug.node.autoAttach": "on",
+  "debug.node.autoAttach": "off",
   "cSpell.ignoreWords": [],
   "cSpell.diagnosticLevel": "Hint",
   "cSpell.ignorePaths": [

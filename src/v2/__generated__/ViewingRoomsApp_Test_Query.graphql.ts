@@ -4,15 +4,15 @@ import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ViewingRoomsApp_Test_QueryVariables = {};
 export type ViewingRoomsApp_Test_QueryResponse = {
-    readonly viewingRooms: {
-        readonly " $fragmentRefs": FragmentRefs<"ViewingRoomsApp_viewingRooms">;
+    readonly allViewingRooms: {
+        readonly " $fragmentRefs": FragmentRefs<"ViewingRoomsApp_allViewingRooms">;
     } | null;
     readonly featuredViewingRooms: {
         readonly " $fragmentRefs": FragmentRefs<"ViewingRoomsApp_featuredViewingRooms">;
     } | null;
 };
 export type ViewingRoomsApp_Test_QueryRawResponse = {
-    readonly viewingRooms: ({
+    readonly allViewingRooms: ({
         readonly edges: ReadonlyArray<({
             readonly node: ({
                 readonly slug: string;
@@ -60,20 +60,30 @@ export type ViewingRoomsApp_Test_Query = {
 
 /*
 query ViewingRoomsApp_Test_Query {
-  viewingRooms {
-    ...ViewingRoomsApp_viewingRooms
+  allViewingRooms: viewingRooms {
+    ...ViewingRoomsApp_allViewingRooms
   }
   featuredViewingRooms: viewingRooms(featured: true) {
     ...ViewingRoomsApp_featuredViewingRooms
   }
 }
 
-fragment ViewingRoomsApp_featuredViewingRooms on ViewingRoomConnection {
-  ...ViewingRoomsRail_featuredViewingRooms
+fragment ViewingRoomsApp_allViewingRooms on ViewingRoomConnection {
+  ...ViewingRoomsLatestGrid_viewingRooms
 }
 
-fragment ViewingRoomsApp_viewingRooms on ViewingRoomConnection {
-  ...ViewingRoomsLatestGrid_viewingRooms
+fragment ViewingRoomsApp_featuredViewingRooms on ViewingRoomConnection {
+  ...ViewingRoomsFeaturedRail_featuredViewingRooms
+}
+
+fragment ViewingRoomsFeaturedRail_featuredViewingRooms on ViewingRoomConnection {
+  edges {
+    node {
+      slug
+      status
+      title
+    }
+  }
 }
 
 fragment ViewingRoomsLatestGrid_viewingRooms on ViewingRoomConnection {
@@ -101,16 +111,6 @@ fragment ViewingRoomsLatestGrid_viewingRooms on ViewingRoomConnection {
           }
         }
       }
-    }
-  }
-}
-
-fragment ViewingRoomsRail_featuredViewingRooms on ViewingRoomConnection {
-  edges {
-    node {
-      slug
-      status
-      title
     }
   }
 }
@@ -170,7 +170,7 @@ return {
     "selections": [
       {
         "kind": "LinkedField",
-        "alias": null,
+        "alias": "allViewingRooms",
         "name": "viewingRooms",
         "storageKey": null,
         "args": null,
@@ -179,7 +179,7 @@ return {
         "selections": [
           {
             "kind": "FragmentSpread",
-            "name": "ViewingRoomsApp_viewingRooms",
+            "name": "ViewingRoomsApp_allViewingRooms",
             "args": null
           }
         ]
@@ -209,7 +209,7 @@ return {
     "selections": [
       {
         "kind": "LinkedField",
-        "alias": null,
+        "alias": "allViewingRooms",
         "name": "viewingRooms",
         "storageKey": null,
         "args": null,
@@ -409,10 +409,10 @@ return {
     "operationKind": "query",
     "name": "ViewingRoomsApp_Test_Query",
     "id": null,
-    "text": "query ViewingRoomsApp_Test_Query {\n  viewingRooms {\n    ...ViewingRoomsApp_viewingRooms\n  }\n  featuredViewingRooms: viewingRooms(featured: true) {\n    ...ViewingRoomsApp_featuredViewingRooms\n  }\n}\n\nfragment ViewingRoomsApp_featuredViewingRooms on ViewingRoomConnection {\n  ...ViewingRoomsRail_featuredViewingRooms\n}\n\nfragment ViewingRoomsApp_viewingRooms on ViewingRoomConnection {\n  ...ViewingRoomsLatestGrid_viewingRooms\n}\n\nfragment ViewingRoomsLatestGrid_viewingRooms on ViewingRoomConnection {\n  edges {\n    node {\n      slug\n      status\n      title\n      heroImageURL\n      distanceToOpen(short: true)\n      distanceToClose(short: true)\n      partner {\n        name\n        id\n      }\n      artworksConnection(first: 2) {\n        totalCount\n        edges {\n          node {\n            image {\n              square: url(version: \"square\")\n              regular: url(version: \"large\")\n            }\n            id\n          }\n        }\n      }\n    }\n  }\n}\n\nfragment ViewingRoomsRail_featuredViewingRooms on ViewingRoomConnection {\n  edges {\n    node {\n      slug\n      status\n      title\n    }\n  }\n}\n",
+    "text": "query ViewingRoomsApp_Test_Query {\n  allViewingRooms: viewingRooms {\n    ...ViewingRoomsApp_allViewingRooms\n  }\n  featuredViewingRooms: viewingRooms(featured: true) {\n    ...ViewingRoomsApp_featuredViewingRooms\n  }\n}\n\nfragment ViewingRoomsApp_allViewingRooms on ViewingRoomConnection {\n  ...ViewingRoomsLatestGrid_viewingRooms\n}\n\nfragment ViewingRoomsApp_featuredViewingRooms on ViewingRoomConnection {\n  ...ViewingRoomsFeaturedRail_featuredViewingRooms\n}\n\nfragment ViewingRoomsFeaturedRail_featuredViewingRooms on ViewingRoomConnection {\n  edges {\n    node {\n      slug\n      status\n      title\n    }\n  }\n}\n\nfragment ViewingRoomsLatestGrid_viewingRooms on ViewingRoomConnection {\n  edges {\n    node {\n      slug\n      status\n      title\n      heroImageURL\n      distanceToOpen(short: true)\n      distanceToClose(short: true)\n      partner {\n        name\n        id\n      }\n      artworksConnection(first: 2) {\n        totalCount\n        edges {\n          node {\n            image {\n              square: url(version: \"square\")\n              regular: url(version: \"large\")\n            }\n            id\n          }\n        }\n      }\n    }\n  }\n}\n",
     "metadata": {}
   }
 };
 })();
-(node as any).hash = 'ed60767934750c0c148d8d83cbf60450';
+(node as any).hash = '32d06580e7fccf7f2c95838905dc2bd0';
 export default node;

@@ -24,11 +24,11 @@ describe("ViewingRoomsApp", () => {
       response: ViewingRoomsApp_Test_QueryRawResponse = ViewingRoomsAppFixture
     ) => {
       return renderRelayTree({
-        Component: ({ viewingRooms, featuredViewingRooms }) => {
+        Component: ({ allViewingRooms, featuredViewingRooms }) => {
           return (
             <MockBoot breakpoint={breakpoint}>
               <ViewingRoomsApp
-                viewingRooms={viewingRooms}
+                allViewingRooms={allViewingRooms}
                 featuredViewingRooms={featuredViewingRooms}
               />
             </MockBoot>
@@ -36,8 +36,8 @@ describe("ViewingRoomsApp", () => {
         },
         query: graphql`
           query ViewingRoomsApp_Test_Query @raw_response_type {
-            viewingRooms {
-              ...ViewingRoomsApp_viewingRooms
+            allViewingRooms: viewingRooms {
+              ...ViewingRoomsApp_allViewingRooms
             }
             featuredViewingRooms: viewingRooms(featured: true) {
               ...ViewingRoomsApp_featuredViewingRooms
@@ -83,7 +83,7 @@ describe("ViewingRoomsApp", () => {
       })
     })
 
-    describe("Viewing rooms rail", () => {
+    describe("Viewing rooms featured rail", () => {
       it("renders correct viewing rooms", async () => {
         const wrapper = await getWrapper()
         const html = wrapper.html()
@@ -94,7 +94,7 @@ describe("ViewingRoomsApp", () => {
 })
 
 const ViewingRoomsAppFixture: ViewingRoomsApp_Test_QueryRawResponse = {
-  viewingRooms: {
+  allViewingRooms: {
     edges: [
       {
         node: {

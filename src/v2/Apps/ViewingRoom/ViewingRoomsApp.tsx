@@ -3,18 +3,18 @@ import { AppContainer } from "v2/Apps/Components/AppContainer"
 import { Box, Sans, Separator, breakpoints } from "@artsy/palette"
 import { ViewingRoomsLatestGridFragmentContainer as ViewingRoomsLatestGrid } from "./Components/ViewingRoomsLatestGrid"
 import { Footer } from "v2/Components/Footer"
-import { ViewingRoomsApp_viewingRooms } from "v2/__generated__/ViewingRoomsApp_viewingRooms.graphql"
+import { ViewingRoomsApp_allViewingRooms } from "v2/__generated__/ViewingRoomsApp_allViewingRooms.graphql"
 import { ViewingRoomsApp_featuredViewingRooms } from "v2/__generated__/ViewingRoomsApp_featuredViewingRooms.graphql"
-import { ViewingRoomsRailFragmentContainer as ViewingRoomsRail } from "./Components/ViewingRoomsRail"
+import { ViewingRoomsFeaturedRailFragmentContainer as ViewingRoomsFeaturedRail } from "./Components/ViewingRoomsFeaturedRail"
 import { createFragmentContainer, graphql } from "react-relay"
 
 interface ViewingRoomsAppProps {
-  viewingRooms: ViewingRoomsApp_viewingRooms
+  allViewingRooms: ViewingRoomsApp_allViewingRooms
   featuredViewingRooms: ViewingRoomsApp_featuredViewingRooms
 }
 
 const ViewingRoomsApp: React.FC<ViewingRoomsAppProps> = props => {
-  const { viewingRooms, featuredViewingRooms } = props
+  const { allViewingRooms, featuredViewingRooms } = props
   return (
     <AppContainer maxWidth="100%">
       <Box maxWidth={breakpoints.xl} mx="auto" width="100%">
@@ -22,8 +22,10 @@ const ViewingRoomsApp: React.FC<ViewingRoomsAppProps> = props => {
           <Sans size="10" my={3}>
             Viewing Rooms
           </Sans>
-          <ViewingRoomsRail featuredViewingRooms={featuredViewingRooms} />
-          <ViewingRoomsLatestGrid viewingRooms={viewingRooms} />
+          <ViewingRoomsFeaturedRail
+            featuredViewingRooms={featuredViewingRooms}
+          />
+          <ViewingRoomsLatestGrid viewingRooms={allViewingRooms} />
         </Box>
       </Box>
       <Box mx={2}>
@@ -37,14 +39,14 @@ const ViewingRoomsApp: React.FC<ViewingRoomsAppProps> = props => {
 export const ViewingRoomsAppFragmentContainer = createFragmentContainer(
   ViewingRoomsApp,
   {
-    viewingRooms: graphql`
-      fragment ViewingRoomsApp_viewingRooms on ViewingRoomConnection {
+    allViewingRooms: graphql`
+      fragment ViewingRoomsApp_allViewingRooms on ViewingRoomConnection {
         ...ViewingRoomsLatestGrid_viewingRooms
       }
     `,
     featuredViewingRooms: graphql`
       fragment ViewingRoomsApp_featuredViewingRooms on ViewingRoomConnection {
-        ...ViewingRoomsRail_featuredViewingRooms
+        ...ViewingRoomsFeaturedRail_featuredViewingRooms
       }
     `,
   }
