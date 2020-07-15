@@ -284,7 +284,11 @@ export function fetchArtistSuggestions(value) {
       } = getState()
       const res = await request
         .get(`${sd.API_URL}/api/v1/match/artists`)
-        .query({ visible_to_public: "true", term: value })
+        .query({
+          target_supply: true,
+          term: value,
+          visible_to_public: true,
+        })
         .set("X-XAPP-TOKEN", sd.ARTSY_XAPP_TOKEN)
       dispatch(updateArtistSuggestions(res.body))
       dispatch(hideNotConsigningMessage())
