@@ -7,7 +7,7 @@ import {
   Sans,
   color,
 } from "@artsy/palette"
-import React, { SFC, useEffect, useRef } from "react"
+import React, { useEffect, useRef } from "react"
 import styled from "styled-components"
 import {
   initialArtworkFilterState,
@@ -16,7 +16,7 @@ import {
 import { isEqual, omit } from "lodash"
 import { countChangedFilters } from "./Utils/countChangedFilters"
 
-export const ArtworkFilterMobileActionSheet: SFC<{
+export const ArtworkFilterMobileActionSheet: React.FC<{
   children: JSX.Element
   onClose: () => void
 }> = ({ children, onClose }) => {
