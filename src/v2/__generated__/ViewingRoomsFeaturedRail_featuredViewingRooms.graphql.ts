@@ -6,8 +6,13 @@ export type ViewingRoomsFeaturedRail_featuredViewingRooms = {
     readonly edges: ReadonlyArray<{
         readonly node: {
             readonly slug: string;
-            readonly status: string;
             readonly title: string;
+            readonly heroImageURL: string | null;
+            readonly distanceToOpen: string | null;
+            readonly distanceToClose: string | null;
+            readonly partner: {
+                readonly name: string | null;
+            } | null;
         } | null;
     } | null> | null;
     readonly " $refType": "ViewingRoomsFeaturedRail_featuredViewingRooms";
@@ -20,7 +25,15 @@ export type ViewingRoomsFeaturedRail_featuredViewingRooms$key = {
 
 
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = [
+  {
+    "kind": "Literal",
+    "name": "short",
+    "value": true
+  }
+];
+return {
   "kind": "Fragment",
   "name": "ViewingRoomsFeaturedRail_featuredViewingRooms",
   "type": "ViewingRoomConnection",
@@ -55,16 +68,48 @@ const node: ReaderFragment = {
             {
               "kind": "ScalarField",
               "alias": null,
-              "name": "status",
+              "name": "title",
               "args": null,
               "storageKey": null
             },
             {
               "kind": "ScalarField",
               "alias": null,
-              "name": "title",
+              "name": "heroImageURL",
               "args": null,
               "storageKey": null
+            },
+            {
+              "kind": "ScalarField",
+              "alias": null,
+              "name": "distanceToOpen",
+              "args": (v0/*: any*/),
+              "storageKey": "distanceToOpen(short:true)"
+            },
+            {
+              "kind": "ScalarField",
+              "alias": null,
+              "name": "distanceToClose",
+              "args": (v0/*: any*/),
+              "storageKey": "distanceToClose(short:true)"
+            },
+            {
+              "kind": "LinkedField",
+              "alias": null,
+              "name": "partner",
+              "storageKey": null,
+              "args": null,
+              "concreteType": "Partner",
+              "plural": false,
+              "selections": [
+                {
+                  "kind": "ScalarField",
+                  "alias": null,
+                  "name": "name",
+                  "args": null,
+                  "storageKey": null
+                }
+              ]
             }
           ]
         }
@@ -72,5 +117,6 @@ const node: ReaderFragment = {
     }
   ]
 };
-(node as any).hash = '31493ff325af5d957d13d24bc3dc1479';
+})();
+(node as any).hash = '314197541bcc75891110db06a9a32898';
 export default node;

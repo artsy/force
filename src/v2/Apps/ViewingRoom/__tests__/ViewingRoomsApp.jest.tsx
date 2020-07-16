@@ -232,9 +232,15 @@ const ViewingRoomsAppFixture: ViewingRoomsApp_Test_QueryRawResponse = {
     edges: [
       {
         node: {
-          status: "live",
           slug: "test-featured-live",
           title: "Featured Live VR",
+          heroImageURL: "https://www.example.com/featured-live.jpg",
+          distanceToOpen: null,
+          distanceToClose: "4 days",
+          partner: {
+            id: "featured",
+            name: "Featured",
+          },
         },
       },
     ],

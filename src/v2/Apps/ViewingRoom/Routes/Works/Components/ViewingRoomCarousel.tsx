@@ -128,7 +128,7 @@ export const ViewingRoomCarouselFragmentContainer = createFragmentContainer(
   }
 )
 
-const Arrow: React.FC<{
+export const Arrow: React.FC<{
   direction: "left" | "right"
   onClick: () => void
   opacity: number

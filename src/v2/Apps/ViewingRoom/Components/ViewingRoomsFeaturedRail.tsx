@@ -1,7 +1,10 @@
-import React from "react"
-import { Box, Sans } from "@artsy/palette"
+import React, { useState } from "react"
+import { Box, Flex, ProgressBar, Sans, breakpoints } from "@artsy/palette"
+import { Carousel } from "v2/Components/Carousel"
 import { ViewingRoomsFeaturedRail_featuredViewingRooms } from "v2/__generated__/ViewingRoomsFeaturedRail_featuredViewingRooms.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
+import { flowRight } from "lodash"
+import { Arrow } from "../Routes/Works/Components/ViewingRoomCarousel"
 
 interface ViewingRoomsFeaturedRailProps {
   featuredViewingRooms: ViewingRoomsFeaturedRail_featuredViewingRooms
@@ -16,19 +19,85 @@ export const ViewingRoomsFeaturedRail: React.FC<ViewingRoomsFeaturedRailProps> =
     })
     .filter(Boolean)
 
-  return featuredViewingRoomsForRail.length > 0 && (
-    <Box>
-      <Sans size="5">Featured</Sans>
+  const computeScrollPercent = selectedIndex =>
+    ((selectedIndex + 1) / featuredViewingRoomsForRail.length) * 100
+  const [scrollPercent, setScrollPercent] = useState(computeScrollPercent(0))
+  const update = flowRight(setScrollPercent, computeScrollPercent)
+  const showProgressBar = featuredViewingRoomsForRail.length > 1
+
+  const CarouselHeight = 380
+
+  return (
+    featuredViewingRoomsForRail.length > 0 && (
       <Box>
-        {featuredViewingRoomsForRail.map(vr => {
-          return (
-            <Sans size="3t" key={vr.slug}>
-              {vr.title}
-            </Sans>
-          )
-        })}
+        <Sans size="5">Featured</Sans>
+        <Box width="100%">
+          <Flex
+            height={CarouselHeight}
+            maxWidth={breakpoints.lg}
+            m="auto"
+            my={2}
+            position="relative"
+            justifyContent="center"
+          >
+            <Carousel
+              options={{
+                cellAlign: "center",
+                draggable: showProgressBar,
+                freeScroll: true,
+                groupCells: 1,
+                pageDots: false,
+              }}
+              data={featuredViewingRoomsForRail}
+              height={CarouselHeight}
+              onDragEnd={({ flickity }) => update(flickity.selectedIndex)}
+              render={({ title }) => {
+                return <Sans size="5t">{title}</Sans>
+              }}
+              renderLeftArrow={({ currentSlideIndex, flickity }) => {
+                const opacity = currentSlideIndex === 0 ? 0 : 1
+                return (
+                  <Arrow
+                    direction="left"
+                    opacity={opacity}
+                    onClick={() => {
+                      flickity.previous()
+                      update(flickity.selectedIndex)
+                    }}
+                  />
+                )
+              }}
+              renderRightArrow={({ currentSlideIndex, flickity }) => {
+                const opacity =
+                  currentSlideIndex === featuredViewingRoomsForRail.length - 1
+                    ? 0
+                    : 1
+                return (
+                  <Arrow
+                    direction="right"
+                    opacity={opacity}
+                    onClick={() => {
+                      flickity.next()
+                      update(flickity.selectedIndex)
+                    }}
+                  />
+                )
+              }}
+            />
+          </Flex>
+
+          {showProgressBar && (
+            <Box maxWidth={["100%", 470]} mx={[2, "auto"]}>
+              <ProgressBar
+                highlight="black100"
+                percentComplete={scrollPercent}
+                transition="width .30s ease-out"
+              />
+            </Box>
+          )}
+        </Box>
       </Box>
-    </Box>
+    )
   )
 }
 export const ViewingRoomsFeaturedRailFragmentContainer = createFragmentContainer(
@@ -39,8 +108,13 @@ export const ViewingRoomsFeaturedRailFragmentContainer = createFragmentContainer
         edges {
           node {
             slug
-            status
             title
+            heroImageURL
+            distanceToOpen(short: true)
+            distanceToClose(short: true)
+            partner {
+              name
+            }
           }
         }
       }
