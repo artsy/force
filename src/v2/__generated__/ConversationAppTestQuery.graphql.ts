@@ -81,7 +81,7 @@ query ConversationAppTestQuery {
 }
 
 fragment ConversationApp_me on Me {
-  conversationsConnection(first: 10) {
+  conversationsConnection(first: 25) {
     edges {
       node {
         internalID
@@ -137,7 +137,7 @@ fragment ConversationSnippet_conversation on Conversation {
 }
 
 fragment Conversations_me on Me {
-  conversationsConnection(first: 10) {
+  conversationsConnection(first: 25) {
     edges {
       cursor
       node {
@@ -230,12 +230,12 @@ return {
             "kind": "LinkedField",
             "alias": null,
             "name": "conversationsConnection",
-            "storageKey": "conversationsConnection(first:10)",
+            "storageKey": "conversationsConnection(first:25)",
             "args": [
               {
                 "kind": "Literal",
                 "name": "first",
-                "value": 10
+                "value": 25
               }
             ],
             "concreteType": "ConversationConnection",
@@ -471,7 +471,7 @@ return {
     "operationKind": "query",
     "name": "ConversationAppTestQuery",
     "id": null,
-    "text": "query ConversationAppTestQuery {\n  me {\n    ...ConversationApp_me\n    id\n  }\n}\n\nfragment ConversationApp_me on Me {\n  conversationsConnection(first: 10) {\n    edges {\n      node {\n        internalID\n        to {\n          name\n          id\n        }\n        id\n      }\n    }\n  }\n  ...Conversations_me\n}\n\nfragment ConversationSnippet_conversation on Conversation {\n  internalID\n  to {\n    name\n    id\n  }\n  lastMessage\n  lastMessageAt\n  unread\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        date\n        title\n        artistNames\n        image {\n          url\n        }\n      }\n      ... on Show {\n        fair {\n          name\n          id\n        }\n        name\n        coverImage {\n          url\n        }\n      }\n      ... on Node {\n        id\n      }\n    }\n  }\n  messagesConnection {\n    totalCount\n  }\n}\n\nfragment Conversations_me on Me {\n  conversationsConnection(first: 10) {\n    edges {\n      cursor\n      node {\n        id\n        internalID\n        lastMessage\n        ...ConversationSnippet_conversation\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n",
+    "text": "query ConversationAppTestQuery {\n  me {\n    ...ConversationApp_me\n    id\n  }\n}\n\nfragment ConversationApp_me on Me {\n  conversationsConnection(first: 25) {\n    edges {\n      node {\n        internalID\n        to {\n          name\n          id\n        }\n        id\n      }\n    }\n  }\n  ...Conversations_me\n}\n\nfragment ConversationSnippet_conversation on Conversation {\n  internalID\n  to {\n    name\n    id\n  }\n  lastMessage\n  lastMessageAt\n  unread\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        date\n        title\n        artistNames\n        image {\n          url\n        }\n      }\n      ... on Show {\n        fair {\n          name\n          id\n        }\n        name\n        coverImage {\n          url\n        }\n      }\n      ... on Node {\n        id\n      }\n    }\n  }\n  messagesConnection {\n    totalCount\n  }\n}\n\nfragment Conversations_me on Me {\n  conversationsConnection(first: 25) {\n    edges {\n      cursor\n      node {\n        id\n        internalID\n        lastMessage\n        ...ConversationSnippet_conversation\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n",
     "metadata": {}
   }
 };
