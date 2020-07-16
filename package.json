@@ -222,6 +222,7 @@
     "standard": "9.0.2",
     "stickyfill": "1.1.1",
     "styled-components": "4.3.2",
+    "styled-system": "^5.1.5",
     "stylus": "0.54.5",
     "superagent": "3.8.3",
     "tti-polyfill": "0.2.2",
