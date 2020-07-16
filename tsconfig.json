@@ -24,9 +24,6 @@
       "package.json": [
         "./package.json"
       ],
-      "reaction/*": [
-        "../node_modules/@artsy/reaction/dist/*"
-      ],
       "storybook/*": [
         "./v2/__stories__/*"
       ],

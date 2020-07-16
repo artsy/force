@@ -2,8 +2,8 @@ import React from "react"
 import sinon from "sinon"
 import { mount } from "enzyme"
 import { Header } from "../header"
-import { PartnerInline } from "reaction/Components/Publishing/Partner/PartnerInline"
-import Icon from "reaction/Components/Icon"
+import { PartnerInline } from "@artsy/reaction/dist/Components/Publishing/Partner/PartnerInline"
+import Icon from "@artsy/reaction/dist/Components/Icon"
 
 xdescribe("Gucci Header", () => {
   const props = {
@@ -44,10 +44,7 @@ xdescribe("Gucci Header", () => {
   it("Calls onOpenMenu when clicking menu icon", () => {
     props.onOpenMenu = sinon.stub()
     const component = mount(<Header {...props} />)
-    component
-      .find(Icon)
-      .at(1)
-      .simulate("click")
+    component.find(Icon).at(1).simulate("click")
     props.onOpenMenu.called.should.eql(true)
   })
 })

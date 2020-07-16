@@ -3,7 +3,7 @@ import { mount } from "enzyme"
 import { InfiniteScrollNewsArticle } from "../InfiniteScrollNewsArticle"
 import { NewsArticle } from "@artsy/reaction/dist/Components/Publishing/Fixtures/Articles"
 import { NewsLayout } from "@artsy/reaction/dist/Components/Publishing/Layouts/NewsLayout"
-import { NewsNav } from "reaction/Components/Publishing/Nav/NewsNav"
+import { NewsNav } from "@artsy/reaction/dist/Components/Publishing/Nav/NewsNav"
 import { extend, times } from "lodash"
 import moment from "moment"
 import Waypoint from "react-waypoint"
@@ -253,9 +253,7 @@ describe("InfiniteScrollNewsArticle", () => {
     })
 
     it("Returns today for articles with no date field", () => {
-      const today = moment()
-        .toISOString()
-        .substring(0, 10)
+      const today = moment().toISOString().substring(0, 10)
       delete props.article.published_at
       delete props.article.scheduled_publish_at
       const instance = getWrapper()
