@@ -17,8 +17,11 @@ export const routes: RouteConfig[] = [
     },
     query: graphql`
       query routes_ViewingRoomsAppQuery {
-        viewingRooms {
-          ...ViewingRoomsApp_viewingRooms
+        allViewingRooms: viewingRooms {
+          ...ViewingRoomsApp_allViewingRooms
+        }
+        featuredViewingRooms: viewingRooms(featured: true) {
+          ...ViewingRoomsApp_featuredViewingRooms
         }
       }
     `,

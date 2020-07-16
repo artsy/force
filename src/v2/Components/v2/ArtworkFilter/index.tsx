@@ -38,6 +38,8 @@ import { ArtistArtworkFilter_artist } from "v2/__generated__/ArtistArtworkFilter
 import { Collection_collection } from "v2/__generated__/Collection_collection.graphql"
 import { SystemQueryRenderer as QueryRenderer } from "v2/Artsy/Relay/SystemQueryRenderer"
 import { ArtworkQueryFilter } from "./ArtworkQueryFilter"
+import { ArtistSeriesArtworksFilter_artistSeries } from "v2/__generated__/ArtistSeriesArtworksFilter_artistSeries.graphql"
+import { StickyContainer } from "./StickyContainer"
 
 /**
  * Primary ArtworkFilter which is wrapped with a context and refetch container.
@@ -84,6 +86,7 @@ export const BaseArtworkFilter: React.FC<{
     | ArtworkFilter_viewer
     | Collection_collection
     | ArtistArtworkFilter_artist
+    | ArtistSeriesArtworksFilter_artistSeries
 }> = ({ relay, viewer, relayVariables = {}, ...props }) => {
   const { filtered_artworks } = viewer
   const hasFilter = filtered_artworks && filtered_artworks.id
@@ -184,7 +187,7 @@ export const BaseArtworkFilter: React.FC<{
             </ArtworkFilterMobileActionSheet>
           )}
 
-          <Flex justifyContent="space-between" alignItems="center" py={1}>
+          <StickyContainer>
             <Button size="small" onClick={() => toggleMobileActionSheet(true)}>
               <Flex justifyContent="space-between" alignItems="center">
                 <FilterIcon fill="white100" />
@@ -194,7 +197,7 @@ export const BaseArtworkFilter: React.FC<{
             </Button>
 
             <SortFilter />
-          </Flex>
+          </StickyContainer>
 
           <Spacer mb={2} />
 

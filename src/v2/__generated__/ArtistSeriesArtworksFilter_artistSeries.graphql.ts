@@ -2,21 +2,24 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type ArtistSeriesApp_artistSeries = {
-    readonly " $fragmentRefs": FragmentRefs<"ArtistSeriesHeader_artistSeries" | "ArtistSeriesArtworksFilter_artistSeries">;
-    readonly " $refType": "ArtistSeriesApp_artistSeries";
+export type ArtistSeriesArtworksFilter_artistSeries = {
+    readonly filtered_artworks: {
+        readonly id: string;
+        readonly " $fragmentRefs": FragmentRefs<"ArtworkFilterArtworkGrid2_filtered_artworks">;
+    } | null;
+    readonly " $refType": "ArtistSeriesArtworksFilter_artistSeries";
 };
-export type ArtistSeriesApp_artistSeries$data = ArtistSeriesApp_artistSeries;
-export type ArtistSeriesApp_artistSeries$key = {
-    readonly " $data"?: ArtistSeriesApp_artistSeries$data;
-    readonly " $fragmentRefs": FragmentRefs<"ArtistSeriesApp_artistSeries">;
+export type ArtistSeriesArtworksFilter_artistSeries$data = ArtistSeriesArtworksFilter_artistSeries;
+export type ArtistSeriesArtworksFilter_artistSeries$key = {
+    readonly " $data"?: ArtistSeriesArtworksFilter_artistSeries$data;
+    readonly " $fragmentRefs": FragmentRefs<"ArtistSeriesArtworksFilter_artistSeries">;
 };
 
 
 
 const node: ReaderFragment = {
   "kind": "Fragment",
-  "name": "ArtistSeriesApp_artistSeries",
+  "name": "ArtistSeriesArtworksFilter_artistSeries",
   "type": "ArtistSeries",
   "metadata": null,
   "argumentDefinitions": [
@@ -131,18 +134,20 @@ const node: ReaderFragment = {
   ],
   "selections": [
     {
-      "kind": "FragmentSpread",
-      "name": "ArtistSeriesHeader_artistSeries",
-      "args": null
-    },
-    {
-      "kind": "FragmentSpread",
-      "name": "ArtistSeriesArtworksFilter_artistSeries",
+      "kind": "LinkedField",
+      "alias": "filtered_artworks",
+      "name": "filterArtworksConnection",
+      "storageKey": null,
       "args": [
         {
           "kind": "Variable",
           "name": "acquireable",
           "variableName": "acquireable"
+        },
+        {
+          "kind": "Literal",
+          "name": "after",
+          "value": ""
         },
         {
           "kind": "Variable",
@@ -163,6 +168,11 @@ const node: ReaderFragment = {
           "kind": "Variable",
           "name": "color",
           "variableName": "color"
+        },
+        {
+          "kind": "Literal",
+          "name": "first",
+          "value": 20
         },
         {
           "kind": "Variable",
@@ -229,9 +239,25 @@ const node: ReaderFragment = {
           "name": "width",
           "variableName": "width"
         }
+      ],
+      "concreteType": "FilterArtworksConnection",
+      "plural": false,
+      "selections": [
+        {
+          "kind": "ScalarField",
+          "alias": null,
+          "name": "id",
+          "args": null,
+          "storageKey": null
+        },
+        {
+          "kind": "FragmentSpread",
+          "name": "ArtworkFilterArtworkGrid2_filtered_artworks",
+          "args": null
+        }
       ]
     }
   ]
 };
-(node as any).hash = '0bd3e085761715c13ee2392434b6e676';
+(node as any).hash = 'e28a35b1eb7b226fcec705e00cff901f';
 export default node;

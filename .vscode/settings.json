@@ -1,5 +1,7 @@
 {
-  "editor.rulers": [80],
+  "editor.rulers": [
+    80
+  ],
   "editor.tabSize": 2,
   "javascript.validate.enable": true,
   "search.exclude": {

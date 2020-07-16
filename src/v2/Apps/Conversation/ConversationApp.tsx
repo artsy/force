@@ -64,8 +64,7 @@ export const ConversationApp: React.FC<ConversationAppProps> = props => {
   const route = findCurrentRoute(props.match)
   let maxWidth
 
-  const isEmpty = me.conversationsConnection.edges.length === 0
-  const conversation = me.conversationsConnection.edges[0]?.node
+  const firstConversation = me?.conversationsConnection?.edges[0]?.node
 
   useEffect(() => {
     setWidth(getViewWidth())
@@ -80,12 +79,12 @@ export const ConversationApp: React.FC<ConversationAppProps> = props => {
     if (
       isEnabled &&
       width > parseInt(breakpoints.xs, 10) &&
-      conversation &&
+      firstConversation &&
       router
     ) {
-      router.replace(`/user/conversations/${conversation.internalID}`)
+      router.replace(`/user/conversations/${firstConversation.internalID}`)
     }
-  }, [isEnabled, router, conversation, width])
+  }, [isEnabled, router, firstConversation, width])
 
   if (!isEnabled) {
     return <ErrorPage code={404} />
@@ -98,10 +97,10 @@ export const ConversationApp: React.FC<ConversationAppProps> = props => {
   return (
     <AppContainer maxWidth={maxWidth}>
       <Title>Conversations | Artsy</Title>
-      {isEmpty ? (
+      {!firstConversation ? (
         <NoMessages />
       ) : (
-        <Inbox selectedConversation={conversation} me={me} />
+        <Inbox selectedConversation={firstConversation} me={me} />
       )}
     </AppContainer>
   )
