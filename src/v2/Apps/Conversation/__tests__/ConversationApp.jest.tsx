@@ -73,10 +73,31 @@ describe("Conversation app", () => {
       })
     })
     describe("without previous conversations", () => {
-      it("shows an empty state", async () => {
+      it("shows an empty state when loading the conversationsConnection", async () => {
         const mockMe = {
           id: "111",
           conversationsConnection: { edges: [], pageInfo },
+        }
+
+        const component = await render(mockMe, userType)
+        const text = component.text()
+        expect(text).toContain("You don't have any messages yet.")
+        expect(text).toContain(
+          "Contact galleries to purchase available work. You'll find your ongoing conversations here."
+        )
+
+        const button = component.find("Button")
+        expect(button.length).toBe(1)
+        expect(button.text()).toBe("Explore artworks")
+
+        const link = component.find("RouterLink")
+        expect(link.html()).toContain(`href="/collect"`)
+      })
+
+      it("shows an empty state on failure on loading the conversationsConnection", async () => {
+        const mockMe = {
+          id: "111",
+          conversationsConnection: null,
         }
 
         const component = await render(mockMe, userType)
