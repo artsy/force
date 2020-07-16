@@ -28,7 +28,7 @@ const ViewingRoomApp: React.FC<ViewingRoomAppProps> = ({
   useEffect(() => {
     if (user && user.id) return
     // openAuthModal will fire off "open:auth" event before ModalContainer
-    // is mounted, use setImmediate to fire after next tick
+    // is mounted, use setTimeout to fire after next tick
     const timeoutID = setTimeout(() => {
       openAuthModal(mediator, {
         mode: ModalType.signup,
