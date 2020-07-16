@@ -1,4 +1,4 @@
-import { Box, Flex, ResponsiveImage, Serif, color } from "@artsy/palette"
+import { Box, Flex, Serif, color } from "@artsy/palette"
 import { OtherCollectionEntity_member } from "v2/__generated__/OtherCollectionEntity_member.graphql"
 import * as Schema from "v2/Artsy/Analytics/Schema"
 import { useTracking } from "v2/Artsy/Analytics/useTracking"
@@ -8,6 +8,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { data as sd } from "sharify"
 import styled from "styled-components"
 import { resize } from "v2/Utils/resizer"
+import { ResponsiveImageDeprecated } from "v2/Components/ResponsiveImageDeprecated"
 
 export interface CollectionProps {
   member: OtherCollectionEntity_member
@@ -89,7 +90,7 @@ export const ImageContainer = styled(Box)`
   width: 60px;
 `
 
-export const ThumbnailImage = styled(ResponsiveImage)`
+export const ThumbnailImage = styled(ResponsiveImageDeprecated)`
   background-size: cover;
   border-radius: 2px 1px 1px 2px;
 `

@@ -1,16 +1,10 @@
 import React from "react"
 import styled from "styled-components"
-import {
-  Flex,
-  FlexProps,
-  HTML,
-  ResponsiveImage,
-  Sans,
-  color,
-} from "@artsy/palette"
+import { Flex, FlexProps, HTML, Sans, color } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import { FeatureFeaturedLink_featuredLink } from "v2/__generated__/FeatureFeaturedLink_featuredLink.graphql"
+import { ResponsiveImageDeprecated } from "v2/Components/ResponsiveImageDeprecated"
 
 const Figure = styled(RouterLink)`
   display: block;
@@ -59,7 +53,7 @@ export const FeatureFeaturedLink: React.FC<FeatureFeaturedLinkProps> = ({
     <Flex flexDirection="column" {...rest}>
       {image ? (
         <Figure to={href}>
-          <ResponsiveImage
+          <ResponsiveImageDeprecated
             maxWidth="100%"
             src={image[size].src}
             ratio={image[size].height / image[size].width}

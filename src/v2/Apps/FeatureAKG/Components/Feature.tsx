@@ -1,4 +1,4 @@
-import { Box, ResponsiveImage, Sans, Serif } from "@artsy/palette"
+import { Box, Sans, Serif } from "@artsy/palette"
 import { Feature_viewer } from "v2/__generated__/Feature_viewer.graphql"
 import { FeaturedArticlesFragmentContainer as FeaturedArticles } from "v2/Apps/FeatureAKG/Components/FeaturedArticles"
 import { FeaturedArtists } from "v2/Apps/FeatureAKG/Components/FeaturedArtists"
@@ -14,6 +14,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { crop, resize } from "v2/Utils/resizer"
 import { Media } from "v2/Utils/Responsive"
+import { ResponsiveImageDeprecated } from "v2/Components/ResponsiveImageDeprecated"
 
 interface FeatureProps {
   viewer: Feature_viewer
@@ -242,7 +243,7 @@ const StyledVideo = styled("video")`
 const ImageSection: React.FC<{ src: string; aspectRatio: number }> = props => {
   return (
     <BorderedSection>
-      <ResponsiveImage src={props.src} ratio={props.aspectRatio} />
+      <ResponsiveImageDeprecated src={props.src} ratio={props.aspectRatio} />
     </BorderedSection>
   )
 }
@@ -291,7 +292,7 @@ export const FeaturedContentLink: React.FC<FeaturedLinkType> = props => {
       }
     >
       <Box position="relative">
-        <ResponsiveImage src={croppedUrl} ratio={height / width} />
+        <ResponsiveImageDeprecated src={croppedUrl} ratio={height / width} />
         <ImageOverlayText maxWidth="150px">
           <BlockText size="2" color="white">
             {props.title}

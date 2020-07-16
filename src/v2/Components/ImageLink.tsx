@@ -1,15 +1,16 @@
-import { Box, ResponsiveImage, SerifProps } from "@artsy/palette"
+import { Box, SerifProps } from "@artsy/palette"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import React, { FC } from "react"
 import styled from "styled-components"
 import { space } from "styled-system"
 import { Media } from "v2/Utils/Responsive"
+import { ResponsiveImageDeprecated } from "v2/Components/ResponsiveImageDeprecated"
 
 const ImageContainer = styled(Box)`
   position: relative;
 `
 
-const HubImage = styled(ResponsiveImage)`
+const HubImage = styled(ResponsiveImageDeprecated)`
   vertical-align: middle;
 `
 

@@ -7,7 +7,6 @@ import {
   Join,
   Link,
   QuestionCircleIcon,
-  ResponsiveImage,
   Sans,
   Separator,
   Spacer,
@@ -20,6 +19,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { Details_conversation } from "v2/__generated__/Details_conversation.graphql"
 import ArtworkDetails from "v2/Components/Artwork/Metadata"
 import { zIndex } from "styled-system"
+import { ResponsiveImageDeprecated } from "v2/Components/ResponsiveImageDeprecated"
 
 export const DETAIL_BOX_ANIMATION = `transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);`
 const DETAIL_BOX_XS_ANIMATION = `transition: opacity 0.3s, z-index 0.3s;`
@@ -118,7 +118,7 @@ export const Details: FC<DetailsProps> = ({ conversation, ...props }) => {
             <Flex>
               <a href={item.href}>
                 <Box height="80px" width="80px">
-                  <ResponsiveImage src={item.image.thumbnailUrl} />
+                  <ResponsiveImageDeprecated src={item.image.thumbnailUrl} />
                 </Box>
               </a>
               <Flex flexDirection="column" ml={1}>

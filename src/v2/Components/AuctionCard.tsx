@@ -1,13 +1,4 @@
-import {
-  BorderBox,
-  Box,
-  Flex,
-  Image,
-  Link,
-  ResponsiveImage,
-  Sans,
-  Serif,
-} from "@artsy/palette"
+import { BorderBox, Box, Flex, Image, Link, Sans, Serif } from "@artsy/palette"
 import { AuctionCard_sale } from "v2/__generated__/AuctionCard_sale.graphql"
 import { Truncator } from "v2/Components/Truncator"
 import { DateTime } from "luxon"
@@ -15,6 +6,7 @@ import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { get } from "v2/Utils/get"
 import { Media } from "v2/Utils/Responsive"
+import { ResponsiveImageDeprecated } from "./ResponsiveImageDeprecated"
 
 export const relativeTime = (timeIn, now) => {
   const time = DateTime.fromISO(timeIn)
@@ -106,7 +98,7 @@ export const LargeAuctionCard = props => (
     </Serif>
     {props.src && (
       <Box height="200px">
-        <ResponsiveImage src={props.src} my={2} pb="160px" />
+        <ResponsiveImageDeprecated src={props.src} my={2} pb="160px" />
       </Box>
     )}
     <Sans size="2" weight="medium">

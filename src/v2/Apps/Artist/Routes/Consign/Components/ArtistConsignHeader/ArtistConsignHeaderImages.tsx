@@ -1,9 +1,10 @@
-import { Box, Flex, ResponsiveImage } from "@artsy/palette"
+import { Box, Flex } from "@artsy/palette"
 import { ArtistConsignHeaderImages_artist } from "v2/__generated__/ArtistConsignHeaderImages_artist.graphql"
 import { last } from "lodash"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
+import { ResponsiveImageDeprecated } from "v2/Components/ResponsiveImageDeprecated"
 
 type Artworks = ArtistConsignHeaderImages_artist["targetSupply"]["microfunnel"]["artworks"]
 
@@ -87,7 +88,7 @@ interface ImageProps {
 }
 const LeftImagePhoto: React.FC<ImageProps> = ({ image }) => {
   return (
-    <ResponsiveImage
+    <ResponsiveImageDeprecated
       src={image.resized.url}
       style={{
         backgroundPosition: "left",
@@ -98,7 +99,7 @@ const LeftImagePhoto: React.FC<ImageProps> = ({ image }) => {
 }
 
 const RightImagePhoto: React.FC<ImageProps> = ({ image }) => {
-  return <ResponsiveImage src={image.resized.url} />
+  return <ResponsiveImageDeprecated src={image.resized.url} />
 }
 
 const LeftImage = styled(Box)`

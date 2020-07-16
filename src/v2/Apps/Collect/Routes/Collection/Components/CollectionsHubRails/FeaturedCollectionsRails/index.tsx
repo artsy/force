@@ -1,12 +1,4 @@
-import {
-  Box,
-  Flex,
-  ResponsiveImage,
-  Sans,
-  Serif,
-  Spacer,
-  color,
-} from "@artsy/palette"
+import { Box, Flex, Sans, Serif, Spacer, color } from "@artsy/palette"
 import { FeaturedCollectionsRails_collectionGroup } from "v2/__generated__/FeaturedCollectionsRails_collectionGroup.graphql"
 import * as Schema from "v2/Artsy/Analytics/Schema"
 import { useTracking } from "v2/Artsy/Analytics/useTracking"
@@ -20,6 +12,7 @@ import { data as sd } from "sharify"
 import styled from "styled-components"
 import { resize } from "v2/Utils/resizer"
 import { Media } from "v2/Utils/Responsive"
+import { ResponsiveImageDeprecated } from "v2/Components/ResponsiveImageDeprecated"
 
 interface Props {
   collectionGroup: FeaturedCollectionsRails_collectionGroup
@@ -212,7 +205,7 @@ const ExtendedSerif = styled(Serif)`
     }
   }
 `
-export const FeaturedImage = styled(ResponsiveImage)`
+export const FeaturedImage = styled(ResponsiveImageDeprecated)`
   background-position: top;
 `
 
@@ -234,5 +227,5 @@ export const StyledLink = styled(RouterLink)`
 `
 
 const ReadMoreLink = styled(Sans)`
-    text-decoration: underline;
+  text-decoration: underline;
 `

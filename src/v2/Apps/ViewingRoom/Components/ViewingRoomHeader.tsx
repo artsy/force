@@ -1,10 +1,11 @@
 import React from "react"
-import { Box, Flex, ResponsiveImage, Sans, color } from "@artsy/palette"
+import { Box, Flex, Sans, color } from "@artsy/palette"
 import { NAV_BAR_HEIGHT } from "v2/Components/NavBar"
 import { Media } from "v2/Utils/Responsive"
 import { createFragmentContainer, graphql } from "react-relay"
 
 import { ViewingRoomHeader_viewingRoom } from "v2/__generated__/ViewingRoomHeader_viewingRoom.graphql"
+import { ResponsiveImageDeprecated } from "v2/Components/ResponsiveImageDeprecated"
 
 interface ViewingRoomHeaderProps {
   viewingRoom: ViewingRoomHeader_viewingRoom
@@ -63,10 +64,9 @@ const ViewingRoomHeaderLarge: React.FC<ViewingRoomHeaderProps> = props => {
       }}
     >
       <Box width="50%" style={{ overflow: "hidden" }}>
-        <ResponsiveImage
+        <ResponsiveImageDeprecated
           // FIXME: Use resizer: https://github.com/artsy/reaction/pull/3499/files#r422166275
           src={heroImageURL}
-          lazyLoad={false}
           style={{
             backgroundSize: "cover",
             backgroundPosition: "center",
@@ -113,7 +113,7 @@ const ViewingRoomHeaderSmall: React.FC<ViewingRoomHeaderProps> = props => {
         position: "relative",
       }}
     >
-      <ResponsiveImage
+      <ResponsiveImageDeprecated
         src={heroImageURL}
         style={{
           backgroundSize: "cover",

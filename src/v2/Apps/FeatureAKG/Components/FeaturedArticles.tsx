@@ -1,13 +1,4 @@
-import {
-  Box,
-  Col,
-  Flex,
-  Grid,
-  Image,
-  ResponsiveImage,
-  Row,
-  Sans,
-} from "@artsy/palette"
+import { Box, Col, Flex, Grid, Image, Row, Sans } from "@artsy/palette"
 import { FeaturedArticles_articles } from "v2/__generated__/FeaturedArticles_articles.graphql"
 import { StyledLink } from "v2/Apps/Artist/Components/StyledLink"
 import { AnalyticsSchema } from "v2/Artsy"
@@ -18,6 +9,7 @@ import { createFragmentContainer } from "react-relay"
 import { graphql } from "relay-runtime"
 import styled from "styled-components"
 import { Media } from "v2/Utils/Responsive"
+import { ResponsiveImageDeprecated } from "v2/Components/ResponsiveImageDeprecated"
 
 interface FeaturedArticlesProps {
   featured_article_id: string
@@ -58,7 +50,7 @@ const FeaturedArticles: React.FC<FeaturedArticlesProps> = props => {
               onClick={() => trackClick(firstArticle.href)}
             >
               {firstArticleImage && (
-                <ResponsiveImage
+                <ResponsiveImageDeprecated
                   src={firstArticle.thumbnailImage.cropped.url}
                   ratio={firstArticleImage.height / firstArticleImage.width}
                 />

@@ -1,8 +1,9 @@
-import { Box, Flex, ResponsiveImage, Sans, Serif } from "@artsy/palette"
+import { Box, Flex, Sans, Serif } from "@artsy/palette"
 import { LotInfo_artwork } from "v2/__generated__/LotInfo_artwork.graphql"
 import { LotInfo_saleArtwork } from "v2/__generated__/LotInfo_saleArtwork.graphql"
 import React from "react"
 import { RelayProp, createFragmentContainer, graphql } from "react-relay"
+import { ResponsiveImageDeprecated } from "v2/Components/ResponsiveImageDeprecated"
 
 interface Props {
   artwork: LotInfo_artwork
@@ -17,7 +18,7 @@ export const LotInfo: React.FC<Props> = ({ artwork, saleArtwork }) => {
   return (
     <Flex py={4}>
       <Box maxWidth="150px" width="100%" height="auto" p={0}>
-        <ResponsiveImage src={artwork.imageUrl} />
+        <ResponsiveImageDeprecated src={artwork.imageUrl} />
       </Box>
       <Flex pl={3} pt={1} flexDirection="column">
         <Sans size="3" weight="medium" color="black100">
