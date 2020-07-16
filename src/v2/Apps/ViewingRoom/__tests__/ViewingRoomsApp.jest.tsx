@@ -1,21 +1,21 @@
-import React from "react"
-import { MockBoot, renderRelayTree } from "v2/DevTools"
-import ViewingRoomsApp from "../ViewingRoomsApp"
-import { graphql } from "react-relay"
-import { ViewingRoomsApp_Test_QueryRawResponse } from "v2/__generated__/ViewingRoomsApp_Test_Query.graphql"
-import { Breakpoint } from "@artsy/palette"
+// import React from "react"
+// import { MockBoot, renderRelayTree } from "v2/DevTools"
+// import ViewingRoomsApp from "../ViewingRoomsApp"
+// import { graphql } from "react-relay"
+// import { ViewingRoomsApp_Test_QueryRawResponse } from "v2/__generated__/ViewingRoomsApp_Test_Query.graphql"
+// import { Breakpoint } from "@artsy/palette"
 
-jest.unmock("react-relay")
-jest.mock("v2/Artsy/Router/useRouter", () => ({
-  useRouter: () => ({
-    match: {
-      params: {
-        slug: "subscription-demo-gg-guy-yanai",
-      },
-    },
-  }),
-  useIsRouteActive: () => false,
-}))
+// jest.unmock("react-relay")
+// jest.mock("v2/Artsy/Router/useRouter", () => ({
+//   useRouter: () => ({
+//     match: {
+//       params: {
+//         slug: "subscription-demo-gg-guy-yanai",
+//       },
+//     },
+//   }),
+//   useIsRouteActive: () => false,
+// }))
 
 // describe("ViewingRoomsApp", () => {
 //   describe("with viewing rooms", () => {

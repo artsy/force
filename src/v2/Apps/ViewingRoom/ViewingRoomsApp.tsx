@@ -42,7 +42,7 @@ export const ViewingRoomsAppFragmentContainer = createFragmentContainer(
   ViewingRoomsApp,
   {
     allViewingRooms: graphql`
-      fragment ViewingRoomsApp_allViewingRooms on ViewingRoomConnection {
+      fragment ViewingRoomsApp_allViewingRooms on Query
         @argumentDefinitions(
           count: { type: "Int" }
           after: { type: "String" }

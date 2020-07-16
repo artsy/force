@@ -135,7 +135,7 @@ export const ViewingRoomsLatestGridFragmentContainer = createPaginationContainer
   ViewingRoomsLatestGrid,
   {
     viewingRooms: graphql`
-      fragment ViewingRoomsLatestGrid_viewingRooms on viewingRooms
+      fragment ViewingRoomsLatestGrid_viewingRooms on Query
         @argumentDefinitions(
           count: { type: "Int" }
           after: { type: "String" }
