@@ -58,7 +58,7 @@ export const ConversationsFragmentContainer = createRefetchContainer(
     me: graphql`
       fragment Conversations_me on Me
         @argumentDefinitions(
-          first: { type: "Int", defaultValue: 10 }
+          first: { type: "Int", defaultValue: 25 }
           last: { type: "Int" }
           after: { type: "String" }
           before: { type: "String" }

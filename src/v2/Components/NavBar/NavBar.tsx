@@ -68,8 +68,15 @@ export const NavBar: React.FC = track(
     }
   }, [isMobile])
 
-  const handleMobileNavClick = () => {
-    toggleMobileNav(false)
+  const handleMobileNavClick = (
+    event: React.MouseEvent<HTMLElement, MouseEvent>
+  ) => {
+    const target = event.target as HTMLElement
+
+    // Only close MobileNav if the underlying tapped element is a link
+    if (target.parentNode instanceof HTMLAnchorElement) {
+      toggleMobileNav(false)
+    }
   }
 
   return (

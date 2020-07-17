@@ -40,10 +40,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/gemup/-/gemup-0.0.3.tgz#0397a472bb69432dab3d2d66ca30556815aa96e7"
   integrity sha512-W///stXDTz3jSQw8UtT0BClVk4DLOsVp7a8v12efsEZvrZNT+85YBqPWq2DP1EX3ILZR1hGZhbKr/Gl5uti56Q==
 
-"@artsy/palette@11.8.1":
-  version "11.8.1"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-11.8.1.tgz#e58ea99d78e0b656b1b9ac6265b4a5c49c457289"
-  integrity sha512-fMI+jAl1ATqjXcQAam2fXUa5Loff3lfKILYXDbAMV8tJdy4DCT0xG/znYlgLaiJvScO1x8DGdREcZiM3vhpPLw==
+"@artsy/palette@11.9.0":
+  version "11.9.0"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-11.9.0.tgz#ac0495178e6bfea685c16bcd85463df8da460ba1"
+  integrity sha512-q+bE97AJTMPHaLPrj1omwwg1MkTXaMm0I5qQoai6rDpUuX5XgOpZDu2vRk0PuZM2OVMlcsngBtWkTQAHchAiIQ==
   dependencies:
     "@styled-system/theme-get" "^5.1.2"
     babel-plugin-styled-components "^1.10.0"
@@ -21734,10 +21734,10 @@ typescript-template-language-service-decorator@^2.2.0:
   resolved "https://registry.yarnpkg.com/typescript-template-language-service-decorator/-/typescript-template-language-service-decorator-2.2.0.tgz#4ee6d580f307fb9239978e69626f2775b8a59b2a"
   integrity sha512-xiolqt1i7e22rpqMaprPgSFVgU64u3b9n6EJlAaUYE61jumipKAdI1+O5khPlWslpTUj80YzjUKjJ2jxT0D74w==
 
-typescript@3.9.6:
-  version "3.9.6"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.9.6.tgz#8f3e0198a34c3ae17091b35571d3afd31999365a"
-  integrity sha512-Pspx3oKAPJtjNwE92YS05HQoY7z2SFyOpHo9MqJor3BXAGNaPUs83CuVp9VISFkSjyRfiTpmKuAYGJB7S7hOxw==
+typescript@3.9.7:
+  version "3.9.7"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.9.7.tgz#98d600a5ebdc38f40cb277522f12dc800e9e25fa"
+  integrity sha512-BLbiRkiBzAwsjut4x/dsibSTB6yWpwT5qWmC2OfuCg3GgVQCSgMs4vEctYPhsaGtd0AeuuHMkjZ2h2WG8MSzRw==
 
 ua-parser-js@0.7.19, ua-parser-js@^0.7.18:
   version "0.7.19"
