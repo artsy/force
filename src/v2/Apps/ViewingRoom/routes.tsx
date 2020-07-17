@@ -20,8 +20,10 @@ export const routes: RouteConfig[] = [
     },
     query: graphql`
       query routes_ViewingRoomsAppQuery($count: Int!, $after: String) {
-        ...ViewingRoomsApp_allViewingRooms
-          @arguments(count: $count, after: $after)
+        allViewingRooms: viewer {
+          ...ViewingRoomsApp_allViewingRooms
+            @arguments(count: $count, after: $after)
+        }
 
         featuredViewingRooms: viewingRooms(featured: true) {
           ...ViewingRoomsApp_featuredViewingRooms

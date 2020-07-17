@@ -3,7 +3,7 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ViewingRoomsLatestGrid_viewingRooms = {
-    readonly viewingRooms: {
+    readonly viewingRoomsConnection: {
         readonly edges: ReadonlyArray<{
             readonly node: {
                 readonly slug: string;
@@ -50,7 +50,7 @@ var v0 = [
 return {
   "kind": "Fragment",
   "name": "ViewingRoomsLatestGrid_viewingRooms",
-  "type": "Query",
+  "type": "Viewer",
   "metadata": {
     "connection": [
       {
@@ -58,7 +58,7 @@ return {
         "cursor": "after",
         "direction": "forward",
         "path": [
-          "viewingRooms"
+          "viewingRoomsConnection"
         ]
       }
     ]
@@ -80,8 +80,8 @@ return {
   "selections": [
     {
       "kind": "LinkedField",
-      "alias": "viewingRooms",
-      "name": "__ViewingRoomsLatestGrid_viewingRooms_connection",
+      "alias": "viewingRoomsConnection",
+      "name": "__ViewingRoomsLatestGrid_viewingRoomsConnection_connection",
       "storageKey": null,
       "args": null,
       "concreteType": "ViewingRoomConnection",
@@ -296,5 +296,5 @@ return {
   ]
 };
 })();
-(node as any).hash = '025d79be76418b0283592d200cd9d2a6';
+(node as any).hash = '2f56f2a39d4bba121a522191698787ba';
 export default node;

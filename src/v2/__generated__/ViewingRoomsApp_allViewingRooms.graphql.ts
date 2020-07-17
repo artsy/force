@@ -17,7 +17,7 @@ export type ViewingRoomsApp_allViewingRooms$key = {
 const node: ReaderFragment = {
   "kind": "Fragment",
   "name": "ViewingRoomsApp_allViewingRooms",
-  "type": "Query",
+  "type": "Viewer",
   "metadata": null,
   "argumentDefinitions": [
     {
@@ -52,5 +52,5 @@ const node: ReaderFragment = {
     }
   ]
 };
-(node as any).hash = '1fe4d12b3ecb2377ba2c4629ababb30f';
+(node as any).hash = 'bac462a0b1f43ecffedeb54a49be7a86';
 export default node;
