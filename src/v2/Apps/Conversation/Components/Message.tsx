@@ -78,6 +78,7 @@ export const Attachment: React.FC<AttachmentProps> = props => {
             src={attachment.downloadURL}
             alt={attachment.fileName}
             width="100%"
+            height="100%"
           />
         ) : (
           <>
