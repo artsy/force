@@ -5,10 +5,34 @@ import React from "react"
 import styled from "styled-components"
 import { DropDownSection } from "./DropDownSection"
 import { Menu, MenuItem } from "v2/Components/Menu"
+import { MenuData } from "../../menuData"
+
+const LinkMenuItem = styled(MenuItem).attrs({
+  px: 1,
+  py: 0.5,
+  color: "black60",
+  variant: "text",
+  hasLighterTextColor: true,
+})``
+
+LinkMenuItem.displayName = "LinkMenuItem"
+
+const ViewAllMenuItem = styled(LinkMenuItem).attrs({
+  color: "black100",
+})`
+  margin-top: auto;
+  text-decoration: underline;
+`
+
+ViewAllMenuItem.displayName = "ViewAllMenuItem"
+
+const Links = styled(Box)`
+  border-right: 1px solid ${color("black10")};
+`
 
 interface DropDownNavMenuProps {
   width?: string
-  menu: any
+  menu: MenuData
   contextModule: ContextModule
   onClick?: () => void
 }
@@ -20,10 +44,6 @@ export const DropDownNavMenu: React.FC<DropDownNavMenuProps> = ({
   onClick,
 }) => {
   const { trackEvent } = useTracking()
-  const viewAllTopMargin = {
-    HeaderArtworksDropdown: "120px",
-    HeaderArtistsDropdown: "80px",
-  }
 
   const handleClick = event => {
     const link = event.target
@@ -45,36 +65,34 @@ export const DropDownNavMenu: React.FC<DropDownNavMenuProps> = ({
   return (
     <Menu onClick={handleClick} width={width} py={0}>
       <Flex justifyContent="center">
-        <SimpleLinksContainer
-          py={3}
-          mr={[3, 3, 3, "50px"]}
-          viewAllTopMargin={viewAllTopMargin[contextModule]}
-        >
-          <Box mr={[1, 1, 2, 2]} width={[110, 110, 110, 135, 170]}>
-            {menu.links.map(menuItem => {
-              if (!menuItem.menu) {
-                return (
-                  <MenuItemContainer key={menuItem.text}>
-                    <MenuItem
-                      px={1}
-                      py={0.5}
-                      href={menuItem.href}
-                      textColor={color("black60")}
-                      textWeight="regular"
-                      fontSize="3t"
-                      hasLighterTextColor
-                    >
-                      {menuItem.text}
-                    </MenuItem>
-                  </MenuItemContainer>
+        <Links py={3} mr={[3, 3, 3, "50px"]}>
+          <Box
+            display="flex"
+            flexDirection="column"
+            height="100%"
+            mr={[1, 1, 2, 2]}
+            width={[110, 110, 110, 135, 170]}
+          >
+            {menu.links.map((menuItem, i) => {
+              if (!("menu" in menuItem)) {
+                const isLast = menu.links.length - 1 === i
+
+                return isLast ? (
+                  <ViewAllMenuItem key={menuItem.text}>
+                    {menuItem.text}
+                  </ViewAllMenuItem>
+                ) : (
+                  <LinkMenuItem key={menuItem.text} href={menuItem.href}>
+                    {menuItem.text}
+                  </LinkMenuItem>
                 )
               }
             })}
           </Box>
-        </SimpleLinksContainer>
+        </Links>
 
         {menu.links.map(subMenu => {
-          if (subMenu.menu) {
+          if ("menu" in subMenu) {
             return <DropDownSection key={subMenu.text} section={subMenu} />
           }
         })}
@@ -82,18 +100,3 @@ export const DropDownNavMenu: React.FC<DropDownNavMenuProps> = ({
     </Menu>
   )
 }
-
-export const MenuItemContainer = styled(Box)``
-
-const SimpleLinksContainer = styled(Box)<{ viewAllTopMargin: string }>`
-  border-right: 1px solid ${color("black10")};
-  ${MenuItemContainer} {
-    &:last-child {
-      margin-top: ${p => p.viewAllTopMargin};
-      text-decoration: underline;
-      div div {
-        color: ${color("black100")};
-      }
-    }
-  }
-`

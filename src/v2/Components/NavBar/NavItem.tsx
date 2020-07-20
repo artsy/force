@@ -4,7 +4,7 @@ import {
   Clickable,
   Flex,
   Link,
-  Sans,
+  Text,
   color,
 } from "@artsy/palette"
 import { AnalyticsSchema } from "v2/Artsy"
@@ -110,7 +110,7 @@ export const NavItem: React.FC<NavItemProps> = ({
 
   const showMenu = Boolean(Menu && isVisible)
   const showOverlay = Boolean(Overlay)
-  const color = isVisible ? "purple100" : "black80"
+  const color = isVisible ? "purple100" : "black100"
 
   const getAnimation = (hover: boolean) => ({
     opacity: hover ? 0 : 1,
@@ -225,7 +225,7 @@ export const NavItem: React.FC<NavItemProps> = ({
         aria-label={label}
       >
         {!!Menu && href && <UnfocusableAnchor to={href} />}
-        <Sans size="3" weight="medium" color={color}>
+        <Text variant="text" lineHeight="solid" color={color}>
           <NavItemInner height={25}>
             {isFunction(navItemLabel)
               ? // NavItem children can be called as renderProps so that contents
@@ -234,7 +234,7 @@ export const NavItem: React.FC<NavItemProps> = ({
                 navItemLabel({ hover: isVisible })
               : navItemLabel}
           </NavItemInner>
-        </Sans>
+        </Text>
       </HitArea>
 
       {showMenu && (

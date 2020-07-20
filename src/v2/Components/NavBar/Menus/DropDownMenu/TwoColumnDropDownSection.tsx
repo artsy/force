@@ -1,4 +1,4 @@
-import { Box, Flex, Sans, color } from "@artsy/palette"
+import { Box, Flex, Sans } from "@artsy/palette"
 import { MenuLinkData, SimpleLinkData } from "v2/Components/NavBar/menuData"
 import React from "react"
 
@@ -33,9 +33,7 @@ export const TwoColumnDropDownSection: React.FC<TwoColumnDropDownSectionProps> =
                 px={1}
                 py={0.5}
                 href={menuItem.href}
-                textColor={color("black60")}
-                textWeight="regular"
-                fontSize="3t"
+                color="black60"
                 hasLighterTextColor
               >
                 {menuItem.text}
@@ -52,9 +50,7 @@ export const TwoColumnDropDownSection: React.FC<TwoColumnDropDownSectionProps> =
                 px={1}
                 py={0.5}
                 href={menuItem.href}
-                textColor={color("black60")}
-                textWeight="regular"
-                fontSize="3t"
+                color="black60"
                 hasLighterTextColor
               >
                 {menuItem.text}

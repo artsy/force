@@ -1,5 +1,5 @@
 import { SearchBarTestQueryRawResponse } from "v2/__generated__/SearchBarTestQuery.graphql"
-import Input from "v2/Components/Input"
+import { Input } from "@artsy/palette"
 import {
   SearchBarRefetchContainer as SearchBar,
   getSearchTerm,
@@ -102,10 +102,7 @@ describe("SearchBar", () => {
       writable: true,
       value: { assign: jest.fn() },
     })
-    component
-      .find(SuggestionItem)
-      .at(0)
-      .simulate("click")
+    component.find(SuggestionItem).at(0).simulate("click")
 
     expect(window.location.assign).toHaveBeenCalledWith("/cat/percy-z")
   })

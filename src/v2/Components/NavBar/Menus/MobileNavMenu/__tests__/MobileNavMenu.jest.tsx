@@ -1,6 +1,6 @@
 import { SystemContextProvider } from "v2/Artsy"
 import { useTracking } from "v2/Artsy/Analytics/useTracking"
-import { SimpleLinkData, menuData } from "v2/Components/NavBar/menuData"
+import { MENU_DATA, SimpleLinkData } from "v2/Components/NavBar/menuData"
 import { mount } from "enzyme"
 import React from "react"
 import {
@@ -25,7 +25,7 @@ describe("MobileNavMenu", () => {
   const getWrapper = props => {
     return mount(
       <SystemContextProvider mediator={mediator} user={props.user}>
-        <MobileNavMenu isOpen menuData={menuData} onClose={noop} />
+        <MobileNavMenu isOpen onClose={noop} />
       </SystemContextProvider>
     )
   }
@@ -76,7 +76,7 @@ describe("MobileNavMenu", () => {
 
       const simpleLinks = linkContainer.children(MobileLink)
       expect(simpleLinks.length).toBe(8)
-      ;(menuData.links as SimpleLinkData[])
+      ;(MENU_DATA.links as SimpleLinkData[])
         .slice(2)
         .map(({ href, text }, index) => {
           const simpleLink = simpleLinks.at(index)

@@ -1,7 +1,7 @@
-import { Box, Flex, Link, Sans, Serif, color } from "@artsy/palette"
+import { Box, Flex, Link, Text, color } from "@artsy/palette"
 import match from "autosuggest-highlight/match"
 import parse from "autosuggest-highlight/parse"
-import React, { SFC } from "react"
+import React from "react"
 import styled from "styled-components"
 
 interface Props {
@@ -12,7 +12,7 @@ interface Props {
   query: string
 }
 
-export const FirstSuggestionItem: SFC<Props> = props => {
+export const FirstSuggestionItem: React.FC<Props> = props => {
   const { href, isHighlighted, query } = props
   const boxStyle = {
     borderBottom: `1px solid ${color("black10")}`,
@@ -27,7 +27,9 @@ export const FirstSuggestionItem: SFC<Props> = props => {
             flexGrow={1}
             justifyContent="center"
           >
-            See full results for "{query}"
+            <Text variant="text">
+              See full results for &ldquo;{query}&rdquo;
+            </Text>
           </InnerWrapper>
         </SuggestionWrapper>
       </Link>
@@ -35,7 +37,7 @@ export const FirstSuggestionItem: SFC<Props> = props => {
   )
 }
 
-export const SuggestionItem: SFC<Props> = props => {
+export const SuggestionItem: React.FC<Props> = props => {
   const { href, isHighlighted } = props
 
   return (
@@ -78,15 +80,16 @@ const DefaultSuggestion = ({ display, label, query }) => {
 
   return (
     <>
-      <SuggestionTitle size="3">{partTags}</SuggestionTitle>
-      <Sans color={color("black60")} size="2">
+      <SuggestionTitle variant="text">{partTags}</SuggestionTitle>
+
+      <Text color="black60" variant="small">
         {label}
-      </Sans>
+      </Text>
     </>
   )
 }
 
-const SuggestionTitle = styled(Serif)`
+const SuggestionTitle = styled(Text)`
   overflow: hidden;
   text-overflow: ellipsis;
 `

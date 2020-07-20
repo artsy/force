@@ -1,10 +1,10 @@
 import { MenuItem } from "v2/Components/Menu"
 import { ContextModule } from "v2/Artsy"
 import { useTracking } from "v2/Artsy/Analytics/useTracking"
-import { MenuLinkData, menuData } from "v2/Components/NavBar/menuData"
+import { ARTWORKS_SUBMENU_DATA } from "v2/Components/NavBar/menuData"
 import { mount } from "enzyme"
 import React from "react"
-import { DropDownNavMenu, MenuItemContainer } from "../DropDownMenu"
+import { DropDownNavMenu } from "../DropDownMenu"
 import { DropDownSection } from "../DropDownSection"
 
 jest.mock("v2/Artsy/Analytics/useTracking")
@@ -15,7 +15,7 @@ describe("DropDownMenu", () => {
   const getWrapper = (passedProps = {}) => {
     return mount(
       <DropDownNavMenu
-        menu={(menuData.links[0] as MenuLinkData).menu}
+        menu={ARTWORKS_SUBMENU_DATA.menu}
         contextModule={ContextModule.HeaderArtworksDropdown}
         {...passedProps}
       />
@@ -34,13 +34,17 @@ describe("DropDownMenu", () => {
 
   it("renders simple links", () => {
     const wrapper = getWrapper()
-    const menuItemContainers = wrapper.find(MenuItemContainer)
+    const linkMenuItems = wrapper.find("LinkMenuItem")
+    const viewAllMenuItems = wrapper.find("ViewAllMenuItem")
 
-    expect(menuItemContainers.length).toBe(5)
-    expect(menuItemContainers.at(0).text()).toContain("New this Week")
-    expect(menuItemContainers.at(1).text()).toContain("Trending this Month")
-    expect(menuItemContainers.at(2).text()).toContain("Exclusively on Artsy")
-    expect(menuItemContainers.at(3).text()).toContain("Closing Soon")
+    expect(linkMenuItems.length).toBe(4)
+    expect(linkMenuItems.at(0).text()).toContain("New this Week")
+    expect(linkMenuItems.at(1).text()).toContain("Trending this Month")
+    expect(linkMenuItems.at(2).text()).toContain("Exclusively on Artsy")
+    expect(linkMenuItems.at(3).text()).toContain("Closing Soon")
+
+    expect(viewAllMenuItems.length).toBe(1)
+    expect(viewAllMenuItems.at(0).text()).toContain("View all artworks")
   })
 
   it("renders correct number of DropDownSection links", () => {
