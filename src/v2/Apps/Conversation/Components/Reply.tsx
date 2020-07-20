@@ -1,7 +1,7 @@
 import { Button, Dialog, Flex, FlexProps, color, media } from "@artsy/palette"
 import { Conversation_conversation } from "v2/__generated__/Conversation_conversation.graphql"
 import React, { useRef, useState } from "react"
-import { Environment } from "react-relay"
+import { Environment, RelayRefetchProps } from "react-relay"
 import styled from "styled-components"
 import { SendConversationMessage } from "../Mutation/SendConversationMessage"
 import { useTracking } from "v2/Artsy/Analytics"
@@ -42,6 +42,7 @@ interface ReplyProps {
   conversation: Conversation_conversation
   environment: Environment
   onScroll?: () => void
+  refetch: RelayRefetchProps["refetch"]
 }
 
 export const Reply: React.FC<ReplyProps> = props => {
@@ -80,6 +81,7 @@ export const Reply: React.FC<ReplyProps> = props => {
               impulseMessageId: internalID,
             })
           )
+          props.refetch({ conversationID: conversation.internalID }, {})
         },
         _error => {
           setLoading(false)
