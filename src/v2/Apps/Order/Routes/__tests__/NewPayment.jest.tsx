@@ -16,6 +16,7 @@ import {
 } from "../__fixtures__/MutationResults"
 import { NewPaymentFragmentContainer } from "../NewPayment"
 import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
+import { GlobalData } from "sharify"
 
 jest.unmock("react-tracking")
 jest.unmock("react-relay")
@@ -48,14 +49,10 @@ const testOrder: NewPaymentTestQueryRawResponse["order"] = {
   ...OfferOrderWithShippingDetails,
   internalID: "1234",
   state: "SUBMITTED",
-  stateExpiresAt: DateTime.fromISO(NOW)
-    .plus({ days: 1 })
-    .toString(),
+  stateExpiresAt: DateTime.fromISO(NOW).plus({ days: 1 }).toString(),
   lastOffer: {
     ...OfferWithTotals,
-    createdAt: DateTime.fromISO(NOW)
-      .minus({ days: 1 })
-      .toString(),
+    createdAt: DateTime.fromISO(NOW).minus({ days: 1 }).toString(),
   },
 }
 
@@ -66,7 +63,7 @@ describe("Payment", () => {
       return { handleCardAction }
     }
 
-    window.sd = { STRIPE_PUBLISHABLE_KEY: "" }
+    window.sd = { STRIPE_PUBLISHABLE_KEY: "" } as GlobalData
   })
   const { buildPage, mutations, routes } = createTestEnv({
     Component: NewPaymentFragmentContainer,
