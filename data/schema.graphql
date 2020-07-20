@@ -7302,6 +7302,7 @@ type Query {
     first: Int
     ids: [String]
     last: Int
+    respectParamsOrder: Boolean = false
   ): ArtworkConnection
     @deprecated(
       reason: "This is only for use in resolving stitched queries, not for first-class client use."
@@ -9387,6 +9388,7 @@ type Viewer {
     first: Int
     ids: [String]
     last: Int
+    respectParamsOrder: Boolean = false
   ): ArtworkConnection
     @deprecated(
       reason: "This is only for use in resolving stitched queries, not for first-class client use."
