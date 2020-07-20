@@ -10,6 +10,7 @@ import { ArtistSeriesHeaderFragmentContainer as ArtistSeriesHeader } from "./Com
 import { ArtistSeriesArtworksFilterRefetchContainer as ArtistSeriesArtworksFilter } from "./Components/ArtistSeriesArtworksFilter"
 import { userHasLabFeature } from "v2/Utils/user"
 import { ErrorPage } from "v2/Components/ErrorPage"
+import { ArtistSeriesRailFragmentContainer as OtherArtistSeriesRail } from "./Components/OtherArtistSeries/ArtistSeriesRail"
 
 interface ArtistSeriesAppProps {
   artistSeries: ArtistSeriesApp_artistSeries
@@ -19,12 +20,15 @@ const ArtistSeriesApp: React.FC<ArtistSeriesAppProps> = ({ artistSeries }) => {
   const { user } = React.useContext(SystemContext)
   const isEnabled = userHasLabFeature(user, "Artist Series")
 
-  if (isEnabled) {
+  if (isEnabled && artistSeries) {
+    const { railArtist } = artistSeries
     return (
       <AppContainer maxWidth="100%">
         <ArtistSeriesHeader artistSeries={artistSeries} />
         <Box m={3}>
           <ArtistSeriesArtworksFilter artistSeries={artistSeries} />
+          <Separator mt={6} mb={3} />
+          <OtherArtistSeriesRail artist={railArtist} />
           <Separator mt={6} mb={3} />
           <Footer />
         </Box>
@@ -59,6 +63,9 @@ export default createFragmentContainer(ArtistSeriesApp, {
         width: { type: "String" }
       ) {
       ...ArtistSeriesHeader_artistSeries
+      railArtist: artists(size: 1) {
+        ...ArtistSeriesRail_artist
+      }
       ...ArtistSeriesArtworksFilter_artistSeries
         @arguments(
           acquireable: $acquireable
