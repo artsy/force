@@ -2,7 +2,11 @@ import { Box, Flex, Image, Link, Sans, Spacer, color } from "@artsy/palette"
 import { Conversation_conversation } from "v2/__generated__/Conversation_conversation.graphql"
 import { DateTime } from "luxon"
 import React, { useEffect, useRef } from "react"
-import { RelayProp, createFragmentContainer } from "react-relay"
+import {
+  RelayProp,
+  RelayRefetchProp,
+  createFragmentContainer,
+} from "react-relay"
 import { graphql } from "relay-runtime"
 import { MessageFragmentContainer as Message } from "./Message"
 import { Reply } from "./Reply"
@@ -134,6 +138,7 @@ const groupMessages = (messages: Message[]): Message[][] => {
 export interface ConversationProps {
   conversation: Conversation_conversation
   relay: RelayProp
+  refetch: RelayRefetchProp["refetch"]
 }
 
 const Conversation: React.FC<ConversationProps> = props => {
@@ -225,6 +230,7 @@ const Conversation: React.FC<ConversationProps> = props => {
       <Reply
         onScroll={scrollToBottom}
         conversation={conversation}
+        refetch={props.refetch}
         environment={relay.environment}
       />
     </NoScrollFlex>
