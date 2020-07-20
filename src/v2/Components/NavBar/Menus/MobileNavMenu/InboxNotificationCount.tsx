@@ -21,8 +21,8 @@ const FloatingDot = styled(Flex)`
   align-items: center;
   justify-content: center;
   position: absolute;
-  top: 16px;
-  left: 19px;
+  top: 11px;
+  left: 25px;
 `
 
 export const InboxNotificationCount: React.FC<
