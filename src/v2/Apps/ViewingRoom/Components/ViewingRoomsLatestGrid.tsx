@@ -22,7 +22,7 @@ export interface ViewingRoomsLatestGridProps {
   viewingRooms: ViewingRoomsLatestGrid_viewingRooms
 }
 
-const getTagProps = (
+export const getTagProps = (
   status: string,
   distanceToOpen: string | null,
   distanceToClose: string | null

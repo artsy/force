@@ -1,10 +1,19 @@
 import React, { useState } from "react"
-import { Box, Flex, ProgressBar, Sans, breakpoints } from "@artsy/palette"
+import {
+  Box,
+  Flex,
+  MediumCard,
+  ProgressBar,
+  Sans,
+  Spacer,
+  breakpoints,
+} from "@artsy/palette"
 import { Carousel } from "v2/Components/Carousel"
 import { ViewingRoomsFeaturedRail_featuredViewingRooms } from "v2/__generated__/ViewingRoomsFeaturedRail_featuredViewingRooms.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 import { flowRight } from "lodash"
 import { Arrow } from "../Routes/Works/Components/ViewingRoomCarousel"
+import { getTagProps } from "../Components/ViewingRoomsLatestGrid"
 
 interface ViewingRoomsFeaturedRailProps {
   featuredViewingRooms: ViewingRoomsFeaturedRail_featuredViewingRooms
@@ -51,8 +60,23 @@ export const ViewingRoomsFeaturedRail: React.FC<ViewingRoomsFeaturedRailProps> =
               data={featuredViewingRoomsForRail}
               height={CarouselHeight}
               onDragEnd={({ flickity }) => update(flickity.selectedIndex)}
-              render={({ title }) => {
-                return <Sans size="5t">{title}</Sans>
+              render={({
+                heroImageURL,
+                title,
+                partner,
+                status,
+                distanceToOpen,
+                distanceToClose,
+              }) => {
+                const tag = getTagProps(status, distanceToOpen, distanceToClose)
+                return (
+                  <MediumCard
+                    image={heroImageURL}
+                    title={title}
+                    subtitle={partner.name}
+                    tag={tag}
+                  />
+                )
               }}
               renderLeftArrow={({ currentSlideIndex, flickity }) => {
                 const opacity = currentSlideIndex === 0 ? 0 : 1
@@ -107,6 +131,7 @@ export const ViewingRoomsFeaturedRailFragmentContainer = createFragmentContainer
       fragment ViewingRoomsFeaturedRail_featuredViewingRooms on ViewingRoomConnection {
         edges {
           node {
+            status
             slug
             title
             heroImageURL

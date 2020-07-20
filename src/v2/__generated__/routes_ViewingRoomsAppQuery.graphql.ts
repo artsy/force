@@ -45,6 +45,7 @@ fragment ViewingRoomsApp_featuredViewingRooms on ViewingRoomConnection {
 fragment ViewingRoomsFeaturedRail_featuredViewingRooms on ViewingRoomConnection {
   edges {
     node {
+      status
       slug
       title
       heroImageURL
@@ -141,46 +142,53 @@ v4 = {
 v5 = {
   "kind": "ScalarField",
   "alias": null,
-  "name": "title",
+  "name": "status",
   "args": null,
   "storageKey": null
 },
 v6 = {
   "kind": "ScalarField",
   "alias": null,
+  "name": "title",
+  "args": null,
+  "storageKey": null
+},
+v7 = {
+  "kind": "ScalarField",
+  "alias": null,
   "name": "heroImageURL",
   "args": null,
   "storageKey": null
 },
-v7 = [
+v8 = [
   {
     "kind": "Literal",
     "name": "short",
     "value": true
   }
 ],
-v8 = {
-  "kind": "ScalarField",
-  "alias": null,
-  "name": "distanceToOpen",
-  "args": (v7/*: any*/),
-  "storageKey": "distanceToOpen(short:true)"
-},
 v9 = {
   "kind": "ScalarField",
   "alias": null,
-  "name": "distanceToClose",
-  "args": (v7/*: any*/),
-  "storageKey": "distanceToClose(short:true)"
+  "name": "distanceToOpen",
+  "args": (v8/*: any*/),
+  "storageKey": "distanceToOpen(short:true)"
 },
 v10 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "distanceToClose",
+  "args": (v8/*: any*/),
+  "storageKey": "distanceToClose(short:true)"
+},
+v11 = {
   "kind": "ScalarField",
   "alias": null,
   "name": "id",
   "args": null,
   "storageKey": null
 },
-v11 = {
+v12 = {
   "kind": "LinkedField",
   "alias": null,
   "name": "partner",
@@ -196,7 +204,7 @@ v11 = {
       "args": null,
       "storageKey": null
     },
-    (v10/*: any*/)
+    (v11/*: any*/)
   ]
 };
 return {
@@ -291,18 +299,12 @@ return {
                     "plural": false,
                     "selections": [
                       (v4/*: any*/),
-                      {
-                        "kind": "ScalarField",
-                        "alias": null,
-                        "name": "status",
-                        "args": null,
-                        "storageKey": null
-                      },
                       (v5/*: any*/),
                       (v6/*: any*/),
-                      (v8/*: any*/),
+                      (v7/*: any*/),
                       (v9/*: any*/),
-                      (v11/*: any*/),
+                      (v10/*: any*/),
+                      (v12/*: any*/),
                       {
                         "kind": "LinkedField",
                         "alias": null,
@@ -380,7 +382,7 @@ return {
                                       }
                                     ]
                                   },
-                                  (v10/*: any*/)
+                                  (v11/*: any*/)
                                 ]
                               }
                             ]
@@ -470,12 +472,13 @@ return {
                 "concreteType": "ViewingRoom",
                 "plural": false,
                 "selections": [
-                  (v4/*: any*/),
                   (v5/*: any*/),
+                  (v4/*: any*/),
                   (v6/*: any*/),
-                  (v8/*: any*/),
+                  (v7/*: any*/),
                   (v9/*: any*/),
-                  (v11/*: any*/)
+                  (v10/*: any*/),
+                  (v12/*: any*/)
                 ]
               }
             ]
@@ -488,7 +491,7 @@ return {
     "operationKind": "query",
     "name": "routes_ViewingRoomsAppQuery",
     "id": null,
-    "text": "query routes_ViewingRoomsAppQuery(\n  $count: Int!\n  $after: String\n) {\n  allViewingRooms: viewer {\n    ...ViewingRoomsApp_allViewingRooms_2QE1um\n  }\n  featuredViewingRooms: viewingRooms(featured: true) {\n    ...ViewingRoomsApp_featuredViewingRooms\n  }\n}\n\nfragment ViewingRoomsApp_allViewingRooms_2QE1um on Viewer {\n  ...ViewingRoomsLatestGrid_viewingRooms_2QE1um\n}\n\nfragment ViewingRoomsApp_featuredViewingRooms on ViewingRoomConnection {\n  ...ViewingRoomsFeaturedRail_featuredViewingRooms\n}\n\nfragment ViewingRoomsFeaturedRail_featuredViewingRooms on ViewingRoomConnection {\n  edges {\n    node {\n      slug\n      title\n      heroImageURL\n      distanceToOpen(short: true)\n      distanceToClose(short: true)\n      partner {\n        name\n        id\n      }\n    }\n  }\n}\n\nfragment ViewingRoomsLatestGrid_viewingRooms_2QE1um on Viewer {\n  viewingRoomsConnection(first: $count, after: $after) {\n    edges {\n      node {\n        slug\n        status\n        title\n        heroImageURL\n        distanceToOpen(short: true)\n        distanceToClose(short: true)\n        partner {\n          name\n          id\n        }\n        artworksConnection(first: 2) {\n          totalCount\n          edges {\n            node {\n              image {\n                square: url(version: \"square\")\n                regular: url(version: \"large\")\n              }\n              id\n            }\n          }\n        }\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n",
+    "text": "query routes_ViewingRoomsAppQuery(\n  $count: Int!\n  $after: String\n) {\n  allViewingRooms: viewer {\n    ...ViewingRoomsApp_allViewingRooms_2QE1um\n  }\n  featuredViewingRooms: viewingRooms(featured: true) {\n    ...ViewingRoomsApp_featuredViewingRooms\n  }\n}\n\nfragment ViewingRoomsApp_allViewingRooms_2QE1um on Viewer {\n  ...ViewingRoomsLatestGrid_viewingRooms_2QE1um\n}\n\nfragment ViewingRoomsApp_featuredViewingRooms on ViewingRoomConnection {\n  ...ViewingRoomsFeaturedRail_featuredViewingRooms\n}\n\nfragment ViewingRoomsFeaturedRail_featuredViewingRooms on ViewingRoomConnection {\n  edges {\n    node {\n      status\n      slug\n      title\n      heroImageURL\n      distanceToOpen(short: true)\n      distanceToClose(short: true)\n      partner {\n        name\n        id\n      }\n    }\n  }\n}\n\nfragment ViewingRoomsLatestGrid_viewingRooms_2QE1um on Viewer {\n  viewingRoomsConnection(first: $count, after: $after) {\n    edges {\n      node {\n        slug\n        status\n        title\n        heroImageURL\n        distanceToOpen(short: true)\n        distanceToClose(short: true)\n        partner {\n          name\n          id\n        }\n        artworksConnection(first: 2) {\n          totalCount\n          edges {\n            node {\n              image {\n                square: url(version: \"square\")\n                regular: url(version: \"large\")\n              }\n              id\n            }\n          }\n        }\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n",
     "metadata": {}
   }
 };

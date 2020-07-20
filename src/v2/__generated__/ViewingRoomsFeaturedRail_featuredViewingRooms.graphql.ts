@@ -5,6 +5,7 @@ import { FragmentRefs } from "relay-runtime";
 export type ViewingRoomsFeaturedRail_featuredViewingRooms = {
     readonly edges: ReadonlyArray<{
         readonly node: {
+            readonly status: string;
             readonly slug: string;
             readonly title: string;
             readonly heroImageURL: string | null;
@@ -58,6 +59,13 @@ return {
           "concreteType": "ViewingRoom",
           "plural": false,
           "selections": [
+            {
+              "kind": "ScalarField",
+              "alias": null,
+              "name": "status",
+              "args": null,
+              "storageKey": null
+            },
             {
               "kind": "ScalarField",
               "alias": null,
@@ -118,5 +126,5 @@ return {
   ]
 };
 })();
-(node as any).hash = '314197541bcc75891110db06a9a32898';
+(node as any).hash = 'b0db84fe428ac769d4f470ef6e09732f';
 export default node;
