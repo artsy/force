@@ -42,7 +42,7 @@ interface ReplyProps {
   conversation: Conversation_conversation
   environment: Environment
   onScroll?: () => void
-  relayRefetch: RelayRefetchProps
+  refetch: RelayRefetchProps["refetch"]
 }
 
 export const Reply: React.FC<ReplyProps> = props => {
@@ -81,10 +81,7 @@ export const Reply: React.FC<ReplyProps> = props => {
               impulseMessageId: internalID,
             })
           )
-          props.relayRefetch.refetch(
-            { conversationID: conversation.internalID },
-            {}
-          )
+          props.refetch({ conversationID: conversation.internalID }, {})
         },
         _error => {
           setLoading(false)

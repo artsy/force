@@ -4,7 +4,7 @@ import { DateTime } from "luxon"
 import React, { useEffect, useRef } from "react"
 import {
   RelayProp,
-  ReleyRefetchProp,
+  RelayRefetchProp,
   createFragmentContainer,
 } from "react-relay"
 import { graphql } from "relay-runtime"
@@ -138,7 +138,7 @@ const groupMessages = (messages: Message[]): Message[][] => {
 export interface ConversationProps {
   conversation: Conversation_conversation
   relay: RelayProp
-  relayRefetch: ReleyRefetchProp
+  refetch: RelayRefetchProp["refetch"]
 }
 
 const Conversation: React.FC<ConversationProps> = props => {
@@ -230,7 +230,7 @@ const Conversation: React.FC<ConversationProps> = props => {
       <Reply
         onScroll={scrollToBottom}
         conversation={conversation}
-        relayRefetch={props.relayRefetch}
+        refetch={props.refetch}
         environment={relay.environment}
       />
     </NoScrollFlex>

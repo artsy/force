@@ -78,7 +78,7 @@ export const ConversationRoute: React.FC<ConversationRouteProps> = props => {
           </Media>
           <Conversation
             conversation={me.conversation}
-            relayRefetch={props.relay}
+            refetch={props.relay.refetch}
           />
           <Details conversation={me.conversation} showDetails={showDetails} />
         </ConstrainedHeightFlex>
