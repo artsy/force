@@ -29,7 +29,6 @@ const ConstrainedHeightFlex = styled(Flex)`
     height: calc(100vh - 55px);
   `}
   & > * {
-    overflow-y: scroll;
     overflow-x: hidden;
   }
   & > .fresnel-greaterThan-xs {
@@ -75,8 +74,14 @@ export const ConversationRoute: React.FC<ConversationRouteProps> = props => {
               selectedConversationID={me.conversation.internalID}
             />
           </Media>
+
           <Conversation conversation={me.conversation} />
-          <Details conversation={me.conversation} showDetails={showDetails} />
+
+          <Details
+            conversation={me.conversation}
+            showDetails={showDetails}
+            setShowDetails={setShowDetails}
+          />
         </ConstrainedHeightFlex>
       </AppContainer>
     )
