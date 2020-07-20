@@ -1041,6 +1041,7 @@ type ArtistSeries {
     tagID: String
     width: String
   ): FilterArtworksConnection
+  forSaleArtworksCount: Int!
   image: Image
   imageHeight: Int
   imageURL: String
