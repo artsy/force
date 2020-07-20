@@ -15,6 +15,13 @@ export type UpdateMyProfileInput = {
     readonly phone?: string | null;
     readonly priceRangeMax?: number | null;
     readonly priceRangeMin?: number | null;
+    readonly receiveLotOpeningSoonNotification?: boolean | null;
+    readonly receiveNewSalesNotification?: boolean | null;
+    readonly receiveNewWorksNotification?: boolean | null;
+    readonly receiveOutbidNotification?: boolean | null;
+    readonly receivePromotionNotification?: boolean | null;
+    readonly receivePurchaseNotification?: boolean | null;
+    readonly receiveSaleOpeningClosingNotification?: boolean | null;
 };
 export type EditableLocation = {
     readonly address?: string | null;
