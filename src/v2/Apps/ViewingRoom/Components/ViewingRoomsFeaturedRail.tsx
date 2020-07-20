@@ -6,7 +6,6 @@ import {
   ProgressBar,
   Sans,
   Spacer,
-  breakpoints,
 } from "@artsy/palette"
 import { Carousel } from "v2/Components/Carousel"
 import { ViewingRoomsFeaturedRail_featuredViewingRooms } from "v2/__generated__/ViewingRoomsFeaturedRail_featuredViewingRooms.graphql"
@@ -43,11 +42,11 @@ export const ViewingRoomsFeaturedRail: React.FC<ViewingRoomsFeaturedRailProps> =
         <Box width="100%">
           <Flex
             height={CarouselHeight}
-            maxWidth={breakpoints.lg}
+            // maxWidth={breakpoints.lg}
             m="auto"
             my={2}
             position="relative"
-            justifyContent="center"
+            justifyContent="left"
           >
             <Carousel
               options={{
@@ -60,22 +59,28 @@ export const ViewingRoomsFeaturedRail: React.FC<ViewingRoomsFeaturedRailProps> =
               data={featuredViewingRoomsForRail}
               height={CarouselHeight}
               onDragEnd={({ flickity }) => update(flickity.selectedIndex)}
-              render={({
-                heroImageURL,
-                title,
-                partner,
-                status,
-                distanceToOpen,
-                distanceToClose,
-              }) => {
+              render={(
+                {
+                  heroImageURL,
+                  title,
+                  partner,
+                  status,
+                  distanceToOpen,
+                  distanceToClose,
+                },
+                slideIndex
+              ) => {
                 const tag = getTagProps(status, distanceToOpen, distanceToClose)
                 return (
-                  <MediumCard
-                    image={heroImageURL}
-                    title={title}
-                    subtitle={partner.name}
-                    tag={tag}
-                  />
+                  <Flex flexDirection="row">
+                    {slideIndex !== 0 && <Spacer ml="15px" />}
+                    <MediumCard
+                      image={heroImageURL}
+                      title={title}
+                      subtitle={partner.name}
+                      tag={tag}
+                    />
+                  </Flex>
                 )
               }}
               renderLeftArrow={({ currentSlideIndex, flickity }) => {
@@ -109,7 +114,6 @@ export const ViewingRoomsFeaturedRail: React.FC<ViewingRoomsFeaturedRailProps> =
               }}
             />
           </Flex>
-
           {showProgressBar && (
             <Box maxWidth={["100%", 470]} mx={[2, "auto"]}>
               <ProgressBar
