@@ -219,7 +219,7 @@ const Conversation: React.FC<ConversationProps> = props => {
     <NoScrollFlex flexDirection="column" width="100%">
       <MessageContainer>
         <Box>
-          <Spacer mt={["75px", 2]} />
+          <Spacer mt={["75px", "75px", 2]} />
           <Flex flexDirection="column" width="100%" px={1}>
             {inquiryItemBox}
             {messageGroups}

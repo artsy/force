@@ -32,7 +32,7 @@ const Conversations: React.FC<ConversationsProps> = props => {
     .indexOf(selectedConversationID)
 
   return (
-    <Container width={["100%", "375px"]}>
+    <Container width={["100%", "100%", "375px"]}>
       <Box>
         {conversations.map(edge => (
           <ConversationSnippet
