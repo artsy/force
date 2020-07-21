@@ -336,6 +336,7 @@
     "prettier": "2.0.5",
     "pug-loader": "2.4.0",
     "raw-loader": "0.5.1",
+    "react-stripe-elements": "2.0.1",
     "react-test-renderer": "16.8.6",
     "react-use-dimensions": "1.2.1",
     "relay-compiler": "7.1.0",

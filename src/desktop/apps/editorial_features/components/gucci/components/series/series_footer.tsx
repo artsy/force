@@ -1,5 +1,5 @@
 import React from "react"
-import { PartnerBlock, Text } from "reaction/Components/Publishing"
+import { PartnerBlock, Text } from "@artsy/reaction/dist/Components/Publishing"
 import { Box, Flex, Sans } from "@artsy/palette"
 import { Media } from "@artsy/reaction/dist/Utils/Responsive"
 

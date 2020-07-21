@@ -1,6 +1,6 @@
 import React, { Component } from "react"
-import { ArticleData } from "reaction/Components/Publishing/Typings"
-import { SystemContextProvider } from "reaction/Artsy"
+import { ArticleData } from "@artsy/reaction/dist/Components/Publishing/Typings"
+import { SystemContextProvider } from "@artsy/reaction/dist/Artsy"
 import { InfiniteScrollNewsArticle } from "desktop/apps/article/components/InfiniteScrollNewsArticle"
 import { data as sd } from "sharify"
 

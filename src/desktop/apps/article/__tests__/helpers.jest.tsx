@@ -7,13 +7,13 @@ import {
   SuperArticle,
   VideoArticle,
   VideoArticleUnpublished,
-} from "reaction/Components/Publishing/Fixtures/Articles"
+} from "@artsy/reaction/dist/Components/Publishing/Fixtures/Articles"
 import React from "react"
 import { NewsArticle } from "desktop/apps/article/components/NewsArticle"
-import { DisplayAd } from "reaction/Components/Publishing/Display/DisplayAd"
+import { DisplayAd } from "@artsy/reaction/dist/Components/Publishing/Display/DisplayAd"
 import { mount } from "enzyme"
 import { ArticleLayout } from "desktop/apps/article/components/layouts/Article"
-import { SystemContextProvider } from "reaction/Artsy"
+import { SystemContextProvider } from "@artsy/reaction/dist/Artsy"
 import {
   getBodyClass,
   getJsonLd,
