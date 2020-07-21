@@ -121,9 +121,9 @@ const ArtistSeriesHeaderLarge: React.FC<ArtistSeriesHeaderProps> = props => {
                 </Sans>
               </Flex>
             </Col>
-            <CenteredCol sm={6}>
+            <AlignedCol sm={6}>
               <HeaderImage src={resize(image.url, { height: 400 })} />
-            </CenteredCol>
+            </AlignedCol>
           </Row>
         </StyledGrid>
       </Box>
@@ -166,7 +166,7 @@ const StyledGrid = styled(Grid)`
   }
 `
 
-const HeaderImage = styled(Image)`
+export const HeaderImage = styled(Image)`
   border-radius: 2px;
 
   @media (max-width: ${theme.flexboxgrid.breakpoints.sm - 1}px) {
@@ -181,7 +181,7 @@ const HeaderImage = styled(Image)`
   }
 `
 
-const CenteredCol = styled(Col)`
+const AlignedCol = styled(Col)`
   display: flex;
   justify-content: flex-end;
   align-items: center;

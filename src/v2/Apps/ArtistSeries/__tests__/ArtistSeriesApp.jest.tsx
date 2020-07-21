@@ -5,6 +5,8 @@ import { graphql } from "react-relay"
 import { ArtistSeriesApp_QueryRawResponse } from "v2/__generated__/ArtistSeriesApp_Query.graphql"
 import { ArtistSeriesApp_UnfoundTest_QueryRawResponse } from "v2/__generated__/ArtistSeriesApp_UnfoundTest_Query.graphql"
 import { Breakpoint } from "@artsy/palette"
+import { HeaderImage } from "../Components/ArtistSeriesHeader"
+import { resize } from "v2/Utils/resizer"
 
 jest.unmock("react-relay")
 jest.mock("v2/Artsy/Router/useRouter", () => ({
@@ -55,6 +57,14 @@ describe("ArtistSeriesApp", () => {
         const wrapper = await getWrapper()
         expect(wrapper.find("AppContainer").length).toBe(1)
         expect(wrapper.find("ArtistSeriesHeader").length).toBe(1)
+        expect(wrapper.find("ArtistSeriesArtworksFilter").length).toBe(1)
+      })
+
+      describe("ArtistSeriesArtworksFilter", () => {
+        it("renders correctly", async () => {
+          const wrapper = await getWrapper()
+          expect(wrapper.find("ArtworkGrid").length).toBe(2)
+        })
       })
 
       describe("ArtistSeriesHeader", () => {
@@ -62,24 +72,19 @@ describe("ArtistSeriesApp", () => {
           describe("with an artist", () => {
             it("renders correctly", async () => {
               const wrapper = await getWrapper()
-              // TODO: expect(wrapper.find("ResponsiveImage").length).toBe(1)
               expect(wrapper.find("ArtistSeriesHeaderLarge").length).toBe(1)
               expect(wrapper.find("ArtistSeriesHeaderSmall").length).toBe(0)
               expect(wrapper.find("ArtistInfo").length).toBe(1)
-              expect(wrapper.find("FollowArtistButton").length).toBe(1)
-              expect(wrapper.find("ArtistSeriesArtworksFilter").length).toBe(1)
-              const html = wrapper.html()
-              expect(html).toContain("Pumpkins")
-              expect(html).toContain("All of the pumpkins")
-              expect(html).toContain("Yayoi Kusama")
-              expect(html).toContain("https://test.artsy.net/yayoi-kusama.jpg")
-              expect(html).toContain("/artist/yayoi-kusama")
-              expect(html).toContain(
-                "/artwork/yayoi-kusama-pumpkin-2222222222222222"
+              expect(wrapper.find(HeaderImage).length).toBe(1)
+            })
+
+            it("has a correctly sized header image", async () => {
+              const wrapper = await getWrapper()
+              const expectedUrl = resize(
+                ArtistSeriesAppFixture.artistSeries.image.url,
+                { height: 400 }
               )
-              expect(html).toContain(
-                "/artwork/yayoi-kusama-pumpkin-33333333333333333"
-              )
+              expect(wrapper.find(HeaderImage).props().src).toBe(expectedUrl)
             })
           })
 
@@ -99,24 +104,19 @@ describe("ArtistSeriesApp", () => {
           describe("with an artist", () => {
             it("renders correctly", async () => {
               const wrapper = await getWrapper("xs")
-              // TODO: expect(wrapper.find("ResponsiveImage").length).toBe(1)
               expect(wrapper.find("ArtistSeriesHeaderLarge").length).toBe(0)
               expect(wrapper.find("ArtistSeriesHeaderSmall").length).toBe(1)
               expect(wrapper.find("ArtistInfo").length).toBe(1)
-              expect(wrapper.find("FollowArtistButton").length).toBe(1)
-              expect(wrapper.find("ArtistSeriesArtworksFilter").length).toBe(1)
-              const html = wrapper.html()
-              expect(html).toContain("Pumpkins")
-              expect(html).toContain("All of the pumpkins")
-              expect(html).toContain("Yayoi Kusama")
-              expect(html).toContain("https://test.artsy.net/yayoi-kusama.jpg")
-              expect(html).toContain("/artist/yayoi-kusama")
-              expect(html).toContain(
-                "/artwork/yayoi-kusama-pumpkin-2222222222222222"
+              expect(wrapper.find(HeaderImage).length).toBe(1)
+            })
+
+            it("has a correctly sized header image", async () => {
+              const wrapper = await getWrapper("xs")
+              const expectedUrl = resize(
+                ArtistSeriesAppFixture.artistSeries.image.url,
+                { height: 180, width: 180 }
               )
-              expect(html).toContain(
-                "/artwork/yayoi-kusama-pumpkin-33333333333333333"
-              )
+              expect(wrapper.find(HeaderImage).props().src).toBe(expectedUrl)
             })
           })
 
@@ -177,6 +177,9 @@ const ArtistSeriesAppFixture: ArtistSeriesApp_QueryRawResponse = {
   artistSeries: {
     title: "Pumpkins",
     description: "All of the pumpkins",
+    image: {
+      url: "https://test.artsy.net/pumpkins-header-image.jpg",
+    },
     artists: [
       {
         name: "Yayoi Kusama",
