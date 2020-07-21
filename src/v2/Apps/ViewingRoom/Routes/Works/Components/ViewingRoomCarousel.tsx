@@ -14,12 +14,16 @@ interface ViewingRoomCarouselProps {
   items: any
   itemRender: any
   height: any
+  maxWidth?
+  justifyCarousel?
 }
 
 export const ViewingRoomCarousel: React.FC<ViewingRoomCarouselProps> = ({
   items,
   itemRender,
   height,
+  maxWidth,
+  justifyCarousel,
 }) => {
   const computeScrollPercent = selectedIndex =>
     ((selectedIndex + 1) / items.length) * 100
@@ -31,11 +35,11 @@ export const ViewingRoomCarousel: React.FC<ViewingRoomCarouselProps> = ({
     <Box width="100%">
       <Flex
         height={height}
-        maxWidth={breakpoints.lg}
+        maxWidth={maxWidth ? maxWidth : breakpoints.lg}
         m="auto"
         my={2}
         position="relative"
-        justifyContent="center"
+        justifyContent={justifyCarousel ? justifyCarousel : "center"}
       >
         <Carousel
           options={{
