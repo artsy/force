@@ -7,7 +7,16 @@ export type ViewingRoomWorksRoute_viewingRoom = {
         readonly edges: ReadonlyArray<{
             readonly node: {
                 readonly internalID: string;
-                readonly " $fragmentRefs": FragmentRefs<"ViewingRoomCarousel_artwork" | "ViewingRoomArtworkDetails_artwork">;
+                readonly title: string | null;
+                readonly images: ReadonlyArray<{
+                    readonly internalID: string | null;
+                    readonly resized: {
+                        readonly url: string | null;
+                        readonly width: number | null;
+                        readonly height: number | null;
+                    } | null;
+                } | null> | null;
+                readonly " $fragmentRefs": FragmentRefs<"ViewingRoomArtworkDetails_artwork">;
             } | null;
         } | null> | null;
     } | null;
@@ -21,7 +30,15 @@ export type ViewingRoomWorksRoute_viewingRoom$key = {
 
 
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "internalID",
+  "args": null,
+  "storageKey": null
+};
+return {
   "kind": "Fragment",
   "name": "ViewingRoomWorksRoute_viewingRoom",
   "type": "ViewingRoom",
@@ -55,17 +72,68 @@ const node: ReaderFragment = {
               "concreteType": "Artwork",
               "plural": false,
               "selections": [
+                (v0/*: any*/),
                 {
                   "kind": "ScalarField",
                   "alias": null,
-                  "name": "internalID",
+                  "name": "title",
                   "args": null,
                   "storageKey": null
                 },
                 {
-                  "kind": "FragmentSpread",
-                  "name": "ViewingRoomCarousel_artwork",
-                  "args": null
+                  "kind": "LinkedField",
+                  "alias": null,
+                  "name": "images",
+                  "storageKey": null,
+                  "args": null,
+                  "concreteType": "Image",
+                  "plural": true,
+                  "selections": [
+                    (v0/*: any*/),
+                    {
+                      "kind": "LinkedField",
+                      "alias": null,
+                      "name": "resized",
+                      "storageKey": "resized(height:1100,version:\"normalized\")",
+                      "args": [
+                        {
+                          "kind": "Literal",
+                          "name": "height",
+                          "value": 1100
+                        },
+                        {
+                          "kind": "Literal",
+                          "name": "version",
+                          "value": "normalized"
+                        }
+                      ],
+                      "concreteType": "ResizedImageUrl",
+                      "plural": false,
+                      "selections": [
+                        {
+                          "kind": "ScalarField",
+                          "alias": null,
+                          "name": "url",
+                          "args": null,
+                          "storageKey": null
+                        },
+                        {
+                          "kind": "ScalarField",
+                          "alias": null,
+                          "name": "width",
+                          "args": null,
+                          "storageKey": null
+                        },
+                        {
+                          "kind": "ScalarField",
+                          "alias": null,
+                          "name": "height",
+                          "args": null,
+                          "storageKey": null
+                        }
+                      ]
+                    }
+                  ]
                 },
                 {
                   "kind": "FragmentSpread",
@@ -80,5 +148,6 @@ const node: ReaderFragment = {
     }
   ]
 };
-(node as any).hash = 'c64e03c30e50e3e2cc05c4715754b414';
+})();
+(node as any).hash = '5eb993431963feae086cbb4bfcc063ca';
 export default node;

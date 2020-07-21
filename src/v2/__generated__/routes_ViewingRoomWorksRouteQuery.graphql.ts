@@ -36,24 +36,20 @@ fragment ViewingRoomArtworkDetails_artwork on Artwork {
   saleMessage
 }
 
-fragment ViewingRoomCarousel_artwork on Artwork {
-  title
-  images {
-    internalID
-    resized(height: 1100, version: "normalized") {
-      url
-      width
-      height
-    }
-  }
-}
-
 fragment ViewingRoomWorksRoute_viewingRoom on ViewingRoom {
   artworksConnection {
     edges {
       node {
         internalID
-        ...ViewingRoomCarousel_artwork
+        title
+        images {
+          internalID
+          resized(height: 1100, version: "normalized") {
+            url
+            width
+            height
+          }
+        }
         ...ViewingRoomArtworkDetails_artwork
         id
       }
@@ -272,7 +268,7 @@ return {
     "operationKind": "query",
     "name": "routes_ViewingRoomWorksRouteQuery",
     "id": null,
-    "text": "query routes_ViewingRoomWorksRouteQuery(\n  $slug: ID!\n) {\n  viewingRoom(id: $slug) {\n    ...ViewingRoomWorksRoute_viewingRoom\n  }\n}\n\nfragment ViewingRoomArtworkDetails_artwork on Artwork {\n  id\n  additionalInformation\n  artistNames\n  title\n  date\n  href\n  saleMessage\n}\n\nfragment ViewingRoomCarousel_artwork on Artwork {\n  title\n  images {\n    internalID\n    resized(height: 1100, version: \"normalized\") {\n      url\n      width\n      height\n    }\n  }\n}\n\nfragment ViewingRoomWorksRoute_viewingRoom on ViewingRoom {\n  artworksConnection {\n    edges {\n      node {\n        internalID\n        ...ViewingRoomCarousel_artwork\n        ...ViewingRoomArtworkDetails_artwork\n        id\n      }\n    }\n  }\n}\n",
+    "text": "query routes_ViewingRoomWorksRouteQuery(\n  $slug: ID!\n) {\n  viewingRoom(id: $slug) {\n    ...ViewingRoomWorksRoute_viewingRoom\n  }\n}\n\nfragment ViewingRoomArtworkDetails_artwork on Artwork {\n  id\n  additionalInformation\n  artistNames\n  title\n  date\n  href\n  saleMessage\n}\n\nfragment ViewingRoomWorksRoute_viewingRoom on ViewingRoom {\n  artworksConnection {\n    edges {\n      node {\n        internalID\n        title\n        images {\n          internalID\n          resized(height: 1100, version: \"normalized\") {\n            url\n            width\n            height\n          }\n        }\n        ...ViewingRoomArtworkDetails_artwork\n        id\n      }\n    }\n  }\n}\n",
     "metadata": {}
   }
 };

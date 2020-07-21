@@ -1,6 +1,4 @@
 import React, { useState } from "react"
-import { createFragmentContainer, graphql } from "react-relay"
-import { ViewingRoomCarousel_artwork } from "v2/__generated__/ViewingRoomCarousel_artwork.graphql"
 import { Carousel } from "v2/Components/Carousel"
 import { flowRight } from "lodash"
 
@@ -8,30 +6,31 @@ import {
   Box,
   ChevronIcon,
   Flex,
-  Image,
   ProgressBar,
   breakpoints,
 } from "@artsy/palette"
 
 interface ViewingRoomCarouselProps {
-  artwork: ViewingRoomCarousel_artwork
+  items: any
+  itemRender: any
+  height: any
 }
 
-const ViewingRoomCarousel: React.FC<ViewingRoomCarouselProps> = ({
-  artwork: { title, images },
+export const ViewingRoomCarousel: React.FC<ViewingRoomCarouselProps> = ({
+  items,
+  itemRender,
+  height,
 }) => {
   const computeScrollPercent = selectedIndex =>
-    ((selectedIndex + 1) / images.length) * 100
+    ((selectedIndex + 1) / items.length) * 100
   const [scrollPercent, setScrollPercent] = useState(computeScrollPercent(0))
   const update = flowRight(setScrollPercent, computeScrollPercent)
-  const showProgressBar = images.length > 1
-
-  const CarouselHeight = [350, 550]
+  const showProgressBar = items.length > 1
 
   return (
     <Box width="100%">
       <Flex
-        height={CarouselHeight}
+        height={height}
         maxWidth={breakpoints.lg}
         m="auto"
         my={2}
@@ -46,26 +45,10 @@ const ViewingRoomCarousel: React.FC<ViewingRoomCarouselProps> = ({
             groupCells: 1,
             pageDots: false,
           }}
-          data={images}
-          height={CarouselHeight}
+          data={items}
+          height={height}
           onDragEnd={({ flickity }) => update(flickity.selectedIndex)}
-          render={({ resized: { url, width, height }, internalID }) => {
-            return (
-              <Box
-                key={internalID}
-                width="auto"
-                height={CarouselHeight}
-                mr="2px"
-              >
-                <Image
-                  src={url}
-                  alt={title}
-                  width="auto"
-                  height={CarouselHeight}
-                />
-              </Box>
-            )
-          }}
+          render={itemRender}
           renderLeftArrow={({ currentSlideIndex, flickity }) => {
             const opacity = currentSlideIndex === 0 ? 0 : 1
             return (
@@ -80,7 +63,7 @@ const ViewingRoomCarousel: React.FC<ViewingRoomCarouselProps> = ({
             )
           }}
           renderRightArrow={({ currentSlideIndex, flickity }) => {
-            const opacity = currentSlideIndex === images.length - 1 ? 0 : 1
+            const opacity = currentSlideIndex === items.length - 1 ? 0 : 1
             return (
               <Arrow
                 direction="right"
@@ -107,26 +90,6 @@ const ViewingRoomCarousel: React.FC<ViewingRoomCarouselProps> = ({
     </Box>
   )
 }
-
-export const ViewingRoomCarouselFragmentContainer = createFragmentContainer(
-  ViewingRoomCarousel,
-  {
-    artwork: graphql`
-      fragment ViewingRoomCarousel_artwork on Artwork {
-        title
-        images {
-          internalID
-          # requesting the largest size and resizing it down to 550*2 for retina
-          resized(height: 1100, version: "normalized") {
-            url
-            width
-            height
-          }
-        }
-      }
-    `,
-  }
-)
 
 export const Arrow: React.FC<{
   direction: "left" | "right"

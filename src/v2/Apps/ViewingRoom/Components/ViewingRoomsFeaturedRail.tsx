@@ -2,6 +2,7 @@ import React, { useState } from "react"
 import {
   Box,
   Flex,
+  Link,
   MediumCard,
   ProgressBar,
   Sans,
@@ -34,6 +35,33 @@ export const ViewingRoomsFeaturedRail: React.FC<ViewingRoomsFeaturedRailProps> =
   const showProgressBar = featuredViewingRoomsForRail.length > 1
 
   const CarouselHeight = 380
+  const carouselItemRender = (
+    {
+      heroImageURL,
+      slug,
+      title,
+      partner,
+      status,
+      distanceToOpen,
+      distanceToClose,
+    },
+    slideIndex
+  ) => {
+    const tag = getTagProps(status, distanceToOpen, distanceToClose)
+    return (
+      <Flex flexDirection="row">
+        {slideIndex !== 0 && <Spacer ml="15px" />}
+        <Link href={`/viewing-room/${slug}`} key={slug} noUnderline>
+          <MediumCard
+            image={heroImageURL}
+            title={title}
+            subtitle={partner.name}
+            tag={tag}
+          />
+        </Link>
+      </Flex>
+    )
+  }
 
   return (
     featuredViewingRoomsForRail.length > 0 && (
@@ -59,30 +87,7 @@ export const ViewingRoomsFeaturedRail: React.FC<ViewingRoomsFeaturedRailProps> =
               data={featuredViewingRoomsForRail}
               height={CarouselHeight}
               onDragEnd={({ flickity }) => update(flickity.selectedIndex)}
-              render={(
-                {
-                  heroImageURL,
-                  title,
-                  partner,
-                  status,
-                  distanceToOpen,
-                  distanceToClose,
-                },
-                slideIndex
-              ) => {
-                const tag = getTagProps(status, distanceToOpen, distanceToClose)
-                return (
-                  <Flex flexDirection="row">
-                    {slideIndex !== 0 && <Spacer ml="15px" />}
-                    <MediumCard
-                      image={heroImageURL}
-                      title={title}
-                      subtitle={partner.name}
-                      tag={tag}
-                    />
-                  </Flex>
-                )
-              }}
+              render={carouselItemRender}
               renderLeftArrow={({ currentSlideIndex, flickity }) => {
                 const opacity = currentSlideIndex === 0 ? 0 : 1
                 return (
