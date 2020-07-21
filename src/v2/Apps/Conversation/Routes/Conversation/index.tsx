@@ -8,7 +8,7 @@ import { findCurrentRoute } from "v2/Artsy/Router/Utils/findCurrentRoute"
 import { ErrorPage } from "v2/Components/ErrorPage"
 import { Match } from "found"
 import React, { useContext, useState } from "react"
-import { createFragmentContainer, graphql } from "react-relay"
+import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
 import { userHasLabFeature } from "v2/Utils/user"
 import { Media } from "v2/Utils/Responsive"
 import {
@@ -21,6 +21,7 @@ interface ConversationRouteProps {
   me: Conversation_me
   conversationID: string
   match: Match
+  relay: RelayRefetchProp
 }
 
 const ConstrainedHeightFlex = styled(Flex)`
@@ -75,7 +76,10 @@ export const ConversationRoute: React.FC<ConversationRouteProps> = props => {
               selectedConversationID={me.conversation.internalID}
             />
           </Media>
-          <Conversation conversation={me.conversation} />
+          <Conversation
+            conversation={me.conversation}
+            refetch={props.relay.refetch}
+          />
           <Details conversation={me.conversation} showDetails={showDetails} />
         </ConstrainedHeightFlex>
       </AppContainer>
@@ -86,7 +90,7 @@ export const ConversationRoute: React.FC<ConversationRouteProps> = props => {
   }
 }
 
-export const ConversationFragmentContainer = createFragmentContainer(
+export const ConversationFragmentContainer = createRefetchContainer(
   ConversationRoute,
   {
     me: graphql`
@@ -103,7 +107,14 @@ export const ConversationFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
+  graphql`
+    query ConversationPageQuery($conversationID: String!) {
+      me {
+        ...Conversation_me @arguments(conversationID: $conversationID)
+      }
+    }
+  `
 )
 
 export default ConversationFragmentContainer

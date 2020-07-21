@@ -25,7 +25,22 @@ jest.mock("v2/Utils/logger")
 import "v2/DevTools/renderUntil"
 Enzyme.configure({ adapter: new Adapter() })
 
-import "jsdom"
+// Manually run the garbage collector after 30 seconds. Only works if the
+// --expose-gc flag is used.
+let time = Date.now()
+afterEach(() => {
+  if (global.gc && Math.floor((Date.now() - time) / 1000) > 30) {
+    global.gc()
+    time = Date.now()
+  }
+})
+
+afterAll(() => {
+  if (global.gc && Math.floor((Date.now() - time) / 1000) > 30) {
+    global.gc()
+    time = Date.now()
+  }
+})
 
 if (typeof window !== "undefined") {
   window.open = jest.fn()
