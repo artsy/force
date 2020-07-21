@@ -14,8 +14,6 @@ interface ViewingRoomsAppProps {
 }
 
 const ViewingRoomsApp: React.FC<ViewingRoomsAppProps> = props => {
-  console.log("FROM APP")
-  console.log(props)
   const { allViewingRooms, featuredViewingRooms } = props
   return (
     <AppContainer maxWidth="100%">

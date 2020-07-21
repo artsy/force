@@ -4,6 +4,7 @@ import {
   Button,
   CSSGrid,
   CardTagProps,
+  Flex,
   Link,
   Sans,
   SmallCard,
@@ -55,24 +56,15 @@ const getTagProps = (
   }
 }
 
-export const PAGE_SIZE = 10
-
-const ShowMoreButton = props => (
-  <Button variant="secondaryOutline" size="medium" {...props}>
-    Show more
-  </Button>
-)
+export const PAGE_SIZE = 12
 
 export const ViewingRoomsLatestGrid: React.FC<ViewingRoomsLatestGridProps> = props => {
   const viewingRooms = props.viewingRooms?.viewingRoomsConnection
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(false)
+  const hasMoreItems = props.relay.hasMore()
 
   const loadMore = () => {
-    console.log("here!!!")
-    console.log(props.relay.hasMore())
-    const hasMore = props.relay.hasMore()
-
-    if (hasMore) {
+    if (hasMoreItems) {
       setIsLoading(true)
 
       props.relay.loadMore(PAGE_SIZE, error => {
@@ -149,10 +141,18 @@ export const ViewingRoomsLatestGrid: React.FC<ViewingRoomsLatestGridProps> = pro
             )
           })}
         </CSSGrid>
-        <ShowMoreButton
-          onClick={() => loadMore()}
-          loading={isLoading ? false : false}
-        />
+        {hasMoreItems && (
+          <Flex flexDirection="column" alignItems="center">
+            <Button
+              variant="secondaryOutline"
+              size="medium"
+              onClick={loadMore}
+              loading={isLoading}
+            >
+              Show more
+            </Button>
+          </Flex>
+        )}
       </Box>
     </Box>
   )

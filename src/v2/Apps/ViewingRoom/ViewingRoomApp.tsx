@@ -14,7 +14,6 @@ import { openAuthModal } from "v2/Utils/openAuthModal"
 import { SystemContext } from "v2/Artsy"
 import { ModalType } from "v2/Components/Authentication/Types"
 import { ContextModule, Intent } from "@artsy/cohesion"
-import { RouterLink } from "v2/Artsy/Router/RouterLink"
 
 interface ViewingRoomAppProps {
   children: React.ReactNode
@@ -67,7 +66,6 @@ const ViewingRoomApp: React.FC<ViewingRoomAppProps> = ({
         {user && getView()}
         <Box mx={2}>
           <Separator mt={6} mb={3} />
-          <RouterLink to="/viewing-rooms">Viewing rooms</RouterLink>
           <Footer />
         </Box>
       </AppContainer>

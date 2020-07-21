@@ -16,7 +16,8 @@ export const routes: RouteConfig[] = [
       ViewingRoomsApp.preload()
     },
     prepareVariables: () => {
-      return { count: 10 }
+      // Accomodates the grid of 3x items and 2x items well.
+      return { count: 12 }
     },
     query: graphql`
       query routes_ViewingRoomsAppQuery($count: Int!, $after: String) {
