@@ -59,7 +59,7 @@ mutation BudgetUpdateMyUserProfileMutation(
 */
 
 const node: ConcreteRequest = (function(){
-var v0 = [
+let v0 = [
   {
     "kind": "LocalArgument",
     "name": "input",

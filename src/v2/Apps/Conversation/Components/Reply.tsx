@@ -1,4 +1,12 @@
-import { Button, Dialog, Flex, FlexProps, color, media } from "@artsy/palette"
+import {
+  Button,
+  Dialog,
+  Flex,
+  FlexProps,
+  color,
+  media,
+  space,
+} from "@artsy/palette"
 import { Conversation_conversation } from "v2/__generated__/Conversation_conversation.graphql"
 import React, { useRef, useState } from "react"
 import { Environment, RelayRefetchProps } from "react-relay"
@@ -34,6 +42,9 @@ const StyledTextArea = styled.textarea<{ height?: string }>`
   min-height: 40px;
   font-size: 16px;
   ${unica("s16")};
+  padding-top: ${space(0.5)}px;
+  padding-left: ${space(1)}px;
+  padding-right: ${space(1)}px;
   ${media.xs`
     max-height: calc(60vh - 115px);
   `};
