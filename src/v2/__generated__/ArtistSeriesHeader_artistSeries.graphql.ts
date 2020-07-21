@@ -5,6 +5,9 @@ import { FragmentRefs } from "relay-runtime";
 export type ArtistSeriesHeader_artistSeries = {
     readonly title: string;
     readonly description: string | null;
+    readonly image: {
+        readonly url: string | null;
+    } | null;
     readonly artists: ReadonlyArray<{
         readonly name: string | null;
         readonly image: {
@@ -24,7 +27,26 @@ export type ArtistSeriesHeader_artistSeries$key = {
 
 
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = {
+  "kind": "LinkedField",
+  "alias": null,
+  "name": "image",
+  "storageKey": null,
+  "args": null,
+  "concreteType": "Image",
+  "plural": false,
+  "selections": [
+    {
+      "kind": "ScalarField",
+      "alias": null,
+      "name": "url",
+      "args": null,
+      "storageKey": null
+    }
+  ]
+};
+return {
   "kind": "Fragment",
   "name": "ArtistSeriesHeader_artistSeries",
   "type": "ArtistSeries",
@@ -45,6 +67,7 @@ const node: ReaderFragment = {
       "args": null,
       "storageKey": null
     },
+    (v0/*: any*/),
     {
       "kind": "LinkedField",
       "alias": null,
@@ -67,24 +90,7 @@ const node: ReaderFragment = {
           "args": null,
           "storageKey": null
         },
-        {
-          "kind": "LinkedField",
-          "alias": null,
-          "name": "image",
-          "storageKey": null,
-          "args": null,
-          "concreteType": "Image",
-          "plural": false,
-          "selections": [
-            {
-              "kind": "ScalarField",
-              "alias": null,
-              "name": "url",
-              "args": null,
-              "storageKey": null
-            }
-          ]
-        },
+        (v0/*: any*/),
         {
           "kind": "ScalarField",
           "alias": null,
@@ -108,5 +114,6 @@ const node: ReaderFragment = {
     }
   ]
 };
-(node as any).hash = 'b7f8ca35258c57e6400d162d1413cc34';
+})();
+(node as any).hash = 'f31639df0433b44fb4f5aa094edf9b17';
 export default node;
