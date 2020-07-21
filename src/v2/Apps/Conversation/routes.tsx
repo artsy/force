@@ -26,7 +26,7 @@ export const conversationRoutes: RouteConfig[] = [
   {
     path: "/user/conversations/:conversationID",
     displayFullPage: true,
-    getComponent: () => loadable(() => import("./Routes/Conversation")),
+    Component: loadable(() => import("./Routes/Conversation")),
     prepareVariables: (params, _props) => {
       return {
         conversationID: params.conversationID,
