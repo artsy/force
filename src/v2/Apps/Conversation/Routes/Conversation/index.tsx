@@ -31,6 +31,7 @@ const ConstrainedHeightFlex = styled(Flex)`
   `}
   & > * {
     overflow-x: hidden;
+    overflow-y: scroll;
   }
   & > .fresnel-greaterThan-xs {
     flex-shrink: 0;

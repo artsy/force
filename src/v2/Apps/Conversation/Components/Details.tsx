@@ -82,7 +82,7 @@ export const Details: FC<DetailsProps> = ({
     window.addEventListener("resize", listenForResize)
     return () => window.removeEventListener("resize", listenForResize)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [setShowDetails, showDetails])
+  }, [showDetails])
 
   const item =
     conversation.items?.[0]?.item?.__typename !== "%other" &&
