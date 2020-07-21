@@ -1,14 +1,6 @@
 import React, { useEffect, useState } from "react"
 import styled from "styled-components"
-import {
-  Box,
-  Button,
-  ChevronIcon,
-  Flex,
-  FlexProps,
-  color,
-  themeProps,
-} from "@artsy/palette"
+import { Button, Flex, FlexProps, color, themeProps } from "@artsy/palette"
 import { useSystemContext } from "v2/Artsy/SystemContext"
 import { SearchBarQueryRenderer as SearchBar } from "v2/Components/Search/SearchBar"
 import {
@@ -20,7 +12,10 @@ import {
 import { InboxNotificationCountQueryRenderer as InboxNotificationCount } from "./Menus/MobileNavMenu/InboxNotificationCount"
 import { userHasLabFeature } from "v2/Utils/user"
 import { ModalType } from "v2/Components/Authentication/Types"
-import { MenuLinkData, menuData } from "v2/Components/NavBar/menuData"
+import {
+  ARTISTS_SUBMENU_DATA,
+  ARTWORKS_SUBMENU_DATA,
+} from "v2/Components/NavBar/menuData"
 import { openAuthModal } from "v2/Utils/openAuthModal"
 import { NavItem } from "./NavItem"
 import { ContextModule, Intent } from "@artsy/cohesion"
@@ -53,13 +48,10 @@ export const NavBar: React.FC = track(
     user,
     "User Conversations View"
   )
-  // ToDo: replace check for conversationsEnabled with check for user when ready to launch
+  const viewingRoomsEnabled = userHasLabFeature(user, "Viewing Rooms")
+  // TODO: replace check for conversationsEnabled with check for user when ready to launch
   const showNotificationCount =
     isLoggedIn && !showMobileMenu && conversationsEnabled
-
-  const {
-    links: [artworks, artists],
-  } = menuData
 
   // Close mobile menu if dragging window from small size to desktop
   useEffect(() => {
@@ -95,46 +87,13 @@ export const NavBar: React.FC = track(
             <NavBarPrimaryLogo />
           </NavSection>
 
-          <NavSection width="100%">
-            <Box width="100%">
-              <SearchBar />
-            </Box>
+          <NavSection flex={1}>
+            <SearchBar width="100%" />
           </NavSection>
 
           {/* Desktop. Collapses into mobile at `sm` breakpoint. */}
           <NavSection display={["none", "none", "flex"]}>
             <NavSection alignItems="center" ml={2}>
-              <NavItem
-                label="Artworks"
-                menuAnchor="full"
-                Menu={({ setIsVisible }) => {
-                  return (
-                    <DropDownNavMenu
-                      width="100vw"
-                      menu={(artworks as MenuLinkData).menu}
-                      contextModule={
-                        AnalyticsSchema.ContextModule.HeaderArtworksDropdown
-                      }
-                      onClick={() => {
-                        setIsVisible(false)
-                      }}
-                    />
-                  )
-                }}
-              >
-                <Flex>
-                  Artworks
-                  <ChevronIcon
-                    direction="down"
-                    color={color("black100")}
-                    height="15px"
-                    width="15px"
-                    top="5px"
-                    left="4px"
-                  />
-                </Flex>
-              </NavItem>
-
               <NavItem
                 label="Artists"
                 menuAnchor="full"
@@ -142,7 +101,7 @@ export const NavBar: React.FC = track(
                   return (
                     <DropDownNavMenu
                       width="100vw"
-                      menu={(artists as MenuLinkData).menu}
+                      menu={ARTISTS_SUBMENU_DATA.menu}
                       contextModule={
                         AnalyticsSchema.ContextModule.HeaderArtistsDropdown
                       }
@@ -153,21 +112,45 @@ export const NavBar: React.FC = track(
                   )
                 }}
               >
-                <Flex>
-                  Artists
-                  <ChevronIcon
-                    direction="down"
-                    color={color("black100")}
-                    height="15px"
-                    width="15px"
-                    top="5px"
-                    left="4px"
-                  />
-                </Flex>
+                Artists
+              </NavItem>
+
+              <NavItem
+                label="Artworks"
+                menuAnchor="full"
+                Menu={({ setIsVisible }) => {
+                  return (
+                    <DropDownNavMenu
+                      width="100vw"
+                      menu={ARTWORKS_SUBMENU_DATA.menu}
+                      contextModule={
+                        AnalyticsSchema.ContextModule.HeaderArtworksDropdown
+                      }
+                      onClick={() => {
+                        setIsVisible(false)
+                      }}
+                    />
+                  )
+                }}
+              >
+                Artworks
               </NavItem>
 
               <NavItem href="/auctions">Auctions</NavItem>
+
+              {viewingRoomsEnabled && (
+                <NavItem
+                  // Hide link at smaller viewports — corresponding display inside of `MoreNavMenu`
+                  // If we need to do this again, consider a more abstract solution
+                  display={["none", "none", "none", "flex"]}
+                  href="/viewing-rooms"
+                >
+                  Viewing&nbsp;Rooms
+                </NavItem>
+              )}
+
               <NavItem href="/articles">Editorial</NavItem>
+
               <NavItem
                 label="More"
                 menuAnchor="center"
@@ -175,17 +158,7 @@ export const NavBar: React.FC = track(
                   return <MoreNavMenu width={160} />
                 }}
               >
-                <Flex>
-                  More
-                  <ChevronIcon
-                    direction="down"
-                    color={color("black100")}
-                    height="15px"
-                    width="15px"
-                    top="5px"
-                    left="4px"
-                  />
-                </Flex>
+                More
               </NavItem>
             </NavSection>
 
@@ -256,7 +229,6 @@ export const NavBar: React.FC = track(
             <MobileNavMenu
               onClose={() => toggleMobileNav(false)}
               isOpen={showMobileMenu}
-              menuData={menuData}
               onNavButtonClick={handleMobileNavClick}
             />
           </>
@@ -277,9 +249,10 @@ const NavSection: React.FC<FlexProps> = ({ children, ...rest }) => {
 }
 
 const NavBarContainer = styled(Flex)`
+  position: relative;
+  height: ${NAV_BAR_HEIGHT}px;
   background-color: ${color("white100")};
   border-bottom: 1px solid ${color("black10")};
-  position: relative;
+
   z-index: 3;
-  height: ${NAV_BAR_HEIGHT}px;
 `

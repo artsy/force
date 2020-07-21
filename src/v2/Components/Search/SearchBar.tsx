@@ -1,4 +1,4 @@
-import { Box, Flex } from "@artsy/palette"
+import { Box, BoxProps, Flex } from "@artsy/palette"
 import { SearchBar_viewer } from "v2/__generated__/SearchBar_viewer.graphql"
 import { SearchBarSuggestQuery } from "v2/__generated__/SearchBarSuggestQuery.graphql"
 import { SystemContext, SystemContextProps, withSystemContext } from "v2/Artsy"
@@ -80,6 +80,10 @@ const SuggestionContainer = ({ children, containerProps }) => {
     </AutosuggestWrapper>
   )
 }
+
+const Form = styled.form`
+  width: 100%;
+`
 
 @track(null, {
   dispatch: data => Events.postEvent(data),
@@ -405,7 +409,7 @@ export class SearchBar extends Component<Props, State> {
     const { router } = this.props
 
     return (
-      <form
+      <Form
         action="/search"
         method="GET"
         itemProp="potentialAction"
@@ -427,7 +431,7 @@ export class SearchBar extends Component<Props, State> {
         <Media greaterThan="xs">
           {this.renderAutosuggestComponent({ xs: false })}
         </Media>
-      </form>
+      </Form>
     )
   }
 }
@@ -466,35 +470,39 @@ export const SearchBarRefetchContainer = createRefetchContainer(
   `
 )
 
-export const SearchBarQueryRenderer: React.FC = () => {
+/**
+ * Displays during SSR render, but once mounted is swapped out with
+ * QueryRenderer below.
+ */
+const StaticSearchContainer: React.FC<{ searchQuery: string } & BoxProps> = ({
+  searchQuery,
+  ...rest
+}) => {
+  return (
+    <>
+      <Box display={["block", "none"]} {...rest}>
+        <SearchInputContainer
+          placeholder={searchQuery || PLACEHOLDER_XS}
+          defaultValue={searchQuery}
+        />
+      </Box>
+
+      <Box display={["none", "block"]} {...rest}>
+        <SearchInputContainer
+          placeholder={searchQuery || PLACEHOLDER}
+          defaultValue={searchQuery}
+        />
+      </Box>
+    </>
+  )
+}
+
+export const SearchBarQueryRenderer: React.FC<BoxProps> = props => {
   const { relayEnvironment, searchQuery = "" } = useContext(SystemContext)
   const isMounted = useDidMount(typeof window !== "undefined")
 
-  /**
-   * Displays during SSR render, but once mounted is swapped out with
-   * QueryRenderer below.
-   */
-  const StaticSearchContainer = () => {
-    return (
-      <>
-        <Box display={["block", "none"]}>
-          <SearchInputContainer
-            placeholder={searchQuery || PLACEHOLDER_XS}
-            defaultValue={searchQuery}
-          />
-        </Box>
-        <Box display={["none", "block"]}>
-          <SearchInputContainer
-            placeholder={searchQuery || PLACEHOLDER}
-            defaultValue={searchQuery}
-          />
-        </Box>
-      </>
-    )
-  }
-
   if (!isMounted) {
-    return <StaticSearchContainer />
+    return <StaticSearchContainer searchQuery={searchQuery} {...props} />
   }
 
   return (
@@ -518,7 +526,7 @@ export const SearchBarQueryRenderer: React.FC = () => {
           // from within the NavBar (it's not a part of any app) we need to lean
           // on styled-system for showing / hiding depending upon breakpoint.
         } else {
-          return <StaticSearchContainer />
+          return <StaticSearchContainer searchQuery={searchQuery} />
         }
       }}
     />

@@ -1,5 +1,4 @@
-import { Box, MagnifyingGlassIcon, color } from "@artsy/palette"
-import Input from "v2/Components/Input"
+import { Box, Input, MagnifyingGlassIcon, color, space } from "@artsy/palette"
 import { isEmpty } from "lodash"
 import React from "react"
 import styled from "styled-components"
@@ -7,9 +6,9 @@ import styled from "styled-components"
 const SearchButton = styled.button`
   position: absolute;
   right: 0;
-  top: calc(50% + 3px);
+  top: 50%;
+  transform: translateY(-50%);
   border: none;
-  margin-top: -14px;
   width: 24px;
   height: 24px;
   margin-right: 10px;
@@ -27,11 +26,21 @@ const SearchButton = styled.button`
   }
 `
 
+const SearchInput = styled(Input)`
+  width: 100%;
+  padding-right: ${space(4)}px;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+`
+
 export const SearchInputContainer: React.ForwardRefExoticComponent<any> = React.forwardRef(
   (props, ref) => {
     return (
-      <Box style={{ position: "relative" }}>
-        <Input ref={ref} style={{ width: "100%" }} {...props} />
+      <Box position="relative">
+        <SearchInput ref={ref} {...props} />
+
         <SearchButton
           onClick={event => {
             ;(event.target as HTMLElement).parentElement.blur()

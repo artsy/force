@@ -15,7 +15,11 @@ import {
 import { AnalyticsSchema, useSystemContext } from "v2/Artsy"
 import { useTracking } from "v2/Artsy/Analytics"
 import { ModalType } from "v2/Components/Authentication/Types"
-import { LinkData, MenuData, MenuLinkData } from "v2/Components/NavBar/menuData"
+import {
+  ARTISTS_SUBMENU_DATA,
+  ARTWORKS_SUBMENU_DATA,
+  LinkData,
+} from "v2/Components/NavBar/menuData"
 import React from "react"
 import styled from "styled-components"
 import { getMobileAuthLink } from "v2/Utils/openAuthModal"
@@ -26,6 +30,7 @@ import {
   useNavigation,
 } from "./NavigatorContextProvider"
 import { NAV_BAR_BORDER_OFFSET, NAV_BAR_HEIGHT } from "v2/Components/NavBar"
+import { userHasLabFeature } from "v2/Utils/user"
 
 const Close = styled(Clickable)`
   position: absolute;
@@ -41,20 +46,18 @@ const Close = styled(Clickable)`
 
 interface Props {
   isOpen: boolean
-  menuData: MenuData
   onClose: () => void
   onNavButtonClick?: (event: React.MouseEvent<HTMLElement, MouseEvent>) => void
 }
 
 export const MobileNavMenu: React.FC<Props> = ({
   isOpen,
-  menuData: {
-    links: [artworks, artists],
-  },
   onNavButtonClick,
   onClose,
 }) => {
   const { user } = useSystemContext()
+
+  const viewingRoomsEnabled = userHasLabFeature(user, "Viewing Rooms")
 
   return (
     <NavigatorContextProvider>
@@ -72,14 +75,17 @@ export const MobileNavMenu: React.FC<Props> = ({
 
           <AnimatingMenuWrapper isOpen={isOpen}>
             <ul>
-              <MobileSubmenuLink menu={(artworks as MenuLinkData).menu}>
-                {(artworks as MenuLinkData).menu.title}
+              <MobileSubmenuLink menu={ARTWORKS_SUBMENU_DATA.menu}>
+                {ARTWORKS_SUBMENU_DATA.menu.title}
               </MobileSubmenuLink>
 
-              <MobileSubmenuLink menu={(artists as MenuLinkData).menu}>
-                {(artists as MenuLinkData).menu.title}
+              <MobileSubmenuLink menu={ARTISTS_SUBMENU_DATA.menu}>
+                {ARTISTS_SUBMENU_DATA.menu.title}
               </MobileSubmenuLink>
               <MobileLink href="/auctions">Auctions</MobileLink>
+              {viewingRoomsEnabled && (
+                <MobileLink href="/viewing-rooms">Viewing Rooms</MobileLink>
+              )}
               <MobileLink href="/articles">Editorial</MobileLink>
               <MobileLink href="/galleries">Galleries</MobileLink>
               <MobileLink href="/fairs">Fairs</MobileLink>
