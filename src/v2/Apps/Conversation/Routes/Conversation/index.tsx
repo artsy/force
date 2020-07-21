@@ -26,8 +26,8 @@ interface ConversationRouteProps {
 
 const ConstrainedHeightFlex = styled(Flex)`
   height: calc(100vh - 145px);
-  ${media.sm`
-    height: calc(100vh - 55px);
+  ${media.md`
+    height: calc(100vh - 60px);
   `}
   & > * {
     overflow-y: scroll;
