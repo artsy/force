@@ -1,10 +1,10 @@
 import React, { Component, Fragment } from "react"
-import { Article } from "reaction/Components/Publishing/Article"
+import { Article } from "@artsy/reaction/dist/Components/Publishing/Article"
 import Waypoint from "react-waypoint"
 import {
   ArticleData,
   RelatedArticleCanvasData,
-} from "reaction/Components/Publishing/Typings"
+} from "@artsy/reaction/dist/Components/Publishing/Typings"
 
 interface Props {
   article: ArticleData

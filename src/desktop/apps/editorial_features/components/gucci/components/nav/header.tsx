@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import React from "react"
-import Icon from "reaction/Components/Icon"
-import { PartnerInline } from "reaction/Components/Publishing/Partner/PartnerInline"
+import Icon from "@artsy/reaction/dist/Components/Icon"
+import { PartnerInline } from "@artsy/reaction/dist/Components/Publishing/Partner/PartnerInline"
 import { Flex, Sans, Serif, media } from "@artsy/palette"
 import { Media } from "@artsy/reaction/dist/Utils/Responsive"
 

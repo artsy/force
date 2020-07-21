@@ -1,7 +1,7 @@
 import React from "react"
 import { DropDownSection } from "../DropDownSection"
 import { MenuItem } from "v2/Components/Menu"
-import { MenuLinkData, menuData } from "v2/Components/NavBar/menuData"
+import { ARTWORKS_SUBMENU_DATA } from "v2/Components/NavBar/menuData"
 import { mount } from "enzyme"
 import { useTracking } from "v2/Artsy/Analytics/useTracking"
 
@@ -9,11 +9,9 @@ jest.mock("v2/Artsy/Analytics/useTracking")
 
 describe("DropDownMenu", () => {
   const trackEvent = jest.fn()
-  const mediumLinks = (menuData.links[0] as MenuLinkData).menu.links.filter(
-    item => {
-      return item.text === "Medium"
-    }
-  )[0] as MenuLinkData
+  const [mediumLinks] = ARTWORKS_SUBMENU_DATA.menu.links.filter(item => {
+    return item.text === "Medium"
+  })
 
   const getWrapper = links => {
     return mount(<DropDownSection section={links} />)

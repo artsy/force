@@ -9,11 +9,11 @@ import { newsArticlesQuery } from "desktop/apps/article/queries/articles"
 import {
   ArticleData,
   RelatedArticleCanvasData,
-} from "reaction/Components/Publishing/Typings"
-import { NewsNav } from "reaction/Components/Publishing/Nav/NewsNav"
+} from "@artsy/reaction/dist/Components/Publishing/Typings"
+import { NewsNav } from "@artsy/reaction/dist/Components/Publishing/Nav/NewsNav"
 import { LoadingSpinner } from "./InfiniteScrollArticle"
 import { NewsArticle } from "./NewsArticle"
-import { NewsDateDivider } from "reaction/Components/Publishing/News/NewsDateDivider"
+import { NewsDateDivider } from "@artsy/reaction/dist/Components/Publishing/News/NewsDateDivider"
 const Cookies = require("desktop/components/cookies/index.coffee")
 import { shouldAdRender } from "desktop/apps/article/helpers"
 import { handleScrollingAuthModal } from "desktop/lib/openAuthModal"

@@ -1,8 +1,8 @@
 import moment from "moment"
 import React from "react"
 import styled from "styled-components"
-import { unica } from "reaction/Assets/Fonts"
-import { Video } from "reaction/Components/Publishing"
+import { unica } from "@artsy/reaction/dist/Assets/Fonts"
+import { Video } from "@artsy/reaction/dist/Components/Publishing"
 import { Box, Flex, Sans, media } from "@artsy/palette"
 
 interface SectionVideoProps {

@@ -59,10 +59,10 @@ export const ConversationHeader: FC<ConversationHeaderProps> = ({
       <RouterLink to={`/user/conversations`}>
         <ArrowLeftIcon />
       </RouterLink>
-      <Sans size="3t" weight="medium" display={["none", "auto"]}>
+      <Sans size="3t" weight="medium" display={["none", "none", "auto"]}>
         Conversation with {partnerName}
       </Sans>
-      <Sans size="3t" weight="medium" display={["auto", "none"]}>
+      <Sans size="3t" weight="medium" display={["auto", "auto", "none"]}>
         Inquiry with {partnerName}
       </Sans>
       <DetailIcon showDetails={showDetails} setShowDetails={setShowDetails} />

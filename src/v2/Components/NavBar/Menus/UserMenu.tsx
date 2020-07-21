@@ -1,5 +1,4 @@
 import React, { useContext } from "react"
-
 import {
   Box,
   Flex,
@@ -10,9 +9,7 @@ import {
   SoloIcon,
   TagIcon,
 } from "@artsy/palette"
-
 import { Menu, MenuItem } from "v2/Components/Menu"
-
 import { AnalyticsSchema, SystemContext } from "v2/Artsy"
 import { useTracking } from "v2/Artsy/Analytics/useTracking"
 import { data as sd } from "sharify"
@@ -44,14 +41,14 @@ export const UserMenu: React.FC = () => {
   return (
     <Menu>
       {isAdmin && (
-        <MenuItem href={sd.ADMIN_URL} onClick={trackClick}>
+        <MenuItem variant="small" href={sd.ADMIN_URL} onClick={trackClick}>
           Admin
         </MenuItem>
       )}
 
       {(isAdmin || hasPartnerAccess) && (
         <>
-          <MenuItem href={sd.CMS_URL} onClick={trackClick}>
+          <MenuItem variant="small" href={sd.CMS_URL} onClick={trackClick}>
             CMS
           </MenuItem>
 
@@ -65,6 +62,7 @@ export const UserMenu: React.FC = () => {
 
       {isAdmin && (
         <MenuItem
+          variant="small"
           aria-label="View your purchases"
           href="/user/purchases"
           onClick={trackClick}
@@ -74,6 +72,7 @@ export const UserMenu: React.FC = () => {
       )}
 
       <MenuItem
+        variant="small"
         aria-label="View your Saves &amp; Follows"
         href="/user/saves"
         onClick={trackClick}
@@ -82,6 +81,7 @@ export const UserMenu: React.FC = () => {
       </MenuItem>
 
       <MenuItem
+        variant="small"
         aria-label="View your Collector Profile"
         href="/profile/edit"
         onClick={trackClick}
@@ -90,6 +90,7 @@ export const UserMenu: React.FC = () => {
       </MenuItem>
 
       <MenuItem
+        variant="small"
         aria-label="Edit your settings"
         href="/user/edit"
         onClick={trackClick}
@@ -98,6 +99,7 @@ export const UserMenu: React.FC = () => {
       </MenuItem>
 
       <MenuItem
+        variant="small"
         aria-label="Log out of your account"
         tabIndex={0}
         onKeyPress={event => {
