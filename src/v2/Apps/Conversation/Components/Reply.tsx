@@ -2,6 +2,7 @@ import { Button, Dialog, Flex, FlexProps, color, media } from "@artsy/palette"
 import { Conversation_conversation } from "v2/__generated__/Conversation_conversation.graphql"
 import React, { useRef, useState } from "react"
 import { Environment, RelayRefetchProps } from "react-relay"
+import { unica } from "v2/Assets/Fonts"
 import styled from "styled-components"
 import { SendConversationMessage } from "../Mutation/SendConversationMessage"
 import { useTracking } from "v2/Artsy/Analytics"
@@ -32,7 +33,7 @@ const StyledTextArea = styled.textarea<{ height?: string }>`
   resize: none;
   min-height: 40px;
   font-size: 16px;
-
+  ${unica("s16")};
   ${media.xs`
     max-height: calc(60vh - 115px);
   `};
