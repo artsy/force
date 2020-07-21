@@ -36,15 +36,15 @@ const getViewWidth = () => {
 const Inbox: React.FC<InboxProps> = ({ selectedConversation, me }) => {
   return (
     <>
-      <Media at="xs">
+      <Media lessThan="md">
         <MobileInboxHeader />
       </Media>
-      <Media greaterThan="xs">
+      <Media greaterThanOrEqual="md">
         <FullHeader partnerName={selectedConversation?.to?.name} />
       </Media>
       <Conversations me={me} />
       <Flex
-        display={["none", "flex"]}
+        display={["none", "none", "flex"]}
         height="100%"
         width="100%"
         justifyContent="center"
@@ -78,7 +78,7 @@ export const ConversationApp: React.FC<ConversationAppProps> = props => {
   useEffect(() => {
     if (
       isEnabled &&
-      width > parseInt(breakpoints.xs, 10) &&
+      width > parseInt(breakpoints.md, 10) &&
       firstConversation &&
       router
     ) {
