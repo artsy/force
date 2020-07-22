@@ -17,8 +17,12 @@ const LinkMenuItem = styled(MenuItem).attrs({
 
 LinkMenuItem.displayName = "LinkMenuItem"
 
-const ViewAllMenuItem = styled(LinkMenuItem).attrs({
+const ViewAllMenuItem = styled(MenuItem).attrs({
+  px: 1,
+  py: 0.5,
   color: "black100",
+  variant: "text",
+  hasLighterTextColor: true,
 })`
   margin-top: auto;
   text-decoration: underline;
@@ -78,7 +82,7 @@ export const DropDownNavMenu: React.FC<DropDownNavMenuProps> = ({
                 const isLast = menu.links.length - 1 === i
 
                 return isLast ? (
-                  <ViewAllMenuItem key={menuItem.text}>
+                  <ViewAllMenuItem key={menuItem.text} href={menuItem.href}>
                     {menuItem.text}
                   </ViewAllMenuItem>
                 ) : (
