@@ -39,12 +39,23 @@ describe("DropDownMenu", () => {
 
     expect(linkMenuItems.length).toBe(4)
     expect(linkMenuItems.at(0).text()).toContain("New this Week")
+    expect(linkMenuItems.at(0).prop("href")).toEqual(
+      "/collection/new-this-week"
+    )
     expect(linkMenuItems.at(1).text()).toContain("Trending this Month")
+    expect(linkMenuItems.at(1).prop("href")).toEqual(
+      "/collection/highlights-this-month"
+    )
     expect(linkMenuItems.at(2).text()).toContain("Exclusively on Artsy")
+    expect(linkMenuItems.at(2).prop("href")).toEqual(
+      "/collection/exclusively-on-artsy"
+    )
     expect(linkMenuItems.at(3).text()).toContain("Closing Soon")
+    expect(linkMenuItems.at(3).prop("href")).toEqual("/collect?at_auction=true")
 
     expect(viewAllMenuItems.length).toBe(1)
     expect(viewAllMenuItems.at(0).text()).toContain("View all artworks")
+    expect(viewAllMenuItems.at(0).prop("href")).toEqual("/collect")
   })
 
   it("renders correct number of DropDownSection links", () => {
