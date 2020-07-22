@@ -15,7 +15,7 @@ import {
   LoggedInActionsQueryResponse,
 } from "v2/__generated__/LoggedInActionsQuery.graphql"
 import { userHasLabFeature } from "v2/Utils/user"
-import { isServer } from "lib/environment"
+import { isServer } from "lib/isServer"
 import { NotificationOverlay } from "./NotificationOverlay"
 import {
   getConversationCount,

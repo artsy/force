@@ -35,7 +35,7 @@ if [ "$NODE_ENV" != "production" ]; then
     fi
   fi
 
-  yarn relay --watch & exec node "${OPT[@]}" ./src
+  yarn relay --watch & BUILD_CLIENT=true exec node "${OPT[@]}" ./src
 else
   exec node "${OPT[@]}" ./server.dist.js
 fi

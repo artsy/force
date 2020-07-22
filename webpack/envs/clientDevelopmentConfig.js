@@ -1,6 +1,6 @@
-const chalk = require("chalk")
-
 // @ts-check
+
+const chalk = require("chalk")
 const fs = require("fs")
 const path = require("path")
 const webpack = require("webpack")
@@ -9,12 +9,11 @@ const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin")
 const FriendlyErrorsWebpackPlugin = require("friendly-errors-webpack-plugin")
 const WebpackNotifierPlugin = require("webpack-notifier")
 const SimpleProgressWebpackPlugin = require("simple-progress-webpack-plugin")
-const { NODE_ENV, basePath, isCI } = require("../../src/lib/environment")
-const { PORT, WEBPACK_DEVTOOL, WEBPACK_STATS } = process.env
+const { basePath, env } = require("../utils/env")
 
 const cacheDirectory = path.resolve(basePath, ".cache")
 
-if (!isCI && !fs.existsSync(cacheDirectory)) {
+if (!env.onCi && !fs.existsSync(cacheDirectory)) {
   console.log(
     chalk.yellow(
       "\n[!] No existing `.cache` directory detected, initial " +
@@ -23,11 +22,11 @@ if (!isCI && !fs.existsSync(cacheDirectory)) {
   )
 }
 
-exports.developmentConfig = {
-  mode: NODE_ENV,
-  devtool: WEBPACK_DEVTOOL || "eval",
-  stats: WEBPACK_STATS || "errors-only",
+export const clientDevelopmentConfig = {
+  devtool: env.webpackDevtool || "eval",
+  stats: env.webpackStats || "errors-only",
   module: {
+    // Why do we only compile css in development mode?
     rules: [
       {
         test: /\.styl$/,
@@ -74,7 +73,7 @@ exports.developmentConfig = {
     new FriendlyErrorsWebpackPlugin({
       clearConsole: false,
       compilationSuccessInfo: {
-        messages: [`[Force] Listening on http://localhost:${PORT} \n`],
+        messages: [`[Force] Listening on http://localhost:${env.port} \n`],
         notes: [""],
       },
     }),

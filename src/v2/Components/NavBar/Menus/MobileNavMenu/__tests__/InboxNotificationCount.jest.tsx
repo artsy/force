@@ -3,7 +3,7 @@ import { Sans } from "@artsy/palette"
 import React from "react"
 import { InboxNotificationCount } from "../InboxNotificationCount"
 
-jest.mock("lib/environment", () => ({
+jest.mock("lib/isServer", () => ({
   isServer: false,
 }))
 

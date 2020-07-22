@@ -1,5 +1,5 @@
 import cookie from "cookies-js"
-import { isServer } from "lib/environment"
+import { isServer } from "lib/isServer"
 
 export const getNotificationCount = () =>
   (!isServer && cookie.get("notification-count")) || 0
