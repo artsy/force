@@ -40,8 +40,13 @@ export const ViewingRoomsAppFragmentContainer = createFragmentContainer(
   ViewingRoomsApp,
   {
     allViewingRooms: graphql`
-      fragment ViewingRoomsApp_allViewingRooms on ViewingRoomConnection {
+      fragment ViewingRoomsApp_allViewingRooms on Viewer
+        @argumentDefinitions(
+          count: { type: "Int" }
+          after: { type: "String" }
+        ) {
         ...ViewingRoomsLatestGrid_viewingRooms
+          @arguments(count: $count, after: $after)
       }
     `,
     featuredViewingRooms: graphql`

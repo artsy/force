@@ -17,16 +17,40 @@ export type ViewingRoomsApp_allViewingRooms$key = {
 const node: ReaderFragment = {
   "kind": "Fragment",
   "name": "ViewingRoomsApp_allViewingRooms",
-  "type": "ViewingRoomConnection",
+  "type": "Viewer",
   "metadata": null,
-  "argumentDefinitions": [],
+  "argumentDefinitions": [
+    {
+      "kind": "LocalArgument",
+      "name": "count",
+      "type": "Int",
+      "defaultValue": null
+    },
+    {
+      "kind": "LocalArgument",
+      "name": "after",
+      "type": "String",
+      "defaultValue": null
+    }
+  ],
   "selections": [
     {
       "kind": "FragmentSpread",
       "name": "ViewingRoomsLatestGrid_viewingRooms",
-      "args": null
+      "args": [
+        {
+          "kind": "Variable",
+          "name": "after",
+          "variableName": "after"
+        },
+        {
+          "kind": "Variable",
+          "name": "count",
+          "variableName": "count"
+        }
+      ]
     }
   ]
 };
-(node as any).hash = '3b354e454f4f9e239b57a6c272cd42ae';
+(node as any).hash = 'bac462a0b1f43ecffedeb54a49be7a86';
 export default node;

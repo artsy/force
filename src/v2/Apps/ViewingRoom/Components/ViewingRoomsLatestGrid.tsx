@@ -1,16 +1,24 @@
-import React from "react"
+import React, { useState } from "react"
 import {
   Box,
+  Button,
   CSSGrid,
   CardTagProps,
+  Flex,
   Link,
   Sans,
   SmallCard,
 } from "@artsy/palette"
-import { createFragmentContainer, graphql } from "react-relay"
+import {
+  RelayPaginationProp,
+  createPaginationContainer,
+  graphql,
+} from "react-relay"
+
 import { ViewingRoomsLatestGrid_viewingRooms } from "v2/__generated__/ViewingRoomsLatestGrid_viewingRooms.graphql"
 
 export interface ViewingRoomsLatestGridProps {
+  relay: RelayPaginationProp
   viewingRooms: ViewingRoomsLatestGrid_viewingRooms
 }
 
@@ -48,8 +56,25 @@ const getTagProps = (
   }
 }
 
+export const PAGE_SIZE = 12
+
 export const ViewingRoomsLatestGrid: React.FC<ViewingRoomsLatestGridProps> = props => {
-  const viewingRooms = props.viewingRooms
+  const viewingRooms = props.viewingRooms?.viewingRoomsConnection
+  const [isLoading, setIsLoading] = useState(false)
+  const hasMoreItems = props.relay.hasMore()
+
+  const loadMore = () => {
+    if (hasMoreItems) {
+      setIsLoading(true)
+
+      props.relay.loadMore(PAGE_SIZE, error => {
+        if (error) {
+          console.error(error)
+        }
+        setIsLoading(false)
+      })
+    }
+  }
 
   if (!viewingRooms?.edges?.length) {
     return null
@@ -116,41 +141,92 @@ export const ViewingRoomsLatestGrid: React.FC<ViewingRoomsLatestGridProps> = pro
             )
           })}
         </CSSGrid>
+        {hasMoreItems && (
+          <Flex flexDirection="column" alignItems="center">
+            <Button
+              variant="secondaryOutline"
+              size="medium"
+              onClick={loadMore}
+              loading={isLoading}
+            >
+              Show more
+            </Button>
+          </Flex>
+        )}
       </Box>
     </Box>
   )
 }
 
-export const ViewingRoomsLatestGridFragmentContainer = createFragmentContainer(
+export const ViewingRoomsLatestGridFragmentContainer = createPaginationContainer(
   ViewingRoomsLatestGrid,
   {
     viewingRooms: graphql`
-      fragment ViewingRoomsLatestGrid_viewingRooms on ViewingRoomConnection {
-        edges {
-          node {
-            slug
-            status
-            title
-            # TODO: Need to either figure out how to get dimensions here
-            # or request a square vervion
-            heroImageURL
-            distanceToOpen(short: true)
-            distanceToClose(short: true)
-            partner {
-              name
-            }
-            artworksConnection(first: 2) {
-              totalCount
-              edges {
-                node {
-                  image {
-                    square: url(version: "square")
-                    regular: url(version: "large")
+      fragment ViewingRoomsLatestGrid_viewingRooms on Viewer
+        @argumentDefinitions(
+          count: { type: "Int" }
+          after: { type: "String" }
+        ) {
+        viewingRoomsConnection(first: $count, after: $after)
+          @connection(key: "ViewingRoomsLatestGrid_viewingRoomsConnection") {
+          edges {
+            node {
+              slug
+              status
+              title
+              # TODO: Need to either figure out how to get dimensions here
+              # or request a square vervion
+              heroImageURL
+              distanceToOpen(short: true)
+              distanceToClose(short: true)
+              partner {
+                name
+              }
+              artworksConnection(first: 2) {
+                totalCount
+                edges {
+                  node {
+                    image {
+                      square: url(version: "square")
+                      regular: url(version: "large")
+                    }
                   }
                 }
               }
             }
           }
+        }
+      }
+    `,
+  },
+  {
+    direction: "forward",
+    getConnectionFromProps(props) {
+      return props.viewingRooms.viewingRoomsConnection
+    },
+    getFragmentVariables(prevVars, totalCount) {
+      return {
+        ...prevVars,
+        count: totalCount,
+      }
+    },
+    getVariables(props, { count, cursor }, fragmentVariables) {
+      return {
+        // in most cases, for variables other than connection filters like
+        // `first`, `after`, etc. you may want to use the previous values.
+        ...fragmentVariables,
+        count,
+        after: cursor,
+      }
+    },
+    query: graphql`
+      query ViewingRoomsLatestGrid_ViewingRoomsAppQuery(
+        $count: Int!
+        $after: String
+      ) {
+        allViewingRooms: viewer {
+          ...ViewingRoomsApp_allViewingRooms
+            @arguments(count: $count, after: $after)
         }
       }
     `,
