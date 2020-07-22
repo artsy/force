@@ -19,7 +19,7 @@ import { useSystemContext } from "v2/Artsy"
 import { Intent } from "@artsy/cohesion"
 import { resize } from "v2/Utils/resizer"
 import styled from "styled-components"
-import theme from "../../../Assets/Theme"
+import theme from "v2/Assets/Theme"
 
 interface ArtistSeriesHeaderProps {
   artistSeries: ArtistSeriesHeader_artistSeries

@@ -6,7 +6,6 @@ import { ArtistSeriesApp_QueryRawResponse } from "v2/__generated__/ArtistSeriesA
 import { ArtistSeriesApp_UnfoundTest_QueryRawResponse } from "v2/__generated__/ArtistSeriesApp_UnfoundTest_Query.graphql"
 import { Breakpoint } from "@artsy/palette"
 import { HeaderImage } from "../Components/ArtistSeriesHeader"
-import { resize } from "v2/Utils/resizer"
 
 jest.unmock("react-relay")
 jest.mock("v2/Artsy/Router/useRouter", () => ({
@@ -63,7 +62,8 @@ describe("ArtistSeriesApp", () => {
       describe("ArtistSeriesArtworksFilter", () => {
         it("renders correctly", async () => {
           const wrapper = await getWrapper()
-          expect(wrapper.find("ArtworkGrid").length).toBe(2)
+          expect(wrapper.find("ArtworkFilterArtworkGrid").length).toBe(1)
+          expect(wrapper.find("GridItem__ArtworkGridItem").length).toBe(2)
         })
       })
 
@@ -80,10 +80,8 @@ describe("ArtistSeriesApp", () => {
 
             it("has a correctly sized header image", async () => {
               const wrapper = await getWrapper()
-              const expectedUrl = resize(
-                ArtistSeriesAppFixture.artistSeries.image.url,
-                { height: 400 }
-              )
+              const expectedUrl =
+                "https://d7hftxdivxxvm.cloudfront.net?resize_to=height&src=https%3A%2F%2Ftest.artsy.net%2Fpumpkins-header-image.jpg&height=400&quality=80"
               expect(wrapper.find(HeaderImage).props().src).toBe(expectedUrl)
             })
           })
@@ -112,10 +110,8 @@ describe("ArtistSeriesApp", () => {
 
             it("has a correctly sized header image", async () => {
               const wrapper = await getWrapper("xs")
-              const expectedUrl = resize(
-                ArtistSeriesAppFixture.artistSeries.image.url,
-                { height: 180, width: 180 }
-              )
+              const expectedUrl =
+                "https://d7hftxdivxxvm.cloudfront.net?resize_to=fit&src=https%3A%2F%2Ftest.artsy.net%2Fpumpkins-header-image.jpg&width=180&height=180&quality=80"
               expect(wrapper.find(HeaderImage).props().src).toBe(expectedUrl)
             })
           })
