@@ -11,35 +11,35 @@ import {
 } from "@artsy/palette"
 
 interface ViewingRoomCarouselProps {
-  items: ReadonlyArray<any>
-  itemRender: (slide: any, slideIndex: number) => JSX.Element
+  data: ReadonlyArray<any>
+  render: (slide: any, slideIndex: number) => JSX.Element
   height: number[] | number
   maxWidth?: string | number
-  justifyCarousel?: string
+  justifyContent?: string
 }
 
 export const ViewingRoomCarousel: React.FC<ViewingRoomCarouselProps> = ({
-  items,
-  itemRender,
+  data,
+  render,
   height,
-  maxWidth,
-  justifyCarousel,
+  maxWidth = breakpoints.lg,
+  justifyContent = "center",
 }) => {
   const computeScrollPercent = selectedIndex =>
-    ((selectedIndex + 1) / items.length) * 100
+    ((selectedIndex + 1) / data.length) * 100
   const [scrollPercent, setScrollPercent] = useState(computeScrollPercent(0))
   const update = flowRight(setScrollPercent, computeScrollPercent)
-  const showProgressBar = items.length > 1
+  const showProgressBar = data.length > 1
 
   return (
     <Box width="100%">
       <Flex
         height={height}
-        maxWidth={maxWidth ? maxWidth : breakpoints.lg}
+        maxWidth={maxWidth}
         m="auto"
         my={2}
         position="relative"
-        justifyContent={justifyCarousel ? justifyCarousel : "center"}
+        justifyContent={justifyContent}
       >
         <Carousel
           options={{
@@ -49,10 +49,10 @@ export const ViewingRoomCarousel: React.FC<ViewingRoomCarouselProps> = ({
             groupCells: 1,
             pageDots: false,
           }}
-          data={items}
+          data={data}
           height={height}
           onDragEnd={({ flickity }) => update(flickity.selectedIndex)}
-          render={itemRender}
+          render={render}
           renderLeftArrow={({ currentSlideIndex, flickity }) => {
             const opacity = currentSlideIndex === 0 ? 0 : 1
             return (
@@ -67,7 +67,7 @@ export const ViewingRoomCarousel: React.FC<ViewingRoomCarouselProps> = ({
             )
           }}
           renderRightArrow={({ currentSlideIndex, flickity }) => {
-            const opacity = currentSlideIndex === items.length - 1 ? 0 : 1
+            const opacity = currentSlideIndex === data.length - 1 ? 0 : 1
             return (
               <Arrow
                 direction="right"

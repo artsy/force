@@ -29,8 +29,8 @@ const ViewingRoomWorksRoute: React.FC<WorksRouteProps> = ({ viewingRoom }) => {
           <Box key={artwork.internalID} id={artwork.internalID}>
             <ViewingRoomCarousel
               height={carouselHeight}
-              items={artwork.images}
-              itemRender={carouselItemRender}
+              data={artwork.images}
+              render={carouselItemRender}
             />
             <Spacer my={2} />
             <Box mb={9} px={[2, 0]}>

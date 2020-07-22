@@ -18,7 +18,6 @@ export const ViewingRoomsFeaturedRail: React.FC<ViewingRoomsFeaturedRailProps> =
     })
     .filter(Boolean)
 
-  const carouselHeight = 380
   const carouselItemRender = (
     {
       heroImageURL,
@@ -52,11 +51,11 @@ export const ViewingRoomsFeaturedRail: React.FC<ViewingRoomsFeaturedRailProps> =
       <Box>
         <Sans size="5">Featured</Sans>
         <ViewingRoomCarousel
-          height={carouselHeight}
-          items={featuredViewingRoomsForRail}
-          itemRender={carouselItemRender}
+          height={380}
+          data={featuredViewingRoomsForRail}
+          render={carouselItemRender}
           maxWidth="100%"
-          justifyCarousel="left"
+          justifyContent="left"
         />
       </Box>
     )
