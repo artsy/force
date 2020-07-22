@@ -1,6 +1,6 @@
 import { Flex } from "@artsy/palette"
 import Input from "v2/Components/Input"
-import React from "react"
+import React, { useState } from "react"
 
 export type PhoneNumber = string
 
@@ -16,54 +16,48 @@ export interface PhoneNumberFormProps {
   errors: PhoneNumberError
   touched: PhoneNumberTouched
   label: string
+  id: string
 }
 
-interface PhoneNumberFormState {
-  phoneNumber: string
-}
+export const PhoneNumberForm: React.FC<PhoneNumberFormProps> = ({
+  errors,
+  id,
+  label,
+  onChange,
+  touched,
+  value,
+}) => {
+  const [phoneNumber, setPhoneNumber] = useState<string>(
+    value || emptyPhoneNumber
+  )
 
-export class PhoneNumberForm extends React.Component<
-  PhoneNumberFormProps,
-  PhoneNumberFormState
-  > {
-  state = {
-    phoneNumber: this.props.value || emptyPhoneNumber,
+  const changeEventHandler = () => (ev: React.FormEvent<HTMLInputElement>) => {
+    onChangeValue(ev.currentTarget.value)
   }
 
-  changeEventHandler = () => (ev: React.FormEvent<HTMLInputElement>) => {
-    this.onChangeValue(ev.currentTarget.value)
+  const onChangeValue = (value: string) => {
+    setPhoneNumber(value)
+    onChange(phoneNumber)
   }
 
-  changeValueHandler = () => (value: string) => {
-    this.onChangeValue(value)
+  const getError = () => {
+    return (touched && errors) || ""
   }
 
-  onChangeValue = (value: string) => {
-    this.setState({ phoneNumber: value }, () => {
-      this.props.onChange(this.state.phoneNumber)
-    })
-  }
-
-  getError = () => {
-    return (this.props.touched && this.props.errors) || ""
-  }
-
-  render() {
-    return (
-      <Flex flexDirection="column" mb={2}>
-        <Input
-          id="PhoneNumberForm_phoneNumber"
-          title="Phone number"
-          type="tel"
-          description={this.props.label}
-          placeholder="Add phone"
-          pattern="[^a-z]+"
-          value={this.props.value}
-          onChange={this.changeEventHandler()}
-          error={this.getError()}
-          block
-        />
-      </Flex>
-    )
-  }
+  return (
+    <Flex flexDirection="column" mb={2}>
+      <Input
+        id={id}
+        title="Phone number"
+        type="tel"
+        description={label}
+        placeholder="Add phone"
+        pattern="[^a-z]+"
+        value={value}
+        onChange={changeEventHandler()}
+        error={getError()}
+        block
+      />
+    </Flex>
+  )
 }

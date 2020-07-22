@@ -1,5 +1,6 @@
 import {
   BorderedRadio,
+  Box,
   Button,
   Col,
   Collapse,
@@ -8,7 +9,6 @@ import {
   Row,
   Sans,
   Spacer,
-  Box,
 } from "@artsy/palette"
 import { Shipping_order } from "v2/__generated__/Shipping_order.graphql"
 import {
@@ -409,6 +409,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
                   />
                   <Spacer mb={2} />
                   <PhoneNumberForm
+                    id="PhoneNumberForm_phoneNumber"
                     value={phoneNumber}
                     errors={phoneNumberError}
                     touched={phoneNumberTouched}
@@ -419,6 +420,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
 
                 <Collapse open={this.state.shippingOption === "PICKUP"}>
                   <PhoneNumberForm
+                    id="PhoneNumberForm_pickupPhoneNumber"
                     value={phoneNumber}
                     errors={phoneNumberError}
                     touched={phoneNumberTouched}
