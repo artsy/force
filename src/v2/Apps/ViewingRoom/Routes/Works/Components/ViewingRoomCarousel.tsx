@@ -11,11 +11,11 @@ import {
 } from "@artsy/palette"
 
 interface ViewingRoomCarouselProps {
-  items: any
-  itemRender: any
-  height: any
-  maxWidth?
-  justifyCarousel?
+  items: ReadonlyArray<any>
+  itemRender: (slide: any, slideIndex: number) => JSX.Element
+  height: number[] | number
+  maxWidth?: string | number
+  justifyCarousel?: string
 }
 
 export const ViewingRoomCarousel: React.FC<ViewingRoomCarouselProps> = ({

@@ -15,7 +15,7 @@ const ViewingRoomWorksRoute: React.FC<WorksRouteProps> = ({ viewingRoom }) => {
     resized: { url, width, height },
     internalID,
     title,
-  }) => {
+  }): React.ReactElement => {
     return (
       <Box key={internalID} width="auto" height={carouselHeight} mr="2px">
         <Image src={url} alt={title} width="auto" height={carouselHeight} />

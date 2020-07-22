@@ -30,7 +30,7 @@ export const ViewingRoomsFeaturedRail: React.FC<ViewingRoomsFeaturedRailProps> =
       distanceToClose,
     },
     slideIndex
-  ) => {
+  ): React.ReactElement => {
     const tag = getTagProps(status, distanceToOpen, distanceToClose)
     return (
       <Flex flexDirection="row">
