@@ -1,6 +1,4 @@
 import React, { useState } from "react"
-import { createFragmentContainer, graphql } from "react-relay"
-import { ViewingRoomCarousel_artwork } from "v2/__generated__/ViewingRoomCarousel_artwork.graphql"
 import { Carousel } from "v2/Components/Carousel"
 import { flowRight } from "lodash"
 
@@ -8,35 +6,40 @@ import {
   Box,
   ChevronIcon,
   Flex,
-  Image,
   ProgressBar,
   breakpoints,
 } from "@artsy/palette"
 
 interface ViewingRoomCarouselProps {
-  artwork: ViewingRoomCarousel_artwork
+  data: ReadonlyArray<any>
+  render: (slide: any, slideIndex: number) => JSX.Element
+  height: number[] | number
+  maxWidth?: string | number
+  justifyContent?: string
 }
 
-const ViewingRoomCarousel: React.FC<ViewingRoomCarouselProps> = ({
-  artwork: { title, images },
+export const ViewingRoomCarousel: React.FC<ViewingRoomCarouselProps> = ({
+  data,
+  render,
+  height,
+  maxWidth = breakpoints.lg,
+  justifyContent = "center",
 }) => {
   const computeScrollPercent = selectedIndex =>
-    ((selectedIndex + 1) / images.length) * 100
+    ((selectedIndex + 1) / data.length) * 100
   const [scrollPercent, setScrollPercent] = useState(computeScrollPercent(0))
   const update = flowRight(setScrollPercent, computeScrollPercent)
-  const showProgressBar = images.length > 1
-
-  const CarouselHeight = [350, 550]
+  const showProgressBar = data.length > 1
 
   return (
     <Box width="100%">
       <Flex
-        height={CarouselHeight}
-        maxWidth={breakpoints.lg}
+        height={height}
+        maxWidth={maxWidth}
         m="auto"
         my={2}
         position="relative"
-        justifyContent="center"
+        justifyContent={justifyContent}
       >
         <Carousel
           options={{
@@ -46,26 +49,10 @@ const ViewingRoomCarousel: React.FC<ViewingRoomCarouselProps> = ({
             groupCells: 1,
             pageDots: false,
           }}
-          data={images}
-          height={CarouselHeight}
+          data={data}
+          height={height}
           onDragEnd={({ flickity }) => update(flickity.selectedIndex)}
-          render={({ resized: { url, width, height }, internalID }) => {
-            return (
-              <Box
-                key={internalID}
-                width="auto"
-                height={CarouselHeight}
-                mr="2px"
-              >
-                <Image
-                  src={url}
-                  alt={title}
-                  width="auto"
-                  height={CarouselHeight}
-                />
-              </Box>
-            )
-          }}
+          render={render}
           renderLeftArrow={({ currentSlideIndex, flickity }) => {
             const opacity = currentSlideIndex === 0 ? 0 : 1
             return (
@@ -80,7 +67,7 @@ const ViewingRoomCarousel: React.FC<ViewingRoomCarouselProps> = ({
             )
           }}
           renderRightArrow={({ currentSlideIndex, flickity }) => {
-            const opacity = currentSlideIndex === images.length - 1 ? 0 : 1
+            const opacity = currentSlideIndex === data.length - 1 ? 0 : 1
             return (
               <Arrow
                 direction="right"
@@ -108,27 +95,7 @@ const ViewingRoomCarousel: React.FC<ViewingRoomCarouselProps> = ({
   )
 }
 
-export const ViewingRoomCarouselFragmentContainer = createFragmentContainer(
-  ViewingRoomCarousel,
-  {
-    artwork: graphql`
-      fragment ViewingRoomCarousel_artwork on Artwork {
-        title
-        images {
-          internalID
-          # requesting the largest size and resizing it down to 550*2 for retina
-          resized(height: 1100, version: "normalized") {
-            url
-            width
-            height
-          }
-        }
-      }
-    `,
-  }
-)
-
-const Arrow: React.FC<{
+export const Arrow: React.FC<{
   direction: "left" | "right"
   onClick: () => void
   opacity: number

@@ -63,7 +63,7 @@ describe("ViewingRoomsApp", () => {
       it("renders proper tags", async () => {
         const wrapper = await getWrapper()
         const html = wrapper.html()
-        expect(wrapper.find("CardTag").length).toBe(2)
+        expect(wrapper.find("CardTag").length).toBe(3)
         expect(html).toContain("Opening soon")
         expect(html).toContain("3 days left")
         expect(html).not.toContain("Closed")
@@ -82,8 +82,28 @@ describe("ViewingRoomsApp", () => {
     describe("Viewing rooms featured rail", () => {
       it("renders correct viewing rooms", async () => {
         const wrapper = await getWrapper()
-        const html = wrapper.html()
+        const featuredRail = wrapper.find("ViewingRoomsFeaturedRail")
+        const html = featuredRail.html()
         expect(html).toContain("Featured Live VR")
+      })
+
+      it("renders proper tags", async () => {
+        const wrapper = await getWrapper()
+        const featuredRail = wrapper.find("ViewingRoomsFeaturedRail")
+        const html = featuredRail.html()
+        expect(featuredRail.find("CardTag").length).toBe(1)
+        expect(html).toContain("4 days left")
+      })
+
+      it("renders proper links to VRs", async () => {
+        const wrapper = await getWrapper()
+        const featuredRail = wrapper.find("ViewingRoomsFeaturedRail")
+        const html = featuredRail.html()
+        expect(html).not.toContain(`href="/viewing-room/test-draft"`)
+        expect(html).not.toContain(`href="/viewing-room/test-scheduled"`)
+        expect(html).not.toContain(`href="/viewing-room/test-live"`)
+        expect(html).not.toContain(`href="/viewing-room/test-closed"`)
+        expect(html).toContain(`href="/viewing-room/test-featured-live"`)
       })
     })
   })
@@ -235,6 +255,13 @@ const ViewingRoomsAppFixture: ViewingRoomsApp_Test_QueryRawResponse = {
           status: "live",
           slug: "test-featured-live",
           title: "Featured Live VR",
+          heroImageURL: "https://www.example.com/featured-live.jpg",
+          distanceToOpen: null,
+          distanceToClose: "4 days",
+          partner: {
+            id: "featured",
+            name: "Featured",
+          },
         },
       },
     ],
