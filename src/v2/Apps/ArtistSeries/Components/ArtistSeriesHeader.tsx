@@ -19,7 +19,7 @@ import { useSystemContext } from "v2/Artsy"
 import { Intent } from "@artsy/cohesion"
 import { resize } from "v2/Utils/resizer"
 import styled from "styled-components"
-import theme from "v2/Assets/Theme"
+import { unitlessBreakpoints } from "@artsy/palette"
 
 interface ArtistSeriesHeaderProps {
   artistSeries: ArtistSeriesHeader_artistSeries
@@ -121,9 +121,16 @@ const ArtistSeriesHeaderLarge: React.FC<ArtistSeriesHeaderProps> = props => {
                 </Sans>
               </Flex>
             </Col>
-            <AlignedCol sm={6}>
-              <HeaderImage src={resize(image.url, { height: 400 })} />
-            </AlignedCol>
+            <Col sm={6}>
+              <Box
+                height={"100%"}
+                display="flex"
+                justifyContent="flex-end"
+                alignItems="center"
+              >
+                <HeaderImage src={resize(image.url, { height: 400 })} />
+              </Box>
+            </Col>
           </Row>
         </StyledGrid>
       </Box>
@@ -161,7 +168,7 @@ const ArtistSeriesHeaderSmall: React.FC<ArtistSeriesHeaderProps> = props => {
 }
 
 const StyledGrid = styled(Grid)`
-  @media (max-width: ${theme.flexboxgrid.breakpoints.lg - 1}px) {
+  @media (max-width: ${unitlessBreakpoints.lg - 1}px) {
     max-width: 100%;
   }
 `
@@ -169,22 +176,16 @@ const StyledGrid = styled(Grid)`
 export const HeaderImage = styled(Image)`
   border-radius: 2px;
 
-  @media (max-width: ${theme.flexboxgrid.breakpoints.sm - 1}px) {
+  @media (max-width: ${unitlessBreakpoints.sm - 1}px) {
     max-width: 180px;
     max-height: 180px;
     margin: auto;
   }
 
-  @media (min-width: ${theme.flexboxgrid.breakpoints.sm}px) {
+  @media (min-width: ${unitlessBreakpoints.sm}px) {
     max-height: 400px;
     max-width: 100%;
   }
-`
-
-const AlignedCol = styled(Col)`
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
 `
 
 export const ArtistSeriesHeaderFragmentContainer = createFragmentContainer(
