@@ -18,6 +18,10 @@ export const ViewingRoomsFeaturedRail: React.FC<ViewingRoomsFeaturedRailProps> =
     })
     .filter(Boolean)
 
+  if (featuredViewingRoomsForRail.length === 0) {
+    return null
+  }
+
   const carouselItemRender = (
     {
       heroImageURL,
@@ -28,7 +32,7 @@ export const ViewingRoomsFeaturedRail: React.FC<ViewingRoomsFeaturedRailProps> =
       distanceToOpen,
       distanceToClose,
     },
-    slideIndex
+    slideIndex: number
   ): React.ReactElement => {
     const tag = getTagProps(status, distanceToOpen, distanceToClose)
     return (
@@ -47,18 +51,16 @@ export const ViewingRoomsFeaturedRail: React.FC<ViewingRoomsFeaturedRailProps> =
   }
 
   return (
-    featuredViewingRoomsForRail.length > 0 && (
-      <Box>
-        <Sans size="5">Featured</Sans>
-        <ViewingRoomCarousel
-          height={380}
-          data={featuredViewingRoomsForRail}
-          render={carouselItemRender}
-          maxWidth="100%"
-          justifyContent="left"
-        />
-      </Box>
-    )
+    <Box>
+      <Sans size="5">Featured</Sans>
+      <ViewingRoomCarousel
+        height={380}
+        data={featuredViewingRoomsForRail}
+        render={carouselItemRender}
+        maxWidth="100%"
+        justifyContent="left"
+      />
+    </Box>
   )
 }
 export const ViewingRoomsFeaturedRailFragmentContainer = createFragmentContainer(
