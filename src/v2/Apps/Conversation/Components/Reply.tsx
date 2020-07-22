@@ -6,11 +6,11 @@ import {
   color,
   media,
   space,
+  themeProps,
 } from "@artsy/palette"
 import { Conversation_conversation } from "v2/__generated__/Conversation_conversation.graphql"
 import React, { useRef, useState } from "react"
 import { Environment, RelayRefetchProps } from "react-relay"
-import { unica } from "v2/Assets/Fonts"
 import styled from "styled-components"
 import { SendConversationMessage } from "../Mutation/SendConversationMessage"
 import { useTracking } from "v2/Artsy/Analytics"
@@ -41,7 +41,7 @@ const StyledTextArea = styled.textarea<{ height?: string }>`
   resize: none;
   min-height: 40px;
   font-size: 16px;
-  ${unica("s16")};
+  font-family: ${themeProps.fontFamily.sans.regular as string};
   padding-top: ${space(0.5)}px;
   padding-left: ${space(1)}px;
   padding-right: ${space(1)}px;
