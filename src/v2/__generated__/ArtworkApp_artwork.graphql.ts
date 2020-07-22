@@ -69,7 +69,14 @@ return {
   "name": "ArtworkApp_artwork",
   "type": "Artwork",
   "metadata": null,
-  "argumentDefinitions": [],
+  "argumentDefinitions": [
+    {
+      "kind": "LocalArgument",
+      "name": "shouldFetchArtistSeriesData",
+      "type": "Boolean!",
+      "defaultValue": null
+    }
+  ],
   "selections": [
     (v0/*: any*/),
     (v1/*: any*/),
@@ -200,7 +207,13 @@ return {
     {
       "kind": "FragmentSpread",
       "name": "OtherWorks_artwork",
-      "args": null
+      "args": [
+        {
+          "kind": "Variable",
+          "name": "shouldFetchArtistSeriesData",
+          "variableName": "shouldFetchArtistSeriesData"
+        }
+      ]
     },
     {
       "kind": "FragmentSpread",
@@ -210,5 +223,5 @@ return {
   ]
 };
 })();
-(node as any).hash = 'b5ee0e1dcc98c7bdd728725f012674a8';
+(node as any).hash = '164faee917283ce6cb127d9a3ee0ca1d';
 export default node;

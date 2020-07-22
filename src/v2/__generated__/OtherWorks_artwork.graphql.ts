@@ -25,7 +25,7 @@ export type OtherWorks_artwork = {
     readonly context: {
         readonly __typename: string;
     } | null;
-    readonly " $fragmentRefs": FragmentRefs<"RelatedWorksArtworkGrid_artwork">;
+    readonly " $fragmentRefs": FragmentRefs<"RelatedWorksArtworkGrid_artwork" | "ArtistSeriesArtworkRail_artwork">;
     readonly " $refType": "OtherWorks_artwork";
 };
 export type OtherWorks_artwork$data = OtherWorks_artwork;
@@ -56,7 +56,14 @@ return {
   "name": "OtherWorks_artwork",
   "type": "Artwork",
   "metadata": null,
-  "argumentDefinitions": [],
+  "argumentDefinitions": [
+    {
+      "kind": "LocalArgument",
+      "name": "shouldFetchArtistSeriesData",
+      "type": "Boolean!",
+      "defaultValue": false
+    }
+  ],
   "selections": [
     {
       "kind": "LinkedField",
@@ -178,9 +185,21 @@ return {
       "kind": "FragmentSpread",
       "name": "RelatedWorksArtworkGrid_artwork",
       "args": null
+    },
+    {
+      "kind": "Condition",
+      "passingValue": true,
+      "condition": "shouldFetchArtistSeriesData",
+      "selections": [
+        {
+          "kind": "FragmentSpread",
+          "name": "ArtistSeriesArtworkRail_artwork",
+          "args": null
+        }
+      ]
     }
   ]
 };
 })();
-(node as any).hash = '001b89e8373c47657f58f46c8886d829';
+(node as any).hash = '9f92c6f7ef8640d934350a89ba7ec1c7';
 export default node;

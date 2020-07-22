@@ -221,7 +221,7 @@ export class ArtworkApp extends React.Component<Props> {
 
           <Row>
             <Col>
-              <Box mt={6}>
+              <Box mt={3}>
                 <OtherWorks artwork={artwork} />
               </Box>
             </Col>
@@ -293,7 +293,10 @@ export const ArtworkAppFragmentContainer = createFragmentContainer(
   },
   {
     artwork: graphql`
-      fragment ArtworkApp_artwork on Artwork {
+      fragment ArtworkApp_artwork on Artwork
+        @argumentDefinitions(
+          shouldFetchArtistSeriesData: { type: "Boolean!" }
+        ) {
         slug
         internalID
         is_acquireable: isAcquireable
@@ -329,6 +332,7 @@ export const ArtworkAppFragmentContainer = createFragmentContainer(
         ...ArtworkDetails_artwork
         ...ArtworkImageBrowser_artwork
         ...OtherWorks_artwork
+          @arguments(shouldFetchArtistSeriesData: $shouldFetchArtistSeriesData)
         ...PricingContext_artwork
       }
     `,
