@@ -1,6 +1,6 @@
 import React from "react"
 import { Box, Image, Join, Spacer } from "@artsy/palette"
-import { ViewingRoomCarousel } from "./Components/ViewingRoomCarousel"
+import { ViewingRoomCarousel } from "../../Components/ViewingRoomCarousel"
 import { ViewingRoomArtworkDetailsFragmentContainer as ViewingRoomArtworkDetails } from "./Components/ViewingRoomArtworkDetails"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ViewingRoomWorksRoute_viewingRoom } from "v2/__generated__/ViewingRoomWorksRoute_viewingRoom.graphql"
