@@ -2,10 +2,11 @@ import { ArtistMeta_artist } from "v2/__generated__/ArtistMeta_artist.graphql"
 import { Person as SeoDataForArtist } from "v2/Components/Seo/Person"
 import { identity, pickBy } from "lodash"
 import React, { Component } from "react"
-import { Link, Meta, Title } from "react-head"
+import { Meta, Title } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
 import { data as sd } from "sharify"
 import { get } from "v2/Utils/get"
+import { ArtistMetaCanonicalLinkFragmentContainer as ArtistMetaCanonicalLink } from "./ArtistMetaCanonicalLink"
 
 interface Props {
   artist: ArtistMeta_artist
@@ -196,7 +197,9 @@ export class ArtistMeta extends Component<Props> {
     return (
       <>
         <Title>{artist.meta.title}</Title>
-        <Link rel="canonical" href={`${sd.APP_URL}/artist/${artist.slug}`} />
+
+        <ArtistMetaCanonicalLink artist={artist} />
+
         <Meta property="og:title" content={artist.meta.title} />
         <Meta name="description" content={artist.meta.description} />
         <Meta property="og:description" content={artist.meta.description} />
@@ -301,6 +304,7 @@ export const ArtistMetaFragmentContainer = createFragmentContainer(ArtistMeta, {
           }
         }
       }
+      ...ArtistMetaCanonicalLink_artist
     }
   `,
 })

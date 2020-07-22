@@ -200,6 +200,7 @@ const overviewArtist: routes_ArtistTopLevelQueryRawResponse["artist"] = {
       edges: [
         {
           node: {
+            __typename: "Gene",
             id: "opaque-gene-id",
             slug: "cubism",
           },

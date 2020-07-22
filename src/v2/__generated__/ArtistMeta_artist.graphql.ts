@@ -69,6 +69,7 @@ export type ArtistMeta_artist = {
             } | null;
         } | null> | null;
     } | null;
+    readonly " $fragmentRefs": FragmentRefs<"ArtistMetaCanonicalLink_artist">;
     readonly " $refType": "ArtistMeta_artist";
 };
 export type ArtistMeta_artist$data = ArtistMeta_artist;
@@ -440,9 +441,14 @@ return {
           ]
         }
       ]
+    },
+    {
+      "kind": "FragmentSpread",
+      "name": "ArtistMetaCanonicalLink_artist",
+      "args": null
     }
   ]
 };
 })();
-(node as any).hash = '658c024a253ef42394b3e4d3317b78d2';
+(node as any).hash = '8f5b53faf93d5c15172918be714fa039';
 export default node;
