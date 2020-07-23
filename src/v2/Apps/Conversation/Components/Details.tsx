@@ -48,6 +48,7 @@ const DetailsContainer = styled(Flex)<{ opacity?: 0 | 1; transform?: string }>`
     transform: none;
     opacity: ${({ opacity }: { opacity?: 0 | 1 }) => opacity};
     top: 114px;
+    position: fixed;
     ${zIndex}
   `}
 `
