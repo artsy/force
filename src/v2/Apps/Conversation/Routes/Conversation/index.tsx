@@ -29,7 +29,7 @@ const ConstrainedHeightContainer = styled(Box)`
 `
 
 const ConversationContainer = styled(Flex)`
-  height: 100%;
+  height: calc(100% - 85px);
   & > * {
     overflow-x: hidden;
     overflow-y: auto;
