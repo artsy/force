@@ -28,7 +28,7 @@ const BorderedFlex = styled(Flex)<BorderedFlexProps>`
 
 const ConversationHeaderContainer = styled(Flex)`
   position: fixed;
-  top: 60px;
+  top: 59px;
   left: 0;
   right: 0;
   border-bottom: 1px solid ${color("black10")};
