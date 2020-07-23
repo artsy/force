@@ -1,4 +1,4 @@
-import { Box, Flex, Title } from "@artsy/palette"
+import { Box, Flex, Title, media } from "@artsy/palette"
 import { Conversation_me } from "v2/__generated__/Conversation_me.graphql"
 import { AppContainer } from "v2/Apps/Components/AppContainer"
 import { ConversationFragmentContainer as Conversation } from "v2/Apps/Conversation/Components/Conversation"
@@ -30,6 +30,9 @@ const ConstrainedHeightContainer = styled(Box)`
 
 const ConversationContainer = styled(Flex)`
   height: calc(100% - 85px);
+  ${media.md`
+    height: 100%;
+  `}
   & > * {
     overflow-x: hidden;
     overflow-y: auto;
