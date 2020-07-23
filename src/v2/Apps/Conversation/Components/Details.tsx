@@ -43,7 +43,7 @@ const DetailsContainer = styled(Flex)<{ opacity?: 0 | 1; transform?: string }>`
     ${DETAIL_BOX_MD_ANIMATION}
     z-index: 0;
   `}
-  ${media.xs`
+  ${media.md`
     ${DETAIL_BOX_XS_ANIMATION}
     transform: none;
     opacity: ${({ opacity }: { opacity?: 0 | 1 }) => opacity};
@@ -129,8 +129,8 @@ export const Details: FC<DetailsProps> = ({
       justifyContent="flex-start"
       height={[
         "calc(100% - 115px)",
-        "calc(100% - 145px)",
-        "calc(100% - 145px)",
+        "calc(100% - 115px)",
+        null,
         "calc(100% - 145px)",
         "100%",
       ]}
