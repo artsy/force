@@ -1,5 +1,4 @@
 _ = require 'underscore'
-Q = require 'bluebird-q'
 Backbone = require 'backbone'
 { SESSION_ID } = require('sharify').data
 Geo = require './mixins/geo.coffee'
@@ -65,8 +64,8 @@ module.exports = class User extends Backbone.Model
   prepareForInquiry: ->
     @findOrCreate silent: true
       .then =>
-        Q.all [
-          Q.promise (resolve) =>
+        Promise.all [
+          new Promise (resolve) =>
             if @isLoggedIn()
               resolve()
             else

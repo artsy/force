@@ -13,7 +13,7 @@ module.exports = (key, defaultPageId = null, cb = null) ->
       .then ->
         cb(modal) if cb
       .then done
-      .fail ->
+      .catch ->
         modal.close()
 
   modal

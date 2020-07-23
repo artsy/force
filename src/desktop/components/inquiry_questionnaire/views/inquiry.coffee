@@ -1,4 +1,3 @@
-Q = require 'bluebird-q'
 _ = require 'underscore'
 StepView = require './step.coffee'
 Form = require '../../form/index.coffee'
@@ -31,17 +30,15 @@ module.exports = class Inquiry extends StepView
     hasSeen 'inquiry-nudge'
 
   maybeSaveInquiry: (data) ->
-    promise = Q.defer()
+    new Promise((resolve) =>
+      attributes = _.extend { contact_gallery: true }, data
 
-    attributes = _.extend { contact_gallery: true }, data
-
-    if @user.isLoggedOut()
-      @inquiry.set attributes
-      promise.resolve(true)
-    else
-      @inquiry.save attributes, success: -> promise.resolve(true)
-
-    promise
+      if @user.isLoggedOut()
+        @inquiry.set attributes
+        resolve(true)
+      else
+        @inquiry.save attributes, success: -> resolve(true)
+    )
 
   serialize: (e) ->
     e.preventDefault()
@@ -69,15 +66,15 @@ module.exports = class Inquiry extends StepView
         .related().collectorProfile
         .related().userFairActions.attendFair @artwork.related().fairs.first()
 
-    @__serialize__ = Q.allSettled [
+    @__serialize__ = Promise.allSettled [
       @maybeSaveInquiry data
       @user.save @inquiry.pick('name', 'email')
       @user.related().account.fetch()
-      Q.promise (resolve) -> _.delay resolve, 1000
+      new Promise (resolve) -> _.delay resolve, 1000
     ]
       .then =>
         @state.set 'inquiry', @inquiry
-        Q.allSettled(
+        Promise.allSettled(
           @user
             .related().collectorProfile
             .related().userFairActions.invoke 'save'

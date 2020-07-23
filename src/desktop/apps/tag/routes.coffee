@@ -1,6 +1,6 @@
-Q = require 'bluebird-q'
 Backbone = require 'backbone'
 Tag = require '../../models/tag'
+require '../../../lib/promiseDone'
 
 @index = (req, res, next) ->
   tag = new Tag(id: req.params.id)

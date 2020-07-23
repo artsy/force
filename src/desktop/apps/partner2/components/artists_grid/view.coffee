@@ -1,7 +1,7 @@
 _ = require 'underscore'
-Q = require 'bluebird-q'
 Backbone = require 'backbone'
 PartnerArtists = require '../../../../collections/partner_artists.coffee'
+require '../../../../../lib/promiseDone'
 template = -> require('./index.jade') arguments...
 
 module.exports = class PartnerArtistsGridView extends Backbone.View

@@ -1,5 +1,4 @@
 _ = require 'underscore'
-Q = require 'bluebird-q'
 Items = require '../../collections/items'
 PartnerShows = require './shows'
 PartnerCities = require '../../collections/partner_cities'
@@ -10,7 +9,7 @@ PartnerFeaturedCities = require '../../collections/partner_featured_cities'
   partnerCities = new PartnerCities()
   partnerFeaturedCities = new PartnerFeaturedCities()
 
-  Q.all([
+  Promise.all([
     partnerCities.fetch()
     partnerFeaturedCities.fetch()
     shows.fetch(cache: true)
@@ -30,7 +29,7 @@ PartnerFeaturedCities = require '../../collections/partner_featured_cities'
 @onlineExlusive = (req, res, next) ->
   partnerCities = new PartnerCities()
   partnerFeaturedCities = new PartnerFeaturedCities()
-  Q.all([
+  Promise.all([
     partnerCities.fetch()
     partnerFeaturedCities.fetch()
   ]).then ->
@@ -48,7 +47,7 @@ PartnerFeaturedCities = require '../../collections/partner_featured_cities'
       size: pageSize
       displayable: true
       at_a_fair: false
-    Q.all([
+    Promise.all([
       upcoming.fetch(cache: true, data: _.defaults(status: 'upcoming', sort: 'start_at', criteria))
       current.fetch(cache: true, data: _.defaults(status: 'running', total_count: true, sort: 'end_at', criteria))
       past.fetch(cache: true, data: _.defaults(status: 'closed', criteria))
@@ -68,7 +67,7 @@ PartnerFeaturedCities = require '../../collections/partner_featured_cities'
   partnerCities = new PartnerCities()
   partnerFeaturedCities = new PartnerFeaturedCities()
 
-  Q.all([
+  Promise.all([
     partnerCities.fetch()
     partnerFeaturedCities.fetch()
   ]).then ->
@@ -92,7 +91,7 @@ PartnerFeaturedCities = require '../../collections/partner_featured_cities'
       displayable: true
       at_a_fair: false
 
-    Q.all([
+    Promise.all([
       upcoming.fetch(cache: true, data: _.defaults(status: 'upcoming', sort: 'start_at', criteria))
       current.fetch(cache: true, data: _.defaults(status: 'running', total_count: true, sort: 'end_at', criteria))
       past.fetch(cache: true, data: _.defaults(status: 'closed', criteria))

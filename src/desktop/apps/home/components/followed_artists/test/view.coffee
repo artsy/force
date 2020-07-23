@@ -4,7 +4,6 @@ sinon = require 'sinon'
 Backbone = require 'backbone'
 { resolve } = require 'path'
 { fabricate } = require '@artsy/antigravity'
-Q = require 'bluebird-q'
 Items = require '../../../../../collections/items.coffee'
 FollowedArtistsRailView = benv.requireWithJadeify require.resolve('../view.coffee'), ['template']
 
@@ -18,10 +17,10 @@ describe 'FollowedArtistsRailView', ->
 
     sinon.stub Backbone, 'sync'
       .onCall(0)
-      .returns Q.resolve fabricate 'artist', id: 'charles-broskoski'
+      .returns Promise.resolve fabricate 'artist', id: 'charles-broskoski'
       .onCall(1)
-      .returns Q.resolve fabricate 'artist', id: 'damon-zucconi'
-    
+      .returns Promise.resolve fabricate 'artist', id: 'damon-zucconi'
+
     @featuredArtists = new Items [
       fabricate 'featured_link' # href: /cat/bitty
       fabricate 'featured_link', href: 'https://www.artsy.net/artist/damon-zucconi'
@@ -36,11 +35,11 @@ describe 'FollowedArtistsRailView', ->
   beforeEach ->
     @view = new FollowedArtistsRailView
       el: $('body')
-    
+
   describe '#_parseAndFetchArtists', ->
     it 'filters out weird urls', ->
       @view._parseAndFetchArtists(@featuredArtists)
-        .then (artists) -> 
+        .then (artists) ->
           artists.length.should.equal 2
           artists[0].id.should.equal 'charles-broskoski'
           artists[1].id.should.equal 'damon-zucconi'

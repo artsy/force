@@ -3,7 +3,6 @@
  * DS102: Remove unnecessary code created because of implicit returns
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
  */
-const Q = require("bluebird-q")
 const _ = require("underscore")
 const sinon = require("sinon")
 const Backbone = require("backbone")
@@ -13,7 +12,7 @@ const { fabricate } = require("@artsy/antigravity")
 describe("Search routes", () =>
   describe("#index", () =>
     describe("success", function () {
-      beforeEach(() => sinon.stub(Backbone, "sync").returns(Q.resolve()))
+      beforeEach(() => sinon.stub(Backbone, "sync").returns(Promise.resolve()))
 
       afterEach(() => Backbone.sync.restore())
 

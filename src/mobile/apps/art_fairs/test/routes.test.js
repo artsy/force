@@ -10,7 +10,6 @@ const Backbone = require("backbone")
 const moment = require("moment")
 const rewire = require("rewire")
 const routes = rewire("../routes")
-const Q = require("bluebird-q")
 
 class OrderedSetsFixture extends Backbone.Collection {
   fetchAll() {
@@ -77,7 +76,7 @@ describe("#index", function () {
         this.upcomingFairs,
       ])
       return routes.__set__("metaphysics", () =>
-        Q.resolve({ fairs: this.fairs })
+        Promise.resolve({ fairs: this.fairs })
       )
     })
 

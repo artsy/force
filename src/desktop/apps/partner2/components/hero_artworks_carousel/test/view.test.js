@@ -13,6 +13,7 @@ const Partner = require("../../../../../models/partner.coffee")
 const Artwork = require("../../../../../models/artwork.coffee")
 const FilterArtworks = require("../../../../../collections/filter_artworks.coffee")
 const Artworks = require("../../../../../collections/artworks.coffee")
+require("../../../../../../lib/promiseDone")
 const { resolve } = require("path")
 const { fabricate } = require("@artsy/antigravity")
 

@@ -6,7 +6,6 @@
 const { fabricate } = require("@artsy/antigravity")
 const fixtures = require("../../../test/helpers/fixtures.coffee")
 const _ = require("underscore")
-const Q = require("bluebird-q")
 const sinon = require("sinon")
 const Backbone = require("backbone")
 const rewire = require("rewire")
@@ -103,7 +102,7 @@ describe("Fair Organization routes", function () {
         .onCall(1)
         .yieldsTo("success")
         .returns(
-          Q.promise((resolve, reject) => resolve(fabricate("fair_profile")))
+          new Promise((resolve, reject) => resolve(fabricate("fair_profile")))
         )
       Backbone.sync.yieldsTo("success")
       return routes
@@ -126,7 +125,7 @@ describe("Fair Organization routes", function () {
       Backbone.sync
         .onCall(1)
         .yieldsTo("error")
-        .returns(Q.promise((resolve, reject) => reject()))
+        .returns(new Promise((resolve, reject) => reject()))
       Backbone.sync.yieldsTo("success")
       return routes
         .fetchFairOrgData(this.req, this.res, (next = sinon.stub()))

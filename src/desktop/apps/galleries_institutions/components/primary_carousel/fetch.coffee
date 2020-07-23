@@ -1,5 +1,4 @@
 _ = require 'underscore'
-Q = require 'bluebird-q'
 Profile = require '../../../../models/profile.coffee'
 Profiles = require '../../../../collections/profiles.coffee'
 OrderedSets = require '../../../../collections/ordered_sets.coffee'
@@ -13,24 +12,24 @@ key =
 
 fetchFeaturedSet = (type) ->
   sets = new OrderedSets key: key[type]
-  Q(sets.fetchAll cache: true)
+  Promise.resolve(sets.fetchAll cache: true)
     .then ->
       profiles = sets.first().get 'items'
       showsCollections = profiles.map (profile) -> profile.related().owner.related().shows
-      Q.all(_.invoke showsCollections, 'fetch', cache: true).then ->
+      Promise.all(_.invoke showsCollections, 'fetch', cache: true).then ->
         profiles
 
 fetchWithParams = (params) ->
   partners = new FilterPartners
-  Q(partners.fetch(
+  Promise.resolve(partners.fetch(
     data: _.extend {}, params, eligible_for_carousel: true, size: 6, sort: '-random_score'
   ).then (results) ->
     profiles = new Profiles
-    Q.all(partners.map (partner) ->
+    Promise.all(partners.map (partner) ->
       profile = new Profile id: partner.get('default_profile_id')
       profiles.add profile
-      Q(profile.fetch(cache: true)).then ->
-        Q(profile.related().owner.related().shows.fetch cache: true)
+      Promise.resolve(profile.fetch(cache: true)).then ->
+        Promise.resolve(profile.related().owner.related().shows.fetch cache: true)
     ).then ->
       profiles
   )

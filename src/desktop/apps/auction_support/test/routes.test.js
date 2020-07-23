@@ -11,7 +11,6 @@ const Backbone = require("backbone")
 const { fabricate } = require("@artsy/antigravity")
 const CurrentUser = require("../../../models/current_user.coffee")
 const moment = require("moment")
-const Q = require("bluebird-q")
 
 const openSale = fabricate("sale", {
   name: "Awesome Sale",

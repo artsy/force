@@ -1,4 +1,3 @@
-Q = require 'bluebird-q'
 Backbone = require 'backbone'
 { defer } = require 'underscore'
 { Following, FollowButton } = require '../../../../components/follow_button/index.coffee'
@@ -43,7 +42,7 @@ module.exports = class CategoriesView extends QuasiInfiniteView
     @$(@selectors.collection)[if @renderCount is 0 then 'html' else 'append'] template
       categories: categories
 
-    Q.all categories.map (category) ->
+    Promise.all categories.map (category) ->
       category.related().artworks.fetch()
     .then =>
       categories.each (category) =>

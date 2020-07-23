@@ -1,4 +1,3 @@
-Promise = require 'bluebird-q'
 Backbone = require 'backbone'
 { stringify } = require 'qs'
 { map, groupBy, toArray, without } = require 'underscore'

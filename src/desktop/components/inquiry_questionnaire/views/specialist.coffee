@@ -1,4 +1,3 @@
-Q = require 'bluebird-q'
 _ = require 'underscore'
 StepView = require './step.coffee'
 Form = require '../../form/index.coffee'
@@ -21,8 +20,8 @@ module.exports = class Specialist extends StepView
     super
 
   setup: ->
-    @__representatives__ = Q @representatives.fetch()
-      .then => Q (@representative = @representatives.first())?.fetch()
+    @__representatives__ = Promise.resolve @representatives.fetch()
+      .then => Promise.resolve (@representative = @representatives.first())?.fetch()
       .finally => @done()
 
   serialize: (e) ->
@@ -33,7 +32,7 @@ module.exports = class Specialist extends StepView
 
     form.state 'loading'
 
-    @__serialize__ = Q.all [
+    @__serialize__ = Promise.all [
       @inquiry.set _.extend { contact_gallery: false }, form.data()
       @user.save @inquiry.pick('name', 'email')
     ]

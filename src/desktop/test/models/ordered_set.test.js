@@ -29,7 +29,7 @@ describe("OrderedSet", function () {
 
   afterEach(() => Backbone.sync.restore())
 
-  return xdescribe("#fetchItems", function () {
+  return describe("#fetchItems", function () {
     // FIXME: Promises do not resolve
     it("sets the items attribute", function () {
       this.orderedSet.fetchItems()

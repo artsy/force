@@ -3,7 +3,6 @@ sd = require('sharify').data
 Backbone = require 'backbone'
 Genes = require '../../collections/genes'
 { Fetch } = require 'artsy-backbone-mixins'
-Q = require 'bluebird-q'
 
 module.exports.index = (req, res, next) ->
   results = []

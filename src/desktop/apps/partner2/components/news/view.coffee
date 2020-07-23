@@ -1,10 +1,10 @@
 _ = require 'underscore'
-Q = require 'bluebird-q'
 Backbone = require 'backbone'
 PartnerShow = require '../../../../models/partner_show.coffee'
 PartnerShows = require '../../../../collections/partner_shows.coffee'
 PartnerShowEvents = require '../../../../collections/partner_show_events.coffee'
 initCarousel = require '../../../../components/merry_go_round/bottom_nav_mgr.coffee'
+require '../../../../../lib/promiseDone'
 template = -> require('./index.jade') arguments...
 { API_URL } = require('sharify').data
 
@@ -14,7 +14,11 @@ module.exports = class NewsView extends Backbone.View
     { @partner } = options
 
   startUp: ->
-    @fetch().spread(@consolidate).then(@render).done()
+    @fetch().then((results) =>
+      showEvents = results[0]
+      fairBooths = results[1]
+      @consolidate(showEvents, fairBooths)
+    ).then(@render).done()
 
   fetch: ->
     showEvents = new PartnerShowEvents
@@ -26,7 +30,7 @@ module.exports = class NewsView extends Backbone.View
       sort: 'start_at'
       size: 3
 
-    Q.allSettled([
+    Promise.allSettled([
       showEvents.fetch data: data
       fairBooths.fetch data: _.extend {}, data, at_a_fair: true
     ])

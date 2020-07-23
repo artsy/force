@@ -7,7 +7,6 @@ fetchLocationCarousel = require '../../components/location_carousel/index.coffee
 carouselTemplate = -> require('../../components/partner_cell_carousel/template.jade') arguments...
 PartnerCellCarouselView = require '../../components/partner_cell_carousel/view.coffee'
 facetDefaults = require '../../components/filter_facet/facet_defaults.coffee'
-Q = require 'bluebird-q'
 
 module.exports = class LandingCarouselView extends Backbone.View
   events:
@@ -20,7 +19,7 @@ module.exports = class LandingCarouselView extends Backbone.View
       @listenTo @params, "change:#{f}", @paramsChanged
 
   setup: (type) ->
-    return Q() if @loaded
+    return Promise.resolve() if @loaded
     @carousels = @$('.partner-category-carousel').map (index, el) =>
       carousel = new PartnerCellCarouselView
         el: $(el),
