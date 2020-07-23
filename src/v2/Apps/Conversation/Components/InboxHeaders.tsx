@@ -51,7 +51,7 @@ export const ConversationHeader: FC<ConversationHeaderProps> = ({
   return (
     <ConversationHeaderContainer
       height="55px"
-      px={[1, 2]}
+      px={[1, 1, 1, 2]}
       alignItems="center"
       justifyContent="space-between"
       width="100%"
@@ -199,7 +199,7 @@ const DetailIcon: React.FC<DetailsProps> = props => {
       width="28"
       height="28"
       viewBox="0 0 28 28"
-      mr={[0, 1]}
+      mr={[0, 0, 0, 1]}
       onClick={() => {
         setShowDetails(!showDetails)
       }}

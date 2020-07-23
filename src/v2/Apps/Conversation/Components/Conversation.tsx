@@ -238,10 +238,8 @@ const Conversation: React.FC<ConversationProps> = props => {
 }
 
 const MessageContainer = styled(Box)`
-  height: calc(100% - 300px);
   flex-grow: 1;
   overflow-y: auto;
-  overflow-x: hidden;
 `
 
 const NoScrollFlex = styled(Flex)`

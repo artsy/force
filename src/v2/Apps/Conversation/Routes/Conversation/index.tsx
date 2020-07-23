@@ -1,4 +1,4 @@
-import { Flex, Title, media } from "@artsy/palette"
+import { Box, Flex, Title, media } from "@artsy/palette"
 import { Conversation_me } from "v2/__generated__/Conversation_me.graphql"
 import { AppContainer } from "v2/Apps/Components/AppContainer"
 import { ConversationFragmentContainer as Conversation } from "v2/Apps/Conversation/Components/Conversation"
@@ -24,10 +24,14 @@ interface ConversationRouteProps {
   relay: RelayRefetchProp
 }
 
-const ConstrainedHeightFlex = styled(Flex)`
-  height: calc(100vh - 145px);
+const ConstrainedHeightContainer = styled(Box)`
+  height: calc(100vh - 60px);
+`
+
+const ConversationContainer = styled(Flex)`
+  height: calc(100% - 85px);
   ${media.md`
-    height: calc(100vh - 60px);
+    height: 100%;
   `}
   & > * {
     overflow-x: hidden;
@@ -54,37 +58,39 @@ export const ConversationRoute: React.FC<ConversationRouteProps> = props => {
     return (
       <AppContainer maxWidth={maxWidth}>
         <Title>Inbox | Artsy</Title>
-        <Media between={["xs", "md"]}>
-          <ConversationHeader
-            showDetails={showDetails}
-            setShowDetails={setShowDetails}
-            partnerName={me.conversation.to.name}
-          />
-        </Media>
-        <Media greaterThan="sm">
-          <FullHeader
-            showDetails={showDetails}
-            setShowDetails={setShowDetails}
-            partnerName={me.conversation.to.name}
-          />
-        </Media>
-        <ConstrainedHeightFlex>
-          <Media greaterThan="sm">
-            <Conversations
-              me={me as any}
-              selectedConversationID={me.conversation.internalID}
+        <ConstrainedHeightContainer>
+          <Media between={["xs", "md"]}>
+            <ConversationHeader
+              showDetails={showDetails}
+              setShowDetails={setShowDetails}
+              partnerName={me.conversation.to.name}
             />
           </Media>
-          <Conversation
-            conversation={me.conversation}
-            refetch={props.relay.refetch}
-          />
-          <Details
-            conversation={me.conversation}
-            showDetails={showDetails}
-            setShowDetails={setShowDetails}
-          />
-        </ConstrainedHeightFlex>
+          <Media greaterThan="sm">
+            <FullHeader
+              showDetails={showDetails}
+              setShowDetails={setShowDetails}
+              partnerName={me.conversation.to.name}
+            />
+          </Media>
+          <ConversationContainer>
+            <Media greaterThan="sm">
+              <Conversations
+                me={me as any}
+                selectedConversationID={me.conversation.internalID}
+              />
+            </Media>
+            <Conversation
+              conversation={me.conversation}
+              refetch={props.relay.refetch}
+            />
+            <Details
+              conversation={me.conversation}
+              showDetails={showDetails}
+              setShowDetails={setShowDetails}
+            />
+          </ConversationContainer>
+        </ConstrainedHeightContainer>
       </AppContainer>
     )
   } else {
