@@ -29,9 +29,9 @@ export const DETAIL_BOX_ANIMATION = `transition: width 0.3s cubic-bezier(0.4, 0,
 const DETAIL_BOX_XS_ANIMATION = `transition: opacity 0.3s, z-index 0.3s;`
 const DETAIL_BOX_MD_ANIMATION = `transition: transform 0.3s;`
 
-// in XS screens transition is animated with `opacity`. z-index: -1 is also needed when showDetail is false
+// in XS/S/M screens transition is animated with `opacity`. z-index: -1 is also needed when showDetail is false
 // in XL screen it is animated with `width` because animation needs to push the mid column content
-// in S/M/L screens it is animated with `translate` for better performance (than `width`)
+// in L screens it is animated with `translate` for better performance (than `width`)
 const DetailsContainer = styled(Flex)<{ opacity?: 0 | 1; transform?: string }>`
   border-left: 1px solid ${color("black10")};
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
