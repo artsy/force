@@ -100,11 +100,6 @@ describe("MobileNavMenu", () => {
   })
 
   describe("lab features", () => {
-    it("hides inbox menu option if lab feature not enabled", () => {
-      const linkContainer = getMobileMenuLinkContainer("notAdmin")
-      expect(linkContainer.html()).not.toContain("Inbox")
-    })
-
     it("shows inbox menu option if lab feature enabled", () => {
       const linkContainer = getMobileMenuLinkContainer("notAdmin", [
         "User Conversations View",
