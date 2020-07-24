@@ -121,7 +121,14 @@ export const Reply: React.FC<ReplyProps> = props => {
           text: "Discard message",
         }}
       />
-      <StyledFlex p={1} right={[0, null]} zIndex={[null, 2]}>
+      <StyledFlex
+        p={1}
+        right={[0, null]}
+        zIndex={[null, 2]}
+        position={["fixed", "static"]}
+        bottom={0}
+        left={0}
+      >
         <FullWidthFlex width="100%">
           <StyledTextArea
             onInput={event => {
@@ -147,7 +154,7 @@ export const Reply: React.FC<ReplyProps> = props => {
             ref={textArea}
           />
         </FullWidthFlex>
-        <Flex alignItems="flex-end">
+        <Flex alignItems="flex-end" height="100%">
           <Button
             ml={1}
             disabled={buttonDisabled}
