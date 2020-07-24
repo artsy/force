@@ -23,7 +23,7 @@ export type Works_artist = {
             } | null> | null;
         } | null> | null;
     } | null;
-    readonly " $fragmentRefs": FragmentRefs<"ArtistTopWorksRail_artist" | "ArtistArtworkFilter_artist">;
+    readonly " $fragmentRefs": FragmentRefs<"ArtistTopWorksRail_artist" | "ArtistSeriesRail_artist" | "ArtistArtworkFilter_artist">;
     readonly " $refType": "Works_artist";
 };
 export type Works_artist$data = Works_artist;
@@ -169,6 +169,12 @@ return {
       "name": "width",
       "type": "String",
       "defaultValue": null
+    },
+    {
+      "kind": "LocalArgument",
+      "name": "shouldFetchArtistSeriesData",
+      "type": "Boolean!",
+      "defaultValue": false
     }
   ],
   "selections": [
@@ -310,6 +316,18 @@ return {
       "args": null
     },
     {
+      "kind": "Condition",
+      "passingValue": true,
+      "condition": "shouldFetchArtistSeriesData",
+      "selections": [
+        {
+          "kind": "FragmentSpread",
+          "name": "ArtistSeriesRail_artist",
+          "args": null
+        }
+      ]
+    },
+    {
       "kind": "FragmentSpread",
       "name": "ArtistArtworkFilter_artist",
       "args": [
@@ -401,5 +419,5 @@ return {
   ]
 };
 })();
-(node as any).hash = '9c0ffdff36a094cab9f45fcc97a02e71';
+(node as any).hash = '1d0b76b4072c686cc173b58c5382b61a';
 export default node;
