@@ -14,6 +14,7 @@ import {
   ArtworkFilters,
   initialArtworkFilterState,
 } from "v2/Components/v2/ArtworkFilter/ArtworkFilterContext"
+import { userHasLabFeature } from "v2/Utils/user"
 
 graphql`
   fragment routes_Artist on Artist {
@@ -178,6 +179,7 @@ export const routes: RouteConfig[] = [
             $sizes: [ArtworkSizes]
             $sort: String
             $width: String
+            $shouldFetchArtistSeriesData: Boolean!
           ) @raw_response_type {
             artist(id: $artistID) {
               ...Works_artist
@@ -201,6 +203,7 @@ export const routes: RouteConfig[] = [
                   sizes: $sizes
                   sort: $sort
                   width: $width
+                  shouldFetchArtistSeriesData: $shouldFetchArtistSeriesData
                 )
             }
           }
@@ -220,6 +223,12 @@ export const routes: RouteConfig[] = [
             ([k, v]: [keyof ArtworkFilters, any]) => {
               return !isDefaultFilter(k, v)
             }
+          )
+
+          const user = props.context.user
+          filterParams.shouldFetchArtistSeriesData = userHasLabFeature(
+            user,
+            "Artist Series"
           )
 
           return filterParams

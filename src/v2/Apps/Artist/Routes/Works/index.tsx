@@ -7,6 +7,9 @@ import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { get } from "v2/Utils/get"
 import { ArtistTopWorksRailFragmentContainer as ArtistTopWorksRail } from "v2/Apps/Artist/Components/ArtistTopWorksRail/ArtistTopWorksRail"
+import { ArtistSeriesRailFragmentContainer as ArtistSeriesRail } from "v2/Components/ArtistSeriesRail/ArtistSeriesRail"
+import { SystemContext } from "v2/Artsy"
+import { userHasLabFeature } from "v2/Utils/user"
 
 export interface WorksRouteProps {
   artist: Works_artist
@@ -21,6 +24,9 @@ export const WorksRoute: React.FC<WorksRouteProps> = props => {
     isClient &&
     get(artist, a => a.related.artistsConnection.edges.length, 0) > 0
 
+  const { user } = React.useContext(SystemContext)
+  const artistSeriesIsEnabled = userHasLabFeature(user, "Artist Series")
+
   return (
     <>
       <Box>
@@ -28,7 +34,11 @@ export const WorksRoute: React.FC<WorksRouteProps> = props => {
       </Box>
 
       <Box>
-        <ArtistCollectionsRail artistID={artist.internalID} />
+        {artistSeriesIsEnabled ? (
+          <ArtistSeriesRail artist={artist} />
+        ) : (
+          <ArtistCollectionsRail artistID={artist.internalID} />
+        )}
       </Box>
 
       <Row>
@@ -77,9 +87,11 @@ export const WorksRouteFragmentContainer = createFragmentContainer(WorksRoute, {
         sizes: { type: "[ArtworkSizes]" }
         sort: { type: "String", defaultValue: "-partner_updated_at" }
         width: { type: "String" }
+        shouldFetchArtistSeriesData: { type: "Boolean!", defaultValue: false }
       ) {
       internalID
       ...ArtistTopWorksRail_artist
+      ...ArtistSeriesRail_artist @include(if: $shouldFetchArtistSeriesData)
       related {
         artistsConnection(first: 1) {
           edges {

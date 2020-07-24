@@ -7,6 +7,7 @@ import React from "react"
 import { graphql } from "react-relay"
 import { Breakpoint } from "v2/Utils/Responsive"
 import { ArtistTopWorksRailFragmentContainer as ArtistTopWorksRail } from "v2/Apps/Artist/Components/ArtistTopWorksRail/ArtistTopWorksRail"
+import { userHasLabFeature } from "v2/Utils/user"
 
 jest.unmock("react-relay")
 
@@ -30,23 +31,33 @@ describe("Works Route", () => {
 
   const getWrapper = async (
     breakpoint: Breakpoint = "xl",
-    worksMock = defaultWorks
+    worksMock = defaultWorks,
+    user = {}
   ) => {
     return renderRelayTree({
       Component: WorksRoute,
       query: graphql`
-        query Works_Test_Query($artistID: String!) @raw_response_type {
+        query Works_Test_Query(
+          $artistID: String!
+          $shouldFetchArtistSeriesData: Boolean!
+        ) @raw_response_type {
           artist(id: $artistID) {
             ...Works_artist
+              @arguments(
+                shouldFetchArtistSeriesData: $shouldFetchArtistSeriesData
+              )
           }
         }
       `,
       mockData: worksMock,
       variables: {
         artistID: "pablo-picasso",
+        shouldFetchArtistSeriesData: userHasLabFeature(user, "Artist Series"),
       },
       wrapper: children => (
-        <MockBoot breakpoint={breakpoint}>{children}</MockBoot>
+        <MockBoot user={user} breakpoint={breakpoint}>
+          {children}
+        </MockBoot>
       ),
     })
   }
@@ -114,11 +125,46 @@ describe("Works Route", () => {
       expect(wrapper.find(ArtistTopWorksRail).length).toEqual(1)
     })
   })
+
+  describe("Artist Series Rail", () => {
+    it("does not display artist series without the lab feature", async () => {
+      expect(wrapper.find("ArtistSeriesRail").length).toBe(0)
+    })
+
+    it("Displays artist series rail with the lab feature", async () => {
+      wrapper = await getWrapper("xl", defaultWorks, {
+        lab_features: ["Artist Series"],
+      })
+      expect(wrapper.find("ArtistSeriesRail").length).toBe(1)
+      expect(wrapper.find("ArtistSeriesItem").length).toBe(1)
+      expect(wrapper.find("ArtistSeriesItem").text()).toContain(
+        "Aardvark Series"
+      )
+      expect(wrapper.find("ArtistSeriesItem").text()).toContain("20 available")
+    })
+  })
 })
 
 const defaultWorks: Works_Test_QueryRawResponse = {
   artist: {
     slug: "slug-of-the-artist",
+    artistSeriesConnection: {
+      edges: [
+        {
+          node: {
+            internalID: "id",
+            slug: "aardvark",
+            forSaleArtworksCount: 20,
+            image: {
+              cropped: {
+                url: "/path/to/aardvarks.jpg",
+              },
+            },
+            title: "Aardvark Series",
+          },
+        },
+      ],
+    },
     filterArtworksConnection: {
       edges: [
         {
