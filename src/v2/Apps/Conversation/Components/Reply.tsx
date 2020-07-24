@@ -125,7 +125,7 @@ export const Reply: React.FC<ReplyProps> = props => {
         p={1}
         right={[0, null]}
         zIndex={[null, 2]}
-        position={["fixed", "static"]}
+        position={["fixed", "fixed", "fixed", "static"]}
         bottom={0}
         left={0}
       >
