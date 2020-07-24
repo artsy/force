@@ -126,8 +126,11 @@ $(() =>
     require("../analytics/galleries.js")
     require("../analytics/recently_viewed_artworks.js")
     require("../analytics/save.js")
+    require("../analytics/eoy_2016.js")
     require("../analytics/embedded_inquiry.js")
     require("../analytics/inquiry_questionnaire.js")
+    require("../analytics/editorial_features.js")
+    require("../analytics/gallery_partnerships.js")
   })
 )
 
