@@ -26,7 +26,6 @@ import {
 } from "../__fixtures__/MutationResults"
 import { ReviewFragmentContainer } from "../Review"
 import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
-import { GlobalData } from "sharify"
 
 jest.unmock("react-relay")
 
@@ -51,7 +50,7 @@ describe("Review", () => {
       return { handleCardAction, handleCardSetup }
     }
 
-    window.sd = { STRIPE_PUBLISHABLE_KEY: "" } as GlobalData
+    window.sd = { STRIPE_PUBLISHABLE_KEY: "" }
   })
 
   const { buildPage, mutations, routes } = createTestEnv({
