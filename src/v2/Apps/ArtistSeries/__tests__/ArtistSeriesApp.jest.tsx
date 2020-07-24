@@ -57,6 +57,7 @@ describe("ArtistSeriesApp", () => {
         expect(wrapper.find("AppContainer").length).toBe(1)
         expect(wrapper.find("ArtistSeriesHeader").length).toBe(1)
         expect(wrapper.find("ArtistSeriesArtworksFilter").length).toBe(1)
+        expect(wrapper.find("ArtistSeriesRail").length).toBe(1)
       })
 
       describe("ArtistSeriesArtworksFilter", () => {
@@ -128,6 +129,22 @@ describe("ArtistSeriesApp", () => {
           })
         })
       })
+
+      describe("ArtistSeriesRail", () => {
+        describe("with an artist", () => {
+          it("renders correctly", async () => {
+            const wrapper = await getWrapper()
+            expect(wrapper.find("ArtistSeriesRail").length).toBe(1)
+            expect(wrapper.find("ArtistSeriesItem").length).toBe(1)
+            expect(wrapper.find("ArtistSeriesItem").text()).toContain(
+              "Aardvark Series"
+            )
+            expect(wrapper.find("ArtistSeriesItem").text()).toContain(
+              "20 available"
+            )
+          })
+        })
+      })
     })
   })
 
@@ -171,6 +188,28 @@ describe("ArtistSeriesApp", () => {
 
 const ArtistSeriesAppFixture: ArtistSeriesApp_QueryRawResponse = {
   artistSeries: {
+    railArtist: [
+      {
+        id: "yayoi-kusama",
+        artistSeriesConnection: {
+          edges: [
+            {
+              node: {
+                internalID: "id",
+                slug: "aardvark",
+                forSaleArtworksCount: 20,
+                image: {
+                  cropped: {
+                    url: "/path/to/aardvarks.jpg",
+                  },
+                },
+                title: "Aardvark Series",
+              },
+            },
+          ],
+        },
+      },
+    ],
     title: "Pumpkins",
     description: "All of the pumpkins",
     image: {
@@ -356,6 +395,7 @@ const ArtistSeriesWithoutArtistAppFixture: ArtistSeriesApp_QueryRawResponse = {
   artistSeries: {
     ...ArtistSeriesAppFixture.artistSeries,
     artists: [],
+    railArtist: [],
   },
 }
 
