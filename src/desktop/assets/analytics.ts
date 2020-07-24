@@ -17,35 +17,45 @@ mediator.on("all", (name, data) =>
   analyticsHooks.trigger(`mediator:${name}`, data)
 )
 
-if (sd.SHOW_ANALYTICS_CALLS) {
-  // Log all pageviews
-  analytics.on("page", function () {
-    console.info("ANALYTICS PAGEVIEW: ", arguments[2], arguments[3])
-  })
-  // Log legacy analytics that do not use react-tracking
-  analytics.on("track", (actionName: string, data?: any) => {
-    console.info("LEGACY ANALYTICS TRACK:", actionName, data)
-  })
-}
+const trackEvent = function (data) {
+  // TODO: This is old schema
+  if (data.action) {
+    // Send Reaction's read more as a page view
+    if (data.action === "Clicked read more") {
+      const pathname = data.pathname || location.pathname
+      const href = sd.APP_URL + "/" + pathname
+      analytics.page({ path: pathname }, { integrations: { Marketo: false } })
+      if (window.PARSELY) {
+        window.PARSELY.beacon.trackPageView({
+          url: href,
+          js: 1,
+          action_name: "infinite",
+        })
+      }
+      if (window.Sailthru) {
+        window.Sailthru.track({
+          domain: "horizon.artsy.net",
+          spider: true,
+          track_url: true,
+          url: href,
+          use_stored_tags: true,
+        })
+      }
 
-/**
- * Format and fire events triggered via react-tracking
- */
-const trackEvent = data => {
-  const actionName = data.action || data.action_type
-  const trackingData = omit(data, ["action_type", "action"])
-
-  if (actionName) {
-    // FIXME: is this still used?
-    if (actionName === "Clicked read more") {
-      // Send Reaction's read more as a page view
-      return onClickedReadMore(data)
+      // Return early because we don't want to make a Segment call for read more
+      return
     }
+
+    analytics.track(data.action, omit(data, "action"))
+  } else if (data.action_type) {
+    // New analytics schema
+    const trackingData = omit(data, "action_type")
+    let trackingOptions = {}
+
+    const referrer = analytics.__artsyClientSideRoutingReferrer
     // Grab referrer from our trackingMiddleware in Reaction, since we're in a
     // single-page-app context and the value will need to be refreshed on route
     // change. See: https://github.com/artsy/reaction/blob/master/src/Artsy/Analytics/trackingMiddleware.ts
-    const referrer = analytics.__artsyClientSideRoutingReferrer
-    let trackingOptions = {}
     if (referrer) {
       trackingOptions = {
         page: {
@@ -53,12 +63,8 @@ const trackEvent = data => {
         },
       }
     }
-    // Log track calls on client
-    if (window.sd.SHOW_ANALYTICS_CALLS) {
-      console.info("ANALYTICS TRACK:", actionName, trackingData)
-    }
-    // Send event to segment
-    analytics.track(actionName, trackingData, trackingOptions)
+
+    analytics.track(data.action_type, trackingData, trackingOptions)
   } else {
     console.error(
       `Unknown analytics schema being used: ${JSON.stringify(data)}`
@@ -66,7 +72,7 @@ const trackEvent = data => {
   }
 }
 
-// Send Reaction events to Segment
+// All Reaction events are sent directly to Segment
 Events.onEvent(trackEvent)
 
 require("../analytics/main_layout.ts")
@@ -133,27 +139,3 @@ $(() =>
     require("../analytics/gallery_partnerships.js")
   })
 )
-
-export const onClickedReadMore = data => {
-  const pathname = data.pathname || location.pathname
-  const href = sd.APP_URL + "/" + pathname
-  analytics.page({ path: pathname }, { integrations: { Marketo: false } })
-  if (window.PARSELY) {
-    window.PARSELY.beacon.trackPageView({
-      url: href,
-      js: 1,
-      action_name: "infinite",
-    })
-  }
-  if (window.Sailthru) {
-    window.Sailthru.track({
-      domain: "horizon.artsy.net",
-      spider: true,
-      track_url: true,
-      url: href,
-      use_stored_tags: true,
-    })
-  }
-  // Return early because we don't want to make a Segment call for read more
-  return
-}

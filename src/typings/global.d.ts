@@ -1,6 +1,6 @@
 interface Window {
   analytics?: {
-    on: (action: string, cb: (nameOrData: any, data?: any) => void) => void
+    on: (action: string, cb: () => void) => void
     page: (object, object) => void
     ready: (cb: () => void) => void
     reset: () => void

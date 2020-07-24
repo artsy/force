@@ -7,6 +7,7 @@ import { data as sd } from "sharify"
 import { reportLoadTimeToVolley } from "lib/volley"
 import { match } from "path-to-regexp"
 const { analytics } = window
+const analyticsHooks = require("../lib/analytics_hooks.coffee")
 
 // Track pageview
 const pageType = window.sd.PAGE_TYPE || window.location.pathname.split("/")[1]
@@ -76,9 +77,9 @@ if (
 
 // FIXME: Move this to reaction
 class PageTimeTracker {
-  path: string
-  delay: number
-  description: string
+  path: any
+  delay: any
+  description: any
   timer: any
   constructor(path, delay, description) {
     this.path = path
@@ -108,7 +109,7 @@ class PageTimeTracker {
         }
       }
 
-      analytics.track(
+      window.analytics.track(
         "Time on page",
         {
           category: this.description,
@@ -133,3 +134,24 @@ class PageTimeTracker {
 window.desktopPageTimeTrackers = [
   new PageTimeTracker(sd.CURRENT_PATH, 15000, "15 seconds"),
 ]
+
+// debug tracking calls
+if (sd.SHOW_ANALYTICS_CALLS) {
+  analytics.on("track", function () {
+    console.info("TRACKED: ", arguments[0], JSON.stringify(arguments[1]))
+  })
+
+  analytics.on("page", function () {
+    console.info(
+      "PAGEVIEW TRACKED: ",
+      arguments[2],
+      arguments[3],
+      JSON.stringify(arguments[2]),
+      JSON.stringify(arguments[3])
+    )
+  })
+
+  analyticsHooks.on("all", function (name, data) {
+    console.info("ANALYTICS HOOK: ", name, data)
+  })
+}

@@ -17,13 +17,12 @@ setTimeout(function () {
 
 // Debug tracking calls
 if (sd.SHOW_ANALYTICS_CALLS) {
-  // FIXME: Events that trigger these events should be updated
-  // or flagged for deprecation
-  analytics.on("track", (actionName, data) => {
-    console.info("LEGACY MOBILE ANALYTICS TRACK:", actionName, data)
+  analytics.on("track", function () {
+    console.debug("TRACKED: ", arguments[0], JSON.stringify(arguments[1]))
   })
-
-  analytics.on("page", function () {
-    console.info("LEGACY MOBILE PAGEVIEW TRACKED: ", arguments[2], arguments[3])
+}
+if (sd.SHOW_ANALYTICS_CALLS) {
+  analyticsHooks.on("all", function (name, data) {
+    console.info("ANALYTICS HOOK: ", name, data)
   })
 }
