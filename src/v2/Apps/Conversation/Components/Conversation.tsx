@@ -218,7 +218,7 @@ const Conversation: React.FC<ConversationProps> = props => {
   return (
     <NoScrollFlex flexDirection="column" width="100%">
       <MessageContainer>
-        <Box>
+        <Box pb={[6, 6, 6, 0]}>
           <Spacer mt={["75px", "75px", 2]} />
           <Flex flexDirection="column" width="100%" px={1}>
             {inquiryItemBox}
