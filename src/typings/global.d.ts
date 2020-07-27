@@ -1,7 +1,7 @@
 interface Window {
   analytics?: {
     identify: (userId: string, traits: object, object) => void
-    on: (action: string, cb: () => void) => void
+    on: (action: string, cb: (nameOrData: any, data?: any) => void) => void
     page: (object, object) => void
     ready: (cb: () => void) => void
     reset: () => void
