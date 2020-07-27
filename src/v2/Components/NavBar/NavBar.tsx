@@ -10,7 +10,6 @@ import {
   MoreNavMenu,
 } from "./Menus"
 import { InboxNotificationCountQueryRenderer as InboxNotificationCount } from "./Menus/MobileNavMenu/InboxNotificationCount"
-import { userHasLabFeature } from "v2/Utils/user"
 import { ModalType } from "v2/Components/Authentication/Types"
 import {
   ARTISTS_SUBMENU_DATA,
@@ -27,6 +26,7 @@ import { NavBarPrimaryLogo } from "./NavBarPrimaryLogo"
 import { NavBarSkipLink } from "./NavBarSkipLink"
 import { LoggedInActionsQueryRenderer as LoggedInActions } from "./LoggedInActions"
 import { NAV_BAR_HEIGHT } from "./constants"
+import { userHasLabFeature } from "v2/Utils/user"
 
 export const NavBar: React.FC = track(
   {
@@ -44,14 +44,8 @@ export const NavBar: React.FC = track(
   const sm = useMatchMedia(themeProps.mediaQueries.sm)
   const isMobile = xs || sm
   const isLoggedIn = Boolean(user)
-  const conversationsEnabled = userHasLabFeature(
-    user,
-    "User Conversations View"
-  )
   const viewingRoomsEnabled = userHasLabFeature(user, "Viewing Rooms")
-  // TODO: replace check for conversationsEnabled with check for user when ready to launch
-  const showNotificationCount =
-    isLoggedIn && !showMobileMenu && conversationsEnabled
+  const showNotificationCount = isLoggedIn && !showMobileMenu
 
   // Close mobile menu if dragging window from small size to desktop
   useEffect(() => {

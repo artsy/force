@@ -3,14 +3,11 @@ import { AppContainer } from "v2/Apps/Components/AppContainer"
 import { ConversationsFragmentContainer as Conversations } from "v2/Apps/Conversation/Components/Conversations"
 import { findCurrentRoute } from "v2/Artsy/Router/Utils/findCurrentRoute"
 import { Match, Router } from "found"
-import React, { useContext, useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
 import { Title } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Flex, Spinner, breakpoints } from "@artsy/palette"
 import { debounce } from "lodash"
-import { SystemContext } from "v2/Artsy"
-import { userHasLabFeature } from "v2/Utils/user"
-import { ErrorPage } from "v2/Components/ErrorPage"
 import { Media } from "v2/Utils/Responsive"
 import { FullHeader, MobileInboxHeader } from "./Components/InboxHeaders"
 import { NoMessages } from "./Components/NoMessages"
@@ -58,8 +55,6 @@ const Inbox: React.FC<InboxProps> = ({ selectedConversation, me }) => {
 
 export const ConversationApp: React.FC<ConversationAppProps> = props => {
   const { me, router } = props
-  const { user } = useContext(SystemContext)
-  const isEnabled = userHasLabFeature(user, "User Conversations View")
   const [width, setWidth] = useState(0)
   const route = findCurrentRoute(props.match)
   let maxWidth
@@ -76,19 +71,10 @@ export const ConversationApp: React.FC<ConversationAppProps> = props => {
   }, [])
 
   useEffect(() => {
-    if (
-      isEnabled &&
-      width > parseInt(breakpoints.md, 10) &&
-      firstConversation &&
-      router
-    ) {
+    if (width > parseInt(breakpoints.md, 10) && firstConversation && router) {
       router.replace(`/user/conversations/${firstConversation.internalID}`)
     }
-  }, [isEnabled, router, firstConversation, width])
-
-  if (!isEnabled) {
-    return <ErrorPage code={404} />
-  }
+  }, [router, firstConversation, width])
 
   if (route.displayFullPage) {
     maxWidth = "100%"

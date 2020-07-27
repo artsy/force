@@ -99,13 +99,6 @@ describe("NavBar", () => {
     })
 
     describe("lab features", () => {
-      it("hides inquiries icon if lab feature not enabled", () => {
-        const wrapper = getWrapper({
-          user: { type: "NotAdmin", lab_features: [] },
-        })
-        expect(wrapper.find(EnvelopeIcon).length).toEqual(0)
-      })
-
       it("shows inquiries icon if lab feature enabled", () => {
         const wrapper = getWrapper({
           user: { type: "NotAdmin", lab_features: ["User Conversations View"] },

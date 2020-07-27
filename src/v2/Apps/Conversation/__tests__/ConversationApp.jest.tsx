@@ -52,10 +52,9 @@ const render = (me: ConversationAppTestQueryRawResponse["me"], user: User) =>
   })
 
 describe("Conversation app", () => {
-  describe("User with feature enabled", () => {
+  describe("as non admin user", () => {
     const userType = {
       type: "NotAdmin",
-      lab_features: ["User Conversations View"],
     }
     describe("having previous conversations", () => {
       it("renders conversations", async () => {
@@ -114,22 +113,6 @@ describe("Conversation app", () => {
         const link = component.find("RouterLink")
         expect(link.html()).toContain(`href="/collect"`)
       })
-    })
-  })
-  describe("User without the feature enabled", () => {
-    it("gives error", async () => {
-      const mockMe = {
-        id: "111",
-        conversationsConnection: {
-          edges: [{ node: MockedConversation, cursor: "absc" }],
-          pageInfo,
-        },
-      }
-      const component = await render(mockMe, { type: "regular-user" })
-      const text = component.text()
-      expect(text).toContain(
-        "Sorry, the page you were looking for doesn’t exist at this URL."
-      )
     })
   })
 })
