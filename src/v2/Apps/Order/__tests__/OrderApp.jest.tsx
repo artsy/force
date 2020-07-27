@@ -22,6 +22,7 @@ import { createMockNetworkLayer2 } from "v2/DevTools/createMockNetworkLayer"
 import { FarceRedirectResult } from "found/lib/server"
 import { DateTime } from "luxon"
 import { Environment, RecordSource, Store } from "relay-runtime"
+import { GlobalData } from "sharify"
 
 jest.mock("react-stripe-elements", () => ({
   Elements: ({ children }) => children,
@@ -478,7 +479,7 @@ describe("OrderApp", () => {
     // tslint:disable-next-line:no-empty
     window.Stripe = () => {}
 
-    window.sd = { STRIPE_PUBLISHABLE_KEY: "" }
+    window.sd = { STRIPE_PUBLISHABLE_KEY: "" } as GlobalData
   })
 
   const getProps = ({ state, location, replace }: any = {}) => {
