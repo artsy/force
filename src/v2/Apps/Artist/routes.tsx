@@ -118,11 +118,14 @@ export const routes: RouteConfig[] = [
       const canShowOverview = showArtistInsights || hasArtistContent
 
       if (pathname === `/artist/${artist.slug}/`) {
-        throw new RedirectException(`/artist/${artist.slug}`)
+        throw new RedirectException(`/artist/${artist.slug}`, 301)
       }
 
       if (!canShowOverview && !alreadyAtWorksForSalePath) {
-        throw new RedirectException(`/artist/${artist.slug}/works-for-sale`)
+        throw new RedirectException(
+          `/artist/${artist.slug}/works-for-sale`,
+          301
+        )
       }
 
       return <Component {...props} />
