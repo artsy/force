@@ -119,7 +119,11 @@ const ViewingRoomsAppFixture: ViewingRoomsApp_Test_QueryRawResponse = {
             status: "draft",
             slug: "test-draft",
             title: "Draft VR",
-            heroImageURL: "https://www.example.com/rikki.jpg",
+            image: {
+              imageURLs: {
+                normalized: "https://www.example.com/rikki.jpg",
+              },
+            },
             distanceToClose: null,
             distanceToOpen: null,
             partner: {
@@ -139,7 +143,11 @@ const ViewingRoomsAppFixture: ViewingRoomsApp_Test_QueryRawResponse = {
             status: "scheduled",
             slug: "test-scheduled",
             title: "Scheduled VR",
-            heroImageURL: "https://www.example.com/tikki.jpg",
+            image: {
+              imageURLs: {
+                normalized: "https://www.example.com/tikki.jpg",
+              },
+            },
             distanceToOpen: "soon",
             distanceToClose: null,
             partner: {
@@ -169,7 +177,11 @@ const ViewingRoomsAppFixture: ViewingRoomsApp_Test_QueryRawResponse = {
             status: "live",
             slug: "test-live",
             title: "Live VR",
-            heroImageURL: "https://www.example.com/tavi.jpg",
+            image: {
+              imageURLs: {
+                normalized: "https://www.example.com/tavi.jpg",
+              },
+            },
             distanceToOpen: null,
             distanceToClose: "3 days",
             partner: {
@@ -208,7 +220,11 @@ const ViewingRoomsAppFixture: ViewingRoomsApp_Test_QueryRawResponse = {
             status: "closed",
             slug: "test-closed",
             title: "Closed VR",
-            heroImageURL: "https://www.example.com/nag.jpg",
+            image: {
+              imageURLs: {
+                normalized: "https://www.example.com/nag.jpg",
+              },
+            },
             distanceToOpen: null,
             distanceToClose: null,
             partner: {
@@ -255,7 +271,11 @@ const ViewingRoomsAppFixture: ViewingRoomsApp_Test_QueryRawResponse = {
           status: "live",
           slug: "test-featured-live",
           title: "Featured Live VR",
-          heroImageURL: "https://www.example.com/featured-live.jpg",
+          image: {
+            imageURLs: {
+              normalized: "https://www.example.com/featured-live.jpg",
+            },
+          },
           distanceToOpen: null,
           distanceToClose: "4 days",
           partner: {

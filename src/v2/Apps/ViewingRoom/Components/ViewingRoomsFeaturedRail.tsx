@@ -4,6 +4,7 @@ import { ViewingRoomsFeaturedRail_featuredViewingRooms } from "v2/__generated__/
 import { createFragmentContainer, graphql } from "react-relay"
 import { ViewingRoomCarousel } from "./ViewingRoomCarousel"
 import { getTagProps } from "../Components/ViewingRoomsLatestGrid"
+import { crop } from "v2/Utils/resizer"
 
 interface ViewingRoomsFeaturedRailProps {
   featuredViewingRooms: ViewingRoomsFeaturedRail_featuredViewingRooms
@@ -23,18 +24,15 @@ export const ViewingRoomsFeaturedRail: React.FC<ViewingRoomsFeaturedRailProps> =
   }
 
   const carouselItemRender = (
-    {
-      heroImageURL,
-      slug,
-      title,
-      partner,
-      status,
-      distanceToOpen,
-      distanceToClose,
-    },
+    { image, slug, title, partner, status, distanceToOpen, distanceToClose },
     slideIndex: number
   ): React.ReactElement => {
     const tag = getTagProps(status, distanceToOpen, distanceToClose)
+    const heroImageURL = crop(image?.imageURLs?.normalized, {
+      height: 740,
+      width: 560,
+    })
+
     return (
       <Flex flexDirection="row">
         {slideIndex !== 0 && <Spacer ml="15px" />}
@@ -73,7 +71,11 @@ export const ViewingRoomsFeaturedRailFragmentContainer = createFragmentContainer
             status
             slug
             title
-            heroImageURL
+            image {
+              imageURLs {
+                normalized
+              }
+            }
             distanceToOpen(short: true)
             distanceToClose(short: true)
             partner {

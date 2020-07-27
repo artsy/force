@@ -16,6 +16,7 @@ import {
 } from "react-relay"
 
 import { ViewingRoomsLatestGrid_viewingRooms } from "v2/__generated__/ViewingRoomsLatestGrid_viewingRooms.graphql"
+import { crop } from "v2/Utils/resizer"
 
 export interface ViewingRoomsLatestGridProps {
   relay: RelayPaginationProp
@@ -117,12 +118,16 @@ export const ViewingRoomsLatestGrid: React.FC<ViewingRoomsLatestGridProps> = pro
               slug,
               title,
               status,
-              heroImageURL,
+              image,
               partner,
               distanceToOpen,
               distanceToClose,
               artworksConnection,
             } = vr
+            const heroImageURL = crop(image?.imageURLs?.normalized, {
+              height: 800,
+              width: 800,
+            })
             const artworksCount = artworksConnection.totalCount
             const artworkImages = artworksConnection.edges.map(({ node }) =>
               artworksCount < 2 ? node.image.regular : node.image.square
@@ -174,9 +179,11 @@ export const ViewingRoomsLatestGridFragmentContainer = createPaginationContainer
               slug
               status
               title
-              # TODO: Need to either figure out how to get dimensions here
-              # or request a square vervion
-              heroImageURL
+              image {
+                imageURLs {
+                  normalized
+                }
+              }
               distanceToOpen(short: true)
               distanceToClose(short: true)
               partner {
