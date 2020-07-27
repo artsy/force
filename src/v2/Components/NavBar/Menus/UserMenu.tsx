@@ -1,7 +1,6 @@
 import React, { useContext } from "react"
 import {
   Box,
-  Flex,
   HeartIcon,
   PowerIcon,
   Separator,
@@ -52,11 +51,9 @@ export const UserMenu: React.FC = () => {
             CMS
           </MenuItem>
 
-          <Flex width="100%" justifyContent="center" my={1}>
-            <Box width="90%">
-              <Separator />
-            </Box>
-          </Flex>
+          <Box my={1} px={2}>
+            <Separator />
+          </Box>
         </>
       )}
 

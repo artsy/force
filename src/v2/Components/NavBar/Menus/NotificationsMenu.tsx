@@ -2,23 +2,61 @@ import { AnalyticsSchema } from "v2/Artsy/Analytics"
 import { useTracking } from "v2/Artsy/Analytics/useTracking"
 import React, { useContext } from "react"
 import { graphql } from "react-relay"
-
 import { SystemContext } from "v2/Artsy"
 import { get } from "v2/Utils/get"
-
-import {
-  LoadProgressRenderer,
-  renderWithLoadProgress,
-} from "v2/Artsy/Relay/renderWithLoadProgress"
-
+import { LoadProgressRenderer } from "v2/Artsy/Relay/renderWithLoadProgress"
 import {
   NotificationsMenuQuery,
   NotificationsMenuQueryResponse,
 } from "v2/__generated__/NotificationsMenuQuery.graphql"
-
-import { Box, Flex, Image, Link, Sans, Separator, Serif } from "@artsy/palette"
-import { Menu, MenuItem } from "v2/Components/Menu"
+import {
+  Box,
+  Image,
+  Link,
+  Separator,
+  SkeletonBox,
+  SkeletonText,
+  Text,
+} from "@artsy/palette"
+import { Menu, MenuItem, MenuItemPlaceholder } from "v2/Components/Menu"
 import { SystemQueryRenderer as QueryRenderer } from "v2/Artsy/Relay/SystemQueryRenderer"
+
+interface NotificationMenuItemContentProps {
+  image: JSX.Element
+  summary: JSX.Element
+  artists: JSX.Element
+}
+
+const NotificationMenuItemContent: React.FC<NotificationMenuItemContentProps> = ({
+  image,
+  summary,
+  artists,
+}) => {
+  return (
+    <Box display="flex" alignItems="center">
+      <Box width={40} height={40} bg="black5" mr={1}>
+        {image}
+      </Box>
+
+      <Box>
+        {summary}
+        {artists}
+      </Box>
+    </Box>
+  )
+}
+
+const NotificationMenuItemPlaceholder = () => {
+  return (
+    <MenuItemPlaceholder>
+      <NotificationMenuItemContent
+        image={<SkeletonBox width="100%" height="100%" />}
+        summary={<SkeletonText variant="small">N works added</SkeletonText>}
+        artists={<SkeletonText variant="small">Pending artists</SkeletonText>}
+      />
+    </MenuItemPlaceholder>
+  )
+}
 
 export const NotificationMenuItems: React.FC<NotificationsMenuQueryResponse> = props => {
   const notifications = get(
@@ -42,87 +80,107 @@ export const NotificationMenuItems: React.FC<NotificationsMenuQueryResponse> = p
 
   return (
     <>
-      {notifications.map(({ node }, index) => {
-        const { artists, href, image, summary } = node
-        const worksForSaleHref = href + "/works-for-sale"
-        return (
-          <MenuItem
-            href={worksForSaleHref}
-            key={index}
-            onClick={() => {
-              handleClick(href, AnalyticsSchema.Subject.Notification)
-            }}
-          >
-            <Flex alignItems="center">
-              <Box width={40} height={40} bg="black5" mr={1}>
-                <Image
-                  src={image.resized.url}
-                  width={40}
-                  height={40}
-                  style={{
-                    objectFit: "cover",
-                  }}
-                  alt={summary}
-                />
-              </Box>
-              <Box>
-                <Sans size="2">{summary}</Sans>
-                <Sans size="2" weight="medium">
-                  {artists}
-                </Sans>
-              </Box>
-            </Flex>
-          </MenuItem>
-        )
-      })}
+      {notifications.map(
+        ({ node: { artists, href, image, summary } }, index) => {
+          return (
+            <MenuItem
+              href={`${href}/works-for-sale`}
+              key={index}
+              aria-label={`${summary} by ${artists}`}
+              onClick={() => {
+                handleClick(href, AnalyticsSchema.Subject.Notification)
+              }}
+            >
+              <NotificationMenuItemContent
+                aria-hidden="true"
+                image={
+                  <Image
+                    src={image.thumb.url}
+                    width={40}
+                    height={40}
+                    alt={summary}
+                  />
+                }
+                summary={<Text variant="small">{summary}</Text>}
+                artists={
+                  <Text variant="small" fontWeight="bold">
+                    {artists}
+                  </Text>
+                }
+              />
+            </MenuItem>
+          )
+        }
+      )}
 
-      <Flex py={1} flexDirection="column" alignItems="center">
-        <>
-          {notifications.length === 0 && (
-            <Flex width="100%" flexDirection="column">
-              <Box pt={1} pb={3} width="100%" textAlign="center">
-                <Serif size="3">No new works</Serif>
-              </Box>
-            </Flex>
-          )}
+      {notifications.length === 0 && (
+        <MenuItemPlaceholder justifyContent="center">
+          <Text variant="small">No new works</Text>
+        </MenuItemPlaceholder>
+      )}
 
-          <Box width="100%" px={2}>
-            <Separator />
-          </Box>
+      <Box px={2}>
+        <Separator />
+      </Box>
 
-          <Box pt={2}>
-            <Sans size="2">
-              <Link
-                aria-label="View all notifications"
-                href="/works-for-you"
-                onClick={() => {
-                  handleClick("/works-for-you", AnalyticsSchema.Subject.ViewAll)
-                }}
-              >
-                View all
-              </Link>
-            </Sans>
-          </Box>
-        </>
-      </Flex>
+      <Link
+        display="block"
+        aria-label="View all notifications"
+        href="/works-for-you"
+        onClick={() => {
+          handleClick("/works-for-you", AnalyticsSchema.Subject.ViewAll)
+        }}
+      >
+        <Text variant="text" textAlign="center" p={2}>
+          View all
+        </Text>
+      </Link>
+    </>
+  )
+}
+
+const NotificationsLoadingState: React.FC = () => {
+  return (
+    <>
+      <NotificationMenuItemPlaceholder />
+      <NotificationMenuItemPlaceholder />
+
+      <Box px={2}>
+        <Separator />
+      </Box>
+
+      <SkeletonText variant="text" textAlign="center" p={2}>
+        View all
+      </SkeletonText>
     </>
   )
 }
 
 /**
  * The <Menu /> component renders a QueryRenderer inside of it, which fetches
- * individual MenuItems for display. During fetch there is a loading spinner.
+ * individual MenuItems for display. During fetch there is a custom placeholder
  */
 export const NotificationsMenu: React.FC = () => {
   return (
-    <Menu title="Activity">
+    <Menu title="Activity" py={0} pt={1} aria-live="assertive">
       <NotificationsQueryRenderer
-        render={renderWithLoadProgress(
-          NotificationMenuItems,
-          {},
-          {},
-          { size: "small" }
-        )}
+        render={({ error, props }) => {
+          if (error) {
+            return (
+              <MenuItemPlaceholder justifyContent="center">
+                <Text variant="small" color="red100">
+                  {error.message}
+                </Text>
+              </MenuItemPlaceholder>
+            )
+          }
+
+          if (!props) {
+            return <NotificationsLoadingState />
+          }
+
+          return <NotificationMenuItems {...props} />
+        }}
       />
     </Menu>
   )
@@ -157,7 +215,7 @@ export const NotificationsQueryRenderer: React.FC<{
                     artists
                     published_at: publishedAt(format: "MMM DD")
                     image {
-                      resized(height: 40, width: 40) {
+                      thumb: cropped(height: 80, width: 80) {
                         url
                       }
                     }

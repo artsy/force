@@ -16,6 +16,10 @@ describe("NotificationsMenu", () => {
     })
   })
 
+  afterEach(() => {
+    jest.clearAllMocks()
+  })
+
   const getWrapper = (props = NotificationMenuFixture) => {
     return mount(<NotificationMenuItems {...props} />)
   }
@@ -37,12 +41,7 @@ describe("NotificationsMenu", () => {
 
   it("renders proper zerostate", () => {
     const wrapper = getWrapper({} as any)
-    expect(
-      wrapper
-        .find("Flex")
-        .first()
-        .html()
-    ).toContain("No new works")
+    expect(wrapper.html()).toContain("No new works")
   })
 })
 
@@ -59,7 +58,7 @@ const NotificationMenuFixture = {
               artists: "David Hockney",
               published_at: "May 02",
               image: {
-                resized: {
+                thumb: {
                   url:
                     "https://d7hftxdivxxvm.cloudfront.net?resize_to=fit&width=40&height=40&quality=80&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FkCJVZo7bcqVrjnQ22QHhvg%2Flarge.jpg",
                 },
@@ -77,7 +76,7 @@ const NotificationMenuFixture = {
               artists: "Pablo Picasso",
               published_at: "May 02",
               image: {
-                resized: {
+                thumb: {
                   url:
                     "https://d7hftxdivxxvm.cloudfront.net?resize_to=fit&width=40&height=27&quality=80&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2Fi3rCA3IaKE-cLBnc-U5swQ%2Flarge.jpg",
                 },
@@ -95,7 +94,7 @@ const NotificationMenuFixture = {
               artists: "Jasper Johns",
               published_at: "May 02",
               image: {
-                resized: {
+                thumb: {
                   url:
                     "https://d7hftxdivxxvm.cloudfront.net?resize_to=fit&width=40&height=40&quality=80&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FjLg7Y6inxaSUpVS9kYHwcg%2Flarge.jpg",
                 },
@@ -113,7 +112,7 @@ const NotificationMenuFixture = {
               artists: "Damien Hirst",
               published_at: "May 02",
               image: {
-                resized: {
+                thumb: {
                   url:
                     "https://d7hftxdivxxvm.cloudfront.net?resize_to=fit&width=39&height=40&quality=80&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FTLj5ypujA8_sBmcjWw6cRw%2Flarge.jpg",
                 },

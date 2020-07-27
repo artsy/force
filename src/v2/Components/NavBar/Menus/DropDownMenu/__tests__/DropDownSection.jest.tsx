@@ -7,7 +7,7 @@ import { useTracking } from "v2/Artsy/Analytics/useTracking"
 
 jest.mock("v2/Artsy/Analytics/useTracking")
 
-describe("DropDownMenu", () => {
+describe("DropDownSection", () => {
   const trackEvent = jest.fn()
   const [mediumLinks] = ARTWORKS_SUBMENU_DATA.menu.links.filter(item => {
     return item.text === "Medium"
