@@ -11,6 +11,7 @@ import { DefaultHeaderArtworkFragmentContainer as DefaultHeaderArtwork } from ".
 const Rail = styled(Box)`
   display: flex;
   flex-direction: row;
+  overflow: hidden;
 `
 
 export const fitHeaderArtworks = (
