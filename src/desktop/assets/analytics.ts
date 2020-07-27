@@ -22,9 +22,9 @@ if (sd.SHOW_ANALYTICS_CALLS) {
   analytics.on("page", function () {
     console.info("ANALYTICS PAGEVIEW: ", arguments[2], arguments[3])
   })
-  // Log legacy analytics that do not use react-tracking
+  // Log all analytics calls
   analytics.on("track", (actionName: string, data?: any) => {
-    console.info("LEGACY ANALYTICS TRACK:", actionName, data)
+    console.info("ANALYTICS TRACK:", actionName, data)
   })
 }
 
@@ -52,10 +52,6 @@ const trackEvent = data => {
           referrer,
         },
       }
-    }
-    // Log track calls on client
-    if (window.sd.SHOW_ANALYTICS_CALLS) {
-      console.info("ANALYTICS TRACK:", actionName, trackingData)
     }
     // Send event to segment
     window.analytics.track(actionName, trackingData, trackingOptions)
