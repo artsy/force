@@ -5,15 +5,15 @@ import serialize from "serialize-javascript"
 import { ServerStyleSheet } from "styled-components"
 
 import { Resolver } from "found-relay"
-import createRender from "found/lib/createRender"
+import createRender from "found/createRender"
 import {
   FarceElementResult,
   FarceRedirectResult,
   getFarceResult,
-} from "found/lib/server"
+} from "found/server"
 import qs from "qs"
 
-import createQueryMiddleware from "farce/lib/createQueryMiddleware"
+import createQueryMiddleware from "farce/createQueryMiddleware"
 
 import { createRelaySSREnvironment } from "v2/Artsy/Relay/createRelaySSREnvironment"
 import { Boot } from "v2/Artsy/Router/Boot"
@@ -35,6 +35,7 @@ export interface ServerAppResolve {
   bodyHTML?: string
   redirect?: {
     url: string
+    status: number
   }
   status?: number
   scripts?: string

@@ -7,8 +7,11 @@ import deepMerge from "deepmerge"
 import { createMockNetworkLayer2 } from "v2/DevTools/createMockNetworkLayer"
 import { createRender } from "found"
 import { Resolver } from "found-relay"
-import { FarceElementResult, FarceRedirectResult } from "found/lib/server"
-import getFarceResult from "found/lib/server/getFarceResult"
+import {
+  FarceElementResult,
+  FarceRedirectResult,
+  getFarceResult,
+} from "found/server"
 import { Environment, RecordSource, Store } from "relay-runtime"
 import { DeepPartial } from "v2/Utils/typeSupport"
 

@@ -1,4 +1,4 @@
-import ActionTypes from "farce/lib/ActionTypes"
+import ActionTypes from "farce/ActionTypes"
 import { trackingMiddleware } from "../trackingMiddleware"
 
 declare const global: any

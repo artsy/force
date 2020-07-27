@@ -3,7 +3,7 @@ import { SystemContextProvider } from "v2/Artsy"
 import { ErrorPage } from "v2/Components/ErrorPage"
 import { mount } from "enzyme"
 import { Resolver } from "found-relay"
-import getFarceResult from "found/lib/server/getFarceResult"
+import { getFarceResult } from "found/server"
 import React from "react"
 import { HeadProvider, Meta } from "react-head"
 import { OrderApp } from "../OrderApp"
@@ -19,7 +19,7 @@ import {
 } from "v2/Apps/__tests__/Fixtures/Order"
 import { MockBoot } from "v2/DevTools"
 import { createMockNetworkLayer2 } from "v2/DevTools/createMockNetworkLayer"
-import { FarceRedirectResult } from "found/lib/server"
+import { FarceRedirectResult } from "found/server"
 import { DateTime } from "luxon"
 import { Environment, RecordSource, Store } from "relay-runtime"
 
@@ -334,9 +334,7 @@ describe("OrderApp routing redirects", () => {
         ...OfferWithTotals,
         id: "last-offer",
         internalID: "last-offer",
-        createdAt: DateTime.local()
-          .minus({ days: 1 })
-          .toString(),
+        createdAt: DateTime.local().minus({ days: 1 }).toString(),
       },
       myLastOffer: {
         id: "my-last-offer",
@@ -393,9 +391,7 @@ describe("OrderApp routing redirects", () => {
           ...counterOfferOrder,
           myLastOffer: {
             ...counterOfferOrder.myLastOffer,
-            createdAt: DateTime.local()
-              .minus({ days: 2 })
-              .toString(),
+            createdAt: DateTime.local().minus({ days: 2 }).toString(),
           },
         })
       )
@@ -412,9 +408,7 @@ describe("OrderApp routing redirects", () => {
         ...OfferWithTotals,
         internalID: "last-offer",
         id: "last-offer",
-        createdAt: DateTime.local()
-          .minus({ days: 1 })
-          .toString(),
+        createdAt: DateTime.local().minus({ days: 1 }).toString(),
       },
       myLastOffer: {
         internalID: "my-last-offer",
