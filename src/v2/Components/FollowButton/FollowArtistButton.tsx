@@ -1,5 +1,5 @@
 import { ContextModule, Intent } from "@artsy/cohesion"
-import { Box, ButtonProps } from "@artsy/palette"
+import { Box, ButtonProps, Clickable } from "@artsy/palette"
 import { FollowArtistButtonMutation } from "v2/__generated__/FollowArtistButtonMutation.graphql"
 import * as Artsy from "v2/Artsy"
 import { FollowArtistPopoverFragmentContainer as SuggestionsPopover } from "v2/Components/FollowArtistPopover"
@@ -163,7 +163,7 @@ export class FollowArtistButton extends React.Component<Props, State> {
 
     // Custom button renderer
     const content = render ? (
-      <span onClick={this.handleFollow}> {render(artist)}</span>
+      <Clickable onClick={this.handleFollow}> {render(artist)}</Clickable>
     ) : (
       <>
         {useDeprecatedButtonStyle && (
