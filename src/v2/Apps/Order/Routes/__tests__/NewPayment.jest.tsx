@@ -16,7 +16,6 @@ import {
 } from "../__fixtures__/MutationResults"
 import { NewPaymentFragmentContainer } from "../NewPayment"
 import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
-import { GlobalData } from "sharify"
 
 jest.unmock("react-tracking")
 jest.unmock("react-relay")
@@ -63,7 +62,7 @@ describe("Payment", () => {
       return { handleCardAction }
     }
 
-    window.sd = { STRIPE_PUBLISHABLE_KEY: "" } as GlobalData
+    window.sd = { STRIPE_PUBLISHABLE_KEY: "" }
   })
   const { buildPage, mutations, routes } = createTestEnv({
     Component: NewPaymentFragmentContainer,

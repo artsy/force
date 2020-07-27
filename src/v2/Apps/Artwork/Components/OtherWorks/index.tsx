@@ -18,6 +18,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { get } from "v2/Utils/get"
 import { ArtistSeriesArtworkRailFragmentContainer as ArtistSeriesArtworkRail } from "./ArtistSeriesArtworkRail"
 import { userHasLabFeature } from "v2/Utils/user"
+import { ArtistSeriesRailFragmentContainer as ArtistSeriesRail } from "v2/Components/ArtistSeriesRail/ArtistSeriesRail"
 
 export interface OtherWorksContextProps {
   artwork: OtherWorks_artwork
@@ -80,7 +81,7 @@ const contextGridTypeToV2ContextModule = contextGridType => {
 
 export const OtherWorks = track()(
   (props: { artwork: OtherWorks_artwork } & SystemContextProps) => {
-    const { context, contextGrids, sale } = props.artwork
+    const { context, contextGrids, sale, seriesArtist } = props.artwork
     const gridsToShow = populatedGrids(contextGrids)
     const tracking = useTracking()
     const { user } = React.useContext(SystemContext)
@@ -100,6 +101,7 @@ export const OtherWorks = track()(
                     grid.__typename === "ArtistArtworkGrid" && (
                       <>
                         <ArtistSeriesArtworkRail artwork={props.artwork} />
+                        <ArtistSeriesRail artist={seriesArtist} />
                       </>
                     )}
 
@@ -174,6 +176,9 @@ export const OtherWorksFragmentContainer = createFragmentContainer<{
       }
       context {
         __typename
+      }
+      seriesArtist: artist(shallow: true) {
+        ...ArtistSeriesRail_artist @include(if: $shouldFetchArtistSeriesData)
       }
     }
   `,

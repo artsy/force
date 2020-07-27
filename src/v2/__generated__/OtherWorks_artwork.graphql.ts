@@ -25,6 +25,9 @@ export type OtherWorks_artwork = {
     readonly context: {
         readonly __typename: string;
     } | null;
+    readonly seriesArtist: {
+        readonly " $fragmentRefs": FragmentRefs<"ArtistSeriesRail_artist">;
+    } | null;
     readonly " $fragmentRefs": FragmentRefs<"RelatedWorksArtworkGrid_artwork" | "ArtistSeriesArtworkRail_artwork">;
     readonly " $refType": "OtherWorks_artwork";
 };
@@ -182,6 +185,35 @@ return {
       ]
     },
     {
+      "kind": "LinkedField",
+      "alias": "seriesArtist",
+      "name": "artist",
+      "storageKey": "artist(shallow:true)",
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "shallow",
+          "value": true
+        }
+      ],
+      "concreteType": "Artist",
+      "plural": false,
+      "selections": [
+        {
+          "kind": "Condition",
+          "passingValue": true,
+          "condition": "shouldFetchArtistSeriesData",
+          "selections": [
+            {
+              "kind": "FragmentSpread",
+              "name": "ArtistSeriesRail_artist",
+              "args": null
+            }
+          ]
+        }
+      ]
+    },
+    {
       "kind": "FragmentSpread",
       "name": "RelatedWorksArtworkGrid_artwork",
       "args": null
@@ -201,5 +233,5 @@ return {
   ]
 };
 })();
-(node as any).hash = '9f92c6f7ef8640d934350a89ba7ec1c7';
+(node as any).hash = '84a7aba3c5bcf0d95baf0844789cadde';
 export default node;

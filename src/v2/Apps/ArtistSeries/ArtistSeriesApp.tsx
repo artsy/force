@@ -10,7 +10,7 @@ import { ArtistSeriesHeaderFragmentContainer as ArtistSeriesHeader } from "./Com
 import { ArtistSeriesArtworksFilterRefetchContainer as ArtistSeriesArtworksFilter } from "./Components/ArtistSeriesArtworksFilter"
 import { userHasLabFeature } from "v2/Utils/user"
 import { ErrorPage } from "v2/Components/ErrorPage"
-import { ArtistSeriesRailFragmentContainer as OtherArtistSeriesRail } from "./Components/OtherArtistSeries/ArtistSeriesRail"
+import { ArtistSeriesRailFragmentContainer as OtherArtistSeriesRail } from "v2/Components/ArtistSeriesRail/ArtistSeriesRail"
 
 interface ArtistSeriesAppProps {
   artistSeries: ArtistSeriesApp_artistSeries
@@ -28,7 +28,9 @@ const ArtistSeriesApp: React.FC<ArtistSeriesAppProps> = ({ artistSeries }) => {
         <Box m={3}>
           <ArtistSeriesArtworksFilter artistSeries={artistSeries} />
           <Separator mt={6} mb={3} />
-          <OtherArtistSeriesRail artist={railArtist} />
+          {railArtist.length && (
+            <OtherArtistSeriesRail artist={railArtist[0]} />
+          )}
           <Separator mt={6} mb={3} />
           <Footer />
         </Box>

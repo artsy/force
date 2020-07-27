@@ -15,12 +15,12 @@ const ArtistSeriesRail: React.SFC<Props> = props => {
   const isMobile = getENV("IS_MOBILE") === true
   const { artist } = props
 
-  if (!artist.length) return null
+  if (!artist) return null
 
-  const edges =
-    artist[0].artistSeriesConnection && artist[0].artistSeriesConnection.edges
+  const { artistSeriesConnection } = artist
+  const edges = artistSeriesConnection && artistSeriesConnection.edges
 
-  if (edges.length) {
+  if (edges && edges.length) {
     return (
       <Box my={3}>
         <Sans size="4" color="black100" my={1}>
@@ -75,7 +75,7 @@ export const ArtistSeriesRailFragmentContainer = createFragmentContainer(
   ArtistSeriesRail,
   {
     artist: graphql`
-      fragment ArtistSeriesRail_artist on Artist @relay(plural: true) {
+      fragment ArtistSeriesRail_artist on Artist {
         artistSeriesConnection {
           edges {
             node {

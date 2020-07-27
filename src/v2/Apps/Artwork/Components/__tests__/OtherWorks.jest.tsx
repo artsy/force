@@ -5,6 +5,9 @@ import { Header } from "../OtherWorks/Header"
 import { OtherWorksFragmentContainer as OtherWorks } from "../OtherWorks/index"
 import { SystemContextProvider } from "v2/Artsy"
 import { ArtistSeriesArtworkRail } from "../OtherWorks/ArtistSeriesArtworkRail"
+import { ArtistSeriesRailFragmentContainer as ArtistSeriesRail } from "v2/Components/ArtistSeriesRail/ArtistSeriesRail"
+import { ArtistSeriesItemFragmentContainer as ArtistSeriesItem } from "v2/Components/ArtistSeriesRail/ArtistSeriesItem"
+import { MockBoot } from "v2/DevTools"
 
 describe("OtherWorks", () => {
   let genericOtherWorksData
@@ -98,6 +101,26 @@ describe("OtherWorks", () => {
           },
         ],
       }
+
+      genericOtherWorksData.seriesArtist = {
+        artistSeriesConnection: {
+          edges: [
+            {
+              node: {
+                internalID: "id",
+                slug: "aardvark",
+                forSaleArtworksCount: 20,
+                image: {
+                  cropped: {
+                    url: "/path/to/aardvarks.jpg",
+                  },
+                },
+                title: "Aardvark Series",
+              },
+            },
+          ],
+        },
+      }
     })
 
     it("renders the other works from the artist series when the lab feature is enabled", () => {
@@ -110,9 +133,26 @@ describe("OtherWorks", () => {
       expect(component.find(ArtistSeriesArtworkRail).length).toEqual(1)
     })
 
-    it("doesnt render the other works from the artist series without the lab feature", () => {
+    it("renders the other series by the artist when the lab feature is enabled", () => {
+      const user = { lab_features: ["Artist Series"] }
+      const component = mount(
+        <MockBoot breakpoint={"lg"} user={user}>
+          <OtherWorks artwork={genericOtherWorksData} />
+        </MockBoot>
+      )
+      expect(component.find(ArtistSeriesRail).length).toEqual(1)
+      expect(component.find(ArtistSeriesItem).length).toEqual(1)
+      expect(component.find(ArtistSeriesItem).text()).toContain(
+        "Aardvark Series"
+      )
+      expect(component.find(ArtistSeriesItem).text()).toContain("20 available")
+    })
+
+    it("doesnt render artist series rails without the lab feature", () => {
       const component = mount(<OtherWorks artwork={genericOtherWorksData} />)
       expect(component.find(ArtistSeriesArtworkRail).length).toEqual(0)
+      expect(component.find(ArtistSeriesRail).length).toEqual(0)
+      expect(component.find(ArtistSeriesItem).length).toEqual(0)
     })
   })
 

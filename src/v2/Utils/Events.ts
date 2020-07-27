@@ -15,7 +15,7 @@ const emitter =
 /**
  * Post tracking event to Force
  * @param data data to track
- * @see [force] src/desktop/assets/analytics.ts
+ * @see [force] assets/analytics/analytics.coffee
  */
 const postEvent = data => {
   emitter.emit("postEvent", data)
