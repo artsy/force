@@ -6,7 +6,7 @@ const mediator = require("../lib/mediator.coffee")
 const setupSplitTests = require("../components/split_test/setup.coffee")
 window._ = require("underscore")
 window.Cookies = require("cookies-js")
-const { analytics } = window
+const analytics = window.analytics
 
 // This event bus also connects to reaction's publishing event emitter because
 // both piggyback on `window`. See Utils/Events for more info.
@@ -58,7 +58,7 @@ const trackEvent = data => {
       console.info("ANALYTICS TRACK:", actionName, trackingData)
     }
     // Send event to segment
-    analytics.track(actionName, trackingData, trackingOptions)
+    window.analytics.track(actionName, trackingData, trackingOptions)
   } else {
     console.error(
       `Unknown analytics schema being used: ${JSON.stringify(data)}`
