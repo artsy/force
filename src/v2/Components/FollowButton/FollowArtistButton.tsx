@@ -55,6 +55,10 @@ const SuggestionsPopoverContainer = styled(Box)`
   z-index: 1;
 `
 
+const Container = styled.span`
+  display: inline-block;
+`
+
 @track()
 export class FollowArtistButton extends React.Component<Props, State> {
   static defaultProps = {
@@ -163,7 +167,19 @@ export class FollowArtistButton extends React.Component<Props, State> {
 
     // Custom button renderer
     const content = render ? (
-      <span onClick={this.handleFollow}> {render(artist)}</span>
+      <Container
+        tabIndex={0}
+        role="button"
+        onKeyPress={event => {
+          if (event.key === "Enter" || event.key === " ") {
+            this.handleFollow(event)
+          }
+        }}
+        onClick={this.handleFollow}
+      >
+        {" "}
+        {render(artist)}
+      </Container>
     ) : (
       <>
         {useDeprecatedButtonStyle && (
