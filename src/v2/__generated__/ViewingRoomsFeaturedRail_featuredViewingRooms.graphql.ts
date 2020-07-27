@@ -8,7 +8,11 @@ export type ViewingRoomsFeaturedRail_featuredViewingRooms = {
             readonly status: string;
             readonly slug: string;
             readonly title: string;
-            readonly heroImageURL: string | null;
+            readonly image: {
+                readonly imageURLs: {
+                    readonly normalized: string | null;
+                } | null;
+            } | null;
             readonly distanceToOpen: string | null;
             readonly distanceToClose: string | null;
             readonly partner: {
@@ -81,11 +85,33 @@ return {
               "storageKey": null
             },
             {
-              "kind": "ScalarField",
+              "kind": "LinkedField",
               "alias": null,
-              "name": "heroImageURL",
+              "name": "image",
+              "storageKey": null,
               "args": null,
-              "storageKey": null
+              "concreteType": "ARImage",
+              "plural": false,
+              "selections": [
+                {
+                  "kind": "LinkedField",
+                  "alias": null,
+                  "name": "imageURLs",
+                  "storageKey": null,
+                  "args": null,
+                  "concreteType": "ImageURLs",
+                  "plural": false,
+                  "selections": [
+                    {
+                      "kind": "ScalarField",
+                      "alias": null,
+                      "name": "normalized",
+                      "args": null,
+                      "storageKey": null
+                    }
+                  ]
+                }
+              ]
             },
             {
               "kind": "ScalarField",
@@ -126,5 +152,5 @@ return {
   ]
 };
 })();
-(node as any).hash = 'b0db84fe428ac769d4f470ef6e09732f';
+(node as any).hash = '9dd834600e28760b97b9b24b16f60122';
 export default node;
