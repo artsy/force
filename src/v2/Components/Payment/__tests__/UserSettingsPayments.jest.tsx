@@ -11,6 +11,7 @@ import {
 import { mount } from "enzyme"
 import React from "react"
 import { RelayProp } from "react-relay"
+import { GlobalData } from "sharify"
 
 jest.mock("react-stripe-elements", () => ({
   Elements: ({ children }) => children,
@@ -52,7 +53,7 @@ describe("UserSettingsPayments", () => {
     // tslint:disable-next-line:no-empty
     window.Stripe = () => {}
 
-    window.sd = { STRIPE_PUBLISHABLE_KEY: "" }
+    window.sd = { STRIPE_PUBLISHABLE_KEY: "" } as GlobalData
   })
 
   it("shows only the payment form if there are no saved credit cards", () => {

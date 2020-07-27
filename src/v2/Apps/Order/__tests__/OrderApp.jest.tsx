@@ -22,6 +22,7 @@ import { createMockNetworkLayer2 } from "v2/DevTools/createMockNetworkLayer"
 import { FarceRedirectResult } from "found/lib/server"
 import { DateTime } from "luxon"
 import { Environment, RecordSource, Store } from "relay-runtime"
+import { GlobalData } from "sharify"
 
 jest.mock("react-stripe-elements", () => ({
   Elements: ({ children }) => children,
@@ -334,9 +335,7 @@ describe("OrderApp routing redirects", () => {
         ...OfferWithTotals,
         id: "last-offer",
         internalID: "last-offer",
-        createdAt: DateTime.local()
-          .minus({ days: 1 })
-          .toString(),
+        createdAt: DateTime.local().minus({ days: 1 }).toString(),
       },
       myLastOffer: {
         id: "my-last-offer",
@@ -393,9 +392,7 @@ describe("OrderApp routing redirects", () => {
           ...counterOfferOrder,
           myLastOffer: {
             ...counterOfferOrder.myLastOffer,
-            createdAt: DateTime.local()
-              .minus({ days: 2 })
-              .toString(),
+            createdAt: DateTime.local().minus({ days: 2 }).toString(),
           },
         })
       )
@@ -412,9 +409,7 @@ describe("OrderApp routing redirects", () => {
         ...OfferWithTotals,
         internalID: "last-offer",
         id: "last-offer",
-        createdAt: DateTime.local()
-          .minus({ days: 1 })
-          .toString(),
+        createdAt: DateTime.local().minus({ days: 1 }).toString(),
       },
       myLastOffer: {
         internalID: "my-last-offer",
@@ -484,7 +479,7 @@ describe("OrderApp", () => {
     // tslint:disable-next-line:no-empty
     window.Stripe = () => {}
 
-    window.sd = { STRIPE_PUBLISHABLE_KEY: "" }
+    window.sd = { STRIPE_PUBLISHABLE_KEY: "" } as GlobalData
   })
 
   const getProps = ({ state, location, replace }: any = {}) => {

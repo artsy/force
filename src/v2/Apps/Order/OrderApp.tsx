@@ -14,13 +14,12 @@ import { Elements, StripeProvider } from "react-stripe-elements"
 import styled from "styled-components"
 import { get } from "v2/Utils/get"
 import { ConnectedModalDialog } from "./Dialogs"
+import { GlobalData } from "sharify"
 
 declare global {
   interface Window {
     Stripe?: (key: string) => stripe.Stripe
-    sd: {
-      STRIPE_PUBLISHABLE_KEY: string
-    }
+    sd: GlobalData
   }
 }
 
