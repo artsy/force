@@ -25,7 +25,7 @@ $ -> analytics.ready ->
     analytics.identify sd.CURRENT_USER.id, traits
     analyticsHooks.on 'auth:logged-out', -> analytics.reset()
 
-  require '../analytics/global.js'
+  require '../analytics/global.ts'
   require '../analytics/show_page.js'
   require '../analytics/bidding.js'
   require '../analytics/commercial_filter.js'

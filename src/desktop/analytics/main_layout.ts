@@ -39,7 +39,7 @@ const foundExcludedPath = excludedRoutes.some(excludedPath => {
 })
 
 if (!foundExcludedPath) {
-  analytics.page(properties, { integrations: { Marketo: false } })
+  window.analytics.page(properties, { integrations: { Marketo: false } })
 }
 
 if (pageType === "auction") {
@@ -75,6 +75,11 @@ if (
 
 // FIXME: Move this to reaction
 class PageTimeTracker {
+  path: string
+  delay: number
+  description: string
+  timer: any
+
   constructor(path, delay, description) {
     this.path = path
     this.delay = delay
@@ -128,25 +133,3 @@ class PageTimeTracker {
 window.desktopPageTimeTrackers = [
   new PageTimeTracker(sd.CURRENT_PATH, 15000, "15 seconds"),
 ]
-
-// debug tracking calls
-if (sd.SHOW_ANALYTICS_CALLS) {
-  analytics.on("track", function () {
-    console.info("TRACKED: ", arguments[0], JSON.stringify(arguments[1]))
-  })
-  analytics.on("page", function () {
-    console.info(
-      "PAGEVIEW TRACKED: ",
-      arguments[2],
-      arguments[3],
-      JSON.stringify(arguments[2]),
-      JSON.stringify(arguments[3])
-    )
-  })
-}
-
-if (sd.SHOW_ANALYTICS_CALLS) {
-  analyticsHooks.on("all", function (name, data) {
-    console.info("ANALYTICS HOOK: ", name, data)
-  })
-}
