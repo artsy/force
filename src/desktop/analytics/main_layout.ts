@@ -6,7 +6,6 @@
 import { data as sd } from "sharify"
 import { reportLoadTimeToVolley } from "lib/volley"
 import { match } from "path-to-regexp"
-const analytics = window.analytics
 
 // Track pageview
 const pageType = window.sd.PAGE_TYPE || window.location.pathname.split("/")[1]
@@ -40,7 +39,7 @@ const foundExcludedPath = excludedRoutes.some(excludedPath => {
 })
 
 if (!foundExcludedPath) {
-  analytics.page(properties, { integrations: { Marketo: false } })
+  window.analytics.page(properties, { integrations: { Marketo: false } })
 }
 
 if (pageType === "auction") {
