@@ -30,7 +30,7 @@ const ViewingRoomContentNotAccessible: React.FC<ViewingRoomContentNotAccessibleP
         </Sans>
         {href && (
           <RouterLink to={href}>
-            <Button variant="secondaryGray">Viait Gallery</Button>
+            <Button variant="secondaryGray">Visit Gallery</Button>
           </RouterLink>
         )}
       </Flex>
