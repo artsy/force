@@ -227,8 +227,12 @@ const ViewingRoomStatmentRouteFixture: ViewingRoomStatementRoute_Test_QueryRawRe
         title: "Guy Yanai",
         body:
           "His visual tools are both ubiquitous and obscure, seemingly random but also all somehow personal. Yanai has used the New York Times, Vitra furniture catalogs, Peanuts comic strips, his iPhone photos, and classic films like Claire’s Knee (1970), directed by Eric Rohmer. “I’ve done so many paintings from this movie,” he said, showing me a reproduction of Lake Annecy (2019), which he painted from a still photo last year. “And honestly, I could do the whole rest of my life just painting from this movie.",
-        imageURL:
-          "https://d7hftxdivxxvm.cloudfront.net/?resize_to=width&src=https%3A%2F%2Fartsy-media-uploads.s3.amazonaws.com%2FQxcoFTsyj4gBuvUFZwrL9g%2FStudio%2Bshot%2BFebruary%2B2019.jpg&width=1200&quality=80",
+        image: {
+          imageURLs: {
+            normalized:
+              "https://artsy-media-uploads.s3.amazonaws.com/QxcoFTsyj4gBuvUFZwrL9g/Studio+shot+February+2019.jpg",
+          },
+        },
         caption:
           "View of Guy Yanai’s studio in February 2019. Photo by Elad Sarig. Courtesy of the artist.",
       },

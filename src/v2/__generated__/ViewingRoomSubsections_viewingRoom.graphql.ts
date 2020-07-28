@@ -7,7 +7,11 @@ export type ViewingRoomSubsections_viewingRoom = {
         readonly internalID: string;
         readonly title: string | null;
         readonly body: string | null;
-        readonly imageURL: string | null;
+        readonly image: {
+            readonly imageURLs: {
+                readonly normalized: string | null;
+            } | null;
+        } | null;
         readonly caption: string | null;
     }>;
     readonly " $refType": "ViewingRoomSubsections_viewingRoom";
@@ -58,11 +62,33 @@ const node: ReaderFragment = {
           "storageKey": null
         },
         {
-          "kind": "ScalarField",
+          "kind": "LinkedField",
           "alias": null,
-          "name": "imageURL",
+          "name": "image",
+          "storageKey": null,
           "args": null,
-          "storageKey": null
+          "concreteType": "ARImage",
+          "plural": false,
+          "selections": [
+            {
+              "kind": "LinkedField",
+              "alias": null,
+              "name": "imageURLs",
+              "storageKey": null,
+              "args": null,
+              "concreteType": "ImageURLs",
+              "plural": false,
+              "selections": [
+                {
+                  "kind": "ScalarField",
+                  "alias": null,
+                  "name": "normalized",
+                  "args": null,
+                  "storageKey": null
+                }
+              ]
+            }
+          ]
         },
         {
           "kind": "ScalarField",
@@ -75,5 +101,5 @@ const node: ReaderFragment = {
     }
   ]
 };
-(node as any).hash = '4172fbc3b205f20e1b32ebf21014e72b';
+(node as any).hash = '3f1d6a976cc3a98198563a8e78f35c4a';
 export default node;
