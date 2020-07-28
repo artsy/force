@@ -6,11 +6,11 @@ export type MenuAnchor = "left" | "right" | "center" | "full"
 
 const AnimatedPanel = styled(animated.div)<{
   menuAnchor: MenuAnchor
-  offsetLeft: number
+  offsetLeft?: number
 }>`
   position: absolute;
   top: 100%;
-  ${({ menuAnchor, offsetLeft }) =>
+  ${({ menuAnchor, offsetLeft = 0 }) =>
     ({
       right: css`
         right: 0;
@@ -67,7 +67,7 @@ export const NavItemPanel: React.FC<NavItemPanelProps> = ({
     <AnimatedPanel
       style={animation}
       menuAnchor={menuAnchor}
-      offsetLeft={relativeTo.current.offsetLeft}
+      offsetLeft={relativeTo.current?.offsetLeft}
     >
       {children}
     </AnimatedPanel>

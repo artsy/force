@@ -52,7 +52,7 @@ const UnfocusableAnchor = styled(RouterLink).attrs({ tabIndex: -1 })`
   z-index: 1;
 `
 
-interface NavItemProps extends BoxProps {
+interface NavItemProps extends BoxProps, React.HTMLAttributes<HTMLDivElement> {
   Menu?: React.FC<{
     setIsVisible: React.Dispatch<React.SetStateAction<boolean>>
   }>
@@ -75,6 +75,8 @@ export const NavItem: React.FC<NavItemProps> = ({
   href,
   label,
   menuAnchor = "left",
+  tabIndex,
+  role,
   onClick,
   ...rest
 }) => {
@@ -172,10 +174,12 @@ export const NavItem: React.FC<NavItemProps> = ({
         color={color}
         underlineBehavior="none"
         px={1}
-        className={className}
         display={display}
-        onClick={handleClick}
+        className={className}
         aria-label={label}
+        tabIndex={tabIndex}
+        role={role}
+        onClick={handleClick}
       >
         {!!Menu && href && <UnfocusableAnchor to={href} />}
         <Text variant="text" lineHeight="solid" color={color}>
