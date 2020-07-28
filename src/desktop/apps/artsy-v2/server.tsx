@@ -74,7 +74,7 @@ app.get(
       })
 
       if (redirect) {
-        res.redirect(302, redirect.url)
+        res.redirect(status ?? 302, redirect.url)
         return
       }
 

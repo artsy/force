@@ -6,6 +6,7 @@ import { FarceRedirectResult } from "found/lib/server"
 import getFarceResult from "found/lib/server/getFarceResult"
 import React from "react"
 import { Environment, RecordSource, Store } from "relay-runtime"
+import { PermanentRedirectException } from "v2/Artsy/Router/PermanentRedirectException"
 
 describe("Artist/routes", () => {
   async function render(url, mockData: routes_ArtistTopLevelQueryRawResponse) {
@@ -42,12 +43,15 @@ describe("Artist/routes", () => {
   })
 
   it("redirects trailing a trailing slash on the artist page back to the root", async () => {
-    const { redirect } = await render(
-      "/artist/juan-gris/",
-      mockResolver(overviewArtist)
-    )
+    await expect(
+      render("/artist/juan-gris/", mockResolver(overviewArtist))
+    ).rejects.toThrow(PermanentRedirectException)
 
-    expect(redirect.url).toBe("/artist/juan-gris")
+    try {
+      await render("/artist/juan-gris/", mockResolver(overviewArtist))
+    } catch (err) {
+      expect(err.pathname).toEqual("/artist/juan-gris")
+    }
   })
 
   it("doesn't redirect from /auction-results to /works-for-sale if auction-results", async () => {
@@ -103,30 +107,37 @@ describe("Artist/routes", () => {
   })
 
   it("redirects from / to the /works-for-sale page if there is no data", async () => {
-    const { redirect } = await render(
-      "/artist/juan-gris",
-      mockResolver({
-        ...overviewArtist,
-        highlights: {
-          partnersConnection: null,
-        },
-        statuses: {
-          shows: false,
-          articles: false,
-          cv: false,
-          auctionLots: false,
-          artworks: false,
-        },
-        biographyBlurb: {
-          text: null,
-        },
-        related: {
-          genes: null,
-        },
-      })
-    )
+    const exec = async () =>
+      await render(
+        "/artist/juan-gris",
+        mockResolver({
+          ...overviewArtist,
+          highlights: {
+            partnersConnection: null,
+          },
+          statuses: {
+            shows: false,
+            articles: false,
+            cv: false,
+            auctionLots: false,
+            artworks: false,
+          },
+          biographyBlurb: {
+            text: null,
+          },
+          related: {
+            genes: null,
+          },
+        })
+      )
 
-    expect(redirect.url).toBe("/artist/juan-gris/works-for-sale")
+    await expect(exec()).rejects.toThrow(PermanentRedirectException)
+
+    try {
+      await exec()
+    } catch (err) {
+      expect(err.pathname).toEqual("/artist/juan-gris/works-for-sale")
+    }
   })
 
   it("does not redirect from /cv", async () => {
@@ -157,27 +168,34 @@ describe("Artist/routes", () => {
   })
 
   it("redirects from /cv to the /works-for-sale page if there is no data", async () => {
-    const { redirect } = await render(
-      "/artist/juan-gris/cv",
-      mockResolver({
-        ...overviewArtist,
-        statuses: {
-          shows: false,
-          articles: false,
-          cv: false,
-          auctionLots: false,
-          artworks: false,
-        },
-        biographyBlurb: {
-          text: null,
-        },
-        related: {
-          genes: null,
-        },
-      })
-    )
+    const exec = async () =>
+      await render(
+        "/artist/juan-gris/cv",
+        mockResolver({
+          ...overviewArtist,
+          statuses: {
+            shows: false,
+            articles: false,
+            cv: false,
+            auctionLots: false,
+            artworks: false,
+          },
+          biographyBlurb: {
+            text: null,
+          },
+          related: {
+            genes: null,
+          },
+        })
+      )
 
-    expect(redirect.url).toBe("/artist/juan-gris/works-for-sale")
+    await expect(exec()).rejects.toThrow(PermanentRedirectException)
+
+    try {
+      await exec()
+    } catch (err) {
+      expect(err.pathname).toEqual("/artist/juan-gris/works-for-sale")
+    }
   })
 })
 
