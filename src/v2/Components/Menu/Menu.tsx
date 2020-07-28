@@ -1,17 +1,9 @@
 import React from "react"
 import styled from "styled-components"
-import {
-  BorderBox,
-  BorderBoxProps,
-  Box,
-  Flex,
-  Sans,
-  Separator,
-  Spacer,
-} from "@artsy/palette"
+import { BorderBox, BorderBoxProps, Box, Separator, Text } from "@artsy/palette"
 
 const Container = styled(BorderBox)`
-  box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
 `
 
 export type MenuProps = BorderBoxProps & {
@@ -19,32 +11,32 @@ export type MenuProps = BorderBoxProps & {
   onClick?: (event: React.MouseEvent<HTMLElement>) => void
 }
 
-export const Menu: React.FC<MenuProps> = ({
-  children,
-  py = 1,
-  title,
-  width = 230,
-  ...rest
-}) => {
+export const Menu: React.FC<MenuProps> = ({ children, title, ...rest }) => {
   return (
     <Container
-      width={width}
+      width={230}
       p={0}
-      py={py}
-      background="white"
+      py={1}
+      bg="white"
       display="flex"
       flexDirection="column"
       {...rest}
     >
       {title && (
-        <Box px={2} pt={1} pb={1}>
-          <Sans size="3">{title}</Sans>
-          <Spacer py={0.5} />
-          <Separator />
-        </Box>
+        <>
+          <Text px={2} pt={1} pb={1} variant="text">
+            {title}
+          </Text>
+
+          <Box px={2}>
+            <Separator />
+          </Box>
+        </>
       )}
 
-      <Flex flexDirection="column">{children}</Flex>
+      <Box display="flex" flexDirection="column">
+        {children}
+      </Box>
     </Container>
   )
 }

@@ -30,6 +30,7 @@ import { queryStringParsing } from "./Utils/queryStringParsing"
 
 import { ChunkExtractor } from "@loadable/server"
 import { getENV } from "v2/Utils/getENV"
+import { PermanentRedirectException } from "v2/Artsy/Router/PermanentRedirectException"
 
 export interface ServerAppResolve {
   bodyHTML?: string
@@ -83,7 +84,7 @@ export function buildServerApp(
       })
 
       if (isRedirect(farceResults)) {
-        resolve({ redirect: farceResults.redirect })
+        resolve({ redirect: farceResults.redirect, status: 302 })
       } else {
         /**
          * An array that gets passed to `react-head`'s provider that will
@@ -237,6 +238,12 @@ export function buildServerApp(
         resolve(result)
       }
     } catch (error) {
+      // FIXME: https://github.com/artsy/force/pull/6013 once found is upgraded
+      if (error instanceof PermanentRedirectException) {
+        resolve({ redirect: { url: error.pathname }, status: 301 })
+        return
+      }
+
       logger.error(error)
       reject(error)
     }
