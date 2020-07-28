@@ -338,8 +338,12 @@ describe("ViewingRoomApp", () => {
 const ScheduledViewingRoomAppFixture: ViewingRoomApp_ScheduledTest_QueryRawResponse = {
   viewingRoom: {
     title: "Guy Yanai",
-    heroImageURL:
-      "https://d7hftxdivxxvm.cloudfront.net/?resize_to=width&src=https%3A%2F%2Fartsy-media-uploads.s3.amazonaws.com%2F0RnxWDsVmKuALfpmd75YyA%2FCTPHSEPT19_018_JO_Guy_Yanai_TLV_031_20190913.jpg&width=1200&quality=80",
+    image: {
+      imageURLs: {
+        normalized:
+          "https://artsy-media-uploads.s3.amazonaws.com/0RnxWDsVmKuALfpmd75YyA/CTPHSEPT19_018_JO_Guy_Yanai_TLV_031_20190913.jpg",
+      },
+    },
     partner: {
       name: "Subscription Demo GG",
       id: "UGFydG5lcjo1NTQxMjM3MzcyNjE2OTJiMTk4YzAzMDA=",
@@ -354,8 +358,12 @@ const ScheduledViewingRoomAppFixture: ViewingRoomApp_ScheduledTest_QueryRawRespo
 const OpenViewingRoomAppFixture: ViewingRoomApp_OpenTest_QueryRawResponse = {
   viewingRoom: {
     title: "Guy Yanai",
-    heroImageURL:
-      "https://d7hftxdivxxvm.cloudfront.net/?resize_to=width&src=https%3A%2F%2Fartsy-media-uploads.s3.amazonaws.com%2F0RnxWDsVmKuALfpmd75YyA%2FCTPHSEPT19_018_JO_Guy_Yanai_TLV_031_20190913.jpg&width=1200&quality=80",
+    image: {
+      imageURLs: {
+        normalized:
+          "https://artsy-media-uploads.s3.amazonaws.com/0RnxWDsVmKuALfpmd75YyA/CTPHSEPT19_018_JO_Guy_Yanai_TLV_031_20190913.jpg",
+      },
+    },
     partner: {
       name: "Subscription Demo GG",
       id: "UGFydG5lcjo1NTQxMjM3MzcyNjE2OTJiMTk4YzAzMDA=",
@@ -370,8 +378,12 @@ const OpenViewingRoomAppFixture: ViewingRoomApp_OpenTest_QueryRawResponse = {
 const ClosedViewingRoomAppFixture: ViewingRoomApp_ClosedTest_QueryRawResponse = {
   viewingRoom: {
     title: "Guy Yanai",
-    heroImageURL:
-      "https://d7hftxdivxxvm.cloudfront.net/?resize_to=width&src=https%3A%2F%2Fartsy-media-uploads.s3.amazonaws.com%2F0RnxWDsVmKuALfpmd75YyA%2FCTPHSEPT19_018_JO_Guy_Yanai_TLV_031_20190913.jpg&width=1200&quality=80",
+    image: {
+      imageURLs: {
+        normalized:
+          "https://artsy-media-uploads.s3.amazonaws.com/0RnxWDsVmKuALfpmd75YyA/CTPHSEPT19_018_JO_Guy_Yanai_TLV_031_20190913.jpg",
+      },
+    },
     partner: {
       name: "Subscription Demo GG",
       id: "UGFydG5lcjo1NTQxMjM3MzcyNjE2OTJiMTk4YzAzMDA=",
@@ -390,8 +402,12 @@ const UnfoundViewingRoomAppFixture: ViewingRoomApp_UnfoundTest_QueryRawResponse 
 const LoggedOutViewingRoomAppFixture: ViewingRoomApp_LoggedOutTest_QueryRawResponse = {
   viewingRoom: {
     title: "Guy Yanai",
-    heroImageURL:
-      "https://d7hftxdivxxvm.cloudfront.net/?resize_to=width&src=https%3A%2F%2Fartsy-media-uploads.s3.amazonaws.com%2F0RnxWDsVmKuALfpmd75YyA%2FCTPHSEPT19_018_JO_Guy_Yanai_TLV_031_20190913.jpg&width=1200&quality=80",
+    image: {
+      imageURLs: {
+        normalized:
+          "https://artsy-media-uploads.s3.amazonaws.com/0RnxWDsVmKuALfpmd75YyA/CTPHSEPT19_018_JO_Guy_Yanai_TLV_031_20190913.jpg",
+      },
+    },
     partner: {
       name: "Subscription Demo GG",
       id: "UGFydG5lcjo1NTQxMjM3MzcyNjE2OTJiMTk4YzAzMDA=",

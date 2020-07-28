@@ -5,6 +5,7 @@ import { Media } from "v2/Utils/Responsive"
 import { createFragmentContainer, graphql } from "react-relay"
 
 import { ViewingRoomHeader_viewingRoom } from "v2/__generated__/ViewingRoomHeader_viewingRoom.graphql"
+import { resize } from "v2/Utils/resizer"
 
 interface ViewingRoomHeaderProps {
   viewingRoom: ViewingRoomHeader_viewingRoom
@@ -28,7 +29,11 @@ export const ViewingRoomHeaderFragmentContainer = createFragmentContainer(
   {
     viewingRoom: graphql`
       fragment ViewingRoomHeader_viewingRoom on ViewingRoom {
-        heroImageURL
+        image {
+          imageURLs {
+            normalized
+          }
+        }
         title
         partner {
           name
@@ -46,14 +51,13 @@ export const ViewingRoomHeaderFragmentContainer = createFragmentContainer(
  */
 const ViewingRoomHeaderLarge: React.FC<ViewingRoomHeaderProps> = props => {
   const {
-    viewingRoom: { heroImageURL, title },
+    viewingRoom: { image, title },
   } = props
 
-  // FIXME: Wire up. Currently Gemini is returning a 500 from this, not sure why.
-  // const resizedHeroImageURL = resize(heroImageURL, {
-  //   width: 600,
-  //   convert_to: "jpg",
-  // })
+  const heroImageURL = resize(image?.imageURLs?.normalized, {
+    width: 1200,
+    convert_to: "jpg",
+  })
 
   return (
     <Flex
@@ -64,7 +68,6 @@ const ViewingRoomHeaderLarge: React.FC<ViewingRoomHeaderProps> = props => {
     >
       <Box width="50%" style={{ overflow: "hidden" }}>
         <ResponsiveImage
-          // FIXME: Use resizer: https://github.com/artsy/reaction/pull/3499/files#r422166275
           src={heroImageURL}
           lazyLoad={false}
           style={{
@@ -96,10 +99,14 @@ const ViewingRoomHeaderLarge: React.FC<ViewingRoomHeaderProps> = props => {
  */
 const ViewingRoomHeaderSmall: React.FC<ViewingRoomHeaderProps> = props => {
   const {
-    viewingRoom: { heroImageURL, title },
+    viewingRoom: { image, title },
   } = props
 
   const HeaderHeight = `calc(100vh - ${NAV_BAR_HEIGHT * 2.8}px)`
+  const heroImageURL = resize(image?.imageURLs?.normalized, {
+    width: 1200,
+    convert_to: "jpg",
+  })
 
   return (
     <Flex

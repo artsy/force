@@ -3,7 +3,11 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ViewingRoomHeader_viewingRoom = {
-    readonly heroImageURL: string | null;
+    readonly image: {
+        readonly imageURLs: {
+            readonly normalized: string | null;
+        } | null;
+    } | null;
     readonly title: string;
     readonly partner: {
         readonly name: string | null;
@@ -29,11 +33,33 @@ const node: ReaderFragment = {
   "argumentDefinitions": [],
   "selections": [
     {
-      "kind": "ScalarField",
+      "kind": "LinkedField",
       "alias": null,
-      "name": "heroImageURL",
+      "name": "image",
+      "storageKey": null,
       "args": null,
-      "storageKey": null
+      "concreteType": "ARImage",
+      "plural": false,
+      "selections": [
+        {
+          "kind": "LinkedField",
+          "alias": null,
+          "name": "imageURLs",
+          "storageKey": null,
+          "args": null,
+          "concreteType": "ImageURLs",
+          "plural": false,
+          "selections": [
+            {
+              "kind": "ScalarField",
+              "alias": null,
+              "name": "normalized",
+              "args": null,
+              "storageKey": null
+            }
+          ]
+        }
+      ]
     },
     {
       "kind": "ScalarField",
@@ -83,5 +109,5 @@ const node: ReaderFragment = {
     }
   ]
 };
-(node as any).hash = '2ec7b471040d4dd4e4f825e4b99ab643';
+(node as any).hash = 'c262912bb2460fffda0243370d4e1f6c';
 export default node;

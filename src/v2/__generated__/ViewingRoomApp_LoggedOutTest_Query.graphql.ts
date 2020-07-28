@@ -13,7 +13,11 @@ export type ViewingRoomApp_LoggedOutTest_QueryResponse = {
 export type ViewingRoomApp_LoggedOutTest_QueryRawResponse = {
     readonly viewingRoom: ({
         readonly title: string;
-        readonly heroImageURL: string | null;
+        readonly image: ({
+            readonly imageURLs: ({
+                readonly normalized: string | null;
+            }) | null;
+        }) | null;
         readonly partner: ({
             readonly name: string | null;
             readonly id: string | null;
@@ -57,7 +61,11 @@ fragment ViewingRoomContentNotAccessible_viewingRoom on ViewingRoom {
 }
 
 fragment ViewingRoomHeader_viewingRoom on ViewingRoom {
-  heroImageURL
+  image {
+    imageURLs {
+      normalized
+    }
+  }
   title
   partner {
     name
@@ -138,11 +146,33 @@ return {
             "storageKey": null
           },
           {
-            "kind": "ScalarField",
+            "kind": "LinkedField",
             "alias": null,
-            "name": "heroImageURL",
+            "name": "image",
+            "storageKey": null,
             "args": null,
-            "storageKey": null
+            "concreteType": "ARImage",
+            "plural": false,
+            "selections": [
+              {
+                "kind": "LinkedField",
+                "alias": null,
+                "name": "imageURLs",
+                "storageKey": null,
+                "args": null,
+                "concreteType": "ImageURLs",
+                "plural": false,
+                "selections": [
+                  {
+                    "kind": "ScalarField",
+                    "alias": null,
+                    "name": "normalized",
+                    "args": null,
+                    "storageKey": null
+                  }
+                ]
+              }
+            ]
           },
           {
             "kind": "LinkedField",
@@ -205,7 +235,7 @@ return {
     "operationKind": "query",
     "name": "ViewingRoomApp_LoggedOutTest_Query",
     "id": null,
-    "text": "query ViewingRoomApp_LoggedOutTest_Query(\n  $slug: ID!\n) {\n  viewingRoom(id: $slug) {\n    ...ViewingRoomApp_viewingRoom\n  }\n}\n\nfragment ViewingRoomApp_viewingRoom on ViewingRoom {\n  ...ViewingRoomMeta_viewingRoom\n  ...ViewingRoomHeader_viewingRoom\n  ...ViewingRoomContentNotAccessible_viewingRoom\n  status\n}\n\nfragment ViewingRoomContentNotAccessible_viewingRoom on ViewingRoom {\n  status\n  partner {\n    href\n    id\n  }\n}\n\nfragment ViewingRoomHeader_viewingRoom on ViewingRoom {\n  heroImageURL\n  title\n  partner {\n    name\n    id\n  }\n  distanceToOpen\n  distanceToClose\n  status\n}\n\nfragment ViewingRoomMeta_viewingRoom on ViewingRoom {\n  title\n}\n",
+    "text": "query ViewingRoomApp_LoggedOutTest_Query(\n  $slug: ID!\n) {\n  viewingRoom(id: $slug) {\n    ...ViewingRoomApp_viewingRoom\n  }\n}\n\nfragment ViewingRoomApp_viewingRoom on ViewingRoom {\n  ...ViewingRoomMeta_viewingRoom\n  ...ViewingRoomHeader_viewingRoom\n  ...ViewingRoomContentNotAccessible_viewingRoom\n  status\n}\n\nfragment ViewingRoomContentNotAccessible_viewingRoom on ViewingRoom {\n  status\n  partner {\n    href\n    id\n  }\n}\n\nfragment ViewingRoomHeader_viewingRoom on ViewingRoom {\n  image {\n    imageURLs {\n      normalized\n    }\n  }\n  title\n  partner {\n    name\n    id\n  }\n  distanceToOpen\n  distanceToClose\n  status\n}\n\nfragment ViewingRoomMeta_viewingRoom on ViewingRoom {\n  title\n}\n",
     "metadata": {}
   }
 };

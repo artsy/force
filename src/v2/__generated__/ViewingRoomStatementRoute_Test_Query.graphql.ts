@@ -33,7 +33,11 @@ export type ViewingRoomStatementRoute_Test_QueryRawResponse = {
             readonly internalID: string;
             readonly title: string | null;
             readonly body: string | null;
-            readonly imageURL: string | null;
+            readonly image: ({
+                readonly imageURLs: ({
+                    readonly normalized: string | null;
+                }) | null;
+            }) | null;
             readonly caption: string | null;
         }>;
     }) | null;
@@ -83,7 +87,11 @@ fragment ViewingRoomSubsections_viewingRoom on ViewingRoom {
     internalID
     title
     body
-    imageURL
+    image {
+      imageURLs {
+        normalized
+      }
+    }
     caption
   }
 }
@@ -295,11 +303,33 @@ return {
               (v3/*: any*/),
               (v4/*: any*/),
               {
-                "kind": "ScalarField",
+                "kind": "LinkedField",
                 "alias": null,
-                "name": "imageURL",
+                "name": "image",
+                "storageKey": null,
                 "args": null,
-                "storageKey": null
+                "concreteType": "ARImage",
+                "plural": false,
+                "selections": [
+                  {
+                    "kind": "LinkedField",
+                    "alias": null,
+                    "name": "imageURLs",
+                    "storageKey": null,
+                    "args": null,
+                    "concreteType": "ImageURLs",
+                    "plural": false,
+                    "selections": [
+                      {
+                        "kind": "ScalarField",
+                        "alias": null,
+                        "name": "normalized",
+                        "args": null,
+                        "storageKey": null
+                      }
+                    ]
+                  }
+                ]
               },
               {
                 "kind": "ScalarField",
@@ -318,7 +348,7 @@ return {
     "operationKind": "query",
     "name": "ViewingRoomStatementRoute_Test_Query",
     "id": null,
-    "text": "query ViewingRoomStatementRoute_Test_Query(\n  $slug: ID!\n) {\n  viewingRoom(id: $slug) {\n    ...ViewingRoomStatementRoute_viewingRoom\n  }\n}\n\nfragment ViewingRoomBody_viewingRoom on ViewingRoom {\n  body\n}\n\nfragment ViewingRoomIntro_viewingRoom on ViewingRoom {\n  introStatement\n}\n\nfragment ViewingRoomPullQuote_viewingRoom on ViewingRoom {\n  pullQuote\n}\n\nfragment ViewingRoomStatementRoute_viewingRoom on ViewingRoom {\n  ...ViewingRoomIntro_viewingRoom\n  ...ViewingRoomWorks_viewingRoom\n  ...ViewingRoomPullQuote_viewingRoom\n  ...ViewingRoomBody_viewingRoom\n  ...ViewingRoomSubsections_viewingRoom\n  artworksConnection(first: 2) {\n    totalCount\n  }\n}\n\nfragment ViewingRoomSubsections_viewingRoom on ViewingRoom {\n  subsections {\n    internalID\n    title\n    body\n    imageURL\n    caption\n  }\n}\n\nfragment ViewingRoomWorks_viewingRoom on ViewingRoom {\n  artworksConnection(first: 2) {\n    totalCount\n    edges {\n      node {\n        internalID\n        imageUrl\n        artistNames\n        title\n        date\n        saleMessage\n        id\n      }\n    }\n  }\n}\n",
+    "text": "query ViewingRoomStatementRoute_Test_Query(\n  $slug: ID!\n) {\n  viewingRoom(id: $slug) {\n    ...ViewingRoomStatementRoute_viewingRoom\n  }\n}\n\nfragment ViewingRoomBody_viewingRoom on ViewingRoom {\n  body\n}\n\nfragment ViewingRoomIntro_viewingRoom on ViewingRoom {\n  introStatement\n}\n\nfragment ViewingRoomPullQuote_viewingRoom on ViewingRoom {\n  pullQuote\n}\n\nfragment ViewingRoomStatementRoute_viewingRoom on ViewingRoom {\n  ...ViewingRoomIntro_viewingRoom\n  ...ViewingRoomWorks_viewingRoom\n  ...ViewingRoomPullQuote_viewingRoom\n  ...ViewingRoomBody_viewingRoom\n  ...ViewingRoomSubsections_viewingRoom\n  artworksConnection(first: 2) {\n    totalCount\n  }\n}\n\nfragment ViewingRoomSubsections_viewingRoom on ViewingRoom {\n  subsections {\n    internalID\n    title\n    body\n    image {\n      imageURLs {\n        normalized\n      }\n    }\n    caption\n  }\n}\n\nfragment ViewingRoomWorks_viewingRoom on ViewingRoom {\n  artworksConnection(first: 2) {\n    totalCount\n    edges {\n      node {\n        internalID\n        imageUrl\n        artistNames\n        title\n        date\n        saleMessage\n        id\n      }\n    }\n  }\n}\n",
     "metadata": {}
   }
 };
