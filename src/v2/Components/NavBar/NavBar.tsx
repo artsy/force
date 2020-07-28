@@ -90,6 +90,7 @@ export const NavBar: React.FC = track(
             <NavSection alignItems="center" ml={2}>
               <NavItem
                 label="Artists"
+                href="/artists"
                 menuAnchor="full"
                 Menu={({ setIsVisible }) => {
                   return (
@@ -111,6 +112,7 @@ export const NavBar: React.FC = track(
 
               <NavItem
                 label="Artworks"
+                href="/collect"
                 menuAnchor="full"
                 Menu={({ setIsVisible }) => {
                   return (

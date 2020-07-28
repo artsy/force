@@ -11,12 +11,13 @@ import { AnalyticsSchema } from "v2/Artsy"
 import { useTracking } from "v2/Artsy/Analytics/useTracking"
 import { isFunction, isString } from "lodash"
 import React, { useEffect, useRef, useState } from "react"
-import { animated, config, useSpring } from "react-spring"
-import styled, { css } from "styled-components"
+import styled from "styled-components"
 import { position } from "styled-system"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
+import { MenuAnchor, NavItemPanel } from "v2/Components/NavBar/NavItemPanel"
 
 const Container = styled(Flex)`
+  position: relative;
   height: 100%;
   align-items: center;
 `
@@ -39,32 +40,6 @@ const HitArea = styled(Link)`
     text-decoration: underline;
     z-index: 1;
   }
-`
-
-type MenuAnchor = "left" | "right" | "center" | "full"
-
-const AnimatedPanel = styled(animated.div)<{
-  menuAnchor: MenuAnchor
-}>`
-  position: absolute;
-  top: 100%;
-  ${({ menuAnchor }) =>
-    ({
-      right: css`
-        right: 0;
-      `,
-      left: css`
-        left: 0;
-      `,
-      center: css`
-        left: 0;
-        margin-left: -50%;
-      `,
-      full: css`
-        left: 0;
-        right: 0;
-      `,
-    }[menuAnchor])}
 `
 
 const UnfocusableAnchor = styled(RouterLink).attrs({ tabIndex: -1 })`
@@ -103,8 +78,6 @@ export const NavItem: React.FC<NavItemProps> = ({
   onClick,
   ...rest
 }) => {
-  const navItemLabel = children
-
   const { trackEvent } = useTracking()
   const [isVisible, setIsVisible] = useState(active)
 
@@ -112,28 +85,11 @@ export const NavItem: React.FC<NavItemProps> = ({
   const showOverlay = Boolean(Overlay)
   const color = isVisible ? "purple100" : "black100"
 
-  const getAnimation = (hover: boolean) => ({
-    opacity: hover ? 0 : 1,
-    transform: `translate3d(0, ${hover ? -25 : 0}px, 0)`,
-  })
-
-  const animatedStyle = useSpring({
-    from: getAnimation(isVisible),
-    ...getAnimation(!isVisible),
-    config: name =>
-      name === "opacity"
-        ? config.stiff
-        : {
-            friction: 10,
-            mass: 0.1,
-          },
-  })
-
   const trackClick = () => {
-    if (href && isString(navItemLabel)) {
+    if (href && isString(children)) {
       trackEvent({
         action_type: AnalyticsSchema.ActionType.Click,
-        subject: navItemLabel, // Text passed into the NavItem
+        subject: children, // Text passed into the NavItem
         destination_path: href,
       })
     }
@@ -200,9 +156,6 @@ export const NavItem: React.FC<NavItemProps> = ({
   return (
     <Container
       ref={containerRef as any}
-      // When fullscreen: position relative to outer container
-      // When not fullscreen: position relative to immediate container
-      position={menuAnchor === "full" ? undefined : "relative"}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       {...rest}
@@ -227,20 +180,20 @@ export const NavItem: React.FC<NavItemProps> = ({
         {!!Menu && href && <UnfocusableAnchor to={href} />}
         <Text variant="text" lineHeight="solid" color={color}>
           <NavItemInner height={25}>
-            {isFunction(navItemLabel)
+            {isFunction(children)
               ? // NavItem children can be called as renderProps so that contents
                 // can operate on UI behaviors (such as changing the color of an
                 // icon on hover).
-                navItemLabel({ hover: isVisible })
-              : navItemLabel}
+                children({ hover: isVisible })
+              : children}
           </NavItemInner>
         </Text>
       </HitArea>
 
       {showMenu && (
-        <AnimatedPanel style={animatedStyle} menuAnchor={menuAnchor}>
+        <NavItemPanel menuAnchor={menuAnchor} relativeTo={containerRef}>
           <Menu setIsVisible={setIsVisible} />
-        </AnimatedPanel>
+        </NavItemPanel>
       )}
 
       {showOverlay && <Overlay />}
