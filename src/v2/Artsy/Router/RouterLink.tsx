@@ -41,6 +41,7 @@ export const RouterLink: React.FC<RouterLinkProps> = ({
 
   if (isSupportedInRouter) {
     const allowedProps = pick(props, [
+      "aria-label",
       "Component",
       "activeClassName",
       "className",

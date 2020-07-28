@@ -37,7 +37,6 @@ describe("NavBar", () => {
   }
 
   beforeEach(() => {
-    jest.spyOn(console, "error").mockImplementation(() => {})
     ;(useTracking as jest.Mock).mockImplementation(() => {
       return {
         trackEvent,

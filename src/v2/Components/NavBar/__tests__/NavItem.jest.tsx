@@ -15,10 +15,6 @@ jest.mock("v2/Utils/Hooks/useMatchMedia")
 jest.useFakeTimers()
 
 describe("NavItem", () => {
-  beforeEach(() => {
-    jest.spyOn(console, "error").mockImplementation(() => {})
-  })
-
   afterEach(() => {
     jest.restoreAllMocks()
   })
