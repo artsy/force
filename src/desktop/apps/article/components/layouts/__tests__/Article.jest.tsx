@@ -12,7 +12,6 @@ import {
 import { clone } from "lodash"
 import { ArticleData } from "@artsy/reaction/dist/Components/Publishing/Typings"
 import { Article } from "@artsy/reaction/dist/Components/Publishing/Article"
-import { CollectionsRailContent } from "@artsy/reaction/dist/Components/CollectionsRail"
 
 jest.mock("desktop/components/article/client/super_article.coffee")
 const mockSuperArticleView = require("desktop/components/article/client/super_article.coffee") as jest.Mock
@@ -68,27 +67,6 @@ describe("Article Layout", () => {
     expect(component.html()).toMatch("Related Stories")
     expect(component.html()).toMatch("RelatedArticlesPanel")
     expect(component.html()).toMatch(FeatureArticle.title)
-  })
-
-  describe("CollectionsRail", () => {
-    beforeEach(() => {
-      props.article = clone({
-        ...StandardArticle,
-        relatedArticlesCanvas: [FeatureArticle, BasicArticle],
-      } as ArticleData)
-    })
-
-    it("renders CollectionsRail if showCollectionsRail is true", () => {
-      props.showCollectionsRail = true
-      const component = getWrapper()
-      expect(component.find(CollectionsRailContent).length).toBe(1)
-    })
-
-    it("does not render CollectionsRail if showCollectionsRail is false", () => {
-      props.showCollectionsRail = false
-      const component = getWrapper()
-      expect(component.find(CollectionsRailContent).length).toBe(0)
-    })
   })
 
   describe("SuperArticle", () => {

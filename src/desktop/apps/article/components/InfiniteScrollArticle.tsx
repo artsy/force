@@ -132,7 +132,6 @@ export class InfiniteScrollArticle extends React.Component<
       article: { slug },
       isMobile,
       showTooltips,
-      showCollectionsRail,
     } = this.props
     const { articles } = this.state
 
@@ -151,7 +150,6 @@ export class InfiniteScrollArticle extends React.Component<
               isTruncated={i !== 0}
               isMobile={isMobile}
               showTooltips={showTooltips}
-              showCollectionsRail={showCollectionsRail}
               onOpenAuthModal={openAuthModal}
               infiniteScrollEntrySlug={slug}
               shouldAdRender={renderAd}
