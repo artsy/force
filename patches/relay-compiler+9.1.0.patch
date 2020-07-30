@@ -1,5 +1,5 @@
 diff --git a/node_modules/relay-compiler/bin/relay-compiler b/node_modules/relay-compiler/bin/relay-compiler
-index ceb3be3..c9eaffe 100755
+index 02c8adc..e74249f 100755
 --- a/node_modules/relay-compiler/bin/relay-compiler
 +++ b/node_modules/relay-compiler/bin/relay-compiler
 @@ -291,7 +291,7 @@ function highlightSourceAtLocation(source, location) {
@@ -7,11 +7,11 @@ index ceb3be3..c9eaffe 100755
    var columnNum = location.column + columnOffset;
    var lines = body.split(/\r\n|[\n\r]/g);
 -  return "".concat(source.name, " (").concat(lineNum, ":").concat(columnNum, ")\n") + printPrefixedLines([// Lines specified like this: ["prefix", "string"],
-+  return "".concat(source.name, ":").concat(lineNum, ":").concat(columnNum, "\n") + printPrefixedLines([// Lines specified like this: ["prefix", "string"],
++  return "".concat(source.name, ":").concat(lineNum, ":").concat(columnNum, ")\n") + printPrefixedLines([// Lines specified like this: ["prefix", "string"],
    ["".concat(lineNum - 1, ": "), lines[lineIndex - 1]], ["".concat(lineNum, ": "), lines[lineIndex]], ['', whitespace(columnNum - 1) + '^'], ["".concat(lineNum + 1, ": "), lines[lineIndex + 1]]]);
  }
  
-@@ -18131,10 +18131,10 @@ module.exports = function (tagFinder, getFileFilter) {
+@@ -17783,10 +17783,10 @@ module.exports = function (tagFinder, getFileFilter) {
  
      var astDefinitions = [];
      var sources = [];
@@ -25,7 +25,7 @@ index ceb3be3..c9eaffe 100755
        sources.push(source.body);
        astDefinitions.push.apply(astDefinitions, (0, _toConsumableArray2["default"])(ast.definitions));
      });
-@@ -18219,9 +18219,7 @@ function find(tagFinder, text, absPath) {
+@@ -17871,9 +17871,7 @@ function find(tagFinder, text, absPath) {
    tags.forEach(function (tag) {
      return validateTemplate(tag, moduleName, absPath);
    });
