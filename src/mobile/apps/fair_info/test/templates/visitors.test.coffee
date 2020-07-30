@@ -11,9 +11,10 @@ InfoMenu = require '../../info_menu.coffee'
 { fabricate } = require '@artsy/antigravity'
 
 describe 'Visitors', ->
+  infoMenu = null
   beforeEach ->
-    @infoMenu = new InfoMenu fair: new Fair fabricate 'fair'
-    @infoMenu.infoMenu = {
+    infoMenu = new InfoMenu fair: new Fair fabricate 'fair'
+    infoMenu.infoMenu = {
       events: true,
       programming: true,
       artsyAtTheFair: false,
@@ -25,7 +26,7 @@ describe 'Visitors', ->
     jade.compile(fs.readFileSync(filename), filename: filename)
       fair: fair
       location: location
-      infoMenu: @infoMenu
+      infoMenu: infoMenu
       sd: { FAIR: fair, profile: new Profile fabricate 'fair' }
 
   it 'should not display map without coordinates', ->

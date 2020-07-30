@@ -35,8 +35,9 @@ describe 'FixedCellsCountCarousel', ->
       view.fetchOptions.should.eql [fetchOptions]
 
     it 'raises an error if no collection provided', ->
+      partner = @partner
       (-> new FixedCellsCountCarousel
-        partner: @partner
+        partner: partner
         fetchOptions: page: 1, size: 15
       ).should.throw 'no collection provided'
 

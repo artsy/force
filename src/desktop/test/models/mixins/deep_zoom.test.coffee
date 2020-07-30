@@ -4,15 +4,21 @@ Backbone = require 'backbone'
 DeepZoom = require '../../../models/mixins/deep_zoom'
 { Image } = require 'artsy-backbone-mixins'
 
+SECURE_IMAGES_URL = 'https://supersecure.foo.bar'
+class NotReallyAnArtworkImage extends Backbone.Model
+  _.extend @prototype, DeepZoom(SECURE_IMAGES_URL)
+
+class NotReallyAnArtworkImage2 extends Backbone.Model
+  _.extend @prototype, Image(null)
+  _.extend @prototype, DeepZoom(null)
+
 describe 'Deep Zoom mixin', ->
   describe 'secure', ->
     before ->
-      @SECURE_IMAGES_URL = SECURE_IMAGES_URL = 'https://supersecure.foo.bar'
-      class @NotReallyAnArtworkImage extends Backbone.Model
-        _.extend @prototype, DeepZoom(SECURE_IMAGES_URL)
+      @SECURE_IMAGES_URL = SECURE_IMAGES_URL
 
     beforeEach ->
-      @image = new @NotReallyAnArtworkImage fabricate 'artwork_image'
+      @image = new NotReallyAnArtworkImage fabricate 'artwork_image'
 
     describe '#canDeepZoom', ->
       it 'should be deep-zoomable if *all* the deep zoom attributes are present', ->
@@ -42,13 +48,10 @@ describe 'Deep Zoom mixin', ->
 
   describe 'unsecure', ->
     before ->
-      @SECURE_IMAGES_URL = SECURE_IMAGES_URL = null
-      class @NotReallyAnArtworkImage extends Backbone.Model
-        _.extend @prototype, Image(SECURE_IMAGES_URL)
-        _.extend @prototype, DeepZoom(SECURE_IMAGES_URL)
+      @SECURE_IMAGES_URL = null
 
     beforeEach ->
-      @image = new @NotReallyAnArtworkImage fabricate 'artwork_image'
+      @image = new NotReallyAnArtworkImage2 fabricate 'artwork_image'
 
     describe '#canDeepZoom', ->
       it 'leaves the base part of the tile_base_url alone if SECURE_IMAGES_URL is not present', ->

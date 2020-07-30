@@ -65,7 +65,7 @@ describe "LinkedAccountsView", ->
 
           it 'sets the correct button state', ->
             @view.$(".js-settings-linked-accounts__service__toggle[data-service=#{provider}]")
-              .data().should.eql service: 'facebook', connected: 'disconnected'
+              .data().should.eql service: "#{provider}", connected: 'disconnected'
 
         describe 'error', ->
           beforeEach ->

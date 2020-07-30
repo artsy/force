@@ -44,5 +44,5 @@ describe 'FeaturedLink', ->
       _(4).times (n) =>
         if n > 1
           @featuredLink.hasImageForLayout(n).should.be.false()
-        if n = 1
+        if n == 1
           @featuredLink.hasImageForLayout(n).should.be.true()

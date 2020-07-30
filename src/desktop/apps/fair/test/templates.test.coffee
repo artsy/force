@@ -84,7 +84,7 @@ describe 'Fair', ->
            highlights: [],
            image_url: 'http://artsy.net/api/v1/artist/andy-warh'
            display_model: 'Artist',
-           location: '/artist/andy-warhol',
+           location: '/artist/andy-warhol'
         ]
       fairResults = [
        new SearchResult
@@ -206,7 +206,6 @@ describe 'Fair', ->
         filteredSearchColumns: filteredSearchColumns
         coverImage: coverImage
         primarySets: primarySets
-        infoMenu: @infoMenu
         asset: (->)
         _: _
         counts: @collection.counts
@@ -307,7 +306,6 @@ describe 'Fair', ->
         filteredSearchColumns: nestedFilteredSearchColumns
         coverImage: coverImage
         primarySets: primarySets
-        infoMenu: {events: true, programming: true, artsyAtTheFair: true}
         asset: (->)
         _: _
         counts: @collection.counts

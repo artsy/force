@@ -261,13 +261,17 @@ describe 'Search', ->
 
     it 'protects against those crazy fair booths that exist in the aether', ->
       # TODO: Consolidate these various render helpers
+      profile = @profile
+      fairResults = @fairResults
+      results = @results
+
       render = (params) ->
         filename = path.resolve __dirname, "../templates/artist.jade"
         jade.compile(fs.readFileSync(filename), filename: filename) _.extend(
-          profile: @profile
+          profile: profile
           artist: new Artist fabricate 'artist'
-          fairResults: @fairResults
-          results: @results
+          fairResults: fairResults
+          results: results
           fair: new Backbone.Model fabricate 'fair'
           sd: {}
         , params)

@@ -9,7 +9,6 @@ describe 'result.jade', ->
   before ->
     @fixture = {
       model: 'article',
-      display_model: 'Article',
       display: 'The Friendship and Flight of Andy Warhol, Philip Pearlstein, and ...',
       image_url: 'https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSlZL9Q-fcFKGOvBsHCfxI6JpcJr5-hUMACOlhD-1j2l-rOahjx-ZUKmAg',
       display_model: 'article',
