@@ -26,7 +26,7 @@ unless name == 'total' || name == 'for_sale'
             href=(
               filterRoot && filterRoot.match('booths') ?
               "#{filterRoot}/#{attr}/#{val}" :
-              "#{filterRoot ? filterRoot : sd.CURRENT_PATH + '/artworks'}?#{name}=#{val}"
+              "#{filterRoot ? filterRoot : sd.CURRENT_PATH}?#{name}=#{val}"
             )
             class=extraClasses.join(' ')
           )

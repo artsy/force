@@ -171,6 +171,18 @@ describe 'Fair routes', ->
       ]
       @res.redirect.args[0][0].should.containEql '/show/gagosian-gallery-inez-and-vinood'
 
+  describe 'malformed /artworks/artworks urls', ->
+    beforeEach ->
+      sinon.stub Backbone, 'sync'
+
+    afterEach ->
+      Backbone.sync.restore()
+
+    it 'redirects to /:id/browse/artworks', ->
+      routes.malformedFilterRedirect @req, @res
+      @res.redirect.args[0][0].should.eql 301
+      @res.redirect.args[0][1].should.containEql '/some-fair/browse/artworks'
+
 describe '#fetchFairData', ->
 
   beforeEach ->
