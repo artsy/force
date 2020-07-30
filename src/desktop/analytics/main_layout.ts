@@ -4,10 +4,9 @@
 //
 
 import { data as sd } from "sharify"
-import { OwnerType, timeOnPage } from "@artsy/cohesion"
 import { reportLoadTimeToVolley } from "lib/volley"
 import { match } from "path-to-regexp"
-import { trackEvent } from "desktop/analytics/helpers"
+import { timeOnPageListener } from "./timeOnPageListener"
 
 // We exclude these routes from analytics.page calls because they're already
 // taken care of in Reaction.
@@ -98,32 +97,7 @@ class PageTimeTracker {
   }
 
   track() {
-    this.timer = setTimeout(() => {
-      const pathname = new URL(window.location.href).pathname
-      const slug = pathname.split("/")[2]
-      const pageType = window.sd.PAGE_TYPE || pathname.split("/")[1]
-      const referrer = window.analytics.__artsyClientSideRoutingReferrer
-      // Grab referrer from our trackingMiddleware in Reaction, since we're in a
-      // single-page-app context and the value will need to be refreshed on route
-      // change. See: https://github.com/artsy/force/blob/master/src/v2/Artsy/Analytics/trackingMiddleware.ts
-      let trackingOptions = {}
-      if (referrer) {
-        trackingOptions = {
-          page: {
-            referrer,
-          },
-        }
-      }
-      const contextPageOwnerSlug = pageType === "partner" ? pathname : slug
-
-      trackEvent(
-        timeOnPage({
-          contextPageOwnerSlug,
-          contextPageOwnerType: OwnerType[pageType],
-        }),
-        trackingOptions
-      )
-    }, this.delay)
+    this.timer = timeOnPageListener()
   }
 
   clear() {
