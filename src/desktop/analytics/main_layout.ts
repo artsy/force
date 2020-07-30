@@ -105,7 +105,7 @@ class PageTimeTracker {
       const referrer = window.analytics.__artsyClientSideRoutingReferrer
       // Grab referrer from our trackingMiddleware in Reaction, since we're in a
       // single-page-app context and the value will need to be refreshed on route
-      // change. See: https://github.com/artsy/reaction/blob/master/src/Artsy/Analytics/trackingMiddleware.ts
+      // change. See: https://github.com/artsy/force/blob/master/src/v2/Artsy/Analytics/trackingMiddleware.ts
       let trackingOptions = {}
       if (referrer) {
         trackingOptions = {

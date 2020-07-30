@@ -14,8 +14,8 @@ const analytics = window.analytics
 const Events = require("../../v2/Utils/Events").default
 
 // All Force mediator events can be hooked into for tracking purposes
-mediator.on("all", (name, data) =>
-  analyticsHooks.trigger(`mediator:${name}`, data)
+mediator.on("all", (actionName: string, data?: object) =>
+  analyticsHooks.trigger(`mediator:${actionName}`, data)
 )
 
 if (sd.SHOW_ANALYTICS_CALLS) {
@@ -24,7 +24,7 @@ if (sd.SHOW_ANALYTICS_CALLS) {
     console.info("ANALYTICS PAGEVIEW: ", arguments[2], arguments[3])
   })
   // Log all analytics calls
-  analytics.on("track", (actionName: string, data?: any) => {
+  analytics.on("track", (actionName: string, data?: object) => {
     console.info("ANALYTICS TRACK:", actionName, data)
   })
 }

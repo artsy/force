@@ -9,12 +9,12 @@ import { trackEvent } from "desktop/analytics/helpers"
 // before you add to this file.
 //
 
-analyticsHooks.on("track", function (message, options) {
-  analytics.track(message, options)
+analyticsHooks.on("track", (actionName: string, data: object) => {
+  analytics.track(actionName, data)
 })
 
 // Track 15 second bounce rate
-setTimeout(function () {
+setTimeout(() => {
   const pathname = new URL(window.location.href).pathname
   const slug = pathname.split("/")[2]
   // @ts-ignore
@@ -34,7 +34,7 @@ setTimeout(function () {
 if (sd.SHOW_ANALYTICS_CALLS) {
   // FIXME: Events that trigger these events should be updated
   // or flagged for deprecation
-  analytics.on("track", (actionName, data) => {
+  analytics.on("track", (actionName: string, data: object) => {
     console.info("LEGACY MOBILE ANALYTICS TRACK:", actionName, data)
   })
 
