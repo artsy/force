@@ -40,10 +40,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/gemup/-/gemup-0.0.3.tgz#0397a472bb69432dab3d2d66ca30556815aa96e7"
   integrity sha512-W///stXDTz3jSQw8UtT0BClVk4DLOsVp7a8v12efsEZvrZNT+85YBqPWq2DP1EX3ILZR1hGZhbKr/Gl5uti56Q==
 
-"@artsy/palette@11.13.0":
-  version "11.13.0"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-11.13.0.tgz#6ed31fe1d7e6917f375bb451d6131c3b444722c1"
-  integrity sha512-j4qhw0BZg/EV5v9fqW3oXHDybpOq7fo2oQciC6JaJzrYdKhSe5lt+T6DYMYiDYtMieaDio0gaeUNiuqNXrKaFw==
+"@artsy/palette@11.14.0":
+  version "11.14.0"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-11.14.0.tgz#a709ff9966f6cddabeae64d3e84041aeabb8c892"
+  integrity sha512-eyA5nB0awnHZIDVYbvHV/PwXbzRrv2nJx4jN+VBiIriZvIRKRlrkxjEonyzxORjLJD7mIp5rTW3NgGkQqrm4bQ==
   dependencies:
     "@styled-system/theme-get" "^5.1.2"
     babel-plugin-styled-components "^1.10.0"
