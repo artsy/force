@@ -4,12 +4,15 @@
 //
 
 import { data as sd } from "sharify"
+import { ActionType, OwnerType, timeOnPage } from "@artsy/cohesion"
 import { reportLoadTimeToVolley } from "lib/volley"
 import { match } from "path-to-regexp"
 
 // Track pageview
-const pageType = window.sd.PAGE_TYPE || window.location.pathname.split("/")[1]
-let properties = { path: location.pathname }
+const pathname = new URL(window.location.href).pathname
+let slug = pathname.split("/")[2]
+let pageType = window.sd.PAGE_TYPE || pathname.split("/")[1]
+let properties = { path: pathname }
 
 // We exclude these routes from analytics.page calls because they're already
 // taken care of in Reaction.
@@ -34,7 +37,7 @@ const excludedRoutes = [
 
 const foundExcludedPath = excludedRoutes.some(excludedPath => {
   const matcher = match(excludedPath, { decode: decodeURIComponent })
-  const foundMatch = !!matcher(window.location.pathname)
+  const foundMatch = !!matcher(pathname)
   return foundMatch
 })
 
@@ -47,12 +50,11 @@ if (pageType === "auction") {
   const matcher = match("/auction/:saleID/bid(2)?/:artworkID", {
     decode: decodeURIComponent,
   })
-  const matchedBidRoute = matcher(window.location.pathname)
+  const matchedBidRoute = matcher(pathname)
   if (!matchedBidRoute) {
     window.addEventListener("load", function () {
       // distinct event required for marketing integrations (Criteo)
-      const saleSlug = window.location.pathname.split("/")[2]
-      window.analytics.track("Auction Pageview", { auction_slug: saleSlug })
+      window.analytics.track("Auction Pageview", { auction_slug: slug })
     })
   }
 }
@@ -107,13 +109,12 @@ class PageTimeTracker {
           },
         }
       }
-
       window.analytics.track(
-        "Time on page",
-        {
-          category: this.description,
-          message: this.path,
-        },
+        ActionType.timeOnPage,
+        timeOnPage({
+          contextPageOwnerSlug: this.path.split("/")[2],
+          contextPageOwnerType: OwnerType[this.path.split("/")[1]],
+        }),
         trackingOptions
       )
     }, this.delay)
