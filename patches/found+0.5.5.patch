@@ -1,7 +1,7 @@
-diff --git a/node_modules/found/lib/index.d.ts b/node_modules/found/lib/index.d.ts
-index 02cc90c..b3706dd 100644
---- a/node_modules/found/lib/index.d.ts
-+++ b/node_modules/found/lib/index.d.ts
+diff --git a/node_modules/found/index.d.ts b/node_modules/found/index.d.ts
+index 6868cf5..4bca495 100644
+--- a/node_modules/found/index.d.ts
++++ b/node_modules/found/index.d.ts
 @@ -111,6 +111,10 @@ declare module 'found' {
       * matchContext from the router
       */
@@ -13,7 +13,7 @@ index 02cc90c..b3706dd 100644
    }
  
    interface FoundState {
-@@ -267,6 +271,12 @@ declare module 'found' {
+@@ -272,6 +276,12 @@ declare module 'found' {
       * loaded
       */
      data?: any;
@@ -26,10 +26,10 @@ index 02cc90c..b3706dd 100644
    }
  
    /**
-@@ -438,6 +448,8 @@ declare module 'found' {
+@@ -444,6 +454,8 @@ declare module 'found' {
  
    function useRouter(): RouterState;
-   
+ 
 +  const RouterContext: React.Context<any>;
 +
    function withRouter<Props extends RouterState>(

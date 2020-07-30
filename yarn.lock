@@ -2317,7 +2317,7 @@
     core-js-pure "^3.0.0"
     regenerator-runtime "^0.13.2"
 
-"@babel/runtime-corejs3@^7.6.3":
+"@babel/runtime-corejs3@^7.6.2", "@babel/runtime-corejs3@^7.6.3":
   version "7.10.5"
   resolved "https://registry.yarnpkg.com/@babel/runtime-corejs3/-/runtime-corejs3-7.10.5.tgz#a57fe6c13045ca33768a2aa527ead795146febe1"
   integrity sha512-RMafpmrNB5E/bwdSphLr8a8++9TosnyJp98RZzI6VOx2R2CCMpsXXXRvmI700O9oEKpXdZat6oEK68/F0zjd4A==
@@ -4305,7 +4305,7 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react@*", "@types/react@16.9.34":
+"@types/react@*", "@types/react@16.9.34", "@types/react@^16.9.31":
   version "16.9.34"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-16.9.34.tgz#f7d5e331c468f53affed17a8a4d488cd44ea9349"
   integrity sha512-8AJlYMOfPe1KGLKyHpflCg5z46n0b5DbRfqDksxBLBTUpB75ypDBAO9eCUcjNwE6LCUslwTz00yyG/X9gaVtow==
@@ -10191,6 +10191,17 @@ farce@^0.2.7, farce@^0.2.8:
     redux "^4.0.1"
     warning "^4.0.3"
 
+farce@^0.4.1:
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/farce/-/farce-0.4.1.tgz#6e1b62f53636e55b706b9672adbe560bc223c02f"
+  integrity sha512-qhxBlWEIK3w1uvOylPKBNDTUQz6hF2NHgOgWei91naaYrck3p4o6Z3dBa1Dm2jhYBaGjZLEC102hqqBbSCWn3Q==
+  dependencies:
+    invariant "^2.2.4"
+    is-promise "^2.1.0"
+    query-string "^5.1.1"
+    redux "^4.0.4"
+    warning "^4.0.3"
+
 fast-deep-equal@^1.0.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/fast-deep-equal/-/fast-deep-equal-1.1.0.tgz#c053477817c86b51daa853c81e059b733d023614"
@@ -10823,7 +10834,7 @@ found-scroll@0.1.6, found-scroll@^0.1.5:
     prop-types "^15.7.2"
     scroll-behavior "^0.9.10"
 
-found@0.4.9, found@^0.4.9:
+found@^0.4.9:
   version "0.4.9"
   resolved "https://registry.yarnpkg.com/found/-/found-0.4.9.tgz#016f69026afa29290c09fb909f198b923a2878f3"
   integrity sha512-6MEtaqmkkvcX92S3HxSZnoHhEOntNAh+sQglrfsYLbqIhyibUy9Udgbitw8oujGd445spPgCyKkPO3mSTdVAfQ==
@@ -10833,6 +10844,25 @@ found@0.4.9, found@^0.4.9:
     farce "^0.2.8"
     invariant "^2.2.4"
     is-promise "^2.1.0"
+    lodash "^4.17.15"
+    path-to-regexp "^1.7.0"
+    prop-types "^15.7.2"
+    react-redux "^7.0.0"
+    react-static-container "^1.0.2"
+    redux "^4.0.4"
+    warning "^4.0.3"
+
+found@^0.5.5:
+  version "0.5.5"
+  resolved "https://registry.yarnpkg.com/found/-/found-0.5.5.tgz#b581caa14b5eba1e1ed52c696f148eddb2e8ba95"
+  integrity sha512-/OQw+t6imImSiehiJvqAqQ3J3tcWC2maR72rYpJyYxgy69TwTCIHCe2GFaHOQhImbEV7AWnsR6r+iYMJNMbkxQ==
+  dependencies:
+    "@babel/runtime-corejs3" "^7.6.2"
+    "@restart/context" "^2.1.4"
+    "@types/react" "^16.9.31"
+    farce "^0.4.1"
+    invariant "^2.2.4"
+    is-promise "^4.0.0"
     lodash "^4.17.15"
     path-to-regexp "^1.7.0"
     prop-types "^15.7.2"
