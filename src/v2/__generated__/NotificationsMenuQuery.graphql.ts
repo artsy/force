@@ -14,7 +14,7 @@ export type NotificationsMenuQueryResponse = {
                         readonly artists: string | null;
                         readonly published_at: string | null;
                         readonly image: {
-                            readonly resized: {
+                            readonly thumb: {
                                 readonly url: string | null;
                             } | null;
                         } | null;
@@ -44,7 +44,7 @@ query NotificationsMenuQuery {
             artists
             published_at: publishedAt(format: "MMM DD")
             image {
-              resized(height: 40, width: 40) {
+              thumb: cropped(height: 80, width: 80) {
                 url
               }
             }
@@ -122,22 +122,22 @@ v6 = {
   "selections": [
     {
       "kind": "LinkedField",
-      "alias": null,
-      "name": "resized",
-      "storageKey": "resized(height:40,width:40)",
+      "alias": "thumb",
+      "name": "cropped",
+      "storageKey": "cropped(height:80,width:80)",
       "args": [
         {
           "kind": "Literal",
           "name": "height",
-          "value": 40
+          "value": 80
         },
         {
           "kind": "Literal",
           "name": "width",
-          "value": 40
+          "value": 80
         }
       ],
-      "concreteType": "ResizedImageUrl",
+      "concreteType": "CroppedImageUrl",
       "plural": false,
       "selections": [
         {
@@ -370,7 +370,7 @@ return {
     "operationKind": "query",
     "name": "NotificationsMenuQuery",
     "id": null,
-    "text": "query NotificationsMenuQuery {\n  me {\n    unreadNotificationsCount\n    followsAndSaves {\n      notifications: bundledArtworksByArtistConnection(sort: PUBLISHED_AT_DESC, first: 10) {\n        edges {\n          node {\n            href\n            summary\n            artists\n            published_at: publishedAt(format: \"MMM DD\")\n            image {\n              resized(height: 40, width: 40) {\n                url\n              }\n            }\n            id\n            __typename\n          }\n          cursor\n        }\n        pageInfo {\n          endCursor\n          hasNextPage\n        }\n      }\n    }\n    id\n  }\n}\n",
+    "text": "query NotificationsMenuQuery {\n  me {\n    unreadNotificationsCount\n    followsAndSaves {\n      notifications: bundledArtworksByArtistConnection(sort: PUBLISHED_AT_DESC, first: 10) {\n        edges {\n          node {\n            href\n            summary\n            artists\n            published_at: publishedAt(format: \"MMM DD\")\n            image {\n              thumb: cropped(height: 80, width: 80) {\n                url\n              }\n            }\n            id\n            __typename\n          }\n          cursor\n        }\n        pageInfo {\n          endCursor\n          hasNextPage\n        }\n      }\n    }\n    id\n  }\n}\n",
     "metadata": {
       "connection": [
         {
@@ -388,5 +388,5 @@ return {
   }
 };
 })();
-(node as any).hash = 'a8c3f9e7d3feccfe1672ba90644d64f1';
+(node as any).hash = 'cc0fff7ed96dae66df18ccbf7314bc29';
 export default node;

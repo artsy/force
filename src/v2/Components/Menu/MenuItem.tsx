@@ -1,6 +1,7 @@
 import React from "react"
 import styled from "styled-components"
 import {
+  Box,
   BoxProps,
   Text,
   TextProps,
@@ -10,11 +11,20 @@ import {
 } from "@artsy/palette"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
 
+const MENU_ITEM_DEFAULT_PROPS = {
+  display: "flex",
+  alignItems: "center",
+  px: 2,
+  py: 1,
+}
+
+export const MenuItemPlaceholder = styled(Box)``
+
+MenuItemPlaceholder.defaultProps = MENU_ITEM_DEFAULT_PROPS
+
 const Container = styled(RouterLink)<
   BoxProps & { hasLighterTextColor: boolean }
 >`
-  display: flex;
-  align-items: center;
   text-decoration: none;
   cursor: pointer;
   ${boxMixin};
@@ -26,6 +36,8 @@ const Container = styled(RouterLink)<
       hasLighterTextColor ? color("black10") : color("black5")};
   }
 `
+
+Container.defaultProps = MENU_ITEM_DEFAULT_PROPS
 
 interface MenuItemProps
   extends BoxProps,
@@ -41,8 +53,6 @@ interface MenuItemProps
 export const MenuItem: React.FC<MenuItemProps> = ({
   children,
   href,
-  px = 2,
-  py = 1,
   hasLighterTextColor,
   variant = "text",
   color,
@@ -52,8 +62,8 @@ export const MenuItem: React.FC<MenuItemProps> = ({
     <Container
       to={href}
       hasLighterTextColor={hasLighterTextColor}
-      px={px}
-      py={py}
+      px={2}
+      py={1}
       {...rest}
     >
       <Text
