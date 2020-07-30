@@ -29,6 +29,7 @@ app.get '/:id/articles', getFairData, routes.fairArticles
 app.get '/:id/for-you', getFairData, routes.forYou
 app.get '/:id/search', getFairData, routes.search
 app.get '/:id/browse/show/:partner_id', getFairData, routes.showRedirect
+app.get '/:id/browse/artworks/artworks', routes.malformedFilterRedirect
 app.get '/:id/browse', getFairData, routes.browse
 app.get '/:id/browse/*', getFairData, routes.browse
 app.get '/:id/sign_up', getFairData, routes.overview

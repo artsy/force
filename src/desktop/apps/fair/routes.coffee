@@ -113,6 +113,9 @@ DEFAULT_CACHE_TIME = 60
     error: res.backboneError
     success: (show) -> res.redirect "/show/#{show.id}"
 
+@malformedFilterRedirect = (req, res, next) ->
+  res.redirect 301, "/#{req.params.id}/browse/artworks"
+
 # Captures fair-specific sign-up.
 # Adds a user fair action to the users collector profile and follows the fair profile.
 # If the user is an attendee, redirect to fair page with flash message (found in ./components/capture_signup)
