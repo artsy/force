@@ -7,7 +7,7 @@ import { data as sd } from "sharify"
 import { OwnerType, timeOnPage } from "@artsy/cohesion"
 import { reportLoadTimeToVolley } from "lib/volley"
 import { match } from "path-to-regexp"
-import { trackEvent } from "desktop/assets/analytics"
+import { trackEvent } from "desktop/analytics/helpers"
 
 // We exclude these routes from analytics.page calls because they're already
 // taken care of in Reaction.
@@ -34,7 +34,6 @@ const excludedRoutes = [
 const pathname = new URL(window.location.href).pathname
 let slug = pathname.split("/")[2]
 let pageType = window.sd.PAGE_TYPE || pathname.split("/")[1]
-let properties = { path: pathname }
 
 const foundExcludedPath = excludedRoutes.some(excludedPath => {
   const matcher = match(excludedPath, { decode: decodeURIComponent })
@@ -43,7 +42,10 @@ const foundExcludedPath = excludedRoutes.some(excludedPath => {
 })
 
 if (!foundExcludedPath) {
-  window.analytics.page(properties, { integrations: { Marketo: false } })
+  window.analytics.page(
+    { path: pathname },
+    { integrations: { Marketo: false } }
+  )
 }
 
 if (pageType === "auction") {
@@ -97,12 +99,14 @@ class PageTimeTracker {
 
   track() {
     this.timer = setTimeout(() => {
-      let trackingOptions = {}
-
+      const pathname = new URL(window.location.href).pathname
+      const slug = pathname.split("/")[2]
+      const pageType = window.sd.PAGE_TYPE || pathname.split("/")[1]
       const referrer = window.analytics.__artsyClientSideRoutingReferrer
       // Grab referrer from our trackingMiddleware in Reaction, since we're in a
       // single-page-app context and the value will need to be refreshed on route
       // change. See: https://github.com/artsy/reaction/blob/master/src/Artsy/Analytics/trackingMiddleware.ts
+      let trackingOptions = {}
       if (referrer) {
         trackingOptions = {
           page: {
@@ -110,10 +114,11 @@ class PageTimeTracker {
           },
         }
       }
+      const contextPageOwnerSlug = pageType === "partner" ? pathname : slug
 
       trackEvent(
         timeOnPage({
-          contextPageOwnerSlug: slug,
+          contextPageOwnerSlug,
           contextPageOwnerType: OwnerType[pageType],
         }),
         trackingOptions

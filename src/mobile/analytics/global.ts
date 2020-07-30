@@ -2,7 +2,7 @@ const analyticsHooks = require("../lib/analytics_hooks.coffee")
 const analytics = window.analytics
 import { data as sd } from "sharify"
 import { OwnerType, timeOnPage } from "@artsy/cohesion"
-import { trackEvent } from "desktop/assets/analytics"
+import { trackEvent } from "desktop/analytics/helpers"
 
 //
 // Analytics that occur globaly on every page. Think if there's a better place
@@ -20,9 +20,11 @@ setTimeout(function () {
   // @ts-ignore
   const pageType = window.sd.PAGE_TYPE || pathname.split("/")[1]
 
+  const contextPageOwnerSlug = pageType === "partner" ? pathname : slug
+
   trackEvent(
     timeOnPage({
-      contextPageOwnerSlug: slug,
+      contextPageOwnerSlug,
       contextPageOwnerType: OwnerType[pageType],
     })
   )
