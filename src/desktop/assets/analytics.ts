@@ -31,7 +31,7 @@ if (sd.SHOW_ANALYTICS_CALLS) {
 /**
  * Format and fire events triggered via react-tracking
  */
-const trackEvent = data => {
+export const trackEvent = (data: any, options: object = {}) => {
   const actionName = data.action || data.action_type
   const trackingData = omit(data, ["action_type", "action"])
 
@@ -45,7 +45,8 @@ const trackEvent = data => {
     // single-page-app context and the value will need to be refreshed on route
     // change. See: https://github.com/artsy/reaction/blob/master/src/Artsy/Analytics/trackingMiddleware.ts
     const referrer = analytics.__artsyClientSideRoutingReferrer
-    let trackingOptions = {}
+    let trackingOptions = options
+
     if (referrer) {
       trackingOptions = {
         page: {

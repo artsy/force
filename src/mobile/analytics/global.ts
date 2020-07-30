@@ -1,6 +1,8 @@
 const analyticsHooks = require("../lib/analytics_hooks.coffee")
 const analytics = window.analytics
 import { data as sd } from "sharify"
+import { OwnerType, timeOnPage } from "@artsy/cohesion"
+import { trackEvent } from "desktop/assets/analytics"
 
 //
 // Analytics that occur globaly on every page. Think if there's a better place
@@ -13,10 +15,17 @@ analyticsHooks.on("track", function (message, options) {
 
 // Track 15 second bounce rate
 setTimeout(function () {
-  analytics.track("time on page more than 15 seconds", {
-    category: "15 Seconds",
-    message: sd.CURRENT_PATH,
-  })
+  const pathname = new URL(window.location.href).pathname
+  const slug = pathname.split("/")[2]
+  // @ts-ignore
+  const pageType = window.sd.PAGE_TYPE || pathname.split("/")[1]
+
+  trackEvent(
+    timeOnPage({
+      contextPageOwnerSlug: slug,
+      contextPageOwnerType: OwnerType[pageType],
+    })
+  )
 }, 15000)
 
 // Debug tracking calls

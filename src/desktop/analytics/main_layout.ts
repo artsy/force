@@ -4,15 +4,10 @@
 //
 
 import { data as sd } from "sharify"
-import { ActionType, OwnerType, timeOnPage } from "@artsy/cohesion"
+import { OwnerType, timeOnPage } from "@artsy/cohesion"
 import { reportLoadTimeToVolley } from "lib/volley"
 import { match } from "path-to-regexp"
-
-// Track pageview
-const pathname = new URL(window.location.href).pathname
-let slug = pathname.split("/")[2]
-let pageType = window.sd.PAGE_TYPE || pathname.split("/")[1]
-let properties = { path: pathname }
+import { trackEvent } from "desktop/assets/analytics"
 
 // We exclude these routes from analytics.page calls because they're already
 // taken care of in Reaction.
@@ -34,6 +29,12 @@ const excludedRoutes = [
   "/user/conversations(.*)",
   "/user/purchases(.*)",
 ]
+
+// Track pageview
+const pathname = new URL(window.location.href).pathname
+let slug = pathname.split("/")[2]
+let pageType = window.sd.PAGE_TYPE || pathname.split("/")[1]
+let properties = { path: pathname }
 
 const foundExcludedPath = excludedRoutes.some(excludedPath => {
   const matcher = match(excludedPath, { decode: decodeURIComponent })
@@ -109,11 +110,11 @@ class PageTimeTracker {
           },
         }
       }
-      window.analytics.track(
-        ActionType.timeOnPage,
+
+      trackEvent(
         timeOnPage({
-          contextPageOwnerSlug: this.path.split("/")[2],
-          contextPageOwnerType: OwnerType[this.path.split("/")[1]],
+          contextPageOwnerSlug: slug,
+          contextPageOwnerType: OwnerType[pageType],
         }),
         trackingOptions
       )
