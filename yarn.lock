@@ -69,10 +69,10 @@
   dependencies:
     passport-strategy "1.x.x"
 
-"@artsy/passport@1.3.1":
-  version "1.3.1"
-  resolved "https://registry.yarnpkg.com/@artsy/passport/-/passport-1.3.1.tgz#6711b447e1d71a8f31087869c965161ff54ec8eb"
-  integrity sha512-7v3TVjL2lfKINcyW+Uj5U0mEh3M05uJNsgFpwsxlBJgMeTQ/jcNBzgAl4hgwP+3ZFYgs8IJHHKBoB0hd41n/Mw==
+"@artsy/passport@1.3.2":
+  version "1.3.2"
+  resolved "https://registry.yarnpkg.com/@artsy/passport/-/passport-1.3.2.tgz#2393f6130808eb7432278126ac35666f028bf3e0"
+  integrity sha512-+t1YSvMbyCyeRC+Td/h6E7fN1Q6Y69bwG9rhqysadfsAQ6Stsqpbd68ZUWXMAN+pDcCqh8mev/DhvsLM5BfSJQ==
   dependencies:
     "@artsy/passport-local-with-otp" "^0.3.0"
     "@artsy/xapp" "^1.0.6"
