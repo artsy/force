@@ -5026,6 +5026,7 @@ type Feature {
   # A type-specific ID likely used as a database ID.
   internalID: ID!
   isActive: Boolean!
+  meta: FeatureMeta!
   name: String!
 
   # Features are composed of sets, which are themselves composed of items of various types
@@ -5063,6 +5064,13 @@ type FeaturedLink {
   internalID: String
   subtitle(format: Format): String
   title: String
+}
+
+# Meta-tag related fields for Features
+type FeatureMeta {
+  description: String!
+  image: String
+  name: String!
 }
 
 type Feedback {
