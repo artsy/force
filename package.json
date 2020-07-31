@@ -36,7 +36,7 @@
     "test:smoke": "scripts/smoke_test.sh",
     "test": "scripts/test.sh",
     "test:jest": "node node_modules/.bin/jest",
-    "test:mocha": "yarn mocha $(find src -name '*.test.*')",
+    "test:mocha": "yarn mocha $(find src -name '*.test.js')",
     "type-check": "tsc",
     "unlink-all": "yalc remove --all && yarn --check-files",
     "webpack": "node --max_old_space_size=2048 -r dotenv/config -r @babel/register node_modules/.bin/webpack --config ./webpack"
