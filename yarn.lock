@@ -68,12 +68,13 @@
   dependencies:
     passport-strategy "1.x.x"
 
-"@artsy/passport@1.3.0":
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/@artsy/passport/-/passport-1.3.0.tgz#7f71745cef8f7a4fd649e0f003abf6e29942a287"
-  integrity sha512-myHNuOWwRgek+mYJgM9hwk9AzXT1N2MDUIUJ4oqS6KLbtGMzvMmoh0V/fGN8aCoMTj8k5uDxlk1tRSlJ39OeZw==
+"@artsy/passport@1.3.1":
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/@artsy/passport/-/passport-1.3.1.tgz#6711b447e1d71a8f31087869c965161ff54ec8eb"
+  integrity sha512-7v3TVjL2lfKINcyW+Uj5U0mEh3M05uJNsgFpwsxlBJgMeTQ/jcNBzgAl4hgwP+3ZFYgs8IJHHKBoB0hd41n/Mw==
   dependencies:
     "@artsy/passport-local-with-otp" "^0.3.0"
+    "@artsy/xapp" "^1.0.6"
     "@nicokaiser/passport-apple" "^0.2.1"
     analytics-node "^2.1.0"
     async "^1.5.0"
@@ -167,6 +168,13 @@
   dependencies:
     consolidate "^0.14.5"
     lodash "^4.17.11"
+
+"@artsy/xapp@^1.0.6":
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/@artsy/xapp/-/xapp-1.0.6.tgz#7aa62f2fdb3defd2634b3ce24a2932159daa2442"
+  integrity sha512-HvVHokBkSg73p9CspnPnNLlZwINgNA/tJ1I5wfmMGXi4hdb9K+35CNLT+rByz4dWXmtA3RJcfzCFQknejEObGg==
+  dependencies:
+    superagent "^1.2.0"
 
 "@babel/cli@7.0.0":
   version "7.0.0"
