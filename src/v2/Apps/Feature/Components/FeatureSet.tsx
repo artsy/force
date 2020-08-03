@@ -5,8 +5,8 @@ import {
   BoxProps,
   CSSGrid,
   HTML,
-  Sans,
   Spacer,
+  Text,
   color,
 } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -43,18 +43,13 @@ export const FeatureSet: React.FC<FeatureSetProps> = ({ set, ...rest }) => {
       {set.name || set.description ? (
         <Box mt={4} mb={2}>
           {set.name && (
-            <Sans size="6" color="black100">
+            <Text variant="title" color="black100">
               {set.name}
-            </Sans>
+            </Text>
           )}
 
           {set.description && (
-            <HTML
-              fontFamily="sans"
-              size="3"
-              color="black60"
-              html={set.description}
-            />
+            <HTML variant="text" color="black60" html={set.description} />
           )}
         </Box>
       ) : (

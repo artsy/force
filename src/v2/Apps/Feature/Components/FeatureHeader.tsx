@@ -5,8 +5,8 @@ import {
   FlexProps,
   HTML,
   Join,
-  Sans,
   Spacer,
+  Text,
   color,
 } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -62,17 +62,17 @@ export const FeatureHeader: React.FC<FeatureHeaderProps> = ({
 
       <Meta p={4} flexBasis={image ? "50%" : "100%"}>
         <Join separator={<Spacer my={1} />}>
-          <Sans size="10" element="h1" textAlign="center" unstable_trackIn>
+          <Text
+            variant="largeTitle"
+            as="h1"
+            fontSize="size10"
+            textAlign="center"
+          >
             {name}
-          </Sans>
+          </Text>
 
           {subheadline && (
-            <HTML
-              fontFamily="sans"
-              size="4"
-              textAlign="center"
-              html={subheadline}
-            />
+            <HTML variant="subtitle" textAlign="center" html={subheadline} />
           )}
         </Join>
       </Meta>
