@@ -8484,6 +8484,7 @@ type SearchAggregationResults {
 enum SearchEntity {
   ARTICLE
   ARTIST
+  ARTIST_SERIES
   ARTWORK
   CITY
   COLLECTION
