@@ -2,7 +2,7 @@
   "description": "Browse lots from premier benefit auctions hosted on Artsy. Bidding online is simple with just a few easy steps.",
   "mobile_cta": {
     "button": {
-      "href": "https://itunes.apple.com/us/app/artsy-art-world-in-your-pocket/id703796080",
+      "href": "https://apps.apple.com/us/app/artsy-buy-sell-original-art/id703796080",
       "label": "Download"
     },
     "description": "Download Artsy for your iPhone or iPad and easily register, browse, and bid.",
@@ -29,7 +29,7 @@
       "title": "Register"
     },
     {
-      "description": "View lots online to learn about celebrated contemporary artists. See estimates, provenance, and connect with our Specialists.\n\n[Download Artsy for iPad or iPhone](https://itunes.apple.com/us/app/artsy-art-world-in-your-pocket/id703796080)",
+      "description": "View lots online to learn about celebrated contemporary artists. See estimates, provenance, and connect with our Specialists.\n\n[Download Artsy for iPad or iPhone](https://apps.apple.com/us/app/artsy-buy-sell-original-art/id703796080)",
       "id": "browse",
       "image": {
         "alt": "Browse",

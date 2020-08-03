@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import styled from "styled-components"
-import { Button, Flex, FlexProps, color, themeProps } from "@artsy/palette"
+import { Box, Button, Flex, FlexProps, color, themeProps } from "@artsy/palette"
 import { useSystemContext } from "v2/Artsy/SystemContext"
 import { SearchBarQueryRenderer as SearchBar } from "v2/Components/Search/SearchBar"
 import {
@@ -27,6 +27,23 @@ import { NavBarSkipLink } from "./NavBarSkipLink"
 import { LoggedInActionsQueryRenderer as LoggedInActions } from "./LoggedInActions"
 import { NAV_BAR_HEIGHT } from "./constants"
 import { userHasLabFeature } from "v2/Utils/user"
+
+const NavBarContainer = styled(Flex)`
+  position: relative;
+  height: ${NAV_BAR_HEIGHT}px;
+  background-color: ${color("white100")};
+  border-bottom: 1px solid ${color("black10")};
+`
+
+const NavSection: React.FC<FlexProps> = ({ children, ...rest }) => {
+  return (
+    <Flex alignItems="stretch" height="100%" bg={rest.bg} {...rest}>
+      <Flex width="100%" height="100%" alignItems="center">
+        {children}
+      </Flex>
+    </Flex>
+  )
+}
 
 export const NavBar: React.FC = track(
   {
@@ -90,6 +107,7 @@ export const NavBar: React.FC = track(
             <NavSection alignItems="center" ml={2}>
               <NavItem
                 label="Artists"
+                href="/artists"
                 menuAnchor="full"
                 Menu={({ setIsVisible }) => {
                   return (
@@ -111,6 +129,7 @@ export const NavBar: React.FC = track(
 
               <NavItem
                 label="Artworks"
+                href="/collect"
                 menuAnchor="full"
                 Menu={({ setIsVisible }) => {
                   return (
@@ -197,8 +216,9 @@ export const NavBar: React.FC = track(
               className="mobileHamburgerButton"
               borderLeft="1px solid"
               borderColor="black10"
-              px={1}
               ml={1}
+              tabIndex={0}
+              role="button"
               onClick={() => {
                 const showMenu = !showMobileMenu
                 if (showMenu) {
@@ -212,8 +232,15 @@ export const NavBar: React.FC = track(
                 toggleMobileNav(showMenu)
               }}
             >
-              <MobileToggleIcon open={showMobileMenu} />
-              {showNotificationCount && <InboxNotificationCount />}
+              <Box
+                px={1}
+                display="flex"
+                alignItems="center"
+                justifyContent="center"
+              >
+                <MobileToggleIcon open={showMobileMenu} />
+                {showNotificationCount && <InboxNotificationCount />}
+              </Box>
             </NavItem>
           </NavSection>
         </NavBarContainer>
@@ -231,22 +258,3 @@ export const NavBar: React.FC = track(
     </>
   )
 })
-
-const NavSection: React.FC<FlexProps> = ({ children, ...rest }) => {
-  return (
-    <Flex alignItems="stretch" height="100%" bg={rest.bg} {...rest}>
-      <Flex width="100%" height="100%" alignItems="center">
-        {children}
-      </Flex>
-    </Flex>
-  )
-}
-
-const NavBarContainer = styled(Flex)`
-  position: relative;
-  height: ${NAV_BAR_HEIGHT}px;
-  background-color: ${color("white100")};
-  border-bottom: 1px solid ${color("black10")};
-
-  z-index: 3;
-`
