@@ -4,7 +4,7 @@
 
 _ = require 'underscore'
 _s = require 'underscore.string'
-artsyXapp = require 'artsy-xapp'
+artsyXapp = require '@artsy/xapp'
 moment = require 'moment'
 Referrer = require 'referer-parser'
 uuid = require 'node-uuid'
