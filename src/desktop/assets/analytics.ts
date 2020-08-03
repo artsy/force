@@ -6,7 +6,6 @@ const mediator = require("../lib/mediator.coffee")
 const setupSplitTests = require("../components/split_test/setup.coffee")
 window._ = require("underscore")
 window.Cookies = require("cookies-js")
-const analytics = window.analytics
 
 // This event bus also connects to reaction's publishing event emitter because
 // both piggyback on `window`. See Utils/Events for more info.
@@ -19,17 +18,20 @@ mediator.on("all", (name, data) =>
 
 if (sd.SHOW_ANALYTICS_CALLS) {
   // Log all pageviews
-  analytics.on("page", function () {
+  window.analytics.on("page", function () {
     console.info("ANALYTICS PAGEVIEW: ", arguments[2], arguments[3])
   })
   // Log all track calls
-  analytics.on("track", (actionName: string, data?: any) => {
+  window.analytics.on("track", (actionName: string, data?: any) => {
     console.info("ANALYTICS TRACK:", actionName, data)
   })
   // Log all identify calls
-  analytics.on("identify", (userId: string, data: object, context: any) => {
-    console.info("ANALYTICS IDENTIFY:", userId, data, context)
-  })
+  window.analytics.on(
+    "identify",
+    (userId: string, data: object, context: any) => {
+      console.info("ANALYTICS IDENTIFY:", userId, data, context)
+    }
+  )
 }
 
 /**
@@ -48,7 +50,7 @@ const trackEvent = data => {
     // Grab referrer from our trackingMiddleware in Reaction, since we're in a
     // single-page-app context and the value will need to be refreshed on route
     // change. See: https://github.com/artsy/reaction/blob/master/src/Artsy/Analytics/trackingMiddleware.ts
-    const referrer = analytics.__artsyClientSideRoutingReferrer
+    const referrer = window.analytics.__artsyClientSideRoutingReferrer
     let trackingOptions = {}
     if (referrer) {
       trackingOptions = {
@@ -72,7 +74,7 @@ Events.onEvent(trackEvent)
 require("../analytics/main_layout.ts")
 
 $(() =>
-  analytics.ready(function () {
+  window.analytics.ready(function () {
     if (sd.CURRENT_USER != null ? sd.CURRENT_USER.id : undefined) {
       const allowedlist = [
         "collector_level",
@@ -90,7 +92,7 @@ $(() =>
         integrations: { Marketo: false },
       })
       // clear analytics cache when user logs out
-      analyticsHooks.on("auth:logged-out", () => analytics.reset())
+      analyticsHooks.on("auth:logged-out", () => window.analytics.reset())
     }
 
     setupSplitTests()
@@ -134,7 +136,10 @@ $(() =>
 export const onClickedReadMore = data => {
   const pathname = data.pathname || location.pathname
   const href = sd.APP_URL + "/" + pathname
-  analytics.page({ path: pathname }, { integrations: { Marketo: false } })
+  window.analytics.page(
+    { path: pathname },
+    { integrations: { Marketo: false } }
+  )
   if (window.PARSELY) {
     window.PARSELY.beacon.trackPageView({
       url: href,
