@@ -86,7 +86,11 @@ export const FEATURE = {
   id: "RmVhdHVyZTo1ZTY5MGMzMWQyMmZmMTAwMTIwYzQzMzY=",
   name: "Alserkal Art Week",
   slug: "alserkal-art-week",
-  metaDescription: "some description",
+  meta: {
+    name: "Alserkal Art Week",
+    description: "some description",
+    image: "some-url.jpg",
+  },
   subheadline:
     "<p>Alserkal Art Week Online</p>\n<p>Discover new exhibitions by Alserkal Avenue Galleries</p>\n",
   image: {

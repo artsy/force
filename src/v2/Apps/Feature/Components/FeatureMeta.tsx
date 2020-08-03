@@ -9,10 +9,12 @@ interface FeatureMetaProps {
 }
 
 const FeatureMeta: React.FC<FeatureMetaProps> = ({
-  feature: { image, metaDescription: description, name, slug },
+  feature: {
+    meta: { description, name, image },
+    slug,
+  },
 }) => {
   const href = `${getENV("APP_URL")}/feature/${slug}`
-  const imageURL = image?.url
 
   return (
     <>
@@ -26,7 +28,7 @@ const FeatureMeta: React.FC<FeatureMetaProps> = ({
       <Meta property="og:type" content="website" />
       <Meta property="twitter:card" content="summary" />
       <Meta name="fragment" content="!" />
-      {imageURL && <Meta property="og:image" content={imageURL} />}
+      {image && <Meta property="og:image" content={image} />}
     </>
   )
 }
@@ -36,11 +38,11 @@ export const FeatureMetaFragmentContainer = createFragmentContainer(
   {
     feature: graphql`
       fragment FeatureMeta_feature on Feature {
-        name
         slug
-        metaDescription: description(format: PLAIN)
-        image {
-          url(version: "large_rectangle")
+        meta {
+          name
+          description
+          image
         }
       }
     `,
