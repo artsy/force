@@ -1,14 +1,14 @@
 import { omit } from "lodash"
 
 /**
- * Format and fire events triggered via react-tracking
+ * Format and fire events triggered via react-tracking and cohesion
  */
 export const trackEvent = (data: any, options: object = {}) => {
   const actionName = data.action || data.action_type
   const trackingData = omit(data, ["action_type", "action"])
 
   if (actionName) {
-    // FIXME: is this still used?
+    // Fire only page (not track) when expanding articles
     if (actionName === "Clicked read more") {
       // Send Reaction's read more as a page view
       return onClickedReadMore(data)
