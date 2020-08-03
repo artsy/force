@@ -98,6 +98,7 @@ export const UserMenu: React.FC = () => {
       <MenuItem
         variant="small"
         aria-label="Log out of your account"
+        role="button"
         tabIndex={0}
         onKeyPress={event => {
           if (event.key === "Enter" || event.key === " ") {

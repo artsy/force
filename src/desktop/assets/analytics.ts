@@ -27,6 +27,10 @@ if (sd.SHOW_ANALYTICS_CALLS) {
   analytics.on("track", (actionName: string, data?: object) => {
     console.info("ANALYTICS TRACK:", actionName, data)
   })
+  // Log all identify calls
+  analytics.on("identify", (userId: string, data: object, context: any) => {
+    console.info("ANALYTICS IDENTIFY:", userId, data, context)
+  })
 }
 
 // Send Reaction events to Segment
@@ -49,7 +53,7 @@ $(() =>
       const traits = extend(pick(sd.CURRENT_USER, allowedlist), {
         session_id: sd.SESSION_ID,
       })
-      analytics.identify(sd.CURRENT_USER.id, traits, {
+      window.analytics.identify(sd.CURRENT_USER.id, traits, {
         integrations: { Marketo: false },
       })
       // clear analytics cache when user logs out

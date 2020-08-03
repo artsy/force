@@ -10,7 +10,7 @@ describe("Partner profile page", () => {
   before(async () => {
     ;({ gravity, positron, browser } = await setup())
     gravity.get("/api/v1/shortcut/:id", (req, res) => {
-      res.res.sendStatus(404)
+      res.sendStatus(404)
     })
     gravity.get("/api/v1/profile/system", systemProfileStub)
     gravity.use(antigravity)
