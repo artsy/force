@@ -1,29 +1,25 @@
 const analyticsHooks = require("../lib/analytics_hooks.coffee")
 const analytics = window.analytics
 import { data as sd } from "sharify"
+import { timeOnPageListener } from "desktop/analytics/timeOnPageListener"
 
 //
 // Analytics that occur globaly on every page. Think if there's a better place
 // before you add to this file.
 //
 
-analyticsHooks.on("track", function (message, options) {
-  analytics.track(message, options)
+analyticsHooks.on("track", (actionName: string, data: object) => {
+  analytics.track(actionName, data)
 })
 
 // Track 15 second bounce rate
-setTimeout(function () {
-  analytics.track("time on page more than 15 seconds", {
-    category: "15 Seconds",
-    message: sd.CURRENT_PATH,
-  })
-}, 15000)
+timeOnPageListener()
 
 // Debug tracking calls
 if (sd.SHOW_ANALYTICS_CALLS) {
   // FIXME: Events that trigger these events should be updated
   // or flagged for deprecation
-  analytics.on("track", (actionName, data) => {
+  analytics.on("track", (actionName: string, data: object) => {
     console.info("LEGACY MOBILE ANALYTICS TRACK:", actionName, data)
   })
 

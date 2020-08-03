@@ -6,10 +6,7 @@
 import { data as sd } from "sharify"
 import { reportLoadTimeToVolley } from "lib/volley"
 import { match } from "path-to-regexp"
-
-// Track pageview
-const pageType = window.sd.PAGE_TYPE || window.location.pathname.split("/")[1]
-let properties = { path: location.pathname }
+import { timeOnPageListener } from "./timeOnPageListener"
 
 // We exclude these routes from analytics.page calls because they're already
 // taken care of in Reaction.
@@ -32,14 +29,22 @@ const excludedRoutes = [
   "/user/purchases(.*)",
 ]
 
+// Track pageview
+const pathname = new URL(window.location.href).pathname
+let slug = pathname.split("/")[2]
+let pageType = window.sd.PAGE_TYPE || pathname.split("/")[1]
+
 const foundExcludedPath = excludedRoutes.some(excludedPath => {
   const matcher = match(excludedPath, { decode: decodeURIComponent })
-  const foundMatch = !!matcher(window.location.pathname)
+  const foundMatch = !!matcher(pathname)
   return foundMatch
 })
 
 if (!foundExcludedPath) {
-  window.analytics.page(properties, { integrations: { Marketo: false } })
+  window.analytics.page(
+    { path: pathname },
+    { integrations: { Marketo: false } }
+  )
 }
 
 if (pageType === "auction") {
@@ -47,12 +52,11 @@ if (pageType === "auction") {
   const matcher = match("/auction/:saleID/bid(2)?/:artworkID", {
     decode: decodeURIComponent,
   })
-  const matchedBidRoute = matcher(window.location.pathname)
+  const matchedBidRoute = matcher(pathname)
   if (!matchedBidRoute) {
     window.addEventListener("load", function () {
       // distinct event required for marketing integrations (Criteo)
-      const saleSlug = window.location.pathname.split("/")[2]
-      window.analytics.track("Auction Pageview", { auction_slug: saleSlug })
+      window.analytics.track("Auction Pageview", { auction_slug: slug })
     })
   }
 }
@@ -93,30 +97,7 @@ class PageTimeTracker {
   }
 
   track() {
-    this.timer = setTimeout(() => {
-      let trackingOptions = {}
-
-      const referrer = window.analytics.__artsyClientSideRoutingReferrer
-      // Grab referrer from our trackingMiddleware in Reaction, since we're in a
-      // single-page-app context and the value will need to be refreshed on route
-      // change. See: https://github.com/artsy/reaction/blob/master/src/Artsy/Analytics/trackingMiddleware.ts
-      if (referrer) {
-        trackingOptions = {
-          page: {
-            referrer,
-          },
-        }
-      }
-
-      window.analytics.track(
-        "Time on page",
-        {
-          category: this.description,
-          message: this.path,
-        },
-        trackingOptions
-      )
-    }, this.delay)
+    this.timer = timeOnPageListener()
   }
 
   clear() {

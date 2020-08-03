@@ -1,6 +1,7 @@
 import $ from "jquery"
 import { data as sd } from "sharify"
-import { extend, omit, pick } from "lodash"
+import { extend, pick } from "lodash"
+import { trackEvent } from "desktop/analytics/helpers"
 const analyticsHooks = require("../lib/analytics_hooks.coffee")
 const mediator = require("../lib/mediator.coffee")
 const setupSplitTests = require("../components/split_test/setup.coffee")
@@ -12,8 +13,8 @@ window.Cookies = require("cookies-js")
 const Events = require("../../v2/Utils/Events").default
 
 // All Force mediator events can be hooked into for tracking purposes
-mediator.on("all", (name, data) =>
-  analyticsHooks.trigger(`mediator:${name}`, data)
+mediator.on("all", (actionName: string, data?: object) =>
+  analyticsHooks.trigger(`mediator:${actionName}`, data)
 )
 
 if (sd.SHOW_ANALYTICS_CALLS) {
@@ -32,40 +33,6 @@ if (sd.SHOW_ANALYTICS_CALLS) {
       console.info("ANALYTICS IDENTIFY:", userId, data, context)
     }
   )
-}
-
-/**
- * Format and fire events triggered via react-tracking
- */
-const trackEvent = data => {
-  const actionName = data.action || data.action_type
-  const trackingData = omit(data, ["action_type", "action"])
-
-  if (actionName) {
-    // FIXME: is this still used?
-    if (actionName === "Clicked read more") {
-      // Send Reaction's read more as a page view
-      return onClickedReadMore(data)
-    }
-    // Grab referrer from our trackingMiddleware in Reaction, since we're in a
-    // single-page-app context and the value will need to be refreshed on route
-    // change. See: https://github.com/artsy/reaction/blob/master/src/Artsy/Analytics/trackingMiddleware.ts
-    const referrer = window.analytics.__artsyClientSideRoutingReferrer
-    let trackingOptions = {}
-    if (referrer) {
-      trackingOptions = {
-        page: {
-          referrer,
-        },
-      }
-    }
-    // Send event to segment
-    window.analytics.track(actionName, trackingData, trackingOptions)
-  } else {
-    console.error(
-      `Unknown analytics schema being used: ${JSON.stringify(data)}`
-    )
-  }
 }
 
 // Send Reaction events to Segment
@@ -132,30 +99,3 @@ $(() =>
     require("../analytics/inquiry_questionnaire.js")
   })
 )
-
-export const onClickedReadMore = data => {
-  const pathname = data.pathname || location.pathname
-  const href = sd.APP_URL + "/" + pathname
-  window.analytics.page(
-    { path: pathname },
-    { integrations: { Marketo: false } }
-  )
-  if (window.PARSELY) {
-    window.PARSELY.beacon.trackPageView({
-      url: href,
-      js: 1,
-      action_name: "infinite",
-    })
-  }
-  if (window.Sailthru) {
-    window.Sailthru.track({
-      domain: "horizon.artsy.net",
-      spider: true,
-      track_url: true,
-      url: href,
-      use_stored_tags: true,
-    })
-  }
-  // Return early because we don't want to make a Segment call for read more
-  return
-}
