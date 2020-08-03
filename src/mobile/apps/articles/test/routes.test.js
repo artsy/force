@@ -115,13 +115,11 @@ describe("#articles", function () {
     const end = sinon
       .stub()
       .yields(null, { body: { data: { articles: [fixtures.article] } } })
-    end
-      .onCall(1)
-      .yields(null, {
-        body: {
-          data: { articles: [{ layout: "news", title: "News Article" }] },
-        },
-      })
+    end.onCall(1).yields(null, {
+      body: {
+        data: { articles: [{ layout: "news", title: "News Article" }] },
+      },
+    })
     sinon.stub(request, "post").returns({
       send: sinon.stub().returns({
         end,

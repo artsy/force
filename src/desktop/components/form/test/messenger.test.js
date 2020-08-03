@@ -98,7 +98,6 @@ describe("Messenger", function () {
       $fields.each(function () {
         return ($(this)[0].validity = {})
       })
-
       ;($invalids = $fields.filter("[required]")).each(function () {
         return ($(this)[0].validity = { valueMissing: true })
       })

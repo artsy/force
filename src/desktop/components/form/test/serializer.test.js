@@ -52,11 +52,9 @@ describe("Serializer", function () {
 
       this.$form.find('input[name="name"]').val(values.name)
 
-      return this.serializer
-        .data()
-        .should.containEql({
-          name: "&lt;script src=http://xss.rocks/xss.js>&lt;/script>",
-        })
+      return this.serializer.data().should.containEql({
+        name: "&lt;script src=http://xss.rocks/xss.js>&lt;/script>",
+      })
     })
 
     return describe("multi-selects", function () {

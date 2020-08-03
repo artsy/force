@@ -37,12 +37,10 @@ describe("JSONPage", function () {
     // FIXME: TypeError: Attempted to wrap get which is already stubbed
     beforeEach(() =>
       sinon.stub(request, "get").returns({
-        end: sinon
-          .stub()
-          .yields(null, {
-            ok: true,
-            text: JSON.stringify({ header: { headline: "test headline" } }),
-          }),
+        end: sinon.stub().yields(null, {
+          ok: true,
+          text: JSON.stringify({ header: { headline: "test headline" } }),
+        }),
       })
     )
 
