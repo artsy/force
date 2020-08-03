@@ -23,7 +23,8 @@ import {
 } from "styled-system"
 import Linkify from "react-linkify"
 
-const AttachmentLink = styled.a<{ isImage: boolean }>`
+const AttachmentLink = styled.a<{ isImage: boolean } & AlignSelfProps>`
+  ${alignSelf};
   text-decoration: none;
   max-width: 66.67%;
   width: ${({ isImage }) => (isImage ? "100%" : "min-content")};
@@ -65,11 +66,11 @@ export const Attachment: React.FC<AttachmentProps> = props => {
       href={attachment.downloadURL}
       target="_blank"
       isImage={isImage}
+      alignSelf={alignSelf}
     >
       <AttachmentContainer
         p={1}
         mt={0.5}
-        alignSelf={alignSelf}
         background={color(bgColor)}
         width={isImage ? "100%" : "min-content"}
       >
@@ -86,7 +87,12 @@ export const Attachment: React.FC<AttachmentProps> = props => {
               {attachment.fileName}
             </Sans>
             <Box flexShrink={0}>
-              <DownloadIcon width="24px" height="24px" viewBox="0 0 24 24" />
+              <DownloadIcon
+                fill={textColor}
+                width="24px"
+                height="24px"
+                viewBox="0 0 24 24"
+              />
             </Box>
           </>
         )}
