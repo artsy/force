@@ -15,7 +15,6 @@ interface Props {
   onActiveArticleChange: (id: string) => void
   onDateChange: (date: string) => void
   relatedArticlesForCanvas?: RelatedArticleCanvasData[]
-  showCollectionsRail?: boolean
   shouldAdRender?: boolean
   articleSerial?: number
 }
@@ -107,7 +106,6 @@ export class NewsArticle extends Component<Props, State> {
       isMobile,
       isTruncated,
       relatedArticlesForCanvas,
-      showCollectionsRail,
       shouldAdRender,
       articleSerial,
     } = this.props
@@ -129,10 +127,6 @@ export class NewsArticle extends Component<Props, State> {
               onExpand={this.onExpand}
               isHovered={isMobile && isActive}
               relatedArticlesForCanvas={relatedArticlesForCanvas}
-              // Only show rail if already rendering canvas
-              showCollectionsRail={
-                relatedArticlesForCanvas && showCollectionsRail
-              }
               shouldAdRender={shouldAdRender}
               articleSerial={articleSerial}
             />

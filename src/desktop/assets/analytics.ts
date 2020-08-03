@@ -7,7 +7,6 @@ const mediator = require("../lib/mediator.coffee")
 const setupSplitTests = require("../components/split_test/setup.coffee")
 window._ = require("underscore")
 window.Cookies = require("cookies-js")
-const analytics = window.analytics
 
 // This event bus also connects to reaction's publishing event emitter because
 // both piggyback on `window`. See Utils/Events for more info.
@@ -20,17 +19,20 @@ mediator.on("all", (actionName: string, data?: object) =>
 
 if (sd.SHOW_ANALYTICS_CALLS) {
   // Log all pageviews
-  analytics.on("page", function () {
+  window.analytics.on("page", function () {
     console.info("ANALYTICS PAGEVIEW: ", arguments[2], arguments[3])
   })
-  // Log all analytics calls
-  analytics.on("track", (actionName: string, data?: object) => {
+  // Log all track calls
+  window.analytics.on("track", (actionName: string, data?: any) => {
     console.info("ANALYTICS TRACK:", actionName, data)
   })
   // Log all identify calls
-  analytics.on("identify", (userId: string, data: object, context: any) => {
-    console.info("ANALYTICS IDENTIFY:", userId, data, context)
-  })
+  window.analytics.on(
+    "identify",
+    (userId: string, data: object, context: any) => {
+      console.info("ANALYTICS IDENTIFY:", userId, data, context)
+    }
+  )
 }
 
 // Send Reaction events to Segment
@@ -39,7 +41,7 @@ Events.onEvent(trackEvent)
 require("../analytics/main_layout.ts")
 
 $(() =>
-  analytics.ready(function () {
+  window.analytics.ready(function () {
     if (sd.CURRENT_USER != null ? sd.CURRENT_USER.id : undefined) {
       const allowedlist = [
         "collector_level",
@@ -57,7 +59,7 @@ $(() =>
         integrations: { Marketo: false },
       })
       // clear analytics cache when user logs out
-      analyticsHooks.on("auth:logged-out", () => analytics.reset())
+      analyticsHooks.on("auth:logged-out", () => window.analytics.reset())
     }
 
     setupSplitTests()

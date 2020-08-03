@@ -60,7 +60,6 @@ export class ArticleLayout extends React.Component<AppProps> {
       isLoggedIn,
       isMobile,
       showTooltips,
-      showCollectionsRail,
       articleSerial,
       templates: { SuperArticleFooter, SuperArticleHeader } = {} as any,
     } = this.props
@@ -89,7 +88,6 @@ export class ArticleLayout extends React.Component<AppProps> {
             relatedArticlesForPanel={article.relatedArticlesPanel}
             relatedArticlesForCanvas={article.relatedArticlesCanvas}
             showTooltips={showTooltips}
-            showCollectionsRail={showCollectionsRail}
             shouldAdRender={true} // always render ads on super, series, and custom editorial articles
           />
         ) : (
@@ -97,7 +95,6 @@ export class ArticleLayout extends React.Component<AppProps> {
             article={article}
             isMobile={isMobile}
             showTooltips={showTooltips}
-            showCollectionsRail={showCollectionsRail}
             shouldAdRender={renderAd}
             articleSerial={articleSerial}
           />
