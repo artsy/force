@@ -21,8 +21,9 @@ const analyticsMiddleware = store => next => action => {
       })
       return result
     }
+
     case actions.SUBMISSION_CREATED: {
-      analyticsHooks.trigger("consignment:submitted", {
+      window.analytics.track("consignment_submitted", {
         contextPath: nextState.submissionFlow.contextPath,
         submissionId: action.payload.submissionId,
         subject: nextState.submissionFlow.subject,
@@ -31,10 +32,11 @@ const analyticsMiddleware = store => next => action => {
       })
       return result
     }
+
     case actions.SUBMISSION_COMPLETED: {
       const submissionId = nextState.submissionFlow.submission.id
       const assetIds = nextState.submissionFlow.assetIds
-      analyticsHooks.trigger("consignment:completed", {
+      window.analytics.track("consignment:completed", {
         submissionId,
         assetIds,
       })
@@ -52,7 +54,7 @@ const analyticsMiddleware = store => next => action => {
         errors = "Error completing submission"
       }
 
-      analyticsHooks.trigger("consignment:submission:error", {
+      window.analytics.track("consignment:submission:error", {
         type: errorType,
         errors,
       })
@@ -60,7 +62,9 @@ const analyticsMiddleware = store => next => action => {
     }
     case actions.SUBMIT_ARTIST: {
       const artistId = nextState.submissionFlow.inputs.artist_id
-      analyticsHooks.trigger("consignment:artist:confirmed", { artistId })
+      window.analytics.track("consignment_artist_confirmed", {
+        artist_id: artistId,
+      })
       return result
     }
     default:
