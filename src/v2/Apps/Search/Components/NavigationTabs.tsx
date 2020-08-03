@@ -18,6 +18,7 @@ const MORE_TABS = ["tag", "city", "feature", "page"]
 const TAB_NAME_MAP = {
   artist: "Artists",
   marketing_collection: "Collections",
+  artist_series: "Artist Series",
   PartnerGallery: "Galleries",
   partner_show: "Shows",
   fair: "Fairs",
@@ -57,7 +58,7 @@ export class NavigationTabs extends React.Component<Props> {
     const tabName = text.replace(/[0-9]/g, "").trim()
     return (
       <RouteTab
-        to={to}
+        to={to.replace(/\s/g, "_")}
         exact={exact}
         onClick={() => {
           this.trackClick(tabName, to)
@@ -160,6 +161,7 @@ export interface TabCounts {
   Categories?: number
   Articles?: number
   Auctions?: number
+  "Artist Series"?: number
 }
 
 export const tabCountMap: (props: Props) => TabCounts = props => {
