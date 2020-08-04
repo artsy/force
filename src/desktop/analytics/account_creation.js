@@ -53,16 +53,6 @@ analyticsHooks.on("auth:login", (options = {}) => {
   analytics.track("Successfully logged in", options)
 })
 
-// Clicked sign up via the header
-$(".mlh-signup").click(function () {
-  analytics.track("Clicked sign up via the header")
-})
-
-// Clicked sign out via the header
-$(".mlh-logout").click(function () {
-  analytics.track("Clicked logout via the header")
-})
-
 analyticsHooks.on("mediator:open:auth", (options = {}) => {
   analytics.trackLink($(".auth-signup-facebook")[0], "Created account")
   analytics.trackLink($(".auth-signup-twitter")[0], "Created account")
