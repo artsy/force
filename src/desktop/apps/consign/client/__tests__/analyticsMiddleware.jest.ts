@@ -51,7 +51,7 @@ describe("analyticsMiddleware", () => {
     expect(window.analytics.track).toHaveBeenCalledTimes(1)
     expect(
       window.analytics.track
-    ).toBeCalledWith("consignment:submission:error", {
+    ).toBeCalledWith("consignment_submission_error", {
       errors: "Error creating submission",
       type: "convection_create",
     })
@@ -67,7 +67,7 @@ describe("analyticsMiddleware", () => {
     expect(window.analytics.track).toHaveBeenCalledTimes(1)
     expect(
       window.analytics.track
-    ).toBeCalledWith("consignment:submission:error", {
+    ).toBeCalledWith("consignment_submission_error", {
       errors: "Error completing submission",
       type: "convection_complete_submission",
     })
@@ -99,7 +99,7 @@ describe("analyticsMiddleware", () => {
     store.dispatch({ type: "SUBMISSION_COMPLETED" })
 
     expect(window.analytics.track).toHaveBeenCalledTimes(1)
-    expect(window.analytics.track).toBeCalledWith("consignment:completed", {
+    expect(window.analytics.track).toBeCalledWith("consignment_completed", {
       submissionId: 123,
       assetIds: [],
     })
