@@ -5,7 +5,7 @@ import {
   FlexProps,
   HTML,
   ResponsiveImage,
-  Sans,
+  Text,
   color,
 } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -33,7 +33,7 @@ const Figure = styled(RouterLink)`
   }
 `
 
-const Title = styled(Sans)`
+const Title = styled(Text)`
   position: absolute;
   bottom: 0;
   left: 0;
@@ -66,26 +66,26 @@ export const FeatureFeaturedLink: React.FC<FeatureFeaturedLinkProps> = ({
             style={{ backgroundColor: color("black10") }}
           />
 
-          <Title size="6" color="white100" p={2} pt={9} unstable_trackIn>
+          <Title variant="title" color="white100" p={2} pt={9}>
             {title}
           </Title>
         </Figure>
       ) : (
-        <Sans size="6" color="black100" my={2}>
+        <Text variant="title" color="black100" my={2}>
           <RouterLink to={href}>{title || "—"}</RouterLink>
-        </Sans>
+        </Text>
       )}
 
       <Flex flexDirection={size === "large" ? ["column", "row"] : "column"}>
         {subtitle && (
           <Flex mt={2} flexBasis="50%">
-            <HTML fontFamily="serif" size="3" html={subtitle} />
+            <HTML variant="mediumText" html={subtitle} />
           </Flex>
         )}
 
         {description && (
           <Flex mt={1} flexBasis="50%">
-            <HTML fontFamily="serif" size="4" html={description} />
+            <HTML variant="text" html={description} />
           </Flex>
         )}
       </Flex>
