@@ -67,7 +67,7 @@ describe("analyticsMiddleware", () => {
     expect(window.analytics.track).toHaveBeenCalledTimes(1)
     expect(
       window.analytics.track
-    ).toBeCalledWith("consignment:submission:error", {
+    ).toBeCalledWith("consignment_submission_error", {
       errors: "Error completing submission",
       type: "convection_complete_submission",
     })
