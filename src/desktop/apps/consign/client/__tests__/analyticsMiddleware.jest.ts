@@ -1,9 +1,7 @@
 import reducers from "../reducers"
 import { applyMiddleware, createStore } from "redux"
-import sinon from "sinon"
 
 import analyticsMiddleware from "../analytics_middleware"
-const analyticsHooks = require("desktop/lib/analytics_hooks.coffee")
 
 jest.mock("desktop/lib/analytics_hooks.coffee")
 jest.mock("sharify", () => ({
@@ -16,13 +14,8 @@ jest.mock("sharify", () => ({
 }))
 
 describe("analyticsMiddleware", () => {
-  let triggerStub
-
   beforeEach(() => {
     window.analytics = { track: jest.fn() } as any
-    triggerStub = sinon.spy()
-    const mockAnalytics = analyticsHooks
-    mockAnalytics.trigger.mockImplementation(triggerStub)
   })
 
   it("tracks an artist confirmed action", () => {
@@ -34,11 +27,12 @@ describe("analyticsMiddleware", () => {
     store.dispatch({ type: "SUBMIT_ARTIST" })
 
     expect(window.analytics.track).toHaveBeenCalledTimes(1)
-    expect(
-      window.analytics.track
-    ).toBeCalledWith("consignment_artist_confirmed", {
-      artist_id: "andy-warhol",
-    })
+    expect(window.analytics.track).toBeCalledWith(
+      "consignment_artist_confirmed",
+      {
+        artist_id: "andy-warhol",
+      }
+    )
   })
 
   it("tracks an error on submission creation", () => {
@@ -49,12 +43,13 @@ describe("analyticsMiddleware", () => {
     })
 
     expect(window.analytics.track).toHaveBeenCalledTimes(1)
-    expect(
-      window.analytics.track
-    ).toBeCalledWith("consignment_submission_error", {
-      errors: "Error creating submission",
-      type: "convection_create",
-    })
+    expect(window.analytics.track).toBeCalledWith(
+      "consignment_submission_error",
+      {
+        errors: "Error creating submission",
+        type: "convection_create",
+      }
+    )
   })
 
   it("tracks an error on submission completion", () => {
@@ -65,12 +60,13 @@ describe("analyticsMiddleware", () => {
     })
 
     expect(window.analytics.track).toHaveBeenCalledTimes(1)
-    expect(
-      window.analytics.track
-    ).toBeCalledWith("consignment_submission_error", {
-      errors: "Error completing submission",
-      type: "convection_complete_submission",
-    })
+    expect(window.analytics.track).toBeCalledWith(
+      "consignment_submission_error",
+      {
+        errors: "Error completing submission",
+        type: "convection_complete_submission",
+      }
+    )
   })
 
   it("tracks a submission created with no assets", () => {

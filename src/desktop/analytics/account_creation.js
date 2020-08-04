@@ -20,17 +20,6 @@ const getUrlParameter = name => {
 const getAcquisitionInitiative = () =>
   getUrlParameter("m-id") || getUrlParameter("acquisition_initiative")
 
-const trackAccountCreation = options => {
-  analytics.track("Created account", options)
-
-  analytics.identify(options.user_id, _.pick(options, "email"), {
-    integrations: {
-      All: false,
-      Marketo: true,
-    },
-  })
-}
-
 // Created account (via email)
 $(document).one(
   "submit",
@@ -65,35 +54,16 @@ analyticsHooks.on("auth:login", (options = {}) => {
 })
 
 // Clicked sign up via the header
-$(".mlh-signup").click(function() {
+$(".mlh-signup").click(function () {
   analytics.track("Clicked sign up via the header")
 })
 
 // Clicked sign out via the header
-$(".mlh-logout").click(function() {
+$(".mlh-logout").click(function () {
   analytics.track("Clicked logout via the header")
 })
 
 analyticsHooks.on("mediator:open:auth", (options = {}) => {
   analytics.trackLink($(".auth-signup-facebook")[0], "Created account")
   analytics.trackLink($(".auth-signup-twitter")[0], "Created account")
-})
-
-// Created account via consignments submission page
-analyticsHooks.on("consignment:account:created", function(options) {
-  if (options.accountCreated) {
-    trackAccountCreation({
-      signup_service: "email",
-      user_id: options.id,
-      context: "consignments",
-      email: options.email,
-    })
-  } else {
-    analytics.identify(options.user_id, options.email, {
-      integrations: {
-        All: false,
-        Marketo: true,
-      },
-    })
-  }
 })
