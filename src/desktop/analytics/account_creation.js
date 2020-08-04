@@ -20,23 +20,6 @@ const getUrlParameter = name => {
 const getAcquisitionInitiative = () =>
   getUrlParameter("m-id") || getUrlParameter("acquisition_initiative")
 
-// Created account (via email)
-$(document).one(
-  "submit",
-  ".auth-register form, .marketing-signup-modal form, .artist-page-cta-overlay__register form",
-  () => {
-    $(document).one("ajaxComplete", (e, xhr, options) =>
-      mediator.trigger("auth:sign_up:email", {
-        acquisition_initiative: getAcquisitionInitiative(),
-        signup_service: "email",
-        user_id: xhr.responseJSON.user.id,
-        context: options.context,
-        email: xhr.responseJSON.user.email,
-      })
-    )
-  }
-)
-
 // Created account (via social)
 
 // 1. Upon clicking the social signup button
