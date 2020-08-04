@@ -31,6 +31,10 @@ import {
 } from "@artsy/palette"
 import { CommitMutation } from "v2/Apps/Order/Utils/commitMutation"
 import { CreditCardDetails } from "./CreditCardDetails"
+import {
+  SystemContextConsumer,
+  SystemContextProps,
+} from "v2/Artsy/SystemContext"
 
 export interface PaymentPickerProps
   extends ReactStripeElements.InjectedStripeProps {
@@ -52,7 +56,7 @@ interface PaymentPickerState {
 }
 
 export class PaymentPicker extends React.Component<
-  PaymentPickerProps,
+  PaymentPickerProps & SystemContextProps,
   PaymentPickerState
 > {
   state = {
@@ -68,7 +72,10 @@ export class PaymentPicker extends React.Component<
 
   private getInitialCreditCardSelection(): PaymentPickerState["creditCardSelection"] {
     if (this.props.order.creditCard) {
-      return { type: "existing", id: this.props.order.creditCard.internalID }
+      return {
+        type: "existing",
+        id: this.props.order.creditCard.internalID,
+      }
     } else {
       return this.props.me.creditCards.edges.length
         ? {
@@ -152,7 +159,10 @@ export class PaymentPicker extends React.Component<
       creditCardOrError.mutationError &&
       creditCardOrError.mutationError.detail
     ) {
-      return { type: "error", error: creditCardOrError.mutationError.detail }
+      return {
+        type: "error",
+        error: creditCardOrError.mutationError.detail,
+      }
     } else if (
       creditCardOrError.mutationError &&
       creditCardOrError.mutationError.message
@@ -217,6 +227,7 @@ export class PaymentPicker extends React.Component<
     } = this.state
     const {
       me: { creditCards },
+      isEigen,
     } = this.props
 
     const orderCard = this.props.order.creditCard
@@ -277,11 +288,13 @@ export class PaymentPicker extends React.Component<
                 ])}
             </RadioGroup>
             <Spacer mb={1} />
-            <Sans size="2">
-              <Link href="/user/payments" target="_blank">
-                Manage cards
-              </Link>
-            </Sans>
+            {!isEigen && (
+              <Sans size="2">
+                <Link href="/user/payments" target="_blank">
+                  Manage cards
+                </Link>
+              </Sans>
+            )}
           </>
         )}
 
@@ -415,10 +428,18 @@ export class PaymentPicker extends React.Component<
 // Our mess of HOC wrappers is not amenable to ref forwarding, so to expose a
 // ref to the PaymentPicker instance (for getCreditCardId) we'll add an
 // `innerRef` prop which gets sneakily injected here
-const PaymentPickerWithInnerRef: React.SFC<PaymentPickerProps & {
-  innerRef: React.RefObject<PaymentPicker>
-}> = ({ innerRef, ...props }) => (
-  <PaymentPicker ref={innerRef} {...(props as any)} />
+const PaymentPickerWithInnerRef: React.SFC<
+  PaymentPickerProps & {
+    innerRef: React.RefObject<PaymentPicker>
+  }
+> = ({ innerRef, ...props }) => (
+  <SystemContextConsumer>
+    {({ isEigen }) => {
+      return (
+        <PaymentPicker ref={innerRef} isEigen={isEigen} {...(props as any)} />
+      )
+    }}
+  </SystemContextConsumer>
 )
 
 export const PaymentPickerFragmentContainer = createFragmentContainer(
