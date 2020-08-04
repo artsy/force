@@ -11,10 +11,10 @@
     lodash "4.17.15"
     prettier "1.19.1"
 
-"@artsy/cohesion@1.22.0":
-  version "1.22.0"
-  resolved "https://registry.yarnpkg.com/@artsy/cohesion/-/cohesion-1.22.0.tgz#dc04e356edbef1b54d094766dc3d766e577fbfb8"
-  integrity sha512-awmF85+WJvqZjRFJ8a30jOm8ZOveQ4nkmm3i4Ddg5ZvEOzlJA63gaC/MbM400XaOC0mDXlT8lDLYSrfiX74apQ==
+"@artsy/cohesion@1.25.0":
+  version "1.25.0"
+  resolved "https://registry.yarnpkg.com/@artsy/cohesion/-/cohesion-1.25.0.tgz#aa03d94fd8004ede569fc3f91ed0373b62133d73"
+  integrity sha512-dJ1rHX0f5wdcIVF9xR6y+CwiGNo1WlSVC6K221e9lSKZcH7Mu+WUu1D89E4Alddtj8FSkDWHGOdIYfkX2Y5ewg==
 
 "@artsy/detect-responsive-traits@^0.0.5":
   version "0.0.5"
@@ -35,21 +35,24 @@
   resolved "https://registry.yarnpkg.com/@artsy/fresnel/-/fresnel-1.0.13.tgz#4bbbda274e74e0d63b471a36d72360d33d571598"
   integrity sha512-Gg/43i30aIqkryVE6eLhNe4j9G1fk41qIJqYfj/b+mv3bYCl8H9HSaedcM7exuh0RlexZGLMD2aYnugiobrpxQ==
 
-"@artsy/gemup@0.0.3":
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/@artsy/gemup/-/gemup-0.0.3.tgz#0397a472bb69432dab3d2d66ca30556815aa96e7"
-  integrity sha512-W///stXDTz3jSQw8UtT0BClVk4DLOsVp7a8v12efsEZvrZNT+85YBqPWq2DP1EX3ILZR1hGZhbKr/Gl5uti56Q==
+"@artsy/gemup@0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@artsy/gemup/-/gemup-0.1.0.tgz#b1e25b2c225a0a457762791a456f7d075974fb7c"
+  integrity sha512-Ipzswe6djF3c1fbiZLnlX2XTUoOUHRFkkj7aQdJknabA6+/TCNYEt3f2GGd8TmjqC3dwc/PhoIyKfYJd8vAYdQ==
+  dependencies:
+    uuid "^8.3.0"
 
-"@artsy/palette@11.14.0":
-  version "11.14.0"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-11.14.0.tgz#a709ff9966f6cddabeae64d3e84041aeabb8c892"
-  integrity sha512-eyA5nB0awnHZIDVYbvHV/PwXbzRrv2nJx4jN+VBiIriZvIRKRlrkxjEonyzxORjLJD7mIp5rTW3NgGkQqrm4bQ==
+"@artsy/palette@12.0.0":
+  version "12.0.0"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-12.0.0.tgz#fc20fd97205ca32894331c1a47b9d150c17f7ad8"
+  integrity sha512-P7VJen0SwEr/Hf04D2TX86+u/MW8h3YuDmgCC1iXvcJ8KprFJSPK22I7xiqP+5oZjSQvvTcvD1pY9U9sfMFLNw==
   dependencies:
     "@styled-system/theme-get" "^5.1.2"
     babel-plugin-styled-components "^1.10.0"
     d3-interpolate "^1.3.2"
     d3-shape "^1.3.5"
     luxon "^1.15"
+    proportional-scale "^4.0.0"
     rc-slider "^8.6.2"
     react-lazy-load-image-component "1.5.0"
     react-live "^1.12.0"
@@ -68,12 +71,13 @@
   dependencies:
     passport-strategy "1.x.x"
 
-"@artsy/passport@1.3.0":
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/@artsy/passport/-/passport-1.3.0.tgz#7f71745cef8f7a4fd649e0f003abf6e29942a287"
-  integrity sha512-myHNuOWwRgek+mYJgM9hwk9AzXT1N2MDUIUJ4oqS6KLbtGMzvMmoh0V/fGN8aCoMTj8k5uDxlk1tRSlJ39OeZw==
+"@artsy/passport@1.3.2":
+  version "1.3.2"
+  resolved "https://registry.yarnpkg.com/@artsy/passport/-/passport-1.3.2.tgz#2393f6130808eb7432278126ac35666f028bf3e0"
+  integrity sha512-+t1YSvMbyCyeRC+Td/h6E7fN1Q6Y69bwG9rhqysadfsAQ6Stsqpbd68ZUWXMAN+pDcCqh8mev/DhvsLM5BfSJQ==
   dependencies:
     "@artsy/passport-local-with-otp" "^0.3.0"
+    "@artsy/xapp" "^1.0.6"
     "@nicokaiser/passport-apple" "^0.2.1"
     analytics-node "^2.1.0"
     async "^1.5.0"
@@ -92,10 +96,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/react-html-parser/-/react-html-parser-3.0.2.tgz#6213d662441acf0bd8c9ee953aa77ac8d9cf1cdd"
   integrity sha512-FXiRSqfSvwpz/QgwaqFvjJsbDmo9qMGpvUp/0p1V6muaJbGnfxkTSxAYWmYlFst6bmjhVxCYKxvgQhEVE03Wfg==
 
-"@artsy/reaction@26.53.0":
-  version "26.53.0"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-26.53.0.tgz#61cbeecedfba4b66256b68f427e7b7e094231f57"
-  integrity sha512-9/rUEas6sc+l4wuEwiozv7KcU/pGPQ+ujO9u+y0k/t3y4tXXYG04EQGlDmcPGgSFwbrlxqivLz0zkCRZMXl/yw==
+"@artsy/reaction@27.0.0":
+  version "27.0.0"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-27.0.0.tgz#d1e753dc2744ee5386c70ca66c7b3f2bf499ad58"
+  integrity sha512-LfMcejTijPi5H/89I2RaJVmcoUJrEfixurZfVzf85JxeJI15eOQzmiUGflIOTnRQlFM4J1tWbfvhSaubbHNHGQ==
   dependencies:
     "@artsy/detect-responsive-traits" "^0.0.5"
     "@artsy/fresnel" "^1.0.13"
@@ -167,6 +171,13 @@
   dependencies:
     consolidate "^0.14.5"
     lodash "^4.17.11"
+
+"@artsy/xapp@1.0.6", "@artsy/xapp@^1.0.6":
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/@artsy/xapp/-/xapp-1.0.6.tgz#7aa62f2fdb3defd2634b3ce24a2932159daa2442"
+  integrity sha512-HvVHokBkSg73p9CspnPnNLlZwINgNA/tJ1I5wfmMGXi4hdb9K+35CNLT+rByz4dWXmtA3RJcfzCFQknejEObGg==
+  dependencies:
+    superagent "^1.2.0"
 
 "@babel/cli@7.0.0":
   version "7.0.0"
@@ -5402,12 +5413,6 @@ artsy-morgan@artsy/artsy-morgan:
     chalk "^1.1.3"
     morgan "^1.8.1"
 
-artsy-xapp@artsy/artsy-xapp:
-  version "1.0.4"
-  resolved "https://codeload.github.com/artsy/artsy-xapp/tar.gz/cbc3db68469054ab13bfbffe68edda422a0972bb"
-  dependencies:
-    superagent "^1.2.0"
-
 asap@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/asap/-/asap-1.0.0.tgz#b2a45da5fdfa20b0496fc3768cc27c12fa916a7d"
@@ -6341,9 +6346,9 @@ blueimp-tmpl@3.6.0:
   integrity sha1-pJEJddBC4rwDunfw5i0E8VSKUkw=
 
 bn.js@^4.0.0, bn.js@^4.1.0, bn.js@^4.1.1, bn.js@^4.4.0:
-  version "4.11.8"
-  resolved "https://registry.yarnpkg.com/bn.js/-/bn.js-4.11.8.tgz#2cde09eb5ee341f484746bb0309b3253b1b1442f"
-  integrity sha512-ItfYfPLkWHUjckQCk8xC+LwxgK8NYcXywGigJgSwOP8Y2iyWT4f2vsZnoOXTTbo+o5yXmIUJ4gn5538SO5S3gA==
+  version "4.11.9"
+  resolved "https://registry.yarnpkg.com/bn.js/-/bn.js-4.11.9.tgz#26d556829458f9d1e81fc48952493d0ba3507828"
+  integrity sha512-E6QoYqCKZfgatHTdHzs1RRKP7ip4vvm+EyRUeE2RF0NblwVvb0p6jSVeNTOFxPn26QXN2o6SMfNxKp6kU8zQaw==
 
 body-parser@1.18.3:
   version "1.18.3"
@@ -9186,9 +9191,9 @@ element-resize-detector@^1.2.1:
     batch-processor "1.0.0"
 
 elliptic@^6.0.0:
-  version "6.4.1"
-  resolved "https://registry.yarnpkg.com/elliptic/-/elliptic-6.4.1.tgz#c2d0b7776911b86722c632c3c06c60f2f819939a"
-  integrity sha512-BsXLz5sqX8OHcsh7CqBMztyXARmGQ3LWPtGjJi6DiJHq5C/qvi9P3OqgswKSDftbu8+IoI/QDTAm2fFnQ9SZSQ==
+  version "6.5.3"
+  resolved "https://registry.yarnpkg.com/elliptic/-/elliptic-6.5.3.tgz#cb59eb2efdaf73a0bd78ccd7015a62ad6e0f93d6"
+  integrity sha512-IMqzv5wNQf+E6aHeIqATs0tOLeOTwj1QKbRcS3jBbYkl5oLAserA8yJTT7/VyHUYG91PRmPyeQDObKLPpeS4dw==
   dependencies:
     bn.js "^4.4.0"
     brorand "^1.0.1"
@@ -12294,20 +12299,20 @@ inflight@^1.0.4:
     once "^1.3.0"
     wrappy "1"
 
-inherits@2, inherits@2.0.3, inherits@^2.0.1, inherits@^2.0.3, inherits@~2.0.1, inherits@~2.0.3:
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/inherits/-/inherits-2.0.3.tgz#633c2c83e3da42a502f52466022480f4208261de"
-  integrity sha1-Yzwsg+PaQqUC9SRmAiSA9CCCYd4=
+inherits@2, inherits@2.0.4, inherits@^2.0.1, inherits@^2.0.3, inherits@~2.0.1, inherits@~2.0.3:
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/inherits/-/inherits-2.0.4.tgz#0fa2c64f932917c3433a0ded55363aae37416b7c"
+  integrity sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==
 
 inherits@2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/inherits/-/inherits-2.0.1.tgz#b17d08d326b4423e568eff719f91b0b1cbdf69f1"
   integrity sha1-sX0I0ya0Qj5Wjv9xn5GwscvfafE=
 
-inherits@2.0.4:
-  version "2.0.4"
-  resolved "https://registry.yarnpkg.com/inherits/-/inherits-2.0.4.tgz#0fa2c64f932917c3433a0ded55363aae37416b7c"
-  integrity sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==
+inherits@2.0.3:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/inherits/-/inherits-2.0.3.tgz#633c2c83e3da42a502f52466022480f4208261de"
+  integrity sha1-Yzwsg+PaQqUC9SRmAiSA9CCCYd4=
 
 ini@1.x.x, ini@^1.3.4, ini@^1.3.5, ini@~1.3.0:
   version "1.3.5"
@@ -17420,6 +17425,11 @@ property-information@^5.0.0:
   dependencies:
     xtend "^4.0.0"
 
+proportional-scale@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/proportional-scale/-/proportional-scale-4.0.0.tgz#888ecdb1e5e710645601bc4edc73d619bca28ff7"
+  integrity sha512-QW0HeiudSHjBQvGnJ35W/gQYaOP09gFSf+xsYSfMYE1DQ+g26aKRN0Hlvce06WeARCUQSlLE7a+jFVMN5feB4Q==
+
 proxy-addr@~2.0.4:
   version "2.0.5"
   resolved "https://registry.yarnpkg.com/proxy-addr/-/proxy-addr-2.0.5.tgz#34cbd64a2d81f4b1fd21e76f9f06c8a45299ee34"
@@ -22099,6 +22109,11 @@ uuid@^7.0.2:
   version "7.0.3"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-7.0.3.tgz#c5c9f2c8cf25dc0a372c4df1441c41f5bd0c680b"
   integrity sha512-DPSke0pXhTZgoF/d+WSt2QaKMCFSfx7QegxEWT+JOuHF5aWrKEn0G+ztjuJg/gG8/ItK+rbPCD/yNv8yyih6Cg==
+
+uuid@^8.3.0:
+  version "8.3.0"
+  resolved "https://registry.yarnpkg.com/uuid/-/uuid-8.3.0.tgz#ab738085ca22dc9a8c92725e459b1d507df5d6ea"
+  integrity sha512-fX6Z5o4m6XsXBdli9g7DtWgAx+osMsRRZFKma1mIUsLCz6vRvv+pz5VNbyu9UEDzpMWulZfvpgb/cmDXVulYFQ==
 
 v8-compile-cache@^2.0.3:
   version "2.1.0"

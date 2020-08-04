@@ -19,6 +19,7 @@ const prepareVariables = (_params, { location }) => {
 }
 
 const tabsToEntitiesMap = {
+  artist_series: ["ARTIST_SERIES"],
   collections: ["COLLECTION"],
   shows: ["SHOW"],
   fairs: ["FAIR"],

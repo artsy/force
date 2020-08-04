@@ -1,4 +1,4 @@
-artsyXapp = require 'artsy-xapp'
+artsyXapp = require '@artsy/xapp'
 { API_URL } = require('sharify').data
 
 module.exports = (modelName, id) ->

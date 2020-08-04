@@ -1,1 +1,0 @@
-xdescribe 'Fair trending view', ->

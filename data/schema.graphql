@@ -5024,6 +5024,7 @@ type Feature {
   # A type-specific ID likely used as a database ID.
   internalID: ID!
   isActive: Boolean!
+  meta: FeatureMeta!
   name: String!
 
   # Features are composed of sets, which are themselves composed of items of various types
@@ -5061,6 +5062,13 @@ type FeaturedLink {
   internalID: String
   subtitle(format: Format): String
   title: String
+}
+
+# Meta-tag related fields for Features
+type FeatureMeta {
+  description: String!
+  image: String
+  name: String!
 }
 
 type Feedback {
@@ -7808,6 +7816,9 @@ type Query {
     # Returns the elements in the list that come before the specified cursor.
     before: String
 
+    # Get submissions filtered by category
+    filterByCategory: ConsignmentSubmissionCategoryAggregation
+
     # Returns the first _n_ elements from the list.
     first: Int
 
@@ -7870,6 +7881,9 @@ type Query {
     last: Int
     partnerID: ID
     published: Boolean = true
+
+    # Returns only viewing rooms with these statuses
+    statuses: [ViewingRoomStatusEnum!] = []
   ): ViewingRoomConnection
 }
 
@@ -8471,6 +8485,7 @@ type SearchAggregationResults {
 enum SearchEntity {
   ARTICLE
   ARTIST
+  ARTIST_SERIES
   ARTWORK
   CITY
   COLLECTION
@@ -9911,6 +9926,7 @@ type ViewingRoom {
 type ViewingRoomArtwork {
   artworkID: ID!
   internalID: ID!
+  published: Boolean!
 }
 
 # An input type for a Viewing Room artwork
@@ -9963,6 +9979,13 @@ type ViewingRoomEdge {
 
 # A viewing room or errors object
 union ViewingRoomOrErrorsUnion = Errors | ViewingRoom
+
+enum ViewingRoomStatusEnum {
+  closed
+  draft
+  live
+  scheduled
+}
 
 # Title, image, text, and caption for a viewing room section
 type ViewingRoomSubsection {
