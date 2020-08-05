@@ -25,7 +25,7 @@ const analyticsMiddleware = store => next => action => {
     case actions.SUBMISSION_COMPLETED: {
       const submissionId = nextState.submissionFlow.submission.id
       const assetIds = nextState.submissionFlow.assetIds
-      window.analytics.track("consignment_completed", {
+      window.analytics.track("consignment_asset_uploaded", {
         submissionId,
         assetIds,
       })
@@ -43,7 +43,7 @@ const analyticsMiddleware = store => next => action => {
         errors = "Error completing submission"
       }
 
-      window.analytics.track("consignment_submission_error", {
+      window.analytics.track("consignment_failed_to_submit", {
         type: errorType,
         errors,
       })

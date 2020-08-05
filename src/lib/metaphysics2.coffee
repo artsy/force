@@ -41,7 +41,13 @@ metaphysics2 = ({ query, variables, req } = {}) ->
 
       .end (err, response) ->
         if err?
-          errorObject = JSON.parse(err?.response?.text)
+          errorObject = err
+          if err?.response?.text?
+            try
+              errorObject = JSON.parse(err?.response?.text)
+            catch
+              console.error chalk.red('Failed to JSON.parse `err.response.text`')
+
           formattedError = JSON.stringify(errorObject, null, 2)
           console.error chalk.red(formattedError)
           return reject err
