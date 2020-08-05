@@ -34,11 +34,12 @@ describe("analyticsMiddleware", () => {
     store.dispatch({ type: "SUBMIT_ARTIST" })
 
     expect(window.analytics.track).toHaveBeenCalledTimes(1)
-    expect(
-      window.analytics.track
-    ).toBeCalledWith("consignment_artist_confirmed", {
-      artist_id: "andy-warhol",
-    })
+    expect(window.analytics.track).toBeCalledWith(
+      "consignment_artist_confirmed",
+      {
+        artist_id: "andy-warhol",
+      }
+    )
   })
 
   it("tracks an error on submission creation", () => {
@@ -49,12 +50,13 @@ describe("analyticsMiddleware", () => {
     })
 
     expect(window.analytics.track).toHaveBeenCalledTimes(1)
-    expect(
-      window.analytics.track
-    ).toBeCalledWith("consignment_submission_error", {
-      errors: "Error creating submission",
-      type: "convection_create",
-    })
+    expect(window.analytics.track).toBeCalledWith(
+      "consignment_failed_to_submit",
+      {
+        errors: "Error creating submission",
+        type: "convection_create",
+      }
+    )
   })
 
   it("tracks an error on submission completion", () => {
@@ -65,12 +67,13 @@ describe("analyticsMiddleware", () => {
     })
 
     expect(window.analytics.track).toHaveBeenCalledTimes(1)
-    expect(
-      window.analytics.track
-    ).toBeCalledWith("consignment_submission_error", {
-      errors: "Error completing submission",
-      type: "convection_complete_submission",
-    })
+    expect(window.analytics.track).toBeCalledWith(
+      "consignment_failed_to_submit",
+      {
+        errors: "Error completing submission",
+        type: "convection_complete_submission",
+      }
+    )
   })
 
   it("tracks a submission created with no assets", () => {
@@ -99,9 +102,12 @@ describe("analyticsMiddleware", () => {
     store.dispatch({ type: "SUBMISSION_COMPLETED" })
 
     expect(window.analytics.track).toHaveBeenCalledTimes(1)
-    expect(window.analytics.track).toBeCalledWith("consignment_completed", {
-      submissionId: 123,
-      assetIds: [],
-    })
+    expect(window.analytics.track).toBeCalledWith(
+      "consignment_asset_uploaded",
+      {
+        submissionId: 123,
+        assetIds: [],
+      }
+    )
   })
 })
