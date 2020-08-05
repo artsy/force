@@ -3,7 +3,7 @@ import $ from "jquery"
 
 window._ = require("underscore")
 window.Cookies = require("cookies-js")
-const Events = require("@artsy/reaction/dist/Utils/Events.js").default
+const Events = require("../../v2/Utils/Events").default
 
 // Send Reaction events to Segment
 Events.onEvent(trackEvent)
