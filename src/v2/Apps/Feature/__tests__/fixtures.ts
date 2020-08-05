@@ -8,6 +8,7 @@ export const FEATURED_LINKS_SET = {
   orderedItems: {
     edges: [
       {
+        __typename: "OrderedSetItemEdge",
         node: {
           __typename: "FeaturedLink",
           id: "RmVhdHVyZWRMaW5rOjVlNmY2MmU2NmU4YTcxMDAwZWM1NjViNA==",
@@ -16,14 +17,7 @@ export const FEATURED_LINKS_SET = {
           title: "Upcoming Exhibitions at Alserkal Avenue",
           subtitle: "",
           description: "",
-          image: {
-            cropped: {
-              src:
-                "https://d7hftxdivxxvm.cloudfront.net?resize_to=fill&width=800&height=600&quality=80&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2F_SzbXBMwj9JIj0QFspYcZQ%2Fwide.jpg",
-              width: 800,
-              height: 600,
-            },
-          },
+          image: null,
         },
       },
     ],
@@ -38,6 +32,7 @@ export const ARTWORKS_SET = {
   orderedItems: {
     edges: [
       {
+        __typename: "OrderedSetItemEdge",
         node: {
           __typename: "Artwork",
           id: "QXJ0d29yazo1YmI1MjgxZWEyYzdjZDAwMjgyMzA1YzM=",
@@ -93,9 +88,13 @@ export const FEATURE = {
   },
   subheadline:
     "<p>Alserkal Art Week Online</p>\n<p>Discover new exhibitions by Alserkal Avenue Galleries</p>\n",
-  image: {
-    url: "some-url.jpg",
-    cropped: { url: null },
+  defaultImage: {
+    _1x: { url: null },
+    _2x: { url: null },
+  },
+  fullImage: {
+    _1x: { url: null },
+    _2x: { url: null },
   },
   description:
     "<p>Alserkal Art Week Online</p>\n<p>Discover new exhibitions by Alserkal Avenue Galleries</p>\n",

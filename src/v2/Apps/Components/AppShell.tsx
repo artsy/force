@@ -2,7 +2,7 @@ import { Box } from "@artsy/palette"
 import { NetworkOfflineMonitor } from "v2/Artsy/Router/NetworkOfflineMonitor"
 import { findCurrentRoute } from "v2/Artsy/Router/Utils/findCurrentRoute"
 import { useMaybeReloadAfterInquirySignIn } from "v2/Artsy/Router/Utils/useMaybeReloadAfterInquirySignIn"
-import { NavBar } from "v2/Components/NavBar"
+import { NAV_BAR_HEIGHT, NavBar } from "v2/Components/NavBar"
 import { Match } from "found"
 import { isFunction } from "lodash"
 import React, { useEffect } from "react"
@@ -47,7 +47,7 @@ export const AppShell: React.FC<AppShellProps> = props => {
 
   return (
     <Box width="100%">
-      <Box pb={6}>
+      <Box pb={NAV_BAR_HEIGHT}>
         <Box left={0} position="fixed" width="100%" zIndex={100}>
           <NavBar />
           <FlashBanner />

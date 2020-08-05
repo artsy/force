@@ -4,11 +4,11 @@ import { storiesOf } from "storybook/storiesOf"
 import { routes as FeatureRoutes } from "v2/Apps/Feature/routes"
 
 storiesOf("Apps/Feature", module)
-  .add("App (communities-test)", () => {
+  .add("App (milan-gallery-community)", () => {
     return (
       <MockRouter
         routes={FeatureRoutes}
-        initialRoute="/feature/communities-test"
+        initialRoute="/feature/milan-gallery-community"
       />
     )
   })
