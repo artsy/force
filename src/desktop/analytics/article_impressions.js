@@ -1,33 +1,39 @@
 const $ = require("jquery")
 const _ = require("underscore")
 
+// FIRED IN 2020:
+// newsletter_signup
+// article_callout
+// social
+// artist_follow
+// related_article
+// image_set
+
 if (
   location.pathname.match("/article/") ||
   location.pathname.match("/articles")
 ) {
-  var trackedImpressions = []
+  let trackedImpressions = []
 
-  var findVisibleItems = function(articleItems) {
+  const findVisibleItems = function (articleItems) {
     if (articleItems.length > 0) {
-      var items = $(articleItems)
-        .filter(function() {
-          var viewportTop = $(window).scrollTop()
-          var viewportBottom = viewportTop + $(window).height()
-          var itemTop = $(this).offset().top
-          var itemBottom = itemTop + $(this).outerHeight()
+      let items = $(articleItems)
+        .filter(function () {
+          const viewportTop = $(window).scrollTop()
+          const viewportBottom = viewportTop + $(window).height()
+          const itemTop = $(this).offset().top
+          const itemBottom = itemTop + $(this).outerHeight()
           // Either item top or item bottom is below the top
           // of the browser and above the fold.
-          var topInView = itemTop > viewportTop && itemTop < viewportBottom
-          var bottomInView =
+          const topInView = itemTop > viewportTop && itemTop < viewportBottom
+          const bottomInView =
             itemBottom > viewportTop && itemBottom < viewportBottom
 
           return topInView || bottomInView
         })
-        .map(function() {
-          var classList = $(this).prop("classList")
-          var articleId = $(this)
-            .closest(".article-container")
-            .data("id")
+        .map(function () {
+          const classList = $(this).prop("classList")
+          const articleId = $(this).closest(".article-container").data("id")
           // Editorial Signup
           if (classList.contains("articles-es-cta__form")) {
             if (location.pathname.match("/article/")) {
@@ -74,7 +80,7 @@ if (
               }
             }
           } else if (classList.contains("article-share-fixed-fullscreen")) {
-            var indArticleId = $(this).data("id")
+            const indArticleId = $(this).data("id")
             return {
               article_id: articleId,
               destination_path: null,
@@ -95,7 +101,7 @@ if (
 
             // Related Article
           } else if (classList.contains("article-related-widget")) {
-            var related = $(this).find("a")
+            const related = $(this).find("a")
             return {
               article_id: articleId,
               destination_path: null,
@@ -136,7 +142,7 @@ if (
             classList.contains("article-section-callout") &&
             $(this)[0].href
           ) {
-            var destinationPath = $(this)[0].href.replace(/^.*\/\/[^\/]+/, "")
+            const destinationPath = $(this)[0].href.replace(/^.*\/\/[^\/]+/, "")
             return {
               article_id: articleId,
               destination_path: destinationPath,
@@ -145,12 +151,13 @@ if (
               id: "article_callout:" + articleId + ":" + destinationPath,
             }
           } else {
+            return
           }
         })
         .toArray()
 
       // Don't double track the same impressions
-      items = _.filter(items, function(item) {
+      items = _.filter(items, function (item) {
         return !_.contains(trackedImpressions, item.id)
       })
       trackedImpressions = trackedImpressions.concat(_.pluck(items, "id"))
@@ -161,40 +168,40 @@ if (
     }
   }
 
-  var trackImpressions = function() {
-    var itemSelectors =
+  const trackImpressions = function () {
+    const itemSelectors =
       ".articles-es-cta__form, .article-es-form," +
       ".article-social, .article-share-fixed-fullscreen," +
       ".article-section-image-set," +
-      ".article-section-toc, .article-sa-sticky-header.visible," +
+      ".article-sa-sticky-header.visible," +
       ".article-sa-related," +
       ".artist-follow," +
       ".article-section-callout," +
       ".article-related-widget"
 
-    var items = $(itemSelectors)
-    var visibleItems = findVisibleItems(items)
+    const items = $(itemSelectors)
+    const visibleItems = findVisibleItems(items)
     if (visibleItems.length > 0) {
-      visibleItems.map(function(item) {
+      visibleItems.map(function (item) {
         trackImpression({ message: "Article Impression", context: item })
       })
     }
   }
-  var trackRelatedLinks = function(related) {
-    var links = []
-    related.map(function(i, link) {
+  const trackRelatedLinks = function (related) {
+    let links = []
+    related.map(function (i, link) {
       links.push(link.href.replace(/^.*\/\/[^\/]+/, ""))
     })
     return links
   }
 
-  var trackImpression = function(item) {
+  const trackImpression = function (item) {
     analytics.track(item.message, item.context)
   }
 
   $(window).on("scroll", _.throttle(trackImpressions, 500))
 
-  analyticsHooks.on("view:image-set-item", function() {
+  analyticsHooks.on("view:image-set-item", function () {
     trackImpressions()
   })
 }
