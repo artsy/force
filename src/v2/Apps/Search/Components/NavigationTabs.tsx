@@ -6,8 +6,10 @@ import { RouteTab, TabCarousel } from "v2/Components/RouteTabs"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { get } from "v2/Utils/get"
+import { SystemContextProps, withSystemContext } from "v2/Artsy"
+import { userHasLabFeature } from "v2/Utils/user"
 
-export interface Props {
+export interface Props extends SystemContextProps {
   searchableConnection: NavigationTabs_searchableConnection
   term: string
   artworkCount: number
@@ -54,11 +56,16 @@ export class NavigationTabs extends React.Component<Props> {
       count?: number
     } = {}
   ) => {
+    const { user } = this.props
+    const artistSeriesIsEnabled = userHasLabFeature(user, "Artist Series")
     const { exact, count } = options
     const tabName = text.replace(/[0-9]/g, "").trim()
+
+    if (tabName === "Artist Series" && !artistSeriesIsEnabled) return null
+
     return (
       <RouteTab
-        to={to.replace(/\s/g, "_")}
+        to={to}
         exact={exact}
         onClick={() => {
           this.trackClick(tabName, to)
@@ -80,7 +87,7 @@ export class NavigationTabs extends React.Component<Props> {
   tabs() {
     const { term, artworkCount } = this.props
 
-    const route = tab => `/search${tab}?term=${term}`
+    const route = tab => `/search${tab.replace(/\s/g, "_")}?term=${term}`
 
     let restAggregationCount: number = 0
     MORE_TABS.forEach(
@@ -135,7 +142,7 @@ export class NavigationTabs extends React.Component<Props> {
 }
 
 export const NavigationTabsFragmentContainer = createFragmentContainer(
-  NavigationTabs,
+  withSystemContext(NavigationTabs),
   {
     searchableConnection: graphql`
       fragment NavigationTabs_searchableConnection on SearchableConnection {
