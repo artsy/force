@@ -1,4 +1,5 @@
 /* tslint:disable */
+/* eslint-disable */
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -83,67 +84,67 @@ v1 = [
   }
 ],
 v2 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "shippingTotal",
   "args": (v1/*: any*/),
+  "kind": "ScalarField",
+  "name": "shippingTotal",
   "storageKey": "shippingTotal(precision:2)"
 },
 v3 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "shippingTotalCents",
   "args": null,
+  "kind": "ScalarField",
+  "name": "shippingTotalCents",
   "storageKey": null
 },
 v4 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "taxTotal",
   "args": (v1/*: any*/),
+  "kind": "ScalarField",
+  "name": "taxTotal",
   "storageKey": "taxTotal(precision:2)"
 },
 v5 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "taxTotalCents",
   "args": null,
+  "kind": "ScalarField",
+  "name": "taxTotalCents",
   "storageKey": null
 },
 v6 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "buyerTotal",
   "args": (v1/*: any*/),
+  "kind": "ScalarField",
+  "name": "buyerTotal",
   "storageKey": "buyerTotal(precision:2)"
 },
 v7 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "id",
   "args": null,
+  "kind": "ScalarField",
+  "name": "id",
   "storageKey": null
 },
 v8 = [
   {
-    "kind": "ScalarField",
     "alias": null,
-    "name": "internalID",
     "args": null,
+    "kind": "ScalarField",
+    "name": "internalID",
     "storageKey": null
   },
   {
-    "kind": "ScalarField",
     "alias": null,
-    "name": "amount",
     "args": (v1/*: any*/),
+    "kind": "ScalarField",
+    "name": "amount",
     "storageKey": "amount(precision:2)"
   },
   {
-    "kind": "ScalarField",
     "alias": null,
-    "name": "amountCents",
     "args": null,
+    "kind": "ScalarField",
+    "name": "amountCents",
     "storageKey": null
   },
   (v2/*: any*/),
@@ -152,81 +153,80 @@ v8 = [
   (v5/*: any*/),
   (v6/*: any*/),
   {
-    "kind": "ScalarField",
     "alias": null,
+    "args": null,
+    "kind": "ScalarField",
     "name": "buyerTotalCents",
-    "args": null,
     "storageKey": null
   },
   {
-    "kind": "ScalarField",
     "alias": null,
+    "args": null,
+    "kind": "ScalarField",
     "name": "fromParticipant",
-    "args": null,
     "storageKey": null
   },
   {
-    "kind": "ScalarField",
     "alias": null,
-    "name": "note",
     "args": null,
+    "kind": "ScalarField",
+    "name": "note",
     "storageKey": null
   },
   (v7/*: any*/)
 ];
 return {
-  "kind": "Request",
   "fragment": {
-    "kind": "Fragment",
-    "name": "TransactionDetailsSummaryItemStoryQuery",
-    "type": "Query",
-    "metadata": null,
     "argumentDefinitions": [],
+    "kind": "Fragment",
+    "metadata": null,
+    "name": "TransactionDetailsSummaryItemStoryQuery",
     "selections": [
       {
-        "kind": "LinkedField",
         "alias": "order",
-        "name": "commerceOrder",
-        "storageKey": "commerceOrder(id:\"foo\")",
         "args": (v0/*: any*/),
         "concreteType": null,
+        "kind": "LinkedField",
+        "name": "commerceOrder",
         "plural": false,
         "selections": [
           {
+            "args": null,
             "kind": "FragmentSpread",
-            "name": "TransactionDetailsSummaryItem_order",
-            "args": null
+            "name": "TransactionDetailsSummaryItem_order"
           }
-        ]
+        ],
+        "storageKey": "commerceOrder(id:\"foo\")"
       }
-    ]
+    ],
+    "type": "Query"
   },
+  "kind": "Request",
   "operation": {
+    "argumentDefinitions": [],
     "kind": "Operation",
     "name": "TransactionDetailsSummaryItemStoryQuery",
-    "argumentDefinitions": [],
     "selections": [
       {
-        "kind": "LinkedField",
         "alias": "order",
-        "name": "commerceOrder",
-        "storageKey": "commerceOrder(id:\"foo\")",
         "args": (v0/*: any*/),
         "concreteType": null,
+        "kind": "LinkedField",
+        "name": "commerceOrder",
         "plural": false,
         "selections": [
           {
-            "kind": "ScalarField",
             "alias": null,
-            "name": "__typename",
             "args": null,
+            "kind": "ScalarField",
+            "name": "__typename",
             "storageKey": null
           },
           {
-            "kind": "ScalarField",
             "alias": null,
-            "name": "mode",
             "args": null,
+            "kind": "ScalarField",
+            "name": "mode",
             "storageKey": null
           },
           (v2/*: any*/),
@@ -234,57 +234,58 @@ return {
           (v4/*: any*/),
           (v5/*: any*/),
           {
-            "kind": "ScalarField",
             "alias": null,
-            "name": "itemsTotal",
             "args": (v1/*: any*/),
+            "kind": "ScalarField",
+            "name": "itemsTotal",
             "storageKey": "itemsTotal(precision:2)"
           },
           {
-            "kind": "ScalarField",
             "alias": null,
-            "name": "totalListPrice",
             "args": (v1/*: any*/),
+            "kind": "ScalarField",
+            "name": "totalListPrice",
             "storageKey": "totalListPrice(precision:2)"
           },
           (v6/*: any*/),
           (v7/*: any*/),
           {
             "kind": "InlineFragment",
-            "type": "CommerceOfferOrder",
             "selections": [
               {
-                "kind": "LinkedField",
                 "alias": null,
-                "name": "lastOffer",
-                "storageKey": null,
                 "args": null,
                 "concreteType": "CommerceOffer",
+                "kind": "LinkedField",
+                "name": "lastOffer",
                 "plural": false,
-                "selections": (v8/*: any*/)
+                "selections": (v8/*: any*/),
+                "storageKey": null
               },
               {
-                "kind": "LinkedField",
                 "alias": null,
-                "name": "myLastOffer",
-                "storageKey": null,
                 "args": null,
                 "concreteType": "CommerceOffer",
+                "kind": "LinkedField",
+                "name": "myLastOffer",
                 "plural": false,
-                "selections": (v8/*: any*/)
+                "selections": (v8/*: any*/),
+                "storageKey": null
               }
-            ]
+            ],
+            "type": "CommerceOfferOrder"
           }
-        ]
+        ],
+        "storageKey": "commerceOrder(id:\"foo\")"
       }
     ]
   },
   "params": {
-    "operationKind": "query",
-    "name": "TransactionDetailsSummaryItemStoryQuery",
     "id": null,
-    "text": "query TransactionDetailsSummaryItemStoryQuery {\n  order: commerceOrder(id: \"foo\") {\n    __typename\n    ...TransactionDetailsSummaryItem_order\n    id\n  }\n}\n\nfragment TransactionDetailsSummaryItem_order on CommerceOrder {\n  __typename\n  mode\n  shippingTotal(precision: 2)\n  shippingTotalCents\n  taxTotal(precision: 2)\n  taxTotalCents\n  itemsTotal(precision: 2)\n  totalListPrice(precision: 2)\n  buyerTotal(precision: 2)\n  ... on CommerceOfferOrder {\n    lastOffer {\n      internalID\n      amount(precision: 2)\n      amountCents\n      shippingTotal(precision: 2)\n      shippingTotalCents\n      taxTotal(precision: 2)\n      taxTotalCents\n      buyerTotal(precision: 2)\n      buyerTotalCents\n      fromParticipant\n      note\n      id\n    }\n    myLastOffer {\n      internalID\n      amount(precision: 2)\n      amountCents\n      shippingTotal(precision: 2)\n      shippingTotalCents\n      taxTotal(precision: 2)\n      taxTotalCents\n      buyerTotal(precision: 2)\n      buyerTotalCents\n      fromParticipant\n      note\n      id\n    }\n  }\n}\n",
-    "metadata": {}
+    "metadata": {},
+    "name": "TransactionDetailsSummaryItemStoryQuery",
+    "operationKind": "query",
+    "text": "query TransactionDetailsSummaryItemStoryQuery {\n  order: commerceOrder(id: \"foo\") {\n    __typename\n    ...TransactionDetailsSummaryItem_order\n    id\n  }\n}\n\nfragment TransactionDetailsSummaryItem_order on CommerceOrder {\n  __typename\n  mode\n  shippingTotal(precision: 2)\n  shippingTotalCents\n  taxTotal(precision: 2)\n  taxTotalCents\n  itemsTotal(precision: 2)\n  totalListPrice(precision: 2)\n  buyerTotal(precision: 2)\n  ... on CommerceOfferOrder {\n    lastOffer {\n      internalID\n      amount(precision: 2)\n      amountCents\n      shippingTotal(precision: 2)\n      shippingTotalCents\n      taxTotal(precision: 2)\n      taxTotalCents\n      buyerTotal(precision: 2)\n      buyerTotalCents\n      fromParticipant\n      note\n      id\n    }\n    myLastOffer {\n      internalID\n      amount(precision: 2)\n      amountCents\n      shippingTotal(precision: 2)\n      shippingTotalCents\n      taxTotal(precision: 2)\n      taxTotalCents\n      buyerTotal(precision: 2)\n      buyerTotalCents\n      fromParticipant\n      note\n      id\n    }\n  }\n}\n"
   }
 };
 })();

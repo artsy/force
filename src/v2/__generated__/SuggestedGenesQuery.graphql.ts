@@ -1,4 +1,5 @@
 /* tslint:disable */
+/* eslint-disable */
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -41,108 +42,102 @@ fragment SuggestedGenes_suggested_genes on Gene {
 */
 
 const node: ConcreteRequest = {
-  "kind": "Request",
   "fragment": {
-    "kind": "Fragment",
-    "name": "SuggestedGenesQuery",
-    "type": "Query",
-    "metadata": null,
     "argumentDefinitions": [],
+    "kind": "Fragment",
+    "metadata": null,
+    "name": "SuggestedGenesQuery",
     "selections": [
       {
-        "kind": "LinkedField",
         "alias": null,
-        "name": "highlights",
-        "storageKey": null,
         "args": null,
         "concreteType": "Highlights",
+        "kind": "LinkedField",
+        "name": "highlights",
         "plural": false,
         "selections": [
           {
-            "kind": "LinkedField",
             "alias": "suggested_genes",
-            "name": "broadCollectingGenes",
-            "storageKey": null,
             "args": null,
             "concreteType": "Gene",
+            "kind": "LinkedField",
+            "name": "broadCollectingGenes",
             "plural": true,
             "selections": [
               {
+                "args": null,
                 "kind": "FragmentSpread",
-                "name": "SuggestedGenes_suggested_genes",
-                "args": null
+                "name": "SuggestedGenes_suggested_genes"
               }
-            ]
+            ],
+            "storageKey": null
           }
-        ]
+        ],
+        "storageKey": null
       }
-    ]
+    ],
+    "type": "Query"
   },
+  "kind": "Request",
   "operation": {
+    "argumentDefinitions": [],
     "kind": "Operation",
     "name": "SuggestedGenesQuery",
-    "argumentDefinitions": [],
     "selections": [
       {
-        "kind": "LinkedField",
         "alias": null,
-        "name": "highlights",
-        "storageKey": null,
         "args": null,
         "concreteType": "Highlights",
+        "kind": "LinkedField",
+        "name": "highlights",
         "plural": false,
         "selections": [
           {
-            "kind": "LinkedField",
             "alias": "suggested_genes",
-            "name": "broadCollectingGenes",
-            "storageKey": null,
             "args": null,
             "concreteType": "Gene",
+            "kind": "LinkedField",
+            "name": "broadCollectingGenes",
             "plural": true,
             "selections": [
               {
-                "kind": "ScalarField",
                 "alias": null,
+                "args": null,
+                "kind": "ScalarField",
                 "name": "id",
-                "args": null,
                 "storageKey": null
               },
               {
-                "kind": "ScalarField",
                 "alias": null,
+                "args": null,
+                "kind": "ScalarField",
                 "name": "slug",
-                "args": null,
                 "storageKey": null
               },
               {
-                "kind": "ScalarField",
                 "alias": null,
+                "args": null,
+                "kind": "ScalarField",
                 "name": "internalID",
-                "args": null,
                 "storageKey": null
               },
               {
+                "alias": null,
+                "args": null,
                 "kind": "ScalarField",
-                "alias": null,
                 "name": "name",
-                "args": null,
                 "storageKey": null
               },
               {
-                "kind": "LinkedField",
                 "alias": null,
-                "name": "image",
-                "storageKey": null,
                 "args": null,
                 "concreteType": "Image",
+                "kind": "LinkedField",
+                "name": "image",
                 "plural": false,
                 "selections": [
                   {
-                    "kind": "LinkedField",
                     "alias": null,
-                    "name": "cropped",
-                    "storageKey": "cropped(height:100,width:100)",
                     "args": [
                       {
                         "kind": "Literal",
@@ -156,31 +151,37 @@ const node: ConcreteRequest = {
                       }
                     ],
                     "concreteType": "CroppedImageUrl",
+                    "kind": "LinkedField",
+                    "name": "cropped",
                     "plural": false,
                     "selections": [
                       {
-                        "kind": "ScalarField",
                         "alias": null,
-                        "name": "url",
                         "args": null,
+                        "kind": "ScalarField",
+                        "name": "url",
                         "storageKey": null
                       }
-                    ]
+                    ],
+                    "storageKey": "cropped(height:100,width:100)"
                   }
-                ]
+                ],
+                "storageKey": null
               }
-            ]
+            ],
+            "storageKey": null
           }
-        ]
+        ],
+        "storageKey": null
       }
     ]
   },
   "params": {
-    "operationKind": "query",
-    "name": "SuggestedGenesQuery",
     "id": null,
-    "text": "query SuggestedGenesQuery {\n  highlights {\n    suggested_genes: broadCollectingGenes {\n      ...SuggestedGenes_suggested_genes\n      id\n    }\n  }\n}\n\nfragment SuggestedGenes_suggested_genes on Gene {\n  id\n  slug\n  internalID\n  name\n  image {\n    cropped(width: 100, height: 100) {\n      url\n    }\n  }\n}\n",
-    "metadata": {}
+    "metadata": {},
+    "name": "SuggestedGenesQuery",
+    "operationKind": "query",
+    "text": "query SuggestedGenesQuery {\n  highlights {\n    suggested_genes: broadCollectingGenes {\n      ...SuggestedGenes_suggested_genes\n      id\n    }\n  }\n}\n\nfragment SuggestedGenes_suggested_genes on Gene {\n  id\n  slug\n  internalID\n  name\n  image {\n    cropped(width: 100, height: 100) {\n      url\n    }\n  }\n}\n"
   }
 };
 (node as any).hash = '91f31587213209d9aee297d52ee8babb';

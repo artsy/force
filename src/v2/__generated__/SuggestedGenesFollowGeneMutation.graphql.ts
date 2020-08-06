@@ -1,13 +1,14 @@
 /* tslint:disable */
+/* eslint-disable */
 
 import { ConcreteRequest } from "relay-runtime";
 export type FollowGeneInput = {
-    readonly clientMutationId?: string | null;
-    readonly geneID?: string | null;
+    clientMutationId?: string | null;
+    geneID?: string | null;
 };
 export type SuggestedGenesFollowGeneMutationVariables = {
     input: FollowGeneInput;
-    excludedGeneIds: ReadonlyArray<string | null>;
+    excludedGeneIds: Array<string | null>;
 };
 export type SuggestedGenesFollowGeneMutationResponse = {
     readonly followGene: {
@@ -68,16 +69,16 @@ mutation SuggestedGenesFollowGeneMutation(
 const node: ConcreteRequest = (function(){
 var v0 = [
   {
+    "defaultValue": null,
     "kind": "LocalArgument",
     "name": "input",
-    "type": "FollowGeneInput!",
-    "defaultValue": null
+    "type": "FollowGeneInput!"
   },
   {
+    "defaultValue": null,
     "kind": "LocalArgument",
     "name": "excludedGeneIds",
-    "type": "[String]!",
-    "defaultValue": null
+    "type": "[String]!"
   }
 ],
 v1 = [
@@ -88,17 +89,14 @@ v1 = [
   }
 ],
 v2 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "id",
   "args": null,
+  "kind": "ScalarField",
+  "name": "id",
   "storageKey": null
 },
 v3 = {
-  "kind": "LinkedField",
   "alias": null,
-  "name": "similar",
-  "storageKey": null,
   "args": [
     {
       "kind": "Variable",
@@ -112,62 +110,58 @@ v3 = {
     }
   ],
   "concreteType": "GeneConnection",
+  "kind": "LinkedField",
+  "name": "similar",
   "plural": false,
   "selections": [
     {
-      "kind": "LinkedField",
       "alias": null,
-      "name": "edges",
-      "storageKey": null,
       "args": null,
       "concreteType": "GeneEdge",
+      "kind": "LinkedField",
+      "name": "edges",
       "plural": true,
       "selections": [
         {
-          "kind": "LinkedField",
           "alias": null,
-          "name": "node",
-          "storageKey": null,
           "args": null,
           "concreteType": "Gene",
+          "kind": "LinkedField",
+          "name": "node",
           "plural": false,
           "selections": [
             {
-              "kind": "ScalarField",
               "alias": null,
-              "name": "slug",
               "args": null,
+              "kind": "ScalarField",
+              "name": "slug",
               "storageKey": null
             },
             {
-              "kind": "ScalarField",
               "alias": null,
-              "name": "internalID",
               "args": null,
+              "kind": "ScalarField",
+              "name": "internalID",
               "storageKey": null
             },
             (v2/*: any*/),
             {
-              "kind": "ScalarField",
               "alias": null,
-              "name": "name",
               "args": null,
+              "kind": "ScalarField",
+              "name": "name",
               "storageKey": null
             },
             {
-              "kind": "LinkedField",
               "alias": null,
-              "name": "image",
-              "storageKey": null,
               "args": null,
               "concreteType": "Image",
+              "kind": "LinkedField",
+              "name": "image",
               "plural": false,
               "selections": [
                 {
-                  "kind": "LinkedField",
                   "alias": null,
-                  "name": "cropped",
-                  "storageKey": "cropped(height:100,width:100)",
                   "args": [
                     {
                       "kind": "Literal",
@@ -181,96 +175,103 @@ v3 = {
                     }
                   ],
                   "concreteType": "CroppedImageUrl",
+                  "kind": "LinkedField",
+                  "name": "cropped",
                   "plural": false,
                   "selections": [
                     {
-                      "kind": "ScalarField",
                       "alias": null,
-                      "name": "url",
                       "args": null,
+                      "kind": "ScalarField",
+                      "name": "url",
                       "storageKey": null
                     }
-                  ]
+                  ],
+                  "storageKey": "cropped(height:100,width:100)"
                 }
-              ]
+              ],
+              "storageKey": null
             }
-          ]
+          ],
+          "storageKey": null
         }
-      ]
+      ],
+      "storageKey": null
     }
-  ]
+  ],
+  "storageKey": null
 };
 return {
-  "kind": "Request",
   "fragment": {
-    "kind": "Fragment",
-    "name": "SuggestedGenesFollowGeneMutation",
-    "type": "Mutation",
-    "metadata": null,
     "argumentDefinitions": (v0/*: any*/),
+    "kind": "Fragment",
+    "metadata": null,
+    "name": "SuggestedGenesFollowGeneMutation",
     "selections": [
       {
-        "kind": "LinkedField",
         "alias": null,
-        "name": "followGene",
-        "storageKey": null,
         "args": (v1/*: any*/),
         "concreteType": "FollowGenePayload",
+        "kind": "LinkedField",
+        "name": "followGene",
         "plural": false,
         "selections": [
           {
-            "kind": "LinkedField",
             "alias": null,
-            "name": "gene",
-            "storageKey": null,
             "args": null,
             "concreteType": "Gene",
+            "kind": "LinkedField",
+            "name": "gene",
             "plural": false,
             "selections": [
               (v3/*: any*/)
-            ]
+            ],
+            "storageKey": null
           }
-        ]
+        ],
+        "storageKey": null
       }
-    ]
+    ],
+    "type": "Mutation"
   },
+  "kind": "Request",
   "operation": {
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "SuggestedGenesFollowGeneMutation",
-    "argumentDefinitions": (v0/*: any*/),
     "selections": [
       {
-        "kind": "LinkedField",
         "alias": null,
-        "name": "followGene",
-        "storageKey": null,
         "args": (v1/*: any*/),
         "concreteType": "FollowGenePayload",
+        "kind": "LinkedField",
+        "name": "followGene",
         "plural": false,
         "selections": [
           {
-            "kind": "LinkedField",
             "alias": null,
-            "name": "gene",
-            "storageKey": null,
             "args": null,
             "concreteType": "Gene",
+            "kind": "LinkedField",
+            "name": "gene",
             "plural": false,
             "selections": [
               (v3/*: any*/),
               (v2/*: any*/)
-            ]
+            ],
+            "storageKey": null
           }
-        ]
+        ],
+        "storageKey": null
       }
     ]
   },
   "params": {
-    "operationKind": "mutation",
-    "name": "SuggestedGenesFollowGeneMutation",
     "id": null,
-    "text": "mutation SuggestedGenesFollowGeneMutation(\n  $input: FollowGeneInput!\n  $excludedGeneIds: [String]!\n) {\n  followGene(input: $input) {\n    gene {\n      similar(first: 1, excludeGeneIDs: $excludedGeneIds) {\n        edges {\n          node {\n            slug\n            internalID\n            id\n            name\n            image {\n              cropped(width: 100, height: 100) {\n                url\n              }\n            }\n          }\n        }\n      }\n      id\n    }\n  }\n}\n",
-    "metadata": {}
+    "metadata": {},
+    "name": "SuggestedGenesFollowGeneMutation",
+    "operationKind": "mutation",
+    "text": "mutation SuggestedGenesFollowGeneMutation(\n  $input: FollowGeneInput!\n  $excludedGeneIds: [String]!\n) {\n  followGene(input: $input) {\n    gene {\n      similar(first: 1, excludeGeneIDs: $excludedGeneIds) {\n        edges {\n          node {\n            slug\n            internalID\n            id\n            name\n            image {\n              cropped(width: 100, height: 100) {\n                url\n              }\n            }\n          }\n        }\n      }\n      id\n    }\n  }\n}\n"
   }
 };
 })();

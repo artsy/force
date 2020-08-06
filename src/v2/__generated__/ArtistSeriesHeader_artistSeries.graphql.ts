@@ -1,4 +1,5 @@
 /* tslint:disable */
+/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -30,48 +31,45 @@ export type ArtistSeriesHeader_artistSeries$key = {
 
 const node: ReaderFragment = (function(){
 var v0 = {
-  "kind": "LinkedField",
   "alias": null,
-  "name": "image",
-  "storageKey": null,
   "args": null,
   "concreteType": "Image",
+  "kind": "LinkedField",
+  "name": "image",
   "plural": false,
   "selections": [
     {
-      "kind": "ScalarField",
       "alias": null,
-      "name": "url",
       "args": null,
+      "kind": "ScalarField",
+      "name": "url",
       "storageKey": null
     }
-  ]
+  ],
+  "storageKey": null
 };
 return {
-  "kind": "Fragment",
-  "name": "ArtistSeriesHeader_artistSeries",
-  "type": "ArtistSeries",
-  "metadata": null,
   "argumentDefinitions": [],
+  "kind": "Fragment",
+  "metadata": null,
+  "name": "ArtistSeriesHeader_artistSeries",
   "selections": [
     {
-      "kind": "ScalarField",
       "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "title",
-      "args": null,
       "storageKey": null
     },
     {
-      "kind": "ScalarField",
       "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "artworksCountMessage",
-      "args": null,
       "storageKey": null
     },
     {
-      "kind": "ScalarField",
       "alias": null,
-      "name": "descriptionFormatted",
       "args": [
         {
           "kind": "Literal",
@@ -79,14 +77,13 @@ return {
           "value": "HTML"
         }
       ],
+      "kind": "ScalarField",
+      "name": "descriptionFormatted",
       "storageKey": "descriptionFormatted(format:\"HTML\")"
     },
     (v0/*: any*/),
     {
-      "kind": "LinkedField",
       "alias": null,
-      "name": "artists",
-      "storageKey": "artists(size:1)",
       "args": [
         {
           "kind": "Literal",
@@ -95,38 +92,42 @@ return {
         }
       ],
       "concreteType": "Artist",
+      "kind": "LinkedField",
+      "name": "artists",
       "plural": true,
       "selections": [
         {
-          "kind": "ScalarField",
           "alias": null,
-          "name": "name",
           "args": null,
+          "kind": "ScalarField",
+          "name": "name",
           "storageKey": null
         },
         (v0/*: any*/),
         {
-          "kind": "ScalarField",
           "alias": null,
+          "args": null,
+          "kind": "ScalarField",
           "name": "href",
-          "args": null,
           "storageKey": null
         },
         {
-          "kind": "ScalarField",
           "alias": null,
-          "name": "slug",
           "args": null,
+          "kind": "ScalarField",
+          "name": "slug",
           "storageKey": null
         },
         {
+          "args": null,
           "kind": "FragmentSpread",
-          "name": "FollowArtistButton_artist",
-          "args": null
+          "name": "FollowArtistButton_artist"
         }
-      ]
+      ],
+      "storageKey": "artists(size:1)"
     }
-  ]
+  ],
+  "type": "ArtistSeries"
 };
 })();
 (node as any).hash = '3304035aff74ca78914667d55ef9f93f';

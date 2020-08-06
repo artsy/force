@@ -1,4 +1,5 @@
 /* tslint:disable */
+/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -22,25 +23,21 @@ export type FillwidthItem_artwork$key = {
 
 
 const node: ReaderFragment = {
-  "kind": "Fragment",
-  "name": "FillwidthItem_artwork",
-  "type": "Artwork",
-  "metadata": null,
   "argumentDefinitions": [],
+  "kind": "Fragment",
+  "metadata": null,
+  "name": "FillwidthItem_artwork",
   "selections": [
     {
-      "kind": "LinkedField",
       "alias": null,
-      "name": "image",
-      "storageKey": null,
       "args": null,
       "concreteType": "Image",
+      "kind": "LinkedField",
+      "name": "image",
       "plural": false,
       "selections": [
         {
-          "kind": "ScalarField",
           "alias": null,
-          "name": "url",
           "args": [
             {
               "kind": "Literal",
@@ -48,54 +45,58 @@ const node: ReaderFragment = {
               "value": "large"
             }
           ],
+          "kind": "ScalarField",
+          "name": "url",
           "storageKey": "url(version:\"large\")"
         },
         {
-          "kind": "ScalarField",
           "alias": "aspect_ratio",
-          "name": "aspectRatio",
           "args": null,
+          "kind": "ScalarField",
+          "name": "aspectRatio",
           "storageKey": null
         }
-      ]
+      ],
+      "storageKey": null
     },
     {
-      "kind": "ScalarField",
       "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "imageTitle",
-      "args": null,
       "storageKey": null
     },
     {
-      "kind": "ScalarField",
       "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "title",
-      "args": null,
       "storageKey": null
     },
     {
-      "kind": "ScalarField",
       "alias": null,
-      "name": "href",
       "args": null,
+      "kind": "ScalarField",
+      "name": "href",
       "storageKey": null
     },
     {
+      "args": null,
       "kind": "FragmentSpread",
-      "name": "Metadata_artwork",
-      "args": null
+      "name": "Metadata_artwork"
     },
     {
+      "args": null,
       "kind": "FragmentSpread",
-      "name": "Save_artwork",
-      "args": null
+      "name": "Save_artwork"
     },
     {
+      "args": null,
       "kind": "FragmentSpread",
-      "name": "Badge_artwork",
-      "args": null
+      "name": "Badge_artwork"
     }
-  ]
+  ],
+  "type": "Artwork"
 };
 (node as any).hash = '7c690a2390e9f5a0ad834b2cba4ed7a6';
 export default node;

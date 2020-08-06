@@ -1,4 +1,5 @@
 /* tslint:disable */
+/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -82,37 +83,35 @@ export type ArtistMeta_artist$key = {
 
 const node: ReaderFragment = (function(){
 var v0 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "name",
   "args": null,
+  "kind": "ScalarField",
+  "name": "name",
   "storageKey": null
 },
 v1 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "href",
   "args": null,
+  "kind": "ScalarField",
+  "name": "href",
   "storageKey": null
 },
 v2 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "title",
   "args": null,
+  "kind": "ScalarField",
+  "name": "title",
   "storageKey": null
 },
 v3 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "description",
   "args": null,
+  "kind": "ScalarField",
+  "name": "description",
   "storageKey": null
 },
 v4 = {
-  "kind": "ScalarField",
   "alias": "large",
-  "name": "url",
   "args": [
     {
       "kind": "Literal",
@@ -120,38 +119,37 @@ v4 = {
       "value": "large"
     }
   ],
+  "kind": "ScalarField",
+  "name": "url",
   "storageKey": "url(version:\"large\")"
 },
 v5 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "major",
   "args": null,
+  "kind": "ScalarField",
+  "name": "major",
   "storageKey": null
 },
 v6 = [
   (v5/*: any*/),
   {
-    "kind": "ScalarField",
     "alias": null,
-    "name": "currencyCode",
     "args": null,
+    "kind": "ScalarField",
+    "name": "currencyCode",
     "storageKey": null
   }
 ],
 v7 = {
-  "kind": "LinkedField",
   "alias": null,
-  "name": "image",
-  "storageKey": null,
   "args": null,
   "concreteType": "Image",
+  "kind": "LinkedField",
+  "name": "image",
   "plural": false,
   "selections": [
     {
-      "kind": "ScalarField",
       "alias": "small",
-      "name": "url",
       "args": [
         {
           "kind": "Literal",
@@ -159,96 +157,95 @@ v7 = {
           "value": "small"
         }
       ],
+      "kind": "ScalarField",
+      "name": "url",
       "storageKey": "url(version:\"small\")"
     },
     (v4/*: any*/)
-  ]
+  ],
+  "storageKey": null
 };
 return {
-  "kind": "Fragment",
-  "name": "ArtistMeta_artist",
-  "type": "Artist",
-  "metadata": null,
   "argumentDefinitions": [],
+  "kind": "Fragment",
+  "metadata": null,
+  "name": "ArtistMeta_artist",
   "selections": [
     {
-      "kind": "ScalarField",
       "alias": null,
-      "name": "slug",
       "args": null,
+      "kind": "ScalarField",
+      "name": "slug",
       "storageKey": null
     },
     (v0/*: any*/),
     {
-      "kind": "ScalarField",
       "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "nationality",
-      "args": null,
       "storageKey": null
     },
     {
-      "kind": "ScalarField",
       "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "birthday",
-      "args": null,
       "storageKey": null
     },
     {
-      "kind": "ScalarField",
       "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "deathday",
-      "args": null,
       "storageKey": null
     },
     {
-      "kind": "ScalarField",
       "alias": null,
-      "name": "gender",
       "args": null,
+      "kind": "ScalarField",
+      "name": "gender",
       "storageKey": null
     },
     (v1/*: any*/),
     {
-      "kind": "LinkedField",
       "alias": null,
-      "name": "meta",
-      "storageKey": null,
       "args": null,
       "concreteType": "ArtistMeta",
+      "kind": "LinkedField",
+      "name": "meta",
       "plural": false,
       "selections": [
         (v2/*: any*/),
         (v3/*: any*/)
-      ]
-    },
-    {
-      "kind": "ScalarField",
-      "alias": "alternate_names",
-      "name": "alternateNames",
-      "args": null,
+      ],
       "storageKey": null
     },
     {
-      "kind": "LinkedField",
+      "alias": "alternate_names",
+      "args": null,
+      "kind": "ScalarField",
+      "name": "alternateNames",
+      "storageKey": null
+    },
+    {
       "alias": null,
-      "name": "image",
-      "storageKey": null,
       "args": null,
       "concreteType": "Image",
+      "kind": "LinkedField",
+      "name": "image",
       "plural": false,
       "selections": [
         {
-          "kind": "ScalarField",
           "alias": null,
-          "name": "versions",
           "args": null,
+          "kind": "ScalarField",
+          "name": "versions",
           "storageKey": null
         },
         (v4/*: any*/),
         {
-          "kind": "ScalarField",
           "alias": "square",
-          "name": "url",
           "args": [
             {
               "kind": "Literal",
@@ -256,40 +253,40 @@ return {
               "value": "square"
             }
           ],
+          "kind": "ScalarField",
+          "name": "url",
           "storageKey": "url(version:\"square\")"
         }
-      ]
-    },
-    {
-      "kind": "LinkedField",
-      "alias": null,
-      "name": "counts",
-      "storageKey": null,
-      "args": null,
-      "concreteType": "ArtistCounts",
-      "plural": false,
-      "selections": [
-        {
-          "kind": "ScalarField",
-          "alias": null,
-          "name": "artworks",
-          "args": null,
-          "storageKey": null
-        }
-      ]
-    },
-    {
-      "kind": "ScalarField",
-      "alias": null,
-      "name": "blurb",
-      "args": null,
+      ],
       "storageKey": null
     },
     {
+      "alias": null,
+      "args": null,
+      "concreteType": "ArtistCounts",
       "kind": "LinkedField",
+      "name": "counts",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "artworks",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "blurb",
+      "storageKey": null
+    },
+    {
       "alias": "artworks_connection",
-      "name": "artworksConnection",
-      "storageKey": "artworksConnection(filter:\"IS_FOR_SALE\",first:10,published:true)",
       "args": [
         {
           "kind": "Literal",
@@ -308,146 +305,150 @@ return {
         }
       ],
       "concreteType": "ArtworkConnection",
+      "kind": "LinkedField",
+      "name": "artworksConnection",
       "plural": false,
       "selections": [
         {
-          "kind": "LinkedField",
           "alias": null,
-          "name": "edges",
-          "storageKey": null,
           "args": null,
           "concreteType": "ArtworkEdge",
+          "kind": "LinkedField",
+          "name": "edges",
           "plural": true,
           "selections": [
             {
-              "kind": "LinkedField",
               "alias": null,
-              "name": "node",
-              "storageKey": null,
               "args": null,
               "concreteType": "Artwork",
+              "kind": "LinkedField",
+              "name": "node",
               "plural": false,
               "selections": [
                 (v2/*: any*/),
                 {
-                  "kind": "ScalarField",
                   "alias": null,
-                  "name": "date",
                   "args": null,
+                  "kind": "ScalarField",
+                  "name": "date",
                   "storageKey": null
                 },
                 (v3/*: any*/),
                 {
-                  "kind": "ScalarField",
                   "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
                   "name": "category",
-                  "args": null,
                   "storageKey": null
                 },
                 {
-                  "kind": "ScalarField",
                   "alias": "price_currency",
-                  "name": "priceCurrency",
                   "args": null,
+                  "kind": "ScalarField",
+                  "name": "priceCurrency",
                   "storageKey": null
                 },
                 {
-                  "kind": "LinkedField",
                   "alias": null,
-                  "name": "listPrice",
-                  "storageKey": null,
                   "args": null,
                   "concreteType": null,
+                  "kind": "LinkedField",
+                  "name": "listPrice",
                   "plural": false,
                   "selections": [
                     {
-                      "kind": "ScalarField",
                       "alias": null,
-                      "name": "__typename",
                       "args": null,
+                      "kind": "ScalarField",
+                      "name": "__typename",
                       "storageKey": null
                     },
                     {
                       "kind": "InlineFragment",
-                      "type": "PriceRange",
                       "selections": [
                         {
-                          "kind": "LinkedField",
                           "alias": null,
-                          "name": "minPrice",
-                          "storageKey": null,
                           "args": null,
                           "concreteType": "Money",
+                          "kind": "LinkedField",
+                          "name": "minPrice",
                           "plural": false,
-                          "selections": (v6/*: any*/)
+                          "selections": (v6/*: any*/),
+                          "storageKey": null
                         },
                         {
-                          "kind": "LinkedField",
                           "alias": null,
-                          "name": "maxPrice",
-                          "storageKey": null,
                           "args": null,
                           "concreteType": "Money",
+                          "kind": "LinkedField",
+                          "name": "maxPrice",
                           "plural": false,
                           "selections": [
                             (v5/*: any*/)
-                          ]
+                          ],
+                          "storageKey": null
                         }
-                      ]
+                      ],
+                      "type": "PriceRange"
                     },
                     {
                       "kind": "InlineFragment",
-                      "type": "Money",
-                      "selections": (v6/*: any*/)
+                      "selections": (v6/*: any*/),
+                      "type": "Money"
                     }
-                  ]
+                  ],
+                  "storageKey": null
                 },
                 {
-                  "kind": "ScalarField",
                   "alias": null,
-                  "name": "availability",
                   "args": null,
+                  "kind": "ScalarField",
+                  "name": "availability",
                   "storageKey": null
                 },
                 (v1/*: any*/),
                 (v7/*: any*/),
                 {
-                  "kind": "LinkedField",
                   "alias": null,
-                  "name": "partner",
-                  "storageKey": null,
                   "args": null,
                   "concreteType": "Partner",
+                  "kind": "LinkedField",
+                  "name": "partner",
                   "plural": false,
                   "selections": [
                     (v0/*: any*/),
                     (v1/*: any*/),
                     {
-                      "kind": "LinkedField",
                       "alias": null,
-                      "name": "profile",
-                      "storageKey": null,
                       "args": null,
                       "concreteType": "Profile",
+                      "kind": "LinkedField",
+                      "name": "profile",
                       "plural": false,
                       "selections": [
                         (v7/*: any*/)
-                      ]
+                      ],
+                      "storageKey": null
                     }
-                  ]
+                  ],
+                  "storageKey": null
                 }
-              ]
+              ],
+              "storageKey": null
             }
-          ]
+          ],
+          "storageKey": null
         }
-      ]
+      ],
+      "storageKey": "artworksConnection(filter:\"IS_FOR_SALE\",first:10,published:true)"
     },
     {
+      "args": null,
       "kind": "FragmentSpread",
-      "name": "ArtistMetaCanonicalLink_artist",
-      "args": null
+      "name": "ArtistMetaCanonicalLink_artist"
     }
-  ]
+  ],
+  "type": "Artist"
 };
 })();
 (node as any).hash = '8f5b53faf93d5c15172918be714fa039';

@@ -1,4 +1,5 @@
 /* tslint:disable */
+/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -15,20 +16,20 @@ export type Collect_marketingHubCollections$key = ReadonlyArray<{
 
 
 const node: ReaderFragment = {
+  "argumentDefinitions": [],
   "kind": "Fragment",
-  "name": "Collect_marketingHubCollections",
-  "type": "MarketingCollection",
   "metadata": {
     "plural": true
   },
-  "argumentDefinitions": [],
+  "name": "Collect_marketingHubCollections",
   "selections": [
     {
+      "args": null,
       "kind": "FragmentSpread",
-      "name": "CollectionsHubsNav_marketingHubCollections",
-      "args": null
+      "name": "CollectionsHubsNav_marketingHubCollections"
     }
-  ]
+  ],
+  "type": "MarketingCollection"
 };
 (node as any).hash = 'd2c8a937457d195a57fd7a72bf2ea361';
 export default node;

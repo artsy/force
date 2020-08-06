@@ -1,4 +1,5 @@
 /* tslint:disable */
+/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -39,117 +40,117 @@ export type ArtworkDetailsAdditionalInfo_artwork$key = {
 const node: ReaderFragment = (function(){
 var v0 = [
   {
-    "kind": "ScalarField",
     "alias": null,
-    "name": "label",
     "args": null,
+    "kind": "ScalarField",
+    "name": "label",
     "storageKey": null
   },
   {
-    "kind": "ScalarField",
     "alias": null,
-    "name": "details",
     "args": null,
+    "kind": "ScalarField",
+    "name": "details",
     "storageKey": null
   }
 ];
 return {
-  "kind": "Fragment",
-  "name": "ArtworkDetailsAdditionalInfo_artwork",
-  "type": "Artwork",
-  "metadata": null,
   "argumentDefinitions": [],
+  "kind": "Fragment",
+  "metadata": null,
+  "name": "ArtworkDetailsAdditionalInfo_artwork",
   "selections": [
     {
-      "kind": "ScalarField",
       "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "category",
-      "args": null,
       "storageKey": null
     },
     {
-      "kind": "ScalarField",
       "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "series",
-      "args": null,
       "storageKey": null
     },
     {
-      "kind": "ScalarField",
       "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "publisher",
-      "args": null,
       "storageKey": null
     },
     {
-      "kind": "ScalarField",
       "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "manufacturer",
-      "args": null,
       "storageKey": null
     },
     {
-      "kind": "ScalarField",
       "alias": "image_rights",
+      "args": null,
+      "kind": "ScalarField",
       "name": "imageRights",
-      "args": null,
       "storageKey": null
     },
     {
-      "kind": "ScalarField",
       "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "canRequestLotConditionsReport",
-      "args": null,
       "storageKey": null
     },
     {
+      "alias": null,
+      "args": null,
       "kind": "ScalarField",
-      "alias": null,
       "name": "internalID",
-      "args": null,
       "storageKey": null
     },
     {
-      "kind": "LinkedField",
       "alias": null,
+      "args": null,
+      "concreteType": "ArtworkInfoRow",
+      "kind": "LinkedField",
       "name": "framed",
-      "storageKey": null,
-      "args": null,
-      "concreteType": "ArtworkInfoRow",
       "plural": false,
-      "selections": (v0/*: any*/)
+      "selections": (v0/*: any*/),
+      "storageKey": null
     },
     {
-      "kind": "LinkedField",
       "alias": null,
+      "args": null,
+      "concreteType": "ArtworkInfoRow",
+      "kind": "LinkedField",
       "name": "signatureInfo",
-      "storageKey": null,
-      "args": null,
-      "concreteType": "ArtworkInfoRow",
       "plural": false,
-      "selections": (v0/*: any*/)
+      "selections": (v0/*: any*/),
+      "storageKey": null
     },
     {
-      "kind": "LinkedField",
       "alias": null,
+      "args": null,
+      "concreteType": "ArtworkInfoRow",
+      "kind": "LinkedField",
       "name": "conditionDescription",
-      "storageKey": null,
-      "args": null,
-      "concreteType": "ArtworkInfoRow",
       "plural": false,
-      "selections": (v0/*: any*/)
+      "selections": (v0/*: any*/),
+      "storageKey": null
     },
     {
-      "kind": "LinkedField",
       "alias": null,
-      "name": "certificateOfAuthenticity",
-      "storageKey": null,
       "args": null,
       "concreteType": "ArtworkInfoRow",
+      "kind": "LinkedField",
+      "name": "certificateOfAuthenticity",
       "plural": false,
-      "selections": (v0/*: any*/)
+      "selections": (v0/*: any*/),
+      "storageKey": null
     }
-  ]
+  ],
+  "type": "Artwork"
 };
 })();
 (node as any).hash = '866bbb3484e7b8b12947081a9d28eb6a';

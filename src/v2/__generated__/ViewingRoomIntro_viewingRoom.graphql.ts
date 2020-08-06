@@ -1,4 +1,5 @@
 /* tslint:disable */
+/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -15,20 +16,20 @@ export type ViewingRoomIntro_viewingRoom$key = {
 
 
 const node: ReaderFragment = {
-  "kind": "Fragment",
-  "name": "ViewingRoomIntro_viewingRoom",
-  "type": "ViewingRoom",
-  "metadata": null,
   "argumentDefinitions": [],
+  "kind": "Fragment",
+  "metadata": null,
+  "name": "ViewingRoomIntro_viewingRoom",
   "selections": [
     {
-      "kind": "ScalarField",
       "alias": null,
-      "name": "introStatement",
       "args": null,
+      "kind": "ScalarField",
+      "name": "introStatement",
       "storageKey": null
     }
-  ]
+  ],
+  "type": "ViewingRoom"
 };
 (node as any).hash = 'f6bd6fd9181c2b21295bf6f5bc6d3aff';
 export default node;

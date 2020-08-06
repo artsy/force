@@ -1,4 +1,5 @@
 /* tslint:disable */
+/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -23,70 +24,70 @@ export type LotInfo_saleArtwork$key = {
 
 
 const node: ReaderFragment = {
-  "kind": "Fragment",
-  "name": "LotInfo_saleArtwork",
-  "type": "SaleArtwork",
-  "metadata": null,
   "argumentDefinitions": [],
+  "kind": "Fragment",
+  "metadata": null,
+  "name": "LotInfo_saleArtwork",
   "selections": [
     {
-      "kind": "LinkedField",
       "alias": null,
-      "name": "counts",
-      "storageKey": null,
       "args": null,
       "concreteType": "SaleArtworkCounts",
+      "kind": "LinkedField",
+      "name": "counts",
       "plural": false,
       "selections": [
         {
-          "kind": "ScalarField",
           "alias": null,
-          "name": "bidderPositions",
           "args": null,
+          "kind": "ScalarField",
+          "name": "bidderPositions",
           "storageKey": null
         }
-      ]
-    },
-    {
-      "kind": "ScalarField",
-      "alias": null,
-      "name": "lotLabel",
-      "args": null,
+      ],
       "storageKey": null
     },
     {
-      "kind": "LinkedField",
       "alias": null,
-      "name": "minimumNextBid",
-      "storageKey": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "lotLabel",
+      "storageKey": null
+    },
+    {
+      "alias": null,
       "args": null,
       "concreteType": "SaleArtworkMinimumNextBid",
+      "kind": "LinkedField",
+      "name": "minimumNextBid",
       "plural": false,
       "selections": [
         {
-          "kind": "ScalarField",
           "alias": null,
+          "args": null,
+          "kind": "ScalarField",
           "name": "amount",
-          "args": null,
           "storageKey": null
         },
         {
-          "kind": "ScalarField",
           "alias": null,
+          "args": null,
+          "kind": "ScalarField",
           "name": "cents",
-          "args": null,
           "storageKey": null
         },
         {
-          "kind": "ScalarField",
           "alias": null,
-          "name": "display",
           "args": null,
+          "kind": "ScalarField",
+          "name": "display",
           "storageKey": null
         }
-      ]
+      ],
+      "storageKey": null
     }
-  ]
+  ],
+  "type": "SaleArtwork"
 };
 (node as any).hash = 'd63876e2627bde421ea90ea82620a1f1';
 export default node;

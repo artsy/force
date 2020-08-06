@@ -1,4 +1,5 @@
 /* tslint:disable */
+/* eslint-disable */
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -35,58 +36,54 @@ fragment BackupSecondFactor_me on Me {
 
 const node: ConcreteRequest = (function(){
 var v0 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "__typename",
   "args": null,
+  "kind": "ScalarField",
+  "name": "__typename",
   "storageKey": null
 };
 return {
-  "kind": "Request",
   "fragment": {
-    "kind": "Fragment",
-    "name": "BackupSecondFactorStoryQuery",
-    "type": "Query",
-    "metadata": null,
     "argumentDefinitions": [],
+    "kind": "Fragment",
+    "metadata": null,
+    "name": "BackupSecondFactorStoryQuery",
     "selections": [
       {
-        "kind": "LinkedField",
         "alias": null,
-        "name": "me",
-        "storageKey": null,
         "args": null,
         "concreteType": "Me",
+        "kind": "LinkedField",
+        "name": "me",
         "plural": false,
         "selections": [
           {
+            "args": null,
             "kind": "FragmentSpread",
-            "name": "BackupSecondFactor_me",
-            "args": null
+            "name": "BackupSecondFactor_me"
           }
-        ]
+        ],
+        "storageKey": null
       }
-    ]
+    ],
+    "type": "Query"
   },
+  "kind": "Request",
   "operation": {
+    "argumentDefinitions": [],
     "kind": "Operation",
     "name": "BackupSecondFactorStoryQuery",
-    "argumentDefinitions": [],
     "selections": [
       {
-        "kind": "LinkedField",
         "alias": null,
-        "name": "me",
-        "storageKey": null,
         "args": null,
         "concreteType": "Me",
+        "kind": "LinkedField",
+        "name": "me",
         "plural": false,
         "selections": [
           {
-            "kind": "LinkedField",
             "alias": "backupSecondFactors",
-            "name": "secondFactors",
-            "storageKey": "secondFactors(kinds:[\"backup\"])",
             "args": [
               {
                 "kind": "Literal",
@@ -97,35 +94,39 @@ return {
               }
             ],
             "concreteType": null,
+            "kind": "LinkedField",
+            "name": "secondFactors",
             "plural": true,
             "selections": [
               (v0/*: any*/),
               {
                 "kind": "InlineFragment",
-                "type": "BackupSecondFactor",
                 "selections": [
                   (v0/*: any*/)
-                ]
+                ],
+                "type": "BackupSecondFactor"
               }
-            ]
+            ],
+            "storageKey": "secondFactors(kinds:[\"backup\"])"
           },
           {
-            "kind": "ScalarField",
             "alias": null,
-            "name": "id",
             "args": null,
+            "kind": "ScalarField",
+            "name": "id",
             "storageKey": null
           }
-        ]
+        ],
+        "storageKey": null
       }
     ]
   },
   "params": {
-    "operationKind": "query",
-    "name": "BackupSecondFactorStoryQuery",
     "id": null,
-    "text": "query BackupSecondFactorStoryQuery {\n  me {\n    ...BackupSecondFactor_me\n    id\n  }\n}\n\nfragment BackupSecondFactor_me on Me {\n  backupSecondFactors: secondFactors(kinds: [backup]) {\n    __typename\n    ... on BackupSecondFactor {\n      __typename\n    }\n  }\n}\n",
-    "metadata": {}
+    "metadata": {},
+    "name": "BackupSecondFactorStoryQuery",
+    "operationKind": "query",
+    "text": "query BackupSecondFactorStoryQuery {\n  me {\n    ...BackupSecondFactor_me\n    id\n  }\n}\n\nfragment BackupSecondFactor_me on Me {\n  backupSecondFactors: secondFactors(kinds: [backup]) {\n    __typename\n    ... on BackupSecondFactor {\n      __typename\n    }\n  }\n}\n"
   }
 };
 })();

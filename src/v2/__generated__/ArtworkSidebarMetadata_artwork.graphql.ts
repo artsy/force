@@ -1,4 +1,5 @@
 /* tslint:disable */
+/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -22,71 +23,71 @@ export type ArtworkSidebarMetadata_artwork$key = {
 
 
 const node: ReaderFragment = {
-  "kind": "Fragment",
-  "name": "ArtworkSidebarMetadata_artwork",
-  "type": "Artwork",
-  "metadata": null,
   "argumentDefinitions": [],
+  "kind": "Fragment",
+  "metadata": null,
+  "name": "ArtworkSidebarMetadata_artwork",
   "selections": [
     {
-      "kind": "ScalarField",
       "alias": "is_biddable",
-      "name": "isBiddable",
       "args": null,
+      "kind": "ScalarField",
+      "name": "isBiddable",
       "storageKey": null
     },
     {
-      "kind": "LinkedField",
       "alias": "edition_sets",
-      "name": "editionSets",
-      "storageKey": null,
       "args": null,
       "concreteType": "EditionSet",
+      "kind": "LinkedField",
+      "name": "editionSets",
       "plural": true,
       "selections": [
         {
-          "kind": "ScalarField",
           "alias": null,
-          "name": "__typename",
           "args": null,
+          "kind": "ScalarField",
+          "name": "__typename",
           "storageKey": null
         }
-      ]
+      ],
+      "storageKey": null
     },
     {
-      "kind": "LinkedField",
       "alias": "sale_artwork",
-      "name": "saleArtwork",
-      "storageKey": null,
       "args": null,
       "concreteType": "SaleArtwork",
+      "kind": "LinkedField",
+      "name": "saleArtwork",
       "plural": false,
       "selections": [
         {
-          "kind": "ScalarField",
           "alias": "lot_label",
-          "name": "lotLabel",
           "args": null,
+          "kind": "ScalarField",
+          "name": "lotLabel",
           "storageKey": null
         }
-      ]
+      ],
+      "storageKey": null
     },
     {
+      "args": null,
       "kind": "FragmentSpread",
-      "name": "ArtworkSidebarTitleInfo_artwork",
-      "args": null
+      "name": "ArtworkSidebarTitleInfo_artwork"
     },
     {
+      "args": null,
       "kind": "FragmentSpread",
-      "name": "ArtworkSidebarSizeInfo_piece",
-      "args": null
+      "name": "ArtworkSidebarSizeInfo_piece"
     },
     {
+      "args": null,
       "kind": "FragmentSpread",
-      "name": "ArtworkSidebarClassification_artwork",
-      "args": null
+      "name": "ArtworkSidebarClassification_artwork"
     }
-  ]
+  ],
+  "type": "Artwork"
 };
 (node as any).hash = 'ee1d620cfeeb5424fe48e300e387ffa4';
 export default node;

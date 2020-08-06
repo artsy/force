@@ -1,4 +1,5 @@
 /* tslint:disable */
+/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -20,98 +21,98 @@ export type ArtworkSidebar_artwork$key = {
 
 
 const node: ReaderFragment = {
-  "kind": "Fragment",
-  "name": "ArtworkSidebar_artwork",
-  "type": "Artwork",
-  "metadata": null,
   "argumentDefinitions": [],
+  "kind": "Fragment",
+  "metadata": null,
+  "name": "ArtworkSidebar_artwork",
   "selections": [
     {
-      "kind": "ScalarField",
       "alias": "is_in_auction",
-      "name": "isInAuction",
       "args": null,
+      "kind": "ScalarField",
+      "name": "isInAuction",
       "storageKey": null
     },
     {
-      "kind": "LinkedField",
       "alias": null,
-      "name": "sale",
-      "storageKey": null,
       "args": null,
       "concreteType": "Sale",
+      "kind": "LinkedField",
+      "name": "sale",
       "plural": false,
       "selections": [
         {
-          "kind": "ScalarField",
           "alias": "is_closed",
-          "name": "isClosed",
           "args": null,
+          "kind": "ScalarField",
+          "name": "isClosed",
           "storageKey": null
         },
         {
+          "args": null,
           "kind": "FragmentSpread",
-          "name": "AuctionTimer_sale",
-          "args": null
+          "name": "AuctionTimer_sale"
         }
-      ]
+      ],
+      "storageKey": null
     },
     {
+      "args": null,
       "kind": "FragmentSpread",
-      "name": "ArtworkSidebarArtists_artwork",
-      "args": null
+      "name": "ArtworkSidebarArtists_artwork"
     },
     {
+      "args": null,
       "kind": "FragmentSpread",
-      "name": "ArtworkSidebarMetadata_artwork",
-      "args": null
+      "name": "ArtworkSidebarMetadata_artwork"
     },
     {
+      "args": null,
       "kind": "FragmentSpread",
-      "name": "ArtworkSidebarAuctionPartnerInfo_artwork",
-      "args": null
+      "name": "ArtworkSidebarAuctionPartnerInfo_artwork"
     },
     {
+      "args": null,
       "kind": "FragmentSpread",
-      "name": "ArtworkSidebarCurrentBidInfo_artwork",
-      "args": null
+      "name": "ArtworkSidebarCurrentBidInfo_artwork"
     },
     {
+      "args": null,
       "kind": "FragmentSpread",
-      "name": "ArtworkSidebarBidAction_artwork",
-      "args": null
+      "name": "ArtworkSidebarBidAction_artwork"
     },
     {
+      "args": null,
       "kind": "FragmentSpread",
-      "name": "ArtworkSidebarCommercial_artwork",
-      "args": null
+      "name": "ArtworkSidebarCommercial_artwork"
     },
     {
+      "args": null,
       "kind": "FragmentSpread",
-      "name": "ArtworkSidebarPartnerInfo_artwork",
-      "args": null
+      "name": "ArtworkSidebarPartnerInfo_artwork"
     },
     {
+      "args": null,
       "kind": "FragmentSpread",
-      "name": "ArtworkSidebarExtraLinks_artwork",
-      "args": null
+      "name": "ArtworkSidebarExtraLinks_artwork"
     },
     {
+      "args": null,
       "kind": "FragmentSpread",
-      "name": "SecurePayment_artwork",
-      "args": null
+      "name": "SecurePayment_artwork"
     },
     {
+      "args": null,
       "kind": "FragmentSpread",
-      "name": "VerifiedSeller_artwork",
-      "args": null
+      "name": "VerifiedSeller_artwork"
     },
     {
+      "args": null,
       "kind": "FragmentSpread",
-      "name": "AuthenticityCertificate_artwork",
-      "args": null
+      "name": "AuthenticityCertificate_artwork"
     }
-  ]
+  ],
+  "type": "Artwork"
 };
 (node as any).hash = '1d64fc32746f33f53452d3d783513e05';
 export default node;

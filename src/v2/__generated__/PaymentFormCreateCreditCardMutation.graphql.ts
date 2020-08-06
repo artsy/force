@@ -1,10 +1,11 @@
 /* tslint:disable */
+/* eslint-disable */
 
 import { ConcreteRequest } from "relay-runtime";
 export type CreditCardInput = {
-    readonly clientMutationId?: string | null;
-    readonly oneTimeUse?: boolean | null;
-    readonly token: string;
+    clientMutationId?: string | null;
+    oneTimeUse?: boolean | null;
+    token: string;
 };
 export type PaymentFormCreateCreditCardMutationVariables = {
     input: CreditCardInput;
@@ -73,10 +74,10 @@ mutation PaymentFormCreateCreditCardMutation(
 const node: ConcreteRequest = (function(){
 var v0 = [
   {
+    "defaultValue": null,
     "kind": "LocalArgument",
     "name": "input",
-    "type": "CreditCardInput!",
-    "defaultValue": null
+    "type": "CreditCardInput!"
   }
 ],
 v1 = [
@@ -87,194 +88,194 @@ v1 = [
   }
 ],
 v2 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "__typename",
   "args": null,
+  "kind": "ScalarField",
+  "name": "__typename",
   "storageKey": null
 },
 v3 = {
   "kind": "InlineFragment",
-  "type": "CreditCardMutationSuccess",
   "selections": [
     {
-      "kind": "LinkedField",
       "alias": null,
-      "name": "creditCardEdge",
-      "storageKey": null,
       "args": null,
       "concreteType": "CreditCardEdge",
+      "kind": "LinkedField",
+      "name": "creditCardEdge",
       "plural": false,
       "selections": [
         {
-          "kind": "LinkedField",
           "alias": null,
-          "name": "node",
-          "storageKey": null,
           "args": null,
           "concreteType": "CreditCard",
+          "kind": "LinkedField",
+          "name": "node",
           "plural": false,
           "selections": [
             {
-              "kind": "ScalarField",
               "alias": null,
+              "args": null,
+              "kind": "ScalarField",
               "name": "id",
-              "args": null,
               "storageKey": null
             },
             {
-              "kind": "ScalarField",
               "alias": null,
+              "args": null,
+              "kind": "ScalarField",
               "name": "internalID",
-              "args": null,
               "storageKey": null
             },
             {
-              "kind": "ScalarField",
               "alias": null,
+              "args": null,
+              "kind": "ScalarField",
               "name": "brand",
-              "args": null,
               "storageKey": null
             },
             {
-              "kind": "ScalarField",
               "alias": null,
+              "args": null,
+              "kind": "ScalarField",
               "name": "lastDigits",
-              "args": null,
               "storageKey": null
             },
             {
-              "kind": "ScalarField",
               "alias": null,
+              "args": null,
+              "kind": "ScalarField",
               "name": "expirationYear",
-              "args": null,
               "storageKey": null
             },
             {
-              "kind": "ScalarField",
               "alias": null,
-              "name": "expirationMonth",
               "args": null,
+              "kind": "ScalarField",
+              "name": "expirationMonth",
               "storageKey": null
             },
             (v2/*: any*/)
-          ]
+          ],
+          "storageKey": null
         }
-      ]
+      ],
+      "storageKey": null
     }
-  ]
+  ],
+  "type": "CreditCardMutationSuccess"
 },
 v4 = {
   "kind": "InlineFragment",
-  "type": "CreditCardMutationFailure",
   "selections": [
     {
-      "kind": "LinkedField",
       "alias": null,
-      "name": "mutationError",
-      "storageKey": null,
       "args": null,
       "concreteType": "GravityMutationError",
+      "kind": "LinkedField",
+      "name": "mutationError",
       "plural": false,
       "selections": [
         {
-          "kind": "ScalarField",
           "alias": null,
+          "args": null,
+          "kind": "ScalarField",
           "name": "type",
-          "args": null,
           "storageKey": null
         },
         {
-          "kind": "ScalarField",
           "alias": null,
+          "args": null,
+          "kind": "ScalarField",
           "name": "message",
-          "args": null,
           "storageKey": null
         },
         {
-          "kind": "ScalarField",
           "alias": null,
-          "name": "detail",
           "args": null,
+          "kind": "ScalarField",
+          "name": "detail",
           "storageKey": null
         }
-      ]
+      ],
+      "storageKey": null
     }
-  ]
+  ],
+  "type": "CreditCardMutationFailure"
 };
 return {
-  "kind": "Request",
   "fragment": {
-    "kind": "Fragment",
-    "name": "PaymentFormCreateCreditCardMutation",
-    "type": "Mutation",
-    "metadata": null,
     "argumentDefinitions": (v0/*: any*/),
+    "kind": "Fragment",
+    "metadata": null,
+    "name": "PaymentFormCreateCreditCardMutation",
     "selections": [
       {
-        "kind": "LinkedField",
         "alias": null,
-        "name": "createCreditCard",
-        "storageKey": null,
         "args": (v1/*: any*/),
         "concreteType": "CreditCardPayload",
+        "kind": "LinkedField",
+        "name": "createCreditCard",
         "plural": false,
         "selections": [
           {
-            "kind": "LinkedField",
             "alias": null,
-            "name": "creditCardOrError",
-            "storageKey": null,
             "args": null,
             "concreteType": null,
+            "kind": "LinkedField",
+            "name": "creditCardOrError",
             "plural": false,
             "selections": [
               (v3/*: any*/),
               (v4/*: any*/)
-            ]
+            ],
+            "storageKey": null
           }
-        ]
+        ],
+        "storageKey": null
       }
-    ]
+    ],
+    "type": "Mutation"
   },
+  "kind": "Request",
   "operation": {
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "PaymentFormCreateCreditCardMutation",
-    "argumentDefinitions": (v0/*: any*/),
     "selections": [
       {
-        "kind": "LinkedField",
         "alias": null,
-        "name": "createCreditCard",
-        "storageKey": null,
         "args": (v1/*: any*/),
         "concreteType": "CreditCardPayload",
+        "kind": "LinkedField",
+        "name": "createCreditCard",
         "plural": false,
         "selections": [
           {
-            "kind": "LinkedField",
             "alias": null,
-            "name": "creditCardOrError",
-            "storageKey": null,
             "args": null,
             "concreteType": null,
+            "kind": "LinkedField",
+            "name": "creditCardOrError",
             "plural": false,
             "selections": [
               (v2/*: any*/),
               (v3/*: any*/),
               (v4/*: any*/)
-            ]
+            ],
+            "storageKey": null
           }
-        ]
+        ],
+        "storageKey": null
       }
     ]
   },
   "params": {
-    "operationKind": "mutation",
-    "name": "PaymentFormCreateCreditCardMutation",
     "id": null,
-    "text": "mutation PaymentFormCreateCreditCardMutation(\n  $input: CreditCardInput!\n) {\n  createCreditCard(input: $input) {\n    creditCardOrError {\n      __typename\n      ... on CreditCardMutationSuccess {\n        creditCardEdge {\n          node {\n            id\n            internalID\n            brand\n            lastDigits\n            expirationYear\n            expirationMonth\n            __typename\n          }\n        }\n      }\n      ... on CreditCardMutationFailure {\n        mutationError {\n          type\n          message\n          detail\n        }\n      }\n    }\n  }\n}\n",
-    "metadata": {}
+    "metadata": {},
+    "name": "PaymentFormCreateCreditCardMutation",
+    "operationKind": "mutation",
+    "text": "mutation PaymentFormCreateCreditCardMutation(\n  $input: CreditCardInput!\n) {\n  createCreditCard(input: $input) {\n    creditCardOrError {\n      __typename\n      ... on CreditCardMutationSuccess {\n        creditCardEdge {\n          node {\n            id\n            internalID\n            brand\n            lastDigits\n            expirationYear\n            expirationMonth\n            __typename\n          }\n        }\n      }\n      ... on CreditCardMutationFailure {\n        mutationError {\n          type\n          message\n          detail\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
