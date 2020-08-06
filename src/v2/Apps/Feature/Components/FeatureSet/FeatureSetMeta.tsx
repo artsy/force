@@ -14,13 +14,13 @@ export const FeatureSetMeta: React.FC<FeatureSetMetaProps> = ({
   return (
     <Box {...rest}>
       {set.name && (
-        <Text variant="title" color="black100">
+        <Text variant="largeTitle" color="black100" mb={1}>
           {set.name}
         </Text>
       )}
 
       {set.description && (
-        <HTML variant="text" color="black60" html={set.description} />
+        <HTML variant="text" color="black60" html={set.description} mt={1} />
       )}
     </Box>
   )
