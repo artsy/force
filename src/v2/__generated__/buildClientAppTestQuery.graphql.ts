@@ -1,5 +1,4 @@
 /* tslint:disable */
-/* eslint-disable */
 
 import { ConcreteRequest } from "relay-runtime";
 export type buildClientAppTestQueryVariables = {};
@@ -26,46 +25,46 @@ query buildClientAppTestQuery {
 const node: ConcreteRequest = (function(){
 var v0 = [
   {
+    "kind": "LinkedField",
     "alias": null,
+    "name": "me",
+    "storageKey": null,
     "args": null,
     "concreteType": "Me",
-    "kind": "LinkedField",
-    "name": "me",
     "plural": false,
     "selections": [
       {
-        "alias": null,
-        "args": null,
         "kind": "ScalarField",
+        "alias": null,
         "name": "id",
+        "args": null,
         "storageKey": null
       }
-    ],
-    "storageKey": null
+    ]
   }
 ];
 return {
-  "fragment": {
-    "argumentDefinitions": [],
-    "kind": "Fragment",
-    "metadata": null,
-    "name": "buildClientAppTestQuery",
-    "selections": (v0/*: any*/),
-    "type": "Query"
-  },
   "kind": "Request",
-  "operation": {
+  "fragment": {
+    "kind": "Fragment",
+    "name": "buildClientAppTestQuery",
+    "type": "Query",
+    "metadata": null,
     "argumentDefinitions": [],
+    "selections": (v0/*: any*/)
+  },
+  "operation": {
     "kind": "Operation",
     "name": "buildClientAppTestQuery",
+    "argumentDefinitions": [],
     "selections": (v0/*: any*/)
   },
   "params": {
-    "id": null,
-    "metadata": {},
-    "name": "buildClientAppTestQuery",
     "operationKind": "query",
-    "text": "query buildClientAppTestQuery {\n  me {\n    id\n  }\n}\n"
+    "name": "buildClientAppTestQuery",
+    "id": null,
+    "text": "query buildClientAppTestQuery {\n  me {\n    id\n  }\n}\n",
+    "metadata": {}
   }
 };
 })();

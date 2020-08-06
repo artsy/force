@@ -1,5 +1,4 @@
 /* tslint:disable */
-/* eslint-disable */
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -218,216 +217,222 @@ v1 = [
   }
 ],
 v2 = {
-  "alias": null,
-  "args": null,
   "kind": "ScalarField",
+  "alias": null,
   "name": "id",
+  "args": null,
   "storageKey": null
 },
 v3 = {
-  "alias": null,
-  "args": null,
   "kind": "ScalarField",
+  "alias": null,
   "name": "internalID",
+  "args": null,
   "storageKey": null
 },
 v4 = {
-  "alias": null,
-  "args": null,
   "kind": "ScalarField",
+  "alias": null,
   "name": "slug",
+  "args": null,
   "storageKey": null
 },
 v5 = {
-  "alias": null,
-  "args": null,
   "kind": "ScalarField",
+  "alias": null,
   "name": "href",
+  "args": null,
   "storageKey": null
 },
 v6 = {
-  "alias": null,
-  "args": null,
   "kind": "ScalarField",
+  "alias": null,
   "name": "name",
+  "args": null,
   "storageKey": null
 },
 v7 = [
   {
-    "alias": null,
-    "args": null,
     "kind": "ScalarField",
+    "alias": null,
     "name": "label",
+    "args": null,
     "storageKey": null
   },
   {
-    "alias": null,
-    "args": null,
     "kind": "ScalarField",
+    "alias": null,
     "name": "details",
+    "args": null,
     "storageKey": null
   }
 ];
 return {
+  "kind": "Request",
   "fragment": {
-    "argumentDefinitions": [],
     "kind": "Fragment",
-    "metadata": null,
     "name": "ArtworkDetails_Test_Query",
+    "type": "Query",
+    "metadata": null,
+    "argumentDefinitions": [],
     "selections": [
       {
+        "kind": "LinkedField",
         "alias": null,
+        "name": "artwork",
+        "storageKey": "artwork(id:\"richard-prince-untitled-fashion\")",
         "args": (v0/*: any*/),
         "concreteType": "Artwork",
-        "kind": "LinkedField",
-        "name": "artwork",
         "plural": false,
         "selections": [
           {
-            "args": null,
             "kind": "FragmentSpread",
-            "name": "ArtworkDetails_artwork"
+            "name": "ArtworkDetails_artwork",
+            "args": null
           }
-        ],
-        "storageKey": "artwork(id:\"richard-prince-untitled-fashion\")"
+        ]
       }
-    ],
-    "type": "Query"
+    ]
   },
-  "kind": "Request",
   "operation": {
-    "argumentDefinitions": [],
     "kind": "Operation",
     "name": "ArtworkDetails_Test_Query",
+    "argumentDefinitions": [],
     "selections": [
       {
+        "kind": "LinkedField",
         "alias": null,
+        "name": "artwork",
+        "storageKey": "artwork(id:\"richard-prince-untitled-fashion\")",
         "args": (v0/*: any*/),
         "concreteType": "Artwork",
-        "kind": "LinkedField",
-        "name": "artwork",
         "plural": false,
         "selections": [
           {
-            "alias": null,
-            "args": (v1/*: any*/),
             "kind": "ScalarField",
+            "alias": null,
             "name": "description",
+            "args": (v1/*: any*/),
             "storageKey": "description(format:\"HTML\")"
           },
           {
-            "alias": "additional_information",
-            "args": (v1/*: any*/),
             "kind": "ScalarField",
+            "alias": "additional_information",
             "name": "additionalInformation",
+            "args": (v1/*: any*/),
             "storageKey": "additionalInformation(format:\"HTML\")"
           },
           {
+            "kind": "LinkedField",
             "alias": null,
+            "name": "sale",
+            "storageKey": null,
             "args": null,
             "concreteType": "Sale",
-            "kind": "LinkedField",
-            "name": "sale",
             "plural": false,
             "selections": [
               {
-                "alias": null,
-                "args": null,
                 "kind": "ScalarField",
+                "alias": null,
                 "name": "isBenefit",
+                "args": null,
                 "storageKey": null
               },
               {
-                "alias": null,
-                "args": null,
                 "kind": "ScalarField",
+                "alias": null,
                 "name": "isGalleryAuction",
+                "args": null,
                 "storageKey": null
               },
               (v2/*: any*/)
-            ],
-            "storageKey": null
+            ]
           },
           {
+            "kind": "LinkedField",
             "alias": null,
+            "name": "partner",
+            "storageKey": null,
             "args": null,
             "concreteType": "Partner",
-            "kind": "LinkedField",
-            "name": "partner",
             "plural": false,
             "selections": [
               (v3/*: any*/),
               (v4/*: any*/),
               {
-                "alias": null,
-                "args": null,
                 "kind": "ScalarField",
+                "alias": null,
                 "name": "type",
+                "args": null,
                 "storageKey": null
               },
               (v5/*: any*/),
               (v6/*: any*/),
               {
-                "alias": null,
-                "args": null,
                 "kind": "ScalarField",
+                "alias": null,
                 "name": "initials",
+                "args": null,
                 "storageKey": null
               },
               {
+                "kind": "LinkedField",
                 "alias": null,
+                "name": "locations",
+                "storageKey": null,
                 "args": null,
                 "concreteType": "Location",
-                "kind": "LinkedField",
-                "name": "locations",
                 "plural": true,
                 "selections": [
                   {
-                    "alias": null,
-                    "args": null,
                     "kind": "ScalarField",
+                    "alias": null,
                     "name": "city",
+                    "args": null,
                     "storageKey": null
                   },
                   (v2/*: any*/)
-                ],
-                "storageKey": null
+                ]
               },
               {
-                "alias": "is_default_profile_public",
-                "args": null,
                 "kind": "ScalarField",
+                "alias": "is_default_profile_public",
                 "name": "isDefaultProfilePublic",
+                "args": null,
                 "storageKey": null
               },
               {
+                "kind": "LinkedField",
                 "alias": null,
+                "name": "profile",
+                "storageKey": null,
                 "args": null,
                 "concreteType": "Profile",
-                "kind": "LinkedField",
-                "name": "profile",
                 "plural": false,
                 "selections": [
                   (v2/*: any*/),
                   (v3/*: any*/),
                   {
-                    "alias": "is_followed",
-                    "args": null,
                     "kind": "ScalarField",
+                    "alias": "is_followed",
                     "name": "isFollowed",
+                    "args": null,
                     "storageKey": null
                   },
                   (v4/*: any*/),
                   {
+                    "kind": "LinkedField",
                     "alias": null,
+                    "name": "icon",
+                    "storageKey": null,
                     "args": null,
                     "concreteType": "Image",
-                    "kind": "LinkedField",
-                    "name": "icon",
                     "plural": false,
                     "selections": [
                       {
+                        "kind": "ScalarField",
                         "alias": null,
+                        "name": "url",
                         "args": [
                           {
                             "kind": "Literal",
@@ -435,105 +440,103 @@ return {
                             "value": "square140"
                           }
                         ],
-                        "kind": "ScalarField",
-                        "name": "url",
                         "storageKey": "url(version:\"square140\")"
                       }
-                    ],
-                    "storageKey": null
+                    ]
                   }
-                ],
-                "storageKey": null
+                ]
               },
               (v2/*: any*/)
-            ],
-            "storageKey": null
+            ]
           },
           {
-            "alias": null,
-            "args": null,
             "kind": "ScalarField",
+            "alias": null,
             "name": "category",
+            "args": null,
             "storageKey": null
           },
           {
-            "alias": null,
-            "args": null,
             "kind": "ScalarField",
+            "alias": null,
             "name": "series",
+            "args": null,
             "storageKey": null
           },
           {
-            "alias": null,
-            "args": null,
             "kind": "ScalarField",
+            "alias": null,
             "name": "publisher",
+            "args": null,
             "storageKey": null
           },
           {
-            "alias": null,
-            "args": null,
             "kind": "ScalarField",
+            "alias": null,
             "name": "manufacturer",
+            "args": null,
             "storageKey": null
           },
           {
+            "kind": "ScalarField",
             "alias": "image_rights",
-            "args": null,
-            "kind": "ScalarField",
             "name": "imageRights",
+            "args": null,
             "storageKey": null
           },
           {
-            "alias": null,
-            "args": null,
             "kind": "ScalarField",
+            "alias": null,
             "name": "canRequestLotConditionsReport",
+            "args": null,
             "storageKey": null
           },
           (v3/*: any*/),
           {
-            "alias": null,
-            "args": null,
-            "concreteType": "ArtworkInfoRow",
             "kind": "LinkedField",
+            "alias": null,
             "name": "framed",
-            "plural": false,
-            "selections": (v7/*: any*/),
-            "storageKey": null
-          },
-          {
-            "alias": null,
+            "storageKey": null,
             "args": null,
             "concreteType": "ArtworkInfoRow",
+            "plural": false,
+            "selections": (v7/*: any*/)
+          },
+          {
             "kind": "LinkedField",
+            "alias": null,
             "name": "signatureInfo",
-            "plural": false,
-            "selections": (v7/*: any*/),
-            "storageKey": null
-          },
-          {
-            "alias": null,
+            "storageKey": null,
             "args": null,
             "concreteType": "ArtworkInfoRow",
+            "plural": false,
+            "selections": (v7/*: any*/)
+          },
+          {
             "kind": "LinkedField",
+            "alias": null,
             "name": "conditionDescription",
-            "plural": false,
-            "selections": (v7/*: any*/),
-            "storageKey": null
-          },
-          {
-            "alias": null,
+            "storageKey": null,
             "args": null,
             "concreteType": "ArtworkInfoRow",
-            "kind": "LinkedField",
-            "name": "certificateOfAuthenticity",
             "plural": false,
-            "selections": (v7/*: any*/),
-            "storageKey": null
+            "selections": (v7/*: any*/)
           },
           {
+            "kind": "LinkedField",
             "alias": null,
+            "name": "certificateOfAuthenticity",
+            "storageKey": null,
+            "args": null,
+            "concreteType": "ArtworkInfoRow",
+            "plural": false,
+            "selections": (v7/*: any*/)
+          },
+          {
+            "kind": "LinkedField",
+            "alias": null,
+            "name": "articles",
+            "storageKey": "articles(size:10)",
             "args": [
               {
                 "kind": "Literal",
@@ -542,26 +545,26 @@ return {
               }
             ],
             "concreteType": "Article",
-            "kind": "LinkedField",
-            "name": "articles",
             "plural": true,
             "selections": [
               {
+                "kind": "LinkedField",
                 "alias": null,
+                "name": "author",
+                "storageKey": null,
                 "args": null,
                 "concreteType": "Author",
-                "kind": "LinkedField",
-                "name": "author",
                 "plural": false,
                 "selections": [
                   (v6/*: any*/),
                   (v2/*: any*/)
-                ],
-                "storageKey": null
+                ]
               },
               (v5/*: any*/),
               {
+                "kind": "ScalarField",
                 "alias": "published_at",
+                "name": "publishedAt",
                 "args": [
                   {
                     "kind": "Literal",
@@ -569,20 +572,22 @@ return {
                     "value": "MMM Do, YYYY"
                   }
                 ],
-                "kind": "ScalarField",
-                "name": "publishedAt",
                 "storageKey": "publishedAt(format:\"MMM Do, YYYY\")"
               },
               {
+                "kind": "LinkedField",
                 "alias": "thumbnail_image",
+                "name": "thumbnailImage",
+                "storageKey": null,
                 "args": null,
                 "concreteType": "Image",
-                "kind": "LinkedField",
-                "name": "thumbnailImage",
                 "plural": false,
                 "selections": [
                   {
+                    "kind": "LinkedField",
                     "alias": null,
+                    "name": "resized",
+                    "storageKey": "resized(width:300)",
                     "args": [
                       {
                         "kind": "Literal",
@@ -591,68 +596,62 @@ return {
                       }
                     ],
                     "concreteType": "ResizedImageUrl",
-                    "kind": "LinkedField",
-                    "name": "resized",
                     "plural": false,
                     "selections": [
                       {
-                        "alias": null,
-                        "args": null,
                         "kind": "ScalarField",
+                        "alias": null,
                         "name": "url",
+                        "args": null,
                         "storageKey": null
                       }
-                    ],
-                    "storageKey": "resized(width:300)"
+                    ]
                   }
-                ],
-                "storageKey": null
+                ]
               },
               {
-                "alias": "thumbnail_title",
-                "args": null,
                 "kind": "ScalarField",
+                "alias": "thumbnail_title",
                 "name": "thumbnailTitle",
+                "args": null,
                 "storageKey": null
               },
               (v2/*: any*/),
               (v4/*: any*/)
-            ],
-            "storageKey": "articles(size:10)"
+            ]
           },
           {
-            "alias": null,
-            "args": (v1/*: any*/),
             "kind": "ScalarField",
+            "alias": null,
             "name": "literature",
+            "args": (v1/*: any*/),
             "storageKey": "literature(format:\"HTML\")"
           },
           {
-            "alias": "exhibition_history",
-            "args": (v1/*: any*/),
             "kind": "ScalarField",
+            "alias": "exhibition_history",
             "name": "exhibitionHistory",
+            "args": (v1/*: any*/),
             "storageKey": "exhibitionHistory(format:\"HTML\")"
           },
           {
-            "alias": null,
-            "args": (v1/*: any*/),
             "kind": "ScalarField",
+            "alias": null,
             "name": "provenance",
+            "args": (v1/*: any*/),
             "storageKey": "provenance(format:\"HTML\")"
           },
           (v2/*: any*/)
-        ],
-        "storageKey": "artwork(id:\"richard-prince-untitled-fashion\")"
+        ]
       }
     ]
   },
   "params": {
-    "id": null,
-    "metadata": {},
-    "name": "ArtworkDetails_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkDetails_Test_Query {\n  artwork(id: \"richard-prince-untitled-fashion\") {\n    ...ArtworkDetails_artwork\n    id\n  }\n}\n\nfragment ArtworkDetailsAboutTheWorkFromArtsy_artwork on Artwork {\n  description(format: HTML)\n}\n\nfragment ArtworkDetailsAboutTheWorkFromPartner_artwork on Artwork {\n  additional_information: additionalInformation(format: HTML)\n  sale {\n    isBenefit\n    isGalleryAuction\n    id\n  }\n  partner {\n    internalID\n    slug\n    type\n    href\n    name\n    initials\n    locations {\n      city\n      id\n    }\n    is_default_profile_public: isDefaultProfilePublic\n    profile {\n      ...FollowProfileButton_profile\n      slug\n      icon {\n        url(version: \"square140\")\n      }\n      id\n    }\n    id\n  }\n}\n\nfragment ArtworkDetailsAdditionalInfo_artwork on Artwork {\n  category\n  series\n  publisher\n  manufacturer\n  image_rights: imageRights\n  canRequestLotConditionsReport\n  internalID\n  framed {\n    label\n    details\n  }\n  signatureInfo {\n    label\n    details\n  }\n  conditionDescription {\n    label\n    details\n  }\n  certificateOfAuthenticity {\n    label\n    details\n  }\n}\n\nfragment ArtworkDetailsArticles_artwork on Artwork {\n  articles(size: 10) {\n    author {\n      name\n      id\n    }\n    href\n    published_at: publishedAt(format: \"MMM Do, YYYY\")\n    thumbnail_image: thumbnailImage {\n      resized(width: 300) {\n        url\n      }\n    }\n    thumbnail_title: thumbnailTitle\n    id\n  }\n}\n\nfragment ArtworkDetails_artwork on Artwork {\n  ...ArtworkDetailsAboutTheWorkFromArtsy_artwork\n  ...ArtworkDetailsAboutTheWorkFromPartner_artwork\n  ...ArtworkDetailsAdditionalInfo_artwork\n  ...ArtworkDetailsArticles_artwork\n  articles(size: 10) {\n    slug\n    id\n  }\n  literature(format: HTML)\n  exhibition_history: exhibitionHistory(format: HTML)\n  provenance(format: HTML)\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  internalID\n  is_followed: isFollowed\n}\n"
+    "name": "ArtworkDetails_Test_Query",
+    "id": null,
+    "text": "query ArtworkDetails_Test_Query {\n  artwork(id: \"richard-prince-untitled-fashion\") {\n    ...ArtworkDetails_artwork\n    id\n  }\n}\n\nfragment ArtworkDetailsAboutTheWorkFromArtsy_artwork on Artwork {\n  description(format: HTML)\n}\n\nfragment ArtworkDetailsAboutTheWorkFromPartner_artwork on Artwork {\n  additional_information: additionalInformation(format: HTML)\n  sale {\n    isBenefit\n    isGalleryAuction\n    id\n  }\n  partner {\n    internalID\n    slug\n    type\n    href\n    name\n    initials\n    locations {\n      city\n      id\n    }\n    is_default_profile_public: isDefaultProfilePublic\n    profile {\n      ...FollowProfileButton_profile\n      slug\n      icon {\n        url(version: \"square140\")\n      }\n      id\n    }\n    id\n  }\n}\n\nfragment ArtworkDetailsAdditionalInfo_artwork on Artwork {\n  category\n  series\n  publisher\n  manufacturer\n  image_rights: imageRights\n  canRequestLotConditionsReport\n  internalID\n  framed {\n    label\n    details\n  }\n  signatureInfo {\n    label\n    details\n  }\n  conditionDescription {\n    label\n    details\n  }\n  certificateOfAuthenticity {\n    label\n    details\n  }\n}\n\nfragment ArtworkDetailsArticles_artwork on Artwork {\n  articles(size: 10) {\n    author {\n      name\n      id\n    }\n    href\n    published_at: publishedAt(format: \"MMM Do, YYYY\")\n    thumbnail_image: thumbnailImage {\n      resized(width: 300) {\n        url\n      }\n    }\n    thumbnail_title: thumbnailTitle\n    id\n  }\n}\n\nfragment ArtworkDetails_artwork on Artwork {\n  ...ArtworkDetailsAboutTheWorkFromArtsy_artwork\n  ...ArtworkDetailsAboutTheWorkFromPartner_artwork\n  ...ArtworkDetailsAdditionalInfo_artwork\n  ...ArtworkDetailsArticles_artwork\n  articles(size: 10) {\n    slug\n    id\n  }\n  literature(format: HTML)\n  exhibition_history: exhibitionHistory(format: HTML)\n  provenance(format: HTML)\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  internalID\n  is_followed: isFollowed\n}\n",
+    "metadata": {}
   }
 };
 })();

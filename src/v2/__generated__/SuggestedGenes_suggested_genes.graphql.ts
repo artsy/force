@@ -1,5 +1,4 @@
 /* tslint:disable */
-/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -24,51 +23,56 @@ export type SuggestedGenes_suggested_genes$key = ReadonlyArray<{
 
 
 const node: ReaderFragment = {
-  "argumentDefinitions": [],
   "kind": "Fragment",
+  "name": "SuggestedGenes_suggested_genes",
+  "type": "Gene",
   "metadata": {
     "plural": true
   },
-  "name": "SuggestedGenes_suggested_genes",
+  "argumentDefinitions": [],
   "selections": [
     {
-      "alias": null,
-      "args": null,
       "kind": "ScalarField",
+      "alias": null,
       "name": "id",
+      "args": null,
       "storageKey": null
     },
     {
-      "alias": null,
-      "args": null,
       "kind": "ScalarField",
+      "alias": null,
       "name": "slug",
+      "args": null,
       "storageKey": null
     },
     {
-      "alias": null,
-      "args": null,
       "kind": "ScalarField",
+      "alias": null,
       "name": "internalID",
-      "storageKey": null
-    },
-    {
-      "alias": null,
       "args": null,
-      "kind": "ScalarField",
-      "name": "name",
       "storageKey": null
     },
     {
+      "kind": "ScalarField",
       "alias": null,
+      "name": "name",
+      "args": null,
+      "storageKey": null
+    },
+    {
+      "kind": "LinkedField",
+      "alias": null,
+      "name": "image",
+      "storageKey": null,
       "args": null,
       "concreteType": "Image",
-      "kind": "LinkedField",
-      "name": "image",
       "plural": false,
       "selections": [
         {
+          "kind": "LinkedField",
           "alias": null,
+          "name": "cropped",
+          "storageKey": "cropped(height:100,width:100)",
           "args": [
             {
               "kind": "Literal",
@@ -82,25 +86,20 @@ const node: ReaderFragment = {
             }
           ],
           "concreteType": "CroppedImageUrl",
-          "kind": "LinkedField",
-          "name": "cropped",
           "plural": false,
           "selections": [
             {
-              "alias": null,
-              "args": null,
               "kind": "ScalarField",
+              "alias": null,
               "name": "url",
+              "args": null,
               "storageKey": null
             }
-          ],
-          "storageKey": "cropped(height:100,width:100)"
+          ]
         }
-      ],
-      "storageKey": null
+      ]
     }
-  ],
-  "type": "Gene"
+  ]
 };
 (node as any).hash = '5ed7e11fb2d04a9c8d275c8e203aeda1';
 export default node;

@@ -1,5 +1,4 @@
 /* tslint:disable */
-/* eslint-disable */
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -82,16 +81,16 @@ fragment SearchResultsArtists_viewer_2iLyA0 on Viewer {
 const node: ConcreteRequest = (function(){
 var v0 = [
   {
-    "defaultValue": null,
     "kind": "LocalArgument",
     "name": "term",
-    "type": "String!"
+    "type": "String!",
+    "defaultValue": null
   },
   {
-    "defaultValue": null,
     "kind": "LocalArgument",
     "name": "page",
-    "type": "Int"
+    "type": "Int",
+    "defaultValue": null
   }
 ],
 v1 = {
@@ -100,46 +99,51 @@ v1 = {
   "variableName": "page"
 },
 v2 = {
-  "alias": null,
-  "args": null,
   "kind": "ScalarField",
+  "alias": null,
   "name": "cursor",
+  "args": null,
   "storageKey": null
 },
 v3 = {
-  "alias": null,
-  "args": null,
   "kind": "ScalarField",
+  "alias": null,
   "name": "page",
+  "args": null,
   "storageKey": null
 },
 v4 = [
   (v2/*: any*/),
   (v3/*: any*/),
   {
-    "alias": null,
-    "args": null,
     "kind": "ScalarField",
+    "alias": null,
     "name": "isCurrent",
+    "args": null,
     "storageKey": null
   }
 ];
 return {
+  "kind": "Request",
   "fragment": {
-    "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
-    "metadata": null,
     "name": "routes_SearchResultsArtistsQuery",
+    "type": "Query",
+    "metadata": null,
+    "argumentDefinitions": (v0/*: any*/),
     "selections": [
       {
+        "kind": "LinkedField",
         "alias": null,
+        "name": "viewer",
+        "storageKey": null,
         "args": null,
         "concreteType": "Viewer",
-        "kind": "LinkedField",
-        "name": "viewer",
         "plural": false,
         "selections": [
           {
+            "kind": "FragmentSpread",
+            "name": "SearchResultsArtists_viewer",
             "args": [
               (v1/*: any*/),
               {
@@ -147,32 +151,31 @@ return {
                 "name": "term",
                 "variableName": "term"
               }
-            ],
-            "kind": "FragmentSpread",
-            "name": "SearchResultsArtists_viewer"
+            ]
           }
-        ],
-        "storageKey": null
+        ]
       }
-    ],
-    "type": "Query"
+    ]
   },
-  "kind": "Request",
   "operation": {
-    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "routes_SearchResultsArtistsQuery",
+    "argumentDefinitions": (v0/*: any*/),
     "selections": [
       {
+        "kind": "LinkedField",
         "alias": null,
+        "name": "viewer",
+        "storageKey": null,
         "args": null,
         "concreteType": "Viewer",
-        "kind": "LinkedField",
-        "name": "viewer",
         "plural": false,
         "selections": [
           {
+            "kind": "LinkedField",
             "alias": null,
+            "name": "searchConnection",
+            "storageKey": null,
             "args": [
               {
                 "kind": "Literal",
@@ -194,180 +197,176 @@ return {
               }
             ],
             "concreteType": "SearchableConnection",
-            "kind": "LinkedField",
-            "name": "searchConnection",
             "plural": false,
             "selections": [
               {
+                "kind": "LinkedField",
                 "alias": null,
+                "name": "pageInfo",
+                "storageKey": null,
                 "args": null,
                 "concreteType": "PageInfo",
-                "kind": "LinkedField",
-                "name": "pageInfo",
                 "plural": false,
                 "selections": [
                   {
-                    "alias": null,
-                    "args": null,
                     "kind": "ScalarField",
+                    "alias": null,
                     "name": "hasNextPage",
+                    "args": null,
                     "storageKey": null
                   },
                   {
-                    "alias": null,
-                    "args": null,
                     "kind": "ScalarField",
+                    "alias": null,
                     "name": "endCursor",
+                    "args": null,
                     "storageKey": null
                   }
-                ],
-                "storageKey": null
+                ]
               },
               {
+                "kind": "LinkedField",
                 "alias": null,
+                "name": "pageCursors",
+                "storageKey": null,
                 "args": null,
                 "concreteType": "PageCursors",
-                "kind": "LinkedField",
-                "name": "pageCursors",
                 "plural": false,
                 "selections": [
                   {
-                    "alias": null,
-                    "args": null,
-                    "concreteType": "PageCursor",
                     "kind": "LinkedField",
+                    "alias": null,
                     "name": "around",
+                    "storageKey": null,
+                    "args": null,
+                    "concreteType": "PageCursor",
                     "plural": true,
-                    "selections": (v4/*: any*/),
-                    "storageKey": null
+                    "selections": (v4/*: any*/)
                   },
                   {
-                    "alias": null,
-                    "args": null,
-                    "concreteType": "PageCursor",
                     "kind": "LinkedField",
+                    "alias": null,
                     "name": "first",
-                    "plural": false,
-                    "selections": (v4/*: any*/),
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
+                    "storageKey": null,
                     "args": null,
                     "concreteType": "PageCursor",
+                    "plural": false,
+                    "selections": (v4/*: any*/)
+                  },
+                  {
                     "kind": "LinkedField",
+                    "alias": null,
                     "name": "last",
-                    "plural": false,
-                    "selections": (v4/*: any*/),
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
+                    "storageKey": null,
                     "args": null,
                     "concreteType": "PageCursor",
+                    "plural": false,
+                    "selections": (v4/*: any*/)
+                  },
+                  {
                     "kind": "LinkedField",
+                    "alias": null,
                     "name": "previous",
+                    "storageKey": null,
+                    "args": null,
+                    "concreteType": "PageCursor",
                     "plural": false,
                     "selections": [
                       (v2/*: any*/),
                       (v3/*: any*/)
-                    ],
-                    "storageKey": null
+                    ]
                   }
-                ],
-                "storageKey": null
+                ]
               },
               {
+                "kind": "LinkedField",
                 "alias": null,
+                "name": "edges",
+                "storageKey": null,
                 "args": null,
                 "concreteType": "SearchableEdge",
-                "kind": "LinkedField",
-                "name": "edges",
                 "plural": true,
                 "selections": [
                   {
+                    "kind": "LinkedField",
                     "alias": null,
+                    "name": "node",
+                    "storageKey": null,
                     "args": null,
                     "concreteType": null,
-                    "kind": "LinkedField",
-                    "name": "node",
                     "plural": false,
                     "selections": [
                       {
-                        "alias": null,
-                        "args": null,
                         "kind": "ScalarField",
+                        "alias": null,
                         "name": "__typename",
+                        "args": null,
                         "storageKey": null
                       },
                       {
-                        "alias": null,
-                        "args": null,
                         "kind": "ScalarField",
+                        "alias": null,
                         "name": "id",
+                        "args": null,
                         "storageKey": null
                       },
                       {
                         "kind": "InlineFragment",
+                        "type": "Artist",
                         "selections": [
                           {
-                            "alias": null,
-                            "args": null,
                             "kind": "ScalarField",
+                            "alias": null,
                             "name": "name",
+                            "args": null,
                             "storageKey": null
                           },
                           {
-                            "alias": null,
-                            "args": null,
                             "kind": "ScalarField",
+                            "alias": null,
                             "name": "internalID",
+                            "args": null,
                             "storageKey": null
                           },
                           {
-                            "alias": null,
-                            "args": null,
                             "kind": "ScalarField",
+                            "alias": null,
                             "name": "href",
+                            "args": null,
                             "storageKey": null
                           },
                           {
-                            "alias": null,
-                            "args": null,
                             "kind": "ScalarField",
+                            "alias": null,
                             "name": "imageUrl",
+                            "args": null,
                             "storageKey": null
                           },
                           {
-                            "alias": null,
-                            "args": null,
                             "kind": "ScalarField",
+                            "alias": null,
                             "name": "bio",
+                            "args": null,
                             "storageKey": null
                           }
-                        ],
-                        "type": "Artist"
+                        ]
                       }
-                    ],
-                    "storageKey": null
+                    ]
                   }
-                ],
-                "storageKey": null
+                ]
               }
-            ],
-            "storageKey": null
+            ]
           }
-        ],
-        "storageKey": null
+        ]
       }
     ]
   },
   "params": {
-    "id": null,
-    "metadata": {},
-    "name": "routes_SearchResultsArtistsQuery",
     "operationKind": "query",
-    "text": "query routes_SearchResultsArtistsQuery(\n  $term: String!\n  $page: Int\n) {\n  viewer {\n    ...SearchResultsArtists_viewer_2iLyA0\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n\nfragment SearchResultsArtists_viewer_2iLyA0 on Viewer {\n  searchConnection(query: $term, first: 10, page: $page, entities: [ARTIST]) @principalField {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        __typename\n        ... on Artist {\n          name\n          internalID\n          href\n          imageUrl\n          bio\n        }\n        ... on Node {\n          id\n        }\n      }\n    }\n  }\n}\n"
+    "name": "routes_SearchResultsArtistsQuery",
+    "id": null,
+    "text": "query routes_SearchResultsArtistsQuery(\n  $term: String!\n  $page: Int\n) {\n  viewer {\n    ...SearchResultsArtists_viewer_2iLyA0\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n\nfragment SearchResultsArtists_viewer_2iLyA0 on Viewer {\n  searchConnection(query: $term, first: 10, page: $page, entities: [ARTIST]) @principalField {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        __typename\n        ... on Artist {\n          name\n          internalID\n          href\n          imageUrl\n          bio\n        }\n        ... on Node {\n          id\n        }\n      }\n    }\n  }\n}\n",
+    "metadata": {}
   }
 };
 })();

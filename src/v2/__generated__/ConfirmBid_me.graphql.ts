@@ -1,5 +1,4 @@
 /* tslint:disable */
-/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -18,32 +17,32 @@ export type ConfirmBid_me$key = {
 
 
 const node: ReaderFragment = {
-  "argumentDefinitions": [],
   "kind": "Fragment",
-  "metadata": null,
   "name": "ConfirmBid_me",
+  "type": "Me",
+  "metadata": null,
+  "argumentDefinitions": [],
   "selections": [
     {
-      "alias": null,
-      "args": null,
       "kind": "ScalarField",
+      "alias": null,
       "name": "internalID",
+      "args": null,
       "storageKey": null
     },
     {
-      "alias": null,
-      "args": null,
       "kind": "ScalarField",
+      "alias": null,
       "name": "hasQualifiedCreditCards",
+      "args": null,
       "storageKey": null
     },
     {
-      "args": null,
       "kind": "FragmentSpread",
-      "name": "BidForm_me"
+      "name": "BidForm_me",
+      "args": null
     }
-  ],
-  "type": "Me"
+  ]
 };
 (node as any).hash = 'bb8ac1b1d0c2ddcd9f84e73755eb4a7e';
 export default node;

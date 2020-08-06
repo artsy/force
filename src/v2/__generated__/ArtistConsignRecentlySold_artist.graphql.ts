@@ -1,5 +1,4 @@
 /* tslint:disable */
-/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -31,108 +30,108 @@ export type ArtistConsignRecentlySold_artist$key = {
 
 
 const node: ReaderFragment = {
-  "argumentDefinitions": [],
   "kind": "Fragment",
-  "metadata": null,
   "name": "ArtistConsignRecentlySold_artist",
+  "type": "Artist",
+  "metadata": null,
+  "argumentDefinitions": [],
   "selections": [
     {
+      "kind": "LinkedField",
       "alias": null,
+      "name": "targetSupply",
+      "storageKey": null,
       "args": null,
       "concreteType": "ArtistTargetSupply",
-      "kind": "LinkedField",
-      "name": "targetSupply",
       "plural": false,
       "selections": [
         {
+          "kind": "LinkedField",
           "alias": null,
+          "name": "microfunnel",
+          "storageKey": null,
           "args": null,
           "concreteType": "ArtistTargetSupplyMicrofunnel",
-          "kind": "LinkedField",
-          "name": "microfunnel",
           "plural": false,
           "selections": [
             {
+              "kind": "LinkedField",
               "alias": null,
+              "name": "artworks",
+              "storageKey": null,
               "args": null,
               "concreteType": "ArtistTargetSupplyMicrofunnelArtwork",
-              "kind": "LinkedField",
-              "name": "artworks",
               "plural": true,
               "selections": [
                 {
+                  "kind": "LinkedField",
                   "alias": null,
+                  "name": "artwork",
+                  "storageKey": null,
                   "args": null,
                   "concreteType": "Artwork",
-                  "kind": "LinkedField",
-                  "name": "artwork",
                   "plural": false,
                   "selections": [
                     {
+                      "kind": "LinkedField",
                       "alias": null,
+                      "name": "image",
+                      "storageKey": null,
                       "args": null,
                       "concreteType": "Image",
-                      "kind": "LinkedField",
-                      "name": "image",
                       "plural": false,
                       "selections": [
                         {
-                          "alias": null,
-                          "args": null,
                           "kind": "ScalarField",
+                          "alias": null,
                           "name": "aspectRatio",
+                          "args": null,
                           "storageKey": null
                         },
                         {
-                          "alias": null,
-                          "args": null,
                           "kind": "ScalarField",
+                          "alias": null,
                           "name": "width",
+                          "args": null,
                           "storageKey": null
                         },
                         {
-                          "alias": null,
-                          "args": null,
                           "kind": "ScalarField",
+                          "alias": null,
                           "name": "height",
+                          "args": null,
                           "storageKey": null
                         }
-                      ],
-                      "storageKey": null
+                      ]
                     },
                     {
-                      "args": null,
                       "kind": "FragmentSpread",
-                      "name": "FillwidthItem_artwork"
+                      "name": "FillwidthItem_artwork",
+                      "args": null
                     }
-                  ],
-                  "storageKey": null
+                  ]
                 },
                 {
-                  "alias": null,
-                  "args": null,
                   "kind": "ScalarField",
+                  "alias": null,
                   "name": "realizedPrice",
+                  "args": null,
                   "storageKey": null
                 }
-              ],
-              "storageKey": null
+              ]
             }
-          ],
-          "storageKey": null
+          ]
         }
-      ],
-      "storageKey": null
+      ]
     },
     {
-      "alias": null,
-      "args": null,
       "kind": "ScalarField",
+      "alias": null,
       "name": "name",
+      "args": null,
       "storageKey": null
     }
-  ],
-  "type": "Artist"
+  ]
 };
 (node as any).hash = '796c6909af76876d049a50784d7fb593';
 export default node;

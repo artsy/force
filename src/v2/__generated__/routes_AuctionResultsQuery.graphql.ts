@@ -1,5 +1,4 @@
 /* tslint:disable */
-/* eslint-disable */
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -125,10 +124,10 @@ fragment Pagination_pageCursors on PageCursors {
 const node: ConcreteRequest = (function(){
 var v0 = [
   {
-    "defaultValue": null,
     "kind": "LocalArgument",
     "name": "artistID",
-    "type": "String!"
+    "type": "String!",
+    "defaultValue": null
   }
 ],
 v1 = [
@@ -139,100 +138,104 @@ v1 = [
   }
 ],
 v2 = {
-  "alias": null,
-  "args": null,
   "kind": "ScalarField",
+  "alias": null,
   "name": "cursor",
+  "args": null,
   "storageKey": null
 },
 v3 = {
-  "alias": null,
-  "args": null,
   "kind": "ScalarField",
+  "alias": null,
   "name": "page",
+  "args": null,
   "storageKey": null
 },
 v4 = [
   (v2/*: any*/),
   (v3/*: any*/),
   {
-    "alias": null,
-    "args": null,
     "kind": "ScalarField",
+    "alias": null,
     "name": "isCurrent",
+    "args": null,
     "storageKey": null
   }
 ],
 v5 = {
-  "alias": null,
-  "args": null,
   "kind": "ScalarField",
+  "alias": null,
   "name": "display",
+  "args": null,
   "storageKey": null
 },
 v6 = {
-  "alias": null,
-  "args": null,
   "kind": "ScalarField",
+  "alias": null,
   "name": "id",
+  "args": null,
   "storageKey": null
 };
 return {
+  "kind": "Request",
   "fragment": {
-    "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
-    "metadata": null,
     "name": "routes_AuctionResultsQuery",
+    "type": "Query",
+    "metadata": null,
+    "argumentDefinitions": (v0/*: any*/),
     "selections": [
       {
+        "kind": "LinkedField",
         "alias": null,
+        "name": "artist",
+        "storageKey": null,
         "args": (v1/*: any*/),
         "concreteType": "Artist",
-        "kind": "LinkedField",
-        "name": "artist",
         "plural": false,
         "selections": [
           {
-            "args": null,
             "kind": "FragmentSpread",
-            "name": "AuctionResults_artist"
+            "name": "AuctionResults_artist",
+            "args": null
           }
-        ],
-        "storageKey": null
+        ]
       }
-    ],
-    "type": "Query"
+    ]
   },
-  "kind": "Request",
   "operation": {
-    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "routes_AuctionResultsQuery",
+    "argumentDefinitions": (v0/*: any*/),
     "selections": [
       {
+        "kind": "LinkedField",
         "alias": null,
+        "name": "artist",
+        "storageKey": null,
         "args": (v1/*: any*/),
         "concreteType": "Artist",
-        "kind": "LinkedField",
-        "name": "artist",
         "plural": false,
         "selections": [
           {
-            "alias": null,
-            "args": null,
             "kind": "ScalarField",
+            "alias": null,
             "name": "slug",
-            "storageKey": null
-          },
-          {
-            "alias": null,
             "args": null,
-            "kind": "ScalarField",
-            "name": "name",
             "storageKey": null
           },
           {
+            "kind": "ScalarField",
             "alias": null,
+            "name": "name",
+            "args": null,
+            "storageKey": null
+          },
+          {
+            "kind": "LinkedField",
+            "alias": null,
+            "name": "auctionResultsConnection",
+            "storageKey": "auctionResultsConnection(first:10,sort:\"DATE_DESC\")",
             "args": [
               {
                 "kind": "Literal",
@@ -246,275 +249,271 @@ return {
               }
             ],
             "concreteType": "AuctionResultConnection",
-            "kind": "LinkedField",
-            "name": "auctionResultsConnection",
             "plural": false,
             "selections": [
               {
-                "alias": null,
-                "args": null,
                 "kind": "ScalarField",
+                "alias": null,
                 "name": "totalCount",
+                "args": null,
                 "storageKey": null
               },
               {
+                "kind": "LinkedField",
                 "alias": null,
+                "name": "createdYearRange",
+                "storageKey": null,
                 "args": null,
                 "concreteType": "YearRange",
-                "kind": "LinkedField",
-                "name": "createdYearRange",
                 "plural": false,
                 "selections": [
                   {
-                    "alias": null,
-                    "args": null,
                     "kind": "ScalarField",
+                    "alias": null,
                     "name": "startAt",
+                    "args": null,
                     "storageKey": null
                   },
                   {
-                    "alias": null,
-                    "args": null,
                     "kind": "ScalarField",
+                    "alias": null,
                     "name": "endAt",
+                    "args": null,
                     "storageKey": null
                   }
-                ],
-                "storageKey": null
+                ]
               },
               {
+                "kind": "LinkedField",
                 "alias": null,
+                "name": "pageInfo",
+                "storageKey": null,
                 "args": null,
                 "concreteType": "PageInfo",
-                "kind": "LinkedField",
-                "name": "pageInfo",
                 "plural": false,
                 "selections": [
                   {
-                    "alias": null,
-                    "args": null,
                     "kind": "ScalarField",
+                    "alias": null,
                     "name": "hasNextPage",
+                    "args": null,
                     "storageKey": null
                   },
                   {
-                    "alias": null,
-                    "args": null,
                     "kind": "ScalarField",
+                    "alias": null,
                     "name": "endCursor",
+                    "args": null,
                     "storageKey": null
                   }
-                ],
-                "storageKey": null
+                ]
               },
               {
+                "kind": "LinkedField",
                 "alias": null,
+                "name": "pageCursors",
+                "storageKey": null,
                 "args": null,
                 "concreteType": "PageCursors",
-                "kind": "LinkedField",
-                "name": "pageCursors",
                 "plural": false,
                 "selections": [
                   {
-                    "alias": null,
-                    "args": null,
-                    "concreteType": "PageCursor",
                     "kind": "LinkedField",
+                    "alias": null,
                     "name": "around",
+                    "storageKey": null,
+                    "args": null,
+                    "concreteType": "PageCursor",
                     "plural": true,
-                    "selections": (v4/*: any*/),
-                    "storageKey": null
+                    "selections": (v4/*: any*/)
                   },
                   {
-                    "alias": null,
-                    "args": null,
-                    "concreteType": "PageCursor",
                     "kind": "LinkedField",
+                    "alias": null,
                     "name": "first",
-                    "plural": false,
-                    "selections": (v4/*: any*/),
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
+                    "storageKey": null,
                     "args": null,
                     "concreteType": "PageCursor",
+                    "plural": false,
+                    "selections": (v4/*: any*/)
+                  },
+                  {
                     "kind": "LinkedField",
+                    "alias": null,
                     "name": "last",
-                    "plural": false,
-                    "selections": (v4/*: any*/),
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
+                    "storageKey": null,
                     "args": null,
                     "concreteType": "PageCursor",
+                    "plural": false,
+                    "selections": (v4/*: any*/)
+                  },
+                  {
                     "kind": "LinkedField",
+                    "alias": null,
                     "name": "previous",
+                    "storageKey": null,
+                    "args": null,
+                    "concreteType": "PageCursor",
                     "plural": false,
                     "selections": [
                       (v2/*: any*/),
                       (v3/*: any*/)
-                    ],
-                    "storageKey": null
+                    ]
                   }
-                ],
-                "storageKey": null
+                ]
               },
               {
+                "kind": "LinkedField",
                 "alias": null,
+                "name": "edges",
+                "storageKey": null,
                 "args": null,
                 "concreteType": "AuctionResultEdge",
-                "kind": "LinkedField",
-                "name": "edges",
                 "plural": true,
                 "selections": [
                   {
+                    "kind": "LinkedField",
                     "alias": null,
+                    "name": "node",
+                    "storageKey": null,
                     "args": null,
                     "concreteType": "AuctionResult",
-                    "kind": "LinkedField",
-                    "name": "node",
                     "plural": false,
                     "selections": [
                       {
-                        "alias": null,
-                        "args": null,
                         "kind": "ScalarField",
+                        "alias": null,
                         "name": "title",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": "dimension_text",
                         "args": null,
-                        "kind": "ScalarField",
-                        "name": "dimensionText",
                         "storageKey": null
                       },
                       {
+                        "kind": "ScalarField",
+                        "alias": "dimension_text",
+                        "name": "dimensionText",
+                        "args": null,
+                        "storageKey": null
+                      },
+                      {
+                        "kind": "LinkedField",
                         "alias": null,
+                        "name": "images",
+                        "storageKey": null,
                         "args": null,
                         "concreteType": "AuctionLotImages",
-                        "kind": "LinkedField",
-                        "name": "images",
                         "plural": false,
                         "selections": [
                           {
+                            "kind": "LinkedField",
                             "alias": null,
+                            "name": "thumbnail",
+                            "storageKey": null,
                             "args": null,
                             "concreteType": "Image",
-                            "kind": "LinkedField",
-                            "name": "thumbnail",
                             "plural": false,
                             "selections": [
                               {
-                                "alias": null,
-                                "args": null,
                                 "kind": "ScalarField",
+                                "alias": null,
                                 "name": "url",
+                                "args": null,
                                 "storageKey": null
                               }
-                            ],
-                            "storageKey": null
+                            ]
                           }
-                        ],
-                        "storageKey": null
+                        ]
                       },
                       {
-                        "alias": null,
-                        "args": null,
                         "kind": "ScalarField",
+                        "alias": null,
                         "name": "description",
+                        "args": null,
                         "storageKey": null
                       },
                       {
+                        "kind": "ScalarField",
                         "alias": "date_text",
-                        "args": null,
-                        "kind": "ScalarField",
                         "name": "dateText",
+                        "args": null,
                         "storageKey": null
                       },
                       {
-                        "alias": null,
-                        "args": null,
                         "kind": "ScalarField",
+                        "alias": null,
                         "name": "organization",
+                        "args": null,
                         "storageKey": null
                       },
                       {
-                        "alias": null,
-                        "args": null,
                         "kind": "ScalarField",
+                        "alias": null,
                         "name": "mediumText",
+                        "args": null,
                         "storageKey": null
                       },
                       {
-                        "alias": null,
-                        "args": null,
                         "kind": "ScalarField",
+                        "alias": null,
                         "name": "categoryText",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
                         "args": null,
-                        "kind": "ScalarField",
-                        "name": "saleDate",
                         "storageKey": null
                       },
                       {
+                        "kind": "ScalarField",
+                        "alias": null,
+                        "name": "saleDate",
+                        "args": null,
+                        "storageKey": null
+                      },
+                      {
+                        "kind": "LinkedField",
                         "alias": "price_realized",
+                        "name": "priceRealized",
+                        "storageKey": null,
                         "args": null,
                         "concreteType": "AuctionResultPriceRealized",
-                        "kind": "LinkedField",
-                        "name": "priceRealized",
                         "plural": false,
                         "selections": [
                           (v5/*: any*/),
                           {
-                            "alias": "cents_usd",
-                            "args": null,
                             "kind": "ScalarField",
+                            "alias": "cents_usd",
                             "name": "centsUSD",
+                            "args": null,
                             "storageKey": null
                           }
-                        ],
-                        "storageKey": null
+                        ]
                       },
                       {
+                        "kind": "LinkedField",
                         "alias": null,
+                        "name": "estimate",
+                        "storageKey": null,
                         "args": null,
                         "concreteType": "AuctionLotEstimate",
-                        "kind": "LinkedField",
-                        "name": "estimate",
                         "plural": false,
                         "selections": [
                           (v5/*: any*/)
-                        ],
-                        "storageKey": null
+                        ]
                       },
                       (v6/*: any*/)
-                    ],
-                    "storageKey": null
+                    ]
                   }
-                ],
-                "storageKey": null
+                ]
               }
-            ],
-            "storageKey": "auctionResultsConnection(first:10,sort:\"DATE_DESC\")"
+            ]
           },
           (v6/*: any*/)
-        ],
-        "storageKey": null
+        ]
       }
     ]
   },
   "params": {
-    "id": null,
-    "metadata": {},
-    "name": "routes_AuctionResultsQuery",
     "operationKind": "query",
-    "text": "query routes_AuctionResultsQuery(\n  $artistID: String!\n) {\n  artist(id: $artistID) {\n    ...AuctionResults_artist\n    id\n  }\n}\n\nfragment ArtistAuctionResultItem_auctionResult on AuctionResult {\n  title\n  dimension_text: dimensionText\n  organization\n  images {\n    thumbnail {\n      url\n    }\n  }\n  mediumText\n  categoryText\n  description\n  date_text: dateText\n  saleDate\n  price_realized: priceRealized {\n    display\n    cents_usd: centsUSD\n  }\n  estimate {\n    display\n  }\n}\n\nfragment ArtistAuctionResults_artist on Artist {\n  slug\n  name\n  ...AuctionResultHeader_artist\n  auctionResultsConnection(first: 10, sort: DATE_DESC) {\n    ...AuctionResultsCount_results\n    createdYearRange {\n      startAt\n      endAt\n    }\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    totalCount\n    edges {\n      node {\n        title\n        dimension_text: dimensionText\n        images {\n          thumbnail {\n            url\n          }\n        }\n        description\n        date_text: dateText\n        ...ArtistAuctionResultItem_auctionResult\n        id\n      }\n    }\n  }\n}\n\nfragment AuctionResultHeader_artist on Artist {\n  slug\n}\n\nfragment AuctionResultsCount_results on AuctionResultConnection {\n  totalCount\n}\n\nfragment AuctionResults_artist on Artist {\n  ...ArtistAuctionResults_artist\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n"
+    "name": "routes_AuctionResultsQuery",
+    "id": null,
+    "text": "query routes_AuctionResultsQuery(\n  $artistID: String!\n) {\n  artist(id: $artistID) {\n    ...AuctionResults_artist\n    id\n  }\n}\n\nfragment ArtistAuctionResultItem_auctionResult on AuctionResult {\n  title\n  dimension_text: dimensionText\n  organization\n  images {\n    thumbnail {\n      url\n    }\n  }\n  mediumText\n  categoryText\n  description\n  date_text: dateText\n  saleDate\n  price_realized: priceRealized {\n    display\n    cents_usd: centsUSD\n  }\n  estimate {\n    display\n  }\n}\n\nfragment ArtistAuctionResults_artist on Artist {\n  slug\n  name\n  ...AuctionResultHeader_artist\n  auctionResultsConnection(first: 10, sort: DATE_DESC) {\n    ...AuctionResultsCount_results\n    createdYearRange {\n      startAt\n      endAt\n    }\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    totalCount\n    edges {\n      node {\n        title\n        dimension_text: dimensionText\n        images {\n          thumbnail {\n            url\n          }\n        }\n        description\n        date_text: dateText\n        ...ArtistAuctionResultItem_auctionResult\n        id\n      }\n    }\n  }\n}\n\nfragment AuctionResultHeader_artist on Artist {\n  slug\n}\n\nfragment AuctionResultsCount_results on AuctionResultConnection {\n  totalCount\n}\n\nfragment AuctionResults_artist on Artist {\n  ...ArtistAuctionResults_artist\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n",
+    "metadata": {}
   }
 };
 })();

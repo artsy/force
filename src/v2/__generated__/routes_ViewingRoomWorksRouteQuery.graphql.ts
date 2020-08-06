@@ -1,5 +1,4 @@
 /* tslint:disable */
-/* eslint-disable */
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -62,10 +61,10 @@ fragment ViewingRoomWorksRoute_viewingRoom on ViewingRoom {
 const node: ConcreteRequest = (function(){
 var v0 = [
   {
-    "defaultValue": null,
     "kind": "LocalArgument",
     "name": "slug",
-    "type": "ID!"
+    "type": "ID!",
+    "defaultValue": null
   }
 ],
 v1 = [
@@ -76,95 +75,103 @@ v1 = [
   }
 ],
 v2 = {
-  "alias": null,
-  "args": null,
   "kind": "ScalarField",
+  "alias": null,
   "name": "internalID",
+  "args": null,
   "storageKey": null
 };
 return {
+  "kind": "Request",
   "fragment": {
-    "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
-    "metadata": null,
     "name": "routes_ViewingRoomWorksRouteQuery",
+    "type": "Query",
+    "metadata": null,
+    "argumentDefinitions": (v0/*: any*/),
     "selections": [
       {
+        "kind": "LinkedField",
         "alias": null,
+        "name": "viewingRoom",
+        "storageKey": null,
         "args": (v1/*: any*/),
         "concreteType": "ViewingRoom",
-        "kind": "LinkedField",
-        "name": "viewingRoom",
         "plural": false,
         "selections": [
           {
-            "args": null,
             "kind": "FragmentSpread",
-            "name": "ViewingRoomWorksRoute_viewingRoom"
+            "name": "ViewingRoomWorksRoute_viewingRoom",
+            "args": null
           }
-        ],
-        "storageKey": null
+        ]
       }
-    ],
-    "type": "Query"
+    ]
   },
-  "kind": "Request",
   "operation": {
-    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "routes_ViewingRoomWorksRouteQuery",
+    "argumentDefinitions": (v0/*: any*/),
     "selections": [
       {
+        "kind": "LinkedField",
         "alias": null,
+        "name": "viewingRoom",
+        "storageKey": null,
         "args": (v1/*: any*/),
         "concreteType": "ViewingRoom",
-        "kind": "LinkedField",
-        "name": "viewingRoom",
         "plural": false,
         "selections": [
           {
+            "kind": "LinkedField",
             "alias": null,
+            "name": "artworksConnection",
+            "storageKey": null,
             "args": null,
             "concreteType": "ArtworkConnection",
-            "kind": "LinkedField",
-            "name": "artworksConnection",
             "plural": false,
             "selections": [
               {
+                "kind": "LinkedField",
                 "alias": null,
+                "name": "edges",
+                "storageKey": null,
                 "args": null,
                 "concreteType": "ArtworkEdge",
-                "kind": "LinkedField",
-                "name": "edges",
                 "plural": true,
                 "selections": [
                   {
+                    "kind": "LinkedField",
                     "alias": null,
+                    "name": "node",
+                    "storageKey": null,
                     "args": null,
                     "concreteType": "Artwork",
-                    "kind": "LinkedField",
-                    "name": "node",
                     "plural": false,
                     "selections": [
                       (v2/*: any*/),
                       {
-                        "alias": null,
-                        "args": null,
                         "kind": "ScalarField",
+                        "alias": null,
                         "name": "title",
+                        "args": null,
                         "storageKey": null
                       },
                       {
+                        "kind": "LinkedField",
                         "alias": null,
+                        "name": "images",
+                        "storageKey": null,
                         "args": null,
                         "concreteType": "Image",
-                        "kind": "LinkedField",
-                        "name": "images",
                         "plural": true,
                         "selections": [
                           (v2/*: any*/),
                           {
+                            "kind": "LinkedField",
                             "alias": null,
+                            "name": "resized",
+                            "storageKey": "resized(height:1100,version:\"normalized\")",
                             "args": [
                               {
                                 "kind": "Literal",
@@ -178,99 +185,91 @@ return {
                               }
                             ],
                             "concreteType": "ResizedImageUrl",
-                            "kind": "LinkedField",
-                            "name": "resized",
                             "plural": false,
                             "selections": [
                               {
-                                "alias": null,
-                                "args": null,
                                 "kind": "ScalarField",
+                                "alias": null,
                                 "name": "url",
+                                "args": null,
                                 "storageKey": null
                               },
                               {
-                                "alias": null,
-                                "args": null,
                                 "kind": "ScalarField",
+                                "alias": null,
                                 "name": "width",
+                                "args": null,
                                 "storageKey": null
                               },
                               {
-                                "alias": null,
-                                "args": null,
                                 "kind": "ScalarField",
+                                "alias": null,
                                 "name": "height",
+                                "args": null,
                                 "storageKey": null
                               }
-                            ],
-                            "storageKey": "resized(height:1100,version:\"normalized\")"
+                            ]
                           }
-                        ],
-                        "storageKey": null
+                        ]
                       },
                       {
-                        "alias": null,
-                        "args": null,
                         "kind": "ScalarField",
+                        "alias": null,
                         "name": "id",
+                        "args": null,
                         "storageKey": null
                       },
                       {
-                        "alias": null,
-                        "args": null,
                         "kind": "ScalarField",
+                        "alias": null,
                         "name": "additionalInformation",
+                        "args": null,
                         "storageKey": null
                       },
                       {
-                        "alias": null,
-                        "args": null,
                         "kind": "ScalarField",
+                        "alias": null,
                         "name": "artistNames",
+                        "args": null,
                         "storageKey": null
                       },
                       {
-                        "alias": null,
-                        "args": null,
                         "kind": "ScalarField",
+                        "alias": null,
                         "name": "date",
+                        "args": null,
                         "storageKey": null
                       },
                       {
-                        "alias": null,
-                        "args": null,
                         "kind": "ScalarField",
+                        "alias": null,
                         "name": "href",
+                        "args": null,
                         "storageKey": null
                       },
                       {
-                        "alias": null,
-                        "args": null,
                         "kind": "ScalarField",
+                        "alias": null,
                         "name": "saleMessage",
+                        "args": null,
                         "storageKey": null
                       }
-                    ],
-                    "storageKey": null
+                    ]
                   }
-                ],
-                "storageKey": null
+                ]
               }
-            ],
-            "storageKey": null
+            ]
           }
-        ],
-        "storageKey": null
+        ]
       }
     ]
   },
   "params": {
-    "id": null,
-    "metadata": {},
-    "name": "routes_ViewingRoomWorksRouteQuery",
     "operationKind": "query",
-    "text": "query routes_ViewingRoomWorksRouteQuery(\n  $slug: ID!\n) {\n  viewingRoom(id: $slug) {\n    ...ViewingRoomWorksRoute_viewingRoom\n  }\n}\n\nfragment ViewingRoomArtworkDetails_artwork on Artwork {\n  id\n  additionalInformation\n  artistNames\n  title\n  date\n  href\n  saleMessage\n}\n\nfragment ViewingRoomWorksRoute_viewingRoom on ViewingRoom {\n  artworksConnection {\n    edges {\n      node {\n        internalID\n        title\n        images {\n          internalID\n          resized(height: 1100, version: \"normalized\") {\n            url\n            width\n            height\n          }\n        }\n        ...ViewingRoomArtworkDetails_artwork\n        id\n      }\n    }\n  }\n}\n"
+    "name": "routes_ViewingRoomWorksRouteQuery",
+    "id": null,
+    "text": "query routes_ViewingRoomWorksRouteQuery(\n  $slug: ID!\n) {\n  viewingRoom(id: $slug) {\n    ...ViewingRoomWorksRoute_viewingRoom\n  }\n}\n\nfragment ViewingRoomArtworkDetails_artwork on Artwork {\n  id\n  additionalInformation\n  artistNames\n  title\n  date\n  href\n  saleMessage\n}\n\nfragment ViewingRoomWorksRoute_viewingRoom on ViewingRoom {\n  artworksConnection {\n    edges {\n      node {\n        internalID\n        title\n        images {\n          internalID\n          resized(height: 1100, version: \"normalized\") {\n            url\n            width\n            height\n          }\n        }\n        ...ViewingRoomArtworkDetails_artwork\n        id\n      }\n    }\n  }\n}\n",
+    "metadata": {}
   }
 };
 })();

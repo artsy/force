@@ -1,5 +1,4 @@
 /* tslint:disable */
-/* eslint-disable */
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -105,62 +104,67 @@ var v0 = [
   }
 ],
 v1 = {
-  "alias": null,
-  "args": null,
   "kind": "ScalarField",
+  "alias": null,
   "name": "id",
+  "args": null,
   "storageKey": null
 };
 return {
+  "kind": "Request",
   "fragment": {
-    "argumentDefinitions": [],
     "kind": "Fragment",
-    "metadata": null,
     "name": "SelectedCareerAchievementsTestQuery",
+    "type": "Query",
+    "metadata": null,
+    "argumentDefinitions": [],
     "selections": [
       {
+        "kind": "LinkedField",
         "alias": null,
+        "name": "artist",
+        "storageKey": "artist(id:\"pablo-picasso\")",
         "args": (v0/*: any*/),
         "concreteType": "Artist",
-        "kind": "LinkedField",
-        "name": "artist",
         "plural": false,
         "selections": [
           {
-            "args": null,
             "kind": "FragmentSpread",
-            "name": "SelectedCareerAchievements_artist"
+            "name": "SelectedCareerAchievements_artist",
+            "args": null
           }
-        ],
-        "storageKey": "artist(id:\"pablo-picasso\")"
+        ]
       }
-    ],
-    "type": "Query"
+    ]
   },
-  "kind": "Request",
   "operation": {
-    "argumentDefinitions": [],
     "kind": "Operation",
     "name": "SelectedCareerAchievementsTestQuery",
+    "argumentDefinitions": [],
     "selections": [
       {
+        "kind": "LinkedField",
         "alias": null,
+        "name": "artist",
+        "storageKey": "artist(id:\"pablo-picasso\")",
         "args": (v0/*: any*/),
         "concreteType": "Artist",
-        "kind": "LinkedField",
-        "name": "artist",
         "plural": false,
         "selections": [
           {
+            "kind": "LinkedField",
             "alias": null,
+            "name": "highlights",
+            "storageKey": null,
             "args": null,
             "concreteType": "ArtistHighlights",
-            "kind": "LinkedField",
-            "name": "highlights",
             "plural": false,
             "selections": [
               {
+                "kind": "LinkedField",
                 "alias": null,
+                "name": "partnersConnection",
+                "storageKey": "partnersConnection(displayOnPartnerProfile:true,first:10,partnerCategory:[\"blue-chip\",\"top-established\",\"top-emerging\"],representedBy:true)",
                 "args": [
                   {
                     "kind": "Literal",
@@ -188,93 +192,92 @@ return {
                   }
                 ],
                 "concreteType": "PartnerArtistConnection",
-                "kind": "LinkedField",
-                "name": "partnersConnection",
                 "plural": false,
                 "selections": [
                   {
+                    "kind": "LinkedField",
                     "alias": null,
+                    "name": "edges",
+                    "storageKey": null,
                     "args": null,
                     "concreteType": "PartnerArtistEdge",
-                    "kind": "LinkedField",
-                    "name": "edges",
                     "plural": true,
                     "selections": [
                       {
+                        "kind": "LinkedField",
                         "alias": null,
+                        "name": "node",
+                        "storageKey": null,
                         "args": null,
                         "concreteType": "Partner",
-                        "kind": "LinkedField",
-                        "name": "node",
                         "plural": false,
                         "selections": [
                           {
+                            "kind": "LinkedField",
                             "alias": null,
+                            "name": "categories",
+                            "storageKey": null,
                             "args": null,
                             "concreteType": "PartnerCategory",
-                            "kind": "LinkedField",
-                            "name": "categories",
                             "plural": true,
                             "selections": [
                               {
-                                "alias": null,
-                                "args": null,
                                 "kind": "ScalarField",
+                                "alias": null,
                                 "name": "slug",
+                                "args": null,
                                 "storageKey": null
                               },
                               (v1/*: any*/)
-                            ],
-                            "storageKey": null
+                            ]
                           },
                           (v1/*: any*/)
-                        ],
-                        "storageKey": null
+                        ]
                       },
                       (v1/*: any*/)
-                    ],
-                    "storageKey": null
+                    ]
                   }
-                ],
-                "storageKey": "partnersConnection(displayOnPartnerProfile:true,first:10,partnerCategory:[\"blue-chip\",\"top-established\",\"top-emerging\"],representedBy:true)"
+                ]
               }
-            ],
-            "storageKey": null
+            ]
           },
           {
+            "kind": "LinkedField",
             "alias": null,
+            "name": "insights",
+            "storageKey": null,
             "args": null,
             "concreteType": "ArtistInsight",
-            "kind": "LinkedField",
-            "name": "insights",
             "plural": true,
             "selections": [
               {
-                "alias": null,
-                "args": null,
                 "kind": "ScalarField",
+                "alias": null,
                 "name": "type",
+                "args": null,
                 "storageKey": null
               },
               {
-                "alias": null,
-                "args": null,
                 "kind": "ScalarField",
+                "alias": null,
                 "name": "label",
+                "args": null,
                 "storageKey": null
               },
               {
-                "alias": null,
-                "args": null,
                 "kind": "ScalarField",
+                "alias": null,
                 "name": "entities",
+                "args": null,
                 "storageKey": null
               }
-            ],
-            "storageKey": null
+            ]
           },
           {
+            "kind": "LinkedField",
             "alias": null,
+            "name": "auctionResultsConnection",
+            "storageKey": "auctionResultsConnection(first:1,recordsTrusted:true,sort:\"PRICE_AND_DATE_DESC\")",
             "args": [
               {
                 "kind": "Literal",
@@ -293,36 +296,39 @@ return {
               }
             ],
             "concreteType": "AuctionResultConnection",
-            "kind": "LinkedField",
-            "name": "auctionResultsConnection",
             "plural": false,
             "selections": [
               {
+                "kind": "LinkedField",
                 "alias": null,
+                "name": "edges",
+                "storageKey": null,
                 "args": null,
                 "concreteType": "AuctionResultEdge",
-                "kind": "LinkedField",
-                "name": "edges",
                 "plural": true,
                 "selections": [
                   {
+                    "kind": "LinkedField",
                     "alias": null,
+                    "name": "node",
+                    "storageKey": null,
                     "args": null,
                     "concreteType": "AuctionResult",
-                    "kind": "LinkedField",
-                    "name": "node",
                     "plural": false,
                     "selections": [
                       {
+                        "kind": "LinkedField",
                         "alias": "price_realized",
+                        "name": "priceRealized",
+                        "storageKey": null,
                         "args": null,
                         "concreteType": "AuctionResultPriceRealized",
-                        "kind": "LinkedField",
-                        "name": "priceRealized",
                         "plural": false,
                         "selections": [
                           {
+                            "kind": "ScalarField",
                             "alias": null,
+                            "name": "display",
                             "args": [
                               {
                                 "kind": "Literal",
@@ -330,22 +336,21 @@ return {
                                 "value": "0a"
                               }
                             ],
-                            "kind": "ScalarField",
-                            "name": "display",
                             "storageKey": "display(format:\"0a\")"
                           }
-                        ],
-                        "storageKey": null
+                        ]
                       },
                       {
-                        "alias": null,
-                        "args": null,
                         "kind": "ScalarField",
+                        "alias": null,
                         "name": "organization",
+                        "args": null,
                         "storageKey": null
                       },
                       {
+                        "kind": "ScalarField",
                         "alias": "sale_date",
+                        "name": "saleDate",
                         "args": [
                           {
                             "kind": "Literal",
@@ -353,32 +358,26 @@ return {
                             "value": "YYYY"
                           }
                         ],
-                        "kind": "ScalarField",
-                        "name": "saleDate",
                         "storageKey": "saleDate(format:\"YYYY\")"
                       },
                       (v1/*: any*/)
-                    ],
-                    "storageKey": null
+                    ]
                   }
-                ],
-                "storageKey": null
+                ]
               }
-            ],
-            "storageKey": "auctionResultsConnection(first:1,recordsTrusted:true,sort:\"PRICE_AND_DATE_DESC\")"
+            ]
           },
           (v1/*: any*/)
-        ],
-        "storageKey": "artist(id:\"pablo-picasso\")"
+        ]
       }
     ]
   },
   "params": {
-    "id": null,
-    "metadata": {},
-    "name": "SelectedCareerAchievementsTestQuery",
     "operationKind": "query",
-    "text": "query SelectedCareerAchievementsTestQuery {\n  artist(id: \"pablo-picasso\") {\n    ...SelectedCareerAchievements_artist\n    id\n  }\n}\n\nfragment SelectedCareerAchievements_artist on Artist {\n  highlights {\n    partnersConnection(first: 10, displayOnPartnerProfile: true, representedBy: true, partnerCategory: [\"blue-chip\", \"top-established\", \"top-emerging\"]) {\n      edges {\n        node {\n          categories {\n            slug\n            id\n          }\n          id\n        }\n        id\n      }\n    }\n  }\n  insights {\n    type\n    label\n    entities\n  }\n  auctionResultsConnection(recordsTrusted: true, first: 1, sort: PRICE_AND_DATE_DESC) {\n    edges {\n      node {\n        price_realized: priceRealized {\n          display(format: \"0a\")\n        }\n        organization\n        sale_date: saleDate(format: \"YYYY\")\n        id\n      }\n    }\n  }\n}\n"
+    "name": "SelectedCareerAchievementsTestQuery",
+    "id": null,
+    "text": "query SelectedCareerAchievementsTestQuery {\n  artist(id: \"pablo-picasso\") {\n    ...SelectedCareerAchievements_artist\n    id\n  }\n}\n\nfragment SelectedCareerAchievements_artist on Artist {\n  highlights {\n    partnersConnection(first: 10, displayOnPartnerProfile: true, representedBy: true, partnerCategory: [\"blue-chip\", \"top-established\", \"top-emerging\"]) {\n      edges {\n        node {\n          categories {\n            slug\n            id\n          }\n          id\n        }\n        id\n      }\n    }\n  }\n  insights {\n    type\n    label\n    entities\n  }\n  auctionResultsConnection(recordsTrusted: true, first: 1, sort: PRICE_AND_DATE_DESC) {\n    edges {\n      node {\n        price_realized: priceRealized {\n          display(format: \"0a\")\n        }\n        organization\n        sale_date: saleDate(format: \"YYYY\")\n        id\n      }\n    }\n  }\n}\n",
+    "metadata": {}
   }
 };
 })();

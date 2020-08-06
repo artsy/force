@@ -1,5 +1,4 @@
 /* tslint:disable */
-/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -20,48 +19,48 @@ export type FeatureSetItem_setItem$key = {
 const node: ReaderFragment = (function(){
 var v0 = [
   {
-    "alias": null,
-    "args": null,
     "kind": "ScalarField",
+    "alias": null,
     "name": "id",
+    "args": null,
     "storageKey": null
   }
 ];
 return {
-  "argumentDefinitions": [],
   "kind": "Fragment",
-  "metadata": null,
   "name": "FeatureSetItem_setItem",
+  "type": "OrderedSetItem",
+  "metadata": null,
+  "argumentDefinitions": [],
   "selections": [
     {
-      "alias": null,
-      "args": null,
       "kind": "ScalarField",
+      "alias": null,
       "name": "__typename",
+      "args": null,
       "storageKey": null
     },
     {
       "kind": "InlineFragment",
-      "selections": (v0/*: any*/),
-      "type": "FeaturedLink"
+      "type": "FeaturedLink",
+      "selections": (v0/*: any*/)
     },
     {
       "kind": "InlineFragment",
-      "selections": (v0/*: any*/),
-      "type": "Artwork"
+      "type": "Artwork",
+      "selections": (v0/*: any*/)
     },
     {
-      "args": null,
       "kind": "FragmentSpread",
-      "name": "GridItem_artwork"
+      "name": "GridItem_artwork",
+      "args": null
     },
     {
-      "args": null,
       "kind": "FragmentSpread",
-      "name": "FeatureFeaturedLink_featuredLink"
+      "name": "FeatureFeaturedLink_featuredLink",
+      "args": null
     }
-  ],
-  "type": "OrderedSetItem"
+  ]
 };
 })();
 (node as any).hash = '9181810fe57734f6a1198ccec3ae7114';

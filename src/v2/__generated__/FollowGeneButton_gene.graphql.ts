@@ -1,5 +1,4 @@
 /* tslint:disable */
-/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -18,34 +17,34 @@ export type FollowGeneButton_gene$key = {
 
 
 const node: ReaderFragment = {
-  "argumentDefinitions": [],
   "kind": "Fragment",
-  "metadata": null,
   "name": "FollowGeneButton_gene",
+  "type": "Gene",
+  "metadata": null,
+  "argumentDefinitions": [],
   "selections": [
     {
-      "alias": null,
-      "args": null,
       "kind": "ScalarField",
+      "alias": null,
       "name": "id",
+      "args": null,
       "storageKey": null
     },
     {
+      "kind": "ScalarField",
       "alias": null,
-      "args": null,
-      "kind": "ScalarField",
       "name": "internalID",
+      "args": null,
       "storageKey": null
     },
     {
-      "alias": "is_followed",
-      "args": null,
       "kind": "ScalarField",
+      "alias": "is_followed",
       "name": "isFollowed",
+      "args": null,
       "storageKey": null
     }
-  ],
-  "type": "Gene"
+  ]
 };
 (node as any).hash = '27bbf9c0d8426586f13fe1dacb54b489';
 export default node;

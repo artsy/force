@@ -1,9 +1,8 @@
 /* tslint:disable */
-/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
-import { FragmentRefs } from "relay-runtime";
 export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
+import { FragmentRefs } from "relay-runtime";
 export type OrderApp_order = {
     readonly mode: CommerceOrderModeEnum | null;
     readonly lineItems: {
@@ -29,92 +28,92 @@ export type OrderApp_order$key = {
 
 
 const node: ReaderFragment = {
-  "argumentDefinitions": [],
   "kind": "Fragment",
-  "metadata": null,
   "name": "OrderApp_order",
+  "type": "CommerceOrder",
+  "metadata": null,
+  "argumentDefinitions": [],
   "selections": [
     {
-      "alias": null,
-      "args": null,
       "kind": "ScalarField",
+      "alias": null,
       "name": "mode",
+      "args": null,
       "storageKey": null
     },
     {
+      "kind": "LinkedField",
       "alias": null,
+      "name": "lineItems",
+      "storageKey": null,
       "args": null,
       "concreteType": "CommerceLineItemConnection",
-      "kind": "LinkedField",
-      "name": "lineItems",
       "plural": false,
       "selections": [
         {
+          "kind": "LinkedField",
           "alias": null,
+          "name": "edges",
+          "storageKey": null,
           "args": null,
           "concreteType": "CommerceLineItemEdge",
-          "kind": "LinkedField",
-          "name": "edges",
           "plural": true,
           "selections": [
             {
+              "kind": "LinkedField",
               "alias": null,
+              "name": "node",
+              "storageKey": null,
               "args": null,
               "concreteType": "CommerceLineItem",
-              "kind": "LinkedField",
-              "name": "node",
               "plural": false,
               "selections": [
                 {
+                  "kind": "LinkedField",
                   "alias": null,
+                  "name": "artwork",
+                  "storageKey": null,
                   "args": null,
                   "concreteType": "Artwork",
-                  "kind": "LinkedField",
-                  "name": "artwork",
                   "plural": false,
                   "selections": [
                     {
-                      "alias": null,
-                      "args": null,
                       "kind": "ScalarField",
+                      "alias": null,
                       "name": "href",
+                      "args": null,
                       "storageKey": null
                     },
                     {
+                      "kind": "ScalarField",
                       "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
                       "name": "slug",
+                      "args": null,
                       "storageKey": null
                     },
                     {
+                      "kind": "ScalarField",
                       "alias": "is_acquireable",
-                      "args": null,
-                      "kind": "ScalarField",
                       "name": "isAcquireable",
+                      "args": null,
                       "storageKey": null
                     },
                     {
-                      "alias": "is_offerable",
-                      "args": null,
                       "kind": "ScalarField",
+                      "alias": "is_offerable",
                       "name": "isOfferable",
+                      "args": null,
                       "storageKey": null
                     }
-                  ],
-                  "storageKey": null
+                  ]
                 }
-              ],
-              "storageKey": null
+              ]
             }
-          ],
-          "storageKey": null
+          ]
         }
-      ],
-      "storageKey": null
+      ]
     }
-  ],
-  "type": "CommerceOrder"
+  ]
 };
 (node as any).hash = '22f0547ca97d2ba0d33dbc5db1aa4c77';
 export default node;

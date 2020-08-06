@@ -1,5 +1,4 @@
 /* tslint:disable */
-/* eslint-disable */
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -68,129 +67,129 @@ var v0 = [
   }
 ],
 v1 = {
-  "alias": null,
-  "args": null,
   "kind": "ScalarField",
+  "alias": null,
   "name": "internalID",
+  "args": null,
   "storageKey": null
 },
 v2 = {
-  "alias": null,
-  "args": null,
   "kind": "ScalarField",
+  "alias": null,
   "name": "id",
+  "args": null,
   "storageKey": null
 };
 return {
+  "kind": "Request",
   "fragment": {
-    "argumentDefinitions": [],
     "kind": "Fragment",
-    "metadata": null,
     "name": "RegisterValidTestQuery",
+    "type": "Query",
+    "metadata": null,
+    "argumentDefinitions": [],
     "selections": [
       {
+        "kind": "LinkedField",
         "alias": null,
+        "name": "sale",
+        "storageKey": "sale(id:\"example-auction-id\")",
         "args": (v0/*: any*/),
         "concreteType": "Sale",
-        "kind": "LinkedField",
-        "name": "sale",
         "plural": false,
         "selections": [
           {
-            "args": null,
             "kind": "FragmentSpread",
-            "name": "Register_sale"
+            "name": "Register_sale",
+            "args": null
           }
-        ],
-        "storageKey": "sale(id:\"example-auction-id\")"
+        ]
       },
       {
+        "kind": "LinkedField",
         "alias": null,
+        "name": "me",
+        "storageKey": null,
         "args": null,
         "concreteType": "Me",
-        "kind": "LinkedField",
-        "name": "me",
         "plural": false,
         "selections": [
           {
-            "args": null,
             "kind": "FragmentSpread",
-            "name": "Register_me"
+            "name": "Register_me",
+            "args": null
           }
-        ],
-        "storageKey": null
+        ]
       }
-    ],
-    "type": "Query"
+    ]
   },
-  "kind": "Request",
   "operation": {
-    "argumentDefinitions": [],
     "kind": "Operation",
     "name": "RegisterValidTestQuery",
+    "argumentDefinitions": [],
     "selections": [
       {
+        "kind": "LinkedField",
         "alias": null,
+        "name": "sale",
+        "storageKey": "sale(id:\"example-auction-id\")",
         "args": (v0/*: any*/),
         "concreteType": "Sale",
-        "kind": "LinkedField",
-        "name": "sale",
         "plural": false,
         "selections": [
           {
-            "alias": null,
-            "args": null,
             "kind": "ScalarField",
+            "alias": null,
             "name": "slug",
+            "args": null,
             "storageKey": null
           },
           (v1/*: any*/),
           {
-            "alias": null,
-            "args": null,
             "kind": "ScalarField",
+            "alias": null,
             "name": "status",
+            "args": null,
             "storageKey": null
           },
           {
-            "alias": null,
-            "args": null,
             "kind": "ScalarField",
+            "alias": null,
             "name": "requireIdentityVerification",
+            "args": null,
             "storageKey": null
           },
           (v2/*: any*/)
-        ],
-        "storageKey": "sale(id:\"example-auction-id\")"
+        ]
       },
       {
+        "kind": "LinkedField",
         "alias": null,
+        "name": "me",
+        "storageKey": null,
         "args": null,
         "concreteType": "Me",
-        "kind": "LinkedField",
-        "name": "me",
         "plural": false,
         "selections": [
           (v1/*: any*/),
           {
-            "alias": null,
-            "args": null,
             "kind": "ScalarField",
+            "alias": null,
             "name": "identityVerified",
+            "args": null,
             "storageKey": null
           },
           (v2/*: any*/)
-        ],
-        "storageKey": null
+        ]
       }
     ]
   },
   "params": {
-    "id": null,
-    "metadata": {},
-    "name": "RegisterValidTestQuery",
     "operationKind": "query",
-    "text": "query RegisterValidTestQuery {\n  sale(id: \"example-auction-id\") {\n    ...Register_sale\n    id\n  }\n  me {\n    ...Register_me\n    id\n  }\n}\n\nfragment Register_me on Me {\n  internalID\n  identityVerified\n}\n\nfragment Register_sale on Sale {\n  slug\n  internalID\n  status\n  requireIdentityVerification\n}\n"
+    "name": "RegisterValidTestQuery",
+    "id": null,
+    "text": "query RegisterValidTestQuery {\n  sale(id: \"example-auction-id\") {\n    ...Register_sale\n    id\n  }\n  me {\n    ...Register_me\n    id\n  }\n}\n\nfragment Register_me on Me {\n  internalID\n  identityVerified\n}\n\nfragment Register_sale on Sale {\n  slug\n  internalID\n  status\n  requireIdentityVerification\n}\n",
+    "metadata": {}
   }
 };
 })();

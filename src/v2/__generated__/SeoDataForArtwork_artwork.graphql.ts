@@ -1,5 +1,4 @@
 /* tslint:disable */
-/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -66,124 +65,129 @@ export type SeoDataForArtwork_artwork$key = {
 
 const node: ReaderFragment = (function(){
 var v0 = {
-  "alias": null,
-  "args": null,
   "kind": "ScalarField",
+  "alias": null,
   "name": "major",
+  "args": null,
   "storageKey": null
 },
 v1 = [
   (v0/*: any*/),
   {
-    "alias": null,
-    "args": null,
     "kind": "ScalarField",
+    "alias": null,
     "name": "currencyCode",
+    "args": null,
     "storageKey": null
   }
 ],
 v2 = {
-  "alias": null,
-  "args": null,
   "kind": "ScalarField",
+  "alias": null,
   "name": "url",
+  "args": null,
   "storageKey": null
 };
 return {
-  "argumentDefinitions": [],
   "kind": "Fragment",
-  "metadata": null,
   "name": "SeoDataForArtwork_artwork",
+  "type": "Artwork",
+  "metadata": null,
+  "argumentDefinitions": [],
   "selections": [
     {
-      "alias": null,
-      "args": null,
       "kind": "ScalarField",
+      "alias": null,
       "name": "href",
+      "args": null,
       "storageKey": null
     },
     {
-      "alias": null,
-      "args": null,
       "kind": "ScalarField",
+      "alias": null,
       "name": "date",
+      "args": null,
       "storageKey": null
     },
     {
+      "kind": "ScalarField",
       "alias": "is_price_hidden",
-      "args": null,
-      "kind": "ScalarField",
       "name": "isPriceHidden",
-      "storageKey": null
-    },
-    {
-      "alias": "is_price_range",
       "args": null,
-      "kind": "ScalarField",
-      "name": "isPriceRange",
       "storageKey": null
     },
     {
+      "kind": "ScalarField",
+      "alias": "is_price_range",
+      "name": "isPriceRange",
+      "args": null,
+      "storageKey": null
+    },
+    {
+      "kind": "LinkedField",
       "alias": null,
+      "name": "listPrice",
+      "storageKey": null,
       "args": null,
       "concreteType": null,
-      "kind": "LinkedField",
-      "name": "listPrice",
       "plural": false,
       "selections": [
         {
-          "alias": null,
-          "args": null,
           "kind": "ScalarField",
+          "alias": null,
           "name": "__typename",
+          "args": null,
           "storageKey": null
         },
         {
           "kind": "InlineFragment",
+          "type": "PriceRange",
           "selections": [
             {
+              "kind": "LinkedField",
               "alias": null,
+              "name": "minPrice",
+              "storageKey": null,
               "args": null,
               "concreteType": "Money",
-              "kind": "LinkedField",
-              "name": "minPrice",
               "plural": false,
-              "selections": (v1/*: any*/),
-              "storageKey": null
+              "selections": (v1/*: any*/)
             },
             {
+              "kind": "LinkedField",
               "alias": null,
+              "name": "maxPrice",
+              "storageKey": null,
               "args": null,
               "concreteType": "Money",
-              "kind": "LinkedField",
-              "name": "maxPrice",
               "plural": false,
               "selections": [
                 (v0/*: any*/)
-              ],
-              "storageKey": null
+              ]
             }
-          ],
-          "type": "PriceRange"
+          ]
         },
         {
           "kind": "InlineFragment",
-          "selections": (v1/*: any*/),
-          "type": "Money"
+          "type": "Money",
+          "selections": (v1/*: any*/)
         }
-      ],
-      "storageKey": null
+      ]
     },
     {
+      "kind": "LinkedField",
       "alias": "meta_image",
+      "name": "image",
+      "storageKey": null,
       "args": null,
       "concreteType": "Image",
-      "kind": "LinkedField",
-      "name": "image",
       "plural": false,
       "selections": [
         {
+          "kind": "LinkedField",
           "alias": null,
+          "name": "resized",
+          "storageKey": "resized(height:640,version:[\"large\",\"medium\",\"tall\"],width:640)",
           "args": [
             {
               "kind": "Literal",
@@ -206,48 +210,47 @@ return {
             }
           ],
           "concreteType": "ResizedImageUrl",
-          "kind": "LinkedField",
-          "name": "resized",
           "plural": false,
           "selections": [
             {
-              "alias": null,
-              "args": null,
               "kind": "ScalarField",
+              "alias": null,
               "name": "width",
+              "args": null,
               "storageKey": null
             },
             {
-              "alias": null,
-              "args": null,
               "kind": "ScalarField",
+              "alias": null,
               "name": "height",
+              "args": null,
               "storageKey": null
             },
             (v2/*: any*/)
-          ],
-          "storageKey": "resized(height:640,version:[\"large\",\"medium\",\"tall\"],width:640)"
+          ]
         }
-      ],
-      "storageKey": null
+      ]
     },
     {
+      "kind": "LinkedField",
       "alias": null,
+      "name": "meta",
+      "storageKey": null,
       "args": null,
       "concreteType": "ArtworkMeta",
-      "kind": "LinkedField",
-      "name": "meta",
       "plural": false,
       "selections": [
         {
-          "alias": null,
-          "args": null,
           "kind": "ScalarField",
+          "alias": null,
           "name": "title",
+          "args": null,
           "storageKey": null
         },
         {
+          "kind": "ScalarField",
           "alias": null,
+          "name": "description",
           "args": [
             {
               "kind": "Literal",
@@ -255,53 +258,56 @@ return {
               "value": 155
             }
           ],
-          "kind": "ScalarField",
-          "name": "description",
           "storageKey": "description(limit:155)"
         }
-      ],
-      "storageKey": null
+      ]
     },
     {
+      "kind": "LinkedField",
       "alias": null,
+      "name": "partner",
+      "storageKey": null,
       "args": null,
       "concreteType": "Partner",
-      "kind": "LinkedField",
-      "name": "partner",
       "plural": false,
       "selections": [
         {
-          "alias": null,
-          "args": null,
           "kind": "ScalarField",
+          "alias": null,
           "name": "name",
-          "storageKey": null
-        },
-        {
-          "alias": null,
           "args": null,
-          "kind": "ScalarField",
-          "name": "type",
           "storageKey": null
         },
         {
+          "kind": "ScalarField",
           "alias": null,
+          "name": "type",
+          "args": null,
+          "storageKey": null
+        },
+        {
+          "kind": "LinkedField",
+          "alias": null,
+          "name": "profile",
+          "storageKey": null,
           "args": null,
           "concreteType": "Profile",
-          "kind": "LinkedField",
-          "name": "profile",
           "plural": false,
           "selections": [
             {
+              "kind": "LinkedField",
               "alias": null,
+              "name": "image",
+              "storageKey": null,
               "args": null,
               "concreteType": "Image",
-              "kind": "LinkedField",
-              "name": "image",
               "plural": false,
               "selections": [
                 {
+                  "kind": "LinkedField",
                   "alias": null,
+                  "name": "resized",
+                  "storageKey": "resized(height:320,version:[\"medium\"],width:320)",
                   "args": [
                     {
                       "kind": "Literal",
@@ -322,64 +328,57 @@ return {
                     }
                   ],
                   "concreteType": "ResizedImageUrl",
-                  "kind": "LinkedField",
-                  "name": "resized",
                   "plural": false,
                   "selections": [
                     (v2/*: any*/)
-                  ],
-                  "storageKey": "resized(height:320,version:[\"medium\"],width:320)"
+                  ]
                 }
-              ],
-              "storageKey": null
+              ]
             }
-          ],
-          "storageKey": null
+          ]
         }
-      ],
-      "storageKey": null
+      ]
     },
     {
+      "kind": "ScalarField",
       "alias": "artist_names",
-      "args": null,
-      "kind": "ScalarField",
       "name": "artistNames",
+      "args": null,
       "storageKey": null
     },
     {
-      "alias": null,
-      "args": null,
       "kind": "ScalarField",
+      "alias": null,
       "name": "availability",
-      "storageKey": null
-    },
-    {
-      "alias": null,
       "args": null,
-      "kind": "ScalarField",
-      "name": "category",
       "storageKey": null
     },
     {
+      "kind": "ScalarField",
       "alias": null,
+      "name": "category",
+      "args": null,
+      "storageKey": null
+    },
+    {
+      "kind": "LinkedField",
+      "alias": null,
+      "name": "dimensions",
+      "storageKey": null,
       "args": null,
       "concreteType": "dimensions",
-      "kind": "LinkedField",
-      "name": "dimensions",
       "plural": false,
       "selections": [
         {
-          "alias": null,
-          "args": null,
           "kind": "ScalarField",
+          "alias": null,
           "name": "in",
+          "args": null,
           "storageKey": null
         }
-      ],
-      "storageKey": null
+      ]
     }
-  ],
-  "type": "Artwork"
+  ]
 };
 })();
 (node as any).hash = 'dffd7ec8e9259daca70604dfb2fc7d41';

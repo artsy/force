@@ -1,5 +1,4 @@
 /* tslint:disable */
-/* eslint-disable */
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -105,164 +104,168 @@ var v0 = [
   }
 ],
 v1 = {
-  "alias": null,
-  "args": null,
   "kind": "ScalarField",
+  "alias": null,
   "name": "id",
+  "args": null,
   "storageKey": null
 },
 v2 = [
   {
-    "alias": null,
-    "args": null,
     "kind": "ScalarField",
+    "alias": null,
     "name": "display",
+    "args": null,
     "storageKey": null
   }
 ];
 return {
+  "kind": "Request",
   "fragment": {
-    "argumentDefinitions": [],
     "kind": "Fragment",
-    "metadata": null,
     "name": "ArtworkSidebarCurrentBidInfo_Test_Query",
+    "type": "Query",
+    "metadata": null,
+    "argumentDefinitions": [],
     "selections": [
       {
+        "kind": "LinkedField",
         "alias": null,
+        "name": "artwork",
+        "storageKey": "artwork(id:\"auction_artwork_estimate_premium\")",
         "args": (v0/*: any*/),
         "concreteType": "Artwork",
-        "kind": "LinkedField",
-        "name": "artwork",
         "plural": false,
         "selections": [
           {
-            "args": null,
             "kind": "FragmentSpread",
-            "name": "ArtworkSidebarCurrentBidInfo_artwork"
+            "name": "ArtworkSidebarCurrentBidInfo_artwork",
+            "args": null
           }
-        ],
-        "storageKey": "artwork(id:\"auction_artwork_estimate_premium\")"
+        ]
       }
-    ],
-    "type": "Query"
+    ]
   },
-  "kind": "Request",
   "operation": {
-    "argumentDefinitions": [],
     "kind": "Operation",
     "name": "ArtworkSidebarCurrentBidInfo_Test_Query",
+    "argumentDefinitions": [],
     "selections": [
       {
+        "kind": "LinkedField",
         "alias": null,
+        "name": "artwork",
+        "storageKey": "artwork(id:\"auction_artwork_estimate_premium\")",
         "args": (v0/*: any*/),
         "concreteType": "Artwork",
-        "kind": "LinkedField",
-        "name": "artwork",
         "plural": false,
         "selections": [
           {
+            "kind": "LinkedField",
             "alias": null,
+            "name": "sale",
+            "storageKey": null,
             "args": null,
             "concreteType": "Sale",
-            "kind": "LinkedField",
-            "name": "sale",
             "plural": false,
             "selections": [
               {
+                "kind": "ScalarField",
                 "alias": "is_closed",
-                "args": null,
-                "kind": "ScalarField",
                 "name": "isClosed",
+                "args": null,
                 "storageKey": null
               },
               {
+                "kind": "ScalarField",
                 "alias": "is_live_open",
-                "args": null,
-                "kind": "ScalarField",
                 "name": "isLiveOpen",
+                "args": null,
                 "storageKey": null
               },
               {
+                "kind": "ScalarField",
                 "alias": null,
-                "args": null,
-                "kind": "ScalarField",
                 "name": "internalID",
+                "args": null,
                 "storageKey": null
               },
               {
-                "alias": "is_with_buyers_premium",
-                "args": null,
                 "kind": "ScalarField",
+                "alias": "is_with_buyers_premium",
                 "name": "isWithBuyersPremium",
+                "args": null,
                 "storageKey": null
               },
               (v1/*: any*/)
-            ],
-            "storageKey": null
+            ]
           },
           {
+            "kind": "LinkedField",
             "alias": "sale_artwork",
+            "name": "saleArtwork",
+            "storageKey": null,
             "args": null,
             "concreteType": "SaleArtwork",
-            "kind": "LinkedField",
-            "name": "saleArtwork",
             "plural": false,
             "selections": [
               {
+                "kind": "ScalarField",
                 "alias": "is_with_reserve",
-                "args": null,
-                "kind": "ScalarField",
                 "name": "isWithReserve",
+                "args": null,
                 "storageKey": null
               },
               {
+                "kind": "ScalarField",
                 "alias": "reserve_message",
-                "args": null,
-                "kind": "ScalarField",
                 "name": "reserveMessage",
-                "storageKey": null
-              },
-              {
-                "alias": "reserve_status",
                 "args": null,
-                "kind": "ScalarField",
-                "name": "reserveStatus",
                 "storageKey": null
               },
               {
+                "kind": "ScalarField",
+                "alias": "reserve_status",
+                "name": "reserveStatus",
+                "args": null,
+                "storageKey": null
+              },
+              {
+                "kind": "LinkedField",
                 "alias": "current_bid",
+                "name": "currentBid",
+                "storageKey": null,
                 "args": null,
                 "concreteType": "SaleArtworkCurrentBid",
-                "kind": "LinkedField",
-                "name": "currentBid",
                 "plural": false,
-                "selections": (v2/*: any*/),
-                "storageKey": null
+                "selections": (v2/*: any*/)
               },
               {
+                "kind": "LinkedField",
                 "alias": null,
+                "name": "counts",
+                "storageKey": null,
                 "args": null,
                 "concreteType": "SaleArtworkCounts",
-                "kind": "LinkedField",
-                "name": "counts",
                 "plural": false,
                 "selections": [
                   {
-                    "alias": "bidder_positions",
-                    "args": null,
                     "kind": "ScalarField",
+                    "alias": "bidder_positions",
                     "name": "bidderPositions",
+                    "args": null,
                     "storageKey": null
                   }
-                ],
-                "storageKey": null
+                ]
               },
               (v1/*: any*/)
-            ],
-            "storageKey": null
+            ]
           },
           {
+            "kind": "LinkedField",
             "alias": null,
+            "name": "myLotStanding",
+            "storageKey": "myLotStanding(live:true)",
             "args": [
               {
                 "kind": "Literal",
@@ -271,66 +274,62 @@ return {
               }
             ],
             "concreteType": "LotStanding",
-            "kind": "LinkedField",
-            "name": "myLotStanding",
             "plural": true,
             "selections": [
               {
+                "kind": "LinkedField",
                 "alias": "active_bid",
+                "name": "activeBid",
+                "storageKey": null,
                 "args": null,
                 "concreteType": "BidderPosition",
-                "kind": "LinkedField",
-                "name": "activeBid",
                 "plural": false,
                 "selections": [
                   {
-                    "alias": "is_winning",
-                    "args": null,
                     "kind": "ScalarField",
+                    "alias": "is_winning",
                     "name": "isWinning",
+                    "args": null,
                     "storageKey": null
                   },
                   (v1/*: any*/)
-                ],
-                "storageKey": null
+                ]
               },
               {
+                "kind": "LinkedField",
                 "alias": "most_recent_bid",
+                "name": "mostRecentBid",
+                "storageKey": null,
                 "args": null,
                 "concreteType": "BidderPosition",
-                "kind": "LinkedField",
-                "name": "mostRecentBid",
                 "plural": false,
                 "selections": [
                   {
+                    "kind": "LinkedField",
                     "alias": "max_bid",
+                    "name": "maxBid",
+                    "storageKey": null,
                     "args": null,
                     "concreteType": "BidderPositionMaxBid",
-                    "kind": "LinkedField",
-                    "name": "maxBid",
                     "plural": false,
-                    "selections": (v2/*: any*/),
-                    "storageKey": null
+                    "selections": (v2/*: any*/)
                   },
                   (v1/*: any*/)
-                ],
-                "storageKey": null
+                ]
               }
-            ],
-            "storageKey": "myLotStanding(live:true)"
+            ]
           },
           (v1/*: any*/)
-        ],
-        "storageKey": "artwork(id:\"auction_artwork_estimate_premium\")"
+        ]
       }
     ]
   },
   "params": {
-    "id": null,
-    "metadata": {},
-    "name": "ArtworkSidebarCurrentBidInfo_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkSidebarCurrentBidInfo_Test_Query {\n  artwork(id: \"auction_artwork_estimate_premium\") {\n    ...ArtworkSidebarCurrentBidInfo_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarCurrentBidInfo_artwork on Artwork {\n  sale {\n    is_closed: isClosed\n    is_live_open: isLiveOpen\n    internalID\n    is_with_buyers_premium: isWithBuyersPremium\n    id\n  }\n  sale_artwork: saleArtwork {\n    is_with_reserve: isWithReserve\n    reserve_message: reserveMessage\n    reserve_status: reserveStatus\n    current_bid: currentBid {\n      display\n    }\n    counts {\n      bidder_positions: bidderPositions\n    }\n    id\n  }\n  myLotStanding(live: true) {\n    active_bid: activeBid {\n      is_winning: isWinning\n      id\n    }\n    most_recent_bid: mostRecentBid {\n      max_bid: maxBid {\n        display\n      }\n      id\n    }\n  }\n}\n"
+    "name": "ArtworkSidebarCurrentBidInfo_Test_Query",
+    "id": null,
+    "text": "query ArtworkSidebarCurrentBidInfo_Test_Query {\n  artwork(id: \"auction_artwork_estimate_premium\") {\n    ...ArtworkSidebarCurrentBidInfo_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarCurrentBidInfo_artwork on Artwork {\n  sale {\n    is_closed: isClosed\n    is_live_open: isLiveOpen\n    internalID\n    is_with_buyers_premium: isWithBuyersPremium\n    id\n  }\n  sale_artwork: saleArtwork {\n    is_with_reserve: isWithReserve\n    reserve_message: reserveMessage\n    reserve_status: reserveStatus\n    current_bid: currentBid {\n      display\n    }\n    counts {\n      bidder_positions: bidderPositions\n    }\n    id\n  }\n  myLotStanding(live: true) {\n    active_bid: activeBid {\n      is_winning: isWinning\n      id\n    }\n    most_recent_bid: mostRecentBid {\n      max_bid: maxBid {\n        display\n      }\n      id\n    }\n  }\n}\n",
+    "metadata": {}
   }
 };
 })();

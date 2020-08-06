@@ -1,5 +1,4 @@
 /* tslint:disable */
-/* eslint-disable */
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -47,77 +46,77 @@ var v0 = [
   }
 ];
 return {
+  "kind": "Request",
   "fragment": {
-    "argumentDefinitions": [],
     "kind": "Fragment",
-    "metadata": null,
     "name": "AuthenticityCertificateTestQuery",
+    "type": "Query",
+    "metadata": null,
+    "argumentDefinitions": [],
     "selections": [
       {
+        "kind": "LinkedField",
         "alias": null,
+        "name": "artwork",
+        "storageKey": "artwork(id:\"whatevs\")",
         "args": (v0/*: any*/),
         "concreteType": "Artwork",
-        "kind": "LinkedField",
-        "name": "artwork",
         "plural": false,
         "selections": [
           {
-            "args": null,
             "kind": "FragmentSpread",
-            "name": "AuthenticityCertificate_artwork"
+            "name": "AuthenticityCertificate_artwork",
+            "args": null
           }
-        ],
-        "storageKey": "artwork(id:\"whatevs\")"
+        ]
       }
-    ],
-    "type": "Query"
+    ]
   },
-  "kind": "Request",
   "operation": {
-    "argumentDefinitions": [],
     "kind": "Operation",
     "name": "AuthenticityCertificateTestQuery",
+    "argumentDefinitions": [],
     "selections": [
       {
+        "kind": "LinkedField",
         "alias": null,
+        "name": "artwork",
+        "storageKey": "artwork(id:\"whatevs\")",
         "args": (v0/*: any*/),
         "concreteType": "Artwork",
-        "kind": "LinkedField",
-        "name": "artwork",
         "plural": false,
         "selections": [
           {
-            "alias": null,
-            "args": null,
             "kind": "ScalarField",
+            "alias": null,
             "name": "hasCertificateOfAuthenticity",
+            "args": null,
             "storageKey": null
           },
           {
+            "kind": "ScalarField",
             "alias": "is_biddable",
-            "args": null,
-            "kind": "ScalarField",
             "name": "isBiddable",
+            "args": null,
             "storageKey": null
           },
           {
-            "alias": null,
-            "args": null,
             "kind": "ScalarField",
+            "alias": null,
             "name": "id",
+            "args": null,
             "storageKey": null
           }
-        ],
-        "storageKey": "artwork(id:\"whatevs\")"
+        ]
       }
     ]
   },
   "params": {
-    "id": null,
-    "metadata": {},
-    "name": "AuthenticityCertificateTestQuery",
     "operationKind": "query",
-    "text": "query AuthenticityCertificateTestQuery {\n  artwork(id: \"whatevs\") {\n    ...AuthenticityCertificate_artwork\n    id\n  }\n}\n\nfragment AuthenticityCertificate_artwork on Artwork {\n  hasCertificateOfAuthenticity\n  is_biddable: isBiddable\n}\n"
+    "name": "AuthenticityCertificateTestQuery",
+    "id": null,
+    "text": "query AuthenticityCertificateTestQuery {\n  artwork(id: \"whatevs\") {\n    ...AuthenticityCertificate_artwork\n    id\n  }\n}\n\nfragment AuthenticityCertificate_artwork on Artwork {\n  hasCertificateOfAuthenticity\n  is_biddable: isBiddable\n}\n",
+    "metadata": {}
   }
 };
 })();

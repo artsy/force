@@ -1,5 +1,4 @@
 /* tslint:disable */
-/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -16,20 +15,20 @@ export type BidForm_me$key = {
 
 
 const node: ReaderFragment = {
-  "argumentDefinitions": [],
   "kind": "Fragment",
-  "metadata": null,
   "name": "BidForm_me",
+  "type": "Me",
+  "metadata": null,
+  "argumentDefinitions": [],
   "selections": [
     {
-      "alias": null,
-      "args": null,
       "kind": "ScalarField",
+      "alias": null,
       "name": "hasQualifiedCreditCards",
+      "args": null,
       "storageKey": null
     }
-  ],
-  "type": "Me"
+  ]
 };
 (node as any).hash = '8ed9070855d2bf5bf240dd4b90da4955';
 export default node;

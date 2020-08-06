@@ -1,5 +1,4 @@
 /* tslint:disable */
-/* eslint-disable */
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -168,153 +167,162 @@ var v0 = [
   }
 ],
 v1 = {
-  "alias": null,
-  "args": null,
   "kind": "ScalarField",
+  "alias": null,
   "name": "__typename",
+  "args": null,
   "storageKey": null
 },
 v2 = {
-  "alias": null,
-  "args": null,
   "kind": "ScalarField",
+  "alias": null,
   "name": "internalID",
+  "args": null,
   "storageKey": null
 },
 v3 = {
-  "alias": null,
-  "args": null,
   "kind": "ScalarField",
+  "alias": null,
   "name": "id",
+  "args": null,
   "storageKey": null
 };
 return {
+  "kind": "Request",
   "fragment": {
-    "argumentDefinitions": [],
     "kind": "Fragment",
-    "metadata": null,
     "name": "RejectTestQuery",
+    "type": "Query",
+    "metadata": null,
+    "argumentDefinitions": [],
     "selections": [
       {
+        "kind": "LinkedField",
         "alias": "order",
+        "name": "commerceOrder",
+        "storageKey": "commerceOrder(id:\"unused\")",
         "args": (v0/*: any*/),
         "concreteType": null,
-        "kind": "LinkedField",
-        "name": "commerceOrder",
         "plural": false,
         "selections": [
           {
-            "args": null,
             "kind": "FragmentSpread",
-            "name": "Reject_order"
+            "name": "Reject_order",
+            "args": null
           }
-        ],
-        "storageKey": "commerceOrder(id:\"unused\")"
+        ]
       }
-    ],
-    "type": "Query"
+    ]
   },
-  "kind": "Request",
   "operation": {
-    "argumentDefinitions": [],
     "kind": "Operation",
     "name": "RejectTestQuery",
+    "argumentDefinitions": [],
     "selections": [
       {
+        "kind": "LinkedField",
         "alias": "order",
+        "name": "commerceOrder",
+        "storageKey": "commerceOrder(id:\"unused\")",
         "args": (v0/*: any*/),
         "concreteType": null,
-        "kind": "LinkedField",
-        "name": "commerceOrder",
         "plural": false,
         "selections": [
           (v1/*: any*/),
           (v2/*: any*/),
           {
-            "alias": null,
-            "args": null,
             "kind": "ScalarField",
+            "alias": null,
             "name": "stateExpiresAt",
+            "args": null,
             "storageKey": null
           },
           {
+            "kind": "LinkedField",
             "alias": null,
+            "name": "lineItems",
+            "storageKey": null,
             "args": null,
             "concreteType": "CommerceLineItemConnection",
-            "kind": "LinkedField",
-            "name": "lineItems",
             "plural": false,
             "selections": [
               {
+                "kind": "LinkedField",
                 "alias": null,
+                "name": "edges",
+                "storageKey": null,
                 "args": null,
                 "concreteType": "CommerceLineItemEdge",
-                "kind": "LinkedField",
-                "name": "edges",
                 "plural": true,
                 "selections": [
                   {
+                    "kind": "LinkedField",
                     "alias": null,
+                    "name": "node",
+                    "storageKey": null,
                     "args": null,
                     "concreteType": "CommerceLineItem",
-                    "kind": "LinkedField",
-                    "name": "node",
                     "plural": false,
                     "selections": [
                       {
+                        "kind": "LinkedField",
                         "alias": null,
+                        "name": "artwork",
+                        "storageKey": null,
                         "args": null,
                         "concreteType": "Artwork",
-                        "kind": "LinkedField",
-                        "name": "artwork",
                         "plural": false,
                         "selections": [
                           {
-                            "alias": null,
-                            "args": null,
                             "kind": "ScalarField",
+                            "alias": null,
                             "name": "slug",
+                            "args": null,
                             "storageKey": null
                           },
                           (v3/*: any*/),
                           {
+                            "kind": "ScalarField",
                             "alias": "artist_names",
-                            "args": null,
-                            "kind": "ScalarField",
                             "name": "artistNames",
+                            "args": null,
                             "storageKey": null
                           },
                           {
-                            "alias": null,
-                            "args": null,
                             "kind": "ScalarField",
+                            "alias": null,
                             "name": "title",
+                            "args": null,
                             "storageKey": null
                           },
                           {
-                            "alias": null,
-                            "args": null,
                             "kind": "ScalarField",
+                            "alias": null,
                             "name": "date",
-                            "storageKey": null
-                          },
-                          {
-                            "alias": null,
                             "args": null,
-                            "kind": "ScalarField",
-                            "name": "shippingOrigin",
                             "storageKey": null
                           },
                           {
+                            "kind": "ScalarField",
                             "alias": null,
+                            "name": "shippingOrigin",
+                            "args": null,
+                            "storageKey": null
+                          },
+                          {
+                            "kind": "LinkedField",
+                            "alias": null,
+                            "name": "image",
+                            "storageKey": null,
                             "args": null,
                             "concreteType": "Image",
-                            "kind": "LinkedField",
-                            "name": "image",
                             "plural": false,
                             "selections": [
                               {
+                                "kind": "LinkedField",
                                 "alias": "resized_ArtworkSummaryItem",
+                                "name": "resized",
+                                "storageKey": "resized(width:55)",
                                 "args": [
                                   {
                                     "kind": "Literal",
@@ -323,100 +331,91 @@ return {
                                   }
                                 ],
                                 "concreteType": "ResizedImageUrl",
-                                "kind": "LinkedField",
-                                "name": "resized",
                                 "plural": false,
                                 "selections": [
                                   {
-                                    "alias": null,
-                                    "args": null,
                                     "kind": "ScalarField",
+                                    "alias": null,
                                     "name": "url",
+                                    "args": null,
                                     "storageKey": null
                                   }
-                                ],
-                                "storageKey": "resized(width:55)"
+                                ]
                               }
-                            ],
-                            "storageKey": null
+                            ]
                           }
-                        ],
-                        "storageKey": null
+                        ]
                       },
                       (v3/*: any*/)
-                    ],
-                    "storageKey": null
+                    ]
                   }
-                ],
-                "storageKey": null
+                ]
               }
-            ],
-            "storageKey": null
+            ]
           },
           {
+            "kind": "LinkedField",
             "alias": null,
+            "name": "sellerDetails",
+            "storageKey": null,
             "args": null,
             "concreteType": null,
-            "kind": "LinkedField",
-            "name": "sellerDetails",
             "plural": false,
             "selections": [
               (v1/*: any*/),
               (v3/*: any*/),
               {
                 "kind": "InlineFragment",
+                "type": "Partner",
                 "selections": [
                   {
-                    "alias": null,
-                    "args": null,
                     "kind": "ScalarField",
+                    "alias": null,
                     "name": "name",
+                    "args": null,
                     "storageKey": null
                   }
-                ],
-                "type": "Partner"
+                ]
               }
-            ],
-            "storageKey": null
+            ]
           },
           (v3/*: any*/),
           {
             "kind": "InlineFragment",
+            "type": "CommerceOfferOrder",
             "selections": [
               {
+                "kind": "LinkedField",
                 "alias": null,
+                "name": "lastOffer",
+                "storageKey": null,
                 "args": null,
                 "concreteType": "CommerceOffer",
-                "kind": "LinkedField",
-                "name": "lastOffer",
                 "plural": false,
                 "selections": [
                   (v2/*: any*/),
                   {
-                    "alias": null,
-                    "args": null,
                     "kind": "ScalarField",
+                    "alias": null,
                     "name": "createdAt",
+                    "args": null,
                     "storageKey": null
                   },
                   (v3/*: any*/)
-                ],
-                "storageKey": null
+                ]
               }
-            ],
-            "type": "CommerceOfferOrder"
+            ]
           }
-        ],
-        "storageKey": "commerceOrder(id:\"unused\")"
+        ]
       }
     ]
   },
   "params": {
-    "id": null,
-    "metadata": {},
-    "name": "RejectTestQuery",
     "operationKind": "query",
-    "text": "query RejectTestQuery {\n  order: commerceOrder(id: \"unused\") {\n    __typename\n    ...Reject_order\n    id\n  }\n}\n\nfragment ArtworkSummaryItem_order on CommerceOrder {\n  sellerDetails {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on Node {\n      id\n    }\n    ... on User {\n      id\n    }\n  }\n  lineItems {\n    edges {\n      node {\n        artwork {\n          artist_names: artistNames\n          title\n          date\n          shippingOrigin\n          image {\n            resized_ArtworkSummaryItem: resized(width: 55) {\n              url\n            }\n          }\n          id\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment Reject_order on CommerceOrder {\n  internalID\n  stateExpiresAt\n  lineItems {\n    edges {\n      node {\n        artwork {\n          slug\n          id\n        }\n        id\n      }\n    }\n  }\n  ... on CommerceOfferOrder {\n    lastOffer {\n      internalID\n      createdAt\n      id\n    }\n  }\n  ...ArtworkSummaryItem_order\n}\n"
+    "name": "RejectTestQuery",
+    "id": null,
+    "text": "query RejectTestQuery {\n  order: commerceOrder(id: \"unused\") {\n    __typename\n    ...Reject_order\n    id\n  }\n}\n\nfragment ArtworkSummaryItem_order on CommerceOrder {\n  sellerDetails {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on Node {\n      id\n    }\n    ... on User {\n      id\n    }\n  }\n  lineItems {\n    edges {\n      node {\n        artwork {\n          artist_names: artistNames\n          title\n          date\n          shippingOrigin\n          image {\n            resized_ArtworkSummaryItem: resized(width: 55) {\n              url\n            }\n          }\n          id\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment Reject_order on CommerceOrder {\n  internalID\n  stateExpiresAt\n  lineItems {\n    edges {\n      node {\n        artwork {\n          slug\n          id\n        }\n        id\n      }\n    }\n  }\n  ... on CommerceOfferOrder {\n    lastOffer {\n      internalID\n      createdAt\n      id\n    }\n  }\n  ...ArtworkSummaryItem_order\n}\n",
+    "metadata": {}
   }
 };
 })();

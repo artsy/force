@@ -1,5 +1,4 @@
 /* tslint:disable */
-/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -24,51 +23,56 @@ export type PopularArtists_popular_artists$key = ReadonlyArray<{
 
 
 const node: ReaderFragment = {
-  "argumentDefinitions": [],
   "kind": "Fragment",
+  "name": "PopularArtists_popular_artists",
+  "type": "Artist",
   "metadata": {
     "plural": true
   },
-  "name": "PopularArtists_popular_artists",
+  "argumentDefinitions": [],
   "selections": [
     {
-      "alias": null,
-      "args": null,
       "kind": "ScalarField",
+      "alias": null,
       "name": "slug",
+      "args": null,
       "storageKey": null
     },
     {
-      "alias": null,
-      "args": null,
       "kind": "ScalarField",
+      "alias": null,
       "name": "internalID",
+      "args": null,
       "storageKey": null
     },
     {
-      "alias": null,
-      "args": null,
       "kind": "ScalarField",
+      "alias": null,
       "name": "id",
-      "storageKey": null
-    },
-    {
-      "alias": null,
       "args": null,
-      "kind": "ScalarField",
-      "name": "name",
       "storageKey": null
     },
     {
+      "kind": "ScalarField",
       "alias": null,
+      "name": "name",
+      "args": null,
+      "storageKey": null
+    },
+    {
+      "kind": "LinkedField",
+      "alias": null,
+      "name": "image",
+      "storageKey": null,
       "args": null,
       "concreteType": "Image",
-      "kind": "LinkedField",
-      "name": "image",
       "plural": false,
       "selections": [
         {
+          "kind": "LinkedField",
           "alias": null,
+          "name": "cropped",
+          "storageKey": "cropped(height:100,width:100)",
           "args": [
             {
               "kind": "Literal",
@@ -82,25 +86,20 @@ const node: ReaderFragment = {
             }
           ],
           "concreteType": "CroppedImageUrl",
-          "kind": "LinkedField",
-          "name": "cropped",
           "plural": false,
           "selections": [
             {
-              "alias": null,
-              "args": null,
               "kind": "ScalarField",
+              "alias": null,
               "name": "url",
+              "args": null,
               "storageKey": null
             }
-          ],
-          "storageKey": "cropped(height:100,width:100)"
+          ]
         }
-      ],
-      "storageKey": null
+      ]
     }
-  ],
-  "type": "Artist"
+  ]
 };
 (node as any).hash = '3d46c81e197d7d6f1f6a27595f5291b6';
 export default node;

@@ -1,5 +1,4 @@
 /* tslint:disable */
-/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -47,94 +46,98 @@ export type ArtistAuctionResults_artist$key = {
 
 
 const node: ReaderFragment = {
+  "kind": "Fragment",
+  "name": "ArtistAuctionResults_artist",
+  "type": "Artist",
+  "metadata": null,
   "argumentDefinitions": [
     {
-      "defaultValue": "DATE_DESC",
       "kind": "LocalArgument",
       "name": "sort",
-      "type": "AuctionResultSorts"
+      "type": "AuctionResultSorts",
+      "defaultValue": "DATE_DESC"
     },
     {
-      "defaultValue": 10,
       "kind": "LocalArgument",
       "name": "first",
-      "type": "Int"
+      "type": "Int",
+      "defaultValue": 10
     },
     {
-      "defaultValue": null,
       "kind": "LocalArgument",
       "name": "last",
-      "type": "Int"
+      "type": "Int",
+      "defaultValue": null
     },
     {
-      "defaultValue": null,
       "kind": "LocalArgument",
       "name": "after",
-      "type": "String"
+      "type": "String",
+      "defaultValue": null
     },
     {
-      "defaultValue": null,
       "kind": "LocalArgument",
       "name": "before",
-      "type": "String"
+      "type": "String",
+      "defaultValue": null
     },
     {
-      "defaultValue": null,
       "kind": "LocalArgument",
       "name": "organizations",
-      "type": "[String]"
+      "type": "[String]",
+      "defaultValue": null
     },
     {
-      "defaultValue": null,
       "kind": "LocalArgument",
       "name": "categories",
-      "type": "[String]"
+      "type": "[String]",
+      "defaultValue": null
     },
     {
-      "defaultValue": null,
       "kind": "LocalArgument",
       "name": "sizes",
-      "type": "[ArtworkSizes]"
+      "type": "[ArtworkSizes]",
+      "defaultValue": null
     },
     {
-      "defaultValue": null,
       "kind": "LocalArgument",
       "name": "createdAfterYear",
-      "type": "Int"
+      "type": "Int",
+      "defaultValue": null
     },
     {
-      "defaultValue": null,
       "kind": "LocalArgument",
       "name": "createdBeforeYear",
-      "type": "Int"
+      "type": "Int",
+      "defaultValue": null
     },
     {
-      "defaultValue": null,
       "kind": "LocalArgument",
       "name": "allowEmptyCreatedDates",
-      "type": "Boolean"
+      "type": "Boolean",
+      "defaultValue": null
     }
   ],
-  "kind": "Fragment",
-  "metadata": null,
-  "name": "ArtistAuctionResults_artist",
   "selections": [
     {
-      "alias": null,
-      "args": null,
       "kind": "ScalarField",
+      "alias": null,
       "name": "slug",
-      "storageKey": null
-    },
-    {
-      "alias": null,
       "args": null,
-      "kind": "ScalarField",
-      "name": "name",
       "storageKey": null
     },
     {
+      "kind": "ScalarField",
       "alias": null,
+      "name": "name",
+      "args": null,
+      "storageKey": null
+    },
+    {
+      "kind": "LinkedField",
+      "alias": null,
+      "name": "auctionResultsConnection",
+      "storageKey": null,
       "args": [
         {
           "kind": "Variable",
@@ -193,182 +196,178 @@ const node: ReaderFragment = {
         }
       ],
       "concreteType": "AuctionResultConnection",
-      "kind": "LinkedField",
-      "name": "auctionResultsConnection",
       "plural": false,
       "selections": [
         {
+          "kind": "LinkedField",
           "alias": null,
+          "name": "createdYearRange",
+          "storageKey": null,
           "args": null,
           "concreteType": "YearRange",
-          "kind": "LinkedField",
-          "name": "createdYearRange",
           "plural": false,
           "selections": [
             {
-              "alias": null,
-              "args": null,
               "kind": "ScalarField",
+              "alias": null,
               "name": "startAt",
+              "args": null,
               "storageKey": null
             },
             {
-              "alias": null,
-              "args": null,
               "kind": "ScalarField",
+              "alias": null,
               "name": "endAt",
+              "args": null,
               "storageKey": null
             }
-          ],
-          "storageKey": null
+          ]
         },
         {
+          "kind": "LinkedField",
           "alias": null,
+          "name": "pageInfo",
+          "storageKey": null,
           "args": null,
           "concreteType": "PageInfo",
-          "kind": "LinkedField",
-          "name": "pageInfo",
           "plural": false,
           "selections": [
             {
-              "alias": null,
-              "args": null,
               "kind": "ScalarField",
+              "alias": null,
               "name": "hasNextPage",
+              "args": null,
               "storageKey": null
             },
             {
-              "alias": null,
-              "args": null,
               "kind": "ScalarField",
+              "alias": null,
               "name": "endCursor",
+              "args": null,
               "storageKey": null
             }
-          ],
-          "storageKey": null
+          ]
         },
         {
+          "kind": "LinkedField",
           "alias": null,
+          "name": "pageCursors",
+          "storageKey": null,
           "args": null,
           "concreteType": "PageCursors",
-          "kind": "LinkedField",
-          "name": "pageCursors",
           "plural": false,
           "selections": [
             {
-              "args": null,
               "kind": "FragmentSpread",
-              "name": "Pagination_pageCursors"
+              "name": "Pagination_pageCursors",
+              "args": null
             }
-          ],
-          "storageKey": null
+          ]
         },
         {
-          "alias": null,
-          "args": null,
           "kind": "ScalarField",
+          "alias": null,
           "name": "totalCount",
+          "args": null,
           "storageKey": null
         },
         {
+          "kind": "LinkedField",
           "alias": null,
+          "name": "edges",
+          "storageKey": null,
           "args": null,
           "concreteType": "AuctionResultEdge",
-          "kind": "LinkedField",
-          "name": "edges",
           "plural": true,
           "selections": [
             {
+              "kind": "LinkedField",
               "alias": null,
+              "name": "node",
+              "storageKey": null,
               "args": null,
               "concreteType": "AuctionResult",
-              "kind": "LinkedField",
-              "name": "node",
               "plural": false,
               "selections": [
                 {
-                  "alias": null,
-                  "args": null,
                   "kind": "ScalarField",
+                  "alias": null,
                   "name": "title",
-                  "storageKey": null
-                },
-                {
-                  "alias": "dimension_text",
                   "args": null,
-                  "kind": "ScalarField",
-                  "name": "dimensionText",
                   "storageKey": null
                 },
                 {
+                  "kind": "ScalarField",
+                  "alias": "dimension_text",
+                  "name": "dimensionText",
+                  "args": null,
+                  "storageKey": null
+                },
+                {
+                  "kind": "LinkedField",
                   "alias": null,
+                  "name": "images",
+                  "storageKey": null,
                   "args": null,
                   "concreteType": "AuctionLotImages",
-                  "kind": "LinkedField",
-                  "name": "images",
                   "plural": false,
                   "selections": [
                     {
+                      "kind": "LinkedField",
                       "alias": null,
+                      "name": "thumbnail",
+                      "storageKey": null,
                       "args": null,
                       "concreteType": "Image",
-                      "kind": "LinkedField",
-                      "name": "thumbnail",
                       "plural": false,
                       "selections": [
                         {
-                          "alias": null,
-                          "args": null,
                           "kind": "ScalarField",
+                          "alias": null,
                           "name": "url",
+                          "args": null,
                           "storageKey": null
                         }
-                      ],
-                      "storageKey": null
+                      ]
                     }
-                  ],
-                  "storageKey": null
+                  ]
                 },
                 {
+                  "kind": "ScalarField",
                   "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
                   "name": "description",
+                  "args": null,
                   "storageKey": null
                 },
                 {
-                  "alias": "date_text",
-                  "args": null,
                   "kind": "ScalarField",
+                  "alias": "date_text",
                   "name": "dateText",
+                  "args": null,
                   "storageKey": null
                 },
                 {
-                  "args": null,
                   "kind": "FragmentSpread",
-                  "name": "ArtistAuctionResultItem_auctionResult"
+                  "name": "ArtistAuctionResultItem_auctionResult",
+                  "args": null
                 }
-              ],
-              "storageKey": null
+              ]
             }
-          ],
-          "storageKey": null
+          ]
         },
         {
-          "args": null,
           "kind": "FragmentSpread",
-          "name": "AuctionResultsCount_results"
+          "name": "AuctionResultsCount_results",
+          "args": null
         }
-      ],
-      "storageKey": null
+      ]
     },
     {
-      "args": null,
       "kind": "FragmentSpread",
-      "name": "AuctionResultHeader_artist"
+      "name": "AuctionResultHeader_artist",
+      "args": null
     }
-  ],
-  "type": "Artist"
+  ]
 };
 (node as any).hash = '5aff1d33dbcf125bff6a53cf3f8a8a6f';
 export default node;

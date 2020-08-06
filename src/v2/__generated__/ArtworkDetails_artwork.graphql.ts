@@ -1,5 +1,4 @@
 /* tslint:disable */
-/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -30,13 +29,17 @@ var v0 = [
   }
 ];
 return {
-  "argumentDefinitions": [],
   "kind": "Fragment",
-  "metadata": null,
   "name": "ArtworkDetails_artwork",
+  "type": "Artwork",
+  "metadata": null,
+  "argumentDefinitions": [],
   "selections": [
     {
+      "kind": "LinkedField",
       "alias": null,
+      "name": "articles",
+      "storageKey": "articles(size:10)",
       "args": [
         {
           "kind": "Literal",
@@ -45,63 +48,59 @@ return {
         }
       ],
       "concreteType": "Article",
-      "kind": "LinkedField",
-      "name": "articles",
       "plural": true,
       "selections": [
         {
-          "alias": null,
-          "args": null,
           "kind": "ScalarField",
+          "alias": null,
           "name": "slug",
+          "args": null,
           "storageKey": null
         }
-      ],
-      "storageKey": "articles(size:10)"
+      ]
     },
     {
-      "alias": null,
-      "args": (v0/*: any*/),
       "kind": "ScalarField",
+      "alias": null,
       "name": "literature",
+      "args": (v0/*: any*/),
       "storageKey": "literature(format:\"HTML\")"
     },
     {
-      "alias": "exhibition_history",
-      "args": (v0/*: any*/),
       "kind": "ScalarField",
+      "alias": "exhibition_history",
       "name": "exhibitionHistory",
+      "args": (v0/*: any*/),
       "storageKey": "exhibitionHistory(format:\"HTML\")"
     },
     {
-      "alias": null,
-      "args": (v0/*: any*/),
       "kind": "ScalarField",
+      "alias": null,
       "name": "provenance",
+      "args": (v0/*: any*/),
       "storageKey": "provenance(format:\"HTML\")"
     },
     {
-      "args": null,
       "kind": "FragmentSpread",
-      "name": "ArtworkDetailsAboutTheWorkFromArtsy_artwork"
+      "name": "ArtworkDetailsAboutTheWorkFromArtsy_artwork",
+      "args": null
     },
     {
-      "args": null,
       "kind": "FragmentSpread",
-      "name": "ArtworkDetailsAboutTheWorkFromPartner_artwork"
+      "name": "ArtworkDetailsAboutTheWorkFromPartner_artwork",
+      "args": null
     },
     {
-      "args": null,
       "kind": "FragmentSpread",
-      "name": "ArtworkDetailsAdditionalInfo_artwork"
+      "name": "ArtworkDetailsAdditionalInfo_artwork",
+      "args": null
     },
     {
-      "args": null,
       "kind": "FragmentSpread",
-      "name": "ArtworkDetailsArticles_artwork"
+      "name": "ArtworkDetailsArticles_artwork",
+      "args": null
     }
-  ],
-  "type": "Artwork"
+  ]
 };
 })();
 (node as any).hash = 'ea24475efa27d1d663735de4d3c074f2';

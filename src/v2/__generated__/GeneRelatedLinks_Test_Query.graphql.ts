@@ -1,5 +1,4 @@
 /* tslint:disable */
-/* eslint-disable */
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -86,145 +85,145 @@ v1 = [
   }
 ],
 v2 = {
-  "alias": null,
-  "args": null,
   "kind": "ScalarField",
+  "alias": null,
   "name": "id",
+  "args": null,
   "storageKey": null
 },
 v3 = [
   {
-    "alias": null,
-    "args": null,
     "kind": "ScalarField",
+    "alias": null,
     "name": "href",
+    "args": null,
     "storageKey": null
   },
   {
-    "alias": null,
-    "args": null,
     "kind": "ScalarField",
+    "alias": null,
     "name": "name",
+    "args": null,
     "storageKey": null
   },
   (v2/*: any*/)
 ];
 return {
+  "kind": "Request",
   "fragment": {
-    "argumentDefinitions": [],
     "kind": "Fragment",
-    "metadata": null,
     "name": "GeneRelatedLinks_Test_Query",
+    "type": "Query",
+    "metadata": null,
+    "argumentDefinitions": [],
     "selections": [
       {
+        "kind": "LinkedField",
         "alias": null,
+        "name": "gene",
+        "storageKey": "gene(id:\"cats\")",
         "args": (v0/*: any*/),
         "concreteType": "Gene",
-        "kind": "LinkedField",
-        "name": "gene",
         "plural": false,
         "selections": [
           {
-            "args": null,
             "kind": "FragmentSpread",
-            "name": "GeneRelatedLinks_gene"
+            "name": "GeneRelatedLinks_gene",
+            "args": null
           }
-        ],
-        "storageKey": "gene(id:\"cats\")"
+        ]
       }
-    ],
-    "type": "Query"
+    ]
   },
-  "kind": "Request",
   "operation": {
-    "argumentDefinitions": [],
     "kind": "Operation",
     "name": "GeneRelatedLinks_Test_Query",
+    "argumentDefinitions": [],
     "selections": [
       {
+        "kind": "LinkedField",
         "alias": null,
+        "name": "gene",
+        "storageKey": "gene(id:\"cats\")",
         "args": (v0/*: any*/),
         "concreteType": "Gene",
-        "kind": "LinkedField",
-        "name": "gene",
         "plural": false,
         "selections": [
           {
+            "kind": "LinkedField",
             "alias": null,
+            "name": "similar",
+            "storageKey": "similar(first:10)",
             "args": (v1/*: any*/),
             "concreteType": "GeneConnection",
-            "kind": "LinkedField",
-            "name": "similar",
             "plural": false,
             "selections": [
               {
+                "kind": "LinkedField",
                 "alias": null,
+                "name": "edges",
+                "storageKey": null,
                 "args": null,
                 "concreteType": "GeneEdge",
-                "kind": "LinkedField",
-                "name": "edges",
                 "plural": true,
                 "selections": [
                   {
+                    "kind": "LinkedField",
                     "alias": null,
+                    "name": "node",
+                    "storageKey": null,
                     "args": null,
                     "concreteType": "Gene",
-                    "kind": "LinkedField",
-                    "name": "node",
                     "plural": false,
-                    "selections": (v3/*: any*/),
-                    "storageKey": null
+                    "selections": (v3/*: any*/)
                   }
-                ],
-                "storageKey": null
+                ]
               }
-            ],
-            "storageKey": "similar(first:10)"
+            ]
           },
           {
+            "kind": "LinkedField",
             "alias": "artists",
+            "name": "artistsConnection",
+            "storageKey": "artistsConnection(first:10)",
             "args": (v1/*: any*/),
             "concreteType": "ArtistConnection",
-            "kind": "LinkedField",
-            "name": "artistsConnection",
             "plural": false,
             "selections": [
               {
+                "kind": "LinkedField",
                 "alias": null,
+                "name": "edges",
+                "storageKey": null,
                 "args": null,
                 "concreteType": "ArtistEdge",
-                "kind": "LinkedField",
-                "name": "edges",
                 "plural": true,
                 "selections": [
                   {
+                    "kind": "LinkedField",
                     "alias": null,
+                    "name": "node",
+                    "storageKey": null,
                     "args": null,
                     "concreteType": "Artist",
-                    "kind": "LinkedField",
-                    "name": "node",
                     "plural": false,
-                    "selections": (v3/*: any*/),
-                    "storageKey": null
+                    "selections": (v3/*: any*/)
                   }
-                ],
-                "storageKey": null
+                ]
               }
-            ],
-            "storageKey": "artistsConnection(first:10)"
+            ]
           },
           (v2/*: any*/)
-        ],
-        "storageKey": "gene(id:\"cats\")"
+        ]
       }
     ]
   },
   "params": {
-    "id": null,
-    "metadata": {},
-    "name": "GeneRelatedLinks_Test_Query",
     "operationKind": "query",
-    "text": "query GeneRelatedLinks_Test_Query {\n  gene(id: \"cats\") {\n    ...GeneRelatedLinks_gene\n    id\n  }\n}\n\nfragment GeneRelatedLinks_gene on Gene {\n  similar(first: 10) {\n    edges {\n      node {\n        href\n        name\n        id\n      }\n    }\n  }\n  artists: artistsConnection(first: 10) {\n    edges {\n      node {\n        href\n        name\n        id\n      }\n    }\n  }\n}\n"
+    "name": "GeneRelatedLinks_Test_Query",
+    "id": null,
+    "text": "query GeneRelatedLinks_Test_Query {\n  gene(id: \"cats\") {\n    ...GeneRelatedLinks_gene\n    id\n  }\n}\n\nfragment GeneRelatedLinks_gene on Gene {\n  similar(first: 10) {\n    edges {\n      node {\n        href\n        name\n        id\n      }\n    }\n  }\n  artists: artistsConnection(first: 10) {\n    edges {\n      node {\n        href\n        name\n        id\n      }\n    }\n  }\n}\n",
+    "metadata": {}
   }
 };
 })();

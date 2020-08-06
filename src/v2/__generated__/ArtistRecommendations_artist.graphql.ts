@@ -1,5 +1,4 @@
 /* tslint:disable */
-/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -26,27 +25,9 @@ export type ArtistRecommendations_artist$key = {
 
 
 const node: ReaderFragment = {
-  "argumentDefinitions": [
-    {
-      "defaultValue": 3,
-      "kind": "LocalArgument",
-      "name": "count",
-      "type": "Int"
-    },
-    {
-      "defaultValue": "",
-      "kind": "LocalArgument",
-      "name": "cursor",
-      "type": "String"
-    },
-    {
-      "defaultValue": 7,
-      "kind": "LocalArgument",
-      "name": "minForsaleArtworks",
-      "type": "Int"
-    }
-  ],
   "kind": "Fragment",
+  "name": "ArtistRecommendations_artist",
+  "type": "Artist",
   "metadata": {
     "connection": [
       {
@@ -60,25 +41,48 @@ const node: ReaderFragment = {
       }
     ]
   },
-  "name": "ArtistRecommendations_artist",
+  "argumentDefinitions": [
+    {
+      "kind": "LocalArgument",
+      "name": "count",
+      "type": "Int",
+      "defaultValue": 3
+    },
+    {
+      "kind": "LocalArgument",
+      "name": "cursor",
+      "type": "String",
+      "defaultValue": ""
+    },
+    {
+      "kind": "LocalArgument",
+      "name": "minForsaleArtworks",
+      "type": "Int",
+      "defaultValue": 7
+    }
+  ],
   "selections": [
     {
-      "alias": null,
-      "args": null,
       "kind": "ScalarField",
+      "alias": null,
       "name": "slug",
+      "args": null,
       "storageKey": null
     },
     {
+      "kind": "LinkedField",
       "alias": null,
+      "name": "related",
+      "storageKey": null,
       "args": null,
       "concreteType": "ArtistRelatedData",
-      "kind": "LinkedField",
-      "name": "related",
       "plural": false,
       "selections": [
         {
+          "kind": "LinkedField",
           "alias": "artistsConnection",
+          "name": "__ArtistRecommendations_artistsConnection_connection",
+          "storageKey": null,
           "args": [
             {
               "kind": "Variable",
@@ -87,91 +91,86 @@ const node: ReaderFragment = {
             }
           ],
           "concreteType": "ArtistConnection",
-          "kind": "LinkedField",
-          "name": "__ArtistRecommendations_artistsConnection_connection",
           "plural": false,
           "selections": [
             {
+              "kind": "LinkedField",
               "alias": null,
+              "name": "edges",
+              "storageKey": null,
               "args": null,
               "concreteType": "ArtistEdge",
-              "kind": "LinkedField",
-              "name": "edges",
               "plural": true,
               "selections": [
                 {
+                  "kind": "LinkedField",
                   "alias": null,
+                  "name": "node",
+                  "storageKey": null,
                   "args": null,
                   "concreteType": "Artist",
-                  "kind": "LinkedField",
-                  "name": "node",
                   "plural": false,
                   "selections": [
                     {
-                      "alias": null,
-                      "args": null,
                       "kind": "ScalarField",
+                      "alias": null,
                       "name": "id",
+                      "args": null,
                       "storageKey": null
                     },
                     {
-                      "alias": null,
-                      "args": null,
                       "kind": "ScalarField",
+                      "alias": null,
                       "name": "__typename",
+                      "args": null,
                       "storageKey": null
                     },
                     {
-                      "args": null,
                       "kind": "FragmentSpread",
-                      "name": "RecommendedArtist_artist"
+                      "name": "RecommendedArtist_artist",
+                      "args": null
                     }
-                  ],
-                  "storageKey": null
+                  ]
                 },
                 {
-                  "alias": null,
-                  "args": null,
                   "kind": "ScalarField",
+                  "alias": null,
                   "name": "cursor",
+                  "args": null,
                   "storageKey": null
                 }
-              ],
-              "storageKey": null
+              ]
             },
             {
+              "kind": "LinkedField",
               "alias": null,
+              "name": "pageInfo",
+              "storageKey": null,
               "args": null,
               "concreteType": "PageInfo",
-              "kind": "LinkedField",
-              "name": "pageInfo",
               "plural": false,
               "selections": [
                 {
-                  "alias": null,
-                  "args": null,
                   "kind": "ScalarField",
+                  "alias": null,
                   "name": "endCursor",
+                  "args": null,
                   "storageKey": null
                 },
                 {
-                  "alias": null,
-                  "args": null,
                   "kind": "ScalarField",
+                  "alias": null,
                   "name": "hasNextPage",
+                  "args": null,
                   "storageKey": null
                 }
-              ],
-              "storageKey": null
+              ]
             }
-          ],
-          "storageKey": null
+          ]
         }
-      ],
-      "storageKey": null
+      ]
     }
-  ],
-  "type": "Artist"
+  ]
 };
 (node as any).hash = 'd902cee33de1092626cb53f065896809';
 export default node;

@@ -1,5 +1,4 @@
 /* tslint:disable */
-/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -17,27 +16,27 @@ export type SecurePayment_artwork$key = {
 
 
 const node: ReaderFragment = {
-  "argumentDefinitions": [],
   "kind": "Fragment",
-  "metadata": null,
   "name": "SecurePayment_artwork",
+  "type": "Artwork",
+  "metadata": null,
+  "argumentDefinitions": [],
   "selections": [
     {
-      "alias": "is_acquireable",
-      "args": null,
       "kind": "ScalarField",
+      "alias": "is_acquireable",
       "name": "isAcquireable",
+      "args": null,
       "storageKey": null
     },
     {
-      "alias": "is_offerable",
-      "args": null,
       "kind": "ScalarField",
+      "alias": "is_offerable",
       "name": "isOfferable",
+      "args": null,
       "storageKey": null
     }
-  ],
-  "type": "Artwork"
+  ]
 };
 (node as any).hash = '7b709dabe338934945be8bc6d1518082';
 export default node;

@@ -1,5 +1,4 @@
 /* tslint:disable */
-/* eslint-disable */
 
 import { ConcreteRequest } from "relay-runtime";
 export type helpersEmailQueryVariables = {
@@ -31,10 +30,10 @@ query helpersEmailQuery(
 const node: ConcreteRequest = (function(){
 var v0 = [
   {
-    "defaultValue": null,
     "kind": "LocalArgument",
     "name": "email",
-    "type": "String!"
+    "type": "String!",
+    "defaultValue": null
   }
 ],
 v1 = [
@@ -45,67 +44,67 @@ v1 = [
   }
 ],
 v2 = {
-  "alias": null,
-  "args": null,
   "kind": "ScalarField",
+  "alias": null,
   "name": "userAlreadyExists",
+  "args": null,
   "storageKey": null
 };
 return {
+  "kind": "Request",
   "fragment": {
-    "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
-    "metadata": null,
     "name": "helpersEmailQuery",
+    "type": "Query",
+    "metadata": null,
+    "argumentDefinitions": (v0/*: any*/),
     "selections": [
       {
+        "kind": "LinkedField",
         "alias": null,
+        "name": "user",
+        "storageKey": null,
         "args": (v1/*: any*/),
         "concreteType": "User",
-        "kind": "LinkedField",
-        "name": "user",
         "plural": false,
         "selections": [
           (v2/*: any*/)
-        ],
-        "storageKey": null
+        ]
       }
-    ],
-    "type": "Query"
+    ]
   },
-  "kind": "Request",
   "operation": {
-    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "helpersEmailQuery",
+    "argumentDefinitions": (v0/*: any*/),
     "selections": [
       {
+        "kind": "LinkedField",
         "alias": null,
+        "name": "user",
+        "storageKey": null,
         "args": (v1/*: any*/),
         "concreteType": "User",
-        "kind": "LinkedField",
-        "name": "user",
         "plural": false,
         "selections": [
           (v2/*: any*/),
           {
-            "alias": null,
-            "args": null,
             "kind": "ScalarField",
+            "alias": null,
             "name": "id",
+            "args": null,
             "storageKey": null
           }
-        ],
-        "storageKey": null
+        ]
       }
     ]
   },
   "params": {
-    "id": null,
-    "metadata": {},
-    "name": "helpersEmailQuery",
     "operationKind": "query",
-    "text": "query helpersEmailQuery(\n  $email: String!\n) {\n  user(email: $email) {\n    userAlreadyExists\n    id\n  }\n}\n"
+    "name": "helpersEmailQuery",
+    "id": null,
+    "text": "query helpersEmailQuery(\n  $email: String!\n) {\n  user(email: $email) {\n    userAlreadyExists\n    id\n  }\n}\n",
+    "metadata": {}
   }
 };
 })();

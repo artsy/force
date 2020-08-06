@@ -1,5 +1,4 @@
 /* tslint:disable */
-/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -18,31 +17,31 @@ export type ArtworkSidebarClassification_artwork$key = {
 
 
 const node: ReaderFragment = {
-  "argumentDefinitions": [],
   "kind": "Fragment",
-  "metadata": null,
   "name": "ArtworkSidebarClassification_artwork",
+  "type": "Artwork",
+  "metadata": null,
+  "argumentDefinitions": [],
   "selections": [
     {
+      "kind": "LinkedField",
       "alias": "attribution_class",
+      "name": "attributionClass",
+      "storageKey": null,
       "args": null,
       "concreteType": "AttributionClass",
-      "kind": "LinkedField",
-      "name": "attributionClass",
       "plural": false,
       "selections": [
         {
-          "alias": "short_description",
-          "args": null,
           "kind": "ScalarField",
+          "alias": "short_description",
           "name": "shortDescription",
+          "args": null,
           "storageKey": null
         }
-      ],
-      "storageKey": null
+      ]
     }
-  ],
-  "type": "Artwork"
+  ]
 };
 (node as any).hash = '8207b17fc2db26e6b886dd476a7920bf';
 export default node;

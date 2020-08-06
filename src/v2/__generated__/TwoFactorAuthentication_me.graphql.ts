@@ -1,5 +1,4 @@
 /* tslint:disable */
-/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -17,35 +16,35 @@ export type TwoFactorAuthentication_me$key = {
 
 
 const node: ReaderFragment = {
-  "argumentDefinitions": [],
   "kind": "Fragment",
-  "metadata": null,
   "name": "TwoFactorAuthentication_me",
+  "type": "Me",
+  "metadata": null,
+  "argumentDefinitions": [],
   "selections": [
     {
-      "alias": null,
-      "args": null,
       "kind": "ScalarField",
+      "alias": null,
       "name": "hasSecondFactorEnabled",
+      "args": null,
       "storageKey": null
     },
     {
-      "args": null,
       "kind": "FragmentSpread",
-      "name": "AppSecondFactor_me"
+      "name": "AppSecondFactor_me",
+      "args": null
     },
     {
-      "args": null,
       "kind": "FragmentSpread",
-      "name": "SmsSecondFactor_me"
+      "name": "SmsSecondFactor_me",
+      "args": null
     },
     {
-      "args": null,
       "kind": "FragmentSpread",
-      "name": "BackupSecondFactor_me"
+      "name": "BackupSecondFactor_me",
+      "args": null
     }
-  ],
-  "type": "Me"
+  ]
 };
 (node as any).hash = 'eac31dfdac45d8d82d5c52be1fac4bf8';
 export default node;

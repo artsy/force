@@ -1,5 +1,4 @@
 /* tslint:disable */
-/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -16,20 +15,20 @@ export type MockRelayRendererFixtures_artist$key = {
 
 
 const node: ReaderFragment = {
-  "argumentDefinitions": [],
   "kind": "Fragment",
-  "metadata": null,
   "name": "MockRelayRendererFixtures_artist",
+  "type": "Artist",
+  "metadata": null,
+  "argumentDefinitions": [],
   "selections": [
     {
-      "alias": null,
-      "args": null,
       "kind": "ScalarField",
+      "alias": null,
       "name": "name",
+      "args": null,
       "storageKey": null
     }
-  ],
-  "type": "Artist"
+  ]
 };
 (node as any).hash = '00923700fab4960aafc6cd20281ef191';
 export default node;

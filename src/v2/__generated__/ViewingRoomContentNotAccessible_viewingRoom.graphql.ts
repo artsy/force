@@ -1,5 +1,4 @@
 /* tslint:disable */
-/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -19,38 +18,38 @@ export type ViewingRoomContentNotAccessible_viewingRoom$key = {
 
 
 const node: ReaderFragment = {
-  "argumentDefinitions": [],
   "kind": "Fragment",
-  "metadata": null,
   "name": "ViewingRoomContentNotAccessible_viewingRoom",
+  "type": "ViewingRoom",
+  "metadata": null,
+  "argumentDefinitions": [],
   "selections": [
     {
-      "alias": null,
-      "args": null,
       "kind": "ScalarField",
+      "alias": null,
       "name": "status",
+      "args": null,
       "storageKey": null
     },
     {
+      "kind": "LinkedField",
       "alias": null,
+      "name": "partner",
+      "storageKey": null,
       "args": null,
       "concreteType": "Partner",
-      "kind": "LinkedField",
-      "name": "partner",
       "plural": false,
       "selections": [
         {
-          "alias": null,
-          "args": null,
           "kind": "ScalarField",
+          "alias": null,
           "name": "href",
+          "args": null,
           "storageKey": null
         }
-      ],
-      "storageKey": null
+      ]
     }
-  ],
-  "type": "ViewingRoom"
+  ]
 };
 (node as any).hash = 'fee7534dccbfac831698452070776d03';
 export default node;

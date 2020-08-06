@@ -1,5 +1,4 @@
 /* tslint:disable */
-/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -18,13 +17,17 @@ export type ArtistBio_bio$key = {
 
 
 const node: ReaderFragment = {
-  "argumentDefinitions": [],
   "kind": "Fragment",
-  "metadata": null,
   "name": "ArtistBio_bio",
+  "type": "Artist",
+  "metadata": null,
+  "argumentDefinitions": [],
   "selections": [
     {
+      "kind": "LinkedField",
       "alias": null,
+      "name": "biographyBlurb",
+      "storageKey": "biographyBlurb(format:\"HTML\",partnerBio:true)",
       "args": [
         {
           "kind": "Literal",
@@ -38,22 +41,18 @@ const node: ReaderFragment = {
         }
       ],
       "concreteType": "ArtistBlurb",
-      "kind": "LinkedField",
-      "name": "biographyBlurb",
       "plural": false,
       "selections": [
         {
-          "alias": null,
-          "args": null,
           "kind": "ScalarField",
+          "alias": null,
           "name": "text",
+          "args": null,
           "storageKey": null
         }
-      ],
-      "storageKey": "biographyBlurb(format:\"HTML\",partnerBio:true)"
+      ]
     }
-  ],
-  "type": "Artist"
+  ]
 };
 (node as any).hash = '8d3d6cad9783dad9b00e24bb96e77b1a';
 export default node;

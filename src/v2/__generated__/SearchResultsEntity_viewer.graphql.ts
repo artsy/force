@@ -1,5 +1,4 @@
 /* tslint:disable */
-/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -34,56 +33,60 @@ export type SearchResultsEntity_viewer$key = {
 
 
 const node: ReaderFragment = {
+  "kind": "Fragment",
+  "name": "SearchResultsEntity_viewer",
+  "type": "Viewer",
+  "metadata": null,
   "argumentDefinitions": [
     {
-      "defaultValue": "",
       "kind": "LocalArgument",
       "name": "term",
-      "type": "String!"
+      "type": "String!",
+      "defaultValue": ""
     },
     {
-      "defaultValue": 10,
       "kind": "LocalArgument",
       "name": "first",
-      "type": "Int"
+      "type": "Int",
+      "defaultValue": 10
     },
     {
-      "defaultValue": null,
       "kind": "LocalArgument",
       "name": "last",
-      "type": "Int"
+      "type": "Int",
+      "defaultValue": null
     },
     {
-      "defaultValue": null,
       "kind": "LocalArgument",
       "name": "after",
-      "type": "String"
+      "type": "String",
+      "defaultValue": null
     },
     {
-      "defaultValue": null,
       "kind": "LocalArgument",
       "name": "before",
-      "type": "String"
+      "type": "String",
+      "defaultValue": null
     },
     {
-      "defaultValue": null,
       "kind": "LocalArgument",
       "name": "page",
-      "type": "Int"
+      "type": "Int",
+      "defaultValue": null
     },
     {
-      "defaultValue": null,
       "kind": "LocalArgument",
       "name": "entities",
-      "type": "[SearchEntity]"
+      "type": "[SearchEntity]",
+      "defaultValue": null
     }
   ],
-  "kind": "Fragment",
-  "metadata": null,
-  "name": "SearchResultsEntity_viewer",
   "selections": [
     {
+      "kind": "LinkedField",
       "alias": null,
+      "name": "searchConnection",
+      "storageKey": null,
       "args": [
         {
           "kind": "Variable",
@@ -122,126 +125,122 @@ const node: ReaderFragment = {
         }
       ],
       "concreteType": "SearchableConnection",
-      "kind": "LinkedField",
-      "name": "searchConnection",
       "plural": false,
       "selections": [
         {
+          "kind": "LinkedField",
           "alias": null,
+          "name": "pageInfo",
+          "storageKey": null,
           "args": null,
           "concreteType": "PageInfo",
-          "kind": "LinkedField",
-          "name": "pageInfo",
           "plural": false,
           "selections": [
             {
-              "alias": null,
-              "args": null,
               "kind": "ScalarField",
+              "alias": null,
               "name": "hasNextPage",
+              "args": null,
               "storageKey": null
             },
             {
-              "alias": null,
-              "args": null,
               "kind": "ScalarField",
+              "alias": null,
               "name": "endCursor",
+              "args": null,
               "storageKey": null
             }
-          ],
-          "storageKey": null
+          ]
         },
         {
+          "kind": "LinkedField",
           "alias": null,
+          "name": "pageCursors",
+          "storageKey": null,
           "args": null,
           "concreteType": "PageCursors",
-          "kind": "LinkedField",
-          "name": "pageCursors",
           "plural": false,
           "selections": [
             {
-              "args": null,
               "kind": "FragmentSpread",
-              "name": "Pagination_pageCursors"
+              "name": "Pagination_pageCursors",
+              "args": null
             }
-          ],
-          "storageKey": null
+          ]
         },
         {
+          "kind": "LinkedField",
           "alias": null,
+          "name": "edges",
+          "storageKey": null,
           "args": null,
           "concreteType": "SearchableEdge",
-          "kind": "LinkedField",
-          "name": "edges",
           "plural": true,
           "selections": [
             {
+              "kind": "LinkedField",
               "alias": null,
+              "name": "node",
+              "storageKey": null,
               "args": null,
               "concreteType": null,
-              "kind": "LinkedField",
-              "name": "node",
               "plural": false,
               "selections": [
                 {
                   "kind": "InlineFragment",
+                  "type": "SearchableItem",
                   "selections": [
                     {
-                      "alias": null,
-                      "args": null,
                       "kind": "ScalarField",
+                      "alias": null,
                       "name": "description",
+                      "args": null,
                       "storageKey": null
                     },
                     {
-                      "alias": null,
-                      "args": null,
                       "kind": "ScalarField",
+                      "alias": null,
                       "name": "displayLabel",
+                      "args": null,
                       "storageKey": null
                     },
                     {
-                      "alias": null,
-                      "args": null,
                       "kind": "ScalarField",
+                      "alias": null,
                       "name": "href",
+                      "args": null,
                       "storageKey": null
                     },
                     {
-                      "alias": null,
-                      "args": null,
                       "kind": "ScalarField",
+                      "alias": null,
                       "name": "internalID",
+                      "args": null,
                       "storageKey": null
                     },
                     {
-                      "alias": null,
-                      "args": null,
                       "kind": "ScalarField",
+                      "alias": null,
                       "name": "imageUrl",
+                      "args": null,
                       "storageKey": null
                     },
                     {
-                      "alias": null,
-                      "args": null,
                       "kind": "ScalarField",
+                      "alias": null,
                       "name": "displayType",
+                      "args": null,
                       "storageKey": null
                     }
-                  ],
-                  "type": "SearchableItem"
+                  ]
                 }
-              ],
-              "storageKey": null
+              ]
             }
-          ],
-          "storageKey": null
+          ]
         }
-      ],
-      "storageKey": null
+      ]
     }
-  ],
-  "type": "Viewer"
+  ]
 };
 (node as any).hash = '5815db449614a1ba927017f63ab148bf';
 export default node;

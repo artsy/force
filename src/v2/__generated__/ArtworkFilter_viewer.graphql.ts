@@ -1,5 +1,4 @@
 /* tslint:disable */
-/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -19,134 +18,138 @@ export type ArtworkFilter_viewer$key = {
 
 
 const node: ReaderFragment = {
+  "kind": "Fragment",
+  "name": "ArtworkFilter_viewer",
+  "type": "Viewer",
+  "metadata": null,
   "argumentDefinitions": [
     {
-      "defaultValue": null,
       "kind": "LocalArgument",
       "name": "acquireable",
-      "type": "Boolean"
+      "type": "Boolean",
+      "defaultValue": null
     },
     {
-      "defaultValue": null,
       "kind": "LocalArgument",
       "name": "aggregations",
-      "type": "[ArtworkAggregation]"
+      "type": "[ArtworkAggregation]",
+      "defaultValue": null
     },
     {
-      "defaultValue": null,
       "kind": "LocalArgument",
       "name": "artistID",
-      "type": "String"
+      "type": "String",
+      "defaultValue": null
     },
     {
-      "defaultValue": null,
       "kind": "LocalArgument",
       "name": "atAuction",
-      "type": "Boolean"
+      "type": "Boolean",
+      "defaultValue": null
     },
     {
-      "defaultValue": null,
       "kind": "LocalArgument",
       "name": "attributionClass",
-      "type": "[String]"
+      "type": "[String]",
+      "defaultValue": null
     },
     {
-      "defaultValue": null,
       "kind": "LocalArgument",
       "name": "color",
-      "type": "String"
+      "type": "String",
+      "defaultValue": null
     },
     {
-      "defaultValue": null,
       "kind": "LocalArgument",
       "name": "forSale",
-      "type": "Boolean"
+      "type": "Boolean",
+      "defaultValue": null
     },
     {
-      "defaultValue": null,
       "kind": "LocalArgument",
       "name": "height",
-      "type": "String"
+      "type": "String",
+      "defaultValue": null
     },
     {
-      "defaultValue": null,
       "kind": "LocalArgument",
       "name": "inquireableOnly",
-      "type": "Boolean"
+      "type": "Boolean",
+      "defaultValue": null
     },
     {
-      "defaultValue": null,
       "kind": "LocalArgument",
       "name": "keyword",
-      "type": "String"
+      "type": "String",
+      "defaultValue": null
     },
     {
-      "defaultValue": null,
       "kind": "LocalArgument",
       "name": "majorPeriods",
-      "type": "[String]"
+      "type": "[String]",
+      "defaultValue": null
     },
     {
-      "defaultValue": null,
       "kind": "LocalArgument",
       "name": "medium",
-      "type": "String"
+      "type": "String",
+      "defaultValue": null
     },
     {
-      "defaultValue": null,
       "kind": "LocalArgument",
       "name": "offerable",
-      "type": "Boolean"
+      "type": "Boolean",
+      "defaultValue": null
     },
     {
-      "defaultValue": null,
       "kind": "LocalArgument",
       "name": "page",
-      "type": "Int"
+      "type": "Int",
+      "defaultValue": null
     },
     {
-      "defaultValue": null,
       "kind": "LocalArgument",
       "name": "partnerID",
-      "type": "ID"
+      "type": "ID",
+      "defaultValue": null
     },
     {
-      "defaultValue": null,
       "kind": "LocalArgument",
       "name": "priceRange",
-      "type": "String"
+      "type": "String",
+      "defaultValue": null
     },
     {
-      "defaultValue": null,
       "kind": "LocalArgument",
       "name": "sizes",
-      "type": "[ArtworkSizes]"
+      "type": "[ArtworkSizes]",
+      "defaultValue": null
     },
     {
-      "defaultValue": "-partner_updated_at",
       "kind": "LocalArgument",
       "name": "sort",
-      "type": "String"
+      "type": "String",
+      "defaultValue": "-partner_updated_at"
     },
     {
-      "defaultValue": null,
       "kind": "LocalArgument",
       "name": "width",
-      "type": "String"
+      "type": "String",
+      "defaultValue": null
     },
     {
-      "defaultValue": 30,
       "kind": "LocalArgument",
       "name": "first",
-      "type": "Int"
+      "type": "Int",
+      "defaultValue": 30
     }
   ],
-  "kind": "Fragment",
-  "metadata": null,
-  "name": "ArtworkFilter_viewer",
   "selections": [
     {
+      "kind": "LinkedField",
       "alias": "filtered_artworks",
+      "name": "artworksConnection",
+      "storageKey": null,
       "args": [
         {
           "kind": "Variable",
@@ -250,27 +253,23 @@ const node: ReaderFragment = {
         }
       ],
       "concreteType": "FilterArtworksConnection",
-      "kind": "LinkedField",
-      "name": "artworksConnection",
       "plural": false,
       "selections": [
         {
-          "alias": null,
-          "args": null,
           "kind": "ScalarField",
+          "alias": null,
           "name": "id",
+          "args": null,
           "storageKey": null
         },
         {
-          "args": null,
           "kind": "FragmentSpread",
-          "name": "ArtworkFilterArtworkGrid2_filtered_artworks"
+          "name": "ArtworkFilterArtworkGrid2_filtered_artworks",
+          "args": null
         }
-      ],
-      "storageKey": null
+      ]
     }
-  ],
-  "type": "Viewer"
+  ]
 };
 (node as any).hash = '35138d48a93ef0f71ee5c77428ffce91';
 export default node;

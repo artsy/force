@@ -1,5 +1,4 @@
 /* tslint:disable */
-/* eslint-disable */
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -32,84 +31,84 @@ fragment CollectionsHubsHomepageNav_marketingHubCollections on MarketingCollecti
 */
 
 const node: ConcreteRequest = {
+  "kind": "Request",
   "fragment": {
-    "argumentDefinitions": [],
     "kind": "Fragment",
-    "metadata": null,
     "name": "CollectionsHubsHomepageNavQuery",
+    "type": "Query",
+    "metadata": null,
+    "argumentDefinitions": [],
     "selections": [
       {
+        "kind": "LinkedField",
         "alias": null,
+        "name": "marketingHubCollections",
+        "storageKey": null,
         "args": null,
         "concreteType": "MarketingCollection",
-        "kind": "LinkedField",
-        "name": "marketingHubCollections",
         "plural": true,
         "selections": [
           {
-            "args": null,
             "kind": "FragmentSpread",
-            "name": "CollectionsHubsHomepageNav_marketingHubCollections"
+            "name": "CollectionsHubsHomepageNav_marketingHubCollections",
+            "args": null
           }
-        ],
-        "storageKey": null
+        ]
       }
-    ],
-    "type": "Query"
+    ]
   },
-  "kind": "Request",
   "operation": {
-    "argumentDefinitions": [],
     "kind": "Operation",
     "name": "CollectionsHubsHomepageNavQuery",
+    "argumentDefinitions": [],
     "selections": [
       {
+        "kind": "LinkedField",
         "alias": null,
+        "name": "marketingHubCollections",
+        "storageKey": null,
         "args": null,
         "concreteType": "MarketingCollection",
-        "kind": "LinkedField",
-        "name": "marketingHubCollections",
         "plural": true,
         "selections": [
           {
-            "alias": null,
-            "args": null,
             "kind": "ScalarField",
+            "alias": null,
             "name": "slug",
+            "args": null,
             "storageKey": null
           },
           {
-            "alias": null,
-            "args": null,
             "kind": "ScalarField",
+            "alias": null,
             "name": "title",
+            "args": null,
             "storageKey": null
           },
           {
-            "alias": null,
-            "args": null,
             "kind": "ScalarField",
+            "alias": null,
             "name": "thumbnail",
+            "args": null,
             "storageKey": null
           },
           {
-            "alias": null,
-            "args": null,
             "kind": "ScalarField",
+            "alias": null,
             "name": "id",
+            "args": null,
             "storageKey": null
           }
-        ],
-        "storageKey": null
+        ]
       }
     ]
   },
   "params": {
-    "id": null,
-    "metadata": {},
-    "name": "CollectionsHubsHomepageNavQuery",
     "operationKind": "query",
-    "text": "query CollectionsHubsHomepageNavQuery {\n  marketingHubCollections {\n    ...CollectionsHubsHomepageNav_marketingHubCollections\n    id\n  }\n}\n\nfragment CollectionsHubsHomepageNav_marketingHubCollections on MarketingCollection {\n  slug\n  title\n  thumbnail\n}\n"
+    "name": "CollectionsHubsHomepageNavQuery",
+    "id": null,
+    "text": "query CollectionsHubsHomepageNavQuery {\n  marketingHubCollections {\n    ...CollectionsHubsHomepageNav_marketingHubCollections\n    id\n  }\n}\n\nfragment CollectionsHubsHomepageNav_marketingHubCollections on MarketingCollection {\n  slug\n  title\n  thumbnail\n}\n",
+    "metadata": {}
   }
 };
 (node as any).hash = '7e2b35da19e4803e18aca235288f1303';

@@ -1,5 +1,4 @@
 /* tslint:disable */
-/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -34,28 +33,31 @@ var v0 = {
 },
 v1 = [
   {
-    "alias": null,
-    "args": null,
     "kind": "ScalarField",
+    "alias": null,
     "name": "url",
+    "args": null,
     "storageKey": null
   }
 ];
 return {
-  "argumentDefinitions": [],
   "kind": "Fragment",
-  "metadata": null,
   "name": "FeatureHeaderFull_feature",
+  "type": "Feature",
+  "metadata": null,
+  "argumentDefinitions": [],
   "selections": [
     {
-      "alias": null,
-      "args": null,
       "kind": "ScalarField",
+      "alias": null,
       "name": "name",
+      "args": null,
       "storageKey": null
     },
     {
+      "kind": "ScalarField",
       "alias": null,
+      "name": "subheadline",
       "args": [
         {
           "kind": "Literal",
@@ -63,20 +65,22 @@ return {
           "value": "HTML"
         }
       ],
-      "kind": "ScalarField",
-      "name": "subheadline",
       "storageKey": "subheadline(format:\"HTML\")"
     },
     {
+      "kind": "LinkedField",
       "alias": "fullImage",
+      "name": "image",
+      "storageKey": null,
       "args": null,
       "concreteType": "Image",
-      "kind": "LinkedField",
-      "name": "image",
       "plural": false,
       "selections": [
         {
+          "kind": "LinkedField",
           "alias": "_1x",
+          "name": "cropped",
+          "storageKey": "cropped(height:1000,version:[\"source\"],width:2000)",
           "args": [
             {
               "kind": "Literal",
@@ -91,14 +95,14 @@ return {
             }
           ],
           "concreteType": "CroppedImageUrl",
-          "kind": "LinkedField",
-          "name": "cropped",
           "plural": false,
-          "selections": (v1/*: any*/),
-          "storageKey": "cropped(height:1000,version:[\"source\"],width:2000)"
+          "selections": (v1/*: any*/)
         },
         {
+          "kind": "LinkedField",
           "alias": "_2x",
+          "name": "cropped",
+          "storageKey": "cropped(height:2000,version:[\"source\"],width:4000)",
           "args": [
             {
               "kind": "Literal",
@@ -113,17 +117,12 @@ return {
             }
           ],
           "concreteType": "CroppedImageUrl",
-          "kind": "LinkedField",
-          "name": "cropped",
           "plural": false,
-          "selections": (v1/*: any*/),
-          "storageKey": "cropped(height:2000,version:[\"source\"],width:4000)"
+          "selections": (v1/*: any*/)
         }
-      ],
-      "storageKey": null
+      ]
     }
-  ],
-  "type": "Feature"
+  ]
 };
 })();
 (node as any).hash = 'c6db612daad6b6c7ff0fdc2ee7b9b07d';

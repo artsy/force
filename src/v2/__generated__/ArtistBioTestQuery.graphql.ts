@@ -1,5 +1,4 @@
 /* tslint:disable */
-/* eslint-disable */
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -49,47 +48,51 @@ var v0 = [
   }
 ];
 return {
+  "kind": "Request",
   "fragment": {
-    "argumentDefinitions": [],
     "kind": "Fragment",
-    "metadata": null,
     "name": "ArtistBioTestQuery",
+    "type": "Query",
+    "metadata": null,
+    "argumentDefinitions": [],
     "selections": [
       {
+        "kind": "LinkedField",
         "alias": "bio",
+        "name": "artist",
+        "storageKey": "artist(id:\"unused\")",
         "args": (v0/*: any*/),
         "concreteType": "Artist",
-        "kind": "LinkedField",
-        "name": "artist",
         "plural": false,
         "selections": [
           {
-            "args": null,
             "kind": "FragmentSpread",
-            "name": "ArtistBio_bio"
+            "name": "ArtistBio_bio",
+            "args": null
           }
-        ],
-        "storageKey": "artist(id:\"unused\")"
+        ]
       }
-    ],
-    "type": "Query"
+    ]
   },
-  "kind": "Request",
   "operation": {
-    "argumentDefinitions": [],
     "kind": "Operation",
     "name": "ArtistBioTestQuery",
+    "argumentDefinitions": [],
     "selections": [
       {
+        "kind": "LinkedField",
         "alias": "bio",
+        "name": "artist",
+        "storageKey": "artist(id:\"unused\")",
         "args": (v0/*: any*/),
         "concreteType": "Artist",
-        "kind": "LinkedField",
-        "name": "artist",
         "plural": false,
         "selections": [
           {
+            "kind": "LinkedField",
             "alias": null,
+            "name": "biographyBlurb",
+            "storageKey": "biographyBlurb(format:\"HTML\",partnerBio:true)",
             "args": [
               {
                 "kind": "Literal",
@@ -103,38 +106,34 @@ return {
               }
             ],
             "concreteType": "ArtistBlurb",
-            "kind": "LinkedField",
-            "name": "biographyBlurb",
             "plural": false,
             "selections": [
               {
-                "alias": null,
-                "args": null,
                 "kind": "ScalarField",
+                "alias": null,
                 "name": "text",
+                "args": null,
                 "storageKey": null
               }
-            ],
-            "storageKey": "biographyBlurb(format:\"HTML\",partnerBio:true)"
+            ]
           },
           {
-            "alias": null,
-            "args": null,
             "kind": "ScalarField",
+            "alias": null,
             "name": "id",
+            "args": null,
             "storageKey": null
           }
-        ],
-        "storageKey": "artist(id:\"unused\")"
+        ]
       }
     ]
   },
   "params": {
-    "id": null,
-    "metadata": {},
-    "name": "ArtistBioTestQuery",
     "operationKind": "query",
-    "text": "query ArtistBioTestQuery {\n  bio: artist(id: \"unused\") {\n    ...ArtistBio_bio\n    id\n  }\n}\n\nfragment ArtistBio_bio on Artist {\n  biographyBlurb(format: HTML, partnerBio: true) {\n    text\n  }\n}\n"
+    "name": "ArtistBioTestQuery",
+    "id": null,
+    "text": "query ArtistBioTestQuery {\n  bio: artist(id: \"unused\") {\n    ...ArtistBio_bio\n    id\n  }\n}\n\nfragment ArtistBio_bio on Artist {\n  biographyBlurb(format: HTML, partnerBio: true) {\n    text\n  }\n}\n",
+    "metadata": {}
   }
 };
 })();

@@ -1,5 +1,4 @@
 /* tslint:disable */
-/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -18,34 +17,34 @@ export type FollowProfileButton_profile$key = {
 
 
 const node: ReaderFragment = {
-  "argumentDefinitions": [],
   "kind": "Fragment",
-  "metadata": null,
   "name": "FollowProfileButton_profile",
+  "type": "Profile",
+  "metadata": null,
+  "argumentDefinitions": [],
   "selections": [
     {
-      "alias": null,
-      "args": null,
       "kind": "ScalarField",
+      "alias": null,
       "name": "id",
+      "args": null,
       "storageKey": null
     },
     {
+      "kind": "ScalarField",
       "alias": null,
-      "args": null,
-      "kind": "ScalarField",
       "name": "internalID",
+      "args": null,
       "storageKey": null
     },
     {
-      "alias": "is_followed",
-      "args": null,
       "kind": "ScalarField",
+      "alias": "is_followed",
       "name": "isFollowed",
+      "args": null,
       "storageKey": null
     }
-  ],
-  "type": "Profile"
+  ]
 };
 (node as any).hash = '377ae8b366b06be26ad5ce795bb56144';
 export default node;

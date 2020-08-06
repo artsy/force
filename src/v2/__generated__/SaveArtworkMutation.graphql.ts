@@ -1,11 +1,10 @@
 /* tslint:disable */
-/* eslint-disable */
 
 import { ConcreteRequest } from "relay-runtime";
 export type SaveArtworkInput = {
-    artworkID?: string | null;
-    clientMutationId?: string | null;
-    remove?: boolean | null;
+    readonly artworkID?: string | null;
+    readonly clientMutationId?: string | null;
+    readonly remove?: boolean | null;
 };
 export type SaveArtworkMutationVariables = {
     input: SaveArtworkInput;
@@ -43,15 +42,18 @@ mutation SaveArtworkMutation(
 const node: ConcreteRequest = (function(){
 var v0 = [
   {
-    "defaultValue": null,
     "kind": "LocalArgument",
     "name": "input",
-    "type": "SaveArtworkInput!"
+    "type": "SaveArtworkInput!",
+    "defaultValue": null
   }
 ],
 v1 = [
   {
+    "kind": "LinkedField",
     "alias": null,
+    "name": "saveArtwork",
+    "storageKey": null,
     "args": [
       {
         "kind": "Variable",
@@ -60,68 +62,65 @@ v1 = [
       }
     ],
     "concreteType": "SaveArtworkPayload",
-    "kind": "LinkedField",
-    "name": "saveArtwork",
     "plural": false,
     "selections": [
       {
+        "kind": "LinkedField",
         "alias": null,
+        "name": "artwork",
+        "storageKey": null,
         "args": null,
         "concreteType": "Artwork",
-        "kind": "LinkedField",
-        "name": "artwork",
         "plural": false,
         "selections": [
           {
-            "alias": null,
-            "args": null,
             "kind": "ScalarField",
+            "alias": null,
             "name": "id",
+            "args": null,
             "storageKey": null
           },
           {
+            "kind": "ScalarField",
             "alias": null,
-            "args": null,
-            "kind": "ScalarField",
             "name": "slug",
+            "args": null,
             "storageKey": null
           },
           {
-            "alias": "is_saved",
-            "args": null,
             "kind": "ScalarField",
+            "alias": "is_saved",
             "name": "isSaved",
+            "args": null,
             "storageKey": null
           }
-        ],
-        "storageKey": null
+        ]
       }
-    ],
-    "storageKey": null
+    ]
   }
 ];
 return {
-  "fragment": {
-    "argumentDefinitions": (v0/*: any*/),
-    "kind": "Fragment",
-    "metadata": null,
-    "name": "SaveArtworkMutation",
-    "selections": (v1/*: any*/),
-    "type": "Mutation"
-  },
   "kind": "Request",
-  "operation": {
+  "fragment": {
+    "kind": "Fragment",
+    "name": "SaveArtworkMutation",
+    "type": "Mutation",
+    "metadata": null,
     "argumentDefinitions": (v0/*: any*/),
+    "selections": (v1/*: any*/)
+  },
+  "operation": {
     "kind": "Operation",
     "name": "SaveArtworkMutation",
+    "argumentDefinitions": (v0/*: any*/),
     "selections": (v1/*: any*/)
   },
   "params": {
-    "id": null,
-    "metadata": {},
-    "name": "SaveArtworkMutation",
     "operationKind": "mutation",
-    "text": "mutation SaveArtworkMutation(\n  $input: SaveArtworkInput!\n) {\n  saveArtwork(input: $input) {\n    artwork {\n      id\n      slug\n      is_saved: isSaved\n    }\n  }\n}\n"
+    "name": "SaveArtworkMutation",
+    "id": null,
+    "text": "mutation SaveArtworkMutation(\n  $input: SaveArtworkInput!\n) {\n  saveArtwork(input: $input) {\n    artwork {\n      id\n      slug\n      is_saved: isSaved\n    }\n  }\n}\n",
+    "metadata": {}
   }
 };
 })();

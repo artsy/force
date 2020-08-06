@@ -1,5 +1,4 @@
 /* tslint:disable */
-/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -16,20 +15,20 @@ export type AuctionResultsCount_results$key = {
 
 
 const node: ReaderFragment = {
-  "argumentDefinitions": [],
   "kind": "Fragment",
-  "metadata": null,
   "name": "AuctionResultsCount_results",
+  "type": "AuctionResultConnection",
+  "metadata": null,
+  "argumentDefinitions": [],
   "selections": [
     {
-      "alias": null,
-      "args": null,
       "kind": "ScalarField",
+      "alias": null,
       "name": "totalCount",
+      "args": null,
       "storageKey": null
     }
-  ],
-  "type": "AuctionResultConnection"
+  ]
 };
 (node as any).hash = 'b7cf8e974b1ff36d00728045da16d9eb';
 export default node;

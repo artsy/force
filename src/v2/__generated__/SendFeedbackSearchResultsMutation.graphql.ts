@@ -1,13 +1,12 @@
 /* tslint:disable */
-/* eslint-disable */
 
 import { ConcreteRequest } from "relay-runtime";
 export type SendFeedbackMutationInput = {
-    clientMutationId?: string | null;
-    email?: string | null;
-    message: string;
-    name?: string | null;
-    url?: string | null;
+    readonly clientMutationId?: string | null;
+    readonly email?: string | null;
+    readonly message: string;
+    readonly name?: string | null;
+    readonly url?: string | null;
 };
 export type SendFeedbackSearchResultsMutationVariables = {
     input: SendFeedbackMutationInput;
@@ -61,10 +60,10 @@ mutation SendFeedbackSearchResultsMutation(
 const node: ConcreteRequest = (function(){
 var v0 = [
   {
-    "defaultValue": null,
     "kind": "LocalArgument",
     "name": "input",
-    "type": "SendFeedbackMutationInput!"
+    "type": "SendFeedbackMutationInput!",
+    "defaultValue": null
   }
 ],
 v1 = [
@@ -75,164 +74,164 @@ v1 = [
   }
 ],
 v2 = {
-  "alias": null,
-  "args": null,
   "kind": "ScalarField",
+  "alias": null,
   "name": "message",
+  "args": null,
   "storageKey": null
 },
 v3 = {
   "kind": "InlineFragment",
+  "type": "SendFeedbackMutationFailure",
   "selections": [
     {
+      "kind": "LinkedField",
       "alias": null,
+      "name": "mutationError",
+      "storageKey": null,
       "args": null,
       "concreteType": "GravityMutationError",
-      "kind": "LinkedField",
-      "name": "mutationError",
       "plural": false,
       "selections": [
         {
-          "alias": null,
-          "args": null,
           "kind": "ScalarField",
+          "alias": null,
           "name": "type",
+          "args": null,
           "storageKey": null
         },
         (v2/*: any*/),
         {
-          "alias": null,
-          "args": null,
           "kind": "ScalarField",
+          "alias": null,
           "name": "detail",
+          "args": null,
           "storageKey": null
         }
-      ],
-      "storageKey": null
+      ]
     }
-  ],
-  "type": "SendFeedbackMutationFailure"
+  ]
 };
 return {
+  "kind": "Request",
   "fragment": {
-    "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
-    "metadata": null,
     "name": "SendFeedbackSearchResultsMutation",
+    "type": "Mutation",
+    "metadata": null,
+    "argumentDefinitions": (v0/*: any*/),
     "selections": [
       {
+        "kind": "LinkedField",
         "alias": null,
+        "name": "sendFeedback",
+        "storageKey": null,
         "args": (v1/*: any*/),
         "concreteType": "SendFeedbackMutationPayload",
-        "kind": "LinkedField",
-        "name": "sendFeedback",
         "plural": false,
         "selections": [
           {
+            "kind": "LinkedField",
             "alias": null,
+            "name": "feedbackOrError",
+            "storageKey": null,
             "args": null,
             "concreteType": null,
-            "kind": "LinkedField",
-            "name": "feedbackOrError",
             "plural": false,
             "selections": [
               {
                 "kind": "InlineFragment",
+                "type": "SendFeedbackMutationSuccess",
                 "selections": [
                   {
+                    "kind": "LinkedField",
                     "alias": null,
+                    "name": "feedback",
+                    "storageKey": null,
                     "args": null,
                     "concreteType": "Feedback",
-                    "kind": "LinkedField",
-                    "name": "feedback",
                     "plural": false,
                     "selections": [
                       (v2/*: any*/)
-                    ],
-                    "storageKey": null
+                    ]
                   }
-                ],
-                "type": "SendFeedbackMutationSuccess"
+                ]
               },
               (v3/*: any*/)
-            ],
-            "storageKey": null
+            ]
           }
-        ],
-        "storageKey": null
+        ]
       }
-    ],
-    "type": "Mutation"
+    ]
   },
-  "kind": "Request",
   "operation": {
-    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "SendFeedbackSearchResultsMutation",
+    "argumentDefinitions": (v0/*: any*/),
     "selections": [
       {
+        "kind": "LinkedField",
         "alias": null,
+        "name": "sendFeedback",
+        "storageKey": null,
         "args": (v1/*: any*/),
         "concreteType": "SendFeedbackMutationPayload",
-        "kind": "LinkedField",
-        "name": "sendFeedback",
         "plural": false,
         "selections": [
           {
+            "kind": "LinkedField",
             "alias": null,
+            "name": "feedbackOrError",
+            "storageKey": null,
             "args": null,
             "concreteType": null,
-            "kind": "LinkedField",
-            "name": "feedbackOrError",
             "plural": false,
             "selections": [
               {
-                "alias": null,
-                "args": null,
                 "kind": "ScalarField",
+                "alias": null,
                 "name": "__typename",
+                "args": null,
                 "storageKey": null
               },
               {
                 "kind": "InlineFragment",
+                "type": "SendFeedbackMutationSuccess",
                 "selections": [
                   {
+                    "kind": "LinkedField",
                     "alias": null,
+                    "name": "feedback",
+                    "storageKey": null,
                     "args": null,
                     "concreteType": "Feedback",
-                    "kind": "LinkedField",
-                    "name": "feedback",
                     "plural": false,
                     "selections": [
                       (v2/*: any*/),
                       {
-                        "alias": null,
-                        "args": null,
                         "kind": "ScalarField",
+                        "alias": null,
                         "name": "id",
+                        "args": null,
                         "storageKey": null
                       }
-                    ],
-                    "storageKey": null
+                    ]
                   }
-                ],
-                "type": "SendFeedbackMutationSuccess"
+                ]
               },
               (v3/*: any*/)
-            ],
-            "storageKey": null
+            ]
           }
-        ],
-        "storageKey": null
+        ]
       }
     ]
   },
   "params": {
-    "id": null,
-    "metadata": {},
-    "name": "SendFeedbackSearchResultsMutation",
     "operationKind": "mutation",
-    "text": "mutation SendFeedbackSearchResultsMutation(\n  $input: SendFeedbackMutationInput!\n) {\n  sendFeedback(input: $input) {\n    feedbackOrError {\n      __typename\n      ... on SendFeedbackMutationSuccess {\n        feedback {\n          message\n          id\n        }\n      }\n      ... on SendFeedbackMutationFailure {\n        mutationError {\n          type\n          message\n          detail\n        }\n      }\n    }\n  }\n}\n"
+    "name": "SendFeedbackSearchResultsMutation",
+    "id": null,
+    "text": "mutation SendFeedbackSearchResultsMutation(\n  $input: SendFeedbackMutationInput!\n) {\n  sendFeedback(input: $input) {\n    feedbackOrError {\n      __typename\n      ... on SendFeedbackMutationSuccess {\n        feedback {\n          message\n          id\n        }\n      }\n      ... on SendFeedbackMutationFailure {\n        mutationError {\n          type\n          message\n          detail\n        }\n      }\n    }\n  }\n}\n",
+    "metadata": {}
   }
 };
 })();

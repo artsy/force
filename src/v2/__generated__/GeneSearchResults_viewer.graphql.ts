@@ -1,5 +1,4 @@
 /* tslint:disable */
-/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -30,6 +29,10 @@ export type GeneSearchResults_viewer$key = {
 
 
 const node: ReaderFragment = {
+  "kind": "Fragment",
+  "name": "GeneSearchResults_viewer",
+  "type": "Viewer",
+  "metadata": null,
   "argumentDefinitions": [
     {
       "kind": "RootArgument",
@@ -37,12 +40,12 @@ const node: ReaderFragment = {
       "type": "String!"
     }
   ],
-  "kind": "Fragment",
-  "metadata": null,
-  "name": "GeneSearchResults_viewer",
   "selections": [
     {
+      "kind": "LinkedField",
       "alias": "match_gene",
+      "name": "searchConnection",
+      "storageKey": null,
       "args": [
         {
           "kind": "Literal",
@@ -63,67 +66,72 @@ const node: ReaderFragment = {
         }
       ],
       "concreteType": "SearchableConnection",
-      "kind": "LinkedField",
-      "name": "searchConnection",
       "plural": false,
       "selections": [
         {
+          "kind": "LinkedField",
           "alias": null,
+          "name": "edges",
+          "storageKey": null,
           "args": null,
           "concreteType": "SearchableEdge",
-          "kind": "LinkedField",
-          "name": "edges",
           "plural": true,
           "selections": [
             {
+              "kind": "LinkedField",
               "alias": null,
+              "name": "node",
+              "storageKey": null,
               "args": null,
               "concreteType": null,
-              "kind": "LinkedField",
-              "name": "node",
               "plural": false,
               "selections": [
                 {
                   "kind": "InlineFragment",
+                  "type": "Gene",
                   "selections": [
                     {
-                      "alias": null,
-                      "args": null,
                       "kind": "ScalarField",
+                      "alias": null,
                       "name": "name",
+                      "args": null,
                       "storageKey": null
                     },
                     {
-                      "alias": null,
-                      "args": null,
                       "kind": "ScalarField",
+                      "alias": null,
                       "name": "id",
+                      "args": null,
                       "storageKey": null
                     },
                     {
-                      "alias": null,
-                      "args": null,
                       "kind": "ScalarField",
+                      "alias": null,
                       "name": "slug",
-                      "storageKey": null
-                    },
-                    {
-                      "alias": null,
                       "args": null,
-                      "kind": "ScalarField",
-                      "name": "internalID",
                       "storageKey": null
                     },
                     {
+                      "kind": "ScalarField",
                       "alias": null,
+                      "name": "internalID",
+                      "args": null,
+                      "storageKey": null
+                    },
+                    {
+                      "kind": "LinkedField",
+                      "alias": null,
+                      "name": "image",
+                      "storageKey": null,
                       "args": null,
                       "concreteType": "Image",
-                      "kind": "LinkedField",
-                      "name": "image",
                       "plural": false,
                       "selections": [
                         {
+                          "kind": "LinkedField",
                           "alias": null,
+                          "name": "cropped",
+                          "storageKey": "cropped(height:100,width:100)",
                           "args": [
                             {
                               "kind": "Literal",
@@ -137,37 +145,28 @@ const node: ReaderFragment = {
                             }
                           ],
                           "concreteType": "CroppedImageUrl",
-                          "kind": "LinkedField",
-                          "name": "cropped",
                           "plural": false,
                           "selections": [
                             {
-                              "alias": null,
-                              "args": null,
                               "kind": "ScalarField",
+                              "alias": null,
                               "name": "url",
+                              "args": null,
                               "storageKey": null
                             }
-                          ],
-                          "storageKey": "cropped(height:100,width:100)"
+                          ]
                         }
-                      ],
-                      "storageKey": null
+                      ]
                     }
-                  ],
-                  "type": "Gene"
+                  ]
                 }
-              ],
-              "storageKey": null
+              ]
             }
-          ],
-          "storageKey": null
+          ]
         }
-      ],
-      "storageKey": null
+      ]
     }
-  ],
-  "type": "Viewer"
+  ]
 };
 (node as any).hash = '87a366c563b27a6b122d374b15ad6c54';
 export default node;

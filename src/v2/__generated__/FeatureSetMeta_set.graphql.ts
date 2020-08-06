@@ -1,5 +1,4 @@
 /* tslint:disable */
-/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -17,20 +16,23 @@ export type FeatureSetMeta_set$key = {
 
 
 const node: ReaderFragment = {
-  "argumentDefinitions": [],
   "kind": "Fragment",
-  "metadata": null,
   "name": "FeatureSetMeta_set",
+  "type": "OrderedSet",
+  "metadata": null,
+  "argumentDefinitions": [],
   "selections": [
     {
-      "alias": null,
-      "args": null,
       "kind": "ScalarField",
+      "alias": null,
       "name": "name",
+      "args": null,
       "storageKey": null
     },
     {
+      "kind": "ScalarField",
       "alias": null,
+      "name": "description",
       "args": [
         {
           "kind": "Literal",
@@ -38,12 +40,9 @@ const node: ReaderFragment = {
           "value": "HTML"
         }
       ],
-      "kind": "ScalarField",
-      "name": "description",
       "storageKey": "description(format:\"HTML\")"
     }
-  ],
-  "type": "OrderedSet"
+  ]
 };
 (node as any).hash = 'e1163832a9d3f97595ab010c0dc8ccf5';
 export default node;

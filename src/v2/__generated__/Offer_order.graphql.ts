@@ -1,10 +1,9 @@
 /* tslint:disable */
-/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
-import { FragmentRefs } from "relay-runtime";
 export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
 export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "PENDING" | "REFUNDED" | "SUBMITTED" | "%future added value";
+import { FragmentRefs } from "relay-runtime";
 export type Offer_order = {
     readonly internalID: string;
     readonly mode: CommerceOrderModeEnum | null;
@@ -33,34 +32,37 @@ export type Offer_order$key = {
 
 
 const node: ReaderFragment = {
-  "argumentDefinitions": [],
   "kind": "Fragment",
-  "metadata": null,
   "name": "Offer_order",
+  "type": "CommerceOrder",
+  "metadata": null,
+  "argumentDefinitions": [],
   "selections": [
     {
-      "alias": null,
-      "args": null,
       "kind": "ScalarField",
+      "alias": null,
       "name": "internalID",
+      "args": null,
       "storageKey": null
     },
     {
-      "alias": null,
-      "args": null,
       "kind": "ScalarField",
+      "alias": null,
       "name": "mode",
-      "storageKey": null
-    },
-    {
-      "alias": null,
       "args": null,
-      "kind": "ScalarField",
-      "name": "state",
       "storageKey": null
     },
     {
+      "kind": "ScalarField",
       "alias": null,
+      "name": "state",
+      "args": null,
+      "storageKey": null
+    },
+    {
+      "kind": "ScalarField",
+      "alias": null,
+      "name": "totalListPrice",
       "args": [
         {
           "kind": "Literal",
@@ -68,87 +70,84 @@ const node: ReaderFragment = {
           "value": 2
         }
       ],
-      "kind": "ScalarField",
-      "name": "totalListPrice",
       "storageKey": "totalListPrice(precision:2)"
     },
     {
-      "alias": null,
-      "args": null,
       "kind": "ScalarField",
+      "alias": null,
       "name": "totalListPriceCents",
-      "storageKey": null
-    },
-    {
-      "alias": null,
       "args": null,
-      "kind": "ScalarField",
-      "name": "currencyCode",
       "storageKey": null
     },
     {
+      "kind": "ScalarField",
       "alias": null,
+      "name": "currencyCode",
+      "args": null,
+      "storageKey": null
+    },
+    {
+      "kind": "LinkedField",
+      "alias": null,
+      "name": "lineItems",
+      "storageKey": null,
       "args": null,
       "concreteType": "CommerceLineItemConnection",
-      "kind": "LinkedField",
-      "name": "lineItems",
       "plural": false,
       "selections": [
         {
+          "kind": "LinkedField",
           "alias": null,
+          "name": "edges",
+          "storageKey": null,
           "args": null,
           "concreteType": "CommerceLineItemEdge",
-          "kind": "LinkedField",
-          "name": "edges",
           "plural": true,
           "selections": [
             {
+              "kind": "LinkedField",
               "alias": null,
+              "name": "node",
+              "storageKey": null,
               "args": null,
               "concreteType": "CommerceLineItem",
-              "kind": "LinkedField",
-              "name": "node",
               "plural": false,
               "selections": [
                 {
+                  "kind": "LinkedField",
                   "alias": null,
+                  "name": "artwork",
+                  "storageKey": null,
                   "args": null,
                   "concreteType": "Artwork",
-                  "kind": "LinkedField",
-                  "name": "artwork",
                   "plural": false,
                   "selections": [
                     {
-                      "alias": null,
-                      "args": null,
                       "kind": "ScalarField",
+                      "alias": null,
                       "name": "slug",
+                      "args": null,
                       "storageKey": null
                     }
-                  ],
-                  "storageKey": null
+                  ]
                 }
-              ],
-              "storageKey": null
+              ]
             }
-          ],
-          "storageKey": null
+          ]
         }
-      ],
-      "storageKey": null
+      ]
     },
     {
-      "args": null,
       "kind": "FragmentSpread",
-      "name": "ArtworkSummaryItem_order"
+      "name": "ArtworkSummaryItem_order",
+      "args": null
     },
     {
-      "args": null,
       "kind": "FragmentSpread",
-      "name": "TransactionDetailsSummaryItem_order"
+      "name": "TransactionDetailsSummaryItem_order",
+      "args": null
     }
-  ],
-  "type": "CommerceOrder"
+  ]
 };
 (node as any).hash = 'ed652f82e3ec77a94451ec21b8d1cc15';
 export default node;

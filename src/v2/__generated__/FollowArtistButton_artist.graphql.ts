@@ -1,5 +1,4 @@
 /* tslint:disable */
-/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -23,78 +22,78 @@ export type FollowArtistButton_artist$key = {
 
 
 const node: ReaderFragment = {
+  "kind": "Fragment",
+  "name": "FollowArtistButton_artist",
+  "type": "Artist",
+  "metadata": null,
   "argumentDefinitions": [
     {
-      "defaultValue": false,
       "kind": "LocalArgument",
       "name": "showFollowSuggestions",
-      "type": "Boolean"
+      "type": "Boolean",
+      "defaultValue": false
     }
   ],
-  "kind": "Fragment",
-  "metadata": null,
-  "name": "FollowArtistButton_artist",
   "selections": [
     {
-      "alias": null,
-      "args": null,
       "kind": "ScalarField",
+      "alias": null,
       "name": "id",
+      "args": null,
       "storageKey": null
     },
     {
-      "alias": null,
-      "args": null,
       "kind": "ScalarField",
+      "alias": null,
       "name": "internalID",
+      "args": null,
       "storageKey": null
     },
     {
-      "alias": null,
-      "args": null,
       "kind": "ScalarField",
+      "alias": null,
       "name": "name",
-      "storageKey": null
-    },
-    {
-      "alias": "is_followed",
       "args": null,
-      "kind": "ScalarField",
-      "name": "isFollowed",
       "storageKey": null
     },
     {
+      "kind": "ScalarField",
+      "alias": "is_followed",
+      "name": "isFollowed",
+      "args": null,
+      "storageKey": null
+    },
+    {
+      "kind": "LinkedField",
       "alias": null,
+      "name": "counts",
+      "storageKey": null,
       "args": null,
       "concreteType": "ArtistCounts",
-      "kind": "LinkedField",
-      "name": "counts",
       "plural": false,
       "selections": [
         {
-          "alias": null,
-          "args": null,
           "kind": "ScalarField",
+          "alias": null,
           "name": "follows",
+          "args": null,
           "storageKey": null
         }
-      ],
-      "storageKey": null
+      ]
     },
     {
-      "condition": "showFollowSuggestions",
       "kind": "Condition",
       "passingValue": true,
+      "condition": "showFollowSuggestions",
       "selections": [
         {
-          "args": null,
           "kind": "FragmentSpread",
-          "name": "FollowArtistPopover_artist"
+          "name": "FollowArtistPopover_artist",
+          "args": null
         }
       ]
     }
-  ],
-  "type": "Artist"
+  ]
 };
 (node as any).hash = '560d15156b37402c50ee7572d14c9eca';
 export default node;

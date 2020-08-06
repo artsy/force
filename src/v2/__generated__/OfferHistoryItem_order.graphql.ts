@@ -1,9 +1,8 @@
 /* tslint:disable */
-/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
-import { FragmentRefs } from "relay-runtime";
 export type CommerceOrderParticipantEnum = "BUYER" | "SELLER" | "%future added value";
+import { FragmentRefs } from "relay-runtime";
 export type OfferHistoryItem_order = {
     readonly totalListPrice: string | null;
     readonly offers?: {
@@ -43,70 +42,77 @@ var v0 = [
   }
 ],
 v1 = {
-  "alias": null,
-  "args": null,
   "kind": "ScalarField",
+  "alias": null,
   "name": "internalID",
+  "args": null,
   "storageKey": null
 },
 v2 = {
-  "alias": null,
-  "args": (v0/*: any*/),
   "kind": "ScalarField",
+  "alias": null,
   "name": "amount",
+  "args": (v0/*: any*/),
   "storageKey": "amount(precision:2)"
 },
 v3 = {
-  "alias": null,
-  "args": null,
   "kind": "ScalarField",
+  "alias": null,
   "name": "fromParticipant",
+  "args": null,
   "storageKey": null
 };
 return {
-  "argumentDefinitions": [],
   "kind": "Fragment",
-  "metadata": null,
   "name": "OfferHistoryItem_order",
+  "type": "CommerceOrder",
+  "metadata": null,
+  "argumentDefinitions": [],
   "selections": [
     {
-      "alias": null,
-      "args": (v0/*: any*/),
       "kind": "ScalarField",
+      "alias": null,
       "name": "totalListPrice",
+      "args": (v0/*: any*/),
       "storageKey": "totalListPrice(precision:2)"
     },
     {
       "kind": "InlineFragment",
+      "type": "CommerceOfferOrder",
       "selections": [
         {
+          "kind": "LinkedField",
           "alias": null,
+          "name": "offers",
+          "storageKey": null,
           "args": null,
           "concreteType": "CommerceOfferConnection",
-          "kind": "LinkedField",
-          "name": "offers",
           "plural": false,
           "selections": [
             {
+              "kind": "LinkedField",
               "alias": null,
+              "name": "edges",
+              "storageKey": null,
               "args": null,
               "concreteType": "CommerceOfferEdge",
-              "kind": "LinkedField",
-              "name": "edges",
               "plural": true,
               "selections": [
                 {
+                  "kind": "LinkedField",
                   "alias": null,
+                  "name": "node",
+                  "storageKey": null,
                   "args": null,
                   "concreteType": "CommerceOffer",
-                  "kind": "LinkedField",
-                  "name": "node",
                   "plural": false,
                   "selections": [
                     (v1/*: any*/),
                     (v2/*: any*/),
                     {
+                      "kind": "ScalarField",
                       "alias": null,
+                      "name": "createdAt",
                       "args": [
                         {
                           "kind": "Literal",
@@ -114,60 +120,53 @@ return {
                           "value": "MMM D"
                         }
                       ],
-                      "kind": "ScalarField",
-                      "name": "createdAt",
                       "storageKey": "createdAt(format:\"MMM D\")"
                     },
                     (v3/*: any*/)
-                  ],
-                  "storageKey": null
+                  ]
                 }
-              ],
-              "storageKey": null
+              ]
             }
-          ],
-          "storageKey": null
+          ]
         },
         {
+          "kind": "LinkedField",
           "alias": null,
+          "name": "lastOffer",
+          "storageKey": null,
           "args": null,
           "concreteType": "CommerceOffer",
-          "kind": "LinkedField",
-          "name": "lastOffer",
           "plural": false,
           "selections": [
             (v1/*: any*/),
             (v3/*: any*/),
             (v2/*: any*/),
             {
-              "alias": null,
-              "args": (v0/*: any*/),
               "kind": "ScalarField",
+              "alias": null,
               "name": "shippingTotal",
+              "args": (v0/*: any*/),
               "storageKey": "shippingTotal(precision:2)"
             },
             {
-              "alias": null,
-              "args": (v0/*: any*/),
               "kind": "ScalarField",
+              "alias": null,
               "name": "taxTotal",
+              "args": (v0/*: any*/),
               "storageKey": "taxTotal(precision:2)"
             },
             {
-              "alias": null,
-              "args": null,
               "kind": "ScalarField",
+              "alias": null,
               "name": "note",
+              "args": null,
               "storageKey": null
             }
-          ],
-          "storageKey": null
+          ]
         }
-      ],
-      "type": "CommerceOfferOrder"
+      ]
     }
-  ],
-  "type": "CommerceOrder"
+  ]
 };
 })();
 (node as any).hash = '6209a00aa1b92262f730863b082250c1';

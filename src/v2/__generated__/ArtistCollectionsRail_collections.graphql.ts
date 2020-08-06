@@ -1,5 +1,4 @@
 /* tslint:disable */
-/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -16,20 +15,20 @@ export type ArtistCollectionsRail_collections$key = ReadonlyArray<{
 
 
 const node: ReaderFragment = {
-  "argumentDefinitions": [],
   "kind": "Fragment",
+  "name": "ArtistCollectionsRail_collections",
+  "type": "MarketingCollection",
   "metadata": {
     "plural": true
   },
-  "name": "ArtistCollectionsRail_collections",
+  "argumentDefinitions": [],
   "selections": [
     {
-      "args": null,
       "kind": "FragmentSpread",
-      "name": "ArtistCollectionEntity_collection"
+      "name": "ArtistCollectionEntity_collection",
+      "args": null
     }
-  ],
-  "type": "MarketingCollection"
+  ]
 };
 (node as any).hash = '321de31247fea0486faf7cdbe0016219';
 export default node;

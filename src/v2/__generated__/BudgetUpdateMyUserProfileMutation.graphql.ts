@@ -1,33 +1,32 @@
 /* tslint:disable */
-/* eslint-disable */
 
 import { ConcreteRequest } from "relay-runtime";
 export type UpdateMyProfileInput = {
-    clientMutationId?: string | null;
-    collectorLevel?: number | null;
-    email?: string | null;
-    location?: EditableLocation | null;
-    name?: string | null;
-    phone?: string | null;
-    priceRangeMax?: number | null;
-    priceRangeMin?: number | null;
-    receiveLotOpeningSoonNotification?: boolean | null;
-    receiveNewSalesNotification?: boolean | null;
-    receiveNewWorksNotification?: boolean | null;
-    receiveOutbidNotification?: boolean | null;
-    receivePromotionNotification?: boolean | null;
-    receivePurchaseNotification?: boolean | null;
-    receiveSaleOpeningClosingNotification?: boolean | null;
+    readonly clientMutationId?: string | null;
+    readonly collectorLevel?: number | null;
+    readonly email?: string | null;
+    readonly location?: EditableLocation | null;
+    readonly name?: string | null;
+    readonly phone?: string | null;
+    readonly priceRangeMax?: number | null;
+    readonly priceRangeMin?: number | null;
+    readonly receiveLotOpeningSoonNotification?: boolean | null;
+    readonly receiveNewSalesNotification?: boolean | null;
+    readonly receiveNewWorksNotification?: boolean | null;
+    readonly receiveOutbidNotification?: boolean | null;
+    readonly receivePromotionNotification?: boolean | null;
+    readonly receivePurchaseNotification?: boolean | null;
+    readonly receiveSaleOpeningClosingNotification?: boolean | null;
 };
 export type EditableLocation = {
-    address?: string | null;
-    address2?: string | null;
-    city?: string | null;
-    country?: string | null;
-    postalCode?: string | null;
-    state?: string | null;
-    stateCode?: string | null;
-    summary?: string | null;
+    readonly address?: string | null;
+    readonly address2?: string | null;
+    readonly city?: string | null;
+    readonly country?: string | null;
+    readonly postalCode?: string | null;
+    readonly state?: string | null;
+    readonly stateCode?: string | null;
+    readonly summary?: string | null;
 };
 export type BudgetUpdateMyUserProfileMutationVariables = {
     input: UpdateMyProfileInput;
@@ -62,10 +61,10 @@ mutation BudgetUpdateMyUserProfileMutation(
 const node: ConcreteRequest = (function(){
 var v0 = [
   {
-    "defaultValue": null,
     "kind": "LocalArgument",
     "name": "input",
-    "type": "UpdateMyProfileInput!"
+    "type": "UpdateMyProfileInput!",
+    "defaultValue": null
   }
 ],
 v1 = [
@@ -76,89 +75,89 @@ v1 = [
   }
 ],
 v2 = {
-  "alias": null,
-  "args": null,
   "kind": "ScalarField",
+  "alias": null,
   "name": "name",
+  "args": null,
   "storageKey": null
 };
 return {
+  "kind": "Request",
   "fragment": {
-    "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
-    "metadata": null,
     "name": "BudgetUpdateMyUserProfileMutation",
+    "type": "Mutation",
+    "metadata": null,
+    "argumentDefinitions": (v0/*: any*/),
     "selections": [
       {
+        "kind": "LinkedField",
         "alias": null,
+        "name": "updateMyUserProfile",
+        "storageKey": null,
         "args": (v1/*: any*/),
         "concreteType": "UpdateMyProfilePayload",
-        "kind": "LinkedField",
-        "name": "updateMyUserProfile",
         "plural": false,
         "selections": [
           {
+            "kind": "LinkedField",
             "alias": null,
+            "name": "user",
+            "storageKey": null,
             "args": null,
             "concreteType": "User",
-            "kind": "LinkedField",
-            "name": "user",
             "plural": false,
             "selections": [
               (v2/*: any*/)
-            ],
-            "storageKey": null
+            ]
           }
-        ],
-        "storageKey": null
+        ]
       }
-    ],
-    "type": "Mutation"
+    ]
   },
-  "kind": "Request",
   "operation": {
-    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "BudgetUpdateMyUserProfileMutation",
+    "argumentDefinitions": (v0/*: any*/),
     "selections": [
       {
+        "kind": "LinkedField",
         "alias": null,
+        "name": "updateMyUserProfile",
+        "storageKey": null,
         "args": (v1/*: any*/),
         "concreteType": "UpdateMyProfilePayload",
-        "kind": "LinkedField",
-        "name": "updateMyUserProfile",
         "plural": false,
         "selections": [
           {
+            "kind": "LinkedField",
             "alias": null,
+            "name": "user",
+            "storageKey": null,
             "args": null,
             "concreteType": "User",
-            "kind": "LinkedField",
-            "name": "user",
             "plural": false,
             "selections": [
               (v2/*: any*/),
               {
-                "alias": null,
-                "args": null,
                 "kind": "ScalarField",
+                "alias": null,
                 "name": "id",
+                "args": null,
                 "storageKey": null
               }
-            ],
-            "storageKey": null
+            ]
           }
-        ],
-        "storageKey": null
+        ]
       }
     ]
   },
   "params": {
-    "id": null,
-    "metadata": {},
-    "name": "BudgetUpdateMyUserProfileMutation",
     "operationKind": "mutation",
-    "text": "mutation BudgetUpdateMyUserProfileMutation(\n  $input: UpdateMyProfileInput!\n) {\n  updateMyUserProfile(input: $input) {\n    user {\n      name\n      id\n    }\n  }\n}\n"
+    "name": "BudgetUpdateMyUserProfileMutation",
+    "id": null,
+    "text": "mutation BudgetUpdateMyUserProfileMutation(\n  $input: UpdateMyProfileInput!\n) {\n  updateMyUserProfile(input: $input) {\n    user {\n      name\n      id\n    }\n  }\n}\n",
+    "metadata": {}
   }
 };
 })();

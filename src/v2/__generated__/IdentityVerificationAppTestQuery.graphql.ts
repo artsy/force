@@ -1,5 +1,4 @@
 /* tslint:disable */
-/* eslint-disable */
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -57,99 +56,99 @@ var v0 = [
   }
 ],
 v1 = {
-  "alias": null,
-  "args": null,
   "kind": "ScalarField",
+  "alias": null,
   "name": "internalID",
+  "args": null,
   "storageKey": null
 },
 v2 = {
-  "alias": null,
-  "args": null,
   "kind": "ScalarField",
+  "alias": null,
   "name": "id",
+  "args": null,
   "storageKey": null
 };
 return {
+  "kind": "Request",
   "fragment": {
-    "argumentDefinitions": [],
     "kind": "Fragment",
-    "metadata": null,
     "name": "IdentityVerificationAppTestQuery",
+    "type": "Query",
+    "metadata": null,
+    "argumentDefinitions": [],
     "selections": [
       {
+        "kind": "LinkedField",
         "alias": null,
+        "name": "me",
+        "storageKey": null,
         "args": null,
         "concreteType": "Me",
-        "kind": "LinkedField",
-        "name": "me",
         "plural": false,
         "selections": [
           {
-            "args": (v0/*: any*/),
             "kind": "FragmentSpread",
-            "name": "IdentityVerificationApp_me"
+            "name": "IdentityVerificationApp_me",
+            "args": (v0/*: any*/)
           }
-        ],
-        "storageKey": null
+        ]
       }
-    ],
-    "type": "Query"
+    ]
   },
-  "kind": "Request",
   "operation": {
-    "argumentDefinitions": [],
     "kind": "Operation",
     "name": "IdentityVerificationAppTestQuery",
+    "argumentDefinitions": [],
     "selections": [
       {
+        "kind": "LinkedField",
         "alias": null,
+        "name": "me",
+        "storageKey": null,
         "args": null,
         "concreteType": "Me",
-        "kind": "LinkedField",
-        "name": "me",
         "plural": false,
         "selections": [
           (v1/*: any*/),
           {
+            "kind": "LinkedField",
             "alias": null,
+            "name": "identityVerification",
+            "storageKey": "identityVerification(id:\"idv-id\")",
             "args": (v0/*: any*/),
             "concreteType": "IdentityVerification",
-            "kind": "LinkedField",
-            "name": "identityVerification",
             "plural": false,
             "selections": [
               (v1/*: any*/),
               {
-                "alias": null,
-                "args": null,
                 "kind": "ScalarField",
+                "alias": null,
                 "name": "userID",
+                "args": null,
                 "storageKey": null
               },
               {
-                "alias": null,
-                "args": null,
                 "kind": "ScalarField",
+                "alias": null,
                 "name": "state",
+                "args": null,
                 "storageKey": null
               },
               (v2/*: any*/)
-            ],
-            "storageKey": "identityVerification(id:\"idv-id\")"
+            ]
           },
           (v2/*: any*/)
-        ],
-        "storageKey": null
+        ]
       }
     ]
   },
   "params": {
-    "id": null,
-    "metadata": {},
-    "name": "IdentityVerificationAppTestQuery",
     "operationKind": "query",
-    "text": "query IdentityVerificationAppTestQuery {\n  me {\n    ...IdentityVerificationApp_me_3zaPSf\n    id\n  }\n}\n\nfragment IdentityVerificationApp_me_3zaPSf on Me {\n  internalID\n  identityVerification(id: \"idv-id\") {\n    internalID\n    userID\n    state\n    id\n  }\n}\n"
+    "name": "IdentityVerificationAppTestQuery",
+    "id": null,
+    "text": "query IdentityVerificationAppTestQuery {\n  me {\n    ...IdentityVerificationApp_me_3zaPSf\n    id\n  }\n}\n\nfragment IdentityVerificationApp_me_3zaPSf on Me {\n  internalID\n  identityVerification(id: \"idv-id\") {\n    internalID\n    userID\n    state\n    id\n  }\n}\n",
+    "metadata": {}
   }
 };
 })();

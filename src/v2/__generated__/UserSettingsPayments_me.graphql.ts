@@ -1,5 +1,4 @@
 /* tslint:disable */
-/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -31,22 +30,23 @@ export type UserSettingsPayments_me$key = {
 
 const node: ReaderFragment = (function(){
 var v0 = {
-  "alias": null,
-  "args": null,
   "kind": "ScalarField",
+  "alias": null,
   "name": "id",
+  "args": null,
   "storageKey": null
 },
 v1 = {
-  "alias": null,
-  "args": null,
   "kind": "ScalarField",
+  "alias": null,
   "name": "internalID",
+  "args": null,
   "storageKey": null
 };
 return {
-  "argumentDefinitions": [],
   "kind": "Fragment",
+  "name": "UserSettingsPayments_me",
+  "type": "Me",
   "metadata": {
     "connection": [
       {
@@ -59,114 +59,113 @@ return {
       }
     ]
   },
-  "name": "UserSettingsPayments_me",
+  "argumentDefinitions": [],
   "selections": [
     (v0/*: any*/),
     (v1/*: any*/),
     {
+      "kind": "LinkedField",
       "alias": "creditCards",
+      "name": "__UserSettingsPayments_creditCards_connection",
+      "storageKey": null,
       "args": null,
       "concreteType": "CreditCardConnection",
-      "kind": "LinkedField",
-      "name": "__UserSettingsPayments_creditCards_connection",
       "plural": false,
       "selections": [
         {
+          "kind": "LinkedField",
           "alias": null,
+          "name": "edges",
+          "storageKey": null,
           "args": null,
           "concreteType": "CreditCardEdge",
-          "kind": "LinkedField",
-          "name": "edges",
           "plural": true,
           "selections": [
             {
+              "kind": "LinkedField",
               "alias": null,
+              "name": "node",
+              "storageKey": null,
               "args": null,
               "concreteType": "CreditCard",
-              "kind": "LinkedField",
-              "name": "node",
               "plural": false,
               "selections": [
                 (v0/*: any*/),
                 (v1/*: any*/),
                 {
-                  "alias": null,
-                  "args": null,
                   "kind": "ScalarField",
+                  "alias": null,
                   "name": "brand",
+                  "args": null,
                   "storageKey": null
                 },
                 {
-                  "alias": null,
-                  "args": null,
                   "kind": "ScalarField",
+                  "alias": null,
                   "name": "lastDigits",
+                  "args": null,
                   "storageKey": null
                 },
                 {
-                  "alias": null,
-                  "args": null,
                   "kind": "ScalarField",
+                  "alias": null,
                   "name": "expirationYear",
+                  "args": null,
                   "storageKey": null
                 },
                 {
-                  "alias": null,
-                  "args": null,
                   "kind": "ScalarField",
+                  "alias": null,
                   "name": "expirationMonth",
+                  "args": null,
                   "storageKey": null
                 },
                 {
-                  "alias": null,
-                  "args": null,
                   "kind": "ScalarField",
+                  "alias": null,
                   "name": "__typename",
+                  "args": null,
                   "storageKey": null
                 }
-              ],
-              "storageKey": null
+              ]
             },
             {
-              "alias": null,
-              "args": null,
               "kind": "ScalarField",
+              "alias": null,
               "name": "cursor",
+              "args": null,
               "storageKey": null
             }
-          ],
-          "storageKey": null
+          ]
         },
         {
+          "kind": "LinkedField",
           "alias": null,
+          "name": "pageInfo",
+          "storageKey": null,
           "args": null,
           "concreteType": "PageInfo",
-          "kind": "LinkedField",
-          "name": "pageInfo",
           "plural": false,
           "selections": [
             {
-              "alias": null,
-              "args": null,
               "kind": "ScalarField",
+              "alias": null,
               "name": "endCursor",
+              "args": null,
               "storageKey": null
             },
             {
-              "alias": null,
-              "args": null,
               "kind": "ScalarField",
+              "alias": null,
               "name": "hasNextPage",
+              "args": null,
               "storageKey": null
             }
-          ],
-          "storageKey": null
+          ]
         }
-      ],
-      "storageKey": null
+      ]
     }
-  ],
-  "type": "Me"
+  ]
 };
 })();
 (node as any).hash = 'fb1e0b6f4ace5339acfc650f9b020b42';

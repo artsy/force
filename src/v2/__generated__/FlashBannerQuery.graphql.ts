@@ -1,5 +1,4 @@
 /* tslint:disable */
-/* eslint-disable */
 
 import { ConcreteRequest } from "relay-runtime";
 export type FlashBannerQueryVariables = {};
@@ -26,67 +25,67 @@ query FlashBannerQuery {
 
 const node: ConcreteRequest = (function(){
 var v0 = {
-  "alias": null,
-  "args": null,
   "kind": "ScalarField",
+  "alias": null,
   "name": "canRequestEmailConfirmation",
+  "args": null,
   "storageKey": null
 };
 return {
+  "kind": "Request",
   "fragment": {
-    "argumentDefinitions": [],
     "kind": "Fragment",
-    "metadata": null,
     "name": "FlashBannerQuery",
+    "type": "Query",
+    "metadata": null,
+    "argumentDefinitions": [],
     "selections": [
       {
+        "kind": "LinkedField",
         "alias": null,
+        "name": "me",
+        "storageKey": null,
         "args": null,
         "concreteType": "Me",
-        "kind": "LinkedField",
-        "name": "me",
         "plural": false,
         "selections": [
           (v0/*: any*/)
-        ],
-        "storageKey": null
+        ]
       }
-    ],
-    "type": "Query"
+    ]
   },
-  "kind": "Request",
   "operation": {
-    "argumentDefinitions": [],
     "kind": "Operation",
     "name": "FlashBannerQuery",
+    "argumentDefinitions": [],
     "selections": [
       {
+        "kind": "LinkedField",
         "alias": null,
+        "name": "me",
+        "storageKey": null,
         "args": null,
         "concreteType": "Me",
-        "kind": "LinkedField",
-        "name": "me",
         "plural": false,
         "selections": [
           (v0/*: any*/),
           {
-            "alias": null,
-            "args": null,
             "kind": "ScalarField",
+            "alias": null,
             "name": "id",
+            "args": null,
             "storageKey": null
           }
-        ],
-        "storageKey": null
+        ]
       }
     ]
   },
   "params": {
-    "id": null,
-    "metadata": {},
-    "name": "FlashBannerQuery",
     "operationKind": "query",
-    "text": "query FlashBannerQuery {\n  me {\n    canRequestEmailConfirmation\n    id\n  }\n}\n"
+    "name": "FlashBannerQuery",
+    "id": null,
+    "text": "query FlashBannerQuery {\n  me {\n    canRequestEmailConfirmation\n    id\n  }\n}\n",
+    "metadata": {}
   }
 };
 })();

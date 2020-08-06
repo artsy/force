@@ -1,5 +1,4 @@
 /* tslint:disable */
-/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -20,45 +19,45 @@ export type VerifiedSeller_artwork$key = {
 
 
 const node: ReaderFragment = {
-  "argumentDefinitions": [],
   "kind": "Fragment",
-  "metadata": null,
   "name": "VerifiedSeller_artwork",
+  "type": "Artwork",
+  "metadata": null,
+  "argumentDefinitions": [],
   "selections": [
     {
-      "alias": "is_biddable",
-      "args": null,
       "kind": "ScalarField",
+      "alias": "is_biddable",
       "name": "isBiddable",
+      "args": null,
       "storageKey": null
     },
     {
+      "kind": "LinkedField",
       "alias": null,
+      "name": "partner",
+      "storageKey": null,
       "args": null,
       "concreteType": "Partner",
-      "kind": "LinkedField",
-      "name": "partner",
       "plural": false,
       "selections": [
         {
-          "alias": null,
-          "args": null,
           "kind": "ScalarField",
+          "alias": null,
           "name": "isVerifiedSeller",
+          "args": null,
           "storageKey": null
         },
         {
-          "alias": null,
-          "args": null,
           "kind": "ScalarField",
+          "alias": null,
           "name": "name",
+          "args": null,
           "storageKey": null
         }
-      ],
-      "storageKey": null
+      ]
     }
-  ],
-  "type": "Artwork"
+  ]
 };
 (node as any).hash = '2efbba0f7a6a9470dc169125c7b5fdc9';
 export default node;

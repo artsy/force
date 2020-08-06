@@ -1,5 +1,4 @@
 /* tslint:disable */
-/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -25,74 +24,74 @@ export type ArtistConsignMarketTrends_artist$key = {
 
 
 const node: ReaderFragment = {
-  "argumentDefinitions": [],
   "kind": "Fragment",
-  "metadata": null,
   "name": "ArtistConsignMarketTrends_artist",
+  "type": "Artist",
+  "metadata": null,
+  "argumentDefinitions": [],
   "selections": [
     {
-      "alias": null,
-      "args": null,
       "kind": "ScalarField",
+      "alias": null,
       "name": "href",
+      "args": null,
       "storageKey": null
     },
     {
+      "kind": "LinkedField",
       "alias": null,
+      "name": "targetSupply",
+      "storageKey": null,
       "args": null,
       "concreteType": "ArtistTargetSupply",
-      "kind": "LinkedField",
-      "name": "targetSupply",
       "plural": false,
       "selections": [
         {
+          "kind": "LinkedField",
           "alias": null,
+          "name": "microfunnel",
+          "storageKey": null,
           "args": null,
           "concreteType": "ArtistTargetSupplyMicrofunnel",
-          "kind": "LinkedField",
-          "name": "microfunnel",
           "plural": false,
           "selections": [
             {
+              "kind": "LinkedField",
               "alias": null,
+              "name": "metadata",
+              "storageKey": null,
               "args": null,
               "concreteType": "TargetSupplyMicrofunnelMetadata",
-              "kind": "LinkedField",
-              "name": "metadata",
               "plural": false,
               "selections": [
                 {
-                  "alias": null,
-                  "args": null,
                   "kind": "ScalarField",
+                  "alias": null,
                   "name": "highestRealized",
+                  "args": null,
                   "storageKey": null
                 },
                 {
-                  "alias": null,
-                  "args": null,
                   "kind": "ScalarField",
+                  "alias": null,
                   "name": "str",
+                  "args": null,
                   "storageKey": null
                 },
                 {
-                  "alias": null,
-                  "args": null,
                   "kind": "ScalarField",
+                  "alias": null,
                   "name": "realized",
+                  "args": null,
                   "storageKey": null
                 }
-              ],
-              "storageKey": null
+              ]
             }
-          ],
-          "storageKey": null
+          ]
         }
-      ],
-      "storageKey": null
+      ]
     }
-  ],
-  "type": "Artist"
+  ]
 };
 (node as any).hash = '91c1ebf56415fcb86b69ff9fa6f2a918';
 export default node;

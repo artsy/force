@@ -1,5 +1,4 @@
 /* tslint:disable */
-/* eslint-disable */
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -97,181 +96,181 @@ var v0 = [
   }
 ],
 v1 = {
-  "alias": null,
-  "args": null,
   "kind": "ScalarField",
+  "alias": null,
   "name": "id",
+  "args": null,
   "storageKey": null
 };
 return {
+  "kind": "Request",
   "fragment": {
-    "argumentDefinitions": [],
     "kind": "Fragment",
-    "metadata": null,
     "name": "ArtworkSidebarMetadata_Test_Query",
+    "type": "Query",
+    "metadata": null,
+    "argumentDefinitions": [],
     "selections": [
       {
+        "kind": "LinkedField",
         "alias": null,
+        "name": "artwork",
+        "storageKey": "artwork(id:\"josef-albers-homage-to-the-square-85\")",
         "args": (v0/*: any*/),
         "concreteType": "Artwork",
-        "kind": "LinkedField",
-        "name": "artwork",
         "plural": false,
         "selections": [
           {
-            "args": null,
             "kind": "FragmentSpread",
-            "name": "ArtworkSidebarMetadata_artwork"
+            "name": "ArtworkSidebarMetadata_artwork",
+            "args": null
           }
-        ],
-        "storageKey": "artwork(id:\"josef-albers-homage-to-the-square-85\")"
+        ]
       }
-    ],
-    "type": "Query"
+    ]
   },
-  "kind": "Request",
   "operation": {
-    "argumentDefinitions": [],
     "kind": "Operation",
     "name": "ArtworkSidebarMetadata_Test_Query",
+    "argumentDefinitions": [],
     "selections": [
       {
+        "kind": "LinkedField",
         "alias": null,
+        "name": "artwork",
+        "storageKey": "artwork(id:\"josef-albers-homage-to-the-square-85\")",
         "args": (v0/*: any*/),
         "concreteType": "Artwork",
-        "kind": "LinkedField",
-        "name": "artwork",
         "plural": false,
         "selections": [
           {
-            "alias": "is_biddable",
-            "args": null,
             "kind": "ScalarField",
+            "alias": "is_biddable",
             "name": "isBiddable",
+            "args": null,
             "storageKey": null
           },
           {
+            "kind": "LinkedField",
             "alias": "edition_sets",
+            "name": "editionSets",
+            "storageKey": null,
             "args": null,
             "concreteType": "EditionSet",
-            "kind": "LinkedField",
-            "name": "editionSets",
             "plural": true,
             "selections": [
               {
-                "alias": null,
-                "args": null,
                 "kind": "ScalarField",
+                "alias": null,
                 "name": "__typename",
+                "args": null,
                 "storageKey": null
               },
               (v1/*: any*/)
-            ],
-            "storageKey": null
+            ]
           },
           {
+            "kind": "LinkedField",
             "alias": "sale_artwork",
+            "name": "saleArtwork",
+            "storageKey": null,
             "args": null,
             "concreteType": "SaleArtwork",
-            "kind": "LinkedField",
-            "name": "saleArtwork",
             "plural": false,
             "selections": [
               {
-                "alias": "lot_label",
-                "args": null,
                 "kind": "ScalarField",
+                "alias": "lot_label",
                 "name": "lotLabel",
+                "args": null,
                 "storageKey": null
               },
               (v1/*: any*/)
-            ],
-            "storageKey": null
+            ]
           },
           {
-            "alias": null,
-            "args": null,
             "kind": "ScalarField",
+            "alias": null,
             "name": "title",
+            "args": null,
             "storageKey": null
           },
           {
-            "alias": null,
-            "args": null,
             "kind": "ScalarField",
+            "alias": null,
             "name": "date",
-            "storageKey": null
-          },
-          {
-            "alias": null,
             "args": null,
-            "kind": "ScalarField",
-            "name": "medium",
             "storageKey": null
           },
           {
+            "kind": "ScalarField",
             "alias": null,
+            "name": "medium",
+            "args": null,
+            "storageKey": null
+          },
+          {
+            "kind": "LinkedField",
+            "alias": null,
+            "name": "dimensions",
+            "storageKey": null,
             "args": null,
             "concreteType": "dimensions",
-            "kind": "LinkedField",
-            "name": "dimensions",
             "plural": false,
             "selections": [
               {
-                "alias": null,
-                "args": null,
                 "kind": "ScalarField",
+                "alias": null,
                 "name": "in",
+                "args": null,
                 "storageKey": null
               },
               {
-                "alias": null,
-                "args": null,
                 "kind": "ScalarField",
+                "alias": null,
                 "name": "cm",
+                "args": null,
                 "storageKey": null
               }
-            ],
-            "storageKey": null
+            ]
           },
           {
-            "alias": "edition_of",
-            "args": null,
             "kind": "ScalarField",
+            "alias": "edition_of",
             "name": "editionOf",
+            "args": null,
             "storageKey": null
           },
           {
+            "kind": "LinkedField",
             "alias": "attribution_class",
+            "name": "attributionClass",
+            "storageKey": null,
             "args": null,
             "concreteType": "AttributionClass",
-            "kind": "LinkedField",
-            "name": "attributionClass",
             "plural": false,
             "selections": [
               {
-                "alias": "short_description",
-                "args": null,
                 "kind": "ScalarField",
+                "alias": "short_description",
                 "name": "shortDescription",
+                "args": null,
                 "storageKey": null
               },
               (v1/*: any*/)
-            ],
-            "storageKey": null
+            ]
           },
           (v1/*: any*/)
-        ],
-        "storageKey": "artwork(id:\"josef-albers-homage-to-the-square-85\")"
+        ]
       }
     ]
   },
   "params": {
-    "id": null,
-    "metadata": {},
-    "name": "ArtworkSidebarMetadata_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkSidebarMetadata_Test_Query {\n  artwork(id: \"josef-albers-homage-to-the-square-85\") {\n    ...ArtworkSidebarMetadata_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarClassification_artwork on Artwork {\n  attribution_class: attributionClass {\n    short_description: shortDescription\n    id\n  }\n}\n\nfragment ArtworkSidebarMetadata_artwork on Artwork {\n  is_biddable: isBiddable\n  edition_sets: editionSets {\n    __typename\n    id\n  }\n  sale_artwork: saleArtwork {\n    lot_label: lotLabel\n    id\n  }\n  ...ArtworkSidebarTitleInfo_artwork\n  ...ArtworkSidebarSizeInfo_piece\n  ...ArtworkSidebarClassification_artwork\n}\n\nfragment ArtworkSidebarSizeInfo_piece on Sellable {\n  dimensions {\n    in\n    cm\n  }\n  edition_of: editionOf\n}\n\nfragment ArtworkSidebarTitleInfo_artwork on Artwork {\n  title\n  date\n  medium\n}\n"
+    "name": "ArtworkSidebarMetadata_Test_Query",
+    "id": null,
+    "text": "query ArtworkSidebarMetadata_Test_Query {\n  artwork(id: \"josef-albers-homage-to-the-square-85\") {\n    ...ArtworkSidebarMetadata_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarClassification_artwork on Artwork {\n  attribution_class: attributionClass {\n    short_description: shortDescription\n    id\n  }\n}\n\nfragment ArtworkSidebarMetadata_artwork on Artwork {\n  is_biddable: isBiddable\n  edition_sets: editionSets {\n    __typename\n    id\n  }\n  sale_artwork: saleArtwork {\n    lot_label: lotLabel\n    id\n  }\n  ...ArtworkSidebarTitleInfo_artwork\n  ...ArtworkSidebarSizeInfo_piece\n  ...ArtworkSidebarClassification_artwork\n}\n\nfragment ArtworkSidebarSizeInfo_piece on Sellable {\n  dimensions {\n    in\n    cm\n  }\n  edition_of: editionOf\n}\n\nfragment ArtworkSidebarTitleInfo_artwork on Artwork {\n  title\n  date\n  medium\n}\n",
+    "metadata": {}
   }
 };
 })();

@@ -1,5 +1,4 @@
 /* tslint:disable */
-/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -24,65 +23,65 @@ export type Fillwidth_artworks$key = {
 
 
 const node: ReaderFragment = {
-  "argumentDefinitions": [],
   "kind": "Fragment",
-  "metadata": null,
   "name": "Fillwidth_artworks",
+  "type": "ArtworkConnection",
+  "metadata": null,
+  "argumentDefinitions": [],
   "selections": [
     {
+      "kind": "LinkedField",
       "alias": null,
+      "name": "edges",
+      "storageKey": null,
       "args": null,
       "concreteType": "ArtworkEdge",
-      "kind": "LinkedField",
-      "name": "edges",
       "plural": true,
       "selections": [
         {
+          "kind": "LinkedField",
           "alias": null,
+          "name": "node",
+          "storageKey": null,
           "args": null,
           "concreteType": "Artwork",
-          "kind": "LinkedField",
-          "name": "node",
           "plural": false,
           "selections": [
             {
-              "alias": null,
-              "args": null,
               "kind": "ScalarField",
+              "alias": null,
               "name": "id",
+              "args": null,
               "storageKey": null
             },
             {
+              "kind": "LinkedField",
               "alias": null,
+              "name": "image",
+              "storageKey": null,
               "args": null,
               "concreteType": "Image",
-              "kind": "LinkedField",
-              "name": "image",
               "plural": false,
               "selections": [
                 {
-                  "alias": "aspect_ratio",
-                  "args": null,
                   "kind": "ScalarField",
+                  "alias": "aspect_ratio",
                   "name": "aspectRatio",
+                  "args": null,
                   "storageKey": null
                 }
-              ],
-              "storageKey": null
+              ]
             },
             {
-              "args": null,
               "kind": "FragmentSpread",
-              "name": "FillwidthItem_artwork"
+              "name": "FillwidthItem_artwork",
+              "args": null
             }
-          ],
-          "storageKey": null
+          ]
         }
-      ],
-      "storageKey": null
+      ]
     }
-  ],
-  "type": "ArtworkConnection"
+  ]
 };
 (node as any).hash = '9b77dfaad4a1239bd6d4dd567c95d70e';
 export default node;

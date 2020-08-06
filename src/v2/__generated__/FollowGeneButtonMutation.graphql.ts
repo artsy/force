@@ -1,10 +1,9 @@
 /* tslint:disable */
-/* eslint-disable */
 
 import { ConcreteRequest } from "relay-runtime";
 export type FollowGeneInput = {
-    clientMutationId?: string | null;
-    geneID?: string | null;
+    readonly clientMutationId?: string | null;
+    readonly geneID?: string | null;
 };
 export type FollowGeneButtonMutationVariables = {
     input: FollowGeneInput;
@@ -40,15 +39,18 @@ mutation FollowGeneButtonMutation(
 const node: ConcreteRequest = (function(){
 var v0 = [
   {
-    "defaultValue": null,
     "kind": "LocalArgument",
     "name": "input",
-    "type": "FollowGeneInput!"
+    "type": "FollowGeneInput!",
+    "defaultValue": null
   }
 ],
 v1 = [
   {
+    "kind": "LinkedField",
     "alias": null,
+    "name": "followGene",
+    "storageKey": null,
     "args": [
       {
         "kind": "Variable",
@@ -57,61 +59,58 @@ v1 = [
       }
     ],
     "concreteType": "FollowGenePayload",
-    "kind": "LinkedField",
-    "name": "followGene",
     "plural": false,
     "selections": [
       {
+        "kind": "LinkedField",
         "alias": null,
+        "name": "gene",
+        "storageKey": null,
         "args": null,
         "concreteType": "Gene",
-        "kind": "LinkedField",
-        "name": "gene",
         "plural": false,
         "selections": [
           {
-            "alias": null,
-            "args": null,
             "kind": "ScalarField",
+            "alias": null,
             "name": "id",
+            "args": null,
             "storageKey": null
           },
           {
-            "alias": "is_followed",
-            "args": null,
             "kind": "ScalarField",
+            "alias": "is_followed",
             "name": "isFollowed",
+            "args": null,
             "storageKey": null
           }
-        ],
-        "storageKey": null
+        ]
       }
-    ],
-    "storageKey": null
+    ]
   }
 ];
 return {
-  "fragment": {
-    "argumentDefinitions": (v0/*: any*/),
-    "kind": "Fragment",
-    "metadata": null,
-    "name": "FollowGeneButtonMutation",
-    "selections": (v1/*: any*/),
-    "type": "Mutation"
-  },
   "kind": "Request",
-  "operation": {
+  "fragment": {
+    "kind": "Fragment",
+    "name": "FollowGeneButtonMutation",
+    "type": "Mutation",
+    "metadata": null,
     "argumentDefinitions": (v0/*: any*/),
+    "selections": (v1/*: any*/)
+  },
+  "operation": {
     "kind": "Operation",
     "name": "FollowGeneButtonMutation",
+    "argumentDefinitions": (v0/*: any*/),
     "selections": (v1/*: any*/)
   },
   "params": {
-    "id": null,
-    "metadata": {},
-    "name": "FollowGeneButtonMutation",
     "operationKind": "mutation",
-    "text": "mutation FollowGeneButtonMutation(\n  $input: FollowGeneInput!\n) {\n  followGene(input: $input) {\n    gene {\n      id\n      is_followed: isFollowed\n    }\n  }\n}\n"
+    "name": "FollowGeneButtonMutation",
+    "id": null,
+    "text": "mutation FollowGeneButtonMutation(\n  $input: FollowGeneInput!\n) {\n  followGene(input: $input) {\n    gene {\n      id\n      is_followed: isFollowed\n    }\n  }\n}\n",
+    "metadata": {}
   }
 };
 })();

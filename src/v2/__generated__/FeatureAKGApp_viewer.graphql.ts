@@ -1,5 +1,4 @@
 /* tslint:disable */
-/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -16,61 +15,64 @@ export type FeatureAKGApp_viewer$key = {
 
 
 const node: ReaderFragment = {
+  "kind": "Fragment",
+  "name": "FeatureAKGApp_viewer",
+  "type": "Viewer",
+  "metadata": null,
   "argumentDefinitions": [
     {
-      "defaultValue": null,
       "kind": "LocalArgument",
       "name": "articleIDs",
-      "type": "[String]!"
+      "type": "[String]!",
+      "defaultValue": null
     },
     {
-      "defaultValue": null,
       "kind": "LocalArgument",
       "name": "selectedWorksSetID",
-      "type": "String!"
+      "type": "String!",
+      "defaultValue": null
     },
     {
-      "defaultValue": null,
       "kind": "LocalArgument",
       "name": "collectionRailItemIDs",
-      "type": "[String!]"
+      "type": "[String!]",
+      "defaultValue": null
     },
     {
-      "defaultValue": null,
       "kind": "LocalArgument",
       "name": "auctionRailItemIDs",
-      "type": "[String!]"
+      "type": "[String!]",
+      "defaultValue": null
     },
     {
-      "defaultValue": null,
       "kind": "LocalArgument",
       "name": "fairRailItemIDs",
-      "type": "[String!]"
+      "type": "[String!]",
+      "defaultValue": null
     },
     {
-      "defaultValue": null,
       "kind": "LocalArgument",
       "name": "hasCollectionRailItems",
-      "type": "Boolean!"
+      "type": "Boolean!",
+      "defaultValue": null
     },
     {
-      "defaultValue": null,
       "kind": "LocalArgument",
       "name": "hasAuctionRailItems",
-      "type": "Boolean!"
+      "type": "Boolean!",
+      "defaultValue": null
     },
     {
-      "defaultValue": null,
       "kind": "LocalArgument",
       "name": "hasFairRailItems",
-      "type": "Boolean!"
+      "type": "Boolean!",
+      "defaultValue": null
     }
   ],
-  "kind": "Fragment",
-  "metadata": null,
-  "name": "FeatureAKGApp_viewer",
   "selections": [
     {
+      "kind": "FragmentSpread",
+      "name": "Feature_viewer",
       "args": [
         {
           "kind": "Variable",
@@ -112,12 +114,9 @@ const node: ReaderFragment = {
           "name": "selectedWorksSetID",
           "variableName": "selectedWorksSetID"
         }
-      ],
-      "kind": "FragmentSpread",
-      "name": "Feature_viewer"
+      ]
     }
-  ],
-  "type": "Viewer"
+  ]
 };
 (node as any).hash = '7e462965607113d556dfbd202e44b165';
 export default node;

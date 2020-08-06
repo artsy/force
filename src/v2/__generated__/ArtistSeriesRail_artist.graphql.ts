@@ -1,5 +1,4 @@
 /* tslint:disable */
-/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -23,58 +22,58 @@ export type ArtistSeriesRail_artist$key = {
 
 
 const node: ReaderFragment = {
-  "argumentDefinitions": [],
   "kind": "Fragment",
-  "metadata": null,
   "name": "ArtistSeriesRail_artist",
+  "type": "Artist",
+  "metadata": null,
+  "argumentDefinitions": [],
   "selections": [
     {
+      "kind": "LinkedField",
       "alias": null,
+      "name": "artistSeriesConnection",
+      "storageKey": null,
       "args": null,
       "concreteType": "ArtistSeriesConnection",
-      "kind": "LinkedField",
-      "name": "artistSeriesConnection",
       "plural": false,
       "selections": [
         {
+          "kind": "LinkedField",
           "alias": null,
+          "name": "edges",
+          "storageKey": null,
           "args": null,
           "concreteType": "ArtistSeriesEdge",
-          "kind": "LinkedField",
-          "name": "edges",
           "plural": true,
           "selections": [
             {
+              "kind": "LinkedField",
               "alias": null,
+              "name": "node",
+              "storageKey": null,
               "args": null,
               "concreteType": "ArtistSeries",
-              "kind": "LinkedField",
-              "name": "node",
               "plural": false,
               "selections": [
                 {
-                  "alias": null,
-                  "args": null,
                   "kind": "ScalarField",
+                  "alias": null,
                   "name": "internalID",
+                  "args": null,
                   "storageKey": null
                 },
                 {
-                  "args": null,
                   "kind": "FragmentSpread",
-                  "name": "ArtistSeriesItem_artistSeries"
+                  "name": "ArtistSeriesItem_artistSeries",
+                  "args": null
                 }
-              ],
-              "storageKey": null
+              ]
             }
-          ],
-          "storageKey": null
+          ]
         }
-      ],
-      "storageKey": null
+      ]
     }
-  ],
-  "type": "Artist"
+  ]
 };
 (node as any).hash = 'f2404c14f9b6592d9e308653647d8326';
 export default node;

@@ -1,5 +1,4 @@
 /* tslint:disable */
-/* eslint-disable */
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -85,181 +84,185 @@ var v0 = [
   }
 ],
 v1 = {
-  "alias": null,
-  "args": null,
   "kind": "ScalarField",
+  "alias": null,
   "name": "id",
+  "args": null,
   "storageKey": null
 },
 v2 = {
-  "alias": null,
-  "args": null,
   "kind": "ScalarField",
+  "alias": null,
   "name": "internalID",
+  "args": null,
   "storageKey": null
 },
 v3 = {
-  "alias": null,
-  "args": null,
   "kind": "ScalarField",
+  "alias": null,
   "name": "slug",
+  "args": null,
   "storageKey": null
 };
 return {
+  "kind": "Request",
   "fragment": {
-    "argumentDefinitions": [],
     "kind": "Fragment",
-    "metadata": null,
     "name": "ArtworkActionsStoryQuery",
+    "type": "Query",
+    "metadata": null,
+    "argumentDefinitions": [],
     "selections": [
       {
+        "kind": "LinkedField",
         "alias": null,
+        "name": "artwork",
+        "storageKey": "artwork(id:\"unused\")",
         "args": (v0/*: any*/),
         "concreteType": "Artwork",
-        "kind": "LinkedField",
-        "name": "artwork",
         "plural": false,
         "selections": [
           {
-            "args": null,
             "kind": "FragmentSpread",
-            "name": "ArtworkActions_artwork"
+            "name": "ArtworkActions_artwork",
+            "args": null
           }
-        ],
-        "storageKey": "artwork(id:\"unused\")"
+        ]
       }
-    ],
-    "type": "Query"
+    ]
   },
-  "kind": "Request",
   "operation": {
-    "argumentDefinitions": [],
     "kind": "Operation",
     "name": "ArtworkActionsStoryQuery",
+    "argumentDefinitions": [],
     "selections": [
       {
+        "kind": "LinkedField",
         "alias": null,
+        "name": "artwork",
+        "storageKey": "artwork(id:\"unused\")",
         "args": (v0/*: any*/),
         "concreteType": "Artwork",
-        "kind": "LinkedField",
-        "name": "artwork",
         "plural": false,
         "selections": [
           (v1/*: any*/),
           (v2/*: any*/),
           (v3/*: any*/),
           {
+            "kind": "ScalarField",
             "alias": "is_saved",
-            "args": null,
-            "kind": "ScalarField",
             "name": "isSaved",
+            "args": null,
             "storageKey": null
           },
           {
-            "alias": null,
-            "args": null,
             "kind": "ScalarField",
+            "alias": null,
             "name": "title",
-            "storageKey": null
-          },
-          {
-            "alias": null,
             "args": null,
-            "kind": "ScalarField",
-            "name": "href",
             "storageKey": null
           },
           {
+            "kind": "ScalarField",
             "alias": null,
+            "name": "href",
+            "args": null,
+            "storageKey": null
+          },
+          {
+            "kind": "LinkedField",
+            "alias": null,
+            "name": "images",
+            "storageKey": null,
             "args": null,
             "concreteType": "Image",
-            "kind": "LinkedField",
-            "name": "images",
             "plural": true,
             "selections": [
               {
-                "alias": null,
-                "args": null,
                 "kind": "ScalarField",
+                "alias": null,
                 "name": "url",
+                "args": null,
                 "storageKey": null
               }
-            ],
-            "storageKey": null
+            ]
           },
           {
+            "kind": "LinkedField",
             "alias": "artworkMeta",
+            "name": "meta",
+            "storageKey": null,
             "args": null,
             "concreteType": "ArtworkMeta",
-            "kind": "LinkedField",
-            "name": "meta",
             "plural": false,
             "selections": [
               {
-                "alias": null,
-                "args": null,
                 "kind": "ScalarField",
+                "alias": null,
                 "name": "share",
+                "args": null,
                 "storageKey": null
               }
-            ],
-            "storageKey": null
+            ]
           },
           {
+            "kind": "LinkedField",
             "alias": null,
+            "name": "artists",
+            "storageKey": null,
             "args": null,
             "concreteType": "Artist",
-            "kind": "LinkedField",
-            "name": "artists",
             "plural": true,
             "selections": [
               {
-                "alias": null,
-                "args": null,
                 "kind": "ScalarField",
+                "alias": null,
                 "name": "name",
+                "args": null,
                 "storageKey": null
               },
               (v1/*: any*/)
-            ],
-            "storageKey": null
+            ]
           },
           {
-            "alias": null,
-            "args": null,
             "kind": "ScalarField",
+            "alias": null,
             "name": "date",
+            "args": null,
             "storageKey": null
           },
           {
+            "kind": "LinkedField",
             "alias": null,
+            "name": "dimensions",
+            "storageKey": null,
             "args": null,
             "concreteType": "dimensions",
-            "kind": "LinkedField",
-            "name": "dimensions",
             "plural": false,
             "selections": [
               {
-                "alias": null,
-                "args": null,
                 "kind": "ScalarField",
+                "alias": null,
                 "name": "cm",
+                "args": null,
                 "storageKey": null
               }
-            ],
-            "storageKey": null
+            ]
           },
           {
+            "kind": "LinkedField",
             "alias": null,
+            "name": "image",
+            "storageKey": null,
             "args": null,
             "concreteType": "Image",
-            "kind": "LinkedField",
-            "name": "image",
             "plural": false,
             "selections": [
               (v2/*: any*/),
               {
+                "kind": "ScalarField",
                 "alias": null,
+                "name": "url",
                 "args": [
                   {
                     "kind": "Literal",
@@ -267,91 +270,87 @@ return {
                     "value": "larger"
                   }
                 ],
-                "kind": "ScalarField",
-                "name": "url",
                 "storageKey": "url(version:\"larger\")"
               },
               {
-                "alias": null,
-                "args": null,
                 "kind": "ScalarField",
+                "alias": null,
                 "name": "height",
+                "args": null,
                 "storageKey": null
               },
               {
-                "alias": null,
-                "args": null,
                 "kind": "ScalarField",
+                "alias": null,
                 "name": "width",
+                "args": null,
                 "storageKey": null
               }
-            ],
-            "storageKey": null
+            ]
           },
           {
+            "kind": "ScalarField",
             "alias": "is_downloadable",
-            "args": null,
-            "kind": "ScalarField",
             "name": "isDownloadable",
-            "storageKey": null
-          },
-          {
-            "alias": "is_hangable",
             "args": null,
-            "kind": "ScalarField",
-            "name": "isHangable",
             "storageKey": null
           },
           {
+            "kind": "ScalarField",
+            "alias": "is_hangable",
+            "name": "isHangable",
+            "args": null,
+            "storageKey": null
+          },
+          {
+            "kind": "LinkedField",
             "alias": null,
+            "name": "partner",
+            "storageKey": null,
             "args": null,
             "concreteType": "Partner",
-            "kind": "LinkedField",
-            "name": "partner",
             "plural": false,
             "selections": [
               (v3/*: any*/),
               (v1/*: any*/)
-            ],
-            "storageKey": null
+            ]
           },
           {
+            "kind": "LinkedField",
             "alias": null,
+            "name": "sale",
+            "storageKey": null,
             "args": null,
             "concreteType": "Sale",
-            "kind": "LinkedField",
-            "name": "sale",
             "plural": false,
             "selections": [
               {
-                "alias": "is_closed",
-                "args": null,
                 "kind": "ScalarField",
+                "alias": "is_closed",
                 "name": "isClosed",
+                "args": null,
                 "storageKey": null
               },
               {
-                "alias": "is_auction",
-                "args": null,
                 "kind": "ScalarField",
+                "alias": "is_auction",
                 "name": "isAuction",
+                "args": null,
                 "storageKey": null
               },
               (v1/*: any*/)
-            ],
-            "storageKey": null
+            ]
           }
-        ],
-        "storageKey": "artwork(id:\"unused\")"
+        ]
       }
     ]
   },
   "params": {
-    "id": null,
-    "metadata": {},
-    "name": "ArtworkActionsStoryQuery",
     "operationKind": "query",
-    "text": "query ArtworkActionsStoryQuery {\n  artwork(id: \"unused\") {\n    ...ArtworkActions_artwork\n    id\n  }\n}\n\nfragment ArtworkActions_artwork on Artwork {\n  ...Save_artwork\n  ...ArtworkSharePanel_artwork\n  artists {\n    name\n    id\n  }\n  date\n  dimensions {\n    cm\n  }\n  href\n  slug\n  image {\n    internalID\n    url(version: \"larger\")\n    height\n    width\n  }\n  is_downloadable: isDownloadable\n  is_hangable: isHangable\n  partner {\n    slug\n    id\n  }\n  title\n  sale {\n    is_closed: isClosed\n    is_auction: isAuction\n    id\n  }\n}\n\nfragment ArtworkSharePanel_artwork on Artwork {\n  href\n  images {\n    url\n  }\n  artworkMeta: meta {\n    share\n  }\n}\n\nfragment Save_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n"
+    "name": "ArtworkActionsStoryQuery",
+    "id": null,
+    "text": "query ArtworkActionsStoryQuery {\n  artwork(id: \"unused\") {\n    ...ArtworkActions_artwork\n    id\n  }\n}\n\nfragment ArtworkActions_artwork on Artwork {\n  ...Save_artwork\n  ...ArtworkSharePanel_artwork\n  artists {\n    name\n    id\n  }\n  date\n  dimensions {\n    cm\n  }\n  href\n  slug\n  image {\n    internalID\n    url(version: \"larger\")\n    height\n    width\n  }\n  is_downloadable: isDownloadable\n  is_hangable: isHangable\n  partner {\n    slug\n    id\n  }\n  title\n  sale {\n    is_closed: isClosed\n    is_auction: isAuction\n    id\n  }\n}\n\nfragment ArtworkSharePanel_artwork on Artwork {\n  href\n  images {\n    url\n  }\n  artworkMeta: meta {\n    share\n  }\n}\n\nfragment Save_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n",
+    "metadata": {}
   }
 };
 })();

@@ -1,12 +1,11 @@
 /* tslint:disable */
-/* eslint-disable */
 
 import { ConcreteRequest } from "relay-runtime";
 export type BidderPositionInput = {
-    artworkID: string;
-    clientMutationId?: string | null;
-    maxBidAmountCents: number;
-    saleID: string;
+    readonly artworkID: string;
+    readonly clientMutationId?: string | null;
+    readonly maxBidAmountCents: number;
+    readonly saleID: string;
 };
 export type ConfirmBidCreateBidderPositionMutationVariables = {
     input: BidderPositionInput;
@@ -68,10 +67,10 @@ mutation ConfirmBidCreateBidderPositionMutation(
 const node: ConcreteRequest = (function(){
 var v0 = [
   {
-    "defaultValue": null,
     "kind": "LocalArgument",
     "name": "input",
-    "type": "BidderPositionInput!"
+    "type": "BidderPositionInput!",
+    "defaultValue": null
   }
 ],
 v1 = [
@@ -82,210 +81,210 @@ v1 = [
   }
 ],
 v2 = {
-  "alias": null,
-  "args": null,
   "kind": "ScalarField",
+  "alias": null,
   "name": "internalID",
+  "args": null,
   "storageKey": null
 },
 v3 = {
-  "alias": null,
-  "args": null,
   "kind": "ScalarField",
+  "alias": null,
   "name": "qualifiedForBidding",
+  "args": null,
   "storageKey": null
 },
 v4 = {
-  "alias": null,
-  "args": null,
   "kind": "ScalarField",
+  "alias": null,
   "name": "status",
+  "args": null,
   "storageKey": null
 },
 v5 = {
-  "alias": null,
-  "args": null,
   "kind": "ScalarField",
+  "alias": null,
   "name": "messageHeader",
+  "args": null,
   "storageKey": null
 },
 v6 = {
-  "alias": null,
-  "args": null,
   "kind": "ScalarField",
+  "alias": null,
   "name": "id",
+  "args": null,
   "storageKey": null
 };
 return {
+  "kind": "Request",
   "fragment": {
-    "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
-    "metadata": null,
     "name": "ConfirmBidCreateBidderPositionMutation",
+    "type": "Mutation",
+    "metadata": null,
+    "argumentDefinitions": (v0/*: any*/),
     "selections": [
       {
+        "kind": "LinkedField",
         "alias": null,
+        "name": "createBidderPosition",
+        "storageKey": null,
         "args": (v1/*: any*/),
         "concreteType": "BidderPositionPayload",
-        "kind": "LinkedField",
-        "name": "createBidderPosition",
         "plural": false,
         "selections": [
           {
+            "kind": "LinkedField",
             "alias": null,
+            "name": "result",
+            "storageKey": null,
             "args": null,
             "concreteType": "BidderPositionResult",
-            "kind": "LinkedField",
-            "name": "result",
             "plural": false,
             "selections": [
               {
+                "kind": "LinkedField",
                 "alias": null,
+                "name": "position",
+                "storageKey": null,
                 "args": null,
                 "concreteType": "BidderPosition",
-                "kind": "LinkedField",
-                "name": "position",
                 "plural": false,
                 "selections": [
                   (v2/*: any*/),
                   {
+                    "kind": "LinkedField",
                     "alias": null,
+                    "name": "saleArtwork",
+                    "storageKey": null,
                     "args": null,
                     "concreteType": "SaleArtwork",
-                    "kind": "LinkedField",
-                    "name": "saleArtwork",
                     "plural": false,
                     "selections": [
                       {
+                        "kind": "LinkedField",
                         "alias": null,
+                        "name": "sale",
+                        "storageKey": null,
                         "args": null,
                         "concreteType": "Sale",
-                        "kind": "LinkedField",
-                        "name": "sale",
                         "plural": false,
                         "selections": [
                           {
+                            "kind": "LinkedField",
                             "alias": null,
+                            "name": "registrationStatus",
+                            "storageKey": null,
                             "args": null,
                             "concreteType": "Bidder",
-                            "kind": "LinkedField",
-                            "name": "registrationStatus",
                             "plural": false,
                             "selections": [
                               (v2/*: any*/),
                               (v3/*: any*/)
-                            ],
-                            "storageKey": null
+                            ]
                           }
-                        ],
-                        "storageKey": null
+                        ]
                       }
-                    ],
-                    "storageKey": null
+                    ]
                   }
-                ],
-                "storageKey": null
+                ]
               },
               (v4/*: any*/),
               (v5/*: any*/)
-            ],
-            "storageKey": null
+            ]
           }
-        ],
-        "storageKey": null
+        ]
       }
-    ],
-    "type": "Mutation"
+    ]
   },
-  "kind": "Request",
   "operation": {
-    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "ConfirmBidCreateBidderPositionMutation",
+    "argumentDefinitions": (v0/*: any*/),
     "selections": [
       {
+        "kind": "LinkedField",
         "alias": null,
+        "name": "createBidderPosition",
+        "storageKey": null,
         "args": (v1/*: any*/),
         "concreteType": "BidderPositionPayload",
-        "kind": "LinkedField",
-        "name": "createBidderPosition",
         "plural": false,
         "selections": [
           {
+            "kind": "LinkedField",
             "alias": null,
+            "name": "result",
+            "storageKey": null,
             "args": null,
             "concreteType": "BidderPositionResult",
-            "kind": "LinkedField",
-            "name": "result",
             "plural": false,
             "selections": [
               {
+                "kind": "LinkedField",
                 "alias": null,
+                "name": "position",
+                "storageKey": null,
                 "args": null,
                 "concreteType": "BidderPosition",
-                "kind": "LinkedField",
-                "name": "position",
                 "plural": false,
                 "selections": [
                   (v2/*: any*/),
                   {
+                    "kind": "LinkedField",
                     "alias": null,
+                    "name": "saleArtwork",
+                    "storageKey": null,
                     "args": null,
                     "concreteType": "SaleArtwork",
-                    "kind": "LinkedField",
-                    "name": "saleArtwork",
                     "plural": false,
                     "selections": [
                       {
+                        "kind": "LinkedField",
                         "alias": null,
+                        "name": "sale",
+                        "storageKey": null,
                         "args": null,
                         "concreteType": "Sale",
-                        "kind": "LinkedField",
-                        "name": "sale",
                         "plural": false,
                         "selections": [
                           {
+                            "kind": "LinkedField",
                             "alias": null,
+                            "name": "registrationStatus",
+                            "storageKey": null,
                             "args": null,
                             "concreteType": "Bidder",
-                            "kind": "LinkedField",
-                            "name": "registrationStatus",
                             "plural": false,
                             "selections": [
                               (v2/*: any*/),
                               (v3/*: any*/),
                               (v6/*: any*/)
-                            ],
-                            "storageKey": null
+                            ]
                           },
                           (v6/*: any*/)
-                        ],
-                        "storageKey": null
+                        ]
                       },
                       (v6/*: any*/)
-                    ],
-                    "storageKey": null
+                    ]
                   },
                   (v6/*: any*/)
-                ],
-                "storageKey": null
+                ]
               },
               (v4/*: any*/),
               (v5/*: any*/)
-            ],
-            "storageKey": null
+            ]
           }
-        ],
-        "storageKey": null
+        ]
       }
     ]
   },
   "params": {
-    "id": null,
-    "metadata": {},
-    "name": "ConfirmBidCreateBidderPositionMutation",
     "operationKind": "mutation",
-    "text": "mutation ConfirmBidCreateBidderPositionMutation(\n  $input: BidderPositionInput!\n) {\n  createBidderPosition(input: $input) {\n    result {\n      position {\n        internalID\n        saleArtwork {\n          sale {\n            registrationStatus {\n              internalID\n              qualifiedForBidding\n              id\n            }\n            id\n          }\n          id\n        }\n        id\n      }\n      status\n      messageHeader\n    }\n  }\n}\n"
+    "name": "ConfirmBidCreateBidderPositionMutation",
+    "id": null,
+    "text": "mutation ConfirmBidCreateBidderPositionMutation(\n  $input: BidderPositionInput!\n) {\n  createBidderPosition(input: $input) {\n    result {\n      position {\n        internalID\n        saleArtwork {\n          sale {\n            registrationStatus {\n              internalID\n              qualifiedForBidding\n              id\n            }\n            id\n          }\n          id\n        }\n        id\n      }\n      status\n      messageHeader\n    }\n  }\n}\n",
+    "metadata": {}
   }
 };
 })();

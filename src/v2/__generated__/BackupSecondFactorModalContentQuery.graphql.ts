@@ -1,5 +1,4 @@
 /* tslint:disable */
-/* eslint-disable */
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -47,47 +46,51 @@ fragment BackupSecondFactorModalContent_me on Me {
 */
 
 const node: ConcreteRequest = {
+  "kind": "Request",
   "fragment": {
-    "argumentDefinitions": [],
     "kind": "Fragment",
-    "metadata": null,
     "name": "BackupSecondFactorModalContentQuery",
+    "type": "Query",
+    "metadata": null,
+    "argumentDefinitions": [],
     "selections": [
       {
+        "kind": "LinkedField",
         "alias": null,
+        "name": "me",
+        "storageKey": null,
         "args": null,
         "concreteType": "Me",
-        "kind": "LinkedField",
-        "name": "me",
         "plural": false,
         "selections": [
           {
-            "args": null,
             "kind": "FragmentSpread",
-            "name": "BackupSecondFactorModalContent_me"
+            "name": "BackupSecondFactorModalContent_me",
+            "args": null
           }
-        ],
-        "storageKey": null
+        ]
       }
-    ],
-    "type": "Query"
+    ]
   },
-  "kind": "Request",
   "operation": {
-    "argumentDefinitions": [],
     "kind": "Operation",
     "name": "BackupSecondFactorModalContentQuery",
+    "argumentDefinitions": [],
     "selections": [
       {
+        "kind": "LinkedField",
         "alias": null,
+        "name": "me",
+        "storageKey": null,
         "args": null,
         "concreteType": "Me",
-        "kind": "LinkedField",
-        "name": "me",
         "plural": false,
         "selections": [
           {
+            "kind": "LinkedField",
             "alias": "backupSecondFactors",
+            "name": "secondFactors",
+            "storageKey": "secondFactors(kinds:[\"backup\"])",
             "args": [
               {
                 "kind": "Literal",
@@ -98,51 +101,47 @@ const node: ConcreteRequest = {
               }
             ],
             "concreteType": null,
-            "kind": "LinkedField",
-            "name": "secondFactors",
             "plural": true,
             "selections": [
               {
-                "alias": null,
-                "args": null,
                 "kind": "ScalarField",
+                "alias": null,
                 "name": "__typename",
+                "args": null,
                 "storageKey": null
               },
               {
                 "kind": "InlineFragment",
+                "type": "BackupSecondFactor",
                 "selections": [
                   {
-                    "alias": null,
-                    "args": null,
                     "kind": "ScalarField",
+                    "alias": null,
                     "name": "code",
+                    "args": null,
                     "storageKey": null
                   }
-                ],
-                "type": "BackupSecondFactor"
+                ]
               }
-            ],
-            "storageKey": "secondFactors(kinds:[\"backup\"])"
+            ]
           },
           {
-            "alias": null,
-            "args": null,
             "kind": "ScalarField",
+            "alias": null,
             "name": "id",
+            "args": null,
             "storageKey": null
           }
-        ],
-        "storageKey": null
+        ]
       }
     ]
   },
   "params": {
-    "id": null,
-    "metadata": {},
-    "name": "BackupSecondFactorModalContentQuery",
     "operationKind": "query",
-    "text": "query BackupSecondFactorModalContentQuery {\n  me {\n    ...BackupSecondFactorModalContent_me\n    id\n  }\n}\n\nfragment BackupSecondFactorModalContent_me on Me {\n  backupSecondFactors: secondFactors(kinds: [backup]) {\n    __typename\n    ... on BackupSecondFactor {\n      code\n    }\n  }\n}\n"
+    "name": "BackupSecondFactorModalContentQuery",
+    "id": null,
+    "text": "query BackupSecondFactorModalContentQuery {\n  me {\n    ...BackupSecondFactorModalContent_me\n    id\n  }\n}\n\nfragment BackupSecondFactorModalContent_me on Me {\n  backupSecondFactors: secondFactors(kinds: [backup]) {\n    __typename\n    ... on BackupSecondFactor {\n      code\n    }\n  }\n}\n",
+    "metadata": {}
   }
 };
 (node as any).hash = '6eb1007194d1ab59a7d88bf4892fd4b1';

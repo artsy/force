@@ -1,5 +1,4 @@
 /* tslint:disable */
-/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -42,7 +41,9 @@ export type SeoProductsForCollections_descending_artworks$key = {
 const node: ReaderFragment = (function(){
 var v0 = [
   {
+    "kind": "ScalarField",
     "alias": null,
+    "name": "major",
     "args": [
       {
         "kind": "Literal",
@@ -50,111 +51,109 @@ var v0 = [
         "value": "USD"
       }
     ],
-    "kind": "ScalarField",
-    "name": "major",
     "storageKey": "major(convertTo:\"USD\")"
   },
   {
-    "alias": null,
-    "args": null,
     "kind": "ScalarField",
+    "alias": null,
     "name": "currencyCode",
+    "args": null,
     "storageKey": null
   }
 ];
 return {
-  "argumentDefinitions": [],
   "kind": "Fragment",
-  "metadata": null,
   "name": "SeoProductsForCollections_descending_artworks",
+  "type": "FilterArtworksConnection",
+  "metadata": null,
+  "argumentDefinitions": [],
   "selections": [
     {
+      "kind": "LinkedField",
       "alias": null,
+      "name": "edges",
+      "storageKey": null,
       "args": null,
       "concreteType": "FilterArtworksEdge",
-      "kind": "LinkedField",
-      "name": "edges",
       "plural": true,
       "selections": [
         {
+          "kind": "LinkedField",
           "alias": null,
+          "name": "node",
+          "storageKey": null,
           "args": null,
           "concreteType": "Artwork",
-          "kind": "LinkedField",
-          "name": "node",
           "plural": false,
           "selections": [
             {
-              "alias": null,
-              "args": null,
               "kind": "ScalarField",
+              "alias": null,
               "name": "id",
-              "storageKey": null
-            },
-            {
-              "alias": null,
               "args": null,
-              "kind": "ScalarField",
-              "name": "availability",
               "storageKey": null
             },
             {
+              "kind": "ScalarField",
               "alias": null,
+              "name": "availability",
+              "args": null,
+              "storageKey": null
+            },
+            {
+              "kind": "LinkedField",
+              "alias": null,
+              "name": "listPrice",
+              "storageKey": null,
               "args": null,
               "concreteType": null,
-              "kind": "LinkedField",
-              "name": "listPrice",
               "plural": false,
               "selections": [
                 {
-                  "alias": null,
-                  "args": null,
                   "kind": "ScalarField",
+                  "alias": null,
                   "name": "__typename",
+                  "args": null,
                   "storageKey": null
                 },
                 {
                   "kind": "InlineFragment",
+                  "type": "PriceRange",
                   "selections": [
                     {
+                      "kind": "LinkedField",
                       "alias": null,
+                      "name": "minPrice",
+                      "storageKey": null,
                       "args": null,
                       "concreteType": "Money",
-                      "kind": "LinkedField",
-                      "name": "minPrice",
                       "plural": false,
-                      "selections": (v0/*: any*/),
-                      "storageKey": null
+                      "selections": (v0/*: any*/)
                     },
                     {
+                      "kind": "LinkedField",
                       "alias": null,
+                      "name": "maxPrice",
+                      "storageKey": null,
                       "args": null,
                       "concreteType": "Money",
-                      "kind": "LinkedField",
-                      "name": "maxPrice",
                       "plural": false,
-                      "selections": (v0/*: any*/),
-                      "storageKey": null
+                      "selections": (v0/*: any*/)
                     }
-                  ],
-                  "type": "PriceRange"
+                  ]
                 },
                 {
                   "kind": "InlineFragment",
-                  "selections": (v0/*: any*/),
-                  "type": "Money"
+                  "type": "Money",
+                  "selections": (v0/*: any*/)
                 }
-              ],
-              "storageKey": null
+              ]
             }
-          ],
-          "storageKey": null
+          ]
         }
-      ],
-      "storageKey": null
+      ]
     }
-  ],
-  "type": "FilterArtworksConnection"
+  ]
 };
 })();
 (node as any).hash = '3ed2186b3a7931bc9115d9f936826ac2';
