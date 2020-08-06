@@ -111,7 +111,7 @@
     "forever": "0.15.3",
     "found": "^0.5.5",
     "found-relay": "^0.8.2",
-    "found-scroll": "0.1.6",
+    "found-scroll": "^0.3.0",
     "geoformatter": "artsy/geoformatter",
     "geolib": "2.0.22",
     "glob": "7.1.3",

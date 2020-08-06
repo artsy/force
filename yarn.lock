@@ -2333,7 +2333,7 @@
     core-js-pure "^3.0.0"
     regenerator-runtime "^0.13.4"
 
-"@babel/runtime@7.11.2":
+"@babel/runtime@7.11.2", "@babel/runtime@^7.8.7":
   version "7.11.2"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.11.2.tgz#f549c13c754cc40b87644b9fa9f09a6a95fe0736"
   integrity sha512-TeWkU52so0mPtDcaCTxNBI/IHiz0pZgr8VEFqXFtZWpYD08ZB6FaSwVAS8MKRQAP3bYKiVjwysOJgMFY28o6Tw==
@@ -8239,6 +8239,11 @@ csstype@^2.5.7, csstype@^2.6.9:
   resolved "https://registry.yarnpkg.com/csstype/-/csstype-2.6.10.tgz#e63af50e66d7c266edb6b32909cfd0aabe03928b"
   integrity sha512-D34BqZU4cIlMCY93rZHbrq9pjTAQJ3U8S8rfBqjwHxkGPThWFjzZDQpgMJY0QViLxth6ZKYiwFBo14RdN44U/w==
 
+csstype@^3.0.2:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/csstype/-/csstype-3.0.2.tgz#ee5ff8f208c8cd613b389f7b222c9801ca62b3f7"
+  integrity sha512-ofovWglpqoqbfLNOTBNZLSbMuGrblAf1efvvArGKOZMBrIoJeu5UsAipQolkijtyQx5MtAzT/J9IHj/CEY1mJw==
+
 csurf@^1.8.3:
   version "1.9.0"
   resolved "https://registry.yarnpkg.com/csurf/-/csurf-1.9.0.tgz#49d2c6925ffcec7b7de559597c153fa533364133"
@@ -8880,6 +8885,14 @@ dom-helpers@^3.2.1, dom-helpers@^3.3.1, dom-helpers@^3.4.0:
   integrity sha512-LnuPJ+dwqKDIyotW1VzmOZ5TONUN7CwkCR5hrgawTUbkBGYdeoNLZo6nNfGkCrjtE1nXXaj7iMMpDa8/d9WoIA==
   dependencies:
     "@babel/runtime" "^7.1.2"
+
+dom-helpers@^5.1.4:
+  version "5.2.0"
+  resolved "https://registry.yarnpkg.com/dom-helpers/-/dom-helpers-5.2.0.tgz#57fd054c5f8f34c52a3eeffdb7e7e93cd357d95b"
+  integrity sha512-Ru5o9+V8CpunKnz5LGgWXkmrH/20cGKwcHwS4m73zIvs54CN9epEmT/HLqFJW3kXpakAFkEdzgy1hzlJe3E4OQ==
+  dependencies:
+    "@babel/runtime" "^7.8.7"
+    csstype "^3.0.2"
 
 dom-iterator@^1.0.0:
   version "1.0.0"
@@ -10226,6 +10239,17 @@ farce@^0.2.7, farce@^0.2.8:
     redux "^4.0.1"
     warning "^4.0.3"
 
+farce@^0.4.0:
+  version "0.4.5"
+  resolved "https://registry.yarnpkg.com/farce/-/farce-0.4.5.tgz#610cefaaa76d57dbd723d2d6df30a72e3ea5d842"
+  integrity sha512-PK3eWFYBicrelTh/ZAM8KCto3c2hwo+9PKxtkSS5EhmLP3Y+m2l5r56MF8+m/htlojQpY2uHwmMDtdb0cNWrSw==
+  dependencies:
+    invariant "^2.2.4"
+    is-promise "^4.0.0"
+    query-string "^5.1.1"
+    redux "^4.0.4"
+    warning "^4.0.3"
+
 farce@^0.4.1:
   version "0.4.1"
   resolved "https://registry.yarnpkg.com/farce/-/farce-0.4.1.tgz#6e1b62f53636e55b706b9672adbe560bc223c02f"
@@ -10851,7 +10875,7 @@ found-relay@^0.8.2:
     prop-types "^15.7.2"
     warning "^4.0.3"
 
-found-scroll@0.1.6, found-scroll@^0.1.5:
+found-scroll@^0.1.5:
   version "0.1.6"
   resolved "https://registry.yarnpkg.com/found-scroll/-/found-scroll-0.1.6.tgz#93adbbcf923eb31d406f57ab7cedbe3ae564b12e"
   integrity sha512-jbHT0hgHQ1f/Yu13pIjoTNmP1KdGe+FLVX12dWMIZ+RuFQiPRYGWutf3SNQ1cMPisSOqYKe7Fac/9N333DqrBA==
@@ -10859,6 +10883,15 @@ found-scroll@0.1.6, found-scroll@^0.1.5:
     farce "^0.2.7"
     prop-types "^15.7.2"
     scroll-behavior "^0.9.10"
+
+found-scroll@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/found-scroll/-/found-scroll-0.3.0.tgz#4ccd6c81c1eef7c453e598a34c18cc51c15a57df"
+  integrity sha512-OdXYQy8SSShjMjagCQrwaeRdce3aeyOrxPkE69Wr1vPOIKSPiY8tXmsY1RQBXNI0m2QJF2RBuqkQ4OWwNBIpow==
+  dependencies:
+    farce "^0.4.0"
+    prop-types "^15.7.2"
+    scroll-behavior "^0.11.0"
 
 found@^0.4.9:
   version "0.4.9"
@@ -16488,6 +16521,11 @@ pad@^3.2.0:
   dependencies:
     wcwidth "^1.0.1"
 
+page-lifecycle@^0.1.2:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/page-lifecycle/-/page-lifecycle-0.1.2.tgz#f17a083c082bd5ababddd77f1025a4b1c8808012"
+  integrity sha512-+3uccYgL0CXG0KSXRxZi4uc2E6mqFWV5HqiJJgcnaJCiS0LqiuJ4vB420N21NFuLvuvLB4Jr5drgQ2NXAXF9Iw==
+
 pako@~1.0.5:
   version "1.0.10"
   resolved "https://registry.yarnpkg.com/pako/-/pako-1.0.10.tgz#4328badb5086a426aa90f541977d4955da5c9732"
@@ -19605,6 +19643,15 @@ schema-utils@^2.0.1, schema-utils@^2.5.0, schema-utils@^2.6.6:
   dependencies:
     ajv "^6.12.0"
     ajv-keywords "^3.4.1"
+
+scroll-behavior@^0.11.0:
+  version "0.11.0"
+  resolved "https://registry.yarnpkg.com/scroll-behavior/-/scroll-behavior-0.11.0.tgz#fff2765b6007341b80a04678fcd314e54d5b03ea"
+  integrity sha512-wQvNs3Q1TRvEkkwrFd/BkIL+dA4PYQl55/FUlmtjgz63/FtbnyR6MkLyRmjK0Rg3LCZCr0jORsFfMLkeNYdFuA==
+  dependencies:
+    dom-helpers "^5.1.4"
+    invariant "^2.2.4"
+    page-lifecycle "^0.1.2"
 
 scroll-behavior@^0.9.10:
   version "0.9.10"
