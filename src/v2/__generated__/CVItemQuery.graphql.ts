@@ -1,4 +1,5 @@
 /* tslint:disable */
+/* eslint-disable */
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -81,52 +82,52 @@ fragment CVItem_artist_4A66pF on Artist {
 const node: ConcreteRequest = (function(){
 var v0 = [
   {
+    "defaultValue": null,
     "kind": "LocalArgument",
     "name": "count",
-    "type": "Int",
-    "defaultValue": null
+    "type": "Int"
   },
   {
+    "defaultValue": null,
     "kind": "LocalArgument",
     "name": "cursor",
-    "type": "String",
-    "defaultValue": null
+    "type": "String"
   },
   {
+    "defaultValue": null,
     "kind": "LocalArgument",
     "name": "artistID",
-    "type": "String!",
-    "defaultValue": null
+    "type": "String!"
   },
   {
+    "defaultValue": null,
     "kind": "LocalArgument",
     "name": "sort",
-    "type": "ShowSorts",
-    "defaultValue": null
+    "type": "ShowSorts"
   },
   {
+    "defaultValue": null,
     "kind": "LocalArgument",
     "name": "atAFair",
-    "type": "Boolean",
-    "defaultValue": null
+    "type": "Boolean"
   },
   {
+    "defaultValue": null,
     "kind": "LocalArgument",
     "name": "soloShow",
-    "type": "Boolean",
-    "defaultValue": null
+    "type": "Boolean"
   },
   {
+    "defaultValue": null,
     "kind": "LocalArgument",
     "name": "isReference",
-    "type": "Boolean",
-    "defaultValue": null
+    "type": "Boolean"
   },
   {
+    "defaultValue": null,
     "kind": "LocalArgument",
     "name": "visibleToPublic",
-    "type": "Boolean",
-    "defaultValue": null
+    "type": "Boolean"
   }
 ],
 v1 = [
@@ -179,54 +180,49 @@ v7 = [
   (v6/*: any*/)
 ],
 v8 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "id",
   "args": null,
+  "kind": "ScalarField",
+  "name": "id",
   "storageKey": null
 },
 v9 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "__typename",
   "args": null,
+  "kind": "ScalarField",
+  "name": "__typename",
   "storageKey": null
 },
 v10 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "name",
   "args": null,
+  "kind": "ScalarField",
+  "name": "name",
   "storageKey": null
 },
 v11 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "href",
   "args": null,
+  "kind": "ScalarField",
+  "name": "href",
   "storageKey": null
 };
 return {
-  "kind": "Request",
   "fragment": {
-    "kind": "Fragment",
-    "name": "CVItemQuery",
-    "type": "Query",
-    "metadata": null,
     "argumentDefinitions": (v0/*: any*/),
+    "kind": "Fragment",
+    "metadata": null,
+    "name": "CVItemQuery",
     "selections": [
       {
-        "kind": "LinkedField",
         "alias": null,
-        "name": "artist",
-        "storageKey": null,
         "args": (v1/*: any*/),
         "concreteType": "Artist",
+        "kind": "LinkedField",
+        "name": "artist",
         "plural": false,
         "selections": [
           {
-            "kind": "FragmentSpread",
-            "name": "CVItem_artist",
             "args": [
               (v2/*: any*/),
               {
@@ -243,119 +239,118 @@ return {
               (v4/*: any*/),
               (v5/*: any*/),
               (v6/*: any*/)
-            ]
+            ],
+            "kind": "FragmentSpread",
+            "name": "CVItem_artist"
           }
-        ]
+        ],
+        "storageKey": null
       }
-    ]
+    ],
+    "type": "Query"
   },
+  "kind": "Request",
   "operation": {
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "CVItemQuery",
-    "argumentDefinitions": (v0/*: any*/),
     "selections": [
       {
-        "kind": "LinkedField",
         "alias": null,
-        "name": "artist",
-        "storageKey": null,
         "args": (v1/*: any*/),
         "concreteType": "Artist",
+        "kind": "LinkedField",
+        "name": "artist",
         "plural": false,
         "selections": [
           {
-            "kind": "ScalarField",
             "alias": null,
-            "name": "slug",
             "args": null,
+            "kind": "ScalarField",
+            "name": "slug",
             "storageKey": null
           },
           {
-            "kind": "LinkedField",
             "alias": null,
-            "name": "showsConnection",
-            "storageKey": null,
             "args": (v7/*: any*/),
             "concreteType": "ShowConnection",
+            "kind": "LinkedField",
+            "name": "showsConnection",
             "plural": false,
             "selections": [
               {
-                "kind": "LinkedField",
                 "alias": null,
-                "name": "pageInfo",
-                "storageKey": null,
                 "args": null,
                 "concreteType": "PageInfo",
+                "kind": "LinkedField",
+                "name": "pageInfo",
                 "plural": false,
                 "selections": [
                   {
-                    "kind": "ScalarField",
                     "alias": null,
-                    "name": "hasNextPage",
                     "args": null,
+                    "kind": "ScalarField",
+                    "name": "hasNextPage",
                     "storageKey": null
                   },
                   {
-                    "kind": "ScalarField",
                     "alias": null,
-                    "name": "endCursor",
                     "args": null,
+                    "kind": "ScalarField",
+                    "name": "endCursor",
                     "storageKey": null
                   }
-                ]
+                ],
+                "storageKey": null
               },
               {
-                "kind": "LinkedField",
                 "alias": null,
-                "name": "edges",
-                "storageKey": null,
                 "args": null,
                 "concreteType": "ShowEdge",
+                "kind": "LinkedField",
+                "name": "edges",
                 "plural": true,
                 "selections": [
                   {
-                    "kind": "LinkedField",
                     "alias": null,
-                    "name": "node",
-                    "storageKey": null,
                     "args": null,
                     "concreteType": "Show",
+                    "kind": "LinkedField",
+                    "name": "node",
                     "plural": false,
                     "selections": [
                       (v8/*: any*/),
                       {
-                        "kind": "LinkedField",
                         "alias": null,
-                        "name": "partner",
-                        "storageKey": null,
                         "args": null,
                         "concreteType": null,
+                        "kind": "LinkedField",
+                        "name": "partner",
                         "plural": false,
                         "selections": [
                           (v9/*: any*/),
                           (v8/*: any*/),
                           {
                             "kind": "InlineFragment",
-                            "type": "ExternalPartner",
                             "selections": [
                               (v10/*: any*/)
-                            ]
+                            ],
+                            "type": "ExternalPartner"
                           },
                           {
                             "kind": "InlineFragment",
-                            "type": "Partner",
                             "selections": [
                               (v10/*: any*/),
                               (v11/*: any*/)
-                            ]
+                            ],
+                            "type": "Partner"
                           }
-                        ]
+                        ],
+                        "storageKey": null
                       },
                       (v10/*: any*/),
                       {
-                        "kind": "ScalarField",
                         "alias": "start_at",
-                        "name": "startAt",
                         "args": [
                           {
                             "kind": "Literal",
@@ -363,56 +358,62 @@ return {
                             "value": "YYYY"
                           }
                         ],
+                        "kind": "ScalarField",
+                        "name": "startAt",
                         "storageKey": "startAt(format:\"YYYY\")"
                       },
                       {
-                        "kind": "ScalarField",
                         "alias": null,
-                        "name": "city",
                         "args": null,
+                        "kind": "ScalarField",
+                        "name": "city",
                         "storageKey": null
                       },
                       (v11/*: any*/),
                       (v9/*: any*/)
-                    ]
+                    ],
+                    "storageKey": null
                   },
                   {
-                    "kind": "ScalarField",
                     "alias": null,
-                    "name": "cursor",
                     "args": null,
+                    "kind": "ScalarField",
+                    "name": "cursor",
                     "storageKey": null
                   }
-                ]
+                ],
+                "storageKey": null
               }
-            ]
+            ],
+            "storageKey": null
           },
           {
-            "kind": "LinkedHandle",
             "alias": null,
-            "name": "showsConnection",
             "args": (v7/*: any*/),
-            "handle": "connection",
-            "key": "Artist_showsConnection",
             "filters": [
               "sort",
               "atAFair",
               "soloShow",
               "isReference",
               "visibleToPublic"
-            ]
+            ],
+            "handle": "connection",
+            "key": "Artist_showsConnection",
+            "kind": "LinkedHandle",
+            "name": "showsConnection"
           },
           (v8/*: any*/)
-        ]
+        ],
+        "storageKey": null
       }
     ]
   },
   "params": {
-    "operationKind": "query",
-    "name": "CVItemQuery",
     "id": null,
-    "text": "query CVItemQuery(\n  $count: Int\n  $cursor: String\n  $artistID: String!\n  $sort: ShowSorts\n  $atAFair: Boolean\n  $soloShow: Boolean\n  $isReference: Boolean\n  $visibleToPublic: Boolean\n) {\n  artist(id: $artistID) {\n    ...CVItem_artist_4A66pF\n    id\n  }\n}\n\nfragment CVItem_artist_4A66pF on Artist {\n  slug\n  showsConnection(first: $count, after: $cursor, sort: $sort, atAFair: $atAFair, soloShow: $soloShow, isReference: $isReference, visibleToPublic: $visibleToPublic) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    edges {\n      node {\n        id\n        partner {\n          __typename\n          ... on ExternalPartner {\n            name\n            id\n          }\n          ... on Partner {\n            name\n            href\n          }\n          ... on Node {\n            id\n          }\n        }\n        name\n        start_at: startAt(format: \"YYYY\")\n        city\n        href\n        __typename\n      }\n      cursor\n    }\n  }\n}\n",
-    "metadata": {}
+    "metadata": {},
+    "name": "CVItemQuery",
+    "operationKind": "query",
+    "text": "query CVItemQuery(\n  $count: Int\n  $cursor: String\n  $artistID: String!\n  $sort: ShowSorts\n  $atAFair: Boolean\n  $soloShow: Boolean\n  $isReference: Boolean\n  $visibleToPublic: Boolean\n) {\n  artist(id: $artistID) {\n    ...CVItem_artist_4A66pF\n    id\n  }\n}\n\nfragment CVItem_artist_4A66pF on Artist {\n  slug\n  showsConnection(first: $count, after: $cursor, sort: $sort, atAFair: $atAFair, soloShow: $soloShow, isReference: $isReference, visibleToPublic: $visibleToPublic) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    edges {\n      node {\n        id\n        partner {\n          __typename\n          ... on ExternalPartner {\n            name\n            id\n          }\n          ... on Partner {\n            name\n            href\n          }\n          ... on Node {\n            id\n          }\n        }\n        name\n        start_at: startAt(format: \"YYYY\")\n        city\n        href\n        __typename\n      }\n      cursor\n    }\n  }\n}\n"
   }
 };
 })();

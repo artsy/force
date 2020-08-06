@@ -1,4 +1,5 @@
 /* tslint:disable */
+/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -24,47 +25,42 @@ export type ArtistCard_artist$key = {
 
 
 const node: ReaderFragment = {
-  "kind": "Fragment",
-  "name": "ArtistCard_artist",
-  "type": "Artist",
-  "metadata": null,
   "argumentDefinitions": [],
+  "kind": "Fragment",
+  "metadata": null,
+  "name": "ArtistCard_artist",
   "selections": [
     {
-      "kind": "ScalarField",
       "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "name",
-      "args": null,
       "storageKey": null
     },
     {
-      "kind": "ScalarField",
       "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "slug",
-      "args": null,
       "storageKey": null
     },
     {
+      "alias": null,
+      "args": null,
       "kind": "ScalarField",
-      "alias": null,
       "name": "href",
-      "args": null,
       "storageKey": null
     },
     {
-      "kind": "LinkedField",
       "alias": null,
-      "name": "image",
-      "storageKey": null,
       "args": null,
       "concreteType": "Image",
+      "kind": "LinkedField",
+      "name": "image",
       "plural": false,
       "selections": [
         {
-          "kind": "LinkedField",
           "alias": null,
-          "name": "cropped",
-          "storageKey": "cropped(height:300,width:400)",
           "args": [
             {
               "kind": "Literal",
@@ -78,32 +74,37 @@ const node: ReaderFragment = {
             }
           ],
           "concreteType": "CroppedImageUrl",
+          "kind": "LinkedField",
+          "name": "cropped",
           "plural": false,
           "selections": [
             {
-              "kind": "ScalarField",
               "alias": null,
-              "name": "url",
               "args": null,
+              "kind": "ScalarField",
+              "name": "url",
               "storageKey": null
             }
-          ]
+          ],
+          "storageKey": "cropped(height:300,width:400)"
         }
-      ]
-    },
-    {
-      "kind": "ScalarField",
-      "alias": "formatted_nationality_and_birthday",
-      "name": "formattedNationalityAndBirthday",
-      "args": null,
+      ],
       "storageKey": null
     },
     {
+      "alias": "formatted_nationality_and_birthday",
+      "args": null,
+      "kind": "ScalarField",
+      "name": "formattedNationalityAndBirthday",
+      "storageKey": null
+    },
+    {
+      "args": null,
       "kind": "FragmentSpread",
-      "name": "FollowArtistButton_artist",
-      "args": null
+      "name": "FollowArtistButton_artist"
     }
-  ]
+  ],
+  "type": "Artist"
 };
 (node as any).hash = 'ecffdabd44e8c5cd2c3ffa2fe9662349';
 export default node;

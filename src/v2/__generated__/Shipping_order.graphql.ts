@@ -1,9 +1,10 @@
 /* tslint:disable */
+/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
+import { FragmentRefs } from "relay-runtime";
 export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
 export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "PENDING" | "REFUNDED" | "SUBMITTED" | "%future added value";
-import { FragmentRefs } from "relay-runtime";
 export type Shipping_order = {
     readonly internalID: string;
     readonly mode: CommerceOrderModeEnum | null;
@@ -52,211 +53,211 @@ export type Shipping_order$key = {
 
 const node: ReaderFragment = (function(){
 var v0 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "phoneNumber",
   "args": null,
+  "kind": "ScalarField",
+  "name": "phoneNumber",
   "storageKey": null
 };
 return {
-  "kind": "Fragment",
-  "name": "Shipping_order",
-  "type": "CommerceOrder",
-  "metadata": null,
   "argumentDefinitions": [],
+  "kind": "Fragment",
+  "metadata": null,
+  "name": "Shipping_order",
   "selections": [
     {
-      "kind": "ScalarField",
       "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "internalID",
-      "args": null,
       "storageKey": null
     },
     {
-      "kind": "ScalarField",
       "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "mode",
-      "args": null,
       "storageKey": null
     },
     {
+      "alias": null,
+      "args": null,
       "kind": "ScalarField",
-      "alias": null,
       "name": "state",
-      "args": null,
       "storageKey": null
     },
     {
-      "kind": "LinkedField",
       "alias": null,
-      "name": "requestedFulfillment",
-      "storageKey": null,
       "args": null,
       "concreteType": null,
+      "kind": "LinkedField",
+      "name": "requestedFulfillment",
       "plural": false,
       "selections": [
         {
-          "kind": "ScalarField",
           "alias": null,
-          "name": "__typename",
           "args": null,
+          "kind": "ScalarField",
+          "name": "__typename",
           "storageKey": null
         },
         {
           "kind": "InlineFragment",
-          "type": "CommercePickup",
           "selections": [
             (v0/*: any*/)
-          ]
+          ],
+          "type": "CommercePickup"
         },
         {
           "kind": "InlineFragment",
-          "type": "CommerceShip",
           "selections": [
             {
-              "kind": "ScalarField",
               "alias": null,
+              "args": null,
+              "kind": "ScalarField",
               "name": "name",
-              "args": null,
               "storageKey": null
             },
             {
-              "kind": "ScalarField",
               "alias": null,
+              "args": null,
+              "kind": "ScalarField",
               "name": "addressLine1",
-              "args": null,
               "storageKey": null
             },
             {
-              "kind": "ScalarField",
               "alias": null,
+              "args": null,
+              "kind": "ScalarField",
               "name": "addressLine2",
-              "args": null,
               "storageKey": null
             },
             {
-              "kind": "ScalarField",
               "alias": null,
+              "args": null,
+              "kind": "ScalarField",
               "name": "city",
-              "args": null,
               "storageKey": null
             },
             {
-              "kind": "ScalarField",
               "alias": null,
+              "args": null,
+              "kind": "ScalarField",
               "name": "region",
-              "args": null,
               "storageKey": null
             },
             {
-              "kind": "ScalarField",
               "alias": null,
+              "args": null,
+              "kind": "ScalarField",
               "name": "country",
-              "args": null,
               "storageKey": null
             },
             {
-              "kind": "ScalarField",
               "alias": null,
-              "name": "postalCode",
               "args": null,
+              "kind": "ScalarField",
+              "name": "postalCode",
               "storageKey": null
             },
             (v0/*: any*/)
-          ]
+          ],
+          "type": "CommerceShip"
         }
-      ]
+      ],
+      "storageKey": null
     },
     {
-      "kind": "LinkedField",
       "alias": null,
-      "name": "lineItems",
-      "storageKey": null,
       "args": null,
       "concreteType": "CommerceLineItemConnection",
+      "kind": "LinkedField",
+      "name": "lineItems",
       "plural": false,
       "selections": [
         {
-          "kind": "LinkedField",
           "alias": null,
-          "name": "edges",
-          "storageKey": null,
           "args": null,
           "concreteType": "CommerceLineItemEdge",
+          "kind": "LinkedField",
+          "name": "edges",
           "plural": true,
           "selections": [
             {
-              "kind": "LinkedField",
               "alias": null,
-              "name": "node",
-              "storageKey": null,
               "args": null,
               "concreteType": "CommerceLineItem",
+              "kind": "LinkedField",
+              "name": "node",
               "plural": false,
               "selections": [
                 {
-                  "kind": "LinkedField",
                   "alias": null,
-                  "name": "artwork",
-                  "storageKey": null,
                   "args": null,
                   "concreteType": "Artwork",
+                  "kind": "LinkedField",
+                  "name": "artwork",
                   "plural": false,
                   "selections": [
                     {
-                      "kind": "ScalarField",
                       "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
                       "name": "slug",
-                      "args": null,
                       "storageKey": null
                     },
                     {
-                      "kind": "ScalarField",
                       "alias": "pickup_available",
+                      "args": null,
+                      "kind": "ScalarField",
                       "name": "pickupAvailable",
-                      "args": null,
                       "storageKey": null
                     },
                     {
-                      "kind": "ScalarField",
                       "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
                       "name": "onlyShipsDomestically",
-                      "args": null,
                       "storageKey": null
                     },
                     {
-                      "kind": "ScalarField",
                       "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
                       "name": "euShippingOrigin",
-                      "args": null,
                       "storageKey": null
                     },
                     {
-                      "kind": "ScalarField",
                       "alias": null,
-                      "name": "shippingCountry",
                       "args": null,
+                      "kind": "ScalarField",
+                      "name": "shippingCountry",
                       "storageKey": null
                     }
-                  ]
+                  ],
+                  "storageKey": null
                 }
-              ]
+              ],
+              "storageKey": null
             }
-          ]
+          ],
+          "storageKey": null
         }
-      ]
+      ],
+      "storageKey": null
     },
     {
+      "args": null,
       "kind": "FragmentSpread",
-      "name": "ArtworkSummaryItem_order",
-      "args": null
+      "name": "ArtworkSummaryItem_order"
     },
     {
+      "args": null,
       "kind": "FragmentSpread",
-      "name": "TransactionDetailsSummaryItem_order",
-      "args": null
+      "name": "TransactionDetailsSummaryItem_order"
     }
-  ]
+  ],
+  "type": "CommerceOrder"
 };
 })();
 (node as any).hash = '215f2663f765f7ae5046b82743647c4a';

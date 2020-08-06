@@ -1,37 +1,38 @@
 /* tslint:disable */
+/* eslint-disable */
 
 import { ConcreteRequest } from "relay-runtime";
 export type CreditCardInput = {
-    readonly clientMutationId?: string | null;
-    readonly oneTimeUse?: boolean | null;
-    readonly token: string;
+    clientMutationId?: string | null;
+    oneTimeUse?: boolean | null;
+    token: string;
 };
 export type UpdateMyProfileInput = {
-    readonly clientMutationId?: string | null;
-    readonly collectorLevel?: number | null;
-    readonly email?: string | null;
-    readonly location?: EditableLocation | null;
-    readonly name?: string | null;
-    readonly phone?: string | null;
-    readonly priceRangeMax?: number | null;
-    readonly priceRangeMin?: number | null;
-    readonly receiveLotOpeningSoonNotification?: boolean | null;
-    readonly receiveNewSalesNotification?: boolean | null;
-    readonly receiveNewWorksNotification?: boolean | null;
-    readonly receiveOutbidNotification?: boolean | null;
-    readonly receivePromotionNotification?: boolean | null;
-    readonly receivePurchaseNotification?: boolean | null;
-    readonly receiveSaleOpeningClosingNotification?: boolean | null;
+    clientMutationId?: string | null;
+    collectorLevel?: number | null;
+    email?: string | null;
+    location?: EditableLocation | null;
+    name?: string | null;
+    phone?: string | null;
+    priceRangeMax?: number | null;
+    priceRangeMin?: number | null;
+    receiveLotOpeningSoonNotification?: boolean | null;
+    receiveNewSalesNotification?: boolean | null;
+    receiveNewWorksNotification?: boolean | null;
+    receiveOutbidNotification?: boolean | null;
+    receivePromotionNotification?: boolean | null;
+    receivePurchaseNotification?: boolean | null;
+    receiveSaleOpeningClosingNotification?: boolean | null;
 };
 export type EditableLocation = {
-    readonly address?: string | null;
-    readonly address2?: string | null;
-    readonly city?: string | null;
-    readonly country?: string | null;
-    readonly postalCode?: string | null;
-    readonly state?: string | null;
-    readonly stateCode?: string | null;
-    readonly summary?: string | null;
+    address?: string | null;
+    address2?: string | null;
+    city?: string | null;
+    country?: string | null;
+    postalCode?: string | null;
+    state?: string | null;
+    stateCode?: string | null;
+    summary?: string | null;
 };
 export type CreateCreditCardAndUpdatePhoneMutationVariables = {
     creditCardInput: CreditCardInput;
@@ -102,16 +103,16 @@ mutation CreateCreditCardAndUpdatePhoneMutation(
 const node: ConcreteRequest = (function(){
 var v0 = [
   {
+    "defaultValue": null,
     "kind": "LocalArgument",
     "name": "creditCardInput",
-    "type": "CreditCardInput!",
-    "defaultValue": null
+    "type": "CreditCardInput!"
   },
   {
+    "defaultValue": null,
     "kind": "LocalArgument",
     "name": "profileInput",
-    "type": "UpdateMyProfileInput!",
-    "defaultValue": null
+    "type": "UpdateMyProfileInput!"
   }
 ],
 v1 = [
@@ -122,10 +123,10 @@ v1 = [
   }
 ],
 v2 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "internalID",
   "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
   "storageKey": null
 },
 v3 = [
@@ -136,240 +137,240 @@ v3 = [
   }
 ],
 v4 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "lastDigits",
   "args": null,
+  "kind": "ScalarField",
+  "name": "lastDigits",
   "storageKey": null
 },
 v5 = {
   "kind": "InlineFragment",
-  "type": "CreditCardMutationFailure",
   "selections": [
     {
-      "kind": "LinkedField",
       "alias": null,
-      "name": "mutationError",
-      "storageKey": null,
       "args": null,
       "concreteType": "GravityMutationError",
+      "kind": "LinkedField",
+      "name": "mutationError",
       "plural": false,
       "selections": [
         {
-          "kind": "ScalarField",
           "alias": null,
+          "args": null,
+          "kind": "ScalarField",
           "name": "type",
-          "args": null,
           "storageKey": null
         },
         {
-          "kind": "ScalarField",
           "alias": null,
+          "args": null,
+          "kind": "ScalarField",
           "name": "message",
-          "args": null,
           "storageKey": null
         },
         {
-          "kind": "ScalarField",
           "alias": null,
-          "name": "detail",
           "args": null,
+          "kind": "ScalarField",
+          "name": "detail",
           "storageKey": null
         }
-      ]
+      ],
+      "storageKey": null
     }
-  ]
+  ],
+  "type": "CreditCardMutationFailure"
 },
 v6 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "id",
   "args": null,
+  "kind": "ScalarField",
+  "name": "id",
   "storageKey": null
 };
 return {
-  "kind": "Request",
   "fragment": {
-    "kind": "Fragment",
-    "name": "CreateCreditCardAndUpdatePhoneMutation",
-    "type": "Mutation",
-    "metadata": null,
     "argumentDefinitions": (v0/*: any*/),
+    "kind": "Fragment",
+    "metadata": null,
+    "name": "CreateCreditCardAndUpdatePhoneMutation",
     "selections": [
       {
-        "kind": "LinkedField",
         "alias": null,
-        "name": "updateMyUserProfile",
-        "storageKey": null,
         "args": (v1/*: any*/),
         "concreteType": "UpdateMyProfilePayload",
+        "kind": "LinkedField",
+        "name": "updateMyUserProfile",
         "plural": false,
         "selections": [
           {
-            "kind": "LinkedField",
             "alias": null,
-            "name": "user",
-            "storageKey": null,
             "args": null,
             "concreteType": "User",
+            "kind": "LinkedField",
+            "name": "user",
             "plural": false,
             "selections": [
               (v2/*: any*/)
-            ]
+            ],
+            "storageKey": null
           }
-        ]
+        ],
+        "storageKey": null
       },
       {
-        "kind": "LinkedField",
         "alias": null,
-        "name": "createCreditCard",
-        "storageKey": null,
         "args": (v3/*: any*/),
         "concreteType": "CreditCardPayload",
+        "kind": "LinkedField",
+        "name": "createCreditCard",
         "plural": false,
         "selections": [
           {
-            "kind": "LinkedField",
             "alias": null,
-            "name": "creditCardOrError",
-            "storageKey": null,
             "args": null,
             "concreteType": null,
+            "kind": "LinkedField",
+            "name": "creditCardOrError",
             "plural": false,
             "selections": [
               {
                 "kind": "InlineFragment",
-                "type": "CreditCardMutationSuccess",
                 "selections": [
                   {
-                    "kind": "LinkedField",
                     "alias": null,
-                    "name": "creditCardEdge",
-                    "storageKey": null,
                     "args": null,
                     "concreteType": "CreditCardEdge",
+                    "kind": "LinkedField",
+                    "name": "creditCardEdge",
                     "plural": false,
                     "selections": [
                       {
-                        "kind": "LinkedField",
                         "alias": null,
-                        "name": "node",
-                        "storageKey": null,
                         "args": null,
                         "concreteType": "CreditCard",
+                        "kind": "LinkedField",
+                        "name": "node",
                         "plural": false,
                         "selections": [
                           (v4/*: any*/)
-                        ]
+                        ],
+                        "storageKey": null
                       }
-                    ]
+                    ],
+                    "storageKey": null
                   }
-                ]
+                ],
+                "type": "CreditCardMutationSuccess"
               },
               (v5/*: any*/)
-            ]
+            ],
+            "storageKey": null
           }
-        ]
+        ],
+        "storageKey": null
       }
-    ]
+    ],
+    "type": "Mutation"
   },
+  "kind": "Request",
   "operation": {
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "CreateCreditCardAndUpdatePhoneMutation",
-    "argumentDefinitions": (v0/*: any*/),
     "selections": [
       {
-        "kind": "LinkedField",
         "alias": null,
-        "name": "updateMyUserProfile",
-        "storageKey": null,
         "args": (v1/*: any*/),
         "concreteType": "UpdateMyProfilePayload",
+        "kind": "LinkedField",
+        "name": "updateMyUserProfile",
         "plural": false,
         "selections": [
           {
-            "kind": "LinkedField",
             "alias": null,
-            "name": "user",
-            "storageKey": null,
             "args": null,
             "concreteType": "User",
+            "kind": "LinkedField",
+            "name": "user",
             "plural": false,
             "selections": [
               (v2/*: any*/),
               (v6/*: any*/)
-            ]
+            ],
+            "storageKey": null
           }
-        ]
+        ],
+        "storageKey": null
       },
       {
-        "kind": "LinkedField",
         "alias": null,
-        "name": "createCreditCard",
-        "storageKey": null,
         "args": (v3/*: any*/),
         "concreteType": "CreditCardPayload",
+        "kind": "LinkedField",
+        "name": "createCreditCard",
         "plural": false,
         "selections": [
           {
-            "kind": "LinkedField",
             "alias": null,
-            "name": "creditCardOrError",
-            "storageKey": null,
             "args": null,
             "concreteType": null,
+            "kind": "LinkedField",
+            "name": "creditCardOrError",
             "plural": false,
             "selections": [
               {
-                "kind": "ScalarField",
                 "alias": null,
-                "name": "__typename",
                 "args": null,
+                "kind": "ScalarField",
+                "name": "__typename",
                 "storageKey": null
               },
               {
                 "kind": "InlineFragment",
-                "type": "CreditCardMutationSuccess",
                 "selections": [
                   {
-                    "kind": "LinkedField",
                     "alias": null,
-                    "name": "creditCardEdge",
-                    "storageKey": null,
                     "args": null,
                     "concreteType": "CreditCardEdge",
+                    "kind": "LinkedField",
+                    "name": "creditCardEdge",
                     "plural": false,
                     "selections": [
                       {
-                        "kind": "LinkedField",
                         "alias": null,
-                        "name": "node",
-                        "storageKey": null,
                         "args": null,
                         "concreteType": "CreditCard",
+                        "kind": "LinkedField",
+                        "name": "node",
                         "plural": false,
                         "selections": [
                           (v4/*: any*/),
                           (v6/*: any*/)
-                        ]
+                        ],
+                        "storageKey": null
                       }
-                    ]
+                    ],
+                    "storageKey": null
                   }
-                ]
+                ],
+                "type": "CreditCardMutationSuccess"
               },
               (v5/*: any*/)
-            ]
+            ],
+            "storageKey": null
           }
-        ]
+        ],
+        "storageKey": null
       }
     ]
   },
   "params": {
-    "operationKind": "mutation",
-    "name": "CreateCreditCardAndUpdatePhoneMutation",
     "id": null,
-    "text": "mutation CreateCreditCardAndUpdatePhoneMutation(\n  $creditCardInput: CreditCardInput!\n  $profileInput: UpdateMyProfileInput!\n) {\n  updateMyUserProfile(input: $profileInput) {\n    user {\n      internalID\n      id\n    }\n  }\n  createCreditCard(input: $creditCardInput) {\n    creditCardOrError {\n      __typename\n      ... on CreditCardMutationSuccess {\n        creditCardEdge {\n          node {\n            lastDigits\n            id\n          }\n        }\n      }\n      ... on CreditCardMutationFailure {\n        mutationError {\n          type\n          message\n          detail\n        }\n      }\n    }\n  }\n}\n",
-    "metadata": {}
+    "metadata": {},
+    "name": "CreateCreditCardAndUpdatePhoneMutation",
+    "operationKind": "mutation",
+    "text": "mutation CreateCreditCardAndUpdatePhoneMutation(\n  $creditCardInput: CreditCardInput!\n  $profileInput: UpdateMyProfileInput!\n) {\n  updateMyUserProfile(input: $profileInput) {\n    user {\n      internalID\n      id\n    }\n  }\n  createCreditCard(input: $creditCardInput) {\n    creditCardOrError {\n      __typename\n      ... on CreditCardMutationSuccess {\n        creditCardEdge {\n          node {\n            lastDigits\n            id\n          }\n        }\n      }\n      ... on CreditCardMutationFailure {\n        mutationError {\n          type\n          message\n          detail\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();

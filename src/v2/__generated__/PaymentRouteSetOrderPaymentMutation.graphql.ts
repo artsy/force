@@ -1,10 +1,11 @@
 /* tslint:disable */
+/* eslint-disable */
 
 import { ConcreteRequest } from "relay-runtime";
 export type CommerceSetPaymentInput = {
-    readonly clientMutationId?: string | null;
-    readonly creditCardId: string;
-    readonly id: string;
+    clientMutationId?: string | null;
+    creditCardId: string;
+    id: string;
 };
 export type PaymentRouteSetOrderPaymentMutationVariables = {
     input: CommerceSetPaymentInput;
@@ -79,10 +80,10 @@ mutation PaymentRouteSetOrderPaymentMutation(
 const node: ConcreteRequest = (function(){
 var v0 = [
   {
+    "defaultValue": null,
     "kind": "LocalArgument",
     "name": "input",
-    "type": "CommerceSetPaymentInput!",
-    "defaultValue": null
+    "type": "CommerceSetPaymentInput!"
   }
 ],
 v1 = [
@@ -93,161 +94,154 @@ v1 = [
   }
 ],
 v2 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "id",
   "args": null,
+  "kind": "ScalarField",
+  "name": "id",
   "storageKey": null
 },
 v3 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "internalID",
   "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
   "storageKey": null
 },
 v4 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "name",
   "args": null,
+  "kind": "ScalarField",
+  "name": "name",
   "storageKey": null
 },
 v5 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "street1",
   "args": null,
+  "kind": "ScalarField",
+  "name": "street1",
   "storageKey": null
 },
 v6 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "street2",
   "args": null,
+  "kind": "ScalarField",
+  "name": "street2",
   "storageKey": null
 },
 v7 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "city",
   "args": null,
+  "kind": "ScalarField",
+  "name": "city",
   "storageKey": null
 },
 v8 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "state",
   "args": null,
+  "kind": "ScalarField",
+  "name": "state",
   "storageKey": null
 },
 v9 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "country",
   "args": null,
+  "kind": "ScalarField",
+  "name": "country",
   "storageKey": null
 },
 v10 = {
-  "kind": "ScalarField",
   "alias": "postal_code",
-  "name": "postalCode",
   "args": null,
+  "kind": "ScalarField",
+  "name": "postalCode",
   "storageKey": null
 },
 v11 = {
   "kind": "InlineFragment",
-  "type": "CommerceOrderWithMutationFailure",
   "selections": [
     {
-      "kind": "LinkedField",
       "alias": null,
-      "name": "error",
-      "storageKey": null,
       "args": null,
       "concreteType": "CommerceApplicationError",
+      "kind": "LinkedField",
+      "name": "error",
       "plural": false,
       "selections": [
         {
-          "kind": "ScalarField",
           "alias": null,
+          "args": null,
+          "kind": "ScalarField",
           "name": "type",
-          "args": null,
           "storageKey": null
         },
         {
-          "kind": "ScalarField",
           "alias": null,
+          "args": null,
+          "kind": "ScalarField",
           "name": "code",
-          "args": null,
           "storageKey": null
         },
         {
-          "kind": "ScalarField",
           "alias": null,
-          "name": "data",
           "args": null,
+          "kind": "ScalarField",
+          "name": "data",
           "storageKey": null
         }
-      ]
+      ],
+      "storageKey": null
     }
-  ]
+  ],
+  "type": "CommerceOrderWithMutationFailure"
 },
 v12 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "__typename",
   "args": null,
+  "kind": "ScalarField",
+  "name": "__typename",
   "storageKey": null
 };
 return {
-  "kind": "Request",
   "fragment": {
-    "kind": "Fragment",
-    "name": "PaymentRouteSetOrderPaymentMutation",
-    "type": "Mutation",
-    "metadata": null,
     "argumentDefinitions": (v0/*: any*/),
+    "kind": "Fragment",
+    "metadata": null,
+    "name": "PaymentRouteSetOrderPaymentMutation",
     "selections": [
       {
-        "kind": "LinkedField",
         "alias": null,
-        "name": "commerceSetPayment",
-        "storageKey": null,
         "args": (v1/*: any*/),
         "concreteType": "CommerceSetPaymentPayload",
+        "kind": "LinkedField",
+        "name": "commerceSetPayment",
         "plural": false,
         "selections": [
           {
-            "kind": "LinkedField",
             "alias": null,
-            "name": "orderOrError",
-            "storageKey": null,
             "args": null,
             "concreteType": null,
+            "kind": "LinkedField",
+            "name": "orderOrError",
             "plural": false,
             "selections": [
               {
                 "kind": "InlineFragment",
-                "type": "CommerceOrderWithMutationSuccess",
                 "selections": [
                   {
-                    "kind": "LinkedField",
                     "alias": null,
-                    "name": "order",
-                    "storageKey": null,
                     "args": null,
                     "concreteType": null,
+                    "kind": "LinkedField",
+                    "name": "order",
                     "plural": false,
                     "selections": [
                       (v2/*: any*/),
                       {
-                        "kind": "LinkedField",
                         "alias": null,
-                        "name": "creditCard",
-                        "storageKey": null,
                         "args": null,
                         "concreteType": "CreditCard",
+                        "kind": "LinkedField",
+                        "name": "creditCard",
                         "plural": false,
                         "selections": [
                           (v3/*: any*/),
@@ -258,65 +252,67 @@ return {
                           (v8/*: any*/),
                           (v9/*: any*/),
                           (v10/*: any*/)
-                        ]
+                        ],
+                        "storageKey": null
                       }
-                    ]
+                    ],
+                    "storageKey": null
                   }
-                ]
+                ],
+                "type": "CommerceOrderWithMutationSuccess"
               },
               (v11/*: any*/)
-            ]
+            ],
+            "storageKey": null
           }
-        ]
+        ],
+        "storageKey": null
       }
-    ]
+    ],
+    "type": "Mutation"
   },
+  "kind": "Request",
   "operation": {
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "PaymentRouteSetOrderPaymentMutation",
-    "argumentDefinitions": (v0/*: any*/),
     "selections": [
       {
-        "kind": "LinkedField",
         "alias": null,
-        "name": "commerceSetPayment",
-        "storageKey": null,
         "args": (v1/*: any*/),
         "concreteType": "CommerceSetPaymentPayload",
+        "kind": "LinkedField",
+        "name": "commerceSetPayment",
         "plural": false,
         "selections": [
           {
-            "kind": "LinkedField",
             "alias": null,
-            "name": "orderOrError",
-            "storageKey": null,
             "args": null,
             "concreteType": null,
+            "kind": "LinkedField",
+            "name": "orderOrError",
             "plural": false,
             "selections": [
               (v12/*: any*/),
               {
                 "kind": "InlineFragment",
-                "type": "CommerceOrderWithMutationSuccess",
                 "selections": [
                   {
-                    "kind": "LinkedField",
                     "alias": null,
-                    "name": "order",
-                    "storageKey": null,
                     "args": null,
                     "concreteType": null,
+                    "kind": "LinkedField",
+                    "name": "order",
                     "plural": false,
                     "selections": [
                       (v12/*: any*/),
                       (v2/*: any*/),
                       {
-                        "kind": "LinkedField",
                         "alias": null,
-                        "name": "creditCard",
-                        "storageKey": null,
                         "args": null,
                         "concreteType": "CreditCard",
+                        "kind": "LinkedField",
+                        "name": "creditCard",
                         "plural": false,
                         "selections": [
                           (v3/*: any*/),
@@ -328,25 +324,30 @@ return {
                           (v9/*: any*/),
                           (v10/*: any*/),
                           (v2/*: any*/)
-                        ]
+                        ],
+                        "storageKey": null
                       }
-                    ]
+                    ],
+                    "storageKey": null
                   }
-                ]
+                ],
+                "type": "CommerceOrderWithMutationSuccess"
               },
               (v11/*: any*/)
-            ]
+            ],
+            "storageKey": null
           }
-        ]
+        ],
+        "storageKey": null
       }
     ]
   },
   "params": {
-    "operationKind": "mutation",
-    "name": "PaymentRouteSetOrderPaymentMutation",
     "id": null,
-    "text": "mutation PaymentRouteSetOrderPaymentMutation(\n  $input: CommerceSetPaymentInput!\n) {\n  commerceSetPayment(input: $input) {\n    orderOrError {\n      __typename\n      ... on CommerceOrderWithMutationSuccess {\n        order {\n          __typename\n          id\n          creditCard {\n            internalID\n            name\n            street1\n            street2\n            city\n            state\n            country\n            postal_code: postalCode\n            id\n          }\n        }\n      }\n      ... on CommerceOrderWithMutationFailure {\n        error {\n          type\n          code\n          data\n        }\n      }\n    }\n  }\n}\n",
-    "metadata": {}
+    "metadata": {},
+    "name": "PaymentRouteSetOrderPaymentMutation",
+    "operationKind": "mutation",
+    "text": "mutation PaymentRouteSetOrderPaymentMutation(\n  $input: CommerceSetPaymentInput!\n) {\n  commerceSetPayment(input: $input) {\n    orderOrError {\n      __typename\n      ... on CommerceOrderWithMutationSuccess {\n        order {\n          __typename\n          id\n          creditCard {\n            internalID\n            name\n            street1\n            street2\n            city\n            state\n            country\n            postal_code: postalCode\n            id\n          }\n        }\n      }\n      ... on CommerceOrderWithMutationFailure {\n        error {\n          type\n          code\n          data\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();

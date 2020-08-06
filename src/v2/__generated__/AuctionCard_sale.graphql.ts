@@ -1,4 +1,5 @@
 /* tslint:disable */
+/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -38,33 +39,28 @@ export type AuctionCard_sale$key = {
 
 const node: ReaderFragment = (function(){
 var v0 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "name",
   "args": null,
+  "kind": "ScalarField",
+  "name": "name",
   "storageKey": null
 };
 return {
-  "kind": "Fragment",
-  "name": "AuctionCard_sale",
-  "type": "Sale",
-  "metadata": null,
   "argumentDefinitions": [],
+  "kind": "Fragment",
+  "metadata": null,
+  "name": "AuctionCard_sale",
   "selections": [
     {
-      "kind": "LinkedField",
       "alias": "cover_image",
-      "name": "coverImage",
-      "storageKey": null,
       "args": null,
       "concreteType": "Image",
+      "kind": "LinkedField",
+      "name": "coverImage",
       "plural": false,
       "selections": [
         {
-          "kind": "LinkedField",
           "alias": null,
-          "name": "cropped",
-          "storageKey": "cropped(height:180,width:200)",
           "args": [
             {
               "kind": "Literal",
@@ -78,128 +74,133 @@ return {
             }
           ],
           "concreteType": "CroppedImageUrl",
+          "kind": "LinkedField",
+          "name": "cropped",
           "plural": false,
           "selections": [
             {
-              "kind": "ScalarField",
               "alias": null,
-              "name": "url",
               "args": null,
+              "kind": "ScalarField",
+              "name": "url",
               "storageKey": null
             }
-          ]
+          ],
+          "storageKey": "cropped(height:180,width:200)"
         }
-      ]
+      ],
+      "storageKey": null
     },
     {
-      "kind": "ScalarField",
       "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "isBenefit",
-      "args": null,
       "storageKey": null
     },
     {
-      "kind": "ScalarField",
       "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "isGalleryAuction",
-      "args": null,
       "storageKey": null
     },
     {
-      "kind": "ScalarField",
       "alias": "end_at",
+      "args": null,
+      "kind": "ScalarField",
       "name": "endAt",
-      "args": null,
       "storageKey": null
     },
     {
-      "kind": "ScalarField",
       "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "href",
-      "args": null,
       "storageKey": null
     },
     {
-      "kind": "ScalarField",
       "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "slug",
-      "args": null,
       "storageKey": null
     },
     {
-      "kind": "ScalarField",
       "alias": "is_live_open",
+      "args": null,
+      "kind": "ScalarField",
       "name": "isLiveOpen",
-      "args": null,
       "storageKey": null
     },
     {
-      "kind": "ScalarField",
       "alias": "is_preview",
-      "name": "isPreview",
       "args": null,
-      "storageKey": null
-    },
-    {
       "kind": "ScalarField",
-      "alias": "live_start_at",
-      "name": "liveStartAt",
-      "args": null,
+      "name": "isPreview",
       "storageKey": null
     },
     {
-      "kind": "LinkedField",
+      "alias": "live_start_at",
+      "args": null,
+      "kind": "ScalarField",
+      "name": "liveStartAt",
+      "storageKey": null
+    },
+    {
       "alias": null,
-      "name": "registrationStatus",
-      "storageKey": null,
       "args": null,
       "concreteType": "Bidder",
+      "kind": "LinkedField",
+      "name": "registrationStatus",
       "plural": false,
       "selections": [
         {
-          "kind": "ScalarField",
           "alias": null,
-          "name": "internalID",
           "args": null,
+          "kind": "ScalarField",
+          "name": "internalID",
           "storageKey": null
         }
-      ]
+      ],
+      "storageKey": null
     },
     {
-      "kind": "ScalarField",
       "alias": "is_registration_closed",
-      "name": "isRegistrationClosed",
       "args": null,
+      "kind": "ScalarField",
+      "name": "isRegistrationClosed",
       "storageKey": null
     },
     (v0/*: any*/),
     {
-      "kind": "ScalarField",
       "alias": "start_at",
-      "name": "startAt",
       "args": null,
-      "storageKey": null
-    },
-    {
       "kind": "ScalarField",
-      "alias": "is_closed",
-      "name": "isClosed",
-      "args": null,
+      "name": "startAt",
       "storageKey": null
     },
     {
-      "kind": "LinkedField",
+      "alias": "is_closed",
+      "args": null,
+      "kind": "ScalarField",
+      "name": "isClosed",
+      "storageKey": null
+    },
+    {
       "alias": null,
-      "name": "partner",
-      "storageKey": null,
       "args": null,
       "concreteType": "Partner",
+      "kind": "LinkedField",
+      "name": "partner",
       "plural": false,
       "selections": [
         (v0/*: any*/)
-      ]
+      ],
+      "storageKey": null
     }
-  ]
+  ],
+  "type": "Sale"
 };
 })();
 (node as any).hash = '8f37c0394eff3ea1633cd5d360966414';

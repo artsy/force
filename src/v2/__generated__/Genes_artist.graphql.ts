@@ -1,4 +1,5 @@
 /* tslint:disable */
+/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -24,71 +25,71 @@ export type Genes_artist$key = {
 
 
 const node: ReaderFragment = {
-  "kind": "Fragment",
-  "name": "Genes_artist",
-  "type": "Artist",
-  "metadata": null,
   "argumentDefinitions": [],
+  "kind": "Fragment",
+  "metadata": null,
+  "name": "Genes_artist",
   "selections": [
     {
-      "kind": "LinkedField",
       "alias": null,
-      "name": "related",
-      "storageKey": null,
       "args": null,
       "concreteType": "ArtistRelatedData",
+      "kind": "LinkedField",
+      "name": "related",
       "plural": false,
       "selections": [
         {
-          "kind": "LinkedField",
           "alias": null,
-          "name": "genes",
-          "storageKey": null,
           "args": null,
           "concreteType": "GeneConnection",
+          "kind": "LinkedField",
+          "name": "genes",
           "plural": false,
           "selections": [
             {
-              "kind": "LinkedField",
               "alias": null,
-              "name": "edges",
-              "storageKey": null,
               "args": null,
               "concreteType": "GeneEdge",
+              "kind": "LinkedField",
+              "name": "edges",
               "plural": true,
               "selections": [
                 {
-                  "kind": "LinkedField",
                   "alias": null,
-                  "name": "node",
-                  "storageKey": null,
                   "args": null,
                   "concreteType": "Gene",
+                  "kind": "LinkedField",
+                  "name": "node",
                   "plural": false,
                   "selections": [
                     {
-                      "kind": "ScalarField",
                       "alias": null,
-                      "name": "href",
                       "args": null,
+                      "kind": "ScalarField",
+                      "name": "href",
                       "storageKey": null
                     },
                     {
-                      "kind": "ScalarField",
                       "alias": null,
-                      "name": "name",
                       "args": null,
+                      "kind": "ScalarField",
+                      "name": "name",
                       "storageKey": null
                     }
-                  ]
+                  ],
+                  "storageKey": null
                 }
-              ]
+              ],
+              "storageKey": null
             }
-          ]
+          ],
+          "storageKey": null
         }
-      ]
+      ],
+      "storageKey": null
     }
-  ]
+  ],
+  "type": "Artist"
 };
 (node as any).hash = '77c969718be8a858b2f72009ac05dbc7';
 export default node;

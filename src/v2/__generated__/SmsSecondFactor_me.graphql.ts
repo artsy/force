@@ -1,4 +1,5 @@
 /* tslint:disable */
+/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -24,24 +25,20 @@ export type SmsSecondFactor_me$key = {
 
 
 const node: ReaderFragment = {
-  "kind": "Fragment",
-  "name": "SmsSecondFactor_me",
-  "type": "Me",
-  "metadata": null,
   "argumentDefinitions": [],
+  "kind": "Fragment",
+  "metadata": null,
+  "name": "SmsSecondFactor_me",
   "selections": [
     {
-      "kind": "ScalarField",
       "alias": null,
-      "name": "hasSecondFactorEnabled",
       "args": null,
+      "kind": "ScalarField",
+      "name": "hasSecondFactorEnabled",
       "storageKey": null
     },
     {
-      "kind": "LinkedField",
       "alias": "smsSecondFactors",
-      "name": "secondFactors",
-      "storageKey": "secondFactors(kinds:[\"sms\"])",
       "args": [
         {
           "kind": "Literal",
@@ -52,38 +49,42 @@ const node: ReaderFragment = {
         }
       ],
       "concreteType": null,
+      "kind": "LinkedField",
+      "name": "secondFactors",
       "plural": true,
       "selections": [
         {
           "kind": "InlineFragment",
-          "type": "SmsSecondFactor",
           "selections": [
             {
-              "kind": "ScalarField",
               "alias": null,
+              "args": null,
+              "kind": "ScalarField",
               "name": "__typename",
-              "args": null,
               "storageKey": null
             },
             {
-              "kind": "ScalarField",
               "alias": null,
+              "args": null,
+              "kind": "ScalarField",
               "name": "internalID",
-              "args": null,
               "storageKey": null
             },
             {
-              "kind": "ScalarField",
               "alias": null,
-              "name": "formattedPhoneNumber",
               "args": null,
+              "kind": "ScalarField",
+              "name": "formattedPhoneNumber",
               "storageKey": null
             }
-          ]
+          ],
+          "type": "SmsSecondFactor"
         }
-      ]
+      ],
+      "storageKey": "secondFactors(kinds:[\"sms\"])"
     }
-  ]
+  ],
+  "type": "Me"
 };
 (node as any).hash = '8c0f24b8224b514269381da71ff6b1b2';
 export default node;

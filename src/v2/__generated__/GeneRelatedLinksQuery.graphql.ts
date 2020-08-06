@@ -1,4 +1,5 @@
 /* tslint:disable */
+/* eslint-disable */
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -52,10 +53,10 @@ fragment GeneRelatedLinks_gene on Gene {
 const node: ConcreteRequest = (function(){
 var v0 = [
   {
+    "defaultValue": null,
     "kind": "LocalArgument",
     "name": "geneID",
-    "type": "String!",
-    "defaultValue": null
+    "type": "String!"
   }
 ],
 v1 = [
@@ -73,145 +74,145 @@ v2 = [
   }
 ],
 v3 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "id",
   "args": null,
+  "kind": "ScalarField",
+  "name": "id",
   "storageKey": null
 },
 v4 = [
   {
-    "kind": "ScalarField",
     "alias": null,
-    "name": "href",
     "args": null,
+    "kind": "ScalarField",
+    "name": "href",
     "storageKey": null
   },
   {
-    "kind": "ScalarField",
     "alias": null,
-    "name": "name",
     "args": null,
+    "kind": "ScalarField",
+    "name": "name",
     "storageKey": null
   },
   (v3/*: any*/)
 ];
 return {
-  "kind": "Request",
   "fragment": {
-    "kind": "Fragment",
-    "name": "GeneRelatedLinksQuery",
-    "type": "Query",
-    "metadata": null,
     "argumentDefinitions": (v0/*: any*/),
+    "kind": "Fragment",
+    "metadata": null,
+    "name": "GeneRelatedLinksQuery",
     "selections": [
       {
-        "kind": "LinkedField",
         "alias": null,
-        "name": "gene",
-        "storageKey": null,
         "args": (v1/*: any*/),
         "concreteType": "Gene",
+        "kind": "LinkedField",
+        "name": "gene",
         "plural": false,
         "selections": [
           {
+            "args": null,
             "kind": "FragmentSpread",
-            "name": "GeneRelatedLinks_gene",
-            "args": null
+            "name": "GeneRelatedLinks_gene"
           }
-        ]
+        ],
+        "storageKey": null
       }
-    ]
+    ],
+    "type": "Query"
   },
+  "kind": "Request",
   "operation": {
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "GeneRelatedLinksQuery",
-    "argumentDefinitions": (v0/*: any*/),
     "selections": [
       {
-        "kind": "LinkedField",
         "alias": null,
-        "name": "gene",
-        "storageKey": null,
         "args": (v1/*: any*/),
         "concreteType": "Gene",
+        "kind": "LinkedField",
+        "name": "gene",
         "plural": false,
         "selections": [
           {
-            "kind": "LinkedField",
             "alias": null,
-            "name": "similar",
-            "storageKey": "similar(first:10)",
             "args": (v2/*: any*/),
             "concreteType": "GeneConnection",
+            "kind": "LinkedField",
+            "name": "similar",
             "plural": false,
             "selections": [
               {
-                "kind": "LinkedField",
                 "alias": null,
-                "name": "edges",
-                "storageKey": null,
                 "args": null,
                 "concreteType": "GeneEdge",
+                "kind": "LinkedField",
+                "name": "edges",
                 "plural": true,
                 "selections": [
                   {
-                    "kind": "LinkedField",
                     "alias": null,
-                    "name": "node",
-                    "storageKey": null,
                     "args": null,
                     "concreteType": "Gene",
+                    "kind": "LinkedField",
+                    "name": "node",
                     "plural": false,
-                    "selections": (v4/*: any*/)
+                    "selections": (v4/*: any*/),
+                    "storageKey": null
                   }
-                ]
+                ],
+                "storageKey": null
               }
-            ]
+            ],
+            "storageKey": "similar(first:10)"
           },
           {
-            "kind": "LinkedField",
             "alias": "artists",
-            "name": "artistsConnection",
-            "storageKey": "artistsConnection(first:10)",
             "args": (v2/*: any*/),
             "concreteType": "ArtistConnection",
+            "kind": "LinkedField",
+            "name": "artistsConnection",
             "plural": false,
             "selections": [
               {
-                "kind": "LinkedField",
                 "alias": null,
-                "name": "edges",
-                "storageKey": null,
                 "args": null,
                 "concreteType": "ArtistEdge",
+                "kind": "LinkedField",
+                "name": "edges",
                 "plural": true,
                 "selections": [
                   {
-                    "kind": "LinkedField",
                     "alias": null,
-                    "name": "node",
-                    "storageKey": null,
                     "args": null,
                     "concreteType": "Artist",
+                    "kind": "LinkedField",
+                    "name": "node",
                     "plural": false,
-                    "selections": (v4/*: any*/)
+                    "selections": (v4/*: any*/),
+                    "storageKey": null
                   }
-                ]
+                ],
+                "storageKey": null
               }
-            ]
+            ],
+            "storageKey": "artistsConnection(first:10)"
           },
           (v3/*: any*/)
-        ]
+        ],
+        "storageKey": null
       }
     ]
   },
   "params": {
-    "operationKind": "query",
-    "name": "GeneRelatedLinksQuery",
     "id": null,
-    "text": "query GeneRelatedLinksQuery(\n  $geneID: String!\n) {\n  gene(id: $geneID) {\n    ...GeneRelatedLinks_gene\n    id\n  }\n}\n\nfragment GeneRelatedLinks_gene on Gene {\n  similar(first: 10) {\n    edges {\n      node {\n        href\n        name\n        id\n      }\n    }\n  }\n  artists: artistsConnection(first: 10) {\n    edges {\n      node {\n        href\n        name\n        id\n      }\n    }\n  }\n}\n",
-    "metadata": {}
+    "metadata": {},
+    "name": "GeneRelatedLinksQuery",
+    "operationKind": "query",
+    "text": "query GeneRelatedLinksQuery(\n  $geneID: String!\n) {\n  gene(id: $geneID) {\n    ...GeneRelatedLinks_gene\n    id\n  }\n}\n\nfragment GeneRelatedLinks_gene on Gene {\n  similar(first: 10) {\n    edges {\n      node {\n        href\n        name\n        id\n      }\n    }\n  }\n  artists: artistsConnection(first: 10) {\n    edges {\n      node {\n        href\n        name\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();

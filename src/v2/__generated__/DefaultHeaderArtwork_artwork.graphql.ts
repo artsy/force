@@ -1,4 +1,5 @@
 /* tslint:disable */
+/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -34,85 +35,79 @@ export type DefaultHeaderArtwork_artwork$key = {
 const node: ReaderFragment = (function(){
 var v0 = [
   {
-    "kind": "ScalarField",
     "alias": null,
+    "args": null,
+    "kind": "ScalarField",
     "name": "url",
-    "args": null,
     "storageKey": null
   },
   {
-    "kind": "ScalarField",
     "alias": null,
+    "args": null,
+    "kind": "ScalarField",
     "name": "width",
-    "args": null,
     "storageKey": null
   },
   {
-    "kind": "ScalarField",
     "alias": null,
-    "name": "height",
     "args": null,
+    "kind": "ScalarField",
+    "name": "height",
     "storageKey": null
   }
 ];
 return {
-  "kind": "Fragment",
-  "name": "DefaultHeaderArtwork_artwork",
-  "type": "FilterArtworksEdge",
-  "metadata": null,
   "argumentDefinitions": [],
+  "kind": "Fragment",
+  "metadata": null,
+  "name": "DefaultHeaderArtwork_artwork",
   "selections": [
     {
-      "kind": "LinkedField",
       "alias": null,
-      "name": "node",
-      "storageKey": null,
       "args": null,
       "concreteType": "Artwork",
+      "kind": "LinkedField",
+      "name": "node",
       "plural": false,
       "selections": [
         {
-          "kind": "ScalarField",
           "alias": null,
+          "args": null,
+          "kind": "ScalarField",
           "name": "id",
-          "args": null,
           "storageKey": null
         },
         {
-          "kind": "ScalarField",
           "alias": null,
+          "args": null,
+          "kind": "ScalarField",
           "name": "title",
-          "args": null,
           "storageKey": null
         },
         {
-          "kind": "ScalarField",
           "alias": null,
+          "args": null,
+          "kind": "ScalarField",
           "name": "href",
-          "args": null,
           "storageKey": null
         },
         {
+          "alias": null,
+          "args": null,
           "kind": "ScalarField",
-          "alias": null,
           "name": "slug",
-          "args": null,
           "storageKey": null
         },
         {
-          "kind": "LinkedField",
           "alias": null,
-          "name": "image",
-          "storageKey": null,
           "args": null,
           "concreteType": "Image",
+          "kind": "LinkedField",
+          "name": "image",
           "plural": false,
           "selections": [
             {
-              "kind": "LinkedField",
               "alias": "large",
-              "name": "resized",
-              "storageKey": "resized(height:230)",
               "args": [
                 {
                   "kind": "Literal",
@@ -121,14 +116,14 @@ return {
                 }
               ],
               "concreteType": "ResizedImageUrl",
+              "kind": "LinkedField",
+              "name": "resized",
               "plural": false,
-              "selections": (v0/*: any*/)
+              "selections": (v0/*: any*/),
+              "storageKey": "resized(height:230)"
             },
             {
-              "kind": "LinkedField",
               "alias": "small",
-              "name": "resized",
-              "storageKey": "resized(height:160)",
               "args": [
                 {
                   "kind": "Literal",
@@ -137,14 +132,20 @@ return {
                 }
               ],
               "concreteType": "ResizedImageUrl",
+              "kind": "LinkedField",
+              "name": "resized",
               "plural": false,
-              "selections": (v0/*: any*/)
+              "selections": (v0/*: any*/),
+              "storageKey": "resized(height:160)"
             }
-          ]
+          ],
+          "storageKey": null
         }
-      ]
+      ],
+      "storageKey": null
     }
-  ]
+  ],
+  "type": "FilterArtworksEdge"
 };
 })();
 (node as any).hash = '7a8740af565bf4a832317bf08ee0a588';

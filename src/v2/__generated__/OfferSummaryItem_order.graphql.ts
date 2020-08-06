@@ -1,4 +1,5 @@
 /* tslint:disable */
+/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -27,51 +28,51 @@ var v0 = [
   }
 ];
 return {
-  "kind": "Fragment",
-  "name": "OfferSummaryItem_order",
-  "type": "CommerceOrder",
-  "metadata": null,
   "argumentDefinitions": [],
+  "kind": "Fragment",
+  "metadata": null,
+  "name": "OfferSummaryItem_order",
   "selections": [
     {
-      "kind": "ScalarField",
       "alias": null,
-      "name": "totalListPrice",
       "args": (v0/*: any*/),
+      "kind": "ScalarField",
+      "name": "totalListPrice",
       "storageKey": "totalListPrice(precision:2)"
     },
     {
       "kind": "InlineFragment",
-      "type": "CommerceOfferOrder",
       "selections": [
         {
-          "kind": "LinkedField",
           "alias": null,
-          "name": "myLastOffer",
-          "storageKey": null,
           "args": null,
           "concreteType": "CommerceOffer",
+          "kind": "LinkedField",
+          "name": "myLastOffer",
           "plural": false,
           "selections": [
             {
-              "kind": "ScalarField",
               "alias": null,
-              "name": "amount",
               "args": (v0/*: any*/),
+              "kind": "ScalarField",
+              "name": "amount",
               "storageKey": "amount(precision:2)"
             },
             {
-              "kind": "ScalarField",
               "alias": null,
-              "name": "note",
               "args": null,
+              "kind": "ScalarField",
+              "name": "note",
               "storageKey": null
             }
-          ]
+          ],
+          "storageKey": null
         }
-      ]
+      ],
+      "type": "CommerceOfferOrder"
     }
-  ]
+  ],
+  "type": "CommerceOrder"
 };
 })();
 (node as any).hash = '0261dbe6d5bf78317ddcbcc13f207aa5';

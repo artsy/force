@@ -1,4 +1,5 @@
 /* tslint:disable */
+/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -20,32 +21,28 @@ export type Artwork_artwork$key = {
 
 
 const node: ReaderFragment = {
-  "kind": "Fragment",
-  "name": "Artwork_artwork",
-  "type": "Artwork",
-  "metadata": null,
   "argumentDefinitions": [],
+  "kind": "Fragment",
+  "metadata": null,
+  "name": "Artwork_artwork",
   "selections": [
     {
-      "kind": "ScalarField",
       "alias": null,
-      "name": "slug",
       "args": null,
+      "kind": "ScalarField",
+      "name": "slug",
       "storageKey": null
     },
     {
-      "kind": "LinkedField",
       "alias": null,
-      "name": "image",
-      "storageKey": null,
       "args": null,
       "concreteType": "Image",
+      "kind": "LinkedField",
+      "name": "image",
       "plural": false,
       "selections": [
         {
-          "kind": "ScalarField",
           "alias": null,
-          "name": "url",
           "args": [
             {
               "kind": "Literal",
@@ -53,23 +50,27 @@ const node: ReaderFragment = {
               "value": "large"
             }
           ],
+          "kind": "ScalarField",
+          "name": "url",
           "storageKey": "url(version:\"large\")"
         },
         {
-          "kind": "ScalarField",
           "alias": "aspect_ratio",
-          "name": "aspectRatio",
           "args": null,
+          "kind": "ScalarField",
+          "name": "aspectRatio",
           "storageKey": null
         }
-      ]
+      ],
+      "storageKey": null
     },
     {
+      "args": null,
       "kind": "FragmentSpread",
-      "name": "Metadata_artwork",
-      "args": null
+      "name": "Metadata_artwork"
     }
-  ]
+  ],
+  "type": "Artwork"
 };
 (node as any).hash = '9e25ccd07ef0c65a2e24af687648d6fd';
 export default node;

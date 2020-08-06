@@ -1,4 +1,5 @@
 /* tslint:disable */
+/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -18,41 +19,41 @@ export type Register_sale$key = {
 
 
 const node: ReaderFragment = {
-  "kind": "Fragment",
-  "name": "Register_sale",
-  "type": "Sale",
-  "metadata": null,
   "argumentDefinitions": [],
+  "kind": "Fragment",
+  "metadata": null,
+  "name": "Register_sale",
   "selections": [
     {
-      "kind": "ScalarField",
       "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "slug",
-      "args": null,
       "storageKey": null
     },
     {
-      "kind": "ScalarField",
       "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "internalID",
-      "args": null,
       "storageKey": null
     },
     {
-      "kind": "ScalarField",
       "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "status",
-      "args": null,
       "storageKey": null
     },
     {
-      "kind": "ScalarField",
       "alias": null,
-      "name": "requireIdentityVerification",
       "args": null,
+      "kind": "ScalarField",
+      "name": "requireIdentityVerification",
       "storageKey": null
     }
-  ]
+  ],
+  "type": "Sale"
 };
 (node as any).hash = '555438fc585fbee0be6171fe3a713deb';
 export default node;

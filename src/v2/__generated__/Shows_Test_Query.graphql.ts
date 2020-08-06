@@ -1,4 +1,5 @@
 /* tslint:disable */
+/* eslint-disable */
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -363,10 +364,10 @@ fragment Shows_viewer on Viewer {
 const node: ConcreteRequest = (function(){
 var v0 = [
   {
+    "defaultValue": null,
     "kind": "LocalArgument",
     "name": "artistID",
-    "type": "String!",
-    "defaultValue": null
+    "type": "String!"
   }
 ],
 v1 = [
@@ -377,10 +378,10 @@ v1 = [
   }
 ],
 v2 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "slug",
   "args": null,
+  "kind": "ScalarField",
+  "name": "slug",
   "storageKey": null
 },
 v3 = {
@@ -389,42 +390,42 @@ v3 = {
   "value": 4
 },
 v4 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "cursor",
   "args": null,
+  "kind": "ScalarField",
+  "name": "cursor",
   "storageKey": null
 },
 v5 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "page",
   "args": null,
+  "kind": "ScalarField",
+  "name": "page",
   "storageKey": null
 },
 v6 = [
   (v4/*: any*/),
   (v5/*: any*/),
   {
-    "kind": "ScalarField",
     "alias": null,
-    "name": "isCurrent",
     "args": null,
+    "kind": "ScalarField",
+    "name": "isCurrent",
     "storageKey": null
   }
 ],
 v7 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "id",
   "args": null,
+  "kind": "ScalarField",
+  "name": "id",
   "storageKey": null
 },
 v8 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "name",
   "args": null,
+  "kind": "ScalarField",
+  "name": "name",
   "storageKey": null
 },
 v9 = [
@@ -432,160 +433,154 @@ v9 = [
 ],
 v10 = [
   {
-    "kind": "LinkedField",
     "alias": null,
-    "name": "pageInfo",
-    "storageKey": null,
     "args": null,
     "concreteType": "PageInfo",
+    "kind": "LinkedField",
+    "name": "pageInfo",
     "plural": false,
     "selections": [
       {
-        "kind": "ScalarField",
         "alias": null,
-        "name": "hasNextPage",
         "args": null,
+        "kind": "ScalarField",
+        "name": "hasNextPage",
         "storageKey": null
       },
       {
-        "kind": "ScalarField",
         "alias": null,
-        "name": "endCursor",
         "args": null,
+        "kind": "ScalarField",
+        "name": "endCursor",
         "storageKey": null
       }
-    ]
+    ],
+    "storageKey": null
   },
   {
-    "kind": "LinkedField",
     "alias": null,
-    "name": "pageCursors",
-    "storageKey": null,
     "args": null,
     "concreteType": "PageCursors",
+    "kind": "LinkedField",
+    "name": "pageCursors",
     "plural": false,
     "selections": [
       {
-        "kind": "LinkedField",
         "alias": null,
+        "args": null,
+        "concreteType": "PageCursor",
+        "kind": "LinkedField",
         "name": "around",
-        "storageKey": null,
-        "args": null,
-        "concreteType": "PageCursor",
         "plural": true,
-        "selections": (v6/*: any*/)
+        "selections": (v6/*: any*/),
+        "storageKey": null
       },
       {
-        "kind": "LinkedField",
         "alias": null,
+        "args": null,
+        "concreteType": "PageCursor",
+        "kind": "LinkedField",
         "name": "first",
-        "storageKey": null,
-        "args": null,
-        "concreteType": "PageCursor",
         "plural": false,
-        "selections": (v6/*: any*/)
+        "selections": (v6/*: any*/),
+        "storageKey": null
       },
       {
-        "kind": "LinkedField",
         "alias": null,
+        "args": null,
+        "concreteType": "PageCursor",
+        "kind": "LinkedField",
         "name": "last",
-        "storageKey": null,
-        "args": null,
-        "concreteType": "PageCursor",
         "plural": false,
-        "selections": (v6/*: any*/)
+        "selections": (v6/*: any*/),
+        "storageKey": null
       },
       {
-        "kind": "LinkedField",
         "alias": null,
-        "name": "previous",
-        "storageKey": null,
         "args": null,
         "concreteType": "PageCursor",
+        "kind": "LinkedField",
+        "name": "previous",
         "plural": false,
         "selections": [
           (v4/*: any*/),
           (v5/*: any*/)
-        ]
+        ],
+        "storageKey": null
       }
-    ]
+    ],
+    "storageKey": null
   },
   {
-    "kind": "LinkedField",
     "alias": null,
-    "name": "edges",
-    "storageKey": null,
     "args": null,
     "concreteType": "ShowEdge",
+    "kind": "LinkedField",
+    "name": "edges",
     "plural": true,
     "selections": [
       {
-        "kind": "LinkedField",
         "alias": null,
-        "name": "node",
-        "storageKey": null,
         "args": null,
         "concreteType": "Show",
+        "kind": "LinkedField",
+        "name": "node",
         "plural": false,
         "selections": [
           {
-            "kind": "LinkedField",
             "alias": null,
-            "name": "partner",
-            "storageKey": null,
             "args": null,
             "concreteType": null,
+            "kind": "LinkedField",
+            "name": "partner",
             "plural": false,
             "selections": [
               {
-                "kind": "ScalarField",
                 "alias": null,
-                "name": "__typename",
                 "args": null,
+                "kind": "ScalarField",
+                "name": "__typename",
                 "storageKey": null
               },
               (v7/*: any*/),
               {
                 "kind": "InlineFragment",
-                "type": "ExternalPartner",
-                "selections": (v9/*: any*/)
+                "selections": (v9/*: any*/),
+                "type": "ExternalPartner"
               },
               {
                 "kind": "InlineFragment",
-                "type": "Partner",
-                "selections": (v9/*: any*/)
+                "selections": (v9/*: any*/),
+                "type": "Partner"
               }
-            ]
+            ],
+            "storageKey": null
           },
           (v8/*: any*/),
           {
-            "kind": "ScalarField",
             "alias": null,
-            "name": "href",
             "args": null,
-            "storageKey": null
-          },
-          {
             "kind": "ScalarField",
-            "alias": "exhibition_period",
-            "name": "exhibitionPeriod",
-            "args": null,
+            "name": "href",
             "storageKey": null
           },
           {
-            "kind": "LinkedField",
+            "alias": "exhibition_period",
+            "args": null,
+            "kind": "ScalarField",
+            "name": "exhibitionPeriod",
+            "storageKey": null
+          },
+          {
             "alias": "cover_image",
-            "name": "coverImage",
-            "storageKey": null,
             "args": null,
             "concreteType": "Image",
+            "kind": "LinkedField",
+            "name": "coverImage",
             "plural": false,
             "selections": [
               {
-                "kind": "LinkedField",
                 "alias": null,
-                "name": "cropped",
-                "storageKey": "cropped(height:600,width:800)",
                 "args": [
                   {
                     "kind": "Literal",
@@ -599,88 +594,89 @@ v10 = [
                   }
                 ],
                 "concreteType": "CroppedImageUrl",
+                "kind": "LinkedField",
+                "name": "cropped",
                 "plural": false,
                 "selections": [
                   {
-                    "kind": "ScalarField",
                     "alias": null,
-                    "name": "url",
                     "args": null,
+                    "kind": "ScalarField",
+                    "name": "url",
                     "storageKey": null
                   }
-                ]
+                ],
+                "storageKey": "cropped(height:600,width:800)"
               }
-            ]
+            ],
+            "storageKey": null
           },
           {
-            "kind": "ScalarField",
             "alias": null,
-            "name": "city",
             "args": null,
+            "kind": "ScalarField",
+            "name": "city",
             "storageKey": null
           },
           (v7/*: any*/)
-        ]
+        ],
+        "storageKey": null
       }
-    ]
+    ],
+    "storageKey": null
   }
 ];
 return {
-  "kind": "Request",
   "fragment": {
-    "kind": "Fragment",
-    "name": "Shows_Test_Query",
-    "type": "Query",
-    "metadata": null,
     "argumentDefinitions": (v0/*: any*/),
+    "kind": "Fragment",
+    "metadata": null,
+    "name": "Shows_Test_Query",
     "selections": [
       {
-        "kind": "LinkedField",
         "alias": null,
-        "name": "viewer",
-        "storageKey": null,
         "args": null,
         "concreteType": "Viewer",
+        "kind": "LinkedField",
+        "name": "viewer",
         "plural": false,
         "selections": [
           {
+            "args": null,
             "kind": "FragmentSpread",
-            "name": "Shows_viewer",
-            "args": null
+            "name": "Shows_viewer"
           }
-        ]
+        ],
+        "storageKey": null
       }
-    ]
+    ],
+    "type": "Query"
   },
+  "kind": "Request",
   "operation": {
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "Shows_Test_Query",
-    "argumentDefinitions": (v0/*: any*/),
     "selections": [
       {
-        "kind": "LinkedField",
         "alias": null,
-        "name": "viewer",
-        "storageKey": null,
         "args": null,
         "concreteType": "Viewer",
+        "kind": "LinkedField",
+        "name": "viewer",
         "plural": false,
         "selections": [
           {
-            "kind": "LinkedField",
             "alias": "artist_currentShows",
-            "name": "artist",
-            "storageKey": null,
             "args": (v1/*: any*/),
             "concreteType": "Artist",
+            "kind": "LinkedField",
+            "name": "artist",
             "plural": false,
             "selections": [
               (v2/*: any*/),
               {
-                "kind": "LinkedField",
                 "alias": null,
-                "name": "showsConnection",
-                "storageKey": "showsConnection(first:4,sort:\"END_AT_ASC\",status:\"running\")",
                 "args": [
                   (v3/*: any*/),
                   {
@@ -695,27 +691,27 @@ return {
                   }
                 ],
                 "concreteType": "ShowConnection",
+                "kind": "LinkedField",
+                "name": "showsConnection",
                 "plural": false,
-                "selections": (v10/*: any*/)
+                "selections": (v10/*: any*/),
+                "storageKey": "showsConnection(first:4,sort:\"END_AT_ASC\",status:\"running\")"
               },
               (v7/*: any*/)
-            ]
+            ],
+            "storageKey": null
           },
           {
-            "kind": "LinkedField",
             "alias": "artist_upcomingShows",
-            "name": "artist",
-            "storageKey": null,
             "args": (v1/*: any*/),
             "concreteType": "Artist",
+            "kind": "LinkedField",
+            "name": "artist",
             "plural": false,
             "selections": [
               (v2/*: any*/),
               {
-                "kind": "LinkedField",
                 "alias": null,
-                "name": "showsConnection",
-                "storageKey": "showsConnection(first:4,sort:\"START_AT_ASC\",status:\"upcoming\")",
                 "args": [
                   (v3/*: any*/),
                   {
@@ -730,27 +726,27 @@ return {
                   }
                 ],
                 "concreteType": "ShowConnection",
+                "kind": "LinkedField",
+                "name": "showsConnection",
                 "plural": false,
-                "selections": (v10/*: any*/)
+                "selections": (v10/*: any*/),
+                "storageKey": "showsConnection(first:4,sort:\"START_AT_ASC\",status:\"upcoming\")"
               },
               (v7/*: any*/)
-            ]
+            ],
+            "storageKey": null
           },
           {
-            "kind": "LinkedField",
             "alias": "artist_pastShows",
-            "name": "artist",
-            "storageKey": null,
             "args": (v1/*: any*/),
             "concreteType": "Artist",
+            "kind": "LinkedField",
+            "name": "artist",
             "plural": false,
             "selections": [
               (v2/*: any*/),
               {
-                "kind": "LinkedField",
                 "alias": null,
-                "name": "showsConnection",
-                "storageKey": "showsConnection(first:4,sort:\"END_AT_DESC\",status:\"closed\")",
                 "args": [
                   (v3/*: any*/),
                   {
@@ -765,22 +761,27 @@ return {
                   }
                 ],
                 "concreteType": "ShowConnection",
+                "kind": "LinkedField",
+                "name": "showsConnection",
                 "plural": false,
-                "selections": (v10/*: any*/)
+                "selections": (v10/*: any*/),
+                "storageKey": "showsConnection(first:4,sort:\"END_AT_DESC\",status:\"closed\")"
               },
               (v7/*: any*/)
-            ]
+            ],
+            "storageKey": null
           }
-        ]
+        ],
+        "storageKey": null
       }
     ]
   },
   "params": {
-    "operationKind": "query",
-    "name": "Shows_Test_Query",
     "id": null,
-    "text": "query Shows_Test_Query(\n  $artistID: String!\n) {\n  viewer {\n    ...Shows_viewer\n  }\n}\n\nfragment ArtistShows_artist_12Fjro on Artist {\n  slug\n  showsConnection(first: 4, sort: START_AT_ASC, status: \"upcoming\") {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        partner {\n          __typename\n          ... on ExternalPartner {\n            name\n            id\n          }\n          ... on Partner {\n            name\n          }\n          ... on Node {\n            id\n          }\n        }\n        name\n        href\n        exhibition_period: exhibitionPeriod\n        cover_image: coverImage {\n          cropped(width: 800, height: 600) {\n            url\n          }\n        }\n        city\n        id\n      }\n    }\n  }\n}\n\nfragment ArtistShows_artist_3dp4w3 on Artist {\n  slug\n  showsConnection(first: 4, sort: END_AT_DESC, status: \"closed\") {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        partner {\n          __typename\n          ... on ExternalPartner {\n            name\n            id\n          }\n          ... on Partner {\n            name\n          }\n          ... on Node {\n            id\n          }\n        }\n        name\n        href\n        exhibition_period: exhibitionPeriod\n        cover_image: coverImage {\n          cropped(width: 800, height: 600) {\n            url\n          }\n        }\n        city\n        id\n      }\n    }\n  }\n}\n\nfragment ArtistShows_artist_43oec1 on Artist {\n  slug\n  showsConnection(first: 4, sort: END_AT_ASC, status: \"running\") {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        partner {\n          __typename\n          ... on ExternalPartner {\n            name\n            id\n          }\n          ... on Partner {\n            name\n          }\n          ... on Node {\n            id\n          }\n        }\n        name\n        href\n        exhibition_period: exhibitionPeriod\n        cover_image: coverImage {\n          cropped(width: 800, height: 600) {\n            url\n          }\n        }\n        city\n        id\n      }\n    }\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n\nfragment Shows_viewer on Viewer {\n  artist_currentShows: artist(id: $artistID) {\n    ...ArtistShows_artist_43oec1\n    id\n  }\n  artist_upcomingShows: artist(id: $artistID) {\n    ...ArtistShows_artist_12Fjro\n    id\n  }\n  artist_pastShows: artist(id: $artistID) {\n    ...ArtistShows_artist_3dp4w3\n    id\n  }\n}\n",
-    "metadata": {}
+    "metadata": {},
+    "name": "Shows_Test_Query",
+    "operationKind": "query",
+    "text": "query Shows_Test_Query(\n  $artistID: String!\n) {\n  viewer {\n    ...Shows_viewer\n  }\n}\n\nfragment ArtistShows_artist_12Fjro on Artist {\n  slug\n  showsConnection(first: 4, sort: START_AT_ASC, status: \"upcoming\") {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        partner {\n          __typename\n          ... on ExternalPartner {\n            name\n            id\n          }\n          ... on Partner {\n            name\n          }\n          ... on Node {\n            id\n          }\n        }\n        name\n        href\n        exhibition_period: exhibitionPeriod\n        cover_image: coverImage {\n          cropped(width: 800, height: 600) {\n            url\n          }\n        }\n        city\n        id\n      }\n    }\n  }\n}\n\nfragment ArtistShows_artist_3dp4w3 on Artist {\n  slug\n  showsConnection(first: 4, sort: END_AT_DESC, status: \"closed\") {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        partner {\n          __typename\n          ... on ExternalPartner {\n            name\n            id\n          }\n          ... on Partner {\n            name\n          }\n          ... on Node {\n            id\n          }\n        }\n        name\n        href\n        exhibition_period: exhibitionPeriod\n        cover_image: coverImage {\n          cropped(width: 800, height: 600) {\n            url\n          }\n        }\n        city\n        id\n      }\n    }\n  }\n}\n\nfragment ArtistShows_artist_43oec1 on Artist {\n  slug\n  showsConnection(first: 4, sort: END_AT_ASC, status: \"running\") {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        partner {\n          __typename\n          ... on ExternalPartner {\n            name\n            id\n          }\n          ... on Partner {\n            name\n          }\n          ... on Node {\n            id\n          }\n        }\n        name\n        href\n        exhibition_period: exhibitionPeriod\n        cover_image: coverImage {\n          cropped(width: 800, height: 600) {\n            url\n          }\n        }\n        city\n        id\n      }\n    }\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n\nfragment Shows_viewer on Viewer {\n  artist_currentShows: artist(id: $artistID) {\n    ...ArtistShows_artist_43oec1\n    id\n  }\n  artist_upcomingShows: artist(id: $artistID) {\n    ...ArtistShows_artist_12Fjro\n    id\n  }\n  artist_pastShows: artist(id: $artistID) {\n    ...ArtistShows_artist_3dp4w3\n    id\n  }\n}\n"
   }
 };
 })();

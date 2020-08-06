@@ -1,10 +1,11 @@
 /* tslint:disable */
+/* eslint-disable */
 
 import { ConcreteRequest } from "relay-runtime";
 export type UpdateConversationMutationInput = {
-    readonly clientMutationId?: string | null;
-    readonly conversationId: string;
-    readonly fromLastViewedMessageId: string;
+    clientMutationId?: string | null;
+    conversationId: string;
+    fromLastViewedMessageId: string;
 };
 export type UpdateConversationMutationVariables = {
     input: UpdateConversationMutationInput;
@@ -40,18 +41,15 @@ mutation UpdateConversationMutation(
 const node: ConcreteRequest = (function(){
 var v0 = [
   {
+    "defaultValue": null,
     "kind": "LocalArgument",
     "name": "input",
-    "type": "UpdateConversationMutationInput!",
-    "defaultValue": null
+    "type": "UpdateConversationMutationInput!"
   }
 ],
 v1 = [
   {
-    "kind": "LinkedField",
     "alias": null,
-    "name": "updateConversation",
-    "storageKey": null,
     "args": [
       {
         "kind": "Variable",
@@ -60,58 +58,61 @@ v1 = [
       }
     ],
     "concreteType": "UpdateConversationMutationPayload",
+    "kind": "LinkedField",
+    "name": "updateConversation",
     "plural": false,
     "selections": [
       {
-        "kind": "LinkedField",
         "alias": null,
-        "name": "conversation",
-        "storageKey": null,
         "args": null,
         "concreteType": "Conversation",
+        "kind": "LinkedField",
+        "name": "conversation",
         "plural": false,
         "selections": [
           {
-            "kind": "ScalarField",
             "alias": null,
-            "name": "id",
             "args": null,
+            "kind": "ScalarField",
+            "name": "id",
             "storageKey": null
           },
           {
-            "kind": "ScalarField",
             "alias": null,
-            "name": "unread",
             "args": null,
+            "kind": "ScalarField",
+            "name": "unread",
             "storageKey": null
           }
-        ]
+        ],
+        "storageKey": null
       }
-    ]
+    ],
+    "storageKey": null
   }
 ];
 return {
-  "kind": "Request",
   "fragment": {
-    "kind": "Fragment",
-    "name": "UpdateConversationMutation",
-    "type": "Mutation",
-    "metadata": null,
     "argumentDefinitions": (v0/*: any*/),
-    "selections": (v1/*: any*/)
+    "kind": "Fragment",
+    "metadata": null,
+    "name": "UpdateConversationMutation",
+    "selections": (v1/*: any*/),
+    "type": "Mutation"
   },
+  "kind": "Request",
   "operation": {
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "UpdateConversationMutation",
-    "argumentDefinitions": (v0/*: any*/),
     "selections": (v1/*: any*/)
   },
   "params": {
-    "operationKind": "mutation",
-    "name": "UpdateConversationMutation",
     "id": null,
-    "text": "mutation UpdateConversationMutation(\n  $input: UpdateConversationMutationInput!\n) {\n  updateConversation(input: $input) {\n    conversation {\n      id\n      unread\n    }\n  }\n}\n",
-    "metadata": {}
+    "metadata": {},
+    "name": "UpdateConversationMutation",
+    "operationKind": "mutation",
+    "text": "mutation UpdateConversationMutation(\n  $input: UpdateConversationMutationInput!\n) {\n  updateConversation(input: $input) {\n    conversation {\n      id\n      unread\n    }\n  }\n}\n"
   }
 };
 })();

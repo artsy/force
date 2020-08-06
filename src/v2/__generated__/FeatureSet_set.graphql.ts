@@ -1,4 +1,5 @@
 /* tslint:disable */
+/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -29,34 +30,31 @@ export type FeatureSet_set$key = {
 
 const node: ReaderFragment = (function(){
 var v0 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "id",
   "args": null,
+  "kind": "ScalarField",
+  "name": "id",
   "storageKey": null
 },
 v1 = [
   (v0/*: any*/)
 ];
 return {
-  "kind": "Fragment",
-  "name": "FeatureSet_set",
-  "type": "OrderedSet",
-  "metadata": null,
   "argumentDefinitions": [],
+  "kind": "Fragment",
+  "metadata": null,
+  "name": "FeatureSet_set",
   "selections": [
     (v0/*: any*/),
     {
-      "kind": "ScalarField",
       "alias": null,
-      "name": "name",
       "args": null,
+      "kind": "ScalarField",
+      "name": "name",
       "storageKey": null
     },
     {
-      "kind": "ScalarField",
       "alias": null,
-      "name": "description",
       "args": [
         {
           "kind": "Literal",
@@ -64,20 +62,19 @@ return {
           "value": "HTML"
         }
       ],
+      "kind": "ScalarField",
+      "name": "description",
       "storageKey": "description(format:\"HTML\")"
     },
     {
-      "kind": "ScalarField",
       "alias": null,
-      "name": "itemType",
       "args": null,
+      "kind": "ScalarField",
+      "name": "itemType",
       "storageKey": null
     },
     {
-      "kind": "LinkedField",
       "alias": "orderedItems",
-      "name": "orderedItemsConnection",
-      "storageKey": "orderedItemsConnection(first:35)",
       "args": [
         {
           "kind": "Literal",
@@ -86,65 +83,69 @@ return {
         }
       ],
       "concreteType": "OrderedSetItemConnection",
+      "kind": "LinkedField",
+      "name": "orderedItemsConnection",
       "plural": false,
       "selections": [
         {
-          "kind": "LinkedField",
           "alias": null,
-          "name": "edges",
-          "storageKey": null,
           "args": null,
           "concreteType": "OrderedSetItemEdge",
+          "kind": "LinkedField",
+          "name": "edges",
           "plural": true,
           "selections": [
             {
-              "kind": "ScalarField",
               "alias": null,
-              "name": "__typename",
               "args": null,
+              "kind": "ScalarField",
+              "name": "__typename",
               "storageKey": null
             },
             {
-              "kind": "LinkedField",
               "alias": null,
-              "name": "node",
-              "storageKey": null,
               "args": null,
               "concreteType": null,
+              "kind": "LinkedField",
+              "name": "node",
               "plural": false,
               "selections": [
                 {
                   "kind": "InlineFragment",
-                  "type": "Artwork",
-                  "selections": (v1/*: any*/)
+                  "selections": (v1/*: any*/),
+                  "type": "Artwork"
                 },
                 {
                   "kind": "InlineFragment",
-                  "type": "FeaturedLink",
-                  "selections": (v1/*: any*/)
+                  "selections": (v1/*: any*/),
+                  "type": "FeaturedLink"
                 },
                 {
+                  "args": null,
                   "kind": "FragmentSpread",
-                  "name": "FeatureSetItem_setItem",
-                  "args": null
+                  "name": "FeatureSetItem_setItem"
                 }
-              ]
+              ],
+              "storageKey": null
             }
-          ]
+          ],
+          "storageKey": null
         }
-      ]
+      ],
+      "storageKey": "orderedItemsConnection(first:35)"
     },
     {
+      "args": null,
       "kind": "FragmentSpread",
-      "name": "FeatureSetMeta_set",
-      "args": null
+      "name": "FeatureSetMeta_set"
     },
     {
+      "args": null,
       "kind": "FragmentSpread",
-      "name": "FeatureSetContainer_set",
-      "args": null
+      "name": "FeatureSetContainer_set"
     }
-  ]
+  ],
+  "type": "OrderedSet"
 };
 })();
 (node as any).hash = '9b7a193447e8ab6dbc35747878b5d3fd';

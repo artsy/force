@@ -1,4 +1,5 @@
 /* tslint:disable */
+/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -25,42 +26,38 @@ export type ConversationApp_me$key = {
 
 
 const node: ReaderFragment = {
-  "kind": "Fragment",
-  "name": "ConversationApp_me",
-  "type": "Me",
-  "metadata": null,
   "argumentDefinitions": [
     {
+      "defaultValue": 25,
       "kind": "LocalArgument",
       "name": "first",
-      "type": "Int",
-      "defaultValue": 25
+      "type": "Int"
     },
     {
+      "defaultValue": null,
       "kind": "LocalArgument",
       "name": "last",
-      "type": "Int",
-      "defaultValue": null
+      "type": "Int"
     },
     {
+      "defaultValue": null,
       "kind": "LocalArgument",
       "name": "after",
-      "type": "String",
-      "defaultValue": null
+      "type": "String"
     },
     {
+      "defaultValue": null,
       "kind": "LocalArgument",
       "name": "before",
-      "type": "String",
-      "defaultValue": null
+      "type": "String"
     }
   ],
+  "kind": "Fragment",
+  "metadata": null,
+  "name": "ConversationApp_me",
   "selections": [
     {
-      "kind": "LinkedField",
       "alias": null,
-      "name": "conversationsConnection",
-      "storageKey": null,
       "args": [
         {
           "kind": "Variable",
@@ -84,63 +81,67 @@ const node: ReaderFragment = {
         }
       ],
       "concreteType": "ConversationConnection",
+      "kind": "LinkedField",
+      "name": "conversationsConnection",
       "plural": false,
       "selections": [
         {
-          "kind": "LinkedField",
           "alias": null,
-          "name": "edges",
-          "storageKey": null,
           "args": null,
           "concreteType": "ConversationEdge",
+          "kind": "LinkedField",
+          "name": "edges",
           "plural": true,
           "selections": [
             {
-              "kind": "LinkedField",
               "alias": null,
-              "name": "node",
-              "storageKey": null,
               "args": null,
               "concreteType": "Conversation",
+              "kind": "LinkedField",
+              "name": "node",
               "plural": false,
               "selections": [
                 {
-                  "kind": "ScalarField",
                   "alias": null,
-                  "name": "internalID",
                   "args": null,
+                  "kind": "ScalarField",
+                  "name": "internalID",
                   "storageKey": null
                 },
                 {
-                  "kind": "LinkedField",
                   "alias": null,
-                  "name": "to",
-                  "storageKey": null,
                   "args": null,
                   "concreteType": "ConversationResponder",
+                  "kind": "LinkedField",
+                  "name": "to",
                   "plural": false,
                   "selections": [
                     {
-                      "kind": "ScalarField",
                       "alias": null,
-                      "name": "name",
                       "args": null,
+                      "kind": "ScalarField",
+                      "name": "name",
                       "storageKey": null
                     }
-                  ]
+                  ],
+                  "storageKey": null
                 }
-              ]
+              ],
+              "storageKey": null
             }
-          ]
+          ],
+          "storageKey": null
         }
-      ]
+      ],
+      "storageKey": null
     },
     {
+      "args": null,
       "kind": "FragmentSpread",
-      "name": "Conversations_me",
-      "args": null
+      "name": "Conversations_me"
     }
-  ]
+  ],
+  "type": "Me"
 };
 (node as any).hash = '0576ce0ca5c4e87d01fa4b031b061fac';
 export default node;
