@@ -2,8 +2,8 @@ import "isomorphic-fetch"
 import "regenerator-runtime/runtime"
 
 import { isEmpty } from "lodash"
-import RelayClientSSR from "react-relay-network-modern-ssr/node8/client"
-import RelayServerSSR from "react-relay-network-modern-ssr/node8/server"
+import RelayClientSSR from "react-relay-network-modern-ssr/lib/client"
+import RelayServerSSR from "react-relay-network-modern-ssr/lib/server"
 import { Environment, INetwork, RecordSource, Store } from "relay-runtime"
 import { data as sd } from "sharify"
 

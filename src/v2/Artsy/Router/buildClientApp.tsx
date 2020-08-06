@@ -2,8 +2,8 @@ import React, { ComponentType } from "react"
 
 import { Resolver } from "found-relay"
 import { ScrollManager } from "found-scroll"
-import createInitialFarceRouter from "found/lib/createInitialFarceRouter"
-import createRender from "found/lib/createRender"
+import createInitialFarceRouter from "found/createInitialFarceRouter"
+import createRender from "found/createRender"
 
 import BrowserProtocol from "farce/lib/BrowserProtocol"
 import createQueryMiddleware from "farce/lib/createQueryMiddleware"
