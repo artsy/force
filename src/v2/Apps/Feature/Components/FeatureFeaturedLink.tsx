@@ -1,16 +1,41 @@
 import React from "react"
 import styled from "styled-components"
 import {
+  Col,
   Flex,
   FlexProps,
+  Grid,
   HTML,
-  ResponsiveImage,
+  ResponsiveBox,
+  ResponsiveBoxProps,
+  Row,
   Text,
   color,
 } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import { FeatureFeaturedLink_featuredLink } from "v2/__generated__/FeatureFeaturedLink_featuredLink.graphql"
+import { themeGet } from "@styled-system/theme-get"
+
+const FullHTML = styled(HTML)`
+  > blockquote {
+    font-size: ${themeGet("fontSizes.size10")};
+    font-family: ${themeGet("fonts.serif")};
+    letter-spacing: ${themeGet("letterSpacings.tight")};
+    line-height: ${themeGet("lineHeights.solid")};
+
+    @media (max-width: ${themeGet("breakpoints.xs")}) {
+      font-size: ${themeGet("fontSizes.size8")};
+    }
+  }
+`
+
+const ResponsiveImage = styled(ResponsiveBox)<ResponsiveBoxProps>`
+  img {
+    width: 100%;
+    height: 100%;
+  }
+`
 
 const Figure = styled(RouterLink)`
   display: block;
@@ -33,7 +58,9 @@ const Figure = styled(RouterLink)`
   }
 `
 
-const Title = styled(Text)`
+const Title = styled(Text).attrs({
+  variant: "title",
+})`
   position: absolute;
   bottom: 0;
   left: 0;
@@ -45,7 +72,7 @@ const Title = styled(Text)`
 `
 
 export interface FeatureFeaturedLinkProps extends FlexProps {
-  size: "small" | "medium" | "large"
+  size: "small" | "medium" | "large" | "full"
   featuredLink: FeatureFeaturedLink_featuredLink
 }
 
@@ -55,22 +82,28 @@ export const FeatureFeaturedLink: React.FC<FeatureFeaturedLinkProps> = ({
   featuredLink: { href, title, subtitle, description, image },
   ...rest
 }) => {
+  const img = image && image[size]
+
   return (
     <Flex flexDirection="column" {...rest}>
-      {image ? (
+      {img && (
         <Figure to={href}>
           <ResponsiveImage
+            aspectWidth={img.width}
+            aspectHeight={img.height}
             maxWidth="100%"
-            src={image[size].src}
-            ratio={image[size].height / image[size].width}
-            style={{ backgroundColor: color("black10") }}
-          />
+            bg="black10"
+          >
+            <img src={img.src} alt={title} />
+          </ResponsiveImage>
 
-          <Title variant="title" color="white100" p={2} pt={9}>
+          <Title color="white100" p={2} pt={9}>
             {title}
           </Title>
         </Figure>
-      ) : (
+      )}
+
+      {!img && title && (
         <Text variant="title" color="black100" my={2}>
           <RouterLink to={href}>{title || "—"}</RouterLink>
         </Text>
@@ -78,16 +111,21 @@ export const FeatureFeaturedLink: React.FC<FeatureFeaturedLinkProps> = ({
 
       <Flex flexDirection={size === "large" ? ["column", "row"] : "column"}>
         {subtitle && (
-          <Flex mt={2} flexBasis="50%">
-            <HTML variant="mediumText" html={subtitle} />
-          </Flex>
+          <HTML variant="mediumText" html={subtitle} mt={2} flexBasis="50%" />
         )}
 
-        {description && (
-          <Flex mt={1} flexBasis="50%">
-            <HTML variant="text" html={description} />
-          </Flex>
-        )}
+        {description &&
+          (size === "full" ? (
+            <Grid>
+              <Row>
+                <Col sm={8} mx="auto">
+                  <FullHTML variant="largeTitle" html={description} mt={1} />
+                </Col>
+              </Row>
+            </Grid>
+          ) : (
+            <HTML variant="text" html={description} mt={1} flexBasis="50%" />
+          ))}
       </Flex>
     </Flex>
   )
@@ -117,6 +155,12 @@ export const FeatureFeaturedLinkFragmentContainer = createFragmentContainer(
           }
           # 16:9 - 1112×626 native max dimensions * 2 for retina
           large: cropped(width: 2224, height: 1252, version: ["wide"]) {
+            src: url
+            width
+            height
+          }
+          # ?:? - 1112×1112 native max dimensions * 2 for retina
+          full: resized(width: 2224, height: 2224, version: ["wide"]) {
             src: url
             width
             height

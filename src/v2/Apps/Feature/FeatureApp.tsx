@@ -14,6 +14,8 @@ interface FeatureAppProps {
 }
 
 const FeatureApp: React.FC<FeatureAppProps> = ({ feature }) => {
+  if (!feature) return null
+
   return (
     <>
       <FeatureMeta feature={feature} />

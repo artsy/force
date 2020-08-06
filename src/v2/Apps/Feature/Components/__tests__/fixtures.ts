@@ -4,8 +4,22 @@ export const FEATURE_HEADER = {
   name: "Alserkal Art Week",
   subheadline:
     "Alserkal Art Week Online\n\nDiscover new exhibitions by Alserkal Avenue Galleries",
-  image: {
-    cropped: {
+  defaultImage: {
+    _1x: {
+      url:
+        "https://d32dm0rphc51dk.cloudfront.net/wsfiG9lAGOzs0Rey0felsQ/source.jpg",
+    },
+    _2x: {
+      url:
+        "https://d32dm0rphc51dk.cloudfront.net/wsfiG9lAGOzs0Rey0felsQ/source.jpg",
+    },
+  },
+  fullImage: {
+    _1x: {
+      url:
+        "https://d32dm0rphc51dk.cloudfront.net/wsfiG9lAGOzs0Rey0felsQ/source.jpg",
+    },
+    _2x: {
       url:
         "https://d32dm0rphc51dk.cloudfront.net/wsfiG9lAGOzs0Rey0felsQ/source.jpg",
     },
@@ -33,6 +47,12 @@ export const FEATURED_LINK = {
       height: 1365,
     },
     large: {
+      src:
+        "https://d196wkiy8qx2u5.cloudfront.net?resize_to=fill&width=2224&height=1252&quality=80&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FBvwH3hwOC9yPKphKcrWBfg%2Fwide.jpg",
+      width: 2224,
+      height: 1252,
+    },
+    full: {
       src:
         "https://d196wkiy8qx2u5.cloudfront.net?resize_to=fill&width=2224&height=1252&quality=80&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FBvwH3hwOC9yPKphKcrWBfg%2Fwide.jpg",
       width: 2224,
