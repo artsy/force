@@ -1,4 +1,5 @@
 /* tslint:disable */
+/* eslint-disable */
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -100,126 +101,119 @@ v1 = [
   }
 ],
 v2 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "id",
   "args": null,
+  "kind": "ScalarField",
+  "name": "id",
   "storageKey": null
 },
 v3 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "internalID",
   "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
   "storageKey": null
 },
 v4 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "amount",
   "args": (v1/*: any*/),
+  "kind": "ScalarField",
+  "name": "amount",
   "storageKey": "amount(precision:2)"
 },
 v5 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "fromParticipant",
   "args": null,
+  "kind": "ScalarField",
+  "name": "fromParticipant",
   "storageKey": null
 };
 return {
-  "kind": "Request",
   "fragment": {
-    "kind": "Fragment",
-    "name": "OfferHistoryItemTestQuery",
-    "type": "Query",
-    "metadata": null,
     "argumentDefinitions": [],
+    "kind": "Fragment",
+    "metadata": null,
+    "name": "OfferHistoryItemTestQuery",
     "selections": [
       {
-        "kind": "LinkedField",
         "alias": "order",
-        "name": "commerceOrder",
-        "storageKey": "commerceOrder(id:\"foo\")",
         "args": (v0/*: any*/),
         "concreteType": null,
+        "kind": "LinkedField",
+        "name": "commerceOrder",
         "plural": false,
         "selections": [
           {
+            "args": null,
             "kind": "FragmentSpread",
-            "name": "OfferHistoryItem_order",
-            "args": null
+            "name": "OfferHistoryItem_order"
           }
-        ]
+        ],
+        "storageKey": "commerceOrder(id:\"foo\")"
       }
-    ]
+    ],
+    "type": "Query"
   },
+  "kind": "Request",
   "operation": {
+    "argumentDefinitions": [],
     "kind": "Operation",
     "name": "OfferHistoryItemTestQuery",
-    "argumentDefinitions": [],
     "selections": [
       {
-        "kind": "LinkedField",
         "alias": "order",
-        "name": "commerceOrder",
-        "storageKey": "commerceOrder(id:\"foo\")",
         "args": (v0/*: any*/),
         "concreteType": null,
+        "kind": "LinkedField",
+        "name": "commerceOrder",
         "plural": false,
         "selections": [
           {
-            "kind": "ScalarField",
             "alias": null,
-            "name": "__typename",
             "args": null,
+            "kind": "ScalarField",
+            "name": "__typename",
             "storageKey": null
           },
           {
-            "kind": "ScalarField",
             "alias": null,
-            "name": "totalListPrice",
             "args": (v1/*: any*/),
+            "kind": "ScalarField",
+            "name": "totalListPrice",
             "storageKey": "totalListPrice(precision:2)"
           },
           (v2/*: any*/),
           {
             "kind": "InlineFragment",
-            "type": "CommerceOfferOrder",
             "selections": [
               {
-                "kind": "LinkedField",
                 "alias": null,
-                "name": "offers",
-                "storageKey": null,
                 "args": null,
                 "concreteType": "CommerceOfferConnection",
+                "kind": "LinkedField",
+                "name": "offers",
                 "plural": false,
                 "selections": [
                   {
-                    "kind": "LinkedField",
                     "alias": null,
-                    "name": "edges",
-                    "storageKey": null,
                     "args": null,
                     "concreteType": "CommerceOfferEdge",
+                    "kind": "LinkedField",
+                    "name": "edges",
                     "plural": true,
                     "selections": [
                       {
-                        "kind": "LinkedField",
                         "alias": null,
-                        "name": "node",
-                        "storageKey": null,
                         "args": null,
                         "concreteType": "CommerceOffer",
+                        "kind": "LinkedField",
+                        "name": "node",
                         "plural": false,
                         "selections": [
                           (v3/*: any*/),
                           (v4/*: any*/),
                           {
-                            "kind": "ScalarField",
                             "alias": null,
-                            "name": "createdAt",
                             "args": [
                               {
                                 "kind": "Literal",
@@ -227,64 +221,71 @@ return {
                                 "value": "MMM D"
                               }
                             ],
+                            "kind": "ScalarField",
+                            "name": "createdAt",
                             "storageKey": "createdAt(format:\"MMM D\")"
                           },
                           (v5/*: any*/),
                           (v2/*: any*/)
-                        ]
+                        ],
+                        "storageKey": null
                       }
-                    ]
+                    ],
+                    "storageKey": null
                   }
-                ]
+                ],
+                "storageKey": null
               },
               {
-                "kind": "LinkedField",
                 "alias": null,
-                "name": "lastOffer",
-                "storageKey": null,
                 "args": null,
                 "concreteType": "CommerceOffer",
+                "kind": "LinkedField",
+                "name": "lastOffer",
                 "plural": false,
                 "selections": [
                   (v3/*: any*/),
                   (v5/*: any*/),
                   (v4/*: any*/),
                   {
-                    "kind": "ScalarField",
                     "alias": null,
-                    "name": "shippingTotal",
                     "args": (v1/*: any*/),
+                    "kind": "ScalarField",
+                    "name": "shippingTotal",
                     "storageKey": "shippingTotal(precision:2)"
                   },
                   {
-                    "kind": "ScalarField",
                     "alias": null,
-                    "name": "taxTotal",
                     "args": (v1/*: any*/),
+                    "kind": "ScalarField",
+                    "name": "taxTotal",
                     "storageKey": "taxTotal(precision:2)"
                   },
                   {
-                    "kind": "ScalarField",
                     "alias": null,
-                    "name": "note",
                     "args": null,
+                    "kind": "ScalarField",
+                    "name": "note",
                     "storageKey": null
                   },
                   (v2/*: any*/)
-                ]
+                ],
+                "storageKey": null
               }
-            ]
+            ],
+            "type": "CommerceOfferOrder"
           }
-        ]
+        ],
+        "storageKey": "commerceOrder(id:\"foo\")"
       }
     ]
   },
   "params": {
-    "operationKind": "query",
-    "name": "OfferHistoryItemTestQuery",
     "id": null,
-    "text": "query OfferHistoryItemTestQuery {\n  order: commerceOrder(id: \"foo\") {\n    __typename\n    ...OfferHistoryItem_order\n    id\n  }\n}\n\nfragment OfferHistoryItem_order on CommerceOrder {\n  ... on CommerceOfferOrder {\n    offers {\n      edges {\n        node {\n          internalID\n          amount(precision: 2)\n          createdAt(format: \"MMM D\")\n          fromParticipant\n          id\n        }\n      }\n    }\n    lastOffer {\n      internalID\n      fromParticipant\n      amount(precision: 2)\n      shippingTotal(precision: 2)\n      taxTotal(precision: 2)\n      note\n      id\n    }\n  }\n  totalListPrice(precision: 2)\n}\n",
-    "metadata": {}
+    "metadata": {},
+    "name": "OfferHistoryItemTestQuery",
+    "operationKind": "query",
+    "text": "query OfferHistoryItemTestQuery {\n  order: commerceOrder(id: \"foo\") {\n    __typename\n    ...OfferHistoryItem_order\n    id\n  }\n}\n\nfragment OfferHistoryItem_order on CommerceOrder {\n  ... on CommerceOfferOrder {\n    offers {\n      edges {\n        node {\n          internalID\n          amount(precision: 2)\n          createdAt(format: \"MMM D\")\n          fromParticipant\n          id\n        }\n      }\n    }\n    lastOffer {\n      internalID\n      fromParticipant\n      amount(precision: 2)\n      shippingTotal(precision: 2)\n      taxTotal(precision: 2)\n      note\n      id\n    }\n  }\n  totalListPrice(precision: 2)\n}\n"
   }
 };
 })();

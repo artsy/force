@@ -1,4 +1,5 @@
 /* tslint:disable */
+/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -22,24 +23,20 @@ export type Conversation_me$key = {
 
 
 const node: ReaderFragment = {
-  "kind": "Fragment",
-  "name": "Conversation_me",
-  "type": "Me",
-  "metadata": null,
   "argumentDefinitions": [
     {
+      "defaultValue": null,
       "kind": "LocalArgument",
       "name": "conversationID",
-      "type": "String!",
-      "defaultValue": null
+      "type": "String!"
     }
   ],
+  "kind": "Fragment",
+  "metadata": null,
+  "name": "Conversation_me",
   "selections": [
     {
-      "kind": "LinkedField",
       "alias": null,
-      "name": "conversation",
-      "storageKey": null,
       "args": [
         {
           "kind": "Variable",
@@ -48,51 +45,55 @@ const node: ReaderFragment = {
         }
       ],
       "concreteType": "Conversation",
+      "kind": "LinkedField",
+      "name": "conversation",
       "plural": false,
       "selections": [
         {
-          "kind": "ScalarField",
           "alias": null,
-          "name": "internalID",
           "args": null,
+          "kind": "ScalarField",
+          "name": "internalID",
           "storageKey": null
         },
         {
-          "kind": "LinkedField",
           "alias": null,
-          "name": "to",
-          "storageKey": null,
           "args": null,
           "concreteType": "ConversationResponder",
+          "kind": "LinkedField",
+          "name": "to",
           "plural": false,
           "selections": [
             {
-              "kind": "ScalarField",
               "alias": null,
-              "name": "name",
               "args": null,
+              "kind": "ScalarField",
+              "name": "name",
               "storageKey": null
             }
-          ]
+          ],
+          "storageKey": null
         },
         {
+          "args": null,
           "kind": "FragmentSpread",
-          "name": "Conversation_conversation",
-          "args": null
+          "name": "Conversation_conversation"
         },
         {
+          "args": null,
           "kind": "FragmentSpread",
-          "name": "Details_conversation",
-          "args": null
+          "name": "Details_conversation"
         }
-      ]
+      ],
+      "storageKey": null
     },
     {
+      "args": null,
       "kind": "FragmentSpread",
-      "name": "Conversations_me",
-      "args": null
+      "name": "Conversations_me"
     }
-  ]
+  ],
+  "type": "Me"
 };
 (node as any).hash = 'a90b90a330544cae930dad6828652f3d';
 export default node;

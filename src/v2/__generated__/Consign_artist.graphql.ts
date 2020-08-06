@@ -1,4 +1,5 @@
 /* tslint:disable */
+/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -15,53 +16,53 @@ export type Consign_artist$key = {
 
 
 const node: ReaderFragment = {
-  "kind": "Fragment",
-  "name": "Consign_artist",
-  "type": "Artist",
-  "metadata": null,
   "argumentDefinitions": [],
+  "kind": "Fragment",
+  "metadata": null,
+  "name": "Consign_artist",
   "selections": [
     {
+      "args": null,
       "kind": "FragmentSpread",
-      "name": "ArtistConsignMeta_artist",
-      "args": null
+      "name": "ArtistConsignMeta_artist"
     },
     {
+      "args": null,
       "kind": "FragmentSpread",
-      "name": "ArtistConsignHeader_artist",
-      "args": null
+      "name": "ArtistConsignHeader_artist"
     },
     {
+      "args": null,
       "kind": "FragmentSpread",
-      "name": "ArtistConsignRecentlySold_artist",
-      "args": null
+      "name": "ArtistConsignRecentlySold_artist"
     },
     {
+      "args": null,
       "kind": "FragmentSpread",
-      "name": "ArtistConsignPageViews_artist",
-      "args": null
+      "name": "ArtistConsignPageViews_artist"
     },
     {
+      "args": null,
       "kind": "FragmentSpread",
-      "name": "ArtistConsignMarketTrends_artist",
-      "args": null
+      "name": "ArtistConsignMarketTrends_artist"
     },
     {
+      "args": null,
       "kind": "FragmentSpread",
-      "name": "ArtistConsignHowToSell_artist",
-      "args": null
+      "name": "ArtistConsignHowToSell_artist"
     },
     {
+      "args": null,
       "kind": "FragmentSpread",
-      "name": "ArtistConsignFAQ_artist",
-      "args": null
+      "name": "ArtistConsignFAQ_artist"
     },
     {
+      "args": null,
       "kind": "FragmentSpread",
-      "name": "ArtistConsignSellArt_artist",
-      "args": null
+      "name": "ArtistConsignSellArt_artist"
     }
-  ]
+  ],
+  "type": "Artist"
 };
 (node as any).hash = '9f723d20ef4f7c755733a715e40e129d';
 export default node;

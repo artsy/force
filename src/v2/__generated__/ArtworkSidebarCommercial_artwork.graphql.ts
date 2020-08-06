@@ -1,4 +1,5 @@
 /* tslint:disable */
+/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -36,144 +37,144 @@ export type ArtworkSidebarCommercial_artwork$key = {
 
 const node: ReaderFragment = (function(){
 var v0 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "internalID",
   "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
   "storageKey": null
 },
 v1 = {
-  "kind": "ScalarField",
   "alias": "is_acquireable",
-  "name": "isAcquireable",
   "args": null,
+  "kind": "ScalarField",
+  "name": "isAcquireable",
   "storageKey": null
 },
 v2 = {
-  "kind": "ScalarField",
   "alias": "is_offerable",
-  "name": "isOfferable",
   "args": null,
+  "kind": "ScalarField",
+  "name": "isOfferable",
   "storageKey": null
 },
 v3 = [
   {
-    "kind": "ScalarField",
     "alias": null,
-    "name": "display",
     "args": null,
+    "kind": "ScalarField",
+    "name": "display",
     "storageKey": null
   }
 ],
 v4 = {
-  "kind": "ScalarField",
   "alias": "sale_message",
-  "name": "saleMessage",
   "args": null,
+  "kind": "ScalarField",
+  "name": "saleMessage",
   "storageKey": null
 };
 return {
-  "kind": "Fragment",
-  "name": "ArtworkSidebarCommercial_artwork",
-  "type": "Artwork",
-  "metadata": null,
   "argumentDefinitions": [],
+  "kind": "Fragment",
+  "metadata": null,
+  "name": "ArtworkSidebarCommercial_artwork",
   "selections": [
     {
-      "kind": "ScalarField",
       "alias": null,
-      "name": "slug",
       "args": null,
+      "kind": "ScalarField",
+      "name": "slug",
       "storageKey": null
     },
     (v0/*: any*/),
     {
-      "kind": "ScalarField",
       "alias": "is_for_sale",
-      "name": "isForSale",
       "args": null,
+      "kind": "ScalarField",
+      "name": "isForSale",
       "storageKey": null
     },
     (v1/*: any*/),
     {
-      "kind": "ScalarField",
       "alias": "is_inquireable",
-      "name": "isInquireable",
       "args": null,
+      "kind": "ScalarField",
+      "name": "isInquireable",
       "storageKey": null
     },
     (v2/*: any*/),
     {
-      "kind": "LinkedField",
       "alias": null,
-      "name": "listPrice",
-      "storageKey": null,
       "args": null,
       "concreteType": null,
+      "kind": "LinkedField",
+      "name": "listPrice",
       "plural": false,
       "selections": [
         {
           "kind": "InlineFragment",
-          "type": "PriceRange",
-          "selections": (v3/*: any*/)
+          "selections": (v3/*: any*/),
+          "type": "PriceRange"
         },
         {
           "kind": "InlineFragment",
-          "type": "Money",
-          "selections": (v3/*: any*/)
+          "selections": (v3/*: any*/),
+          "type": "Money"
         }
-      ]
+      ],
+      "storageKey": null
     },
     {
-      "kind": "ScalarField",
       "alias": null,
-      "name": "priceIncludesTaxDisplay",
       "args": null,
+      "kind": "ScalarField",
+      "name": "priceIncludesTaxDisplay",
       "storageKey": null
     },
     (v4/*: any*/),
     {
-      "kind": "ScalarField",
       "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "shippingInfo",
-      "args": null,
       "storageKey": null
     },
     {
-      "kind": "ScalarField",
       "alias": null,
-      "name": "shippingOrigin",
       "args": null,
+      "kind": "ScalarField",
+      "name": "shippingOrigin",
       "storageKey": null
     },
     {
-      "kind": "LinkedField",
       "alias": "edition_sets",
-      "name": "editionSets",
-      "storageKey": null,
       "args": null,
       "concreteType": "EditionSet",
+      "kind": "LinkedField",
+      "name": "editionSets",
       "plural": true,
       "selections": [
         (v0/*: any*/),
         {
-          "kind": "ScalarField",
           "alias": null,
-          "name": "id",
           "args": null,
+          "kind": "ScalarField",
+          "name": "id",
           "storageKey": null
         },
         (v1/*: any*/),
         (v2/*: any*/),
         (v4/*: any*/),
         {
+          "args": null,
           "kind": "FragmentSpread",
-          "name": "ArtworkSidebarSizeInfo_piece",
-          "args": null
+          "name": "ArtworkSidebarSizeInfo_piece"
         }
-      ]
+      ],
+      "storageKey": null
     }
-  ]
+  ],
+  "type": "Artwork"
 };
 })();
 (node as any).hash = '4b27f5f48c80ad681cc7752ca8fe9638';

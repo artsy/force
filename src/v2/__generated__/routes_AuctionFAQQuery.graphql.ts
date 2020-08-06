@@ -1,4 +1,5 @@
 /* tslint:disable */
+/* eslint-disable */
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -49,66 +50,62 @@ fragment AuctionFAQ_viewer on Viewer {
 const node: ConcreteRequest = (function(){
 var v0 = [
   {
-    "kind": "ScalarField",
     "alias": null,
-    "name": "content",
     "args": null,
+    "kind": "ScalarField",
+    "name": "content",
     "storageKey": null
   },
   {
-    "kind": "ScalarField",
     "alias": null,
-    "name": "id",
     "args": null,
+    "kind": "ScalarField",
+    "name": "id",
     "storageKey": null
   }
 ];
 return {
-  "kind": "Request",
   "fragment": {
-    "kind": "Fragment",
-    "name": "routes_AuctionFAQQuery",
-    "type": "Query",
-    "metadata": null,
     "argumentDefinitions": [],
+    "kind": "Fragment",
+    "metadata": null,
+    "name": "routes_AuctionFAQQuery",
     "selections": [
       {
-        "kind": "LinkedField",
         "alias": null,
-        "name": "viewer",
-        "storageKey": null,
         "args": null,
         "concreteType": "Viewer",
+        "kind": "LinkedField",
+        "name": "viewer",
         "plural": false,
         "selections": [
           {
+            "args": null,
             "kind": "FragmentSpread",
-            "name": "AuctionFAQ_viewer",
-            "args": null
+            "name": "AuctionFAQ_viewer"
           }
-        ]
+        ],
+        "storageKey": null
       }
-    ]
+    ],
+    "type": "Query"
   },
+  "kind": "Request",
   "operation": {
+    "argumentDefinitions": [],
     "kind": "Operation",
     "name": "routes_AuctionFAQQuery",
-    "argumentDefinitions": [],
     "selections": [
       {
-        "kind": "LinkedField",
         "alias": null,
-        "name": "viewer",
-        "storageKey": null,
         "args": null,
         "concreteType": "Viewer",
+        "kind": "LinkedField",
+        "name": "viewer",
         "plural": false,
         "selections": [
           {
-            "kind": "LinkedField",
             "alias": "bidding",
-            "name": "staticContent",
-            "storageKey": "staticContent(id:\"how-auctions-work-bidding\")",
             "args": [
               {
                 "kind": "Literal",
@@ -117,14 +114,14 @@ return {
               }
             ],
             "concreteType": "StaticContent",
+            "kind": "LinkedField",
+            "name": "staticContent",
             "plural": false,
-            "selections": (v0/*: any*/)
+            "selections": (v0/*: any*/),
+            "storageKey": "staticContent(id:\"how-auctions-work-bidding\")"
           },
           {
-            "kind": "LinkedField",
             "alias": "buyersPremiumTaxesAndFees",
-            "name": "staticContent",
-            "storageKey": "staticContent(id:\"how-auctions-work-buyers-premium-taxes-and-fees\")",
             "args": [
               {
                 "kind": "Literal",
@@ -133,14 +130,14 @@ return {
               }
             ],
             "concreteType": "StaticContent",
+            "kind": "LinkedField",
+            "name": "staticContent",
             "plural": false,
-            "selections": (v0/*: any*/)
+            "selections": (v0/*: any*/),
+            "storageKey": "staticContent(id:\"how-auctions-work-buyers-premium-taxes-and-fees\")"
           },
           {
-            "kind": "LinkedField",
             "alias": "paymentsAndShipping",
-            "name": "staticContent",
-            "storageKey": "staticContent(id:\"how-auctions-work-payments-and-shipping\")",
             "args": [
               {
                 "kind": "Literal",
@@ -149,14 +146,14 @@ return {
               }
             ],
             "concreteType": "StaticContent",
+            "kind": "LinkedField",
+            "name": "staticContent",
             "plural": false,
-            "selections": (v0/*: any*/)
+            "selections": (v0/*: any*/),
+            "storageKey": "staticContent(id:\"how-auctions-work-payments-and-shipping\")"
           },
           {
-            "kind": "LinkedField",
             "alias": "emailsAndAlerts",
-            "name": "staticContent",
-            "storageKey": "staticContent(id:\"how-auctions-work-emails-and-alerts\")",
             "args": [
               {
                 "kind": "Literal",
@@ -165,14 +162,14 @@ return {
               }
             ],
             "concreteType": "StaticContent",
+            "kind": "LinkedField",
+            "name": "staticContent",
             "plural": false,
-            "selections": (v0/*: any*/)
+            "selections": (v0/*: any*/),
+            "storageKey": "staticContent(id:\"how-auctions-work-emails-and-alerts\")"
           },
           {
-            "kind": "LinkedField",
             "alias": "conditionsOfSale",
-            "name": "staticContent",
-            "storageKey": "staticContent(id:\"how-auctions-work-conditions-of-sale\")",
             "args": [
               {
                 "kind": "Literal",
@@ -181,19 +178,23 @@ return {
               }
             ],
             "concreteType": "StaticContent",
+            "kind": "LinkedField",
+            "name": "staticContent",
             "plural": false,
-            "selections": (v0/*: any*/)
+            "selections": (v0/*: any*/),
+            "storageKey": "staticContent(id:\"how-auctions-work-conditions-of-sale\")"
           }
-        ]
+        ],
+        "storageKey": null
       }
     ]
   },
   "params": {
-    "operationKind": "query",
-    "name": "routes_AuctionFAQQuery",
     "id": null,
-    "text": "query routes_AuctionFAQQuery {\n  viewer {\n    ...AuctionFAQ_viewer\n  }\n}\n\nfragment AuctionFAQ_viewer on Viewer {\n  bidding: staticContent(id: \"how-auctions-work-bidding\") {\n    content\n    id\n  }\n  buyersPremiumTaxesAndFees: staticContent(id: \"how-auctions-work-buyers-premium-taxes-and-fees\") {\n    content\n    id\n  }\n  paymentsAndShipping: staticContent(id: \"how-auctions-work-payments-and-shipping\") {\n    content\n    id\n  }\n  emailsAndAlerts: staticContent(id: \"how-auctions-work-emails-and-alerts\") {\n    content\n    id\n  }\n  conditionsOfSale: staticContent(id: \"how-auctions-work-conditions-of-sale\") {\n    content\n    id\n  }\n}\n",
-    "metadata": {}
+    "metadata": {},
+    "name": "routes_AuctionFAQQuery",
+    "operationKind": "query",
+    "text": "query routes_AuctionFAQQuery {\n  viewer {\n    ...AuctionFAQ_viewer\n  }\n}\n\nfragment AuctionFAQ_viewer on Viewer {\n  bidding: staticContent(id: \"how-auctions-work-bidding\") {\n    content\n    id\n  }\n  buyersPremiumTaxesAndFees: staticContent(id: \"how-auctions-work-buyers-premium-taxes-and-fees\") {\n    content\n    id\n  }\n  paymentsAndShipping: staticContent(id: \"how-auctions-work-payments-and-shipping\") {\n    content\n    id\n  }\n  emailsAndAlerts: staticContent(id: \"how-auctions-work-emails-and-alerts\") {\n    content\n    id\n  }\n  conditionsOfSale: staticContent(id: \"how-auctions-work-conditions-of-sale\") {\n    content\n    id\n  }\n}\n"
   }
 };
 })();

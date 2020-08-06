@@ -1,12 +1,13 @@
 /* tslint:disable */
+/* eslint-disable */
 
 import { ConcreteRequest } from "relay-runtime";
 export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
 export type CommerceAddInitialOfferToOrderInput = {
-    readonly amountCents: number;
-    readonly clientMutationId?: string | null;
-    readonly note?: string | null;
-    readonly orderId: string;
+    amountCents: number;
+    clientMutationId?: string | null;
+    note?: string | null;
+    orderId: string;
 };
 export type OfferMutationVariables = {
     input: CommerceAddInitialOfferToOrderInput;
@@ -82,10 +83,10 @@ mutation OfferMutation(
 const node: ConcreteRequest = (function(){
 var v0 = [
   {
+    "defaultValue": null,
     "kind": "LocalArgument",
     "name": "input",
-    "type": "CommerceAddInitialOfferToOrderInput!",
-    "defaultValue": null
+    "type": "CommerceAddInitialOfferToOrderInput!"
   }
 ],
 v1 = [
@@ -96,138 +97,132 @@ v1 = [
   }
 ],
 v2 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "__typename",
   "args": null,
+  "kind": "ScalarField",
+  "name": "__typename",
   "storageKey": null
 },
 v3 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "internalID",
   "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
   "storageKey": null
 },
 v4 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "mode",
   "args": null,
+  "kind": "ScalarField",
+  "name": "mode",
   "storageKey": null
 },
 v5 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "totalListPrice",
   "args": null,
+  "kind": "ScalarField",
+  "name": "totalListPrice",
   "storageKey": null
 },
 v6 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "totalListPriceCents",
   "args": null,
+  "kind": "ScalarField",
+  "name": "totalListPriceCents",
   "storageKey": null
 },
 v7 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "amountCents",
   "args": null,
+  "kind": "ScalarField",
+  "name": "amountCents",
   "storageKey": null
 },
 v8 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "note",
   "args": null,
+  "kind": "ScalarField",
+  "name": "note",
   "storageKey": null
 },
 v9 = {
   "kind": "InlineFragment",
-  "type": "CommerceOrderWithMutationFailure",
   "selections": [
     {
-      "kind": "LinkedField",
       "alias": null,
-      "name": "error",
-      "storageKey": null,
       "args": null,
       "concreteType": "CommerceApplicationError",
+      "kind": "LinkedField",
+      "name": "error",
       "plural": false,
       "selections": [
         {
-          "kind": "ScalarField",
           "alias": null,
+          "args": null,
+          "kind": "ScalarField",
           "name": "type",
-          "args": null,
           "storageKey": null
         },
         {
-          "kind": "ScalarField",
           "alias": null,
+          "args": null,
+          "kind": "ScalarField",
           "name": "code",
-          "args": null,
           "storageKey": null
         },
         {
-          "kind": "ScalarField",
           "alias": null,
-          "name": "data",
           "args": null,
+          "kind": "ScalarField",
+          "name": "data",
           "storageKey": null
         }
-      ]
+      ],
+      "storageKey": null
     }
-  ]
+  ],
+  "type": "CommerceOrderWithMutationFailure"
 },
 v10 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "id",
   "args": null,
+  "kind": "ScalarField",
+  "name": "id",
   "storageKey": null
 };
 return {
-  "kind": "Request",
   "fragment": {
-    "kind": "Fragment",
-    "name": "OfferMutation",
-    "type": "Mutation",
-    "metadata": null,
     "argumentDefinitions": (v0/*: any*/),
+    "kind": "Fragment",
+    "metadata": null,
+    "name": "OfferMutation",
     "selections": [
       {
-        "kind": "LinkedField",
         "alias": null,
-        "name": "commerceAddInitialOfferToOrder",
-        "storageKey": null,
         "args": (v1/*: any*/),
         "concreteType": "CommerceAddInitialOfferToOrderPayload",
+        "kind": "LinkedField",
+        "name": "commerceAddInitialOfferToOrder",
         "plural": false,
         "selections": [
           {
-            "kind": "LinkedField",
             "alias": null,
-            "name": "orderOrError",
-            "storageKey": null,
             "args": null,
             "concreteType": null,
+            "kind": "LinkedField",
+            "name": "orderOrError",
             "plural": false,
             "selections": [
               {
                 "kind": "InlineFragment",
-                "type": "CommerceOrderWithMutationSuccess",
                 "selections": [
                   (v2/*: any*/),
                   {
-                    "kind": "LinkedField",
                     "alias": null,
-                    "name": "order",
-                    "storageKey": null,
                     "args": null,
                     "concreteType": null,
+                    "kind": "LinkedField",
+                    "name": "order",
                     "plural": false,
                     "selections": [
                       (v3/*: any*/),
@@ -236,71 +231,73 @@ return {
                       (v6/*: any*/),
                       {
                         "kind": "InlineFragment",
-                        "type": "CommerceOfferOrder",
                         "selections": [
                           {
-                            "kind": "LinkedField",
                             "alias": null,
-                            "name": "myLastOffer",
-                            "storageKey": null,
                             "args": null,
                             "concreteType": "CommerceOffer",
+                            "kind": "LinkedField",
+                            "name": "myLastOffer",
                             "plural": false,
                             "selections": [
                               (v3/*: any*/),
                               (v7/*: any*/),
                               (v8/*: any*/)
-                            ]
+                            ],
+                            "storageKey": null
                           }
-                        ]
+                        ],
+                        "type": "CommerceOfferOrder"
                       }
-                    ]
+                    ],
+                    "storageKey": null
                   }
-                ]
+                ],
+                "type": "CommerceOrderWithMutationSuccess"
               },
               (v9/*: any*/)
-            ]
+            ],
+            "storageKey": null
           }
-        ]
+        ],
+        "storageKey": null
       }
-    ]
+    ],
+    "type": "Mutation"
   },
+  "kind": "Request",
   "operation": {
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "OfferMutation",
-    "argumentDefinitions": (v0/*: any*/),
     "selections": [
       {
-        "kind": "LinkedField",
         "alias": null,
-        "name": "commerceAddInitialOfferToOrder",
-        "storageKey": null,
         "args": (v1/*: any*/),
         "concreteType": "CommerceAddInitialOfferToOrderPayload",
+        "kind": "LinkedField",
+        "name": "commerceAddInitialOfferToOrder",
         "plural": false,
         "selections": [
           {
-            "kind": "LinkedField",
             "alias": null,
-            "name": "orderOrError",
-            "storageKey": null,
             "args": null,
             "concreteType": null,
+            "kind": "LinkedField",
+            "name": "orderOrError",
             "plural": false,
             "selections": [
               (v2/*: any*/),
               {
                 "kind": "InlineFragment",
-                "type": "CommerceOrderWithMutationSuccess",
                 "selections": [
                   (v2/*: any*/),
                   {
-                    "kind": "LinkedField",
                     "alias": null,
-                    "name": "order",
-                    "storageKey": null,
                     "args": null,
                     "concreteType": null,
+                    "kind": "LinkedField",
+                    "name": "order",
                     "plural": false,
                     "selections": [
                       (v2/*: any*/),
@@ -311,42 +308,46 @@ return {
                       (v10/*: any*/),
                       {
                         "kind": "InlineFragment",
-                        "type": "CommerceOfferOrder",
                         "selections": [
                           {
-                            "kind": "LinkedField",
                             "alias": null,
-                            "name": "myLastOffer",
-                            "storageKey": null,
                             "args": null,
                             "concreteType": "CommerceOffer",
+                            "kind": "LinkedField",
+                            "name": "myLastOffer",
                             "plural": false,
                             "selections": [
                               (v3/*: any*/),
                               (v7/*: any*/),
                               (v8/*: any*/),
                               (v10/*: any*/)
-                            ]
+                            ],
+                            "storageKey": null
                           }
-                        ]
+                        ],
+                        "type": "CommerceOfferOrder"
                       }
-                    ]
+                    ],
+                    "storageKey": null
                   }
-                ]
+                ],
+                "type": "CommerceOrderWithMutationSuccess"
               },
               (v9/*: any*/)
-            ]
+            ],
+            "storageKey": null
           }
-        ]
+        ],
+        "storageKey": null
       }
     ]
   },
   "params": {
-    "operationKind": "mutation",
-    "name": "OfferMutation",
     "id": null,
-    "text": "mutation OfferMutation(\n  $input: CommerceAddInitialOfferToOrderInput!\n) {\n  commerceAddInitialOfferToOrder(input: $input) {\n    orderOrError {\n      __typename\n      ... on CommerceOrderWithMutationSuccess {\n        __typename\n        order {\n          __typename\n          internalID\n          mode\n          totalListPrice\n          totalListPriceCents\n          ... on CommerceOfferOrder {\n            myLastOffer {\n              internalID\n              amountCents\n              note\n              id\n            }\n          }\n          id\n        }\n      }\n      ... on CommerceOrderWithMutationFailure {\n        error {\n          type\n          code\n          data\n        }\n      }\n    }\n  }\n}\n",
-    "metadata": {}
+    "metadata": {},
+    "name": "OfferMutation",
+    "operationKind": "mutation",
+    "text": "mutation OfferMutation(\n  $input: CommerceAddInitialOfferToOrderInput!\n) {\n  commerceAddInitialOfferToOrder(input: $input) {\n    orderOrError {\n      __typename\n      ... on CommerceOrderWithMutationSuccess {\n        __typename\n        order {\n          __typename\n          internalID\n          mode\n          totalListPrice\n          totalListPriceCents\n          ... on CommerceOfferOrder {\n            myLastOffer {\n              internalID\n              amountCents\n              note\n              id\n            }\n          }\n          id\n        }\n      }\n      ... on CommerceOrderWithMutationFailure {\n        error {\n          type\n          code\n          data\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();

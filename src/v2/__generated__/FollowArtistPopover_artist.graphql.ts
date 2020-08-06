@@ -1,4 +1,5 @@
 /* tslint:disable */
+/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -25,26 +26,21 @@ export type FollowArtistPopover_artist$key = {
 
 
 const node: ReaderFragment = {
-  "kind": "Fragment",
-  "name": "FollowArtistPopover_artist",
-  "type": "Artist",
-  "metadata": null,
   "argumentDefinitions": [],
+  "kind": "Fragment",
+  "metadata": null,
+  "name": "FollowArtistPopover_artist",
   "selections": [
     {
-      "kind": "LinkedField",
       "alias": null,
-      "name": "related",
-      "storageKey": null,
       "args": null,
       "concreteType": "ArtistRelatedData",
+      "kind": "LinkedField",
+      "name": "related",
       "plural": false,
       "selections": [
         {
-          "kind": "LinkedField",
           "alias": null,
-          "name": "suggestedConnection",
-          "storageKey": "suggestedConnection(excludeFollowedArtists:true,first:3)",
           "args": [
             {
               "kind": "Literal",
@@ -58,54 +54,59 @@ const node: ReaderFragment = {
             }
           ],
           "concreteType": "ArtistConnection",
+          "kind": "LinkedField",
+          "name": "suggestedConnection",
           "plural": false,
           "selections": [
             {
-              "kind": "LinkedField",
               "alias": null,
-              "name": "edges",
-              "storageKey": null,
               "args": null,
               "concreteType": "ArtistEdge",
+              "kind": "LinkedField",
+              "name": "edges",
               "plural": true,
               "selections": [
                 {
-                  "kind": "LinkedField",
                   "alias": null,
-                  "name": "node",
-                  "storageKey": null,
                   "args": null,
                   "concreteType": "Artist",
+                  "kind": "LinkedField",
+                  "name": "node",
                   "plural": false,
                   "selections": [
                     {
-                      "kind": "ScalarField",
                       "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
                       "name": "id",
-                      "args": null,
                       "storageKey": null
                     },
                     {
-                      "kind": "ScalarField",
                       "alias": null,
-                      "name": "internalID",
                       "args": null,
+                      "kind": "ScalarField",
+                      "name": "internalID",
                       "storageKey": null
                     },
                     {
+                      "args": null,
                       "kind": "FragmentSpread",
-                      "name": "FollowArtistPopoverRow_artist",
-                      "args": null
+                      "name": "FollowArtistPopoverRow_artist"
                     }
-                  ]
+                  ],
+                  "storageKey": null
                 }
-              ]
+              ],
+              "storageKey": null
             }
-          ]
+          ],
+          "storageKey": "suggestedConnection(excludeFollowedArtists:true,first:3)"
         }
-      ]
+      ],
+      "storageKey": null
     }
-  ]
+  ],
+  "type": "Artist"
 };
 (node as any).hash = '90657ea28fda4ad1f17942932ad1d208';
 export default node;

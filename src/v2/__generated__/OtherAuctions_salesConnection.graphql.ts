@@ -1,4 +1,5 @@
 /* tslint:disable */
+/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -19,40 +20,40 @@ export type OtherAuctions_salesConnection$key = {
 
 
 const node: ReaderFragment = {
-  "kind": "Fragment",
-  "name": "OtherAuctions_salesConnection",
-  "type": "SaleConnection",
-  "metadata": null,
   "argumentDefinitions": [],
+  "kind": "Fragment",
+  "metadata": null,
+  "name": "OtherAuctions_salesConnection",
   "selections": [
     {
-      "kind": "LinkedField",
       "alias": null,
-      "name": "edges",
-      "storageKey": null,
       "args": null,
       "concreteType": "SaleEdge",
+      "kind": "LinkedField",
+      "name": "edges",
       "plural": true,
       "selections": [
         {
-          "kind": "LinkedField",
           "alias": null,
-          "name": "node",
-          "storageKey": null,
           "args": null,
           "concreteType": "Sale",
+          "kind": "LinkedField",
+          "name": "node",
           "plural": false,
           "selections": [
             {
+              "args": null,
               "kind": "FragmentSpread",
-              "name": "AuctionCard_sale",
-              "args": null
+              "name": "AuctionCard_sale"
             }
-          ]
+          ],
+          "storageKey": null
         }
-      ]
+      ],
+      "storageKey": null
     }
-  ]
+  ],
+  "type": "SaleConnection"
 };
 (node as any).hash = 'c2907770ffe0232df7c5a03b3a42b7d9';
 export default node;

@@ -1,4 +1,5 @@
 /* tslint:disable */
+/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -39,92 +40,92 @@ var v0 = [
 ],
 v1 = [
   {
-    "kind": "ScalarField",
     "alias": null,
-    "name": "href",
     "args": null,
+    "kind": "ScalarField",
+    "name": "href",
     "storageKey": null
   },
   {
-    "kind": "ScalarField",
     "alias": null,
-    "name": "name",
     "args": null,
+    "kind": "ScalarField",
+    "name": "name",
     "storageKey": null
   }
 ];
 return {
-  "kind": "Fragment",
-  "name": "GeneRelatedLinks_gene",
-  "type": "Gene",
-  "metadata": null,
   "argumentDefinitions": [],
+  "kind": "Fragment",
+  "metadata": null,
+  "name": "GeneRelatedLinks_gene",
   "selections": [
     {
-      "kind": "LinkedField",
       "alias": null,
-      "name": "similar",
-      "storageKey": "similar(first:10)",
       "args": (v0/*: any*/),
       "concreteType": "GeneConnection",
+      "kind": "LinkedField",
+      "name": "similar",
       "plural": false,
       "selections": [
         {
-          "kind": "LinkedField",
           "alias": null,
-          "name": "edges",
-          "storageKey": null,
           "args": null,
           "concreteType": "GeneEdge",
+          "kind": "LinkedField",
+          "name": "edges",
           "plural": true,
           "selections": [
             {
-              "kind": "LinkedField",
               "alias": null,
-              "name": "node",
-              "storageKey": null,
               "args": null,
               "concreteType": "Gene",
+              "kind": "LinkedField",
+              "name": "node",
               "plural": false,
-              "selections": (v1/*: any*/)
+              "selections": (v1/*: any*/),
+              "storageKey": null
             }
-          ]
+          ],
+          "storageKey": null
         }
-      ]
+      ],
+      "storageKey": "similar(first:10)"
     },
     {
-      "kind": "LinkedField",
       "alias": "artists",
-      "name": "artistsConnection",
-      "storageKey": "artistsConnection(first:10)",
       "args": (v0/*: any*/),
       "concreteType": "ArtistConnection",
+      "kind": "LinkedField",
+      "name": "artistsConnection",
       "plural": false,
       "selections": [
         {
-          "kind": "LinkedField",
           "alias": null,
-          "name": "edges",
-          "storageKey": null,
           "args": null,
           "concreteType": "ArtistEdge",
+          "kind": "LinkedField",
+          "name": "edges",
           "plural": true,
           "selections": [
             {
-              "kind": "LinkedField",
               "alias": null,
-              "name": "node",
-              "storageKey": null,
               "args": null,
               "concreteType": "Artist",
+              "kind": "LinkedField",
+              "name": "node",
               "plural": false,
-              "selections": (v1/*: any*/)
+              "selections": (v1/*: any*/),
+              "storageKey": null
             }
-          ]
+          ],
+          "storageKey": null
         }
-      ]
+      ],
+      "storageKey": "artistsConnection(first:10)"
     }
-  ]
+  ],
+  "type": "Gene"
 };
 })();
 (node as any).hash = '16d8882b604595dcffe85c9f3fdda533';

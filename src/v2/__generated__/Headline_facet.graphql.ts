@@ -1,4 +1,5 @@
 /* tslint:disable */
+/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -17,31 +18,31 @@ export type Headline_facet$key = {
 const node: ReaderFragment = (function(){
 var v0 = [
   {
-    "kind": "ScalarField",
     "alias": null,
-    "name": "name",
     "args": null,
+    "kind": "ScalarField",
+    "name": "name",
     "storageKey": null
   }
 ];
 return {
-  "kind": "Fragment",
-  "name": "Headline_facet",
-  "type": "ArtworkFilterFacet",
-  "metadata": null,
   "argumentDefinitions": [],
+  "kind": "Fragment",
+  "metadata": null,
+  "name": "Headline_facet",
   "selections": [
     {
       "kind": "InlineFragment",
-      "type": "Tag",
-      "selections": (v0/*: any*/)
+      "selections": (v0/*: any*/),
+      "type": "Tag"
     },
     {
       "kind": "InlineFragment",
-      "type": "Gene",
-      "selections": (v0/*: any*/)
+      "selections": (v0/*: any*/),
+      "type": "Gene"
     }
-  ]
+  ],
+  "type": "ArtworkFilterFacet"
 };
 })();
 (node as any).hash = 'cc39f7348e589619f9da1addd80e0022';

@@ -1,10 +1,11 @@
 /* tslint:disable */
+/* eslint-disable */
 
 import { ConcreteRequest } from "relay-runtime";
 export type DisableSecondFactorInput = {
-    readonly clientMutationId?: string | null;
-    readonly password?: string | null;
-    readonly secondFactorID: string;
+    clientMutationId?: string | null;
+    password?: string | null;
+    secondFactorID: string;
 };
 export type DisableSecondFactorMutationVariables = {
     input: DisableSecondFactorInput;
@@ -81,10 +82,10 @@ mutation DisableSecondFactorMutation(
 const node: ConcreteRequest = (function(){
 var v0 = [
   {
+    "defaultValue": null,
     "kind": "LocalArgument",
     "name": "input",
-    "type": "DisableSecondFactorInput!",
-    "defaultValue": null
+    "type": "DisableSecondFactorInput!"
   }
 ],
 v1 = [
@@ -95,10 +96,10 @@ v1 = [
   }
 ],
 v2 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "__typename",
   "args": null,
+  "kind": "ScalarField",
+  "name": "__typename",
   "storageKey": null
 },
 v3 = [
@@ -106,121 +107,121 @@ v3 = [
 ],
 v4 = {
   "kind": "InlineFragment",
-  "type": "AppSecondFactor",
-  "selections": (v3/*: any*/)
+  "selections": (v3/*: any*/),
+  "type": "AppSecondFactor"
 },
 v5 = {
   "kind": "InlineFragment",
-  "type": "SmsSecondFactor",
-  "selections": (v3/*: any*/)
+  "selections": (v3/*: any*/),
+  "type": "SmsSecondFactor"
 },
 v6 = {
   "kind": "InlineFragment",
-  "type": "Errors",
   "selections": [
     (v2/*: any*/),
     {
-      "kind": "LinkedField",
       "alias": null,
-      "name": "errors",
-      "storageKey": null,
       "args": null,
       "concreteType": "Error",
+      "kind": "LinkedField",
+      "name": "errors",
       "plural": true,
       "selections": [
         {
-          "kind": "ScalarField",
           "alias": null,
-          "name": "message",
           "args": null,
+          "kind": "ScalarField",
+          "name": "message",
           "storageKey": null
         },
         {
-          "kind": "ScalarField",
           "alias": null,
-          "name": "code",
           "args": null,
+          "kind": "ScalarField",
+          "name": "code",
           "storageKey": null
         }
-      ]
+      ],
+      "storageKey": null
     }
-  ]
+  ],
+  "type": "Errors"
 };
 return {
-  "kind": "Request",
   "fragment": {
-    "kind": "Fragment",
-    "name": "DisableSecondFactorMutation",
-    "type": "Mutation",
-    "metadata": null,
     "argumentDefinitions": (v0/*: any*/),
+    "kind": "Fragment",
+    "metadata": null,
+    "name": "DisableSecondFactorMutation",
     "selections": [
       {
-        "kind": "LinkedField",
         "alias": null,
-        "name": "disableSecondFactor",
-        "storageKey": null,
         "args": (v1/*: any*/),
         "concreteType": "DisableSecondFactorPayload",
+        "kind": "LinkedField",
+        "name": "disableSecondFactor",
         "plural": false,
         "selections": [
           {
-            "kind": "LinkedField",
             "alias": null,
-            "name": "secondFactorOrErrors",
-            "storageKey": null,
             "args": null,
             "concreteType": null,
+            "kind": "LinkedField",
+            "name": "secondFactorOrErrors",
             "plural": false,
             "selections": [
               (v4/*: any*/),
               (v5/*: any*/),
               (v6/*: any*/)
-            ]
+            ],
+            "storageKey": null
           }
-        ]
+        ],
+        "storageKey": null
       }
-    ]
+    ],
+    "type": "Mutation"
   },
+  "kind": "Request",
   "operation": {
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "DisableSecondFactorMutation",
-    "argumentDefinitions": (v0/*: any*/),
     "selections": [
       {
-        "kind": "LinkedField",
         "alias": null,
-        "name": "disableSecondFactor",
-        "storageKey": null,
         "args": (v1/*: any*/),
         "concreteType": "DisableSecondFactorPayload",
+        "kind": "LinkedField",
+        "name": "disableSecondFactor",
         "plural": false,
         "selections": [
           {
-            "kind": "LinkedField",
             "alias": null,
-            "name": "secondFactorOrErrors",
-            "storageKey": null,
             "args": null,
             "concreteType": null,
+            "kind": "LinkedField",
+            "name": "secondFactorOrErrors",
             "plural": false,
             "selections": [
               (v2/*: any*/),
               (v4/*: any*/),
               (v5/*: any*/),
               (v6/*: any*/)
-            ]
+            ],
+            "storageKey": null
           }
-        ]
+        ],
+        "storageKey": null
       }
     ]
   },
   "params": {
-    "operationKind": "mutation",
-    "name": "DisableSecondFactorMutation",
     "id": null,
-    "text": "mutation DisableSecondFactorMutation(\n  $input: DisableSecondFactorInput!\n) {\n  disableSecondFactor(input: $input) {\n    secondFactorOrErrors {\n      __typename\n      ... on AppSecondFactor {\n        __typename\n      }\n      ... on SmsSecondFactor {\n        __typename\n      }\n      ... on Errors {\n        __typename\n        errors {\n          message\n          code\n        }\n      }\n    }\n  }\n}\n",
-    "metadata": {}
+    "metadata": {},
+    "name": "DisableSecondFactorMutation",
+    "operationKind": "mutation",
+    "text": "mutation DisableSecondFactorMutation(\n  $input: DisableSecondFactorInput!\n) {\n  disableSecondFactor(input: $input) {\n    secondFactorOrErrors {\n      __typename\n      ... on AppSecondFactor {\n        __typename\n      }\n      ... on SmsSecondFactor {\n        __typename\n      }\n      ... on Errors {\n        __typename\n        errors {\n          message\n          code\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();

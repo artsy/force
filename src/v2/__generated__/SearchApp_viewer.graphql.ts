@@ -1,8 +1,9 @@
 /* tslint:disable */
+/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
-export type SearchAggregation = "TYPE" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
+export type SearchAggregation = "TYPE" | "%future added value";
 export type SearchApp_viewer = {
     readonly searchConnection: {
         readonly aggregations: ReadonlyArray<{
@@ -37,24 +38,20 @@ export type SearchApp_viewer$key = {
 
 
 const node: ReaderFragment = {
-  "kind": "Fragment",
-  "name": "SearchApp_viewer",
-  "type": "Viewer",
-  "metadata": null,
   "argumentDefinitions": [
     {
+      "defaultValue": "",
       "kind": "LocalArgument",
       "name": "term",
-      "type": "String!",
-      "defaultValue": ""
+      "type": "String!"
     }
   ],
+  "kind": "Fragment",
+  "metadata": null,
+  "name": "SearchApp_viewer",
   "selections": [
     {
-      "kind": "LinkedField",
       "alias": null,
-      "name": "searchConnection",
-      "storageKey": null,
       "args": [
         {
           "kind": "Literal",
@@ -75,112 +72,112 @@ const node: ReaderFragment = {
         }
       ],
       "concreteType": "SearchableConnection",
+      "kind": "LinkedField",
+      "name": "searchConnection",
       "plural": false,
       "selections": [
         {
-          "kind": "LinkedField",
           "alias": null,
-          "name": "aggregations",
-          "storageKey": null,
           "args": null,
           "concreteType": "SearchAggregationResults",
+          "kind": "LinkedField",
+          "name": "aggregations",
           "plural": true,
           "selections": [
             {
-              "kind": "ScalarField",
               "alias": null,
-              "name": "slice",
               "args": null,
+              "kind": "ScalarField",
+              "name": "slice",
               "storageKey": null
             },
             {
-              "kind": "LinkedField",
               "alias": null,
-              "name": "counts",
-              "storageKey": null,
               "args": null,
               "concreteType": "AggregationCount",
+              "kind": "LinkedField",
+              "name": "counts",
               "plural": true,
               "selections": [
                 {
-                  "kind": "ScalarField",
                   "alias": null,
-                  "name": "count",
                   "args": null,
+                  "kind": "ScalarField",
+                  "name": "count",
                   "storageKey": null
                 },
                 {
-                  "kind": "ScalarField",
                   "alias": null,
-                  "name": "name",
                   "args": null,
+                  "kind": "ScalarField",
+                  "name": "name",
                   "storageKey": null
                 }
-              ]
+              ],
+              "storageKey": null
             }
-          ]
+          ],
+          "storageKey": null
         },
         {
-          "kind": "LinkedField",
           "alias": null,
-          "name": "edges",
-          "storageKey": null,
           "args": null,
           "concreteType": "SearchableEdge",
+          "kind": "LinkedField",
+          "name": "edges",
           "plural": true,
           "selections": [
             {
-              "kind": "LinkedField",
               "alias": null,
-              "name": "node",
-              "storageKey": null,
               "args": null,
               "concreteType": null,
+              "kind": "LinkedField",
+              "name": "node",
               "plural": false,
               "selections": [
                 {
                   "kind": "InlineFragment",
-                  "type": "SearchableItem",
                   "selections": [
                     {
-                      "kind": "ScalarField",
                       "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
                       "name": "slug",
-                      "args": null,
                       "storageKey": null
                     },
                     {
-                      "kind": "ScalarField",
                       "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
                       "name": "displayLabel",
-                      "args": null,
                       "storageKey": null
                     },
                     {
-                      "kind": "ScalarField",
                       "alias": null,
-                      "name": "displayType",
                       "args": null,
+                      "kind": "ScalarField",
+                      "name": "displayType",
                       "storageKey": null
                     }
-                  ]
+                  ],
+                  "type": "SearchableItem"
                 }
-              ]
+              ],
+              "storageKey": null
             }
-          ]
+          ],
+          "storageKey": null
         },
         {
+          "args": null,
           "kind": "FragmentSpread",
-          "name": "NavigationTabs_searchableConnection",
-          "args": null
+          "name": "NavigationTabs_searchableConnection"
         }
-      ]
+      ],
+      "storageKey": null
     },
     {
-      "kind": "LinkedField",
       "alias": null,
-      "name": "artworksConnection",
-      "storageKey": null,
       "args": [
         {
           "kind": "Literal",
@@ -201,29 +198,33 @@ const node: ReaderFragment = {
         }
       ],
       "concreteType": "FilterArtworksConnection",
+      "kind": "LinkedField",
+      "name": "artworksConnection",
       "plural": false,
       "selections": [
         {
-          "kind": "LinkedField",
           "alias": null,
-          "name": "counts",
-          "storageKey": null,
           "args": null,
           "concreteType": "FilterArtworksCounts",
+          "kind": "LinkedField",
+          "name": "counts",
           "plural": false,
           "selections": [
             {
-              "kind": "ScalarField",
               "alias": null,
-              "name": "total",
               "args": null,
+              "kind": "ScalarField",
+              "name": "total",
               "storageKey": null
             }
-          ]
+          ],
+          "storageKey": null
         }
-      ]
+      ],
+      "storageKey": null
     }
-  ]
+  ],
+  "type": "Viewer"
 };
 (node as any).hash = '35e201abf8d672d14777050f0cca8a84';
 export default node;

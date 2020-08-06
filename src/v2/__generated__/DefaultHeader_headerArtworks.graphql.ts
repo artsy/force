@@ -1,4 +1,5 @@
 /* tslint:disable */
+/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -32,66 +33,59 @@ export type DefaultHeader_headerArtworks$key = {
 const node: ReaderFragment = (function(){
 var v0 = [
   {
-    "kind": "ScalarField",
     "alias": null,
-    "name": "width",
     "args": null,
+    "kind": "ScalarField",
+    "name": "width",
     "storageKey": null
   },
   {
-    "kind": "ScalarField",
     "alias": null,
-    "name": "height",
     "args": null,
+    "kind": "ScalarField",
+    "name": "height",
     "storageKey": null
   }
 ];
 return {
-  "kind": "Fragment",
-  "name": "DefaultHeader_headerArtworks",
-  "type": "FilterArtworksConnection",
-  "metadata": null,
   "argumentDefinitions": [],
+  "kind": "Fragment",
+  "metadata": null,
+  "name": "DefaultHeader_headerArtworks",
   "selections": [
     {
-      "kind": "LinkedField",
       "alias": null,
-      "name": "edges",
-      "storageKey": null,
       "args": null,
       "concreteType": "FilterArtworksEdge",
+      "kind": "LinkedField",
+      "name": "edges",
       "plural": true,
       "selections": [
         {
-          "kind": "LinkedField",
           "alias": null,
-          "name": "node",
-          "storageKey": null,
           "args": null,
           "concreteType": "Artwork",
+          "kind": "LinkedField",
+          "name": "node",
           "plural": false,
           "selections": [
             {
-              "kind": "ScalarField",
               "alias": null,
-              "name": "id",
               "args": null,
+              "kind": "ScalarField",
+              "name": "id",
               "storageKey": null
             },
             {
-              "kind": "LinkedField",
               "alias": null,
-              "name": "image",
-              "storageKey": null,
               "args": null,
               "concreteType": "Image",
+              "kind": "LinkedField",
+              "name": "image",
               "plural": false,
               "selections": [
                 {
-                  "kind": "LinkedField",
                   "alias": "large",
-                  "name": "resized",
-                  "storageKey": "resized(height:230)",
                   "args": [
                     {
                       "kind": "Literal",
@@ -100,14 +94,14 @@ return {
                     }
                   ],
                   "concreteType": "ResizedImageUrl",
+                  "kind": "LinkedField",
+                  "name": "resized",
                   "plural": false,
-                  "selections": (v0/*: any*/)
+                  "selections": (v0/*: any*/),
+                  "storageKey": "resized(height:230)"
                 },
                 {
-                  "kind": "LinkedField",
                   "alias": "small",
-                  "name": "resized",
-                  "storageKey": "resized(height:160)",
                   "args": [
                     {
                       "kind": "Literal",
@@ -116,21 +110,28 @@ return {
                     }
                   ],
                   "concreteType": "ResizedImageUrl",
+                  "kind": "LinkedField",
+                  "name": "resized",
                   "plural": false,
-                  "selections": (v0/*: any*/)
+                  "selections": (v0/*: any*/),
+                  "storageKey": "resized(height:160)"
                 }
-              ]
+              ],
+              "storageKey": null
             }
-          ]
+          ],
+          "storageKey": null
         },
         {
+          "args": null,
           "kind": "FragmentSpread",
-          "name": "DefaultHeaderArtwork_artwork",
-          "args": null
+          "name": "DefaultHeaderArtwork_artwork"
         }
-      ]
+      ],
+      "storageKey": null
     }
-  ]
+  ],
+  "type": "FilterArtworksConnection"
 };
 })();
 (node as any).hash = 'ae5d379a80797d4438c3da3bbd5c6375';

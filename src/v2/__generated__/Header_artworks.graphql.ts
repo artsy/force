@@ -1,4 +1,5 @@
 /* tslint:disable */
+/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -28,56 +29,50 @@ export type Header_artworks$key = {
 
 
 const node: ReaderFragment = {
-  "kind": "Fragment",
-  "name": "Header_artworks",
-  "type": "FilterArtworksConnection",
-  "metadata": null,
   "argumentDefinitions": [],
+  "kind": "Fragment",
+  "metadata": null,
+  "name": "Header_artworks",
   "selections": [
     {
-      "kind": "LinkedField",
       "alias": null,
-      "name": "merchandisableArtists",
-      "storageKey": null,
       "args": null,
       "concreteType": "Artist",
+      "kind": "LinkedField",
+      "name": "merchandisableArtists",
       "plural": true,
       "selections": [
         {
-          "kind": "ScalarField",
           "alias": null,
+          "args": null,
+          "kind": "ScalarField",
           "name": "slug",
-          "args": null,
           "storageKey": null
         },
         {
-          "kind": "ScalarField",
           "alias": null,
+          "args": null,
+          "kind": "ScalarField",
           "name": "internalID",
-          "args": null,
           "storageKey": null
         },
         {
+          "alias": null,
+          "args": null,
           "kind": "ScalarField",
-          "alias": null,
           "name": "name",
-          "args": null,
           "storageKey": null
         },
         {
-          "kind": "LinkedField",
           "alias": null,
-          "name": "image",
-          "storageKey": null,
           "args": null,
           "concreteType": "Image",
+          "kind": "LinkedField",
+          "name": "image",
           "plural": false,
           "selections": [
             {
-              "kind": "LinkedField",
               "alias": null,
-              "name": "resized",
-              "storageKey": "resized(height:45,version:\"square\",width:45)",
               "args": [
                 {
                   "kind": "Literal",
@@ -96,46 +91,52 @@ const node: ReaderFragment = {
                 }
               ],
               "concreteType": "ResizedImageUrl",
+              "kind": "LinkedField",
+              "name": "resized",
               "plural": false,
               "selections": [
                 {
-                  "kind": "ScalarField",
                   "alias": null,
-                  "name": "url",
                   "args": null,
+                  "kind": "ScalarField",
+                  "name": "url",
                   "storageKey": null
                 }
-              ]
+              ],
+              "storageKey": "resized(height:45,version:\"square\",width:45)"
             }
-          ]
+          ],
+          "storageKey": null
         },
         {
-          "kind": "ScalarField",
           "alias": null,
+          "args": null,
+          "kind": "ScalarField",
           "name": "birthday",
-          "args": null,
           "storageKey": null
         },
         {
-          "kind": "ScalarField",
           "alias": null,
-          "name": "nationality",
           "args": null,
+          "kind": "ScalarField",
+          "name": "nationality",
           "storageKey": null
         },
         {
+          "args": null,
           "kind": "FragmentSpread",
-          "name": "FollowArtistButton_artist",
-          "args": null
+          "name": "FollowArtistButton_artist"
         }
-      ]
+      ],
+      "storageKey": null
     },
     {
+      "args": null,
       "kind": "FragmentSpread",
-      "name": "DefaultHeader_headerArtworks",
-      "args": null
+      "name": "DefaultHeader_headerArtworks"
     }
-  ]
+  ],
+  "type": "FilterArtworksConnection"
 };
 (node as any).hash = 'ee9a91cd2dac53afe39f913787441bc3';
 export default node;

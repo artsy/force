@@ -1,4 +1,5 @@
 /* tslint:disable */
+/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -34,81 +35,81 @@ export type Pagination_pageCursors$key = {
 
 const node: ReaderFragment = (function(){
 var v0 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "cursor",
   "args": null,
+  "kind": "ScalarField",
+  "name": "cursor",
   "storageKey": null
 },
 v1 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "page",
   "args": null,
+  "kind": "ScalarField",
+  "name": "page",
   "storageKey": null
 },
 v2 = [
   (v0/*: any*/),
   (v1/*: any*/),
   {
-    "kind": "ScalarField",
     "alias": null,
-    "name": "isCurrent",
     "args": null,
+    "kind": "ScalarField",
+    "name": "isCurrent",
     "storageKey": null
   }
 ];
 return {
-  "kind": "Fragment",
-  "name": "Pagination_pageCursors",
-  "type": "PageCursors",
-  "metadata": null,
   "argumentDefinitions": [],
+  "kind": "Fragment",
+  "metadata": null,
+  "name": "Pagination_pageCursors",
   "selections": [
     {
-      "kind": "LinkedField",
       "alias": null,
+      "args": null,
+      "concreteType": "PageCursor",
+      "kind": "LinkedField",
       "name": "around",
-      "storageKey": null,
-      "args": null,
-      "concreteType": "PageCursor",
       "plural": true,
-      "selections": (v2/*: any*/)
+      "selections": (v2/*: any*/),
+      "storageKey": null
     },
     {
-      "kind": "LinkedField",
       "alias": null,
+      "args": null,
+      "concreteType": "PageCursor",
+      "kind": "LinkedField",
       "name": "first",
-      "storageKey": null,
-      "args": null,
-      "concreteType": "PageCursor",
       "plural": false,
-      "selections": (v2/*: any*/)
+      "selections": (v2/*: any*/),
+      "storageKey": null
     },
     {
-      "kind": "LinkedField",
       "alias": null,
+      "args": null,
+      "concreteType": "PageCursor",
+      "kind": "LinkedField",
       "name": "last",
-      "storageKey": null,
-      "args": null,
-      "concreteType": "PageCursor",
       "plural": false,
-      "selections": (v2/*: any*/)
+      "selections": (v2/*: any*/),
+      "storageKey": null
     },
     {
-      "kind": "LinkedField",
       "alias": null,
-      "name": "previous",
-      "storageKey": null,
       "args": null,
       "concreteType": "PageCursor",
+      "kind": "LinkedField",
+      "name": "previous",
       "plural": false,
       "selections": [
         (v0/*: any*/),
         (v1/*: any*/)
-      ]
+      ],
+      "storageKey": null
     }
-  ]
+  ],
+  "type": "PageCursors"
 };
 })();
 (node as any).hash = '72b4f72005e64de70ab045755aaaec79';

@@ -1,4 +1,5 @@
 /* tslint:disable */
+/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -21,31 +22,27 @@ export type FeatureSetContainer_set$key = {
 
 
 const node: ReaderFragment = {
-  "kind": "Fragment",
-  "name": "FeatureSetContainer_set",
-  "type": "OrderedSet",
-  "metadata": null,
   "argumentDefinitions": [],
+  "kind": "Fragment",
+  "metadata": null,
+  "name": "FeatureSetContainer_set",
   "selections": [
     {
-      "kind": "ScalarField",
       "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "id",
-      "args": null,
       "storageKey": null
     },
     {
-      "kind": "ScalarField",
       "alias": null,
-      "name": "itemType",
       "args": null,
+      "kind": "ScalarField",
+      "name": "itemType",
       "storageKey": null
     },
     {
-      "kind": "LinkedField",
       "alias": "orderedItems",
-      "name": "orderedItemsConnection",
-      "storageKey": "orderedItemsConnection(first:35)",
       "args": [
         {
           "kind": "Literal",
@@ -54,29 +51,33 @@ const node: ReaderFragment = {
         }
       ],
       "concreteType": "OrderedSetItemConnection",
+      "kind": "LinkedField",
+      "name": "orderedItemsConnection",
       "plural": false,
       "selections": [
         {
-          "kind": "LinkedField",
           "alias": null,
-          "name": "edges",
-          "storageKey": null,
           "args": null,
           "concreteType": "OrderedSetItemEdge",
+          "kind": "LinkedField",
+          "name": "edges",
           "plural": true,
           "selections": [
             {
-              "kind": "ScalarField",
               "alias": null,
-              "name": "__typename",
               "args": null,
+              "kind": "ScalarField",
+              "name": "__typename",
               "storageKey": null
             }
-          ]
+          ],
+          "storageKey": null
         }
-      ]
+      ],
+      "storageKey": "orderedItemsConnection(first:35)"
     }
-  ]
+  ],
+  "type": "OrderedSet"
 };
 (node as any).hash = '1426721195af893bf2e41b4cdda194df';
 export default node;
