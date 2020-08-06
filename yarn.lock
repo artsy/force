@@ -3820,7 +3820,7 @@
   dependencies:
     "@styled-system/core" "^5.1.2"
 
-"@styled-system/theme-get@^5.1.2":
+"@styled-system/theme-get@5.1.2", "@styled-system/theme-get@^5.1.2":
   version "5.1.2"
   resolved "https://registry.yarnpkg.com/@styled-system/theme-get/-/theme-get-5.1.2.tgz#b40a00a44da63b7a6ed85f73f737c4defecd6049"
   integrity sha512-afAYdRqrKfNIbVgmn/2Qet1HabxmpRnzhFwttbGr6F/mJ4RDS/Cmn+KHwHvNXangQsWw/5TfjpWV+rgcqqIcJQ==
@@ -4342,7 +4342,7 @@
   dependencies:
     csstype "^2.6.9"
 
-"@types/styled-system__theme-get@^5.0.0":
+"@types/styled-system__theme-get@5.0.0":
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/@types/styled-system__theme-get/-/styled-system__theme-get-5.0.0.tgz#639edd3d39aad91b47746db1cbc4f5a0c6e640a7"
   integrity sha512-Q8B2vdj78SpPjvresEZbEgnPb7TBTFD0S8sz2HJCd1mn1xjnXzJZhXJFdfZb2KrybfjuJ0Suu3jg4hZz3SyVtg==
