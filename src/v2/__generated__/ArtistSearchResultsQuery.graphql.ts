@@ -1,5 +1,4 @@
 /* tslint:disable */
-/* eslint-disable */
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -51,54 +50,58 @@ fragment ArtistSearchResults_viewer on Viewer {
 const node: ConcreteRequest = (function(){
 var v0 = [
   {
-    "defaultValue": null,
     "kind": "LocalArgument",
     "name": "term",
-    "type": "String!"
+    "type": "String!",
+    "defaultValue": null
   }
 ];
 return {
+  "kind": "Request",
   "fragment": {
-    "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
-    "metadata": null,
     "name": "ArtistSearchResultsQuery",
+    "type": "Query",
+    "metadata": null,
+    "argumentDefinitions": (v0/*: any*/),
     "selections": [
       {
+        "kind": "LinkedField",
         "alias": null,
+        "name": "viewer",
+        "storageKey": null,
         "args": null,
         "concreteType": "Viewer",
-        "kind": "LinkedField",
-        "name": "viewer",
         "plural": false,
         "selections": [
           {
-            "args": null,
             "kind": "FragmentSpread",
-            "name": "ArtistSearchResults_viewer"
+            "name": "ArtistSearchResults_viewer",
+            "args": null
           }
-        ],
-        "storageKey": null
+        ]
       }
-    ],
-    "type": "Query"
+    ]
   },
-  "kind": "Request",
   "operation": {
-    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "ArtistSearchResultsQuery",
+    "argumentDefinitions": (v0/*: any*/),
     "selections": [
       {
+        "kind": "LinkedField",
         "alias": null,
+        "name": "viewer",
+        "storageKey": null,
         "args": null,
         "concreteType": "Viewer",
-        "kind": "LinkedField",
-        "name": "viewer",
         "plural": false,
         "selections": [
           {
+            "kind": "LinkedField",
             "alias": null,
+            "name": "searchConnection",
+            "storageKey": null,
             "args": [
               {
                 "kind": "Literal",
@@ -119,94 +122,90 @@ return {
               }
             ],
             "concreteType": "SearchableConnection",
-            "kind": "LinkedField",
-            "name": "searchConnection",
             "plural": false,
             "selections": [
               {
+                "kind": "LinkedField",
                 "alias": null,
+                "name": "edges",
+                "storageKey": null,
                 "args": null,
                 "concreteType": "SearchableEdge",
-                "kind": "LinkedField",
-                "name": "edges",
                 "plural": true,
                 "selections": [
                   {
+                    "kind": "LinkedField",
                     "alias": null,
+                    "name": "node",
+                    "storageKey": null,
                     "args": null,
                     "concreteType": null,
-                    "kind": "LinkedField",
-                    "name": "node",
                     "plural": false,
                     "selections": [
                       {
-                        "alias": null,
-                        "args": null,
                         "kind": "ScalarField",
+                        "alias": null,
                         "name": "__typename",
+                        "args": null,
                         "storageKey": null
                       },
                       {
-                        "alias": null,
-                        "args": null,
                         "kind": "ScalarField",
+                        "alias": null,
                         "name": "id",
+                        "args": null,
                         "storageKey": null
                       },
                       {
                         "kind": "InlineFragment",
+                        "type": "SearchableItem",
                         "selections": [
                           {
-                            "alias": null,
-                            "args": null,
                             "kind": "ScalarField",
+                            "alias": null,
                             "name": "slug",
+                            "args": null,
                             "storageKey": null
                           },
                           {
-                            "alias": null,
-                            "args": null,
                             "kind": "ScalarField",
+                            "alias": null,
                             "name": "internalID",
+                            "args": null,
                             "storageKey": null
                           },
                           {
-                            "alias": null,
-                            "args": null,
                             "kind": "ScalarField",
+                            "alias": null,
                             "name": "displayLabel",
+                            "args": null,
                             "storageKey": null
                           },
                           {
-                            "alias": null,
-                            "args": null,
                             "kind": "ScalarField",
+                            "alias": null,
                             "name": "imageUrl",
+                            "args": null,
                             "storageKey": null
                           }
-                        ],
-                        "type": "SearchableItem"
+                        ]
                       }
-                    ],
-                    "storageKey": null
+                    ]
                   }
-                ],
-                "storageKey": null
+                ]
               }
-            ],
-            "storageKey": null
+            ]
           }
-        ],
-        "storageKey": null
+        ]
       }
     ]
   },
   "params": {
-    "id": null,
-    "metadata": {},
-    "name": "ArtistSearchResultsQuery",
     "operationKind": "query",
-    "text": "query ArtistSearchResultsQuery(\n  $term: String!\n) {\n  viewer {\n    ...ArtistSearchResults_viewer\n  }\n}\n\nfragment ArtistSearchResults_viewer on Viewer {\n  searchConnection(query: $term, mode: AUTOSUGGEST, entities: [ARTIST]) {\n    edges {\n      node {\n        __typename\n        ... on SearchableItem {\n          id\n          slug\n          internalID\n          displayLabel\n          imageUrl\n        }\n        ... on Node {\n          id\n        }\n      }\n    }\n  }\n}\n"
+    "name": "ArtistSearchResultsQuery",
+    "id": null,
+    "text": "query ArtistSearchResultsQuery(\n  $term: String!\n) {\n  viewer {\n    ...ArtistSearchResults_viewer\n  }\n}\n\nfragment ArtistSearchResults_viewer on Viewer {\n  searchConnection(query: $term, mode: AUTOSUGGEST, entities: [ARTIST]) {\n    edges {\n      node {\n        __typename\n        ... on SearchableItem {\n          id\n          slug\n          internalID\n          displayLabel\n          imageUrl\n        }\n        ... on Node {\n          id\n        }\n      }\n    }\n  }\n}\n",
+    "metadata": {}
   }
 };
 })();

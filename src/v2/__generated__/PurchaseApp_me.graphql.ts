@@ -1,5 +1,4 @@
 /* tslint:disable */
-/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -16,18 +15,18 @@ export type PurchaseApp_me$key = {
 
 
 const node: ReaderFragment = {
-  "argumentDefinitions": [],
   "kind": "Fragment",
-  "metadata": null,
   "name": "PurchaseApp_me",
+  "type": "Me",
+  "metadata": null,
+  "argumentDefinitions": [],
   "selections": [
     {
-      "args": null,
       "kind": "FragmentSpread",
-      "name": "PurchaseHistory_me"
+      "name": "PurchaseHistory_me",
+      "args": null
     }
-  ],
-  "type": "Me"
+  ]
 };
 (node as any).hash = 'e70a36883f4593860107a31d2f840614';
 export default node;

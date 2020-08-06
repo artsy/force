@@ -1,5 +1,4 @@
 /* tslint:disable */
-/* eslint-disable */
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -258,10 +257,10 @@ fragment CV_viewer on Viewer {
 const node: ConcreteRequest = (function(){
 var v0 = [
   {
-    "defaultValue": null,
     "kind": "LocalArgument",
     "name": "artistID",
-    "type": "String!"
+    "type": "String!",
+    "defaultValue": null
   }
 ],
 v1 = [
@@ -272,10 +271,10 @@ v1 = [
   }
 ],
 v2 = {
-  "alias": null,
-  "args": null,
   "kind": "ScalarField",
+  "alias": null,
   "name": "slug",
+  "args": null,
   "storageKey": null
 },
 v3 = {
@@ -316,107 +315,111 @@ v8 = [
   (v7/*: any*/)
 ],
 v9 = {
-  "alias": null,
-  "args": null,
   "kind": "ScalarField",
+  "alias": null,
   "name": "id",
+  "args": null,
   "storageKey": null
 },
 v10 = {
-  "alias": null,
-  "args": null,
   "kind": "ScalarField",
+  "alias": null,
   "name": "__typename",
+  "args": null,
   "storageKey": null
 },
 v11 = {
-  "alias": null,
-  "args": null,
   "kind": "ScalarField",
+  "alias": null,
   "name": "name",
+  "args": null,
   "storageKey": null
 },
 v12 = {
-  "alias": null,
-  "args": null,
   "kind": "ScalarField",
+  "alias": null,
   "name": "href",
+  "args": null,
   "storageKey": null
 },
 v13 = [
   {
+    "kind": "LinkedField",
     "alias": null,
+    "name": "pageInfo",
+    "storageKey": null,
     "args": null,
     "concreteType": "PageInfo",
-    "kind": "LinkedField",
-    "name": "pageInfo",
     "plural": false,
     "selections": [
       {
-        "alias": null,
-        "args": null,
         "kind": "ScalarField",
+        "alias": null,
         "name": "hasNextPage",
+        "args": null,
         "storageKey": null
       },
       {
-        "alias": null,
-        "args": null,
         "kind": "ScalarField",
+        "alias": null,
         "name": "endCursor",
+        "args": null,
         "storageKey": null
       }
-    ],
-    "storageKey": null
+    ]
   },
   {
+    "kind": "LinkedField",
     "alias": null,
+    "name": "edges",
+    "storageKey": null,
     "args": null,
     "concreteType": "ShowEdge",
-    "kind": "LinkedField",
-    "name": "edges",
     "plural": true,
     "selections": [
       {
+        "kind": "LinkedField",
         "alias": null,
+        "name": "node",
+        "storageKey": null,
         "args": null,
         "concreteType": "Show",
-        "kind": "LinkedField",
-        "name": "node",
         "plural": false,
         "selections": [
           (v9/*: any*/),
           {
+            "kind": "LinkedField",
             "alias": null,
+            "name": "partner",
+            "storageKey": null,
             "args": null,
             "concreteType": null,
-            "kind": "LinkedField",
-            "name": "partner",
             "plural": false,
             "selections": [
               (v10/*: any*/),
               (v9/*: any*/),
               {
                 "kind": "InlineFragment",
+                "type": "ExternalPartner",
                 "selections": [
                   (v11/*: any*/)
-                ],
-                "type": "ExternalPartner"
+                ]
               },
               {
                 "kind": "InlineFragment",
+                "type": "Partner",
                 "selections": [
                   (v11/*: any*/),
                   (v12/*: any*/)
-                ],
-                "type": "Partner"
+                ]
               }
-            ],
-            "storageKey": null
+            ]
           },
           (v11/*: any*/),
           {
+            "kind": "ScalarField",
             "alias": "start_at",
+            "name": "startAt",
             "args": [
               {
                 "kind": "Literal",
@@ -424,31 +427,27 @@ v13 = [
                 "value": "YYYY"
               }
             ],
-            "kind": "ScalarField",
-            "name": "startAt",
             "storageKey": "startAt(format:\"YYYY\")"
           },
           {
-            "alias": null,
-            "args": null,
             "kind": "ScalarField",
+            "alias": null,
             "name": "city",
+            "args": null,
             "storageKey": null
           },
           (v12/*: any*/),
           (v10/*: any*/)
-        ],
-        "storageKey": null
+        ]
       },
       {
-        "alias": null,
-        "args": null,
         "kind": "ScalarField",
+        "alias": null,
         "name": "cursor",
+        "args": null,
         "storageKey": null
       }
-    ],
-    "storageKey": null
+    ]
   }
 ],
 v14 = [
@@ -484,152 +483,152 @@ v17 = [
   (v7/*: any*/)
 ];
 return {
+  "kind": "Request",
   "fragment": {
-    "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
-    "metadata": null,
     "name": "CV_Test_Query",
+    "type": "Query",
+    "metadata": null,
+    "argumentDefinitions": (v0/*: any*/),
     "selections": [
       {
+        "kind": "LinkedField",
         "alias": null,
+        "name": "viewer",
+        "storageKey": null,
         "args": null,
         "concreteType": "Viewer",
-        "kind": "LinkedField",
-        "name": "viewer",
         "plural": false,
         "selections": [
           {
-            "args": null,
             "kind": "FragmentSpread",
-            "name": "CV_viewer"
+            "name": "CV_viewer",
+            "args": null
           }
-        ],
-        "storageKey": null
+        ]
       }
-    ],
-    "type": "Query"
+    ]
   },
-  "kind": "Request",
   "operation": {
-    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "CV_Test_Query",
+    "argumentDefinitions": (v0/*: any*/),
     "selections": [
       {
+        "kind": "LinkedField",
         "alias": null,
+        "name": "viewer",
+        "storageKey": null,
         "args": null,
         "concreteType": "Viewer",
-        "kind": "LinkedField",
-        "name": "viewer",
         "plural": false,
         "selections": [
           {
+            "kind": "LinkedField",
             "alias": "artist_soloShows",
+            "name": "artist",
+            "storageKey": null,
             "args": (v1/*: any*/),
             "concreteType": "Artist",
-            "kind": "LinkedField",
-            "name": "artist",
             "plural": false,
             "selections": [
               (v2/*: any*/),
               {
+                "kind": "LinkedField",
                 "alias": null,
+                "name": "showsConnection",
+                "storageKey": "showsConnection(atAFair:false,first:10,isReference:true,soloShow:true,sort:\"START_AT_DESC\",visibleToPublic:false)",
                 "args": (v8/*: any*/),
                 "concreteType": "ShowConnection",
-                "kind": "LinkedField",
-                "name": "showsConnection",
                 "plural": false,
-                "selections": (v13/*: any*/),
-                "storageKey": "showsConnection(atAFair:false,first:10,isReference:true,soloShow:true,sort:\"START_AT_DESC\",visibleToPublic:false)"
+                "selections": (v13/*: any*/)
               },
               {
+                "kind": "LinkedHandle",
                 "alias": null,
+                "name": "showsConnection",
                 "args": (v8/*: any*/),
-                "filters": (v14/*: any*/),
                 "handle": "connection",
                 "key": "Artist_showsConnection",
-                "kind": "LinkedHandle",
-                "name": "showsConnection"
+                "filters": (v14/*: any*/)
               },
               (v9/*: any*/)
-            ],
-            "storageKey": null
+            ]
           },
           {
+            "kind": "LinkedField",
             "alias": "artist_groupShows",
+            "name": "artist",
+            "storageKey": null,
             "args": (v1/*: any*/),
             "concreteType": "Artist",
-            "kind": "LinkedField",
-            "name": "artist",
             "plural": false,
             "selections": [
               (v2/*: any*/),
               {
+                "kind": "LinkedField",
                 "alias": null,
+                "name": "showsConnection",
+                "storageKey": "showsConnection(atAFair:false,first:10,isReference:true,soloShow:false,sort:\"START_AT_DESC\",visibleToPublic:false)",
                 "args": (v16/*: any*/),
                 "concreteType": "ShowConnection",
-                "kind": "LinkedField",
-                "name": "showsConnection",
                 "plural": false,
-                "selections": (v13/*: any*/),
-                "storageKey": "showsConnection(atAFair:false,first:10,isReference:true,soloShow:false,sort:\"START_AT_DESC\",visibleToPublic:false)"
+                "selections": (v13/*: any*/)
               },
               {
+                "kind": "LinkedHandle",
                 "alias": null,
+                "name": "showsConnection",
                 "args": (v16/*: any*/),
-                "filters": (v14/*: any*/),
                 "handle": "connection",
                 "key": "Artist_showsConnection",
-                "kind": "LinkedHandle",
-                "name": "showsConnection"
+                "filters": (v14/*: any*/)
               },
               (v9/*: any*/)
-            ],
-            "storageKey": null
+            ]
           },
           {
+            "kind": "LinkedField",
             "alias": "artist_fairBooths",
+            "name": "artist",
+            "storageKey": null,
             "args": (v1/*: any*/),
             "concreteType": "Artist",
-            "kind": "LinkedField",
-            "name": "artist",
             "plural": false,
             "selections": [
               (v2/*: any*/),
               {
+                "kind": "LinkedField",
                 "alias": null,
+                "name": "showsConnection",
+                "storageKey": "showsConnection(atAFair:true,first:10,isReference:true,soloShow:false,sort:\"START_AT_DESC\",visibleToPublic:false)",
                 "args": (v17/*: any*/),
                 "concreteType": "ShowConnection",
-                "kind": "LinkedField",
-                "name": "showsConnection",
                 "plural": false,
-                "selections": (v13/*: any*/),
-                "storageKey": "showsConnection(atAFair:true,first:10,isReference:true,soloShow:false,sort:\"START_AT_DESC\",visibleToPublic:false)"
+                "selections": (v13/*: any*/)
               },
               {
+                "kind": "LinkedHandle",
                 "alias": null,
+                "name": "showsConnection",
                 "args": (v17/*: any*/),
-                "filters": (v14/*: any*/),
                 "handle": "connection",
                 "key": "Artist_showsConnection",
-                "kind": "LinkedHandle",
-                "name": "showsConnection"
+                "filters": (v14/*: any*/)
               },
               (v9/*: any*/)
-            ],
-            "storageKey": null
+            ]
           }
-        ],
-        "storageKey": null
+        ]
       }
     ]
   },
   "params": {
-    "id": null,
-    "metadata": {},
-    "name": "CV_Test_Query",
     "operationKind": "query",
-    "text": "query CV_Test_Query(\n  $artistID: String!\n) {\n  viewer {\n    ...CV_viewer\n  }\n}\n\nfragment CVItem_artist_47e96d on Artist {\n  slug\n  showsConnection(first: 10, sort: START_AT_DESC, atAFair: true, soloShow: false, isReference: true, visibleToPublic: false) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    edges {\n      node {\n        id\n        partner {\n          __typename\n          ... on ExternalPartner {\n            name\n            id\n          }\n          ... on Partner {\n            name\n            href\n          }\n          ... on Node {\n            id\n          }\n        }\n        name\n        start_at: startAt(format: \"YYYY\")\n        city\n        href\n        __typename\n      }\n      cursor\n    }\n  }\n}\n\nfragment CVItem_artist_4DszuY on Artist {\n  slug\n  showsConnection(first: 10, sort: START_AT_DESC, atAFair: false, soloShow: false, isReference: true, visibleToPublic: false) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    edges {\n      node {\n        id\n        partner {\n          __typename\n          ... on ExternalPartner {\n            name\n            id\n          }\n          ... on Partner {\n            name\n            href\n          }\n          ... on Node {\n            id\n          }\n        }\n        name\n        start_at: startAt(format: \"YYYY\")\n        city\n        href\n        __typename\n      }\n      cursor\n    }\n  }\n}\n\nfragment CVItem_artist_ieWPx on Artist {\n  slug\n  showsConnection(first: 10, sort: START_AT_DESC, atAFair: false, soloShow: true, isReference: true, visibleToPublic: false) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    edges {\n      node {\n        id\n        partner {\n          __typename\n          ... on ExternalPartner {\n            name\n            id\n          }\n          ... on Partner {\n            name\n            href\n          }\n          ... on Node {\n            id\n          }\n        }\n        name\n        start_at: startAt(format: \"YYYY\")\n        city\n        href\n        __typename\n      }\n      cursor\n    }\n  }\n}\n\nfragment CV_viewer on Viewer {\n  artist_soloShows: artist(id: $artistID) {\n    ...CVItem_artist_ieWPx\n    id\n  }\n  artist_groupShows: artist(id: $artistID) {\n    ...CVItem_artist_4DszuY\n    id\n  }\n  artist_fairBooths: artist(id: $artistID) {\n    ...CVItem_artist_47e96d\n    id\n  }\n}\n"
+    "name": "CV_Test_Query",
+    "id": null,
+    "text": "query CV_Test_Query(\n  $artistID: String!\n) {\n  viewer {\n    ...CV_viewer\n  }\n}\n\nfragment CVItem_artist_47e96d on Artist {\n  slug\n  showsConnection(first: 10, sort: START_AT_DESC, atAFair: true, soloShow: false, isReference: true, visibleToPublic: false) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    edges {\n      node {\n        id\n        partner {\n          __typename\n          ... on ExternalPartner {\n            name\n            id\n          }\n          ... on Partner {\n            name\n            href\n          }\n          ... on Node {\n            id\n          }\n        }\n        name\n        start_at: startAt(format: \"YYYY\")\n        city\n        href\n        __typename\n      }\n      cursor\n    }\n  }\n}\n\nfragment CVItem_artist_4DszuY on Artist {\n  slug\n  showsConnection(first: 10, sort: START_AT_DESC, atAFair: false, soloShow: false, isReference: true, visibleToPublic: false) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    edges {\n      node {\n        id\n        partner {\n          __typename\n          ... on ExternalPartner {\n            name\n            id\n          }\n          ... on Partner {\n            name\n            href\n          }\n          ... on Node {\n            id\n          }\n        }\n        name\n        start_at: startAt(format: \"YYYY\")\n        city\n        href\n        __typename\n      }\n      cursor\n    }\n  }\n}\n\nfragment CVItem_artist_ieWPx on Artist {\n  slug\n  showsConnection(first: 10, sort: START_AT_DESC, atAFair: false, soloShow: true, isReference: true, visibleToPublic: false) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    edges {\n      node {\n        id\n        partner {\n          __typename\n          ... on ExternalPartner {\n            name\n            id\n          }\n          ... on Partner {\n            name\n            href\n          }\n          ... on Node {\n            id\n          }\n        }\n        name\n        start_at: startAt(format: \"YYYY\")\n        city\n        href\n        __typename\n      }\n      cursor\n    }\n  }\n}\n\nfragment CV_viewer on Viewer {\n  artist_soloShows: artist(id: $artistID) {\n    ...CVItem_artist_ieWPx\n    id\n  }\n  artist_groupShows: artist(id: $artistID) {\n    ...CVItem_artist_4DszuY\n    id\n  }\n  artist_fairBooths: artist(id: $artistID) {\n    ...CVItem_artist_47e96d\n    id\n  }\n}\n",
+    "metadata": {}
   }
 };
 })();

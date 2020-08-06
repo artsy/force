@@ -1,5 +1,4 @@
 /* tslint:disable */
-/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -21,54 +20,54 @@ export type Collections_marketingCategories$key = ReadonlyArray<{
 
 
 const node: ReaderFragment = {
-  "argumentDefinitions": [],
   "kind": "Fragment",
+  "name": "Collections_marketingCategories",
+  "type": "MarketingCollectionCategory",
   "metadata": {
     "plural": true
   },
-  "name": "Collections_marketingCategories",
+  "argumentDefinitions": [],
   "selections": [
     {
-      "alias": null,
-      "args": null,
       "kind": "ScalarField",
+      "alias": null,
       "name": "name",
+      "args": null,
       "storageKey": null
     },
     {
+      "kind": "LinkedField",
       "alias": null,
+      "name": "collections",
+      "storageKey": null,
       "args": null,
       "concreteType": "MarketingCollection",
-      "kind": "LinkedField",
-      "name": "collections",
       "plural": true,
       "selections": [
         {
-          "alias": null,
-          "args": null,
           "kind": "ScalarField",
+          "alias": null,
           "name": "slug",
+          "args": null,
           "storageKey": null
         },
         {
-          "alias": null,
-          "args": null,
           "kind": "ScalarField",
+          "alias": null,
           "name": "headerImage",
+          "args": null,
           "storageKey": null
         },
         {
-          "alias": null,
-          "args": null,
           "kind": "ScalarField",
+          "alias": null,
           "name": "title",
+          "args": null,
           "storageKey": null
         }
-      ],
-      "storageKey": null
+      ]
     }
-  ],
-  "type": "MarketingCollectionCategory"
+  ]
 };
 (node as any).hash = '76554c57a5339cf4a60df12cdee4be57';
 export default node;

@@ -1,14 +1,13 @@
 /* tslint:disable */
-/* eslint-disable */
 
 import { ConcreteRequest } from "relay-runtime";
 export type CreateAccountRequestMutationInput = {
-    action?: string | null;
-    clientMutationId?: string | null;
-    email?: string | null;
-    name?: string | null;
-    notes: string;
-    userID?: string | null;
+    readonly action?: string | null;
+    readonly clientMutationId?: string | null;
+    readonly email?: string | null;
+    readonly name?: string | null;
+    readonly notes: string;
+    readonly userID?: string | null;
 };
 export type CCPARequestMutationVariables = {
     input: CreateAccountRequestMutationInput;
@@ -62,10 +61,10 @@ mutation CCPARequestMutation(
 const node: ConcreteRequest = (function(){
 var v0 = [
   {
-    "defaultValue": null,
     "kind": "LocalArgument",
     "name": "input",
-    "type": "CreateAccountRequestMutationInput!"
+    "type": "CreateAccountRequestMutationInput!",
+    "defaultValue": null
   }
 ],
 v1 = [
@@ -76,170 +75,170 @@ v1 = [
   }
 ],
 v2 = {
-  "alias": null,
-  "args": null,
   "kind": "ScalarField",
+  "alias": null,
   "name": "notes",
+  "args": null,
   "storageKey": null
 },
 v3 = {
   "kind": "InlineFragment",
+  "type": "CreateAccountRequestMutationFailure",
   "selections": [
     {
+      "kind": "LinkedField",
       "alias": null,
+      "name": "mutationError",
+      "storageKey": null,
       "args": null,
       "concreteType": "GravityMutationError",
-      "kind": "LinkedField",
-      "name": "mutationError",
       "plural": false,
       "selections": [
         {
-          "alias": null,
-          "args": null,
           "kind": "ScalarField",
+          "alias": null,
           "name": "type",
+          "args": null,
           "storageKey": null
         },
         {
-          "alias": null,
-          "args": null,
           "kind": "ScalarField",
+          "alias": null,
           "name": "message",
+          "args": null,
           "storageKey": null
         },
         {
-          "alias": null,
-          "args": null,
           "kind": "ScalarField",
+          "alias": null,
           "name": "detail",
+          "args": null,
           "storageKey": null
         }
-      ],
-      "storageKey": null
+      ]
     }
-  ],
-  "type": "CreateAccountRequestMutationFailure"
+  ]
 };
 return {
+  "kind": "Request",
   "fragment": {
-    "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
-    "metadata": null,
     "name": "CCPARequestMutation",
+    "type": "Mutation",
+    "metadata": null,
+    "argumentDefinitions": (v0/*: any*/),
     "selections": [
       {
+        "kind": "LinkedField",
         "alias": null,
+        "name": "createAccountRequest",
+        "storageKey": null,
         "args": (v1/*: any*/),
         "concreteType": "CreateAccountRequestMutationPayload",
-        "kind": "LinkedField",
-        "name": "createAccountRequest",
         "plural": false,
         "selections": [
           {
+            "kind": "LinkedField",
             "alias": null,
+            "name": "accountRequestOrError",
+            "storageKey": null,
             "args": null,
             "concreteType": null,
-            "kind": "LinkedField",
-            "name": "accountRequestOrError",
             "plural": false,
             "selections": [
               {
                 "kind": "InlineFragment",
+                "type": "CreateAccountRequestMutationSuccess",
                 "selections": [
                   {
+                    "kind": "LinkedField",
                     "alias": null,
+                    "name": "accountRequest",
+                    "storageKey": null,
                     "args": null,
                     "concreteType": "AccountRequest",
-                    "kind": "LinkedField",
-                    "name": "accountRequest",
                     "plural": false,
                     "selections": [
                       (v2/*: any*/)
-                    ],
-                    "storageKey": null
+                    ]
                   }
-                ],
-                "type": "CreateAccountRequestMutationSuccess"
+                ]
               },
               (v3/*: any*/)
-            ],
-            "storageKey": null
+            ]
           }
-        ],
-        "storageKey": null
+        ]
       }
-    ],
-    "type": "Mutation"
+    ]
   },
-  "kind": "Request",
   "operation": {
-    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "CCPARequestMutation",
+    "argumentDefinitions": (v0/*: any*/),
     "selections": [
       {
+        "kind": "LinkedField",
         "alias": null,
+        "name": "createAccountRequest",
+        "storageKey": null,
         "args": (v1/*: any*/),
         "concreteType": "CreateAccountRequestMutationPayload",
-        "kind": "LinkedField",
-        "name": "createAccountRequest",
         "plural": false,
         "selections": [
           {
+            "kind": "LinkedField",
             "alias": null,
+            "name": "accountRequestOrError",
+            "storageKey": null,
             "args": null,
             "concreteType": null,
-            "kind": "LinkedField",
-            "name": "accountRequestOrError",
             "plural": false,
             "selections": [
               {
-                "alias": null,
-                "args": null,
                 "kind": "ScalarField",
+                "alias": null,
                 "name": "__typename",
+                "args": null,
                 "storageKey": null
               },
               {
                 "kind": "InlineFragment",
+                "type": "CreateAccountRequestMutationSuccess",
                 "selections": [
                   {
+                    "kind": "LinkedField",
                     "alias": null,
+                    "name": "accountRequest",
+                    "storageKey": null,
                     "args": null,
                     "concreteType": "AccountRequest",
-                    "kind": "LinkedField",
-                    "name": "accountRequest",
                     "plural": false,
                     "selections": [
                       (v2/*: any*/),
                       {
-                        "alias": null,
-                        "args": null,
                         "kind": "ScalarField",
+                        "alias": null,
                         "name": "id",
+                        "args": null,
                         "storageKey": null
                       }
-                    ],
-                    "storageKey": null
+                    ]
                   }
-                ],
-                "type": "CreateAccountRequestMutationSuccess"
+                ]
               },
               (v3/*: any*/)
-            ],
-            "storageKey": null
+            ]
           }
-        ],
-        "storageKey": null
+        ]
       }
     ]
   },
   "params": {
-    "id": null,
-    "metadata": {},
-    "name": "CCPARequestMutation",
     "operationKind": "mutation",
-    "text": "mutation CCPARequestMutation(\n  $input: CreateAccountRequestMutationInput!\n) {\n  createAccountRequest(input: $input) {\n    accountRequestOrError {\n      __typename\n      ... on CreateAccountRequestMutationSuccess {\n        accountRequest {\n          notes\n          id\n        }\n      }\n      ... on CreateAccountRequestMutationFailure {\n        mutationError {\n          type\n          message\n          detail\n        }\n      }\n    }\n  }\n}\n"
+    "name": "CCPARequestMutation",
+    "id": null,
+    "text": "mutation CCPARequestMutation(\n  $input: CreateAccountRequestMutationInput!\n) {\n  createAccountRequest(input: $input) {\n    accountRequestOrError {\n      __typename\n      ... on CreateAccountRequestMutationSuccess {\n        accountRequest {\n          notes\n          id\n        }\n      }\n      ... on CreateAccountRequestMutationFailure {\n        mutationError {\n          type\n          message\n          detail\n        }\n      }\n    }\n  }\n}\n",
+    "metadata": {}
   }
 };
 })();

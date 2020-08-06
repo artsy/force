@@ -1,5 +1,4 @@
 /* tslint:disable */
-/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -34,27 +33,31 @@ var v0 = [
   }
 ];
 return {
-  "argumentDefinitions": [],
   "kind": "Fragment",
-  "metadata": null,
   "name": "FeatureApp_feature",
+  "type": "Feature",
+  "metadata": null,
+  "argumentDefinitions": [],
   "selections": [
     {
-      "alias": null,
-      "args": (v0/*: any*/),
       "kind": "ScalarField",
+      "alias": null,
       "name": "description",
+      "args": (v0/*: any*/),
       "storageKey": "description(format:\"HTML\")"
     },
     {
-      "alias": null,
-      "args": (v0/*: any*/),
       "kind": "ScalarField",
+      "alias": null,
       "name": "callout",
+      "args": (v0/*: any*/),
       "storageKey": "callout(format:\"HTML\")"
     },
     {
+      "kind": "LinkedField",
       "alias": "sets",
+      "name": "setsConnection",
+      "storageKey": "setsConnection(first:20)",
       "args": [
         {
           "kind": "Literal",
@@ -63,59 +66,55 @@ return {
         }
       ],
       "concreteType": "OrderedSetConnection",
-      "kind": "LinkedField",
-      "name": "setsConnection",
       "plural": false,
       "selections": [
         {
+          "kind": "LinkedField",
           "alias": null,
+          "name": "edges",
+          "storageKey": null,
           "args": null,
           "concreteType": "OrderedSetEdge",
-          "kind": "LinkedField",
-          "name": "edges",
           "plural": true,
           "selections": [
             {
+              "kind": "LinkedField",
               "alias": null,
+              "name": "node",
+              "storageKey": null,
               "args": null,
               "concreteType": "OrderedSet",
-              "kind": "LinkedField",
-              "name": "node",
               "plural": false,
               "selections": [
                 {
-                  "alias": null,
-                  "args": null,
                   "kind": "ScalarField",
+                  "alias": null,
                   "name": "id",
+                  "args": null,
                   "storageKey": null
                 },
                 {
-                  "args": null,
                   "kind": "FragmentSpread",
-                  "name": "FeatureSet_set"
+                  "name": "FeatureSet_set",
+                  "args": null
                 }
-              ],
-              "storageKey": null
+              ]
             }
-          ],
-          "storageKey": null
+          ]
         }
-      ],
-      "storageKey": "setsConnection(first:20)"
+      ]
     },
     {
-      "args": null,
       "kind": "FragmentSpread",
-      "name": "FeatureMeta_feature"
+      "name": "FeatureMeta_feature",
+      "args": null
     },
     {
-      "args": null,
       "kind": "FragmentSpread",
-      "name": "FeatureHeader_feature"
+      "name": "FeatureHeader_feature",
+      "args": null
     }
-  ],
-  "type": "Feature"
+  ]
 };
 })();
 (node as any).hash = 'a03892745f198465e63df7420b7e1d3d';

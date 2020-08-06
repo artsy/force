@@ -1,5 +1,4 @@
 /* tslint:disable */
-/* eslint-disable */
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -67,68 +66,72 @@ fragment TwoFactorAuthentication_me on Me {
 
 const node: ConcreteRequest = (function(){
 var v0 = {
-  "alias": null,
-  "args": null,
   "kind": "ScalarField",
+  "alias": null,
   "name": "__typename",
+  "args": null,
   "storageKey": null
 },
 v1 = {
-  "alias": null,
-  "args": null,
   "kind": "ScalarField",
+  "alias": null,
   "name": "internalID",
+  "args": null,
   "storageKey": null
 };
 return {
+  "kind": "Request",
   "fragment": {
-    "argumentDefinitions": [],
     "kind": "Fragment",
-    "metadata": null,
     "name": "TwoFactorAuthenticationRefetchQuery",
+    "type": "Query",
+    "metadata": null,
+    "argumentDefinitions": [],
     "selections": [
       {
+        "kind": "LinkedField",
         "alias": null,
+        "name": "me",
+        "storageKey": null,
         "args": null,
         "concreteType": "Me",
-        "kind": "LinkedField",
-        "name": "me",
         "plural": false,
         "selections": [
           {
-            "args": null,
             "kind": "FragmentSpread",
-            "name": "TwoFactorAuthentication_me"
+            "name": "TwoFactorAuthentication_me",
+            "args": null
           }
-        ],
-        "storageKey": null
+        ]
       }
-    ],
-    "type": "Query"
+    ]
   },
-  "kind": "Request",
   "operation": {
-    "argumentDefinitions": [],
     "kind": "Operation",
     "name": "TwoFactorAuthenticationRefetchQuery",
+    "argumentDefinitions": [],
     "selections": [
       {
+        "kind": "LinkedField",
         "alias": null,
+        "name": "me",
+        "storageKey": null,
         "args": null,
         "concreteType": "Me",
-        "kind": "LinkedField",
-        "name": "me",
         "plural": false,
         "selections": [
           {
-            "alias": null,
-            "args": null,
             "kind": "ScalarField",
+            "alias": null,
             "name": "hasSecondFactorEnabled",
+            "args": null,
             "storageKey": null
           },
           {
+            "kind": "LinkedField",
             "alias": "appSecondFactors",
+            "name": "secondFactors",
+            "storageKey": "secondFactors(kinds:[\"app\"])",
             "args": [
               {
                 "kind": "Literal",
@@ -139,31 +142,31 @@ return {
               }
             ],
             "concreteType": null,
-            "kind": "LinkedField",
-            "name": "secondFactors",
             "plural": true,
             "selections": [
               (v0/*: any*/),
               {
                 "kind": "InlineFragment",
+                "type": "AppSecondFactor",
                 "selections": [
                   (v0/*: any*/),
                   (v1/*: any*/),
                   {
-                    "alias": null,
-                    "args": null,
                     "kind": "ScalarField",
+                    "alias": null,
                     "name": "name",
+                    "args": null,
                     "storageKey": null
                   }
-                ],
-                "type": "AppSecondFactor"
+                ]
               }
-            ],
-            "storageKey": "secondFactors(kinds:[\"app\"])"
+            ]
           },
           {
+            "kind": "LinkedField",
             "alias": "smsSecondFactors",
+            "name": "secondFactors",
+            "storageKey": "secondFactors(kinds:[\"sms\"])",
             "args": [
               {
                 "kind": "Literal",
@@ -174,31 +177,31 @@ return {
               }
             ],
             "concreteType": null,
-            "kind": "LinkedField",
-            "name": "secondFactors",
             "plural": true,
             "selections": [
               (v0/*: any*/),
               {
                 "kind": "InlineFragment",
+                "type": "SmsSecondFactor",
                 "selections": [
                   (v0/*: any*/),
                   (v1/*: any*/),
                   {
-                    "alias": null,
-                    "args": null,
                     "kind": "ScalarField",
+                    "alias": null,
                     "name": "formattedPhoneNumber",
+                    "args": null,
                     "storageKey": null
                   }
-                ],
-                "type": "SmsSecondFactor"
+                ]
               }
-            ],
-            "storageKey": "secondFactors(kinds:[\"sms\"])"
+            ]
           },
           {
+            "kind": "LinkedField",
             "alias": "backupSecondFactors",
+            "name": "secondFactors",
+            "storageKey": "secondFactors(kinds:[\"backup\"])",
             "args": [
               {
                 "kind": "Literal",
@@ -209,39 +212,35 @@ return {
               }
             ],
             "concreteType": null,
-            "kind": "LinkedField",
-            "name": "secondFactors",
             "plural": true,
             "selections": [
               (v0/*: any*/),
               {
                 "kind": "InlineFragment",
+                "type": "BackupSecondFactor",
                 "selections": [
                   (v0/*: any*/)
-                ],
-                "type": "BackupSecondFactor"
+                ]
               }
-            ],
-            "storageKey": "secondFactors(kinds:[\"backup\"])"
+            ]
           },
           {
-            "alias": null,
-            "args": null,
             "kind": "ScalarField",
+            "alias": null,
             "name": "id",
+            "args": null,
             "storageKey": null
           }
-        ],
-        "storageKey": null
+        ]
       }
     ]
   },
   "params": {
-    "id": null,
-    "metadata": {},
-    "name": "TwoFactorAuthenticationRefetchQuery",
     "operationKind": "query",
-    "text": "query TwoFactorAuthenticationRefetchQuery {\n  me {\n    ...TwoFactorAuthentication_me\n    id\n  }\n}\n\nfragment AppSecondFactor_me on Me {\n  hasSecondFactorEnabled\n  appSecondFactors: secondFactors(kinds: [app]) {\n    __typename\n    ... on AppSecondFactor {\n      __typename\n      internalID\n      name\n    }\n  }\n}\n\nfragment BackupSecondFactor_me on Me {\n  backupSecondFactors: secondFactors(kinds: [backup]) {\n    __typename\n    ... on BackupSecondFactor {\n      __typename\n    }\n  }\n}\n\nfragment SmsSecondFactor_me on Me {\n  hasSecondFactorEnabled\n  smsSecondFactors: secondFactors(kinds: [sms]) {\n    __typename\n    ... on SmsSecondFactor {\n      __typename\n      internalID\n      formattedPhoneNumber\n    }\n  }\n}\n\nfragment TwoFactorAuthentication_me on Me {\n  hasSecondFactorEnabled\n  ...AppSecondFactor_me\n  ...SmsSecondFactor_me\n  ...BackupSecondFactor_me\n}\n"
+    "name": "TwoFactorAuthenticationRefetchQuery",
+    "id": null,
+    "text": "query TwoFactorAuthenticationRefetchQuery {\n  me {\n    ...TwoFactorAuthentication_me\n    id\n  }\n}\n\nfragment AppSecondFactor_me on Me {\n  hasSecondFactorEnabled\n  appSecondFactors: secondFactors(kinds: [app]) {\n    __typename\n    ... on AppSecondFactor {\n      __typename\n      internalID\n      name\n    }\n  }\n}\n\nfragment BackupSecondFactor_me on Me {\n  backupSecondFactors: secondFactors(kinds: [backup]) {\n    __typename\n    ... on BackupSecondFactor {\n      __typename\n    }\n  }\n}\n\nfragment SmsSecondFactor_me on Me {\n  hasSecondFactorEnabled\n  smsSecondFactors: secondFactors(kinds: [sms]) {\n    __typename\n    ... on SmsSecondFactor {\n      __typename\n      internalID\n      formattedPhoneNumber\n    }\n  }\n}\n\nfragment TwoFactorAuthentication_me on Me {\n  hasSecondFactorEnabled\n  ...AppSecondFactor_me\n  ...SmsSecondFactor_me\n  ...BackupSecondFactor_me\n}\n",
+    "metadata": {}
   }
 };
 })();

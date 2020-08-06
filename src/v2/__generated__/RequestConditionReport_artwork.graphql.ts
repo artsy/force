@@ -1,5 +1,4 @@
 /* tslint:disable */
-/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -21,40 +20,40 @@ export type RequestConditionReport_artwork$key = {
 
 const node: ReaderFragment = (function(){
 var v0 = {
-  "alias": null,
-  "args": null,
   "kind": "ScalarField",
+  "alias": null,
   "name": "internalID",
+  "args": null,
   "storageKey": null
 };
 return {
-  "argumentDefinitions": [],
   "kind": "Fragment",
-  "metadata": null,
   "name": "RequestConditionReport_artwork",
+  "type": "Artwork",
+  "metadata": null,
+  "argumentDefinitions": [],
   "selections": [
     (v0/*: any*/),
     {
-      "alias": null,
-      "args": null,
       "kind": "ScalarField",
+      "alias": null,
       "name": "slug",
+      "args": null,
       "storageKey": null
     },
     {
+      "kind": "LinkedField",
       "alias": null,
+      "name": "saleArtwork",
+      "storageKey": null,
       "args": null,
       "concreteType": "SaleArtwork",
-      "kind": "LinkedField",
-      "name": "saleArtwork",
       "plural": false,
       "selections": [
         (v0/*: any*/)
-      ],
-      "storageKey": null
+      ]
     }
-  ],
-  "type": "Artwork"
+  ]
 };
 })();
 (node as any).hash = 'e20d4fa964b57dd0a75664fa56741ed4';

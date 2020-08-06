@@ -1,5 +1,4 @@
 /* tslint:disable */
-/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -19,13 +18,17 @@ export type ViewingRoomStatementRoute_viewingRoom$key = {
 
 
 const node: ReaderFragment = {
-  "argumentDefinitions": [],
   "kind": "Fragment",
-  "metadata": null,
   "name": "ViewingRoomStatementRoute_viewingRoom",
+  "type": "ViewingRoom",
+  "metadata": null,
+  "argumentDefinitions": [],
   "selections": [
     {
+      "kind": "LinkedField",
       "alias": null,
+      "name": "artworksConnection",
+      "storageKey": "artworksConnection(first:2)",
       "args": [
         {
           "kind": "Literal",
@@ -34,47 +37,43 @@ const node: ReaderFragment = {
         }
       ],
       "concreteType": "ArtworkConnection",
-      "kind": "LinkedField",
-      "name": "artworksConnection",
       "plural": false,
       "selections": [
         {
-          "alias": null,
-          "args": null,
           "kind": "ScalarField",
+          "alias": null,
           "name": "totalCount",
+          "args": null,
           "storageKey": null
         }
-      ],
-      "storageKey": "artworksConnection(first:2)"
+      ]
     },
     {
-      "args": null,
       "kind": "FragmentSpread",
-      "name": "ViewingRoomIntro_viewingRoom"
+      "name": "ViewingRoomIntro_viewingRoom",
+      "args": null
     },
     {
-      "args": null,
       "kind": "FragmentSpread",
-      "name": "ViewingRoomWorks_viewingRoom"
+      "name": "ViewingRoomWorks_viewingRoom",
+      "args": null
     },
     {
-      "args": null,
       "kind": "FragmentSpread",
-      "name": "ViewingRoomPullQuote_viewingRoom"
+      "name": "ViewingRoomPullQuote_viewingRoom",
+      "args": null
     },
     {
-      "args": null,
       "kind": "FragmentSpread",
-      "name": "ViewingRoomBody_viewingRoom"
+      "name": "ViewingRoomBody_viewingRoom",
+      "args": null
     },
     {
-      "args": null,
       "kind": "FragmentSpread",
-      "name": "ViewingRoomSubsections_viewingRoom"
+      "name": "ViewingRoomSubsections_viewingRoom",
+      "args": null
     }
-  ],
-  "type": "ViewingRoom"
+  ]
 };
 (node as any).hash = 'eb89dc547a16f9d2e7413352b51ab944';
 export default node;

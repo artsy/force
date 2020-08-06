@@ -1,5 +1,4 @@
 /* tslint:disable */
-/* eslint-disable */
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -48,22 +47,22 @@ fragment CollectionsRail_collections on MarketingCollection {
 const node: ConcreteRequest = (function(){
 var v0 = [
   {
-    "defaultValue": null,
     "kind": "LocalArgument",
     "name": "showOnEditorial",
-    "type": "Boolean"
+    "type": "Boolean",
+    "defaultValue": null
   },
   {
-    "defaultValue": null,
     "kind": "LocalArgument",
     "name": "size",
-    "type": "Int"
+    "type": "Int",
+    "defaultValue": null
   },
   {
-    "defaultValue": null,
     "kind": "LocalArgument",
     "name": "randomizationSeed",
-    "type": "String"
+    "type": "String",
+    "defaultValue": null
   }
 ],
 v1 = [
@@ -84,98 +83,98 @@ v1 = [
   }
 ];
 return {
+  "kind": "Request",
   "fragment": {
-    "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
-    "metadata": null,
     "name": "CollectionsRailQuery",
+    "type": "Query",
+    "metadata": null,
+    "argumentDefinitions": (v0/*: any*/),
     "selections": [
       {
+        "kind": "LinkedField",
         "alias": "collections",
+        "name": "marketingCollections",
+        "storageKey": null,
         "args": (v1/*: any*/),
         "concreteType": "MarketingCollection",
-        "kind": "LinkedField",
-        "name": "marketingCollections",
         "plural": true,
         "selections": [
           {
-            "args": null,
             "kind": "FragmentSpread",
-            "name": "CollectionsRail_collections"
+            "name": "CollectionsRail_collections",
+            "args": null
           }
-        ],
-        "storageKey": null
+        ]
       }
-    ],
-    "type": "Query"
+    ]
   },
-  "kind": "Request",
   "operation": {
-    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "CollectionsRailQuery",
+    "argumentDefinitions": (v0/*: any*/),
     "selections": [
       {
+        "kind": "LinkedField",
         "alias": "collections",
+        "name": "marketingCollections",
+        "storageKey": null,
         "args": (v1/*: any*/),
         "concreteType": "MarketingCollection",
-        "kind": "LinkedField",
-        "name": "marketingCollections",
         "plural": true,
         "selections": [
           {
-            "alias": null,
-            "args": null,
             "kind": "ScalarField",
+            "alias": null,
             "name": "slug",
+            "args": null,
             "storageKey": null
           },
           {
-            "alias": null,
-            "args": null,
             "kind": "ScalarField",
+            "alias": null,
             "name": "headerImage",
+            "args": null,
             "storageKey": null
           },
           {
-            "alias": null,
-            "args": null,
             "kind": "ScalarField",
+            "alias": null,
             "name": "title",
+            "args": null,
             "storageKey": null
           },
           {
+            "kind": "ScalarField",
             "alias": "price_guidance",
-            "args": null,
-            "kind": "ScalarField",
             "name": "priceGuidance",
+            "args": null,
             "storageKey": null
           },
           {
+            "kind": "ScalarField",
             "alias": "show_on_editorial",
-            "args": null,
-            "kind": "ScalarField",
             "name": "showOnEditorial",
+            "args": null,
             "storageKey": null
           },
           {
-            "alias": null,
-            "args": null,
             "kind": "ScalarField",
+            "alias": null,
             "name": "id",
+            "args": null,
             "storageKey": null
           }
-        ],
-        "storageKey": null
+        ]
       }
     ]
   },
   "params": {
-    "id": null,
-    "metadata": {},
-    "name": "CollectionsRailQuery",
     "operationKind": "query",
-    "text": "query CollectionsRailQuery(\n  $showOnEditorial: Boolean\n  $size: Int\n  $randomizationSeed: String\n) {\n  collections: marketingCollections(showOnEditorial: $showOnEditorial, size: $size, randomizationSeed: $randomizationSeed) {\n    ...CollectionsRail_collections\n    id\n  }\n}\n\nfragment CollectionEntity_collection on MarketingCollection {\n  slug\n  headerImage\n  title\n  price_guidance: priceGuidance\n  show_on_editorial: showOnEditorial\n}\n\nfragment CollectionsRail_collections on MarketingCollection {\n  ...CollectionEntity_collection\n}\n"
+    "name": "CollectionsRailQuery",
+    "id": null,
+    "text": "query CollectionsRailQuery(\n  $showOnEditorial: Boolean\n  $size: Int\n  $randomizationSeed: String\n) {\n  collections: marketingCollections(showOnEditorial: $showOnEditorial, size: $size, randomizationSeed: $randomizationSeed) {\n    ...CollectionsRail_collections\n    id\n  }\n}\n\nfragment CollectionEntity_collection on MarketingCollection {\n  slug\n  headerImage\n  title\n  price_guidance: priceGuidance\n  show_on_editorial: showOnEditorial\n}\n\nfragment CollectionsRail_collections on MarketingCollection {\n  ...CollectionEntity_collection\n}\n",
+    "metadata": {}
   }
 };
 })();

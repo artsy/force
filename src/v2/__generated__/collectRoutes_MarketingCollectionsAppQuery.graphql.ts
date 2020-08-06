@@ -1,5 +1,4 @@
 /* tslint:disable */
-/* eslint-disable */
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -35,102 +34,102 @@ fragment Collections_marketingCategories on MarketingCollectionCategory {
 */
 
 const node: ConcreteRequest = {
+  "kind": "Request",
   "fragment": {
-    "argumentDefinitions": [],
     "kind": "Fragment",
-    "metadata": null,
     "name": "collectRoutes_MarketingCollectionsAppQuery",
+    "type": "Query",
+    "metadata": null,
+    "argumentDefinitions": [],
     "selections": [
       {
+        "kind": "LinkedField",
         "alias": null,
+        "name": "marketingCategories",
+        "storageKey": null,
         "args": null,
         "concreteType": "MarketingCollectionCategory",
-        "kind": "LinkedField",
-        "name": "marketingCategories",
         "plural": true,
         "selections": [
           {
-            "args": null,
             "kind": "FragmentSpread",
-            "name": "Collections_marketingCategories"
+            "name": "Collections_marketingCategories",
+            "args": null
           }
-        ],
-        "storageKey": null
+        ]
       }
-    ],
-    "type": "Query"
+    ]
   },
-  "kind": "Request",
   "operation": {
-    "argumentDefinitions": [],
     "kind": "Operation",
     "name": "collectRoutes_MarketingCollectionsAppQuery",
+    "argumentDefinitions": [],
     "selections": [
       {
+        "kind": "LinkedField",
         "alias": null,
+        "name": "marketingCategories",
+        "storageKey": null,
         "args": null,
         "concreteType": "MarketingCollectionCategory",
-        "kind": "LinkedField",
-        "name": "marketingCategories",
         "plural": true,
         "selections": [
           {
-            "alias": null,
-            "args": null,
             "kind": "ScalarField",
+            "alias": null,
             "name": "name",
+            "args": null,
             "storageKey": null
           },
           {
+            "kind": "LinkedField",
             "alias": null,
+            "name": "collections",
+            "storageKey": null,
             "args": null,
             "concreteType": "MarketingCollection",
-            "kind": "LinkedField",
-            "name": "collections",
             "plural": true,
             "selections": [
               {
-                "alias": null,
-                "args": null,
                 "kind": "ScalarField",
+                "alias": null,
                 "name": "slug",
+                "args": null,
                 "storageKey": null
               },
               {
-                "alias": null,
-                "args": null,
                 "kind": "ScalarField",
+                "alias": null,
                 "name": "headerImage",
+                "args": null,
                 "storageKey": null
               },
               {
-                "alias": null,
-                "args": null,
                 "kind": "ScalarField",
+                "alias": null,
                 "name": "title",
+                "args": null,
                 "storageKey": null
               },
               {
-                "alias": null,
-                "args": null,
                 "kind": "ScalarField",
+                "alias": null,
                 "name": "id",
+                "args": null,
                 "storageKey": null
               }
-            ],
-            "storageKey": null
+            ]
           }
-        ],
-        "storageKey": null
+        ]
       }
     ]
   },
   "params": {
-    "id": null,
-    "metadata": {},
-    "name": "collectRoutes_MarketingCollectionsAppQuery",
     "operationKind": "query",
-    "text": "query collectRoutes_MarketingCollectionsAppQuery {\n  marketingCategories @principalField {\n    ...Collections_marketingCategories\n  }\n}\n\nfragment Collections_marketingCategories on MarketingCollectionCategory {\n  name\n  collections {\n    slug\n    headerImage\n    title\n    id\n  }\n}\n"
+    "name": "collectRoutes_MarketingCollectionsAppQuery",
+    "id": null,
+    "text": "query collectRoutes_MarketingCollectionsAppQuery {\n  marketingCategories @principalField {\n    ...Collections_marketingCategories\n  }\n}\n\nfragment Collections_marketingCategories on MarketingCollectionCategory {\n  name\n  collections {\n    slug\n    headerImage\n    title\n    id\n  }\n}\n",
+    "metadata": {}
   }
 };
 (node as any).hash = 'fef524f8337c800a5308955689bca0b6';

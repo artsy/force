@@ -1,5 +1,4 @@
 /* tslint:disable */
-/* eslint-disable */
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -112,231 +111,231 @@ var v0 = [
 ],
 v1 = [
   {
-    "alias": null,
-    "args": null,
     "kind": "ScalarField",
+    "alias": null,
     "name": "minor",
+    "args": null,
     "storageKey": null
   }
 ],
 v2 = {
-  "alias": null,
-  "args": null,
   "kind": "ScalarField",
+  "alias": null,
   "name": "id",
+  "args": null,
   "storageKey": null
 },
 v3 = {
-  "alias": null,
-  "args": null,
   "kind": "ScalarField",
+  "alias": null,
   "name": "category",
+  "args": null,
   "storageKey": null
 };
 return {
+  "kind": "Request",
   "fragment": {
-    "argumentDefinitions": [],
     "kind": "Fragment",
-    "metadata": null,
     "name": "PricingContextTestQuery",
+    "type": "Query",
+    "metadata": null,
+    "argumentDefinitions": [],
     "selections": [
       {
+        "kind": "LinkedField",
         "alias": null,
+        "name": "artwork",
+        "storageKey": "artwork(id:\"unused\")",
         "args": (v0/*: any*/),
         "concreteType": "Artwork",
-        "kind": "LinkedField",
-        "name": "artwork",
         "plural": false,
         "selections": [
           {
-            "args": null,
             "kind": "FragmentSpread",
-            "name": "PricingContext_artwork"
+            "name": "PricingContext_artwork",
+            "args": null
           }
-        ],
-        "storageKey": "artwork(id:\"unused\")"
+        ]
       }
-    ],
-    "type": "Query"
+    ]
   },
-  "kind": "Request",
   "operation": {
-    "argumentDefinitions": [],
     "kind": "Operation",
     "name": "PricingContextTestQuery",
+    "argumentDefinitions": [],
     "selections": [
       {
+        "kind": "LinkedField",
         "alias": null,
+        "name": "artwork",
+        "storageKey": "artwork(id:\"unused\")",
         "args": (v0/*: any*/),
         "concreteType": "Artwork",
-        "kind": "LinkedField",
-        "name": "artwork",
         "plural": false,
         "selections": [
           {
+            "kind": "LinkedField",
             "alias": null,
+            "name": "listPrice",
+            "storageKey": null,
             "args": null,
             "concreteType": null,
-            "kind": "LinkedField",
-            "name": "listPrice",
             "plural": false,
             "selections": [
               {
-                "alias": null,
-                "args": null,
                 "kind": "ScalarField",
+                "alias": null,
                 "name": "__typename",
+                "args": null,
                 "storageKey": null
               },
               {
                 "kind": "InlineFragment",
+                "type": "PriceRange",
                 "selections": [
                   {
+                    "kind": "LinkedField",
                     "alias": null,
+                    "name": "maxPrice",
+                    "storageKey": null,
                     "args": null,
                     "concreteType": "Money",
-                    "kind": "LinkedField",
-                    "name": "maxPrice",
                     "plural": false,
-                    "selections": (v1/*: any*/),
-                    "storageKey": null
+                    "selections": (v1/*: any*/)
                   },
                   {
+                    "kind": "LinkedField",
                     "alias": null,
+                    "name": "minPrice",
+                    "storageKey": null,
                     "args": null,
                     "concreteType": "Money",
-                    "kind": "LinkedField",
-                    "name": "minPrice",
                     "plural": false,
-                    "selections": (v1/*: any*/),
-                    "storageKey": null
+                    "selections": (v1/*: any*/)
                   }
-                ],
-                "type": "PriceRange"
+                ]
               },
               {
                 "kind": "InlineFragment",
-                "selections": (v1/*: any*/),
-                "type": "Money"
+                "type": "Money",
+                "selections": (v1/*: any*/)
               }
-            ],
-            "storageKey": null
+            ]
           },
           {
+            "kind": "LinkedField",
             "alias": null,
+            "name": "artists",
+            "storageKey": null,
             "args": null,
             "concreteType": "Artist",
-            "kind": "LinkedField",
-            "name": "artists",
             "plural": true,
             "selections": [
               {
-                "alias": null,
-                "args": null,
                 "kind": "ScalarField",
+                "alias": null,
                 "name": "slug",
+                "args": null,
                 "storageKey": null
               },
               (v2/*: any*/)
-            ],
-            "storageKey": null
+            ]
           },
           (v3/*: any*/),
           {
+            "kind": "LinkedField",
             "alias": null,
+            "name": "pricingContext",
+            "storageKey": null,
             "args": null,
             "concreteType": "AnalyticsPricingContext",
-            "kind": "LinkedField",
-            "name": "pricingContext",
             "plural": false,
             "selections": [
               {
-                "alias": null,
-                "args": null,
                 "kind": "ScalarField",
+                "alias": null,
                 "name": "appliedFiltersDisplay",
+                "args": null,
                 "storageKey": null
               },
               {
+                "kind": "LinkedField",
                 "alias": null,
+                "name": "appliedFilters",
+                "storageKey": null,
                 "args": null,
                 "concreteType": "AnalyticsPriceContextFilterType",
-                "kind": "LinkedField",
-                "name": "appliedFilters",
                 "plural": false,
                 "selections": [
                   {
-                    "alias": null,
-                    "args": null,
                     "kind": "ScalarField",
+                    "alias": null,
                     "name": "dimension",
+                    "args": null,
                     "storageKey": null
                   },
                   (v3/*: any*/)
-                ],
-                "storageKey": null
+                ]
               },
               {
+                "kind": "LinkedField",
                 "alias": null,
+                "name": "bins",
+                "storageKey": null,
                 "args": null,
                 "concreteType": "AnalyticsHistogramBin",
-                "kind": "LinkedField",
-                "name": "bins",
                 "plural": true,
                 "selections": [
                   {
-                    "alias": null,
-                    "args": null,
                     "kind": "ScalarField",
+                    "alias": null,
                     "name": "maxPrice",
+                    "args": null,
                     "storageKey": null
                   },
                   {
-                    "alias": null,
-                    "args": null,
                     "kind": "ScalarField",
+                    "alias": null,
                     "name": "maxPriceCents",
+                    "args": null,
                     "storageKey": null
                   },
                   {
-                    "alias": null,
-                    "args": null,
                     "kind": "ScalarField",
+                    "alias": null,
                     "name": "minPrice",
+                    "args": null,
                     "storageKey": null
                   },
                   {
-                    "alias": null,
-                    "args": null,
                     "kind": "ScalarField",
+                    "alias": null,
                     "name": "minPriceCents",
+                    "args": null,
                     "storageKey": null
                   },
                   {
-                    "alias": null,
-                    "args": null,
                     "kind": "ScalarField",
+                    "alias": null,
                     "name": "numArtworks",
+                    "args": null,
                     "storageKey": null
                   }
-                ],
-                "storageKey": null
+                ]
               }
-            ],
-            "storageKey": null
+            ]
           },
           (v2/*: any*/)
-        ],
-        "storageKey": "artwork(id:\"unused\")"
+        ]
       }
     ]
   },
   "params": {
-    "id": null,
-    "metadata": {},
-    "name": "PricingContextTestQuery",
     "operationKind": "query",
-    "text": "query PricingContextTestQuery {\n  artwork(id: \"unused\") {\n    ...PricingContext_artwork\n    id\n  }\n}\n\nfragment PricingContext_artwork on Artwork {\n  listPrice {\n    __typename\n    ... on PriceRange {\n      maxPrice {\n        minor\n      }\n      minPrice {\n        minor\n      }\n    }\n    ... on Money {\n      minor\n    }\n  }\n  artists {\n    slug\n    id\n  }\n  category\n  pricingContext {\n    appliedFiltersDisplay\n    appliedFilters {\n      dimension\n      category\n    }\n    bins {\n      maxPrice\n      maxPriceCents\n      minPrice\n      minPriceCents\n      numArtworks\n    }\n  }\n}\n"
+    "name": "PricingContextTestQuery",
+    "id": null,
+    "text": "query PricingContextTestQuery {\n  artwork(id: \"unused\") {\n    ...PricingContext_artwork\n    id\n  }\n}\n\nfragment PricingContext_artwork on Artwork {\n  listPrice {\n    __typename\n    ... on PriceRange {\n      maxPrice {\n        minor\n      }\n      minPrice {\n        minor\n      }\n    }\n    ... on Money {\n      minor\n    }\n  }\n  artists {\n    slug\n    id\n  }\n  category\n  pricingContext {\n    appliedFiltersDisplay\n    appliedFilters {\n      dimension\n      category\n    }\n    bins {\n      maxPrice\n      maxPriceCents\n      minPrice\n      minPriceCents\n      numArtworks\n    }\n  }\n}\n",
+    "metadata": {}
   }
 };
 })();

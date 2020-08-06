@@ -1,14 +1,13 @@
 /* tslint:disable */
-/* eslint-disable */
 
 import { ConcreteRequest } from "relay-runtime";
 export type CreateSmsSecondFactorInput = {
-    attributes: SmsSecondFactorAttributes;
-    clientMutationId?: string | null;
+    readonly attributes: SmsSecondFactorAttributes;
+    readonly clientMutationId?: string | null;
 };
 export type SmsSecondFactorAttributes = {
-    countryCode?: string | null;
-    phoneNumber?: string | null;
+    readonly countryCode?: string | null;
+    readonly phoneNumber?: string | null;
 };
 export type CreateSmsSecondFactorMutationVariables = {
     input: CreateSmsSecondFactorInput;
@@ -81,10 +80,10 @@ mutation CreateSmsSecondFactorMutation(
 const node: ConcreteRequest = (function(){
 var v0 = [
   {
-    "defaultValue": null,
     "kind": "LocalArgument",
     "name": "input",
-    "type": "CreateSmsSecondFactorInput!"
+    "type": "CreateSmsSecondFactorInput!",
+    "defaultValue": null
   }
 ],
 v1 = [
@@ -95,131 +94,131 @@ v1 = [
   }
 ],
 v2 = {
-  "alias": null,
-  "args": null,
   "kind": "ScalarField",
+  "alias": null,
   "name": "__typename",
+  "args": null,
   "storageKey": null
 },
 v3 = {
   "kind": "InlineFragment",
+  "type": "SmsSecondFactor",
   "selections": [
     (v2/*: any*/),
     {
-      "alias": null,
-      "args": null,
       "kind": "ScalarField",
+      "alias": null,
       "name": "internalID",
+      "args": null,
       "storageKey": null
     }
-  ],
-  "type": "SmsSecondFactor"
+  ]
 },
 v4 = {
   "kind": "InlineFragment",
+  "type": "Errors",
   "selections": [
     (v2/*: any*/),
     {
+      "kind": "LinkedField",
       "alias": null,
+      "name": "errors",
+      "storageKey": null,
       "args": null,
       "concreteType": "Error",
-      "kind": "LinkedField",
-      "name": "errors",
       "plural": true,
       "selections": [
         {
-          "alias": null,
-          "args": null,
           "kind": "ScalarField",
+          "alias": null,
           "name": "message",
+          "args": null,
           "storageKey": null
         },
         {
-          "alias": null,
-          "args": null,
           "kind": "ScalarField",
+          "alias": null,
           "name": "code",
+          "args": null,
           "storageKey": null
         }
-      ],
-      "storageKey": null
+      ]
     }
-  ],
-  "type": "Errors"
+  ]
 };
 return {
+  "kind": "Request",
   "fragment": {
-    "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
-    "metadata": null,
     "name": "CreateSmsSecondFactorMutation",
+    "type": "Mutation",
+    "metadata": null,
+    "argumentDefinitions": (v0/*: any*/),
     "selections": [
       {
+        "kind": "LinkedField",
         "alias": null,
+        "name": "createSmsSecondFactor",
+        "storageKey": null,
         "args": (v1/*: any*/),
         "concreteType": "CreateSmsSecondFactorPayload",
-        "kind": "LinkedField",
-        "name": "createSmsSecondFactor",
         "plural": false,
         "selections": [
           {
+            "kind": "LinkedField",
             "alias": null,
+            "name": "secondFactorOrErrors",
+            "storageKey": null,
             "args": null,
             "concreteType": null,
-            "kind": "LinkedField",
-            "name": "secondFactorOrErrors",
             "plural": false,
             "selections": [
               (v3/*: any*/),
               (v4/*: any*/)
-            ],
-            "storageKey": null
+            ]
           }
-        ],
-        "storageKey": null
+        ]
       }
-    ],
-    "type": "Mutation"
+    ]
   },
-  "kind": "Request",
   "operation": {
-    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "CreateSmsSecondFactorMutation",
+    "argumentDefinitions": (v0/*: any*/),
     "selections": [
       {
+        "kind": "LinkedField",
         "alias": null,
+        "name": "createSmsSecondFactor",
+        "storageKey": null,
         "args": (v1/*: any*/),
         "concreteType": "CreateSmsSecondFactorPayload",
-        "kind": "LinkedField",
-        "name": "createSmsSecondFactor",
         "plural": false,
         "selections": [
           {
+            "kind": "LinkedField",
             "alias": null,
+            "name": "secondFactorOrErrors",
+            "storageKey": null,
             "args": null,
             "concreteType": null,
-            "kind": "LinkedField",
-            "name": "secondFactorOrErrors",
             "plural": false,
             "selections": [
               (v2/*: any*/),
               (v3/*: any*/),
               (v4/*: any*/)
-            ],
-            "storageKey": null
+            ]
           }
-        ],
-        "storageKey": null
+        ]
       }
     ]
   },
   "params": {
-    "id": null,
-    "metadata": {},
-    "name": "CreateSmsSecondFactorMutation",
     "operationKind": "mutation",
-    "text": "mutation CreateSmsSecondFactorMutation(\n  $input: CreateSmsSecondFactorInput!\n) {\n  createSmsSecondFactor(input: $input) {\n    secondFactorOrErrors {\n      __typename\n      ... on SmsSecondFactor {\n        __typename\n        internalID\n      }\n      ... on Errors {\n        __typename\n        errors {\n          message\n          code\n        }\n      }\n    }\n  }\n}\n"
+    "name": "CreateSmsSecondFactorMutation",
+    "id": null,
+    "text": "mutation CreateSmsSecondFactorMutation(\n  $input: CreateSmsSecondFactorInput!\n) {\n  createSmsSecondFactor(input: $input) {\n    secondFactorOrErrors {\n      __typename\n      ... on SmsSecondFactor {\n        __typename\n        internalID\n      }\n      ... on Errors {\n        __typename\n        errors {\n          message\n          code\n        }\n      }\n    }\n  }\n}\n",
+    "metadata": {}
   }
 };
 })();

@@ -1,5 +1,4 @@
 /* tslint:disable */
-/* eslint-disable */
 
 import { ConcreteRequest } from "relay-runtime";
 export type PricingTransparencyQueryVariables = {
@@ -60,22 +59,22 @@ query PricingTransparencyQuery(
 const node: ConcreteRequest = (function(){
 var v0 = [
   {
-    "defaultValue": null,
     "kind": "LocalArgument",
     "name": "saleId",
-    "type": "String!"
+    "type": "String!",
+    "defaultValue": null
   },
   {
-    "defaultValue": null,
     "kind": "LocalArgument",
     "name": "artworkId",
-    "type": "String!"
+    "type": "String!",
+    "defaultValue": null
   },
   {
-    "defaultValue": null,
     "kind": "LocalArgument",
     "name": "bidAmountMinor",
-    "type": "Int!"
+    "type": "Int!",
+    "defaultValue": null
   }
 ],
 v1 = [
@@ -94,15 +93,18 @@ v2 = [
 ],
 v3 = [
   {
-    "alias": null,
-    "args": null,
     "kind": "ScalarField",
+    "alias": null,
     "name": "display",
+    "args": null,
     "storageKey": null
   }
 ],
 v4 = {
+  "kind": "LinkedField",
   "alias": null,
+  "name": "calculatedCost",
+  "storageKey": null,
   "args": [
     {
       "kind": "Variable",
@@ -111,122 +113,119 @@ v4 = {
     }
   ],
   "concreteType": "CalculatedCost",
-  "kind": "LinkedField",
-  "name": "calculatedCost",
   "plural": false,
   "selections": [
     {
-      "alias": null,
-      "args": null,
-      "concreteType": "Money",
       "kind": "LinkedField",
+      "alias": null,
       "name": "bidAmount",
-      "plural": false,
-      "selections": (v3/*: any*/),
-      "storageKey": null
-    },
-    {
-      "alias": null,
+      "storageKey": null,
       "args": null,
       "concreteType": "Money",
+      "plural": false,
+      "selections": (v3/*: any*/)
+    },
+    {
       "kind": "LinkedField",
+      "alias": null,
       "name": "buyersPremium",
-      "plural": false,
-      "selections": (v3/*: any*/),
-      "storageKey": null
-    },
-    {
-      "alias": null,
+      "storageKey": null,
       "args": null,
       "concreteType": "Money",
-      "kind": "LinkedField",
-      "name": "subtotal",
       "plural": false,
-      "selections": (v3/*: any*/),
-      "storageKey": null
+      "selections": (v3/*: any*/)
+    },
+    {
+      "kind": "LinkedField",
+      "alias": null,
+      "name": "subtotal",
+      "storageKey": null,
+      "args": null,
+      "concreteType": "Money",
+      "plural": false,
+      "selections": (v3/*: any*/)
     }
-  ],
-  "storageKey": null
+  ]
 },
 v5 = {
-  "alias": null,
-  "args": null,
   "kind": "ScalarField",
+  "alias": null,
   "name": "id",
+  "args": null,
   "storageKey": null
 };
 return {
+  "kind": "Request",
   "fragment": {
-    "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
-    "metadata": null,
     "name": "PricingTransparencyQuery",
+    "type": "Query",
+    "metadata": null,
+    "argumentDefinitions": (v0/*: any*/),
     "selections": [
       {
+        "kind": "LinkedField",
         "alias": null,
+        "name": "artwork",
+        "storageKey": null,
         "args": (v1/*: any*/),
         "concreteType": "Artwork",
-        "kind": "LinkedField",
-        "name": "artwork",
         "plural": false,
         "selections": [
           {
+            "kind": "LinkedField",
             "alias": null,
+            "name": "saleArtwork",
+            "storageKey": null,
             "args": (v2/*: any*/),
             "concreteType": "SaleArtwork",
-            "kind": "LinkedField",
-            "name": "saleArtwork",
             "plural": false,
             "selections": [
               (v4/*: any*/)
-            ],
-            "storageKey": null
+            ]
           }
-        ],
-        "storageKey": null
+        ]
       }
-    ],
-    "type": "Query"
+    ]
   },
-  "kind": "Request",
   "operation": {
-    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "PricingTransparencyQuery",
+    "argumentDefinitions": (v0/*: any*/),
     "selections": [
       {
+        "kind": "LinkedField",
         "alias": null,
+        "name": "artwork",
+        "storageKey": null,
         "args": (v1/*: any*/),
         "concreteType": "Artwork",
-        "kind": "LinkedField",
-        "name": "artwork",
         "plural": false,
         "selections": [
           {
+            "kind": "LinkedField",
             "alias": null,
+            "name": "saleArtwork",
+            "storageKey": null,
             "args": (v2/*: any*/),
             "concreteType": "SaleArtwork",
-            "kind": "LinkedField",
-            "name": "saleArtwork",
             "plural": false,
             "selections": [
               (v4/*: any*/),
               (v5/*: any*/)
-            ],
-            "storageKey": null
+            ]
           },
           (v5/*: any*/)
-        ],
-        "storageKey": null
+        ]
       }
     ]
   },
   "params": {
-    "id": null,
-    "metadata": {},
-    "name": "PricingTransparencyQuery",
     "operationKind": "query",
-    "text": "query PricingTransparencyQuery(\n  $saleId: String!\n  $artworkId: String!\n  $bidAmountMinor: Int!\n) {\n  artwork(id: $artworkId) {\n    saleArtwork(saleID: $saleId) {\n      calculatedCost(bidAmountMinor: $bidAmountMinor) {\n        bidAmount {\n          display\n        }\n        buyersPremium {\n          display\n        }\n        subtotal {\n          display\n        }\n      }\n      id\n    }\n    id\n  }\n}\n"
+    "name": "PricingTransparencyQuery",
+    "id": null,
+    "text": "query PricingTransparencyQuery(\n  $saleId: String!\n  $artworkId: String!\n  $bidAmountMinor: Int!\n) {\n  artwork(id: $artworkId) {\n    saleArtwork(saleID: $saleId) {\n      calculatedCost(bidAmountMinor: $bidAmountMinor) {\n        bidAmount {\n          display\n        }\n        buyersPremium {\n          display\n        }\n        subtotal {\n          display\n        }\n      }\n      id\n    }\n    id\n  }\n}\n",
+    "metadata": {}
   }
 };
 })();

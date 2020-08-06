@@ -1,5 +1,4 @@
 /* tslint:disable */
-/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -23,13 +22,17 @@ export type SelectedWorks_selectedWorks$key = {
 
 
 const node: ReaderFragment = {
-  "argumentDefinitions": [],
   "kind": "Fragment",
-  "metadata": null,
   "name": "SelectedWorks_selectedWorks",
+  "type": "OrderedSet",
+  "metadata": null,
+  "argumentDefinitions": [],
   "selections": [
     {
+      "kind": "LinkedField",
       "alias": null,
+      "name": "itemsConnection",
+      "storageKey": "itemsConnection(first:6)",
       "args": [
         {
           "kind": "Literal",
@@ -38,49 +41,45 @@ const node: ReaderFragment = {
         }
       ],
       "concreteType": "ArtworkConnection",
-      "kind": "LinkedField",
-      "name": "itemsConnection",
       "plural": false,
       "selections": [
         {
+          "kind": "LinkedField",
           "alias": null,
+          "name": "edges",
+          "storageKey": null,
           "args": null,
           "concreteType": "ArtworkEdge",
-          "kind": "LinkedField",
-          "name": "edges",
           "plural": true,
           "selections": [
             {
+              "kind": "LinkedField",
               "alias": null,
+              "name": "node",
+              "storageKey": null,
               "args": null,
               "concreteType": "Artwork",
-              "kind": "LinkedField",
-              "name": "node",
               "plural": false,
               "selections": [
                 {
-                  "alias": null,
-                  "args": null,
                   "kind": "ScalarField",
+                  "alias": null,
                   "name": "id",
+                  "args": null,
                   "storageKey": null
                 }
-              ],
-              "storageKey": null
+              ]
             }
-          ],
-          "storageKey": null
+          ]
         },
         {
-          "args": null,
           "kind": "FragmentSpread",
-          "name": "ArtworkGrid_artworks"
+          "name": "ArtworkGrid_artworks",
+          "args": null
         }
-      ],
-      "storageKey": "itemsConnection(first:6)"
+      ]
     }
-  ],
-  "type": "OrderedSet"
+  ]
 };
 (node as any).hash = 'a2d0c0c9d79f769c7dc6802073e78848';
 export default node;

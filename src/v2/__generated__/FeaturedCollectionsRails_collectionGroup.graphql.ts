@@ -1,9 +1,8 @@
 /* tslint:disable */
-/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
-import { FragmentRefs } from "relay-runtime";
 export type MarketingGroupTypes = "ArtistSeries" | "FeaturedCollections" | "OtherCollections" | "%future added value";
+import { FragmentRefs } from "relay-runtime";
 export type FeaturedCollectionsRails_collectionGroup = {
     readonly groupType: MarketingGroupTypes;
     readonly name: string;
@@ -25,73 +24,73 @@ export type FeaturedCollectionsRails_collectionGroup$key = {
 
 
 const node: ReaderFragment = {
-  "argumentDefinitions": [],
   "kind": "Fragment",
-  "metadata": null,
   "name": "FeaturedCollectionsRails_collectionGroup",
+  "type": "MarketingCollectionGroup",
+  "metadata": null,
+  "argumentDefinitions": [],
   "selections": [
     {
-      "alias": null,
-      "args": null,
       "kind": "ScalarField",
+      "alias": null,
       "name": "groupType",
-      "storageKey": null
-    },
-    {
-      "alias": null,
       "args": null,
-      "kind": "ScalarField",
-      "name": "name",
       "storageKey": null
     },
     {
+      "kind": "ScalarField",
       "alias": null,
+      "name": "name",
+      "args": null,
+      "storageKey": null
+    },
+    {
+      "kind": "LinkedField",
+      "alias": null,
+      "name": "members",
+      "storageKey": null,
       "args": null,
       "concreteType": "MarketingCollection",
-      "kind": "LinkedField",
-      "name": "members",
       "plural": true,
       "selections": [
         {
-          "alias": null,
-          "args": null,
           "kind": "ScalarField",
+          "alias": null,
           "name": "slug",
+          "args": null,
           "storageKey": null
         },
         {
-          "alias": null,
-          "args": null,
           "kind": "ScalarField",
+          "alias": null,
           "name": "title",
+          "args": null,
           "storageKey": null
         },
         {
-          "alias": null,
-          "args": null,
           "kind": "ScalarField",
+          "alias": null,
           "name": "description",
+          "args": null,
           "storageKey": null
         },
         {
+          "kind": "ScalarField",
           "alias": "price_guidance",
-          "args": null,
-          "kind": "ScalarField",
           "name": "priceGuidance",
+          "args": null,
           "storageKey": null
         },
         {
-          "alias": null,
-          "args": null,
           "kind": "ScalarField",
+          "alias": null,
           "name": "thumbnail",
+          "args": null,
           "storageKey": null
         }
-      ],
-      "storageKey": null
+      ]
     }
-  ],
-  "type": "MarketingCollectionGroup"
+  ]
 };
 (node as any).hash = 'dc85cfd2b23294d0d678a66eaf966810';
 export default node;

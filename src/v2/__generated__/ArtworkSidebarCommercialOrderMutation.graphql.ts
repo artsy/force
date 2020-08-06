@@ -1,13 +1,12 @@
 /* tslint:disable */
-/* eslint-disable */
 
 import { ConcreteRequest } from "relay-runtime";
 export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
 export type CommerceCreateOrderWithArtworkInput = {
-    artworkId: string;
-    clientMutationId?: string | null;
-    editionSetId?: string | null;
-    quantity?: number | null;
+    readonly artworkId: string;
+    readonly clientMutationId?: string | null;
+    readonly editionSetId?: string | null;
+    readonly quantity?: number | null;
 };
 export type ArtworkSidebarCommercialOrderMutationVariables = {
     input: CommerceCreateOrderWithArtworkInput;
@@ -66,10 +65,10 @@ mutation ArtworkSidebarCommercialOrderMutation(
 const node: ConcreteRequest = (function(){
 var v0 = [
   {
-    "defaultValue": null,
     "kind": "LocalArgument",
     "name": "input",
-    "type": "CommerceCreateOrderWithArtworkInput!"
+    "type": "CommerceCreateOrderWithArtworkInput!",
+    "defaultValue": null
   }
 ],
 v1 = [
@@ -80,183 +79,183 @@ v1 = [
   }
 ],
 v2 = {
-  "alias": null,
-  "args": null,
   "kind": "ScalarField",
+  "alias": null,
   "name": "__typename",
+  "args": null,
   "storageKey": null
 },
 v3 = {
-  "alias": null,
-  "args": null,
   "kind": "ScalarField",
+  "alias": null,
   "name": "internalID",
+  "args": null,
   "storageKey": null
 },
 v4 = {
-  "alias": null,
-  "args": null,
   "kind": "ScalarField",
+  "alias": null,
   "name": "mode",
+  "args": null,
   "storageKey": null
 },
 v5 = {
   "kind": "InlineFragment",
+  "type": "CommerceOrderWithMutationFailure",
   "selections": [
     {
+      "kind": "LinkedField",
       "alias": null,
+      "name": "error",
+      "storageKey": null,
       "args": null,
       "concreteType": "CommerceApplicationError",
-      "kind": "LinkedField",
-      "name": "error",
       "plural": false,
       "selections": [
         {
-          "alias": null,
-          "args": null,
           "kind": "ScalarField",
+          "alias": null,
           "name": "type",
+          "args": null,
           "storageKey": null
         },
         {
-          "alias": null,
-          "args": null,
           "kind": "ScalarField",
+          "alias": null,
           "name": "code",
+          "args": null,
           "storageKey": null
         },
         {
-          "alias": null,
-          "args": null,
           "kind": "ScalarField",
+          "alias": null,
           "name": "data",
+          "args": null,
           "storageKey": null
         }
-      ],
-      "storageKey": null
+      ]
     }
-  ],
-  "type": "CommerceOrderWithMutationFailure"
+  ]
 };
 return {
+  "kind": "Request",
   "fragment": {
-    "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
-    "metadata": null,
     "name": "ArtworkSidebarCommercialOrderMutation",
+    "type": "Mutation",
+    "metadata": null,
+    "argumentDefinitions": (v0/*: any*/),
     "selections": [
       {
+        "kind": "LinkedField",
         "alias": null,
+        "name": "commerceCreateOrderWithArtwork",
+        "storageKey": null,
         "args": (v1/*: any*/),
         "concreteType": "CommerceCreateOrderWithArtworkPayload",
-        "kind": "LinkedField",
-        "name": "commerceCreateOrderWithArtwork",
         "plural": false,
         "selections": [
           {
+            "kind": "LinkedField",
             "alias": null,
+            "name": "orderOrError",
+            "storageKey": null,
             "args": null,
             "concreteType": null,
-            "kind": "LinkedField",
-            "name": "orderOrError",
             "plural": false,
             "selections": [
               {
                 "kind": "InlineFragment",
+                "type": "CommerceOrderWithMutationSuccess",
                 "selections": [
                   (v2/*: any*/),
                   {
+                    "kind": "LinkedField",
                     "alias": null,
+                    "name": "order",
+                    "storageKey": null,
                     "args": null,
                     "concreteType": null,
-                    "kind": "LinkedField",
-                    "name": "order",
                     "plural": false,
                     "selections": [
                       (v3/*: any*/),
                       (v4/*: any*/)
-                    ],
-                    "storageKey": null
+                    ]
                   }
-                ],
-                "type": "CommerceOrderWithMutationSuccess"
+                ]
               },
               (v5/*: any*/)
-            ],
-            "storageKey": null
+            ]
           }
-        ],
-        "storageKey": null
+        ]
       }
-    ],
-    "type": "Mutation"
+    ]
   },
-  "kind": "Request",
   "operation": {
-    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "ArtworkSidebarCommercialOrderMutation",
+    "argumentDefinitions": (v0/*: any*/),
     "selections": [
       {
+        "kind": "LinkedField",
         "alias": null,
+        "name": "commerceCreateOrderWithArtwork",
+        "storageKey": null,
         "args": (v1/*: any*/),
         "concreteType": "CommerceCreateOrderWithArtworkPayload",
-        "kind": "LinkedField",
-        "name": "commerceCreateOrderWithArtwork",
         "plural": false,
         "selections": [
           {
+            "kind": "LinkedField",
             "alias": null,
+            "name": "orderOrError",
+            "storageKey": null,
             "args": null,
             "concreteType": null,
-            "kind": "LinkedField",
-            "name": "orderOrError",
             "plural": false,
             "selections": [
               (v2/*: any*/),
               {
                 "kind": "InlineFragment",
+                "type": "CommerceOrderWithMutationSuccess",
                 "selections": [
                   (v2/*: any*/),
                   {
+                    "kind": "LinkedField",
                     "alias": null,
+                    "name": "order",
+                    "storageKey": null,
                     "args": null,
                     "concreteType": null,
-                    "kind": "LinkedField",
-                    "name": "order",
                     "plural": false,
                     "selections": [
                       (v2/*: any*/),
                       (v3/*: any*/),
                       (v4/*: any*/),
                       {
-                        "alias": null,
-                        "args": null,
                         "kind": "ScalarField",
+                        "alias": null,
                         "name": "id",
+                        "args": null,
                         "storageKey": null
                       }
-                    ],
-                    "storageKey": null
+                    ]
                   }
-                ],
-                "type": "CommerceOrderWithMutationSuccess"
+                ]
               },
               (v5/*: any*/)
-            ],
-            "storageKey": null
+            ]
           }
-        ],
-        "storageKey": null
+        ]
       }
     ]
   },
   "params": {
-    "id": null,
-    "metadata": {},
-    "name": "ArtworkSidebarCommercialOrderMutation",
     "operationKind": "mutation",
-    "text": "mutation ArtworkSidebarCommercialOrderMutation(\n  $input: CommerceCreateOrderWithArtworkInput!\n) {\n  commerceCreateOrderWithArtwork(input: $input) {\n    orderOrError {\n      __typename\n      ... on CommerceOrderWithMutationSuccess {\n        __typename\n        order {\n          __typename\n          internalID\n          mode\n          id\n        }\n      }\n      ... on CommerceOrderWithMutationFailure {\n        error {\n          type\n          code\n          data\n        }\n      }\n    }\n  }\n}\n"
+    "name": "ArtworkSidebarCommercialOrderMutation",
+    "id": null,
+    "text": "mutation ArtworkSidebarCommercialOrderMutation(\n  $input: CommerceCreateOrderWithArtworkInput!\n) {\n  commerceCreateOrderWithArtwork(input: $input) {\n    orderOrError {\n      __typename\n      ... on CommerceOrderWithMutationSuccess {\n        __typename\n        order {\n          __typename\n          internalID\n          mode\n          id\n        }\n      }\n      ... on CommerceOrderWithMutationFailure {\n        error {\n          type\n          code\n          data\n        }\n      }\n    }\n  }\n}\n",
+    "metadata": {}
   }
 };
 })();

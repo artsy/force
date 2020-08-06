@@ -1,5 +1,4 @@
 /* tslint:disable */
-/* eslint-disable */
 
 import { ConcreteRequest } from "relay-runtime";
 export type createMockNetworkLayerTestQueryVariables = {};
@@ -28,7 +27,10 @@ query createMockNetworkLayerTestQuery {
 const node: ConcreteRequest = (function(){
 var v0 = [
   {
+    "kind": "LinkedField",
     "alias": null,
+    "name": "artwork",
+    "storageKey": "artwork(id:\"untitled\")",
     "args": [
       {
         "kind": "Literal",
@@ -37,50 +39,47 @@ var v0 = [
       }
     ],
     "concreteType": "Artwork",
-    "kind": "LinkedField",
-    "name": "artwork",
     "plural": false,
     "selections": [
       {
-        "alias": null,
-        "args": null,
         "kind": "ScalarField",
+        "alias": null,
         "name": "id",
+        "args": null,
         "storageKey": null
       },
       {
-        "alias": null,
-        "args": null,
         "kind": "ScalarField",
+        "alias": null,
         "name": "title",
+        "args": null,
         "storageKey": null
       }
-    ],
-    "storageKey": "artwork(id:\"untitled\")"
+    ]
   }
 ];
 return {
-  "fragment": {
-    "argumentDefinitions": [],
-    "kind": "Fragment",
-    "metadata": null,
-    "name": "createMockNetworkLayerTestQuery",
-    "selections": (v0/*: any*/),
-    "type": "Query"
-  },
   "kind": "Request",
-  "operation": {
+  "fragment": {
+    "kind": "Fragment",
+    "name": "createMockNetworkLayerTestQuery",
+    "type": "Query",
+    "metadata": null,
     "argumentDefinitions": [],
+    "selections": (v0/*: any*/)
+  },
+  "operation": {
     "kind": "Operation",
     "name": "createMockNetworkLayerTestQuery",
+    "argumentDefinitions": [],
     "selections": (v0/*: any*/)
   },
   "params": {
-    "id": null,
-    "metadata": {},
-    "name": "createMockNetworkLayerTestQuery",
     "operationKind": "query",
-    "text": "query createMockNetworkLayerTestQuery {\n  artwork(id: \"untitled\") {\n    id\n    title\n  }\n}\n"
+    "name": "createMockNetworkLayerTestQuery",
+    "id": null,
+    "text": "query createMockNetworkLayerTestQuery {\n  artwork(id: \"untitled\") {\n    id\n    title\n  }\n}\n",
+    "metadata": {}
   }
 };
 })();

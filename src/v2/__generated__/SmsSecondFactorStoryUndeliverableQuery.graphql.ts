@@ -1,5 +1,4 @@
 /* tslint:disable */
-/* eslint-disable */
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -39,61 +38,65 @@ fragment SmsSecondFactor_me on Me {
 
 const node: ConcreteRequest = (function(){
 var v0 = {
-  "alias": null,
-  "args": null,
   "kind": "ScalarField",
+  "alias": null,
   "name": "__typename",
+  "args": null,
   "storageKey": null
 };
 return {
+  "kind": "Request",
   "fragment": {
-    "argumentDefinitions": [],
     "kind": "Fragment",
-    "metadata": null,
     "name": "SmsSecondFactorStoryUndeliverableQuery",
+    "type": "Query",
+    "metadata": null,
+    "argumentDefinitions": [],
     "selections": [
       {
+        "kind": "LinkedField",
         "alias": null,
+        "name": "me",
+        "storageKey": null,
         "args": null,
         "concreteType": "Me",
-        "kind": "LinkedField",
-        "name": "me",
         "plural": false,
         "selections": [
           {
-            "args": null,
             "kind": "FragmentSpread",
-            "name": "SmsSecondFactor_me"
+            "name": "SmsSecondFactor_me",
+            "args": null
           }
-        ],
-        "storageKey": null
+        ]
       }
-    ],
-    "type": "Query"
+    ]
   },
-  "kind": "Request",
   "operation": {
-    "argumentDefinitions": [],
     "kind": "Operation",
     "name": "SmsSecondFactorStoryUndeliverableQuery",
+    "argumentDefinitions": [],
     "selections": [
       {
+        "kind": "LinkedField",
         "alias": null,
+        "name": "me",
+        "storageKey": null,
         "args": null,
         "concreteType": "Me",
-        "kind": "LinkedField",
-        "name": "me",
         "plural": false,
         "selections": [
           {
-            "alias": null,
-            "args": null,
             "kind": "ScalarField",
+            "alias": null,
             "name": "hasSecondFactorEnabled",
+            "args": null,
             "storageKey": null
           },
           {
+            "kind": "LinkedField",
             "alias": "smsSecondFactors",
+            "name": "secondFactors",
+            "storageKey": "secondFactors(kinds:[\"sms\"])",
             "args": [
               {
                 "kind": "Literal",
@@ -104,53 +107,49 @@ return {
               }
             ],
             "concreteType": null,
-            "kind": "LinkedField",
-            "name": "secondFactors",
             "plural": true,
             "selections": [
               (v0/*: any*/),
               {
                 "kind": "InlineFragment",
+                "type": "SmsSecondFactor",
                 "selections": [
                   (v0/*: any*/),
                   {
-                    "alias": null,
-                    "args": null,
                     "kind": "ScalarField",
+                    "alias": null,
                     "name": "internalID",
+                    "args": null,
                     "storageKey": null
                   },
                   {
-                    "alias": null,
-                    "args": null,
                     "kind": "ScalarField",
+                    "alias": null,
                     "name": "formattedPhoneNumber",
+                    "args": null,
                     "storageKey": null
                   }
-                ],
-                "type": "SmsSecondFactor"
+                ]
               }
-            ],
-            "storageKey": "secondFactors(kinds:[\"sms\"])"
+            ]
           },
           {
-            "alias": null,
-            "args": null,
             "kind": "ScalarField",
+            "alias": null,
             "name": "id",
+            "args": null,
             "storageKey": null
           }
-        ],
-        "storageKey": null
+        ]
       }
     ]
   },
   "params": {
-    "id": null,
-    "metadata": {},
-    "name": "SmsSecondFactorStoryUndeliverableQuery",
     "operationKind": "query",
-    "text": "query SmsSecondFactorStoryUndeliverableQuery {\n  me {\n    ...SmsSecondFactor_me\n    id\n  }\n}\n\nfragment SmsSecondFactor_me on Me {\n  hasSecondFactorEnabled\n  smsSecondFactors: secondFactors(kinds: [sms]) {\n    __typename\n    ... on SmsSecondFactor {\n      __typename\n      internalID\n      formattedPhoneNumber\n    }\n  }\n}\n"
+    "name": "SmsSecondFactorStoryUndeliverableQuery",
+    "id": null,
+    "text": "query SmsSecondFactorStoryUndeliverableQuery {\n  me {\n    ...SmsSecondFactor_me\n    id\n  }\n}\n\nfragment SmsSecondFactor_me on Me {\n  hasSecondFactorEnabled\n  smsSecondFactors: secondFactors(kinds: [sms]) {\n    __typename\n    ... on SmsSecondFactor {\n      __typename\n      internalID\n      formattedPhoneNumber\n    }\n  }\n}\n",
+    "metadata": {}
   }
 };
 })();

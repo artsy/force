@@ -1,5 +1,4 @@
 /* tslint:disable */
-/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -33,61 +32,69 @@ export type ViewingRoomWorksRoute_viewingRoom$key = {
 
 const node: ReaderFragment = (function(){
 var v0 = {
-  "alias": null,
-  "args": null,
   "kind": "ScalarField",
+  "alias": null,
   "name": "internalID",
+  "args": null,
   "storageKey": null
 };
 return {
-  "argumentDefinitions": [],
   "kind": "Fragment",
-  "metadata": null,
   "name": "ViewingRoomWorksRoute_viewingRoom",
+  "type": "ViewingRoom",
+  "metadata": null,
+  "argumentDefinitions": [],
   "selections": [
     {
+      "kind": "LinkedField",
       "alias": null,
+      "name": "artworksConnection",
+      "storageKey": null,
       "args": null,
       "concreteType": "ArtworkConnection",
-      "kind": "LinkedField",
-      "name": "artworksConnection",
       "plural": false,
       "selections": [
         {
+          "kind": "LinkedField",
           "alias": null,
+          "name": "edges",
+          "storageKey": null,
           "args": null,
           "concreteType": "ArtworkEdge",
-          "kind": "LinkedField",
-          "name": "edges",
           "plural": true,
           "selections": [
             {
+              "kind": "LinkedField",
               "alias": null,
+              "name": "node",
+              "storageKey": null,
               "args": null,
               "concreteType": "Artwork",
-              "kind": "LinkedField",
-              "name": "node",
               "plural": false,
               "selections": [
                 (v0/*: any*/),
                 {
-                  "alias": null,
-                  "args": null,
                   "kind": "ScalarField",
+                  "alias": null,
                   "name": "title",
+                  "args": null,
                   "storageKey": null
                 },
                 {
+                  "kind": "LinkedField",
                   "alias": null,
+                  "name": "images",
+                  "storageKey": null,
                   "args": null,
                   "concreteType": "Image",
-                  "kind": "LinkedField",
-                  "name": "images",
                   "plural": true,
                   "selections": [
                     (v0/*: any*/),
                     {
+                      "kind": "LinkedField",
                       "alias": null,
+                      "name": "resized",
+                      "storageKey": "resized(height:1100,version:\"normalized\")",
                       "args": [
                         {
                           "kind": "Literal",
@@ -101,53 +108,45 @@ return {
                         }
                       ],
                       "concreteType": "ResizedImageUrl",
-                      "kind": "LinkedField",
-                      "name": "resized",
                       "plural": false,
                       "selections": [
                         {
-                          "alias": null,
-                          "args": null,
                           "kind": "ScalarField",
+                          "alias": null,
                           "name": "url",
+                          "args": null,
                           "storageKey": null
                         },
                         {
-                          "alias": null,
-                          "args": null,
                           "kind": "ScalarField",
+                          "alias": null,
                           "name": "width",
+                          "args": null,
                           "storageKey": null
                         },
                         {
-                          "alias": null,
-                          "args": null,
                           "kind": "ScalarField",
+                          "alias": null,
                           "name": "height",
+                          "args": null,
                           "storageKey": null
                         }
-                      ],
-                      "storageKey": "resized(height:1100,version:\"normalized\")"
+                      ]
                     }
-                  ],
-                  "storageKey": null
+                  ]
                 },
                 {
-                  "args": null,
                   "kind": "FragmentSpread",
-                  "name": "ViewingRoomArtworkDetails_artwork"
+                  "name": "ViewingRoomArtworkDetails_artwork",
+                  "args": null
                 }
-              ],
-              "storageKey": null
+              ]
             }
-          ],
-          "storageKey": null
+          ]
         }
-      ],
-      "storageKey": null
+      ]
     }
-  ],
-  "type": "ViewingRoom"
+  ]
 };
 })();
 (node as any).hash = '5eb993431963feae086cbb4bfcc063ca';

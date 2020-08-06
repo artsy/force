@@ -1,10 +1,9 @@
 /* tslint:disable */
-/* eslint-disable */
 
 import { ConcreteRequest } from "relay-runtime";
 export type CreateBackupSecondFactorsInput = {
-    clientMutationId?: string | null;
-    password?: string | null;
+    readonly clientMutationId?: string | null;
+    readonly password?: string | null;
 };
 export type CreateBackupSecondFactorsMutationVariables = {
     input: CreateBackupSecondFactorsInput;
@@ -64,10 +63,10 @@ mutation CreateBackupSecondFactorsMutation(
 const node: ConcreteRequest = (function(){
 var v0 = [
   {
-    "defaultValue": null,
     "kind": "LocalArgument",
     "name": "input",
-    "type": "CreateBackupSecondFactorsInput!"
+    "type": "CreateBackupSecondFactorsInput!",
+    "defaultValue": null
   }
 ],
 v1 = [
@@ -78,137 +77,137 @@ v1 = [
   }
 ],
 v2 = {
-  "alias": null,
-  "args": null,
   "kind": "ScalarField",
+  "alias": null,
   "name": "__typename",
+  "args": null,
   "storageKey": null
 },
 v3 = {
-  "alias": null,
-  "args": null,
   "kind": "ScalarField",
+  "alias": null,
   "name": "code",
+  "args": null,
   "storageKey": null
 },
 v4 = {
   "kind": "InlineFragment",
+  "type": "BackupSecondFactors",
   "selections": [
     (v2/*: any*/),
     {
+      "kind": "LinkedField",
       "alias": null,
+      "name": "secondFactors",
+      "storageKey": null,
       "args": null,
       "concreteType": "BackupSecondFactor",
-      "kind": "LinkedField",
-      "name": "secondFactors",
       "plural": true,
       "selections": [
         (v3/*: any*/)
-      ],
-      "storageKey": null
+      ]
     }
-  ],
-  "type": "BackupSecondFactors"
+  ]
 },
 v5 = {
   "kind": "InlineFragment",
+  "type": "Errors",
   "selections": [
     (v2/*: any*/),
     {
+      "kind": "LinkedField",
       "alias": null,
+      "name": "errors",
+      "storageKey": null,
       "args": null,
       "concreteType": "Error",
-      "kind": "LinkedField",
-      "name": "errors",
       "plural": true,
       "selections": [
         (v3/*: any*/),
         {
-          "alias": null,
-          "args": null,
           "kind": "ScalarField",
+          "alias": null,
           "name": "message",
+          "args": null,
           "storageKey": null
         }
-      ],
-      "storageKey": null
+      ]
     }
-  ],
-  "type": "Errors"
+  ]
 };
 return {
+  "kind": "Request",
   "fragment": {
-    "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
-    "metadata": null,
     "name": "CreateBackupSecondFactorsMutation",
+    "type": "Mutation",
+    "metadata": null,
+    "argumentDefinitions": (v0/*: any*/),
     "selections": [
       {
+        "kind": "LinkedField",
         "alias": null,
+        "name": "createBackupSecondFactors",
+        "storageKey": null,
         "args": (v1/*: any*/),
         "concreteType": "CreateBackupSecondFactorsPayload",
-        "kind": "LinkedField",
-        "name": "createBackupSecondFactors",
         "plural": false,
         "selections": [
           {
+            "kind": "LinkedField",
             "alias": null,
+            "name": "secondFactorsOrErrors",
+            "storageKey": null,
             "args": null,
             "concreteType": null,
-            "kind": "LinkedField",
-            "name": "secondFactorsOrErrors",
             "plural": false,
             "selections": [
               (v4/*: any*/),
               (v5/*: any*/)
-            ],
-            "storageKey": null
+            ]
           }
-        ],
-        "storageKey": null
+        ]
       }
-    ],
-    "type": "Mutation"
+    ]
   },
-  "kind": "Request",
   "operation": {
-    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "CreateBackupSecondFactorsMutation",
+    "argumentDefinitions": (v0/*: any*/),
     "selections": [
       {
+        "kind": "LinkedField",
         "alias": null,
+        "name": "createBackupSecondFactors",
+        "storageKey": null,
         "args": (v1/*: any*/),
         "concreteType": "CreateBackupSecondFactorsPayload",
-        "kind": "LinkedField",
-        "name": "createBackupSecondFactors",
         "plural": false,
         "selections": [
           {
+            "kind": "LinkedField",
             "alias": null,
+            "name": "secondFactorsOrErrors",
+            "storageKey": null,
             "args": null,
             "concreteType": null,
-            "kind": "LinkedField",
-            "name": "secondFactorsOrErrors",
             "plural": false,
             "selections": [
               (v2/*: any*/),
               (v4/*: any*/),
               (v5/*: any*/)
-            ],
-            "storageKey": null
+            ]
           }
-        ],
-        "storageKey": null
+        ]
       }
     ]
   },
   "params": {
-    "id": null,
-    "metadata": {},
-    "name": "CreateBackupSecondFactorsMutation",
     "operationKind": "mutation",
-    "text": "mutation CreateBackupSecondFactorsMutation(\n  $input: CreateBackupSecondFactorsInput!\n) {\n  createBackupSecondFactors(input: $input) {\n    secondFactorsOrErrors {\n      __typename\n      ... on BackupSecondFactors {\n        __typename\n        secondFactors {\n          code\n        }\n      }\n      ... on Errors {\n        __typename\n        errors {\n          code\n          message\n        }\n      }\n    }\n  }\n}\n"
+    "name": "CreateBackupSecondFactorsMutation",
+    "id": null,
+    "text": "mutation CreateBackupSecondFactorsMutation(\n  $input: CreateBackupSecondFactorsInput!\n) {\n  createBackupSecondFactors(input: $input) {\n    secondFactorsOrErrors {\n      __typename\n      ... on BackupSecondFactors {\n        __typename\n        secondFactors {\n          code\n        }\n      }\n      ... on Errors {\n        __typename\n        errors {\n          code\n          message\n        }\n      }\n    }\n  }\n}\n",
+    "metadata": {}
   }
 };
 })();

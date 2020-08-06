@@ -1,5 +1,4 @@
 /* tslint:disable */
-/* eslint-disable */
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -109,10 +108,10 @@ var v0 = [
   }
 ],
 v1 = {
-  "alias": null,
-  "args": null,
   "kind": "ScalarField",
+  "alias": null,
   "name": "href",
+  "args": null,
   "storageKey": null
 },
 v2 = [
@@ -123,220 +122,220 @@ v2 = [
   }
 ],
 v3 = {
-  "alias": null,
-  "args": null,
   "kind": "ScalarField",
+  "alias": null,
   "name": "id",
+  "args": null,
   "storageKey": null
 },
 v4 = {
-  "alias": null,
-  "args": null,
   "kind": "ScalarField",
+  "alias": null,
   "name": "name",
+  "args": null,
   "storageKey": null
 },
 v5 = [
   {
-    "alias": null,
-    "args": null,
     "kind": "ScalarField",
+    "alias": null,
     "name": "display",
+    "args": null,
     "storageKey": null
   }
 ];
 return {
+  "kind": "Request",
   "fragment": {
-    "argumentDefinitions": [],
     "kind": "Fragment",
-    "metadata": null,
     "name": "Details_Test_Query",
+    "type": "Query",
+    "metadata": null,
+    "argumentDefinitions": [],
     "selections": [
       {
+        "kind": "LinkedField",
         "alias": null,
+        "name": "artwork",
+        "storageKey": "artwork(id:\"gerhard-richter-bagdad-ii-flow-p10-1\")",
         "args": (v0/*: any*/),
         "concreteType": "Artwork",
-        "kind": "LinkedField",
-        "name": "artwork",
         "plural": false,
         "selections": [
           {
-            "args": null,
             "kind": "FragmentSpread",
-            "name": "Details_artwork"
+            "name": "Details_artwork",
+            "args": null
           }
-        ],
-        "storageKey": "artwork(id:\"gerhard-richter-bagdad-ii-flow-p10-1\")"
+        ]
       }
-    ],
-    "type": "Query"
+    ]
   },
-  "kind": "Request",
   "operation": {
-    "argumentDefinitions": [],
     "kind": "Operation",
     "name": "Details_Test_Query",
+    "argumentDefinitions": [],
     "selections": [
       {
+        "kind": "LinkedField",
         "alias": null,
+        "name": "artwork",
+        "storageKey": "artwork(id:\"gerhard-richter-bagdad-ii-flow-p10-1\")",
         "args": (v0/*: any*/),
         "concreteType": "Artwork",
-        "kind": "LinkedField",
-        "name": "artwork",
         "plural": false,
         "selections": [
           (v1/*: any*/),
           {
-            "alias": null,
-            "args": null,
             "kind": "ScalarField",
+            "alias": null,
             "name": "title",
+            "args": null,
             "storageKey": null
           },
           {
-            "alias": null,
-            "args": null,
             "kind": "ScalarField",
+            "alias": null,
             "name": "date",
+            "args": null,
             "storageKey": null
           },
           {
+            "kind": "ScalarField",
             "alias": "sale_message",
-            "args": null,
-            "kind": "ScalarField",
             "name": "saleMessage",
-            "storageKey": null
-          },
-          {
-            "alias": "cultural_maker",
             "args": null,
-            "kind": "ScalarField",
-            "name": "culturalMaker",
             "storageKey": null
           },
           {
+            "kind": "ScalarField",
+            "alias": "cultural_maker",
+            "name": "culturalMaker",
+            "args": null,
+            "storageKey": null
+          },
+          {
+            "kind": "LinkedField",
             "alias": null,
+            "name": "artists",
+            "storageKey": "artists(shallow:true)",
             "args": (v2/*: any*/),
             "concreteType": "Artist",
-            "kind": "LinkedField",
-            "name": "artists",
             "plural": true,
             "selections": [
               (v3/*: any*/),
               (v1/*: any*/),
               (v4/*: any*/)
-            ],
-            "storageKey": "artists(shallow:true)"
+            ]
           },
           {
-            "alias": "collecting_institution",
-            "args": null,
             "kind": "ScalarField",
+            "alias": "collecting_institution",
             "name": "collectingInstitution",
+            "args": null,
             "storageKey": null
           },
           {
+            "kind": "LinkedField",
             "alias": null,
+            "name": "partner",
+            "storageKey": "partner(shallow:true)",
             "args": (v2/*: any*/),
             "concreteType": "Partner",
-            "kind": "LinkedField",
-            "name": "partner",
             "plural": false,
             "selections": [
               (v4/*: any*/),
               (v1/*: any*/),
               (v3/*: any*/)
-            ],
-            "storageKey": "partner(shallow:true)"
+            ]
           },
           {
+            "kind": "LinkedField",
             "alias": null,
+            "name": "sale",
+            "storageKey": null,
             "args": null,
             "concreteType": "Sale",
-            "kind": "LinkedField",
-            "name": "sale",
             "plural": false,
             "selections": [
               {
-                "alias": "is_auction",
-                "args": null,
                 "kind": "ScalarField",
+                "alias": "is_auction",
                 "name": "isAuction",
+                "args": null,
                 "storageKey": null
               },
               {
-                "alias": "is_closed",
-                "args": null,
                 "kind": "ScalarField",
+                "alias": "is_closed",
                 "name": "isClosed",
+                "args": null,
                 "storageKey": null
               },
               (v3/*: any*/)
-            ],
-            "storageKey": null
+            ]
           },
           {
+            "kind": "LinkedField",
             "alias": "sale_artwork",
+            "name": "saleArtwork",
+            "storageKey": null,
             "args": null,
             "concreteType": "SaleArtwork",
-            "kind": "LinkedField",
-            "name": "saleArtwork",
             "plural": false,
             "selections": [
               {
+                "kind": "LinkedField",
                 "alias": null,
+                "name": "counts",
+                "storageKey": null,
                 "args": null,
                 "concreteType": "SaleArtworkCounts",
-                "kind": "LinkedField",
-                "name": "counts",
                 "plural": false,
                 "selections": [
                   {
-                    "alias": "bidder_positions",
-                    "args": null,
                     "kind": "ScalarField",
+                    "alias": "bidder_positions",
                     "name": "bidderPositions",
+                    "args": null,
                     "storageKey": null
                   }
-                ],
-                "storageKey": null
+                ]
               },
               {
+                "kind": "LinkedField",
                 "alias": "highest_bid",
+                "name": "highestBid",
+                "storageKey": null,
                 "args": null,
                 "concreteType": "SaleArtworkHighestBid",
-                "kind": "LinkedField",
-                "name": "highestBid",
                 "plural": false,
-                "selections": (v5/*: any*/),
-                "storageKey": null
+                "selections": (v5/*: any*/)
               },
               {
+                "kind": "LinkedField",
                 "alias": "opening_bid",
+                "name": "openingBid",
+                "storageKey": null,
                 "args": null,
                 "concreteType": "SaleArtworkOpeningBid",
-                "kind": "LinkedField",
-                "name": "openingBid",
                 "plural": false,
-                "selections": (v5/*: any*/),
-                "storageKey": null
+                "selections": (v5/*: any*/)
               },
               (v3/*: any*/)
-            ],
-            "storageKey": null
+            ]
           },
           (v3/*: any*/)
-        ],
-        "storageKey": "artwork(id:\"gerhard-richter-bagdad-ii-flow-p10-1\")"
+        ]
       }
     ]
   },
   "params": {
-    "id": null,
-    "metadata": {},
-    "name": "Details_Test_Query",
     "operationKind": "query",
-    "text": "query Details_Test_Query {\n  artwork(id: \"gerhard-richter-bagdad-ii-flow-p10-1\") {\n    ...Details_artwork\n    id\n  }\n}\n\nfragment Details_artwork on Artwork {\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n}\n"
+    "name": "Details_Test_Query",
+    "id": null,
+    "text": "query Details_Test_Query {\n  artwork(id: \"gerhard-richter-bagdad-ii-flow-p10-1\") {\n    ...Details_artwork\n    id\n  }\n}\n\nfragment Details_artwork on Artwork {\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n}\n",
+    "metadata": {}
   }
 };
 })();

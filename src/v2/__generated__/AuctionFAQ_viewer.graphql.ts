@@ -1,5 +1,4 @@
 /* tslint:disable */
-/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -32,21 +31,25 @@ export type AuctionFAQ_viewer$key = {
 const node: ReaderFragment = (function(){
 var v0 = [
   {
-    "alias": null,
-    "args": null,
     "kind": "ScalarField",
+    "alias": null,
     "name": "content",
+    "args": null,
     "storageKey": null
   }
 ];
 return {
-  "argumentDefinitions": [],
   "kind": "Fragment",
-  "metadata": null,
   "name": "AuctionFAQ_viewer",
+  "type": "Viewer",
+  "metadata": null,
+  "argumentDefinitions": [],
   "selections": [
     {
+      "kind": "LinkedField",
       "alias": "bidding",
+      "name": "staticContent",
+      "storageKey": "staticContent(id:\"how-auctions-work-bidding\")",
       "args": [
         {
           "kind": "Literal",
@@ -55,14 +58,14 @@ return {
         }
       ],
       "concreteType": "StaticContent",
-      "kind": "LinkedField",
-      "name": "staticContent",
       "plural": false,
-      "selections": (v0/*: any*/),
-      "storageKey": "staticContent(id:\"how-auctions-work-bidding\")"
+      "selections": (v0/*: any*/)
     },
     {
+      "kind": "LinkedField",
       "alias": "buyersPremiumTaxesAndFees",
+      "name": "staticContent",
+      "storageKey": "staticContent(id:\"how-auctions-work-buyers-premium-taxes-and-fees\")",
       "args": [
         {
           "kind": "Literal",
@@ -71,14 +74,14 @@ return {
         }
       ],
       "concreteType": "StaticContent",
-      "kind": "LinkedField",
-      "name": "staticContent",
       "plural": false,
-      "selections": (v0/*: any*/),
-      "storageKey": "staticContent(id:\"how-auctions-work-buyers-premium-taxes-and-fees\")"
+      "selections": (v0/*: any*/)
     },
     {
+      "kind": "LinkedField",
       "alias": "paymentsAndShipping",
+      "name": "staticContent",
+      "storageKey": "staticContent(id:\"how-auctions-work-payments-and-shipping\")",
       "args": [
         {
           "kind": "Literal",
@@ -87,14 +90,14 @@ return {
         }
       ],
       "concreteType": "StaticContent",
-      "kind": "LinkedField",
-      "name": "staticContent",
       "plural": false,
-      "selections": (v0/*: any*/),
-      "storageKey": "staticContent(id:\"how-auctions-work-payments-and-shipping\")"
+      "selections": (v0/*: any*/)
     },
     {
+      "kind": "LinkedField",
       "alias": "emailsAndAlerts",
+      "name": "staticContent",
+      "storageKey": "staticContent(id:\"how-auctions-work-emails-and-alerts\")",
       "args": [
         {
           "kind": "Literal",
@@ -103,14 +106,14 @@ return {
         }
       ],
       "concreteType": "StaticContent",
-      "kind": "LinkedField",
-      "name": "staticContent",
       "plural": false,
-      "selections": (v0/*: any*/),
-      "storageKey": "staticContent(id:\"how-auctions-work-emails-and-alerts\")"
+      "selections": (v0/*: any*/)
     },
     {
+      "kind": "LinkedField",
       "alias": "conditionsOfSale",
+      "name": "staticContent",
+      "storageKey": "staticContent(id:\"how-auctions-work-conditions-of-sale\")",
       "args": [
         {
           "kind": "Literal",
@@ -119,14 +122,10 @@ return {
         }
       ],
       "concreteType": "StaticContent",
-      "kind": "LinkedField",
-      "name": "staticContent",
       "plural": false,
-      "selections": (v0/*: any*/),
-      "storageKey": "staticContent(id:\"how-auctions-work-conditions-of-sale\")"
+      "selections": (v0/*: any*/)
     }
-  ],
-  "type": "Viewer"
+  ]
 };
 })();
 (node as any).hash = 'e29df207450f132c887a37fde758a3ac';

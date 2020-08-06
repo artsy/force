@@ -1,5 +1,4 @@
 /* tslint:disable */
-/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -32,54 +31,58 @@ export type RelatedWorksArtworkGrid_artwork$key = {
 
 const node: ReaderFragment = (function(){
 var v0 = {
-  "alias": null,
-  "args": null,
   "kind": "ScalarField",
+  "alias": null,
   "name": "name",
+  "args": null,
   "storageKey": null
 },
 v1 = {
-  "alias": null,
-  "args": null,
   "kind": "ScalarField",
+  "alias": null,
   "name": "slug",
+  "args": null,
   "storageKey": null
 };
 return {
+  "kind": "Fragment",
+  "name": "RelatedWorksArtworkGrid_artwork",
+  "type": "Artwork",
+  "metadata": null,
   "argumentDefinitions": [
     {
-      "defaultValue": null,
       "kind": "LocalArgument",
       "name": "layerId",
-      "type": "String"
+      "type": "String",
+      "defaultValue": null
     }
   ],
-  "kind": "Fragment",
-  "metadata": null,
-  "name": "RelatedWorksArtworkGrid_artwork",
   "selections": [
     {
+      "kind": "LinkedField",
       "alias": null,
+      "name": "layers",
+      "storageKey": null,
       "args": null,
       "concreteType": "ArtworkLayer",
-      "kind": "LinkedField",
-      "name": "layers",
       "plural": true,
       "selections": [
         (v0/*: any*/),
         {
-          "alias": null,
-          "args": null,
           "kind": "ScalarField",
+          "alias": null,
           "name": "internalID",
+          "args": null,
           "storageKey": null
         }
-      ],
-      "storageKey": null
+      ]
     },
     (v1/*: any*/),
     {
+      "kind": "LinkedField",
       "alias": null,
+      "name": "layer",
+      "storageKey": null,
       "args": [
         {
           "kind": "Variable",
@@ -88,13 +91,14 @@ return {
         }
       ],
       "concreteType": "ArtworkLayer",
-      "kind": "LinkedField",
-      "name": "layer",
       "plural": false,
       "selections": [
         (v0/*: any*/),
         {
+          "kind": "LinkedField",
           "alias": null,
+          "name": "artworksConnection",
+          "storageKey": "artworksConnection(first:8)",
           "args": [
             {
               "kind": "Literal",
@@ -103,46 +107,41 @@ return {
             }
           ],
           "concreteType": "ArtworkConnection",
-          "kind": "LinkedField",
-          "name": "artworksConnection",
           "plural": false,
           "selections": [
             {
+              "kind": "LinkedField",
               "alias": null,
+              "name": "edges",
+              "storageKey": null,
               "args": null,
               "concreteType": "ArtworkEdge",
-              "kind": "LinkedField",
-              "name": "edges",
               "plural": true,
               "selections": [
                 {
+                  "kind": "LinkedField",
                   "alias": null,
+                  "name": "node",
+                  "storageKey": null,
                   "args": null,
                   "concreteType": "Artwork",
-                  "kind": "LinkedField",
-                  "name": "node",
                   "plural": false,
                   "selections": [
                     (v1/*: any*/)
-                  ],
-                  "storageKey": null
+                  ]
                 }
-              ],
-              "storageKey": null
+              ]
             },
             {
-              "args": null,
               "kind": "FragmentSpread",
-              "name": "ArtworkGrid_artworks"
+              "name": "ArtworkGrid_artworks",
+              "args": null
             }
-          ],
-          "storageKey": "artworksConnection(first:8)"
+          ]
         }
-      ],
-      "storageKey": null
+      ]
     }
-  ],
-  "type": "Artwork"
+  ]
 };
 })();
 (node as any).hash = 'c94051a248fa232b6664a79ce100df6d';

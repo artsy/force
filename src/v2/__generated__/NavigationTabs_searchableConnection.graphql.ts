@@ -1,9 +1,8 @@
 /* tslint:disable */
-/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
-import { FragmentRefs } from "relay-runtime";
 export type SearchAggregation = "TYPE" | "%future added value";
+import { FragmentRefs } from "relay-runtime";
 export type NavigationTabs_searchableConnection = {
     readonly aggregations: ReadonlyArray<{
         readonly slice: SearchAggregation | null;
@@ -23,56 +22,56 @@ export type NavigationTabs_searchableConnection$key = {
 
 
 const node: ReaderFragment = {
-  "argumentDefinitions": [],
   "kind": "Fragment",
-  "metadata": null,
   "name": "NavigationTabs_searchableConnection",
+  "type": "SearchableConnection",
+  "metadata": null,
+  "argumentDefinitions": [],
   "selections": [
     {
+      "kind": "LinkedField",
       "alias": null,
+      "name": "aggregations",
+      "storageKey": null,
       "args": null,
       "concreteType": "SearchAggregationResults",
-      "kind": "LinkedField",
-      "name": "aggregations",
       "plural": true,
       "selections": [
         {
-          "alias": null,
-          "args": null,
           "kind": "ScalarField",
+          "alias": null,
           "name": "slice",
+          "args": null,
           "storageKey": null
         },
         {
+          "kind": "LinkedField",
           "alias": null,
+          "name": "counts",
+          "storageKey": null,
           "args": null,
           "concreteType": "AggregationCount",
-          "kind": "LinkedField",
-          "name": "counts",
           "plural": true,
           "selections": [
             {
-              "alias": null,
-              "args": null,
               "kind": "ScalarField",
+              "alias": null,
               "name": "count",
+              "args": null,
               "storageKey": null
             },
             {
-              "alias": null,
-              "args": null,
               "kind": "ScalarField",
+              "alias": null,
               "name": "name",
+              "args": null,
               "storageKey": null
             }
-          ],
-          "storageKey": null
+          ]
         }
-      ],
-      "storageKey": null
+      ]
     }
-  ],
-  "type": "SearchableConnection"
+  ]
 };
 (node as any).hash = '76f1af5fa568892ae22f4ba4840ff358';
 export default node;

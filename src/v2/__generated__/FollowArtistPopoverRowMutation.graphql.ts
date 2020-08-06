@@ -1,15 +1,14 @@
 /* tslint:disable */
-/* eslint-disable */
 
 import { ConcreteRequest } from "relay-runtime";
 export type FollowArtistInput = {
-    artistID: string;
-    clientMutationId?: string | null;
-    unfollow?: boolean | null;
+    readonly artistID: string;
+    readonly clientMutationId?: string | null;
+    readonly unfollow?: boolean | null;
 };
 export type FollowArtistPopoverRowMutationVariables = {
     input: FollowArtistInput;
-    excludeArtistIds: Array<string | null>;
+    excludeArtistIds: ReadonlyArray<string | null>;
 };
 export type FollowArtistPopoverRowMutationResponse = {
     readonly followArtist: {
@@ -73,28 +72,31 @@ mutation FollowArtistPopoverRowMutation(
 const node: ConcreteRequest = (function(){
 var v0 = [
   {
-    "defaultValue": null,
     "kind": "LocalArgument",
     "name": "input",
-    "type": "FollowArtistInput!"
+    "type": "FollowArtistInput!",
+    "defaultValue": null
   },
   {
-    "defaultValue": null,
     "kind": "LocalArgument",
     "name": "excludeArtistIds",
-    "type": "[String]!"
+    "type": "[String]!",
+    "defaultValue": null
   }
 ],
 v1 = {
-  "alias": null,
-  "args": null,
   "kind": "ScalarField",
+  "alias": null,
   "name": "id",
+  "args": null,
   "storageKey": null
 },
 v2 = [
   {
+    "kind": "LinkedField",
     "alias": null,
+    "name": "followArtist",
+    "storageKey": null,
     "args": [
       {
         "kind": "Variable",
@@ -103,29 +105,32 @@ v2 = [
       }
     ],
     "concreteType": "FollowArtistPayload",
-    "kind": "LinkedField",
-    "name": "followArtist",
     "plural": false,
     "selections": [
       {
+        "kind": "LinkedField",
         "alias": null,
+        "name": "artist",
+        "storageKey": null,
         "args": null,
         "concreteType": "Artist",
-        "kind": "LinkedField",
-        "name": "artist",
         "plural": false,
         "selections": [
           (v1/*: any*/),
           {
+            "kind": "LinkedField",
             "alias": null,
+            "name": "related",
+            "storageKey": null,
             "args": null,
             "concreteType": "ArtistRelatedData",
-            "kind": "LinkedField",
-            "name": "related",
             "plural": false,
             "selections": [
               {
+                "kind": "LinkedField",
                 "alias": null,
+                "name": "suggestedConnection",
+                "storageKey": null,
                 "args": [
                   {
                     "kind": "Variable",
@@ -144,51 +149,55 @@ v2 = [
                   }
                 ],
                 "concreteType": "ArtistConnection",
-                "kind": "LinkedField",
-                "name": "suggestedConnection",
                 "plural": false,
                 "selections": [
                   {
+                    "kind": "LinkedField",
                     "alias": null,
+                    "name": "edges",
+                    "storageKey": null,
                     "args": null,
                     "concreteType": "ArtistEdge",
-                    "kind": "LinkedField",
-                    "name": "edges",
                     "plural": true,
                     "selections": [
                       {
+                        "kind": "LinkedField",
                         "alias": null,
+                        "name": "node",
+                        "storageKey": null,
                         "args": null,
                         "concreteType": "Artist",
-                        "kind": "LinkedField",
-                        "name": "node",
                         "plural": false,
                         "selections": [
                           (v1/*: any*/),
                           {
-                            "alias": null,
-                            "args": null,
                             "kind": "ScalarField",
+                            "alias": null,
                             "name": "internalID",
-                            "storageKey": null
-                          },
-                          {
-                            "alias": null,
                             "args": null,
-                            "kind": "ScalarField",
-                            "name": "name",
                             "storageKey": null
                           },
                           {
+                            "kind": "ScalarField",
                             "alias": null,
+                            "name": "name",
+                            "args": null,
+                            "storageKey": null
+                          },
+                          {
+                            "kind": "LinkedField",
+                            "alias": null,
+                            "name": "image",
+                            "storageKey": null,
                             "args": null,
                             "concreteType": "Image",
-                            "kind": "LinkedField",
-                            "name": "image",
                             "plural": false,
                             "selections": [
                               {
+                                "kind": "LinkedField",
                                 "alias": null,
+                                "name": "cropped",
+                                "storageKey": "cropped(height:45,width:45)",
                                 "args": [
                                   {
                                     "kind": "Literal",
@@ -202,64 +211,54 @@ v2 = [
                                   }
                                 ],
                                 "concreteType": "CroppedImageUrl",
-                                "kind": "LinkedField",
-                                "name": "cropped",
                                 "plural": false,
                                 "selections": [
                                   {
-                                    "alias": null,
-                                    "args": null,
                                     "kind": "ScalarField",
+                                    "alias": null,
                                     "name": "url",
+                                    "args": null,
                                     "storageKey": null
                                   }
-                                ],
-                                "storageKey": "cropped(height:45,width:45)"
+                                ]
                               }
-                            ],
-                            "storageKey": null
+                            ]
                           }
-                        ],
-                        "storageKey": null
+                        ]
                       }
-                    ],
-                    "storageKey": null
+                    ]
                   }
-                ],
-                "storageKey": null
+                ]
               }
-            ],
-            "storageKey": null
+            ]
           }
-        ],
-        "storageKey": null
+        ]
       }
-    ],
-    "storageKey": null
+    ]
   }
 ];
 return {
-  "fragment": {
-    "argumentDefinitions": (v0/*: any*/),
-    "kind": "Fragment",
-    "metadata": null,
-    "name": "FollowArtistPopoverRowMutation",
-    "selections": (v2/*: any*/),
-    "type": "Mutation"
-  },
   "kind": "Request",
-  "operation": {
+  "fragment": {
+    "kind": "Fragment",
+    "name": "FollowArtistPopoverRowMutation",
+    "type": "Mutation",
+    "metadata": null,
     "argumentDefinitions": (v0/*: any*/),
+    "selections": (v2/*: any*/)
+  },
+  "operation": {
     "kind": "Operation",
     "name": "FollowArtistPopoverRowMutation",
+    "argumentDefinitions": (v0/*: any*/),
     "selections": (v2/*: any*/)
   },
   "params": {
-    "id": null,
-    "metadata": {},
-    "name": "FollowArtistPopoverRowMutation",
     "operationKind": "mutation",
-    "text": "mutation FollowArtistPopoverRowMutation(\n  $input: FollowArtistInput!\n  $excludeArtistIds: [String]!\n) {\n  followArtist(input: $input) {\n    artist {\n      id\n      related {\n        suggestedConnection(first: 1, excludeFollowedArtists: true, excludeArtistIDs: $excludeArtistIds) {\n          edges {\n            node {\n              id\n              internalID\n              name\n              image {\n                cropped(width: 45, height: 45) {\n                  url\n                }\n              }\n            }\n          }\n        }\n      }\n    }\n  }\n}\n"
+    "name": "FollowArtistPopoverRowMutation",
+    "id": null,
+    "text": "mutation FollowArtistPopoverRowMutation(\n  $input: FollowArtistInput!\n  $excludeArtistIds: [String]!\n) {\n  followArtist(input: $input) {\n    artist {\n      id\n      related {\n        suggestedConnection(first: 1, excludeFollowedArtists: true, excludeArtistIDs: $excludeArtistIds) {\n          edges {\n            node {\n              id\n              internalID\n              name\n              image {\n                cropped(width: 45, height: 45) {\n                  url\n                }\n              }\n            }\n          }\n        }\n      }\n    }\n  }\n}\n",
+    "metadata": {}
   }
 };
 })();

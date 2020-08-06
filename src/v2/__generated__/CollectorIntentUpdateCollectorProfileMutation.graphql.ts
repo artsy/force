@@ -1,14 +1,13 @@
 /* tslint:disable */
-/* eslint-disable */
 
 import { ConcreteRequest } from "relay-runtime";
 export type Intents = "BUY_ART_AND_DESIGN" | "FIND_ART_EXHIBITS" | "LEARN_ABOUT_ART" | "READ_ART_MARKET_NEWS" | "RESEARCH_ART_PRICES" | "SELL_ART_AND_DESIGN" | "%future added value";
 export type UpdateCollectorProfileInput = {
-    clientMutationId?: string | null;
-    intents?: Array<Intents | null> | null;
-    loyaltyApplicant?: boolean | null;
-    professionalBuyer?: boolean | null;
-    selfReportedPurchases?: string | null;
+    readonly clientMutationId?: string | null;
+    readonly intents?: ReadonlyArray<Intents | null> | null;
+    readonly loyaltyApplicant?: boolean | null;
+    readonly professionalBuyer?: boolean | null;
+    readonly selfReportedPurchases?: string | null;
 };
 export type CollectorIntentUpdateCollectorProfileMutationVariables = {
     input: UpdateCollectorProfileInput;
@@ -39,10 +38,10 @@ mutation CollectorIntentUpdateCollectorProfileMutation(
 const node: ConcreteRequest = (function(){
 var v0 = [
   {
-    "defaultValue": null,
     "kind": "LocalArgument",
     "name": "input",
-    "type": "UpdateCollectorProfileInput!"
+    "type": "UpdateCollectorProfileInput!",
+    "defaultValue": null
   }
 ],
 v1 = [
@@ -53,67 +52,67 @@ v1 = [
   }
 ],
 v2 = {
-  "alias": null,
-  "args": null,
   "kind": "ScalarField",
+  "alias": null,
   "name": "intents",
+  "args": null,
   "storageKey": null
 };
 return {
+  "kind": "Request",
   "fragment": {
-    "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
-    "metadata": null,
     "name": "CollectorIntentUpdateCollectorProfileMutation",
+    "type": "Mutation",
+    "metadata": null,
+    "argumentDefinitions": (v0/*: any*/),
     "selections": [
       {
+        "kind": "LinkedField",
         "alias": null,
+        "name": "updateCollectorProfile",
+        "storageKey": null,
         "args": (v1/*: any*/),
         "concreteType": "UpdateCollectorProfilePayload",
-        "kind": "LinkedField",
-        "name": "updateCollectorProfile",
         "plural": false,
         "selections": [
           (v2/*: any*/)
-        ],
-        "storageKey": null
+        ]
       }
-    ],
-    "type": "Mutation"
+    ]
   },
-  "kind": "Request",
   "operation": {
-    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "CollectorIntentUpdateCollectorProfileMutation",
+    "argumentDefinitions": (v0/*: any*/),
     "selections": [
       {
+        "kind": "LinkedField",
         "alias": null,
+        "name": "updateCollectorProfile",
+        "storageKey": null,
         "args": (v1/*: any*/),
         "concreteType": "UpdateCollectorProfilePayload",
-        "kind": "LinkedField",
-        "name": "updateCollectorProfile",
         "plural": false,
         "selections": [
           (v2/*: any*/),
           {
-            "alias": null,
-            "args": null,
             "kind": "ScalarField",
+            "alias": null,
             "name": "id",
+            "args": null,
             "storageKey": null
           }
-        ],
-        "storageKey": null
+        ]
       }
     ]
   },
   "params": {
-    "id": null,
-    "metadata": {},
-    "name": "CollectorIntentUpdateCollectorProfileMutation",
     "operationKind": "mutation",
-    "text": "mutation CollectorIntentUpdateCollectorProfileMutation(\n  $input: UpdateCollectorProfileInput!\n) {\n  updateCollectorProfile(input: $input) {\n    intents\n    id\n  }\n}\n"
+    "name": "CollectorIntentUpdateCollectorProfileMutation",
+    "id": null,
+    "text": "mutation CollectorIntentUpdateCollectorProfileMutation(\n  $input: UpdateCollectorProfileInput!\n) {\n  updateCollectorProfile(input: $input) {\n    intents\n    id\n  }\n}\n",
+    "metadata": {}
   }
 };
 })();

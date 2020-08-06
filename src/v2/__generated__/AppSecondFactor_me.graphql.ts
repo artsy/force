@@ -1,5 +1,4 @@
 /* tslint:disable */
-/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -25,20 +24,24 @@ export type AppSecondFactor_me$key = {
 
 
 const node: ReaderFragment = {
-  "argumentDefinitions": [],
   "kind": "Fragment",
-  "metadata": null,
   "name": "AppSecondFactor_me",
+  "type": "Me",
+  "metadata": null,
+  "argumentDefinitions": [],
   "selections": [
     {
-      "alias": null,
-      "args": null,
       "kind": "ScalarField",
+      "alias": null,
       "name": "hasSecondFactorEnabled",
+      "args": null,
       "storageKey": null
     },
     {
+      "kind": "LinkedField",
       "alias": "appSecondFactors",
+      "name": "secondFactors",
+      "storageKey": "secondFactors(kinds:[\"app\"])",
       "args": [
         {
           "kind": "Literal",
@@ -49,42 +52,38 @@ const node: ReaderFragment = {
         }
       ],
       "concreteType": null,
-      "kind": "LinkedField",
-      "name": "secondFactors",
       "plural": true,
       "selections": [
         {
           "kind": "InlineFragment",
+          "type": "AppSecondFactor",
           "selections": [
             {
-              "alias": null,
-              "args": null,
               "kind": "ScalarField",
+              "alias": null,
               "name": "__typename",
+              "args": null,
               "storageKey": null
             },
             {
-              "alias": null,
-              "args": null,
               "kind": "ScalarField",
+              "alias": null,
               "name": "internalID",
+              "args": null,
               "storageKey": null
             },
             {
-              "alias": null,
-              "args": null,
               "kind": "ScalarField",
+              "alias": null,
               "name": "name",
+              "args": null,
               "storageKey": null
             }
-          ],
-          "type": "AppSecondFactor"
+          ]
         }
-      ],
-      "storageKey": "secondFactors(kinds:[\"app\"])"
+      ]
     }
-  ],
-  "type": "Me"
+  ]
 };
 (node as any).hash = '5c098681fc3af26acb2b13dab1368da3';
 export default node;

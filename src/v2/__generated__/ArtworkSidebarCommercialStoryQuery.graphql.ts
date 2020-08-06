@@ -1,5 +1,4 @@
 /* tslint:disable */
-/* eslint-disable */
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -72,169 +71,171 @@ var v0 = [
   }
 ],
 v1 = {
-  "alias": null,
-  "args": null,
   "kind": "ScalarField",
+  "alias": null,
   "name": "internalID",
+  "args": null,
   "storageKey": null
 },
 v2 = {
-  "alias": "is_acquireable",
-  "args": null,
   "kind": "ScalarField",
+  "alias": "is_acquireable",
   "name": "isAcquireable",
+  "args": null,
   "storageKey": null
 },
 v3 = {
-  "alias": "is_offerable",
-  "args": null,
   "kind": "ScalarField",
+  "alias": "is_offerable",
   "name": "isOfferable",
+  "args": null,
   "storageKey": null
 },
 v4 = [
   {
-    "alias": null,
-    "args": null,
     "kind": "ScalarField",
+    "alias": null,
     "name": "display",
+    "args": null,
     "storageKey": null
   }
 ],
 v5 = {
-  "alias": "sale_message",
-  "args": null,
   "kind": "ScalarField",
+  "alias": "sale_message",
   "name": "saleMessage",
+  "args": null,
   "storageKey": null
 },
 v6 = {
-  "alias": null,
-  "args": null,
   "kind": "ScalarField",
+  "alias": null,
   "name": "id",
+  "args": null,
   "storageKey": null
 };
 return {
+  "kind": "Request",
   "fragment": {
-    "argumentDefinitions": [],
     "kind": "Fragment",
-    "metadata": null,
     "name": "ArtworkSidebarCommercialStoryQuery",
+    "type": "Query",
+    "metadata": null,
+    "argumentDefinitions": [],
     "selections": [
       {
+        "kind": "LinkedField",
         "alias": null,
+        "name": "artwork",
+        "storageKey": "artwork(id:\"unused\")",
         "args": (v0/*: any*/),
         "concreteType": "Artwork",
-        "kind": "LinkedField",
-        "name": "artwork",
         "plural": false,
         "selections": [
           {
-            "args": null,
             "kind": "FragmentSpread",
-            "name": "ArtworkSidebarCommercial_artwork"
+            "name": "ArtworkSidebarCommercial_artwork",
+            "args": null
           }
-        ],
-        "storageKey": "artwork(id:\"unused\")"
+        ]
       }
-    ],
-    "type": "Query"
+    ]
   },
-  "kind": "Request",
   "operation": {
-    "argumentDefinitions": [],
     "kind": "Operation",
     "name": "ArtworkSidebarCommercialStoryQuery",
+    "argumentDefinitions": [],
     "selections": [
       {
+        "kind": "LinkedField",
         "alias": null,
+        "name": "artwork",
+        "storageKey": "artwork(id:\"unused\")",
         "args": (v0/*: any*/),
         "concreteType": "Artwork",
-        "kind": "LinkedField",
-        "name": "artwork",
         "plural": false,
         "selections": [
           {
-            "alias": null,
-            "args": null,
             "kind": "ScalarField",
+            "alias": null,
             "name": "slug",
+            "args": null,
             "storageKey": null
           },
           (v1/*: any*/),
           {
-            "alias": "is_for_sale",
-            "args": null,
             "kind": "ScalarField",
+            "alias": "is_for_sale",
             "name": "isForSale",
+            "args": null,
             "storageKey": null
           },
           (v2/*: any*/),
           {
-            "alias": "is_inquireable",
-            "args": null,
             "kind": "ScalarField",
+            "alias": "is_inquireable",
             "name": "isInquireable",
+            "args": null,
             "storageKey": null
           },
           (v3/*: any*/),
           {
+            "kind": "LinkedField",
             "alias": null,
+            "name": "listPrice",
+            "storageKey": null,
             "args": null,
             "concreteType": null,
-            "kind": "LinkedField",
-            "name": "listPrice",
             "plural": false,
             "selections": [
               {
-                "alias": null,
-                "args": null,
                 "kind": "ScalarField",
+                "alias": null,
                 "name": "__typename",
+                "args": null,
                 "storageKey": null
               },
               {
                 "kind": "InlineFragment",
-                "selections": (v4/*: any*/),
-                "type": "PriceRange"
+                "type": "PriceRange",
+                "selections": (v4/*: any*/)
               },
               {
                 "kind": "InlineFragment",
-                "selections": (v4/*: any*/),
-                "type": "Money"
+                "type": "Money",
+                "selections": (v4/*: any*/)
               }
-            ],
-            "storageKey": null
+            ]
           },
           {
-            "alias": null,
-            "args": null,
             "kind": "ScalarField",
+            "alias": null,
             "name": "priceIncludesTaxDisplay",
+            "args": null,
             "storageKey": null
           },
           (v5/*: any*/),
           {
-            "alias": null,
-            "args": null,
             "kind": "ScalarField",
+            "alias": null,
             "name": "shippingInfo",
-            "storageKey": null
-          },
-          {
-            "alias": null,
             "args": null,
-            "kind": "ScalarField",
-            "name": "shippingOrigin",
             "storageKey": null
           },
           {
+            "kind": "ScalarField",
+            "alias": null,
+            "name": "shippingOrigin",
+            "args": null,
+            "storageKey": null
+          },
+          {
+            "kind": "LinkedField",
             "alias": "edition_sets",
+            "name": "editionSets",
+            "storageKey": null,
             "args": null,
             "concreteType": "EditionSet",
-            "kind": "LinkedField",
-            "name": "editionSets",
             "plural": true,
             "selections": [
               (v1/*: any*/),
@@ -243,52 +244,50 @@ return {
               (v3/*: any*/),
               (v5/*: any*/),
               {
+                "kind": "LinkedField",
                 "alias": null,
+                "name": "dimensions",
+                "storageKey": null,
                 "args": null,
                 "concreteType": "dimensions",
-                "kind": "LinkedField",
-                "name": "dimensions",
                 "plural": false,
                 "selections": [
                   {
-                    "alias": null,
-                    "args": null,
                     "kind": "ScalarField",
+                    "alias": null,
                     "name": "in",
+                    "args": null,
                     "storageKey": null
                   },
                   {
-                    "alias": null,
-                    "args": null,
                     "kind": "ScalarField",
+                    "alias": null,
                     "name": "cm",
+                    "args": null,
                     "storageKey": null
                   }
-                ],
-                "storageKey": null
+                ]
               },
               {
-                "alias": "edition_of",
-                "args": null,
                 "kind": "ScalarField",
+                "alias": "edition_of",
                 "name": "editionOf",
+                "args": null,
                 "storageKey": null
               }
-            ],
-            "storageKey": null
+            ]
           },
           (v6/*: any*/)
-        ],
-        "storageKey": "artwork(id:\"unused\")"
+        ]
       }
     ]
   },
   "params": {
-    "id": null,
-    "metadata": {},
-    "name": "ArtworkSidebarCommercialStoryQuery",
     "operationKind": "query",
-    "text": "query ArtworkSidebarCommercialStoryQuery {\n  artwork(id: \"unused\") {\n    ...ArtworkSidebarCommercial_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarCommercial_artwork on Artwork {\n  slug\n  internalID\n  is_for_sale: isForSale\n  is_acquireable: isAcquireable\n  is_inquireable: isInquireable\n  is_offerable: isOfferable\n  listPrice {\n    __typename\n    ... on PriceRange {\n      display\n    }\n    ... on Money {\n      display\n    }\n  }\n  priceIncludesTaxDisplay\n  sale_message: saleMessage\n  shippingInfo\n  shippingOrigin\n  edition_sets: editionSets {\n    internalID\n    id\n    is_acquireable: isAcquireable\n    is_offerable: isOfferable\n    sale_message: saleMessage\n    ...ArtworkSidebarSizeInfo_piece\n  }\n}\n\nfragment ArtworkSidebarSizeInfo_piece on Sellable {\n  dimensions {\n    in\n    cm\n  }\n  edition_of: editionOf\n}\n"
+    "name": "ArtworkSidebarCommercialStoryQuery",
+    "id": null,
+    "text": "query ArtworkSidebarCommercialStoryQuery {\n  artwork(id: \"unused\") {\n    ...ArtworkSidebarCommercial_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarCommercial_artwork on Artwork {\n  slug\n  internalID\n  is_for_sale: isForSale\n  is_acquireable: isAcquireable\n  is_inquireable: isInquireable\n  is_offerable: isOfferable\n  listPrice {\n    __typename\n    ... on PriceRange {\n      display\n    }\n    ... on Money {\n      display\n    }\n  }\n  priceIncludesTaxDisplay\n  sale_message: saleMessage\n  shippingInfo\n  shippingOrigin\n  edition_sets: editionSets {\n    internalID\n    id\n    is_acquireable: isAcquireable\n    is_offerable: isOfferable\n    sale_message: saleMessage\n    ...ArtworkSidebarSizeInfo_piece\n  }\n}\n\nfragment ArtworkSidebarSizeInfo_piece on Sellable {\n  dimensions {\n    in\n    cm\n  }\n  edition_of: editionOf\n}\n",
+    "metadata": {}
   }
 };
 })();

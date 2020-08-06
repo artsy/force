@@ -1,5 +1,4 @@
 /* tslint:disable */
-/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -28,13 +27,17 @@ export type ArtworkDetailsArticles_artwork$key = {
 
 
 const node: ReaderFragment = {
-  "argumentDefinitions": [],
   "kind": "Fragment",
-  "metadata": null,
   "name": "ArtworkDetailsArticles_artwork",
+  "type": "Artwork",
+  "metadata": null,
+  "argumentDefinitions": [],
   "selections": [
     {
+      "kind": "LinkedField",
       "alias": null,
+      "name": "articles",
+      "storageKey": "articles(size:10)",
       "args": [
         {
           "kind": "Literal",
@@ -43,37 +46,37 @@ const node: ReaderFragment = {
         }
       ],
       "concreteType": "Article",
-      "kind": "LinkedField",
-      "name": "articles",
       "plural": true,
       "selections": [
         {
+          "kind": "LinkedField",
           "alias": null,
+          "name": "author",
+          "storageKey": null,
           "args": null,
           "concreteType": "Author",
-          "kind": "LinkedField",
-          "name": "author",
           "plural": false,
           "selections": [
             {
-              "alias": null,
-              "args": null,
               "kind": "ScalarField",
+              "alias": null,
               "name": "name",
+              "args": null,
               "storageKey": null
             }
-          ],
-          "storageKey": null
+          ]
         },
         {
-          "alias": null,
-          "args": null,
           "kind": "ScalarField",
+          "alias": null,
           "name": "href",
+          "args": null,
           "storageKey": null
         },
         {
+          "kind": "ScalarField",
           "alias": "published_at",
+          "name": "publishedAt",
           "args": [
             {
               "kind": "Literal",
@@ -81,20 +84,22 @@ const node: ReaderFragment = {
               "value": "MMM Do, YYYY"
             }
           ],
-          "kind": "ScalarField",
-          "name": "publishedAt",
           "storageKey": "publishedAt(format:\"MMM Do, YYYY\")"
         },
         {
+          "kind": "LinkedField",
           "alias": "thumbnail_image",
+          "name": "thumbnailImage",
+          "storageKey": null,
           "args": null,
           "concreteType": "Image",
-          "kind": "LinkedField",
-          "name": "thumbnailImage",
           "plural": false,
           "selections": [
             {
+              "kind": "LinkedField",
               "alias": null,
+              "name": "resized",
+              "storageKey": "resized(width:300)",
               "args": [
                 {
                   "kind": "Literal",
@@ -103,35 +108,29 @@ const node: ReaderFragment = {
                 }
               ],
               "concreteType": "ResizedImageUrl",
-              "kind": "LinkedField",
-              "name": "resized",
               "plural": false,
               "selections": [
                 {
-                  "alias": null,
-                  "args": null,
                   "kind": "ScalarField",
+                  "alias": null,
                   "name": "url",
+                  "args": null,
                   "storageKey": null
                 }
-              ],
-              "storageKey": "resized(width:300)"
+              ]
             }
-          ],
-          "storageKey": null
+          ]
         },
         {
-          "alias": "thumbnail_title",
-          "args": null,
           "kind": "ScalarField",
+          "alias": "thumbnail_title",
           "name": "thumbnailTitle",
+          "args": null,
           "storageKey": null
         }
-      ],
-      "storageKey": "articles(size:10)"
+      ]
     }
-  ],
-  "type": "Artwork"
+  ]
 };
 (node as any).hash = '07fa06d932146874a0ac580620a5cdf9';
 export default node;

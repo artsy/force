@@ -1,10 +1,9 @@
 /* tslint:disable */
-/* eslint-disable */
 
 import { ConcreteRequest } from "relay-runtime";
 export type DeleteCreditCardInput = {
-    clientMutationId?: string | null;
-    id: string;
+    readonly clientMutationId?: string | null;
+    readonly id: string;
 };
 export type SavedCreditCardsDeleteCreditCardMutationVariables = {
     input: DeleteCreditCardInput;
@@ -59,10 +58,10 @@ mutation SavedCreditCardsDeleteCreditCardMutation(
 const node: ConcreteRequest = (function(){
 var v0 = [
   {
-    "defaultValue": null,
     "kind": "LocalArgument",
     "name": "input",
-    "type": "DeleteCreditCardInput!"
+    "type": "DeleteCreditCardInput!",
+    "defaultValue": null
   }
 ],
 v1 = [
@@ -74,152 +73,152 @@ v1 = [
 ],
 v2 = {
   "kind": "InlineFragment",
+  "type": "CreditCardMutationSuccess",
   "selections": [
     {
+      "kind": "LinkedField",
       "alias": null,
+      "name": "creditCard",
+      "storageKey": null,
       "args": null,
       "concreteType": "CreditCard",
-      "kind": "LinkedField",
-      "name": "creditCard",
       "plural": false,
       "selections": [
         {
-          "alias": null,
-          "args": null,
           "kind": "ScalarField",
+          "alias": null,
           "name": "internalID",
+          "args": null,
           "storageKey": null
         },
         {
-          "alias": null,
-          "args": null,
           "kind": "ScalarField",
+          "alias": null,
           "name": "id",
+          "args": null,
           "storageKey": null
         }
-      ],
-      "storageKey": null
+      ]
     }
-  ],
-  "type": "CreditCardMutationSuccess"
+  ]
 },
 v3 = {
   "kind": "InlineFragment",
+  "type": "CreditCardMutationFailure",
   "selections": [
     {
+      "kind": "LinkedField",
       "alias": null,
+      "name": "mutationError",
+      "storageKey": null,
       "args": null,
       "concreteType": "GravityMutationError",
-      "kind": "LinkedField",
-      "name": "mutationError",
       "plural": false,
       "selections": [
         {
-          "alias": null,
-          "args": null,
           "kind": "ScalarField",
+          "alias": null,
           "name": "type",
+          "args": null,
           "storageKey": null
         },
         {
-          "alias": null,
-          "args": null,
           "kind": "ScalarField",
+          "alias": null,
           "name": "message",
+          "args": null,
           "storageKey": null
         },
         {
-          "alias": null,
-          "args": null,
           "kind": "ScalarField",
+          "alias": null,
           "name": "detail",
+          "args": null,
           "storageKey": null
         }
-      ],
-      "storageKey": null
+      ]
     }
-  ],
-  "type": "CreditCardMutationFailure"
+  ]
 };
 return {
+  "kind": "Request",
   "fragment": {
-    "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
-    "metadata": null,
     "name": "SavedCreditCardsDeleteCreditCardMutation",
+    "type": "Mutation",
+    "metadata": null,
+    "argumentDefinitions": (v0/*: any*/),
     "selections": [
       {
+        "kind": "LinkedField",
         "alias": null,
+        "name": "deleteCreditCard",
+        "storageKey": null,
         "args": (v1/*: any*/),
         "concreteType": "DeleteCreditCardPayload",
-        "kind": "LinkedField",
-        "name": "deleteCreditCard",
         "plural": false,
         "selections": [
           {
+            "kind": "LinkedField",
             "alias": null,
+            "name": "creditCardOrError",
+            "storageKey": null,
             "args": null,
             "concreteType": null,
-            "kind": "LinkedField",
-            "name": "creditCardOrError",
             "plural": false,
             "selections": [
               (v2/*: any*/),
               (v3/*: any*/)
-            ],
-            "storageKey": null
+            ]
           }
-        ],
-        "storageKey": null
+        ]
       }
-    ],
-    "type": "Mutation"
+    ]
   },
-  "kind": "Request",
   "operation": {
-    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "SavedCreditCardsDeleteCreditCardMutation",
+    "argumentDefinitions": (v0/*: any*/),
     "selections": [
       {
+        "kind": "LinkedField",
         "alias": null,
+        "name": "deleteCreditCard",
+        "storageKey": null,
         "args": (v1/*: any*/),
         "concreteType": "DeleteCreditCardPayload",
-        "kind": "LinkedField",
-        "name": "deleteCreditCard",
         "plural": false,
         "selections": [
           {
+            "kind": "LinkedField",
             "alias": null,
+            "name": "creditCardOrError",
+            "storageKey": null,
             "args": null,
             "concreteType": null,
-            "kind": "LinkedField",
-            "name": "creditCardOrError",
             "plural": false,
             "selections": [
               {
-                "alias": null,
-                "args": null,
                 "kind": "ScalarField",
+                "alias": null,
                 "name": "__typename",
+                "args": null,
                 "storageKey": null
               },
               (v2/*: any*/),
               (v3/*: any*/)
-            ],
-            "storageKey": null
+            ]
           }
-        ],
-        "storageKey": null
+        ]
       }
     ]
   },
   "params": {
-    "id": null,
-    "metadata": {},
-    "name": "SavedCreditCardsDeleteCreditCardMutation",
     "operationKind": "mutation",
-    "text": "mutation SavedCreditCardsDeleteCreditCardMutation(\n  $input: DeleteCreditCardInput!\n) {\n  deleteCreditCard(input: $input) {\n    creditCardOrError {\n      __typename\n      ... on CreditCardMutationSuccess {\n        creditCard {\n          internalID\n          id\n        }\n      }\n      ... on CreditCardMutationFailure {\n        mutationError {\n          type\n          message\n          detail\n        }\n      }\n    }\n  }\n}\n"
+    "name": "SavedCreditCardsDeleteCreditCardMutation",
+    "id": null,
+    "text": "mutation SavedCreditCardsDeleteCreditCardMutation(\n  $input: DeleteCreditCardInput!\n) {\n  deleteCreditCard(input: $input) {\n    creditCardOrError {\n      __typename\n      ... on CreditCardMutationSuccess {\n        creditCard {\n          internalID\n          id\n        }\n      }\n      ... on CreditCardMutationFailure {\n        mutationError {\n          type\n          message\n          detail\n        }\n      }\n    }\n  }\n}\n",
+    "metadata": {}
   }
 };
 })();

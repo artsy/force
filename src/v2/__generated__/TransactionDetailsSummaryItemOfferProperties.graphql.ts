@@ -1,9 +1,8 @@
 /* tslint:disable */
-/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
-import { FragmentRefs } from "relay-runtime";
 export type CommerceOrderParticipantEnum = "BUYER" | "SELLER" | "%future added value";
+import { FragmentRefs } from "relay-runtime";
 export type TransactionDetailsSummaryItemOfferProperties = {
     readonly internalID: string;
     readonly amount: string | null;
@@ -35,90 +34,90 @@ var v0 = [
   }
 ];
 return {
-  "argumentDefinitions": [],
   "kind": "Fragment",
-  "metadata": null,
   "name": "TransactionDetailsSummaryItemOfferProperties",
+  "type": "CommerceOffer",
+  "metadata": null,
+  "argumentDefinitions": [],
   "selections": [
     {
-      "alias": null,
-      "args": null,
       "kind": "ScalarField",
+      "alias": null,
       "name": "internalID",
+      "args": null,
       "storageKey": null
     },
     {
-      "alias": null,
-      "args": (v0/*: any*/),
       "kind": "ScalarField",
+      "alias": null,
       "name": "amount",
+      "args": (v0/*: any*/),
       "storageKey": "amount(precision:2)"
     },
     {
-      "alias": null,
-      "args": null,
       "kind": "ScalarField",
+      "alias": null,
       "name": "amountCents",
+      "args": null,
       "storageKey": null
     },
     {
-      "alias": null,
-      "args": (v0/*: any*/),
       "kind": "ScalarField",
+      "alias": null,
       "name": "shippingTotal",
+      "args": (v0/*: any*/),
       "storageKey": "shippingTotal(precision:2)"
     },
     {
-      "alias": null,
-      "args": null,
       "kind": "ScalarField",
+      "alias": null,
       "name": "shippingTotalCents",
+      "args": null,
       "storageKey": null
     },
     {
-      "alias": null,
-      "args": (v0/*: any*/),
       "kind": "ScalarField",
+      "alias": null,
       "name": "taxTotal",
+      "args": (v0/*: any*/),
       "storageKey": "taxTotal(precision:2)"
     },
     {
-      "alias": null,
-      "args": null,
       "kind": "ScalarField",
+      "alias": null,
       "name": "taxTotalCents",
+      "args": null,
       "storageKey": null
     },
     {
-      "alias": null,
-      "args": (v0/*: any*/),
       "kind": "ScalarField",
+      "alias": null,
       "name": "buyerTotal",
+      "args": (v0/*: any*/),
       "storageKey": "buyerTotal(precision:2)"
     },
     {
-      "alias": null,
-      "args": null,
       "kind": "ScalarField",
+      "alias": null,
       "name": "buyerTotalCents",
+      "args": null,
       "storageKey": null
     },
     {
-      "alias": null,
-      "args": null,
       "kind": "ScalarField",
+      "alias": null,
       "name": "fromParticipant",
+      "args": null,
       "storageKey": null
     },
     {
-      "alias": null,
-      "args": null,
       "kind": "ScalarField",
+      "alias": null,
       "name": "note",
+      "args": null,
       "storageKey": null
     }
-  ],
-  "type": "CommerceOffer"
+  ]
 };
 })();
 (node as any).hash = '7bd6db26a9439bff847c104aa299279d';

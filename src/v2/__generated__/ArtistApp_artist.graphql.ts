@@ -1,5 +1,4 @@
 /* tslint:disable */
-/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -19,49 +18,49 @@ export type ArtistApp_artist$key = {
 
 
 const node: ReaderFragment = {
-  "argumentDefinitions": [],
   "kind": "Fragment",
-  "metadata": null,
   "name": "ArtistApp_artist",
+  "type": "Artist",
+  "metadata": null,
+  "argumentDefinitions": [],
   "selections": [
     {
-      "alias": null,
-      "args": null,
       "kind": "ScalarField",
+      "alias": null,
       "name": "internalID",
+      "args": null,
       "storageKey": null
     },
     {
-      "alias": null,
-      "args": null,
       "kind": "ScalarField",
+      "alias": null,
       "name": "name",
+      "args": null,
       "storageKey": null
     },
     {
-      "alias": null,
-      "args": null,
       "kind": "ScalarField",
+      "alias": null,
       "name": "slug",
+      "args": null,
       "storageKey": null
     },
     {
-      "args": null,
       "kind": "FragmentSpread",
-      "name": "ArtistMeta_artist"
+      "name": "ArtistMeta_artist",
+      "args": null
     },
     {
-      "args": null,
       "kind": "FragmentSpread",
-      "name": "ArtistHeader_artist"
+      "name": "ArtistHeader_artist",
+      "args": null
     },
     {
-      "args": null,
       "kind": "FragmentSpread",
-      "name": "NavigationTabs_artist"
+      "name": "NavigationTabs_artist",
+      "args": null
     }
-  ],
-  "type": "Artist"
+  ]
 };
 (node as any).hash = '8804872230d49a56826f305d90d76385';
 export default node;

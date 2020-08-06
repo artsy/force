@@ -1,5 +1,4 @@
 /* tslint:disable */
-/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -28,67 +27,75 @@ export type ArtistConsignMeta_artist$key = {
 
 
 const node: ReaderFragment = {
-  "argumentDefinitions": [],
   "kind": "Fragment",
-  "metadata": null,
   "name": "ArtistConsignMeta_artist",
+  "type": "Artist",
+  "metadata": null,
+  "argumentDefinitions": [],
   "selections": [
     {
-      "alias": null,
-      "args": null,
       "kind": "ScalarField",
+      "alias": null,
       "name": "name",
-      "storageKey": null
-    },
-    {
-      "alias": null,
       "args": null,
-      "kind": "ScalarField",
-      "name": "href",
       "storageKey": null
     },
     {
+      "kind": "ScalarField",
       "alias": null,
+      "name": "href",
+      "args": null,
+      "storageKey": null
+    },
+    {
+      "kind": "LinkedField",
+      "alias": null,
+      "name": "targetSupply",
+      "storageKey": null,
       "args": null,
       "concreteType": "ArtistTargetSupply",
-      "kind": "LinkedField",
-      "name": "targetSupply",
       "plural": false,
       "selections": [
         {
+          "kind": "LinkedField",
           "alias": null,
+          "name": "microfunnel",
+          "storageKey": null,
           "args": null,
           "concreteType": "ArtistTargetSupplyMicrofunnel",
-          "kind": "LinkedField",
-          "name": "microfunnel",
           "plural": false,
           "selections": [
             {
+              "kind": "LinkedField",
               "alias": null,
+              "name": "artworks",
+              "storageKey": null,
               "args": null,
               "concreteType": "ArtistTargetSupplyMicrofunnelArtwork",
-              "kind": "LinkedField",
-              "name": "artworks",
               "plural": true,
               "selections": [
                 {
+                  "kind": "LinkedField",
                   "alias": null,
+                  "name": "artwork",
+                  "storageKey": null,
                   "args": null,
                   "concreteType": "Artwork",
-                  "kind": "LinkedField",
-                  "name": "artwork",
                   "plural": false,
                   "selections": [
                     {
+                      "kind": "LinkedField",
                       "alias": null,
+                      "name": "image",
+                      "storageKey": null,
                       "args": null,
                       "concreteType": "Image",
-                      "kind": "LinkedField",
-                      "name": "image",
                       "plural": false,
                       "selections": [
                         {
+                          "kind": "ScalarField",
                           "alias": "imageURL",
+                          "name": "url",
                           "args": [
                             {
                               "kind": "Literal",
@@ -96,27 +103,19 @@ const node: ReaderFragment = {
                               "value": "medium"
                             }
                           ],
-                          "kind": "ScalarField",
-                          "name": "url",
                           "storageKey": "url(version:\"medium\")"
                         }
-                      ],
-                      "storageKey": null
+                      ]
                     }
-                  ],
-                  "storageKey": null
+                  ]
                 }
-              ],
-              "storageKey": null
+              ]
             }
-          ],
-          "storageKey": null
+          ]
         }
-      ],
-      "storageKey": null
+      ]
     }
-  ],
-  "type": "Artist"
+  ]
 };
 (node as any).hash = 'cdb304af5dff2c7987ce5b9833fa7914';
 export default node;

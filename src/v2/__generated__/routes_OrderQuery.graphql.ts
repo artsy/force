@@ -1,5 +1,4 @@
 /* tslint:disable */
-/* eslint-disable */
 
 import { ConcreteRequest } from "relay-runtime";
 export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
@@ -184,17 +183,17 @@ query routes_OrderQuery(
 const node: ConcreteRequest = (function(){
 var v0 = [
   {
-    "defaultValue": null,
     "kind": "LocalArgument",
     "name": "orderID",
-    "type": "ID!"
+    "type": "ID!",
+    "defaultValue": null
   }
 ],
 v1 = {
-  "alias": null,
-  "args": null,
   "kind": "ScalarField",
+  "alias": null,
   "name": "name",
+  "args": null,
   "storageKey": null
 },
 v2 = [
@@ -205,85 +204,85 @@ v2 = [
   }
 ],
 v3 = {
-  "alias": null,
-  "args": null,
   "kind": "ScalarField",
+  "alias": null,
   "name": "internalID",
+  "args": null,
   "storageKey": null
 },
 v4 = {
-  "alias": null,
-  "args": null,
   "kind": "ScalarField",
+  "alias": null,
   "name": "mode",
+  "args": null,
   "storageKey": null
 },
 v5 = {
-  "alias": null,
-  "args": null,
   "kind": "ScalarField",
+  "alias": null,
   "name": "state",
+  "args": null,
   "storageKey": null
 },
 v6 = {
-  "alias": null,
-  "args": null,
   "kind": "ScalarField",
+  "alias": null,
   "name": "lastTransactionFailed",
+  "args": null,
   "storageKey": null
 },
 v7 = {
-  "alias": null,
-  "args": null,
   "kind": "ScalarField",
+  "alias": null,
   "name": "__typename",
+  "args": null,
   "storageKey": null
 },
 v8 = {
+  "kind": "LinkedField",
   "alias": null,
+  "name": "requestedFulfillment",
+  "storageKey": null,
   "args": null,
   "concreteType": null,
-  "kind": "LinkedField",
-  "name": "requestedFulfillment",
   "plural": false,
   "selections": [
     (v7/*: any*/)
-  ],
-  "storageKey": null
+  ]
 },
 v9 = {
-  "alias": null,
-  "args": null,
   "kind": "ScalarField",
+  "alias": null,
   "name": "slug",
+  "args": null,
   "storageKey": null
 },
 v10 = {
-  "alias": null,
-  "args": null,
   "kind": "ScalarField",
+  "alias": null,
   "name": "href",
+  "args": null,
   "storageKey": null
 },
 v11 = {
-  "alias": "is_acquireable",
-  "args": null,
   "kind": "ScalarField",
+  "alias": "is_acquireable",
   "name": "isAcquireable",
+  "args": null,
   "storageKey": null
 },
 v12 = {
-  "alias": "is_offerable",
-  "args": null,
   "kind": "ScalarField",
+  "alias": "is_offerable",
   "name": "isOfferable",
+  "args": null,
   "storageKey": null
 },
 v13 = {
-  "alias": null,
-  "args": null,
   "kind": "ScalarField",
+  "alias": null,
   "name": "createdAt",
+  "args": null,
   "storageKey": null
 },
 v14 = [
@@ -291,17 +290,17 @@ v14 = [
   (v13/*: any*/)
 ],
 v15 = {
-  "alias": null,
-  "args": null,
   "kind": "ScalarField",
+  "alias": null,
   "name": "awaitingResponseFrom",
+  "args": null,
   "storageKey": null
 },
 v16 = {
-  "alias": null,
-  "args": null,
   "kind": "ScalarField",
+  "alias": null,
   "name": "id",
+  "args": null,
   "storageKey": null
 },
 v17 = [
@@ -310,30 +309,33 @@ v17 = [
   (v16/*: any*/)
 ];
 return {
+  "kind": "Request",
   "fragment": {
-    "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
-    "metadata": null,
     "name": "routes_OrderQuery",
+    "type": "Query",
+    "metadata": null,
+    "argumentDefinitions": (v0/*: any*/),
     "selections": [
       {
+        "kind": "LinkedField",
         "alias": null,
+        "name": "me",
+        "storageKey": null,
         "args": null,
         "concreteType": "Me",
-        "kind": "LinkedField",
-        "name": "me",
         "plural": false,
         "selections": [
           (v1/*: any*/)
-        ],
-        "storageKey": null
+        ]
       },
       {
+        "kind": "LinkedField",
         "alias": "order",
+        "name": "commerceOrder",
+        "storageKey": null,
         "args": (v2/*: any*/),
         "concreteType": null,
-        "kind": "LinkedField",
-        "name": "commerceOrder",
         "plural": false,
         "selections": [
           (v3/*: any*/),
@@ -342,123 +344,121 @@ return {
           (v6/*: any*/),
           (v8/*: any*/),
           {
+            "kind": "LinkedField",
             "alias": null,
+            "name": "lineItems",
+            "storageKey": null,
             "args": null,
             "concreteType": "CommerceLineItemConnection",
-            "kind": "LinkedField",
-            "name": "lineItems",
             "plural": false,
             "selections": [
               {
+                "kind": "LinkedField",
                 "alias": null,
+                "name": "edges",
+                "storageKey": null,
                 "args": null,
                 "concreteType": "CommerceLineItemEdge",
-                "kind": "LinkedField",
-                "name": "edges",
                 "plural": true,
                 "selections": [
                   {
+                    "kind": "LinkedField",
                     "alias": null,
+                    "name": "node",
+                    "storageKey": null,
                     "args": null,
                     "concreteType": "CommerceLineItem",
-                    "kind": "LinkedField",
-                    "name": "node",
                     "plural": false,
                     "selections": [
                       {
+                        "kind": "LinkedField",
                         "alias": null,
+                        "name": "artwork",
+                        "storageKey": null,
                         "args": null,
                         "concreteType": "Artwork",
-                        "kind": "LinkedField",
-                        "name": "artwork",
                         "plural": false,
                         "selections": [
                           (v9/*: any*/),
                           (v10/*: any*/),
                           (v11/*: any*/),
                           (v12/*: any*/)
-                        ],
-                        "storageKey": null
+                        ]
                       }
-                    ],
-                    "storageKey": null
+                    ]
                   }
-                ],
-                "storageKey": null
+                ]
               }
-            ],
-            "storageKey": null
+            ]
           },
           {
+            "kind": "LinkedField",
             "alias": null,
+            "name": "creditCard",
+            "storageKey": null,
             "args": null,
             "concreteType": "CreditCard",
-            "kind": "LinkedField",
-            "name": "creditCard",
             "plural": false,
             "selections": [
               (v3/*: any*/)
-            ],
-            "storageKey": null
+            ]
           },
           {
             "kind": "InlineFragment",
+            "type": "CommerceOfferOrder",
             "selections": [
               {
+                "kind": "LinkedField",
                 "alias": null,
+                "name": "myLastOffer",
+                "storageKey": null,
                 "args": null,
                 "concreteType": "CommerceOffer",
-                "kind": "LinkedField",
-                "name": "myLastOffer",
                 "plural": false,
-                "selections": (v14/*: any*/),
-                "storageKey": null
+                "selections": (v14/*: any*/)
               },
               {
+                "kind": "LinkedField",
                 "alias": null,
+                "name": "lastOffer",
+                "storageKey": null,
                 "args": null,
                 "concreteType": "CommerceOffer",
-                "kind": "LinkedField",
-                "name": "lastOffer",
                 "plural": false,
-                "selections": (v14/*: any*/),
-                "storageKey": null
+                "selections": (v14/*: any*/)
               },
               (v15/*: any*/)
-            ],
-            "type": "CommerceOfferOrder"
+            ]
           }
-        ],
-        "storageKey": null
+        ]
       }
-    ],
-    "type": "Query"
+    ]
   },
-  "kind": "Request",
   "operation": {
-    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "routes_OrderQuery",
+    "argumentDefinitions": (v0/*: any*/),
     "selections": [
       {
+        "kind": "LinkedField",
         "alias": null,
+        "name": "me",
+        "storageKey": null,
         "args": null,
         "concreteType": "Me",
-        "kind": "LinkedField",
-        "name": "me",
         "plural": false,
         "selections": [
           (v1/*: any*/),
           (v16/*: any*/)
-        ],
-        "storageKey": null
+        ]
       },
       {
+        "kind": "LinkedField",
         "alias": "order",
+        "name": "commerceOrder",
+        "storageKey": null,
         "args": (v2/*: any*/),
         "concreteType": null,
-        "kind": "LinkedField",
-        "name": "commerceOrder",
         "plural": false,
         "selections": [
           (v7/*: any*/),
@@ -468,35 +468,39 @@ return {
           (v6/*: any*/),
           (v8/*: any*/),
           {
+            "kind": "LinkedField",
             "alias": null,
+            "name": "lineItems",
+            "storageKey": null,
             "args": null,
             "concreteType": "CommerceLineItemConnection",
-            "kind": "LinkedField",
-            "name": "lineItems",
             "plural": false,
             "selections": [
               {
+                "kind": "LinkedField",
                 "alias": null,
+                "name": "edges",
+                "storageKey": null,
                 "args": null,
                 "concreteType": "CommerceLineItemEdge",
-                "kind": "LinkedField",
-                "name": "edges",
                 "plural": true,
                 "selections": [
                   {
+                    "kind": "LinkedField",
                     "alias": null,
+                    "name": "node",
+                    "storageKey": null,
                     "args": null,
                     "concreteType": "CommerceLineItem",
-                    "kind": "LinkedField",
-                    "name": "node",
                     "plural": false,
                     "selections": [
                       {
+                        "kind": "LinkedField",
                         "alias": null,
+                        "name": "artwork",
+                        "storageKey": null,
                         "args": null,
                         "concreteType": "Artwork",
-                        "kind": "LinkedField",
-                        "name": "artwork",
                         "plural": false,
                         "selections": [
                           (v9/*: any*/),
@@ -504,71 +508,66 @@ return {
                           (v10/*: any*/),
                           (v11/*: any*/),
                           (v12/*: any*/)
-                        ],
-                        "storageKey": null
+                        ]
                       },
                       (v16/*: any*/)
-                    ],
-                    "storageKey": null
+                    ]
                   }
-                ],
-                "storageKey": null
+                ]
               }
-            ],
-            "storageKey": null
+            ]
           },
           {
+            "kind": "LinkedField",
             "alias": null,
+            "name": "creditCard",
+            "storageKey": null,
             "args": null,
             "concreteType": "CreditCard",
-            "kind": "LinkedField",
-            "name": "creditCard",
             "plural": false,
             "selections": [
               (v3/*: any*/),
               (v16/*: any*/)
-            ],
-            "storageKey": null
+            ]
           },
           (v16/*: any*/),
           {
             "kind": "InlineFragment",
+            "type": "CommerceOfferOrder",
             "selections": [
               {
+                "kind": "LinkedField",
                 "alias": null,
+                "name": "myLastOffer",
+                "storageKey": null,
                 "args": null,
                 "concreteType": "CommerceOffer",
-                "kind": "LinkedField",
-                "name": "myLastOffer",
                 "plural": false,
-                "selections": (v17/*: any*/),
-                "storageKey": null
+                "selections": (v17/*: any*/)
               },
               {
+                "kind": "LinkedField",
                 "alias": null,
+                "name": "lastOffer",
+                "storageKey": null,
                 "args": null,
                 "concreteType": "CommerceOffer",
-                "kind": "LinkedField",
-                "name": "lastOffer",
                 "plural": false,
-                "selections": (v17/*: any*/),
-                "storageKey": null
+                "selections": (v17/*: any*/)
               },
               (v15/*: any*/)
-            ],
-            "type": "CommerceOfferOrder"
+            ]
           }
-        ],
-        "storageKey": null
+        ]
       }
     ]
   },
   "params": {
-    "id": null,
-    "metadata": {},
-    "name": "routes_OrderQuery",
     "operationKind": "query",
-    "text": "query routes_OrderQuery(\n  $orderID: ID!\n) {\n  me {\n    name\n    id\n  }\n  order: commerceOrder(id: $orderID) @principalField {\n    __typename\n    internalID\n    mode\n    state\n    lastTransactionFailed\n    ... on CommerceOfferOrder {\n      myLastOffer {\n        internalID\n        createdAt\n        id\n      }\n      lastOffer {\n        internalID\n        createdAt\n        id\n      }\n      awaitingResponseFrom\n    }\n    requestedFulfillment {\n      __typename\n    }\n    lineItems {\n      edges {\n        node {\n          artwork {\n            slug\n            id\n            href\n            is_acquireable: isAcquireable\n            is_offerable: isOfferable\n          }\n          id\n        }\n      }\n    }\n    creditCard {\n      internalID\n      id\n    }\n    id\n  }\n}\n"
+    "name": "routes_OrderQuery",
+    "id": null,
+    "text": "query routes_OrderQuery(\n  $orderID: ID!\n) {\n  me {\n    name\n    id\n  }\n  order: commerceOrder(id: $orderID) @principalField {\n    __typename\n    internalID\n    mode\n    state\n    lastTransactionFailed\n    ... on CommerceOfferOrder {\n      myLastOffer {\n        internalID\n        createdAt\n        id\n      }\n      lastOffer {\n        internalID\n        createdAt\n        id\n      }\n      awaitingResponseFrom\n    }\n    requestedFulfillment {\n      __typename\n    }\n    lineItems {\n      edges {\n        node {\n          artwork {\n            slug\n            id\n            href\n            is_acquireable: isAcquireable\n            is_offerable: isOfferable\n          }\n          id\n        }\n      }\n    }\n    creditCard {\n      internalID\n      id\n    }\n    id\n  }\n}\n",
+    "metadata": {}
   }
 };
 })();

@@ -1,9 +1,8 @@
 /* tslint:disable */
-/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
-import { FragmentRefs } from "relay-runtime";
 export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
+import { FragmentRefs } from "relay-runtime";
 export type Review_order = {
     readonly internalID: string;
     readonly mode: CommerceOrderModeEnum | null;
@@ -38,35 +37,38 @@ export type Review_order$key = {
 
 const node: ReaderFragment = (function(){
 var v0 = {
-  "alias": null,
-  "args": null,
   "kind": "ScalarField",
+  "alias": null,
   "name": "internalID",
+  "args": null,
   "storageKey": null
 },
 v1 = {
-  "alias": null,
-  "args": null,
   "kind": "ScalarField",
+  "alias": null,
   "name": "slug",
+  "args": null,
   "storageKey": null
 };
 return {
-  "argumentDefinitions": [],
   "kind": "Fragment",
-  "metadata": null,
   "name": "Review_order",
+  "type": "CommerceOrder",
+  "metadata": null,
+  "argumentDefinitions": [],
   "selections": [
     (v0/*: any*/),
     {
-      "alias": null,
-      "args": null,
       "kind": "ScalarField",
+      "alias": null,
       "name": "mode",
+      "args": null,
       "storageKey": null
     },
     {
+      "kind": "ScalarField",
       "alias": null,
+      "name": "itemsTotal",
       "args": [
         {
           "kind": "Literal",
@@ -74,118 +76,115 @@ return {
           "value": 2
         }
       ],
-      "kind": "ScalarField",
-      "name": "itemsTotal",
       "storageKey": "itemsTotal(precision:2)"
     },
     {
+      "kind": "LinkedField",
       "alias": null,
+      "name": "lineItems",
+      "storageKey": null,
       "args": null,
       "concreteType": "CommerceLineItemConnection",
-      "kind": "LinkedField",
-      "name": "lineItems",
       "plural": false,
       "selections": [
         {
+          "kind": "LinkedField",
           "alias": null,
+          "name": "edges",
+          "storageKey": null,
           "args": null,
           "concreteType": "CommerceLineItemEdge",
-          "kind": "LinkedField",
-          "name": "edges",
           "plural": true,
           "selections": [
             {
+              "kind": "LinkedField",
               "alias": null,
+              "name": "node",
+              "storageKey": null,
               "args": null,
               "concreteType": "CommerceLineItem",
-              "kind": "LinkedField",
-              "name": "node",
               "plural": false,
               "selections": [
                 {
+                  "kind": "LinkedField",
                   "alias": null,
+                  "name": "artwork",
+                  "storageKey": null,
                   "args": null,
                   "concreteType": "Artwork",
-                  "kind": "LinkedField",
-                  "name": "artwork",
                   "plural": false,
                   "selections": [
                     (v1/*: any*/),
                     (v0/*: any*/),
                     {
+                      "kind": "LinkedField",
                       "alias": null,
+                      "name": "artists",
+                      "storageKey": null,
                       "args": null,
                       "concreteType": "Artist",
-                      "kind": "LinkedField",
-                      "name": "artists",
                       "plural": true,
                       "selections": [
                         (v1/*: any*/)
-                      ],
-                      "storageKey": null
+                      ]
                     }
-                  ],
-                  "storageKey": null
+                  ]
                 },
                 {
-                  "args": null,
                   "kind": "FragmentSpread",
-                  "name": "ItemReview_lineItem"
+                  "name": "ItemReview_lineItem",
+                  "args": null
                 }
-              ],
-              "storageKey": null
+              ]
             }
-          ],
-          "storageKey": null
+          ]
         }
-      ],
-      "storageKey": null
+      ]
     },
     {
       "kind": "InlineFragment",
+      "type": "CommerceOfferOrder",
       "selections": [
         {
+          "kind": "LinkedField",
           "alias": null,
+          "name": "myLastOffer",
+          "storageKey": null,
           "args": null,
           "concreteType": "CommerceOffer",
-          "kind": "LinkedField",
-          "name": "myLastOffer",
           "plural": false,
           "selections": [
             (v0/*: any*/)
-          ],
-          "storageKey": null
+          ]
         }
-      ],
-      "type": "CommerceOfferOrder"
+      ]
     },
     {
-      "args": null,
       "kind": "FragmentSpread",
-      "name": "ArtworkSummaryItem_order"
+      "name": "ArtworkSummaryItem_order",
+      "args": null
     },
     {
-      "args": null,
       "kind": "FragmentSpread",
-      "name": "TransactionDetailsSummaryItem_order"
+      "name": "TransactionDetailsSummaryItem_order",
+      "args": null
     },
     {
-      "args": null,
       "kind": "FragmentSpread",
-      "name": "ShippingSummaryItem_order"
+      "name": "ShippingSummaryItem_order",
+      "args": null
     },
     {
-      "args": null,
       "kind": "FragmentSpread",
-      "name": "CreditCardSummaryItem_order"
+      "name": "CreditCardSummaryItem_order",
+      "args": null
     },
     {
-      "args": null,
       "kind": "FragmentSpread",
-      "name": "OfferSummaryItem_order"
+      "name": "OfferSummaryItem_order",
+      "args": null
     }
-  ],
-  "type": "CommerceOrder"
+  ]
 };
 })();
 (node as any).hash = '60dfd6ec4add50147123f983c4b5e086';

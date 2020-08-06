@@ -1,5 +1,4 @@
 /* tslint:disable */
-/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -21,27 +20,31 @@ export type ArtistRow_artist$key = {
 
 
 const node: ReaderFragment = {
-  "argumentDefinitions": [],
   "kind": "Fragment",
-  "metadata": null,
   "name": "ArtistRow_artist",
+  "type": "Artist",
+  "metadata": null,
+  "argumentDefinitions": [],
   "selections": [
     {
-      "alias": null,
-      "args": null,
       "kind": "ScalarField",
+      "alias": null,
       "name": "name",
-      "storageKey": null
-    },
-    {
-      "alias": null,
       "args": null,
-      "kind": "ScalarField",
-      "name": "href",
       "storageKey": null
     },
     {
+      "kind": "ScalarField",
+      "alias": null,
+      "name": "href",
+      "args": null,
+      "storageKey": null
+    },
+    {
+      "kind": "LinkedField",
       "alias": "artworks",
+      "name": "artworksConnection",
+      "storageKey": "artworksConnection(first:6)",
       "args": [
         {
           "kind": "Literal",
@@ -50,25 +53,21 @@ const node: ReaderFragment = {
         }
       ],
       "concreteType": "ArtworkConnection",
-      "kind": "LinkedField",
-      "name": "artworksConnection",
       "plural": false,
       "selections": [
         {
-          "args": null,
           "kind": "FragmentSpread",
-          "name": "Fillwidth_artworks"
+          "name": "Fillwidth_artworks",
+          "args": null
         }
-      ],
-      "storageKey": "artworksConnection(first:6)"
+      ]
     },
     {
-      "args": null,
       "kind": "FragmentSpread",
-      "name": "Follow_artist"
+      "name": "Follow_artist",
+      "args": null
     }
-  ],
-  "type": "Artist"
+  ]
 };
 (node as any).hash = '165cde0cf105756da9745ed008809922';
 export default node;

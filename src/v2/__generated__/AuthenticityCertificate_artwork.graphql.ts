@@ -1,5 +1,4 @@
 /* tslint:disable */
-/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -17,27 +16,27 @@ export type AuthenticityCertificate_artwork$key = {
 
 
 const node: ReaderFragment = {
-  "argumentDefinitions": [],
   "kind": "Fragment",
-  "metadata": null,
   "name": "AuthenticityCertificate_artwork",
+  "type": "Artwork",
+  "metadata": null,
+  "argumentDefinitions": [],
   "selections": [
     {
-      "alias": null,
-      "args": null,
       "kind": "ScalarField",
+      "alias": null,
       "name": "hasCertificateOfAuthenticity",
+      "args": null,
       "storageKey": null
     },
     {
-      "alias": "is_biddable",
-      "args": null,
       "kind": "ScalarField",
+      "alias": "is_biddable",
       "name": "isBiddable",
+      "args": null,
       "storageKey": null
     }
-  ],
-  "type": "Artwork"
+  ]
 };
 (node as any).hash = '39bc344c746b3df84f3c897873593c9b';
 export default node;

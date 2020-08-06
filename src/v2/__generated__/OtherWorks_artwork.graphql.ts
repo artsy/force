@@ -1,5 +1,4 @@
 /* tslint:disable */
-/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -42,64 +41,69 @@ export type OtherWorks_artwork$key = {
 
 const node: ReaderFragment = (function(){
 var v0 = {
-  "alias": null,
-  "args": null,
   "kind": "ScalarField",
+  "alias": null,
   "name": "__typename",
+  "args": null,
   "storageKey": null
 },
 v1 = {
-  "alias": null,
-  "args": null,
   "kind": "ScalarField",
+  "alias": null,
   "name": "slug",
+  "args": null,
   "storageKey": null
 };
 return {
+  "kind": "Fragment",
+  "name": "OtherWorks_artwork",
+  "type": "Artwork",
+  "metadata": null,
   "argumentDefinitions": [
     {
-      "defaultValue": false,
       "kind": "LocalArgument",
       "name": "shouldFetchArtistSeriesData",
-      "type": "Boolean!"
+      "type": "Boolean!",
+      "defaultValue": false
     }
   ],
-  "kind": "Fragment",
-  "metadata": null,
-  "name": "OtherWorks_artwork",
   "selections": [
     {
+      "kind": "LinkedField",
       "alias": null,
+      "name": "contextGrids",
+      "storageKey": null,
       "args": null,
       "concreteType": null,
-      "kind": "LinkedField",
-      "name": "contextGrids",
       "plural": true,
       "selections": [
         (v0/*: any*/),
         {
-          "alias": null,
-          "args": null,
           "kind": "ScalarField",
+          "alias": null,
           "name": "title",
+          "args": null,
           "storageKey": null
         },
         {
-          "alias": null,
-          "args": null,
           "kind": "ScalarField",
+          "alias": null,
           "name": "ctaTitle",
-          "storageKey": null
-        },
-        {
-          "alias": null,
           "args": null,
-          "kind": "ScalarField",
-          "name": "ctaHref",
           "storageKey": null
         },
         {
+          "kind": "ScalarField",
           "alias": null,
+          "name": "ctaHref",
+          "args": null,
+          "storageKey": null
+        },
+        {
+          "kind": "LinkedField",
+          "alias": null,
+          "name": "artworksConnection",
+          "storageKey": "artworksConnection(first:8)",
           "args": [
             {
               "kind": "Literal",
@@ -108,84 +112,83 @@ return {
             }
           ],
           "concreteType": "ArtworkConnection",
-          "kind": "LinkedField",
-          "name": "artworksConnection",
           "plural": false,
           "selections": [
             {
+              "kind": "LinkedField",
               "alias": null,
+              "name": "edges",
+              "storageKey": null,
               "args": null,
               "concreteType": "ArtworkEdge",
-              "kind": "LinkedField",
-              "name": "edges",
               "plural": true,
               "selections": [
                 {
+                  "kind": "LinkedField",
                   "alias": null,
+                  "name": "node",
+                  "storageKey": null,
                   "args": null,
                   "concreteType": "Artwork",
-                  "kind": "LinkedField",
-                  "name": "node",
                   "plural": false,
                   "selections": [
                     (v1/*: any*/)
-                  ],
-                  "storageKey": null
+                  ]
                 }
-              ],
-              "storageKey": null
+              ]
             },
             {
-              "args": null,
               "kind": "FragmentSpread",
-              "name": "ArtworkGrid_artworks"
+              "name": "ArtworkGrid_artworks",
+              "args": null
             }
-          ],
-          "storageKey": "artworksConnection(first:8)"
+          ]
         }
-      ],
-      "storageKey": null
+      ]
     },
     (v1/*: any*/),
     {
-      "alias": null,
-      "args": null,
       "kind": "ScalarField",
+      "alias": null,
       "name": "internalID",
+      "args": null,
       "storageKey": null
     },
     {
+      "kind": "LinkedField",
       "alias": null,
+      "name": "sale",
+      "storageKey": null,
       "args": null,
       "concreteType": "Sale",
-      "kind": "LinkedField",
-      "name": "sale",
       "plural": false,
       "selections": [
         {
-          "alias": "is_closed",
-          "args": null,
           "kind": "ScalarField",
+          "alias": "is_closed",
           "name": "isClosed",
+          "args": null,
           "storageKey": null
         }
-      ],
-      "storageKey": null
+      ]
     },
     {
+      "kind": "LinkedField",
       "alias": null,
+      "name": "context",
+      "storageKey": null,
       "args": null,
       "concreteType": null,
-      "kind": "LinkedField",
-      "name": "context",
       "plural": false,
       "selections": [
         (v0/*: any*/)
-      ],
-      "storageKey": null
+      ]
     },
     {
+      "kind": "LinkedField",
       "alias": "seriesArtist",
+      "name": "artist",
+      "storageKey": "artist(shallow:true)",
       "args": [
         {
           "kind": "Literal",
@@ -194,44 +197,40 @@ return {
         }
       ],
       "concreteType": "Artist",
-      "kind": "LinkedField",
-      "name": "artist",
       "plural": false,
       "selections": [
         {
-          "condition": "shouldFetchArtistSeriesData",
           "kind": "Condition",
           "passingValue": true,
+          "condition": "shouldFetchArtistSeriesData",
           "selections": [
             {
-              "args": null,
               "kind": "FragmentSpread",
-              "name": "ArtistSeriesRail_artist"
+              "name": "ArtistSeriesRail_artist",
+              "args": null
             }
           ]
         }
-      ],
-      "storageKey": "artist(shallow:true)"
+      ]
     },
     {
-      "args": null,
       "kind": "FragmentSpread",
-      "name": "RelatedWorksArtworkGrid_artwork"
+      "name": "RelatedWorksArtworkGrid_artwork",
+      "args": null
     },
     {
-      "condition": "shouldFetchArtistSeriesData",
       "kind": "Condition",
       "passingValue": true,
+      "condition": "shouldFetchArtistSeriesData",
       "selections": [
         {
-          "args": null,
           "kind": "FragmentSpread",
-          "name": "ArtistSeriesArtworkRail_artwork"
+          "name": "ArtistSeriesArtworkRail_artwork",
+          "args": null
         }
       ]
     }
-  ],
-  "type": "Artwork"
+  ]
 };
 })();
 (node as any).hash = '84a7aba3c5bcf0d95baf0844789cadde';
