@@ -1,8 +1,8 @@
 _ = require 'underscore'
-Q = require 'bluebird-q'
 Backbone = require 'backbone'
 FilterArtworks = require '../../../../collections/filter_artworks.coffee'
 initCarousel = require '../../../../components/merry_go_round/bottom_nav_mgr.coffee'
+require '../../../../../lib/promiseDone'
 template = -> require('./index.jade') arguments...
 
 module.exports = class HeroArtworksCarousel extends Backbone.View
@@ -22,7 +22,7 @@ module.exports = class HeroArtworksCarousel extends Backbone.View
   fetchArtworks: ->
     artworks = new FilterArtworks []
     data = _.extend {}, @filterOptions, partner_id: @partner.get('id')
-    Q(artworks.fetch data: data).then -> artworks
+    Promise.resolve(artworks.fetch data: data).then -> artworks
 
   initCarousel: (artworks) =>
     return @remove() unless artworks.length >= 5

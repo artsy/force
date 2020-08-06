@@ -5,7 +5,6 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
  */
 const Backbone = require("backbone")
-const Q = require("bluebird-q")
 const _ = require("underscore")
 const rewire = require("rewire")
 const { fabricate } = require("@artsy/antigravity")
@@ -221,7 +220,7 @@ describe("FetchFilterPartners", function () {
           this.stub = sinon.stub()
           FetchFilterPartners.__set__("metaphysics", this.stub)
           this.stub.returns(
-            Q.promise((resolve, reject) =>
+            new Promise((resolve, reject) =>
               resolve(_.extend({}, results, aggregationsResponse))
             )
           )
@@ -317,10 +316,12 @@ describe("FetchFilterPartners", function () {
               },
             }
 
-            FetchFilterPartners.__set__("metaphysics", () =>
-              Q.promise((resolve, reject) =>
-                resolve(_.extend({}, results, aggregationsResponse))
-              )
+            FetchFilterPartners.__set__(
+              "metaphysics",
+              () =>
+                new Promise((resolve, reject) =>
+                  resolve(_.extend({}, results, aggregationsResponse))
+                )
             )
 
             return this.filterPartners.fetch().then(() => {
@@ -335,7 +336,7 @@ describe("FetchFilterPartners", function () {
           this.stub = sinon.stub()
           FetchFilterPartners.__set__("metaphysics", this.stub)
           this.stub.returns(
-            Q.promise((resolve, reject) =>
+            new Promise((resolve, reject) =>
               resolve({ results: { hits: nPartners(10) } })
             )
           )
@@ -432,7 +433,7 @@ describe("FetchFilterPartners", function () {
         this.stub = sinon.stub()
         FetchFilterPartners.__set__("metaphysics", this.stub)
         this.stub.returns(
-          Q.promise((resolve, reject) => resolve(aggregationsResponse))
+          new Promise((resolve, reject) => resolve(aggregationsResponse))
         )
 
         this.params = new Params({ type: "gallery" })

@@ -10,7 +10,6 @@ ImageSetView = require './image_set.coffee'
 modalize = require '../../modalize/index.coffee'
 { Following, FollowButton } = require '../../follow_button/index.coffee'
 initCarousel = require '../../merry_go_round/bottom_nav_mgr.coffee'
-Q = require 'bluebird-q'
 Sticky = require '../../sticky/index.coffee'
 editTemplate = -> require('../templates/edit.jade') arguments...
 
@@ -125,7 +124,11 @@ module.exports = class ArticleView extends Backbone.View
         $el.addClass('single') if $el.children().length is 1
         @setupMaxImageHeights $el
       else
-        Q.nfcall @fillwidth, $el
+        new Promise((resolve) =>
+          @fillwidth($el, () ->
+            resolve()
+          )
+        )
     cb()
 
   doneResizingImages: =>

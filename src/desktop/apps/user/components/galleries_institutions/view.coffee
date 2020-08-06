@@ -1,4 +1,3 @@
-Q = require 'bluebird-q'
 Backbone = require 'backbone'
 { defer } = require 'underscore'
 { Following, FollowButton } = require '../../../../components/follow_button/index.coffee'

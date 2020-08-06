@@ -1,6 +1,5 @@
 _ = require 'underscore'
 _s = require 'underscore.string'
-Q = require 'bluebird-q'
 Backbone = require 'backbone'
 moment = require 'moment'
 momentTimezone = require 'moment-timezone'
@@ -27,7 +26,7 @@ module.exports = class Article extends Backbone.Model
     # Deferred require
     Articles = require '../collections/articles.coffee'
     superArticles = new Articles
-    Q.allSettled([
+    Promise.allSettled([
       @fetch(
         error: options.error
         headers: 'X-Access-Token': options.accessToken or ''
@@ -86,9 +85,9 @@ module.exports = class Article extends Backbone.Model
             success: (article) ->
               calloutArticles.add(article)
 
-      Q.allSettled(dfds).then =>
+      Promise.allSettled(dfds).then =>
         superArticleDefferreds = if superArticle then superArticle.fetchSuperSubArticles(superSubArticles, options.accessToken) else []
-        Q.allSettled(superArticleDefferreds)
+        Promise.allSettled(superArticleDefferreds)
           .then =>
 
             # Super Sub Article Ids

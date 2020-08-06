@@ -4,7 +4,6 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
  */
 const _ = require("underscore")
-const Q = require("bluebird-q")
 const sinon = require("sinon")
 const moment = require("moment")
 const Backbone = require("backbone")
@@ -15,7 +14,7 @@ const rewire = require("rewire")
 const routes = rewire("../routes")
 
 describe("Auctions routes", function () {
-  beforeEach(() => sinon.stub(Backbone, "sync").returns(Q.resolve()))
+  beforeEach(() => sinon.stub(Backbone, "sync").returns(Promise.resolve()))
 
   afterEach(() => Backbone.sync.restore())
 
@@ -165,8 +164,9 @@ describe("Auctions routes", function () {
       before(function () {
         this.req = { user: new CurrentUser(fabricate("user")) }
         this.res = { render: sinon.stub(), locals: { sd: {} } }
-        return routes.__set__("metaphysics", () =>
-          Q.promise((resolve, reject) => resolve({ me: [] }))
+        return routes.__set__(
+          "metaphysics",
+          () => new Promise((resolve, reject) => resolve({ me: [] }))
         )
       })
 

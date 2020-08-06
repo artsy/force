@@ -1,6 +1,5 @@
 _ = require 'underscore'
 sd = require('sharify').data
-Q = require 'bluebird-q'
 Profile = require '../../models/profile.coffee'
 Fair = require '../../models/fair.coffee'
 PartnerLocation = require '../../models/partner_location.coffee'
@@ -9,13 +8,14 @@ FairEvents = require '../../collections/fair_events.coffee'
 InfoMenu = require './info_menu.coffee'
 Articles = require '../../collections/articles.coffee'
 Article = require '../../models/article.coffee'
+require '../../../lib/promiseDone'
 
 module.exports.assignFair = (req, res, next) ->
   return next() unless req.profile?.isFair()
   res.locals.sd.PAGE_TYPE = 'fair'
   fair = new Fair req.profile.get('owner')
   infoMenu = new InfoMenu fair: fair
-  Q.all([
+  Promise.all([
     fair.fetch(cache: false)
     infoMenu.fetch(cache: false)
   ]).then () ->
@@ -138,7 +138,7 @@ module.exports.armoryArtsWeekAll = (req, res, next) ->
   neighborhoods = _.map aawMap, (neighborhood) ->
     _.extend neighborhood, { article: new Article id: neighborhood.id }
 
-  Q.all _.map neighborhoods, (hood) -> hood.article.fetch()
+  Promise.all _.map neighborhoods, (hood) -> hood.article.fetch()
   .then ->
     res.render 'armory_arts_week_all',
       neighborhoods: neighborhoods

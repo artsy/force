@@ -74,7 +74,9 @@ describe("NewsView", function () {
 
       Backbone.sync.onCall(1).yieldsTo("success", this.fairBooths.models)
 
-      return this.view.fetch().spread((showEvents, fairBooths) => {
+      return this.view.fetch().then(results => {
+        const showEvents = results[0]
+        const fairBooths = results[1]
         showEvents.length.should.equal(1)
         fairBooths.length.should.equal(1)
         showEvents.models.should.eql(this.partnerShowEvents.models)

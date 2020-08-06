@@ -1,4 +1,3 @@
-Q = require 'bluebird-q'
 Backbone = require 'backbone'
 Form = require '../../../../components/form/index.coffee'
 FlashMessage = require '../../../../components/flash/index.coffee'
@@ -28,7 +27,7 @@ module.exports = class DeleteMyAccountView extends Backbone.View
 
     form.state 'loading'
 
-    Q $.ajax
+    Promise.resolve $.ajax
       method: 'DELETE'
       url: @user.url()
       data:
@@ -37,7 +36,7 @@ module.exports = class DeleteMyAccountView extends Backbone.View
         url: '/user/delete'
 
     .then ->
-      Q $.ajax
+      Promise.resolve $.ajax
         method: 'DELETE'
         url: '/users/sign_out'
 

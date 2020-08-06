@@ -1,5 +1,4 @@
 _ = require 'underscore'
-Q = require 'bluebird-q'
 sd = require('sharify').data
 Backbone = require 'backbone'
 CurrentUser = require '../../../models/current_user.coffee'
@@ -15,6 +14,7 @@ OverviewView = require './overview.coffee'
 tablistTemplate = -> require('../templates/tablist.jade') arguments...
 { Following, FollowButton } = require '../../../components/follow_button/index.coffee'
 mediator = require '../../../lib/mediator.coffee'
+require '../../../../lib/promiseDone'
 { ContextModule } = require "@artsy/cohesion"
 
 sectionToView =
@@ -80,7 +80,7 @@ module.exports = class PartnerView extends Backbone.View
       limit: 1
       count: true
 
-    Q.allSettled([@partner.fetch(), articles.fetch(data: articlesFetchData)])
+    Promise.allSettled([@partner.fetch(), articles.fetch(data: articlesFetchData)])
       .then => @partnerArticlesCount = articles.count
 
   initializeTablistAndContent: =>

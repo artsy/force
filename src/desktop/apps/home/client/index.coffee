@@ -1,4 +1,3 @@
-Q = require 'bluebird-q'
 Backbone = require 'backbone'
 Cookies = require 'cookies-js'
 CurrentUser = require '../../../models/current_user.coffee'

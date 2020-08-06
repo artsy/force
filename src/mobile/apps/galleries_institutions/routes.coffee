@@ -1,7 +1,7 @@
 _ = require 'underscore'
 sd = require('sharify').data
-Q = require 'bluebird-q'
 Backbone = require 'backbone'
+require '../../../lib/promiseDone'
 { FeaturedCities, Cities } = require 'places'
 Profiles = require '../../collections/profiles'
 Partners = require '../../collections/partners'

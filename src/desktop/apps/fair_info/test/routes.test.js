@@ -4,7 +4,6 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
  */
 const _ = require("underscore")
-const Q = require("bluebird-q")
 const routes = require("../routes")
 const Backbone = require("backbone")
 const sinon = require("sinon")
@@ -42,7 +41,7 @@ describe("FairInfo routes", function () {
         .yieldsTo("success", {})
         .onCall(0)
         .yieldsTo("success", fabricate("fair"))
-        .returns(Q.resolve({}))
+        .returns(Promise.resolve({}))
     })
 
     afterEach(() => Backbone.sync.restore())

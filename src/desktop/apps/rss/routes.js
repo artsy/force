@@ -1,7 +1,6 @@
 import _request from "superagent"
 import { data as _sd } from "sharify"
 import Articles from "../../collections/articles"
-import Q from "bluebird-q"
 import { news as newsQuery } from "./queries/news"
 import { positronql as _positronql } from "desktop/lib/positronql"
 
@@ -59,7 +58,7 @@ export const partnerUpdates = (req, res, next) =>
   })
 
 export const findArticlesWithEmbeds = articles => {
-  return Q.all(
+  return Promise.all(
     articles.map(async (article, i) => {
       const newSections = await findSocialEmbeds(article)
       article.sections = newSections
@@ -72,7 +71,7 @@ export const findArticlesWithEmbeds = articles => {
 }
 
 export const findSocialEmbeds = article => {
-  return Q.all(
+  return Promise.all(
     article.sections.map(async (section, index) => {
       try {
         const newSection = await maybeFetchSocialEmbed(section)

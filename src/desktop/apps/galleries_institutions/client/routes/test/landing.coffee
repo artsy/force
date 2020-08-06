@@ -1,5 +1,4 @@
 { resolve } = require 'path'
-Q = require 'bluebird-q'
 benv = require 'benv'
 sinon = require 'sinon'
 rewire = require 'rewire'
@@ -44,7 +43,7 @@ describe 'LandingCarouselView', ->
 
     @fetch = sinon.stub()
     LandingCarouselView.__set__ 'fetchLocationCarousel', @fetch
-    @fetch.returns Q.promise (resolve, reject) => resolve @category
+    @fetch.returns new Promise (resolve, reject) => resolve @category
 
     @PartnerCellCarouselView = benv.requireWithJadeify resolve(__dirname, '../../../components/partner_cell_carousel/view'), ['template']
     LandingCarouselView.__set__ 'PartnerCellCarouselView', @PartnerCellCarouselView

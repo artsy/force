@@ -3,7 +3,6 @@
  * DS102: Remove unnecessary code created because of implicit returns
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
  */
-const Q = require("bluebird-q")
 const _ = require("underscore")
 const Backbone = require("backbone")
 const sinon = require("sinon")
@@ -313,7 +312,7 @@ describe("CurrentUser", function () {
 
       this.user = new CurrentUser()
 
-      return sinon.stub(Backbone, "sync").returns(Q.resolve())
+      return sinon.stub(Backbone, "sync").returns(Promise.resolve())
     })
 
     return it("creates or persists everything needed to make an inquiry", function () {

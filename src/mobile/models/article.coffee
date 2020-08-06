@@ -1,6 +1,5 @@
 _ = require 'underscore'
 _s = require 'underscore.string'
-Q = require 'bluebird-q'
 sd = require('sharify').data
 moment = require 'moment'
 Backbone = require 'backbone'
@@ -65,7 +64,7 @@ module.exports = class Article extends Backbone.Model
     if @isFairArticle()
       dfds.push (fair = new Fair(id: @get('fair_ids')[0])).fetch(cache: true)
 
-    Q.allSettled(dfds).then =>
+    Promise.allSettled(dfds).then =>
       footerArticles.remove @ if footerArticles
       options.success(
         article: this

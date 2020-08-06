@@ -1,7 +1,7 @@
 _ = require 'underscore'
-Q = require 'bluebird-q'
 Backbone = require 'backbone'
 initCarousel = require '../../../../components/merry_go_round/bottom_nav_mgr.coffee'
+require '../../../../../lib/promiseDone'
 
 module.exports = class FixedCellsCountCarousel extends Backbone.View
   defaults:
@@ -25,7 +25,7 @@ module.exports = class FixedCellsCountCarousel extends Backbone.View
     @fetch().then(@consolidate).then(@initCarousel).done()
 
   fetch: ->
-    Q.allSettled(
+    Promise.allSettled(
       _.map @fetchOptions, (options) =>
         @collection.fetch data: options, remove: false
     ).then (values) =>

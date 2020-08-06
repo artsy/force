@@ -1,9 +1,9 @@
 _ = require 'underscore'
-Q = require 'bluebird-q'
 { API_URL } = require('sharify').data
 Backbone = require 'backbone'
 Sales = require '../../collections/sales'
 Artworks = require '../../collections/artworks'
+require '../../../lib/promiseDone'
 
 eligibleFilter = _.partial _.filter, _, ((sale) ->
   # Reject sales without artworks
@@ -16,7 +16,7 @@ module.exports.index = (req, res) ->
     data: is_auction: true, published: true, size: 100, sort: '-timely_at,name'
     success: (collection, response, options) ->
       # Fetch artworks for the sale
-      Q.allSettled(sales.map (sale) ->
+      Promise.allSettled(sales.map (sale) ->
         sale.related().saleArtworks.fetch
           cache: true
           data: size: 5

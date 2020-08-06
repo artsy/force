@@ -1,12 +1,11 @@
 _ = require 'underscore'
-Q = require 'bluebird-q'
 geolib = require 'geolib'
 request = require 'superagent'
 { Cities } = require 'places'
 { NODE_ENV, GEOIP_ENDPOINT } = require '../../config'
 
 geoIP = (ip) ->
-  Q.promise (resolve, reject) ->
+  new Promise (resolve, reject) ->
     endpoint = GEOIP_ENDPOINT
     endpoint += if NODE_ENV is 'development' then '72.89.161.100' else ip
     request
