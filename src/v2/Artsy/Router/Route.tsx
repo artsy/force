@@ -5,7 +5,7 @@
 
 import { RouteSpinner } from "v2/Artsy/Relay/renderWithLoadProgress"
 import { HttpError } from "found"
-import BaseRoute from "found/lib/Route"
+import BaseRoute from "found/Route"
 import React from "react"
 
 type FetchIndicator = "spinner" | "overlay"

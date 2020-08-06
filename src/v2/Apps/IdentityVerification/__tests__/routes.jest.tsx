@@ -5,7 +5,7 @@ import {
   FarceElementResult,
   FarceRedirectResult,
   getFarceResult,
-} from "found/lib/server"
+} from "found/server"
 import { Environment, RecordSource, Store } from "relay-runtime"
 
 import { routes } from "v2/Apps/IdentityVerification/routes"
