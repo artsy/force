@@ -6,7 +6,6 @@ template = -> require('../templates/image_set.jade') arguments...
 { Following, FollowButton } = Follow = require '../../follow_button/index.coffee'
 imagesLoaded = require 'imagesloaded'
 { resize } = require '../../resizer/index.coffee'
-analyticsHooks = require '../../../lib/analytics_hooks.coffee'
 initCarousel = require '../../merry_go_round/horizontal_nav_mgr.coffee'
 
 module.exports = class ImageSetView extends Backbone.View
@@ -40,11 +39,9 @@ module.exports = class ImageSetView extends Backbone.View
     @addFollowButtons()
 
   next: ->
-    analyticsHooks.trigger 'view:image-set-item'
     @carousel.navigation.flickity.next()
 
   previous: ->
-    analyticsHooks.trigger 'view:image-set-item'
     @carousel.navigation.flickity.previous()
 
   onKeyUp: (e) =>
