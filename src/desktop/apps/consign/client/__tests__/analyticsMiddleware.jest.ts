@@ -1,9 +1,7 @@
 import reducers from "../reducers"
 import { applyMiddleware, createStore } from "redux"
-import sinon from "sinon"
 
 import analyticsMiddleware from "../analytics_middleware"
-const analyticsHooks = require("desktop/lib/analytics_hooks.coffee")
 
 jest.mock("desktop/lib/analytics_hooks.coffee")
 jest.mock("sharify", () => ({
@@ -16,13 +14,8 @@ jest.mock("sharify", () => ({
 }))
 
 describe("analyticsMiddleware", () => {
-  let triggerStub
-
   beforeEach(() => {
     window.analytics = { track: jest.fn() } as any
-    triggerStub = sinon.spy()
-    const mockAnalytics = analyticsHooks
-    mockAnalytics.trigger.mockImplementation(triggerStub)
   })
 
   it("tracks an artist confirmed action", () => {

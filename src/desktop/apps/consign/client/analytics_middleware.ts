@@ -1,11 +1,6 @@
 import * as actions from "./actions"
 import { data as sd } from "sharify"
 
-const _analyticsHooks = require("../../../lib/analytics_hooks.coffee")
-
-// FIXME: Rewire
-let analyticsHooks = _analyticsHooks
-
 const analyticsMiddleware = store => next => action => {
   const result = next(action)
   const nextState = store.getState()
@@ -13,12 +8,6 @@ const analyticsMiddleware = store => next => action => {
   // track certain types of actions
   switch (action.type) {
     case actions.UPDATE_USER: {
-      const { user, accountCreated } = action.payload
-      analyticsHooks.trigger("consignment:account:created", {
-        id: user.id,
-        email: user.email,
-        accountCreated: accountCreated,
-      })
       return result
     }
 

@@ -1,4 +1,6 @@
-import { omit } from "lodash"
+import { extend, omit, pick } from "lodash"
+import { data as sd } from "sharify"
+const analyticsHooks = require("../lib/analytics_hooks.coffee")
 
 /**
  * Format and fire events triggered via react-tracking and cohesion
@@ -35,6 +37,32 @@ export const trackEvent = (data: any, options: object = {}) => {
   }
 }
 
+export const onAnalyticsReady = () => {
+  if (sd.CURRENT_USER != null ? sd.CURRENT_USER.id : undefined) {
+    const allowedlist = [
+      "collector_level",
+      "default_profile_id",
+      "email",
+      "id",
+      "name",
+      "phone",
+      "type",
+    ]
+    const traits = extend(pick(sd.CURRENT_USER, allowedlist), {
+      session_id: sd.SESSION_ID,
+    })
+    window.analytics.identify(sd.CURRENT_USER.id, traits, {
+      integrations: { Marketo: false },
+    })
+    // clear analytics cache when user logs out
+    analyticsHooks.on("auth:logged-out", () => window.analytics.reset())
+  }
+}
+
+/**
+ * Send a pageview instead of track event when a stub is expanded,
+ * for example clicking read more in articles infinite scroll
+ */
 export const onClickedReadMore = data => {
   const pathname = data.pathname || location.pathname
   const href = window.sd.APP_URL + "/" + pathname
