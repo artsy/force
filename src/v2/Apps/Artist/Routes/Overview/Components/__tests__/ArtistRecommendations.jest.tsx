@@ -62,13 +62,13 @@ describe("ArtistRecommendations", () => {
   it("Doesn`t render `show more` button when less than three artists", async () => {
     const wrapper = await getWrapper(defaultArtist)
 
-    expect(wrapper.find("button").length).toEqual(0)
+    expect(wrapper.find("ShowMoreButton").length).toEqual(0)
   })
 
   it("Renders `show more` button when more than three artists available", async () => {
     const wrapper = await getWrapper(pagedArtist)
 
-    expect(wrapper.find("button").length).toEqual(1)
+    expect(wrapper.find("ShowMoreButton").length).toEqual(1)
   })
 })
 

@@ -1,6 +1,7 @@
 import React from "react"
 import {
   Box,
+  Clickable,
   Col,
   EntityHeader,
   Flex,
@@ -54,17 +55,19 @@ const ArtistInfo: React.FC<ArtistsInfoProps> = props => {
           }
           render={({ is_followed }) => {
             return (
-              <Sans
-                size="3"
-                color="black"
-                data-test="followArtistButton"
-                style={{
-                  cursor: "pointer",
-                  textDecoration: "underline",
-                }}
-              >
-                {is_followed ? "Following" : "Follow"}
-              </Sans>
+              <Clickable>
+                <Sans
+                  size="3"
+                  color="black"
+                  data-test="followArtistButton"
+                  style={{
+                    cursor: "pointer",
+                    textDecoration: "underline",
+                  }}
+                >
+                  {is_followed ? "Following" : "Follow"}
+                </Sans>
+              </Clickable>
             )
           }}
         />

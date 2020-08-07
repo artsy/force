@@ -1,5 +1,5 @@
 import { ContextModule, Intent } from "@artsy/cohesion"
-import { EntityHeader, ReadMore, breakpoints } from "@artsy/palette"
+import { Clickable, EntityHeader, ReadMore, breakpoints } from "@artsy/palette"
 import {
   Box,
   Col,
@@ -103,18 +103,20 @@ export const featuredArtistsEntityCollection: (
               onOpenAuthModal={() => handleOpenAuth(mediator, artist)}
               render={({ is_followed }) => {
                 return (
-                  <Sans
-                    size="2"
-                    weight="medium"
-                    color="black"
-                    data-test="followArtistButton"
-                    style={{
-                      cursor: "pointer",
-                      textDecoration: "underline",
-                    }}
-                  >
-                    {is_followed ? "Following" : "Follow"}
-                  </Sans>
+                  <Clickable>
+                    <Sans
+                      size="2"
+                      weight="medium"
+                      color="black"
+                      data-test="followArtistButton"
+                      style={{
+                        cursor: "pointer",
+                        textDecoration: "underline",
+                      }}
+                    >
+                      {is_followed ? "Following" : "Follow"}
+                    </Sans>
+                  </Clickable>
                 )
               }}
             />

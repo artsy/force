@@ -1,4 +1,4 @@
-import { Box, Serif } from "@artsy/palette"
+import { Box, Clickable, Serif } from "@artsy/palette"
 import { SystemContextConsumer } from "v2/Artsy"
 import * as Schema from "v2/Artsy/Analytics/Schema"
 
@@ -56,7 +56,11 @@ export class ArtworkSidebarArtists extends React.Component<ArtistsProps> {
           onOpenAuthModal={() => this.handleOpenAuth(mediator, artist)}
           triggerSuggestions
           render={({ is_followed }) => {
-            return <FollowIcon isFollowed={is_followed} />
+            return (
+              <Clickable>
+                <FollowIcon isFollowed={is_followed} />
+              </Clickable>
+            )
           }}
         >
           Follow

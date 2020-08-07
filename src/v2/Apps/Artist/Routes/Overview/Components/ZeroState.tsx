@@ -1,5 +1,5 @@
 import { ContextModule, Intent } from "@artsy/cohesion"
-import { Link, Message, Sans } from "@artsy/palette"
+import { Clickable, Link, Message, Sans } from "@artsy/palette"
 import { useSystemContext } from "v2/Artsy"
 import { FollowArtistButtonFragmentContainer as FollowArtistButton } from "v2/Components/FollowButton/FollowArtistButton"
 import React from "react"
@@ -29,9 +29,11 @@ export const ZeroState = props => {
             onOpenAuthModal={() => handleOpenAuth()}
             render={({ name }) => {
               return (
-                <Sans size="4" color="black60" weight="regular">
-                  Follow <Link>{name}</Link>
-                </Sans>
+                <Clickable>
+                  <Sans size="4" color="black60" weight="regular">
+                    Follow <Link>{name}</Link>
+                  </Sans>
+                </Clickable>
               )
             }}
           />{" "}
