@@ -36,6 +36,7 @@ const ViewingRoomApp: React.FC<ViewingRoomAppProps> = ({
         contextModule: ContextModule.viewingRoom,
         intent: Intent.viewViewingRoom,
         hideCloseButton: true,
+        copy: "Sign up to enter viewing rooms",
       })
     }, 0)
 
