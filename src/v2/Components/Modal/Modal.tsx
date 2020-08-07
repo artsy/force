@@ -49,6 +49,9 @@ export class Modal extends React.Component<ModalProps> {
 
   close = () => {
     this.props.onClose()
+    if (this.props.hideCloseButton) {
+      window.history.back()
+    }
   }
 
   render(): JSX.Element {
@@ -74,7 +77,7 @@ export class Modal extends React.Component<ModalProps> {
         fullscreenResponsiveModal
         hideCloseButton={hideCloseButton}
       >
-        {!hideCloseButton && <CloseButton name="close" onClick={this.close} />}
+        <CloseButton name="close" onClick={this.close} />
 
         {image && <Image image={image} />}
 
