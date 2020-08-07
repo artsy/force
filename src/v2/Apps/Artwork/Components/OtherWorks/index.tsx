@@ -101,7 +101,10 @@ export const OtherWorks = track()(
                     grid.__typename === "ArtistArtworkGrid" && (
                       <>
                         <ArtistSeriesArtworkRail artwork={props.artwork} />
-                        <ArtistSeriesRail artist={seriesArtist} />
+                        <ArtistSeriesRail
+                          artist={seriesArtist}
+                          title="More series by this artist"
+                        />
                       </>
                     )}
 

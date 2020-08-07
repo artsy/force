@@ -29,7 +29,10 @@ const ArtistSeriesApp: React.FC<ArtistSeriesAppProps> = ({ artistSeries }) => {
           <ArtistSeriesArtworksFilter artistSeries={artistSeries} />
           <Separator mt={6} mb={3} />
           {railArtist.length && (
-            <OtherArtistSeriesRail artist={railArtist[0]} />
+            <OtherArtistSeriesRail
+              artist={railArtist[0]}
+              title="More series by this artist"
+            />
           )}
           <Separator mt={6} mb={3} />
           <Footer />
