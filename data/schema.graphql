@@ -9893,7 +9893,11 @@ type Viewer {
     ids: [String]
     last: Int
   ): UserConnection
-  viewingRoomsConnection(after: String, first: Int): ViewingRoomConnection
+  viewingRoomsConnection(
+    after: String
+    first: Int
+    statuses: [ViewingRoomStatusEnum!]
+  ): ViewingRoomConnection
 }
 
 # An artwork viewing room
