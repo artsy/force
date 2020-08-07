@@ -21,6 +21,7 @@ export interface ModalWrapperProps extends React.HTMLProps<ModalWrapper> {
   fullscreenResponsiveModal?: boolean
   image?: string
   show?: boolean
+  hideCloseButton?: boolean
 }
 
 export interface ModalWrapperState {
@@ -109,7 +110,7 @@ export class ModalWrapper extends React.Component<
   }
 
   handleEscapeKey = event => {
-    if (event && event.key === "Escape") {
+    if (!this.props.hideCloseButton && event && event.key === "Escape") {
       this.close()
     }
   }
@@ -137,7 +138,11 @@ export class ModalWrapper extends React.Component<
       <Theme>
         <Wrapper isShown={isShown || isAnimating}>
           <GlobalStyle suppressMultiMountWarning />
-          {isShown && <ModalOverlay onClick={this.close} />}
+          {isShown && (
+            <ModalOverlay
+              onClick={!this.props.hideCloseButton ? this.close : null}
+            />
+          )}
           <FadeTransition
             in={isShown}
             mountOnEnter

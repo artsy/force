@@ -113,6 +113,10 @@ export interface ModalOptions {
    * Used to construct afterSignupAction from query params
    */
   objectId?: AfterSignUpAction["objectId"]
+  /**
+   * TODO: write me
+   */
+  hideCloseButton?: boolean
 }
 
 export type FormComponentType =

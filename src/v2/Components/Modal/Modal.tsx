@@ -17,6 +17,7 @@ export interface ModalProps extends React.HTMLProps<Modal> {
   image?: string
   show?: boolean
   title?: string
+  hideCloseButton?: boolean
 }
 
 /**
@@ -60,6 +61,7 @@ export class Modal extends React.Component<ModalProps> {
       onClose,
       show,
       title,
+      hideCloseButton,
     } = this.props
 
     return (
@@ -70,8 +72,9 @@ export class Modal extends React.Component<ModalProps> {
         width={isWide ? ModalWidth.Wide : ModalWidth.Normal}
         image={image}
         fullscreenResponsiveModal
+        hideCloseButton={hideCloseButton}
       >
-        <CloseButton name="close" onClick={this.close} />
+        {!hideCloseButton && <CloseButton name="close" onClick={this.close} />}
 
         {image && <Image image={image} />}
 
