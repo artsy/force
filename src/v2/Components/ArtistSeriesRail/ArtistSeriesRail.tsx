@@ -9,6 +9,7 @@ import { ArtistSeriesItemFragmentContainer as ArtistSeriesItem } from "./ArtistS
 
 interface Props {
   artist: ArtistSeriesRail_artist
+  title?: string
 }
 
 const ArtistSeriesRail: React.SFC<Props> = props => {
@@ -17,6 +18,8 @@ const ArtistSeriesRail: React.SFC<Props> = props => {
 
   if (!artist) return null
 
+  const displayTitle = props.title ?? "Artist Series"
+
   const { artistSeriesConnection } = artist
   const edges = artistSeriesConnection && artistSeriesConnection.edges
 
@@ -24,7 +27,7 @@ const ArtistSeriesRail: React.SFC<Props> = props => {
     return (
       <Box my={3}>
         <Sans size="4" color="black100" my={1}>
-          More series by this artist
+          {displayTitle}
         </Sans>
 
         <Box mx={[-20, 0]}>
