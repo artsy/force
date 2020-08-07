@@ -4,7 +4,6 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
  */
 const _ = require("underscore")
-const Q = require("bluebird-q")
 const Backbone = require("backbone")
 const { fabricate } = require("@artsy/antigravity")
 const rewire = require("rewire")
@@ -25,7 +24,7 @@ describe("Article", function () {
     Article.__set__("sd", { EOY_2016_ARTICLE: "1234" })
     Article.__set__("ARTSY_EDITORIAL_CHANNEL", "5759e3efb5989e6f98f77993")
     Article.__set__
-    sinon.stub(Backbone, "sync").returns(Q.defer())
+    sinon.stub(Backbone, "sync").returns(Promise.resolve())
     return (this.article = new Article())
   })
 

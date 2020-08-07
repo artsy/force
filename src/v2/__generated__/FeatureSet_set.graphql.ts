@@ -9,13 +9,14 @@ export type FeatureSet_set = {
     readonly itemType: string | null;
     readonly orderedItems: {
         readonly edges: ReadonlyArray<{
+            readonly __typename: string;
             readonly node: {
-                readonly __typename: string;
                 readonly id?: string;
-                readonly " $fragmentRefs": FragmentRefs<"GridItem_artwork" | "FeatureFeaturedLink_featuredLink">;
+                readonly " $fragmentRefs": FragmentRefs<"FeatureSetItem_setItem">;
             } | null;
         } | null> | null;
     };
+    readonly " $fragmentRefs": FragmentRefs<"FeatureSetMeta_set" | "FeatureSetContainer_set">;
     readonly " $refType": "FeatureSet_set";
 };
 export type FeatureSet_set$data = FeatureSet_set;
@@ -97,6 +98,13 @@ return {
           "plural": true,
           "selections": [
             {
+              "kind": "ScalarField",
+              "alias": null,
+              "name": "__typename",
+              "args": null,
+              "storageKey": null
+            },
+            {
               "kind": "LinkedField",
               "alias": null,
               "name": "node",
@@ -106,11 +114,9 @@ return {
               "plural": false,
               "selections": [
                 {
-                  "kind": "ScalarField",
-                  "alias": null,
-                  "name": "__typename",
-                  "args": null,
-                  "storageKey": null
+                  "kind": "InlineFragment",
+                  "type": "Artwork",
+                  "selections": (v1/*: any*/)
                 },
                 {
                   "kind": "InlineFragment",
@@ -118,18 +124,8 @@ return {
                   "selections": (v1/*: any*/)
                 },
                 {
-                  "kind": "InlineFragment",
-                  "type": "Artwork",
-                  "selections": (v1/*: any*/)
-                },
-                {
                   "kind": "FragmentSpread",
-                  "name": "GridItem_artwork",
-                  "args": null
-                },
-                {
-                  "kind": "FragmentSpread",
-                  "name": "FeatureFeaturedLink_featuredLink",
+                  "name": "FeatureSetItem_setItem",
                   "args": null
                 }
               ]
@@ -137,9 +133,19 @@ return {
           ]
         }
       ]
+    },
+    {
+      "kind": "FragmentSpread",
+      "name": "FeatureSetMeta_set",
+      "args": null
+    },
+    {
+      "kind": "FragmentSpread",
+      "name": "FeatureSetContainer_set",
+      "args": null
     }
   ]
 };
 })();
-(node as any).hash = 'ab3d81270da7110cd400fd1e454f2248';
+(node as any).hash = '9b7a193447e8ab6dbc35747878b5d3fd';
 export default node;

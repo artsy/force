@@ -1,4 +1,3 @@
-Q = require 'bluebird-q'
 _ = require 'underscore'
 sd = require('sharify').data
 Backbone = require 'backbone'
@@ -23,36 +22,32 @@ class OrderedSets extends Backbone.Collection
       cache: true
       data: display_on_desktop: true
 
-    dfd = Q.defer()
+    new Promise((resolve) =>
+      cache = options.cache
+      cacheTime = options.cacheTime
 
-    cache = options.cache
-    cacheTime = options.cacheTime
-
-    @fetch
-      url: "#{sd.API_URL}/api/v1/sets?owner_type=#{ownerType}&owner_id=#{ownerId}&sort=key"
-      cache: cache
-      cacheTime: cacheTime
-      data: options.data
-      error: dfd.resolve
-      success: =>
-        @fetchSets(cache: cache, cacheTime: cacheTime).then dfd.resolve
-
-    dfd.promise
+      @fetch
+        url: "#{sd.API_URL}/api/v1/sets?owner_type=#{ownerType}&owner_id=#{ownerId}&sort=key"
+        cache: cache
+        cacheTime: cacheTime
+        data: options.data
+        error: resolve
+        success: =>
+          @fetchSets(cache: cache, cacheTime: cacheTime).then resolve
+    )
 
   fetchSets: (options = {}) ->
-    dfd = Q.defer()
-    Q.allSettled(@map (model) ->
+    Promise.allSettled(@map (model) ->
       model.fetchItems options.cache, options.cacheTime
-    ).then dfd.resolve
-    dfd.promise
+    )
 
   fetchAll: (options = {}) ->
-    dfd = Q.defer()
-    @fetch(options).then =>
-      @fetchSets(options).then =>
-        @trigger 'sync:complete'
-        dfd.resolve arguments...
-    dfd.promise
+    new Promise((resolve) =>
+      @fetch(options).then =>
+        @fetchSets(options).then =>
+          @trigger 'sync:complete'
+          resolve arguments...
+    )
 
 class OrderedSetMeta extends Backbone.Model
   defaults: public: true

@@ -9,7 +9,6 @@ const Backbone = require("backbone")
 const { fabricate } = require("@artsy/antigravity")
 const rewire = require("rewire")
 const fetchLocationCarousel = rewire("../index")
-const Q = require("bluebird-q")
 
 describe("fetchLocationCarousel", function () {
   before(done =>
@@ -39,7 +38,7 @@ describe("fetchLocationCarousel", function () {
     this.metaphysics = sinon.stub()
     fetchLocationCarousel.__set__("metaphysics", this.metaphysics)
     return this.metaphysics.returns(
-      Q.promise((resolve, reject) => resolve(data))
+      new Promise((resolve, reject) => resolve(data))
     )
   })
 

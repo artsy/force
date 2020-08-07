@@ -1,16 +1,8 @@
 import React from "react"
 import styled from "styled-components"
-import {
-  Flex,
-  FlexProps,
-  HTML,
-  Join,
-  Spacer,
-  Text,
-  color,
-} from "@artsy/palette"
+import { Flex, HTML, Join, Spacer, Text, color } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { FeatureHeader_feature } from "v2/__generated__/FeatureHeader_feature.graphql"
+import { FeatureHeaderDefault_feature } from "v2/__generated__/FeatureHeaderDefault_feature.graphql"
 import { NAV_BAR_HEIGHT } from "v2/Components/NavBar"
 
 const Container = styled(Flex)`
@@ -35,29 +27,32 @@ const Meta = styled(Flex)`
   justify-content: center;
 `
 
-export interface FeatureHeaderProps extends FlexProps {
-  feature: FeatureHeader_feature
+const Image = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+`
+
+export interface FeatureHeaderDefaultProps {
+  feature: FeatureHeaderDefault_feature
 }
 
-export const FeatureHeader: React.FC<FeatureHeaderProps> = ({
-  feature: { name, subheadline, image },
-  ...rest
+export const FeatureHeaderDefault: React.FC<FeatureHeaderDefaultProps> = ({
+  feature: { name, subheadline, defaultImage: image },
 }) => {
   return (
     <Container
       display={["block", "flex"]}
       height={["auto", !!image ? `calc(95vh - ${NAV_BAR_HEIGHT}px)` : "50vh"]}
-      {...rest}
     >
       {image && (
-        <Figure
-          style={{
-            backgroundImage: `url(${image.cropped.url})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center center",
-          }}
-          height={["50vh", "auto"]}
-        />
+        <Figure height={["50vh", "auto"]}>
+          <Image
+            src={image._1x.url}
+            srcSet={`${image._1x.url} 1x, ${image._2x.url} 2x`}
+            alt={name}
+          />
+        </Figure>
       )}
 
       <Meta p={4} flexBasis={image ? "50%" : "100%"}>
@@ -80,15 +75,18 @@ export const FeatureHeader: React.FC<FeatureHeaderProps> = ({
   )
 }
 
-export const FeatureHeaderFragmentContainer = createFragmentContainer(
-  FeatureHeader,
+export const FeatureHeaderDefaultFragmentContainer = createFragmentContainer(
+  FeatureHeaderDefault,
   {
     feature: graphql`
-      fragment FeatureHeader_feature on Feature {
+      fragment FeatureHeaderDefault_feature on Feature {
         name
         subheadline(format: HTML)
-        image {
-          cropped(width: 2000, height: 2000, version: "source") {
+        defaultImage: image {
+          _1x: cropped(width: 1000, height: 1000, version: ["source"]) {
+            url
+          }
+          _2x: cropped(width: 2000, height: 2000, version: ["source"]) {
             url
           }
         }

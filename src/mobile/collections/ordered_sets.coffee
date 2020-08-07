@@ -1,4 +1,3 @@
-Q = require 'bluebird-q'
 _ = require 'underscore'
 sd = require('sharify').data
 Backbone = require 'backbone'
@@ -21,19 +20,17 @@ class OrderedSets extends Backbone.Collection
     Backbone.Collection::fetch.call this, options
 
   fetchSets: (options = {}) ->
-    dfd = Q.defer()
-    Q.allSettled(@map (model) ->
+    Promise.allSettled(@map (model) ->
       model.fetchItems options?.cache
-    ).then dfd.resolve
-    dfd.promise
+    )
 
   fetchAll: (options = {}) ->
-    dfd = Q.defer()
-    @fetch(options).then =>
-      @fetchSets(options).then =>
-        @trigger 'sync:complete'
-        dfd.resolve arguments...
-    dfd.promise
+    new Promise((resolve) =>
+      @fetch(options).then =>
+        @fetchSets(options).then =>
+          @trigger 'sync:complete'
+          resolve arguments...
+    )
 
 class OrderedSetMeta extends Backbone.Model
   defaults: public: true

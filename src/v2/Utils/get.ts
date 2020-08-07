@@ -17,10 +17,9 @@ export function get<O, T>(
     if (result) {
       return result
     } else {
-      throw new Error()
+      return valueIfFailOrUndefined
     }
-    return
-  } catch (error) {
+  } catch {
     return valueIfFailOrUndefined
   }
 }

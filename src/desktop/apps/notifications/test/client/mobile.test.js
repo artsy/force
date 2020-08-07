@@ -4,7 +4,6 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
  */
 const _ = require("underscore")
-const Q = require("bluebird-q")
 const benv = require("benv")
 const sinon = require("sinon")
 const Backbone = require("backbone")
@@ -29,7 +28,7 @@ xdescribe("NotificationsView", function () {
 
   after(() => benv.teardown())
 
-  beforeEach(() => sinon.stub(Backbone, "sync").returns(Q.resolve()))
+  beforeEach(() => sinon.stub(Backbone, "sync").returns(Promise.resolve()))
 
   afterEach(() => Backbone.sync.restore())
 

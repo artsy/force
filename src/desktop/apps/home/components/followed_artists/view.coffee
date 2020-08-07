@@ -1,7 +1,6 @@
 Backbone = require 'backbone'
 { map, take, defaults } = require 'underscore'
 { API_URL } = require('sharify').data
-Q = require 'bluebird-q'
 Artist = require '../../../../models/artist.coffee'
 Artists = require '../../../../collections/artists.coffee'
 Items = require '../../../../collections/items.coffee'
@@ -83,11 +82,11 @@ module.exports = class FollowedArtistsRailView extends Backbone.View
       .map (href) ->
         # remove any query params
         href.split("?")[0].replace('https://www.artsy.net/artist/','')
-    
+
     artists = map ids, (id) -> new Artist id: id
-    
+
     # return a promise for all the individual artist fetches
-    Q.all(map(artists, (artist) -> artist.fetch()))
+    Promise.all(map(artists, (artist) -> artist.fetch()))
 
   remove: ->
     invoke @subViews, 'remove'

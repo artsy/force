@@ -1,5 +1,4 @@
 _ = require 'underscore'
-Q = require 'bluebird-q'
 sd = require('sharify').data
 Backbone = require 'backbone'
 CurrentUser = require '../../../models/current_user.coffee'

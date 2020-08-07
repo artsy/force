@@ -1,6 +1,5 @@
 _ = require 'underscore'
 _s = require 'underscore.string'
-Q = require 'bluebird-q'
 sd = require('sharify').data
 Backbone = require 'backbone'
 Edition = require './edition.coffee'
@@ -354,7 +353,7 @@ module.exports = class Artwork extends Backbone.Model
     names.join (', ')
 
   fetchPartnerAndSales: (options) ->
-    Q.allSettled([
+    Promise.allSettled([
       (partner = @related().partner).fetch()
       (sales = @related().sales).fetch()
-    ]).fail(options.error).then -> options.success partner, sales
+    ]).catch(options.error).then -> options.success partner, sales

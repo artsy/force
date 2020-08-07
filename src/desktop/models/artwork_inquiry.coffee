@@ -2,7 +2,6 @@ _ = require 'underscore'
 Backbone = require 'backbone'
 { API_URL, SESSION_ID } = require('sharify').data
 Cookies = require '../components/cookies/index.coffee'
-Promise = require 'bluebird-q'
 
 module.exports = class ArtworkInquiry extends Backbone.Model
   urlRoot: "#{API_URL}/api/v1/me/artwork_inquiry_request"

@@ -1,11 +1,6 @@
 import * as actions from "./actions"
 import { data as sd } from "sharify"
 
-const _analyticsHooks = require("../../../lib/analytics_hooks.coffee")
-
-// FIXME: Rewire
-let analyticsHooks = _analyticsHooks
-
 const analyticsMiddleware = store => next => action => {
   const result = next(action)
   const nextState = store.getState()
@@ -13,12 +8,6 @@ const analyticsMiddleware = store => next => action => {
   // track certain types of actions
   switch (action.type) {
     case actions.UPDATE_USER: {
-      const { user, accountCreated } = action.payload
-      analyticsHooks.trigger("consignment:account:created", {
-        id: user.id,
-        email: user.email,
-        accountCreated: accountCreated,
-      })
       return result
     }
 
@@ -36,7 +25,7 @@ const analyticsMiddleware = store => next => action => {
     case actions.SUBMISSION_COMPLETED: {
       const submissionId = nextState.submissionFlow.submission.id
       const assetIds = nextState.submissionFlow.assetIds
-      window.analytics.track("consignment_completed", {
+      window.analytics.track("consignment_asset_uploaded", {
         submissionId,
         assetIds,
       })
@@ -54,7 +43,7 @@ const analyticsMiddleware = store => next => action => {
         errors = "Error completing submission"
       }
 
-      window.analytics.track("consignment_submission_error", {
+      window.analytics.track("consignment_failed_to_submit", {
         type: errorType,
         errors,
       })

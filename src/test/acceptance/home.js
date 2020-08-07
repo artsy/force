@@ -1,5 +1,10 @@
 /* eslint-env mocha */
 import { setup, teardown } from "./helpers"
+import allSettled from "promise.allsettled"
+
+// Nightmare uses an old version of electron running Node v8, we need to
+// polyfill Promise.allSettled so the tests pass.
+allSettled.shim()
 
 describe("Home page", () => {
   let gravity, positron, metaphysics, browser

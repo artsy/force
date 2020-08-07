@@ -1,5 +1,4 @@
 _ = require 'underscore'
-Q = require 'bluebird-q'
 OrderedSets = require '../../collections/ordered_sets'
 Fairs = require '../../collections/fairs'
 query = require './query.coffee'

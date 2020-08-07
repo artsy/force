@@ -1,5 +1,4 @@
 _ = require 'underscore'
-Q = require 'bluebird-q'
 sd = require('sharify').data
 ShareView = require '../../../components/share/view.coffee'
 attachFollowArtists = require '../components/follow_artists/index.coffee'

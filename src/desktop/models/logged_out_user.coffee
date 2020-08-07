@@ -1,4 +1,3 @@
-Q = require 'bluebird-q'
 _ = require 'underscore'
 Cookies = require 'cookies-js'
 Backbone = require 'backbone'
@@ -103,9 +102,9 @@ module.exports = class LoggedOutUser extends User
 
   repossess: (subsequent_user_id, options = {}) ->
     # Only valid for recently logged in LoggedOutUsers
-    return Q.resolve() unless @isLoggedIn()
+    return Promise.resolve() unless @isLoggedIn()
     edit = new Backbone.Model _.extend { subsequent_user_id: subsequent_user_id }, @pick('id')
-    Q(edit.save null, _.extend options, url: "#{API_URL}/api/v1/me/anonymous_session/#{@id}")
+    Promise.resolve(edit.save null, _.extend options, url: "#{API_URL}/api/v1/me/anonymous_session/#{@id}")
 
   findOrCreate: (options = {}) ->
-    Q(@save {}, options)
+    Promise.resolve(@save {}, options)

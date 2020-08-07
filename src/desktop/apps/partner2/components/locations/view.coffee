@@ -1,6 +1,6 @@
 _ = require 'underscore'
-Q = require 'bluebird-q'
 Backbone = require 'backbone'
+require '../../../../../lib/promiseDone'
 template = -> require('./index.jade') arguments...
 { API_URL } = require('sharify').data
 
@@ -14,7 +14,7 @@ module.exports = class LocationsView extends Backbone.View
 
   fetch: ->
     locations = @partner.related().locations
-    Q(locations.fetch()).then -> locations
+    Promise.resolve(locations.fetch()).then -> locations
 
   render: (locations) =>
     return @remove() if locations.length is 0

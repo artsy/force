@@ -1,5 +1,4 @@
 _ = require 'underscore'
-Q = require 'bluebird-q'
 Backbone = require 'backbone'
 { API_URL } = require('sharify').data
 Relations = require './mixins/relations/collector_profile.coffee'
@@ -24,4 +23,4 @@ module.exports = class CollectorProfile extends Backbone.Model
     @get('professional_buyer_at')?
 
   findOrCreate: (options = {}) ->
-    Q(@save {}, options)
+    Promise.resolve(@save {}, options)

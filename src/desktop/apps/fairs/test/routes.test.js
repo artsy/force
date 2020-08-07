@@ -7,7 +7,6 @@ const _ = require("underscore")
 const sinon = require("sinon")
 const moment = require("moment")
 const rewire = require("rewire")
-const Q = require("bluebird-q")
 const { fabricate } = require("@artsy/antigravity")
 const routes = rewire("../routes")
 const ViewHelpers = require("../helpers/view_helpers.coffee")
@@ -77,7 +76,10 @@ describe("Fairs routes", function () {
           this.upcomingFairs,
         ])
         return routes.__set__("metaphysics", () =>
-          Q.resolve({ featured_fairs: [{ fairs: {} }], fairs: this.fairs })
+          Promise.resolve({
+            featured_fairs: [{ fairs: {} }],
+            fairs: this.fairs,
+          })
         )
       })
 
@@ -97,7 +99,10 @@ describe("Fairs routes", function () {
         this.res = { render: sinon.stub(), locals: { sd: sinon.stub() } }
         this.fairs = _.flatten([this.pastFairs, this.upcomingFairs])
         return routes.__set__("metaphysics", () =>
-          Q.resolve({ featured_fairs: [{ fairs: {} }], fairs: this.fairs })
+          Promise.resolve({
+            featured_fairs: [{ fairs: {} }],
+            fairs: this.fairs,
+          })
         )
       })
 

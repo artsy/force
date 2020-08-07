@@ -1,6 +1,5 @@
 GeoFormatter = require 'geoformatter'
 Backbone = require 'backbone'
-Q = require 'bluebird-q'
 { GOOGLE_MAPS_API_KEY } = require('sharify').data
 
 module.exports =

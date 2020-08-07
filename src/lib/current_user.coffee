@@ -7,7 +7,6 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 request = require 'superagent'
-Q = require 'bluebird-q'
 ABM = require 'artsy-backbone-mixins'
 { API_URL, CURRENT_USER } = sd = require('sharify').data
 Following = require '../desktop/components/follow_button/collection.coffee'
@@ -90,20 +89,19 @@ module.exports = class CurrentUser extends Backbone.Model
         access_token: @get('accessToken')
 
   hasUnviewedNotifications: (options) ->
-    dfd = Q.defer()
-    request.
-      head("#{@url()}/notifications").
-      query(
-        type: 'ArtworkPublished'
-        after_status: 'viewed'
-        size: 0
-        total_count: 1
-        access_token: @get('accessToken')
-      ).
-      end (err, res) ->
-        dfd.resolve res.header['x-total-count'] > 0
-    dfd.promise
-
+    new Promise((resolve) =>
+      request.
+        head("#{@url()}/notifications").
+        query(
+          type: 'ArtworkPublished'
+          after_status: 'viewed'
+          size: 0
+          total_count: 1
+          access_token: @get('accessToken')
+        ).
+        end (err, res) ->
+          resolve res.header['x-total-count'] > 0
+    )
 
   fetchAndMarkNotifications: (status = 'read', options) ->
     url = "#{@url()}/notifications"
@@ -119,7 +117,7 @@ module.exports = class CurrentUser extends Backbone.Model
         @markNotifications 'read', options
 
   findOrCreate: (options = {}) ->
-    Q(@fetch options)
+    Promise.resolve(@fetch options)
 
   isLinkedTo: (provider) ->
     @related().authentications.where(provider: provider).length > 0

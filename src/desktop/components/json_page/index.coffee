@@ -1,4 +1,3 @@
-Q = require 'bluebird-q'
 knox = require 'knox'
 request = require 'superagent'
 { S3_KEY, S3_SECRET, S3_BUCKET } = require '../../config'
@@ -19,7 +18,7 @@ module.exports = class JSONPage
         bucket: @bucket
 
   get: (callback) ->
-    Q.promise (resolve, reject) =>
+    new Promise (resolve, reject) =>
       error = (message) ->
         err = new Error message
         reject err

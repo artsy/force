@@ -5,7 +5,6 @@
  */
 const { fabricate } = require("@artsy/antigravity")
 const _ = require("underscore")
-const Q = require("bluebird-q")
 const sinon = require("sinon")
 const rewire = require("rewire")
 const Backbone = require("backbone")

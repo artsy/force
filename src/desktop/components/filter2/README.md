@@ -7,7 +7,6 @@ Sets up a view of filtered artworks with a filter and sort bar. This component u
 The initial render of the component is done server side. Using the tag app as an example:
 
 ```coffeescript
-Q = require 'bluebird-q'
 Backbone = require 'backbone'
 Tag = require '../../models/tag'
 FilterArtworks = require '../../collections/filter_artworks'
@@ -19,7 +18,7 @@ aggregationParams = require './aggregations.coffee'
   params = new Backbone.Model tag: tag.id
   filterData = { size: 0, tag: req.params.id, aggregations: aggregationParams }
 
-  Q.all([
+  Promise.all([
     tag.fetch(cache: true)
     filterArtworks.fetch(data: filterData)
   ]).done ->

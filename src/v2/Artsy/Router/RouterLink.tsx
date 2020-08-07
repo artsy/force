@@ -23,9 +23,9 @@ export const RouterLink: React.FC<RouterLinkProps> = ({
   ...props
 }) => {
   const context = useContext(RouterContext)
-  const routes = get(context, c => c.router.matcher.routeConfig, [])
+  const routes = get(context, c => c?.router?.matcher?.routeConfig, [])
   const isSupportedInRouter = !!get(context, c =>
-    c.router.matcher.matchRoutes(routes, to)
+    c?.router?.matcher?.matchRoutes(routes, to)
   )
 
   /**

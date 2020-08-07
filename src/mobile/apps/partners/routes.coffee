@@ -3,7 +3,6 @@ sd = require('sharify').data
 Backbone = require 'backbone'
 Partner = require '../../models/partner'
 Profiles = require '../../collections/profiles'
-Q = require 'bluebird-q'
 
 module.exports.index = (req, res) ->
   new Backbone.Collection([]).fetch
@@ -17,7 +16,7 @@ module.exports.index = (req, res) ->
         cache: true
         success: (profiles) ->
           # For each Profile, set a Partner and fetch/set that Partner's Locations
-          Q.allSettled(profiles.map (profile) ->
+          Promise.allSettled(profiles.map (profile) ->
             partner = new Partner profile.get('owner')
             profile.set 'owner', partner
             return partner.fetchLocations

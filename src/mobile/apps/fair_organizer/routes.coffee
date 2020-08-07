@@ -1,22 +1,22 @@
 _ = require 'underscore'
-Q = require 'bluebird-q'
 Profile = require '../../models/profile.coffee'
 FairOrganizer = require '../../models/fair_organizer.coffee'
 Fairs = require '../../collections/fairs.coffee'
 OrderedSets = require '../../collections/ordered_sets'
 Articles = require '../../collections/articles.coffee'
+require '../../../lib/promiseDone'
 ProfileFixture = require './fixtures/profile.json'
 FairFixture = require './fixtures/fair.json'
 moment = require 'moment'
 
 representation = (fair) ->
-  dfd = Q.defer()
-  sets = new OrderedSets(owner_type: 'Fair', owner_id: fair.id, sort: 'key')
-  sets.fetchAll(cache: true).then ->
-    set = sets.findWhere(key: 'explore')?.get('items')
-    fair.representation = set
-    dfd.resolve set
-  dfd.promise
+  new Promise((resolve) ->
+    sets = new OrderedSets(owner_type: 'Fair', owner_id: fair.id, sort: 'key')
+    sets.fetchAll(cache: true).then ->
+      set = sets.findWhere(key: 'explore')?.get('items')
+      fair.representation = set
+      resolve set
+  )
 
 module.exports.overview = (req, res, next) ->
   return next() if (not res.locals.fairOrg)
@@ -68,7 +68,7 @@ module.exports.fetchFairOrgData = (req, res, next) ->
         )
       ]
 
-      Q.allSettled(promises).then(->
+      Promise.allSettled(promises).then(->
         res.locals.newestFair = res.locals.sd.FAIR = fairs.models[0]
         res.locals.sd.FAIR_IDS = fairs.pluck('_id')
         res.locals.sd.FAIR_ORGANIZER = fairOrg.toJSON()

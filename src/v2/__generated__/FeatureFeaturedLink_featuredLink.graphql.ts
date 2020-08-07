@@ -23,6 +23,11 @@ export type FeatureFeaturedLink_featuredLink = {
             readonly width: number | null;
             readonly height: number | null;
         } | null;
+        readonly full: {
+            readonly src: string | null;
+            readonly width: number | null;
+            readonly height: number | null;
+        } | null;
     } | null;
     readonly " $refType": "FeatureFeaturedLink_featuredLink";
 };
@@ -71,7 +76,12 @@ v2 = [
     "args": null,
     "storageKey": null
   }
-];
+],
+v3 = {
+  "kind": "Literal",
+  "name": "width",
+  "value": 2224
+};
 return {
   "kind": "Fragment",
   "name": "FeatureFeaturedLink_featuredLink",
@@ -172,13 +182,27 @@ return {
               "value": 1252
             },
             (v1/*: any*/),
-            {
-              "kind": "Literal",
-              "name": "width",
-              "value": 2224
-            }
+            (v3/*: any*/)
           ],
           "concreteType": "CroppedImageUrl",
+          "plural": false,
+          "selections": (v2/*: any*/)
+        },
+        {
+          "kind": "LinkedField",
+          "alias": "full",
+          "name": "resized",
+          "storageKey": "resized(height:2224,version:[\"wide\"],width:2224)",
+          "args": [
+            {
+              "kind": "Literal",
+              "name": "height",
+              "value": 2224
+            },
+            (v1/*: any*/),
+            (v3/*: any*/)
+          ],
+          "concreteType": "ResizedImageUrl",
           "plural": false,
           "selections": (v2/*: any*/)
         }
@@ -187,5 +211,5 @@ return {
   ]
 };
 })();
-(node as any).hash = 'fa4bc7ff6104ce8d3d7efc5d766a3a74';
+(node as any).hash = '0661c6e900a886e0ce801e13e52ee2eb';
 export default node;

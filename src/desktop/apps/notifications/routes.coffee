@@ -1,6 +1,5 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-Q = require 'bluebird-q'
 sd = require('sharify').data
 Artists = require '../../collections/artists.coffee'
 qs = require 'qs'
@@ -15,7 +14,7 @@ qs = require 'qs'
     queryString = qs.stringify params
     return res.redirect("/artist/#{artist_id}/works-for-sale?#{queryString}")
 
-  Q.allSettled([
+  Promise.allSettled([
     req.user.followingArtists()
     req.user.fetchAndMarkNotifications()
   ]).then ->

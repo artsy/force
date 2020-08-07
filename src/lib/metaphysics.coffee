@@ -1,4 +1,3 @@
-Q = require 'bluebird-q'
 qs = require 'qs'
 request = require 'superagent'
 { extend, some } = require 'underscore'
@@ -19,7 +18,7 @@ resolveProxies = (req) ->
 
 metaphysics = ({ query, variables, req } = {}) ->
   sentRequestId = REQUEST_ID || req?.id || 'implement-me'
-  Q.promise (resolve, reject) ->
+  new Promise (resolve, reject) ->
     post = request
       .post METAPHYSICS_ENDPOINT
       .set 'Accept', 'application/json'

@@ -15,15 +15,13 @@ analyticsHooks.on("track", (actionName: string, data: object) => {
 // Track 15 second bounce rate
 timeOnPageListener()
 
-// Debug tracking calls
 if (sd.SHOW_ANALYTICS_CALLS) {
-  // FIXME: Events that trigger these events should be updated
-  // or flagged for deprecation
-  analytics.on("track", (actionName: string, data: object) => {
-    console.info("LEGACY MOBILE ANALYTICS TRACK:", actionName, data)
+  // Log all track calls
+  window.analytics.on("track", (actionName: string, data?: any) => {
+    console.info("MOBILE ANALYTICS TRACK:", actionName, data)
   })
-
-  analytics.on("page", function () {
-    console.info("LEGACY MOBILE PAGEVIEW TRACKED: ", arguments[2], arguments[3])
+  // Log all pageviews
+  window.analytics.on("page", function () {
+    console.info("MOBILE ANALYTICS PAGEVIEW: ", arguments[2], arguments[3])
   })
 }

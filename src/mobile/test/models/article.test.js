@@ -4,7 +4,6 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
  */
 const _ = require("underscore")
-const Q = require("bluebird-q")
 const Backbone = require("backbone")
 const { fabricate } = require("@artsy/antigravity")
 const rewire = require("rewire")
@@ -26,10 +25,10 @@ describe("Article", function () {
       Backbone.sync
         .onCall(0)
         .yieldsTo("success", [fabricate("article")])
-        .returns(Q.resolve([fabricate("article")]))
+        .returns(Promise.resolve([fabricate("article")]))
         .onCall(1)
         .yieldsTo("success", fabricate("fair"))
-        .returns(Q.resolve(fabricate("fair")))
+        .returns(Promise.resolve(fabricate("fair")))
       this.article.set({
         id: "id-1",
         fair_ids: ["123"],
@@ -48,10 +47,10 @@ describe("Article", function () {
       Backbone.sync
         .onCall(0)
         .yieldsTo("success", [fabricate("article")])
-        .returns(Q.resolve([fabricate("article")]))
+        .returns(Promise.resolve([fabricate("article")]))
         .onCall(1)
         .yieldsTo("success", fabricate("partner"))
-        .returns(Q.resolve(fabricate("partner")))
+        .returns(Promise.resolve(fabricate("partner")))
       this.article.set({
         id: "id-1",
         partner_channel_id: "147",

@@ -1,7 +1,6 @@
 Backbone = require 'backbone'
 _ = require 'underscore'
 sd = require('sharify').data
-Q = require 'bluebird-q'
 markdown = require '../../components/util/markdown.coffee'
 httpProxy = require 'http-proxy'
 Curation = require '../../models/curation.coffee'
@@ -19,7 +18,7 @@ mediaStyles = createMediaStyle()
 @eoy = (req, res, next) ->
   @curation = new Curation(id: sd.EOY_2016)
   @article = new Article(id: sd.EOY_2016_ARTICLE)
-  Q.all([
+  Promise.all([
     @curation.fetch(cache: true)
     @article.fetch(
       cache:  true
@@ -28,7 +27,7 @@ mediaStyles = createMediaStyle()
   ]).then (result) =>
     @superSubArticles = new Articles
 
-    Q.all(@article.fetchSuperSubArticles(@superSubArticles, req.user?.get('accessToken')))
+    Promise.all(@article.fetchSuperSubArticles(@superSubArticles, req.user?.get('accessToken')))
     .then =>
       res.locals.sd.SUPER_ARTICLE = @article.toJSON()
       res.locals.sd.CURATION = @curation.toJSON()
@@ -97,7 +96,7 @@ mediaStyles = createMediaStyle()
       ]
       if @curation.get('sub_articles')?.length
         promises.push( @veniceSubArticles.fetch(data: 'ids[]': @curation.get('sub_articles'), cache: true) )
-      Q.all(promises)
+      Promise.all(promises)
       .then =>
         videoIndex = setVeniceVideoIndex(curation, req.params.slug)
         if isNaN videoIndex
@@ -145,7 +144,7 @@ setGucciVideoIndex = (slug) ->
     when 'future' then 2
 
 subscribedToEditorial = (email) ->
-  Q.Promise (resolve, reject) =>
+  new Promise (resolve, reject) =>
     sailthru.apiGet 'user', { id: email }, (err, response) ->
       if response.vars?.receive_editorial_email
         @isSubscribed = true

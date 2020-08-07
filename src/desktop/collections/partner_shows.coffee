@@ -1,4 +1,3 @@
-Q = require 'bluebird-q'
 _ = require 'underscore'
 sd = require('sharify').data
 moment = require 'moment'
@@ -50,7 +49,7 @@ module.exports = class PartnerShows extends Backbone.Collection
     return featurables[0] if featurables.length
 
   getShowsRelatedImages: ->
-    Q.allSettled(
+    Promise.allSettled(
       @map (show) ->
         show.related().installShots.fetch data: size: 1, default: false
         show.related().artworks.fetch data: size: 5
