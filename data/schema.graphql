@@ -3309,11 +3309,29 @@ type ConsignmentOffer {
   createdById: ID
   currency: String
   deadlineToConsign: String
+  highEstimateAmount(
+    decimal: String = "."
+
+    # Allows control of symbol position (%v = value, %s = symbol)
+    format: String = "%s%v"
+    precision: Int = 0
+    symbol: String
+    thousand: String = ","
+  ): String
   highEstimateCents: Int
 
   # Uniq ID for this offer
   id: ID!
   insuranceInfo: String
+  lowEstimateAmount(
+    decimal: String = "."
+
+    # Allows control of symbol position (%v = value, %s = symbol)
+    format: String = "%s%v"
+    precision: Int = 0
+    symbol: String
+    thousand: String = ","
+  ): String
   lowEstimateCents: Int
   notes: String
   offerType: String
