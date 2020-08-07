@@ -85,8 +85,16 @@ export class ModalWrapper extends React.Component<
   }
 
   close = () => {
+    // this.props.hideCloseButton is undefined if it is accessed after this.props.onClose()
+    // TODO: test this behavior in case this gets refactored
+    const goBack = this.props.hideCloseButton
+
     this.props.onClose()
     this.removeBlurToContainers()
+
+    if (goBack) {
+      window.history.back()
+    }
   }
 
   addBlurToContainers = () => {
@@ -110,7 +118,7 @@ export class ModalWrapper extends React.Component<
   }
 
   handleEscapeKey = event => {
-    if (!this.props.hideCloseButton && event && event.key === "Escape") {
+    if (event && event.key === "Escape") {
       this.close()
     }
   }
