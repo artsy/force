@@ -46,7 +46,6 @@ $(() =>
 
     require("../analytics/global.js")
     require("../analytics/articles.js")
-    require("../analytics/article_impressions.js")
     require("../analytics/partner_application.js")
     require("../analytics/artworks_filter.js")
     require("../analytics/artist_page.js")
