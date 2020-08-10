@@ -1,6 +1,6 @@
 import { mount } from "enzyme"
 import React from "react"
-import { Image, Modal, ModalContent } from "../Modal"
+import { CloseButton, Image, Modal, ModalContent } from "../Modal"
 import { ModalCta } from "../ModalCta"
 import { ModalHeader } from "../ModalHeader"
 
@@ -59,6 +59,26 @@ describe("Modal", () => {
 
       expect(component.find(Image)).toHaveLength(1)
       expect(component.find(ModalContent)).toHaveLength(1)
+    })
+
+    it("Navigates to previous page on close if props.goBackOnClose", () => {
+      window.history.back = jest.fn()
+      props.goBackOnClose = true
+
+      const component = getWrapper(props)
+      component.find(CloseButton).at(0).simulate("click")
+
+      expect(window.history.back).toHaveBeenCalled()
+    })
+
+    it("Navigates to previous page if not props.goBackOnClose", () => {
+      window.history.back = jest.fn()
+      props.goBackOnClose = false
+
+      const component = getWrapper(props)
+      component.find(CloseButton).at(0).simulate("click")
+
+      expect(window.history.back).not.toHaveBeenCalled()
     })
   })
 })

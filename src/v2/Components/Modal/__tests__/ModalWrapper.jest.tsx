@@ -37,14 +37,36 @@ describe("Modal", () => {
     props.show = true
     const component = getWrapper(props)
     ;(component.instance() as any).removeBlurToContainers = jest.fn()
-    component
-      .find(ModalOverlay)
-      .at(0)
-      .simulate("click")
+    component.find(ModalOverlay).at(0).simulate("click")
 
     expect(
       (component.instance() as any).removeBlurToContainers
     ).toHaveBeenCalled()
     expect(props.onClose).toHaveBeenCalled()
+  })
+  it("Doesn't close on background click if props.disableCloseOnBackgroundClick", () => {
+    props.show = true
+    props.disableCloseOnBackgroundClick = true
+    const component = getWrapper(props)
+    ;(component.instance() as any).removeBlurToContainers = jest.fn()
+    component.find(ModalOverlay).at(0).simulate("click")
+
+    expect(
+      (component.instance() as any).removeBlurToContainers
+    ).not.toHaveBeenCalled()
+    expect(props.onClose).not.toHaveBeenCalled()
+  })
+  it("Navigates to previous page on escape key up", () => {
+    window.history.back = jest.fn()
+    props.show = true
+    props.goBackOnClose = true
+    const component = getWrapper(props)
+    ;(component.instance() as any).removeBlurToContainers = jest.fn()
+    document.dispatchEvent(new KeyboardEvent("keyup", { key: "Escape" }))
+    expect(
+      (component.instance() as any).removeBlurToContainers
+    ).toHaveBeenCalled()
+    expect(props.onClose).toHaveBeenCalled()
+    expect(window.history.back).toHaveBeenCalled()
   })
 })
