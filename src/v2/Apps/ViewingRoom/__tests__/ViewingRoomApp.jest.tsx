@@ -9,7 +9,6 @@ import { ViewingRoomApp_ClosedTest_QueryRawResponse } from "v2/__generated__/Vie
 import { ViewingRoomApp_UnfoundTest_QueryRawResponse } from "v2/__generated__/ViewingRoomApp_UnfoundTest_Query.graphql"
 import { ViewingRoomApp_LoggedOutTest_QueryRawResponse } from "v2/__generated__/ViewingRoomApp_LoggedOutTest_Query.graphql.ts"
 import { Breakpoint } from "@artsy/palette"
-import { FairWeekPageScaffold } from "desktop/components/fair_week_marketing/PageScaffold"
 
 jest.unmock("react-relay")
 jest.mock("v2/Artsy/Router/useRouter", () => ({
