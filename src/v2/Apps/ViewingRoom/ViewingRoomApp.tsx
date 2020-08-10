@@ -35,8 +35,9 @@ const ViewingRoomApp: React.FC<ViewingRoomAppProps> = ({
         redirectTo: window.location.href,
         contextModule: ContextModule.viewingRoom,
         intent: Intent.viewViewingRoom,
-        hideCloseButton: true,
         copy: "Sign up to enter viewing rooms",
+        disableCloseOnBackgroundClick: true,
+        goBackOnClose: true,
       })
     }, 0)
 

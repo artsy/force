@@ -21,7 +21,8 @@ export interface ModalWrapperProps extends React.HTMLProps<ModalWrapper> {
   fullscreenResponsiveModal?: boolean
   image?: string
   show?: boolean
-  hideCloseButton?: boolean
+  disableCloseOnBackgroundClick?: boolean
+  goBackOnClose?: boolean
 }
 
 export interface ModalWrapperState {
@@ -85,9 +86,9 @@ export class ModalWrapper extends React.Component<
   }
 
   close = () => {
-    // this.props.hideCloseButton is undefined if it is accessed after this.props.onClose()
+    // this.props.goBackOnClose is undefined if it is accessed after this.props.onClose()
     // TODO: test this behavior in case this gets refactored
-    const goBack = this.props.hideCloseButton
+    const goBack = this.props.goBackOnClose
 
     this.props.onClose()
     this.removeBlurToContainers()
@@ -148,7 +149,9 @@ export class ModalWrapper extends React.Component<
           <GlobalStyle suppressMultiMountWarning />
           {isShown && (
             <ModalOverlay
-              onClick={!this.props.hideCloseButton ? this.close : null}
+              onClick={
+                !this.props.disableCloseOnBackgroundClick ? this.close : null
+              }
             />
           )}
           <FadeTransition

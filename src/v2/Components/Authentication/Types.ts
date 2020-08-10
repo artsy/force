@@ -114,9 +114,13 @@ export interface ModalOptions {
    */
   objectId?: AfterSignUpAction["objectId"]
   /**
-   * TODO: write me
+   * Prevents users from clicking outside the modal to close it
    */
-  hideCloseButton?: boolean
+  disableCloseOnBackgroundClick?: boolean
+  /**
+   * Returns users to the previous page when they close the modal
+   */
+  goBackOnClose?: boolean
 }
 
 export type FormComponentType =

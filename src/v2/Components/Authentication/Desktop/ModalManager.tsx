@@ -126,7 +126,10 @@ export class ModalManager extends Component<
         subtitle={this.getSubtitle()}
         type={currentType}
         image={options && options.image}
-        hideCloseButton={options && options.hideCloseButton}
+        disableCloseOnBackgroundClick={
+          options && options.disableCloseOnBackgroundClick
+        }
+        goBackOnClose={options && options.goBackOnClose}
       >
         <FormSwitcher
           type={currentType}
