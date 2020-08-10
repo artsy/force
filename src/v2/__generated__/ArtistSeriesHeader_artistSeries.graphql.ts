@@ -4,7 +4,7 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ArtistSeriesHeader_artistSeries = {
     readonly title: string;
-    readonly description: string | null;
+    readonly descriptionFormatted: string | null;
     readonly image: {
         readonly url: string | null;
     } | null;
@@ -63,9 +63,15 @@ return {
     {
       "kind": "ScalarField",
       "alias": null,
-      "name": "description",
-      "args": null,
-      "storageKey": null
+      "name": "descriptionFormatted",
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "format",
+          "value": "HTML"
+        }
+      ],
+      "storageKey": "descriptionFormatted(format:\"HTML\")"
     },
     (v0/*: any*/),
     {
@@ -115,5 +121,5 @@ return {
   ]
 };
 })();
-(node as any).hash = 'f31639df0433b44fb4f5aa094edf9b17';
+(node as any).hash = 'a8017b29698708ca2d742bbe4181b20a';
 export default node;
