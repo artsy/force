@@ -26,6 +26,7 @@ export const Items = [
 ]
 
 export const MockedConversation = {
+  __typename: "Conversation",
   id: "123898",
   internalID: "conversation1",
   from: {
