@@ -1,5 +1,6 @@
 import { Router } from "found"
 import React, { SFC, useContext, useState } from "react"
+import { data as sd } from "sharify"
 import { Environment } from "relay-runtime"
 
 import { createRelaySSREnvironment } from "v2/Artsy/Relay/createRelaySSREnvironment"
@@ -103,6 +104,7 @@ export const SystemContextProvider: SFC<SystemContextProps> = ({
     relayEnvironment,
     user,
     setUser,
+    isEigen: sd.EIGEN,
   }
 
   return (

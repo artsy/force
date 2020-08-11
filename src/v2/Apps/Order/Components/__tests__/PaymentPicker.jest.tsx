@@ -26,6 +26,7 @@ jest.unmock("react-tracking")
 jest.mock("v2/Utils/Events", () => ({
   postEvent: jest.fn(),
 }))
+
 const mockPostEvent = require("v2/Utils/Events").postEvent as jest.Mock
 
 jest.mock("react-stripe-elements", () => {
@@ -93,15 +94,11 @@ class PaymentPickerTestPage extends RootTestPage {
   }
 
   get addressFormIsVisible() {
-    return this.find(Collapse)
-      .at(1)
-      .props().open
+    return this.find(Collapse).at(1).props().open
   }
 
   get useNewCardSectionIsVisible() {
-    return this.find(Collapse)
-      .at(0)
-      .props().open
+    return this.find(Collapse).at(0).props().open
   }
 
   async toggleSameAddressCheckbox() {
@@ -158,6 +155,27 @@ describe("PaymentPickerFragmentContainer", () => {
         }
       }
     `,
+    systemContextProps: { isEigen: false },
+  })
+
+  const eigenEnv = createTestEnv({
+    Component: injectCommitMutation(PaymentPickerFragmentContainer as any),
+    TestPage: PaymentPickerTestPage,
+    defaultData,
+    defaultMutationResults: {
+      ...creatingCreditCardSuccess,
+    },
+    query: graphql`
+      query PaymentPickerEigenTestQuery @raw_response_type {
+        me {
+          ...PaymentPicker_me
+        }
+        order: commerceOrder(id: "unused") {
+          ...PaymentPicker_order
+        }
+      }
+    `,
+    systemContextProps: { isEigen: true },
   })
 
   beforeEach(() => {
@@ -170,8 +188,10 @@ describe("PaymentPickerFragmentContainer", () => {
 
   describe("with no existing cards", () => {
     let page: PaymentPickerTestPage
+    let eigenPage: PaymentPickerTestPage
     beforeAll(async () => {
       page = await env.buildPage()
+      eigenPage = await eigenEnv.buildPage()
     })
     it("always shows the 'use new card' section", () => {
       expect(page.useNewCardSectionIsVisible).toBeTruthy()
@@ -179,8 +199,11 @@ describe("PaymentPickerFragmentContainer", () => {
     it("does not show any radio buttons", () => {
       expect(page.radios).toHaveLength(0)
     })
-    it("does not show the 'manage cards' link", () => {
+    it("does not show the 'manage cards' link if not eigen", () => {
       expect(page.find(Link)).toHaveLength(0)
+    })
+    it("does not show the 'manage cards' link if eigen", () => {
+      expect(eigenPage.find(Link)).toHaveLength(0)
     })
   })
 
@@ -442,19 +465,37 @@ describe("PaymentPickerFragmentContainer", () => {
       })
     }
 
+    function getEigenPage(_cards: typeof cards, _order) {
+      return eigenEnv.buildPage({
+        mockData: {
+          me: {
+            creditCards: {
+              edges: _cards.map(node => ({ node })),
+            },
+          },
+          order: _order,
+        },
+      })
+    }
+
     describe("with one card", () => {
       let page: PaymentPickerTestPage
+      let eigenPage: PaymentPickerTestPage
       beforeAll(async () => {
         page = await getPage(cards.slice(0, 1), orderWithoutCard)
+        eigenPage = await getEigenPage(cards.slice(0, 1), orderWithoutCard)
       })
       it("has two radio buttons", async () => {
         expect(page.radios).toHaveLength(2)
       })
-      it("shows the 'manage cards' link", () => {
+      it("shows the 'manage cards' link if not eigen", () => {
         expect(page.find(Link)).toHaveLength(1)
         expect(page.find(Link).props().href).toMatchInlineSnapshot(
           `"/user/payments"`
         )
+      })
+      it("has no 'manage cards' link if eigen", () => {
+        expect(eigenPage.find(Link)).toHaveLength(0)
       })
       it("has the credit card option at the top", async () => {
         expect(page.radios.at(0).text()).toMatchInlineSnapshot(
@@ -492,17 +533,22 @@ describe("PaymentPickerFragmentContainer", () => {
 
     describe("with two cards", () => {
       let page: PaymentPickerTestPage
+      let eigenPage: PaymentPickerTestPage
       beforeAll(async () => {
         page = await getPage(cards, orderWithoutCard)
+        eigenPage = await getEigenPage(cards, orderWithoutCard)
       })
       it("has three radio buttons", async () => {
         expect(page.radios).toHaveLength(3)
       })
-      it("shows the 'manage cards' link", () => {
+      it("shows the 'manage cards' link if not eigen", () => {
         expect(page.find(Link)).toHaveLength(1)
         expect(page.find(Link).props().href).toMatchInlineSnapshot(
           `"/user/payments"`
         )
+      })
+      it("shows the 'manage cards' link if eigen", () => {
+        expect(eigenPage.find(Link)).toHaveLength(0)
       })
       it("has the credit card options at the top", async () => {
         expect(page.radios.at(0).text()).toMatchInlineSnapshot(
