@@ -34,7 +34,18 @@ const node: ReaderFragment = {
   "kind": "Fragment",
   "name": "Conversations_me",
   "type": "Me",
-  "metadata": null,
+  "metadata": {
+    "connection": [
+      {
+        "count": null,
+        "cursor": null,
+        "direction": "bidirectional",
+        "path": [
+          "conversationsConnection"
+        ]
+      }
+    ]
+  },
   "argumentDefinitions": [
     {
       "kind": "LocalArgument",
@@ -64,31 +75,10 @@ const node: ReaderFragment = {
   "selections": [
     {
       "kind": "LinkedField",
-      "alias": null,
-      "name": "conversationsConnection",
+      "alias": "conversationsConnection",
+      "name": "__Conversations_conversationsConnection_connection",
       "storageKey": null,
-      "args": [
-        {
-          "kind": "Variable",
-          "name": "after",
-          "variableName": "after"
-        },
-        {
-          "kind": "Variable",
-          "name": "before",
-          "variableName": "before"
-        },
-        {
-          "kind": "Variable",
-          "name": "first",
-          "variableName": "first"
-        },
-        {
-          "kind": "Variable",
-          "name": "last",
-          "variableName": "last"
-        }
-      ],
+      "args": null,
       "concreteType": "ConversationConnection",
       "plural": false,
       "selections": [
@@ -135,6 +125,13 @@ const node: ReaderFragment = {
                   "kind": "ScalarField",
                   "alias": null,
                   "name": "lastMessage",
+                  "args": null,
+                  "storageKey": null
+                },
+                {
+                  "kind": "ScalarField",
+                  "alias": null,
+                  "name": "__typename",
                   "args": null,
                   "storageKey": null
                 },
@@ -190,5 +187,5 @@ const node: ReaderFragment = {
     }
   ]
 };
-(node as any).hash = '40c2082fde79a2f20537f4d13eecb2f1';
+(node as any).hash = '9ce7999243d62714276fee2e39f94ffe';
 export default node;

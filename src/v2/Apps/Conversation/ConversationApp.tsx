@@ -1,6 +1,6 @@
 import { ConversationApp_me } from "v2/__generated__/ConversationApp_me.graphql"
 import { AppContainer } from "v2/Apps/Components/AppContainer"
-import { ConversationsFragmentContainer as Conversations } from "v2/Apps/Conversation/Components/Conversations"
+import { ConversationsPaginationContainer as Conversations } from "v2/Apps/Conversation/Components/Conversations"
 import { findCurrentRoute } from "v2/Artsy/Router/Utils/findCurrentRoute"
 import { Match, Router } from "found"
 import React, { useEffect, useState } from "react"

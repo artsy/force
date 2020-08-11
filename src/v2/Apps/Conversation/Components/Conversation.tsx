@@ -1,11 +1,20 @@
-import { Box, Flex, Image, Link, Sans, Spacer, color } from "@artsy/palette"
+import {
+  Box,
+  Flex,
+  Image,
+  Link,
+  Sans,
+  Spacer,
+  Spinner,
+  color,
+} from "@artsy/palette"
 import { Conversation_conversation } from "v2/__generated__/Conversation_conversation.graphql"
 import { DateTime } from "luxon"
-import React, { useEffect, useRef } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import {
   RelayProp,
   RelayRefetchProp,
-  createFragmentContainer,
+  createPaginationContainer,
 } from "react-relay"
 import { graphql } from "relay-runtime"
 import { MessageFragmentContainer as Message } from "./Message"
@@ -141,20 +150,26 @@ export interface ConversationProps {
   refetch: RelayRefetchProp["refetch"]
 }
 
+export const PAGE_SIZE: number = 30
+
 const Conversation: React.FC<ConversationProps> = props => {
   const { conversation, relay } = props
 
   const bottomOfPage = useRef(null)
   const initialMount = useRef(true)
 
+  // Keeping track of this for scroll on send
+  const [lastMessageID, setLastMessageID] = useState("")
+
   const scrollToBottom = () => {
-    if (bottomOfPage.current !== null) {
+    if (
+      bottomOfPage.current !== null &&
+      (initialMount.current || lastMessageID !== conversation?.lastMessageID)
+    ) {
       const scrollOptions = initialMount.current ? {} : { behavior: "smooth" }
       bottomOfPage.current.scrollIntoView(scrollOptions)
-    }
-
-    if (initialMount.current) {
       initialMount.current = false
+      setLastMessageID(conversation?.lastMessageID)
     }
   }
 
@@ -174,6 +189,55 @@ const Conversation: React.FC<ConversationProps> = props => {
       }
     />
   ))
+
+  // Pagination Scroll Logic
+  const [fetchingMore, setFetchingMore] = useState(false)
+  const [messagesTop, setMessagesTop] = useState(null)
+  const scrollContainer = useRef(null)
+
+  useEffect(() => {
+    if (!("IntersectionObserver" in window)) return
+    const observer = new IntersectionObserver(
+      entries => {
+        const first = entries[0]
+        if (first.isIntersecting && !initialMount.current) {
+          _loadMore()
+        }
+      },
+      { threshold: 0, rootMargin: `150px` }
+    )
+
+    const currentMessagesTop = messagesTop
+    const currentObserver = observer
+    if (currentMessagesTop) {
+      currentObserver.observe(currentMessagesTop)
+    }
+
+    // Cleanup
+    return () => {
+      if (currentMessagesTop) {
+        currentObserver.unobserve(currentMessagesTop)
+      }
+    }
+  }, [messagesTop])
+
+  const _loadMore = (): void => {
+    if (relay.isLoading() || !relay.hasMore() || initialMount.current) return
+    setFetchingMore(true)
+    const scrollCursor = scrollContainer.current
+      ? scrollContainer.current.scrollHeight - scrollContainer.current.scrollTop
+      : 0
+    relay.loadMore(PAGE_SIZE, error => {
+      if (error) console.error(error)
+      setFetchingMore(false)
+      if (scrollContainer.current) {
+        // Scrolling to former position
+        scrollContainer.current.scrollTo({
+          top: scrollContainer.current.scrollHeight - scrollCursor,
+        })
+      }
+    })
+  }
 
   const messageGroups = groupMessages(
     conversation.messagesConnection.edges.map(edge => edge.node)
@@ -200,7 +264,6 @@ const Conversation: React.FC<ConversationProps> = props => {
                 message={message}
                 initialMessage={conversation.initialMessage}
                 key={message.internalID}
-                isFirst={groupIndex + messageIndex === 0}
                 showTimeSince={
                   message.createdAt &&
                   today &&
@@ -217,11 +280,17 @@ const Conversation: React.FC<ConversationProps> = props => {
 
   return (
     <NoScrollFlex flexDirection="column" width="100%">
-      <MessageContainer>
+      <MessageContainer ref={scrollContainer}>
         <Box pb={[6, 6, 6, 0]}>
           <Spacer mt={["75px", "75px", 2]} />
           <Flex flexDirection="column" width="100%" px={1}>
             {inquiryItemBox}
+            <Box ref={setMessagesTop}></Box>
+            {fetchingMore ? (
+              <SpinnerContainer>
+                <Spinner />
+              </SpinnerContainer>
+            ) : null}
             {messageGroups}
             <Box ref={bottomOfPage}></Box>
           </Flex>
@@ -246,7 +315,13 @@ const NoScrollFlex = styled(Flex)`
   overflow: hidden;
 `
 
-export const ConversationFragmentContainer = createFragmentContainer(
+const SpinnerContainer = styled.div`
+  width: 100%;
+  height: 100px;
+  position: relative;
+`
+
+export const ConversationPaginationContainer = createPaginationContainer(
   Conversation,
   {
     conversation: graphql`
@@ -324,6 +399,37 @@ export const ConversationFragmentContainer = createFragmentContainer(
               }
             }
           }
+        }
+      }
+    `,
+  },
+  {
+    direction: "forward",
+    getConnectionFromProps(props) {
+      return props.conversation?.messagesConnection
+    },
+    getFragmentVariables(prevVars, count) {
+      return {
+        ...prevVars,
+        count,
+      }
+    },
+    getVariables(props, { cursor, count }) {
+      return {
+        count,
+        cursor,
+        after: cursor,
+        conversationID: props.conversation.id,
+      }
+    },
+    query: graphql`
+      query ConversationPaginationQuery(
+        $count: Int
+        $after: String
+        $conversationID: ID!
+      ) {
+        node(id: $conversationID) {
+          ...Conversation_conversation @arguments(count: $count, after: $after)
         }
       }
     `,

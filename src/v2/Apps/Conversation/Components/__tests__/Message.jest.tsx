@@ -12,16 +12,14 @@ describe("Message", () => {
       const linkBody = { body: "Link here: https://artsy.net." }
       const messageWithLink = { ...message, ...linkBody }
 
-      const component = mount(
-        <Message message={messageWithLink} isFirst={false} />
-      )
+      const component = mount(<Message message={messageWithLink} />)
       expect(component.html()).toContain(
         'Link here: <a href="https://artsy.net" target="_blank">https://artsy.net</a>.'
       )
     })
 
     it("does not convert regular text", () => {
-      const component = mount(<Message message={message} isFirst={false} />)
+      const component = mount(<Message message={message} />)
       expect(component.html()).toContain("Body of the message")
     })
   })

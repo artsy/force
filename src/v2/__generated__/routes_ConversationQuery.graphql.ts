@@ -88,6 +88,7 @@ fragment Conversations_me on Me {
         internalID
         lastMessage
         ...ConversationSnippet_conversation
+        __typename
       }
     }
     pageInfo {
@@ -101,25 +102,39 @@ fragment Conversations_me on Me {
 */
 
 const node: ConcreteRequest = (function(){
-var v0 = {
+var v0 = [
+  {
+    "kind": "Literal",
+    "name": "first",
+    "value": 25
+  }
+],
+v1 = {
   "kind": "ScalarField",
   "alias": null,
   "name": "name",
   "args": null,
   "storageKey": null
 },
-v1 = {
+v2 = {
   "kind": "ScalarField",
   "alias": null,
   "name": "id",
   "args": null,
   "storageKey": null
 },
-v2 = [
-  (v0/*: any*/),
-  (v1/*: any*/)
-],
 v3 = [
+  (v1/*: any*/),
+  (v2/*: any*/)
+],
+v4 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "__typename",
+  "args": null,
+  "storageKey": null
+},
+v5 = [
   {
     "kind": "ScalarField",
     "alias": null,
@@ -174,13 +189,7 @@ return {
             "alias": null,
             "name": "conversationsConnection",
             "storageKey": "conversationsConnection(first:25)",
-            "args": [
-              {
-                "kind": "Literal",
-                "name": "first",
-                "value": 25
-              }
-            ],
+            "args": (v0/*: any*/),
             "concreteType": "ConversationConnection",
             "plural": false,
             "selections": [
@@ -217,9 +226,9 @@ return {
                         "args": null,
                         "concreteType": "ConversationResponder",
                         "plural": false,
-                        "selections": (v2/*: any*/)
+                        "selections": (v3/*: any*/)
                       },
-                      (v1/*: any*/),
+                      (v2/*: any*/),
                       {
                         "kind": "ScalarField",
                         "alias": null,
@@ -259,14 +268,8 @@ return {
                             "concreteType": null,
                             "plural": false,
                             "selections": [
-                              {
-                                "kind": "ScalarField",
-                                "alias": null,
-                                "name": "__typename",
-                                "args": null,
-                                "storageKey": null
-                              },
-                              (v1/*: any*/),
+                              (v4/*: any*/),
+                              (v2/*: any*/),
                               {
                                 "kind": "InlineFragment",
                                 "type": "Artwork",
@@ -300,7 +303,7 @@ return {
                                     "args": null,
                                     "concreteType": "Image",
                                     "plural": false,
-                                    "selections": (v3/*: any*/)
+                                    "selections": (v5/*: any*/)
                                   }
                                 ]
                               },
@@ -316,9 +319,9 @@ return {
                                     "args": null,
                                     "concreteType": "Fair",
                                     "plural": false,
-                                    "selections": (v2/*: any*/)
+                                    "selections": (v3/*: any*/)
                                   },
-                                  (v0/*: any*/),
+                                  (v1/*: any*/),
                                   {
                                     "kind": "LinkedField",
                                     "alias": null,
@@ -327,7 +330,7 @@ return {
                                     "args": null,
                                     "concreteType": "Image",
                                     "plural": false,
-                                    "selections": (v3/*: any*/)
+                                    "selections": (v5/*: any*/)
                                   }
                                 ]
                               }
@@ -352,7 +355,8 @@ return {
                             "storageKey": null
                           }
                         ]
-                      }
+                      },
+                      (v4/*: any*/)
                     ]
                   },
                   {
@@ -405,7 +409,16 @@ return {
               }
             ]
           },
-          (v1/*: any*/)
+          {
+            "kind": "LinkedHandle",
+            "alias": null,
+            "name": "conversationsConnection",
+            "args": (v0/*: any*/),
+            "handle": "connection",
+            "key": "Conversations_conversationsConnection",
+            "filters": null
+          },
+          (v2/*: any*/)
         ]
       }
     ]
@@ -414,7 +427,7 @@ return {
     "operationKind": "query",
     "name": "routes_ConversationQuery",
     "id": null,
-    "text": "query routes_ConversationQuery {\n  me {\n    ...ConversationApp_me\n    id\n  }\n}\n\nfragment ConversationApp_me on Me {\n  conversationsConnection(first: 25) {\n    edges {\n      node {\n        internalID\n        to {\n          name\n          id\n        }\n        id\n      }\n    }\n  }\n  ...Conversations_me\n}\n\nfragment ConversationSnippet_conversation on Conversation {\n  internalID\n  to {\n    name\n    id\n  }\n  lastMessage\n  lastMessageAt\n  unread\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        date\n        title\n        artistNames\n        image {\n          url\n        }\n      }\n      ... on Show {\n        fair {\n          name\n          id\n        }\n        name\n        coverImage {\n          url\n        }\n      }\n      ... on Node {\n        id\n      }\n    }\n  }\n  messagesConnection {\n    totalCount\n  }\n}\n\nfragment Conversations_me on Me {\n  conversationsConnection(first: 25) {\n    edges {\n      cursor\n      node {\n        id\n        internalID\n        lastMessage\n        ...ConversationSnippet_conversation\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n",
+    "text": "query routes_ConversationQuery {\n  me {\n    ...ConversationApp_me\n    id\n  }\n}\n\nfragment ConversationApp_me on Me {\n  conversationsConnection(first: 25) {\n    edges {\n      node {\n        internalID\n        to {\n          name\n          id\n        }\n        id\n      }\n    }\n  }\n  ...Conversations_me\n}\n\nfragment ConversationSnippet_conversation on Conversation {\n  internalID\n  to {\n    name\n    id\n  }\n  lastMessage\n  lastMessageAt\n  unread\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        date\n        title\n        artistNames\n        image {\n          url\n        }\n      }\n      ... on Show {\n        fair {\n          name\n          id\n        }\n        name\n        coverImage {\n          url\n        }\n      }\n      ... on Node {\n        id\n      }\n    }\n  }\n  messagesConnection {\n    totalCount\n  }\n}\n\nfragment Conversations_me on Me {\n  conversationsConnection(first: 25) {\n    edges {\n      cursor\n      node {\n        id\n        internalID\n        lastMessage\n        ...ConversationSnippet_conversation\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n",
     "metadata": {}
   }
 };
