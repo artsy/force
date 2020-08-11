@@ -211,7 +211,7 @@ const ArtistSeriesAppFixture: ArtistSeriesApp_QueryRawResponse = {
       },
     ],
     title: "Pumpkins",
-    description: "All of the pumpkins",
+    descriptionFormatted: "All of the pumpkins",
     image: {
       url: "https://test.artsy.net/pumpkins-header-image.jpg",
     },

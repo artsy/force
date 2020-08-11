@@ -5,6 +5,7 @@ import {
   EntityHeader,
   Flex,
   Grid,
+  HTML,
   Image,
   Row,
   Sans,
@@ -88,7 +89,7 @@ const ArtistSeriesHeader: React.FC<ArtistSeriesHeaderProps> = props => {
 
 const ArtistSeriesHeaderLarge: React.FC<ArtistSeriesHeaderProps> = props => {
   const {
-    artistSeries: { title, description, artists, image },
+    artistSeries: { title, descriptionFormatted, artists, image },
   } = props
   return (
     <>
@@ -116,9 +117,7 @@ const ArtistSeriesHeaderLarge: React.FC<ArtistSeriesHeaderProps> = props => {
                 <Sans size="8" element="h1" unstable_trackIn>
                   {title}
                 </Sans>
-                <Sans lineHeight={1.5} size="3t" pr={1}>
-                  {description}
-                </Sans>
+                <HTML variant="text" html={descriptionFormatted} />
               </Flex>
             </Col>
             <Col sm={6}>
@@ -140,7 +139,7 @@ const ArtistSeriesHeaderLarge: React.FC<ArtistSeriesHeaderProps> = props => {
 
 const ArtistSeriesHeaderSmall: React.FC<ArtistSeriesHeaderProps> = props => {
   const {
-    artistSeries: { title, description, artists, image },
+    artistSeries: { title, descriptionFormatted, artists, image },
   } = props
   return (
     <>
@@ -158,9 +157,7 @@ const ArtistSeriesHeaderSmall: React.FC<ArtistSeriesHeaderProps> = props => {
         </Sans>
         {artists.length && <ArtistInfo artist={artists[0]} />}
         <Box my={1}>
-          <Sans lineHeight={1.5} size="3t">
-            {description}
-          </Sans>
+          <HTML variant="text" html={descriptionFormatted} />
         </Box>
       </Box>
     </>
@@ -194,7 +191,7 @@ export const ArtistSeriesHeaderFragmentContainer = createFragmentContainer(
     artistSeries: graphql`
       fragment ArtistSeriesHeader_artistSeries on ArtistSeries {
         title
-        description
+        descriptionFormatted(format: HTML)
         image {
           url
         }
