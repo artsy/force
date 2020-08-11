@@ -86,16 +86,8 @@ export class ModalWrapper extends React.Component<
   }
 
   close = () => {
-    // this.props.goBackOnClose is undefined if it is accessed after this.props.onClose()
-    // TODO: test this behavior in case this gets refactored
-    const goBack = this.props.goBackOnClose
-
     this.props.onClose()
     this.removeBlurToContainers()
-
-    if (goBack) {
-      window.history.back()
-    }
   }
 
   addBlurToContainers = () => {

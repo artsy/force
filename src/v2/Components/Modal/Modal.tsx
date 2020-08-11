@@ -18,7 +18,6 @@ export interface ModalProps extends React.HTMLProps<Modal> {
   show?: boolean
   title?: string
   disableCloseOnBackgroundClick?: boolean
-  goBackOnClose?: boolean
 }
 
 /**
@@ -50,9 +49,6 @@ export class Modal extends React.Component<ModalProps> {
 
   close = () => {
     this.props.onClose()
-    if (this.props.goBackOnClose) {
-      window.history.back()
-    }
   }
 
   render(): JSX.Element {
@@ -66,7 +62,6 @@ export class Modal extends React.Component<ModalProps> {
       show,
       title,
       disableCloseOnBackgroundClick,
-      goBackOnClose,
     } = this.props
 
     return (
@@ -78,7 +73,6 @@ export class Modal extends React.Component<ModalProps> {
         image={image}
         fullscreenResponsiveModal
         disableCloseOnBackgroundClick={disableCloseOnBackgroundClick}
-        goBackOnClose={goBackOnClose}
       >
         <CloseButton name="close" onClick={this.close} />
 

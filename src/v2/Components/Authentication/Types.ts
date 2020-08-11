@@ -118,9 +118,9 @@ export interface ModalOptions {
    */
   disableCloseOnBackgroundClick?: boolean
   /**
-   * Returns users to the previous page when they close the modal
+   * Hook to be called after the modal has closed
    */
-  goBackOnClose?: boolean
+  afterClose?: () => void
 }
 
 export type FormComponentType =

@@ -56,17 +56,4 @@ describe("Modal", () => {
     ).not.toHaveBeenCalled()
     expect(props.onClose).not.toHaveBeenCalled()
   })
-  it("Navigates to previous page on escape key up", () => {
-    window.history.back = jest.fn()
-    props.show = true
-    props.goBackOnClose = true
-    const component = getWrapper(props)
-    ;(component.instance() as any).removeBlurToContainers = jest.fn()
-    document.dispatchEvent(new KeyboardEvent("keyup", { key: "Escape" }))
-    expect(
-      (component.instance() as any).removeBlurToContainers
-    ).toHaveBeenCalled()
-    expect(props.onClose).toHaveBeenCalled()
-    expect(window.history.back).toHaveBeenCalled()
-  })
 })
