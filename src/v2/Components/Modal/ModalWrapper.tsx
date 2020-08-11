@@ -22,7 +22,6 @@ export interface ModalWrapperProps extends React.HTMLProps<ModalWrapper> {
   image?: string
   show?: boolean
   disableCloseOnBackgroundClick?: boolean
-  goBackOnClose?: boolean
 }
 
 export interface ModalWrapperState {
