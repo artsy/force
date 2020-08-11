@@ -2,6 +2,7 @@ export const FEATURE_HEADER = {
   " $fragmentRefs": null,
   " $refType": null,
   name: "Alserkal Art Week",
+  layout: "DEFAULT",
   subheadline:
     "Alserkal Art Week Online\n\nDiscover new exhibitions by Alserkal Avenue Galleries",
   defaultImage: {

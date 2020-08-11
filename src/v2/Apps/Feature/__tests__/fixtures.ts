@@ -81,6 +81,7 @@ export const FEATURE = {
   id: "RmVhdHVyZTo1ZTY5MGMzMWQyMmZmMTAwMTIwYzQzMzY=",
   name: "Alserkal Art Week",
   slug: "alserkal-art-week",
+  layout: "DEFAULT" as "DEFAULT" | "FULL",
   meta: {
     name: "Alserkal Art Week",
     description: "some description",
