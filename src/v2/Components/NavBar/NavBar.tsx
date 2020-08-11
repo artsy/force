@@ -26,7 +26,6 @@ import { NavBarPrimaryLogo } from "./NavBarPrimaryLogo"
 import { NavBarSkipLink } from "./NavBarSkipLink"
 import { LoggedInActionsQueryRenderer as LoggedInActions } from "./LoggedInActions"
 import { NAV_BAR_HEIGHT } from "./constants"
-import { userHasLabFeature } from "v2/Utils/user"
 
 const NavBarContainer = styled(Flex)`
   position: relative;
@@ -61,7 +60,6 @@ export const NavBar: React.FC = track(
   const sm = useMatchMedia(themeProps.mediaQueries.sm)
   const isMobile = xs || sm
   const isLoggedIn = Boolean(user)
-  const viewingRoomsEnabled = userHasLabFeature(user, "Viewing Rooms")
   const showNotificationCount = isLoggedIn && !showMobileMenu
 
   // Close mobile menu if dragging window from small size to desktop
@@ -151,16 +149,14 @@ export const NavBar: React.FC = track(
 
               <NavItem href="/auctions">Auctions</NavItem>
 
-              {viewingRoomsEnabled && (
-                <NavItem
-                  // Hide link at smaller viewports — corresponding display inside of `MoreNavMenu`
-                  // If we need to do this again, consider a more abstract solution
-                  display={["none", "none", "none", "flex"]}
-                  href="/viewing-rooms"
-                >
-                  Viewing&nbsp;Rooms
-                </NavItem>
-              )}
+              <NavItem
+                // Hide link at smaller viewports — corresponding display inside of `MoreNavMenu`
+                // If we need to do this again, consider a more abstract solution
+                display={["none", "none", "none", "flex"]}
+                href="/viewing-rooms"
+              >
+                Viewing&nbsp;Rooms
+              </NavItem>
 
               <NavItem href="/articles">Editorial</NavItem>
 

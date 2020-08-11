@@ -30,7 +30,6 @@ import {
   useNavigation,
 } from "./NavigatorContextProvider"
 import { NAV_BAR_BORDER_OFFSET, NAV_BAR_HEIGHT } from "v2/Components/NavBar"
-import { userHasLabFeature } from "v2/Utils/user"
 
 const Close = styled(Clickable)`
   position: absolute;
@@ -57,8 +56,6 @@ export const MobileNavMenu: React.FC<Props> = ({
 }) => {
   const { user } = useSystemContext()
 
-  const viewingRoomsEnabled = userHasLabFeature(user, "Viewing Rooms")
-
   return (
     <NavigatorContextProvider>
       <ModalBase
@@ -83,9 +80,7 @@ export const MobileNavMenu: React.FC<Props> = ({
                 {ARTISTS_SUBMENU_DATA.menu.title}
               </MobileSubmenuLink>
               <MobileLink href="/auctions">Auctions</MobileLink>
-              {viewingRoomsEnabled && (
-                <MobileLink href="/viewing-rooms">Viewing Rooms</MobileLink>
-              )}
+              <MobileLink href="/viewing-rooms">Viewing Rooms</MobileLink>
               <MobileLink href="/articles">Editorial</MobileLink>
               <MobileLink href="/galleries">Galleries</MobileLink>
               <MobileLink href="/fairs">Fairs</MobileLink>
