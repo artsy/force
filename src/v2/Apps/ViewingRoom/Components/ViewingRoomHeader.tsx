@@ -1,5 +1,5 @@
 import React from "react"
-import { Box, Flex, ResponsiveImage, Sans, color } from "@artsy/palette"
+import { Box, Flex, Link, ResponsiveImage, Sans, color } from "@artsy/palette"
 import { NAV_BAR_HEIGHT } from "v2/Components/NavBar"
 import { Media } from "v2/Utils/Responsive"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -37,6 +37,7 @@ export const ViewingRoomHeaderFragmentContainer = createFragmentContainer(
         title
         partner {
           name
+          href
         }
         distanceToOpen
         distanceToClose
@@ -157,7 +158,7 @@ const ViewingRoomHeaderSmall: React.FC<ViewingRoomHeaderProps> = props => {
 const RoomInfo: React.FC<ViewingRoomHeaderProps> = props => {
   const {
     viewingRoom: {
-      partner: { name },
+      partner: { name, href },
       distanceToOpen,
       distanceToClose,
       status,
@@ -193,7 +194,9 @@ const RoomInfo: React.FC<ViewingRoomHeaderProps> = props => {
         width="100%"
         p={2}
       >
-        <InfoText>{name}</InfoText>
+        <Link href={href} underlineBehavior="hover">
+          <InfoText>{name}</InfoText>
+        </Link>
         <TimingInfo />
       </Flex>
     </Box>
