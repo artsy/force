@@ -21,7 +21,7 @@ export interface ConversationProps {
   refetch: RelayRefetchProp["refetch"]
 }
 
-export const PAGE_SIZE: number = 30
+export const PAGE_SIZE: number = 15
 
 const Conversation: React.FC<ConversationProps> = props => {
   const { conversation, relay } = props
@@ -72,27 +72,25 @@ const Conversation: React.FC<ConversationProps> = props => {
       entries => {
         const first = entries[0]
         if (first.isIntersecting && !initialMount.current) {
-          _loadMore()
+          loadMore()
         }
       },
       { threshold: 0, rootMargin: `150px` }
     )
 
-    const currentMessagesTop = messagesTop
-    const currentObserver = observer
-    if (currentMessagesTop) {
-      currentObserver.observe(currentMessagesTop)
+    if (messagesTop) {
+      observer.observe(messagesTop)
     }
 
     // Cleanup
     return () => {
-      if (currentMessagesTop) {
-        currentObserver.unobserve(currentMessagesTop)
+      if (messagesTop) {
+        observer.unobserve(messagesTop)
       }
     }
   }, [messagesTop])
 
-  const _loadMore = (): void => {
+  const loadMore = (): void => {
     if (relay.isLoading() || !relay.hasMore() || initialMount.current) return
     setFetchingMore(true)
     const scrollCursor = scrollContainer.current

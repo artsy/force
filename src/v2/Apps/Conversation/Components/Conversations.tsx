@@ -45,7 +45,7 @@ const Conversations: React.FC<ConversationsProps> = props => {
     .map(e => e.node.internalID)
     .indexOf(selectedConversationID)
 
-  const _loadMore = () => {
+  const loadMore = () => {
     if (!relay.hasMore()) return
     setFetchingMore(true)
     relay.loadMore(PAGE_SIZE, error => {
@@ -57,7 +57,7 @@ const Conversations: React.FC<ConversationsProps> = props => {
   const handleScroll = (event: React.UIEvent<HTMLElement>): void => {
     const { scrollTop, clientHeight, scrollHeight } = event.currentTarget
     if (scrollHeight - scrollTop === clientHeight) {
-      _loadMore()
+      loadMore()
     }
   }
 
