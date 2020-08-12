@@ -7,6 +7,7 @@ import {
   createPaginationContainer,
 } from "react-relay"
 import { graphql } from "relay-runtime"
+import Waypoint from "react-waypoint"
 import { Item } from "./Item"
 import { MessageFragmentContainer as Message } from "./Message"
 import { Reply } from "./Reply"
@@ -63,32 +64,7 @@ const Conversation: React.FC<ConversationProps> = props => {
 
   // Pagination Scroll Logic
   const [fetchingMore, setFetchingMore] = useState(false)
-  const [messagesTop, setMessagesTop] = useState(null)
   const scrollContainer = useRef(null)
-
-  useEffect(() => {
-    if (!("IntersectionObserver" in window)) return
-    const observer = new IntersectionObserver(
-      entries => {
-        const first = entries[0]
-        if (first.isIntersecting && !initialMount.current) {
-          loadMore()
-        }
-      },
-      { threshold: 0, rootMargin: `150px` }
-    )
-
-    if (messagesTop) {
-      observer.observe(messagesTop)
-    }
-
-    // Cleanup
-    return () => {
-      if (messagesTop) {
-        observer.unobserve(messagesTop)
-      }
-    }
-  }, [messagesTop])
 
   const loadMore = (): void => {
     if (relay.isLoading() || !relay.hasMore() || initialMount.current) return
@@ -103,6 +79,7 @@ const Conversation: React.FC<ConversationProps> = props => {
         // Scrolling to former position
         scrollContainer.current.scrollTo({
           top: scrollContainer.current.scrollHeight - scrollCursor,
+          behavior: "smooth",
         })
       }
     })
@@ -154,7 +131,7 @@ const Conversation: React.FC<ConversationProps> = props => {
           <Spacer mt={["75px", "75px", 2]} />
           <Flex flexDirection="column" width="100%" px={1}>
             {inquiryItemBox}
-            <Box ref={setMessagesTop}></Box>
+            <Waypoint onEnter={loadMore} />
             {fetchingMore ? (
               <SpinnerContainer>
                 <Spinner />
