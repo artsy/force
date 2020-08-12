@@ -12,7 +12,7 @@ interface Props {
 
 export const ArtistSeriesItem: React.SFC<Props> = props => {
   const {
-    artistSeries: { slug, title, image, forSaleArtworksCount },
+    artistSeries: { slug, title, image, artworksCountMessage },
     lazyLoad,
   } = props
 
@@ -30,7 +30,7 @@ export const ArtistSeriesItem: React.SFC<Props> = props => {
           <SeriesTitle size={"3"}>{title}</SeriesTitle>
           <Spacer />
           <Sans size={"3"} color={"black30"}>
-            {forSaleArtworksCount} available
+            {artworksCountMessage}
           </Sans>
         </Box>
       </StyledLink>
@@ -65,7 +65,7 @@ export const ArtistSeriesItemFragmentContainer = createFragmentContainer(
       fragment ArtistSeriesItem_artistSeries on ArtistSeries {
         title
         slug
-        forSaleArtworksCount
+        artworksCountMessage
         image {
           cropped(width: 160, height: 160) {
             url
