@@ -141,7 +141,7 @@ export class ModalWrapper extends React.Component<
           {isShown && (
             <ModalOverlay
               onClick={
-                !this.props.disableCloseOnBackgroundClick ? this.close : null
+                this.props.disableCloseOnBackgroundClick ? null : this.close
               }
             />
           )}

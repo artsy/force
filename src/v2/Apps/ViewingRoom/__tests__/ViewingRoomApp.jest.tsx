@@ -18,7 +18,6 @@ jest.mock("v2/Artsy/Router/useRouter", () => ({
         slug: "subscription-demo-gg-guy-yanai",
       },
     },
-    router: jest.fn(),
   }),
   useIsRouteActive: () => false,
 }))
@@ -325,19 +324,7 @@ describe("ViewingRoomApp", () => {
       expect(wrapper.find("ViewingRoomTabBar").length).toBe(0)
       expect(wrapper.find("ViewingRoomContentNotAccessible").length).toBe(0)
       expect(wrapper.html()).not.toContain("some child")
-      expect(mediator.trigger).toBeCalled()
-    })
-    xit("redirects user to /viewing-rooms on close", () => {
-      // const spy = jest.fn()
-      // ;(useRouter as jest.Mock).mockImplementation(() => {
-      //   return {
-      //     router: {
-      //       push: spy,
-      //     },
-      //   }
-      // })
-      // expect(spy).toHaveBeenCalled()
-      // expect(spy).toHaveBeenCalledWith("/viewing-rooms")
+      expect(mediator.trigger).toHaveBeenCalled()
     })
   })
 })
