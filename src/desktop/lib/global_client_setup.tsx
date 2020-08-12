@@ -10,6 +10,7 @@ import { hydrate as hydrateStitch } from "@artsy/stitch/dist/internal/hydrate"
 import { initModalManager } from "desktop/apps/authentication/client/index"
 import { Components } from "@artsy/stitch/dist/internal/types"
 import { omit } from "lodash"
+import syncAuth from "lib/syncAuth"
 
 const mediator = require("./mediator.coffee")
 const FlashMessage = require("../components/flash/index.coffee")
@@ -35,24 +36,6 @@ export function globalClientSetup() {
   syncAuth()
   trackAuthenticationEvents()
   mediator.on("auth:logout", logoutEventHandler)
-}
-
-export function syncAuth() {
-  if (sd.CURRENT_USER) {
-    $.ajax({
-      url: `${sd.API_URL}/api/v1/me`,
-      // success: ensureFreshUser, # this can cause an endless reload
-      error() {
-        $.ajax({
-          method: "DELETE",
-          url: "/users/sign_out",
-          complete() {
-            return window.location.reload()
-          },
-        })
-      },
-    })
-  }
 }
 
 function logoutEventHandler() {

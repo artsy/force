@@ -67,21 +67,11 @@ xdescribe("Layout init code", function () {
       sd["APP_URL"] = "http://m.artsy.net"
       require("../bootstrap")()
       sinon.stub($, "ajax")
-      ;({ syncAuth: this.syncAuth } = require("../bootstrap"))
       return done()
     })
   })
 
   afterEach(() => benv.teardown())
-
-  return it("logs you out if Gravity throws an auth error", function () {
-    sd.CURRENT_USER = fabricate("user")
-    this.syncAuth()
-    $.ajax.args[0][0].url.should.containEql("api/v1/me")
-    $.ajax.args[0][0].error()
-    window.location.should.equal("/users/sign_out")
-    return (sd.CURRENT_USER = null)
-  })
 })
 
 describe("Canonical url", () =>
