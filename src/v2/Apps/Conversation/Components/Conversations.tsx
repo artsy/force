@@ -27,7 +27,7 @@ const SpinnerContainer = styled.div`
   position: relative;
 `
 
-export const PAGE_SIZE: number = 25
+export const PAGE_SIZE: number = 15
 
 interface ConversationsProps {
   me: Conversations_me
