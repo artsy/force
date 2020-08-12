@@ -24,6 +24,7 @@ hydrateStitch = require('@artsy/stitch/dist/internal/hydrate').hydrate
 analyticsHooks = require('../../lib/analytics_hooks.coffee')
 mediator = require('../../../desktop/lib/mediator.coffee')
 FlashMessage = require('../../../desktop/components/flash/index.coffee')
+syncAuth = require('../../../lib/syncAuth.ts').default
 
 module.exports = ->
   # Add the Gravity XAPP or access token to all ajax requests
@@ -61,19 +62,6 @@ mountStitch = ->
     modules: globalReactModules
     wrapper: globalReactModules.StitchWrapper
   })
-
-syncAuth = module.exports.syncAuth = ->
-  # Log out of Microgravity if you're not logged in to Gravity
-  if sd.CURRENT_USER
-    $.ajax
-      url: "#{sd.API_URL}/api/v1/me"
-      # success: ensureFreshUser # this can cause an endless reload
-      error: ->
-        $.ajax
-          method: 'DELETE'
-          url: '/users/sign_out'
-          complete: ->
-            window.location.reload()
 
 setupErrorReporting = ->
   Sentry.init({ dsn: sd.SENTRY_PUBLIC_DSN })
