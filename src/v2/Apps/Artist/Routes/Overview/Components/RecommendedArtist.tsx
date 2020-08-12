@@ -1,5 +1,5 @@
 import { ContextModule, Intent } from "@artsy/cohesion"
-import { Box, Clickable, EntityHeader, Sans, Spacer } from "@artsy/palette"
+import { Box, EntityHeader, Sans, Spacer } from "@artsy/palette"
 import { RecommendedArtist_artist } from "v2/__generated__/RecommendedArtist_artist.graphql"
 import { SystemContext } from "v2/Artsy"
 import { track } from "v2/Artsy/Analytics"
@@ -82,20 +82,18 @@ const RecommendedArtist: FC<
             onOpenAuthModal={() => handleOpenAuth(mediator, artist)}
             render={({ is_followed }) => {
               return (
-                <Clickable>
-                  <Sans
-                    size="2"
-                    weight="medium"
-                    color="black"
-                    data-test="followButton"
-                    style={{
-                      cursor: "pointer",
-                      textDecoration: "underline",
-                    }}
-                  >
-                    {is_followed ? "Following" : "Follow"}
-                  </Sans>
-                </Clickable>
+                <Sans
+                  size="2"
+                  weight="medium"
+                  color="black"
+                  data-test="followButton"
+                  style={{
+                    cursor: "pointer",
+                    textDecoration: "underline",
+                  }}
+                >
+                  {is_followed ? "Following" : "Follow"}
+                </Sans>
               )
             }}
           />

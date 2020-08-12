@@ -1,6 +1,5 @@
 import {
   Button,
-  Clickable,
   EntityHeader,
   Flex,
   Sans,
@@ -138,20 +137,18 @@ export class ArtistInfo extends Component<ArtistInfoProps, ArtistInfoState> {
                     }
                     render={({ is_followed }) => {
                       return (
-                        <Clickable>
-                          <Sans
-                            size="2"
-                            weight="medium"
-                            color="black"
-                            data-test="followButton"
-                            style={{
-                              cursor: "pointer",
-                              textDecoration: "underline",
-                            }}
-                          >
-                            {is_followed ? "Following" : "Follow"}
-                          </Sans>
-                        </Clickable>
+                        <Sans
+                          size="2"
+                          weight="medium"
+                          color="black"
+                          data-test="followButton"
+                          style={{
+                            cursor: "pointer",
+                            textDecoration: "underline",
+                          }}
+                        >
+                          {is_followed ? "Following" : "Follow"}
+                        </Sans>
                       )
                     }}
                   />

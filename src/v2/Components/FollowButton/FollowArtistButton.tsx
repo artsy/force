@@ -55,6 +55,10 @@ const SuggestionsPopoverContainer = styled(Box)`
   z-index: 1;
 `
 
+const Container = styled.span`
+  display: inline-block;
+`
+
 @track()
 export class FollowArtistButton extends React.Component<Props, State> {
   static defaultProps = {
@@ -163,7 +167,7 @@ export class FollowArtistButton extends React.Component<Props, State> {
 
     // Custom button renderer
     const content = render ? (
-      <span
+      <Container
         tabIndex={0}
         role="button"
         onKeyPress={event => {
@@ -175,7 +179,7 @@ export class FollowArtistButton extends React.Component<Props, State> {
       >
         {" "}
         {render(artist)}
-      </span>
+      </Container>
     ) : (
       <>
         {useDeprecatedButtonStyle && (
