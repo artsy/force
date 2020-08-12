@@ -6,7 +6,7 @@ import {
 import { PopularArtistsQuery } from "v2/__generated__/PopularArtistsQuery.graphql"
 import { SystemContextProps, withSystemContext } from "v2/Artsy"
 import { SystemQueryRenderer as QueryRenderer } from "v2/Artsy/Relay/SystemQueryRenderer"
-import * as React from "react"
+import React from "react"
 import {
   RelayProp,
   commitMutation,

@@ -1,5 +1,5 @@
 import { storiesOf } from "@storybook/react"
-import * as React from "react"
+import React from "react"
 import ReplaceTransition from "../Animation/ReplaceTransition"
 import ItemLink, { LinkContainer } from "../Onboarding/ItemLink"
 

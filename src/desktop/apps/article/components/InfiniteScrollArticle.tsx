@@ -1,4 +1,4 @@
-import * as React from "react"
+import React from "react"
 import { flatten } from "underscore"
 import Waypoint from "react-waypoint"
 import styled from "styled-components"

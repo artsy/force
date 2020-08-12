@@ -2,7 +2,7 @@ import { MockRelayRendererFixturesBadQueryRawResponse } from "v2/__generated__/M
 import { MockRelayRendererFixturesQueryRawResponse } from "v2/__generated__/MockRelayRendererFixturesQuery.graphql"
 import { renderUntil } from "v2/DevTools/renderUntil"
 import { mount } from "enzyme"
-import * as React from "react"
+import React from "react"
 import { MockRelayRenderer } from "../MockRelayRenderer"
 import {
   Artwork,

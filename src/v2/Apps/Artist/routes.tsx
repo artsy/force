@@ -1,6 +1,6 @@
 import loadable from "@loadable/component"
 import { Redirect, RedirectException, RouteConfig } from "found"
-import * as React from "react"
+import React from "react"
 import { graphql } from "react-relay"
 
 import { hasSections as showMarketInsights } from "v2/Apps/Artist/Components/MarketInsights/MarketInsights"

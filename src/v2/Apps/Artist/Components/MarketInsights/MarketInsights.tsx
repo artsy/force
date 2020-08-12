@@ -1,5 +1,5 @@
 import { groupBy } from "lodash"
-import * as React from "react"
+import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 

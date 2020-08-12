@@ -1,6 +1,6 @@
 import { MockRelayRendererFixturesArtistQueryRawResponse } from "v2/__generated__/MockRelayRendererFixturesArtistQuery.graphql"
 import { MockRelayRendererFixturesQueryRawResponse } from "v2/__generated__/MockRelayRendererFixturesQuery.graphql"
-import * as React from "react"
+import React from "react"
 import { renderRelayTree } from "../renderRelayTree"
 import { Artwork, query, renderToString } from "./MockRelayRendererFixtures"
 

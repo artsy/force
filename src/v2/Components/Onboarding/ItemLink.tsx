@@ -1,4 +1,4 @@
-import * as React from "react"
+import React from "react"
 import styled from "styled-components"
 
 import { CircleWhiteCheckIcon, PlusIcon } from "@artsy/palette"
@@ -89,8 +89,8 @@ export default class ItemLink extends React.Component<Props, State> {
           {this.state.selected ? (
             <CircleWhiteCheckIcon width="26" height="26" />
           ) : (
-              <PlusIcon width="26" height="26" />
-            )}
+            <PlusIcon width="26" height="26" />
+          )}
         </Col>
       </Link>
     )

@@ -1,5 +1,5 @@
 import { ReactWrapper } from "enzyme"
-import * as React from "react"
+import React from "react"
 
 declare module "enzyme" {
   export type RenderUntilPredicate<P, S, C> = (
@@ -10,7 +10,7 @@ declare module "enzyme" {
     /**
      * Continuously checks an asynchronously rendered tree until it is
      * considered done, as per the provided predicate function.
-     * 
+     *
      * @param until
      * A predicate function that is used to test wether rendering should be
      * considered finished. This is a regular enzyme wrapper.
@@ -26,19 +26,19 @@ declare module "enzyme" {
         state = {
           data: "Loading",
         }
-      
+
         // After mounting and the initial render, trigger another render with data.
         componentDidMount() {
           setImmediate(() => {
             this.setState({ data: "ohai" })
           })
         }
-      
+
         render() {
           return <div>{this.state.data}</div>
         }
       }
-      
+
       it("resolves the promise with an enzyme wrapper with the final state", async () => {
         const wrapper = await mount(<Component />).renderUntil(
           n => n.find("div").text() !== "Loading"

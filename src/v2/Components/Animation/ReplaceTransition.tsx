@@ -1,4 +1,4 @@
-import * as React from "react"
+import React from "react"
 import ReactCSSTransitionReplace from "react-css-transition-replace"
 import { createGlobalStyle } from "styled-components"
 

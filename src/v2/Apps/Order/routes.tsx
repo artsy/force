@@ -3,7 +3,7 @@ import { getRedirect } from "v2/Apps/Order/getRedirect"
 import { redirects } from "v2/Apps/Order/redirects"
 import { ErrorPage } from "v2/Components/ErrorPage"
 import { Redirect, RedirectException, RouteConfig } from "found"
-import * as React from "react"
+import React from "react"
 import { graphql } from "react-relay"
 
 import { RespondFragmentContainer as RespondRoute } from "./Routes/Respond"
@@ -230,7 +230,7 @@ export const routes: RouteConfig[] = [
       }) as any,
       {
         path: "*",
-        Component: (props) => {
+        Component: props => {
           return <ErrorPage code={404} />
         },
       },

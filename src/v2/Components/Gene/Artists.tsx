@@ -1,7 +1,7 @@
 import { Artists_gene } from "v2/__generated__/Artists_gene.graphql"
 import { Mediator } from "v2/Artsy"
 import { avantgarde } from "v2/Assets/Fonts"
-import * as React from "react"
+import React from "react"
 import {
   RelayPaginationProp,
   createPaginationContainer,
