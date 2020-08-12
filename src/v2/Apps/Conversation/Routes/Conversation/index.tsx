@@ -1,8 +1,8 @@
 import { Box, Flex, Title, media } from "@artsy/palette"
 import { Conversation_me } from "v2/__generated__/Conversation_me.graphql"
 import { AppContainer } from "v2/Apps/Components/AppContainer"
-import { ConversationFragmentContainer as Conversation } from "v2/Apps/Conversation/Components/Conversation"
-import { ConversationsFragmentContainer as Conversations } from "v2/Apps/Conversation/Components/Conversations"
+import { ConversationPaginationContainer as Conversation } from "v2/Apps/Conversation/Components/Conversation"
+import { ConversationsPaginationContainer as Conversations } from "v2/Apps/Conversation/Components/Conversations"
 import { findCurrentRoute } from "v2/Artsy/Router/Utils/findCurrentRoute"
 import { Match } from "found"
 import React, { useState } from "react"
@@ -89,7 +89,7 @@ export const ConversationRoute: React.FC<ConversationRouteProps> = props => {
   )
 }
 
-export const ConversationFragmentContainer = createRefetchContainer(
+export const ConversationPaginationContainer = createRefetchContainer(
   ConversationRoute,
   {
     me: graphql`
@@ -116,4 +116,4 @@ export const ConversationFragmentContainer = createRefetchContainer(
   `
 )
 
-export default ConversationFragmentContainer
+export default ConversationPaginationContainer

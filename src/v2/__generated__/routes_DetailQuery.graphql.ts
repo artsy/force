@@ -199,6 +199,7 @@ fragment Conversations_me on Me {
         internalID
         lastMessage
         ...ConversationSnippet_conversation
+        __typename
       }
     }
     pageInfo {
@@ -327,74 +328,81 @@ var v0 = [
     "defaultValue": null
   }
 ],
-v1 = {
+v1 = [
+  {
+    "kind": "Literal",
+    "name": "first",
+    "value": 25
+  }
+],
+v2 = {
   "kind": "ScalarField",
   "alias": null,
   "name": "cursor",
   "args": null,
   "storageKey": null
 },
-v2 = {
+v3 = {
   "kind": "ScalarField",
   "alias": null,
   "name": "id",
   "args": null,
   "storageKey": null
 },
-v3 = {
+v4 = {
   "kind": "ScalarField",
   "alias": null,
   "name": "internalID",
   "args": null,
   "storageKey": null
 },
-v4 = {
+v5 = {
   "kind": "ScalarField",
   "alias": null,
   "name": "name",
   "args": null,
   "storageKey": null
 },
-v5 = [
-  (v4/*: any*/),
-  (v2/*: any*/)
+v6 = [
+  (v5/*: any*/),
+  (v3/*: any*/)
 ],
-v6 = {
+v7 = {
   "kind": "ScalarField",
   "alias": null,
   "name": "unread",
   "args": null,
   "storageKey": null
 },
-v7 = {
+v8 = {
   "kind": "ScalarField",
   "alias": null,
   "name": "__typename",
   "args": null,
   "storageKey": null
 },
-v8 = {
+v9 = {
   "kind": "ScalarField",
   "alias": null,
   "name": "date",
   "args": null,
   "storageKey": null
 },
-v9 = {
+v10 = {
   "kind": "ScalarField",
   "alias": null,
   "name": "title",
   "args": null,
   "storageKey": null
 },
-v10 = {
+v11 = {
   "kind": "ScalarField",
   "alias": null,
   "name": "artistNames",
   "args": null,
   "storageKey": null
 },
-v11 = [
+v12 = [
   {
     "kind": "ScalarField",
     "alias": null,
@@ -403,7 +411,7 @@ v11 = [
     "storageKey": null
   }
 ],
-v12 = {
+v13 = {
   "kind": "LinkedField",
   "alias": null,
   "name": "coverImage",
@@ -411,44 +419,44 @@ v12 = {
   "args": null,
   "concreteType": "Image",
   "plural": false,
-  "selections": (v11/*: any*/)
+  "selections": (v12/*: any*/)
 },
-v13 = {
+v14 = {
   "kind": "ScalarField",
   "alias": null,
   "name": "endCursor",
   "args": null,
   "storageKey": null
 },
-v14 = {
+v15 = {
   "kind": "ScalarField",
   "alias": null,
   "name": "hasNextPage",
   "args": null,
   "storageKey": null
 },
-v15 = {
+v16 = {
   "kind": "ScalarField",
   "alias": null,
   "name": "hasPreviousPage",
   "args": null,
   "storageKey": null
 },
-v16 = {
+v17 = {
   "kind": "ScalarField",
   "alias": null,
   "name": "startCursor",
   "args": null,
   "storageKey": null
 },
-v17 = {
+v18 = {
   "kind": "ScalarField",
   "alias": null,
   "name": "email",
   "args": null,
   "storageKey": null
 },
-v18 = [
+v19 = [
   {
     "kind": "Literal",
     "name": "first",
@@ -460,14 +468,14 @@ v18 = [
     "value": "DESC"
   }
 ],
-v19 = {
+v20 = {
   "kind": "ScalarField",
   "alias": null,
   "name": "href",
   "args": null,
   "storageKey": null
 },
-v20 = {
+v21 = {
   "kind": "ScalarField",
   "alias": "thumbnailUrl",
   "name": "url",
@@ -480,7 +488,7 @@ v20 = {
   ],
   "storageKey": "url(version:\"small\")"
 },
-v21 = [
+v22 = [
   {
     "kind": "ScalarField",
     "alias": null,
@@ -489,7 +497,7 @@ v21 = [
     "storageKey": null
   }
 ],
-v22 = [
+v23 = [
   {
     "kind": "Literal",
     "name": "shallow",
@@ -548,13 +556,7 @@ return {
             "alias": null,
             "name": "conversationsConnection",
             "storageKey": "conversationsConnection(first:25)",
-            "args": [
-              {
-                "kind": "Literal",
-                "name": "first",
-                "value": 25
-              }
-            ],
+            "args": (v1/*: any*/),
             "concreteType": "ConversationConnection",
             "plural": false,
             "selections": [
@@ -567,7 +569,7 @@ return {
                 "concreteType": "ConversationEdge",
                 "plural": true,
                 "selections": [
-                  (v1/*: any*/),
+                  (v2/*: any*/),
                   {
                     "kind": "LinkedField",
                     "alias": null,
@@ -577,8 +579,8 @@ return {
                     "concreteType": "Conversation",
                     "plural": false,
                     "selections": [
-                      (v2/*: any*/),
                       (v3/*: any*/),
+                      (v4/*: any*/),
                       {
                         "kind": "ScalarField",
                         "alias": null,
@@ -594,7 +596,7 @@ return {
                         "args": null,
                         "concreteType": "ConversationResponder",
                         "plural": false,
-                        "selections": (v5/*: any*/)
+                        "selections": (v6/*: any*/)
                       },
                       {
                         "kind": "ScalarField",
@@ -603,7 +605,7 @@ return {
                         "args": null,
                         "storageKey": null
                       },
-                      (v6/*: any*/),
+                      (v7/*: any*/),
                       {
                         "kind": "LinkedField",
                         "alias": null,
@@ -622,15 +624,15 @@ return {
                             "concreteType": null,
                             "plural": false,
                             "selections": [
-                              (v7/*: any*/),
-                              (v2/*: any*/),
+                              (v8/*: any*/),
+                              (v3/*: any*/),
                               {
                                 "kind": "InlineFragment",
                                 "type": "Artwork",
                                 "selections": [
-                                  (v8/*: any*/),
                                   (v9/*: any*/),
                                   (v10/*: any*/),
+                                  (v11/*: any*/),
                                   {
                                     "kind": "LinkedField",
                                     "alias": null,
@@ -639,7 +641,7 @@ return {
                                     "args": null,
                                     "concreteType": "Image",
                                     "plural": false,
-                                    "selections": (v11/*: any*/)
+                                    "selections": (v12/*: any*/)
                                   }
                                 ]
                               },
@@ -655,10 +657,10 @@ return {
                                     "args": null,
                                     "concreteType": "Fair",
                                     "plural": false,
-                                    "selections": (v5/*: any*/)
+                                    "selections": (v6/*: any*/)
                                   },
-                                  (v4/*: any*/),
-                                  (v12/*: any*/)
+                                  (v5/*: any*/),
+                                  (v13/*: any*/)
                                 ]
                               }
                             ]
@@ -682,7 +684,8 @@ return {
                             "storageKey": null
                           }
                         ]
-                      }
+                      },
+                      (v8/*: any*/)
                     ]
                   }
                 ]
@@ -696,13 +699,22 @@ return {
                 "concreteType": "PageInfo",
                 "plural": false,
                 "selections": [
-                  (v13/*: any*/),
                   (v14/*: any*/),
                   (v15/*: any*/),
-                  (v16/*: any*/)
+                  (v16/*: any*/),
+                  (v17/*: any*/)
                 ]
               }
             ]
+          },
+          {
+            "kind": "LinkedHandle",
+            "alias": null,
+            "name": "conversationsConnection",
+            "args": (v1/*: any*/),
+            "handle": "connection",
+            "key": "Conversations_conversationsConnection",
+            "filters": null
           },
           {
             "kind": "LinkedField",
@@ -719,7 +731,7 @@ return {
             "concreteType": "Conversation",
             "plural": false,
             "selections": [
-              (v3/*: any*/),
+              (v4/*: any*/),
               {
                 "kind": "LinkedField",
                 "alias": null,
@@ -729,8 +741,8 @@ return {
                 "concreteType": "ConversationResponder",
                 "plural": false,
                 "selections": [
-                  (v4/*: any*/),
-                  (v2/*: any*/),
+                  (v5/*: any*/),
+                  (v3/*: any*/),
                   {
                     "kind": "ScalarField",
                     "alias": null,
@@ -740,7 +752,7 @@ return {
                   }
                 ]
               },
-              (v2/*: any*/),
+              (v3/*: any*/),
               {
                 "kind": "LinkedField",
                 "alias": null,
@@ -750,9 +762,9 @@ return {
                 "concreteType": "ConversationInitiator",
                 "plural": false,
                 "selections": [
-                  (v4/*: any*/),
-                  (v17/*: any*/),
-                  (v2/*: any*/)
+                  (v5/*: any*/),
+                  (v18/*: any*/),
+                  (v3/*: any*/)
                 ]
               },
               {
@@ -769,13 +781,13 @@ return {
                 "args": null,
                 "storageKey": null
               },
-              (v6/*: any*/),
+              (v7/*: any*/),
               {
                 "kind": "LinkedField",
                 "alias": null,
                 "name": "messagesConnection",
                 "storageKey": "messagesConnection(first:30,sort:\"DESC\")",
-                "args": (v18/*: any*/),
+                "args": (v19/*: any*/),
                 "concreteType": "MessageConnection",
                 "plural": false,
                 "selections": [
@@ -788,10 +800,10 @@ return {
                     "concreteType": "PageInfo",
                     "plural": false,
                     "selections": [
+                      (v17/*: any*/),
+                      (v14/*: any*/),
                       (v16/*: any*/),
-                      (v13/*: any*/),
-                      (v15/*: any*/),
-                      (v14/*: any*/)
+                      (v15/*: any*/)
                     ]
                   },
                   {
@@ -812,8 +824,8 @@ return {
                         "concreteType": "Message",
                         "plural": false,
                         "selections": [
-                          (v2/*: any*/),
                           (v3/*: any*/),
+                          (v4/*: any*/),
                           {
                             "kind": "ScalarField",
                             "alias": null,
@@ -844,8 +856,8 @@ return {
                             "concreteType": "MessageInitiator",
                             "plural": false,
                             "selections": [
-                              (v4/*: any*/),
-                              (v17/*: any*/)
+                              (v5/*: any*/),
+                              (v18/*: any*/)
                             ]
                           },
                           {
@@ -857,7 +869,7 @@ return {
                             "concreteType": "Attachment",
                             "plural": true,
                             "selections": [
-                              (v2/*: any*/),
+                              (v3/*: any*/),
                               {
                                 "kind": "ScalarField",
                                 "alias": null,
@@ -881,10 +893,10 @@ return {
                               }
                             ]
                           },
-                          (v7/*: any*/)
+                          (v8/*: any*/)
                         ]
                       },
-                      (v1/*: any*/)
+                      (v2/*: any*/)
                     ]
                   }
                 ]
@@ -893,7 +905,7 @@ return {
                 "kind": "LinkedHandle",
                 "alias": null,
                 "name": "messagesConnection",
-                "args": (v18/*: any*/),
+                "args": (v19/*: any*/),
                 "handle": "connection",
                 "key": "Messages_messagesConnection",
                 "filters": []
@@ -916,16 +928,16 @@ return {
                     "concreteType": null,
                     "plural": false,
                     "selections": [
-                      (v7/*: any*/),
-                      (v2/*: any*/),
+                      (v8/*: any*/),
+                      (v3/*: any*/),
                       {
                         "kind": "InlineFragment",
                         "type": "Artwork",
                         "selections": [
-                          (v8/*: any*/),
                           (v9/*: any*/),
                           (v10/*: any*/),
-                          (v19/*: any*/),
+                          (v11/*: any*/),
+                          (v20/*: any*/),
                           {
                             "kind": "LinkedField",
                             "alias": null,
@@ -950,7 +962,7 @@ return {
                                 ],
                                 "storageKey": "url(version:[\"large\"])"
                               },
-                              (v20/*: any*/)
+                              (v21/*: any*/)
                             ]
                           },
                           {
@@ -962,16 +974,16 @@ return {
                             "concreteType": null,
                             "plural": false,
                             "selections": [
-                              (v7/*: any*/),
+                              (v8/*: any*/),
                               {
                                 "kind": "InlineFragment",
                                 "type": "Money",
-                                "selections": (v21/*: any*/)
+                                "selections": (v22/*: any*/)
                               },
                               {
                                 "kind": "InlineFragment",
                                 "type": "PriceRange",
-                                "selections": (v21/*: any*/)
+                                "selections": (v22/*: any*/)
                               }
                             ]
                           },
@@ -994,13 +1006,13 @@ return {
                             "alias": null,
                             "name": "artists",
                             "storageKey": "artists(shallow:true)",
-                            "args": (v22/*: any*/),
+                            "args": (v23/*: any*/),
                             "concreteType": "Artist",
                             "plural": true,
                             "selections": [
-                              (v2/*: any*/),
-                              (v19/*: any*/),
-                              (v4/*: any*/)
+                              (v3/*: any*/),
+                              (v20/*: any*/),
+                              (v5/*: any*/)
                             ]
                           },
                           {
@@ -1015,13 +1027,13 @@ return {
                             "alias": null,
                             "name": "partner",
                             "storageKey": "partner(shallow:true)",
-                            "args": (v22/*: any*/),
+                            "args": (v23/*: any*/),
                             "concreteType": "Partner",
                             "plural": false,
                             "selections": [
-                              (v4/*: any*/),
-                              (v19/*: any*/),
-                              (v2/*: any*/),
+                              (v5/*: any*/),
+                              (v20/*: any*/),
+                              (v3/*: any*/),
                               {
                                 "kind": "ScalarField",
                                 "alias": null,
@@ -1054,7 +1066,7 @@ return {
                                 "args": null,
                                 "storageKey": null
                               },
-                              (v2/*: any*/),
+                              (v3/*: any*/),
                               {
                                 "kind": "ScalarField",
                                 "alias": "is_live_open",
@@ -1106,7 +1118,7 @@ return {
                                 "args": null,
                                 "concreteType": "SaleArtworkHighestBid",
                                 "plural": false,
-                                "selections": (v21/*: any*/)
+                                "selections": (v22/*: any*/)
                               },
                               {
                                 "kind": "LinkedField",
@@ -1116,9 +1128,9 @@ return {
                                 "args": null,
                                 "concreteType": "SaleArtworkOpeningBid",
                                 "plural": false,
-                                "selections": (v21/*: any*/)
+                                "selections": (v22/*: any*/)
                               },
-                              (v2/*: any*/)
+                              (v3/*: any*/)
                             ]
                           },
                           {
@@ -1143,7 +1155,7 @@ return {
                             "concreteType": "Fair",
                             "plural": false,
                             "selections": [
-                              (v4/*: any*/),
+                              (v5/*: any*/),
                               {
                                 "kind": "ScalarField",
                                 "alias": null,
@@ -1167,15 +1179,15 @@ return {
                                     "args": null,
                                     "storageKey": null
                                   },
-                                  (v2/*: any*/)
+                                  (v3/*: any*/)
                                 ]
                               },
-                              (v2/*: any*/)
+                              (v3/*: any*/)
                             ]
                           },
-                          (v19/*: any*/),
-                          (v4/*: any*/),
-                          (v12/*: any*/),
+                          (v20/*: any*/),
+                          (v5/*: any*/),
+                          (v13/*: any*/),
                           {
                             "kind": "LinkedField",
                             "alias": "image",
@@ -1185,7 +1197,7 @@ return {
                             "concreteType": "Image",
                             "plural": false,
                             "selections": [
-                              (v20/*: any*/)
+                              (v21/*: any*/)
                             ]
                           }
                         ]
@@ -1196,7 +1208,7 @@ return {
               }
             ]
           },
-          (v2/*: any*/)
+          (v3/*: any*/)
         ]
       }
     ]
@@ -1205,7 +1217,7 @@ return {
     "operationKind": "query",
     "name": "routes_DetailQuery",
     "id": null,
-    "text": "query routes_DetailQuery(\n  $conversationID: String!\n) {\n  me {\n    ...Conversation_me_3oGfhn\n    id\n  }\n}\n\nfragment Contact_artwork on Artwork {\n  href\n  is_inquireable: isInquireable\n  sale {\n    is_auction: isAuction\n    is_live_open: isLiveOpen\n    is_open: isOpen\n    is_closed: isClosed\n    id\n  }\n  partner(shallow: true) {\n    type\n    id\n  }\n  sale_artwork: saleArtwork {\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    counts {\n      bidder_positions: bidderPositions\n    }\n    id\n  }\n}\n\nfragment ConversationSnippet_conversation on Conversation {\n  internalID\n  to {\n    name\n    id\n  }\n  lastMessage\n  lastMessageAt\n  unread\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        date\n        title\n        artistNames\n        image {\n          url\n        }\n      }\n      ... on Show {\n        fair {\n          name\n          id\n        }\n        name\n        coverImage {\n          url\n        }\n      }\n      ... on Node {\n        id\n      }\n    }\n  }\n  messagesConnection {\n    totalCount\n  }\n}\n\nfragment Conversation_conversation on Conversation {\n  id\n  internalID\n  from {\n    name\n    email\n    id\n  }\n  to {\n    name\n    initials\n    id\n  }\n  initialMessage\n  lastMessageID\n  unread\n  messagesConnection(first: 30, sort: DESC) {\n    pageInfo {\n      startCursor\n      endCursor\n      hasPreviousPage\n      hasNextPage\n    }\n    edges {\n      node {\n        id\n        internalID\n        createdAt\n        isFromUser\n        ...Message_message\n        __typename\n      }\n      cursor\n    }\n  }\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        id\n        date\n        title\n        artistNames\n        href\n        image {\n          url(version: [\"large\"])\n        }\n        listPrice {\n          __typename\n          ... on Money {\n            display\n          }\n          ... on PriceRange {\n            display\n          }\n        }\n      }\n      ... on Show {\n        id\n        fair {\n          name\n          exhibitionPeriod\n          location {\n            city\n            id\n          }\n          id\n        }\n        href\n        name\n        coverImage {\n          url\n        }\n      }\n      ... on Node {\n        id\n      }\n    }\n  }\n}\n\nfragment Conversation_me_3oGfhn on Me {\n  ...Conversations_me\n  conversation(id: $conversationID) {\n    internalID\n    to {\n      name\n      id\n    }\n    ...Conversation_conversation\n    ...Details_conversation\n    id\n  }\n}\n\nfragment Conversations_me on Me {\n  conversationsConnection(first: 25) {\n    edges {\n      cursor\n      node {\n        id\n        internalID\n        lastMessage\n        ...ConversationSnippet_conversation\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n\nfragment Details_artwork on Artwork {\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n}\n\nfragment Details_conversation on Conversation {\n  to {\n    name\n    initials\n    id\n  }\n  messagesConnection(first: 30, sort: DESC) {\n    edges {\n      node {\n        attachments {\n          id\n          contentType\n          fileName\n          downloadURL\n        }\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        href\n        ...Metadata_artwork\n        image {\n          thumbnailUrl: url(version: \"small\")\n        }\n      }\n      ... on Show {\n        href\n        image: coverImage {\n          thumbnailUrl: url(version: \"small\")\n        }\n      }\n      ... on Node {\n        id\n      }\n    }\n  }\n}\n\nfragment Message_message on Message {\n  internalID\n  body\n  createdAt\n  isFromUser\n  from {\n    name\n    email\n  }\n  attachments {\n    id\n    contentType\n    fileName\n    downloadURL\n  }\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  ...Contact_artwork\n  href\n}\n",
+    "text": "query routes_DetailQuery(\n  $conversationID: String!\n) {\n  me {\n    ...Conversation_me_3oGfhn\n    id\n  }\n}\n\nfragment Contact_artwork on Artwork {\n  href\n  is_inquireable: isInquireable\n  sale {\n    is_auction: isAuction\n    is_live_open: isLiveOpen\n    is_open: isOpen\n    is_closed: isClosed\n    id\n  }\n  partner(shallow: true) {\n    type\n    id\n  }\n  sale_artwork: saleArtwork {\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    counts {\n      bidder_positions: bidderPositions\n    }\n    id\n  }\n}\n\nfragment ConversationSnippet_conversation on Conversation {\n  internalID\n  to {\n    name\n    id\n  }\n  lastMessage\n  lastMessageAt\n  unread\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        date\n        title\n        artistNames\n        image {\n          url\n        }\n      }\n      ... on Show {\n        fair {\n          name\n          id\n        }\n        name\n        coverImage {\n          url\n        }\n      }\n      ... on Node {\n        id\n      }\n    }\n  }\n  messagesConnection {\n    totalCount\n  }\n}\n\nfragment Conversation_conversation on Conversation {\n  id\n  internalID\n  from {\n    name\n    email\n    id\n  }\n  to {\n    name\n    initials\n    id\n  }\n  initialMessage\n  lastMessageID\n  unread\n  messagesConnection(first: 30, sort: DESC) {\n    pageInfo {\n      startCursor\n      endCursor\n      hasPreviousPage\n      hasNextPage\n    }\n    edges {\n      node {\n        id\n        internalID\n        createdAt\n        isFromUser\n        ...Message_message\n        __typename\n      }\n      cursor\n    }\n  }\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        id\n        date\n        title\n        artistNames\n        href\n        image {\n          url(version: [\"large\"])\n        }\n        listPrice {\n          __typename\n          ... on Money {\n            display\n          }\n          ... on PriceRange {\n            display\n          }\n        }\n      }\n      ... on Show {\n        id\n        fair {\n          name\n          exhibitionPeriod\n          location {\n            city\n            id\n          }\n          id\n        }\n        href\n        name\n        coverImage {\n          url\n        }\n      }\n      ... on Node {\n        id\n      }\n    }\n  }\n}\n\nfragment Conversation_me_3oGfhn on Me {\n  ...Conversations_me\n  conversation(id: $conversationID) {\n    internalID\n    to {\n      name\n      id\n    }\n    ...Conversation_conversation\n    ...Details_conversation\n    id\n  }\n}\n\nfragment Conversations_me on Me {\n  conversationsConnection(first: 25) {\n    edges {\n      cursor\n      node {\n        id\n        internalID\n        lastMessage\n        ...ConversationSnippet_conversation\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n\nfragment Details_artwork on Artwork {\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n}\n\nfragment Details_conversation on Conversation {\n  to {\n    name\n    initials\n    id\n  }\n  messagesConnection(first: 30, sort: DESC) {\n    edges {\n      node {\n        attachments {\n          id\n          contentType\n          fileName\n          downloadURL\n        }\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        href\n        ...Metadata_artwork\n        image {\n          thumbnailUrl: url(version: \"small\")\n        }\n      }\n      ... on Show {\n        href\n        image: coverImage {\n          thumbnailUrl: url(version: \"small\")\n        }\n      }\n      ... on Node {\n        id\n      }\n    }\n  }\n}\n\nfragment Message_message on Message {\n  internalID\n  body\n  createdAt\n  isFromUser\n  from {\n    name\n    email\n  }\n  attachments {\n    id\n    contentType\n    fileName\n    downloadURL\n  }\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  ...Contact_artwork\n  href\n}\n",
     "metadata": {}
   }
 };

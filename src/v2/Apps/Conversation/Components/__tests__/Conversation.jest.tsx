@@ -1,6 +1,6 @@
 import { mount } from "enzyme"
 import React from "react"
-import { Item } from "../Conversation"
+import { Item } from "../Item"
 import { Conversation_conversation } from "v2/__generated__/Conversation_conversation.graphql"
 
 describe("Conversation", () => {

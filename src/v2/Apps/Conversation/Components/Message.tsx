@@ -102,14 +102,11 @@ export const Attachment: React.FC<AttachmentProps> = props => {
 }
 interface MessageProps extends Omit<BoxProps, "color"> {
   message: Message_message
-  initialMessage?: string
-  isFirst: boolean
   showTimeSince?: boolean
 }
 export const Message: React.FC<MessageProps> = props => {
-  const { message, initialMessage, isFirst, showTimeSince, ...boxProps } = props
+  const { message, showTimeSince, ...boxProps } = props
   const { isFromUser, body } = message
-  const text = isFirst ? initialMessage : body
   const bgColor = isFromUser ? "black100" : "black10"
   const textColor = isFromUser ? "white100" : "black100"
   const alignSelf = isFromUser ? "flex-end" : undefined
@@ -137,7 +134,7 @@ export const Message: React.FC<MessageProps> = props => {
         width="fit-content"
       >
         <MessageText size="4" color={textColor}>
-          <Linkify componentDecorator={linkTargetDecorator}>{text}</Linkify>
+          <Linkify componentDecorator={linkTargetDecorator}>{body}</Linkify>
         </MessageText>
       </Box>
       {message.attachments.length > 0 &&

@@ -82,6 +82,7 @@ fragment Conversations_me_pbnwq on Me {
         internalID
         lastMessage
         ...ConversationSnippet_conversation
+        __typename
       }
     }
     pageInfo {
@@ -161,7 +162,14 @@ v4 = [
   (v3/*: any*/),
   (v2/*: any*/)
 ],
-v5 = [
+v5 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "__typename",
+  "args": null,
+  "storageKey": null
+},
+v6 = [
   {
     "kind": "ScalarField",
     "alias": null,
@@ -302,13 +310,7 @@ return {
                             "concreteType": null,
                             "plural": false,
                             "selections": [
-                              {
-                                "kind": "ScalarField",
-                                "alias": null,
-                                "name": "__typename",
-                                "args": null,
-                                "storageKey": null
-                              },
+                              (v5/*: any*/),
                               (v2/*: any*/),
                               {
                                 "kind": "InlineFragment",
@@ -343,7 +345,7 @@ return {
                                     "args": null,
                                     "concreteType": "Image",
                                     "plural": false,
-                                    "selections": (v5/*: any*/)
+                                    "selections": (v6/*: any*/)
                                   }
                                 ]
                               },
@@ -370,7 +372,7 @@ return {
                                     "args": null,
                                     "concreteType": "Image",
                                     "plural": false,
-                                    "selections": (v5/*: any*/)
+                                    "selections": (v6/*: any*/)
                                   }
                                 ]
                               }
@@ -395,7 +397,8 @@ return {
                             "storageKey": null
                           }
                         ]
-                      }
+                      },
+                      (v5/*: any*/)
                     ]
                   }
                 ]
@@ -441,6 +444,15 @@ return {
               }
             ]
           },
+          {
+            "kind": "LinkedHandle",
+            "alias": null,
+            "name": "conversationsConnection",
+            "args": (v1/*: any*/),
+            "handle": "connection",
+            "key": "Conversations_conversationsConnection",
+            "filters": null
+          },
           (v2/*: any*/)
         ]
       }
@@ -450,7 +462,7 @@ return {
     "operationKind": "query",
     "name": "ConversationsQuery",
     "id": null,
-    "text": "query ConversationsQuery(\n  $first: Int!\n  $last: Int\n  $after: String\n  $before: String\n) {\n  me {\n    ...Conversations_me_pbnwq\n    id\n  }\n}\n\nfragment ConversationSnippet_conversation on Conversation {\n  internalID\n  to {\n    name\n    id\n  }\n  lastMessage\n  lastMessageAt\n  unread\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        date\n        title\n        artistNames\n        image {\n          url\n        }\n      }\n      ... on Show {\n        fair {\n          name\n          id\n        }\n        name\n        coverImage {\n          url\n        }\n      }\n      ... on Node {\n        id\n      }\n    }\n  }\n  messagesConnection {\n    totalCount\n  }\n}\n\nfragment Conversations_me_pbnwq on Me {\n  conversationsConnection(first: $first, last: $last, before: $before, after: $after) {\n    edges {\n      cursor\n      node {\n        id\n        internalID\n        lastMessage\n        ...ConversationSnippet_conversation\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n",
+    "text": "query ConversationsQuery(\n  $first: Int!\n  $last: Int\n  $after: String\n  $before: String\n) {\n  me {\n    ...Conversations_me_pbnwq\n    id\n  }\n}\n\nfragment ConversationSnippet_conversation on Conversation {\n  internalID\n  to {\n    name\n    id\n  }\n  lastMessage\n  lastMessageAt\n  unread\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        date\n        title\n        artistNames\n        image {\n          url\n        }\n      }\n      ... on Show {\n        fair {\n          name\n          id\n        }\n        name\n        coverImage {\n          url\n        }\n      }\n      ... on Node {\n        id\n      }\n    }\n  }\n  messagesConnection {\n    totalCount\n  }\n}\n\nfragment Conversations_me_pbnwq on Me {\n  conversationsConnection(first: $first, last: $last, before: $before, after: $after) {\n    edges {\n      cursor\n      node {\n        id\n        internalID\n        lastMessage\n        ...ConversationSnippet_conversation\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n",
     "metadata": {}
   }
 };
