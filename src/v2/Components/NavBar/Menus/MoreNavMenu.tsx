@@ -2,14 +2,9 @@ import { Menu, MenuItem } from "v2/Components/Menu"
 import { AnalyticsSchema } from "v2/Artsy"
 import { useTracking } from "v2/Artsy/Analytics/useTracking"
 import React from "react"
-import { userHasLabFeature } from "v2/Utils/user"
-import { useSystemContext } from "v2/Artsy"
 
 export const MoreNavMenu: React.FC<{ width?: number }> = ({ width = 160 }) => {
   const { trackEvent } = useTracking()
-
-  const { user } = useSystemContext()
-  const viewingRoomsEnabled = userHasLabFeature(user, "Viewing Rooms")
 
   const trackClick = event => {
     const link = event.target
@@ -26,15 +21,13 @@ export const MoreNavMenu: React.FC<{ width?: number }> = ({ width = 160 }) => {
 
   return (
     <Menu onClick={trackClick} width={width}>
-      {viewingRoomsEnabled && (
-        <MenuItem
-          variant="small"
-          href="viewing-rooms"
-          display={["flex", "flex", "flex", "none"]}
-        >
-          Viewing Rooms
-        </MenuItem>
-      )}
+      <MenuItem
+        variant="small"
+        href="/viewing-rooms"
+        display={["flex", "flex", "flex", "none"]}
+      >
+        Viewing Rooms
+      </MenuItem>
 
       <MenuItem variant="small" href="/galleries">
         Galleries

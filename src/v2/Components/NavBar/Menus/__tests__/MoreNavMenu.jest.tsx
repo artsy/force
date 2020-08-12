@@ -14,6 +14,7 @@ describe("MoreNavMenu", () => {
   }
 
   const defaultLinks = [
+    ["/viewing-rooms", "Viewing Rooms"],
     ["/galleries", "Galleries"],
     ["/fairs", "Fairs"],
     ["/shows", "Shows"],
