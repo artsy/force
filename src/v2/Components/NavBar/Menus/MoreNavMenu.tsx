@@ -23,7 +23,7 @@ export const MoreNavMenu: React.FC<{ width?: number }> = ({ width = 160 }) => {
     <Menu onClick={trackClick} width={width}>
       <MenuItem
         variant="small"
-        href="viewing-rooms"
+        href="/viewing-rooms"
         display={["flex", "flex", "flex", "none"]}
       >
         Viewing Rooms

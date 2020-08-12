@@ -59,6 +59,7 @@ describe("NavBar", () => {
       ["/artists", "Artists"],
       ["/collect", "Artworks"],
       ["/auctions", "Auctions"],
+      ["/viewing-rooms", "Viewing\xa0Rooms"],
       ["/articles", "Editorial"],
     ]
 
