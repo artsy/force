@@ -85,7 +85,7 @@ const ViewingRoomHeaderLarge: React.FC<ViewingRoomHeaderProps> = props => {
         width="50%"
         style={{ position: "relative" }}
       >
-        <Sans size="10" element="h1" p={2} unstable_trackIn>
+        <Sans textAlign="center" size="10" element="h1" p={2} unstable_trackIn>
           {title}
         </Sans>
 
@@ -145,7 +145,7 @@ const ViewingRoomHeaderSmall: React.FC<ViewingRoomHeaderProps> = props => {
       />
 
       <Box position="absolute" bottom="20%">
-        <Sans size="8" element="h1" color="white100" p={2}>
+        <Sans textAlign="center" size="8" element="h1" color="white100" p={2}>
           {title}
         </Sans>
       </Box>
