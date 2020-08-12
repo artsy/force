@@ -89,7 +89,13 @@ const ArtistSeriesHeader: React.FC<ArtistSeriesHeaderProps> = props => {
 
 const ArtistSeriesHeaderLarge: React.FC<ArtistSeriesHeaderProps> = props => {
   const {
-    artistSeries: { title, descriptionFormatted, artists, image },
+    artistSeries: {
+      title,
+      descriptionFormatted,
+      artists,
+      image,
+      artworksCountMessage,
+    },
   } = props
   return (
     <>
@@ -114,9 +120,15 @@ const ArtistSeriesHeaderLarge: React.FC<ArtistSeriesHeaderProps> = props => {
                 flexDirection="column"
                 justifyContent="space-between"
               >
-                <Sans size="8" element="h1" unstable_trackIn>
-                  {title}
-                </Sans>
+                <Box>
+                  <Sans size="8" element="h1" unstable_trackIn>
+                    {title}
+                  </Sans>
+                  <Sans size="3" color="black60">
+                    {artworksCountMessage}
+                  </Sans>
+                </Box>
+
                 <HTML variant="text" html={descriptionFormatted} />
               </Flex>
             </Col>
@@ -191,6 +203,7 @@ export const ArtistSeriesHeaderFragmentContainer = createFragmentContainer(
     artistSeries: graphql`
       fragment ArtistSeriesHeader_artistSeries on ArtistSeries {
         title
+        artworksCountMessage
         descriptionFormatted(format: HTML)
         image {
           url
