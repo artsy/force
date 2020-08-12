@@ -113,6 +113,14 @@ export interface ModalOptions {
    * Used to construct afterSignupAction from query params
    */
   objectId?: AfterSignUpAction["objectId"]
+  /**
+   * Prevents users from clicking outside the modal to close it
+   */
+  disableCloseOnBackgroundClick?: boolean
+  /**
+   * Hook to be called after the modal has closed
+   */
+  afterClose?: () => void
 }
 
 export type FormComponentType =

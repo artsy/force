@@ -67,12 +67,16 @@ export class ModalManager extends Component<
   }
 
   closeModal = () => {
+    let afterClose = this.state.options?.afterClose
+
     this.setState({
       currentType: null,
       options: {} as ModalOptions,
     })
+
     document.body.style.overflowY = "auto"
-    this.props.onModalClose && this.props.onModalClose()
+    this.props.onModalClose?.()
+    afterClose?.()
   }
 
   handleTypeChange = type => {
@@ -126,6 +130,9 @@ export class ModalManager extends Component<
         subtitle={this.getSubtitle()}
         type={currentType}
         image={options && options.image}
+        disableCloseOnBackgroundClick={Boolean(
+          options?.disableCloseOnBackgroundClick
+        )}
       >
         <FormSwitcher
           type={currentType}

@@ -37,14 +37,23 @@ describe("Modal", () => {
     props.show = true
     const component = getWrapper(props)
     ;(component.instance() as any).removeBlurToContainers = jest.fn()
-    component
-      .find(ModalOverlay)
-      .at(0)
-      .simulate("click")
+    component.find(ModalOverlay).at(0).simulate("click")
 
     expect(
       (component.instance() as any).removeBlurToContainers
     ).toHaveBeenCalled()
     expect(props.onClose).toHaveBeenCalled()
+  })
+  it("Doesn't close on background click if props.disableCloseOnBackgroundClick", () => {
+    props.show = true
+    props.disableCloseOnBackgroundClick = true
+    const component = getWrapper(props)
+    ;(component.instance() as any).removeBlurToContainers = jest.fn()
+    component.find(ModalOverlay).at(0).simulate("click")
+
+    expect(
+      (component.instance() as any).removeBlurToContainers
+    ).not.toHaveBeenCalled()
+    expect(props.onClose).not.toHaveBeenCalled()
   })
 })

@@ -324,13 +324,7 @@ describe("ViewingRoomApp", () => {
       expect(wrapper.find("ViewingRoomTabBar").length).toBe(0)
       expect(wrapper.find("ViewingRoomContentNotAccessible").length).toBe(0)
       expect(wrapper.html()).not.toContain("some child")
-
-      expect(mediator.trigger).toBeCalledWith("open:auth", {
-        mode: "signup",
-        redirectTo: "http://localhost/" + slug,
-        contextModule: "viewingRoom",
-        intent: "viewViewingRoom",
-      })
+      expect(mediator.trigger).toHaveBeenCalled()
     })
   })
 })

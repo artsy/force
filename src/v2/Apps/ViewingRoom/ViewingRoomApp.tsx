@@ -14,6 +14,7 @@ import { openAuthModal } from "v2/Utils/openAuthModal"
 import { SystemContext } from "v2/Artsy"
 import { ModalType } from "v2/Components/Authentication/Types"
 import { ContextModule, Intent } from "@artsy/cohesion"
+import { useRouter } from "v2/Artsy/Router/useRouter"
 
 interface ViewingRoomAppProps {
   children: React.ReactNode
@@ -25,6 +26,7 @@ const ViewingRoomApp: React.FC<ViewingRoomAppProps> = ({
   viewingRoom,
 }) => {
   const { mediator, user } = useContext(SystemContext)
+  const { router } = useRouter()
   useEffect(() => {
     if (user && user.id) return
     // openAuthModal will fire off "open:auth" event before ModalContainer
@@ -35,11 +37,16 @@ const ViewingRoomApp: React.FC<ViewingRoomAppProps> = ({
         redirectTo: window.location.href,
         contextModule: ContextModule.viewingRoom,
         intent: Intent.viewViewingRoom,
+        copy: "Sign up to enter viewing rooms",
+        disableCloseOnBackgroundClick: true,
+        afterClose: () => {
+          router.push("/viewing-rooms")
+        },
       })
     }, 0)
 
     return () => clearTimeout(timeoutID)
-  }, [user, mediator])
+  }, [user, router, mediator])
 
   if (!viewingRoom) {
     return <ErrorPage code={404} />
