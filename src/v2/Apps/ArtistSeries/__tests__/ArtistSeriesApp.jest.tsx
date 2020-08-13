@@ -79,6 +79,13 @@ describe("ArtistSeriesApp", () => {
               expect(wrapper.find(HeaderImage).length).toBe(1)
             })
 
+            it("includes artwork counts", async () => {
+              const wrapper = await getWrapper()
+              expect(wrapper.find("ArtistSeriesHeaderLarge").text()).toContain(
+                "20 available"
+              )
+            })
+
             it("has a correctly sized header image", async () => {
               const wrapper = await getWrapper()
               const expectedUrl =
@@ -197,7 +204,7 @@ const ArtistSeriesAppFixture: ArtistSeriesApp_QueryRawResponse = {
               node: {
                 internalID: "id",
                 slug: "aardvark",
-                forSaleArtworksCount: 20,
+                artworksCountMessage: "20 available",
                 image: {
                   cropped: {
                     url: "/path/to/aardvarks.jpg",
@@ -211,6 +218,7 @@ const ArtistSeriesAppFixture: ArtistSeriesApp_QueryRawResponse = {
       },
     ],
     title: "Pumpkins",
+    artworksCountMessage: "20 available",
     descriptionFormatted: "All of the pumpkins",
     image: {
       url: "https://test.artsy.net/pumpkins-header-image.jpg",

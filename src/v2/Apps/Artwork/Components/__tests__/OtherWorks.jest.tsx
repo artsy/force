@@ -109,7 +109,7 @@ describe("OtherWorks", () => {
               node: {
                 internalID: "id",
                 slug: "aardvark",
-                forSaleArtworksCount: 20,
+                artworksCountMessage: "20 available",
                 image: {
                   cropped: {
                     url: "/path/to/aardvarks.jpg",
