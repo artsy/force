@@ -14,19 +14,14 @@ const Container = styled(Box)`
 
 export interface FeatureSetProps extends Omit<BoxProps, "color"> {
   set: FeatureSet_set
-  layout: "default" | "full"
 }
 
 const SUPPORTED_ITEM_TYPES = ["FeaturedLink", "Artwork"]
 
-export const FeatureSet: React.FC<FeatureSetProps> = ({
-  set,
-  layout = "default",
-  ...rest
-}) => {
+export const FeatureSet: React.FC<FeatureSetProps> = ({ set, ...rest }) => {
   const count = set.orderedItems.edges.length
   const size =
-    layout === "full"
+    set.layout === "FULL"
       ? "full"
       : { 1: "large", 2: "medium" }[set.orderedItems.edges.length] ?? "small"
 
@@ -47,7 +42,7 @@ export const FeatureSet: React.FC<FeatureSetProps> = ({
         <Spacer my={4} />
       )}
 
-      <FeatureSetContainer layout={layout} set={set}>
+      <FeatureSetContainer set={set}>
         {set.orderedItems.edges.map(({ node: setItem }) => {
           return (
             <FeatureSetItem key={setItem.id} setItem={setItem} size={size} />
@@ -62,6 +57,7 @@ export const FeatureSetFragmentContainer = createFragmentContainer(FeatureSet, {
   set: graphql`
     fragment FeatureSet_set on OrderedSet {
       id
+      layout
       name
       description(format: HTML)
       itemType
