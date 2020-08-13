@@ -111,6 +111,7 @@ export const FeatureFeaturedLink: React.FC<FeatureFeaturedLinkProps> = ({
 
       <Flex flexDirection={size === "large" ? ["column", "row"] : "column"}>
         {subtitle && (
+          // @ts-ignore
           <HTML variant="mediumText" html={subtitle} mt={2} flexBasis="50%" />
         )}
 
@@ -124,6 +125,7 @@ export const FeatureFeaturedLink: React.FC<FeatureFeaturedLinkProps> = ({
               </Row>
             </Grid>
           ) : (
+            // @ts-ignore
             <HTML variant="text" html={description} mt={1} flexBasis="50%" />
           ))}
       </Flex>

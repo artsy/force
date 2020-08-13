@@ -104,6 +104,7 @@
     "express": "4.16.4",
     "express-ipfilter": "0.2.1",
     "express-request-id": "1.4.0",
+    "farce": "^0.4.5",
     "fastclick": "1.0.6",
     "flickity": "2.1.2",
     "flickity-imagesloaded": "2.0.0",

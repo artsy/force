@@ -5,10 +5,13 @@ import { ScrollManager } from "found-scroll"
 import createInitialFarceRouter from "found/createInitialFarceRouter"
 import createRender from "found/createRender"
 
-import BrowserProtocol from "farce/lib/BrowserProtocol"
-import createQueryMiddleware from "farce/lib/createQueryMiddleware"
-import HashProtocol from "farce/lib/HashProtocol"
-import MemoryProtocol from "farce/lib/MemoryProtocol"
+import {
+  BrowserProtocol,
+  HashProtocol,
+  MemoryProtocol,
+  createQueryMiddleware,
+} from "farce"
+
 import qs from "qs"
 
 import createLogger from "v2/Utils/logger"

@@ -10239,7 +10239,7 @@ farce@^0.2.7, farce@^0.2.8:
     redux "^4.0.1"
     warning "^4.0.3"
 
-farce@^0.4.0:
+farce@^0.4.0, farce@^0.4.5:
   version "0.4.5"
   resolved "https://registry.yarnpkg.com/farce/-/farce-0.4.5.tgz#610cefaaa76d57dbd723d2d6df30a72e3ea5d842"
   integrity sha512-PK3eWFYBicrelTh/ZAM8KCto3c2hwo+9PKxtkSS5EhmLP3Y+m2l5r56MF8+m/htlojQpY2uHwmMDtdb0cNWrSw==

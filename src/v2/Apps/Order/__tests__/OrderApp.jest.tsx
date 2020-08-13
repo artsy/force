@@ -491,7 +491,7 @@ describe("OrderApp", () => {
       location: { pathname: location || "/order/123/shipping" },
       router: {
         // tslint:disable-next-line:no-empty
-        addTransitionHook: () => {},
+        addNavigationListener: () => {},
         replace,
       },
       order: {
