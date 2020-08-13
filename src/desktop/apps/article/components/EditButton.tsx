@@ -1,4 +1,4 @@
-import * as React from "react"
+import React from "react"
 import ChannelMemberQuery from "desktop/apps/article/queries/channelMember"
 import { positronql } from "desktop/lib/positronql"
 import { data as sd } from "sharify"

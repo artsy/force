@@ -1,5 +1,5 @@
 import { storiesOf } from "@storybook/react"
-import * as React from "react"
+import React from "react"
 
 import { Contents } from "v2/Apps/Artist/Components/MarketInsights"
 import { SystemContextProvider } from "v2/Artsy"

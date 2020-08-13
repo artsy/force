@@ -1,5 +1,5 @@
 import { storiesOf } from "@storybook/react"
-import * as React from "react"
+import React from "react"
 
 import { SystemContextProvider } from "v2/Artsy"
 import Genes from "../Steps/Genes"

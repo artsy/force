@@ -2,7 +2,7 @@ import { ContextModule } from "@artsy/cohesion"
 import { TagArtworks_tag } from "v2/__generated__/TagArtworks_tag.graphql"
 import { Mediator } from "v2/Artsy"
 import ArtworkGrid from "v2/Components/ArtworkGrid"
-import * as React from "react"
+import React from "react"
 import {
   RelayPaginationProp,
   createPaginationContainer,
