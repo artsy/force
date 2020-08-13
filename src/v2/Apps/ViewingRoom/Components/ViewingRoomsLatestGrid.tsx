@@ -5,7 +5,6 @@ import {
   CSSGrid,
   CardTagProps,
   Flex,
-  Link,
   Sans,
   SmallCard,
 } from "@artsy/palette"
@@ -17,6 +16,7 @@ import {
 import { scrollIntoView } from "v2/Utils/scrollHelpers"
 import { ViewingRoomsLatestGrid_viewingRooms } from "v2/__generated__/ViewingRoomsLatestGrid_viewingRooms.graphql"
 import { crop } from "v2/Utils/resizer"
+import { RouterLink } from "v2/Artsy/Router/RouterLink"
 
 export interface ViewingRoomsLatestGridProps {
   relay: RelayPaginationProp
@@ -140,25 +140,20 @@ export const ViewingRoomsLatestGrid: React.FC<ViewingRoomsLatestGridProps> = pro
             const tag = getTagProps(status, distanceToOpen, distanceToClose)
 
             return (
-              <Link
-                href={`/viewing-room/${slug}`}
-                key={slug}
-                noUnderline
-                id={
-                  // Calling loadMore loads 12 VRs at a time. We want to add a css id selector to the last VR in the list (list length - 12)
-                  // before loadMore was called and scroll to that element when the Show More button is pressed.
-                  viewingRoomsForLatestGrid.length - 12 === index
-                    ? "jump--viewingRoom"
-                    : ""
+              <RouterLink to={`/viewing-room/${slug}`} key={slug} noUnderline>
+                {
+                  // Add a css id selector to an empty div above the last list item and scroll to that div when the Show More button is pressed.
+                  viewingRoomsForLatestGrid.length - PAGE_SIZE === index && (
+                    <div id="jump--viewingRoom" />
+                  )
                 }
-              >
                 <SmallCard
                   title={title}
                   subtitle={partner.name}
                   images={[heroImageURL].concat(artworkImages)}
                   tag={tag}
                 />
-              </Link>
+              </RouterLink>
             )
           })}
         </CSSGrid>
