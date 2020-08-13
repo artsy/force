@@ -16,43 +16,9 @@ import { position } from "styled-system"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import { MenuAnchor, NavItemPanel } from "v2/Components/NavBar/NavItemPanel"
 
-const Container = styled(Flex)`
-  position: relative;
-  height: 100%;
-  align-items: center;
-`
-
-const HitArea = styled(Link)`
-  ${position}
-  display: flex;
-  align-items: center;
-  height: 100%;
-  user-select: none;
-
-  /* Utilize content-box sizing so that the bottom-border overlays
-  the nav border, rather than stacking */
-  box-sizing: content-box;
-  border-bottom: 1px solid transparent;
-
-  &:focus {
-    outline: 0;
-    border-bottom-color: ${color("black100")};
-    text-decoration: underline;
-    z-index: 1;
-  }
-`
-
-const UnfocusableAnchor = styled(RouterLink).attrs({ tabIndex: -1 })`
-  display: block;
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 1;
-`
-
-interface NavItemProps extends BoxProps, React.HTMLAttributes<HTMLDivElement> {
+interface NavItemProps
+  extends BoxProps,
+    Pick<React.HTMLAttributes<HTMLDivElement>, "tabIndex" | "role"> {
   Menu?: React.FC<{
     setIsVisible: React.Dispatch<React.SetStateAction<boolean>>
   }>
@@ -204,6 +170,42 @@ export const NavItem: React.FC<NavItemProps> = ({
     </Container>
   )
 }
+
+const Container = styled(Flex)`
+  position: relative;
+  height: 100%;
+  align-items: center;
+`
+
+const HitArea = styled(Link)`
+  ${position}
+  display: flex;
+  align-items: center;
+  height: 100%;
+  user-select: none;
+
+  /* Utilize content-box sizing so that the bottom-border overlays
+  the nav border, rather than stacking */
+  box-sizing: content-box;
+  border-bottom: 1px solid transparent;
+
+  &:focus {
+    outline: 0;
+    border-bottom-color: ${color("black100")};
+    text-decoration: underline;
+    z-index: 1;
+  }
+`
+
+const UnfocusableAnchor = styled(RouterLink).attrs({ tabIndex: -1 })`
+  display: block;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+`
 
 const NavItemInner = styled(Box)`
   display: flex;

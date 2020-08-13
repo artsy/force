@@ -13,7 +13,7 @@ import {
 } from "found/server"
 import qs from "qs"
 
-import createQueryMiddleware from "farce/lib/createQueryMiddleware"
+import { createQueryMiddleware } from "farce"
 
 import { createRelaySSREnvironment } from "v2/Artsy/Relay/createRelaySSREnvironment"
 import { Boot } from "v2/Artsy/Router/Boot"

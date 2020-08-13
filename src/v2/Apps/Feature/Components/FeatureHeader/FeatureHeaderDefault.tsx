@@ -67,6 +67,8 @@ export const FeatureHeaderDefault: React.FC<FeatureHeaderDefaultProps> = ({
           </Text>
 
           {subheadline && (
+            // FIXME: `property 'size' is missing
+            // @ts-ignore
             <HTML variant="subtitle" textAlign="center" html={subheadline} />
           )}
         </Join>

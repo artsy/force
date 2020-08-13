@@ -30,10 +30,14 @@ const FeatureApp: React.FC<FeatureAppProps> = ({ feature }) => {
                 <Col sm={8} mx="auto">
                   <Join separator={<Spacer my={3} />}>
                     {feature.description && (
+                      // FIXME: `property 'size' is missing
+                      // @ts-ignore
                       <HTML variant="text" html={feature.description} />
                     )}
 
                     {feature.callout && (
+                      // FIXME: `property 'size' is missing
+                      // @ts-ignore
                       <HTML variant="title" html={feature.callout} />
                     )}
                   </Join>
