@@ -231,7 +231,8 @@ export function buildServerApp(
         if (typeof jest !== "undefined") {
           Object.defineProperty(
             result,
-            __THOU_SHALT_NOT_FAFF_AROUND_WITH_THIS_HERE_OBJECT_WE_ARE_SERIOUS__,
+
+            __TEST_INTERNAL_SERVER_APP__,
             { value: ServerApp }
           )
         }
@@ -251,7 +252,7 @@ export function buildServerApp(
   })
 }
 
-export const __THOU_SHALT_NOT_FAFF_AROUND_WITH_THIS_HERE_OBJECT_WE_ARE_SERIOUS__ =
+export const __TEST_INTERNAL_SERVER_APP__ =
   typeof jest !== "undefined" ? Symbol() : null
 
 function isRedirect(

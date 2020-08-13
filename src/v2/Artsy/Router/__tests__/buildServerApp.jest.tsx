@@ -6,7 +6,7 @@ import { SystemContextConsumer } from "v2/Artsy"
 import { createRelaySSREnvironment } from "v2/Artsy/Relay/createRelaySSREnvironment"
 import {
   ServerRouterConfig,
-  __THOU_SHALT_NOT_FAFF_AROUND_WITH_THIS_HERE_OBJECT_WE_ARE_SERIOUS__,
+  __TEST_INTERNAL_SERVER_APP__,
   buildServerApp,
 } from "v2/Artsy/Router/buildServerApp"
 import { createMockNetworkLayer } from "v2/DevTools"
@@ -18,6 +18,10 @@ import { graphql } from "react-relay"
 import { Media } from "v2/Utils/Responsive"
 
 jest.unmock("react-relay")
+
+// FIXME: Not sure why this fails test since all code here is server-side. Need
+// to investigate where this dep intersects
+jest.mock("found-scroll", () => {})
 
 jest.mock("@loadable/server", () => ({
   ChunkExtractor: class {
@@ -62,7 +66,7 @@ describe("buildServerApp", () => {
     })
     const ServerApp = Object.getOwnPropertyDescriptor(
       result,
-      __THOU_SHALT_NOT_FAFF_AROUND_WITH_THIS_HERE_OBJECT_WE_ARE_SERIOUS__
+      __TEST_INTERNAL_SERVER_APP__
     ).value
     return {
       ...result,
