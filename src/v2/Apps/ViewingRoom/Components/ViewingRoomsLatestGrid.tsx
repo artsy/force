@@ -14,7 +14,7 @@ import {
   createPaginationContainer,
   graphql,
 } from "react-relay"
-
+import { scrollIntoView } from "v2/Utils/scrollHelpers"
 import { ViewingRoomsLatestGrid_viewingRooms } from "v2/__generated__/ViewingRoomsLatestGrid_viewingRooms.graphql"
 import { crop } from "v2/Utils/resizer"
 
@@ -62,7 +62,7 @@ export const PAGE_SIZE = 12
 export const ViewingRoomsLatestGrid: React.FC<ViewingRoomsLatestGridProps> = props => {
   const viewingRooms = props.viewingRooms?.viewingRoomsConnection
   const [isLoading, setIsLoading] = useState(false)
-  const hasMoreItems = props.relay.hasMore()
+  const hasMoreItems = props.relay.hasMore() as boolean
 
   const loadMore = () => {
     if (hasMoreItems) {
@@ -73,6 +73,11 @@ export const ViewingRoomsLatestGrid: React.FC<ViewingRoomsLatestGridProps> = pro
           console.error(error)
         }
         setIsLoading(false)
+
+        setTimeout(
+          () => scrollIntoView({ offset: 60, selector: "#jump--viewingRoom" }),
+          100
+        )
       })
     }
   }
@@ -113,7 +118,7 @@ export const ViewingRoomsLatestGrid: React.FC<ViewingRoomsLatestGridProps> = pro
           gridColumnGap={2}
           gridRowGap={6}
         >
-          {viewingRoomsForLatestGrid.map(vr => {
+          {viewingRoomsForLatestGrid.map((vr, index) => {
             const {
               slug,
               title,
@@ -135,7 +140,18 @@ export const ViewingRoomsLatestGrid: React.FC<ViewingRoomsLatestGridProps> = pro
             const tag = getTagProps(status, distanceToOpen, distanceToClose)
 
             return (
-              <Link href={`/viewing-room/${slug}`} key={slug} noUnderline>
+              <Link
+                href={`/viewing-room/${slug}`}
+                key={slug}
+                noUnderline
+                id={
+                  // Calling loadMore loads 12 VRs at a time. We want to add a css id selector to the last VR in the list (list length - 12)
+                  // before loadMore was called and scroll to that element when the Show More button is pressed.
+                  viewingRoomsForLatestGrid.length - 12 === index
+                    ? "jump--viewingRoom"
+                    : ""
+                }
+              >
                 <SmallCard
                   title={title}
                   subtitle={partner.name}
