@@ -1,6 +1,6 @@
 import { Box, ProgressBar } from "@artsy/palette"
 import { random } from "lodash"
-import React, { CSSProperties } from "react"
+import React from "react"
 import { Spring } from "react-spring/renderprops.cjs"
 
 interface PageLoaderProps {
@@ -9,7 +9,7 @@ interface PageLoaderProps {
   percentComplete?: number
   showBackground?: boolean
   step?: number
-  style?: CSSProperties
+  style?: any // FIXME: any
 }
 
 interface PageLoaderState {

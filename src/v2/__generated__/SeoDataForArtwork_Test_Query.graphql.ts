@@ -1,4 +1,5 @@
 /* tslint:disable */
+/* eslint-disable */
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -142,170 +143,165 @@ var v0 = [
   }
 ],
 v1 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "major",
   "args": null,
+  "kind": "ScalarField",
+  "name": "major",
   "storageKey": null
 },
 v2 = [
   (v1/*: any*/),
   {
-    "kind": "ScalarField",
     "alias": null,
-    "name": "currencyCode",
     "args": null,
+    "kind": "ScalarField",
+    "name": "currencyCode",
     "storageKey": null
   }
 ],
 v3 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "url",
   "args": null,
+  "kind": "ScalarField",
+  "name": "url",
   "storageKey": null
 },
 v4 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "id",
   "args": null,
+  "kind": "ScalarField",
+  "name": "id",
   "storageKey": null
 };
 return {
-  "kind": "Request",
   "fragment": {
-    "kind": "Fragment",
-    "name": "SeoDataForArtwork_Test_Query",
-    "type": "Query",
-    "metadata": null,
     "argumentDefinitions": [],
+    "kind": "Fragment",
+    "metadata": null,
+    "name": "SeoDataForArtwork_Test_Query",
     "selections": [
       {
-        "kind": "LinkedField",
         "alias": null,
-        "name": "artwork",
-        "storageKey": "artwork(id:\"richard-anuszkiewicz-lino-yellow-318\")",
         "args": (v0/*: any*/),
         "concreteType": "Artwork",
+        "kind": "LinkedField",
+        "name": "artwork",
         "plural": false,
         "selections": [
           {
+            "args": null,
             "kind": "FragmentSpread",
-            "name": "SeoDataForArtwork_artwork",
-            "args": null
+            "name": "SeoDataForArtwork_artwork"
           }
-        ]
+        ],
+        "storageKey": "artwork(id:\"richard-anuszkiewicz-lino-yellow-318\")"
       }
-    ]
+    ],
+    "type": "Query"
   },
+  "kind": "Request",
   "operation": {
+    "argumentDefinitions": [],
     "kind": "Operation",
     "name": "SeoDataForArtwork_Test_Query",
-    "argumentDefinitions": [],
     "selections": [
       {
-        "kind": "LinkedField",
         "alias": null,
-        "name": "artwork",
-        "storageKey": "artwork(id:\"richard-anuszkiewicz-lino-yellow-318\")",
         "args": (v0/*: any*/),
         "concreteType": "Artwork",
+        "kind": "LinkedField",
+        "name": "artwork",
         "plural": false,
         "selections": [
           {
-            "kind": "ScalarField",
             "alias": null,
+            "args": null,
+            "kind": "ScalarField",
             "name": "href",
-            "args": null,
             "storageKey": null
           },
           {
-            "kind": "ScalarField",
             "alias": null,
+            "args": null,
+            "kind": "ScalarField",
             "name": "date",
-            "args": null,
             "storageKey": null
           },
           {
-            "kind": "ScalarField",
             "alias": "is_price_hidden",
-            "name": "isPriceHidden",
             "args": null,
-            "storageKey": null
-          },
-          {
             "kind": "ScalarField",
-            "alias": "is_price_range",
-            "name": "isPriceRange",
-            "args": null,
+            "name": "isPriceHidden",
             "storageKey": null
           },
           {
-            "kind": "LinkedField",
+            "alias": "is_price_range",
+            "args": null,
+            "kind": "ScalarField",
+            "name": "isPriceRange",
+            "storageKey": null
+          },
+          {
             "alias": null,
-            "name": "listPrice",
-            "storageKey": null,
             "args": null,
             "concreteType": null,
+            "kind": "LinkedField",
+            "name": "listPrice",
             "plural": false,
             "selections": [
               {
-                "kind": "ScalarField",
                 "alias": null,
-                "name": "__typename",
                 "args": null,
+                "kind": "ScalarField",
+                "name": "__typename",
                 "storageKey": null
               },
               {
                 "kind": "InlineFragment",
-                "type": "PriceRange",
                 "selections": [
                   {
-                    "kind": "LinkedField",
                     "alias": null,
-                    "name": "minPrice",
-                    "storageKey": null,
                     "args": null,
                     "concreteType": "Money",
+                    "kind": "LinkedField",
+                    "name": "minPrice",
                     "plural": false,
-                    "selections": (v2/*: any*/)
+                    "selections": (v2/*: any*/),
+                    "storageKey": null
                   },
                   {
-                    "kind": "LinkedField",
                     "alias": null,
-                    "name": "maxPrice",
-                    "storageKey": null,
                     "args": null,
                     "concreteType": "Money",
+                    "kind": "LinkedField",
+                    "name": "maxPrice",
                     "plural": false,
                     "selections": [
                       (v1/*: any*/)
-                    ]
+                    ],
+                    "storageKey": null
                   }
-                ]
+                ],
+                "type": "PriceRange"
               },
               {
                 "kind": "InlineFragment",
-                "type": "Money",
-                "selections": (v2/*: any*/)
+                "selections": (v2/*: any*/),
+                "type": "Money"
               }
-            ]
+            ],
+            "storageKey": null
           },
           {
-            "kind": "LinkedField",
             "alias": "meta_image",
-            "name": "image",
-            "storageKey": null,
             "args": null,
             "concreteType": "Image",
+            "kind": "LinkedField",
+            "name": "image",
             "plural": false,
             "selections": [
               {
-                "kind": "LinkedField",
                 "alias": null,
-                "name": "resized",
-                "storageKey": "resized(height:640,version:[\"large\",\"medium\",\"tall\"],width:640)",
                 "args": [
                   {
                     "kind": "Literal",
@@ -328,47 +324,48 @@ return {
                   }
                 ],
                 "concreteType": "ResizedImageUrl",
+                "kind": "LinkedField",
+                "name": "resized",
                 "plural": false,
                 "selections": [
                   {
-                    "kind": "ScalarField",
                     "alias": null,
-                    "name": "width",
                     "args": null,
+                    "kind": "ScalarField",
+                    "name": "width",
                     "storageKey": null
                   },
                   {
-                    "kind": "ScalarField",
                     "alias": null,
-                    "name": "height",
                     "args": null,
+                    "kind": "ScalarField",
+                    "name": "height",
                     "storageKey": null
                   },
                   (v3/*: any*/)
-                ]
+                ],
+                "storageKey": "resized(height:640,version:[\"large\",\"medium\",\"tall\"],width:640)"
               }
-            ]
+            ],
+            "storageKey": null
           },
           {
-            "kind": "LinkedField",
             "alias": null,
-            "name": "meta",
-            "storageKey": null,
             "args": null,
             "concreteType": "ArtworkMeta",
+            "kind": "LinkedField",
+            "name": "meta",
             "plural": false,
             "selections": [
               {
-                "kind": "ScalarField",
                 "alias": null,
-                "name": "title",
                 "args": null,
+                "kind": "ScalarField",
+                "name": "title",
                 "storageKey": null
               },
               {
-                "kind": "ScalarField",
                 "alias": null,
-                "name": "description",
                 "args": [
                   {
                     "kind": "Literal",
@@ -376,56 +373,53 @@ return {
                     "value": 155
                   }
                 ],
+                "kind": "ScalarField",
+                "name": "description",
                 "storageKey": "description(limit:155)"
               }
-            ]
+            ],
+            "storageKey": null
           },
           {
-            "kind": "LinkedField",
             "alias": null,
-            "name": "partner",
-            "storageKey": null,
             "args": null,
             "concreteType": "Partner",
+            "kind": "LinkedField",
+            "name": "partner",
             "plural": false,
             "selections": [
               {
-                "kind": "ScalarField",
                 "alias": null,
+                "args": null,
+                "kind": "ScalarField",
                 "name": "name",
-                "args": null,
                 "storageKey": null
               },
               {
+                "alias": null,
+                "args": null,
                 "kind": "ScalarField",
-                "alias": null,
                 "name": "type",
-                "args": null,
                 "storageKey": null
               },
               {
-                "kind": "LinkedField",
                 "alias": null,
-                "name": "profile",
-                "storageKey": null,
                 "args": null,
                 "concreteType": "Profile",
+                "kind": "LinkedField",
+                "name": "profile",
                 "plural": false,
                 "selections": [
                   {
-                    "kind": "LinkedField",
                     "alias": null,
-                    "name": "image",
-                    "storageKey": null,
                     "args": null,
                     "concreteType": "Image",
+                    "kind": "LinkedField",
+                    "name": "image",
                     "plural": false,
                     "selections": [
                       {
-                        "kind": "LinkedField",
                         "alias": null,
-                        "name": "resized",
-                        "storageKey": "resized(height:320,version:[\"medium\"],width:320)",
                         "args": [
                           {
                             "kind": "Literal",
@@ -446,69 +440,76 @@ return {
                           }
                         ],
                         "concreteType": "ResizedImageUrl",
+                        "kind": "LinkedField",
+                        "name": "resized",
                         "plural": false,
                         "selections": [
                           (v3/*: any*/)
-                        ]
+                        ],
+                        "storageKey": "resized(height:320,version:[\"medium\"],width:320)"
                       }
-                    ]
+                    ],
+                    "storageKey": null
                   },
                   (v4/*: any*/)
-                ]
+                ],
+                "storageKey": null
               },
               (v4/*: any*/)
-            ]
+            ],
+            "storageKey": null
           },
           {
-            "kind": "ScalarField",
             "alias": "artist_names",
+            "args": null,
+            "kind": "ScalarField",
             "name": "artistNames",
-            "args": null,
             "storageKey": null
           },
           {
-            "kind": "ScalarField",
             "alias": null,
+            "args": null,
+            "kind": "ScalarField",
             "name": "availability",
-            "args": null,
             "storageKey": null
           },
           {
+            "alias": null,
+            "args": null,
             "kind": "ScalarField",
-            "alias": null,
             "name": "category",
-            "args": null,
             "storageKey": null
           },
           {
-            "kind": "LinkedField",
             "alias": null,
-            "name": "dimensions",
-            "storageKey": null,
             "args": null,
             "concreteType": "dimensions",
+            "kind": "LinkedField",
+            "name": "dimensions",
             "plural": false,
             "selections": [
               {
-                "kind": "ScalarField",
                 "alias": null,
-                "name": "in",
                 "args": null,
+                "kind": "ScalarField",
+                "name": "in",
                 "storageKey": null
               }
-            ]
+            ],
+            "storageKey": null
           },
           (v4/*: any*/)
-        ]
+        ],
+        "storageKey": "artwork(id:\"richard-anuszkiewicz-lino-yellow-318\")"
       }
     ]
   },
   "params": {
-    "operationKind": "query",
-    "name": "SeoDataForArtwork_Test_Query",
     "id": null,
-    "text": "query SeoDataForArtwork_Test_Query {\n  artwork(id: \"richard-anuszkiewicz-lino-yellow-318\") {\n    ...SeoDataForArtwork_artwork\n    id\n  }\n}\n\nfragment SeoDataForArtwork_artwork on Artwork {\n  href\n  date\n  is_price_hidden: isPriceHidden\n  is_price_range: isPriceRange\n  listPrice {\n    __typename\n    ... on PriceRange {\n      minPrice {\n        major\n        currencyCode\n      }\n      maxPrice {\n        major\n      }\n    }\n    ... on Money {\n      major\n      currencyCode\n    }\n  }\n  meta_image: image {\n    resized(width: 640, height: 640, version: [\"large\", \"medium\", \"tall\"]) {\n      width\n      height\n      url\n    }\n  }\n  meta {\n    title\n    description(limit: 155)\n  }\n  partner {\n    name\n    type\n    profile {\n      image {\n        resized(width: 320, height: 320, version: [\"medium\"]) {\n          url\n        }\n      }\n      id\n    }\n    id\n  }\n  artist_names: artistNames\n  availability\n  category\n  dimensions {\n    in\n  }\n}\n",
-    "metadata": {}
+    "metadata": {},
+    "name": "SeoDataForArtwork_Test_Query",
+    "operationKind": "query",
+    "text": "query SeoDataForArtwork_Test_Query {\n  artwork(id: \"richard-anuszkiewicz-lino-yellow-318\") {\n    ...SeoDataForArtwork_artwork\n    id\n  }\n}\n\nfragment SeoDataForArtwork_artwork on Artwork {\n  href\n  date\n  is_price_hidden: isPriceHidden\n  is_price_range: isPriceRange\n  listPrice {\n    __typename\n    ... on PriceRange {\n      minPrice {\n        major\n        currencyCode\n      }\n      maxPrice {\n        major\n      }\n    }\n    ... on Money {\n      major\n      currencyCode\n    }\n  }\n  meta_image: image {\n    resized(width: 640, height: 640, version: [\"large\", \"medium\", \"tall\"]) {\n      width\n      height\n      url\n    }\n  }\n  meta {\n    title\n    description(limit: 155)\n  }\n  partner {\n    name\n    type\n    profile {\n      image {\n        resized(width: 320, height: 320, version: [\"medium\"]) {\n          url\n        }\n      }\n      id\n    }\n    id\n  }\n  artist_names: artistNames\n  availability\n  category\n  dimensions {\n    in\n  }\n}\n"
   }
 };
 })();

@@ -37,11 +37,11 @@ interface OrderAppState {
 class OrderApp extends React.Component<OrderAppProps, OrderAppState> {
   mediator: Mediator | null = null
   state = { stripe: null }
-  removeTransitionHook: () => void
+  removeNavigationListener: () => void
 
   componentDidMount() {
-    if (!this.removeTransitionHook) {
-      this.removeTransitionHook = this.props.router.addTransitionHook(
+    if (!this.removeNavigationListener) {
+      this.removeNavigationListener = this.props.router.addNavigationListener(
         this.onTransition
       )
     }
@@ -76,8 +76,8 @@ class OrderApp extends React.Component<OrderAppProps, OrderAppState> {
   }
 
   componentWillUnmount() {
-    if (this.removeTransitionHook) {
-      this.removeTransitionHook()
+    if (this.removeNavigationListener) {
+      this.removeNavigationListener()
     }
 
     window.removeEventListener("beforeunload", this.preventHardReload)

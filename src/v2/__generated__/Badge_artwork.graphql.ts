@@ -1,4 +1,5 @@
 /* tslint:disable */
+/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -20,52 +21,52 @@ export type Badge_artwork$key = {
 
 
 const node: ReaderFragment = {
-  "kind": "Fragment",
-  "name": "Badge_artwork",
-  "type": "Artwork",
-  "metadata": null,
   "argumentDefinitions": [],
+  "kind": "Fragment",
+  "metadata": null,
+  "name": "Badge_artwork",
   "selections": [
     {
-      "kind": "ScalarField",
       "alias": "is_biddable",
-      "name": "isBiddable",
       "args": null,
-      "storageKey": null
-    },
-    {
       "kind": "ScalarField",
-      "alias": null,
-      "name": "href",
-      "args": null,
+      "name": "isBiddable",
       "storageKey": null
     },
     {
-      "kind": "LinkedField",
       "alias": null,
-      "name": "sale",
-      "storageKey": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "href",
+      "storageKey": null
+    },
+    {
+      "alias": null,
       "args": null,
       "concreteType": "Sale",
+      "kind": "LinkedField",
+      "name": "sale",
       "plural": false,
       "selections": [
         {
-          "kind": "ScalarField",
           "alias": "is_preview",
-          "name": "isPreview",
           "args": null,
+          "kind": "ScalarField",
+          "name": "isPreview",
           "storageKey": null
         },
         {
-          "kind": "ScalarField",
           "alias": "display_timely_at",
-          "name": "displayTimelyAt",
           "args": null,
+          "kind": "ScalarField",
+          "name": "displayTimelyAt",
           "storageKey": null
         }
-      ]
+      ],
+      "storageKey": null
     }
-  ]
+  ],
+  "type": "Artwork"
 };
 (node as any).hash = 'c56c0d898e4433bfc5acdba932369f3f';
 export default node;

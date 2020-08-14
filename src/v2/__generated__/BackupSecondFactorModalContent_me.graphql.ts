@@ -1,4 +1,5 @@
 /* tslint:disable */
+/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -17,17 +18,13 @@ export type BackupSecondFactorModalContent_me$key = {
 
 
 const node: ReaderFragment = {
-  "kind": "Fragment",
-  "name": "BackupSecondFactorModalContent_me",
-  "type": "Me",
-  "metadata": null,
   "argumentDefinitions": [],
+  "kind": "Fragment",
+  "metadata": null,
+  "name": "BackupSecondFactorModalContent_me",
   "selections": [
     {
-      "kind": "LinkedField",
       "alias": "backupSecondFactors",
-      "name": "secondFactors",
-      "storageKey": "secondFactors(kinds:[\"backup\"])",
       "args": [
         {
           "kind": "Literal",
@@ -38,24 +35,28 @@ const node: ReaderFragment = {
         }
       ],
       "concreteType": null,
+      "kind": "LinkedField",
+      "name": "secondFactors",
       "plural": true,
       "selections": [
         {
           "kind": "InlineFragment",
-          "type": "BackupSecondFactor",
           "selections": [
             {
-              "kind": "ScalarField",
               "alias": null,
-              "name": "code",
               "args": null,
+              "kind": "ScalarField",
+              "name": "code",
               "storageKey": null
             }
-          ]
+          ],
+          "type": "BackupSecondFactor"
         }
-      ]
+      ],
+      "storageKey": "secondFactors(kinds:[\"backup\"])"
     }
-  ]
+  ],
+  "type": "Me"
 };
 (node as any).hash = '59bb25aba7d7357efac7d1fdaa4a177e';
 export default node;

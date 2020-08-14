@@ -1,4 +1,5 @@
 /* tslint:disable */
+/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -24,35 +25,31 @@ export type SearchBar_viewer$key = {
 
 
 const node: ReaderFragment = {
-  "kind": "Fragment",
-  "name": "SearchBar_viewer",
-  "type": "Viewer",
-  "metadata": null,
   "argumentDefinitions": [
     {
+      "defaultValue": "",
       "kind": "LocalArgument",
       "name": "term",
-      "type": "String!",
-      "defaultValue": ""
+      "type": "String!"
     },
     {
+      "defaultValue": false,
       "kind": "LocalArgument",
       "name": "hasTerm",
-      "type": "Boolean!",
-      "defaultValue": false
+      "type": "Boolean!"
     }
   ],
+  "kind": "Fragment",
+  "metadata": null,
+  "name": "SearchBar_viewer",
   "selections": [
     {
+      "condition": "hasTerm",
       "kind": "Condition",
       "passingValue": true,
-      "condition": "hasTerm",
       "selections": [
         {
-          "kind": "LinkedField",
           "alias": null,
-          "name": "searchConnection",
-          "storageKey": null,
           "args": [
             {
               "kind": "Literal",
@@ -71,69 +68,73 @@ const node: ReaderFragment = {
             }
           ],
           "concreteType": "SearchableConnection",
+          "kind": "LinkedField",
+          "name": "searchConnection",
           "plural": false,
           "selections": [
             {
-              "kind": "LinkedField",
               "alias": null,
-              "name": "edges",
-              "storageKey": null,
               "args": null,
               "concreteType": "SearchableEdge",
+              "kind": "LinkedField",
+              "name": "edges",
               "plural": true,
               "selections": [
                 {
-                  "kind": "LinkedField",
                   "alias": null,
-                  "name": "node",
-                  "storageKey": null,
                   "args": null,
                   "concreteType": null,
+                  "kind": "LinkedField",
+                  "name": "node",
                   "plural": false,
                   "selections": [
                     {
-                      "kind": "ScalarField",
                       "alias": null,
-                      "name": "displayLabel",
                       "args": null,
+                      "kind": "ScalarField",
+                      "name": "displayLabel",
                       "storageKey": null
                     },
                     {
-                      "kind": "ScalarField",
                       "alias": null,
-                      "name": "href",
                       "args": null,
+                      "kind": "ScalarField",
+                      "name": "href",
                       "storageKey": null
                     },
                     {
                       "kind": "InlineFragment",
-                      "type": "SearchableItem",
                       "selections": [
                         {
-                          "kind": "ScalarField",
                           "alias": null,
-                          "name": "displayType",
                           "args": null,
+                          "kind": "ScalarField",
+                          "name": "displayType",
                           "storageKey": null
                         },
                         {
-                          "kind": "ScalarField",
                           "alias": null,
-                          "name": "slug",
                           "args": null,
+                          "kind": "ScalarField",
+                          "name": "slug",
                           "storageKey": null
                         }
-                      ]
+                      ],
+                      "type": "SearchableItem"
                     }
-                  ]
+                  ],
+                  "storageKey": null
                 }
-              ]
+              ],
+              "storageKey": null
             }
-          ]
+          ],
+          "storageKey": null
         }
       ]
     }
-  ]
+  ],
+  "type": "Viewer"
 };
 (node as any).hash = '3aeb38b1dc5d0bfda3a165193d2b7a27';
 export default node;

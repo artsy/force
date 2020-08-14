@@ -1,4 +1,5 @@
 /* tslint:disable */
+/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -19,48 +20,48 @@ export type CollectionEntity_collection$key = {
 
 
 const node: ReaderFragment = {
-  "kind": "Fragment",
-  "name": "CollectionEntity_collection",
-  "type": "MarketingCollection",
-  "metadata": null,
   "argumentDefinitions": [],
+  "kind": "Fragment",
+  "metadata": null,
+  "name": "CollectionEntity_collection",
   "selections": [
     {
-      "kind": "ScalarField",
       "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "slug",
-      "args": null,
       "storageKey": null
     },
     {
-      "kind": "ScalarField",
       "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "headerImage",
-      "args": null,
       "storageKey": null
     },
     {
-      "kind": "ScalarField",
       "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "title",
-      "args": null,
       "storageKey": null
     },
     {
-      "kind": "ScalarField",
       "alias": "price_guidance",
-      "name": "priceGuidance",
       "args": null,
+      "kind": "ScalarField",
+      "name": "priceGuidance",
       "storageKey": null
     },
     {
-      "kind": "ScalarField",
       "alias": "show_on_editorial",
-      "name": "showOnEditorial",
       "args": null,
+      "kind": "ScalarField",
+      "name": "showOnEditorial",
       "storageKey": null
     }
-  ]
+  ],
+  "type": "MarketingCollection"
 };
 (node as any).hash = '7b6be8924b3cafab86730578ebf5c997';
 export default node;

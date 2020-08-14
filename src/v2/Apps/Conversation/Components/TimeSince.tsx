@@ -73,7 +73,7 @@ interface TimeSinceProps extends Omit<BoxProps, "color"> {
   size?: SansSize
   time: string
   exact?: boolean
-  style?: React.CSSProperties
+  style?: any // FIXME: React.CSSProperties
 }
 export const TimeSince: React.FC<TimeSinceProps> = ({
   size = "2",

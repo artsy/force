@@ -4,8 +4,7 @@ import {
   createMockNetworkLayer,
   createMockNetworkLayer2,
 } from "v2/DevTools/createMockNetworkLayer"
-import { HistoryOptions } from "farce"
-import { RouteConfig } from "found"
+import { FarceCreateRouterArgs, RouteConfig } from "found"
 import { IMocks } from "graphql-tools/dist/Interfaces"
 import React from "react"
 import { getUser } from "v2/Utils/user"
@@ -14,7 +13,7 @@ interface Props {
   routes: RouteConfig[]
   initialRoute?: string
   initialState?: object
-  historyOptions?: HistoryOptions
+  historyOptions?: FarceCreateRouterArgs["historyOptions"]
   mockResolvers?: IMocks
   mockData?: object
   mockMutationResults?: object
@@ -47,8 +46,8 @@ export class MockRouter extends React.Component<Props> {
       const relayEnvironment = mockResolvers
         ? createMockNetworkLayer(mockResolvers)
         : mockData || mockMutationResults
-          ? createMockNetworkLayer2({ mockData, mockMutationResults })
-          : undefined
+        ? createMockNetworkLayer2({ mockData, mockMutationResults })
+        : undefined
 
       const { ClientApp } = await buildClientApp({
         routes,

@@ -1,10 +1,11 @@
 /* tslint:disable */
+/* eslint-disable */
 
 import { ConcreteRequest } from "relay-runtime";
 export type CommerceOrderParticipantEnum = "BUYER" | "SELLER" | "%future added value";
 export type CommerceBuyerAcceptOfferInput = {
-    readonly clientMutationId?: string | null;
-    readonly offerId: string;
+    clientMutationId?: string | null;
+    offerId: string;
 };
 export type AcceptOfferMutationVariables = {
     input: CommerceBuyerAcceptOfferInput;
@@ -65,10 +66,10 @@ mutation AcceptOfferMutation(
 const node: ConcreteRequest = (function(){
 var v0 = [
   {
+    "defaultValue": null,
     "kind": "LocalArgument",
     "name": "input",
-    "type": "CommerceBuyerAcceptOfferInput!",
-    "defaultValue": null
+    "type": "CommerceBuyerAcceptOfferInput!"
   }
 ],
 v1 = [
@@ -79,189 +80,189 @@ v1 = [
   }
 ],
 v2 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "__typename",
   "args": null,
+  "kind": "ScalarField",
+  "name": "__typename",
   "storageKey": null
 },
 v3 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "internalID",
   "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
   "storageKey": null
 },
 v4 = {
   "kind": "InlineFragment",
-  "type": "CommerceOfferOrder",
   "selections": [
     {
-      "kind": "ScalarField",
       "alias": null,
-      "name": "awaitingResponseFrom",
       "args": null,
+      "kind": "ScalarField",
+      "name": "awaitingResponseFrom",
       "storageKey": null
     }
-  ]
+  ],
+  "type": "CommerceOfferOrder"
 },
 v5 = {
   "kind": "InlineFragment",
-  "type": "CommerceOrderWithMutationFailure",
   "selections": [
     {
-      "kind": "LinkedField",
       "alias": null,
-      "name": "error",
-      "storageKey": null,
       "args": null,
       "concreteType": "CommerceApplicationError",
+      "kind": "LinkedField",
+      "name": "error",
       "plural": false,
       "selections": [
         {
-          "kind": "ScalarField",
           "alias": null,
+          "args": null,
+          "kind": "ScalarField",
           "name": "type",
-          "args": null,
           "storageKey": null
         },
         {
-          "kind": "ScalarField",
           "alias": null,
+          "args": null,
+          "kind": "ScalarField",
           "name": "code",
-          "args": null,
           "storageKey": null
         },
         {
-          "kind": "ScalarField",
           "alias": null,
-          "name": "data",
           "args": null,
+          "kind": "ScalarField",
+          "name": "data",
           "storageKey": null
         }
-      ]
+      ],
+      "storageKey": null
     }
-  ]
+  ],
+  "type": "CommerceOrderWithMutationFailure"
 };
 return {
-  "kind": "Request",
   "fragment": {
-    "kind": "Fragment",
-    "name": "AcceptOfferMutation",
-    "type": "Mutation",
-    "metadata": null,
     "argumentDefinitions": (v0/*: any*/),
+    "kind": "Fragment",
+    "metadata": null,
+    "name": "AcceptOfferMutation",
     "selections": [
       {
-        "kind": "LinkedField",
         "alias": null,
-        "name": "commerceBuyerAcceptOffer",
-        "storageKey": null,
         "args": (v1/*: any*/),
         "concreteType": "CommerceBuyerAcceptOfferPayload",
+        "kind": "LinkedField",
+        "name": "commerceBuyerAcceptOffer",
         "plural": false,
         "selections": [
           {
-            "kind": "LinkedField",
             "alias": null,
-            "name": "orderOrError",
-            "storageKey": null,
             "args": null,
             "concreteType": null,
+            "kind": "LinkedField",
+            "name": "orderOrError",
             "plural": false,
             "selections": [
               {
                 "kind": "InlineFragment",
-                "type": "CommerceOrderWithMutationSuccess",
                 "selections": [
                   (v2/*: any*/),
                   {
-                    "kind": "LinkedField",
                     "alias": null,
-                    "name": "order",
-                    "storageKey": null,
                     "args": null,
                     "concreteType": null,
+                    "kind": "LinkedField",
+                    "name": "order",
                     "plural": false,
                     "selections": [
                       (v3/*: any*/),
                       (v4/*: any*/)
-                    ]
+                    ],
+                    "storageKey": null
                   }
-                ]
+                ],
+                "type": "CommerceOrderWithMutationSuccess"
               },
               (v5/*: any*/)
-            ]
+            ],
+            "storageKey": null
           }
-        ]
+        ],
+        "storageKey": null
       }
-    ]
+    ],
+    "type": "Mutation"
   },
+  "kind": "Request",
   "operation": {
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "AcceptOfferMutation",
-    "argumentDefinitions": (v0/*: any*/),
     "selections": [
       {
-        "kind": "LinkedField",
         "alias": null,
-        "name": "commerceBuyerAcceptOffer",
-        "storageKey": null,
         "args": (v1/*: any*/),
         "concreteType": "CommerceBuyerAcceptOfferPayload",
+        "kind": "LinkedField",
+        "name": "commerceBuyerAcceptOffer",
         "plural": false,
         "selections": [
           {
-            "kind": "LinkedField",
             "alias": null,
-            "name": "orderOrError",
-            "storageKey": null,
             "args": null,
             "concreteType": null,
+            "kind": "LinkedField",
+            "name": "orderOrError",
             "plural": false,
             "selections": [
               (v2/*: any*/),
               {
                 "kind": "InlineFragment",
-                "type": "CommerceOrderWithMutationSuccess",
                 "selections": [
                   (v2/*: any*/),
                   {
-                    "kind": "LinkedField",
                     "alias": null,
-                    "name": "order",
-                    "storageKey": null,
                     "args": null,
                     "concreteType": null,
+                    "kind": "LinkedField",
+                    "name": "order",
                     "plural": false,
                     "selections": [
                       (v2/*: any*/),
                       (v3/*: any*/),
                       {
-                        "kind": "ScalarField",
                         "alias": null,
-                        "name": "id",
                         "args": null,
+                        "kind": "ScalarField",
+                        "name": "id",
                         "storageKey": null
                       },
                       (v4/*: any*/)
-                    ]
+                    ],
+                    "storageKey": null
                   }
-                ]
+                ],
+                "type": "CommerceOrderWithMutationSuccess"
               },
               (v5/*: any*/)
-            ]
+            ],
+            "storageKey": null
           }
-        ]
+        ],
+        "storageKey": null
       }
     ]
   },
   "params": {
-    "operationKind": "mutation",
-    "name": "AcceptOfferMutation",
     "id": null,
-    "text": "mutation AcceptOfferMutation(\n  $input: CommerceBuyerAcceptOfferInput!\n) {\n  commerceBuyerAcceptOffer(input: $input) {\n    orderOrError {\n      __typename\n      ... on CommerceOrderWithMutationSuccess {\n        __typename\n        order {\n          __typename\n          internalID\n          ... on CommerceOfferOrder {\n            awaitingResponseFrom\n          }\n          id\n        }\n      }\n      ... on CommerceOrderWithMutationFailure {\n        error {\n          type\n          code\n          data\n        }\n      }\n    }\n  }\n}\n",
-    "metadata": {}
+    "metadata": {},
+    "name": "AcceptOfferMutation",
+    "operationKind": "mutation",
+    "text": "mutation AcceptOfferMutation(\n  $input: CommerceBuyerAcceptOfferInput!\n) {\n  commerceBuyerAcceptOffer(input: $input) {\n    orderOrError {\n      __typename\n      ... on CommerceOrderWithMutationSuccess {\n        __typename\n        order {\n          __typename\n          internalID\n          ... on CommerceOfferOrder {\n            awaitingResponseFrom\n          }\n          id\n        }\n      }\n      ... on CommerceOrderWithMutationFailure {\n        error {\n          type\n          code\n          data\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();

@@ -1,4 +1,5 @@
 /* tslint:disable */
+/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -21,56 +22,56 @@ export type ArtworkSharePanel_artwork$key = {
 
 
 const node: ReaderFragment = {
-  "kind": "Fragment",
-  "name": "ArtworkSharePanel_artwork",
-  "type": "Artwork",
-  "metadata": null,
   "argumentDefinitions": [],
+  "kind": "Fragment",
+  "metadata": null,
+  "name": "ArtworkSharePanel_artwork",
   "selections": [
     {
-      "kind": "ScalarField",
       "alias": null,
-      "name": "href",
       "args": null,
+      "kind": "ScalarField",
+      "name": "href",
       "storageKey": null
     },
     {
-      "kind": "LinkedField",
       "alias": null,
-      "name": "images",
-      "storageKey": null,
       "args": null,
       "concreteType": "Image",
+      "kind": "LinkedField",
+      "name": "images",
       "plural": true,
       "selections": [
         {
-          "kind": "ScalarField",
           "alias": null,
-          "name": "url",
           "args": null,
+          "kind": "ScalarField",
+          "name": "url",
           "storageKey": null
         }
-      ]
+      ],
+      "storageKey": null
     },
     {
-      "kind": "LinkedField",
       "alias": "artworkMeta",
-      "name": "meta",
-      "storageKey": null,
       "args": null,
       "concreteType": "ArtworkMeta",
+      "kind": "LinkedField",
+      "name": "meta",
       "plural": false,
       "selections": [
         {
-          "kind": "ScalarField",
           "alias": null,
-          "name": "share",
           "args": null,
+          "kind": "ScalarField",
+          "name": "share",
           "storageKey": null
         }
-      ]
+      ],
+      "storageKey": null
     }
-  ]
+  ],
+  "type": "Artwork"
 };
 (node as any).hash = '1aa535d73c67f2bc420065b91e091f3c';
 export default node;

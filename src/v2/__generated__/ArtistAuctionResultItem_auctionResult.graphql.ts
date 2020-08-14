@@ -1,4 +1,5 @@
 /* tslint:disable */
+/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -35,136 +36,136 @@ export type ArtistAuctionResultItem_auctionResult$key = {
 
 const node: ReaderFragment = (function(){
 var v0 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "display",
   "args": null,
+  "kind": "ScalarField",
+  "name": "display",
   "storageKey": null
 };
 return {
-  "kind": "Fragment",
-  "name": "ArtistAuctionResultItem_auctionResult",
-  "type": "AuctionResult",
-  "metadata": null,
   "argumentDefinitions": [],
+  "kind": "Fragment",
+  "metadata": null,
+  "name": "ArtistAuctionResultItem_auctionResult",
   "selections": [
     {
-      "kind": "ScalarField",
       "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "title",
-      "args": null,
       "storageKey": null
     },
     {
-      "kind": "ScalarField",
       "alias": "dimension_text",
-      "name": "dimensionText",
       "args": null,
-      "storageKey": null
-    },
-    {
       "kind": "ScalarField",
-      "alias": null,
-      "name": "organization",
-      "args": null,
+      "name": "dimensionText",
       "storageKey": null
     },
     {
-      "kind": "LinkedField",
       "alias": null,
-      "name": "images",
-      "storageKey": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "organization",
+      "storageKey": null
+    },
+    {
+      "alias": null,
       "args": null,
       "concreteType": "AuctionLotImages",
+      "kind": "LinkedField",
+      "name": "images",
       "plural": false,
       "selections": [
         {
-          "kind": "LinkedField",
           "alias": null,
-          "name": "thumbnail",
-          "storageKey": null,
           "args": null,
           "concreteType": "Image",
+          "kind": "LinkedField",
+          "name": "thumbnail",
           "plural": false,
           "selections": [
             {
-              "kind": "ScalarField",
               "alias": null,
-              "name": "url",
               "args": null,
+              "kind": "ScalarField",
+              "name": "url",
               "storageKey": null
             }
-          ]
+          ],
+          "storageKey": null
         }
-      ]
+      ],
+      "storageKey": null
     },
     {
-      "kind": "ScalarField",
       "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "mediumText",
-      "args": null,
       "storageKey": null
     },
     {
-      "kind": "ScalarField",
       "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "categoryText",
-      "args": null,
       "storageKey": null
     },
     {
-      "kind": "ScalarField",
       "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "description",
-      "args": null,
       "storageKey": null
     },
     {
-      "kind": "ScalarField",
       "alias": "date_text",
-      "name": "dateText",
       "args": null,
-      "storageKey": null
-    },
-    {
       "kind": "ScalarField",
-      "alias": null,
-      "name": "saleDate",
-      "args": null,
+      "name": "dateText",
       "storageKey": null
     },
     {
-      "kind": "LinkedField",
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "saleDate",
+      "storageKey": null
+    },
+    {
       "alias": "price_realized",
-      "name": "priceRealized",
-      "storageKey": null,
       "args": null,
       "concreteType": "AuctionResultPriceRealized",
+      "kind": "LinkedField",
+      "name": "priceRealized",
       "plural": false,
       "selections": [
         (v0/*: any*/),
         {
-          "kind": "ScalarField",
           "alias": "cents_usd",
-          "name": "centsUSD",
           "args": null,
+          "kind": "ScalarField",
+          "name": "centsUSD",
           "storageKey": null
         }
-      ]
+      ],
+      "storageKey": null
     },
     {
-      "kind": "LinkedField",
       "alias": null,
-      "name": "estimate",
-      "storageKey": null,
       "args": null,
       "concreteType": "AuctionLotEstimate",
+      "kind": "LinkedField",
+      "name": "estimate",
       "plural": false,
       "selections": [
         (v0/*: any*/)
-      ]
+      ],
+      "storageKey": null
     }
-  ]
+  ],
+  "type": "AuctionResult"
 };
 })();
 (node as any).hash = '3a2f0277ca44b0ac5b199a1c147fdc7f';

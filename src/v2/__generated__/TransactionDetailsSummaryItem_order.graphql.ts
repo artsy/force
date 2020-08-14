@@ -1,9 +1,10 @@
 /* tslint:disable */
+/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
+import { FragmentRefs } from "relay-runtime";
 export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
 export type CommerceOrderParticipantEnum = "BUYER" | "SELLER" | "%future added value";
-import { FragmentRefs } from "relay-runtime";
 export type TransactionDetailsSummaryItem_order = {
     readonly __typename: string;
     readonly mode: CommerceOrderModeEnum | null;
@@ -59,60 +60,60 @@ var v0 = [
   }
 ],
 v1 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "shippingTotal",
   "args": (v0/*: any*/),
+  "kind": "ScalarField",
+  "name": "shippingTotal",
   "storageKey": "shippingTotal(precision:2)"
 },
 v2 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "shippingTotalCents",
   "args": null,
+  "kind": "ScalarField",
+  "name": "shippingTotalCents",
   "storageKey": null
 },
 v3 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "taxTotal",
   "args": (v0/*: any*/),
+  "kind": "ScalarField",
+  "name": "taxTotal",
   "storageKey": "taxTotal(precision:2)"
 },
 v4 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "taxTotalCents",
   "args": null,
+  "kind": "ScalarField",
+  "name": "taxTotalCents",
   "storageKey": null
 },
 v5 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "buyerTotal",
   "args": (v0/*: any*/),
+  "kind": "ScalarField",
+  "name": "buyerTotal",
   "storageKey": "buyerTotal(precision:2)"
 },
 v6 = [
   {
-    "kind": "ScalarField",
     "alias": null,
-    "name": "internalID",
     "args": null,
+    "kind": "ScalarField",
+    "name": "internalID",
     "storageKey": null
   },
   {
-    "kind": "ScalarField",
     "alias": null,
-    "name": "amount",
     "args": (v0/*: any*/),
+    "kind": "ScalarField",
+    "name": "amount",
     "storageKey": "amount(precision:2)"
   },
   {
-    "kind": "ScalarField",
     "alias": null,
-    "name": "amountCents",
     "args": null,
+    "kind": "ScalarField",
+    "name": "amountCents",
     "storageKey": null
   },
   (v1/*: any*/),
@@ -121,46 +122,45 @@ v6 = [
   (v4/*: any*/),
   (v5/*: any*/),
   {
-    "kind": "ScalarField",
     "alias": null,
+    "args": null,
+    "kind": "ScalarField",
     "name": "buyerTotalCents",
-    "args": null,
     "storageKey": null
   },
   {
-    "kind": "ScalarField",
     "alias": null,
+    "args": null,
+    "kind": "ScalarField",
     "name": "fromParticipant",
-    "args": null,
     "storageKey": null
   },
   {
-    "kind": "ScalarField",
     "alias": null,
-    "name": "note",
     "args": null,
+    "kind": "ScalarField",
+    "name": "note",
     "storageKey": null
   }
 ];
 return {
-  "kind": "Fragment",
-  "name": "TransactionDetailsSummaryItem_order",
-  "type": "CommerceOrder",
-  "metadata": null,
   "argumentDefinitions": [],
+  "kind": "Fragment",
+  "metadata": null,
+  "name": "TransactionDetailsSummaryItem_order",
   "selections": [
     {
-      "kind": "ScalarField",
       "alias": null,
-      "name": "__typename",
       "args": null,
+      "kind": "ScalarField",
+      "name": "__typename",
       "storageKey": null
     },
     {
-      "kind": "ScalarField",
       "alias": null,
-      "name": "mode",
       "args": null,
+      "kind": "ScalarField",
+      "name": "mode",
       "storageKey": null
     },
     (v1/*: any*/),
@@ -168,47 +168,48 @@ return {
     (v3/*: any*/),
     (v4/*: any*/),
     {
-      "kind": "ScalarField",
       "alias": null,
-      "name": "itemsTotal",
       "args": (v0/*: any*/),
+      "kind": "ScalarField",
+      "name": "itemsTotal",
       "storageKey": "itemsTotal(precision:2)"
     },
     {
-      "kind": "ScalarField",
       "alias": null,
-      "name": "totalListPrice",
       "args": (v0/*: any*/),
+      "kind": "ScalarField",
+      "name": "totalListPrice",
       "storageKey": "totalListPrice(precision:2)"
     },
     (v5/*: any*/),
     {
       "kind": "InlineFragment",
-      "type": "CommerceOfferOrder",
       "selections": [
         {
-          "kind": "LinkedField",
           "alias": null,
-          "name": "lastOffer",
-          "storageKey": null,
           "args": null,
           "concreteType": "CommerceOffer",
+          "kind": "LinkedField",
+          "name": "lastOffer",
           "plural": false,
-          "selections": (v6/*: any*/)
+          "selections": (v6/*: any*/),
+          "storageKey": null
         },
         {
-          "kind": "LinkedField",
           "alias": null,
-          "name": "myLastOffer",
-          "storageKey": null,
           "args": null,
           "concreteType": "CommerceOffer",
+          "kind": "LinkedField",
+          "name": "myLastOffer",
           "plural": false,
-          "selections": (v6/*: any*/)
+          "selections": (v6/*: any*/),
+          "storageKey": null
         }
-      ]
+      ],
+      "type": "CommerceOfferOrder"
     }
-  ]
+  ],
+  "type": "CommerceOrder"
 };
 })();
 (node as any).hash = 'e207bab0483d25f4386054ee2b0365c6';

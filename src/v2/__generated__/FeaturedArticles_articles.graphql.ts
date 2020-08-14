@@ -1,4 +1,5 @@
 /* tslint:disable */
+/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -30,32 +31,29 @@ export type FeaturedArticles_articles$key = ReadonlyArray<{
 
 const node: ReaderFragment = (function(){
 var v0 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "url",
   "args": null,
+  "kind": "ScalarField",
+  "name": "url",
   "storageKey": null
 };
 return {
+  "argumentDefinitions": [],
   "kind": "Fragment",
-  "name": "FeaturedArticles_articles",
-  "type": "Article",
   "metadata": {
     "plural": true
   },
-  "argumentDefinitions": [],
+  "name": "FeaturedArticles_articles",
   "selections": [
     {
-      "kind": "ScalarField",
       "alias": null,
-      "name": "thumbnailTitle",
       "args": null,
+      "kind": "ScalarField",
+      "name": "thumbnailTitle",
       "storageKey": null
     },
     {
-      "kind": "ScalarField",
       "alias": null,
-      "name": "publishedAt",
       "args": [
         {
           "kind": "Literal",
@@ -63,22 +61,20 @@ return {
           "value": "MMM Do, YYYY"
         }
       ],
+      "kind": "ScalarField",
+      "name": "publishedAt",
       "storageKey": "publishedAt(format:\"MMM Do, YYYY\")"
     },
     {
-      "kind": "LinkedField",
       "alias": null,
-      "name": "thumbnailImage",
-      "storageKey": null,
       "args": null,
       "concreteType": "Image",
+      "kind": "LinkedField",
+      "name": "thumbnailImage",
       "plural": false,
       "selections": [
         {
-          "kind": "LinkedField",
           "alias": null,
-          "name": "cropped",
-          "storageKey": "cropped(height:780,width:1170)",
           "args": [
             {
               "kind": "Literal",
@@ -92,41 +88,41 @@ return {
             }
           ],
           "concreteType": "CroppedImageUrl",
+          "kind": "LinkedField",
+          "name": "cropped",
           "plural": false,
           "selections": [
             {
-              "kind": "ScalarField",
               "alias": null,
-              "name": "width",
               "args": null,
+              "kind": "ScalarField",
+              "name": "width",
               "storageKey": null
             },
             {
-              "kind": "ScalarField",
               "alias": null,
-              "name": "height",
               "args": null,
+              "kind": "ScalarField",
+              "name": "height",
               "storageKey": null
             },
             (v0/*: any*/)
-          ]
+          ],
+          "storageKey": "cropped(height:780,width:1170)"
         }
-      ]
+      ],
+      "storageKey": null
     },
     {
-      "kind": "LinkedField",
       "alias": "tinyImage",
-      "name": "thumbnailImage",
-      "storageKey": null,
       "args": null,
       "concreteType": "Image",
+      "kind": "LinkedField",
+      "name": "thumbnailImage",
       "plural": false,
       "selections": [
         {
-          "kind": "LinkedField",
           "alias": null,
-          "name": "cropped",
-          "storageKey": "cropped(height:120,width:120)",
           "args": [
             {
               "kind": "Literal",
@@ -140,21 +136,26 @@ return {
             }
           ],
           "concreteType": "CroppedImageUrl",
+          "kind": "LinkedField",
+          "name": "cropped",
           "plural": false,
           "selections": [
             (v0/*: any*/)
-          ]
+          ],
+          "storageKey": "cropped(height:120,width:120)"
         }
-      ]
+      ],
+      "storageKey": null
     },
     {
-      "kind": "ScalarField",
       "alias": null,
-      "name": "href",
       "args": null,
+      "kind": "ScalarField",
+      "name": "href",
       "storageKey": null
     }
-  ]
+  ],
+  "type": "Article"
 };
 })();
 (node as any).hash = 'c35619012178f50363dab1e735a3b8ad';

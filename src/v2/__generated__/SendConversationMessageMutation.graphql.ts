@@ -1,13 +1,14 @@
 /* tslint:disable */
+/* eslint-disable */
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type SendConversationMessageMutationInput = {
-    readonly bodyText: string;
-    readonly clientMutationId?: string | null;
-    readonly from: string;
-    readonly id: string;
-    readonly replyToMessageID: string;
+    bodyText: string;
+    clientMutationId?: string | null;
+    from: string;
+    id: string;
+    replyToMessageID: string;
 };
 export type SendConversationMessageMutationVariables = {
     input: SendConversationMessageMutationInput;
@@ -72,10 +73,10 @@ fragment Message_message on Message {
 const node: ConcreteRequest = (function(){
 var v0 = [
   {
+    "defaultValue": null,
     "kind": "LocalArgument",
     "name": "input",
-    "type": "SendConversationMessageMutationInput!",
-    "defaultValue": null
+    "type": "SendConversationMessageMutationInput!"
   }
 ],
 v1 = [
@@ -86,74 +87,69 @@ v1 = [
   }
 ],
 v2 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "impulseID",
   "args": null,
+  "kind": "ScalarField",
+  "name": "impulseID",
   "storageKey": null
 },
 v3 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "isFromUser",
   "args": null,
+  "kind": "ScalarField",
+  "name": "isFromUser",
   "storageKey": null
 },
 v4 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "body",
   "args": null,
+  "kind": "ScalarField",
+  "name": "body",
   "storageKey": null
 },
 v5 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "id",
   "args": null,
+  "kind": "ScalarField",
+  "name": "id",
   "storageKey": null
 },
 v6 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "internalID",
   "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
   "storageKey": null
 };
 return {
-  "kind": "Request",
   "fragment": {
-    "kind": "Fragment",
-    "name": "SendConversationMessageMutation",
-    "type": "Mutation",
-    "metadata": null,
     "argumentDefinitions": (v0/*: any*/),
+    "kind": "Fragment",
+    "metadata": null,
+    "name": "SendConversationMessageMutation",
     "selections": [
       {
-        "kind": "LinkedField",
         "alias": null,
-        "name": "sendConversationMessage",
-        "storageKey": null,
         "args": (v1/*: any*/),
         "concreteType": "SendConversationMessageMutationPayload",
+        "kind": "LinkedField",
+        "name": "sendConversationMessage",
         "plural": false,
         "selections": [
           {
-            "kind": "LinkedField",
             "alias": null,
-            "name": "messageEdge",
-            "storageKey": null,
             "args": null,
             "concreteType": "MessageEdge",
+            "kind": "LinkedField",
+            "name": "messageEdge",
             "plural": false,
             "selections": [
               {
-                "kind": "LinkedField",
                 "alias": null,
-                "name": "node",
-                "storageKey": null,
                 "args": null,
                 "concreteType": "Message",
+                "kind": "LinkedField",
+                "name": "node",
                 "plural": false,
                 "selections": [
                   (v2/*: any*/),
@@ -162,48 +158,50 @@ return {
                   (v5/*: any*/),
                   (v6/*: any*/),
                   {
+                    "args": null,
                     "kind": "FragmentSpread",
-                    "name": "Message_message",
-                    "args": null
+                    "name": "Message_message"
                   }
-                ]
+                ],
+                "storageKey": null
               }
-            ]
+            ],
+            "storageKey": null
           }
-        ]
+        ],
+        "storageKey": null
       }
-    ]
+    ],
+    "type": "Mutation"
   },
+  "kind": "Request",
   "operation": {
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "SendConversationMessageMutation",
-    "argumentDefinitions": (v0/*: any*/),
     "selections": [
       {
-        "kind": "LinkedField",
         "alias": null,
-        "name": "sendConversationMessage",
-        "storageKey": null,
         "args": (v1/*: any*/),
         "concreteType": "SendConversationMessageMutationPayload",
+        "kind": "LinkedField",
+        "name": "sendConversationMessage",
         "plural": false,
         "selections": [
           {
-            "kind": "LinkedField",
             "alias": null,
-            "name": "messageEdge",
-            "storageKey": null,
             "args": null,
             "concreteType": "MessageEdge",
+            "kind": "LinkedField",
+            "name": "messageEdge",
             "plural": false,
             "selections": [
               {
-                "kind": "LinkedField",
                 "alias": null,
-                "name": "node",
-                "storageKey": null,
                 "args": null,
                 "concreteType": "Message",
+                "kind": "LinkedField",
+                "name": "node",
                 "plural": false,
                 "selections": [
                   (v2/*: any*/),
@@ -212,84 +210,87 @@ return {
                   (v5/*: any*/),
                   (v6/*: any*/),
                   {
-                    "kind": "ScalarField",
                     "alias": null,
-                    "name": "createdAt",
                     "args": null,
+                    "kind": "ScalarField",
+                    "name": "createdAt",
                     "storageKey": null
                   },
                   {
-                    "kind": "LinkedField",
                     "alias": null,
-                    "name": "from",
-                    "storageKey": null,
                     "args": null,
                     "concreteType": "MessageInitiator",
+                    "kind": "LinkedField",
+                    "name": "from",
                     "plural": false,
                     "selections": [
                       {
-                        "kind": "ScalarField",
                         "alias": null,
-                        "name": "name",
                         "args": null,
+                        "kind": "ScalarField",
+                        "name": "name",
                         "storageKey": null
                       },
                       {
-                        "kind": "ScalarField",
                         "alias": null,
-                        "name": "email",
                         "args": null,
+                        "kind": "ScalarField",
+                        "name": "email",
                         "storageKey": null
                       }
-                    ]
+                    ],
+                    "storageKey": null
                   },
                   {
-                    "kind": "LinkedField",
                     "alias": null,
-                    "name": "attachments",
-                    "storageKey": null,
                     "args": null,
                     "concreteType": "Attachment",
+                    "kind": "LinkedField",
+                    "name": "attachments",
                     "plural": true,
                     "selections": [
                       (v5/*: any*/),
                       {
-                        "kind": "ScalarField",
                         "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
                         "name": "contentType",
-                        "args": null,
                         "storageKey": null
                       },
                       {
-                        "kind": "ScalarField",
                         "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
                         "name": "fileName",
-                        "args": null,
                         "storageKey": null
                       },
                       {
-                        "kind": "ScalarField",
                         "alias": null,
-                        "name": "downloadURL",
                         "args": null,
+                        "kind": "ScalarField",
+                        "name": "downloadURL",
                         "storageKey": null
                       }
-                    ]
+                    ],
+                    "storageKey": null
                   }
-                ]
+                ],
+                "storageKey": null
               }
-            ]
+            ],
+            "storageKey": null
           }
-        ]
+        ],
+        "storageKey": null
       }
     ]
   },
   "params": {
-    "operationKind": "mutation",
-    "name": "SendConversationMessageMutation",
     "id": null,
-    "text": "mutation SendConversationMessageMutation(\n  $input: SendConversationMessageMutationInput!\n) {\n  sendConversationMessage(input: $input) {\n    messageEdge {\n      node {\n        impulseID\n        isFromUser\n        body\n        id\n        internalID\n        ...Message_message\n      }\n    }\n  }\n}\n\nfragment Message_message on Message {\n  internalID\n  body\n  createdAt\n  isFromUser\n  from {\n    name\n    email\n  }\n  attachments {\n    id\n    contentType\n    fileName\n    downloadURL\n  }\n}\n",
-    "metadata": {}
+    "metadata": {},
+    "name": "SendConversationMessageMutation",
+    "operationKind": "mutation",
+    "text": "mutation SendConversationMessageMutation(\n  $input: SendConversationMessageMutationInput!\n) {\n  sendConversationMessage(input: $input) {\n    messageEdge {\n      node {\n        impulseID\n        isFromUser\n        body\n        id\n        internalID\n        ...Message_message\n      }\n    }\n  }\n}\n\nfragment Message_message on Message {\n  internalID\n  body\n  createdAt\n  isFromUser\n  from {\n    name\n    email\n  }\n  attachments {\n    id\n    contentType\n    fileName\n    downloadURL\n  }\n}\n"
   }
 };
 })();

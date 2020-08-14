@@ -1,4 +1,5 @@
 /* tslint:disable */
+/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -18,126 +19,122 @@ export type ArtistSeriesApp_artistSeries$key = {
 
 
 const node: ReaderFragment = {
-  "kind": "Fragment",
-  "name": "ArtistSeriesApp_artistSeries",
-  "type": "ArtistSeries",
-  "metadata": null,
   "argumentDefinitions": [
     {
+      "defaultValue": null,
       "kind": "LocalArgument",
       "name": "acquireable",
-      "type": "Boolean",
-      "defaultValue": null
+      "type": "Boolean"
     },
     {
+      "defaultValue": null,
       "kind": "LocalArgument",
       "name": "aggregations",
-      "type": "[ArtworkAggregation]",
-      "defaultValue": null
+      "type": "[ArtworkAggregation]"
     },
     {
+      "defaultValue": null,
       "kind": "LocalArgument",
       "name": "atAuction",
-      "type": "Boolean",
-      "defaultValue": null
+      "type": "Boolean"
     },
     {
+      "defaultValue": null,
       "kind": "LocalArgument",
       "name": "attributionClass",
-      "type": "[String]",
-      "defaultValue": null
+      "type": "[String]"
     },
     {
+      "defaultValue": null,
       "kind": "LocalArgument",
       "name": "color",
-      "type": "String",
-      "defaultValue": null
+      "type": "String"
     },
     {
+      "defaultValue": null,
       "kind": "LocalArgument",
       "name": "forSale",
-      "type": "Boolean",
-      "defaultValue": null
+      "type": "Boolean"
     },
     {
+      "defaultValue": null,
       "kind": "LocalArgument",
       "name": "height",
-      "type": "String",
-      "defaultValue": null
+      "type": "String"
     },
     {
+      "defaultValue": null,
       "kind": "LocalArgument",
       "name": "inquireableOnly",
-      "type": "Boolean",
-      "defaultValue": null
+      "type": "Boolean"
     },
     {
+      "defaultValue": null,
       "kind": "LocalArgument",
       "name": "keyword",
-      "type": "String",
-      "defaultValue": null
+      "type": "String"
     },
     {
+      "defaultValue": null,
       "kind": "LocalArgument",
       "name": "majorPeriods",
-      "type": "[String]",
-      "defaultValue": null
+      "type": "[String]"
     },
     {
+      "defaultValue": "*",
       "kind": "LocalArgument",
       "name": "medium",
-      "type": "String",
-      "defaultValue": "*"
+      "type": "String"
     },
     {
+      "defaultValue": null,
       "kind": "LocalArgument",
       "name": "offerable",
-      "type": "Boolean",
-      "defaultValue": null
+      "type": "Boolean"
     },
     {
+      "defaultValue": null,
       "kind": "LocalArgument",
       "name": "page",
-      "type": "Int",
-      "defaultValue": null
+      "type": "Int"
     },
     {
+      "defaultValue": null,
       "kind": "LocalArgument",
       "name": "partnerID",
-      "type": "ID",
-      "defaultValue": null
+      "type": "ID"
     },
     {
+      "defaultValue": null,
       "kind": "LocalArgument",
       "name": "priceRange",
-      "type": "String",
-      "defaultValue": null
+      "type": "String"
     },
     {
+      "defaultValue": null,
       "kind": "LocalArgument",
       "name": "sizes",
-      "type": "[ArtworkSizes]",
-      "defaultValue": null
+      "type": "[ArtworkSizes]"
     },
     {
+      "defaultValue": "-partner_updated_at",
       "kind": "LocalArgument",
       "name": "sort",
-      "type": "String",
-      "defaultValue": "-partner_updated_at"
+      "type": "String"
     },
     {
+      "defaultValue": null,
       "kind": "LocalArgument",
       "name": "width",
-      "type": "String",
-      "defaultValue": null
+      "type": "String"
     }
   ],
+  "kind": "Fragment",
+  "metadata": null,
+  "name": "ArtistSeriesApp_artistSeries",
   "selections": [
     {
-      "kind": "LinkedField",
       "alias": "railArtist",
-      "name": "artists",
-      "storageKey": "artists(size:1)",
       "args": [
         {
           "kind": "Literal",
@@ -146,23 +143,24 @@ const node: ReaderFragment = {
         }
       ],
       "concreteType": "Artist",
+      "kind": "LinkedField",
+      "name": "artists",
       "plural": true,
       "selections": [
         {
+          "args": null,
           "kind": "FragmentSpread",
-          "name": "ArtistSeriesRail_artist",
-          "args": null
+          "name": "ArtistSeriesRail_artist"
         }
-      ]
+      ],
+      "storageKey": "artists(size:1)"
     },
     {
+      "args": null,
       "kind": "FragmentSpread",
-      "name": "ArtistSeriesHeader_artistSeries",
-      "args": null
+      "name": "ArtistSeriesHeader_artistSeries"
     },
     {
-      "kind": "FragmentSpread",
-      "name": "ArtistSeriesArtworksFilter_artistSeries",
       "args": [
         {
           "kind": "Variable",
@@ -254,9 +252,12 @@ const node: ReaderFragment = {
           "name": "width",
           "variableName": "width"
         }
-      ]
+      ],
+      "kind": "FragmentSpread",
+      "name": "ArtistSeriesArtworksFilter_artistSeries"
     }
-  ]
+  ],
+  "type": "ArtistSeries"
 };
 (node as any).hash = '54f2094f5c9c3096ee854fe89b4b35f2';
 export default node;

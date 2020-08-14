@@ -1,8 +1,9 @@
 /* tslint:disable */
+/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
-export type MarketingGroupTypes = "ArtistSeries" | "FeaturedCollections" | "OtherCollections" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
+export type MarketingGroupTypes = "ArtistSeries" | "FeaturedCollections" | "OtherCollections" | "%future added value";
 export type ArtistSeriesRail_collectionGroup = {
     readonly groupType: MarketingGroupTypes;
     readonly name: string;
@@ -21,50 +22,50 @@ export type ArtistSeriesRail_collectionGroup$key = {
 
 
 const node: ReaderFragment = {
-  "kind": "Fragment",
-  "name": "ArtistSeriesRail_collectionGroup",
-  "type": "MarketingCollectionGroup",
-  "metadata": null,
   "argumentDefinitions": [],
+  "kind": "Fragment",
+  "metadata": null,
+  "name": "ArtistSeriesRail_collectionGroup",
   "selections": [
     {
-      "kind": "ScalarField",
       "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "groupType",
-      "args": null,
       "storageKey": null
     },
     {
+      "alias": null,
+      "args": null,
       "kind": "ScalarField",
-      "alias": null,
       "name": "name",
-      "args": null,
       "storageKey": null
     },
     {
-      "kind": "LinkedField",
       "alias": null,
-      "name": "members",
-      "storageKey": null,
       "args": null,
       "concreteType": "MarketingCollection",
+      "kind": "LinkedField",
+      "name": "members",
       "plural": true,
       "selections": [
         {
-          "kind": "ScalarField",
           "alias": null,
-          "name": "slug",
           "args": null,
+          "kind": "ScalarField",
+          "name": "slug",
           "storageKey": null
         },
         {
+          "args": null,
           "kind": "FragmentSpread",
-          "name": "ArtistSeriesEntity_member",
-          "args": null
+          "name": "ArtistSeriesEntity_member"
         }
-      ]
+      ],
+      "storageKey": null
     }
-  ]
+  ],
+  "type": "MarketingCollectionGroup"
 };
 (node as any).hash = '0a934729123f8c15545a74cfcd58bb55';
 export default node;

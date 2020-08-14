@@ -1,4 +1,5 @@
 /* tslint:disable */
+/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -31,46 +32,42 @@ var v0 = [
   }
 ];
 return {
-  "kind": "Fragment",
-  "name": "Shows_viewer",
-  "type": "Viewer",
-  "metadata": null,
   "argumentDefinitions": [
     {
+      "defaultValue": "running",
       "kind": "LocalArgument",
       "name": "currentShowsStatus",
-      "type": "String",
-      "defaultValue": "running"
+      "type": "String"
     },
     {
+      "defaultValue": "END_AT_ASC",
       "kind": "LocalArgument",
       "name": "currentShowsSort",
-      "type": "ShowSorts",
-      "defaultValue": "END_AT_ASC"
+      "type": "ShowSorts"
     },
     {
+      "defaultValue": "upcoming",
       "kind": "LocalArgument",
       "name": "upcomingShowsStatus",
-      "type": "String",
-      "defaultValue": "upcoming"
+      "type": "String"
     },
     {
+      "defaultValue": "START_AT_ASC",
       "kind": "LocalArgument",
       "name": "upcomingShowsSort",
-      "type": "ShowSorts",
-      "defaultValue": "START_AT_ASC"
+      "type": "ShowSorts"
     },
     {
+      "defaultValue": "closed",
       "kind": "LocalArgument",
       "name": "pastShowsStatus",
-      "type": "String",
-      "defaultValue": "closed"
+      "type": "String"
     },
     {
+      "defaultValue": "END_AT_DESC",
       "kind": "LocalArgument",
       "name": "pastShowsSort",
-      "type": "ShowSorts",
-      "defaultValue": "END_AT_DESC"
+      "type": "ShowSorts"
     },
     {
       "kind": "RootArgument",
@@ -78,19 +75,19 @@ return {
       "type": "String!"
     }
   ],
+  "kind": "Fragment",
+  "metadata": null,
+  "name": "Shows_viewer",
   "selections": [
     {
-      "kind": "LinkedField",
       "alias": "artist_currentShows",
-      "name": "artist",
-      "storageKey": null,
       "args": (v0/*: any*/),
       "concreteType": "Artist",
+      "kind": "LinkedField",
+      "name": "artist",
       "plural": false,
       "selections": [
         {
-          "kind": "FragmentSpread",
-          "name": "ArtistShows_artist",
           "args": [
             {
               "kind": "Variable",
@@ -102,22 +99,22 @@ return {
               "name": "status",
               "variableName": "currentShowsStatus"
             }
-          ]
+          ],
+          "kind": "FragmentSpread",
+          "name": "ArtistShows_artist"
         }
-      ]
+      ],
+      "storageKey": null
     },
     {
-      "kind": "LinkedField",
       "alias": "artist_upcomingShows",
-      "name": "artist",
-      "storageKey": null,
       "args": (v0/*: any*/),
       "concreteType": "Artist",
+      "kind": "LinkedField",
+      "name": "artist",
       "plural": false,
       "selections": [
         {
-          "kind": "FragmentSpread",
-          "name": "ArtistShows_artist",
           "args": [
             {
               "kind": "Variable",
@@ -129,22 +126,22 @@ return {
               "name": "status",
               "variableName": "upcomingShowsStatus"
             }
-          ]
+          ],
+          "kind": "FragmentSpread",
+          "name": "ArtistShows_artist"
         }
-      ]
+      ],
+      "storageKey": null
     },
     {
-      "kind": "LinkedField",
       "alias": "artist_pastShows",
-      "name": "artist",
-      "storageKey": null,
       "args": (v0/*: any*/),
       "concreteType": "Artist",
+      "kind": "LinkedField",
+      "name": "artist",
       "plural": false,
       "selections": [
         {
-          "kind": "FragmentSpread",
-          "name": "ArtistShows_artist",
           "args": [
             {
               "kind": "Variable",
@@ -156,11 +153,15 @@ return {
               "name": "status",
               "variableName": "pastShowsStatus"
             }
-          ]
+          ],
+          "kind": "FragmentSpread",
+          "name": "ArtistShows_artist"
         }
-      ]
+      ],
+      "storageKey": null
     }
-  ]
+  ],
+  "type": "Viewer"
 };
 })();
 (node as any).hash = '88d732cfde2cab843c92b14811d5f43d';

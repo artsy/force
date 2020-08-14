@@ -1,4 +1,5 @@
 /* tslint:disable */
+/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -20,52 +21,52 @@ export type CreditCardSummaryItem_order$key = {
 
 
 const node: ReaderFragment = {
-  "kind": "Fragment",
-  "name": "CreditCardSummaryItem_order",
-  "type": "CommerceOrder",
-  "metadata": null,
   "argumentDefinitions": [],
+  "kind": "Fragment",
+  "metadata": null,
+  "name": "CreditCardSummaryItem_order",
   "selections": [
     {
-      "kind": "LinkedField",
       "alias": null,
-      "name": "creditCard",
-      "storageKey": null,
       "args": null,
       "concreteType": "CreditCard",
+      "kind": "LinkedField",
+      "name": "creditCard",
       "plural": false,
       "selections": [
         {
-          "kind": "ScalarField",
           "alias": null,
+          "args": null,
+          "kind": "ScalarField",
           "name": "brand",
-          "args": null,
           "storageKey": null
         },
         {
-          "kind": "ScalarField",
           "alias": null,
+          "args": null,
+          "kind": "ScalarField",
           "name": "lastDigits",
-          "args": null,
           "storageKey": null
         },
         {
-          "kind": "ScalarField",
           "alias": null,
+          "args": null,
+          "kind": "ScalarField",
           "name": "expirationYear",
-          "args": null,
           "storageKey": null
         },
         {
-          "kind": "ScalarField",
           "alias": null,
-          "name": "expirationMonth",
           "args": null,
+          "kind": "ScalarField",
+          "name": "expirationMonth",
           "storageKey": null
         }
-      ]
+      ],
+      "storageKey": null
     }
-  ]
+  ],
+  "type": "CommerceOrder"
 };
 (node as any).hash = 'a92d2e7b3be6db434a54e7812b352637';
 export default node;

@@ -1,4 +1,5 @@
 /* tslint:disable */
+/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -16,27 +17,27 @@ export type RequestConditionReport_me$key = {
 
 
 const node: ReaderFragment = {
-  "kind": "Fragment",
-  "name": "RequestConditionReport_me",
-  "type": "Me",
-  "metadata": null,
   "argumentDefinitions": [],
+  "kind": "Fragment",
+  "metadata": null,
+  "name": "RequestConditionReport_me",
   "selections": [
     {
-      "kind": "ScalarField",
       "alias": null,
-      "name": "email",
       "args": null,
+      "kind": "ScalarField",
+      "name": "email",
       "storageKey": null
     },
     {
-      "kind": "ScalarField",
       "alias": null,
-      "name": "internalID",
       "args": null,
+      "kind": "ScalarField",
+      "name": "internalID",
       "storageKey": null
     }
-  ]
+  ],
+  "type": "Me"
 };
 (node as any).hash = '258c05430e9b3e8a98d4422132c12e82';
 export default node;

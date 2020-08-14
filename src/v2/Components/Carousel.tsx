@@ -449,6 +449,7 @@ const FlickityCarousel = styled.div<{
 `
 
 const CarouselContainer = styled(Box)<{
+  height: any
   isMounted: boolean
 }>`
   width: 100%;
@@ -494,7 +495,9 @@ const CarouselContainer = styled(Box)<{
   }};
 `
 
-export const ArrowButton = styled(Flex)<LeftProps & RightProps & HeightProps>`
+export const ArrowButton: typeof Flex = styled(Flex)<
+  LeftProps & RightProps & HeightProps
+>`
   position: relative;
   cursor: pointer;
   display: flex;

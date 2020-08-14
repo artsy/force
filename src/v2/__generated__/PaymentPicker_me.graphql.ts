@@ -1,4 +1,5 @@
 /* tslint:disable */
+/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -25,17 +26,13 @@ export type PaymentPicker_me$key = {
 
 
 const node: ReaderFragment = {
-  "kind": "Fragment",
-  "name": "PaymentPicker_me",
-  "type": "Me",
-  "metadata": null,
   "argumentDefinitions": [],
+  "kind": "Fragment",
+  "metadata": null,
+  "name": "PaymentPicker_me",
   "selections": [
     {
-      "kind": "LinkedField",
       "alias": null,
-      "name": "creditCards",
-      "storageKey": "creditCards(first:100)",
       "args": [
         {
           "kind": "Literal",
@@ -44,68 +41,72 @@ const node: ReaderFragment = {
         }
       ],
       "concreteType": "CreditCardConnection",
+      "kind": "LinkedField",
+      "name": "creditCards",
       "plural": false,
       "selections": [
         {
-          "kind": "LinkedField",
           "alias": null,
-          "name": "edges",
-          "storageKey": null,
           "args": null,
           "concreteType": "CreditCardEdge",
+          "kind": "LinkedField",
+          "name": "edges",
           "plural": true,
           "selections": [
             {
-              "kind": "LinkedField",
               "alias": null,
-              "name": "node",
-              "storageKey": null,
               "args": null,
               "concreteType": "CreditCard",
+              "kind": "LinkedField",
+              "name": "node",
               "plural": false,
               "selections": [
                 {
-                  "kind": "ScalarField",
                   "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
                   "name": "internalID",
-                  "args": null,
                   "storageKey": null
                 },
                 {
-                  "kind": "ScalarField",
                   "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
                   "name": "brand",
-                  "args": null,
                   "storageKey": null
                 },
                 {
-                  "kind": "ScalarField",
                   "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
                   "name": "lastDigits",
-                  "args": null,
                   "storageKey": null
                 },
                 {
-                  "kind": "ScalarField",
                   "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
                   "name": "expirationMonth",
-                  "args": null,
                   "storageKey": null
                 },
                 {
-                  "kind": "ScalarField",
                   "alias": null,
-                  "name": "expirationYear",
                   "args": null,
+                  "kind": "ScalarField",
+                  "name": "expirationYear",
                   "storageKey": null
                 }
-              ]
+              ],
+              "storageKey": null
             }
-          ]
+          ],
+          "storageKey": null
         }
-      ]
+      ],
+      "storageKey": "creditCards(first:100)"
     }
-  ]
+  ],
+  "type": "Me"
 };
 (node as any).hash = '7c560989a1629a7d702ebca42324ab84';
 export default node;

@@ -28,7 +28,13 @@ const Router = ({ order, ...props }: any) => (
         name: "Dr. Collector",
       },
     }}
-    historyOptions={{ useBeforeUnload: true }}
+    /**
+     * FIXME: Lib upgrade
+     * Breaking: Configure beforeunload handling on navigation listeners rather than on history enhancer (#313)
+     * Instead of setting useBeforeUnload in createHistoryEnhancer, set beforeUnload in addNavigationListener
+     * @see https://github.com/4Catalyzer/farce/releases/tag/v0.4.0
+     */
+    // historyOptions={{ useBeforeUnload: true }}
     context={{
       mediator: {
         trigger: x => x,
@@ -187,14 +193,10 @@ storiesOf("Apps/Order/Make Offer/NewPayment", module)
       order={{
         ...OfferOrderPickup,
         state: "SUBMITTED",
-        stateExpiresAt: DateTime.local()
-          .plus({ days: 1 })
-          .toString(),
+        stateExpiresAt: DateTime.local().plus({ days: 1 }).toString(),
         lastOffer: {
           ...OfferWithTotals,
-          createdAt: DateTime.local()
-            .minus({ days: 1 })
-            .toString(),
+          createdAt: DateTime.local().minus({ days: 1 }).toString(),
         },
         awaitingResponseFrom: "BUYER",
         lastTransactionFailed: true,
@@ -209,14 +211,10 @@ storiesOf("Apps/Order/Make Offer/NewPayment", module)
       order={{
         ...OfferOrderWithShippingDetails,
         state: "SUBMITTED",
-        stateExpiresAt: DateTime.local()
-          .plus({ days: 1 })
-          .toString(),
+        stateExpiresAt: DateTime.local().plus({ days: 1 }).toString(),
         lastOffer: {
           ...OfferWithTotals,
-          createdAt: DateTime.local()
-            .minus({ days: 1 })
-            .toString(),
+          createdAt: DateTime.local().minus({ days: 1 }).toString(),
         },
         lastTransactionFailed: true,
         awaitingResponseFrom: "BUYER",
@@ -239,14 +237,10 @@ storiesOf("Apps/Order/Respond", module)
       order={{
         ...OfferOrderWithShippingDetails,
         state: "SUBMITTED",
-        stateExpiresAt: DateTime.local()
-          .plus({ days: 1 })
-          .toString(),
+        stateExpiresAt: DateTime.local().plus({ days: 1 }).toString(),
         lastOffer: {
           ...OfferWithTotals,
-          createdAt: DateTime.local()
-            .minus({ days: 1 })
-            .toString(),
+          createdAt: DateTime.local().minus({ days: 1 }).toString(),
         },
         awaitingResponseFrom: "BUYER",
         offers: { edges: Offers },
@@ -260,23 +254,17 @@ storiesOf("Apps/Order/Respond", module)
       order={{
         ...OfferOrderWithShippingDetails,
         state: "SUBMITTED",
-        stateExpiresAt: DateTime.local()
-          .plus({ days: 1 })
-          .toString(),
+        stateExpiresAt: DateTime.local().plus({ days: 1 }).toString(),
         lastOffer: {
           ...OfferWithTotals,
           id: "last-offer",
-          createdAt: DateTime.local()
-            .minus({ days: 1 })
-            .toString(),
+          createdAt: DateTime.local().minus({ days: 1 }).toString(),
         },
         myLastOffer: {
           ...OfferWithTotals,
           id: "my-last-offer",
           fromParticipant: "BUYER",
-          createdAt: DateTime.local()
-            .minus({ days: 1 })
-            .toString(),
+          createdAt: DateTime.local().minus({ days: 1 }).toString(),
         },
         awaitingResponseFrom: "BUYER",
         offers: { edges: Offers },
@@ -290,15 +278,11 @@ storiesOf("Apps/Order/Respond", module)
       order={{
         ...OfferOrderWithShippingDetails,
         state: "SUBMITTED",
-        stateExpiresAt: DateTime.local()
-          .plus({ days: 1 })
-          .toString(),
+        stateExpiresAt: DateTime.local().plus({ days: 1 }).toString(),
         lastOffer: {
           ...OfferWithTotals,
           id: "last-offer",
-          createdAt: DateTime.local()
-            .minus({ days: 1 })
-            .toString(),
+          createdAt: DateTime.local().minus({ days: 1 }).toString(),
         },
         awaitingResponseFrom: "BUYER",
         offers: { edges: Offers },
@@ -313,15 +297,11 @@ storiesOf("Apps/Order/Respond", module)
       order={{
         ...OfferOrderWithShippingDetails,
         state: "SUBMITTED",
-        stateExpiresAt: DateTime.local()
-          .plus({ days: 1 })
-          .toString(),
+        stateExpiresAt: DateTime.local().plus({ days: 1 }).toString(),
         lastOffer: {
           ...OfferWithTotals,
           id: "last-offer",
-          createdAt: DateTime.local()
-            .minus({ days: 1 })
-            .toString(),
+          createdAt: DateTime.local().minus({ days: 1 }).toString(),
         },
         awaitingResponseFrom: "BUYER",
         offers: { edges: Offers },

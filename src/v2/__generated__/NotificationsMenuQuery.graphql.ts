@@ -1,4 +1,5 @@
 /* tslint:disable */
+/* eslint-disable */
 
 import { ConcreteRequest } from "relay-runtime";
 export type NotificationsMenuQueryVariables = {};
@@ -66,10 +67,10 @@ query NotificationsMenuQuery {
 
 const node: ConcreteRequest = (function(){
 var v0 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "unreadNotificationsCount",
   "args": null,
+  "kind": "ScalarField",
+  "name": "unreadNotificationsCount",
   "storageKey": null
 },
 v1 = {
@@ -78,30 +79,28 @@ v1 = {
   "value": "PUBLISHED_AT_DESC"
 },
 v2 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "href",
   "args": null,
+  "kind": "ScalarField",
+  "name": "href",
   "storageKey": null
 },
 v3 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "summary",
   "args": null,
+  "kind": "ScalarField",
+  "name": "summary",
   "storageKey": null
 },
 v4 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "artists",
   "args": null,
+  "kind": "ScalarField",
+  "name": "artists",
   "storageKey": null
 },
 v5 = {
-  "kind": "ScalarField",
   "alias": "published_at",
-  "name": "publishedAt",
   "args": [
     {
       "kind": "Literal",
@@ -109,22 +108,20 @@ v5 = {
       "value": "MMM DD"
     }
   ],
+  "kind": "ScalarField",
+  "name": "publishedAt",
   "storageKey": "publishedAt(format:\"MMM DD\")"
 },
 v6 = {
-  "kind": "LinkedField",
   "alias": null,
-  "name": "image",
-  "storageKey": null,
   "args": null,
   "concreteType": "Image",
+  "kind": "LinkedField",
+  "name": "image",
   "plural": false,
   "selections": [
     {
-      "kind": "LinkedField",
       "alias": "thumb",
-      "name": "cropped",
-      "storageKey": "cropped(height:80,width:80)",
       "args": [
         {
           "kind": "Literal",
@@ -138,57 +135,61 @@ v6 = {
         }
       ],
       "concreteType": "CroppedImageUrl",
+      "kind": "LinkedField",
+      "name": "cropped",
       "plural": false,
       "selections": [
         {
-          "kind": "ScalarField",
           "alias": null,
-          "name": "url",
           "args": null,
+          "kind": "ScalarField",
+          "name": "url",
           "storageKey": null
         }
-      ]
+      ],
+      "storageKey": "cropped(height:80,width:80)"
     }
-  ]
+  ],
+  "storageKey": null
 },
 v7 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "__typename",
   "args": null,
+  "kind": "ScalarField",
+  "name": "__typename",
   "storageKey": null
 },
 v8 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "cursor",
   "args": null,
+  "kind": "ScalarField",
+  "name": "cursor",
   "storageKey": null
 },
 v9 = {
-  "kind": "LinkedField",
   "alias": null,
-  "name": "pageInfo",
-  "storageKey": null,
   "args": null,
   "concreteType": "PageInfo",
+  "kind": "LinkedField",
+  "name": "pageInfo",
   "plural": false,
   "selections": [
     {
-      "kind": "ScalarField",
       "alias": null,
-      "name": "endCursor",
       "args": null,
+      "kind": "ScalarField",
+      "name": "endCursor",
       "storageKey": null
     },
     {
-      "kind": "ScalarField",
       "alias": null,
-      "name": "hasNextPage",
       "args": null,
+      "kind": "ScalarField",
+      "name": "hasNextPage",
       "storageKey": null
     }
-  ]
+  ],
+  "storageKey": null
 },
 v10 = [
   {
@@ -199,67 +200,60 @@ v10 = [
   (v1/*: any*/)
 ],
 v11 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "id",
   "args": null,
+  "kind": "ScalarField",
+  "name": "id",
   "storageKey": null
 };
 return {
-  "kind": "Request",
   "fragment": {
-    "kind": "Fragment",
-    "name": "NotificationsMenuQuery",
-    "type": "Query",
-    "metadata": null,
     "argumentDefinitions": [],
+    "kind": "Fragment",
+    "metadata": null,
+    "name": "NotificationsMenuQuery",
     "selections": [
       {
-        "kind": "LinkedField",
         "alias": null,
-        "name": "me",
-        "storageKey": null,
         "args": null,
         "concreteType": "Me",
+        "kind": "LinkedField",
+        "name": "me",
         "plural": false,
         "selections": [
           (v0/*: any*/),
           {
-            "kind": "LinkedField",
             "alias": null,
-            "name": "followsAndSaves",
-            "storageKey": null,
             "args": null,
             "concreteType": "FollowsAndSaves",
+            "kind": "LinkedField",
+            "name": "followsAndSaves",
             "plural": false,
             "selections": [
               {
-                "kind": "LinkedField",
                 "alias": "notifications",
-                "name": "__WorksForYou_notifications_connection",
-                "storageKey": "__WorksForYou_notifications_connection(sort:\"PUBLISHED_AT_DESC\")",
                 "args": [
                   (v1/*: any*/)
                 ],
                 "concreteType": "FollowedArtistsArtworksGroupConnection",
+                "kind": "LinkedField",
+                "name": "__WorksForYou_notifications_connection",
                 "plural": false,
                 "selections": [
                   {
-                    "kind": "LinkedField",
                     "alias": null,
-                    "name": "edges",
-                    "storageKey": null,
                     "args": null,
                     "concreteType": "FollowedArtistsArtworksGroupEdge",
+                    "kind": "LinkedField",
+                    "name": "edges",
                     "plural": true,
                     "selections": [
                       {
-                        "kind": "LinkedField",
                         "alias": null,
-                        "name": "node",
-                        "storageKey": null,
                         "args": null,
                         "concreteType": "FollowedArtistsArtworksGroup",
+                        "kind": "LinkedField",
+                        "name": "node",
                         "plural": false,
                         "selections": [
                           (v2/*: any*/),
@@ -268,69 +262,71 @@ return {
                           (v5/*: any*/),
                           (v6/*: any*/),
                           (v7/*: any*/)
-                        ]
+                        ],
+                        "storageKey": null
                       },
                       (v8/*: any*/)
-                    ]
+                    ],
+                    "storageKey": null
                   },
                   (v9/*: any*/)
-                ]
+                ],
+                "storageKey": "__WorksForYou_notifications_connection(sort:\"PUBLISHED_AT_DESC\")"
               }
-            ]
+            ],
+            "storageKey": null
           }
-        ]
+        ],
+        "storageKey": null
       }
-    ]
+    ],
+    "type": "Query"
   },
+  "kind": "Request",
   "operation": {
+    "argumentDefinitions": [],
     "kind": "Operation",
     "name": "NotificationsMenuQuery",
-    "argumentDefinitions": [],
     "selections": [
       {
-        "kind": "LinkedField",
         "alias": null,
-        "name": "me",
-        "storageKey": null,
         "args": null,
         "concreteType": "Me",
+        "kind": "LinkedField",
+        "name": "me",
         "plural": false,
         "selections": [
           (v0/*: any*/),
           {
-            "kind": "LinkedField",
             "alias": null,
-            "name": "followsAndSaves",
-            "storageKey": null,
             "args": null,
             "concreteType": "FollowsAndSaves",
+            "kind": "LinkedField",
+            "name": "followsAndSaves",
             "plural": false,
             "selections": [
               {
-                "kind": "LinkedField",
                 "alias": "notifications",
-                "name": "bundledArtworksByArtistConnection",
-                "storageKey": "bundledArtworksByArtistConnection(first:10,sort:\"PUBLISHED_AT_DESC\")",
                 "args": (v10/*: any*/),
                 "concreteType": "FollowedArtistsArtworksGroupConnection",
+                "kind": "LinkedField",
+                "name": "bundledArtworksByArtistConnection",
                 "plural": false,
                 "selections": [
                   {
-                    "kind": "LinkedField",
                     "alias": null,
-                    "name": "edges",
-                    "storageKey": null,
                     "args": null,
                     "concreteType": "FollowedArtistsArtworksGroupEdge",
+                    "kind": "LinkedField",
+                    "name": "edges",
                     "plural": true,
                     "selections": [
                       {
-                        "kind": "LinkedField",
                         "alias": null,
-                        "name": "node",
-                        "storageKey": null,
                         "args": null,
                         "concreteType": "FollowedArtistsArtworksGroup",
+                        "kind": "LinkedField",
+                        "name": "node",
                         "plural": false,
                         "selections": [
                           (v2/*: any*/),
@@ -340,37 +336,39 @@ return {
                           (v6/*: any*/),
                           (v11/*: any*/),
                           (v7/*: any*/)
-                        ]
+                        ],
+                        "storageKey": null
                       },
                       (v8/*: any*/)
-                    ]
+                    ],
+                    "storageKey": null
                   },
                   (v9/*: any*/)
-                ]
+                ],
+                "storageKey": "bundledArtworksByArtistConnection(first:10,sort:\"PUBLISHED_AT_DESC\")"
               },
               {
-                "kind": "LinkedHandle",
                 "alias": "notifications",
-                "name": "bundledArtworksByArtistConnection",
                 "args": (v10/*: any*/),
-                "handle": "connection",
-                "key": "WorksForYou_notifications",
                 "filters": [
                   "sort"
-                ]
+                ],
+                "handle": "connection",
+                "key": "WorksForYou_notifications",
+                "kind": "LinkedHandle",
+                "name": "bundledArtworksByArtistConnection"
               }
-            ]
+            ],
+            "storageKey": null
           },
           (v11/*: any*/)
-        ]
+        ],
+        "storageKey": null
       }
     ]
   },
   "params": {
-    "operationKind": "query",
-    "name": "NotificationsMenuQuery",
     "id": null,
-    "text": "query NotificationsMenuQuery {\n  me {\n    unreadNotificationsCount\n    followsAndSaves {\n      notifications: bundledArtworksByArtistConnection(sort: PUBLISHED_AT_DESC, first: 10) {\n        edges {\n          node {\n            href\n            summary\n            artists\n            published_at: publishedAt(format: \"MMM DD\")\n            image {\n              thumb: cropped(height: 80, width: 80) {\n                url\n              }\n            }\n            id\n            __typename\n          }\n          cursor\n        }\n        pageInfo {\n          endCursor\n          hasNextPage\n        }\n      }\n    }\n    id\n  }\n}\n",
     "metadata": {
       "connection": [
         {
@@ -384,7 +382,10 @@ return {
           ]
         }
       ]
-    }
+    },
+    "name": "NotificationsMenuQuery",
+    "operationKind": "query",
+    "text": "query NotificationsMenuQuery {\n  me {\n    unreadNotificationsCount\n    followsAndSaves {\n      notifications: bundledArtworksByArtistConnection(sort: PUBLISHED_AT_DESC, first: 10) {\n        edges {\n          node {\n            href\n            summary\n            artists\n            published_at: publishedAt(format: \"MMM DD\")\n            image {\n              thumb: cropped(height: 80, width: 80) {\n                url\n              }\n            }\n            id\n            __typename\n          }\n          cursor\n        }\n        pageInfo {\n          endCursor\n          hasNextPage\n        }\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();

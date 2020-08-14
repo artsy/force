@@ -1,4 +1,5 @@
 /* tslint:disable */
+/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -29,109 +30,109 @@ export type ArtworkSidebarExtraLinks_artwork$key = {
 
 
 const node: ReaderFragment = {
-  "kind": "Fragment",
-  "name": "ArtworkSidebarExtraLinks_artwork",
-  "type": "Artwork",
-  "metadata": null,
   "argumentDefinitions": [],
+  "kind": "Fragment",
+  "metadata": null,
+  "name": "ArtworkSidebarExtraLinks_artwork",
   "selections": [
     {
-      "kind": "ScalarField",
       "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "internalID",
-      "args": null,
       "storageKey": null
     },
     {
-      "kind": "ScalarField",
       "alias": "is_in_auction",
+      "args": null,
+      "kind": "ScalarField",
       "name": "isInAuction",
-      "args": null,
       "storageKey": null
     },
     {
-      "kind": "ScalarField",
       "alias": "is_for_sale",
+      "args": null,
+      "kind": "ScalarField",
       "name": "isForSale",
-      "args": null,
       "storageKey": null
     },
     {
-      "kind": "ScalarField",
       "alias": "is_acquireable",
-      "name": "isAcquireable",
       "args": null,
-      "storageKey": null
-    },
-    {
       "kind": "ScalarField",
-      "alias": "is_inquireable",
-      "name": "isInquireable",
-      "args": null,
+      "name": "isAcquireable",
       "storageKey": null
     },
     {
-      "kind": "LinkedField",
+      "alias": "is_inquireable",
+      "args": null,
+      "kind": "ScalarField",
+      "name": "isInquireable",
+      "storageKey": null
+    },
+    {
       "alias": null,
-      "name": "artists",
-      "storageKey": null,
       "args": null,
       "concreteType": "Artist",
+      "kind": "LinkedField",
+      "name": "artists",
       "plural": true,
       "selections": [
         {
-          "kind": "ScalarField",
           "alias": "is_consignable",
-          "name": "isConsignable",
           "args": null,
+          "kind": "ScalarField",
+          "name": "isConsignable",
           "storageKey": null
         }
-      ]
+      ],
+      "storageKey": null
     },
     {
-      "kind": "LinkedField",
       "alias": null,
-      "name": "sale",
-      "storageKey": null,
       "args": null,
       "concreteType": "Sale",
+      "kind": "LinkedField",
+      "name": "sale",
       "plural": false,
       "selections": [
         {
-          "kind": "ScalarField",
           "alias": "is_closed",
-          "name": "isClosed",
           "args": null,
-          "storageKey": null
-        },
-        {
           "kind": "ScalarField",
-          "alias": null,
-          "name": "isBenefit",
-          "args": null,
+          "name": "isClosed",
           "storageKey": null
         },
         {
-          "kind": "LinkedField",
           "alias": null,
-          "name": "partner",
-          "storageKey": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "isBenefit",
+          "storageKey": null
+        },
+        {
+          "alias": null,
           "args": null,
           "concreteType": "Partner",
+          "kind": "LinkedField",
+          "name": "partner",
           "plural": false,
           "selections": [
             {
-              "kind": "ScalarField",
               "alias": null,
-              "name": "name",
               "args": null,
+              "kind": "ScalarField",
+              "name": "name",
               "storageKey": null
             }
-          ]
+          ],
+          "storageKey": null
         }
-      ]
+      ],
+      "storageKey": null
     }
-  ]
+  ],
+  "type": "Artwork"
 };
 (node as any).hash = 'bec792d6e1dee8cecdc8ce83584d8d2e';
 export default node;
