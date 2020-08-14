@@ -6,7 +6,7 @@ Edition = require './edition.coffee'
 Partner = require './partner.coffee'
 AdditionalImage = require './additional_image.coffee'
 { compactObject } = require './mixins/compact_object.coffee'
-{ Dimensions, Markdown, ArtworkHelpers } = require 'artsy-backbone-mixins'
+{ Dimensions, Markdown, ArtworkHelpers } = require '@artsy/backbone-mixins'
 Relations = require './mixins/relations/artwork.coffee'
 
 module.exports = class Artwork extends Backbone.Model

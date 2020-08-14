@@ -59,6 +59,7 @@
     "superagent": "3.8.3"
   },
   "dependencies": {
+    "@artsy/backbone-mixins": "2.0.0",
     "@artsy/cohesion": "1.28.0",
     "@artsy/express-reloadable": "1.4.8",
     "@artsy/gemup": "0.1.0",
@@ -72,7 +73,6 @@
     "@styled-system/theme-get": "5.1.2",
     "accounting": "0.4.1",
     "analytics-node": "2.4.1",
-    "artsy-backbone-mixins": "artsy/artsy-backbone-mixins",
     "artsy-eigen-web-association": "git://github.com/artsy/artsy-eigen-web-association.git",
     "artsy-ezel-components": "artsy/artsy-ezel-components",
     "artsy-morgan": "artsy/artsy-morgan",

@@ -1,7 +1,7 @@
 Backbone = require 'backbone'
 _ = require 'underscore'
 sd = require('sharify').data
-{ Fetch } = require 'artsy-backbone-mixins'
+{ Fetch } = require '@artsy/backbone-mixins'
 SaleArtwork = require '../models/sale_artwork.coffee'
 
 module.exports = class Artworks extends Backbone.Collection

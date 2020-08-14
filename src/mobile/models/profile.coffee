@@ -4,7 +4,7 @@ Backbone = require 'backbone'
 CoverImage = require './cover_image.coffee'
 Icon = require './icon.coffee'
 
-{ Markdown } = require 'artsy-backbone-mixins'
+{ Markdown } = require '@artsy/backbone-mixins'
 
 module.exports = class Profile extends Backbone.Model
 

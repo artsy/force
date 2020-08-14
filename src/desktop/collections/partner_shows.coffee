@@ -5,7 +5,7 @@ PartnerShow = require '../models/partner_show.coffee'
 
 Backbone = require 'backbone'
 { API_URL } = require('sharify').data
-{ Fetch } = require 'artsy-backbone-mixins'
+{ Fetch } = require '@artsy/backbone-mixins'
 
 module.exports = class PartnerShows extends Backbone.Collection
   _.extend @prototype, Fetch(API_URL)

@@ -3,7 +3,7 @@ Backbone = require 'backbone'
 Artworks = require './artworks.coffee'
 qs = require 'querystring'
 { API_URL } = require('sharify').data
-{ Fetch } = require 'artsy-backbone-mixins'
+{ Fetch } = require '@artsy/backbone-mixins'
 
 class ArtworkCollection extends Backbone.Model
 

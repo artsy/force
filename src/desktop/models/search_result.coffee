@@ -3,7 +3,7 @@ _s = require 'underscore.string'
 sd = require('sharify').data
 moment = require 'moment-timezone'
 Backbone = require 'backbone'
-{ Image } = require 'artsy-backbone-mixins'
+{ Image } = require '@artsy/backbone-mixins'
 PartnerShow = require './partner_show.coffee'
 
 module.exports = class SearchResult extends Backbone.Model

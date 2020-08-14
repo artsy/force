@@ -2,7 +2,7 @@ Backbone = require 'backbone'
 sd = require('sharify').data
 _ = require 'underscore'
 _s = require 'underscore.string'
-{ Markdown, Image } = require 'artsy-backbone-mixins'
+{ Markdown, Image } = require '@artsy/backbone-mixins'
 
 module.exports = class FeaturedLink extends Backbone.Model
 

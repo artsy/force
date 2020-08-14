@@ -3,7 +3,7 @@ sd = require('sharify').data
 Backbone = require 'backbone'
 Partner = require '../models/partner.coffee'
 { API_URL } = require('sharify').data
-{ Fetch, AToZ } = require 'artsy-backbone-mixins'
+{ Fetch, AToZ } = require '@artsy/backbone-mixins'
 
 module.exports = class Partners extends Backbone.Collection
 

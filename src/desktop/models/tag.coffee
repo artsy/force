@@ -4,7 +4,7 @@ _s = require 'underscore.string'
 { API_URL } = require('sharify').data
 Backbone = require 'backbone'
 
-{ Markdown } = require 'artsy-backbone-mixins'
+{ Markdown } = require '@artsy/backbone-mixins'
 
 module.exports = class Tag extends Backbone.Model
 

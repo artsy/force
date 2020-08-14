@@ -1,7 +1,7 @@
 sd = require('sharify').data
 _ = require 'underscore'
 Backbone = require 'backbone'
-{ Image, Markdown } = require 'artsy-backbone-mixins'
+{ Image, Markdown } = require '@artsy/backbone-mixins'
 OrderedSets = require '../collections/ordered_sets.coffee'
 DateHelpers = require '../components/util/date_helpers.coffee'
 Clock = require './mixins/clock.coffee'

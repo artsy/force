@@ -10,7 +10,7 @@
 #
 _ = require 'underscore'
 sd = require('sharify').data
-{ Image } = require 'artsy-backbone-mixins'
+{ Image } = require '@artsy/backbone-mixins'
 Artworks = require '../collections/artworks.coffee'
 Backbone = require 'backbone'
 FeaturedLinks = require '../collections/featured_links.coffee'
@@ -18,7 +18,7 @@ FeaturedSet = require './featured_set.coffee'
 Sale = require './sale.coffee'
 ImageSizes = require './mixins/image_sizes.coffee'
 { smartTruncate } = require "../components/util/string.coffee"
-ABM = require 'artsy-backbone-mixins'
+ABM = require '@artsy/backbone-mixins'
 MetaOverrides = require './mixins/meta_overrides.coffee'
 
 module.exports = class Feature extends Backbone.Model

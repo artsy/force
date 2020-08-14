@@ -1,6 +1,6 @@
 Backbone = require 'backbone'
 accounting = require 'accounting'
-{ Markdown } = require 'artsy-backbone-mixins'
+{ Markdown } = require '@artsy/backbone-mixins'
 _ = require 'underscore'
 sd = require('sharify').data
 

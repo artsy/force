@@ -1,6 +1,6 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-{ Image, Markdown } = require 'artsy-backbone-mixins'
+{ Image, Markdown } = require '@artsy/backbone-mixins'
 { API_URL } = require('sharify').data
 { SECURE_IMAGES_URL } = require('sharify').data
 

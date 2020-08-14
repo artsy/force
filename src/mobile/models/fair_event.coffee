@@ -4,7 +4,7 @@ Backbone = require 'backbone'
 dateMixin = require './mixins/date.coffee'
 querystring = require 'querystring'
 moment = require 'moment'
-{ Markdown, CalendarUrls } = require 'artsy-backbone-mixins'
+{ Markdown, CalendarUrls } = require '@artsy/backbone-mixins'
 
 module.exports = class FairEvent extends Backbone.Model
 

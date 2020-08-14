@@ -2,7 +2,7 @@ _ = require 'underscore'
 { API_URL, SECURE_IMAGES_URL } = require('sharify').data
 moment = require 'moment-timezone'
 Backbone = require 'backbone'
-{ Fetch, Markdown, Image, CalendarUrls } = require 'artsy-backbone-mixins'
+{ Fetch, Markdown, Image, CalendarUrls } = require '@artsy/backbone-mixins'
 Clock = require './mixins/clock.coffee'
 Relations = require './mixins/relations/sale.coffee'
 ImageSizes = require './mixins/image_sizes.coffee'
@@ -155,7 +155,7 @@ module.exports = class Sale extends Backbone.Model
   isWithHeaderImage: ->
     @get('image_versions')?.length > 0
 
-  # Support for Feature in artsy-backbone-mixins
+  # Support for Feature in @artsy/backbone-mixins
   fetchArtworks: ->
     @related().saleArtworks.fetchUntilEnd arguments...
 
