@@ -54,7 +54,9 @@ export const RouterLink: React.FC<RouterLinkProps> = ({
       "data-test",
       "exact",
       "replace",
+      "role",
       "style",
+      "tabIndex",
       ...handlers,
     ])
 
