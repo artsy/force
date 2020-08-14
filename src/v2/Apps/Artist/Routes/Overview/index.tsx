@@ -24,7 +24,7 @@ import { ArtistBioFragmentContainer as ArtistBio } from "v2/Components/ArtistBio
 import { Carousel } from "v2/Components/Carousel"
 import { SelectedCareerAchievementsFragmentContainer as SelectedCareerAchievements } from "v2/Components/SelectedCareerAchievements"
 
-import { ArtistConsignButtonFragmentContainer as ArtistConsignButton } from "v2/Apps/Artist/Components/ArtistConsignButton"
+import { ArtistConsignButton } from "v2/Apps/Artist/Components/ArtistConsignButton"
 import { StyledLink } from "v2/Apps/Artist/Components/StyledLink"
 import { WorksForSaleRailQueryRenderer as WorksForSaleRail } from "v2/Apps/Artist/Routes/Overview/Components/WorksForSaleRail"
 import { pMedia } from "v2/Components/Helpers"

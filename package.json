@@ -183,6 +183,7 @@
     "redux-mock-store": "1.2.3",
     "redux-thunk": "2.2.0",
     "referer-parser": "0.0.3",
+    "relay-hooks": "^3.5.2",
     "relay-mock-network-layer": "2.0.0",
     "relay-runtime": "9.1.0",
     "require-control": "2.1.1",

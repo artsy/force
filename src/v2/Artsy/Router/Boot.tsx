@@ -12,6 +12,7 @@ import Events from "v2/Utils/Events"
 import { getENV } from "v2/Utils/getENV"
 import { ErrorBoundary } from "./ErrorBoundary"
 import { FocusVisible } from "v2/Components/FocusVisible"
+import { RelayEnvironmentProvider } from "relay-hooks"
 
 import {
   MatchingMediaQueries,
@@ -63,27 +64,33 @@ export const Boot = track(null, {
     <Theme>
       <HeadProvider headTags={headTags}>
         <StateProvider>
-          <SystemContextProvider {...contextProps}>
-            <ErrorBoundary>
-              <MediaContextProvider onlyMatch={onlyMatchMediaQueries}>
-                <ResponsiveProvider
-                  mediaQueries={themeProps.mediaQueries}
-                  initialMatchingMediaQueries={onlyMatchMediaQueries as any}
-                >
-                  <Grid fluid maxWidth="100%">
-                    <GlobalStyles />
-                    <FocusVisible />
-                    {children}
-                    {process.env.NODE_ENV === "development" && (
-                      <BreakpointVisualizer />
-                    )}
-                  </Grid>
-                </ResponsiveProvider>
-              </MediaContextProvider>
-            </ErrorBoundary>
-          </SystemContextProvider>
+          <RelayEnvironmentProvider environment={props.relayEnvironment}>
+            <SystemContextProvider {...contextProps}>
+              <ErrorBoundary>
+                <MediaContextProvider onlyMatch={onlyMatchMediaQueries}>
+                  <ResponsiveProvider
+                    mediaQueries={themeProps.mediaQueries}
+                    initialMatchingMediaQueries={onlyMatchMediaQueries as any}
+                  >
+                    <Grid fluid maxWidth="100%">
+                      <GlobalStyles />
+                      <FocusVisible />
+                      {children}
+                      {process.env.NODE_ENV === "development" && (
+                        <BreakpointVisualizer />
+                      )}
+                    </Grid>
+                  </ResponsiveProvider>
+                </MediaContextProvider>
+              </ErrorBoundary>
+            </SystemContextProvider>
+          </RelayEnvironmentProvider>
         </StateProvider>
       </HeadProvider>
     </Theme>
   )
 })
+
+// TODO: PR display name change upstream. Added for tests
+// @ts-ignore
+RelayEnvironmentProvider.displayName = "RelayEnvironmentProvider"

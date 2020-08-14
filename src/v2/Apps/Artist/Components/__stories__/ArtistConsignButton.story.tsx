@@ -7,17 +7,17 @@ import { useSystemContext } from "v2/Artsy"
 import { renderWithLoadProgress } from "v2/Artsy/Relay/renderWithLoadProgress"
 
 import {
-  ArtistConsignButtonFragmentContainer,
+  ArtistConsignButton,
   ArtistConsignButtonLarge,
   ArtistConsignButtonProps,
   ArtistConsignButtonSmall,
 } from "v2/Apps/Artist/Components/ArtistConsignButton"
 
-export const ArtistConsignButtonQueryRenderer: React.FC<Partial<
-  ArtistConsignButtonProps
-> & {
-  artistID: string
-}> = ({ artistID }) => {
+export const ArtistConsignButtonQueryRenderer: React.FC<
+  Partial<ArtistConsignButtonProps> & {
+    artistID: string
+  }
+> = ({ artistID }) => {
   const { relayEnvironment } = useSystemContext()
   return (
     <QueryRenderer<ArtistConsignButtonQuery>
@@ -32,7 +32,7 @@ export const ArtistConsignButtonQueryRenderer: React.FC<Partial<
       variables={{
         artistID,
       }}
-      render={renderWithLoadProgress(ArtistConsignButtonFragmentContainer)}
+      render={renderWithLoadProgress(ArtistConsignButton)}
     />
   )
 }

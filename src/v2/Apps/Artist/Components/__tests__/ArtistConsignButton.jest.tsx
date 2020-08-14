@@ -5,7 +5,7 @@ import { MockBoot, renderRelayTree } from "v2/DevTools"
 import { cloneDeep } from "lodash"
 import React from "react"
 import { graphql } from "react-relay"
-import { ArtistConsignButtonFragmentContainer } from "../ArtistConsignButton"
+import { ArtistConsignButton } from "../ArtistConsignButton"
 
 jest.unmock("react-relay")
 jest.mock("v2/Artsy/Analytics/useTracking")
@@ -24,7 +24,7 @@ describe("ArtistConsignButton", () => {
       Component: ({ artist }) => {
         return (
           <MockBoot breakpoint={breakpoint}>
-            <ArtistConsignButtonFragmentContainer artist={artist} />
+            <ArtistConsignButton artist={artist} />
           </MockBoot>
         )
       },

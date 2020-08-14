@@ -3011,6 +3011,14 @@
   resolved "https://registry.yarnpkg.com/@restart/context/-/context-2.1.4.tgz#a99d87c299a34c28bd85bb489cb07bfd23149c02"
   integrity sha512-INJYZQJP7g+IoDUh/475NlGiTeMfwTXUEr3tmRneckHIxNolGOW9CTq83S8cxq0CgJwwcMzMJFchxvlwe7Rk8Q==
 
+"@restart/hooks@^0.3.1":
+  version "0.3.25"
+  resolved "https://registry.yarnpkg.com/@restart/hooks/-/hooks-0.3.25.tgz#11004139ad1c70d2f5965a8939dcb5aeb96aa652"
+  integrity sha512-m2v3N5pxTsIiSH74/sb1yW8D9RxkJidGW+5Mfwn/lHb2QzhZNlaU1su7abSyT9EGf0xS/0waLjrf7/XxQHUk7w==
+  dependencies:
+    lodash "^4.17.15"
+    lodash-es "^4.17.15"
+
 "@samverschueren/stream-to-observable@^0.3.0":
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/@samverschueren/stream-to-observable/-/stream-to-observable-0.3.0.tgz#ecdf48d532c58ea477acfcab80348424f8d0662f"
@@ -18941,6 +18949,14 @@ relay-config@9.1.0:
   integrity sha512-x9/5NOGUuGntYPVUK34yA8yedysBNoRT9BJIjRxGNIIIyof5NfpTPHoXBlD/g5w9DWN0yX11Ei/ar5Ma267vXQ==
   dependencies:
     cosmiconfig "^5.0.5"
+
+relay-hooks@^3.5.2:
+  version "3.5.2"
+  resolved "https://registry.yarnpkg.com/relay-hooks/-/relay-hooks-3.5.2.tgz#98035099988e8f87a3369f3a8a4531068d59bafe"
+  integrity sha512-zqtSajxbNCLRQV9t5mBu1LcLbVjTpdNhhxzCWPVtWYvwiXFgx/8tuC3hFYP8EF7l3ogwlqt5rcswK6xmONC81Q==
+  dependencies:
+    "@restart/hooks" "^0.3.1"
+    fbjs "^1.0.0"
 
 relay-mock-network-layer@2.0.0, relay-mock-network-layer@^2.0.0:
   version "2.0.0"

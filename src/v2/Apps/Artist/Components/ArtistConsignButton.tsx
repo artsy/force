@@ -1,7 +1,10 @@
 import React from "react"
-import { createFragmentContainer, graphql } from "react-relay"
+import { graphql } from "react-relay"
 
-import { ArtistConsignButton_artist } from "v2/__generated__/ArtistConsignButton_artist.graphql"
+import {
+  ArtistConsignButton_artist,
+  ArtistConsignButton_artist$key,
+} from "v2/__generated__/ArtistConsignButton_artist.graphql"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import { Media } from "v2/Utils/Responsive"
 
@@ -15,14 +18,33 @@ import {
   color,
 } from "@artsy/palette"
 import { AnalyticsSchema, useTracking } from "v2/Artsy"
+import { useFragment } from "relay-hooks"
+
+const ArtistConsignButtonFragment = graphql`
+  fragment ArtistConsignButton_artist on Artist {
+    targetSupply {
+      isInMicrofunnel
+      isTargetSupply
+    }
+
+    internalID
+    slug
+    name
+    href
+    image {
+      cropped(width: 66, height: 66) {
+        url
+      }
+    }
+  }
+`
 
 export interface ArtistConsignButtonProps {
-  artist: ArtistConsignButton_artist
+  artist: ArtistConsignButton_artist$key
 }
 
-export const ArtistConsignButton: React.FC<ArtistConsignButtonProps> = ({
-  artist,
-}) => {
+export const ArtistConsignButton: React.FC<ArtistConsignButtonProps> = props => {
+  const artist = useFragment(ArtistConsignButtonFragment, props.artist)
   const tracking = useTracking()
 
   const trackGetStartedClick = ({ destinationPath }) => {
@@ -38,15 +60,18 @@ export const ArtistConsignButton: React.FC<ArtistConsignButtonProps> = ({
     })
   }
 
-  const props = { artist, trackGetStartedClick }
+  const passedProps = {
+    artist,
+    trackGetStartedClick,
+  }
 
   return (
     <>
       <Media at="xs">
-        <ArtistConsignButtonSmall {...props} />
+        <ArtistConsignButtonSmall {...passedProps} />
       </Media>
       <Media greaterThan="xs">
-        <ArtistConsignButtonLarge {...props} />
+        <ArtistConsignButtonLarge {...passedProps} />
       </Media>
     </>
   )
@@ -56,9 +81,11 @@ interface Tracking {
   trackGetStartedClick: (props: { destinationPath: string }) => void
 }
 
-export const ArtistConsignButtonLarge: React.FC<
-  ArtistConsignButtonProps & Tracking
-> = props => {
+interface Props extends Tracking {
+  artist: ArtistConsignButton_artist
+}
+
+export const ArtistConsignButtonLarge: React.FC<Props> = props => {
   const { showImage, imageURL, headline, consignURL } = getData(props)
 
   return (
@@ -105,9 +132,7 @@ export const ArtistConsignButtonLarge: React.FC<
   )
 }
 
-export const ArtistConsignButtonSmall: React.FC<
-  ArtistConsignButtonProps & Tracking
-> = props => {
+export const ArtistConsignButtonSmall: React.FC<Props> = props => {
   const { showImage, imageURL, headline, consignURL } = getData(props)
 
   return (
@@ -169,27 +194,3 @@ function getData(props) {
     consignURL,
   }
 }
-
-export const ArtistConsignButtonFragmentContainer = createFragmentContainer(
-  ArtistConsignButton,
-  {
-    artist: graphql`
-      fragment ArtistConsignButton_artist on Artist {
-        targetSupply {
-          isInMicrofunnel
-          isTargetSupply
-        }
-
-        internalID
-        slug
-        name
-        href
-        image {
-          cropped(width: 66, height: 66) {
-            url
-          }
-        }
-      }
-    `,
-  }
-)

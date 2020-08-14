@@ -55,4 +55,10 @@ describe("Boot", () => {
   it("injects Grid", () => {
     expect(mount(<Boot {...bootProps} />).find("Grid").length).toEqual(1)
   })
+
+  it("injects RelayEnvironmentProvider", () => {
+    expect(
+      mount(<Boot {...bootProps} />).find("RelayEnvironmentProvider").length
+    ).toEqual(1)
+  })
 })
