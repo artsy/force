@@ -41,7 +41,7 @@
     "test:mocha": "yarn mocha $(find src -name '*.test.js')",
     "type-check": "tsc",
     "unlink-all": "yalc remove --all && yarn --check-files",
-    "webpack": "node --max_old_space_size=2048 -r dotenv/config -r @babel/register node_modules/.bin/webpack --config ./webpack"
+    "webpack": "node --max_old_space_size=4096 -r dotenv/config -r @babel/register node_modules/.bin/webpack --config ./webpack"
   },
   "resolutions": {
     "@types/react": "16.9.34",
@@ -336,7 +336,7 @@
     "style-loader": "0.23.1",
     "stylus-loader": "3.0.2",
     "supertest": "2.0.1",
-    "terser-webpack-plugin": "2.3.5",
+    "terser-webpack-plugin": "4.1.0",
     "typescript": "3.9.7",
     "typescript-styled-plugin": "0.15.0",
     "vscode-apollo-relay": "1.5.0",

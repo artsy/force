@@ -3,6 +3,7 @@
 const nodeExternals = require("webpack-node-externals")
 const path = require("path")
 const webpack = require("webpack")
+const TerserPlugin = require("terser-webpack-plugin")
 const { removeEmpty } = require("webpack-config-utils")
 const { basePath, env } = require("../utils/env")
 
@@ -55,6 +56,16 @@ export const serverConfig = {
           },
         ],
       },
+    ],
+  },
+  optimization: {
+    minimize: env.isProduction && !env.webpackDebug,
+    minimizer: [
+      new TerserPlugin({
+        cache: false,
+        parallel: env.onCi ? env.webpackCiCpuLimit : true, // Only use 4 cpus (default) in CircleCI, by default it will try using 36 and OOM
+        sourceMap: true, // Must be set to true if using source-maps in production
+      }),
     ],
   },
   plugins: removeEmpty([
