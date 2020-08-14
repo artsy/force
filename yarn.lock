@@ -10207,6 +10207,17 @@ eyes@0.1.x, eyes@~0.1.8:
   resolved "https://registry.yarnpkg.com/eyes/-/eyes-0.1.8.tgz#62cf120234c683785d902348a800ef3e0cc20bc0"
   integrity sha1-Ys8SAjTGg3hdkCNIqADvPgzCC8A=
 
+farce@0.4.5, farce@^0.4.0:
+  version "0.4.5"
+  resolved "https://registry.yarnpkg.com/farce/-/farce-0.4.5.tgz#610cefaaa76d57dbd723d2d6df30a72e3ea5d842"
+  integrity sha512-PK3eWFYBicrelTh/ZAM8KCto3c2hwo+9PKxtkSS5EhmLP3Y+m2l5r56MF8+m/htlojQpY2uHwmMDtdb0cNWrSw==
+  dependencies:
+    invariant "^2.2.4"
+    is-promise "^4.0.0"
+    query-string "^5.1.1"
+    redux "^4.0.4"
+    warning "^4.0.3"
+
 farce@^0.2.6:
   version "0.2.6"
   resolved "https://registry.yarnpkg.com/farce/-/farce-0.2.6.tgz#3d307fae9eac46a148fd5535dee2dfbcf653ba83"
@@ -10218,17 +10229,6 @@ farce@^0.2.6:
     query-string "^5.1.1"
     redux "^4.0.0"
     warning "^3.0.0"
-
-farce@^0.4.0, farce@^0.4.5:
-  version "0.4.5"
-  resolved "https://registry.yarnpkg.com/farce/-/farce-0.4.5.tgz#610cefaaa76d57dbd723d2d6df30a72e3ea5d842"
-  integrity sha512-PK3eWFYBicrelTh/ZAM8KCto3c2hwo+9PKxtkSS5EhmLP3Y+m2l5r56MF8+m/htlojQpY2uHwmMDtdb0cNWrSw==
-  dependencies:
-    invariant "^2.2.4"
-    is-promise "^4.0.0"
-    query-string "^5.1.1"
-    redux "^4.0.4"
-    warning "^4.0.3"
 
 farce@^0.4.1:
   version "0.4.1"
@@ -10833,7 +10833,7 @@ forwarded@~0.1.2:
   resolved "https://registry.yarnpkg.com/forwarded/-/forwarded-0.1.2.tgz#98c23dab1175657b8c0573e8ceccd91b0ff18c84"
   integrity sha1-mMI9qxF1ZXuMBXPozszZGw/xjIQ=
 
-found-relay@0.8.2, found-relay@^0.8.2:
+found-relay@0.8.2:
   version "0.8.2"
   resolved "https://registry.yarnpkg.com/found-relay/-/found-relay-0.8.2.tgz#589eeee14da9df32c304de925be54f4fd821ce00"
   integrity sha512-rBNNchEafACS0y7tLIb2r7hfINcFXbELZzFh/5yYGS3riwrS0P/5cgV0elk0tVyD4hRqE6Pgr1HrlXdGUN47VQ==
@@ -10844,7 +10844,7 @@ found-relay@0.8.2, found-relay@^0.8.2:
     prop-types "^15.7.2"
     warning "^4.0.3"
 
-found-scroll@0.3.0, found-scroll@^0.3.0:
+found-scroll@0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/found-scroll/-/found-scroll-0.3.0.tgz#4ccd6c81c1eef7c453e598a34c18cc51c15a57df"
   integrity sha512-OdXYQy8SSShjMjagCQrwaeRdce3aeyOrxPkE69Wr1vPOIKSPiY8tXmsY1RQBXNI0m2QJF2RBuqkQ4OWwNBIpow==
@@ -10853,7 +10853,7 @@ found-scroll@0.3.0, found-scroll@^0.3.0:
     prop-types "^15.7.2"
     scroll-behavior "^0.11.0"
 
-found@0.5.5, found@^0.5.5:
+found@0.5.5:
   version "0.5.5"
   resolved "https://registry.yarnpkg.com/found/-/found-0.5.5.tgz#b581caa14b5eba1e1ed52c696f148eddb2e8ba95"
   integrity sha512-/OQw+t6imImSiehiJvqAqQ3J3tcWC2maR72rYpJyYxgy69TwTCIHCe2GFaHOQhImbEV7AWnsR6r+iYMJNMbkxQ==
@@ -18216,12 +18216,12 @@ react-redux@^7.0.0:
     prop-types "^15.7.2"
     react-is "^16.9.0"
 
-react-relay-network-modern-ssr@1.4.0, react-relay-network-modern-ssr@^1.4.0:
+react-relay-network-modern-ssr@1.4.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/react-relay-network-modern-ssr/-/react-relay-network-modern-ssr-1.4.0.tgz#a5e4b60e69e14769c7266a1a0f5002430c815fe1"
   integrity sha512-sCIiwjzDPV9eBPOb7VcT/dmZkwrqcNpAK5eHkwjvC3Xw+RShtgB/uCSVgCUzMZpOR8iUSkzaceC/HMZdnKxF3w==
 
-react-relay-network-modern@4.7.3, react-relay-network-modern@^4.7.3:
+react-relay-network-modern@4.7.3:
   version "4.7.3"
   resolved "https://registry.yarnpkg.com/react-relay-network-modern/-/react-relay-network-modern-4.7.3.tgz#a8aa6175482b5923b1c70579d59d15ec9ed36b13"
   integrity sha512-bqVtka5cwPF1ULx2SY11K5e5YPrvbADVgVisKOFjuytsJSuvc/9T7B70vhSAK9ZHC8HT6WA6yHmpTxPvtXX/Uw==
@@ -18905,7 +18905,7 @@ relateurl@^0.2.7:
   resolved "https://registry.yarnpkg.com/relateurl/-/relateurl-0.2.7.tgz#54dbf377e51440aca90a4cd274600d3ff2d888a9"
   integrity sha1-VNvzd+UUQKypCkzSdGANP/LYiKk=
 
-relay-compiler-language-typescript@^12.0.3:
+relay-compiler-language-typescript@12.0.3:
   version "12.0.3"
   resolved "https://registry.yarnpkg.com/relay-compiler-language-typescript/-/relay-compiler-language-typescript-12.0.3.tgz#99b7fe7a298c54e0ad9691b41599b1d4c2064954"
   integrity sha512-T4HgZmhn4T4bpMVyVGwy2ngWv+DTVrjUOjTigAq8k/VV1au+NDkw99HVm9FjoSSpwKxDANh4f7Cf9AqTStH6NA==
