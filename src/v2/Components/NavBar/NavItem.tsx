@@ -37,7 +37,6 @@ const HitArea = styled(Link)`
   &:focus {
     outline: 0;
     border-bottom-color: ${color("black100")};
-    text-decoration: underline;
     z-index: 1;
   }
 `
