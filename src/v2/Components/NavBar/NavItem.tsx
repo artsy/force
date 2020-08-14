@@ -41,7 +41,10 @@ const HitArea = styled(Link)`
   }
 `
 
-const UnfocusableAnchor = styled(RouterLink).attrs({ tabIndex: -1 })`
+const UnfocusableAnchor = styled(RouterLink).attrs({
+  tabIndex: -1,
+  role: "presentation",
+})`
   display: block;
   position: absolute;
   top: 0;
