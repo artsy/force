@@ -55,6 +55,7 @@ describe("ArtistSeriesApp", () => {
       it("renders the correct components", async () => {
         const wrapper = await getWrapper()
         expect(wrapper.find("AppContainer").length).toBe(1)
+        expect(wrapper.find("ArtistSeriesMeta").length).toBe(1)
         expect(wrapper.find("ArtistSeriesHeader").length).toBe(1)
         expect(wrapper.find("ArtistSeriesArtworksFilter").length).toBe(1)
         expect(wrapper.find("ArtistSeriesRail").length).toBe(1)
@@ -219,6 +220,7 @@ const ArtistSeriesAppFixture: ArtistSeriesApp_QueryRawResponse = {
     ],
     title: "Pumpkins",
     artworksCountMessage: "20 available",
+    description: "All of the pumpkins",
     descriptionFormatted: "All of the pumpkins",
     image: {
       url: "https://test.artsy.net/pumpkins-header-image.jpg",
