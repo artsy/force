@@ -59,10 +59,10 @@ export const FeatureHeaderFullFragmentContainer = createFragmentContainer(
         name
         subheadline(format: HTML)
         fullImage: image {
-          _1x: cropped(width: 2000, height: 1000, version: ["source"]) {
+          _1x: cropped(width: 2000, height: 1000, version: ["main", "wide"]) {
             url
           }
-          _2x: cropped(width: 4000, height: 2000, version: ["source"]) {
+          _2x: cropped(width: 4000, height: 2000, version: ["main", "wide"]) {
             url
           }
         }

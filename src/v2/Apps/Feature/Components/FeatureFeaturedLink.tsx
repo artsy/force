@@ -142,25 +142,29 @@ export const FeatureFeaturedLinkFragmentContainer = createFragmentContainer(
         description(format: HTML)
         image {
           # 4:5 - 400×500 native max dimensions * 2 for retina
-          small: cropped(width: 800, height: 1000, version: ["wide"]) {
+          small: cropped(width: 800, height: 1000, version: ["main", "wide"]) {
             src: url
             width
             height
           }
           # 4:5 - 546×682.5 native max dimensions * 2 for retina
-          medium: cropped(width: 1092, height: 1365, version: ["wide"]) {
+          medium: cropped(
+            width: 1092
+            height: 1365
+            version: ["main", "wide"]
+          ) {
             src: url
             width
             height
           }
           # 16:9 - 1112×626 native max dimensions * 2 for retina
-          large: cropped(width: 2224, height: 1252, version: ["wide"]) {
+          large: cropped(width: 2224, height: 1252, version: ["main", "wide"]) {
             src: url
             width
             height
           }
           # ?:? - 1112×1112 native max dimensions * 2 for retina
-          full: resized(width: 2224, height: 2224, version: ["wide"]) {
+          full: resized(width: 2224, height: 2224, version: ["main", "wide"]) {
             src: url
             width
             height

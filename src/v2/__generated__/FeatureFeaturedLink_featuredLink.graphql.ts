@@ -51,6 +51,7 @@ v1 = {
   "kind": "Literal",
   "name": "version",
   "value": [
+    "main",
     "wide"
   ]
 },
@@ -130,7 +131,7 @@ return {
           "kind": "LinkedField",
           "alias": "small",
           "name": "cropped",
-          "storageKey": "cropped(height:1000,version:[\"wide\"],width:800)",
+          "storageKey": "cropped(height:1000,version:[\"main\",\"wide\"],width:800)",
           "args": [
             {
               "kind": "Literal",
@@ -152,7 +153,7 @@ return {
           "kind": "LinkedField",
           "alias": "medium",
           "name": "cropped",
-          "storageKey": "cropped(height:1365,version:[\"wide\"],width:1092)",
+          "storageKey": "cropped(height:1365,version:[\"main\",\"wide\"],width:1092)",
           "args": [
             {
               "kind": "Literal",
@@ -174,7 +175,7 @@ return {
           "kind": "LinkedField",
           "alias": "large",
           "name": "cropped",
-          "storageKey": "cropped(height:1252,version:[\"wide\"],width:2224)",
+          "storageKey": "cropped(height:1252,version:[\"main\",\"wide\"],width:2224)",
           "args": [
             {
               "kind": "Literal",
@@ -192,7 +193,7 @@ return {
           "kind": "LinkedField",
           "alias": "full",
           "name": "resized",
-          "storageKey": "resized(height:2224,version:[\"wide\"],width:2224)",
+          "storageKey": "resized(height:2224,version:[\"main\",\"wide\"],width:2224)",
           "args": [
             {
               "kind": "Literal",
@@ -211,5 +212,5 @@ return {
   ]
 };
 })();
-(node as any).hash = '0661c6e900a886e0ce801e13e52ee2eb';
+(node as any).hash = 'b427ed43f8f143e92c1332e3f1ed0e63';
 export default node;

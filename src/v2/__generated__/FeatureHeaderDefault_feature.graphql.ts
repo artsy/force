@@ -28,7 +28,8 @@ var v0 = {
   "kind": "Literal",
   "name": "version",
   "value": [
-    "source"
+    "main",
+    "wide"
   ]
 },
 v1 = [
@@ -80,7 +81,7 @@ return {
           "kind": "LinkedField",
           "alias": "_1x",
           "name": "cropped",
-          "storageKey": "cropped(height:1000,version:[\"source\"],width:1000)",
+          "storageKey": "cropped(height:1000,version:[\"main\",\"wide\"],width:1000)",
           "args": [
             {
               "kind": "Literal",
@@ -102,7 +103,7 @@ return {
           "kind": "LinkedField",
           "alias": "_2x",
           "name": "cropped",
-          "storageKey": "cropped(height:2000,version:[\"source\"],width:2000)",
+          "storageKey": "cropped(height:2000,version:[\"main\",\"wide\"],width:2000)",
           "args": [
             {
               "kind": "Literal",
@@ -125,5 +126,5 @@ return {
   ]
 };
 })();
-(node as any).hash = '21733d538edce936a436d52d1004340c';
+(node as any).hash = 'daec947183f26d5bcbf0d3a5039d8a5b';
 export default node;
