@@ -11,8 +11,9 @@ interface ArtistSeriesMetaProps {
 export const ArtistSeriesMeta: React.FC<ArtistSeriesMetaProps> = props => {
   const { artistSeries } = props
   const artist = artistSeries.artists[0]
-  const title = `${artist.name}’s ${artistSeries.title} - For Sale on Artsy`
-  const descriptionFirstSentence = `Discover and collect art from ${artist.name}’s iconic ${artistSeries.title} series and more. `
+  const artistName = artist?.name ? `${artist.name}’s ` : ""
+  const title = `${artistName}${artistSeries.title} - For Sale on Artsy`
+  const descriptionFirstSentence = `Discover and collect art from ${artistName}iconic ${artistSeries.title} series and more. `
   const description = truncate(
     `${descriptionFirstSentence}${artistSeries.description}`,
     { length: 160, separator: " " }

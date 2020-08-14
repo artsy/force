@@ -57,9 +57,20 @@ describe("ArtistSeriesMeta", () => {
       wrapper.find('Meta[property="twitter:description"]').prop("content")
     ).toBe(expectedDescription)
   })
+
+  it("omits the artist name in the title an description when there is no artist", async () => {
+    const wrapper = await getWrapper(ArtistSeriesMetaFixtureNoArtist)
+    const expectedTitle = "Squashes - For Sale on Artsy"
+    const expectedDescription =
+      "Discover and collect art from iconic Squashes series and more. Squashes are a lot like pumpkins except that they don't belong to any particular holiday. The..."
+    expect(wrapper.find("Title").text()).toBe(expectedTitle)
+    expect(wrapper.find('Meta[name="description"]').prop("content")).toBe(
+      expectedDescription
+    )
+  })
 })
 
-const ArtistSeriesMetaFixture = {
+const ArtistSeriesMetaFixture: ArtistSeriesMeta_TestQueryRawResponse = {
   artistSeries: {
     title: "Pumpkins",
     description:
@@ -70,5 +81,14 @@ const ArtistSeriesMetaFixture = {
         id: "abc123",
       },
     ],
+  },
+}
+
+const ArtistSeriesMetaFixtureNoArtist: ArtistSeriesMeta_TestQueryRawResponse = {
+  artistSeries: {
+    title: "Squashes",
+    description:
+      "Squashes are a lot like pumpkins except that they don't belong to any particular holiday. The most independent gourd, they always remain in style throughout the year.",
+    artists: [],
   },
 }
