@@ -29,6 +29,7 @@ export type Conversation_conversation = {
                 readonly internalID: string;
                 readonly createdAt: string | null;
                 readonly isFromUser: boolean | null;
+                readonly body: string | null;
                 readonly " $fragmentRefs": FragmentRefs<"Message_message">;
             } | null;
         } | null> | null;
@@ -305,6 +306,13 @@ return {
                   "args": null,
                   "storageKey": null
                 },
+                {
+                  "kind": "ScalarField",
+                  "alias": null,
+                  "name": "body",
+                  "args": null,
+                  "storageKey": null
+                },
                 (v3/*: any*/),
                 {
                   "kind": "FragmentSpread",
@@ -491,5 +499,5 @@ return {
   ]
 };
 })();
-(node as any).hash = '16e46b2371551650adfb83bb45fb436d';
+(node as any).hash = 'c46c642b7ea1ffed330d0411f7a27f60';
 export default node;

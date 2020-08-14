@@ -45,7 +45,7 @@ const Conversation: React.FC<ConversationProps> = props => {
     }
   }
 
-  useEffect(scrollToBottom, [conversation])
+  useEffect(scrollToBottom, [conversation, lastMessageID])
 
   useEffect(() => {
     UpdateConversation(relay.environment, conversation)
@@ -86,7 +86,9 @@ const Conversation: React.FC<ConversationProps> = props => {
   }
 
   const messageGroups = groupMessages(
-    conversation.messagesConnection.edges.map(edge => edge.node)
+    conversation.messagesConnection.edges
+      .map(edge => edge.node)
+      .filter(node => node.body.length > 0)
   ).map((messageGroup, groupIndex) => {
     const today = fromToday(messageGroup[0].createdAt)
     return (
@@ -203,6 +205,7 @@ export const ConversationPaginationContainer = createPaginationContainer(
               internalID
               createdAt
               isFromUser
+              body
               ...Message_message
             }
           }
