@@ -5,18 +5,16 @@ import { Masonry } from "v2/Components/Masonry"
 import { FeatureSetContainer_set } from "v2/__generated__/FeatureSetContainer_set.graphql"
 
 export interface FeatureSetContainerProps {
-  layout: "full" | "default"
   set: FeatureSetContainer_set
 }
 
 export const FeatureSetContainer: React.FC<FeatureSetContainerProps> = ({
-  layout,
   set,
   children,
 }) => {
   const count = set.orderedItems.edges.length
 
-  if (layout === "full") {
+  if (set.layout === "FULL") {
     return (
       <Box mt={2} mb={6}>
         <Join separator={<Spacer my={6} />}>{children}</Join>
@@ -64,6 +62,7 @@ export const FeatureSetContainerFragmentContainer = createFragmentContainer(
     set: graphql`
       fragment FeatureSetContainer_set on OrderedSet {
         id
+        layout
         itemType
         orderedItems: orderedItemsConnection(first: 35) {
           edges {

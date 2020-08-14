@@ -1,9 +1,11 @@
 /* tslint:disable */
 
 import { ReaderFragment } from "relay-runtime";
+export type OrderedSetLayouts = "DEFAULT" | "FULL" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type FeatureSet_set = {
     readonly id: string;
+    readonly layout: OrderedSetLayouts;
     readonly name: string | null;
     readonly description: string | null;
     readonly itemType: string | null;
@@ -46,6 +48,13 @@ return {
   "argumentDefinitions": [],
   "selections": [
     (v0/*: any*/),
+    {
+      "kind": "ScalarField",
+      "alias": null,
+      "name": "layout",
+      "args": null,
+      "storageKey": null
+    },
     {
       "kind": "ScalarField",
       "alias": null,
@@ -147,5 +156,5 @@ return {
   ]
 };
 })();
-(node as any).hash = '9b7a193447e8ab6dbc35747878b5d3fd';
+(node as any).hash = '906377816f34b9a6b67fca92aefbb3bc';
 export default node;
