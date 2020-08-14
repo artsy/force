@@ -14,7 +14,12 @@ import { get } from "v2/Utils/get"
  * `
  */
 
-export type RouterLinkProps = LinkProps &
+interface StyleProps {
+  noUnderline?: boolean
+}
+
+export type RouterLinkProps = StyleProps &
+  LinkProps &
   React.HTMLAttributes<HTMLAnchorElement>
 
 export const RouterLink: React.FC<RouterLinkProps> = ({
@@ -22,6 +27,7 @@ export const RouterLink: React.FC<RouterLinkProps> = ({
   children,
   ...props
 }) => {
+  const styleProps = props.noUnderline ? { textDecoration: "none" } : {}
   const context = useContext(RouterContext)
   const routes = get(context, c => c?.router?.matcher?.routeConfig, [])
   const isSupportedInRouter = !!get(context, c =>
@@ -53,7 +59,7 @@ export const RouterLink: React.FC<RouterLinkProps> = ({
     ])
 
     return (
-      <Link to={to} {...allowedProps}>
+      <Link to={to} {...allowedProps} style={styleProps}>
         {children}
       </Link>
     )
@@ -62,7 +68,7 @@ export const RouterLink: React.FC<RouterLinkProps> = ({
       <a
         href={to as string}
         className={(props as LinkPropsSimple).className}
-        style={(props as LinkPropsSimple).style}
+        style={Object.assign(styleProps, (props as LinkPropsSimple).style)}
         {...omit(props, ["activeClassName", "hasLighterTextColor"])}
       >
         {children}

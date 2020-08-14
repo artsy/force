@@ -5,7 +5,6 @@ import {
   CSSGrid,
   CardTagProps,
   Flex,
-  Link,
   Sans,
   SmallCard,
 } from "@artsy/palette"
@@ -14,9 +13,10 @@ import {
   createPaginationContainer,
   graphql,
 } from "react-relay"
-
+import { scrollIntoView } from "v2/Utils/scrollHelpers"
 import { ViewingRoomsLatestGrid_viewingRooms } from "v2/__generated__/ViewingRoomsLatestGrid_viewingRooms.graphql"
 import { crop } from "v2/Utils/resizer"
+import { RouterLink } from "v2/Artsy/Router/RouterLink"
 
 export interface ViewingRoomsLatestGridProps {
   relay: RelayPaginationProp
@@ -62,7 +62,7 @@ export const PAGE_SIZE = 12
 export const ViewingRoomsLatestGrid: React.FC<ViewingRoomsLatestGridProps> = props => {
   const viewingRooms = props.viewingRooms?.viewingRoomsConnection
   const [isLoading, setIsLoading] = useState(false)
-  const hasMoreItems = props.relay.hasMore()
+  const hasMoreItems = props.relay.hasMore() as boolean
 
   const loadMore = () => {
     if (hasMoreItems) {
@@ -73,6 +73,11 @@ export const ViewingRoomsLatestGrid: React.FC<ViewingRoomsLatestGridProps> = pro
           console.error(error)
         }
         setIsLoading(false)
+
+        setTimeout(
+          () => scrollIntoView({ offset: 60, selector: "#jump--viewingRoom" }),
+          100
+        )
       })
     }
   }
@@ -113,7 +118,7 @@ export const ViewingRoomsLatestGrid: React.FC<ViewingRoomsLatestGridProps> = pro
           gridColumnGap={2}
           gridRowGap={6}
         >
-          {viewingRoomsForLatestGrid.map(vr => {
+          {viewingRoomsForLatestGrid.map((vr, index) => {
             const {
               slug,
               title,
@@ -135,14 +140,20 @@ export const ViewingRoomsLatestGrid: React.FC<ViewingRoomsLatestGridProps> = pro
             const tag = getTagProps(status, distanceToOpen, distanceToClose)
 
             return (
-              <Link href={`/viewing-room/${slug}`} key={slug} noUnderline>
+              <RouterLink to={`/viewing-room/${slug}`} key={slug} noUnderline>
+                {
+                  // Add a css id selector to an empty div above the last list item and scroll to that div when the Show More button is pressed.
+                  viewingRoomsForLatestGrid.length - PAGE_SIZE === index && (
+                    <div id="jump--viewingRoom" />
+                  )
+                }
                 <SmallCard
                   title={title}
                   subtitle={partner.name}
                   images={[heroImageURL].concat(artworkImages)}
                   tag={tag}
                 />
-              </Link>
+              </RouterLink>
             )
           })}
         </CSSGrid>
