@@ -64,27 +64,27 @@ export const Boot = track(null, {
     <Theme>
       <HeadProvider headTags={headTags}>
         <StateProvider>
-          {/* <RelayEnvironmentProvider environment={props.relayEnvironment}> */}
-          <SystemContextProvider {...contextProps}>
-            <ErrorBoundary>
-              <MediaContextProvider onlyMatch={onlyMatchMediaQueries}>
-                <ResponsiveProvider
-                  mediaQueries={themeProps.mediaQueries}
-                  initialMatchingMediaQueries={onlyMatchMediaQueries as any}
-                >
-                  <Grid fluid maxWidth="100%">
-                    <GlobalStyles />
-                    <FocusVisible />
-                    {children}
-                    {process.env.NODE_ENV === "development" && (
-                      <BreakpointVisualizer />
-                    )}
-                  </Grid>
-                </ResponsiveProvider>
-              </MediaContextProvider>
-            </ErrorBoundary>
-          </SystemContextProvider>
-          {/* </RelayEnvironmentProvider> */}
+          <RelayEnvironmentProvider environment={props.relayEnvironment}>
+            <SystemContextProvider {...contextProps}>
+              <ErrorBoundary>
+                <MediaContextProvider onlyMatch={onlyMatchMediaQueries}>
+                  <ResponsiveProvider
+                    mediaQueries={themeProps.mediaQueries}
+                    initialMatchingMediaQueries={onlyMatchMediaQueries as any}
+                  >
+                    <Grid fluid maxWidth="100%">
+                      <GlobalStyles />
+                      <FocusVisible />
+                      {children}
+                      {process.env.NODE_ENV === "development" && (
+                        <BreakpointVisualizer />
+                      )}
+                    </Grid>
+                  </ResponsiveProvider>
+                </MediaContextProvider>
+              </ErrorBoundary>
+            </SystemContextProvider>
+          </RelayEnvironmentProvider>
         </StateProvider>
       </HeadProvider>
     </Theme>

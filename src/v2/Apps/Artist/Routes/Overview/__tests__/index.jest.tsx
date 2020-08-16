@@ -8,6 +8,7 @@ import React from "react"
 import { ArtistRecommendationsQueryRenderer as ArtistRecommendations } from "../Components/ArtistRecommendations"
 import { ArtistTopWorksRailFragmentContainer as ArtistTopWorksRail } from "v2/Apps/Artist/Components/ArtistTopWorksRail/ArtistTopWorksRail"
 import { FeaturedArticlesItem, OverviewRoute } from "../index"
+import { MockBoot } from "v2/DevTools"
 
 jest.mock("v2/Artsy/Analytics/useTracking")
 
@@ -15,9 +16,11 @@ describe("OverviewRoute", () => {
   function getWrapper(artistData, user: User = {}) {
     return mount(
       <SystemContextProvider user={user}>
-        <Theme>
-          <OverviewRoute artist={artistData} />
-        </Theme>
+        <MockBoot>
+          <Theme>
+            <OverviewRoute artist={artistData} />
+          </Theme>
+        </MockBoot>
       </SystemContextProvider>
     )
   }
