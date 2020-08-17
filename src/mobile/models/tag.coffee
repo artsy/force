@@ -3,7 +3,7 @@ sd = require('sharify').data
 Backbone = require 'backbone'
 Artworks = require '../collections/artworks.coffee'
 FilterSuggest = require './filter_suggest.coffee'
-{ Image, Markdown } = require 'artsy-backbone-mixins'
+{ Image, Markdown } = require '@artsy/backbone-mixins'
 
 module.exports = class Tag extends Backbone.Model
 

@@ -4,7 +4,7 @@ Artworks = require '../collections/artworks.coffee'
 FilteredArtworks = require '../collections/filter_artworks.coffee'
 Artists = require '../collections/artists.coffee'
 _ = require 'underscore'
-{ Markdown } = require 'artsy-backbone-mixins'
+{ Markdown } = require '@artsy/backbone-mixins'
 
 module.exports = class Artist extends Backbone.Model
   _.extend @prototype, Markdown

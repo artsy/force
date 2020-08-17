@@ -11,6 +11,17 @@
     lodash "4.17.15"
     prettier "1.19.1"
 
+"@artsy/backbone-mixins@2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@artsy/backbone-mixins/-/backbone-mixins-2.0.0.tgz#8a7cd00c3f961f10fa457249d7c7db42dda1bdc5"
+  integrity sha512-xiz+s4xSItiHAC3gf50lihCj+vUVIq1hp9ZQyTfQMvv8oYhvFE+OVBqwFeQ8CmhOk2ujtVlkmK5TDwdR8OYhNw==
+  dependencies:
+    ics "^0.4.1"
+    marked "*"
+    moment "^2.11.1"
+    qs "5.2.0"
+    underscore "*"
+
 "@artsy/cohesion@1.28.0":
   version "1.28.0"
   resolved "https://registry.yarnpkg.com/@artsy/cohesion/-/cohesion-1.28.0.tgz#87e13daa69904ffea87df131189783ff90f1be2b"
@@ -5276,17 +5287,6 @@ arrify@^1.0.0, arrify@^1.0.1:
   resolved "https://registry.yarnpkg.com/arrify/-/arrify-1.0.1.tgz#898508da2226f380df904728456849c1501a4b0d"
   integrity sha1-iYUI2iIm84DfkEcoRWhJwVAaSw0=
 
-artsy-backbone-mixins@artsy/artsy-backbone-mixins:
-  version "1.0.0"
-  resolved "https://codeload.github.com/artsy/artsy-backbone-mixins/tar.gz/6309f2a4d4e1a1458105d934b1ec89af6bb87e98"
-  dependencies:
-    bluebird-q "^1.0.3"
-    ics "^0.4.1"
-    marked "*"
-    moment "^2.11.1"
-    qs "5.2.0"
-    underscore "*"
-
 "artsy-eigen-web-association@git://github.com/artsy/artsy-eigen-web-association.git":
   version "1.0.7"
   resolved "git://github.com/artsy/artsy-eigen-web-association.git#faf724b5486912cc3da3876b881d1bda12f187f6"
@@ -6222,13 +6222,6 @@ bindings@^1.5.0:
   dependencies:
     file-uri-to-path "1.0.0"
 
-bluebird-q@^1.0.3:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/bluebird-q/-/bluebird-q-1.0.3.tgz#0d099248587d04212ca3070c008e4490f2586af2"
-  integrity sha1-DQmSSFh9BCEsowcMAI5EkPJYavI=
-  dependencies:
-    bluebird "^2.8.0"
-
 bluebird@*, bluebird@^3.1.1:
   version "3.5.3"
   resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-3.5.3.tgz#7d01c6f9616c9a51ab0f8c549a79dfe6ec33efa7"
@@ -6238,11 +6231,6 @@ bluebird@3.5.0:
   version "3.5.0"
   resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-3.5.0.tgz#791420d7f551eea2897453a8a77653f96606d67c"
   integrity sha1-eRQg1/VR7qKJdFOop3ZT+WYG1nw=
-
-bluebird@^2.8.0:
-  version "2.11.0"
-  resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-2.11.0.tgz#534b9033c022c9579c56ba3b3e5a5caafbb650e1"
-  integrity sha1-U0uQM8AiyVecVro7Plpcqvu2UOE=
 
 bluebird@^3.3.5, bluebird@^3.5.5:
   version "3.7.2"
@@ -14905,9 +14893,9 @@ markdown-to-jsx@^6.9.1, markdown-to-jsx@^6.9.3:
     unquote "^1.1.0"
 
 marked@*:
-  version "0.7.0"
-  resolved "https://registry.yarnpkg.com/marked/-/marked-0.7.0.tgz#b64201f051d271b1edc10a04d1ae9b74bb8e5c0e"
-  integrity sha512-c+yYdCZJQrsRjTPhUx7VKkApw9bwDkNbHUKo1ovgcfDjb2kc8rLuRbIFyXL5WOEUwzSSKo3IXpph2K6DqB/KZg==
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/marked/-/marked-1.1.1.tgz#e5d61b69842210d5df57b05856e0c91572703e6a"
+  integrity sha512-mJzT8D2yPxoPh7h0UXkB+dBj4FykPJ2OIfxAWeIHrvoHDkFxukV/29QxoFQoPM6RLEwhIFdJpmKBlqVM3s2ZIw==
 
 marked@^0.6.2:
   version "0.6.3"

@@ -5,7 +5,7 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
  */
 const _ = require("underscore")
-const { AToZ } = require("artsy-backbone-mixins")
+const { AToZ } = require("@artsy/backbone-mixins")
 const Backbone = require("backbone")
 const cheerio = require("cheerio")
 const fs = require("fs")

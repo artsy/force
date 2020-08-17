@@ -2,7 +2,7 @@ _ = require 'underscore'
 sd = require('sharify').data
 Backbone = require 'backbone'
 Genes = require '../../collections/genes'
-{ Fetch } = require 'artsy-backbone-mixins'
+{ Fetch } = require '@artsy/backbone-mixins'
 
 module.exports.index = (req, res, next) ->
   results = []

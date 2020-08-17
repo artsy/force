@@ -7,7 +7,7 @@ Profile = require '../models/profile.coffee'
 Artists = require '../collections/artists.coffee'
 PartnerLocations = require '../collections/partner_locations.coffee'
 PartnerShows = require '../collections/partner_shows.coffee'
-fetchUntilEnd = require('artsy-backbone-mixins').Fetch().fetchUntilEnd
+fetchUntilEnd = require('@artsy/backbone-mixins').Fetch().fetchUntilEnd
 Relations = require './mixins/relations/partner.coffee'
 
 INSTITUTION        = 'institution'

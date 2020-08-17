@@ -1,7 +1,7 @@
 _ = require 'underscore'
 sd = require('sharify').data
 Backbone = require 'backbone'
-{ Image } = require 'artsy-backbone-mixins'
+{ Image } = require '@artsy/backbone-mixins'
 _s = require 'underscore.string'
 PartnerShow = require './show.coffee'
 moment = require 'moment-timezone'

@@ -5,7 +5,7 @@ Backbone = require 'backbone'
 CoverImage = require './cover_image.coffee'
 Icon = require './icon.coffee'
 Artworks = require '../collections/artworks.coffee'
-{ Markdown } = require 'artsy-backbone-mixins'
+{ Markdown } = require '@artsy/backbone-mixins'
 { compactObject } = require './mixins/compact_object.coffee'
 Relations = require './mixins/relations/profile.coffee'
 

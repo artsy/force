@@ -5,7 +5,7 @@ jade = require 'jade'
 path = require 'path'
 fs = require 'fs'
 Backbone = require 'backbone'
-{ AToZ } = require 'artsy-backbone-mixins'
+{ AToZ } = require '@artsy/backbone-mixins'
 { fabricate, fabricate2 } = require '@artsy/antigravity'
 Fair = require '../../../../../models/fair'
 Profile = require '../../../../../models/profile'
@@ -33,7 +33,7 @@ describe 'Browse templates', ->
       fair = new Fair (fabricate 'fair', about: 'about the fair')
       profile = new Profile (fabricate 'fair_profile')
       collection = new FilterArtworks fabricate2('filter_artworks'), parse: true
-      
+
       @template = render('template')
         sd: {}
         fair: fair
