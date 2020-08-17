@@ -37,16 +37,11 @@ describe("FairApp", () => {
   it("displays basic information about the fair", async () => {
     const wrapper = await getWrapper()
     expect(wrapper.find("AppContainer").length).toBe(1)
-    expect(wrapper.find("FairHeader").length).toBe(1)
-    expect(wrapper.text()).toContain("Miart 2020")
   })
 })
 
 const FairAppFixture: FairApp_QueryRawResponse = {
   fair: {
     id: "fair12345",
-    about: "Lorem ipsum",
-    name: "Miart 2020",
-    formattedOpeningHours: "Closes in 12 days",
   },
 }

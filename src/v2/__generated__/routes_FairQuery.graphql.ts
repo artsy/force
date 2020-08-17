@@ -29,13 +29,7 @@ query routes_FairQuery(
 }
 
 fragment FairApp_fair on Fair {
-  ...FairHeader_fair
-}
-
-fragment FairHeader_fair on Fair {
-  about
-  formattedOpeningHours
-  name
+  id
 }
 */
 
@@ -99,27 +93,6 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "about",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "formattedOpeningHours",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "name",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
             "name": "id",
             "storageKey": null
           }
@@ -133,7 +106,7 @@ return {
     "metadata": {},
     "name": "routes_FairQuery",
     "operationKind": "query",
-    "text": "query routes_FairQuery(\n  $slug: String!\n) {\n  fair(id: $slug) {\n    ...FairApp_fair\n    id\n  }\n}\n\nfragment FairApp_fair on Fair {\n  ...FairHeader_fair\n}\n\nfragment FairHeader_fair on Fair {\n  about\n  formattedOpeningHours\n  name\n}\n"
+    "text": "query routes_FairQuery(\n  $slug: String!\n) {\n  fair(id: $slug) {\n    ...FairApp_fair\n    id\n  }\n}\n\nfragment FairApp_fair on Fair {\n  id\n}\n"
   }
 };
 })();

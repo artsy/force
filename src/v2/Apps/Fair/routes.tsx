@@ -3,6 +3,8 @@ import { graphql } from "react-relay"
 import { RouteConfig } from "found"
 
 const FairApp = loadable(() => import("./FairApp"))
+const FairOverviewRoute = loadable(() => import("./Routes/FairOverview"))
+const FairInfoRoute = loadable(() => import("./Routes/FairInfo"))
 
 export const routes: RouteConfig[] = [
   {
@@ -18,5 +20,35 @@ export const routes: RouteConfig[] = [
         }
       }
     `,
+    children: [
+      {
+        path: "/",
+        getComponent: () => FairOverviewRoute,
+        prepare: () => {
+          FairOverviewRoute.preload()
+        },
+        query: graphql`
+          query routes_FairOverviewQuery($slug: String!) {
+            fair(id: $slug) {
+              ...FairOverview_fair
+            }
+          }
+        `,
+      },
+      {
+        path: "info",
+        getComponent: () => FairInfoRoute,
+        prepare: () => {
+          FairInfoRoute.preload()
+        },
+        query: graphql`
+          query routes_FairInfoQuery($slug: String!) {
+            fair(id: $slug) {
+              ...FairInfo_fair
+            }
+          }
+        `,
+      },
+    ],
   },
 ]

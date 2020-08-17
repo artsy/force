@@ -13,10 +13,7 @@ export type FairApp_QueryResponse = {
 };
 export type FairApp_QueryRawResponse = {
     readonly fair: ({
-        readonly about: string | null;
-        readonly formattedOpeningHours: string | null;
-        readonly name: string | null;
-        readonly id: string | null;
+        readonly id: string;
     }) | null;
 };
 export type FairApp_Query = {
@@ -38,13 +35,7 @@ query FairApp_Query(
 }
 
 fragment FairApp_fair on Fair {
-  ...FairHeader_fair
-}
-
-fragment FairHeader_fair on Fair {
-  about
-  formattedOpeningHours
-  name
+  id
 }
 */
 
@@ -108,27 +99,6 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "about",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "formattedOpeningHours",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "name",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
             "name": "id",
             "storageKey": null
           }
@@ -142,7 +112,7 @@ return {
     "metadata": {},
     "name": "FairApp_Query",
     "operationKind": "query",
-    "text": "query FairApp_Query(\n  $slug: String!\n) {\n  fair(id: $slug) {\n    ...FairApp_fair\n    id\n  }\n}\n\nfragment FairApp_fair on Fair {\n  ...FairHeader_fair\n}\n\nfragment FairHeader_fair on Fair {\n  about\n  formattedOpeningHours\n  name\n}\n"
+    "text": "query FairApp_Query(\n  $slug: String!\n) {\n  fair(id: $slug) {\n    ...FairApp_fair\n    id\n  }\n}\n\nfragment FairApp_fair on Fair {\n  id\n}\n"
   }
 };
 })();
