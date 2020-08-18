@@ -88,7 +88,7 @@ const Conversation: React.FC<ConversationProps> = props => {
   const messageGroups = groupMessages(
     conversation.messagesConnection.edges
       .map(edge => edge.node)
-      .filter(node => node.body.length > 0)
+      .filter(node => node?.body?.length > 0)
   ).map((messageGroup, groupIndex) => {
     const today = fromToday(messageGroup[0].createdAt)
     return (
