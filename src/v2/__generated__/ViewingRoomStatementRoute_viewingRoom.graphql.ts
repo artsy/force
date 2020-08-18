@@ -1,4 +1,5 @@
 /* tslint:disable */
+/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -18,17 +19,13 @@ export type ViewingRoomStatementRoute_viewingRoom$key = {
 
 
 const node: ReaderFragment = {
-  "kind": "Fragment",
-  "name": "ViewingRoomStatementRoute_viewingRoom",
-  "type": "ViewingRoom",
-  "metadata": null,
   "argumentDefinitions": [],
+  "kind": "Fragment",
+  "metadata": null,
+  "name": "ViewingRoomStatementRoute_viewingRoom",
   "selections": [
     {
-      "kind": "LinkedField",
       "alias": null,
-      "name": "artworksConnection",
-      "storageKey": "artworksConnection(first:2)",
       "args": [
         {
           "kind": "Literal",
@@ -37,43 +34,47 @@ const node: ReaderFragment = {
         }
       ],
       "concreteType": "ArtworkConnection",
+      "kind": "LinkedField",
+      "name": "artworksConnection",
       "plural": false,
       "selections": [
         {
-          "kind": "ScalarField",
           "alias": null,
-          "name": "totalCount",
           "args": null,
+          "kind": "ScalarField",
+          "name": "totalCount",
           "storageKey": null
         }
-      ]
+      ],
+      "storageKey": "artworksConnection(first:2)"
     },
     {
+      "args": null,
       "kind": "FragmentSpread",
-      "name": "ViewingRoomIntro_viewingRoom",
-      "args": null
+      "name": "ViewingRoomIntro_viewingRoom"
     },
     {
+      "args": null,
       "kind": "FragmentSpread",
-      "name": "ViewingRoomWorks_viewingRoom",
-      "args": null
+      "name": "ViewingRoomWorks_viewingRoom"
     },
     {
+      "args": null,
       "kind": "FragmentSpread",
-      "name": "ViewingRoomPullQuote_viewingRoom",
-      "args": null
+      "name": "ViewingRoomPullQuote_viewingRoom"
     },
     {
+      "args": null,
       "kind": "FragmentSpread",
-      "name": "ViewingRoomBody_viewingRoom",
-      "args": null
+      "name": "ViewingRoomBody_viewingRoom"
     },
     {
+      "args": null,
       "kind": "FragmentSpread",
-      "name": "ViewingRoomSubsections_viewingRoom",
-      "args": null
+      "name": "ViewingRoomSubsections_viewingRoom"
     }
-  ]
+  ],
+  "type": "ViewingRoom"
 };
 (node as any).hash = 'eb89dc547a16f9d2e7413352b51ab944';
 export default node;

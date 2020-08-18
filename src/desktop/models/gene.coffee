@@ -3,7 +3,7 @@ _s = require 'underscore.string'
 sd = require('sharify').data
 Backbone = require 'backbone'
 Artworks = require '../collections/artworks.coffee'
-{ Image, Markdown } = require 'artsy-backbone-mixins'
+{ Image, Markdown } = require '@artsy/backbone-mixins'
 Artist = require '../models/artist.coffee'
 Relations = require './mixins/relations/gene.coffee'
 
@@ -21,7 +21,7 @@ module.exports = class Gene extends Backbone.Model
 
   href: -> "/gene/#{@get('id')}"
 
-  displayName: -> @get('display_name') or @get('name') 
+  displayName: -> @get('display_name') or @get('name')
 
   familyName: -> @related().family.get('name')
 

@@ -6,15 +6,11 @@ import { FeatureHeaderDefaultFragmentContainer as FeatureHeaderDefault } from ".
 
 export interface FeatureHeaderProps {
   feature: FeatureHeader_feature
-  layout: "default" | "full"
 }
 
-export const FeatureHeader: React.FC<FeatureHeaderProps> = ({
-  feature,
-  layout = "default",
-}) => {
-  if (layout === "full") {
-    return <FeatureHeaderFull feature={feature} layout={layout} />
+export const FeatureHeader: React.FC<FeatureHeaderProps> = ({ feature }) => {
+  if (feature.layout === "FULL") {
+    return <FeatureHeaderFull feature={feature} />
   }
 
   return <FeatureHeaderDefault feature={feature} />
@@ -27,6 +23,7 @@ export const FeatureHeaderFragmentContainer = createFragmentContainer(
       fragment FeatureHeader_feature on Feature {
         ...FeatureHeaderDefault_feature
         ...FeatureHeaderFull_feature
+        layout
       }
     `,
   }

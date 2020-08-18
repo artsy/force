@@ -1,4 +1,5 @@
 /* tslint:disable */
+/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -21,32 +22,28 @@ export type IdentityVerificationApp_me$key = {
 
 const node: ReaderFragment = (function(){
 var v0 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "internalID",
   "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
   "storageKey": null
 };
 return {
-  "kind": "Fragment",
-  "name": "IdentityVerificationApp_me",
-  "type": "Me",
-  "metadata": null,
   "argumentDefinitions": [
     {
+      "defaultValue": null,
       "kind": "LocalArgument",
       "name": "id",
-      "type": "String!",
-      "defaultValue": null
+      "type": "String!"
     }
   ],
+  "kind": "Fragment",
+  "metadata": null,
+  "name": "IdentityVerificationApp_me",
   "selections": [
     (v0/*: any*/),
     {
-      "kind": "LinkedField",
       "alias": null,
-      "name": "identityVerification",
-      "storageKey": null,
       "args": [
         {
           "kind": "Variable",
@@ -55,26 +52,30 @@ return {
         }
       ],
       "concreteType": "IdentityVerification",
+      "kind": "LinkedField",
+      "name": "identityVerification",
       "plural": false,
       "selections": [
         (v0/*: any*/),
         {
-          "kind": "ScalarField",
           "alias": null,
-          "name": "userID",
           "args": null,
+          "kind": "ScalarField",
+          "name": "userID",
           "storageKey": null
         },
         {
-          "kind": "ScalarField",
           "alias": null,
-          "name": "state",
           "args": null,
+          "kind": "ScalarField",
+          "name": "state",
           "storageKey": null
         }
-      ]
+      ],
+      "storageKey": null
     }
-  ]
+  ],
+  "type": "Me"
 };
 })();
 (node as any).hash = '820346679be7e29c2ffcf41999f0acf4';

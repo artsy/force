@@ -5,7 +5,7 @@ Artworks = require '../collections/artworks.coffee'
 Artists = require '../collections/artists.coffee'
 FilterSuggest = require './filter_suggest.coffee'
 
-{ Image, Markdown } = require 'artsy-backbone-mixins'
+{ Image, Markdown } = require '@artsy/backbone-mixins'
 
 SUBJECT_MATTER_MATCHES = [
   "content", "medium", "concrete contemporary",

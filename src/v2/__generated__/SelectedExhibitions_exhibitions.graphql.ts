@@ -1,4 +1,5 @@
 /* tslint:disable */
+/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -26,50 +27,47 @@ export type SelectedExhibitions_exhibitions$key = ReadonlyArray<{
 
 const node: ReaderFragment = (function(){
 var v0 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "name",
   "args": null,
+  "kind": "ScalarField",
+  "name": "name",
   "storageKey": null
 },
 v1 = [
   (v0/*: any*/)
 ];
 return {
+  "argumentDefinitions": [],
   "kind": "Fragment",
-  "name": "SelectedExhibitions_exhibitions",
-  "type": "Show",
   "metadata": {
     "plural": true
   },
-  "argumentDefinitions": [],
+  "name": "SelectedExhibitions_exhibitions",
   "selections": [
     {
-      "kind": "LinkedField",
       "alias": null,
-      "name": "partner",
-      "storageKey": null,
       "args": null,
       "concreteType": null,
+      "kind": "LinkedField",
+      "name": "partner",
       "plural": false,
       "selections": [
         {
           "kind": "InlineFragment",
-          "type": "ExternalPartner",
-          "selections": (v1/*: any*/)
+          "selections": (v1/*: any*/),
+          "type": "ExternalPartner"
         },
         {
           "kind": "InlineFragment",
-          "type": "Partner",
-          "selections": (v1/*: any*/)
+          "selections": (v1/*: any*/),
+          "type": "Partner"
         }
-      ]
+      ],
+      "storageKey": null
     },
     (v0/*: any*/),
     {
-      "kind": "ScalarField",
       "alias": "start_at",
-      "name": "startAt",
       "args": [
         {
           "kind": "Literal",
@@ -77,22 +75,20 @@ return {
           "value": "YYYY"
         }
       ],
+      "kind": "ScalarField",
+      "name": "startAt",
       "storageKey": "startAt(format:\"YYYY\")"
     },
     {
-      "kind": "LinkedField",
       "alias": "cover_image",
-      "name": "coverImage",
-      "storageKey": null,
       "args": null,
       "concreteType": "Image",
+      "kind": "LinkedField",
+      "name": "coverImage",
       "plural": false,
       "selections": [
         {
-          "kind": "LinkedField",
           "alias": null,
-          "name": "cropped",
-          "storageKey": "cropped(height:600,width:800)",
           "args": [
             {
               "kind": "Literal",
@@ -106,27 +102,32 @@ return {
             }
           ],
           "concreteType": "CroppedImageUrl",
+          "kind": "LinkedField",
+          "name": "cropped",
           "plural": false,
           "selections": [
             {
-              "kind": "ScalarField",
               "alias": null,
-              "name": "url",
               "args": null,
+              "kind": "ScalarField",
+              "name": "url",
               "storageKey": null
             }
-          ]
+          ],
+          "storageKey": "cropped(height:600,width:800)"
         }
-      ]
+      ],
+      "storageKey": null
     },
     {
-      "kind": "ScalarField",
       "alias": null,
-      "name": "city",
       "args": null,
+      "kind": "ScalarField",
+      "name": "city",
       "storageKey": null
     }
-  ]
+  ],
+  "type": "Show"
 };
 })();
 (node as any).hash = '909495fb57e2524b079c5d2304d2d162';

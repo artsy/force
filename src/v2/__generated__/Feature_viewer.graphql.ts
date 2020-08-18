@@ -1,4 +1,5 @@
 /* tslint:disable */
+/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -21,66 +22,62 @@ export type Feature_viewer$key = {
 
 
 const node: ReaderFragment = {
-  "kind": "Fragment",
-  "name": "Feature_viewer",
-  "type": "Viewer",
-  "metadata": null,
   "argumentDefinitions": [
     {
+      "defaultValue": null,
       "kind": "LocalArgument",
       "name": "articleIDs",
-      "type": "[String]!",
-      "defaultValue": null
+      "type": "[String]!"
     },
     {
+      "defaultValue": null,
       "kind": "LocalArgument",
       "name": "selectedWorksSetID",
-      "type": "String!",
-      "defaultValue": null
+      "type": "String!"
     },
     {
+      "defaultValue": null,
       "kind": "LocalArgument",
       "name": "collectionRailItemIDs",
-      "type": "[String!]",
-      "defaultValue": null
+      "type": "[String!]"
     },
     {
+      "defaultValue": null,
       "kind": "LocalArgument",
       "name": "auctionRailItemIDs",
-      "type": "[String!]",
-      "defaultValue": null
+      "type": "[String!]"
     },
     {
+      "defaultValue": null,
       "kind": "LocalArgument",
       "name": "fairRailItemIDs",
-      "type": "[String!]",
-      "defaultValue": null
+      "type": "[String!]"
     },
     {
+      "defaultValue": null,
       "kind": "LocalArgument",
       "name": "hasCollectionRailItems",
-      "type": "Boolean!",
-      "defaultValue": null
+      "type": "Boolean!"
     },
     {
+      "defaultValue": null,
       "kind": "LocalArgument",
       "name": "hasAuctionRailItems",
-      "type": "Boolean!",
-      "defaultValue": null
+      "type": "Boolean!"
     },
     {
+      "defaultValue": null,
       "kind": "LocalArgument",
       "name": "hasFairRailItems",
-      "type": "Boolean!",
-      "defaultValue": null
+      "type": "Boolean!"
     }
   ],
+  "kind": "Fragment",
+  "metadata": null,
+  "name": "Feature_viewer",
   "selections": [
     {
-      "kind": "LinkedField",
       "alias": null,
-      "name": "articles",
-      "storageKey": null,
       "args": [
         {
           "kind": "Variable",
@@ -89,20 +86,20 @@ const node: ReaderFragment = {
         }
       ],
       "concreteType": "Article",
+      "kind": "LinkedField",
+      "name": "articles",
       "plural": true,
       "selections": [
         {
+          "args": null,
           "kind": "FragmentSpread",
-          "name": "FeaturedArticles_articles",
-          "args": null
+          "name": "FeaturedArticles_articles"
         }
-      ]
+      ],
+      "storageKey": null
     },
     {
-      "kind": "LinkedField",
       "alias": "selectedWorks",
-      "name": "orderedSet",
-      "storageKey": null,
       "args": [
         {
           "kind": "Variable",
@@ -111,18 +108,19 @@ const node: ReaderFragment = {
         }
       ],
       "concreteType": "OrderedSet",
+      "kind": "LinkedField",
+      "name": "orderedSet",
       "plural": false,
       "selections": [
         {
+          "args": null,
           "kind": "FragmentSpread",
-          "name": "SelectedWorks_selectedWorks",
-          "args": null
+          "name": "SelectedWorks_selectedWorks"
         }
-      ]
+      ],
+      "storageKey": null
     },
     {
-      "kind": "FragmentSpread",
-      "name": "FeaturedRails_viewer",
       "args": [
         {
           "kind": "Variable",
@@ -154,9 +152,12 @@ const node: ReaderFragment = {
           "name": "hasFairRailItems",
           "variableName": "hasFairRailItems"
         }
-      ]
+      ],
+      "kind": "FragmentSpread",
+      "name": "FeaturedRails_viewer"
     }
-  ]
+  ],
+  "type": "Viewer"
 };
 (node as any).hash = '308da696148367711e40c557c82521e0';
 export default node;

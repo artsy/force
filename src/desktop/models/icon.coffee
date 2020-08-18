@@ -2,7 +2,7 @@ Backbone = require 'backbone'
 _ = require 'underscore'
 sd = require('sharify').data
 Icon = require './icon.coffee'
-{ Image } = require 'artsy-backbone-mixins'
+{ Image } = require '@artsy/backbone-mixins'
 ImageSizes = require './mixins/image_sizes.coffee'
 
 module.exports = class Icon extends Backbone.Model

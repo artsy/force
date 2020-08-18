@@ -1,7 +1,7 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 sd = require('sharify').data
-{ Dimensions, Markdown, ArtworkHelpers } = require 'artsy-backbone-mixins'
+{ Dimensions, Markdown, ArtworkHelpers } = require '@artsy/backbone-mixins'
 Artworks = require '../collections/artworks.coffee'
 EditionSets = require '../collections/edition_sets.coffee'
 Sale = require './sale.coffee'

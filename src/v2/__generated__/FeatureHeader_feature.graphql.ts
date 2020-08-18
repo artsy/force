@@ -1,8 +1,11 @@
 /* tslint:disable */
+/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
+export type FeatureLayouts = "DEFAULT" | "FULL" | "%future added value";
 export type FeatureHeader_feature = {
+    readonly layout: FeatureLayouts;
     readonly " $fragmentRefs": FragmentRefs<"FeatureHeaderDefault_feature" | "FeatureHeaderFull_feature">;
     readonly " $refType": "FeatureHeader_feature";
 };
@@ -15,23 +18,30 @@ export type FeatureHeader_feature$key = {
 
 
 const node: ReaderFragment = {
-  "kind": "Fragment",
-  "name": "FeatureHeader_feature",
-  "type": "Feature",
-  "metadata": null,
   "argumentDefinitions": [],
+  "kind": "Fragment",
+  "metadata": null,
+  "name": "FeatureHeader_feature",
   "selections": [
     {
-      "kind": "FragmentSpread",
-      "name": "FeatureHeaderDefault_feature",
-      "args": null
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "layout",
+      "storageKey": null
     },
     {
+      "args": null,
       "kind": "FragmentSpread",
-      "name": "FeatureHeaderFull_feature",
-      "args": null
+      "name": "FeatureHeaderDefault_feature"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "FeatureHeaderFull_feature"
     }
-  ]
+  ],
+  "type": "Feature"
 };
-(node as any).hash = '7472f3ce172d61b360f008173e242725';
+(node as any).hash = '410eddfc25f11a9687c26ed516418f0e';
 export default node;

@@ -1,12 +1,13 @@
 /* tslint:disable */
+/* eslint-disable */
 
 import { ConcreteRequest } from "relay-runtime";
 export type CreateAppSecondFactorInput = {
-    readonly attributes: AppSecondFactorAttributes;
-    readonly clientMutationId?: string | null;
+    attributes: AppSecondFactorAttributes;
+    clientMutationId?: string | null;
 };
 export type AppSecondFactorAttributes = {
-    readonly name?: string | null;
+    name?: string | null;
 };
 export type CreateAppSecondFactorMutationVariables = {
     input: CreateAppSecondFactorInput;
@@ -88,10 +89,10 @@ mutation CreateAppSecondFactorMutation(
 const node: ConcreteRequest = (function(){
 var v0 = [
   {
+    "defaultValue": null,
     "kind": "LocalArgument",
     "name": "input",
-    "type": "CreateAppSecondFactorInput!",
-    "defaultValue": null
+    "type": "CreateAppSecondFactorInput!"
   }
 ],
 v1 = [
@@ -102,152 +103,152 @@ v1 = [
   }
 ],
 v2 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "__typename",
   "args": null,
+  "kind": "ScalarField",
+  "name": "__typename",
   "storageKey": null
 },
 v3 = {
   "kind": "InlineFragment",
-  "type": "AppSecondFactor",
   "selections": [
     (v2/*: any*/),
     {
-      "kind": "ScalarField",
       "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "internalID",
-      "args": null,
       "storageKey": null
     },
     {
-      "kind": "ScalarField",
       "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "otpSecret",
-      "args": null,
       "storageKey": null
     },
     {
-      "kind": "ScalarField",
       "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "otpProvisioningURI",
-      "args": null,
       "storageKey": null
     },
     {
-      "kind": "ScalarField",
       "alias": null,
-      "name": "name",
       "args": null,
+      "kind": "ScalarField",
+      "name": "name",
       "storageKey": null
     }
-  ]
+  ],
+  "type": "AppSecondFactor"
 },
 v4 = {
   "kind": "InlineFragment",
-  "type": "Errors",
   "selections": [
     (v2/*: any*/),
     {
-      "kind": "LinkedField",
       "alias": null,
-      "name": "errors",
-      "storageKey": null,
       "args": null,
       "concreteType": "Error",
+      "kind": "LinkedField",
+      "name": "errors",
       "plural": true,
       "selections": [
         {
-          "kind": "ScalarField",
           "alias": null,
-          "name": "message",
           "args": null,
+          "kind": "ScalarField",
+          "name": "message",
           "storageKey": null
         },
         {
-          "kind": "ScalarField",
           "alias": null,
-          "name": "code",
           "args": null,
+          "kind": "ScalarField",
+          "name": "code",
           "storageKey": null
         }
-      ]
+      ],
+      "storageKey": null
     }
-  ]
+  ],
+  "type": "Errors"
 };
 return {
-  "kind": "Request",
   "fragment": {
-    "kind": "Fragment",
-    "name": "CreateAppSecondFactorMutation",
-    "type": "Mutation",
-    "metadata": null,
     "argumentDefinitions": (v0/*: any*/),
+    "kind": "Fragment",
+    "metadata": null,
+    "name": "CreateAppSecondFactorMutation",
     "selections": [
       {
-        "kind": "LinkedField",
         "alias": null,
-        "name": "createAppSecondFactor",
-        "storageKey": null,
         "args": (v1/*: any*/),
         "concreteType": "CreateAppSecondFactorPayload",
+        "kind": "LinkedField",
+        "name": "createAppSecondFactor",
         "plural": false,
         "selections": [
           {
-            "kind": "LinkedField",
             "alias": null,
-            "name": "secondFactorOrErrors",
-            "storageKey": null,
             "args": null,
             "concreteType": null,
+            "kind": "LinkedField",
+            "name": "secondFactorOrErrors",
             "plural": false,
             "selections": [
               (v3/*: any*/),
               (v4/*: any*/)
-            ]
+            ],
+            "storageKey": null
           }
-        ]
+        ],
+        "storageKey": null
       }
-    ]
+    ],
+    "type": "Mutation"
   },
+  "kind": "Request",
   "operation": {
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "CreateAppSecondFactorMutation",
-    "argumentDefinitions": (v0/*: any*/),
     "selections": [
       {
-        "kind": "LinkedField",
         "alias": null,
-        "name": "createAppSecondFactor",
-        "storageKey": null,
         "args": (v1/*: any*/),
         "concreteType": "CreateAppSecondFactorPayload",
+        "kind": "LinkedField",
+        "name": "createAppSecondFactor",
         "plural": false,
         "selections": [
           {
-            "kind": "LinkedField",
             "alias": null,
-            "name": "secondFactorOrErrors",
-            "storageKey": null,
             "args": null,
             "concreteType": null,
+            "kind": "LinkedField",
+            "name": "secondFactorOrErrors",
             "plural": false,
             "selections": [
               (v2/*: any*/),
               (v3/*: any*/),
               (v4/*: any*/)
-            ]
+            ],
+            "storageKey": null
           }
-        ]
+        ],
+        "storageKey": null
       }
     ]
   },
   "params": {
-    "operationKind": "mutation",
-    "name": "CreateAppSecondFactorMutation",
     "id": null,
-    "text": "mutation CreateAppSecondFactorMutation(\n  $input: CreateAppSecondFactorInput!\n) {\n  createAppSecondFactor(input: $input) {\n    secondFactorOrErrors {\n      __typename\n      ... on AppSecondFactor {\n        __typename\n        internalID\n        otpSecret\n        otpProvisioningURI\n        name\n      }\n      ... on Errors {\n        __typename\n        errors {\n          message\n          code\n        }\n      }\n    }\n  }\n}\n",
-    "metadata": {}
+    "metadata": {},
+    "name": "CreateAppSecondFactorMutation",
+    "operationKind": "mutation",
+    "text": "mutation CreateAppSecondFactorMutation(\n  $input: CreateAppSecondFactorInput!\n) {\n  createAppSecondFactor(input: $input) {\n    secondFactorOrErrors {\n      __typename\n      ... on AppSecondFactor {\n        __typename\n        internalID\n        otpSecret\n        otpProvisioningURI\n        name\n      }\n      ... on Errors {\n        __typename\n        errors {\n          message\n          code\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();

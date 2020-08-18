@@ -1,6 +1,5 @@
 import { RelaySSREnvironment } from "v2/Artsy/Relay/createRelaySSREnvironment"
-import { HistoryOptions, HistoryProtocol } from "farce"
-import { RouteConfig } from "found"
+import { FarceCreateRouterArgs, RouteConfig } from "found"
 import { SystemContextProps } from "../SystemContext"
 
 export { Link } from "found"
@@ -23,9 +22,9 @@ export interface RouterConfig {
     /**
      * Defines the type of history to use, depending on router environment.
      */
-    protocol?: HistoryProtocol
+    protocol?: "browser" | "hash" | "memory"
 
-    options?: HistoryOptions
+    options?: FarceCreateRouterArgs["historyOptions"]
   }
 
   /**

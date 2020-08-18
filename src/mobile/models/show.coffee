@@ -8,7 +8,7 @@ moment = require 'moment'
 dateMixin = require './mixins/date.coffee'
 Relations = require './mixins/relations/show.coffee'
 AdditionalImage = require './additional_image.coffee'
-{ Fetch, Markdown } = require 'artsy-backbone-mixins'
+{ Fetch, Markdown } = require '@artsy/backbone-mixins'
 DateHelpers = require '../components/util/date_helpers.coffee'
 { fetchUntilEnd } = Fetch(sd.API_URL)
 

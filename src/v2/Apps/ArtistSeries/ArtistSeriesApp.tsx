@@ -11,6 +11,7 @@ import { ArtistSeriesArtworksFilterRefetchContainer as ArtistSeriesArtworksFilte
 import { userHasLabFeature } from "v2/Utils/user"
 import { ErrorPage } from "v2/Components/ErrorPage"
 import { ArtistSeriesRailFragmentContainer as OtherArtistSeriesRail } from "v2/Components/ArtistSeriesRail/ArtistSeriesRail"
+import { ArtistSeriesMetaFragmentContainer as ArtistSeriesMeta } from "./Components/ArtistSeriesMeta"
 
 interface ArtistSeriesAppProps {
   artistSeries: ArtistSeriesApp_artistSeries
@@ -24,6 +25,8 @@ const ArtistSeriesApp: React.FC<ArtistSeriesAppProps> = ({ artistSeries }) => {
     const { railArtist } = artistSeries
     return (
       <AppContainer maxWidth="100%">
+        {/* NOTE: react-head automatically moves these tags to the <head> element */}
+        <ArtistSeriesMeta artistSeries={artistSeries} />
         <ArtistSeriesHeader artistSeries={artistSeries} />
         <Box m={3}>
           <ArtistSeriesArtworksFilter artistSeries={artistSeries} />
@@ -67,6 +70,7 @@ export default createFragmentContainer(ArtistSeriesApp, {
         sort: { type: "String", defaultValue: "-partner_updated_at" }
         width: { type: "String" }
       ) {
+      ...ArtistSeriesMeta_artistSeries
       ...ArtistSeriesHeader_artistSeries
       railArtist: artists(size: 1) {
         ...ArtistSeriesRail_artist

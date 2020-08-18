@@ -2,7 +2,7 @@ _ = require 'underscore'
 sd = require('sharify').data
 Backbone = require 'backbone'
 Profile = require '../models/profile.coffee'
-{ AToZ, Fetch } = require 'artsy-backbone-mixins'
+{ AToZ, Fetch } = require '@artsy/backbone-mixins'
 
 module.exports = class Profiles extends Backbone.Collection
 

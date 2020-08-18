@@ -1,4 +1,5 @@
 /* tslint:disable */
+/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -30,9 +31,21 @@ export type ArtworkRelatedArtists_artwork$key = {
 
 
 const node: ReaderFragment = {
+  "argumentDefinitions": [
+    {
+      "defaultValue": 4,
+      "kind": "LocalArgument",
+      "name": "count",
+      "type": "Int"
+    },
+    {
+      "defaultValue": "",
+      "kind": "LocalArgument",
+      "name": "cursor",
+      "type": "String"
+    }
+  ],
   "kind": "Fragment",
-  "name": "ArtworkRelatedArtists_artwork",
-  "type": "Artwork",
   "metadata": {
     "connection": [
       {
@@ -47,58 +60,40 @@ const node: ReaderFragment = {
       }
     ]
   },
-  "argumentDefinitions": [
-    {
-      "kind": "LocalArgument",
-      "name": "count",
-      "type": "Int",
-      "defaultValue": 4
-    },
-    {
-      "kind": "LocalArgument",
-      "name": "cursor",
-      "type": "String",
-      "defaultValue": ""
-    }
-  ],
+  "name": "ArtworkRelatedArtists_artwork",
   "selections": [
     {
-      "kind": "ScalarField",
       "alias": null,
-      "name": "slug",
       "args": null,
+      "kind": "ScalarField",
+      "name": "slug",
       "storageKey": null
     },
     {
-      "kind": "LinkedField",
       "alias": null,
-      "name": "artist",
-      "storageKey": null,
       "args": null,
       "concreteType": "Artist",
+      "kind": "LinkedField",
+      "name": "artist",
       "plural": false,
       "selections": [
         {
-          "kind": "ScalarField",
           "alias": null,
-          "name": "href",
           "args": null,
+          "kind": "ScalarField",
+          "name": "href",
           "storageKey": null
         },
         {
-          "kind": "LinkedField",
           "alias": null,
-          "name": "related",
-          "storageKey": null,
           "args": null,
           "concreteType": "ArtistRelatedData",
+          "kind": "LinkedField",
+          "name": "related",
           "plural": false,
           "selections": [
             {
-              "kind": "LinkedField",
               "alias": "artistsConnection",
-              "name": "__ArtworkRelatedArtists_artistsConnection_connection",
-              "storageKey": "__ArtworkRelatedArtists_artistsConnection_connection(kind:\"MAIN\")",
               "args": [
                 {
                   "kind": "Literal",
@@ -107,81 +102,87 @@ const node: ReaderFragment = {
                 }
               ],
               "concreteType": "ArtistConnection",
+              "kind": "LinkedField",
+              "name": "__ArtworkRelatedArtists_artistsConnection_connection",
               "plural": false,
               "selections": [
                 {
-                  "kind": "LinkedField",
                   "alias": null,
-                  "name": "pageInfo",
-                  "storageKey": null,
                   "args": null,
                   "concreteType": "PageInfo",
+                  "kind": "LinkedField",
+                  "name": "pageInfo",
                   "plural": false,
                   "selections": [
                     {
-                      "kind": "ScalarField",
                       "alias": null,
-                      "name": "hasNextPage",
                       "args": null,
+                      "kind": "ScalarField",
+                      "name": "hasNextPage",
                       "storageKey": null
                     },
                     {
-                      "kind": "ScalarField",
                       "alias": null,
-                      "name": "endCursor",
                       "args": null,
+                      "kind": "ScalarField",
+                      "name": "endCursor",
                       "storageKey": null
                     }
-                  ]
+                  ],
+                  "storageKey": null
                 },
                 {
-                  "kind": "LinkedField",
                   "alias": null,
-                  "name": "edges",
-                  "storageKey": null,
                   "args": null,
                   "concreteType": "ArtistEdge",
+                  "kind": "LinkedField",
+                  "name": "edges",
                   "plural": true,
                   "selections": [
                     {
-                      "kind": "LinkedField",
                       "alias": null,
-                      "name": "node",
-                      "storageKey": null,
                       "args": null,
                       "concreteType": "Artist",
+                      "kind": "LinkedField",
+                      "name": "node",
                       "plural": false,
                       "selections": [
                         {
-                          "kind": "ScalarField",
                           "alias": null,
-                          "name": "__typename",
                           "args": null,
+                          "kind": "ScalarField",
+                          "name": "__typename",
                           "storageKey": null
                         },
                         {
+                          "args": null,
                           "kind": "FragmentSpread",
-                          "name": "ArtistCard_artist",
-                          "args": null
+                          "name": "ArtistCard_artist"
                         }
-                      ]
+                      ],
+                      "storageKey": null
                     },
                     {
-                      "kind": "ScalarField",
                       "alias": null,
-                      "name": "cursor",
                       "args": null,
+                      "kind": "ScalarField",
+                      "name": "cursor",
                       "storageKey": null
                     }
-                  ]
+                  ],
+                  "storageKey": null
                 }
-              ]
+              ],
+              "storageKey": "__ArtworkRelatedArtists_artistsConnection_connection(kind:\"MAIN\")"
             }
-          ]
+          ],
+          "storageKey": null
         }
-      ]
+      ],
+      "storageKey": null
     }
-  ]
+  ],
+  "type": "Artwork"
 };
 (node as any).hash = '4df1872cc84dffa4698fd299b4459457';
 export default node;

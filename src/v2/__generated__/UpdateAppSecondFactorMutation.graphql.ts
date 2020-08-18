@@ -1,13 +1,14 @@
 /* tslint:disable */
+/* eslint-disable */
 
 import { ConcreteRequest } from "relay-runtime";
 export type UpdateAppSecondFactorInput = {
-    readonly attributes: AppSecondFactorAttributes;
-    readonly clientMutationId?: string | null;
-    readonly secondFactorID: string;
+    attributes: AppSecondFactorAttributes;
+    clientMutationId?: string | null;
+    secondFactorID: string;
 };
 export type AppSecondFactorAttributes = {
-    readonly name?: string | null;
+    name?: string | null;
 };
 export type UpdateAppSecondFactorMutationVariables = {
     input: UpdateAppSecondFactorInput;
@@ -77,10 +78,10 @@ mutation UpdateAppSecondFactorMutation(
 const node: ConcreteRequest = (function(){
 var v0 = [
   {
+    "defaultValue": null,
     "kind": "LocalArgument",
     "name": "input",
-    "type": "UpdateAppSecondFactorInput!",
-    "defaultValue": null
+    "type": "UpdateAppSecondFactorInput!"
   }
 ],
 v1 = [
@@ -91,124 +92,124 @@ v1 = [
   }
 ],
 v2 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "__typename",
   "args": null,
+  "kind": "ScalarField",
+  "name": "__typename",
   "storageKey": null
 },
 v3 = {
   "kind": "InlineFragment",
-  "type": "AppSecondFactor",
   "selections": [
     (v2/*: any*/)
-  ]
+  ],
+  "type": "AppSecondFactor"
 },
 v4 = {
   "kind": "InlineFragment",
-  "type": "Errors",
   "selections": [
     (v2/*: any*/),
     {
-      "kind": "LinkedField",
       "alias": null,
-      "name": "errors",
-      "storageKey": null,
       "args": null,
       "concreteType": "Error",
+      "kind": "LinkedField",
+      "name": "errors",
       "plural": true,
       "selections": [
         {
-          "kind": "ScalarField",
           "alias": null,
-          "name": "message",
           "args": null,
+          "kind": "ScalarField",
+          "name": "message",
           "storageKey": null
         },
         {
-          "kind": "ScalarField",
           "alias": null,
-          "name": "code",
           "args": null,
+          "kind": "ScalarField",
+          "name": "code",
           "storageKey": null
         }
-      ]
+      ],
+      "storageKey": null
     }
-  ]
+  ],
+  "type": "Errors"
 };
 return {
-  "kind": "Request",
   "fragment": {
-    "kind": "Fragment",
-    "name": "UpdateAppSecondFactorMutation",
-    "type": "Mutation",
-    "metadata": null,
     "argumentDefinitions": (v0/*: any*/),
+    "kind": "Fragment",
+    "metadata": null,
+    "name": "UpdateAppSecondFactorMutation",
     "selections": [
       {
-        "kind": "LinkedField",
         "alias": null,
-        "name": "updateAppSecondFactor",
-        "storageKey": null,
         "args": (v1/*: any*/),
         "concreteType": "UpdateAppSecondFactorPayload",
+        "kind": "LinkedField",
+        "name": "updateAppSecondFactor",
         "plural": false,
         "selections": [
           {
-            "kind": "LinkedField",
             "alias": null,
-            "name": "secondFactorOrErrors",
-            "storageKey": null,
             "args": null,
             "concreteType": null,
+            "kind": "LinkedField",
+            "name": "secondFactorOrErrors",
             "plural": false,
             "selections": [
               (v3/*: any*/),
               (v4/*: any*/)
-            ]
+            ],
+            "storageKey": null
           }
-        ]
+        ],
+        "storageKey": null
       }
-    ]
+    ],
+    "type": "Mutation"
   },
+  "kind": "Request",
   "operation": {
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "UpdateAppSecondFactorMutation",
-    "argumentDefinitions": (v0/*: any*/),
     "selections": [
       {
-        "kind": "LinkedField",
         "alias": null,
-        "name": "updateAppSecondFactor",
-        "storageKey": null,
         "args": (v1/*: any*/),
         "concreteType": "UpdateAppSecondFactorPayload",
+        "kind": "LinkedField",
+        "name": "updateAppSecondFactor",
         "plural": false,
         "selections": [
           {
-            "kind": "LinkedField",
             "alias": null,
-            "name": "secondFactorOrErrors",
-            "storageKey": null,
             "args": null,
             "concreteType": null,
+            "kind": "LinkedField",
+            "name": "secondFactorOrErrors",
             "plural": false,
             "selections": [
               (v2/*: any*/),
               (v3/*: any*/),
               (v4/*: any*/)
-            ]
+            ],
+            "storageKey": null
           }
-        ]
+        ],
+        "storageKey": null
       }
     ]
   },
   "params": {
-    "operationKind": "mutation",
-    "name": "UpdateAppSecondFactorMutation",
     "id": null,
-    "text": "mutation UpdateAppSecondFactorMutation(\n  $input: UpdateAppSecondFactorInput!\n) {\n  updateAppSecondFactor(input: $input) {\n    secondFactorOrErrors {\n      __typename\n      ... on AppSecondFactor {\n        __typename\n      }\n      ... on Errors {\n        __typename\n        errors {\n          message\n          code\n        }\n      }\n    }\n  }\n}\n",
-    "metadata": {}
+    "metadata": {},
+    "name": "UpdateAppSecondFactorMutation",
+    "operationKind": "mutation",
+    "text": "mutation UpdateAppSecondFactorMutation(\n  $input: UpdateAppSecondFactorInput!\n) {\n  updateAppSecondFactor(input: $input) {\n    secondFactorOrErrors {\n      __typename\n      ... on AppSecondFactor {\n        __typename\n      }\n      ... on Errors {\n        __typename\n        errors {\n          message\n          code\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();

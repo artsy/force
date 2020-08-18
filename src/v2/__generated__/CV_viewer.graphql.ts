@@ -1,4 +1,5 @@
 /* tslint:disable */
+/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -31,34 +32,30 @@ var v0 = [
   }
 ];
 return {
-  "kind": "Fragment",
-  "name": "CV_viewer",
-  "type": "Viewer",
-  "metadata": null,
   "argumentDefinitions": [
     {
+      "defaultValue": false,
       "kind": "LocalArgument",
       "name": "soloShowsAtAFair",
-      "type": "Boolean",
-      "defaultValue": false
+      "type": "Boolean"
     },
     {
+      "defaultValue": true,
       "kind": "LocalArgument",
       "name": "soloShowsSoloShow",
-      "type": "Boolean",
-      "defaultValue": true
+      "type": "Boolean"
     },
     {
+      "defaultValue": false,
       "kind": "LocalArgument",
       "name": "groupShowsAtAFair",
-      "type": "Boolean",
-      "defaultValue": false
+      "type": "Boolean"
     },
     {
+      "defaultValue": true,
       "kind": "LocalArgument",
       "name": "fairBoothsAtAFair",
-      "type": "Boolean",
-      "defaultValue": true
+      "type": "Boolean"
     },
     {
       "kind": "RootArgument",
@@ -66,19 +63,19 @@ return {
       "type": "String!"
     }
   ],
+  "kind": "Fragment",
+  "metadata": null,
+  "name": "CV_viewer",
   "selections": [
     {
-      "kind": "LinkedField",
       "alias": "artist_soloShows",
-      "name": "artist",
-      "storageKey": null,
       "args": (v0/*: any*/),
       "concreteType": "Artist",
+      "kind": "LinkedField",
+      "name": "artist",
       "plural": false,
       "selections": [
         {
-          "kind": "FragmentSpread",
-          "name": "CVItem_artist",
           "args": [
             {
               "kind": "Variable",
@@ -90,55 +87,59 @@ return {
               "name": "soloShow",
               "variableName": "soloShowsSoloShow"
             }
-          ]
+          ],
+          "kind": "FragmentSpread",
+          "name": "CVItem_artist"
         }
-      ]
+      ],
+      "storageKey": null
     },
     {
-      "kind": "LinkedField",
       "alias": "artist_groupShows",
-      "name": "artist",
-      "storageKey": null,
       "args": (v0/*: any*/),
       "concreteType": "Artist",
+      "kind": "LinkedField",
+      "name": "artist",
       "plural": false,
       "selections": [
         {
-          "kind": "FragmentSpread",
-          "name": "CVItem_artist",
           "args": [
             {
               "kind": "Variable",
               "name": "atAFair",
               "variableName": "groupShowsAtAFair"
             }
-          ]
+          ],
+          "kind": "FragmentSpread",
+          "name": "CVItem_artist"
         }
-      ]
+      ],
+      "storageKey": null
     },
     {
-      "kind": "LinkedField",
       "alias": "artist_fairBooths",
-      "name": "artist",
-      "storageKey": null,
       "args": (v0/*: any*/),
       "concreteType": "Artist",
+      "kind": "LinkedField",
+      "name": "artist",
       "plural": false,
       "selections": [
         {
-          "kind": "FragmentSpread",
-          "name": "CVItem_artist",
           "args": [
             {
               "kind": "Variable",
               "name": "atAFair",
               "variableName": "fairBoothsAtAFair"
             }
-          ]
+          ],
+          "kind": "FragmentSpread",
+          "name": "CVItem_artist"
         }
-      ]
+      ],
+      "storageKey": null
     }
-  ]
+  ],
+  "type": "Viewer"
 };
 })();
 (node as any).hash = '95af52644c864123ab8658ddcc4912f4';

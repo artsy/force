@@ -1,6 +1,6 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-{ Markdown } = require 'artsy-backbone-mixins'
+{ Markdown } = require '@artsy/backbone-mixins'
 
 module.exports = class FeaturedSet extends Backbone.Model
 

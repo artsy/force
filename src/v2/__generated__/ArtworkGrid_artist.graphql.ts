@@ -1,4 +1,5 @@
 /* tslint:disable */
+/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -17,17 +18,13 @@ export type ArtworkGrid_artist$key = {
 
 
 const node: ReaderFragment = {
-  "kind": "Fragment",
-  "name": "ArtworkGrid_artist",
-  "type": "Artist",
-  "metadata": null,
   "argumentDefinitions": [],
+  "kind": "Fragment",
+  "metadata": null,
+  "name": "ArtworkGrid_artist",
   "selections": [
     {
-      "kind": "LinkedField",
       "alias": "artworks_connection",
-      "name": "artworksConnection",
-      "storageKey": "artworksConnection(first:4)",
       "args": [
         {
           "kind": "Literal",
@@ -36,16 +33,20 @@ const node: ReaderFragment = {
         }
       ],
       "concreteType": "ArtworkConnection",
+      "kind": "LinkedField",
+      "name": "artworksConnection",
       "plural": false,
       "selections": [
         {
+          "args": null,
           "kind": "FragmentSpread",
-          "name": "ArtworkGrid_artworks",
-          "args": null
+          "name": "ArtworkGrid_artworks"
         }
-      ]
+      ],
+      "storageKey": "artworksConnection(first:4)"
     }
-  ]
+  ],
+  "type": "Artist"
 };
 (node as any).hash = '2993b1c9335bd41e7d807b765cc2d6fd';
 export default node;

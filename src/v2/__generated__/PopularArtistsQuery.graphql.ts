@@ -1,4 +1,5 @@
 /* tslint:disable */
+/* eslint-disable */
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -49,108 +50,102 @@ var v0 = [
   }
 ];
 return {
-  "kind": "Request",
   "fragment": {
-    "kind": "Fragment",
-    "name": "PopularArtistsQuery",
-    "type": "Query",
-    "metadata": null,
     "argumentDefinitions": [],
+    "kind": "Fragment",
+    "metadata": null,
+    "name": "PopularArtistsQuery",
     "selections": [
       {
-        "kind": "LinkedField",
         "alias": null,
-        "name": "highlights",
-        "storageKey": null,
         "args": null,
         "concreteType": "Highlights",
+        "kind": "LinkedField",
+        "name": "highlights",
         "plural": false,
         "selections": [
           {
-            "kind": "LinkedField",
             "alias": "popular_artists",
-            "name": "popularArtists",
-            "storageKey": "popularArtists(excludeFollowedArtists:true)",
             "args": (v0/*: any*/),
             "concreteType": "Artist",
+            "kind": "LinkedField",
+            "name": "popularArtists",
             "plural": true,
             "selections": [
               {
+                "args": null,
                 "kind": "FragmentSpread",
-                "name": "PopularArtists_popular_artists",
-                "args": null
+                "name": "PopularArtists_popular_artists"
               }
-            ]
+            ],
+            "storageKey": "popularArtists(excludeFollowedArtists:true)"
           }
-        ]
+        ],
+        "storageKey": null
       }
-    ]
+    ],
+    "type": "Query"
   },
+  "kind": "Request",
   "operation": {
+    "argumentDefinitions": [],
     "kind": "Operation",
     "name": "PopularArtistsQuery",
-    "argumentDefinitions": [],
     "selections": [
       {
-        "kind": "LinkedField",
         "alias": null,
-        "name": "highlights",
-        "storageKey": null,
         "args": null,
         "concreteType": "Highlights",
+        "kind": "LinkedField",
+        "name": "highlights",
         "plural": false,
         "selections": [
           {
-            "kind": "LinkedField",
             "alias": "popular_artists",
-            "name": "popularArtists",
-            "storageKey": "popularArtists(excludeFollowedArtists:true)",
             "args": (v0/*: any*/),
             "concreteType": "Artist",
+            "kind": "LinkedField",
+            "name": "popularArtists",
             "plural": true,
             "selections": [
               {
-                "kind": "ScalarField",
                 "alias": null,
+                "args": null,
+                "kind": "ScalarField",
                 "name": "slug",
-                "args": null,
                 "storageKey": null
               },
               {
-                "kind": "ScalarField",
                 "alias": null,
+                "args": null,
+                "kind": "ScalarField",
                 "name": "internalID",
-                "args": null,
                 "storageKey": null
               },
               {
-                "kind": "ScalarField",
                 "alias": null,
+                "args": null,
+                "kind": "ScalarField",
                 "name": "id",
-                "args": null,
                 "storageKey": null
               },
               {
+                "alias": null,
+                "args": null,
                 "kind": "ScalarField",
-                "alias": null,
                 "name": "name",
-                "args": null,
                 "storageKey": null
               },
               {
-                "kind": "LinkedField",
                 "alias": null,
-                "name": "image",
-                "storageKey": null,
                 "args": null,
                 "concreteType": "Image",
+                "kind": "LinkedField",
+                "name": "image",
                 "plural": false,
                 "selections": [
                   {
-                    "kind": "LinkedField",
                     "alias": null,
-                    "name": "cropped",
-                    "storageKey": "cropped(height:100,width:100)",
                     "args": [
                       {
                         "kind": "Literal",
@@ -164,31 +159,37 @@ return {
                       }
                     ],
                     "concreteType": "CroppedImageUrl",
+                    "kind": "LinkedField",
+                    "name": "cropped",
                     "plural": false,
                     "selections": [
                       {
-                        "kind": "ScalarField",
                         "alias": null,
-                        "name": "url",
                         "args": null,
+                        "kind": "ScalarField",
+                        "name": "url",
                         "storageKey": null
                       }
-                    ]
+                    ],
+                    "storageKey": "cropped(height:100,width:100)"
                   }
-                ]
+                ],
+                "storageKey": null
               }
-            ]
+            ],
+            "storageKey": "popularArtists(excludeFollowedArtists:true)"
           }
-        ]
+        ],
+        "storageKey": null
       }
     ]
   },
   "params": {
-    "operationKind": "query",
-    "name": "PopularArtistsQuery",
     "id": null,
-    "text": "query PopularArtistsQuery {\n  highlights {\n    popular_artists: popularArtists(excludeFollowedArtists: true) {\n      ...PopularArtists_popular_artists\n      id\n    }\n  }\n}\n\nfragment PopularArtists_popular_artists on Artist {\n  slug\n  internalID\n  id\n  name\n  image {\n    cropped(width: 100, height: 100) {\n      url\n    }\n  }\n}\n",
-    "metadata": {}
+    "metadata": {},
+    "name": "PopularArtistsQuery",
+    "operationKind": "query",
+    "text": "query PopularArtistsQuery {\n  highlights {\n    popular_artists: popularArtists(excludeFollowedArtists: true) {\n      ...PopularArtists_popular_artists\n      id\n    }\n  }\n}\n\nfragment PopularArtists_popular_artists on Artist {\n  slug\n  internalID\n  id\n  name\n  image {\n    cropped(width: 100, height: 100) {\n      url\n    }\n  }\n}\n"
   }
 };
 })();

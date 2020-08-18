@@ -38,7 +38,9 @@ export const ArtistApp: React.FC<ArtistAppProps> = props => {
   const { artist, children } = props
   const { trackEvent } = useTracking()
   const route = findCurrentRoute(props.match)
-  let HorizontalPaddingArea = HorizontalPadding
+  let HorizontalPaddingArea:
+    | typeof HorizontalPadding
+    | typeof Box = HorizontalPadding
   let maxWidth
 
   if (route.displayFullPage) {

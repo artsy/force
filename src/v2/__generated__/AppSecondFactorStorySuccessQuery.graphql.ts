@@ -1,4 +1,5 @@
 /* tslint:disable */
+/* eslint-disable */
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -38,65 +39,61 @@ fragment AppSecondFactor_me on Me {
 
 const node: ConcreteRequest = (function(){
 var v0 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "__typename",
   "args": null,
+  "kind": "ScalarField",
+  "name": "__typename",
   "storageKey": null
 };
 return {
-  "kind": "Request",
   "fragment": {
-    "kind": "Fragment",
-    "name": "AppSecondFactorStorySuccessQuery",
-    "type": "Query",
-    "metadata": null,
     "argumentDefinitions": [],
+    "kind": "Fragment",
+    "metadata": null,
+    "name": "AppSecondFactorStorySuccessQuery",
     "selections": [
       {
-        "kind": "LinkedField",
         "alias": null,
-        "name": "me",
-        "storageKey": null,
         "args": null,
         "concreteType": "Me",
+        "kind": "LinkedField",
+        "name": "me",
         "plural": false,
         "selections": [
           {
+            "args": null,
             "kind": "FragmentSpread",
-            "name": "AppSecondFactor_me",
-            "args": null
+            "name": "AppSecondFactor_me"
           }
-        ]
+        ],
+        "storageKey": null
       }
-    ]
+    ],
+    "type": "Query"
   },
+  "kind": "Request",
   "operation": {
+    "argumentDefinitions": [],
     "kind": "Operation",
     "name": "AppSecondFactorStorySuccessQuery",
-    "argumentDefinitions": [],
     "selections": [
       {
-        "kind": "LinkedField",
         "alias": null,
-        "name": "me",
-        "storageKey": null,
         "args": null,
         "concreteType": "Me",
+        "kind": "LinkedField",
+        "name": "me",
         "plural": false,
         "selections": [
           {
-            "kind": "ScalarField",
             "alias": null,
-            "name": "hasSecondFactorEnabled",
             "args": null,
+            "kind": "ScalarField",
+            "name": "hasSecondFactorEnabled",
             "storageKey": null
           },
           {
-            "kind": "LinkedField",
             "alias": "appSecondFactors",
-            "name": "secondFactors",
-            "storageKey": "secondFactors(kinds:[\"app\"])",
             "args": [
               {
                 "kind": "Literal",
@@ -107,49 +104,53 @@ return {
               }
             ],
             "concreteType": null,
+            "kind": "LinkedField",
+            "name": "secondFactors",
             "plural": true,
             "selections": [
               (v0/*: any*/),
               {
                 "kind": "InlineFragment",
-                "type": "AppSecondFactor",
                 "selections": [
                   (v0/*: any*/),
                   {
-                    "kind": "ScalarField",
                     "alias": null,
-                    "name": "internalID",
                     "args": null,
+                    "kind": "ScalarField",
+                    "name": "internalID",
                     "storageKey": null
                   },
                   {
-                    "kind": "ScalarField",
                     "alias": null,
-                    "name": "name",
                     "args": null,
+                    "kind": "ScalarField",
+                    "name": "name",
                     "storageKey": null
                   }
-                ]
+                ],
+                "type": "AppSecondFactor"
               }
-            ]
+            ],
+            "storageKey": "secondFactors(kinds:[\"app\"])"
           },
           {
-            "kind": "ScalarField",
             "alias": null,
-            "name": "id",
             "args": null,
+            "kind": "ScalarField",
+            "name": "id",
             "storageKey": null
           }
-        ]
+        ],
+        "storageKey": null
       }
     ]
   },
   "params": {
-    "operationKind": "query",
-    "name": "AppSecondFactorStorySuccessQuery",
     "id": null,
-    "text": "query AppSecondFactorStorySuccessQuery {\n  me {\n    ...AppSecondFactor_me\n    id\n  }\n}\n\nfragment AppSecondFactor_me on Me {\n  hasSecondFactorEnabled\n  appSecondFactors: secondFactors(kinds: [app]) {\n    __typename\n    ... on AppSecondFactor {\n      __typename\n      internalID\n      name\n    }\n  }\n}\n",
-    "metadata": {}
+    "metadata": {},
+    "name": "AppSecondFactorStorySuccessQuery",
+    "operationKind": "query",
+    "text": "query AppSecondFactorStorySuccessQuery {\n  me {\n    ...AppSecondFactor_me\n    id\n  }\n}\n\nfragment AppSecondFactor_me on Me {\n  hasSecondFactorEnabled\n  appSecondFactors: secondFactors(kinds: [app]) {\n    __typename\n    ... on AppSecondFactor {\n      __typename\n      internalID\n      name\n    }\n  }\n}\n"
   }
 };
 })();

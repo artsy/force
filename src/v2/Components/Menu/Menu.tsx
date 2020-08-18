@@ -8,7 +8,7 @@ const Container = styled(BorderBox)`
 
 export type MenuProps = BorderBoxProps & {
   title?: string
-  onClick?: (event: React.MouseEvent<HTMLElement>) => void
+  onClick?: (event) => void
 }
 
 export const Menu: React.FC<MenuProps> = ({ children, title, ...rest }) => {

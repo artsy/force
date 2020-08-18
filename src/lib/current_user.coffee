@@ -7,7 +7,7 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 request = require 'superagent'
-ABM = require 'artsy-backbone-mixins'
+ABM = require '@artsy/backbone-mixins'
 { API_URL, CURRENT_USER } = sd = require('sharify').data
 Following = require '../desktop/components/follow_button/collection.coffee'
 Artists = require '../desktop/collections/artists.coffee'

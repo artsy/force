@@ -1,9 +1,10 @@
 /* tslint:disable */
+/* eslint-disable */
 
 import { ConcreteRequest } from "relay-runtime";
 export type RequestConditionReportInput = {
-    readonly clientMutationId?: string | null;
-    readonly saleArtworkID: string;
+    clientMutationId?: string | null;
+    saleArtworkID: string;
 };
 export type RequestConditionReportMutationVariables = {
     input: RequestConditionReportInput;
@@ -37,18 +38,15 @@ mutation RequestConditionReportMutation(
 const node: ConcreteRequest = (function(){
 var v0 = [
   {
+    "defaultValue": null,
     "kind": "LocalArgument",
     "name": "input",
-    "type": "RequestConditionReportInput!",
-    "defaultValue": null
+    "type": "RequestConditionReportInput!"
   }
 ],
 v1 = [
   {
-    "kind": "LinkedField",
     "alias": null,
-    "name": "requestConditionReport",
-    "storageKey": null,
     "args": [
       {
         "kind": "Variable",
@@ -57,51 +55,54 @@ v1 = [
       }
     ],
     "concreteType": "RequestConditionReportPayload",
+    "kind": "LinkedField",
+    "name": "requestConditionReport",
     "plural": false,
     "selections": [
       {
-        "kind": "LinkedField",
         "alias": null,
-        "name": "conditionReportRequest",
-        "storageKey": null,
         "args": null,
         "concreteType": "ConditionReportRequest",
+        "kind": "LinkedField",
+        "name": "conditionReportRequest",
         "plural": false,
         "selections": [
           {
-            "kind": "ScalarField",
             "alias": null,
-            "name": "internalID",
             "args": null,
+            "kind": "ScalarField",
+            "name": "internalID",
             "storageKey": null
           }
-        ]
+        ],
+        "storageKey": null
       }
-    ]
+    ],
+    "storageKey": null
   }
 ];
 return {
-  "kind": "Request",
   "fragment": {
-    "kind": "Fragment",
-    "name": "RequestConditionReportMutation",
-    "type": "Mutation",
-    "metadata": null,
     "argumentDefinitions": (v0/*: any*/),
-    "selections": (v1/*: any*/)
+    "kind": "Fragment",
+    "metadata": null,
+    "name": "RequestConditionReportMutation",
+    "selections": (v1/*: any*/),
+    "type": "Mutation"
   },
+  "kind": "Request",
   "operation": {
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "RequestConditionReportMutation",
-    "argumentDefinitions": (v0/*: any*/),
     "selections": (v1/*: any*/)
   },
   "params": {
-    "operationKind": "mutation",
-    "name": "RequestConditionReportMutation",
     "id": null,
-    "text": "mutation RequestConditionReportMutation(\n  $input: RequestConditionReportInput!\n) {\n  requestConditionReport(input: $input) {\n    conditionReportRequest {\n      internalID\n    }\n  }\n}\n",
-    "metadata": {}
+    "metadata": {},
+    "name": "RequestConditionReportMutation",
+    "operationKind": "mutation",
+    "text": "mutation RequestConditionReportMutation(\n  $input: RequestConditionReportInput!\n) {\n  requestConditionReport(input: $input) {\n    conditionReportRequest {\n      internalID\n    }\n  }\n}\n"
   }
 };
 })();

@@ -1,4 +1,5 @@
 /* tslint:disable */
+/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -29,17 +30,13 @@ export type RecentlyViewed_me$key = {
 
 
 const node: ReaderFragment = {
-  "kind": "Fragment",
-  "name": "RecentlyViewed_me",
-  "type": "Me",
-  "metadata": null,
   "argumentDefinitions": [],
+  "kind": "Fragment",
+  "metadata": null,
+  "name": "RecentlyViewed_me",
   "selections": [
     {
-      "kind": "LinkedField",
       "alias": null,
-      "name": "recentlyViewedArtworksConnection",
-      "storageKey": "recentlyViewedArtworksConnection(first:20)",
       "args": [
         {
           "kind": "Literal",
@@ -48,53 +45,50 @@ const node: ReaderFragment = {
         }
       ],
       "concreteType": "ArtworkConnection",
+      "kind": "LinkedField",
+      "name": "recentlyViewedArtworksConnection",
       "plural": false,
       "selections": [
         {
-          "kind": "LinkedField",
           "alias": null,
-          "name": "edges",
-          "storageKey": null,
           "args": null,
           "concreteType": "ArtworkEdge",
+          "kind": "LinkedField",
+          "name": "edges",
           "plural": true,
           "selections": [
             {
-              "kind": "LinkedField",
               "alias": null,
-              "name": "node",
-              "storageKey": null,
               "args": null,
               "concreteType": "Artwork",
+              "kind": "LinkedField",
+              "name": "node",
               "plural": false,
               "selections": [
                 {
-                  "kind": "ScalarField",
                   "alias": null,
-                  "name": "id",
                   "args": null,
+                  "kind": "ScalarField",
+                  "name": "id",
                   "storageKey": null
                 },
                 {
-                  "kind": "LinkedField",
                   "alias": null,
-                  "name": "image",
-                  "storageKey": null,
                   "args": null,
                   "concreteType": "Image",
+                  "kind": "LinkedField",
+                  "name": "image",
                   "plural": false,
                   "selections": [
                     {
-                      "kind": "ScalarField",
                       "alias": "aspect_ratio",
-                      "name": "aspectRatio",
                       "args": null,
+                      "kind": "ScalarField",
+                      "name": "aspectRatio",
                       "storageKey": null
                     },
                     {
-                      "kind": "ScalarField",
                       "alias": null,
-                      "name": "url",
                       "args": [
                         {
                           "kind": "Literal",
@@ -102,53 +96,60 @@ const node: ReaderFragment = {
                           "value": "large"
                         }
                       ],
+                      "kind": "ScalarField",
+                      "name": "url",
                       "storageKey": "url(version:\"large\")"
                     }
-                  ]
+                  ],
+                  "storageKey": null
                 },
                 {
-                  "kind": "ScalarField",
                   "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
                   "name": "imageTitle",
-                  "args": null,
                   "storageKey": null
                 },
                 {
-                  "kind": "ScalarField",
                   "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
                   "name": "title",
-                  "args": null,
                   "storageKey": null
                 },
                 {
-                  "kind": "ScalarField",
                   "alias": null,
-                  "name": "href",
                   "args": null,
+                  "kind": "ScalarField",
+                  "name": "href",
                   "storageKey": null
                 },
                 {
+                  "args": null,
                   "kind": "FragmentSpread",
-                  "name": "Metadata_artwork",
-                  "args": null
+                  "name": "Metadata_artwork"
                 },
                 {
+                  "args": null,
                   "kind": "FragmentSpread",
-                  "name": "Save_artwork",
-                  "args": null
+                  "name": "Save_artwork"
                 },
                 {
+                  "args": null,
                   "kind": "FragmentSpread",
-                  "name": "Badge_artwork",
-                  "args": null
+                  "name": "Badge_artwork"
                 }
-              ]
+              ],
+              "storageKey": null
             }
-          ]
+          ],
+          "storageKey": null
         }
-      ]
+      ],
+      "storageKey": "recentlyViewedArtworksConnection(first:20)"
     }
-  ]
+  ],
+  "type": "Me"
 };
 (node as any).hash = '746769007f334b0c16dc32cb9ec46bf4';
 export default node;

@@ -5,15 +5,15 @@ import serialize from "serialize-javascript"
 import { ServerStyleSheet } from "styled-components"
 
 import { Resolver } from "found-relay"
-import createRender from "found/lib/createRender"
+import createRender from "found/createRender"
 import {
   FarceElementResult,
   FarceRedirectResult,
   getFarceResult,
-} from "found/lib/server"
+} from "found/server"
 import qs from "qs"
 
-import createQueryMiddleware from "farce/lib/createQueryMiddleware"
+import { createQueryMiddleware } from "farce"
 
 import { createRelaySSREnvironment } from "v2/Artsy/Relay/createRelaySSREnvironment"
 import { Boot } from "v2/Artsy/Router/Boot"
@@ -31,6 +31,7 @@ import { queryStringParsing } from "./Utils/queryStringParsing"
 import { ChunkExtractor } from "@loadable/server"
 import { getENV } from "v2/Utils/getENV"
 import { PermanentRedirectException } from "v2/Artsy/Router/PermanentRedirectException"
+import RelayServerSSR from "react-relay-network-modern-ssr/lib/server"
 
 export interface ServerAppResolve {
   bodyHTML?: string
@@ -203,7 +204,7 @@ export function buildServerApp(
         // extractor.getLinkTags()
 
         // Get serializable Relay data for rehydration on the client
-        const _relayData = await relayEnvironment.relaySSRMiddleware.getCache()
+        const _relayData = await (relayEnvironment.relaySSRMiddleware as RelayServerSSR).getCache()
 
         // Extract CSS styleTags to inject for SSR pass
         const styleTags = sheet.getStyleTags()
@@ -230,7 +231,8 @@ export function buildServerApp(
         if (typeof jest !== "undefined") {
           Object.defineProperty(
             result,
-            __THOU_SHALT_NOT_FAFF_AROUND_WITH_THIS_HERE_OBJECT_WE_ARE_SERIOUS__,
+
+            __TEST_INTERNAL_SERVER_APP__,
             { value: ServerApp }
           )
         }
@@ -250,7 +252,7 @@ export function buildServerApp(
   })
 }
 
-export const __THOU_SHALT_NOT_FAFF_AROUND_WITH_THIS_HERE_OBJECT_WE_ARE_SERIOUS__ =
+export const __TEST_INTERNAL_SERVER_APP__ =
   typeof jest !== "undefined" ? Symbol() : null
 
 function isRedirect(

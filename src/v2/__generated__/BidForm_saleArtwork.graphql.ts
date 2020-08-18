@@ -1,4 +1,5 @@
 /* tslint:disable */
+/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -28,36 +29,32 @@ export type BidForm_saleArtwork$key = {
 
 const node: ReaderFragment = (function(){
 var v0 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "cents",
   "args": null,
+  "kind": "ScalarField",
+  "name": "cents",
   "storageKey": null
 };
 return {
-  "kind": "Fragment",
-  "name": "BidForm_saleArtwork",
-  "type": "SaleArtwork",
-  "metadata": null,
   "argumentDefinitions": [],
+  "kind": "Fragment",
+  "metadata": null,
+  "name": "BidForm_saleArtwork",
   "selections": [
     {
-      "kind": "LinkedField",
       "alias": null,
-      "name": "minimumNextBid",
-      "storageKey": null,
       "args": null,
       "concreteType": "SaleArtworkMinimumNextBid",
+      "kind": "LinkedField",
+      "name": "minimumNextBid",
       "plural": false,
       "selections": [
         (v0/*: any*/)
-      ]
+      ],
+      "storageKey": null
     },
     {
-      "kind": "LinkedField",
       "alias": null,
-      "name": "increments",
-      "storageKey": "increments(useMyMaxBid:true)",
       "args": [
         {
           "kind": "Literal",
@@ -66,55 +63,59 @@ return {
         }
       ],
       "concreteType": "BidIncrementsFormatted",
+      "kind": "LinkedField",
+      "name": "increments",
       "plural": true,
       "selections": [
         (v0/*: any*/),
         {
-          "kind": "ScalarField",
           "alias": null,
-          "name": "display",
           "args": null,
+          "kind": "ScalarField",
+          "name": "display",
           "storageKey": null
         }
-      ]
+      ],
+      "storageKey": "increments(useMyMaxBid:true)"
     },
     {
-      "kind": "LinkedField",
       "alias": null,
-      "name": "sale",
-      "storageKey": null,
       "args": null,
       "concreteType": "Sale",
+      "kind": "LinkedField",
+      "name": "sale",
       "plural": false,
       "selections": [
         {
-          "kind": "ScalarField",
           "alias": null,
-          "name": "slug",
           "args": null,
+          "kind": "ScalarField",
+          "name": "slug",
           "storageKey": null
         },
         {
-          "kind": "LinkedField",
           "alias": null,
-          "name": "registrationStatus",
-          "storageKey": null,
           "args": null,
           "concreteType": "Bidder",
+          "kind": "LinkedField",
+          "name": "registrationStatus",
           "plural": false,
           "selections": [
             {
-              "kind": "ScalarField",
               "alias": null,
-              "name": "qualifiedForBidding",
               "args": null,
+              "kind": "ScalarField",
+              "name": "qualifiedForBidding",
               "storageKey": null
             }
-          ]
+          ],
+          "storageKey": null
         }
-      ]
+      ],
+      "storageKey": null
     }
-  ]
+  ],
+  "type": "SaleArtwork"
 };
 })();
 (node as any).hash = '40cc7961713f7964a792ce4f22933426';

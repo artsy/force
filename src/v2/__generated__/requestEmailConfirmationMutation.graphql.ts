@@ -1,4 +1,5 @@
 /* tslint:disable */
+/* eslint-disable */
 
 import { ConcreteRequest } from "relay-runtime";
 export type requestEmailConfirmationMutationVariables = {};
@@ -49,127 +50,127 @@ var v0 = [
 ],
 v1 = {
   "kind": "InlineFragment",
-  "type": "SendConfirmationEmailMutationSuccess",
   "selections": [
     {
-      "kind": "ScalarField",
       "alias": null,
-      "name": "unconfirmedEmail",
       "args": null,
+      "kind": "ScalarField",
+      "name": "unconfirmedEmail",
       "storageKey": null
     }
-  ]
+  ],
+  "type": "SendConfirmationEmailMutationSuccess"
 },
 v2 = {
   "kind": "InlineFragment",
-  "type": "SendConfirmationEmailMutationFailure",
   "selections": [
     {
-      "kind": "LinkedField",
       "alias": null,
-      "name": "mutationError",
-      "storageKey": null,
       "args": null,
       "concreteType": "GravityMutationError",
+      "kind": "LinkedField",
+      "name": "mutationError",
       "plural": false,
       "selections": [
         {
-          "kind": "ScalarField",
           "alias": null,
-          "name": "error",
           "args": null,
+          "kind": "ScalarField",
+          "name": "error",
           "storageKey": null
         },
         {
-          "kind": "ScalarField",
           "alias": null,
-          "name": "message",
           "args": null,
+          "kind": "ScalarField",
+          "name": "message",
           "storageKey": null
         }
-      ]
+      ],
+      "storageKey": null
     }
-  ]
+  ],
+  "type": "SendConfirmationEmailMutationFailure"
 };
 return {
-  "kind": "Request",
   "fragment": {
-    "kind": "Fragment",
-    "name": "requestEmailConfirmationMutation",
-    "type": "Mutation",
-    "metadata": null,
     "argumentDefinitions": [],
+    "kind": "Fragment",
+    "metadata": null,
+    "name": "requestEmailConfirmationMutation",
     "selections": [
       {
-        "kind": "LinkedField",
         "alias": null,
-        "name": "sendConfirmationEmail",
-        "storageKey": "sendConfirmationEmail(input:{})",
         "args": (v0/*: any*/),
         "concreteType": "SendConfirmationEmailMutationPayload",
+        "kind": "LinkedField",
+        "name": "sendConfirmationEmail",
         "plural": false,
         "selections": [
           {
-            "kind": "LinkedField",
             "alias": null,
-            "name": "confirmationOrError",
-            "storageKey": null,
             "args": null,
             "concreteType": null,
+            "kind": "LinkedField",
+            "name": "confirmationOrError",
             "plural": false,
             "selections": [
               (v1/*: any*/),
               (v2/*: any*/)
-            ]
+            ],
+            "storageKey": null
           }
-        ]
+        ],
+        "storageKey": "sendConfirmationEmail(input:{})"
       }
-    ]
+    ],
+    "type": "Mutation"
   },
+  "kind": "Request",
   "operation": {
+    "argumentDefinitions": [],
     "kind": "Operation",
     "name": "requestEmailConfirmationMutation",
-    "argumentDefinitions": [],
     "selections": [
       {
-        "kind": "LinkedField",
         "alias": null,
-        "name": "sendConfirmationEmail",
-        "storageKey": "sendConfirmationEmail(input:{})",
         "args": (v0/*: any*/),
         "concreteType": "SendConfirmationEmailMutationPayload",
+        "kind": "LinkedField",
+        "name": "sendConfirmationEmail",
         "plural": false,
         "selections": [
           {
-            "kind": "LinkedField",
             "alias": null,
-            "name": "confirmationOrError",
-            "storageKey": null,
             "args": null,
             "concreteType": null,
+            "kind": "LinkedField",
+            "name": "confirmationOrError",
             "plural": false,
             "selections": [
               {
-                "kind": "ScalarField",
                 "alias": null,
-                "name": "__typename",
                 "args": null,
+                "kind": "ScalarField",
+                "name": "__typename",
                 "storageKey": null
               },
               (v1/*: any*/),
               (v2/*: any*/)
-            ]
+            ],
+            "storageKey": null
           }
-        ]
+        ],
+        "storageKey": "sendConfirmationEmail(input:{})"
       }
     ]
   },
   "params": {
-    "operationKind": "mutation",
-    "name": "requestEmailConfirmationMutation",
     "id": null,
-    "text": "mutation requestEmailConfirmationMutation {\n  sendConfirmationEmail(input: {}) {\n    confirmationOrError {\n      __typename\n      ... on SendConfirmationEmailMutationSuccess {\n        unconfirmedEmail\n      }\n      ... on SendConfirmationEmailMutationFailure {\n        mutationError {\n          error\n          message\n        }\n      }\n    }\n  }\n}\n",
-    "metadata": {}
+    "metadata": {},
+    "name": "requestEmailConfirmationMutation",
+    "operationKind": "mutation",
+    "text": "mutation requestEmailConfirmationMutation {\n  sendConfirmationEmail(input: {}) {\n    confirmationOrError {\n      __typename\n      ... on SendConfirmationEmailMutationSuccess {\n        unconfirmedEmail\n      }\n      ... on SendConfirmationEmailMutationFailure {\n        mutationError {\n          error\n          message\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();

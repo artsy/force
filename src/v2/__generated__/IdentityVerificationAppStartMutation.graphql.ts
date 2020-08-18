@@ -1,9 +1,10 @@
 /* tslint:disable */
+/* eslint-disable */
 
 import { ConcreteRequest } from "relay-runtime";
 export type startIdentityVerificationMutationInput = {
-    readonly clientMutationId?: string | null;
-    readonly identityVerificationId: string;
+    clientMutationId?: string | null;
+    identityVerificationId: string;
 };
 export type IdentityVerificationAppStartMutationVariables = {
     input: startIdentityVerificationMutationInput;
@@ -52,10 +53,10 @@ mutation IdentityVerificationAppStartMutation(
 const node: ConcreteRequest = (function(){
 var v0 = [
   {
+    "defaultValue": null,
     "kind": "LocalArgument",
     "name": "input",
-    "type": "startIdentityVerificationMutationInput!",
-    "defaultValue": null
+    "type": "startIdentityVerificationMutationInput!"
   }
 ],
 v1 = [
@@ -67,134 +68,134 @@ v1 = [
 ],
 v2 = {
   "kind": "InlineFragment",
-  "type": "StartIdentityVerificationSuccess",
   "selections": [
     {
-      "kind": "ScalarField",
       "alias": null,
-      "name": "identityVerificationFlowUrl",
       "args": null,
+      "kind": "ScalarField",
+      "name": "identityVerificationFlowUrl",
       "storageKey": null
     }
-  ]
+  ],
+  "type": "StartIdentityVerificationSuccess"
 },
 v3 = {
   "kind": "InlineFragment",
-  "type": "StartIdentityVerificationFailure",
   "selections": [
     {
-      "kind": "LinkedField",
       "alias": null,
-      "name": "mutationError",
-      "storageKey": null,
       "args": null,
       "concreteType": "GravityMutationError",
+      "kind": "LinkedField",
+      "name": "mutationError",
       "plural": false,
       "selections": [
         {
-          "kind": "ScalarField",
           "alias": null,
+          "args": null,
+          "kind": "ScalarField",
           "name": "detail",
-          "args": null,
           "storageKey": null
         },
         {
-          "kind": "ScalarField",
           "alias": null,
+          "args": null,
+          "kind": "ScalarField",
           "name": "error",
-          "args": null,
           "storageKey": null
         },
         {
-          "kind": "ScalarField",
           "alias": null,
-          "name": "message",
           "args": null,
+          "kind": "ScalarField",
+          "name": "message",
           "storageKey": null
         }
-      ]
+      ],
+      "storageKey": null
     }
-  ]
+  ],
+  "type": "StartIdentityVerificationFailure"
 };
 return {
-  "kind": "Request",
   "fragment": {
-    "kind": "Fragment",
-    "name": "IdentityVerificationAppStartMutation",
-    "type": "Mutation",
-    "metadata": null,
     "argumentDefinitions": (v0/*: any*/),
+    "kind": "Fragment",
+    "metadata": null,
+    "name": "IdentityVerificationAppStartMutation",
     "selections": [
       {
-        "kind": "LinkedField",
         "alias": null,
-        "name": "startIdentityVerification",
-        "storageKey": null,
         "args": (v1/*: any*/),
         "concreteType": "startIdentityVerificationMutationPayload",
+        "kind": "LinkedField",
+        "name": "startIdentityVerification",
         "plural": false,
         "selections": [
           {
-            "kind": "LinkedField",
             "alias": null,
-            "name": "startIdentityVerificationResponseOrError",
-            "storageKey": null,
             "args": null,
             "concreteType": null,
+            "kind": "LinkedField",
+            "name": "startIdentityVerificationResponseOrError",
             "plural": false,
             "selections": [
               (v2/*: any*/),
               (v3/*: any*/)
-            ]
+            ],
+            "storageKey": null
           }
-        ]
+        ],
+        "storageKey": null
       }
-    ]
+    ],
+    "type": "Mutation"
   },
+  "kind": "Request",
   "operation": {
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "IdentityVerificationAppStartMutation",
-    "argumentDefinitions": (v0/*: any*/),
     "selections": [
       {
-        "kind": "LinkedField",
         "alias": null,
-        "name": "startIdentityVerification",
-        "storageKey": null,
         "args": (v1/*: any*/),
         "concreteType": "startIdentityVerificationMutationPayload",
+        "kind": "LinkedField",
+        "name": "startIdentityVerification",
         "plural": false,
         "selections": [
           {
-            "kind": "LinkedField",
             "alias": null,
-            "name": "startIdentityVerificationResponseOrError",
-            "storageKey": null,
             "args": null,
             "concreteType": null,
+            "kind": "LinkedField",
+            "name": "startIdentityVerificationResponseOrError",
             "plural": false,
             "selections": [
               {
-                "kind": "ScalarField",
                 "alias": null,
-                "name": "__typename",
                 "args": null,
+                "kind": "ScalarField",
+                "name": "__typename",
                 "storageKey": null
               },
               (v2/*: any*/),
               (v3/*: any*/)
-            ]
+            ],
+            "storageKey": null
           }
-        ]
+        ],
+        "storageKey": null
       }
     ]
   },
   "params": {
-    "operationKind": "mutation",
-    "name": "IdentityVerificationAppStartMutation",
     "id": null,
-    "text": "mutation IdentityVerificationAppStartMutation(\n  $input: startIdentityVerificationMutationInput!\n) {\n  startIdentityVerification(input: $input) {\n    startIdentityVerificationResponseOrError {\n      __typename\n      ... on StartIdentityVerificationSuccess {\n        identityVerificationFlowUrl\n      }\n      ... on StartIdentityVerificationFailure {\n        mutationError {\n          detail\n          error\n          message\n        }\n      }\n    }\n  }\n}\n",
-    "metadata": {}
+    "metadata": {},
+    "name": "IdentityVerificationAppStartMutation",
+    "operationKind": "mutation",
+    "text": "mutation IdentityVerificationAppStartMutation(\n  $input: startIdentityVerificationMutationInput!\n) {\n  startIdentityVerification(input: $input) {\n    startIdentityVerificationResponseOrError {\n      __typename\n      ... on StartIdentityVerificationSuccess {\n        identityVerificationFlowUrl\n      }\n      ... on StartIdentityVerificationFailure {\n        mutationError {\n          detail\n          error\n          message\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();

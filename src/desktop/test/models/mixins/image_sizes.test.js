@@ -8,7 +8,7 @@ const _ = require("underscore")
 const sinon = require("sinon")
 const Backbone = require("backbone")
 const { fabricate } = require("@artsy/antigravity")
-const { Image } = require("artsy-backbone-mixins")
+const { Image } = require("@artsy/backbone-mixins")
 const ImageSizes = require("../../../models/mixins/image_sizes")
 const sd = require("sharify").data
 

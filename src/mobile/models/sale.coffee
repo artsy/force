@@ -2,7 +2,7 @@ _ = require 'underscore'
 Backbone = require 'backbone'
 sd = require('sharify').data
 moment = require 'moment'
-{ Fetch, Markdown, Image } = require 'artsy-backbone-mixins'
+{ Fetch, Markdown, Image } = require '@artsy/backbone-mixins'
 Relations = require './mixins/relations/sale.coffee'
 Eventable = require './mixins/eventable.coffee'
 

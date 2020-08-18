@@ -2,7 +2,7 @@ _ = require 'underscore'
 { formatMoney } = require 'accounting'
 sd = require('sharify').data
 Backbone = require 'backbone'
-{ Markdown } = require 'artsy-backbone-mixins'
+{ Markdown } = require '@artsy/backbone-mixins'
 Artwork = require './artwork.coffee'
 Sale = require './sale.coffee'
 

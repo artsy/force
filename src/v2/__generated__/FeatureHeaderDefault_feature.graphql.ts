@@ -1,4 +1,5 @@
 /* tslint:disable */
+/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -34,31 +35,28 @@ var v0 = {
 },
 v1 = [
   {
-    "kind": "ScalarField",
     "alias": null,
-    "name": "url",
     "args": null,
+    "kind": "ScalarField",
+    "name": "url",
     "storageKey": null
   }
 ];
 return {
-  "kind": "Fragment",
-  "name": "FeatureHeaderDefault_feature",
-  "type": "Feature",
-  "metadata": null,
   "argumentDefinitions": [],
+  "kind": "Fragment",
+  "metadata": null,
+  "name": "FeatureHeaderDefault_feature",
   "selections": [
     {
-      "kind": "ScalarField",
       "alias": null,
-      "name": "name",
       "args": null,
+      "kind": "ScalarField",
+      "name": "name",
       "storageKey": null
     },
     {
-      "kind": "ScalarField",
       "alias": null,
-      "name": "subheadline",
       "args": [
         {
           "kind": "Literal",
@@ -66,22 +64,20 @@ return {
           "value": "HTML"
         }
       ],
+      "kind": "ScalarField",
+      "name": "subheadline",
       "storageKey": "subheadline(format:\"HTML\")"
     },
     {
-      "kind": "LinkedField",
       "alias": "defaultImage",
-      "name": "image",
-      "storageKey": null,
       "args": null,
       "concreteType": "Image",
+      "kind": "LinkedField",
+      "name": "image",
       "plural": false,
       "selections": [
         {
-          "kind": "LinkedField",
           "alias": "_1x",
-          "name": "cropped",
-          "storageKey": "cropped(height:1000,version:[\"main\",\"wide\"],width:1000)",
           "args": [
             {
               "kind": "Literal",
@@ -96,14 +92,14 @@ return {
             }
           ],
           "concreteType": "CroppedImageUrl",
+          "kind": "LinkedField",
+          "name": "cropped",
           "plural": false,
-          "selections": (v1/*: any*/)
+          "selections": (v1/*: any*/),
+          "storageKey": "cropped(height:1000,version:[\"main\",\"wide\"],width:1000)"
         },
         {
-          "kind": "LinkedField",
           "alias": "_2x",
-          "name": "cropped",
-          "storageKey": "cropped(height:2000,version:[\"main\",\"wide\"],width:2000)",
           "args": [
             {
               "kind": "Literal",
@@ -118,12 +114,17 @@ return {
             }
           ],
           "concreteType": "CroppedImageUrl",
+          "kind": "LinkedField",
+          "name": "cropped",
           "plural": false,
-          "selections": (v1/*: any*/)
+          "selections": (v1/*: any*/),
+          "storageKey": "cropped(height:2000,version:[\"main\",\"wide\"],width:2000)"
         }
-      ]
+      ],
+      "storageKey": null
     }
-  ]
+  ],
+  "type": "Feature"
 };
 })();
 (node as any).hash = 'daec947183f26d5bcbf0d3a5039d8a5b';

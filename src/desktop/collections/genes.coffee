@@ -3,7 +3,7 @@ sd = require('sharify').data
 Backbone = require 'backbone'
 Gene = require '../models/gene.coffee'
 { API_URL } = require('sharify').data
-{ Fetch, AToZ } = require 'artsy-backbone-mixins'
+{ Fetch, AToZ } = require '@artsy/backbone-mixins'
 
 module.exports = class Genes extends Backbone.Collection
 

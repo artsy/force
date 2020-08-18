@@ -1,8 +1,9 @@
 /* tslint:disable */
+/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
-export type MarketingGroupTypes = "ArtistSeries" | "FeaturedCollections" | "OtherCollections" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
+export type MarketingGroupTypes = "ArtistSeries" | "FeaturedCollections" | "OtherCollections" | "%future added value";
 export type CollectionsHubRails_linkedCollections = ReadonlyArray<{
     readonly groupType: MarketingGroupTypes;
     readonly " $fragmentRefs": FragmentRefs<"FeaturedCollectionsRails_collectionGroup" | "OtherCollectionsRail_collectionGroup" | "ArtistSeriesRail_collectionGroup">;
@@ -17,37 +18,37 @@ export type CollectionsHubRails_linkedCollections$key = ReadonlyArray<{
 
 
 const node: ReaderFragment = {
+  "argumentDefinitions": [],
   "kind": "Fragment",
-  "name": "CollectionsHubRails_linkedCollections",
-  "type": "MarketingCollectionGroup",
   "metadata": {
     "plural": true
   },
-  "argumentDefinitions": [],
+  "name": "CollectionsHubRails_linkedCollections",
   "selections": [
     {
-      "kind": "ScalarField",
       "alias": null,
-      "name": "groupType",
       "args": null,
+      "kind": "ScalarField",
+      "name": "groupType",
       "storageKey": null
     },
     {
+      "args": null,
       "kind": "FragmentSpread",
-      "name": "FeaturedCollectionsRails_collectionGroup",
-      "args": null
+      "name": "FeaturedCollectionsRails_collectionGroup"
     },
     {
+      "args": null,
       "kind": "FragmentSpread",
-      "name": "OtherCollectionsRail_collectionGroup",
-      "args": null
+      "name": "OtherCollectionsRail_collectionGroup"
     },
     {
+      "args": null,
       "kind": "FragmentSpread",
-      "name": "ArtistSeriesRail_collectionGroup",
-      "args": null
+      "name": "ArtistSeriesRail_collectionGroup"
     }
-  ]
+  ],
+  "type": "MarketingCollectionGroup"
 };
 (node as any).hash = 'a7285e8c4087e97b3282b8c929f612be';
 export default node;

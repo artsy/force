@@ -9,7 +9,7 @@ interface MobileLinkProps {
   contextModule?: any
   children: React.ReactNode
   href?: string
-  onClick?: (event?: React.MouseEvent<HTMLElement>) => void
+  onClick?: (event?) => void
 }
 
 export const MobileLink: React.FC<MobileLinkProps> = ({
@@ -48,8 +48,8 @@ export const MobileLink: React.FC<MobileLinkProps> = ({
           <Link
             href={href}
             underlineBehavior="none"
-            onClick={evt => {
-              onClick && onClick(evt)
+            onClick={event => {
+              onClick && onClick(event)
               handleClickTracking(href)
             }}
           >

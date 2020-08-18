@@ -3,6 +3,7 @@ import { FeatureApp_Test_QueryRawResponse } from "v2/__generated__/FeatureApp_Te
 export const FEATURED_LINKS_SET = {
   id: "T3JkZXJlZFNldDo1ZTZmNWVlMmM1MmE1OTAwMTExMTEyMWY=",
   name: "Latest News",
+  layout: "DEFAULT" as "DEFAULT" | "FULL",
   description: "",
   itemType: "FeaturedLink",
   orderedItems: {
@@ -27,6 +28,7 @@ export const FEATURED_LINKS_SET = {
 export const ARTWORKS_SET = {
   id: "T3JkZXJlZFNldDo1ZWJkODBiMjA2ZmU4ZjAwMTI3YWQ4N2Y=",
   name: "CRM test artworks",
+  layout: "DEFAULT" as "DEFAULT" | "FULL",
   description: "",
   itemType: "Artwork",
   orderedItems: {
@@ -81,6 +83,7 @@ export const FEATURE = {
   id: "RmVhdHVyZTo1ZTY5MGMzMWQyMmZmMTAwMTIwYzQzMzY=",
   name: "Alserkal Art Week",
   slug: "alserkal-art-week",
+  layout: "DEFAULT" as "DEFAULT" | "FULL",
   meta: {
     name: "Alserkal Art Week",
     description: "some description",

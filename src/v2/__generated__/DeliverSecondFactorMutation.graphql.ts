@@ -1,9 +1,10 @@
 /* tslint:disable */
+/* eslint-disable */
 
 import { ConcreteRequest } from "relay-runtime";
 export type DeliverSecondFactorInput = {
-    readonly clientMutationId?: string | null;
-    readonly secondFactorID: string;
+    clientMutationId?: string | null;
+    secondFactorID: string;
 };
 export type DeliverSecondFactorMutationVariables = {
     input: DeliverSecondFactorInput;
@@ -76,10 +77,10 @@ mutation DeliverSecondFactorMutation(
 const node: ConcreteRequest = (function(){
 var v0 = [
   {
+    "defaultValue": null,
     "kind": "LocalArgument",
     "name": "input",
-    "type": "DeliverSecondFactorInput!",
-    "defaultValue": null
+    "type": "DeliverSecondFactorInput!"
   }
 ],
 v1 = [
@@ -90,131 +91,131 @@ v1 = [
   }
 ],
 v2 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "__typename",
   "args": null,
+  "kind": "ScalarField",
+  "name": "__typename",
   "storageKey": null
 },
 v3 = {
   "kind": "InlineFragment",
-  "type": "SmsSecondFactor",
   "selections": [
     (v2/*: any*/),
     {
-      "kind": "ScalarField",
       "alias": null,
-      "name": "formattedPhoneNumber",
       "args": null,
+      "kind": "ScalarField",
+      "name": "formattedPhoneNumber",
       "storageKey": null
     }
-  ]
+  ],
+  "type": "SmsSecondFactor"
 },
 v4 = {
   "kind": "InlineFragment",
-  "type": "Errors",
   "selections": [
     (v2/*: any*/),
     {
-      "kind": "LinkedField",
       "alias": null,
-      "name": "errors",
-      "storageKey": null,
       "args": null,
       "concreteType": "Error",
+      "kind": "LinkedField",
+      "name": "errors",
       "plural": true,
       "selections": [
         {
-          "kind": "ScalarField",
           "alias": null,
-          "name": "message",
           "args": null,
+          "kind": "ScalarField",
+          "name": "message",
           "storageKey": null
         },
         {
-          "kind": "ScalarField",
           "alias": null,
-          "name": "code",
           "args": null,
+          "kind": "ScalarField",
+          "name": "code",
           "storageKey": null
         }
-      ]
+      ],
+      "storageKey": null
     }
-  ]
+  ],
+  "type": "Errors"
 };
 return {
-  "kind": "Request",
   "fragment": {
-    "kind": "Fragment",
-    "name": "DeliverSecondFactorMutation",
-    "type": "Mutation",
-    "metadata": null,
     "argumentDefinitions": (v0/*: any*/),
+    "kind": "Fragment",
+    "metadata": null,
+    "name": "DeliverSecondFactorMutation",
     "selections": [
       {
-        "kind": "LinkedField",
         "alias": null,
-        "name": "deliverSecondFactor",
-        "storageKey": null,
         "args": (v1/*: any*/),
         "concreteType": "DeliverSecondFactorPayload",
+        "kind": "LinkedField",
+        "name": "deliverSecondFactor",
         "plural": false,
         "selections": [
           {
-            "kind": "LinkedField",
             "alias": null,
-            "name": "secondFactorOrErrors",
-            "storageKey": null,
             "args": null,
             "concreteType": null,
+            "kind": "LinkedField",
+            "name": "secondFactorOrErrors",
             "plural": false,
             "selections": [
               (v3/*: any*/),
               (v4/*: any*/)
-            ]
+            ],
+            "storageKey": null
           }
-        ]
+        ],
+        "storageKey": null
       }
-    ]
+    ],
+    "type": "Mutation"
   },
+  "kind": "Request",
   "operation": {
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "DeliverSecondFactorMutation",
-    "argumentDefinitions": (v0/*: any*/),
     "selections": [
       {
-        "kind": "LinkedField",
         "alias": null,
-        "name": "deliverSecondFactor",
-        "storageKey": null,
         "args": (v1/*: any*/),
         "concreteType": "DeliverSecondFactorPayload",
+        "kind": "LinkedField",
+        "name": "deliverSecondFactor",
         "plural": false,
         "selections": [
           {
-            "kind": "LinkedField",
             "alias": null,
-            "name": "secondFactorOrErrors",
-            "storageKey": null,
             "args": null,
             "concreteType": null,
+            "kind": "LinkedField",
+            "name": "secondFactorOrErrors",
             "plural": false,
             "selections": [
               (v2/*: any*/),
               (v3/*: any*/),
               (v4/*: any*/)
-            ]
+            ],
+            "storageKey": null
           }
-        ]
+        ],
+        "storageKey": null
       }
     ]
   },
   "params": {
-    "operationKind": "mutation",
-    "name": "DeliverSecondFactorMutation",
     "id": null,
-    "text": "mutation DeliverSecondFactorMutation(\n  $input: DeliverSecondFactorInput!\n) {\n  deliverSecondFactor(input: $input) {\n    secondFactorOrErrors {\n      __typename\n      ... on SmsSecondFactor {\n        __typename\n        formattedPhoneNumber\n      }\n      ... on Errors {\n        __typename\n        errors {\n          message\n          code\n        }\n      }\n    }\n  }\n}\n",
-    "metadata": {}
+    "metadata": {},
+    "name": "DeliverSecondFactorMutation",
+    "operationKind": "mutation",
+    "text": "mutation DeliverSecondFactorMutation(\n  $input: DeliverSecondFactorInput!\n) {\n  deliverSecondFactor(input: $input) {\n    secondFactorOrErrors {\n      __typename\n      ... on SmsSecondFactor {\n        __typename\n        formattedPhoneNumber\n      }\n      ... on Errors {\n        __typename\n        errors {\n          message\n          code\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();

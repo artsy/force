@@ -15,6 +15,11 @@ export function bundleAnalyzer(config) {
     optimization: {
       concatenateModules: false,
     },
-    plugins: [new BundleAnalyzerPlugin()],
+    plugins: [
+      new BundleAnalyzerPlugin({
+        analyzerMode: "static",
+        defaultSizes: "gzip",
+      }),
+    ],
   })
 }

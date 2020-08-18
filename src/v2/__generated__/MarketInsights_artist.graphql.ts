@@ -1,4 +1,5 @@
 /* tslint:disable */
+/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -36,51 +37,46 @@ export type MarketInsights_artist$key = {
 
 
 const node: ReaderFragment = {
-  "kind": "Fragment",
-  "name": "MarketInsights_artist",
-  "type": "Artist",
-  "metadata": null,
   "argumentDefinitions": [
     {
-      "kind": "LocalArgument",
-      "name": "partnerCategory",
-      "type": "[String]",
       "defaultValue": [
         "blue-chip",
         "top-established",
         "top-emerging"
-      ]
+      ],
+      "kind": "LocalArgument",
+      "name": "partnerCategory",
+      "type": "[String]"
     }
   ],
+  "kind": "Fragment",
+  "metadata": null,
+  "name": "MarketInsights_artist",
   "selections": [
     {
-      "kind": "ScalarField",
       "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "internalID",
-      "args": null,
       "storageKey": null
     },
     {
+      "alias": null,
+      "args": null,
       "kind": "ScalarField",
-      "alias": null,
       "name": "collections",
-      "args": null,
       "storageKey": null
     },
     {
-      "kind": "LinkedField",
       "alias": null,
-      "name": "highlights",
-      "storageKey": null,
       "args": null,
       "concreteType": "ArtistHighlights",
+      "kind": "LinkedField",
+      "name": "highlights",
       "plural": false,
       "selections": [
         {
-          "kind": "LinkedField",
           "alias": null,
-          "name": "partnersConnection",
-          "storageKey": null,
           "args": [
             {
               "kind": "Literal",
@@ -104,57 +100,58 @@ const node: ReaderFragment = {
             }
           ],
           "concreteType": "PartnerArtistConnection",
+          "kind": "LinkedField",
+          "name": "partnersConnection",
           "plural": false,
           "selections": [
             {
-              "kind": "LinkedField",
               "alias": null,
-              "name": "edges",
-              "storageKey": null,
               "args": null,
               "concreteType": "PartnerArtistEdge",
+              "kind": "LinkedField",
+              "name": "edges",
               "plural": true,
               "selections": [
                 {
-                  "kind": "LinkedField",
                   "alias": null,
-                  "name": "node",
-                  "storageKey": null,
                   "args": null,
                   "concreteType": "Partner",
+                  "kind": "LinkedField",
+                  "name": "node",
                   "plural": false,
                   "selections": [
                     {
-                      "kind": "LinkedField",
                       "alias": null,
-                      "name": "categories",
-                      "storageKey": null,
                       "args": null,
                       "concreteType": "PartnerCategory",
+                      "kind": "LinkedField",
+                      "name": "categories",
                       "plural": true,
                       "selections": [
                         {
-                          "kind": "ScalarField",
                           "alias": null,
-                          "name": "slug",
                           "args": null,
+                          "kind": "ScalarField",
+                          "name": "slug",
                           "storageKey": null
                         }
-                      ]
+                      ],
+                      "storageKey": null
                     }
-                  ]
+                  ],
+                  "storageKey": null
                 }
-              ]
+              ],
+              "storageKey": null
             }
-          ]
+          ],
+          "storageKey": null
         }
-      ]
+      ],
+      "storageKey": null
     },
     {
-      "kind": "LinkedField",
       "alias": null,
-      "name": "auctionResultsConnection",
-      "storageKey": "auctionResultsConnection(first:1,recordsTrusted:true,sort:\"PRICE_AND_DATE_DESC\")",
       "args": [
         {
           "kind": "Literal",
@@ -173,39 +170,36 @@ const node: ReaderFragment = {
         }
       ],
       "concreteType": "AuctionResultConnection",
+      "kind": "LinkedField",
+      "name": "auctionResultsConnection",
       "plural": false,
       "selections": [
         {
-          "kind": "LinkedField",
           "alias": null,
-          "name": "edges",
-          "storageKey": null,
           "args": null,
           "concreteType": "AuctionResultEdge",
+          "kind": "LinkedField",
+          "name": "edges",
           "plural": true,
           "selections": [
             {
-              "kind": "LinkedField",
               "alias": null,
-              "name": "node",
-              "storageKey": null,
               "args": null,
               "concreteType": "AuctionResult",
+              "kind": "LinkedField",
+              "name": "node",
               "plural": false,
               "selections": [
                 {
-                  "kind": "LinkedField",
                   "alias": "price_realized",
-                  "name": "priceRealized",
-                  "storageKey": null,
                   "args": null,
                   "concreteType": "AuctionResultPriceRealized",
+                  "kind": "LinkedField",
+                  "name": "priceRealized",
                   "plural": false,
                   "selections": [
                     {
-                      "kind": "ScalarField",
                       "alias": null,
-                      "name": "display",
                       "args": [
                         {
                           "kind": "Literal",
@@ -213,17 +207,24 @@ const node: ReaderFragment = {
                           "value": "0a"
                         }
                       ],
+                      "kind": "ScalarField",
+                      "name": "display",
                       "storageKey": "display(format:\"0a\")"
                     }
-                  ]
+                  ],
+                  "storageKey": null
                 }
-              ]
+              ],
+              "storageKey": null
             }
-          ]
+          ],
+          "storageKey": null
         }
-      ]
+      ],
+      "storageKey": "auctionResultsConnection(first:1,recordsTrusted:true,sort:\"PRICE_AND_DATE_DESC\")"
     }
-  ]
+  ],
+  "type": "Artist"
 };
 (node as any).hash = '8a16ac97b1188e4b379169f822c2b755';
 export default node;
