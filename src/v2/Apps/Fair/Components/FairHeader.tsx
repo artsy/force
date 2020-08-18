@@ -26,7 +26,17 @@ const ResponsiveImage = styled(ResponsiveBox)<ResponsiveBoxProps>`
 
 const FairHeader: React.FC<FairHeaderProps> = ({ fair }) => {
   const img = fair?.image?.cropped
-  const { about, tagline, location, ticketsLink, hours, links } = fair
+  const {
+    about,
+    tagline,
+    location,
+    ticketsLink,
+    hours,
+    links,
+    contact,
+    summary,
+    tickets,
+  } = fair
 
   const canShowMoreInfoLink =
     !!about ||
@@ -34,7 +44,12 @@ const FairHeader: React.FC<FairHeaderProps> = ({ fair }) => {
     !!location?.summary ||
     !!ticketsLink ||
     !!hours ||
-    !!links
+    !!links ||
+    !!contact ||
+    !!summary ||
+    !!tickets
+
+  const previewText = summary || about
 
   return (
     <>
@@ -60,7 +75,7 @@ const FairHeader: React.FC<FairHeaderProps> = ({ fair }) => {
           <Text variant="caption">{fair.formattedOpeningHours}</Text>
         </Col>
         <Col sm="6" mt={[3, 0]}>
-          <Text variant="text">{about}</Text>
+          <Text variant="text">{previewText}</Text>
           {canShowMoreInfoLink && (
             <ForwardLink
               linkText="More info"
@@ -77,6 +92,7 @@ export const FairHeaderFragmentContainer = createFragmentContainer(FairHeader, {
   fair: graphql`
     fragment FairHeader_fair on Fair {
       about
+      summary
       formattedOpeningHours
       name
       slug
@@ -94,8 +110,10 @@ export const FairHeaderFragmentContainer = createFragmentContainer(FairHeader, {
         summary
       }
       ticketsLink
-      hours
-      links
+      hours(format: HTML)
+      links(format: HTML)
+      tickets(format: HTML)
+      contact(format: HTML)
     }
   `,
 })

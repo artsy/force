@@ -59,5 +59,8 @@ const FairOverviewFixture: FairOverview_QueryRawResponse = {
     ticketsLink: "",
     hours: "",
     links: "",
+    tickets: "<b>Tickets available today</b>",
+    contact: "<b>Contact us</b>",
+    summary: "This is the summary.",
   },
 }

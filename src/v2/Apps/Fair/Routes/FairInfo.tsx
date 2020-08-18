@@ -29,7 +29,12 @@ const FairInfo: React.FC<FairInfoProps> = ({ fair }) => {
 
       <Row>
         <Col sm="9" pr={2}>
-          {/** TODO: Add summary here when it exists **/}
+          {fair.summary && (
+            <>
+              <TextWithNewlines variant="text">{fair.summary}</TextWithNewlines>
+              <Spacer my={3} />
+            </>
+          )}
           {fair.about && (
             <>
               <TextWithNewlines variant="text">{fair.about}</TextWithNewlines>
@@ -50,11 +55,11 @@ const FairInfo: React.FC<FairInfoProps> = ({ fair }) => {
               <TextWithNewlines variant="text">
                 {fair.location?.summary}
               </TextWithNewlines>
+              <Spacer my={3} />
             </>
           )}
         </Col>
         <Col sm="3">
-          {/** TODO: Hours should be able to be formatted into HTML **/}
           {fair.hours && (
             <>
               <Text variant="mediumText">Hours</Text>
@@ -62,7 +67,13 @@ const FairInfo: React.FC<FairInfoProps> = ({ fair }) => {
               <Spacer my={3} />
             </>
           )}
-          {/** TODO: Add tickets here when it exists **/}
+          {fair.tickets && (
+            <>
+              <Text variant="mediumText">Tickets</Text>
+              <HTML variant="text" html={fair.tickets} />
+              <Spacer my={3} />
+            </>
+          )}
           {fair.ticketsLink && (
             <>
               <a href={fair.ticketsLink}>
@@ -71,11 +82,17 @@ const FairInfo: React.FC<FairInfoProps> = ({ fair }) => {
               <Spacer my={3} />
             </>
           )}
-          {/** TODO: Links should be able to be formatted into HTML **/}
           {fair.links && (
             <>
               <Text variant="mediumText">Links</Text>
               <HTML variant="text" html={fair.links} />
+              <Spacer my={3} />
+            </>
+          )}
+          {fair.contact && (
+            <>
+              <Text variant="mediumText">Contact</Text>
+              <HTML variant="text" html={fair.contact} />
               <Spacer my={3} />
             </>
           )}
@@ -96,8 +113,11 @@ export const FairInfoFragmentContainer = createFragmentContainer(FairInfo, {
         summary
       }
       ticketsLink
-      hours
-      links
+      hours(format: HTML)
+      links(format: HTML)
+      tickets(format: HTML)
+      summary
+      contact(format: HTML)
     }
   `,
 })

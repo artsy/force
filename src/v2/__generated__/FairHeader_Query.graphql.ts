@@ -14,6 +14,7 @@ export type FairHeader_QueryResponse = {
 export type FairHeader_QueryRawResponse = {
     readonly fair: ({
         readonly about: string | null;
+        readonly summary: string | null;
         readonly formattedOpeningHours: string | null;
         readonly name: string | null;
         readonly slug: string;
@@ -32,6 +33,8 @@ export type FairHeader_QueryRawResponse = {
         readonly ticketsLink: string | null;
         readonly hours: string | null;
         readonly links: string | null;
+        readonly tickets: string | null;
+        readonly contact: string | null;
         readonly id: string | null;
     }) | null;
 };
@@ -55,6 +58,7 @@ query FairHeader_Query(
 
 fragment FairHeader_fair on Fair {
   about
+  summary
   formattedOpeningHours
   name
   slug
@@ -71,8 +75,10 @@ fragment FairHeader_fair on Fair {
     id
   }
   ticketsLink
-  hours
-  links
+  hours(format: HTML)
+  links(format: HTML)
+  tickets(format: HTML)
+  contact(format: HTML)
 }
 */
 
@@ -96,9 +102,23 @@ v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
+  "name": "summary",
+  "storageKey": null
+},
+v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
   "name": "id",
   "storageKey": null
-};
+},
+v4 = [
+  {
+    "kind": "Literal",
+    "name": "format",
+    "value": "HTML"
+  }
+];
 return {
   "fragment": {
     "argumentDefinitions": (v0/*: any*/),
@@ -146,6 +166,7 @@ return {
             "name": "about",
             "storageKey": null
           },
+          (v2/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -241,14 +262,8 @@ return {
             "name": "location",
             "plural": false,
             "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "summary",
-                "storageKey": null
-              },
-              (v2/*: any*/)
+              (v2/*: any*/),
+              (v3/*: any*/)
             ],
             "storageKey": null
           },
@@ -261,19 +276,33 @@ return {
           },
           {
             "alias": null,
-            "args": null,
+            "args": (v4/*: any*/),
             "kind": "ScalarField",
             "name": "hours",
-            "storageKey": null
+            "storageKey": "hours(format:\"HTML\")"
           },
           {
             "alias": null,
-            "args": null,
+            "args": (v4/*: any*/),
             "kind": "ScalarField",
             "name": "links",
-            "storageKey": null
+            "storageKey": "links(format:\"HTML\")"
           },
-          (v2/*: any*/)
+          {
+            "alias": null,
+            "args": (v4/*: any*/),
+            "kind": "ScalarField",
+            "name": "tickets",
+            "storageKey": "tickets(format:\"HTML\")"
+          },
+          {
+            "alias": null,
+            "args": (v4/*: any*/),
+            "kind": "ScalarField",
+            "name": "contact",
+            "storageKey": "contact(format:\"HTML\")"
+          },
+          (v3/*: any*/)
         ],
         "storageKey": null
       }
@@ -284,7 +313,7 @@ return {
     "metadata": {},
     "name": "FairHeader_Query",
     "operationKind": "query",
-    "text": "query FairHeader_Query(\n  $slug: String!\n) {\n  fair(id: $slug) {\n    ...FairHeader_fair\n    id\n  }\n}\n\nfragment FairHeader_fair on Fair {\n  about\n  formattedOpeningHours\n  name\n  slug\n  image {\n    cropped(width: 750, height: 1000, version: \"wide\") {\n      src: url\n      width\n      height\n    }\n  }\n  tagline\n  location {\n    summary\n    id\n  }\n  ticketsLink\n  hours\n  links\n}\n"
+    "text": "query FairHeader_Query(\n  $slug: String!\n) {\n  fair(id: $slug) {\n    ...FairHeader_fair\n    id\n  }\n}\n\nfragment FairHeader_fair on Fair {\n  about\n  summary\n  formattedOpeningHours\n  name\n  slug\n  image {\n    cropped(width: 750, height: 1000, version: \"wide\") {\n      src: url\n      width\n      height\n    }\n  }\n  tagline\n  location {\n    summary\n    id\n  }\n  ticketsLink\n  hours(format: HTML)\n  links(format: HTML)\n  tickets(format: HTML)\n  contact(format: HTML)\n}\n"
   }
 };
 })();

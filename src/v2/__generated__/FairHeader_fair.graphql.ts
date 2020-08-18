@@ -5,6 +5,7 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type FairHeader_fair = {
     readonly about: string | null;
+    readonly summary: string | null;
     readonly formattedOpeningHours: string | null;
     readonly name: string | null;
     readonly slug: string;
@@ -22,6 +23,8 @@ export type FairHeader_fair = {
     readonly ticketsLink: string | null;
     readonly hours: string | null;
     readonly links: string | null;
+    readonly tickets: string | null;
+    readonly contact: string | null;
     readonly " $refType": "FairHeader_fair";
 };
 export type FairHeader_fair$data = FairHeader_fair;
@@ -32,7 +35,22 @@ export type FairHeader_fair$key = {
 
 
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "summary",
+  "storageKey": null
+},
+v1 = [
+  {
+    "kind": "Literal",
+    "name": "format",
+    "value": "HTML"
+  }
+];
+return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
@@ -45,6 +63,7 @@ const node: ReaderFragment = {
       "name": "about",
       "storageKey": null
     },
+    (v0/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -140,13 +159,7 @@ const node: ReaderFragment = {
       "name": "location",
       "plural": false,
       "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "summary",
-          "storageKey": null
-        }
+        (v0/*: any*/)
       ],
       "storageKey": null
     },
@@ -159,20 +172,35 @@ const node: ReaderFragment = {
     },
     {
       "alias": null,
-      "args": null,
+      "args": (v1/*: any*/),
       "kind": "ScalarField",
       "name": "hours",
-      "storageKey": null
+      "storageKey": "hours(format:\"HTML\")"
     },
     {
       "alias": null,
-      "args": null,
+      "args": (v1/*: any*/),
       "kind": "ScalarField",
       "name": "links",
-      "storageKey": null
+      "storageKey": "links(format:\"HTML\")"
+    },
+    {
+      "alias": null,
+      "args": (v1/*: any*/),
+      "kind": "ScalarField",
+      "name": "tickets",
+      "storageKey": "tickets(format:\"HTML\")"
+    },
+    {
+      "alias": null,
+      "args": (v1/*: any*/),
+      "kind": "ScalarField",
+      "name": "contact",
+      "storageKey": "contact(format:\"HTML\")"
     }
   ],
   "type": "Fair"
 };
-(node as any).hash = '554a68c5a66a979acf68678d51941642';
+})();
+(node as any).hash = '748b0ed3393806f687251805ea7401f0';
 export default node;
