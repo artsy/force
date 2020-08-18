@@ -38,6 +38,17 @@ describe("FairHeader", () => {
   it("displays basic information about the fair", async () => {
     const wrapper = await getWrapper()
     expect(wrapper.text()).toContain("Miart 2020")
+    expect(wrapper.text()).toContain("This is the summary.")
+  })
+
+  it("displays the about content if there is no summary", async () => {
+    const noSummaryFair: FairHeader_QueryRawResponse = {
+      fair: {
+        ...FairHeaderFixture.fair,
+        summary: "",
+      },
+    }
+    const wrapper = await getWrapper("lg", noSummaryFair)
     expect(wrapper.text()).toContain("This is the about.")
   })
 
@@ -60,6 +71,9 @@ describe("FairHeader", () => {
         ticketsLink: "",
         hours: "",
         links: "",
+        tickets: "",
+        contact: "",
+        summary: "",
       },
     }
 
@@ -80,6 +94,9 @@ describe("FairHeader", () => {
         ticketsLink: "",
         hours: "",
         links: "",
+        tickets: "",
+        contact: "",
+        summary: "",
       },
     }
 
@@ -110,5 +127,8 @@ const FairHeaderFixture: FairHeader_QueryRawResponse = {
     ticketsLink: "",
     hours: "",
     links: "",
+    tickets: "<b>Tickets available today</b>",
+    contact: "<b>Contact us</b>",
+    summary: "This is the summary.",
   },
 }

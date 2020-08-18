@@ -63,6 +63,9 @@ describe("FairInfo", () => {
         ticketsLink: "",
         hours: "",
         links: "",
+        tickets: "",
+        contact: "",
+        summary: "",
       },
     }
     const wrapper = await getWrapper("lg", missingInfo)
@@ -70,6 +73,8 @@ describe("FairInfo", () => {
     expect(wrapper.text()).not.toContain("Hours")
     expect(wrapper.text()).not.toContain("Buy Tickets")
     expect(wrapper.text()).not.toContain("Links")
+    expect(wrapper.text()).not.toContain("Tickets")
+    expect(wrapper.text()).not.toContain("Contact")
   })
 })
 
@@ -87,5 +92,8 @@ const FairInfoFixture: FairInfo_QueryRawResponse = {
     ticketsLink: "https://eventbrite.com/cool-event",
     hours: "Open every day at 5am",
     links: "<a href='google.com'>Google it</a>",
+    tickets: "<b>Tickets available today</b>",
+    contact: "<b>Contact us</b>",
+    summary: "This is the summary.",
   },
 }

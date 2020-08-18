@@ -14,6 +14,9 @@ export type FairInfo_fair = {
     readonly ticketsLink: string | null;
     readonly hours: string | null;
     readonly links: string | null;
+    readonly tickets: string | null;
+    readonly summary: string | null;
+    readonly contact: string | null;
     readonly " $refType": "FairInfo_fair";
 };
 export type FairInfo_fair$data = FairInfo_fair;
@@ -24,7 +27,22 @@ export type FairInfo_fair$key = {
 
 
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "summary",
+  "storageKey": null
+},
+v1 = [
+  {
+    "kind": "Literal",
+    "name": "format",
+    "value": "HTML"
+  }
+];
+return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
@@ -66,13 +84,7 @@ const node: ReaderFragment = {
       "name": "location",
       "plural": false,
       "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "summary",
-          "storageKey": null
-        }
+        (v0/*: any*/)
       ],
       "storageKey": null
     },
@@ -85,20 +97,36 @@ const node: ReaderFragment = {
     },
     {
       "alias": null,
-      "args": null,
+      "args": (v1/*: any*/),
       "kind": "ScalarField",
       "name": "hours",
-      "storageKey": null
+      "storageKey": "hours(format:\"HTML\")"
     },
     {
       "alias": null,
-      "args": null,
+      "args": (v1/*: any*/),
       "kind": "ScalarField",
       "name": "links",
-      "storageKey": null
+      "storageKey": "links(format:\"HTML\")"
+    },
+    {
+      "alias": null,
+      "args": (v1/*: any*/),
+      "kind": "ScalarField",
+      "name": "tickets",
+      "storageKey": "tickets(format:\"HTML\")"
+    },
+    (v0/*: any*/),
+    {
+      "alias": null,
+      "args": (v1/*: any*/),
+      "kind": "ScalarField",
+      "name": "contact",
+      "storageKey": "contact(format:\"HTML\")"
     }
   ],
   "type": "Fair"
 };
-(node as any).hash = 'a5f4b009cac6a9ca25166951f14f82f1';
+})();
+(node as any).hash = 'ea4f45ae63264ece824c15f339698eee';
 export default node;
