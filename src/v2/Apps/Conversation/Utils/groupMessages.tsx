@@ -1,8 +1,8 @@
-import { Conversation_conversation } from "v2/__generated__/Conversation_conversation.graphql"
+import { ConversationMessages_messages } from "v2/__generated__/ConversationMessages_messages.graphql"
 import { DateTime } from "luxon"
 import { fromToday } from "../Components/TimeSince"
 
-type Message = Conversation_conversation["messagesConnection"]["edges"][number]["node"]
+type Message = ConversationMessages_messages["edges"][number]["node"]
 /**
  * Combines messages into groups of messages sent by the same party and
  * separated out into different groups if sent across multiple days
