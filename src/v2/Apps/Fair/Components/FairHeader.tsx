@@ -1,14 +1,41 @@
 import React from "react"
-import { Placeholder } from "v2/Utils"
-import { Col, Flex, Row, Spacer, Text } from "@artsy/palette"
+import {
+  Col,
+  Flex,
+  ResponsiveBox,
+  ResponsiveBoxProps,
+  Row,
+  Spacer,
+  Text,
+} from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FairHeader_fair } from "v2/__generated__/FairHeader_fair.graphql"
+import styled from "styled-components"
+import { ForwardLink } from "v2/Components/Links/ForwardLink"
 
 interface FairHeaderProps {
   fair: FairHeader_fair
 }
 
+const ResponsiveImage = styled(ResponsiveBox)<ResponsiveBoxProps>`
+  img {
+    width: 100%;
+    height: 100%;
+  }
+`
+
 const FairHeader: React.FC<FairHeaderProps> = ({ fair }) => {
+  const img = fair?.image?.cropped
+  const { about, tagline, location, ticketsLink, hours, links } = fair
+
+  const canShowMoreInfoLink =
+    !!about ||
+    !!tagline ||
+    !!location?.summary ||
+    !!ticketsLink ||
+    !!hours ||
+    !!links
+
   return (
     <>
       <Spacer mb="2" />
@@ -17,7 +44,14 @@ const FairHeader: React.FC<FairHeaderProps> = ({ fair }) => {
         justifyContent="center"
         style={{ position: "relative" }}
       >
-        <Placeholder height="500px" width="375px" name="header image" />
+        <ResponsiveImage
+          aspectWidth={img.width}
+          aspectHeight={img.height}
+          maxWidth={375}
+          bg="black10"
+        >
+          <img src={img.src} alt={fair.name} />
+        </ResponsiveImage>
       </Flex>
       <Spacer mb="2" />
       <Row>
@@ -26,7 +60,13 @@ const FairHeader: React.FC<FairHeaderProps> = ({ fair }) => {
           <Text variant="caption">{fair.formattedOpeningHours}</Text>
         </Col>
         <Col sm="6" mt={[3, 0]}>
-          <Text variant="text">{fair.about}</Text>
+          <Text variant="text">{about}</Text>
+          {canShowMoreInfoLink && (
+            <ForwardLink
+              linkText="More info"
+              path={`/fair2/${fair.slug}/info`}
+            />
+          )}
         </Col>
       </Row>
     </>
@@ -39,6 +79,23 @@ export const FairHeaderFragmentContainer = createFragmentContainer(FairHeader, {
       about
       formattedOpeningHours
       name
+      slug
+      image {
+        # 3:4 - 375×500 native max dimensions * 2 for retina
+        cropped(width: 750, height: 1000, version: "wide") {
+          src: url
+          width
+          height
+        }
+      }
+      # Used to figure out if we should render the More info link
+      tagline
+      location {
+        summary
+      }
+      ticketsLink
+      hours
+      links
     }
   `,
 })
