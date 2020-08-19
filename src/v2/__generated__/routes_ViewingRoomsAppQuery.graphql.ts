@@ -304,7 +304,7 @@ return {
           {
             "alias": null,
             "args": (v3/*: any*/),
-            "concreteType": "ViewingRoomConnection",
+            "concreteType": "ViewingRoomsConnection",
             "kind": "LinkedField",
             "name": "viewingRoomsConnection",
             "plural": false,
@@ -312,7 +312,7 @@ return {
               {
                 "alias": null,
                 "args": null,
-                "concreteType": "ViewingRoomEdge",
+                "concreteType": "ViewingRoomsEdge",
                 "kind": "LinkedField",
                 "name": "edges",
                 "plural": true,
