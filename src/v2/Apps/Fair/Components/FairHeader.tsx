@@ -2,6 +2,7 @@ import React from "react"
 import {
   Col,
   Flex,
+  Grid,
   ResponsiveBox,
   ResponsiveBoxProps,
   Row,
@@ -54,36 +55,50 @@ const FairHeader: React.FC<FairHeaderProps> = ({ fair }) => {
   return (
     <>
       <Spacer mb="2" />
-      <Flex
-        alignItems="center"
-        justifyContent="center"
-        style={{ position: "relative" }}
-      >
-        <ResponsiveImage
-          aspectWidth={img.width}
-          aspectHeight={img.height}
-          maxWidth={375}
-          bg="black10"
+      {img && (
+        <Flex
+          alignItems="center"
+          justifyContent="center"
+          style={{ position: "relative" }}
         >
-          <img src={img.src} alt={fair.name} />
-        </ResponsiveImage>
-      </Flex>
+          <ResponsiveImage
+            aspectWidth={img.width}
+            aspectHeight={img.height}
+            maxWidth={375}
+            bg="black10"
+          >
+            <img src={img.src} alt={fair.name} />
+          </ResponsiveImage>
+        </Flex>
+      )}
+
       <Spacer mb="2" />
-      <Row>
-        <Col sm="6">
-          <Text variant="largeTitle">{fair.name}</Text>
-          <Text variant="caption">{fair.formattedOpeningHours}</Text>
-        </Col>
-        <Col sm="6" mt={[3, 0]}>
-          <Text variant="text">{previewText}</Text>
-          {canShowMoreInfoLink && (
-            <ForwardLink
-              linkText="More info"
-              path={`/fair2/${fair.slug}/info`}
-            />
-          )}
-        </Col>
-      </Row>
+
+      <Grid>
+        <Row>
+          <Col sm="6">
+            <Text as="h1" variant="largeTitle">
+              {fair.name}
+            </Text>
+            <Text variant="text" color="black60">
+              {fair.formattedOpeningHours}
+            </Text>
+          </Col>
+
+          <Col sm="6" mt={[3, 0]}>
+            <Text variant="subtitle" lineHeight="body">
+              {previewText}
+            </Text>
+
+            {canShowMoreInfoLink && (
+              <ForwardLink
+                linkText="More info"
+                path={`/fair2/${fair.slug}/info`}
+              />
+            )}
+          </Col>
+        </Row>
+      </Grid>
     </>
   )
 }
