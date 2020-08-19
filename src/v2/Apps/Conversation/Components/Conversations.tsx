@@ -12,14 +12,19 @@ import { ConversationListHeader } from "./InboxHeaders"
 
 const Container = styled(Box)`
   height: 100%;
-  overflow-y: auto;
-  overflow-x: hidden;
+  overflow: hidden;
   border-bottom: 30px solid ${color("white100")};
   border-right: 1px solid ${color("black10")};
   ${media.xs`
     border-right: none;
     border-bottom: none;
   `};
+`
+
+const ScrollContainer = styled(Box)`
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 100%;
 `
 
 const SpinnerContainer = styled.div`
@@ -66,7 +71,7 @@ const Conversations: React.FC<ConversationsProps> = props => {
     <Container width={["100%", "100%", "375px"]} onScroll={handleScroll}>
       <>
         <ConversationListHeader />
-        <Box>
+        <ScrollContainer>
           {conversations.map(edge => (
             <ConversationSnippet
               selectedConversationID={selectedConversationID}
@@ -85,7 +90,7 @@ const Conversations: React.FC<ConversationsProps> = props => {
               <Spinner />
             </SpinnerContainer>
           ) : null}
-        </Box>
+        </ScrollContainer>
       </>
     </Container>
   )
