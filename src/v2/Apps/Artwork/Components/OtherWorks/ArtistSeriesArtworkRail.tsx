@@ -14,14 +14,18 @@ interface Props {
 export const ArtistSeriesArtworkRail: React.FC<Props> = ({
   artwork: { artistSeriesConnection },
 }) => {
-  if (!artistSeriesConnection.edges.length) {
+  if (!artistSeriesConnection?.edges?.length) {
     return null
   }
 
   const artistSeries = artistSeriesConnection.edges[0].node
   const { artworksConnection, slug } = artistSeries
 
-  const artworks = artworksConnection.edges.map(({ node }) => node)
+  const artworks = artworksConnection?.edges?.map(({ node }) => node)
+
+  if (!artworks) {
+    return null
+  }
 
   const isMobile = getENV("IS_MOBILE") === true
 
