@@ -4,7 +4,6 @@ import {
   Col,
   EntityHeader,
   Flex,
-  Grid,
   HTML,
   Image,
   Row,
@@ -21,6 +20,7 @@ import { Intent } from "@artsy/cohesion"
 import { resize } from "v2/Utils/resizer"
 import styled from "styled-components"
 import { unitlessBreakpoints } from "@artsy/palette"
+import { AppContainer } from "v2/Apps/Components/AppContainer"
 
 interface ArtistSeriesHeaderProps {
   artistSeries: ArtistSeriesHeader_artistSeries
@@ -99,20 +99,19 @@ const ArtistSeriesHeaderLarge: React.FC<ArtistSeriesHeaderProps> = props => {
   } = props
   return (
     <>
-      <Flex
-        position="relative"
-        alignItems="center"
-        justifyContent="center"
-        p={2}
-      >
-        <Flex position="absolute" left={3}>
-          {artists.length && <ArtistInfo artist={artists[0]} />}
-        </Flex>
-        <Sans size="3">Series</Sans>
-      </Flex>
+      <Box m={3}>
+        <AppContainer>
+          <Flex alignItems="center" justifyContent="center" position="relative">
+            <Flex position="absolute" left={0}>
+              {artists.length && <ArtistInfo artist={artists[0]} />}
+            </Flex>
+            <Sans size="3">Series</Sans>
+          </Flex>
+        </AppContainer>
+      </Box>
       <Separator />
       <Box m={3}>
-        <StyledGrid>
+        <AppContainer>
           <Row>
             <Col sm={6}>
               <Flex
@@ -143,7 +142,7 @@ const ArtistSeriesHeaderLarge: React.FC<ArtistSeriesHeaderProps> = props => {
               </Box>
             </Col>
           </Row>
-        </StyledGrid>
+        </AppContainer>
       </Box>
     </>
   )
@@ -176,11 +175,11 @@ const ArtistSeriesHeaderSmall: React.FC<ArtistSeriesHeaderProps> = props => {
   )
 }
 
-const StyledGrid = styled(Grid)`
-  @media (max-width: ${unitlessBreakpoints.lg - 1}px) {
-    max-width: 100%;
-  }
-`
+// const StyledGrid = styled(Grid)`
+//   @media (max-width: ${unitlessBreakpoints.lg - 1}px) {
+//     max-width: 100%;
+//   }
+// `
 
 export const HeaderImage = styled(Image)`
   border-radius: 2px;
