@@ -1,8 +1,15 @@
 import styled from "styled-components"
 import React from "react"
-import Icon from "@artsy/reaction/dist/Components/Icon"
 import { PartnerInline } from "@artsy/reaction/dist/Components/Publishing/Partner/PartnerInline"
-import { Flex, Sans, Serif, media } from "@artsy/palette"
+import {
+  Clickable,
+  CloseIcon,
+  Flex,
+  MenuIcon,
+  Sans,
+  Serif,
+  media,
+} from "@artsy/palette"
 import { Media } from "@artsy/reaction/dist/Utils/Responsive"
 
 interface HeaderProps {
@@ -44,11 +51,7 @@ export const Header: React.SFC<HeaderProps> = props => {
             justifyContent="flex-end"
             alignItems="center"
           >
-            <Icon
-              name={isOpen ? "close" : "list"}
-              color="black"
-              fontSize={isOpen ? "25px" : "32px"}
-            />
+            {isOpen ? <CloseIcon /> : <MenuIcon />}
           </Menu>
         )}
       </Media>
@@ -63,7 +66,7 @@ const Title = styled(Serif)`
   letter-spacing: -0.25px;
 `
 
-const Menu = styled(Flex)`
+const Menu = styled(Clickable)`
   flex: 1;
 `
 
