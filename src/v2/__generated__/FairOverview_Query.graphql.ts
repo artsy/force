@@ -83,6 +83,17 @@ query FairOverview_Query(
   }
 }
 
+fragment FairAboveFold_fair on Fair {
+  ...FairHeader_fair
+  ...FairEditorial_fair
+  slug
+  articles: articlesConnection(first: 5, sort: PUBLISHED_AT_DESC) {
+    edges {
+      __typename
+    }
+  }
+}
+
 fragment FairEditorialItem_article on Article {
   id
   title
@@ -143,13 +154,7 @@ fragment FairHeader_fair on Fair {
 }
 
 fragment FairOverview_fair on Fair {
-  ...FairHeader_fair
-  ...FairEditorial_fair
-  articles: articlesConnection(first: 5, sort: PUBLISHED_AT_DESC) {
-    edges {
-      __typename
-    }
-  }
+  ...FairAboveFold_fair
 }
 */
 
@@ -532,7 +537,7 @@ return {
     "metadata": {},
     "name": "FairOverview_Query",
     "operationKind": "query",
-    "text": "query FairOverview_Query(\n  $slug: String!\n) {\n  fair(id: $slug) {\n    ...FairOverview_fair\n    id\n  }\n}\n\nfragment FairEditorialItem_article on Article {\n  id\n  title\n  href\n  author {\n    name\n    id\n  }\n  thumbnailTitle\n  thumbnailImage {\n    _1x: cropped(width: 140, height: 80) {\n      width\n      height\n      src: url\n    }\n    _2x: cropped(width: 280, height: 160) {\n      width\n      height\n      src: url\n    }\n  }\n}\n\nfragment FairEditorial_fair on Fair {\n  articles: articlesConnection(first: 5, sort: PUBLISHED_AT_DESC) {\n    edges {\n      node {\n        id\n        ...FairEditorialItem_article\n      }\n    }\n  }\n}\n\nfragment FairHeader_fair on Fair {\n  about\n  summary\n  formattedOpeningHours\n  name\n  slug\n  image {\n    cropped(width: 750, height: 1000, version: \"wide\") {\n      src: url\n      width\n      height\n    }\n  }\n  tagline\n  location {\n    summary\n    id\n  }\n  ticketsLink\n  hours(format: HTML)\n  links(format: HTML)\n  tickets(format: HTML)\n  contact(format: HTML)\n}\n\nfragment FairOverview_fair on Fair {\n  ...FairHeader_fair\n  ...FairEditorial_fair\n  articles: articlesConnection(first: 5, sort: PUBLISHED_AT_DESC) {\n    edges {\n      __typename\n    }\n  }\n}\n"
+    "text": "query FairOverview_Query(\n  $slug: String!\n) {\n  fair(id: $slug) {\n    ...FairOverview_fair\n    id\n  }\n}\n\nfragment FairAboveFold_fair on Fair {\n  ...FairHeader_fair\n  ...FairEditorial_fair\n  slug\n  articles: articlesConnection(first: 5, sort: PUBLISHED_AT_DESC) {\n    edges {\n      __typename\n    }\n  }\n}\n\nfragment FairEditorialItem_article on Article {\n  id\n  title\n  href\n  author {\n    name\n    id\n  }\n  thumbnailTitle\n  thumbnailImage {\n    _1x: cropped(width: 140, height: 80) {\n      width\n      height\n      src: url\n    }\n    _2x: cropped(width: 280, height: 160) {\n      width\n      height\n      src: url\n    }\n  }\n}\n\nfragment FairEditorial_fair on Fair {\n  articles: articlesConnection(first: 5, sort: PUBLISHED_AT_DESC) {\n    edges {\n      node {\n        id\n        ...FairEditorialItem_article\n      }\n    }\n  }\n}\n\nfragment FairHeader_fair on Fair {\n  about\n  summary\n  formattedOpeningHours\n  name\n  slug\n  image {\n    cropped(width: 750, height: 1000, version: \"wide\") {\n      src: url\n      width\n      height\n    }\n  }\n  tagline\n  location {\n    summary\n    id\n  }\n  ticketsLink\n  hours(format: HTML)\n  links(format: HTML)\n  tickets(format: HTML)\n  contact(format: HTML)\n}\n\nfragment FairOverview_fair on Fair {\n  ...FairAboveFold_fair\n}\n"
   }
 };
 })();
