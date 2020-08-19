@@ -130,5 +130,13 @@ const FairHeaderFixture: FairHeader_QueryRawResponse = {
     tickets: "<b>Tickets available today</b>",
     contact: "<b>Contact us</b>",
     summary: "This is the summary.",
+    profile: {
+      id: "profile",
+      icon: {
+        cropped: {
+          src: "/path/to/cats.jpg",
+        },
+      },
+    },
   },
 }

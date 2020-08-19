@@ -68,6 +68,14 @@ fragment FairHeader_fair on Fair {
   formattedOpeningHours
   name
   slug
+  profile {
+    icon {
+      cropped(width: 120, height: 120, version: "square140") {
+        src: url
+      }
+    }
+    id
+  }
   image {
     cropped(width: 750, height: 1000, version: "wide") {
       src: url
@@ -139,21 +147,21 @@ v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "width",
+  "name": "id",
   "storageKey": null
 },
 v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "height",
+  "name": "width",
   "storageKey": null
 },
 v7 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "id",
+  "name": "height",
   "storageKey": null
 },
 v8 = [
@@ -164,8 +172,8 @@ v8 = [
   }
 ],
 v9 = [
-  (v5/*: any*/),
   (v6/*: any*/),
+  (v7/*: any*/),
   (v4/*: any*/)
 ];
 return {
@@ -234,6 +242,57 @@ return {
           {
             "alias": null,
             "args": null,
+            "concreteType": "Profile",
+            "kind": "LinkedField",
+            "name": "profile",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "Image",
+                "kind": "LinkedField",
+                "name": "icon",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": [
+                      {
+                        "kind": "Literal",
+                        "name": "height",
+                        "value": 120
+                      },
+                      {
+                        "kind": "Literal",
+                        "name": "version",
+                        "value": "square140"
+                      },
+                      {
+                        "kind": "Literal",
+                        "name": "width",
+                        "value": 120
+                      }
+                    ],
+                    "concreteType": "CroppedImageUrl",
+                    "kind": "LinkedField",
+                    "name": "cropped",
+                    "plural": false,
+                    "selections": [
+                      (v4/*: any*/)
+                    ],
+                    "storageKey": "cropped(height:120,version:\"square140\",width:120)"
+                  }
+                ],
+                "storageKey": null
+              },
+              (v5/*: any*/)
+            ],
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
             "concreteType": "Image",
             "kind": "LinkedField",
             "name": "image",
@@ -264,8 +323,8 @@ return {
                 "plural": false,
                 "selections": [
                   (v4/*: any*/),
-                  (v5/*: any*/),
-                  (v6/*: any*/)
+                  (v6/*: any*/),
+                  (v7/*: any*/)
                 ],
                 "storageKey": "cropped(height:1000,version:\"wide\",width:750)"
               }
@@ -288,7 +347,7 @@ return {
             "plural": false,
             "selections": [
               (v2/*: any*/),
-              (v7/*: any*/)
+              (v5/*: any*/)
             ],
             "storageKey": null
           },
@@ -362,7 +421,7 @@ return {
                     "name": "node",
                     "plural": false,
                     "selections": [
-                      (v7/*: any*/),
+                      (v5/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -386,7 +445,7 @@ return {
                         "plural": false,
                         "selections": [
                           (v3/*: any*/),
-                          (v7/*: any*/)
+                          (v5/*: any*/)
                         ],
                         "storageKey": null
                       },
@@ -466,7 +525,7 @@ return {
             ],
             "storageKey": "articlesConnection(first:5,sort:\"PUBLISHED_AT_DESC\")"
           },
-          (v7/*: any*/)
+          (v5/*: any*/)
         ],
         "storageKey": null
       }
@@ -477,7 +536,7 @@ return {
     "metadata": {},
     "name": "routes_FairOverviewQuery",
     "operationKind": "query",
-    "text": "query routes_FairOverviewQuery(\n  $slug: String!\n) {\n  fair(id: $slug) {\n    ...FairOverview_fair\n    id\n  }\n}\n\nfragment FairEditorialItem_article on Article {\n  id\n  title\n  href\n  author {\n    name\n    id\n  }\n  thumbnailTitle\n  thumbnailImage {\n    _1x: cropped(width: 140, height: 80) {\n      width\n      height\n      src: url\n    }\n    _2x: cropped(width: 280, height: 160) {\n      width\n      height\n      src: url\n    }\n  }\n}\n\nfragment FairEditorial_fair on Fair {\n  articles: articlesConnection(first: 5, sort: PUBLISHED_AT_DESC) {\n    edges {\n      node {\n        id\n        ...FairEditorialItem_article\n      }\n    }\n  }\n}\n\nfragment FairHeader_fair on Fair {\n  about\n  summary\n  formattedOpeningHours\n  name\n  slug\n  image {\n    cropped(width: 750, height: 1000, version: \"wide\") {\n      src: url\n      width\n      height\n    }\n  }\n  tagline\n  location {\n    summary\n    id\n  }\n  ticketsLink\n  hours(format: HTML)\n  links(format: HTML)\n  tickets(format: HTML)\n  contact(format: HTML)\n}\n\nfragment FairOverview_fair on Fair {\n  ...FairHeader_fair\n  ...FairEditorial_fair\n  articles: articlesConnection(first: 5, sort: PUBLISHED_AT_DESC) {\n    edges {\n      __typename\n    }\n  }\n}\n"
+    "text": "query routes_FairOverviewQuery(\n  $slug: String!\n) {\n  fair(id: $slug) {\n    ...FairOverview_fair\n    id\n  }\n}\n\nfragment FairEditorialItem_article on Article {\n  id\n  title\n  href\n  author {\n    name\n    id\n  }\n  thumbnailTitle\n  thumbnailImage {\n    _1x: cropped(width: 140, height: 80) {\n      width\n      height\n      src: url\n    }\n    _2x: cropped(width: 280, height: 160) {\n      width\n      height\n      src: url\n    }\n  }\n}\n\nfragment FairEditorial_fair on Fair {\n  articles: articlesConnection(first: 5, sort: PUBLISHED_AT_DESC) {\n    edges {\n      node {\n        id\n        ...FairEditorialItem_article\n      }\n    }\n  }\n}\n\nfragment FairHeader_fair on Fair {\n  about\n  summary\n  formattedOpeningHours\n  name\n  slug\n  profile {\n    icon {\n      cropped(width: 120, height: 120, version: \"square140\") {\n        src: url\n      }\n    }\n    id\n  }\n  image {\n    cropped(width: 750, height: 1000, version: \"wide\") {\n      src: url\n      width\n      height\n    }\n  }\n  tagline\n  location {\n    summary\n    id\n  }\n  ticketsLink\n  hours(format: HTML)\n  links(format: HTML)\n  tickets(format: HTML)\n  contact(format: HTML)\n}\n\nfragment FairOverview_fair on Fair {\n  ...FairHeader_fair\n  ...FairEditorial_fair\n  articles: articlesConnection(first: 5, sort: PUBLISHED_AT_DESC) {\n    edges {\n      __typename\n    }\n  }\n}\n"
   }
 };
 })();

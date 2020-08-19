@@ -9,6 +9,13 @@ export type FairHeader_fair = {
     readonly formattedOpeningHours: string | null;
     readonly name: string | null;
     readonly slug: string;
+    readonly profile: {
+        readonly icon: {
+            readonly cropped: {
+                readonly src: string | null;
+            } | null;
+        } | null;
+    } | null;
     readonly image: {
         readonly cropped: {
             readonly src: string | null;
@@ -43,7 +50,14 @@ var v0 = {
   "name": "summary",
   "storageKey": null
 },
-v1 = [
+v1 = {
+  "alias": "src",
+  "args": null,
+  "kind": "ScalarField",
+  "name": "url",
+  "storageKey": null
+},
+v2 = [
   {
     "kind": "Literal",
     "name": "format",
@@ -88,6 +102,56 @@ return {
     {
       "alias": null,
       "args": null,
+      "concreteType": "Profile",
+      "kind": "LinkedField",
+      "name": "profile",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "Image",
+          "kind": "LinkedField",
+          "name": "icon",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": [
+                {
+                  "kind": "Literal",
+                  "name": "height",
+                  "value": 120
+                },
+                {
+                  "kind": "Literal",
+                  "name": "version",
+                  "value": "square140"
+                },
+                {
+                  "kind": "Literal",
+                  "name": "width",
+                  "value": 120
+                }
+              ],
+              "concreteType": "CroppedImageUrl",
+              "kind": "LinkedField",
+              "name": "cropped",
+              "plural": false,
+              "selections": [
+                (v1/*: any*/)
+              ],
+              "storageKey": "cropped(height:120,version:\"square140\",width:120)"
+            }
+          ],
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
       "concreteType": "Image",
       "kind": "LinkedField",
       "name": "image",
@@ -117,13 +181,7 @@ return {
           "name": "cropped",
           "plural": false,
           "selections": [
-            {
-              "alias": "src",
-              "args": null,
-              "kind": "ScalarField",
-              "name": "url",
-              "storageKey": null
-            },
+            (v1/*: any*/),
             {
               "alias": null,
               "args": null,
@@ -172,28 +230,28 @@ return {
     },
     {
       "alias": null,
-      "args": (v1/*: any*/),
+      "args": (v2/*: any*/),
       "kind": "ScalarField",
       "name": "hours",
       "storageKey": "hours(format:\"HTML\")"
     },
     {
       "alias": null,
-      "args": (v1/*: any*/),
+      "args": (v2/*: any*/),
       "kind": "ScalarField",
       "name": "links",
       "storageKey": "links(format:\"HTML\")"
     },
     {
       "alias": null,
-      "args": (v1/*: any*/),
+      "args": (v2/*: any*/),
       "kind": "ScalarField",
       "name": "tickets",
       "storageKey": "tickets(format:\"HTML\")"
     },
     {
       "alias": null,
-      "args": (v1/*: any*/),
+      "args": (v2/*: any*/),
       "kind": "ScalarField",
       "name": "contact",
       "storageKey": "contact(format:\"HTML\")"
@@ -202,5 +260,5 @@ return {
   "type": "Fair"
 };
 })();
-(node as any).hash = '748b0ed3393806f687251805ea7401f0';
+(node as any).hash = '602875de975ebad7d480faa41e409f8f';
 export default node;

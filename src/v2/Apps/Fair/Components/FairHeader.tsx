@@ -1,5 +1,6 @@
 import React from "react"
 import {
+  Box,
   Col,
   Flex,
   Grid,
@@ -27,6 +28,7 @@ const ResponsiveImage = styled(ResponsiveBox)<ResponsiveBoxProps>`
 
 const FairHeader: React.FC<FairHeaderProps> = ({ fair }) => {
   const img = fair?.image?.cropped
+  const profileIcon = fair?.profile?.icon?.cropped
   const {
     about,
     tagline,
@@ -68,6 +70,18 @@ const FairHeader: React.FC<FairHeaderProps> = ({ fair }) => {
             bg="black10"
           >
             <img src={img.src} alt={fair.name} />
+            {profileIcon && (
+              <Box
+                bg="white100"
+                width={80}
+                px={1}
+                position="absolute"
+                bottom={0}
+                left="1rem"
+              >
+                <img src={profileIcon.src} />
+              </Box>
+            )}
           </ResponsiveImage>
         </Flex>
       )}
@@ -111,6 +125,14 @@ export const FairHeaderFragmentContainer = createFragmentContainer(FairHeader, {
       formattedOpeningHours
       name
       slug
+      profile {
+        icon {
+          # Always 60px wide * 2 for retina
+          cropped(width: 120, height: 120, version: "square140") {
+            src: url
+          }
+        }
+      }
       image {
         # 3:4 - 375×500 native max dimensions * 2 for retina
         cropped(width: 750, height: 1000, version: "wide") {
