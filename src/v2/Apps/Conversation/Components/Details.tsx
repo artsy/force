@@ -137,7 +137,7 @@ export const Details: FC<DetailsProps> = ({
         "100%",
       ]}
       flexShrink={0}
-      position={["absolute", "absolute", "absolute", "absolute", "static"]}
+      position={["fixed", "fixed", "fixed", "fixed", "static"]}
       right={[0, 0, 0, 0, "auto"]}
       width={getDetailsContainerWidth()}
       opacity={showDetails ? 1 : (0 as any)}
