@@ -4,7 +4,7 @@ import { MockedConversation } from "v2/Apps/__tests__/Fixtures/Conversation"
 import { Conversation_conversation } from "v2/__generated__/Conversation_conversation.graphql"
 import { Reply } from "../Components/Reply"
 import { mount } from "enzyme"
-import { Environment } from "relay-runtime"
+import { Environment } from "react-relay"
 
 jest.mock("v2/Artsy/Analytics/useTracking")
 
