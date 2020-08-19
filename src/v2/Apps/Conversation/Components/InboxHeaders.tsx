@@ -166,7 +166,7 @@ export const DetailsHeader: FC<DetailsHeaderProps> = props => {
       width={showDetails ? "375px" : "0"}
       maxWidth={showDetails ? "auto" : "0"}
       pb={1}
-      display={["none", "flex"]}
+      display={["none", "none", "flex", "flex", "flex"]}
       {...props}
     >
       <Flex

@@ -130,10 +130,10 @@ export const Details: FC<DetailsProps> = ({
       flexDirection="column"
       justifyContent="flex-start"
       height={[
-        "calc(100% - 115px)",
-        "calc(100% - 115px)",
-        null,
-        "calc(100% - 145px)",
+        "calc(100% - 122px)",
+        "calc(100% - 175px)",
+        "calc(100% - 122px)",
+        "calc(100% - 122px)",
         "100%",
       ]}
       flexShrink={0}
