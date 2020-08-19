@@ -1,4 +1,4 @@
-import { Box, Flex, Title, media } from "@artsy/palette"
+import { Box, Flex, Title } from "@artsy/palette"
 import { Conversation_me } from "v2/__generated__/Conversation_me.graphql"
 import { AppContainer } from "v2/Apps/Components/AppContainer"
 import { ConversationPaginationContainer as Conversation } from "v2/Apps/Conversation/Components/Conversation"
@@ -8,10 +8,6 @@ import { Match } from "found"
 import React, { useState } from "react"
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
 import { Media } from "v2/Utils/Responsive"
-import {
-  ConversationHeader,
-  FullHeader,
-} from "v2/Apps/Conversation/Components/InboxHeaders"
 import { DetailsFragmentContainer as Details } from "../../Components/Details"
 import styled from "styled-components"
 interface ConversationRouteProps {
@@ -26,10 +22,7 @@ const ConstrainedHeightContainer = styled(Box)`
 `
 
 const ConversationContainer = styled(Flex)`
-  height: calc(100% - 85px);
-  ${media.md`
-    height: 100%;
-  `}
+  height: 100%;
   & > * {
     overflow-x: hidden;
     overflow-y: auto;
@@ -53,20 +46,6 @@ export const ConversationRoute: React.FC<ConversationRouteProps> = props => {
     <AppContainer maxWidth={maxWidth}>
       <Title>Inbox | Artsy</Title>
       <ConstrainedHeightContainer>
-        <Media between={["xs", "md"]}>
-          <ConversationHeader
-            showDetails={showDetails}
-            setShowDetails={setShowDetails}
-            partnerName={me.conversation.to.name}
-          />
-        </Media>
-        <Media greaterThan="sm">
-          <FullHeader
-            showDetails={showDetails}
-            setShowDetails={setShowDetails}
-            partnerName={me.conversation.to.name}
-          />
-        </Media>
         <ConversationContainer>
           <Media greaterThan="sm">
             <Conversations
@@ -76,6 +55,8 @@ export const ConversationRoute: React.FC<ConversationRouteProps> = props => {
           </Media>
           <Conversation
             conversation={me.conversation}
+            showDetails={showDetails}
+            setShowDetails={setShowDetails}
             refetch={props.relay.refetch}
           />
           <Details
@@ -98,9 +79,6 @@ export const ConversationPaginationContainer = createRefetchContainer(
         ...Conversations_me
         conversation(id: $conversationID) {
           internalID
-          to {
-            name
-          }
           ...Conversation_conversation
           ...Details_conversation
         }

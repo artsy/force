@@ -8,6 +8,7 @@ import {
 } from "react-relay"
 import { ConversationSnippetFragmentContainer as ConversationSnippet } from "./ConversationSnippet"
 import styled from "styled-components"
+import { ConversationListHeader } from "./InboxHeaders"
 
 const Container = styled(Box)`
   height: 100%;
@@ -63,26 +64,29 @@ const Conversations: React.FC<ConversationsProps> = props => {
 
   return (
     <Container width={["100%", "100%", "375px"]} onScroll={handleScroll}>
-      <Box>
-        {conversations.map(edge => (
-          <ConversationSnippet
-            selectedConversationID={selectedConversationID}
-            isSelected={edge.node.internalID === selectedConversationID}
-            conversation={edge.node}
-            key={edge.cursor}
-            hasDivider={
-              conversations.indexOf(edge) !== selectedConversationIndex &&
-              conversations.indexOf(edge) !== selectedConversationIndex - 1 &&
-              conversations.indexOf(edge) !== conversations.length - 1
-            }
-          />
-        ))}
-        {fetchingMore ? (
-          <SpinnerContainer>
-            <Spinner />
-          </SpinnerContainer>
-        ) : null}
-      </Box>
+      <>
+        <ConversationListHeader />
+        <Box>
+          {conversations.map(edge => (
+            <ConversationSnippet
+              selectedConversationID={selectedConversationID}
+              isSelected={edge.node.internalID === selectedConversationID}
+              conversation={edge.node}
+              key={edge.cursor}
+              hasDivider={
+                conversations.indexOf(edge) !== selectedConversationIndex &&
+                conversations.indexOf(edge) !== selectedConversationIndex - 1 &&
+                conversations.indexOf(edge) !== conversations.length - 1
+              }
+            />
+          ))}
+          {fetchingMore ? (
+            <SpinnerContainer>
+              <Spinner />
+            </SpinnerContainer>
+          ) : null}
+        </Box>
+      </>
     </Container>
   )
 }

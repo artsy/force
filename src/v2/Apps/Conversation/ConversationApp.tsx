@@ -8,8 +8,6 @@ import { Title } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Flex, Spinner, breakpoints } from "@artsy/palette"
 import { debounce } from "lodash"
-import { Media } from "v2/Utils/Responsive"
-import { FullHeader, MobileInboxHeader } from "./Components/InboxHeaders"
 import { NoMessages } from "./Components/NoMessages"
 
 interface ConversationAppProps {
@@ -33,12 +31,6 @@ const getViewWidth = () => {
 const Inbox: React.FC<InboxProps> = ({ selectedConversation, me }) => {
   return (
     <>
-      <Media lessThan="md">
-        <MobileInboxHeader />
-      </Media>
-      <Media greaterThanOrEqual="md">
-        <FullHeader partnerName={selectedConversation?.to?.name} />
-      </Media>
       <Conversations me={me} />
       <Flex
         display={["none", "none", "flex"]}

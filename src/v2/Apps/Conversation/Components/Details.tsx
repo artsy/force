@@ -24,8 +24,9 @@ import ArtworkDetails from "v2/Components/Artwork/Metadata"
 import { zIndex } from "styled-system"
 import { debounce } from "lodash"
 import { getViewportDimensions } from "v2/Utils/viewport"
+import { DetailsHeader } from "./InboxHeaders"
 
-export const DETAIL_BOX_ANIMATION = `transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);`
+const DETAIL_BOX_XL_ANIMATION = `transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);`
 const DETAIL_BOX_XS_ANIMATION = `transition: opacity 0.3s, z-index 0.3s;`
 const DETAIL_BOX_MD_ANIMATION = `transition: transform 0.3s;`
 
@@ -37,7 +38,7 @@ const DetailsContainer = styled(Flex)<{ opacity?: 0 | 1; transform?: string }>`
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   background-color: ${color("white100")};
   transform: none;
-  ${DETAIL_BOX_ANIMATION}
+  ${DETAIL_BOX_XL_ANIMATION}
   ${media.xl`
     transform: ${({ transform }: { transform?: string }) => transform};
     ${DETAIL_BOX_MD_ANIMATION}
@@ -144,6 +145,10 @@ export const Details: FC<DetailsProps> = ({
       zIndex={showDetails ? 1 : -1}
       {...props}
     >
+      <DetailsHeader
+        showDetails={showDetails}
+        setShowDetails={setShowDetails}
+      />
       <EntityHeader
         px={2}
         py={1}
