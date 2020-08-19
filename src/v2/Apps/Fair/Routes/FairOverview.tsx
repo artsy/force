@@ -1,4 +1,4 @@
-import { Box, CSSGrid, Text } from "@artsy/palette"
+import { Col, Grid, Row, Text } from "@artsy/palette"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FairOverview_fair } from "v2/__generated__/FairOverview_fair.graphql"
@@ -14,31 +14,19 @@ const FairOverview: React.FC<FairOverviewProps> = ({ fair }) => {
     <>
       <FairHeader fair={fair} />
 
-      <CSSGrid
-        gridRowGap={3}
-        gridColumnGap={3}
-        gridTemplateColumns={["repeat(1fr)", "repeat(2, 1fr)"]}
-        mt={3}
-        pt={3}
-        borderTop="1px solid"
-        borderColor="black10"
-      >
-        {fair.articles.edges.length > 0 && (
-          <Box>
-            <Text variant="subtitle" as="h3" mb={2}>
-              Coverage by Artsy Editorial
-            </Text>
+      {fair.articles.edges.length > 0 && (
+        <Grid mt={3} pt={3} borderTop="1px solid" borderColor="black10">
+          <Row>
+            <Col sm="6" mx="auto">
+              <Text variant="subtitle" as="h3" mb={2}>
+                Coverage by Artsy Editorial
+              </Text>
 
-            <FairEditorial fair={fair} />
-          </Box>
-        )}
-
-        <Box>
-          <Text variant="subtitle" as="h3" mb={2}>
-            Curated highlights
-          </Text>
-        </Box>
-      </CSSGrid>
+              <FairEditorial fair={fair} />
+            </Col>
+          </Row>
+        </Grid>
+      )}
     </>
   )
 }

@@ -2,6 +2,7 @@ import React from "react"
 import {
   Col,
   Flex,
+  Grid,
   ResponsiveBox,
   ResponsiveBoxProps,
   Row,
@@ -73,29 +74,31 @@ const FairHeader: React.FC<FairHeaderProps> = ({ fair }) => {
 
       <Spacer mb="2" />
 
-      <Row>
-        <Col sm="6">
-          <Text as="h1" variant="largeTitle">
-            {fair.name}
-          </Text>
-          <Text variant="text" color="black60">
-            {fair.formattedOpeningHours}
-          </Text>
-        </Col>
+      <Grid>
+        <Row>
+          <Col sm="6">
+            <Text as="h1" variant="largeTitle">
+              {fair.name}
+            </Text>
+            <Text variant="text" color="black60">
+              {fair.formattedOpeningHours}
+            </Text>
+          </Col>
 
-        <Col sm="6" mt={[3, 0]}>
-          <Text variant="subtitle" lineHeight="body">
-            {previewText}
-          </Text>
+          <Col sm="6" mt={[3, 0]}>
+            <Text variant="subtitle" lineHeight="body">
+              {previewText}
+            </Text>
 
-          {canShowMoreInfoLink && (
-            <ForwardLink
-              linkText="More info"
-              path={`/fair2/${fair.slug}/info`}
-            />
-          )}
-        </Col>
-      </Row>
+            {canShowMoreInfoLink && (
+              <ForwardLink
+                linkText="More info"
+                path={`/fair2/${fair.slug}/info`}
+              />
+            )}
+          </Col>
+        </Row>
+      </Grid>
     </>
   )
 }
