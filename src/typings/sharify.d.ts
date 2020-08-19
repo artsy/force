@@ -71,6 +71,7 @@ declare module "sharify" {
       MARKETING_SIGNUP_MODALS: any
       MARKETING_SIGNUP_MODALS: any[]
       PAGE_TYPE?: string
+      PARTNER_NEW_LAYOUT?: boolean
       PATHS?: any // JSONPage
       PC_ARTSY_CHANNEL: string
       PC_AUCTION_CHANNEL: string

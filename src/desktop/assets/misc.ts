@@ -1,8 +1,12 @@
 import $ from "jquery"
 import qs from "qs"
+// FIXME: not sure why we require jquery/blueimp packages
+require("jquery-ui")
+require("blueimp-file-upload")
+require("jquery.iframe-transport")
 
 const routes = {
-  "/about"() {
+  "/about": () => {
     require("../apps/about/client/index.coffee").init()
     require("../apps/about/client/easter_egg.coffee")()
   },
@@ -20,7 +24,7 @@ const routes = {
   "/reset_password": require("../apps/authentication/client/reset_password.coffee")
     .init,
 
-  "/works-for-you"() {
+  "/works-for-you": () => {
     require("../apps/notifications/client/index.coffee").init()
     const { artist, artist_id } = qs.parse(location.search.substring(1))
     require("../apps/notifications/client/react_grid.js").default.setupReactGrid(
