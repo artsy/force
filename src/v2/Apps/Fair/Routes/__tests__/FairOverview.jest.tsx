@@ -7,10 +7,59 @@ import { FairOverview_QueryRawResponse } from "v2/__generated__/FairOverview_Que
 
 jest.unmock("react-relay")
 
+const FAIR_OVERVIEW_FIXTURE: FairOverview_QueryRawResponse = {
+  fair: {
+    id: "fair12345",
+    about: "Lorem ipsum",
+    name: "Miart 2020",
+    formattedOpeningHours: "Closes in 12 days",
+    slug: "miart-2020",
+    image: {
+      cropped: {
+        src: "https://cloudfront.com/square.jpg",
+        width: 100,
+        height: 400,
+      },
+    },
+    tagline: "",
+    location: null,
+    ticketsLink: "",
+    hours: "",
+    links: "",
+    tickets: "<b>Tickets available today</b>",
+    contact: "<b>Contact us</b>",
+    summary: "This is the summary.",
+    articles: {
+      edges: [],
+    },
+  },
+}
+
+const FAIR_EDITORIAL_ARTICLE_FIXTURE = {
+  id: "QXJ0aWNsZTo1ZGE1ZTQ1YjQ2NzY5NDAwMjBkODI4NWM=",
+  title: "IFPDA Fine Art Print Fair 2019: Programming and Projects",
+  href:
+    "/article/ifpda-fine-art-print-fair-ifpda-fine-art-print-fair-2019-programming-projects",
+  author: { name: "IFPDA" },
+  thumbnailTitle: "IFPDA Fine Art Print Fair 2019: Programming and Projects",
+  thumbnailImage: {
+    _1x: {
+      width: 140,
+      height: 80,
+      src: "example.jpg",
+    },
+    _2x: {
+      width: 280,
+      height: 160,
+      src: "example.jpg",
+    },
+  },
+}
+
 describe("FairOverview", () => {
   const getWrapper = async (
     breakpoint: Breakpoint = "lg",
-    response: FairOverview_QueryRawResponse = FairOverviewFixture
+    response: FairOverview_QueryRawResponse = FAIR_OVERVIEW_FIXTURE
   ) => {
     return renderRelayTree({
       Component: ({ fair }) => {
@@ -38,29 +87,33 @@ describe("FairOverview", () => {
     const wrapper = await getWrapper()
     expect(wrapper.find("FairHeader").length).toBe(1)
   })
-})
 
-const FairOverviewFixture: FairOverview_QueryRawResponse = {
-  fair: {
-    id: "fair12345",
-    about: "Lorem ipsum",
-    name: "Miart 2020",
-    formattedOpeningHours: "Closes in 12 days",
-    slug: "miart-2020",
-    image: {
-      cropped: {
-        src: "https://cloudfront.com/square.jpg",
-        width: 100,
-        height: 400,
+  it("renders articles", async () => {
+    const wrapper = await getWrapper("lg", {
+      fair: {
+        ...FAIR_OVERVIEW_FIXTURE.fair,
+        articles: {
+          edges: [{ node: FAIR_EDITORIAL_ARTICLE_FIXTURE } as any],
+        },
       },
-    },
-    tagline: "",
-    location: null,
-    ticketsLink: "",
-    hours: "",
-    links: "",
-    tickets: "<b>Tickets available today</b>",
-    contact: "<b>Contact us</b>",
-    summary: "This is the summary.",
-  },
-}
+    })
+
+    const html = wrapper.html()
+
+    expect(html).toContain("Coverage by Artsy Editorial")
+    expect(html).toContain(
+      "IFPDA Fine Art Print Fair 2019: Programming and Projects"
+    )
+  })
+
+  it("does not render articles when they are missing", async () => {
+    const wrapper = await getWrapper()
+
+    const html = wrapper.html()
+
+    expect(html).not.toContain("Coverage by Artsy Editorial")
+    expect(html).not.toContain(
+      "IFPDA Fine Art Print Fair 2019: Programming and Projects"
+    )
+  })
+})
