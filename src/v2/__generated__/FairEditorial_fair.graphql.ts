@@ -3,19 +3,21 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type FairOverview_fair = {
+export type FairEditorial_fair = {
     readonly articles: {
         readonly edges: ReadonlyArray<{
-            readonly __typename: string;
+            readonly node: {
+                readonly id: string;
+                readonly " $fragmentRefs": FragmentRefs<"FairEditorialItem_article">;
+            } | null;
         } | null> | null;
     } | null;
-    readonly " $fragmentRefs": FragmentRefs<"FairHeader_fair" | "FairEditorial_fair">;
-    readonly " $refType": "FairOverview_fair";
+    readonly " $refType": "FairEditorial_fair";
 };
-export type FairOverview_fair$data = FairOverview_fair;
-export type FairOverview_fair$key = {
-    readonly " $data"?: FairOverview_fair$data;
-    readonly " $fragmentRefs": FragmentRefs<"FairOverview_fair">;
+export type FairEditorial_fair$data = FairEditorial_fair;
+export type FairEditorial_fair$key = {
+    readonly " $data"?: FairEditorial_fair$data;
+    readonly " $fragmentRefs": FragmentRefs<"FairEditorial_fair">;
 };
 
 
@@ -24,7 +26,7 @@ const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "FairOverview_fair",
+  "name": "FairEditorial_fair",
   "selections": [
     {
       "alias": "articles",
@@ -56,8 +58,24 @@ const node: ReaderFragment = {
             {
               "alias": null,
               "args": null,
-              "kind": "ScalarField",
-              "name": "__typename",
+              "concreteType": "Article",
+              "kind": "LinkedField",
+              "name": "node",
+              "plural": false,
+              "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "id",
+                  "storageKey": null
+                },
+                {
+                  "args": null,
+                  "kind": "FragmentSpread",
+                  "name": "FairEditorialItem_article"
+                }
+              ],
               "storageKey": null
             }
           ],
@@ -65,19 +83,9 @@ const node: ReaderFragment = {
         }
       ],
       "storageKey": "articlesConnection(first:5,sort:\"PUBLISHED_AT_DESC\")"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "FairHeader_fair"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "FairEditorial_fair"
     }
   ],
   "type": "Fair"
 };
-(node as any).hash = '8dce1dedb0f8752c6ce2470813b42e17';
+(node as any).hash = '6c196cd86adf966b035c281f671b9c32';
 export default node;
