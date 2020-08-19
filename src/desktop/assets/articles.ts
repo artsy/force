@@ -1,4 +1,4 @@
-import { $ } from "backbone"
+import $ from "jquery"
 import { data as sd } from "sharify"
 
 $(() => {
