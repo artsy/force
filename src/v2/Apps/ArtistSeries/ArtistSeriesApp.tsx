@@ -12,6 +12,7 @@ import { userHasLabFeature } from "v2/Utils/user"
 import { ErrorPage } from "v2/Components/ErrorPage"
 import { ArtistSeriesRailFragmentContainer as OtherArtistSeriesRail } from "v2/Components/ArtistSeriesRail/ArtistSeriesRail"
 import { ArtistSeriesMetaFragmentContainer as ArtistSeriesMeta } from "./Components/ArtistSeriesMeta"
+import { LazyLoadComponent } from "react-lazy-load-image-component"
 
 interface ArtistSeriesAppProps {
   artistSeries: ArtistSeriesApp_artistSeries
@@ -31,11 +32,19 @@ const ArtistSeriesApp: React.FC<ArtistSeriesAppProps> = ({ artistSeries }) => {
         <Box m={3}>
           <ArtistSeriesArtworksFilter artistSeries={artistSeries} />
           <Separator mt={6} mb={3} />
-          {railArtist.length && (
-            <OtherArtistSeriesRail
-              artist={railArtist[0]}
-              title="More series by this artist"
-            />
+
+          {/* HOTFIX FIXME: This rail was causing an error if included in SSR render
+              pass and so it was deferred to the client.
+
+              See: https://github.com/artsy/force/pull/6137
+           */}
+          {railArtist.length && typeof window !== "undefined" && (
+            <LazyLoadComponent threshold={1000}>
+              <OtherArtistSeriesRail
+                artist={railArtist[0]}
+                title="More series by this artist"
+              />
+            </LazyLoadComponent>
           )}
           <Separator mt={6} mb={3} />
           <Footer />

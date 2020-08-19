@@ -19,6 +19,7 @@ import { data as sd } from "sharify"
 import truncate from "trunc-html"
 import { CollectionAppQuery } from "./CollectionAppQuery"
 import { CollectionsHubRailsContainer as CollectionsHubRails } from "./Components/CollectionsHubRails"
+import { LazyLoadComponent } from "react-lazy-load-image-component"
 
 import { BaseArtworkFilter } from "v2/Components/v2/ArtworkFilter"
 import {
@@ -164,18 +165,24 @@ export class CollectionApp extends Component<CollectionAppProps> {
                 </ArtworkFilterContextProvider>
               </Box>
 
-              {collection.linkedCollections.length === 0 && (
-                <>
-                  <Separator mt={6} mb={3} />
-                  <Box mt="3">
-                    <RelatedCollectionsRail
-                      collections={collection.relatedCollections}
-                      title={collection.title}
-                      lazyLoadImages
-                    />
-                  </Box>
-                </>
-              )}
+              {/* HOTFIX FIXME: This rail was causing an error if included in SSR render
+                  pass and so it was deferred to the client.
+
+                  See: https://github.com/artsy/force/pull/6137
+              */}
+              {collection.linkedCollections.length === 0 &&
+                typeof window !== "undefined" && (
+                  <LazyLoadComponent threshold={1000}>
+                    <Separator mt={6} mb={3} />
+                    <Box mt="3">
+                      <RelatedCollectionsRail
+                        collections={collection.relatedCollections}
+                        title={collection.title}
+                        lazyLoadImages
+                      />
+                    </Box>
+                  </LazyLoadComponent>
+                )}
             </FrameWithRecentlyViewed>
           </Box>
         </AppContainer>
