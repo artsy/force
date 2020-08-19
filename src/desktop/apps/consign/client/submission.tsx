@@ -166,6 +166,6 @@ function setupSubmissionFlow() {
   )
 }
 
-export default () => {
+export const init = () => {
   setupSubmissionFlow()
 }
