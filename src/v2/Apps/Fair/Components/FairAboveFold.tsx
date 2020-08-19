@@ -30,8 +30,13 @@ const FairAboveFold: React.FC<FairAboveFoldProps> = ({ fair, children }) => {
       )}
 
       <RouteTabs>
-        <RouteTab to={`/fair2/${fair.slug}`}>Exhibitors</RouteTab>
-        <RouteTab to={`/fair2/${fair.slug}/artworks`}>Artworks</RouteTab>
+        <RouteTab exact to={`/fair2/${fair.slug}`}>
+          Exhibitors
+        </RouteTab>
+
+        <RouteTab exact to={`/fair2/${fair.slug}/artworks`}>
+          Artworks
+        </RouteTab>
       </RouteTabs>
     </>
   )

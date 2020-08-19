@@ -1,28 +1,28 @@
 import { Text } from "@artsy/palette"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { FairOverview_fair } from "v2/__generated__/FairOverview_fair.graphql"
+import { FairArtworks_fair } from "v2/__generated__/FairArtworks_fair.graphql"
 import { FairAboveFoldFragmentContainer as FairAboveFold } from "../Components/FairAboveFold"
 
-interface FairOverviewProps {
-  fair: FairOverview_fair
+interface FairArtworksProps {
+  fair: FairArtworks_fair
 }
 
-const FairOverview: React.FC<FairOverviewProps> = ({ fair }) => {
+const FairArtworks: React.FC<FairArtworksProps> = ({ fair }) => {
   return (
     <>
       <FairAboveFold fair={fair} />
 
-      <Text mt={1}>Exhibitors</Text>
+      <Text mt={1}>Artworks</Text>
     </>
   )
 }
 
-export const FairOverviewFragmentContainer = createFragmentContainer(
-  FairOverview,
+export const FairArtworksFragmentContainer = createFragmentContainer(
+  FairArtworks,
   {
     fair: graphql`
-      fragment FairOverview_fair on Fair {
+      fragment FairArtworks_fair on Fair {
         ...FairAboveFold_fair
       }
     `,
@@ -30,4 +30,4 @@ export const FairOverviewFragmentContainer = createFragmentContainer(
 )
 
 // Top-level route needs to be exported for bundle splitting in the router
-export default FairOverviewFragmentContainer
+export default FairArtworksFragmentContainer

@@ -4,6 +4,7 @@ import { RouteConfig } from "found"
 
 const FairApp = loadable(() => import("./FairApp"))
 const FairOverviewRoute = loadable(() => import("./Routes/FairOverview"))
+const FairArtworksRoute = loadable(() => import("./Routes/FairArtworks"))
 const FairInfoRoute = loadable(() => import("./Routes/FairInfo"))
 
 export const routes: RouteConfig[] = [
@@ -31,6 +32,20 @@ export const routes: RouteConfig[] = [
           query routes_FairOverviewQuery($slug: String!) {
             fair(id: $slug) {
               ...FairOverview_fair
+            }
+          }
+        `,
+      },
+      {
+        path: "artworks",
+        getComponent: () => FairArtworksRoute,
+        prepare: () => {
+          FairArtworksRoute.preload()
+        },
+        query: graphql`
+          query routes_FairArtworksQuery($slug: String!) {
+            fair(id: $slug) {
+              ...FairArtworks_fair
             }
           }
         `,
