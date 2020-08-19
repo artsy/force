@@ -8,11 +8,11 @@ import {
   space,
 } from "@artsy/palette"
 import { ArrowButton, Carousel } from "v2/Components/Carousel"
-import { Link, LinkProps } from "found"
 import React from "react"
 import styled from "styled-components"
 import { left, right } from "styled-system"
 import { Media } from "v2/Utils/Responsive"
+import { RouterLink, RouterLinkProps } from "v2/Artsy/Router/RouterLink"
 
 export const RouteTabs = styled(TabsContainer)`
   width: 100%;
@@ -33,16 +33,16 @@ export const RouteTabs = styled(TabsContainer)`
   }
 `
 
-export const RouteTab: React.FC<Omit<LinkProps, "ref">> = ({
+export const RouteTab: React.FC<Omit<RouterLinkProps, "ref">> = ({
   children,
   ...props
 }) => {
   return (
-    <Link {...props} activeClassName="active">
+    <RouterLink {...props} activeClassName="active">
       <Sans size="3t" weight="medium">
         {children}
       </Sans>
-    </Link>
+    </RouterLink>
   )
 }
 
