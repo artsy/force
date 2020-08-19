@@ -5,7 +5,7 @@ $(() => {
   if (location.pathname === "/articles") {
     return require("../apps/articles/client/magazine.coffee").init()
   } else if (location.pathname === "/news") {
-    return require("../apps/articles/client/news.js").init()
+    return require("../apps/articles/client/news")
   } else if (
     location.pathname ===
     "/" + (sd.SECTION != null ? sd.SECTION.slug : undefined)
