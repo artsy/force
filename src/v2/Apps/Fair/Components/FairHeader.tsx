@@ -54,20 +54,22 @@ const FairHeader: React.FC<FairHeaderProps> = ({ fair }) => {
   return (
     <>
       <Spacer mb="2" />
-      <Flex
-        alignItems="center"
-        justifyContent="center"
-        style={{ position: "relative" }}
-      >
-        <ResponsiveImage
-          aspectWidth={img.width}
-          aspectHeight={img.height}
-          maxWidth={375}
-          bg="black10"
+      {img && (
+        <Flex
+          alignItems="center"
+          justifyContent="center"
+          style={{ position: "relative" }}
         >
-          <img src={img.src} alt={fair.name} />
-        </ResponsiveImage>
-      </Flex>
+          <ResponsiveImage
+            aspectWidth={img.width}
+            aspectHeight={img.height}
+            maxWidth={375}
+            bg="black10"
+          >
+            <img src={img.src} alt={fair.name} />
+          </ResponsiveImage>
+        </Flex>
+      )}
 
       <Spacer mb="2" />
 
