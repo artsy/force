@@ -9,11 +9,9 @@ import {
 import { graphql } from "relay-runtime"
 import Waypoint from "react-waypoint"
 import { Item } from "./Item"
-import { MessageFragmentContainer as Message } from "./Message"
 import { Reply } from "./Reply"
-import { TimeSince, fromToday } from "./TimeSince"
+import { ConversationMessagesFragmentContainer as ConversationMessages } from "./ConversationMessages"
 import { UpdateConversation } from "../Mutation/UpdateConversationMutation"
-import { groupMessages } from "../Utils/groupMessages"
 import styled from "styled-components"
 
 export interface ConversationProps {
@@ -45,7 +43,7 @@ const Conversation: React.FC<ConversationProps> = props => {
     }
   }
 
-  useEffect(scrollToBottom, [conversation])
+  useEffect(scrollToBottom, [conversation, lastMessageID])
 
   useEffect(() => {
     UpdateConversation(relay.environment, conversation)
@@ -85,45 +83,6 @@ const Conversation: React.FC<ConversationProps> = props => {
     })
   }
 
-  const messageGroups = groupMessages(
-    conversation.messagesConnection.edges.map(edge => edge.node)
-  ).map((messageGroup, groupIndex) => {
-    const today = fromToday(messageGroup[0].createdAt)
-    return (
-      <React.Fragment key={`group-${groupIndex}-${messageGroup[0].internalID}`}>
-        <TimeSince
-          style={{ alignSelf: "center" }}
-          time={messageGroup[0].createdAt}
-          exact
-          mb={1}
-        />
-        {messageGroup.map((message, messageIndex) => {
-          const nextMessage = messageGroup[messageIndex + 1]
-          const senderChanges =
-            nextMessage && nextMessage.isFromUser !== message.isFromUser
-          const lastMessageInGroup = messageIndex === messageGroup.length - 1
-          const spaceAfter = senderChanges || lastMessageInGroup ? 2 : 0.5
-
-          return (
-            <>
-              <Message
-                message={message}
-                initialMessage={conversation.initialMessage}
-                key={message.internalID}
-                showTimeSince={
-                  message.createdAt &&
-                  today &&
-                  messageGroup.length - 1 === messageIndex
-                }
-              />
-              <Spacer mb={spaceAfter} />
-            </>
-          )
-        })}
-      </React.Fragment>
-    )
-  })
-
   return (
     <NoScrollFlex flexDirection="column" width="100%">
       <MessageContainer ref={scrollContainer}>
@@ -137,7 +96,7 @@ const Conversation: React.FC<ConversationProps> = props => {
                 <Spinner />
               </SpinnerContainer>
             ) : null}
-            {messageGroups}
+            <ConversationMessages messages={conversation.messagesConnection} />
             <Box ref={bottomOfPage}></Box>
           </Flex>
         </Box>
@@ -200,12 +159,9 @@ export const ConversationPaginationContainer = createPaginationContainer(
           edges {
             node {
               id
-              internalID
-              createdAt
-              isFromUser
-              ...Message_message
             }
           }
+          ...ConversationMessages_messages
         }
         items {
           item {
