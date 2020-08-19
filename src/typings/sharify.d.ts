@@ -62,7 +62,7 @@ declare module "sharify" {
       ARTSY_EDITORIAL_CHANNEL: string
       ARTSY_XAPP_TOKEN: string
       CSRF_TOKEN: string
-      CHANNEL?: { slug?: string }
+      CHANNEL?: { slug?: string } // Articles
       GALLERY_INSIGHTS_CHANNEL: string
       INTERCOM_BUYER_APP_ID: string
       INTERCOM_BUYER_ENABLED: boolean
@@ -71,6 +71,7 @@ declare module "sharify" {
       MARKETING_SIGNUP_MODALS: any
       MARKETING_SIGNUP_MODALS: any[]
       PAGE_TYPE?: string
+      PATHS?: any // JSONPage
       PC_ARTSY_CHANNEL: string
       PC_AUCTION_CHANNEL: string
       POSITRON_URL: string
