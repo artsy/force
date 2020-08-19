@@ -68,14 +68,24 @@ const FairHeader: React.FC<FairHeaderProps> = ({ fair }) => {
           <img src={img.src} alt={fair.name} />
         </ResponsiveImage>
       </Flex>
+
       <Spacer mb="2" />
+
       <Row>
         <Col sm="6">
-          <Text variant="largeTitle">{fair.name}</Text>
-          <Text variant="caption">{fair.formattedOpeningHours}</Text>
+          <Text as="h1" variant="largeTitle">
+            {fair.name}
+          </Text>
+          <Text variant="text" color="black60">
+            {fair.formattedOpeningHours}
+          </Text>
         </Col>
+
         <Col sm="6" mt={[3, 0]}>
-          <Text variant="text">{previewText}</Text>
+          <Text variant="subtitle" lineHeight="body">
+            {previewText}
+          </Text>
+
           {canShowMoreInfoLink && (
             <ForwardLink
               linkText="More info"
