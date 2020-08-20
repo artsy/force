@@ -153,6 +153,7 @@ const defaultWorks: Works_Test_QueryRawResponse = {
         {
           node: {
             internalID: "id",
+            featured: true,
             slug: "aardvark",
             artworksCountMessage: "20 available",
             image: {

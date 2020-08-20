@@ -1,4 +1,4 @@
-import { ContextModule } from "@artsy/cohesion"
+import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { Box, Join, Spacer } from "@artsy/palette"
 import { OtherWorks_artwork } from "v2/__generated__/OtherWorks_artwork.graphql"
 import { OtherAuctionsQueryRenderer as OtherAuctions } from "v2/Apps/Artwork/Components/OtherAuctions"
@@ -81,7 +81,14 @@ const contextGridTypeToV2ContextModule = contextGridType => {
 
 export const OtherWorks = track()(
   (props: { artwork: OtherWorks_artwork } & SystemContextProps) => {
-    const { context, contextGrids, sale, seriesArtist } = props.artwork
+    const {
+      context,
+      contextGrids,
+      sale,
+      seriesArtist,
+      internalID,
+      slug,
+    } = props.artwork
     const gridsToShow = populatedGrids(contextGrids)
     const tracking = useTracking()
     const { user } = React.useContext(SystemContext)
@@ -104,6 +111,10 @@ export const OtherWorks = track()(
                         <ArtistSeriesRail
                           artist={seriesArtist}
                           title="More series by this artist"
+                          contextPageOwnerId={internalID}
+                          contextPageOwnerSlug={slug}
+                          contextModule={ContextModule.moreSeriesByThisArtist}
+                          contextPageOwnerType={OwnerType.artwork}
                         />
                       </>
                     )}

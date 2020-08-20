@@ -6,6 +6,8 @@ import { FragmentRefs } from "relay-runtime";
 export type ArtistSeriesItem_artistSeries = {
     readonly title: string;
     readonly slug: string;
+    readonly featured: boolean;
+    readonly internalID: string;
     readonly artworksCountMessage: string | null;
     readonly image: {
         readonly cropped: {
@@ -40,6 +42,20 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "ScalarField",
       "name": "slug",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "featured",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "internalID",
       "storageKey": null
     },
     {
@@ -92,5 +108,5 @@ const node: ReaderFragment = {
   ],
   "type": "ArtistSeries"
 };
-(node as any).hash = '83b709bc2e8b51ce5b2289aeedf6710e';
+(node as any).hash = 'dd16a02dadf75db6aa6584c5ae692a35';
 export default node;

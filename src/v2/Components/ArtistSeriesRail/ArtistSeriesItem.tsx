@@ -4,21 +4,59 @@ import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
+import {
+  ContextModule,
+  PageOwnerType,
+  clickedArtistSeriesGroup,
+} from "@artsy/cohesion"
+import { useTracking } from "react-tracking"
 
 interface Props {
   artistSeries: ArtistSeriesItem_artistSeries
   lazyLoad: boolean
+  contextPageOwnerId: string
+  contextPageOwnerSlug: string
+  contextModule: ContextModule
+  contextPageOwnerType: PageOwnerType
+  index: number
 }
 
 export const ArtistSeriesItem: React.SFC<Props> = props => {
   const {
-    artistSeries: { slug, title, image, artworksCountMessage },
+    contextPageOwnerId,
+    contextPageOwnerSlug,
+    contextModule,
+    contextPageOwnerType,
+    index,
+    artistSeries: {
+      internalID,
+      slug,
+      title,
+      image,
+      artworksCountMessage,
+      featured,
+    },
     lazyLoad,
   } = props
+  const { trackEvent } = useTracking()
 
+  const onClick = () => {
+    trackEvent(
+      clickedArtistSeriesGroup({
+        contextModule,
+        contextPageOwnerType,
+        destinationPageOwnerId: internalID,
+        destinationPageOwnerSlug: slug,
+        contextPageOwnerId,
+        contextPageOwnerSlug,
+        horizontalSlidePosition: index,
+        curationBoost: featured,
+      })
+    )
+  }
   return (
     <Box pr={2}>
-      <StyledLink to={`/artist-series/${slug}`}>
+      <StyledLink onClick={onClick} to={`/artist-series/${slug}`}>
         <SeriesImage
           src={image.cropped.url}
           alt={title}
@@ -65,6 +103,8 @@ export const ArtistSeriesItemFragmentContainer = createFragmentContainer(
       fragment ArtistSeriesItem_artistSeries on ArtistSeries {
         title
         slug
+        featured
+        internalID
         artworksCountMessage
         image {
           cropped(width: 160, height: 160) {

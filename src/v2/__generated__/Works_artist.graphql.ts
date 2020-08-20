@@ -6,6 +6,7 @@ import { FragmentRefs } from "relay-runtime";
 export type ArtworkAggregation = "COLOR" | "DIMENSION_RANGE" | "FOLLOWED_ARTISTS" | "GALLERY" | "INSTITUTION" | "MAJOR_PERIOD" | "MEDIUM" | "MERCHANDISABLE_ARTISTS" | "PARTNER_CITY" | "PERIOD" | "PRICE_RANGE" | "TOTAL" | "%future added value";
 export type Works_artist = {
     readonly internalID: string;
+    readonly slug: string;
     readonly related: {
         readonly artistsConnection: {
             readonly edges: ReadonlyArray<{
@@ -183,6 +184,13 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "internalID",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "slug",
       "storageKey": null
     },
     {
@@ -420,5 +428,5 @@ return {
   "type": "Artist"
 };
 })();
-(node as any).hash = '1d0b76b4072c686cc173b58c5382b61a';
+(node as any).hash = '5c33e785a766d33773ba50aeccae13a5';
 export default node;

@@ -196,6 +196,8 @@ describe("ArtistSeriesApp", () => {
 
 const ArtistSeriesAppFixture: ArtistSeriesApp_QueryRawResponse = {
   artistSeries: {
+    slug: "slug",
+    internalID: "internal-id",
     railArtist: [
       {
         id: "yayoi-kusama",
@@ -212,6 +214,7 @@ const ArtistSeriesAppFixture: ArtistSeriesApp_QueryRawResponse = {
                   },
                 },
                 title: "Aardvark Series",
+                featured: true,
               },
             },
           ],
