@@ -33,7 +33,7 @@ const DETAIL_BOX_MD_ANIMATION = `transition: transform 0.3s;`
 // in XS/S/M screens transition is animated with `opacity`. z-index: -1 is also needed when showDetail is false
 // in XL screen it is animated with `width` because animation needs to push the mid column content
 // in L screens it is animated with `translate` for better performance (than `width`)
-const DetailsContainer = styled(Flex)<{ opacity?: 0 | 1; transform?: string }>`
+const DetailsContainer = styled(Flex)<{ transform?: string }>`
   border-left: 1px solid ${color("black10")};
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   background-color: ${color("white100")};
@@ -47,7 +47,7 @@ const DetailsContainer = styled(Flex)<{ opacity?: 0 | 1; transform?: string }>`
   ${media.md`
     ${DETAIL_BOX_XS_ANIMATION}
     transform: none;
-    opacity: ${({ opacity }: { opacity?: 0 | 1 }) => opacity};
+    opacity: ${({ opacity }) => opacity};
     top: 114px;
     position: fixed;
     ${zIndex}
@@ -125,6 +125,14 @@ export const Details: FC<DetailsProps> = ({
     return "100%"
   }
 
+  const getDetailsContainerOpacity = (): number => {
+    // opacity 0 is only needed on xs/sm/md screen for fade in/out
+    if (width < parseInt(breakpoints.md, 10) && !showDetails) {
+      return 0
+    }
+    return 1
+  }
+
   return (
     <DetailsContainer
       flexDirection="column"
@@ -140,7 +148,7 @@ export const Details: FC<DetailsProps> = ({
       position={["fixed", "fixed", "fixed", "fixed", "static"]}
       right={[0, 0, 0, 0, "auto"]}
       width={getDetailsContainerWidth()}
-      opacity={showDetails ? 1 : (0 as any)}
+      opacity={getDetailsContainerOpacity()}
       transform={showDetails ? "translateX(0)" : "translateX(376px)"}
       zIndex={showDetails ? 1 : -1}
       {...props}
