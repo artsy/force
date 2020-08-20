@@ -13,6 +13,7 @@ import { ErrorPage } from "v2/Components/ErrorPage"
 import { ArtistSeriesRailFragmentContainer as OtherArtistSeriesRail } from "v2/Components/ArtistSeriesRail/ArtistSeriesRail"
 import { ArtistSeriesMetaFragmentContainer as ArtistSeriesMeta } from "./Components/ArtistSeriesMeta"
 import { LazyLoadComponent } from "react-lazy-load-image-component"
+import { ContextModule, OwnerType } from "@artsy/cohesion"
 
 interface ArtistSeriesAppProps {
   artistSeries: ArtistSeriesApp_artistSeries
@@ -23,7 +24,7 @@ const ArtistSeriesApp: React.FC<ArtistSeriesAppProps> = ({ artistSeries }) => {
   const isEnabled = userHasLabFeature(user, "Artist Series")
 
   if (isEnabled && artistSeries) {
-    const { railArtist } = artistSeries
+    const { railArtist, internalID, slug } = artistSeries
     return (
       <AppContainer maxWidth="100%">
         {/* NOTE: react-head automatically moves these tags to the <head> element */}
@@ -44,6 +45,10 @@ const ArtistSeriesApp: React.FC<ArtistSeriesAppProps> = ({ artistSeries }) => {
                 <OtherArtistSeriesRail
                   artist={railArtist[0]}
                   title="More series by this artist"
+                  contextPageOwnerId={internalID}
+                  contextPageOwnerSlug={slug}
+                  contextModule={ContextModule.moreSeriesByThisArtist}
+                  contextPageOwnerType={OwnerType.artistSeries}
                 />
               </LazyLoadComponent>
             )}
@@ -86,6 +91,8 @@ export default createFragmentContainer(ArtistSeriesApp, {
       railArtist: artists(size: 1) {
         ...ArtistSeriesRail_artist
       }
+      internalID
+      slug
       ...ArtistSeriesArtworksFilter_artistSeries
         @arguments(
           acquireable: $acquireable

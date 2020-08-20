@@ -10,6 +10,7 @@ import { ArtistTopWorksRailFragmentContainer as ArtistTopWorksRail } from "v2/Ap
 import { ArtistSeriesRailFragmentContainer as ArtistSeriesRail } from "v2/Components/ArtistSeriesRail/ArtistSeriesRail"
 import { SystemContext } from "v2/Artsy"
 import { userHasLabFeature } from "v2/Utils/user"
+import { ContextModule, OwnerType } from "@artsy/cohesion"
 
 export interface WorksRouteProps {
   artist: Works_artist
@@ -17,7 +18,7 @@ export interface WorksRouteProps {
 
 export const WorksRoute: React.FC<WorksRouteProps> = props => {
   const { artist } = props
-  const { sidebarAggregations } = artist
+  const { sidebarAggregations, internalID, slug } = artist
 
   const isClient = typeof window !== "undefined"
   const showRecommendations =
@@ -35,7 +36,13 @@ export const WorksRoute: React.FC<WorksRouteProps> = props => {
 
       <Box>
         {artistSeriesIsEnabled ? (
-          <ArtistSeriesRail artist={artist} />
+          <ArtistSeriesRail
+            artist={artist}
+            contextPageOwnerId={internalID}
+            contextPageOwnerSlug={slug}
+            contextModule={ContextModule.artistSeriesRail}
+            contextPageOwnerType={OwnerType.artist}
+          />
         ) : (
           <ArtistCollectionsRail artistID={artist.internalID} />
         )}
@@ -90,6 +97,7 @@ export const WorksRouteFragmentContainer = createFragmentContainer(WorksRoute, {
         shouldFetchArtistSeriesData: { type: "Boolean!", defaultValue: false }
       ) {
       internalID
+      slug
       ...ArtistTopWorksRail_artist
       ...ArtistSeriesRail_artist @include(if: $shouldFetchArtistSeriesData)
       related {

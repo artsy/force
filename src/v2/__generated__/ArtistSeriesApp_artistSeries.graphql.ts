@@ -7,6 +7,8 @@ export type ArtistSeriesApp_artistSeries = {
     readonly railArtist: ReadonlyArray<{
         readonly " $fragmentRefs": FragmentRefs<"ArtistSeriesRail_artist">;
     } | null> | null;
+    readonly internalID: string;
+    readonly slug: string;
     readonly " $fragmentRefs": FragmentRefs<"ArtistSeriesMeta_artistSeries" | "ArtistSeriesHeader_artistSeries" | "ArtistSeriesArtworksFilter_artistSeries">;
     readonly " $refType": "ArtistSeriesApp_artistSeries";
 };
@@ -156,6 +158,20 @@ const node: ReaderFragment = {
       "storageKey": "artists(size:1)"
     },
     {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "internalID",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "slug",
+      "storageKey": null
+    },
+    {
       "args": null,
       "kind": "FragmentSpread",
       "name": "ArtistSeriesMeta_artistSeries"
@@ -264,5 +280,5 @@ const node: ReaderFragment = {
   ],
   "type": "ArtistSeries"
 };
-(node as any).hash = 'e6ae31c94c81b91b73fceab1eaaf91f3';
+(node as any).hash = '71b0fb4cab691979230c3f7679f16fcd';
 export default node;

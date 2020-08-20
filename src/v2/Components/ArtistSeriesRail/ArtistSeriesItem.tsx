@@ -4,21 +4,59 @@ import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
+import {
+  ContextModule,
+  PageOwnerType,
+  clickedArtistSeriesGroup,
+} from "@artsy/cohesion"
+import { useTracking } from "v2/Artsy/Analytics/useTracking"
 
 interface Props {
   artistSeries: ArtistSeriesItem_artistSeries
   lazyLoad: boolean
+  contextPageOwnerId: string
+  contextPageOwnerSlug: string
+  contextModule: ContextModule
+  contextPageOwnerType: PageOwnerType
+  index: number
 }
 
 export const ArtistSeriesItem: React.SFC<Props> = props => {
   const {
-    artistSeries: { slug, title, image, artworksCountMessage },
+    contextPageOwnerId,
+    contextPageOwnerSlug,
+    contextModule,
+    contextPageOwnerType,
+    index,
+    artistSeries: {
+      internalID,
+      slug,
+      title,
+      image,
+      artworksCountMessage,
+      featured,
+    },
     lazyLoad,
   } = props
+  const { trackEvent } = useTracking()
 
+  const onClick = () => {
+    trackEvent(
+      clickedArtistSeriesGroup({
+        contextModule,
+        contextPageOwnerType,
+        destinationPageOwnerId: internalID,
+        destinationPageOwnerSlug: slug,
+        contextPageOwnerId,
+        contextPageOwnerSlug,
+        horizontalSlidePosition: index,
+        curationBoost: featured,
+      })
+    )
+  }
   return (
     <Box border="1px solid" borderColor="black10" borderRadius="2px">
-      <StyledLink to={`/artist-series/${slug}`}>
+      <StyledLink onClick={onClick} to={`/artist-series/${slug}`}>
         <SeriesImage
           src={image.cropped.url}
           alt={title}
@@ -42,7 +80,7 @@ const SeriesTitle = styled(Sans)`
   width: max-content;
 `
 
-const StyledLink = styled(RouterLink)`
+export const StyledLink = styled(RouterLink)`
   text-decoration: none;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 
@@ -65,6 +103,8 @@ export const ArtistSeriesItemFragmentContainer = createFragmentContainer(
       fragment ArtistSeriesItem_artistSeries on ArtistSeries {
         title
         slug
+        featured
+        internalID
         artworksCountMessage
         image {
           # Fetch double the px for retina display

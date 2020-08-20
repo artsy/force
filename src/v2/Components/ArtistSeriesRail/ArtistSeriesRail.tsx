@@ -6,15 +6,26 @@ import styled from "styled-components"
 import { getENV } from "v2/Utils/getENV"
 import { ArtistSeriesRail_artist } from "v2/__generated__/ArtistSeriesRail_artist.graphql"
 import { ArtistSeriesItemFragmentContainer as ArtistSeriesItem } from "./ArtistSeriesItem"
+import { ContextModule, PageOwnerType } from "@artsy/cohesion"
 
 interface Props {
   artist: ArtistSeriesRail_artist
   title?: string
+  contextPageOwnerId: string
+  contextPageOwnerSlug: string
+  contextModule: ContextModule
+  contextPageOwnerType: PageOwnerType
 }
 
 const ArtistSeriesRail: React.SFC<Props> = props => {
   const isMobile = getENV("IS_MOBILE") === true
-  const { artist } = props
+  const {
+    artist,
+    contextPageOwnerId,
+    contextPageOwnerSlug,
+    contextModule,
+    contextPageOwnerType,
+  } = props
 
   if (!artist) return null
 
@@ -41,7 +52,15 @@ const ArtistSeriesRail: React.SFC<Props> = props => {
               const { node } = slide
               return (
                 <Box mr={5} ml={isMobile && index === 0 ? 2 : 0}>
-                  <ArtistSeriesItem lazyLoad={index > 5} artistSeries={node} />
+                  <ArtistSeriesItem
+                    contextPageOwnerSlug={contextPageOwnerSlug}
+                    contextPageOwnerId={contextPageOwnerId}
+                    lazyLoad={index > 5}
+                    artistSeries={node}
+                    index={index}
+                    contextModule={contextModule}
+                    contextPageOwnerType={contextPageOwnerType}
+                  />
                 </Box>
               )
             }}

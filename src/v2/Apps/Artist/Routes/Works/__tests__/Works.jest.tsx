@@ -8,7 +8,9 @@ import { graphql } from "react-relay"
 import { Breakpoint } from "v2/Utils/Responsive"
 import { ArtistTopWorksRailFragmentContainer as ArtistTopWorksRail } from "v2/Apps/Artist/Components/ArtistTopWorksRail/ArtistTopWorksRail"
 import { userHasLabFeature } from "v2/Utils/user"
+import { useTracking } from "v2/Artsy/Analytics/useTracking"
 
+jest.mock("v2/Artsy/Analytics/useTracking")
 jest.unmock("react-relay")
 
 // Mocking the ArtworkCollectionsRail component because it is tested elsewhere
@@ -27,6 +29,15 @@ jest.mock(
 )
 
 describe("Works Route", () => {
+  let trackEvent
+  beforeEach(() => {
+    trackEvent = jest.fn()
+    ;(useTracking as jest.Mock).mockImplementation(() => {
+      return {
+        trackEvent,
+      }
+    })
+  })
   let wrapper: ReactWrapper
 
   const getWrapper = async (
@@ -153,6 +164,7 @@ const defaultWorks: Works_Test_QueryRawResponse = {
         {
           node: {
             internalID: "id",
+            featured: true,
             slug: "aardvark",
             artworksCountMessage: "20 available",
             image: {

@@ -8,11 +8,24 @@ import { ArtistSeriesArtworkRail } from "../OtherWorks/ArtistSeriesArtworkRail"
 import { ArtistSeriesRailFragmentContainer as ArtistSeriesRail } from "v2/Components/ArtistSeriesRail/ArtistSeriesRail"
 import { ArtistSeriesItemFragmentContainer as ArtistSeriesItem } from "v2/Components/ArtistSeriesRail/ArtistSeriesItem"
 import { MockBoot } from "v2/DevTools"
+import { useTracking } from "v2/Artsy/Analytics/useTracking"
+
+jest.mock("v2/Artsy/Analytics/useTracking")
 
 describe("OtherWorks", () => {
   let genericOtherWorksData
 
   beforeEach(() => {
+    let trackEvent
+    beforeEach(() => {
+      trackEvent = jest.fn()
+      ;(useTracking as jest.Mock).mockImplementation(() => {
+        return {
+          trackEvent,
+        }
+      })
+    })
+
     genericOtherWorksData = {
       contextGrids: null,
       context: {

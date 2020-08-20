@@ -6,7 +6,9 @@ import { ArtistSeriesApp_QueryRawResponse } from "v2/__generated__/ArtistSeriesA
 import { ArtistSeriesApp_UnfoundTest_QueryRawResponse } from "v2/__generated__/ArtistSeriesApp_UnfoundTest_Query.graphql"
 import { Breakpoint } from "@artsy/palette"
 import { HeaderImage } from "../Components/ArtistSeriesHeader"
+import { useTracking } from "v2/Artsy/Analytics/useTracking"
 
+jest.mock("v2/Artsy/Analytics/useTracking")
 jest.unmock("react-relay")
 jest.mock("v2/Artsy/Router/useRouter", () => ({
   useRouter: () => ({
@@ -20,6 +22,15 @@ jest.mock("v2/Artsy/Router/useRouter", () => ({
 }))
 
 describe("ArtistSeriesApp", () => {
+  let trackEvent
+  beforeEach(() => {
+    trackEvent = jest.fn()
+    ;(useTracking as jest.Mock).mockImplementation(() => {
+      return {
+        trackEvent,
+      }
+    })
+  })
   let slug = "pumpkins"
 
   describe("with a user who has the Artist Series lab feature", () => {
@@ -196,6 +207,8 @@ describe("ArtistSeriesApp", () => {
 
 const ArtistSeriesAppFixture: ArtistSeriesApp_QueryRawResponse = {
   artistSeries: {
+    slug: "slug",
+    internalID: "internal-id",
     railArtist: [
       {
         id: "yayoi-kusama",
@@ -212,6 +225,7 @@ const ArtistSeriesAppFixture: ArtistSeriesApp_QueryRawResponse = {
                   },
                 },
                 title: "Aardvark Series",
+                featured: true,
               },
             },
           ],
