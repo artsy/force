@@ -80,7 +80,7 @@ const SeriesTitle = styled(Sans)`
   width: max-content;
 `
 
-const StyledLink = styled(RouterLink)`
+export const StyledLink = styled(RouterLink)`
   text-decoration: none;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 
