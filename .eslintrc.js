@@ -6,6 +6,7 @@ module.exports = {
   plugins: [
     "react-hooks",
     "@typescript-eslint",
+    "styled-components-a11y",
     // TODO: Add support for Graphql
     /*, "graphql" */
   ],
@@ -15,6 +16,7 @@ module.exports = {
     "plugin:react-hooks/recommended",
     "plugin:@typescript-eslint/recommended",
     "prettier",
+    "plugin:styled-components-a11y/recommended",
   ],
   parserOptions: {
     ecmaFeatures: {
