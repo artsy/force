@@ -17,7 +17,6 @@ import { openAuthToFollowSave } from "v2/Utils/openAuthModal"
 import { ArtistSeriesHeader_artistSeries } from "v2/__generated__/ArtistSeriesHeader_artistSeries.graphql"
 import { useSystemContext } from "v2/Artsy"
 import { Intent } from "@artsy/cohesion"
-import { crop, resize } from "v2/Utils/resizer"
 import styled from "styled-components"
 import { unitlessBreakpoints } from "@artsy/palette"
 import { AppContainer } from "v2/Apps/Components/AppContainer"
@@ -127,8 +126,9 @@ const ArtistSeriesHeaderLarge: React.FC<ArtistSeriesHeaderProps> = props => {
                     {artworksCountMessage}
                   </Sans>
                 </Box>
-
-                <HTML variant="text" html={descriptionFormatted} />
+                <Box pr={[0, 2]}>
+                  <HTML variant="text" html={descriptionFormatted} />
+                </Box>
               </Flex>
             </Col>
             <Col sm={6}>
@@ -139,7 +139,7 @@ const ArtistSeriesHeaderLarge: React.FC<ArtistSeriesHeaderProps> = props => {
                 alignItems="center"
               >
                 {/** The max width for the image is ~600px, so we need that */}
-                <HeaderImage src={resize(image.url, { width: 1200 })} />
+                <HeaderImage src={image?.sm?.url} />
               </Box>
             </Col>
           </Row>
@@ -160,10 +160,7 @@ const ArtistSeriesHeaderSmall: React.FC<ArtistSeriesHeaderProps> = props => {
       </Box>
       <Separator />
       <Box m={3}>
-        <HeaderImage
-          src={crop(image.url, { height: 360, width: 360 })}
-          pb={1}
-        />
+        <HeaderImage src={image?.xs?.url} pb={1} />
         <Sans size="8" element="h1" my={1} unstable_trackIn>
           {title}
         </Sans>
@@ -201,6 +198,12 @@ export const ArtistSeriesHeaderFragmentContainer = createFragmentContainer(
         artworksCountMessage
         descriptionFormatted(format: HTML)
         image {
+          xs: cropped(height: 360, width: 360, version: "large") {
+            url
+          }
+          sm: resized(width: 1200, version: "normalized") {
+            url
+          }
           url
         }
         artists(size: 1) {
