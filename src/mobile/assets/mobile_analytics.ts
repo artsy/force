@@ -22,6 +22,5 @@ $(() =>
     require("../analytics/following.js")
     require("../analytics/save.js")
     require("../analytics/partners.js")
-    require("../analytics/personalize.js")
   })
 )
