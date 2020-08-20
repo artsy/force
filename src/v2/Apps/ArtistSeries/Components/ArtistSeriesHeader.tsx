@@ -4,7 +4,6 @@ import {
   Col,
   EntityHeader,
   Flex,
-  Grid,
   HTML,
   Image,
   Row,
@@ -18,9 +17,10 @@ import { openAuthToFollowSave } from "v2/Utils/openAuthModal"
 import { ArtistSeriesHeader_artistSeries } from "v2/__generated__/ArtistSeriesHeader_artistSeries.graphql"
 import { useSystemContext } from "v2/Artsy"
 import { Intent } from "@artsy/cohesion"
-import { resize } from "v2/Utils/resizer"
+import { crop, resize } from "v2/Utils/resizer"
 import styled from "styled-components"
 import { unitlessBreakpoints } from "@artsy/palette"
+import { AppContainer } from "v2/Apps/Components/AppContainer"
 
 interface ArtistSeriesHeaderProps {
   artistSeries: ArtistSeriesHeader_artistSeries
@@ -99,20 +99,19 @@ const ArtistSeriesHeaderLarge: React.FC<ArtistSeriesHeaderProps> = props => {
   } = props
   return (
     <>
-      <Flex
-        position="relative"
-        alignItems="center"
-        justifyContent="center"
-        p={2}
-      >
-        <Flex position="absolute" left={3}>
-          {artists.length && <ArtistInfo artist={artists[0]} />}
-        </Flex>
-        <Sans size="3">Series</Sans>
-      </Flex>
+      <Box m={3}>
+        <AppContainer>
+          <Flex alignItems="center" justifyContent="center" position="relative">
+            <Flex position="absolute" left={0}>
+              {artists.length && <ArtistInfo artist={artists[0]} />}
+            </Flex>
+            <Sans size="3">Series</Sans>
+          </Flex>
+        </AppContainer>
+      </Box>
       <Separator />
       <Box m={3}>
-        <StyledGrid>
+        <AppContainer>
           <Row>
             <Col sm={6}>
               <Flex
@@ -139,11 +138,12 @@ const ArtistSeriesHeaderLarge: React.FC<ArtistSeriesHeaderProps> = props => {
                 justifyContent="flex-end"
                 alignItems="center"
               >
-                <HeaderImage src={resize(image.url, { height: 400 })} />
+                {/** The max width for the image is ~600px, so we need that */}
+                <HeaderImage src={resize(image.url, { width: 1200 })} />
               </Box>
             </Col>
           </Row>
-        </StyledGrid>
+        </AppContainer>
       </Box>
     </>
   )
@@ -161,7 +161,7 @@ const ArtistSeriesHeaderSmall: React.FC<ArtistSeriesHeaderProps> = props => {
       <Separator />
       <Box m={3}>
         <HeaderImage
-          src={resize(image.url, { height: 180, width: 180 })}
+          src={crop(image.url, { height: 360, width: 360 })}
           pb={1}
         />
         <Sans size="8" element="h1" my={1} unstable_trackIn>
@@ -176,12 +176,6 @@ const ArtistSeriesHeaderSmall: React.FC<ArtistSeriesHeaderProps> = props => {
   )
 }
 
-const StyledGrid = styled(Grid)`
-  @media (max-width: ${unitlessBreakpoints.lg - 1}px) {
-    max-width: 100%;
-  }
-`
-
 export const HeaderImage = styled(Image)`
   border-radius: 2px;
 
@@ -193,7 +187,8 @@ export const HeaderImage = styled(Image)`
 
   @media (min-width: ${unitlessBreakpoints.sm}px) {
     max-height: 400px;
-    max-width: 100%;
+    width: 100%;
+    object-fit: cover;
   }
 `
 

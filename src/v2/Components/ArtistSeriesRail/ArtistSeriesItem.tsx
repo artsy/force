@@ -55,7 +55,7 @@ export const ArtistSeriesItem: React.SFC<Props> = props => {
     )
   }
   return (
-    <Box pr={2}>
+    <Box border="1px solid" borderColor="black10" borderRadius="2px">
       <StyledLink onClick={onClick} to={`/artist-series/${slug}`}>
         <SeriesImage
           src={image.cropped.url}
@@ -64,10 +64,10 @@ export const ArtistSeriesItem: React.SFC<Props> = props => {
           width={160}
           style={{ objectFit: "cover", objectPosition: "center" }}
         />
-        <Box mt={1} ml={1}>
+        <Box my={1} mx={2}>
           <SeriesTitle size={"3"}>{title}</SeriesTitle>
           <Spacer />
-          <Sans size={"3"} color={"black30"}>
+          <Sans size={"3"} color={"black60"}>
             {artworksCountMessage}
           </Sans>
         </Box>
@@ -107,7 +107,8 @@ export const ArtistSeriesItemFragmentContainer = createFragmentContainer(
         internalID
         artworksCountMessage
         image {
-          cropped(width: 160, height: 160) {
+          # Fetch double the px for retina display
+          cropped(width: 320, height: 320) {
             url
           }
         }
