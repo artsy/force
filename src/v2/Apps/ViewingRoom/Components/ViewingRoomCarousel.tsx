@@ -46,7 +46,7 @@ export const ViewingRoomCarousel: React.FC<ViewingRoomCarouselProps> = ({
             cellAlign: "center",
             draggable: showProgressBar,
             freeScroll: true,
-            groupCells: 1,
+            groupCells: "50%",
             pageDots: false,
           }}
           data={data}
