@@ -54,6 +54,8 @@ export const routes: RouteConfig[] = [
       },
     ],
   },
+  // NOTE: Nested sub-apps are mounted under the same top-level path as above.
+  // The root `path: ""` matches the `FairExhibitorsRoute`.
   {
     path: "/fair2/:slug",
     getComponent: () => FairSubApp,
