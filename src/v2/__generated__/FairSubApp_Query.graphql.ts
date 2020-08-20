@@ -16,6 +16,10 @@ export type FairSubApp_QueryRawResponse = {
         readonly id: string;
         readonly name: string | null;
         readonly slug: string;
+        readonly metaDescription: string | null;
+        readonly metaImage: ({
+            readonly src: string | null;
+        }) | null;
     }) | null;
 };
 export type FairSubApp_Query = {
@@ -36,10 +40,20 @@ query FairSubApp_Query(
   }
 }
 
+fragment FairMeta_fair on Fair {
+  name
+  slug
+  metaDescription: summary
+  metaImage: image {
+    src: url(version: "large_rectangle")
+  }
+}
+
 fragment FairSubApp_fair on Fair {
   id
   name
   slug
+  ...FairMeta_fair
 }
 */
 
@@ -119,6 +133,37 @@ return {
             "kind": "ScalarField",
             "name": "slug",
             "storageKey": null
+          },
+          {
+            "alias": "metaDescription",
+            "args": null,
+            "kind": "ScalarField",
+            "name": "summary",
+            "storageKey": null
+          },
+          {
+            "alias": "metaImage",
+            "args": null,
+            "concreteType": "Image",
+            "kind": "LinkedField",
+            "name": "image",
+            "plural": false,
+            "selections": [
+              {
+                "alias": "src",
+                "args": [
+                  {
+                    "kind": "Literal",
+                    "name": "version",
+                    "value": "large_rectangle"
+                  }
+                ],
+                "kind": "ScalarField",
+                "name": "url",
+                "storageKey": "url(version:\"large_rectangle\")"
+              }
+            ],
+            "storageKey": null
           }
         ],
         "storageKey": null
@@ -130,7 +175,7 @@ return {
     "metadata": {},
     "name": "FairSubApp_Query",
     "operationKind": "query",
-    "text": "query FairSubApp_Query(\n  $slug: String!\n) {\n  fair(id: $slug) {\n    ...FairSubApp_fair\n    id\n  }\n}\n\nfragment FairSubApp_fair on Fair {\n  id\n  name\n  slug\n}\n"
+    "text": "query FairSubApp_Query(\n  $slug: String!\n) {\n  fair(id: $slug) {\n    ...FairSubApp_fair\n    id\n  }\n}\n\nfragment FairMeta_fair on Fair {\n  name\n  slug\n  metaDescription: summary\n  metaImage: image {\n    src: url(version: \"large_rectangle\")\n  }\n}\n\nfragment FairSubApp_fair on Fair {\n  id\n  name\n  slug\n  ...FairMeta_fair\n}\n"
   }
 };
 })();

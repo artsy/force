@@ -7,6 +7,7 @@ import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
 import { Footer } from "v2/Components/Footer"
 import { ErrorPage } from "v2/Components/ErrorPage"
 import { BackLink } from "v2/Components/Links/BackLink"
+import { FairMetaFragmentContainer as FairMeta } from "./Components/FairMeta"
 
 interface FairAppProps {
   fair: FairSubApp_fair
@@ -17,6 +18,8 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
 
   return (
     <>
+      <FairMeta fair={fair} />
+
       <AppContainer>
         <HorizontalPadding>
           <BackLink my={3} to={`/fair2/${fair.slug}`}>
@@ -41,6 +44,7 @@ export default createFragmentContainer(FairApp, {
       id
       name
       slug
+      ...FairMeta_fair
     }
   `,
 })
