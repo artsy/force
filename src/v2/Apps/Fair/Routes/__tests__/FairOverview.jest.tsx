@@ -32,6 +32,14 @@ const FAIR_OVERVIEW_FIXTURE: FairOverview_QueryRawResponse = {
     articles: {
       edges: [],
     },
+    profile: {
+      id: "profile",
+      icon: {
+        cropped: {
+          src: "/path/to/cats.jpg",
+        },
+      },
+    },
   },
 }
 

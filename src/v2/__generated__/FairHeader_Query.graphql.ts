@@ -18,6 +18,14 @@ export type FairHeader_QueryRawResponse = {
         readonly formattedOpeningHours: string | null;
         readonly name: string | null;
         readonly slug: string;
+        readonly profile: ({
+            readonly icon: ({
+                readonly cropped: ({
+                    readonly src: string | null;
+                }) | null;
+            }) | null;
+            readonly id: string | null;
+        }) | null;
         readonly image: ({
             readonly cropped: ({
                 readonly src: string | null;
@@ -62,6 +70,14 @@ fragment FairHeader_fair on Fair {
   formattedOpeningHours
   name
   slug
+  profile {
+    icon {
+      cropped(width: 120, height: 120, version: "square140") {
+        src: url
+      }
+    }
+    id
+  }
   image {
     cropped(width: 750, height: 1000, version: "wide") {
       src: url
@@ -106,13 +122,20 @@ v2 = {
   "storageKey": null
 },
 v3 = {
+  "alias": "src",
+  "args": null,
+  "kind": "ScalarField",
+  "name": "url",
+  "storageKey": null
+},
+v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v4 = [
+v5 = [
   {
     "kind": "Literal",
     "name": "format",
@@ -191,6 +214,57 @@ return {
           {
             "alias": null,
             "args": null,
+            "concreteType": "Profile",
+            "kind": "LinkedField",
+            "name": "profile",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "Image",
+                "kind": "LinkedField",
+                "name": "icon",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": [
+                      {
+                        "kind": "Literal",
+                        "name": "height",
+                        "value": 120
+                      },
+                      {
+                        "kind": "Literal",
+                        "name": "version",
+                        "value": "square140"
+                      },
+                      {
+                        "kind": "Literal",
+                        "name": "width",
+                        "value": 120
+                      }
+                    ],
+                    "concreteType": "CroppedImageUrl",
+                    "kind": "LinkedField",
+                    "name": "cropped",
+                    "plural": false,
+                    "selections": [
+                      (v3/*: any*/)
+                    ],
+                    "storageKey": "cropped(height:120,version:\"square140\",width:120)"
+                  }
+                ],
+                "storageKey": null
+              },
+              (v4/*: any*/)
+            ],
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
             "concreteType": "Image",
             "kind": "LinkedField",
             "name": "image",
@@ -220,13 +294,7 @@ return {
                 "name": "cropped",
                 "plural": false,
                 "selections": [
-                  {
-                    "alias": "src",
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "url",
-                    "storageKey": null
-                  },
+                  (v3/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -263,7 +331,7 @@ return {
             "plural": false,
             "selections": [
               (v2/*: any*/),
-              (v3/*: any*/)
+              (v4/*: any*/)
             ],
             "storageKey": null
           },
@@ -276,33 +344,33 @@ return {
           },
           {
             "alias": null,
-            "args": (v4/*: any*/),
+            "args": (v5/*: any*/),
             "kind": "ScalarField",
             "name": "hours",
             "storageKey": "hours(format:\"HTML\")"
           },
           {
             "alias": null,
-            "args": (v4/*: any*/),
+            "args": (v5/*: any*/),
             "kind": "ScalarField",
             "name": "links",
             "storageKey": "links(format:\"HTML\")"
           },
           {
             "alias": null,
-            "args": (v4/*: any*/),
+            "args": (v5/*: any*/),
             "kind": "ScalarField",
             "name": "tickets",
             "storageKey": "tickets(format:\"HTML\")"
           },
           {
             "alias": null,
-            "args": (v4/*: any*/),
+            "args": (v5/*: any*/),
             "kind": "ScalarField",
             "name": "contact",
             "storageKey": "contact(format:\"HTML\")"
           },
-          (v3/*: any*/)
+          (v4/*: any*/)
         ],
         "storageKey": null
       }
@@ -313,7 +381,7 @@ return {
     "metadata": {},
     "name": "FairHeader_Query",
     "operationKind": "query",
-    "text": "query FairHeader_Query(\n  $slug: String!\n) {\n  fair(id: $slug) {\n    ...FairHeader_fair\n    id\n  }\n}\n\nfragment FairHeader_fair on Fair {\n  about\n  summary\n  formattedOpeningHours\n  name\n  slug\n  image {\n    cropped(width: 750, height: 1000, version: \"wide\") {\n      src: url\n      width\n      height\n    }\n  }\n  tagline\n  location {\n    summary\n    id\n  }\n  ticketsLink\n  hours(format: HTML)\n  links(format: HTML)\n  tickets(format: HTML)\n  contact(format: HTML)\n}\n"
+    "text": "query FairHeader_Query(\n  $slug: String!\n) {\n  fair(id: $slug) {\n    ...FairHeader_fair\n    id\n  }\n}\n\nfragment FairHeader_fair on Fair {\n  about\n  summary\n  formattedOpeningHours\n  name\n  slug\n  profile {\n    icon {\n      cropped(width: 120, height: 120, version: \"square140\") {\n        src: url\n      }\n    }\n    id\n  }\n  image {\n    cropped(width: 750, height: 1000, version: \"wide\") {\n      src: url\n      width\n      height\n    }\n  }\n  tagline\n  location {\n    summary\n    id\n  }\n  ticketsLink\n  hours(format: HTML)\n  links(format: HTML)\n  tickets(format: HTML)\n  contact(format: HTML)\n}\n"
   }
 };
 })();
