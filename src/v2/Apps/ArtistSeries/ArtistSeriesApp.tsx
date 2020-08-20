@@ -30,24 +30,26 @@ const ArtistSeriesApp: React.FC<ArtistSeriesAppProps> = ({ artistSeries }) => {
         <ArtistSeriesMeta artistSeries={artistSeries} />
         <ArtistSeriesHeader artistSeries={artistSeries} />
         <Box m={3}>
-          <ArtistSeriesArtworksFilter artistSeries={artistSeries} />
-          <Separator mt={6} mb={3} />
+          <AppContainer>
+            <ArtistSeriesArtworksFilter artistSeries={artistSeries} />
+            <Separator mt={6} mb={3} />
 
-          {/* HOTFIX FIXME: This rail was causing an error if included in SSR render
+            {/* HOTFIX FIXME: This rail was causing an error if included in SSR render
               pass and so it was deferred to the client.
 
               See: https://github.com/artsy/force/pull/6137
            */}
-          {railArtist.length && typeof window !== "undefined" && (
-            <LazyLoadComponent threshold={1000}>
-              <OtherArtistSeriesRail
-                artist={railArtist[0]}
-                title="More series by this artist"
-              />
-            </LazyLoadComponent>
-          )}
-          <Separator mt={6} mb={3} />
-          <Footer />
+            {railArtist.length && typeof window !== "undefined" && (
+              <LazyLoadComponent threshold={1000}>
+                <OtherArtistSeriesRail
+                  artist={railArtist[0]}
+                  title="More series by this artist"
+                />
+              </LazyLoadComponent>
+            )}
+            <Separator mt={6} mb={3} />
+            <Footer />
+          </AppContainer>
         </Box>
       </AppContainer>
     )

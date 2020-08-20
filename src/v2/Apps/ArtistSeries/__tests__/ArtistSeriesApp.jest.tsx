@@ -54,7 +54,7 @@ describe("ArtistSeriesApp", () => {
 
       it("renders the correct components", async () => {
         const wrapper = await getWrapper()
-        expect(wrapper.find("AppContainer").length).toBe(1)
+        expect(wrapper.find("AppContainer").length).toBe(4)
         expect(wrapper.find("ArtistSeriesMeta").length).toBe(1)
         expect(wrapper.find("ArtistSeriesHeader").length).toBe(1)
         expect(wrapper.find("ArtistSeriesArtworksFilter").length).toBe(1)
@@ -90,7 +90,7 @@ describe("ArtistSeriesApp", () => {
             it("has a correctly sized header image", async () => {
               const wrapper = await getWrapper()
               const expectedUrl =
-                "https://d7hftxdivxxvm.cloudfront.net?resize_to=height&src=https%3A%2F%2Ftest.artsy.net%2Fpumpkins-header-image.jpg&height=400&quality=80"
+                "https://d7hftxdivxxvm.cloudfront.net?resize_to=width&src=https%3A%2F%2Ftest.artsy.net%2Fpumpkins-header-image.jpg&width=1200&quality=80"
               expect(wrapper.find(HeaderImage).props().src).toBe(expectedUrl)
             })
           })
@@ -120,7 +120,7 @@ describe("ArtistSeriesApp", () => {
             it("has a correctly sized header image", async () => {
               const wrapper = await getWrapper("xs")
               const expectedUrl =
-                "https://d7hftxdivxxvm.cloudfront.net?resize_to=fit&src=https%3A%2F%2Ftest.artsy.net%2Fpumpkins-header-image.jpg&width=180&height=180&quality=80"
+                "https://d7hftxdivxxvm.cloudfront.net?resize_to=fill&src=https%3A%2F%2Ftest.artsy.net%2Fpumpkins-header-image.jpg&width=360&height=360&quality=80"
               expect(wrapper.find(HeaderImage).props().src).toBe(expectedUrl)
             })
           })

@@ -40,7 +40,7 @@ const ArtistSeriesRail: React.SFC<Props> = props => {
             render={(slide, index: number) => {
               const { node } = slide
               return (
-                <Box ml={isMobile && index === 0 ? 2 : 0}>
+                <Box mr={5} ml={isMobile && index === 0 ? 2 : 0}>
                   <ArtistSeriesItem lazyLoad={index > 5} artistSeries={node} />
                 </Box>
               )

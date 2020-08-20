@@ -63,12 +63,12 @@ const node: ReaderFragment = {
             {
               "kind": "Literal",
               "name": "height",
-              "value": 160
+              "value": 320
             },
             {
               "kind": "Literal",
               "name": "width",
-              "value": 160
+              "value": 320
             }
           ],
           "concreteType": "CroppedImageUrl",
@@ -84,7 +84,7 @@ const node: ReaderFragment = {
               "storageKey": null
             }
           ],
-          "storageKey": "cropped(height:160,width:160)"
+          "storageKey": "cropped(height:320,width:320)"
         }
       ],
       "storageKey": null
@@ -92,5 +92,5 @@ const node: ReaderFragment = {
   ],
   "type": "ArtistSeries"
 };
-(node as any).hash = '83b709bc2e8b51ce5b2289aeedf6710e';
+(node as any).hash = 'a2e98d0362c528e8d4573ae9ca9ac07d';
 export default node;
