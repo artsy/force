@@ -2,7 +2,7 @@ import React from "react"
 import { AppContainer } from "v2/Apps/Components/AppContainer"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FairSubApp_fair } from "v2/__generated__/FairSubApp_fair.graphql"
-import { Separator, Spacer } from "@artsy/palette"
+import { Separator } from "@artsy/palette"
 import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
 import { Footer } from "v2/Components/Footer"
 import { ErrorPage } from "v2/Components/ErrorPage"
@@ -19,12 +19,9 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
     <>
       <AppContainer>
         <HorizontalPadding>
-          <BackLink
-            linkText={`Back to ${fair.name}`}
-            path={`/fair2/${fair.slug}`}
-          />
-
-          <Spacer my={3} />
+          <BackLink my={3} to={`/fair2/${fair.slug}`}>
+            Back to {fair.name}
+          </BackLink>
 
           {children}
 
