@@ -2,7 +2,6 @@ import React from "react"
 import { Col, HTML, Row, Spacer, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FairInfo_fair } from "v2/__generated__/FairInfo_fair.graphql"
-import { BackLink } from "v2/Components/Links/BackLink"
 import styled from "styled-components"
 
 interface FairInfoProps {
@@ -16,13 +15,6 @@ const TextWithNewlines = styled(Text)`
 const FairInfo: React.FC<FairInfoProps> = ({ fair }) => {
   return (
     <>
-      <BackLink
-        linkText={`Back to ${fair.name}`}
-        path={`/fair2/${fair.slug}`}
-      />
-
-      <Spacer my={3} />
-
       <Text variant="largeTitle">About</Text>
 
       <Spacer my={1} />
@@ -59,6 +51,7 @@ const FairInfo: React.FC<FairInfoProps> = ({ fair }) => {
             </>
           )}
         </Col>
+
         <Col sm="3">
           {fair.hours && (
             <>

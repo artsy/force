@@ -3,12 +3,15 @@ import { graphql } from "react-relay"
 import { RouteConfig } from "found"
 
 const FairApp = loadable(() => import("./FairApp"))
-const FairOverviewRoute = loadable(() => import("./Routes/FairOverview"))
+const FairSubApp = loadable(() => import("./FairSubApp"))
+const FairExhibitorsRoute = loadable(() => import("./Routes/FairExhibitors"))
+const FairArtworksRoute = loadable(() => import("./Routes/FairArtworks"))
 const FairInfoRoute = loadable(() => import("./Routes/FairInfo"))
 
 export const routes: RouteConfig[] = [
   {
     path: "/fair2/:slug",
+    ignoreScrollBehavior: true,
     getComponent: () => FairApp,
     prepare: () => {
       FairApp.preload()
@@ -22,19 +25,51 @@ export const routes: RouteConfig[] = [
     `,
     children: [
       {
-        path: "/",
-        getComponent: () => FairOverviewRoute,
+        path: "",
+        getComponent: () => FairExhibitorsRoute,
         prepare: () => {
-          FairOverviewRoute.preload()
+          FairExhibitorsRoute.preload()
         },
         query: graphql`
-          query routes_FairOverviewQuery($slug: String!) {
+          query routes_FairExhibitorsQuery($slug: String!) {
             fair(id: $slug) {
-              ...FairOverview_fair
+              ...FairExhibitors_fair
             }
           }
         `,
       },
+      {
+        path: "artworks",
+        getComponent: () => FairArtworksRoute,
+        prepare: () => {
+          FairArtworksRoute.preload()
+        },
+        query: graphql`
+          query routes_FairArtworksQuery($slug: String!) {
+            fair(id: $slug) {
+              ...FairArtworks_fair
+            }
+          }
+        `,
+      },
+    ],
+  },
+  // NOTE: Nested sub-apps are mounted under the same top-level path as above.
+  // The root `path: ""` matches the `FairExhibitorsRoute`.
+  {
+    path: "/fair2/:slug",
+    getComponent: () => FairSubApp,
+    prepare: () => {
+      FairSubApp.preload()
+    },
+    query: graphql`
+      query routes_FairSubAppQuery($slug: String!) {
+        fair(id: $slug) {
+          ...FairSubApp_fair
+        }
+      }
+    `,
+    children: [
       {
         path: "info",
         getComponent: () => FairInfoRoute,
