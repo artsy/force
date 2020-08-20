@@ -9,7 +9,7 @@ import {
   PageOwnerType,
   clickedArtistSeriesGroup,
 } from "@artsy/cohesion"
-import { useTracking } from "react-tracking"
+import { useTracking } from "v2/Artsy/Analytics/useTracking"
 
 interface Props {
   artistSeries: ArtistSeriesItem_artistSeries
