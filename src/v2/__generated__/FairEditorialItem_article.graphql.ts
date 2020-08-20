@@ -7,9 +7,7 @@ export type FairEditorialItem_article = {
     readonly id: string;
     readonly title: string | null;
     readonly href: string | null;
-    readonly author: {
-        readonly name: string | null;
-    } | null;
+    readonly publishedAt: string | null;
     readonly thumbnailTitle: string | null;
     readonly thumbnailImage: {
         readonly _1x: {
@@ -86,21 +84,16 @@ return {
     },
     {
       "alias": null,
-      "args": null,
-      "concreteType": "Author",
-      "kind": "LinkedField",
-      "name": "author",
-      "plural": false,
-      "selections": [
+      "args": [
         {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "name",
-          "storageKey": null
+          "kind": "Literal",
+          "name": "format",
+          "value": "MMM Do, YY"
         }
       ],
-      "storageKey": null
+      "kind": "ScalarField",
+      "name": "publishedAt",
+      "storageKey": "publishedAt(format:\"MMM Do, YY\")"
     },
     {
       "alias": null,
@@ -166,5 +159,5 @@ return {
   "type": "Article"
 };
 })();
-(node as any).hash = '0dd2aeba4ff373d5e4f35f4136e4e43f';
+(node as any).hash = '7ae77e7305447798221c7b205b4f0411';
 export default node;

@@ -1,27 +1,45 @@
 import React from "react"
-import { ChevronIcon, Flex, Text } from "@artsy/palette"
+import { BoxProps, ChevronIcon, Text, boxMixin } from "@artsy/palette"
 import { StyledLink } from "./StyledLink"
+import { RouterLinkProps } from "v2/Artsy/Router/RouterLink"
+import styled from "styled-components"
 
-interface BackLinkProps {
-  linkText: string
-  path: string
-}
+type BackLinkProps = RouterLinkProps & BoxProps
 
-export const BackLink: React.FC<BackLinkProps> = ({ linkText, path }) => {
+const Container = styled(StyledLink)`
+  display: flex;
+  align-items: center;
+  ${boxMixin}
+`
+
+export const BackLink: React.FC<BackLinkProps> = ({
+  children,
+  to,
+  ...rest
+}) => {
   return (
-    <>
-      <Flex flexDirection="row" alignItems="center" my={3}>
-        <ChevronIcon
-          direction="left"
-          color="black"
-          height="18px"
-          width="14px"
-          top="-2px"
-        />
-        <Text variant="mediumText" ml="8px">
-          <StyledLink to={path}>{linkText}</StyledLink>
-        </Text>
-      </Flex>
-    </>
+    // TODO: Anything using a `RouterLink` has issues with the typings.
+    // These props are infact valid.
+    // @ts-ignore
+    <Container to={to} {...rest}>
+      <ChevronIcon
+        direction="left"
+        color="black100"
+        height={14}
+        width={18}
+        mr={0.5}
+      />
+
+      <Text
+        variant="mediumText"
+        lineHeight="solid"
+        // HACK: Visually align with the chevron because
+        // Unica's baseline is abnormally high
+        position="relative"
+        bottom={-1}
+      >
+        {children}
+      </Text>
+    </Container>
   )
 }

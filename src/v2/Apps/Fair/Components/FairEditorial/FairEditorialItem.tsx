@@ -26,7 +26,7 @@ export const FairEditorialItem: React.FC<FairEditorialItemProps> = ({
   return (
     <Container
       to={article.href}
-      aria-label={`${article.title} by ${article.author.name}`}
+      aria-label={`${article.title} (${article.publishedAt})`}
     >
       <Box flex="1" pr={3}>
         <Text variant="subtitle" as="h4" mb={0.5}>
@@ -34,7 +34,7 @@ export const FairEditorialItem: React.FC<FairEditorialItemProps> = ({
         </Text>
 
         <Text variant="text" color="black60">
-          {article.author.name}
+          {article.publishedAt}
         </Text>
       </Box>
 
@@ -65,9 +65,7 @@ export const FairEditorialItemFragmentContainer = createFragmentContainer(
         id
         title
         href
-        author {
-          name
-        }
+        publishedAt(format: "MMM Do, YY")
         thumbnailTitle
         thumbnailImage {
           _1x: cropped(width: 140, height: 80) {

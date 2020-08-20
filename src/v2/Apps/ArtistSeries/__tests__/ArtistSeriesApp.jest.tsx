@@ -101,7 +101,7 @@ describe("ArtistSeriesApp", () => {
             it("has a correctly sized header image", async () => {
               const wrapper = await getWrapper()
               const expectedUrl =
-                "https://d7hftxdivxxvm.cloudfront.net?resize_to=width&src=https%3A%2F%2Ftest.artsy.net%2Fpumpkins-header-image.jpg&width=1200&quality=80"
+                "https://test.artsy.net/pumpkins-header-image-sm.jpg"
               expect(wrapper.find(HeaderImage).props().src).toBe(expectedUrl)
             })
           })
@@ -131,7 +131,7 @@ describe("ArtistSeriesApp", () => {
             it("has a correctly sized header image", async () => {
               const wrapper = await getWrapper("xs")
               const expectedUrl =
-                "https://d7hftxdivxxvm.cloudfront.net?resize_to=fill&src=https%3A%2F%2Ftest.artsy.net%2Fpumpkins-header-image.jpg&width=360&height=360&quality=80"
+                "https://test.artsy.net/pumpkins-header-image-xs.jpg"
               expect(wrapper.find(HeaderImage).props().src).toBe(expectedUrl)
             })
           })
@@ -237,6 +237,12 @@ const ArtistSeriesAppFixture: ArtistSeriesApp_QueryRawResponse = {
     description: "All of the pumpkins",
     descriptionFormatted: "All of the pumpkins",
     image: {
+      xs: {
+        url: "https://test.artsy.net/pumpkins-header-image-xs.jpg",
+      },
+      sm: {
+        url: "https://test.artsy.net/pumpkins-header-image-sm.jpg",
+      },
       url: "https://test.artsy.net/pumpkins-header-image.jpg",
     },
     artists: [
