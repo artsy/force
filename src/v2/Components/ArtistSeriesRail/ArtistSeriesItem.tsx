@@ -26,7 +26,7 @@ export const ArtistSeriesItem: React.SFC<Props> = props => {
           width={160}
           style={{ objectFit: "cover", objectPosition: "center" }}
         />
-        <Box my={1} mx="15px">
+        <Box my={1} mx={2}>
           <SeriesTitle size={"3"}>{title}</SeriesTitle>
           <Spacer />
           <Sans size={"3"} color={"black60"}>
