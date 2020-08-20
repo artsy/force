@@ -10228,7 +10228,7 @@ eslint-plugin-standard@~2.0.1:
   resolved "https://registry.yarnpkg.com/eslint-plugin-standard/-/eslint-plugin-standard-2.0.1.tgz#3589699ff9c917f2c25f76a916687f641c369ff3"
   integrity sha1-NYlpn/nJF/LCX3apFmh/ZBw2n/M=
 
-eslint-plugin-styled-components-a11y@^0.0.16:
+eslint-plugin-styled-components-a11y@0.0.16:
   version "0.0.16"
   resolved "https://registry.yarnpkg.com/eslint-plugin-styled-components-a11y/-/eslint-plugin-styled-components-a11y-0.0.16.tgz#ebf5313d8a5ae5a58d1e1b8c212c7b9af0eaf261"
   integrity sha512-RdwqxffXfxftbG7C9RBskwitEcDmzN1GUzXV/ZRRlIpI884xSh5zNRmMkoQ8jW/p704Oh/ozqxIEZB6AwPIKcA==
