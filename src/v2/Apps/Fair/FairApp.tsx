@@ -28,7 +28,7 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
               <Row>
                 <Col sm="6" mx="auto">
                   <Text variant="subtitle" as="h3" mb={2}>
-                    Coverage by Artsy Editorial
+                    Related articles
                   </Text>
 
                   <FairEditorial fair={fair} />

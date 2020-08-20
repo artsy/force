@@ -49,10 +49,7 @@ export type FairApp_QueryRawResponse = {
                     readonly id: string;
                     readonly title: string | null;
                     readonly href: string | null;
-                    readonly author: ({
-                        readonly name: string | null;
-                        readonly id: string | null;
-                    }) | null;
+                    readonly publishedAt: string | null;
                     readonly thumbnailTitle: string | null;
                     readonly thumbnailImage: ({
                         readonly _1x: ({
@@ -106,10 +103,7 @@ fragment FairEditorialItem_article on Article {
   id
   title
   href
-  author {
-    name
-    id
-  }
+  publishedAt(format: "MMM Do, YY")
   thumbnailTitle
   thumbnailImage {
     _1x: cropped(width: 140, height: 80) {
@@ -194,51 +188,44 @@ v2 = {
   "storageKey": null
 },
 v3 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "name",
-  "storageKey": null
-},
-v4 = {
   "alias": "src",
   "args": null,
   "kind": "ScalarField",
   "name": "url",
   "storageKey": null
 },
-v5 = {
+v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v6 = {
+v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "width",
   "storageKey": null
 },
-v7 = {
+v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "height",
   "storageKey": null
 },
-v8 = [
+v7 = [
   {
     "kind": "Literal",
     "name": "format",
     "value": "HTML"
   }
 ],
-v9 = [
+v8 = [
+  (v5/*: any*/),
   (v6/*: any*/),
-  (v7/*: any*/),
-  (v4/*: any*/)
+  (v3/*: any*/)
 ];
 return {
   "fragment": {
@@ -302,7 +289,13 @@ return {
             "name": "formattedOpeningHours",
             "storageKey": null
           },
-          (v3/*: any*/),
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "name",
+            "storageKey": null
+          },
           {
             "alias": null,
             "args": null,
@@ -343,14 +336,14 @@ return {
                     "name": "cropped",
                     "plural": false,
                     "selections": [
-                      (v4/*: any*/)
+                      (v3/*: any*/)
                     ],
                     "storageKey": "cropped(height:120,version:\"square140\",width:120)"
                   }
                 ],
                 "storageKey": null
               },
-              (v5/*: any*/)
+              (v4/*: any*/)
             ],
             "storageKey": null
           },
@@ -386,9 +379,9 @@ return {
                 "name": "cropped",
                 "plural": false,
                 "selections": [
-                  (v4/*: any*/),
-                  (v6/*: any*/),
-                  (v7/*: any*/)
+                  (v3/*: any*/),
+                  (v5/*: any*/),
+                  (v6/*: any*/)
                 ],
                 "storageKey": "cropped(height:1000,version:\"wide\",width:750)"
               }
@@ -411,7 +404,7 @@ return {
             "plural": false,
             "selections": [
               (v2/*: any*/),
-              (v5/*: any*/)
+              (v4/*: any*/)
             ],
             "storageKey": null
           },
@@ -424,28 +417,28 @@ return {
           },
           {
             "alias": null,
-            "args": (v8/*: any*/),
+            "args": (v7/*: any*/),
             "kind": "ScalarField",
             "name": "hours",
             "storageKey": "hours(format:\"HTML\")"
           },
           {
             "alias": null,
-            "args": (v8/*: any*/),
+            "args": (v7/*: any*/),
             "kind": "ScalarField",
             "name": "links",
             "storageKey": "links(format:\"HTML\")"
           },
           {
             "alias": null,
-            "args": (v8/*: any*/),
+            "args": (v7/*: any*/),
             "kind": "ScalarField",
             "name": "tickets",
             "storageKey": "tickets(format:\"HTML\")"
           },
           {
             "alias": null,
-            "args": (v8/*: any*/),
+            "args": (v7/*: any*/),
             "kind": "ScalarField",
             "name": "contact",
             "storageKey": "contact(format:\"HTML\")"
@@ -485,7 +478,7 @@ return {
                     "name": "node",
                     "plural": false,
                     "selections": [
-                      (v5/*: any*/),
+                      (v4/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -502,16 +495,16 @@ return {
                       },
                       {
                         "alias": null,
-                        "args": null,
-                        "concreteType": "Author",
-                        "kind": "LinkedField",
-                        "name": "author",
-                        "plural": false,
-                        "selections": [
-                          (v3/*: any*/),
-                          (v5/*: any*/)
+                        "args": [
+                          {
+                            "kind": "Literal",
+                            "name": "format",
+                            "value": "MMM Do, YY"
+                          }
                         ],
-                        "storageKey": null
+                        "kind": "ScalarField",
+                        "name": "publishedAt",
+                        "storageKey": "publishedAt(format:\"MMM Do, YY\")"
                       },
                       {
                         "alias": null,
@@ -546,7 +539,7 @@ return {
                             "kind": "LinkedField",
                             "name": "cropped",
                             "plural": false,
-                            "selections": (v9/*: any*/),
+                            "selections": (v8/*: any*/),
                             "storageKey": "cropped(height:80,width:140)"
                           },
                           {
@@ -567,7 +560,7 @@ return {
                             "kind": "LinkedField",
                             "name": "cropped",
                             "plural": false,
-                            "selections": (v9/*: any*/),
+                            "selections": (v8/*: any*/),
                             "storageKey": "cropped(height:160,width:280)"
                           }
                         ],
@@ -589,7 +582,7 @@ return {
             ],
             "storageKey": "articlesConnection(first:5,sort:\"PUBLISHED_AT_DESC\")"
           },
-          (v5/*: any*/)
+          (v4/*: any*/)
         ],
         "storageKey": null
       }
@@ -600,7 +593,7 @@ return {
     "metadata": {},
     "name": "FairApp_Query",
     "operationKind": "query",
-    "text": "query FairApp_Query(\n  $slug: String!\n) {\n  fair(id: $slug) {\n    ...FairApp_fair\n    id\n  }\n}\n\nfragment FairApp_fair on Fair {\n  slug\n  ...FairHeader_fair\n  ...FairEditorial_fair\n  articles: articlesConnection(first: 5, sort: PUBLISHED_AT_DESC) {\n    edges {\n      __typename\n    }\n  }\n}\n\nfragment FairEditorialItem_article on Article {\n  id\n  title\n  href\n  author {\n    name\n    id\n  }\n  thumbnailTitle\n  thumbnailImage {\n    _1x: cropped(width: 140, height: 80) {\n      width\n      height\n      src: url\n    }\n    _2x: cropped(width: 280, height: 160) {\n      width\n      height\n      src: url\n    }\n  }\n}\n\nfragment FairEditorial_fair on Fair {\n  articles: articlesConnection(first: 5, sort: PUBLISHED_AT_DESC) {\n    edges {\n      node {\n        id\n        ...FairEditorialItem_article\n      }\n    }\n  }\n}\n\nfragment FairHeader_fair on Fair {\n  about\n  summary\n  formattedOpeningHours\n  name\n  slug\n  profile {\n    icon {\n      cropped(width: 120, height: 120, version: \"square140\") {\n        src: url\n      }\n    }\n    id\n  }\n  image {\n    cropped(width: 750, height: 1000, version: \"wide\") {\n      src: url\n      width\n      height\n    }\n  }\n  tagline\n  location {\n    summary\n    id\n  }\n  ticketsLink\n  hours(format: HTML)\n  links(format: HTML)\n  tickets(format: HTML)\n  contact(format: HTML)\n}\n"
+    "text": "query FairApp_Query(\n  $slug: String!\n) {\n  fair(id: $slug) {\n    ...FairApp_fair\n    id\n  }\n}\n\nfragment FairApp_fair on Fair {\n  slug\n  ...FairHeader_fair\n  ...FairEditorial_fair\n  articles: articlesConnection(first: 5, sort: PUBLISHED_AT_DESC) {\n    edges {\n      __typename\n    }\n  }\n}\n\nfragment FairEditorialItem_article on Article {\n  id\n  title\n  href\n  publishedAt(format: \"MMM Do, YY\")\n  thumbnailTitle\n  thumbnailImage {\n    _1x: cropped(width: 140, height: 80) {\n      width\n      height\n      src: url\n    }\n    _2x: cropped(width: 280, height: 160) {\n      width\n      height\n      src: url\n    }\n  }\n}\n\nfragment FairEditorial_fair on Fair {\n  articles: articlesConnection(first: 5, sort: PUBLISHED_AT_DESC) {\n    edges {\n      node {\n        id\n        ...FairEditorialItem_article\n      }\n    }\n  }\n}\n\nfragment FairHeader_fair on Fair {\n  about\n  summary\n  formattedOpeningHours\n  name\n  slug\n  profile {\n    icon {\n      cropped(width: 120, height: 120, version: \"square140\") {\n        src: url\n      }\n    }\n    id\n  }\n  image {\n    cropped(width: 750, height: 1000, version: \"wide\") {\n      src: url\n      width\n      height\n    }\n  }\n  tagline\n  location {\n    summary\n    id\n  }\n  ticketsLink\n  hours(format: HTML)\n  links(format: HTML)\n  tickets(format: HTML)\n  contact(format: HTML)\n}\n"
   }
 };
 })();

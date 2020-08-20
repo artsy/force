@@ -47,7 +47,7 @@ const FAIR_EDITORIAL_ARTICLE_FIXTURE = {
   title: "IFPDA Fine Art Print Fair 2019: Programming and Projects",
   href:
     "/article/ifpda-fine-art-print-fair-ifpda-fine-art-print-fair-2019-programming-projects",
-  author: { name: "IFPDA" },
+  publishedAt: "Jun 9th, 2020",
   thumbnailTitle: "IFPDA Fine Art Print Fair 2019: Programming and Projects",
   thumbnailImage: {
     _1x: {
@@ -106,7 +106,7 @@ describe("FairApp", () => {
 
     const html = wrapper.html()
 
-    expect(html).toContain("Coverage by Artsy Editorial")
+    expect(html).toContain("Related articles")
     expect(html).toContain(
       "IFPDA Fine Art Print Fair 2019: Programming and Projects"
     )
@@ -116,7 +116,7 @@ describe("FairApp", () => {
     const wrapper = await getWrapper()
     const html = wrapper.html()
 
-    expect(html).not.toContain("Coverage by Artsy Editorial")
+    expect(html).not.toContain("Related articles")
     expect(html).not.toContain(
       "IFPDA Fine Art Print Fair 2019: Programming and Projects"
     )
