@@ -4,7 +4,6 @@ import React from "react"
 import { FairInfoFragmentContainer } from "../FairInfo"
 import { graphql } from "react-relay"
 import { FairInfo_QueryRawResponse } from "v2/__generated__/FairInfo_Query.graphql"
-import { RouterLink } from "v2/Artsy/Router/RouterLink"
 
 jest.unmock("react-relay")
 
@@ -42,15 +41,6 @@ describe("FairInfo", () => {
     expect(wrapper.text()).toContain("HoursOpen every day at 5am")
     expect(wrapper.text()).toContain("Buy Tickets")
     expect(wrapper.text()).toContain("LinksGoogle it")
-  })
-
-  it("displays a link to get back to the fair", async () => {
-    const wrapper = await getWrapper()
-    const BackButton = wrapper
-      .find(RouterLink)
-      .filterWhere(t => t.text() === "Back to Miart 2020")
-    expect(BackButton.length).toEqual(1)
-    expect(BackButton.first().prop("to")).toEqual("/fair2/miart-2020")
   })
 
   it("handles missing information", async () => {

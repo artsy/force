@@ -1,6 +1,7 @@
 import React from "react"
 import {
   Box,
+  BoxProps,
   Col,
   Flex,
   Grid,
@@ -15,7 +16,7 @@ import { FairHeader_fair } from "v2/__generated__/FairHeader_fair.graphql"
 import styled from "styled-components"
 import { ForwardLink } from "v2/Components/Links/ForwardLink"
 
-interface FairHeaderProps {
+interface FairHeaderProps extends BoxProps {
   fair: FairHeader_fair
 }
 
@@ -26,7 +27,7 @@ const ResponsiveImage = styled(ResponsiveBox)<ResponsiveBoxProps>`
   }
 `
 
-const FairHeader: React.FC<FairHeaderProps> = ({ fair }) => {
+const FairHeader: React.FC<FairHeaderProps> = ({ fair, ...rest }) => {
   const img = fair?.image?.cropped
   const profileIcon = fair?.profile?.icon?.cropped
   const {
@@ -55,8 +56,7 @@ const FairHeader: React.FC<FairHeaderProps> = ({ fair }) => {
   const previewText = summary || about
 
   return (
-    <>
-      <Spacer mb="2" />
+    <Box {...rest}>
       {img && (
         <Flex
           alignItems="center"
@@ -113,7 +113,7 @@ const FairHeader: React.FC<FairHeaderProps> = ({ fair }) => {
           </Col>
         </Row>
       </Grid>
-    </>
+    </Box>
   )
 }
 
