@@ -83,10 +83,10 @@ describe("ArtworkArtistSeries", () => {
     const noSeriesData: ArtworkArtistSeries_QueryRawResponse = {
       artwork: {
         ...ArtworkArtistSeriesFixture.artwork,
+        artistSeriesConnection: null,
         seriesForCounts: null,
       },
     }
-
     const wrapper = await getWrapper("xl", noSeriesData)
     expect(wrapper.find("ArtistSeriesRail").length).toBe(0)
     expect(wrapper.find("ArtistSeriesArtworkRail").length).toBe(0)
