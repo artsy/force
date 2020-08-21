@@ -1,4 +1,4 @@
-import { ContextModule, Intent } from "@artsy/cohesion"
+import { ActionType, ContextModule, Intent } from "@artsy/cohesion"
 import { Box, ButtonProps } from "@artsy/palette"
 import { FollowArtistButtonMutation } from "v2/__generated__/FollowArtistButtonMutation.graphql"
 import * as Artsy from "v2/Artsy"
@@ -28,6 +28,7 @@ interface Props
   tracking?: TrackingProp
   trackingData?: FollowTrackingData
   onOpenAuthModal?: (type: ModalType, config?: ModalOptions) => void
+  useNewAnalyticsSchema?: boolean
 
   /**
    * FIXME: Default is true due to legacy code. If false, use new @artsy/palette
@@ -65,6 +66,7 @@ export class FollowArtistButton extends React.Component<Props, State> {
     useDeprecatedButtonStyle: true,
     buttonProps: {},
     triggerSuggestions: false,
+    useNewAnalyticsSchema: false,
   }
 
   state = { openSuggestions: false }
@@ -73,11 +75,25 @@ export class FollowArtistButton extends React.Component<Props, State> {
     const {
       tracking,
       artist: { is_followed },
+      useNewAnalyticsSchema,
     } = this.props
     const trackingData: FollowTrackingData = this.props.trackingData || {}
-    const action = is_followed ? "Unfollowed Artist" : "Followed Artist"
 
-    tracking.trackEvent(extend({ action }, trackingData))
+    let action:
+      | ActionType.unfollowedArtist
+      | ActionType.followedArtist
+      | "Unfollowed Artist"
+      | "Followed Artist"
+
+    if (useNewAnalyticsSchema) {
+      action = is_followed
+        ? ActionType.unfollowedArtist
+        : ActionType.followedArtist
+    } else {
+      action = is_followed ? "Unfollowed Artist" : "Followed Artist"
+    }
+
+    tracking.trackEvent(extend(trackingData, { action }))
   }
 
   handleFollow = e => {

@@ -13,6 +13,7 @@ export enum PageName {
   SearchPage = "Search page",
   HomePage = "Home",
   IdentityVerificationPage = "Identity Verification page",
+  ArtistSeriesPage = "Artist Series",
 }
 
 /**
