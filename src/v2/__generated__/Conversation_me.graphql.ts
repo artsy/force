@@ -6,12 +6,9 @@ import { FragmentRefs } from "relay-runtime";
 export type Conversation_me = {
     readonly conversation: {
         readonly internalID: string | null;
-        readonly to: {
-            readonly name: string;
-        };
         readonly " $fragmentRefs": FragmentRefs<"Conversation_conversation" | "Details_conversation">;
     } | null;
-    readonly " $fragmentRefs": FragmentRefs<"Conversations_me">;
+    readonly " $fragmentRefs": FragmentRefs<"ConversationList_me">;
     readonly " $refType": "Conversation_me";
 };
 export type Conversation_me$data = Conversation_me;
@@ -57,24 +54,6 @@ const node: ReaderFragment = {
           "storageKey": null
         },
         {
-          "alias": null,
-          "args": null,
-          "concreteType": "ConversationResponder",
-          "kind": "LinkedField",
-          "name": "to",
-          "plural": false,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "name",
-              "storageKey": null
-            }
-          ],
-          "storageKey": null
-        },
-        {
           "args": null,
           "kind": "FragmentSpread",
           "name": "Conversation_conversation"
@@ -90,10 +69,10 @@ const node: ReaderFragment = {
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "Conversations_me"
+      "name": "ConversationList_me"
     }
   ],
   "type": "Me"
 };
-(node as any).hash = 'a90b90a330544cae930dad6828652f3d';
+(node as any).hash = '769cd74107f8f254704a013eb41dbcae';
 export default node;

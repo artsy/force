@@ -1,6 +1,6 @@
 import { ConversationApp_me } from "v2/__generated__/ConversationApp_me.graphql"
 import { AppContainer } from "v2/Apps/Components/AppContainer"
-import { ConversationsPaginationContainer as Conversations } from "v2/Apps/Conversation/Components/Conversations"
+import { ConversationListPaginationContainer as ConversationList } from "v2/Apps/Conversation/Components/ConversationList"
 import { findCurrentRoute } from "v2/Artsy/Router/Utils/findCurrentRoute"
 import { Match, Router } from "found"
 import React, { useEffect, useState } from "react"
@@ -8,8 +8,6 @@ import { Title } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Flex, Spinner, breakpoints } from "@artsy/palette"
 import { debounce } from "lodash"
-import { Media } from "v2/Utils/Responsive"
-import { FullHeader, MobileInboxHeader } from "./Components/InboxHeaders"
 import { NoMessages } from "./Components/NoMessages"
 
 interface ConversationAppProps {
@@ -33,13 +31,7 @@ const getViewWidth = () => {
 const Inbox: React.FC<InboxProps> = ({ selectedConversation, me }) => {
   return (
     <>
-      <Media lessThan="md">
-        <MobileInboxHeader />
-      </Media>
-      <Media greaterThanOrEqual="md">
-        <FullHeader partnerName={selectedConversation?.to?.name} />
-      </Media>
-      <Conversations me={me} />
+      <ConversationList me={me} />
       <Flex
         display={["none", "none", "flex"]}
         height="100%"
@@ -118,7 +110,7 @@ export const ConversationAppFragmentContainer = createFragmentContainer(
             }
           }
         }
-        ...Conversations_me
+        ...ConversationList_me
       }
     `,
   }

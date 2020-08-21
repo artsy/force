@@ -13,9 +13,12 @@ import { Reply } from "./Reply"
 import { ConversationMessagesFragmentContainer as ConversationMessages } from "./ConversationMessages"
 import { UpdateConversation } from "../Mutation/UpdateConversationMutation"
 import styled from "styled-components"
+import { ConversationHeader } from "./ConversationHeader"
 
 export interface ConversationProps {
   conversation: Conversation_conversation
+  showDetails: boolean
+  setShowDetails: (showDetails: boolean) => void
   relay: RelayProp
   refetch: RelayRefetchProp["refetch"]
 }
@@ -23,7 +26,7 @@ export interface ConversationProps {
 export const PAGE_SIZE: number = 15
 
 const Conversation: React.FC<ConversationProps> = props => {
-  const { conversation, relay } = props
+  const { conversation, relay, showDetails, setShowDetails } = props
 
   const bottomOfPage = useRef(null)
   const initialMount = useRef(true)
@@ -84,30 +87,39 @@ const Conversation: React.FC<ConversationProps> = props => {
   }
 
   return (
-    <NoScrollFlex flexDirection="column" width="100%">
-      <MessageContainer ref={scrollContainer}>
-        <Box pb={[6, 6, 6, 0]}>
-          <Spacer mt={["75px", "75px", 2]} />
-          <Flex flexDirection="column" width="100%" px={1}>
-            {inquiryItemBox}
-            <Waypoint onEnter={loadMore} />
-            {fetchingMore ? (
-              <SpinnerContainer>
-                <Spinner />
-              </SpinnerContainer>
-            ) : null}
-            <ConversationMessages messages={conversation.messagesConnection} />
-            <Box ref={bottomOfPage}></Box>
-          </Flex>
-        </Box>
-      </MessageContainer>
-      <Reply
-        onScroll={scrollToBottom}
-        conversation={conversation}
-        refetch={props.refetch}
-        environment={relay.environment}
+    <Flex flexDirection="column">
+      <ConversationHeader
+        partnerName={conversation.to.name}
+        showDetails={showDetails}
+        setShowDetails={setShowDetails}
       />
-    </NoScrollFlex>
+      <NoScrollFlex flexDirection="column" width="100%">
+        <MessageContainer ref={scrollContainer}>
+          <Box pb={[6, 6, 6, 0]}>
+            <Spacer mt={["75px", "75px", 2]} />
+            <Flex flexDirection="column" width="100%" px={1}>
+              {inquiryItemBox}
+              <Waypoint onEnter={loadMore} />
+              {fetchingMore ? (
+                <SpinnerContainer>
+                  <Spinner />
+                </SpinnerContainer>
+              ) : null}
+              <ConversationMessages
+                messages={conversation.messagesConnection}
+              />
+              <Box ref={bottomOfPage}></Box>
+            </Flex>
+          </Box>
+        </MessageContainer>
+        <Reply
+          onScroll={scrollToBottom}
+          conversation={conversation}
+          refetch={props.refetch}
+          environment={relay.environment}
+        />
+      </NoScrollFlex>
+    </Flex>
   )
 }
 

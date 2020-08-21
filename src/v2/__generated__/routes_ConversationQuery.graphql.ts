@@ -37,7 +37,28 @@ fragment ConversationApp_me on Me {
       }
     }
   }
-  ...Conversations_me
+  ...ConversationList_me
+}
+
+fragment ConversationList_me on Me {
+  conversationsConnection(first: 25) {
+    edges {
+      cursor
+      node {
+        id
+        internalID
+        lastMessage
+        ...ConversationSnippet_conversation
+        __typename
+      }
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+      hasPreviousPage
+      startCursor
+    }
+  }
 }
 
 fragment ConversationSnippet_conversation on Conversation {
@@ -77,27 +98,6 @@ fragment ConversationSnippet_conversation on Conversation {
   }
   messagesConnection {
     totalCount
-  }
-}
-
-fragment Conversations_me on Me {
-  conversationsConnection(first: 25) {
-    edges {
-      cursor
-      node {
-        id
-        internalID
-        lastMessage
-        ...ConversationSnippet_conversation
-        __typename
-      }
-    }
-    pageInfo {
-      endCursor
-      hasNextPage
-      hasPreviousPage
-      startCursor
-    }
   }
 }
 */
@@ -414,7 +414,7 @@ return {
             "args": (v0/*: any*/),
             "filters": null,
             "handle": "connection",
-            "key": "Conversations_conversationsConnection",
+            "key": "ConversationList_conversationsConnection",
             "kind": "LinkedHandle",
             "name": "conversationsConnection"
           },
@@ -429,7 +429,7 @@ return {
     "metadata": {},
     "name": "routes_ConversationQuery",
     "operationKind": "query",
-    "text": "query routes_ConversationQuery {\n  me {\n    ...ConversationApp_me\n    id\n  }\n}\n\nfragment ConversationApp_me on Me {\n  conversationsConnection(first: 25) {\n    edges {\n      node {\n        internalID\n        to {\n          name\n          id\n        }\n        id\n      }\n    }\n  }\n  ...Conversations_me\n}\n\nfragment ConversationSnippet_conversation on Conversation {\n  internalID\n  to {\n    name\n    id\n  }\n  lastMessage\n  lastMessageAt\n  unread\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        date\n        title\n        artistNames\n        image {\n          url\n        }\n      }\n      ... on Show {\n        fair {\n          name\n          id\n        }\n        name\n        coverImage {\n          url\n        }\n      }\n      ... on Node {\n        id\n      }\n    }\n  }\n  messagesConnection {\n    totalCount\n  }\n}\n\nfragment Conversations_me on Me {\n  conversationsConnection(first: 25) {\n    edges {\n      cursor\n      node {\n        id\n        internalID\n        lastMessage\n        ...ConversationSnippet_conversation\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n"
+    "text": "query routes_ConversationQuery {\n  me {\n    ...ConversationApp_me\n    id\n  }\n}\n\nfragment ConversationApp_me on Me {\n  conversationsConnection(first: 25) {\n    edges {\n      node {\n        internalID\n        to {\n          name\n          id\n        }\n        id\n      }\n    }\n  }\n  ...ConversationList_me\n}\n\nfragment ConversationList_me on Me {\n  conversationsConnection(first: 25) {\n    edges {\n      cursor\n      node {\n        id\n        internalID\n        lastMessage\n        ...ConversationSnippet_conversation\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n\nfragment ConversationSnippet_conversation on Conversation {\n  internalID\n  to {\n    name\n    id\n  }\n  lastMessage\n  lastMessageAt\n  unread\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        date\n        title\n        artistNames\n        image {\n          url\n        }\n      }\n      ... on Show {\n        fair {\n          name\n          id\n        }\n        name\n        coverImage {\n          url\n        }\n      }\n      ... on Node {\n        id\n      }\n    }\n  }\n  messagesConnection {\n    totalCount\n  }\n}\n"
   }
 };
 })();

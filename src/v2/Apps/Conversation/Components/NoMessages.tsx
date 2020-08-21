@@ -1,6 +1,6 @@
 import { Box, Button, Flex, Sans } from "@artsy/palette"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
-import { EmptyInboxHeader } from "./InboxHeaders"
+import { EmptyInboxHeader } from "./EmptyInboxHeader"
 import React from "react"
 
 export const NoMessages = () => {
