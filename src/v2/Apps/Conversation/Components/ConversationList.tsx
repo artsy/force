@@ -1,5 +1,5 @@
 import { Box, Spinner, color, media } from "@artsy/palette"
-import { Conversations_me } from "v2/__generated__/Conversations_me.graphql"
+import { ConversationList_me } from "v2/__generated__/ConversationList_me.graphql"
 import React, { useState } from "react"
 import {
   RelayRefetchProp,
@@ -8,7 +8,7 @@ import {
 } from "react-relay"
 import { ConversationSnippetFragmentContainer as ConversationSnippet } from "./ConversationSnippet"
 import styled from "styled-components"
-import { ConversationListHeader } from "./InboxHeaders"
+import { ConversationListHeader } from "./ConversationListHeader"
 
 const Container = styled(Box)`
   height: 100%;
@@ -36,12 +36,12 @@ const SpinnerContainer = styled.div`
 export const PAGE_SIZE: number = 15
 
 interface ConversationsProps {
-  me: Conversations_me
+  me: ConversationList_me
   relay: RelayRefetchProp
   selectedConversationID: string
 }
 
-const Conversations: React.FC<ConversationsProps> = props => {
+const ConversationList: React.FC<ConversationsProps> = props => {
   const { me, selectedConversationID, relay } = props
   const conversations = me.conversationsConnection.edges
 
@@ -96,11 +96,11 @@ const Conversations: React.FC<ConversationsProps> = props => {
   )
 }
 
-export const ConversationsPaginationContainer = createPaginationContainer(
-  Conversations as React.ComponentType<ConversationsProps>,
+export const ConversationListPaginationContainer = createPaginationContainer(
+  ConversationList as React.ComponentType<ConversationsProps>,
   {
     me: graphql`
-      fragment Conversations_me on Me
+      fragment ConversationList_me on Me
         @argumentDefinitions(
           first: { type: "Int", defaultValue: 25 }
           last: { type: "Int" }
@@ -112,7 +112,7 @@ export const ConversationsPaginationContainer = createPaginationContainer(
           last: $last
           before: $before
           after: $after
-        ) @connection(key: "Conversations_conversationsConnection") {
+        ) @connection(key: "ConversationList_conversationsConnection") {
           edges {
             cursor
             node {
@@ -149,14 +149,14 @@ export const ConversationsPaginationContainer = createPaginationContainer(
       }
     },
     query: graphql`
-      query ConversationsQuery(
+      query ConversationListQuery(
         $first: Int!
         $last: Int
         $after: String
         $before: String
       ) {
         me {
-          ...Conversations_me
+          ...ConversationList_me
             @arguments(
               first: $first
               last: $last

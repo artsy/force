@@ -24,7 +24,7 @@ import ArtworkDetails from "v2/Components/Artwork/Metadata"
 import { zIndex } from "styled-system"
 import { debounce } from "lodash"
 import { getViewportDimensions } from "v2/Utils/viewport"
-import { DetailsHeader } from "./InboxHeaders"
+import { DetailsHeader } from "./DetailsHeader"
 
 const DETAIL_BOX_XL_ANIMATION = `transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);`
 const DETAIL_BOX_XS_ANIMATION = `transition: opacity 0.3s, z-index 0.3s;`

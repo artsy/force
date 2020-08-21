@@ -8,7 +8,7 @@ export type Conversation_me = {
         readonly internalID: string | null;
         readonly " $fragmentRefs": FragmentRefs<"Conversation_conversation" | "Details_conversation">;
     } | null;
-    readonly " $fragmentRefs": FragmentRefs<"Conversations_me">;
+    readonly " $fragmentRefs": FragmentRefs<"ConversationList_me">;
     readonly " $refType": "Conversation_me";
 };
 export type Conversation_me$data = Conversation_me;
@@ -69,10 +69,10 @@ const node: ReaderFragment = {
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "Conversations_me"
+      "name": "ConversationList_me"
     }
   ],
   "type": "Me"
 };
-(node as any).hash = '6a4b5e72a9ee9d1a352b37c4d9e83327';
+(node as any).hash = '769cd74107f8f254704a013eb41dbcae';
 export default node;

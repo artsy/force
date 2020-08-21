@@ -3,7 +3,7 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type Conversations_me = {
+export type ConversationList_me = {
     readonly conversationsConnection: {
         readonly edges: ReadonlyArray<{
             readonly cursor: string;
@@ -21,12 +21,12 @@ export type Conversations_me = {
             readonly startCursor: string | null;
         };
     } | null;
-    readonly " $refType": "Conversations_me";
+    readonly " $refType": "ConversationList_me";
 };
-export type Conversations_me$data = Conversations_me;
-export type Conversations_me$key = {
-    readonly " $data"?: Conversations_me$data;
-    readonly " $fragmentRefs": FragmentRefs<"Conversations_me">;
+export type ConversationList_me$data = ConversationList_me;
+export type ConversationList_me$key = {
+    readonly " $data"?: ConversationList_me$data;
+    readonly " $fragmentRefs": FragmentRefs<"ConversationList_me">;
 };
 
 
@@ -71,14 +71,14 @@ const node: ReaderFragment = {
       }
     ]
   },
-  "name": "Conversations_me",
+  "name": "ConversationList_me",
   "selections": [
     {
       "alias": "conversationsConnection",
       "args": null,
       "concreteType": "ConversationConnection",
       "kind": "LinkedField",
-      "name": "__Conversations_conversationsConnection_connection",
+      "name": "__ConversationList_conversationsConnection_connection",
       "plural": false,
       "selections": [
         {
@@ -188,5 +188,5 @@ const node: ReaderFragment = {
   ],
   "type": "Me"
 };
-(node as any).hash = '9ce7999243d62714276fee2e39f94ffe';
+(node as any).hash = '81c8754e57ad661670bdc6f4f9b0c5ca';
 export default node;

@@ -3,34 +3,55 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type ConversationsQueryVariables = {
+export type ConversationListQueryVariables = {
     first: number;
     last?: number | null;
     after?: string | null;
     before?: string | null;
 };
-export type ConversationsQueryResponse = {
+export type ConversationListQueryResponse = {
     readonly me: {
-        readonly " $fragmentRefs": FragmentRefs<"Conversations_me">;
+        readonly " $fragmentRefs": FragmentRefs<"ConversationList_me">;
     } | null;
 };
-export type ConversationsQuery = {
-    readonly response: ConversationsQueryResponse;
-    readonly variables: ConversationsQueryVariables;
+export type ConversationListQuery = {
+    readonly response: ConversationListQueryResponse;
+    readonly variables: ConversationListQueryVariables;
 };
 
 
 
 /*
-query ConversationsQuery(
+query ConversationListQuery(
   $first: Int!
   $last: Int
   $after: String
   $before: String
 ) {
   me {
-    ...Conversations_me_pbnwq
+    ...ConversationList_me_pbnwq
     id
+  }
+}
+
+fragment ConversationList_me_pbnwq on Me {
+  conversationsConnection(first: $first, last: $last, before: $before, after: $after) {
+    edges {
+      cursor
+      node {
+        id
+        internalID
+        lastMessage
+        ...ConversationSnippet_conversation
+        __typename
+      }
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+      hasPreviousPage
+      startCursor
+    }
   }
 }
 
@@ -71,27 +92,6 @@ fragment ConversationSnippet_conversation on Conversation {
   }
   messagesConnection {
     totalCount
-  }
-}
-
-fragment Conversations_me_pbnwq on Me {
-  conversationsConnection(first: $first, last: $last, before: $before, after: $after) {
-    edges {
-      cursor
-      node {
-        id
-        internalID
-        lastMessage
-        ...ConversationSnippet_conversation
-        __typename
-      }
-    }
-    pageInfo {
-      endCursor
-      hasNextPage
-      hasPreviousPage
-      startCursor
-    }
   }
 }
 */
@@ -184,7 +184,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "ConversationsQuery",
+    "name": "ConversationListQuery",
     "selections": [
       {
         "alias": null,
@@ -197,7 +197,7 @@ return {
           {
             "args": (v1/*: any*/),
             "kind": "FragmentSpread",
-            "name": "Conversations_me"
+            "name": "ConversationList_me"
           }
         ],
         "storageKey": null
@@ -209,7 +209,7 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "ConversationsQuery",
+    "name": "ConversationListQuery",
     "selections": [
       {
         "alias": null,
@@ -449,7 +449,7 @@ return {
             "args": (v1/*: any*/),
             "filters": null,
             "handle": "connection",
-            "key": "Conversations_conversationsConnection",
+            "key": "ConversationList_conversationsConnection",
             "kind": "LinkedHandle",
             "name": "conversationsConnection"
           },
@@ -462,11 +462,11 @@ return {
   "params": {
     "id": null,
     "metadata": {},
-    "name": "ConversationsQuery",
+    "name": "ConversationListQuery",
     "operationKind": "query",
-    "text": "query ConversationsQuery(\n  $first: Int!\n  $last: Int\n  $after: String\n  $before: String\n) {\n  me {\n    ...Conversations_me_pbnwq\n    id\n  }\n}\n\nfragment ConversationSnippet_conversation on Conversation {\n  internalID\n  to {\n    name\n    id\n  }\n  lastMessage\n  lastMessageAt\n  unread\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        date\n        title\n        artistNames\n        image {\n          url\n        }\n      }\n      ... on Show {\n        fair {\n          name\n          id\n        }\n        name\n        coverImage {\n          url\n        }\n      }\n      ... on Node {\n        id\n      }\n    }\n  }\n  messagesConnection {\n    totalCount\n  }\n}\n\nfragment Conversations_me_pbnwq on Me {\n  conversationsConnection(first: $first, last: $last, before: $before, after: $after) {\n    edges {\n      cursor\n      node {\n        id\n        internalID\n        lastMessage\n        ...ConversationSnippet_conversation\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n"
+    "text": "query ConversationListQuery(\n  $first: Int!\n  $last: Int\n  $after: String\n  $before: String\n) {\n  me {\n    ...ConversationList_me_pbnwq\n    id\n  }\n}\n\nfragment ConversationList_me_pbnwq on Me {\n  conversationsConnection(first: $first, last: $last, before: $before, after: $after) {\n    edges {\n      cursor\n      node {\n        id\n        internalID\n        lastMessage\n        ...ConversationSnippet_conversation\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n\nfragment ConversationSnippet_conversation on Conversation {\n  internalID\n  to {\n    name\n    id\n  }\n  lastMessage\n  lastMessageAt\n  unread\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        date\n        title\n        artistNames\n        image {\n          url\n        }\n      }\n      ... on Show {\n        fair {\n          name\n          id\n        }\n        name\n        coverImage {\n          url\n        }\n      }\n      ... on Node {\n        id\n      }\n    }\n  }\n  messagesConnection {\n    totalCount\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'ad09c5f9c49de156acde51a82fc57fcb';
+(node as any).hash = 'b0401378c83d1d0d4e560d978309a2c6';
 export default node;

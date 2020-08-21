@@ -14,7 +14,7 @@ export type ConversationApp_me = {
             } | null;
         } | null> | null;
     } | null;
-    readonly " $fragmentRefs": FragmentRefs<"Conversations_me">;
+    readonly " $fragmentRefs": FragmentRefs<"ConversationList_me">;
     readonly " $refType": "ConversationApp_me";
 };
 export type ConversationApp_me$data = ConversationApp_me;
@@ -138,10 +138,10 @@ const node: ReaderFragment = {
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "Conversations_me"
+      "name": "ConversationList_me"
     }
   ],
   "type": "Me"
 };
-(node as any).hash = '0576ce0ca5c4e87d01fa4b031b061fac';
+(node as any).hash = '7b32208e71cb364f107200604f93ec26';
 export default node;

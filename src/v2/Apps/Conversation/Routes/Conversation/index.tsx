@@ -2,7 +2,7 @@ import { Box, Flex, Title } from "@artsy/palette"
 import { Conversation_me } from "v2/__generated__/Conversation_me.graphql"
 import { AppContainer } from "v2/Apps/Components/AppContainer"
 import { ConversationPaginationContainer as Conversation } from "v2/Apps/Conversation/Components/Conversation"
-import { ConversationsPaginationContainer as Conversations } from "v2/Apps/Conversation/Components/Conversations"
+import { ConversationListPaginationContainer as ConversationList } from "v2/Apps/Conversation/Components/ConversationList"
 import { findCurrentRoute } from "v2/Artsy/Router/Utils/findCurrentRoute"
 import { Match } from "found"
 import React, { useState } from "react"
@@ -48,7 +48,7 @@ export const ConversationRoute: React.FC<ConversationRouteProps> = props => {
       <ConstrainedHeightContainer>
         <ConversationContainer>
           <Media greaterThan="sm">
-            <Conversations
+            <ConversationList
               me={me as any}
               selectedConversationID={me.conversation.internalID}
             />
@@ -76,7 +76,7 @@ export const ConversationPaginationContainer = createRefetchContainer(
     me: graphql`
       fragment Conversation_me on Me
         @argumentDefinitions(conversationID: { type: "String!" }) {
-        ...Conversations_me
+        ...ConversationList_me
         conversation(id: $conversationID) {
           internalID
           ...Conversation_conversation

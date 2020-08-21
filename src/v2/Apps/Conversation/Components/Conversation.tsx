@@ -13,7 +13,7 @@ import { Reply } from "./Reply"
 import { ConversationMessagesFragmentContainer as ConversationMessages } from "./ConversationMessages"
 import { UpdateConversation } from "../Mutation/UpdateConversationMutation"
 import styled from "styled-components"
-import { ConversationPanelHeader } from "./InboxHeaders"
+import { ConversationHeader } from "./ConversationHeader"
 
 export interface ConversationProps {
   conversation: Conversation_conversation
@@ -88,7 +88,7 @@ const Conversation: React.FC<ConversationProps> = props => {
 
   return (
     <Flex flexDirection="column">
-      <ConversationPanelHeader
+      <ConversationHeader
         partnerName={conversation.to.name}
         showDetails={showDetails}
         setShowDetails={setShowDetails}
