@@ -1,4 +1,7 @@
-import { Flex, Sans, Serif, Spinner } from "@artsy/palette"
+import { Spinner } from "@artsy/palette/dist/elements/Spinner"
+import { Serif } from "@artsy/palette/dist/elements/Typography"
+import { Sans } from "@artsy/palette/dist/elements/Typography"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
 import React from "react"
 import { graphql } from "react-relay"
 

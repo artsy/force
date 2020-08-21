@@ -1,4 +1,6 @@
-import { Flex, Sans, color } from "@artsy/palette"
+import { Sans } from "@artsy/palette/dist/elements/Typography"
+import { color } from "@artsy/palette/dist/helpers/color"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
 import { ModalWidth, ModalWrapper } from "v2/Components/Modal/ModalWrapper"
 import React from "react"
 import styled from "styled-components"

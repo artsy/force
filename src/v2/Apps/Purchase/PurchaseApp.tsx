@@ -7,7 +7,7 @@ import { Title } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
 import { userIsAdmin } from "v2/Utils/user"
 import { PurchaseHistoryFragmentContainer as PurchaseHistory } from "./Components/PurchaseHistory"
-import { Spacer } from "@artsy/palette"
+import { Spacer } from "@artsy/palette/dist/elements/Spacer"
 
 export interface PurchaseAppProps {
   me: PurchaseApp_me

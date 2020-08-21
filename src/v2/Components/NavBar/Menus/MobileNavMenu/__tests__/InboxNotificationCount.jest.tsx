@@ -1,5 +1,5 @@
 import { mount } from "enzyme"
-import { Sans } from "@artsy/palette"
+import { Sans } from "@artsy/palette/dist/elements/Typography"
 import React from "react"
 import { InboxNotificationCount } from "../InboxNotificationCount"
 

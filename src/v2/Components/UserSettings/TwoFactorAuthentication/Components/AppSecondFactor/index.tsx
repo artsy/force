@@ -1,13 +1,12 @@
 import {
   BorderBox,
   BorderBoxProps,
-  Button,
-  Flex,
-  Link,
-  Modal,
-  Sans,
-  Serif,
-} from "@artsy/palette"
+} from "@artsy/palette/dist/elements/BorderBox"
+import { Button } from "@artsy/palette/dist/elements/Button"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
+import { Link } from "@artsy/palette/dist/elements/Link"
+import { Modal } from "@artsy/palette/dist/elements/Modal"
+import { Sans, Serif } from "@artsy/palette/dist/elements/Typography"
 import React, { useState } from "react"
 import { RelayRefetchProp, createFragmentContainer, graphql } from "react-relay"
 import request from "superagent"
@@ -153,26 +152,26 @@ export const AppSecondFactor: React.FC<AppSecondFactorProps> = props => {
         </Flex>
         <Flex mt={[3, 0]} flexDirection={["column", "row"]} alignItems="center">
           {me.appSecondFactors.length &&
-            me.appSecondFactors[0].__typename === "AppSecondFactor" ? (
-              <>
-                <Sans color="black60" size="3" weight="medium">
-                  {me.appSecondFactors[0].name || "Unnamed"}
-                </Sans>
-                <DisableButton width={["100%", "auto"]} ml={[0, 1]} mt={[1, 0]} />
-                <SetupButton
-                  width={["100%", "auto"]}
-                  ml={[0, 1]}
-                  mt={[1, 0]}
-                  variant="secondaryGray"
-                >
-                  Edit
+          me.appSecondFactors[0].__typename === "AppSecondFactor" ? (
+            <>
+              <Sans color="black60" size="3" weight="medium">
+                {me.appSecondFactors[0].name || "Unnamed"}
+              </Sans>
+              <DisableButton width={["100%", "auto"]} ml={[0, 1]} mt={[1, 0]} />
+              <SetupButton
+                width={["100%", "auto"]}
+                ml={[0, 1]}
+                mt={[1, 0]}
+                variant="secondaryGray"
+              >
+                Edit
               </SetupButton>
-              </>
-            ) : (
-              <SetupButton width={["100%", "auto"]} ml={[0, 1]} mt={[1, 0]}>
-                Set up
-              </SetupButton>
-            )}
+            </>
+          ) : (
+            <SetupButton width={["100%", "auto"]} ml={[0, 1]} mt={[1, 0]}>
+              Set up
+            </SetupButton>
+          )}
         </Flex>
       </Flex>
       <AppSecondFactorModal

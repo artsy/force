@@ -3,7 +3,9 @@ import styled from "styled-components"
 import { FormSwitcher } from "v2/Components/Authentication/FormSwitcher"
 import { handleSubmit } from "../helpers"
 import { ModalOptions, ModalType } from "v2/Components/Authentication/Types"
-import { Box, Flex, color } from "@artsy/palette"
+import { color } from "@artsy/palette/dist/helpers/color"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
+import { Box } from "@artsy/palette/dist/elements/Box"
 
 interface Props {
   type: string

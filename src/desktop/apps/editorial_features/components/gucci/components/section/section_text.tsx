@@ -4,7 +4,10 @@ import styled from "styled-components"
 import { data as sd } from "sharify"
 import { Share } from "@artsy/reaction/dist/Components/Publishing/Byline/Share"
 import { Text } from "@artsy/reaction/dist/Components/Publishing"
-import { Flex, Sans, media, space } from "@artsy/palette"
+import { media } from "@artsy/palette/dist/helpers/media"
+import { space } from "@artsy/palette/dist/helpers/space"
+import { Sans } from "@artsy/palette/dist/elements/Typography"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
 import { Media } from "@artsy/reaction/dist/Utils/Responsive"
 
 interface SectionTextProps {

@@ -1,4 +1,6 @@
-import { Grid, Theme, injectGlobalStyles, themeProps } from "@artsy/palette"
+import { Grid } from "@artsy/palette/dist/elements/Grid"
+import { Theme, themeProps } from "@artsy/palette/dist/Theme"
+import { injectGlobalStyles } from "@artsy/palette/dist/helpers/injectGlobalStyles"
 import * as Sentry from "@sentry/browser"
 import { SystemContextProvider, track } from "v2/Artsy"
 import { RouteConfig } from "found"

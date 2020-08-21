@@ -1,5 +1,5 @@
-import { Button } from "@artsy/palette"
-import { Stepper } from "@artsy/palette"
+import { Button } from "@artsy/palette/dist/elements/Button"
+import { Stepper } from "@artsy/palette/dist/elements/Stepper"
 import { ArtworkSummaryItemFragmentContainer } from "v2/Apps/Order/Components/ArtworkSummaryItem"
 import { ConditionsOfSaleDisclaimer } from "v2/Apps/Order/Components/ConditionsOfSaleDisclaimer"
 import { CreditCardSummaryItemFragmentContainer } from "v2/Apps/Order/Components/CreditCardSummaryItem"
@@ -67,10 +67,7 @@ export class OrderAppTestPage extends RootTestPage {
   }
 
   async dismissModal() {
-    this.modalDialog
-      .find(ModalButton)
-      .last()
-      .simulate("click")
+    this.modalDialog.find(ModalButton).last().simulate("click")
     await this.update()
   }
 

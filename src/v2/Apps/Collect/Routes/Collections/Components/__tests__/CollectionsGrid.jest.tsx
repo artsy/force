@@ -1,4 +1,4 @@
-import { EntityHeader } from "@artsy/palette"
+import { EntityHeader } from "@artsy/palette/dist/elements/EntityHeader"
 import { CollectionsFixture } from "v2/Apps/__tests__/Fixtures/Collections"
 import { mount } from "enzyme"
 import React from "react"

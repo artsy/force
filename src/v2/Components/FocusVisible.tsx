@@ -1,5 +1,5 @@
 import "focus-visible"
-import { color } from "@artsy/palette"
+import { color } from "@artsy/palette/dist/helpers/color"
 import { createGlobalStyle } from "styled-components"
 
 export const FocusVisible = createGlobalStyle`

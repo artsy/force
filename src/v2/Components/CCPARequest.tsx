@@ -1,15 +1,12 @@
-import {
-  Box,
-  Button,
-  CheckCircleIcon,
-  Input,
-  Link,
-  Modal,
-  Sans,
-  Separator,
-  Serif,
-  TextArea,
-} from "@artsy/palette"
+import { Box } from "@artsy/palette/dist/elements/Box"
+import { Button } from "@artsy/palette/dist/elements/Button"
+import { CheckCircleIcon } from "@artsy/palette/dist/svgs/CheckCircleIcon"
+import { Input } from "@artsy/palette/dist/elements/Input"
+import { Link } from "@artsy/palette/dist/elements/Link"
+import { Modal } from "@artsy/palette/dist/elements/Modal"
+import { Sans, Serif } from "@artsy/palette/dist/elements/Typography"
+import { Separator } from "@artsy/palette/dist/elements/Separator"
+import { TextArea } from "@artsy/palette/dist/elements/TextArea"
 import { CCPARequestMutation } from "v2/__generated__/CCPARequestMutation.graphql"
 import { useSystemContext } from "v2/Artsy"
 import React, { useEffect, useState } from "react"
@@ -250,13 +247,13 @@ export const CCPARequest: React.SFC<Props> = props => {
       setNotes={setNotes.bind(this)}
     />
   ) : (
-    <LoggedInContents
-      notes={notes}
-      email={userEmail}
-      triggeredValidation={triggeredValidation}
-      setNotes={setNotes.bind(this)}
-    />
-  )
+        <LoggedInContents
+          notes={notes}
+          email={userEmail}
+          triggeredValidation={triggeredValidation}
+          setNotes={setNotes.bind(this)}
+        />
+      )
 
   useEffect(() => {
     if (clickedSubmit) {
@@ -287,16 +284,16 @@ export const CCPARequest: React.SFC<Props> = props => {
       Return to Artsy
     </Button>
   ) : (
-    <Button
-      width="100%"
-      onClick={() => {
-        setTriggeredValidation(true)
-        setClickedSubmit(true)
-      }}
-    >
-      Send message
-    </Button>
-  )
+      <Button
+        width="100%"
+        onClick={() => {
+          setTriggeredValidation(true)
+          setClickedSubmit(true)
+        }}
+      >
+        Send message
+      </Button>
+    )
 
   const onClose = () => {
     setEmail(null)

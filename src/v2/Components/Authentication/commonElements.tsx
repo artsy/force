@@ -3,15 +3,11 @@ import React from "react"
 import styled from "styled-components"
 export { Footer } from "./Footer"
 export { TermsOfServiceCheckbox } from "./TermsOfServiceCheckbox"
-import {
-  Box,
-  Button,
-  ButtonProps,
-  Flex,
-  Link,
-  Sans,
-  Serif,
-} from "@artsy/palette"
+import { Box } from "@artsy/palette/dist/elements/Box"
+import { Button, ButtonProps } from "@artsy/palette/dist/elements/Button"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
+import { Link } from "@artsy/palette/dist/elements/Link"
+import { Sans, Serif } from "@artsy/palette/dist/elements/Typography"
 
 export const FormContainer = styled.form<{ height?: number }>`
   display: flex;

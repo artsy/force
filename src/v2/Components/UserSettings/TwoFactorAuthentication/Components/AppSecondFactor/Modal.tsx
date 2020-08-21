@@ -1,4 +1,9 @@
-import { Box, Button, Flex, Input, Modal, Sans } from "@artsy/palette"
+import { Input } from "@artsy/palette/dist/elements/Input"
+import { Modal } from "@artsy/palette/dist/elements/Modal"
+import { Button } from "@artsy/palette/dist/elements/Button"
+import { Sans } from "@artsy/palette/dist/elements/Typography"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import { CreateAppSecondFactorMutationResponse } from "v2/__generated__/CreateAppSecondFactorMutation.graphql"
 import { useSystemContext } from "v2/Artsy"
 import { Formik, FormikHelpers as FormikActions, FormikProps } from "formik"
@@ -153,14 +158,14 @@ const InnerForm: React.FC<InnerFormProps> = ({
             {secondFactor.otpSecret}
           </Sans>
         ) : (
-            <Button
-              size="small"
-              variant="secondaryGray"
-              onClick={() => setShowSecret(true)}
-            >
-              Show secret
-            </Button>
-          )}
+          <Button
+            size="small"
+            variant="secondaryGray"
+            onClick={() => setShowSecret(true)}
+          >
+            Show secret
+          </Button>
+        )}
       </Box>
       <Sans mt={2} color="black60" size="3">
         2. Enter the six-digit code from the application to complete the

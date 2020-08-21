@@ -1,16 +1,13 @@
 import React from "react"
 
-import {
-  AuctionIcon,
-  Box,
-  Button,
-  EditIcon,
-  EnvelopeIcon,
-  Flex,
-  Sans,
-  Serif,
-  Spacer,
-} from "@artsy/palette"
+import { AuctionIcon } from "@artsy/palette/dist/svgs/AuctionIcon"
+import { EditIcon } from "@artsy/palette/dist/svgs/EditIcon"
+import { EnvelopeIcon } from "@artsy/palette/dist/svgs/EnvelopeIcon"
+import { Box } from "@artsy/palette/dist/elements/Box"
+import { Button } from "@artsy/palette/dist/elements/Button"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
+import { Sans, Serif } from "@artsy/palette/dist/elements/Typography"
+import { Spacer } from "@artsy/palette/dist/elements/Spacer"
 
 import { ArtistConsignHowToSell_artist } from "v2/__generated__/ArtistConsignHowToSell_artist.graphql"
 

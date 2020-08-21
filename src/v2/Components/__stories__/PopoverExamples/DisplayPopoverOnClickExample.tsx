@@ -1,4 +1,4 @@
-import { Col, Row } from "@artsy/palette"
+import { Col, Row } from "@artsy/palette/dist/elements/Grid"
 import React from "react"
 import styled from "styled-components"
 

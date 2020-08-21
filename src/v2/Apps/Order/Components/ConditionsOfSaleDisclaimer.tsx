@@ -1,4 +1,5 @@
-import { Link, Sans, SansProps } from "@artsy/palette"
+import { Link } from "@artsy/palette/dist/elements/Link"
+import { Sans, SansProps } from "@artsy/palette/dist/elements/Typography"
 import React from "react"
 
 export const ConditionsOfSaleDisclaimer: React.SFC<Partial<

@@ -2,7 +2,8 @@ import { Metadata_artwork } from "v2/__generated__/Metadata_artwork.graphql"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { DetailsFragmentContainer as Details } from "./Details"
-import { Box, BoxProps, Link } from "@artsy/palette"
+import { Link } from "@artsy/palette/dist/elements/Link"
+import { Box, BoxProps } from "@artsy/palette/dist/elements/Box"
 
 export interface MetadataProps extends BoxProps {
   artwork: Metadata_artwork

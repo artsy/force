@@ -1,4 +1,6 @@
-import { Box, Flex, SelectSmall } from "@artsy/palette"
+import { SelectSmall } from "@artsy/palette/dist/elements/Select"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import React from "react"
 import { useArtworkFilterContext } from "../ArtworkFilterContext"
 

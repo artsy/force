@@ -1,4 +1,7 @@
-import { Button, Col, Flex, Row, Spacer } from "@artsy/palette"
+import { Col, Row } from "@artsy/palette/dist/elements/Grid"
+import { Spacer } from "@artsy/palette/dist/elements/Spacer"
+import { Button } from "@artsy/palette/dist/elements/Button"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
 import { Counter_order } from "v2/__generated__/Counter_order.graphql"
 import { CounterSubmitMutation } from "v2/__generated__/CounterSubmitMutation.graphql"
 import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"

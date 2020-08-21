@@ -1,4 +1,7 @@
-import { BorderBox, Sans, color, themeProps } from "@artsy/palette"
+import { BorderBox } from "@artsy/palette/dist/elements/BorderBox"
+import { Sans } from "@artsy/palette/dist/elements/Typography"
+import { color } from "@artsy/palette/dist/helpers/color"
+import { themeProps } from "@artsy/palette/dist/Theme"
 import { fontFamily } from "@artsy/palette/dist/platform/fonts"
 import {
   BorderProps as InputBorderProps,

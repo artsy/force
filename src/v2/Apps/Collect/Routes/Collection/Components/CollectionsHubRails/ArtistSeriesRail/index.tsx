@@ -1,4 +1,6 @@
-import { Box, Serif, color } from "@artsy/palette"
+import { Serif } from "@artsy/palette/dist/elements/Typography"
+import { color } from "@artsy/palette/dist/helpers/color"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import { ArtistSeriesRail_collectionGroup } from "v2/__generated__/ArtistSeriesRail_collectionGroup.graphql"
 import { AnalyticsSchema } from "v2/Artsy/Analytics"
 import { useTracking } from "v2/Artsy/Analytics/useTracking"

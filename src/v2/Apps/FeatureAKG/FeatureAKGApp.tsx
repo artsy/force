@@ -1,4 +1,5 @@
-import { Col, Row, Separator } from "@artsy/palette"
+import { Col, Row } from "@artsy/palette/dist/elements/Grid"
+import { Separator } from "@artsy/palette/dist/elements/Separator"
 import { FeatureAKGApp_viewer } from "v2/__generated__/FeatureAKGApp_viewer.graphql"
 import { AppContainer } from "v2/Apps/Components/AppContainer"
 import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"

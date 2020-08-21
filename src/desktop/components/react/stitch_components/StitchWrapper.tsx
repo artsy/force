@@ -2,7 +2,7 @@ import React from "react"
 import { data as sd } from "sharify"
 import { SystemContextProvider } from "v2/Artsy"
 import { MediaContextProvider } from "v2/Utils/Responsive"
-import { Theme } from "@artsy/palette"
+import { Theme } from "@artsy/palette/dist/Theme"
 import { FocusVisible } from "v2/Components/FocusVisible"
 
 const mediator = require("desktop/lib/mediator.coffee")

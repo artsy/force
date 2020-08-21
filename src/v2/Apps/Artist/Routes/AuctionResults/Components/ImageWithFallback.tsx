@@ -1,4 +1,6 @@
-import { Box, Flex, NoArtworkIcon } from "@artsy/palette"
+import { NoArtworkIcon } from "@artsy/palette/dist/svgs/NoArtworkIcon"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import React, { useState } from "react"
 
 export const ImageWithFallback = ({ Fallback, ...props }) => {

@@ -7,7 +7,7 @@ import { FollowProfileButton_profile } from "../../__generated__/FollowProfileBu
 import { FollowButton } from "./Button"
 import { FollowTrackingData } from "./Typings"
 
-import { ButtonProps } from "@artsy/palette"
+import { ButtonProps } from "@artsy/palette/dist/elements/Button"
 import {
   RelayProp,
   commitMutation,

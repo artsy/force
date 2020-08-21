@@ -1,7 +1,8 @@
 import React from "react"
 import { storiesOf } from "storybook/storiesOf"
 import { Masonry } from "../Masonry"
-import { Box, BoxProps, Sans } from "@artsy/palette"
+import { Sans } from "@artsy/palette/dist/elements/Typography"
+import { Box, BoxProps } from "@artsy/palette/dist/elements/Box"
 
 const rand = (min: number, max: number) =>
   Math.floor(Math.random() * (max - min)) + min

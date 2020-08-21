@@ -3,14 +3,12 @@ import { slugify } from "underscore.string"
 import { crop } from "v2/Utils/resizer"
 import { Media } from "v2/Utils/Responsive"
 
-import {
-  Box,
-  EntityHeader,
-  Flex,
-  Sans,
-  Separator,
-  Spacer,
-} from "@artsy/palette"
+import { Box } from "@artsy/palette/dist/elements/Box"
+import { EntityHeader } from "@artsy/palette/dist/elements/EntityHeader"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
+import { Sans } from "@artsy/palette/dist/elements/Typography"
+import { Separator } from "@artsy/palette/dist/elements/Separator"
+import { Spacer } from "@artsy/palette/dist/elements/Spacer"
 import { Router } from "found"
 
 import styled from "styled-components"
@@ -66,7 +64,7 @@ export class CollectionsGrid extends Component<CollectionsGridProps> {
                     href={`/collection/${collection.slug}`}
                     imageUrl={imageUrl || undefined}
                     name={collection.title}
-                    onClick={(event) => {
+                    onClick={event => {
                       event.preventDefault()
                       router.push(`/collection/${collection.slug}`)
                     }}

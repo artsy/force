@@ -1,4 +1,5 @@
-import { Checkbox, LargeSelect } from "@artsy/palette"
+import { Checkbox } from "@artsy/palette/dist/elements/Checkbox"
+import { LargeSelect } from "@artsy/palette/dist/elements/Select"
 
 import { ValidFormValues } from "v2/Apps/Auction/Routes/__tests__/Utils/RegisterTestPage"
 import { Address, AddressForm } from "v2/Components/AddressForm"

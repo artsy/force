@@ -1,4 +1,5 @@
-import { Button, Sans } from "@artsy/palette"
+import { Button } from "@artsy/palette/dist/elements/Button"
+import { Sans } from "@artsy/palette/dist/elements/Typography"
 import { CreditCardInput } from "v2/Apps/Order/Components/CreditCardInput"
 import { mount } from "enzyme"
 import React from "react"
@@ -160,12 +161,9 @@ describe("PaymentForm", () => {
     fillAddressForm(paymentWrapper, validAddress)
     paymentWrapper.find(Button).simulate("click")
 
-    expect(
-      paymentWrapper
-        .find(CreditCardInput)
-        .find(Sans)
-        .html()
-    ).toContain("Your card number is invalid.")
+    expect(paymentWrapper.find(CreditCardInput).find(Sans).html()).toContain(
+      "Your card number is invalid."
+    )
   })
 
   it("shows an error modal when there is an error in CreateCreditCardPayload", () => {

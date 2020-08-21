@@ -1,4 +1,4 @@
-import { Flex } from "@artsy/palette"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
 import { TransactionDetailsSummaryItem_order } from "v2/__generated__/TransactionDetailsSummaryItem_order.graphql"
 import { mockResolver } from "v2/Apps/__tests__/Fixtures/Order"
 import { MockRelayRenderer } from "v2/DevTools"
@@ -36,17 +36,17 @@ const render = (
     ExtractProps<typeof TransactionDetailsSummaryItem>
   >
 ) => (
-    <MockRelayRenderer
-      Component={(props: any) => (
-        <TransactionDetailsSummaryItem {...extraComponentProps} {...props} />
-      )}
-      mockResolvers={mockResolver({
-        ...order,
-        ...extraOrderProps,
-      })}
-      query={orderQuery}
-    />
-  )
+  <MockRelayRenderer
+    Component={(props: any) => (
+      <TransactionDetailsSummaryItem {...extraComponentProps} {...props} />
+    )}
+    mockResolvers={mockResolver({
+      ...order,
+      ...extraOrderProps,
+    })}
+    query={orderQuery}
+  />
+)
 
 storiesOf("Apps/Order/Components", module).add(
   "TransactionDetailsSummary",

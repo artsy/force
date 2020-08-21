@@ -1,4 +1,6 @@
-import { Box, Flex, Title } from "@artsy/palette"
+import { Title } from "@artsy/palette/dist/svgs/Icon"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import { Conversation_me } from "v2/__generated__/Conversation_me.graphql"
 import { AppContainer } from "v2/Apps/Components/AppContainer"
 import { ConversationPaginationContainer as Conversation } from "v2/Apps/Conversation/Components/Conversation"

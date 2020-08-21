@@ -1,4 +1,5 @@
-import { Box, Spacer } from "@artsy/palette"
+import { Spacer } from "@artsy/palette/dist/elements/Spacer"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import { isEmpty } from "lodash"
 import React, { useEffect } from "react"
 import { RelayProp, createFragmentContainer, graphql } from "react-relay"

@@ -1,4 +1,4 @@
-import { CheckIcon } from "@artsy/palette"
+import { CheckIcon } from "@artsy/palette/dist/svgs/CheckIcon"
 import { garamond } from "v2/Assets/Fonts"
 import React, { Component } from "react"
 import styled from "styled-components"
@@ -104,7 +104,7 @@ const CheckboxInput = styled.input`
     background-color: ${colors.white};
     border: 2px solid
       ${({ error }: { error?: boolean }) =>
-        error ? colors.redMedium : colors.grayRegular};
+    error ? colors.redMedium : colors.grayRegular};
   }
 
   &:checked::after {

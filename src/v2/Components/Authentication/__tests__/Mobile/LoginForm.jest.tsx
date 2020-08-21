@@ -9,7 +9,7 @@ import { mount } from "enzyme"
 import React from "react"
 import { ChangeEvents } from "../fixtures"
 import { flushPromiseQueue } from "v2/DevTools"
-import { Link } from "@artsy/palette"
+import { Link } from "@artsy/palette/dist/elements/Link"
 
 jest.mock("sharify", () => ({
   data: { RECAPTCHA_KEY: "recaptcha-api-key" },
@@ -126,10 +126,7 @@ describe("MobileLoginForm", () => {
     await flushPromiseQueue()
     wrapper.update()
 
-    wrapper
-      .find(ForgotPassword)
-      .find(Link)
-      .simulate("click")
+    wrapper.find(ForgotPassword).find(Link).simulate("click")
     expect(location.assign).toBeCalledWith(
       "/forgot?intent=login&contextModule=header&destination=/"
     )
@@ -145,10 +142,7 @@ describe("MobileLoginForm", () => {
     await flushPromiseQueue()
     wrapper.update()
 
-    wrapper
-      .find(ForgotPassword)
-      .find(Link)
-      .simulate("click")
+    wrapper.find(ForgotPassword).find(Link).simulate("click")
     expect(location.assign).toBeCalledWith("/forgot")
   })
 

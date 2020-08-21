@@ -1,5 +1,7 @@
 import React from "react"
-import { ChevronIcon, Flex, Text } from "@artsy/palette"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
+import { Text } from "@artsy/palette/dist/elements/Text"
+import { ChevronIcon } from "@artsy/palette/dist/svgs/ChevronIcon"
 import { StyledLink } from "./StyledLink"
 
 interface ForwardLinkProps {

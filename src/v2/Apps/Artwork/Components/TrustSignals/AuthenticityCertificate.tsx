@@ -1,4 +1,7 @@
-import { CertificateIcon, Flex, Modal, Serif } from "@artsy/palette"
+import { CertificateIcon } from "@artsy/palette/dist/svgs/CertificateIcon"
+import { Modal } from "@artsy/palette/dist/elements/Modal"
+import { Serif } from "@artsy/palette/dist/elements/Typography"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
 import { AuthenticityCertificate_artwork } from "v2/__generated__/AuthenticityCertificate_artwork.graphql"
 import React, { useState } from "react"
 import { createFragmentContainer } from "react-relay"

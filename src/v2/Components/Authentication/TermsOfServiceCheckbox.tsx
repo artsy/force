@@ -1,4 +1,5 @@
-import { Link, Serif } from "@artsy/palette"
+import { Link } from "@artsy/palette/dist/elements/Link"
+import { Serif } from "@artsy/palette/dist/elements/Typography"
 import Checkbox from "v2/Components/Checkbox"
 import React from "react"
 import styled from "styled-components"

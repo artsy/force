@@ -1,4 +1,7 @@
-import { Col, Row, Separator, Serif, Spacer } from "@artsy/palette"
+import { Col, Row } from "@artsy/palette/dist/elements/Grid"
+import { Separator } from "@artsy/palette/dist/elements/Separator"
+import { Spacer } from "@artsy/palette/dist/elements/Spacer"
+import { Serif } from "@artsy/palette/dist/elements/Typography"
 import React, { SFC } from "react"
 import { Media } from "v2/Utils/Responsive"
 

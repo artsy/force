@@ -1,4 +1,7 @@
-import { Button, Serif, Spacer, color } from "@artsy/palette"
+import { Spacer } from "@artsy/palette/dist/elements/Spacer"
+import { Serif } from "@artsy/palette/dist/elements/Typography"
+import { Button } from "@artsy/palette/dist/elements/Button"
+import { color } from "@artsy/palette/dist/helpers/color"
 import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
 import { garamond } from "v2/Assets/Fonts"
 import React from "react"

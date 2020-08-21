@@ -1,13 +1,10 @@
-import {
-  Box,
-  ChevronIcon,
-  Col,
-  Flex,
-  Row,
-  Sans,
-  Separator,
-  Spacer,
-} from "@artsy/palette"
+import { Box } from "@artsy/palette/dist/elements/Box"
+import { ChevronIcon } from "@artsy/palette/dist/svgs/ChevronIcon"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
+import { Col, Row } from "@artsy/palette/dist/elements/Grid"
+import { Sans } from "@artsy/palette/dist/elements/Typography"
+import { Separator } from "@artsy/palette/dist/elements/Separator"
+import { Spacer } from "@artsy/palette/dist/elements/Spacer"
 import { ArtistApp_artist } from "v2/__generated__/ArtistApp_artist.graphql"
 import { ArtistMetaFragmentContainer as ArtistMeta } from "v2/Apps/Artist/Components/ArtistMeta"
 import { NavigationTabsFragmentContainer as NavigationTabs } from "v2/Apps/Artist/Components/NavigationTabs"
@@ -72,39 +69,39 @@ export const ArtistApp: React.FC<ArtistAppProps> = props => {
                 <Spacer mb={2} />
               </>
             ) : (
-              /**
-               * If full page, then we take over the entire area; if not, then
-               * display the "Back to Artist link"
-               */
-              !route.displayFullPage && (
-                <>
-                  <Flex flexDirection="row" alignItems="center" my={3}>
-                    <ChevronIcon
-                      direction="left"
-                      color="black"
-                      height="18px"
-                      width="14px"
-                      top="-1px"
-                    />
-                    <Sans size="3" weight="medium" color="black100" ml="3px">
-                      <StyledLink
-                        to={`/artist/${artist.slug}`}
-                        onClick={() =>
-                          trackEvent({
-                            action_type: Schema.ActionType.Click,
-                            subject: "Back to artist link",
-                            destination_path: `/artist/${artist.slug}`,
-                          })
-                        }
-                      >
-                        {`Back to ${artist.name}`}
-                      </StyledLink>
-                    </Sans>
-                  </Flex>
-                  <Spacer mb={2} />
-                </>
-              )
-            )}
+                /**
+                 * If full page, then we take over the entire area; if not, then
+                 * display the "Back to Artist link"
+                 */
+                !route.displayFullPage && (
+                  <>
+                    <Flex flexDirection="row" alignItems="center" my={3}>
+                      <ChevronIcon
+                        direction="left"
+                        color="black"
+                        height="18px"
+                        width="14px"
+                        top="-1px"
+                      />
+                      <Sans size="3" weight="medium" color="black100" ml="3px">
+                        <StyledLink
+                          to={`/artist/${artist.slug}`}
+                          onClick={() =>
+                            trackEvent({
+                              action_type: Schema.ActionType.Click,
+                              subject: "Back to artist link",
+                              destination_path: `/artist/${artist.slug}`,
+                            })
+                          }
+                        >
+                          {`Back to ${artist.name}`}
+                        </StyledLink>
+                      </Sans>
+                    </Flex>
+                    <Spacer mb={2} />
+                  </>
+                )
+              )}
 
             <Box minHeight="30vh">{children}</Box>
           </Col>
@@ -126,8 +123,8 @@ export const ArtistApp: React.FC<ArtistAppProps> = props => {
         {route.displayFullPage ? (
           <Spacer mb={3} />
         ) : (
-          <Separator mt={6} mb={3} />
-        )}
+            <Separator mt={6} mb={3} />
+          )}
 
         <Row>
           <Col>

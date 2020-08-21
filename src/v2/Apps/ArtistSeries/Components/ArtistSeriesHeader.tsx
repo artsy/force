@@ -1,15 +1,13 @@
 import React from "react"
-import {
-  Box,
-  Col,
-  EntityHeader,
-  Flex,
-  HTML,
-  Image,
-  Row,
-  Sans,
-  Separator,
-} from "@artsy/palette"
+import { Box } from "@artsy/palette/dist/elements/Box"
+import { EntityHeader } from "@artsy/palette/dist/elements/EntityHeader"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
+import { Col, Row } from "@artsy/palette/dist/elements/Grid"
+import { HTML } from "@artsy/palette/dist/elements/HTML"
+import { Image } from "@artsy/palette/dist/elements/Image"
+import { Sans } from "@artsy/palette/dist/elements/Typography"
+import { Separator } from "@artsy/palette/dist/elements/Separator"
+import { unitlessBreakpoints } from "@artsy/palette/dist/Theme"
 import { Media } from "v2/Utils/Responsive"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FollowArtistButtonFragmentContainer as FollowArtistButton } from "v2/Components/FollowButton/FollowArtistButton"
@@ -23,7 +21,6 @@ import {
   followedArtist,
 } from "@artsy/cohesion"
 import styled from "styled-components"
-import { unitlessBreakpoints } from "@artsy/palette"
 import { AppContainer } from "v2/Apps/Components/AppContainer"
 
 interface ArtistSeriesHeaderProps {

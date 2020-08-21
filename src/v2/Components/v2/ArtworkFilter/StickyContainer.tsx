@@ -1,5 +1,7 @@
 import styled, { css } from "styled-components"
-import { Box, Flex, color } from "@artsy/palette"
+import { color } from "@artsy/palette/dist/helpers/color"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import React, { useEffect, useRef, useState } from "react"
 import { NAV_BAR_HEIGHT } from "v2/Components/NavBar"
 

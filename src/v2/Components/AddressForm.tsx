@@ -1,4 +1,8 @@
-import { Flex, Join, Sans, Serif, Spacer } from "@artsy/palette"
+import { Join } from "@artsy/palette/dist/elements/Join"
+import { Spacer } from "@artsy/palette/dist/elements/Spacer"
+import { Serif } from "@artsy/palette/dist/elements/Typography"
+import { Sans } from "@artsy/palette/dist/elements/Typography"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
 import { CountrySelect } from "v2/Components/CountrySelect"
 import Input from "v2/Components/Input"
 import React from "react"
@@ -51,7 +55,7 @@ interface AddressFormState {
 export class AddressForm extends React.Component<
   AddressFormProps,
   AddressFormState
-  > {
+> {
   state = {
     address: {
       ...emptyAddress,
@@ -121,7 +125,7 @@ export class AddressForm extends React.Component<
             <CountrySelect
               selected={
                 lockCountryToOrigin ||
-                  (lockCountriesToEU && !this.state.address.country)
+                (lockCountriesToEU && !this.state.address.country)
                   ? this.props.shippingCountry
                   : this.state.address.country
               }

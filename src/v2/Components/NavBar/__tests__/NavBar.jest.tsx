@@ -1,4 +1,6 @@
-import { BellIcon, EnvelopeIcon, SoloIcon } from "@artsy/palette"
+import { BellIcon } from "@artsy/palette/dist/svgs/BellIcon"
+import { EnvelopeIcon } from "@artsy/palette/dist/svgs/EnvelopeIcon"
+import { UserSingleIcon } from "@artsy/palette/dist/svgs/UserSingleIcon"
 import { SystemContextProvider } from "v2/Artsy"
 import { useTracking } from "v2/Artsy/Analytics/useTracking"
 import { mount } from "enzyme"
@@ -37,7 +39,7 @@ describe("NavBar", () => {
   }
 
   beforeEach(() => {
-    ;(useTracking as jest.Mock).mockImplementation(() => {
+    ; (useTracking as jest.Mock).mockImplementation(() => {
       return {
         trackEvent,
       }
@@ -87,7 +89,7 @@ describe("NavBar", () => {
       expect(wrapper.html()).toContain("Log in")
       expect(wrapper.html()).toContain("Sign up")
       expect(wrapper.find(BellIcon).length).toEqual(0)
-      expect(wrapper.find(SoloIcon).length).toEqual(0)
+      expect(wrapper.find(UserSingleIcon).length).toEqual(0)
     })
 
     it("renders logged in items", () => {
@@ -95,7 +97,7 @@ describe("NavBar", () => {
       expect(wrapper.html()).not.toContain("Log in")
       expect(wrapper.html()).not.toContain("Sign up")
       expect(wrapper.find(BellIcon).length).toEqual(1)
-      expect(wrapper.find(SoloIcon).length).toEqual(1)
+      expect(wrapper.find(UserSingleIcon).length).toEqual(1)
     })
 
     describe("lab features", () => {

@@ -1,4 +1,4 @@
-import { Flex } from "@artsy/palette"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
 import { FullArtworkFixture } from "v2/Apps/__tests__/Fixtures/Artwork/FullArtwork.fixture"
 import { MockRelayRenderer } from "v2/DevTools"
 import { cloneDeep } from "lodash"

@@ -1,4 +1,6 @@
-import { Box, Color, Serif } from "@artsy/palette"
+import { Color } from "@artsy/palette/dist/Theme"
+import { Serif } from "@artsy/palette/dist/elements/Typography"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import React from "react"
 
 interface SubheaderProps {

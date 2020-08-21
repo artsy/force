@@ -1,7 +1,7 @@
 import { storiesOf } from "@storybook/react"
 import React from "react"
 
-import { HelpIcon } from "@artsy/palette"
+import { QuestionCircleIcon } from "@artsy/palette/dist/svgs/QuestionCircleIcon"
 import { Tooltip } from "../Tooltip"
 
 function RenderTooltip(
@@ -18,7 +18,7 @@ function RenderTooltip(
         verticalAlign={verticalAlign}
         hoverWidth={hoverWidth}
       >
-        <HelpIcon />
+        <QuestionCircleIcon />
       </Tooltip>
     </div>
   )

@@ -1,4 +1,5 @@
-import { Link, TextArea, TextAreaChange } from "@artsy/palette"
+import { Link } from "@artsy/palette/dist/elements/Link"
+import { TextArea, TextAreaChange } from "@artsy/palette/dist/elements/TextArea"
 import { SystemContext } from "v2/Artsy"
 import React, { useContext } from "react"
 

@@ -1,4 +1,4 @@
-import { Tags } from "@artsy/palette"
+import { Tags } from "@artsy/palette/dist/elements/Tags"
 import { Genes_artist } from "v2/__generated__/Genes_artist.graphql"
 import React, { Component } from "react"
 import { createFragmentContainer, graphql } from "react-relay"

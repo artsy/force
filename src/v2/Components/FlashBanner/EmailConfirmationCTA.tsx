@@ -1,5 +1,6 @@
 import React from "react"
-import { Button, Sans } from "@artsy/palette"
+import { Button } from "@artsy/palette/dist/elements/Button"
+import { Sans } from "@artsy/palette/dist/elements/Typography"
 import {
   AnalyticsSchema as Schema,
   useSystemContext,

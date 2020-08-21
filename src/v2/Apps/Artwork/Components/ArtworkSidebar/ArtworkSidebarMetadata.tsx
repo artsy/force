@@ -1,4 +1,5 @@
-import { Box, Serif } from "@artsy/palette"
+import { Serif } from "@artsy/palette/dist/elements/Typography"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { get } from "v2/Utils/get"
@@ -14,7 +15,7 @@ export interface ArtworkSidebarMetadataProps {
 
 export class ArtworkSidebarMetadata extends React.Component<
   ArtworkSidebarMetadataProps
-  > {
+> {
   render() {
     const { artwork } = this.props
     const lotLabel = get(

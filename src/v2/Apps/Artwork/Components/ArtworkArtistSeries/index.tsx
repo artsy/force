@@ -5,7 +5,8 @@ import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { ArtistSeriesArtworkRailFragmentContainer as ArtistSeriesArtworkRail } from "v2/Apps/Artwork/Components/ArtworkArtistSeries/ArtistSeriesArtworkRail"
 import { ArtistSeriesRailFragmentContainer as ArtistSeriesRail } from "v2/Components/ArtistSeriesRail/ArtistSeriesRail"
 import { ArtworkArtistSeries_artwork } from "v2/__generated__/ArtworkArtistSeries_artwork.graphql"
-import { Separator, Spacer } from "@artsy/palette"
+import { Separator } from "@artsy/palette/dist/elements/Separator"
+import { Spacer } from "@artsy/palette/dist/elements/Spacer"
 
 interface ArtworkArtistSeriesProps {
   artwork: ArtworkArtistSeries_artwork

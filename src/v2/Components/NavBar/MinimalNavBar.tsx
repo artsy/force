@@ -1,4 +1,5 @@
-import { ArtsyLogoBlackIcon, Box } from "@artsy/palette"
+import { ArtsyLogoBlackIcon } from "@artsy/palette/dist/svgs/ArtsyLogoBlackIcon"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import { AppContainer } from "v2/Apps/Components/AppContainer"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import React from "react"

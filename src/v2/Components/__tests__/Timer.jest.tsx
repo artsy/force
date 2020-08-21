@@ -1,4 +1,4 @@
-import { Sans } from "@artsy/palette"
+import { Sans } from "@artsy/palette/dist/elements/Typography"
 import React from "react"
 import * as renderer from "react-test-renderer"
 import { Timer } from "../Timer"

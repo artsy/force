@@ -1,4 +1,4 @@
-import { Serif } from "@artsy/palette"
+import { Serif } from "@artsy/palette/dist/elements/Typography"
 import React from "react"
 
 export const CreditCardInstructions = () => {

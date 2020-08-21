@@ -1,4 +1,5 @@
-import { Box, space } from "@artsy/palette"
+import { space } from "@artsy/palette/dist/helpers/space"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import { DefaultHeader_headerArtworks } from "v2/__generated__/DefaultHeader_headerArtworks.graphql"
 import React, { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"

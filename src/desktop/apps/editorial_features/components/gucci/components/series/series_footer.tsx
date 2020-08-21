@@ -1,6 +1,8 @@
 import React from "react"
 import { PartnerBlock, Text } from "@artsy/reaction/dist/Components/Publishing"
-import { Box, Flex, Sans } from "@artsy/palette"
+import { Sans } from "@artsy/palette/dist/elements/Typography"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import { Media } from "@artsy/reaction/dist/Utils/Responsive"
 
 interface SeriesFooterProps {

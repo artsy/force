@@ -1,4 +1,6 @@
-import { Box, color, space } from "@artsy/palette"
+import { space } from "@artsy/palette/dist/helpers/space"
+import { color } from "@artsy/palette/dist/helpers/color"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import { growAndFadeIn } from "v2/Assets/Animations"
 import { garamond, unica } from "v2/Assets/Fonts"
 import React from "react"

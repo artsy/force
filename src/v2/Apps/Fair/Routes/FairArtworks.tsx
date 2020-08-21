@@ -1,4 +1,5 @@
-import { Box, Text } from "@artsy/palette"
+import { Box } from "@artsy/palette/dist/elements/Box"
+import { Text } from "@artsy/palette/dist/elements/Text"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FairArtworks_fair } from "v2/__generated__/FairArtworks_fair.graphql"

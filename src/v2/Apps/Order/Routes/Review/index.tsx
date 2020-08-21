@@ -1,13 +1,10 @@
-import {
-  Button,
-  Col,
-  Flex,
-  Join,
-  Message,
-  Row,
-  Spacer,
-  Box,
-} from "@artsy/palette"
+import { Button } from "@artsy/palette/dist/elements/Button"
+import { Col, Row } from "@artsy/palette/dist/elements/Grid"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
+import { Join } from "@artsy/palette/dist/elements/Join"
+import { Message } from "@artsy/palette/dist/elements/Message"
+import { Spacer } from "@artsy/palette/dist/elements/Spacer"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import { Review_order } from "v2/__generated__/Review_order.graphql"
 import { ReviewSubmitOfferOrderMutation } from "v2/__generated__/ReviewSubmitOfferOrderMutation.graphql"
 import { ReviewSubmitOrderMutation } from "v2/__generated__/ReviewSubmitOrderMutation.graphql"

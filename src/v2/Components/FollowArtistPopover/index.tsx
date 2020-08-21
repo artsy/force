@@ -1,13 +1,11 @@
-import {
-  BorderBox,
-  Box,
-  CloseIcon,
-  Flex,
-  Link,
-  Sans,
-  Separator,
-  space,
-} from "@artsy/palette"
+import { BorderBox } from "@artsy/palette/dist/elements/BorderBox"
+import { Box } from "@artsy/palette/dist/elements/Box"
+import { CloseIcon } from "@artsy/palette/dist/svgs/CloseIcon"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
+import { Link } from "@artsy/palette/dist/elements/Link"
+import { Sans } from "@artsy/palette/dist/elements/Typography"
+import { Separator } from "@artsy/palette/dist/elements/Separator"
+import { space } from "@artsy/palette/dist/helpers/space"
 import { FollowArtistPopover_artist } from "v2/__generated__/FollowArtistPopover_artist.graphql"
 import { FollowArtistPopoverQuery } from "v2/__generated__/FollowArtistPopoverQuery.graphql"
 import { SystemContext, SystemContextProps } from "v2/Artsy"

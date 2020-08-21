@@ -1,4 +1,6 @@
-import { Box, Spinner, Tab, Tabs } from "@artsy/palette"
+import { Tab, Tabs } from "@artsy/palette/dist/elements/Tabs"
+import { Spinner } from "@artsy/palette/dist/elements/Spinner"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import { RelatedWorksArtworkGrid_artwork } from "v2/__generated__/RelatedWorksArtworkGrid_artwork.graphql"
 import { RelatedWorksArtworkGridQuery } from "v2/__generated__/RelatedWorksArtworkGridQuery.graphql"
 import { hideGrid } from "v2/Apps/Artwork/Components/OtherWorks"

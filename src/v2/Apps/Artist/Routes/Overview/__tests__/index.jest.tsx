@@ -1,4 +1,6 @@
-import { Button, Sans, Theme } from "@artsy/palette"
+import { Theme } from "@artsy/palette/dist/Theme"
+import { Button } from "@artsy/palette/dist/elements/Button"
+import { Sans } from "@artsy/palette/dist/elements/Typography"
 import { routes_OverviewQueryRawResponse } from "v2/__generated__/routes_OverviewQuery.graphql"
 import { SystemContextProvider } from "v2/Artsy"
 import { useTracking } from "v2/Artsy/Analytics/useTracking"

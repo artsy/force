@@ -1,8 +1,32 @@
 import React from "react"
 import { storiesOf } from "storybook/storiesOf"
 
-import { Box, Col, Flex, Grid, Row } from "@artsy/palette"
-import * as svgs from "@artsy/palette"
+import { Grid } from "@artsy/palette/dist/elements/Grid"
+import { Col, Row } from "@artsy/palette/dist/elements/Grid"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
+import { Box } from "@artsy/palette/dist/elements/Box"
+import { AuctionIcon } from "@artsy/palette/dist/svgs/AuctionIcon"
+import { BellIcon } from "@artsy/palette/dist/svgs/BellIcon"
+import { BlueChipIcon } from "@artsy/palette/dist/svgs/BlueChipIcon"
+import { PublicationIcon } from "@artsy/palette/dist/svgs/PublicationIcon"
+import { CheckIcon } from "@artsy/palette/dist/svgs/CheckIcon"
+import { ChevronIcon } from "@artsy/palette/dist/svgs/ChevronIcon"
+import { CheckCircleFillIcon } from "@artsy/palette/dist/svgs/CheckCircleFillIcon"
+import { EyeClosedIcon } from "@artsy/palette/dist/svgs/EyeClosedIcon"
+import { FairIcon } from "@artsy/palette/dist/svgs/FairIcon"
+import { FilterIcon } from "@artsy/palette/dist/svgs/FilterIcon"
+import { UserMultiIcon } from "@artsy/palette/dist/svgs/UserMultiIcon"
+import { HeartIcon } from "@artsy/palette/dist/svgs/HeartIcon"
+import { QuestionCircleIcon } from "@artsy/palette/dist/svgs/QuestionCircleIcon"
+import { MapPinIcon } from "@artsy/palette/dist/svgs/MapPinIcon"
+import { CloseCircleIcon } from "@artsy/palette/dist/svgs/CloseCircleIcon"
+import { InstitutionIcon } from "@artsy/palette/dist/svgs/InstitutionIcon"
+import { EyeOpenedIcon } from "@artsy/palette/dist/svgs/EyeOpenedIcon"
+import { AddCircleFillIcon } from "@artsy/palette/dist/svgs/AddCircleFillIcon"
+import { UserSingleIcon } from "@artsy/palette/dist/svgs/UserSingleIcon"
+import { TopEmergingIcon } from "@artsy/palette/dist/svgs/TopEmergingIcon"
+import { EstablishedIcon } from "@artsy/palette/dist/svgs/EstablishedIcon"
+import { CheckCircleIcon } from "@artsy/palette/dist/svgs/CheckCircleIcon"
 import icons, { IconName } from "../../Assets/Icons"
 import CircleIcon from "../CircleIcon"
 import Icon from "../Icon"
@@ -20,73 +44,73 @@ storiesOf("Components/Icons", module).add("All Icons", () => {
         <Row>
           <Flex flexDirection="row" flexWrap="wrap">
             <Col p={1} width="auto">
-              <svgs.BellIcon width="25" />
+              <BellIcon width="25" />
             </Col>
             <Col p={1} width="auto">
-              <svgs.CheckIcon />
+              <CheckIcon />
             </Col>
             <Col p={1} width="auto">
-              <svgs.ChevronIcon width={40} height={40} />
+              <ChevronIcon width={40} height={40} />
             </Col>
             <Col p={1} width="auto">
-              <svgs.CircleBlackCheckIcon width="25" height="25" />
+              <CheckCircleFillIcon width="25" height="25" />
             </Col>
             <Col p={1} width="auto">
-              <svgs.CircleWhiteCheckIcon width="25" height="25" />
+              <CheckCircleIcon width="25" height="25" />
             </Col>
             <Col p={1} width="auto">
-              <svgs.ClosedEyeIcon />
+              <EyeClosedIcon />
             </Col>
             <Col p={1} width="auto">
-              <svgs.FilterIcon fill="black10" />
+              <FilterIcon fill="black10" />
             </Col>
             <Col p={1} width="auto">
-              <svgs.HeartIcon />
+              <HeartIcon />
             </Col>
             <Col p={1} width="auto">
-              <svgs.HelpIcon />
+              <QuestionCircleIcon />
             </Col>
             <Col p={1} width="auto">
-              <svgs.LocationIcon />
+              <MapPinIcon />
             </Col>
             <Col p={1} width="auto">
-              <svgs.LosingBidIcon />
+              <CloseCircleIcon />
             </Col>
             <Col p={1} width="auto">
-              <svgs.OpenEyeIcon />
+              <EyeOpenedIcon />
             </Col>
             <Col p={1} width="auto">
-              <svgs.PlusIcon width="25" height="25" />
+              <AddCircleFillIcon width="25" height="25" />
             </Col>
             <Col p={1} width="auto">
-              <svgs.WinningBidIcon />
+              <CheckCircleIcon />
             </Col>
             <Col p={1} width="auto">
-              <svgs.BlueChipIcon />
+              <BlueChipIcon />
             </Col>
             <Col p={1} width="auto">
-              <svgs.SoloIcon />
+              <UserSingleIcon />
             </Col>
             <Col p={1} width="auto">
-              <svgs.GroupIcon />
+              <UserMultiIcon />
             </Col>
             <Col p={1} width="auto">
-              <svgs.BookIcon />
+              <PublicationIcon />
             </Col>
             <Col p={1} width="auto">
-              <svgs.AuctionIcon />
+              <AuctionIcon />
             </Col>
             <Col p={1} width="auto">
-              <svgs.FairIcon />
+              <FairIcon />
             </Col>
             <Col p={1} width="auto">
-              <svgs.MuseumIcon />
+              <InstitutionIcon />
             </Col>
             <Col p={1} width="auto">
-              <svgs.TopEmergingIcon />
+              <TopEmergingIcon />
             </Col>
             <Col p={1} width="auto">
-              <svgs.TopEstablishedIcon />
+              <EstablishedIcon />
             </Col>
           </Flex>
         </Row>

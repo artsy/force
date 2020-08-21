@@ -2,13 +2,11 @@ import React, { useState } from "react"
 import { Carousel } from "v2/Components/Carousel"
 import { flowRight } from "lodash"
 
-import {
-  Box,
-  ChevronIcon,
-  Flex,
-  ProgressBar,
-  breakpoints,
-} from "@artsy/palette"
+import { Box } from "@artsy/palette/dist/elements/Box"
+import { ChevronIcon } from "@artsy/palette/dist/svgs/ChevronIcon"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
+import { ProgressBar } from "@artsy/palette/dist/elements/ProgressBar"
+import { breakpoints } from "@artsy/palette/dist/Theme"
 
 interface ViewingRoomCarouselProps {
   data: ReadonlyArray<any>

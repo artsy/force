@@ -1,4 +1,4 @@
-import { Flex } from "@artsy/palette"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
 import React from "react"
 import { storiesOf } from "storybook/storiesOf"
 import { Section } from "v2/Utils/Section"
@@ -13,7 +13,7 @@ class TypicalAddressForm extends React.Component<
     shippingCountry?: string
   },
   Address
-  > {
+> {
   constructor(props) {
     super(props)
     this.state = props.address || {}

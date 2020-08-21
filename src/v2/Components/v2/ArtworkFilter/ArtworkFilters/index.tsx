@@ -1,4 +1,4 @@
-import { Box } from "@artsy/palette"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import React from "react"
 
 import { ColorFilter } from "./ColorFilter"

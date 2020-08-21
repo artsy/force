@@ -1,4 +1,4 @@
-import { Checkbox } from "@artsy/palette"
+import { Checkbox } from "@artsy/palette/dist/elements/Checkbox"
 import { PaymentTestQueryRawResponse } from "v2/__generated__/PaymentTestQuery.graphql"
 
 import {

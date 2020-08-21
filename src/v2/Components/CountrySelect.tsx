@@ -1,4 +1,4 @@
-import { LargeSelect } from "@artsy/palette"
+import { LargeSelect } from "@artsy/palette/dist/elements/Select"
 import React from "react"
 import { PositionProps, SpaceProps } from "styled-system"
 

@@ -1,17 +1,15 @@
 import { ContextModule, Intent } from "@artsy/cohesion"
-import {
-  Box,
-  ChevronIcon,
-  Clickable,
-  CloseIcon,
-  Flex,
-  MenuIcon,
-  ModalBase,
-  Sans,
-  Separator,
-  color,
-  space,
-} from "@artsy/palette"
+import { Box } from "@artsy/palette/dist/elements/Box"
+import { ChevronIcon } from "@artsy/palette/dist/svgs/ChevronIcon"
+import { CloseIcon } from "@artsy/palette/dist/svgs/CloseIcon"
+import { MenuIcon } from "@artsy/palette/dist/svgs/MenuIcon"
+import { Clickable } from "@artsy/palette/dist/elements/Clickable"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
+import { ModalBase } from "@artsy/palette/dist/elements/Modal"
+import { Sans } from "@artsy/palette/dist/elements/Typography"
+import { Separator } from "@artsy/palette/dist/elements/Separator"
+import { color } from "@artsy/palette/dist/helpers/color"
+import { space } from "@artsy/palette/dist/helpers/space"
 import { AnalyticsSchema, useSystemContext } from "v2/Artsy"
 import { useTracking } from "v2/Artsy/Analytics"
 import { ModalType } from "v2/Components/Authentication/Types"

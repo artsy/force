@@ -1,4 +1,5 @@
-import { Box, Display } from "@artsy/palette"
+import { Display } from "@artsy/palette/dist/elements/Typography"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import React from "react"
 import styled from "styled-components"
 import { Media } from "v2/Utils/Responsive"
@@ -19,10 +20,10 @@ const BreakpointText: React.SFC<{ breakpoint: string; max?: boolean }> = ({
   breakpoint,
   max,
 }) => (
-    <Media {...{ [max ? "greaterThanOrEqual" : "at"]: breakpoint }}>
-      <Display size="8">{breakpoint}</Display>
-    </Media>
-  )
+  <Media {...{ [max ? "greaterThanOrEqual" : "at"]: breakpoint }}>
+    <Display size="8">{breakpoint}</Display>
+  </Media>
+)
 
 export const BreakpointVisualizer: React.SFC = () => (
   <React.Fragment>

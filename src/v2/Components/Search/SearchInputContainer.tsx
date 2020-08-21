@@ -1,4 +1,8 @@
-import { Box, Input, MagnifyingGlassIcon, color, space } from "@artsy/palette"
+import { MagnifyingGlassIcon } from "@artsy/palette/dist/svgs/MagnifyingGlassIcon"
+import { Input } from "@artsy/palette/dist/elements/Input"
+import { space } from "@artsy/palette/dist/helpers/space"
+import { color } from "@artsy/palette/dist/helpers/color"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import { isEmpty } from "lodash"
 import React from "react"
 import styled from "styled-components"
@@ -43,7 +47,7 @@ export const SearchInputContainer: React.ForwardRefExoticComponent<any> = React.
 
         <SearchButton
           onClick={event => {
-            ;(event.target as HTMLElement).parentElement.blur()
+            ; (event.target as HTMLElement).parentElement.blur()
             if (isEmpty(props.value)) {
               event.preventDefault()
             }

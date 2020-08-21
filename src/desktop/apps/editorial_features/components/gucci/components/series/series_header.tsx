@@ -1,4 +1,5 @@
-import { Box, media } from "@artsy/palette"
+import { media } from "@artsy/palette/dist/helpers/media"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import styled from "styled-components"
 import React from "react"
 import Waypoint from "react-waypoint"

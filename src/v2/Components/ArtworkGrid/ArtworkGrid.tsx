@@ -1,5 +1,5 @@
 import { AuthContextModule, ContextModule } from "@artsy/cohesion"
-import { Flex } from "@artsy/palette"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
 import { ArtworkGrid_artworks } from "v2/__generated__/ArtworkGrid_artworks.graphql"
 import { Mediator } from "v2/Artsy"
 import { ArtworkGridEmptyState } from "v2/Components/ArtworkGrid/ArtworkGridEmptyState"

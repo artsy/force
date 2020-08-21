@@ -1,4 +1,6 @@
-import { Box, ResponsiveImage, SerifProps } from "@artsy/palette"
+import { ResponsiveImage } from "@artsy/palette/dist/elements/Image"
+import { SerifProps } from "@artsy/palette/dist/elements/Typography"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import React, { FC } from "react"
 import styled from "styled-components"

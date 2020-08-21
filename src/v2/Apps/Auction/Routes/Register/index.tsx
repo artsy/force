@@ -1,4 +1,6 @@
-import { Box, Separator, Serif } from "@artsy/palette"
+import { Separator } from "@artsy/palette/dist/elements/Separator"
+import { Serif } from "@artsy/palette/dist/elements/Typography"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import { Register_me } from "v2/__generated__/Register_me.graphql"
 import { Register_sale } from "v2/__generated__/Register_sale.graphql"
 import {

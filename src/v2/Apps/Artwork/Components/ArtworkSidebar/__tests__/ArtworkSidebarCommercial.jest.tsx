@@ -14,7 +14,7 @@ import {
   OrderWithSuccess,
 } from "v2/Apps/__tests__/Fixtures/Artwork/MutationResults"
 
-import { Button } from "@artsy/palette"
+import { Button } from "@artsy/palette/dist/elements/Button"
 import { mount } from "enzyme"
 import React from "react"
 import { RelayProp, commitMutation as _commitMutation } from "react-relay"

@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 import styled from "styled-components"
-import { Banner, Box } from "@artsy/palette"
+import { Banner } from "@artsy/palette/dist/elements/Banner"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import { data as sd } from "sharify"
 
 export const StagingBanner = () => {

@@ -1,4 +1,7 @@
-import { Button, Col, Flex, Row, Spacer } from "@artsy/palette"
+import { Col, Row } from "@artsy/palette/dist/elements/Grid"
+import { Spacer } from "@artsy/palette/dist/elements/Spacer"
+import { Button } from "@artsy/palette/dist/elements/Button"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
 import { Accept_order } from "v2/__generated__/Accept_order.graphql"
 import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
 import { TwoColumnLayout } from "v2/Apps/Order/Components/TwoColumnLayout"

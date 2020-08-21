@@ -1,4 +1,5 @@
-import { Serif, space } from "@artsy/palette"
+import { space } from "@artsy/palette/dist/helpers/space"
+import { Serif } from "@artsy/palette/dist/elements/Typography"
 import Icon from "v2/Components/Icon"
 import React, { SFC } from "react"
 import styled from "styled-components"

@@ -1,4 +1,4 @@
-import { Flex } from "@artsy/palette"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
 import { PricingContextStoryQueryRawResponse } from "v2/__generated__/PricingContextStoryQuery.graphql"
 import { MockRelayRenderer } from "v2/DevTools"
 import React from "react"

@@ -1,4 +1,6 @@
-import { Box, Serif, Theme } from "@artsy/palette"
+import { Theme } from "@artsy/palette/dist/Theme"
+import { Serif } from "@artsy/palette/dist/elements/Typography"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import { UserSettingsPayments_me } from "v2/__generated__/UserSettingsPayments_me.graphql"
 import { UserSettingsPaymentsCreditCard } from "v2/__generated__/UserSettingsPaymentsCreditCard.graphql"
 import { UserSettingsPaymentsQuery } from "v2/__generated__/UserSettingsPaymentsQuery.graphql"

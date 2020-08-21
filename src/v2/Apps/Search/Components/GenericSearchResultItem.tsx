@@ -1,13 +1,10 @@
-import {
-  Box,
-  Flex,
-  Image,
-  Link,
-  Sans,
-  Serif,
-  Spacer,
-  color,
-} from "@artsy/palette"
+import { Box } from "@artsy/palette/dist/elements/Box"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
+import { Image } from "@artsy/palette/dist/elements/Image"
+import { Link } from "@artsy/palette/dist/elements/Link"
+import { Sans, Serif } from "@artsy/palette/dist/elements/Typography"
+import { Spacer } from "@artsy/palette/dist/elements/Spacer"
+import { color } from "@artsy/palette/dist/helpers/color"
 import { track } from "v2/Artsy/Analytics"
 import * as Schema from "v2/Artsy/Analytics/Schema"
 import { Truncator } from "v2/Components/Truncator"

@@ -1,4 +1,5 @@
-import { Box, Text } from "@artsy/palette"
+import { Text } from "@artsy/palette/dist/elements/Text"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import { MenuLinkData } from "v2/Components/NavBar/menuData"
 import React from "react"
 import { TwoColumnDropDownSection } from "./TwoColumnDropDownSection"

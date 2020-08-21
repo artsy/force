@@ -1,4 +1,6 @@
-import { BorderBox, Flex, Spacer } from "@artsy/palette"
+import { BorderBox } from "@artsy/palette/dist/elements/BorderBox"
+import { Spacer } from "@artsy/palette/dist/elements/Spacer"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
 import { SelectedCareerAchievements_artist } from "v2/__generated__/SelectedCareerAchievements_artist.graphql"
 import {
   hasSections,
@@ -27,7 +29,7 @@ const CATEGORY_LABEL_MAP = {
 
 export class SelectedCareerAchievements extends React.Component<
   SelectedCareerAchievementsProps
-  > {
+> {
   state = {
     showModal: false,
   }

@@ -1,4 +1,5 @@
-import { Link, LockIcon } from "@artsy/palette"
+import { LockIcon } from "@artsy/palette/dist/svgs/LockIcon"
+import { Link } from "@artsy/palette/dist/elements/Link"
 import { SecurePayment_artwork } from "v2/__generated__/SecurePayment_artwork.graphql"
 import React from "react"
 import { createFragmentContainer } from "react-relay"

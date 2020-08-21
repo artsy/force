@@ -1,4 +1,6 @@
-import { ClosedEyeIcon, OpenEyeIcon, space } from "@artsy/palette"
+import { EyeClosedIcon } from "@artsy/palette/dist/svgs/EyeClosedIcon"
+import { EyeOpenedIcon } from "@artsy/palette/dist/svgs/EyeOpenedIcon"
+import { space } from "@artsy/palette/dist/helpers/space"
 import React from "react"
 import styled from "styled-components"
 
@@ -20,17 +22,17 @@ export interface PasswordInputState {
 export class PasswordInput extends React.Component<
   PasswordInputProps,
   PasswordInputState
-> {
+  > {
   state = {
     showPassword: false,
   }
 
   getRightViewForPassword() {
     const icon = this.state.showPassword ? (
-      <ClosedEyeIcon onClick={this.toggleShowPassword} />
+      <EyeClosedIcon onClick={this.toggleShowPassword} />
     ) : (
-      <OpenEyeIcon onClick={this.toggleShowPassword} />
-    )
+        <EyeOpenedIcon onClick={this.toggleShowPassword} />
+      )
 
     return <Eye onClick={this.toggleShowPassword}>{icon}</Eye>
   }

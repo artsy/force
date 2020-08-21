@@ -1,4 +1,6 @@
-import { Box, Flex, Link } from "@artsy/palette"
+import { Link } from "@artsy/palette/dist/elements/Link"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import React from "react"
 import { data as sd } from "sharify"
 import { CaptchaTerms, FooterText } from "./commonElements"

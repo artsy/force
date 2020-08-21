@@ -1,4 +1,7 @@
-import { Box, Flex, Sans, space } from "@artsy/palette"
+import { space } from "@artsy/palette/dist/helpers/space"
+import { Sans } from "@artsy/palette/dist/elements/Typography"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import { Badge_artwork } from "v2/__generated__/Badge_artwork.graphql"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"

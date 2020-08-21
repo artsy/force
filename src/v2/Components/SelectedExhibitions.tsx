@@ -1,4 +1,7 @@
-import { BorderBox, Box, Flex, Sans } from "@artsy/palette"
+import { BorderBox } from "@artsy/palette/dist/elements/BorderBox"
+import { Sans } from "@artsy/palette/dist/elements/Typography"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import { SelectedExhibitions_exhibitions } from "v2/__generated__/SelectedExhibitions_exhibitions.graphql"
 import { Link } from "found"
 import { groupBy, toPairs } from "lodash"
@@ -133,7 +136,7 @@ export interface SelectedExhibitionsContainerProps
 
 export class SelectedExhibitionsContainer extends React.Component<
   SelectedExhibitionsContainerProps
-  > {
+> {
   static defaultProps = {
     border: true,
   }
@@ -173,13 +176,13 @@ export class SelectedExhibitionsContainer extends React.Component<
             expanded: this.state.expanded,
             ...this.props,
           }) && (
-              <FullExhibitionList
-                artistID={this.props.artistID}
-                exhibitions={this.props.exhibitions}
-                totalExhibitions={this.props.totalExhibitions}
-                ViewAllLink={this.props.ViewAllLink}
-              />
-            )}
+            <FullExhibitionList
+              artistID={this.props.artistID}
+              exhibitions={this.props.exhibitions}
+              totalExhibitions={this.props.totalExhibitions}
+              ViewAllLink={this.props.ViewAllLink}
+            />
+          )}
         </Flex>
       </Container>
     )

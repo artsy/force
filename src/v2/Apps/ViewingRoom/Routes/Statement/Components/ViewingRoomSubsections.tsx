@@ -1,5 +1,8 @@
 import React, { Fragment } from "react"
-import { Box, Image, Sans, Serif, Spacer } from "@artsy/palette"
+import { Image } from "@artsy/palette/dist/elements/Image"
+import { Spacer } from "@artsy/palette/dist/elements/Spacer"
+import { Sans, Serif } from "@artsy/palette/dist/elements/Typography"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import { createFragmentContainer, graphql } from "react-relay"
 
 import { ViewingRoomSubsections_viewingRoom } from "v2/__generated__/ViewingRoomSubsections_viewingRoom.graphql"

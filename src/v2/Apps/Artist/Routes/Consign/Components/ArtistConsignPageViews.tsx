@@ -1,6 +1,8 @@
 import React from "react"
 
-import { Box, Sans, Spacer } from "@artsy/palette"
+import { Spacer } from "@artsy/palette/dist/elements/Spacer"
+import { Sans } from "@artsy/palette/dist/elements/Typography"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import { createFragmentContainer, graphql } from "react-relay"
 import { SectionContainer } from "./SectionContainer"
 import { Subheader } from "./Subheader"

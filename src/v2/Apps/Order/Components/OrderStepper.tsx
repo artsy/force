@@ -1,4 +1,4 @@
-import { Step, Stepper } from "@artsy/palette"
+import { Step, Stepper } from "@artsy/palette/dist/elements/Stepper"
 import React from "react"
 
 function typedArray<T extends string>(...elems: T[]): T[] {

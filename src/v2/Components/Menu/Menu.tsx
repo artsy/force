@@ -1,6 +1,12 @@
 import React from "react"
 import styled from "styled-components"
-import { BorderBox, BorderBoxProps, Box, Separator, Text } from "@artsy/palette"
+import { Text } from "@artsy/palette/dist/elements/Text"
+import {
+  BorderBox,
+  BorderBoxProps,
+} from "@artsy/palette/dist/elements/BorderBox"
+import { Separator } from "@artsy/palette/dist/elements/Separator"
+import { Box } from "@artsy/palette/dist/elements/Box"
 
 const Container = styled(BorderBox)`
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);

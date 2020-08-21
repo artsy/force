@@ -1,4 +1,7 @@
-import { BorderBox, Flex, Sans, Spinner } from "@artsy/palette"
+import { BorderBox } from "@artsy/palette/dist/elements/BorderBox"
+import { Spinner } from "@artsy/palette/dist/elements/Spinner"
+import { Sans } from "@artsy/palette/dist/elements/Typography"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
 import {
   SavedCreditCardsDeleteCreditCardMutation,
   SavedCreditCardsDeleteCreditCardMutationResponse,

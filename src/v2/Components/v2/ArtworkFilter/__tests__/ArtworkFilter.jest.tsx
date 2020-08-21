@@ -1,4 +1,4 @@
-import { Breakpoint } from "@artsy/palette"
+import { Breakpoint } from "@artsy/palette/dist/Theme"
 import { useTracking } from "v2/Artsy/Analytics/useTracking"
 import {
   ArtworkFilter,
@@ -19,12 +19,12 @@ describe("ArtworkFilter", () => {
     passedProps = {}
   ) => {
     return await renderRelayTree({
-      Component: (props) => (
+      Component: props => (
         <ArtworkFilter {...(props as any)} {...passedProps} />
       ),
       query: ArtworkQueryFilter,
       mockData: ArtworkFilterFixture,
-      wrapper: (children) => {
+      wrapper: children => {
         return <MockBoot breakpoint={breakpoint}>{children}</MockBoot>
       },
     })

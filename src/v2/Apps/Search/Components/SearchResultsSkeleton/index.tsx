@@ -1,4 +1,7 @@
-import { Box, Col, Flex, Grid, Row } from "@artsy/palette"
+import { Grid } from "@artsy/palette/dist/elements/Grid"
+import { Col, Row } from "@artsy/palette/dist/elements/Grid"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import { AppContainer } from "v2/Apps/Components/AppContainer"
 import React from "react"
 import { FilterSidebar } from "./FilterSidebar"

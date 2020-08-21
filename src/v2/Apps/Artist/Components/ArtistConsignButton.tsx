@@ -5,15 +5,13 @@ import { ArtistConsignButton_artist } from "v2/__generated__/ArtistConsignButton
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import { Media } from "v2/Utils/Responsive"
 
-import {
-  BorderBox,
-  Box,
-  Button,
-  Flex,
-  Image,
-  Sans,
-  color,
-} from "@artsy/palette"
+import { BorderBox } from "@artsy/palette/dist/elements/BorderBox"
+import { Box } from "@artsy/palette/dist/elements/Box"
+import { Button } from "@artsy/palette/dist/elements/Button"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
+import { Image } from "@artsy/palette/dist/elements/Image"
+import { Sans } from "@artsy/palette/dist/elements/Typography"
+import { color } from "@artsy/palette/dist/helpers/color"
 import { AnalyticsSchema, useTracking } from "v2/Artsy"
 
 export interface ArtistConsignButtonProps {

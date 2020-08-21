@@ -1,4 +1,4 @@
-import { Flex } from "@artsy/palette"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
 import { AuthenticityCertificate_artwork } from "v2/__generated__/AuthenticityCertificate_artwork.graphql"
 import { SecurePayment_artwork } from "v2/__generated__/SecurePayment_artwork.graphql"
 import { VerifiedSeller_artwork } from "v2/__generated__/VerifiedSeller_artwork.graphql"

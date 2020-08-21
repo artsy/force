@@ -1,4 +1,6 @@
-import { Flex, FlexProps, Link, Sans } from "@artsy/palette"
+import { Link } from "@artsy/palette/dist/elements/Link"
+import { Sans } from "@artsy/palette/dist/elements/Typography"
+import { Flex, FlexProps } from "@artsy/palette/dist/elements/Flex"
 import React, { FC } from "react"
 
 export interface TrustSignalProps extends Omit<FlexProps, "flexDirection"> {

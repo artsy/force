@@ -1,4 +1,5 @@
-import { Box, breakpoints } from "@artsy/palette"
+import { Box } from "@artsy/palette/dist/elements/Box"
+import { breakpoints } from "@artsy/palette/dist/Theme"
 import React from "react"
 
 interface AppContainerProps {

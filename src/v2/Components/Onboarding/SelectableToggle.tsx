@@ -1,7 +1,7 @@
 import React from "react"
 import styled from "styled-components"
 
-import { CircleBlackCheckIcon } from "@artsy/palette"
+import { CheckCircleFillIcon } from "@artsy/palette/dist/svgs/CheckCircleFillIcon"
 import Colors from "v2/Assets/Colors"
 import { avantgarde } from "v2/Assets/Fonts"
 import { media } from "../Helpers"
@@ -70,7 +70,7 @@ class SelectableToggle extends React.Component<SelectableToggleProps, null> {
 
           <Col>
             {this.props.selected ? (
-              <CircleBlackCheckIcon width="26" height="26" />
+              <CheckCircleFillIcon width="26" height="26" />
             ) : (
                 <EmptyCircle />
               )}

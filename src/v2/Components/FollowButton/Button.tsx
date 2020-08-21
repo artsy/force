@@ -1,4 +1,4 @@
-import { Button, ButtonProps } from "@artsy/palette"
+import { Button, ButtonProps } from "@artsy/palette/dist/elements/Button"
 import React from "react"
 
 interface Props {

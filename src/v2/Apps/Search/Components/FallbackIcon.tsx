@@ -1,14 +1,12 @@
-import {
-  AuctionIcon,
-  FairIcon,
-  InstitutionIcon,
-  MapPinIcon,
-  NoImageIcon,
-  PageIcon,
-  PublicationIcon,
-  TagIcon,
-  UserSingleIcon,
-} from "@artsy/palette"
+import { AuctionIcon } from "@artsy/palette/dist/svgs/AuctionIcon"
+import { FairIcon } from "@artsy/palette/dist/svgs/FairIcon"
+import { InstitutionIcon } from "@artsy/palette/dist/svgs/InstitutionIcon"
+import { MapPinIcon } from "@artsy/palette/dist/svgs/MapPinIcon"
+import { NoImageIcon } from "@artsy/palette/dist/svgs/NoImageIcon"
+import { PageIcon } from "@artsy/palette/dist/svgs/PageIcon"
+import { PublicationIcon } from "@artsy/palette/dist/svgs/PublicationIcon"
+import { TagIcon } from "@artsy/palette/dist/svgs/TagIcon"
+import { UserSingleIcon } from "@artsy/palette/dist/svgs/UserSingleIcon"
 import React, { SFC } from "react"
 
 const iconMapping = {

@@ -1,13 +1,9 @@
-import {
-  Button,
-  Col,
-  Link,
-  Modal,
-  Row,
-  Sans,
-  Serif,
-  Spinner,
-} from "@artsy/palette"
+import { Button } from "@artsy/palette/dist/elements/Button"
+import { Col, Row } from "@artsy/palette/dist/elements/Grid"
+import { Link } from "@artsy/palette/dist/elements/Link"
+import { Modal } from "@artsy/palette/dist/elements/Modal"
+import { Sans, Serif } from "@artsy/palette/dist/elements/Typography"
+import { Spinner } from "@artsy/palette/dist/elements/Spinner"
 import React, { useState } from "react"
 import { commitMutation, createFragmentContainer, graphql } from "react-relay"
 

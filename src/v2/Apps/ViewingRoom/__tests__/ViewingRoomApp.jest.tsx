@@ -8,7 +8,7 @@ import { ViewingRoomApp_OpenTest_QueryRawResponse } from "v2/__generated__/Viewi
 import { ViewingRoomApp_ClosedTest_QueryRawResponse } from "v2/__generated__/ViewingRoomApp_ClosedTest_Query.graphql"
 import { ViewingRoomApp_UnfoundTest_QueryRawResponse } from "v2/__generated__/ViewingRoomApp_UnfoundTest_Query.graphql"
 import { ViewingRoomApp_LoggedOutTest_QueryRawResponse } from "v2/__generated__/ViewingRoomApp_LoggedOutTest_Query.graphql.ts"
-import { Breakpoint } from "@artsy/palette"
+import { Breakpoint } from "@artsy/palette/dist/Theme"
 
 jest.unmock("react-relay")
 jest.mock("v2/Artsy/Router/useRouter", () => ({

@@ -2,7 +2,7 @@ import React from "react"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import { scrollToId } from "../Utils/scrollToId"
 import { AnalyticsSchema, useTracking } from "v2/Artsy"
-import { Button } from "@artsy/palette"
+import { Button } from "@artsy/palette/dist/elements/Button"
 import { useRouter } from "v2/Artsy/Router/useRouter"
 
 interface ViewWorksButtonProps {

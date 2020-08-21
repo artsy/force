@@ -3,7 +3,10 @@ import { useTracking } from "v2/Artsy/Analytics"
 import React, { useState } from "react"
 import styled from "styled-components"
 
-import { Box, Link, Sans, color } from "@artsy/palette"
+import { Link } from "@artsy/palette/dist/elements/Link"
+import { Sans } from "@artsy/palette/dist/elements/Typography"
+import { color } from "@artsy/palette/dist/helpers/color"
+import { Box } from "@artsy/palette/dist/elements/Box"
 
 interface MobileLinkProps {
   contextModule?: any

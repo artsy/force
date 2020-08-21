@@ -5,7 +5,12 @@ import styled from "styled-components"
 import { track } from "v2/Artsy"
 import * as Schema from "v2/Artsy/Analytics/Schema"
 
-import { Box, Button, Flex, Sans, Separator, Spacer } from "@artsy/palette"
+import { Separator } from "@artsy/palette/dist/elements/Separator"
+import { Spacer } from "@artsy/palette/dist/elements/Spacer"
+import { Button } from "@artsy/palette/dist/elements/Button"
+import { Sans } from "@artsy/palette/dist/elements/Typography"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
+import { Box } from "@artsy/palette/dist/elements/Box"
 
 const COLLECT_URL = `${sd.APP_URL}/collect?acquireable=true`
 

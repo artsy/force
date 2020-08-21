@@ -1,4 +1,4 @@
-import { VerifiedIcon } from "@artsy/palette"
+import { VerifiedIcon } from "@artsy/palette/dist/svgs/VerifiedIcon"
 import { VerifiedSeller_artwork } from "v2/__generated__/VerifiedSeller_artwork.graphql"
 import React from "react"
 import { createFragmentContainer } from "react-relay"

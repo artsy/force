@@ -1,5 +1,5 @@
 import { AuthModalType, authImpression } from "@artsy/cohesion"
-import { Theme } from "@artsy/palette"
+import { Theme } from "@artsy/palette/dist/Theme"
 import qs from "querystring"
 import React from "react"
 import track, { TrackingProp } from "react-tracking"

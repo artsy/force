@@ -1,4 +1,4 @@
-import { Button } from "@artsy/palette"
+import { Button } from "@artsy/palette/dist/elements/Button"
 import { RootTestPage } from "v2/DevTools/RootTestPage"
 
 export class RequestConditionReportTestPage extends RootTestPage {

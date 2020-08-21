@@ -1,4 +1,8 @@
-import { Box, Flex, LocationIcon, Serif, Spacer } from "@artsy/palette"
+import { MapPinIcon } from "@artsy/palette/dist/svgs/MapPinIcon"
+import { Spacer } from "@artsy/palette/dist/elements/Spacer"
+import { Serif } from "@artsy/palette/dist/elements/Typography"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import { filterLocations } from "v2/Apps/Artwork/Utils/filterLocations"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -61,7 +65,7 @@ export class ArtworkSidebarPartnerInfo extends React.Component<
           <Box>
             <Flex width="100%" pt={1}>
               <Flex flexDirection="column">
-                <LocationIcon />
+                <MapPinIcon />
               </Flex>
               <Flex flexDirection="column">
                 {this.renderLocations(locationNames)}

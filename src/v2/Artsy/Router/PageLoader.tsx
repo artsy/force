@@ -1,4 +1,5 @@
-import { Box, ProgressBar } from "@artsy/palette"
+import { Box } from "@artsy/palette/dist/elements/Box"
+import { ProgressBar } from "@artsy/palette/dist/elements/ProgressBar"
 import { random } from "lodash"
 import React from "react"
 import { Spring } from "react-spring/renderprops.cjs"

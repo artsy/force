@@ -1,4 +1,4 @@
-import { StaticCountdownTimer } from "@artsy/palette"
+import { StaticCountdownTimer } from "@artsy/palette/dist/elements/StaticCountdownTimer"
 import React from "react"
 
 import { WithCurrentTime } from "v2/Components/WithCurrentTime"

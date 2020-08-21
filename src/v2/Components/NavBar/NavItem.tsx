@@ -1,12 +1,9 @@
-import {
-  Box,
-  BoxProps,
-  Clickable,
-  Flex,
-  Link,
-  Text,
-  color,
-} from "@artsy/palette"
+import { Box, BoxProps } from "@artsy/palette/dist/elements/Box"
+import { Clickable } from "@artsy/palette/dist/elements/Clickable"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
+import { Link } from "@artsy/palette/dist/elements/Link"
+import { Text } from "@artsy/palette/dist/elements/Text"
+import { color } from "@artsy/palette/dist/helpers/color"
 import { AnalyticsSchema } from "v2/Artsy"
 import { useTracking } from "v2/Artsy/Analytics/useTracking"
 import { isFunction, isString } from "lodash"

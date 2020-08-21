@@ -1,4 +1,7 @@
-import { Box, Separator, Serif, Spacer } from "@artsy/palette"
+import { Separator } from "@artsy/palette/dist/elements/Separator"
+import { Spacer } from "@artsy/palette/dist/elements/Spacer"
+import { Serif } from "@artsy/palette/dist/elements/Typography"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import { OwnerType, clickedMainArtworkGrid } from "@artsy/cohesion"
 import { Match, Router } from "found"
 import React from "react"

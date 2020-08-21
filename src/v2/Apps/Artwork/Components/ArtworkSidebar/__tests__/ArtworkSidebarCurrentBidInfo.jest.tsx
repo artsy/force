@@ -1,4 +1,5 @@
-import { LosingBidIcon, WinningBidIcon } from "@artsy/palette"
+import { CloseCircleIcon } from "@artsy/palette/dist/svgs/CloseCircleIcon"
+import { CheckCircleIcon } from "@artsy/palette/dist/svgs/CheckCircleIcon"
 import { ArtworkSidebarCurrentBidInfo_Test_QueryRawResponse } from "v2/__generated__/ArtworkSidebarCurrentBidInfo_Test_Query.graphql"
 import {
   AuctionPreview,
@@ -148,7 +149,7 @@ describe("ArtworkSidebarCurrentBidInfo", () => {
       const wrapper = await getWrapper(OpenAuctionReserveMetWithMyWinningBid)
 
       expect(wrapper.text()).toContain("Your max: $15,000")
-      expect(wrapper.find(WinningBidIcon).length).toBe(1)
+      expect(wrapper.find(CheckCircleIcon).length).toBe(1)
     })
 
     it("displays buyer's premium information", async () => {
@@ -166,7 +167,7 @@ describe("ArtworkSidebarCurrentBidInfo", () => {
       const wrapper = await getWrapper(OpenAuctionReserveMetWithMyLosingBid)
 
       expect(wrapper.text()).toContain("Your max: $400")
-      expect(wrapper.find(LosingBidIcon).length).toBe(1)
+      expect(wrapper.find(CloseCircleIcon).length).toBe(1)
     })
   })
 
@@ -175,7 +176,7 @@ describe("ArtworkSidebarCurrentBidInfo", () => {
       const wrapper = await getWrapper(OpenAuctionReserveNotMetIncreasingOwnBid)
 
       expect(wrapper.text()).toContain("Your max: $15,000")
-      expect(wrapper.find(WinningBidIcon).length).toBe(1)
+      expect(wrapper.find(CheckCircleIcon).length).toBe(1)
     })
   })
 })

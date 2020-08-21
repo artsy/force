@@ -1,5 +1,5 @@
 import { ContextModule, Intent } from "@artsy/cohesion"
-import { Link } from "@artsy/palette"
+import { Link } from "@artsy/palette/dist/elements/Link"
 import QuickInput from "v2/Components/QuickInput"
 import { mount } from "enzyme"
 import React from "react"
@@ -103,10 +103,7 @@ describe("FormSwitcher", () => {
         isMobile: true,
       })
 
-      wrapper
-        .find(Link)
-        .at(2)
-        .simulate("click")
+      wrapper.find(Link).at(2).simulate("click")
 
       expect(window.location.assign).toHaveBeenCalledWith(
         "/signup?contextModule=header&copy=Foo%20Bar&destination=%2Fcollect&intent=followArtist&redirectTo=%2Ffoo&triggerSeconds=1"
@@ -118,10 +115,7 @@ describe("FormSwitcher", () => {
         type: ModalType.login,
       })
 
-      wrapper
-        .find(Link)
-        .at(3)
-        .simulate("click")
+      wrapper.find(Link).at(3).simulate("click")
 
       expect((wrapper.state() as any).type).toMatch("signup")
       expect(wrapper.props().handleTypeChange).toBeCalled()
@@ -150,10 +144,7 @@ describe("FormSwitcher", () => {
         onSocialAuthEvent: jest.fn(),
       })
 
-      wrapper
-        .find(Link)
-        .at(1)
-        .simulate("click")
+      wrapper.find(Link).at(1).simulate("click")
 
       expect(wrapper.props().onSocialAuthEvent).toHaveBeenCalledWith(
         expect.objectContaining({

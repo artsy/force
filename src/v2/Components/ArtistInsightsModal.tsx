@@ -1,4 +1,7 @@
-import { Link, Sans, Separator, Serif } from "@artsy/palette"
+import { Link } from "@artsy/palette/dist/elements/Link"
+import { Separator } from "@artsy/palette/dist/elements/Separator"
+import { Serif } from "@artsy/palette/dist/elements/Typography"
+import { Sans } from "@artsy/palette/dist/elements/Typography"
 
 import { track } from "v2/Artsy/Analytics"
 import * as Schema from "v2/Artsy/Analytics/Schema"

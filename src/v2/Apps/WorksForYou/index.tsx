@@ -1,4 +1,6 @@
-import { Box, Spinner, Theme } from "@artsy/palette"
+import { Theme } from "@artsy/palette/dist/Theme"
+import { Spinner } from "@artsy/palette/dist/elements/Spinner"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import { ArtistArtworksFilters } from "v2/__generated__/WorksForYouQuery.graphql"
 import { WorksForYouQuery } from "v2/__generated__/WorksForYouQuery.graphql"
 import { MarketingHeader } from "v2/Apps/WorksForYou/MarketingHeader"
@@ -76,11 +78,11 @@ export class WorksForYou extends Component<Props> {
                               user={user}
                             />
                           ) : (
-                              <WorksForYouFeed
-                                user={user}
-                                viewer={props.viewer}
-                              />
-                            )}
+                            <WorksForYouFeed
+                              user={user}
+                              viewer={props.viewer}
+                            />
+                          )}
                         </Box>
                       )
                     } else {

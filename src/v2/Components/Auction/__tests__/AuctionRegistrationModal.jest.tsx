@@ -1,4 +1,6 @@
-import { Button, Checkbox, Modal } from "@artsy/palette"
+import { Modal } from "@artsy/palette/dist/elements/Modal"
+import { Checkbox } from "@artsy/palette/dist/elements/Checkbox"
+import { Button } from "@artsy/palette/dist/elements/Button"
 import { mount } from "enzyme"
 import "jest-styled-components"
 import React from "react"

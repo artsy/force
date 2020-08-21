@@ -1,4 +1,4 @@
-import { Box } from "@artsy/palette"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import { storiesOf } from "@storybook/react"
 import { WorksForYou } from "v2/Apps/WorksForYou"
 import { SystemContextProvider } from "v2/Artsy"

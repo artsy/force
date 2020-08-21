@@ -1,4 +1,7 @@
-import { Box, Image, Sans, Spacer } from "@artsy/palette"
+import { Image } from "@artsy/palette/dist/elements/Image"
+import { Spacer } from "@artsy/palette/dist/elements/Spacer"
+import { Sans } from "@artsy/palette/dist/elements/Typography"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import { FeaturedRails_viewer } from "v2/__generated__/FeaturedRails_viewer.graphql"
 import { StyledLink } from "v2/Apps/Artist/Components/StyledLink"
 import { FeaturedAuctionsRailFragmentContainer as FeaturedAuctions } from "v2/Apps/FeatureAKG/Components/FeaturedRails/FeaturedAuctions"

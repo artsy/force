@@ -1,5 +1,5 @@
-import { CSSGrid } from "@artsy/palette"
-import { Serif } from "@artsy/palette"
+import { CSSGrid } from "@artsy/palette/dist/elements/CSSGrid"
+import { Serif } from "@artsy/palette/dist/elements/Typography"
 import { CollectionsHubsHomepageNav_marketingHubCollections } from "v2/__generated__/CollectionsHubsHomepageNav_marketingHubCollections.graphql"
 import { AnalyticsSchema } from "v2/Artsy/Analytics"
 import React from "react"

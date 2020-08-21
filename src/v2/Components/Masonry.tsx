@@ -1,4 +1,4 @@
-import { Box } from "@artsy/palette"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import styled from "styled-components"
 import { GridColumnGapProps, gridColumnGap, style } from "styled-system"
 

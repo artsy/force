@@ -1,4 +1,5 @@
-import { Box, Flex } from "@artsy/palette"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import { SystemContextProvider } from "v2/Artsy"
 import { SearchBarQueryRenderer as SearchBar } from "v2/Components/Search/SearchBar"
 import { SuggestionItem } from "v2/Components/Search/Suggestions/SuggestionItem"

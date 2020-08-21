@@ -1,4 +1,6 @@
-import { Box, Sans, Serif, Spacer } from "@artsy/palette"
+import { Spacer } from "@artsy/palette/dist/elements/Spacer"
+import { Sans, Serif } from "@artsy/palette/dist/elements/Typography"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import Modal from "v2/Components/Modal/Modal"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -18,8 +20,8 @@ interface State {
 
 @track()
 export class ArtworkSidebarClassification extends React.Component<
-ArtworkSidebarClassificationProps,
-State
+  ArtworkSidebarClassificationProps,
+  State
 > {
   state = {
     isModalOpen: false,

@@ -1,4 +1,5 @@
-import { Box, BoxProps, Flex } from "@artsy/palette"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
+import { Box, BoxProps } from "@artsy/palette/dist/elements/Box"
 import { SearchBar_viewer } from "v2/__generated__/SearchBar_viewer.graphql"
 import { SearchBarSuggestQuery } from "v2/__generated__/SearchBarSuggestQuery.graphql"
 import { SystemContext, SystemContextProps, withSystemContext } from "v2/Artsy"

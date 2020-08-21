@@ -1,6 +1,13 @@
 import React, { useEffect, useState } from "react"
 import styled from "styled-components"
-import { Box, Button, Flex, FlexProps, color, themeProps } from "@artsy/palette"
+
+import { Box } from "@artsy/palette/dist/elements/Box"
+import { Button } from "@artsy/palette/dist/elements/Button"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
+import { FlexProps } from "@artsy/palette/dist/elements/Flex"
+import { color } from "@artsy/palette/dist/helpers/color"
+import { themeProps } from "@artsy/palette/dist/Theme"
+
 import { useSystemContext } from "v2/Artsy/SystemContext"
 import { SearchBarQueryRenderer as SearchBar } from "v2/Components/Search/SearchBar"
 import {

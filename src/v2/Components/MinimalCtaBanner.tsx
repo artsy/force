@@ -1,4 +1,4 @@
-import { Sans } from "@artsy/palette"
+import { Sans } from "@artsy/palette/dist/elements/Typography"
 import { track } from "v2/Artsy/Analytics"
 import * as Schema from "v2/Artsy/Analytics/Schema"
 import React from "react"

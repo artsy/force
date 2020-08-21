@@ -1,4 +1,4 @@
-import { Box } from "@artsy/palette"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import { SystemContextProvider } from "v2/Artsy/SystemContext"
 import { MockRouter } from "v2/DevTools"
 import React from "react"

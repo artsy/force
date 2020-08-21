@@ -1,12 +1,11 @@
-import { Flex, Sans, color } from "@artsy/palette"
 import React from "react"
-
-import {
-  AuctionIcon,
-  BlueChipIcon,
-  TopEmergingIcon,
-  TopEstablishedIcon,
-} from "@artsy/palette"
+import { Sans } from "@artsy/palette/dist/elements/Typography"
+import { color } from "@artsy/palette/dist/helpers/color"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
+import { AuctionIcon } from "@artsy/palette/dist/svgs/AuctionIcon"
+import { BlueChipIcon } from "@artsy/palette/dist/svgs/BlueChipIcon"
+import { EstablishedIcon } from "@artsy/palette/dist/svgs/EstablishedIcon"
+import { TopEmergingIcon } from "@artsy/palette/dist/svgs/TopEmergingIcon"
 import styled from "styled-components"
 import { StyledLink } from "./StyledLink"
 
@@ -19,7 +18,7 @@ interface ArtistIndicatorProps {
 const ICON_MAPPING = {
   "high-auction": AuctionIcon,
   "blue-chip": BlueChipIcon,
-  "top-established": TopEstablishedIcon,
+  "top-established": EstablishedIcon,
   "top-emerging": TopEmergingIcon,
 }
 

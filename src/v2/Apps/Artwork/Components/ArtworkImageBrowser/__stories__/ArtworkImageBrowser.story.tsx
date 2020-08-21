@@ -1,4 +1,5 @@
-import { Box, Col } from "@artsy/palette"
+import { Col } from "@artsy/palette/dist/elements/Grid"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import { ArtworkImageBrowserQueryRenderer } from "v2/Apps/Artwork/Components/ArtworkImageBrowser"
 import React from "react"
 import { storiesOf } from "storybook/storiesOf"

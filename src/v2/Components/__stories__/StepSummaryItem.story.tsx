@@ -1,4 +1,4 @@
-import { Sans, Serif } from "@artsy/palette"
+import { Sans, Serif } from "@artsy/palette/dist/elements/Typography"
 import { StepSummaryItem } from "v2/Components/StepSummaryItem"
 import React from "react"
 import { storiesOf } from "storybook/storiesOf"

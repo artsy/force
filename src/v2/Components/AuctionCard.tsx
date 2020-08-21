@@ -1,13 +1,10 @@
-import {
-  BorderBox,
-  Box,
-  Flex,
-  Image,
-  Link,
-  ResponsiveImage,
-  Sans,
-  Serif,
-} from "@artsy/palette"
+import { BorderBox } from "@artsy/palette/dist/elements/BorderBox"
+import { Box } from "@artsy/palette/dist/elements/Box"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
+import { Image } from "@artsy/palette/dist/elements/Image"
+import { Link } from "@artsy/palette/dist/elements/Link"
+import { ResponsiveImage } from "@artsy/palette/dist/elements/Image"
+import { Sans, Serif } from "@artsy/palette/dist/elements/Typography"
 import { AuctionCard_sale } from "v2/__generated__/AuctionCard_sale.graphql"
 import { Truncator } from "v2/Components/Truncator"
 import { DateTime } from "luxon"

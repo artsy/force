@@ -1,4 +1,4 @@
-import { Flex } from "@artsy/palette"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
 import Input from "v2/Components/Input"
 import React from "react"
 
@@ -25,7 +25,7 @@ interface PhoneNumberFormState {
 export class PhoneNumberForm extends React.Component<
   PhoneNumberFormProps,
   PhoneNumberFormState
-  > {
+> {
   state = {
     phoneNumber: this.props.value || emptyPhoneNumber,
   }

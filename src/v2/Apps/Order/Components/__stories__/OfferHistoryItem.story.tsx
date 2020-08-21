@@ -1,4 +1,4 @@
-import { Flex } from "@artsy/palette"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
 import { OfferHistoryItem_order } from "v2/__generated__/OfferHistoryItem_order.graphql"
 import {
   Buyer,

@@ -1,11 +1,9 @@
-import {
-  Box,
-  Button,
-  Flex,
-  Sans,
-  Spacer,
-  StackableBorderBox,
-} from "@artsy/palette"
+import { Box } from "@artsy/palette/dist/elements/Box"
+import { Button } from "@artsy/palette/dist/elements/Button"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
+import { Sans } from "@artsy/palette/dist/elements/Typography"
+import { Spacer } from "@artsy/palette/dist/elements/Spacer"
+import { StackableBorderBox } from "@artsy/palette/dist/elements/StackableBorderBox"
 import { MobileTopBar } from "v2/Components/MobileTopBar"
 import React from "react"
 import { storiesOf } from "storybook/storiesOf"
@@ -61,12 +59,12 @@ class ActionSheet extends React.Component {
             </StackableBorderBox>
           </>
         ) : (
-            <>
-              <Button onClick={() => this.setState({ isOpen: true })}>
-                Open ActionSheet
+          <>
+            <Button onClick={() => this.setState({ isOpen: true })}>
+              Open ActionSheet
             </Button>
-            </>
-          )}
+          </>
+        )}
       </>
     )
   }

@@ -1,7 +1,8 @@
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FairEditorialItem_article } from "v2/__generated__/FairEditorialItem_article.graphql"
-import { Box, Text } from "@artsy/palette"
+import { Box } from "@artsy/palette/dist/elements/Box"
+import { Text } from "@artsy/palette/dist/elements/Text"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import styled from "styled-components"
 

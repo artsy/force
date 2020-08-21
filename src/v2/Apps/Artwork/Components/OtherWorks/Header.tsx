@@ -1,4 +1,6 @@
-import { Button, Flex, Serif } from "@artsy/palette"
+import { Serif } from "@artsy/palette/dist/elements/Typography"
+import { Button } from "@artsy/palette/dist/elements/Button"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import React from "react"
 

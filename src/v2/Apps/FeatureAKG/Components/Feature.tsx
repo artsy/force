@@ -1,4 +1,6 @@
-import { Box, ResponsiveImage, Sans, Serif } from "@artsy/palette"
+import { ResponsiveImage } from "@artsy/palette/dist/elements/Image"
+import { Sans, Serif } from "@artsy/palette/dist/elements/Typography"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import { Feature_viewer } from "v2/__generated__/Feature_viewer.graphql"
 import { FeaturedArticlesFragmentContainer as FeaturedArticles } from "v2/Apps/FeatureAKG/Components/FeaturedArticles"
 import { FeaturedArtists } from "v2/Apps/FeatureAKG/Components/FeaturedArtists"

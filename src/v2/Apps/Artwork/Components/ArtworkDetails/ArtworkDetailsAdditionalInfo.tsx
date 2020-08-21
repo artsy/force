@@ -1,11 +1,7 @@
-import {
-  Col,
-  Grid,
-  ReadMore,
-  Row,
-  Sans,
-  StackableBorderBox,
-} from "@artsy/palette"
+import { Col, Grid, Row } from "@artsy/palette/dist/elements/Grid"
+import { ReadMore } from "@artsy/palette/dist/elements/ReadMore"
+import { Sans } from "@artsy/palette/dist/elements/Typography"
+import { StackableBorderBox } from "@artsy/palette/dist/elements/StackableBorderBox"
 import { ArtworkDetailsAdditionalInfo_artwork } from "v2/__generated__/ArtworkDetailsAdditionalInfo_artwork.graphql"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -18,7 +14,7 @@ export interface ArtworkDetailsAdditionalInfoProps {
 
 export class ArtworkDetailsAdditionalInfo extends React.Component<
   ArtworkDetailsAdditionalInfoProps
-  > {
+> {
   render() {
     const {
       category,
@@ -44,8 +40,8 @@ export class ArtworkDetailsAdditionalInfo extends React.Component<
         value: canRequestLotConditionsReport ? (
           <RequestConditionReportQueryRenderer artworkID={internalID} />
         ) : (
-            conditionDescription && conditionDescription.details
-          ),
+          conditionDescription && conditionDescription.details
+        ),
       },
 
       {
@@ -92,8 +88,8 @@ export class ArtworkDetailsAdditionalInfo extends React.Component<
                   {React.isValidElement(value) ? (
                     value
                   ) : (
-                      <ReadMore maxChars={140} content={value} />
-                    )}
+                    <ReadMore maxChars={140} content={value} />
+                  )}
                 </Sans>
               </Col>
             </Row>

@@ -1,4 +1,8 @@
-import { Box, Checkbox, Flex, Sans, Toggle } from "@artsy/palette"
+import { Toggle } from "@artsy/palette/dist/elements/Toggle"
+import { Checkbox } from "@artsy/palette/dist/elements/Checkbox"
+import { Sans } from "@artsy/palette/dist/elements/Typography"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import React from "react"
 
 const sizeMap = [

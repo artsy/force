@@ -1,5 +1,9 @@
 import { ContextModule } from "@artsy/cohesion"
-import { Box, ChevronIcon, Flex, color, space } from "@artsy/palette"
+import { ChevronIcon } from "@artsy/palette/dist/svgs/ChevronIcon"
+import { space } from "@artsy/palette/dist/helpers/space"
+import { color } from "@artsy/palette/dist/helpers/color"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import React from "react"
 import styled from "styled-components"
 import { HeightProps, LeftProps, RightProps, left, right } from "styled-system"
@@ -170,7 +174,7 @@ interface BaseCarouselState {
 export class BaseCarousel<T> extends React.Component<
   CarouselProps<T>,
   BaseCarouselState
-> {
+  > {
   state = {
     currentSlideIndex: 0,
     lastItemVisible: true,
@@ -448,7 +452,7 @@ const FlickityCarousel = styled.div<{
   display: ${props => (props.isMounted ? "block" : "flex")};
 `
 
-const CarouselContainer = styled(Box)<{
+const CarouselContainer = styled(Box) <{
   height: any
   isMounted: boolean
 }>`
@@ -495,9 +499,9 @@ const CarouselContainer = styled(Box)<{
   }};
 `
 
-export const ArrowButton: typeof Flex = styled(Flex)<
+export const ArrowButton: typeof Flex = styled(Flex) <
   LeftProps & RightProps & HeightProps
->`
+  >`
   position: relative;
   cursor: pointer;
   display: flex;

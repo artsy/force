@@ -1,4 +1,4 @@
-import { Box } from "@artsy/palette"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import { SelectedWorks_selectedWorks } from "v2/__generated__/SelectedWorks_selectedWorks.graphql"
 import { AnalyticsSchema, useSystemContext } from "v2/Artsy"
 import { useTracking } from "v2/Artsy/Analytics/useTracking"

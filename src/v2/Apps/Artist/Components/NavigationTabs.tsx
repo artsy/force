@@ -1,4 +1,4 @@
-import { Flex } from "@artsy/palette"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
 import { NavigationTabs_artist } from "v2/__generated__/NavigationTabs_artist.graphql"
 import { hasSections as showMarketInsights } from "v2/Apps/Artist/Components/MarketInsights/MarketInsights"
 import { SystemContextProps, withSystemContext } from "v2/Artsy"

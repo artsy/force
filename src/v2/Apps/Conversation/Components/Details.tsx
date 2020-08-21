@@ -1,20 +1,17 @@
-import {
-  Box,
-  DocumentIcon,
-  EntityHeader,
-  Flex,
-  FlexProps,
-  Join,
-  Link,
-  QuestionCircleIcon,
-  ResponsiveImage,
-  Sans,
-  Separator,
-  Spacer,
-  breakpoints,
-  color,
-  media,
-} from "@artsy/palette"
+import { Box } from "@artsy/palette/dist/elements/Box"
+import { DocumentIcon } from "@artsy/palette/dist/svgs/DocumentIcon"
+import { QuestionCircleIcon } from "@artsy/palette/dist/svgs/QuestionCircleIcon"
+import { EntityHeader } from "@artsy/palette/dist/elements/EntityHeader"
+import { Flex, FlexProps } from "@artsy/palette/dist/elements/Flex"
+import { Join } from "@artsy/palette/dist/elements/Join"
+import { Link } from "@artsy/palette/dist/elements/Link"
+import { ResponsiveImage } from "@artsy/palette/dist/elements/Image"
+import { Sans } from "@artsy/palette/dist/elements/Typography"
+import { Separator } from "@artsy/palette/dist/elements/Separator"
+import { Spacer } from "@artsy/palette/dist/elements/Spacer"
+import { breakpoints } from "@artsy/palette/dist/Theme"
+import { color } from "@artsy/palette/dist/helpers/color"
+import { media } from "@artsy/palette/dist/helpers/media"
 import React, { FC, useEffect } from "react"
 import styled from "styled-components"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -33,7 +30,7 @@ const DETAIL_BOX_MD_ANIMATION = `transition: transform 0.3s;`
 // in XS/S/M screens transition is animated with `opacity`. z-index: -1 is also needed when showDetail is false
 // in XL screen it is animated with `width` because animation needs to push the mid column content
 // in L screens it is animated with `translate` for better performance (than `width`)
-const DetailsContainer = styled(Flex)<{ transform?: string }>`
+const DetailsContainer = styled(Flex) <{ transform?: string }>`
   border-left: 1px solid ${color("black10")};
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   background-color: ${color("white100")};

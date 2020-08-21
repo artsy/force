@@ -3,7 +3,10 @@ import { createFragmentContainer, graphql } from "react-relay"
 
 import { ArtistConsignSellArt_artist } from "v2/__generated__/ArtistConsignSellArt_artist.graphql"
 
-import { Box, Button, Sans, Serif } from "@artsy/palette"
+import { Serif } from "@artsy/palette/dist/elements/Typography"
+import { Button } from "@artsy/palette/dist/elements/Button"
+import { Sans } from "@artsy/palette/dist/elements/Typography"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import { AnalyticsSchema, useTracking } from "v2/Artsy"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import { LightPurpleColor, SectionContainer } from "./SectionContainer"

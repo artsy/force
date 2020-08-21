@@ -1,5 +1,6 @@
 import React from "react"
-import { Box, Serif } from "@artsy/palette"
+import { Serif } from "@artsy/palette/dist/elements/Typography"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ViewingRoomBody_viewingRoom } from "v2/__generated__/ViewingRoomBody_viewingRoom.graphql"
 

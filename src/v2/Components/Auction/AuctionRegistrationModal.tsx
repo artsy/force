@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react"
 
-import { Box, Button, Flex, Modal, Sans, Serif } from "@artsy/palette"
+import { Modal } from "@artsy/palette/dist/elements/Modal"
+import { Button } from "@artsy/palette/dist/elements/Button"
+import { Sans, Serif } from "@artsy/palette/dist/elements/Typography"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import { bidderNeedsIdentityVerification } from "v2/Utils/identityVerificationRequirements"
 import { ConditionsOfSaleCheckbox } from "./ConditionsOfSaleCheckbox"
 

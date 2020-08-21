@@ -1,4 +1,5 @@
-import { media, space } from "@artsy/palette"
+import { media } from "@artsy/palette/dist/helpers/media"
+import { space } from "@artsy/palette/dist/helpers/space"
 import styled, { css } from "styled-components"
 import { SpaceProps } from "styled-system"
 

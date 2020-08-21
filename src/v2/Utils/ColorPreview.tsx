@@ -1,4 +1,6 @@
-import { Display, Flex, themeProps } from "@artsy/palette"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
+import { Display } from "@artsy/palette/dist/elements/Typography"
+import { themeProps } from "@artsy/palette/dist/Theme"
 import React from "react"
 import styled from "styled-components"
 import { BackgroundProps, ColorProps, color } from "styled-system"

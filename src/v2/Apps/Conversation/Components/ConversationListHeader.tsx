@@ -1,5 +1,7 @@
 import React, { FC } from "react"
-import { Flex, Sans, Separator } from "@artsy/palette"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
+import { Sans } from "@artsy/palette/dist/elements/Typography"
+import { Separator } from "@artsy/palette/dist/elements/Separator"
 import { LARGE_SCREEN_HEADER_HEIGHT } from "./ConversationHeader"
 
 export const ConversationListHeader: FC = props => {

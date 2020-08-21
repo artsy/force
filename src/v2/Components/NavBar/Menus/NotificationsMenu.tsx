@@ -9,15 +9,15 @@ import {
   NotificationsMenuQuery,
   NotificationsMenuQueryResponse,
 } from "v2/__generated__/NotificationsMenuQuery.graphql"
+import { Box } from "@artsy/palette/dist/elements/Box"
+import { Image } from "@artsy/palette/dist/elements/Image"
+import { Link } from "@artsy/palette/dist/elements/Link"
+import { Separator } from "@artsy/palette/dist/elements/Separator"
 import {
-  Box,
-  Image,
-  Link,
-  Separator,
   SkeletonBox,
   SkeletonText,
-  Text,
-} from "@artsy/palette"
+} from "@artsy/palette/dist/elements/Skeleton"
+import { Text } from "@artsy/palette/dist/elements/Text"
 import { Menu, MenuItem, MenuItemPlaceholder } from "v2/Components/Menu"
 import { SystemQueryRenderer as QueryRenderer } from "v2/Artsy/Relay/SystemQueryRenderer"
 

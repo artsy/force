@@ -1,4 +1,4 @@
-import { Message } from "@artsy/palette"
+import { Message } from "@artsy/palette/dist/elements/Message"
 import { StatusQueryRawResponse } from "v2/__generated__/StatusQuery.graphql"
 import {
   BuyOrderPickup,
@@ -31,9 +31,9 @@ class StatusTestPage extends OrderAppTestPage {
   }
 }
 
-type UnionToIntersection<U> = (U extends any
-? (k: U) => void
-: never) extends (k: infer I) => void
+type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends (
+  k: infer I
+) => void
   ? I
   : never
 

@@ -1,4 +1,4 @@
-import { Serif } from "@artsy/palette"
+import { Serif } from "@artsy/palette/dist/elements/Typography"
 import { ArtistBio_bio } from "v2/__generated__/ArtistBio_bio.graphql"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"

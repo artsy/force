@@ -1,4 +1,4 @@
-import { Box } from "@artsy/palette"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import { CollectionsHubRailsStoryQuery } from "v2/__generated__/CollectionsHubRailsStoryQuery.graphql"
 import { SystemContext } from "v2/Artsy"
 import { SystemQueryRenderer as QueryRenderer } from "v2/Artsy/Relay/SystemQueryRenderer"

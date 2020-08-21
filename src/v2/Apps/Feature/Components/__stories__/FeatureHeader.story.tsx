@@ -3,7 +3,8 @@ import { storiesOf } from "storybook/storiesOf"
 import { FeatureHeaderDefault } from "../FeatureHeader/FeatureHeaderDefault"
 import { FeatureHeaderFull } from "../FeatureHeader/FeatureHeaderFull"
 import { FEATURE_HEADER } from "../__tests__/fixtures"
-import { Box } from "@artsy/palette"
+
+import { Box } from "@artsy/palette/dist/elements/Box"
 
 storiesOf("Apps/Feature", module)
   .add("FeatureHeader (default, with image)", () => (

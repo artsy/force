@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from "react"
 import { AppContainer } from "v2/Apps/Components/AppContainer"
-import { Box, Separator } from "@artsy/palette"
+import { Separator } from "@artsy/palette/dist/elements/Separator"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import { ViewingRoomHeaderFragmentContainer as ViewingRoomHeader } from "./Components/ViewingRoomHeader"
 import { ViewingRoomContentNotAccessibleFragmentContainer as ViewingRoomContentNotAccessible } from "./Components/ViewingRoomContentNotAccessible"
 import { ViewingRoomTabBar } from "./Components/ViewingRoomTabBar"

@@ -1,4 +1,5 @@
-import { Box, Sans } from "@artsy/palette"
+import { Sans } from "@artsy/palette/dist/elements/Typography"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import { ArrowButton, Carousel } from "v2/Components/Carousel"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"

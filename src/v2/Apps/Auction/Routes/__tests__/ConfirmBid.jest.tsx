@@ -29,7 +29,7 @@ import { createTestEnv } from "v2/DevTools/createTestEnv"
 import { Location, Match } from "found"
 import React from "react"
 import { graphql } from "react-relay"
-import { LargeSelect } from "@artsy/palette"
+import { LargeSelect } from "@artsy/palette/dist/elements/Select"
 
 import { routes_ConfirmBidQueryResponse } from "v2/__generated__/routes_ConfirmBidQuery.graphql"
 import { ConfirmBidQueryResponseFixture } from "v2/Apps/Auction/__fixtures__/routes_ConfirmBidQuery"

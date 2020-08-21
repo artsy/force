@@ -10,13 +10,6 @@ exports[`Artwork renders correctly 1`] = `
   margin-bottom: 0.3px;
 }
 
-.c8 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-}
-
 .c6 {
   font-family: Unica77LLWebMedium,'Helvetica Neue',Helvetica,Arial,sans-serif;
   font-weight: 500;
@@ -59,6 +52,13 @@ exports[`Artwork renders correctly 1`] = `
   -webkit-text-decoration: none;
   text-decoration: none;
   color: #000;
+}
+
+.c8 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
 }
 
 .c5 {

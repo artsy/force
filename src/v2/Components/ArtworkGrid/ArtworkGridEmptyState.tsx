@@ -1,4 +1,4 @@
-import { Message } from "@artsy/palette"
+import { Message } from "@artsy/palette/dist/elements/Message"
 import React from "react"
 import styled from "styled-components"
 

@@ -1,6 +1,8 @@
 import React from "react"
 import styled from "styled-components"
-import { Text, color, space } from "@artsy/palette"
+import { Text } from "@artsy/palette/dist/elements/Text"
+import { space } from "@artsy/palette/dist/helpers/space"
+import { color } from "@artsy/palette/dist/helpers/color"
 
 const Container = styled.a`
   display: block;

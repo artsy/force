@@ -1,4 +1,4 @@
-import { Box } from "@artsy/palette"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import { ArtistRecommendationsQueryRenderer as ArtistRecommendations } from "v2/Apps/Artist/Routes/Overview/Components/ArtistRecommendations"
 import React from "react"
 import { storiesOf } from "storybook/storiesOf"

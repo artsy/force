@@ -1,4 +1,4 @@
-import { Flex } from "@artsy/palette"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
 import { ShippingAddress_ship } from "v2/__generated__/ShippingAddress_ship.graphql"
 import { ShippingSummaryItem_order } from "v2/__generated__/ShippingSummaryItem_order.graphql"
 import { mockResolver } from "v2/Apps/__tests__/Fixtures/Order"

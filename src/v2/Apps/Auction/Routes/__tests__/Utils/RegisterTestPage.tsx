@@ -1,4 +1,4 @@
-import { Checkbox } from "@artsy/palette"
+import { Checkbox } from "@artsy/palette/dist/elements/Checkbox"
 import { Address, AddressForm } from "v2/Components/AddressForm"
 import { RootTestPage, expectOne } from "v2/DevTools/RootTestPage"
 

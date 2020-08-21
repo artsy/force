@@ -2,7 +2,7 @@ import React from "react"
 import styled, { ThemeProvider } from "styled-components"
 
 import colors from "v2/Assets/Colors"
-import { Col, Row } from "@artsy/palette"
+import { Col, Row } from "@artsy/palette/dist/elements/Grid"
 import Text from "v2/Components/Text"
 import Title from "v2/Components/Title"
 

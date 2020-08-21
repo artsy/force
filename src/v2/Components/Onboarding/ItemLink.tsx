@@ -1,7 +1,8 @@
 import React from "react"
 import styled from "styled-components"
 
-import { CircleWhiteCheckIcon, PlusIcon } from "@artsy/palette"
+import { CheckCircleIcon } from "@artsy/palette/dist/svgs/CheckCircleIcon"
+import { AddCircleFillIcon } from "@artsy/palette/dist/svgs/AddCircleFillIcon"
 import Colors from "v2/Assets/Colors"
 import { avantgarde } from "v2/Assets/Fonts"
 import { media } from "../Helpers"
@@ -87,10 +88,10 @@ export default class ItemLink extends React.Component<Props, State> {
         <FullWidthCol>{this.props.name}</FullWidthCol>
         <Col>
           {this.state.selected ? (
-            <CircleWhiteCheckIcon width="26" height="26" />
+            <CheckCircleIcon width="26" height="26" />
           ) : (
-            <PlusIcon width="26" height="26" />
-          )}
+              <AddCircleFillIcon width="26" height="26" />
+            )}
         </Col>
       </Link>
     )

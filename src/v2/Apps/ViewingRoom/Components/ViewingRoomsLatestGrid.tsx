@@ -1,13 +1,10 @@
 import React, { useState } from "react"
-import {
-  Box,
-  Button,
-  CSSGrid,
-  CardTagProps,
-  Flex,
-  Sans,
-  SmallCard,
-} from "@artsy/palette"
+import { Box } from "@artsy/palette/dist/elements/Box"
+import { Button } from "@artsy/palette/dist/elements/Button"
+import { CSSGrid } from "@artsy/palette/dist/elements/CSSGrid"
+import { CardTagProps, SmallCard } from "@artsy/palette/dist/elements/Cards"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
+import { Sans } from "@artsy/palette/dist/elements/Typography"
 import {
   RelayPaginationProp,
   createPaginationContainer,

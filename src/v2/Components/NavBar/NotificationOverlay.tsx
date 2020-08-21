@@ -1,6 +1,8 @@
 import React, { FC } from "react"
 import styled from "styled-components"
-import { Flex, color, space } from "@artsy/palette"
+import { space } from "@artsy/palette/dist/helpers/space"
+import { color } from "@artsy/palette/dist/helpers/color"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
 
 interface NotificationOverlayProps {
   showOverlay: boolean

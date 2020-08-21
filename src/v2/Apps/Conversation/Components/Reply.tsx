@@ -1,13 +1,10 @@
-import {
-  Button,
-  Dialog,
-  Flex,
-  FlexProps,
-  color,
-  media,
-  space,
-  themeProps,
-} from "@artsy/palette"
+import { Button } from "@artsy/palette/dist/elements/Button"
+import { Dialog } from "@artsy/palette/dist/elements/Dialog"
+import { Flex, FlexProps } from "@artsy/palette/dist/elements/Flex"
+import { color } from "@artsy/palette/dist/helpers/color"
+import { media } from "@artsy/palette/dist/helpers/media"
+import { space } from "@artsy/palette/dist/helpers/space"
+import { themeProps } from "@artsy/palette/dist/Theme"
 import { Conversation_conversation } from "v2/__generated__/Conversation_conversation.graphql"
 import React, { useRef, useState } from "react"
 import { Environment, RelayRefetchProps } from "react-relay"

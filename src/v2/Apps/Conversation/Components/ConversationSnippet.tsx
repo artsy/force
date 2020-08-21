@@ -1,13 +1,11 @@
-import {
-  Box,
-  Flex,
-  Link,
-  Row,
-  Sans,
-  Separator,
-  color,
-  space,
-} from "@artsy/palette"
+import { Box } from "@artsy/palette/dist/elements/Box"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
+import { Link } from "@artsy/palette/dist/elements/Link"
+import { Row } from "@artsy/palette/dist/elements/Grid"
+import { Sans } from "@artsy/palette/dist/elements/Typography"
+import { Separator } from "@artsy/palette/dist/elements/Separator"
+import { color } from "@artsy/palette/dist/helpers/color"
+import { space } from "@artsy/palette/dist/helpers/space"
 import { ConversationSnippet_conversation } from "v2/__generated__/ConversationSnippet_conversation.graphql"
 import {
   ImageWithFallback,

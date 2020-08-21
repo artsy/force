@@ -1,4 +1,7 @@
-import { Box, Button, Flex, Sans } from "@artsy/palette"
+import { Button } from "@artsy/palette/dist/elements/Button"
+import { Sans } from "@artsy/palette/dist/elements/Typography"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import { EmptyInboxHeader } from "./EmptyInboxHeader"
 import React from "react"

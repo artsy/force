@@ -1,4 +1,7 @@
-import { Box, Col, Flex, Row, Spacer } from "@artsy/palette"
+import { Col, Row } from "@artsy/palette/dist/elements/Grid"
+import { Spacer } from "@artsy/palette/dist/elements/Spacer"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import React from "react"
 import { Media } from "v2/Utils/Responsive"
 

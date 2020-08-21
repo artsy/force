@@ -5,7 +5,7 @@ import {
   FlashBannerQueryRenderer,
 } from "v2/Components/FlashBanner"
 import { graphql } from "react-relay"
-import { Banner } from "@artsy/palette"
+import { Banner } from "@artsy/palette/dist/elements/Banner"
 import { flushPromiseQueue, renderRelayTree } from "v2/DevTools"
 import { mount } from "enzyme"
 import { useTracking } from "v2/Artsy/Analytics/useTracking"

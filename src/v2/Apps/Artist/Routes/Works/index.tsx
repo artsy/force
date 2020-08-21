@@ -1,4 +1,6 @@
-import { Box, Col, Row, Separator } from "@artsy/palette"
+import { Col, Row } from "@artsy/palette/dist/elements/Grid"
+import { Separator } from "@artsy/palette/dist/elements/Separator"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import { Works_artist } from "v2/__generated__/Works_artist.graphql"
 import { ArtistCollectionsRailContent as ArtistCollectionsRail } from "v2/Apps/Artist/Components/ArtistCollectionsRail"
 import { ArtistArtworkFilterRefetchContainer as ArtworkFilter } from "v2/Apps/Artist/Routes/Overview/Components/ArtistArtworkFilter"

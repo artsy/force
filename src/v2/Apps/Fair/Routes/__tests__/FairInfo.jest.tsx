@@ -1,4 +1,4 @@
-import { Breakpoint } from "@artsy/palette"
+import { Breakpoint } from "@artsy/palette/dist/Theme"
 import { MockBoot, renderRelayTree } from "v2/DevTools"
 import React from "react"
 import { FairInfoFragmentContainer } from "../FairInfo"

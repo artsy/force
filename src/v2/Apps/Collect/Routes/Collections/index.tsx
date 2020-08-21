@@ -1,4 +1,7 @@
-import { Box, Button, Flex, Sans, Serif } from "@artsy/palette"
+import { Button } from "@artsy/palette/dist/elements/Button"
+import { Sans, Serif } from "@artsy/palette/dist/elements/Typography"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import { Collections_marketingCategories } from "v2/__generated__/Collections_marketingCategories.graphql"
 import { AppContainer } from "v2/Apps/Components/AppContainer"
 import { withSystemContext } from "v2/Artsy"

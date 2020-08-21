@@ -1,12 +1,11 @@
 import {
   BorderBox,
   BorderBoxProps,
-  Button,
-  Flex,
-  Modal,
-  Sans,
-  Serif,
-} from "@artsy/palette"
+} from "@artsy/palette/dist/elements/BorderBox"
+import { Button } from "@artsy/palette/dist/elements/Button"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
+import { Modal } from "@artsy/palette/dist/elements/Modal"
+import { Sans, Serif } from "@artsy/palette/dist/elements/Typography"
 import React, { useState } from "react"
 import { RelayRefetchProp, createFragmentContainer, graphql } from "react-relay"
 import request from "superagent"
@@ -150,26 +149,26 @@ export const SmsSecondFactor: React.FC<SmsSecondFactorProps> = props => {
         </Flex>
         <Flex mt={[3, 0]} flexDirection={["column", "row"]} alignItems="center">
           {me.smsSecondFactors.length &&
-            me.smsSecondFactors[0].__typename === "SmsSecondFactor" ? (
-              <>
-                <Sans color="black60" size="3" weight="medium">
-                  {me.smsSecondFactors[0].formattedPhoneNumber}
-                </Sans>
-                <DisableButton width={["100%", "auto"]} ml={[0, 1]} mt={[1, 0]} />
-                <SetupButton
-                  width={["100%", "auto"]}
-                  ml={[0, 1]}
-                  mt={[1, 0]}
-                  variant="secondaryGray"
-                >
-                  Edit
+          me.smsSecondFactors[0].__typename === "SmsSecondFactor" ? (
+            <>
+              <Sans color="black60" size="3" weight="medium">
+                {me.smsSecondFactors[0].formattedPhoneNumber}
+              </Sans>
+              <DisableButton width={["100%", "auto"]} ml={[0, 1]} mt={[1, 0]} />
+              <SetupButton
+                width={["100%", "auto"]}
+                ml={[0, 1]}
+                mt={[1, 0]}
+                variant="secondaryGray"
+              >
+                Edit
               </SetupButton>
-              </>
-            ) : (
-              <SetupButton width={["100%", "auto"]} ml={[0, 1]} mt={[1, 0]}>
-                Set up
-              </SetupButton>
-            )}
+            </>
+          ) : (
+            <SetupButton width={["100%", "auto"]} ml={[0, 1]} mt={[1, 0]}>
+              Set up
+            </SetupButton>
+          )}
         </Flex>
       </Flex>
       <SmsSecondFactorModal

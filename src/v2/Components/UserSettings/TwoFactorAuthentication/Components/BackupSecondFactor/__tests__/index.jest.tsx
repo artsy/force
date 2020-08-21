@@ -1,4 +1,4 @@
-import { Button } from "@artsy/palette"
+import { Button } from "@artsy/palette/dist/elements/Button"
 import { mount } from "enzyme"
 import React from "react"
 

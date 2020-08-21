@@ -1,4 +1,5 @@
-import { Sans, Spacer } from "@artsy/palette"
+import { Spacer } from "@artsy/palette/dist/elements/Spacer"
+import { Sans } from "@artsy/palette/dist/elements/Typography"
 import { Articles_artist } from "v2/__generated__/Articles_artist.graphql"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"

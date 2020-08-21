@@ -1,5 +1,7 @@
 import { ContextModule } from "@artsy/cohesion"
-import { Box, Flex, Image } from "@artsy/palette"
+import { Image } from "@artsy/palette/dist/elements/Image"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import { artworkBricks, images } from "v2/Apps/__tests__/Fixtures/Carousel"
 import { FillwidthItem } from "v2/Components/Artwork/FillwidthItem"
 import React from "react"

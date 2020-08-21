@@ -1,4 +1,5 @@
-import { Sans, Serif, Spacer } from "@artsy/palette"
+import { Spacer } from "@artsy/palette/dist/elements/Spacer"
+import { Sans, Serif } from "@artsy/palette/dist/elements/Typography"
 import { OfferSummaryItem_order } from "v2/__generated__/OfferSummaryItem_order.graphql"
 import {
   StepSummaryItem,

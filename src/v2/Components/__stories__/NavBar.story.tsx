@@ -1,7 +1,7 @@
 import React from "react"
 import { storiesOf } from "storybook/storiesOf"
 
-import { Box } from "@artsy/palette"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import { SystemContextProvider } from "v2/Artsy"
 import { NavBar } from "v2/Components/NavBar"
 import * as Menus from "v2/Components/NavBar/Menus"

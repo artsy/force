@@ -1,4 +1,7 @@
-import { Box, Sans, Serif, Spacer } from "@artsy/palette"
+import { Spacer } from "@artsy/palette/dist/elements/Spacer"
+import { Serif } from "@artsy/palette/dist/elements/Typography"
+import { Sans } from "@artsy/palette/dist/elements/Typography"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import { ArtistConsignFAQ_artist } from "v2/__generated__/ArtistConsignFAQ_artist.graphql"
 import { AnalyticsSchema, useTracking } from "v2/Artsy"
 import React from "react"

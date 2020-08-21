@@ -3,7 +3,7 @@ import {
   ResponsiveProviderProps as _ResponsiveProviderProps,
   createResponsiveComponents,
 } from "@artsy/fresnel/dist/DynamicResponsive"
-import { themeProps } from "@artsy/palette"
+import { themeProps } from "@artsy/palette/dist/Theme"
 import React from "react"
 import * as sharify from "sharify"
 

@@ -1,4 +1,4 @@
-import { Box } from "@artsy/palette"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import { ArtistCollectionsRailQuery } from "v2/__generated__/ArtistCollectionsRailQuery.graphql"
 import { useSystemContext } from "v2/Artsy"
 import { renderWithLoadProgress } from "v2/Artsy/Relay/renderWithLoadProgress"

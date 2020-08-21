@@ -1,6 +1,6 @@
 import React from "react"
 import { connect } from "react-redux"
-import { Box } from "@artsy/palette"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import { FormSwitcher } from "v2/Components/Authentication/FormSwitcher"
 import { handleSubmit } from "desktop/apps/authentication/helpers"
 import { ModalHeader } from "v2/Components/Modal/ModalHeader"

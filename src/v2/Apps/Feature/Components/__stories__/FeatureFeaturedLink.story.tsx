@@ -2,7 +2,7 @@ import React from "react"
 import { storiesOf } from "storybook/storiesOf"
 import { FeatureFeaturedLink } from "../FeatureFeaturedLink"
 import { FEATURED_LINK } from "../__tests__/fixtures"
-import { CSSGrid } from "@artsy/palette"
+import { CSSGrid } from "@artsy/palette/dist/elements/CSSGrid"
 
 storiesOf("Apps/Feature", module)
   .add("FeatureFeaturedLink (small)", () => (

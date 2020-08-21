@@ -1,4 +1,6 @@
-import { Box, Serif, Spacer } from "@artsy/palette"
+import { Spacer } from "@artsy/palette/dist/elements/Spacer"
+import { Serif } from "@artsy/palette/dist/elements/Typography"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import { RelatedCollectionsRail_collections } from "v2/__generated__/RelatedCollectionsRail_collections.graphql"
 import { track } from "v2/Artsy/Analytics"
 import * as Schema from "v2/Artsy/Analytics/Schema"
@@ -22,7 +24,7 @@ interface RelatedCollectionsRailProps {
   dispatch: data => Events.postEvent(data),
 })
 export class RelatedCollectionsRail extends React.Component<
-RelatedCollectionsRailProps
+  RelatedCollectionsRailProps
 > {
   @track({
     action_type: Schema.ActionType.Impression,

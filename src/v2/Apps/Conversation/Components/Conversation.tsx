@@ -1,4 +1,7 @@
-import { Box, Flex, Spacer, Spinner } from "@artsy/palette"
+import { Box } from "@artsy/palette/dist/elements/Box"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
+import { Spacer } from "@artsy/palette/dist/elements/Spacer"
+import { Spinner } from "@artsy/palette/dist/elements/Spinner"
 import { Conversation_conversation } from "v2/__generated__/Conversation_conversation.graphql"
 import React, { useEffect, useRef, useState } from "react"
 import {

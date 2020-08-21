@@ -1,4 +1,4 @@
-import { Flex } from "@artsy/palette"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
 import { withSystemContext } from "v2/Artsy"
 import { checkEmail } from "v2/Components/Authentication/helpers"
 import Icon from "v2/Components/Icon"

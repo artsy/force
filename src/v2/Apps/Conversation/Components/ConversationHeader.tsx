@@ -1,14 +1,11 @@
 import React, { FC } from "react"
 import styled from "styled-components"
-import {
-  ArrowLeftIcon,
-  Box,
-  Flex,
-  FlexProps,
-  Sans,
-  Separator,
-  color,
-} from "@artsy/palette"
+import { ArrowLeftIcon } from "@artsy/palette/dist/svgs/ArrowLeftIcon"
+import { Box } from "@artsy/palette/dist/elements/Box"
+import { Flex, FlexProps } from "@artsy/palette/dist/elements/Flex"
+import { Sans } from "@artsy/palette/dist/elements/Typography"
+import { Separator } from "@artsy/palette/dist/elements/Separator"
+import { color } from "@artsy/palette/dist/helpers/color"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import { Media } from "v2/Utils/Responsive"
 import { DetailIcon, DetailsProps } from "./DetailsHeader"

@@ -1,15 +1,12 @@
 import styled from "styled-components"
 import React from "react"
 import { PartnerInline } from "@artsy/reaction/dist/Components/Publishing/Partner/PartnerInline"
-import {
-  Clickable,
-  CloseIcon,
-  Flex,
-  MenuIcon,
-  Sans,
-  Serif,
-  media,
-} from "@artsy/palette"
+import { Clickable } from "@artsy/palette/dist/elements/Clickable"
+import { media } from "@artsy/palette/dist/helpers/media"
+import { CloseIcon } from "@artsy/palette/dist/svgs/CloseIcon"
+import { MenuIcon } from "@artsy/palette/dist/svgs/MenuIcon"
+import { Sans, Serif } from "@artsy/palette/dist/elements/Typography"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
 import { Media } from "@artsy/reaction/dist/Utils/Responsive"
 
 interface HeaderProps {

@@ -1,16 +1,13 @@
-import {
-  Box,
-  Button,
-  Flex,
-  HelpIcon,
-  LargeSelect,
-  Link,
-  Sans,
-  Separator,
-  Serif,
-  Spacer,
-  Tooltip,
-} from "@artsy/palette"
+import { Box } from "@artsy/palette/dist/elements/Box"
+import { Button } from "@artsy/palette/dist/elements/Button"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
+import { QuestionCircleIcon } from "@artsy/palette/dist/svgs/QuestionCircleIcon"
+import { LargeSelect } from "@artsy/palette/dist/elements/Select"
+import { Link } from "@artsy/palette/dist/elements/Link"
+import { Sans, Serif } from "@artsy/palette/dist/elements/Typography"
+import { Separator } from "@artsy/palette/dist/elements/Separator"
+import { Spacer } from "@artsy/palette/dist/elements/Spacer"
+import { Tooltip } from "@artsy/palette/dist/elements/Tooltip"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 
@@ -250,7 +247,7 @@ ArtworkSidebarBidActionState
                 Place max bid
               </Serif>
               <Tooltip content="Set the maximum amount you would like Artsy to bid up to on your behalf">
-                <HelpIcon />
+                <QuestionCircleIcon />
               </Tooltip>
             </Flex>
             <LargeSelect options={selectOptions} onSelect={this.setMaxBid} />

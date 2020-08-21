@@ -3,7 +3,10 @@ import React from "react"
 import styled from "styled-components"
 import { unica } from "@artsy/reaction/dist/Assets/Fonts"
 import { Video } from "@artsy/reaction/dist/Components/Publishing"
-import { Box, Flex, Sans, media } from "@artsy/palette"
+import { media } from "@artsy/palette/dist/helpers/media"
+import { Sans } from "@artsy/palette/dist/elements/Typography"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
+import { Box } from "@artsy/palette/dist/elements/Box"
 
 interface SectionVideoProps {
   section: any

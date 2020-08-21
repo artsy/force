@@ -1,4 +1,5 @@
-import { Link, Sans } from "@artsy/palette"
+import { Link } from "@artsy/palette/dist/elements/Link"
+import { Sans } from "@artsy/palette/dist/elements/Typography"
 import React from "react"
 import styled from "styled-components"
 

@@ -1,4 +1,6 @@
-import { Checkbox, Flex, Toggle } from "@artsy/palette"
+import { Toggle } from "@artsy/palette/dist/elements/Toggle"
+import { Checkbox } from "@artsy/palette/dist/elements/Checkbox"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
 import { isEmpty } from "lodash"
 import React, { FC } from "react"
 

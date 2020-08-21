@@ -1,4 +1,6 @@
-import { Box, Flex, color } from "@artsy/palette"
+import { color } from "@artsy/palette/dist/helpers/color"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import { AnalyticsSchema, ContextModule } from "v2/Artsy"
 import { useTracking } from "v2/Artsy/Analytics/useTracking"
 import React from "react"

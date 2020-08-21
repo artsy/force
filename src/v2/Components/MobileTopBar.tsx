@@ -1,4 +1,5 @@
-import { BorderBox, Flex } from "@artsy/palette"
+import { BorderBox } from "@artsy/palette/dist/elements/BorderBox"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
 import React, { ReactNode, SFC } from "react"
 import styled from "styled-components"
 

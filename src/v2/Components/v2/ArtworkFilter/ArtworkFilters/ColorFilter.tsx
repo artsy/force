@@ -1,4 +1,6 @@
-import { CheckIcon, Flex, Toggle } from "@artsy/palette"
+import { CheckIcon } from "@artsy/palette/dist/svgs/CheckIcon"
+import { Toggle } from "@artsy/palette/dist/elements/Toggle"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
 import React, { FC } from "react"
 import { useArtworkFilterContext } from "../ArtworkFilterContext"
 

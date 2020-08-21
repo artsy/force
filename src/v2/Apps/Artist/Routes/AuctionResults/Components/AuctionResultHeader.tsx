@@ -1,4 +1,6 @@
-import { Box, Sans, Serif } from "@artsy/palette"
+import { Serif } from "@artsy/palette/dist/elements/Typography"
+import { Sans } from "@artsy/palette/dist/elements/Typography"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import { AuctionResultHeader_artist } from "v2/__generated__/AuctionResultHeader_artist.graphql"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import React from "react"

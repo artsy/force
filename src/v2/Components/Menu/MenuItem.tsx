@@ -1,14 +1,9 @@
 import React from "react"
 import styled from "styled-components"
-import {
-  Box,
-  BoxProps,
-  Text,
-  TextProps,
-  TextVariant,
-  boxMixin,
-  color,
-} from "@artsy/palette"
+import { Box, BoxProps } from "@artsy/palette/dist/elements/Box"
+import { Text, TextProps, TextVariant } from "@artsy/palette/dist/elements/Text"
+import { boxMixin } from "@artsy/palette/dist/elements/Box"
+import { color } from "@artsy/palette/dist/helpers/color"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
 
 const MENU_ITEM_DEFAULT_PROPS = {

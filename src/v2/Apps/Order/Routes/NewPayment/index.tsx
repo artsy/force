@@ -16,7 +16,11 @@ import { data as sd } from "sharify"
 import createLogger from "v2/Utils/logger"
 import { Media } from "v2/Utils/Responsive"
 
-import { Button, Col, Flex, Join, Row, Spacer } from "@artsy/palette"
+import { Join } from "@artsy/palette/dist/elements/Join"
+import { Col, Row } from "@artsy/palette/dist/elements/Grid"
+import { Spacer } from "@artsy/palette/dist/elements/Spacer"
+import { Button } from "@artsy/palette/dist/elements/Button"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
 import {
   PaymentPicker,
   PaymentPickerFragmentContainer,
@@ -28,7 +32,7 @@ import {
 } from "v2/Apps/Order/Utils/commitMutation"
 import { get } from "v2/Utils/get"
 
-export const ContinueButton = (props) => (
+export const ContinueButton = props => (
   <Button size="large" width="100%" {...props}>
     Continue
   </Button>
@@ -295,7 +299,7 @@ export class NewPaymentRoute extends Component<
   artistId() {
     return get(
       this.props.order,
-      (o) => o.lineItems.edges[0].node.artwork.artists[0].slug
+      o => o.lineItems.edges[0].node.artwork.artists[0].slug
     )
   }
 

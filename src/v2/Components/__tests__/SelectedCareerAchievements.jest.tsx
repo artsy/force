@@ -1,4 +1,4 @@
-import { Sans } from "@artsy/palette"
+import { Sans } from "@artsy/palette/dist/elements/Typography"
 import { SelectedCareerAchievementsTestQueryRawResponse } from "v2/__generated__/SelectedCareerAchievementsTestQuery.graphql"
 import { renderRelayTree } from "v2/DevTools"
 import { ReactWrapper } from "enzyme"

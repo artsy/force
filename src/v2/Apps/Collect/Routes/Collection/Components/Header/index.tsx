@@ -1,17 +1,14 @@
 import { ContextModule, Intent } from "@artsy/cohesion"
-import { EntityHeader, ReadMore, breakpoints } from "@artsy/palette"
-import {
-  Box,
-  Col,
-  Flex,
-  Grid,
-  Row,
-  Sans,
-  Serif,
-  Spacer,
-  color,
-  media,
-} from "@artsy/palette"
+import { breakpoints } from "@artsy/palette/dist/Theme"
+import { ReadMore } from "@artsy/palette/dist/elements/ReadMore"
+import { EntityHeader } from "@artsy/palette/dist/elements/EntityHeader"
+import { Box } from "@artsy/palette/dist/elements/Box"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
+import { Col, Grid, Row } from "@artsy/palette/dist/elements/Grid"
+import { Sans, Serif } from "@artsy/palette/dist/elements/Typography"
+import { Spacer } from "@artsy/palette/dist/elements/Spacer"
+import { color } from "@artsy/palette/dist/helpers/color"
+import { media } from "@artsy/palette/dist/helpers/media"
 import { Header_artworks } from "v2/__generated__/Header_artworks.graphql"
 import { Header_collection } from "v2/__generated__/Header_collection.graphql"
 import { CollectionDefaultHeaderFragmentContainer as CollectionDefaultHeader } from "v2/Apps/Collect/Routes/Collection/Components/Header/DefaultHeader"

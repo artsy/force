@@ -1,13 +1,11 @@
-import {
-  Box,
-  Button,
-  CheckCircleIcon,
-  Flex,
-  Input,
-  Serif,
-  TextArea,
-  color,
-} from "@artsy/palette"
+import { Box } from "@artsy/palette/dist/elements/Box"
+import { Button } from "@artsy/palette/dist/elements/Button"
+import { CheckCircleIcon } from "@artsy/palette/dist/svgs/CheckCircleIcon"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
+import { Input } from "@artsy/palette/dist/elements/Input"
+import { Serif } from "@artsy/palette/dist/elements/Typography"
+import { TextArea } from "@artsy/palette/dist/elements/TextArea"
+import { color } from "@artsy/palette/dist/helpers/color"
 import { SendFeedbackSearchResultsMutation } from "v2/__generated__/SendFeedbackSearchResultsMutation.graphql"
 import { SystemContextProps } from "v2/Artsy"
 import { withSystemContext } from "v2/Artsy"

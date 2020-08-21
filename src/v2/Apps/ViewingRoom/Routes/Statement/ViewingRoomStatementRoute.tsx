@@ -1,5 +1,7 @@
 import React from "react"
-import { Box, Join, Spacer } from "@artsy/palette"
+import { Join } from "@artsy/palette/dist/elements/Join"
+import { Spacer } from "@artsy/palette/dist/elements/Spacer"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import { ViewingRoomWorksFragmentContainer as ViewingRoomWorks } from "./Components/ViewingRoomWorks"
 import { ViewingRoomIntroFragmentContainer as ViewingRoomIntro } from "./Components/ViewingRoomIntro"
 import { ViewingRoomPullQuoteFragmentContainer as ViewingRoomPullQuote } from "./Components/ViewingRoomPullQuote"

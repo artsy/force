@@ -1,4 +1,4 @@
-import { Dialog } from "@artsy/palette"
+import { Dialog } from "@artsy/palette/dist/elements/Dialog"
 import React from "react"
 
 interface DisableFactorConfirmationProps {

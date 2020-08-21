@@ -1,11 +1,9 @@
-import {
-  Button,
-  FilterIcon,
-  Flex,
-  Row,
-  Separator,
-  Spacer,
-} from "@artsy/palette"
+import { Button } from "@artsy/palette/dist/elements/Button"
+import { FilterIcon } from "@artsy/palette/dist/svgs/FilterIcon"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
+import { Row } from "@artsy/palette/dist/elements/Grid"
+import { Separator } from "@artsy/palette/dist/elements/Separator"
+import { Spacer } from "@artsy/palette/dist/elements/Spacer"
 import React from "react"
 import { Media } from "v2/Utils/Responsive"
 import { AuctionResultsCount } from "./AuctionResultsCount"

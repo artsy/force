@@ -4,14 +4,12 @@ import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { get } from "v2/Utils/get"
 
-import {
-  Box,
-  Flex,
-  FlexProps,
-  Image,
-  Serif,
-  StackableBorderBox,
-} from "@artsy/palette"
+import { Box } from "@artsy/palette/dist/elements/Box"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
+import { FlexProps } from "@artsy/palette/dist/elements/Flex"
+import { Image } from "@artsy/palette/dist/elements/Image"
+import { Serif } from "@artsy/palette/dist/elements/Typography"
+import { StackableBorderBox } from "@artsy/palette/dist/elements/StackableBorderBox"
 
 export interface ArtworkSummaryItemProps extends Omit<FlexProps, "order"> {
   order: ArtworkSummaryItem_order

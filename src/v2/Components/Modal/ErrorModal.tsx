@@ -1,4 +1,5 @@
-import { Box, Link } from "@artsy/palette"
+import { Link } from "@artsy/palette/dist/elements/Link"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import React from "react"
 import { getENV } from "v2/Utils/getENV"
 import { ModalDialog } from "./ModalDialog"

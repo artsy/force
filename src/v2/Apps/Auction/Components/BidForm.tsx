@@ -1,13 +1,10 @@
-import {
-  Box,
-  Button,
-  Flex,
-  LargeSelect,
-  Sans,
-  Separator,
-  Serif,
-  Spacer,
-} from "@artsy/palette"
+import { Box } from "@artsy/palette/dist/elements/Box"
+import { Button } from "@artsy/palette/dist/elements/Button"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
+import { LargeSelect } from "@artsy/palette/dist/elements/Select"
+import { Sans, Serif } from "@artsy/palette/dist/elements/Typography"
+import { Separator } from "@artsy/palette/dist/elements/Separator"
+import { Spacer } from "@artsy/palette/dist/elements/Spacer"
 import {
   Form,
   Formik,

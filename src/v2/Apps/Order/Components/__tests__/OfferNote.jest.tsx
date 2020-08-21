@@ -1,4 +1,4 @@
-import { Link } from "@artsy/palette"
+import { Link } from "@artsy/palette/dist/elements/Link"
 import { SystemContextProvider } from "v2/Artsy"
 import { ReactWrapper, mount } from "enzyme"
 import React from "react"

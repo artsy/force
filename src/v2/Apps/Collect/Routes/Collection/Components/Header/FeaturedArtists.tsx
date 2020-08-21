@@ -1,4 +1,8 @@
-import { Box, Breakpoint, EntityHeader, Flex, Sans } from "@artsy/palette"
+import { Breakpoint } from "@artsy/palette/dist/Theme"
+import { EntityHeader } from "@artsy/palette/dist/elements/EntityHeader"
+import { Sans } from "@artsy/palette/dist/elements/Typography"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import React, { useState } from "react"
 import styled from "styled-components"
 

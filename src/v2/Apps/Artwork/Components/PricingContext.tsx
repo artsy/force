@@ -1,12 +1,10 @@
-import {
-  BarChart,
-  BarDescriptor,
-  BorderBox,
-  Flex,
-  Link,
-  Sans,
-  Spacer,
-} from "@artsy/palette"
+import { BarChart } from "@artsy/palette/dist/elements/BarChart"
+import { BarDescriptor } from "@artsy/palette/dist/elements/BarChart"
+import { BorderBox } from "@artsy/palette/dist/elements/BorderBox"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
+import { Link } from "@artsy/palette/dist/elements/Link"
+import { Sans } from "@artsy/palette/dist/elements/Typography"
+import { Spacer } from "@artsy/palette/dist/elements/Spacer"
 import { PricingContext_artwork } from "v2/__generated__/PricingContext_artwork.graphql"
 import { track } from "v2/Artsy/Analytics"
 import * as Schema from "v2/Artsy/Analytics/Schema"

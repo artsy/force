@@ -1,16 +1,13 @@
-import { Col, Row } from "@artsy/palette"
+import { Col, Row } from "@artsy/palette/dist/elements/Grid"
 import React, { SFC } from "react"
 import { Media } from "v2/Utils/Responsive"
 
-import {
-  Box,
-  Flex,
-  Image,
-  Sans,
-  Separator,
-  Serif,
-  Spacer,
-} from "@artsy/palette"
+import { Box } from "@artsy/palette/dist/elements/Box"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
+import { Image } from "@artsy/palette/dist/elements/Image"
+import { Separator } from "@artsy/palette/dist/elements/Separator"
+import { Sans, Serif } from "@artsy/palette/dist/elements/Typography"
+import { Spacer } from "@artsy/palette/dist/elements/Spacer"
 
 interface ArticleItemProps {
   imageUrl: string

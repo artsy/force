@@ -3,20 +3,18 @@ import React from "react"
 import styled from "styled-components"
 import { FlexDirectionProps } from "styled-system"
 import { Media } from "v2/Utils/Responsive"
-import {
-  ArtsyMarkIcon,
-  FacebookIcon,
-  Flex,
-  InstagramIcon,
-  Separator,
-  Spacer,
-  Text,
-  TwitterIcon,
-  WeChatIcon,
-  breakpoints,
-  space,
-} from "@artsy/palette"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
+import { ArtsyMarkBlackIcon } from "@artsy/palette/dist/svgs/ArtsyMarkBlackIcon"
+import { FacebookIcon } from "@artsy/palette/dist/svgs/FacebookIcon"
+import { InstagramIcon } from "@artsy/palette/dist/svgs/InstagramIcon"
+import { TwitterIcon } from "@artsy/palette/dist/svgs/TwitterIcon"
+import { WeChatIcon } from "@artsy/palette/dist/svgs/WeChatIcon"
+import { Text } from "@artsy/palette/dist/elements/Text"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
+import { Separator } from "@artsy/palette/dist/elements/Separator"
+import { Spacer } from "@artsy/palette/dist/elements/Spacer"
+import { breakpoints } from "@artsy/palette/dist/Theme"
+import { space } from "@artsy/palette/dist/helpers/space"
 
 const Column = styled(Flex).attrs({
   flex: 1,
@@ -137,13 +135,13 @@ const FooterContainer: React.FC<FlexDirectionProps & Props> = props => {
         <Flex>
           <Media at="xs">
             <Flex>
-              <ArtsyMarkIcon width="20px" height="20px" mr={2} />
+              <ArtsyMarkBlackIcon width="20px" height="20px" mr={2} />
             </Flex>
           </Media>
 
           <Media greaterThan="xs">
             <Flex flexDirection="row">
-              <ArtsyMarkIcon width="30px" height="30px" mr={2} />
+              <ArtsyMarkBlackIcon width="30px" height="30px" mr={2} />
 
               <Spacer mr={1} />
 

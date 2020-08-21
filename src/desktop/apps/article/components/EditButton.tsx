@@ -3,7 +3,8 @@ import ChannelMemberQuery from "desktop/apps/article/queries/channelMember"
 import { positronql } from "desktop/lib/positronql"
 import { data as sd } from "sharify"
 import { includes, map } from "lodash"
-import { Box, space } from "@artsy/palette"
+import { space } from "@artsy/palette/dist/helpers/space"
+import { Box } from "@artsy/palette/dist/elements/Box"
 
 interface EditButtonProps {
   channelId?: string

@@ -1,4 +1,4 @@
-import { Link } from "@artsy/palette"
+import { Link } from "@artsy/palette/dist/elements/Link"
 import { ArtworkSidebarCurrentBidInfo_artwork } from "v2/__generated__/ArtworkSidebarCurrentBidInfo_artwork.graphql"
 import { SystemContextConsumer } from "v2/Artsy"
 import React from "react"
@@ -6,16 +6,13 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { get } from "v2/Utils/get"
 import { track } from "v2/Artsy/Analytics"
 import { AnalyticsSchema } from "v2/Artsy/Analytics"
-import {
-  Box,
-  Flex,
-  LosingBidIcon,
-  Sans,
-  Separator,
-  Serif,
-  Spacer,
-  WinningBidIcon,
-} from "@artsy/palette"
+import { CloseCircleIcon } from "@artsy/palette/dist/svgs/CloseCircleIcon"
+import { CheckCircleIcon } from "@artsy/palette/dist/svgs/CheckCircleIcon"
+import { Box } from "@artsy/palette/dist/elements/Box"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
+import { Sans, Serif } from "@artsy/palette/dist/elements/Typography"
+import { Separator } from "@artsy/palette/dist/elements/Separator"
+import { Spacer } from "@artsy/palette/dist/elements/Spacer"
 
 export interface ArtworkSidebarCurrentBidInfoProps {
   artwork: ArtworkSidebarCurrentBidInfo_artwork
@@ -116,9 +113,9 @@ ArtworkSidebarCurrentBidInfoProps
                 {myBidPresent && (
                   <Box pt={0.5}>
                     {myBidWinning ? (
-                      <WinningBidIcon fill="green100" />
+                      <CheckCircleIcon fill="green100" />
                     ) : (
-                        <LosingBidIcon fill="red100" />
+                        <CloseCircleIcon fill="red100" />
                       )}
                   </Box>
                 )}

@@ -1,4 +1,4 @@
-import { Link } from "@artsy/palette"
+import { Link } from "@artsy/palette/dist/elements/Link"
 import { MockBoot } from "v2/DevTools/MockBoot"
 import { mount } from "enzyme"
 import React from "react"
@@ -25,10 +25,7 @@ describe("AuctionCard", () => {
     expect(text).toContain("Collected by a major institution")
     expect(text).toMatch(/Tate, and 1\smore/)
 
-    wrapper
-      .find(Link)
-      .first()
-      .simulate("click")
+    wrapper.find(Link).first().simulate("click")
 
     expect(wrapper.text()).toContain("Tate, MoMA PS1")
   })

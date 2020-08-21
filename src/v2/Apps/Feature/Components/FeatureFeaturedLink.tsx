@@ -1,17 +1,14 @@
 import React from "react"
 import styled from "styled-components"
+import { Flex, FlexProps } from "@artsy/palette/dist/elements/Flex"
+import { Col, Grid, Row } from "@artsy/palette/dist/elements/Grid"
+import { HTML } from "@artsy/palette/dist/elements/HTML"
 import {
-  Col,
-  Flex,
-  FlexProps,
-  Grid,
-  HTML,
   ResponsiveBox,
   ResponsiveBoxProps,
-  Row,
-  Text,
-  color,
-} from "@artsy/palette"
+} from "@artsy/palette/dist/elements/ResponsiveBox"
+import { Text } from "@artsy/palette/dist/elements/Text"
+import { color } from "@artsy/palette/dist/helpers/color"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import { FeatureFeaturedLink_featuredLink } from "v2/__generated__/FeatureFeaturedLink_featuredLink.graphql"

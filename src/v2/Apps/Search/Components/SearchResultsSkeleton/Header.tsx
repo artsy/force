@@ -1,4 +1,6 @@
-import { Box, Separator, color } from "@artsy/palette"
+import { Separator } from "@artsy/palette/dist/elements/Separator"
+import { color } from "@artsy/palette/dist/helpers/color"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import React from "react"
 
 export const Header: React.SFC<any> = () => {

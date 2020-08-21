@@ -1,4 +1,4 @@
-import { Box } from "@artsy/palette"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import { NetworkOfflineMonitor } from "v2/Artsy/Router/NetworkOfflineMonitor"
 import { findCurrentRoute } from "v2/Artsy/Router/Utils/findCurrentRoute"
 import { useMaybeReloadAfterInquirySignIn } from "v2/Artsy/Router/Utils/useMaybeReloadAfterInquirySignIn"

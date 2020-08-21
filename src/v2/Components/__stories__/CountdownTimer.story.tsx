@@ -1,4 +1,4 @@
-import { Flex } from "@artsy/palette"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
 import { CountdownTimer } from "v2/Components/CountdownTimer"
 import { StepSummaryItem } from "v2/Components/StepSummaryItem"
 import { DateTime } from "luxon"
@@ -12,9 +12,7 @@ storiesOf("Styleguide/Components", module).add("CountdownTimer", () => {
         <CountdownTimer
           action="Respond"
           note="Expired offers end the negotiation process permanently."
-          countdownEnd={DateTime.local()
-            .plus({ days: 2 })
-            .toString()}
+          countdownEnd={DateTime.local().plus({ days: 2 }).toString()}
           countdownStart={DateTime.local().toString()}
         />
       </StepSummaryItem>
@@ -22,21 +20,15 @@ storiesOf("Styleguide/Components", module).add("CountdownTimer", () => {
         <CountdownTimer
           action="Respond"
           note="Expired offers end the negotiation process permanently."
-          countdownEnd={DateTime.local()
-            .plus({ days: 1 })
-            .toString()}
-          countdownStart={DateTime.local()
-            .minus({ days: 1 })
-            .toString()}
+          countdownEnd={DateTime.local().plus({ days: 1 }).toString()}
+          countdownStart={DateTime.local().minus({ days: 1 }).toString()}
         />
       </StepSummaryItem>
       <StepSummaryItem title="Moves fast!" width="100%" maxWidth="542px">
         <CountdownTimer
           action="Respond"
           note="Expired offers end the negotiation process permanently."
-          countdownEnd={DateTime.local()
-            .plus({ seconds: 10 })
-            .toString()}
+          countdownEnd={DateTime.local().plus({ seconds: 10 }).toString()}
           countdownStart={DateTime.local().toString()}
         />
       </StepSummaryItem>
@@ -48,24 +40,16 @@ storiesOf("Styleguide/Components", module).add("CountdownTimer", () => {
         <CountdownTimer
           action="Respond"
           note="Expired offers end the negotiation process permanently."
-          countdownEnd={DateTime.local()
-            .plus({ hours: 1 })
-            .toString()}
-          countdownStart={DateTime.local()
-            .minus({ days: 2 })
-            .toString()}
+          countdownEnd={DateTime.local().plus({ hours: 1 }).toString()}
+          countdownStart={DateTime.local().minus({ days: 2 }).toString()}
         />
       </StepSummaryItem>
       <StepSummaryItem title="Out of time!!" width="100%" maxWidth="542px">
         <CountdownTimer
           action="You forgot to do the thing 😵"
           note="And now it's too late."
-          countdownEnd={DateTime.local()
-            .minus({ seconds: 10 })
-            .toString()}
-          countdownStart={DateTime.local()
-            .minus({ days: 2 })
-            .toString()}
+          countdownEnd={DateTime.local().minus({ seconds: 10 }).toString()}
+          countdownStart={DateTime.local().minus({ days: 2 }).toString()}
         />
       </StepSummaryItem>
     </Flex>

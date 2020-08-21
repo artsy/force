@@ -1,5 +1,6 @@
 import { ActionType, ContextModule, Intent } from "@artsy/cohesion"
-import { Box, ButtonProps } from "@artsy/palette"
+import { ButtonProps } from "@artsy/palette/dist/elements/Button"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import { FollowArtistButtonMutation } from "v2/__generated__/FollowArtistButtonMutation.graphql"
 import * as Artsy from "v2/Artsy"
 import { FollowArtistPopoverFragmentContainer as SuggestionsPopover } from "v2/Components/FollowArtistPopover"
@@ -22,7 +23,7 @@ import {
 
 interface Props
   extends React.HTMLProps<FollowArtistButton>,
-    Artsy.SystemContextProps {
+  Artsy.SystemContextProps {
   relay?: RelayProp
   artist?: FollowArtistButton_artist
   tracking?: TrackingProp
@@ -197,23 +198,23 @@ export class FollowArtistButton extends React.Component<Props, State> {
         {render(artist)}
       </Container>
     ) : (
-      <>
-        {useDeprecatedButtonStyle && (
-          <FollowButtonDeprecated
-            isFollowed={artist && artist.is_followed}
-            handleFollow={this.handleFollow}
-            buttonProps={buttonProps}
-          />
-        )}
-        {!useDeprecatedButtonStyle && (
-          <FollowButton
-            isFollowed={artist && artist.is_followed}
-            handleFollow={this.handleFollow}
-            buttonProps={buttonProps}
-          />
-        )}
-      </>
-    )
+        <>
+          {useDeprecatedButtonStyle && (
+            <FollowButtonDeprecated
+              isFollowed={artist && artist.is_followed}
+              handleFollow={this.handleFollow}
+              buttonProps={buttonProps}
+            />
+          )}
+          {!useDeprecatedButtonStyle && (
+            <FollowButton
+              isFollowed={artist && artist.is_followed}
+              handleFollow={this.handleFollow}
+              buttonProps={buttonProps}
+            />
+          )}
+        </>
+      )
 
     return (
       <>

@@ -1,4 +1,5 @@
-import { Box, Flex } from "@artsy/palette"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import { OtherAuctions_salesConnection } from "v2/__generated__/OtherAuctions_salesConnection.graphql"
 import { OtherAuctionsQuery } from "v2/__generated__/OtherAuctionsQuery.graphql"
 import { SystemContext } from "v2/Artsy"

@@ -1,20 +1,17 @@
-import { Col, Row } from "@artsy/palette"
+import { Col, Row } from "@artsy/palette/dist/elements/Grid"
 import { CVItem_artist } from "v2/__generated__/CVItem_artist.graphql"
 import { groupBy } from "lodash"
 import React, { Component } from "react"
 import styled from "styled-components"
 import { Responsive } from "v2/Utils/Responsive"
 
-import {
-  Box,
-  Button,
-  Flex,
-  Sans,
-  Separator,
-  Serif,
-  Spacer,
-  space,
-} from "@artsy/palette"
+import { Box } from "@artsy/palette/dist/elements/Box"
+import { Button } from "@artsy/palette/dist/elements/Button"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
+import { Separator } from "@artsy/palette/dist/elements/Separator"
+import { Sans, Serif } from "@artsy/palette/dist/elements/Typography"
+import { Spacer } from "@artsy/palette/dist/elements/Spacer"
+import { space } from "@artsy/palette/dist/helpers/space"
 
 import {
   RelayPaginationProp,

@@ -1,4 +1,6 @@
-import { Box, Col, Grid, Row } from "@artsy/palette"
+import { Grid } from "@artsy/palette/dist/elements/Grid"
+import { Col, Row } from "@artsy/palette/dist/elements/Grid"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import { AnalyticsSchema } from "v2/Artsy"
 import React from "react"
 import { FeaturedContentLink, FeaturedLinkType } from "./Feature"

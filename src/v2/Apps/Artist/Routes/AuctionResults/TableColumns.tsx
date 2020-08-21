@@ -1,4 +1,5 @@
-import { Col, Row, Sans } from "@artsy/palette"
+import { Col, Row } from "@artsy/palette/dist/elements/Grid"
+import { Sans } from "@artsy/palette/dist/elements/Typography"
 import React from "react"
 import { Media } from "v2/Utils/Responsive"
 

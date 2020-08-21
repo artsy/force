@@ -1,5 +1,6 @@
 import React, { FC } from "react"
-import { Flex, Sans } from "@artsy/palette"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
+import { Sans } from "@artsy/palette/dist/elements/Typography"
 import { LARGE_SCREEN_HEADER_HEIGHT } from "./ConversationHeader"
 import { color } from "styled-system"
 

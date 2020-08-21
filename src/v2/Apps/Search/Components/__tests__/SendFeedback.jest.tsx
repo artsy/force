@@ -1,4 +1,4 @@
-import { Button } from "@artsy/palette"
+import { Button } from "@artsy/palette/dist/elements/Button"
 import { SendFeedback } from "v2/Apps/Search/Components/SendFeedback"
 import { MockBoot } from "v2/DevTools"
 import { ReactWrapper, mount } from "enzyme"

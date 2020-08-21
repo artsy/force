@@ -9,17 +9,14 @@ import { get } from "v2/Utils/get"
 import { openAuthToFollowSave } from "v2/Utils/openAuthModal"
 import { Media } from "v2/Utils/Responsive"
 
-import {
-  Avatar,
-  BorderBox,
-  Box,
-  Button,
-  Flex,
-  Sans,
-  Serif,
-  Spacer,
-  space,
-} from "@artsy/palette"
+import { Avatar } from "@artsy/palette/dist/elements/Avatar"
+import { BorderBox } from "@artsy/palette/dist/elements/BorderBox"
+import { Box } from "@artsy/palette/dist/elements/Box"
+import { Button } from "@artsy/palette/dist/elements/Button"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
+import { Sans, Serif } from "@artsy/palette/dist/elements/Typography"
+import { Spacer } from "@artsy/palette/dist/elements/Spacer"
+import { space } from "@artsy/palette/dist/helpers/space"
 import styled from "styled-components"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
 

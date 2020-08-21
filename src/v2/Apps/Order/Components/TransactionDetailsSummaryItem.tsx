@@ -2,7 +2,9 @@ import { TransactionDetailsSummaryItem_order } from "v2/__generated__/Transactio
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 
-import { Flex, Sans, Serif, Spacer } from "@artsy/palette"
+import { Spacer } from "@artsy/palette/dist/elements/Spacer"
+import { Sans, Serif } from "@artsy/palette/dist/elements/Typography"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
 import {
   StepSummaryItem,
   StepSummaryItemProps,
@@ -22,7 +24,7 @@ const emDash = "—"
 
 export class TransactionDetailsSummaryItem extends React.Component<
   TransactionDetailsSummaryItemProps
-  > {
+> {
   static defaultProps: Partial<TransactionDetailsSummaryItemProps> = {
     offerContextPrice: "LIST_PRICE",
   }
@@ -99,16 +101,16 @@ export class TransactionDetailsSummaryItem extends React.Component<
         {offerContextPrice === "LIST_PRICE" ? (
           <SecondaryEntry label="List price" value={order.totalListPrice} />
         ) : (
-            // show last offer
-            <SecondaryEntry
-              label={
-                order.lastOffer.fromParticipant === "SELLER"
-                  ? "Seller's offer"
-                  : "Your offer"
-              }
-              value={order.lastOffer.amount}
-            />
-          )}
+          // show last offer
+          <SecondaryEntry
+            label={
+              order.lastOffer.fromParticipant === "SELLER"
+                ? "Seller's offer"
+                : "Your offer"
+            }
+            value={order.lastOffer.amount}
+          />
+        )}
       </>
     )
   }

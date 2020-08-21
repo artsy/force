@@ -1,11 +1,11 @@
 import React from "react"
-import { HelpIcon } from "@artsy/palette"
+import { QuestionCircleIcon } from "@artsy/palette/dist/svgs/QuestionCircleIcon"
 import { Tooltip } from "v2/Components/Tooltip"
 
 export const ReactionTooltipQuestion = props => {
   return (
     <Tooltip {...props}>
-      <HelpIcon />
+      <QuestionCircleIcon />
     </Tooltip>
   )
 }

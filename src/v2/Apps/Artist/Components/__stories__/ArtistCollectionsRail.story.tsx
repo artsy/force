@@ -1,4 +1,5 @@
-import { Box, Theme } from "@artsy/palette"
+import { Theme } from "@artsy/palette/dist/Theme"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import { ArtistCollectionsRailContent as ArtistCollectionsRail } from "v2/Apps/Artist/Components/ArtistCollectionsRail"
 import React from "react"
 import { storiesOf } from "storybook/storiesOf"

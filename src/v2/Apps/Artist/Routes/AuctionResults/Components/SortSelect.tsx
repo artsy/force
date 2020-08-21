@@ -1,4 +1,4 @@
-import { SelectSmall } from "@artsy/palette"
+import { SelectSmall } from "@artsy/palette/dist/elements/Select"
 import React from "react"
 import { useAuctionResultsFilterContext } from "../AuctionResultsFilterContext"
 

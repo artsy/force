@@ -1,4 +1,6 @@
-import { Box, BoxProps, Sans, SansSize } from "@artsy/palette"
+import { Sans } from "@artsy/palette/dist/elements/Typography"
+import { SansSize } from "@artsy/palette/dist/Theme"
+import { Box, BoxProps } from "@artsy/palette/dist/elements/Box"
 import { DateTime } from "luxon"
 import React from "react"
 

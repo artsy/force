@@ -1,4 +1,6 @@
-import { Box, Flex, ResponsiveImage } from "@artsy/palette"
+import { ResponsiveImage } from "@artsy/palette/dist/elements/Image"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import { ArtistConsignHeaderImages_artist } from "v2/__generated__/ArtistConsignHeaderImages_artist.graphql"
 import { last } from "lodash"
 import React from "react"

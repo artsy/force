@@ -1,4 +1,4 @@
-import { Image } from "@artsy/palette"
+import { Image } from "@artsy/palette/dist/elements/Image"
 import { WorksForSaleRail_Test_QueryRawResponse } from "v2/__generated__/WorksForSaleRail_Test_Query.graphql"
 import { WorksForSaleRailFragmentContainer as WorksForSaleRail } from "v2/Apps/Artist/Routes/Overview/Components/WorksForSaleRail"
 import { renderRelayTree } from "v2/DevTools"

@@ -1,7 +1,8 @@
 import React from "react"
 import { AppContainer } from "v2/Apps/Components/AppContainer"
-import { Box, Separator, Spacer } from "@artsy/palette"
-
+import { Separator } from "@artsy/palette/dist/elements/Separator"
+import { Box } from "@artsy/palette/dist/elements/Box"
+import { Spacer } from "@artsy/palette/dist/elements/Spacer"
 import { SystemContext } from "v2/Artsy"
 import { Footer } from "v2/Components/Footer"
 import { createFragmentContainer, graphql } from "react-relay"

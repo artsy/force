@@ -1,4 +1,4 @@
-import { EntityHeader } from "@artsy/palette"
+import { EntityHeader } from "@artsy/palette/dist/elements/EntityHeader"
 import { CollectionsAppTestQueryRawResponse } from "v2/__generated__/CollectionsAppTestQuery.graphql"
 import { CategoriesFixture } from "v2/Apps/__tests__/Fixtures/Collections"
 import { CollectionsAppFragmentContainer as CollectionsApp } from "v2/Apps/Collect/Routes/Collections"

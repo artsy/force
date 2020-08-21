@@ -1,4 +1,6 @@
-import { Box, Separator, breakpoints } from "@artsy/palette"
+import { breakpoints } from "@artsy/palette/dist/Theme"
+import { Separator } from "@artsy/palette/dist/elements/Separator"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import { Collection_collection } from "v2/__generated__/Collection_collection.graphql"
 import { SeoProductsForArtworks } from "v2/Apps/Collect/Components/SeoProductsForArtworks"
 import { SeoProductsForCollections } from "v2/Apps/Collect/Components/SeoProductsForCollections"

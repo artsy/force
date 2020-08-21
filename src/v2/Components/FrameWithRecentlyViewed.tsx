@@ -1,5 +1,6 @@
-import { Separator } from "@artsy/palette"
-import { Box, Flex } from "@artsy/palette"
+import { Separator } from "@artsy/palette/dist/elements/Separator"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
 import { useSystemContext } from "v2/Artsy"
 import React from "react"

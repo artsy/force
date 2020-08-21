@@ -1,15 +1,16 @@
 import { ContextModule, Intent } from "@artsy/cohesion"
-import {
-  ArrowDownIcon,
-  ArrowUpIcon,
-  BorderBox,
-  Col,
-  Collapse,
-  Link,
-  Row,
-  Sans,
-} from "@artsy/palette"
-import { Box, Button, Flex, Separator, Spacer } from "@artsy/palette"
+import { ArrowDownIcon } from "@artsy/palette/dist/svgs/ArrowDownIcon"
+import { ArrowUpIcon } from "@artsy/palette/dist/svgs/ArrowUpIcon"
+import { BorderBox } from "@artsy/palette/dist/elements/BorderBox"
+import { Col, Row } from "@artsy/palette/dist/elements/Grid"
+import { Collapse } from "@artsy/palette/dist/elements/Collapse"
+import { Link } from "@artsy/palette/dist/elements/Link"
+import { Sans } from "@artsy/palette/dist/elements/Typography"
+import { Separator } from "@artsy/palette/dist/elements/Separator"
+import { Spacer } from "@artsy/palette/dist/elements/Spacer"
+import { Button } from "@artsy/palette/dist/elements/Button"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import { ArtistAuctionResultItem_auctionResult } from "v2/__generated__/ArtistAuctionResultItem_auctionResult.graphql"
 import { AnalyticsSchema, SystemContextProps } from "v2/Artsy"
 import { Mediator, SystemContext } from "v2/Artsy"
@@ -155,8 +156,8 @@ const LargeAuctionItem: SFC<Props> = props => {
               Fallback={() => renderFallbackImage()}
             />
           ) : (
-            renderFallbackImage()
-          )}
+              renderFallbackImage()
+            )}
         </Flex>
       </Col>
       <Col sm={4}>
@@ -229,8 +230,8 @@ const ExtraSmallAuctionItem: SFC<Props> = props => {
         {imageUrl ? (
           <StyledImage src={imageUrl} Fallback={() => renderFallbackImage()} />
         ) : (
-          renderFallbackImage()
-        )}
+            renderFallbackImage()
+          )}
       </Flex>
       <Flex ml={2} flexDirection="column" justifyContent="center" width="100%">
         {renderPricing(

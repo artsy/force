@@ -1,4 +1,4 @@
-import { Link } from "@artsy/palette"
+import { Link } from "@artsy/palette/dist/elements/Link"
 import { ModalDialog, ModalDialogProps } from "v2/Components/Modal/ModalDialog"
 import React from "react"
 import { Container, Subscribe } from "unstated"

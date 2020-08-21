@@ -1,5 +1,6 @@
 import React from "react"
-import { Box } from "@artsy/palette"
+
+import { Box } from "@artsy/palette/dist/elements/Box"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FeatureFeaturedLinkFragmentContainer as FeatureFeaturedLink } from "../FeatureFeaturedLink"
 import GridItem from "v2/Components/Artwork/GridItem"

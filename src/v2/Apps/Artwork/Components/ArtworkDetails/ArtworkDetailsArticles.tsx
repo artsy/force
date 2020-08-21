@@ -1,4 +1,5 @@
-import { Box, Col, Row } from "@artsy/palette"
+import { Col, Row } from "@artsy/palette/dist/elements/Grid"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import { ArticleItem } from "v2/Apps/Artist/Routes/Articles/ArtistArticle"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"

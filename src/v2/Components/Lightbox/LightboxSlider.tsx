@@ -1,4 +1,6 @@
-import { Flex, color, space } from "@artsy/palette"
+import { space } from "@artsy/palette/dist/helpers/space"
+import { color } from "@artsy/palette/dist/helpers/color"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
 import React, { SFC } from "react"
 import styled, { css } from "styled-components"
 

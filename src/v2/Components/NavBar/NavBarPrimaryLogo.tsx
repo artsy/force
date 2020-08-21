@@ -1,5 +1,7 @@
 import React from "react"
-import { ArtsyMarkIcon, color, space } from "@artsy/palette"
+import { ArtsyMarkBlackIcon } from "@artsy/palette/dist/svgs/ArtsyMarkBlackIcon"
+import { space } from "@artsy/palette/dist/helpers/space"
+import { color } from "@artsy/palette/dist/helpers/color"
 import styled from "styled-components"
 import { RouterLink, RouterLinkProps } from "v2/Artsy/Router/RouterLink"
 
@@ -28,7 +30,7 @@ export const NavBarPrimaryLogo: React.FC<Omit<
 >> = props => {
   return (
     <HitArea to="/" {...props}>
-      <ArtsyMarkIcon height={40} width={40} name="Artsy" />
+      <ArtsyMarkBlackIcon height={40} width={40} name="Artsy" />
     </HitArea>
   )
 }

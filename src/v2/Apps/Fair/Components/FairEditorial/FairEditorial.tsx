@@ -1,7 +1,9 @@
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FairEditorial_fair } from "v2/__generated__/FairEditorial_fair.graphql"
-import { Box, BoxProps, Join, Spacer } from "@artsy/palette"
+import { Box, BoxProps } from "@artsy/palette/dist/elements/Box"
+import { Join } from "@artsy/palette/dist/elements/Join"
+import { Spacer } from "@artsy/palette/dist/elements/Spacer"
 import { FairEditorialItemFragmentContainer as FairEditorialItem } from "./FairEditorialItem"
 
 interface FairEditorialProps extends BoxProps {

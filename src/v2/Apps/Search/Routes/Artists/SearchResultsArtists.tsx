@@ -1,4 +1,5 @@
-import { Box, Separator } from "@artsy/palette"
+import { Separator } from "@artsy/palette/dist/elements/Separator"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import { SearchResultsArtists_viewer } from "v2/__generated__/SearchResultsArtists_viewer.graphql"
 import { GenericSearchResultItem } from "v2/Apps/Search/Components/GenericSearchResultItem"
 import { ZeroState } from "v2/Apps/Search/Components/ZeroState"

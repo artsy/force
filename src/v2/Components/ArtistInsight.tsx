@@ -1,19 +1,20 @@
-import { Box, Flex, Link, Sans } from "@artsy/palette"
+import { Link } from "@artsy/palette/dist/elements/Link"
+import { Sans } from "@artsy/palette/dist/elements/Typography"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import { track } from "v2/Artsy/Analytics"
 import * as Schema from "v2/Artsy/Analytics/Schema"
 import React from "react"
 
-import {
-  AuctionIcon,
-  BlueChipIcon,
-  BookIcon,
-  FairIcon,
-  GroupIcon,
-  MuseumIcon,
-  SoloIcon,
-  TopEmergingIcon,
-  TopEstablishedIcon,
-} from "@artsy/palette"
+import { AuctionIcon } from "@artsy/palette/dist/svgs/AuctionIcon"
+import { BlueChipIcon } from "@artsy/palette/dist/svgs/BlueChipIcon"
+import { PublicationIcon } from "@artsy/palette/dist/svgs/PublicationIcon"
+import { FairIcon } from "@artsy/palette/dist/svgs/FairIcon"
+import { UserMultiIcon } from "@artsy/palette/dist/svgs/UserMultiIcon"
+import { InstitutionIcon } from "@artsy/palette/dist/svgs/InstitutionIcon"
+import { UserSingleIcon } from "@artsy/palette/dist/svgs/UserSingleIcon"
+import { TopEmergingIcon } from "@artsy/palette/dist/svgs/TopEmergingIcon"
+import { EstablishedIcon } from "@artsy/palette/dist/svgs/EstablishedIcon"
 
 interface ArtistInsightProps {
   type: string
@@ -24,13 +25,13 @@ interface ArtistInsightProps {
 
 const ICON_MAPPING = {
   HIGH_AUCTION: AuctionIcon,
-  SOLO_SHOW: SoloIcon,
-  GROUP_SHOW: GroupIcon,
+  SOLO_SHOW: UserSingleIcon,
+  GROUP_SHOW: UserMultiIcon,
   BIENNIAL: FairIcon,
-  REVIEWED: BookIcon,
-  COLLECTED: MuseumIcon,
+  REVIEWED: PublicationIcon,
+  COLLECTED: InstitutionIcon,
   BLUE_CHIP: BlueChipIcon,
-  TOP_ESTABLISHED: TopEstablishedIcon,
+  TOP_ESTABLISHED: EstablishedIcon,
   TOP_EMERGING: TopEmergingIcon,
 }
 

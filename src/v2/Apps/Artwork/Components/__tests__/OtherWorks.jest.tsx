@@ -1,4 +1,4 @@
-import { Serif } from "@artsy/palette"
+import { Serif } from "@artsy/palette/dist/elements/Typography"
 import { mount, shallow } from "enzyme"
 import React from "react"
 import { Header } from "../OtherWorks/Header"

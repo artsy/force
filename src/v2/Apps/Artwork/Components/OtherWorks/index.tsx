@@ -1,5 +1,7 @@
 import { ContextModule } from "@artsy/cohesion"
-import { Box, Join, Spacer } from "@artsy/palette"
+import { Join } from "@artsy/palette/dist/elements/Join"
+import { Spacer } from "@artsy/palette/dist/elements/Spacer"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import { OtherWorks_artwork } from "v2/__generated__/OtherWorks_artwork.graphql"
 import { OtherAuctionsQueryRenderer as OtherAuctions } from "v2/Apps/Artwork/Components/OtherAuctions"
 import { Header } from "v2/Apps/Artwork/Components/OtherWorks/Header"
@@ -114,10 +116,10 @@ export const OtherWorks = track()(
           context.__typename === "ArtworkContextAuction" &&
           !(sale && sale.is_closed)
         ) && (
-          <Box mt={3}>
-            <RelatedWorksArtworkGrid artwork={props.artwork} />
-          </Box>
-        )}
+            <Box mt={3}>
+              <RelatedWorksArtworkGrid artwork={props.artwork} />
+            </Box>
+          )}
         {context && context.__typename === "ArtworkContextAuction" && (
           <OtherAuctions />
         )}

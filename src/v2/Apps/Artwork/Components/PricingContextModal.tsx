@@ -1,13 +1,11 @@
-import {
-  Box,
-  Button,
-  Link,
-  Modal,
-  QuestionCircleIcon,
-  Serif,
-  Spacer,
-  Tooltip,
-} from "@artsy/palette"
+import { Box } from "@artsy/palette/dist/elements/Box"
+import { Button } from "@artsy/palette/dist/elements/Button"
+import { Link } from "@artsy/palette/dist/elements/Link"
+import { Modal } from "@artsy/palette/dist/elements/Modal"
+import { QuestionCircleIcon } from "@artsy/palette/dist/svgs/QuestionCircleIcon"
+import { Serif } from "@artsy/palette/dist/elements/Typography"
+import { Spacer } from "@artsy/palette/dist/elements/Spacer"
+import { Tooltip } from "@artsy/palette/dist/elements/Tooltip"
 import { track } from "v2/Artsy/Analytics"
 import * as Schema from "v2/Artsy/Analytics/Schema"
 import React from "react"

@@ -1,14 +1,10 @@
-import {
-  Box,
-  BoxProps,
-  Color,
-  DownloadIcon,
-  Flex,
-  FlexProps,
-  Image,
-  Sans,
-  color,
-} from "@artsy/palette"
+import { Box, BoxProps } from "@artsy/palette/dist/elements/Box"
+import { Color } from "@artsy/palette/dist/Theme"
+import { DownloadIcon } from "@artsy/palette/dist/svgs/DownloadIcon"
+import { Flex, FlexProps } from "@artsy/palette/dist/elements/Flex"
+import { Image } from "@artsy/palette/dist/elements/Image"
+import { Sans } from "@artsy/palette/dist/elements/Typography"
+import { color } from "@artsy/palette/dist/helpers/color"
 import { Message_message } from "v2/__generated__/Message_message.graphql"
 import React from "react"
 import { createFragmentContainer } from "react-relay"
@@ -30,9 +26,9 @@ const AttachmentLink = styled.a<{ isImage: boolean } & AlignSelfProps>`
   width: ${({ isImage }) => (isImage ? "100%" : "min-content")};
 `
 
-const AttachmentContainer = styled(Flex)<
+const AttachmentContainer = styled(Flex) <
   FlexProps & AlignSelfProps & BackgroundProps
->`
+  >`
   ${alignSelf};
   ${background};
   border-radius: 15px;
@@ -82,20 +78,20 @@ export const Attachment: React.FC<AttachmentProps> = props => {
             height="100%"
           />
         ) : (
-          <>
-            <Sans color={textColor} weight="medium" size="4" mr={2}>
-              {attachment.fileName}
-            </Sans>
-            <Box flexShrink={0}>
-              <DownloadIcon
-                fill={textColor}
-                width="24px"
-                height="24px"
-                viewBox="0 0 24 24"
-              />
-            </Box>
-          </>
-        )}
+            <>
+              <Sans color={textColor} weight="medium" size="4" mr={2}>
+                {attachment.fileName}
+              </Sans>
+              <Box flexShrink={0}>
+                <DownloadIcon
+                  fill={textColor}
+                  width="24px"
+                  height="24px"
+                  viewBox="0 0 24 24"
+                />
+              </Box>
+            </>
+          )}
       </AttachmentContainer>
     </AttachmentLink>
   )

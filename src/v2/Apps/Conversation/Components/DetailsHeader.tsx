@@ -1,13 +1,9 @@
 import React, { FC } from "react"
-import {
-  CloseIcon,
-  Flex,
-  Icon,
-  Path,
-  Sans,
-  Separator,
-  Title,
-} from "@artsy/palette"
+import { CloseIcon } from "@artsy/palette/dist/svgs/CloseIcon"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
+import { Icon, Path, Title } from "@artsy/palette/dist/svgs/Icon"
+import { Sans } from "@artsy/palette/dist/elements/Typography"
+import { Separator } from "@artsy/palette/dist/elements/Separator"
 import { color } from "styled-system"
 import styled from "styled-components"
 import { LARGE_SCREEN_HEADER_HEIGHT } from "./ConversationHeader"

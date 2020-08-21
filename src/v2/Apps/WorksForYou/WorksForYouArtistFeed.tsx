@@ -1,4 +1,6 @@
-import { EntityHeader, Spacer, Spinner } from "@artsy/palette"
+import { Spinner } from "@artsy/palette/dist/elements/Spinner"
+import { EntityHeader } from "@artsy/palette/dist/elements/EntityHeader"
+import { Spacer } from "@artsy/palette/dist/elements/Spacer"
 import { WorksForYouArtistFeed_viewer } from "v2/__generated__/WorksForYouArtistFeed_viewer.graphql"
 import { SystemContextProps } from "v2/Artsy"
 import ArtworkGrid from "v2/Components/ArtworkGrid"

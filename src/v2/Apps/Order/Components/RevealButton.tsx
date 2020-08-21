@@ -1,4 +1,6 @@
-import { Button, Collapse, Flex } from "@artsy/palette"
+import { Button } from "@artsy/palette/dist/elements/Button"
+import { Collapse } from "@artsy/palette/dist/elements/Collapse"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
 import React from "react"
 
 interface RevealButtonProps {

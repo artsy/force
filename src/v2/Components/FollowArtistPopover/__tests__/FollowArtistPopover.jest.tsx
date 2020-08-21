@@ -1,4 +1,4 @@
-import { Breakpoint } from "@artsy/palette"
+import { Breakpoint } from "@artsy/palette/dist/Theme"
 import { FollowArtistPopover_Test_QueryRawResponse } from "v2/__generated__/FollowArtistPopover_Test_Query.graphql"
 import { FollowArtistPopoverFragmentContainer as FollowArtistPopover } from "v2/Components/FollowArtistPopover"
 import { MockBoot, renderRelayTree } from "v2/DevTools"

@@ -1,4 +1,4 @@
-import { Spinner, SpinnerProps } from "@artsy/palette"
+import { Spinner, SpinnerProps } from "@artsy/palette/dist/elements/Spinner"
 import React from "react"
 import {
   QueryRendererReadyState,

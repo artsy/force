@@ -1,4 +1,4 @@
-import { Sans } from "@artsy/palette"
+import { Sans } from "@artsy/palette/dist/elements/Typography"
 import { shallow } from "enzyme"
 import React from "react"
 import { CreditCardInput, StyledCardElement } from "../CreditCardInput"

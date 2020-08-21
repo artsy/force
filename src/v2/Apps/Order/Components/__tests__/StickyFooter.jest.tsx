@@ -1,4 +1,4 @@
-import { Link } from "@artsy/palette"
+import { Link } from "@artsy/palette/dist/elements/Link"
 import { SystemContextProvider } from "v2/Artsy"
 import { mockTracking } from "v2/Artsy/Analytics"
 import { mount } from "enzyme"

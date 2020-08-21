@@ -1,4 +1,4 @@
-import { space } from "@artsy/palette"
+import { space } from "@artsy/palette/dist/helpers/space"
 import { fadeIn, fadeOut } from "v2/Assets/Animations"
 import Colors from "v2/Assets/Colors"
 import { garamond, unica } from "v2/Assets/Fonts"

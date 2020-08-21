@@ -1,17 +1,13 @@
-import {
-  Box,
-  Button,
-  ChevronIcon,
-  Col,
-  Flex,
-  Image,
-  Link,
-  Row,
-  Sans,
-  Separator,
-  Serif,
-  Spacer,
-} from "@artsy/palette"
+import { Box } from "@artsy/palette/dist/elements/Box"
+import { Button } from "@artsy/palette/dist/elements/Button"
+import { ChevronIcon } from "@artsy/palette/dist/svgs/ChevronIcon"
+import { Col, Row } from "@artsy/palette/dist/elements/Grid"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
+import { Image } from "@artsy/palette/dist/elements/Image"
+import { Link } from "@artsy/palette/dist/elements/Link"
+import { Separator } from "@artsy/palette/dist/elements/Separator"
+import { Sans, Serif } from "@artsy/palette/dist/elements/Typography"
+import { Spacer } from "@artsy/palette/dist/elements/Spacer"
 import { Overview_artist } from "v2/__generated__/Overview_artist.graphql"
 import { ArtistTopWorksRailFragmentContainer as ArtistTopWorksRail } from "v2/Apps/Artist/Components/ArtistTopWorksRail/ArtistTopWorksRail"
 import { ArtistCollectionsRailContent as ArtistCollectionsRail } from "v2/Apps/Artist/Components/ArtistCollectionsRail"

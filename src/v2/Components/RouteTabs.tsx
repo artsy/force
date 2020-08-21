@@ -1,12 +1,12 @@
+import { Box } from "@artsy/palette/dist/elements/Box"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
+import { Sans } from "@artsy/palette/dist/elements/Typography"
 import {
-  Box,
-  Flex,
-  Sans,
   TabsContainer,
-  color,
   sharedTabsStyles,
-  space,
-} from "@artsy/palette"
+} from "@artsy/palette/dist/elements/Tabs"
+import { color } from "@artsy/palette/dist/helpers/color"
+import { space } from "@artsy/palette/dist/helpers/space"
 import { ArrowButton, Carousel } from "v2/Components/Carousel"
 import React from "react"
 import styled from "styled-components"

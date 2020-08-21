@@ -1,4 +1,5 @@
-import { Button, Collapse } from "@artsy/palette"
+import { Collapse } from "@artsy/palette/dist/elements/Collapse"
+import { Button } from "@artsy/palette/dist/elements/Button"
 import {
   OfferHistoryItemTestQueryRawResponse,
   OfferHistoryItemTestQueryResponse,

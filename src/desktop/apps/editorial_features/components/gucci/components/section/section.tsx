@@ -2,7 +2,7 @@ import React from "react"
 import Waypoint from "react-waypoint"
 import { SectionVideo } from "./section_video"
 import { SectionText } from "./section_text"
-import { Box } from "@artsy/palette"
+import { Box } from "@artsy/palette/dist/elements/Box"
 
 interface SectionProps {
   onEnterSection: (index: number, data: any) => void

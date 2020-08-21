@@ -4,7 +4,7 @@ import ArtistSeriesApp from "../ArtistSeriesApp"
 import { graphql } from "react-relay"
 import { ArtistSeriesApp_QueryRawResponse } from "v2/__generated__/ArtistSeriesApp_Query.graphql"
 import { ArtistSeriesApp_UnfoundTest_QueryRawResponse } from "v2/__generated__/ArtistSeriesApp_UnfoundTest_Query.graphql"
-import { Breakpoint } from "@artsy/palette"
+import { Breakpoint } from "@artsy/palette/dist/Theme"
 import { HeaderImage } from "../Components/ArtistSeriesHeader"
 import { useTracking } from "v2/Artsy/Analytics/useTracking"
 

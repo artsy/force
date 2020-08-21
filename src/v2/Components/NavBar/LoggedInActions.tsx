@@ -2,7 +2,9 @@ import React, { useContext } from "react"
 import { NavItem } from "./NavItem"
 import { NotificationsMenu, UserMenu } from "./Menus"
 import { AnalyticsSchema, SystemContext, useTracking } from "v2/Artsy"
-import { BellIcon, EnvelopeIcon, SoloIcon } from "@artsy/palette"
+import { BellIcon } from "@artsy/palette/dist/svgs/BellIcon"
+import { EnvelopeIcon } from "@artsy/palette/dist/svgs/EnvelopeIcon"
+import { UserSingleIcon } from "@artsy/palette/dist/svgs/UserSingleIcon"
 import { graphql } from "relay-runtime"
 import { SystemQueryRenderer as QueryRenderer } from "v2/Artsy/Relay/SystemQueryRenderer"
 import {
@@ -75,7 +77,7 @@ export const LoggedInActions: React.FC<
       <NavItem Menu={UserMenu} menuAnchor="right">
         {({ hover }) => {
           return (
-            <SoloIcon
+            <UserSingleIcon
               fill={hover ? "purple100" : "black80"}
               title="Your account"
             />
@@ -92,9 +94,9 @@ export const LoggedInActionsQueryRenderer: React.FC<{}> = () => {
   return isServer ? (
     <LoggedInActions />
   ) : (
-    <QueryRenderer<LoggedInActionsQuery>
-      environment={relayEnvironment}
-      query={graphql`
+      <QueryRenderer<LoggedInActionsQuery>
+        environment={relayEnvironment}
+        query={graphql`
         query LoggedInActionsQuery {
           me {
             unreadNotificationsCount
@@ -122,10 +124,10 @@ export const LoggedInActionsQueryRenderer: React.FC<{}> = () => {
           }
         }
       `}
-      variables={{}}
-      render={({ error, props }) => {
-        return <LoggedInActions error={error} {...props} />
-      }}
-    />
-  )
+        variables={{}}
+        render={({ error, props }) => {
+          return <LoggedInActions error={error} {...props} />
+        }}
+      />
+    )
 }

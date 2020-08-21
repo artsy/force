@@ -1,4 +1,4 @@
-import { Breakpoint } from "@artsy/palette"
+import { Breakpoint } from "@artsy/palette/dist/Theme"
 import { ArtistConsignButtonQueryRawResponse } from "v2/__generated__/ArtistConsignButtonQuery.graphql"
 import { useTracking } from "v2/Artsy/Analytics/useTracking"
 import { MockBoot, renderRelayTree } from "v2/DevTools"

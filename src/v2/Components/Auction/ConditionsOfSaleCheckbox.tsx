@@ -1,4 +1,6 @@
-import { Checkbox, CheckboxProps, Link, Serif } from "@artsy/palette"
+import { Checkbox, CheckboxProps } from "@artsy/palette/dist/elements/Checkbox"
+import { Link } from "@artsy/palette/dist/elements/Link"
+import { Serif } from "@artsy/palette/dist/elements/Typography"
 import React from "react"
 import { data as sd } from "sharify"
 

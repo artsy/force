@@ -1,4 +1,4 @@
-import { color } from "@artsy/palette"
+import { color } from "@artsy/palette/dist/helpers/color"
 import Icon from "v2/Components/Icon"
 import React from "react"
 import styled from "styled-components"

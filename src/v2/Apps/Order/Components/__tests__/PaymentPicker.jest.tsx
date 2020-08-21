@@ -1,4 +1,7 @@
-import { BorderedRadio, Checkbox, Collapse, Link } from "@artsy/palette"
+import { BorderedRadio } from "@artsy/palette/dist/elements/Radio"
+import { Collapse } from "@artsy/palette/dist/elements/Collapse"
+import { Checkbox } from "@artsy/palette/dist/elements/Checkbox"
+import { Link } from "@artsy/palette/dist/elements/Link"
 import { PaymentPicker_me } from "v2/__generated__/PaymentPicker_me.graphql"
 import { PaymentPickerTestQueryRawResponse } from "v2/__generated__/PaymentPickerTestQuery.graphql"
 import {

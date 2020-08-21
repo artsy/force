@@ -1,4 +1,6 @@
-import { Box, ReadMore, Serif } from "@artsy/palette"
+import { ReadMore } from "@artsy/palette/dist/elements/ReadMore"
+import { Serif } from "@artsy/palette/dist/elements/Typography"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import React, { Component } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Media } from "v2/Utils/Responsive"
@@ -21,7 +23,7 @@ export interface ArtworkDetailsAboutTheWorkFromArtsyProps {
   context_module: Schema.ContextModule.AboutTheWork,
 })
 export class ArtworkDetailsAboutTheWorkFromArtsy extends Component<
-ArtworkDetailsAboutTheWorkFromArtsyProps
+  ArtworkDetailsAboutTheWorkFromArtsyProps
 > {
   @track({
     action_type: Schema.ActionType.Click,

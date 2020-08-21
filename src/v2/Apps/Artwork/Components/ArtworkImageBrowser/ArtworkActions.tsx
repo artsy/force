@@ -14,24 +14,22 @@ import { Media } from "v2/Utils/Responsive"
 import { ArtworkSharePanelFragmentContainer as ArtworkSharePanel } from "./ArtworkSharePanel"
 
 import { ContextModule } from "@artsy/cohesion"
-import {
-  BellFillIcon,
-  BellIcon,
-  DownloadIcon,
-  EditIcon,
-  Flex,
-  GenomeIcon,
-  HeartFillIcon,
-  HeartIcon,
-  Join,
-  Link,
-  MoreIcon,
-  OpenEyeIcon,
-  Sans,
-  ShareIcon,
-  Spacer,
-  color,
-} from "@artsy/palette"
+import { BellFillIcon } from "@artsy/palette/dist/svgs/BellFillIcon"
+import { BellIcon } from "@artsy/palette/dist/svgs/BellIcon"
+import { DownloadIcon } from "@artsy/palette/dist/svgs/DownloadIcon"
+import { EditIcon } from "@artsy/palette/dist/svgs/EditIcon"
+import { GenomeIcon } from "@artsy/palette/dist/svgs/GenomeIcon"
+import { HeartFillIcon } from "@artsy/palette/dist/svgs/HeartFillIcon"
+import { HeartIcon } from "@artsy/palette/dist/svgs/HeartIcon"
+import { MoreIcon } from "@artsy/palette/dist/svgs/MoreIcon"
+import { EyeOpenedIcon } from "@artsy/palette/dist/svgs/EyeOpenedIcon"
+import { ShareIcon } from "@artsy/palette/dist/svgs/ShareIcon"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
+import { Join } from "@artsy/palette/dist/elements/Join"
+import { Link } from "@artsy/palette/dist/elements/Link"
+import { Sans } from "@artsy/palette/dist/elements/Typography"
+import { Spacer } from "@artsy/palette/dist/elements/Spacer"
+import { color } from "@artsy/palette/dist/helpers/color"
 import { userIsAdmin } from "v2/Utils/user"
 import { ArtworkPopoutPanel } from "./ArtworkPopoutPanel"
 
@@ -49,8 +47,8 @@ interface ArtworkActionsState {
 
 @track()
 export class ArtworkActions extends React.Component<
-  ArtworkActionsProps,
-  ArtworkActionsState
+ArtworkActionsProps,
+ArtworkActionsState
 > {
   state = {
     showSharePanel: false,
@@ -311,14 +309,14 @@ export const ArtworkActionsFragmentContainer = createFragmentContainer(
 
 interface UtilButtonProps {
   name:
-    | "bell"
-    | "edit"
-    | "download"
-    | "genome"
-    | "heart"
-    | "more"
-    | "share"
-    | "viewInRoom"
+  | "bell"
+  | "edit"
+  | "download"
+  | "genome"
+  | "heart"
+  | "more"
+  | "share"
+  | "viewInRoom"
   href?: string
   onClick?: () => void
   selected?: boolean
@@ -329,7 +327,7 @@ interface UtilButtonProps {
 export class UtilButton extends React.Component<
   UtilButtonProps,
   { hovered: boolean }
-> {
+  > {
   state = {
     hovered: false,
   }
@@ -354,7 +352,7 @@ export class UtilButton extends React.Component<
         case "share":
           return ShareIcon
         case "viewInRoom":
-          return OpenEyeIcon
+          return EyeOpenedIcon
       }
     }
 
@@ -391,15 +389,15 @@ export class UtilButton extends React.Component<
             )}
           </UtilButtonLink>
         ) : (
-          <>
-            <ActionIcon {...props} fill={fill} />
-            {label && (
-              <Sans size="2" pl={0.5} pt="1px">
-                {label}
-              </Sans>
-            )}
-          </>
-        )}
+            <>
+              <ActionIcon {...props} fill={fill} />
+              {label && (
+                <Sans size="2" pl={0.5} pt="1px">
+                  {label}
+                </Sans>
+              )}
+            </>
+          )}
       </UtilButtonContainer>
     )
   }

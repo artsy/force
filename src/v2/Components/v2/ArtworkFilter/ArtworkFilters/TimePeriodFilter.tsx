@@ -1,4 +1,7 @@
-import { Flex, Radio, RadioGroup, Toggle } from "@artsy/palette"
+import { RadioGroup } from "@artsy/palette/dist/elements/RadioGroup"
+import { Radio } from "@artsy/palette/dist/elements/Radio"
+import { Toggle } from "@artsy/palette/dist/elements/Toggle"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
 import React, { FC } from "react"
 import { get } from "v2/Utils/get"
 import { useArtworkFilterContext } from "../ArtworkFilterContext"

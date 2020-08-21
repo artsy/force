@@ -3,7 +3,7 @@ import { MockBoot, renderRelayTree } from "v2/DevTools"
 import FeatureApp from "../FeatureApp"
 import { graphql } from "react-relay"
 import { FeatureApp_Test_QueryRawResponse } from "v2/__generated__/FeatureApp_Test_Query.graphql"
-import { Breakpoint } from "@artsy/palette"
+import { Breakpoint } from "@artsy/palette/dist/Theme"
 import { FEATURE_APP_FIXTURE } from "./fixtures"
 
 jest.unmock("react-relay")

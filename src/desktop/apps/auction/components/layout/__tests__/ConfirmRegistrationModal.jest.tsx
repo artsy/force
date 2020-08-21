@@ -1,7 +1,7 @@
 import renderTestComponent from "desktop/apps/auction/__tests__/utils/renderTestComponent"
 import { ConfirmRegistrationModal } from "../ConfirmRegistrationModal"
 import { act } from "react-dom/test-utils"
-import { Button } from "@artsy/palette"
+import { Button } from "@artsy/palette/dist/elements/Button"
 
 describe("Confirm Registration Modal", () => {
   beforeAll(() => {

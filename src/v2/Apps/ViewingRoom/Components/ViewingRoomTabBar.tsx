@@ -1,13 +1,9 @@
 import React from "react"
-import {
-  Box,
-  Color,
-  Flex,
-  FlexProps,
-  FontWeights,
-  Sans,
-  color,
-} from "@artsy/palette"
+import { Box } from "@artsy/palette/dist/elements/Box"
+import { Color } from "@artsy/palette/dist/Theme"
+import { Flex, FlexProps } from "@artsy/palette/dist/elements/Flex"
+import { FontWeights, Sans } from "@artsy/palette/dist/elements/Typography"
+import { color } from "@artsy/palette/dist/helpers/color"
 import { useIsRouteActive, useRouter } from "v2/Artsy/Router/useRouter"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import { LinkProps } from "found"
@@ -45,7 +41,7 @@ const Tab: React.FC<LinkProps> = ({ children, to }) => {
     </Box>
   )
 }
-export const ViewingRoomTabBar: React.FC<FlexProps> = (props) => {
+export const ViewingRoomTabBar: React.FC<FlexProps> = props => {
   const {
     match: {
       params: { slug },

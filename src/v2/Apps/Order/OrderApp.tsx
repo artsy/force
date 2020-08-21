@@ -1,4 +1,4 @@
-import { Box } from "@artsy/palette"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import { OrderApp_order } from "v2/__generated__/OrderApp_order.graphql"
 import { AppContainer } from "v2/Apps/Components/AppContainer"
 import { StickyFooter } from "v2/Apps/Order/Components/StickyFooter"

@@ -1,13 +1,11 @@
 import React, { useContext } from "react"
-import {
-  Box,
-  HeartIcon,
-  PowerIcon,
-  Separator,
-  SettingsIcon,
-  SoloIcon,
-  TagIcon,
-} from "@artsy/palette"
+import { Box } from "@artsy/palette/dist/elements/Box"
+import { Separator } from "@artsy/palette/dist/elements/Separator"
+import { HeartIcon } from "@artsy/palette/dist/svgs/HeartIcon"
+import { LogoutIcon } from "@artsy/palette/dist/svgs/LogoutIcon"
+import { SettingsIcon } from "@artsy/palette/dist/svgs/SettingsIcon"
+import { UserSingleIcon } from "@artsy/palette/dist/svgs/UserSingleIcon"
+import { TagIcon } from "@artsy/palette/dist/svgs/TagIcon"
 import { Menu, MenuItem } from "v2/Components/Menu"
 import { AnalyticsSchema, SystemContext } from "v2/Artsy"
 import { useTracking } from "v2/Artsy/Analytics/useTracking"
@@ -83,7 +81,7 @@ export const UserMenu: React.FC = () => {
         href="/profile/edit"
         onClick={trackClick}
       >
-        <SoloIcon mr={1} aria-hidden="true" /> Collector Profile
+        <UserSingleIcon mr={1} aria-hidden="true" /> Collector Profile
       </MenuItem>
 
       <MenuItem
@@ -109,7 +107,7 @@ export const UserMenu: React.FC = () => {
           mediator.trigger("auth:logout")
         }}
       >
-        <PowerIcon mr={1} aria-hidden="true" /> Log out
+        <LogoutIcon mr={1} aria-hidden="true" /> Log out
       </MenuItem>
     </Menu>
   )

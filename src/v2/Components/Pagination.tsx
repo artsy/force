@@ -5,12 +5,12 @@ import { ScrollIntoView } from "v2/Utils/ScrollIntoView"
 
 import { Pagination_pageCursors } from "v2/__generated__/Pagination_pageCursors.graphql"
 
+import { Box } from "@artsy/palette/dist/elements/Box"
 import {
-  Box,
   LargePagination,
-  Separator,
   SmallPagination,
-} from "@artsy/palette"
+} from "@artsy/palette/dist/elements/Pagination"
+import { Separator } from "@artsy/palette/dist/elements/Separator"
 
 interface Props {
   onClick?: (cursor: string, page: number) => void

@@ -1,15 +1,12 @@
-import {
-  BorderedRadio,
-  Button,
-  Col,
-  Collapse,
-  Flex,
-  RadioGroup,
-  Row,
-  Sans,
-  Spacer,
-  Box,
-} from "@artsy/palette"
+import { BorderedRadio } from "@artsy/palette/dist/elements/Radio"
+import { Button } from "@artsy/palette/dist/elements/Button"
+import { Col, Row } from "@artsy/palette/dist/elements/Grid"
+import { Collapse } from "@artsy/palette/dist/elements/Collapse"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
+import { RadioGroup } from "@artsy/palette/dist/elements/RadioGroup"
+import { Sans } from "@artsy/palette/dist/elements/Typography"
+import { Spacer } from "@artsy/palette/dist/elements/Spacer"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import { Shipping_order } from "v2/__generated__/Shipping_order.graphql"
 import {
   CommerceOrderFulfillmentTypeEnum,

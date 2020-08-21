@@ -1,4 +1,7 @@
-import { Box, Image, Serif, Spacer } from "@artsy/palette"
+import { Image } from "@artsy/palette/dist/elements/Image"
+import { Spacer } from "@artsy/palette/dist/elements/Spacer"
+import { Serif } from "@artsy/palette/dist/elements/Typography"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import React, { SFC } from "react"
 import { data as sd } from "sharify"
 import { SpaceProps, WidthProps } from "styled-system"

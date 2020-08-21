@@ -1,4 +1,5 @@
-import { BorderedRadio, Button } from "@artsy/palette"
+import { Button } from "@artsy/palette/dist/elements/Button"
+import { BorderedRadio } from "@artsy/palette/dist/elements/Radio"
 import { RespondTestQueryRawResponse } from "v2/__generated__/RespondTestQuery.graphql"
 import {
   Buyer,
@@ -41,14 +42,10 @@ import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
 
 const testOrder = {
   ...OfferOrderWithShippingDetails,
-  stateExpiresAt: DateTime.fromISO(NOW)
-    .plus({ days: 1 })
-    .toString(),
+  stateExpiresAt: DateTime.fromISO(NOW).plus({ days: 1 }).toString(),
   lastOffer: {
     ...OfferWithTotals,
-    createdAt: DateTime.fromISO(NOW)
-      .minus({ days: 1 })
-      .toString(),
+    createdAt: DateTime.fromISO(NOW).minus({ days: 1 }).toString(),
   },
   offers: { edges: Offers },
   buyer: Buyer,

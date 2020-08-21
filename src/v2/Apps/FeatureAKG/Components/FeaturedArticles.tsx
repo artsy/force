@@ -1,13 +1,9 @@
-import {
-  Box,
-  Col,
-  Flex,
-  Grid,
-  Image,
-  ResponsiveImage,
-  Row,
-  Sans,
-} from "@artsy/palette"
+import { Box } from "@artsy/palette/dist/elements/Box"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
+import { Col, Grid, Row } from "@artsy/palette/dist/elements/Grid"
+import { Image } from "@artsy/palette/dist/elements/Image"
+import { ResponsiveImage } from "@artsy/palette/dist/elements/Image"
+import { Sans } from "@artsy/palette/dist/elements/Typography"
 import { FeaturedArticles_articles } from "v2/__generated__/FeaturedArticles_articles.graphql"
 import { StyledLink } from "v2/Apps/Artist/Components/StyledLink"
 import { AnalyticsSchema } from "v2/Artsy"

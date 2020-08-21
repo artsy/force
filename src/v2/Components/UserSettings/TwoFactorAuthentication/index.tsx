@@ -1,4 +1,6 @@
-import { Box, Flex, Sans, Serif } from "@artsy/palette"
+import { Sans, Serif } from "@artsy/palette/dist/elements/Typography"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import React from "react"
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
 

@@ -1,4 +1,8 @@
-import { Box, Button, CheckCircleIcon, Modal, Serif } from "@artsy/palette"
+import { CheckCircleIcon } from "@artsy/palette/dist/svgs/CheckCircleIcon"
+import { Modal } from "@artsy/palette/dist/elements/Modal"
+import { Serif } from "@artsy/palette/dist/elements/Typography"
+import { Button } from "@artsy/palette/dist/elements/Button"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import React, { useEffect, useState } from "react"
 
 export type ContentKey =

@@ -3,7 +3,8 @@ import React from "react"
 import block from "bem-cn-lite"
 import { get } from "lodash"
 import { connect } from "react-redux"
-import { Button, Sans } from "@artsy/palette"
+import { Button } from "@artsy/palette/dist/elements/Button"
+import { Sans } from "@artsy/palette/dist/elements/Typography"
 import { bidderNeedsIdentityVerification } from "v2/Utils/identityVerificationRequirements"
 
 function RegistrationText(props) {

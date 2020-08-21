@@ -1,16 +1,12 @@
 import { ContextModule, Intent } from "@artsy/cohesion"
-import {
-  Box,
-  Button,
-  Flex,
-  FlexProps,
-  Radio,
-  RadioGroup,
-  Sans,
-  Separator,
-  Serif,
-  Spacer,
-} from "@artsy/palette"
+import { Box } from "@artsy/palette/dist/elements/Box"
+import { Button } from "@artsy/palette/dist/elements/Button"
+import { Flex, FlexProps } from "@artsy/palette/dist/elements/Flex"
+import { Radio } from "@artsy/palette/dist/elements/Radio"
+import { RadioGroup } from "@artsy/palette/dist/elements/RadioGroup"
+import { Sans, Serif } from "@artsy/palette/dist/elements/Typography"
+import { Separator } from "@artsy/palette/dist/elements/Separator"
+import { Spacer } from "@artsy/palette/dist/elements/Spacer"
 import { ArtworkSidebarCommercial_artwork } from "v2/__generated__/ArtworkSidebarCommercial_artwork.graphql"
 import { ArtworkSidebarCommercialOfferOrderMutation } from "v2/__generated__/ArtworkSidebarCommercialOfferOrderMutation.graphql"
 import { ArtworkSidebarCommercialOrderMutation } from "v2/__generated__/ArtworkSidebarCommercialOrderMutation.graphql"

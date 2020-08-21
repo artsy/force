@@ -3,7 +3,8 @@ import { FormSwitcher } from "v2/Components/Authentication/FormSwitcher"
 import { ModalOptions, ModalType } from "v2/Components/Authentication/Types"
 import { ModalHeader } from "v2/Components/Modal/ModalHeader"
 import { handleSubmit } from "../helpers"
-import { Box, Flex } from "@artsy/palette"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
+import { Box } from "@artsy/palette/dist/elements/Box"
 
 interface Props {
   type: string

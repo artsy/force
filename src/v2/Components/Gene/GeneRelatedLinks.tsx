@@ -1,4 +1,4 @@
-import { Box } from "@artsy/palette"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import { GeneRelatedLinks_gene } from "v2/__generated__/GeneRelatedLinks_gene.graphql"
 import { GeneRelatedLinksQuery } from "v2/__generated__/GeneRelatedLinksQuery.graphql"
 import { useSystemContext } from "v2/Artsy"

@@ -26,14 +26,12 @@ import {
 import { ArtworkFilterMobileActionSheet } from "./ArtworkFilterMobileActionSheet"
 import { ArtworkFilters } from "./ArtworkFilters"
 
-import {
-  Box,
-  Button,
-  FilterIcon,
-  Flex,
-  Separator,
-  Spacer,
-} from "@artsy/palette"
+import { Box } from "@artsy/palette/dist/elements/Box"
+import { Button } from "@artsy/palette/dist/elements/Button"
+import { FilterIcon } from "@artsy/palette/dist/svgs/FilterIcon"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
+import { Separator } from "@artsy/palette/dist/elements/Separator"
+import { Spacer } from "@artsy/palette/dist/elements/Spacer"
 import { ArtistArtworkFilter_artist } from "v2/__generated__/ArtistArtworkFilter_artist.graphql"
 import { Collection_collection } from "v2/__generated__/Collection_collection.graphql"
 import { SystemQueryRenderer as QueryRenderer } from "v2/Artsy/Relay/SystemQueryRenderer"
@@ -63,30 +61,30 @@ export const ArtworkFilter: React.FC<
   onChange,
   ZeroState,
 }) => {
-  return (
-    <ArtworkFilterContextProvider
-      aggregations={aggregations}
-      counts={counts}
-      filters={filters}
-      sortOptions={sortOptions}
-      onArtworkBrickClick={onArtworkBrickClick}
-      onFilterClick={onFilterClick}
-      onChange={onChange}
-      ZeroState={ZeroState}
-    >
-      <ArtworkFilterRefetchContainer viewer={viewer} />
-    </ArtworkFilterContextProvider>
-  )
-}
+    return (
+      <ArtworkFilterContextProvider
+        aggregations={aggregations}
+        counts={counts}
+        filters={filters}
+        sortOptions={sortOptions}
+        onArtworkBrickClick={onArtworkBrickClick}
+        onFilterClick={onFilterClick}
+        onChange={onChange}
+        ZeroState={ZeroState}
+      >
+        <ArtworkFilterRefetchContainer viewer={viewer} />
+      </ArtworkFilterContextProvider>
+    )
+  }
 
 export const BaseArtworkFilter: React.FC<{
   relay: RelayRefetchProp
   relayVariables?: object
   viewer:
-    | ArtworkFilter_viewer
-    | Collection_collection
-    | ArtistArtworkFilter_artist
-    | ArtistSeriesArtworksFilter_artistSeries
+  | ArtworkFilter_viewer
+  | Collection_collection
+  | ArtistArtworkFilter_artist
+  | ArtistSeriesArtworksFilter_artistSeries
 }> = ({ relay, viewer, relayVariables = {}, ...props }) => {
   const { filtered_artworks } = viewer
   const hasFilter = filtered_artworks && filtered_artworks.id

@@ -1,12 +1,10 @@
-import {
-  Box,
-  Button,
-  Clickable,
-  Flex,
-  ModalBase,
-  Sans,
-  color,
-} from "@artsy/palette"
+import { Box } from "@artsy/palette/dist/elements/Box"
+import { Button } from "@artsy/palette/dist/elements/Button"
+import { Clickable } from "@artsy/palette/dist/elements/Clickable"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
+import { ModalBase } from "@artsy/palette/dist/elements/Modal"
+import { Sans } from "@artsy/palette/dist/elements/Typography"
+import { color } from "@artsy/palette/dist/helpers/color"
 import React, { useEffect, useRef } from "react"
 import styled from "styled-components"
 import {

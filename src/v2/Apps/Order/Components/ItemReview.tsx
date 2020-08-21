@@ -1,6 +1,8 @@
 import React from "react"
 
-import { BorderBox, Flex, Serif } from "@artsy/palette"
+import { BorderBox } from "@artsy/palette/dist/elements/BorderBox"
+import { Serif } from "@artsy/palette/dist/elements/Typography"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
 import { ItemReview_lineItem } from "v2/__generated__/ItemReview_lineItem.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
@@ -43,39 +45,39 @@ export const ItemReview: React.SFC<ItemReviewProps> = ({
     editionSetId,
   },
 }) => (
-    <BorderBox p={[2, 3]}>
-      <Flex flexGrow={1} flexDirection="column">
-        <Serif size="2" weight="semibold" color="black60">
-          {artist_names}
+  <BorderBox p={[2, 3]}>
+    <Flex flexGrow={1} flexDirection="column">
+      <Serif size="2" weight="semibold" color="black60">
+        {artist_names}
+      </Serif>
+      <Serif italic size="2" color="black60">
+        {title}
+        {date && `, (${date})`}
+      </Serif>
+      {medium && (
+        <Serif size="2" color="black60">
+          {medium}
         </Serif>
-        <Serif italic size="2" color="black60">
-          {title}
-          {date && `, (${date})`}
+      )}
+      {editionSetId &&
+        edition_sets &&
+        dimensionsDisplay(
+          edition_sets.find(e => e.internalID === editionSetId).dimensions
+        )}
+      {!editionSetId &&
+        artworkDimensions &&
+        dimensionsDisplay(artworkDimensions)}
+      {attribution_class && (
+        <Serif size="2" color="black60">
+          {attribution_class.shortDescription}
         </Serif>
-        {medium && (
-          <Serif size="2" color="black60">
-            {medium}
-          </Serif>
-        )}
-        {editionSetId &&
-          edition_sets &&
-          dimensionsDisplay(
-            edition_sets.find(e => e.internalID === editionSetId).dimensions
-          )}
-        {!editionSetId &&
-          artworkDimensions &&
-          dimensionsDisplay(artworkDimensions)}
-        {attribution_class && (
-          <Serif size="2" color="black60">
-            {attribution_class.shortDescription}
-          </Serif>
-        )}
-      </Flex>
-      <ImageBox>
-        <img alt={`${title} by ${artist_names}`} src={url} />
-      </ImageBox>
-    </BorderBox>
-  )
+      )}
+    </Flex>
+    <ImageBox>
+      <img alt={`${title} by ${artist_names}`} src={url} />
+    </ImageBox>
+  </BorderBox>
+)
 
 export const ItemReviewFragmentContainer = createFragmentContainer(ItemReview, {
   lineItem: graphql`

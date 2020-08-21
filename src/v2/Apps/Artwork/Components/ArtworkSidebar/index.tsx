@@ -1,4 +1,6 @@
-import { Box, Spacer, space } from "@artsy/palette"
+import { space } from "@artsy/palette/dist/helpers/space"
+import { Spacer } from "@artsy/palette/dist/elements/Spacer"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import { renderWithLoadProgress } from "v2/Artsy/Relay/renderWithLoadProgress"
 import { AuctionTimerFragmentContainer as AuctionTimer } from "v2/Components/AuctionTimer"
 import React, { Component, useContext } from "react"

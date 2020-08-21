@@ -1,4 +1,7 @@
-import { Flex, Sans, color, themeProps } from "@artsy/palette"
+import { Sans } from "@artsy/palette/dist/elements/Typography"
+import { color } from "@artsy/palette/dist/helpers/color"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
+import { themeProps } from "@artsy/palette/dist/Theme"
 import React from "react"
 import styled from "styled-components"
 

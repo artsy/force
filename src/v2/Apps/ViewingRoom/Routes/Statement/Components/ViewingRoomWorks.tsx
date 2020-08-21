@@ -1,5 +1,9 @@
 import React from "react"
-import { Box, Flex, Image, Sans, Spacer } from "@artsy/palette"
+import { Image } from "@artsy/palette/dist/elements/Image"
+import { Spacer } from "@artsy/palette/dist/elements/Spacer"
+import { Sans } from "@artsy/palette/dist/elements/Typography"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import { useRouter } from "v2/Artsy/Router/useRouter"
 import { createFragmentContainer, graphql } from "react-relay"
 

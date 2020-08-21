@@ -7,7 +7,8 @@ import React, { useContext } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkActionsFragmentContainer as ArtworkActions } from "./ArtworkActions"
 import { ArtworkImageBrowser } from "./ArtworkImageBrowser"
-import { Box } from "@artsy/palette"
+
+import { Box } from "@artsy/palette/dist/elements/Box"
 import { ContextModule } from "@artsy/cohesion"
 
 export interface ImageBrowserProps {
@@ -16,7 +17,7 @@ export interface ImageBrowserProps {
 
 export class ArtworkImageBrowserContainer extends React.Component<
   ImageBrowserProps
-  > {
+> {
   carousel = null
 
   render() {

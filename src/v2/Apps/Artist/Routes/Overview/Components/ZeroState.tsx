@@ -1,5 +1,7 @@
 import { ContextModule, Intent } from "@artsy/cohesion"
-import { Link, Message, Sans } from "@artsy/palette"
+import { Link } from "@artsy/palette/dist/elements/Link"
+import { Message } from "@artsy/palette/dist/elements/Message"
+import { Sans } from "@artsy/palette/dist/elements/Typography"
 import { useSystemContext } from "v2/Artsy"
 import { FollowArtistButtonFragmentContainer as FollowArtistButton } from "v2/Components/FollowButton/FollowArtistButton"
 import React from "react"

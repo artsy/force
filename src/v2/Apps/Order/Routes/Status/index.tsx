@@ -1,13 +1,10 @@
-import {
-  Button,
-  Flex,
-  Join,
-  Message,
-  Sans,
-  Serif,
-  Spacer,
-  media,
-} from "@artsy/palette"
+import { Button } from "@artsy/palette/dist/elements/Button"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
+import { Join } from "@artsy/palette/dist/elements/Join"
+import { Message } from "@artsy/palette/dist/elements/Message"
+import { Sans, Serif } from "@artsy/palette/dist/elements/Typography"
+import { Spacer } from "@artsy/palette/dist/elements/Spacer"
+import { media } from "@artsy/palette/dist/helpers/media"
 import { Status_order } from "v2/__generated__/Status_order.graphql"
 import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
 import { TransactionDetailsSummaryItemFragmentContainer as TransactionDetailsSummaryItem } from "v2/Apps/Order/Components/TransactionDetailsSummaryItem"

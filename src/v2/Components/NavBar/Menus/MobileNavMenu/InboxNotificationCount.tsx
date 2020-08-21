@@ -11,7 +11,9 @@ import { SystemContext } from "v2/Artsy/SystemContext"
 import { SystemQueryRenderer as QueryRenderer } from "v2/Artsy/Relay/SystemQueryRenderer"
 import { getConversationCount, updateConversationCache } from "../../helpers"
 
-import { Flex, Sans, color } from "@artsy/palette"
+import { Sans } from "@artsy/palette/dist/elements/Typography"
+import { color } from "@artsy/palette/dist/helpers/color"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
 
 const FloatingDot = styled(Flex)`
   background-color: ${color("purple100")};

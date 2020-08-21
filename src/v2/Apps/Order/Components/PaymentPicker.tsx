@@ -18,17 +18,14 @@ import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ReactStripeElements, injectStripe } from "react-stripe-elements"
 
-import {
-  BorderedRadio,
-  Checkbox,
-  Collapse,
-  Flex,
-  Link,
-  RadioGroup,
-  Sans,
-  Serif,
-  Spacer,
-} from "@artsy/palette"
+import { BorderedRadio } from "@artsy/palette/dist/elements/Radio"
+import { Checkbox } from "@artsy/palette/dist/elements/Checkbox"
+import { Collapse } from "@artsy/palette/dist/elements/Collapse"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
+import { Link } from "@artsy/palette/dist/elements/Link"
+import { RadioGroup } from "@artsy/palette/dist/elements/RadioGroup"
+import { Sans, Serif } from "@artsy/palette/dist/elements/Typography"
+import { Spacer } from "@artsy/palette/dist/elements/Spacer"
 import { CommitMutation } from "v2/Apps/Order/Utils/commitMutation"
 import { CreditCardDetails } from "./CreditCardDetails"
 import {

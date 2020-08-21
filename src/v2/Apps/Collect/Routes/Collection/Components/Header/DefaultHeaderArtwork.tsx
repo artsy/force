@@ -1,4 +1,4 @@
-import { Image } from "@artsy/palette"
+import { Image } from "@artsy/palette/dist/elements/Image"
 import { DefaultHeaderArtwork_artwork } from "v2/__generated__/DefaultHeaderArtwork_artwork.graphql"
 import { AnalyticsSchema } from "v2/Artsy/Analytics"
 import { useTracking } from "v2/Artsy/Analytics/useTracking"

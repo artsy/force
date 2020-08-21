@@ -1,5 +1,5 @@
 import { SearchBarTestQueryRawResponse } from "v2/__generated__/SearchBarTestQuery.graphql"
-import { Input } from "@artsy/palette"
+import { Input } from "@artsy/palette/dist/elements/Input"
 import {
   SearchBarRefetchContainer as SearchBar,
   getSearchTerm,

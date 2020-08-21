@@ -1,13 +1,10 @@
-import {
-  Button,
-  Col,
-  Flex,
-  Message,
-  Row,
-  Sans,
-  Spacer,
-  TextAreaChange,
-} from "@artsy/palette"
+import { Button } from "@artsy/palette/dist/elements/Button"
+import { Col, Row } from "@artsy/palette/dist/elements/Grid"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
+import { Message } from "@artsy/palette/dist/elements/Message"
+import { Sans } from "@artsy/palette/dist/elements/Typography"
+import { Spacer } from "@artsy/palette/dist/elements/Spacer"
+import { TextAreaChange } from "@artsy/palette/dist/elements/TextArea"
 import { Offer_order } from "v2/__generated__/Offer_order.graphql"
 import { OfferMutation } from "v2/__generated__/OfferMutation.graphql"
 import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"

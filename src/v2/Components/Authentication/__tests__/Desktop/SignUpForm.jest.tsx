@@ -1,4 +1,4 @@
-import { Link } from "@artsy/palette"
+import { Link } from "@artsy/palette/dist/elements/Link"
 import { SignUpForm } from "v2/Components/Authentication/Desktop/SignUpForm"
 import { mount } from "enzyme"
 import { Formik } from "formik"
@@ -124,10 +124,7 @@ describe("SignUpForm", () => {
     props.values = SignupValues
     const wrapper = getWrapper()
 
-    wrapper
-      .find(Link)
-      .at(2)
-      .simulate("click")
+    wrapper.find(Link).at(2).simulate("click")
 
     setTimeout(() => {
       expect(props.onAppleLogin).toBeCalled()
@@ -159,10 +156,7 @@ describe("SignUpForm", () => {
     props.values.accepted_terms_of_service = false
     const wrapper = getWrapper()
 
-    wrapper
-      .find(Link)
-      .at(2)
-      .simulate("click")
+    wrapper.find(Link).at(2).simulate("click")
 
     wrapper.update()
 

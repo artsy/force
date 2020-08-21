@@ -1,4 +1,4 @@
-import { Theme } from "@artsy/palette"
+import { Theme } from "@artsy/palette/dist/Theme"
 import { CollectionsHubsHomepageNavQuery } from "v2/__generated__/CollectionsHubsHomepageNavQuery.graphql"
 import { useSystemContext } from "v2/Artsy"
 import { renderWithLoadProgress } from "v2/Artsy/Relay/renderWithLoadProgress"

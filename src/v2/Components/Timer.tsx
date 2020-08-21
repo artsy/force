@@ -1,4 +1,5 @@
-import { Flex, Sans } from "@artsy/palette"
+import { Sans } from "@artsy/palette/dist/elements/Typography"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
 import { WithCurrentTime } from "v2/Components/WithCurrentTime"
 import { DateTime, Duration } from "luxon"
 import React from "react"
@@ -17,9 +18,7 @@ export const Timer: React.SFC<{
   <WithCurrentTime syncWithServer>
     {currentTime => {
       const duration = Duration.fromISO(
-        DateTime.fromISO(endDate)
-          .diff(DateTime.fromISO(currentTime))
-          .toString()
+        DateTime.fromISO(endDate).diff(DateTime.fromISO(currentTime)).toString()
       )
 
       const hasEnded = Math.floor(duration.seconds) <= 0

@@ -1,4 +1,6 @@
-import { Box, Separator, Serif } from "@artsy/palette"
+import { Separator } from "@artsy/palette/dist/elements/Separator"
+import { Serif } from "@artsy/palette/dist/elements/Typography"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import { Match } from "found"
 
 import { BidderPositionQueryResponse } from "v2/__generated__/BidderPositionQuery.graphql"

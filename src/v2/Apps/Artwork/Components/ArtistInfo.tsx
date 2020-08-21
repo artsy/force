@@ -1,11 +1,9 @@
-import {
-  Button,
-  EntityHeader,
-  Flex,
-  Sans,
-  Spacer,
-  StackableBorderBox,
-} from "@artsy/palette"
+import { Button } from "@artsy/palette/dist/elements/Button"
+import { EntityHeader } from "@artsy/palette/dist/elements/EntityHeader"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
+import { Sans } from "@artsy/palette/dist/elements/Typography"
+import { Spacer } from "@artsy/palette/dist/elements/Spacer"
+import { StackableBorderBox } from "@artsy/palette/dist/elements/StackableBorderBox"
 import { ArtistInfo_artist } from "v2/__generated__/ArtistInfo_artist.graphql"
 import { ArtistInfoQuery } from "v2/__generated__/ArtistInfoQuery.graphql"
 import { SystemContextConsumer } from "v2/Artsy"

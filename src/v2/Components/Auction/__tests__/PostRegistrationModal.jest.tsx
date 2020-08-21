@@ -1,4 +1,4 @@
-import { Modal } from "@artsy/palette"
+import { Modal } from "@artsy/palette/dist/elements/Modal"
 import { mount } from "enzyme"
 import React from "react"
 import { flushPromiseQueue } from "v2/DevTools"

@@ -16,15 +16,12 @@ import * as Schema from "v2/Artsy/Analytics/Schema"
 import Events from "v2/Utils/Events"
 
 import { ContextModule, Intent } from "@artsy/cohesion"
-import {
-  Box,
-  EntityHeader,
-  ReadMore,
-  Sans,
-  Serif,
-  Spacer,
-  StackableBorderBox,
-} from "@artsy/palette"
+import { Box } from "@artsy/palette/dist/elements/Box"
+import { EntityHeader } from "@artsy/palette/dist/elements/EntityHeader"
+import { ReadMore } from "@artsy/palette/dist/elements/ReadMore"
+import { Sans, Serif } from "@artsy/palette/dist/elements/Typography"
+import { Spacer } from "@artsy/palette/dist/elements/Spacer"
+import { StackableBorderBox } from "@artsy/palette/dist/elements/StackableBorderBox"
 import { FollowProfileButton_profile } from "v2/__generated__/FollowProfileButton_profile.graphql"
 import { openAuthToFollowSave } from "v2/Utils/openAuthModal"
 

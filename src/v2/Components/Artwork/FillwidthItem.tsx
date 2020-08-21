@@ -1,5 +1,5 @@
 import { AuthContextModule } from "@artsy/cohesion"
-import { Image } from "@artsy/palette"
+import { Image } from "@artsy/palette/dist/elements/Image"
 import { FillwidthItem_artwork } from "v2/__generated__/FillwidthItem_artwork.graphql"
 import { SystemContextProps } from "v2/Artsy"
 import { Mediator } from "v2/Artsy"

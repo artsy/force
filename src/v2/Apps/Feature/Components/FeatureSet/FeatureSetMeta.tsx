@@ -1,5 +1,7 @@
 import React from "react"
-import { Box, BoxProps, HTML, Text } from "@artsy/palette"
+import { HTML } from "@artsy/palette/dist/elements/HTML"
+import { Text } from "@artsy/palette/dist/elements/Text"
+import { Box, BoxProps } from "@artsy/palette/dist/elements/Box"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FeatureSetMeta_set } from "v2/__generated__/FeatureSetMeta_set.graphql"
 

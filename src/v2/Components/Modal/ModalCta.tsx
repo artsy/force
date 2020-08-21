@@ -1,4 +1,6 @@
-import { Button, color, space } from "@artsy/palette"
+import { space } from "@artsy/palette/dist/helpers/space"
+import { Button } from "@artsy/palette/dist/elements/Button"
+import { color } from "@artsy/palette/dist/helpers/color"
 import React, { SFC } from "react"
 import styled from "styled-components"
 import { media } from "../Helpers"

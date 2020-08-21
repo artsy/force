@@ -1,21 +1,18 @@
-import { Breakpoint } from "@artsy/palette"
+import { Breakpoint } from "@artsy/palette/dist/Theme"
 import { ArtworkActions_Test_QueryRawResponse } from "v2/__generated__/ArtworkActions_Test_Query.graphql"
 import { ArtworkActionsFixture } from "v2/Apps/__tests__/Fixtures/Artwork/ArtworkActions.fixture"
 import { MockBoot, renderRelayTree } from "v2/DevTools"
 import { cloneDeep } from "lodash"
 import React from "react"
 import { ArtworkActionsFragmentContainer as ArtworkActions } from "../ArtworkActions"
-
-import {
-  BellFillIcon,
-  DownloadIcon,
-  EditIcon,
-  GenomeIcon,
-  HeartFillIcon,
-  MoreIcon,
-  OpenEyeIcon,
-  ShareIcon,
-} from "@artsy/palette"
+import { BellFillIcon } from "@artsy/palette/dist/svgs/BellFillIcon"
+import { DownloadIcon } from "@artsy/palette/dist/svgs/DownloadIcon"
+import { EditIcon } from "@artsy/palette/dist/svgs/EditIcon"
+import { GenomeIcon } from "@artsy/palette/dist/svgs/GenomeIcon"
+import { HeartFillIcon } from "@artsy/palette/dist/svgs/HeartFillIcon"
+import { MoreIcon } from "@artsy/palette/dist/svgs/MoreIcon"
+import { EyeOpenedIcon } from "@artsy/palette/dist/svgs/EyeOpenedIcon"
+import { ShareIcon } from "@artsy/palette/dist/svgs/ShareIcon"
 import { SystemContextProvider } from "v2/Artsy"
 import { graphql } from "react-relay"
 
@@ -64,7 +61,7 @@ describe("ArtworkActions", () => {
     const wrapper = await getWrapper("lg", data)
     expect(wrapper.find(HeartFillIcon).length).toBe(1)
     expect(wrapper.find(ShareIcon).length).toBe(1)
-    expect(wrapper.find(OpenEyeIcon).length).toBe(1)
+    expect(wrapper.find(EyeOpenedIcon).length).toBe(1)
     expect(wrapper.find(DownloadIcon).length).toBe(1)
     expect(wrapper.find(EditIcon).length).toBe(0)
     expect(wrapper.find(GenomeIcon).length).toBe(0)
@@ -133,7 +130,7 @@ describe("ArtworkActions", () => {
         },
       }
       const wrapper = await getWrapper("lg", data)
-      expect(wrapper.find(OpenEyeIcon).length).toBe(1)
+      expect(wrapper.find(EyeOpenedIcon).length).toBe(1)
     })
 
     it("is not available for non hangable artworks", async () => {
@@ -149,7 +146,7 @@ describe("ArtworkActions", () => {
         },
       }
       const wrapper = await getWrapper("lg", data)
-      expect(wrapper.find(OpenEyeIcon).length).toBe(0)
+      expect(wrapper.find(EyeOpenedIcon).length).toBe(0)
     })
   })
 
@@ -210,7 +207,7 @@ describe("ArtworkActions", () => {
       const wrapper = await getWrapper("xs")
       expect(wrapper.find(HeartFillIcon).length).toBe(1)
       expect(wrapper.find(ShareIcon).length).toBe(1)
-      expect(wrapper.find(OpenEyeIcon).length).toBe(1)
+      expect(wrapper.find(EyeOpenedIcon).length).toBe(1)
       expect(wrapper.find(MoreIcon).length).toBe(1)
       expect(wrapper.find(DownloadIcon).length).toBe(0)
       expect(wrapper.find(EditIcon).length).toBe(0)
@@ -240,7 +237,7 @@ describe("ArtworkActions", () => {
       const wrapper = await getWrapper("xs", data)
       expect(wrapper.find(HeartFillIcon).length).toBe(1)
       expect(wrapper.find(ShareIcon).length).toBe(1)
-      expect(wrapper.find(OpenEyeIcon).length).toBe(1)
+      expect(wrapper.find(EyeOpenedIcon).length).toBe(1)
       expect(wrapper.find(DownloadIcon).length).toBe(0)
       expect(wrapper.find(EditIcon).length).toBe(0)
       expect(wrapper.find(GenomeIcon).length).toBe(0)

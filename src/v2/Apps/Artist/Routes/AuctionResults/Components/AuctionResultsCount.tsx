@@ -1,4 +1,4 @@
-import { Sans } from "@artsy/palette"
+import { Sans } from "@artsy/palette/dist/elements/Typography"
 import { AuctionResultsCount_results } from "v2/__generated__/AuctionResultsCount_results.graphql"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"

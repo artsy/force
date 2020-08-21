@@ -3,7 +3,7 @@ import { MockBoot, renderRelayTree } from "v2/DevTools"
 import ViewingRoomsApp from "../ViewingRoomsApp"
 import { graphql } from "react-relay"
 import { ViewingRoomsApp_Test_QueryRawResponse } from "v2/__generated__/ViewingRoomsApp_Test_Query.graphql"
-import { Breakpoint } from "@artsy/palette"
+import { Breakpoint } from "@artsy/palette/dist/Theme"
 
 jest.unmock("react-relay")
 jest.mock("v2/Artsy/Router/useRouter", () => ({

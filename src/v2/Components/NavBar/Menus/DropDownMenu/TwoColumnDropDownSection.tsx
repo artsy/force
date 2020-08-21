@@ -1,4 +1,6 @@
-import { Box, Flex, Sans } from "@artsy/palette"
+import { Sans } from "@artsy/palette/dist/elements/Typography"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import { MenuLinkData, SimpleLinkData } from "v2/Components/NavBar/menuData"
 import React from "react"
 

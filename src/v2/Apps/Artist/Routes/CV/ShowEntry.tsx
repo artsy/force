@@ -1,4 +1,5 @@
-import { Serif, SerifSize } from "@artsy/palette"
+import { Serif } from "@artsy/palette/dist/elements/Typography"
+import { SerifSize } from "@artsy/palette/dist/Theme"
 import React, { SFC } from "react"
 
 const FIXME_DOMAIN = "https://www.artsy.net"

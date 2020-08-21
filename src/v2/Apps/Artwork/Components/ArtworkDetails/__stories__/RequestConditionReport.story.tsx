@@ -1,4 +1,4 @@
-import { Box } from "@artsy/palette"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import { MockRelayRenderer } from "v2/DevTools"
 import React from "react"
 import { storiesOf } from "storybook/storiesOf"

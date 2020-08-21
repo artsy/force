@@ -18,7 +18,11 @@ import { ReactStripeElements } from "react-stripe-elements"
 import createLogger from "v2/Utils/logger"
 import { Media } from "v2/Utils/Responsive"
 
-import { Button, Col, Flex, Row, Spacer, Box } from "@artsy/palette"
+import { Col, Row } from "@artsy/palette/dist/elements/Grid"
+import { Spacer } from "@artsy/palette/dist/elements/Spacer"
+import { Button } from "@artsy/palette/dist/elements/Button"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import {
   PaymentPicker,
   PaymentPickerFragmentContainer,

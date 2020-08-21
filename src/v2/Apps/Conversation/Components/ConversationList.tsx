@@ -1,4 +1,7 @@
-import { Box, Spinner, color, media } from "@artsy/palette"
+import { media } from "@artsy/palette/dist/helpers/media"
+import { color } from "@artsy/palette/dist/helpers/color"
+import { Box } from "@artsy/palette/dist/elements/Box"
+import { Spinner } from "@artsy/palette/dist/elements/Spinner"
 import { ConversationList_me } from "v2/__generated__/ConversationList_me.graphql"
 import React, { useState } from "react"
 import {

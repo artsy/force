@@ -1,7 +1,7 @@
 import { ShippingTestQueryRawResponse } from "v2/__generated__/ShippingTestQuery.graphql"
 import { cloneDeep } from "lodash"
 
-import { RadioGroup } from "@artsy/palette"
+import { RadioGroup } from "@artsy/palette/dist/elements/RadioGroup"
 import {
   UntouchedBuyOrder,
   UntouchedOfferOrder,
@@ -55,9 +55,7 @@ const testOrder: ShippingTestQueryRawResponse["order"] = {
 
 class ShippingTestPage extends OrderAppTestPage {
   async selectPickupOption() {
-    this.find("Radio")
-      .last()
-      .simulate("click")
+    this.find("Radio").last().simulate("click")
     await this.update()
   }
 }

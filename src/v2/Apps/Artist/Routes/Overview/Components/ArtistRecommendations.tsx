@@ -1,4 +1,7 @@
-import { Box, Button, Flex, Sans } from "@artsy/palette"
+import { Button } from "@artsy/palette/dist/elements/Button"
+import { Sans } from "@artsy/palette/dist/elements/Typography"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import { ArtistRecommendations_artist } from "v2/__generated__/ArtistRecommendations_artist.graphql"
 import { ArtistRecommendationsRendererQuery } from "v2/__generated__/ArtistRecommendationsRendererQuery.graphql"
 import { SystemContext, useTracking } from "v2/Artsy"

@@ -1,4 +1,4 @@
-import { Box } from "@artsy/palette"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import { SystemContextProvider } from "v2/Artsy"
 import { RecentlyViewedQueryRenderer } from "v2/Components/RecentlyViewed"
 import React from "react"

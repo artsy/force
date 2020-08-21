@@ -1,4 +1,4 @@
-import { breakpoints } from "@artsy/palette"
+import { breakpoints } from "@artsy/palette/dist/Theme"
 import Colors from "./Colors"
 
 export default {

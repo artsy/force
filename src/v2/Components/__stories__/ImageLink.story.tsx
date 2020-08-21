@@ -1,4 +1,5 @@
-import { Box, Serif } from "@artsy/palette"
+import { Serif } from "@artsy/palette/dist/elements/Typography"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import React from "react"
 import { storiesOf } from "storybook/storiesOf"
 import { ImageLink } from "../ImageLink"

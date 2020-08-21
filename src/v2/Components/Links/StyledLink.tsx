@@ -1,6 +1,6 @@
 import styled from "styled-components"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
-import { color } from "@artsy/palette"
+import { color } from "@artsy/palette/dist/helpers/color"
 
 export const StyledLink = styled(RouterLink)`
   text-decoration: none;

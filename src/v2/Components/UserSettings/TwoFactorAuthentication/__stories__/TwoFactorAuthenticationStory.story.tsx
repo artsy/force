@@ -1,4 +1,5 @@
-import { Box, Theme } from "@artsy/palette"
+import { Theme } from "@artsy/palette/dist/Theme"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import { storiesOf } from "@storybook/react"
 import React from "react"
 

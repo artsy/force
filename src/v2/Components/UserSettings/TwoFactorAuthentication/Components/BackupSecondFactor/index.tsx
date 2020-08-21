@@ -1,12 +1,11 @@
 import {
   BorderBox,
   BorderBoxProps,
-  Button,
-  Flex,
-  Modal,
-  Sans,
-  Serif,
-} from "@artsy/palette"
+} from "@artsy/palette/dist/elements/BorderBox"
+import { Button } from "@artsy/palette/dist/elements/Button"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
+import { Modal } from "@artsy/palette/dist/elements/Modal"
+import { Sans, Serif } from "@artsy/palette/dist/elements/Typography"
 import React, { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 
@@ -92,10 +91,10 @@ export const BackupSecondFactor: React.FC<BackupSecondFactorProps> = props => {
               </SetupButton>
             </>
           ) : (
-              <SetupButton width={["100%", "auto"]} ml={[0, 1]} mt={[1, 0]}>
-                Set up
-              </SetupButton>
-            )}
+            <SetupButton width={["100%", "auto"]} ml={[0, 1]} mt={[1, 0]}>
+              Set up
+            </SetupButton>
+          )}
         </Flex>
       </Flex>
       <Modal

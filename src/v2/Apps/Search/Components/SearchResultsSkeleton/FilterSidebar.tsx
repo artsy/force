@@ -1,4 +1,7 @@
-import { Box, Flex, Separator, color } from "@artsy/palette"
+import { Separator } from "@artsy/palette/dist/elements/Separator"
+import { color } from "@artsy/palette/dist/helpers/color"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import React from "react"
 
 const FilterSidebarSection: React.SFC<any> = props => {

@@ -1,4 +1,5 @@
-import { Box, Flex } from "@artsy/palette"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import { AnalyticsSchema } from "v2/Artsy"
 import React from "react"
 import { FeaturedContentLink, FeaturedLinkType } from "./Feature"

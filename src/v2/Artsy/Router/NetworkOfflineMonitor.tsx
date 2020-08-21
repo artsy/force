@@ -1,4 +1,5 @@
-import { Banner, Box } from "@artsy/palette"
+import { Banner } from "@artsy/palette/dist/elements/Banner"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import { throttle } from "lodash"
 import React, { useEffect, useState } from "react"
 

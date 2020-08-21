@@ -1,15 +1,12 @@
-import {
-  Box,
-  Button,
-  Flex,
-  Image,
-  LargePagination,
-  Link,
-  Sans,
-  Serif,
-  Spinner,
-  StackableBorderBox,
-} from "@artsy/palette"
+import { Box } from "@artsy/palette/dist/elements/Box"
+import { Button } from "@artsy/palette/dist/elements/Button"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
+import { Image } from "@artsy/palette/dist/elements/Image"
+import { LargePagination } from "@artsy/palette/dist/elements/Pagination"
+import { Link } from "@artsy/palette/dist/elements/Link"
+import { Sans, Serif } from "@artsy/palette/dist/elements/Typography"
+import { Spinner } from "@artsy/palette/dist/elements/Spinner"
+import { StackableBorderBox } from "@artsy/palette/dist/elements/StackableBorderBox"
 import { PurchaseHistory_me } from "v2/__generated__/PurchaseHistory_me.graphql"
 import React, { useState } from "react"
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"

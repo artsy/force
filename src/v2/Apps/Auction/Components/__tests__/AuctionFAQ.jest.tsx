@@ -1,4 +1,5 @@
-import { Sans, Toggle } from "@artsy/palette"
+import { Toggle } from "@artsy/palette/dist/elements/Toggle"
+import { Sans } from "@artsy/palette/dist/elements/Typography"
 import { AuctionFAQ_QueryRawResponse } from "v2/__generated__/AuctionFAQ_Query.graphql"
 import { renderRelayTree } from "v2/DevTools"
 import { graphql } from "react-relay"
@@ -78,10 +79,7 @@ describe("AuctionFAQ", () => {
 
   it("renders content correctly", async () => {
     const wrapper = await getWrapper(viewerMockResponse)
-    const biddingContent = wrapper
-      .find(Toggle)
-      .at(0)
-      .find(Sans)
+    const biddingContent = wrapper.find(Toggle).at(0).find(Sans)
     biddingContent.simulate("click")
     wrapper.update()
     expect(wrapper.text()).toContain("How do I Register for an Auction?")

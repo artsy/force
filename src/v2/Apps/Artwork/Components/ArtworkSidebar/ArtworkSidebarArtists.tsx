@@ -1,4 +1,5 @@
-import { Box, Serif } from "@artsy/palette"
+import { Serif } from "@artsy/palette/dist/elements/Typography"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import { SystemContextConsumer } from "v2/Artsy"
 import * as Schema from "v2/Artsy/Analytics/Schema"
 

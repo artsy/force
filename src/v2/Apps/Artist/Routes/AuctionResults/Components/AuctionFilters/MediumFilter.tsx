@@ -1,4 +1,7 @@
-import { Box, Checkbox, Flex, Toggle } from "@artsy/palette"
+import { Toggle } from "@artsy/palette/dist/elements/Toggle"
+import { Checkbox } from "@artsy/palette/dist/elements/Checkbox"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import React from "react"
 import { useAuctionResultsFilterContext } from "../../AuctionResultsFilterContext"
 

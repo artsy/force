@@ -2,7 +2,7 @@ import styled from "styled-components"
 import React, { Component } from "react"
 import { SectionsNav } from "./sections_nav"
 import { Header } from "./header"
-import { color } from "@artsy/palette"
+import { color } from "@artsy/palette/dist/helpers/color"
 
 interface FixedHeaderProps {
   activeSection: number
@@ -83,10 +83,7 @@ export class FixedHeader extends Component<FixedHeaderProps, FixedHeaderState> {
   }
 }
 
-const FixedHeaderContainer =
-  styled.div <
-  { isVisible: boolean } >
-  `
+const FixedHeaderContainer = styled.div<{ isVisible: boolean }>`
   width: 100%;
   padding: 15px 20px;
   background: white;

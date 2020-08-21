@@ -1,13 +1,10 @@
-import {
-  Box,
-  Flex,
-  Image,
-  Link,
-  Sans,
-  Serif,
-  WebImageProps,
-  color,
-} from "@artsy/palette"
+import { Box } from "@artsy/palette/dist/elements/Box"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
+import { Image } from "@artsy/palette/dist/elements/Image"
+import { Link } from "@artsy/palette/dist/elements/Link"
+import { Sans, Serif } from "@artsy/palette/dist/elements/Typography"
+import { WebImageProps } from "@artsy/palette/dist/elements/Image"
+import { color } from "@artsy/palette/dist/helpers/color"
 import { RelatedCollectionEntity_collection } from "v2/__generated__/RelatedCollectionEntity_collection.graphql"
 import { track } from "v2/Artsy/Analytics"
 import * as Schema from "v2/Artsy/Analytics/Schema"

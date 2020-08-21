@@ -1,4 +1,8 @@
-import { Flex, Image, Link, Sans, color } from "@artsy/palette"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
+import { Image } from "@artsy/palette/dist/elements/Image"
+import { Link } from "@artsy/palette/dist/elements/Link"
+import { color } from "@artsy/palette/dist/helpers/color"
+import { Sans } from "@artsy/palette/dist/elements/Typography"
 import { Conversation_conversation } from "v2/__generated__/Conversation_conversation.graphql"
 import React from "react"
 

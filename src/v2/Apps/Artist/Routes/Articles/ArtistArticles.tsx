@@ -1,4 +1,5 @@
-import { Box, Col, Row } from "@artsy/palette"
+import { Col, Row } from "@artsy/palette/dist/elements/Grid"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import { ArtistArticles_artist } from "v2/__generated__/ArtistArticles_artist.graphql"
 import { PaginationFragmentContainer as Pagination } from "v2/Components/Pagination"
 import React, { Component } from "react"

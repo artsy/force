@@ -1,4 +1,6 @@
-import { Box, Flex, Serif } from "@artsy/palette"
+import { Serif } from "@artsy/palette/dist/elements/Typography"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
+import { Box } from "@artsy/palette/dist/elements/Box"
 import { SendFeedback } from "v2/Apps/Search/Components/SendFeedback"
 import { useArtworkFilterContext } from "v2/Components/v2/ArtworkFilter/ArtworkFilterContext"
 import React, { FC } from "react"

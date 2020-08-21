@@ -3,7 +3,7 @@ import { useTracking } from "v2/Artsy/Analytics/useTracking"
 import { MockBoot, renderRelayTree } from "v2/DevTools"
 import { graphql } from "react-relay"
 import { ViewingRoomWorksRoute_Test_QueryRawResponse } from "v2/__generated__/ViewingRoomWorksRoute_Test_Query.graphql"
-import { Breakpoint } from "@artsy/palette"
+import { Breakpoint } from "@artsy/palette/dist/Theme"
 import { ViewingRoomWorksRouteFragmentContainer } from "../../Works/ViewingRoomWorksRoute"
 
 jest.unmock("react-relay")

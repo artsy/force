@@ -1,16 +1,13 @@
 import React from "react"
+import { Box, BoxProps } from "@artsy/palette/dist/elements/Box"
+import { Col, Grid, Row } from "@artsy/palette/dist/elements/Grid"
+import { Flex } from "@artsy/palette/dist/elements/Flex"
 import {
-  Box,
-  BoxProps,
-  Col,
-  Flex,
-  Grid,
   ResponsiveBox,
   ResponsiveBoxProps,
-  Row,
-  Spacer,
-  Text,
-} from "@artsy/palette"
+} from "@artsy/palette/dist/elements/ResponsiveBox"
+import { Spacer } from "@artsy/palette/dist/elements/Spacer"
+import { Text } from "@artsy/palette/dist/elements/Text"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FairHeader_fair } from "v2/__generated__/FairHeader_fair.graphql"
 import styled from "styled-components"
@@ -20,7 +17,7 @@ interface FairHeaderProps extends BoxProps {
   fair: FairHeader_fair
 }
 
-const ResponsiveImage = styled(ResponsiveBox)<ResponsiveBoxProps>`
+const ResponsiveImage = styled(ResponsiveBox) <ResponsiveBoxProps>`
   img {
     width: 100%;
     height: 100%;
