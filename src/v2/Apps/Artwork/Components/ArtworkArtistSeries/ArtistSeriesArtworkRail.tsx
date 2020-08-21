@@ -1,4 +1,4 @@
-import { Box, Flex, Sans, Separator } from "@artsy/palette"
+import { Box, Flex, Sans } from "@artsy/palette"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtistSeriesArtworkRail_artwork } from "v2/__generated__/ArtistSeriesArtworkRail_artwork.graphql"
@@ -31,7 +31,6 @@ export const ArtistSeriesArtworkRail: React.FC<Props> = ({
 
   return artworks.length > 0 ? (
     <>
-      <Separator my={3} />
       <Flex mb={1} justifyContent="space-between">
         <Sans size="4" color="black100">
           More from this series
@@ -39,7 +38,7 @@ export const ArtistSeriesArtworkRail: React.FC<Props> = ({
 
         <StyledLink to={`/artist-series/${slug}`}>
           <Sans size="4" color="black60">
-            View all works
+            View series
           </Sans>
         </StyledLink>
       </Flex>
@@ -67,7 +66,6 @@ export const ArtistSeriesArtworkRail: React.FC<Props> = ({
           }}
         />
       </Box>
-      <Separator my={3} />
     </>
   ) : null
 }

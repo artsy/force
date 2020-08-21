@@ -17,6 +17,7 @@ import { ArtworkMetaFragmentContainer as ArtworkMeta } from "./Components/Artwor
 import { ArtworkRelatedArtistsPaginationContainer as RelatedArtists } from "./Components/ArtworkRelatedArtists"
 import { ArtworkSidebarFragmentContainer as ArtworkSidebar } from "./Components/ArtworkSidebar"
 import { OtherWorksFragmentContainer as OtherWorks } from "./Components/OtherWorks"
+import { ArtworkArtistSeriesFragmentContainer as ArtworkArtistSeries } from "./Components/ArtworkArtistSeries"
 import { PricingContextFragmentContainer as PricingContext } from "./Components/PricingContext"
 
 import { SystemContextConsumer } from "v2/Artsy"
@@ -29,6 +30,7 @@ import { RecentlyViewedQueryRenderer as RecentlyViewed } from "v2/Components/Rec
 import { RouterContext } from "found"
 import { TrackingProp } from "react-tracking"
 import { Media } from "v2/Utils/Responsive"
+import { userHasLabFeature } from "v2/Utils/user"
 
 export interface Props {
   artwork: ArtworkApp_artwork
@@ -219,6 +221,26 @@ export class ArtworkApp extends React.Component<Props> {
             </Row>
           </Media>
 
+          <SystemContextConsumer>
+            {({ user }) => {
+              const artistSeriesIsEnabled = userHasLabFeature(
+                user,
+                "Artist Series"
+              )
+              if (artistSeriesIsEnabled) {
+                return (
+                  <Row>
+                    <Col>
+                      <Box mt={3}>
+                        <ArtworkArtistSeries artwork={artwork} />
+                      </Box>
+                    </Col>
+                  </Row>
+                )
+              }
+            }}
+          </SystemContextConsumer>
+
           <Row>
             <Col>
               <Box mt={3}>
@@ -332,6 +354,7 @@ export const ArtworkAppFragmentContainer = createFragmentContainer(
         ...ArtworkDetails_artwork
         ...ArtworkImageBrowser_artwork
         ...OtherWorks_artwork
+        ...ArtworkArtistSeries_artwork
           @arguments(shouldFetchArtistSeriesData: $shouldFetchArtistSeriesData)
         ...PricingContext_artwork
       }

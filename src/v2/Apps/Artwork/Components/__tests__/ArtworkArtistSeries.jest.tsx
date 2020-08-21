@@ -1,0 +1,204 @@
+import React from "react"
+import { MockBoot, renderRelayTree } from "v2/DevTools"
+import { graphql } from "react-relay"
+import { ArtworkArtistSeries_QueryRawResponse } from "v2/__generated__/ArtworkArtistSeries_Query.graphql"
+import { Breakpoint } from "@artsy/palette"
+import { useTracking } from "v2/Artsy/Analytics/useTracking"
+import { ArtworkArtistSeriesFragmentContainer } from "../ArtworkArtistSeries"
+
+jest.mock("v2/Artsy/Analytics/useTracking")
+jest.unmock("react-relay")
+
+describe("ArtworkArtistSeries", () => {
+  let trackEvent
+  beforeEach(() => {
+    trackEvent = jest.fn()
+    ;(useTracking as jest.Mock).mockImplementation(() => {
+      return {
+        trackEvent,
+      }
+    })
+  })
+
+  const getWrapper = async (
+    breakpoint: Breakpoint = "lg",
+    response: ArtworkArtistSeries_QueryRawResponse = ArtworkArtistSeriesFixture
+  ) => {
+    return renderRelayTree({
+      Component: ({ artwork }) => {
+        return (
+          <MockBoot breakpoint={breakpoint}>
+            <ArtworkArtistSeriesFragmentContainer artwork={artwork} />
+          </MockBoot>
+        )
+      },
+      query: graphql`
+        query ArtworkArtistSeries_Query(
+          $slug: String!
+          $shouldFetchArtistSeriesData: Boolean!
+        ) @raw_response_type {
+          artwork(id: $slug) {
+            ...ArtworkArtistSeries_artwork
+              @arguments(
+                shouldFetchArtistSeriesData: $shouldFetchArtistSeriesData
+              )
+          }
+        }
+      `,
+      variables: {
+        slug: "pumpkin",
+        shouldFetchArtistSeriesData: true,
+      },
+      mockData: response,
+    })
+  }
+
+  it("includes both rails when there is data", async () => {
+    const wrapper = await getWrapper()
+    expect(wrapper.find("ArtistSeriesRail").length).toBe(1)
+    expect(wrapper.find("ArtistSeriesArtworkRail").length).toBe(1)
+  })
+
+  it("includes just the series rail if there are no artworks", async () => {
+    const noArtworksData: ArtworkArtistSeries_QueryRawResponse = {
+      artwork: {
+        ...ArtworkArtistSeriesFixture.artwork,
+        seriesForCounts: {
+          edges: [
+            {
+              node: {
+                artworksCount: 0,
+              },
+            },
+          ],
+        },
+      },
+    }
+    const wrapper = await getWrapper("xl", noArtworksData)
+    expect(wrapper.find("ArtistSeriesRail").length).toBe(1)
+    expect(wrapper.find("ArtistSeriesArtworkRail").length).toBe(0)
+  })
+
+  it("is null if there is no series", async () => {
+    const noSeriesData: ArtworkArtistSeries_QueryRawResponse = {
+      artwork: {
+        ...ArtworkArtistSeriesFixture.artwork,
+        artistSeriesConnection: null,
+        seriesForCounts: null,
+      },
+    }
+    const wrapper = await getWrapper("xl", noSeriesData)
+    expect(wrapper.find("ArtistSeriesRail").length).toBe(0)
+    expect(wrapper.find("ArtistSeriesArtworkRail").length).toBe(0)
+  })
+})
+
+const ArtworkArtistSeriesFixture: ArtworkArtistSeries_QueryRawResponse = {
+  artwork: {
+    id: "relayrelay",
+    internalID: "abc124",
+    slug: "pumpkin",
+    seriesArtist: {
+      id: "series-artist-relay",
+      artistSeriesConnection: {
+        edges: [
+          {
+            node: {
+              internalID: "abc123445",
+              slug: "yayoi-kusama-pumpkins",
+              featured: true,
+              title: "Yayoi Kusama: Pumpkins",
+              artworksCountMessage: "12 available",
+              image: {
+                cropped: {
+                  url: "pumpkin.jpg",
+                },
+              },
+            },
+          },
+        ],
+      },
+    },
+    seriesForCounts: {
+      edges: [
+        {
+          node: {
+            artworksCount: 124,
+          },
+        },
+      ],
+    },
+    artistSeriesConnection: {
+      edges: [
+        {
+          node: {
+            slug: "yayoi-kusama-pumpkins",
+            artworksConnection: {
+              edges: [
+                {
+                  node: {
+                    id: "ggg123",
+                    slug: "yayoi-kusama-pumpkin-2222222222222222",
+                    href: "/artwork/yayoi-kusama-pumpkin-2222222222222222",
+                    internalID: "zzz123",
+                    image: {
+                      url: "pumpkins.jpg",
+                      aspect_ratio: 12,
+                      resized: {
+                        height: 124,
+                        width: 200,
+                      },
+                    },
+                    imageTitle: "Pumpkin",
+                    title: "Pumpkin",
+                    date: "2020",
+                    sale_message: "Contact For Price",
+                    cultural_maker: null,
+                    artists: [
+                      {
+                        id: "artistabc123",
+                        href: "/artist/yayoi-kusama",
+                        name: "Yayoi Kusama",
+                      },
+                    ],
+                    collecting_institution: null,
+                    partner: {
+                      name: "Important Auction House",
+                      href: "/auction/important-auction-house",
+                      id: "ahabc123",
+                      type: "Auction House",
+                    },
+                    sale: {
+                      is_auction: true,
+                      is_closed: false,
+                      id: "saleabc123",
+                      is_live_open: false,
+                      is_open: true,
+                      is_preview: false,
+                      display_timely_at: "live in 3d",
+                    },
+                    sale_artwork: {
+                      counts: {
+                        bidder_positions: 0,
+                      },
+                      highest_bid: {
+                        display: null,
+                      },
+                      opening_bid: {
+                        display: "USD $2222",
+                      },
+                      id: "idabc123",
+                    },
+                    is_inquireable: true,
+                    is_saved: false,
+                    is_biddable: true,
+                  },
+                },
+              ],
+            },
+          },
+        },
+      ],
+    },
+  },
+}

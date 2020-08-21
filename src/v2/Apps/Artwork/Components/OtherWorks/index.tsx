@@ -1,24 +1,16 @@
-import { ContextModule, OwnerType } from "@artsy/cohesion"
+import { ContextModule } from "@artsy/cohesion"
 import { Box, Join, Spacer } from "@artsy/palette"
 import { OtherWorks_artwork } from "v2/__generated__/OtherWorks_artwork.graphql"
 import { OtherAuctionsQueryRenderer as OtherAuctions } from "v2/Apps/Artwork/Components/OtherAuctions"
 import { Header } from "v2/Apps/Artwork/Components/OtherWorks/Header"
 import { RelatedWorksArtworkGridRefetchContainer as RelatedWorksArtworkGrid } from "v2/Apps/Artwork/Components/OtherWorks/RelatedWorksArtworkGrid"
-import {
-  Mediator,
-  SystemContext,
-  SystemContextProps,
-  withSystemContext,
-} from "v2/Artsy"
+import { Mediator, SystemContextProps, withSystemContext } from "v2/Artsy"
 import { track, useTracking } from "v2/Artsy/Analytics"
 import * as Schema from "v2/Artsy/Analytics/Schema"
 import ArtworkGrid from "v2/Components/ArtworkGrid"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { get } from "v2/Utils/get"
-import { ArtistSeriesArtworkRailFragmentContainer as ArtistSeriesArtworkRail } from "./ArtistSeriesArtworkRail"
-import { userHasLabFeature } from "v2/Utils/user"
-import { ArtistSeriesRailFragmentContainer as ArtistSeriesRail } from "v2/Components/ArtistSeriesRail/ArtistSeriesRail"
 
 export interface OtherWorksContextProps {
   artwork: OtherWorks_artwork
@@ -81,18 +73,9 @@ const contextGridTypeToV2ContextModule = contextGridType => {
 
 export const OtherWorks = track()(
   (props: { artwork: OtherWorks_artwork } & SystemContextProps) => {
-    const {
-      context,
-      contextGrids,
-      sale,
-      seriesArtist,
-      internalID,
-      slug,
-    } = props.artwork
+    const { context, contextGrids, sale } = props.artwork
     const gridsToShow = populatedGrids(contextGrids)
     const tracking = useTracking()
-    const { user } = React.useContext(SystemContext)
-    const artistSeriesIsEnabled = userHasLabFeature(user, "Artist Series")
 
     return (
       <>
@@ -104,21 +87,6 @@ export const OtherWorks = track()(
               )
               return (
                 <Box key={`Grid-${index}`} data-test={contextModule}>
-                  {artistSeriesIsEnabled &&
-                    grid.__typename === "ArtistArtworkGrid" && (
-                      <>
-                        <ArtistSeriesArtworkRail artwork={props.artwork} />
-                        <ArtistSeriesRail
-                          artist={seriesArtist}
-                          title="More series by this artist"
-                          contextPageOwnerId={internalID}
-                          contextPageOwnerSlug={slug}
-                          contextModule={ContextModule.moreSeriesByThisArtist}
-                          contextPageOwnerType={OwnerType.artwork}
-                        />
-                      </>
-                    )}
-
                   <Header title={grid.title} buttonHref={grid.ctaHref} />
                   <ArtworkGrid
                     artworks={grid.artworksConnection}

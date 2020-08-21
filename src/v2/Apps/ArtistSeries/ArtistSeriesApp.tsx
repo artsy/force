@@ -1,6 +1,6 @@
 import React from "react"
 import { AppContainer } from "v2/Apps/Components/AppContainer"
-import { Box, Separator } from "@artsy/palette"
+import { Box, Separator, Spacer } from "@artsy/palette"
 
 import { SystemContext } from "v2/Artsy"
 import { Footer } from "v2/Components/Footer"
@@ -14,6 +14,7 @@ import { ArtistSeriesRailFragmentContainer as OtherArtistSeriesRail } from "v2/C
 import { ArtistSeriesMetaFragmentContainer as ArtistSeriesMeta } from "./Components/ArtistSeriesMeta"
 import { LazyLoadComponent } from "react-lazy-load-image-component"
 import { ContextModule, OwnerType } from "@artsy/cohesion"
+import { Media } from "v2/Utils/Responsive"
 
 interface ArtistSeriesAppProps {
   artistSeries: ArtistSeriesApp_artistSeries
@@ -30,7 +31,13 @@ const ArtistSeriesApp: React.FC<ArtistSeriesAppProps> = ({ artistSeries }) => {
         {/* NOTE: react-head automatically moves these tags to the <head> element */}
         <ArtistSeriesMeta artistSeries={artistSeries} />
         <ArtistSeriesHeader artistSeries={artistSeries} />
-        <Box m={3}>
+        <Box mx={3}>
+          <Media greaterThan="xs">
+            <Spacer my={3} />
+          </Media>
+          <Media at="xs">
+            <Separator my={2} />
+          </Media>
           <AppContainer>
             <ArtistSeriesArtworksFilter artistSeries={artistSeries} />
             <Separator mt={6} mb={3} />
