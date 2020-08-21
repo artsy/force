@@ -5,6 +5,8 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ArtistSeriesHeader_artistSeries = {
     readonly title: string;
+    readonly slug: string;
+    readonly internalID: string;
     readonly artworksCountMessage: string | null;
     readonly descriptionFormatted: string | null;
     readonly image: {
@@ -23,6 +25,7 @@ export type ArtistSeriesHeader_artistSeries = {
         } | null;
         readonly href: string | null;
         readonly slug: string;
+        readonly internalID: string;
         readonly " $fragmentRefs": FragmentRefs<"FollowArtistButton_artist">;
     } | null> | null;
     readonly " $refType": "ArtistSeriesHeader_artistSeries";
@@ -40,11 +43,25 @@ var v0 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
+  "name": "slug",
+  "storageKey": null
+},
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+},
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
   "name": "url",
   "storageKey": null
 },
-v1 = [
-  (v0/*: any*/)
+v3 = [
+  (v2/*: any*/)
 ];
 return {
   "argumentDefinitions": [],
@@ -59,6 +76,8 @@ return {
       "name": "title",
       "storageKey": null
     },
+    (v0/*: any*/),
+    (v1/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -110,7 +129,7 @@ return {
           "kind": "LinkedField",
           "name": "cropped",
           "plural": false,
-          "selections": (v1/*: any*/),
+          "selections": (v3/*: any*/),
           "storageKey": "cropped(height:360,version:\"large\",width:360)"
         },
         {
@@ -131,10 +150,10 @@ return {
           "kind": "LinkedField",
           "name": "resized",
           "plural": false,
-          "selections": (v1/*: any*/),
+          "selections": (v3/*: any*/),
           "storageKey": "resized(version:\"normalized\",width:1200)"
         },
-        (v0/*: any*/)
+        (v2/*: any*/)
       ],
       "storageKey": null
     },
@@ -166,7 +185,7 @@ return {
           "kind": "LinkedField",
           "name": "image",
           "plural": false,
-          "selections": (v1/*: any*/),
+          "selections": (v3/*: any*/),
           "storageKey": null
         },
         {
@@ -176,13 +195,8 @@ return {
           "name": "href",
           "storageKey": null
         },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "slug",
-          "storageKey": null
-        },
+        (v0/*: any*/),
+        (v1/*: any*/),
         {
           "args": null,
           "kind": "FragmentSpread",
@@ -195,5 +209,5 @@ return {
   "type": "ArtistSeries"
 };
 })();
-(node as any).hash = 'b8723c21790e37b227b7419e250b34ed';
+(node as any).hash = '33dcfd92bf44cb71b54eebec95d18d55';
 export default node;

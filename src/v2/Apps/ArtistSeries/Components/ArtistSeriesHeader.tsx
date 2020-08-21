@@ -16,7 +16,12 @@ import { FollowArtistButtonFragmentContainer as FollowArtistButton } from "v2/Co
 import { openAuthToFollowSave } from "v2/Utils/openAuthModal"
 import { ArtistSeriesHeader_artistSeries } from "v2/__generated__/ArtistSeriesHeader_artistSeries.graphql"
 import { useSystemContext } from "v2/Artsy"
-import { Intent } from "@artsy/cohesion"
+import {
+  ContextModule,
+  Intent,
+  OwnerType,
+  followedArtist,
+} from "@artsy/cohesion"
 import styled from "styled-components"
 import { unitlessBreakpoints } from "@artsy/palette"
 import { AppContainer } from "v2/Apps/Components/AppContainer"
@@ -27,13 +32,26 @@ interface ArtistSeriesHeaderProps {
 
 interface ArtistsInfoProps {
   artist: ArtistSeriesHeader_artistSeries["artists"][0]
+  contextOwnerId: string
+  contextOwnerSlug: string
 }
 
 const ArtistInfo: React.FC<ArtistsInfoProps> = props => {
   /* Displays artist name, avatar and follow button. We currently assume
      that an artist series will have one artist. */
   const { user, mediator } = useSystemContext()
-  const { artist } = props
+  const { artist, contextOwnerId, contextOwnerSlug } = props
+  const { slug, internalID } = artist
+
+  const trackingData = followedArtist({
+    contextModule: ContextModule.featuredArtists,
+    contextOwnerType: OwnerType.artistSeries,
+    contextOwnerId,
+    contextOwnerSlug,
+    ownerId: internalID,
+    ownerSlug: slug,
+  })
+
   return (
     <EntityHeader
       smallVariant
@@ -43,7 +61,9 @@ const ArtistInfo: React.FC<ArtistsInfoProps> = props => {
       FollowButton={
         <FollowArtistButton
           artist={artist}
+          useNewAnalyticsSchema
           user={user}
+          trackingData={trackingData}
           onOpenAuthModal={() =>
             openAuthToFollowSave(mediator, {
               entity: artist,
@@ -94,6 +114,8 @@ const ArtistSeriesHeaderLarge: React.FC<ArtistSeriesHeaderProps> = props => {
       artists,
       image,
       artworksCountMessage,
+      internalID,
+      slug,
     },
   } = props
   return (
@@ -102,7 +124,13 @@ const ArtistSeriesHeaderLarge: React.FC<ArtistSeriesHeaderProps> = props => {
         <AppContainer>
           <Flex alignItems="center" justifyContent="center" position="relative">
             <Flex position="absolute" left={0}>
-              {artists.length && <ArtistInfo artist={artists[0]} />}
+              {artists.length && (
+                <ArtistInfo
+                  contextOwnerId={internalID}
+                  contextOwnerSlug={slug}
+                  artist={artists[0]}
+                />
+              )}
             </Flex>
             <Sans size="3">Series</Sans>
           </Flex>
@@ -151,7 +179,14 @@ const ArtistSeriesHeaderLarge: React.FC<ArtistSeriesHeaderProps> = props => {
 
 const ArtistSeriesHeaderSmall: React.FC<ArtistSeriesHeaderProps> = props => {
   const {
-    artistSeries: { title, descriptionFormatted, artists, image },
+    artistSeries: {
+      title,
+      descriptionFormatted,
+      artists,
+      image,
+      slug,
+      internalID,
+    },
   } = props
   return (
     <>
@@ -164,7 +199,13 @@ const ArtistSeriesHeaderSmall: React.FC<ArtistSeriesHeaderProps> = props => {
         <Sans size="8" element="h1" my={1} unstable_trackIn>
           {title}
         </Sans>
-        {artists.length && <ArtistInfo artist={artists[0]} />}
+        {artists.length && (
+          <ArtistInfo
+            contextOwnerId={internalID}
+            contextOwnerSlug={slug}
+            artist={artists[0]}
+          />
+        )}
         <Box my={1}>
           <HTML variant="text" html={descriptionFormatted} />
         </Box>
@@ -195,6 +236,8 @@ export const ArtistSeriesHeaderFragmentContainer = createFragmentContainer(
     artistSeries: graphql`
       fragment ArtistSeriesHeader_artistSeries on ArtistSeries {
         title
+        slug
+        internalID
         artworksCountMessage
         descriptionFormatted(format: HTML)
         image {
@@ -213,6 +256,7 @@ export const ArtistSeriesHeaderFragmentContainer = createFragmentContainer(
           }
           href
           slug
+          internalID
           ...FollowArtistButton_artist
         }
       }
