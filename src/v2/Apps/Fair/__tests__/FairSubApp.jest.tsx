@@ -2,6 +2,7 @@ import { MockBoot, renderRelayTree } from "v2/DevTools"
 import React from "react"
 import FairSubApp from "../FairSubApp"
 import { graphql } from "react-relay"
+import { Title } from "react-head"
 import { FairSubApp_QueryRawResponse } from "v2/__generated__/FairSubApp_Query.graphql"
 
 jest.unmock("react-relay")
@@ -11,6 +12,8 @@ const FAIR_APP_FIXTURE: FairSubApp_QueryRawResponse = {
     id: "fair12345",
     name: "Miart 2020",
     slug: "miart-2020",
+    metaDescription: null,
+    metaImage: null,
   },
 }
 
@@ -43,5 +46,10 @@ describe("FairSubApp", () => {
   it("displays a back button", async () => {
     const wrapper = await getWrapper()
     expect(wrapper.html()).toContain("Back to Miart 2020")
+  })
+
+  it("sets a title tag", async () => {
+    const wrapper = await getWrapper()
+    expect(wrapper.find(Title).prop("children")).toEqual("Miart 2020 | Artsy")
   })
 })

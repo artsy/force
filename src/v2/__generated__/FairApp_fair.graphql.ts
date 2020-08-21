@@ -10,7 +10,7 @@ export type FairApp_fair = {
             readonly __typename: string;
         } | null> | null;
     } | null;
-    readonly " $fragmentRefs": FragmentRefs<"FairHeader_fair" | "FairEditorial_fair">;
+    readonly " $fragmentRefs": FragmentRefs<"FairMeta_fair" | "FairHeader_fair" | "FairEditorial_fair">;
     readonly " $refType": "FairApp_fair";
 };
 export type FairApp_fair$data = FairApp_fair;
@@ -77,6 +77,11 @@ const node: ReaderFragment = {
     {
       "args": null,
       "kind": "FragmentSpread",
+      "name": "FairMeta_fair"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
       "name": "FairHeader_fair"
     },
     {
@@ -87,5 +92,5 @@ const node: ReaderFragment = {
   ],
   "type": "Fair"
 };
-(node as any).hash = 'c8ef41b0e6e233ebc135d1b9d4cfa8f7';
+(node as any).hash = '79ab1d2b08ff2d0e4d959529d07faa66';
 export default node;

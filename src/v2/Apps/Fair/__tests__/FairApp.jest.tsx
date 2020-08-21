@@ -2,6 +2,7 @@ import { MockBoot, renderRelayTree } from "v2/DevTools"
 import React from "react"
 import FairApp from "../FairApp"
 import { graphql } from "react-relay"
+import { Title } from "react-head"
 import { FairApp_QueryRawResponse } from "v2/__generated__/FairApp_Query.graphql"
 
 jest.unmock("react-relay")
@@ -39,6 +40,8 @@ const FAIR_APP_FIXTURE: FairApp_QueryRawResponse = {
         },
       },
     },
+    metaDescription: null,
+    metaImage: null,
   },
 }
 
@@ -127,5 +130,10 @@ describe("FairApp", () => {
     const html = wrapper.html()
 
     expect(html).toContain("Exhibitors")
+  })
+
+  it("sets a title tag", async () => {
+    const wrapper = await getWrapper()
+    expect(wrapper.find(Title).prop("children")).toEqual("Miart 2020 | Artsy")
   })
 })

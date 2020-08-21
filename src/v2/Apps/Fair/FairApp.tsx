@@ -9,6 +9,7 @@ import { ErrorPage } from "v2/Components/ErrorPage"
 import { FairEditorialFragmentContainer as FairEditorial } from "./Components/FairEditorial"
 import { FairHeaderFragmentContainer as FairHeader } from "./Components/FairHeader"
 import { RouteTab, RouteTabs } from "v2/Components/RouteTabs"
+import { FairMetaFragmentContainer as FairMeta } from "./Components/FairMeta"
 
 interface FairAppProps {
   fair: FairApp_fair
@@ -19,6 +20,8 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
 
   return (
     <>
+      <FairMeta fair={fair} />
+
       <AppContainer>
         <HorizontalPadding>
           <FairHeader mt={2} fair={fair} />
@@ -63,6 +66,7 @@ export default createFragmentContainer(FairApp, {
   fair: graphql`
     fragment FairApp_fair on Fair {
       slug
+      ...FairMeta_fair
       ...FairHeader_fair
       ...FairEditorial_fair
       articles: articlesConnection(first: 5, sort: PUBLISHED_AT_DESC) {
