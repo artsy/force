@@ -22,7 +22,7 @@
     "cypress": "./node_modules/.bin/cypress open",
     "delete-review-app": "kubectl --context staging delete namespace",
     "jest": "JEST_JUNIT_OUTPUT=reports/junit/js-test-results.xml node --expose-gc --max_old_space_size=4096 ./node_modules/.bin/jest --no-cache --runInBand --logHeapUsage",
-    "lint": "eslint --cache --cache-location '.cache/eslint/' --ext ts,tsx --ignore-pattern 'src/v2/__generated__'",
+    "lint": "eslint --rulesdir ./eslint --cache --cache-location '.cache/eslint/' --ext ts,tsx --ignore-pattern 'src/v2/__generated__'",
     "mocha": "scripts/mocha.sh",
     "prepare": "patch-package",
     "prettier-project": "yarn run prettier-write 'src/**/*.{ts,tsx,js,jsx}'",
