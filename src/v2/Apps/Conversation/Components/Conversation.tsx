@@ -87,7 +87,7 @@ const Conversation: React.FC<ConversationProps> = props => {
   }
 
   return (
-    <Flex flexDirection="column">
+    <Flex flexDirection="column" flexGrow={1}>
       <ConversationHeader
         partnerName={conversation.to.name}
         showDetails={showDetails}
@@ -130,6 +130,7 @@ const MessageContainer = styled(Box)`
 
 const NoScrollFlex = styled(Flex)`
   overflow: hidden;
+  flex-grow: 1;
 `
 
 const SpinnerContainer = styled.div`
