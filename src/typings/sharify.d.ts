@@ -20,8 +20,8 @@ declare module "sharify" {
       readonly APP_URL: string
       readonly ARTIST_COLLECTIONS_RAIL?: string // TODO: remove after CollectionsRail a/b test
       readonly ARTIST_COLLECTIONS_RAIL_IDS: string[]
-      readonly CMS_URL: string
       readonly CDN_URL: string
+      readonly CMS_URL: string
       CURRENT_PATH: string
       CURRENT_USER: User
       readonly EIGEN: boolean
@@ -62,6 +62,8 @@ declare module "sharify" {
       ARTSY_EDITORIAL_CHANNEL: string
       ARTSY_XAPP_TOKEN: string
       CSRF_TOKEN: string
+      CHANNEL?: { slug?: string } // Articles
+      FAIR_ORGANIZER?: any
       GALLERY_INSIGHTS_CHANNEL: string
       INTERCOM_BUYER_APP_ID: string
       INTERCOM_BUYER_ENABLED: boolean
@@ -70,9 +72,12 @@ declare module "sharify" {
       MARKETING_SIGNUP_MODALS: any
       MARKETING_SIGNUP_MODALS: any[]
       PAGE_TYPE?: string
+      PARTNER_NEW_LAYOUT?: boolean
+      PATHS?: any // JSONPage
       PC_ARTSY_CHANNEL: string
       PC_AUCTION_CHANNEL: string
       POSITRON_URL: string
+      SECTION?: { slug?: string } // FIXME: used only for /venice-biennale-2015
       SESSION_ID?: string
       SHOW_ANALYTICS_CALLS: boolean
       SUBMISSION: string

@@ -11,7 +11,7 @@ module.exports = (page) ->
     page.get (err, data) ->
       return next err if err
 
-      res.locals.sd.DATA = page.data
+      res.locals.sd.JSON_PAGE_DATA = page.data
       res.locals.sd.PATHS = page.paths
 
       # Render the template irrespective of app/views context
