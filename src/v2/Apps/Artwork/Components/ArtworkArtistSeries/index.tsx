@@ -37,7 +37,7 @@ const ArtworkArtistSeries: React.FC<ArtworkArtistSeriesProps> = props => {
           <Spacer my={3} />
           <ArtistSeriesRail
             artist={artwork.seriesArtist}
-            title="More series by this artist"
+            title="Series by this artist"
             contextPageOwnerId={artwork.internalID}
             contextPageOwnerSlug={artwork.slug}
             contextModule={ContextModule.moreSeriesByThisArtist}

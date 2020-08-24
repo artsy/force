@@ -4,10 +4,13 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ArtistSeriesArtworkRail_artwork = {
+    readonly internalID: string;
+    readonly slug: string;
     readonly artistSeriesConnection: {
         readonly edges: ReadonlyArray<{
             readonly node: {
                 readonly slug: string;
+                readonly internalID: string;
                 readonly artworksConnection: {
                     readonly edges: ReadonlyArray<{
                         readonly node: {
@@ -17,6 +20,8 @@ export type ArtistSeriesArtworkRail_artwork = {
                                     readonly width: number | null;
                                 } | null;
                             } | null;
+                            readonly slug: string;
+                            readonly internalID: string;
                             readonly " $fragmentRefs": FragmentRefs<"FillwidthItem_artwork">;
                         } | null;
                     } | null> | null;
@@ -34,12 +39,29 @@ export type ArtistSeriesArtworkRail_artwork$key = {
 
 
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+},
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "slug",
+  "storageKey": null
+};
+return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
   "name": "ArtistSeriesArtworkRail_artwork",
   "selections": [
+    (v0/*: any*/),
+    (v1/*: any*/),
     {
       "alias": null,
       "args": [
@@ -70,13 +92,8 @@ const node: ReaderFragment = {
               "name": "node",
               "plural": false,
               "selections": [
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "slug",
-                  "storageKey": null
-                },
+                (v1/*: any*/),
+                (v0/*: any*/),
                 {
                   "alias": null,
                   "args": [
@@ -149,6 +166,8 @@ const node: ReaderFragment = {
                               ],
                               "storageKey": null
                             },
+                            (v1/*: any*/),
+                            (v0/*: any*/),
                             {
                               "args": null,
                               "kind": "FragmentSpread",
@@ -175,5 +194,6 @@ const node: ReaderFragment = {
   ],
   "type": "Artwork"
 };
-(node as any).hash = 'a51597e3761d7cabb5642743fda2eb0e';
+})();
+(node as any).hash = '9fc473bc4824730df57b1db945505c9b';
 export default node;
