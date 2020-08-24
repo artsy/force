@@ -51,7 +51,7 @@ const ArtistSeriesApp: React.FC<ArtistSeriesAppProps> = ({ artistSeries }) => {
               <LazyLoadComponent threshold={1000}>
                 <OtherArtistSeriesRail
                   artist={railArtist[0]}
-                  title="More series by this artist"
+                  title="Series by this artist"
                   contextPageOwnerId={internalID}
                   contextPageOwnerSlug={slug}
                   contextModule={ContextModule.moreSeriesByThisArtist}
