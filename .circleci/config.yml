@@ -198,7 +198,7 @@ workflows:
             - push-staging-image
 
       - run_deepcrawl_automator:
-          context: deepcrawl-automator
+          context: deepcrawl-staging
           requires:
             - deploy-staging
 
