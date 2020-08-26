@@ -9,7 +9,6 @@ import track, { TrackingProp } from "react-tracking"
 import styled from "styled-components"
 import { FollowArtistButton_artist } from "../../__generated__/FollowArtistButton_artist.graphql"
 import { FollowButton } from "./Button"
-import { FollowButtonDeprecated } from "./ButtonDeprecated"
 import { FollowTrackingData } from "./Typings"
 
 import { ModalOptions, ModalType } from "v2/Components/Authentication/Types"
@@ -29,12 +28,6 @@ interface Props
   trackingData?: FollowTrackingData
   onOpenAuthModal?: (type: ModalType, config?: ModalOptions) => void
   useNewAnalyticsSchema?: boolean
-
-  /**
-   * FIXME: Default is true due to legacy code. If false, use new @artsy/palette
-   * design system <Button /> style.
-   */
-  useDeprecatedButtonStyle?: boolean
   /**
    * FIXME: If useDeprecatedButtonStyle is false pass <Button> style props along
    * to new design-system buttons.
@@ -63,7 +56,6 @@ const Container = styled.span`
 @track()
 export class FollowArtistButton extends React.Component<Props, State> {
   static defaultProps = {
-    useDeprecatedButtonStyle: true,
     buttonProps: {},
     triggerSuggestions: false,
     useNewAnalyticsSchema: false,
@@ -172,13 +164,7 @@ export class FollowArtistButton extends React.Component<Props, State> {
   }
 
   render() {
-    const {
-      artist,
-      useDeprecatedButtonStyle,
-      buttonProps,
-      render,
-      user,
-    } = this.props
+    const { artist, buttonProps, render, user } = this.props
     const { openSuggestions } = this.state
 
     // Custom button renderer
@@ -197,22 +183,11 @@ export class FollowArtistButton extends React.Component<Props, State> {
         {render(artist)}
       </Container>
     ) : (
-      <>
-        {useDeprecatedButtonStyle && (
-          <FollowButtonDeprecated
-            isFollowed={artist && artist.is_followed}
-            handleFollow={this.handleFollow}
-            buttonProps={buttonProps}
-          />
-        )}
-        {!useDeprecatedButtonStyle && (
-          <FollowButton
-            isFollowed={artist && artist.is_followed}
-            handleFollow={this.handleFollow}
-            buttonProps={buttonProps}
-          />
-        )}
-      </>
+      <FollowButton
+        isFollowed={artist && artist.is_followed}
+        handleFollow={this.handleFollow}
+        buttonProps={buttonProps}
+      />
     )
 
     return (
