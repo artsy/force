@@ -6,7 +6,7 @@ import { FeaturedCollectionsRailFragmentContainer as FeaturedCollections } from 
 import { FeaturedFairsRailFragmentContainer as FeaturedFairs } from "v2/Apps/FeatureAKG/Components/FeaturedRails/FeaturedFairs"
 import { AnalyticsSchema, ContextModule } from "v2/Artsy"
 import { useTracking } from "v2/Artsy/Analytics/useTracking"
-import { Carousel } from "v2/Components/Carousel"
+import { Carousel } from "v2/Components/FlickityCarousel"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { crop } from "v2/Utils/resizer"

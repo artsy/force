@@ -2,7 +2,7 @@ import { Box, Serif, Spacer } from "@artsy/palette"
 import { RelatedCollectionsRail_collections } from "v2/__generated__/RelatedCollectionsRail_collections.graphql"
 import { track } from "v2/Artsy/Analytics"
 import * as Schema from "v2/Artsy/Analytics/Schema"
-import { ArrowButton, Carousel } from "v2/Components/Carousel"
+import { ArrowButton, Carousel } from "v2/Components/FlickityCarousel"
 import { once } from "lodash"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -22,7 +22,7 @@ interface RelatedCollectionsRailProps {
   dispatch: data => Events.postEvent(data),
 })
 export class RelatedCollectionsRail extends React.Component<
-RelatedCollectionsRailProps
+  RelatedCollectionsRailProps
 > {
   @track({
     action_type: Schema.ActionType.Impression,

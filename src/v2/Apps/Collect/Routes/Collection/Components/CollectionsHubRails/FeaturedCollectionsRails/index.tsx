@@ -11,7 +11,7 @@ import { FeaturedCollectionsRails_collectionGroup } from "v2/__generated__/Featu
 import * as Schema from "v2/Artsy/Analytics/Schema"
 import { useTracking } from "v2/Artsy/Analytics/useTracking"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
-import { ArrowButton, Carousel } from "v2/Components/Carousel"
+import { ArrowButton, Carousel } from "v2/Components/FlickityCarousel"
 import { Truncator } from "v2/Components/Truncator"
 import currency from "currency.js"
 import React from "react"

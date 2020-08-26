@@ -1,7 +1,7 @@
 import { MockBoot } from "v2/DevTools/MockBoot"
 import { mount } from "enzyme"
 import React from "react"
-import { Carousel, LargeCarousel, SmallCarousel } from "../Carousel"
+import { Carousel, LargeCarousel, SmallCarousel } from "../FlickityCarousel"
 
 describe("Carousel", () => {
   beforeAll(() => {
@@ -51,11 +51,8 @@ describe("Carousel", () => {
     })
 
     expect(wrapper.find(Foo).length).toEqual(2)
-    expect(
-      wrapper
-        .find(Foo)
-        .first()
-        .html()
-    ).toContain("hello name1 how are you")
+    expect(wrapper.find(Foo).first().html()).toContain(
+      "hello name1 how are you"
+    )
   })
 })

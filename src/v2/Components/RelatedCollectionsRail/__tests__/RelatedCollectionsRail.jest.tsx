@@ -1,6 +1,6 @@
 import { CollectionsRailFixture } from "v2/Apps/__tests__/Fixtures/Collections"
 import { mockTracking } from "v2/Artsy/Analytics"
-import { ArrowButton } from "v2/Components/Carousel"
+import { ArrowButton } from "v2/Components/FlickityCarousel"
 import { mount } from "enzyme"
 import "jest-styled-components"
 import { clone, drop } from "lodash"
@@ -68,10 +68,7 @@ describe("CollectionsRail", () => {
     it("Tracks impressions", () => {
       const { Component, dispatch } = mockTracking(RelatedCollectionsRail)
       const component = mount(<Component {...props} />)
-      component
-        .find(Waypoint)
-        .getElement()
-        .props.onEnter()
+      component.find(Waypoint).getElement().props.onEnter()
 
       expect(dispatch).toBeCalledWith({
         action_type: "Impression",
@@ -138,10 +135,7 @@ describe("CollectionsRail", () => {
       const updatedCollections = { collections: collectionsCopy }
       const { Component, dispatch } = mockTracking(RelatedCollectionsRail)
       const component = mount(<Component {...updatedCollections} />)
-      component
-        .find(ArrowButton)
-        .at(1)
-        .simulate("click")
+      component.find(ArrowButton).at(1).simulate("click")
       // Settimeout needed here for carousel render
       setTimeout(() => {
         expect(dispatch).toBeCalledWith({

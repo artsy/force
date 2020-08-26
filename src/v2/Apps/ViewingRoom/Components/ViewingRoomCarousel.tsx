@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { Carousel } from "v2/Components/Carousel"
+import { Carousel } from "v2/Components/FlickityCarousel"
 import { flowRight } from "lodash"
 
 import {

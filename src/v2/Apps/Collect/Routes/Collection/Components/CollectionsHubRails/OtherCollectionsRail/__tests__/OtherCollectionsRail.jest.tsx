@@ -1,6 +1,6 @@
 import { CollectionHubFixture } from "v2/Apps/__tests__/Fixtures/Collections"
 import { useTracking } from "v2/Artsy/Analytics/useTracking"
-import { ArrowButton } from "v2/Components/Carousel"
+import { ArrowButton } from "v2/Components/FlickityCarousel"
 import { mount } from "enzyme"
 import "jest-styled-components"
 import React from "react"
@@ -59,10 +59,7 @@ describe("CollectionsRail", () => {
 
       const component = mount(<OtherCollectionsRail {...props} />)
 
-      component
-        .find(ArrowButton)
-        .at(1)
-        .simulate("click")
+      component.find(ArrowButton).at(1).simulate("click")
 
       expect(trackEvent).toBeCalledWith({
         action_type: "Click",

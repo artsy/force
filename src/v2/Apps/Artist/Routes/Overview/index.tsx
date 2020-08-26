@@ -21,7 +21,7 @@ import { useTracking, withSystemContext } from "v2/Artsy"
 import { track } from "v2/Artsy/Analytics"
 import * as Schema from "v2/Artsy/Analytics/Schema"
 import { ArtistBioFragmentContainer as ArtistBio } from "v2/Components/ArtistBio"
-import { Carousel } from "v2/Components/Carousel"
+import { Carousel } from "v2/Components/FlickityCarousel"
 import { SelectedCareerAchievementsFragmentContainer as SelectedCareerAchievements } from "v2/Components/SelectedCareerAchievements"
 
 import { ArtistConsignButtonFragmentContainer as ArtistConsignButton } from "v2/Apps/Artist/Components/ArtistConsignButton"
