@@ -193,7 +193,7 @@ export const ARTWORKS_SUBMENU_DATA: MenuLinkData = {
       },
       {
         text: "Limited Editions",
-        href: "https://www.artsy.net/collection/limited-edition-works",
+        href: "/collection/limited-edition-works",
         dividerBelow: true,
       },
       {
@@ -203,19 +203,19 @@ export const ARTWORKS_SUBMENU_DATA: MenuLinkData = {
           links: [
             {
               text: "Auction",
-              href: "https://www.artsy.net/collection/auction-highlights",
+              href: "/collection/auction-highlights",
             },
             {
               text: "Art Fairs",
-              href: "https://www.artsy.net/collection/art-fair-highlights",
+              href: "/collection/art-fair-highlights",
             },
             {
               text: "Gallery Shows",
-              href: "https://www.artsy.net/collection/gallery-show-highlights",
+              href: "/collection/gallery-show-highlights",
             },
             {
               text: "Nonprofit Shops",
-              href: "https://www.artsy.net/collection/nonprofit-shops",
+              href: "/collection/nonprofit-shops",
             },
           ],
         },
@@ -231,19 +231,19 @@ export const ARTWORKS_SUBMENU_DATA: MenuLinkData = {
             },
             {
               text: "$25,000–$50,000",
-              href: "https://www.artsy.net/collect?price_range=25000-50000",
+              href: "/collect?price_range=25000-50000",
             },
             {
               text: "$10,000–$25,000",
-              href: "https://www.artsy.net/collect?price_range=10000-25000",
+              href: "/collect?price_range=10000-25000",
             },
             {
               text: "$5,000–$10,000",
-              href: "https://www.artsy.net/collect?price_range=5000-10000",
+              href: "/collect?price_range=5000-10000",
             },
             {
               text: "Under $5,000",
-              href: "https://www.artsy.net/collect?price_range=0-5000",
+              href: "/collect?price_range=0-5000",
             },
           ],
         },
@@ -271,11 +271,11 @@ export const ARTWORKS_SUBMENU_DATA: MenuLinkData = {
             },
             {
               text: "Drawing",
-              href: "https://www.artsy.net/collection/drawing",
+              href: "/collection/drawing",
             },
             {
               text: "Mixed Media",
-              href: "https://www.artsy.net/collection/mixed-media",
+              href: "/collection/mixed-media",
             },
             {
               text: "Design",
@@ -291,31 +291,31 @@ export const ARTWORKS_SUBMENU_DATA: MenuLinkData = {
           links: [
             {
               text: "Contemporary",
-              href: "https://www.artsy.net/collection/contemporary",
+              href: "/collection/contemporary",
             },
             {
               text: "Street Art",
-              href: "https://www.artsy.net/collection/street-art",
+              href: "/collection/street-art",
             },
             {
               text: "Pop Art",
-              href: "https://www.artsy.net/collection/pop-art",
+              href: "/collection/pop-art",
             },
             {
               text: "Abstract Expressionism",
-              href: "https://www.artsy.net/collection/abstract-expressionism",
+              href: "/collection/abstract-expressionism",
             },
             {
               text: "Post-War",
-              href: "https://www.artsy.net/collection/post-war",
+              href: "/collection/post-war",
             },
             {
               text: "Impressionism & Modernism",
-              href: "https://www.artsy.net/collection/impressionist-and-modern",
+              href: "/collection/impressionist-and-modern",
             },
             {
               text: "Old Masters",
-              href: "https://www.artsy.net/collection/old-masters",
+              href: "/collection/old-masters",
             },
           ],
         },

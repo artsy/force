@@ -66,11 +66,9 @@ describe("MobileNavMenu", () => {
 
       let linkText = mobileSubmenuLinks.first().text()
       expect(linkText).toContain("Artworks")
-      expect(linkText).not.toContain("New This Week")
 
       linkText = mobileSubmenuLinks.last().text()
       expect(linkText).toContain("Artists")
-      expect(linkText).not.toContain("Career Stages")
 
       // TODO: Not sure these specs make any kind of sense:
       // We don't use the data for rendering these links (why?)
