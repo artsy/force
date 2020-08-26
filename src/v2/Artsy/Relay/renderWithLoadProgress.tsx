@@ -1,11 +1,12 @@
 import { Spinner, SpinnerProps } from "@artsy/palette"
 import React from "react"
-import {
-  QueryRendererReadyState,
-  Container as RelayContainer,
-} from "react-relay"
+import { QueryRenderer, Container as RelayContainer } from "react-relay"
 import styled from "styled-components"
 import createLogger from "v2/Utils/logger"
+
+type ReadyState = Parameters<
+  React.ComponentProps<typeof QueryRenderer>["render"]
+>[0]
 
 /**
  * WARNING: Do _not_ change this element to something common like a div. If the
@@ -63,7 +64,8 @@ const handleError = error => {
 }
 
 export type LoadProgressRenderer<P> = (
-  readyState: QueryRendererReadyState<P>
+  // FIXME: https://github.com/DefinitelyTyped/DefinitelyTyped/issues/37950
+  readyState: ReadyState
 ) => React.ReactElement<RelayContainer<P>> | null
 
 export function renderWithLoadProgress<P>(

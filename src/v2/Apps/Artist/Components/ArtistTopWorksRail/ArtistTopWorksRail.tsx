@@ -89,6 +89,7 @@ export const ArtistTopWorksRail: React.FC<ArtistTopWorksRailProps> = ({
             return (
               <Box height={376} mb={3} width="auto">
                 <FillwidthItem
+                  contextModule={ContextModule.topWorksRail}
                   artwork={node}
                   hidePartnerName
                   hideArtistName

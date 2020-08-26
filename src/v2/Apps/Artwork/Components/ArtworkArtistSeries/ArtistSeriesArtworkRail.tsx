@@ -95,6 +95,7 @@ export const ArtistSeriesArtworkRail: React.FC<Props> = ({ artwork }) => {
             return (
               <Box mb={3} width="auto">
                 <FillwidthItem
+                  contextModule={ContextModule.artistSeriesRail}
                   artwork={artwork}
                   onClick={() =>
                     trackArtworkClick(artwork.slug, artwork.internalID, index)
