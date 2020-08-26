@@ -4509,6 +4509,14 @@
     "@types/react" "*"
     "@types/react-transition-group" "*"
 
+"@types/react-relay@^7.0.9":
+  version "7.0.9"
+  resolved "https://registry.yarnpkg.com/@types/react-relay/-/react-relay-7.0.9.tgz#aae453888d5383dc13d7c5b55beb6b5933939ae8"
+  integrity sha512-5wxvzTIA2XatkEvAIBkMtUBlqnhn7kia8sPMYB9YPRTWw/GA4CQ/YFavSfcv5lXc5PH0oQhdRzCMALpa+2yjKw==
+  dependencies:
+    "@types/react" "*"
+    "@types/relay-runtime" "*"
+
 "@types/react-slick@0.23.2":
   version "0.23.2"
   resolved "https://registry.yarnpkg.com/@types/react-slick/-/react-slick-0.23.2.tgz#f1c3c6b36b363b8b500ad433f53468428345f802"
@@ -4581,10 +4589,10 @@
   dependencies:
     "@types/node" "*"
 
-"@types/relay-runtime@9.1.0":
-  version "9.1.0"
-  resolved "https://registry.yarnpkg.com/@types/relay-runtime/-/relay-runtime-9.1.0.tgz#f7808391131371ca3006bb3cb80e0b3ad681157c"
-  integrity sha512-kQOE1T03BONwF0A62cIY4CCHAOuK0ploH88mPNkhjRr1mJ4v0DkMwZ5enwLyAIeMI9dE2F3ySAFG/lQDcQ3mDQ==
+"@types/relay-runtime@*", "@types/relay-runtime@9.1.6":
+  version "9.1.6"
+  resolved "https://registry.yarnpkg.com/@types/relay-runtime/-/relay-runtime-9.1.6.tgz#5a9afc37552d7e5b7966779d33ab26dce7da6771"
+  integrity sha512-rdylQOGAoqjDjtzC2uKdjIqeDRcAvUsjONQB+FZld3cAP9qU4eEwTfMKJ7MdZSw2YbWRcTphczT4OpKKlLxY3Q==
 
 "@types/serve-static@*":
   version "1.13.1"
