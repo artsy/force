@@ -9,7 +9,7 @@
 import $ from "jquery"
 import { data as sd } from "sharify"
 
-const hash = {
+const routes = {
   "^/search"() {
     return require("../apps/search/client.coffee").init()
   },
@@ -158,19 +158,9 @@ const hash = {
   },
 }
 
-// On DOM load iterate through the hash and load that app's JS
-$(() =>
-  (() => {
-    const result = []
-    for (let regexStr in hash) {
-      const load = hash[regexStr]
-      if (location.pathname.replace(/\/$/, "").match(new RegExp(regexStr))) {
-        load()
-        break
-      } else {
-        result.push(undefined)
-      }
-    }
-    return result
-  })()
-)
+for (let path in routes) {
+  const init = routes[path]
+  if (location.pathname.match(path)) {
+    $(init)
+  }
+}
