@@ -1,6 +1,6 @@
 .partnerships-section-nav
   nav
-    - applyLink = subject == 'gallery' ? '/gallery-partnerships/apply' : '/apply/' + subject
+    - applyLink = '/apply/' + subject
 
     for section, i in sections.slice(0, -1)
       a.partnerships-nav-link.internal( href="/#{subject}-partnerships/#{section.slug}", data-section=section.title )
