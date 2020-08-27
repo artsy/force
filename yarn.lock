@@ -53,10 +53,10 @@
   dependencies:
     uuid "^8.3.0"
 
-"@artsy/palette@12.3.0":
-  version "12.3.0"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-12.3.0.tgz#8072f8f556b961971e0608d97fa5e18067ffce49"
-  integrity sha512-gaEToAHXqfD7bXIReFNs5yz2i0QwzL3D1EArv/w6S8iijrmDBSd+FQe1d5gDy5vSfxb+GY7JH4PFUMAVZmK/Bw==
+"@artsy/palette@12.4.1":
+  version "12.4.1"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-12.4.1.tgz#09a42d6481473ed88f1d16c3bfd1aaea21838e9b"
+  integrity sha512-RpPeO8i69tUBn0D5JmBHpEDa+MuDcp4FlkLWdVmO0tKZ2wz+eSpti2gAIH1/FRNXDthlpWC66gfuGRBKFDyw0g==
   dependencies:
     "@styled-system/theme-get" "^5.1.2"
     babel-plugin-styled-components "^1.10.0"
