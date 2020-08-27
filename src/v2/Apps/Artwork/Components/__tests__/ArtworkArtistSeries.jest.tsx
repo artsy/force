@@ -134,7 +134,8 @@ const ArtworkArtistSeriesFixture: ArtworkArtistSeries_QueryRawResponse = {
           node: {
             internalID: "artwork1234",
             slug: "yayoi-kusama-pumpkins",
-            artworksConnection: {
+            filterArtworksConnection: {
+              id: "filter-artworks-relay-id",
               edges: [
                 {
                   node: {

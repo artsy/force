@@ -27,9 +27,9 @@ export const ArtistSeriesArtworkRail: React.FC<Props> = ({ artwork }) => {
   }
 
   const artistSeries = artistSeriesConnection.edges[0].node
-  const { artworksConnection, slug } = artistSeries
+  const { filterArtworksConnection, slug } = artistSeries
 
-  const artworks = artworksConnection?.edges?.map(({ node }) => node)
+  const artworks = filterArtworksConnection?.edges?.map(({ node }) => node)
 
   if (!artworks) {
     return null
@@ -128,7 +128,7 @@ export const ArtistSeriesArtworkRailFragmentContainer = createFragmentContainer(
             node {
               slug
               internalID
-              artworksConnection(first: 20) {
+              filterArtworksConnection(sort: "-decayed_merch", first: 20) {
                 edges {
                   node {
                     image {
