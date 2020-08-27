@@ -2,7 +2,7 @@ import { Box, Flex, Spacer, Spinner } from "@artsy/palette"
 import { Conversation_conversation } from "v2/__generated__/Conversation_conversation.graphql"
 import React, { useEffect, useRef, useState } from "react"
 import {
-  RelayProp,
+  RelayPaginationProp,
   RelayRefetchProp,
   createPaginationContainer,
 } from "react-relay"
@@ -19,7 +19,7 @@ export interface ConversationProps {
   conversation: Conversation_conversation
   showDetails: boolean
   setShowDetails: (showDetails: boolean) => void
-  relay: RelayProp
+  relay: RelayPaginationProp
   refetch: RelayRefetchProp["refetch"]
 }
 

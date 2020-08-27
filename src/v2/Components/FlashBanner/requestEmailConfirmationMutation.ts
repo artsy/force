@@ -5,12 +5,16 @@ export const requestEmailConfirmation = (relayEnvironment: Environment) => {
   return new Promise<requestEmailConfirmationMutationResponse>(
     (done, reject) => {
       commitMutation(relayEnvironment, {
-        onCompleted: (data, errors) => {
+        onCompleted: (
+          data: PromiseLike<requestEmailConfirmationMutationResponse>,
+          errors
+        ) => {
           errors && errors.length ? reject(errors) : done(data)
         },
         onError: error => {
           reject(error)
         },
+        variables: {},
         mutation: graphql`
           mutation requestEmailConfirmationMutation {
             sendConfirmationEmail(input: {}) {

@@ -1,5 +1,6 @@
 import React from "react"
-/* tslint:disable-next-line:no-query-renderer-import */
+// FIXME: https://github.com/DefinitelyTyped/DefinitelyTyped/issues/37950
+// @ts-ignore
 import { QueryRenderer, QueryRendererProps } from "react-relay"
 import { OperationType } from "relay-runtime"
 
