@@ -125,7 +125,6 @@ export class CollectionApp extends Component<CollectionAppProps> {
                   linkedCollections={collection.linkedCollections}
                 />
               )}
-
               <Box>
                 <ArtworkFilterContextProvider
                   filters={location.query}
@@ -164,7 +163,6 @@ export class CollectionApp extends Component<CollectionAppProps> {
                   />
                 </ArtworkFilterContextProvider>
               </Box>
-
               {/* HOTFIX FIXME: This rail was causing an error if included in SSR render
                   pass and so it was deferred to the client.
 

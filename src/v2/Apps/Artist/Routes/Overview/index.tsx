@@ -21,7 +21,7 @@ import { useTracking, withSystemContext } from "v2/Artsy"
 import { track } from "v2/Artsy/Analytics"
 import * as Schema from "v2/Artsy/Analytics/Schema"
 import { ArtistBioFragmentContainer as ArtistBio } from "v2/Components/ArtistBio"
-import { Carousel } from "v2/Components/FlickityCarousel"
+import { Carousel } from "v2/Components/Carousel"
 import { SelectedCareerAchievementsFragmentContainer as SelectedCareerAchievements } from "v2/Components/SelectedCareerAchievements"
 
 import { ArtistConsignButtonFragmentContainer as ArtistConsignButton } from "v2/Apps/Artist/Components/ArtistConsignButton"
@@ -331,20 +331,14 @@ export class OverviewRoute extends React.Component<OverviewRouteProps, {}> {
           <>
             <Separator my={3} />
             <SectionHeader headerString={`Shows Featuring ${artist.name}`} />
-            <Carousel
-              height="200px"
-              options={{
-                pageDots: false,
-              }}
-              data={currentShows}
-              render={slide => {
+            <Carousel arrowHeight={140}>
+              {currentShows.map(slide => {
                 return (
-                  <Box maxWidth="240px" pr={2}>
+                  <Box maxWidth={240} key={slide.href}>
                     <Link
                       href={slide.href}
                       onClick={() => this.onClickSlide(slide)}
                       underlineBehavior="none"
-                      mr={2}
                     >
                       <Image
                         src={get(slide, i => i.coverImage.cropped.url)}
@@ -361,8 +355,8 @@ export class OverviewRoute extends React.Component<OverviewRouteProps, {}> {
                     </Link>
                   </Box>
                 )
-              }}
-            />
+              })}
+            </Carousel>
             <Spacer mb={2} />
             <NavLink
               label="See all current and upcoming shows"

@@ -76,7 +76,6 @@ export const StyledLink = styled(RouterLink)`
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   border: 1px solid ${color("black10")};
   border-radius: 2px;
-  margin-right: 10px;
 
   &:hover {
     text-decoration: none;

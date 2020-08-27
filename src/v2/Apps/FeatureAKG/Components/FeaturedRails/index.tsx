@@ -6,7 +6,7 @@ import { FeaturedCollectionsRailFragmentContainer as FeaturedCollections } from 
 import { FeaturedFairsRailFragmentContainer as FeaturedFairs } from "v2/Apps/FeatureAKG/Components/FeaturedRails/FeaturedFairs"
 import { AnalyticsSchema, ContextModule } from "v2/Artsy"
 import { useTracking } from "v2/Artsy/Analytics/useTracking"
-import { Carousel } from "v2/Components/FlickityCarousel"
+import { Carousel } from "v2/Components/Carousel"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { crop } from "v2/Utils/resizer"
@@ -135,11 +135,8 @@ export const FeaturedRailCarousel: React.FC<FeaturedRailCarouselProps> = props =
   const tracking = useTracking()
 
   return (
-    <Carousel
-      height="325px"
-      data={itemsForCarousel}
-      options={{ pageDots: false }}
-      render={item => {
+    <Carousel>
+      {itemsForCarousel.map(item => {
         const croppedImageUrl = crop(item.imageSrc, {
           width: imgWidth * devicePixelRatio,
           height: imgHeight * devicePixelRatio,
@@ -147,7 +144,7 @@ export const FeaturedRailCarousel: React.FC<FeaturedRailCarouselProps> = props =
         })
 
         return (
-          <Box mr={1} maxWidth="245px">
+          <Box key={item.href} maxWidth={245} overflow="hidden">
             <StyledLink
               to={item.href}
               onClick={() => {
@@ -172,7 +169,7 @@ export const FeaturedRailCarousel: React.FC<FeaturedRailCarouselProps> = props =
             </StyledLink>
           </Box>
         )
-      }}
-    />
+      })}
+    </Carousel>
   )
 }

@@ -54,7 +54,7 @@ export class RelatedCollectionEntity extends React.Component<CollectionProps> {
       bgImages.length === 1 ? 262 : bgImages.length === 2 ? 130 : 86
 
     return (
-      <Box pr={2}>
+      <Box>
         <StyledLink
           href={`${sd.APP_URL}/collection/${slug}`}
           onClick={this.onLinkClick.bind(this)}
