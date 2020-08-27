@@ -37,7 +37,7 @@ describe("Artist Notable Works Rail Component", () => {
 
   it("tracks the analytics properties when an artwork is clicked on the Notable Works rail", () => {
     const component = mount(<ArtistTopWorksRail {...props} />)
-    const elem = component.find(FillwidthItem).first() as typeof FillwidthItem
+    const elem = component.find(FillwidthItem).first()
     elem.props().onClick({})
 
     expect(trackEvent).toHaveBeenCalledWith({

@@ -179,7 +179,11 @@ export const NotificationsMenu: React.FC = () => {
             return <NotificationsLoadingState />
           }
 
-          return <NotificationMenuItems {...props} />
+          return (
+            <NotificationMenuItems
+              {...(props as NotificationsMenuQueryResponse)}
+            />
+          )
         }}
       />
     </Menu>

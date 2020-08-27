@@ -2,7 +2,7 @@ import { Box, Spinner, color, media } from "@artsy/palette"
 import { ConversationList_me } from "v2/__generated__/ConversationList_me.graphql"
 import React, { useState } from "react"
 import {
-  RelayRefetchProp,
+  RelayPaginationProp,
   createPaginationContainer,
   graphql,
 } from "react-relay"
@@ -37,7 +37,7 @@ export const PAGE_SIZE: number = 15
 
 interface ConversationsProps {
   me: ConversationList_me
-  relay: RelayRefetchProp
+  relay: RelayPaginationProp
   selectedConversationID: string
 }
 
@@ -74,7 +74,6 @@ const ConversationList: React.FC<ConversationsProps> = props => {
         <ScrollContainer>
           {conversations.map(edge => (
             <ConversationSnippet
-              selectedConversationID={selectedConversationID}
               isSelected={edge.node.internalID === selectedConversationID}
               conversation={edge.node}
               key={edge.cursor}

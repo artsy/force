@@ -31,7 +31,10 @@ const getViewWidth = () => {
 const Inbox: React.FC<InboxProps> = ({ selectedConversation, me }) => {
   return (
     <>
-      <ConversationList me={me} />
+      <ConversationList
+        me={me}
+        selectedConversationID={selectedConversation.internalID}
+      />
       <Flex
         display={["none", "none", "flex"]}
         height="100%"

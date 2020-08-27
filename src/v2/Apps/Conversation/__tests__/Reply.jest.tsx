@@ -32,7 +32,7 @@ describe("Reply", () => {
             (MockedConversation as unknown) as Conversation_conversation
           }
           environment={{} as Environment}
-          refetch={jest.fn}
+          refetch={() => ({ dispose: jest.fn })}
         />
       )
       wrapper.find("textarea").simulate("focus")
