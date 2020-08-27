@@ -5,8 +5,6 @@ Jump = require '../../../components/jump/view.coffee'
 
 module.exports = class PartnershipsRouter extends Backbone.Router
   routes:
-    'gallery-partnerships': 'toTop'
-    'gallery-partnerships/:slug': 'toSection'
     'institution-partnerships': 'toTop'
     'institution-partnerships/:slug': 'toSection'
     'auction-partnerships': 'toTop'
