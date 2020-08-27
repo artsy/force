@@ -63,9 +63,3 @@ mixin support(section)
         .quote
           .quote-text= q.quote
           .quote-author #{q.author}, #{q.title}
-
-mixin apply(section)
-  .partnerships-section-header.apply
-    if path.indexOf('institution') > 0
-      h3!= section.heading
-      a.avant-garde-button-black.apply-button.apply-link-cta( href='/apply/institution' ) Apply
