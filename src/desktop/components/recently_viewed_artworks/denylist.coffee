@@ -2,7 +2,6 @@ denylist = require '../../lib/denylist.coffee'
 
 module.exports =
   patterns: [
-    '^/gallery-partnerships'
     '^/institution-partnerships'
     '^/auction-partnerships'
     '^/artsy-education'

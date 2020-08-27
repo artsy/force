@@ -66,7 +66,6 @@ $(() =>
     require("../analytics/layered_search.js")
     require("../analytics/notifications.js")
     require("../analytics/partner.js")
-    require("../analytics/partner_application.js")
     require("../analytics/recently_viewed_artworks.js")
     require("../analytics/save.js")
     require("../analytics/search.js")
