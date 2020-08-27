@@ -1,7 +1,3 @@
-#
-# Gallery Partnerships page requires different functionality from others.
-#
-
 express = require 'express'
 routes = require './routes'
 adminOnly = require '../../lib/admin_only'
@@ -11,9 +7,6 @@ jsonPageRoutes = require '../../components/json_page/routes'
 app = module.exports = express()
 app.set 'views', __dirname + '/templates'
 app.set 'view engine', 'jade'
-
-# Randomly redirect this link for a marketing A/B testing
-app.get '/partnership-opportunities', routes.mktoABTest
 
 # JSON Page routes
 for subject in ['auction', 'institution']

@@ -42,10 +42,6 @@ mixin support(section)
         h3!= section.heading
       .grid-item
         p.preamble!= section.preamble
-          if path.indexOf('gallery') > 0
-            |  You can also read and subscribe to our&nbsp;
-            a(href='/gallery-insights') Gallery Insights Newsletter
-            | .
 
   .partnerships-section-content
     .support-liaisons( data-liaisons=section.liaisons )
@@ -67,32 +63,3 @@ mixin support(section)
         .quote
           .quote-text= q.quote
           .quote-author #{q.author}, #{q.title}
-
-mixin apply(section)
-  .partnerships-section-header.apply
-    if path.indexOf('institution') > 0
-      h3!= section.heading
-      a.avant-garde-button-black.apply-button.apply-link-cta( href='/apply/institution' ) Apply
-    else
-      .gallery-partnerships-apply-form
-        header
-          h3#apply-h3 Interested in partnering with Artsy?
-            aside Apply to join Artsy&rsquo;s invitation-only subscription service for galleries
-
-          a.partnerships-marketo-form-apply-btn.avant-garde-button-black.apply-button.apply-link-cta( href=sd.APPLY_URL + '/galleries.html' ) Apply
-          .partnerships-marketo-form
-            script( src='//app-ab14.marketo.com/js/forms2/js/forms2.min.js')
-            form#mktoForm_1238
-            script.
-              MktoForms2.loadForm("//app-ab14.marketo.com", "609-FDY-207", 1238, function() {
-                $('.partnerships-marketo-form-apply-btn').remove()
-              });
-
-        .gallery-partnerships-privacy
-          | By clicking apply, you accept our&nbsp;
-          a( href='/terms' ) Terms of Use
-          | &nbsp;and&nbsp;
-          a( href='/privacy' ) Privacy Policy
-          | .
-
-        .partnerships-contact Call us: +1 800 589-1350

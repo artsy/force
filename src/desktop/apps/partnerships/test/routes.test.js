@@ -36,7 +36,7 @@ describe("Partnerships routes", function () {
         locals.foo.should.equal("bar")
         return done()
       }
-      this.req.url = "/gallery-partnerships"
+      this.req.url = "/auction-partnerships"
       routes.index(this.req, this.res, done)
       return this.jsonPage.get.args[0][0](null, { foo: "bar" })
     }))
