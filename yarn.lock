@@ -4509,7 +4509,7 @@
     "@types/react" "*"
     "@types/react-transition-group" "*"
 
-"@types/react-relay@^7.0.9":
+"@types/react-relay@7.0.9":
   version "7.0.9"
   resolved "https://registry.yarnpkg.com/@types/react-relay/-/react-relay-7.0.9.tgz#aae453888d5383dc13d7c5b55beb6b5933939ae8"
   integrity sha512-5wxvzTIA2XatkEvAIBkMtUBlqnhn7kia8sPMYB9YPRTWw/GA4CQ/YFavSfcv5lXc5PH0oQhdRzCMALpa+2yjKw==
