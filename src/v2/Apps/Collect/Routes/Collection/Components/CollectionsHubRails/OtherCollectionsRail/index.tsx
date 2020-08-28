@@ -2,10 +2,9 @@ import { Box, Serif, color } from "@artsy/palette"
 import { OtherCollectionsRail_collectionGroup } from "v2/__generated__/OtherCollectionsRail_collectionGroup.graphql"
 import * as Schema from "v2/Artsy/Analytics/Schema"
 import { useTracking } from "v2/Artsy/Analytics/useTracking"
-import { ArrowButton, Carousel } from "v2/Components/Carousel"
+import { Carousel } from "v2/Components/Carousel"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { data as sd } from "sharify"
 import styled from "styled-components"
 import { OtherCollectionsRailsContainer as OtherCollectionEntity } from "./OtherCollectionEntity"
 
@@ -34,30 +33,24 @@ export const OtherCollectionsRail: React.FC<OtherCollectionsRailProps> = ({
       <Serif size="5" mt={3} mb={2}>
         {name}
       </Serif>
-      <Carousel
-        height="100px"
-        options={{
-          wrapAround: sd.IS_MOBILE ? true : false,
-          pageDots: false,
-        }}
-        data={members}
-        render={(slide, slideIndex) => {
+
+      <Carousel onChange={() => trackArrowClick()}>
+        {members.map((slide, index) => {
           return (
-            <OtherCollectionEntity member={slide} itemNumber={slideIndex} />
+            <OtherCollectionEntity
+              key={index}
+              member={slide}
+              itemNumber={index}
+            />
           )
-        }}
-        onArrowClick={() => trackArrowClick()}
-      />
+        })}
+      </Carousel>
     </Container>
   )
 }
 
 const Container = styled(Box)`
   border-top: 1px solid ${color("black10")};
-
-  ${ArrowButton} {
-    height: 60%;
-  }
 `
 
 export const OtherCollectionsRailsContainer = createFragmentContainer(

@@ -1,6 +1,5 @@
 import { CollectionsRailFixture } from "v2/Apps/__tests__/Fixtures/Collections"
 import { mockTracking } from "v2/Artsy/Analytics"
-import { ArrowButton } from "v2/Components/Carousel"
 import { mount } from "enzyme"
 import "jest-styled-components"
 import { clone, drop } from "lodash"
@@ -8,6 +7,9 @@ import React from "react"
 import Waypoint from "react-waypoint"
 import { ArtistCollectionEntity } from "../ArtistCollectionEntity"
 import { ArtistCollectionsRail } from "../ArtistCollectionsRail"
+import { paginateCarousel } from "@artsy/palette"
+
+jest.mock("@artsy/palette/dist/elements/Carousel/paginate")
 jest.unmock("react-tracking")
 
 describe("CollectionsRail", () => {
@@ -21,14 +23,11 @@ describe("CollectionsRail", () => {
     props = {
       collections: CollectionsRailFixture,
     }
+    ;(paginateCarousel as jest.Mock).mockImplementation(() => [0, 100, 200])
   })
 
   it("Renders expected fields", async () => {
-    const component = await mount(
-      <ArtistCollectionsRail {...props} />
-    ).renderUntil(n => {
-      return n.html().search("is-selected") > 0
-    })
+    const component = await mount(<ArtistCollectionsRail {...props} />)
     expect(component.text()).toMatch("Iconic Collections")
     expect(component.find(ArtistCollectionEntity).length).toBe(8)
     expect(component.text()).toMatch("Flags")
@@ -45,11 +44,6 @@ describe("CollectionsRail", () => {
     expect(component.find(ArtistCollectionEntity).length).toBe(0)
   })
 
-  it("No arrows when there are less than 5 collections", () => {
-    const component = getWrapper()
-    expect(component.find(ArrowButton).length).toBe(1)
-  })
-
   describe("Tracking", () => {
     it("Tracks impressions", () => {
       const { Component, dispatch } = mockTracking(ArtistCollectionsRail)
@@ -63,7 +57,7 @@ describe("CollectionsRail", () => {
       })
     })
 
-    it("Tracks carousel navigation", done => {
+    it("Tracks carousel navigation", () => {
       const collectionsCopy = clone(props.collections)
       collectionsCopy.push({
         slug: "jasper-johns-flags2",
@@ -120,17 +114,14 @@ describe("CollectionsRail", () => {
       const updatedCollections = { collections: collectionsCopy }
       const { Component, dispatch } = mockTracking(ArtistCollectionsRail)
       const component = mount(<Component {...updatedCollections} />)
-      component.find(ArrowButton).at(1).simulate("click")
-      // Settimeout needed here for carousel render
-      setTimeout(() => {
-        expect(dispatch).toBeCalledWith({
-          action_type: "Click",
-          context_module: "CollectionsRail",
-          context_page_owner_type: "Artist",
-          subject: "clicked next button",
-          type: "Button",
-        })
-        done()
+      component.find("button").at(2).simulate("click") // Next button
+
+      expect(dispatch).toBeCalledWith({
+        action_type: "Click",
+        context_module: "CollectionsRail",
+        context_page_owner_type: "Artist",
+        subject: "clicked next button",
+        type: "Button",
       })
     })
   })

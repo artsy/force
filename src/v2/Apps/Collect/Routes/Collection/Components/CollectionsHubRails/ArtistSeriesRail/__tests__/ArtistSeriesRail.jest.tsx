@@ -1,11 +1,12 @@
 import { CollectionsHubLinkedCollections } from "v2/Apps/__tests__/Fixtures/Collections"
 import { useTracking } from "v2/Artsy/Analytics/useTracking"
-import { ArrowButton } from "v2/Components/Carousel"
 import { mount } from "enzyme"
 import "jest-styled-components"
 import React from "react"
 import { ArtistSeriesRail } from "../index"
+import { paginateCarousel } from "@artsy/palette"
 
+jest.mock("@artsy/palette/dist/elements/Carousel/paginate")
 jest.mock("v2/Artsy/Analytics/useTracking")
 jest.mock("found", () => ({
   Link: props => <div>{props.children}</div>,
@@ -48,6 +49,7 @@ describe("ArtistSeriesRail", () => {
         trackEvent,
       }
     })
+    ;(paginateCarousel as jest.Mock).mockImplementation(() => [0, 100, 200])
   })
 
   it("showing the correct text, price guidance, and title", () => {
@@ -55,6 +57,7 @@ describe("ArtistSeriesRail", () => {
     expect(component.text()).toMatch("Artist Series")
     expect(component.text()).toMatch("Flags unique collections")
     expect(component.text()).toMatch("From $1,000")
+    expect(component.html()).toContain("Page 1 of 3")
   })
 
   describe("Tracking", () => {
@@ -68,10 +71,7 @@ describe("ArtistSeriesRail", () => {
       ]
 
       const component = mount(<ArtistSeriesRail {...props} />)
-      component
-        .find(ArrowButton)
-        .at(1)
-        .simulate("click")
+      component.find("button").at(2).simulate("click") // Next button
 
       expect(trackEvent).toBeCalledWith({
         action_type: "Click",

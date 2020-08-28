@@ -1,10 +1,19 @@
 import { CollectionHubFixture } from "v2/Apps/__tests__/Fixtures/Collections"
 import { useTracking } from "v2/Artsy/Analytics/useTracking"
-import { ArrowButton } from "v2/Components/Carousel"
 import { mount } from "enzyme"
 import "jest-styled-components"
 import React from "react"
 import { OtherCollectionsRail } from "../index"
+import { paginateCarousel } from "@artsy/palette"
+
+jest.mock("@artsy/palette/dist/elements/Carousel/paginate")
+jest.mock("@artsy/palette", () => {
+  const moduleMock = jest.requireActual("@artsy/palette")
+  return {
+    ...moduleMock,
+    paginate: () => [0, 100],
+  }
+})
 
 jest.mock("v2/Artsy/Analytics/useTracking")
 jest.mock("found", () => ({
@@ -25,6 +34,7 @@ describe("CollectionsRail", () => {
         trackEvent,
       }
     })
+    ;(paginateCarousel as jest.Mock).mockImplementation(() => [0, 100, 200])
   })
 
   const memberData = () => {
@@ -58,11 +68,7 @@ describe("CollectionsRail", () => {
       ]
 
       const component = mount(<OtherCollectionsRail {...props} />)
-
-      component
-        .find(ArrowButton)
-        .at(1)
-        .simulate("click")
+      component.find("button").at(2).simulate("click") // Next button
 
       expect(trackEvent).toBeCalledWith({
         action_type: "Click",

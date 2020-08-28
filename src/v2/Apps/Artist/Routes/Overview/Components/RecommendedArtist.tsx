@@ -5,14 +5,12 @@ import { SystemContext } from "v2/Artsy"
 import { track } from "v2/Artsy/Analytics"
 import * as Schema from "v2/Artsy/Analytics/Schema"
 import FillwidthItem from "v2/Components/Artwork/FillwidthItem"
-import { ArrowButton, Carousel } from "v2/Components/Carousel"
+import { Carousel } from "v2/Components/Carousel"
 import { FollowArtistButtonFragmentContainer as FollowArtistButton } from "v2/Components/FollowButton/FollowArtistButton"
 import React, { FC, useContext } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import styled from "styled-components"
 import { get } from "v2/Utils/get"
 import { openAuthToFollowSave } from "v2/Utils/openAuthModal"
-import { getENV } from "v2/Utils/getENV"
 
 interface RecommendedArtistProps {
   artist: RecommendedArtist_artist
@@ -59,7 +57,6 @@ const RecommendedArtist: FC<
 > = ({ artist, onArtworkClicked, fullBleedRail }) => {
   const { user, mediator } = useContext(SystemContext)
   const artistData = get(artist, a => a.artworks_connection.edges, [])
-  const isMobile = getENV("IS_MOBILE") === true
 
   return (
     <Box data-test={ContextModule.relatedArtistsRail}>
@@ -102,56 +99,28 @@ const RecommendedArtist: FC<
 
       <Spacer mb={3} />
 
-      <Box mx={[-20, 0]}>
-        <Carousel
-          height="240px"
-          data={artistData}
-          options={{ pageDots: false }}
-          render={(artwork, index) => {
-            const aspect_ratio = get(artwork, a => a.node.image.aspect_ratio, 1)
-            return (
-              <FillwidthItem
-                artwork={artwork.node}
-                contextModule={ContextModule.relatedArtistsRail}
-                targetHeight={HEIGHT}
-                imageHeight={HEIGHT}
-                width={HEIGHT * aspect_ratio}
-                marginRight={10}
-                marginLeft={isMobile && fullBleedRail && index === 0 ? 20 : 0}
-                user={user}
-                mediator={mediator}
-                onClick={onArtworkClicked}
-                lazyLoad
-              />
-            )
-          }}
-          renderLeftArrow={({ Arrow }) => {
-            return (
-              <ArrowContainer>
-                <Arrow />
-              </ArrowContainer>
-            )
-          }}
-          renderRightArrow={({ Arrow }) => {
-            return (
-              <ArrowContainer>
-                <Arrow />
-              </ArrowContainer>
-            )
-          }}
-        />
-      </Box>
+      <Carousel arrowHeight={HEIGHT}>
+        {artistData.map(artwork => {
+          const aspect_ratio = get(artwork, a => a.node.image.aspect_ratio, 1)
+          return (
+            <FillwidthItem
+              key={artwork.node.id}
+              artwork={artwork.node}
+              contextModule={ContextModule.relatedArtistsRail}
+              targetHeight={HEIGHT}
+              imageHeight={HEIGHT}
+              width={HEIGHT * aspect_ratio}
+              user={user}
+              mediator={mediator}
+              onClick={onArtworkClicked}
+              lazyLoad
+            />
+          )
+        })}
+      </Carousel>
     </Box>
   )
 }
-
-const ArrowContainer = styled(Box)`
-  align-self: flex-start;
-
-  ${ArrowButton} {
-    height: 60%;
-  }
-`
 
 export const RecommendedArtistFragmentContainer = createFragmentContainer(
   RecommendedArtistWithTracking,

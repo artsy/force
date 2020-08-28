@@ -135,11 +135,8 @@ export const FeaturedRailCarousel: React.FC<FeaturedRailCarouselProps> = props =
   const tracking = useTracking()
 
   return (
-    <Carousel
-      height="325px"
-      data={itemsForCarousel}
-      options={{ pageDots: false }}
-      render={item => {
+    <Carousel>
+      {itemsForCarousel.map(item => {
         const croppedImageUrl = crop(item.imageSrc, {
           width: imgWidth * devicePixelRatio,
           height: imgHeight * devicePixelRatio,
@@ -147,7 +144,7 @@ export const FeaturedRailCarousel: React.FC<FeaturedRailCarouselProps> = props =
         })
 
         return (
-          <Box mr={1} maxWidth="245px">
+          <Box key={item.href} maxWidth={245} overflow="hidden">
             <StyledLink
               to={item.href}
               onClick={() => {
@@ -172,7 +169,7 @@ export const FeaturedRailCarousel: React.FC<FeaturedRailCarouselProps> = props =
             </StyledLink>
           </Box>
         )
-      }}
-    />
+      })}
+    </Carousel>
   )
 }

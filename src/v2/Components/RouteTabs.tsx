@@ -7,7 +7,7 @@ import {
   sharedTabsStyles,
   space,
 } from "@artsy/palette"
-import { ArrowButton, Carousel } from "v2/Components/Carousel"
+import { ArrowButton, Carousel } from "v2/Components/FlickityCarousel"
 import React from "react"
 import styled from "styled-components"
 import { left, right } from "styled-system"

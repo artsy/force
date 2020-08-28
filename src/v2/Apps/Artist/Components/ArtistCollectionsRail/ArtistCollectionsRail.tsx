@@ -2,7 +2,7 @@ import { Box, Sans } from "@artsy/palette"
 import { ArtistCollectionsRail_collections } from "v2/__generated__/ArtistCollectionsRail_collections.graphql"
 import { track } from "v2/Artsy/Analytics"
 import * as Schema from "v2/Artsy/Analytics/Schema"
-import { ArrowButton, Carousel } from "v2/Components/Carousel"
+import { Carousel } from "v2/Components/Carousel"
 import { once } from "lodash"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -10,7 +10,6 @@ import Waypoint from "react-waypoint"
 import styled from "styled-components"
 import Events from "v2/Utils/Events"
 import { ArtistCollectionEntityFragmentContainer as ArtistCollectionEntity } from "./ArtistCollectionEntity"
-import { getENV } from "v2/Utils/getENV"
 
 interface ArtistCollectionsRailProps {
   collections: ArtistCollectionsRail_collections
@@ -44,7 +43,6 @@ export class ArtistCollectionsRail extends React.Component<
 
   render() {
     const { collections } = this.props
-    const isMobile = getENV("IS_MOBILE") === true
 
     if (collections.length > 3) {
       return (
@@ -61,43 +59,20 @@ export class ArtistCollectionsRail extends React.Component<
             </Sans>
           </H2>
 
-          <Box mx={[-20, 0]}>
-            <Carousel
-              height="200px"
-              options={{
-                groupCells: isMobile ? 1 : 4,
-                cellAlign: "left",
-                pageDots: false,
-                contain: true,
-              }}
-              onArrowClick={this.trackCarouselNav.bind(this)}
-              data={collections}
-              render={(slide, index: number) => {
-                return (
-                  <Box ml={isMobile && index === 0 ? 2 : 0}>
-                    <ArtistCollectionEntity
-                      lazyLoad={index > 5}
-                      collection={slide}
-                    />
-                  </Box>
-                )
-              }}
-              renderLeftArrow={({ Arrow }) => {
-                return (
-                  <ArrowContainer>
-                    <Arrow />
-                  </ArrowContainer>
-                )
-              }}
-              renderRightArrow={({ Arrow }) => {
-                return (
-                  <ArrowContainer>
-                    {collections.length > 4 && <Arrow />}
-                  </ArrowContainer>
-                )
-              }}
-            />
-          </Box>
+          <Carousel
+            onChange={this.trackCarouselNav.bind(this)}
+            arrowHeight={125}
+          >
+            {collections.map((slide, index) => {
+              return (
+                <ArtistCollectionEntity
+                  key={index}
+                  lazyLoad={index > 5}
+                  collection={slide}
+                />
+              )
+            })}
+          </Carousel>
         </Box>
       )
     } else {
@@ -107,14 +82,6 @@ export class ArtistCollectionsRail extends React.Component<
 }
 
 const H2 = styled.h2``
-
-const ArrowContainer = styled(Box)`
-  align-self: flex-start;
-
-  ${ArrowButton} {
-    height: 60%;
-  }
-`
 
 export const ArtistCollectionsRailFragmentContainer = createFragmentContainer(
   ArtistCollectionsRail,

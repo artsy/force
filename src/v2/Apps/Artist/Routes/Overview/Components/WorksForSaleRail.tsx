@@ -1,5 +1,4 @@
 import { ContextModule } from "@artsy/cohesion"
-import { Box } from "@artsy/palette"
 import { WorksForSaleRail_artist } from "v2/__generated__/WorksForSaleRail_artist.graphql"
 import { WorksForSaleRailRendererQuery } from "v2/__generated__/WorksForSaleRailRendererQuery.graphql"
 import { SystemContext } from "v2/Artsy"
@@ -8,10 +7,9 @@ import * as Schema from "v2/Artsy/Analytics/Schema"
 import { renderWithLoadProgress } from "v2/Artsy/Relay/renderWithLoadProgress"
 import { SystemQueryRenderer } from "v2/Artsy/Relay/SystemQueryRenderer"
 import FillwidthItem from "v2/Components/Artwork/FillwidthItem"
-import { ArrowButton, Carousel } from "v2/Components/Carousel"
+import { Carousel } from "v2/Components/Carousel"
 import React, { useContext } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import styled from "styled-components"
 import { get } from "v2/Utils/get"
 
 interface WorksForSaleRailProps {
@@ -29,53 +27,27 @@ const WorksForSaleRail: React.FC<
   const artistData = get(artist, a => a.artworksConnection.edges, [])
 
   return (
-    <Carousel
-      height="240px"
-      data={artistData}
-      options={{ pageDots: false }}
-      contextModule={ContextModule.worksForSaleRail}
-      render={artwork => {
+    <Carousel data-test={ContextModule.worksForSaleRail} arrowHeight={150}>
+      {artistData.map(artwork => {
         const aspect_ratio = get(artwork, a => a.node.image.aspect_ratio, 1)
         return (
           <FillwidthItem
+            key={artwork.node.id}
             artwork={artwork.node}
             contextModule={ContextModule.worksForSaleRail}
             targetHeight={HEIGHT}
             imageHeight={HEIGHT}
             width={HEIGHT * aspect_ratio}
-            marginRight={10}
             user={user}
             mediator={mediator}
             onClick={onArtworkClicked}
             lazyLoad
           />
         )
-      }}
-      renderLeftArrow={({ Arrow }) => {
-        return (
-          <ArrowContainer>
-            <Arrow />
-          </ArrowContainer>
-        )
-      }}
-      renderRightArrow={({ Arrow }) => {
-        return (
-          <ArrowContainer>
-            <Arrow />
-          </ArrowContainer>
-        )
-      }}
-    />
+      })}
+    </Carousel>
   )
 }
-
-const ArrowContainer = styled(Box)`
-  align-self: flex-start;
-
-  ${ArrowButton} {
-    height: 60%;
-  }
-`
 
 @track({
   context_module: Schema.ContextModule.WorksForSale,

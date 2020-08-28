@@ -47,7 +47,7 @@ export const ArtistSeriesEntity: React.FC<ArtistSeriesEntityProps> = ({
   }
 
   return (
-    <Container px={2} pt={2} pb={2} m={1}>
+    <Container px={2} pt={2} pb={2}>
       <StyledLink to={`/collection/${slug}`} onClick={handleLinkClick}>
         <ImgWrapper>
           {bgImages!.length

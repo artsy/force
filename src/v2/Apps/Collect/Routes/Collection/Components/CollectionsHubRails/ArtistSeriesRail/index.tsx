@@ -2,10 +2,9 @@ import { Box, Serif, color } from "@artsy/palette"
 import { ArtistSeriesRail_collectionGroup } from "v2/__generated__/ArtistSeriesRail_collectionGroup.graphql"
 import { AnalyticsSchema } from "v2/Artsy/Analytics"
 import { useTracking } from "v2/Artsy/Analytics/useTracking"
-import { ArrowButton, Carousel } from "v2/Components/Carousel"
+import { Carousel } from "v2/Components/Carousel"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { data as sd } from "sharify"
 import styled from "styled-components"
 import { ArtistSeriesRailContainer as ArtistSeriesEntity } from "./ArtistSeriesEntity"
 
@@ -34,38 +33,24 @@ export const ArtistSeriesRail: React.FC<ArtistSeriesRailProps> = ({
       <Serif size="5" mb={1}>
         {name}
       </Serif>
-      <Carousel
-        height="250px"
-        options={{
-          wrapAround: sd.IS_MOBILE ? true : false,
-          pageDots: false,
-        }}
-        data={members}
-        render={(slide, slideIndex) => {
+
+      <Carousel onChange={() => trackArrowClick()}>
+        {members.map((slide, slideIndex) => {
           return (
             <ArtistSeriesEntity
+              key={slide.slug || slideIndex}
               member={slide}
               itemNumber={slideIndex}
-              key={slide.slug}
             />
           )
-        }}
-        onArrowClick={() => trackArrowClick()}
-      />
+        })}
+      </Carousel>
     </Content>
   )
 }
 
 const Content = styled(Box)`
   border-top: 1px solid ${color("black10")};
-`
-
-export const ArrowContainer = styled(Box)`
-  align-self: flex-start;
-
-  ${ArrowButton} {
-    height: 85%;
-  }
 `
 
 export const ArtistSeriesRailContainer = createFragmentContainer(

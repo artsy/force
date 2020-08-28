@@ -106,7 +106,7 @@ export const ArtistApp: React.FC<ArtistAppProps> = props => {
               )
             )}
 
-            <Box minHeight="30vh">{children}</Box>
+            {children}
           </Col>
         </Row>
 
