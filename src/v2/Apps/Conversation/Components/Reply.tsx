@@ -128,6 +128,7 @@ export const Reply: React.FC<ReplyProps> = props => {
         position={["fixed", "fixed", "fixed", "static"]}
         bottom={0}
         left={0}
+        flexShrink={0}
       >
         <FullWidthFlex width="100%">
           <StyledTextArea
