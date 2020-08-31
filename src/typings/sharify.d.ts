@@ -63,7 +63,6 @@ declare module "sharify" {
       ARTSY_XAPP_TOKEN: string
       CSRF_TOKEN: string
       CHANNEL?: { slug?: string } // Articles
-      FAIR?: any // mobile fair app data
       FAIR_ORGANIZER?: any
       GALLERY_INSIGHTS_CHANNEL: string
       INTERCOM_BUYER_APP_ID: string
@@ -74,12 +73,10 @@ declare module "sharify" {
       MARKETING_SIGNUP_MODALS: any[]
       PAGE_TYPE?: string
       PARTNER_NEW_LAYOUT?: boolean
-      PARTNER_PROFILE?: any // mobile partner app data
       PATHS?: any // JSONPage
       PC_ARTSY_CHANNEL: string
       PC_AUCTION_CHANNEL: string
       POSITRON_URL: string
-      PROFILE?: any // mobile partner app data
       SECTION?: { slug?: string } // FIXME: used only for /venice-biennale-2015
       SESSION_ID?: string
       SHOW_ANALYTICS_CALLS: boolean
