@@ -1,7 +1,7 @@
-import { Box, Text } from "@artsy/palette"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FairExhibitors_fair } from "v2/__generated__/FairExhibitors_fair.graphql"
+import { FairExhibitorRailFragmentContainer as FairExhibitorRail } from "../Components/FairExhibitorRail"
 
 interface FairExhibitorsProps {
   fair: FairExhibitors_fair
@@ -9,9 +9,16 @@ interface FairExhibitorsProps {
 
 const FairExhibitors: React.FC<FairExhibitorsProps> = ({ fair }) => {
   return (
-    <Box py={2}>
-      <Text variant="text">Exhibitors</Text>
-    </Box>
+    <>
+      {fair.exhibitors.edges.map(({ show }) => {
+        if (show.counts.artworks === 0) {
+          // Skip rendering of booths without artworks
+          return null
+        }
+
+        return <FairExhibitorRail key={show.id} show={show} my={3} />
+      })}
+    </>
   )
 }
 
@@ -21,6 +28,17 @@ export const FairExhibitorsFragmentContainer = createFragmentContainer(
     fair: graphql`
       fragment FairExhibitors_fair on Fair {
         id
+        exhibitors: showsConnection(first: 30, sort: FEATURED_ASC) {
+          edges {
+            show: node {
+              id
+              counts {
+                artworks
+              }
+              ...FairExhibitorRail_show
+            }
+          }
+        }
       }
     `,
   }
