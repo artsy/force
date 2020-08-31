@@ -1,4 +1,4 @@
-import { ContextModule, Intent, OwnerType } from "@artsy/cohesion"
+import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { Box, EntityHeader, Sans, Spacer } from "@artsy/palette"
 import { RecommendedArtist_artist } from "v2/__generated__/RecommendedArtist_artist.graphql"
 import { SystemContext } from "v2/Artsy"
@@ -10,21 +10,12 @@ import { FollowArtistButtonFragmentContainer as FollowArtistButton } from "v2/Co
 import React, { FC, useContext } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { get } from "v2/Utils/get"
-import { openAuthToFollowSave } from "v2/Utils/openAuthModal"
 
 interface RecommendedArtistProps {
   artist: RecommendedArtist_artist
   fullBleedRail?: boolean
 }
 const HEIGHT = 150
-
-const handleOpenAuth = (mediator, artist) => {
-  openAuthToFollowSave(mediator, {
-    entity: artist,
-    contextModule: ContextModule.relatedArtistsRail,
-    intent: Intent.followArtist,
-  })
-}
 
 @track({
   context_module: Schema.ContextModule.RecommendedArtists,
@@ -76,7 +67,6 @@ const RecommendedArtist: FC<
               ownerId: artist.internalID,
               ownerSlug: artist.slug,
             }}
-            onOpenAuthModal={() => handleOpenAuth(mediator, artist)}
             render={({ is_followed }) => {
               return (
                 <Sans

@@ -13,12 +13,10 @@ import {
 import { Media } from "v2/Utils/Responsive"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FollowArtistButtonFragmentContainer as FollowArtistButton } from "v2/Components/FollowButton/FollowArtistButton"
-import { openAuthToFollowSave } from "v2/Utils/openAuthModal"
 import { ArtistSeriesHeader_artistSeries } from "v2/__generated__/ArtistSeriesHeader_artistSeries.graphql"
 import { useSystemContext } from "v2/Artsy"
 import {
   ContextModule,
-  Intent,
   OwnerType,
 } from "@artsy/cohesion"
 import styled from "styled-components"
@@ -38,7 +36,7 @@ interface ArtistsInfoProps {
 const ArtistInfo: React.FC<ArtistsInfoProps> = props => {
   /* Displays artist name, avatar and follow button. We currently assume
      that an artist series will have one artist. */
-  const { user, mediator } = useSystemContext()
+  const { user } = useSystemContext()
   const { artist, contextOwnerId, contextOwnerSlug } = props
   const { slug, internalID } = artist
 
@@ -51,7 +49,6 @@ const ArtistInfo: React.FC<ArtistsInfoProps> = props => {
       FollowButton={
         <FollowArtistButton
           artist={artist}
-          useNewAnalyticsSchema
           user={user}
           trackingData={{
             contextModule: ContextModule.featuredArtists,
@@ -61,13 +58,6 @@ const ArtistInfo: React.FC<ArtistsInfoProps> = props => {
             ownerId: internalID,
             ownerSlug: slug,
           }}
-          onOpenAuthModal={() =>
-            openAuthToFollowSave(mediator, {
-              entity: artist,
-              contextModule: ContextModule.featuredArtists,
-              intent: Intent.followArtist,
-            })
-          }
           render={({ is_followed }) => {
             return (
               <Sans

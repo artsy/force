@@ -53,7 +53,6 @@ export class ArtworkSidebarArtists extends React.Component<ArtistsProps> {
             ownerId: artist.internalID,
             ownerSlug: artist.slug,
           }}
-          onOpenAuthModal={() => this.handleOpenAuth(mediator, artist)}
           triggerSuggestions
           render={({ is_followed }) => {
             return <FollowIcon isFollowed={is_followed} />

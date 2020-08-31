@@ -1,4 +1,4 @@
-import { AuthContextModule, Intent, OwnerType } from "@artsy/cohesion"
+import { AuthContextModule, OwnerType } from "@artsy/cohesion"
 import { ArtistCard_artist } from "v2/__generated__/ArtistCard_artist.graphql"
 import { Mediator } from "v2/Artsy"
 import { FollowArtistButtonFragmentContainer as FollowArtistButton } from "v2/Components/FollowButton/FollowArtistButton"
@@ -6,7 +6,6 @@ import { Truncator } from "v2/Components/Truncator"
 import React, { SFC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { get } from "v2/Utils/get"
-import { openAuthToFollowSave } from "v2/Utils/openAuthModal"
 import { Media } from "v2/Utils/Responsive"
 
 import {
@@ -96,7 +95,6 @@ export const LargeArtistCard: SFC<ArtistCardProps> = props => (
           ownerId: props.artist.internalID,
           ownerSlug: props.artist.slug
         }}
-        onOpenAuthModal={() => handleOpenAuth(props)}
         render={({ is_followed }) => {
           return (
             <Button
@@ -143,7 +141,6 @@ export const SmallArtistCard: SFC<ArtistCardProps> = props => (
           ownerId: props.artist.internalID,
           ownerSlug: props.artist.slug
         }}
-        onOpenAuthModal={() => handleOpenAuth(props)}
         render={({ is_followed }) => {
           return (
             <Button
@@ -159,14 +156,6 @@ export const SmallArtistCard: SFC<ArtistCardProps> = props => (
     </Flex>
   </BorderBox>
 )
-
-const handleOpenAuth = (props: ArtistCardProps) => {
-  openAuthToFollowSave(props.mediator, {
-    entity: props.artist,
-    contextModule: props.contextModule,
-    intent: Intent.followArtist,
-  })
-}
 
 export const ArtistCardFragmentContainer = createFragmentContainer(ArtistCard as React.ComponentType<ArtistCardProps>, {
   artist: graphql`

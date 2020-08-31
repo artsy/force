@@ -6,7 +6,10 @@ import { commitMutation } from "react-relay"
 import { FollowButton } from "../Button"
 import { FollowArtistButtonFragmentContainer as FollowArtistButton } from "../FollowArtistButton"
 import { ContextModule, OwnerType } from "@artsy/cohesion"
+import * as openAuth  from "v2/Utils/openAuthModal"
+import { openAuthToFollowSave } from "v2/Utils/openAuthModal"
 
+jest.spyOn(openAuth, "openAuthToFollowSave")
 jest.mock("react-relay", () => ({
   commitMutation: jest.fn(),
   createFragmentContainer: component => component,
@@ -30,12 +33,16 @@ describe("FollowArtistButton", () => {
   beforeEach(() => {
     props = {
       artist: {
-        internalID: "damon-zucconi",
+        internalID: "12345",
         id: "1234",
+        slug: "damon-zucconi",
+        name: "Damon Zucconi",
         is_followed: false,
         counts: { follows: 99 },
       },
-      onOpenAuthModal: jest.fn(),
+      mediator: {
+        trigger: jest.fn()
+      },
       relay: { environment: "" },
       tracking: { trackEvent: jest.fn() },
       trackingData: {
@@ -64,20 +71,22 @@ describe("FollowArtistButton", () => {
   // })
 
   describe("unit", () => {
-    it("Calls #onOpenAuthModal if no current user", () => {
+    it("Calls #openAuthToFollowSave if no current user", () => {
       const component = getWrapper()
       component.find(FollowButton).simulate("click")
 
-      expect(props.onOpenAuthModal).toBeCalledWith("signup", {
-        contextModule: "intextTooltip",
-        copy: "Sign up to follow artists",
+      expect(openAuthToFollowSave).toBeCalledWith(props.mediator, {
+        contextModule: "artistsToFollowRail",
         intent: "followArtist",
-        afterSignUpAction: {
-          action: "follow",
-          kind: "artist",
-          objectId: "damon-zucconi",
+        "entity": {
+         "name": "Damon Zucconi",
+           "slug": "damon-zucconi",
         },
       })
+
+      expect(props.mediator.trigger).toBeCalledWith(
+        "open:auth", {"afterSignUpAction": {"action": "follow", "kind": "artist", "objectId": "damon-zucconi"}, "contextModule": "artistsToFollowRail", "copy": "Sign up to follow Damon Zucconi", "intent": "followArtist", "mode": "signup"}
+      )
     })
 
     it("Follows an artist if current user", () => {
@@ -85,7 +94,7 @@ describe("FollowArtistButton", () => {
       component.find(FollowButton).simulate("click")
       const mutation = (commitMutation as any).mock.calls[0][1].variables.input
 
-      expect(mutation.artistID).toBe("damon-zucconi")
+      expect(mutation.artistID).toBe("12345")
       expect(mutation.unfollow).toBe(false)
     })
 
@@ -95,7 +104,7 @@ describe("FollowArtistButton", () => {
       component.find(FollowButton).simulate("click")
       const mutation = (commitMutation as any).mock.calls[1][1].variables.input
 
-      expect(mutation.artistID).toBe("damon-zucconi")
+      expect(mutation.artistID).toBe("12345")
       expect(mutation.unfollow).toBe(true)
     })
 
@@ -103,8 +112,8 @@ describe("FollowArtistButton", () => {
       const component = getWrapper(props, { id: "1234" })
       component.find(FollowButton).simulate("click")
 
-      expect(props.tracking.trackEvent.mock.calls[0][0].action).toBe(
-        "Followed Artist"
+      expect(props.tracking.trackEvent).toBeCalledWith(
+        {"action": "followedArtist", "contextModule": "artistsToFollowRail", "contextOwnerType": "home", "ownerId": "1234", "ownerSlug": "damon-zucconi"}
       )
     })
 
@@ -113,18 +122,8 @@ describe("FollowArtistButton", () => {
       const component = getWrapper(props, { id: "1234" })
       component.find(FollowButton).simulate("click")
 
-      expect(props.tracking.trackEvent.mock.calls[0][0].action).toBe(
-        "Unfollowed Artist"
-      )
-    })
-
-    it("Tracks with custom trackingData if provided", () => {
-      props.trackingData = { contextModule: "tooltip" }
-      const component = getWrapper(props, { id: "1234" })
-      component.find(FollowButton).simulate("click")
-
-      expect(props.tracking.trackEvent.mock.calls[0][0].contextModule).toBe(
-        "tooltip"
+      expect(props.tracking.trackEvent).toBeCalledWith(
+        {"action": "unfollowedArtist", "contextModule": "artistsToFollowRail", "contextOwnerType": "home", "ownerId": "1234", "ownerSlug": "damon-zucconi"}
       )
     })
   })
