@@ -66,13 +66,7 @@ export class FillwidthItemContainer extends React.Component<
     return this.props.imageHeight
   }
 
-  // TODO: Just replace with `srcSet` 1x/2x set of URLs.
-  // This causes images to load twice on 1x devices
-  get devicePixelRatio() {
-    return typeof window === "undefined" ? 2 : window.devicePixelRatio
-  }
-
-  getImageUrl() {
+  getImageUrl(pixelRatio = 1) {
     const imageURL = this.props.artwork.image.url
 
     if (!imageURL) {
@@ -89,9 +83,9 @@ export class FillwidthItemContainer extends React.Component<
     const type = aspect_ratio ? "fit" : "fill"
 
     return `${getENV("GEMINI_CLOUDFRONT_URL")}/?resize_to=${type}&width=${
-      this.imageWidth * this.devicePixelRatio
+      this.imageWidth * pixelRatio
     }&height=${
-      this.imageHeight * this.devicePixelRatio
+      this.imageHeight * pixelRatio
     }&quality=${IMAGE_QUALITY}&src=${encodeURIComponent(imageURL)}`
   }
 
@@ -136,7 +130,8 @@ export class FillwidthItemContainer extends React.Component<
             }}
           >
             <Image
-              src={this.getImageUrl()}
+              src={this.getImageUrl(1)}
+              srcSet={`${this.getImageUrl(1)} 1x, ${this.getImageUrl(2)} 2x`}
               width="100%"
               height={imageHeight}
               lazyLoad={lazyLoad}
