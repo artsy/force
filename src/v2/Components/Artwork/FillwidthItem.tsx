@@ -1,5 +1,5 @@
 import { AuthContextModule } from "@artsy/cohesion"
-import { Image } from "@artsy/palette"
+import { Box, Image } from "@artsy/palette"
 import { FillwidthItem_artwork } from "v2/__generated__/FillwidthItem_artwork.graphql"
 import { SystemContextProps } from "v2/Artsy"
 import { Mediator } from "v2/Artsy"
@@ -19,7 +19,7 @@ const logger = createLogger("FillwidthItem.tsx")
 
 const IMAGE_QUALITY = 80
 
-const Placeholder = styled.div`
+const Placeholder = styled(Box).attrs({ bg: "gray10" })`
   position: relative;
   width: 100%;
 `
@@ -31,6 +31,7 @@ export interface FillwidthItemContainerProps
   contextModule: AuthContextModule
   hideArtistName?: boolean
   hidePartnerName?: boolean
+  // TODO: probably should be required or have a sensible default
   imageHeight?: number
   lazyLoad?: boolean
   marginLeft?: number
@@ -57,17 +58,18 @@ export class FillwidthItemContainer extends React.Component<
       },
     } = this.props
 
-    const imageWidth = Math.floor(this.imageHeight * aspect_ratio)
+    const imageWidth = Math.floor(this.props.imageHeight * aspect_ratio)
     return imageWidth
   }
 
   get imageHeight() {
-    // During the SSR render pass we don't have access to window pixel data so
-    // default to high density screen.
-    const devicePixelRatio =
-      typeof window === "undefined" ? 2 : window.devicePixelRatio
+    return this.props.imageHeight
+  }
 
-    return this.props.imageHeight * devicePixelRatio
+  // TODO: Just replace with `srcSet` 1x/2x set of URLs.
+  // This causes images to load twice on 1x devices
+  get devicePixelRatio() {
+    return typeof window === "undefined" ? 2 : window.devicePixelRatio
   }
 
   getImageUrl() {
@@ -86,11 +88,10 @@ export class FillwidthItemContainer extends React.Component<
     // Either scale or crop, based on if an aspect ratio is available.
     const type = aspect_ratio ? "fit" : "fill"
 
-    // tslint:disable-next-line:max-line-length
     return `${getENV("GEMINI_CLOUDFRONT_URL")}/?resize_to=${type}&width=${
-      this.imageWidth
+      this.imageWidth * this.devicePixelRatio
     }&height=${
-      this.imageHeight
+      this.imageHeight * this.devicePixelRatio
     }&quality=${IMAGE_QUALITY}&src=${encodeURIComponent(imageURL)}`
   }
 
@@ -125,7 +126,7 @@ export class FillwidthItemContainer extends React.Component<
 
     return (
       <div className={className}>
-        <Placeholder style={{ height: targetHeight }}>
+        <Placeholder style={{ height: targetHeight, width: this.imageWidth }}>
           <RouterLink
             to={artwork.href}
             onClick={() => {
@@ -155,6 +156,7 @@ export class FillwidthItemContainer extends React.Component<
             style={{ position: "absolute", right: "5px", bottom: "5px" }}
           />
         </Placeholder>
+
         {showMetadata && (
           <Metadata
             artwork={artwork}
