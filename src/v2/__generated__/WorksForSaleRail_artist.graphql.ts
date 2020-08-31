@@ -8,9 +8,6 @@ export type WorksForSaleRail_artist = {
         readonly edges: ReadonlyArray<{
             readonly node: {
                 readonly id: string;
-                readonly image: {
-                    readonly aspect_ratio: number;
-                } | null;
                 readonly " $fragmentRefs": FragmentRefs<"FillwidthItem_artwork">;
             } | null;
         } | null> | null;
@@ -75,24 +72,6 @@ const node: ReaderFragment = {
                   "storageKey": null
                 },
                 {
-                  "alias": null,
-                  "args": null,
-                  "concreteType": "Image",
-                  "kind": "LinkedField",
-                  "name": "image",
-                  "plural": false,
-                  "selections": [
-                    {
-                      "alias": "aspect_ratio",
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "aspectRatio",
-                      "storageKey": null
-                    }
-                  ],
-                  "storageKey": null
-                },
-                {
                   "args": null,
                   "kind": "FragmentSpread",
                   "name": "FillwidthItem_artwork"
@@ -114,5 +93,5 @@ const node: ReaderFragment = {
   ],
   "type": "Artist"
 };
-(node as any).hash = '02986b550f6f0e00853e117d22f1ece9';
+(node as any).hash = '12d04fad2d3da6a2b00bd5d9b4038f75';
 export default node;

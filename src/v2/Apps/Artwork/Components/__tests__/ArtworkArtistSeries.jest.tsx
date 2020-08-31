@@ -164,11 +164,7 @@ const ArtworkArtistSeriesFixture: ArtworkArtistSeries_QueryRawResponse = {
                     internalID: "zzz123",
                     image: {
                       url: "pumpkins.jpg",
-                      aspect_ratio: 12,
-                      resized: {
-                        height: 124,
-                        width: 200,
-                      },
+                      aspectRatio: 12,
                     },
                     imageTitle: "Pumpkin",
                     title: "Pumpkin",

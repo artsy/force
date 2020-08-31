@@ -11,6 +11,8 @@ import { useTracking } from "v2/Artsy"
 import styled from "styled-components"
 import { ContextModule, OwnerType, clickedEntityGroup } from "@artsy/cohesion"
 
+const HEIGHT = 300
+
 interface ArtistTopWorksRailProps {
   artist: ArtistTopWorksRail_artist
   onOverviewTab?: boolean
@@ -73,9 +75,9 @@ export const ArtistTopWorksRail: React.FC<ArtistTopWorksRailProps> = ({
           </Media>
         </StyledLink>
       </Flex>
-      <Carousel mb={3} arrowHeight={300}>
+      <Carousel mb={3} arrowHeight={HEIGHT}>
         {artworks.map(({ node }, index) => {
-          const { image, id, slug } = node
+          const { id, slug } = node
 
           return (
             <FillwidthItem
@@ -84,9 +86,7 @@ export const ArtistTopWorksRail: React.FC<ArtistTopWorksRailProps> = ({
               artwork={node}
               hidePartnerName
               hideArtistName
-              targetHeight={image?.resized?.height}
-              imageHeight={image?.resized?.height}
-              width={image?.resized?.height * image?.imageAspectRatio}
+              imageHeight={HEIGHT}
               showMetadata
               showExtended={false}
               onClick={() => {
@@ -126,15 +126,6 @@ export const ArtistTopWorksRailFragmentContainer = createFragmentContainer(
             node {
               id
               slug
-              image {
-                href
-                imageAspectRatio: aspectRatio
-                resized(height: 300) {
-                  url
-                  width
-                  height
-                }
-              }
               ...FillwidthItem_artwork
             }
           }
