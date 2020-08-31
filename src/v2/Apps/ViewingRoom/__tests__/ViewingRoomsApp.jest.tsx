@@ -47,6 +47,13 @@ describe("ViewingRoomsApp", () => {
     it("renders the correct components", async () => {
       const wrapper = await getWrapper()
       expect(wrapper.html()).toContain("Viewing Rooms")
+      expect(wrapper.find("ViewingRoomsMeta").length).toBe(1)
+      expect(wrapper.find("ViewingRoomsMeta").html()).toContain(
+        "Artsy Viewing Rooms"
+      )
+      expect(wrapper.find("ViewingRoomsMeta").html()).toContain(
+        "Discover in-demand works and storytelling from the world’s leading galleries and artists — all in one place."
+      )
     })
 
     describe("Viewing rooms grid", () => {
