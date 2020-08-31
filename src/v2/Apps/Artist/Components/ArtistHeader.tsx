@@ -1,4 +1,4 @@
-import { ContextModule, Intent } from "@artsy/cohesion"
+import { ContextModule, Intent, OwnerType } from "@artsy/cohesion"
 import { Box, Flex, Sans, Spacer } from "@artsy/palette"
 import { ArtistHeader_artist } from "v2/__generated__/ArtistHeader_artist.graphql"
 import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
@@ -121,14 +121,19 @@ export class LargeArtistHeader extends Component<Props> {
               )}
               <Spacer mr={3} />
               <FollowArtistButton
-                useDeprecatedButtonStyle={false}
-                artist={props.artist}
-                user={user}
-                onOpenAuthModal={() =>
-                  handleOpenAuth(props.mediator, props.artist)
-                }
-              >
-                Follow
+                trackingData={{
+                  contextModule: ContextModule.artistHeader,
+                  contextOwnerType: OwnerType.artist,
+                  ownerId: props.artist.internalID,
+                  ownerSlug: props.artist.slug
+                }}
+                  artist={props.artist}
+                  user={user}
+                  onOpenAuthModal={() =>
+                    handleOpenAuth(props.mediator, props.artist)
+                  }
+                >
+                  Follow
               </FollowArtistButton>
             </Flex>
           </Flex>
@@ -185,9 +190,14 @@ export class SmallArtistHeader extends Component<Props> {
           <Flex>
             <FollowArtistButton
               artist={props.artist}
-              useDeprecatedButtonStyle={false}
               buttonProps={{ width: "100%" }}
               user={user}
+              trackingData={{
+                contextModule: ContextModule.artistHeader,
+                contextOwnerType: OwnerType.artist,
+                ownerId: props.artist.internalID,
+                ownerSlug: props.artist.slug
+              }}
               render={({ is_followed }) => {
                 return (
                   <Sans

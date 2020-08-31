@@ -20,7 +20,7 @@ import { ArtistBioFragmentContainer as ArtistBio } from "v2/Components/ArtistBio
 import { ArtistMarketInsightsFragmentContainer as ArtistMarketInsights } from "v2/Components/ArtistMarketInsights"
 import { SelectedExhibitionFragmentContainer as SelectedExhibitions } from "v2/Components/SelectedExhibitions"
 
-import { ContextModule, Intent } from "@artsy/cohesion"
+import { ContextModule, Intent, OwnerType } from "@artsy/cohesion"
 import { MIN_EXHIBITIONS } from "v2/Components/SelectedExhibitions"
 import React, { Component } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -32,6 +32,8 @@ import { openAuthToFollowSave } from "v2/Utils/openAuthModal"
 interface ArtistInfoProps {
   artist: ArtistInfo_artist
   mediator?: Mediator
+  contextOwnerId: string
+  contextOwnerSlug: string
 }
 
 interface ArtistInfoState {
@@ -127,10 +129,12 @@ export class ArtistInfo extends Component<ArtistInfoProps, ArtistInfoState> {
                     artist={this.props.artist}
                     user={user}
                     trackingData={{
-                      modelName: Schema.OwnerType.Artist,
-                      context_module: Schema.ContextModule.Biography,
-                      entity_id: internalID,
-                      entity_slug: slug,
+                      contextModule: ContextModule.aboutTheWork,
+                      contextOwnerId: this.props.contextOwnerId,
+                      contextOwnerSlug: this.props.contextOwnerSlug,
+                      contextOwnerType: OwnerType.artwork,
+                      ownerId: internalID,
+                      ownerSlug: slug,
                     }}
                     onOpenAuthModal={() =>
                       this.handleOpenAuth(mediator, this.props.artist)
@@ -214,7 +218,7 @@ export class ArtistInfo extends Component<ArtistInfoProps, ArtistInfoState> {
 
 // ADDED COLLECTIONS, HIGHLIGHTS, AND AUCTION RESULTS TO FRAGMENT FOR SHOW ARTIST INSIGHTS BUTTON VISIBLILITY CHECK
 
-export const ArtistInfoFragmentContainer = createFragmentContainer(ArtistInfo, {
+export const ArtistInfoFragmentContainer = createFragmentContainer(ArtistInfo as React.ComponentType<ArtistInfoProps>, {
   artist: graphql`
     fragment ArtistInfo_artist on Artist
       @argumentDefinitions(

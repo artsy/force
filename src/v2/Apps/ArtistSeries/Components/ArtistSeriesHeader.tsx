@@ -20,7 +20,6 @@ import {
   ContextModule,
   Intent,
   OwnerType,
-  followedArtist,
 } from "@artsy/cohesion"
 import styled from "styled-components"
 import { unitlessBreakpoints } from "@artsy/palette"
@@ -43,15 +42,6 @@ const ArtistInfo: React.FC<ArtistsInfoProps> = props => {
   const { artist, contextOwnerId, contextOwnerSlug } = props
   const { slug, internalID } = artist
 
-  const trackingData = followedArtist({
-    contextModule: ContextModule.featuredArtists,
-    contextOwnerType: OwnerType.artistSeries,
-    contextOwnerId,
-    contextOwnerSlug,
-    ownerId: internalID,
-    ownerSlug: slug,
-  })
-
   return (
     <EntityHeader
       smallVariant
@@ -63,12 +53,18 @@ const ArtistInfo: React.FC<ArtistsInfoProps> = props => {
           artist={artist}
           useNewAnalyticsSchema
           user={user}
-          trackingData={trackingData}
+          trackingData={{
+            contextModule: ContextModule.featuredArtists,
+            contextOwnerType: OwnerType.artistSeries,
+            contextOwnerId,
+            contextOwnerSlug,
+            ownerId: internalID,
+            ownerSlug: slug,
+          }}
           onOpenAuthModal={() =>
             openAuthToFollowSave(mediator, {
               entity: artist,
-              // FIXME: Add artist series to Cohesion
-              contextModule: null,
+              contextModule: ContextModule.featuredArtists,
               intent: Intent.followArtist,
             })
           }

@@ -1,4 +1,4 @@
-import { ContextModule } from "@artsy/cohesion"
+import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { Box, Button, Flex, Serif } from "@artsy/palette"
 import { ArtworkRelatedArtists_artwork } from "v2/__generated__/ArtworkRelatedArtists_artwork.graphql"
 import { hideGrid } from "v2/Apps/Artwork/Components/OtherWorks"
@@ -64,6 +64,7 @@ export const ArtworkRelatedArtists: React.FC<ArtworkRelatedArtistsProps> = track
                 <ArtistCard
                   lazyLoad
                   artist={node}
+                  contextOwnerType={OwnerType.artwork}
                   contextModule={ContextModule.relatedArtistsRail}
                   mediator={mediator}
                   user={user}

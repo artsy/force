@@ -1,4 +1,4 @@
-import { ActionType, ContextModule, Intent } from "@artsy/cohesion"
+import { ActionType, FollowedArgs, Intent } from "@artsy/cohesion"
 import { Box, ButtonProps } from "@artsy/palette"
 import { FollowArtistButtonMutation } from "v2/__generated__/FollowArtistButtonMutation.graphql"
 import * as Artsy from "v2/Artsy"
@@ -25,11 +25,11 @@ interface Props
   relay?: RelayProp
   artist?: FollowArtistButton_artist
   tracking?: TrackingProp
-  trackingData?: FollowTrackingData
+  trackingData: FollowedArgs
   onOpenAuthModal?: (type: ModalType, config?: ModalOptions) => void
   useNewAnalyticsSchema?: boolean
   /**
-   * FIXME: If useDeprecatedButtonStyle is false pass <Button> style props along
+   * FIXME: pass <Button> style props along
    * to new design-system buttons.
    */
   buttonProps?: Partial<ButtonProps>
@@ -67,43 +67,35 @@ export class FollowArtistButton extends React.Component<Props, State> {
     const {
       tracking,
       artist: { is_followed },
-      useNewAnalyticsSchema,
     } = this.props
-    const trackingData: FollowTrackingData = this.props.trackingData || {}
+    const trackingData: FollowTrackingData = this.props.trackingData
 
     let action:
       | ActionType.unfollowedArtist
       | ActionType.followedArtist
-      | "Unfollowed Artist"
-      | "Followed Artist"
 
-    if (useNewAnalyticsSchema) {
       action = is_followed
         ? ActionType.unfollowedArtist
         : ActionType.followedArtist
-    } else {
-      action = is_followed ? "Unfollowed Artist" : "Followed Artist"
-    }
 
     tracking.trackEvent(extend(trackingData, { action }))
   }
 
   handleFollow = e => {
     e.preventDefault() // If this button is part of a link, we _probably_ dont want to actually follow the link.
-    const { artist, user, onOpenAuthModal } = this.props
-    const trackingData: FollowTrackingData = this.props.trackingData || {}
+    const { artist, user, onOpenAuthModal, trackingData } = this.props
 
     if (user && user.id) {
       this.followArtistForUser(user)
     } else if (onOpenAuthModal) {
       onOpenAuthModal(ModalType.signup, {
-        contextModule: ContextModule.intextTooltip,
+        contextModule: trackingData.contextModule,
         intent: Intent.followArtist,
         copy: "Sign up to follow artists",
         afterSignUpAction: {
           action: "follow",
           kind: "artist",
-          objectId: (artist && artist.internalID) || trackingData.entity_slug,
+          objectId: (artist && artist.internalID),
         },
       })
     }
@@ -122,6 +114,7 @@ export class FollowArtistButton extends React.Component<Props, State> {
           followArtist(input: $input) {
             artist {
               id
+              slug
               is_followed: isFollowed
               counts {
                 follows
@@ -140,6 +133,7 @@ export class FollowArtistButton extends React.Component<Props, State> {
         followArtist: {
           artist: {
             id: artist.id,
+            slug: artist.slug,
             is_followed: !artist.is_followed,
             counts: { follows: newFollowCount },
           },
@@ -208,7 +202,7 @@ export class FollowArtistButton extends React.Component<Props, State> {
 }
 
 export const FollowArtistButtonFragmentContainer = createFragmentContainer(
-  Artsy.withSystemContext(FollowArtistButton),
+  Artsy.withSystemContext(FollowArtistButton) as React.ComponentType<Props>,
   {
     artist: graphql`
       fragment FollowArtistButton_artist on Artist
@@ -218,6 +212,7 @@ export const FollowArtistButtonFragmentContainer = createFragmentContainer(
         id
         internalID
         name
+        slug
         is_followed: isFollowed
         counts {
           follows

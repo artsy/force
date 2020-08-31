@@ -1,12 +1,11 @@
 import { Box, Serif } from "@artsy/palette"
 import { SystemContextConsumer } from "v2/Artsy"
-import * as Schema from "v2/Artsy/Analytics/Schema"
 
 import { FollowIcon } from "v2/Components/FollowIcon"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 
-import { ContextModule, Intent } from "@artsy/cohesion"
+import { ContextModule, Intent, OwnerType } from "@artsy/cohesion"
 import { ArtworkSidebarArtists_artwork } from "v2/__generated__/ArtworkSidebarArtists_artwork.graphql"
 import { FollowArtistButtonFragmentContainer as FollowArtistButton } from "v2/Components/FollowButton/FollowArtistButton"
 import { openAuthToFollowSave } from "v2/Utils/openAuthModal"
@@ -39,7 +38,7 @@ export class ArtworkSidebarArtists extends React.Component<ArtistsProps> {
     })
   }
 
-  private renderSingleArtist = (artist: Artist, user, mediator) => {
+  private renderSingleArtist = (artist: Artist, user, mediator, artwork: ArtworkSidebarArtists_artwork) => {
     return (
       <React.Fragment>
         <Box>{this.renderArtistName(artist)}</Box>
@@ -47,11 +46,12 @@ export class ArtworkSidebarArtists extends React.Component<ArtistsProps> {
           artist={artist}
           user={user}
           trackingData={{
-            modelName: Schema.OwnerType.Artist,
-            context_module: Schema.ContextModule.Sidebar,
-            context_page: "Artwork page",
-            entity_id: artist.internalID,
-            entity_slug: artist.slug,
+            contextModule: ContextModule.artworkSidebar,
+            contextOwnerId: artwork.internalID,
+            contextOwnerSlug: artwork.slug,
+            contextOwnerType: OwnerType.artwork,
+            ownerId: artist.internalID,
+            ownerSlug: artist.slug,
           }}
           onOpenAuthModal={() => this.handleOpenAuth(mediator, artist)}
           triggerSuggestions
@@ -96,7 +96,7 @@ export class ArtworkSidebarArtists extends React.Component<ArtistsProps> {
           return (
             <Box>
               {artists.length === 1
-                ? this.renderSingleArtist(artists[0], user, mediator)
+                ? this.renderSingleArtist(artists[0], user, mediator, this.props.artwork)
                 : this.renderMultipleArtists()}
               {artists.length === 0 &&
                 cultural_maker &&
@@ -117,6 +117,8 @@ export const ArtworkSidebarArtistsFragmentContainer = createFragmentContainer(
         @argumentDefinitions(
           showFollowSuggestions: { type: "Boolean", defaultValue: true }
         ) {
+        internalID
+        slug
         cultural_maker: culturalMaker
         artists {
           id

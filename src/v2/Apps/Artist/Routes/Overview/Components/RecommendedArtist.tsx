@@ -1,4 +1,4 @@
-import { ContextModule, Intent } from "@artsy/cohesion"
+import { ContextModule, Intent, OwnerType } from "@artsy/cohesion"
 import { Box, EntityHeader, Sans, Spacer } from "@artsy/palette"
 import { RecommendedArtist_artist } from "v2/__generated__/RecommendedArtist_artist.graphql"
 import { SystemContext } from "v2/Artsy"
@@ -71,10 +71,10 @@ const RecommendedArtist: FC<
             artist={artist}
             user={user}
             trackingData={{
-              modelName: Schema.OwnerType.Artist,
-              context_module: Schema.ContextModule.RecommendedArtists,
-              entity_id: artist.internalID,
-              entity_slug: artist.slug,
+              contextOwnerType: OwnerType.artist,
+              contextModule: ContextModule.recommendedArtistsRail,
+              ownerId: artist.internalID,
+              ownerSlug: artist.slug,
             }}
             onOpenAuthModal={() => handleOpenAuth(mediator, artist)}
             render={({ is_followed }) => {

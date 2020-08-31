@@ -39,6 +39,7 @@ describe("collections header", () => {
     collection: {
       " $refType": null,
       id: "abcdefg1234",
+      internalID: "1234",
       title: "KAWS: Toys",
       credit: null,
       description: null,

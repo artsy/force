@@ -151,7 +151,8 @@ export class ArtworkApp extends React.Component<Props> {
   }
 
   renderArtists() {
-    const artists = this.props.artwork?.artists
+    const { artwork } = this.props
+    const artists = artwork?.artists
 
     if (!artists?.length) {
       return null
@@ -165,7 +166,7 @@ export class ArtworkApp extends React.Component<Props> {
             <React.Fragment key={index}>
               <Row key={artist.id}>
                 <Col>
-                  <ArtistInfo artist={artist} />
+                  <ArtistInfo artist={artist} contextOwnerId={artwork.internalID} contextOwnerSlug={artwork.slug} />
                 </Col>
               </Row>
               {addSpacer && <Spacer mb={2} />}

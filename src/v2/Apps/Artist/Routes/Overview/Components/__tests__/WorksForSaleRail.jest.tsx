@@ -59,6 +59,7 @@ describe("Works For Sale Rail", () => {
 const defaultArtist: WorksForSaleRail_Test_QueryRawResponse["artist"] = {
   internalID: "artist1234",
   name: "Andy Warhol",
+  slug: "andy-warhol",
   is_followed: false,
   counts: {
     follows: 100,

@@ -1,4 +1,4 @@
-import { ContextModule, Intent } from "@artsy/cohesion"
+import { ContextModule, Intent, OwnerType } from "@artsy/cohesion"
 import { EntityHeader, ReadMore, breakpoints } from "@artsy/palette"
 import {
   Box,
@@ -17,7 +17,6 @@ import { Header_collection } from "v2/__generated__/Header_collection.graphql"
 import { CollectionDefaultHeaderFragmentContainer as CollectionDefaultHeader } from "v2/Apps/Collect/Routes/Collection/Components/Header/DefaultHeader"
 import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
 import { useSystemContext } from "v2/Artsy"
-import { AnalyticsSchema } from "v2/Artsy/Analytics"
 import { unica } from "v2/Assets/Fonts"
 import { FollowArtistButtonFragmentContainer as FollowArtistButton } from "v2/Components/FollowButton/FollowArtistButton"
 import { Link } from "found"
@@ -69,8 +68,9 @@ export const getFeaturedArtists = (
 export const featuredArtistsEntityCollection: (
   artists: Header_artworks["merchandisableArtists"],
   mediator: any,
-  user: any
-) => JSX.Element[] = (artists, mediator, user) => {
+  user: any,
+  collection: Header_collection
+) => JSX.Element[] = (artists, mediator, user, collection) => {
   return artists.map((artist, index) => {
     const hasArtistMetaData = artist.nationality && artist.birthday
     return (
@@ -94,11 +94,12 @@ export const featuredArtistsEntityCollection: (
               artist={artist}
               user={user}
               trackingData={{
-                modelName: AnalyticsSchema.OwnerType.Artist,
-                context_module:
-                  AnalyticsSchema.ContextModule.CollectionDescription,
-                entity_id: artist.internalID,
-                entity_slug: artist.slug,
+                contextOwnerId: collection.internalID,
+                contextOwnerSlug: collection.slug,
+                contextOwnerType: OwnerType.collection,
+                contextModule: ContextModule.featuredArtistsRail,
+                ownerId: artist.internalID,
+                ownerSlug: artist.slug,
               }}
               onOpenAuthModal={() => handleOpenAuth(mediator, artist)}
               render={({ is_followed }) => {
@@ -174,7 +175,8 @@ export const CollectionHeader: FC<Props> = ({ artworks, collection }) => {
             artworks.merchandisableArtists
           ),
           mediator,
-          user
+          user,
+          collection
         )
         const resizedHeaderImage =
           collection.headerImage &&
@@ -354,6 +356,7 @@ export const CollectionFilterFragmentContainer = createFragmentContainer(
         featuredArtistExclusionIds
         headerImage
         id
+        internalID
         query {
           artistIDs
         }

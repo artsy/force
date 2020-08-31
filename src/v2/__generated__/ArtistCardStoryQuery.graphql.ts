@@ -33,6 +33,7 @@ fragment ArtistCard_artist on Artist {
       url
     }
   }
+  internalID
   formatted_nationality_and_birthday: formattedNationalityAndBirthday
   ...FollowArtistButton_artist
 }
@@ -41,6 +42,7 @@ fragment FollowArtistButton_artist on Artist {
   id
   internalID
   name
+  slug
   is_followed: isFollowed
   counts {
     follows
@@ -158,6 +160,13 @@ return {
             "storageKey": null
           },
           {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "internalID",
+            "storageKey": null
+          },
+          {
             "alias": "formatted_nationality_and_birthday",
             "args": null,
             "kind": "ScalarField",
@@ -169,13 +178,6 @@ return {
             "args": null,
             "kind": "ScalarField",
             "name": "id",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "internalID",
             "storageKey": null
           },
           {
@@ -213,7 +215,7 @@ return {
     "metadata": {},
     "name": "ArtistCardStoryQuery",
     "operationKind": "query",
-    "text": "query ArtistCardStoryQuery {\n  artist(id: \"unused\") {\n    ...ArtistCard_artist\n    id\n  }\n}\n\nfragment ArtistCard_artist on Artist {\n  name\n  slug\n  href\n  image {\n    cropped(width: 400, height: 300) {\n      url\n    }\n  }\n  formatted_nationality_and_birthday: formattedNationalityAndBirthday\n  ...FollowArtistButton_artist\n}\n\nfragment FollowArtistButton_artist on Artist {\n  id\n  internalID\n  name\n  is_followed: isFollowed\n  counts {\n    follows\n  }\n}\n"
+    "text": "query ArtistCardStoryQuery {\n  artist(id: \"unused\") {\n    ...ArtistCard_artist\n    id\n  }\n}\n\nfragment ArtistCard_artist on Artist {\n  name\n  slug\n  href\n  image {\n    cropped(width: 400, height: 300) {\n      url\n    }\n  }\n  internalID\n  formatted_nationality_and_birthday: formattedNationalityAndBirthday\n  ...FollowArtistButton_artist\n}\n\nfragment FollowArtistButton_artist on Artist {\n  id\n  internalID\n  name\n  slug\n  is_followed: isFollowed\n  counts {\n    follows\n  }\n}\n"
   }
 };
 })();

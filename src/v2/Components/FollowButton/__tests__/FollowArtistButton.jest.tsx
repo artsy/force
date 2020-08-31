@@ -5,6 +5,7 @@ import React from "react"
 import { commitMutation } from "react-relay"
 import { FollowButton } from "../Button"
 import { FollowArtistButtonFragmentContainer as FollowArtistButton } from "../FollowArtistButton"
+import { ContextModule, OwnerType } from "@artsy/cohesion"
 
 jest.mock("react-relay", () => ({
   commitMutation: jest.fn(),
@@ -12,10 +13,11 @@ jest.mock("react-relay", () => ({
 }))
 
 describe("FollowArtistButton", () => {
-  const getWrapper = (props = {}, user = {}) => {
+  let props
+  const getWrapper = (passedProps = props, user = {}) => {
     return mount(
       <SystemContextProvider user={user}>
-        <FollowArtistButton relay={{ environment: "" }} {...props} />
+        <FollowArtistButton {...passedProps} />
       </SystemContextProvider>
     )
   }
@@ -25,9 +27,8 @@ describe("FollowArtistButton", () => {
     value: { assign: jest.fn() },
   })
 
-  let testProps
   beforeEach(() => {
-    testProps = {
+    props = {
       artist: {
         internalID: "damon-zucconi",
         id: "1234",
@@ -35,7 +36,14 @@ describe("FollowArtistButton", () => {
         counts: { follows: 99 },
       },
       onOpenAuthModal: jest.fn(),
+      relay: { environment: "" },
       tracking: { trackEvent: jest.fn() },
+      trackingData: {
+        ownerSlug: "damon-zucconi",
+        ownerId: "1234",
+        contextModule: ContextModule.artistsToFollowRail,
+        contextOwnerType: OwnerType.home
+      }
     }
   })
 
@@ -47,7 +55,7 @@ describe("FollowArtistButton", () => {
   //     const component = renderer
   //       .create(
   //         <SystemContextProvider>
-  //           <FollowArtistButton {...testProps} />
+  //           <FollowArtistButton {...props} />
   //         </SystemContextProvider>
   //       )
   //       .toJSON()
@@ -57,10 +65,10 @@ describe("FollowArtistButton", () => {
 
   describe("unit", () => {
     it("Calls #onOpenAuthModal if no current user", () => {
-      const component = getWrapper(testProps)
+      const component = getWrapper()
       component.find(FollowButton).simulate("click")
 
-      expect(testProps.onOpenAuthModal).toBeCalledWith("signup", {
+      expect(props.onOpenAuthModal).toBeCalledWith("signup", {
         contextModule: "intextTooltip",
         copy: "Sign up to follow artists",
         intent: "followArtist",
@@ -73,7 +81,7 @@ describe("FollowArtistButton", () => {
     })
 
     it("Follows an artist if current user", () => {
-      const component = getWrapper(testProps, { id: "1234" })
+      const component = getWrapper(props, { id: "1234" })
       component.find(FollowButton).simulate("click")
       const mutation = (commitMutation as any).mock.calls[0][1].variables.input
 
@@ -82,8 +90,8 @@ describe("FollowArtistButton", () => {
     })
 
     it("Unfollows an artist if current user", () => {
-      testProps.artist.is_followed = true
-      const component = getWrapper(testProps, { id: "1234" })
+      props.artist.is_followed = true
+      const component = getWrapper(props, { id: "1234" })
       component.find(FollowButton).simulate("click")
       const mutation = (commitMutation as any).mock.calls[1][1].variables.input
 
@@ -92,30 +100,30 @@ describe("FollowArtistButton", () => {
     })
 
     it("Tracks follow click when following", () => {
-      const component = getWrapper(testProps, { id: "1234" })
+      const component = getWrapper(props, { id: "1234" })
       component.find(FollowButton).simulate("click")
 
-      expect(testProps.tracking.trackEvent.mock.calls[0][0].action).toBe(
+      expect(props.tracking.trackEvent.mock.calls[0][0].action).toBe(
         "Followed Artist"
       )
     })
 
     it("Tracks unfollow click when unfollowing", () => {
-      testProps.artist.is_followed = true
-      const component = getWrapper(testProps, { id: "1234" })
+      props.artist.is_followed = true
+      const component = getWrapper(props, { id: "1234" })
       component.find(FollowButton).simulate("click")
 
-      expect(testProps.tracking.trackEvent.mock.calls[0][0].action).toBe(
+      expect(props.tracking.trackEvent.mock.calls[0][0].action).toBe(
         "Unfollowed Artist"
       )
     })
 
     it("Tracks with custom trackingData if provided", () => {
-      testProps.trackingData = { contextModule: "tooltip" }
-      const component = getWrapper(testProps, { id: "1234" })
+      props.trackingData = { contextModule: "tooltip" }
+      const component = getWrapper(props, { id: "1234" })
       component.find(FollowButton).simulate("click")
 
-      expect(testProps.tracking.trackEvent.mock.calls[0][0].contextModule).toBe(
+      expect(props.tracking.trackEvent.mock.calls[0][0].contextModule).toBe(
         "tooltip"
       )
     })

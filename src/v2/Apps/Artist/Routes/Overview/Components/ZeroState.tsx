@@ -1,4 +1,4 @@
-import { ContextModule, Intent } from "@artsy/cohesion"
+import { ContextModule, Intent, OwnerType } from "@artsy/cohesion"
 import { Link, Message, Sans } from "@artsy/palette"
 import { useSystemContext } from "v2/Artsy"
 import { FollowArtistButtonFragmentContainer as FollowArtistButton } from "v2/Components/FollowButton/FollowArtistButton"
@@ -24,8 +24,15 @@ export const ZeroState = props => {
         <>
           <FollowArtistButton
             artist={artist}
-            useDeprecatedButtonStyle={false}
             user={user}
+            trackingData={{
+              contextModule: ContextModule.worksForSaleRail,
+              contextOwnerId: artist.internalID,
+              contextOwnerSlug: artist.slug,
+              contextOwnerType: OwnerType.artist,
+              ownerId: artist.internalID,
+              ownerSlug: artist.slug
+            }}
             onOpenAuthModal={() => handleOpenAuth()}
             render={({ name }) => {
               return (

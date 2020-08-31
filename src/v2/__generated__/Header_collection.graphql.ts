@@ -10,6 +10,7 @@ export type Header_collection = {
     readonly featuredArtistExclusionIds: ReadonlyArray<string> | null;
     readonly headerImage: string | null;
     readonly id: string;
+    readonly internalID: string;
     readonly query: {
         readonly artistIDs: ReadonlyArray<string> | null;
     };
@@ -76,6 +77,13 @@ const node: ReaderFragment = {
     {
       "alias": null,
       "args": null,
+      "kind": "ScalarField",
+      "name": "internalID",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
       "concreteType": "MarketingCollectionQuery",
       "kind": "LinkedField",
       "name": "query",
@@ -108,5 +116,5 @@ const node: ReaderFragment = {
   ],
   "type": "MarketingCollection"
 };
-(node as any).hash = '0cf4acb77713799d73ee4bbb29a03fb0';
+(node as any).hash = '344d1a13780149a20b3ee99c57975aaf';
 export default node;
