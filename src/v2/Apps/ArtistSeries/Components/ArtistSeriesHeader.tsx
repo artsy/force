@@ -120,7 +120,7 @@ const ArtistSeriesHeaderLarge: React.FC<ArtistSeriesHeaderProps> = props => {
   } = props
   return (
     <>
-      <Box m={3}>
+      <Box m={2}>
         <AppContainer>
           <Flex alignItems="center" justifyContent="center" position="relative">
             <Flex position="absolute" left={0}>
