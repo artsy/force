@@ -17,16 +17,15 @@ export type ArtworkArtistSeries_QueryRawResponse = {
         readonly internalID: string;
         readonly slug: string;
         readonly seriesArtist: ({
-            readonly id: string | null;
             readonly artistSeriesConnection: ({
                 readonly edges: ReadonlyArray<({
                     readonly node: ({
                         readonly internalID: string;
-                        readonly title: string;
-                        readonly slug: string;
-                        readonly featured: boolean;
-                        readonly artworksCountMessage: string | null;
-                        readonly image: ({
+                        readonly title?: string;
+                        readonly slug?: string;
+                        readonly featured?: boolean;
+                        readonly artworksCountMessage?: string | null;
+                        readonly image?: ({
                             readonly cropped: ({
                                 readonly url: string | null;
                             }) | null;
@@ -34,6 +33,7 @@ export type ArtworkArtistSeries_QueryRawResponse = {
                     }) | null;
                 }) | null> | null;
             }) | null;
+            readonly id: string | null;
         }) | null;
         readonly seriesForCounts: ({
             readonly edges: ReadonlyArray<({
@@ -192,6 +192,13 @@ fragment ArtworkArtistSeries_artwork_2juLqN on Artwork {
   slug
   seriesArtist: artist(shallow: true) {
     ...ArtistSeriesRail_artist @include(if: $shouldFetchArtistSeriesData)
+    artistSeriesConnection {
+      edges {
+        node {
+          internalID
+        }
+      }
+    }
     id
   }
   seriesForCounts: artistSeriesConnection(first: 1) {
@@ -448,6 +455,40 @@ return {
             "name": "artist",
             "plural": false,
             "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "ArtistSeriesConnection",
+                "kind": "LinkedField",
+                "name": "artistSeriesConnection",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "ArtistSeriesEdge",
+                    "kind": "LinkedField",
+                    "name": "edges",
+                    "plural": true,
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "ArtistSeries",
+                        "kind": "LinkedField",
+                        "name": "node",
+                        "plural": false,
+                        "selections": [
+                          (v2/*: any*/)
+                        ],
+                        "storageKey": null
+                      }
+                    ],
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              },
               (v5/*: any*/),
               {
                 "condition": "shouldFetchArtistSeriesData",
@@ -478,7 +519,6 @@ return {
                             "name": "node",
                             "plural": false,
                             "selections": [
-                              (v2/*: any*/),
                               (v6/*: any*/),
                               (v3/*: any*/),
                               {
@@ -949,7 +989,7 @@ return {
     "metadata": {},
     "name": "ArtworkArtistSeries_Query",
     "operationKind": "query",
-    "text": "query ArtworkArtistSeries_Query(\n  $slug: String!\n  $shouldFetchArtistSeriesData: Boolean!\n) {\n  artwork(id: $slug) {\n    ...ArtworkArtistSeries_artwork_2juLqN\n    id\n  }\n}\n\nfragment ArtistSeriesArtworkRail_artwork on Artwork {\n  internalID\n  slug\n  artistSeriesConnection(first: 1) {\n    edges {\n      node {\n        slug\n        internalID\n        filterArtworksConnection(sort: \"-decayed_merch\", first: 20) {\n          edges {\n            node {\n              image {\n                resized(height: 200) {\n                  height\n                  width\n                }\n              }\n              slug\n              internalID\n              ...FillwidthItem_artwork\n              id\n            }\n          }\n          id\n        }\n      }\n    }\n  }\n}\n\nfragment ArtistSeriesItem_artistSeries on ArtistSeries {\n  title\n  slug\n  featured\n  internalID\n  artworksCountMessage\n  image {\n    cropped(width: 320, height: 320) {\n      url\n    }\n  }\n}\n\nfragment ArtistSeriesRail_artist on Artist {\n  artistSeriesConnection {\n    edges {\n      node {\n        internalID\n        ...ArtistSeriesItem_artistSeries\n      }\n    }\n  }\n}\n\nfragment ArtworkArtistSeries_artwork_2juLqN on Artwork {\n  ...ArtistSeriesArtworkRail_artwork @include(if: $shouldFetchArtistSeriesData)\n  internalID\n  slug\n  seriesArtist: artist(shallow: true) {\n    ...ArtistSeriesRail_artist @include(if: $shouldFetchArtistSeriesData)\n    id\n  }\n  seriesForCounts: artistSeriesConnection(first: 1) {\n    edges {\n      node {\n        artworksCount\n      }\n    }\n  }\n}\n\nfragment Badge_artwork on Artwork {\n  is_biddable: isBiddable\n  href\n  sale {\n    is_preview: isPreview\n    display_timely_at: displayTimelyAt\n    id\n  }\n}\n\nfragment Contact_artwork on Artwork {\n  href\n  is_inquireable: isInquireable\n  sale {\n    is_auction: isAuction\n    is_live_open: isLiveOpen\n    is_open: isOpen\n    is_closed: isClosed\n    id\n  }\n  partner(shallow: true) {\n    type\n    id\n  }\n  sale_artwork: saleArtwork {\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    counts {\n      bidder_positions: bidderPositions\n    }\n    id\n  }\n}\n\nfragment Details_artwork on Artwork {\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n}\n\nfragment FillwidthItem_artwork on Artwork {\n  image {\n    url(version: \"large\")\n    aspect_ratio: aspectRatio\n  }\n  imageTitle\n  title\n  href\n  ...Metadata_artwork\n  ...Save_artwork\n  ...Badge_artwork\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  ...Contact_artwork\n  href\n}\n\nfragment Save_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n"
+    "text": "query ArtworkArtistSeries_Query(\n  $slug: String!\n  $shouldFetchArtistSeriesData: Boolean!\n) {\n  artwork(id: $slug) {\n    ...ArtworkArtistSeries_artwork_2juLqN\n    id\n  }\n}\n\nfragment ArtistSeriesArtworkRail_artwork on Artwork {\n  internalID\n  slug\n  artistSeriesConnection(first: 1) {\n    edges {\n      node {\n        slug\n        internalID\n        filterArtworksConnection(sort: \"-decayed_merch\", first: 20) {\n          edges {\n            node {\n              image {\n                resized(height: 200) {\n                  height\n                  width\n                }\n              }\n              slug\n              internalID\n              ...FillwidthItem_artwork\n              id\n            }\n          }\n          id\n        }\n      }\n    }\n  }\n}\n\nfragment ArtistSeriesItem_artistSeries on ArtistSeries {\n  title\n  slug\n  featured\n  internalID\n  artworksCountMessage\n  image {\n    cropped(width: 320, height: 320) {\n      url\n    }\n  }\n}\n\nfragment ArtistSeriesRail_artist on Artist {\n  artistSeriesConnection {\n    edges {\n      node {\n        internalID\n        ...ArtistSeriesItem_artistSeries\n      }\n    }\n  }\n}\n\nfragment ArtworkArtistSeries_artwork_2juLqN on Artwork {\n  ...ArtistSeriesArtworkRail_artwork @include(if: $shouldFetchArtistSeriesData)\n  internalID\n  slug\n  seriesArtist: artist(shallow: true) {\n    ...ArtistSeriesRail_artist @include(if: $shouldFetchArtistSeriesData)\n    artistSeriesConnection {\n      edges {\n        node {\n          internalID\n        }\n      }\n    }\n    id\n  }\n  seriesForCounts: artistSeriesConnection(first: 1) {\n    edges {\n      node {\n        artworksCount\n      }\n    }\n  }\n}\n\nfragment Badge_artwork on Artwork {\n  is_biddable: isBiddable\n  href\n  sale {\n    is_preview: isPreview\n    display_timely_at: displayTimelyAt\n    id\n  }\n}\n\nfragment Contact_artwork on Artwork {\n  href\n  is_inquireable: isInquireable\n  sale {\n    is_auction: isAuction\n    is_live_open: isLiveOpen\n    is_open: isOpen\n    is_closed: isClosed\n    id\n  }\n  partner(shallow: true) {\n    type\n    id\n  }\n  sale_artwork: saleArtwork {\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    counts {\n      bidder_positions: bidderPositions\n    }\n    id\n  }\n}\n\nfragment Details_artwork on Artwork {\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n}\n\nfragment FillwidthItem_artwork on Artwork {\n  image {\n    url(version: \"large\")\n    aspect_ratio: aspectRatio\n  }\n  imageTitle\n  title\n  href\n  ...Metadata_artwork\n  ...Save_artwork\n  ...Badge_artwork\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  ...Contact_artwork\n  href\n}\n\nfragment Save_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n"
   }
 };
 })();

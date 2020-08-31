@@ -79,12 +79,31 @@ describe("ArtworkArtistSeries", () => {
     expect(wrapper.find("ArtistSeriesArtworkRail").length).toBe(0)
   })
 
-  it("is null if there is no series", async () => {
+  it("includes just series if the artist has any", async () => {
     const noSeriesData: ArtworkArtistSeries_QueryRawResponse = {
       artwork: {
         ...ArtworkArtistSeriesFixture.artwork,
         artistSeriesConnection: null,
         seriesForCounts: null,
+      },
+    }
+    const wrapper = await getWrapper("xl", noSeriesData)
+    expect(wrapper.find("ArtistSeriesRail").length).toBe(1)
+    expect(wrapper.find("ArtistSeriesArtworkRail").length).toBe(0)
+  })
+
+  it("is null if there is no series or artworks", async () => {
+    const noSeriesData: ArtworkArtistSeries_QueryRawResponse = {
+      artwork: {
+        ...ArtworkArtistSeriesFixture.artwork,
+        artistSeriesConnection: null,
+        seriesForCounts: null,
+        seriesArtist: {
+          id: "series-artist-relay",
+          artistSeriesConnection: {
+            edges: [],
+          },
+        },
       },
     }
     const wrapper = await getWrapper("xl", noSeriesData)
