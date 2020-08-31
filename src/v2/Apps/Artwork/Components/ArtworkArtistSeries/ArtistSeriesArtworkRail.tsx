@@ -92,7 +92,6 @@ export const ArtistSeriesArtworkRail: React.FC<Props> = ({ artwork }) => {
               onClick={() =>
                 trackArtworkClick(artwork.slug, artwork.internalID, index)
               }
-              useLighterFont
               targetHeight={200}
               imageHeight={image?.resized.height}
               width={image?.resized.width}

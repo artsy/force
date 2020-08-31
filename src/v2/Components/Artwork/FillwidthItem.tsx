@@ -40,7 +40,6 @@ export interface FillwidthItemContainerProps
   showExtended?: boolean
   showMetadata?: boolean
   targetHeight?: number
-  useLighterFont?: boolean
   width?: number
 }
 
@@ -109,7 +108,6 @@ export class FillwidthItemContainer extends React.Component<
       user,
       hidePartnerName,
       hideArtistName,
-      useLighterFont,
     } = this.props
 
     let userSpread = {}
@@ -163,7 +161,6 @@ export class FillwidthItemContainer extends React.Component<
             extended={showExtended}
             hidePartnerName={hidePartnerName}
             hideArtistName={hideArtistName}
-            useLighterFont={useLighterFont}
           />
         )}
       </div>

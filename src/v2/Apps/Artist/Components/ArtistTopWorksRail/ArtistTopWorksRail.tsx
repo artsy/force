@@ -84,7 +84,6 @@ export const ArtistTopWorksRail: React.FC<ArtistTopWorksRailProps> = ({
               artwork={node}
               hidePartnerName
               hideArtistName
-              useLighterFont
               targetHeight={image?.resized?.height}
               imageHeight={image?.resized?.height}
               width={image?.resized?.height * image?.imageAspectRatio}
