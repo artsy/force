@@ -1,6 +1,6 @@
 _ = require 'underscore'
 template = -> require('./template.jade') arguments...
-metaphysics = require '../../../../../lib/metaphysics.coffee'
+metaphysics = require '../../../../../lib/metaphysics2.coffee'
 Backbone = require 'backbone'
 module.exports = class RelatedArticlesView extends Backbone.View
 
@@ -15,18 +15,16 @@ module.exports = class RelatedArticlesView extends Backbone.View
     metaphysics
       variables: show_id: @showId
       query: '
-        query($show_id: String!)
-        {
-          related_articles: articles(show_id: $show_id) {
+        query ($show_id: String!) {
+          related_articles: articles(showID: $show_id) {
             id
             href
             title
-            thumbnail_title
+            thumbnail_title: thumbnailTitle
             author {
               name
-              href
             }
-            thumbnail_image {
+            thumbnail_image: thumbnailImage {
               cropped(width: 300, height: 225) {
                 url
               }
