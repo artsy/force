@@ -1,5 +1,5 @@
 import { ActionType, FollowedArgs, Intent } from "@artsy/cohesion"
-import { Box, ButtonProps } from "@artsy/palette"
+import { Box } from "@artsy/palette"
 import { FollowArtistButtonMutation } from "v2/__generated__/FollowArtistButtonMutation.graphql"
 import * as Artsy from "v2/Artsy"
 import { FollowArtistPopoverFragmentContainer as SuggestionsPopover } from "v2/Components/FollowArtistPopover"
@@ -28,11 +28,6 @@ interface Props
   tracking?: TrackingProp
   trackingData: FollowedArgs
   /**
-   * FIXME: pass <Button> style props along
-   * to new design-system buttons.
-   */
-  buttonProps?: Partial<ButtonProps>
-  /**
    * Custom renderer for alternative button displays
    */
   render?: (artist: FollowArtistButton_artist) => JSX.Element
@@ -55,7 +50,6 @@ const Container = styled.span`
 @track()
 export class FollowArtistButton extends React.Component<Props, State> {
   static defaultProps = {
-    buttonProps: {},
     triggerSuggestions: false,
     useNewAnalyticsSchema: false,
   }
@@ -150,7 +144,7 @@ export class FollowArtistButton extends React.Component<Props, State> {
   }
 
   render() {
-    const { artist, buttonProps, render, user } = this.props
+    const { artist, render, user } = this.props
     const { openSuggestions } = this.state
 
     // Custom button renderer
@@ -172,7 +166,6 @@ export class FollowArtistButton extends React.Component<Props, State> {
       <FollowButton
         isFollowed={artist && artist.is_followed}
         handleFollow={this.handleFollow}
-        buttonProps={buttonProps}
       />
     )
 

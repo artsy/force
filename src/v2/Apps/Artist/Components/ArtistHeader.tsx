@@ -186,7 +186,6 @@ export class SmallArtistHeader extends Component<Props> {
           <Flex>
             <FollowArtistButton
               artist={props.artist}
-              buttonProps={{ width: "100%" }}
               user={user}
               trackingData={{
                 contextModule: ContextModule.artistHeader,
