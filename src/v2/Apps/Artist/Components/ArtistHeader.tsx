@@ -1,4 +1,4 @@
-import { ContextModule, Intent, OwnerType } from "@artsy/cohesion"
+import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { Box, Flex, Sans, Spacer } from "@artsy/palette"
 import { ArtistHeader_artist } from "v2/__generated__/ArtistHeader_artist.graphql"
 import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
@@ -10,7 +10,6 @@ import React, { Component } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { get } from "v2/Utils/get"
-import { openAuthToFollowSave } from "v2/Utils/openAuthModal"
 import { Media } from "v2/Utils/Responsive"
 import { ArtistIndicator } from "./ArtistIndicator"
 import { highestCategory } from "./MarketInsights/MarketInsights"
@@ -125,15 +124,12 @@ export class LargeArtistHeader extends Component<Props> {
                   contextModule: ContextModule.artistHeader,
                   contextOwnerType: OwnerType.artist,
                   ownerId: props.artist.internalID,
-                  ownerSlug: props.artist.slug
+                  ownerSlug: props.artist.slug,
                 }}
-                  artist={props.artist}
-                  user={user}
-                  onOpenAuthModal={() =>
-                    handleOpenAuth(props.mediator, props.artist)
-                  }
-                >
-                  Follow
+                artist={props.artist}
+                user={user}
+              >
+                Follow
               </FollowArtistButton>
             </Flex>
           </Flex>
@@ -196,7 +192,7 @@ export class SmallArtistHeader extends Component<Props> {
                 contextModule: ContextModule.artistHeader,
                 contextOwnerType: OwnerType.artist,
                 ownerId: props.artist.internalID,
-                ownerSlug: props.artist.slug
+                ownerSlug: props.artist.slug,
               }}
               render={({ is_followed }) => {
                 return (
@@ -213,9 +209,6 @@ export class SmallArtistHeader extends Component<Props> {
                   </Sans>
                 )
               }}
-              onOpenAuthModal={() =>
-                handleOpenAuth(props.mediator, props.artist)
-              }
             >
               Follow
             </FollowArtistButton>
@@ -230,14 +223,6 @@ export class SmallArtistHeader extends Component<Props> {
       </Flex>
     )
   }
-}
-
-const handleOpenAuth = (mediator, artist) => {
-  openAuthToFollowSave(mediator, {
-    entity: artist,
-    contextModule: ContextModule.artistHeader,
-    intent: Intent.followArtist,
-  })
 }
 
 const renderAuctionHighlight = artist => {

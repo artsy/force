@@ -20,14 +20,13 @@ import { ArtistBioFragmentContainer as ArtistBio } from "v2/Components/ArtistBio
 import { ArtistMarketInsightsFragmentContainer as ArtistMarketInsights } from "v2/Components/ArtistMarketInsights"
 import { SelectedExhibitionFragmentContainer as SelectedExhibitions } from "v2/Components/SelectedExhibitions"
 
-import { ContextModule, Intent, OwnerType } from "@artsy/cohesion"
+import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { MIN_EXHIBITIONS } from "v2/Components/SelectedExhibitions"
 import React, { Component } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { data as sd } from "sharify"
 import Events from "v2/Utils/Events"
 import { get } from "v2/Utils/get"
-import { openAuthToFollowSave } from "v2/Utils/openAuthModal"
 
 interface ArtistInfoProps {
   artist: ArtistInfo_artist
@@ -85,14 +84,6 @@ export class ArtistInfo extends Component<ArtistInfoProps, ArtistInfoState> {
     })
   }
 
-  handleOpenAuth = (mediator, artist) => {
-    openAuthToFollowSave(mediator, {
-      entity: artist,
-      contextModule: ContextModule.aboutTheWork,
-      intent: Intent.followArtist,
-    })
-  }
-
   render() {
     const { artist } = this.props
     const { biographyBlurb, image, slug, internalID } = this.props.artist
@@ -136,9 +127,6 @@ export class ArtistInfo extends Component<ArtistInfoProps, ArtistInfoState> {
                       ownerId: internalID,
                       ownerSlug: slug,
                     }}
-                    onOpenAuthModal={() =>
-                      this.handleOpenAuth(mediator, this.props.artist)
-                    }
                     render={({ is_followed }) => {
                       return (
                         <Sans
@@ -218,38 +206,52 @@ export class ArtistInfo extends Component<ArtistInfoProps, ArtistInfoState> {
 
 // ADDED COLLECTIONS, HIGHLIGHTS, AND AUCTION RESULTS TO FRAGMENT FOR SHOW ARTIST INSIGHTS BUTTON VISIBLILITY CHECK
 
-export const ArtistInfoFragmentContainer = createFragmentContainer(ArtistInfo as React.ComponentType<ArtistInfoProps>, {
-  artist: graphql`
-    fragment ArtistInfo_artist on Artist
-      @argumentDefinitions(
-        partnerCategory: {
-          type: "[String]"
-          defaultValue: ["blue-chip", "top-established", "top-emerging"]
+export const ArtistInfoFragmentContainer = createFragmentContainer(
+  ArtistInfo as React.ComponentType<ArtistInfoProps>,
+  {
+    artist: graphql`
+      fragment ArtistInfo_artist on Artist
+        @argumentDefinitions(
+          partnerCategory: {
+            type: "[String]"
+            defaultValue: ["blue-chip", "top-established", "top-emerging"]
+          }
+        ) {
+        internalID
+        slug
+        name
+        href
+        image {
+          cropped(width: 100, height: 100) {
+            url
+          }
         }
-      ) {
-      internalID
-      slug
-      name
-      href
-      image {
-        cropped(width: 100, height: 100) {
-          url
+        formatted_nationality_and_birthday: formattedNationalityAndBirthday
+        counts {
+          partner_shows: partnerShows
         }
-      }
-      formatted_nationality_and_birthday: formattedNationalityAndBirthday
-      counts {
-        partner_shows: partnerShows
-      }
-      exhibition_highlights: exhibitionHighlights(size: 3) {
-        ...SelectedExhibitions_exhibitions
-      }
-      collections
-      highlights {
-        partnersConnection(
-          first: 10
-          displayOnPartnerProfile: true
-          representedBy: true
-          partnerCategory: $partnerCategory
+        exhibition_highlights: exhibitionHighlights(size: 3) {
+          ...SelectedExhibitions_exhibitions
+        }
+        collections
+        highlights {
+          partnersConnection(
+            first: 10
+            displayOnPartnerProfile: true
+            representedBy: true
+            partnerCategory: $partnerCategory
+          ) {
+            edges {
+              node {
+                __typename
+              }
+            }
+          }
+        }
+        auctionResultsConnection(
+          recordsTrusted: true
+          first: 1
+          sort: PRICE_AND_DATE_DESC
         ) {
           edges {
             node {
@@ -257,29 +259,18 @@ export const ArtistInfoFragmentContainer = createFragmentContainer(ArtistInfo as
             }
           }
         }
-      }
-      auctionResultsConnection(
-        recordsTrusted: true
-        first: 1
-        sort: PRICE_AND_DATE_DESC
-      ) {
-        edges {
-          node {
-            __typename
-          }
+        ...ArtistBio_bio
+        ...ArtistMarketInsights_artist
+        ...FollowArtistButton_artist
+        # The below data is only used to determine whether a section
+        # should be rendered
+        biographyBlurb: biographyBlurb(format: HTML, partnerBio: true) {
+          text
         }
       }
-      ...ArtistBio_bio
-      ...ArtistMarketInsights_artist
-      ...FollowArtistButton_artist
-      # The below data is only used to determine whether a section
-      # should be rendered
-      biographyBlurb: biographyBlurb(format: HTML, partnerBio: true) {
-        text
-      }
-    }
-  `,
-})
+    `,
+  }
+)
 
 export const ArtistInfoQueryRenderer = ({ artistID }: { artistID: string }) => {
   return (

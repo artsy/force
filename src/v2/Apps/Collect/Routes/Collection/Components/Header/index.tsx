@@ -1,4 +1,4 @@
-import { ContextModule, Intent, OwnerType } from "@artsy/cohesion"
+import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { EntityHeader, ReadMore, breakpoints } from "@artsy/palette"
 import {
   Box,
@@ -25,7 +25,6 @@ import React, { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { slugify } from "underscore.string"
-import { openAuthToFollowSave } from "v2/Utils/openAuthModal"
 import { resize } from "v2/Utils/resizer"
 import { Responsive } from "v2/Utils/Responsive"
 import { FeaturedArtists } from "./FeaturedArtists"
@@ -33,14 +32,6 @@ import { FeaturedArtists } from "./FeaturedArtists"
 export interface Props {
   collection: Header_collection
   artworks: Header_artworks
-}
-
-const handleOpenAuth = (mediator, artist) => {
-  openAuthToFollowSave(mediator, {
-    entity: artist,
-    contextModule: ContextModule.featuredArtistsRail,
-    intent: Intent.followArtist,
-  })
 }
 
 export const getFeaturedArtists = (
@@ -101,7 +92,6 @@ export const featuredArtistsEntityCollection: (
                 ownerId: artist.internalID,
                 ownerSlug: artist.slug,
               }}
-              onOpenAuthModal={() => handleOpenAuth(mediator, artist)}
               render={({ is_followed }) => {
                 return (
                   <Sans

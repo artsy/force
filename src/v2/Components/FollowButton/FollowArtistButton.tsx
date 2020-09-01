@@ -10,24 +10,23 @@ import styled from "styled-components"
 import { FollowArtistButton_artist } from "../../__generated__/FollowArtistButton_artist.graphql"
 import { FollowButton } from "./Button"
 import { FollowTrackingData } from "./Typings"
-
-import { ModalOptions, ModalType } from "v2/Components/Authentication/Types"
 import {
   RelayProp,
   commitMutation,
   createFragmentContainer,
   graphql,
 } from "react-relay"
+import { openAuthToFollowSave } from "v2/Utils/openAuthModal"
+import { Mediator } from "v2/Artsy"
 
 interface Props
   extends React.HTMLProps<FollowArtistButton>,
     Artsy.SystemContextProps {
   relay?: RelayProp
+  mediator?: Mediator
   artist?: FollowArtistButton_artist
   tracking?: TrackingProp
   trackingData: FollowedArgs
-  onOpenAuthModal?: (type: ModalType, config?: ModalOptions) => void
-  useNewAnalyticsSchema?: boolean
   /**
    * FIXME: pass <Button> style props along
    * to new design-system buttons.
@@ -70,38 +69,31 @@ export class FollowArtistButton extends React.Component<Props, State> {
     } = this.props
     const trackingData: FollowTrackingData = this.props.trackingData
 
-    let action:
-      | ActionType.unfollowedArtist
-      | ActionType.followedArtist
+    let action: ActionType.unfollowedArtist | ActionType.followedArtist
 
-      action = is_followed
-        ? ActionType.unfollowedArtist
-        : ActionType.followedArtist
+    action = is_followed
+      ? ActionType.unfollowedArtist
+      : ActionType.followedArtist
 
     tracking.trackEvent(extend(trackingData, { action }))
   }
 
   handleFollow = e => {
     e.preventDefault() // If this button is part of a link, we _probably_ dont want to actually follow the link.
-    const { artist, user, onOpenAuthModal, trackingData } = this.props
+    const { artist, user, mediator, trackingData } = this.props
 
     if (user && user.id) {
-      this.followArtistForUser(user)
-    } else if (onOpenAuthModal) {
-      onOpenAuthModal(ModalType.signup, {
+      this.followArtistForUser()
+    } else {
+      openAuthToFollowSave(mediator, {
+        entity: artist,
         contextModule: trackingData.contextModule,
         intent: Intent.followArtist,
-        copy: "Sign up to follow artists",
-        afterSignUpAction: {
-          action: "follow",
-          kind: "artist",
-          objectId: (artist && artist.internalID),
-        },
       })
     }
   }
 
-  followArtistForUser = user => {
+  followArtistForUser = () => {
     const { artist, relay, triggerSuggestions } = this.props
 
     const newFollowCount = artist.is_followed

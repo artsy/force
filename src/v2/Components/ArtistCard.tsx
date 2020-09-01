@@ -1,4 +1,4 @@
-import { AuthContextModule, Intent, OwnerType } from "@artsy/cohesion"
+import { AuthContextModule, OwnerType } from "@artsy/cohesion"
 import { ArtistCard_artist } from "v2/__generated__/ArtistCard_artist.graphql"
 import { Mediator } from "v2/Artsy"
 import { FollowArtistButtonFragmentContainer as FollowArtistButton } from "v2/Components/FollowButton/FollowArtistButton"
@@ -6,7 +6,6 @@ import { Truncator } from "v2/Components/Truncator"
 import React, { SFC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { get } from "v2/Utils/get"
-import { openAuthToFollowSave } from "v2/Utils/openAuthModal"
 import { Media } from "v2/Utils/Responsive"
 
 import {
@@ -25,8 +24,8 @@ import { RouterLink } from "v2/Artsy/Router/RouterLink"
 
 export interface ArtistCardProps {
   artist: ArtistCard_artist
-  contextModule: AuthContextModule,
-  contextOwnerType: OwnerType,
+  contextModule: AuthContextModule
+  contextOwnerType: OwnerType
   user: User
   mediator?: Mediator
   /** Lazy load the avatar image */
@@ -94,9 +93,8 @@ export const LargeArtistCard: SFC<ArtistCardProps> = props => (
           contextOwnerType: props.contextOwnerType,
           contextModule: props.contextModule,
           ownerId: props.artist.internalID,
-          ownerSlug: props.artist.slug
+          ownerSlug: props.artist.slug,
         }}
-        onOpenAuthModal={() => handleOpenAuth(props)}
         render={({ is_followed }) => {
           return (
             <Button
@@ -141,9 +139,8 @@ export const SmallArtistCard: SFC<ArtistCardProps> = props => (
           contextOwnerType: props.contextOwnerType,
           contextModule: props.contextModule,
           ownerId: props.artist.internalID,
-          ownerSlug: props.artist.slug
+          ownerSlug: props.artist.slug,
         }}
-        onOpenAuthModal={() => handleOpenAuth(props)}
         render={({ is_followed }) => {
           return (
             <Button
@@ -160,31 +157,26 @@ export const SmallArtistCard: SFC<ArtistCardProps> = props => (
   </BorderBox>
 )
 
-const handleOpenAuth = (props: ArtistCardProps) => {
-  openAuthToFollowSave(props.mediator, {
-    entity: props.artist,
-    contextModule: props.contextModule,
-    intent: Intent.followArtist,
-  })
-}
-
-export const ArtistCardFragmentContainer = createFragmentContainer(ArtistCard as React.ComponentType<ArtistCardProps>, {
-  artist: graphql`
-    fragment ArtistCard_artist on Artist {
-      name
-      slug
-      href
-      image {
-        cropped(width: 400, height: 300) {
-          url
+export const ArtistCardFragmentContainer = createFragmentContainer(
+  ArtistCard as React.ComponentType<ArtistCardProps>,
+  {
+    artist: graphql`
+      fragment ArtistCard_artist on Artist {
+        name
+        slug
+        href
+        image {
+          cropped(width: 400, height: 300) {
+            url
+          }
         }
+        internalID
+        formatted_nationality_and_birthday: formattedNationalityAndBirthday
+        ...FollowArtistButton_artist
       }
-      internalID
-      formatted_nationality_and_birthday: formattedNationalityAndBirthday
-      ...FollowArtistButton_artist
-    }
-  `,
-})
+    `,
+  }
+)
 
 // Helpers
 

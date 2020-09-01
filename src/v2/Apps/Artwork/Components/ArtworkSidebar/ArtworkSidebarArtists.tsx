@@ -5,10 +5,9 @@ import { FollowIcon } from "v2/Components/FollowIcon"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 
-import { ContextModule, Intent, OwnerType } from "@artsy/cohesion"
+import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { ArtworkSidebarArtists_artwork } from "v2/__generated__/ArtworkSidebarArtists_artwork.graphql"
 import { FollowArtistButtonFragmentContainer as FollowArtistButton } from "v2/Components/FollowButton/FollowArtistButton"
-import { openAuthToFollowSave } from "v2/Utils/openAuthModal"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
 
 export interface ArtistsProps {
@@ -30,15 +29,11 @@ export class ArtworkSidebarArtists extends React.Component<ArtistsProps> {
     )
   }
 
-  handleOpenAuth = (mediator, artist) => {
-    openAuthToFollowSave(mediator, {
-      entity: artist,
-      contextModule: ContextModule.artworkSidebar,
-      intent: Intent.followArtist,
-    })
-  }
-
-  private renderSingleArtist = (artist: Artist, user, mediator, artwork: ArtworkSidebarArtists_artwork) => {
+  private renderSingleArtist = (
+    artist: Artist,
+    user,
+    artwork: ArtworkSidebarArtists_artwork
+  ) => {
     return (
       <React.Fragment>
         <Box>{this.renderArtistName(artist)}</Box>
@@ -53,7 +48,6 @@ export class ArtworkSidebarArtists extends React.Component<ArtistsProps> {
             ownerId: artist.internalID,
             ownerSlug: artist.slug,
           }}
-          onOpenAuthModal={() => this.handleOpenAuth(mediator, artist)}
           triggerSuggestions
           render={({ is_followed }) => {
             return <FollowIcon isFollowed={is_followed} />
@@ -96,7 +90,7 @@ export class ArtworkSidebarArtists extends React.Component<ArtistsProps> {
           return (
             <Box>
               {artists.length === 1
-                ? this.renderSingleArtist(artists[0], user, mediator, this.props.artwork)
+                ? this.renderSingleArtist(artists[0], user, this.props.artwork)
                 : this.renderMultipleArtists()}
               {artists.length === 0 &&
                 cultural_maker &&
