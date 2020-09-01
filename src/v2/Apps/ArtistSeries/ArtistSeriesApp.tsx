@@ -2,13 +2,11 @@ import React from "react"
 import { AppContainer } from "v2/Apps/Components/AppContainer"
 import { Box, Separator, Spacer } from "@artsy/palette"
 
-import { SystemContext } from "v2/Artsy"
 import { Footer } from "v2/Components/Footer"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtistSeriesApp_artistSeries } from "v2/__generated__/ArtistSeriesApp_artistSeries.graphql"
 import { ArtistSeriesHeaderFragmentContainer as ArtistSeriesHeader } from "./Components/ArtistSeriesHeader"
 import { ArtistSeriesArtworksFilterRefetchContainer as ArtistSeriesArtworksFilter } from "./Components/ArtistSeriesArtworksFilter"
-import { userHasLabFeature } from "v2/Utils/user"
 import { ErrorPage } from "v2/Components/ErrorPage"
 import { ArtistSeriesRailFragmentContainer as OtherArtistSeriesRail } from "v2/Components/ArtistSeriesRail/ArtistSeriesRail"
 import { ArtistSeriesMetaFragmentContainer as ArtistSeriesMeta } from "./Components/ArtistSeriesMeta"
@@ -21,10 +19,7 @@ interface ArtistSeriesAppProps {
 }
 
 const ArtistSeriesApp: React.FC<ArtistSeriesAppProps> = ({ artistSeries }) => {
-  const { user } = React.useContext(SystemContext)
-  const isEnabled = userHasLabFeature(user, "Artist Series")
-
-  if (isEnabled && artistSeries) {
+  if (artistSeries) {
     const { railArtist, internalID, slug } = artistSeries
     return (
       <AppContainer maxWidth="100%">

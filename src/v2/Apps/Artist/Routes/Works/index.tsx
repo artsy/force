@@ -1,6 +1,5 @@
 import { Box, Col, Row, Separator } from "@artsy/palette"
 import { Works_artist } from "v2/__generated__/Works_artist.graphql"
-import { ArtistCollectionsRailContent as ArtistCollectionsRail } from "v2/Apps/Artist/Components/ArtistCollectionsRail"
 import { ArtistArtworkFilterRefetchContainer as ArtworkFilter } from "v2/Apps/Artist/Routes/Overview/Components/ArtistArtworkFilter"
 import { ArtistRecommendationsQueryRenderer as ArtistRecommendations } from "v2/Apps/Artist/Routes/Overview/Components/ArtistRecommendations"
 import React from "react"
@@ -8,8 +7,6 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { get } from "v2/Utils/get"
 import { ArtistTopWorksRailFragmentContainer as ArtistTopWorksRail } from "v2/Apps/Artist/Components/ArtistTopWorksRail/ArtistTopWorksRail"
 import { ArtistSeriesRailFragmentContainer as ArtistSeriesRail } from "v2/Components/ArtistSeriesRail/ArtistSeriesRail"
-import { SystemContext } from "v2/Artsy"
-import { userHasLabFeature } from "v2/Utils/user"
 import { ContextModule, OwnerType } from "@artsy/cohesion"
 
 export interface WorksRouteProps {
@@ -25,9 +22,6 @@ export const WorksRoute: React.FC<WorksRouteProps> = props => {
     isClient &&
     get(artist, a => a.related.artistsConnection.edges.length, 0) > 0
 
-  const { user } = React.useContext(SystemContext)
-  const artistSeriesIsEnabled = userHasLabFeature(user, "Artist Series")
-
   return (
     <>
       <Box>
@@ -35,17 +29,13 @@ export const WorksRoute: React.FC<WorksRouteProps> = props => {
       </Box>
 
       <Box>
-        {artistSeriesIsEnabled ? (
-          <ArtistSeriesRail
-            artist={artist}
-            contextPageOwnerId={internalID}
-            contextPageOwnerSlug={slug}
-            contextModule={ContextModule.artistSeriesRail}
-            contextPageOwnerType={OwnerType.artist}
-          />
-        ) : (
-          <ArtistCollectionsRail artistID={artist.internalID} />
-        )}
+        <ArtistSeriesRail
+          artist={artist}
+          contextPageOwnerId={internalID}
+          contextPageOwnerSlug={slug}
+          contextModule={ContextModule.artistSeriesRail}
+          contextPageOwnerType={OwnerType.artist}
+        />
       </Box>
 
       <Row>
@@ -94,12 +84,11 @@ export const WorksRouteFragmentContainer = createFragmentContainer(WorksRoute, {
         sizes: { type: "[ArtworkSizes]" }
         sort: { type: "String", defaultValue: "-partner_updated_at" }
         width: { type: "String" }
-        shouldFetchArtistSeriesData: { type: "Boolean!", defaultValue: false }
       ) {
       internalID
       slug
       ...ArtistTopWorksRail_artist
-      ...ArtistSeriesRail_artist @include(if: $shouldFetchArtistSeriesData)
+      ...ArtistSeriesRail_artist
       related {
         artistsConnection(first: 1) {
           edges {

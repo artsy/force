@@ -7,7 +7,6 @@ import React from "react"
 import { graphql } from "react-relay"
 import { Breakpoint } from "v2/Utils/Responsive"
 import { ArtistTopWorksRailFragmentContainer as ArtistTopWorksRail } from "v2/Apps/Artist/Components/ArtistTopWorksRail/ArtistTopWorksRail"
-import { userHasLabFeature } from "v2/Utils/user"
 import { useTracking } from "v2/Artsy/Analytics/useTracking"
 
 jest.mock("v2/Artsy/Analytics/useTracking")
@@ -42,33 +41,23 @@ describe("Works Route", () => {
 
   const getWrapper = async (
     breakpoint: Breakpoint = "xl",
-    worksMock = defaultWorks,
-    user = {}
+    worksMock = defaultWorks
   ) => {
     return renderRelayTree({
       Component: WorksRoute,
       query: graphql`
-        query Works_Test_Query(
-          $artistID: String!
-          $shouldFetchArtistSeriesData: Boolean!
-        ) @raw_response_type {
+        query Works_Test_Query($artistID: String!) @raw_response_type {
           artist(id: $artistID) {
             ...Works_artist
-              @arguments(
-                shouldFetchArtistSeriesData: $shouldFetchArtistSeriesData
-              )
           }
         }
       `,
       mockData: worksMock,
       variables: {
         artistID: "pablo-picasso",
-        shouldFetchArtistSeriesData: userHasLabFeature(user, "Artist Series"),
       },
       wrapper: children => (
-        <MockBoot user={user} breakpoint={breakpoint}>
-          {children}
-        </MockBoot>
+        <MockBoot breakpoint={breakpoint}>{children}</MockBoot>
       ),
     })
   }
@@ -143,9 +132,7 @@ describe("Works Route", () => {
     })
 
     it("Displays artist series rail with the lab feature", async () => {
-      wrapper = await getWrapper("xl", defaultWorks, {
-        lab_features: ["Artist Series"],
-      })
+      wrapper = await getWrapper("xl", defaultWorks)
       expect(wrapper.find("ArtistSeriesRail").length).toBe(1)
       expect(wrapper.find("ArtistSeriesItem").length).toBe(1)
       expect(wrapper.find("ArtistSeriesItem").text()).toContain(

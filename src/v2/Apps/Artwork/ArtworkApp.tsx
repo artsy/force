@@ -30,7 +30,6 @@ import { RecentlyViewedQueryRenderer as RecentlyViewed } from "v2/Components/Rec
 import { RouterContext } from "found"
 import { TrackingProp } from "react-tracking"
 import { Media } from "v2/Utils/Responsive"
-import { userHasLabFeature } from "v2/Utils/user"
 
 export interface Props {
   artwork: ArtworkApp_artwork
@@ -221,25 +220,13 @@ export class ArtworkApp extends React.Component<Props> {
             </Row>
           </Media>
 
-          <SystemContextConsumer>
-            {({ user }) => {
-              const artistSeriesIsEnabled = userHasLabFeature(
-                user,
-                "Artist Series"
-              )
-              if (artistSeriesIsEnabled) {
-                return (
-                  <Row>
-                    <Col>
-                      <Box mt={3}>
-                        <ArtworkArtistSeries artwork={artwork} />
-                      </Box>
-                    </Col>
-                  </Row>
-                )
-              }
-            }}
-          </SystemContextConsumer>
+          <Row>
+            <Col>
+              <Box mt={3}>
+                <ArtworkArtistSeries artwork={artwork} />
+              </Box>
+            </Col>
+          </Row>
 
           <Row>
             <Col>
@@ -315,10 +302,7 @@ export const ArtworkAppFragmentContainer = createFragmentContainer(
   },
   {
     artwork: graphql`
-      fragment ArtworkApp_artwork on Artwork
-        @argumentDefinitions(
-          shouldFetchArtistSeriesData: { type: "Boolean!" }
-        ) {
+      fragment ArtworkApp_artwork on Artwork {
         slug
         internalID
         is_acquireable: isAcquireable
@@ -355,7 +339,6 @@ export const ArtworkAppFragmentContainer = createFragmentContainer(
         ...ArtworkImageBrowser_artwork
         ...OtherWorks_artwork
         ...ArtworkArtistSeries_artwork
-          @arguments(shouldFetchArtistSeriesData: $shouldFetchArtistSeriesData)
         ...PricingContext_artwork
       }
     `,

@@ -56,14 +56,7 @@ v1 = {
   "storageKey": null
 };
 return {
-  "argumentDefinitions": [
-    {
-      "defaultValue": false,
-      "kind": "LocalArgument",
-      "name": "shouldFetchArtistSeriesData",
-      "type": "Boolean!"
-    }
-  ],
+  "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
   "name": "OtherWorks_artwork",
@@ -199,16 +192,9 @@ return {
       "plural": false,
       "selections": [
         {
-          "condition": "shouldFetchArtistSeriesData",
-          "kind": "Condition",
-          "passingValue": true,
-          "selections": [
-            {
-              "args": null,
-              "kind": "FragmentSpread",
-              "name": "ArtistSeriesRail_artist"
-            }
-          ]
+          "args": null,
+          "kind": "FragmentSpread",
+          "name": "ArtistSeriesRail_artist"
         }
       ],
       "storageKey": "artist(shallow:true)"
@@ -219,20 +205,13 @@ return {
       "name": "RelatedWorksArtworkGrid_artwork"
     },
     {
-      "condition": "shouldFetchArtistSeriesData",
-      "kind": "Condition",
-      "passingValue": true,
-      "selections": [
-        {
-          "args": null,
-          "kind": "FragmentSpread",
-          "name": "ArtistSeriesArtworkRail_artwork"
-        }
-      ]
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArtistSeriesArtworkRail_artwork"
     }
   ],
   "type": "Artwork"
 };
 })();
-(node as any).hash = '84a7aba3c5bcf0d95baf0844789cadde';
+(node as any).hash = 'aaea80834413bdf2196a4490426d4adc';
 export default node;
