@@ -12,11 +12,6 @@ import { useTracking } from "v2/Artsy/Analytics/useTracking"
 jest.mock("v2/Artsy/Analytics/useTracking")
 jest.unmock("react-relay")
 
-// Mocking the ArtworkCollectionsRail component because it is tested elsewhere
-jest.mock("v2/Apps/Artist/Components/ArtistCollectionsRail", () => ({
-  ArtistCollectionsRailContent: () => <div>Mock ArtistCollectionRail</div>,
-}))
-
 // Mocking the ArtistRecommendations component because it is tested elsewhere
 jest.mock(
   "v2/Apps/Artist/Routes/Overview/Components/ArtistRecommendations",
@@ -63,17 +58,15 @@ describe("Works Route", () => {
   }
 
   describe("general behavior", () => {
-    beforeAll(async () => {
-      wrapper = await getWrapper()
-    })
-
-    it("renders correct sections", () => {
+    it("renders correct sections", async () => {
+      const wrapper = await getWrapper()
+      console.log("WRAPPY", wrapper.html())
       expect(wrapper.find(ArtworkFilter).length).toEqual(1)
       expect(wrapper.html()).toContain("Mock ArtistRecommendations")
-      expect(wrapper.html()).toContain("Mock ArtistCollectionRail")
     })
 
-    it("includes the correct sort options", () => {
+    it("includes the correct sort options", async () => {
+      const wrapper = await getWrapper()
       const sortOptions = wrapper
         .find("div[title='Sort'] select option")
         .map(el => el.text())
@@ -127,11 +120,7 @@ describe("Works Route", () => {
   })
 
   describe("Artist Series Rail", () => {
-    it("does not display artist series without the lab feature", async () => {
-      expect(wrapper.find("ArtistSeriesRail").length).toBe(0)
-    })
-
-    it("Displays artist series rail with the lab feature", async () => {
+    it("Displays artist series rail", async () => {
       wrapper = await getWrapper("xl", defaultWorks)
       expect(wrapper.find("ArtistSeriesRail").length).toBe(1)
       expect(wrapper.find("ArtistSeriesItem").length).toBe(1)
