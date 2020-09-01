@@ -3,23 +3,53 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type routes_FairExhibitorsQueryVariables = {
+export type FairExhibitors_QueryVariables = {
     slug: string;
 };
-export type routes_FairExhibitorsQueryResponse = {
+export type FairExhibitors_QueryResponse = {
     readonly fair: {
         readonly " $fragmentRefs": FragmentRefs<"FairExhibitors_fair">;
     } | null;
 };
-export type routes_FairExhibitorsQuery = {
-    readonly response: routes_FairExhibitorsQueryResponse;
-    readonly variables: routes_FairExhibitorsQueryVariables;
+export type FairExhibitors_QueryRawResponse = {
+    readonly fair: ({
+        readonly id: string;
+        readonly exhibitors: ({
+            readonly edges: ReadonlyArray<({
+                readonly show: ({
+                    readonly id: string;
+                    readonly counts: ({
+                        readonly artworks: number | null;
+                    }) | null;
+                    readonly internalID: string;
+                    readonly href: string | null;
+                    readonly partner: ({
+                        readonly __typename: "Partner";
+                        readonly id: string | null;
+                        readonly name: string | null;
+                    } | {
+                        readonly __typename: "ExternalPartner";
+                        readonly id: string | null;
+                        readonly name: string | null;
+                    } | {
+                        readonly __typename: string | null;
+                        readonly id: string | null;
+                    }) | null;
+                }) | null;
+            }) | null> | null;
+        }) | null;
+    }) | null;
+};
+export type FairExhibitors_Query = {
+    readonly response: FairExhibitors_QueryResponse;
+    readonly variables: FairExhibitors_QueryVariables;
+    readonly rawResponse: FairExhibitors_QueryRawResponse;
 };
 
 
 
 /*
-query routes_FairExhibitorsQuery(
+query FairExhibitors_Query(
   $slug: String!
 ) {
   fair(id: $slug) {
@@ -102,7 +132,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "routes_FairExhibitorsQuery",
+    "name": "FairExhibitors_Query",
     "selections": [
       {
         "alias": null,
@@ -127,7 +157,7 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "routes_FairExhibitorsQuery",
+    "name": "FairExhibitors_Query",
     "selections": [
       {
         "alias": null,
@@ -252,11 +282,11 @@ return {
   "params": {
     "id": null,
     "metadata": {},
-    "name": "routes_FairExhibitorsQuery",
+    "name": "FairExhibitors_Query",
     "operationKind": "query",
-    "text": "query routes_FairExhibitorsQuery(\n  $slug: String!\n) {\n  fair(id: $slug) {\n    ...FairExhibitors_fair\n    id\n  }\n}\n\nfragment FairExhibitorRail_show on Show {\n  internalID\n  href\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on ExternalPartner {\n      name\n      id\n    }\n    ... on Node {\n      id\n    }\n  }\n  counts {\n    artworks\n  }\n}\n\nfragment FairExhibitors_fair on Fair {\n  id\n  exhibitors: showsConnection(first: 30, sort: FEATURED_ASC) {\n    edges {\n      show: node {\n        id\n        counts {\n          artworks\n        }\n        ...FairExhibitorRail_show\n      }\n    }\n  }\n}\n"
+    "text": "query FairExhibitors_Query(\n  $slug: String!\n) {\n  fair(id: $slug) {\n    ...FairExhibitors_fair\n    id\n  }\n}\n\nfragment FairExhibitorRail_show on Show {\n  internalID\n  href\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on ExternalPartner {\n      name\n      id\n    }\n    ... on Node {\n      id\n    }\n  }\n  counts {\n    artworks\n  }\n}\n\nfragment FairExhibitors_fair on Fair {\n  id\n  exhibitors: showsConnection(first: 30, sort: FEATURED_ASC) {\n    edges {\n      show: node {\n        id\n        counts {\n          artworks\n        }\n        ...FairExhibitorRail_show\n      }\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '1ac901f746202b051e3b3db7a1f162e3';
+(node as any).hash = '0c79ba8bfa4adb482b02f44c18f7c9d7';
 export default node;
