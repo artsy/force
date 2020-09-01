@@ -22,6 +22,7 @@ export const openAuthToFollowSave = (
   options: AuthModalOptions
 ) => {
   let handled = false
+
   if (sd.IS_MOBILE) {
     const intent = getMobileIntent(options)
     if (intent) {

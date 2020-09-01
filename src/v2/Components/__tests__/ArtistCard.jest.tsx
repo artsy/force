@@ -11,28 +11,21 @@ import {
   LargeArtistCard,
   SmallArtistCard,
 } from "../ArtistCard"
-import * as openAuth from "v2/Utils/openAuthModal"
-import { openAuthToFollowSave } from "v2/Utils/openAuthModal"
-import { SystemContextProvider } from "v2/Artsy"
-
-jest.spyOn(openAuth, "openAuthToFollowSave")
 
 describe("ArtistCard", () => {
   let props: ArtistCardProps
-  let mediator
+
   const getWrapper = (breakpoint, passedProps: ArtistCardProps = props) => {
     return mount(
       <MockBoot breakpoint={breakpoint}>
-        <SystemContextProvider user={{}} mediator={mediator}>
-          <ArtistCard {...passedProps} />
-        </SystemContextProvider>
+        <ArtistCard {...passedProps} />
       </MockBoot>
     )
   }
 
   beforeEach(() => {
-    mediator = { trigger: jest.fn() }
     props = {
+      mediator: { trigger: jest.fn() },
       user: null,
       contextModule: ContextModule.artistsToFollowRail,
       contextOwnerType: OwnerType.home,
@@ -74,8 +67,11 @@ describe("ArtistCard", () => {
 
   it("opens auth modal with expected args when following an artist", () => {
     const wrapper = getWrapper("lg")
-    wrapper.find(FollowArtistButton).first().simulate("click")
-    expect(mediator.trigger).toBeCalledWith("open:auth", {
+    wrapper
+      .find(FollowArtistButton)
+      .first()
+      .simulate("click")
+    expect(props.mediator.trigger).toBeCalledWith("open:auth", {
       mode: "signup",
       contextModule: "artistsToFollowRail",
       copy: "Sign up to follow Francesca DiMattio",

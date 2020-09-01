@@ -10,23 +10,24 @@ import styled from "styled-components"
 import { FollowArtistButton_artist } from "../../__generated__/FollowArtistButton_artist.graphql"
 import { FollowButton } from "./Button"
 import { FollowTrackingData } from "./Typings"
-import { openAuthToFollowSave } from "v2/Utils/openAuthModal"
+
+import { ModalOptions, ModalType } from "v2/Components/Authentication/Types"
 import {
   RelayProp,
   commitMutation,
   createFragmentContainer,
   graphql,
 } from "react-relay"
-import { Mediator } from "v2/Artsy"
 
 interface Props
   extends React.HTMLProps<FollowArtistButton>,
     Artsy.SystemContextProps {
   relay?: RelayProp
   artist?: FollowArtistButton_artist
-  mediator?: Mediator
   tracking?: TrackingProp
   trackingData: FollowedArgs
+  onOpenAuthModal?: (type: ModalType, config?: ModalOptions) => void
+  useNewAnalyticsSchema?: boolean
   /**
    * FIXME: pass <Button> style props along
    * to new design-system buttons.
@@ -82,23 +83,25 @@ export class FollowArtistButton extends React.Component<Props, State> {
 
   handleFollow = e => {
     e.preventDefault() // If this button is part of a link, we _probably_ dont want to actually follow the link.
-    const { artist, user, mediator, trackingData } = this.props
+    const { artist, user, onOpenAuthModal, trackingData } = this.props
 
     if (user && user.id) {
-      this.followArtistForUser()
-    } else {
-      openAuthToFollowSave(mediator, {
+      this.followArtistForUser(user)
+    } else if (onOpenAuthModal) {
+      onOpenAuthModal(ModalType.signup, {
         contextModule: trackingData.contextModule,
         intent: Intent.followArtist,
-        entity: {
-          slug: artist.slug,
-          name: artist.name
-        }
+        copy: "Sign up to follow artists",
+        afterSignUpAction: {
+          action: "follow",
+          kind: "artist",
+          objectId: (artist && artist.internalID),
+        },
       })
     }
   }
 
-  followArtistForUser = () => {
+  followArtistForUser = user => {
     const { artist, relay, triggerSuggestions } = this.props
 
     const newFollowCount = artist.is_followed

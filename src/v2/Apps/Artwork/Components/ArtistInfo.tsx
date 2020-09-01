@@ -136,6 +136,9 @@ export class ArtistInfo extends Component<ArtistInfoProps, ArtistInfoState> {
                       ownerId: internalID,
                       ownerSlug: slug,
                     }}
+                    onOpenAuthModal={() =>
+                      this.handleOpenAuth(mediator, this.props.artist)
+                    }
                     render={({ is_followed }) => {
                       return (
                         <Sans
