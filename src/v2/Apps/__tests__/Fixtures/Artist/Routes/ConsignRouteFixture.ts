@@ -21,10 +21,7 @@ export const ConsignRouteFixture: ConsignRoute_Test_QueryRawResponse = {
                 },
                 url:
                   "https://d32dm0rphc51dk.cloudfront.net/JB8GqSuSHtsDHDIQ9nyPUw/large.jpg",
-                aspect_ratio: 0.75,
                 aspectRatio: 0.75,
-                width: 1499,
-                height: 2000,
               },
               id: "QXJ0d29yazo1ZDljYTZmZThmMWFlZTAwMTE0NzVjZjc=",
               href: "/artwork/alex-katz-luna-park-2-maravell-67-schroder-68",
@@ -89,10 +86,7 @@ export const ConsignRouteFixture: ConsignRoute_Test_QueryRawResponse = {
                 },
                 url:
                   "https://d32dm0rphc51dk.cloudfront.net/NcjBjx9Xz_pTqQp1G0gXWQ/large.jpg",
-                aspect_ratio: 0.75,
                 aspectRatio: 0.75,
-                width: 2237,
-                height: 3000,
               },
               id: "QXJ0d29yazo1ZDEyNmY5YmJhNDZiYTAwMTJjMzEzNGY=",
               href: "/artwork/alex-katz-rose-bud-30",
@@ -138,10 +132,7 @@ export const ConsignRouteFixture: ConsignRoute_Test_QueryRawResponse = {
                 },
                 url:
                   "https://d32dm0rphc51dk.cloudfront.net/2PzNL_vTOOx3Py9zfe7upw/large.jpg",
-                aspect_ratio: 1.7,
                 aspectRatio: 1.7,
-                width: 6395,
-                height: 3756,
               },
               id: "QXJ0d29yazo1Y2ZmZGRmZjQwNDkxODAwMGVjODliZWI=",
               href:
@@ -208,10 +199,7 @@ export const ConsignRouteFixture: ConsignRoute_Test_QueryRawResponse = {
                 },
                 url:
                   "https://d32dm0rphc51dk.cloudfront.net/WNHtB_gQLN3HxPW4nNGAjA/large.jpg",
-                aspect_ratio: 0.66,
                 aspectRatio: 0.66,
-                width: 500,
-                height: 754,
               },
               id: "QXJ0d29yazo1YWEyZTkwZDc2MjJkZDQ5ZGM4YjM1NmM=",
               href: "/artwork/alex-katz-laura-1-49",

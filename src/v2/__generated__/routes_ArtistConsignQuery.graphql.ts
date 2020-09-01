@@ -115,11 +115,6 @@ fragment ArtistConsignRecentlySold_artist on Artist {
     microfunnel {
       artworks {
         artwork {
-          image {
-            aspectRatio
-            width
-            height
-          }
           ...FillwidthItem_artwork
           id
         }
@@ -222,7 +217,7 @@ fragment Details_artwork on Artwork {
 fragment FillwidthItem_artwork on Artwork {
   image {
     url(version: "large")
-    aspect_ratio: aspectRatio
+    aspectRatio
   }
   imageTitle
   title
@@ -288,31 +283,17 @@ v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "width",
-  "storageKey": null
-},
-v6 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "height",
-  "storageKey": null
-},
-v7 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v8 = [
+v6 = [
   {
     "kind": "Literal",
     "name": "shallow",
     "value": true
   }
 ],
-v9 = [
+v7 = [
   {
     "alias": null,
     "args": null,
@@ -442,8 +423,20 @@ return {
                                 "name": "resized",
                                 "plural": false,
                                 "selections": [
-                                  (v5/*: any*/),
-                                  (v6/*: any*/),
+                                  {
+                                    "alias": null,
+                                    "args": null,
+                                    "kind": "ScalarField",
+                                    "name": "width",
+                                    "storageKey": null
+                                  },
+                                  {
+                                    "alias": null,
+                                    "args": null,
+                                    "kind": "ScalarField",
+                                    "name": "height",
+                                    "storageKey": null
+                                  },
                                   {
                                     "alias": null,
                                     "args": null,
@@ -468,25 +461,16 @@ return {
                                 "storageKey": "url(version:\"large\")"
                               },
                               {
-                                "alias": "aspect_ratio",
-                                "args": null,
-                                "kind": "ScalarField",
-                                "name": "aspectRatio",
-                                "storageKey": null
-                              },
-                              {
                                 "alias": null,
                                 "args": null,
                                 "kind": "ScalarField",
                                 "name": "aspectRatio",
                                 "storageKey": null
-                              },
-                              (v5/*: any*/),
-                              (v6/*: any*/)
+                              }
                             ],
                             "storageKey": null
                           },
-                          (v7/*: any*/),
+                          (v5/*: any*/),
                           {
                             "alias": null,
                             "args": null,
@@ -525,13 +509,13 @@ return {
                           },
                           {
                             "alias": null,
-                            "args": (v8/*: any*/),
+                            "args": (v6/*: any*/),
                             "concreteType": "Artist",
                             "kind": "LinkedField",
                             "name": "artists",
                             "plural": true,
                             "selections": [
-                              (v7/*: any*/),
+                              (v5/*: any*/),
                               (v4/*: any*/),
                               (v3/*: any*/)
                             ],
@@ -546,7 +530,7 @@ return {
                           },
                           {
                             "alias": null,
-                            "args": (v8/*: any*/),
+                            "args": (v6/*: any*/),
                             "concreteType": "Partner",
                             "kind": "LinkedField",
                             "name": "partner",
@@ -554,7 +538,7 @@ return {
                             "selections": [
                               (v3/*: any*/),
                               (v4/*: any*/),
-                              (v7/*: any*/),
+                              (v5/*: any*/),
                               {
                                 "alias": null,
                                 "args": null,
@@ -587,7 +571,7 @@ return {
                                 "name": "isClosed",
                                 "storageKey": null
                               },
-                              (v7/*: any*/),
+                              (v5/*: any*/),
                               {
                                 "alias": "is_live_open",
                                 "args": null,
@@ -652,7 +636,7 @@ return {
                                 "kind": "LinkedField",
                                 "name": "highestBid",
                                 "plural": false,
-                                "selections": (v9/*: any*/),
+                                "selections": (v7/*: any*/),
                                 "storageKey": null
                               },
                               {
@@ -662,10 +646,10 @@ return {
                                 "kind": "LinkedField",
                                 "name": "openingBid",
                                 "plural": false,
-                                "selections": (v9/*: any*/),
+                                "selections": (v7/*: any*/),
                                 "storageKey": null
                               },
-                              (v7/*: any*/)
+                              (v5/*: any*/)
                             ],
                             "storageKey": null
                           },
@@ -770,7 +754,7 @@ return {
             ],
             "storageKey": null
           },
-          (v7/*: any*/)
+          (v5/*: any*/)
         ],
         "storageKey": null
       }
@@ -781,7 +765,7 @@ return {
     "metadata": {},
     "name": "routes_ArtistConsignQuery",
     "operationKind": "query",
-    "text": "query routes_ArtistConsignQuery(\n  $artistID: String!\n) {\n  artist(id: $artistID) {\n    ...Consign_artist\n    targetSupply {\n      isInMicrofunnel\n    }\n    id\n  }\n}\n\nfragment ArtistConsignFAQ_artist on Artist {\n  href\n}\n\nfragment ArtistConsignHeaderImages_artist on Artist {\n  targetSupply {\n    microfunnel {\n      artworks {\n        artwork {\n          image {\n            resized(height: 395) {\n              width\n              height\n              url\n            }\n          }\n          ...FillwidthItem_artwork\n          id\n        }\n      }\n    }\n  }\n}\n\nfragment ArtistConsignHeader_artist on Artist {\n  ...ArtistConsignHeaderImages_artist\n  name\n  href\n}\n\nfragment ArtistConsignHowToSell_artist on Artist {\n  href\n}\n\nfragment ArtistConsignMarketTrends_artist on Artist {\n  href\n  targetSupply {\n    microfunnel {\n      metadata {\n        highestRealized\n        str\n        realized\n      }\n    }\n  }\n}\n\nfragment ArtistConsignMeta_artist on Artist {\n  name\n  href\n  targetSupply {\n    microfunnel {\n      artworks {\n        artwork {\n          image {\n            imageURL: url(version: \"medium\")\n          }\n          id\n        }\n      }\n    }\n  }\n}\n\nfragment ArtistConsignPageViews_artist on Artist {\n  name\n  targetSupply {\n    microfunnel {\n      metadata {\n        roundedViews\n        roundedUniqueVisitors\n      }\n    }\n  }\n}\n\nfragment ArtistConsignRecentlySold_artist on Artist {\n  targetSupply {\n    microfunnel {\n      artworks {\n        artwork {\n          image {\n            aspectRatio\n            width\n            height\n          }\n          ...FillwidthItem_artwork\n          id\n        }\n        realizedPrice\n      }\n    }\n  }\n  name\n}\n\nfragment ArtistConsignSellArt_artist on Artist {\n  href\n}\n\nfragment Badge_artwork on Artwork {\n  is_biddable: isBiddable\n  href\n  sale {\n    is_preview: isPreview\n    display_timely_at: displayTimelyAt\n    id\n  }\n}\n\nfragment Consign_artist on Artist {\n  ...ArtistConsignMeta_artist\n  ...ArtistConsignHeader_artist\n  ...ArtistConsignRecentlySold_artist\n  ...ArtistConsignPageViews_artist\n  ...ArtistConsignMarketTrends_artist\n  ...ArtistConsignHowToSell_artist\n  ...ArtistConsignFAQ_artist\n  ...ArtistConsignSellArt_artist\n}\n\nfragment Contact_artwork on Artwork {\n  href\n  is_inquireable: isInquireable\n  sale {\n    is_auction: isAuction\n    is_live_open: isLiveOpen\n    is_open: isOpen\n    is_closed: isClosed\n    id\n  }\n  partner(shallow: true) {\n    type\n    id\n  }\n  sale_artwork: saleArtwork {\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    counts {\n      bidder_positions: bidderPositions\n    }\n    id\n  }\n}\n\nfragment Details_artwork on Artwork {\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n}\n\nfragment FillwidthItem_artwork on Artwork {\n  image {\n    url(version: \"large\")\n    aspect_ratio: aspectRatio\n  }\n  imageTitle\n  title\n  href\n  ...Metadata_artwork\n  ...Save_artwork\n  ...Badge_artwork\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  ...Contact_artwork\n  href\n}\n\nfragment Save_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n"
+    "text": "query routes_ArtistConsignQuery(\n  $artistID: String!\n) {\n  artist(id: $artistID) {\n    ...Consign_artist\n    targetSupply {\n      isInMicrofunnel\n    }\n    id\n  }\n}\n\nfragment ArtistConsignFAQ_artist on Artist {\n  href\n}\n\nfragment ArtistConsignHeaderImages_artist on Artist {\n  targetSupply {\n    microfunnel {\n      artworks {\n        artwork {\n          image {\n            resized(height: 395) {\n              width\n              height\n              url\n            }\n          }\n          ...FillwidthItem_artwork\n          id\n        }\n      }\n    }\n  }\n}\n\nfragment ArtistConsignHeader_artist on Artist {\n  ...ArtistConsignHeaderImages_artist\n  name\n  href\n}\n\nfragment ArtistConsignHowToSell_artist on Artist {\n  href\n}\n\nfragment ArtistConsignMarketTrends_artist on Artist {\n  href\n  targetSupply {\n    microfunnel {\n      metadata {\n        highestRealized\n        str\n        realized\n      }\n    }\n  }\n}\n\nfragment ArtistConsignMeta_artist on Artist {\n  name\n  href\n  targetSupply {\n    microfunnel {\n      artworks {\n        artwork {\n          image {\n            imageURL: url(version: \"medium\")\n          }\n          id\n        }\n      }\n    }\n  }\n}\n\nfragment ArtistConsignPageViews_artist on Artist {\n  name\n  targetSupply {\n    microfunnel {\n      metadata {\n        roundedViews\n        roundedUniqueVisitors\n      }\n    }\n  }\n}\n\nfragment ArtistConsignRecentlySold_artist on Artist {\n  targetSupply {\n    microfunnel {\n      artworks {\n        artwork {\n          ...FillwidthItem_artwork\n          id\n        }\n        realizedPrice\n      }\n    }\n  }\n  name\n}\n\nfragment ArtistConsignSellArt_artist on Artist {\n  href\n}\n\nfragment Badge_artwork on Artwork {\n  is_biddable: isBiddable\n  href\n  sale {\n    is_preview: isPreview\n    display_timely_at: displayTimelyAt\n    id\n  }\n}\n\nfragment Consign_artist on Artist {\n  ...ArtistConsignMeta_artist\n  ...ArtistConsignHeader_artist\n  ...ArtistConsignRecentlySold_artist\n  ...ArtistConsignPageViews_artist\n  ...ArtistConsignMarketTrends_artist\n  ...ArtistConsignHowToSell_artist\n  ...ArtistConsignFAQ_artist\n  ...ArtistConsignSellArt_artist\n}\n\nfragment Contact_artwork on Artwork {\n  href\n  is_inquireable: isInquireable\n  sale {\n    is_auction: isAuction\n    is_live_open: isLiveOpen\n    is_open: isOpen\n    is_closed: isClosed\n    id\n  }\n  partner(shallow: true) {\n    type\n    id\n  }\n  sale_artwork: saleArtwork {\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    counts {\n      bidder_positions: bidderPositions\n    }\n    id\n  }\n}\n\nfragment Details_artwork on Artwork {\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n}\n\nfragment FillwidthItem_artwork on Artwork {\n  image {\n    url(version: \"large\")\n    aspectRatio\n  }\n  imageTitle\n  title\n  href\n  ...Metadata_artwork\n  ...Save_artwork\n  ...Badge_artwork\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  ...Contact_artwork\n  href\n}\n\nfragment Save_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n"
   }
 };
 })();

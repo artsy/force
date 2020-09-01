@@ -1,5 +1,5 @@
 import { ContextModule, Intent } from "@artsy/cohesion"
-import { Box, EntityHeader, Sans, Spacer } from "@artsy/palette"
+import { Box, EntityHeader, Sans } from "@artsy/palette"
 import { RecommendedArtist_artist } from "v2/__generated__/RecommendedArtist_artist.graphql"
 import { SystemContext } from "v2/Artsy"
 import { track } from "v2/Artsy/Analytics"
@@ -97,19 +97,14 @@ const RecommendedArtist: FC<
         }
       />
 
-      <Spacer mb={3} />
-
-      <Carousel arrowHeight={HEIGHT}>
+      <Carousel mt={3} arrowHeight={HEIGHT}>
         {artistData.map(artwork => {
-          const aspect_ratio = get(artwork, a => a.node.image.aspect_ratio, 1)
           return (
             <FillwidthItem
               key={artwork.node.id}
               artwork={artwork.node}
               contextModule={ContextModule.relatedArtistsRail}
-              targetHeight={HEIGHT}
               imageHeight={HEIGHT}
-              width={HEIGHT * aspect_ratio}
               user={user}
               mediator={mediator}
               onClick={onArtworkClicked}
@@ -145,9 +140,6 @@ export const RecommendedArtistFragmentContainer = createFragmentContainer(
           edges {
             node {
               id
-              image {
-                aspect_ratio: aspectRatio
-              }
               ...FillwidthItem_artwork
             }
           }

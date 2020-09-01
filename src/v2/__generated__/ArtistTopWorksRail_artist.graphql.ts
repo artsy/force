@@ -11,15 +11,6 @@ export type ArtistTopWorksRail_artist = {
             readonly node: {
                 readonly id: string;
                 readonly slug: string;
-                readonly image: {
-                    readonly href: string | null;
-                    readonly imageAspectRatio: number;
-                    readonly resized: {
-                        readonly url: string | null;
-                        readonly width: number | null;
-                        readonly height: number | null;
-                    } | null;
-                } | null;
                 readonly " $fragmentRefs": FragmentRefs<"FillwidthItem_artwork">;
             } | null;
         } | null> | null;
@@ -95,69 +86,6 @@ return {
                 (v1/*: any*/),
                 (v0/*: any*/),
                 {
-                  "alias": null,
-                  "args": null,
-                  "concreteType": "Image",
-                  "kind": "LinkedField",
-                  "name": "image",
-                  "plural": false,
-                  "selections": [
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "href",
-                      "storageKey": null
-                    },
-                    {
-                      "alias": "imageAspectRatio",
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "aspectRatio",
-                      "storageKey": null
-                    },
-                    {
-                      "alias": null,
-                      "args": [
-                        {
-                          "kind": "Literal",
-                          "name": "height",
-                          "value": 300
-                        }
-                      ],
-                      "concreteType": "ResizedImageUrl",
-                      "kind": "LinkedField",
-                      "name": "resized",
-                      "plural": false,
-                      "selections": [
-                        {
-                          "alias": null,
-                          "args": null,
-                          "kind": "ScalarField",
-                          "name": "url",
-                          "storageKey": null
-                        },
-                        {
-                          "alias": null,
-                          "args": null,
-                          "kind": "ScalarField",
-                          "name": "width",
-                          "storageKey": null
-                        },
-                        {
-                          "alias": null,
-                          "args": null,
-                          "kind": "ScalarField",
-                          "name": "height",
-                          "storageKey": null
-                        }
-                      ],
-                      "storageKey": "resized(height:300)"
-                    }
-                  ],
-                  "storageKey": null
-                },
-                {
                   "args": null,
                   "kind": "FragmentSpread",
                   "name": "FillwidthItem_artwork"
@@ -175,5 +103,5 @@ return {
   "type": "Artist"
 };
 })();
-(node as any).hash = '476bc215ca4cd480599c42ae3a3f9835';
+(node as any).hash = 'c56c2e07e4b148b4aa16bcf9ded2f102';
 export default node;

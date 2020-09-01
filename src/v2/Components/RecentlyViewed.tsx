@@ -11,7 +11,6 @@ import { FillwidthItem } from "v2/Components/Artwork/FillwidthItem"
 import { Carousel } from "v2/Components/Carousel"
 import React, { useContext } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { get } from "v2/Utils/get"
 
 export interface RecentlyViewedProps {
   me: RecentlyViewed_me
@@ -48,21 +47,13 @@ export class RecentlyViewed extends React.Component<RecentlyViewedProps> {
 
                 <Carousel arrowHeight={HEIGHT}>
                   {me.recentlyViewedArtworksConnection.edges.map(artwork => {
-                    const aspect_ratio = get(
-                      artwork,
-                      w => w.node.image.aspect_ratio,
-                      1
-                    )
-
                     return (
                       <FillwidthItem
                         key={artwork.node.id}
                         lazyLoad={true}
                         // @ts-ignore // TODO: Correct typing
                         artwork={artwork.node}
-                        targetHeight={HEIGHT}
                         imageHeight={HEIGHT}
-                        width={HEIGHT * aspect_ratio}
                         user={user}
                         mediator={mediator}
                         onClick={this.trackClick.bind(this)}
@@ -89,9 +80,6 @@ export const RecentlyViewedFragmentContainer = createFragmentContainer(
           edges {
             node {
               id
-              image {
-                aspect_ratio: aspectRatio
-              }
               ...FillwidthItem_artwork @relay(mask: false)
             }
           }

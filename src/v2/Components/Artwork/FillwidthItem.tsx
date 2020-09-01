@@ -1,5 +1,5 @@
 import { AuthContextModule } from "@artsy/cohesion"
-import { Image } from "@artsy/palette"
+import { Box, Image, space } from "@artsy/palette"
 import { FillwidthItem_artwork } from "v2/__generated__/FillwidthItem_artwork.graphql"
 import { SystemContextProps } from "v2/Artsy"
 import { Mediator } from "v2/Artsy"
@@ -19,7 +19,7 @@ const logger = createLogger("FillwidthItem.tsx")
 
 const IMAGE_QUALITY = 80
 
-const Placeholder = styled.div`
+const Placeholder = styled(Box).attrs({ bg: "gray10" })`
   position: relative;
   width: 100%;
 `
@@ -31,16 +31,14 @@ export interface FillwidthItemContainerProps
   contextModule: AuthContextModule
   hideArtistName?: boolean
   hidePartnerName?: boolean
-  imageHeight?: number
+  imageHeight: number
   lazyLoad?: boolean
   marginLeft?: number
   marginRight?: number
   mediator?: Mediator
-  onClick?: () => void
   showExtended?: boolean
   showMetadata?: boolean
-  targetHeight?: number
-  width?: number
+  onClick?: () => void
 }
 
 export class FillwidthItemContainer extends React.Component<
@@ -53,24 +51,21 @@ export class FillwidthItemContainer extends React.Component<
   get imageWidth() {
     const {
       artwork: {
-        image: { aspect_ratio },
+        image: { aspectRatio },
       },
     } = this.props
 
-    const imageWidth = Math.floor(this.imageHeight * aspect_ratio)
-    return imageWidth
+    // NOTE: `aspectRatio` will default to `1` if image geometry is missing.
+    // Given that `imageHeight` is required, this means that any missing geometry
+    // will default to a square thumbnail.
+    return Math.floor(this.props.imageHeight * aspectRatio)
   }
 
   get imageHeight() {
-    // During the SSR render pass we don't have access to window pixel data so
-    // default to high density screen.
-    const devicePixelRatio =
-      typeof window === "undefined" ? 2 : window.devicePixelRatio
-
-    return this.props.imageHeight * devicePixelRatio
+    return this.props.imageHeight
   }
 
-  getImageUrl() {
+  getImageUrl(pixelRatio = 1) {
     const imageURL = this.props.artwork.image.url
 
     if (!imageURL) {
@@ -79,18 +74,19 @@ export class FillwidthItemContainer extends React.Component<
 
     const {
       artwork: {
-        image: { aspect_ratio },
+        image: { aspectRatio },
       },
     } = this.props
 
-    // Either scale or crop, based on if an aspect ratio is available.
-    const type = aspect_ratio ? "fit" : "fill"
+    // Either scale or crop, based on if an aspect ratio is 1. Either the image
+    // actually is a square — or the geometry is missing and utilizing fill prevents
+    // distortion when it is sized to fit.
+    const type = aspectRatio === 1 ? "fill" : "fit"
 
-    // tslint:disable-next-line:max-line-length
     return `${getENV("GEMINI_CLOUDFRONT_URL")}/?resize_to=${type}&width=${
-      this.imageWidth
+      this.imageWidth * pixelRatio
     }&height=${
-      this.imageHeight
+      this.imageHeight * pixelRatio
     }&quality=${IMAGE_QUALITY}&src=${encodeURIComponent(imageURL)}`
   }
 
@@ -104,7 +100,6 @@ export class FillwidthItemContainer extends React.Component<
       mediator,
       showExtended,
       showMetadata,
-      targetHeight,
       user,
       hidePartnerName,
       hideArtistName,
@@ -117,6 +112,7 @@ export class FillwidthItemContainer extends React.Component<
     const isAdmin = userIsAdmin(user)
 
     const image = get(this.props, p => p.artwork.image)
+
     if (!image) {
       const href = get(this.props, p => p.artwork.href, "(unknown href)")
       logger.error(`Artwork at ${href} does not have an image!`)
@@ -124,8 +120,10 @@ export class FillwidthItemContainer extends React.Component<
     }
 
     return (
-      <div className={className}>
-        <Placeholder style={{ height: targetHeight }}>
+      <Box className={className} width={this.imageWidth}>
+        <Placeholder
+          style={{ height: this.imageHeight, width: this.imageWidth }}
+        >
           <RouterLink
             to={artwork.href}
             onClick={() => {
@@ -135,7 +133,8 @@ export class FillwidthItemContainer extends React.Component<
             }}
           >
             <Image
-              src={this.getImageUrl()}
+              src={this.getImageUrl(1)}
+              srcSet={`${this.getImageUrl(1)} 1x, ${this.getImageUrl(2)} 2x`}
               width="100%"
               height={imageHeight}
               lazyLoad={lazyLoad}
@@ -152,9 +151,14 @@ export class FillwidthItemContainer extends React.Component<
             contextModule={contextModule}
             className="artwork-save"
             artwork={artwork}
-            style={{ position: "absolute", right: "5px", bottom: "5px" }}
+            style={{
+              position: "absolute",
+              right: space(0.5),
+              bottom: space(0.5),
+            }}
           />
         </Placeholder>
+
         {showMetadata && (
           <Metadata
             artwork={artwork}
@@ -163,7 +167,7 @@ export class FillwidthItemContainer extends React.Component<
             hideArtistName={hideArtistName}
           />
         )}
-      </div>
+      </Box>
     )
   }
 }
@@ -191,7 +195,7 @@ export default createFragmentContainer(FillwidthItem, {
     fragment FillwidthItem_artwork on Artwork {
       image {
         url(version: "large")
-        aspect_ratio: aspectRatio
+        aspectRatio
       }
       imageTitle
       title

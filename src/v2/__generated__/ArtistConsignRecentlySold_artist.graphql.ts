@@ -8,11 +8,6 @@ export type ArtistConsignRecentlySold_artist = {
         readonly microfunnel: {
             readonly artworks: ReadonlyArray<{
                 readonly artwork: {
-                    readonly image: {
-                        readonly aspectRatio: number;
-                        readonly width: number | null;
-                        readonly height: number | null;
-                    } | null;
                     readonly " $fragmentRefs": FragmentRefs<"FillwidthItem_artwork">;
                 } | null;
                 readonly realizedPrice: string | null;
@@ -69,38 +64,6 @@ const node: ReaderFragment = {
                   "plural": false,
                   "selections": [
                     {
-                      "alias": null,
-                      "args": null,
-                      "concreteType": "Image",
-                      "kind": "LinkedField",
-                      "name": "image",
-                      "plural": false,
-                      "selections": [
-                        {
-                          "alias": null,
-                          "args": null,
-                          "kind": "ScalarField",
-                          "name": "aspectRatio",
-                          "storageKey": null
-                        },
-                        {
-                          "alias": null,
-                          "args": null,
-                          "kind": "ScalarField",
-                          "name": "width",
-                          "storageKey": null
-                        },
-                        {
-                          "alias": null,
-                          "args": null,
-                          "kind": "ScalarField",
-                          "name": "height",
-                          "storageKey": null
-                        }
-                      ],
-                      "storageKey": null
-                    },
-                    {
                       "args": null,
                       "kind": "FragmentSpread",
                       "name": "FillwidthItem_artwork"
@@ -134,5 +97,5 @@ const node: ReaderFragment = {
   ],
   "type": "Artist"
 };
-(node as any).hash = '796c6909af76876d049a50784d7fb593';
+(node as any).hash = '9554efc6c368bc6a4feebaeb434924ed';
 export default node;

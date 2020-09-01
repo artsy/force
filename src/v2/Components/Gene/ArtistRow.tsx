@@ -3,11 +3,14 @@ import { ArtistRow_artist } from "v2/__generated__/ArtistRow_artist.graphql"
 import { Mediator } from "v2/Artsy"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import styled from "styled-components"
-import Fillwidth from "../Artwork/Fillwidth"
+import FillwidthItem from "../Artwork/FillwidthItem"
 import Follow from "../Follow"
 import Text from "../Text"
 import TextLink from "../TextLink"
+import { Carousel } from "../Carousel"
+import styled from "styled-components"
+
+const HEIGHT = 160
 
 interface Props extends React.HTMLProps<ArtistRow> {
   artist: ArtistRow_artist
@@ -30,11 +33,20 @@ export class ArtistRow extends React.Component<Props, null> {
             contextModule={ContextModule.featuredArtistsRail}
           />
         </Header>
-        <Fillwidth
-          artworks={artist.artworks}
-          contextModule={ContextModule.featuredArtistsRail}
-          mediator={mediator}
-        />
+
+        <Carousel arrowHeight={HEIGHT}>
+          {artist.artworks.edges.map(({ node }) => {
+            return (
+              <FillwidthItem
+                key={node.id}
+                artwork={node}
+                imageHeight={HEIGHT}
+                contextModule={ContextModule.featuredArtistsRail}
+                mediator={mediator}
+              />
+            )
+          })}
+        </Carousel>
       </Container>
     )
   }
@@ -56,7 +68,12 @@ export default createFragmentContainer(ArtistRow, {
       href
       ...Follow_artist
       artworks: artworksConnection(first: 6) {
-        ...Fillwidth_artworks
+        edges {
+          node {
+            id
+            ...FillwidthItem_artwork
+          }
+        }
       }
     }
   `,

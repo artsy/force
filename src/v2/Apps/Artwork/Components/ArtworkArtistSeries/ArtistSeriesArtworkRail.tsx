@@ -13,6 +13,8 @@ import {
   OwnerType,
 } from "@artsy/cohesion"
 
+const HEIGHT = 200
+
 interface Props {
   artwork: ArtistSeriesArtworkRail_artwork
 }
@@ -83,18 +85,15 @@ export const ArtistSeriesArtworkRail: React.FC<Props> = ({ artwork }) => {
       </Flex>
       <Carousel>
         {artworks.map((artwork, index) => {
-          const { image } = artwork
           return (
             <FillwidthItem
               key={artwork.internalID}
               contextModule={ContextModule.artistSeriesRail}
               artwork={artwork}
+              imageHeight={HEIGHT}
               onClick={() =>
                 trackArtworkClick(artwork.slug, artwork.internalID, index)
               }
-              targetHeight={200}
-              imageHeight={image?.resized.height}
-              width={image?.resized.width}
             />
           )
         })}
@@ -118,12 +117,6 @@ export const ArtistSeriesArtworkRailFragmentContainer = createFragmentContainer(
               filterArtworksConnection(sort: "-decayed_merch", first: 20) {
                 edges {
                   node {
-                    image {
-                      resized(height: 200) {
-                        height
-                        width
-                      }
-                    }
                     slug
                     internalID
                     ...FillwidthItem_artwork

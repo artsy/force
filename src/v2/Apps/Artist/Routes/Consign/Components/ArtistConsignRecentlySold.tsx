@@ -40,10 +40,8 @@ export const ArtistConsignRecentlySold: React.FC<ArtistConsignRecentlySoldProps>
                   >
                     <FillwidthItem
                       artwork={artwork}
-                      targetHeight={150}
                       imageHeight={150}
                       showExtended={false}
-                      width={150 * artwork.image.aspectRatio}
                       contextModule={ContextModule.artistRecentlySold}
                     />
                     {realizedPrice && (
@@ -71,11 +69,6 @@ export const ArtistConsignRecentlySoldFragmentContainer = createFragmentContaine
           microfunnel {
             artworks {
               artwork {
-                image {
-                  aspectRatio
-                  width
-                  height
-                }
                 ...FillwidthItem_artwork
               }
               realizedPrice
