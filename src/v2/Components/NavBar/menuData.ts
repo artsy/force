@@ -151,8 +151,8 @@ export const ARTISTS_SUBMENU_DATA: MenuLinkData = {
               href: "/collection/emerging-painters",
             },
             {
-              text: "Critically Acclaimed Artists",
-              href: "/collection/critically-acclaimed-artists",
+              text: "Critically Acclaimed Photographers",
+              href: "/collection/critically-acclaimed-photographers",
             },
             {
               text: "Notable Street Artists",
