@@ -86,7 +86,7 @@ query = """
           day_of_week: dayOfWeek
         }
       }
-      artworksConnection(first: 100) {
+      artworksConnection(first: 25) {
         edges {
           node {
             id: slug
@@ -117,6 +117,9 @@ query = """
             sale_message: saleMessage
             is_inquireable: isInquireable
           }
+        }
+        pageInfo {
+          endCursor
         }
       }
       artists {
@@ -154,7 +157,8 @@ query = """
       res.locals.ViewHelpers = ViewHelpers
       res.locals.DateHelpers = DateHelpers
       res.locals.jsonLD = JSON.stringify ViewHelpers.toJSONLD data.partner_show if data.partner_show.has_location
-      artworks = data.partner_show.artworksConnection.edges.map (edge) -> edge.node
+      artworksConnection = data.partner_show.artworksConnection
+      artworks = artworksConnection.edges.map (edge) -> edge.node
       data.artworkColumns = ViewHelpers.groupByColumnsInOrder(artworks)
       res.render 'index', data
     .catch next
