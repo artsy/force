@@ -1,4 +1,4 @@
-import { Box, Image, Sans, Spacer, color } from "@artsy/palette"
+import { Box, Image, Sans, color } from "@artsy/palette"
 import { ArtistSeriesItem_artistSeries } from "v2/__generated__/ArtistSeriesItem_artistSeries.graphql"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import React from "react"
@@ -66,7 +66,6 @@ export const ArtistSeriesItem: React.SFC<Props> = props => {
         />
         <Box my={1} mx={2}>
           <SeriesTitle size={"3"}>{title}</SeriesTitle>
-          <Spacer />
           <Sans size={"3"} color={"black60"}>
             {artworksCountMessage}
           </Sans>
@@ -77,7 +76,11 @@ export const ArtistSeriesItem: React.SFC<Props> = props => {
 }
 
 const SeriesTitle = styled(Sans)`
-  width: max-content;
+  max-width: 140px;
+  display: block;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 `
 
 export const StyledLink = styled(RouterLink)`

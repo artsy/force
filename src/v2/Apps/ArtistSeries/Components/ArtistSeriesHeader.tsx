@@ -16,11 +16,7 @@ import { FollowArtistButtonFragmentContainer as FollowArtistButton } from "v2/Co
 import { openAuthToFollowSave } from "v2/Utils/openAuthModal"
 import { ArtistSeriesHeader_artistSeries } from "v2/__generated__/ArtistSeriesHeader_artistSeries.graphql"
 import { useSystemContext } from "v2/Artsy"
-import {
-  ContextModule,
-  Intent,
-  OwnerType,
-} from "@artsy/cohesion"
+import { ContextModule, Intent, OwnerType } from "@artsy/cohesion"
 import styled from "styled-components"
 import { unitlessBreakpoints } from "@artsy/palette"
 import { AppContainer } from "v2/Apps/Components/AppContainer"
@@ -116,7 +112,7 @@ const ArtistSeriesHeaderLarge: React.FC<ArtistSeriesHeaderProps> = props => {
   } = props
   return (
     <>
-      <Box m={3}>
+      <Box m={2}>
         <AppContainer>
           <Flex alignItems="center" justifyContent="center" position="relative">
             <Flex position="absolute" left={0}>

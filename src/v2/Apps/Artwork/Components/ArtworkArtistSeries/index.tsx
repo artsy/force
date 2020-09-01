@@ -13,14 +13,16 @@ interface ArtworkArtistSeriesProps {
 
 const ArtworkArtistSeries: React.FC<ArtworkArtistSeriesProps> = props => {
   const { artwork } = props
-  const artistSeries = artwork?.seriesForCounts?.edges[0]?.node
+  const artworkArtistSeries = artwork?.seriesForCounts?.edges[0]?.node
+  const artistArtistSeries =
+    artwork?.seriesArtist?.artistSeriesConnection?.edges[0]?.node
 
-  if (!artistSeries) {
+  if (!artworkArtistSeries && !artistArtistSeries) {
     return null
   }
 
   const hasArtistSeriesArtworks =
-    artistSeries.artworksCount && artistSeries.artworksCount > 0
+    artworkArtistSeries?.artworksCount && artworkArtistSeries?.artworksCount > 0
 
   return (
     <>
@@ -31,7 +33,7 @@ const ArtworkArtistSeries: React.FC<ArtworkArtistSeriesProps> = props => {
         </>
       )}
 
-      {artistSeries && (
+      {!!artistArtistSeries && (
         <>
           {!hasArtistSeriesArtworks && <Separator mt={3} />}
           <Spacer my={3} />
@@ -46,7 +48,7 @@ const ArtworkArtistSeries: React.FC<ArtworkArtistSeriesProps> = props => {
         </>
       )}
 
-      {(artistSeries || artistSeries.artworksCount) && <Spacer my={6} />}
+      {(hasArtistSeriesArtworks || !!artistArtistSeries) && <Spacer my={6} />}
     </>
   )
 }
@@ -65,6 +67,13 @@ export const ArtworkArtistSeriesFragmentContainer = createFragmentContainer<{
       slug
       seriesArtist: artist(shallow: true) {
         ...ArtistSeriesRail_artist @include(if: $shouldFetchArtistSeriesData)
+        artistSeriesConnection {
+          edges {
+            node {
+              internalID
+            }
+          }
+        }
       }
       seriesForCounts: artistSeriesConnection(first: 1) {
         edges {

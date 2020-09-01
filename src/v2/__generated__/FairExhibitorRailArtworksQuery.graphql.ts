@@ -3,31 +3,27 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type FillwidthQueryVariables = {
-    artistID: string;
+export type FairExhibitorRailArtworksQueryVariables = {
+    id: string;
 };
-export type FillwidthQueryResponse = {
-    readonly artist: {
-        readonly artworks: {
-            readonly " $fragmentRefs": FragmentRefs<"Fillwidth_artworks">;
-        } | null;
+export type FairExhibitorRailArtworksQueryResponse = {
+    readonly show: {
+        readonly " $fragmentRefs": FragmentRefs<"FairExhibitorRailArtworks_show">;
     } | null;
 };
-export type FillwidthQuery = {
-    readonly response: FillwidthQueryResponse;
-    readonly variables: FillwidthQueryVariables;
+export type FairExhibitorRailArtworksQuery = {
+    readonly response: FairExhibitorRailArtworksQueryResponse;
+    readonly variables: FairExhibitorRailArtworksQueryVariables;
 };
 
 
 
 /*
-query FillwidthQuery(
-  $artistID: String!
+query FairExhibitorRailArtworksQuery(
+  $id: String!
 ) {
-  artist(id: $artistID) {
-    artworks: artworksConnection(first: 6) {
-      ...Fillwidth_artworks
-    }
+  show(id: $id) {
+    ...FairExhibitorRailArtworks_show
     id
   }
 }
@@ -106,10 +102,21 @@ fragment Details_artwork on Artwork {
   }
 }
 
+fragment FairExhibitorRailArtworks_show on Show {
+  artworks: artworksConnection(first: 20) {
+    edges {
+      artwork: node {
+        ...FillwidthItem_artwork
+        id
+      }
+    }
+  }
+}
+
 fragment FillwidthItem_artwork on Artwork {
   image {
     url(version: "large")
-    aspect_ratio: aspectRatio
+    aspectRatio
   }
   imageTitle
   title
@@ -117,18 +124,6 @@ fragment FillwidthItem_artwork on Artwork {
   ...Metadata_artwork
   ...Save_artwork
   ...Badge_artwork
-}
-
-fragment Fillwidth_artworks on ArtworkConnection {
-  edges {
-    node {
-      id
-      image {
-        aspect_ratio: aspectRatio
-      }
-      ...FillwidthItem_artwork
-    }
-  }
 }
 
 fragment Metadata_artwork on Artwork {
@@ -151,7 +146,7 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "artistID",
+    "name": "id",
     "type": "String!"
   }
 ],
@@ -159,45 +154,38 @@ v1 = [
   {
     "kind": "Variable",
     "name": "id",
-    "variableName": "artistID"
+    "variableName": "id"
   }
 ],
-v2 = [
-  {
-    "kind": "Literal",
-    "name": "first",
-    "value": 6
-  }
-],
-v3 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "id",
-  "storageKey": null
-},
-v4 = {
+v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "href",
   "storageKey": null
 },
-v5 = [
+v3 = [
   {
     "kind": "Literal",
     "name": "shallow",
     "value": true
   }
 ],
-v6 = {
+v4 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "name",
   "storageKey": null
 },
-v7 = [
+v6 = [
   {
     "alias": null,
     "args": null,
@@ -211,31 +199,20 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "FillwidthQuery",
+    "name": "FairExhibitorRailArtworksQuery",
     "selections": [
       {
         "alias": null,
         "args": (v1/*: any*/),
-        "concreteType": "Artist",
+        "concreteType": "Show",
         "kind": "LinkedField",
-        "name": "artist",
+        "name": "show",
         "plural": false,
         "selections": [
           {
-            "alias": "artworks",
-            "args": (v2/*: any*/),
-            "concreteType": "ArtworkConnection",
-            "kind": "LinkedField",
-            "name": "artworksConnection",
-            "plural": false,
-            "selections": [
-              {
-                "args": null,
-                "kind": "FragmentSpread",
-                "name": "Fillwidth_artworks"
-              }
-            ],
-            "storageKey": "artworksConnection(first:6)"
+            "args": null,
+            "kind": "FragmentSpread",
+            "name": "FairExhibitorRailArtworks_show"
           }
         ],
         "storageKey": null
@@ -247,19 +224,25 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "FillwidthQuery",
+    "name": "FairExhibitorRailArtworksQuery",
     "selections": [
       {
         "alias": null,
         "args": (v1/*: any*/),
-        "concreteType": "Artist",
+        "concreteType": "Show",
         "kind": "LinkedField",
-        "name": "artist",
+        "name": "show",
         "plural": false,
         "selections": [
           {
             "alias": "artworks",
-            "args": (v2/*: any*/),
+            "args": [
+              {
+                "kind": "Literal",
+                "name": "first",
+                "value": 20
+              }
+            ],
             "concreteType": "ArtworkConnection",
             "kind": "LinkedField",
             "name": "artworksConnection",
@@ -274,14 +257,13 @@ return {
                 "plural": true,
                 "selections": [
                   {
-                    "alias": null,
+                    "alias": "artwork",
                     "args": null,
                     "concreteType": "Artwork",
                     "kind": "LinkedField",
                     "name": "node",
                     "plural": false,
                     "selections": [
-                      (v3/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -290,13 +272,6 @@ return {
                         "name": "image",
                         "plural": false,
                         "selections": [
-                          {
-                            "alias": "aspect_ratio",
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "aspectRatio",
-                            "storageKey": null
-                          },
                           {
                             "alias": null,
                             "args": [
@@ -309,6 +284,13 @@ return {
                             "kind": "ScalarField",
                             "name": "url",
                             "storageKey": "url(version:\"large\")"
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "aspectRatio",
+                            "storageKey": null
                           }
                         ],
                         "storageKey": null
@@ -327,7 +309,7 @@ return {
                         "name": "title",
                         "storageKey": null
                       },
-                      (v4/*: any*/),
+                      (v2/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -351,15 +333,15 @@ return {
                       },
                       {
                         "alias": null,
-                        "args": (v5/*: any*/),
+                        "args": (v3/*: any*/),
                         "concreteType": "Artist",
                         "kind": "LinkedField",
                         "name": "artists",
                         "plural": true,
                         "selections": [
-                          (v3/*: any*/),
                           (v4/*: any*/),
-                          (v6/*: any*/)
+                          (v2/*: any*/),
+                          (v5/*: any*/)
                         ],
                         "storageKey": "artists(shallow:true)"
                       },
@@ -372,15 +354,15 @@ return {
                       },
                       {
                         "alias": null,
-                        "args": (v5/*: any*/),
+                        "args": (v3/*: any*/),
                         "concreteType": "Partner",
                         "kind": "LinkedField",
                         "name": "partner",
                         "plural": false,
                         "selections": [
-                          (v6/*: any*/),
+                          (v5/*: any*/),
+                          (v2/*: any*/),
                           (v4/*: any*/),
-                          (v3/*: any*/),
                           {
                             "alias": null,
                             "args": null,
@@ -413,7 +395,7 @@ return {
                             "name": "isClosed",
                             "storageKey": null
                           },
-                          (v3/*: any*/),
+                          (v4/*: any*/),
                           {
                             "alias": "is_live_open",
                             "args": null,
@@ -478,7 +460,7 @@ return {
                             "kind": "LinkedField",
                             "name": "highestBid",
                             "plural": false,
-                            "selections": (v7/*: any*/),
+                            "selections": (v6/*: any*/),
                             "storageKey": null
                           },
                           {
@@ -488,10 +470,10 @@ return {
                             "kind": "LinkedField",
                             "name": "openingBid",
                             "plural": false,
-                            "selections": (v7/*: any*/),
+                            "selections": (v6/*: any*/),
                             "storageKey": null
                           },
-                          (v3/*: any*/)
+                          (v4/*: any*/)
                         ],
                         "storageKey": null
                       },
@@ -502,6 +484,7 @@ return {
                         "name": "isInquireable",
                         "storageKey": null
                       },
+                      (v4/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -537,9 +520,9 @@ return {
                 "storageKey": null
               }
             ],
-            "storageKey": "artworksConnection(first:6)"
+            "storageKey": "artworksConnection(first:20)"
           },
-          (v3/*: any*/)
+          (v4/*: any*/)
         ],
         "storageKey": null
       }
@@ -548,11 +531,11 @@ return {
   "params": {
     "id": null,
     "metadata": {},
-    "name": "FillwidthQuery",
+    "name": "FairExhibitorRailArtworksQuery",
     "operationKind": "query",
-    "text": "query FillwidthQuery(\n  $artistID: String!\n) {\n  artist(id: $artistID) {\n    artworks: artworksConnection(first: 6) {\n      ...Fillwidth_artworks\n    }\n    id\n  }\n}\n\nfragment Badge_artwork on Artwork {\n  is_biddable: isBiddable\n  href\n  sale {\n    is_preview: isPreview\n    display_timely_at: displayTimelyAt\n    id\n  }\n}\n\nfragment Contact_artwork on Artwork {\n  href\n  is_inquireable: isInquireable\n  sale {\n    is_auction: isAuction\n    is_live_open: isLiveOpen\n    is_open: isOpen\n    is_closed: isClosed\n    id\n  }\n  partner(shallow: true) {\n    type\n    id\n  }\n  sale_artwork: saleArtwork {\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    counts {\n      bidder_positions: bidderPositions\n    }\n    id\n  }\n}\n\nfragment Details_artwork on Artwork {\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n}\n\nfragment FillwidthItem_artwork on Artwork {\n  image {\n    url(version: \"large\")\n    aspect_ratio: aspectRatio\n  }\n  imageTitle\n  title\n  href\n  ...Metadata_artwork\n  ...Save_artwork\n  ...Badge_artwork\n}\n\nfragment Fillwidth_artworks on ArtworkConnection {\n  edges {\n    node {\n      id\n      image {\n        aspect_ratio: aspectRatio\n      }\n      ...FillwidthItem_artwork\n    }\n  }\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  ...Contact_artwork\n  href\n}\n\nfragment Save_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n"
+    "text": "query FairExhibitorRailArtworksQuery(\n  $id: String!\n) {\n  show(id: $id) {\n    ...FairExhibitorRailArtworks_show\n    id\n  }\n}\n\nfragment Badge_artwork on Artwork {\n  is_biddable: isBiddable\n  href\n  sale {\n    is_preview: isPreview\n    display_timely_at: displayTimelyAt\n    id\n  }\n}\n\nfragment Contact_artwork on Artwork {\n  href\n  is_inquireable: isInquireable\n  sale {\n    is_auction: isAuction\n    is_live_open: isLiveOpen\n    is_open: isOpen\n    is_closed: isClosed\n    id\n  }\n  partner(shallow: true) {\n    type\n    id\n  }\n  sale_artwork: saleArtwork {\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    counts {\n      bidder_positions: bidderPositions\n    }\n    id\n  }\n}\n\nfragment Details_artwork on Artwork {\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n}\n\nfragment FairExhibitorRailArtworks_show on Show {\n  artworks: artworksConnection(first: 20) {\n    edges {\n      artwork: node {\n        ...FillwidthItem_artwork\n        id\n      }\n    }\n  }\n}\n\nfragment FillwidthItem_artwork on Artwork {\n  image {\n    url(version: \"large\")\n    aspectRatio\n  }\n  imageTitle\n  title\n  href\n  ...Metadata_artwork\n  ...Save_artwork\n  ...Badge_artwork\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  ...Contact_artwork\n  href\n}\n\nfragment Save_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n"
   }
 };
 })();
-(node as any).hash = '90a1fead54deacd67059bd57c61b9bee';
+(node as any).hash = 'b44800ccb33bb732f73b5cc0dbb91b21';
 export default node;

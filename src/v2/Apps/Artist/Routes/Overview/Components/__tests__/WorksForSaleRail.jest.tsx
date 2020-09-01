@@ -73,7 +73,7 @@ const defaultArtist: WorksForSaleRail_Test_QueryRawResponse["artist"] = {
           slug: "andy-warhol-cow-ii-dot-12-31",
           href: "/artwork/andy-warhol-cow-ii-dot-12-31",
           image: {
-            aspect_ratio: 0.69,
+            aspectRatio: 0.69,
             url:
               "https://d32dm0rphc51dk.cloudfront.net/TggVGbEkp8GPrxSRYyUrVw/large.jpg",
           },
@@ -110,7 +110,7 @@ const defaultArtist: WorksForSaleRail_Test_QueryRawResponse["artist"] = {
           slug: "andy-warhol-cow-ii-dot-12-31",
           href: "/artwork/andy-warhol-cow-ii-dot-12-31",
           image: {
-            aspect_ratio: 0.69,
+            aspectRatio: 0.69,
             url:
               "https://d32dm0rphc51dk.cloudfront.net/TggVGbEkp8GPrxSRYyUrVw/large.jpg",
           },

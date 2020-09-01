@@ -14,12 +14,6 @@ export type ArtistSeriesArtworkRail_artwork = {
                 readonly filterArtworksConnection: {
                     readonly edges: ReadonlyArray<{
                         readonly node: {
-                            readonly image: {
-                                readonly resized: {
-                                    readonly height: number | null;
-                                    readonly width: number | null;
-                                } | null;
-                            } | null;
                             readonly slug: string;
                             readonly internalID: string;
                             readonly " $fragmentRefs": FragmentRefs<"FillwidthItem_artwork">;
@@ -129,48 +123,6 @@ return {
                           "name": "node",
                           "plural": false,
                           "selections": [
-                            {
-                              "alias": null,
-                              "args": null,
-                              "concreteType": "Image",
-                              "kind": "LinkedField",
-                              "name": "image",
-                              "plural": false,
-                              "selections": [
-                                {
-                                  "alias": null,
-                                  "args": [
-                                    {
-                                      "kind": "Literal",
-                                      "name": "height",
-                                      "value": 200
-                                    }
-                                  ],
-                                  "concreteType": "ResizedImageUrl",
-                                  "kind": "LinkedField",
-                                  "name": "resized",
-                                  "plural": false,
-                                  "selections": [
-                                    {
-                                      "alias": null,
-                                      "args": null,
-                                      "kind": "ScalarField",
-                                      "name": "height",
-                                      "storageKey": null
-                                    },
-                                    {
-                                      "alias": null,
-                                      "args": null,
-                                      "kind": "ScalarField",
-                                      "name": "width",
-                                      "storageKey": null
-                                    }
-                                  ],
-                                  "storageKey": "resized(height:200)"
-                                }
-                              ],
-                              "storageKey": null
-                            },
                             (v1/*: any*/),
                             (v0/*: any*/),
                             {
@@ -200,5 +152,5 @@ return {
   "type": "Artwork"
 };
 })();
-(node as any).hash = '49930e339134145bf9e6af048a5152e0';
+(node as any).hash = '8b15bbaacf09d0707448e986c263cd76';
 export default node;

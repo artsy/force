@@ -6,7 +6,7 @@ import { FragmentRefs } from "relay-runtime";
 export type FillwidthItem_artwork = {
     readonly image: {
         readonly url: string | null;
-        readonly aspect_ratio: number;
+        readonly aspectRatio: number;
     } | null;
     readonly imageTitle: string | null;
     readonly title: string | null;
@@ -50,7 +50,7 @@ const node: ReaderFragment = {
           "storageKey": "url(version:\"large\")"
         },
         {
-          "alias": "aspect_ratio",
+          "alias": null,
           "args": null,
           "kind": "ScalarField",
           "name": "aspectRatio",
@@ -98,5 +98,5 @@ const node: ReaderFragment = {
   ],
   "type": "Artwork"
 };
-(node as any).hash = '7c690a2390e9f5a0ad834b2cba4ed7a6';
+(node as any).hash = '1f99dc8973d4464babcf751f53d41e7f';
 export default node;

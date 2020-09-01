@@ -296,15 +296,7 @@ const defaultArtist: routes_OverviewQueryRawResponse["artist"] = {
           slug: "andy-warhol-roy-lichtenstein-authenticated-3",
           href: "/artwork/andy-warhol-roy-lichtenstein-authenticated-3",
           image: {
-            href: "/artwork/andy-warhol-roy-lichtenstein-authenticated-3",
-            imageAspectRatio: 0.78,
-            resized: {
-              width: 100,
-              height: 200,
-              url:
-                "https://d32dm0rphc51dk.cloudfront.net/JS5CsvkO_SpL1Vg7R-h_Zw/large.jpg",
-            },
-            aspect_ratio: 1.0,
+            aspectRatio: 1.0,
             url:
               "https://d32dm0rphc51dk.cloudfront.net/JS5CsvkO_SpL1Vg7R-h_Zw/large.jpg",
           },

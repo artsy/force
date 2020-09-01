@@ -18,9 +18,6 @@ export type RecommendedArtist_artist = {
         readonly edges: ReadonlyArray<{
             readonly node: {
                 readonly id: string;
-                readonly image: {
-                    readonly aspect_ratio: number;
-                } | null;
                 readonly " $fragmentRefs": FragmentRefs<"FillwidthItem_artwork">;
             } | null;
         } | null> | null;
@@ -165,24 +162,6 @@ const node: ReaderFragment = {
                   "storageKey": null
                 },
                 {
-                  "alias": null,
-                  "args": null,
-                  "concreteType": "Image",
-                  "kind": "LinkedField",
-                  "name": "image",
-                  "plural": false,
-                  "selections": [
-                    {
-                      "alias": "aspect_ratio",
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "aspectRatio",
-                      "storageKey": null
-                    }
-                  ],
-                  "storageKey": null
-                },
-                {
                   "args": null,
                   "kind": "FragmentSpread",
                   "name": "FillwidthItem_artwork"
@@ -204,5 +183,5 @@ const node: ReaderFragment = {
   ],
   "type": "Artist"
 };
-(node as any).hash = '7f1af7a31280e5d9f0987d58426dc4fa';
+(node as any).hash = '5243a48f8116ba46cda15524e4693731';
 export default node;

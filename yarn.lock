@@ -22,10 +22,10 @@
     qs "5.2.0"
     underscore "*"
 
-"@artsy/cohesion@1.33.3":
-  version "1.33.3"
-  resolved "https://registry.yarnpkg.com/@artsy/cohesion/-/cohesion-1.33.3.tgz#3124dd4338ab5c5f6a8f1923920df2a6e437d787"
-  integrity sha512-MrrmamWOvNRiVJwBPQrax40PyFxm+u/6sBHc3VxAZvaybSiEnOynaYX/NkKlSxVZImm8C0WNWfPWrG7D1bdEPg==
+"@artsy/cohesion@1.33.4":
+  version "1.33.4"
+  resolved "https://registry.yarnpkg.com/@artsy/cohesion/-/cohesion-1.33.4.tgz#df545b2c1f1eef198b8f15c58fa218664bfce9c4"
+  integrity sha512-sIzvSrjOnGHH1wlIhR6jCoDS7vORaMq1CNMcDupJ3sDJ83y5q/Y6FFBtxRyg75mOPbvcgTKfcgp+dTIKoc8Jvg==
 
 "@artsy/detect-responsive-traits@^0.0.5":
   version "0.0.5"
@@ -53,10 +53,10 @@
   dependencies:
     uuid "^8.3.0"
 
-"@artsy/palette@12.4.2":
-  version "12.4.2"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-12.4.2.tgz#3e284aed1f462dcaa401e34c0901c61990085080"
-  integrity sha512-gCAji7xklYjcA3kU5UFdyER/tPhuwunD6E4ZecxbsqvD5efwSZlm46EDTFBWraL+QymIIfgNS6nNOgDhb7aVQQ==
+"@artsy/palette@12.5.0":
+  version "12.5.0"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-12.5.0.tgz#0d89990ca2eb11735079c9d3e643c2feb8f7763f"
+  integrity sha512-Civ9TcqX74tyfgiEPysqvKA6CPCHL8FKRshH0qlxXl+b7/CjvlB7hVzXIWH0Rn79nEPBQ0afZb3Ut5IWKEzKVA==
   dependencies:
     "@styled-system/theme-get" "^5.1.2"
     babel-plugin-styled-components "^1.10.0"
@@ -108,10 +108,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/react-html-parser/-/react-html-parser-3.0.2.tgz#6213d662441acf0bd8c9ee953aa77ac8d9cf1cdd"
   integrity sha512-FXiRSqfSvwpz/QgwaqFvjJsbDmo9qMGpvUp/0p1V6muaJbGnfxkTSxAYWmYlFst6bmjhVxCYKxvgQhEVE03Wfg==
 
-"@artsy/reaction@28.4.0":
-  version "28.4.0"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-28.4.0.tgz#6f186fa45ab99bfbe7bc91a6b80f157dcf8fc762"
-  integrity sha512-LcEvezslMEooxiX2kvHUOsdEjaTVLqq5kuuPqaQVzyEyUmycTx7QnnIbw1ZJHuy7gIiOPWUIbwlJrXcYCzlzJA==
+"@artsy/reaction@28.4.1":
+  version "28.4.1"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-28.4.1.tgz#09dbdacfaec007dc98dac38f010ddd780749853c"
+  integrity sha512-H0hiFtZkp75MehVBWmvkPqHcjV0/c1NZgQqtiBRYm00BbjbvNLm8I6xG9nZGp58muWD4GjMI9fe5tMZd/nCUAA==
   dependencies:
     "@artsy/detect-responsive-traits" "^0.0.5"
     "@artsy/fresnel" "^1.0.13"

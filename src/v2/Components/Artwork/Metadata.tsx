@@ -9,14 +9,13 @@ export interface MetadataProps extends BoxProps {
   extended?: boolean
   hidePartnerName?: boolean
   hideArtistName?: boolean
-  useLighterFont?: boolean
   className?: string
 }
 
 export class Metadata extends React.Component<MetadataProps> {
   static defaultProps = {
     extended: true,
-    mt: "12px",
+    mt: 1,
   }
 
   render() {
@@ -26,7 +25,6 @@ export class Metadata extends React.Component<MetadataProps> {
       extended,
       hidePartnerName,
       hideArtistName,
-      useLighterFont,
       ...boxProps
     } = this.props
 
@@ -39,7 +37,6 @@ export class Metadata extends React.Component<MetadataProps> {
             artwork={artwork}
             hidePartnerName={hidePartnerName}
             hideArtistName={hideArtistName}
-            useLighterFont={useLighterFont}
           />
         </Box>
       </Link>

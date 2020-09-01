@@ -7,6 +7,13 @@ export type ArtworkArtistSeries_artwork = {
     readonly internalID: string;
     readonly slug: string;
     readonly seriesArtist: {
+        readonly artistSeriesConnection: {
+            readonly edges: ReadonlyArray<{
+                readonly node: {
+                    readonly internalID: string;
+                } | null;
+            } | null> | null;
+        } | null;
         readonly " $fragmentRefs": FragmentRefs<"ArtistSeriesRail_artist">;
     } | null;
     readonly seriesForCounts: {
@@ -27,7 +34,15 @@ export type ArtworkArtistSeries_artwork$key = {
 
 
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+};
+return {
   "argumentDefinitions": [
     {
       "defaultValue": false,
@@ -40,13 +55,7 @@ const node: ReaderFragment = {
   "metadata": null,
   "name": "ArtworkArtistSeries_artwork",
   "selections": [
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "internalID",
-      "storageKey": null
-    },
+    (v0/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -68,6 +77,40 @@ const node: ReaderFragment = {
       "name": "artist",
       "plural": false,
       "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "ArtistSeriesConnection",
+          "kind": "LinkedField",
+          "name": "artistSeriesConnection",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "ArtistSeriesEdge",
+              "kind": "LinkedField",
+              "name": "edges",
+              "plural": true,
+              "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "concreteType": "ArtistSeries",
+                  "kind": "LinkedField",
+                  "name": "node",
+                  "plural": false,
+                  "selections": [
+                    (v0/*: any*/)
+                  ],
+                  "storageKey": null
+                }
+              ],
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        },
         {
           "condition": "shouldFetchArtistSeriesData",
           "kind": "Condition",
@@ -144,5 +187,6 @@ const node: ReaderFragment = {
   ],
   "type": "Artwork"
 };
-(node as any).hash = 'bb006cb163de0199877477f81ebec024';
+})();
+(node as any).hash = '5fd65d1cfa7fdd9dd45cf49c8a3c20c3';
 export default node;

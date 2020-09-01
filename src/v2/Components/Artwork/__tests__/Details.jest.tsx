@@ -19,7 +19,6 @@ describe("Details", () => {
     response: Details_Test_QueryRawResponse["artwork"],
     restProps?: {
       showSaleLine: boolean
-      useLighterFont: boolean
       hidePartnerName: boolean
       hideArtistName: boolean
     }
@@ -45,7 +44,6 @@ describe("Details", () => {
     it("removes artwork's partner and artist name metadata", async () => {
       props = {
         showSaleLine: false,
-        useLighterFont: true,
         hidePartnerName: true,
         hideArtistName: true,
       }

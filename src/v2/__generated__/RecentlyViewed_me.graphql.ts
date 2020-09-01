@@ -9,8 +9,8 @@ export type RecentlyViewed_me = {
             readonly node: {
                 readonly id: string;
                 readonly image: {
-                    readonly aspect_ratio: number;
                     readonly url: string | null;
+                    readonly aspectRatio: number;
                 } | null;
                 readonly imageTitle: string | null;
                 readonly title: string | null;
@@ -81,13 +81,6 @@ const node: ReaderFragment = {
                   "plural": false,
                   "selections": [
                     {
-                      "alias": "aspect_ratio",
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "aspectRatio",
-                      "storageKey": null
-                    },
-                    {
                       "alias": null,
                       "args": [
                         {
@@ -99,6 +92,13 @@ const node: ReaderFragment = {
                       "kind": "ScalarField",
                       "name": "url",
                       "storageKey": "url(version:\"large\")"
+                    },
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "aspectRatio",
+                      "storageKey": null
                     }
                   ],
                   "storageKey": null
@@ -151,5 +151,5 @@ const node: ReaderFragment = {
   ],
   "type": "Me"
 };
-(node as any).hash = '746769007f334b0c16dc32cb9ec46bf4';
+(node as any).hash = 'abeef15094294a706fc1c2aaad7c61a2';
 export default node;
