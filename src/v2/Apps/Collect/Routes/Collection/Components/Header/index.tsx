@@ -89,8 +89,6 @@ export const featuredArtistsEntityCollection: (
                 contextOwnerSlug: collection.slug,
                 contextOwnerType: OwnerType.collection,
                 contextModule: ContextModule.featuredArtistsRail,
-                ownerId: artist.internalID,
-                ownerSlug: artist.slug,
               }}
               render={({ is_followed }) => {
                 return (

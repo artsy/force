@@ -130,10 +130,7 @@ describe("ArtistInfo", () => {
 
   it("opens auth modal with expected args when following an artist", () => {
     const component = getWrapper()
-    component
-      .find(FollowArtistButton)
-      .first()
-      .simulate("click")
+    component.find(FollowArtistButton).first().simulate("click")
     expect(context.mediator.trigger).toBeCalledWith("open:auth", {
       mode: "signup",
       contextModule: "aboutTheWork",
@@ -150,7 +147,15 @@ describe("ArtistInfo", () => {
   describe("Analytics", () => {
     it("tracks click on 'Show artist insights' button", () => {
       const { Component, dispatch } = mockTracking(ArtistInfo)
-      const component = mount(<Component contextOwnerSlug="slug" contextOwnerId="1234" artist={ArtistInfoFixture as any} />)
+      const component = mount(
+        <Component
+          trackingData={{
+            contextOwnerSlug: "slug",
+            contextOwnerId: "1234",
+          }}
+          artist={ArtistInfoFixture as any}
+        />
+      )
       const button = component.find("Button")
       button.simulate("click")
       expect(dispatch).toBeCalledWith({

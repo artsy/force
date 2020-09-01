@@ -1,4 +1,3 @@
-import { AuthContextModule, OwnerType } from "@artsy/cohesion"
 import { ArtistCard_artist } from "v2/__generated__/ArtistCard_artist.graphql"
 import { Mediator } from "v2/Artsy"
 import { FollowArtistButtonFragmentContainer as FollowArtistButton } from "v2/Components/FollowButton/FollowArtistButton"
@@ -21,11 +20,11 @@ import {
 } from "@artsy/palette"
 import styled from "styled-components"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
+import { FollowTrackingData } from "./FollowButton/Typings"
 
 export interface ArtistCardProps {
   artist: ArtistCard_artist
-  contextModule: AuthContextModule
-  contextOwnerType: OwnerType
+  trackingData: FollowTrackingData
   user: User
   mediator?: Mediator
   /** Lazy load the avatar image */
@@ -89,12 +88,7 @@ export const LargeArtistCard: SFC<ArtistCardProps> = props => (
       <FollowArtistButton
         artist={props.artist}
         user={props.user}
-        trackingData={{
-          contextOwnerType: props.contextOwnerType,
-          contextModule: props.contextModule,
-          ownerId: props.artist.internalID,
-          ownerSlug: props.artist.slug,
-        }}
+        trackingData={props.trackingData}
         render={({ is_followed }) => {
           return (
             <Button
@@ -135,12 +129,7 @@ export const SmallArtistCard: SFC<ArtistCardProps> = props => (
       <FollowArtistButton
         artist={props.artist}
         user={props.user}
-        trackingData={{
-          contextOwnerType: props.contextOwnerType,
-          contextModule: props.contextModule,
-          ownerId: props.artist.internalID,
-          ownerSlug: props.artist.slug,
-        }}
+        trackingData={props.trackingData}
         render={({ is_followed }) => {
           return (
             <Button

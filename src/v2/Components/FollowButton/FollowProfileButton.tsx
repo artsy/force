@@ -5,7 +5,7 @@ import React from "react"
 import track, { TrackingProp } from "react-tracking"
 import { FollowProfileButton_profile } from "../../__generated__/FollowProfileButton_profile.graphql"
 import { FollowButton } from "./Button"
-import { FollowTrackingData } from "./Typings"
+import { FollowDeprecatedTrackingData } from "./Typings"
 
 import { ButtonProps } from "@artsy/palette"
 import {
@@ -21,7 +21,7 @@ interface Props
   relay?: RelayProp
   profile?: FollowProfileButton_profile
   tracking?: TrackingProp
-  trackingData?: FollowTrackingData
+  trackingData?: FollowDeprecatedTrackingData
   onOpenAuthModal?: (type: "register" | "login", config?: object) => void
 
   buttonProps?: Partial<ButtonProps>
@@ -41,7 +41,7 @@ export class FollowProfileButton extends React.Component<Props> {
       tracking,
       profile: { is_followed },
     } = this.props
-    const trackingData: FollowTrackingData = this.props.trackingData || {}
+    const trackingData: FollowDeprecatedTrackingData = this.props.trackingData || {}
     const action = is_followed ? "Unfollowed Profile" : "Followed Profile"
 
     tracking.trackEvent(extend({ action }, trackingData))

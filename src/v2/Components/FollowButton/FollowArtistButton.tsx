@@ -1,9 +1,13 @@
-import { ActionType, FollowedArgs, Intent } from "@artsy/cohesion"
+import {
+  FollowedArgs,
+  Intent,
+  followedArtist,
+  unfollowedArtist,
+} from "@artsy/cohesion"
 import { Box } from "@artsy/palette"
 import { FollowArtistButtonMutation } from "v2/__generated__/FollowArtistButtonMutation.graphql"
 import * as Artsy from "v2/Artsy"
 import { FollowArtistPopoverFragmentContainer as SuggestionsPopover } from "v2/Components/FollowArtistPopover"
-import { extend } from "lodash"
 import React from "react"
 import track, { TrackingProp } from "react-tracking"
 import styled from "styled-components"
@@ -26,7 +30,7 @@ interface Props
   mediator?: Mediator
   artist?: FollowArtistButton_artist
   tracking?: TrackingProp
-  trackingData: FollowedArgs
+  trackingData: FollowTrackingData
   /**
    * Custom renderer for alternative button displays
    */
@@ -51,25 +55,23 @@ const Container = styled.span`
 export class FollowArtistButton extends React.Component<Props, State> {
   static defaultProps = {
     triggerSuggestions: false,
-    useNewAnalyticsSchema: false,
   }
 
   state = { openSuggestions: false }
 
   trackFollow = () => {
-    const {
-      tracking,
-      artist: { is_followed },
-    } = this.props
-    const trackingData: FollowTrackingData = this.props.trackingData
+    const { tracking, artist } = this.props
+    const args: FollowedArgs = {
+      ownerId: artist.internalID,
+      ownerSlug: artist.slug,
+      ...this.props.trackingData,
+    }
 
-    let action: ActionType.unfollowedArtist | ActionType.followedArtist
+    const trackingData = artist.is_followed
+      ? unfollowedArtist(args)
+      : followedArtist(args)
 
-    action = is_followed
-      ? ActionType.unfollowedArtist
-      : ActionType.followedArtist
-
-    tracking.trackEvent(extend(trackingData, { action }))
+    tracking.trackEvent(trackingData)
   }
 
   handleFollow = e => {

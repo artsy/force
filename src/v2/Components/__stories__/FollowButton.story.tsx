@@ -20,8 +20,6 @@ storiesOf("Components/Follow Button", module)
           trackingData={{
             contextModule: ContextModule.relatedArtistsRail,
             contextOwnerType: OwnerType.home,
-            ownerId: "1234",
-            ownerSlug: "damon-zucconi"
           }}
         />
         <br />
@@ -37,8 +35,6 @@ storiesOf("Components/Follow Button", module)
           trackingData={{
             contextModule: ContextModule.relatedArtistsRail,
             contextOwnerType: OwnerType.home,
-            ownerId: "1234",
-            ownerSlug: "damon-zucconi"
           }}
         />
       </div>

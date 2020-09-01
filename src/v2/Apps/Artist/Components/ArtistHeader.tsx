@@ -3,8 +3,6 @@ import { Box, Flex, Sans, Spacer } from "@artsy/palette"
 import { ArtistHeader_artist } from "v2/__generated__/ArtistHeader_artist.graphql"
 import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
 import { Mediator, SystemContextConsumer } from "v2/Artsy"
-import { track } from "v2/Artsy/Analytics"
-import * as Schema from "v2/Artsy/Analytics/Schema"
 import { FollowArtistButtonFragmentContainer as FollowArtistButton } from "v2/Components/FollowButton/FollowArtistButton"
 import React, { Component } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -47,16 +45,6 @@ const CATEGORIES = {
   "top-emerging": "Emerging Representation",
 }
 
-@track<Props>(
-  props =>
-    ({
-      context_module: "Header",
-      // TODO: Old schema for the Follow button
-      modelName: "artist",
-      entity_slug: props.artist.slug,
-      entity_id: props.artist.internalID,
-    } as Schema.ContextModule & Schema.Old)
-)
 export class ArtistHeader extends Component<Props> {
   render() {
     const props = this.props
@@ -123,8 +111,8 @@ export class LargeArtistHeader extends Component<Props> {
                 trackingData={{
                   contextModule: ContextModule.artistHeader,
                   contextOwnerType: OwnerType.artist,
-                  ownerId: props.artist.internalID,
-                  ownerSlug: props.artist.slug,
+                  contextOwnerId: props.artist.internalID,
+                  contextOwnerSlug: props.artist.slug,
                 }}
                 artist={props.artist}
                 user={user}
@@ -190,8 +178,8 @@ export class SmallArtistHeader extends Component<Props> {
               trackingData={{
                 contextModule: ContextModule.artistHeader,
                 contextOwnerType: OwnerType.artist,
-                ownerId: props.artist.internalID,
-                ownerSlug: props.artist.slug,
+                contextOwnerId: props.artist.internalID,
+                contextOwnerSlug: props.artist.slug,
               }}
               render={({ is_followed }) => {
                 return (

@@ -20,6 +20,8 @@ const logger = createLogger("ArtistRecommendations.tsx")
 interface ArtistRecommendationsProps {
   artist: ArtistRecommendations_artist
   relay: RelayPaginationProp
+  contextOwnerId: string
+  contextOwnerSlug: string
 }
 
 const PAGE_SIZE = 3
@@ -35,7 +37,15 @@ export const ArtistRecommendations: React.FC<ArtistRecommendationsProps> = ({
     a => a.related.artistsConnection.edges,
     []
   ).map(edge => (
-    <RecommendedArtist artist={edge.node} key={edge.node.id} fullBleedRail />
+    <RecommendedArtist
+      artist={edge.node}
+      key={edge.node.id}
+      fullBleedRail
+      trackingData={{
+        contextOwnerId: artist.internalID,
+        contextOwnerSlug: artist.slug,
+      }}
+    />
   ))
 
   const fetchData = () => {
@@ -93,7 +103,7 @@ const ShowMoreButton: React.FC<{ onClick: () => void; loading: boolean }> = ({
 }
 
 export const ArtistRecommendationsPaginationContainer = createPaginationContainer(
-  ArtistRecommendations,
+  ArtistRecommendations as React.FC<ArtistRecommendationsProps>,
   {
     artist: graphql`
       fragment ArtistRecommendations_artist on Artist
@@ -103,6 +113,7 @@ export const ArtistRecommendationsPaginationContainer = createPaginationContaine
           minForsaleArtworks: { type: "Int", defaultValue: 7 }
         ) {
         slug
+        internalID
         related {
           artistsConnection(
             first: $count

@@ -21,8 +21,6 @@ export const ZeroState = props => {
               contextOwnerId: artist.internalID,
               contextOwnerSlug: artist.slug,
               contextOwnerType: OwnerType.artist,
-              ownerId: artist.internalID,
-              ownerSlug: artist.slug,
             }}
             render={({ name }) => {
               return (

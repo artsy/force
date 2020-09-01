@@ -30,8 +30,10 @@ describe("ArtistCard", () => {
     mediator = { trigger: jest.fn() }
     props = {
       user: null,
-      contextModule: ContextModule.artistsToFollowRail,
-      contextOwnerType: OwnerType.home,
+      trackingData: {
+        contextModule: ContextModule.artistsToFollowRail,
+        contextOwnerType: OwnerType.home,
+      },
       artist: {
         image: {
           cropped: {

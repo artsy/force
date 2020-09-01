@@ -45,8 +45,6 @@ export class ArtworkSidebarArtists extends React.Component<ArtistsProps> {
             contextOwnerId: artwork.internalID,
             contextOwnerSlug: artwork.slug,
             contextOwnerType: OwnerType.artwork,
-            ownerId: artist.internalID,
-            ownerSlug: artist.slug,
           }}
           triggerSuggestions
           render={({ is_followed }) => {

@@ -48,6 +48,7 @@ fragment ArtistCard_artist on Artist {
 
 fragment ArtworkRelatedArtists_artwork_1G22uz on Artwork {
   slug
+  internalID
   artist {
     href
     related {
@@ -121,10 +122,17 @@ v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+},
+v4 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
   "name": "href",
   "storageKey": null
 },
-v4 = [
+v5 = [
   {
     "kind": "Variable",
     "name": "after",
@@ -141,7 +149,7 @@ v4 = [
     "value": "MAIN"
   }
 ],
-v5 = {
+v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -200,6 +208,7 @@ return {
         "plural": false,
         "selections": [
           (v2/*: any*/),
+          (v3/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -208,7 +217,7 @@ return {
             "name": "artist",
             "plural": false,
             "selections": [
-              (v3/*: any*/),
+              (v4/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -219,7 +228,7 @@ return {
                 "selections": [
                   {
                     "alias": null,
-                    "args": (v4/*: any*/),
+                    "args": (v5/*: any*/),
                     "concreteType": "ArtistConnection",
                     "kind": "LinkedField",
                     "name": "artistsConnection",
@@ -274,7 +283,7 @@ return {
                                 "storageKey": null
                               },
                               (v2/*: any*/),
-                              (v3/*: any*/),
+                              (v4/*: any*/),
                               {
                                 "alias": null,
                                 "args": null,
@@ -315,13 +324,7 @@ return {
                                 ],
                                 "storageKey": null
                               },
-                              {
-                                "alias": null,
-                                "args": null,
-                                "kind": "ScalarField",
-                                "name": "internalID",
-                                "storageKey": null
-                              },
+                              (v3/*: any*/),
                               {
                                 "alias": "formatted_nationality_and_birthday",
                                 "args": null,
@@ -329,7 +332,7 @@ return {
                                 "name": "formattedNationalityAndBirthday",
                                 "storageKey": null
                               },
-                              (v5/*: any*/),
+                              (v6/*: any*/),
                               {
                                 "alias": "is_followed",
                                 "args": null,
@@ -380,7 +383,7 @@ return {
                   },
                   {
                     "alias": null,
-                    "args": (v4/*: any*/),
+                    "args": (v5/*: any*/),
                     "filters": [
                       "kind"
                     ],
@@ -392,11 +395,11 @@ return {
                 ],
                 "storageKey": null
               },
-              (v5/*: any*/)
+              (v6/*: any*/)
             ],
             "storageKey": null
           },
-          (v5/*: any*/)
+          (v6/*: any*/)
         ],
         "storageKey": null
       }
@@ -407,7 +410,7 @@ return {
     "metadata": {},
     "name": "ArtworkRelatedArtistsPaginationQuery",
     "operationKind": "query",
-    "text": "query ArtworkRelatedArtistsPaginationQuery(\n  $count: Int!\n  $cursor: String\n  $artworkID: String!\n) {\n  artwork(id: $artworkID) {\n    ...ArtworkRelatedArtists_artwork_1G22uz\n    id\n  }\n}\n\nfragment ArtistCard_artist on Artist {\n  name\n  slug\n  href\n  image {\n    cropped(width: 400, height: 300) {\n      url\n    }\n  }\n  internalID\n  formatted_nationality_and_birthday: formattedNationalityAndBirthday\n  ...FollowArtistButton_artist\n}\n\nfragment ArtworkRelatedArtists_artwork_1G22uz on Artwork {\n  slug\n  artist {\n    href\n    related {\n      artistsConnection(kind: MAIN, first: $count, after: $cursor) {\n        pageInfo {\n          hasNextPage\n          endCursor\n        }\n        edges {\n          node {\n            ...ArtistCard_artist\n            id\n            __typename\n          }\n          cursor\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment FollowArtistButton_artist on Artist {\n  id\n  internalID\n  name\n  slug\n  is_followed: isFollowed\n  counts {\n    follows\n  }\n}\n"
+    "text": "query ArtworkRelatedArtistsPaginationQuery(\n  $count: Int!\n  $cursor: String\n  $artworkID: String!\n) {\n  artwork(id: $artworkID) {\n    ...ArtworkRelatedArtists_artwork_1G22uz\n    id\n  }\n}\n\nfragment ArtistCard_artist on Artist {\n  name\n  slug\n  href\n  image {\n    cropped(width: 400, height: 300) {\n      url\n    }\n  }\n  internalID\n  formatted_nationality_and_birthday: formattedNationalityAndBirthday\n  ...FollowArtistButton_artist\n}\n\nfragment ArtworkRelatedArtists_artwork_1G22uz on Artwork {\n  slug\n  internalID\n  artist {\n    href\n    related {\n      artistsConnection(kind: MAIN, first: $count, after: $cursor) {\n        pageInfo {\n          hasNextPage\n          endCursor\n        }\n        edges {\n          node {\n            ...ArtistCard_artist\n            id\n            __typename\n          }\n          cursor\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment FollowArtistButton_artist on Artist {\n  id\n  internalID\n  name\n  slug\n  is_followed: isFollowed\n  counts {\n    follows\n  }\n}\n"
   }
 };
 })();

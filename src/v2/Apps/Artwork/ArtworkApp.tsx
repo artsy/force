@@ -166,7 +166,13 @@ export class ArtworkApp extends React.Component<Props> {
             <React.Fragment key={index}>
               <Row key={artist.id}>
                 <Col>
-                  <ArtistInfo artist={artist} contextOwnerId={artwork.internalID} contextOwnerSlug={artwork.slug} />
+                  <ArtistInfo
+                    artist={artist}
+                    trackingData={{
+                      contextOwnerId: artwork.internalID,
+                      contextOwnerSlug: artwork.slug,
+                    }}
+                  />
                 </Col>
               </Row>
               {addSpacer && <Spacer mb={2} />}

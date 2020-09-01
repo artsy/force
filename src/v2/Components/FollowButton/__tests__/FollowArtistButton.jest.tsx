@@ -124,10 +124,13 @@ describe("FollowArtistButton", () => {
 
       expect(props.tracking.trackEvent).toBeCalledWith({
         action: "followedArtist",
-        contextModule: "artistsToFollowRail",
-        contextOwnerType: "home",
-        ownerId: "1234",
-        ownerSlug: "damon-zucconi",
+        context_module: "artistsToFollowRail",
+        context_owner_id: undefined,
+        context_owner_slug: undefined,
+        context_owner_type: "home",
+        owner_id: "1234",
+        owner_slug: "damon-zucconi",
+        owner_type: "artist",
       })
     })
 
@@ -138,10 +141,13 @@ describe("FollowArtistButton", () => {
 
       expect(props.tracking.trackEvent).toBeCalledWith({
         action: "unfollowedArtist",
-        contextModule: "artistsToFollowRail",
-        contextOwnerType: "home",
-        ownerId: "1234",
-        ownerSlug: "damon-zucconi",
+        context_module: "artistsToFollowRail",
+        context_owner_id: undefined,
+        context_owner_slug: undefined,
+        context_owner_type: "home",
+        owner_id: "1234",
+        owner_slug: "damon-zucconi",
+        owner_type: "artist",
       })
     })
   })

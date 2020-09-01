@@ -14,6 +14,10 @@ import { get } from "v2/Utils/get"
 interface RecommendedArtistProps {
   artist: RecommendedArtist_artist
   fullBleedRail?: boolean
+  trackingData: {
+    contextOwnerId: string
+    contextOwnerSlug: string
+  }
 }
 const HEIGHT = 150
 
@@ -45,7 +49,7 @@ const RecommendedArtist: FC<
   RecommendedArtistProps & {
     onArtworkClicked: () => void
   }
-> = ({ artist, onArtworkClicked, fullBleedRail }) => {
+> = ({ artist, onArtworkClicked, fullBleedRail, trackingData }) => {
   const { user, mediator } = useContext(SystemContext)
   const artistData = get(artist, a => a.artworks_connection.edges, [])
 
@@ -64,8 +68,7 @@ const RecommendedArtist: FC<
             trackingData={{
               contextOwnerType: OwnerType.artist,
               contextModule: ContextModule.recommendedArtistsRail,
-              ownerId: artist.internalID,
-              ownerSlug: artist.slug,
+              ...trackingData,
             }}
             render={({ is_followed }) => {
               return (
@@ -108,7 +111,7 @@ const RecommendedArtist: FC<
 }
 
 export const RecommendedArtistFragmentContainer = createFragmentContainer(
-  RecommendedArtistWithTracking,
+  RecommendedArtistWithTracking as React.ComponentClass<RecommendedArtistProps>,
   {
     artist: graphql`
       fragment RecommendedArtist_artist on Artist {

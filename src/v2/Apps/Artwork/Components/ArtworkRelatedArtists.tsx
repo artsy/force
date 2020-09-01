@@ -64,8 +64,12 @@ export const ArtworkRelatedArtists: React.FC<ArtworkRelatedArtistsProps> = track
                 <ArtistCard
                   lazyLoad
                   artist={node}
-                  contextOwnerType={OwnerType.artwork}
-                  contextModule={ContextModule.relatedArtistsRail}
+                  trackingData={{
+                    contextOwnerId: props.artwork.internalID,
+                    contextOwnerSlug: props.artwork.slug,
+                    contextOwnerType: OwnerType.artwork,
+                    contextModule: ContextModule.relatedArtistsRail,
+                  }}
                   mediator={mediator}
                   user={user}
                   onClick={() => {
@@ -117,6 +121,7 @@ export const ArtworkRelatedArtistsPaginationContainer = createPaginationContaine
           cursor: { type: "String", defaultValue: "" }
         ) {
         slug
+        internalID
         artist {
           href
           related {

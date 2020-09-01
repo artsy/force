@@ -31,8 +31,10 @@ import { get } from "v2/Utils/get"
 interface ArtistInfoProps {
   artist: ArtistInfo_artist
   mediator?: Mediator
-  contextOwnerId: string
-  contextOwnerSlug: string
+  trackingData: {
+    contextOwnerId: string
+    contextOwnerSlug: string
+  }
 }
 
 interface ArtistInfoState {
@@ -86,7 +88,7 @@ export class ArtistInfo extends Component<ArtistInfoProps, ArtistInfoState> {
 
   render() {
     const { artist } = this.props
-    const { biographyBlurb, image, slug, internalID } = this.props.artist
+    const { biographyBlurb, image } = this.props.artist
     const showArtistBio = !!biographyBlurb.text
     const imageUrl = get(this.props, p => image.cropped.url)
     const showArtistInsightsButton =
@@ -121,11 +123,8 @@ export class ArtistInfo extends Component<ArtistInfoProps, ArtistInfoState> {
                     user={user}
                     trackingData={{
                       contextModule: ContextModule.aboutTheWork,
-                      contextOwnerId: this.props.contextOwnerId,
-                      contextOwnerSlug: this.props.contextOwnerSlug,
                       contextOwnerType: OwnerType.artwork,
-                      ownerId: internalID,
-                      ownerSlug: slug,
+                      ...this.props.trackingData,
                     }}
                     render={({ is_followed }) => {
                       return (

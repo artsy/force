@@ -35,7 +35,6 @@ const ArtistInfo: React.FC<ArtistsInfoProps> = props => {
      that an artist series will have one artist. */
   const { user } = useSystemContext()
   const { artist, contextOwnerId, contextOwnerSlug } = props
-  const { slug, internalID } = artist
 
   return (
     <EntityHeader
@@ -52,8 +51,6 @@ const ArtistInfo: React.FC<ArtistsInfoProps> = props => {
             contextOwnerType: OwnerType.artistSeries,
             contextOwnerId,
             contextOwnerSlug,
-            ownerId: internalID,
-            ownerSlug: slug,
           }}
           render={({ is_followed }) => {
             return (
