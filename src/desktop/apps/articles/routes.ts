@@ -20,8 +20,10 @@ let positronql = _positronql
 let topParselyArticles = _topParselyArticles
 let stitch = _stitch
 
-export const articles = (_req, res, next) => {
-  const query = { query: magazineQuery }
+export const articles = (req, res, next) => {
+  const limit = 50
+  const offset = (parseInt(req.query.page, 10) || 1) * limit - limit
+  const query = { query: magazineQuery(limit, offset) }
   return positronql(query)
     .then(async result => {
       const articles = new Articles(result.articles)
