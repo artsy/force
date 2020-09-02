@@ -382,7 +382,6 @@ fragment Header_collection on MarketingCollection {
   featuredArtistExclusionIds
   headerImage
   id
-  internalID
   query {
     artistIDs
     id
@@ -814,36 +813,29 @@ v8 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "internalID",
+  "name": "slug",
   "storageKey": null
 },
 v9 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "slug",
-  "storageKey": null
-},
-v10 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
   "name": "title",
   "storageKey": null
 },
-v11 = {
+v10 = {
   "alias": "price_guidance",
   "args": null,
   "kind": "ScalarField",
   "name": "priceGuidance",
   "storageKey": null
 },
-v12 = {
+v11 = {
   "kind": "Literal",
   "name": "sort",
   "value": "-decayed_merch"
 },
-v13 = [
+v12 = [
   {
     "kind": "Literal",
     "name": "aggregations",
@@ -856,55 +848,55 @@ v13 = [
     "name": "first",
     "value": 3
   },
-  (v12/*: any*/)
+  (v11/*: any*/)
 ],
-v14 = {
+v13 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "name",
   "storageKey": null
 },
-v15 = [
-  (v14/*: any*/),
+v14 = [
+  (v13/*: any*/),
   (v7/*: any*/)
 ],
-v16 = {
+v15 = {
   "alias": null,
   "args": null,
   "concreteType": "Artist",
   "kind": "LinkedField",
   "name": "artist",
   "plural": false,
-  "selections": (v15/*: any*/),
+  "selections": (v14/*: any*/),
   "storageKey": null
 },
-v17 = {
+v16 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "url",
   "storageKey": null
 },
-v18 = [
-  (v17/*: any*/)
+v17 = [
+  (v16/*: any*/)
 ],
-v19 = {
+v18 = {
   "kind": "Literal",
   "name": "first",
   "value": 1
 },
-v20 = {
+v19 = {
   "kind": "Literal",
   "name": "includeMediumFilterInAggregation",
   "value": true
 },
-v21 = {
+v20 = {
   "kind": "Literal",
   "name": "size",
   "value": 1
 },
-v22 = [
+v21 = [
   {
     "alias": null,
     "args": null,
@@ -919,9 +911,9 @@ v22 = [
     "name": "height",
     "storageKey": null
   },
-  (v17/*: any*/)
+  (v16/*: any*/)
 ],
-v23 = {
+v22 = {
   "alias": null,
   "args": [
     {
@@ -934,35 +926,35 @@ v23 = {
   "name": "url",
   "storageKey": "url(version:\"larger\")"
 },
-v24 = {
+v23 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "href",
   "storageKey": null
 },
-v25 = {
+v24 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "availability",
   "storageKey": null
 },
-v26 = {
+v25 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "date",
   "storageKey": null
 },
-v27 = {
+v26 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "__typename",
   "storageKey": null
 },
-v28 = [
+v27 = [
   {
     "alias": null,
     "args": null,
@@ -971,18 +963,25 @@ v28 = [
     "storageKey": null
   }
 ],
-v29 = [
+v28 = [
   {
     "kind": "Literal",
     "name": "shallow",
     "value": true
   }
 ],
-v30 = {
+v29 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "type",
+  "storageKey": null
+},
+v30 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
   "storageKey": null
 },
 v31 = {
@@ -1015,7 +1014,7 @@ v31 = {
           "name": "value",
           "storageKey": null
         },
-        (v14/*: any*/),
+        (v13/*: any*/),
         {
           "alias": null,
           "args": null,
@@ -1069,7 +1068,7 @@ v33 = [
         "plural": false,
         "selections": [
           (v7/*: any*/),
-          (v25/*: any*/),
+          (v24/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -1078,7 +1077,7 @@ v33 = [
             "name": "listPrice",
             "plural": false,
             "selections": [
-              (v27/*: any*/),
+              (v26/*: any*/),
               {
                 "kind": "InlineFragment",
                 "selections": [
@@ -1204,7 +1203,6 @@ return {
           },
           (v6/*: any*/),
           (v7/*: any*/),
-          (v8/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -1238,8 +1236,8 @@ return {
             ],
             "storageKey": null
           },
+          (v8/*: any*/),
           (v9/*: any*/),
-          (v10/*: any*/),
           {
             "alias": null,
             "args": [
@@ -1255,12 +1253,12 @@ return {
             "plural": true,
             "selections": [
               (v6/*: any*/),
+              (v8/*: any*/),
               (v9/*: any*/),
               (v10/*: any*/),
-              (v11/*: any*/),
               {
                 "alias": null,
-                "args": (v13/*: any*/),
+                "args": (v12/*: any*/),
                 "concreteType": "FilterArtworksConnection",
                 "kind": "LinkedField",
                 "name": "artworksConnection",
@@ -1282,8 +1280,8 @@ return {
                         "name": "node",
                         "plural": false,
                         "selections": [
-                          (v16/*: any*/),
-                          (v10/*: any*/),
+                          (v15/*: any*/),
+                          (v9/*: any*/),
                           {
                             "alias": null,
                             "args": null,
@@ -1305,7 +1303,7 @@ return {
                                 "kind": "LinkedField",
                                 "name": "resized",
                                 "plural": false,
-                                "selections": (v18/*: any*/),
+                                "selections": (v17/*: any*/),
                                 "storageKey": "resized(width:262)"
                               }
                             ],
@@ -1341,7 +1339,7 @@ return {
                 "name": "groupType",
                 "storageKey": null
               },
-              (v14/*: any*/),
+              (v13/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -1350,10 +1348,10 @@ return {
                 "name": "members",
                 "plural": true,
                 "selections": [
+                  (v8/*: any*/),
                   (v9/*: any*/),
-                  (v10/*: any*/),
                   (v5/*: any*/),
-                  (v11/*: any*/),
+                  (v10/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -1365,7 +1363,7 @@ return {
                   (v6/*: any*/),
                   {
                     "alias": null,
-                    "args": (v13/*: any*/),
+                    "args": (v12/*: any*/),
                     "concreteType": "FilterArtworksConnection",
                     "kind": "LinkedField",
                     "name": "artworksConnection",
@@ -1387,8 +1385,8 @@ return {
                             "name": "node",
                             "plural": false,
                             "selections": [
-                              (v16/*: any*/),
-                              (v10/*: any*/),
+                              (v15/*: any*/),
+                              (v9/*: any*/),
                               {
                                 "alias": null,
                                 "args": null,
@@ -1434,10 +1432,10 @@ return {
             "alias": "fallbackHeaderImage",
             "args": [
               (v2/*: any*/),
+              (v18/*: any*/),
               (v19/*: any*/),
               (v20/*: any*/),
-              (v21/*: any*/),
-              (v12/*: any*/)
+              (v11/*: any*/)
             ],
             "concreteType": "FilterArtworksConnection",
             "kind": "LinkedField",
@@ -1481,7 +1479,7 @@ return {
                             "kind": "LinkedField",
                             "name": "resized",
                             "plural": false,
-                            "selections": (v18/*: any*/),
+                            "selections": (v17/*: any*/),
                             "storageKey": "resized(width:600)"
                           }
                         ],
@@ -1507,13 +1505,13 @@ return {
                 "name": "first",
                 "value": 20
               },
-              (v20/*: any*/),
+              (v19/*: any*/),
               {
                 "kind": "Literal",
                 "name": "size",
                 "value": 20
               },
-              (v12/*: any*/)
+              (v11/*: any*/)
             ],
             "concreteType": "FilterArtworksConnection",
             "kind": "LinkedField",
@@ -1558,7 +1556,7 @@ return {
                             "kind": "LinkedField",
                             "name": "resized",
                             "plural": false,
-                            "selections": (v22/*: any*/),
+                            "selections": (v21/*: any*/),
                             "storageKey": "resized(height:230)"
                           },
                           {
@@ -1574,19 +1572,19 @@ return {
                             "kind": "LinkedField",
                             "name": "resized",
                             "plural": false,
-                            "selections": (v22/*: any*/),
+                            "selections": (v21/*: any*/),
                             "storageKey": "resized(height:160)"
                           },
-                          (v23/*: any*/)
+                          (v22/*: any*/)
                         ],
                         "storageKey": null
                       },
-                      (v10/*: any*/),
-                      (v24/*: any*/),
                       (v9/*: any*/),
-                      (v25/*: any*/),
+                      (v23/*: any*/),
+                      (v8/*: any*/),
+                      (v24/*: any*/),
                       (v4/*: any*/),
-                      (v26/*: any*/),
+                      (v25/*: any*/),
                       {
                         "alias": "is_acquireable",
                         "args": null,
@@ -1609,15 +1607,15 @@ return {
                         "name": "listPrice",
                         "plural": false,
                         "selections": [
-                          (v27/*: any*/),
+                          (v26/*: any*/),
                           {
                             "kind": "InlineFragment",
-                            "selections": (v28/*: any*/),
+                            "selections": (v27/*: any*/),
                             "type": "PriceRange"
                           },
                           {
                             "kind": "InlineFragment",
-                            "selections": (v28/*: any*/),
+                            "selections": (v27/*: any*/),
                             "type": "Money"
                           }
                         ],
@@ -1632,12 +1630,12 @@ return {
                       },
                       {
                         "alias": null,
-                        "args": (v29/*: any*/),
+                        "args": (v28/*: any*/),
                         "concreteType": "Artist",
                         "kind": "LinkedField",
                         "name": "artists",
                         "plural": true,
-                        "selections": (v15/*: any*/),
+                        "selections": (v14/*: any*/),
                         "storageKey": "artists(shallow:true)"
                       },
                       {
@@ -1654,14 +1652,14 @@ return {
                       },
                       {
                         "alias": null,
-                        "args": (v29/*: any*/),
+                        "args": (v28/*: any*/),
                         "concreteType": "Partner",
                         "kind": "LinkedField",
                         "name": "partner",
                         "plural": false,
                         "selections": [
-                          (v14/*: any*/),
-                          (v30/*: any*/),
+                          (v13/*: any*/),
+                          (v29/*: any*/),
                           {
                             "alias": null,
                             "args": null,
@@ -1678,7 +1676,7 @@ return {
                                 "name": "icon",
                                 "plural": false,
                                 "selections": [
-                                  (v23/*: any*/)
+                                  (v22/*: any*/)
                                 ],
                                 "storageKey": null
                               },
@@ -1689,7 +1687,7 @@ return {
                           {
                             "alias": null,
                             "args": [
-                              (v21/*: any*/)
+                              (v20/*: any*/)
                             ],
                             "concreteType": "Location",
                             "kind": "LinkedField",
@@ -1767,9 +1765,9 @@ return {
                 "name": "merchandisableArtists",
                 "plural": true,
                 "selections": [
-                  (v9/*: any*/),
                   (v8/*: any*/),
-                  (v14/*: any*/),
+                  (v30/*: any*/),
+                  (v13/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -1801,7 +1799,7 @@ return {
                         "kind": "LinkedField",
                         "name": "resized",
                         "plural": false,
-                        "selections": (v18/*: any*/),
+                        "selections": (v17/*: any*/),
                         "storageKey": "resized(height:45,version:\"square\",width:45)"
                       }
                     ],
@@ -1859,9 +1857,9 @@ return {
             "alias": "descending_artworks",
             "args": [
               (v2/*: any*/),
+              (v18/*: any*/),
               (v19/*: any*/),
               (v20/*: any*/),
-              (v21/*: any*/),
               {
                 "kind": "Literal",
                 "name": "sort",
@@ -1879,9 +1877,9 @@ return {
             "alias": "ascending_artworks",
             "args": [
               (v2/*: any*/),
+              (v18/*: any*/),
               (v19/*: any*/),
               (v20/*: any*/),
-              (v21/*: any*/),
               {
                 "kind": "Literal",
                 "name": "sort",
@@ -2001,9 +1999,9 @@ return {
                     "plural": false,
                     "selections": [
                       (v7/*: any*/),
-                      (v9/*: any*/),
-                      (v24/*: any*/),
                       (v8/*: any*/),
+                      (v23/*: any*/),
+                      (v30/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -2042,7 +2040,7 @@ return {
                         ],
                         "storageKey": null
                       },
-                      (v10/*: any*/),
+                      (v9/*: any*/),
                       {
                         "alias": "image_title",
                         "args": null,
@@ -2050,7 +2048,7 @@ return {
                         "name": "imageTitle",
                         "storageKey": null
                       },
-                      (v26/*: any*/),
+                      (v25/*: any*/),
                       {
                         "alias": "sale_message",
                         "args": null,
@@ -2067,15 +2065,15 @@ return {
                       },
                       {
                         "alias": null,
-                        "args": (v29/*: any*/),
+                        "args": (v28/*: any*/),
                         "concreteType": "Artist",
                         "kind": "LinkedField",
                         "name": "artists",
                         "plural": true,
                         "selections": [
                           (v7/*: any*/),
-                          (v24/*: any*/),
-                          (v14/*: any*/)
+                          (v23/*: any*/),
+                          (v13/*: any*/)
                         ],
                         "storageKey": "artists(shallow:true)"
                       },
@@ -2088,16 +2086,16 @@ return {
                       },
                       {
                         "alias": null,
-                        "args": (v29/*: any*/),
+                        "args": (v28/*: any*/),
                         "concreteType": "Partner",
                         "kind": "LinkedField",
                         "name": "partner",
                         "plural": false,
                         "selections": [
-                          (v14/*: any*/),
-                          (v24/*: any*/),
+                          (v13/*: any*/),
+                          (v23/*: any*/),
                           (v7/*: any*/),
-                          (v30/*: any*/)
+                          (v29/*: any*/)
                         ],
                         "storageKey": "partner(shallow:true)"
                       },
@@ -2188,7 +2186,7 @@ return {
                             "kind": "LinkedField",
                             "name": "highestBid",
                             "plural": false,
-                            "selections": (v28/*: any*/),
+                            "selections": (v27/*: any*/),
                             "storageKey": null
                           },
                           {
@@ -2198,7 +2196,7 @@ return {
                             "kind": "LinkedField",
                             "name": "openingBid",
                             "plural": false,
-                            "selections": (v28/*: any*/),
+                            "selections": (v27/*: any*/),
                             "storageKey": null
                           },
                           (v7/*: any*/)
@@ -2246,7 +2244,7 @@ return {
     "metadata": {},
     "name": "CollectionAppQuery",
     "operationKind": "query",
-    "text": "query CollectionAppQuery(\n  $acquireable: Boolean\n  $aggregations: [ArtworkAggregation] = [MERCHANDISABLE_ARTISTS, MEDIUM, MAJOR_PERIOD, TOTAL]\n  $atAuction: Boolean\n  $color: String\n  $forSale: Boolean\n  $height: String\n  $inquireableOnly: Boolean\n  $majorPeriods: [String]\n  $medium: String\n  $offerable: Boolean\n  $page: Int\n  $priceRange: String\n  $sizes: [ArtworkSizes]\n  $sort: String\n  $slug: String!\n  $width: String\n) {\n  collection: marketingCollection(slug: $slug) {\n    ...Collection_collection_OtEKD\n    id\n  }\n}\n\nfragment ArtistSeriesEntity_member on MarketingCollection {\n  slug\n  headerImage\n  thumbnail\n  title\n  price_guidance: priceGuidance\n  artworksConnection(first: 3, aggregations: [TOTAL], sort: \"-decayed_merch\") {\n    edges {\n      node {\n        artist {\n          name\n          id\n        }\n        title\n        image {\n          url(version: \"small\")\n        }\n        id\n      }\n    }\n    id\n  }\n}\n\nfragment ArtistSeriesRail_collectionGroup on MarketingCollectionGroup {\n  groupType\n  name\n  members {\n    slug\n    ...ArtistSeriesEntity_member\n    id\n  }\n}\n\nfragment ArtworkFilterArtworkGrid2_filtered_artworks on FilterArtworksConnection {\n  id\n  aggregations {\n    slice\n    counts {\n      value\n      name\n      count\n    }\n  }\n  pageInfo {\n    hasNextPage\n    endCursor\n  }\n  pageCursors {\n    ...Pagination_pageCursors\n  }\n  edges {\n    node {\n      id\n    }\n  }\n  ...ArtworkGrid_artworks\n}\n\nfragment ArtworkGrid_artworks on ArtworkConnectionInterface {\n  edges {\n    __typename\n    node {\n      id\n      slug\n      href\n      internalID\n      image {\n        aspect_ratio: aspectRatio\n      }\n      ...GridItem_artwork\n    }\n    ... on Node {\n      id\n    }\n  }\n}\n\nfragment Badge_artwork on Artwork {\n  is_biddable: isBiddable\n  href\n  sale {\n    is_preview: isPreview\n    display_timely_at: displayTimelyAt\n    id\n  }\n}\n\nfragment Collection_collection_OtEKD on MarketingCollection {\n  ...Header_collection\n  description\n  headerImage\n  slug\n  id\n  title\n  query {\n    artist_id: artistID\n    gene_id: geneID\n    id\n  }\n  relatedCollections(size: 16) {\n    ...RelatedCollectionsRail_collections\n    id\n  }\n  linkedCollections {\n    ...CollectionsHubRails_linkedCollections\n  }\n  fallbackHeaderImage: artworksConnection(aggregations: $aggregations, includeMediumFilterInAggregation: true, size: 1, first: 1, sort: \"-decayed_merch\") {\n    edges {\n      node {\n        image {\n          resized(width: 600) {\n            url\n          }\n        }\n        id\n      }\n    }\n    id\n  }\n  artworksConnection(aggregations: $aggregations, includeMediumFilterInAggregation: true, size: 20, first: 20, sort: \"-decayed_merch\") {\n    ...Header_artworks\n    ...SeoProductsForArtworks_artworks\n    aggregations {\n      slice\n      counts {\n        value\n        name\n        count\n      }\n    }\n    id\n  }\n  descending_artworks: artworksConnection(aggregations: $aggregations, includeMediumFilterInAggregation: true, first: 1, size: 1, sort: \"sold,-has_price,-prices\") {\n    ...SeoProductsForCollections_descending_artworks\n    id\n  }\n  ascending_artworks: artworksConnection(aggregations: $aggregations, includeMediumFilterInAggregation: true, first: 1, size: 1, sort: \"sold,-has_price,prices\") {\n    ...SeoProductsForCollections_ascending_artworks\n    id\n  }\n  filtered_artworks: artworksConnection(acquireable: $acquireable, aggregations: $aggregations, atAuction: $atAuction, color: $color, forSale: $forSale, height: $height, inquireableOnly: $inquireableOnly, majorPeriods: $majorPeriods, medium: $medium, offerable: $offerable, page: $page, priceRange: $priceRange, sizes: $sizes, first: 30, sort: $sort, width: $width) {\n    id\n    ...ArtworkFilterArtworkGrid2_filtered_artworks\n  }\n}\n\nfragment CollectionsHubRails_linkedCollections on MarketingCollectionGroup {\n  groupType\n  ...FeaturedCollectionsRails_collectionGroup\n  ...OtherCollectionsRail_collectionGroup\n  ...ArtistSeriesRail_collectionGroup\n}\n\nfragment Contact_artwork on Artwork {\n  href\n  is_inquireable: isInquireable\n  sale {\n    is_auction: isAuction\n    is_live_open: isLiveOpen\n    is_open: isOpen\n    is_closed: isClosed\n    id\n  }\n  partner(shallow: true) {\n    type\n    id\n  }\n  sale_artwork: saleArtwork {\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    counts {\n      bidder_positions: bidderPositions\n    }\n    id\n  }\n}\n\nfragment DefaultHeaderArtwork_artwork on FilterArtworksEdge {\n  node {\n    id\n    title\n    href\n    slug\n    image {\n      large: resized(height: 230) {\n        url\n        width\n        height\n      }\n      small: resized(height: 160) {\n        url\n        width\n        height\n      }\n    }\n  }\n}\n\nfragment DefaultHeader_headerArtworks on FilterArtworksConnection {\n  edges {\n    node {\n      id\n      image {\n        large: resized(height: 230) {\n          width\n          height\n        }\n        small: resized(height: 160) {\n          width\n          height\n        }\n      }\n    }\n    ...DefaultHeaderArtwork_artwork\n  }\n}\n\nfragment Details_artwork on Artwork {\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n}\n\nfragment FeaturedCollectionsRails_collectionGroup on MarketingCollectionGroup {\n  groupType\n  name\n  members {\n    slug\n    title\n    description\n    price_guidance: priceGuidance\n    thumbnail\n    id\n  }\n}\n\nfragment FollowArtistButton_artist on Artist {\n  id\n  internalID\n  name\n  slug\n  is_followed: isFollowed\n  counts {\n    follows\n  }\n}\n\nfragment GridItem_artwork on Artwork {\n  internalID\n  title\n  image_title: imageTitle\n  image {\n    placeholder\n    url(version: \"large\")\n    aspect_ratio: aspectRatio\n  }\n  href\n  ...Metadata_artwork\n  ...Save_artwork\n  ...Badge_artwork\n}\n\nfragment Header_artworks on FilterArtworksConnection {\n  ...DefaultHeader_headerArtworks\n  merchandisableArtists {\n    slug\n    internalID\n    name\n    image {\n      resized(width: 45, height: 45, version: \"square\") {\n        url\n      }\n    }\n    birthday\n    nationality\n    ...FollowArtistButton_artist\n    id\n  }\n}\n\nfragment Header_collection on MarketingCollection {\n  category\n  credit\n  description\n  featuredArtistExclusionIds\n  headerImage\n  id\n  internalID\n  query {\n    artistIDs\n    id\n  }\n  slug\n  title\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  ...Contact_artwork\n  href\n}\n\nfragment OtherCollectionEntity_member on MarketingCollection {\n  slug\n  thumbnail\n  title\n}\n\nfragment OtherCollectionsRail_collectionGroup on MarketingCollectionGroup {\n  groupType\n  name\n  members {\n    ...OtherCollectionEntity_member\n    id\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n\nfragment RelatedCollectionEntity_collection on MarketingCollection {\n  headerImage\n  slug\n  title\n  price_guidance: priceGuidance\n  artworksConnection(first: 3, aggregations: [TOTAL], sort: \"-decayed_merch\") {\n    edges {\n      node {\n        artist {\n          name\n          id\n        }\n        title\n        image {\n          resized(width: 262) {\n            url\n          }\n        }\n        id\n      }\n    }\n    id\n  }\n}\n\nfragment RelatedCollectionsRail_collections on MarketingCollection {\n  ...RelatedCollectionEntity_collection\n  artworksConnection(first: 3, aggregations: [TOTAL], sort: \"-decayed_merch\") {\n    edges {\n      node {\n        id\n      }\n    }\n    id\n  }\n}\n\nfragment Save_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n\nfragment SeoProductsForArtworks_artworks on FilterArtworksConnection {\n  edges {\n    node {\n      id\n      availability\n      category\n      date\n      href\n      is_acquireable: isAcquireable\n      is_price_range: isPriceRange\n      listPrice {\n        __typename\n        ... on PriceRange {\n          display\n        }\n        ... on Money {\n          display\n        }\n      }\n      price_currency: priceCurrency\n      title\n      artists(shallow: true) {\n        name\n        id\n      }\n      image {\n        url(version: \"larger\")\n      }\n      meta {\n        description\n      }\n      partner(shallow: true) {\n        name\n        type\n        profile {\n          icon {\n            url(version: \"larger\")\n          }\n          id\n        }\n        locations(size: 1) {\n          address\n          address_2: address2\n          city\n          state\n          country\n          postal_code: postalCode\n          phone\n          id\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment SeoProductsForCollections_ascending_artworks on FilterArtworksConnection {\n  edges {\n    node {\n      id\n      availability\n      listPrice {\n        __typename\n        ... on PriceRange {\n          minPrice {\n            major(convertTo: \"USD\")\n            currencyCode\n          }\n          maxPrice {\n            major(convertTo: \"USD\")\n            currencyCode\n          }\n        }\n        ... on Money {\n          major(convertTo: \"USD\")\n          currencyCode\n        }\n      }\n    }\n  }\n}\n\nfragment SeoProductsForCollections_descending_artworks on FilterArtworksConnection {\n  edges {\n    node {\n      id\n      availability\n      listPrice {\n        __typename\n        ... on PriceRange {\n          minPrice {\n            major(convertTo: \"USD\")\n            currencyCode\n          }\n          maxPrice {\n            major(convertTo: \"USD\")\n            currencyCode\n          }\n        }\n        ... on Money {\n          major(convertTo: \"USD\")\n          currencyCode\n        }\n      }\n    }\n  }\n}\n"
+    "text": "query CollectionAppQuery(\n  $acquireable: Boolean\n  $aggregations: [ArtworkAggregation] = [MERCHANDISABLE_ARTISTS, MEDIUM, MAJOR_PERIOD, TOTAL]\n  $atAuction: Boolean\n  $color: String\n  $forSale: Boolean\n  $height: String\n  $inquireableOnly: Boolean\n  $majorPeriods: [String]\n  $medium: String\n  $offerable: Boolean\n  $page: Int\n  $priceRange: String\n  $sizes: [ArtworkSizes]\n  $sort: String\n  $slug: String!\n  $width: String\n) {\n  collection: marketingCollection(slug: $slug) {\n    ...Collection_collection_OtEKD\n    id\n  }\n}\n\nfragment ArtistSeriesEntity_member on MarketingCollection {\n  slug\n  headerImage\n  thumbnail\n  title\n  price_guidance: priceGuidance\n  artworksConnection(first: 3, aggregations: [TOTAL], sort: \"-decayed_merch\") {\n    edges {\n      node {\n        artist {\n          name\n          id\n        }\n        title\n        image {\n          url(version: \"small\")\n        }\n        id\n      }\n    }\n    id\n  }\n}\n\nfragment ArtistSeriesRail_collectionGroup on MarketingCollectionGroup {\n  groupType\n  name\n  members {\n    slug\n    ...ArtistSeriesEntity_member\n    id\n  }\n}\n\nfragment ArtworkFilterArtworkGrid2_filtered_artworks on FilterArtworksConnection {\n  id\n  aggregations {\n    slice\n    counts {\n      value\n      name\n      count\n    }\n  }\n  pageInfo {\n    hasNextPage\n    endCursor\n  }\n  pageCursors {\n    ...Pagination_pageCursors\n  }\n  edges {\n    node {\n      id\n    }\n  }\n  ...ArtworkGrid_artworks\n}\n\nfragment ArtworkGrid_artworks on ArtworkConnectionInterface {\n  edges {\n    __typename\n    node {\n      id\n      slug\n      href\n      internalID\n      image {\n        aspect_ratio: aspectRatio\n      }\n      ...GridItem_artwork\n    }\n    ... on Node {\n      id\n    }\n  }\n}\n\nfragment Badge_artwork on Artwork {\n  is_biddable: isBiddable\n  href\n  sale {\n    is_preview: isPreview\n    display_timely_at: displayTimelyAt\n    id\n  }\n}\n\nfragment Collection_collection_OtEKD on MarketingCollection {\n  ...Header_collection\n  description\n  headerImage\n  slug\n  id\n  title\n  query {\n    artist_id: artistID\n    gene_id: geneID\n    id\n  }\n  relatedCollections(size: 16) {\n    ...RelatedCollectionsRail_collections\n    id\n  }\n  linkedCollections {\n    ...CollectionsHubRails_linkedCollections\n  }\n  fallbackHeaderImage: artworksConnection(aggregations: $aggregations, includeMediumFilterInAggregation: true, size: 1, first: 1, sort: \"-decayed_merch\") {\n    edges {\n      node {\n        image {\n          resized(width: 600) {\n            url\n          }\n        }\n        id\n      }\n    }\n    id\n  }\n  artworksConnection(aggregations: $aggregations, includeMediumFilterInAggregation: true, size: 20, first: 20, sort: \"-decayed_merch\") {\n    ...Header_artworks\n    ...SeoProductsForArtworks_artworks\n    aggregations {\n      slice\n      counts {\n        value\n        name\n        count\n      }\n    }\n    id\n  }\n  descending_artworks: artworksConnection(aggregations: $aggregations, includeMediumFilterInAggregation: true, first: 1, size: 1, sort: \"sold,-has_price,-prices\") {\n    ...SeoProductsForCollections_descending_artworks\n    id\n  }\n  ascending_artworks: artworksConnection(aggregations: $aggregations, includeMediumFilterInAggregation: true, first: 1, size: 1, sort: \"sold,-has_price,prices\") {\n    ...SeoProductsForCollections_ascending_artworks\n    id\n  }\n  filtered_artworks: artworksConnection(acquireable: $acquireable, aggregations: $aggregations, atAuction: $atAuction, color: $color, forSale: $forSale, height: $height, inquireableOnly: $inquireableOnly, majorPeriods: $majorPeriods, medium: $medium, offerable: $offerable, page: $page, priceRange: $priceRange, sizes: $sizes, first: 30, sort: $sort, width: $width) {\n    id\n    ...ArtworkFilterArtworkGrid2_filtered_artworks\n  }\n}\n\nfragment CollectionsHubRails_linkedCollections on MarketingCollectionGroup {\n  groupType\n  ...FeaturedCollectionsRails_collectionGroup\n  ...OtherCollectionsRail_collectionGroup\n  ...ArtistSeriesRail_collectionGroup\n}\n\nfragment Contact_artwork on Artwork {\n  href\n  is_inquireable: isInquireable\n  sale {\n    is_auction: isAuction\n    is_live_open: isLiveOpen\n    is_open: isOpen\n    is_closed: isClosed\n    id\n  }\n  partner(shallow: true) {\n    type\n    id\n  }\n  sale_artwork: saleArtwork {\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    counts {\n      bidder_positions: bidderPositions\n    }\n    id\n  }\n}\n\nfragment DefaultHeaderArtwork_artwork on FilterArtworksEdge {\n  node {\n    id\n    title\n    href\n    slug\n    image {\n      large: resized(height: 230) {\n        url\n        width\n        height\n      }\n      small: resized(height: 160) {\n        url\n        width\n        height\n      }\n    }\n  }\n}\n\nfragment DefaultHeader_headerArtworks on FilterArtworksConnection {\n  edges {\n    node {\n      id\n      image {\n        large: resized(height: 230) {\n          width\n          height\n        }\n        small: resized(height: 160) {\n          width\n          height\n        }\n      }\n    }\n    ...DefaultHeaderArtwork_artwork\n  }\n}\n\nfragment Details_artwork on Artwork {\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n}\n\nfragment FeaturedCollectionsRails_collectionGroup on MarketingCollectionGroup {\n  groupType\n  name\n  members {\n    slug\n    title\n    description\n    price_guidance: priceGuidance\n    thumbnail\n    id\n  }\n}\n\nfragment FollowArtistButton_artist on Artist {\n  id\n  internalID\n  name\n  slug\n  is_followed: isFollowed\n  counts {\n    follows\n  }\n}\n\nfragment GridItem_artwork on Artwork {\n  internalID\n  title\n  image_title: imageTitle\n  image {\n    placeholder\n    url(version: \"large\")\n    aspect_ratio: aspectRatio\n  }\n  href\n  ...Metadata_artwork\n  ...Save_artwork\n  ...Badge_artwork\n}\n\nfragment Header_artworks on FilterArtworksConnection {\n  ...DefaultHeader_headerArtworks\n  merchandisableArtists {\n    slug\n    internalID\n    name\n    image {\n      resized(width: 45, height: 45, version: \"square\") {\n        url\n      }\n    }\n    birthday\n    nationality\n    ...FollowArtistButton_artist\n    id\n  }\n}\n\nfragment Header_collection on MarketingCollection {\n  category\n  credit\n  description\n  featuredArtistExclusionIds\n  headerImage\n  id\n  query {\n    artistIDs\n    id\n  }\n  slug\n  title\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  ...Contact_artwork\n  href\n}\n\nfragment OtherCollectionEntity_member on MarketingCollection {\n  slug\n  thumbnail\n  title\n}\n\nfragment OtherCollectionsRail_collectionGroup on MarketingCollectionGroup {\n  groupType\n  name\n  members {\n    ...OtherCollectionEntity_member\n    id\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n\nfragment RelatedCollectionEntity_collection on MarketingCollection {\n  headerImage\n  slug\n  title\n  price_guidance: priceGuidance\n  artworksConnection(first: 3, aggregations: [TOTAL], sort: \"-decayed_merch\") {\n    edges {\n      node {\n        artist {\n          name\n          id\n        }\n        title\n        image {\n          resized(width: 262) {\n            url\n          }\n        }\n        id\n      }\n    }\n    id\n  }\n}\n\nfragment RelatedCollectionsRail_collections on MarketingCollection {\n  ...RelatedCollectionEntity_collection\n  artworksConnection(first: 3, aggregations: [TOTAL], sort: \"-decayed_merch\") {\n    edges {\n      node {\n        id\n      }\n    }\n    id\n  }\n}\n\nfragment Save_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n\nfragment SeoProductsForArtworks_artworks on FilterArtworksConnection {\n  edges {\n    node {\n      id\n      availability\n      category\n      date\n      href\n      is_acquireable: isAcquireable\n      is_price_range: isPriceRange\n      listPrice {\n        __typename\n        ... on PriceRange {\n          display\n        }\n        ... on Money {\n          display\n        }\n      }\n      price_currency: priceCurrency\n      title\n      artists(shallow: true) {\n        name\n        id\n      }\n      image {\n        url(version: \"larger\")\n      }\n      meta {\n        description\n      }\n      partner(shallow: true) {\n        name\n        type\n        profile {\n          icon {\n            url(version: \"larger\")\n          }\n          id\n        }\n        locations(size: 1) {\n          address\n          address_2: address2\n          city\n          state\n          country\n          postal_code: postalCode\n          phone\n          id\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment SeoProductsForCollections_ascending_artworks on FilterArtworksConnection {\n  edges {\n    node {\n      id\n      availability\n      listPrice {\n        __typename\n        ... on PriceRange {\n          minPrice {\n            major(convertTo: \"USD\")\n            currencyCode\n          }\n          maxPrice {\n            major(convertTo: \"USD\")\n            currencyCode\n          }\n        }\n        ... on Money {\n          major(convertTo: \"USD\")\n          currencyCode\n        }\n      }\n    }\n  }\n}\n\nfragment SeoProductsForCollections_descending_artworks on FilterArtworksConnection {\n  edges {\n    node {\n      id\n      availability\n      listPrice {\n        __typename\n        ... on PriceRange {\n          minPrice {\n            major(convertTo: \"USD\")\n            currencyCode\n          }\n          maxPrice {\n            major(convertTo: \"USD\")\n            currencyCode\n          }\n        }\n        ... on Money {\n          major(convertTo: \"USD\")\n          currencyCode\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();

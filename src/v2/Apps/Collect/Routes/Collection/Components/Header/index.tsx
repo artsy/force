@@ -85,7 +85,7 @@ export const featuredArtistsEntityCollection: (
               artist={artist}
               user={user}
               trackingData={{
-                contextOwnerId: collection.internalID,
+                contextOwnerId: collection.id,
                 contextOwnerSlug: collection.slug,
                 contextOwnerType: OwnerType.collection,
                 contextModule: ContextModule.featuredArtistsRail,
@@ -344,7 +344,6 @@ export const CollectionFilterFragmentContainer = createFragmentContainer(
         featuredArtistExclusionIds
         headerImage
         id
-        internalID
         query {
           artistIDs
         }

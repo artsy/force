@@ -39,7 +39,6 @@ describe("collections header", () => {
     collection: {
       " $refType": null,
       id: "abcdefg1234",
-      internalID: "1234",
       title: "KAWS: Toys",
       credit: null,
       description: null,
@@ -472,10 +471,7 @@ describe("collections header", () => {
 
     it("opens auth modal with expected args when following an artist", () => {
       const component = mountComponent(props)
-      component
-        .find(FollowArtistButton)
-        .first()
-        .simulate("click")
+      component.find(FollowArtistButton).first().simulate("click")
       expect(context.mediator.trigger).toBeCalledWith("open:auth", {
         mode: "signup",
         contextModule: "featuredArtistsRail",
