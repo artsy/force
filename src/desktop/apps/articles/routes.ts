@@ -22,8 +22,8 @@ let stitch = _stitch
 
 export const articles = (req, res, next) => {
   const limit = 50
-  const page = parseInt(req.query.page, 10) || 1
-  const offset = page * limit - limit
+  const page = Math.max(parseInt(req.query.page, 10) || 1, 1)
+  const offset = limit * (page - 1)
   const query = { query: magazineQuery(limit, offset) }
   return positronql(query)
     .then(async result => {
