@@ -7,6 +7,7 @@ import {
   StyledLink,
   ThumbnailImage,
 } from "../OtherCollectionEntity"
+import { OwnerType } from "@artsy/cohesion"
 
 jest.mock("v2/Artsy/Analytics/useTracking")
 jest.mock("found", () => ({
@@ -24,7 +25,7 @@ describe("OtherCollectionEntity", () => {
       trackingData: {
         contextPageOwnerId: "1234",
         contextPageOwnerSlug: "slug",
-        contextPageOwnerType: "Collection",
+        contextPageOwnerType: OwnerType.collection,
       },
     }
     ;(useTracking as jest.Mock).mockImplementation(() => {
@@ -67,15 +68,16 @@ describe("OtherCollectionEntity", () => {
       component.at(0).simulate("click")
 
       expect(trackEvent).toBeCalledWith({
-        action_type: "Click",
-        context_page: "Collection",
-        context_module: "OtherCollectionsRail",
-        context_page_owner_type: "Collection",
+        action: "clickedCollectionGroup",
+        context_module: "otherCollectionsRail",
+        context_page_owner_type: "collection",
         context_page_owner_id: "1234",
         context_page_owner_slug: "slug",
+        destination_page_owner_id: "123456",
+        destination_page_owner_slug: "artist-posters",
+        destination_page_owner_type: "collection",
+        horizontal_slide_position: 0,
         type: "thumbnail",
-        destination_path: "undefined/collection/artist-posters",
-        item_number: 0,
       })
     })
   })

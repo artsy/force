@@ -8,6 +8,7 @@ export type FeaturedCollectionsRails_collectionGroup = {
     readonly groupType: MarketingGroupTypes;
     readonly name: string;
     readonly members: ReadonlyArray<{
+        readonly id: string;
         readonly slug: string;
         readonly title: string;
         readonly description: string | null;
@@ -56,6 +57,13 @@ const node: ReaderFragment = {
           "alias": null,
           "args": null,
           "kind": "ScalarField",
+          "name": "id",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
           "name": "slug",
           "storageKey": null
         },
@@ -93,5 +101,5 @@ const node: ReaderFragment = {
   ],
   "type": "MarketingCollectionGroup"
 };
-(node as any).hash = 'dc85cfd2b23294d0d678a66eaf966810';
+(node as any).hash = '9d0cecb1e0c3dfbf121f3870b82d55ec';
 export default node;

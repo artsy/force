@@ -8,7 +8,6 @@ import {
   color,
 } from "@artsy/palette"
 import { FeaturedCollectionsRails_collectionGroup } from "v2/__generated__/FeaturedCollectionsRails_collectionGroup.graphql"
-import * as Schema from "v2/Artsy/Analytics/Schema"
 import { useTracking } from "v2/Artsy/Analytics/useTracking"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import { Carousel } from "v2/Components/Carousel"
@@ -16,11 +15,11 @@ import { Truncator } from "v2/Components/Truncator"
 import currency from "currency.js"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { data as sd } from "sharify"
 import styled from "styled-components"
 import { resize } from "v2/Utils/resizer"
 import { Media } from "v2/Utils/Responsive"
-import { CollectionContextTrackingArgs } from "../../.."
+import { CollectionContextTrackingArgs } from "v2/Apps/Collect/Routes/Collection"
+import { ContextModule, clickedCollectionGroup } from "@artsy/cohesion"
 
 interface Props {
   collectionGroup: FeaturedCollectionsRails_collectionGroup
@@ -32,20 +31,6 @@ export const FeaturedCollectionsRails: React.FC<Props> = ({
   trackingData,
 }) => {
   const { members, name } = collectionGroup
-  const { trackEvent } = useTracking()
-
-  const trackArrowClick = () => {
-    trackEvent({
-      action_type: Schema.ActionType.Click,
-      context_module: Schema.ContextModule.FeaturedCollectionsRail,
-      context_page_owner_id: trackingData.contextPageOwnerId,
-      context_page_owner_slug: trackingData.contextPageOwnerSlug,
-      context_page_owner_type: trackingData.contextPageOwnerType,
-      context_page: Schema.PageName.CollectionPage,
-      type: Schema.Type.Button,
-      subject: Schema.Subject.ClickedNextButton,
-    })
-  }
 
   return (
     <FeaturedCollectionsContainer>
@@ -53,7 +38,7 @@ export const FeaturedCollectionsRails: React.FC<Props> = ({
         {name}
       </Serif>
 
-      <Carousel onChange={() => trackArrowClick()}>
+      <Carousel>
         {members.map((slide, slideIndex) => {
           return (
             <FeaturedCollectionEntity
@@ -80,9 +65,13 @@ interface FeaturedCollectionEntityProps {
 export const FeaturedCollectionEntity: React.FC<FeaturedCollectionEntityProps> = ({
   itemNumber,
   member,
-  trackingData,
+  trackingData: {
+    contextPageOwnerId,
+    contextPageOwnerSlug,
+    contextPageOwnerType,
+  },
 }) => {
-  const { description, price_guidance, slug, thumbnail, title } = member
+  const { description, price_guidance, slug, id, thumbnail, title } = member
   const { trackEvent } = useTracking()
   const formattedPrice = currency(price_guidance, {
     separator: ",",
@@ -90,17 +79,17 @@ export const FeaturedCollectionEntity: React.FC<FeaturedCollectionEntityProps> =
   }).format()
 
   const handleClick = () => {
-    trackEvent({
-      action_type: Schema.ActionType.Click,
-      context_page: Schema.PageName.CollectionPage,
-      context_module: Schema.ContextModule.FeaturedCollectionsRail,
-      context_page_owner_id: trackingData.contextPageOwnerId,
-      context_page_owner_slug: trackingData.contextPageOwnerSlug,
-      context_page_owner_type: trackingData.contextPageOwnerType,
-      type: Schema.Type.Thumbnail,
-      destination_path: `${sd.APP_URL}/collection/${slug}`,
-      item_number: itemNumber,
-    })
+    trackEvent(
+      clickedCollectionGroup({
+        contextModule: ContextModule.featuredCollectionsRail,
+        contextPageOwnerId,
+        contextPageOwnerSlug,
+        contextPageOwnerType,
+        destinationPageOwnerId: id,
+        destinationPageOwnerSlug: slug,
+        horizontalSlidePosition: itemNumber,
+      })
+    )
   }
 
   const getTruncatedDescription = (lines: number) => {
@@ -156,14 +145,14 @@ export const FeaturedCollectionEntity: React.FC<FeaturedCollectionEntityProps> =
 }
 
 export const FeaturedCollectionsRailsContainer = createFragmentContainer(
-  FeaturedCollectionsRails,
+  FeaturedCollectionsRails as React.FC<Props>,
   {
     collectionGroup: graphql`
       fragment FeaturedCollectionsRails_collectionGroup on MarketingCollectionGroup {
         groupType
         name
         members {
-          slug
+          id
           slug
           title
           description

@@ -1,13 +1,11 @@
 import { Box, Serif, color } from "@artsy/palette"
 import { ArtistSeriesRail_collectionGroup } from "v2/__generated__/ArtistSeriesRail_collectionGroup.graphql"
-import { AnalyticsSchema } from "v2/Artsy/Analytics"
-import { useTracking } from "v2/Artsy/Analytics/useTracking"
 import { Carousel } from "v2/Components/Carousel"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { ArtistSeriesRailContainer as ArtistSeriesEntity } from "./ArtistSeriesEntity"
-import { CollectionContextTrackingArgs } from "../../.."
+import { CollectionContextTrackingArgs } from "v2/Apps/Collect/Routes/Collection"
 
 export interface ArtistSeriesRailProps {
   collectionGroup: ArtistSeriesRail_collectionGroup
@@ -18,20 +16,6 @@ export const ArtistSeriesRail: React.FC<ArtistSeriesRailProps> = ({
   trackingData,
 }) => {
   const { members, name } = collectionGroup
-  const { trackEvent } = useTracking()
-
-  const trackArrowClick = () => {
-    trackEvent({
-      action_type: AnalyticsSchema.ActionType.Click,
-      context_module: AnalyticsSchema.ContextModule.ArtistCollectionsRail,
-      context_page_owner_id: trackingData.contextPageOwnerId,
-      context_page_owner_slug: trackingData.contextPageOwnerSlug,
-      context_page_owner_type: trackingData.contextPageOwnerType,
-      context_page: AnalyticsSchema.PageName.CollectionPage,
-      type: AnalyticsSchema.Type.Button,
-      subject: AnalyticsSchema.Subject.ClickedNextButton,
-    })
-  }
 
   return (
     <Content mt={2} py={3}>
@@ -39,7 +23,7 @@ export const ArtistSeriesRail: React.FC<ArtistSeriesRailProps> = ({
         {name}
       </Serif>
 
-      <Carousel onChange={() => trackArrowClick()}>
+      <Carousel>
         {members.map((slide, slideIndex) => {
           return (
             <ArtistSeriesEntity
@@ -60,7 +44,7 @@ const Content = styled(Box)`
 `
 
 export const ArtistSeriesRailContainer = createFragmentContainer(
-  ArtistSeriesRail,
+  ArtistSeriesRail as React.FC<ArtistSeriesRailProps>,
   {
     collectionGroup: graphql`
       fragment ArtistSeriesRail_collectionGroup on MarketingCollectionGroup {

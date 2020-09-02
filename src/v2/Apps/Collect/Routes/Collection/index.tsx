@@ -19,7 +19,6 @@ import truncate from "trunc-html"
 import { CollectionAppQuery } from "./CollectionAppQuery"
 import { CollectionsHubRailsContainer as CollectionsHubRails } from "./Components/CollectionsHubRails"
 import { LazyLoadComponent } from "react-lazy-load-image-component"
-import * as Schema from "v2/Artsy/Analytics/Schema"
 
 import { BaseArtworkFilter } from "v2/Components/v2/ArtworkFilter"
 import {
@@ -135,11 +134,7 @@ export class CollectionApp extends Component<CollectionAppProps> {
               {showCollectionHubs && (
                 <CollectionsHubRails
                   linkedCollections={collection.linkedCollections}
-                  trackingData={{
-                    // FIXME: legacy schema
-                    contextPageOwnerType: Schema.OwnerType.Collection,
-                    ...trackingData,
-                  }}
+                  trackingData={trackingData}
                 />
               )}
               <Box>
@@ -192,6 +187,7 @@ export class CollectionApp extends Component<CollectionAppProps> {
                         collections={collection.relatedCollections}
                         title={collection.title}
                         lazyLoadImages
+                        trackingData={trackingData}
                       />
                     </Box>
                   </LazyLoadComponent>

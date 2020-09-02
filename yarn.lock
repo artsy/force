@@ -22,10 +22,10 @@
     qs "5.2.0"
     underscore "*"
 
-"@artsy/cohesion@1.33.5":
-  version "1.33.5"
-  resolved "https://registry.yarnpkg.com/@artsy/cohesion/-/cohesion-1.33.5.tgz#769e3cc3155599e4b5946f4be0a2d8d132a7515b"
-  integrity sha512-cFrFwJv4NW9tfXUeMqxHtSHnZwlhPweAVQJttwyL72/gvYtAfMXLztVCjU3oKmB8g6LQHMf6kQavfGE8EktcbQ==
+"@artsy/cohesion@1.33.6-canary.100.1490.0":
+  version "1.33.6-canary.100.1490.0"
+  resolved "https://registry.yarnpkg.com/@artsy/cohesion/-/cohesion-1.33.6-canary.100.1490.0.tgz#e7006b92f5ba2f13e55f960339ab645f076ca4f3"
+  integrity sha512-MhmLGQwj2u0/JQO2TJAnkM7E4R0eOGUnFPthCVunh1n2g0Y9gCfGMafLOLYe3pyT+17wGlq819crCyQ0Hsdmhg==
 
 "@artsy/detect-responsive-traits@^0.0.5":
   version "0.0.5"
