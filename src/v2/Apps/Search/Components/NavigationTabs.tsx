@@ -7,7 +7,6 @@ import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { get } from "v2/Utils/get"
 import { SystemContextProps, withSystemContext } from "v2/Artsy"
-import { userHasLabFeature } from "v2/Utils/user"
 
 export interface Props extends SystemContextProps {
   searchableConnection: NavigationTabs_searchableConnection
@@ -56,12 +55,8 @@ export class NavigationTabs extends React.Component<Props> {
       count?: number
     } = {}
   ) => {
-    const { user } = this.props
-    const artistSeriesIsEnabled = userHasLabFeature(user, "Artist Series")
     const { exact, count } = options
     const tabName = text.replace(/[0-9]/g, "").trim()
-
-    if (tabName === "Artist Series" && !artistSeriesIsEnabled) return null
 
     return (
       <RouteTab
