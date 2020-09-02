@@ -33,6 +33,7 @@ query CollectionsHubRailsStoryQuery(
 }
 
 fragment ArtistSeriesEntity_member on MarketingCollection {
+  id
   slug
   headerImage
   thumbnail
@@ -77,16 +78,17 @@ fragment FeaturedCollectionsRails_collectionGroup on MarketingCollectionGroup {
   groupType
   name
   members {
+    id
     slug
     title
     description
     price_guidance: priceGuidance
     thumbnail
-    id
   }
 }
 
 fragment OtherCollectionEntity_member on MarketingCollection {
+  id
   slug
   thumbnail
   title
@@ -129,14 +131,14 @@ v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "title",
+  "name": "id",
   "storageKey": null
 },
 v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "id",
+  "name": "title",
   "storageKey": null
 };
 return {
@@ -214,6 +216,7 @@ return {
                 "name": "members",
                 "plural": true,
                 "selections": [
+                  (v3/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -221,7 +224,7 @@ return {
                     "name": "slug",
                     "storageKey": null
                   },
-                  (v3/*: any*/),
+                  (v4/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -243,7 +246,6 @@ return {
                     "name": "thumbnail",
                     "storageKey": null
                   },
-                  (v4/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -302,11 +304,11 @@ return {
                                 "plural": false,
                                 "selections": [
                                   (v2/*: any*/),
-                                  (v4/*: any*/)
+                                  (v3/*: any*/)
                                 ],
                                 "storageKey": null
                               },
-                              (v3/*: any*/),
+                              (v4/*: any*/),
                               {
                                 "alias": null,
                                 "args": null,
@@ -331,14 +333,14 @@ return {
                                 ],
                                 "storageKey": null
                               },
-                              (v4/*: any*/)
+                              (v3/*: any*/)
                             ],
                             "storageKey": null
                           }
                         ],
                         "storageKey": null
                       },
-                      (v4/*: any*/)
+                      (v3/*: any*/)
                     ],
                     "storageKey": "artworksConnection(aggregations:[\"TOTAL\"],first:3,sort:\"-decayed_merch\")"
                   }
@@ -348,7 +350,7 @@ return {
             ],
             "storageKey": null
           },
-          (v4/*: any*/)
+          (v3/*: any*/)
         ],
         "storageKey": null
       }
@@ -359,7 +361,7 @@ return {
     "metadata": {},
     "name": "CollectionsHubRailsStoryQuery",
     "operationKind": "query",
-    "text": "query CollectionsHubRailsStoryQuery(\n  $collectionID: String!\n) {\n  marketingCollection(slug: $collectionID) {\n    linkedCollections {\n      ...CollectionsHubRails_linkedCollections\n    }\n    id\n  }\n}\n\nfragment ArtistSeriesEntity_member on MarketingCollection {\n  slug\n  headerImage\n  thumbnail\n  title\n  price_guidance: priceGuidance\n  artworksConnection(first: 3, aggregations: [TOTAL], sort: \"-decayed_merch\") {\n    edges {\n      node {\n        artist {\n          name\n          id\n        }\n        title\n        image {\n          url(version: \"small\")\n        }\n        id\n      }\n    }\n    id\n  }\n}\n\nfragment ArtistSeriesRail_collectionGroup on MarketingCollectionGroup {\n  groupType\n  name\n  members {\n    slug\n    ...ArtistSeriesEntity_member\n    id\n  }\n}\n\nfragment CollectionsHubRails_linkedCollections on MarketingCollectionGroup {\n  groupType\n  ...FeaturedCollectionsRails_collectionGroup\n  ...OtherCollectionsRail_collectionGroup\n  ...ArtistSeriesRail_collectionGroup\n}\n\nfragment FeaturedCollectionsRails_collectionGroup on MarketingCollectionGroup {\n  groupType\n  name\n  members {\n    slug\n    title\n    description\n    price_guidance: priceGuidance\n    thumbnail\n    id\n  }\n}\n\nfragment OtherCollectionEntity_member on MarketingCollection {\n  slug\n  thumbnail\n  title\n}\n\nfragment OtherCollectionsRail_collectionGroup on MarketingCollectionGroup {\n  groupType\n  name\n  members {\n    ...OtherCollectionEntity_member\n    id\n  }\n}\n"
+    "text": "query CollectionsHubRailsStoryQuery(\n  $collectionID: String!\n) {\n  marketingCollection(slug: $collectionID) {\n    linkedCollections {\n      ...CollectionsHubRails_linkedCollections\n    }\n    id\n  }\n}\n\nfragment ArtistSeriesEntity_member on MarketingCollection {\n  id\n  slug\n  headerImage\n  thumbnail\n  title\n  price_guidance: priceGuidance\n  artworksConnection(first: 3, aggregations: [TOTAL], sort: \"-decayed_merch\") {\n    edges {\n      node {\n        artist {\n          name\n          id\n        }\n        title\n        image {\n          url(version: \"small\")\n        }\n        id\n      }\n    }\n    id\n  }\n}\n\nfragment ArtistSeriesRail_collectionGroup on MarketingCollectionGroup {\n  groupType\n  name\n  members {\n    slug\n    ...ArtistSeriesEntity_member\n    id\n  }\n}\n\nfragment CollectionsHubRails_linkedCollections on MarketingCollectionGroup {\n  groupType\n  ...FeaturedCollectionsRails_collectionGroup\n  ...OtherCollectionsRail_collectionGroup\n  ...ArtistSeriesRail_collectionGroup\n}\n\nfragment FeaturedCollectionsRails_collectionGroup on MarketingCollectionGroup {\n  groupType\n  name\n  members {\n    id\n    slug\n    title\n    description\n    price_guidance: priceGuidance\n    thumbnail\n  }\n}\n\nfragment OtherCollectionEntity_member on MarketingCollection {\n  id\n  slug\n  thumbnail\n  title\n}\n\nfragment OtherCollectionsRail_collectionGroup on MarketingCollectionGroup {\n  groupType\n  name\n  members {\n    ...OtherCollectionEntity_member\n    id\n  }\n}\n"
   }
 };
 })();

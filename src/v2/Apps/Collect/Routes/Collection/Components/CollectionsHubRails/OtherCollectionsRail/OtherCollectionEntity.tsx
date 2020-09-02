@@ -1,14 +1,13 @@
 import { Box, Flex, ResponsiveImage, Serif, color } from "@artsy/palette"
 import { OtherCollectionEntity_member } from "v2/__generated__/OtherCollectionEntity_member.graphql"
-import * as Schema from "v2/Artsy/Analytics/Schema"
 import { useTracking } from "v2/Artsy/Analytics/useTracking"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { data as sd } from "sharify"
 import styled from "styled-components"
 import { resize } from "v2/Utils/resizer"
-import { CollectionContextTrackingArgs } from "../../.."
+import { CollectionContextTrackingArgs } from "v2/Apps/Collect/Routes/Collection"
+import { ContextModule, clickedCollectionGroup } from "@artsy/cohesion"
 
 export interface CollectionProps {
   member: OtherCollectionEntity_member
@@ -19,23 +18,27 @@ export interface CollectionProps {
 export const OtherCollectionEntity: React.FC<CollectionProps> = ({
   itemNumber,
   member,
-  trackingData,
+  trackingData: {
+    contextPageOwnerId,
+    contextPageOwnerSlug,
+    contextPageOwnerType,
+  },
 }) => {
-  const { slug, thumbnail, title } = member
+  const { id, slug, thumbnail, title } = member
   const { trackEvent } = useTracking()
 
   const handleClick = () => {
-    trackEvent({
-      action_type: Schema.ActionType.Click,
-      context_page: Schema.PageName.CollectionPage,
-      context_module: Schema.ContextModule.OtherCollectionsRail,
-      context_page_owner_id: trackingData.contextPageOwnerId,
-      context_page_owner_slug: trackingData.contextPageOwnerSlug,
-      context_page_owner_type: trackingData.contextPageOwnerType,
-      type: Schema.Type.Thumbnail,
-      destination_path: `${sd.APP_URL}/collection/${slug}`,
-      item_number: itemNumber,
-    })
+    trackEvent(
+      clickedCollectionGroup({
+        contextModule: ContextModule.otherCollectionsRail,
+        contextPageOwnerId,
+        contextPageOwnerSlug,
+        contextPageOwnerType,
+        destinationPageOwnerId: id,
+        destinationPageOwnerSlug: slug,
+        horizontalSlidePosition: itemNumber,
+      })
+    )
   }
 
   return (
@@ -63,10 +66,11 @@ export const OtherCollectionEntity: React.FC<CollectionProps> = ({
 }
 
 export const OtherCollectionsRailsContainer = createFragmentContainer(
-  OtherCollectionEntity,
+  OtherCollectionEntity as React.FC<CollectionProps>,
   {
     member: graphql`
       fragment OtherCollectionEntity_member on MarketingCollection {
+        id
         slug
         thumbnail
         title

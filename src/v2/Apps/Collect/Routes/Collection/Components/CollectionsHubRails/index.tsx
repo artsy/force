@@ -4,7 +4,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { ArtistSeriesRailContainer as ArtistSeriesRail } from "./ArtistSeriesRail"
 import { FeaturedCollectionsRailsContainer as FeaturedCollectionsRails } from "./FeaturedCollectionsRails"
 import { OtherCollectionsRailsContainer as OtherCollectionsRail } from "./OtherCollectionsRail"
-import { CollectionContextTrackingArgs } from "../.."
+import { CollectionContextTrackingArgs } from "v2/Apps/Collect/Routes/Collection"
 
 const railForGroupType = (
   collectionGroup,

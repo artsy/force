@@ -4,6 +4,7 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type OtherCollectionEntity_member = {
+    readonly id: string;
     readonly slug: string;
     readonly thumbnail: string | null;
     readonly title: string;
@@ -23,6 +24,13 @@ const node: ReaderFragment = {
   "metadata": null,
   "name": "OtherCollectionEntity_member",
   "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "id",
+      "storageKey": null
+    },
     {
       "alias": null,
       "args": null,
@@ -47,5 +55,5 @@ const node: ReaderFragment = {
   ],
   "type": "MarketingCollection"
 };
-(node as any).hash = '9240c380fecb65bb0486a4b0f4fd151b';
+(node as any).hash = 'ae069d7d2cf1284dbee48601931755b6';
 export default node;

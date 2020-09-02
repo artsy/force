@@ -60,7 +60,6 @@ describe("Works Route", () => {
   describe("general behavior", () => {
     it("renders correct sections", async () => {
       const wrapper = await getWrapper()
-      console.log("WRAPPY", wrapper.html())
       expect(wrapper.find(ArtworkFilter).length).toEqual(1)
       expect(wrapper.html()).toContain("Mock ArtistRecommendations")
     })

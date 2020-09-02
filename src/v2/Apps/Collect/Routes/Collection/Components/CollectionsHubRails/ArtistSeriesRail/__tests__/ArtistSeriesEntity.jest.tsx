@@ -96,15 +96,17 @@ describe("ArtistSeriesEntity", () => {
       component.find(StyledLink).at(0).simulate("click")
 
       expect(trackEvent).toBeCalledWith({
-        action_type: "Click",
-        context_page: "Collection",
-        context_module: "ArtistCollectionsRail",
-        context_page_owner_type: "Collection",
+        action: "clickedArtistSeriesGroup",
+        context_module: "artistSeriesRail",
         context_page_owner_id: "1234",
         context_page_owner_slug: "slug",
+        context_page_owner_type: "Collection",
+        curation_boost: false,
+        destination_page_owner_id: "4321",
+        destination_page_owner_slug: "many-flags",
+        destination_page_owner_type: "artistSeries",
+        horizontal_slide_position: 0,
         type: "thumbnail",
-        destination_path: "undefined/collection/Many-Flags",
-        item_number: 0,
       })
     })
   })
