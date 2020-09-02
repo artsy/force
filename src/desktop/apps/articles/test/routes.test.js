@@ -2,7 +2,7 @@ import Backbone from "backbone"
 import sinon from "sinon"
 import articlesJSON from "./fixtures.coffee"
 import fixtures from "desktop/test/helpers/fixtures.coffee"
-import { extend, cloneDeep } from "lodash"
+import { cloneDeep, extend } from "lodash"
 import { JSDOM } from "jsdom"
 
 const jsdom = new JSDOM("<!doctype html><html><body></body></html>")
@@ -68,9 +68,50 @@ describe("Articles routes", () => {
       })
     })
 
-    it("requests less than 50 articles", () => {
+    it("requests less than 50 articles with no offset by default", () => {
       articles(req, res, next).then(() => {
         positronql.args[0][0].query.should.containEql("limit: 50")
+        positronql.args[0][0].query.should.containEql("offset: 0")
+      })
+    })
+    describe("pagination", () => {
+      it("accepts a page query parameter that offsets the results by limit * (page - 1)", () => {
+        req.query.page = 3
+        articles(req, res, next).then(() => {
+          positronql.args[0][0].query.should.containEql("offset: 100")
+          res.render.args[0][1].page.should.equal(3)
+          res.locals.sd.PAGE.should.equal(3)
+        })
+      })
+
+      it("gracefully handles invalid page input", () => {
+        req.query.page = "foo"
+        articles(req, res, next).then(() => {
+          positronql.args[0][0].query.should.containEql("offset: 0")
+          res.render.args[0][1].page.should.equal(1)
+          res.locals.sd.PAGE.should.equal(1)
+        })
+
+        req.query.page = ""
+        articles(req, res, next).then(() => {
+          positronql.args[0][0].query.should.containEql("offset: 0")
+          res.render.args[0][1].page.should.equal(1)
+          res.locals.sd.PAGE.should.equal(1)
+        })
+
+        req.query.page = 0
+        articles(req, res, next).then(() => {
+          positronql.args[0][0].query.should.containEql("offset: 0")
+          res.render.args[0][1].page.should.equal(1)
+          res.locals.sd.PAGE.should.equal(1)
+        })
+
+        req.query.page = -1
+        articles(req, res, next).then(() => {
+          positronql.args[0][0].query.should.containEql("offset: 0")
+          res.render.args[0][1].page.should.equal(1)
+          res.locals.sd.PAGE.should.equal(1)
+        })
       })
     })
   })
