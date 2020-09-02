@@ -57,16 +57,12 @@ export const ArtworkArtistSeriesFragmentContainer = createFragmentContainer<{
   artwork: ArtworkArtistSeries_artwork
 }>(withSystemContext(ArtworkArtistSeries), {
   artwork: graphql`
-    fragment ArtworkArtistSeries_artwork on Artwork
-      @argumentDefinitions(
-        shouldFetchArtistSeriesData: { type: "Boolean!", defaultValue: false }
-      ) {
+    fragment ArtworkArtistSeries_artwork on Artwork {
       ...ArtistSeriesArtworkRail_artwork
-        @include(if: $shouldFetchArtistSeriesData)
       internalID
       slug
       seriesArtist: artist(shallow: true) {
-        ...ArtistSeriesRail_artist @include(if: $shouldFetchArtistSeriesData)
+        ...ArtistSeriesRail_artist
         artistSeriesConnection {
           edges {
             node {

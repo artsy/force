@@ -130,10 +130,7 @@ export const OtherWorksFragmentContainer = createFragmentContainer<{
   artwork: OtherWorks_artwork
 }>(withSystemContext(OtherWorks), {
   artwork: graphql`
-    fragment OtherWorks_artwork on Artwork
-      @argumentDefinitions(
-        shouldFetchArtistSeriesData: { type: "Boolean!", defaultValue: false }
-      ) {
+    fragment OtherWorks_artwork on Artwork {
       contextGrids {
         __typename
         title
@@ -150,7 +147,6 @@ export const OtherWorksFragmentContainer = createFragmentContainer<{
       }
       ...RelatedWorksArtworkGrid_artwork
       ...ArtistSeriesArtworkRail_artwork
-        @include(if: $shouldFetchArtistSeriesData)
       slug
       internalID
       sale {
@@ -160,7 +156,7 @@ export const OtherWorksFragmentContainer = createFragmentContainer<{
         __typename
       }
       seriesArtist: artist(shallow: true) {
-        ...ArtistSeriesRail_artist @include(if: $shouldFetchArtistSeriesData)
+        ...ArtistSeriesRail_artist
       }
     }
   `,

@@ -167,12 +167,6 @@ return {
       "kind": "LocalArgument",
       "name": "width",
       "type": "String"
-    },
-    {
-      "defaultValue": false,
-      "kind": "LocalArgument",
-      "name": "shouldFetchArtistSeriesData",
-      "type": "Boolean!"
     }
   ],
   "kind": "Fragment",
@@ -324,16 +318,9 @@ return {
       "name": "ArtistTopWorksRail_artist"
     },
     {
-      "condition": "shouldFetchArtistSeriesData",
-      "kind": "Condition",
-      "passingValue": true,
-      "selections": [
-        {
-          "args": null,
-          "kind": "FragmentSpread",
-          "name": "ArtistSeriesRail_artist"
-        }
-      ]
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArtistSeriesRail_artist"
     },
     {
       "args": [
@@ -428,5 +415,5 @@ return {
   "type": "Artist"
 };
 })();
-(node as any).hash = '5c33e785a766d33773ba50aeccae13a5';
+(node as any).hash = '861c4a4e4cc9878128529bea6f814c20';
 export default node;
