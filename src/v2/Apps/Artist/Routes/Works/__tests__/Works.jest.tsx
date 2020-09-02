@@ -7,16 +7,10 @@ import React from "react"
 import { graphql } from "react-relay"
 import { Breakpoint } from "v2/Utils/Responsive"
 import { ArtistTopWorksRailFragmentContainer as ArtistTopWorksRail } from "v2/Apps/Artist/Components/ArtistTopWorksRail/ArtistTopWorksRail"
-import { userHasLabFeature } from "v2/Utils/user"
 import { useTracking } from "v2/Artsy/Analytics/useTracking"
 
 jest.mock("v2/Artsy/Analytics/useTracking")
 jest.unmock("react-relay")
-
-// Mocking the ArtworkCollectionsRail component because it is tested elsewhere
-jest.mock("v2/Apps/Artist/Components/ArtistCollectionsRail", () => ({
-  ArtistCollectionsRailContent: () => <div>Mock ArtistCollectionRail</div>,
-}))
 
 // Mocking the ArtistRecommendations component because it is tested elsewhere
 jest.mock(
@@ -42,49 +36,37 @@ describe("Works Route", () => {
 
   const getWrapper = async (
     breakpoint: Breakpoint = "xl",
-    worksMock = defaultWorks,
-    user = {}
+    worksMock = defaultWorks
   ) => {
     return renderRelayTree({
       Component: WorksRoute,
       query: graphql`
-        query Works_Test_Query(
-          $artistID: String!
-          $shouldFetchArtistSeriesData: Boolean!
-        ) @raw_response_type {
+        query Works_Test_Query($artistID: String!) @raw_response_type {
           artist(id: $artistID) {
             ...Works_artist
-              @arguments(
-                shouldFetchArtistSeriesData: $shouldFetchArtistSeriesData
-              )
           }
         }
       `,
       mockData: worksMock,
       variables: {
         artistID: "pablo-picasso",
-        shouldFetchArtistSeriesData: userHasLabFeature(user, "Artist Series"),
       },
       wrapper: children => (
-        <MockBoot user={user} breakpoint={breakpoint}>
-          {children}
-        </MockBoot>
+        <MockBoot breakpoint={breakpoint}>{children}</MockBoot>
       ),
     })
   }
 
   describe("general behavior", () => {
-    beforeAll(async () => {
-      wrapper = await getWrapper()
-    })
-
-    it("renders correct sections", () => {
+    it("renders correct sections", async () => {
+      const wrapper = await getWrapper()
+      console.log("WRAPPY", wrapper.html())
       expect(wrapper.find(ArtworkFilter).length).toEqual(1)
       expect(wrapper.html()).toContain("Mock ArtistRecommendations")
-      expect(wrapper.html()).toContain("Mock ArtistCollectionRail")
     })
 
-    it("includes the correct sort options", () => {
+    it("includes the correct sort options", async () => {
+      const wrapper = await getWrapper()
       const sortOptions = wrapper
         .find("div[title='Sort'] select option")
         .map(el => el.text())
@@ -138,14 +120,8 @@ describe("Works Route", () => {
   })
 
   describe("Artist Series Rail", () => {
-    it("does not display artist series without the lab feature", async () => {
-      expect(wrapper.find("ArtistSeriesRail").length).toBe(0)
-    })
-
-    it("Displays artist series rail with the lab feature", async () => {
-      wrapper = await getWrapper("xl", defaultWorks, {
-        lab_features: ["Artist Series"],
-      })
+    it("Displays artist series rail", async () => {
+      wrapper = await getWrapper("xl", defaultWorks)
       expect(wrapper.find("ArtistSeriesRail").length).toBe(1)
       expect(wrapper.find("ArtistSeriesItem").length).toBe(1)
       expect(wrapper.find("ArtistSeriesItem").text()).toContain(

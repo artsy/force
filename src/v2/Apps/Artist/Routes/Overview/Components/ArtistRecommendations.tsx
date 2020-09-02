@@ -20,8 +20,6 @@ const logger = createLogger("ArtistRecommendations.tsx")
 interface ArtistRecommendationsProps {
   artist: ArtistRecommendations_artist
   relay: RelayPaginationProp
-  contextOwnerId: string
-  contextOwnerSlug: string
 }
 
 const PAGE_SIZE = 3

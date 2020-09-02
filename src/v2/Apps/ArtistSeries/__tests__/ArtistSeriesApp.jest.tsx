@@ -34,8 +34,6 @@ describe("ArtistSeriesApp", () => {
   let slug = "pumpkins"
 
   describe("with a user who has the Artist Series lab feature", () => {
-    let user = { lab_features: ["Artist Series"] }
-
     describe("with a published artist series", () => {
       const getWrapper = async (
         breakpoint: Breakpoint = "lg",
@@ -44,7 +42,7 @@ describe("ArtistSeriesApp", () => {
         return renderRelayTree({
           Component: ({ artistSeries }) => {
             return (
-              <MockBoot breakpoint={breakpoint} user={user}>
+              <MockBoot breakpoint={breakpoint}>
                 <ArtistSeriesApp artistSeries={artistSeries} />
               </MockBoot>
             )

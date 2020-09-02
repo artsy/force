@@ -66,14 +66,7 @@ v3 = {
   "name": "ArtistInfo_artist"
 };
 return {
-  "argumentDefinitions": [
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "shouldFetchArtistSeriesData",
-      "type": "Boolean!"
-    }
-  ],
+  "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
   "name": "ArtworkApp_artwork",
@@ -210,13 +203,7 @@ return {
       "name": "OtherWorks_artwork"
     },
     {
-      "args": [
-        {
-          "kind": "Variable",
-          "name": "shouldFetchArtistSeriesData",
-          "variableName": "shouldFetchArtistSeriesData"
-        }
-      ],
+      "args": null,
       "kind": "FragmentSpread",
       "name": "ArtworkArtistSeries_artwork"
     },
@@ -229,5 +216,5 @@ return {
   "type": "Artwork"
 };
 })();
-(node as any).hash = '0bb527eae590faab565032be805c381e';
+(node as any).hash = 'c50431d3ac341e5dc39dfcaddeab0e18';
 export default node;

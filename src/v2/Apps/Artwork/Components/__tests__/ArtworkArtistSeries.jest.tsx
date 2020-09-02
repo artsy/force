@@ -33,21 +33,14 @@ describe("ArtworkArtistSeries", () => {
         )
       },
       query: graphql`
-        query ArtworkArtistSeries_Query(
-          $slug: String!
-          $shouldFetchArtistSeriesData: Boolean!
-        ) @raw_response_type {
+        query ArtworkArtistSeries_Query($slug: String!) @raw_response_type {
           artwork(id: $slug) {
             ...ArtworkArtistSeries_artwork
-              @arguments(
-                shouldFetchArtistSeriesData: $shouldFetchArtistSeriesData
-              )
           }
         }
       `,
       variables: {
         slug: "pumpkin",
-        shouldFetchArtistSeriesData: true,
       },
       mockData: response,
     })
