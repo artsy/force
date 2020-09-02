@@ -20,13 +20,16 @@ import { data as sd } from "sharify"
 import styled from "styled-components"
 import { resize } from "v2/Utils/resizer"
 import { Media } from "v2/Utils/Responsive"
+import { CollectionContextTrackingArgs } from "../../.."
 
 interface Props {
   collectionGroup: FeaturedCollectionsRails_collectionGroup
+  trackingData: CollectionContextTrackingArgs
 }
 
 export const FeaturedCollectionsRails: React.FC<Props> = ({
   collectionGroup,
+  trackingData,
 }) => {
   const { members, name } = collectionGroup
   const { trackEvent } = useTracking()
@@ -35,7 +38,9 @@ export const FeaturedCollectionsRails: React.FC<Props> = ({
     trackEvent({
       action_type: Schema.ActionType.Click,
       context_module: Schema.ContextModule.FeaturedCollectionsRail,
-      context_page_owner_type: Schema.OwnerType.Collection,
+      context_page_owner_id: trackingData.contextPageOwnerId,
+      context_page_owner_slug: trackingData.contextPageOwnerSlug,
+      context_page_owner_type: trackingData.contextPageOwnerType,
       context_page: Schema.PageName.CollectionPage,
       type: Schema.Type.Button,
       subject: Schema.Subject.ClickedNextButton,
@@ -55,6 +60,7 @@ export const FeaturedCollectionsRails: React.FC<Props> = ({
               key={slide.slug}
               member={slide}
               itemNumber={slideIndex}
+              trackingData={trackingData}
             />
           )
         })}
@@ -68,11 +74,13 @@ export const FeaturedCollectionsRails: React.FC<Props> = ({
 interface FeaturedCollectionEntityProps {
   member: any
   itemNumber: number
+  trackingData: CollectionContextTrackingArgs
 }
 
 export const FeaturedCollectionEntity: React.FC<FeaturedCollectionEntityProps> = ({
   itemNumber,
   member,
+  trackingData,
 }) => {
   const { description, price_guidance, slug, thumbnail, title } = member
   const { trackEvent } = useTracking()
@@ -86,7 +94,9 @@ export const FeaturedCollectionEntity: React.FC<FeaturedCollectionEntityProps> =
       action_type: Schema.ActionType.Click,
       context_page: Schema.PageName.CollectionPage,
       context_module: Schema.ContextModule.FeaturedCollectionsRail,
-      context_page_owner_type: Schema.OwnerType.Collection,
+      context_page_owner_id: trackingData.contextPageOwnerId,
+      context_page_owner_slug: trackingData.contextPageOwnerSlug,
+      context_page_owner_type: trackingData.contextPageOwnerType,
       type: Schema.Type.Thumbnail,
       destination_path: `${sd.APP_URL}/collection/${slug}`,
       item_number: itemNumber,

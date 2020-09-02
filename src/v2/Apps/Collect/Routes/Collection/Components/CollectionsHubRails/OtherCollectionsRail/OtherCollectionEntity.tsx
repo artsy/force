@@ -8,15 +8,18 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { data as sd } from "sharify"
 import styled from "styled-components"
 import { resize } from "v2/Utils/resizer"
+import { CollectionContextTrackingArgs } from "../../.."
 
 export interface CollectionProps {
   member: OtherCollectionEntity_member
   itemNumber: number
+  trackingData: CollectionContextTrackingArgs
 }
 
 export const OtherCollectionEntity: React.FC<CollectionProps> = ({
   itemNumber,
   member,
+  trackingData,
 }) => {
   const { slug, thumbnail, title } = member
   const { trackEvent } = useTracking()
@@ -26,7 +29,9 @@ export const OtherCollectionEntity: React.FC<CollectionProps> = ({
       action_type: Schema.ActionType.Click,
       context_page: Schema.PageName.CollectionPage,
       context_module: Schema.ContextModule.OtherCollectionsRail,
-      context_page_owner_type: Schema.OwnerType.Collection,
+      context_page_owner_id: trackingData.contextPageOwnerId,
+      context_page_owner_slug: trackingData.contextPageOwnerSlug,
+      context_page_owner_type: trackingData.contextPageOwnerType,
       type: Schema.Type.Thumbnail,
       destination_path: `${sd.APP_URL}/collection/${slug}`,
       item_number: itemNumber,

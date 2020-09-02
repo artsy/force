@@ -7,12 +7,15 @@ import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { OtherCollectionsRailsContainer as OtherCollectionEntity } from "./OtherCollectionEntity"
+import { CollectionContextTrackingArgs } from "../../.."
 
 interface OtherCollectionsRailProps {
   collectionGroup: OtherCollectionsRail_collectionGroup
+  trackingData: CollectionContextTrackingArgs
 }
 export const OtherCollectionsRail: React.FC<OtherCollectionsRailProps> = ({
   collectionGroup,
+  trackingData,
 }) => {
   const { name, members } = collectionGroup
   const { trackEvent } = useTracking()
@@ -21,7 +24,9 @@ export const OtherCollectionsRail: React.FC<OtherCollectionsRailProps> = ({
     trackEvent({
       action_type: Schema.ActionType.Click,
       context_module: Schema.ContextModule.OtherCollectionsRail,
-      context_page_owner_type: Schema.OwnerType.Collection,
+      context_page_owner_id: trackingData.contextPageOwnerId,
+      context_page_owner_slug: trackingData.contextPageOwnerSlug,
+      context_page_owner_type: trackingData.contextPageOwnerType,
       context_page: Schema.PageName.CollectionPage,
       type: Schema.Type.Button,
       subject: Schema.Subject.ClickedNextButton,
@@ -34,13 +39,14 @@ export const OtherCollectionsRail: React.FC<OtherCollectionsRailProps> = ({
         {name}
       </Serif>
 
-      <Carousel onChange={() => trackArrowClick()}>
+      <Carousel onChange={trackArrowClick}>
         {members.map((slide, index) => {
           return (
             <OtherCollectionEntity
               key={index}
               member={slide}
               itemNumber={index}
+              trackingData={trackingData}
             />
           )
         })}

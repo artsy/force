@@ -5,7 +5,6 @@ import { SeoProductsForCollections } from "v2/Apps/Collect/Components/SeoProduct
 import { CollectionFilterFragmentContainer as CollectionHeader } from "v2/Apps/Collect/Routes/Collection/Components/Header"
 import { AppContainer } from "v2/Apps/Components/AppContainer"
 import { track } from "v2/Artsy/Analytics"
-import * as Schema from "v2/Artsy/Analytics/Schema"
 import { SystemContextProps, withSystemContext } from "v2/Artsy/SystemContext"
 import { FrameWithRecentlyViewed } from "v2/Components/FrameWithRecentlyViewed"
 import { RelatedCollectionsRailFragmentContainer as RelatedCollectionsRail } from "v2/Components/RelatedCollectionsRail/RelatedCollectionsRail"
@@ -20,6 +19,7 @@ import truncate from "trunc-html"
 import { CollectionAppQuery } from "./CollectionAppQuery"
 import { CollectionsHubRailsContainer as CollectionsHubRails } from "./Components/CollectionsHubRails"
 import { LazyLoadComponent } from "react-lazy-load-image-component"
+import * as Schema from "v2/Artsy/Analytics/Schema"
 
 import { BaseArtworkFilter } from "v2/Components/v2/ArtworkFilter"
 import {
@@ -28,7 +28,11 @@ import {
 } from "v2/Components/v2/ArtworkFilter/ArtworkFilterContext"
 import { updateUrl } from "v2/Components/v2/ArtworkFilter/Utils/urlBuilder"
 import { TrackingProp } from "react-tracking"
-import { OwnerType, clickedMainArtworkGrid } from "@artsy/cohesion"
+import {
+  OwnerType,
+  PageOwnerType,
+  clickedMainArtworkGrid,
+} from "@artsy/cohesion"
 
 interface CollectionAppProps extends SystemContextProps {
   collection: Collection_collection
@@ -37,11 +41,13 @@ interface CollectionAppProps extends SystemContextProps {
   tracking: TrackingProp
 }
 
-@track<CollectionAppProps>(props => ({
-  context_module: Schema.ContextModule.CollectionDescription,
-  context_page_owner_slug: props.collection && props.collection.slug,
-  context_page_owner_id: props.collection && props.collection.slug,
-}))
+export interface CollectionContextTrackingArgs {
+  contextPageOwnerType: PageOwnerType
+  contextPageOwnerId: string
+  contextPageOwnerSlug: string
+}
+
+@track()
 export class CollectionApp extends Component<CollectionAppProps> {
   collectionNotFound = collection => {
     if (!collection) {
@@ -84,6 +90,12 @@ export class CollectionApp extends Component<CollectionAppProps> {
       (fallbackHeaderImage?.edges &&
         fallbackHeaderImage?.edges[0]?.node?.image?.resized.url)
 
+    const trackingData: CollectionContextTrackingArgs = {
+      contextPageOwnerType: OwnerType.collection,
+      contextPageOwnerId: collection.id,
+      contextPageOwnerSlug: collection.slug,
+    }
+
     return (
       <>
         <Title>{`${title} - For Sale on Artsy`}</Title>
@@ -123,6 +135,11 @@ export class CollectionApp extends Component<CollectionAppProps> {
               {showCollectionHubs && (
                 <CollectionsHubRails
                   linkedCollections={collection.linkedCollections}
+                  trackingData={{
+                    // FIXME: legacy schema
+                    contextPageOwnerType: Schema.OwnerType.Collection,
+                    ...trackingData,
+                  }}
                 />
               )}
               <Box>
@@ -144,12 +161,10 @@ export class CollectionApp extends Component<CollectionAppProps> {
                   onArtworkBrickClick={artwork => {
                     tracking.trackEvent(
                       clickedMainArtworkGrid({
-                        contextPageOwnerType: OwnerType.collection,
-                        contextPageOwnerId: collection.id,
-                        contextPageOwnerSlug: collection.slug,
                         destinationPageOwnerId: artwork.internalID,
                         destinationPageOwnerSlug: artwork.slug,
-                      }) as any
+                        ...trackingData,
+                      })
                     )
                   }}
                 >

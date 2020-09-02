@@ -10,15 +10,18 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { data as sd } from "sharify"
 import styled from "styled-components"
 import { get } from "v2/Utils/get"
+import { CollectionContextTrackingArgs } from "../../.."
 
 export interface ArtistSeriesEntityProps {
   member: ArtistSeriesEntity_member
   itemNumber: number
+  trackingData: CollectionContextTrackingArgs
 }
 
 export const ArtistSeriesEntity: React.FC<ArtistSeriesEntityProps> = ({
   member,
   itemNumber,
+  trackingData,
 }) => {
   const {
     headerImage,
@@ -39,7 +42,9 @@ export const ArtistSeriesEntity: React.FC<ArtistSeriesEntityProps> = ({
       action_type: AnalyticsSchema.ActionType.Click,
       context_page: AnalyticsSchema.PageName.CollectionPage,
       context_module: AnalyticsSchema.ContextModule.ArtistCollectionsRail,
-      context_page_owner_type: AnalyticsSchema.OwnerType.Collection,
+      context_page_owner_id: trackingData.contextPageOwnerId,
+      context_page_owner_slug: trackingData.contextPageOwnerSlug,
+      context_page_owner_type: trackingData.contextPageOwnerType,
       type: AnalyticsSchema.Type.Thumbnail,
       destination_path: `${sd.APP_URL}/collection/${slug}`,
       item_number: itemNumber,
