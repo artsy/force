@@ -21,6 +21,11 @@ describe("OtherCollectionEntity", () => {
   beforeEach(() => {
     props = {
       member: CollectionHubFixture.linkedCollections[0].members[0],
+      trackingData: {
+        contextPageOwnerId: "1234",
+        contextPageOwnerSlug: "slug",
+        contextPageOwnerType: "Collection",
+      },
     }
     ;(useTracking as jest.Mock).mockImplementation(() => {
       return {
@@ -34,19 +39,14 @@ describe("OtherCollectionEntity", () => {
 
     expect(component.text()).toMatch("Artist Posters")
     expect(component.find(ThumbnailImage).length).toBe(1)
-    const thumbnailImage = component
-      .find(ThumbnailImage)
-      .at(0)
-      .getElement().props
+    const thumbnailImage = component.find(ThumbnailImage).at(0).getElement()
+      .props
 
     expect(thumbnailImage.src).toContain(
       "posters_thumbnail.png&width=60&height=60&quality=80&convert_to=jpg"
     )
 
-    const link = component
-      .find(StyledLink)
-      .at(0)
-      .getElement().props
+    const link = component.find(StyledLink).at(0).getElement().props
 
     expect(link.to).toContain("artist-poster")
   })
@@ -71,6 +71,8 @@ describe("OtherCollectionEntity", () => {
         context_page: "Collection",
         context_module: "OtherCollectionsRail",
         context_page_owner_type: "Collection",
+        context_page_owner_id: "1234",
+        context_page_owner_slug: "slug",
         type: "thumbnail",
         destination_path: "undefined/collection/artist-posters",
         item_number: 0,

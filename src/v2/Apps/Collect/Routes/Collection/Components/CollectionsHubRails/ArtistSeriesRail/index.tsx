@@ -7,12 +7,15 @@ import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { ArtistSeriesRailContainer as ArtistSeriesEntity } from "./ArtistSeriesEntity"
+import { CollectionContextTrackingArgs } from "../../.."
 
 export interface ArtistSeriesRailProps {
   collectionGroup: ArtistSeriesRail_collectionGroup
+  trackingData: CollectionContextTrackingArgs
 }
 export const ArtistSeriesRail: React.FC<ArtistSeriesRailProps> = ({
   collectionGroup,
+  trackingData,
 }) => {
   const { members, name } = collectionGroup
   const { trackEvent } = useTracking()
@@ -21,7 +24,9 @@ export const ArtistSeriesRail: React.FC<ArtistSeriesRailProps> = ({
     trackEvent({
       action_type: AnalyticsSchema.ActionType.Click,
       context_module: AnalyticsSchema.ContextModule.ArtistCollectionsRail,
-      context_page_owner_type: AnalyticsSchema.OwnerType.Collection,
+      context_page_owner_id: trackingData.contextPageOwnerId,
+      context_page_owner_slug: trackingData.contextPageOwnerSlug,
+      context_page_owner_type: trackingData.contextPageOwnerType,
       context_page: AnalyticsSchema.PageName.CollectionPage,
       type: AnalyticsSchema.Type.Button,
       subject: AnalyticsSchema.Subject.ClickedNextButton,
@@ -41,6 +46,7 @@ export const ArtistSeriesRail: React.FC<ArtistSeriesRailProps> = ({
               key={slide.slug || slideIndex}
               member={slide}
               itemNumber={slideIndex}
+              trackingData={trackingData}
             />
           )
         })}

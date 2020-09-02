@@ -43,6 +43,11 @@ describe("ArtistSeriesRail", () => {
   beforeEach(() => {
     props = {
       collectionGroup: CollectionsHubLinkedCollections.linkedCollections[0],
+      trackingData: {
+        contextPageOwnerId: "1234",
+        contextPageOwnerSlug: "slug",
+        contextPageOwnerType: "Collection",
+      },
     }
     ;(useTracking as jest.Mock).mockImplementation(() => {
       return {
@@ -78,6 +83,8 @@ describe("ArtistSeriesRail", () => {
         context_page: "Collection",
         context_module: "ArtistCollectionsRail",
         context_page_owner_type: "Collection",
+        context_page_owner_id: "1234",
+        context_page_owner_slug: "slug",
         type: "Button",
         subject: "clicked next button",
       })

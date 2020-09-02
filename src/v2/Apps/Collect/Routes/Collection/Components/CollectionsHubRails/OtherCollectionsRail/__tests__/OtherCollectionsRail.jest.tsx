@@ -28,6 +28,11 @@ describe("CollectionsRail", () => {
   beforeEach(() => {
     props = {
       collectionGroup: CollectionHubFixture.linkedCollections[0],
+      trackingData: {
+        contextPageOwnerId: "1234",
+        contextPageOwnerSlug: "slug",
+        contextPageOwnerType: "Collection",
+      },
     }
     ;(useTracking as jest.Mock).mockImplementation(() => {
       return {
@@ -75,6 +80,8 @@ describe("CollectionsRail", () => {
         context_page: "Collection",
         context_module: "OtherCollectionsRail",
         context_page_owner_type: "Collection",
+        context_page_owner_id: "1234",
+        context_page_owner_slug: "slug",
         type: "Button",
         subject: "clicked next button",
       })
