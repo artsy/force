@@ -50,7 +50,6 @@ $(() =>
     require("../analytics/artwork.js")
     require("../analytics/artwork_rail.js")
     require("../analytics/artworks_filter.js")
-    require("../analytics/bidding.js")
     require("../analytics/checkout.js")
     require("../analytics/consignments.js")
     require("../analytics/contact.js")
