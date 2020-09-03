@@ -19,6 +19,8 @@ export const AuthenticationMeta: React.SFC<MetaProps> = props => {
       <meta property="description" content={description} />
       <meta property="og:description" content={description} />
       <meta property="twitter:description" content={description} />
+      {/* Don't index or follow links on this page */}
+      <meta name="robots" content="none" />
     </>
   )
 }

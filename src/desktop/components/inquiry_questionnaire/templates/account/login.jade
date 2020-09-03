@@ -33,12 +33,12 @@ form.stacked-form
         | Remember me
 
     span
-      a.fine-faux-underline.js-mode.js-forgot-password( data-mode='forgot' )
+      a.fine-faux-underline.js-mode.js-forgot-password( data-mode='forgot', rel='nofollow' )
         | Forgot Password?
 
       unless user.isWithAccount()
         span.garamond-tab-separator.is-vertical
-        a.fine-faux-underline.js-mode( data-mode='signup' )
+        a.fine-faux-underline.js-mode( data-mode='signup', rel='nofollow' )
           | Sign up
 
   .iq-account-sub
