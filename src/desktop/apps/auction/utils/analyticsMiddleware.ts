@@ -2,7 +2,7 @@ import * as actions from "desktop/apps/auction/actions/artworkBrowser"
 import { isEqual } from "underscore"
 import { data as sd } from "sharify"
 
-const analyticsMiddleware = store => next => action => {
+export const analyticsMiddleware = store => next => action => {
   const result = next(action)
   const nextState = store.getState()
 
@@ -62,5 +62,3 @@ function trackParamChange(changed, newState) {
     changed,
   })
 }
-
-export default analyticsMiddleware
