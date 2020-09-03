@@ -1,7 +1,6 @@
 Backbone = require 'backbone'
 SearchBarView = require '../../search_bar/view.coffee'
 teleport = require './teleport.coffee'
-analyticsHooks = require '../../../lib/analytics_hooks.coffee'
 { modelNameAndIdToLabel } = require '../../../lib/analytics_helpers.coffee'
 
 module.exports = class FairNavView extends Backbone.View
@@ -12,17 +11,17 @@ module.exports = class FairNavView extends Backbone.View
       fairId: fair.id
 
     @$('.fair-layout-search-input').on 'focus', ->
-      analyticsHooks.trigger 'fair:search:focus'
+      window.analytics.track("Focused on search input at fair")
 
-    @searchBarView.on 'search:entered', (term) =>
-      analyticsHooks.trigger 'fair:search:enter'
+    @searchBarView.on 'search:entered', (term) ->
+      window.analytics.track("Hit enter on fair search")
 
       teleport "#{model.href()}/search?q=#{term}"
 
     @searchBarView.on 'search:selected', (e, model) ->
       return false unless model and model.get('published')
       model.updateForFair fair
-      analyticsHooks.trigger 'fair:search:select',
+      window.analytics.track "Selected item from fair search",
         label: modelNameAndIdToLabel model.get('display_model'), model.id
         query: @query
       @selected = true
