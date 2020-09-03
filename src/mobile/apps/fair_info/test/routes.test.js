@@ -101,7 +101,7 @@ describe("FairInfo routes", function () {
     })
   })
 
-  describe("#singleEvent", function () {
+  xdescribe("#singleEvent", function () {
     beforeEach(function () {
       this.res.locals.fair = new Fair(fabricate("fair"))
       return sinon

@@ -1,4 +1,4 @@
-import { renderRelayTree } from "v2/DevTools"
+import { MockBoot, renderRelayTree } from "v2/DevTools"
 import React from "react"
 import { FairExhibitorsFragmentContainer } from "../FairExhibitors"
 import { graphql } from "react-relay"
@@ -13,7 +13,11 @@ describe("FairExhibitors", () => {
   ) => {
     return renderRelayTree({
       Component: ({ fair }) => {
-        return <FairExhibitorsFragmentContainer fair={fair} />
+        return (
+          <MockBoot>
+            <FairExhibitorsFragmentContainer fair={fair} />
+          </MockBoot>
+        )
       },
       query: graphql`
         query FairExhibitors_Query($slug: String!) @raw_response_type {
@@ -40,15 +44,27 @@ describe("FairExhibitors", () => {
     const text = wrapper.text()
     expect(text).not.toContain("Partner Without Artworks")
   })
+
+  it("renders the show more button", async () => {
+    const wrapper = await getWrapper()
+    expect(wrapper.text()).toContain("Show more")
+  })
 })
 
 const FAIR_EXHIBITORS_FIXTURE: FairExhibitors_QueryRawResponse = {
   fair: {
     id: "xxx",
+    slug: "xxx",
     exhibitors: {
+      pageInfo: {
+        endCursor: "xxx",
+        hasNextPage: false,
+      },
       edges: [
         {
-          show: {
+          cursor: "xxx",
+          node: {
+            __typename: "Show",
             id: "xxx-1",
             internalID: "xxx-1",
             counts: { artworks: 0 },
@@ -61,7 +77,9 @@ const FAIR_EXHIBITORS_FIXTURE: FairExhibitors_QueryRawResponse = {
           },
         },
         {
-          show: {
+          cursor: "xxx",
+          node: {
+            __typename: "Show",
             id: "xxx-2",
             internalID: "xxx-2",
             counts: { artworks: 10 },
@@ -74,7 +92,9 @@ const FAIR_EXHIBITORS_FIXTURE: FairExhibitors_QueryRawResponse = {
           },
         },
         {
-          show: {
+          cursor: "xxx",
+          node: {
+            __typename: "Show",
             id: "xxx-3",
             internalID: "xxx-3",
             counts: { artworks: 10 },
