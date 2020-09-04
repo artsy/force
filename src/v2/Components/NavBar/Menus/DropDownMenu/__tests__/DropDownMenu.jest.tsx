@@ -38,11 +38,11 @@ describe("DropDownMenu", () => {
     const viewAllMenuItems = wrapper.find("ViewAllMenuItem")
 
     expect(linkMenuItems.length).toBe(4)
-    expect(linkMenuItems.at(0).text()).toContain("New this Week")
+    expect(linkMenuItems.at(0).text()).toContain("New This Week")
     expect(linkMenuItems.at(0).prop("href")).toEqual(
       "/collection/new-this-week"
     )
-    expect(linkMenuItems.at(1).text()).toContain("Trending this Month")
+    expect(linkMenuItems.at(1).text()).toContain("What’s Trending")
     expect(linkMenuItems.at(1).prop("href")).toEqual(
       "/collection/highlights-this-month"
     )
@@ -50,8 +50,10 @@ describe("DropDownMenu", () => {
     expect(linkMenuItems.at(2).prop("href")).toEqual(
       "/collection/exclusively-on-artsy"
     )
-    expect(linkMenuItems.at(3).text()).toContain("Closing Soon")
-    expect(linkMenuItems.at(3).prop("href")).toEqual("/collect?at_auction=true")
+    expect(linkMenuItems.at(3).text()).toContain("Limited Editions")
+    expect(linkMenuItems.at(3).prop("href")).toEqual(
+      "/collection/limited-edition-works"
+    )
 
     expect(viewAllMenuItems.length).toBe(1)
     expect(viewAllMenuItems.at(0).text()).toContain("View all artworks")
@@ -62,7 +64,7 @@ describe("DropDownMenu", () => {
     const wrapper = getWrapper()
     const dropDownSection = wrapper.find(DropDownSection)
 
-    expect(dropDownSection.length).toBe(5)
+    expect(dropDownSection.length).toBe(4)
   })
 
   it("tracks analytics click events correctly", () => {
