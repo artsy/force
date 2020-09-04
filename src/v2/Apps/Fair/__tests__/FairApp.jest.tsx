@@ -14,11 +14,24 @@ const FAIR_APP_FIXTURE: FairApp_QueryRawResponse = {
     name: "Miart 2020",
     formattedOpeningHours: "Closes in 12 days",
     slug: "miart-2020",
-    image: {
-      cropped: {
+    smallHero: {
+      _1x: {
         src: "https://cloudfront.com/square.jpg",
-        width: 100,
+        width: 300,
         height: 400,
+      },
+      _2x: {
+        src: "https://cloudfront.com/square.jpg",
+      },
+    },
+    mediumHero: {
+      _1x: {
+        src: "https://cloudfront.com/square.jpg",
+        width: 600,
+        height: 800,
+      },
+      _2x: {
+        src: "https://cloudfront.com/square.jpg",
       },
     },
     tagline: "",
@@ -35,7 +48,10 @@ const FAIR_APP_FIXTURE: FairApp_QueryRawResponse = {
     profile: {
       id: "profile",
       icon: {
-        cropped: {
+        _1x: {
+          src: "/path/to/cats.jpg",
+        },
+        _2x: {
           src: "/path/to/cats.jpg",
         },
       },

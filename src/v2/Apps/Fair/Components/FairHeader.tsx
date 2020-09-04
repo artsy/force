@@ -5,31 +5,43 @@ import {
   Col,
   Flex,
   Grid,
-  ResponsiveBox,
-  ResponsiveBoxProps,
+  Image,
   Row,
   Spacer,
   Text,
+  space,
 } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FairHeader_fair } from "v2/__generated__/FairHeader_fair.graphql"
-import styled from "styled-components"
 import { ForwardLink } from "v2/Components/Links/ForwardLink"
+import styled from "styled-components"
 
 interface FairHeaderProps extends BoxProps {
   fair: FairHeader_fair
 }
 
-const ResponsiveImage = styled(ResponsiveBox)<ResponsiveBoxProps>`
-  img {
-    width: 100%;
-    height: 100%;
+const MediumHero = styled(Image).attrs({ lazyLoad: true })`
+  display: none;
+  @media (min-height: 1000px) {
+    display: block;
+  }
+`
+
+const SmallHero = styled(Image).attrs({ lazyLoad: true })`
+  display: none;
+  @media (max-height: 1000px) {
+    display: block;
   }
 `
 
 const FairHeader: React.FC<FairHeaderProps> = ({ fair, ...rest }) => {
-  const img = fair?.image?.cropped
-  const profileIcon = fair?.profile?.icon?.cropped
+  const image = {
+    small: fair?.smallHero,
+    medium: fair?.mediumHero,
+  }
+
+  const icon = fair.profile?.icon
+
   const {
     about,
     tagline,
@@ -57,32 +69,52 @@ const FairHeader: React.FC<FairHeaderProps> = ({ fair, ...rest }) => {
 
   return (
     <Box {...rest}>
-      {img && (
-        <Flex
-          alignItems="center"
-          justifyContent="center"
-          style={{ position: "relative" }}
-        >
-          <ResponsiveImage
-            aspectWidth={img.width}
-            aspectHeight={img.height}
-            maxWidth={375}
-            bg="black10"
+      {image && (
+        <Flex position="relative" alignItems="center" justifyContent="center">
+          <Box
+            display="inline-block"
+            position="relative"
+            mx="auto"
+            height="100%"
           >
-            <img src={img.src} alt={fair.name} />
-            {profileIcon && (
+            <MediumHero
+              alt={fair.name}
+              src={image.medium._1x.src}
+              srcSet={`${image.medium._1x.src} 1x, ${image.medium._2x.src} 2x`}
+              width={image.medium._1x.width}
+              height={image.medium._1x.height}
+            />
+
+            <SmallHero
+              alt={fair.name}
+              src={image.small._1x.src}
+              srcSet={`${image.small._1x.src} 1x, ${image.small._2x.src} 2x`}
+              width={image.small._1x.width}
+              height={image.small._1x.height}
+            />
+
+            {icon && (
               <Box
                 bg="white100"
                 width={80}
-                px={1}
+                height={60}
                 position="absolute"
                 bottom={0}
-                left="1rem"
+                left={space(2)}
+                display="flex"
+                alignItems="center"
+                justifyContent="center"
               >
-                <img src={profileIcon.src} />
+                <img
+                  src={icon._1x.src}
+                  srcSet={`${icon._1x.src} 1x, ${icon._2x.src} 2x`}
+                  alt={`Logo of ${fair.name}`}
+                  width={40}
+                  height={40}
+                />
               </Box>
             )}
-          </ResponsiveImage>
+          </Box>
         </Flex>
       )}
 
@@ -127,18 +159,32 @@ export const FairHeaderFragmentContainer = createFragmentContainer(FairHeader, {
       slug
       profile {
         icon {
-          # Always 60px wide * 2 for retina
-          cropped(width: 120, height: 120, version: "square140") {
+          _1x: cropped(width: 40, height: 40, version: "square140") {
+            src: url
+          }
+          _2x: cropped(width: 80, height: 80, version: "square140") {
             src: url
           }
         }
       }
-      image {
-        # 3:4 - 375×500 native max dimensions * 2 for retina
-        cropped(width: 750, height: 1000, version: "wide") {
+      smallHero: image {
+        _1x: cropped(width: 375, height: 500, version: "wide") {
           src: url
           width
           height
+        }
+        _2x: cropped(width: 750, height: 1000, version: "wide") {
+          src: url
+        }
+      }
+      mediumHero: image {
+        _1x: cropped(width: 600, height: 800, version: "wide") {
+          src: url
+          width
+          height
+        }
+        _2x: cropped(width: 1200, height: 1600, version: "wide") {
+          src: url
         }
       }
       # Used to figure out if we should render the More info link

@@ -24,17 +24,33 @@ export type FairApp_QueryRawResponse = {
         readonly formattedOpeningHours: string | null;
         readonly profile: ({
             readonly icon: ({
-                readonly cropped: ({
+                readonly _1x: ({
+                    readonly src: string | null;
+                }) | null;
+                readonly _2x: ({
                     readonly src: string | null;
                 }) | null;
             }) | null;
             readonly id: string | null;
         }) | null;
-        readonly image: ({
-            readonly cropped: ({
+        readonly smallHero: ({
+            readonly _1x: ({
                 readonly src: string | null;
                 readonly width: number | null;
                 readonly height: number | null;
+            }) | null;
+            readonly _2x: ({
+                readonly src: string | null;
+            }) | null;
+        }) | null;
+        readonly mediumHero: ({
+            readonly _1x: ({
+                readonly src: string | null;
+                readonly width: number | null;
+                readonly height: number | null;
+            }) | null;
+            readonly _2x: ({
+                readonly src: string | null;
             }) | null;
         }) | null;
         readonly tagline: string | null;
@@ -143,17 +159,33 @@ fragment FairHeader_fair on Fair {
   slug
   profile {
     icon {
-      cropped(width: 120, height: 120, version: "square140") {
+      _1x: cropped(width: 40, height: 40, version: "square140") {
+        src: url
+      }
+      _2x: cropped(width: 80, height: 80, version: "square140") {
         src: url
       }
     }
     id
   }
-  image {
-    cropped(width: 750, height: 1000, version: "wide") {
+  smallHero: image {
+    _1x: cropped(width: 375, height: 500, version: "wide") {
       src: url
       width
       height
+    }
+    _2x: cropped(width: 750, height: 1000, version: "wide") {
+      src: url
+    }
+  }
+  mediumHero: image {
+    _1x: cropped(width: 600, height: 800, version: "wide") {
+      src: url
+      width
+      height
+    }
+    _2x: cropped(width: 1200, height: 1600, version: "wide") {
+      src: url
     }
   }
   tagline
@@ -202,44 +234,67 @@ v2 = {
   "storageKey": null
 },
 v3 = {
+  "kind": "Literal",
+  "name": "version",
+  "value": "square140"
+},
+v4 = {
   "alias": "src",
   "args": null,
   "kind": "ScalarField",
   "name": "url",
   "storageKey": null
 },
-v4 = {
+v5 = [
+  (v4/*: any*/)
+],
+v6 = {
+  "kind": "Literal",
+  "name": "height",
+  "value": 80
+},
+v7 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v5 = {
+v8 = {
+  "kind": "Literal",
+  "name": "version",
+  "value": "wide"
+},
+v9 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "width",
   "storageKey": null
 },
-v6 = {
+v10 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "height",
   "storageKey": null
 },
-v7 = [
+v11 = [
+  (v4/*: any*/),
+  (v9/*: any*/),
+  (v10/*: any*/)
+],
+v12 = [
   {
     "kind": "Literal",
     "name": "format",
     "value": "HTML"
   }
 ],
-v8 = [
-  (v5/*: any*/),
-  (v6/*: any*/),
-  (v3/*: any*/)
+v13 = [
+  (v9/*: any*/),
+  (v10/*: any*/),
+  (v4/*: any*/)
 ];
 return {
   "fragment": {
@@ -358,42 +413,54 @@ return {
                 "plural": false,
                 "selections": [
                   {
-                    "alias": null,
+                    "alias": "_1x",
                     "args": [
                       {
                         "kind": "Literal",
                         "name": "height",
-                        "value": 120
+                        "value": 40
                       },
-                      {
-                        "kind": "Literal",
-                        "name": "version",
-                        "value": "square140"
-                      },
+                      (v3/*: any*/),
                       {
                         "kind": "Literal",
                         "name": "width",
-                        "value": 120
+                        "value": 40
                       }
                     ],
                     "concreteType": "CroppedImageUrl",
                     "kind": "LinkedField",
                     "name": "cropped",
                     "plural": false,
-                    "selections": [
-                      (v3/*: any*/)
+                    "selections": (v5/*: any*/),
+                    "storageKey": "cropped(height:40,version:\"square140\",width:40)"
+                  },
+                  {
+                    "alias": "_2x",
+                    "args": [
+                      (v6/*: any*/),
+                      (v3/*: any*/),
+                      {
+                        "kind": "Literal",
+                        "name": "width",
+                        "value": 80
+                      }
                     ],
-                    "storageKey": "cropped(height:120,version:\"square140\",width:120)"
+                    "concreteType": "CroppedImageUrl",
+                    "kind": "LinkedField",
+                    "name": "cropped",
+                    "plural": false,
+                    "selections": (v5/*: any*/),
+                    "storageKey": "cropped(height:80,version:\"square140\",width:80)"
                   }
                 ],
                 "storageKey": null
               },
-              (v4/*: any*/)
+              (v7/*: any*/)
             ],
             "storageKey": null
           },
           {
-            "alias": null,
+            "alias": "smallHero",
             "args": null,
             "concreteType": "Image",
             "kind": "LinkedField",
@@ -401,18 +468,36 @@ return {
             "plural": false,
             "selections": [
               {
-                "alias": null,
+                "alias": "_1x",
+                "args": [
+                  {
+                    "kind": "Literal",
+                    "name": "height",
+                    "value": 500
+                  },
+                  (v8/*: any*/),
+                  {
+                    "kind": "Literal",
+                    "name": "width",
+                    "value": 375
+                  }
+                ],
+                "concreteType": "CroppedImageUrl",
+                "kind": "LinkedField",
+                "name": "cropped",
+                "plural": false,
+                "selections": (v11/*: any*/),
+                "storageKey": "cropped(height:500,version:\"wide\",width:375)"
+              },
+              {
+                "alias": "_2x",
                 "args": [
                   {
                     "kind": "Literal",
                     "name": "height",
                     "value": 1000
                   },
-                  {
-                    "kind": "Literal",
-                    "name": "version",
-                    "value": "wide"
-                  },
+                  (v8/*: any*/),
                   {
                     "kind": "Literal",
                     "name": "width",
@@ -423,12 +508,63 @@ return {
                 "kind": "LinkedField",
                 "name": "cropped",
                 "plural": false,
-                "selections": [
-                  (v3/*: any*/),
-                  (v5/*: any*/),
-                  (v6/*: any*/)
-                ],
+                "selections": (v5/*: any*/),
                 "storageKey": "cropped(height:1000,version:\"wide\",width:750)"
+              }
+            ],
+            "storageKey": null
+          },
+          {
+            "alias": "mediumHero",
+            "args": null,
+            "concreteType": "Image",
+            "kind": "LinkedField",
+            "name": "image",
+            "plural": false,
+            "selections": [
+              {
+                "alias": "_1x",
+                "args": [
+                  {
+                    "kind": "Literal",
+                    "name": "height",
+                    "value": 800
+                  },
+                  (v8/*: any*/),
+                  {
+                    "kind": "Literal",
+                    "name": "width",
+                    "value": 600
+                  }
+                ],
+                "concreteType": "CroppedImageUrl",
+                "kind": "LinkedField",
+                "name": "cropped",
+                "plural": false,
+                "selections": (v11/*: any*/),
+                "storageKey": "cropped(height:800,version:\"wide\",width:600)"
+              },
+              {
+                "alias": "_2x",
+                "args": [
+                  {
+                    "kind": "Literal",
+                    "name": "height",
+                    "value": 1600
+                  },
+                  (v8/*: any*/),
+                  {
+                    "kind": "Literal",
+                    "name": "width",
+                    "value": 1200
+                  }
+                ],
+                "concreteType": "CroppedImageUrl",
+                "kind": "LinkedField",
+                "name": "cropped",
+                "plural": false,
+                "selections": (v5/*: any*/),
+                "storageKey": "cropped(height:1600,version:\"wide\",width:1200)"
               }
             ],
             "storageKey": null
@@ -449,7 +585,7 @@ return {
             "plural": false,
             "selections": [
               (v2/*: any*/),
-              (v4/*: any*/)
+              (v7/*: any*/)
             ],
             "storageKey": null
           },
@@ -462,28 +598,28 @@ return {
           },
           {
             "alias": null,
-            "args": (v7/*: any*/),
+            "args": (v12/*: any*/),
             "kind": "ScalarField",
             "name": "hours",
             "storageKey": "hours(format:\"HTML\")"
           },
           {
             "alias": null,
-            "args": (v7/*: any*/),
+            "args": (v12/*: any*/),
             "kind": "ScalarField",
             "name": "links",
             "storageKey": "links(format:\"HTML\")"
           },
           {
             "alias": null,
-            "args": (v7/*: any*/),
+            "args": (v12/*: any*/),
             "kind": "ScalarField",
             "name": "tickets",
             "storageKey": "tickets(format:\"HTML\")"
           },
           {
             "alias": null,
-            "args": (v7/*: any*/),
+            "args": (v12/*: any*/),
             "kind": "ScalarField",
             "name": "contact",
             "storageKey": "contact(format:\"HTML\")"
@@ -523,7 +659,7 @@ return {
                     "name": "node",
                     "plural": false,
                     "selections": [
-                      (v4/*: any*/),
+                      (v7/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -569,11 +705,7 @@ return {
                           {
                             "alias": "_1x",
                             "args": [
-                              {
-                                "kind": "Literal",
-                                "name": "height",
-                                "value": 80
-                              },
+                              (v6/*: any*/),
                               {
                                 "kind": "Literal",
                                 "name": "width",
@@ -584,7 +716,7 @@ return {
                             "kind": "LinkedField",
                             "name": "cropped",
                             "plural": false,
-                            "selections": (v8/*: any*/),
+                            "selections": (v13/*: any*/),
                             "storageKey": "cropped(height:80,width:140)"
                           },
                           {
@@ -605,7 +737,7 @@ return {
                             "kind": "LinkedField",
                             "name": "cropped",
                             "plural": false,
-                            "selections": (v8/*: any*/),
+                            "selections": (v13/*: any*/),
                             "storageKey": "cropped(height:160,width:280)"
                           }
                         ],
@@ -627,7 +759,7 @@ return {
             ],
             "storageKey": "articlesConnection(first:5,sort:\"PUBLISHED_AT_DESC\")"
           },
-          (v4/*: any*/)
+          (v7/*: any*/)
         ],
         "storageKey": null
       }
@@ -638,7 +770,7 @@ return {
     "metadata": {},
     "name": "FairApp_Query",
     "operationKind": "query",
-    "text": "query FairApp_Query(\n  $slug: String!\n) {\n  fair(id: $slug) {\n    ...FairApp_fair\n    id\n  }\n}\n\nfragment FairApp_fair on Fair {\n  slug\n  ...FairMeta_fair\n  ...FairHeader_fair\n  ...FairEditorial_fair\n  articles: articlesConnection(first: 5, sort: PUBLISHED_AT_DESC) {\n    edges {\n      __typename\n    }\n  }\n}\n\nfragment FairEditorialItem_article on Article {\n  id\n  title\n  href\n  publishedAt(format: \"MMM Do, YY\")\n  thumbnailTitle\n  thumbnailImage {\n    _1x: cropped(width: 140, height: 80) {\n      width\n      height\n      src: url\n    }\n    _2x: cropped(width: 280, height: 160) {\n      width\n      height\n      src: url\n    }\n  }\n}\n\nfragment FairEditorial_fair on Fair {\n  articles: articlesConnection(first: 5, sort: PUBLISHED_AT_DESC) {\n    edges {\n      node {\n        id\n        ...FairEditorialItem_article\n      }\n    }\n  }\n}\n\nfragment FairHeader_fair on Fair {\n  about\n  summary\n  formattedOpeningHours\n  name\n  slug\n  profile {\n    icon {\n      cropped(width: 120, height: 120, version: \"square140\") {\n        src: url\n      }\n    }\n    id\n  }\n  image {\n    cropped(width: 750, height: 1000, version: \"wide\") {\n      src: url\n      width\n      height\n    }\n  }\n  tagline\n  location {\n    summary\n    id\n  }\n  ticketsLink\n  hours(format: HTML)\n  links(format: HTML)\n  tickets(format: HTML)\n  contact(format: HTML)\n}\n\nfragment FairMeta_fair on Fair {\n  name\n  slug\n  metaDescription: summary\n  metaImage: image {\n    src: url(version: \"large_rectangle\")\n  }\n}\n"
+    "text": "query FairApp_Query(\n  $slug: String!\n) {\n  fair(id: $slug) {\n    ...FairApp_fair\n    id\n  }\n}\n\nfragment FairApp_fair on Fair {\n  slug\n  ...FairMeta_fair\n  ...FairHeader_fair\n  ...FairEditorial_fair\n  articles: articlesConnection(first: 5, sort: PUBLISHED_AT_DESC) {\n    edges {\n      __typename\n    }\n  }\n}\n\nfragment FairEditorialItem_article on Article {\n  id\n  title\n  href\n  publishedAt(format: \"MMM Do, YY\")\n  thumbnailTitle\n  thumbnailImage {\n    _1x: cropped(width: 140, height: 80) {\n      width\n      height\n      src: url\n    }\n    _2x: cropped(width: 280, height: 160) {\n      width\n      height\n      src: url\n    }\n  }\n}\n\nfragment FairEditorial_fair on Fair {\n  articles: articlesConnection(first: 5, sort: PUBLISHED_AT_DESC) {\n    edges {\n      node {\n        id\n        ...FairEditorialItem_article\n      }\n    }\n  }\n}\n\nfragment FairHeader_fair on Fair {\n  about\n  summary\n  formattedOpeningHours\n  name\n  slug\n  profile {\n    icon {\n      _1x: cropped(width: 40, height: 40, version: \"square140\") {\n        src: url\n      }\n      _2x: cropped(width: 80, height: 80, version: \"square140\") {\n        src: url\n      }\n    }\n    id\n  }\n  smallHero: image {\n    _1x: cropped(width: 375, height: 500, version: \"wide\") {\n      src: url\n      width\n      height\n    }\n    _2x: cropped(width: 750, height: 1000, version: \"wide\") {\n      src: url\n    }\n  }\n  mediumHero: image {\n    _1x: cropped(width: 600, height: 800, version: \"wide\") {\n      src: url\n      width\n      height\n    }\n    _2x: cropped(width: 1200, height: 1600, version: \"wide\") {\n      src: url\n    }\n  }\n  tagline\n  location {\n    summary\n    id\n  }\n  ticketsLink\n  hours(format: HTML)\n  links(format: HTML)\n  tickets(format: HTML)\n  contact(format: HTML)\n}\n\nfragment FairMeta_fair on Fair {\n  name\n  slug\n  metaDescription: summary\n  metaImage: image {\n    src: url(version: \"large_rectangle\")\n  }\n}\n"
   }
 };
 })();
