@@ -51,6 +51,7 @@ getFullEditorialHref = require("@artsy/reaction/dist/Components/Publishing/Const
     Sitemap: #{APP_URL}/sitemap-articles.xml
     Sitemap: #{APP_URL}/sitemap-artists.xml
     Sitemap: #{APP_URL}/sitemap-artist-images.xml
+    Sitemap: #{APP_URL}/sitemap-artist-series.xml
     Sitemap: #{APP_URL}/sitemap-artworks.xml
     Sitemap: #{APP_URL}/sitemap-cities.xml
     Sitemap: #{APP_URL}/sitemap-collect.xml
