@@ -1,35 +1,14 @@
 ## Creating a Review App
 
-If wanting to create a deploy for a WIP feature or for QA, [Hokusai](), supports [Review Apps](https://github.com/artsy/hokusai/blob/master/docs/Review_Apps.md).
+If you want to create a deploy for a WIP feature or for QA, [Hokusai](), supports [Review Apps](https://github.com/artsy/hokusai/blob/master/docs/Review_Apps.md).
 
-The process for launching the review app differs somewhat depending on whether your unmerged changes are in Reaction or in Force.
+You can create a Force review app via CircleCI which runs the [build_review_app.sh`](https://github.com/artsy/force/blob/master/scripts/build_review_app.sh) script. Or, you can run that script locally, which will be slower because it involves building the docker image locally and pushing it up to AWS ECR.
 
-### Pre-building steps for Reaction diff
+The rest of the doc assumes you are working with a review app called `awesome-feature`.
 
-You will first cut a release of Reaction and publish it as a "canary" version to the NPM registry. You will then install this canary release into your copy of Force and launch _that_ as review app.
+### Building on Circle
 
-1. Login to the NPM registry with `npm login`. (You will need to already have an NPM account, and it will need to be associated with the Artsy NPM org — holler on #front-end if you need help with this.)
-1. Update `reaction/package.json` to have a canary version number, e.g. `22.9.8-canary-<your PR number>`
-1. Publish the package under the `canary` tag with `npm publish --tag canary`. (Including the tag is vital to ensuring this release doesn't end up tagged as `latest` — thus triggering a round of auto-update PRs in the various apps that consume Reaction)
-1. Confirm the results of the previous step with `npm dist-tag ls`. You should see something like
-
-   ```
-   canary: 22.9.8-canary-<your PR number>
-   latest: 22.9.7
-   ```
-
-1. Over in Force install the canary with `yarn add @artsy/reaction@canary`
-
-From here on out follow the steps in the next section for launching a Force review app. When you are done with the review process revert your change in step 2 above so that Reaction will resume normal versioning.
-
-### Building Review Apps
-
-Launching a Force review app can be automated via the [`build_review_app.sh`](https://github.com/artsy/force/blob/master/scripts/build_review_app.sh) script.
-
-#### Building on Circle
-
-The easiest and fastest way to spin up a review app is to push your work to
-a branch starting with `review-app-` (note the trailing dash). For example, `review-app-new-form`.
+This is the easiest and fastest way. Push a branch named `review-app-awesome-feature`
 
 CircleCI will match the `review-app-` prefix and either:
 
@@ -38,21 +17,7 @@ CircleCI will match the `review-app-` prefix and either:
 2. Update an existing review app using `update_review_app.sh`
 3. Once CI is complete follow [this step](https://github.com/artsy/force/blob/master/docs/creating_review_app.md#dns-setup) to setup DNS.
 
-> Once you're done working with the review app it (currently) has to be deleted manually
-
-#### Deleting a Review App
-
-Run:
-
-```sh
-yarn delete-review-app <name>
-```
-
-The `name` is the name of the branch, minus the `review-app-` prefix.
-
-#### Manual Steps
-
-##### Manual Build
+### Building on Local
 
 First, make sure `jq` is installed:
 
@@ -60,40 +25,54 @@ First, make sure `jq` is installed:
 brew install jq
 ```
 
-Then launch the script:
+Then launch the script with:
 
 ```sh
-./scripts/build_review_app.sh review-app-name
+./scripts/build_review_app.sh awesome-app
 ```
 
-##### Manual Update
+The script will save a K8s spec in `hokusai/awesome-app.yml`.
 
-If you want to push subsequent changes to the review app you can push a new build to the same tag with the `--overwrite` flag:
-
-```sh
-hokusai registry push --overwrite --skip-latest --force --tag <name>
-```
-
-and you need to redeploy your app:
-
-```sh
-hokusai review_app deploy <name> <name>
-```
-
-😇 After your review app is no longer needed please remember to clean up any CNAMEs you've created, and to de-provision the review app itself with `hokusai review_app delete <review-app-name>` if there's a hokusai/<review-app-name>.yml, otherwise, please use the yarn command mentioned above.
-
-For more info on Review App maintenence, [see Hokusai docs](https://github.com/artsy/hokusai/blob/master/docs/Review_Apps.md).
-
-#### DNS Setup
+### Accessing the review app.
 
 To access the review app, you must create a DNS name for it. A name ending in `artsy.net` is required for full OAuth flows (for, say, login redirects between Gravity and Force for Auction registration). On Cloudflare, please do:
 
 1. [Login to Cloudflare](https://dash.cloudflare.com/), and navigate to **artsy.net** > **DNS**
 1. Click `+ Add Record`
 1. Change `Type` dropdown to `CNAME`
-1. Under `Name` enter a new subdomain. This must be review-app-name, the same name that build_review_app.sh was called with.
+1. Under `Name` enter `awesome-feature`
 1. Under `Target` say `nginx-staging.artsy.net`
 1. Hit `Save`
-1. DNS will propagate and after a few minutes the review app will be available via `<review-app-name>.artsy.net`
+1. DNS will propagate and after a few minutes the review app will be available via `awesome-feature.artsy.net`
+
+### Updating the review app
+
+If you want to push subsequent changes to the review app you can push a new build to the same tag with the `--overwrite` flag:
+
+```sh
+hokusai registry push --overwrite --skip-latest --force --tag awesome-feature
+```
+
+and you need to redeploy your app:
+
+```sh
+hokusai review_app deploy awesome-feature awesome-feature
+```
+
+### Deleting a Review App
+
+When you are done using the review app, please delete it and its DNS entry.
+
+Run:
+
+```sh
+yarn delete-review-app awesome-feature
+```
+
+And please delete the DNS entry as mentioned above.
+
+### Conclusion
+
+For more info on Review App maintenence, [see Hokusai docs](https://github.com/artsy/hokusai/blob/master/docs/Review_Apps.md).
 
 Read over the [`build_review_app.sh`](https://github.com/artsy/force/blob/master/scripts/build_review_app.sh) script for more info on how this is all done.
