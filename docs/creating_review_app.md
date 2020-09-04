@@ -80,28 +80,20 @@ and you need to redeploy your app:
 hokusai review_app deploy <name> <name>
 ```
 
-😇 After your review app is no longer needed please remember to clean up any CNAMEs you've created, and to de-provision the review app itself with `hokusai review_app delete <review-app-name>`
+😇 After your review app is no longer needed please remember to clean up any CNAMEs you've created, and to de-provision the review app itself with `hokusai review_app delete <review-app-name>` if there's a hokusai/<review-app-name>.yml, otherwise, please use the yarn command mentioned above.
 
 For more info on Review App maintenence, [see Hokusai docs](https://github.com/artsy/hokusai/blob/master/docs/Review_Apps.md).
 
 #### DNS Setup
 
-Regardless of how you created a review app (CircleCI or manually), `build_review_app.sh` will output a hostname like the following:
-
-```sh
-a99199101d01011e9aff2127c3b176f7-1359163722.us-east-1.elb.amazonaws.com
-```
-
-This is your Review App url, which should support all of the basic features inside of Force.
-
-If you'd like a pretty URL subdomain or need to test full OAuth flows (for, say, login redirects between Gravity and Force for Auction registration) then an additional non-automated step is required via Cloudflare:
+To access the review app, you must create a DNS name for it. A name ending in `artsy.net` is required for full OAuth flows (for, say, login redirects between Gravity and Force for Auction registration). On Cloudflare, please do:
 
 1. [Login to Cloudflare](https://dash.cloudflare.com/), and navigate to **artsy.net** > **DNS**
 1. Click `+ Add Record`
 1. Change `Type` dropdown to `CNAME`
-1. Under `Name` enter a new subdomain
-1. Under `Target` paste in URL output by `build_review_app.sh` script
+1. Under `Name` enter a new subdomain. This must be review-app-name, the same name that build_review_app.sh was called with.
+1. Under `Target` say `nginx-staging.artsy.net`
 1. Hit `Save`
-1. DNS will propagate and after a few minutes the review app will be available via `<your-subdomain>.artsy.net`
+1. DNS will propagate and after a few minutes the review app will be available via `<review-app-name>.artsy.net`
 
 Read over the [`build_review_app.sh`](https://github.com/artsy/force/blob/master/scripts/build_review_app.sh) script for more info on how this is all done.
