@@ -47,13 +47,13 @@ To access the review app, you must create a DNS name for it. A name ending in `a
 
 ### Updating the review app
 
-If you want to push subsequent changes to the review app you can push a new build to the same tag with the `--overwrite` flag:
+If you want to push subsequent changes to the review app, push a new build to the same tag with the `--overwrite` flag:
 
 ```sh
 hokusai registry push --overwrite --skip-latest --force --tag awesome-feature
 ```
 
-and you need to redeploy your app:
+and redeploy the app:
 
 ```sh
 hokusai review_app deploy awesome-feature awesome-feature
@@ -61,15 +61,18 @@ hokusai review_app deploy awesome-feature awesome-feature
 
 ### Deleting a Review App
 
-When you are done using the review app, please delete it and its DNS entry.
-
-Run:
+When you are done using the review app, please delete it by:
 
 ```sh
 yarn delete-review-app awesome-feature
 ```
 
-And please delete the DNS entry as mentioned above.
+And please delete its DNS entry by:
+
+1. [Login to Cloudflare](https://dash.cloudflare.com/), and navigate to **artsy.net** > **DNS**
+1. In the search box, type `awesome-feature`
+1. Locate the correct record in search results, hit `Edit` at end of line
+1. Hit the `Delete` button on lower left
 
 ### Conclusion
 
