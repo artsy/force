@@ -40,6 +40,9 @@ hokusai registry push --force --skip-latest --overwrite --verbose --tag "$NAME"
 # Edit the K8S YAML to reference the proper Docker image
 sed -i.bak "s/:staging/:$NAME/g" "$review_app_file_path" && rm "$review_app_file_path.bak"
 
+# Edit the K8S YAML Ingress resource to use the Review App's name as the host.
+sed -i.bak "s/host: staging.artsy.net/host: $NAME.artsy.net/g" "$review_app_file_path" && rm "$review_app_file_path.bak"
+
 # Provision the review app
 hokusai review_app create "$NAME" --verbose
 
