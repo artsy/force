@@ -49,9 +49,6 @@ hokusai review_app create "$NAME" --verbose
 # Copy Force staging's ConfigMap to your review app
 hokusai review_app env copy "$NAME" --verbose
 
-# Copy the staging-shared nginx config to your review app
-hokusai review_app env copy "$NAME" --configmap nginx-config --verbose
-
 # To enable authentication via Force's server, we need to allow XHR requests
 # from Force's client to server. As such, Force's server needs to have the
 # proper name of the domain that the requests are coming from. Otherwise,
@@ -82,11 +79,9 @@ hokusai review_app refresh "$NAME"
 # ...
 # ...
 # yeah, I'm talking to you
-# you need to configure a CNAME record so that $NAME.artsy.net resolves to" \
-# the service's external IP:
+# you need to configure a CNAME record so that $NAME.artsy.net points to nginx-staging.artsy.net
 #
-echo $(kubectl get service force-web --namespace $NAME --context staging -o json \
-  | jq .status.loadBalancer.ingress[].hostname)
+echo "Create a CNAME record of $NAME.artsy.net pointing to nginx-staging.artsy.net"
 #
 # you may do this in the Cloudflare interface. Credentials are in 1pass.
 #
