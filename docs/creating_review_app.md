@@ -1,14 +1,14 @@
-## Creating a Review App
+## Creating a Force Review App
 
 If you want to create a deploy for a WIP feature or for QA, [Hokusai](), supports [Review Apps](https://github.com/artsy/hokusai/blob/master/docs/Review_Apps.md).
 
-You can create a Force review app via CircleCI which runs the [build_review_app.sh`](https://github.com/artsy/force/blob/master/scripts/build_review_app.sh) script. Or, you can run that script locally, which will be slower because it involves building the docker image locally and pushing it up to AWS ECR.
+You can create a review app via CircleCI which runs the [`build_review_app.sh`](https://github.com/artsy/force/blob/master/scripts/build_review_app.sh) script. Or, you can run that script locally, which will be slower because it involves building the docker image locally and pushing it up to AWS ECR.
 
 The rest of the doc assumes you are working with a review app called `awesome-feature`.
 
 ### Building on Circle
 
-This is the easiest and fastest way. Push a branch named `review-app-awesome-feature`
+This is the easiest and fastest way. Push up a branch named `review-app-awesome-feature`
 
 CircleCI will match the `review-app-` prefix and either:
 
@@ -28,10 +28,10 @@ brew install jq
 Then launch the script with:
 
 ```sh
-./scripts/build_review_app.sh awesome-app
+./scripts/build_review_app.sh awesome-feature
 ```
 
-The script will save a K8s spec in `hokusai/awesome-app.yml`.
+The script will save a K8s spec in `hokusai/awesome-feature.yml`
 
 ### Accessing the review app.
 
