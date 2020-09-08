@@ -47,7 +47,9 @@ To access the review app, you must create a DNS name for it. The name must match
 
 ### Updating the review app
 
-If you want to push subsequent changes to the review app, push a new build to the same tag with the `--overwrite` flag:
+If the review app was created via Circle as mentioned above, simply push up your changes on the `review-app-awesome-feature` branch.
+
+If the app was built locally, do:
 
 ```sh
 hokusai registry push --overwrite --skip-latest --force --tag awesome-feature
