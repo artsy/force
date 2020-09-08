@@ -61,13 +61,15 @@ hokusai review_app deploy awesome-feature awesome-feature
 
 ### Deleting a Review App
 
-When you are done using the review app, please delete it by:
+You should delete review apps as soon as QA is complete.
+
+Delete the app by:
 
 ```sh
 yarn delete-review-app awesome-feature
 ```
 
-And please delete its DNS entry by:
+Delete its DNS entry by:
 
 1. [Login to Cloudflare](https://dash.cloudflare.com/), and navigate to **artsy.net** > **DNS**
 1. In the search box, type `awesome-feature`
