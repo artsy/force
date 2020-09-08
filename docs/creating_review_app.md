@@ -1,6 +1,6 @@
 ## Creating a Force Review App
 
-If you want to create a deploy for a WIP feature or for QA, [Hokusai](), supports [Review Apps](https://github.com/artsy/hokusai/blob/master/docs/Review_Apps.md).
+If you want to create a deploy for a WIP feature or for QA, Hokusai supports [Review Apps](https://github.com/artsy/hokusai/blob/master/docs/Review_Apps.md).
 
 You can create a review app via CircleCI which runs the [`build_review_app.sh`](https://github.com/artsy/force/blob/master/scripts/build_review_app.sh) script. Or, you can run that script locally, which will be slower because it involves building the docker image locally and pushing it up to AWS ECR.
 
