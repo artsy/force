@@ -35,7 +35,7 @@ The script will save a K8s spec in `hokusai/awesome-feature.yml`
 
 ### Accessing the review app.
 
-To access the review app, you must create a DNS name for it. A name ending in `artsy.net` is required for full OAuth flows (for, say, login redirects between Gravity and Force for Auction registration). On Cloudflare, please do:
+To access the review app, you must create a DNS name for it. The name must match the name of the review app, and it must end in `artsy.net`. So it must be `awesome-feature.artsy.net`. This is required for full OAuth flow to complete. On Cloudflare, please do:
 
 1. [Login to Cloudflare](https://dash.cloudflare.com/), and navigate to **artsy.net** > **DNS**
 1. Click `+ Add Record`
