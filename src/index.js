@@ -45,7 +45,7 @@ setAliases({
 })
 
 const artsyXapp = require("@artsy/xapp")
-const cache = require("./lib/cache.coffee")
+const cache = require("./lib/cache")
 const { setup: relayCacheSetup } = require("./lib/cacheClient")
 const express = require("express")
 const once = require("lodash").once
