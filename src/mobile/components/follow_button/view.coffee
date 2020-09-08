@@ -30,22 +30,21 @@ module.exports = class FollowButtonView extends Backbone.View
     if @isLoggedIn
       if @collection.isFollowing @followId
         @collection.unfollow @followId
-        analyticsHooks.trigger 'followable:unfollowed', {
+        window.analytics.track("Unfollowed " + @type, {
           entity_id: @_id,
           entity_slug: @followId,
           context_module: @context_module,
           context_page: @context_page,
-          entity_type: @type
-        }
+        })
       else
         @collection.follow @followId
-        analyticsHooks.trigger 'followable:followed', {
+        window.analytics.track("Followed " + @type, {
           entity_id: @_id,
           entity_slug: @followId,
           context_module: @context_module,
           context_page: @context_page,
-          entity_type: @type
-        }
+        })
+
         # Delay label change
         @$el.addClass 'is-clicked'
         setTimeout (=> @$el.removeClass 'is-clicked'), 1500

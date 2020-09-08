@@ -55,7 +55,6 @@ $(() =>
     require("../analytics/contact.js")
     require("../analytics/embedded_inquiry.js")
     require("../analytics/follow_widget.js")
-    require("../analytics/following.js")
     require("../analytics/galleries.js")
     require("../analytics/genes.js")
     require("../analytics/global.js")
