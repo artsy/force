@@ -31,7 +31,7 @@ describe("DropDownSection", () => {
     const wrapper = getWrapper(mediumLinks)
     const menuItems = wrapper.find(MenuItem)
 
-    expect(menuItems.length).toBe(8)
+    expect(menuItems.length).toBe(7)
     expect(menuItems.first().text()).toContain("Painting")
     expect(menuItems.first().prop("href")).toContain("/collection/painting")
     expect(menuItems.last().text()).toContain("Design")

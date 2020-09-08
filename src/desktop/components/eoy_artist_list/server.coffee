@@ -1,4 +1,4 @@
-cache = require '../../lib/cache.coffee'
+cache = require '../../lib/cache'
 JSONPage = require '../json_page/index.coffee'
 
 page = new JSONPage name: 'eoy_2016'

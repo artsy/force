@@ -81,7 +81,7 @@ export const FooterText = (props: { children: any; mt?: number }) => (
 
 export const ForgotPassword = (props: { onClick: () => void }) => (
   <Sans size="2">
-    <Link color="black60" {...props} data-test="forgot">
+    <Link color="black60" {...props} data-test="forgot" rel="nofollow">
       Forgot Password?
     </Link>
   </Sans>

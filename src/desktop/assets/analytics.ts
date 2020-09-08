@@ -62,7 +62,6 @@ $(() =>
     require("../analytics/global.js")
     require("../analytics/home.js")
     require("../analytics/inquiry_questionnaire.js")
-    require("../analytics/notifications.js")
     require("../analytics/partner.js")
     require("../analytics/recently_viewed_artworks.js")
     require("../analytics/save.js")
