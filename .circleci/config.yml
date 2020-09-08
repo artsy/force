@@ -197,19 +197,20 @@ workflows:
           requires:
             - push-staging-image
 
-      - run_deepcrawl_automator:
-          context: deepcrawl-staging
-          requires:
-            - deploy-staging
-
       # Release
       - validate_production_schema:
           <<: *only_release
       - hokusai/deploy-production:
           <<: *only_release
+          name: deploy-production
           requires:
             - horizon/block
             - validate_production_schema
+
+      - run_deepcrawl_automator:
+          context: deepcrawl-automator
+          requires:
+            - deploy-production
 
       - create_or_update_review_app:
           context: hokusai
