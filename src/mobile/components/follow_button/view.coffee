@@ -1,6 +1,5 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-analyticsHooks = require '../../lib/analytics_hooks.coffee'
 
 module.exports = class FollowButtonView extends Backbone.View
 
@@ -49,7 +48,6 @@ module.exports = class FollowButtonView extends Backbone.View
         @$el.addClass 'is-clicked'
         setTimeout (=> @$el.removeClass 'is-clicked'), 1500
     else
-      analyticsHooks.trigger 'follow:signup'
       location.href = "/sign_up?action=follow&objectId=#{@followId}&kind=artist&destination=#{window.location}&intent=follow+#{@type.toLowerCase()}&contextModule=#{@context_module}"
 
     false

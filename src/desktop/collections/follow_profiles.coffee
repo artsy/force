@@ -45,7 +45,7 @@ module.exports = class FollowProfiles extends Backbone.Collection
     @syncFollows _.rest(profileIds, @maxSyncSize)
 
   follow: (profileId, options={}) ->
-    analytics.track("Followed profile", { message: "Follow profile" })
+    window.analytics.track("Followed profile", { message: "Follow profile" })
     
     error = options.error
     options.error = (model, response, options) =>
@@ -58,7 +58,7 @@ module.exports = class FollowProfiles extends Backbone.Collection
     @add followProfile
 
   unfollow: (profileId, options={}) ->
-    analytics.track("Unfollowed profile", { message: "Unfollow profile" })
+    window.analytics.track("Unfollowed profile", { message: "Unfollow profile" })
 
     error = options.error
     options.error = (model, response, options) =>
