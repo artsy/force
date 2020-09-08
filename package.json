@@ -282,7 +282,7 @@
     "coffee-loader": "0.8.0",
     "coffeescript": "1.11.1",
     "core-js": "2.6.5",
-    "cypress": "3.8.2",
+    "cypress": "5.1.0",
     "danger": "7.0.16",
     "electron": "3.0.16",
     "enzyme": "3.10.0",
