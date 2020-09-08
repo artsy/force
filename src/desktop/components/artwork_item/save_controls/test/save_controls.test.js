@@ -1,8 +1,3 @@
-/*
- * decaffeinate suggestions:
- * DS102: Remove unnecessary code created because of implicit returns
- * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
- */
 const benv = require("benv")
 const sinon = require("sinon")
 const Backbone = require("backbone")
@@ -21,16 +16,19 @@ artworkCollection.saveArtwork = sinon.stub()
 describe("SaveControls", () =>
   describe("#save", function () {
     beforeEach(function (done) {
-      return benv.setup(() => {
-        benv.expose({ $: benv.require("jquery") })
+      benv.setup(() => {
+        benv.expose({
+          $: benv.require("jquery"),
+          analytics: { track: sinon.stub() },
+        })
         Backbone.$ = $
-        return benv.render(resolve(__dirname, "../template.jade"), {}, () => {
+        benv.render(resolve(__dirname, "../template.jade"), {}, () => {
           this.view = new SaveControls({
             artworkCollection: null,
             model,
             el: $(".overlay-container"),
           })
-          return done()
+          done()
         })
       })
     })
@@ -42,21 +40,21 @@ describe("SaveControls", () =>
       this.view.$(".overlay-button-save").click()
       mediator.trigger.args[0][0].should.equal("open:auth")
       mediator.trigger.args[0][1].mode.should.equal("signup")
-      return mediator.trigger.restore()
+      mediator.trigger.restore()
     })
 
-    return describe("logged in behavior", function () {
+    describe("logged in behavior", function () {
       beforeEach(function (done) {
-        return benv.setup(() => {
+        benv.setup(() => {
           benv.expose({ $: benv.require("jquery") })
           Backbone.$ = $
-          return benv.render(resolve(__dirname, "../template.jade"), {}, () => {
+          benv.render(resolve(__dirname, "../template.jade"), {}, () => {
             this.view = new SaveControls({
               artworkCollection,
               model,
               el: $(".overlay-container"),
             })
-            return done()
+            done()
           })
         })
       })
@@ -72,7 +70,7 @@ describe("SaveControls", () =>
         this.view.artworkCollection.saveArtwork.args[0][0].should.equal(
           model.id
         )
-        return this.view.$button.attr("data-state").should.equal("saved")
+        this.view.$button.attr("data-state").should.equal("saved")
       })
 
       it("unsaves the artwork if it is in the collection", function () {
@@ -84,15 +82,12 @@ describe("SaveControls", () =>
         this.view.artworkCollection.unsaveArtwork.args[0][0].should.equal(
           model.id
         )
-        return this.view.$button.attr("data-state").should.equal("unsaved")
+        this.view.$button.attr("data-state").should.equal("unsaved")
       })
 
-      return xit("shows the control if the work is saved", function () {
+      xit("shows the control if the work is saved", function () {
         this.view.model.isSaved = () => true
-        return this.view
-          .$(".overlay-button-save")
-          .is(":visible")
-          .should.be.true()
+        this.view.$(".overlay-button-save").is(":visible").should.be.true()
       })
     })
   }))

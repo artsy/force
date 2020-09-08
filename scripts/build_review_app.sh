@@ -40,28 +40,14 @@ hokusai registry push --force --skip-latest --overwrite --verbose --tag "$NAME"
 # Edit the K8S YAML to reference the proper Docker image
 sed -i.bak "s/:staging/:$NAME/g" "$review_app_file_path" && rm "$review_app_file_path.bak"
 
-# Edit the K8S YAML to remove the instructions that enforce that the service
-# can only be accessible via Cloudflare
-#
-# First, remove the `loadBalancerSourceRanges:` line
-sed -i.bak '/loadBalancer/d' "$review_app_file_path" && rm "$review_app_file_path.bak"
-
-# Then, delete all the IP address lines.
-#
-# WARNING: This is a bit sketchy as this will
-# delete any line of the form "- [number][number][number].". This is my best
-# approx for an regex for an IP address, and I'm sure that there are better
-# ones.
-sed -i.bak "/- [[:digit:]][[:digit:]][[:digit:]]./d" "$review_app_file_path" && rm "$review_app_file_path.bak"
+# Edit the K8S YAML Ingress resource to use the Review App's name as the host.
+sed -i.bak "s/host: staging.artsy.net/host: $NAME.artsy.net/g" "$review_app_file_path" && rm "$review_app_file_path.bak"
 
 # Provision the review app
 hokusai review_app create "$NAME" --verbose
 
 # Copy Force staging's ConfigMap to your review app
 hokusai review_app env copy "$NAME" --verbose
-
-# Copy the staging-shared nginx config to your review app
-hokusai review_app env copy "$NAME" --configmap nginx-config --verbose
 
 # To enable authentication via Force's server, we need to allow XHR requests
 # from Force's client to server. As such, Force's server needs to have the
@@ -93,11 +79,9 @@ hokusai review_app refresh "$NAME"
 # ...
 # ...
 # yeah, I'm talking to you
-# you need to configure a CNAME record so that $NAME.artsy.net resolves to" \
-# the service's external IP:
+# you need to configure a CNAME record so that $NAME.artsy.net points to nginx-staging.artsy.net
 #
-echo $(kubectl get service force-web --namespace $NAME --context staging -o json \
-  | jq .status.loadBalancer.ingress[].hostname)
+echo "Create a CNAME record of $NAME.artsy.net pointing to nginx-staging.artsy.net"
 #
 # you may do this in the Cloudflare interface. Credentials are in 1pass.
 #

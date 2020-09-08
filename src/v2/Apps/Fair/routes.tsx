@@ -1,6 +1,7 @@
 import loadable from "@loadable/component"
 import { graphql } from "react-relay"
 import { RouteConfig } from "found"
+import { paramsToCamelCase } from "v2/Components/v2/ArtworkFilter/Utils/urlBuilder"
 
 const FairApp = loadable(() => import("./FairApp"))
 const FairSubApp = loadable(() => import("./FairSubApp"))
@@ -44,10 +45,43 @@ export const routes: RouteConfig[] = [
         prepare: () => {
           FairArtworksRoute.preload()
         },
+        prepareVariables: initializeVariablesWithFilterState,
         query: graphql`
-          query routes_FairArtworksQuery($slug: String!) {
+          query routes_FairArtworksQuery(
+            $slug: String!
+            $acquireable: Boolean
+            $aggregations: [ArtworkAggregation] = [TOTAL, GALLERY, MAJOR_PERIOD]
+            $atAuction: Boolean
+            $color: String
+            $forSale: Boolean
+            $inquireableOnly: Boolean
+            $majorPeriods: [String]
+            $medium: String
+            $offerable: Boolean
+            $page: Int
+            $partnerID: ID
+            $priceRange: String
+            $sizes: [ArtworkSizes]
+            $sort: String
+          ) {
             fair(id: $slug) {
               ...FairArtworks_fair
+                @arguments(
+                  acquireable: $acquireable
+                  aggregations: $aggregations
+                  atAuction: $atAuction
+                  color: $color
+                  forSale: $forSale
+                  partnerID: $partnerID
+                  inquireableOnly: $inquireableOnly
+                  majorPeriods: $majorPeriods
+                  medium: $medium
+                  offerable: $offerable
+                  page: $page
+                  priceRange: $priceRange
+                  sizes: $sizes
+                  sort: $sort
+                )
             }
           }
         `,
@@ -87,3 +121,15 @@ export const routes: RouteConfig[] = [
     ],
   },
 ]
+
+function initializeVariablesWithFilterState(params, props) {
+  const initialFilterState = props.location ? props.location.query : {}
+
+  const state = {
+    sort: "-decayed_merch",
+    ...paramsToCamelCase(initialFilterState),
+    ...params,
+  }
+
+  return state
+}
