@@ -22,7 +22,10 @@ describe("SaveControls", () =>
   describe("#save", function () {
     beforeEach(function (done) {
       return benv.setup(() => {
-        benv.expose({ $: benv.require("jquery") })
+        benv.expose({
+          $: benv.require("jquery"),
+          analytics: { track: sinon.stub() },
+        })
         Backbone.$ = $
         return benv.render(resolve(__dirname, "../template.jade"), {}, () => {
           this.view = new SaveControls({
