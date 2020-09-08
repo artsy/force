@@ -56,6 +56,11 @@ mixin design(section)
           li.browser-image.tools-image( class=(i === 0 ? 'is-active' : undefined) )
             img( src=image.src )
 
+mixin apply(section)
+  .partnerships-section-header.apply
+    h3!= section.heading
+    a.avant-garde-button-black.apply-button.apply-link-cta( href='/apply/institution' ) Apply
+
 section.partnerships-section( id= sections[0].slug, data-href="/institution-partnerships/#{sections[0].slug}" ): +shows(sections[0])
 section.partnerships-section( id= sections[1].slug, data-href="/institution-partnerships/#{sections[1].slug}" ): +education(sections[1])
 section.partnerships-section( id= sections[2].slug, data-href="/institution-partnerships/#{sections[2].slug}" ): +audience(sections[2])

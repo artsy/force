@@ -86,7 +86,10 @@ describe("ArticlesFeedView", function () {
       })
 
       return it("renders the button", function () {
-        return this.view.$("button").text().should.equal("More Articles (8)")
+        return this.view
+          .$("a.js-load-more-articles")
+          .text()
+          .should.equal("More Articles (8)")
       })
     })
   })

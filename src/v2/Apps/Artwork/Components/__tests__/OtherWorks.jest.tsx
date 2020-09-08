@@ -3,16 +3,24 @@ import { mount, shallow } from "enzyme"
 import React from "react"
 import { Header } from "../OtherWorks/Header"
 import { OtherWorksFragmentContainer as OtherWorks } from "../OtherWorks/index"
-import { SystemContextProvider } from "v2/Artsy"
-import { ArtistSeriesArtworkRail } from "../OtherWorks/ArtistSeriesArtworkRail"
-import { ArtistSeriesRailFragmentContainer as ArtistSeriesRail } from "v2/Components/ArtistSeriesRail/ArtistSeriesRail"
-import { ArtistSeriesItemFragmentContainer as ArtistSeriesItem } from "v2/Components/ArtistSeriesRail/ArtistSeriesItem"
-import { MockBoot } from "v2/DevTools"
+import { useTracking } from "v2/Artsy/Analytics/useTracking"
+
+jest.mock("v2/Artsy/Analytics/useTracking")
 
 describe("OtherWorks", () => {
   let genericOtherWorksData
 
   beforeEach(() => {
+    let trackEvent
+    beforeEach(() => {
+      trackEvent = jest.fn()
+      ;(useTracking as jest.Mock).mockImplementation(() => {
+        return {
+          trackEvent,
+        }
+      })
+    })
+
     genericOtherWorksData = {
       contextGrids: null,
       context: {
@@ -61,99 +69,6 @@ describe("OtherWorks", () => {
     const component = mount(<OtherWorks artwork={genericOtherWorksData} />)
     expect(component.find(Header).length).toEqual(1)
     expect(component.find(Serif).text()).toEqual("Other works by Andy Warhol")
-  })
-
-  describe("artist series", () => {
-    beforeEach(() => {
-      genericOtherWorksData.contextGrids = [
-        {
-          __typename: "ArtistArtworkGrid",
-          title: "Other works by Andy Warhol",
-          ctaTitle: "View all works by Andy Warhol",
-          ctaHref: "/artist/andy-warhol",
-          artworksConnection: {
-            edges: [
-              {
-                node: {
-                  internalID: "artwork1",
-                },
-              },
-            ],
-          },
-        },
-      ]
-
-      genericOtherWorksData.artistSeriesConnection = {
-        edges: [
-          {
-            node: {
-              slug: "artist-series",
-              artworksConnection: {
-                edges: [
-                  {
-                    node: {
-                      internalID: "artwork",
-                    },
-                  },
-                ],
-              },
-            },
-          },
-        ],
-      }
-
-      genericOtherWorksData.seriesArtist = {
-        artistSeriesConnection: {
-          edges: [
-            {
-              node: {
-                internalID: "id",
-                slug: "aardvark",
-                artworksCountMessage: "20 available",
-                image: {
-                  cropped: {
-                    url: "/path/to/aardvarks.jpg",
-                  },
-                },
-                title: "Aardvark Series",
-              },
-            },
-          ],
-        },
-      }
-    })
-
-    it("renders the other works from the artist series when the lab feature is enabled", () => {
-      const user = { lab_features: ["Artist Series"] }
-      const component = mount(
-        <SystemContextProvider user={user}>
-          <OtherWorks artwork={genericOtherWorksData} />
-        </SystemContextProvider>
-      )
-      expect(component.find(ArtistSeriesArtworkRail).length).toEqual(1)
-    })
-
-    it("renders the other series by the artist when the lab feature is enabled", () => {
-      const user = { lab_features: ["Artist Series"] }
-      const component = mount(
-        <MockBoot breakpoint={"lg"} user={user}>
-          <OtherWorks artwork={genericOtherWorksData} />
-        </MockBoot>
-      )
-      expect(component.find(ArtistSeriesRail).length).toEqual(1)
-      expect(component.find(ArtistSeriesItem).length).toEqual(1)
-      expect(component.find(ArtistSeriesItem).text()).toContain(
-        "Aardvark Series"
-      )
-      expect(component.find(ArtistSeriesItem).text()).toContain("20 available")
-    })
-
-    it("doesnt render artist series rails without the lab feature", () => {
-      const component = mount(<OtherWorks artwork={genericOtherWorksData} />)
-      expect(component.find(ArtistSeriesArtworkRail).length).toEqual(0)
-      expect(component.find(ArtistSeriesRail).length).toEqual(0)
-      expect(component.find(ArtistSeriesItem).length).toEqual(0)
-    })
   })
 
   it("renders the grids if multiple are provided", () => {

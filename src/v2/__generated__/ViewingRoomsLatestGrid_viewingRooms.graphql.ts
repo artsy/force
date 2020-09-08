@@ -85,7 +85,7 @@ return {
     {
       "alias": "viewingRoomsConnection",
       "args": null,
-      "concreteType": "ViewingRoomConnection",
+      "concreteType": "ViewingRoomsConnection",
       "kind": "LinkedField",
       "name": "__ViewingRoomsLatestGrid_viewingRoomsConnection_connection",
       "plural": false,
@@ -93,7 +93,7 @@ return {
         {
           "alias": null,
           "args": null,
-          "concreteType": "ViewingRoomEdge",
+          "concreteType": "ViewingRoomsEdge",
           "kind": "LinkedField",
           "name": "edges",
           "plural": true,

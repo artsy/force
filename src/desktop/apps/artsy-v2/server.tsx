@@ -10,6 +10,7 @@ import { handleArtworkImageDownload } from "./apps/artwork/artworkMiddleware"
 import { artistMiddleware } from "./apps/artist/artistMiddleware"
 import { userRequiredMiddleware } from "./middleware/userRequiredMiddleware"
 import { searchMiddleware } from "./apps/search/searchMiddleware"
+import { handleCollectionToArtistSeriesRedirect } from "./apps/collection/collectionMiddleware"
 
 export const app = express()
 
@@ -34,6 +35,7 @@ const allRoutes = flatten(
  * Mount non-Reaction routes that are relevant to specific global router routes
  */
 app.get("/artwork/:artworkID/download/:filename", handleArtworkImageDownload)
+app.get("/collection/:collectionSlug", handleCollectionToArtistSeriesRedirect)
 
 /**
  * Mount routes that will connect to global SSR router

@@ -6,7 +6,9 @@ import { ArtistSeriesApp_QueryRawResponse } from "v2/__generated__/ArtistSeriesA
 import { ArtistSeriesApp_UnfoundTest_QueryRawResponse } from "v2/__generated__/ArtistSeriesApp_UnfoundTest_Query.graphql"
 import { Breakpoint } from "@artsy/palette"
 import { HeaderImage } from "../Components/ArtistSeriesHeader"
+import { useTracking } from "v2/Artsy/Analytics/useTracking"
 
+jest.mock("v2/Artsy/Analytics/useTracking")
 jest.unmock("react-relay")
 jest.mock("v2/Artsy/Router/useRouter", () => ({
   useRouter: () => ({
@@ -20,11 +22,18 @@ jest.mock("v2/Artsy/Router/useRouter", () => ({
 }))
 
 describe("ArtistSeriesApp", () => {
+  let trackEvent
+  beforeEach(() => {
+    trackEvent = jest.fn()
+    ;(useTracking as jest.Mock).mockImplementation(() => {
+      return {
+        trackEvent,
+      }
+    })
+  })
   let slug = "pumpkins"
 
   describe("with a user who has the Artist Series lab feature", () => {
-    let user = { lab_features: ["Artist Series"] }
-
     describe("with a published artist series", () => {
       const getWrapper = async (
         breakpoint: Breakpoint = "lg",
@@ -33,7 +42,7 @@ describe("ArtistSeriesApp", () => {
         return renderRelayTree({
           Component: ({ artistSeries }) => {
             return (
-              <MockBoot breakpoint={breakpoint} user={user}>
+              <MockBoot breakpoint={breakpoint}>
                 <ArtistSeriesApp artistSeries={artistSeries} />
               </MockBoot>
             )
@@ -54,7 +63,7 @@ describe("ArtistSeriesApp", () => {
 
       it("renders the correct components", async () => {
         const wrapper = await getWrapper()
-        expect(wrapper.find("AppContainer").length).toBe(1)
+        expect(wrapper.find("AppContainer").length).toBe(4)
         expect(wrapper.find("ArtistSeriesMeta").length).toBe(1)
         expect(wrapper.find("ArtistSeriesHeader").length).toBe(1)
         expect(wrapper.find("ArtistSeriesArtworksFilter").length).toBe(1)
@@ -90,7 +99,7 @@ describe("ArtistSeriesApp", () => {
             it("has a correctly sized header image", async () => {
               const wrapper = await getWrapper()
               const expectedUrl =
-                "https://d7hftxdivxxvm.cloudfront.net?resize_to=height&src=https%3A%2F%2Ftest.artsy.net%2Fpumpkins-header-image.jpg&height=400&quality=80"
+                "https://test.artsy.net/pumpkins-header-image-sm.jpg"
               expect(wrapper.find(HeaderImage).props().src).toBe(expectedUrl)
             })
           })
@@ -120,7 +129,7 @@ describe("ArtistSeriesApp", () => {
             it("has a correctly sized header image", async () => {
               const wrapper = await getWrapper("xs")
               const expectedUrl =
-                "https://d7hftxdivxxvm.cloudfront.net?resize_to=fit&src=https%3A%2F%2Ftest.artsy.net%2Fpumpkins-header-image.jpg&width=180&height=180&quality=80"
+                "https://test.artsy.net/pumpkins-header-image-xs.jpg"
               expect(wrapper.find(HeaderImage).props().src).toBe(expectedUrl)
             })
           })
@@ -196,6 +205,8 @@ describe("ArtistSeriesApp", () => {
 
 const ArtistSeriesAppFixture: ArtistSeriesApp_QueryRawResponse = {
   artistSeries: {
+    slug: "slug",
+    internalID: "internal-id",
     railArtist: [
       {
         id: "yayoi-kusama",
@@ -212,6 +223,7 @@ const ArtistSeriesAppFixture: ArtistSeriesApp_QueryRawResponse = {
                   },
                 },
                 title: "Aardvark Series",
+                featured: true,
               },
             },
           ],
@@ -223,6 +235,12 @@ const ArtistSeriesAppFixture: ArtistSeriesApp_QueryRawResponse = {
     description: "All of the pumpkins",
     descriptionFormatted: "All of the pumpkins",
     image: {
+      xs: {
+        url: "https://test.artsy.net/pumpkins-header-image-xs.jpg",
+      },
+      sm: {
+        url: "https://test.artsy.net/pumpkins-header-image-sm.jpg",
+      },
       url: "https://test.artsy.net/pumpkins-header-image.jpg",
     },
     artists: [

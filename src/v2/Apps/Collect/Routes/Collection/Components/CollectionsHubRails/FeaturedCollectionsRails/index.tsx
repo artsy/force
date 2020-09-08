@@ -11,7 +11,7 @@ import { FeaturedCollectionsRails_collectionGroup } from "v2/__generated__/Featu
 import * as Schema from "v2/Artsy/Analytics/Schema"
 import { useTracking } from "v2/Artsy/Analytics/useTracking"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
-import { ArrowButton, Carousel } from "v2/Components/Carousel"
+import { Carousel } from "v2/Components/Carousel"
 import { Truncator } from "v2/Components/Truncator"
 import currency from "currency.js"
 import React from "react"
@@ -23,29 +23,6 @@ import { Media } from "v2/Utils/Responsive"
 
 interface Props {
   collectionGroup: FeaturedCollectionsRails_collectionGroup
-}
-
-export const renderCarousel = (
-  members,
-  trackArrowClick,
-  carouselHeight: string
-) => {
-  return (
-    <Carousel
-      height={carouselHeight}
-      options={{
-        wrapAround: sd.IS_MOBILE ? true : false,
-        pageDots: false,
-      }}
-      data={members}
-      render={(slide, slideIndex) => {
-        return (
-          <FeaturedCollectionEntity member={slide} itemNumber={slideIndex} />
-        )
-      }}
-      onArrowClick={() => trackArrowClick()}
-    />
-  )
 }
 
 export const FeaturedCollectionsRails: React.FC<Props> = ({
@@ -67,15 +44,22 @@ export const FeaturedCollectionsRails: React.FC<Props> = ({
 
   return (
     <FeaturedCollectionsContainer>
-      <Serif size="5" mt={3}>
+      <Serif size="5" mt={3} mb={1}>
         {name}
       </Serif>
-      <Media lessThan="md">
-        {renderCarousel(members, trackArrowClick, "430px")}
-      </Media>
-      <Media greaterThanOrEqual="md">
-        {renderCarousel(members, trackArrowClick, "500px")}
-      </Media>
+
+      <Carousel onChange={() => trackArrowClick()}>
+        {members.map((slide, slideIndex) => {
+          return (
+            <FeaturedCollectionEntity
+              key={slide.slug}
+              member={slide}
+              itemNumber={slideIndex}
+            />
+          )
+        })}
+      </Carousel>
+
       <Spacer pb={2} />
     </FeaturedCollectionsContainer>
   )
@@ -134,7 +118,7 @@ export const FeaturedCollectionEntity: React.FC<FeaturedCollectionEntityProps> =
   }
 
   return (
-    <Container p={2} m={1} width={["261px", "261px", "355px", "355px"]}>
+    <Container p={2} width={["261px", "261px", "355px", "355px"]}>
       <StyledLink to={`/collection/${slug}`} onClick={handleClick}>
         <Flex height={["190px", "190px", "280px", "280px"]}>
           <FeaturedImage
@@ -193,12 +177,6 @@ const Container = styled(Box)`
 
 const FeaturedCollectionsContainer = styled(Box)`
   border-top: 1px solid ${color("black10")};
-
-  ${Container} {
-    &:first-of-type {
-      margin-left: 2px;
-    }
-  }
 `
 
 const ExtendedSerif = styled(Serif)`
@@ -216,14 +194,6 @@ export const FeaturedImage = styled(ResponsiveImage)`
   background-position: top;
 `
 
-export const ArrowContainer = styled(Box)`
-  align-self: flex-start;
-
-  ${ArrowButton} {
-    height: 100%;
-  }
-`
-
 export const StyledLink = styled(RouterLink)`
   text-decoration: none;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
@@ -234,5 +204,5 @@ export const StyledLink = styled(RouterLink)`
 `
 
 const ReadMoreLink = styled(Sans)`
-    text-decoration: underline;
+  text-decoration: underline;
 `

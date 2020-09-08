@@ -9,9 +9,5 @@ append locals
   - assetPackage = 'partners'
 
 block body
-  if sd.IS_MOBILE
-    #gallery-partnerships.gallery-partnerships-container
-      include mobile/index
-  else
-    .partnerships-container
-      include content
+  .partnerships-container
+    include content

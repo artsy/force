@@ -20,12 +20,16 @@ let positronql = _positronql
 let topParselyArticles = _topParselyArticles
 let stitch = _stitch
 
-export const articles = (_req, res, next) => {
-  const query = { query: magazineQuery }
+export const articles = (req, res, next) => {
+  const limit = 50
+  const page = Math.max(parseInt(req.query.page, 10) || 1, 1)
+  const offset = limit * (page - 1)
+  const query = { query: magazineQuery(limit, offset) }
   return positronql(query)
     .then(async result => {
       const articles = new Articles(result.articles)
       res.locals.sd.ARTICLES = articles.toJSON()
+      res.locals.sd.PAGE = page
 
       // Fetch News Panel Articles
       positronql({ query: newsPanelQuery() }).then(result => {
@@ -36,6 +40,7 @@ export const articles = (_req, res, next) => {
           articles: articles,
           crop,
           newsArticles,
+          page,
         })
       })
     })

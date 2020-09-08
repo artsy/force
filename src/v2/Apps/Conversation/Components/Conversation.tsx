@@ -2,30 +2,31 @@ import { Box, Flex, Spacer, Spinner } from "@artsy/palette"
 import { Conversation_conversation } from "v2/__generated__/Conversation_conversation.graphql"
 import React, { useEffect, useRef, useState } from "react"
 import {
-  RelayProp,
+  RelayPaginationProp,
   RelayRefetchProp,
   createPaginationContainer,
 } from "react-relay"
 import { graphql } from "relay-runtime"
 import Waypoint from "react-waypoint"
 import { Item } from "./Item"
-import { MessageFragmentContainer as Message } from "./Message"
 import { Reply } from "./Reply"
-import { TimeSince, fromToday } from "./TimeSince"
+import { ConversationMessagesFragmentContainer as ConversationMessages } from "./ConversationMessages"
 import { UpdateConversation } from "../Mutation/UpdateConversationMutation"
-import { groupMessages } from "../Utils/groupMessages"
 import styled from "styled-components"
+import { ConversationHeader } from "./ConversationHeader"
 
 export interface ConversationProps {
   conversation: Conversation_conversation
-  relay: RelayProp
+  showDetails: boolean
+  setShowDetails: (showDetails: boolean) => void
+  relay: RelayPaginationProp
   refetch: RelayRefetchProp["refetch"]
 }
 
 export const PAGE_SIZE: number = 15
 
 const Conversation: React.FC<ConversationProps> = props => {
-  const { conversation, relay } = props
+  const { conversation, relay, showDetails, setShowDetails } = props
 
   const bottomOfPage = useRef(null)
   const initialMount = useRef(true)
@@ -45,7 +46,7 @@ const Conversation: React.FC<ConversationProps> = props => {
     }
   }
 
-  useEffect(scrollToBottom, [conversation])
+  useEffect(scrollToBottom, [conversation, lastMessageID])
 
   useEffect(() => {
     UpdateConversation(relay.environment, conversation)
@@ -85,70 +86,40 @@ const Conversation: React.FC<ConversationProps> = props => {
     })
   }
 
-  const messageGroups = groupMessages(
-    conversation.messagesConnection.edges.map(edge => edge.node)
-  ).map((messageGroup, groupIndex) => {
-    const today = fromToday(messageGroup[0].createdAt)
-    return (
-      <React.Fragment key={`group-${groupIndex}-${messageGroup[0].internalID}`}>
-        <TimeSince
-          style={{ alignSelf: "center" }}
-          time={messageGroup[0].createdAt}
-          exact
-          mb={1}
-        />
-        {messageGroup.map((message, messageIndex) => {
-          const nextMessage = messageGroup[messageIndex + 1]
-          const senderChanges =
-            nextMessage && nextMessage.isFromUser !== message.isFromUser
-          const lastMessageInGroup = messageIndex === messageGroup.length - 1
-          const spaceAfter = senderChanges || lastMessageInGroup ? 2 : 0.5
-
-          return (
-            <>
-              <Message
-                message={message}
-                initialMessage={conversation.initialMessage}
-                key={message.internalID}
-                showTimeSince={
-                  message.createdAt &&
-                  today &&
-                  messageGroup.length - 1 === messageIndex
-                }
-              />
-              <Spacer mb={spaceAfter} />
-            </>
-          )
-        })}
-      </React.Fragment>
-    )
-  })
-
   return (
-    <NoScrollFlex flexDirection="column" width="100%">
-      <MessageContainer ref={scrollContainer}>
-        <Box pb={[6, 6, 6, 0]}>
-          <Spacer mt={["75px", "75px", 2]} />
-          <Flex flexDirection="column" width="100%" px={1}>
-            {inquiryItemBox}
-            <Waypoint onEnter={loadMore} />
-            {fetchingMore ? (
-              <SpinnerContainer>
-                <Spinner />
-              </SpinnerContainer>
-            ) : null}
-            {messageGroups}
-            <Box ref={bottomOfPage}></Box>
-          </Flex>
-        </Box>
-      </MessageContainer>
-      <Reply
-        onScroll={scrollToBottom}
-        conversation={conversation}
-        refetch={props.refetch}
-        environment={relay.environment}
+    <Flex flexDirection="column" flexGrow={1}>
+      <ConversationHeader
+        partnerName={conversation.to.name}
+        showDetails={showDetails}
+        setShowDetails={setShowDetails}
       />
-    </NoScrollFlex>
+      <NoScrollFlex flexDirection="column" width="100%">
+        <MessageContainer ref={scrollContainer}>
+          <Box pb={[6, 6, 6, 0]}>
+            <Spacer mt={["75px", "75px", 2]} />
+            <Flex flexDirection="column" width="100%" px={1}>
+              {inquiryItemBox}
+              <Waypoint onEnter={loadMore} />
+              {fetchingMore ? (
+                <SpinnerContainer>
+                  <Spinner />
+                </SpinnerContainer>
+              ) : null}
+              <ConversationMessages
+                messages={conversation.messagesConnection}
+              />
+              <Box ref={bottomOfPage}></Box>
+            </Flex>
+          </Box>
+        </MessageContainer>
+        <Reply
+          onScroll={scrollToBottom}
+          conversation={conversation}
+          refetch={props.refetch}
+          environment={relay.environment}
+        />
+      </NoScrollFlex>
+    </Flex>
   )
 }
 
@@ -159,6 +130,7 @@ const MessageContainer = styled(Box)`
 
 const NoScrollFlex = styled(Flex)`
   overflow: hidden;
+  flex-grow: 1;
 `
 
 const SpinnerContainer = styled.div`
@@ -200,12 +172,9 @@ export const ConversationPaginationContainer = createPaginationContainer(
           edges {
             node {
               id
-              internalID
-              createdAt
-              isFromUser
-              ...Message_message
             }
           }
+          ...ConversationMessages_messages
         }
         items {
           item {

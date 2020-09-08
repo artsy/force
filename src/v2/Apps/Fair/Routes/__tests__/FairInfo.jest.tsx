@@ -1,25 +1,18 @@
-import { Breakpoint } from "@artsy/palette"
-import { MockBoot, renderRelayTree } from "v2/DevTools"
+import { renderRelayTree } from "v2/DevTools"
 import React from "react"
 import { FairInfoFragmentContainer } from "../FairInfo"
 import { graphql } from "react-relay"
 import { FairInfo_QueryRawResponse } from "v2/__generated__/FairInfo_Query.graphql"
-import { RouterLink } from "v2/Artsy/Router/RouterLink"
 
 jest.unmock("react-relay")
 
 describe("FairInfo", () => {
   const getWrapper = async (
-    breakpoint: Breakpoint = "lg",
-    response: FairInfo_QueryRawResponse = FairInfoFixture
+    response: FairInfo_QueryRawResponse = FAIR_INFO_FIXTURE
   ) => {
     return renderRelayTree({
       Component: ({ fair }) => {
-        return (
-          <MockBoot breakpoint={breakpoint}>
-            <FairInfoFragmentContainer fair={fair} />
-          </MockBoot>
-        )
+        return <FairInfoFragmentContainer fair={fair} />
       },
       query: graphql`
         query FairInfo_Query($slug: String!) @raw_response_type {
@@ -28,9 +21,7 @@ describe("FairInfo", () => {
           }
         }
       `,
-      variables: {
-        slug: "miart-2020",
-      },
+      variables: { slug: "miart-2020" },
       mockData: response,
     })
   }
@@ -44,19 +35,10 @@ describe("FairInfo", () => {
     expect(wrapper.text()).toContain("LinksGoogle it")
   })
 
-  it("displays a link to get back to the fair", async () => {
-    const wrapper = await getWrapper()
-    const BackButton = wrapper
-      .find(RouterLink)
-      .filterWhere(t => t.text() === "Back to Miart 2020")
-    expect(BackButton.length).toEqual(1)
-    expect(BackButton.first().prop("to")).toEqual("/fair2/miart-2020")
-  })
-
   it("handles missing information", async () => {
     const missingInfo = {
       fair: {
-        ...FairInfoFixture.fair,
+        ...FAIR_INFO_FIXTURE.fair,
         about: "",
         tagline: "",
         location: null,
@@ -68,7 +50,7 @@ describe("FairInfo", () => {
         summary: "",
       },
     }
-    const wrapper = await getWrapper("lg", missingInfo)
+    const wrapper = await getWrapper(missingInfo)
     expect(wrapper.text()).not.toContain("Location")
     expect(wrapper.text()).not.toContain("Hours")
     expect(wrapper.text()).not.toContain("Buy Tickets")
@@ -78,7 +60,7 @@ describe("FairInfo", () => {
   })
 })
 
-const FairInfoFixture: FairInfo_QueryRawResponse = {
+const FAIR_INFO_FIXTURE: FairInfo_QueryRawResponse = {
   fair: {
     id: "fair12345",
     about: "This is the about.",

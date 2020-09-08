@@ -4,12 +4,14 @@ import {
   withSystemContext,
 } from "v2/Artsy"
 import React from "react"
-import { QueryRendererPropsBase } from "react-relay"
+// FIXME: https://github.com/DefinitelyTyped/DefinitelyTyped/issues/37950
+// @ts-ignore
+import { QueryRendererProps } from "react-relay"
 import { OperationType } from "relay-runtime"
 import { SystemQueryRenderer } from "./SystemQueryRenderer"
 
 type Props<T extends OperationType> = SystemContextProps &
-  Omit<QueryRendererPropsBase<T>, "environment">
+  Omit<QueryRendererProps<T>, "environment">
 
 class Renderer<T extends OperationType> extends React.Component<Props<T>> {
   redner() {
@@ -28,7 +30,7 @@ const RendererWithContext = withSystemContext(Renderer)
  */
 export class RootQueryRenderer<T extends OperationType> extends React.Component<
   Props<T>
-  > {
+> {
   render() {
     const { user, children, ...props } = this.props
     return (

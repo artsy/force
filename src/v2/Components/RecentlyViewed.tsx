@@ -1,5 +1,5 @@
 import { ContextModule } from "@artsy/cohesion"
-import { Box, Separator, Serif, Spacer } from "@artsy/palette"
+import { Separator, Serif, Spacer } from "@artsy/palette"
 import { RecentlyViewed_me } from "v2/__generated__/RecentlyViewed_me.graphql"
 import { RecentlyViewedQuery } from "v2/__generated__/RecentlyViewedQuery.graphql"
 import { SystemContext, SystemContextConsumer } from "v2/Artsy"
@@ -8,12 +8,9 @@ import * as Schema from "v2/Artsy/Analytics/Schema"
 import { renderWithLoadProgress } from "v2/Artsy/Relay/renderWithLoadProgress"
 import { SystemQueryRenderer as QueryRenderer } from "v2/Artsy/Relay/SystemQueryRenderer"
 import { FillwidthItem } from "v2/Components/Artwork/FillwidthItem"
-import { ArrowButton, Carousel } from "v2/Components/Carousel"
+import { Carousel } from "v2/Components/Carousel"
 import React, { useContext } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import styled from "styled-components"
-import { get } from "v2/Utils/get"
-import { getENV } from "v2/Utils/getENV"
 
 export interface RecentlyViewedProps {
   me: RecentlyViewed_me
@@ -35,65 +32,37 @@ export class RecentlyViewed extends React.Component<RecentlyViewedProps> {
 
   render() {
     const { me } = this.props
-    const isMobile = getENV("IS_MOBILE") === true
 
     return (
       <SystemContextConsumer>
         {({ user, mediator }) => {
           return (
             me && (
-              <React.Fragment>
+              <>
                 <Separator my={6} />
 
                 <Serif size="6">Recently viewed</Serif>
 
                 <Spacer mb={3} />
 
-                <Box mx={[-20, 0]}>
-                  <Carousel
-                    data={me.recentlyViewedArtworksConnection.edges}
-                    render={(artwork, index) => {
-                      const aspect_ratio = get(
-                        artwork,
-                        w => w.node.image.aspect_ratio,
-                        1
-                      )
-
-                      return (
-                        <FillwidthItem
-                          lazyLoad={true}
-                          // @ts-ignore // TODO: Correct typing
-                          artwork={artwork.node}
-                          targetHeight={HEIGHT}
-                          imageHeight={HEIGHT}
-                          width={HEIGHT * aspect_ratio}
-                          marginRight={10}
-                          marginLeft={isMobile && index === 0 ? 20 : 0}
-                          user={user}
-                          mediator={mediator}
-                          onClick={this.trackClick.bind(this)}
-                          contextModule={ContextModule.recentlyViewedRail}
-                        />
-                      )
-                    }}
-                    renderLeftArrow={({ Arrow }) => {
-                      return (
-                        <ArrowContainer>
-                          <Arrow />
-                        </ArrowContainer>
-                      )
-                    }}
-                    renderRightArrow={({ Arrow }) => {
-                      return (
-                        <ArrowContainer>
-                          {me.recentlyViewedArtworksConnection.edges.length >
-                            4 && <Arrow />}
-                        </ArrowContainer>
-                      )
-                    }}
-                  />
-                </Box>
-              </React.Fragment>
+                <Carousel arrowHeight={HEIGHT}>
+                  {me.recentlyViewedArtworksConnection.edges.map(artwork => {
+                    return (
+                      <FillwidthItem
+                        key={artwork.node.id}
+                        lazyLoad={true}
+                        // @ts-ignore // TODO: Correct typing
+                        artwork={artwork.node}
+                        imageHeight={HEIGHT}
+                        user={user}
+                        mediator={mediator}
+                        onClick={this.trackClick.bind(this)}
+                        contextModule={ContextModule.recentlyViewedRail}
+                      />
+                    )
+                  })}
+                </Carousel>
+              </>
             )
           )
         }}
@@ -101,14 +70,6 @@ export class RecentlyViewed extends React.Component<RecentlyViewedProps> {
     )
   }
 }
-
-const ArrowContainer = styled(Box)`
-  align-self: flex-start;
-
-  ${ArrowButton} {
-    height: 60%;
-  }
-`
 
 export const RecentlyViewedFragmentContainer = createFragmentContainer(
   RecentlyViewed,
@@ -119,9 +80,6 @@ export const RecentlyViewedFragmentContainer = createFragmentContainer(
           edges {
             node {
               id
-              image {
-                aspect_ratio: aspectRatio
-              }
               ...FillwidthItem_artwork @relay(mask: false)
             }
           }

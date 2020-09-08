@@ -4,7 +4,6 @@ import {
   Col,
   EntityHeader,
   Flex,
-  Grid,
   HTML,
   Image,
   Row,
@@ -17,10 +16,15 @@ import { FollowArtistButtonFragmentContainer as FollowArtistButton } from "v2/Co
 import { openAuthToFollowSave } from "v2/Utils/openAuthModal"
 import { ArtistSeriesHeader_artistSeries } from "v2/__generated__/ArtistSeriesHeader_artistSeries.graphql"
 import { useSystemContext } from "v2/Artsy"
-import { Intent } from "@artsy/cohesion"
-import { resize } from "v2/Utils/resizer"
+import {
+  ContextModule,
+  Intent,
+  OwnerType,
+  followedArtist,
+} from "@artsy/cohesion"
 import styled from "styled-components"
 import { unitlessBreakpoints } from "@artsy/palette"
+import { AppContainer } from "v2/Apps/Components/AppContainer"
 
 interface ArtistSeriesHeaderProps {
   artistSeries: ArtistSeriesHeader_artistSeries
@@ -28,13 +32,26 @@ interface ArtistSeriesHeaderProps {
 
 interface ArtistsInfoProps {
   artist: ArtistSeriesHeader_artistSeries["artists"][0]
+  contextOwnerId: string
+  contextOwnerSlug: string
 }
 
 const ArtistInfo: React.FC<ArtistsInfoProps> = props => {
   /* Displays artist name, avatar and follow button. We currently assume
      that an artist series will have one artist. */
   const { user, mediator } = useSystemContext()
-  const { artist } = props
+  const { artist, contextOwnerId, contextOwnerSlug } = props
+  const { slug, internalID } = artist
+
+  const trackingData = followedArtist({
+    contextModule: ContextModule.featuredArtists,
+    contextOwnerType: OwnerType.artistSeries,
+    contextOwnerId,
+    contextOwnerSlug,
+    ownerId: internalID,
+    ownerSlug: slug,
+  })
+
   return (
     <EntityHeader
       smallVariant
@@ -44,7 +61,9 @@ const ArtistInfo: React.FC<ArtistsInfoProps> = props => {
       FollowButton={
         <FollowArtistButton
           artist={artist}
+          useNewAnalyticsSchema
           user={user}
+          trackingData={trackingData}
           onOpenAuthModal={() =>
             openAuthToFollowSave(mediator, {
               entity: artist,
@@ -95,24 +114,31 @@ const ArtistSeriesHeaderLarge: React.FC<ArtistSeriesHeaderProps> = props => {
       artists,
       image,
       artworksCountMessage,
+      internalID,
+      slug,
     },
   } = props
   return (
     <>
-      <Flex
-        position="relative"
-        alignItems="center"
-        justifyContent="center"
-        p={2}
-      >
-        <Flex position="absolute" left={3}>
-          {artists.length && <ArtistInfo artist={artists[0]} />}
-        </Flex>
-        <Sans size="3">Series</Sans>
-      </Flex>
+      <Box m={2}>
+        <AppContainer>
+          <Flex alignItems="center" justifyContent="center" position="relative">
+            <Flex position="absolute" left={0}>
+              {artists.length && (
+                <ArtistInfo
+                  contextOwnerId={internalID}
+                  contextOwnerSlug={slug}
+                  artist={artists[0]}
+                />
+              )}
+            </Flex>
+            <Sans size="3">Series</Sans>
+          </Flex>
+        </AppContainer>
+      </Box>
       <Separator />
       <Box m={3}>
-        <StyledGrid>
+        <AppContainer>
           <Row>
             <Col sm={6}>
               <Flex
@@ -128,8 +154,9 @@ const ArtistSeriesHeaderLarge: React.FC<ArtistSeriesHeaderProps> = props => {
                     {artworksCountMessage}
                   </Sans>
                 </Box>
-
-                <HTML variant="text" html={descriptionFormatted} />
+                <Box pr={[0, 2]}>
+                  <HTML variant="text" html={descriptionFormatted} />
+                </Box>
               </Flex>
             </Col>
             <Col sm={6}>
@@ -139,11 +166,12 @@ const ArtistSeriesHeaderLarge: React.FC<ArtistSeriesHeaderProps> = props => {
                 justifyContent="flex-end"
                 alignItems="center"
               >
-                <HeaderImage src={resize(image.url, { height: 400 })} />
+                {/** The max width for the image is ~600px, so we need that */}
+                <HeaderImage src={image?.sm?.url} />
               </Box>
             </Col>
           </Row>
-        </StyledGrid>
+        </AppContainer>
       </Box>
     </>
   )
@@ -151,7 +179,14 @@ const ArtistSeriesHeaderLarge: React.FC<ArtistSeriesHeaderProps> = props => {
 
 const ArtistSeriesHeaderSmall: React.FC<ArtistSeriesHeaderProps> = props => {
   const {
-    artistSeries: { title, descriptionFormatted, artists, image },
+    artistSeries: {
+      title,
+      descriptionFormatted,
+      artists,
+      image,
+      slug,
+      internalID,
+    },
   } = props
   return (
     <>
@@ -160,14 +195,17 @@ const ArtistSeriesHeaderSmall: React.FC<ArtistSeriesHeaderProps> = props => {
       </Box>
       <Separator />
       <Box m={3}>
-        <HeaderImage
-          src={resize(image.url, { height: 180, width: 180 })}
-          pb={1}
-        />
+        <HeaderImage src={image?.xs?.url} pb={1} />
         <Sans size="8" element="h1" my={1} unstable_trackIn>
           {title}
         </Sans>
-        {artists.length && <ArtistInfo artist={artists[0]} />}
+        {artists.length && (
+          <ArtistInfo
+            contextOwnerId={internalID}
+            contextOwnerSlug={slug}
+            artist={artists[0]}
+          />
+        )}
         <Box my={1}>
           <HTML variant="text" html={descriptionFormatted} />
         </Box>
@@ -175,12 +213,6 @@ const ArtistSeriesHeaderSmall: React.FC<ArtistSeriesHeaderProps> = props => {
     </>
   )
 }
-
-const StyledGrid = styled(Grid)`
-  @media (max-width: ${unitlessBreakpoints.lg - 1}px) {
-    max-width: 100%;
-  }
-`
 
 export const HeaderImage = styled(Image)`
   border-radius: 2px;
@@ -193,7 +225,8 @@ export const HeaderImage = styled(Image)`
 
   @media (min-width: ${unitlessBreakpoints.sm}px) {
     max-height: 400px;
-    max-width: 100%;
+    width: 100%;
+    object-fit: cover;
   }
 `
 
@@ -203,9 +236,17 @@ export const ArtistSeriesHeaderFragmentContainer = createFragmentContainer(
     artistSeries: graphql`
       fragment ArtistSeriesHeader_artistSeries on ArtistSeries {
         title
+        slug
+        internalID
         artworksCountMessage
         descriptionFormatted(format: HTML)
         image {
+          xs: cropped(height: 360, width: 360, version: "large") {
+            url
+          }
+          sm: resized(width: 1200, version: "normalized") {
+            url
+          }
           url
         }
         artists(size: 1) {
@@ -215,6 +256,7 @@ export const ArtistSeriesHeaderFragmentContainer = createFragmentContainer(
           }
           href
           slug
+          internalID
           ...FollowArtistButton_artist
         }
       }

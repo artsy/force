@@ -4,19 +4,18 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ArtistSeriesArtworkRail_artwork = {
+    readonly internalID: string;
+    readonly slug: string;
     readonly artistSeriesConnection: {
         readonly edges: ReadonlyArray<{
             readonly node: {
                 readonly slug: string;
-                readonly artworksConnection: {
+                readonly internalID: string;
+                readonly filterArtworksConnection: {
                     readonly edges: ReadonlyArray<{
                         readonly node: {
-                            readonly image: {
-                                readonly resized: {
-                                    readonly height: number | null;
-                                    readonly width: number | null;
-                                } | null;
-                            } | null;
+                            readonly slug: string;
+                            readonly internalID: string;
                             readonly " $fragmentRefs": FragmentRefs<"FillwidthItem_artwork">;
                         } | null;
                     } | null> | null;
@@ -34,12 +33,29 @@ export type ArtistSeriesArtworkRail_artwork$key = {
 
 
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+},
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "slug",
+  "storageKey": null
+};
+return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
   "name": "ArtistSeriesArtworkRail_artwork",
   "selections": [
+    (v0/*: any*/),
+    (v1/*: any*/),
     {
       "alias": null,
       "args": [
@@ -70,13 +86,8 @@ const node: ReaderFragment = {
               "name": "node",
               "plural": false,
               "selections": [
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "slug",
-                  "storageKey": null
-                },
+                (v1/*: any*/),
+                (v0/*: any*/),
                 {
                   "alias": null,
                   "args": [
@@ -84,17 +95,22 @@ const node: ReaderFragment = {
                       "kind": "Literal",
                       "name": "first",
                       "value": 20
+                    },
+                    {
+                      "kind": "Literal",
+                      "name": "sort",
+                      "value": "-decayed_merch"
                     }
                   ],
-                  "concreteType": "ArtworkConnection",
+                  "concreteType": "FilterArtworksConnection",
                   "kind": "LinkedField",
-                  "name": "artworksConnection",
+                  "name": "filterArtworksConnection",
                   "plural": false,
                   "selections": [
                     {
                       "alias": null,
                       "args": null,
-                      "concreteType": "ArtworkEdge",
+                      "concreteType": "FilterArtworksEdge",
                       "kind": "LinkedField",
                       "name": "edges",
                       "plural": true,
@@ -107,48 +123,8 @@ const node: ReaderFragment = {
                           "name": "node",
                           "plural": false,
                           "selections": [
-                            {
-                              "alias": null,
-                              "args": null,
-                              "concreteType": "Image",
-                              "kind": "LinkedField",
-                              "name": "image",
-                              "plural": false,
-                              "selections": [
-                                {
-                                  "alias": null,
-                                  "args": [
-                                    {
-                                      "kind": "Literal",
-                                      "name": "height",
-                                      "value": 200
-                                    }
-                                  ],
-                                  "concreteType": "ResizedImageUrl",
-                                  "kind": "LinkedField",
-                                  "name": "resized",
-                                  "plural": false,
-                                  "selections": [
-                                    {
-                                      "alias": null,
-                                      "args": null,
-                                      "kind": "ScalarField",
-                                      "name": "height",
-                                      "storageKey": null
-                                    },
-                                    {
-                                      "alias": null,
-                                      "args": null,
-                                      "kind": "ScalarField",
-                                      "name": "width",
-                                      "storageKey": null
-                                    }
-                                  ],
-                                  "storageKey": "resized(height:200)"
-                                }
-                              ],
-                              "storageKey": null
-                            },
+                            (v1/*: any*/),
+                            (v0/*: any*/),
                             {
                               "args": null,
                               "kind": "FragmentSpread",
@@ -161,7 +137,7 @@ const node: ReaderFragment = {
                       "storageKey": null
                     }
                   ],
-                  "storageKey": "artworksConnection(first:20)"
+                  "storageKey": "filterArtworksConnection(first:20,sort:\"-decayed_merch\")"
                 }
               ],
               "storageKey": null
@@ -175,5 +151,6 @@ const node: ReaderFragment = {
   ],
   "type": "Artwork"
 };
-(node as any).hash = 'a51597e3761d7cabb5642743fda2eb0e';
+})();
+(node as any).hash = '8b15bbaacf09d0707448e986c263cd76';
 export default node;

@@ -1,4 +1,4 @@
-import { Flex, Link, Sans, Spacer, color } from "@artsy/palette"
+import { Flex, Link, Text } from "@artsy/palette"
 import { Details_artwork } from "v2/__generated__/Details_artwork.graphql"
 import { SystemContextConsumer } from "v2/Artsy"
 import React from "react"
@@ -20,7 +20,6 @@ export interface Props extends React.HTMLProps<Details> {
   artwork: Details_artwork
   hideArtistName?: boolean
   hidePartnerName?: boolean
-  useLighterFont?: boolean
 }
 
 export class Details extends React.Component<Props, null> {
@@ -41,9 +40,7 @@ export class Details extends React.Component<Props, null> {
     if (cultural_maker) {
       return (
         <TruncatedLine>
-          <Sans size="3t" color="black100" weight="medium">
-            {cultural_maker}
-          </Sans>
+          <Text variant="mediumText">{cultural_maker}</Text>
         </TruncatedLine>
       )
     } else if (artists && artists.length) {
@@ -59,9 +56,7 @@ export class Details extends React.Component<Props, null> {
         .slice(1)
       return (
         <TruncatedLine>
-          <Sans size="3t" color="black100" weight="medium">
-            {artistLine}
-          </Sans>
+          <Text variant="mediumText">{artistLine}</Text>
         </TruncatedLine>
       )
     }
@@ -75,9 +70,9 @@ export class Details extends React.Component<Props, null> {
 
     const artworkText = (
       <TruncatedLine>
-        <Sans size="3t" color="black60">
+        <Text variant="text" color="black60">
           {date ? title + ", " + date : title}
-        </Sans>
+        </Text>
       </TruncatedLine>
     )
     const artworkTextWithLink = <Link href={href}>{artworkText}</Link>
@@ -88,9 +83,9 @@ export class Details extends React.Component<Props, null> {
   line(text) {
     return (
       <TruncatedLine>
-        <Sans size="3t" color="black60">
+        <Text variant="text" color="black60">
           {text}
-        </Sans>
+        </Text>
       </TruncatedLine>
     )
   }
@@ -98,9 +93,9 @@ export class Details extends React.Component<Props, null> {
   link(text, href, key) {
     return (
       <Link href={href} key={key}>
-        <Sans size="3t" color="black60">
+        <Text variant="text" color="black60">
           {text}
-        </Sans>
+        </Text>
       </Link>
     )
   }
@@ -124,9 +119,9 @@ export class Details extends React.Component<Props, null> {
         return (
           <TruncatedLine>
             <Link href={href}>
-              <Sans size="3t" color="black60">
+              <Text variant="text" color="black60">
                 {name}
-              </Sans>
+              </Text>
             </Link>
           </TruncatedLine>
         )
@@ -147,26 +142,13 @@ export class Details extends React.Component<Props, null> {
   }
 
   saleInfoLine() {
-    const { useLighterFont } = this.props
-
     return (
       <Flex>
-        <Sans
-          color={useLighterFont ? color("black60") : color("black100")}
-          weight="regular"
-          size="3t"
-        >
-          {this.saleMessage()}{" "}
-        </Sans>
-        <Sans
-          size="3t"
-          color={useLighterFont ? color("black60") : color("black100")}
-          weight={"regular"}
-          ml={0.5}
-        >
-          {this.bidInfo()}
-        </Sans>
-        <Spacer mb={0.3} />
+        <TruncatedLine>
+          <Text variant="text" color="black60">
+            {this.saleMessage()} {this.bidInfo()}
+          </Text>
+        </TruncatedLine>
       </Flex>
     )
   }

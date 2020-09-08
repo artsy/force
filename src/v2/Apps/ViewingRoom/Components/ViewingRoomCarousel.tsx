@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { Carousel } from "v2/Components/Carousel"
+import { Carousel } from "v2/Components/FlickityCarousel"
 import { flowRight } from "lodash"
 
 import {
@@ -46,7 +46,7 @@ export const ViewingRoomCarousel: React.FC<ViewingRoomCarouselProps> = ({
             cellAlign: "center",
             draggable: showProgressBar,
             freeScroll: true,
-            groupCells: 1,
+            groupCells: "50%",
             pageDots: false,
           }}
           data={data}

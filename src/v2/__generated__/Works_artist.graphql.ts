@@ -6,6 +6,7 @@ import { FragmentRefs } from "relay-runtime";
 export type ArtworkAggregation = "COLOR" | "DIMENSION_RANGE" | "FOLLOWED_ARTISTS" | "GALLERY" | "INSTITUTION" | "MAJOR_PERIOD" | "MEDIUM" | "MERCHANDISABLE_ARTISTS" | "PARTNER_CITY" | "PERIOD" | "PRICE_RANGE" | "TOTAL" | "%future added value";
 export type Works_artist = {
     readonly internalID: string;
+    readonly slug: string;
     readonly related: {
         readonly artistsConnection: {
             readonly edges: ReadonlyArray<{
@@ -166,12 +167,6 @@ return {
       "kind": "LocalArgument",
       "name": "width",
       "type": "String"
-    },
-    {
-      "defaultValue": false,
-      "kind": "LocalArgument",
-      "name": "shouldFetchArtistSeriesData",
-      "type": "Boolean!"
     }
   ],
   "kind": "Fragment",
@@ -183,6 +178,13 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "internalID",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "slug",
       "storageKey": null
     },
     {
@@ -316,16 +318,9 @@ return {
       "name": "ArtistTopWorksRail_artist"
     },
     {
-      "condition": "shouldFetchArtistSeriesData",
-      "kind": "Condition",
-      "passingValue": true,
-      "selections": [
-        {
-          "args": null,
-          "kind": "FragmentSpread",
-          "name": "ArtistSeriesRail_artist"
-        }
-      ]
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArtistSeriesRail_artist"
     },
     {
       "args": [
@@ -420,5 +415,5 @@ return {
   "type": "Artist"
 };
 })();
-(node as any).hash = '1d0b76b4072c686cc173b58c5382b61a';
+(node as any).hash = '861c4a4e4cc9878128529bea6f814c20';
 export default node;

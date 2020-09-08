@@ -17,6 +17,7 @@ import { ArtworkMetaFragmentContainer as ArtworkMeta } from "./Components/Artwor
 import { ArtworkRelatedArtistsPaginationContainer as RelatedArtists } from "./Components/ArtworkRelatedArtists"
 import { ArtworkSidebarFragmentContainer as ArtworkSidebar } from "./Components/ArtworkSidebar"
 import { OtherWorksFragmentContainer as OtherWorks } from "./Components/OtherWorks"
+import { ArtworkArtistSeriesFragmentContainer as ArtworkArtistSeries } from "./Components/ArtworkArtistSeries"
 import { PricingContextFragmentContainer as PricingContext } from "./Components/PricingContext"
 
 import { SystemContextConsumer } from "v2/Artsy"
@@ -222,6 +223,14 @@ export class ArtworkApp extends React.Component<Props> {
           <Row>
             <Col>
               <Box mt={3}>
+                <ArtworkArtistSeries artwork={artwork} />
+              </Box>
+            </Col>
+          </Row>
+
+          <Row>
+            <Col>
+              <Box mt={3}>
                 <OtherWorks artwork={artwork} />
               </Box>
             </Col>
@@ -293,10 +302,7 @@ export const ArtworkAppFragmentContainer = createFragmentContainer(
   },
   {
     artwork: graphql`
-      fragment ArtworkApp_artwork on Artwork
-        @argumentDefinitions(
-          shouldFetchArtistSeriesData: { type: "Boolean!" }
-        ) {
+      fragment ArtworkApp_artwork on Artwork {
         slug
         internalID
         is_acquireable: isAcquireable
@@ -332,7 +338,7 @@ export const ArtworkAppFragmentContainer = createFragmentContainer(
         ...ArtworkDetails_artwork
         ...ArtworkImageBrowser_artwork
         ...OtherWorks_artwork
-          @arguments(shouldFetchArtistSeriesData: $shouldFetchArtistSeriesData)
+        ...ArtworkArtistSeries_artwork
         ...PricingContext_artwork
       }
     `,

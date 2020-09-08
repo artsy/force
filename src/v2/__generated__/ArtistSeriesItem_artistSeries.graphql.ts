@@ -6,6 +6,8 @@ import { FragmentRefs } from "relay-runtime";
 export type ArtistSeriesItem_artistSeries = {
     readonly title: string;
     readonly slug: string;
+    readonly featured: boolean;
+    readonly internalID: string;
     readonly artworksCountMessage: string | null;
     readonly image: {
         readonly cropped: {
@@ -46,6 +48,20 @@ const node: ReaderFragment = {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
+      "name": "featured",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "internalID",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "artworksCountMessage",
       "storageKey": null
     },
@@ -63,12 +79,12 @@ const node: ReaderFragment = {
             {
               "kind": "Literal",
               "name": "height",
-              "value": 160
+              "value": 320
             },
             {
               "kind": "Literal",
               "name": "width",
-              "value": 160
+              "value": 320
             }
           ],
           "concreteType": "CroppedImageUrl",
@@ -84,7 +100,7 @@ const node: ReaderFragment = {
               "storageKey": null
             }
           ],
-          "storageKey": "cropped(height:160,width:160)"
+          "storageKey": "cropped(height:320,width:320)"
         }
       ],
       "storageKey": null
@@ -92,5 +108,5 @@ const node: ReaderFragment = {
   ],
   "type": "ArtistSeries"
 };
-(node as any).hash = '83b709bc2e8b51ce5b2289aeedf6710e';
+(node as any).hash = 'c2ed70b2fa374f2ae0e979d4d62157fd';
 export default node;

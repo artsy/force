@@ -16,6 +16,7 @@ describe("FillwidthItem", () => {
       const wrapper = render(
         <FillwidthItem
           artwork={artwork as any}
+          imageHeight={200}
           contextModule={ContextModule.header}
         />
       )

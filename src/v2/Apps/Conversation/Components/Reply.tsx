@@ -10,7 +10,7 @@ import {
 } from "@artsy/palette"
 import { Conversation_conversation } from "v2/__generated__/Conversation_conversation.graphql"
 import React, { useRef, useState } from "react"
-import { Environment, RelayRefetchProps } from "react-relay"
+import { Environment, RelayRefetchProp } from "react-relay"
 import styled from "styled-components"
 import { SendConversationMessage } from "../Mutation/SendConversationMessage"
 import { useTracking } from "v2/Artsy/Analytics"
@@ -54,7 +54,7 @@ interface ReplyProps {
   conversation: Conversation_conversation
   environment: Environment
   onScroll?: () => void
-  refetch: RelayRefetchProps["refetch"]
+  refetch: RelayRefetchProp["refetch"]
 }
 
 export const Reply: React.FC<ReplyProps> = props => {
@@ -128,6 +128,7 @@ export const Reply: React.FC<ReplyProps> = props => {
         position={["fixed", "fixed", "fixed", "static"]}
         bottom={0}
         left={0}
+        flexShrink={0}
       >
         <FullWidthFlex width="100%">
           <StyledTextArea

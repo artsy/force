@@ -7,7 +7,12 @@ export type ArtistRow_artist = {
     readonly name: string | null;
     readonly href: string | null;
     readonly artworks: {
-        readonly " $fragmentRefs": FragmentRefs<"Fillwidth_artworks">;
+        readonly edges: ReadonlyArray<{
+            readonly node: {
+                readonly id: string;
+                readonly " $fragmentRefs": FragmentRefs<"FillwidthItem_artwork">;
+            } | null;
+        } | null> | null;
     } | null;
     readonly " $fragmentRefs": FragmentRefs<"Follow_artist">;
     readonly " $refType": "ArtistRow_artist";
@@ -55,9 +60,38 @@ const node: ReaderFragment = {
       "plural": false,
       "selections": [
         {
+          "alias": null,
           "args": null,
-          "kind": "FragmentSpread",
-          "name": "Fillwidth_artworks"
+          "concreteType": "ArtworkEdge",
+          "kind": "LinkedField",
+          "name": "edges",
+          "plural": true,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "Artwork",
+              "kind": "LinkedField",
+              "name": "node",
+              "plural": false,
+              "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "id",
+                  "storageKey": null
+                },
+                {
+                  "args": null,
+                  "kind": "FragmentSpread",
+                  "name": "FillwidthItem_artwork"
+                }
+              ],
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
         }
       ],
       "storageKey": "artworksConnection(first:6)"
@@ -70,5 +104,5 @@ const node: ReaderFragment = {
   ],
   "type": "Artist"
 };
-(node as any).hash = '165cde0cf105756da9745ed008809922';
+(node as any).hash = '4c9d77a82ae954fd90b1ff8fe5c96c2c';
 export default node;

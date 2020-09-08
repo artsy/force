@@ -1,5 +1,5 @@
 import { ArtworkImageBrowser_artwork } from "v2/__generated__/ArtworkImageBrowser_artwork.graphql"
-import { BaseCarousel as Carousel } from "v2/Components/Carousel"
+import { BaseCarousel as Carousel } from "v2/Components/FlickityCarousel"
 import { Lightbox } from "v2/Components/Lightbox"
 import FlickityType from "flickity"
 import React from "react"

@@ -37,7 +37,7 @@ describe("Artist Notable Works Rail Component", () => {
 
   it("tracks the analytics properties when an artwork is clicked on the Notable Works rail", () => {
     const component = mount(<ArtistTopWorksRail {...props} />)
-    const elem = component.find(FillwidthItem).first() as typeof FillwidthItem
+    const elem = component.find(FillwidthItem).first()
     elem.props().onClick({})
 
     expect(trackEvent).toHaveBeenCalledWith({
@@ -85,16 +85,6 @@ const topWorksContent: ArtistTopWorksRail_artist = {
           slug: "artwork-slug",
           " $fragmentRefs": null,
           id: "QXJ0d29yazo1ZGVjZDRiYjNjN2NiMTAwMTAwYWQzNmQ=",
-          image: {
-            href: "/artwork/andy-warhol-roy-lichtenstein-authenticated-3",
-            imageAspectRatio: 0.78,
-            resized: {
-              width: 100,
-              height: 200,
-              url:
-                "https://d32dm0rphc51dk.cloudfront.net/JS5CsvkO_SpL1Vg7R-h_Zw/large.jpg",
-            },
-          },
         },
       },
     ],

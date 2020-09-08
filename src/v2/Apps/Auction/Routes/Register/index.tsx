@@ -31,7 +31,10 @@ import { ReactStripeElements } from "react-stripe-elements"
 
 const logger = createLogger("Apps/Auction/Routes/Register")
 
-function createBidder(relayEnvironment: RelayProp.environment, saleID: string) {
+function createBidder(
+  relayEnvironment: RelayProp["environment"],
+  saleID: string
+) {
   return new Promise<RegisterCreateBidderMutationResponse>(
     (resolve, reject) => {
       commitMutation<RegisterCreateBidderMutation>(relayEnvironment, {

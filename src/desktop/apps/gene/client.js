@@ -9,6 +9,8 @@ import { Contents } from "v2/Components/Gene"
 import { GeneRelatedLinksQueryRenderer as RelatedLinks } from "v2/Components/Gene/GeneRelatedLinks"
 import { SystemContextProvider } from "v2/Artsy"
 import { ContextModule } from "@artsy/cohesion"
+import { MediaContextProvider } from "v2/Utils/Responsive"
+import { Boot } from "v2/Artsy/Router"
 
 const Gene = require("../../models/gene.coffee")
 const CurrentUser = require("../../models/current_user.coffee")
@@ -62,7 +64,9 @@ export const setupGenePage = () => {
       user={user ? user.toJSON() : null}
       mediator={mediator}
     >
-      <Contents {...options} onStateChange={onStateChange} />
+      <Boot>
+        <Contents {...options} onStateChange={onStateChange} />
+      </Boot>
     </SystemContextProvider>,
     document.getElementById("gene-filter")
   )
@@ -72,9 +76,9 @@ export const setupGenePage = () => {
       user={user ? user.toJSON() : null}
       mediator={mediator}
     >
-      <Theme>
+      <Boot>
         <RelatedLinks geneID={sd.GENE.id} />
-      </Theme>
+      </Boot>
     </SystemContextProvider>,
     document.getElementById("gene-related-links")
   )

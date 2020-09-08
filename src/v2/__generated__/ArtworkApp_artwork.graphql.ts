@@ -25,7 +25,7 @@ export type ArtworkApp_artwork = {
     readonly artist: {
         readonly " $fragmentRefs": FragmentRefs<"ArtistInfo_artist">;
     } | null;
-    readonly " $fragmentRefs": FragmentRefs<"ArtworkRelatedArtists_artwork" | "ArtworkMeta_artwork" | "ArtworkBanner_artwork" | "ArtworkSidebar_artwork" | "ArtworkDetails_artwork" | "ArtworkImageBrowser_artwork" | "OtherWorks_artwork" | "PricingContext_artwork">;
+    readonly " $fragmentRefs": FragmentRefs<"ArtworkRelatedArtists_artwork" | "ArtworkMeta_artwork" | "ArtworkBanner_artwork" | "ArtworkSidebar_artwork" | "ArtworkDetails_artwork" | "ArtworkImageBrowser_artwork" | "OtherWorks_artwork" | "ArtworkArtistSeries_artwork" | "PricingContext_artwork">;
     readonly " $refType": "ArtworkApp_artwork";
 };
 export type ArtworkApp_artwork$data = ArtworkApp_artwork;
@@ -66,14 +66,7 @@ v3 = {
   "name": "ArtistInfo_artist"
 };
 return {
-  "argumentDefinitions": [
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "shouldFetchArtistSeriesData",
-      "type": "Boolean!"
-    }
-  ],
+  "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
   "name": "ArtworkApp_artwork",
@@ -205,15 +198,14 @@ return {
       "name": "ArtworkImageBrowser_artwork"
     },
     {
-      "args": [
-        {
-          "kind": "Variable",
-          "name": "shouldFetchArtistSeriesData",
-          "variableName": "shouldFetchArtistSeriesData"
-        }
-      ],
+      "args": null,
       "kind": "FragmentSpread",
       "name": "OtherWorks_artwork"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArtworkArtistSeries_artwork"
     },
     {
       "args": null,
@@ -224,5 +216,5 @@ return {
   "type": "Artwork"
 };
 })();
-(node as any).hash = '164faee917283ce6cb127d9a3ee0ca1d';
+(node as any).hash = 'c50431d3ac341e5dc39dfcaddeab0e18';
 export default node;

@@ -1,24 +1,62 @@
-import { Box, Image, Sans, Spacer, color } from "@artsy/palette"
+import { Box, Image, Sans, color } from "@artsy/palette"
 import { ArtistSeriesItem_artistSeries } from "v2/__generated__/ArtistSeriesItem_artistSeries.graphql"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
+import {
+  ContextModule,
+  PageOwnerType,
+  clickedArtistSeriesGroup,
+} from "@artsy/cohesion"
+import { useTracking } from "v2/Artsy/Analytics/useTracking"
 
 interface Props {
   artistSeries: ArtistSeriesItem_artistSeries
   lazyLoad: boolean
+  contextPageOwnerId: string
+  contextPageOwnerSlug: string
+  contextModule: ContextModule
+  contextPageOwnerType: PageOwnerType
+  index: number
 }
 
 export const ArtistSeriesItem: React.SFC<Props> = props => {
   const {
-    artistSeries: { slug, title, image, artworksCountMessage },
+    contextPageOwnerId,
+    contextPageOwnerSlug,
+    contextModule,
+    contextPageOwnerType,
+    index,
+    artistSeries: {
+      internalID,
+      slug,
+      title,
+      image,
+      artworksCountMessage,
+      featured,
+    },
     lazyLoad,
   } = props
+  const { trackEvent } = useTracking()
 
+  const onClick = () => {
+    trackEvent(
+      clickedArtistSeriesGroup({
+        contextModule,
+        contextPageOwnerType,
+        destinationPageOwnerId: internalID,
+        destinationPageOwnerSlug: slug,
+        contextPageOwnerId,
+        contextPageOwnerSlug,
+        horizontalSlidePosition: index,
+        curationBoost: featured,
+      })
+    )
+  }
   return (
-    <Box pr={2}>
-      <StyledLink to={`/artist-series/${slug}`}>
+    <Box border="1px solid" borderColor="black10" borderRadius="2px">
+      <StyledLink onClick={onClick} to={`/artist-series/${slug}`}>
         <SeriesImage
           src={image.cropped.url}
           alt={title}
@@ -26,10 +64,9 @@ export const ArtistSeriesItem: React.SFC<Props> = props => {
           width={160}
           style={{ objectFit: "cover", objectPosition: "center" }}
         />
-        <Box mt={1} ml={1}>
+        <Box my={1} mx={2}>
           <SeriesTitle size={"3"}>{title}</SeriesTitle>
-          <Spacer />
-          <Sans size={"3"} color={"black30"}>
+          <Sans size={"3"} color={"black60"}>
             {artworksCountMessage}
           </Sans>
         </Box>
@@ -39,10 +76,14 @@ export const ArtistSeriesItem: React.SFC<Props> = props => {
 }
 
 const SeriesTitle = styled(Sans)`
-  width: max-content;
+  max-width: 140px;
+  display: block;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 `
 
-const StyledLink = styled(RouterLink)`
+export const StyledLink = styled(RouterLink)`
   text-decoration: none;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 
@@ -65,9 +106,12 @@ export const ArtistSeriesItemFragmentContainer = createFragmentContainer(
       fragment ArtistSeriesItem_artistSeries on ArtistSeries {
         title
         slug
+        featured
+        internalID
         artworksCountMessage
         image {
-          cropped(width: 160, height: 160) {
+          # Fetch double the px for retina display
+          cropped(width: 320, height: 320) {
             url
           }
         }

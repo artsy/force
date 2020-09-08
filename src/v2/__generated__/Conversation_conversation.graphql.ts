@@ -27,12 +27,9 @@ export type Conversation_conversation = {
         readonly edges: ReadonlyArray<{
             readonly node: {
                 readonly id: string;
-                readonly internalID: string;
-                readonly createdAt: string | null;
-                readonly isFromUser: boolean | null;
-                readonly " $fragmentRefs": FragmentRefs<"Message_message">;
             } | null;
         } | null> | null;
+        readonly " $fragmentRefs": FragmentRefs<"ConversationMessages_messages">;
     } | null;
     readonly items: ReadonlyArray<{
         readonly item: ({
@@ -99,31 +96,24 @@ v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "internalID",
+  "name": "name",
   "storageKey": null
 },
 v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "name",
+  "name": "__typename",
   "storageKey": null
 },
 v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "__typename",
-  "storageKey": null
-},
-v4 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
   "name": "href",
   "storageKey": null
 },
-v5 = [
+v4 = [
   {
     "alias": null,
     "args": null,
@@ -163,7 +153,13 @@ return {
   "name": "Conversation_conversation",
   "selections": [
     (v0/*: any*/),
-    (v1/*: any*/),
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "internalID",
+      "storageKey": null
+    },
     {
       "alias": null,
       "args": null,
@@ -172,7 +168,7 @@ return {
       "name": "from",
       "plural": false,
       "selections": [
-        (v2/*: any*/),
+        (v1/*: any*/),
         {
           "alias": null,
           "args": null,
@@ -191,7 +187,7 @@ return {
       "name": "to",
       "plural": false,
       "selections": [
-        (v2/*: any*/),
+        (v1/*: any*/),
         {
           "alias": null,
           "args": null,
@@ -287,27 +283,7 @@ return {
               "plural": false,
               "selections": [
                 (v0/*: any*/),
-                (v1/*: any*/),
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "createdAt",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "isFromUser",
-                  "storageKey": null
-                },
-                (v3/*: any*/),
-                {
-                  "args": null,
-                  "kind": "FragmentSpread",
-                  "name": "Message_message"
-                }
+                (v2/*: any*/)
               ],
               "storageKey": null
             },
@@ -320,6 +296,11 @@ return {
             }
           ],
           "storageKey": null
+        },
+        {
+          "args": null,
+          "kind": "FragmentSpread",
+          "name": "ConversationMessages_messages"
         }
       ],
       "storageKey": null
@@ -340,7 +321,7 @@ return {
           "name": "item",
           "plural": false,
           "selections": [
-            (v3/*: any*/),
+            (v2/*: any*/),
             {
               "kind": "InlineFragment",
               "selections": [
@@ -366,7 +347,7 @@ return {
                   "name": "artistNames",
                   "storageKey": null
                 },
-                (v4/*: any*/),
+                (v3/*: any*/),
                 {
                   "alias": null,
                   "args": null,
@@ -401,15 +382,15 @@ return {
                   "name": "listPrice",
                   "plural": false,
                   "selections": [
-                    (v3/*: any*/),
+                    (v2/*: any*/),
                     {
                       "kind": "InlineFragment",
-                      "selections": (v5/*: any*/),
+                      "selections": (v4/*: any*/),
                       "type": "Money"
                     },
                     {
                       "kind": "InlineFragment",
-                      "selections": (v5/*: any*/),
+                      "selections": (v4/*: any*/),
                       "type": "PriceRange"
                     }
                   ],
@@ -430,7 +411,7 @@ return {
                   "name": "fair",
                   "plural": false,
                   "selections": [
-                    (v2/*: any*/),
+                    (v1/*: any*/),
                     {
                       "alias": null,
                       "args": null,
@@ -459,8 +440,8 @@ return {
                   ],
                   "storageKey": null
                 },
-                (v4/*: any*/),
-                (v2/*: any*/),
+                (v3/*: any*/),
+                (v1/*: any*/),
                 {
                   "alias": null,
                   "args": null,
@@ -492,5 +473,5 @@ return {
   "type": "Conversation"
 };
 })();
-(node as any).hash = '16e46b2371551650adfb83bb45fb436d';
+(node as any).hash = '9eaaa6e185f2b5ea255966af0c2edef5';
 export default node;

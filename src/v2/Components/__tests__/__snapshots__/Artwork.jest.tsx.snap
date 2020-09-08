@@ -3,11 +3,23 @@
 exports[`Artwork renders correctly 1`] = `
 .c4 {
   text-align: left;
-  margin-top: 12px;
+  margin-top: 4px;
 }
 
-.c11 {
-  margin-bottom: 0.3px;
+.c6 {
+  font-size: size4;
+  line-height: body;
+  font-weight: bold;
+  font-family: sans;
+}
+
+.c7 {
+  color: black60;
+  font-size: size4;
+  line-height: body;
+  font-weight: normal;
+  color: black60;
+  font-family: sans;
 }
 
 .c8 {
@@ -15,36 +27,6 @@ exports[`Artwork renders correctly 1`] = `
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-}
-
-.c6 {
-  font-family: Unica77LLWebMedium,'Helvetica Neue',Helvetica,Arial,sans-serif;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 20px;
-  color: black100;
-}
-
-.c7 {
-  font-family: Unica77LLWebRegular,'Helvetica Neue',Helvetica,Arial,sans-serif;
-  font-size: 14px;
-  line-height: 20px;
-  color: black60;
-}
-
-.c9 {
-  font-family: Unica77LLWebRegular,'Helvetica Neue',Helvetica,Arial,sans-serif;
-  font-size: 14px;
-  line-height: 20px;
-  color: #000;
-}
-
-.c10 {
-  font-family: Unica77LLWebRegular,'Helvetica Neue',Helvetica,Arial,sans-serif;
-  font-size: 14px;
-  line-height: 20px;
-  color: #000;
-  margin-left: 0.5px;
 }
 
 .c3 {
@@ -111,6 +93,25 @@ exports[`Artwork renders correctly 1`] = `
   right: 0;
 }
 
+@media (min-width:) {
+  .c6 {
+    font-size: size3;
+    line-height: body;
+    font-weight: bold;
+    font-family: sans;
+  }
+}
+
+@media (min-width:) {
+  .c7 {
+    font-size: size3;
+    line-height: body;
+    font-weight: normal;
+    color: black60;
+    font-family: sans;
+  }
+}
+
 @media (min-width:769px) {
   .c1:hover .overlay-container.hovered {
     opacity: 1;
@@ -146,15 +147,7 @@ exports[`Artwork renders correctly 1`] = `
         >
           <div
             className="c6"
-            color="black100"
-            fontFamily={
-              Object {
-                "fontFamily": "Unica77LLWebMedium, 'Helvetica Neue', Helvetica, Arial, sans-serif",
-                "fontWeight": 500,
-              }
-            }
-            fontSize="14px"
-            style={Object {}}
+            fontFamily="sans"
           >
             Mikael Olson
           </div>
@@ -165,9 +158,7 @@ exports[`Artwork renders correctly 1`] = `
           <div
             className="c7"
             color="black60"
-            fontFamily="Unica77LLWebRegular, 'Helvetica Neue', Helvetica, Arial, sans-serif"
-            fontSize="14px"
-            style={Object {}}
+            fontFamily="sans"
           >
             Some Kind of Dinosaur, 2015
           </div>
@@ -178,9 +169,7 @@ exports[`Artwork renders correctly 1`] = `
           <div
             className="c7"
             color="black60"
-            fontFamily="Unica77LLWebRegular, 'Helvetica Neue', Helvetica, Arial, sans-serif"
-            fontSize="14px"
-            style={Object {}}
+            fontFamily="sans"
           >
             Gallery 1261
           </div>
@@ -190,25 +179,17 @@ exports[`Artwork renders correctly 1`] = `
           display="flex"
         >
           <div
-            className="c9"
-            color="#000"
-            fontFamily="Unica77LLWebRegular, 'Helvetica Neue', Helvetica, Arial, sans-serif"
-            fontSize="14px"
-            style={Object {}}
+            className="c5"
           >
-            $875
-             
+            <div
+              className="c7"
+              color="black60"
+              fontFamily="sans"
+            >
+              $875
+               
+            </div>
           </div>
-          <div
-            className="c10"
-            color="#000"
-            fontFamily="Unica77LLWebRegular, 'Helvetica Neue', Helvetica, Arial, sans-serif"
-            fontSize="14px"
-            style={Object {}}
-          />
-          <div
-            className="c11"
-          />
         </div>
       </div>
     </div>
