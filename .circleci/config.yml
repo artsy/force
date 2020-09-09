@@ -8,6 +8,18 @@ orbs:
   yarn: artsy/yarn@5.1.3
 
 jobs:
+  run_deepcrawl_automator:
+    docker:
+      - image: cimg/base:2020.09
+    environment:
+      AUTOMATOR_START_ONLY: true
+    steps:
+      - run:
+          name: Download automator script
+          command: curl https://raw.githubusercontent.com/deepcrawl/automator-sdk/master/ci.sh --output automator.sh
+      - run:
+          name: Start automator crawl
+          command: chmod +x automator.sh && ./automator.sh
   acceptance:
     docker:
       - image: circleci/node:12-stretch-browsers
@@ -180,6 +192,7 @@ workflows:
 
       - hokusai/deploy-staging:
           <<: *only_master
+          name: deploy-staging
           project-name: force
           requires:
             - push-staging-image
@@ -189,9 +202,15 @@ workflows:
           <<: *only_release
       - hokusai/deploy-production:
           <<: *only_release
+          name: deploy-production
           requires:
             - horizon/block
             - validate_production_schema
+
+      - run_deepcrawl_automator:
+          context: deepcrawl-automator
+          requires:
+            - deploy-production
 
       - create_or_update_review_app:
           context: hokusai

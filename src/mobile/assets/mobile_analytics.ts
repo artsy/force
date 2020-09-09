@@ -20,7 +20,6 @@ $(() =>
     require("../analytics/commercial_filter.js")
     require("../analytics/fairs.js")
     require("../analytics/following.js")
-    require("../analytics/save.js")
     require("../analytics/partners.js")
   })
 )

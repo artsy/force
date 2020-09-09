@@ -1,5 +1,4 @@
 Backbone = require 'backbone'
-analyticsHooks = require '../../lib/analytics_hooks.coffee'
 { openAuthModal } = require '../../lib/openAuthModal'
 { ModalType } = require "../../../v2/Components/Authentication/Types"
 { Intent } = require "@artsy/cohesion"
@@ -45,7 +44,7 @@ module.exports = class ArtworkSaveView extends Backbone.View
         processData: true
         data: user_id: @user.id
 
-      analyticsHooks.trigger 'save:remove-artwork',
+      window.analytics.track "Removed Artwork",
         entity_id: save._id
         entity_slug: save.id
         context_page: @context_page
@@ -58,8 +57,7 @@ module.exports = class ArtworkSaveView extends Backbone.View
 
       clone = save.clone()
       clone.save {}, type: 'post'
-
-      analyticsHooks.trigger 'save:save-artwork',
+      window.analytics.track "Saved Artwork",
         entity_id: save._id
         entity_slug: save.id
         context_page: @context_page

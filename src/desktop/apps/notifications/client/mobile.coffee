@@ -10,6 +10,9 @@ template = -> require('../templates/mobile/artist.jade') arguments...
 emptyTemplate = -> require('../templates/mobile/empty.jade') arguments...
 
 module.exports = class NotificationsView extends Backbone.View
+  events:
+    'click .notifications-see-more': 'trackSeeMore'
+
   initialize: (options) ->
     @notifications = new Notifications [], since: 30, type: 'ArtworkPublished'
     @$spinner = @$('#notifications-published-artworks-spinner')
@@ -25,6 +28,11 @@ module.exports = class NotificationsView extends Backbone.View
           $(window).off 'infiniteScroll'
 
       $.onInfiniteScroll @nextPage
+
+  trackSeeMore: (e) ->
+    window.analytics.track(
+      'Clicked "See More" in artwork group on "Works For You" page'
+    )
 
   params: ->
     qs = location.search.substring(1)

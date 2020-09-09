@@ -30,8 +30,8 @@ module.exports.index = (req, res, next) ->
 
   metaphysics(query: query, variables: {showCollectionsHubs: showCollectionsHubs})
     .then ({ homePage, marketingHubCollections }) ->
-      res.render 'page', 
-        heroUnits: homePage.heroUnits, 
-        resize: resize, 
+      res.render 'page',
+        heroUnits: homePage.heroUnits,
+        resize: resize,
         collectionsHubs: marketingHubCollections
     .catch next

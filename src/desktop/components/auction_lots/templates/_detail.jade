@@ -35,7 +35,7 @@ if lot.hasImage('thumbnail')
       if (user)
         = lot.get('price_realized_text') || '–'
       else
-        a.auction-lot-sale-signup( href='/sign_up' )
+        a.auction-lot-sale-signup( href='/sign_up', rel='nofollow' )
           | Sign up to see sale price
 
   if lot.get('description')

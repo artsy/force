@@ -11,7 +11,6 @@ Artists = require '../../../collections/artists.coffee'
 FollowProfiles = require '../../../collections/follow_profiles.coffee'
 CurrentUser = require '../../../models/current_user.coffee'
 FeedItems = require '../../../components/feed/collections/feed_items.coffee'
-analyticsHooks = require '../../../lib/analytics_hooks.coffee'
 ArtworkColumnsView = require '../../../components/artwork_columns/view.coffee'
 exhibitorsTemplate = -> require('../templates/exhibitors_columns.jade') arguments...
 { ContextModule } = require "@artsy/cohesion"
@@ -113,9 +112,9 @@ module.exports = class ForYouView extends Backbone.View
       url: url
       data:
         _.extend(additionalParams, size: 3)
-      success: (items) =>
+      success: (items) ->
         if items.models
-          analyticsHooks.trigger 'fair:display-following'
+          window.analytics.track("Display following exhibitors at the fair")
 
         feed.handleFetchedItems items.models
 

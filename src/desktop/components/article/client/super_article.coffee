@@ -63,6 +63,10 @@ module.exports = class SuperArticleView extends Backbone.View
   setWaypoints: ->
     return unless @$stickyHeader.length
 
+    # HACK: `globalClientSetup` which requires this library is somehow being
+    # called *after* this view method, causing this to error.
+    require("jquery-waypoints/waypoints.js")
+
     @$(".article-content").waypoint (direction) =>
       if direction == 'down'
         @$stickyHeader.addClass 'visible'

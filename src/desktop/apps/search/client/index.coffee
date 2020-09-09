@@ -1,4 +1,3 @@
-analyticsHooks = require '../../../lib/analytics_hooks.coffee'
 _ = require 'underscore'
 Backbone = require 'backbone'
 sd = require('sharify').data
@@ -6,7 +5,6 @@ Artist = require '../../../models/artist.coffee'
 Gene = require '../../../models/gene.coffee'
 Artwork = require '../../../models/artwork.coffee'
 { crop } = require '../../../components/resizer/index.coffee'
-analyticsHooks = require '../../../lib/analytics_hooks.coffee'
 
 imageTemplate = -> require('../templates/image-template.jade') arguments...
 resolvedImage = -> require('../templates/image.jade') arguments...
@@ -19,6 +17,9 @@ module.exports.SearchResultsView = class SearchResultsView extends Backbone.View
     'click .search-result': 'trackSelectResult'
 
   initialize: (options) ->
+    window.analytics.trackLink($(".search-result"), "Selected item from results page", {
+      query: $("#main-layout-search-bar-input").val(),
+    })
     if options.results
       for result in options.results
         if result.display_model is 'Artist'
@@ -70,7 +71,7 @@ module.exports.SearchResultsView = class SearchResultsView extends Backbone.View
   trackSelectResult: (e) ->
     term = $('#main-layout-search-bar-input').val()
     $searchResult = $(e.currentTarget)
-    analyticsHooks.trigger 'search-page:item:click',
+    window.analytics.track "Selected item from search page",
       query: term
       item_number: $searchResult.parent().children().index($searchResult)
       item_type: $searchResult.attr('class').replace('search-result ', '')
