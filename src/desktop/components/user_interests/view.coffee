@@ -35,12 +35,16 @@ module.exports = class UserInterestsView extends Backbone.View
     userInterest = @collection.addInterest interest
     userInterest.save()
     @following.follow interest.id if CURRENT_USER?
-    analyticsHooks.trigger 'user_interests:add', interest: interest
+    window.analytics.track("Added an artist to their collection", {
+      artist: interest.id,
+    })
 
   uninterested: (interest) ->
     userInterest = @collection.findByInterestId interest.id
     userInterest.destroy()
-    analyticsHooks.trigger 'user_interests:remove', interest: interest
+    window.analytics.track("Removed an artist from their collection", {
+      artist: interest.id
+    })
 
   render: ->
     @$el.html @resultsList.render().$el
