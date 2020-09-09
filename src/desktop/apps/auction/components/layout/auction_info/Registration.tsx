@@ -1,4 +1,3 @@
-import PropTypes from "prop-types"
 import React from "react"
 import block from "bem-cn-lite"
 import { get } from "lodash"
@@ -6,12 +5,15 @@ import { connect } from "react-redux"
 import { Button, Sans } from "@artsy/palette"
 import { bidderNeedsIdentityVerification } from "v2/Utils/identityVerificationRequirements"
 
-function RegistrationText(props) {
-  const {
-    userNeedsIdentityVerification,
-    defaultText = "Registration required to bid",
-    defaultColor = "black60",
-  } = props
+const RegistrationText: React.FC<{
+  userNeedsIdentityVerification: boolean
+  text?: string
+  color?: string
+}> = ({
+  userNeedsIdentityVerification,
+  text = "Registration required to bid",
+  color = "black60",
+}) => {
   if (userNeedsIdentityVerification) {
     return (
       <Sans mt="1" size="3" color="black60" textAlign="center">
@@ -26,15 +28,27 @@ function RegistrationText(props) {
     )
   } else {
     return (
-      <Sans mt="1" size="3" color={defaultColor} textAlign="center">
-        {defaultText}
+      <Sans mt="1" size="3" color={color} textAlign="center">
+        {text}
       </Sans>
     )
   }
 }
 
-function Registration(props) {
+const Registration: React.FC<{
+  auction: any
+  isClosed: boolean
+  isEcommerceSale?: boolean
+  isQualifiedForBidding: boolean
+  isRegistrationEnded: boolean
+  numBidders?: number
+  showContactInfo?: boolean
+  user: any
+  userNeedsIdentityVerification?: boolean
+}> = props => {
   const {
+    auction,
+    user,
     isClosed,
     isEcommerceSale,
     isQualifiedForBidding,
@@ -45,6 +59,14 @@ function Registration(props) {
   } = props
 
   const b = block("auction-Registration")
+  const trackBidClick = e => {
+    window.analytics.track('Clicked "Register to bid"', {
+      context_type: "auctions landing",
+      auction_slug: auction.id,
+      auction_state: auction.get("auction_state"),
+      user_id: user && user.id,
+    })
+  }
 
   if (isEcommerceSale) {
     return null
@@ -63,8 +85,8 @@ function Registration(props) {
               </Button>
               <RegistrationText
                 userNeedsIdentityVerification={userNeedsIdentityVerification}
-                defaultText="Reviewing submitted information"
-                defaultColor="yellow100"
+                text="Reviewing submitted information"
+                color="yellow100"
               />
             </div>
           )
@@ -92,7 +114,7 @@ function Registration(props) {
           return (
             <div className={b("wrapper")}>
               <div className="js-register-button">
-                <Button width="100%" size="large">
+                <Button width="100%" size="large" onClick={trackBidClick}>
                   Register to bid
                 </Button>
               </div>
@@ -125,16 +147,6 @@ function Registration(props) {
   )
 }
 
-Registration.propTypes = {
-  isClosed: PropTypes.bool.isRequired,
-  isEcommerceSale: PropTypes.bool,
-  userNeedsIdentityVerification: PropTypes.bool,
-  isQualifiedForBidding: PropTypes.bool.isRequired,
-  isRegistrationEnded: PropTypes.bool.isRequired,
-  numBidders: PropTypes.number.isRequired,
-  showContactInfo: PropTypes.bool.isRequired,
-}
-
 const mapStateToProps = state => {
   const { auction, isEcommerceSale, isMobile, me } = state.app
 
@@ -148,6 +160,7 @@ const mapStateToProps = state => {
   })
 
   return {
+    auction,
     isClosed: auction.isClosed() || auction.get("clockState") === "closed",
     isEcommerceSale,
     isMobile,
@@ -156,6 +169,7 @@ const mapStateToProps = state => {
     isRegistrationEnded: auction.isRegistrationEnded(),
     numBidders,
     showContactInfo,
+    user: me,
     userNeedsIdentityVerification,
   }
 }
