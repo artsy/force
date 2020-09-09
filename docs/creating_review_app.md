@@ -15,7 +15,7 @@ CircleCI will match the `review-app-` prefix and either:
 1. Create a review app using `build_review_app.sh` if the review app doesn't
    exist yet (i.e. first successful push of the branch), or
 2. Update an existing review app using `update_review_app.sh`
-3. Once CI is complete follow [this step](https://github.com/artsy/force/blob/master/docs/creating_review_app.md#dns-setup) to setup DNS.
+3. Once CI is complete follow [this step](https://github.com/artsy/force/blob/master/docs/creating_review_app.md#accessing-the-review-app) to setup DNS.
 
 ### Building on Local
 
