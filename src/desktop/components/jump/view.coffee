@@ -74,7 +74,7 @@ module.exports = class JumpView extends Backbone.View
         @scrollToPosition @element.offset().top
     else
       @scrollToPosition @position
-    analyticsHooks.trigger 'jump:scroll-to-top'
+    window.analytics.track("Clicked filter scrollToTop")
 
   remove: ->
     @$window.off 'scroll.jump'

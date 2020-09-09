@@ -1,6 +1,6 @@
 Backbone = require 'backbone'
 _ = require 'underscore'
-metaphysics = require '../../../../../lib/metaphysics.coffee'
+metaphysics = require '../../../../../lib/metaphysics2.coffee'
 initCarousel = require '../../../../components/merry_go_round/bottom_nav_mgr.coffee'
 ViewHelpers = require '../../helpers/view_helpers.coffee'
 template = -> require('../../templates/carousel.jade') arguments...
@@ -17,7 +17,7 @@ module.exports = class InstallShotsView extends Backbone.View
       variables: show_id: @showId, page: @page
       query: '
         query ShowInstallShotsViewQuery ($show_id: String!, $page: Int) {
-          partner_show(id: $show_id) {
+          partner_show: show(id: $show_id) {
             install_shots: images(page: $page, default: false) {
               carousel_dimension: resized(height: 300, version: "large") {
                 width

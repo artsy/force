@@ -29,6 +29,7 @@ describe("SearchResultsView", function () {
           benv.expose({
             $: benv.require("jquery"),
             jQuery: benv.require("jquery"),
+            analytics: { trackLink: sinon.stub() },
           })
           Backbone.$ = $
           sinon.stub(Backbone, "sync")

@@ -32,7 +32,6 @@ RUN yarn install --frozen-lockfile --quiet && \
 COPY --chown=deploy:deploy . ./
 
 # Build application
-# Update file/directory permissions
 RUN yarn assets && \
     yarn build:server
 

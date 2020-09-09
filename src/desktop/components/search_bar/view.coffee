@@ -5,7 +5,6 @@ request = require 'superagent'
 sd = require('sharify').data
 Search = require './collections/search.coffee'
 mediator = require '../../lib/mediator.coffee'
-analyticsHooks = require '../../lib/analytics_hooks.coffee'
 { modelNameAndIdToLabel } = require '../../lib/analytics_helpers.coffee'
 itemTemplate = -> require('./templates/item.jade') arguments...
 emptyItemTemplate = -> require('./templates/empty-item.jade') arguments...
@@ -75,7 +74,7 @@ module.exports = class SearchBarView extends Backbone.View
       @emptyItemClick()
 
   trackFocusInput: ->
-    analyticsHooks.trigger 'search:focus'
+    window.analytics.track "Focused on search input"
 
   checkSubmission: (e) ->
     @hideSuggestions()
@@ -162,9 +161,7 @@ module.exports = class SearchBarView extends Backbone.View
 
   trackSearchResults: (results) ->
     string = "Searched from header, with #{if Object.keys(results).length then 'results' else 'no results'}"
-    analyticsHooks.trigger 'search:header',
-      message: string
-      query: @$input.val()
+    window.analytics.track(string, { query: @$input.val() })
 
   setupBloodHound: ->
     @hound = new Bloodhound
@@ -215,7 +212,7 @@ module.exports = class SearchBarView extends Backbone.View
     @$input.typeahead 'val', decodeURIComponent value
 
   emptyItemClick: ->
-    analyticsHooks.trigger 'search:empty-item:click',
+    window.analytics.track "Selected item from search",
       query: @query
       item_number: 0
       item_type: 'search'
@@ -227,7 +224,7 @@ module.exports = class SearchBarView extends Backbone.View
     return @emptyItemClick() unless model
 
     if model.collection and model.collection.models
-      analyticsHooks.trigger 'search:item:click',
+      window.analytics.track "Selected item from search",
         query: @query
         item_number: model.collection.models.findIndex( (result) -> return result.id == model.id ) + 1
         item_type: model.get('display_model')

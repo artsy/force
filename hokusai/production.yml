@@ -159,3 +159,40 @@ spec:
     - 104.16.0.0/12
     - 172.64.0.0/13
     - 131.0.72.0/22
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: force
+    component: web
+    layer: application
+  name: force-web-internal
+  namespace: default
+spec:
+  ports:
+    - port: 5000
+      protocol: TCP
+      name: force-http
+      targetPort: force-http
+  selector:
+    app: force
+    layer: application
+    component: web
+  type: ClusterIP
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: force
+  annotations:
+    nginx.ingress.kubernetes.io/whitelist-source-range: "{{ cloudflareIpSourceRanges|join(',') }}"
+spec:
+  rules:
+    - host: www.artsy.net
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: force-web-internal
+              servicePort: force-http

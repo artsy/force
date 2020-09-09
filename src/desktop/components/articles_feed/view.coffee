@@ -1,5 +1,6 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
+sd = require('sharify').data
 ArticleView = require './article.coffee'
 template = -> require('./templates/index.jade') arguments...
 button = -> require('./templates/button.jade') arguments...
@@ -15,11 +16,12 @@ module.exports = class ArticlesFeedView extends Backbone.View
 
   initialize: ({ @fetchWith } = {}) ->
     @renderOuter = _.once =>
-      @$el.html template(articles: @collection)
+      @$el.html template(articles: @collection, page: sd.PAGE)
 
     @listenTo @collection, 'sync', @render
 
   more: (e) ->
+    e.preventDefault()
     return if @collection.length >= @collection.count
 
     @$('.js-load-more-articles').attr 'data-state', 'loading'
@@ -31,7 +33,7 @@ module.exports = class ArticlesFeedView extends Backbone.View
 
   renderButton: =>
     (@$more ?= @$('.js-articles-feed-more'))
-      .html button(articles: @collection)
+      .html button(articles: @collection, page: sd.PAGE)
 
   renderArticle: (article, options = {}) =>
     article.set rendered: true

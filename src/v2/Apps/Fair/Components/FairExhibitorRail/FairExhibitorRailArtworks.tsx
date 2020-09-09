@@ -21,12 +21,11 @@ const FairExhibitorRailArtworks: React.FC<FairExhibitorRailArtworksProps> = ({
       {show.artworks.edges.map(({ artwork }) => {
         return (
           <FillwidthItem
+            contextModule={ContextModule.fairRail}
             artwork={artwork}
             imageHeight={FAIR_EXHIBITOR_IMAGE_HEIGHT}
             hidePartnerName
-            // TODO
-            // @ts-ignore
-            contextModule={ContextModule.fairRail}
+            lazyLoad
           />
         )
       })}

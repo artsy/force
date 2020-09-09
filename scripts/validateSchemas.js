@@ -8,33 +8,14 @@
 //
 const path = require("path")
 const { readFileSync } = require("fs")
-const {
-  introspectionQuery,
-  buildClientSchema,
-  printSchema,
-  buildSchema,
-} = require("graphql")
+const { buildSchema } = require("graphql")
 
 const { diff } = require("@graphql-inspector/core")
 const fetch = require("isomorphic-fetch")
 
 const downloadMetaphysicsSchema = async endpoint => {
-  const postBody = {
-    query: introspectionQuery,
-    operationName: "IntrospectionQuery",
-  }
-
-  const response = await fetch(endpoint, {
-    method: "POST",
-    body: JSON.stringify(postBody),
-    headers: {
-      "Content-Type": "application/json",
-    },
-  })
-  const { data } = await response.json()
-  // commentDescriptions is hidden
-  // @ts-ignore
-  return printSchema(buildClientSchema(data), { commentDescriptions: true })
+  const response = await fetch(endpoint)
+  return response.text()
 }
 
 const getBreakingChanges = async (metaphysicsEnv, metaphysicsVersion = 2) => {
@@ -44,9 +25,10 @@ const getBreakingChanges = async (metaphysicsEnv, metaphysicsVersion = 2) => {
       encoding: "utf8",
     }
   )
-  const metaphysicsEndpoint = metaphysicsVersion === 2 ? "/v2" : ""
+  const metaphysicsSchemaSuffix = metaphysicsVersion === 2 ? "V2" : ""
+  const metaphysicsRef = metaphysicsEnv == "production" ? "release" : "staging"
   const metaphyicsSchema = await downloadMetaphysicsSchema(
-    `https://metaphysics-${metaphysicsEnv}.artsy.net${metaphysicsEndpoint}`
+    `https://raw.githubusercontent.com/artsy/metaphysics/${metaphysicsRef}/_schema${metaphysicsSchemaSuffix}.graphql`
   )
 
   const allChanges = diff(

@@ -47,10 +47,13 @@ module.exports.init = ->
 
   furtherArtworksEl = $('.artworks-container')
 
+  artworksConnection = bootstrappedShow.artworksConnection
+  artworks = artworksConnection.edges.map (edge) -> edge.node
+
   new FurtherArtworksView
     showId: bootstrappedShow._id,
-    page: 2,
-    artworks: bootstrappedShow.artworks,
+    endCursor: artworksConnection.pageInfo.endCursor
+    artworks: artworks,
     el: furtherArtworksEl,
     sd: sd
     context_module: ContextModule.artworkGrid

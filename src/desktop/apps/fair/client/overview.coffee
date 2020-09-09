@@ -3,7 +3,6 @@ Backbone = require 'backbone'
 sd = require('sharify').data
 Clock = require '../../../components/clock/view.coffee'
 Artists = require '../../../collections/artists.coffee'
-analyticsHooks = require '../../../lib/analytics_hooks.coffee'
 ForYouView = require './for_you.coffee'
 { ContextModule } = require "@artsy/cohesion"
 { Following, FollowButton } = require '../../../components/follow_button/index.coffee'
@@ -38,7 +37,7 @@ module.exports = class Overview extends Backbone.View
   onFetchFollowingArtists: (followingArtists) =>
     artistNames = @formatArtists followingArtists, 2
     if artistNames
-      analyticsHooks.trigger 'fair:display-following-artists'
+      window.analytics.track("Display following artists at the fair")
       @$('.container-left .large-section-subheading').text "Works by #{artistNames}"
 
   formatArtists: (followArtists, max=Infinity) ->
