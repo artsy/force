@@ -1,57 +1,59 @@
 { NODE_ENV } = require '../../config'
 { stringifyJSONForWeb } = require '../../components/util/json'
 PartnerShow = require '../../models/partner_show'
-metaphysics = require '../../../lib/metaphysics'
+metaphysics = require '../../../lib/metaphysics2'
 DateHelpers = require '../../components/util/date_helpers'
 ViewHelpers = require './helpers/view_helpers'
 
 query = """
   query ShowMetadataQuery($id: String!) {
-    partner_show(id: $id) {
-      _id
-      id
-      created_at
-      start_at
-      end_at
+    partner_show: show(id: $id) {
+      _id: internalID
+      id: slug
+      createdAt
+      start_at: startAt
+      end_at: endAt
       name
-      displayable
-      has_location
-      press_release(format: HTML)
+      displayable: isDisplayable
+      has_location: hasLocation
+      press_release: pressRelease(format: HTML)
       description
       status
       href
       counts {
         artworks
-        eligible_artworks
+        eligible_artworks: eligibleArtworks
       }
       events {
         description
         title
-        start_at
-        end_at
-        event_type
+        start_at: startAt
+        end_at: endAt
+        event_type: eventType
       }
       partner {
-        id
-        _id
-        href
-        name
-        type
-        is_linkable
-        default_profile_id
+        ... on Partner {
+          id: slug
+          _id: internalID
+          href
+          name
+          type
+          is_linkable: isLinkable
+          default_profile_id: defaultProfileID
+        }
       }
       fair {
-        id
-        _id
+        id: slug
+        _id: internalID
         profile {
-          is_published
+          is_published: isPublished
         }
-        published
-        has_full_feature
+        published: isPublished
+        has_full_feature: hasFullFeature
         name
         href
-        start_at
-        end_at
+        start_at: startAt
+        end_at: endAt
         location {
           coordinates {
             lat
@@ -60,10 +62,10 @@ query = """
           display
           city
           state
-          postal_code
+          postal_code: postalCode
           country
           address
-          address_2
+          address_2: address2
         }
       }
       location {
@@ -74,44 +76,51 @@ query = """
         display
         city
         state
-        postal_code
+        postal_code: postalCode
         country
         address
-        address_2
-        day_schedules {
-          start_time
-          end_time
-          day_of_week
+        address_2: address2
+        day_schedules: daySchedules {
+          start_time: startTime
+          end_time: endTime
+          day_of_week: dayOfWeek
         }
       }
-      artworks {
-        id
-        _id
-        __id
-        href
-        collecting_institution
-        image {
-          url(version: "large")
-          width
-          height
-          aspect_ratio
-          placeholder
+      artworksConnection(first: 25) {
+        edges {
+          node {
+            id: slug
+            _id: internalID
+            __id: id
+            href
+            collecting_institution: collectingInstitution
+            image {
+              url(version: "large")
+              width
+              height
+              aspect_ratio: aspectRatio
+              placeholder
+            }
+            partner {
+              href
+              id
+              type
+              name
+            }
+            artists {
+              public: isPublic
+              href
+              name
+            }
+            date
+            title
+            sale_message: saleMessage
+            is_inquireable: isInquireable
+          }
         }
-        partner {
-          href
-          id
-          type
-          name
+        pageInfo {
+          endCursor
         }
-        artists {
-          public
-          href
-          name
-        }
-        date
-        title
-        sale_message
-        is_inquireable
       }
       artists {
         id
@@ -121,7 +130,7 @@ query = """
           url(version: "large")
         }
       }
-      meta_image {
+      meta_image: metaImage {
         meta_image_url: url(version: "larger")
         meta_thumb_url: url(version: "medium")
       }
@@ -148,6 +157,8 @@ query = """
       res.locals.ViewHelpers = ViewHelpers
       res.locals.DateHelpers = DateHelpers
       res.locals.jsonLD = JSON.stringify ViewHelpers.toJSONLD data.partner_show if data.partner_show.has_location
-      data.artworkColumns = ViewHelpers.groupByColumnsInOrder(data.partner_show.artworks)
+      artworksConnection = data.partner_show.artworksConnection
+      artworks = artworksConnection.edges.map (edge) -> edge.node
+      data.artworkColumns = ViewHelpers.groupByColumnsInOrder(artworks)
       res.render 'index', data
     .catch next
