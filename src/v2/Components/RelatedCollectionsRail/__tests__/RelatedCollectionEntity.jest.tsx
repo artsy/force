@@ -8,6 +8,7 @@ import {
 } from "../RelatedCollectionEntity"
 import { useTracking } from "v2/Artsy/Analytics/useTracking"
 import { OwnerType } from "@artsy/cohesion"
+import { AnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
 
 jest.mock("v2/Artsy/Analytics/useTracking")
 
@@ -18,11 +19,6 @@ describe("RelatedCollectionEntity", () => {
   beforeEach(() => {
     props = {
       collection: CollectionsRailFixture[0],
-      trackingData: {
-        contextPageOwnerId: "1234",
-        contextPageOwnerSlug: "slug",
-        contextPageOwnerType: OwnerType.collection,
-      },
       slideIndex: 1,
     }
     ;(useTracking as jest.Mock).mockImplementation(() => {
@@ -31,9 +27,22 @@ describe("RelatedCollectionEntity", () => {
       }
     })
   })
+  const getWrapper = (passedProps = props) => {
+    return mount(
+      <AnalyticsContext.Provider
+        value={{
+          contextPageOwnerId: "1234",
+          contextPageOwnerSlug: "slug",
+          contextPageOwnerType: OwnerType.collection,
+        }}
+      >
+        <RelatedCollectionEntity {...passedProps} />
+      </AnalyticsContext.Provider>
+    )
+  }
 
   it("Renders expected fields", () => {
-    const component = mount(<RelatedCollectionEntity {...props} />)
+    const component = getWrapper()
 
     expect(component.text()).toMatch("Jasper Johns:")
     expect(component.text()).toMatch("Flags")
@@ -50,7 +59,7 @@ describe("RelatedCollectionEntity", () => {
 
   it("Returns proper image size if 2 artworks returned", () => {
     props.collection.artworksConnection.edges.pop()
-    const component = mount(<RelatedCollectionEntity {...props} />)
+    const component = getWrapper()
     const artworkImage = component.find(ArtworkImage).at(0).getElement().props
 
     expect(component.find(ArtworkImage).length).toBe(2)
@@ -59,7 +68,7 @@ describe("RelatedCollectionEntity", () => {
 
   it("Renders a backup image if no artworks returned", () => {
     props.collection.artworksConnection.edges = []
-    const component = mount(<RelatedCollectionEntity {...props} />)
+    const component = getWrapper()
     const artworkImage = component.find(ArtworkImage).at(0).getElement().props
 
     expect(component.find(ArtworkImage).length).toBe(1)
@@ -70,7 +79,7 @@ describe("RelatedCollectionEntity", () => {
   })
 
   it("Tracks link clicks", () => {
-    const component = mount(<RelatedCollectionEntity {...props} />)
+    const component = getWrapper()
     component.find(StyledLink).simulate("click")
 
     expect(trackEvent).toBeCalledWith({

@@ -6,26 +6,24 @@ import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { resize } from "v2/Utils/resizer"
-import { CollectionContextTrackingArgs } from "v2/Apps/Collect/Routes/Collection"
 import { ContextModule, clickedCollectionGroup } from "@artsy/cohesion"
+import { useAnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
 
 export interface CollectionProps {
   member: OtherCollectionEntity_member
   itemNumber: number
-  trackingData: CollectionContextTrackingArgs
 }
 
 export const OtherCollectionEntity: React.FC<CollectionProps> = ({
   itemNumber,
-  member,
-  trackingData: {
+  member: { id, slug, thumbnail, title },
+}) => {
+  const { trackEvent } = useTracking()
+  const {
     contextPageOwnerId,
     contextPageOwnerSlug,
     contextPageOwnerType,
-  },
-}) => {
-  const { id, slug, thumbnail, title } = member
-  const { trackEvent } = useTracking()
+  } = useAnalyticsContext()
 
   const handleClick = () => {
     trackEvent(

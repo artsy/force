@@ -9,6 +9,7 @@ import { RelatedCollectionsRail } from "../RelatedCollectionsRail"
 import { paginateCarousel } from "@artsy/palette"
 import { OwnerType } from "@artsy/cohesion"
 import { useTracking } from "v2/Artsy/Analytics/useTracking"
+import { AnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
 
 jest.mock("v2/Artsy/Analytics/useTracking")
 jest.mock("@artsy/palette/dist/elements/Carousel/paginate")
@@ -17,15 +18,18 @@ jest.unmock("react-tracking")
 describe("CollectionsRail", () => {
   let props
   const trackEvent = jest.fn()
-  const trackingData = {
-    contextPageOwnerId: "1234",
-    contextPageOwnerSlug: "slug",
-    contextPageOwnerType: OwnerType.collection,
-  }
 
   const getWrapper = (passedProps = props) => {
     return mount(
-      <RelatedCollectionsRail {...passedProps} trackingData={trackingData} />
+      <AnalyticsContext.Provider
+        value={{
+          contextPageOwnerId: "1234",
+          contextPageOwnerSlug: "slug",
+          contextPageOwnerType: OwnerType.collection,
+        }}
+      >
+        <RelatedCollectionsRail {...passedProps} />
+      </AnalyticsContext.Provider>
     )
   }
 

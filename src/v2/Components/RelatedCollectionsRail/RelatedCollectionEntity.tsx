@@ -18,26 +18,19 @@ import { data as sd } from "sharify"
 import styled from "styled-components"
 import { get } from "v2/Utils/get"
 import { ContextModule, clickedCollectionGroup } from "@artsy/cohesion"
-import { CollectionContextTrackingArgs } from "v2/Apps/Collect/Routes/Collection"
+import { useAnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
 
 export interface CollectionProps {
   collection: RelatedCollectionEntity_collection
   lazyLoad?: boolean
-  trackingData: CollectionContextTrackingArgs
   slideIndex: number
 }
 
-export const RelatedCollectionEntity: React.FC<CollectionProps> = props => {
-  const {
-    lazyLoad,
-    collection,
-    slideIndex,
-    trackingData: {
-      contextPageOwnerId,
-      contextPageOwnerSlug,
-      contextPageOwnerType,
-    },
-  } = props
+export const RelatedCollectionEntity: React.FC<CollectionProps> = ({
+  lazyLoad,
+  collection,
+  slideIndex,
+}) => {
   const {
     artworksConnection,
     headerImage,
@@ -53,6 +46,11 @@ export const RelatedCollectionEntity: React.FC<CollectionProps> = props => {
   const imageSize =
     bgImages.length === 1 ? 262 : bgImages.length === 2 ? 130 : 86
   const { trackEvent } = useTracking()
+  const {
+    contextPageOwnerId,
+    contextPageOwnerSlug,
+    contextPageOwnerType,
+  } = useAnalyticsContext()
 
   const onLinkClick = () => {
     trackEvent(

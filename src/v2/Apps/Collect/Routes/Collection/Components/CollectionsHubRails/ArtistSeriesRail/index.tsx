@@ -5,18 +5,13 @@ import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { ArtistSeriesRailContainer as ArtistSeriesEntity } from "./ArtistSeriesEntity"
-import { CollectionContextTrackingArgs } from "v2/Apps/Collect/Routes/Collection"
 
 export interface ArtistSeriesRailProps {
   collectionGroup: ArtistSeriesRail_collectionGroup
-  trackingData: CollectionContextTrackingArgs
 }
 export const ArtistSeriesRail: React.FC<ArtistSeriesRailProps> = ({
-  collectionGroup,
-  trackingData,
+  collectionGroup: { members, name },
 }) => {
-  const { members, name } = collectionGroup
-
   return (
     <Content mt={2} py={3}>
       <Serif size="5" mb={1}>
@@ -30,7 +25,6 @@ export const ArtistSeriesRail: React.FC<ArtistSeriesRailProps> = ({
               key={slide.slug || slideIndex}
               member={slide}
               itemNumber={slideIndex}
-              trackingData={trackingData}
             />
           )
         })}

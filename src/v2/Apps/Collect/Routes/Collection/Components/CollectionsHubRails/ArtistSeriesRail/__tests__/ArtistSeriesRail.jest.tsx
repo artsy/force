@@ -6,6 +6,7 @@ import React from "react"
 import { ArtistSeriesRail } from "../index"
 import { paginateCarousel } from "@artsy/palette"
 import { OwnerType } from "@artsy/cohesion"
+import { AnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
 
 jest.mock("@artsy/palette/dist/elements/Carousel/paginate")
 jest.mock("v2/Artsy/Analytics/useTracking")
@@ -44,11 +45,6 @@ describe("ArtistSeriesRail", () => {
   beforeEach(() => {
     props = {
       collectionGroup: CollectionsHubLinkedCollections.linkedCollections[0],
-      trackingData: {
-        contextPageOwnerId: "1234",
-        contextPageOwnerSlug: "slug",
-        contextPageOwnerType: OwnerType.collection,
-      },
     }
     ;(useTracking as jest.Mock).mockImplementation(() => {
       return {
@@ -58,8 +54,22 @@ describe("ArtistSeriesRail", () => {
     ;(paginateCarousel as jest.Mock).mockImplementation(() => [0, 100, 200])
   })
 
+  const getWrapper = (passedProps = props) => {
+    return mount(
+      <AnalyticsContext.Provider
+        value={{
+          contextPageOwnerId: "1234",
+          contextPageOwnerSlug: "slug",
+          contextPageOwnerType: OwnerType.collection,
+        }}
+      >
+        <ArtistSeriesRail {...passedProps} />
+      </AnalyticsContext.Provider>
+    )
+  }
+
   it("showing the correct text, price guidance, and title", () => {
-    const component = mount(<ArtistSeriesRail {...props} />)
+    const component = getWrapper()
     expect(component.text()).toMatch("Artist Series")
     expect(component.text()).toMatch("Flags unique collections")
     expect(component.text()).toMatch("From $1,000")
@@ -76,7 +86,7 @@ describe("ArtistSeriesRail", () => {
         singleData(),
       ]
 
-      const component = mount(<ArtistSeriesRail {...props} />)
+      const component = getWrapper()
       component.find("a").at(2).simulate("click")
 
       expect(trackEvent).toBeCalledWith({

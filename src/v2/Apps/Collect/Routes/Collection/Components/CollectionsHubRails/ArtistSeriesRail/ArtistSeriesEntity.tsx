@@ -8,23 +8,17 @@ import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { get } from "v2/Utils/get"
-import { CollectionContextTrackingArgs } from "v2/Apps/Collect/Routes/Collection"
 import { ContextModule, clickedArtistSeriesGroup } from "@artsy/cohesion"
+import { useAnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
 
 export interface ArtistSeriesEntityProps {
   member: ArtistSeriesEntity_member
   itemNumber: number
-  trackingData: CollectionContextTrackingArgs
 }
 
 export const ArtistSeriesEntity: React.FC<ArtistSeriesEntityProps> = ({
   member,
   itemNumber,
-  trackingData: {
-    contextPageOwnerId,
-    contextPageOwnerSlug,
-    contextPageOwnerType,
-  },
 }) => {
   const {
     headerImage,
@@ -40,6 +34,11 @@ export const ArtistSeriesEntity: React.FC<ArtistSeriesEntityProps> = ({
     bgImages!.length === 1 ? 221 : bgImages!.length === 2 ? 109 : 72
 
   const { trackEvent } = useTracking()
+  const {
+    contextPageOwnerId,
+    contextPageOwnerSlug,
+    contextPageOwnerType,
+  } = useAnalyticsContext()
 
   const handleLinkClick = () => {
     trackEvent(

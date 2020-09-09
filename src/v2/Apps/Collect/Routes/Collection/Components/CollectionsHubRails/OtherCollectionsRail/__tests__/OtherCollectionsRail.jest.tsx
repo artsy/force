@@ -6,6 +6,7 @@ import React from "react"
 import { OtherCollectionsRail } from "../index"
 import { paginateCarousel } from "@artsy/palette"
 import { OwnerType } from "@artsy/cohesion"
+import { AnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
 
 jest.mock("@artsy/palette/dist/elements/Carousel/paginate")
 jest.mock("@artsy/palette", () => {
@@ -29,11 +30,6 @@ describe("CollectionsRail", () => {
   beforeEach(() => {
     props = {
       collectionGroup: CollectionHubFixture.linkedCollections[0],
-      trackingData: {
-        contextPageOwnerId: "1234",
-        contextPageOwnerSlug: "slug",
-        contextPageOwnerType: OwnerType.collection,
-      },
     }
     ;(useTracking as jest.Mock).mockImplementation(() => {
       return {
@@ -43,8 +39,22 @@ describe("CollectionsRail", () => {
     ;(paginateCarousel as jest.Mock).mockImplementation(() => [0, 100, 200])
   })
 
+  const getWrapper = (passedProps = props) => {
+    return mount(
+      <AnalyticsContext.Provider
+        value={{
+          contextPageOwnerId: "1234",
+          contextPageOwnerSlug: "slug",
+          contextPageOwnerType: OwnerType.collection,
+        }}
+      >
+        <OtherCollectionsRail {...passedProps} />
+      </AnalyticsContext.Provider>
+    )
+  }
+
   it("Renders expected fields", () => {
-    const component = mount(<OtherCollectionsRail {...props} />)
+    const component = getWrapper()
 
     expect(component.text()).toMatch("Other Collections")
     expect(component.text()).toMatch("Artist Posters")
@@ -54,7 +64,7 @@ describe("CollectionsRail", () => {
 
   describe("Tracking", () => {
     it("Tracks link click", () => {
-      const component = mount(<OtherCollectionsRail {...props} />)
+      const component = getWrapper()
       component.find("a").at(2).simulate("click")
 
       expect(trackEvent).toBeCalledWith({
