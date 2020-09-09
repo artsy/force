@@ -149,17 +149,6 @@ const analytics = window.analytics
     track("CollectorProfile data saved")
   })
 
-  bind("user_interests:add", function (context) {
-    let userInterest = context.userInterests.last()
-    track("User added an interest in artist", {
-      artist_id: userInterest.related().interest.id,
-    })
-  })
-
-  bind("user_interests:remove", function (context) {
-    track("User removed an interest in artist")
-  })
-
   bindOnce("inquiry:sync", function (context) {
     track("Inquiry successfully sent")
   })
