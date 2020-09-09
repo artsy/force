@@ -62,7 +62,7 @@
   },
   "dependencies": {
     "@artsy/backbone-mixins": "2.0.0",
-    "@artsy/cohesion": "1.33.5",
+    "@artsy/cohesion": "1.34.0",
     "@artsy/express-reloadable": "1.4.8",
     "@artsy/gemup": "0.1.0",
     "@artsy/palette": "12.5.0",
