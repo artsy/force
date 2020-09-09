@@ -13,7 +13,7 @@ describe("FairArtworks", () => {
     return renderRelayTree({
       Component: ({ fair }) => {
         return (
-          <MockBoot>
+          <MockBoot user={{ id: "percy-z" }}>
             <FairArtworksRefetchContainer fair={fair} />
           </MockBoot>
         )
@@ -21,7 +21,7 @@ describe("FairArtworks", () => {
       query: graphql`
         query FairArtworks_Query($slug: String!) @raw_response_type {
           fair(id: $slug) {
-            ...FairArtworks_fair
+            ...FairArtworks_fair @arguments(shouldFetchCounts: true)
           }
         }
       `,
@@ -35,6 +35,14 @@ describe("FairArtworks", () => {
     expect(wrapper.find("ArtworkFilterArtworkGrid").length).toBe(1)
     expect(wrapper.find("GridItem__ArtworkGridItem").length).toBe(2)
   })
+
+  it("includes the followed artist filter", async () => {
+    const wrapper = await getWrapper()
+    expect(wrapper.find("FollowedArtistsFilter").length).toBe(1)
+    expect(wrapper.find("FollowedArtistsFilter").text()).toMatch(
+      "Artists I Follow (10)"
+    )
+  })
 })
 
 const FAIR_ARTWORKS_FIXTURE: FairArtworks_QueryRawResponse = {
@@ -42,6 +50,9 @@ const FAIR_ARTWORKS_FIXTURE: FairArtworks_QueryRawResponse = {
     id: "xxx",
     filtered_artworks: {
       id: "filteredartworksabc123",
+      counts: {
+        followedArtists: 10,
+      },
       aggregations: [
         {
           slice: "INSTITUTION",
