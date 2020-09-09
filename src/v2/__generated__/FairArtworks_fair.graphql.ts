@@ -6,6 +6,9 @@ import { FragmentRefs } from "relay-runtime";
 export type FairArtworks_fair = {
     readonly filtered_artworks: {
         readonly id: string;
+        readonly counts?: {
+            readonly followedArtists: number | null;
+        } | null;
         readonly " $fragmentRefs": FragmentRefs<"ArtworkFilterArtworkGrid2_filtered_artworks">;
     } | null;
     readonly " $refType": "FairArtworks_fair";
@@ -48,6 +51,12 @@ const node: ReaderFragment = {
       "defaultValue": null,
       "kind": "LocalArgument",
       "name": "forSale",
+      "type": "Boolean"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "includeArtworksByFollowedArtists",
       "type": "Boolean"
     },
     {
@@ -103,6 +112,12 @@ const node: ReaderFragment = {
       "kind": "LocalArgument",
       "name": "sort",
       "type": "String"
+    },
+    {
+      "defaultValue": false,
+      "kind": "LocalArgument",
+      "name": "shouldFetchCounts",
+      "type": "Boolean"
     }
   ],
   "kind": "Fragment",
@@ -146,6 +161,11 @@ const node: ReaderFragment = {
           "kind": "Variable",
           "name": "forSale",
           "variableName": "forSale"
+        },
+        {
+          "kind": "Variable",
+          "name": "includeArtworksByFollowedArtists",
+          "variableName": "includeArtworksByFollowedArtists"
         },
         {
           "kind": "Variable",
@@ -206,6 +226,31 @@ const node: ReaderFragment = {
           "storageKey": null
         },
         {
+          "condition": "shouldFetchCounts",
+          "kind": "Condition",
+          "passingValue": true,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "FilterArtworksCounts",
+              "kind": "LinkedField",
+              "name": "counts",
+              "plural": false,
+              "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "followedArtists",
+                  "storageKey": null
+                }
+              ],
+              "storageKey": null
+            }
+          ]
+        },
+        {
           "args": null,
           "kind": "FragmentSpread",
           "name": "ArtworkFilterArtworkGrid2_filtered_artworks"
@@ -216,5 +261,5 @@ const node: ReaderFragment = {
   ],
   "type": "Fair"
 };
-(node as any).hash = 'b2c87e15d25257e3192ddc14bb99d71e';
+(node as any).hash = 'a6d10b9f523c42a0b3f9ff869ae1b431';
 export default node;

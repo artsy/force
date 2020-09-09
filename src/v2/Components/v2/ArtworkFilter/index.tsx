@@ -89,7 +89,8 @@ export const BaseArtworkFilter: React.FC<{
     | ArtistArtworkFilter_artist
     | ArtistSeriesArtworksFilter_artistSeries
     | FairArtworks_fair
-}> = ({ relay, viewer, relayVariables = {}, ...props }) => {
+  Filters?: React.FC
+}> = ({ relay, viewer, Filters, relayVariables = {}, ...props }) => {
   const { filtered_artworks } = viewer
   const hasFilter = filtered_artworks && filtered_artworks.id
 
@@ -185,7 +186,7 @@ export const BaseArtworkFilter: React.FC<{
             <ArtworkFilterMobileActionSheet
               onClose={() => toggleMobileActionSheet(false)}
             >
-              <ArtworkFilters />
+              {Filters ? <Filters /> : <ArtworkFilters />}
             </ArtworkFilterMobileActionSheet>
           )}
 
@@ -213,7 +214,7 @@ export const BaseArtworkFilter: React.FC<{
       <Media greaterThan="xs">
         <Flex>
           <Box width="25%" mr={2} mt={0.5}>
-            <ArtworkFilters />
+            {Filters ? <Filters /> : <ArtworkFilters />}
           </Box>
           <Box width="75%">
             <Box mb={2}>

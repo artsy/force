@@ -50,10 +50,11 @@ export const routes: RouteConfig[] = [
           query routes_FairArtworksQuery(
             $slug: String!
             $acquireable: Boolean
-            $aggregations: [ArtworkAggregation] = [TOTAL, GALLERY, MAJOR_PERIOD]
+            $aggregations: [ArtworkAggregation]
             $atAuction: Boolean
             $color: String
             $forSale: Boolean
+            $includeArtworksByFollowedArtists: Boolean
             $inquireableOnly: Boolean
             $majorPeriods: [String]
             $medium: String
@@ -63,6 +64,7 @@ export const routes: RouteConfig[] = [
             $priceRange: String
             $sizes: [ArtworkSizes]
             $sort: String
+            $shouldFetchCounts: Boolean!
           ) {
             fair(id: $slug) {
               ...FairArtworks_fair
@@ -73,6 +75,7 @@ export const routes: RouteConfig[] = [
                   color: $color
                   forSale: $forSale
                   partnerID: $partnerID
+                  includeArtworksByFollowedArtists: $includeArtworksByFollowedArtists
                   inquireableOnly: $inquireableOnly
                   majorPeriods: $majorPeriods
                   medium: $medium
@@ -81,6 +84,7 @@ export const routes: RouteConfig[] = [
                   priceRange: $priceRange
                   sizes: $sizes
                   sort: $sort
+                  shouldFetchCounts: $shouldFetchCounts
                 )
             }
           }
@@ -125,10 +129,15 @@ export const routes: RouteConfig[] = [
 function initializeVariablesWithFilterState(params, props) {
   const initialFilterState = props.location ? props.location.query : {}
 
+  let aggregations: string[] = ["TOTAL", "GALLERY", "MAJOR_PERIOD"]
+  if (props.context.user) aggregations = aggregations.concat("FOLLOWED_ARTISTS")
+
   const state = {
     sort: "-decayed_merch",
     ...paramsToCamelCase(initialFilterState),
     ...params,
+    aggregations,
+    shouldFetchCounts: !!props.context.user,
   }
 
   return state

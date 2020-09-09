@@ -20,9 +20,10 @@ export const WaysToBuyFilter: FC = () => {
    * If counts aren't passed, enable by default
    */
   const isDisabled = condition => {
-    if (isEmpty(filterContext.counts)) {
+    if (isEmpty(filterContext.counts) || condition === undefined) {
       return false
     }
+
     return !Boolean(condition)
   }
 

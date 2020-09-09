@@ -31,6 +31,7 @@ export interface ArtworkFilters {
   color?: string
   forSale?: boolean
   height?: string
+  includeArtworksByFollowedArtists?: boolean
   inquireableOnly?: boolean
   keyword?: string
   majorPeriods?: string[]
@@ -56,7 +57,6 @@ export type Aggregations = Array<{
   slice:
     | "COLOR"
     | "DIMENSION_RANGE"
-    | "FOLLOWED_ARTISTS"
     | "GALLERY"
     | "INSTITUTION"
     | "MAJOR_PERIOD"
@@ -79,6 +79,7 @@ interface Counts {
   auction_artworks?: number
   artworks?: number
   has_make_offer_artworks?: boolean
+  followedArtists?: number
 }
 
 // TODO: merge or make a generic base of `ArtworkFilterContextProps` and `AuctionResultsFilterContextProps`.
@@ -363,6 +364,7 @@ const artworkFilterReducer = (
         "acquireable",
         "atAuction",
         "forSale",
+        "includeArtworksByFollowedArtists",
         "inquireableOnly",
         "offerable",
       ]
@@ -417,6 +419,7 @@ const artworkFilterReducer = (
         "atAuction",
         "color",
         "forSale",
+        "includeArtworksByFollowedArtists",
         "inquireableOnly",
         "offerable",
         "partnerID",
