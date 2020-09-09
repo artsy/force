@@ -10,7 +10,7 @@ orbs:
 jobs:
   run_deepcrawl_automator:
     docker:
-      - image: cimg/base:2020.01
+      - image: cimg/base:2020.09
     environment:
       AUTOMATOR_START_ONLY: true
     steps:
