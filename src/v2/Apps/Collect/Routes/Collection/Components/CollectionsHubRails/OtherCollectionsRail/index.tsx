@@ -5,18 +5,13 @@ import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { OtherCollectionsRailsContainer as OtherCollectionEntity } from "./OtherCollectionEntity"
-import { CollectionContextTrackingArgs } from "v2/Apps/Collect/Routes/Collection"
 
 interface OtherCollectionsRailProps {
   collectionGroup: OtherCollectionsRail_collectionGroup
-  trackingData: CollectionContextTrackingArgs
 }
 export const OtherCollectionsRail: React.FC<OtherCollectionsRailProps> = ({
-  collectionGroup,
-  trackingData,
+  collectionGroup: { name, members },
 }) => {
-  const { name, members } = collectionGroup
-
   return (
     <Container mb={4}>
       <Serif size="5" mt={3} mb={2}>
@@ -30,7 +25,6 @@ export const OtherCollectionsRail: React.FC<OtherCollectionsRailProps> = ({
               key={index}
               member={slide}
               itemNumber={index}
-              trackingData={trackingData}
             />
           )
         })}

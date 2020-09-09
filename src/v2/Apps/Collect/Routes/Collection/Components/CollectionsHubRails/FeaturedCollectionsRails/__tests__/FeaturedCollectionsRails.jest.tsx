@@ -10,6 +10,7 @@ import {
 } from "../index"
 import { paginateCarousel } from "@artsy/palette"
 import { OwnerType } from "@artsy/cohesion"
+import { AnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
 
 jest.mock("@artsy/palette/dist/elements/Carousel/paginate")
 jest.mock("v2/Artsy/Analytics/useTracking")
@@ -19,23 +20,26 @@ jest.mock("found", () => ({
   RouterContext: jest.requireActual("found").RouterContext,
 }))
 
-const trackingData = {
-  contextPageOwnerId: "1234",
-  contextPageOwnerSlug: "slug",
-  contextPageOwnerType: OwnerType.collection,
-}
-
 describe("FeaturedCollectionsRails", () => {
   let props
   const trackEvent = jest.fn()
   const getWrapper = (passedProps = props) => {
-    return mount(<FeaturedCollectionsRails {...passedProps} />)
+    return mount(
+      <AnalyticsContext.Provider
+        value={{
+          contextPageOwnerId: "1234",
+          contextPageOwnerSlug: "slug",
+          contextPageOwnerType: OwnerType.collection,
+        }}
+      >
+        <FeaturedCollectionsRails {...passedProps} />
+      </AnalyticsContext.Provider>
+    )
   }
 
   beforeEach(() => {
     props = {
       collectionGroup: CollectionHubFixture.linkedCollections[1],
-      trackingData,
     }
     ;(useTracking as jest.Mock).mockImplementation(() => {
       return {

@@ -18,20 +18,16 @@ import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { resize } from "v2/Utils/resizer"
 import { Media } from "v2/Utils/Responsive"
-import { CollectionContextTrackingArgs } from "v2/Apps/Collect/Routes/Collection"
 import { ContextModule, clickedCollectionGroup } from "@artsy/cohesion"
+import { useAnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
 
 interface Props {
   collectionGroup: FeaturedCollectionsRails_collectionGroup
-  trackingData: CollectionContextTrackingArgs
 }
 
 export const FeaturedCollectionsRails: React.FC<Props> = ({
-  collectionGroup,
-  trackingData,
+  collectionGroup: { members, name },
 }) => {
-  const { members, name } = collectionGroup
-
   return (
     <FeaturedCollectionsContainer>
       <Serif size="5" mt={3} mb={1}>
@@ -45,7 +41,6 @@ export const FeaturedCollectionsRails: React.FC<Props> = ({
               key={slide.slug}
               member={slide}
               itemNumber={slideIndex}
-              trackingData={trackingData}
             />
           )
         })}
@@ -59,24 +54,24 @@ export const FeaturedCollectionsRails: React.FC<Props> = ({
 interface FeaturedCollectionEntityProps {
   member: any
   itemNumber: number
-  trackingData: CollectionContextTrackingArgs
 }
 
 export const FeaturedCollectionEntity: React.FC<FeaturedCollectionEntityProps> = ({
   itemNumber,
   member,
-  trackingData: {
-    contextPageOwnerId,
-    contextPageOwnerSlug,
-    contextPageOwnerType,
-  },
 }) => {
   const { description, price_guidance, slug, id, thumbnail, title } = member
-  const { trackEvent } = useTracking()
   const formattedPrice = currency(price_guidance, {
     separator: ",",
     precision: 0,
   }).format()
+
+  const { trackEvent } = useTracking()
+  const {
+    contextPageOwnerId,
+    contextPageOwnerSlug,
+    contextPageOwnerType,
+  } = useAnalyticsContext()
 
   const handleClick = () => {
     trackEvent(

@@ -8,19 +8,17 @@ import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import Waypoint from "react-waypoint"
 import { RelatedCollectionEntityFragmentContainer as RelatedCollectionEntity } from "./RelatedCollectionEntity"
-import { CollectionContextTrackingArgs } from "v2/Apps/Collect/Routes/Collection"
 
 interface RelatedCollectionsRailProps {
   collections: RelatedCollectionsRail_collections
   title?: string
   lazyLoadImages?: boolean
-  trackingData: CollectionContextTrackingArgs
 }
 
 export const RelatedCollectionsRail: React.FC<RelatedCollectionsRailProps> = props => {
   const { trackEvent } = useTracking()
   const { collections } = props
-  const { title, lazyLoadImages, trackingData } = props
+  const { title, lazyLoadImages } = props
   const collectionsWithArtworks = collections.filter(collection =>
     Boolean(collection.artworksConnection)
   )
@@ -49,7 +47,6 @@ export const RelatedCollectionsRail: React.FC<RelatedCollectionsRailProps> = pro
                 key={i}
                 lazyLoad={lazyLoadImages}
                 collection={slide}
-                trackingData={trackingData}
                 slideIndex={i}
               />
             )

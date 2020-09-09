@@ -4,35 +4,16 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { ArtistSeriesRailContainer as ArtistSeriesRail } from "./ArtistSeriesRail"
 import { FeaturedCollectionsRailsContainer as FeaturedCollectionsRails } from "./FeaturedCollectionsRails"
 import { OtherCollectionsRailsContainer as OtherCollectionsRail } from "./OtherCollectionsRail"
-import { CollectionContextTrackingArgs } from "v2/Apps/Collect/Routes/Collection"
 
-const railForGroupType = (
-  collectionGroup,
-  trackingData: CollectionContextTrackingArgs
-) => {
+const railForGroupType = collectionGroup => {
   const { groupType } = collectionGroup
   switch (groupType) {
     case "ArtistSeries":
-      return (
-        <ArtistSeriesRail
-          collectionGroup={collectionGroup}
-          trackingData={trackingData}
-        />
-      )
+      return <ArtistSeriesRail collectionGroup={collectionGroup} />
     case "FeaturedCollections":
-      return (
-        <FeaturedCollectionsRails
-          collectionGroup={collectionGroup}
-          trackingData={trackingData}
-        />
-      )
+      return <FeaturedCollectionsRails collectionGroup={collectionGroup} />
     case "OtherCollections":
-      return (
-        <OtherCollectionsRail
-          collectionGroup={collectionGroup}
-          trackingData={trackingData}
-        />
-      )
+      return <OtherCollectionsRail collectionGroup={collectionGroup} />
     default:
       return null
   }
@@ -40,17 +21,13 @@ const railForGroupType = (
 
 interface Props {
   linkedCollections: CollectionsHubRails_linkedCollections
-  trackingData: CollectionContextTrackingArgs
 }
 
-export const CollectionsHubRails = ({
-  linkedCollections,
-  trackingData,
-}: Props) => {
+export const CollectionsHubRails = ({ linkedCollections }: Props) => {
   return (
     <>
       {linkedCollections.map((collectionGroup, index) => (
-        <div key={index}>{railForGroupType(collectionGroup, trackingData)}</div>
+        <div key={index}>{railForGroupType(collectionGroup)}</div>
       ))}
     </>
   )

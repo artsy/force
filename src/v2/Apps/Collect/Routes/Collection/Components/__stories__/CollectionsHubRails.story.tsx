@@ -7,7 +7,6 @@ import { graphql } from "react-relay"
 import { storiesOf } from "storybook/storiesOf"
 import styled from "styled-components"
 import { CollectionsHubRailsContainer as CollectionsHubRails } from "../CollectionsHubRails"
-import { OwnerType } from "@artsy/cohesion"
 
 const RailsContainer = styled(Box)`
   max-width: 1250px;
@@ -51,16 +50,7 @@ export const CollectionHubRailsQueryRenderer: React.FC<Props> = ({
         render={({ props }) => {
           if (props) {
             const { linkedCollections } = props.marketingCollection
-            return (
-              <CollectionsHubRails
-                linkedCollections={linkedCollections}
-                trackingData={{
-                  contextPageOwnerId: "123",
-                  contextPageOwnerSlug: "slug",
-                  contextPageOwnerType: OwnerType.collection,
-                }}
-              />
-            )
+            return <CollectionsHubRails linkedCollections={linkedCollections} />
           } else {
             return null
           }

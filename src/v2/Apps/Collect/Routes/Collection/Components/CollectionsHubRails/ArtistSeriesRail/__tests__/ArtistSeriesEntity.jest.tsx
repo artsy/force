@@ -7,6 +7,8 @@ import {
   ArtworkImage,
   StyledLink,
 } from "../ArtistSeriesEntity"
+import { OwnerType } from "@artsy/cohesion"
+import { AnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
 
 jest.mock("v2/Artsy/Analytics/useTracking")
 jest.mock("found", () => ({
@@ -21,11 +23,6 @@ describe("ArtistSeriesEntity", () => {
   beforeEach(() => {
     props = {
       member: CollectionsHubLinkedCollections.linkedCollections[0].members[0],
-      trackingData: {
-        contextPageOwnerId: "1234",
-        contextPageOwnerSlug: "slug",
-        contextPageOwnerType: "Collection",
-      },
     }
     ;(useTracking as jest.Mock).mockImplementation(() => {
       return {
@@ -34,8 +31,22 @@ describe("ArtistSeriesEntity", () => {
     })
   })
 
+  const getWrapper = (passedProps = props) => {
+    return mount(
+      <AnalyticsContext.Provider
+        value={{
+          contextPageOwnerId: "1234",
+          contextPageOwnerSlug: "slug",
+          contextPageOwnerType: OwnerType.collection,
+        }}
+      >
+        <ArtistSeriesEntity {...passedProps} />
+      </AnalyticsContext.Provider>
+    )
+  }
+
   it("showing the correct text, price guidance, amount of hits and image", () => {
-    const component = mount(<ArtistSeriesEntity {...props} />)
+    const component = getWrapper()
     expect(component.text()).toMatch("Flags unique collections")
     expect(component.text()).toMatch("From $1,000")
     expect(component.find(ArtworkImage).length).toBe(3)
@@ -45,14 +56,14 @@ describe("ArtistSeriesEntity", () => {
   })
 
   it("uses small image width when there are more than 2 hits", () => {
-    const component = mount(<ArtistSeriesEntity {...props} />)
+    const component = getWrapper()
     expect(component.find(ArtworkImage).length).toBe(3)
     expect(component.find(ArtworkImage).at(0).getElement().props.width).toBe(72)
   })
 
   it("uses medium image width when there are only 2 hits", () => {
     props.member.artworksConnection.edges.pop()
-    const component = mount(<ArtistSeriesEntity {...props} />)
+    const component = getWrapper()
     expect(component.find(ArtworkImage).length).toBe(2)
     expect(component.find(ArtworkImage).at(0).getElement().props.width).toBe(
       109
@@ -61,7 +72,7 @@ describe("ArtistSeriesEntity", () => {
 
   it("uses large image width when there is exactly 1 hit", () => {
     props.member.artworksConnection.edges.pop()
-    const component = mount(<ArtistSeriesEntity {...props} />)
+    const component = getWrapper()
     expect(component.find(ArtworkImage).length).toBe(1)
     expect(component.find(ArtworkImage).at(0).getElement().props.width).toBe(
       221
@@ -69,7 +80,7 @@ describe("ArtistSeriesEntity", () => {
   })
 
   it("uses the hit title for alt text if there is no artist", () => {
-    const component = mount(<ArtistSeriesEntity {...props} />)
+    const component = getWrapper()
     expect(component.find(ArtworkImage).at(0).getElement().props.alt).toMatch(
       "A great flag from Jasper"
     )
@@ -77,7 +88,7 @@ describe("ArtistSeriesEntity", () => {
 
   it("uses the artist name and title for alt text if there is an artist", () => {
     props.member.artworksConnection.edges[0].node.artist.name = "Jasper Johns"
-    const component = mount(<ArtistSeriesEntity {...props} />)
+    const component = getWrapper()
     expect(component.find(ArtworkImage).at(0).getElement().props.alt).toMatch(
       "Jasper Johns, A great flag from Jasper"
     )
@@ -85,14 +96,13 @@ describe("ArtistSeriesEntity", () => {
 
   it("if price_guidance is missing, NOT showing 'From $' ", () => {
     delete props.member.price_guidance
-    const component = mount(<ArtistSeriesEntity {...props} />)
+    const component = getWrapper()
     expect(component.text()).not.toMatch("From $")
   })
 
   describe("Tracking", () => {
     it("Tracks collection click", () => {
-      const component = mount(<ArtistSeriesEntity {...props} itemNumber={0} />)
-
+      const component = getWrapper()
       component.find(StyledLink).at(0).simulate("click")
 
       expect(trackEvent).toBeCalledWith({
