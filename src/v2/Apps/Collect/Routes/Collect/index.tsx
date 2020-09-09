@@ -110,7 +110,7 @@ export const CollectApp: React.FC<CollectAppProps> = ({
                         contextPageOwnerType,
                         destinationPageOwnerId: artwork.internalID,
                         destinationPageOwnerSlug: artwork.slug,
-                      }) as any
+                      })
                     )
                   }}
                   onChange={filters => {

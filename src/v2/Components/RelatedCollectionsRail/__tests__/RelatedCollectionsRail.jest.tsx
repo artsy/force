@@ -85,6 +85,8 @@ describe("CollectionsRail", () => {
       expect(trackEvent).toBeCalledWith({
         action_type: "Impression",
         context_module: "CollectionsRail",
+        context_page_owner_id: "1234",
+        context_page_owner_slug: "slug",
         context_page_owner_type: "Collection",
       })
     })

@@ -8,6 +8,7 @@ import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import Waypoint from "react-waypoint"
 import { RelatedCollectionEntityFragmentContainer as RelatedCollectionEntity } from "./RelatedCollectionEntity"
+import { useAnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
 
 interface RelatedCollectionsRailProps {
   collections: RelatedCollectionsRail_collections
@@ -22,11 +23,15 @@ export const RelatedCollectionsRail: React.FC<RelatedCollectionsRailProps> = pro
   const collectionsWithArtworks = collections.filter(collection =>
     Boolean(collection.artworksConnection)
   )
+  const { contextPageOwnerId, contextPageOwnerSlug } = useAnalyticsContext()
 
   const trackImpression = () => {
+    // FIXME: old schema
     trackEvent({
       action_type: Schema.ActionType.Impression,
       context_module: Schema.ContextModule.CollectionsRail,
+      context_page_owner_id: contextPageOwnerId,
+      context_page_owner_slug: contextPageOwnerSlug,
       context_page_owner_type: Schema.OwnerType.Collection,
     })
   }

@@ -164,7 +164,7 @@ export class CollectionApp extends Component<CollectionAppProps> {
                               contextPageOwnerSlug,
                               destinationPageOwnerId: artwork.internalID,
                               destinationPageOwnerSlug: artwork.slug,
-                            }) as any
+                            })
                           )
                         }}
                       >
