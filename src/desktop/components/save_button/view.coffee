@@ -1,6 +1,5 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-analyticsHooks = require '../../lib/analytics_hooks.coffee'
 { modelNameAndIdToLabel } = require '../../lib/analytics_helpers.coffee'
 { openAuthModal } = require '../../lib/openAuthModal'
 { ModalType } = require "../../../v2/Components/Authentication/Types"
@@ -51,10 +50,10 @@ module.exports = class SaveButton extends Backbone.View
 
     if @model.isSaved @saved
       @saved.unsaveArtwork @model.id
-      analyticsHooks.trigger 'save:remove-artwork', trackedProperties
+      window.analytics.track("Removed Artwork", trackedProperties)
     else
       @saved.saveArtwork @model.id, notes: (@notes or @analyticsSaveMessage)
-      analyticsHooks.trigger 'save:save-artwork', trackedProperties
+      window.analytics.track("Saved Artwork", trackedProperties)
 
       # Delay label change
       @$el.addClass 'is-clicked'

@@ -23,6 +23,7 @@ module.exports = class SidebarView extends Backbone.View
     @setupSearch()
 
   toggleForSale: (e) ->
+    window.analytics.track('Toggled "For Sale" on "Works For You" page')
     forSale = $(e.currentTarget).prop('checked')
     artist = @$selectedArtist.attr 'data-artist' if @$selectedArtist
     grid.setupReactGrid({forSale: forSale, artistID: artist})

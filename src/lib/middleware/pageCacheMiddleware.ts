@@ -13,7 +13,7 @@ import {
   PAGE_CACHE_VERSION,
 } from "../../config"
 import { NextFunction, Request, Response } from "express"
-const cache = require("lib/cache.coffee")
+const cache = require("lib/cache")
 const runningTests = Object.keys(
   require("desktop/components/split_test/running_tests.coffee")
 ).sort()

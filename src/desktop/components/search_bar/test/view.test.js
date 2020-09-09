@@ -19,6 +19,7 @@ describe("SearchBarView", function () {
         $: benv.require("jquery"),
         jQuery: benv.require("jquery"),
         sd: {},
+        analytics: { track: sinon.stub() },
       })
       Backbone.$ = $
       SearchBarView = benv.require(require.resolve("../view"))
