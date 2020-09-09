@@ -63,8 +63,8 @@ const Registration: React.FC<{
     window.analytics.track('Clicked "Register to bid"', {
       context_type: "auctions landing",
       auction_slug: auction.id,
-      auction_state: auction.auction_state,
-      user_id: user.id,
+      auction_state: auction.get("auction_state"),
+      user_id: user && user.id,
     })
   }
 

@@ -44,7 +44,7 @@ function trackableArtistIds(changed, filterParams) {
 
 function trackParamChange(changed, newState) {
   const USER_ID = sd.CURRENT_USER ? sd.CURRENT_USER.id : null
-  const AUCTION_ID = sd.AUCTION && sd.AUCTION.id
+  const { _id, id } = sd.AUCTION
 
   const { filterParams } = newState.artworkBrowser
   const current = [
@@ -55,8 +55,8 @@ function trackParamChange(changed, newState) {
   ]
 
   window.analytics.track("Commercial filter params changed", {
-    sale_id: AUCTION_ID,
-    auction_slug: sd.AUCTION.slug,
+    sale_id: _id,
+    auction_slug: id,
     user_id: USER_ID,
     current,
     changed,

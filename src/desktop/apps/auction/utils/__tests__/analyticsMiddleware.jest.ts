@@ -5,8 +5,8 @@ import { analyticsMiddleware } from "../analyticsMiddleware"
 jest.mock("sharify", () => ({
   data: {
     AUCTION: {
-      id: "123",
-      slug: "auction-slug",
+      _id: "123",
+      id: "auction-slug",
     },
     CURRENT_USER: { id: "321" },
   },
