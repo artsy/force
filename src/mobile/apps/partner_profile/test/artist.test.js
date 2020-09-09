@@ -21,7 +21,10 @@ describe("PartnerArtistView", function () {
     return benv.setup(() => {
       this._location = global.location
       global.location = { search: "" }
-      benv.expose({ $: benv.require("jquery") })
+      benv.expose({
+        $: benv.require("jquery"),
+        analytics: { track: sinon.stub() },
+      })
       Backbone.$ = $
       sinon.stub(Backbone, "sync")
       return benv.render(

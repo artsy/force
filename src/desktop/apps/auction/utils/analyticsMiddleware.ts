@@ -1,11 +1,8 @@
 import * as actions from "desktop/apps/auction/actions/artworkBrowser"
-import _analyticsHooks from "desktop/lib/analytics_hooks.coffee"
 import { isEqual } from "underscore"
+import { data as sd } from "sharify"
 
-// FIXME: Rewire
-let analyticsHooks = _analyticsHooks
-
-const analyticsMiddleware = store => next => action => {
+export const analyticsMiddleware = store => next => action => {
   const result = next(action)
   const nextState = store.getState()
 
@@ -46,16 +43,22 @@ function trackableArtistIds(changed, filterParams) {
 }
 
 function trackParamChange(changed, newState) {
+  const USER_ID = sd.CURRENT_USER ? sd.CURRENT_USER.id : null
+  const { _id, id } = sd.AUCTION
+
   const { filterParams } = newState.artworkBrowser
-  analyticsHooks.trigger("auction:artworks:params:change", {
-    current: [
-      { artists: trackableArtistIds(changed, filterParams) },
-      { medium: filterParams.gene_ids },
-      { sort: filterParams.sort },
-      { price: filterParams.estimate_range },
-    ],
+  const current = [
+    { artists: trackableArtistIds(changed, filterParams) },
+    { medium: filterParams.gene_ids },
+    { sort: filterParams.sort },
+    { price: filterParams.estimate_range },
+  ]
+
+  window.analytics.track("Commercial filter params changed", {
+    sale_id: _id,
+    auction_slug: id,
+    user_id: USER_ID,
+    current,
     changed,
   })
 }
-
-export default analyticsMiddleware

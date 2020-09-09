@@ -27,18 +27,31 @@ function ActiveBidItem(props) {
   })
 
   const b = block("auction-ActiveBidItem")
+  const trackBidClick = e => {
+    window.analytics.track('Clicked "Bid"', {
+      auction_slug: sale_id,
+      user_id: user && user.id,
+      context_type: "your active bids",
+      artwork_slug: artwork.id, //FIXME: check typings
+    })
+  }
 
   return (
     <div className={b()} data-artwork_id={id}>
       <div className={b("artwork-container")}>
         <a href={artwork.href}>
-          <img className={b("img")} src={artwork.image.url} />
+          <img
+            className={b("img")}
+            src={artwork.image.url}
+            alt={artwork.title}
+          />
         </a>
       </div>
 
       <div className={b("artwork")}>
-        {isMobile &&
-          BidStatus && <BidStatus bid={bid} saleArtwork={bid.sale_artwork} />}
+        {isMobile && BidStatus && (
+          <BidStatus bid={bid} saleArtwork={bid.sale_artwork} />
+        )}
 
         <div className={b("lot-number")}>Lot {lot_label}</div>
         <h3>{get(artwork, "artist.name", "")}</h3>
@@ -47,13 +60,12 @@ function ActiveBidItem(props) {
           {artwork.date}
         </div>
 
-        {isMobile &&
-          highest_bid && (
-            <div className={b("current-and-bids")}>
-              {highest_bid.display}{" "}
-              {`(${bidCount} Bid${bidCount > 1 ? "s" : ""})`}
-            </div>
-          )}
+        {isMobile && highest_bid && (
+          <div className={b("current-and-bids")}>
+            {highest_bid.display}{" "}
+            {`(${bidCount} Bid${bidCount > 1 ? "s" : ""})`}
+          </div>
+        )}
       </div>
 
       {highest_bid && (
@@ -83,15 +95,15 @@ function ActiveBidItem(props) {
         )
       )}
 
-      {!isMobile &&
-        !sale.is_live_open && (
-          <a
-            href={artwork.href}
-            className={"avant-garde-button-white " + b("bid-button")}
-          >
-            Bid
-          </a>
-        )}
+      {!isMobile && !sale.is_live_open && (
+        <a
+          href={artwork.href}
+          className={"avant-garde-button-white " + b("bid-button")}
+          onClick={trackBidClick}
+        >
+          Bid
+        </a>
+      )}
     </div>
   )
 }
