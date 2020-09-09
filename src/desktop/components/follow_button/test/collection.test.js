@@ -19,8 +19,12 @@ const CurrentUser = require("../../../models/current_user.coffee")
 describe("Following collection", function () {
   before(done =>
     benv.setup(function () {
-      benv.expose({ $: benv.require("jquery"), jQuery: benv.require("jquery") })
-      return done()
+      benv.expose({
+        $: benv.require("jquery"),
+        jQuery: benv.require("jquery"),
+        analytics: { track: sinon.stub() },
+      })
+      done()
     })
   )
   after(() => benv.teardown())
@@ -80,20 +84,20 @@ describe("Following collection", function () {
       this.following.syncFollows([this.follow2.get("profile").id])
       fetchSpy.callCount.should.equal(0)
       fetchSpy.restore()
-      return CurrentUser.orNull.restore()
+      CurrentUser.orNull.restore()
     }))
 
-  return describe("with a current user", function () {
+  describe("with a current user", function () {
     beforeEach(function () {
       this.profileId1 = this.follow1.get("profile").id
       this.profileId2 = this.follow2.get("profile").id
       sinon.stub(Backbone, "sync").yieldsTo("success")
-      return (sd.CURRENT_USER = "existy")
+      sd.CURRENT_USER = "existy"
     })
 
     afterEach(function () {
       delete this.profileId1
-      return Backbone.sync.restore()
+      Backbone.sync.restore()
     })
 
     describe("#syncFollows", function () {
@@ -107,23 +111,23 @@ describe("Following collection", function () {
         Backbone.sync.args[0][2].success([this.follow2.attributes])
         onAdd.callCount.should.equal(1)
         this.following.should.have.lengthOf(2)
-        return this.following
+        this.following
           .findByModelId(this.profileId2)
           .id.should.equal(this.follow2.id)
       })
 
       it("should not cache the result and retain models", function () {
         this.following.syncFollows([this.profileId2])
-        return Backbone.sync.args[0][2].cache.should.be.false()
+        Backbone.sync.args[0][2].cache.should.be.false()
       })
 
       it("should retain the models when fetching", function () {
         this.following.syncFollows([this.profileId2])
         Backbone.sync.args[0][2].remove.should.be.false()
-        return Backbone.sync.args[0][2].merge.should.be.true()
+        Backbone.sync.args[0][2].merge.should.be.true()
       })
 
-      return it("breaks sync requests up so that no more than @maxSyncSize are requested at a time", function () {
+      it("breaks sync requests up so that no more than @maxSyncSize are requested at a time", function () {
         let n
         const profileIds = []
         sinon.spy(this.following, "syncFollows")
@@ -173,13 +177,13 @@ describe("Following collection", function () {
         onAdd.callCount.should.equal(1)
         onSuccess.callCount.should.equal(1)
         this.following.should.have.lengthOf(2)
-        return this.following
+        this.following
           .findByModelId(this.profileId2)
           .get("profile_id")
           .should.equal(this.profileId2)
       }))
 
-    return describe("#unfollow", () =>
+    describe("#unfollow", () =>
       it("destroys a follow through the API and updates the collection", function () {
         this.following.add(this.follow2)
         this.following.should.have.lengthOf(2)
@@ -193,7 +197,7 @@ describe("Following collection", function () {
         )
         onRemove.callCount.should.equal(1)
         onSuccess.callCount.should.equal(1)
-        return this.following.should.have.lengthOf(1)
+        this.following.should.have.lengthOf(1)
       }))
   })
 })
