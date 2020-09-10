@@ -5,7 +5,7 @@ import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type SearchEntity = "ARTICLE" | "ARTIST" | "ARTIST_SERIES" | "ARTWORK" | "CITY" | "COLLECTION" | "FAIR" | "FEATURE" | "GALLERY" | "GENE" | "INSTITUTION" | "PAGE" | "PROFILE" | "SALE" | "SHOW" | "TAG" | "%future added value";
 export type routes_SearchResultsEntityQueryVariables = {
-    term: string;
+    keyword: string;
     entities?: Array<SearchEntity | null> | null;
     page?: number | null;
 };
@@ -23,12 +23,12 @@ export type routes_SearchResultsEntityQuery = {
 
 /*
 query routes_SearchResultsEntityQuery(
-  $term: String!
+  $keyword: String!
   $entities: [SearchEntity]
   $page: Int
 ) {
   viewer {
-    ...SearchResultsEntity_viewer_1qCJIT
+    ...SearchResultsEntity_viewer_gkVBu
   }
 }
 
@@ -54,8 +54,8 @@ fragment Pagination_pageCursors on PageCursors {
   }
 }
 
-fragment SearchResultsEntity_viewer_1qCJIT on Viewer {
-  searchConnection(query: $term, first: 10, page: $page, entities: $entities) @principalField {
+fragment SearchResultsEntity_viewer_gkVBu on Viewer {
+  searchConnection(query: $keyword, first: 10, page: $page, entities: $entities) @principalField {
     pageInfo {
       hasNextPage
       endCursor
@@ -88,7 +88,7 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "term",
+    "name": "keyword",
     "type": "String!"
   },
   {
@@ -161,7 +161,7 @@ return {
               {
                 "kind": "Variable",
                 "name": "term",
-                "variableName": "term"
+                "variableName": "keyword"
               }
             ],
             "kind": "FragmentSpread",
@@ -200,7 +200,7 @@ return {
               {
                 "kind": "Variable",
                 "name": "query",
-                "variableName": "term"
+                "variableName": "keyword"
               }
             ],
             "concreteType": "SearchableConnection",
@@ -384,9 +384,9 @@ return {
     "metadata": {},
     "name": "routes_SearchResultsEntityQuery",
     "operationKind": "query",
-    "text": "query routes_SearchResultsEntityQuery(\n  $term: String!\n  $entities: [SearchEntity]\n  $page: Int\n) {\n  viewer {\n    ...SearchResultsEntity_viewer_1qCJIT\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n\nfragment SearchResultsEntity_viewer_1qCJIT on Viewer {\n  searchConnection(query: $term, first: 10, page: $page, entities: $entities) @principalField {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        __typename\n        ... on SearchableItem {\n          description\n          displayLabel\n          href\n          internalID\n          imageUrl\n          displayType\n        }\n        ... on Node {\n          id\n        }\n      }\n    }\n  }\n}\n"
+    "text": "query routes_SearchResultsEntityQuery(\n  $keyword: String!\n  $entities: [SearchEntity]\n  $page: Int\n) {\n  viewer {\n    ...SearchResultsEntity_viewer_gkVBu\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n\nfragment SearchResultsEntity_viewer_gkVBu on Viewer {\n  searchConnection(query: $keyword, first: 10, page: $page, entities: $entities) @principalField {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        __typename\n        ... on SearchableItem {\n          description\n          displayLabel\n          href\n          internalID\n          imageUrl\n          displayType\n        }\n        ... on Node {\n          id\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'fe6c5e86fda971399b1d8f8dc6edb0df';
+(node as any).hash = '7f840e4f16ba4fd4df026f3a972cf6c5';
 export default node;
