@@ -6,7 +6,19 @@ ArtistSuggestions = require './artist_suggestions.coffee'
 { ARTIST_PAGE_CTA_ENABLED } = require('sharify').data
 { openAuthModal } = require '../../lib/openAuthModal'
 { ModalType } = require "../../../v2/Components/Authentication/Types"
-{ Intent } = require "@artsy/cohesion"
+{
+  Intent,
+  ActionType,
+  followedArtist,
+  unfollowedArtist
+  followedFair,
+  unfollowedFair
+  followedGene,
+  unfollowedGene
+  followedPartner,
+  unfollowedPartner
+} = require "@artsy/cohesion"
+{ trackEvent } = require "../../analytics/helpers.ts"
 
 module.exports = class FollowButton extends Backbone.View
 
@@ -74,19 +86,31 @@ module.exports = class FollowButton extends Backbone.View
       })
       return false
 
-    # remove null values
-    analyticsOptions = _.pick
-      entity_slug: @model.id
-      entity_id: @model.get('_id')
-      context_page: @context_page
-      context_module: @context_module
-    , _.identity
+    analyticsOptions = {
+      context_module: @context_module,
+      context_owner_id: @context_page_owner_id,
+      context_owner_slug: @context_page_owner_slug,
+      context_owner_type: @context_page,
+      ownder_id: @model.get('_id'),
+      owner_slug: @model.id,
+    }
 
+    # trackEvent
     if @following.isFollowing @model.id
       @following.unfollow @model.id
       mediator.trigger 'follow-button:unfollow', @$el, @model
       @trigger 'unfollowed'
-      window.analytics.track("Unfollowed #{@modelName}", analyticsOptions)
+      switch @modelName
+        when 'artist'
+          trackEvent(unfollowedArtist(analyticsOptions))
+        when 'fair'
+          trackEvent(unfollowedFair(analyticsOptions))
+        when 'gene'
+          trackEvent(unfollowedGene(analyticsOptions))
+        when 'profile'
+          trackEvent(unfollowedPartner(analyticsOptions))
+        else
+          window.analytics.track("Unfollowed #{@modelName}", analyticsOptions)
     else
       @following.follow @model.id, notes: (@notes or @analyticsFollowMessage)
       $('.artist-suggestion-popover').remove()
@@ -98,6 +122,16 @@ module.exports = class FollowButton extends Backbone.View
       setTimeout (=> @$el.removeClass 'is-clicked'), 1500
       mediator.trigger 'follow-button:follow', @$el, @model
       @trigger 'followed'
-      window.analytics.track("Followed #{@modelName}", analyticsOptions)
+      switch @modelName
+        when 'artist'
+          trackEvent(followedArtist(analyticsOptions))
+        when 'fair'
+          trackEvent(followedFair(analyticsOptions))
+        when 'gene'
+          trackEvent(followedGene(analyticsOptions))
+        when 'profile'
+          trackEvent(followedPartner(analyticsOptions))
+        else
+          window.analytics.track("Followed #{@modelName}", analyticsOptions)
 
     false
