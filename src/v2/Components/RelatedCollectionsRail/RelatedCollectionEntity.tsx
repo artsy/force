@@ -9,8 +9,7 @@ import {
   color,
 } from "@artsy/palette"
 import { RelatedCollectionEntity_collection } from "v2/__generated__/RelatedCollectionEntity_collection.graphql"
-import { track } from "v2/Artsy/Analytics"
-import * as Schema from "v2/Artsy/Analytics/Schema"
+import { useTracking } from "v2/Artsy/Analytics"
 import currency from "currency.js"
 import { compact } from "lodash"
 import React from "react"
@@ -18,85 +17,98 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { data as sd } from "sharify"
 import styled from "styled-components"
 import { get } from "v2/Utils/get"
+import { ContextModule, clickedCollectionGroup } from "@artsy/cohesion"
+import { useAnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
 
 export interface CollectionProps {
   collection: RelatedCollectionEntity_collection
   lazyLoad?: boolean
+  slideIndex: number
 }
 
-@track()
-export class RelatedCollectionEntity extends React.Component<CollectionProps> {
-  @track<CollectionProps>(({ collection }) => ({
-    action_type: Schema.ActionType.Click,
-    context_module: Schema.ContextModule.CollectionsRail,
-    context_page_owner_type: Schema.OwnerType.Collection,
-    destination_path: `${sd.APP_URL}/collection/${collection.slug}`,
-    type: Schema.Type.Thumbnail,
-  }))
-  onLinkClick() {
-    // noop
+export const RelatedCollectionEntity: React.FC<CollectionProps> = ({
+  lazyLoad,
+  collection,
+  slideIndex,
+}) => {
+  const {
+    artworksConnection,
+    headerImage,
+    price_guidance,
+    id,
+    slug,
+    title,
+  } = collection
+  const artworks = artworksConnection.edges.map(({ node }) => node)
+  const bgImages = compact(
+    artworks.map(({ image }) => image && image.resized && image.resized.url)
+  )
+  const imageSize =
+    bgImages.length === 1 ? 262 : bgImages.length === 2 ? 130 : 86
+  const { trackEvent } = useTracking()
+  const {
+    contextPageOwnerId,
+    contextPageOwnerSlug,
+    contextPageOwnerType,
+  } = useAnalyticsContext()
+
+  const onLinkClick = () => {
+    trackEvent(
+      clickedCollectionGroup({
+        contextModule: ContextModule.relatedCollectionsRail,
+        contextPageOwnerId,
+        contextPageOwnerSlug,
+        contextPageOwnerType,
+        destinationPageOwnerId: id,
+        destinationPageOwnerSlug: slug,
+        horizontalSlidePosition: slideIndex,
+      })
+    )
   }
 
-  render() {
-    const { lazyLoad } = this.props
-    const {
-      artworksConnection,
-      headerImage,
-      price_guidance,
-      slug,
-      title,
-    } = this.props.collection
-    const artworks = artworksConnection.edges.map(({ node }) => node)
-    const bgImages = compact(
-      artworks.map(({ image }) => image && image.resized && image.resized.url)
-    )
-    const imageSize =
-      bgImages.length === 1 ? 262 : bgImages.length === 2 ? 130 : 86
-
-    return (
-      <Box>
-        <StyledLink
-          href={`${sd.APP_URL}/collection/${slug}`}
-          onClick={this.onLinkClick.bind(this)}
-        >
-          <ImgWrapper pb={1}>
-            {bgImages.length ? (
-              bgImages.map((url, i) => {
-                const artistName = get(artworks[i].artist, a => a.name)
-                const alt = `${artistName ? artistName + ", " : ""}${
-                  artworks[i].title
-                }`
-                return (
-                  <SingleImgContainer key={i}>
-                    <ImgOverlay width={imageSize} />
-                    <ArtworkImage
-                      key={i}
-                      src={url}
-                      width={imageSize}
-                      alt={alt}
-                      lazyLoad={lazyLoad}
-                    />
-                  </SingleImgContainer>
-                )
-              })
-            ) : (
-              <ArtworkImage src={headerImage} alt={title} width={262} />
-            )}
-          </ImgWrapper>
-          <CollectionTitle size="3">{title}</CollectionTitle>
-          {price_guidance && (
-            <Sans size="2" color="black60">
-              From $
-              {currency(price_guidance, {
-                separator: ",",
-                precision: 0,
-              }).format()}
-            </Sans>
+  return (
+    <Box>
+      <StyledLink
+        href={`${sd.APP_URL}/collection/${slug}`}
+        onClick={onLinkClick}
+      >
+        <ImgWrapper pb={1}>
+          {bgImages.length ? (
+            bgImages.map((url, i) => {
+              const artistName = get(artworks[i].artist, a => a.name)
+              const alt = `${artistName ? artistName + ", " : ""}${
+                artworks[i].title
+              }`
+              return (
+                <SingleImgContainer key={i}>
+                  <ImgOverlay width={imageSize} />
+                  <ArtworkImage
+                    key={i}
+                    src={url}
+                    width={imageSize}
+                    alt={alt}
+                    lazyLoad={lazyLoad}
+                  />
+                </SingleImgContainer>
+              )
+            })
+          ) : (
+            <ArtworkImage src={headerImage} alt={title} width={262} />
           )}
-        </StyledLink>
-      </Box>
-    )
-  }
+        </ImgWrapper>
+        <CollectionTitle size="3">{title}</CollectionTitle>
+        {price_guidance && (
+          <Sans size="2" color="black60">
+            From $
+            {currency(price_guidance, {
+              separator: ",",
+              precision: 0,
+            }).format()}
+          </Sans>
+        )}
+      </StyledLink>
+    </Box>
+  )
 }
 
 const CollectionTitle = styled(Serif)`
@@ -148,13 +160,14 @@ const ImgWrapper = styled(Flex)`
 `
 
 export const RelatedCollectionEntityFragmentContainer = createFragmentContainer(
-  RelatedCollectionEntity,
+  RelatedCollectionEntity as React.FC<CollectionProps>,
   {
     collection: graphql`
       fragment RelatedCollectionEntity_collection on MarketingCollection {
         headerImage
         slug
         title
+        id
         price_guidance: priceGuidance
         artworksConnection(
           first: 3

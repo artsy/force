@@ -8,7 +8,6 @@ import {
   color,
 } from "@artsy/palette"
 import { FeaturedCollectionsRails_collectionGroup } from "v2/__generated__/FeaturedCollectionsRails_collectionGroup.graphql"
-import * as Schema from "v2/Artsy/Analytics/Schema"
 import { useTracking } from "v2/Artsy/Analytics/useTracking"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import { Carousel } from "v2/Components/Carousel"
@@ -16,39 +15,26 @@ import { Truncator } from "v2/Components/Truncator"
 import currency from "currency.js"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { data as sd } from "sharify"
 import styled from "styled-components"
 import { resize } from "v2/Utils/resizer"
 import { Media } from "v2/Utils/Responsive"
+import { ContextModule, clickedCollectionGroup } from "@artsy/cohesion"
+import { useAnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
 
 interface Props {
   collectionGroup: FeaturedCollectionsRails_collectionGroup
 }
 
 export const FeaturedCollectionsRails: React.FC<Props> = ({
-  collectionGroup,
+  collectionGroup: { members, name },
 }) => {
-  const { members, name } = collectionGroup
-  const { trackEvent } = useTracking()
-
-  const trackArrowClick = () => {
-    trackEvent({
-      action_type: Schema.ActionType.Click,
-      context_module: Schema.ContextModule.FeaturedCollectionsRail,
-      context_page_owner_type: Schema.OwnerType.Collection,
-      context_page: Schema.PageName.CollectionPage,
-      type: Schema.Type.Button,
-      subject: Schema.Subject.ClickedNextButton,
-    })
-  }
-
   return (
     <FeaturedCollectionsContainer>
       <Serif size="5" mt={3} mb={1}>
         {name}
       </Serif>
 
-      <Carousel onChange={() => trackArrowClick()}>
+      <Carousel>
         {members.map((slide, slideIndex) => {
           return (
             <FeaturedCollectionEntity
@@ -74,23 +60,31 @@ export const FeaturedCollectionEntity: React.FC<FeaturedCollectionEntityProps> =
   itemNumber,
   member,
 }) => {
-  const { description, price_guidance, slug, thumbnail, title } = member
-  const { trackEvent } = useTracking()
+  const { description, price_guidance, slug, id, thumbnail, title } = member
   const formattedPrice = currency(price_guidance, {
     separator: ",",
     precision: 0,
   }).format()
 
+  const { trackEvent } = useTracking()
+  const {
+    contextPageOwnerId,
+    contextPageOwnerSlug,
+    contextPageOwnerType,
+  } = useAnalyticsContext()
+
   const handleClick = () => {
-    trackEvent({
-      action_type: Schema.ActionType.Click,
-      context_page: Schema.PageName.CollectionPage,
-      context_module: Schema.ContextModule.FeaturedCollectionsRail,
-      context_page_owner_type: Schema.OwnerType.Collection,
-      type: Schema.Type.Thumbnail,
-      destination_path: `${sd.APP_URL}/collection/${slug}`,
-      item_number: itemNumber,
-    })
+    trackEvent(
+      clickedCollectionGroup({
+        contextModule: ContextModule.featuredCollectionsRail,
+        contextPageOwnerId,
+        contextPageOwnerSlug,
+        contextPageOwnerType,
+        destinationPageOwnerId: id,
+        destinationPageOwnerSlug: slug,
+        horizontalSlidePosition: itemNumber,
+      })
+    )
   }
 
   const getTruncatedDescription = (lines: number) => {
@@ -146,14 +140,14 @@ export const FeaturedCollectionEntity: React.FC<FeaturedCollectionEntityProps> =
 }
 
 export const FeaturedCollectionsRailsContainer = createFragmentContainer(
-  FeaturedCollectionsRails,
+  FeaturedCollectionsRails as React.FC<Props>,
   {
     collectionGroup: graphql`
       fragment FeaturedCollectionsRails_collectionGroup on MarketingCollectionGroup {
         groupType
         name
         members {
-          slug
+          id
           slug
           title
           description

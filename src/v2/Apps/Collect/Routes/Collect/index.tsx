@@ -10,8 +10,8 @@ import { SeoProductsForArtworks } from "v2/Apps/Collect/Components/SeoProductsFo
 import { buildUrlForCollectApp } from "v2/Apps/Collect/Utils/urlBuilder"
 import { AppContainer } from "v2/Apps/Components/AppContainer"
 
-import { track, useTracking } from "v2/Artsy/Analytics"
-import * as Schema from "v2/Artsy/Analytics/Schema"
+import { useTracking } from "v2/Artsy/Analytics"
+import { AnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
 import { FrameWithRecentlyViewed } from "v2/Components/FrameWithRecentlyViewed"
 import { BreadCrumbList } from "v2/Components/Seo"
 
@@ -30,21 +30,18 @@ export interface CollectAppProps {
   filterArtworks: collectRoutes_ArtworkFilterQueryResponse["filterArtworks"]
 }
 
-export const CollectApp = track({
-  context_page: Schema.PageName.CollectPage,
-})((props: CollectAppProps) => {
-  const {
-    viewer,
-    match: { location, params },
-  } = props
+export const CollectApp: React.FC<CollectAppProps> = ({
+  filterArtworks,
+  marketingHubCollections,
+  match: { location, params },
+  viewer,
+}) => {
   const medium = params && params.medium
   const { description, breadcrumbTitle, title } = getMetadataForMedium(medium)
 
   const canonicalHref = medium
     ? `${sd.APP_URL}/collect/${medium}`
     : `${sd.APP_URL}/collect`
-
-  const { filterArtworks } = props
 
   const items = [{ path: "/collect", name: "Collect" }]
   if (medium) {
@@ -57,90 +54,102 @@ export const CollectApp = track({
   const tracking = useTracking()
 
   return (
-    <AppContainer>
-      <FrameWithRecentlyViewed>
-        <Title>{title}</Title>
-        <Meta property="og:url" content={`${sd.APP_URL}/collect`} />
-        <Meta
-          property="og:image"
-          content={`${sd.APP_URL}/images/og_image.jpg`}
-        />
-        <Meta name="description" content={description} />
-        <Meta property="og:description" content={description} />
-        <Meta property="twitter:description" content={description} />
-        <Link rel="canonical" href={canonicalHref} />
+    <AnalyticsContext.Provider
+      value={{
+        contextPageOwnerType: OwnerType.collect,
+      }}
+    >
+      <AnalyticsContext.Consumer>
+        {({ contextPageOwnerType }) => (
+          <AppContainer>
+            <FrameWithRecentlyViewed>
+              <Title>{title}</Title>
+              <Meta property="og:url" content={`${sd.APP_URL}/collect`} />
+              <Meta
+                property="og:image"
+                content={`${sd.APP_URL}/images/og_image.jpg`}
+              />
+              <Meta name="description" content={description} />
+              <Meta property="og:description" content={description} />
+              <Meta property="twitter:description" content={description} />
+              <Link rel="canonical" href={canonicalHref} />
 
-        <BreadCrumbList items={items} />
+              <BreadCrumbList items={items} />
 
-        {filterArtworks && <SeoProductsForArtworks artworks={filterArtworks} />}
+              {filterArtworks && (
+                <SeoProductsForArtworks artworks={filterArtworks} />
+              )}
 
-        <Box mt={3}>
-          <Serif size="8">
-            <h1>Collect art and design online</h1>
-          </Serif>
-          <Separator mt={2} mb={[2, 2, 2, 4]} />
+              <Box mt={3}>
+                <Serif size="8">
+                  <h1>Collect art and design online</h1>
+                </Serif>
+                <Separator mt={2} mb={[2, 2, 2, 4]} />
 
-          <CollectionsHubsNav
-            marketingHubCollections={props.marketingHubCollections}
-          />
+                <CollectionsHubsNav
+                  marketingHubCollections={marketingHubCollections}
+                />
 
-          <Spacer mb={2} mt={[2, 2, 2, 4]} />
-        </Box>
+                <Spacer mb={2} mt={[2, 2, 2, 4]} />
+              </Box>
 
-        <Box>
-          <ArtworkFilter
-            viewer={viewer}
-            filters={location.query as any}
-            sortOptions={[
-              { value: "-decayed_merch", text: "Default" },
-              { value: "-partner_updated_at", text: "Recently updated" },
-              { value: "-published_at", text: "Recently added" },
-              { value: "-year", text: "Artwork year (desc.)" },
-              { value: "year", text: "Artwork year (asc.)" },
-            ]}
-            onArtworkBrickClick={artwork => {
-              tracking.trackEvent(
-                clickedMainArtworkGrid({
-                  contextPageOwnerType: OwnerType.collect,
-                  destinationPageOwnerId: artwork.internalID,
-                  destinationPageOwnerSlug: artwork.slug,
-                }) as any
-              )
-            }}
-            onChange={filters => {
-              const url = buildUrlForCollectApp(filters)
+              <Box>
+                <ArtworkFilter
+                  viewer={viewer}
+                  filters={location.query as any}
+                  sortOptions={[
+                    { value: "-decayed_merch", text: "Default" },
+                    { value: "-partner_updated_at", text: "Recently updated" },
+                    { value: "-published_at", text: "Recently added" },
+                    { value: "-year", text: "Artwork year (desc.)" },
+                    { value: "year", text: "Artwork year (asc.)" },
+                  ]}
+                  onArtworkBrickClick={artwork => {
+                    tracking.trackEvent(
+                      clickedMainArtworkGrid({
+                        contextPageOwnerType,
+                        destinationPageOwnerId: artwork.internalID,
+                        destinationPageOwnerSlug: artwork.slug,
+                      })
+                    )
+                  }}
+                  onChange={filters => {
+                    const url = buildUrlForCollectApp(filters)
 
-              if (typeof window !== "undefined") {
-                // FIXME: Is this the best way to guard against history updates
-                // in Storybooks?
-                if (!process.env.IS_STORYBOOK) {
-                  window.history.replaceState({}, "", url)
-                }
-              }
+                    if (typeof window !== "undefined") {
+                      // FIXME: Is this the best way to guard against history updates
+                      // in Storybooks?
+                      if (!process.env.IS_STORYBOOK) {
+                        window.history.replaceState({}, "", url)
+                      }
+                    }
 
-              /**
-               * FIXME: Ideally we route using our router, but are running into
-               * synchronization issues between router state and URL bar state.
-               *
-               * See below example as an illustration:
-               *
-                const newLocation = router.createLocation(url)
+                    /**
+                   * FIXME: Ideally we route using our router, but are running into
+                   * synchronization issues between router state and URL bar state.
+                   *
+                   * See below example as an illustration:
+                   *
+                    const newLocation = router.createLocation(url)
 
-                router.replace({
-                  ...newLocation,
-                  state: {
-                    scrollTo: "#jump--artworkFilter"
-                  },
-                })
-               *
-               */
-            }}
-          />
-        </Box>
-      </FrameWithRecentlyViewed>
-    </AppContainer>
+                    router.replace({
+                      ...newLocation,
+                      state: {
+                        scrollTo: "#jump--artworkFilter"
+                      },
+                    })
+                  *
+                  */
+                  }}
+                />
+              </Box>
+            </FrameWithRecentlyViewed>
+          </AppContainer>
+        )}
+      </AnalyticsContext.Consumer>
+    </AnalyticsContext.Provider>
   )
-})
+}
 
 export const CollectAppFragmentContainer = createFragmentContainer(CollectApp, {
   marketingHubCollections: graphql`

@@ -4,6 +4,7 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ArtistSeriesEntity_member = {
+    readonly id: string;
     readonly slug: string;
     readonly headerImage: string | null;
     readonly thumbnail: string | null;
@@ -46,6 +47,13 @@ return {
   "metadata": null,
   "name": "ArtistSeriesEntity_member",
   "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "id",
+      "storageKey": null
+    },
     {
       "alias": null,
       "args": null,
@@ -173,5 +181,5 @@ return {
   "type": "MarketingCollection"
 };
 })();
-(node as any).hash = '0a60f3488b2db09e3fc248c364090150';
+(node as any).hash = 'f38ba623e4d7462798c5bc9fde614e47';
 export default node;
