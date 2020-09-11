@@ -124,7 +124,7 @@ class Cache {
     if (this.client == null) {
       return callback()
     }
-    return client.flushall(callback)
+    return this.client.flushall(callback)
   }
 }
 
