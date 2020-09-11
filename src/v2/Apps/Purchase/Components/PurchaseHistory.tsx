@@ -1,16 +1,12 @@
 import {
-  BorderBox,
   Box,
-  Button,
   Flex,
   Image,
   LargePagination,
   Link,
   Sans,
   Separator,
-  Serif,
   Spinner,
-  StackableBorderBox,
 } from "@artsy/palette"
 import { DateTime } from "luxon"
 import { PurchaseHistory_me } from "v2/__generated__/PurchaseHistory_me.graphql"
