@@ -15,6 +15,10 @@ describe("JumpView", function () {
       benv.expose({ $: benv.require("jquery"), jQuery: benv.require("jquery") })
       Backbone.$ = $
       this.view = new JumpView()
+      window.analytics = {
+        track: () => {},
+        page: () => {},
+      }
       return done()
     })
   })
