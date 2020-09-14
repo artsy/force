@@ -7,6 +7,7 @@ import {
   Sans,
   Separator,
   Spinner,
+  Text,
 } from "@artsy/palette"
 import { DateTime } from "luxon"
 import { PurchaseHistory_me } from "v2/__generated__/PurchaseHistory_me.graphql"
@@ -43,7 +44,7 @@ const OrderRow = (props: OrderRowProps) => {
   return (
     <Box px={2}>
       <Flex
-        py={1.5}
+        py="15px"
         flexDirection="row"
         alignItems="center"
         justifyContent="space-between"
@@ -53,7 +54,7 @@ const OrderRow = (props: OrderRowProps) => {
           justifyContent="center"
           height="50px"
           width="50px"
-          mr={1.5}
+          mr="15px"
         >
           <StyledImage
             src={get(artwork, a => a.image.resized.url)}
@@ -66,33 +67,40 @@ const OrderRow = (props: OrderRowProps) => {
               href={`/orders/${order.internalID}/status`}
               underlineBehavior="hover"
             >
-              <Sans size="3">{artwork.artist_names}</Sans>
+              <Text variant="text" letterSpacing="tight">
+                {artwork.artist_names}
+              </Text>
             </Link>
           )}
-          {orderIsInactive && <Sans size="3">{artwork.artist_names}</Sans>}
-
-          <Sans size="3" color="black60">
+          {orderIsInactive && (
+            <Text variant="text" letterSpacing="tight">
+              {artwork.artist_names}
+            </Text>
+          )}
+          <Text variant="text" color="black60" letterSpacing="tight">
             {artwork.partner.name}
-          </Sans>
-          <Sans size="3" color="black60">
+          </Text>
+          <Text variant="text" color="black60" letterSpacing="tight">
             {orderCreatedAt}
-          </Sans>
+          </Text>
         </Flex>
         <Flex flexDirection="column" alignItems="flex-end">
-          <Sans
-            size="3"
-            weight="medium"
+          <Text
+            variant="text"
+            color="black60"
+            letterSpacing="tight"
             style={{ textTransform: "capitalize" }}
           >
-            {order.itemsTotal ?? order.totalListPrice}
-          </Sans>
-          <Sans
-            size="3"
+            {order.itemsTotal ? order.itemsTotal : order.totalListPrice}
+          </Text>
+          <Text
+            variant="text"
             color="black60"
+            letterSpacing="tight"
             style={{ textTransform: "capitalize" }}
           >
             {order.state.toLowerCase()}
-          </Sans>
+          </Text>
         </Flex>
       </Flex>
       {props.hasDivider && <Separator />}
@@ -144,7 +152,7 @@ const PurchaseHistory: React.FC<PurchaseHistoryProps> = (
   const myOrders = me.orders.edges && me.orders.edges.map(x => x.node)
   return !loading ? (
     <Box>
-      <Sans size="6" px={1} py={1.5}>
+      <Sans size="6" px={1} py="15px">
         Order History
       </Sans>
       <Separator />
