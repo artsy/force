@@ -5,6 +5,8 @@ import { Box, BoxProps, SmallCard } from "@artsy/palette"
 import { crop } from "v2/Utils/resizer"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
 
+const CARD_IMAGE_SIZES = [360, 180, 180]
+
 interface FairCollectionsProps extends BoxProps {
   fair: FairCollections_fair
 }
@@ -23,11 +25,24 @@ export const FairCollections: React.FC<FairCollectionsProps> = ({
     }) => url
   )
 
-  // TODO: Improve card image handling
-  const images = imageUrls.map(url => crop(url, { width: 375, height: 375 }))
+  const images = imageUrls.map((url, i) => {
+    const _1x = crop(url, {
+      width: CARD_IMAGE_SIZES[i],
+      height: CARD_IMAGE_SIZES[i],
+    })
+
+    const _2x = crop(url, {
+      width: CARD_IMAGE_SIZES[i] * 2,
+      height: CARD_IMAGE_SIZES[i] * 2,
+    })
+
+    return {
+      src: _1x,
+      srcSet: `${_1x} 1x, ${_2x} 2x`,
+    }
+  })
 
   return (
-    // TODO: Cards should extend Box
     <Box {...rest}>
       <RouterLink to={`/collection/${collection.slug}`} noUnderline>
         <SmallCard
