@@ -13,7 +13,11 @@ let UserInterestsView = null
 describe("UserInterestsView", function () {
   before(done =>
     benv.setup(function () {
-      benv.expose({ $: benv.require("jquery"), jQuery: benv.require("jquery") })
+      benv.expose({
+        $: benv.require("jquery"),
+        jQuery: benv.require("jquery"),
+        analytics: { track: sinon.stub() },
+      })
       UserInterestsView = rewire("../view")
       UserInterestsView.__set__("CURRENT_USER", "existy")
       UserInterestsView.__set__("ResultsListView", Backbone.View)
