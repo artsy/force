@@ -75,6 +75,7 @@ export const UntouchedOrder = {
             is_offerable: false as boolean,
             partner: {
               name: "A Gallery",
+              id: "1234",
             },
             dimensions: {
               in: "36 × 36 in",

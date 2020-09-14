@@ -37,6 +37,9 @@ const OrderRow = (props: OrderRowProps) => {
     return null
   }
 
+  const orderIsInactive =
+    order.state === "ABANDONED" || order.state === "CANCELED"
+
   return (
     <Box px="20px">
       <Flex
@@ -58,12 +61,16 @@ const OrderRow = (props: OrderRowProps) => {
           />
         </Flex>
         <Flex flexDirection="column" justifyContent="center" width="100%">
-          <Link
-            href={`/orders/${order.internalID}/status`}
-            underlineBehavior="hover"
-          >
-            <Sans size="3t">{artwork.artist_names}</Sans>
-          </Link>
+          {!orderIsInactive && (
+            <Link
+              href={`/orders/${order.internalID}/status`}
+              underlineBehavior="hover"
+            >
+              <Sans size="3t">{artwork.artist_names}</Sans>
+            </Link>
+          )}
+          {orderIsInactive && <Sans size="3t">{artwork.artist_names}</Sans>}
+
           <Sans size="3t" color="black60" lineHeight={1.3}>
             {artwork.partner.name}
           </Sans>
