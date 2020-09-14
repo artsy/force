@@ -41,9 +41,9 @@ const OrderRow = (props: OrderRowProps) => {
     order.state === "ABANDONED" || order.state === "CANCELED"
 
   return (
-    <Box px="20px">
+    <Box px={2}>
       <Flex
-        py="15px"
+        py={1.5}
         flexDirection="row"
         alignItems="center"
         justifyContent="space-between"
@@ -53,7 +53,7 @@ const OrderRow = (props: OrderRowProps) => {
           justifyContent="center"
           height="50px"
           width="50px"
-          mr="15px"
+          mr={1.5}
         >
           <StyledImage
             src={get(artwork, a => a.image.resized.url)}
@@ -66,28 +66,28 @@ const OrderRow = (props: OrderRowProps) => {
               href={`/orders/${order.internalID}/status`}
               underlineBehavior="hover"
             >
-              <Sans size="3t">{artwork.artist_names}</Sans>
+              <Sans size="3">{artwork.artist_names}</Sans>
             </Link>
           )}
-          {orderIsInactive && <Sans size="3t">{artwork.artist_names}</Sans>}
+          {orderIsInactive && <Sans size="3">{artwork.artist_names}</Sans>}
 
-          <Sans size="3t" color="black60" lineHeight={1.3}>
+          <Sans size="3" color="black60">
             {artwork.partner.name}
           </Sans>
-          <Sans size="3t" color="black60" lineHeight={1.3}>
+          <Sans size="3" color="black60">
             {orderCreatedAt}
           </Sans>
         </Flex>
         <Flex flexDirection="column" alignItems="flex-end">
           <Sans
-            size="3t"
+            size="3"
             weight="medium"
             style={{ textTransform: "capitalize" }}
           >
             {order.itemsTotal ?? order.totalListPrice}
           </Sans>
           <Sans
-            size="3t"
+            size="3"
             color="black60"
             style={{ textTransform: "capitalize" }}
           >
@@ -144,7 +144,7 @@ const PurchaseHistory: React.FC<PurchaseHistoryProps> = (
   const myOrders = me.orders.edges && me.orders.edges.map(x => x.node)
   return !loading ? (
     <Box>
-      <Sans size="6" px="10px" py="15px">
+      <Sans size="6" px={1} py={1.5}>
         Order History
       </Sans>
       <Separator />
