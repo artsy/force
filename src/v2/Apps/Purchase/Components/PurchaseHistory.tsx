@@ -44,7 +44,7 @@ const OrderRow = (props: OrderRowProps) => {
   return (
     <Box px={2}>
       <Flex
-        py="15px"
+        py={1.5}
         flexDirection="row"
         alignItems="center"
         justifyContent="space-between"
@@ -54,7 +54,7 @@ const OrderRow = (props: OrderRowProps) => {
           justifyContent="center"
           height="50px"
           width="50px"
-          mr="15px"
+          mr={1.5}
         >
           <StyledImage
             src={get(artwork, a => a.image.resized.url)}
@@ -152,7 +152,7 @@ const PurchaseHistory: React.FC<PurchaseHistoryProps> = (
   const myOrders = me.orders.edges && me.orders.edges.map(x => x.node)
   return !loading ? (
     <Box>
-      <Sans size="6" px={1} py="15px">
+      <Sans size="6" px={1} py={1.5}>
         Order History
       </Sans>
       <Separator />
