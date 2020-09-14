@@ -84,7 +84,7 @@ const OrderRow = (props: OrderRowProps) => {
             weight="medium"
             style={{ textTransform: "capitalize" }}
           >
-            {order.itemsTotal ? order.itemsTotal : order.totalListPrice}
+            {order.itemsTotal ?? order.totalListPrice}
           </Sans>
           <Sans
             size="3t"
