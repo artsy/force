@@ -1,7 +1,6 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 mediator = require '../../lib/mediator.coffee'
-analyticsHooks = require '../../lib/analytics_hooks.coffee'
 
 module.exports = class JumpView extends Backbone.View
   className: 'jump-to-top icon-chevron-up'
@@ -74,7 +73,7 @@ module.exports = class JumpView extends Backbone.View
         @scrollToPosition @element.offset().top
     else
       @scrollToPosition @position
-    analyticsHooks.trigger 'jump:scroll-to-top'
+    window.analytics.track("Clicked filter scrollToTop")
 
   remove: ->
     @$window.off 'scroll.jump'

@@ -4,7 +4,7 @@
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type routes_SearchResultsArtistsQueryVariables = {
-    term: string;
+    keyword: string;
     page?: number | null;
 };
 export type routes_SearchResultsArtistsQueryResponse = {
@@ -21,11 +21,11 @@ export type routes_SearchResultsArtistsQuery = {
 
 /*
 query routes_SearchResultsArtistsQuery(
-  $term: String!
+  $keyword: String!
   $page: Int
 ) {
   viewer {
-    ...SearchResultsArtists_viewer_2iLyA0
+    ...SearchResultsArtists_viewer_2zsz5P
   }
 }
 
@@ -51,8 +51,8 @@ fragment Pagination_pageCursors on PageCursors {
   }
 }
 
-fragment SearchResultsArtists_viewer_2iLyA0 on Viewer {
-  searchConnection(query: $term, first: 10, page: $page, entities: [ARTIST]) @principalField {
+fragment SearchResultsArtists_viewer_2zsz5P on Viewer {
+  searchConnection(query: $keyword, first: 10, page: $page, entities: [ARTIST]) @principalField {
     pageInfo {
       hasNextPage
       endCursor
@@ -84,7 +84,7 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "term",
+    "name": "keyword",
     "type": "String!"
   },
   {
@@ -145,7 +145,7 @@ return {
               {
                 "kind": "Variable",
                 "name": "term",
-                "variableName": "term"
+                "variableName": "keyword"
               }
             ],
             "kind": "FragmentSpread",
@@ -190,7 +190,7 @@ return {
               {
                 "kind": "Variable",
                 "name": "query",
-                "variableName": "term"
+                "variableName": "keyword"
               }
             ],
             "concreteType": "SearchableConnection",
@@ -367,9 +367,9 @@ return {
     "metadata": {},
     "name": "routes_SearchResultsArtistsQuery",
     "operationKind": "query",
-    "text": "query routes_SearchResultsArtistsQuery(\n  $term: String!\n  $page: Int\n) {\n  viewer {\n    ...SearchResultsArtists_viewer_2iLyA0\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n\nfragment SearchResultsArtists_viewer_2iLyA0 on Viewer {\n  searchConnection(query: $term, first: 10, page: $page, entities: [ARTIST]) @principalField {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        __typename\n        ... on Artist {\n          name\n          internalID\n          href\n          imageUrl\n          bio\n        }\n        ... on Node {\n          id\n        }\n      }\n    }\n  }\n}\n"
+    "text": "query routes_SearchResultsArtistsQuery(\n  $keyword: String!\n  $page: Int\n) {\n  viewer {\n    ...SearchResultsArtists_viewer_2zsz5P\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n\nfragment SearchResultsArtists_viewer_2zsz5P on Viewer {\n  searchConnection(query: $keyword, first: 10, page: $page, entities: [ARTIST]) @principalField {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        __typename\n        ... on Artist {\n          name\n          internalID\n          href\n          imageUrl\n          bio\n        }\n        ... on Node {\n          id\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '1a3f143f1f7e1089dea56bcc73c2b49b';
+(node as any).hash = 'd135fb999c7eb00f8159031a543916e3';
 export default node;

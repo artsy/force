@@ -5,6 +5,16 @@ import { updateUrl } from "v2/Components/v2/ArtworkFilter/Utils/urlBuilder"
 import { Match, RouterState, withRouter } from "found"
 import React from "react"
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
+import { MediumFilter } from "v2/Components/v2/ArtworkFilter/ArtworkFilters/MediumFilter"
+import { PriceRangeFilter } from "v2/Components/v2/ArtworkFilter/ArtworkFilters/PriceRangeFilter"
+import { WaysToBuyFilter } from "v2/Components/v2/ArtworkFilter/ArtworkFilters/WaysToBuyFilter"
+import { GalleryFilter } from "v2/Components/v2/ArtworkFilter/ArtworkFilters/GalleryFilter"
+import { SizeFilter } from "v2/Components/v2/ArtworkFilter/ArtworkFilters/SizeFilter"
+import { TimePeriodFilter } from "v2/Components/v2/ArtworkFilter/ArtworkFilters/TimePeriodFilter"
+import { ColorFilter } from "v2/Components/v2/ArtworkFilter/ArtworkFilters/ColorFilter"
+import { Box } from "@artsy/palette"
+import { FollowedArtistsFilter } from "v2/Components/v2/ArtworkFilter/ArtworkFilters/FollowedArtistsFilter"
+import { useSystemContext } from "v2/Artsy"
 
 interface FairArtworksFilterProps {
   fair: FairArtworks_fair
@@ -15,6 +25,7 @@ interface FairArtworksFilterProps {
 const FairArtworksFilter: React.FC<FairArtworksFilterProps> = props => {
   const { match, relay, fair } = props
   const { filtered_artworks } = fair
+  const { user } = useSystemContext()
 
   const hasFilter = filtered_artworks && filtered_artworks.id
 
@@ -22,9 +33,26 @@ const FairArtworksFilter: React.FC<FairArtworksFilterProps> = props => {
   // we still want to render the rest of the page.
   if (!hasFilter) return null
 
+  const { counts } = filtered_artworks
+
+  const Filters = () => (
+    <Box pr={2}>
+      {!!user && <FollowedArtistsFilter />}
+
+      <MediumFilter />
+      <PriceRangeFilter />
+      <WaysToBuyFilter />
+      <GalleryFilter />
+      <SizeFilter />
+      <TimePeriodFilter />
+      <ColorFilter />
+    </Box>
+  )
+
   return (
     <ArtworkFilterContextProvider
       filters={match && match.location.query}
+      counts={counts}
       sortOptions={[
         { value: "-decayed_merch", text: "Default" },
         { value: "-has_price,-prices", text: "Price (desc.)" },
@@ -42,6 +70,7 @@ const FairArtworksFilter: React.FC<FairArtworksFilterProps> = props => {
         relayVariables={{
           aggregations: ["TOTAL"],
         }}
+        Filters={Filters}
       ></BaseArtworkFilter>
     </ArtworkFilterContextProvider>
   )
@@ -58,6 +87,7 @@ export const FairArtworksRefetchContainer = createRefetchContainer(
           atAuction: { type: "Boolean" }
           color: { type: "String" }
           forSale: { type: "Boolean" }
+          includeArtworksByFollowedArtists: { type: "Boolean" }
           inquireableOnly: { type: "Boolean" }
           majorPeriods: { type: "[String]" }
           medium: { type: "String", defaultValue: "*" }
@@ -67,6 +97,7 @@ export const FairArtworksRefetchContainer = createRefetchContainer(
           priceRange: { type: "String" }
           sizes: { type: "[ArtworkSizes]" }
           sort: { type: "String", defaultValue: "-partner_updated_at" }
+          shouldFetchCounts: { type: "Boolean", defaultValue: false }
         ) {
         filtered_artworks: filterArtworksConnection(
           acquireable: $acquireable
@@ -74,6 +105,7 @@ export const FairArtworksRefetchContainer = createRefetchContainer(
           atAuction: $atAuction
           color: $color
           forSale: $forSale
+          includeArtworksByFollowedArtists: $includeArtworksByFollowedArtists
           inquireableOnly: $inquireableOnly
           majorPeriods: $majorPeriods
           medium: $medium
@@ -87,6 +119,9 @@ export const FairArtworksRefetchContainer = createRefetchContainer(
           sort: $sort
         ) {
           id
+          counts @include(if: $shouldFetchCounts) {
+            followedArtists
+          }
           ...ArtworkFilterArtworkGrid2_filtered_artworks
         }
       }
@@ -100,6 +135,7 @@ export const FairArtworksRefetchContainer = createRefetchContainer(
       $atAuction: Boolean
       $color: String
       $forSale: Boolean
+      $includeArtworksByFollowedArtists: Boolean
       $inquireableOnly: Boolean
       $majorPeriods: [String]
       $medium: String
@@ -118,6 +154,7 @@ export const FairArtworksRefetchContainer = createRefetchContainer(
             atAuction: $atAuction
             color: $color
             forSale: $forSale
+            includeArtworksByFollowedArtists: $includeArtworksByFollowedArtists
             inquireableOnly: $inquireableOnly
             majorPeriods: $majorPeriods
             medium: $medium

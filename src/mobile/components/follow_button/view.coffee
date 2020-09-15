@@ -1,6 +1,5 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-analyticsHooks = require '../../lib/analytics_hooks.coffee'
 
 module.exports = class FollowButtonView extends Backbone.View
 
@@ -30,27 +29,25 @@ module.exports = class FollowButtonView extends Backbone.View
     if @isLoggedIn
       if @collection.isFollowing @followId
         @collection.unfollow @followId
-        analyticsHooks.trigger 'followable:unfollowed', {
+        window.analytics.track("Unfollowed " + @type, {
           entity_id: @_id,
           entity_slug: @followId,
           context_module: @context_module,
           context_page: @context_page,
-          entity_type: @type
-        }
+        })
       else
         @collection.follow @followId
-        analyticsHooks.trigger 'followable:followed', {
+        window.analytics.track("Followed " + @type, {
           entity_id: @_id,
           entity_slug: @followId,
           context_module: @context_module,
           context_page: @context_page,
-          entity_type: @type
-        }
+        })
+
         # Delay label change
         @$el.addClass 'is-clicked'
         setTimeout (=> @$el.removeClass 'is-clicked'), 1500
     else
-      analyticsHooks.trigger 'follow:signup'
       location.href = "/sign_up?action=follow&objectId=#{@followId}&kind=artist&destination=#{window.location}&intent=follow+#{@type.toLowerCase()}&contextModule=#{@context_module}"
 
     false

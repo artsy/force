@@ -136,7 +136,7 @@ export class LargeArtistHeader extends Component<Props> {
         <Flex flexDirection="row">
           {renderRepresentationStatus(props.artist)}
           {renderAuctionHighlight(props.artist) &&
-            renderRepresentationStatus(props.artist) && <Spacer mr={5} />}
+            renderRepresentationStatus(props.artist) && <Spacer mr={0.5} />}
           {renderAuctionHighlight(props.artist)}
         </Flex>
       </HorizontalPadding>
@@ -214,7 +214,7 @@ export class SmallArtistHeader extends Component<Props> {
         <Flex flexDirection="row" justifyContent="center">
           {renderRepresentationStatus(props.artist)}
           {renderAuctionHighlight(props.artist) &&
-            renderRepresentationStatus(props.artist) && <Spacer mr={5} />}
+            renderRepresentationStatus(props.artist) && <Spacer mr={0.5} />}
           {renderAuctionHighlight(props.artist)}
         </Flex>
       </Flex>

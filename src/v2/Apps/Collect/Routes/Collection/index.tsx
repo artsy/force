@@ -4,8 +4,6 @@ import { SeoProductsForArtworks } from "v2/Apps/Collect/Components/SeoProductsFo
 import { SeoProductsForCollections } from "v2/Apps/Collect/Components/SeoProductsForCollections"
 import { CollectionFilterFragmentContainer as CollectionHeader } from "v2/Apps/Collect/Routes/Collection/Components/Header"
 import { AppContainer } from "v2/Apps/Components/AppContainer"
-import { track } from "v2/Artsy/Analytics"
-import * as Schema from "v2/Artsy/Analytics/Schema"
 import { SystemContextProps, withSystemContext } from "v2/Artsy/SystemContext"
 import { FrameWithRecentlyViewed } from "v2/Components/FrameWithRecentlyViewed"
 import { RelatedCollectionsRailFragmentContainer as RelatedCollectionsRail } from "v2/Components/RelatedCollectionsRail/RelatedCollectionsRail"
@@ -20,6 +18,7 @@ import truncate from "trunc-html"
 import { CollectionAppQuery } from "./CollectionAppQuery"
 import { CollectionsHubRailsContainer as CollectionsHubRails } from "./Components/CollectionsHubRails"
 import { LazyLoadComponent } from "react-lazy-load-image-component"
+import { AnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
 
 import { BaseArtworkFilter } from "v2/Components/v2/ArtworkFilter"
 import {
@@ -37,11 +36,6 @@ interface CollectionAppProps extends SystemContextProps {
   tracking: TrackingProp
 }
 
-@track<CollectionAppProps>(props => ({
-  context_module: Schema.ContextModule.CollectionDescription,
-  context_page_owner_slug: props.collection && props.collection.slug,
-  context_page_owner_id: props.collection && props.collection.slug,
-}))
 export class CollectionApp extends Component<CollectionAppProps> {
   collectionNotFound = collection => {
     if (!collection) {
@@ -85,106 +79,130 @@ export class CollectionApp extends Component<CollectionAppProps> {
         fallbackHeaderImage?.edges[0]?.node?.image?.resized.url)
 
     return (
-      <>
-        <Title>{`${title} - For Sale on Artsy`}</Title>
-        <Meta name="description" content={metadataDescription} />
-        <Meta property="og:url" content={collectionHref} />
-        <Meta property="og:image" content={socialImage} />
-        <Meta property="og:description" content={metadataDescription} />
-        <Meta property="twitter:description" content={metadataDescription} />
-        <Link rel="canonical" href={collectionHref} />
-        <BreadCrumbList
-          items={[
-            { path: "/collections", name: "Collections" },
-            { path: `/collection/${slug}`, name: title },
-          ]}
-        />
-        {artworksConnection && (
-          <SeoProductsForArtworks artworks={artworksConnection} />
-        )}
-        {artworksConnection && (
-          <SeoProductsForCollections
-            descending_artworks={descending_artworks}
-            ascending_artworks={ascending_artworks}
-            collectionDescription={description}
-            collectionURL={collectionHref}
-            collectionName={title}
+      <AnalyticsContext.Provider
+        value={{
+          contextPageOwnerType: OwnerType.collection,
+          contextPageOwnerId: collection.id,
+          contextPageOwnerSlug: collection.slug,
+        }}
+      >
+        <>
+          <Title>{`${title} - For Sale on Artsy`}</Title>
+          <Meta name="description" content={metadataDescription} />
+          <Meta property="og:url" content={collectionHref} />
+          <Meta property="og:image" content={socialImage} />
+          <Meta property="og:description" content={metadataDescription} />
+          <Meta property="twitter:description" content={metadataDescription} />
+          <Link rel="canonical" href={collectionHref} />
+          <BreadCrumbList
+            items={[
+              { path: "/collections", name: "Collections" },
+              { path: `/collection/${slug}`, name: title },
+            ]}
           />
-        )}
-
-        <AppContainer maxWidth="100%">
-          <CollectionHeader
-            collection={collection}
-            artworks={artworksConnection}
-          />
-
-          <Box maxWidth={breakpoints.xl} mx="auto" width="100%">
-            <FrameWithRecentlyViewed>
-              {showCollectionHubs && (
-                <CollectionsHubRails
-                  linkedCollections={collection.linkedCollections}
+          {artworksConnection && (
+            <SeoProductsForArtworks artworks={artworksConnection} />
+          )}
+          {artworksConnection && (
+            <SeoProductsForCollections
+              descending_artworks={descending_artworks}
+              ascending_artworks={ascending_artworks}
+              collectionDescription={description}
+              collectionURL={collectionHref}
+              collectionName={title}
+            />
+          )}
+          <AnalyticsContext.Consumer>
+            {({
+              contextPageOwnerType,
+              contextPageOwnerId,
+              contextPageOwnerSlug,
+            }) => (
+              <AppContainer maxWidth="100%">
+                <CollectionHeader
+                  collection={collection}
+                  artworks={artworksConnection}
                 />
-              )}
-              <Box>
-                <ArtworkFilterContextProvider
-                  filters={location.query}
-                  sortOptions={[
-                    { value: "-decayed_merch", text: "Default" },
-                    { value: "sold,-has_price,-prices", text: "Price (desc.)" },
-                    { value: "sold,-has_price,prices", text: "Price (asc.)" },
-                    { value: "-partner_updated_at", text: "Recently updated" },
-                    { value: "-published_at", text: "Recently added" },
-                    { value: "-year", text: "Artwork year (desc.)" },
-                    { value: "year", text: "Artwork year (asc.)" },
-                  ]}
-                  aggregations={
-                    artworksConnection.aggregations as SharedArtworkFilterContextProps["aggregations"]
-                  }
-                  onChange={updateUrl}
-                  onArtworkBrickClick={artwork => {
-                    tracking.trackEvent(
-                      clickedMainArtworkGrid({
-                        contextPageOwnerType: OwnerType.collection,
-                        contextPageOwnerId: collection.id,
-                        contextPageOwnerSlug: collection.slug,
-                        destinationPageOwnerId: artwork.internalID,
-                        destinationPageOwnerSlug: artwork.slug,
-                      }) as any
-                    )
-                  }}
-                >
-                  <BaseArtworkFilter
-                    relay={relay}
-                    viewer={collection}
-                    relayVariables={{
-                      slug: collection.slug,
-                      first: 30,
-                    }}
-                  />
-                </ArtworkFilterContextProvider>
-              </Box>
-              {/* HOTFIX FIXME: This rail was causing an error if included in SSR render
-                  pass and so it was deferred to the client.
 
-                  See: https://github.com/artsy/force/pull/6137
-              */}
-              {collection.linkedCollections.length === 0 &&
-                typeof window !== "undefined" && (
-                  <LazyLoadComponent threshold={1000}>
-                    <Separator mt={6} mb={3} />
-                    <Box mt="3">
-                      <RelatedCollectionsRail
-                        collections={collection.relatedCollections}
-                        title={collection.title}
-                        lazyLoadImages
+                <Box maxWidth={breakpoints.xl} mx="auto" width="100%">
+                  <FrameWithRecentlyViewed>
+                    {showCollectionHubs && (
+                      <CollectionsHubRails
+                        linkedCollections={collection.linkedCollections}
                       />
+                    )}
+                    <Box>
+                      <ArtworkFilterContextProvider
+                        filters={location.query}
+                        sortOptions={[
+                          { value: "-decayed_merch", text: "Default" },
+                          {
+                            value: "sold,-has_price,-prices",
+                            text: "Price (desc.)",
+                          },
+                          {
+                            value: "sold,-has_price,prices",
+                            text: "Price (asc.)",
+                          },
+                          {
+                            value: "-partner_updated_at",
+                            text: "Recently updated",
+                          },
+                          { value: "-published_at", text: "Recently added" },
+                          { value: "-year", text: "Artwork year (desc.)" },
+                          { value: "year", text: "Artwork year (asc.)" },
+                        ]}
+                        aggregations={
+                          artworksConnection.aggregations as SharedArtworkFilterContextProps["aggregations"]
+                        }
+                        onChange={updateUrl}
+                        onArtworkBrickClick={artwork => {
+                          tracking.trackEvent(
+                            clickedMainArtworkGrid({
+                              contextPageOwnerType,
+                              contextPageOwnerId,
+                              contextPageOwnerSlug,
+                              destinationPageOwnerId: artwork.internalID,
+                              destinationPageOwnerSlug: artwork.slug,
+                            })
+                          )
+                        }}
+                      >
+                        <BaseArtworkFilter
+                          relay={relay}
+                          viewer={collection}
+                          relayVariables={{
+                            slug: collection.slug,
+                            first: 30,
+                          }}
+                        />
+                      </ArtworkFilterContextProvider>
                     </Box>
-                  </LazyLoadComponent>
-                )}
-            </FrameWithRecentlyViewed>
-          </Box>
-        </AppContainer>
-      </>
+                    {/* HOTFIX FIXME: This rail was causing an error if included in SSR render
+                      pass and so it was deferred to the client.
+
+                      See: https://github.com/artsy/force/pull/6137
+                  */}
+                    {collection.linkedCollections.length === 0 &&
+                      typeof window !== "undefined" && (
+                        <LazyLoadComponent threshold={1000}>
+                          <Separator mt={6} mb={3} />
+                          <Box mt="3">
+                            <RelatedCollectionsRail
+                              collections={collection.relatedCollections}
+                              title={collection.title}
+                              lazyLoadImages
+                            />
+                          </Box>
+                        </LazyLoadComponent>
+                      )}
+                  </FrameWithRecentlyViewed>
+                </Box>
+              </AppContainer>
+            )}
+          </AnalyticsContext.Consumer>
+        </>
+      </AnalyticsContext.Provider>
     )
   }
 }

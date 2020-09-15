@@ -31,7 +31,7 @@ export class ArtistIndicator extends React.Component<ArtistIndicatorProps> {
   renderIcon(insightType) {
     const Component = ICON_MAPPING[insightType]
 
-    return <Component size="20px" pr={5} />
+    return <Component size="20px" pr={0.5} />
   }
 
   render() {
@@ -42,8 +42,8 @@ export class ArtistIndicator extends React.Component<ArtistIndicatorProps> {
         <RoundedFlex
           background={color("black5")}
           width="auto"
-          py={5}
-          px={10}
+          py={0.5}
+          px={1}
           mt={1}
         >
           {this.renderIcon(type)}

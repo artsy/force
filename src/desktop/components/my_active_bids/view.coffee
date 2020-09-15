@@ -7,6 +7,8 @@ template = -> require('./template.jade') arguments...
 {getLiveAuctionUrl} = require('../../../utils/domain/auctions/urls')
 
 module.exports = class MyActiveBids extends Backbone.View
+  events:
+    "click .my-active-bids-bid-button": "trackClickedBid"
 
   initialize: ({ @user, @saleId, @template = template }) ->
 
@@ -27,6 +29,17 @@ module.exports = class MyActiveBids extends Backbone.View
       req: user: @user
     ).then (data) =>
       @bidderPositions = data.me?.lot_standings
+
+  trackClickedBid: (e) ->
+    artworkId = $(e.target)
+      .parent()
+      .data("artwork_id")
+    window.analytics.track('Clicked "Bid"', {
+      auction_slug: @saleId,
+      user_id: @user.id,
+      context_type: "your active bids",
+      artwork_slug: artworkId,
+    })
 
   render: =>
     @$el.html @template myActiveBids: @bidderPositions, viewHelpers: { getLiveAuctionUrl }

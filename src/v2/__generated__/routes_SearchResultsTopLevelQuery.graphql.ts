@@ -4,7 +4,7 @@
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type routes_SearchResultsTopLevelQueryVariables = {
-    term: string;
+    keyword: string;
 };
 export type routes_SearchResultsTopLevelQueryResponse = {
     readonly viewer: {
@@ -20,10 +20,10 @@ export type routes_SearchResultsTopLevelQuery = {
 
 /*
 query routes_SearchResultsTopLevelQuery(
-  $term: String!
+  $keyword: String!
 ) {
   viewer {
-    ...SearchApp_viewer_4hh6ED
+    ...SearchApp_viewer_2hPz0N
   }
 }
 
@@ -37,8 +37,8 @@ fragment NavigationTabs_searchableConnection on SearchableConnection {
   }
 }
 
-fragment SearchApp_viewer_4hh6ED on Viewer {
-  searchConnection(query: $term, first: 1, aggregations: [TYPE]) {
+fragment SearchApp_viewer_2hPz0N on Viewer {
+  searchConnection(query: $keyword, first: 1, aggregations: [TYPE]) {
     aggregations {
       slice
       counts {
@@ -61,7 +61,7 @@ fragment SearchApp_viewer_4hh6ED on Viewer {
       }
     }
   }
-  artworksConnection(keyword: $term, size: 0, aggregations: [TOTAL]) {
+  artworksConnection(keyword: $keyword, size: 0, aggregations: [TOTAL]) {
     counts {
       total
     }
@@ -75,7 +75,7 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "term",
+    "name": "keyword",
     "type": "String!"
   }
 ],
@@ -106,7 +106,7 @@ return {
               {
                 "kind": "Variable",
                 "name": "term",
-                "variableName": "term"
+                "variableName": "keyword"
               }
             ],
             "kind": "FragmentSpread",
@@ -150,7 +150,7 @@ return {
               {
                 "kind": "Variable",
                 "name": "query",
-                "variableName": "term"
+                "variableName": "keyword"
               }
             ],
             "concreteType": "SearchableConnection",
@@ -274,7 +274,7 @@ return {
               {
                 "kind": "Variable",
                 "name": "keyword",
-                "variableName": "term"
+                "variableName": "keyword"
               },
               {
                 "kind": "Literal",
@@ -319,9 +319,9 @@ return {
     "metadata": {},
     "name": "routes_SearchResultsTopLevelQuery",
     "operationKind": "query",
-    "text": "query routes_SearchResultsTopLevelQuery(\n  $term: String!\n) {\n  viewer {\n    ...SearchApp_viewer_4hh6ED\n  }\n}\n\nfragment NavigationTabs_searchableConnection on SearchableConnection {\n  aggregations {\n    slice\n    counts {\n      count\n      name\n    }\n  }\n}\n\nfragment SearchApp_viewer_4hh6ED on Viewer {\n  searchConnection(query: $term, first: 1, aggregations: [TYPE]) {\n    aggregations {\n      slice\n      counts {\n        count\n        name\n      }\n    }\n    ...NavigationTabs_searchableConnection\n    edges {\n      node {\n        __typename\n        ... on SearchableItem {\n          slug\n          displayLabel\n          displayType\n        }\n        ... on Node {\n          id\n        }\n      }\n    }\n  }\n  artworksConnection(keyword: $term, size: 0, aggregations: [TOTAL]) {\n    counts {\n      total\n    }\n    id\n  }\n}\n"
+    "text": "query routes_SearchResultsTopLevelQuery(\n  $keyword: String!\n) {\n  viewer {\n    ...SearchApp_viewer_2hPz0N\n  }\n}\n\nfragment NavigationTabs_searchableConnection on SearchableConnection {\n  aggregations {\n    slice\n    counts {\n      count\n      name\n    }\n  }\n}\n\nfragment SearchApp_viewer_2hPz0N on Viewer {\n  searchConnection(query: $keyword, first: 1, aggregations: [TYPE]) {\n    aggregations {\n      slice\n      counts {\n        count\n        name\n      }\n    }\n    ...NavigationTabs_searchableConnection\n    edges {\n      node {\n        __typename\n        ... on SearchableItem {\n          slug\n          displayLabel\n          displayType\n        }\n        ... on Node {\n          id\n        }\n      }\n    }\n  }\n  artworksConnection(keyword: $keyword, size: 0, aggregations: [TOTAL]) {\n    counts {\n      total\n    }\n    id\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '6f3892041bb97db5f3ad7fb947d804bc';
+(node as any).hash = 'a66426847932472697ce0fda4cae92f7';
 export default node;

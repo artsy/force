@@ -14,7 +14,7 @@ import SearchApp from "./SearchApp"
 const prepareVariables = (_params, { location }) => {
   return {
     ...paramsToCamelCase(location.query),
-    keyword: location.query.term,
+    keyword: location.query.term.toString(),
   }
 }
 
@@ -52,13 +52,13 @@ const entityTabs = Object.entries(tabsToEntitiesMap).map(([key, entities]) => {
     },
     query: graphql`
       query routes_SearchResultsEntityQuery(
-        $term: String!
+        $keyword: String!
         $entities: [SearchEntity]
         $page: Int
       ) {
         viewer {
           ...SearchResultsEntity_viewer
-            @arguments(term: $term, entities: $entities, page: $page)
+            @arguments(term: $keyword, entities: $entities, page: $page)
         }
       }
     `,
@@ -70,9 +70,9 @@ export const routes: RouteConfig[] = [
     path: "/search",
     Component: SearchApp,
     query: graphql`
-      query routes_SearchResultsTopLevelQuery($term: String!) {
+      query routes_SearchResultsTopLevelQuery($keyword: String!) {
         viewer {
-          ...SearchApp_viewer @arguments(term: $term)
+          ...SearchApp_viewer @arguments(term: $keyword)
         }
       }
     `,
@@ -89,10 +89,13 @@ export const routes: RouteConfig[] = [
         Component: ArtistsRoute,
         prepareVariables,
         query: graphql`
-          query routes_SearchResultsArtistsQuery($term: String!, $page: Int) {
+          query routes_SearchResultsArtistsQuery(
+            $keyword: String!
+            $page: Int
+          ) {
             viewer {
               ...SearchResultsArtists_viewer
-                @arguments(term: $term, page: $page)
+                @arguments(term: $keyword, page: $page)
             }
           }
         `,

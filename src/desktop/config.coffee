@@ -15,8 +15,6 @@ module.exports =
   APP_URL: 'http://localhost:3004'
   ARTIST_COLLECTIONS_RAIL_IDS: null
   ARTSY_EDITORIAL_CHANNEL: '5759e3efb5989e6f98f77993'
-  ARTSY_ID: null
-  ARTSY_SECRET: null
   BIDDER_INFO_COPY_P1: 'Please enter your credit card information below. The name on your Artsy account must match the name on the card, and a valid credit card is required in order to bid.'
   BIDDER_INFO_COPY_P2: 'Registration is free. Artsy will never charge this card without your permission, and you are not required to use this card to pay if you win.'
   CDN_URL: 'https://d1s2w0upia4e9w.cloudfront.net'
@@ -128,6 +126,7 @@ module.exports =
   STRIPE_PUBLISHABLE_KEY: null
   TEAM_BLOGS: '^\/life-at-artsy$|^\/artsy-education$|^\/buying-with-artsy$'
   TARGET_CAMPAIGN_URL: '/seattle-art-fair-2017'
+  THIRD_PARTIES_DISABLED: false
   TRACK_PAGELOAD_PATHS: null
   VANITY_BUCKET: null
   VOLLEY_ENDPOINT: null

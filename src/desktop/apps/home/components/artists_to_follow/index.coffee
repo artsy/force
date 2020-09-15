@@ -14,7 +14,7 @@ module.exports = (user) ->
     query: query
     variables: type: initialType
     req: { user: user }
-  .then ({ home_page: { artist_module: { results } } }) =>
+  .then ({ home_page: { artist_module: { results } } }) ->
     view = new ArtistsToFollowView
       state: state
       results: results

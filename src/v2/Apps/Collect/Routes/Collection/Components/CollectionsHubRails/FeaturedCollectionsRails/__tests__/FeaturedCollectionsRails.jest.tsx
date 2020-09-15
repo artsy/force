@@ -7,9 +7,10 @@ import {
   FeaturedCollectionEntity,
   FeaturedCollectionsRails,
   FeaturedImage,
-  StyledLink,
 } from "../index"
 import { paginateCarousel } from "@artsy/palette"
+import { OwnerType } from "@artsy/cohesion"
+import { AnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
 
 jest.mock("@artsy/palette/dist/elements/Carousel/paginate")
 jest.mock("v2/Artsy/Analytics/useTracking")
@@ -22,6 +23,19 @@ jest.mock("found", () => ({
 describe("FeaturedCollectionsRails", () => {
   let props
   const trackEvent = jest.fn()
+  const getWrapper = (passedProps = props) => {
+    return mount(
+      <AnalyticsContext.Provider
+        value={{
+          contextPageOwnerId: "1234",
+          contextPageOwnerSlug: "slug",
+          contextPageOwnerType: OwnerType.collection,
+        }}
+      >
+        <FeaturedCollectionsRails {...passedProps} />
+      </AnalyticsContext.Provider>
+    )
+  }
 
   beforeEach(() => {
     props = {
@@ -33,22 +47,11 @@ describe("FeaturedCollectionsRails", () => {
       }
     })
     ;(paginateCarousel as jest.Mock).mockImplementation(() => [0, 100, 200])
+    trackEvent.mockClear()
   })
 
-  const memberData = () => {
-    return {
-      description:
-        "<p>From SpongeBob SquarePants to Snoopy, many beloved childhood cartoons have made an impact on the history of art.</p>",
-      price_guidance: 60,
-      slug: "art-inspired-by-cartoons",
-      thumbnail: "http://files.artsy.net/images/cartoons_thumbnail.png",
-      title: "Art Inspired by Cartoons",
-    }
-  }
-
   it("Renders expected fields", () => {
-    const component = mount(<FeaturedCollectionsRails {...props} />)
-
+    const component = getWrapper()
     expect(component.text()).toMatch("Featured Collections")
     expect(component.text()).toMatch("Art Inspired by Cartoons")
     expect(component.text()).toMatch("Street Art: Celebrity Portraits")
@@ -56,61 +59,30 @@ describe("FeaturedCollectionsRails", () => {
   })
 
   describe("Tracking", () => {
-    it("Tracks arrow click", () => {
-      props.collectionGroup.members = [
-        memberData(),
-        memberData(),
-        memberData(),
-        memberData(),
-        memberData(),
-      ]
-
-      const component = mount(<FeaturedCollectionsRails {...props} />)
-      component.find("button").at(2).simulate("click") // Next button
+    it("Tracks rails clicks", () => {
+      const component = getWrapper()
+      component.find("a").at(2).simulate("click")
 
       expect(trackEvent).toBeCalledWith({
-        action_type: "Click",
-        context_page: "Collection",
-        context_module: "FeaturedCollectionsRail",
-        context_page_owner_type: "Collection",
-        type: "Button",
-        subject: "clicked next button",
+        action: "clickedCollectionGroup",
+        context_module: "featuredCollectionsRail",
+        context_page_owner_id: "1234",
+        context_page_owner_slug: "slug",
+        context_page_owner_type: "collection",
+        destination_page_owner_id: "123452",
+        destination_page_owner_slug: "street-art-superheroes-and-villains",
+        destination_page_owner_type: "collection",
+        horizontal_slide_position: 2,
+        type: "thumbnail",
       })
-    })
-  })
-})
-
-describe("FeaturedCollectionEntity", () => {
-  let props
-  const trackEvent = jest.fn()
-
-  const memberDataWithoutPriceGuidance = () => {
-    return {
-      description:
-        "<p>From SpongeBob SquarePants to Snoopy, many beloved childhood cartoons have made an impact on the history of art.</p>",
-      price_guidance: null,
-      slug: "art-inspired-by-cartoons",
-      thumbnail: "http://files.artsy.net/images/cartoons_thumbnail.png",
-      title: "Art Inspired by Cartoons",
-    }
-  }
-
-  beforeEach(() => {
-    props = {
-      collectionGroup: CollectionHubFixture.linkedCollections[1],
-    }
-    ;(useTracking as jest.Mock).mockImplementation(() => {
-      return {
-        trackEvent,
-      }
     })
   })
 
   it("Renders expected fields for FeaturedCollectionEntity", () => {
-    const component = mount(<FeaturedCollectionsRails {...props} />)
+    const component = getWrapper()
     const firstEntity = component.find(FeaturedCollectionEntity).at(0)
 
-    expect(firstEntity.text()).toMatch("From SpongeBob SquarePants to Snoopy")
+    expect(firstEntity.text()).toMatch("Art Inspired by Cartoons")
     expect(firstEntity.text()).toMatch("From $60")
     const featuredImage = component.find(FeaturedImage).at(0)
     expect(featuredImage.getElement().props.src).toContain(
@@ -119,28 +91,10 @@ describe("FeaturedCollectionEntity", () => {
   })
 
   it("Does not renders price guidance for FeaturedCollectionEntity when it is null", () => {
-    props.collectionGroup.members = [memberDataWithoutPriceGuidance()]
-    const component = mount(<FeaturedCollectionsRails {...props} />)
+    props.collectionGroup.members[0].price_guidance = null
+    const component = getWrapper()
     const firstEntity = component.find(FeaturedCollectionEntity).at(0)
 
     expect(firstEntity.text()).not.toContain("From $")
-  })
-
-  it("Tracks collection entity click", () => {
-    const { members } = props.collectionGroup
-    const component = mount(
-      <FeaturedCollectionEntity member={members[0]} itemNumber={0} />
-    )
-    component.find(StyledLink).at(0).simulate("click")
-
-    expect(trackEvent).toBeCalledWith({
-      action_type: "Click",
-      context_page: "Collection",
-      context_module: "FeaturedCollectionsRail",
-      context_page_owner_type: "Collection",
-      type: "thumbnail",
-      destination_path: "undefined/collection/art-inspired-by-cartoons",
-      item_number: 0,
-    })
   })
 })
