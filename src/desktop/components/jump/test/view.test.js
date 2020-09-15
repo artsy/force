@@ -19,6 +19,10 @@ describe("JumpView", function () {
       })
       Backbone.$ = $
       this.view = new JumpView()
+      window.analytics = {
+        track: () => {},
+        page: () => {},
+      }
       return done()
     })
   })

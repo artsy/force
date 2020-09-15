@@ -126,6 +126,7 @@ module.exports =
   STRIPE_PUBLISHABLE_KEY: null
   TEAM_BLOGS: '^\/life-at-artsy$|^\/artsy-education$|^\/buying-with-artsy$'
   TARGET_CAMPAIGN_URL: '/seattle-art-fair-2017'
+  THIRD_PARTIES_DISABLED: false
   TRACK_PAGELOAD_PATHS: null
   VANITY_BUCKET: null
   VOLLEY_ENDPOINT: null
