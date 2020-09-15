@@ -9,6 +9,7 @@ import { data as sd } from "sharify"
 
 import {
   RelayNetworkLayer,
+  batchMiddleware,
   errorMiddleware,
   loggerMiddleware,
   urlMiddleware,
@@ -86,17 +87,19 @@ export function createRelaySSREnvironment(config: Config = {}) {
     logger.warn("Browser does not support i18n API, not setting TZ header.")
   }
 
+  const authenticatedHeaders = !!user
+    ? {
+        ...headers,
+        "X-USER-ID": user && user.id,
+        "X-ACCESS-TOKEN": user && user.accessToken,
+      }
+    : headers
+
   const middlewares = [
     searchBarImmediateResolveMiddleware(),
     urlMiddleware({
       url: METAPHYSICS_ENDPOINT,
-      headers: !!user
-        ? {
-            ...headers,
-            "X-USER-ID": user && user.id,
-            "X-ACCESS-TOKEN": user && user.accessToken,
-          }
-        : headers,
+      headers: authenticatedHeaders,
     }),
     relaySSRMiddleware.getMiddleware(),
     cacheMiddleware({
@@ -115,6 +118,20 @@ export function createRelaySSREnvironment(config: Config = {}) {
     loggingEnabled && loggerMiddleware(),
     loggingEnabled && metaphysicsExtensionsLoggerMiddleware(),
     loggingEnabled && errorMiddleware({ disableServerMiddlewareTip: true }),
+
+    ...(sd.ENABLE_QUERY_BATCHING
+      ? [
+          batchMiddleware({
+            headers: authenticatedHeaders,
+            batchUrl: `${METAPHYSICS_ENDPOINT}/batch`,
+            // Period of time (integer in milliseconds) for gathering multiple requests
+            // before sending them to the server.
+            // Will delay sending of the requests on specified in this option period of time,
+            // so be careful and keep this value small. (default: 0)
+            batchTimeout: 0,
+          }),
+        ]
+      : []),
   ]
 
   // TODO: The `noThrow` option is used since we do our own error handling,
