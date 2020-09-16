@@ -2,6 +2,7 @@
 // Button styles used project-wide
 //
 @import '../../stylus_lib'
+@require '../../../../lib/palette'
 
 .circle-border-icon-button
   display inline-block
@@ -112,8 +113,7 @@ a.nav-image-item
 
 // Avant Garde rectangular buttons
 .avant-garde-box-button
-  avant-garde()
-  font-size avant-garde-font-size
+  text('mediumText')
   padding 12px
   border 1px solid light-gray-border-color
   background transparent

@@ -5,13 +5,11 @@ block head
 
 block content
   #art-fairs-page
-    header.art-fairs-header.garamond-header(
+    header.art-fairs-header(
       style= !currentFairs.length ? "background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('/images/fairs-header-img.jpg')" : ""
       class= !currentFairs.length ? "art-fairs-header--background-image" : ""
     )
-      h1 Collect from leading
-        br
-        | art fairs on Artsy
+      h1 Fairs
 
     #art-fairs-content.main-side-margin
 

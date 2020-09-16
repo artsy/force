@@ -1,21 +1,23 @@
 @import '../../components/stylus_lib'
 @import '../../components/avant_garde_tabs/index'
+@require '../../../lib/palette'
 
 #art-fairs-page
   min-height 600px
 
-  .art-fairs-header--background-image.garamond-header
+  .art-fairs-header
+    h1
+      text('largeTitle')
+      text-align center
+      padding-top getSpace(3)
+      padding-bottom getSpace(1)
+
+  .art-fairs-header--background-image
     background-size cover
     background-position center
     height 200px
     color white
     margin-bottom 30px
-
-    h1
-      font-size 30px
-      position relative
-      top 50%
-      transform translateY(-50%)
 
   .art-fairs-content--sign-up-container
     padding-bottom 30px
@@ -26,7 +28,7 @@
       margin-top 20px
 
     .art-fairs-content--sign-up-container__label
-      serif()
+      text('text')
       font-size 18px
 
   #art-fairs-content
@@ -69,11 +71,10 @@
     height 50px
 
   .fair-details h5.fair-name
-    avant-garde-size('s-headline', true)
-    margin-bottom 4px
+    text('text')
 
   .fair-details p.fair-content
-    garamond-size('l-caption')
+    text('text')
 
   .fair-content__location
     max-width 90%
