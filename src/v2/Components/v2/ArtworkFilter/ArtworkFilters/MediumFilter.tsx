@@ -1,6 +1,7 @@
 import { Flex, Radio, RadioGroup, Toggle } from "@artsy/palette"
 import React, { FC } from "react"
 import { useArtworkFilterContext } from "../ArtworkFilterContext"
+import { OptionText } from "./OptionText"
 
 export const MediumFilter: FC = () => {
   const { aggregations, counts, ...filterContext } = useArtworkFilterContext()
@@ -30,7 +31,7 @@ export const MediumFilter: FC = () => {
                 key={index}
                 my={0.3}
                 value={medium.value.toLocaleLowerCase()}
-                label={medium.name}
+                label={<OptionText>{medium.name}</OptionText>}
               />
             )
           })}

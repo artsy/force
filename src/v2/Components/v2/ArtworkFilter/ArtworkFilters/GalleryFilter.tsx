@@ -2,6 +2,7 @@ import { Flex, Radio, RadioGroup, Toggle } from "@artsy/palette"
 import { sortBy } from "lodash"
 import React, { FC } from "react"
 import { useArtworkFilterContext } from "../ArtworkFilterContext"
+import { OptionText } from "./OptionText"
 
 export const GalleryFilter: FC = () => {
   const { aggregations, ...filterContext } = useArtworkFilterContext()
@@ -29,7 +30,7 @@ export const GalleryFilter: FC = () => {
                 key={index}
                 my={0.3}
                 value={item.value.toLocaleLowerCase()}
-                label={item.name}
+                label={<OptionText>{item.name}</OptionText>}
               />
             )
           })}
