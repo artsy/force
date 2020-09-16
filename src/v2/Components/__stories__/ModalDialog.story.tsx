@@ -11,6 +11,7 @@ storiesOf("Components/Info Modal", module)
         action: () => ({}),
         text: "Continue",
       }}
+      // eslint-disable-next-line no-console
       onClose={() => console.log("You clicked the background")}
     />
   ))
@@ -21,6 +22,7 @@ storiesOf("Components/Info Modal", module)
       detail="This extra informaton is important."
       primaryCta={{
         action: () => {
+          // eslint-disable-next-line no-console
           console.log("you clicked continue")
         },
         text: "Continue",
@@ -34,12 +36,14 @@ storiesOf("Components/Info Modal", module)
       detail="This extra informaton is important."
       primaryCta={{
         action: () => {
+          // eslint-disable-next-line no-console
           console.log("you clicked continue")
         },
         text: "Continue",
       }}
       secondaryCta={{
         action: () => {
+          // eslint-disable-next-line no-console
           console.log("you clicked cancel")
         },
         text: "Cancel",

@@ -19,16 +19,19 @@ mediator.on("all", (actionName: string, data?: object) =>
 if (sd.SHOW_ANALYTICS_CALLS) {
   // Log all pageviews
   window.analytics.on("page", function () {
+    // eslint-disable-next-line no-console
     console.info("ANALYTICS PAGEVIEW: ", arguments[2], arguments[3])
   })
   // Log all track calls
   window.analytics.on("track", (actionName: string, data?: any) => {
+    // eslint-disable-next-line no-console
     console.info("ANALYTICS TRACK:", actionName, data)
   })
   // Log all identify calls
   window.analytics.on(
     "identify",
     (userId: string, data: object, context: any) => {
+      // eslint-disable-next-line no-console
       console.info("ANALYTICS IDENTIFY:", userId, data, context)
     }
   )

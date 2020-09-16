@@ -48,7 +48,7 @@ export const submissionFlow = async (req, res, next) => {
     sendTrackingEvent(req, res)
     res.render("submission_flow", { user: req.user })
   } catch (error) {
-    console.log(error)
+    console.error(error)
     next(error)
   }
 }
@@ -82,7 +82,7 @@ export const submissionFlowWithFetch = async (req, res, next) => {
     }
     res.render("submission_flow", { user: req.user })
   } catch (e) {
-    console.log(e)
+    console.error(e)
     next(e)
   }
 }
