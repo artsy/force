@@ -1,4 +1,5 @@
 @require './popover'
+@require '../../lib/palette'
 
 .follow-button
   &:before
@@ -10,18 +11,19 @@
   &.no-touch[data-state='following'],
   &.no-touch.is-following
     &:hover
-      color purple-color
+      color getColor('purple100')
       &:before
         content 'Unfollow'
       &.is-clicked:before
         content 'Following'
 
 .plus-follow-button
+  text('text')
   cursor pointer
   display inline-block
   min-width 86px
   &.is-following, &:hover, &[data-state='following']
-    color purple-color
+    color getColor('purple100')
   .icon-follow-circle, .follow-button-text
     display inline
   .icon-follow-circle

@@ -1,5 +1,4 @@
-import { CSSGrid } from "@artsy/palette"
-import { Serif } from "@artsy/palette"
+import { CSSGrid, Text } from "@artsy/palette"
 import { CollectionsHubsHomepageNav_marketingHubCollections } from "v2/__generated__/CollectionsHubsHomepageNav_marketingHubCollections.graphql"
 import { AnalyticsSchema } from "v2/Artsy/Analytics"
 import React from "react"
@@ -37,8 +36,8 @@ export const CollectionsHubsHomepageNav = track(
           to={`/collection/${hub.slug}`}
           src={resize(hub.thumbnail, { width: 357, height: 175 })}
           ratio={[0.49]}
-          title={<Serif size={["3", "4"]}>{hub.title}</Serif>}
-          subtitle={<Serif size="2">{subtitleFor(hub.title)}</Serif>}
+          title={<Text variant="text">{hub.title}</Text>}
+          subtitle={<Text variant="caption">{subtitleFor(hub.title)}</Text>}
           key={hub.slug}
           onClick={() => {
             trackEvent({

@@ -32,13 +32,16 @@ getColor(name)
     error('cannot find: ' + name)
   value
 
-getSpace(indices...)
+getSpace(keys...)
   values = ()
-  for i in indices
-    value = THEME.space[i]
-    if value == null
-      error('cannot find: ' + i)
-    push(values, value)
+  for key in keys
+    if key == 0 || key == 'auto'
+      push(values, key)
+    else
+      value = THEME.space[key]
+      if value == null
+        error('cannot find: ' + key)
+      push(values, value)
   values
 
 // Access text treatments

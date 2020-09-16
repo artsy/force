@@ -1,3 +1,5 @@
+@require '../../lib/palette'
+
 .abrv-context--float
   float left
   position relative
@@ -10,13 +12,13 @@
     border-bottom none
     padding-right 15px
     margin-right 15px
-    border-right 1px solid gray-lighter-color
+    border-right 1px solid getColor('black10')
     display inline-block
     width calc(25% \- 15px)
     min-width value
     .my-active-bids-item-details
       padding-top 8px
-      garamond-size('l-caption', true)
+      text('text')
     .my-active-bids-warning, .my-active-bids-bid-button
       right 15px
     .bid-status
@@ -28,6 +30,8 @@
   z-index 100
   overflow ellipsis
   height 100%
+  text('text')
+
   &--fair
     img
       width 75px
@@ -42,7 +46,7 @@
   &--iconic-artists, &--followed-artists
     &__artist, &__more-artists
       display block
-      avant-garde-size('body', true)
+      text('mediumText')
       text-decoration none
       margin 10px 0
       width 100%
@@ -50,7 +54,7 @@
       overflow hidden
       text-overflow ellipsis
       &:hover
-        color purple-color
+        color getColor('purple100')
       &:first-child
         margin-top 0
 

@@ -7,7 +7,7 @@ column-gap = 30px
 
 .home-featured-header
   margin (column-gap - 10px) 0 column-gap 0
-  garamond-size('headline')
+  text('title')
 
 .home-featured-list
   position relative
@@ -25,8 +25,9 @@ column-gap = 30px
 .home-browse-all-right
   float right
   a
-    fine-faux-underline()
-    font-size 17px
+    text('text')
+    color getColor('black60')
+    text-decoration none
 
 .home-featured-cover-img
   overflow hidden
@@ -86,17 +87,17 @@ li.grid-item .artwork-item-contact-seller
 .htfl-details
   padding (column-gap / 2)
   > h3
-  > h4
     text('small')
-  > h3
     color getColor('black60')
+  > h4
+    text('subtitle')
 
 // Featured articles
 // --------------
 
 #home-featured-articles-section
   .home-featured-header
-    garamond-size('headline')
+    text('title')
 
 .home-featured-article-link
   display inline-block
@@ -111,8 +112,7 @@ li.grid-item .artwork-item-contact-seller
     padding-right column-gap
     height auto
     h4
-      font-size 24px
-      line-height 1.2em
+      text('subtitle')
     .home-featured-cover-img
       padding-bottom 410px
   &:nth-child(2), &:nth-child(5)
@@ -128,12 +128,11 @@ li.grid-item .artwork-item-contact-seller
     padding-bottom 140px
     width 100%
   h4
-    margin-top 10px
+    text('mediumText')
+    margin-top getSpace(1)
   h5
-    avant-garde()
-    font-size 11px
-    padding-top 3px
-    color gray-darker-color
+    text('text')
+    color getColor('black60')
   a
     text-decoration none
 
