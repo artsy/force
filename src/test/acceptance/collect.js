@@ -23,7 +23,7 @@ xdescribe("Collect page", () => {
 
   it("renders a title and header info", async () => {
     const $ = await browser.page("/collect")
-    $.html().should.containEql("Collect art and design online")
+    $.html().should.containEql("Browse artworks")
   })
 
   it("renders artwork grid", async () => {
