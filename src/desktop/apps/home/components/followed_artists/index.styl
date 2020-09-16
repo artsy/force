@@ -1,4 +1,5 @@
 @require '../../../../components/typeahead/index'
+@require '../../../../../lib/palette'
 
 .abrv-context__content--followed-artists
   &__more-artists
@@ -9,7 +10,7 @@
   float left
   .tt-suggestion
     padding 0
-    border-bottom 1px solid gray-lighter-color
+    border-bottom 1px solid getColor('black10')
     position relative
     height 63px
     &:last-child
@@ -20,20 +21,20 @@
     align-items center
     flex 1
     &__selected
-      color white
-      background-color purple-color !important
+      color getColor('white100')
+      background-color getColor('purple100') !important
   .tt-dropdown-menu
-    border 1px solid gray-lighter-color
+    border 1px solid getColor('black10')
   .tt-cursor
   .tt-suggestion:hover
-      background-color gray-lightest-color
-      color black
+      background-color getColor('black5')
+      color getColor('black100')
   .typeahead-suggestion-follow
     margin-right 10px
     &[data-state="follow"] .avant-garde-button-underlined:before
       content 'Follow'
     &[data-state="following"] .avant-garde-button-underlined
-      border-bottom-color white
+      border-bottom-color getColor('white100')
       &:before
         content 'Following'
-        color white
+        color getColor('white100')

@@ -1,35 +1,43 @@
 @require '../../../../../components/artist_cell'
+@require '../../../../lib/palette'
 
 .artists-to-follow
   height 450px
-  background-color gray-lightest-color
-  margin-bottom 60px
+  background-color getColor('black5')
+  margin-bottom getSpace(6)
+
   &__inner
-    padding 30px 0 50px
+    padding getSpace(3, 0, 5)
+
     &__header
       h1
-        garamond-size('headline')
+        text('title')
         display inline-block
+
       &__tabs
         display inline-block
+
         &__tab
+          text('subtitle')
           cursor pointer
-          margin 0 15px
+          margin getSpace(0, 1.5)
           display inline-block
-          avant-garde-size('body')
-          color gray-darker-color
+
           &:first-child
-            margin-left 25px
+            margin-left getSpace(3)
+
           &.is-active
-            color black
-            border-bottom 2px solid black
+            color getColor('black100')
+            text-decoration underline
+
     &__results
-      padding-top 22px
+      padding-top getSpace(2)
+
       .artist-rail-cell
         padding 0
-        margin-right 30px
+        margin-right getSpace(3)
         width calc(25% \- 22.5px)
-        background-color white
-        // transition opacity, 800ms, ease
+        background-color getColor('white100')
+
       .hoverable-image-link
         width 100%
