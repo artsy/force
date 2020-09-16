@@ -19,7 +19,9 @@ export const ViewingRoomsFeaturedRail: React.FC<ViewingRoomsFeaturedRailProps> =
     })
     .filter(Boolean)
 
-  if (featuredViewingRoomsForRail.length === 0) {
+  const numFeaturedViewingRooms = featuredViewingRoomsForRail.length
+
+  if (numFeaturedViewingRooms === 0) {
     return null
   }
 
@@ -57,6 +59,7 @@ export const ViewingRoomsFeaturedRail: React.FC<ViewingRoomsFeaturedRailProps> =
         render={carouselItemRender}
         maxWidth="100%"
         justifyContent="left"
+        scrollPercentByCustomCount={numFeaturedViewingRooms - 2}
       />
     </Box>
   )
