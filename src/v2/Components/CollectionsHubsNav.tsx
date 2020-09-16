@@ -1,4 +1,4 @@
-import { CSSGrid, Serif } from "@artsy/palette"
+import { CSSGrid, Text } from "@artsy/palette"
 import { CollectionsHubsNav_marketingHubCollections } from "v2/__generated__/CollectionsHubsNav_marketingHubCollections.graphql"
 import { useTracking } from "v2/Artsy/Analytics"
 import * as Schema from "v2/Artsy/Analytics/Schema"
@@ -29,7 +29,11 @@ export const CollectionsHubsNav: FC<CollectionsHubsNavProps> = props => {
           to={`/collection/${hub.slug}`}
           src={resize(hub.thumbnail, { width: 357, height: 175 })}
           ratio={[0.49]}
-          title={<Serif size="4t">{hub.title}</Serif>}
+          title={
+            <Text variant="text" px={1}>
+              {hub.title}
+            </Text>
+          }
           key={hub.slug}
           onClick={() => {
             trackEvent({
