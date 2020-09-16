@@ -16,7 +16,7 @@ describe("/collect", () => {
   })
 
   it("renders page content", () => {
-    cy.get("h1").should("contain", "Collect art and design online")
+    cy.get("h1").should("contain", "Browse artworks")
     artworkGridRenders()
   })
 })

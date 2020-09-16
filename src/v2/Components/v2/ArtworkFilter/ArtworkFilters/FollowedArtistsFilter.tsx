@@ -2,6 +2,7 @@ import { Checkbox, Flex, Toggle } from "@artsy/palette"
 import React, { FC } from "react"
 
 import { useArtworkFilterContext } from "../ArtworkFilterContext"
+import { OptionText } from "./OptionText"
 
 export const FollowedArtistsFilter: FC = () => {
   const filterContext = useArtworkFilterContext()
@@ -20,7 +21,9 @@ export const FollowedArtistsFilter: FC = () => {
     <Toggle label="Artists" expanded>
       <Flex flexDirection="column">
         <Checkbox {...props}>
-          Artists I Follow ({filterContext.counts.followedArtists})
+          <OptionText>
+            Artists I Follow ({filterContext.counts.followedArtists})
+          </OptionText>
         </Checkbox>
       </Flex>
     </Toggle>

@@ -2,6 +2,7 @@ import { Flex, Radio, RadioGroup, Toggle } from "@artsy/palette"
 import React, { FC } from "react"
 import { get } from "v2/Utils/get"
 import { useArtworkFilterContext } from "../ArtworkFilterContext"
+import { OptionText } from "./OptionText"
 
 interface TimePeriodFilterProps {
   expanded?: boolean
@@ -43,7 +44,7 @@ export const TimePeriodFilter: FC<TimePeriodFilterProps> = ({
                 my={0.3}
                 value={timePeriod.name}
                 key={index}
-                label={timePeriod.name}
+                label={<OptionText>{timePeriod.name}</OptionText>}
               />
             )
           })}

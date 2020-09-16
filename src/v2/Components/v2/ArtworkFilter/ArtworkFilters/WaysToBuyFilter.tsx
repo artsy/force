@@ -6,6 +6,7 @@ import {
   ArtworkFilters,
   useArtworkFilterContext,
 } from "../ArtworkFilterContext"
+import { OptionText } from "./OptionText"
 
 interface WayToBuy {
   disabled: any
@@ -65,7 +66,11 @@ export const WaysToBuyFilter: FC = () => {
               filterContext.currentlySelectedFilters()[checkbox.state]
             ),
           }
-          return <Checkbox {...props}>{checkbox.name}</Checkbox>
+          return (
+            <Checkbox {...props}>
+              <OptionText>{checkbox.name}</OptionText>
+            </Checkbox>
+          )
         })}
       </Flex>
     </Toggle>
