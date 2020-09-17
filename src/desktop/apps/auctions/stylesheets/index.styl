@@ -69,23 +69,25 @@
 .auctions-placeholder
   display table
   width 100%
+
 .auctions-placeholder-metadata
 .auctions-placeholder-hero
   display table-cell
   height 100%
   vertical-align middle
   text-align center
+
 .auctions-placeholder-metadata
   width 33.33%
   padding 0 50px 0 20px
   > h2
-    garamond-size('l-headline')
+    text('largeTitle')
     // Visually center. Due to line-height and hard-edged bottom button
     margin -((@font-size * (@line-height - 1)) * 2) auto 10px
   > p
+    text('subtitle')
     margin 20px 0
     padding 0 20px
-    garamond-size('l-body')
   > a
     white-space nowrap
 .auctions-placeholder-hero
