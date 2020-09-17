@@ -1,5 +1,6 @@
 @require '../../../components/stylus_lib'
 @require './mobile'
+@require '../../../../lib/palette'
 
 #notifications-page
   padding-top 50px
@@ -56,8 +57,7 @@
 #notifications-header
   margin-bottom 40px
   h1
-    garamond-size('l-headline')
-    font-size 32px
+    text('largeTitle')
 
 #notifications-react-headline
   margin-left 250px
@@ -71,15 +71,19 @@
   .artsy-checkbox
     display block
     padding-bottom 36px
+    .artsy-checkbox--label
+      text('text')
   .filter-artist
     display block
+    margin-bottom getSpace(1)
   .filter-artist-published-artworks-count, .filter-artist-forsale-artworks-count
     display inline
     color gray-dark-color
+    text('text')
   .filter-artist-name
     text-decoration none
     display inline
-    line-height 2em
+    text('text')
   .filter-artist-clear
     display none
   .filter-artist[data-state=selected]
@@ -122,7 +126,7 @@
     avant-garde-size('m-headline')
     text-decoration none
   .artist-work-count
-    garamond-size('l-caption')
+    text('text')
     color gray-dark-color
     font-style italic
 
@@ -167,8 +171,8 @@
     font-size 13px
 
 .notifications-search-header
-  avant-garde('body')
-  margin 40px 0 20px 0
+  text('small')
+  margin getSpace(4, 0, 2, 0)
 
 #notifications-search-container
   margin-bottom 50px
