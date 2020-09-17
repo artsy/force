@@ -1,10 +1,8 @@
 @require '../../../components/stylus_lib'
+@require '../../../../lib/palette'
 
 .af-hero-image
   width 100%
-.af-name
-  margin 20px 0
-  garamond-size('headline')
 .af-metadata
   margin 20px 0
   display flex
@@ -62,7 +60,7 @@
 .auctions-list
   block-margins(30px)
   .leader-dots-list-item
-    garamond-size('l-body')
+    text('subtitle')
     &:after
       font-size 12px
       line-height 2.2
@@ -107,8 +105,6 @@
     display table-cell
     vertical-align middle
     padding 20px 0
-  h3
-    font-style italic
 
 .auction-cta-group .auction-cta-group__left
   width 20%
@@ -121,9 +117,9 @@
   padding-left 10px
 
 .auctions-header, .auctions-my-active-bids h3
-  garamond-size('headline')
+  text('largeTitle')
+  padding-bottom getSpace(2)
   border-bottom 1px solid gray-lighter-color
-  padding-bottom 17px
 
 .auctions-my-active-bids h3
   margin-bottom 30px
@@ -154,12 +150,14 @@
   flex-grow 1
 
 .af-name
-  garamond-size('s-headline')
-  margin 0
+  text('subtitle')
+
+.af-sale-time
+  text('caption')
 
 .af-live-header
-  avant-garde-size('body')
-  letter-spacing 3px
+  text('caption')
+  color getColor('black60')
 
 .af-go-button
   width 200px

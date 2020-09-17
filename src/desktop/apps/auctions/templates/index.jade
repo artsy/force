@@ -65,8 +65,8 @@ block body
           for auction in upcomingAuctions
             .ap-upcoming-item
               if auction.id == 'input-output'
-                a.fine-faux-underline.au-name( href= auction.href() ) Sotheby's Input/Output
+                a.au-name( href= auction.href() ) Sotheby's Input/Output
               else
-                a.fine-faux-underline.au-name( href= auction.href() )= auction.get('name')
+                a.au-name( href= auction.href() )= auction.get('name')
               .au-date Opens #{auction.overviewStartDate()}
 
