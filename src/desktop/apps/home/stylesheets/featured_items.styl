@@ -6,8 +6,11 @@ column-gap = 30px
 // ----------------
 
 .home-featured-header
+  position relative
   margin (column-gap - 10px) 0 column-gap 0
-  text('title')
+
+  &__title
+    text('title')
 
 .home-featured-list
   position relative
@@ -23,7 +26,10 @@ column-gap = 30px
   text-align center
 
 .home-browse-all-right
-  float right
+  position absolute
+  right 0
+  bottom 0
+
   a
     text('text')
     color getColor('black60')
@@ -95,10 +101,6 @@ li.grid-item .artwork-item-contact-seller
 // Featured articles
 // --------------
 
-#home-featured-articles-section
-  .home-featured-header
-    text('title')
-
 .home-featured-article-link
   display inline-block
   vertical-align top
@@ -115,6 +117,8 @@ li.grid-item .artwork-item-contact-seller
       text('subtitle')
     .home-featured-cover-img
       padding-bottom 410px
+    h5
+      margin-top getSpace(1)
   &:nth-child(2), &:nth-child(5)
     padding-right (column-gap * .66)
   &:nth-child(3), &:nth-child(6)

@@ -1,25 +1,27 @@
 @import './hero_units'
 @import './current_shows'
+@require '../../../../lib/palette'
 
 .home-page-section.main-side-margin
-  margin-top 20px
+  margin-top getSpace(2)
 
-.home-page-section>h2
-  font-size: 22px;
-  margin-bottom: 25px;
-  line-height: 28px;
-  
+.home-page-section > h2
+  text('title')
+  text-align center
+  margin-bottom getSpace(2)
+
 #home-page-featured-links
-  margin-top 20px
+  margin-top getSpace(2)
 
 .home-page-featured-header
-  margin 30px 0 20px 0
-  font-size large-avant-garde-font-size !important
+  text('title')
+  text-align center
+  margin getSpace(3, 0, 2, 0)
 
 #home-page-featured-list
-  margin 20px 0
+  margin getSpace(2, 0)
 
 .home-featured-back-link
-  margin 30px 0
+  margin getSpace(3, 0)
   display block
   text-decoration none
