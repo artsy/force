@@ -66,18 +66,17 @@ chevron-pseudo-el()
 
 .chevron-nav-list
   a
+    text('subtitle')
     text-decoration none
     position relative
     display block
-    padding 14px 0
-    border-top 1px solid gray-lighter-color
-    avant-garde()
-    font-size avant-garde-font-size
+    padding getSpace(1.5, 0)
+    border-top 1px solid getColor('black10')
     &:last-child
       border-bottom @border-top
     &::after
       chevron-pseudo-el()
-      background light-gray-border-color
+      background getColor('black10')
       right -9px
       position absolute
 
