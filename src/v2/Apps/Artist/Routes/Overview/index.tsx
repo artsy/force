@@ -7,10 +7,9 @@ import {
   Image,
   Link,
   Row,
-  Sans,
   Separator,
-  Serif,
   Spacer,
+  Text,
 } from "@artsy/palette"
 import { Overview_artist } from "v2/__generated__/Overview_artist.graphql"
 import { ArtistTopWorksRailFragmentContainer as ArtistTopWorksRail } from "v2/Apps/Artist/Components/ArtistTopWorksRail/ArtistTopWorksRail"
@@ -54,7 +53,7 @@ const NavLink: React.FC<NavLinkProps> = props => {
 
   return (
     <Flex flexDirection="row" alignItems="center" mt={1}>
-      <Sans size="3" weight="medium" mr="3px">
+      <Text variant="mediumText" mr="3px">
         <StyledLink
           to={props.path}
           onClick={() =>
@@ -67,7 +66,7 @@ const NavLink: React.FC<NavLinkProps> = props => {
         >
           {props.label}
         </StyledLink>
-      </Sans>
+      </Text>
       <ChevronIcon
         direction="right"
         color="black"
@@ -85,9 +84,9 @@ interface SectionHeaderProps {
 
 const SectionHeader: React.FC<SectionHeaderProps> = props => {
   return (
-    <Sans size="5" color="black100" mb={2}>
+    <Text variant="subtitle" color="black100" mb={2}>
       {props.headerString}
-    </Sans>
+    </Text>
   )
 }
 
@@ -195,9 +194,7 @@ export class OverviewRoute extends React.Component<OverviewRouteProps, {}> {
               <>
                 {showArtistBio && (
                   <>
-                    <Sans size="3" weight="medium">
-                      Biography
-                    </Sans>
+                    <Text variant="mediumText">Biography</Text>
                     <Spacer mb={1} />
                     <ArtistBio
                       onReadMoreClicked={() => {
@@ -210,9 +207,7 @@ export class OverviewRoute extends React.Component<OverviewRouteProps, {}> {
                 {showRelatedCategories && (
                   <>
                     {showArtistBio && <Spacer mb={2} />}
-                    <Sans size="3" weight="medium">
-                      Related Categories
-                    </Sans>
+                    <Text variant="mediumText">Related Categories</Text>
                     <Spacer mb={1} />
                     <Genes artist={artist} />
                     <Spacer mb={2} />
@@ -227,9 +222,7 @@ export class OverviewRoute extends React.Component<OverviewRouteProps, {}> {
             {(showArtistInsights || artist.statuses.cv) && (
               <Col sm={4}>
                 <Box pl={2} pt={0}>
-                  <Sans size="3" weight="medium">
-                    Career Highlights
-                  </Sans>
+                  <Text variant="mediumText">Career Highlights</Text>
                   <SelectedCareerAchievements artist={artist} />
                   {artist.statuses.cv && (
                     <>
@@ -253,7 +246,7 @@ export class OverviewRoute extends React.Component<OverviewRouteProps, {}> {
             <>
               <Separator mt={5} mb={2} />
 
-              <Sans size="5">Biography</Sans>
+              <Text variant="subtitle">Biography</Text>
               <Spacer mb={1} />
               <ArtistBio
                 onReadMoreClicked={() => {
@@ -309,9 +302,9 @@ export class OverviewRoute extends React.Component<OverviewRouteProps, {}> {
             <Separator my={3} />
             <Col sm={4}>
               <Box>
-                <Sans size="5" color="black100">
+                <Text variant="subtitle" color="black100">
                   Career Highlights
-                </Sans>
+                </Text>
                 <SelectedCareerAchievements artist={artist} />
                 {artist.statuses.cv && (
                   <>
@@ -346,12 +339,12 @@ export class OverviewRoute extends React.Component<OverviewRouteProps, {}> {
                         width={get(slide, i => i.coverImage.cropped.width)}
                         height={get(slide, i => i.coverImage.cropped.height)}
                       />
-                      <Serif size="3t" mt={1}>
+                      <Text variant="mediumText" mt={1}>
                         <TruncatedLine>{slide.name}</TruncatedLine>
-                      </Serif>
-                      <Sans size="2" color="black60">
+                      </Text>
+                      <Text variant="caption" color="black60">
                         <TruncatedLine>{slide.exhibitionPeriod}</TruncatedLine>
-                      </Sans>
+                      </Text>
                     </Link>
                   </Box>
                 )
@@ -382,12 +375,10 @@ export class OverviewRoute extends React.Component<OverviewRouteProps, {}> {
                     }}
                   >
                     <Box width="70%" maxWidth={["none", "300px"]} mr={[1, 2]}>
-                      <Serif size={["3t", "4t"]}>
-                        {article.thumbnailTitle}
-                      </Serif>
-                      <Sans size="2" color="black60">
+                      <Text variant="mediumText">{article.thumbnailTitle}</Text>
+                      <Text variant="caption" color="black60">
                         {article.publishedAt}
-                      </Sans>
+                      </Text>
                     </Box>
                     <Box maxWidth={["90px", "120px"]}>
                       <Image
