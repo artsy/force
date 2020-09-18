@@ -13,22 +13,22 @@
   background-size cover
   background-position center
   height 200px
-  color white
-  margin-bottom 30px
+  color getColor('white100')
+  margin-bottom getSpace(3)
 
   h1
-    font-size 30px
+    text('largeTitle')
     position relative
     top 50%
     transform translateY(-50%)
 
 .auction-page-content--sign-up-container
-  padding-bottom 30px
+  padding-bottom getSpace(3)
   text-align center
 
   .avant-garde-box-button
     background #000
-    margin-top 20px
+    margin-top getSpace(2)
 
   .auction-page-content--sign-up-container__label
     text('text')
@@ -38,7 +38,7 @@
   > .is-promo
     color dark-gray-text-color
   > .is-open
-    color #00cc66
+    color getColor('green100')
 
 .auctions-page-list[data-list='current'] .auctions-page-list__auction__bid-label
   display block
@@ -52,7 +52,7 @@
 
   .auctions-page-list__auction__name.avant-garde-tabs-list__chevron-name
     margin-top 0
-    margin-bottom 20px
+    margin-bottom getSpace(2)
 
   .auctions-page-list__auction__name__title
     text('title')
@@ -66,7 +66,7 @@
   .auctions-page-list__auction__image
     height 100%
     width auto
-    margin-right 5px
+    margin-right getSpace(0.5)
 
   .avant-garde-tabs-list__chevron-name
 
