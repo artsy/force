@@ -4,7 +4,7 @@ import {
   CheckCircleIcon,
   Flex,
   Input,
-  Serif,
+  Text,
   TextArea,
   color,
 } from "@artsy/palette"
@@ -176,10 +176,10 @@ class SendFeedbackForm extends React.Component<SystemContextProps, State> {
       <>
         <CheckCircleIcon />
         <Box mt={1} textAlign="center">
-          <Serif size="4">Your message has been sent!</Serif>
+          <Text variant="text">Your message has been sent!</Text>
         </Box>
         <Box>
-          <Serif size="2">Thank you for helping to improve Artsy.</Serif>
+          <Text variant="caption">Thank you for helping to improve Artsy.</Text>
         </Box>
       </>
     )
@@ -190,13 +190,13 @@ class SendFeedbackForm extends React.Component<SystemContextProps, State> {
     return (
       <>
         <Box textAlign="center">
-          <Serif size="5">Your feedback is important to us.</Serif>
-        </Box>
-        <Box>
-          <Serif size="3">
+          <Text variant="subtitle" mb={1}>
+            Your feedback is important to us.
+          </Text>
+          <Text variant="text">
             Tell us how we can improve and help you find what you are looking
             for.
-          </Serif>
+          </Text>
         </Box>
         {!user ? this.renderPersonalInfoInputs() : null}
         {this.renderFeedbackTextArea()}

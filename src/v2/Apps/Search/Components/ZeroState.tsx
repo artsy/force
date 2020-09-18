@@ -1,4 +1,4 @@
-import { Box, Flex, Serif } from "@artsy/palette"
+import { Box, Flex, Text } from "@artsy/palette"
 import { SendFeedback } from "v2/Apps/Search/Components/SendFeedback"
 import { useArtworkFilterContext } from "v2/Components/v2/ArtworkFilter/ArtworkFilterContext"
 import React, { FC } from "react"
@@ -21,14 +21,14 @@ export const ZeroState: FC<ZeroStateProps> = props => {
       justifyContent="center"
     >
       <Box m={3} textAlign="center">
-        <Serif size="6">
+        <Text variant="subtitle" mb={1}>
           {hasFilters ? "No results found." : `No results found for "${term}".`}
-        </Serif>
-        <Serif size="3">
+        </Text>
+        <Text variant="text">
           {hasFilters
             ? "Try removing some filters or try another search term."
             : "Try checking for spelling errors or try another search term."}
-        </Serif>
+        </Text>
       </Box>
       <Box width="100%">
         <SendFeedback />
