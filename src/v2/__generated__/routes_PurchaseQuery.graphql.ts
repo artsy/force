@@ -37,7 +37,9 @@ fragment PurchaseHistory_me on Me {
         code
         state
         mode
-        buyerTotal
+        createdAt
+        totalListPrice
+        itemsTotal
         lineItems {
           edges {
             node {
@@ -47,6 +49,10 @@ fragment PurchaseHistory_me on Me {
                   resized(width: 55) {
                     url
                   }
+                }
+                partner {
+                  name
+                  id
                 }
                 internalID
                 title
@@ -233,7 +239,21 @@ return {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
-                        "name": "buyerTotal",
+                        "name": "createdAt",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "totalListPrice",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "itemsTotal",
                         "storageKey": null
                       },
                       {
@@ -307,6 +327,25 @@ return {
                                             ],
                                             "storageKey": "resized(width:55)"
                                           }
+                                        ],
+                                        "storageKey": null
+                                      },
+                                      {
+                                        "alias": null,
+                                        "args": null,
+                                        "concreteType": "Partner",
+                                        "kind": "LinkedField",
+                                        "name": "partner",
+                                        "plural": false,
+                                        "selections": [
+                                          {
+                                            "alias": null,
+                                            "args": null,
+                                            "kind": "ScalarField",
+                                            "name": "name",
+                                            "storageKey": null
+                                          },
+                                          (v1/*: any*/)
                                         ],
                                         "storageKey": null
                                       },
@@ -450,7 +489,7 @@ return {
     "metadata": {},
     "name": "routes_PurchaseQuery",
     "operationKind": "query",
-    "text": "query routes_PurchaseQuery {\n  me {\n    ...PurchaseApp_me\n    id\n  }\n}\n\nfragment PurchaseApp_me on Me {\n  ...PurchaseHistory_me\n}\n\nfragment PurchaseHistory_me on Me {\n  orders(first: 10) {\n    edges {\n      node {\n        __typename\n        internalID\n        code\n        state\n        mode\n        buyerTotal\n        lineItems {\n          edges {\n            node {\n              artwork {\n                date\n                image {\n                  resized(width: 55) {\n                    url\n                  }\n                }\n                internalID\n                title\n                artist_names: artistNames\n                id\n              }\n              id\n            }\n          }\n        }\n        id\n      }\n    }\n    pageCursors {\n      around {\n        cursor\n        isCurrent\n        page\n      }\n      first {\n        cursor\n        isCurrent\n        page\n      }\n      last {\n        cursor\n        isCurrent\n        page\n      }\n      previous {\n        cursor\n        isCurrent\n        page\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n"
+    "text": "query routes_PurchaseQuery {\n  me {\n    ...PurchaseApp_me\n    id\n  }\n}\n\nfragment PurchaseApp_me on Me {\n  ...PurchaseHistory_me\n}\n\nfragment PurchaseHistory_me on Me {\n  orders(first: 10) {\n    edges {\n      node {\n        __typename\n        internalID\n        code\n        state\n        mode\n        createdAt\n        totalListPrice\n        itemsTotal\n        lineItems {\n          edges {\n            node {\n              artwork {\n                date\n                image {\n                  resized(width: 55) {\n                    url\n                  }\n                }\n                partner {\n                  name\n                  id\n                }\n                internalID\n                title\n                artist_names: artistNames\n                id\n              }\n              id\n            }\n          }\n        }\n        id\n      }\n    }\n    pageCursors {\n      around {\n        cursor\n        isCurrent\n        page\n      }\n      first {\n        cursor\n        isCurrent\n        page\n      }\n      last {\n        cursor\n        isCurrent\n        page\n      }\n      previous {\n        cursor\n        isCurrent\n        page\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n"
   }
 };
 })();
