@@ -1,7 +1,15 @@
 @import '../../components/stylus_lib'
 @import '../../components/avant_garde_tabs/index'
+@require '../../../lib/palette'
 
-.auctions-header--background-image.garamond-header
+.auctions-header
+  h1
+    text('largeTitle')
+    text-align center
+    padding-top getSpace(3)
+    padding-bottom getSpace(1)
+
+.auctions-header--background-image
   background-size cover
   background-position center
   height 200px
@@ -23,12 +31,10 @@
     margin-top 20px
 
   .auction-page-content--sign-up-container__label
-    serif()
-    font-size 18px
+    text('text')
 
 .auctions-page-list__auction__bid-label
-  avant-garde()
-  font-size 11px
+  text('mediumText')
   > .is-promo
     color dark-gray-text-color
   > .is-open
@@ -38,8 +44,8 @@
   display block
 
 .avant-garde-tabs-list__upcoming-name
+  text('text')
   display block
-  font-size 18px
   text-decoration none
 
 .auctions-page-list__auction
@@ -49,9 +55,8 @@
     margin-bottom 20px
 
   .auctions-page-list__auction__name__title
-    serif()
+    text('title')
     max-width 80%
-    font-size 20px
 
   .auctions-page-list__auction__images
     overflow hidden
