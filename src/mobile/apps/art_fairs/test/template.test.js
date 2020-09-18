@@ -99,7 +99,7 @@ describe("Art fairs template", function () {
 
     // this test always fails ci
     return it("renders header with current fairs active", function () {
-      $(".art-fairs-header").html().should.containEql("Fairs")
+      $(".art-fairs-header").html().should.containEql("Collect from leading")
       return $(".art-fairs-tab[data-tab=current]").hasClass(
         "art-fairs-tab--active"
       )
@@ -135,7 +135,7 @@ describe("Art fairs template", function () {
     after(() => benv.teardown())
 
     return it("renders header with upcoming fairs active", function () {
-      $(".art-fairs-header").html().should.containEql("Fairs")
+      $(".art-fairs-header").html().should.containEql("Collect from leading")
       $(".art-fairs-header").hasClass("art-fairs-header--background-image")
       return $(".art-fairs-tab[data-tab=upcoming]").hasClass(
         "art-fairs-tab--active"
