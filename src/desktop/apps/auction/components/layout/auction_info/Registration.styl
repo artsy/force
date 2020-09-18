@@ -1,66 +1,66 @@
+@require '../../../../lib/palette'
+
 .auction-Registration
+  text('text')
+
   +respond-mobile()
-    padding-bottom 20px
+    padding-bottom getSpace(2)
 
     &:after
       content ''
-      border-bottom 1px solid #e5e5e5
+      border-bottom 1px solid getColor('black10')
       width 120%
       right 0
       position absolute
-      padding-top 20px
+      padding-top getSpace(2)
 
   &__wrapper
-    border 1px solid gray-lighter-color
-    padding 20px 20px 10px
+    border 1px solid getColor('black10')
+    padding getSpace(2, 2, 1)
 
     +respond-desktop()
-      margin-bottom 20px
+      margin-bottom getSpace(2)
 
     +respond-mobile()
       border none
-      margin-top 16px
+      margin-top getSpace(1.5)
       padding 0
 
 
   &__small
-    color gray-dark-color
-    padding-top 20px
+    color getColor('black60')
+    padding-top getSpace(2)
     text-align center
 
     +respond-mobile()
-      padding-top 15px
+      padding-top getSpace(1.5)
 
     &_warning
-      color #f0cc49
+      color getColor('yellow100')
 
   &__preview
     p
-      garamond-size('l-body')
-      margin-bottom 15px
+      margin-bottom getSpace(1.5)
     .bordered-input
-      margin-bottom 15px
+      margin-bottom getSpace(1.5)
 
   &__approved
-    color new-green-color
-    garamond-size('l-body')
+    color getColor('green100')
 
     +respond-desktop()
-      margin-bottom 20px
-      padding-left 20px
+      margin-bottom getSpace(2)
+      padding-left getSpace(2)
 
     +respond-mobile()
-      garamond-size('s-body')
-      margin-top 15px
+      margin-top getSpace(1)
       padding-left 0
 
       .icon-check
         display none
 
     .icon-check
-      color new-green-color
+      color getColor('green100')
       width 23px
-      //
       border 2px solid
       border-color @color
       border-radius @width
@@ -73,17 +73,17 @@
 
   &__how-to-bid
     display block
-    margin 0 0 20px 0
+    margin getSpace(0, 0, 2, 0)
     text-decoration none
 
     img
       display inline-block
       height 40px
-      margin-right 15px
+      margin-right getSpace(1.5)
       vertical-align middle
 
   &__wrapper + &__how-to-bid
-    margin-top 30px
+    margin-top getSpace(3)
 
   &__how-to-bid, &__question
-    margin-left 20px
+    margin-left getSpace(2)

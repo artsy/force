@@ -1,3 +1,5 @@
+@require '../../../../lib/palette'
+
 height-desktop = 240px
 height-mobile = 150px
 
@@ -5,14 +7,14 @@ height-mobile = 150px
   height height-desktop
   position relative
   overflow hidden
-  background-color gray-lighter-color
+  background-color getColor('black100')
 
   +respond-desktop()
-    margin-bottom 40px
+    margin-bottom getSpace(4)
 
   +respond-mobile()
     height height-mobile
-    margin-bottom 21px
+    margin-bottom getSpace(2)
 
   &__background-image
     background-size cover
@@ -32,7 +34,7 @@ height-mobile = 150px
       background-blend-mode none
 
   &_isLiveOpen
-    color white
+    color getColor('white100')
     text-align center
     height 600px
 
@@ -40,23 +42,22 @@ height-mobile = 150px
       height 200px
 
     h1
-      garamond-size('headline')
+      text('largeTitle')
+      margin-bottom getSpace(2)
 
       +respond-mobile()
-        garamond-size('s-headline')
+        margin-bottom getSpace(1)
 
     .avant-garde-button-white
-      background-color white
+      background-color getColor('white100')
       width 400px
-      margin-top 20px
-      padding 17px 0
+      padding getSpace(1.5)
       border 0
-      avant-garde-size('l-headline')
+      border-radius getSpace(0.3)
 
       +respond-mobile()
-        padding 10px
+        padding getSpace(1)
         width 90%
-        avant-garde-size('s-headline')
 
   &__live-details
     z-index 2
@@ -67,12 +68,8 @@ height-mobile = 150px
     transform translate(-50%, -50%)
 
   &__closed
-    avant-garde-size('xl-headline')
-
-    +respond-mobile()
-      avant-garde-size('l-headline')
-
-    color white
+    text('largeTitle')
+    color getColor('white100')
     z-index 2
     position absolute
     display flex
