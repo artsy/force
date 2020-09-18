@@ -67,7 +67,7 @@ module.exports = class ClockView extends Backbone.View
             <small>#{label}</small>
           </li>
         """
-    )).join '<li>:</li>'
+    )).join '<li class="clock-separator">:</li>'
 
     # emit event every render when timer is almost over
     if @toDate?.diff(moment(), 'seconds') < @almostOver
