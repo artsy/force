@@ -1,11 +1,13 @@
+@require '../../../../lib/palette'
+
 .auction-ArtworkRail
   user-select none
 
   &__title
-    font-size 30px
-    padding-top 30px
-    margin-top 30px
-    border-top 1px solid gray-lighter-color
+    text('title')
+    padding-top getSpace(3)
+    margin-top getSpace(3)
+    border-top 1px solid getColor('black10')
 
   &__content
     display flex
@@ -15,8 +17,9 @@
     &:hover svg
       visibility visible
 
-  &__page-left, &__page-right
-    width 50px
+  &__page-left
+  &__page-right
+    width getSpace(5)
     height 300px
     display flex
     align-items center
@@ -36,7 +39,7 @@
   &__artwork
     float left
     width 25%
-    padding 15px
+    padding getSpace(1.5)
     a
       text-decoration none
 
@@ -44,4 +47,4 @@
     pointer-events none
 
     svg
-      fill gray-lighter-color
+      fill getColor('black10')

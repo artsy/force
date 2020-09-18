@@ -1,6 +1,7 @@
 @require '../../components/stylus_lib'
+@require '../../../lib/palette'
 
-overlapping-border(border-color = gray-lighter-color)
+overlapping-border(border-color = getColor('black10'))
   border-top 1px solid border-color
   border-bottom @border-top
   margin-top -1px
@@ -12,7 +13,7 @@ chevron()
   &::after
     iconfont-styling()
     content '\e607'
-    color gray-color
+    color getColor('black30')
     vertical-align middle
     position absolute
     top 50%
@@ -33,16 +34,17 @@ chevron-item()
 .small-chevron-list a
   chevron-item()
   overlapping-border()
-  padding 15px 5px
+  padding getSpace(1.5, 0.5)
 
 // Nav
 .chevron-nav-list a
+  text('text')
   chevron-item()
   overlapping-border()
-  avant-garde-size('m-headline', true)
-  padding 14px 0
+  padding getSpace(1.5, 0)
+
   &.is-active
-    color purple-color
+    color getColor('purple100')
 
 // Large
 .large-chevron-list a
@@ -54,6 +56,6 @@ chevron-item()
     font-size 40px
     right 10px
   &:hover
-    background-color gray-lightest-color
+    background-color getColor('black5')
     border-color @background-color
     z-index 1
