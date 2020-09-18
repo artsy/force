@@ -29,7 +29,9 @@ const TotalResults: React.SFC<{ count: number; term: string }> = ({
 }) => {
   const formatResults = useCallback(
     () =>
-      `${count.toLocaleString()} Result${count > 1 ? "s" : ""} for "${term}"`,
+      `${count.toLocaleString()} result${
+        count > 1 ? "s" : ""
+      } for \u201C${term}\u201D`,
     [count, term]
   )
 
