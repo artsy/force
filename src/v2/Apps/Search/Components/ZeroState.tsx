@@ -22,7 +22,9 @@ export const ZeroState: FC<ZeroStateProps> = props => {
     >
       <Box m={3} textAlign="center">
         <Text variant="subtitle" mb={1}>
-          {hasFilters ? "No results found." : `No results found for "${term}".`}
+          {hasFilters
+            ? "No results found."
+            : `No results found for \u201C${term}\u201D.`}
         </Text>
         <Text variant="text">
           {hasFilters
