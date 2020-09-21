@@ -1,4 +1,4 @@
-import { CertificateIcon, Flex, Modal, Serif } from "@artsy/palette"
+import { CertificateIcon, Flex, Modal, Text } from "@artsy/palette"
 import { AuthenticityCertificate_artwork } from "v2/__generated__/AuthenticityCertificate_artwork.graphql"
 import React, { useState } from "react"
 import { createFragmentContainer } from "react-relay"
@@ -42,19 +42,19 @@ export const AuthenticityCertificate: React.FC<AuthenticityCertificateProps> = (
           title="Certificate of Authenticity"
         >
           <Flex flexGrow={1} flexDirection="column">
-            <Serif size="3t" pb={2}>
+            <Text variant="text" pb={2}>
               A certificate of authenticity (COA) is a signed document from an
               authoritative source that verifies the artwork’s authenticity.
               While many COAs are signed by the artist, others will be signed by
               the representing gallery or the printmaker who collaborated with
               the artist on the work. For secondary market works, authorized
               estates or foundations are often the issuing party.
-            </Serif>
-            <Serif size="3t" pb={2}>
+            </Text>
+            <Text variant="text" pb={2}>
               COAs typically include the name of the artist, the details (title,
               date, medium, dimensions) of the work in question, and whenever
               possible an image of the work.
-            </Serif>
+            </Text>
           </Flex>
         </Modal>
       </>

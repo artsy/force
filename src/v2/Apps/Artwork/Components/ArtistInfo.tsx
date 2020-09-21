@@ -2,9 +2,9 @@ import {
   Button,
   EntityHeader,
   Flex,
-  Sans,
   Spacer,
   StackableBorderBox,
+  Text,
 } from "@artsy/palette"
 import { ArtistInfo_artist } from "v2/__generated__/ArtistInfo_artist.graphql"
 import { ArtistInfoQuery } from "v2/__generated__/ArtistInfoQuery.graphql"
@@ -137,9 +137,8 @@ export class ArtistInfo extends Component<ArtistInfoProps, ArtistInfoState> {
                     }
                     render={({ is_followed }) => {
                       return (
-                        <Sans
-                          size="2"
-                          weight="medium"
+                        <Text
+                          variant="caption"
                           color="black"
                           data-test="followButton"
                           style={{
@@ -148,7 +147,7 @@ export class ArtistInfo extends Component<ArtistInfoProps, ArtistInfoState> {
                           }}
                         >
                           {is_followed ? "Following" : "Follow"}
-                        </Sans>
+                        </Text>
                       )
                     }}
                   />

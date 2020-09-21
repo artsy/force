@@ -1,5 +1,5 @@
 import { ContextModule } from "@artsy/cohesion"
-import { Box, Button, Flex, Serif } from "@artsy/palette"
+import { Box, Button, Flex, Text } from "@artsy/palette"
 import { ArtworkRelatedArtists_artwork } from "v2/__generated__/ArtworkRelatedArtists_artwork.graphql"
 import { hideGrid } from "v2/Apps/Artwork/Components/OtherWorks"
 import { useSystemContext } from "v2/Artsy"
@@ -53,9 +53,9 @@ export const ArtworkRelatedArtists: React.FC<ArtworkRelatedArtistsProps> = track
     return (
       <Box mt={6} data-test={ContextModule.relatedArtistsRail}>
         <Flex flexDirection="column" alignItems="center">
-          <Serif size={["5t", "8"]} color="black100" mb={2} textAlign="center">
+          <Text variant="title" color="black100" mb={2} textAlign="center">
             Related artists
-          </Serif>
+          </Text>
         </Flex>
         <Flex flexWrap="wrap" mr={-2} width="100%">
           {artist.related.artistsConnection.edges.map(({ node }, index) => {

@@ -20,10 +20,9 @@ import {
   Box,
   EntityHeader,
   ReadMore,
-  Sans,
-  Serif,
   Spacer,
   StackableBorderBox,
+  Text,
 } from "@artsy/palette"
 import { FollowProfileButton_profile } from "v2/__generated__/FollowProfileButton_profile.graphql"
 import { openAuthToFollowSave } from "v2/Utils/openAuthModal"
@@ -128,9 +127,8 @@ export class ArtworkDetailsAboutTheWorkFromPartner extends React.Component<
                         render={(profile: FollowProfileButton_profile) => {
                           const is_followed = profile.is_followed || false
                           return (
-                            <Sans
-                              size="2"
-                              weight="medium"
+                            <Text
+                              variant="caption"
                               color="black"
                               data-test="followButton"
                               style={{
@@ -139,7 +137,7 @@ export class ArtworkDetailsAboutTheWorkFromPartner extends React.Component<
                               }}
                             >
                               {is_followed ? "Following" : "Follow"}
-                            </Sans>
+                            </Text>
                           )
                         }}
                       >
@@ -151,10 +149,10 @@ export class ArtworkDetailsAboutTheWorkFromPartner extends React.Component<
                 {additional_information && (
                   <React.Fragment>
                     <Spacer mb={1} />
-                    <Serif size="3">
+                    <Text variant="text">
                       <Media at="xs">{this.renderReadMore("xs")}</Media>
                       <Media greaterThan="xs">{this.renderReadMore()}</Media>
-                    </Serif>
+                    </Text>
                   </React.Fragment>
                 )}
               </Box>

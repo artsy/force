@@ -1,4 +1,4 @@
-import { Avatar, Flex, Link, Sans, Serif } from "@artsy/palette"
+import { Avatar, Flex, Link, Text } from "@artsy/palette"
 import { Truncator } from "v2/Components/Truncator"
 import React from "react"
 import styled from "styled-components"
@@ -52,13 +52,11 @@ export const LargeBanner = props => (
   <Flex flexDirection="row" mt={2}>
     <Avatar size="sm" src={props.imageUrl} initials={props.initials} />
     <Flex flexDirection="column" justifyContent="center" ml={2}>
-      <Sans weight="medium" size="2">
-        {props.meta}
-      </Sans>
-      <Serif size="4t">{props.name}</Serif>
-      <Serif size="4t" color="black60">
+      <Text variant="mediumText">{props.meta}</Text>
+      <Text variant="text">{props.name}</Text>
+      <Text variant="caption" color="black60">
         {props.subHeadline}
-      </Serif>
+      </Text>
     </Flex>
   </Flex>
 )
@@ -66,15 +64,15 @@ export const LargeBanner = props => (
 export const SmallBanner = props => (
   <Flex flexDirection="row" width="100%" justifyContent="space-between" mt={2}>
     <Flex flexDirection="column" justifyContent="center" mr={2}>
-      <Sans weight="medium" size="2">
+      <Text variant="mediumText">
         <Truncator maxLineCount={1}>{props.meta}</Truncator>
-      </Sans>
-      <Serif size="4t">
+      </Text>
+      <Text variant="text">
         <Truncator maxLineCount={1}>{props.name}</Truncator>
-      </Serif>
-      <Serif size="4t" color="black60">
+      </Text>
+      <Text variant="caption" color="black60">
         <Truncator maxLineCount={1}>{props.subHeadline}</Truncator>
-      </Serif>
+      </Text>
     </Flex>
     <Avatar size="sm" src={props.imageUrl} initials={props.initials} />
   </Flex>
