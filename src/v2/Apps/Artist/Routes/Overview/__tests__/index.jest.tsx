@@ -1,4 +1,4 @@
-import { Button, Sans, Theme } from "@artsy/palette"
+import { Button, Text, Theme } from "@artsy/palette"
 import { routes_OverviewQueryRawResponse } from "v2/__generated__/routes_OverviewQuery.graphql"
 import { SystemContextProvider } from "v2/Artsy"
 import { useTracking } from "v2/Artsy/Analytics/useTracking"
@@ -42,7 +42,7 @@ describe("OverviewRoute", () => {
 
       expect(
         wrapper
-          .find(Sans)
+          .find(Text)
           .filterWhere(t => t.text() === "Articles Featuring Juan Gris")
       ).toHaveLength(1)
 
@@ -50,7 +50,7 @@ describe("OverviewRoute", () => {
 
       expect(
         wrapper
-          .find(Sans)
+          .find(Text)
           .filterWhere(t => t.text() === "Shows Featuring Juan Gris")
       ).toHaveLength(1)
     })

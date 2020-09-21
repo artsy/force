@@ -1,7 +1,6 @@
 _ = require 'underscore'
 { CURRENT_USER } = require('sharify').data
 Backbone = require 'backbone'
-analyticsHooks = require '../../lib/analytics_hooks.coffee'
 Following = require '../follow_button/collection.coffee'
 UserInterests = require '../../collections/user_interests.coffee'
 TypeaheadView = require '../typeahead/view.coffee'

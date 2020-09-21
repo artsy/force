@@ -1,6 +1,7 @@
 import React from "react"
 import { Box, Checkbox, Flex, Sans, Toggle } from "@artsy/palette"
 import { useArtworkFilterContext } from "../ArtworkFilterContext"
+import { OptionText } from "./OptionText"
 
 const sizeMap = [
   { displayName: "Small (under 40cm)", name: "SMALL" },
@@ -44,7 +45,11 @@ export const SizeFilter: React.FC = () => {
                 .currentlySelectedFilters()
                 .sizes.includes(name),
             }
-            return <Checkbox {...props}>{displayName}</Checkbox>
+            return (
+              <Checkbox {...props}>
+                <OptionText>{displayName}</OptionText>
+              </Checkbox>
+            )
           })}
         </Box>
       </Flex>

@@ -98,7 +98,7 @@ describe("Art fairs template", function () {
     after(() => benv.teardown())
 
     // this test always fails ci
-    return xit("renders header with current fairs active", function () {
+    return it("renders header with current fairs active", function () {
       $(".art-fairs-header").html().should.containEql("Collect from leading")
       return $(".art-fairs-tab[data-tab=current]").hasClass(
         "art-fairs-tab--active"

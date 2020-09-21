@@ -64,7 +64,7 @@ export const UserMenu: React.FC = () => {
           href="/user/purchases"
           onClick={trackClick}
         >
-          <TagIcon mr={1} aria-hidden="true" /> Purchases
+          <TagIcon mr={1} aria-hidden="true" /> Order History
         </MenuItem>
       )}
 

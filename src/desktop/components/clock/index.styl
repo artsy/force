@@ -1,65 +1,36 @@
 @require '../stylus_lib'
-
-header-font-size = garamond-s-body-font-size
-value-font-size = avant-garde-l-headline-font-size
-small-font-size = 9px
-closed-font-size = avant-garde-body-font-size
-closed-border-size = 2px
-clock-height = (header-font-size + (value-font-size * 2) + small-font-size)
-closed-padding = (((clock-height - closed-font-size) - (closed-border-size * 2)) / 2)
+@require '../../lib/palette'
 
 .clock
   display inline-block
-  height clock-height
   text-align left
 
-  +respond-mobile()
-    height 50px
-
 .clock-header
-  font-size header-font-size
-  line-height 1
-
-  +respond-mobile()
-    font-size 8px
+  text('mediumText')
 
 .clock-value
-  avant-garde()
-  prevent-content-shift()
+  text('mediumText')
+  display flex
+  align-items center
   list-style none
-  font-size value-font-size
-  line-height 2
+  text-transform capitalize
+
   li
     display inline-block
     vertical-align top
-    inline-block-margins(3px)
-
-    +respond-mobile()
-      margin -7px -3px
 
     small
+      text('mediumText')
       display block
-      color transparify(gray-dark-color, black)
-      font-size small-font-size
-      line-height 1
+      color transparify(getColor('black60'), getColor('black100'))
 
 .clock-closed
+  text('subtitle')
   position relative
-  padding closed-padding 0
-  avant-garde()
-  font-size closed-font-size
-  line-height 1
-  border-top 2px solid black
-  border-bottom @border-top
   text-align center
-  // Often overwritten unintentionally
-  text-transform uppercase !important
-
-  +respond-mobile()
-    avant-garde-size('l-headline')
 
 .white-overlay-clock
-  color white
+  color getColor('white100')
   left 50%
   top 50%
   display inline-block
@@ -68,34 +39,25 @@ closed-padding = (((clock-height - closed-font-size) - (closed-border-size * 2))
   z-index 1
 
   .clock-header.clock-closed
-    avant-garde-size('xl-headline')
-    color white
+    text('subtitle')
+    color color('white100')
     border 0
-    letter-spacing 2px
-
-    +respond-mobile()
-      avant-garde-size('l-headline')
 
   .clock
     text-align center
 
   .clock-header
-    margin-bottom 5px
-    avant-garde-size('s-headline')
+    margin-bottom getSpace(0.5)
 
-    +respond-mobile()
-      font-size 8px
-      margin-bottom 2px
+  .clock-months
+  .clock-days
+  .clock-hours
+  .clock-minutes
+  .clock-seconds
+    text('subtitle')
+    margin getSpace(0, 1)
 
-  .clock-months, .clock-days, .clock-hours, .clock-minutes, .clock-seconds
-    avant-garde-size('l-headline')
-    margin 0 12px
     small
-      avant-garde-size('s-headline')
-      color white
-      margin-top 5px
-
-      +respond-mobile()
-        font-size 8px
-        margin-top 2px
-        margin-bottom 2px
+      text('mediumText')
+      color getColor('white100')
+      margin-top getSpace(0.5)

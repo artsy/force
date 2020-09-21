@@ -51,6 +51,7 @@ export const UntouchedOrder = {
   requestedFulfillment: null,
   lastTransactionFailed: false,
   currencyCode: "USD",
+  createdAt: "2019-12-19T06:01:17.171Z",
   lineItems: {
     edges: [
       {
@@ -72,6 +73,10 @@ export const UntouchedOrder = {
             shippingCountry: "US",
             is_acquireable: true as boolean,
             is_offerable: false as boolean,
+            partner: {
+              name: "A Gallery",
+              id: "1234",
+            },
             dimensions: {
               in: "36 × 36 in",
               cm: "91.4 × 91.4 cm",

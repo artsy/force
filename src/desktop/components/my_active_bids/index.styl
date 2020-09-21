@@ -1,11 +1,14 @@
 @require '../stylus_lib'
 @require '../bid_status'
+@require '../../lib/palette'
 
 item-margin-bottom = 16px
 
-.my-active-bids-bid-button, .my-active-bids-bid-live-button, .my-active-bids-warning, .my-active-bids-item h4
-  avant-garde()
-  font-size 10px
+.my-active-bids-bid-button
+.my-active-bids-bid-live-button
+.my-active-bids-warning
+.my-active-bids-item h4
+  text('small')
 
 .my-active-bids-item
   position relative
@@ -13,16 +16,16 @@ item-margin-bottom = 16px
   min-width 260px
   margin-bottom item-margin-bottom
   padding-bottom item-margin-bottom
-  border-bottom 1px solid gray-lighter-color
+  border-bottom 1px solid getColor('black10')
   &:last-child
     border-bottom 0
   &.my-active-bids-winning
     .my-active-bids-bid-button
       background transparent
-      color black
-      border-color gray-lighter-color
+      color getColor('black100')
+      border-color getColor('black10')
       &:hover
-        color purple-color
+        color getColor('purple100')
   img
     margin-right 12px
     width 60px
@@ -45,8 +48,6 @@ item-margin-bottom = 16px
   position absolute
   top 0
   right 0
-  p
-    font-size 10px
 
 .my-active-bids-bid-button
   small-avant-garde()

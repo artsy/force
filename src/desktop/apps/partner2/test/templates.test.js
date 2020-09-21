@@ -18,15 +18,24 @@ const render = function (templateName) {
 describe("Partner header", () =>
   describe("canonical links", function () {
     beforeEach(function () {
-      return (this.profile = new Profile(fabricate("profile")))
+      return (this.profile = new Profile(
+        fabricate("profile", {
+          id: "pace-gallery",
+        })
+      ))
     })
 
     it("has a canonical link to the full artist page on partner artist pages", function () {
       this.template = render("index")({
         profile: this.profile,
-        sd: { APP_URL: "http://localhost:3004", CURRENT_PATH: "/pace-gallery" },
+        sd: {
+          APP_URL: "http://localhost:3004",
+        },
         asset() {},
-        params: { id: "pace-gallery", artistId: "yoshitomo-nara" },
+        params: {
+          id: "pace-gallery",
+          artistId: "yoshitomo-nara",
+        },
       })
       return this.template.should.containEql(
         '<link rel="canonical" href="http://localhost:3004/artist/yoshitomo-nara">'
@@ -36,9 +45,13 @@ describe("Partner header", () =>
     it("has a canonical link to current url on other pages", function () {
       this.template = render("index")({
         profile: this.profile,
-        sd: { APP_URL: "http://localhost:3004", CURRENT_PATH: "/pace-gallery" },
+        sd: {
+          APP_URL: "http://localhost:3004",
+        },
         asset() {},
-        params: { id: "pace-gallery" },
+        params: {
+          id: "pace-gallery",
+        },
       })
       return this.template.should.containEql(
         '<link rel="canonical" href="http://localhost:3004/pace-gallery">'
@@ -50,11 +63,12 @@ describe("Partner header", () =>
         profile: this.profile,
         sd: {
           APP_URL: "http://localhost:3004",
-          CURRENT_PATH: "/pace-gallery",
           INCLUDE_ESCAPED_FRAGMENT: true,
         },
         asset() {},
-        params: { id: "pace-gallery" },
+        params: {
+          id: "pace-gallery",
+        },
       })
       return this.template.should.containEql(
         '<meta name="fragment" content="!">'
@@ -67,11 +81,12 @@ describe("Partner header", () =>
         tab: "overview",
         sd: {
           APP_URL: "http://localhost:3004",
-          CURRENT_PATH: "/pace-gallery",
           INCLUDE_ESCAPED_FRAGMENT: true,
         },
         asset() {},
-        params: { id: "pace-gallery" },
+        params: {
+          id: "pace-gallery",
+        },
       })
       return this.template.should.not.containEql(
         '<meta name="fragment" content="!">'

@@ -1,7 +1,6 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 mediator = require '../../lib/mediator.coffee'
-analyticsHooks = require '../../lib/analytics_hooks.coffee'
 
 module.exports = class JumpView extends Backbone.View
   className: 'jump-to-top icon-chevron-up'

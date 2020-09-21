@@ -79,7 +79,7 @@ const FairHeader: React.FC<FairHeaderProps> = ({ fair, ...rest }) => {
                 bottom={0}
                 left="1rem"
               >
-                <img src={profileIcon.src} />
+                <img src={profileIcon.src} alt={`Logo of ${fair.name}`} />
               </Box>
             )}
           </ResponsiveImage>

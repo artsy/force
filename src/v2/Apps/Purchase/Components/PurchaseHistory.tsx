@@ -1,85 +1,109 @@
 import {
   Box,
-  Button,
   Flex,
   Image,
   LargePagination,
   Link,
   Sans,
-  Serif,
+  Separator,
   Spinner,
-  StackableBorderBox,
+  Text,
 } from "@artsy/palette"
+import { DateTime } from "luxon"
 import { PurchaseHistory_me } from "v2/__generated__/PurchaseHistory_me.graphql"
 import React, { useState } from "react"
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
 import { get } from "v2/Utils/get"
+import styled from "styled-components"
 
 interface OrderRowProps {
   order: PurchaseHistory_me["orders"]["edges"][number]["node"]
+  hasDivider: boolean
 }
+
+const StyledImage = styled(Image)`
+  object-fit: cover;
+  height: 50px;
+  width: 50px;
+`
+
 const OrderRow = (props: OrderRowProps) => {
   const { order } = props
   const artwork = get(order, o => o.lineItems.edges[0].node.artwork)
 
+  const orderCreatedAt = DateTime.fromISO(order.createdAt).toLocaleString(
+    DateTime.DATE_SHORT
+  )
   if (!artwork) {
     return null
   }
 
+  const orderIsInactive =
+    order.state === "ABANDONED" || order.state === "CANCELED"
+
   return (
-    <Box py={1}>
-      <StackableBorderBox
+    <Box px={2}>
+      <Flex
+        py={1.5}
         flexDirection="row"
         alignItems="center"
         justifyContent="space-between"
       >
-        <Flex width="350px">
-          <Flex height="auto" alignItems="center" mr={2}>
-            <Image
-              src={get(artwork, a => a.image.resized.url)}
-              alt={artwork.title}
-              width="55px"
-            />
-          </Flex>
-          <Flex flexDirection="column" justifyContent="center">
+        <Flex
+          alignItems="center"
+          justifyContent="center"
+          height="50px"
+          width="50px"
+          mr={1.5}
+        >
+          <StyledImage
+            src={get(artwork, a => a.image.resized.url)}
+            alt={artwork.title}
+          />
+        </Flex>
+        <Flex flexDirection="column" justifyContent="center" width="100%">
+          {!orderIsInactive && (
             <Link
               href={`/orders/${order.internalID}/status`}
               underlineBehavior="hover"
             >
-              <Serif size="2" weight="semibold">
+              <Text variant="text" letterSpacing="tight">
                 {artwork.artist_names}
-              </Serif>
+              </Text>
             </Link>
-            <Serif italic size="2" color="black60" lineHeight={1.3}>
-              {artwork.title}, {artwork.date}
-            </Serif>
-          </Flex>
+          )}
+          {orderIsInactive && (
+            <Text variant="text" letterSpacing="tight">
+              {artwork.artist_names}
+            </Text>
+          )}
+          <Text variant="text" color="black60" letterSpacing="tight">
+            {artwork.partner.name}
+          </Text>
+          <Text variant="text" color="black60" letterSpacing="tight">
+            {orderCreatedAt}
+          </Text>
         </Flex>
-        <Flex flexDirection="column" justifyContent="center">
-          <Sans
-            size="2"
-            weight="medium"
+        <Flex flexDirection="column" alignItems="flex-end">
+          <Text
+            variant="text"
+            color="black60"
+            letterSpacing="tight"
             style={{ textTransform: "capitalize" }}
           >
-            {order.mode.toLowerCase()}
-          </Sans>
-          <Sans
-            size="2"
+            {order.itemsTotal ? order.itemsTotal : order.totalListPrice}
+          </Text>
+          <Text
+            variant="text"
             color="black60"
+            letterSpacing="tight"
             style={{ textTransform: "capitalize" }}
           >
             {order.state.toLowerCase()}
-          </Sans>
+          </Text>
         </Flex>
-        <Flex>
-          <Link
-            href={`/orders/${order.internalID}/status`}
-            underlineBehavior="hover"
-          >
-            <Button variant="secondaryGray">View details</Button>
-          </Link>
-        </Flex>
-      </StackableBorderBox>
+      </Flex>
+      {props.hasDivider && <Separator />}
     </Box>
   )
 }
@@ -127,10 +151,19 @@ const PurchaseHistory: React.FC<PurchaseHistoryProps> = (
   const pageInfo = me.orders.pageInfo
   const myOrders = me.orders.edges && me.orders.edges.map(x => x.node)
   return !loading ? (
-    <Box px={1}>
-      <Serif size="5">Purchases</Serif>
+    <Box>
+      <Sans size="6" px={1} py={1.5}>
+        Order History
+      </Sans>
+      <Separator />
       {myOrders.length ? (
-        myOrders.map(order => <OrderRow key={order.code} order={order} />)
+        myOrders.map((order, i) => (
+          <OrderRow
+            key={order.code}
+            order={order}
+            hasDivider={i != myOrders.length - 1}
+          />
+        ))
       ) : (
         <Sans size="2">No Orders</Sans>
       )}
@@ -164,7 +197,9 @@ export const PurchaseHistoryFragmentContainer = createRefetchContainer(
               code
               state
               mode
-              buyerTotal
+              createdAt
+              totalListPrice
+              itemsTotal
               lineItems {
                 edges {
                   node {
@@ -174,6 +209,9 @@ export const PurchaseHistoryFragmentContainer = createRefetchContainer(
                         resized(width: 55) {
                           url
                         }
+                      }
+                      partner {
+                        name
                       }
                       internalID
                       title

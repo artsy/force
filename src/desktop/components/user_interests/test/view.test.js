@@ -11,16 +11,24 @@ const Backbone = require("backbone")
 let UserInterestsView = null
 
 describe("UserInterestsView", function () {
-  before(done =>
+  before(done => {
     benv.setup(function () {
-      benv.expose({ $: benv.require("jquery"), jQuery: benv.require("jquery") })
+      benv.expose({
+        $: benv.require("jquery"),
+        jQuery: benv.require("jquery"),
+        analytics: { track: sinon.stub() },
+      })
       UserInterestsView = rewire("../view")
       UserInterestsView.__set__("CURRENT_USER", "existy")
       UserInterestsView.__set__("ResultsListView", Backbone.View)
       Backbone.$ = $
-      return done()
+      window.analytics = {
+        track: () => {},
+        page: () => {},
+      }
+      done()
     })
-  )
+  })
 
   after(() => benv.teardown())
 
@@ -37,7 +45,7 @@ describe("UserInterestsView", function () {
       return this.view.resultsList.trigger("add", interest)
     })
 
-    return it("when a result is added; the view syncs it as an inteerest", function () {
+    return it("when a result is added; the view syncs it as an interest", function () {
       Backbone.sync.callCount.should.equal(2)
 
       Backbone.sync.args[0][1]

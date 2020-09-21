@@ -18,12 +18,13 @@ declare module "sharify" {
     export interface GlobalData {
       readonly ADMIN_URL: string
       readonly APP_URL: string
-      readonly ARTIST_COLLECTIONS_RAIL?: string // TODO: remove after CollectionsRail a/b test
       readonly ARTIST_COLLECTIONS_RAIL_IDS: string[]
+      readonly ARTIST_COLLECTIONS_RAIL?: string // TODO: remove after CollectionsRail a/b test
       readonly CDN_URL: string
       readonly CMS_URL: string
       CURRENT_PATH: string
       CURRENT_USER: User
+      readonly DEPLOY_ENV: string
       readonly EIGEN: boolean
       readonly ENABLE_SERVER_SIDE_CACHE: string
       readonly ENABLE_SIGN_IN_WITH_APPLE: string // TODO: Remove once sign in with apple is rolled out.
@@ -35,7 +36,6 @@ declare module "sharify" {
       readonly GOOGLE_ADWORDS_ID: string
       readonly IMAGE_LAZY_LOADING: boolean
       IS_MOBILE: boolean
-      readonly DEPLOY_ENV: string
       readonly METAPHYSICS_ENDPOINT: string
       readonly NODE_ENV: string
       readonly NOTIFICATION_COUNT: string
@@ -44,6 +44,7 @@ declare module "sharify" {
       readonly SENTRY_PUBLIC_DSN: string
       readonly SHOW_ANALYTICS_CALLS: boolean
       readonly STRIPE_PUBLISHABLE_KEY: string
+      readonly THIRD_PARTIES_DISABLED: boolean
       readonly VOLLEY_ENDPOINT: string
       readonly XAPP_TOKEN: string
 

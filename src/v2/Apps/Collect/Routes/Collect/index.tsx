@@ -1,4 +1,4 @@
-import { Box, Separator, Serif, Spacer } from "@artsy/palette"
+import { Box, Separator, Spacer, Text } from "@artsy/palette"
 import { OwnerType, clickedMainArtworkGrid } from "@artsy/cohesion"
 import { Match, Router } from "found"
 import React from "react"
@@ -81,9 +81,9 @@ export const CollectApp: React.FC<CollectAppProps> = ({
               )}
 
               <Box mt={3}>
-                <Serif size="8">
+                <Text variant="largeTitle">
                   <h1>Collect art and design online</h1>
-                </Serif>
+                </Text>
                 <Separator mt={2} mb={[2, 2, 2, 4]} />
 
                 <CollectionsHubsNav

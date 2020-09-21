@@ -1,43 +1,45 @@
+@require '../../lib/palette'
+
 .add-to-calendar
   position relative
   display inline-block
 
-  &__wrapper
-    position absolute
-    width 150px
-    top -18px
-
 .add-to-calendar-event-item-date
   &__add-to-calender
-    color gray-dark-color
-    font-size 17px
+    text('text')
+    color getColor('black60')
     text-decoration none
 
 .add-to-calendar-event-calendar-wrapper
   display none
-  margin-top 10px
   position absolute
   z-index 100
+  top 100%
+  left 50%
+  transform translateX(-50%)
+
   .add-to-calendar-event-arrow-up
+    position relative
     width 0
     height 0
     border-left 8px solid transparent
     border-right 8px solid transparent
-    border-bottom 8px solid black
-    margin-left 70px
+    border-bottom 8px solid getColor('black100')
+    left 50%
+    transform translateX(-50%)
+
   .add-to-calendar-event-calendar-container
-    width 150px
-    height 160px
-    background-color #000
-    padding-top 15px
+    text('text')
+    min-width 150px
+    background-color getColor('black100')
+    padding getSpace(1, 0)
+
     a
       width 100%
       display block
-      color white
-      garamond()
+      color getColor('white100')
       text-decoration none
-      font-size 17px
-      padding 0 20px
-      line-height 2
-    a:hover
-      background-color gray-darkest-color
+      padding getSpace(0.5, 2)
+
+      &:hover
+        background-color getColor('black60')
