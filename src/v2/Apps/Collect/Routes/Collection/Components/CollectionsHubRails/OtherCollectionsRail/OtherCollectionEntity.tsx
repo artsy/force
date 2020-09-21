@@ -1,4 +1,4 @@
-import { Box, Flex, ResponsiveImage, Serif, color } from "@artsy/palette"
+import { Box, Flex, ResponsiveImage, Text, color } from "@artsy/palette"
 import { OtherCollectionEntity_member } from "v2/__generated__/OtherCollectionEntity_member.graphql"
 import { useTracking } from "v2/Artsy/Analytics/useTracking"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
@@ -54,7 +54,7 @@ export const OtherCollectionEntity: React.FC<CollectionProps> = ({
           </ImageContainer>
         )}
         <Box>
-          <TitleContainer size="3" px={2}>
+          <TitleContainer variant="text" px={2}>
             {title}
           </TitleContainer>
         </Box>
@@ -100,7 +100,7 @@ export const ThumbnailImage = styled(ResponsiveImage)`
   border-radius: 2px 1px 1px 2px;
 `
 
-const TitleContainer = styled(Serif)`
+const TitleContainer = styled(Text)`
   width: max-content;
   white-space: nowrap;
 `

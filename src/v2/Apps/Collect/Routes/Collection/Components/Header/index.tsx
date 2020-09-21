@@ -1,17 +1,6 @@
 import { ContextModule, Intent } from "@artsy/cohesion"
-import { EntityHeader, ReadMore, breakpoints } from "@artsy/palette"
-import {
-  Box,
-  Col,
-  Flex,
-  Grid,
-  Row,
-  Sans,
-  Serif,
-  Spacer,
-  color,
-  media,
-} from "@artsy/palette"
+import { EntityHeader, ReadMore, Text, breakpoints } from "@artsy/palette"
+import { Box, Col, Flex, Grid, Row, Spacer, color, media } from "@artsy/palette"
 import { Header_artworks } from "v2/__generated__/Header_artworks.graphql"
 import { Header_collection } from "v2/__generated__/Header_collection.graphql"
 import { CollectionDefaultHeaderFragmentContainer as CollectionDefaultHeader } from "v2/Apps/Collect/Routes/Collection/Components/Header/DefaultHeader"
@@ -103,9 +92,8 @@ export const featuredArtistsEntityCollection: (
               onOpenAuthModal={() => handleOpenAuth(mediator, artist)}
               render={({ is_followed }) => {
                 return (
-                  <Sans
-                    size="2"
-                    weight="medium"
+                  <Text
+                    variant="caption"
                     color="black"
                     data-test="followArtistButton"
                     style={{
@@ -114,7 +102,7 @@ export const featuredArtistsEntityCollection: (
                     }}
                   >
                     {is_followed ? "Following" : "Follow"}
-                  </Sans>
+                  </Text>
                 )
               }}
             />
@@ -221,23 +209,23 @@ export const CollectionHeader: FC<Props> = ({ artworks, collection }) => {
                 >
                   <HorizontalPadding>
                     <MetaContainer my={2}>
-                      <BreadcrumbContainer size={["2", "3"]} mt={[2, 0]}>
+                      <BreadcrumbContainer mt={[2, 0]}>
                         <Link to="/collect">All works</Link> /{" "}
                         <Link to={categoryTarget}>{collection.category}</Link>
                       </BreadcrumbContainer>
 
                       <Spacer mt={1} />
 
-                      <Serif size={["6", "10"]} element="h1">
+                      <Text variant="largeTitle" as="h1">
                         {collection.title}
-                      </Serif>
+                      </Text>
                     </MetaContainer>
 
                     <Grid>
                       <Row>
                         <Col sm="12" md="8">
                           <Flex>
-                            <ExtendedSerif size="3">
+                            <ExtendedText size="3">
                               {smallerScreen ? (
                                 <ReadMore
                                   maxChars={chars}
@@ -247,7 +235,7 @@ export const CollectionHeader: FC<Props> = ({ artworks, collection }) => {
                                 htmlUnsafeDescription
                               )}
                               {collection.description && <Spacer mt={2} />}
-                            </ExtendedSerif>
+                            </ExtendedText>
                           </Flex>
                         </Col>
 
@@ -312,7 +300,7 @@ const MetaContainer = styled(Box)`
   z-index: 1;
 `
 
-const BreadcrumbContainer = styled(Sans)`
+const BreadcrumbContainer = styled(Text)`
   a {
     text-decoration: none;
   }
@@ -330,7 +318,7 @@ const ImageCaption = styled(Box)`
   text-shadow: 0 0 15px rgba(0, 0, 0, 0.25);
 `
 
-const ExtendedSerif = styled(Serif)`
+const ExtendedText = styled(Text)`
   div span {
     span p {
       display: inline;

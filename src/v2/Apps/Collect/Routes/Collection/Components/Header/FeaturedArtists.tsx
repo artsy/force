@@ -1,4 +1,4 @@
-import { Box, Breakpoint, EntityHeader, Flex, Sans } from "@artsy/palette"
+import { Box, Breakpoint, EntityHeader, Flex, Text } from "@artsy/palette"
 import React, { useState } from "react"
 import styled from "styled-components"
 
@@ -18,9 +18,7 @@ export const FeaturedArtists: React.FC<FeaturedArtistsProps> = props => {
 
   return (
     <Box pb={1}>
-      <Sans size="2" weight="medium" pb={15}>
-        {headlineLabel}
-      </Sans>
+      <Text pb={15}>{headlineLabel}</Text>
       <Flex flexWrap="wrap">
         {showAll || featuredArtists.length <= artistCount ? (
           featuredArtists
@@ -49,7 +47,7 @@ export const FeaturedArtists: React.FC<FeaturedArtistsProps> = props => {
   )
 }
 
-const ViewMore = styled(Sans)`
+const ViewMore = styled(Text)`
   div {
     div {
       text-decoration: underline;
