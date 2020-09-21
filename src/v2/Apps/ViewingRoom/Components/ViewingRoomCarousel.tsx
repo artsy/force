@@ -16,6 +16,7 @@ interface ViewingRoomCarouselProps {
   height: number[] | number
   maxWidth?: string | number
   justifyContent?: string
+  scrollPercentByCustomCount?: number
 }
 
 export const ViewingRoomCarousel: React.FC<ViewingRoomCarouselProps> = ({
@@ -24,9 +25,11 @@ export const ViewingRoomCarousel: React.FC<ViewingRoomCarouselProps> = ({
   height,
   maxWidth = breakpoints.lg,
   justifyContent = "center",
+  scrollPercentByCustomCount,
 }) => {
-  const computeScrollPercent = selectedIndex =>
-    ((selectedIndex + 1) / data.length) * 100
+  const scrollLength = scrollPercentByCustomCount || data.length
+  const computeScrollPercent = selectedIndex => ((selectedIndex + 1) / scrollLength) * 100
+
   const [scrollPercent, setScrollPercent] = useState(computeScrollPercent(0))
   const update = flowRight(setScrollPercent, computeScrollPercent)
   const showProgressBar = data.length > 1
@@ -66,8 +69,11 @@ export const ViewingRoomCarousel: React.FC<ViewingRoomCarouselProps> = ({
               />
             )
           }}
-          renderRightArrow={({ currentSlideIndex, flickity }) => {
-            const opacity = currentSlideIndex === data.length - 1 ? 0 : 1
+          renderRightArrow={({ flickity }) => {
+            const opacity =
+              flickity && computeScrollPercent(flickity.selectedIndex) === 100
+                ? 0
+                : 1
             return (
               <Arrow
                 direction="right"
