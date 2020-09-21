@@ -72,6 +72,7 @@ export type FairApp_QueryRawResponse = {
             }) | null> | null;
         }) | null;
         readonly marketingCollections: ReadonlyArray<({
+            readonly id: string;
             readonly slug: string;
             readonly title: string;
             readonly category: string;
@@ -86,7 +87,6 @@ export type FairApp_QueryRawResponse = {
                 }) | null> | null;
                 readonly id: string | null;
             }) | null;
-            readonly id: string | null;
             readonly __typename: string;
         }) | null>;
         readonly id: string | null;
@@ -121,29 +121,33 @@ fragment FairApp_fair on Fair {
       __typename
     }
   }
-  marketingCollections(size: 1) {
+  marketingCollections(size: 4) {
     __typename
     id
   }
 }
 
-fragment FairCollections_fair on Fair {
-  marketingCollections(size: 1) {
-    slug
-    title
-    category
-    artworks: artworksConnection(first: 3) {
-      edges {
-        node {
-          image {
-            url(version: "larger")
-          }
-          id
+fragment FairCollection_collection on MarketingCollection {
+  slug
+  title
+  category
+  artworks: artworksConnection(first: 3) {
+    edges {
+      node {
+        image {
+          url(version: "larger")
         }
+        id
       }
-      id
     }
     id
+  }
+}
+
+fragment FairCollections_fair on Fair {
+  marketingCollections(size: 4) {
+    id
+    ...FairCollection_collection
   }
 }
 
@@ -679,7 +683,7 @@ return {
               {
                 "kind": "Literal",
                 "name": "size",
-                "value": 1
+                "value": 4
               }
             ],
             "concreteType": "MarketingCollection",
@@ -687,6 +691,7 @@ return {
             "name": "marketingCollections",
             "plural": true,
             "selections": [
+              (v5/*: any*/),
               (v2/*: any*/),
               (v9/*: any*/),
               {
@@ -761,10 +766,9 @@ return {
                 ],
                 "storageKey": "artworksConnection(first:3)"
               },
-              (v5/*: any*/),
               (v11/*: any*/)
             ],
-            "storageKey": "marketingCollections(size:1)"
+            "storageKey": "marketingCollections(size:4)"
           },
           (v5/*: any*/)
         ],
@@ -777,7 +781,7 @@ return {
     "metadata": {},
     "name": "FairApp_Query",
     "operationKind": "query",
-    "text": "query FairApp_Query(\n  $slug: String!\n) {\n  fair(id: $slug) {\n    ...FairApp_fair\n    id\n  }\n}\n\nfragment FairApp_fair on Fair {\n  slug\n  ...FairMeta_fair\n  ...FairHeader_fair\n  ...FairEditorial_fair\n  ...FairCollections_fair\n  articles: articlesConnection(first: 5, sort: PUBLISHED_AT_DESC) {\n    edges {\n      __typename\n    }\n  }\n  marketingCollections(size: 1) {\n    __typename\n    id\n  }\n}\n\nfragment FairCollections_fair on Fair {\n  marketingCollections(size: 1) {\n    slug\n    title\n    category\n    artworks: artworksConnection(first: 3) {\n      edges {\n        node {\n          image {\n            url(version: \"larger\")\n          }\n          id\n        }\n      }\n      id\n    }\n    id\n  }\n}\n\nfragment FairEditorialItem_article on Article {\n  id\n  title\n  href\n  publishedAt(format: \"MMM Do, YY\")\n  thumbnailTitle\n  thumbnailImage {\n    _1x: cropped(width: 140, height: 80) {\n      width\n      height\n      src: url\n    }\n    _2x: cropped(width: 280, height: 160) {\n      width\n      height\n      src: url\n    }\n  }\n}\n\nfragment FairEditorial_fair on Fair {\n  articles: articlesConnection(first: 5, sort: PUBLISHED_AT_DESC) {\n    edges {\n      node {\n        id\n        ...FairEditorialItem_article\n      }\n    }\n  }\n}\n\nfragment FairHeader_fair on Fair {\n  about\n  summary\n  formattedOpeningHours\n  name\n  slug\n  profile {\n    icon {\n      cropped(width: 120, height: 120, version: \"square140\") {\n        src: url\n      }\n    }\n    id\n  }\n  image {\n    cropped(width: 750, height: 1000, version: \"wide\") {\n      src: url\n      width\n      height\n    }\n  }\n  tagline\n  location {\n    summary\n    id\n  }\n  ticketsLink\n  hours(format: HTML)\n  links(format: HTML)\n  tickets(format: HTML)\n  contact(format: HTML)\n}\n\nfragment FairMeta_fair on Fair {\n  name\n  slug\n  metaDescription: summary\n  metaImage: image {\n    src: url(version: \"large_rectangle\")\n  }\n}\n"
+    "text": "query FairApp_Query(\n  $slug: String!\n) {\n  fair(id: $slug) {\n    ...FairApp_fair\n    id\n  }\n}\n\nfragment FairApp_fair on Fair {\n  slug\n  ...FairMeta_fair\n  ...FairHeader_fair\n  ...FairEditorial_fair\n  ...FairCollections_fair\n  articles: articlesConnection(first: 5, sort: PUBLISHED_AT_DESC) {\n    edges {\n      __typename\n    }\n  }\n  marketingCollections(size: 4) {\n    __typename\n    id\n  }\n}\n\nfragment FairCollection_collection on MarketingCollection {\n  slug\n  title\n  category\n  artworks: artworksConnection(first: 3) {\n    edges {\n      node {\n        image {\n          url(version: \"larger\")\n        }\n        id\n      }\n    }\n    id\n  }\n}\n\nfragment FairCollections_fair on Fair {\n  marketingCollections(size: 4) {\n    id\n    ...FairCollection_collection\n  }\n}\n\nfragment FairEditorialItem_article on Article {\n  id\n  title\n  href\n  publishedAt(format: \"MMM Do, YY\")\n  thumbnailTitle\n  thumbnailImage {\n    _1x: cropped(width: 140, height: 80) {\n      width\n      height\n      src: url\n    }\n    _2x: cropped(width: 280, height: 160) {\n      width\n      height\n      src: url\n    }\n  }\n}\n\nfragment FairEditorial_fair on Fair {\n  articles: articlesConnection(first: 5, sort: PUBLISHED_AT_DESC) {\n    edges {\n      node {\n        id\n        ...FairEditorialItem_article\n      }\n    }\n  }\n}\n\nfragment FairHeader_fair on Fair {\n  about\n  summary\n  formattedOpeningHours\n  name\n  slug\n  profile {\n    icon {\n      cropped(width: 120, height: 120, version: \"square140\") {\n        src: url\n      }\n    }\n    id\n  }\n  image {\n    cropped(width: 750, height: 1000, version: \"wide\") {\n      src: url\n      width\n      height\n    }\n  }\n  tagline\n  location {\n    summary\n    id\n  }\n  ticketsLink\n  hours(format: HTML)\n  links(format: HTML)\n  tickets(format: HTML)\n  contact(format: HTML)\n}\n\nfragment FairMeta_fair on Fair {\n  name\n  slug\n  metaDescription: summary\n  metaImage: image {\n    src: url(version: \"large_rectangle\")\n  }\n}\n"
   }
 };
 })();
