@@ -6,9 +6,8 @@ module.exports = class DateHelpers
     date = moment.utc utc_date
 
     month = date.format('MMM')
-    if date.month() isnt 4 then month += "."
 
-    day = date.format('Do')
+    day = date.format('D')
 
     "#{month} #{day}"
 
