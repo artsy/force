@@ -1,3 +1,5 @@
+@require '../../../../lib/palette'
+
 .new-for-you
   position fixed
   bottom 30px
@@ -11,16 +13,16 @@
   opacity 0
 
   &__bubble
-    display inline-block
-    border 1px solid gray-color
-    background-color white
+    text('text')
+    display flex
+    align-items center
+    justify-content center
+    border 1px solid getColor('black10')
+    background-color getColor('white100')
     border-radius 100px
     width 200px
     height 50px
-    sans('body')
     cursor pointer
-    text-align center
-    line-height 50px
 
   &__arrow
     font-size 16px
