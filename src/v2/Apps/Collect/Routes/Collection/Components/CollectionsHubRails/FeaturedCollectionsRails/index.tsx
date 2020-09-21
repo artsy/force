@@ -1,12 +1,4 @@
-import {
-  Box,
-  Flex,
-  ResponsiveImage,
-  Sans,
-  Serif,
-  Spacer,
-  color,
-} from "@artsy/palette"
+import { Box, Flex, ResponsiveImage, Spacer, Text, color } from "@artsy/palette"
 import { FeaturedCollectionsRails_collectionGroup } from "v2/__generated__/FeaturedCollectionsRails_collectionGroup.graphql"
 import { useTracking } from "v2/Artsy/Analytics/useTracking"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
@@ -30,9 +22,9 @@ export const FeaturedCollectionsRails: React.FC<Props> = ({
 }) => {
   return (
     <FeaturedCollectionsContainer>
-      <Serif size="5" mt={3} mb={1}>
+      <Text variant="subtitle" pt={3} pb={2}>
         {name}
-      </Serif>
+      </Text>
 
       <Carousel>
         {members.map((slide, slideIndex) => {
@@ -95,9 +87,7 @@ export const FeaturedCollectionEntity: React.FC<FeaturedCollectionEntityProps> =
           return (
             <>
               {`... `}
-              <ReadMoreLink size="2" weight="medium" display="inline">
-                Read more
-              </ReadMoreLink>
+              <ReadMoreLink display="inline">Read more</ReadMoreLink>
             </>
           )
         }}
@@ -124,16 +114,21 @@ export const FeaturedCollectionEntity: React.FC<FeaturedCollectionEntityProps> =
             })}
           />
         </Flex>
-        <Serif size="4" mt={1} maxWidth={["246px", "100%"]}>
+        <Text variant="subtitle" mt={1} maxWidth={["246px", "100%"]}>
           <Truncator maxLineCount={1}>{title}</Truncator>
-        </Serif>
+        </Text>
         {price_guidance && (
-          <Sans size="2" color="black60">{`From $${formattedPrice}`}</Sans>
+          <Text variant="small" color="black60">
+            {`From $${formattedPrice}`}
+          </Text>
         )}
-        <ExtendedSerif size="3" mt={1}>
-          <Media lessThan="md">{getTruncatedDescription(4)}</Media>
-          <Media greaterThan="sm">{getTruncatedDescription(3)}</Media>
-        </ExtendedSerif>
+        {/* TODO: fix this truncation/overflow issue properly, rather than this overflow:hidden Box */}
+        <Box style={{ overflow: "hidden" }}>
+          <ExtendedText mt={1}>
+            <Media lessThan="md">{getTruncatedDescription(4)}</Media>
+            <Media greaterThan="sm">{getTruncatedDescription(3)}</Media>
+          </ExtendedText>
+        </Box>
       </StyledLink>
     </Container>
   )
@@ -173,7 +168,7 @@ const FeaturedCollectionsContainer = styled(Box)`
   border-top: 1px solid ${color("black10")};
 `
 
-const ExtendedSerif = styled(Serif)`
+const ExtendedText = styled(Text)`
   div span {
     span p {
       display: inline;
@@ -197,6 +192,6 @@ export const StyledLink = styled(RouterLink)`
   }
 `
 
-const ReadMoreLink = styled(Sans)`
+const ReadMoreLink = styled(Text).attrs({ variant: "mediumText" })`
   text-decoration: underline;
 `

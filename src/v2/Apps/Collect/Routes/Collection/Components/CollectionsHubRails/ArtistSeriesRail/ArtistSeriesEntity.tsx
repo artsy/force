@@ -1,4 +1,4 @@
-import { Box, Flex, Sans, Serif, color } from "@artsy/palette"
+import { Box, Flex, Text, color } from "@artsy/palette"
 import { ArtistSeriesEntity_member } from "v2/__generated__/ArtistSeriesEntity_member.graphql"
 import { useTracking } from "v2/Artsy/Analytics/useTracking"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
@@ -81,19 +81,17 @@ export const ArtistSeriesEntity: React.FC<ArtistSeriesEntityProps> = ({
               })
             : headerImage && <ArtworkImage src={headerImage} width={221} />}
         </ImgWrapper>
-        {
-          <CollectionTitle pt={1} pb={0.5} size="3">
-            <Truncator maxLineCount={1}>{title}</Truncator>
-          </CollectionTitle>
-        }
+        <Text variant="text" pt={2}>
+          <Truncator maxLineCount={1}>{title}</Truncator>
+        </Text>
         {price_guidance && (
-          <Sans size="2" color="black60" pb={1}>
+          <Text variant="small" color="black60" pb={1}>
             From $
             {currency(price_guidance, {
               separator: ",",
               precision: 0,
             }).format()}
-          </Sans>
+          </Text>
         )}
       </StyledLink>
     </Container>
@@ -136,10 +134,6 @@ const SingleImgContainer = styled(Box)`
   &:last-child {
     margin-right: 0;
   }
-`
-
-const CollectionTitle = styled(Serif)`
-  width: 100%;
 `
 
 export const ImgWrapper = styled(Flex)`

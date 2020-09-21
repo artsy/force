@@ -1,4 +1,4 @@
-import { Box, Serif, color } from "@artsy/palette"
+import { Box, Text, color } from "@artsy/palette"
 import { ArtistSeriesRail_collectionGroup } from "v2/__generated__/ArtistSeriesRail_collectionGroup.graphql"
 import { Carousel } from "v2/Components/Carousel"
 import React from "react"
@@ -14,9 +14,9 @@ export const ArtistSeriesRail: React.FC<ArtistSeriesRailProps> = ({
 }) => {
   return (
     <Content mt={2} py={3}>
-      <Serif size="5" mb={1}>
+      <Text variant="subtitle" pb={2}>
         {name}
-      </Serif>
+      </Text>
 
       <Carousel>
         {members.map((slide, slideIndex) => {
