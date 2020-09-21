@@ -1,4 +1,4 @@
-import { Box, Serif } from "@artsy/palette"
+import { Box, Text } from "@artsy/palette"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { get } from "v2/Utils/get"
@@ -14,7 +14,7 @@ export interface ArtworkSidebarMetadataProps {
 
 export class ArtworkSidebarMetadata extends React.Component<
   ArtworkSidebarMetadataProps
-  > {
+> {
   render() {
     const { artwork } = this.props
     const lotLabel = get(
@@ -24,9 +24,9 @@ export class ArtworkSidebarMetadata extends React.Component<
     return (
       <Box>
         {lotLabel && (
-          <Serif size="2" weight="semibold" color="black100">
+          <Text variant="mediumText" color="black100">
             Lot {lotLabel}
-          </Serif>
+          </Text>
         )}
         <TitleInfo artwork={artwork} />
         {artwork.edition_sets.length < 2 && <SizeInfo piece={artwork} />}

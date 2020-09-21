@@ -1,4 +1,4 @@
-import { Box, Serif } from "@artsy/palette"
+import { Box, Text } from "@artsy/palette"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 
@@ -10,18 +10,18 @@ export interface ArtworkSidebarTitleInfoProps {
 
 export class ArtworkSidebarTitleInfo extends React.Component<
   ArtworkSidebarTitleInfoProps
-  > {
+> {
   render() {
     const { artwork } = this.props
     return (
       <Box color="black60">
-        <Serif size="2" element="h2">
+        <Text variant="caption" as="h2">
           <i>{artwork.title}</i>
           {artwork.date &&
             artwork.date.replace(/\s+/g, "").length > 0 &&
             ", " + artwork.date}
-        </Serif>
-        {artwork.medium && <Serif size="2">{artwork.medium}</Serif>}
+        </Text>
+        {artwork.medium && <Text variant="caption">{artwork.medium}</Text>}
       </Box>
     )
   }
