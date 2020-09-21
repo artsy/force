@@ -15209,6 +15209,11 @@ jws@^3.2.2:
     jwa "^1.4.1"
     safe-buffer "^5.0.1"
 
+jwt-decode@^3.0.0-beta.2:
+  version "3.0.0-beta.2"
+  resolved "https://registry.yarnpkg.com/jwt-decode/-/jwt-decode-3.0.0-beta.2.tgz#5d928dd0d582caab47b252a5f12ad1721f2f6eef"
+  integrity sha512-AnENY5syz7PzgpTzos9sxkqKTmHU0JeJOXZFHUc41bDyybC2yzZ+1r43ZLhk7+JCwF0yjISPuVK9ZWfA1nCUPA==
+
 keyboard-code@0.0.2:
   version "0.0.2"
   resolved "https://registry.yarnpkg.com/keyboard-code/-/keyboard-code-0.0.2.tgz#5562cd1b36798a1698a547a85ee6ff0aeb938488"
