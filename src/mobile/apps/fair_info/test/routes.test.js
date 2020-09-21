@@ -51,7 +51,7 @@ describe("FairInfo routes", function () {
     })
   })
 
-  describe("#visitors", function () {
+  xdescribe("#visitors", function () {
     beforeEach(function () {
       return (this.res.locals.fair = new Fair(fabricate("fair")))
     })
