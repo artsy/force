@@ -21,11 +21,11 @@ type Artist = ArtworkSidebarArtists_artwork["artists"][0]
 export class ArtworkSidebarArtists extends React.Component<ArtistsProps> {
   private renderArtistName(artist: Artist, multiple = false) {
     return artist.href ? (
-      <Text variant="subtitle" as={multiple ? "span" : "h1"}>
+      <Text variant="title" as={multiple ? "span" : "h1"}>
         <RouterLink to={artist.href}>{artist.name}</RouterLink>
       </Text>
     ) : (
-      <Text variant="subtitle" as={multiple ? "span" : "h1"}>
+      <Text variant="title" as={multiple ? "span" : "h1"}>
         {artist.name}
       </Text>
     )
