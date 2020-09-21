@@ -54,6 +54,7 @@ const ViewingRoomApp: React.FC<ViewingRoomAppProps> = ({
   }
 
   const preview =
+    user &&
     userHasAccessToPartner(user, viewingRoom.partner.internalID) &&
     viewingRoom.status === "draft"
 

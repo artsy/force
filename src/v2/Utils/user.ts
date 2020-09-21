@@ -39,6 +39,13 @@ export function userIsAdmin(user?: User): boolean {
 
 export function userHasAccessToPartner(user: User, partnerId: string): boolean {
   const token = get(user, u => u.accessToken)
+  if (!token) {
+    return false
+  }
   const decodedToken = jwt_decode(token)
-  return decodedToken.partner_ids.includes(partnerId)
+  return (
+    decodedToken &&
+    decodedToken.partner_ids &&
+    decodedToken.partner_ids.includes(partnerId)
+  )
 }

@@ -33,6 +33,57 @@ describe("ViewingRoomApp", () => {
     window.history.pushState({}, "Viewing Room Title", slug)
   })
 
+  // DRAFT viewing room
+  describe("with draft viewing room and user that has access to viewing rooms partner", () => {
+    beforeEach(() => {
+      jest.mock("v2/Utils/user", () => ({
+        userHasAccessToPartner: (user: User, partnerId: string): boolean => {
+          return true
+        },
+      }))
+    })
+
+    const getWrapper = async (
+      breakpoint: Breakpoint = "lg",
+      response: ViewingRoomApp_ScheduledTest_QueryRawResponse = DraftViewingRoomAppFixture
+    ) => {
+      return renderRelayTree({
+        Component: ({ viewingRoom }) => {
+          return (
+            <MockBoot breakpoint={breakpoint}>
+              <SystemContextProvider mediator={mediator} user={user}>
+                <ViewingRoomApp viewingRoom={viewingRoom}>
+                  some child
+                </ViewingRoomApp>
+              </SystemContextProvider>
+            </MockBoot>
+          )
+        },
+        query: graphql`
+          query ViewingRoomApp_ScheduledTest_Query($slug: ID!)
+            @raw_response_type {
+            viewingRoom(id: $slug) {
+              ...ViewingRoomApp_viewingRoom
+            }
+          }
+        `,
+        variables: {
+          slug,
+        },
+        mockData: response,
+      })
+    }
+
+    it("renders the correct components", async () => {
+      const wrapper = await getWrapper()
+      expect(wrapper.find("ViewingRoomMeta").length).toBe(1)
+      expect(wrapper.find("AppContainer").length).toBe(1)
+      expect(wrapper.find("ViewingRoomHeader").length).toBe(1)
+      // expect(wrapper.find("ViewingRoomTabBar").length).toBe(1)
+      // expect(wrapper.find("ViewingRoomContentNotAccessible").length).toBe(0)
+    })
+  })
+
   // SCHEDULED viewing room
   describe("with scheduled viewing room", () => {
     const getWrapper = async (
@@ -328,6 +379,27 @@ describe("ViewingRoomApp", () => {
     })
   })
 })
+
+const DraftViewingRoomAppFixture: ViewingRoomApp_ScheduledTest_QueryRawResponse = {
+  viewingRoom: {
+    title: "Not published room",
+    image: {
+      imageURLs: {
+        normalized:
+          "https://artsy-media-uploads.s3.amazonaws.com/0RnxWDsVmKuALfpmd75YyA/CTPHSEPT19_018_JO_Guy_Yanai_TLV_031_20190913.jpg",
+      },
+    },
+    partner: {
+      name: "Subscription Demo GG",
+      id: "UGFydG5lcjo1NTQxMjM3MzcyNjE2OTJiMTk4YzAzMDA=",
+      href: "/partner-demo-gg",
+      internalID: "00001",
+    },
+    distanceToOpen: null,
+    distanceToClose: null,
+    status: "draft",
+  },
+}
 
 const ScheduledViewingRoomAppFixture: ViewingRoomApp_ScheduledTest_QueryRawResponse = {
   viewingRoom: {
