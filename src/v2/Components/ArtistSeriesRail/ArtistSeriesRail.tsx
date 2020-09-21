@@ -66,7 +66,7 @@ export const ArtistSeriesRailFragmentContainer = createFragmentContainer(
   {
     artist: graphql`
       fragment ArtistSeriesRail_artist on Artist {
-        artistSeriesConnection {
+        artistSeriesConnection(first: 50) {
           edges {
             node {
               internalID
