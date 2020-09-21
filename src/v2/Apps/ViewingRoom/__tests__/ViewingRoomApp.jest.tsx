@@ -3,6 +3,7 @@ import { MockBoot, renderRelayTree } from "v2/DevTools"
 import { Mediator, SystemContextProvider } from "v2/Artsy"
 import ViewingRoomApp from "../ViewingRoomApp"
 import { graphql } from "react-relay"
+import { ViewingRoomApp_DraftTest_QueryRawResponse } from "v2/__generated__/ViewingRoomApp_DraftTest_Query.graphql"
 import { ViewingRoomApp_ScheduledTest_QueryRawResponse } from "v2/__generated__/ViewingRoomApp_ScheduledTest_Query.graphql"
 import { ViewingRoomApp_OpenTest_QueryRawResponse } from "v2/__generated__/ViewingRoomApp_OpenTest_Query.graphql"
 import { ViewingRoomApp_ClosedTest_QueryRawResponse } from "v2/__generated__/ViewingRoomApp_ClosedTest_Query.graphql"
@@ -45,7 +46,7 @@ describe("ViewingRoomApp", () => {
 
     const getWrapper = async (
       breakpoint: Breakpoint = "lg",
-      response: ViewingRoomApp_ScheduledTest_QueryRawResponse = DraftViewingRoomAppFixture
+      response: ViewingRoomApp_DraftTest_QueryRawResponse = DraftViewingRoomAppFixture
     ) => {
       return renderRelayTree({
         Component: ({ viewingRoom }) => {
@@ -60,8 +61,7 @@ describe("ViewingRoomApp", () => {
           )
         },
         query: graphql`
-          query ViewingRoomApp_ScheduledTest_Query($slug: ID!)
-            @raw_response_type {
+          query ViewingRoomApp_DraftTest_Query($slug: ID!) @raw_response_type {
             viewingRoom(id: $slug) {
               ...ViewingRoomApp_viewingRoom
             }
@@ -380,7 +380,7 @@ describe("ViewingRoomApp", () => {
   })
 })
 
-const DraftViewingRoomAppFixture: ViewingRoomApp_ScheduledTest_QueryRawResponse = {
+const DraftViewingRoomAppFixture: ViewingRoomApp_DraftTest_QueryRawResponse = {
   viewingRoom: {
     title: "Not published room",
     image: {

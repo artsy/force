@@ -53,13 +53,13 @@ const ViewingRoomApp: React.FC<ViewingRoomAppProps> = ({
     return <ErrorPage code={404} />
   }
 
-  const preview =
+  const showPreview =
     user &&
     userHasAccessToPartner(user, viewingRoom.partner.internalID) &&
     viewingRoom.status === "draft"
 
   const getView = () => {
-    if (viewingRoom.status === "live" || preview) {
+    if (viewingRoom.status === "live" || showPreview) {
       return (
         <>
           <ViewingRoomTabBar mb={[2, 3]} />
@@ -73,7 +73,7 @@ const ViewingRoomApp: React.FC<ViewingRoomAppProps> = ({
   return (
     <>
       <ViewingRoomMeta viewingRoom={viewingRoom} />
-      {preview && (
+      {showPreview && (
         <Box position="fixed" left={0} top={58} width="100%" zIndex={1}>
           <Banner backgroundColor="black10" textColor="black100">
             <ClosedEyeIcon />
