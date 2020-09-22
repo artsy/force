@@ -69,7 +69,6 @@ const getColor = status => {
 
 const OrderRow = (props: OrderRowProps) => {
   const { order } = props
-  const { creditCard, requestedFulfillment } = order
   const artwork = get(order, o => o.lineItems.edges[0].node.artwork)
   const { partner } = artwork
 
@@ -77,6 +76,8 @@ const OrderRow = (props: OrderRowProps) => {
   if (!artwork || order.state === "ABANDONED") {
     return null
   }
+
+  const { creditCard, requestedFulfillment } = order
 
   const orderIsInactive =
     order.state === "CANCELED" || order.state === "REFUNDED"
