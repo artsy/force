@@ -1,4 +1,4 @@
-import { Box, Serif } from "@artsy/palette"
+import { Box, Text } from "@artsy/palette"
 import { SystemContextConsumer } from "v2/Artsy"
 import * as Schema from "v2/Artsy/Analytics/Schema"
 
@@ -19,15 +19,15 @@ export interface ArtistsProps {
 type Artist = ArtworkSidebarArtists_artwork["artists"][0]
 
 export class ArtworkSidebarArtists extends React.Component<ArtistsProps> {
-  private renderArtistName(artist: Artist) {
+  private renderArtistName(artist: Artist, multiple = false) {
     return artist.href ? (
-      <Serif size="5t" display="inline" weight="semibold" element="h1">
+      <Text variant="title" as={multiple ? "span" : "h1"}>
         <RouterLink to={artist.href}>{artist.name}</RouterLink>
-      </Serif>
+      </Text>
     ) : (
-      <Serif size="5t" display="inline" weight="semibold" element="h1">
+      <Text variant="title" as={multiple ? "span" : "h1"}>
         {artist.name}
-      </Serif>
+      </Text>
     )
   }
 
@@ -42,7 +42,7 @@ export class ArtworkSidebarArtists extends React.Component<ArtistsProps> {
   private renderSingleArtist = (artist: Artist, user, mediator) => {
     return (
       <React.Fragment>
-        <Box>{this.renderArtistName(artist)}</Box>
+        {this.renderArtistName(artist)}
         <FollowArtistButton
           artist={artist}
           user={user}
@@ -69,21 +69,25 @@ export class ArtworkSidebarArtists extends React.Component<ArtistsProps> {
     const {
       artwork: { artists },
     } = this.props
-    return artists.map((artist, index) => {
-      return (
-        <React.Fragment key={artist.id}>
-          {this.renderArtistName(artist)}
-          {index !== artists.length - 1 && ", "}
-        </React.Fragment>
-      )
-    })
+    return (
+      <Box as="h1">
+        {artists.map((artist, index) => {
+          return (
+            <React.Fragment key={artist.id}>
+              {this.renderArtistName(artist, true)}
+              {index !== artists.length - 1 && ", "}
+            </React.Fragment>
+          )
+        })}
+      </Box>
+    )
   }
 
   renderCulturalMaker(cultural_maker: string) {
     return (
-      <Serif size="5t" display="inline-block" weight="semibold">
+      <Text variant="subtitle" display="inline-block" as="h1">
         {cultural_maker}
-      </Serif>
+      </Text>
     )
   }
   render() {

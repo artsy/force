@@ -1,4 +1,6 @@
-import { Box, Link, Sans, Separator, Spacer } from "@artsy/palette"
+// FIXME -- Remove this lint disable
+/* eslint-disable jsx-a11y/anchor-is-valid */
+import { Box, Link, Separator, Spacer, Text } from "@artsy/palette"
 import { Mediator, SystemContext } from "v2/Artsy"
 import { track } from "v2/Artsy/Analytics"
 import * as Schema from "v2/Artsy/Analytics/Schema"
@@ -18,9 +20,9 @@ export interface ArtworkSidebarExtraLinksContainerProps
 }
 
 const Container = ({ children }) => (
-  <Sans size="2" color="black60">
+  <Text variant="caption" color="black60">
     {children}
-  </Sans>
+  </Text>
 )
 
 @track({

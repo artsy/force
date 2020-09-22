@@ -1,4 +1,4 @@
-import { Box, Flex, LocationIcon, Serif, Spacer } from "@artsy/palette"
+import { Box, Flex, LocationIcon, Spacer, Text } from "@artsy/palette"
 import { filterLocations } from "v2/Apps/Artwork/Utils/filterLocations"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -11,14 +11,14 @@ export interface ArtworkSidebarPartnerInfoProps {
 
 export class ArtworkSidebarPartnerInfo extends React.Component<
   ArtworkSidebarPartnerInfoProps
-  > {
+> {
   renderPartnerName() {
     const sale = this.props.artwork.sale
     if (sale) {
       return (
-        <Serif size="5t" display="inline-block" weight="semibold">
+        <Text variant="subtitle" display="inline-block">
           <a href={sale.href}>{sale.name}</a>
-        </Serif>
+        </Text>
       )
     }
 
@@ -28,20 +28,26 @@ export class ArtworkSidebarPartnerInfo extends React.Component<
     }
 
     return partner.href ? (
-      <Serif size="5t" display="inline-block" weight="semibold">
+      <Text variant="subtitle" display="inline-block">
         <a href={partner.href}>{partner.name}</a>
-      </Serif>
+      </Text>
     ) : (
-        <Serif size="5t" display="inline-block" weight="semibold">
-          {partner.name}
-        </Serif>
-      )
+      <Text variant="subtitle" display="inline-block">
+        {partner.name}
+      </Text>
+    )
   }
   renderLocations(locationNames) {
     return (
-      <Serif size="2" display="inline-block" pl={1} pt={0.3}>
+      <Text
+        variant="caption"
+        color="black60"
+        display="inline-block"
+        pl={1}
+        pt={0.3}
+      >
         {locationNames.join(", ")}
-      </Serif>
+      </Text>
     )
   }
 
@@ -59,8 +65,8 @@ export class ArtworkSidebarPartnerInfo extends React.Component<
         {this.renderPartnerName()}
         {locationNames && locationNames.length > 0 && (
           <Box>
-            <Flex width="100%" pt={1}>
-              <Flex flexDirection="column">
+            <Flex width="100%">
+              <Flex flexDirection="column" pt={0.3}>
                 <LocationIcon />
               </Flex>
               <Flex flexDirection="column">
