@@ -4,8 +4,8 @@ import {
   Link,
   Modal,
   QuestionCircleIcon,
-  Serif,
   Spacer,
+  Text,
   Tooltip,
 } from "@artsy/palette"
 import { track } from "v2/Artsy/Analytics"
@@ -59,19 +59,19 @@ export class PricingContextModal extends React.Component<State> {
           }
         >
           <Spacer mt={2} />
-          <Serif size="3" color="black80">
+          <Text variant="text" color="black80">
             This feature aims to provide insight into the range of prices for an
             artist's works and allow buyers to discover other available works by
             the artist at different price points.
-          </Serif>
+          </Text>
           <Spacer mt={2} />
-          <Serif size="3" color="black80">
+          <Text variant="text" color="black80">
             The graph displays current and past list prices for works that are
             similar in size and category to the work you're viewing. The prices
             included in the graph are only from galleries and dealers on Artsy.
-          </Serif>
+          </Text>
           <Spacer mt={2} />
-          <Serif size="3" color="black80">
+          <Text variant="text" color="black80">
             Artwork prices are affected by{" "}
             <Link
               href={sd.APP_URL + "/article/artsy-editorial-artworks-prices"}
@@ -84,7 +84,7 @@ export class PricingContextModal extends React.Component<State> {
             to provide pricing guidance for the artwork being viewed. If you
             have feedback or questions{" "}
             <Link href="mailto:support@artsy.net">let us know</Link>.
-          </Serif>
+          </Text>
           <Spacer mt={2} />
         </Modal>
         <Tooltip width={73} size="sm" content="Learn more">

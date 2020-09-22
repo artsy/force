@@ -1,13 +1,4 @@
-import {
-  Button,
-  Col,
-  Link,
-  Modal,
-  Row,
-  Sans,
-  Serif,
-  Spinner,
-} from "@artsy/palette"
+import { Button, Col, Link, Modal, Row, Spinner, Text } from "@artsy/palette"
 import React, { useState } from "react"
 import { commitMutation, createFragmentContainer, graphql } from "react-relay"
 
@@ -138,9 +129,9 @@ export const RequestConditionReport: React.FC<RequestConditionReportProps> = pro
       >
         Log in
       </Button>
-      <Sans display="inline" ml={1} size="2">
+      <Text variant="caption" display="inline" ml={1}>
         to request
-      </Sans>
+      </Text>
     </>
   )
 
@@ -163,15 +154,15 @@ export const RequestConditionReport: React.FC<RequestConditionReportProps> = pro
       }}
       show={showRequestedModal}
     >
-      <Serif mt={1} color="black100" textAlign="center" size="4">
+      <Text variant="text" mt={1} color="black100" textAlign="center">
         We have received your request. The condition report will be sent to{" "}
         {me && me.email}.
-      </Serif>
+      </Text>
 
-      <Serif mt={2} textAlign="center" color="black100" size="4">
+      <Text variant="text" mt={2} textAlign="center" color="black100">
         For questions, contact{" "}
         <Link href="mailto:specialist@artsy.net">specialist@artsy.net</Link>.
-      </Serif>
+      </Text>
 
       <Button block mt={4} onClick={() => setShowRequestedModal(false)}>
         OK

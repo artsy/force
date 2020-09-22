@@ -2,6 +2,7 @@
 // Button styles used project-wide
 //
 @import '../../stylus_lib'
+@require '../../../../lib/palette'
 
 .circle-border-icon-button
   display inline-block
@@ -65,18 +66,17 @@ chevron-pseudo-el()
 
 .chevron-nav-list
   a
+    text('subtitle')
     text-decoration none
     position relative
     display block
-    padding 14px 0
-    border-top 1px solid gray-lighter-color
-    avant-garde()
-    font-size avant-garde-font-size
+    padding getSpace(1.5, 0)
+    border-top 1px solid getColor('black10')
     &:last-child
       border-bottom @border-top
     &::after
       chevron-pseudo-el()
-      background light-gray-border-color
+      background getColor('black10')
       right -9px
       position absolute
 
@@ -112,8 +112,7 @@ a.nav-image-item
 
 // Avant Garde rectangular buttons
 .avant-garde-box-button
-  avant-garde()
-  font-size avant-garde-font-size
+  text('mediumText')
   padding 12px
   border 1px solid light-gray-border-color
   background transparent

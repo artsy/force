@@ -28,9 +28,15 @@ meta( property="fb:pages" content="342443413406")
 script( type="text/javascript" )
   include ../../../../../node_modules/scroll-frame/scroll-frame-head.js
 
+link( rel="preload" href="#{sd.WEBFONT_URL}/artsy-icons.woff2" as="font" type="font/woff2" crossorigin )
+link( rel="preload" href="#{sd.WEBFONT_URL}/ll-unica77_regular.woff2" as="font" type="font/woff2" crossorigin )
+link( rel="preload" href="#{sd.WEBFONT_URL}/ll-unica77_medium.woff2" as="font" type="font/woff2" crossorigin )
+link( rel="preload" href="#{sd.WEBFONT_URL}/adobe-garamond-pro_regular.woff2" as="font" type="font/woff2" crossorigin )
+link( rel="preload" href="#{sd.WEBFONT_URL}/adobe-garamond-pro_bold.woff2" as="font" type="font/woff2" crossorigin )
+
 //- Don't include fonts if Reflection is requesting it
 if sd.BROWSER && sd.BROWSER.family != 'Other'
-  link( type='text/css', rel='stylesheet', href='#{sd.WEBFONT_URL}/all-webfonts.css')
+  link( type='text/css', rel='stylesheet', href='#{sd.WEBFONT_URL}/all-webfonts.css' )
 
 //- TTI measurement
 script( type="text/javascript" )

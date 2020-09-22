@@ -54,29 +54,6 @@ spec:
             preStop:
               exec:
                 command: ["sh", "-c", "sleep 10"]
-        - name: force-nginx
-          image: artsy/docker-nginx:latest
-          ports:
-            - name: nginx-http
-              containerPort: 8080
-            - name: nginx-https
-              containerPort: 443
-          readinessProbe:
-            tcpSocket:
-              port: nginx-http
-            initialDelaySeconds: 5
-            periodSeconds: 15
-            timeoutSeconds: 10
-          lifecycle:
-            preStop:
-              exec:
-                command: ["sh", "-c", "sleep 5 && /usr/sbin/nginx -s quit"]
-          env:
-            - name: "NGINX_DEFAULT_CONF"
-              valueFrom:
-                configMapKeyRef:
-                  name: nginx-config
-                  key: force
       dnsPolicy: ClusterFirst
       dnsConfig:
         options:
@@ -91,7 +68,6 @@ spec:
                     operator: In
                     values:
                       - foreground
-
 ---
 apiVersion: autoscaling/v1
 kind: HorizontalPodAutoscaler
@@ -106,59 +82,6 @@ spec:
   minReplicas: 3
   maxReplicas: 20
   targetCPUUtilizationPercentage: 70
-
----
-apiVersion: v1
-kind: Service
-metadata:
-  labels:
-    app: force
-    layer: application
-    component: web
-  name: force-web
-  namespace: default
-  annotations:
-    service.beta.kubernetes.io/aws-load-balancer-ssl-cert: {{ artsyNetWildcardSSLCert }}
-    service.beta.kubernetes.io/aws-load-balancer-backend-protocol: "http"
-    service.beta.kubernetes.io/aws-load-balancer-ssl-ports: "443"
-    service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: "true"
-    service.beta.kubernetes.io/aws-load-balancer-connection-draining-enabled: "true"
-    service.beta.kubernetes.io/aws-load-balancer-access-log-enabled: "true"
-    service.beta.kubernetes.io/aws-load-balancer-access-log-emit-interval: "60"
-    service.beta.kubernetes.io/aws-load-balancer-access-log-s3-bucket-name: "artsy-elb-logs"
-    service.beta.kubernetes.io/aws-load-balancer-access-log-s3-bucket-prefix: "production-force"
-    service.beta.kubernetes.io/aws-load-balancer-connection-idle-timeout: "300"
-spec:
-  ports:
-    - port: 80
-      protocol: TCP
-      name: http
-      targetPort: nginx-http
-    - port: 443
-      protocol: TCP
-      name: https
-      targetPort: nginx-http
-  selector:
-    app: force
-    layer: application
-    component: web
-  sessionAffinity: None
-  type: LoadBalancer
-  loadBalancerSourceRanges:
-    - 173.245.48.0/20
-    - 103.21.244.0/22
-    - 103.22.200.0/22
-    - 103.31.4.0/22
-    - 141.101.64.0/18
-    - 108.162.192.0/18
-    - 190.93.240.0/20
-    - 188.114.96.0/20
-    - 197.234.240.0/22
-    - 198.41.128.0/17
-    - 162.158.0.0/15
-    - 104.16.0.0/12
-    - 172.64.0.0/13
-    - 131.0.72.0/22
 ---
 apiVersion: v1
 kind: Service

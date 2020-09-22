@@ -9,7 +9,7 @@
       p
         | Next Upcoming Auction:
         br
-        a.fine-faux-underline( href= nextAuction.href() )
+        a( href= nextAuction.href() )
           = nextAuction.get('name')
       .apu-clock.js-apu-clock( data-id= nextAuction.id )
         include ../../../components/clock/template

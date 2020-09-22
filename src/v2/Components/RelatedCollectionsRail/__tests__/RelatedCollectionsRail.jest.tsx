@@ -1,5 +1,4 @@
 import { CollectionsRailFixture } from "v2/Apps/__tests__/Fixtures/Collections"
-import { mockTracking } from "v2/Artsy/Analytics"
 import { mount } from "enzyme"
 import "jest-styled-components"
 import { clone, drop } from "lodash"
@@ -8,15 +7,30 @@ import Waypoint from "react-waypoint"
 import { RelatedCollectionEntity } from "../RelatedCollectionEntity"
 import { RelatedCollectionsRail } from "../RelatedCollectionsRail"
 import { paginateCarousel } from "@artsy/palette"
+import { OwnerType } from "@artsy/cohesion"
+import { useTracking } from "v2/Artsy/Analytics/useTracking"
+import { AnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
 
+jest.mock("v2/Artsy/Analytics/useTracking")
 jest.mock("@artsy/palette/dist/elements/Carousel/paginate")
 jest.unmock("react-tracking")
 
 describe("CollectionsRail", () => {
   let props
+  const trackEvent = jest.fn()
 
   const getWrapper = (passedProps = props) => {
-    return mount(<RelatedCollectionsRail {...passedProps} />)
+    return mount(
+      <AnalyticsContext.Provider
+        value={{
+          contextPageOwnerId: "1234",
+          contextPageOwnerSlug: "slug",
+          contextPageOwnerType: OwnerType.collection,
+        }}
+      >
+        <RelatedCollectionsRail {...passedProps} />
+      </AnalyticsContext.Provider>
+    )
   }
 
   beforeEach(() => {
@@ -24,11 +38,16 @@ describe("CollectionsRail", () => {
       title: "Street Art",
       collections: CollectionsRailFixture,
     }
+    ;(useTracking as jest.Mock).mockImplementation(() => {
+      return {
+        trackEvent,
+      }
+    })
     ;(paginateCarousel as jest.Mock).mockImplementation(() => [0, 100, 200])
   })
 
-  it("Renders expected fields", async () => {
-    const component = await mount(<RelatedCollectionsRail {...props} />)
+  it("Renders expected fields", () => {
+    const component = getWrapper()
     expect(component.text()).toMatch("More like Street Art")
     expect(component.find(RelatedCollectionEntity).length).toBe(8)
     expect(component.text()).toMatch("Flags")
@@ -60,13 +79,14 @@ describe("CollectionsRail", () => {
 
   describe("Tracking", () => {
     it("Tracks impressions", () => {
-      const { Component, dispatch } = mockTracking(RelatedCollectionsRail)
-      const component = mount(<Component {...props} />)
+      const component = getWrapper()
       component.find(Waypoint).getElement().props.onEnter()
 
-      expect(dispatch).toBeCalledWith({
+      expect(trackEvent).toBeCalledWith({
         action_type: "Impression",
         context_module: "CollectionsRail",
+        context_page_owner_id: "1234",
+        context_page_owner_slug: "slug",
         context_page_owner_type: "Collection",
       })
     })
@@ -125,19 +145,20 @@ describe("CollectionsRail", () => {
           ],
         },
       })
+      const component = getWrapper({ collections: collectionsCopy })
+      component.find("a").at(2).simulate("click")
 
-      const updatedCollections = { collections: collectionsCopy }
-      const { Component, dispatch } = mockTracking(RelatedCollectionsRail)
-
-      const component = mount(<Component {...updatedCollections} />)
-      component.find("button").at(2).simulate("click") // Next button
-
-      expect(dispatch).toBeCalledWith({
-        action_type: "Click",
-        context_module: "CollectionsRail",
-        context_page_owner_type: "Collection",
-        subject: "clicked next button",
-        type: "Button",
+      expect(trackEvent).toBeCalledWith({
+        action: "clickedCollectionGroup",
+        context_module: "relatedCollectionsRail",
+        context_page_owner_id: "1234",
+        context_page_owner_slug: "slug",
+        context_page_owner_type: "collection",
+        destination_page_owner_id: "65432",
+        destination_page_owner_slug: "contemporary-limited-editions",
+        destination_page_owner_type: "collection",
+        horizontal_slide_position: 2,
+        type: "thumbnail",
       })
     })
   })

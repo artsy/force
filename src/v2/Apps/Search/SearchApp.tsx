@@ -1,4 +1,4 @@
-import { Box, Col, Row, Separator, Serif, Spacer } from "@artsy/palette"
+import { Box, Col, Row, Separator, Spacer, Text } from "@artsy/palette"
 import { SearchApp_viewer } from "v2/__generated__/SearchApp_viewer.graphql"
 import { AppContainer } from "v2/Apps/Components/AppContainer"
 import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
@@ -29,7 +29,9 @@ const TotalResults: React.SFC<{ count: number; term: string }> = ({
 }) => {
   const formatResults = useCallback(
     () =>
-      `${count.toLocaleString()} Result${count > 1 ? "s" : ""} for "${term}"`,
+      `${count.toLocaleString()} result${
+        count > 1 ? "s" : ""
+      } for \u201C${term}\u201D`,
     [count, term]
   )
 
@@ -39,7 +41,7 @@ const TotalResults: React.SFC<{ count: number; term: string }> = ({
     setResults(formatResults())
   }, [count, formatResults])
 
-  return <Serif size="5">{results}</Serif>
+  return <Text variant="subtitle">{results}</Text>
 }
 
 @track({

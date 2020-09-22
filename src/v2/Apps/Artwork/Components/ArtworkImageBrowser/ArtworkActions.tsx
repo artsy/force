@@ -27,9 +27,9 @@ import {
   Link,
   MoreIcon,
   OpenEyeIcon,
-  Sans,
   ShareIcon,
   Spacer,
+  Text,
   color,
 } from "@artsy/palette"
 import { userIsAdmin } from "v2/Utils/user"
@@ -385,18 +385,18 @@ export class UtilButton extends React.Component<
           <UtilButtonLink className="noUnderline" href={href} target="_blank">
             <ActionIcon {...props} fill={"black100"} />
             {label && (
-              <Sans size="2" pl={0.5} pt="1px">
+              <Text variant="caption" pl={0.5} pt="1px">
                 {label}
-              </Sans>
+              </Text>
             )}
           </UtilButtonLink>
         ) : (
           <>
             <ActionIcon {...props} fill={fill} />
             {label && (
-              <Sans size="2" pl={0.5} pt="1px">
+              <Text variant="caption" pl={0.5} pt="1px">
                 {label}
-              </Sans>
+              </Text>
             )}
           </>
         )}

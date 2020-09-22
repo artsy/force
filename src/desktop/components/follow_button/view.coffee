@@ -1,7 +1,6 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 mediator = require '../../lib/mediator.coffee'
-analyticsHooks = require '../../lib/analytics_hooks.coffee'
 { modelNameAndIdToLabel } = require '../../lib/analytics_helpers.coffee'
 ArtistSuggestions = require './artist_suggestions.coffee'
 { ARTIST_PAGE_CTA_ENABLED } = require('sharify').data
@@ -77,7 +76,6 @@ module.exports = class FollowButton extends Backbone.View
 
     # remove null values
     analyticsOptions = _.pick
-      modelName: @modelName
       entity_slug: @model.id
       entity_id: @model.get('_id')
       context_page: @context_page
@@ -88,7 +86,7 @@ module.exports = class FollowButton extends Backbone.View
       @following.unfollow @model.id
       mediator.trigger 'follow-button:unfollow', @$el, @model
       @trigger 'unfollowed'
-      analyticsHooks.trigger 'followable:unfollowed', analyticsOptions
+      window.analytics.track("Unfollowed #{@modelName}", analyticsOptions)
     else
       @following.follow @model.id, notes: (@notes or @analyticsFollowMessage)
       $('.artist-suggestion-popover').remove()
@@ -100,6 +98,6 @@ module.exports = class FollowButton extends Backbone.View
       setTimeout (=> @$el.removeClass 'is-clicked'), 1500
       mediator.trigger 'follow-button:follow', @$el, @model
       @trigger 'followed'
-      analyticsHooks.trigger 'followable:followed', analyticsOptions
+      window.analytics.track("Followed #{@modelName}", analyticsOptions)
 
     false

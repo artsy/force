@@ -6,10 +6,9 @@ import {
   FlexProps,
   Radio,
   RadioGroup,
-  Sans,
   Separator,
-  Serif,
   Spacer,
+  Text,
 } from "@artsy/palette"
 import { ArtworkSidebarCommercial_artwork } from "v2/__generated__/ArtworkSidebarCommercial_artwork.graphql"
 import { ArtworkSidebarCommercialOfferOrderMutation } from "v2/__generated__/ArtworkSidebarCommercialOfferOrderMutation.graphql"
@@ -82,9 +81,9 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
 
   renderSaleMessage(saleMessage: string) {
     return (
-      <Serif size="5t" weight="semibold" data-test="SaleMessage">
+      <Text variant="subtitle" data-test="SaleMessage">
         {saleMessage}
-      </Serif>
+      </Text>
     )
   }
 
@@ -95,9 +94,9 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
     const editionFragment = (
       <>
         <SizeInfo piece={editionSet} />
-        <Serif ml="auto" size="2" data-test="SaleMessage">
+        <Text ml="auto" variant="caption" data-test="SaleMessage">
           {editionSet.sale_message}
-        </Serif>
+        </Text>
       </>
     )
     if (includeSelectOption) {
@@ -379,19 +378,19 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
         {artworkEcommerceAvailable &&
           (artwork.shippingOrigin || artwork.shippingInfo) && <Spacer mt={1} />}
         {artworkEcommerceAvailable && artwork.shippingOrigin && (
-          <Sans size="2" color="black60">
+          <Text variant="caption" color="black60">
             Ships from {artwork.shippingOrigin}
-          </Sans>
+          </Text>
         )}
         {artworkEcommerceAvailable && artwork.shippingInfo && (
-          <Sans size="2" color="black60">
+          <Text variant="caption" color="black60">
             {artwork.shippingInfo}
-          </Sans>
+          </Text>
         )}
         {artworkEcommerceAvailable && artwork.priceIncludesTaxDisplay && (
-          <Sans size="2" color="black60">
+          <Text variant="caption" color="black60">
             {artwork.priceIncludesTaxDisplay}
-          </Sans>
+          </Text>
         )}
 
         {artwork.is_inquireable ||

@@ -53,7 +53,7 @@ app.get("/ssr-experiments/stitch", adminOnly, async (_req, res, next) => {
 
     res.send(layout)
   } catch (error) {
-    console.log(error)
+    console.error(error)
     next()
   }
 })
@@ -83,7 +83,7 @@ app.get("/ssr-experiments/router", adminOnly, async (req, res, next) => {
     `.trim()
     )
   } catch (error) {
-    console.log(error)
+    console.error(error)
     next()
   }
 })
@@ -110,7 +110,7 @@ app.get("/ssr-experiments/all*", adminOnly, async (req, res, next) => {
 
     res.send(layout)
   } catch (error) {
-    console.log(error)
+    console.error(error)
     next(error)
   }
 })

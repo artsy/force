@@ -1,15 +1,15 @@
-import { Box, Flex, Sans, Serif, color } from "@artsy/palette"
+import { Box, Flex, Text, color } from "@artsy/palette"
 import { ArtistSeriesEntity_member } from "v2/__generated__/ArtistSeriesEntity_member.graphql"
-import { AnalyticsSchema } from "v2/Artsy/Analytics"
 import { useTracking } from "v2/Artsy/Analytics/useTracking"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import { Truncator } from "v2/Components/Truncator"
 import currency from "currency.js"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { data as sd } from "sharify"
 import styled from "styled-components"
 import { get } from "v2/Utils/get"
+import { ContextModule, clickedArtistSeriesGroup } from "@artsy/cohesion"
+import { useAnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
 
 export interface ArtistSeriesEntityProps {
   member: ArtistSeriesEntity_member
@@ -25,6 +25,7 @@ export const ArtistSeriesEntity: React.FC<ArtistSeriesEntityProps> = ({
     artworksConnection,
     price_guidance,
     slug,
+    id,
     title,
   } = member
   const artworks = artworksConnection.edges.map(({ node }) => node)
@@ -33,17 +34,24 @@ export const ArtistSeriesEntity: React.FC<ArtistSeriesEntityProps> = ({
     bgImages!.length === 1 ? 221 : bgImages!.length === 2 ? 109 : 72
 
   const { trackEvent } = useTracking()
+  const {
+    contextPageOwnerId,
+    contextPageOwnerSlug,
+    contextPageOwnerType,
+  } = useAnalyticsContext()
 
   const handleLinkClick = () => {
-    trackEvent({
-      action_type: AnalyticsSchema.ActionType.Click,
-      context_page: AnalyticsSchema.PageName.CollectionPage,
-      context_module: AnalyticsSchema.ContextModule.ArtistCollectionsRail,
-      context_page_owner_type: AnalyticsSchema.OwnerType.Collection,
-      type: AnalyticsSchema.Type.Thumbnail,
-      destination_path: `${sd.APP_URL}/collection/${slug}`,
-      item_number: itemNumber,
-    })
+    trackEvent(
+      clickedArtistSeriesGroup({
+        contextModule: ContextModule.artistSeriesRail,
+        contextPageOwnerId,
+        contextPageOwnerSlug,
+        contextPageOwnerType,
+        destinationPageOwnerId: id,
+        destinationPageOwnerSlug: slug,
+        horizontalSlidePosition: itemNumber,
+      })
+    )
   }
 
   return (
@@ -73,19 +81,17 @@ export const ArtistSeriesEntity: React.FC<ArtistSeriesEntityProps> = ({
               })
             : headerImage && <ArtworkImage src={headerImage} width={221} />}
         </ImgWrapper>
-        {
-          <CollectionTitle pt={1} pb={0.5} size="3">
-            <Truncator maxLineCount={1}>{title}</Truncator>
-          </CollectionTitle>
-        }
+        <Text variant="text" pt={2}>
+          <Truncator maxLineCount={1}>{title}</Truncator>
+        </Text>
         {price_guidance && (
-          <Sans size="2" color="black60" pb={1}>
+          <Text variant="small" color="black60" pb={1}>
             From $
             {currency(price_guidance, {
               separator: ",",
               precision: 0,
             }).format()}
-          </Sans>
+          </Text>
         )}
       </StyledLink>
     </Container>
@@ -130,10 +136,6 @@ const SingleImgContainer = styled(Box)`
   }
 `
 
-const CollectionTitle = styled(Serif)`
-  width: 100%;
-`
-
 export const ImgWrapper = styled(Flex)`
   width: 221px;
 `
@@ -148,10 +150,11 @@ export const StyledLink = styled(RouterLink)`
 `
 
 export const ArtistSeriesRailContainer = createFragmentContainer(
-  ArtistSeriesEntity,
+  ArtistSeriesEntity as React.FC<ArtistSeriesEntityProps>,
   {
     member: graphql`
       fragment ArtistSeriesEntity_member on MarketingCollection {
+        id
         slug
         headerImage
         thumbnail

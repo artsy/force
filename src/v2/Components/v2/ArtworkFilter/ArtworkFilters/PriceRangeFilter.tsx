@@ -1,6 +1,7 @@
 import React from "react"
 import { Flex, Radio, RadioGroup, Toggle } from "@artsy/palette"
 import { useArtworkFilterContext } from "../ArtworkFilterContext"
+import { OptionText } from "./OptionText"
 
 export const PriceRangeFilter: React.FC = () => {
   const filterContext = useArtworkFilterContext()
@@ -22,7 +23,7 @@ export const PriceRangeFilter: React.FC = () => {
             <Radio
               key={`${index}`}
               my={0.3}
-              label={range.name}
+              label={<OptionText>{range.name}</OptionText>}
               value={range.value}
             />
           ))}

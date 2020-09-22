@@ -1,4 +1,4 @@
-import { Flex, FlexProps, Link, Sans } from "@artsy/palette"
+import { Flex, FlexProps, Link, Text } from "@artsy/palette"
 import React, { FC } from "react"
 
 export interface TrustSignalProps extends Omit<FlexProps, "flexDirection"> {
@@ -19,14 +19,16 @@ export const TrustSignal: FC<TrustSignalProps> = ({
     <Flex {...other}>
       {Icon}
       <Flex flexDirection="column" ml={1}>
+        {/* FIXME: Remove this lint ignore */}
+        {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
         <Link onClick={onClick}>
-          <Sans size="2" weight="medium" color="black100">
+          <Text variant="caption" color="black100">
             {label}
-          </Sans>
+          </Text>
         </Link>
-        <Sans size="2" color="black60">
+        <Text variant="caption" color="black60">
           {description}
-        </Sans>
+        </Text>
       </Flex>
     </Flex>
   )

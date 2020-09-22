@@ -62,14 +62,18 @@ export const ArtworkArtistSeriesFragmentContainer = createFragmentContainer<{
       internalID
       slug
       seriesArtist: artist(shallow: true) {
-        ...ArtistSeriesRail_artist
-        artistSeriesConnection {
+        # The below fragment is used for an exist-y check.
+        # Since it repeats the 'artistSeriesConnection' selection
+        # from the component that actually renders it, keep the arguments
+        # the same (first: 50).
+        artistSeriesConnection(first: 50) {
           edges {
             node {
               internalID
             }
           }
         }
+        ...ArtistSeriesRail_artist
       }
       seriesForCounts: artistSeriesConnection(first: 1) {
         edges {

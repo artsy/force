@@ -18,7 +18,12 @@ module.exports = class ArtistSuggestions extends Backbone.View
     id = $(e.currentTarget).data('artist-slug')
     _id = $(e.currentTarget).data('artist-id')
     @following.follow id
-    analyticsHooks.trigger 'follow-widget:follow', {entity_slug: id, entity_id: _id, context_page: @context_page}
+    window.analytics.track("Followed Artist", {
+      entity_slug: id,
+      entity_id: _id,
+      context_page: @context_page,
+      context_module: "follow-widget",
+    })
     $li = $(e.currentTarget).parent().parent('li')
     $li.find('.follow-button').attr 'data-state', 'following'
     return unless (nextArtist = @remainingArtists?.shift())
@@ -33,7 +38,7 @@ module.exports = class ArtistSuggestions extends Backbone.View
     @$popoverEl.find(@followButtonSelector(artist.get('id'))).on 'click', @followAndMaybeSwap
 
   remove: =>
-    analyticsHooks.trigger 'follow-widget:closed'
+    window.analytics.track("Dismiss follow widget")
     @popover.remove()
 
   followButtonSelector: (artistId) ->
@@ -49,7 +54,7 @@ module.exports = class ArtistSuggestions extends Backbone.View
         exclude_artists_without_artworks: true
       success: =>
         return unless artists.length > 3
-        analyticsHooks.trigger 'follow-widget:opened'
+        window.analytics.track("Show follow widget")
         @initialArtists = artists.models[0...3]
         @remainingArtists = artists.models[3...-1]
         html = listTemplate
@@ -73,7 +78,7 @@ module.exports = class ArtistSuggestions extends Backbone.View
       'bottom'
 
   trackArtistClick: (e) ->
-    analyticsHooks.trigger('follow-widget:clicked-artist-name')
+    window.analytics.track("Clicked artist name on follow widget")
 
   bindPopoverEvents: ->
     @$popoverEl.find('.popover-close').on 'click', @remove

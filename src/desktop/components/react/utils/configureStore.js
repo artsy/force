@@ -1,8 +1,8 @@
-import analyticsMiddleware from "desktop/apps/auction/utils/analyticsMiddleware"
+import { analyticsMiddleware } from "desktop/apps/auction/utils/analyticsMiddleware"
 import createLogger from "redux-logger"
 import thunkMiddleware from "redux-thunk"
 import { contains } from "underscore"
-import { createStore, applyMiddleware } from "redux"
+import { applyMiddleware, createStore } from "redux"
 import { data as sd } from "sharify"
 
 export default function configureStore(rootReducer, initialState = {}) {

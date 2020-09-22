@@ -1,51 +1,42 @@
 @import '../../../components/stylus_lib'
+@require '../../../../mobile/components/artwork_columns'
+@require '../../../../lib/palette'
 
-#notifications-page
-  margin-top 20px
+#notifications-page.mobile
+  padding-top getSpace(4)
+  .notifications-header
+    margin-bottom getSpace(3)
+    text-align center
+    text('largeTitle')
 
-#notifications-published-artworks
-  margin-top 20px
+  #notifications-published-artworks
+    margin-top getSpace(2)
 
-.notifications-works-added
-  color dark-gray-text-color
-  margin-bottom 10px
+  .notifications-list-item
+    .notifications-artist-link
+      text('mediumText')
+      margin-bottom getSpace(2)
+      text-decoration none
+    .notifications-works-added
+      text('caption')
+      margin-bottom getSpace(1.5)
+      color getColor('black60')
+    .notifications-publish-date
+      float right
+      text-transform none
+      text('text')
+      color getColor('black60')
+    border-top 1px solid getColor('black10')
+    padding-top getSpace(2)
+    margin-bottom getSpace(2)
 
-.notifications-list-item
-  .notifications-artist-link
-    avant-garde()
-    font-size avant-garde-font-size
-    margin-bottom 20px
-    text-decoration none
-  .notifications-publish-date
-    float right
-    text-transform none
-    color dark-gray-text-color
-    garamond()
-    letter-spacing 0px
-    font-size 15px
-  border-top 1px solid light-gray-border-color
-  padding-top 20px
-  margin-bottom 20px
+  .notifications-see-more
+    text-align right
+    margin getSpace(2, 0, 2, 0)
+    text('caption')
+    a
+      text-decoration none
 
-.notifications-see-more
-  text-align right
-  margin-right 20px
-
-.chevron-arrow-button
-  avant-garde()
-  font-size avant-garde-font-size
-  margin-bottom 20px
-  text-decoration none
-  &::after
-    background light-gray-border-color
-    width 20px
-    height 20px
-    margin-top 1px
-
-// Styles from the Artwork Columns component copy-pasted from the ./mobile side.
-// We're breaking DRY here because in a more responsive future we likely won't
-// be carrying over this component in a significant way.
-#notifications-page
   .artwork-columns
     width 100%
 
@@ -56,23 +47,23 @@
         margin 0
       &:nth-child(1)
         .artwork-columns-artwork
-          margin-right 10px
+          margin-right getSpace(1)
       &:nth-child(2)
         .artwork-columns-artwork
-          margin-left 10px
+          margin-left getSpace(1)
 
   .artwork-columns-triple
     .artwork-columns-column
       width 33.33%
       &:nth-child(1)
         .artwork-columns-artwork
-          margin 0 10px 0 0
+          margin getSpace(0, 1, 0, 0)
       &:nth-child(2)
         .artwork-columns-artwork
-          margin 0 10px
+          margin getSpace(0, 1)
       &:nth-child(3)
         .artwork-columns-artwork
-          margin 0 0 0 10px
+          margin getSpace(0, 0, 0, 1)
 
   .artwork-columns-column
     max-width 100%
@@ -84,39 +75,4 @@
     width 100%
 
   .artwork-columns-artwork-details
-    margin 10px 0 20px 0
-    font-size 14px
-    line-height 1.2em
-    color dark-gray-text-color
-    p
-      ellipsis()
-
-  .artwork-columns-artwork-details
-    &__auction-lot-number
-      avant-garde-size('s-headline', true)
-      color black
-    &__buy-now, &__bid
-      color black
-    > a
-      padding-bottom 2px
-      color #666
-      fine-faux-underline()
-
-  .artwork_column__contact-gallery
-    color gray-darker-color
-
-  .artwork-columns-artwork-details__bid-now
-    display flex
-    p.bid-now-link
-      line-height 1.5
-      margin-left -3px
-      text-decoration underline
-    &:before
-      content ''
-      background-image url('/images/paddle.png')
-      background-repeat no-repeat
-      background-position 0 2px
-      background-size 63%
-      padding-right 14px
-      margin-top 1px
-      height 16px
+    margin getSpace(1, 0, 2, 0)

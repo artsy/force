@@ -3,23 +3,22 @@
 //
 
 @import '../../stylus_lib'
+@require '../../../../lib/palette'
 
 .avant-garde-header
-  avant-garde()
-  font-size avant-garde-font-size
+  text('text')
 
 .avant-garde-header-center
-  @extend .avant-garde-header
+  text('title')
   width 100%
   text-align center
 
 .h2-margin
-  margin 20px 0
+  margin getSpace(2, 0)
 
 .avant-garde-subheader
-  avant-garde()
-  font-size avant-garde-font-size - 2
-  color dark-gray-text-color
+  text('text')
+  color getColor('black60')
 
 .page-heading
   padding 36px 50px 24px

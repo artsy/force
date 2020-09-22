@@ -1205,8 +1205,17 @@ type Artwork implements Node & Searchable & Sellable {
   # Returns the associated Fair/Sale/Show
   context: ArtworkContext
   contextGrids: [ArtworkContextGrid]
+
+  # The currency code used to pay for the artwork
+  costCurrencyCode: String
+
+  # The amount paid for the artwork, in cents
+  costMinor: Int
   culturalMaker: String
   date: String
+
+  # The depth as expressed by the original input metric
+  depth: String
   description(format: Format): String
   dimensions: dimensions
   displayLabel: String
@@ -1227,6 +1236,9 @@ type Artwork implements Node & Searchable & Sellable {
 
   # Returns true when artwork has a certificate of authenticity
   hasCertificateOfAuthenticity: Boolean
+
+  # The height as expressed by the original input metric
+  height: String
 
   # If you need to render artwork dimensions as a string, prefer the `Artwork#dimensions` field
   heightCm: Float
@@ -1289,6 +1301,9 @@ type Artwork implements Node & Searchable & Sellable {
   manufacturer(format: Format): String
   medium: String
   meta: ArtworkMeta
+
+  # The unit of length of the artwork, expressed in `in` or `cm`
+  metric: String
   myLotStanding(live: Boolean = null): [LotStanding!]
 
   # Is this work only available for shipping domestically?
@@ -1349,6 +1364,9 @@ type Artwork implements Node & Searchable & Sellable {
 
   # If the category is video, then it returns the href for the (youtube/vimeo) video, otherwise returns the website from CMS
   website: String
+
+  # The width as expressed by the original input metric
+  width: String
 
   # If you need to render artwork dimensions as a string, prefer the `Artwork#dimensions` field
   widthCm: Float
@@ -2103,6 +2121,10 @@ type BidIncrementsFormatted {
   cents: Float
   display: String
 }
+
+# Represents non-fractional signed whole numeric values. Since the value may
+# exceed the size of a 32-bit integer, it's encoded as a string.
+scalar BigInt
 
 type BuyersPremium {
   # A formatted price with various currency formatting options.
@@ -5378,8 +5400,10 @@ type Fair implements EntityWithFilterArtworksConnectionInterface & Node {
   # Are we currently in the fair's active period?
   isActive: Boolean
   isPublished: Boolean
+  kawsCollectionSlugs: [String]!
   links(format: Format): String
   location: Location
+  marketingCollections(size: Int): [MarketingCollection]!
   mobileImage: Image
   name: String
   organizer: organizer
@@ -6770,29 +6794,29 @@ enum MarketingGroupTypes {
 # Market Price Insights
 type MarketPriceInsights {
   annualLotsSold: Int
-  annualValueSoldCents: Int
+  annualValueSoldCents: BigInt
   artistId: ID
   artistName: String
   artsyQInventory: Int
   createdAt: ISO8601DateTime
   demandRank: Float
   demandTrend: Float
-  highRangeCents: Int
-  largeHighRangeCents: Int
-  largeLowRangeCents: Int
-  largeMidRangeCents: Int
+  highRangeCents: BigInt
+  largeHighRangeCents: BigInt
+  largeLowRangeCents: BigInt
+  largeMidRangeCents: BigInt
   liquidityRank: Float
-  lowRangeCents: Int
+  lowRangeCents: BigInt
   medianSaleToEstimateRatio: Float
   medium: String
-  mediumHighRangeCents: Int
-  mediumLowRangeCents: Int
-  mediumMidRangeCents: Int
-  midRangeCents: Int
+  mediumHighRangeCents: BigInt
+  mediumLowRangeCents: BigInt
+  mediumMidRangeCents: BigInt
+  midRangeCents: BigInt
   sellThroughRate: Float
-  smallHighRangeCents: Int
-  smallLowRangeCents: Int
-  smallMidRangeCents: Int
+  smallHighRangeCents: BigInt
+  smallLowRangeCents: BigInt
+  smallMidRangeCents: BigInt
   updatedAt: ISO8601DateTime
 }
 
@@ -6910,6 +6934,8 @@ type Me implements Node {
     estimateRange: String
     first: Int
     geneIDs: [String]
+
+    # When called under the Me field, this defaults to true. Otherwise it defaults to false
     includeArtworksByFollowedArtists: Boolean
     isAuction: Boolean
     last: Int
@@ -7352,6 +7378,8 @@ input MyCollectionCreateArtworkInput {
   artistIds: [String]!
   category: String
   clientMutationId: String
+  costCurrencyCode: String
+  costMinor: Int
   date: String
   depth: String
   height: String
@@ -7390,6 +7418,8 @@ input MyCollectionUpdateArtworkInput {
   artworkId: String!
   category: String
   clientMutationId: String
+  costCurrencyCode: String
+  costMinor: Int
   date: String
   depth: String
   height: String
@@ -8454,6 +8484,8 @@ type Query {
     estimateRange: String
     first: Int
     geneIDs: [String]
+
+    # When called under the Me field, this defaults to true. Otherwise it defaults to false
     includeArtworksByFollowedArtists: Boolean
     isAuction: Boolean
     last: Int
@@ -8748,6 +8780,7 @@ type Sale implements Node {
   # Auction's buyer's premium policy.
   buyersPremium: [BuyersPremium]
   cached: Int
+  collectPayments: Boolean!
   coverImage: Image
   currency: String
   description: String
@@ -10518,6 +10551,8 @@ type Viewer {
     estimateRange: String
     first: Int
     geneIDs: [String]
+
+    # When called under the Me field, this defaults to true. Otherwise it defaults to false
     includeArtworksByFollowedArtists: Boolean
     isAuction: Boolean
     last: Int

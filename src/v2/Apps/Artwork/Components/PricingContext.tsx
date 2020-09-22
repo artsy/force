@@ -4,8 +4,8 @@ import {
   BorderBox,
   Flex,
   Link,
-  Sans,
   Spacer,
+  Text,
 } from "@artsy/palette"
 import { PricingContext_artwork } from "v2/__generated__/PricingContext_artwork.graphql"
 import { track } from "v2/Artsy/Analytics"
@@ -97,11 +97,13 @@ export class PricingContext extends React.Component<PricingContextProps> {
       <BorderBox mb={2} flexDirection="column">
         <Waypoint onEnter={once(this.trackImpression.bind(this))} />
         <Flex>
-          <Sans size="2" weight="medium">
+          <Text variant="caption">
             {artwork.pricingContext.appliedFiltersDisplay}
-          </Sans>
+          </Text>
           <PricingContextModal />
         </Flex>
+        {/* FIXME: Remove this lint ignore */}
+        {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
         <Link
           onClick={this.collectPageLinkClick.bind(this, {
             dimension: artwork.pricingContext.appliedFilters.dimension,
@@ -110,7 +112,7 @@ export class PricingContext extends React.Component<PricingContextProps> {
           })}
           color="black60"
         >
-          <Sans size="2">Browse works in this category</Sans>
+          <Text variant="caption">Browse works in this category</Text>
         </Link>
         <Spacer mb={[2, 3]} />
         <BarChart

@@ -14,8 +14,19 @@ const CurrentUser = require("../../models/current_user.coffee")
 const FollowProfiles = require("../../collections/follow_profiles")
 const FollowProfile = require("../../models/follow_profile")
 const Profile = require("../../models/profile")
+const benv = require("benv")
 
 describe("FollowProfiles", function () {
+  before(done =>
+    benv.setup(function () {
+      benv.expose({
+        analytics: { track: sinon.stub() },
+      })
+      done()
+    })
+  )
+  after(() => benv.teardown())
+
   beforeEach(function () {
     this.followProfile1 = new FollowProfile({
       id: "111",
@@ -54,7 +65,7 @@ describe("FollowProfiles", function () {
       return this.followProfiles.isFollowing(profile).should.be.true()
     })
 
-    return it("returns false if the profile is not in this collection", function () {
+    it("returns false if the profile is not in this collection", function () {
       const profile = new Profile(this.followProfile2.get("profile"))
       return this.followProfiles.isFollowing(profile).should.be.false()
     })
@@ -77,11 +88,11 @@ describe("FollowProfiles", function () {
       return CurrentUser.orNull.restore()
     }))
 
-  return describe("with a current user", function () {
+  describe("with a current user", function () {
     beforeEach(function () {
       this.profileId = this.followProfile2.get("profile").id
       sinon.stub(Backbone, "sync")
-      return sinon.stub(
+      sinon.stub(
         CurrentUser,
         "orNull",
         () => new CurrentUser(fabricate("user"))
@@ -91,7 +102,7 @@ describe("FollowProfiles", function () {
     afterEach(function () {
       delete this.profileId
       Backbone.sync.restore()
-      return CurrentUser.orNull.restore()
+      CurrentUser.orNull.restore()
     })
 
     describe("#syncFollows", function () {
@@ -122,7 +133,7 @@ describe("FollowProfiles", function () {
         return Backbone.sync.args[0][2].merge.should.be.true()
       })
 
-      return it("breaks sync requests up so that no more than @maxSyncSize are requested at a time", function () {
+      it("breaks sync requests up so that no more than @maxSyncSize are requested at a time", function () {
         let n
         const profileIds = []
         sinon.spy(this.followProfiles, "syncFollows")
@@ -185,7 +196,7 @@ describe("FollowProfiles", function () {
         return this.followProfiles.should.have.lengthOf(2)
       }))
 
-    return describe("#unfollow", () =>
+    describe("#unfollow", () =>
       it("destroys a follow through the API and updates the collection", function () {
         this.followProfiles.add(this.followProfile2)
         this.followProfiles.should.have.lengthOf(2)

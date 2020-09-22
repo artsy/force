@@ -1,4 +1,4 @@
-import { Flex, Sans } from "@artsy/palette"
+import { Flex, Text } from "@artsy/palette"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtistSeriesArtworkRail_artwork } from "v2/__generated__/ArtistSeriesArtworkRail_artwork.graphql"
@@ -70,17 +70,17 @@ export const ArtistSeriesArtworkRail: React.FC<Props> = ({ artwork }) => {
   return artworks.length > 0 ? (
     <>
       <Flex mb={1} justifyContent="space-between">
-        <Sans size="4" color="black100">
+        <Text variant="subtitle" color="black100">
           More from this series
-        </Sans>
+        </Text>
 
         <StyledLink
           to={`/artist-series/${slug}`}
           onClick={() => trackViewSeriesClick()}
         >
-          <Sans size="4" color="black60">
+          <Text variant="text" color="black60">
             View series
-          </Sans>
+          </Text>
         </StyledLink>
       </Flex>
       <Carousel>

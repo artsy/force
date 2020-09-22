@@ -87,19 +87,19 @@ module.exports = {
     "@typescript-eslint/no-empty-function": 0,
     "@typescript-eslint/no-empty-interface": 0,
     "@typescript-eslint/no-non-null-assertion": 0,
-
+    // artsyPaletteCanonicalImport: 0,
     // "@typescript-eslint/no-unused-vars": [
     //   "error",
     //   {
     //     argsIgnorePattern: "^_",
     //   },
     // ],
-    // "no-console": [
-    //   "error",
-    //   {
-    //     allow: ["warn", "error"],
-    //   },
-    // ],
+    "no-console": [
+      "error",
+      {
+        allow: ["warn", "error"],
+      },
+    ],
 
     // TODO: Add support for Graphql, but first need to fetch .json schema
     // "graphql/template-strings": [

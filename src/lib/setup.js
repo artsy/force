@@ -58,6 +58,8 @@ const {
   API_REQUEST_TIMEOUT,
   API_URL,
   APP_TIMEOUT,
+  CLIENT_ID,
+  CLIENT_SECRET,
   COOKIE_DOMAIN,
   DEFAULT_CACHE_TIME,
   IP_DENYLIST,
@@ -155,6 +157,8 @@ export default function (app) {
       _.extend({}, config, {
         CurrentUser: CurrentUser,
         ARTSY_URL: API_URL,
+        ARTSY_ID: CLIENT_ID,
+        ARTSY_SECRET: CLIENT_SECRET,
         SEGMENT_WRITE_KEY: SEGMENT_WRITE_KEY_SERVER,
         userKeys: [
           "collector_level",

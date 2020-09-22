@@ -34,7 +34,7 @@ export const CollectionsHubRails = ({ linkedCollections }: Props) => {
 }
 
 export const CollectionsHubRailsContainer = createFragmentContainer(
-  CollectionsHubRails,
+  CollectionsHubRails as React.FC<Props>,
   {
     linkedCollections: graphql`
       fragment CollectionsHubRails_linkedCollections on MarketingCollectionGroup

@@ -19,16 +19,19 @@ mediator.on("all", (actionName: string, data?: object) =>
 if (sd.SHOW_ANALYTICS_CALLS) {
   // Log all pageviews
   window.analytics.on("page", function () {
+    // eslint-disable-next-line no-console
     console.info("ANALYTICS PAGEVIEW: ", arguments[2], arguments[3])
   })
   // Log all track calls
   window.analytics.on("track", (actionName: string, data?: any) => {
+    // eslint-disable-next-line no-console
     console.info("ANALYTICS TRACK:", actionName, data)
   })
   // Log all identify calls
   window.analytics.on(
     "identify",
     (userId: string, data: object, context: any) => {
+      // eslint-disable-next-line no-console
       console.info("ANALYTICS IDENTIFY:", userId, data, context)
     }
   )
@@ -50,15 +53,11 @@ $(() =>
     require("../analytics/artwork.js")
     require("../analytics/artwork_rail.js")
     require("../analytics/artworks_filter.js")
-    require("../analytics/bidding.js")
     require("../analytics/consignments.js")
     require("../analytics/contact.js")
     require("../analytics/embedded_inquiry.js")
-    require("../analytics/follow_widget.js")
-    require("../analytics/following.js")
     require("../analytics/galleries.js")
     require("../analytics/genes.js")
-    require("../analytics/global.js")
     require("../analytics/home.js")
     require("../analytics/inquiry_questionnaire.js")
     require("../analytics/partner.js")

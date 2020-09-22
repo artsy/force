@@ -1,4 +1,4 @@
-import { Box, Sans, Serif, Spacer } from "@artsy/palette"
+import { Box, Spacer, Text } from "@artsy/palette"
 import Modal from "v2/Components/Modal/Modal"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -18,8 +18,8 @@ interface State {
 
 @track()
 export class ArtworkSidebarClassification extends React.Component<
-ArtworkSidebarClassificationProps,
-State
+  ArtworkSidebarClassificationProps,
+  State
 > {
   state = {
     isModalOpen: false,
@@ -56,12 +56,12 @@ State
         </Modal>
         <Box color="black60" textAlign="left">
           <Spacer mt={2} />
-          <Serif size="2">
+          <Text variant="caption">
             <ClassificationLink onClick={this.openModal.bind(this)}>
               {artwork.attribution_class.short_description}
             </ClassificationLink>
             .
-          </Serif>
+          </Text>
         </Box>
       </ClassificationContainer>
     )
@@ -141,20 +141,18 @@ const ClassificationDetails = () => {
         {classificationOptions.map(option => {
           return (
             <React.Fragment key={option.name}>
-              <Serif size="3" weight="semibold">
-                {option.name}
-              </Serif>
-              <Serif size="3" mb={2}>
+              <Text variant="mediumText">{option.name}</Text>
+              <Text variant="text" mb={2}>
                 {option.long_description}
-              </Serif>
+              </Text>
             </React.Fragment>
           )
         })}
       </Box>
-      <Sans size="2" color="black60" mb={3}>
+      <Text variant="caption" color="black60" mb={3}>
         Our partners are responsible for providing accurate classification
         information for all works.
-      </Sans>
+      </Text>
     </>
   )
 }

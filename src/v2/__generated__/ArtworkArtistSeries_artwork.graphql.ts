@@ -72,7 +72,13 @@ return {
       "selections": [
         {
           "alias": null,
-          "args": null,
+          "args": [
+            {
+              "kind": "Literal",
+              "name": "first",
+              "value": 50
+            }
+          ],
           "concreteType": "ArtistSeriesConnection",
           "kind": "LinkedField",
           "name": "artistSeriesConnection",
@@ -102,7 +108,7 @@ return {
               "storageKey": null
             }
           ],
-          "storageKey": null
+          "storageKey": "artistSeriesConnection(first:50)"
         },
         {
           "args": null,
@@ -167,5 +173,5 @@ return {
   "type": "Artwork"
 };
 })();
-(node as any).hash = '8e5e026a87f9513fd18e82b240b581fc';
+(node as any).hash = 'abd79722eb234ba11e80abf08340f6ed';
 export default node;

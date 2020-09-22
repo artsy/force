@@ -1,3 +1,5 @@
+@require '../../../../lib/palette'
+
 fade-duration = 0.2s
 hhu-credit-height = 30px
 
@@ -22,13 +24,13 @@ hhu-credit-height = 30px
     transition opacity fade-duration ease-in fade-duration
   .avant-garde-button
     padding 10px 20px
-    border 3px solid black
+    border 3px solid getColor('black100')
     background transparent
     &:hover
     &:focus
     &:active
-      color white
-      background black
+      color getColor('white100')
+      background getColor('black100')
 
 .hhu-frame
   display block
@@ -45,22 +47,18 @@ hhu-credit-height = 30px
 .hhu-inner
   margin-top -(hhu-credit-height)
 .hhu-header
-  font-size 21px
-  line-height 1
+  text('text')
 .hhu-title
   display inline-block
-  margin 25px 0 0 0
+  margin-top getSpace(2)
 .hhu-subheading
-  margin 30px 0
-  font-size 27px
-  line-height 1.3
+  text('subtitle')
+  margin getSpace(2, 0, 3, 0)
 .hhu-credit
+  text('small')
   position absolute
   left 0
-  bottom 0
-  line-height hhu-credit-height
-  font-style italic
-  font-size 11px
+  bottom getSpace(1)
   opacity 0.65
 
 .home-hero-unit-left-light
@@ -69,15 +67,15 @@ hhu-credit-height = 30px
   .hhu-subheading
   .hhu-header
   .hhu-credit
-    color white
+    color getColor('white100')
   .avant-garde-button
-    border-color white
-    color white
+    border-color getColor('white100')
+    color getColor('white100')
     &:hover
     &:focus
     &:active
-      background white
-      color black
+      background getColor('white100')
+      color getColor('black100')
 
 #home-hero-units-controls
   width 100%
@@ -101,7 +99,7 @@ hhu-credit-height = 30px
     height @width
     border-radius @width
     margin-right 10px
-    background gray-color
+    background getColor('black30')
     display inline-block
     cursor pointer
     transition background-color 0.3s
@@ -109,13 +107,12 @@ hhu-credit-height = 30px
     &:hover
     &:focus
     &:active
-      background black
+      background getColor('black100')
     &:last-child
       margin-right 0
 
-welcome-background-color = #dedede
 .home-hero-unit-welcome
-  background-color welcome-background-color
+  background-color getColor('black5')
   .hhu-inner
     width 40%
     margin 0
@@ -125,13 +122,7 @@ welcome-background-color = #dedede
     font-size 45px
     line-height @font-size
   .hhu-header
-    font-size 40px
-    text-transform none
-    letter-spacing 0
-    line-height 1.25
-  .hhu-subheading
-    margin 20px 0 30px 0
-    font-size 18px
+    text('largeTitle')
   .avant-garde-button
-    background-color black
-    color white
+    background-color getColor('black100')
+    color getColor('white100')

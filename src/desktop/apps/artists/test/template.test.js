@@ -81,6 +81,7 @@ describe("Artists", function () {
         sd: _.extend(sd, {
           APP_URL: "http://localhost:5000",
           CURRENT_PATH: "/artists-starting-with-a",
+          WEBFONT_URL: "http://webfonts.artsy.net/",
         }),
         letter: "A",
         letterRange: ["a", "b", "c"],

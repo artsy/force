@@ -11,16 +11,26 @@ const Backbone = require("backbone")
 let UserInterestsView = null
 
 describe("UserInterestsView", function () {
-  before(done =>
+  before(done => {
     benv.setup(function () {
-      benv.expose({ $: benv.require("jquery"), jQuery: benv.require("jquery") })
+      benv.expose({
+        $: benv.require("jquery"),
+        jQuery: benv.require("jquery"),
+        analytics: {
+          track: sinon.stub(),
+        },
+      })
       UserInterestsView = rewire("../view")
       UserInterestsView.__set__("CURRENT_USER", "existy")
       UserInterestsView.__set__("ResultsListView", Backbone.View)
       Backbone.$ = $
-      return done()
+      window.analytics = {
+        track: () => {},
+        page: () => {},
+      }
+      done()
     })
-  )
+  })
 
   after(() => benv.teardown())
 
@@ -33,11 +43,14 @@ describe("UserInterestsView", function () {
 
   describe("#interested", function () {
     beforeEach(function () {
-      const interest = new Backbone.Model({ id: "foobar", name: "Foo Bar" })
+      const interest = new Backbone.Model({
+        id: "foobar",
+        name: "Foo Bar",
+      })
       return this.view.resultsList.trigger("add", interest)
     })
 
-    return it("when a result is added; the view syncs it as an inteerest", function () {
+    return it("when a result is added; the view syncs it as an interest", function () {
       Backbone.sync.callCount.should.equal(2)
 
       Backbone.sync.args[0][1]
@@ -46,7 +59,10 @@ describe("UserInterestsView", function () {
       Backbone.sync.args[0][1].attributes.should.eql({
         interest_type: "Artist",
         interest_id: "foobar",
-        interest: { id: "foobar", name: "Foo Bar" },
+        interest: {
+          id: "foobar",
+          name: "Foo Bar",
+        },
         category: "collected_before",
       })
 
@@ -60,7 +76,10 @@ describe("UserInterestsView", function () {
 
   return describe("#uninterested", function () {
     beforeEach(function () {
-      this.interest = new Backbone.Model({ id: "foobar", name: "Foo Bar" })
+      this.interest = new Backbone.Model({
+        id: "foobar",
+        name: "Foo Bar",
+      })
       return this.view.collection.addInterest(this.interest)
     })
 

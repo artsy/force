@@ -1,4 +1,4 @@
-import { Flex, Sans, Separator, color, media } from "@artsy/palette"
+import { Flex, Separator, Text, color, media } from "@artsy/palette"
 import { ArtworkSharePanel_artwork } from "v2/__generated__/ArtworkSharePanel_artwork.graphql"
 import Icon from "v2/Components/Icon"
 import React from "react"
@@ -87,7 +87,7 @@ export class ArtworkSharePanel extends React.Component<
 
   renderShareButton({ service, label, message, url }) {
     return (
-      <Flex
+      <ShareButtonContainer
         flexDirection="row"
         flexBasis="50%"
         mt={2}
@@ -97,10 +97,10 @@ export class ArtworkSharePanel extends React.Component<
         })}
       >
         <Icon name={service} color="black" />
-        <Sans size="3" color="black60">
-          <a>{label}</a>
-        </Sans>
-      </Flex>
+        <Text variant="text" color="black60">
+          {label}
+        </Text>
+      </ShareButtonContainer>
     )
   }
 
@@ -119,7 +119,7 @@ export class ArtworkSharePanel extends React.Component<
     return (
       <ArtworkPopoutPanel title="Share" onClose={this.props.onClose}>
         <Flex flexDirection="row" mb={1}>
-          <SansGrow size={["3", "2"]} color="black60" mr={4}>
+          <SansGrow variant="text" color="black60" mr={4}>
             <URLInput
               type="text"
               readOnly
@@ -128,9 +128,11 @@ export class ArtworkSharePanel extends React.Component<
               onClick={this.handleCopy}
             />
           </SansGrow>
-          <Sans size={["3", "2"]} weight="medium" color="black60">
+          <Text variant="mediumText" color="black60">
+            {/* FIXME Remove lint ignore */}
+            {/* eslint-disable-next-line  */}
             <a onClick={this.handleCopy}>{this.state.copyLabelText}</a>
-          </Sans>
+          </Text>
         </Flex>
         <Separator />
         <Flex flexDirection="row" flexWrap="wrap">
@@ -153,13 +155,13 @@ export class ArtworkSharePanel extends React.Component<
             */}
           <Flex flexDirection="row" flexBasis="50%" mt={2}>
             <Icon name="mail" color="black" />
-            <Sans size="3" color="black60">
+            <Text variant="text" color="black60">
               <UnstyledLink
                 href={`mailto:?subject=${share}&body=${share} on Artsy: ${url}`}
               >
                 Mail
               </UnstyledLink>
-            </Sans>
+            </Text>
           </Flex>
 
           {this.renderShareButton({
@@ -197,7 +199,11 @@ export const ArtworkSharePanelFragmentContainer = createFragmentContainer(
   }
 )
 
-const SansGrow = styled(Sans)`
+const ShareButtonContainer = styled(Flex)`
+  cursor: pointer;
+`
+
+const SansGrow = styled(Text)`
   display: flex;
   flex-grow: 1;
 `

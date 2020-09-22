@@ -32,23 +32,23 @@ describe("TimePeriodFilter", () => {
               name: "Late 19th Century",
               value: "foo-period",
             },
+            {
+              name: "18th Century & Earlier",
+              value: "bar-period",
+            },
           ],
         },
       ],
     })
 
     expect(wrapper.html()).toContain("Late 19th Century")
+    expect(wrapper.html()).toContain("18th Century &amp; Earlier")
     expect(wrapper.html()).not.toContain("2010")
   })
 
   it("updates context on filter change", done => {
     const wrapper = getWrapper()
-    wrapper
-      .find("Radio")
-      .first()
-      .find("Flex")
-      .first()
-      .simulate("click")
+    wrapper.find("Radio").first().find("Flex").first().simulate("click")
 
     setTimeout(() => {
       expect(context.filters.majorPeriods).toEqual(["2010"])

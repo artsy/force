@@ -1,4 +1,4 @@
-import { Box, Serif } from "@artsy/palette"
+import { Box, Text } from "@artsy/palette"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 
@@ -10,7 +10,7 @@ export interface ArtworkSidebarSizeInfoProps {
 
 export class ArtworkSidebarSizeInfo extends React.Component<
   ArtworkSidebarSizeInfoProps
-  > {
+> {
   render() {
     const {
       piece: { dimensions, edition_of },
@@ -23,9 +23,9 @@ export class ArtworkSidebarSizeInfo extends React.Component<
     }
     return (
       <Box color="black60">
-        {dimensions.in && <Serif size="2">{dimensions.in}</Serif>}
-        {dimensions.cm && <Serif size="2">{dimensions.cm}</Serif>}
-        {edition_of && <Serif size="2">{edition_of}</Serif>}
+        {dimensions.in && <Text variant="caption">{dimensions.in}</Text>}
+        {dimensions.cm && <Text variant="caption">{dimensions.cm}</Text>}
+        {edition_of && <Text variant="caption">{edition_of}</Text>}
       </Box>
     )
   }

@@ -1,32 +1,29 @@
 @require '../../components/stylus_lib'
+@require '../../../lib/palette'
 
 .fsfs-metadata
+  text('text')
   display block
-  margin 10px 0 20px 0
-  padding-right 20px
+  margin getSpace(1, 0, 2, 0)
+  padding-right getSpace(2)
   text-decoration none
-  line-height 1.4
 
 .fsfs-contextual-label
-  margin-top 20px
-  avant-garde()
-  font-size 10px
-  line-height 2
+  margin-top getSpace(2)
 
 .fsfs-partner-name
-  avant-garde()
-  font-size default-avant-garde-font-size
-  line-height 1.75
+  font-weight bold
 
 .fsfs-partner-name
 .fsfs-show-name
 .fsfs-running-dates
   overflow ellipsis
 
+.fsfs-show-name
 .fsfs-closing-date
 .fsfs-street-address
 .fsfs-running-dates
-  color gray-darker-color
+  color getColor('black60')
 
 .fsfs-warning
-  color red-color
+  color getColor('red100')

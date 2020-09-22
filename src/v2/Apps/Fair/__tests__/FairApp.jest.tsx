@@ -32,6 +32,7 @@ const FAIR_APP_FIXTURE: FairApp_QueryRawResponse = {
     articles: {
       edges: [],
     },
+    marketingCollections: [],
     profile: {
       id: "profile",
       icon: {
@@ -63,6 +64,40 @@ const FAIR_EDITORIAL_ARTICLE_FIXTURE = {
       height: 160,
       src: "example.jpg",
     },
+  },
+}
+
+const FAIR_COLLECTION_FIXTURE = {
+  slug: "collectible-sculptures",
+  title: "Big Artists, Small Sculptures",
+  category: "Collectible Sculptures",
+  artworks: {
+    edges: [
+      {
+        node: {
+          image: {
+            url:
+              "https://d32dm0rphc51dk.cloudfront.net/soQ-Hq04yd7yFbKw_cbJbA/larger.jpg",
+          },
+        },
+      },
+      {
+        node: {
+          image: {
+            url:
+              "https://d32dm0rphc51dk.cloudfront.net/1y50hphmsAyRkWDPUOyM7Q/larger.jpg",
+          },
+        },
+      },
+      {
+        node: {
+          image: {
+            url:
+              "https://d32dm0rphc51dk.cloudfront.net/NNDJExmp5iTtKWoJj4Av6A/larger.jpg",
+          },
+        },
+      },
+    ],
   },
 }
 
@@ -123,6 +158,28 @@ describe("FairApp", () => {
     expect(html).not.toContain(
       "IFPDA Fine Art Print Fair 2019: Programming and Projects"
     )
+  })
+
+  it("renders the collection when it is present", async () => {
+    const wrapper = await getWrapper({
+      fair: {
+        ...FAIR_APP_FIXTURE.fair,
+        marketingCollections: [FAIR_COLLECTION_FIXTURE as any],
+      },
+    })
+
+    const html = wrapper.html()
+
+    expect(html).toContain("Curated highlights")
+    expect(html).toContain("Big Artists, Small Sculptures")
+  })
+
+  it("does not render the collection when it is missing", async () => {
+    const wrapper = await getWrapper()
+    const html = wrapper.html()
+
+    expect(html).not.toContain("Curated highlights")
+    expect(html).not.toContain("Big Artists, Small Sculptures")
   })
 
   it("renders the exhibitors tab by default", async () => {
