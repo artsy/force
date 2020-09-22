@@ -35,13 +35,11 @@ describe("ViewingRoomApp", () => {
   })
 
   // DRAFT viewing room
-  describe("with draft viewing room and user that has access to viewing rooms partner", () => {
+  describe("for draft viewing room when viewed by user that has access to viewing rooms partner", () => {
+    // encoded through https://jwt.io with data of "partner_ids": ["00001", "12345"]
     beforeEach(() => {
-      jest.mock("v2/Utils/user", () => ({
-        userHasAccessToPartner: (user: User, partnerId: string): boolean => {
-          return true
-        },
-      }))
+      user.accessToken =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwicGFydG5lcl9pZHMiOlsiMDAwMDEiLCIxMjM0NSJdfQ.3mH8dg__KaPBEA5jSU8mHMEExttDIP2-nk3NJ2yb0ok"
     })
 
     const getWrapper = async (
@@ -79,8 +77,10 @@ describe("ViewingRoomApp", () => {
       expect(wrapper.find("ViewingRoomMeta").length).toBe(1)
       expect(wrapper.find("AppContainer").length).toBe(1)
       expect(wrapper.find("ViewingRoomHeader").length).toBe(1)
-      // expect(wrapper.find("ViewingRoomTabBar").length).toBe(1)
-      // expect(wrapper.find("ViewingRoomContentNotAccessible").length).toBe(0)
+      expect(wrapper.find("ViewingRoomTabBar").length).toBe(1)
+      expect(wrapper.find("ViewingRoomContentNotAccessible").length).toBe(0)
+      const html = wrapper.html()
+      expect(html).toContain("This is a preview of your viewing room.")
     })
   })
 

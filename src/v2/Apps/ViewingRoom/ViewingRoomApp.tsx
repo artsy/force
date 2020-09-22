@@ -56,7 +56,7 @@ const ViewingRoomApp: React.FC<ViewingRoomAppProps> = ({
   const showPreview =
     user &&
     userHasAccessToPartner(user, viewingRoom.partner.internalID) &&
-    viewingRoom.status === "draft"
+    (viewingRoom.status === "draft" || viewingRoom.status === "scheduled")
 
   const getView = () => {
     if (viewingRoom.status === "live" || showPreview) {
