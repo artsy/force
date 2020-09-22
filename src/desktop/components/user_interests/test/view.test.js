@@ -16,7 +16,9 @@ describe("UserInterestsView", function () {
       benv.expose({
         $: benv.require("jquery"),
         jQuery: benv.require("jquery"),
-        analytics: { track: sinon.stub() },
+        analytics: {
+          track: sinon.stub()
+        },
       })
       UserInterestsView = rewire("../view")
       UserInterestsView.__set__("CURRENT_USER", "existy")
@@ -41,7 +43,10 @@ describe("UserInterestsView", function () {
 
   describe("#interested", function () {
     beforeEach(function () {
-      const interest = new Backbone.Model({ id: "foobar", name: "Foo Bar" })
+      const interest = new Backbone.Model({
+        id: "foobar",
+        name: "Foo Bar",
+      })
       return this.view.resultsList.trigger("add", interest)
     })
 
@@ -54,7 +59,10 @@ describe("UserInterestsView", function () {
       Backbone.sync.args[0][1].attributes.should.eql({
         interest_type: "Artist",
         interest_id: "foobar",
-        interest: { id: "foobar", name: "Foo Bar" },
+        interest: {
+          id: "foobar",
+          name: "Foo Bar",
+        },
         category: "collected_before",
       })
 
@@ -68,7 +76,10 @@ describe("UserInterestsView", function () {
 
   return describe("#uninterested", function () {
     beforeEach(function () {
-      this.interest = new Backbone.Model({ id: "foobar", name: "Foo Bar" })
+      this.interest = new Backbone.Model({
+        id: "foobar",
+        name: "Foo Bar",
+      })
       return this.view.collection.addInterest(this.interest)
     })
 

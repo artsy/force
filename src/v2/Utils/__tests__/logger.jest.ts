@@ -8,6 +8,7 @@ describe("logger", () => {
   describe("#createLogger", () => {
     let logger
     beforeEach(() => {
+      // eslint-disable-next-line no-console
       console.log = jest.fn()
       console.warn = jest.fn()
       console.error = jest.fn()
@@ -17,6 +18,7 @@ describe("logger", () => {
     describe("#log", () => {
       it("logs given statements with console.log", () => {
         logger.log("msg")
+        // eslint-disable-next-line no-console
         expect(console.log).toBeCalledWith("testing |", "msg", "\n")
       })
     })

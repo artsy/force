@@ -13,6 +13,7 @@ storiesOf("Components/Pages/Gene/Contents", module)
             filters={{}}
             geneID="minimalism"
             mode="artists"
+            // eslint-disable-next-line no-console
             onStateChange={console.log}
           />
         </SystemContextProvider>
@@ -27,6 +28,7 @@ storiesOf("Components/Pages/Gene/Contents", module)
             filters={{ for_sale: true }}
             geneID="animals"
             mode="artworks"
+            // eslint-disable-next-line no-console
             onStateChange={console.log}
           />
         </SystemContextProvider>
@@ -41,6 +43,7 @@ storiesOf("Components/Pages/Gene/Contents", module)
             filters={{ for_sale: false }}
             geneID="abstract-painting"
             mode="artworks"
+            // eslint-disable-next-line no-console
             onStateChange={console.log}
           />
         </SystemContextProvider>

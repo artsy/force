@@ -8,6 +8,7 @@ export default function createLogger(namespace = "reaction") {
 
   return {
     log: (...messages) => {
+      // eslint-disable-next-line no-console
       console.log(formattedNamespace, ...messages, "\n")
     },
     warn: (...warnings) => {
