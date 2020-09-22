@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from "react"
 import { AppContainer } from "v2/Apps/Components/AppContainer"
-import { Box, Separator } from "@artsy/palette"
+import { Banner, Box, ClosedEyeIcon, Separator, Text } from "@artsy/palette"
 import { ViewingRoomHeaderFragmentContainer as ViewingRoomHeader } from "./Components/ViewingRoomHeader"
 import { ViewingRoomContentNotAccessibleFragmentContainer as ViewingRoomContentNotAccessible } from "./Components/ViewingRoomContentNotAccessible"
 import { ViewingRoomTabBar } from "./Components/ViewingRoomTabBar"
@@ -15,6 +15,7 @@ import { SystemContext } from "v2/Artsy"
 import { ModalType } from "v2/Components/Authentication/Types"
 import { ContextModule, Intent } from "@artsy/cohesion"
 import { useRouter } from "v2/Artsy/Router/useRouter"
+import { userHasAccessToPartner } from "v2/Utils/user"
 
 interface ViewingRoomAppProps {
   children: React.ReactNode
@@ -52,8 +53,13 @@ const ViewingRoomApp: React.FC<ViewingRoomAppProps> = ({
     return <ErrorPage code={404} />
   }
 
+  const showPreview =
+    user &&
+    userHasAccessToPartner(user, viewingRoom.partner.internalID) &&
+    (viewingRoom.status === "draft" || viewingRoom.status === "scheduled")
+
   const getView = () => {
-    if (viewingRoom.status === "live") {
+    if (viewingRoom.status === "live" || showPreview) {
       return (
         <>
           <ViewingRoomTabBar mb={[2, 3]} />
@@ -67,6 +73,21 @@ const ViewingRoomApp: React.FC<ViewingRoomAppProps> = ({
   return (
     <>
       <ViewingRoomMeta viewingRoom={viewingRoom} />
+      {showPreview && (
+        <Box position="fixed" left={0} top={58} width="100%" zIndex={1}>
+          <Banner backgroundColor="black10" textColor="black100">
+            <ClosedEyeIcon />
+            <Text
+              display="inline"
+              verticalAlign="top"
+              px={0.5}
+              lineHeight="18px"
+            >
+              This is a preview of your viewing room.
+            </Text>
+          </Banner>
+        </Box>
+      )}
 
       <AppContainer maxWidth="100%">
         <ViewingRoomHeader viewingRoom={viewingRoom} />
@@ -87,6 +108,9 @@ export default createFragmentContainer(ViewingRoomApp, {
       ...ViewingRoomMeta_viewingRoom
       ...ViewingRoomHeader_viewingRoom
       ...ViewingRoomContentNotAccessible_viewingRoom
+      partner {
+        internalID
+      }
       status
     }
   `,

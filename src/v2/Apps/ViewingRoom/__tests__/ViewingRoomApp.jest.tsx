@@ -3,6 +3,7 @@ import { MockBoot, renderRelayTree } from "v2/DevTools"
 import { Mediator, SystemContextProvider } from "v2/Artsy"
 import ViewingRoomApp from "../ViewingRoomApp"
 import { graphql } from "react-relay"
+import { ViewingRoomApp_DraftTest_QueryRawResponse } from "v2/__generated__/ViewingRoomApp_DraftTest_Query.graphql"
 import { ViewingRoomApp_ScheduledTest_QueryRawResponse } from "v2/__generated__/ViewingRoomApp_ScheduledTest_Query.graphql"
 import { ViewingRoomApp_OpenTest_QueryRawResponse } from "v2/__generated__/ViewingRoomApp_OpenTest_Query.graphql"
 import { ViewingRoomApp_ClosedTest_QueryRawResponse } from "v2/__generated__/ViewingRoomApp_ClosedTest_Query.graphql"
@@ -31,6 +32,56 @@ describe("ViewingRoomApp", () => {
     user = { id: "blah" }
     mediator = { trigger: jest.fn() }
     window.history.pushState({}, "Viewing Room Title", slug)
+  })
+
+  // DRAFT viewing room
+  describe("for draft viewing room when viewed by user that has access to viewing rooms partner", () => {
+    // encoded through https://jwt.io with data of "partner_ids": ["00001", "12345"]
+    beforeEach(() => {
+      user.accessToken =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwicGFydG5lcl9pZHMiOlsiMDAwMDEiLCIxMjM0NSJdfQ.3mH8dg__KaPBEA5jSU8mHMEExttDIP2-nk3NJ2yb0ok"
+    })
+
+    const getWrapper = async (
+      breakpoint: Breakpoint = "lg",
+      response: ViewingRoomApp_DraftTest_QueryRawResponse = DraftViewingRoomAppFixture
+    ) => {
+      return renderRelayTree({
+        Component: ({ viewingRoom }) => {
+          return (
+            <MockBoot breakpoint={breakpoint}>
+              <SystemContextProvider mediator={mediator} user={user}>
+                <ViewingRoomApp viewingRoom={viewingRoom}>
+                  some child
+                </ViewingRoomApp>
+              </SystemContextProvider>
+            </MockBoot>
+          )
+        },
+        query: graphql`
+          query ViewingRoomApp_DraftTest_Query($slug: ID!) @raw_response_type {
+            viewingRoom(id: $slug) {
+              ...ViewingRoomApp_viewingRoom
+            }
+          }
+        `,
+        variables: {
+          slug,
+        },
+        mockData: response,
+      })
+    }
+
+    it("renders the correct components", async () => {
+      const wrapper = await getWrapper()
+      expect(wrapper.find("ViewingRoomMeta").length).toBe(1)
+      expect(wrapper.find("AppContainer").length).toBe(1)
+      expect(wrapper.find("ViewingRoomHeader").length).toBe(1)
+      expect(wrapper.find("ViewingRoomTabBar").length).toBe(1)
+      expect(wrapper.find("ViewingRoomContentNotAccessible").length).toBe(0)
+      const html = wrapper.html()
+      expect(html).toContain("This is a preview of your viewing room.")
+    })
   })
 
   // SCHEDULED viewing room
@@ -329,6 +380,27 @@ describe("ViewingRoomApp", () => {
   })
 })
 
+const DraftViewingRoomAppFixture: ViewingRoomApp_DraftTest_QueryRawResponse = {
+  viewingRoom: {
+    title: "Not published room",
+    image: {
+      imageURLs: {
+        normalized:
+          "https://artsy-media-uploads.s3.amazonaws.com/0RnxWDsVmKuALfpmd75YyA/CTPHSEPT19_018_JO_Guy_Yanai_TLV_031_20190913.jpg",
+      },
+    },
+    partner: {
+      name: "Subscription Demo GG",
+      id: "UGFydG5lcjo1NTQxMjM3MzcyNjE2OTJiMTk4YzAzMDA=",
+      href: "/partner-demo-gg",
+      internalID: "00001",
+    },
+    distanceToOpen: null,
+    distanceToClose: null,
+    status: "draft",
+  },
+}
+
 const ScheduledViewingRoomAppFixture: ViewingRoomApp_ScheduledTest_QueryRawResponse = {
   viewingRoom: {
     title: "Guy Yanai",
@@ -342,6 +414,7 @@ const ScheduledViewingRoomAppFixture: ViewingRoomApp_ScheduledTest_QueryRawRespo
       name: "Subscription Demo GG",
       id: "UGFydG5lcjo1NTQxMjM3MzcyNjE2OTJiMTk4YzAzMDA=",
       href: "/partner-demo-gg",
+      internalID: "12345",
     },
     distanceToOpen: "8 days",
     distanceToClose: null,
@@ -362,6 +435,7 @@ const OpenViewingRoomAppFixture: ViewingRoomApp_OpenTest_QueryRawResponse = {
       name: "Subscription Demo GG",
       id: "UGFydG5lcjo1NTQxMjM3MzcyNjE2OTJiMTk4YzAzMDA=",
       href: "/partner-demo-gg",
+      internalID: "6789",
     },
     distanceToOpen: null,
     distanceToClose: "1 month",
@@ -382,6 +456,7 @@ const ClosedViewingRoomAppFixture: ViewingRoomApp_ClosedTest_QueryRawResponse = 
       name: "Subscription Demo GG",
       id: "UGFydG5lcjo1NTQxMjM3MzcyNjE2OTJiMTk4YzAzMDA=",
       href: "/partner-demo-gg",
+      internalID: "212121",
     },
     distanceToOpen: null,
     distanceToClose: null,
@@ -406,6 +481,7 @@ const LoggedOutViewingRoomAppFixture: ViewingRoomApp_LoggedOutTest_QueryRawRespo
       name: "Subscription Demo GG",
       id: "UGFydG5lcjo1NTQxMjM3MzcyNjE2OTJiMTk4YzAzMDA=",
       href: "/partner-demo-gg",
+      internalID: "123123123",
     },
     distanceToOpen: null,
     distanceToClose: "Closes in 1 month",

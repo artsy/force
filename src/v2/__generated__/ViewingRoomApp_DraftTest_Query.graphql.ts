@@ -3,15 +3,15 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type ViewingRoomApp_OpenTest_QueryVariables = {
+export type ViewingRoomApp_DraftTest_QueryVariables = {
     slug: string;
 };
-export type ViewingRoomApp_OpenTest_QueryResponse = {
+export type ViewingRoomApp_DraftTest_QueryResponse = {
     readonly viewingRoom: {
         readonly " $fragmentRefs": FragmentRefs<"ViewingRoomApp_viewingRoom">;
     } | null;
 };
-export type ViewingRoomApp_OpenTest_QueryRawResponse = {
+export type ViewingRoomApp_DraftTest_QueryRawResponse = {
     readonly viewingRoom: ({
         readonly title: string;
         readonly image: ({
@@ -30,16 +30,16 @@ export type ViewingRoomApp_OpenTest_QueryRawResponse = {
         readonly status: string;
     }) | null;
 };
-export type ViewingRoomApp_OpenTest_Query = {
-    readonly response: ViewingRoomApp_OpenTest_QueryResponse;
-    readonly variables: ViewingRoomApp_OpenTest_QueryVariables;
-    readonly rawResponse: ViewingRoomApp_OpenTest_QueryRawResponse;
+export type ViewingRoomApp_DraftTest_Query = {
+    readonly response: ViewingRoomApp_DraftTest_QueryResponse;
+    readonly variables: ViewingRoomApp_DraftTest_QueryVariables;
+    readonly rawResponse: ViewingRoomApp_DraftTest_QueryRawResponse;
 };
 
 
 
 /*
-query ViewingRoomApp_OpenTest_Query(
+query ViewingRoomApp_DraftTest_Query(
   $slug: ID!
 ) {
   viewingRoom(id: $slug) {
@@ -109,7 +109,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "ViewingRoomApp_OpenTest_Query",
+    "name": "ViewingRoomApp_DraftTest_Query",
     "selections": [
       {
         "alias": null,
@@ -134,7 +134,7 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "ViewingRoomApp_OpenTest_Query",
+    "name": "ViewingRoomApp_DraftTest_Query",
     "selections": [
       {
         "alias": null,
@@ -248,11 +248,11 @@ return {
   "params": {
     "id": null,
     "metadata": {},
-    "name": "ViewingRoomApp_OpenTest_Query",
+    "name": "ViewingRoomApp_DraftTest_Query",
     "operationKind": "query",
-    "text": "query ViewingRoomApp_OpenTest_Query(\n  $slug: ID!\n) {\n  viewingRoom(id: $slug) {\n    ...ViewingRoomApp_viewingRoom\n  }\n}\n\nfragment ViewingRoomApp_viewingRoom on ViewingRoom {\n  ...ViewingRoomMeta_viewingRoom\n  ...ViewingRoomHeader_viewingRoom\n  ...ViewingRoomContentNotAccessible_viewingRoom\n  partner {\n    internalID\n    id\n  }\n  status\n}\n\nfragment ViewingRoomContentNotAccessible_viewingRoom on ViewingRoom {\n  status\n  partner {\n    href\n    id\n  }\n}\n\nfragment ViewingRoomHeader_viewingRoom on ViewingRoom {\n  image {\n    imageURLs {\n      normalized\n    }\n  }\n  title\n  partner {\n    name\n    href\n    id\n  }\n  distanceToOpen\n  distanceToClose\n  status\n}\n\nfragment ViewingRoomMeta_viewingRoom on ViewingRoom {\n  title\n}\n"
+    "text": "query ViewingRoomApp_DraftTest_Query(\n  $slug: ID!\n) {\n  viewingRoom(id: $slug) {\n    ...ViewingRoomApp_viewingRoom\n  }\n}\n\nfragment ViewingRoomApp_viewingRoom on ViewingRoom {\n  ...ViewingRoomMeta_viewingRoom\n  ...ViewingRoomHeader_viewingRoom\n  ...ViewingRoomContentNotAccessible_viewingRoom\n  partner {\n    internalID\n    id\n  }\n  status\n}\n\nfragment ViewingRoomContentNotAccessible_viewingRoom on ViewingRoom {\n  status\n  partner {\n    href\n    id\n  }\n}\n\nfragment ViewingRoomHeader_viewingRoom on ViewingRoom {\n  image {\n    imageURLs {\n      normalized\n    }\n  }\n  title\n  partner {\n    name\n    href\n    id\n  }\n  distanceToOpen\n  distanceToClose\n  status\n}\n\nfragment ViewingRoomMeta_viewingRoom on ViewingRoom {\n  title\n}\n"
   }
 };
 })();
-(node as any).hash = 'cdbb14e9b2536f43953bc8e28b911b02';
+(node as any).hash = '8088071494e5abfee3ab834c19a7c3ca';
 export default node;
