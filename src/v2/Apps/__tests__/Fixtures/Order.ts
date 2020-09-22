@@ -78,6 +78,7 @@ export const UntouchedOrder = {
               id: "1234",
               initials: "AG",
               profile: {
+                id: "12345",
                 icon: {
                   url: "www.artsy.net",
                 },

@@ -88,6 +88,7 @@ describe("Purchase app", () => {
       it("renders orders", async () => {
         // TODO: revisit mocking and remove `artist_names` alias from PurchseHistory
         const mockMe = {
+          id: "1234",
           orders: {
             edges: [{ node: UntouchedBuyOrder }],
             pageInfo,
@@ -143,7 +144,7 @@ describe("Purchase app", () => {
       })
     })
   })
-  describe("User without admin privilages", () => {
+  describe("User without admin privileges", () => {
     it("gives error", async () => {
       const mockMe = {
         id: "111",
