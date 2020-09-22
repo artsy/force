@@ -13,6 +13,19 @@ export type PurchaseHistory_me = {
                 readonly code: string;
                 readonly state: CommerceOrderStateEnum;
                 readonly mode: CommerceOrderModeEnum | null;
+                readonly requestedFulfillment: ({
+                    readonly __typename: "CommerceShip";
+                } | {
+                    readonly __typename: "CommercePickup";
+                } | {
+                    /*This will never be '%other', but we need some
+                    value in case none of the concrete values match.*/
+                    readonly __typename: "%other";
+                }) | null;
+                readonly creditCard: {
+                    readonly lastDigits: string;
+                } | null;
+                readonly buyerTotal: string | null;
                 readonly createdAt: string;
                 readonly totalListPrice: string | null;
                 readonly itemsTotal: string | null;
@@ -27,8 +40,15 @@ export type PurchaseHistory_me = {
                                     } | null;
                                 } | null;
                                 readonly partner: {
+                                    readonly initials: string | null;
                                     readonly name: string | null;
+                                    readonly profile: {
+                                        readonly icon: {
+                                            readonly url: string | null;
+                                        } | null;
+                                    } | null;
                                 } | null;
+                                readonly shippingOrigin: string | null;
                                 readonly internalID: string;
                                 readonly title: string | null;
                                 readonly artist_names: string | null;
@@ -86,6 +106,15 @@ var v0 = {
   "storageKey": null
 },
 v1 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "__typename",
+    "storageKey": null
+  }
+],
+v2 = [
   {
     "alias": null,
     "args": null,
@@ -209,6 +238,52 @@ return {
                 {
                   "alias": null,
                   "args": null,
+                  "concreteType": null,
+                  "kind": "LinkedField",
+                  "name": "requestedFulfillment",
+                  "plural": false,
+                  "selections": [
+                    {
+                      "kind": "InlineFragment",
+                      "selections": (v1/*: any*/),
+                      "type": "CommerceShip"
+                    },
+                    {
+                      "kind": "InlineFragment",
+                      "selections": (v1/*: any*/),
+                      "type": "CommercePickup"
+                    }
+                  ],
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "concreteType": "CreditCard",
+                  "kind": "LinkedField",
+                  "name": "creditCard",
+                  "plural": false,
+                  "selections": [
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "lastDigits",
+                      "storageKey": null
+                    }
+                  ],
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "buyerTotal",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
                   "kind": "ScalarField",
                   "name": "createdAt",
                   "storageKey": null
@@ -313,10 +388,59 @@ return {
                                       "alias": null,
                                       "args": null,
                                       "kind": "ScalarField",
+                                      "name": "initials",
+                                      "storageKey": null
+                                    },
+                                    {
+                                      "alias": null,
+                                      "args": null,
+                                      "kind": "ScalarField",
                                       "name": "name",
+                                      "storageKey": null
+                                    },
+                                    {
+                                      "alias": null,
+                                      "args": null,
+                                      "concreteType": "Profile",
+                                      "kind": "LinkedField",
+                                      "name": "profile",
+                                      "plural": false,
+                                      "selections": [
+                                        {
+                                          "alias": null,
+                                          "args": null,
+                                          "concreteType": "Image",
+                                          "kind": "LinkedField",
+                                          "name": "icon",
+                                          "plural": false,
+                                          "selections": [
+                                            {
+                                              "alias": null,
+                                              "args": [
+                                                {
+                                                  "kind": "Literal",
+                                                  "name": "version",
+                                                  "value": "square140"
+                                                }
+                                              ],
+                                              "kind": "ScalarField",
+                                              "name": "url",
+                                              "storageKey": "url(version:\"square140\")"
+                                            }
+                                          ],
+                                          "storageKey": null
+                                        }
+                                      ],
                                       "storageKey": null
                                     }
                                   ],
+                                  "storageKey": null
+                                },
+                                {
+                                  "alias": null,
+                                  "args": null,
+                                  "kind": "ScalarField",
+                                  "name": "shippingOrigin",
                                   "storageKey": null
                                 },
                                 (v0/*: any*/),
@@ -367,7 +491,7 @@ return {
               "kind": "LinkedField",
               "name": "around",
               "plural": true,
-              "selections": (v1/*: any*/),
+              "selections": (v2/*: any*/),
               "storageKey": null
             },
             {
@@ -377,7 +501,7 @@ return {
               "kind": "LinkedField",
               "name": "first",
               "plural": false,
-              "selections": (v1/*: any*/),
+              "selections": (v2/*: any*/),
               "storageKey": null
             },
             {
@@ -387,7 +511,7 @@ return {
               "kind": "LinkedField",
               "name": "last",
               "plural": false,
-              "selections": (v1/*: any*/),
+              "selections": (v2/*: any*/),
               "storageKey": null
             },
             {
@@ -397,7 +521,7 @@ return {
               "kind": "LinkedField",
               "name": "previous",
               "plural": false,
-              "selections": (v1/*: any*/),
+              "selections": (v2/*: any*/),
               "storageKey": null
             }
           ],
@@ -449,5 +573,5 @@ return {
   "type": "Me"
 };
 })();
-(node as any).hash = 'e139e932a4ec9fdf1c70a9aaae531d01';
+(node as any).hash = 'eed60061b3cc3d73f670c3b857e3614e';
 export default node;
