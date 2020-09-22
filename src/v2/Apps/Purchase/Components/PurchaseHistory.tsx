@@ -22,8 +22,6 @@ import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
 import { get } from "v2/Utils/get"
 import styled from "styled-components"
 import { Media } from "v2/Utils/Responsive"
-import { filterLocations } from "v2/Apps/Artwork/Utils/filterLocations"
-import { limitWithCount } from "v2/Apps/Artwork/Utils/limitWithCount"
 
 interface OrderRowProps {
   order: PurchaseHistory_me["orders"]["edges"][number]["node"]
