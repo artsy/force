@@ -14,8 +14,11 @@ const FairEvent = require("../../../models/fair_event")
 const FairEvents = require("../../../collections/fair_events")
 
 describe("FairInfo routes", function () {
+  let req
+  let res
+  let next
   beforeEach(function () {
-    this.req = {
+    req = {
       profile: new Profile(
         fabricate("profile", { owner_type: "Fair", owner: fabricate("fair") })
       ),
@@ -23,13 +26,13 @@ describe("FairInfo routes", function () {
         id: "the-armory-show-2013",
       },
     }
-    this.res = {
+    res = {
       locals: {
         sd: {},
       },
       render: sinon.stub(),
     }
-    return (this.next = sinon.stub())
+    next = sinon.stub()
   })
 
   describe("#assignFair", function () {
@@ -43,35 +46,36 @@ describe("FairInfo routes", function () {
 
     after(() => Backbone.sync.restore())
 
-    return it("assigns a fair model to locals", function () {
-      routes.assignFair(this.req, this.res, this.next)
-      return _.defer(() => {
-        return this.res.locals.fair.get("name").should.equal("Armory Show 2013")
+    it("assigns a fair model to locals", function (done) {
+      routes.assignFair(req, res, next)
+      _.defer(() => {
+        res.locals.fair.get("name").should.equal("Armory Show 2013")
+        done()
       })
     })
   })
 
   xdescribe("#visitors", function () {
     beforeEach(function () {
-      return (this.res.locals.fair = new Fair(fabricate("fair")))
+      res.locals.fair = new Fair(fabricate("fair"))
     })
 
-    return it("renders the visitors page", function () {
-      routes.visitors(this.req, this.res, this.next)
-      this.res.render.called.should.be.true()
-      return this.res.render.args[0][0].should.eql("visitors")
+    it("renders the visitors page", function () {
+      routes.visitors(req, res, next)
+      res.render.called.should.be.true()
+      res.render.args[0][0].should.eql("visitors")
     })
   })
 
   describe("#info", function () {
     beforeEach(function () {
-      return (this.res.locals.fair = new Fair(fabricate("fair")))
+      res.locals.fair = new Fair(fabricate("fair"))
     })
 
-    return it("renders the navigation page", function () {
-      routes.info(this.req, this.res, this.next)
-      this.res.render.called.should.be.true()
-      return this.res.render.args[0][0].should.eql("index")
+    it("renders the navigation page", function () {
+      routes.info(req, res, next)
+      res.render.called.should.be.true()
+      res.render.args[0][0].should.eql("index")
     })
   })
 
@@ -84,58 +88,54 @@ describe("FairInfo routes", function () {
         fabricate("fair_event"),
       ]
 
-      this.res.locals.fair = new Fair(fabricate("fair"))
-      return sinon.stub(Backbone, "sync").yieldsTo("success", fairEvents)
+      res.locals.fair = new Fair(fabricate("fair"))
+      sinon.stub(Backbone, "sync").yieldsTo("success", fairEvents)
     })
 
     afterEach(() => Backbone.sync.restore())
 
-    return it("renders the events page", function () {
-      routes.events(this.req, this.res, this.next)
-      this.res.render.called.should.be.true()
-      this.res.render.args[0][0].should.eql("events")
+    it("renders the events page", function () {
+      routes.events(req, res, next)
+      res.render.called.should.be.true()
+      res.render.args[0][0].should.eql("events")
       // all events are on the same day, check to make sure there are 4 events
-      const { eventsByDay } = this.res.render.args[0][1]
+      const { eventsByDay } = res.render.args[0][1]
       const dayKey = _.first(_.keys(eventsByDay))
-      return eventsByDay[dayKey].length.should.eql(4)
+      eventsByDay[dayKey].length.should.eql(4)
     })
   })
 
   xdescribe("#singleEvent", function () {
     beforeEach(function () {
-      this.res.locals.fair = new Fair(fabricate("fair"))
-      return sinon
-        .stub(Backbone, "sync")
-        .yieldsTo("success", fabricate("fair_event"))
+      res.locals.fair = new Fair(fabricate("fair"))
+      sinon.stub(Backbone, "sync").yieldsTo("success", fabricate("fair_event"))
     })
 
     afterEach(() => Backbone.sync.restore())
 
-    return it("renders the single event page", function () {
-      routes.singleEvent(this.req, this.res, this.next)
-      this.res.render.called.should.be.true()
-      this.res.render.args[0][0].should.eql("event")
-      return this.res.render.args[0][1].event.get("name").should.eql("Welcome")
+    it("renders the single event page", function () {
+      routes.singleEvent(req, res, next)
+      res.render.called.should.be.true()
+      res.render.args[0][0].should.eql("event")
+      res.render.args[0][1].event.get("name").should.eql("Welcome")
     })
   })
 
-  return describe("#infoProgramming", function () {
+  describe("#infoProgramming", function () {
     beforeEach(function () {
-      this.res.locals.fair = new Fair(fabricate("fair"))
-      return sinon
-        .stub(Backbone, "sync")
-        .yieldsTo("success", fabricate("article"))
+      res.locals.fair = new Fair(fabricate("fair"))
+      sinon.stub(Backbone, "sync").yieldsTo("success", fabricate("article"))
     })
 
     afterEach(() => Backbone.sync.restore())
 
-    return xit("renders the article page", function () {
-      routes.infoProgramming(this.req, this.res, this.next)
+    xit("renders the article page", function () {
+      routes.infoProgramming(req, res, next)
       _.keys(Backbone.sync.args[0][2]["data"]).should.containEql(
         "fair_programming_id"
       )
-      this.res.render.called.should.be.true()
-      return this.res.render.args[0][0].should.eql("article")
+      res.render.called.should.be.true()
+      res.render.args[0][0].should.eql("article")
     })
   })
 })
