@@ -7,7 +7,6 @@ import { FollowArtistButton } from "v2/Components/FollowButton/FollowArtistButto
 import { renderRelayTree } from "v2/DevTools"
 import React from "react"
 import { Environment, graphql } from "react-relay"
-import { ArtistIndicator } from "../ArtistIndicator"
 
 jest.unmock("react-relay")
 jest.mock("v2/Artsy/Analytics/useTracking")
@@ -55,7 +54,7 @@ describe("ArtistHeader", () => {
     const html = wrapper.html()
     expect(html).toContain("British")
     expect(html).toContain("born 1969")
-    expect(html).toContain("9,135 followers")
+    expect(html).toContain("9.1k followers")
   })
 
   it("renders the follow button in the correct state", async () => {
@@ -89,7 +88,7 @@ describe("ArtistHeader", () => {
 
   it("career stage links to cv page", async () => {
     const wrapper = await getWrapper()
-    expect(wrapper.find(ArtistIndicator).at(0).props().link).toEqual(
+    expect(wrapper.find("a").at(1).props().href).toEqual(
       "/artist/cecily-brown/cv"
     )
   })
@@ -102,7 +101,7 @@ describe("ArtistHeader", () => {
 
   it("auction record indicator links to auction results tab", async () => {
     const wrapper = await getWrapper()
-    expect(wrapper.find(ArtistIndicator).at(1).props().link).toEqual(
+    expect(wrapper.find("a").at(0).props().href).toEqual(
       "/artist/cecily-brown/auction-results"
     )
   })
@@ -120,7 +119,7 @@ describe("ArtistHeader", () => {
   it("hides auction record indicator when data is not present", async () => {
     const artist = {
       ...ArtistHeaderFixture,
-      artistHightlights: { partnersConnection: null },
+      artistHighlights: { partnersConnection: null },
     }
     const wrapper = await getWrapper(artist)
     const html = wrapper.html()

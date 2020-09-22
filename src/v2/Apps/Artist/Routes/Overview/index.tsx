@@ -187,7 +187,7 @@ export class OverviewRoute extends React.Component<OverviewRouteProps, {}> {
               <ArtistTopWorksRail artist={artist} onOverviewTab />
             </Col>
           </Row>
-          <Separator mt={5} mb={2} />
+          <Separator my={3} />
 
           <Row>
             <Col sm={8}>
@@ -244,7 +244,7 @@ export class OverviewRoute extends React.Component<OverviewRouteProps, {}> {
 
           {showArtistBio && (
             <>
-              <Separator mt={5} mb={2} />
+              <Separator my={3} />
 
               <Text variant="subtitle">Biography</Text>
               <Spacer mb={1} />

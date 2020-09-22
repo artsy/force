@@ -1,4 +1,4 @@
-import { Box, Col, Row, Separator } from "@artsy/palette"
+import { Col, Row, Separator } from "@artsy/palette"
 import { Works_artist } from "v2/__generated__/Works_artist.graphql"
 import { ArtistArtworkFilterRefetchContainer as ArtworkFilter } from "v2/Apps/Artist/Routes/Overview/Components/ArtistArtworkFilter"
 import { ArtistRecommendationsQueryRenderer as ArtistRecommendations } from "v2/Apps/Artist/Routes/Overview/Components/ArtistRecommendations"
@@ -24,21 +24,21 @@ export const WorksRoute: React.FC<WorksRouteProps> = props => {
 
   return (
     <>
-      <Box>
-        <ArtistTopWorksRail artist={artist} />
-      </Box>
+      <ArtistTopWorksRail artist={artist} />
 
-      <Box>
-        <ArtistSeriesRail
-          artist={artist}
-          contextPageOwnerId={internalID}
-          contextPageOwnerSlug={slug}
-          contextModule={ContextModule.artistSeriesRail}
-          contextPageOwnerType={OwnerType.artist}
-        />
-      </Box>
+      <ArtistSeriesRail
+        mt={3}
+        pt={2}
+        borderTop="1px solid"
+        borderColor="black10"
+        artist={artist}
+        contextPageOwnerId={internalID}
+        contextPageOwnerSlug={slug}
+        contextModule={ContextModule.artistSeriesRail}
+        contextPageOwnerType={OwnerType.artist}
+      />
 
-      <Row>
+      <Row mt={3}>
         <Col>
           <span id="jump--artistArtworkGrid" />
 
