@@ -8,6 +8,7 @@ import { get } from "v2/Utils/get"
 import { ArtistTopWorksRailFragmentContainer as ArtistTopWorksRail } from "v2/Apps/Artist/Components/ArtistTopWorksRail/ArtistTopWorksRail"
 import { ArtistSeriesRailFragmentContainer as ArtistSeriesRail } from "v2/Components/ArtistSeriesRail/ArtistSeriesRail"
 import { ContextModule, OwnerType } from "@artsy/cohesion"
+import { ArtistCollectionsRailContent as ArtistCollectionsRail } from "v2/Apps/Artist/Components/ArtistCollectionsRail"
 
 export interface WorksRouteProps {
   artist: Works_artist
@@ -22,21 +23,28 @@ export const WorksRoute: React.FC<WorksRouteProps> = props => {
     isClient &&
     get(artist, a => a.related.artistsConnection.edges.length, 0) > 0
 
+  const hasArtistSeries =
+    get(artist, a => a.artistSeriesConnection.edges.length, 0) > 0
+
   return (
     <>
       <ArtistTopWorksRail artist={artist} />
 
-      <ArtistSeriesRail
-        mt={3}
-        pt={2}
-        borderTop="1px solid"
-        borderColor="black10"
-        artist={artist}
-        contextPageOwnerId={internalID}
-        contextPageOwnerSlug={slug}
-        contextModule={ContextModule.artistSeriesRail}
-        contextPageOwnerType={OwnerType.artist}
-      />
+      {hasArtistSeries ? (
+        <ArtistSeriesRail
+          mt={3}
+          pt={2}
+          borderTop="1px solid"
+          borderColor="black10"
+          artist={artist}
+          contextPageOwnerId={internalID}
+          contextPageOwnerSlug={slug}
+          contextModule={ContextModule.artistSeriesRail}
+          contextPageOwnerType={OwnerType.artist}
+        />
+      ) : (
+        <ArtistCollectionsRail artistID={artist.internalID} />
+      )}
 
       <Row mt={3}>
         <Col>
@@ -87,8 +95,22 @@ export const WorksRouteFragmentContainer = createFragmentContainer(WorksRoute, {
       ) {
       internalID
       slug
+
       ...ArtistTopWorksRail_artist
+
+      # The below fragment is used for an exist-y check.
+      # Since it repeats the 'artistSeriesConnection' selection
+      # from the component that actually renders it ('ArtistSeriesRail'),
+      # keep the arguments the same ('first: 50').
+      artistSeriesConnection(first: 50) {
+        edges {
+          node {
+            internalID
+          }
+        }
+      }
       ...ArtistSeriesRail_artist
+
       related {
         artistsConnection(first: 1) {
           edges {
