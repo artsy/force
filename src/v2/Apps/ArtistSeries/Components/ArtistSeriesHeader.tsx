@@ -1,14 +1,16 @@
 import React from "react"
 import {
   Box,
+  Clickable,
   Col,
   EntityHeader,
   Flex,
   HTML,
   Image,
+  ReadMore,
   Row,
-  Sans,
   Separator,
+  Text,
 } from "@artsy/palette"
 import { Media } from "v2/Utils/Responsive"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -74,17 +76,14 @@ const ArtistInfo: React.FC<ArtistsInfoProps> = props => {
           }
           render={({ is_followed }) => {
             return (
-              <Sans
-                size="3"
-                color="black"
+              <Clickable
                 data-test="followArtistButton"
-                style={{
-                  cursor: "pointer",
-                  textDecoration: "underline",
-                }}
+                textDecoration="underline"
               >
-                {is_followed ? "Following" : "Follow"}
-              </Sans>
+                <Text variant="text">
+                  {is_followed ? "Following" : "Follow"}
+                </Text>
+              </Clickable>
             )
           }}
         />
@@ -99,6 +98,7 @@ const ArtistSeriesHeader: React.FC<ArtistSeriesHeaderProps> = props => {
       <Media greaterThanOrEqual="sm">
         <ArtistSeriesHeaderLarge {...props} />
       </Media>
+
       <Media lessThan="sm">
         <ArtistSeriesHeaderSmall {...props} />
       </Media>
@@ -132,11 +132,14 @@ const ArtistSeriesHeaderLarge: React.FC<ArtistSeriesHeaderProps> = props => {
                 />
               )}
             </Flex>
-            <Sans size="3">Series</Sans>
+
+            <Text variant="text">Series</Text>
           </Flex>
         </AppContainer>
       </Box>
+
       <Separator />
+
       <Box m={3}>
         <AppContainer>
           <Row>
@@ -147,18 +150,21 @@ const ArtistSeriesHeaderLarge: React.FC<ArtistSeriesHeaderProps> = props => {
                 justifyContent="space-between"
               >
                 <Box>
-                  <Sans size="8" element="h1" unstable_trackIn>
+                  <Text as="h1" variant="largeTitle">
                     {title}
-                  </Sans>
-                  <Sans size="3" color="black60">
+                  </Text>
+
+                  <Text variant="text" color="black60">
                     {artworksCountMessage}
-                  </Sans>
+                  </Text>
                 </Box>
-                <Box pr={[0, 2]}>
-                  <HTML variant="text" html={descriptionFormatted} />
-                </Box>
+
+                <HTML pr={[0, 2]} variant="text">
+                  <ReadMore content={descriptionFormatted} maxChars={320} />
+                </HTML>
               </Flex>
             </Col>
+
             <Col sm={6}>
               <Box
                 height={"100%"}
@@ -191,14 +197,18 @@ const ArtistSeriesHeaderSmall: React.FC<ArtistSeriesHeaderProps> = props => {
   return (
     <>
       <Box textAlign="center" p={1}>
-        <Sans size="3">Series</Sans>
+        <Text variant="text">Series</Text>
       </Box>
+
       <Separator />
+
       <Box m={3}>
         <HeaderImage src={image?.xs?.url} pb={1} />
-        <Sans size="8" element="h1" my={1} unstable_trackIn>
+
+        <Text as="h1" variant="largeTitle" my={1}>
           {title}
-        </Sans>
+        </Text>
+
         {artists.length && (
           <ArtistInfo
             contextOwnerId={internalID}
@@ -206,9 +216,10 @@ const ArtistSeriesHeaderSmall: React.FC<ArtistSeriesHeaderProps> = props => {
             artist={artists[0]}
           />
         )}
-        <Box my={1}>
-          <HTML variant="text" html={descriptionFormatted} />
-        </Box>
+
+        <HTML variant="text" my={1}>
+          <ReadMore content={descriptionFormatted} maxChars={200} />
+        </HTML>
       </Box>
     </>
   )
