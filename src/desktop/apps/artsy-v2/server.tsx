@@ -111,7 +111,7 @@ app.get(
       res.locals.PAGE_CACHE = { status, key: req.url, html: layout }
       res.status(status).send(layout)
     } catch (error) {
-      console.log(error)
+      console.error(error)
       next(error)
     }
   }

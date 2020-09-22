@@ -94,12 +94,12 @@ module.exports = {
     //     argsIgnorePattern: "^_",
     //   },
     // ],
-    // "no-console": [
-    //   "error",
-    //   {
-    //     allow: ["warn", "error"],
-    //   },
-    // ],
+    "no-console": [
+      "error",
+      {
+        allow: ["warn", "error"],
+      },
+    ],
 
     // TODO: Add support for Graphql, but first need to fetch .json schema
     // "graphql/template-strings": [

@@ -83,6 +83,7 @@ if (process.env.ALLOW_CONSOLE_LOGS !== "true") {
   beforeEach(done => {
     ;["error", "warn"].forEach((type: "error" | "warn") => {
       // Don't spy on loggers that have been modified by the current test.
+      // eslint-disable-next-line no-console
       if (console[type] === originalLoggers[type]) {
         const handler = (...args) => {
           // FIXME: React 16.8.x doesn't support async `act` testing hooks and so this
