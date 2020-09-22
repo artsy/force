@@ -13,9 +13,12 @@ block content
               a( href= heroUnit.href )
                 figcaption.home-page-hero-unit-details
                   .vcenter-outer: .vcenter-inner
-                    h2.avant-garde-header!= heroUnit.heading
-                    h1.home-page-hero-unit-title.avant-garde-header= heroUnit.title
-                    h2!= heroUnit.subtitle
+                    h3.home-page-hero-unit__heading
+                      != heroUnit.heading
+                    h1.home-page-hero-unit__title
+                      = heroUnit.title
+                    h2.home-page-hero-unit__subtitle
+                      != heroUnit.subtitle
 
   section.main-side-margin.home-page-section
     if collectionsHubs && collectionsHubs.length
@@ -23,7 +26,7 @@ block content
       != stitch.components.CollectionsHubsHomepageNav({collectionsHubs: collectionsHubs})
     else
       h1.avant-garde-header-center Explore Artsy
-      
+
     nav#home-page-featured-list.chevron-nav-list
       a#home-page-featured-works( href='/collect' ) Featured Artworks
       a#home-page-featured-articles( href='/articles' ) Featured Articles

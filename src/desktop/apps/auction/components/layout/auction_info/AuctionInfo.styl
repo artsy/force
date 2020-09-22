@@ -1,3 +1,5 @@
+@require '../../../../lib/palette'
+
 .auction-AuctionInfo
   clearfix()
 
@@ -41,6 +43,7 @@
       width 100%
 
     &__info-window-title
+      text('subtitle')
 
     &__info-window-close-button
       cursor pointer
@@ -90,7 +93,7 @@
       font-size size
       width size
       height size
-      border 2px solid gray-lighter-color
+      border 2px solid getColor('black10')
       display block
       padding-left 14px
       padding-top 2px
@@ -99,95 +102,71 @@
   // Main Content
 
   &__sub-header
-    avant-garde-size('body', true)
+    text('text')
 
   &__title
-    garamond-size('l-headline')
-    padding-right 30px
-
-    +respond-mobile()
-      garamond-size('l-body')
+    text('largeTitle')
+    padding-right getSpace(3)
 
   &__description
-    garamond-size('l-body')
-    margin 30px 0
+    text('text')
+    margin getSpace(2, 0)
     > p
-      block-margins(15px)
+      block-margins(getSpace(1.5))
     a
-      fine-faux-underline()
+      text-decoration underline
 
     +respond-mobile()
-      garamond-size('s-body')
-      margin 10px 0 20px 0
+      margin getSpace(1, 0, 2, 0)
 
   &__date-time
+    text('text')
+
     +respond-mobile()
-      margin-bottom 25px
+      text('small')
+      margin-bottom getSpace(2)
 
   &__register-button
-    margin-bottom 30px
-
-  &__metadata-cell
-    margin-bottom 20px
-
-    > h3
-      margin 0.5em 0
-      avant-garde-size('body', true)
-
-  &__metadata-cell-contents
-    > p
-      block-margins(10px)
+    margin-bottom getSpace(3)
 
   &__callout
-    border-bottom 1px solid gray-lighter-color
-    border-top 1px solid gray-lighter-color
-    garamond-size('l-body')
-    margin 20px 0
-    position relative
+    display flex
+    justify-content space-between
+    border-bottom 1px solid getColor('black10')
+    border-top 1px solid getColor('black10')
+    margin getSpace(2, 0)
 
     +respond-desktop()
-      padding 10px 0 12px 0
+      text('subtitle')
+      padding getSpace(1, 0)
 
     +respond-mobile()
+      text('caption')
       border-bottom 0
       border-top 0
-      garamond-size('s-body')
-      margin 0
+      margin getSpace(1, 0, 0, 0)
       padding 0
 
-  &__callout-live-label
-    position absolute
-    right 0
-    top 10px
-
-    +respond-mobile()
-      avant-garde-size('s-headline')
-      position relative
-      top -5px
-
   &__live-label
-    avant-garde-size('body')
-    letter-spacing 3px
+    text('subtitle')
 
     +respond-mobile()
-      avant-garde-size('s-headline')
-
+      text('small')
 
   &__live-tooltip
-    garamond-size('s-body')
     margin-left 10px
     margin-left 14px
     top -3px
 
     &:hover::before
-      background gray-darker-color
+      background getColor('black60')
       border 0
-      color white
+      color getColor('white100')
 
     &::before
       background transparent
-      border 1px solid gray-lighter-color
-      color black
+      border 1px solid getColor('black10')
+      color getColor('black100')
       width 20px
       height @width
       line-height @width - 1px

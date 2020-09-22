@@ -1,4 +1,4 @@
-import { Box, Button, Flex, Sans, Serif } from "@artsy/palette"
+import { Box, Button, Flex, Text } from "@artsy/palette"
 import { Collections_marketingCategories } from "v2/__generated__/Collections_marketingCategories.graphql"
 import { AppContainer } from "v2/Apps/Components/AppContainer"
 import { withSystemContext } from "v2/Artsy"
@@ -47,14 +47,14 @@ export class CollectionsApp extends Component<CollectionsAppProps> {
               justifyContent="space-between"
               alignItems="flex-end"
             >
-              <Serif size="8">
-                <h1>Collections</h1>
-              </Serif>
+              <Text variant="largeTitle" as="h1">
+                Collections
+              </Text>
 
               <Box pb={0.3}>
-                <Sans size="3" weight="medium">
+                <Text variant="mediumText">
                   <Link to="/collect">View works</Link>
-                </Sans>
+                </Text>
               </Box>
             </Flex>
             {marketingCategories &&

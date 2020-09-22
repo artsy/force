@@ -1,4 +1,4 @@
-import { Box, Serif, color } from "@artsy/palette"
+import { Box, Text, color } from "@artsy/palette"
 import { OtherCollectionsRail_collectionGroup } from "v2/__generated__/OtherCollectionsRail_collectionGroup.graphql"
 import { Carousel } from "v2/Components/Carousel"
 import React from "react"
@@ -14,9 +14,9 @@ export const OtherCollectionsRail: React.FC<OtherCollectionsRailProps> = ({
 }) => {
   return (
     <Container mb={4}>
-      <Serif size="5" mt={3} mb={2}>
+      <Text variant="subtitle" pt={3} pb={2}>
         {name}
-      </Serif>
+      </Text>
 
       <Carousel>
         {members.map((slide, index) => {

@@ -1,21 +1,18 @@
 @import '../../stylus_lib'
+@import '../../../../lib/palette'
 
 footer
-  background-color #000
   position: relative
   z-index: 3
-  background: black
+  background-color getColor('black100')
 
 .footer__bottom-nav
-  padding 30px 12px
+  padding getSpace(3, 2)
 
 #ccpa-request > div > div:first-child
-  color white
-
 .footer__bottom-nav__link
-  serif()
+  text('caption')
   display inline-block
-  color white
-  font-size default-font-size
+  color getColor('white100')
   text-decoration none
-  padding-right 12px
+  padding-right getSpace(1)

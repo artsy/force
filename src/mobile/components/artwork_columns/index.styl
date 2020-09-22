@@ -4,6 +4,7 @@
 //
 
 @import '../stylus_lib'
+@require '../../lib/palette'
 
 .artwork-columns
   width 100%
@@ -15,23 +16,23 @@
       margin 0
     &:nth-child(1)
       .artwork-columns-artwork
-        margin-right 10px
+        margin-right getSpace(1)
     &:nth-child(2)
       .artwork-columns-artwork
-        margin-left 10px
+        margin-left getSpace(1)
 
 .artwork-columns-triple
   .artwork-columns-column
     width 33.33%
     &:nth-child(1)
       .artwork-columns-artwork
-        margin 0 10px 0 0
+        margin getSpace(0, 1, 0, 0)
     &:nth-child(2)
       .artwork-columns-artwork
-        margin 0 10px
+        margin getSpace(0, 1)
     &:nth-child(3)
       .artwork-columns-artwork
-        margin 0 0 0 10px
+        margin getSpace(0, 0, 0, 1)
 
 .artwork-columns-column
   max-width 100%
@@ -43,26 +44,29 @@
   width 100%
 
 .artwork-columns-artwork-details
-  margin 10px 0 20px 0
-  font-size 14px
-  line-height 1.2em
-  color dark-gray-text-color
+  text('text')
+  margin getSpace(1, 0, 2, 0)
+  color getColor('black60')
   p
     ellipsis()
 
+    &:first-of-type
+      text('mediumText')
+      color getColor('black100')
+
+
 .artwork-columns-artwork-details
   &__auction-lot-number
-    avant-garde-size('s-headline', true)
-    color black
-  &__buy-now, &__bid
-    color black
+    color getColor('black100')
+  &__buy-now
+  &__bid
+    color getColor('black100')
   > a
-    padding-bottom 2px
-    color #666
-    fine-faux-underline()
+    color getColor('black60')
+    text-decoration underline
 
 .artwork_column__contact-gallery
-  color gray-darker-color
+  color getColor('black60')
 
 .artwork-columns-artwork-details__bid-now
   display flex

@@ -7,9 +7,9 @@ import {
   Box,
   EntityHeader,
   Flex,
-  Sans,
   Separator,
   Spacer,
+  Text,
 } from "@artsy/palette"
 import { Router } from "found"
 
@@ -35,9 +35,9 @@ export class CollectionsGrid extends Component<CollectionsGridProps> {
     return (
       <Box pb={80}>
         <CollectionsGridAnchor id={name && slugify(name)} />
-        <Sans size="3" weight="medium" pb={15}>
+        <Text variant="mediumText" pb={15}>
           {name}
-        </Sans>
+        </Text>
 
         <Flex flexWrap="wrap" justifyContent="space-between">
           {[...collections] // needs to create a new array since the sort function modifies the array.
@@ -66,7 +66,7 @@ export class CollectionsGrid extends Component<CollectionsGridProps> {
                     href={`/collection/${collection.slug}`}
                     imageUrl={imageUrl || undefined}
                     name={collection.title}
-                    onClick={(event) => {
+                    onClick={event => {
                       event.preventDefault()
                       router.push(`/collection/${collection.slug}`)
                     }}

@@ -82,7 +82,7 @@ export const CollectApp: React.FC<CollectAppProps> = ({
 
               <Box mt={3}>
                 <Text variant="largeTitle">
-                  <h1>Browse artworks</h1>
+                  <h1>Collect art and design online</h1>
                 </Text>
                 <Separator mt={2} mb={[2, 2, 2, 4]} />
 

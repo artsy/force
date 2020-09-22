@@ -72,7 +72,7 @@ const render = (me: PurchaseAppTestQueryRawResponse["me"], user: User) =>
         }
       }
     `,
-    wrapper: (children) => (
+    wrapper: children => (
       <MockBoot>
         <HeadProvider>
           <SystemContextProvider user={user}>{children}</SystemContextProvider>
@@ -85,7 +85,7 @@ describe("Purchase app", () => {
   describe("User with admin privilages", () => {
     const userType = { type: "Admin" }
     describe("having previous orders", () => {
-      it("renders orders with view details button", async () => {
+      it("renders orders", async () => {
         // TODO: revisit mocking and remove `artist_names` alias from PurchseHistory
         const mockMe = {
           id: "111",
@@ -98,11 +98,8 @@ describe("Purchase app", () => {
         const component = await render(mockMe, userType)
         const text = component.text()
         expect(text).toContain(
-          "PurchasesLisa BreslowGramercy Park South, 2016buypending"
+          "Order HistoryLisa BreslowA Gallery12/19/2019$12,000pending"
         )
-        const btn = component.find("Button")
-        expect(btn.length).toBe(1)
-        expect(btn.text()).toEqual("View details")
       })
     })
     describe("with around pages", () => {

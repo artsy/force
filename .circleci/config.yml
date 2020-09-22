@@ -20,15 +20,6 @@ jobs:
       - run:
           name: Start automator crawl
           command: chmod +x automator.sh && ./automator.sh
-  acceptance:
-    docker:
-      - image: circleci/node:12-stretch-browsers
-    steps:
-      - yarn/setup
-      - run:
-          name: Acceptance Tests
-          command: yarn acceptance src/test/acceptance/*.js
-
   acceptance_cypress:
     docker:
       - image: circleci/node:12-stretch-browsers
@@ -171,8 +162,6 @@ workflows:
           <<: *not_staging_or_release
       - yarn/type-check:
           <<: *not_staging_or_release
-      - acceptance:
-          <<: *not_staging_or_release
       - acceptance_cypress:
           <<: *not_master_or_staging_or_release
       - build:
@@ -187,7 +176,6 @@ workflows:
           requires:
             - yarn/jest
             - test:mocha
-            - acceptance
             - build
 
       - hokusai/deploy-staging:
