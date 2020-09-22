@@ -34,7 +34,6 @@ export type PurchaseAppTestQueryRawResponse = {
                     }) | null;
                     readonly buyerTotal: string | null;
                     readonly createdAt: string;
-                    readonly totalListPrice: string | null;
                     readonly itemsTotal: string | null;
                     readonly lineItems: ({
                         readonly edges: ReadonlyArray<({
@@ -146,7 +145,6 @@ fragment PurchaseHistory_me on Me {
         }
         buyerTotal
         createdAt
-        totalListPrice
         itemsTotal
         lineItems {
           edges {
@@ -408,13 +406,6 @@ return {
                         "args": null,
                         "kind": "ScalarField",
                         "name": "createdAt",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "totalListPrice",
                         "storageKey": null
                       },
                       {
@@ -707,7 +698,7 @@ return {
     "metadata": {},
     "name": "PurchaseAppTestQuery",
     "operationKind": "query",
-    "text": "query PurchaseAppTestQuery {\n  me {\n    ...PurchaseApp_me\n    id\n  }\n}\n\nfragment PurchaseApp_me on Me {\n  ...PurchaseHistory_me\n}\n\nfragment PurchaseHistory_me on Me {\n  orders(first: 10) {\n    edges {\n      node {\n        __typename\n        internalID\n        code\n        state\n        mode\n        requestedFulfillment {\n          __typename\n          ... on CommerceShip {\n            __typename\n          }\n          ... on CommercePickup {\n            __typename\n          }\n        }\n        creditCard {\n          lastDigits\n          id\n        }\n        buyerTotal\n        createdAt\n        totalListPrice\n        itemsTotal\n        lineItems {\n          edges {\n            node {\n              artwork {\n                date\n                image {\n                  resized(width: 55) {\n                    url\n                  }\n                }\n                partner {\n                  initials\n                  name\n                  profile {\n                    icon {\n                      url(version: \"square140\")\n                    }\n                    id\n                  }\n                  id\n                }\n                shippingOrigin\n                internalID\n                title\n                artist_names: artistNames\n                id\n              }\n              id\n            }\n          }\n        }\n        id\n      }\n    }\n    pageCursors {\n      around {\n        cursor\n        isCurrent\n        page\n      }\n      first {\n        cursor\n        isCurrent\n        page\n      }\n      last {\n        cursor\n        isCurrent\n        page\n      }\n      previous {\n        cursor\n        isCurrent\n        page\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n"
+    "text": "query PurchaseAppTestQuery {\n  me {\n    ...PurchaseApp_me\n    id\n  }\n}\n\nfragment PurchaseApp_me on Me {\n  ...PurchaseHistory_me\n}\n\nfragment PurchaseHistory_me on Me {\n  orders(first: 10) {\n    edges {\n      node {\n        __typename\n        internalID\n        code\n        state\n        mode\n        requestedFulfillment {\n          __typename\n          ... on CommerceShip {\n            __typename\n          }\n          ... on CommercePickup {\n            __typename\n          }\n        }\n        creditCard {\n          lastDigits\n          id\n        }\n        buyerTotal\n        createdAt\n        itemsTotal\n        lineItems {\n          edges {\n            node {\n              artwork {\n                date\n                image {\n                  resized(width: 55) {\n                    url\n                  }\n                }\n                partner {\n                  initials\n                  name\n                  profile {\n                    icon {\n                      url(version: \"square140\")\n                    }\n                    id\n                  }\n                  id\n                }\n                shippingOrigin\n                internalID\n                title\n                artist_names: artistNames\n                id\n              }\n              id\n            }\n          }\n        }\n        id\n      }\n    }\n    pageCursors {\n      around {\n        cursor\n        isCurrent\n        page\n      }\n      first {\n        cursor\n        isCurrent\n        page\n      }\n      last {\n        cursor\n        isCurrent\n        page\n      }\n      previous {\n        cursor\n        isCurrent\n        page\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n"
   }
 };
 })();

@@ -76,6 +76,12 @@ export const UntouchedOrder = {
             partner: {
               name: "A Gallery",
               id: "1234",
+              initials: "AG",
+              profile: {
+                icon: {
+                  url: "www.artsy.net",
+                },
+              },
             },
             dimensions: {
               in: "36 × 36 in",

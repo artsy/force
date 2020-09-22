@@ -27,7 +27,6 @@ export type PurchaseHistory_me = {
                 } | null;
                 readonly buyerTotal: string | null;
                 readonly createdAt: string;
-                readonly totalListPrice: string | null;
                 readonly itemsTotal: string | null;
                 readonly lineItems: {
                     readonly edges: ReadonlyArray<{
@@ -286,13 +285,6 @@ return {
                   "args": null,
                   "kind": "ScalarField",
                   "name": "createdAt",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "totalListPrice",
                   "storageKey": null
                 },
                 {
@@ -573,5 +565,5 @@ return {
   "type": "Me"
 };
 })();
-(node as any).hash = 'eed60061b3cc3d73f670c3b857e3614e';
+(node as any).hash = '53a6e7088f1987cffe0d86d3378e52a0';
 export default node;

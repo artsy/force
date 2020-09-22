@@ -139,7 +139,7 @@ const OrderRow = (props: OrderRowProps) => {
                 letterSpacing="tight"
                 style={{ textTransform: "capitalize" }}
               >
-                {order.itemsTotal ? order.itemsTotal : order.totalListPrice}
+                {order.buyerTotal}
               </Text>
               <Text
                 variant="text"
@@ -368,7 +368,6 @@ export const PurchaseHistoryFragmentContainer = createRefetchContainer(
               }
               buyerTotal
               createdAt
-              totalListPrice
               itemsTotal
               lineItems {
                 edges {
