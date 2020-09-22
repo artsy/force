@@ -85,7 +85,7 @@ return {
         {
           "kind": "Literal",
           "name": "size",
-          "value": 1
+          "value": 4
         }
       ],
       "concreteType": "MarketingCollection",
@@ -93,7 +93,7 @@ return {
       "name": "marketingCollections",
       "plural": true,
       "selections": (v0/*: any*/),
-      "storageKey": "marketingCollections(size:1)"
+      "storageKey": "marketingCollections(size:4)"
     },
     {
       "args": null,
@@ -119,5 +119,5 @@ return {
   "type": "Fair"
 };
 })();
-(node as any).hash = '282c0ad896edff8f12f0f13df653f204';
+(node as any).hash = '10cbf0c4a503d4f5145103681b2cdb21';
 export default node;
