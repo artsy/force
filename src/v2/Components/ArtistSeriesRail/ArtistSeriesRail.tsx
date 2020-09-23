@@ -1,4 +1,4 @@
-import { Box, Sans } from "@artsy/palette"
+import { Box, BoxProps, Sans } from "@artsy/palette"
 import { Carousel } from "v2/Components/Carousel"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -6,7 +6,7 @@ import { ArtistSeriesRail_artist } from "v2/__generated__/ArtistSeriesRail_artis
 import { ArtistSeriesItemFragmentContainer as ArtistSeriesItem } from "./ArtistSeriesItem"
 import { ContextModule, PageOwnerType } from "@artsy/cohesion"
 
-interface Props {
+interface Props extends BoxProps {
   artist: ArtistSeriesRail_artist
   title?: string
   contextPageOwnerId: string
@@ -22,6 +22,7 @@ const ArtistSeriesRail: React.FC<Props> = props => {
     contextPageOwnerSlug,
     contextModule,
     contextPageOwnerType,
+    ...rest
   } = props
 
   if (!artist) return null
@@ -33,7 +34,7 @@ const ArtistSeriesRail: React.FC<Props> = props => {
 
   if (edges && edges.length) {
     return (
-      <Box mb={3}>
+      <Box mb={3} {...rest}>
         <Sans size="4" color="black100" my={1}>
           {displayTitle}
         </Sans>

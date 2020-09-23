@@ -29,7 +29,7 @@ export const ArtistHeaderFixture = {
     auction_lots: true,
     artworks: true,
   },
-  artistHightlights: {
+  artistHighlights: {
     partnersConnection: {
       edges: [
         {
