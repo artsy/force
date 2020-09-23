@@ -107,7 +107,7 @@ export const LargeArtistHeader: React.FC<ArtistHeaderProps> = ({
   const highCategory = getHighCategory(artist)
 
   return (
-    <HorizontalPadding>
+    <HorizontalPadding data-test={ContextModule.artistHeader}>
       <Box pt={3}>
         <Text as="h1" variant="largeTitle">
           {artist.name}
