@@ -6,6 +6,7 @@ import {
   FlexProps,
   Grid,
   HTML,
+  HTMLProps,
   ResponsiveBox,
   ResponsiveBoxProps,
   Row,
@@ -17,7 +18,7 @@ import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import { FeatureFeaturedLink_featuredLink } from "v2/__generated__/FeatureFeaturedLink_featuredLink.graphql"
 import { themeGet } from "@styled-system/theme-get"
 
-const FullHTML = styled(HTML)`
+const FullHTML = styled(HTML)<HTMLProps>`
   > blockquote {
     font-size: ${themeGet("fontSizes.size10")};
     font-family: ${themeGet("fonts.serif")};
