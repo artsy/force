@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import _ from "lodash"
 
 /**
@@ -58,6 +57,7 @@ export function metaphysicsExtensionsLoggerMiddleware() {
             Object.keys(apis).forEach(host => {
               console.group(host)
               Object.keys(apis[host].requests).forEach(route => {
+                // eslint-disable-next-line no-console
                 console.log(route, apis[host].requests[route])
               })
               console.groupEnd()
@@ -70,6 +70,7 @@ export function metaphysicsExtensionsLoggerMiddleware() {
           if (stitchCount) {
             console.group("Stitched")
             Object.keys(stitching.requests).forEach(stitchedSchema => {
+              // eslint-disable-next-line no-console
               console.log(stitching.requests[stitchedSchema])
             })
             console.groupEnd()

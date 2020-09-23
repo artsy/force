@@ -97,7 +97,7 @@ module.exports = {
     "no-console": [
       "error",
       {
-        allow: ["warn", "error"],
+        allow: ["warn", "error", "info", "group", "groupEnd", "groupCollapsed"],
       },
     ],
 
