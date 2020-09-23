@@ -93,8 +93,6 @@ export const featuredArtistsEntityCollection: (
               render={({ is_followed }) => {
                 return (
                   <Text
-                    variant="caption"
-                    color="black"
                     data-test="followArtistButton"
                     style={{
                       cursor: "pointer",

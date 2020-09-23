@@ -128,8 +128,6 @@ export class ArtworkDetailsAboutTheWorkFromPartner extends React.Component<
                           const is_followed = profile.is_followed || false
                           return (
                             <Text
-                              variant="caption"
-                              color="black"
                               data-test="followButton"
                               style={{
                                 cursor: "pointer",
