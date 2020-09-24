@@ -5,6 +5,7 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type IdentityVerificationApp_me = {
     readonly internalID: string;
+    readonly email: string | null;
     readonly identityVerification: {
         readonly internalID: string;
         readonly userID: string;
@@ -44,6 +45,13 @@ return {
     (v0/*: any*/),
     {
       "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "email",
+      "storageKey": null
+    },
+    {
+      "alias": null,
       "args": [
         {
           "kind": "Variable",
@@ -78,5 +86,5 @@ return {
   "type": "Me"
 };
 })();
-(node as any).hash = '820346679be7e29c2ffcf41999f0acf4';
+(node as any).hash = 'abd8adb7376ce8126f079b2ebdfbe456';
 export default node;

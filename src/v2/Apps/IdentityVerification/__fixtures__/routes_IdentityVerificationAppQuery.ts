@@ -3,6 +3,7 @@ import { routes_IdentityVerificationAppQueryRawResponse } from "v2/__generated__
 export const IdentityVerificationAppQueryResponseFixture: routes_IdentityVerificationAppQueryRawResponse = {
   me: {
     internalID: "my-user-id",
+    email: "barry@example.com",
     id: "unused-user",
     identityVerification: {
       internalID: "identity-verification-id",
