@@ -12,7 +12,6 @@ storiesOf("Components/Pages/Tag/Contents", module).add("Butt", () => {
           tagID="butt"
           sort="-year"
           filters={{ for_sale: true }}
-          // eslint-disable-next-line no-console
           onStateChange={console.log}
         />
       </SystemContextProvider>

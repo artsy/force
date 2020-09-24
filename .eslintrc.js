@@ -111,4 +111,12 @@ module.exports = {
     //   },
     // ],
   },
+  overrides: [
+    {
+      files: ["src/v2/**/*.story.tsx"],
+      rules: {
+        "no-console": "off",
+      },
+    },
+  ],
 }
