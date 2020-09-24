@@ -32,7 +32,7 @@ module.exports = class NewsView extends Backbone.View
 
     Promise.allSettled([
       showEvents.fetch data: data
-      fairBooths.fetch data: _.extend {}, data, at_a_fair: true
+      fairBooths.fetch data: _.extend {}, data, at_a_fair: true, displayable: true
     ])
     .then ->
       [showEvents, fairBooths]
