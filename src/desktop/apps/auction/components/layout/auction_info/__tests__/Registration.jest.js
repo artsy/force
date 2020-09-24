@@ -10,15 +10,13 @@ describe("auction/components/layout/auction_info/Registration.test", () => {
         Component: Registration,
         props: {
           isClosed: true,
-          isQualifiedForBidding: true,
           isRegistrationEnded: false,
           showContactInfo: true,
-          numBidders: 0,
           userNeedsIdentityVerification: false,
         },
       })
 
-      expect(wrapper.find(".auctino2-registration__wrapper").length).toBe(0)
+      expect(wrapper.find(".auction2-registration__wrapper").length).toBe(0)
     })
 
     it("returns Registration Pending when not qualified for bidding and verified", () => {
@@ -26,10 +24,9 @@ describe("auction/components/layout/auction_info/Registration.test", () => {
         Component: Registration,
         props: {
           isClosed: false,
-          isQualifiedForBidding: false,
           isRegistrationEnded: false,
+          userRegistration: { qualified_for_bidding: false },
           showContactInfo: true,
-          numBidders: 0,
           userNeedsIdentityVerification: false,
         },
       })
@@ -43,10 +40,9 @@ describe("auction/components/layout/auction_info/Registration.test", () => {
         Component: Registration,
         props: {
           isClosed: false,
-          isQualifiedForBidding: false,
           isRegistrationEnded: false,
           showContactInfo: true,
-          numBidders: 1,
+          userRegistration: { qualified_for_bidding: false },
           userNeedsIdentityVerification: true,
         },
       })
@@ -60,8 +56,7 @@ describe("auction/components/layout/auction_info/Registration.test", () => {
         Component: Registration,
         props: {
           isClosed: false,
-          isQualifiedForBidding: true,
-          numBidders: 1,
+          userRegistration: { qualified_for_bidding: true },
           isRegistrationEnded: false,
           showContactInfo: true,
           userNeedsIdentityVerification: false,
@@ -76,8 +71,7 @@ describe("auction/components/layout/auction_info/Registration.test", () => {
         Component: Registration,
         props: {
           isClosed: false,
-          isQualifiedForBidding: true,
-          numBidders: 1,
+          userRegistration: { qualified_for_bidding: true },
           isRegistrationEnded: false,
           showContactInfo: true,
           userNeedsIdentityVerification: true,
@@ -92,10 +86,9 @@ describe("auction/components/layout/auction_info/Registration.test", () => {
         Component: Registration,
         props: {
           isClosed: false,
-          isQualifiedForBidding: true,
           isRegistrationEnded: true,
           showContactInfo: true,
-          numBidders: 0,
+          userRegistration: undefined,
           userNeedsIdentityVerification: false,
         },
       })
@@ -109,10 +102,9 @@ describe("auction/components/layout/auction_info/Registration.test", () => {
         Component: Registration,
         props: {
           isClosed: false,
-          isQualifiedForBidding: true,
           isRegistrationEnded: false,
           showContactInfo: true,
-          numBidders: 0,
+          userRegistration: undefined,
           userNeedsIdentityVerification: false,
         },
       })

@@ -1,6 +1,5 @@
 import React from "react"
 import block from "bem-cn-lite"
-import { get } from "lodash"
 import { connect } from "react-redux"
 import { Button, Sans } from "@artsy/palette"
 import { bidderNeedsIdentityVerification } from "v2/Utils/identityVerificationRequirements"
@@ -35,25 +34,27 @@ const RegistrationText: React.FC<{
   }
 }
 
-const Registration: React.FC<{
+interface RegistrationProps {
   auction: any
   isClosed: boolean
   isEcommerceSale?: boolean
-  isQualifiedForBidding: boolean
+  isLiveOpen?: boolean
+  isMobile: boolean
   isRegistrationEnded: boolean
-  numBidders?: number
+  userRegistration?: { qualified_for_bidding: boolean }
   showContactInfo?: boolean
   user: any
   userNeedsIdentityVerification?: boolean
-}> = props => {
+}
+
+const Registration: React.FC<RegistrationProps> = props => {
   const {
     auction,
     user,
     isClosed,
     isEcommerceSale,
-    isQualifiedForBidding,
+    userRegistration,
     isRegistrationEnded,
-    numBidders,
     showContactInfo,
     userNeedsIdentityVerification,
   } = props
@@ -77,28 +78,30 @@ const Registration: React.FC<{
       {(() => {
         if (isClosed) {
           return null
-        } else if (!isQualifiedForBidding) {
-          return (
-            <div className={b("wrapper")}>
-              <Button width="100%" size="large" disabled>
-                Registration pending
-              </Button>
-              <RegistrationText
-                userNeedsIdentityVerification={userNeedsIdentityVerification}
-                text="Reviewing submitted information"
-                color="yellow100"
-              />
-            </div>
-          )
-        } else if (numBidders > 0) {
-          return (
-            <div className={b("approved")}>
-              <Sans mt="1" size="3" color="green100">
-                <span className="icon-check" />
-                Approved to Bid
-              </Sans>
-            </div>
-          )
+        } else if (Boolean(userRegistration)) {
+          if (!userRegistration.qualified_for_bidding) {
+            return (
+              <div className={b("wrapper")}>
+                <Button width="100%" size="large" disabled>
+                  Registration pending
+                </Button>
+                <RegistrationText
+                  userNeedsIdentityVerification={userNeedsIdentityVerification}
+                  text="Reviewing submitted information"
+                  color="yellow100"
+                />
+              </div>
+            )
+          } else {
+            return (
+              <div className={b("approved")}>
+                <Sans mt="1" size="3" color="green100">
+                  <span className="icon-check" />
+                  Approved to Bid
+                </Sans>
+              </div>
+            )
+          }
         } else if (isRegistrationEnded) {
           return (
             <div className={b("wrapper")}>
@@ -147,16 +150,15 @@ const Registration: React.FC<{
   )
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state): RegistrationProps => {
   const { auction, isEcommerceSale, isMobile, me } = state.app
 
-  const numBidders = me?.bidders?.length || 0
-  const isQualifiedForBidding = get(me, "bidders.0.qualified_for_bidding", true) // TODO: the default value is `true`?
+  const userRegistration = me?.bidders?.[0]
   const showContactInfo = !isMobile
   const userNeedsIdentityVerification = bidderNeedsIdentityVerification({
     sale: auction.attributes,
     user: me,
-    bidder: me?.bidders?.[0],
+    bidder: userRegistration,
   })
 
   return {
@@ -165,9 +167,8 @@ const mapStateToProps = state => {
     isEcommerceSale,
     isMobile,
     isLiveOpen: auction.get("is_live_open"),
-    isQualifiedForBidding,
     isRegistrationEnded: auction.isRegistrationEnded(),
-    numBidders,
+    userRegistration,
     showContactInfo,
     user: me,
     userNeedsIdentityVerification,
