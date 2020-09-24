@@ -44,7 +44,7 @@ describe("NewsView", function () {
       ]))
     })
 
-    it("makes proper requests to fetch partner artists", function () {
+    it("makes proper requests to fetch partner artists and shows", function () {
       let requests
       this.view.fetch()
       ;(requests = Backbone.sync.args).length.should.equal(2)
@@ -62,6 +62,7 @@ describe("NewsView", function () {
         sort: "start_at",
         size: 3,
         at_a_fair: true,
+        displayable: true,
       })
     })
 
