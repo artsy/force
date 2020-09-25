@@ -136,9 +136,7 @@ const LargeAuctionItem: SFC<Props> = props => {
   } = getProps(props)
 
   const imageUrl = get(images, i => i.thumbnail.url, "")
-  const dateOfSale = DateTime.fromISO(saleDate).toLocaleString(
-    DateTime.DATE_MED
-  )
+  const dateOfSale = getDisplaySaleDate(saleDate)
 
   return (
     <>
@@ -214,9 +212,7 @@ const ExtraSmallAuctionItem: SFC<Props> = props => {
     salePrice,
   } = getProps(props)
   const imageUrl = get(images, i => i.thumbnail.url, "")
-  const dateOfSale = DateTime.fromISO(saleDate).toLocaleString(
-    DateTime.DATE_MED
-  )
+  const dateOfSale = getDisplaySaleDate(saleDate)
 
   return (
     <Flex data-test={ContextModule.auctionResults} width="100%">
@@ -317,6 +313,12 @@ const getProps = (props: Props) => {
   }
 }
 
+const getDisplaySaleDate = saleDate => {
+  return DateTime.fromISO(saleDate, { zone: "utc" }).toLocaleString(
+    DateTime.DATE_MED
+  )
+}
+
 const renderPricing = (
   salePrice,
   saleDate,
@@ -330,7 +332,8 @@ const renderPricing = (
   // If user is logged in we show prices. Otherwise we show prices only when filters at default.
   if (user || filtersAtDefault) {
     const textAlign = size === "xs" ? "left" : "right"
-    const dateOfSale = DateTime.fromISO(saleDate)
+
+    const dateOfSale = DateTime.fromISO(saleDate, { zone: "utc" })
     const now = DateTime.local()
     const awaitingResults = dateOfSale > now
 
@@ -468,9 +471,7 @@ const renderLargeCollapse = (props, user, mediator, filtersAtDefault) => {
     estimatedPrice,
   } = getProps(props)
 
-  const dateOfSale = DateTime.fromISO(saleDate).toLocaleString(
-    DateTime.DATE_MED
-  )
+  const dateOfSale = getDisplaySaleDate(saleDate)
 
   return (
     <Collapse open={expanded}>
@@ -561,9 +562,7 @@ const renderSmallCollapse = (props, user, mediator, filtersAtDefault) => {
     estimatedPrice,
   } = getProps(props)
 
-  const dateOfSale = DateTime.fromISO(saleDate).toLocaleString(
-    DateTime.DATE_MED
-  )
+  const dateOfSale = getDisplaySaleDate(saleDate)
 
   return (
     <Collapse open={expanded}>
