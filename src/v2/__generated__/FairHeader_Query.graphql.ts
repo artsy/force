@@ -15,7 +15,9 @@ export type FairHeader_QueryRawResponse = {
     readonly fair: ({
         readonly about: string | null;
         readonly summary: string | null;
-        readonly formattedOpeningHours: string | null;
+        readonly exhibitionPeriod: string | null;
+        readonly startAt: string | null;
+        readonly endAt: string | null;
         readonly name: string | null;
         readonly slug: string;
         readonly profile: ({
@@ -67,7 +69,7 @@ query FairHeader_Query(
 fragment FairHeader_fair on Fair {
   about
   summary
-  formattedOpeningHours
+  ...FairTiming_fair
   name
   slug
   profile {
@@ -95,6 +97,12 @@ fragment FairHeader_fair on Fair {
   links(format: HTML)
   tickets(format: HTML)
   contact(format: HTML)
+}
+
+fragment FairTiming_fair on Fair {
+  exhibitionPeriod
+  startAt
+  endAt
 }
 */
 
@@ -194,7 +202,21 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "formattedOpeningHours",
+            "name": "exhibitionPeriod",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "startAt",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "endAt",
             "storageKey": null
           },
           {
@@ -381,7 +403,7 @@ return {
     "metadata": {},
     "name": "FairHeader_Query",
     "operationKind": "query",
-    "text": "query FairHeader_Query(\n  $slug: String!\n) {\n  fair(id: $slug) {\n    ...FairHeader_fair\n    id\n  }\n}\n\nfragment FairHeader_fair on Fair {\n  about\n  summary\n  formattedOpeningHours\n  name\n  slug\n  profile {\n    icon {\n      cropped(width: 120, height: 120, version: \"square140\") {\n        src: url\n      }\n    }\n    id\n  }\n  image {\n    cropped(width: 750, height: 1000, version: \"wide\") {\n      src: url\n      width\n      height\n    }\n  }\n  tagline\n  location {\n    summary\n    id\n  }\n  ticketsLink\n  hours(format: HTML)\n  links(format: HTML)\n  tickets(format: HTML)\n  contact(format: HTML)\n}\n"
+    "text": "query FairHeader_Query(\n  $slug: String!\n) {\n  fair(id: $slug) {\n    ...FairHeader_fair\n    id\n  }\n}\n\nfragment FairHeader_fair on Fair {\n  about\n  summary\n  ...FairTiming_fair\n  name\n  slug\n  profile {\n    icon {\n      cropped(width: 120, height: 120, version: \"square140\") {\n        src: url\n      }\n    }\n    id\n  }\n  image {\n    cropped(width: 750, height: 1000, version: \"wide\") {\n      src: url\n      width\n      height\n    }\n  }\n  tagline\n  location {\n    summary\n    id\n  }\n  ticketsLink\n  hours(format: HTML)\n  links(format: HTML)\n  tickets(format: HTML)\n  contact(format: HTML)\n}\n\nfragment FairTiming_fair on Fair {\n  exhibitionPeriod\n  startAt\n  endAt\n}\n"
   }
 };
 })();

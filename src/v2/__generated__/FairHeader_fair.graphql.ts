@@ -6,7 +6,6 @@ import { FragmentRefs } from "relay-runtime";
 export type FairHeader_fair = {
     readonly about: string | null;
     readonly summary: string | null;
-    readonly formattedOpeningHours: string | null;
     readonly name: string | null;
     readonly slug: string;
     readonly profile: {
@@ -32,6 +31,7 @@ export type FairHeader_fair = {
     readonly links: string | null;
     readonly tickets: string | null;
     readonly contact: string | null;
+    readonly " $fragmentRefs": FragmentRefs<"FairTiming_fair">;
     readonly " $refType": "FairHeader_fair";
 };
 export type FairHeader_fair$data = FairHeader_fair;
@@ -78,13 +78,6 @@ return {
       "storageKey": null
     },
     (v0/*: any*/),
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "formattedOpeningHours",
-      "storageKey": null
-    },
     {
       "alias": null,
       "args": null,
@@ -255,10 +248,15 @@ return {
       "kind": "ScalarField",
       "name": "contact",
       "storageKey": "contact(format:\"HTML\")"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "FairTiming_fair"
     }
   ],
   "type": "Fair"
 };
 })();
-(node as any).hash = '602875de975ebad7d480faa41e409f8f';
+(node as any).hash = 'f639d9dfb1d75fe2c1d3e0b586ac6d89';
 export default node;
