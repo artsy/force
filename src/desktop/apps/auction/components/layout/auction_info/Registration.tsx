@@ -86,14 +86,14 @@ const Registration: React.FC<RegistrationProps> = props => {
             // User is registered, not qualified
             if (
               userLacksIdentityVerification &&
-              Boolean(user.pendingIdentityVerificationId)
+              Boolean(user?.pendingIdentityVerification?.flowURL)
             ) {
               // User needs IDV and has one pending
               return (
                 <div className={b("wrapper")}>
                   <a
                     className={b("idv-link")}
-                    href={`/identity-verification/${user.pendingIdentityVerificationId}`}
+                    href={user.pendingIdentityVerification.flowURL}
                   >
                     <Button width="100%" size="large">
                       Verify identity
