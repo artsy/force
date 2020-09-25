@@ -19,7 +19,6 @@ import { DateTime } from "luxon"
 import { PurchaseHistory_me } from "v2/__generated__/PurchaseHistory_me.graphql"
 import React, { useState } from "react"
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
-import { get } from "v2/Utils/get"
 import styled from "styled-components"
 import { Media } from "v2/Utils/Responsive"
 
@@ -69,7 +68,7 @@ const getColor = status => {
 
 const OrderRow = (props: OrderRowProps) => {
   const { order } = props
-  const artwork = get(order, o => o.lineItems.edges[0].node.artwork)
+  const artwork = order.lineItems.edges[0].node.artwork
   const { partner } = artwork
 
   const orderCreatedAt = DateTime.fromISO(order.createdAt)
@@ -82,10 +81,11 @@ const OrderRow = (props: OrderRowProps) => {
   const orderIsInactive =
     order.state === "CANCELED" || order.state === "REFUNDED"
 
-  const partnerImageUrl = get(partner, p => p.profile.icon.url)
-  const partnerInitials = get(partner, p => p.initials)
-  const creditCardNumber = get(creditCard, c => c.lastDigits)
-  const fulfillment = get(requestedFulfillment, r => r.__typename)
+  const partnerImageUrl = partner.profile.icon?.url
+  const partnerInitials = partner?.initials
+  const creditCardNumber = creditCard?.lastDigits
+  const fulfillment = requestedFulfillment?.__typename
+
   const isShip = fulfillment === "CommerceShip"
   return (
     <>
@@ -105,7 +105,7 @@ const OrderRow = (props: OrderRowProps) => {
               mr={1.5}
             >
               <StyledImage
-                src={get(artwork, a => a.image.resized.url)}
+                src={artwork.image?.resized?.url}
                 alt={artwork.title}
               />
             </Flex>
@@ -182,7 +182,7 @@ const OrderRow = (props: OrderRowProps) => {
           <Flex p={2} width="100%" alignItems="center">
             <Flex width="50%">
               <StyledImage
-                src={get(artwork, a => a.image.resized.url)}
+                src={artwork.image?.resized?.url}
                 alt={artwork.title}
                 mr={1}
               />
