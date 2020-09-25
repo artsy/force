@@ -20,6 +20,7 @@ module.exports =
   DEPLOY_ENV: null
   EMAIL_SIGNUP_IMAGES_ID: '572a7996b5989e6f98f77992'
   EMBEDLY_KEY: null
+  ENABLE_QUERY_BATCHING: false
   EUROPA_URL: 'http://europa-production.herokuapp.com'
   FACEBOOK_ID: null
   FACEBOOK_SECRET: null
