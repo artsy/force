@@ -419,7 +419,7 @@ const renderEstimate = (estimatedPrice, user, mediator) => {
 }
 
 const renderRealizedPrice = (
-  estimatedPrice,
+  realizedPrice,
   user,
   mediator,
   filtersAtDefault
@@ -427,8 +427,8 @@ const renderRealizedPrice = (
   // Show prices if user is logged in. Otherwise, show prices only when filters at default.
   let body: JSX.Element
   if (user || filtersAtDefault) {
-    if (estimatedPrice) {
-      body = <Sans size="2">{estimatedPrice}</Sans>
+    if (realizedPrice) {
+      body = <Sans size="2">{realizedPrice}</Sans>
     } else {
       body = <Sans size="2">Price not available</Sans>
     }
