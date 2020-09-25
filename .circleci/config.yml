@@ -174,6 +174,7 @@ workflows:
           name: push-staging-image
           <<: *only_master
           requires:
+            - yarn/type-check
             - yarn/jest
             - test:mocha
             - build
