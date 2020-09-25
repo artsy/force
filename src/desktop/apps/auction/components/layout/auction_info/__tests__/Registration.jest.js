@@ -13,45 +13,15 @@ describe("auction/components/layout/auction_info/Registration.test", () => {
           isRegistrationEnded: false,
           showContactInfo: true,
           userNeedsIdentityVerification: false,
+          auction: { attributes: {} },
+          user: {},
         },
       })
 
       expect(wrapper.find(".auction2-registration__wrapper").length).toBe(0)
     })
 
-    it("returns Registration Pending when not qualified for bidding and verified", () => {
-      const { wrapper } = renderTestComponent({
-        Component: Registration,
-        props: {
-          isClosed: false,
-          isRegistrationEnded: false,
-          userRegistration: { qualified_for_bidding: false },
-          showContactInfo: true,
-          userNeedsIdentityVerification: false,
-        },
-      })
-
-      wrapper.text().should.containEql("Registration pending")
-      wrapper.text().should.containEql("Reviewing submitted information")
-    })
-
-    it("returns Registration Pending when not qualified for bidding and not verified", () => {
-      const { wrapper } = renderTestComponent({
-        Component: Registration,
-        props: {
-          isClosed: false,
-          isRegistrationEnded: false,
-          showContactInfo: true,
-          userRegistration: { qualified_for_bidding: false },
-          userNeedsIdentityVerification: true,
-        },
-      })
-
-      wrapper.text().should.containEql("Registration pending")
-      wrapper.text().should.containEql("Identity verification required to bid.")
-    })
-
-    it("returns Approved if the number of bidders is greater than 0 and verified", () => {
+    it("returns Approved if user has a qualified bidder registration", () => {
       const { wrapper } = renderTestComponent({
         Component: Registration,
         props: {
@@ -59,29 +29,65 @@ describe("auction/components/layout/auction_info/Registration.test", () => {
           userRegistration: { qualified_for_bidding: true },
           isRegistrationEnded: false,
           showContactInfo: true,
-          userNeedsIdentityVerification: false,
+          user: {},
+          auction: { attributes: {} },
         },
       })
 
       expect(wrapper.text()).toMatch("Approved to Bid")
     })
 
-    it("returns Approved if the number of bidders is greater than 0 and unverified", () => {
-      const { wrapper } = renderTestComponent({
-        Component: Registration,
-        props: {
-          isClosed: false,
-          userRegistration: { qualified_for_bidding: true },
-          isRegistrationEnded: false,
-          showContactInfo: true,
-          userNeedsIdentityVerification: true,
+    describe("sale requires identity verification", () => {
+      const auction = {
+        attributes: {
+          requireIdentityVerification: true,
         },
+      }
+      it("returns Registration Pending when not qualified for bidding and verified", () => {
+        const { wrapper } = renderTestComponent({
+          Component: Registration,
+          props: {
+            isClosed: false,
+            isRegistrationEnded: false,
+            userRegistration: { qualified_for_bidding: false },
+            showContactInfo: true,
+            auction,
+            user: {
+              identityVerified: true,
+            },
+          },
+        })
+
+        wrapper.find("button").text().should.containEql("Registration pending")
+        wrapper.text().should.containEql("Reviewing submitted information")
       })
 
-      expect(wrapper.text()).toMatch("Approved to Bid")
+      it("Has CTA with link for user to complete id verificaiton if that is blocking their registration", () => {
+        const { wrapper } = renderTestComponent({
+          Component: Registration,
+          props: {
+            isClosed: false,
+            isRegistrationEnded: false,
+            showContactInfo: true,
+            userRegistration: { qualified_for_bidding: false },
+            auction,
+            user: {
+              identityVerified: false,
+              pendingIdentityVerificationId: "idv-id",
+            },
+          },
+        })
+
+        const button = wrapper.find("a").first()
+        expect(button.text()).toContain("Verify identity")
+        expect(button.prop("href")).toEqual("/identity-verification/idv-id")
+        wrapper
+          .text()
+          .should.containEql("Identity verification required to bid.")
+      })
     })
 
-    it("returns Registration Closed if if registration is ended", () => {
+    it("returns Registration Closed if if registration is ended + not registered", () => {
       const { wrapper } = renderTestComponent({
         Component: Registration,
         props: {
@@ -89,7 +95,8 @@ describe("auction/components/layout/auction_info/Registration.test", () => {
           isRegistrationEnded: true,
           showContactInfo: true,
           userRegistration: undefined,
-          userNeedsIdentityVerification: false,
+          user: {},
+          auction: { attributes: {} },
         },
       })
 
@@ -97,41 +104,52 @@ describe("auction/components/layout/auction_info/Registration.test", () => {
       expect(wrapper.text()).toMatch("Registration required to bid")
     })
 
-    it("returns Register to Bid by default", () => {
-      const { wrapper } = renderTestComponent({
-        Component: Registration,
-        props: {
-          isClosed: false,
-          isRegistrationEnded: false,
-          showContactInfo: true,
-          userRegistration: undefined,
-          userNeedsIdentityVerification: false,
-        },
+    describe("user not registered", () => {
+      const userRegistration = null
+      it("Button says 'Register to Bid' + 'registration required' by default", () => {
+        const { wrapper } = renderTestComponent({
+          Component: Registration,
+          props: {
+            isClosed: false,
+            isRegistrationEnded: false,
+            showContactInfo: true,
+            userRegistration,
+            auction: {
+              attributes: {
+                requireIdentityVerification: false,
+              },
+            },
+            user: {
+              identityVerified: false,
+            },
+          },
+        })
+
+        expect(wrapper.find("button").text()).toBe("Register to bid")
+        expect(wrapper.text()).toMatch("Registration required to bid")
       })
 
-      expect(wrapper.text()).toMatch("Register to bid")
-      expect(wrapper.text()).toMatch("Registration required to bid")
-    })
+      it("'Register to bid' button plus ID verification message if applicable to that user+sale", () => {
+        const { wrapper } = renderTestComponent({
+          Component: Registration,
+          props: {
+            isClosed: false,
+            isRegistrationEnded: false,
+            userRegistration,
+            showContactInfo: true,
+            numBidders: 0,
+            auction: { attributes: { requireIdentityVerification: true } },
+            user: { identityVerified: false },
+          },
+        })
 
-    it("returns Register to Bid by default with IDV required", () => {
-      const { wrapper } = renderTestComponent({
-        Component: Registration,
-        props: {
-          isClosed: false,
-          isQualifiedForBidding: true,
-          isRegistrationEnded: false,
-          showContactInfo: true,
-          numBidders: 0,
-          userNeedsIdentityVerification: true,
-        },
+        expect(wrapper.find("button").text()).toBe("Register to bid")
+        expect(wrapper.text()).toMatch("Identity verification required to bid.")
       })
-
-      expect(wrapper.text()).toMatch("Register to bid")
-      expect(wrapper.text()).toMatch("Identity verification required to bid.")
     })
 
-    describe("mobile mode", () => {
-      it("hides contact info if mobile", () => {
+    describe("contact info", () => {
+      it("hides contact info if specified", () => {
         const { wrapper } = renderTestComponent({
           Component: Registration,
           props: {
@@ -140,17 +158,16 @@ describe("auction/components/layout/auction_info/Registration.test", () => {
             showContactInfo: false,
             isRegistrationEnded: false,
             numBidders: 0,
-            userNeedsIdentityVerification: false,
+            auction: { attributes: { requireIdentityVerification: false } },
+            user: {},
           },
         })
 
         expect(wrapper.text()).not.toMatch("Questions?")
         expect(wrapper.text()).not.toMatch("How to Bid on Artsy")
       })
-    })
 
-    describe("desktop mode", () => {
-      it("displays contact info", () => {
+      it("displays contact info if specified", () => {
         const { wrapper } = renderTestComponent({
           Component: Registration,
           props: {
@@ -159,7 +176,8 @@ describe("auction/components/layout/auction_info/Registration.test", () => {
             showContactInfo: true,
             isRegistrationEnded: false,
             numBidders: 0,
-            userNeedsIdentityVerification: false,
+            auction: { attributes: { requireIdentityVerification: false } },
+            user: {},
           },
         })
 

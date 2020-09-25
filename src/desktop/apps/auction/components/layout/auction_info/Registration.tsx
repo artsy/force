@@ -2,36 +2,27 @@ import React from "react"
 import block from "bem-cn-lite"
 import { connect } from "react-redux"
 import { Button, Sans } from "@artsy/palette"
-import { bidderNeedsIdentityVerification } from "v2/Utils/identityVerificationRequirements"
 
-const RegistrationText: React.FC<{
-  userNeedsIdentityVerification: boolean
-  text?: string
-  color?: string
-}> = ({
-  userNeedsIdentityVerification,
-  text = "Registration required to bid",
+const RegistrationMessage: React.FC<{ color?: string }> = ({
   color = "black60",
+  children,
 }) => {
-  if (userNeedsIdentityVerification) {
-    return (
-      <Sans mt="1" size="3" color="black60" textAlign="center">
-        Identity verification required to bid.{" "}
-        <a
-          target="_blank"
-          href="https://www.artsy.net/identity-verification-faq"
-        >
-          FAQ
-        </a>
-      </Sans>
-    )
-  } else {
-    return (
-      <Sans mt="1" size="3" color={color} textAlign="center">
-        {text}
-      </Sans>
-    )
-  }
+  return (
+    <Sans mt="1" size="3" color={color} textAlign="center">
+      {children}
+    </Sans>
+  )
+}
+
+const IDVRequiredMessage = (): JSX.Element => {
+  return (
+    <RegistrationMessage>
+      Identity verification required to bid.{" "}
+      <a target="_blank" href="https://www.artsy.net/identity-verification-faq">
+        FAQ
+      </a>
+    </RegistrationMessage>
+  )
 }
 
 interface RegistrationProps {
@@ -41,23 +32,24 @@ interface RegistrationProps {
   isLiveOpen?: boolean
   isMobile: boolean
   isRegistrationEnded: boolean
-  userRegistration?: { qualified_for_bidding: boolean }
   showContactInfo?: boolean
   user: any
-  userNeedsIdentityVerification?: boolean
+  userRegistration?: { qualified_for_bidding: boolean }
 }
 
 const Registration: React.FC<RegistrationProps> = props => {
   const {
     auction,
-    user,
     isClosed,
     isEcommerceSale,
-    userRegistration,
     isRegistrationEnded,
     showContactInfo,
-    userNeedsIdentityVerification,
+    user,
+    userRegistration,
   } = props
+
+  const userLacksIdentityVerification =
+    auction.attributes.requireIdentityVerification && !user?.identityVerified
 
   const b = block("auction-Registration")
   const trackBidClick = e => {
@@ -79,20 +71,9 @@ const Registration: React.FC<RegistrationProps> = props => {
         if (isClosed) {
           return null
         } else if (Boolean(userRegistration)) {
-          if (!userRegistration.qualified_for_bidding) {
-            return (
-              <div className={b("wrapper")}>
-                <Button width="100%" size="large" disabled>
-                  Registration pending
-                </Button>
-                <RegistrationText
-                  userNeedsIdentityVerification={userNeedsIdentityVerification}
-                  text="Reviewing submitted information"
-                  color="yellow100"
-                />
-              </div>
-            )
-          } else {
+          // User is registered
+          if (userRegistration.qualified_for_bidding) {
+            // User is qualified
             return (
               <div className={b("approved")}>
                 <Sans mt="1" size="3" color="green100">
@@ -101,19 +82,58 @@ const Registration: React.FC<RegistrationProps> = props => {
                 </Sans>
               </div>
             )
+          } else {
+            // User is registered, not qualified
+            if (
+              userLacksIdentityVerification &&
+              Boolean(user.pendingIdentityVerificationId)
+            ) {
+              // User needs IDV and has one pending
+              return (
+                <div className={b("wrapper")}>
+                  <a
+                    className={b("idv-link")}
+                    href={`/identity-verification/${user.pendingIdentityVerificationId}`}
+                  >
+                    <Button width="100%" size="large">
+                      Verify identity
+                    </Button>
+                  </a>
+                  <IDVRequiredMessage />
+                </div>
+              )
+            } else {
+              // Any other unqualified case, including a user lacking idv with no pending IDV available
+              return (
+                <div className={b("wrapper")}>
+                  <Button width="100%" size="large" disabled>
+                    Registration pending
+                  </Button>
+                  {userLacksIdentityVerification ? (
+                    <IDVRequiredMessage />
+                  ) : (
+                    <RegistrationMessage color="yellow100">
+                      Reviewing submitted information
+                    </RegistrationMessage>
+                  )}
+                </div>
+              )
+            }
           }
         } else if (isRegistrationEnded) {
+          // Registration is closed
           return (
             <div className={b("wrapper")}>
               <Button width="100%" size="large" disabled>
                 Registration closed
               </Button>
-              <Sans mt="1" size="3" color="black60" textAlign="center">
+              <RegistrationMessage>
                 Registration required to bid
-              </Sans>
+              </RegistrationMessage>
             </div>
           )
         } else {
+          // Registration is open
           return (
             <div className={b("wrapper")}>
               <div className="js-register-button">
@@ -121,9 +141,13 @@ const Registration: React.FC<RegistrationProps> = props => {
                   Register to bid
                 </Button>
               </div>
-              <RegistrationText
-                userNeedsIdentityVerification={userNeedsIdentityVerification}
-              />
+              {userLacksIdentityVerification ? (
+                <IDVRequiredMessage />
+              ) : (
+                <RegistrationMessage>
+                  Registration required to bid
+                </RegistrationMessage>
+              )}
             </div>
           )
         }
@@ -151,16 +175,10 @@ const Registration: React.FC<RegistrationProps> = props => {
 }
 
 const mapStateToProps = (state): RegistrationProps => {
-  const { auction, isEcommerceSale, isMobile, me } = state.app
+  const { auction, isEcommerceSale, isMobile, me: user } = state.app
 
-  const userRegistration = me?.bidders?.[0]
+  const userRegistration = user?.bidders?.[0]
   const showContactInfo = !isMobile
-  const userNeedsIdentityVerification = bidderNeedsIdentityVerification({
-    sale: auction.attributes,
-    user: me,
-    bidder: userRegistration,
-  })
-
   return {
     auction,
     isClosed: auction.isClosed() || auction.get("clockState") === "closed",
@@ -170,8 +188,7 @@ const mapStateToProps = (state): RegistrationProps => {
     isRegistrationEnded: auction.isRegistrationEnded(),
     userRegistration,
     showContactInfo,
-    user: me,
-    userNeedsIdentityVerification,
+    user,
   }
 }
 
