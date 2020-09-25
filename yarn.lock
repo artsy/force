@@ -83,7 +83,7 @@
   dependencies:
     passport-strategy "1.x.x"
 
-"@artsy/passport@^1.4.0":
+"@artsy/passport@1.4.0":
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/@artsy/passport/-/passport-1.4.0.tgz#095b504b9941c755b15bd6af00833ae27bfe2679"
   integrity sha512-htOaR+EF2yqgoWkxTpvW/gp5pmNg0ndYlLsDAtzm1m2MXAXxhzeFQ6ytpzJQEQm7ngngl58YdSum9/Uhjn/38w==
