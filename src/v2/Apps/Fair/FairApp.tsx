@@ -11,13 +11,6 @@ import { FairHeaderFragmentContainer as FairHeader } from "./Components/FairHead
 import { RouteTab, RouteTabs } from "v2/Components/RouteTabs"
 import { FairMetaFragmentContainer as FairMeta } from "./Components/FairMeta"
 import { FairCollectionsFragmentContainer as FairCollections } from "./Components/FairCollections"
-import styled from "styled-components"
-
-const Cell = styled(Box).attrs({
-  width: "100%",
-  maxWidth: ["auto", 540],
-  mx: "auto",
-})``
 
 interface FairAppProps {
   fair: FairApp_fair
@@ -38,47 +31,34 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
         <HorizontalPadding>
           <FairHeader mt={2} fair={fair} />
 
-          {(hasArticles || hasCollections) && (
-            <CSSGrid
-              my={3}
-              pt={3}
-              borderTop="1px solid"
-              borderColor="black10"
-              gridColumnGap={3}
-              gridTemplateColumns={[
-                "repeat(1, 1fr)",
-                `repeat(${columnCount}, 1fr)`,
-              ]}
-            >
-              {hasArticles && (
-                <Cell>
-                  <Text variant="subtitle" as="h3" mb={2}>
-                    Related articles
-                  </Text>
+          {hasArticles && (
+            <Box my={3} pt={3} borderTop="1px solid" borderColor="black10">
+              <Text variant="subtitle" as="h3" mb={2}>
+                Related articles
+              </Text>
 
-                  <FairEditorial fair={fair} />
-                </Cell>
-              )}
+              <CSSGrid
+                gridAutoFlow="row"
+                gridColumnGap={3}
+                gridRowGap={2}
+                gridTemplateColumns={[
+                  "repeat(1, 1fr)",
+                  `repeat(${columnCount}, 1fr)`,
+                ]}
+              >
+                <FairEditorial fair={fair} />
+              </CSSGrid>
+            </Box>
+          )}
 
-              {hasCollections && (
-                <Cell
-                  {...(hasArticles
-                    ? {
-                        borderTop: ["1px solid", "none"],
-                        borderColor: "black10",
-                        py: [2, 0],
-                        mt: [2, 0],
-                      }
-                    : {})}
-                >
-                  <Text variant="subtitle" as="h3" mb={2}>
-                    Curated highlights
-                  </Text>
+          {hasCollections && (
+            <Box my={3} pt={3} borderTop="1px solid" borderColor="black10">
+              <Text variant="subtitle" as="h3" mb={2}>
+                Curated highlights
+              </Text>
 
-                  <FairCollections fair={fair} />
-                </Cell>
-              )}
-            </CSSGrid>
+              <FairCollections fair={fair} />
+            </Box>
           )}
 
           <RouteTabs>
@@ -116,7 +96,7 @@ export default createFragmentContainer(FairApp, {
           __typename
         }
       }
-      marketingCollections(size: 1) {
+      marketingCollections(size: 4) {
         __typename
       }
     }

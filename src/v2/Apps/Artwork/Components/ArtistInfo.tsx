@@ -138,8 +138,6 @@ export class ArtistInfo extends Component<ArtistInfoProps, ArtistInfoState> {
                     render={({ is_followed }) => {
                       return (
                         <Text
-                          variant="caption"
-                          color="black"
                           data-test="followButton"
                           style={{
                             cursor: "pointer",

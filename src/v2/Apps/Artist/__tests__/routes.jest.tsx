@@ -233,7 +233,7 @@ const overviewArtist: routes_ArtistTopLevelQueryRawResponse["artist"] = {
       edges: [],
     },
   },
-  artistHightlights: {
+  artistHighlights: {
     partnersConnection: {
       edges: [],
     },

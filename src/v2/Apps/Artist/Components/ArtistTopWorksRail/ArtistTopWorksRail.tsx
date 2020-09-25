@@ -75,7 +75,7 @@ export const ArtistTopWorksRail: React.FC<ArtistTopWorksRailProps> = ({
           </Media>
         </StyledLink>
       </Flex>
-      <Carousel mb={3} arrowHeight={HEIGHT}>
+      <Carousel arrowHeight={HEIGHT}>
         {artworks.map(({ node }, index) => {
           const { id, slug } = node
 

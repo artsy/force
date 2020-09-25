@@ -1,4 +1,4 @@
-import { Flex, Serif, color } from "@artsy/palette"
+import { Flex, Text, color } from "@artsy/palette"
 import Icon from "v2/Components/Icon"
 import React from "react"
 import styled from "styled-components"
@@ -14,21 +14,21 @@ export const FollowIconContainer = styled(Flex)`
 `
 
 const Follow = styled(props => (
-  <Serif size="2" {...props}>
+  <Text variant="caption" {...props}>
     Follow
-  </Serif>
+  </Text>
 ))``
 
 const Unfollow = styled(props => (
-  <Serif size="2" {...props}>
+  <Text variant="caption" {...props}>
     Unfollow
-  </Serif>
+  </Text>
 ))``
 
 const Following = styled(props => (
-  <Serif size="2" {...props}>
+  <Text variant="caption" {...props}>
     Following
-  </Serif>
+  </Text>
 ))``
 
 const FollowingHover = styled.div`
