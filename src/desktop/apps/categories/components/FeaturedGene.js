@@ -1,7 +1,7 @@
 import React from "react"
 import PropTypes from "prop-types"
 import styled from "styled-components"
-import { avantgarde } from "v2/Assets/Fonts"
+import { Text } from "@artsy/palette"
 
 const propTypes = {
   title: PropTypes.string,
@@ -15,17 +15,14 @@ const Container = styled.div`
   overflow: hidden;
 `
 
-const GeneName = styled.span`
+const GeneName = styled(Text).attrs({ variant: "mediumText" })`
   position: absolute;
   left: 1em;
-  bottom: 1em;
+  bottom: 0.85em;
   text-decoration: none;
 
   color: white;
   text-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
-
-  ${avantgarde("s13")};
-  font-weight: bold;
 `
 
 const GeneImage = styled.img`
@@ -37,7 +34,7 @@ const FeaturedGene = ({ title, href, image: { url: imageSrc } }) => {
     <a href={href}>
       <Container>
         <GeneName>{title}</GeneName>
-        <GeneImage src={imageSrc} />
+        <GeneImage src={imageSrc} alt={title} />
       </Container>
     </a>
   )

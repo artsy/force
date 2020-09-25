@@ -1,3 +1,4 @@
+import { Theme } from "@artsy/palette"
 import React, { Component } from "react"
 import PropTypes from "prop-types"
 import styled from "styled-components"
@@ -20,10 +21,12 @@ class App extends Component {
   render() {
     const { geneFamilies, allFeaturedGenesByFamily } = this.props
     return (
-      <Layout>
-        <GeneFamilyNav geneFamilies={geneFamilies} />
-        <TAGPContent geneFamilies={geneFamilies} />
-      </Layout>
+      <Theme>
+        <Layout>
+          <GeneFamilyNav geneFamilies={geneFamilies} />
+          <TAGPContent geneFamilies={geneFamilies} />
+        </Layout>
+      </Theme>
     )
   }
 }
