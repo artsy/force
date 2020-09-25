@@ -6344,6 +6344,9 @@ type HomePageSalesModule {
 }
 
 type IdentityVerification {
+  # Verification flow entry point
+  flowURL: String
+
   # A globally unique ID.
   id: ID!
 
@@ -6987,6 +6990,9 @@ type Me implements Node {
     state: CommerceOrderStateEnum
   ): CommerceOrderConnectionWithTotalCount
   paddleNumber: String
+
+  # The user's most current pending identity verification, if it exists
+  pendingIdentityVerification: IdentityVerification
   phone: String
 
   # This user should receive lot opening notifications
