@@ -26,7 +26,7 @@ describe("auction/components/layout/auction_info/Registration.test", () => {
         Component: Registration,
         props: {
           isClosed: false,
-          userRegistration: { qualified_for_bidding: true },
+          userRegistration: { qualifiedForBidding: true },
           isRegistrationEnded: false,
           showContactInfo: true,
           user: {},
@@ -39,17 +39,15 @@ describe("auction/components/layout/auction_info/Registration.test", () => {
 
     describe("sale requires identity verification", () => {
       const auction = {
-        attributes: {
-          requireIdentityVerification: true,
-        },
+        isClosed: false,
+        requireIdentityVerification: true,
+        isRegistrationEnded: false,
       }
-      it("returns Registration Pending when not qualified for bidding and verified", () => {
+      it("returns Registration Pending when not qualified for bidding but verified", () => {
         const { wrapper } = renderTestComponent({
           Component: Registration,
           props: {
-            isClosed: false,
-            isRegistrationEnded: false,
-            userRegistration: { qualified_for_bidding: false },
+            userRegistration: { qualifiedForBidding: false },
             showContactInfo: true,
             auction,
             user: {
@@ -62,18 +60,18 @@ describe("auction/components/layout/auction_info/Registration.test", () => {
         wrapper.text().should.containEql("Reviewing submitted information")
       })
 
-      it("Has CTA with link for user to complete id verificaiton if that is blocking their registration", () => {
+      it("Has CTA with link for user to complete id verification if that is blocking their registration", () => {
         const { wrapper } = renderTestComponent({
           Component: Registration,
           props: {
-            isClosed: false,
-            isRegistrationEnded: false,
             showContactInfo: true,
-            userRegistration: { qualified_for_bidding: false },
+            userRegistration: { qualifiedForBidding: false },
             auction,
             user: {
               identityVerified: false,
-              pendingIdentityVerificationId: "idv-id",
+              pendingIdentityVerification: {
+                internalID: "idv-id",
+              },
             },
           },
         })
@@ -91,12 +89,13 @@ describe("auction/components/layout/auction_info/Registration.test", () => {
       const { wrapper } = renderTestComponent({
         Component: Registration,
         props: {
-          isClosed: false,
-          isRegistrationEnded: true,
           showContactInfo: true,
           userRegistration: undefined,
           user: {},
-          auction: { attributes: {} },
+          auction: {
+            isClosed: false,
+            isRegistrationEnded: true,
+          },
         },
       })
 
@@ -110,14 +109,12 @@ describe("auction/components/layout/auction_info/Registration.test", () => {
         const { wrapper } = renderTestComponent({
           Component: Registration,
           props: {
-            isClosed: false,
-            isRegistrationEnded: false,
             showContactInfo: true,
             userRegistration,
             auction: {
-              attributes: {
-                requireIdentityVerification: false,
-              },
+              isClosed: false,
+              isRegistrationEnded: false,
+              requireIdentityVerification: false,
             },
             user: {
               identityVerified: false,
@@ -133,12 +130,13 @@ describe("auction/components/layout/auction_info/Registration.test", () => {
         const { wrapper } = renderTestComponent({
           Component: Registration,
           props: {
-            isClosed: false,
-            isRegistrationEnded: false,
             userRegistration,
             showContactInfo: true,
-            numBidders: 0,
-            auction: { attributes: { requireIdentityVerification: true } },
+            auction: {
+              requireIdentityVerification: true,
+              isClosed: false,
+              isRegistrationEnded: false,
+            },
             user: { identityVerified: false },
           },
         })
@@ -153,12 +151,12 @@ describe("auction/components/layout/auction_info/Registration.test", () => {
         const { wrapper } = renderTestComponent({
           Component: Registration,
           props: {
-            isClosed: false,
-            isQualifiedForBidding: true,
             showContactInfo: false,
-            isRegistrationEnded: false,
-            numBidders: 0,
-            auction: { attributes: { requireIdentityVerification: false } },
+            auction: {
+              isClosed: false,
+              isRegistrationEnded: false,
+              requireIdentityVerification: false,
+            },
             user: {},
           },
         })
@@ -171,12 +169,13 @@ describe("auction/components/layout/auction_info/Registration.test", () => {
         const { wrapper } = renderTestComponent({
           Component: Registration,
           props: {
-            isClosed: false,
-            isQualifiedForBidding: true,
             showContactInfo: true,
-            isRegistrationEnded: false,
-            numBidders: 0,
-            auction: { attributes: { requireIdentityVerification: false } },
+            auction: {
+              isClosed: false,
+              isQualifiedForBidding: true,
+              requireIdentityVerification: false,
+              isRegistrationEnded: false,
+            },
             user: {},
           },
         })

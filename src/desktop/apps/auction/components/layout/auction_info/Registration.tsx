@@ -26,37 +26,47 @@ const IDVRequiredMessage = (): JSX.Element => {
 }
 
 interface RegistrationProps {
-  auction: any
-  isClosed: boolean
+  auction: {
+    id: string
+    auctionState: string
+    isClosed: boolean
+    isLiveOpen?: boolean
+    isRegistrationEnded: boolean
+    requireIdentityVerification: boolean
+  }
   isEcommerceSale?: boolean
-  isLiveOpen?: boolean
   isMobile: boolean
-  isRegistrationEnded: boolean
   showContactInfo?: boolean
-  user: any
-  userRegistration?: { qualified_for_bidding: boolean }
+  user: {
+    id: string
+    identityVerified: boolean
+
+    pendingIdentityVerification?: {
+      internalID: string
+    }
+  }
+  userRegistration?: { qualifiedForBidding: boolean }
 }
 
 const Registration: React.FC<RegistrationProps> = props => {
   const {
     auction,
-    isClosed,
     isEcommerceSale,
-    isRegistrationEnded,
     showContactInfo,
     user,
     userRegistration,
   } = props
 
   const userLacksIdentityVerification =
-    auction.attributes.requireIdentityVerification && !user?.identityVerified
+    auction.requireIdentityVerification && !user.identityVerified
+  const { pendingIdentityVerification } = user
 
   const b = block("auction-Registration")
-  const trackBidClick = e => {
-    window.analytics.track('Clicked "Register to bid"', {
+  const trackClick = desc => e => {
+    window.analytics.track(desc, {
       context_type: "auctions landing",
       auction_slug: auction.id,
-      auction_state: auction.get("auction_state"),
+      auction_state: auction.auctionState,
       user_id: user && user.id,
     })
   }
@@ -68,11 +78,11 @@ const Registration: React.FC<RegistrationProps> = props => {
   return (
     <div className={b()}>
       {(() => {
-        if (isClosed) {
+        if (auction.isClosed) {
           return null
         } else if (Boolean(userRegistration)) {
           // User is registered
-          if (userRegistration.qualified_for_bidding) {
+          if (userRegistration.qualifiedForBidding) {
             // User is qualified
             return (
               <div className={b("approved")}>
@@ -86,16 +96,20 @@ const Registration: React.FC<RegistrationProps> = props => {
             // User is registered, not qualified
             if (
               userLacksIdentityVerification &&
-              Boolean(user?.pendingIdentityVerification?.flowURL)
+              Boolean(pendingIdentityVerification)
             ) {
               // User needs IDV and has one pending
               return (
                 <div className={b("wrapper")}>
                   <a
                     className={b("idv-link")}
-                    href={user.pendingIdentityVerification.flowURL}
+                    href={`/identity-verification/${pendingIdentityVerification.internalID}`}
                   >
-                    <Button width="100%" size="large">
+                    <Button
+                      width="100%"
+                      size="large"
+                      onClick={trackClick('Clicked "Verify identity"')}
+                    >
                       Verify identity
                     </Button>
                   </a>
@@ -120,7 +134,7 @@ const Registration: React.FC<RegistrationProps> = props => {
               )
             }
           }
-        } else if (isRegistrationEnded) {
+        } else if (auction.isRegistrationEnded) {
           // Registration is closed
           return (
             <div className={b("wrapper")}>
@@ -137,7 +151,11 @@ const Registration: React.FC<RegistrationProps> = props => {
           return (
             <div className={b("wrapper")}>
               <div className="js-register-button">
-                <Button width="100%" size="large" onClick={trackBidClick}>
+                <Button
+                  width="100%"
+                  size="large"
+                  onClick={trackClick('Clicked "Register to bid"')}
+                >
                   Register to bid
                 </Button>
               </div>
@@ -180,13 +198,19 @@ const mapStateToProps = (state): RegistrationProps => {
   const userRegistration = user?.bidders?.[0]
   const showContactInfo = !isMobile
   return {
-    auction,
-    isClosed: auction.isClosed() || auction.get("clockState") === "closed",
+    auction: {
+      id: auction.id,
+      requireIdentityVerification: auction.get("requireIdentityVerification"),
+      auctionState: auction.get("auction_state"),
+      isClosed: auction.isClosed() || auction.get("clockState") === "closed",
+      isLiveOpen: auction.get("is_live_open"),
+      isRegistrationEnded: auction.isRegistrationEnded(),
+    },
     isEcommerceSale,
     isMobile,
-    isLiveOpen: auction.get("is_live_open"),
-    isRegistrationEnded: auction.isRegistrationEnded(),
-    userRegistration,
+    userRegistration: {
+      qualifiedForBidding: userRegistration.qualified_for_bidding,
+    },
     showContactInfo,
     user,
   }

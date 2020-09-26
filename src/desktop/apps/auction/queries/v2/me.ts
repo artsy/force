@@ -5,7 +5,7 @@ export const meV2Query = `
       has_credit_cards: hasCreditCards
       identityVerified
       pendingIdentityVerification {
-        flowURL
+        internalID
       }
       bidders(saleID: $saleId) {
         qualified_for_bidding: qualifiedForBidding
