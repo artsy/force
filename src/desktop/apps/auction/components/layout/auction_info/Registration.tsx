@@ -37,7 +37,7 @@ interface RegistrationProps {
   isEcommerceSale?: boolean
   isMobile: boolean
   showContactInfo?: boolean
-  user: {
+  user?: {
     id: string
     identityVerified: boolean
 
@@ -58,8 +58,8 @@ const Registration: React.FC<RegistrationProps> = props => {
   } = props
 
   const userLacksIdentityVerification =
-    auction.requireIdentityVerification && !user.identityVerified
-  const { pendingIdentityVerification } = user
+    auction.requireIdentityVerification && !user?.identityVerified
+  const pendingIdentityVerification = user?.pendingIdentityVerification
 
   const b = block("auction-Registration")
   const trackClick = desc => e => {
@@ -67,7 +67,7 @@ const Registration: React.FC<RegistrationProps> = props => {
       context_type: "auctions landing",
       auction_slug: auction.id,
       auction_state: auction.auctionState,
-      user_id: user && user.id,
+      user_id: user?.id,
     })
   }
 
@@ -208,7 +208,7 @@ const mapStateToProps = (state): RegistrationProps => {
     },
     isEcommerceSale,
     isMobile,
-    userRegistration: {
+    userRegistration: userRegistration && {
       qualifiedForBidding: userRegistration.qualified_for_bidding,
     },
     showContactInfo,
