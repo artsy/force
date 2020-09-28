@@ -22,10 +22,15 @@ import {
 } from "react-relay"
 import { openAuthToFollowSave } from "v2/Utils/openAuthModal"
 import { Mediator } from "v2/Artsy"
+import {
+  AnalyticsContextProps,
+  withAnalyticsContext,
+} from "v2/Artsy/Analytics/AnalyticsContext"
 
 interface Props
   extends React.HTMLProps<FollowArtistButton>,
-    Artsy.SystemContextProps {
+    Artsy.SystemContextProps,
+    AnalyticsContextProps {
   relay?: RelayProp
   mediator?: Mediator
   artist?: FollowArtistButton_artist
@@ -60,18 +65,30 @@ export class FollowArtistButton extends React.Component<Props, State> {
   state = { openSuggestions: false }
 
   trackFollow = () => {
-    const { tracking, artist } = this.props
+    const {
+      tracking,
+      artist,
+      trackingData,
+      contextPageOwnerId,
+      contextPageOwnerSlug,
+      contextPageOwnerType,
+    } = this.props
+
+    // FIXME: remove contextOwner from trackingData when apps use AnalyticsContext
     const args: FollowedArgs = {
       ownerId: artist.internalID,
       ownerSlug: artist.slug,
-      ...this.props.trackingData,
+      contextModule: trackingData.contextModule,
+      contextOwnerId: contextPageOwnerId || trackingData.contextOwnerId,
+      contextOwnerSlug: contextPageOwnerSlug || trackingData.contextOwnerSlug,
+      contextOwnerType: contextPageOwnerType || trackingData.contextOwnerType,
     }
 
-    const trackingData = artist.is_followed
+    const analyticsData = artist.is_followed
       ? unfollowedArtist(args)
       : followedArtist(args)
 
-    tracking.trackEvent(trackingData)
+    tracking.trackEvent(analyticsData)
   }
 
   handleFollow = e => {
@@ -189,7 +206,9 @@ export class FollowArtistButton extends React.Component<Props, State> {
 }
 
 export const FollowArtistButtonFragmentContainer = createFragmentContainer(
-  Artsy.withSystemContext(FollowArtistButton) as React.ComponentType<Props>,
+  Artsy.withSystemContext(
+    withAnalyticsContext(FollowArtistButton)
+  ) as React.ComponentType<Props>,
   {
     artist: graphql`
       fragment FollowArtistButton_artist on Artist

@@ -4,7 +4,7 @@ export interface FollowTrackingData {
   contextModule: AuthContextModule
   contextOwnerId?: string
   contextOwnerSlug?: string
-  contextOwnerType: OwnerType
+  contextOwnerType?: OwnerType
 }
 
 export interface FollowDeprecatedTrackingData {

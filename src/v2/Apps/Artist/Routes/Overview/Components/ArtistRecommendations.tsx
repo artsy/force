@@ -35,15 +35,7 @@ export const ArtistRecommendations: React.FC<ArtistRecommendationsProps> = ({
     a => a.related.artistsConnection.edges,
     []
   ).map(edge => (
-    <RecommendedArtist
-      artist={edge.node}
-      key={edge.node.id}
-      fullBleedRail
-      trackingData={{
-        contextOwnerId: artist.internalID,
-        contextOwnerSlug: artist.slug,
-      }}
-    />
+    <RecommendedArtist artist={edge.node} key={edge.node.id} fullBleedRail />
   ))
 
   const fetchData = () => {

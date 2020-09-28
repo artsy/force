@@ -8,6 +8,7 @@ import { FollowArtistButtonFragmentContainer as FollowArtistButton } from "../Fo
 import { ContextModule, OwnerType } from "@artsy/cohesion"
 import * as openAuthModal from "v2/Utils/openAuthModal"
 import renderer from "react-test-renderer"
+import { AnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
 
 const openAuthToFollowSave = jest.spyOn(openAuthModal, "openAuthToFollowSave")
 jest.mock("react-relay", () => ({
@@ -21,7 +22,15 @@ describe("FollowArtistButton", () => {
   const getWrapper = (passedProps = props, user = {}) => {
     return mount(
       <SystemContextProvider user={user} mediator={mediator}>
-        <FollowArtistButton {...passedProps} />
+        <AnalyticsContext.Provider
+          value={{
+            contextPageOwnerId: "54321",
+            contextPageOwnerType: OwnerType.artwork,
+            contextPageOwnerSlug: "andy-warhol-skull",
+          }}
+        >
+          <FollowArtistButton {...passedProps} />
+        </AnalyticsContext.Provider>
       </SystemContextProvider>
     )
   }
@@ -36,7 +45,6 @@ describe("FollowArtistButton", () => {
     props = {
       artist: {
         internalID: "12345",
-        id: "1234",
         slug: "damon-zucconi",
         name: "Damon Zucconi",
         is_followed: false,
@@ -46,10 +54,7 @@ describe("FollowArtistButton", () => {
       relay: { environment: "" },
       tracking: { trackEvent: jest.fn() },
       trackingData: {
-        ownerSlug: "damon-zucconi",
-        ownerId: "1234",
         contextModule: ContextModule.artistsToFollowRail,
-        contextOwnerType: OwnerType.home,
       },
     }
   })
@@ -78,7 +83,6 @@ describe("FollowArtistButton", () => {
           counts: {
             follows: 99,
           },
-          id: "1234",
           internalID: "12345",
           is_followed: false,
           name: "Damon Zucconi",
@@ -125,10 +129,10 @@ describe("FollowArtistButton", () => {
       expect(props.tracking.trackEvent).toBeCalledWith({
         action: "followedArtist",
         context_module: "artistsToFollowRail",
-        context_owner_id: undefined,
-        context_owner_slug: undefined,
-        context_owner_type: "home",
-        owner_id: "1234",
+        context_owner_id: "54321",
+        context_owner_slug: "andy-warhol-skull",
+        context_owner_type: "artwork",
+        owner_id: "12345",
         owner_slug: "damon-zucconi",
         owner_type: "artist",
       })
@@ -142,10 +146,10 @@ describe("FollowArtistButton", () => {
       expect(props.tracking.trackEvent).toBeCalledWith({
         action: "unfollowedArtist",
         context_module: "artistsToFollowRail",
-        context_owner_id: undefined,
-        context_owner_slug: undefined,
-        context_owner_type: "home",
-        owner_id: "1234",
+        context_owner_id: "54321",
+        context_owner_slug: "andy-warhol-skull",
+        context_owner_type: "artwork",
+        owner_id: "12345",
         owner_slug: "damon-zucconi",
         owner_type: "artist",
       })

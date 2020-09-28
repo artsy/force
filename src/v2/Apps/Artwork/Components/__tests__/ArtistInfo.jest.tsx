@@ -147,15 +147,7 @@ describe("ArtistInfo", () => {
   describe("Analytics", () => {
     it("tracks click on 'Show artist insights' button", () => {
       const { Component, dispatch } = mockTracking(ArtistInfo)
-      const component = mount(
-        <Component
-          trackingData={{
-            contextOwnerSlug: "slug",
-            contextOwnerId: "1234",
-          }}
-          artist={ArtistInfoFixture as any}
-        />
-      )
+      const component = mount(<Component artist={ArtistInfoFixture as any} />)
       const button = component.find("Button")
       button.simulate("click")
       expect(dispatch).toBeCalledWith({

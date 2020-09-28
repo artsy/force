@@ -1,4 +1,4 @@
-import { ContextModule, OwnerType } from "@artsy/cohesion"
+import { ContextModule } from "@artsy/cohesion"
 import { EntityHeader, ReadMore, Text, breakpoints } from "@artsy/palette"
 import { Box, Col, Flex, Grid, Row, Spacer, color, media } from "@artsy/palette"
 import { Header_artworks } from "v2/__generated__/Header_artworks.graphql"
@@ -74,9 +74,6 @@ export const featuredArtistsEntityCollection: (
               artist={artist}
               user={user}
               trackingData={{
-                contextOwnerId: collection.id,
-                contextOwnerSlug: collection.slug,
-                contextOwnerType: OwnerType.collection,
                 contextModule: ContextModule.featuredArtistsRail,
               }}
               render={({ is_followed }) => {

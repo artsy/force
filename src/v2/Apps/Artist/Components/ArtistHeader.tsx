@@ -1,8 +1,8 @@
-import { ContextModule, Intent } from "@artsy/cohesion"
+import { ContextModule } from "@artsy/cohesion"
 import { Box, Text } from "@artsy/palette"
 import { ArtistHeader_artist } from "v2/__generated__/ArtistHeader_artist.graphql"
 import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
-import { Mediator, SystemContextConsumer } from "v2/Artsy"
+import { SystemContextConsumer } from "v2/Artsy"
 import { FollowArtistButtonFragmentContainer as FollowArtistButton } from "v2/Components/FollowButton/FollowArtistButton"
 import React, { Component } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -49,10 +49,9 @@ const formatFollowerCount = (n: number) => {
 interface ArtistHeaderProps {
   artist: ArtistHeader_artist
   user?: User
-  mediator?: Mediator
 }
 
-export class ArtistHeader extends Component<Props> {
+export class ArtistHeader extends Component<ArtistHeaderProps> {
   render() {
     const props = this.props
     return (
@@ -63,11 +62,11 @@ export class ArtistHeader extends Component<Props> {
               <span id="jumpto-ArtistHeader" />
 
               <Media at="xs">
-                <SmallArtistHeader mediator={mediator} user={user} {...props} />
+                <SmallArtistHeader user={user} {...props} />
               </Media>
 
               <Media greaterThan="xs">
-                <LargeArtistHeader mediator={mediator} user={user} {...props} />
+                <LargeArtistHeader user={user} {...props} />
               </Media>
             </>
           )
@@ -80,7 +79,6 @@ export class ArtistHeader extends Component<Props> {
 export const LargeArtistHeader: React.FC<ArtistHeaderProps> = ({
   user,
   artist,
-  mediator,
 }) => {
   const topAuctionResult = getTopAuctionResult(artist)
   const highCategory = getHighCategory(artist)
@@ -155,9 +153,6 @@ export const LargeArtistHeader: React.FC<ArtistHeaderProps> = ({
             user={user}
             trackingData={{
               contextModule: ContextModule.artistHeader,
-              contextOwnerType: OwnerType.artist,
-              contextOwnerId: props.artist.internalID,
-              contextOwnerSlug: props.artist.slug,
             }}
           >
             Follow
@@ -171,7 +166,6 @@ export const LargeArtistHeader: React.FC<ArtistHeaderProps> = ({
 export const SmallArtistHeader: React.FC<ArtistHeaderProps> = ({
   user,
   artist,
-  mediator,
 }) => {
   const topAuctionResult = getTopAuctionResult(artist)
   const highCategory = getHighCategory(artist)
@@ -221,13 +215,8 @@ export const SmallArtistHeader: React.FC<ArtistHeaderProps> = ({
         <FollowArtistButton
           user={user}
           artist={artist}
-          useDeprecatedButtonStyle={false}
-          buttonProps={{ size: "small" }}
           trackingData={{
             contextModule: ContextModule.artistHeader,
-            contextOwnerType: OwnerType.artist,
-            contextOwnerId: props.artist.internalID,
-            contextOwnerSlug: props.artist.slug,
           }}
         />
       </Box>

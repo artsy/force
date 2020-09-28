@@ -2,7 +2,7 @@ import { storiesOf } from "@storybook/react"
 import React from "react"
 import { FollowArtistButton } from "../FollowButton/FollowArtistButton"
 import { FollowProfileButton } from "../FollowButton/FollowProfileButton"
-import { ContextModule, OwnerType } from "@artsy/cohesion"
+import { ContextModule } from "@artsy/cohesion"
 
 storiesOf("Components/Follow Button", module)
   .add("Artist", () => {
@@ -19,7 +19,6 @@ storiesOf("Components/Follow Button", module)
           }
           trackingData={{
             contextModule: ContextModule.relatedArtistsRail,
-            contextOwnerType: OwnerType.home,
           }}
         />
         <br />
@@ -34,7 +33,6 @@ storiesOf("Components/Follow Button", module)
           }
           trackingData={{
             contextModule: ContextModule.relatedArtistsRail,
-            contextOwnerType: OwnerType.home,
           }}
         />
       </div>

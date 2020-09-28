@@ -5,7 +5,7 @@ import { FollowIcon } from "v2/Components/FollowIcon"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 
-import { ContextModule, OwnerType } from "@artsy/cohesion"
+import { ContextModule } from "@artsy/cohesion"
 import { ArtworkSidebarArtists_artwork } from "v2/__generated__/ArtworkSidebarArtists_artwork.graphql"
 import { FollowArtistButtonFragmentContainer as FollowArtistButton } from "v2/Components/FollowButton/FollowArtistButton"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
@@ -42,9 +42,6 @@ export class ArtworkSidebarArtists extends React.Component<ArtistsProps> {
           user={user}
           trackingData={{
             contextModule: ContextModule.artworkSidebar,
-            contextOwnerId: artwork.internalID,
-            contextOwnerSlug: artwork.slug,
-            contextOwnerType: OwnerType.artwork,
           }}
           triggerSuggestions
           render={({ is_followed }) => {
@@ -88,7 +85,7 @@ export class ArtworkSidebarArtists extends React.Component<ArtistsProps> {
     } = this.props
     return (
       <SystemContextConsumer>
-        {({ user, mediator }) => {
+        {({ user }) => {
           return (
             <Box>
               {artists.length === 1

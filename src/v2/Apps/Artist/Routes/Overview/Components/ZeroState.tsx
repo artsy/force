@@ -1,4 +1,4 @@
-import { ContextModule, OwnerType } from "@artsy/cohesion"
+import { ContextModule } from "@artsy/cohesion"
 import { Clickable, Message, Sans } from "@artsy/palette"
 import { useSystemContext } from "v2/Artsy"
 import { FollowArtistButtonFragmentContainer as FollowArtistButton } from "v2/Components/FollowButton/FollowArtistButton"
@@ -18,9 +18,6 @@ export const ZeroState = props => {
             user={user}
             trackingData={{
               contextModule: ContextModule.worksForSaleRail,
-              contextOwnerId: artist.internalID,
-              contextOwnerSlug: artist.slug,
-              contextOwnerType: OwnerType.artist,
             }}
             render={({ name }) => {
               return (

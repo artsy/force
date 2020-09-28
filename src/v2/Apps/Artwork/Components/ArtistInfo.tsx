@@ -9,7 +9,6 @@ import {
 import { ArtistInfo_artist } from "v2/__generated__/ArtistInfo_artist.graphql"
 import { ArtistInfoQuery } from "v2/__generated__/ArtistInfoQuery.graphql"
 import { SystemContextConsumer } from "v2/Artsy"
-import { Mediator } from "v2/Artsy"
 import { track } from "v2/Artsy/Analytics"
 import * as Schema from "v2/Artsy/Analytics/Schema"
 import { renderWithLoadProgress } from "v2/Artsy/Relay/renderWithLoadProgress"
@@ -20,7 +19,7 @@ import { ArtistBioFragmentContainer as ArtistBio } from "v2/Components/ArtistBio
 import { ArtistMarketInsightsFragmentContainer as ArtistMarketInsights } from "v2/Components/ArtistMarketInsights"
 import { SelectedExhibitionFragmentContainer as SelectedExhibitions } from "v2/Components/SelectedExhibitions"
 
-import { ContextModule, OwnerType } from "@artsy/cohesion"
+import { ContextModule } from "@artsy/cohesion"
 import { MIN_EXHIBITIONS } from "v2/Components/SelectedExhibitions"
 import React, { Component } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -30,11 +29,6 @@ import { get } from "v2/Utils/get"
 
 interface ArtistInfoProps {
   artist: ArtistInfo_artist
-  mediator?: Mediator
-  trackingData: {
-    contextOwnerId: string
-    contextOwnerSlug: string
-  }
 }
 
 interface ArtistInfoState {
@@ -105,7 +99,7 @@ export class ArtistInfo extends Component<ArtistInfoProps, ArtistInfoState> {
 
     return (
       <SystemContextConsumer>
-        {({ user, mediator }) => (
+        {({ user }) => (
           <>
             <StackableBorderBox
               p={2}
@@ -123,8 +117,6 @@ export class ArtistInfo extends Component<ArtistInfoProps, ArtistInfoState> {
                     user={user}
                     trackingData={{
                       contextModule: ContextModule.aboutTheWork,
-                      contextOwnerType: OwnerType.artwork,
-                      ...this.props.trackingData,
                     }}
                     render={({ is_followed }) => {
                       return (

@@ -1,4 +1,4 @@
-import { ContextModule, OwnerType } from "@artsy/cohesion"
+import { ContextModule } from "@artsy/cohesion"
 import { Box, Button, Flex, Text } from "@artsy/palette"
 import { ArtworkRelatedArtists_artwork } from "v2/__generated__/ArtworkRelatedArtists_artwork.graphql"
 import { hideGrid } from "v2/Apps/Artwork/Components/OtherWorks"
@@ -26,7 +26,7 @@ const PAGE_SIZE = 4
 export const ArtworkRelatedArtists: React.FC<ArtworkRelatedArtistsProps> = track()(
   props => {
     const { trackEvent } = useTracking()
-    const { mediator, user } = useSystemContext()
+    const { user } = useSystemContext()
     const [fetchingNextPage, setFetchingNextPage] = useState(false)
 
     const {
@@ -65,12 +65,8 @@ export const ArtworkRelatedArtists: React.FC<ArtworkRelatedArtistsProps> = track
                   lazyLoad
                   artist={node}
                   trackingData={{
-                    contextOwnerId: props.artwork.internalID,
-                    contextOwnerSlug: props.artwork.slug,
-                    contextOwnerType: OwnerType.artwork,
                     contextModule: ContextModule.relatedArtistsRail,
                   }}
-                  mediator={mediator}
                   user={user}
                   onClick={() => {
                     trackEvent({

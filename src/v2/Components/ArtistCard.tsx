@@ -1,5 +1,4 @@
 import { ArtistCard_artist } from "v2/__generated__/ArtistCard_artist.graphql"
-import { Mediator } from "v2/Artsy"
 import { FollowArtistButtonFragmentContainer as FollowArtistButton } from "v2/Components/FollowButton/FollowArtistButton"
 import { Truncator } from "v2/Components/Truncator"
 import React, { SFC } from "react"
@@ -26,7 +25,6 @@ export interface ArtistCardProps {
   artist: ArtistCard_artist
   trackingData: FollowTrackingData
   user: User
-  mediator?: Mediator
   /** Lazy load the avatar image */
   lazyLoad?: boolean
   onClick?: () => void

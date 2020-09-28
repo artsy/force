@@ -1,4 +1,4 @@
-import { ContextModule, OwnerType } from "@artsy/cohesion"
+import { ContextModule } from "@artsy/cohesion"
 import { Box, EntityHeader, Text } from "@artsy/palette"
 import { RecommendedArtist_artist } from "v2/__generated__/RecommendedArtist_artist.graphql"
 import { SystemContext } from "v2/Artsy"
@@ -14,10 +14,6 @@ import { get } from "v2/Utils/get"
 interface RecommendedArtistProps {
   artist: RecommendedArtist_artist
   fullBleedRail?: boolean
-  trackingData: {
-    contextOwnerId: string
-    contextOwnerSlug: string
-  }
 }
 const HEIGHT = 150
 
@@ -49,7 +45,7 @@ const RecommendedArtist: FC<
   RecommendedArtistProps & {
     onArtworkClicked: () => void
   }
-> = ({ artist, onArtworkClicked, fullBleedRail, trackingData }) => {
+> = ({ artist, onArtworkClicked, fullBleedRail }) => {
   const { user, mediator } = useContext(SystemContext)
   const artistData = get(artist, a => a.artworks_connection.edges, [])
 
@@ -66,9 +62,7 @@ const RecommendedArtist: FC<
             artist={artist}
             user={user}
             trackingData={{
-              contextOwnerType: OwnerType.artist,
               contextModule: ContextModule.recommendedArtistsRail,
-              ...trackingData,
             }}
             render={({ is_followed }) => {
               return (
