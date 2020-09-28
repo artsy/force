@@ -85,10 +85,10 @@ describe("Purchase app", () => {
   describe("User with admin privilages", () => {
     const userType = { type: "Admin" }
     describe("having previous orders", () => {
-      it("renders orders", async () => {
+      it.only("renders orders", async () => {
         // TODO: revisit mocking and remove `artist_names` alias from PurchseHistory
         const mockMe = {
-          id: "1234",
+          id: "34343267",
           orders: {
             edges: [{ node: UntouchedBuyOrder }],
             pageInfo,
