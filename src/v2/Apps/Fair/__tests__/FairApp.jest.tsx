@@ -4,12 +4,15 @@ import FairApp from "../FairApp"
 import { graphql } from "react-relay"
 import { Title } from "react-head"
 import { FairApp_QueryRawResponse } from "v2/__generated__/FairApp_Query.graphql"
+import { useTracking } from "react-tracking"
 
 jest.unmock("react-relay")
+jest.mock("react-tracking")
 
 const FAIR_APP_FIXTURE: FairApp_QueryRawResponse = {
   fair: {
     id: "fair12345",
+    internalID: "bson-fair",
     about: "Lorem ipsum",
     name: "Miart 2020",
     formattedOpeningHours: "Closes in 12 days",
@@ -49,6 +52,8 @@ const FAIR_APP_FIXTURE: FairApp_QueryRawResponse = {
 
 const FAIR_EDITORIAL_ARTICLE_FIXTURE = {
   id: "QXJ0aWNsZTo1ZGE1ZTQ1YjQ2NzY5NDAwMjBkODI4NWM=",
+  slug: "article-slug",
+  internalID: "articleID",
   title: "IFPDA Fine Art Print Fair 2019: Programming and Projects",
   href:
     "/article/ifpda-fine-art-print-fair-ifpda-fine-art-print-fair-2019-programming-projects",
@@ -103,6 +108,8 @@ const FAIR_COLLECTION_FIXTURE = {
 }
 
 describe("FairApp", () => {
+  let trackEvent
+
   const getWrapper = async (
     response: FairApp_QueryRawResponse = FAIR_APP_FIXTURE
   ) => {
@@ -127,6 +134,15 @@ describe("FairApp", () => {
       mockData: response,
     })
   }
+
+  beforeEach(() => {
+    trackEvent = jest.fn()
+    ;(useTracking as jest.Mock).mockImplementation(() => {
+      return {
+        trackEvent,
+      }
+    })
+  })
 
   it("displays basic information about the fair", async () => {
     const wrapper = await getWrapper()
@@ -193,5 +209,43 @@ describe("FairApp", () => {
   it("sets a title tag", async () => {
     const wrapper = await getWrapper()
     expect(wrapper.find(Title).prop("children")).toEqual("Miart 2020 | Artsy")
+  })
+
+  it("tracks clicks to the exhibitors tab", async () => {
+    const wrapper = await getWrapper()
+    const exhibitorsTab = wrapper
+      .find("RouteTab")
+      .findWhere(t => t.text() === "Exhibitors")
+      .first()
+    exhibitorsTab.simulate("click")
+
+    expect(trackEvent).toHaveBeenCalledWith({
+      action: "clickedNavigationTab",
+      context_module: "artworksTab",
+      context_page_owner_id: "bson-fair",
+      context_page_owner_slug: "miart-2020",
+      context_page_owner_type: "fair",
+      destination_path: "fair/miart-2020",
+      subject: "Exhibitors",
+    })
+  })
+
+  it("tracks clicks to the artworks tab", async () => {
+    const wrapper = await getWrapper()
+    const artworksTab = wrapper
+      .find("RouteTab")
+      .findWhere(t => t.text() === "Artworks")
+      .first()
+    artworksTab.simulate("click")
+
+    expect(trackEvent).toHaveBeenCalledWith({
+      action: "clickedNavigationTab",
+      context_module: "exhibitorsTab",
+      context_page_owner_id: "bson-fair",
+      context_page_owner_slug: "miart-2020",
+      context_page_owner_type: "fair",
+      destination_path: "fair/miart-2020/artworks",
+      subject: "Artworks",
+    })
   })
 })

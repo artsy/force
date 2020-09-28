@@ -5,6 +5,7 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type FairExhibitorRail_show = {
     readonly internalID: string;
+    readonly slug: string;
     readonly href: string | null;
     readonly partner: {
         readonly name?: string | null;
@@ -43,6 +44,13 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "internalID",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "slug",
       "storageKey": null
     },
     {
@@ -95,5 +103,5 @@ return {
   "type": "Show"
 };
 })();
-(node as any).hash = 'e71391c18cda1f56e8afd4c9ab7856ca';
+(node as any).hash = 'b5e285e71e922173d341f3f3c3c9c3be';
 export default node;

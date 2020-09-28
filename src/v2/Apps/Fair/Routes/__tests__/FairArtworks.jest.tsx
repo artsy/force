@@ -48,6 +48,8 @@ describe("FairArtworks", () => {
 const FAIR_ARTWORKS_FIXTURE: FairArtworks_QueryRawResponse = {
   fair: {
     id: "xxx",
+    slug: "cool-fair",
+    internalID: "bson-fair",
     filtered_artworks: {
       id: "filteredartworksabc123",
       counts: {

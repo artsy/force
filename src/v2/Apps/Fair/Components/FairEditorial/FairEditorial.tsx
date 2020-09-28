@@ -11,7 +11,14 @@ export const FairEditorial: React.FC<FairEditorialProps> = ({ fair }) => {
   return (
     <>
       {fair.articles.edges.map(({ node: article }) => {
-        return <FairEditorialItem key={article.id} article={article} />
+        return (
+          <FairEditorialItem
+            key={article.id}
+            article={article}
+            fairID={fair.internalID}
+            fairSlug={fair.slug}
+          />
+        )
       })}
     </>
   )
@@ -22,6 +29,8 @@ export const FairEditorialFragmentContainer = createFragmentContainer(
   {
     fair: graphql`
       fragment FairEditorial_fair on Fair {
+        internalID
+        slug
         articles: articlesConnection(first: 5, sort: PUBLISHED_AT_DESC) {
           edges {
             node {

@@ -4,6 +4,8 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type FairArtworks_fair = {
+    readonly slug: string;
+    readonly internalID: string;
     readonly filtered_artworks: {
         readonly id: string;
         readonly counts?: {
@@ -124,6 +126,20 @@ const node: ReaderFragment = {
   "metadata": null,
   "name": "FairArtworks_fair",
   "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "slug",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "internalID",
+      "storageKey": null
+    },
     {
       "alias": "filtered_artworks",
       "args": [
@@ -261,5 +277,5 @@ const node: ReaderFragment = {
   ],
   "type": "Fair"
 };
-(node as any).hash = 'a6d10b9f523c42a0b3f9ff869ae1b431';
+(node as any).hash = 'e6d9b9af84777ffe5e0d7aea0a0cb4c3';
 export default node;

@@ -4,6 +4,8 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type FairEditorial_fair = {
+    readonly internalID: string;
+    readonly slug: string;
     readonly articles: {
         readonly edges: ReadonlyArray<{
             readonly node: {
@@ -28,6 +30,20 @@ const node: ReaderFragment = {
   "metadata": null,
   "name": "FairEditorial_fair",
   "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "internalID",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "slug",
+      "storageKey": null
+    },
     {
       "alias": "articles",
       "args": [
@@ -87,5 +103,5 @@ const node: ReaderFragment = {
   ],
   "type": "Fair"
 };
-(node as any).hash = '6c196cd86adf966b035c281f671b9c32';
+(node as any).hash = '55ee3fb0c18ecb8731e24cfa414bd604';
 export default node;
