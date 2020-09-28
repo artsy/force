@@ -43,6 +43,7 @@ const FAIR_APP_FIXTURE: FairApp_QueryRawResponse = {
     },
     metaDescription: null,
     metaImage: null,
+    followedArtistArtworks: null,
   },
 }
 

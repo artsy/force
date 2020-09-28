@@ -11,12 +11,16 @@ import { FairHeaderFragmentContainer as FairHeader } from "./Components/FairHead
 import { RouteTab, RouteTabs } from "v2/Components/RouteTabs"
 import { FairMetaFragmentContainer as FairMeta } from "./Components/FairMeta"
 import { FairCollectionsFragmentContainer as FairCollections } from "./Components/FairCollections"
+import { FairFollowedArtistsFragmentContainer as FairFollowedArtists } from "./Components/FairFollowedArtists"
+import { useSystemContext } from "v2/Artsy"
 
 interface FairAppProps {
   fair: FairApp_fair
 }
 
 const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
+  const { user } = useSystemContext()
+
   if (!fair) return <ErrorPage code={404} />
 
   const hasArticles = fair.articles.edges.length > 0
@@ -61,6 +65,16 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
             </Box>
           )}
 
+          {!!user && (
+            <FairFollowedArtists
+              fair={fair}
+              my={3}
+              pt={3}
+              borderTop="1px solid"
+              borderColor="black10"
+            />
+          )}
+
           <RouteTabs>
             <RouteTab to={`/fair2/${fair.slug}`} exact>
               Exhibitors
@@ -91,6 +105,7 @@ export default createFragmentContainer(FairApp, {
       ...FairHeader_fair
       ...FairEditorial_fair
       ...FairCollections_fair
+      ...FairFollowedArtists_fair
       articles: articlesConnection(first: 5, sort: PUBLISHED_AT_DESC) {
         edges {
           __typename
