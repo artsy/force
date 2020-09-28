@@ -17,9 +17,7 @@ storiesOf("Components/Follow Button", module)
               counts: { follows: 100 },
             } as any
           }
-          trackingData={{
-            contextModule: ContextModule.relatedArtistsRail,
-          }}
+          contextModule={ContextModule.relatedArtistsRail}
         />
         <br />
         <FollowArtistButton
@@ -31,9 +29,7 @@ storiesOf("Components/Follow Button", module)
               counts: { follows: 100 },
             } as any
           }
-          trackingData={{
-            contextModule: ContextModule.relatedArtistsRail,
-          }}
+          contextModule={ContextModule.relatedArtistsRail}
         />
       </div>
     )

@@ -1,4 +1,4 @@
-import { ContextModule, OwnerType } from "@artsy/cohesion"
+import { ContextModule } from "@artsy/cohesion"
 import { FollowArtistButtonFragmentContainer as FollowArtistButton } from "v2/Components/FollowButton/FollowArtistButton"
 import { MockBoot } from "v2/DevTools/MockBoot"
 import { mount } from "enzyme"
@@ -29,11 +29,7 @@ describe("ArtistCard", () => {
   beforeEach(() => {
     mediator = { trigger: jest.fn() }
     props = {
-      user: null,
-      trackingData: {
-        contextModule: ContextModule.artistsToFollowRail,
-        contextOwnerType: OwnerType.home,
-      },
+      contextModule: ContextModule.artistsToFollowRail,
       artist: {
         image: {
           cropped: {
@@ -41,7 +37,6 @@ describe("ArtistCard", () => {
           },
         },
         href: "/artist/francesca-dimattio",
-        internalID: "1234",
         name: "Francesca DiMattio",
         formatted_nationality_and_birthday: "American, b. 1979",
         slug: "percy",

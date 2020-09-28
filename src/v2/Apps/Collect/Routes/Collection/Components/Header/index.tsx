@@ -5,7 +5,6 @@ import { Header_artworks } from "v2/__generated__/Header_artworks.graphql"
 import { Header_collection } from "v2/__generated__/Header_collection.graphql"
 import { CollectionDefaultHeaderFragmentContainer as CollectionDefaultHeader } from "v2/Apps/Collect/Routes/Collection/Components/Header/DefaultHeader"
 import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
-import { useSystemContext } from "v2/Artsy"
 import { unica } from "v2/Assets/Fonts"
 import { FollowArtistButtonFragmentContainer as FollowArtistButton } from "v2/Components/FollowButton/FollowArtistButton"
 import { Link } from "found"
@@ -46,11 +45,8 @@ export const getFeaturedArtists = (
 }
 
 export const featuredArtistsEntityCollection: (
-  artists: Header_artworks["merchandisableArtists"],
-  mediator: any,
-  user: any,
-  collection: Header_collection
-) => JSX.Element[] = (artists, mediator, user, collection) => {
+  artists: Header_artworks["merchandisableArtists"]
+) => JSX.Element[] = artists => {
   return artists.map((artist, index) => {
     const hasArtistMetaData = artist.nationality && artist.birthday
     return (
@@ -72,10 +68,7 @@ export const featuredArtistsEntityCollection: (
           FollowButton={
             <FollowArtistButton
               artist={artist}
-              user={user}
-              trackingData={{
-                contextModule: ContextModule.featuredArtistsRail,
-              }}
+              contextModule={ContextModule.featuredArtistsRail}
               render={({ is_followed }) => {
                 return (
                   <Text
@@ -119,7 +112,6 @@ const imageHeightSizes = {
 }
 
 export const CollectionHeader: FC<Props> = ({ artworks, collection }) => {
-  const { user, mediator } = useSystemContext()
   const hasMultipleArtists =
     artworks.merchandisableArtists && artworks.merchandisableArtists.length > 1
 
@@ -144,10 +136,7 @@ export const CollectionHeader: FC<Props> = ({ artworks, collection }) => {
             artistsCount,
             collection,
             artworks.merchandisableArtists
-          ),
-          mediator,
-          user,
-          collection
+          )
         )
         const resizedHeaderImage =
           collection.headerImage &&
@@ -317,7 +306,7 @@ const ExtendedText = styled(Text)`
 `
 
 export const CollectionFilterFragmentContainer = createFragmentContainer(
-  CollectionHeader,
+  CollectionHeader as FC<Props>,
   {
     collection: graphql`
       fragment Header_collection on MarketingCollection {

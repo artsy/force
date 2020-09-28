@@ -60,10 +60,7 @@ const RecommendedArtist: FC<
         FollowButton={
           <FollowArtistButton
             artist={artist}
-            user={user}
-            trackingData={{
-              contextModule: ContextModule.recommendedArtistsRail,
-            }}
+            contextModule={ContextModule.recommendedArtistsRail}
             render={({ is_followed }) => {
               return (
                 <Text

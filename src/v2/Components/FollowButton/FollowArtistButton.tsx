@@ -1,10 +1,11 @@
 import {
+  AuthContextModule,
   FollowedArgs,
   Intent,
   followedArtist,
   unfollowedArtist,
 } from "@artsy/cohesion"
-import { Box } from "@artsy/palette"
+import { Box, ButtonProps } from "@artsy/palette"
 import { FollowArtistButtonMutation } from "v2/__generated__/FollowArtistButtonMutation.graphql"
 import * as Artsy from "v2/Artsy"
 import { FollowArtistPopoverFragmentContainer as SuggestionsPopover } from "v2/Components/FollowArtistPopover"
@@ -13,7 +14,6 @@ import track, { TrackingProp } from "react-tracking"
 import styled from "styled-components"
 import { FollowArtistButton_artist } from "../../__generated__/FollowArtistButton_artist.graphql"
 import { FollowButton } from "./Button"
-import { FollowTrackingData } from "./Typings"
 import {
   RelayProp,
   commitMutation,
@@ -35,9 +35,13 @@ interface Props
   mediator?: Mediator
   artist?: FollowArtistButton_artist
   tracking?: TrackingProp
-  trackingData: FollowTrackingData
+  contextModule: AuthContextModule
   /**
-   * Custom renderer for alternative button displays
+   * Pass palette props to button
+   */
+  buttonProps?: Partial<ButtonProps>
+  /**
+   * Custom renderer if palette button is not desired
    */
   render?: (artist: FollowArtistButton_artist) => JSX.Element
   triggerSuggestions?: boolean
@@ -60,6 +64,7 @@ const Container = styled.span`
 export class FollowArtistButton extends React.Component<Props, State> {
   static defaultProps = {
     triggerSuggestions: false,
+    buttonProps: {},
   }
 
   state = { openSuggestions: false }
@@ -68,20 +73,19 @@ export class FollowArtistButton extends React.Component<Props, State> {
     const {
       tracking,
       artist,
-      trackingData,
+      contextModule,
       contextPageOwnerId,
       contextPageOwnerSlug,
       contextPageOwnerType,
     } = this.props
 
-    // FIXME: remove contextOwner from trackingData when apps use AnalyticsContext
     const args: FollowedArgs = {
       ownerId: artist.internalID,
       ownerSlug: artist.slug,
-      contextModule: trackingData.contextModule,
-      contextOwnerId: contextPageOwnerId || trackingData.contextOwnerId,
-      contextOwnerSlug: contextPageOwnerSlug || trackingData.contextOwnerSlug,
-      contextOwnerType: contextPageOwnerType || trackingData.contextOwnerType,
+      contextModule,
+      contextOwnerId: contextPageOwnerId,
+      contextOwnerSlug: contextPageOwnerSlug,
+      contextOwnerType: contextPageOwnerType,
     }
 
     const analyticsData = artist.is_followed
@@ -93,14 +97,14 @@ export class FollowArtistButton extends React.Component<Props, State> {
 
   handleFollow = e => {
     e.preventDefault() // If this button is part of a link, we _probably_ dont want to actually follow the link.
-    const { artist, user, mediator, trackingData } = this.props
+    const { artist, user, mediator, contextModule } = this.props
 
     if (user && user.id) {
       this.followArtistForUser()
     } else {
       openAuthToFollowSave(mediator, {
         entity: artist,
-        contextModule: trackingData.contextModule,
+        contextModule,
         intent: Intent.followArtist,
       })
     }
@@ -163,7 +167,7 @@ export class FollowArtistButton extends React.Component<Props, State> {
   }
 
   render() {
-    const { artist, render, user } = this.props
+    const { artist, buttonProps, render, user } = this.props
     const { openSuggestions } = this.state
 
     // Custom button renderer
@@ -185,6 +189,7 @@ export class FollowArtistButton extends React.Component<Props, State> {
       <FollowButton
         isFollowed={artist && artist.is_followed}
         handleFollow={this.handleFollow}
+        buttonProps={buttonProps}
       />
     )
 

@@ -19,12 +19,11 @@ import {
 } from "@artsy/palette"
 import styled from "styled-components"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
-import { FollowTrackingData } from "./FollowButton/Typings"
+import { AuthContextModule } from "@artsy/cohesion"
 
 export interface ArtistCardProps {
   artist: ArtistCard_artist
-  trackingData: FollowTrackingData
-  user: User
+  contextModule: AuthContextModule
   /** Lazy load the avatar image */
   lazyLoad?: boolean
   onClick?: () => void
@@ -85,8 +84,7 @@ export const LargeArtistCard: SFC<ArtistCardProps> = props => (
     <Flex flexDirection="column" alignItems="center" mt="auto">
       <FollowArtistButton
         artist={props.artist}
-        user={props.user}
-        trackingData={props.trackingData}
+        contextModule={props.contextModule}
         render={({ is_followed }) => {
           return (
             <Button
@@ -126,9 +124,9 @@ export const SmallArtistCard: SFC<ArtistCardProps> = props => (
 
       <FollowArtistButton
         artist={props.artist}
-        user={props.user}
-        trackingData={props.trackingData}
+        contextModule={props.contextModule}
         render={({ is_followed }) => {
+          // FIXME: use button props
           return (
             <Button
               variant="secondaryOutline"
@@ -157,7 +155,6 @@ export const ArtistCardFragmentContainer = createFragmentContainer(
             url
           }
         }
-        internalID
         formatted_nationality_and_birthday: formattedNationalityAndBirthday
         ...FollowArtistButton_artist
       }

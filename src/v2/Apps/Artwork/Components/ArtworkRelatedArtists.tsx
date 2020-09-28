@@ -2,7 +2,6 @@ import { ContextModule } from "@artsy/cohesion"
 import { Box, Button, Flex, Text } from "@artsy/palette"
 import { ArtworkRelatedArtists_artwork } from "v2/__generated__/ArtworkRelatedArtists_artwork.graphql"
 import { hideGrid } from "v2/Apps/Artwork/Components/OtherWorks"
-import { useSystemContext } from "v2/Artsy"
 import { track, useTracking } from "v2/Artsy/Analytics"
 import * as Schema from "v2/Artsy/Analytics/Schema"
 import { ArtistCardFragmentContainer as ArtistCard } from "v2/Components/ArtistCard"
@@ -26,7 +25,6 @@ const PAGE_SIZE = 4
 export const ArtworkRelatedArtists: React.FC<ArtworkRelatedArtistsProps> = track()(
   props => {
     const { trackEvent } = useTracking()
-    const { user } = useSystemContext()
     const [fetchingNextPage, setFetchingNextPage] = useState(false)
 
     const {
@@ -64,10 +62,7 @@ export const ArtworkRelatedArtists: React.FC<ArtworkRelatedArtistsProps> = track
                 <ArtistCard
                   lazyLoad
                   artist={node}
-                  trackingData={{
-                    contextModule: ContextModule.relatedArtistsRail,
-                  }}
-                  user={user}
+                  contextModule={ContextModule.relatedArtistsRail}
                   onClick={() => {
                     trackEvent({
                       context_module: Schema.ContextModule.RelatedArtists,
@@ -117,7 +112,6 @@ export const ArtworkRelatedArtistsPaginationContainer = createPaginationContaine
           cursor: { type: "String", defaultValue: "" }
         ) {
         slug
-        internalID
         artist {
           href
           related {

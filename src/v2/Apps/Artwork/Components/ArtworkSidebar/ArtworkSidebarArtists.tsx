@@ -1,5 +1,4 @@
 import { Box, Text } from "@artsy/palette"
-import { SystemContextConsumer } from "v2/Artsy"
 
 import { FollowIcon } from "v2/Components/FollowIcon"
 import React from "react"
@@ -29,20 +28,13 @@ export class ArtworkSidebarArtists extends React.Component<ArtistsProps> {
     )
   }
 
-  private renderSingleArtist = (
-    artist: Artist,
-    user,
-    artwork: ArtworkSidebarArtists_artwork
-  ) => {
+  private renderSingleArtist = (artist: Artist) => {
     return (
       <React.Fragment>
         {this.renderArtistName(artist)}
         <FollowArtistButton
           artist={artist}
-          user={user}
-          trackingData={{
-            contextModule: ContextModule.artworkSidebar,
-          }}
+          contextModule={ContextModule.artworkSidebar}
           triggerSuggestions
           render={({ is_followed }) => {
             return <FollowIcon isFollowed={is_followed} />
@@ -84,20 +76,14 @@ export class ArtworkSidebarArtists extends React.Component<ArtistsProps> {
       artwork: { artists, cultural_maker },
     } = this.props
     return (
-      <SystemContextConsumer>
-        {({ user }) => {
-          return (
-            <Box>
-              {artists.length === 1
-                ? this.renderSingleArtist(artists[0], user, this.props.artwork)
-                : this.renderMultipleArtists()}
-              {artists.length === 0 &&
-                cultural_maker &&
-                this.renderCulturalMaker(cultural_maker)}
-            </Box>
-          )
-        }}
-      </SystemContextConsumer>
+      <Box>
+        {artists.length === 1
+          ? this.renderSingleArtist(artists[0])
+          : this.renderMultipleArtists()}
+        {artists.length === 0 &&
+          cultural_maker &&
+          this.renderCulturalMaker(cultural_maker)}
+      </Box>
     )
   }
 }
@@ -110,8 +96,6 @@ export const ArtworkSidebarArtistsFragmentContainer = createFragmentContainer(
         @argumentDefinitions(
           showFollowSuggestions: { type: "Boolean", defaultValue: true }
         ) {
-        internalID
-        slug
         cultural_maker: culturalMaker
         artists {
           id

@@ -34,8 +34,6 @@ import styled from "styled-components"
 import { get } from "v2/Utils/get"
 import { Media } from "v2/Utils/Responsive"
 import { ArtistRecommendationsQueryRenderer as ArtistRecommendations } from "./Components/ArtistRecommendations"
-import { AnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
-import { OwnerType } from "@artsy/cohesion"
 
 export interface OverviewRouteProps {
   artist: Overview_artist
@@ -182,140 +180,49 @@ export class OverviewRoute extends React.Component<OverviewRouteProps, {}> {
       artist.articlesConnection.edges.map(({ node }) => node)
 
     return (
-      <AnalyticsContext.Provider
-        value={{
-          contextPageOwnerId: artist.internalID,
-          contextPageOwnerSlug: artist.slug,
-          contextPageOwnerType: OwnerType.artist,
-        }}
-      >
-        <>
-          <Media greaterThan="xs">
-            <Row>
-              <Col>
-                <ArtistTopWorksRail artist={artist} onOverviewTab />
-              </Col>
-            </Row>
-            <Separator my={3} />
-
-            <Row>
-              <Col sm={8}>
-                <>
-                  {showArtistBio && (
-                    <>
-                      <Text variant="mediumText">Biography</Text>
-                      <Spacer mb={1} />
-                      <ArtistBio
-                        onReadMoreClicked={() => {
-                          this.setState({ isReadMoreExpanded: true })
-                        }}
-                        bio={artist}
-                      />
-                    </>
-                  )}
-                  {showRelatedCategories && (
-                    <>
-                      {showArtistBio && <Spacer mb={2} />}
-                      <Text variant="mediumText">Related Categories</Text>
-                      <Spacer mb={1} />
-                      <Genes artist={artist} />
-                      <Spacer mb={2} />
-                    </>
-                  )}
-
-                  <Spacer mb={3} />
-                  <ArtistConsignButton artist={artist} />
-                </>
-              </Col>
-
-              {(showArtistInsights || artist.statuses.cv) && (
-                <Col sm={4}>
-                  <Box pl={2} pt={0}>
-                    <Text variant="mediumText">Career Highlights</Text>
-                    <SelectedCareerAchievements artist={artist} />
-                    {artist.statuses.cv && (
-                      <>
-                        <Spacer mb={2} />
-                        <NavLink
-                          label="See all past shows and fair booths"
-                          path={`/artist/${artist.slug}/cv`}
-                        />
-                      </>
-                    )}
-                  </Box>
-                </Col>
-              )}
-            </Row>
-          </Media>
-
-          <Media at="xs">
-            <ArtistTopWorksRail artist={artist} onOverviewTab />
-
-            {showArtistBio && (
-              <>
-                <Separator my={3} />
-
-                <Text variant="subtitle">Biography</Text>
-                <Spacer mb={1} />
-                <ArtistBio
-                  onReadMoreClicked={() => {
-                    this.setState({ isReadMoreExpanded: true })
-                  }}
-                  bio={artist}
-                />
-                <Spacer mb={2} />
-                <ArtistConsignButton artist={artist} />
-              </>
-            )}
-          </Media>
-
+      <>
+        <Media greaterThan="xs">
           <Row>
             <Col>
-              <ArtistCollectionsRail artistID={artist.internalID} />
+              <ArtistTopWorksRail artist={artist} onOverviewTab />
             </Col>
           </Row>
+          <Separator my={3} />
 
-          {artist.statuses.artworks && (
-            <>
-              <Media at="xs">{showArtistBio && <Separator my={3} />}</Media>
+          <Row>
+            <Col sm={8}>
+              <>
+                {showArtistBio && (
+                  <>
+                    <Text variant="mediumText">Biography</Text>
+                    <Spacer mb={1} />
+                    <ArtistBio
+                      onReadMoreClicked={() => {
+                        this.setState({ isReadMoreExpanded: true })
+                      }}
+                      bio={artist}
+                    />
+                  </>
+                )}
+                {showRelatedCategories && (
+                  <>
+                    {showArtistBio && <Spacer mb={2} />}
+                    <Text variant="mediumText">Related Categories</Text>
+                    <Spacer mb={1} />
+                    <Genes artist={artist} />
+                    <Spacer mb={2} />
+                  </>
+                )}
 
-              <Media greaterThan="xs">
-                <Separator my={3} />
-              </Media>
-              <Row>
-                <Col>
-                  <SectionHeader
-                    headerString={
-                      artist.counts.forSaleArtworks > 0
-                        ? "Works For Sale"
-                        : "Artworks"
-                    }
-                  />
-                  {isClient && (
-                    <WorksForSaleRail artistID={artist.internalID} />
-                  )}
-                  <Spacer mb={2} />
-                  <StyledLink
-                    onClick={() => this.handleBrowseWorksClick()}
-                    to={`/artist/${artist.slug}/works-for-sale`}
-                  >
-                    <Button variant="secondaryGray" size="medium" width="100%">
-                      {browseWorksButtonLabel}
-                    </Button>
-                  </StyledLink>
-                </Col>
-              </Row>
-            </>
-          )}
+                <Spacer mb={3} />
+                <ArtistConsignButton artist={artist} />
+              </>
+            </Col>
 
-          {(showArtistInsights || artist.statuses.cv) && (
-            <Media at="xs">
-              <Separator my={3} />
+            {(showArtistInsights || artist.statuses.cv) && (
               <Col sm={4}>
-                <Box>
-                  <Text variant="subtitle" color="black100">
-                    Career Highlights
-                  </Text>
+                <Box pl={2} pt={0}>
+                  <Text variant="mediumText">Career Highlights</Text>
                   <SelectedCareerAchievements artist={artist} />
                   {artist.statuses.cv && (
                     <>
@@ -328,113 +235,188 @@ export class OverviewRoute extends React.Component<OverviewRouteProps, {}> {
                   )}
                 </Box>
               </Col>
-            </Media>
-          )}
+            )}
+          </Row>
+        </Media>
 
-          {!!currentShows && (
+        <Media at="xs">
+          <ArtistTopWorksRail artist={artist} onOverviewTab />
+
+          {showArtistBio && (
             <>
               <Separator my={3} />
-              <SectionHeader headerString={`Shows Featuring ${artist.name}`} />
-              <Carousel arrowHeight={140}>
-                {currentShows.map(slide => {
-                  return (
-                    <Box maxWidth={240} key={slide.href}>
-                      <Link
-                        href={slide.href}
-                        onClick={() => this.onClickSlide(slide)}
-                        underlineBehavior="none"
-                      >
-                        <Image
-                          src={get(slide, i => i.coverImage.cropped.url)}
-                          alt={slide.name}
-                          width={get(slide, i => i.coverImage.cropped.width)}
-                          height={get(slide, i => i.coverImage.cropped.height)}
-                        />
-                        <Text variant="mediumText" mt={1}>
-                          <TruncatedLine>{slide.name}</TruncatedLine>
-                        </Text>
-                        <Text variant="caption" color="black60">
-                          <TruncatedLine>
-                            {slide.exhibitionPeriod}
-                          </TruncatedLine>
-                        </Text>
-                      </Link>
-                    </Box>
-                  )
-                })}
-              </Carousel>
-              <Spacer mb={2} />
-              <NavLink
-                label="See all current and upcoming shows"
-                path={`/artist/${artist.slug}/shows`}
-              />
-            </>
-          )}
 
-          {!!featuredArticles && (
-            <>
-              <Separator my={3} />
-              <SectionHeader
-                headerString={`Articles Featuring ${artist.name}`}
-              />
-              <Flex flexWrap="wrap" justifyContent="space-between">
-                {featuredArticles.map((article, index) => {
-                  return (
-                    <FeaturedArticlesItem
-                      mb={3}
-                      width={["100%", "45%"]}
-                      justifyContent="space-between"
-                      key={`article-${index}`}
-                      onClick={() => {
-                        window.location.href = article.href
-                      }}
-                    >
-                      <Box width="70%" maxWidth={["none", "300px"]} mr={[1, 2]}>
-                        <Text variant="mediumText">
-                          {article.thumbnailTitle}
-                        </Text>
-                        <Text variant="caption" color="black60">
-                          {article.publishedAt}
-                        </Text>
-                      </Box>
-                      <Box maxWidth={["90px", "120px"]}>
-                        <Image
-                          src={get(article, i => i.thumbnailImage.cropped.url)}
-                          alt={article.thumbnailTitle}
-                          width="100%"
-                        />
-                      </Box>
-                    </FeaturedArticlesItem>
-                  )
-                })}
-              </Flex>
-              <Spacer mb={-1} />
-              <NavLink
-                label="See all articles"
-                path={`/artist/${artist.slug}/articles`}
-              />
-            </>
-          )}
-
-          {showRelatedCategories && (
-            <Media at="xs">
-              <Separator my={3} />
-              <SectionHeader headerString="Related Categories" />
+              <Text variant="subtitle">Biography</Text>
               <Spacer mb={1} />
-              <Genes artist={artist} />
-            </Media>
+              <ArtistBio
+                onReadMoreClicked={() => {
+                  this.setState({ isReadMoreExpanded: true })
+                }}
+                bio={artist}
+              />
+              <Spacer mb={2} />
+              <ArtistConsignButton artist={artist} />
+            </>
           )}
+        </Media>
 
-          {showRecommendations && (
+        <Row>
+          <Col>
+            <ArtistCollectionsRail artistID={artist.internalID} />
+          </Col>
+        </Row>
+
+        {artist.statuses.artworks && (
+          <>
+            <Media at="xs">{showArtistBio && <Separator my={3} />}</Media>
+
+            <Media greaterThan="xs">
+              <Separator my={3} />
+            </Media>
             <Row>
               <Col>
-                <Separator my={3} />
-                <ArtistRecommendations artistID={artist.internalID} />
+                <SectionHeader
+                  headerString={
+                    artist.counts.forSaleArtworks > 0
+                      ? "Works For Sale"
+                      : "Artworks"
+                  }
+                />
+                {isClient && <WorksForSaleRail artistID={artist.internalID} />}
+                <Spacer mb={2} />
+                <StyledLink
+                  onClick={() => this.handleBrowseWorksClick()}
+                  to={`/artist/${artist.slug}/works-for-sale`}
+                >
+                  <Button variant="secondaryGray" size="medium" width="100%">
+                    {browseWorksButtonLabel}
+                  </Button>
+                </StyledLink>
               </Col>
             </Row>
-          )}
-        </>
-      </AnalyticsContext.Provider>
+          </>
+        )}
+
+        {(showArtistInsights || artist.statuses.cv) && (
+          <Media at="xs">
+            <Separator my={3} />
+            <Col sm={4}>
+              <Box>
+                <Text variant="subtitle" color="black100">
+                  Career Highlights
+                </Text>
+                <SelectedCareerAchievements artist={artist} />
+                {artist.statuses.cv && (
+                  <>
+                    <Spacer mb={2} />
+                    <NavLink
+                      label="See all past shows and fair booths"
+                      path={`/artist/${artist.slug}/cv`}
+                    />
+                  </>
+                )}
+              </Box>
+            </Col>
+          </Media>
+        )}
+
+        {!!currentShows && (
+          <>
+            <Separator my={3} />
+            <SectionHeader headerString={`Shows Featuring ${artist.name}`} />
+            <Carousel arrowHeight={140}>
+              {currentShows.map(slide => {
+                return (
+                  <Box maxWidth={240} key={slide.href}>
+                    <Link
+                      href={slide.href}
+                      onClick={() => this.onClickSlide(slide)}
+                      underlineBehavior="none"
+                    >
+                      <Image
+                        src={get(slide, i => i.coverImage.cropped.url)}
+                        alt={slide.name}
+                        width={get(slide, i => i.coverImage.cropped.width)}
+                        height={get(slide, i => i.coverImage.cropped.height)}
+                      />
+                      <Text variant="mediumText" mt={1}>
+                        <TruncatedLine>{slide.name}</TruncatedLine>
+                      </Text>
+                      <Text variant="caption" color="black60">
+                        <TruncatedLine>{slide.exhibitionPeriod}</TruncatedLine>
+                      </Text>
+                    </Link>
+                  </Box>
+                )
+              })}
+            </Carousel>
+            <Spacer mb={2} />
+            <NavLink
+              label="See all current and upcoming shows"
+              path={`/artist/${artist.slug}/shows`}
+            />
+          </>
+        )}
+
+        {!!featuredArticles && (
+          <>
+            <Separator my={3} />
+            <SectionHeader headerString={`Articles Featuring ${artist.name}`} />
+            <Flex flexWrap="wrap" justifyContent="space-between">
+              {featuredArticles.map((article, index) => {
+                return (
+                  <FeaturedArticlesItem
+                    mb={3}
+                    width={["100%", "45%"]}
+                    justifyContent="space-between"
+                    key={`article-${index}`}
+                    onClick={() => {
+                      window.location.href = article.href
+                    }}
+                  >
+                    <Box width="70%" maxWidth={["none", "300px"]} mr={[1, 2]}>
+                      <Text variant="mediumText">{article.thumbnailTitle}</Text>
+                      <Text variant="caption" color="black60">
+                        {article.publishedAt}
+                      </Text>
+                    </Box>
+                    <Box maxWidth={["90px", "120px"]}>
+                      <Image
+                        src={get(article, i => i.thumbnailImage.cropped.url)}
+                        alt={article.thumbnailTitle}
+                        width="100%"
+                      />
+                    </Box>
+                  </FeaturedArticlesItem>
+                )
+              })}
+            </Flex>
+            <Spacer mb={-1} />
+            <NavLink
+              label="See all articles"
+              path={`/artist/${artist.slug}/articles`}
+            />
+          </>
+        )}
+
+        {showRelatedCategories && (
+          <Media at="xs">
+            <Separator my={3} />
+            <SectionHeader headerString="Related Categories" />
+            <Spacer mb={1} />
+            <Genes artist={artist} />
+          </Media>
+        )}
+
+        {showRecommendations && (
+          <Row>
+            <Col>
+              <Separator my={3} />
+              <ArtistRecommendations artistID={artist.internalID} />
+            </Col>
+          </Row>
+        )}
+      </>
     )
   }
 }

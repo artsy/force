@@ -1,11 +1,9 @@
 import { ContextModule } from "@artsy/cohesion"
 import { Clickable, Message, Sans } from "@artsy/palette"
-import { useSystemContext } from "v2/Artsy"
 import { FollowArtistButtonFragmentContainer as FollowArtistButton } from "v2/Components/FollowButton/FollowArtistButton"
 import React from "react"
 
 export const ZeroState = props => {
-  const { user } = useSystemContext()
   const { is_followed, artist } = props
 
   return (
@@ -15,10 +13,7 @@ export const ZeroState = props => {
         <>
           <FollowArtistButton
             artist={artist}
-            user={user}
-            trackingData={{
-              contextModule: ContextModule.worksForSaleRail,
-            }}
+            contextModule={ContextModule.worksForSaleRail}
             render={({ name }) => {
               return (
                 <Sans size="4" color="black60" weight="regular">

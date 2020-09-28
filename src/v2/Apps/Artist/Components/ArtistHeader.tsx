@@ -2,9 +2,8 @@ import { ContextModule } from "@artsy/cohesion"
 import { Box, Text } from "@artsy/palette"
 import { ArtistHeader_artist } from "v2/__generated__/ArtistHeader_artist.graphql"
 import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
-import { SystemContextConsumer } from "v2/Artsy"
 import { FollowArtistButtonFragmentContainer as FollowArtistButton } from "v2/Components/FollowButton/FollowArtistButton"
-import React, { Component } from "react"
+import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { get } from "v2/Utils/get"
 import { Media } from "v2/Utils/Responsive"
@@ -48,38 +47,25 @@ const formatFollowerCount = (n: number) => {
 
 interface ArtistHeaderProps {
   artist: ArtistHeader_artist
-  user?: User
 }
 
-export class ArtistHeader extends Component<ArtistHeaderProps> {
-  render() {
-    const props = this.props
-    return (
-      <SystemContextConsumer>
-        {({ mediator, user }) => {
-          return (
-            <>
-              <span id="jumpto-ArtistHeader" />
+export const ArtistHeader: React.FC<ArtistHeaderProps> = props => {
+  return (
+    <>
+      <span id="jumpto-ArtistHeader" />
 
-              <Media at="xs">
-                <SmallArtistHeader user={user} {...props} />
-              </Media>
+      <Media at="xs">
+        <SmallArtistHeader {...props} />
+      </Media>
 
-              <Media greaterThan="xs">
-                <LargeArtistHeader user={user} {...props} />
-              </Media>
-            </>
-          )
-        }}
-      </SystemContextConsumer>
-    )
-  }
+      <Media greaterThan="xs">
+        <LargeArtistHeader {...props} />
+      </Media>
+    </>
+  )
 }
 
-export const LargeArtistHeader: React.FC<ArtistHeaderProps> = ({
-  user,
-  artist,
-}) => {
+export const LargeArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
   const topAuctionResult = getTopAuctionResult(artist)
   const highCategory = getHighCategory(artist)
 
@@ -150,23 +136,15 @@ export const LargeArtistHeader: React.FC<ArtistHeaderProps> = ({
 
           <FollowArtistButton
             artist={artist}
-            user={user}
-            trackingData={{
-              contextModule: ContextModule.artistHeader,
-            }}
-          >
-            Follow
-          </FollowArtistButton>
+            contextModule={ContextModule.artistHeader}
+          />
         </Box>
       </Box>
     </HorizontalPadding>
   )
 }
 
-export const SmallArtistHeader: React.FC<ArtistHeaderProps> = ({
-  user,
-  artist,
-}) => {
+export const SmallArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
   const topAuctionResult = getTopAuctionResult(artist)
   const highCategory = getHighCategory(artist)
 
@@ -213,11 +191,9 @@ export const SmallArtistHeader: React.FC<ArtistHeaderProps> = ({
 
       <Box mt={1.5}>
         <FollowArtistButton
-          user={user}
           artist={artist}
-          trackingData={{
-            contextModule: ContextModule.artistHeader,
-          }}
+          contextModule={ContextModule.artistHeader}
+          buttonProps={{ size: "small" }}
         />
       </Box>
     </Box>
@@ -225,7 +201,7 @@ export const SmallArtistHeader: React.FC<ArtistHeaderProps> = ({
 }
 
 export const ArtistHeaderFragmentContainer = createFragmentContainer(
-  ArtistHeader,
+  ArtistHeader as React.FC<ArtistHeaderProps>,
   {
     artist: graphql`
       fragment ArtistHeader_artist on Artist

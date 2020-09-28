@@ -16,8 +16,7 @@ import { Media } from "v2/Utils/Responsive"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FollowArtistButtonFragmentContainer as FollowArtistButton } from "v2/Components/FollowButton/FollowArtistButton"
 import { ArtistSeriesHeader_artistSeries } from "v2/__generated__/ArtistSeriesHeader_artistSeries.graphql"
-import { useSystemContext } from "v2/Artsy"
-import { ContextModule, OwnerType } from "@artsy/cohesion"
+import { ContextModule } from "@artsy/cohesion"
 import styled from "styled-components"
 import { unitlessBreakpoints } from "@artsy/palette"
 import { AppContainer } from "v2/Apps/Components/AppContainer"
@@ -35,8 +34,7 @@ interface ArtistsInfoProps {
 const ArtistInfo: React.FC<ArtistsInfoProps> = props => {
   /* Displays artist name, avatar and follow button. We currently assume
      that an artist series will have one artist. */
-  const { user } = useSystemContext()
-  const { artist, contextOwnerId, contextOwnerSlug } = props
+  const { artist } = props
 
   return (
     <EntityHeader
@@ -47,13 +45,7 @@ const ArtistInfo: React.FC<ArtistsInfoProps> = props => {
       FollowButton={
         <FollowArtistButton
           artist={artist}
-          user={user}
-          trackingData={{
-            contextModule: ContextModule.featuredArtists,
-            contextOwnerType: OwnerType.artistSeries,
-            contextOwnerId,
-            contextOwnerSlug,
-          }}
+          contextModule={ContextModule.featuredArtists}
           render={({ is_followed }) => {
             return (
               <Clickable

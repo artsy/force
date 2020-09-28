@@ -93,7 +93,7 @@ const ShowMoreButton: React.FC<{ onClick: () => void; loading: boolean }> = ({
 }
 
 export const ArtistRecommendationsPaginationContainer = createPaginationContainer(
-  ArtistRecommendations as React.FC<ArtistRecommendationsProps>,
+  ArtistRecommendations,
   {
     artist: graphql`
       fragment ArtistRecommendations_artist on Artist
@@ -103,7 +103,6 @@ export const ArtistRecommendationsPaginationContainer = createPaginationContaine
           minForsaleArtworks: { type: "Int", defaultValue: 7 }
         ) {
         slug
-        internalID
         related {
           artistsConnection(
             first: $count

@@ -12,7 +12,6 @@ export type ArtistCard_artist = {
             readonly url: string | null;
         } | null;
     } | null;
-    readonly internalID: string;
     readonly formatted_nationality_and_birthday: string | null;
     readonly " $fragmentRefs": FragmentRefs<"FollowArtistButton_artist">;
     readonly " $refType": "ArtistCard_artist";
@@ -93,13 +92,6 @@ const node: ReaderFragment = {
       "storageKey": null
     },
     {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "internalID",
-      "storageKey": null
-    },
-    {
       "alias": "formatted_nationality_and_birthday",
       "args": null,
       "kind": "ScalarField",
@@ -114,5 +106,5 @@ const node: ReaderFragment = {
   ],
   "type": "Artist"
 };
-(node as any).hash = 'b1013520995f55032f133ad4e3fd3c71';
+(node as any).hash = 'ecffdabd44e8c5cd2c3ffa2fe9662349';
 export default node;

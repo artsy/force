@@ -30,6 +30,8 @@ import { RecentlyViewedQueryRenderer as RecentlyViewed } from "v2/Components/Rec
 import { RouterContext } from "found"
 import { TrackingProp } from "react-tracking"
 import { Media } from "v2/Utils/Responsive"
+import { AnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
+import { OwnerType } from "@artsy/cohesion"
 
 export interface Props {
   artwork: ArtworkApp_artwork
@@ -179,102 +181,110 @@ export class ArtworkApp extends React.Component<Props> {
   render() {
     const { artwork, me } = this.props
     return (
-      <AppContainer>
-        <HorizontalPadding>
-          {/* NOTE: react-head automatically moves these tags to the <head> element */}
-          <ArtworkMeta artwork={artwork} />
+      <AnalyticsContext.Provider
+        value={{
+          contextPageOwnerId: artwork.internalID,
+          contextPageOwnerSlug: artwork.slug,
+          contextPageOwnerType: OwnerType.artwork,
+        }}
+      >
+        <AppContainer>
+          <HorizontalPadding>
+            {/* NOTE: react-head automatically moves these tags to the <head> element */}
+            <ArtworkMeta artwork={artwork} />
 
-          <Row>
-            <Col sm={8}>
-              <ArtworkBanner artwork={artwork} />
-              <Spacer mb={2} />
-            </Col>
-          </Row>
-
-          {/* Mobile */}
-          <Media at="xs">
-            <Row>
-              <Col>
-                <ArtworkImageBrowser artwork={artwork} />
-                <ArtworkSidebar artwork={artwork} me={me} />
-                <ArtworkDetails artwork={artwork} />
-                <PricingContext artwork={artwork} />
-                {this.renderArtists()}
-              </Col>
-            </Row>
-          </Media>
-
-          {/* Desktop */}
-          <Media greaterThan="xs">
             <Row>
               <Col sm={8}>
-                <Box pr={4}>
+                <ArtworkBanner artwork={artwork} />
+                <Spacer mb={2} />
+              </Col>
+            </Row>
+
+            {/* Mobile */}
+            <Media at="xs">
+              <Row>
+                <Col>
                   <ArtworkImageBrowser artwork={artwork} />
+                  <ArtworkSidebar artwork={artwork} me={me} />
                   <ArtworkDetails artwork={artwork} />
                   <PricingContext artwork={artwork} />
                   {this.renderArtists()}
-                </Box>
-              </Col>
-              <Col sm={4}>
-                <ArtworkSidebar artwork={artwork} me={me} />
-              </Col>
-            </Row>
-          </Media>
-
-          <Row>
-            <Col>
-              <Box mt={3}>
-                <ArtworkArtistSeries artwork={artwork} />
-              </Box>
-            </Col>
-          </Row>
-
-          <Row>
-            <Col>
-              <Box mt={3}>
-                <OtherWorks artwork={artwork} />
-              </Box>
-            </Col>
-          </Row>
-
-          {artwork.artist && (
-            <Row>
-              <Col>
-                <RelatedArtists artwork={artwork} />
-              </Col>
-            </Row>
-          )}
-
-          {typeof window !== "undefined" && (
-            <LazyLoadComponent threshold={1000}>
-              <Row>
-                <Col>
-                  <RecentlyViewed />
                 </Col>
               </Row>
-            </LazyLoadComponent>
-          )}
+            </Media>
 
-          <Row>
-            <Col>
-              <Separator mt={6} mb={3} />
-              <Footer />
-            </Col>
-          </Row>
+            {/* Desktop */}
+            <Media greaterThan="xs">
+              <Row>
+                <Col sm={8}>
+                  <Box pr={4}>
+                    <ArtworkImageBrowser artwork={artwork} />
+                    <ArtworkDetails artwork={artwork} />
+                    <PricingContext artwork={artwork} />
+                    {this.renderArtists()}
+                  </Box>
+                </Col>
+                <Col sm={4}>
+                  <ArtworkSidebar artwork={artwork} me={me} />
+                </Col>
+              </Row>
+            </Media>
 
-          <div
-            id="lightbox-container"
-            style={{
-              position: "absolute",
-              top: 0,
-              zIndex: 1100, // over top nav
-            }}
-          />
-          <SystemContextConsumer>
-            {({ mediator }) => <>{this.enableIntercomForBuyers(mediator)}</>}
-          </SystemContextConsumer>
-        </HorizontalPadding>
-      </AppContainer>
+            <Row>
+              <Col>
+                <Box mt={3}>
+                  <ArtworkArtistSeries artwork={artwork} />
+                </Box>
+              </Col>
+            </Row>
+
+            <Row>
+              <Col>
+                <Box mt={3}>
+                  <OtherWorks artwork={artwork} />
+                </Box>
+              </Col>
+            </Row>
+
+            {artwork.artist && (
+              <Row>
+                <Col>
+                  <RelatedArtists artwork={artwork} />
+                </Col>
+              </Row>
+            )}
+
+            {typeof window !== "undefined" && (
+              <LazyLoadComponent threshold={1000}>
+                <Row>
+                  <Col>
+                    <RecentlyViewed />
+                  </Col>
+                </Row>
+              </LazyLoadComponent>
+            )}
+
+            <Row>
+              <Col>
+                <Separator mt={6} mb={3} />
+                <Footer />
+              </Col>
+            </Row>
+
+            <div
+              id="lightbox-container"
+              style={{
+                position: "absolute",
+                top: 0,
+                zIndex: 1100, // over top nav
+              }}
+            />
+            <SystemContextConsumer>
+              {({ mediator }) => <>{this.enableIntercomForBuyers(mediator)}</>}
+            </SystemContextConsumer>
+          </HorizontalPadding>
+        </AppContainer>
+      </AnalyticsContext.Provider>
     )
   }
 }

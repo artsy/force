@@ -98,96 +98,79 @@ export class ArtistInfo extends Component<ArtistInfoProps, ArtistInfoState> {
       : "Show artist insights"
 
     return (
-      <SystemContextConsumer>
-        {({ user }) => (
-          <>
-            <StackableBorderBox
-              p={2}
-              flexDirection="column"
-              data-test="artistInfo"
-            >
-              <EntityHeader
-                name={this.props.artist.name}
-                meta={this.props.artist.formatted_nationality_and_birthday}
-                imageUrl={imageUrl}
-                href={this.props.artist.href}
-                FollowButton={
-                  <FollowArtistButton
-                    artist={this.props.artist}
-                    user={user}
-                    trackingData={{
-                      contextModule: ContextModule.aboutTheWork,
-                    }}
-                    render={({ is_followed }) => {
-                      return (
-                        <Text
-                          data-test="followButton"
-                          style={{
-                            cursor: "pointer",
-                            textDecoration: "underline",
-                          }}
-                        >
-                          {is_followed ? "Following" : "Follow"}
-                        </Text>
-                      )
-                    }}
-                  />
-                }
-              />
-              {showArtistBio && (
-                <>
-                  <Spacer mb={1} />
-                  <ArtistBio
-                    bio={this.props.artist}
-                    onReadMoreClicked={this.trackArtistBioReadMoreClick.bind(
-                      this
-                    )}
-                  />
-                </>
-              )}
-              {showArtistInsightsButton && (
-                <Flex flexDirection="column" alignItems="flex-start">
-                  <Button
-                    onClick={
-                      this.state.showArtistInsights
-                        ? this.closeArtistInsights.bind(this)
-                        : this.openArtistInsights.bind(this)
-                    }
-                    variant="secondaryGray"
-                    size="small"
-                    mt={1}
-                  >
-                    {buttonText}
-                  </Button>
-                </Flex>
-              )}
-            </StackableBorderBox>
-            {this.state.showArtistInsights && (
-              <>
-                <ArtistMarketInsights
-                  artist={this.props.artist}
-                  border={false}
-                  Container={Container}
-                />
-                <SelectedExhibitions
-                  artistID={this.props.artist.internalID}
-                  border={false}
-                  totalExhibitions={this.props.artist.counts.partner_shows}
-                  exhibitions={this.props.artist.exhibition_highlights}
-                  ViewAllLink={
-                    <a
-                      href={`${sd.APP_URL}/artist/${this.props.artist.slug}/cv`}
+      <>
+        <StackableBorderBox p={2} flexDirection="column" data-test="artistInfo">
+          <EntityHeader
+            name={artist.name}
+            meta={artist.formatted_nationality_and_birthday}
+            imageUrl={imageUrl}
+            href={artist.href}
+            FollowButton={
+              <FollowArtistButton
+                artist={artist}
+                contextModule={ContextModule.aboutTheWork}
+                render={({ is_followed }) => {
+                  return (
+                    <Text
+                      data-test="followButton"
+                      style={{
+                        cursor: "pointer",
+                        textDecoration: "underline",
+                      }}
                     >
-                      View all
-                    </a>
-                  }
-                  Container={Container}
-                />
-              </>
-            )}
+                      {is_followed ? "Following" : "Follow"}
+                    </Text>
+                  )
+                }}
+              />
+            }
+          />
+          {showArtistBio && (
+            <>
+              <Spacer mb={1} />
+              <ArtistBio
+                bio={artist}
+                onReadMoreClicked={this.trackArtistBioReadMoreClick.bind(this)}
+              />
+            </>
+          )}
+          {showArtistInsightsButton && (
+            <Flex flexDirection="column" alignItems="flex-start">
+              <Button
+                onClick={
+                  this.state.showArtistInsights
+                    ? this.closeArtistInsights.bind(this)
+                    : this.openArtistInsights.bind(this)
+                }
+                variant="secondaryGray"
+                size="small"
+                mt={1}
+              >
+                {buttonText}
+              </Button>
+            </Flex>
+          )}
+        </StackableBorderBox>
+        {this.state.showArtistInsights && (
+          <>
+            <ArtistMarketInsights
+              artist={artist}
+              border={false}
+              Container={Container}
+            />
+            <SelectedExhibitions
+              artistID={artist.internalID}
+              border={false}
+              totalExhibitions={artist.counts.partner_shows}
+              exhibitions={artist.exhibition_highlights}
+              ViewAllLink={
+                <a href={`${sd.APP_URL}/artist/${artist.slug}/cv`}>View all</a>
+              }
+              Container={Container}
+            />
           </>
         )}
-      </SystemContextConsumer>
+      </>
     )
   }
 }

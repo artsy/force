@@ -53,9 +53,7 @@ describe("FollowArtistButton", () => {
       onOpenAuthModal: jest.fn(),
       relay: { environment: "" },
       tracking: { trackEvent: jest.fn() },
-      trackingData: {
-        contextModule: ContextModule.artistsToFollowRail,
-      },
+      contextModule: ContextModule.artistsToFollowRail,
     }
   })
 

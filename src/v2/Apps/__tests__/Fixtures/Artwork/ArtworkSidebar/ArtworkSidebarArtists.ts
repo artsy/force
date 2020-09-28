@@ -2,7 +2,6 @@ import { ArtworkSidebarArtists_Test_QueryRawResponse } from "v2/__generated__/Ar
 
 export const SingleFollowedArtist: ArtworkSidebarArtists_Test_QueryRawResponse["artwork"] = {
   id: "opaque-artwork-id",
-  internalID: "1234",
   artists: [
     {
       id: "QXJ0aXN0Ompvc2VmLWFsYmVycw==",
@@ -15,7 +14,6 @@ export const SingleFollowedArtist: ArtworkSidebarArtists_Test_QueryRawResponse["
       related: null,
     },
   ],
-  slug: "american-18th-century",
   cultural_maker: "American 18th Century",
 }
 
@@ -37,7 +35,6 @@ export const SingleNonFollowedArtist = {
 
 export const MultipleArtists: ArtworkSidebarArtists_Test_QueryRawResponse["artwork"] = {
   id: "opaque-artwork-id",
-  internalID: "1234",
   artists: [
     {
       id: "QXJ0aXN0Ompvc2VmLWFsYmVycw==",
@@ -60,7 +57,6 @@ export const MultipleArtists: ArtworkSidebarArtists_Test_QueryRawResponse["artwo
       related: null,
     },
   ],
-  slug: "american-18th-century",
   cultural_maker: "American 18th Century",
 }
 
@@ -68,6 +64,4 @@ export const CulturalMakerWork: ArtworkSidebarArtists_Test_QueryRawResponse["art
   id: "opaque-artwork-id",
   artists: [],
   cultural_maker: "American 18th Century",
-  internalID: "1234",
-  slug: "american-18th-century"
 }

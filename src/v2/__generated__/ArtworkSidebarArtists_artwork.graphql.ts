@@ -4,8 +4,6 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkSidebarArtists_artwork = {
-    readonly internalID: string;
-    readonly slug: string;
     readonly cultural_maker: string | null;
     readonly artists: ReadonlyArray<{
         readonly id: string;
@@ -25,22 +23,7 @@ export type ArtworkSidebarArtists_artwork$key = {
 
 
 
-const node: ReaderFragment = (function(){
-var v0 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "internalID",
-  "storageKey": null
-},
-v1 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "slug",
-  "storageKey": null
-};
-return {
+const node: ReaderFragment = {
   "argumentDefinitions": [
     {
       "defaultValue": true,
@@ -53,8 +36,6 @@ return {
   "metadata": null,
   "name": "ArtworkSidebarArtists_artwork",
   "selections": [
-    (v0/*: any*/),
-    (v1/*: any*/),
     {
       "alias": "cultural_maker",
       "args": null,
@@ -77,8 +58,20 @@ return {
           "name": "id",
           "storageKey": null
         },
-        (v0/*: any*/),
-        (v1/*: any*/),
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "internalID",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "slug",
+          "storageKey": null
+        },
         {
           "alias": null,
           "args": null,
@@ -110,6 +103,5 @@ return {
   ],
   "type": "Artwork"
 };
-})();
-(node as any).hash = 'c9b3291ead4d03fefa7f8f10a6c536a1';
+(node as any).hash = '961d703b4bbc396cc6aaf106c649a11d';
 export default node;
