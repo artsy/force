@@ -22,7 +22,7 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
 
       <AppContainer>
         <HorizontalPadding>
-          <BackLink my={3} to={`/fair2/${fair.slug}`}>
+          <BackLink my={3} to={`/fair/${fair.slug}`}>
             Back to {fair.name}
           </BackLink>
 
