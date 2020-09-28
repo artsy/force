@@ -28,7 +28,8 @@ export const ViewingRoomCarousel: React.FC<ViewingRoomCarouselProps> = ({
   scrollPercentByCustomCount,
 }) => {
   const scrollLength = scrollPercentByCustomCount || data.length
-  const computeScrollPercent = selectedIndex => ((selectedIndex + 1) / scrollLength) * 100
+  const computeScrollPercent = selectedIndex =>
+    ((selectedIndex + 1) / scrollLength) * 100
 
   const [scrollPercent, setScrollPercent] = useState(computeScrollPercent(0))
   const update = flowRight(setScrollPercent, computeScrollPercent)

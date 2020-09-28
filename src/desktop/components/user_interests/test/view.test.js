@@ -17,7 +17,7 @@ describe("UserInterestsView", function () {
         $: benv.require("jquery"),
         jQuery: benv.require("jquery"),
         analytics: {
-          track: sinon.stub()
+          track: sinon.stub(),
         },
       })
       UserInterestsView = rewire("../view")
