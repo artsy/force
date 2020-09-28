@@ -97,7 +97,7 @@ module.exports = {
     "no-console": [
       "error",
       {
-        allow: ["warn", "error"],
+        allow: ["warn", "error", "info", "group", "groupEnd", "groupCollapsed"],
       },
     ],
 
@@ -111,4 +111,12 @@ module.exports = {
     //   },
     // ],
   },
+  overrides: [
+    {
+      files: ["src/v2/**/*.story.tsx"],
+      rules: {
+        "no-console": "off",
+      },
+    },
+  ],
 }
