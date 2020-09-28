@@ -536,7 +536,7 @@ describe("OrderApp", () => {
   it("shows the sticky 'need help?' footer", () => {
     const props = getProps() as any
     const subject = getWrapper({ props }) as any
-    expect(subject.text()).toMatch("Need help? Read our FAQ or ask a question.")
+    expect(subject.text()).toMatch("Need help? Visit our help center or ask a question.")
   })
 
   it("shows an error page if the order is missing", () => {

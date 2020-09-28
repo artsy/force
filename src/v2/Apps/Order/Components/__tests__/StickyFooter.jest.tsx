@@ -35,7 +35,7 @@ describe("Sticky footer", () => {
     component.find("a").at(0).simulate("click")
 
     expect(window.open).toHaveBeenCalledWith(
-      "https://www.artsy.net/buy-now-feature-faq",
+      "https://support.artsy.net/hc/en-us/sections/360008203114-Buy-Now-and-Make-Offer",
       "_blank"
     )
   })
@@ -62,7 +62,7 @@ describe("Sticky footer", () => {
       <StickyFooter orderType="OFFER" artworkId="whatever" />
     )
     expect(component.text()).toContain(
-      "Need help? Read our FAQ or ask a question."
+      "Need help? Visit our help center or ask a question."
     )
   })
 
