@@ -1,4 +1,4 @@
-import { Serif } from "@artsy/palette"
+import { Text } from "@artsy/palette"
 import { mount, shallow } from "enzyme"
 import React from "react"
 import { Header } from "../OtherWorks/Header"
@@ -68,7 +68,7 @@ describe("OtherWorks", () => {
     ]
     const component = mount(<OtherWorks artwork={genericOtherWorksData} />)
     expect(component.find(Header).length).toEqual(1)
-    expect(component.find(Serif).text()).toEqual("Other works by Andy Warhol")
+    expect(component.find(Text).text()).toEqual("Other works by Andy Warhol")
   })
 
   it("renders the grids if multiple are provided", () => {
@@ -90,10 +90,10 @@ describe("OtherWorks", () => {
     ]
     const component = mount(<OtherWorks artwork={genericOtherWorksData} />)
     expect(component.find(Header).length).toEqual(2)
-    expect(component.find(Serif).first().text()).toEqual(
+    expect(component.find(Text).first().text()).toEqual(
       "Other works by Andy Warhol"
     )
-    expect(component.find(Serif).last().text()).toEqual(
+    expect(component.find(Text).last().text()).toEqual(
       "Other works from Gagosian Gallery"
     )
   })
@@ -115,7 +115,7 @@ describe("OtherWorks", () => {
     ]
     const component = mount(<OtherWorks artwork={genericOtherWorksData} />)
     expect(component.find(Header).length).toEqual(1)
-    expect(component.find(Serif).text()).toEqual("Other works by Andy Warhol")
+    expect(component.find(Text).text()).toEqual("Other works by Andy Warhol")
   })
 
   it("renders only grids with artworks", () => {
@@ -144,7 +144,7 @@ describe("OtherWorks", () => {
     ]
     const component = mount(<OtherWorks artwork={genericOtherWorksData} />)
     expect(component.find(Header).length).toEqual(1)
-    expect(component.find(Serif).text()).toEqual("Other works by Andy Warhol")
+    expect(component.find(Text).text()).toEqual("Other works by Andy Warhol")
   })
 
   describe("Context-specific behavior", () => {

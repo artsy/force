@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { sendErrorToService } from "v2/Utils/errors"
 import createLogger from "v2/Utils/logger"
 

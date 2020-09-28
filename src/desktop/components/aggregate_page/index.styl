@@ -1,4 +1,6 @@
 @require '../components/stylus_lib'
+@require '../components/stylus_lib'
+@require '../../../lib/palette'
 
 .aggregate-page
   padding 40px 0
@@ -8,8 +10,8 @@
   garamond-size('l-headline')
 
 .aggregate-page-subheader
-  margin 30px 0
-  avant-garde-size('m-headline', true)
+  text('mediumText')
+  margin getSpace(3, 0, 2, 0)
 
 .aggregate-page-items
   clearfix()
@@ -24,9 +26,10 @@
     border-bottom 1px solid gray-lighter-color
 
 .aggregate-page-items-upcoming
+  text('text')
+  padding-left getSpace(3)
   float left
   width 25%
-  padding-left 30px
 
 .aggregate-page-items-featured-set
   block-margins(120px)

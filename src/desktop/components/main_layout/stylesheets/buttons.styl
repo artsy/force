@@ -1,6 +1,7 @@
 @require '../../stylus_lib'
 @require '../../../../../node_modules/artsy-ezel-components/spinners'
 @require '../../follow_button'
+@require '../../../../lib/palette'
 
 .circle-button
   display inline-block
@@ -9,11 +10,11 @@
   margin 0 10px
   height @width
   cursor pointer
-  color black
+  color getColor('black100')
   background-color transparent
   text-align center
   vertical-align middle
-  border 2px solid gray-lighter-color
+  border 2px solid getColor('black10')
   border-radius (@width / 2)
   opacity 1
   user-select none
@@ -21,12 +22,12 @@
   line-height @height !important
   transition all 0.125s
   &:hover
-    background-color gray-darker-color
+    background-color getColor('black60')
     border-color @background-color
     color white
   &.is-active
   &[data-state='active']
-    background-color purple-color
+    background-color getColor('purple100')
     border-color @background-color
     color white
 
@@ -35,21 +36,20 @@
   text-align center
 
 .circle-button-label
-  avant-garde()
-  font-size 11px
-  color black
-  margin-top 5px
+  text('small')
+  color getColor('black100')
+  margin-top getSpace(0.5)
 
 .highlight-link
   line-height 1.1
   text-decoration none
   transition color 0.25s
   &:hover
-    color purple-color
+    color getColor('purple100')
 
 .play-button
   position absolute
-  background-color black
+  background-color getColor('black100')
   cursor pointer
   height 55px
   width 75px
@@ -60,7 +60,7 @@
   padding 25px
   transition background-color 0.25s
   &:hover
-    background-color purple-color
+    background-color getColor('purple100')
   &:after
     display block
     position absolute
@@ -81,36 +81,35 @@
   margin 0 5px
 
 .avant-garde-button
+  text('mediumText')
   display inline-block
   position relative
-  padding 15px 30px
-  font-size 13px
-  line-height 1
+  padding getSpace(1.5, 3)
+  line-height 1 !important
   cursor pointer
   border none
-  background-color gray-lightest-color
-  avant-garde()
+  background-color getColor('black5')
   transition background-color 0.25s, color 0.25s
   border 1px solid transparent
   text-decoration none
   &:focus, &:hover
     outline none
-    background-color gray-lighter-color
+    background-color getColor('black10')
   // States
   &[data-state='success'], &.is-success
-    background-color green-color
-    color #fff
+    background-color getColor('green100')
+    color getColor('white100')
     &:hover
-      background-color darken(green-color, 25%)
+      background-color darken(getColor('green100'), 25%)
   &[data-state='error'], &.is-error
     &, &:focus
-      background-color red-color
-      color #fff
+      background-color getColor('red100')
+      color getColor('white100')
       &:hover
-        background-color darken(red-color, 25%)
+        background-color darken(getColor('red100'), 25%)
   &[data-state='loading'], &.is-loading
     &, &[disabled], &[disabled]:hover
-      background-color purple-color
+      background-color getColor('purple100')
       color transparent !important
       // Note:
       // Giving the loading state to input[type='submit']
@@ -119,7 +118,7 @@
       &::before
         display block
         content ''
-        spinner(25px, 6px, #fff)
+        spinner(25px, 6px, getColor('white100'))
   // Handle icons
   > i
     line-height 0
@@ -130,42 +129,41 @@
     &, &:hover
       background-color gray-lightest-color
       cursor default
-      color rgba(black, 0.5)
+      color rgba(getColor('black100'), 0.5)
       &[data-state='success'], &.is-success
-        background-color green-color
+        background-color getColor('green100')
       &[data-state='error'], &.is-error
-        background-color red-color
+        background-color getColor('red100')
 
   // Structural variants
   &.is-block
     width 100%
     text-align center
   &.is-small
-    font-size 11px
-    padding 10px 20px
+    padding getSpace(1, 2)
     &[data-state='loading'], &.is-loading
       &::before
-        spinner(16px, 4px, #fff)
+        spinner(16px, 4px, getColor('white100'))
   &.is-tiny
     font-size 11px
     padding 6px 12px 5px
     &[data-state='loading'], &.is-loading
       &::before
-        spinner(12px, 3px, #fff)
+        spinner(12px, 3px, getColor('white100'))
 
 // Stylistic variants
 .avant-garde-button-black
   @extends .avant-garde-button
   text-align center
-  background-color black
-  color #fff
+  background-color getColor('black100')
+  color getColor('white100')
   border 1px solid transparent
   &:focus, &:hover
-    background-color purple-color
+    background-color getColor('purple100')
   &[disabled], &.is-disabled
     &, &:hover
-      background-color gray-darker-color
-      color rgba(white, 0.75)
+      background-color getColor('black60')
+      color rgba(getColor('white100'), 0.75)
 
 .avant-garde-follow-button-black
   @extends .avant-garde-button
@@ -173,55 +171,55 @@
   &, &:hover, &:focus
     user-select none
     text-align center
-    color white
+    color getColor('white100')
   &, &:focus
     background-color black
   &:hover
-    background-color purple-color
+    background-color getColor('purple100')
   &[data-state='following'], &.is-following
-    background-color white
+    background-color getColor('white100')
     color gray-color
-    border 1px solid gray-lighter-color
+    border 1px solid getColor('black10')
   &.no-touch[data-state='following'],
   &.no-touch.is-following
     &:hover
-      color purple-color
+      color getColor('purple100')
 
 .avant-garde-button-dark
   @extends .avant-garde-button
-  color white
-  background-color gray-darkest-color
+  color getColor('white100')
+  background-color getColor('black60')
   &:focus, &:hover
-    background-color purple-color
+    background-color getColor('purple100')
   &[disabled], &.is-disabled
     &, &:hover
-      background-color gray-darkest-color
-      color rgba(white, 0.25)
+      background-color getColor('black60')
+      color rgba(getColor('white100'), 0.25)
 
 .avant-garde-button-white
   @extends .avant-garde-button
   background-color transparent
-  border 1px solid gray-lighter-color
+  border 1px solid getColor('black10')
   &:focus, &:hover, &:active
-    color purple-color
+    color getColor('purple100')
     background-color transparent
   &[data-state='success'], &.is-success
     background-color transparent
-    color green-color
+    color getColor('green100')
     &:hover
       background-color transparent
-      color purple-color
+      color getColor('purple100')
   &[data-state='error'], &.is-error
     &, &:focus
       background-color transparent
-      color red-color
+      color getColor('red100')
       &:hover
         background-color transparent
-        color purple-color
+        color getColor('purple100')
   &[data-state='loading'], &.is-loading
     background-color white
     &::before
-      background-color purple-color
+      background-color getColor('purple100')
   &[disabled], &.is-disabled
     &, &:hover
       background-color transparent
@@ -265,14 +263,12 @@
     vertical-align middle
 
 .garamond-button-text
+  text('text')
   display inline-block
   position relative
-  garamond()
-  text-transform uppercase
-  letter-spacing 1px
-  color black
+  color getColor('black100')
   text-decoration none
-  line-height 1
+  line-height 1 !important
   cursor pointer
   border none
   &[data-state='loading'], &.is-loading
@@ -285,4 +281,4 @@
       &::before
         display block
         content ''
-        spinner(25px, 6px, black)
+        spinner(25px, 6px, getColor('black100'))

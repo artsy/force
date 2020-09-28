@@ -34,7 +34,7 @@ export const ARTISTS_SUBMENU_DATA: MenuLinkData = {
       },
       {
         text: "Black Figurative Painters on the Rise",
-        href: "/collection/the-rise-of-craft",
+        href: "/collection/black-figurative-painters",
       },
       {
         text: "Modern & Contemporary Masters",

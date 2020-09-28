@@ -90,7 +90,10 @@ Authentication in Force is handled by a modified OAuth flow, with [Gravity](http
 
 For most local development in Force, this shouldn't be a problem. The login will still take effect and you can manually visit the desired local URL after logging in.
 
-If you require the authentication flow to redirect back to your local version, you can configure Force to run locally at an `*.artsy.net` subdomain. Gravity's staging environment considers all `*.artsy.net` subdomains to be valid redirect URLs.
+If you require the authentication flow to redirect back to your local version, you can configure Force to run locally at an `*.artsy.net` subdomain. Gravity's staging environment considers all `*.artsy.net` subdomains to be valid redirect URLs. Note that you may need to do this in
+an incognito window if you're using Chrome. Otherwise, the browser tends
+to remember that Artsy.net should always be accessed via SSL, and enforces
+that behavior even for subdomains (such as local.artsy.net).
 
 1. Add the following entry to your local hosts file (`/etc/hosts`):
 

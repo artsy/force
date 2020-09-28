@@ -45,7 +45,7 @@ const renderPage = async ({ layoutTemplate }, req, res, next) => {
 
     res.status(status).send(layout)
   } catch (error) {
-    console.log("(apps/auction_reaction) Error: ", error)
+    console.error("(apps/auction_reaction) Error: ", error)
     if (error.message.includes("Received status code 404")) {
       const notFoundError: any = new Error("Sale Not Found")
       notFoundError.status = 404

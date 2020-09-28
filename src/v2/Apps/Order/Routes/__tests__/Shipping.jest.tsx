@@ -55,9 +55,7 @@ const testOrder: ShippingTestQueryRawResponse["order"] = {
 
 class ShippingTestPage extends OrderAppTestPage {
   async selectPickupOption() {
-    this.find("Radio")
-      .last()
-      .simulate("click")
+    this.find("Radio").last().simulate("click")
     await this.update()
   }
 }
@@ -154,7 +152,6 @@ describe("Shipping", () => {
 
   it("commits the mutation with pickup option", async () => {
     const page = await buildPage()
-    console.log("")
     await page.selectPickupOption()
     fillInPhoneNumber(page.root, { isPickup: true, value: "2813308004" })
     expect(mutations.mockFetch).not.toHaveBeenCalled()

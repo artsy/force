@@ -1,10 +1,13 @@
 @require '../stylus_lib'
+@require '../../lib/palette'
+
+LINE_HEIGHT = 21px
 
 .artwork-metadata-stub
-  serif('l-caption')
-  margin distance(gutter / 2) 0 distance(gutter) 0
+  text('text')
+  margin getSpace(1) 0 distance(gutter) 0
   lines = 5
-  height (line-height-in-px('garamond-l-caption') * lines)
+  height (LINE_HEIGHT * lines)
   overflow hidden
 
   &__sale-artwork__estimate
@@ -16,7 +19,7 @@
 
     &
     & > a
-      color gray-darker-color
+      color getColor('black60')
       text-decoration none
 
   &__bid-now:before
@@ -30,11 +33,14 @@
 
   &__artists
     font-weight bold
+    &
+    & > a
+      color getColor('black100')
 
   &__placeholder-line
     offset = 3px
-    height (line-height-in-px('garamond-l-caption') - (offset * 2))
-    background-color gray-lightest-color
+    height (LINE_HEIGHT - (offset * 2))
+    background-color getColor('black5')
     margin offset 0
 
     &:nth-child(2)

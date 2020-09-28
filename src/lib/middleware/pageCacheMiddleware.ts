@@ -74,6 +74,7 @@ export const pageCacheMiddleware = async (
   // Register callback to write rendered page data to cache.
   res.once("finish", () => {
     if (res.locals.PAGE_CACHE) {
+      // eslint-disable-next-line no-console
       console.log(`[Page Cache]: Writing ${cacheKeyForRequest} to cache`)
       cacheHtmlForPage(res.locals.PAGE_CACHE)
     }
@@ -96,6 +97,7 @@ export const pageCacheMiddleware = async (
         clearTimeout(timeoutId)
 
         if (html) {
+          // eslint-disable-next-line no-console
           console.log(`[Page Cache]: Reading ${cacheKeyForRequest} from cache`)
           return res.send(html)
         }
@@ -106,7 +108,7 @@ export const pageCacheMiddleware = async (
       cache.get(cacheKey(req.url), handleCacheGet)
     })
   } catch (e) {
-    console.log(`[Page Cache Middleware]: ${e.message}`)
+    console.error(`[Page Cache Middleware]: ${e.message}`)
   } finally {
     next()
   }

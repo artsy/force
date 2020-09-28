@@ -5,6 +5,8 @@ import "jest-styled-components"
 import React from "react"
 import { OtherCollectionsRail } from "../index"
 import { paginateCarousel } from "@artsy/palette"
+import { OwnerType } from "@artsy/cohesion"
+import { AnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
 
 jest.mock("@artsy/palette/dist/elements/Carousel/paginate")
 jest.mock("@artsy/palette", () => {
@@ -37,19 +39,22 @@ describe("CollectionsRail", () => {
     ;(paginateCarousel as jest.Mock).mockImplementation(() => [0, 100, 200])
   })
 
-  const memberData = () => {
-    return {
-      description:
-        "<p>From SpongeBob SquarePants to Snoopy, many beloved childhood cartoons have made an impact on the history of art.</p>",
-      price_guidance: 60,
-      slug: "art-inspired-by-cartoons",
-      thumbnail: "http://files.artsy.net/images/cartoons_thumbnail.png",
-      title: "Art Inspired by Cartoons",
-    }
+  const getWrapper = (passedProps = props) => {
+    return mount(
+      <AnalyticsContext.Provider
+        value={{
+          contextPageOwnerId: "1234",
+          contextPageOwnerSlug: "slug",
+          contextPageOwnerType: OwnerType.collection,
+        }}
+      >
+        <OtherCollectionsRail {...passedProps} />
+      </AnalyticsContext.Provider>
+    )
   }
 
   it("Renders expected fields", () => {
-    const component = mount(<OtherCollectionsRail {...props} />)
+    const component = getWrapper()
 
     expect(component.text()).toMatch("Other Collections")
     expect(component.text()).toMatch("Artist Posters")
@@ -58,25 +63,21 @@ describe("CollectionsRail", () => {
   })
 
   describe("Tracking", () => {
-    it("Tracks arrow click", () => {
-      props.collectionGroup.members = [
-        memberData(),
-        memberData(),
-        memberData(),
-        memberData(),
-        memberData(),
-      ]
-
-      const component = mount(<OtherCollectionsRail {...props} />)
-      component.find("button").at(2).simulate("click") // Next button
+    it("Tracks link click", () => {
+      const component = getWrapper()
+      component.find("a").at(2).simulate("click")
 
       expect(trackEvent).toBeCalledWith({
-        action_type: "Click",
-        context_page: "Collection",
-        context_module: "OtherCollectionsRail",
-        context_page_owner_type: "Collection",
-        type: "Button",
-        subject: "clicked next button",
+        action: "clickedCollectionGroup",
+        context_module: "otherCollectionsRail",
+        context_page_owner_id: "1234",
+        context_page_owner_slug: "slug",
+        context_page_owner_type: "collection",
+        destination_page_owner_id: "123457",
+        destination_page_owner_slug: "kaws-bearbrick",
+        destination_page_owner_type: "collection",
+        horizontal_slide_position: 2,
+        type: "thumbnail",
       })
     })
   })

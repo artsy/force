@@ -1,4 +1,5 @@
 @require '../../../components/stylus_lib'
+@require '../../../../lib/palette'
 
 browse-container-width = 663px
 browse-container-height = 442px
@@ -364,12 +365,15 @@ html[data-useragent*="Firefox"]
   margin-top: 25px
 
 .clock
-  margin-top 15px
-  text-align: left
-  .clock-header
-    text-transform: none
-    font-size: 17px
-    margin-bottom: 5px
+  .clock-value
+    align-items flex-start
+
+    small
+      text('small')
+
+  .clock-separator
+    padding-right getSpace(1)
+
   .clock-closed
     display none
 

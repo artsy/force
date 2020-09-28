@@ -10,10 +10,9 @@ import {
   Box,
   Flex,
   LosingBidIcon,
-  Sans,
   Separator,
-  Serif,
   Spacer,
+  Text,
   WinningBidIcon,
 } from "@artsy/palette"
 
@@ -23,7 +22,7 @@ export interface ArtworkSidebarCurrentBidInfoProps {
 
 @track()
 export class ArtworkSidebarCurrentBidInfo extends React.Component<
-ArtworkSidebarCurrentBidInfoProps
+  ArtworkSidebarCurrentBidInfoProps
 > {
   @track(() => {
     return {
@@ -52,9 +51,9 @@ ArtworkSidebarCurrentBidInfoProps
       return (
         <Box>
           <Separator mb={3} />
-          <Serif size="5t" weight="semibold" color="black100">
+          <Text variant="subtitle" color="black100">
             Bidding closed
-          </Serif>
+          </Text>
           <Spacer mb={3} />
         </Box>
       )
@@ -67,8 +66,8 @@ ArtworkSidebarCurrentBidInfoProps
     const bidsPresent = bidsCount > 0
     const bidColor =
       artwork.sale_artwork.is_with_reserve &&
-        bidsPresent &&
-        artwork.sale_artwork.reserve_status === "reserve_not_met"
+      bidsPresent &&
+      artwork.sale_artwork.reserve_status === "reserve_not_met"
         ? "red100"
         : "black60"
 
@@ -105,9 +104,9 @@ ArtworkSidebarCurrentBidInfoProps
               flexDirection="row"
               justifyContent="space-between"
             >
-              <Serif size="5t" weight="semibold" pr={1}>
+              <Text variant="subtitle" pr={1}>
                 {bidsPresent ? "Current bid" : "Starting bid"}
-              </Serif>
+              </Text>
               <Flex
                 flexDirection="row"
                 justifyContent="right"
@@ -118,13 +117,13 @@ ArtworkSidebarCurrentBidInfoProps
                     {myBidWinning ? (
                       <WinningBidIcon fill="green100" />
                     ) : (
-                        <LosingBidIcon fill="red100" />
-                      )}
+                      <LosingBidIcon fill="red100" />
+                    )}
                   </Box>
                 )}
-                <Serif size="5t" weight="semibold" pl={0.5}>
+                <Text variant="subtitle" pl={0.5}>
                   {artwork.sale_artwork.current_bid.display}
-                </Serif>
+                </Text>
               </Flex>
             </Flex>
             <Flex
@@ -132,25 +131,26 @@ ArtworkSidebarCurrentBidInfoProps
               flexDirection="row"
               justifyContent="space-between"
             >
-              <Sans size="2" color={bidColor} pr={1}>
+              <Text variant="caption" color={bidColor} pr={1}>
                 {bidText}
-              </Sans>
+              </Text>
               {myMaxBid && (
-                <Sans size="2" color="black60" pl={1}>
+                <Text variant="caption" color="black60" pl={1}>
                   Your max: {myMaxBid}
-                </Sans>
+                </Text>
               )}
             </Flex>
             {artwork.sale && artwork.sale.is_with_buyers_premium && (
-              <Serif size="2" color="black60">
+              <Text variant="caption" color="black60">
                 <br />
-                This auction has a{" "}
+                This auction has a {/* FIXME: Remove this lint ignore */}
+                {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
                 <Link onClick={() => this.handleClickBuyerPremium(mediator)}>
                   buyer's premium
                 </Link>
                 .<br />
                 Shipping, taxes, and additional fees may apply.
-              </Serif>
+              </Text>
             )}
             <Spacer mb={3} />
           </Box>

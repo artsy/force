@@ -13,7 +13,9 @@ export type PurchaseHistory_me = {
                 readonly code: string;
                 readonly state: CommerceOrderStateEnum;
                 readonly mode: CommerceOrderModeEnum | null;
-                readonly buyerTotal: string | null;
+                readonly createdAt: string;
+                readonly totalListPrice: string | null;
+                readonly itemsTotal: string | null;
                 readonly lineItems: {
                     readonly edges: ReadonlyArray<{
                         readonly node: {
@@ -23,6 +25,9 @@ export type PurchaseHistory_me = {
                                     readonly resized: {
                                         readonly url: string | null;
                                     } | null;
+                                } | null;
+                                readonly partner: {
+                                    readonly name: string | null;
                                 } | null;
                                 readonly internalID: string;
                                 readonly title: string | null;
@@ -205,7 +210,21 @@ return {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
-                  "name": "buyerTotal",
+                  "name": "createdAt",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "totalListPrice",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "itemsTotal",
                   "storageKey": null
                 },
                 {
@@ -278,6 +297,24 @@ return {
                                         }
                                       ],
                                       "storageKey": "resized(width:55)"
+                                    }
+                                  ],
+                                  "storageKey": null
+                                },
+                                {
+                                  "alias": null,
+                                  "args": null,
+                                  "concreteType": "Partner",
+                                  "kind": "LinkedField",
+                                  "name": "partner",
+                                  "plural": false,
+                                  "selections": [
+                                    {
+                                      "alias": null,
+                                      "args": null,
+                                      "kind": "ScalarField",
+                                      "name": "name",
+                                      "storageKey": null
                                     }
                                   ],
                                   "storageKey": null
@@ -412,5 +449,5 @@ return {
   "type": "Me"
 };
 })();
-(node as any).hash = 'd41ff70287f376c946cc6639696bee28';
+(node as any).hash = 'e139e932a4ec9fdf1c70a9aaae531d01';
 export default node;

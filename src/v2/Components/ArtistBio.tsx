@@ -1,4 +1,4 @@
-import { Serif } from "@artsy/palette"
+import { Text } from "@artsy/palette"
 import { ArtistBio_bio } from "v2/__generated__/ArtistBio_bio.graphql"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -14,13 +14,13 @@ export class ArtistBio extends React.Component<ArtistBioProps> {
   render() {
     const { bio } = this.props
     return (
-      <Serif size="3">
+      <Text variant="text">
         <BioSpan
           dangerouslySetInnerHTML={{
             __html: bio.biographyBlurb.text,
           }}
         />
-      </Serif>
+      </Text>
     )
   }
 }

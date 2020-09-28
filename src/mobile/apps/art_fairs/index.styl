@@ -1,39 +1,45 @@
 @import '../../components/stylus_lib'
 @import '../../components/avant_garde_tabs/index'
+@require '../../../lib/palette'
 
 #art-fairs-page
   min-height 600px
 
-  .art-fairs-header--background-image.garamond-header
+  .art-fairs-header
+    h1
+      text('largeTitle')
+      text-align center
+      padding-top getSpace(3)
+      padding-bottom getSpace(1)
+
+  .art-fairs-header--background-image
     background-size cover
     background-position center
     height 200px
     color white
-    margin-bottom 30px
+    margin-bottom getSpace(3)
 
     h1
-      font-size 30px
+      text('largeTitle')
       position relative
       top 50%
       transform translateY(-50%)
 
   .art-fairs-content--sign-up-container
-    padding-bottom 30px
+    padding-bottom getSpace(3)
     text-align center
 
     .avant-garde-box-button
-      background #000
-      margin-top 20px
+      background getColor('black100')
+      margin-top getSpace(2)
 
     .art-fairs-content--sign-up-container__label
-      serif()
-      font-size 18px
+      text('text')
 
   #art-fairs-content
-    font-size 18px
 
     h1
-      avant-garde()
+      text('largeTitle')
 
   .current-fairs.avant-garde-tabs-list--active
     display table
@@ -44,8 +50,8 @@
     width 100%
 
   .art-fairs--fair-details
-    margin-bottom 10px
-    padding 10px 0
+    margin-bottom getSpace(1)
+    padding getSpace(1, 0)
     position relative
 
   .past-art-fairs--border-bottom
@@ -58,7 +64,7 @@
 
   .fair-logo
     display table-cell
-    padding-right 15px
+    padding-right getSpace(1.5)
 
   .fair-details
     display table-cell
@@ -69,11 +75,10 @@
     height 50px
 
   .fair-details h5.fair-name
-    avant-garde-size('s-headline', true)
-    margin-bottom 4px
+    text('text')
 
   .fair-details p.fair-content
-    garamond-size('l-caption')
+    text('text')
 
   .fair-content__location
     max-width 90%
@@ -92,7 +97,7 @@
     top 50%
 
   #paginate-past-fairs
-    margin-top 20px
+    margin-top getSpace(2)
 
   .current-art-fairs__image
     width 100%

@@ -52,7 +52,7 @@ describe("SearchApp", () => {
   it("includes the total count", () => {
     const wrapper = getWrapper(props).find("TotalResults")
     const html = wrapper.text()
-    expect(html).toContain('520 Results for "andy"')
+    expect(html).toContain("520 results for \u201Candy\u201D")
   })
 
   it("includes tabs w/ counts", () => {

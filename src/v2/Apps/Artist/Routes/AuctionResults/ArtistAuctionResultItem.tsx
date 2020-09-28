@@ -3,9 +3,9 @@ import {
   ArrowDownIcon,
   ArrowUpIcon,
   BorderBox,
+  Clickable,
   Col,
   Collapse,
-  Link,
   Row,
   Sans,
 } from "@artsy/palette"
@@ -136,9 +136,7 @@ const LargeAuctionItem: SFC<Props> = props => {
   } = getProps(props)
 
   const imageUrl = get(images, i => i.thumbnail.url, "")
-  const dateOfSale = DateTime.fromISO(saleDate).toLocaleString(
-    DateTime.DATE_MED
-  )
+  const dateOfSale = getDisplaySaleDate(saleDate)
 
   return (
     <>
@@ -214,9 +212,7 @@ const ExtraSmallAuctionItem: SFC<Props> = props => {
     salePrice,
   } = getProps(props)
   const imageUrl = get(images, i => i.thumbnail.url, "")
-  const dateOfSale = DateTime.fromISO(saleDate).toLocaleString(
-    DateTime.DATE_MED
-  )
+  const dateOfSale = getDisplaySaleDate(saleDate)
 
   return (
     <Flex data-test={ContextModule.auctionResults} width="100%">
@@ -317,6 +313,12 @@ const getProps = (props: Props) => {
   }
 }
 
+const getDisplaySaleDate = saleDate => {
+  return DateTime.fromISO(saleDate, { zone: "utc" }).toLocaleString(
+    DateTime.DATE_MED
+  )
+}
+
 const renderPricing = (
   salePrice,
   saleDate,
@@ -330,7 +332,8 @@ const renderPricing = (
   // If user is logged in we show prices. Otherwise we show prices only when filters at default.
   if (user || filtersAtDefault) {
     const textAlign = size === "xs" ? "left" : "right"
-    const dateOfSale = DateTime.fromISO(saleDate)
+
+    const dateOfSale = DateTime.fromISO(saleDate, { zone: "utc" })
     const now = DateTime.local()
     const awaitingResults = dateOfSale > now
 
@@ -388,26 +391,17 @@ const renderPricing = (
   }
 }
 
-const renderEstimate = (estimatedPrice, user, mediator, size) => {
-  const justifyContent = size === "xs" ? "flex-start" : "flex-end"
+const renderEstimate = (estimatedPrice, user, mediator) => {
+  let body: JSX.Element
   if (user) {
-    return (
-      <Flex justifyContent={justifyContent}>
-        {estimatedPrice && (
-          <>
-            <Sans size="2">{estimatedPrice}</Sans>
-          </>
-        )}
-        {!estimatedPrice && (
-          <>
-            <Sans size="2">Estimate not available</Sans>
-          </>
-        )}
-      </Flex>
-    )
+    if (estimatedPrice) {
+      body = <Sans size="2">{estimatedPrice}</Sans>
+    } else {
+      body = <Sans size="2">Estimate not available</Sans>
+    }
   } else {
-    return (
-      <Link
+    body = (
+      <Clickable
         onClick={() => {
           mediator &&
             openAuthModal(mediator, {
@@ -417,40 +411,33 @@ const renderEstimate = (estimatedPrice, user, mediator, size) => {
               intent: Intent.seeEstimateAuctionRecords,
             })
         }}
+        textDecoration="underline"
       >
         <Sans size="2">Sign up to see estimate</Sans>
-      </Link>
+      </Clickable>
     )
   }
+
+  return <Flex justifyContent="flex-start">{body}</Flex>
 }
 
 const renderRealizedPrice = (
-  estimatedPrice,
+  realizedPrice,
   user,
   mediator,
-  size,
   filtersAtDefault
 ) => {
-  const justifyContent = size === "xs" ? "flex-start" : "flex-end"
   // Show prices if user is logged in. Otherwise, show prices only when filters at default.
+  let body: JSX.Element
   if (user || filtersAtDefault) {
-    return (
-      <Flex justifyContent={justifyContent}>
-        {estimatedPrice && (
-          <>
-            <Sans size="2">{estimatedPrice}</Sans>
-          </>
-        )}
-        {!estimatedPrice && (
-          <>
-            <Sans size="2">Price not available</Sans>
-          </>
-        )}
-      </Flex>
-    )
+    if (realizedPrice) {
+      body = <Sans size="2">{realizedPrice}</Sans>
+    } else {
+      body = <Sans size="2">Price not available</Sans>
+    }
   } else {
-    return (
-      <Link
+    body = (
+      <Clickable
         onClick={() => {
           mediator &&
             openAuthModal(mediator, {
@@ -460,11 +447,14 @@ const renderRealizedPrice = (
               intent: Intent.seeRealizedPriceAuctionRecords,
             })
         }}
+        textDecoration="underline"
       >
         <Sans size="2">Sign up to see realized price</Sans>
-      </Link>
+      </Clickable>
     )
   }
+
+  return <Flex justifyContent="flex-start">{body}</Flex>
 }
 
 const renderLargeCollapse = (props, user, mediator, filtersAtDefault) => {
@@ -481,9 +471,7 @@ const renderLargeCollapse = (props, user, mediator, filtersAtDefault) => {
     estimatedPrice,
   } = getProps(props)
 
-  const dateOfSale = DateTime.fromISO(saleDate).toLocaleString(
-    DateTime.DATE_MED
-  )
+  const dateOfSale = getDisplaySaleDate(saleDate)
 
   return (
     <Collapse open={expanded}>
@@ -510,9 +498,7 @@ const renderLargeCollapse = (props, user, mediator, filtersAtDefault) => {
             </Box>
           </Col>
           <Col sm={4} pr="4.5%">
-            <Sans size="2">
-              {renderEstimate(estimatedPrice, user, mediator, "lg")}
-            </Sans>
+            {renderEstimate(estimatedPrice, user, mediator)}
           </Col>
         </Row>
 
@@ -538,13 +524,7 @@ const renderLargeCollapse = (props, user, mediator, filtersAtDefault) => {
             </Box>
           </Col>
           <Col sm={4} pr="4.5%">
-            {renderRealizedPrice(
-              salePrice,
-              user,
-              mediator,
-              "lg",
-              filtersAtDefault
-            )}
+            {renderRealizedPrice(salePrice, user, mediator, filtersAtDefault)}
           </Col>
         </Row>
 
@@ -582,9 +562,7 @@ const renderSmallCollapse = (props, user, mediator, filtersAtDefault) => {
     estimatedPrice,
   } = getProps(props)
 
-  const dateOfSale = DateTime.fromISO(saleDate).toLocaleString(
-    DateTime.DATE_MED
-  )
+  const dateOfSale = getDisplaySaleDate(saleDate)
 
   return (
     <Collapse open={expanded}>
@@ -612,9 +590,7 @@ const renderSmallCollapse = (props, user, mediator, filtersAtDefault) => {
               Estimate
             </Sans>
           </Col>
-          <Col xs={8}>
-            {renderEstimate(estimatedPrice, user, mediator, "xs")}
-          </Col>
+          <Col xs={8}>{renderEstimate(estimatedPrice, user, mediator)}</Col>
         </Row>
 
         <Row mb={2}>
@@ -624,13 +600,7 @@ const renderSmallCollapse = (props, user, mediator, filtersAtDefault) => {
             </Sans>
           </Col>
           <Col xs={8}>
-            {renderRealizedPrice(
-              salePrice,
-              user,
-              mediator,
-              "xs",
-              filtersAtDefault
-            )}
+            {renderRealizedPrice(salePrice, user, mediator, filtersAtDefault)}
           </Col>
         </Row>
 

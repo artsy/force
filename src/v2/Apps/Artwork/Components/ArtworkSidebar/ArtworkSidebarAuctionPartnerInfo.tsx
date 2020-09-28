@@ -1,4 +1,4 @@
-import { Box, Serif } from "@artsy/palette"
+import { Box, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import React from "react"
 
@@ -10,7 +10,7 @@ export interface ArtworkSidebarAuctionPartnerInfoProps {
 
 export class ArtworkSidebarAuctionPartnerInfo extends React.Component<
   ArtworkSidebarAuctionPartnerInfoProps
-  > {
+> {
   render() {
     const { partner, sale_artwork, sale } = this.props.artwork
     if (sale.is_closed) {
@@ -19,14 +19,14 @@ export class ArtworkSidebarAuctionPartnerInfo extends React.Component<
     return (
       <Box pb={3}>
         {partner && (
-          <Serif size="2" weight="semibold" color="black100">
+          <Text variant="caption" color="black100">
             {partner.name}
-          </Serif>
+          </Text>
         )}
         {sale_artwork && sale_artwork.estimate && (
-          <Serif size="2" color="black60">
+          <Text variant="caption" color="black60">
             Estimated value: {sale_artwork.estimate}
-          </Serif>
+          </Text>
         )}
       </Box>
     )

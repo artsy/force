@@ -1,4 +1,4 @@
-import { Box, Flex, Sans, color, space } from "@artsy/palette"
+import { Box, Flex, Text, color, space } from "@artsy/palette"
 import Icon from "v2/Components/Icon"
 import React from "react"
 import styled from "styled-components"
@@ -19,9 +19,9 @@ export class ArtworkPopoutPanel extends React.Component<
         </Box>
         <Flex flexDirection="column" p={2}>
           <Flex flexDirection="row" mb={2}>
-            <Sans size="3" weight="medium" color="black100">
+            <Text variant="mediumText" color="black100">
               {this.props.title}
-            </Sans>
+            </Text>
           </Flex>
           {this.props.children}
         </Flex>

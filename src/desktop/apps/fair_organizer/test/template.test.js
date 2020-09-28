@@ -42,6 +42,7 @@ describe("Fair Organizer", () =>
         CURRENT_PATH: "/cool-fair",
         PROFILE: fabricate("fair_organizer_profile"),
         FAIR_ORGANIZER: fabricate("fair_organizer"),
+        WEBFONT_URL: "http://webfonts.artsy.net/",
       })
       const fairOrg = new FairOrganizer(sd.FAIR_ORGANIZER)
       const profile = new Profile(sd.PROFILE)

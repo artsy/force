@@ -1,0 +1,81 @@
+THEME = json('../../node_modules/@artsy/palette/dist/tokens.json', { hash: true })
+
+// Access themed values
+
+getFontFamily(name)
+  value = THEME.fonts[name]
+  if value == null
+    error('cannot find: ' + name)
+  value
+
+getFontSize(name)
+  value = THEME.fontSizes[name]
+  if value == null
+    error('cannot find: ' + name)
+  value
+
+getLineHeight(name)
+  value = THEME.lineHeights[name]
+  if value == null
+    error('cannot find: ' + name)
+  value
+
+getLetterSpacing(name)
+  value = THEME.letterSpacings[name]
+  if value == null
+    error('cannot find: ' + name)
+  value
+
+getColor(name)
+  value = THEME.colors[name]
+  if value == null
+    error('cannot find: ' + name)
+  value
+
+getSpace(keys...)
+  values = ()
+  for key in keys
+    if key == 0 || key == 'auto'
+      push(values, key)
+    else
+      value = THEME.space[key]
+      if value == null
+        error('cannot find: ' + key)
+      push(values, value)
+  values
+
+// Access text treatments
+
+TEXT = THEME.textVariants
+
+PROPERTIES = {
+  fontSize: {
+    name: 'font-size',
+    theme: 'fontSizes'
+  },
+  lineHeight: {
+    name: 'line-height',
+    theme: 'lineHeights'
+  },
+  letterSpacing: {
+    name: 'letter-spacing',
+    theme: 'letterSpacings'
+  },
+  fontWeight: {
+    name: 'font-weight',
+    theme: 'fontWeights'
+  }
+}
+
+treatment(variant, size)
+  treatment = TEXT[size][variant]
+  if treatment == null
+    error('cannot find variant: ' + variant)
+  for attr, value in treatment
+    {PROPERTIES[attr][name]}: THEME[PROPERTIES[attr][theme]][value] || value
+
+text(variant, font = 'sans')
+  font-family: getFontFamily(font)
+  treatment(variant, small)
+  @media (min-width: THEME[breakpoints]['0'])
+    treatment(variant, large)

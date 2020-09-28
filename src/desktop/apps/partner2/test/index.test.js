@@ -75,35 +75,36 @@ const partnerRoutes = [
 
 const subscriptions2_0Specs = function (partnerRoutes) {
   _.each(_.without(partnerRoutes, "/:id/overview"), route =>
-    it(`renders partner2 for ${route}`, function () {
-      return request(this.app)
+    it(`renders partner2 for ${route}`, function (done) {
+      request(this.app)
         .get(
           route.replace(":id", "partner-id").replace(":artistId", "artist-id")
         )
+        .expect(res => res.text.should.startWith("<!DOCTYPE html>"))
         .expect(200)
-        .expect((
-          res // https://github.com/visionmedia/supertest/issues/253
-        ) => res.text.should.startWith("<!DOCTYPE html>"))
+        .end((err, res) => (err ? done.fail(err) : done()))
     })
   )
 
-  return xit("redirects to /:id for /:id/overview", function () {
-    return request(this.app)
+  it("redirects to /:id for /:id/overview", function (done) {
+    request(this.app)
       .get("/partner-id/overview")
-      .expect(302)
       .expect(res => res.text.should.endWith("Redirecting to /partner-id"))
+      .expect(302)
+      .end((err, res) => (err ? done.fail(err) : done()))
   })
 }
 
 const subscriptions1_0Specs = partnerRoutes =>
   _.each(partnerRoutes, route =>
-    xit(`renders partner1 for ${route}`, function () {
-      return request(this.app)
+    it(`renders partner1 for ${route}`, function (done) {
+      request(this.app)
         .get(
           route.replace(":id", "partner-id").replace(":artistId", "artist-id")
         )
-        .expect(200)
         .expect("partner1")
+        .expect(200)
+        .end((err, res) => (err ? done.fail(err) : done()))
     })
   )
 
@@ -115,7 +116,7 @@ const itShouldBeLikeSubscriptions2_0ForInstitutions = function (partnerRoutes) {
       return this.app.use(partner1)
     })
 
-    return subscriptions2_0Specs(partnerRoutes)
+    subscriptions2_0Specs(partnerRoutes)
   })
 
   context("user", function () {
@@ -125,17 +126,17 @@ const itShouldBeLikeSubscriptions2_0ForInstitutions = function (partnerRoutes) {
       return this.app.use(partner1)
     })
 
-    return subscriptions2_0Specs(partnerRoutes)
+    subscriptions2_0Specs(partnerRoutes)
   })
 
-  return context("admin", function () {
+  context("admin", function () {
     beforeEach(function () {
       this.app.use(loginAsAdmin)
       this.app.use(partner2)
       return this.app.use(partner1)
     })
 
-    return subscriptions2_0Specs(partnerRoutes)
+    subscriptions2_0Specs(partnerRoutes)
   })
 }
 
@@ -157,17 +158,17 @@ const itShouldBehaveLikeSubscriptions2_0 = function (partnerRoutes) {
       return this.app.use(partner1)
     })
 
-    return subscriptions2_0Specs(partnerRoutes)
+    subscriptions2_0Specs(partnerRoutes)
   })
 
-  return context("admin", function () {
+  context("admin", function () {
     beforeEach(function () {
       this.app.use(loginAsAdmin)
       this.app.use(partner2)
       return this.app.use(partner1)
     })
 
-    return subscriptions2_0Specs(partnerRoutes)
+    subscriptions2_0Specs(partnerRoutes)
   })
 }
 
@@ -176,30 +177,30 @@ const itShouldBehaveLikeSubscriptions1_0 = function (partnerRoutes) {
   context("public", function () {
     beforeEach(function () {
       this.app.use(partner2)
-      return this.app.use(partner1)
+      this.app.use(partner1)
     })
 
-    return subscriptions1_0Specs(partnerRoutes)
+    subscriptions1_0Specs(partnerRoutes)
   })
 
   context("user", function () {
     beforeEach(function () {
       this.app.use(loginAsUser)
       this.app.use(partner2)
-      return this.app.use(partner1)
+      this.app.use(partner1)
     })
 
-    return subscriptions1_0Specs(partnerRoutes)
+    subscriptions1_0Specs(partnerRoutes)
   })
 
-  return context("admin", function () {
+  context("admin", function () {
     beforeEach(function () {
       this.app.use(loginAsAdmin)
       this.app.use(partner2)
-      return this.app.use(partner1)
+      this.app.use(partner1)
     })
 
-    return subscriptions1_0Specs(partnerRoutes)
+    subscriptions1_0Specs(partnerRoutes)
   })
 }
 
@@ -210,10 +211,10 @@ describe("partner2 index", function () {
       function () {
         beforeEach(function () {
           this.app = express()
-          return this.app.use(prepareLocals(profile))
+          this.app.use(prepareLocals(profile))
         })
 
-        return itShouldBehaveLikeSubscriptions2_0(partnerRoutes)
+        itShouldBehaveLikeSubscriptions2_0(partnerRoutes)
       }
     )
   )
@@ -224,10 +225,10 @@ describe("partner2 index", function () {
       function () {
         beforeEach(function () {
           this.app = express()
-          return this.app.use(prepareLocals(profile))
+          this.app.use(prepareLocals(profile))
         })
 
-        return itShouldBehaveLikeSubscriptions1_0(partnerRoutes)
+        itShouldBehaveLikeSubscriptions1_0(partnerRoutes)
       }
     )
   )
@@ -238,6 +239,6 @@ describe("partner2 index", function () {
       return this.app.use(prepareLocals(institutionLayoutPartnerProfile))
     })
 
-    return itShouldBeLikeSubscriptions2_0ForInstitutions(partnerRoutes)
+    itShouldBeLikeSubscriptions2_0ForInstitutions(partnerRoutes)
   })
 })

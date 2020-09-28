@@ -20,6 +20,7 @@ module.exports =
   DEPLOY_ENV: null
   EMAIL_SIGNUP_IMAGES_ID: '572a7996b5989e6f98f77992'
   EMBEDLY_KEY: null
+  ENABLE_QUERY_BATCHING: false
   EUROPA_URL: 'http://europa-production.herokuapp.com'
   FACEBOOK_ID: null
   FACEBOOK_SECRET: null
@@ -58,6 +59,7 @@ module.exports =
   SHOW_ANALYTICS_CALLS: false
   STRIPE_PUBLISHABLE_KEY: null
   TARGET_CAMPAIGN_URL: '/seattle-art-fair-2017'
+  THIRD_PARTIES_DISABLED: false
   TRACK_PAGELOAD_PATHS: null
   VOLLEY_ENDPOINT: null
   ENABLE_SIGN_IN_WITH_APPLE: false
@@ -65,6 +67,7 @@ module.exports =
   APPLE_TEAM_ID: null
   APPLE_KEY_ID: null
   APPLE_PRIVATE_KEY: null
+
 # Override any values with env variables if they exist.
 # You can set JSON-y values for env variables as well such as "true" or
 # "['foo']" and config will attempt to JSON.parse them into non-string types.

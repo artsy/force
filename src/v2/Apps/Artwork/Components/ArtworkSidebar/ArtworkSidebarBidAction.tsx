@@ -5,10 +5,9 @@ import {
   HelpIcon,
   LargeSelect,
   Link,
-  Sans,
   Separator,
-  Serif,
   Spacer,
+  Text,
   Tooltip,
 } from "@artsy/palette"
 import React from "react"
@@ -42,17 +41,17 @@ const RegisterToBidButton: React.FC<{ onClick: () => void }> = ({
 
 const IdentityVerificationDisclaimer: React.FC = () => {
   return (
-    <Sans mt="1" size="3" color="black60" pb={1} textAlign="center">
+    <Text mt="1" variant="text" color="black60" pb={1} textAlign="center">
       Identity verification required to bid.{" "}
       <Link href="/identity-verification-faq">FAQ</Link>
-    </Sans>
+    </Text>
   )
 }
 
 @track()
 export class ArtworkSidebarBidAction extends React.Component<
-ArtworkSidebarBidActionProps,
-ArtworkSidebarBidActionState
+  ArtworkSidebarBidActionProps,
+  ArtworkSidebarBidActionState
 > {
   state: ArtworkSidebarBidActionState = {
     selectedMaxBidCents: null,
@@ -172,9 +171,9 @@ ArtworkSidebarBidActionState
       if (notApprovedBidderBeforeRegistrationClosed) {
         return (
           <Box>
-            <Sans size="2" color="black60" pb={1} textAlign="center">
+            <Text variant="caption" color="black60" pb={1} textAlign="center">
               Registration closed
-            </Sans>
+            </Text>
             <Button
               width="100%"
               size="large"
@@ -246,9 +245,9 @@ ArtworkSidebarBidActionState
           <Box>
             <Separator mb={2} />
             <Flex width="100%" flexDirection="row">
-              <Serif size="3t" color="black100" mr={1}>
+              <Text variant="text" color="black100" mr={1}>
                 Place max bid
-              </Serif>
+              </Text>
               <Tooltip content="Set the maximum amount you would like Artsy to bid up to on your behalf">
                 <HelpIcon />
               </Tooltip>

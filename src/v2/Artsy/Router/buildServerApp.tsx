@@ -135,7 +135,7 @@ export function buildServerApp(
             "loadable-stats.json"
           )
         } catch (error) {
-          console.log(
+          console.error(
             "[Artsy/Router/buildServerApp.tsx] Error:",
             "Missing loadable-stats.json file"
           )

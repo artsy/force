@@ -7,6 +7,7 @@ export type RelatedCollectionEntity_collection = {
     readonly headerImage: string | null;
     readonly slug: string;
     readonly title: string;
+    readonly id: string;
     readonly price_guidance: number | null;
     readonly artworksConnection: {
         readonly edges: ReadonlyArray<{
@@ -62,6 +63,13 @@ return {
       "storageKey": null
     },
     (v0/*: any*/),
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "id",
+      "storageKey": null
+    },
     {
       "alias": "price_guidance",
       "args": null,
@@ -178,5 +186,5 @@ return {
   "type": "MarketingCollection"
 };
 })();
-(node as any).hash = '141d971c1d5e0629404d6cf94e35843e';
+(node as any).hash = '8c24cf0ae044a86d45d239f94f8cbe8a';
 export default node;

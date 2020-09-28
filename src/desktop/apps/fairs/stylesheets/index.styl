@@ -1,15 +1,17 @@
 @require '../../../components/stylus_lib'
 @require '../../../components/chevron_list'
+@require '../../../../lib/palette'
 
 #fairs-page
   clearfix()
   margin-bottom 20%
 
 #fairs-page .entity-follow
+  text('text')
   margin-left -8px
 
 h1.fair-header
-  garamond-size('headline')
+  text('largeTitle')
   padding-bottom 10px
   margin-top 30px
 
@@ -55,11 +57,11 @@ h1.fair-header
   display table-cell
 
 .fairs-fair__name
-  avant-garde-size('body')
+  text('text')
   display inline
 
 .fairs-fair__info
-  garamond-size('s-body')
+  text('text')
 
 .fairs__promo
   width 100%
@@ -137,7 +139,7 @@ h1.fair-header
     margin 0 auto
 
 .fairs__current__promo__copy
-  garamond-size('headline')
+  text('text')
   font-size 25px
 
 .fairs-fair__follow

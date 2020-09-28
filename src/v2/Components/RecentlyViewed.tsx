@@ -1,5 +1,5 @@
 import { ContextModule } from "@artsy/cohesion"
-import { Separator, Serif, Spacer } from "@artsy/palette"
+import { Separator, Text } from "@artsy/palette"
 import { RecentlyViewed_me } from "v2/__generated__/RecentlyViewed_me.graphql"
 import { RecentlyViewedQuery } from "v2/__generated__/RecentlyViewedQuery.graphql"
 import { SystemContext, SystemContextConsumer } from "v2/Artsy"
@@ -41,9 +41,9 @@ export class RecentlyViewed extends React.Component<RecentlyViewedProps> {
               <>
                 <Separator my={6} />
 
-                <Serif size="6">Recently viewed</Serif>
-
-                <Spacer mb={3} />
+                <Text variant="subtitle" mb={3}>
+                  Recently viewed
+                </Text>
 
                 <Carousel arrowHeight={HEIGHT}>
                   {me.recentlyViewedArtworksConnection.edges.map(artwork => {

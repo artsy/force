@@ -5,6 +5,7 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
  */
 const _ = require("underscore")
+const moment = require("moment")
 const { sortedNestedGroupByDate, sortedByDate } = require("../util")
 
 describe("util", function () {
@@ -21,17 +22,30 @@ describe("util", function () {
         { year: "2005", month: "January", day: 1 },
       ]
 
-      return (this.sorted = sortedByDate(items))
+      this.sorted = sortedByDate(items)
     })
 
     it("sets a correct timestamp for zero-indexed numeric months and named months", function () {
       const [a, b] = Array.from(_.first(this.sorted, 2))
-      _.isUndefined(a.timestamp).should.be.false()
-      return a.timestamp.should.equal(b.timestamp)
+
+      // In rare cases the unix timestamp will be off by a ms or two causing a flaky test.
+      const aWithoutTime = moment(a.timestamp, "X")
+        .hours(0)
+        .minutes(0)
+        .seconds(0)
+        .unix()
+      const bWithoutTime = moment(b.timestamp, "X")
+        .hours(0)
+        .minutes(0)
+        .seconds(0)
+        .unix()
+
+      _.isUndefined(aWithoutTime).should.be.false()
+      aWithoutTime.should.equal(bWithoutTime)
     })
 
-    return it("sorts items correctly", function () {
-      return _.map(
+    it("sorts items correctly", function () {
+      _.map(
         this.sorted,
         _.partial(_.pick, _, "year", "month", "day")
       ).should.eql([
@@ -47,7 +61,7 @@ describe("util", function () {
     })
   })
 
-  return describe("#sortedNestedGroupByDate", () =>
+  describe("#sortedNestedGroupByDate", () =>
     it("takes in items and returns a sorted (reverse chron) grouped hash according to month and year", function () {
       const items = [
         { year: "1999", month: "March", day: 2 },
@@ -76,6 +90,6 @@ describe("util", function () {
 
       const marches = _.last(_1999.months)
       _.first(marches.items).day.should.equal(1)
-      return _.last(marches.items).day.should.equal(10)
+      _.last(marches.items).day.should.equal(10)
     }))
 })

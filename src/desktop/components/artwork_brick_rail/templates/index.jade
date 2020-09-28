@@ -1,14 +1,16 @@
 .abrv-inner( data-rail= railId )
   .abrv-header
-    if annotation
-      != annotation
-    if category
-      .abrv-category-annotation.avant-garde-s-headline Category
-    if viewAllUrl
-      a( href= viewAllUrl )
+    div
+      if annotation
+        != annotation
+      if category
+        .abrv-category-annotation Category
+      if viewAllUrl
+        a( href= viewAllUrl )
+          h1= title
+      else
         h1= title
-    else
-      h1= title
+
     .abrv-follow-button
       //- rendered on the client
 

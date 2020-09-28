@@ -1,4 +1,4 @@
-import { Button, Flex, Serif } from "@artsy/palette"
+import { Button, Flex, Text } from "@artsy/palette"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import React from "react"
 
@@ -13,9 +13,9 @@ export const Header: React.SFC<HeaderProps> = props => {
 
   return (
     <Flex flexDirection="column" alignItems="center">
-      <Serif size={["5t", "8"]} color="black100" mb={2} textAlign="center">
+      <Text variant="title" color="black100" mb={2} textAlign="center">
         {title}
-      </Serif>
+      </Text>
       {buttonHref && (
         <RouterLink to={buttonHref}>
           <Button variant="secondaryOutline" mb={3}>

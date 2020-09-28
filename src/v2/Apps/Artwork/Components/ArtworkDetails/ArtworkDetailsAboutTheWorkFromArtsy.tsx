@@ -1,4 +1,4 @@
-import { Box, ReadMore, Serif } from "@artsy/palette"
+import { Box, ReadMore, Text } from "@artsy/palette"
 import React, { Component } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Media } from "v2/Utils/Responsive"
@@ -21,7 +21,7 @@ export interface ArtworkDetailsAboutTheWorkFromArtsyProps {
   context_module: Schema.ContextModule.AboutTheWork,
 })
 export class ArtworkDetailsAboutTheWorkFromArtsy extends Component<
-ArtworkDetailsAboutTheWorkFromArtsyProps
+  ArtworkDetailsAboutTheWorkFromArtsyProps
 > {
   @track({
     action_type: Schema.ActionType.Click,
@@ -53,10 +53,10 @@ ArtworkDetailsAboutTheWorkFromArtsyProps
     }
     return (
       <Box pb={2}>
-        <Serif size="3">
+        <Text variant="text">
           <Media at="xs">{this.renderReadMore("xs")}</Media>
           <Media greaterThan="xs">{this.renderReadMore()}</Media>
-        </Serif>
+        </Text>
       </Box>
     )
   }

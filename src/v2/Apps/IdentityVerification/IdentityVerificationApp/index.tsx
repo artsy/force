@@ -3,7 +3,6 @@ import { IdentityVerificationApp_me } from "v2/__generated__/IdentityVerificatio
 import { IdentityVerificationAppStartMutation } from "v2/__generated__/IdentityVerificationAppStartMutation.graphql"
 import { AppContainer } from "v2/Apps/Components/AppContainer"
 import * as Schema from "v2/Artsy/Analytics/Schema"
-import { ErrorPage } from "v2/Components/ErrorPage"
 import { ErrorModal } from "v2/Components/Modal/ErrorModal"
 import React, { useState } from "react"
 import { Title as HeadTitle } from "react-head"
@@ -18,6 +17,7 @@ import createLogger from "v2/Utils/logger"
 import { CompleteFailed } from "./CompleteFailed"
 import { CompletePassed } from "./CompletePassed"
 import { CompleteWatchlistHit } from "./CompleteWatchlistHit"
+import { WrongOwner } from "./WrongOwner"
 const logger = createLogger("IdentityVerificationApp.tsx")
 
 interface Props {
@@ -31,7 +31,7 @@ const IdentityVerificationApp: React.FC<Props> = ({ me, relay }) => {
   const [showErrorModal, setShowErrorModal] = useState(false)
   const { trackEvent } = useTracking()
   if (!identityVerification || identityVerification.userID !== me.internalID) {
-    return <ErrorPage code={404} />
+    return <WrongOwner email={me.email} />
   }
 
   let AlternateComponent: React.FC = null
@@ -197,6 +197,7 @@ export const IdentityVerificationAppFragmentContainer = createFragmentContainer(
       fragment IdentityVerificationApp_me on Me
         @argumentDefinitions(id: { type: "String!" }) {
         internalID
+        email
         identityVerification(id: $id) {
           internalID
           userID

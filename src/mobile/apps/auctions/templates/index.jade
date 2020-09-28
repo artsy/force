@@ -6,7 +6,7 @@ block head
 block content
   #auction-page
     //- TODO: Modify bucket assets to upload and display images assets
-    header.auctions-header.garamond-header(
+    header.auctions-header(
         style= !currentAuctions.length ? "background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('/images/auction-header-img.jpg')" : ""
         class= !currentAuctions.length ? "auctions-header--background-image" : ""
       )

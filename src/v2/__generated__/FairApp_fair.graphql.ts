@@ -10,7 +10,10 @@ export type FairApp_fair = {
             readonly __typename: string;
         } | null> | null;
     } | null;
-    readonly " $fragmentRefs": FragmentRefs<"FairMeta_fair" | "FairHeader_fair" | "FairEditorial_fair">;
+    readonly marketingCollections: ReadonlyArray<{
+        readonly __typename: string;
+    } | null>;
+    readonly " $fragmentRefs": FragmentRefs<"FairMeta_fair" | "FairHeader_fair" | "FairEditorial_fair" | "FairCollections_fair">;
     readonly " $refType": "FairApp_fair";
 };
 export type FairApp_fair$data = FairApp_fair;
@@ -21,7 +24,17 @@ export type FairApp_fair$key = {
 
 
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "__typename",
+    "storageKey": null
+  }
+];
+return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
@@ -60,19 +73,27 @@ const node: ReaderFragment = {
           "kind": "LinkedField",
           "name": "edges",
           "plural": true,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "__typename",
-              "storageKey": null
-            }
-          ],
+          "selections": (v0/*: any*/),
           "storageKey": null
         }
       ],
       "storageKey": "articlesConnection(first:5,sort:\"PUBLISHED_AT_DESC\")"
+    },
+    {
+      "alias": null,
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "size",
+          "value": 4
+        }
+      ],
+      "concreteType": "MarketingCollection",
+      "kind": "LinkedField",
+      "name": "marketingCollections",
+      "plural": true,
+      "selections": (v0/*: any*/),
+      "storageKey": "marketingCollections(size:4)"
     },
     {
       "args": null,
@@ -88,9 +109,15 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "FragmentSpread",
       "name": "FairEditorial_fair"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "FairCollections_fair"
     }
   ],
   "type": "Fair"
 };
-(node as any).hash = '79ab1d2b08ff2d0e4d959529d07faa66';
+})();
+(node as any).hash = '10cbf0c4a503d4f5145103681b2cdb21';
 export default node;
