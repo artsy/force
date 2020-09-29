@@ -6,6 +6,7 @@ import { FragmentRefs } from "relay-runtime";
 export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
 export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "PENDING" | "REFUNDED" | "SUBMITTED" | "%future added value";
 export type PurchaseHistory_me = {
+    readonly name: string | null;
     readonly orders: {
         readonly edges: ReadonlyArray<{
             readonly node: {
@@ -101,10 +102,17 @@ var v0 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
+  "name": "name",
+  "storageKey": null
+},
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
   "name": "internalID",
   "storageKey": null
 },
-v1 = [
+v2 = [
   {
     "alias": null,
     "args": null,
@@ -113,7 +121,7 @@ v1 = [
     "storageKey": null
   }
 ],
-v2 = [
+v3 = [
   {
     "alias": null,
     "args": null,
@@ -167,6 +175,7 @@ return {
   "metadata": null,
   "name": "PurchaseHistory_me",
   "selections": [
+    (v0/*: any*/),
     {
       "alias": null,
       "args": [
@@ -212,7 +221,7 @@ return {
               "name": "node",
               "plural": false,
               "selections": [
-                (v0/*: any*/),
+                (v1/*: any*/),
                 {
                   "alias": null,
                   "args": null,
@@ -244,12 +253,12 @@ return {
                   "selections": [
                     {
                       "kind": "InlineFragment",
-                      "selections": (v1/*: any*/),
+                      "selections": (v2/*: any*/),
                       "type": "CommerceShip"
                     },
                     {
                       "kind": "InlineFragment",
-                      "selections": (v1/*: any*/),
+                      "selections": (v2/*: any*/),
                       "type": "CommercePickup"
                     }
                   ],
@@ -383,13 +392,7 @@ return {
                                       "name": "initials",
                                       "storageKey": null
                                     },
-                                    {
-                                      "alias": null,
-                                      "args": null,
-                                      "kind": "ScalarField",
-                                      "name": "name",
-                                      "storageKey": null
-                                    },
+                                    (v0/*: any*/),
                                     {
                                       "alias": null,
                                       "args": null,
@@ -435,7 +438,7 @@ return {
                                   "name": "shippingOrigin",
                                   "storageKey": null
                                 },
-                                (v0/*: any*/),
+                                (v1/*: any*/),
                                 {
                                   "alias": null,
                                   "args": null,
@@ -483,7 +486,7 @@ return {
               "kind": "LinkedField",
               "name": "around",
               "plural": true,
-              "selections": (v2/*: any*/),
+              "selections": (v3/*: any*/),
               "storageKey": null
             },
             {
@@ -493,7 +496,7 @@ return {
               "kind": "LinkedField",
               "name": "first",
               "plural": false,
-              "selections": (v2/*: any*/),
+              "selections": (v3/*: any*/),
               "storageKey": null
             },
             {
@@ -503,7 +506,7 @@ return {
               "kind": "LinkedField",
               "name": "last",
               "plural": false,
-              "selections": (v2/*: any*/),
+              "selections": (v3/*: any*/),
               "storageKey": null
             },
             {
@@ -513,7 +516,7 @@ return {
               "kind": "LinkedField",
               "name": "previous",
               "plural": false,
-              "selections": (v2/*: any*/),
+              "selections": (v3/*: any*/),
               "storageKey": null
             }
           ],
@@ -565,5 +568,5 @@ return {
   "type": "Me"
 };
 })();
-(node as any).hash = '53a6e7088f1987cffe0d86d3378e52a0';
+(node as any).hash = '33653cd5785d2676b3c22ce9f3e0f1e7';
 export default node;

@@ -35,6 +35,7 @@ query PurchaseHistoryQuery(
 }
 
 fragment PurchaseHistory_me_pbnwq on Me {
+  name
   orders(first: $first, last: $last, before: $before, after: $after) {
     edges {
       node {
@@ -178,27 +179,34 @@ v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "__typename",
+  "name": "name",
   "storageKey": null
 },
 v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
+  "name": "__typename",
+  "storageKey": null
+},
+v4 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
   "name": "internalID",
   "storageKey": null
 },
-v4 = [
-  (v2/*: any*/)
+v5 = [
+  (v3/*: any*/)
 ],
-v5 = {
+v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v6 = [
+v7 = [
   {
     "alias": null,
     "args": null,
@@ -261,6 +269,7 @@ return {
         "name": "me",
         "plural": false,
         "selections": [
+          (v2/*: any*/),
           {
             "alias": null,
             "args": (v1/*: any*/),
@@ -285,8 +294,8 @@ return {
                     "name": "node",
                     "plural": false,
                     "selections": [
-                      (v2/*: any*/),
                       (v3/*: any*/),
+                      (v4/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -316,15 +325,15 @@ return {
                         "name": "requestedFulfillment",
                         "plural": false,
                         "selections": [
-                          (v2/*: any*/),
+                          (v3/*: any*/),
                           {
                             "kind": "InlineFragment",
-                            "selections": (v4/*: any*/),
+                            "selections": (v5/*: any*/),
                             "type": "CommerceShip"
                           },
                           {
                             "kind": "InlineFragment",
-                            "selections": (v4/*: any*/),
+                            "selections": (v5/*: any*/),
                             "type": "CommercePickup"
                           }
                         ],
@@ -345,7 +354,7 @@ return {
                             "name": "lastDigits",
                             "storageKey": null
                           },
-                          (v5/*: any*/)
+                          (v6/*: any*/)
                         ],
                         "storageKey": null
                       },
@@ -459,13 +468,7 @@ return {
                                             "name": "initials",
                                             "storageKey": null
                                           },
-                                          {
-                                            "alias": null,
-                                            "args": null,
-                                            "kind": "ScalarField",
-                                            "name": "name",
-                                            "storageKey": null
-                                          },
+                                          (v2/*: any*/),
                                           {
                                             "alias": null,
                                             "args": null,
@@ -498,11 +501,11 @@ return {
                                                 ],
                                                 "storageKey": null
                                               },
-                                              (v5/*: any*/)
+                                              (v6/*: any*/)
                                             ],
                                             "storageKey": null
                                           },
-                                          (v5/*: any*/)
+                                          (v6/*: any*/)
                                         ],
                                         "storageKey": null
                                       },
@@ -513,7 +516,7 @@ return {
                                         "name": "shippingOrigin",
                                         "storageKey": null
                                       },
-                                      (v3/*: any*/),
+                                      (v4/*: any*/),
                                       {
                                         "alias": null,
                                         "args": null,
@@ -528,11 +531,11 @@ return {
                                         "name": "artistNames",
                                         "storageKey": null
                                       },
-                                      (v5/*: any*/)
+                                      (v6/*: any*/)
                                     ],
                                     "storageKey": null
                                   },
-                                  (v5/*: any*/)
+                                  (v6/*: any*/)
                                 ],
                                 "storageKey": null
                               }
@@ -542,7 +545,7 @@ return {
                         ],
                         "storageKey": null
                       },
-                      (v5/*: any*/)
+                      (v6/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -564,7 +567,7 @@ return {
                     "kind": "LinkedField",
                     "name": "around",
                     "plural": true,
-                    "selections": (v6/*: any*/),
+                    "selections": (v7/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -574,7 +577,7 @@ return {
                     "kind": "LinkedField",
                     "name": "first",
                     "plural": false,
-                    "selections": (v6/*: any*/),
+                    "selections": (v7/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -584,7 +587,7 @@ return {
                     "kind": "LinkedField",
                     "name": "last",
                     "plural": false,
-                    "selections": (v6/*: any*/),
+                    "selections": (v7/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -594,7 +597,7 @@ return {
                     "kind": "LinkedField",
                     "name": "previous",
                     "plural": false,
-                    "selections": (v6/*: any*/),
+                    "selections": (v7/*: any*/),
                     "storageKey": null
                   }
                 ],
@@ -642,7 +645,7 @@ return {
             ],
             "storageKey": null
           },
-          (v5/*: any*/)
+          (v6/*: any*/)
         ],
         "storageKey": null
       }
@@ -653,7 +656,7 @@ return {
     "metadata": {},
     "name": "PurchaseHistoryQuery",
     "operationKind": "query",
-    "text": "query PurchaseHistoryQuery(\n  $first: Int!\n  $last: Int\n  $after: String\n  $before: String\n) {\n  me {\n    ...PurchaseHistory_me_pbnwq\n    id\n  }\n}\n\nfragment PurchaseHistory_me_pbnwq on Me {\n  orders(first: $first, last: $last, before: $before, after: $after) {\n    edges {\n      node {\n        __typename\n        internalID\n        code\n        state\n        mode\n        requestedFulfillment {\n          __typename\n          ... on CommerceShip {\n            __typename\n          }\n          ... on CommercePickup {\n            __typename\n          }\n        }\n        creditCard {\n          lastDigits\n          id\n        }\n        buyerTotal\n        createdAt\n        itemsTotal\n        lineItems {\n          edges {\n            node {\n              artwork {\n                date\n                image {\n                  resized(width: 55) {\n                    url\n                  }\n                }\n                partner {\n                  initials\n                  name\n                  profile {\n                    icon {\n                      url(version: \"square140\")\n                    }\n                    id\n                  }\n                  id\n                }\n                shippingOrigin\n                internalID\n                title\n                artist_names: artistNames\n                id\n              }\n              id\n            }\n          }\n        }\n        id\n      }\n    }\n    pageCursors {\n      around {\n        cursor\n        isCurrent\n        page\n      }\n      first {\n        cursor\n        isCurrent\n        page\n      }\n      last {\n        cursor\n        isCurrent\n        page\n      }\n      previous {\n        cursor\n        isCurrent\n        page\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n"
+    "text": "query PurchaseHistoryQuery(\n  $first: Int!\n  $last: Int\n  $after: String\n  $before: String\n) {\n  me {\n    ...PurchaseHistory_me_pbnwq\n    id\n  }\n}\n\nfragment PurchaseHistory_me_pbnwq on Me {\n  name\n  orders(first: $first, last: $last, before: $before, after: $after) {\n    edges {\n      node {\n        __typename\n        internalID\n        code\n        state\n        mode\n        requestedFulfillment {\n          __typename\n          ... on CommerceShip {\n            __typename\n          }\n          ... on CommercePickup {\n            __typename\n          }\n        }\n        creditCard {\n          lastDigits\n          id\n        }\n        buyerTotal\n        createdAt\n        itemsTotal\n        lineItems {\n          edges {\n            node {\n              artwork {\n                date\n                image {\n                  resized(width: 55) {\n                    url\n                  }\n                }\n                partner {\n                  initials\n                  name\n                  profile {\n                    icon {\n                      url(version: \"square140\")\n                    }\n                    id\n                  }\n                  id\n                }\n                shippingOrigin\n                internalID\n                title\n                artist_names: artistNames\n                id\n              }\n              id\n            }\n          }\n        }\n        id\n      }\n    }\n    pageCursors {\n      around {\n        cursor\n        isCurrent\n        page\n      }\n      first {\n        cursor\n        isCurrent\n        page\n      }\n      last {\n        cursor\n        isCurrent\n        page\n      }\n      previous {\n        cursor\n        isCurrent\n        page\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n"
   }
 };
 })();
