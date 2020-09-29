@@ -17,6 +17,7 @@ const FairTiming: React.FC<Props> = ({
       <Text variant="mediumText" color="black100">
         {exhibitionPeriod}
       </Text>
+
       <Text variant="text" color="black60">
         <WithCurrentTime syncWithServer>
           {currentTime => {
