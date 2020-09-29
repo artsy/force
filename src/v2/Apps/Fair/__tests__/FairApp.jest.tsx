@@ -15,8 +15,10 @@ const FAIR_APP_FIXTURE: FairApp_QueryRawResponse = {
     internalID: "bson-fair",
     about: "Lorem ipsum",
     name: "Miart 2020",
-    formattedOpeningHours: "Closes in 12 days",
+    exhibitionPeriod: "Aug 19 - Sep 19",
     slug: "miart-2020",
+    startAt: "2020-08-19T08:00:00+00:00",
+    endAt: "2020-09-19T08:00:00+00:00",
     image: {
       cropped: {
         src: "https://cloudfront.com/square.jpg",
