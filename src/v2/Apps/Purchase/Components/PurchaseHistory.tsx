@@ -312,16 +312,16 @@ const PurchaseHistory: React.FC<PurchaseHistoryProps> = (
   const myOrders = me.orders.edges && me.orders.edges.map(x => x.node)
   return !loading ? (
     <Box>
-      <Media greaterThanOrEqual="sm">
-        <Box mx="40px" mt="-5px">
-          <UserSettingsTabs route={sd.CURRENT_PATH} username={me.name} />
-        </Box>
-      </Media>
-      <Media lessThan="sm">
+      <Media at="xs">
         <Sans size="6" px={1} py={1.5}>
           Order History
         </Sans>
         <Separator />
+      </Media>
+      <Media greaterThanOrEqual="sm">
+        <Box mx="40px" mt="-5px">
+          <UserSettingsTabs route={sd.CURRENT_PATH} username={me.name} />
+        </Box>
       </Media>
       {myOrders.length ? (
         myOrders.map((order, i) => (
