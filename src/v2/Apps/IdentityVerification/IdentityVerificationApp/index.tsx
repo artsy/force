@@ -139,19 +139,24 @@ const IdentityVerificationApp: React.FC<Props> = ({ me, relay }) => {
               You’ll need
             </Sans>
             <Sans size="4">
-              • A camera on your phone or computer
-              <br />• Your government ID
+              • Your non-expired government id
+              <br />• A camera on your mobile device or computer to take a
+              picture of yourself
             </Sans>
 
             <Sans size="4" mt="2" weight="medium">
               Keep in mind
             </Sans>
             <Sans size="4">
-              • Verification may take up to 5–10 minutes
+              • The verification process can take up to 5 minutes, and needs to
+              be completed at one time
               <br />
-              • The name on your ID must match the name on your payment method
-              <br />• Your ID and photo will only be used for verification
-              purposes, and will not be shared
+              • You will have to enable permissions to your camera to take a
+              photo of your ID and yourself
+              <br />• All four corners of your ID must be captured
+              <br />• Artsy can not accept emails of your personal documents,
+              they must be submitted to our secure identity verification partner
+              during this process
             </Sans>
             <Sans size="4" mt="2" weight="medium">
               Compatible browsers
