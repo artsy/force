@@ -1,5 +1,6 @@
 import {
   BorderedRadio,
+  Box,
   Button,
   Col,
   Collapse,
@@ -8,7 +9,6 @@ import {
   Row,
   Sans,
   Spacer,
-  Box,
 } from "@artsy/palette"
 import { Shipping_order } from "v2/__generated__/Shipping_order.graphql"
 import {
@@ -99,7 +99,8 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
   get startingAddress() {
     return {
       ...emptyAddress,
-      country: "US",
+      country: this.props.order.lineItems.edges[0].node.artwork.shippingCountry,
+
       // We need to pull out _only_ the values specified by the Address type,
       // since our state will be used for Relay variables later on. The
       // easiest way to do this is with the emptyAddress.
