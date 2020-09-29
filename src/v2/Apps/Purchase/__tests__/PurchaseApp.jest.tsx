@@ -88,7 +88,7 @@ describe("Purchase app", () => {
       it("renders orders", async () => {
         // TODO: revisit mocking and remove `artist_names` alias from PurchseHistory
         const mockMe = {
-          id: "111",
+          id: "34343267",
           orders: {
             edges: [{ node: UntouchedBuyOrder }],
             pageInfo,
@@ -98,7 +98,7 @@ describe("Purchase app", () => {
         const component = await render(mockMe, userType)
         const text = component.text()
         expect(text).toContain(
-          "Order HistoryLisa BreslowA Gallery12/19/2019$12,000pending"
+          "Order History Dec 19, 2019pendingLisa BreslowGramercy Park SouthA GalleryNew York, NYOrder No.abcdefgTotal$12,000"
         )
       })
     })
@@ -144,7 +144,7 @@ describe("Purchase app", () => {
       })
     })
   })
-  describe("User without admin privilages", () => {
+  describe("User without admin privileges", () => {
     it("gives error", async () => {
       const mockMe = {
         id: "111",

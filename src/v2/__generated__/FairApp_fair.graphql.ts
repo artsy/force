@@ -4,6 +4,7 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type FairApp_fair = {
+    readonly internalID: string;
     readonly slug: string;
     readonly articles: {
         readonly edges: ReadonlyArray<{
@@ -13,7 +14,7 @@ export type FairApp_fair = {
     readonly marketingCollections: ReadonlyArray<{
         readonly __typename: string;
     } | null>;
-    readonly " $fragmentRefs": FragmentRefs<"FairMeta_fair" | "FairHeader_fair" | "FairEditorial_fair" | "FairCollections_fair">;
+    readonly " $fragmentRefs": FragmentRefs<"FairMeta_fair" | "FairHeader_fair" | "FairEditorial_fair" | "FairCollections_fair" | "FairFollowedArtists_fair">;
     readonly " $refType": "FairApp_fair";
 };
 export type FairApp_fair$data = FairApp_fair;
@@ -40,6 +41,13 @@ return {
   "metadata": null,
   "name": "FairApp_fair",
   "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "internalID",
+      "storageKey": null
+    },
     {
       "alias": null,
       "args": null,
@@ -114,10 +122,15 @@ return {
       "args": null,
       "kind": "FragmentSpread",
       "name": "FairCollections_fair"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "FairFollowedArtists_fair"
     }
   ],
   "type": "Fair"
 };
 })();
-(node as any).hash = '10cbf0c4a503d4f5145103681b2cdb21';
+(node as any).hash = 'e36e4e73c5f91ec2ea52e87d44b80161';
 export default node;

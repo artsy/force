@@ -5,6 +5,13 @@ import { SmallCard } from "@artsy/palette"
 import { crop } from "v2/Utils/resizer"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import { compact } from "lodash"
+import { useTracking } from "react-tracking"
+import {
+  ActionType,
+  ClickedCollectionGroup,
+  ContextModule,
+  OwnerType,
+} from "@artsy/cohesion"
 
 const CARD_WIDTH = 263
 const CARD_LARGE_IMAGE_SIZE = 170
@@ -18,11 +25,32 @@ const CARD_IMAGE_SIZES = [
 
 interface FairCollectionProps {
   collection: FairCollection_collection
+  fairID: string // needed for analytics
+  fairSlug: string // needed for analytics
+  carouselIndex: number // needed for analytics
 }
 
 export const FairCollection: React.FC<FairCollectionProps> = ({
   collection,
+  fairID,
+  fairSlug,
+  carouselIndex,
 }) => {
+  const tracking = useTracking()
+
+  const collectionTrackingData: ClickedCollectionGroup = {
+    context_module: ContextModule.curatedHighlightsRail,
+    context_page_owner_type: OwnerType.fair,
+    context_page_owner_id: fairID,
+    context_page_owner_slug: fairSlug,
+    destination_page_owner_type: OwnerType.collection,
+    destination_page_owner_id: collection.id,
+    destination_page_owner_slug: collection.slug,
+    horizontal_slide_position: carouselIndex,
+    type: "thumbnail",
+    action: ActionType.clickedCollectionGroup,
+  }
+
   const imageUrls = compact(
     collection.artworks.edges.map(({ node }) => node?.image?.url)
   )
@@ -45,7 +73,11 @@ export const FairCollection: React.FC<FairCollectionProps> = ({
   })
 
   return (
-    <RouterLink to={`/collection/${collection.slug}`} noUnderline>
+    <RouterLink
+      to={`/collection/${collection.slug}`}
+      noUnderline
+      onClick={() => tracking.trackEvent(collectionTrackingData)}
+    >
       <SmallCard
         width={CARD_WIDTH}
         title={collection.title}
@@ -61,6 +93,7 @@ export const FairCollectionFragmentContainer = createFragmentContainer(
   {
     collection: graphql`
       fragment FairCollection_collection on MarketingCollection {
+        id
         slug
         title
         category

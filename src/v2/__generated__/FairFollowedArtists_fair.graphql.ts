@@ -3,23 +3,21 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type FairEditorial_fair = {
-    readonly internalID: string;
+export type FairFollowedArtists_fair = {
     readonly slug: string;
-    readonly articles: {
+    readonly followedArtistArtworks: {
         readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly id: string;
-                readonly " $fragmentRefs": FragmentRefs<"FairEditorialItem_article">;
+            readonly artwork: {
+                readonly " $fragmentRefs": FragmentRefs<"FillwidthItem_artwork">;
             } | null;
         } | null> | null;
     } | null;
-    readonly " $refType": "FairEditorial_fair";
+    readonly " $refType": "FairFollowedArtists_fair";
 };
-export type FairEditorial_fair$data = FairEditorial_fair;
-export type FairEditorial_fair$key = {
-    readonly " $data"?: FairEditorial_fair$data;
-    readonly " $fragmentRefs": FragmentRefs<"FairEditorial_fair">;
+export type FairFollowedArtists_fair$data = FairFollowedArtists_fair;
+export type FairFollowedArtists_fair$key = {
+    readonly " $data"?: FairFollowedArtists_fair$data;
+    readonly " $fragmentRefs": FragmentRefs<"FairFollowedArtists_fair">;
 };
 
 
@@ -28,15 +26,8 @@ const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "FairEditorial_fair",
+  "name": "FairFollowedArtists_fair",
   "selections": [
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "internalID",
-      "storageKey": null
-    },
     {
       "alias": null,
       "args": null,
@@ -45,51 +36,44 @@ const node: ReaderFragment = {
       "storageKey": null
     },
     {
-      "alias": "articles",
+      "alias": "followedArtistArtworks",
       "args": [
         {
           "kind": "Literal",
           "name": "first",
-          "value": 5
+          "value": 20
         },
         {
           "kind": "Literal",
-          "name": "sort",
-          "value": "PUBLISHED_AT_DESC"
+          "name": "includeArtworksByFollowedArtists",
+          "value": true
         }
       ],
-      "concreteType": "ArticleConnection",
+      "concreteType": "FilterArtworksConnection",
       "kind": "LinkedField",
-      "name": "articlesConnection",
+      "name": "filterArtworksConnection",
       "plural": false,
       "selections": [
         {
           "alias": null,
           "args": null,
-          "concreteType": "ArticleEdge",
+          "concreteType": "FilterArtworksEdge",
           "kind": "LinkedField",
           "name": "edges",
           "plural": true,
           "selections": [
             {
-              "alias": null,
+              "alias": "artwork",
               "args": null,
-              "concreteType": "Article",
+              "concreteType": "Artwork",
               "kind": "LinkedField",
               "name": "node",
               "plural": false,
               "selections": [
                 {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "id",
-                  "storageKey": null
-                },
-                {
                   "args": null,
                   "kind": "FragmentSpread",
-                  "name": "FairEditorialItem_article"
+                  "name": "FillwidthItem_artwork"
                 }
               ],
               "storageKey": null
@@ -98,10 +82,10 @@ const node: ReaderFragment = {
           "storageKey": null
         }
       ],
-      "storageKey": "articlesConnection(first:5,sort:\"PUBLISHED_AT_DESC\")"
+      "storageKey": "filterArtworksConnection(first:20,includeArtworksByFollowedArtists:true)"
     }
   ],
   "type": "Fair"
 };
-(node as any).hash = '55ee3fb0c18ecb8731e24cfa414bd604';
+(node as any).hash = 'f2a46b7155c7bf542cc4b9a10fb4fa5e';
 export default node;

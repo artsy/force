@@ -3,10 +3,10 @@ import {
   Box,
   HeartIcon,
   PowerIcon,
+  ReceiptIcon,
   Separator,
   SettingsIcon,
   SoloIcon,
-  TagIcon,
 } from "@artsy/palette"
 import { Menu, MenuItem } from "v2/Components/Menu"
 import { AnalyticsSchema, SystemContext } from "v2/Artsy"
@@ -64,7 +64,7 @@ export const UserMenu: React.FC = () => {
           href="/user/purchases"
           onClick={trackClick}
         >
-          <TagIcon mr={1} aria-hidden="true" /> Order History
+          <ReceiptIcon mr={1} aria-hidden="true" /> Order History
         </MenuItem>
       )}
 

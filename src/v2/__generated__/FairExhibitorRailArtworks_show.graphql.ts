@@ -7,6 +7,8 @@ export type FairExhibitorRailArtworks_show = {
     readonly artworks: {
         readonly edges: ReadonlyArray<{
             readonly artwork: {
+                readonly internalID: string;
+                readonly slug: string;
                 readonly " $fragmentRefs": FragmentRefs<"FillwidthItem_artwork">;
             } | null;
         } | null> | null;
@@ -58,6 +60,20 @@ const node: ReaderFragment = {
               "plural": false,
               "selections": [
                 {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "internalID",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "slug",
+                  "storageKey": null
+                },
+                {
                   "args": null,
                   "kind": "FragmentSpread",
                   "name": "FillwidthItem_artwork"
@@ -74,5 +90,5 @@ const node: ReaderFragment = {
   ],
   "type": "Show"
 };
-(node as any).hash = '2cd0ef4a0f10392d01d89ff808d8de31';
+(node as any).hash = '30c2338aa32b73b3949ac6bfb1955657';
 export default node;

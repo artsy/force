@@ -54,6 +54,7 @@ describe("FairExhibitors", () => {
 const FAIR_EXHIBITORS_FIXTURE: FairExhibitors_QueryRawResponse = {
   fair: {
     id: "xxx",
+    internalID: "fair-ID",
     slug: "xxx",
     exhibitors: {
       pageInfo: {
@@ -67,6 +68,7 @@ const FAIR_EXHIBITORS_FIXTURE: FairExhibitors_QueryRawResponse = {
             __typename: "Show",
             id: "xxx-1",
             internalID: "xxx-1",
+            slug: "show-slug",
             counts: { artworks: 0 },
             href: "/show/example-1",
             partner: {
@@ -82,6 +84,7 @@ const FAIR_EXHIBITORS_FIXTURE: FairExhibitors_QueryRawResponse = {
             __typename: "Show",
             id: "xxx-2",
             internalID: "xxx-2",
+            slug: "show-slug",
             counts: { artworks: 10 },
             href: "/show/example-2",
             partner: {
@@ -97,6 +100,7 @@ const FAIR_EXHIBITORS_FIXTURE: FairExhibitors_QueryRawResponse = {
             __typename: "Show",
             id: "xxx-3",
             internalID: "xxx-3",
+            slug: "show-slug",
             counts: { artworks: 10 },
             href: "/show/example-3",
             partner: {

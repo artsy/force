@@ -62,7 +62,7 @@
   },
   "dependencies": {
     "@artsy/backbone-mixins": "2.0.0",
-    "@artsy/cohesion": "1.35.0",
+    "@artsy/cohesion": "1.38.0",
     "@artsy/express-reloadable": "1.4.8",
     "@artsy/gemup": "0.1.0",
     "@artsy/palette": "13.7.3",
@@ -244,6 +244,7 @@
     "@types/flickity": "2.2.2",
     "@types/isomorphic-fetch": "0.0.34",
     "@types/jest": "24.0.18",
+    "@types/jwt-decode": "2.2.0",
     "@types/loadable__component": "5.10.0",
     "@types/lodash": "4.14.111",
     "@types/memoize-one": "3.1.1",

@@ -37,8 +37,21 @@ fragment PurchaseHistory_me on Me {
         code
         state
         mode
+        requestedFulfillment {
+          __typename
+          ... on CommerceShip {
+            __typename
+          }
+          ... on CommercePickup {
+            __typename
+          }
+        }
+        creditCard {
+          lastDigits
+          id
+        }
+        buyerTotal
         createdAt
-        totalListPrice
         itemsTotal
         lineItems {
           edges {
@@ -51,9 +64,17 @@ fragment PurchaseHistory_me on Me {
                   }
                 }
                 partner {
+                  initials
                   name
+                  profile {
+                    icon {
+                      url(version: "square140")
+                    }
+                    id
+                  }
                   id
                 }
+                shippingOrigin
                 internalID
                 title
                 artist_names: artistNames
@@ -103,17 +124,27 @@ var v0 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "internalID",
+  "name": "__typename",
   "storageKey": null
 },
 v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "id",
+  "name": "internalID",
   "storageKey": null
 },
 v2 = [
+  (v0/*: any*/)
+],
+v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v4 = [
   {
     "alias": null,
     "args": null,
@@ -206,14 +237,8 @@ return {
                     "name": "node",
                     "plural": false,
                     "selections": [
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "__typename",
-                        "storageKey": null
-                      },
                       (v0/*: any*/),
+                      (v1/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -238,15 +263,56 @@ return {
                       {
                         "alias": null,
                         "args": null,
-                        "kind": "ScalarField",
-                        "name": "createdAt",
+                        "concreteType": null,
+                        "kind": "LinkedField",
+                        "name": "requestedFulfillment",
+                        "plural": false,
+                        "selections": [
+                          (v0/*: any*/),
+                          {
+                            "kind": "InlineFragment",
+                            "selections": (v2/*: any*/),
+                            "type": "CommerceShip"
+                          },
+                          {
+                            "kind": "InlineFragment",
+                            "selections": (v2/*: any*/),
+                            "type": "CommercePickup"
+                          }
+                        ],
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "CreditCard",
+                        "kind": "LinkedField",
+                        "name": "creditCard",
+                        "plural": false,
+                        "selections": [
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "lastDigits",
+                            "storageKey": null
+                          },
+                          (v3/*: any*/)
+                        ],
                         "storageKey": null
                       },
                       {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
-                        "name": "totalListPrice",
+                        "name": "buyerTotal",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "createdAt",
                         "storageKey": null
                       },
                       {
@@ -342,14 +408,64 @@ return {
                                             "alias": null,
                                             "args": null,
                                             "kind": "ScalarField",
+                                            "name": "initials",
+                                            "storageKey": null
+                                          },
+                                          {
+                                            "alias": null,
+                                            "args": null,
+                                            "kind": "ScalarField",
                                             "name": "name",
                                             "storageKey": null
                                           },
-                                          (v1/*: any*/)
+                                          {
+                                            "alias": null,
+                                            "args": null,
+                                            "concreteType": "Profile",
+                                            "kind": "LinkedField",
+                                            "name": "profile",
+                                            "plural": false,
+                                            "selections": [
+                                              {
+                                                "alias": null,
+                                                "args": null,
+                                                "concreteType": "Image",
+                                                "kind": "LinkedField",
+                                                "name": "icon",
+                                                "plural": false,
+                                                "selections": [
+                                                  {
+                                                    "alias": null,
+                                                    "args": [
+                                                      {
+                                                        "kind": "Literal",
+                                                        "name": "version",
+                                                        "value": "square140"
+                                                      }
+                                                    ],
+                                                    "kind": "ScalarField",
+                                                    "name": "url",
+                                                    "storageKey": "url(version:\"square140\")"
+                                                  }
+                                                ],
+                                                "storageKey": null
+                                              },
+                                              (v3/*: any*/)
+                                            ],
+                                            "storageKey": null
+                                          },
+                                          (v3/*: any*/)
                                         ],
                                         "storageKey": null
                                       },
-                                      (v0/*: any*/),
+                                      {
+                                        "alias": null,
+                                        "args": null,
+                                        "kind": "ScalarField",
+                                        "name": "shippingOrigin",
+                                        "storageKey": null
+                                      },
+                                      (v1/*: any*/),
                                       {
                                         "alias": null,
                                         "args": null,
@@ -364,11 +480,11 @@ return {
                                         "name": "artistNames",
                                         "storageKey": null
                                       },
-                                      (v1/*: any*/)
+                                      (v3/*: any*/)
                                     ],
                                     "storageKey": null
                                   },
-                                  (v1/*: any*/)
+                                  (v3/*: any*/)
                                 ],
                                 "storageKey": null
                               }
@@ -378,7 +494,7 @@ return {
                         ],
                         "storageKey": null
                       },
-                      (v1/*: any*/)
+                      (v3/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -400,7 +516,7 @@ return {
                     "kind": "LinkedField",
                     "name": "around",
                     "plural": true,
-                    "selections": (v2/*: any*/),
+                    "selections": (v4/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -410,7 +526,7 @@ return {
                     "kind": "LinkedField",
                     "name": "first",
                     "plural": false,
-                    "selections": (v2/*: any*/),
+                    "selections": (v4/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -420,7 +536,7 @@ return {
                     "kind": "LinkedField",
                     "name": "last",
                     "plural": false,
-                    "selections": (v2/*: any*/),
+                    "selections": (v4/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -430,7 +546,7 @@ return {
                     "kind": "LinkedField",
                     "name": "previous",
                     "plural": false,
-                    "selections": (v2/*: any*/),
+                    "selections": (v4/*: any*/),
                     "storageKey": null
                   }
                 ],
@@ -478,7 +594,7 @@ return {
             ],
             "storageKey": "orders(first:10)"
           },
-          (v1/*: any*/)
+          (v3/*: any*/)
         ],
         "storageKey": null
       }
@@ -489,7 +605,7 @@ return {
     "metadata": {},
     "name": "routes_PurchaseQuery",
     "operationKind": "query",
-    "text": "query routes_PurchaseQuery {\n  me {\n    ...PurchaseApp_me\n    id\n  }\n}\n\nfragment PurchaseApp_me on Me {\n  ...PurchaseHistory_me\n}\n\nfragment PurchaseHistory_me on Me {\n  orders(first: 10) {\n    edges {\n      node {\n        __typename\n        internalID\n        code\n        state\n        mode\n        createdAt\n        totalListPrice\n        itemsTotal\n        lineItems {\n          edges {\n            node {\n              artwork {\n                date\n                image {\n                  resized(width: 55) {\n                    url\n                  }\n                }\n                partner {\n                  name\n                  id\n                }\n                internalID\n                title\n                artist_names: artistNames\n                id\n              }\n              id\n            }\n          }\n        }\n        id\n      }\n    }\n    pageCursors {\n      around {\n        cursor\n        isCurrent\n        page\n      }\n      first {\n        cursor\n        isCurrent\n        page\n      }\n      last {\n        cursor\n        isCurrent\n        page\n      }\n      previous {\n        cursor\n        isCurrent\n        page\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n"
+    "text": "query routes_PurchaseQuery {\n  me {\n    ...PurchaseApp_me\n    id\n  }\n}\n\nfragment PurchaseApp_me on Me {\n  ...PurchaseHistory_me\n}\n\nfragment PurchaseHistory_me on Me {\n  orders(first: 10) {\n    edges {\n      node {\n        __typename\n        internalID\n        code\n        state\n        mode\n        requestedFulfillment {\n          __typename\n          ... on CommerceShip {\n            __typename\n          }\n          ... on CommercePickup {\n            __typename\n          }\n        }\n        creditCard {\n          lastDigits\n          id\n        }\n        buyerTotal\n        createdAt\n        itemsTotal\n        lineItems {\n          edges {\n            node {\n              artwork {\n                date\n                image {\n                  resized(width: 55) {\n                    url\n                  }\n                }\n                partner {\n                  initials\n                  name\n                  profile {\n                    icon {\n                      url(version: \"square140\")\n                    }\n                    id\n                  }\n                  id\n                }\n                shippingOrigin\n                internalID\n                title\n                artist_names: artistNames\n                id\n              }\n              id\n            }\n          }\n        }\n        id\n      }\n    }\n    pageCursors {\n      around {\n        cursor\n        isCurrent\n        page\n      }\n      first {\n        cursor\n        isCurrent\n        page\n      }\n      last {\n        cursor\n        isCurrent\n        page\n      }\n      previous {\n        cursor\n        isCurrent\n        page\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n"
   }
 };
 })();

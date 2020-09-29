@@ -11,17 +11,49 @@ import { FairHeaderFragmentContainer as FairHeader } from "./Components/FairHead
 import { RouteTab, RouteTabs } from "v2/Components/RouteTabs"
 import { FairMetaFragmentContainer as FairMeta } from "./Components/FairMeta"
 import { FairCollectionsFragmentContainer as FairCollections } from "./Components/FairCollections"
+import { FairFollowedArtistsFragmentContainer as FairFollowedArtists } from "./Components/FairFollowedArtists"
+import { useSystemContext } from "v2/Artsy"
+import { useTracking } from "react-tracking"
+import {
+  ActionType,
+  ClickedNavigationTab,
+  ContextModule,
+  OwnerType,
+} from "@artsy/cohesion"
 
 interface FairAppProps {
   fair: FairApp_fair
 }
 
 const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
+  const { user } = useSystemContext()
+  const tracking = useTracking()
+
   if (!fair) return <ErrorPage code={404} />
 
-  const hasArticles = fair.articles.edges.length > 0
-  const hasCollections = fair.marketingCollections.length > 0
+  const hasArticles = (fair.articles?.edges?.length ?? 0) > 0
+  const hasCollections = (fair.marketingCollections?.length ?? 0) > 0
   const columnCount = hasArticles && hasCollections ? 2 : 1
+
+  const clickedArtworksTabTrackingData: ClickedNavigationTab = {
+    context_module: ContextModule.exhibitorsTab,
+    context_page_owner_type: OwnerType.fair,
+    context_page_owner_id: fair.internalID,
+    context_page_owner_slug: fair.slug,
+    destination_path: `fair/${fair.slug}/artworks`,
+    subject: "Artworks",
+    action: ActionType.clickedNavigationTab,
+  }
+
+  const clickedExhibitorsTabTrackingData: ClickedNavigationTab = {
+    context_module: ContextModule.artworksTab,
+    context_page_owner_type: OwnerType.fair,
+    context_page_owner_id: fair.internalID,
+    context_page_owner_slug: fair.slug,
+    destination_path: `fair/${fair.slug}`,
+    subject: "Exhibitors",
+    action: ActionType.clickedNavigationTab,
+  }
 
   return (
     <>
@@ -61,12 +93,34 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
             </Box>
           )}
 
+          {!!user && (
+            <FairFollowedArtists
+              fair={fair}
+              my={3}
+              pt={3}
+              borderTop="1px solid"
+              borderColor="black10"
+            />
+          )}
+
           <RouteTabs>
-            <RouteTab to={`/fair2/${fair.slug}`} exact>
+            <RouteTab
+              to={`/fair2/${fair.slug}`}
+              exact
+              onClick={() =>
+                tracking.trackEvent(clickedExhibitorsTabTrackingData)
+              }
+            >
               Exhibitors
             </RouteTab>
 
-            <RouteTab to={`/fair2/${fair.slug}/artworks`} exact>
+            <RouteTab
+              to={`/fair2/${fair.slug}/artworks`}
+              exact
+              onClick={() =>
+                tracking.trackEvent(clickedArtworksTabTrackingData)
+              }
+            >
               Artworks
             </RouteTab>
           </RouteTabs>
@@ -86,11 +140,13 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
 export default createFragmentContainer(FairApp, {
   fair: graphql`
     fragment FairApp_fair on Fair {
+      internalID
       slug
       ...FairMeta_fair
       ...FairHeader_fair
       ...FairEditorial_fair
       ...FairCollections_fair
+      ...FairFollowedArtists_fair
       articles: articlesConnection(first: 5, sort: PUBLISHED_AT_DESC) {
         edges {
           __typename

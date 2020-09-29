@@ -22,10 +22,10 @@
     qs "5.2.0"
     underscore "*"
 
-"@artsy/cohesion@1.35.0":
-  version "1.35.0"
-  resolved "https://registry.yarnpkg.com/@artsy/cohesion/-/cohesion-1.35.0.tgz#37d295336617f8e0d64f1095aae8a0d18633054b"
-  integrity sha512-nZ2F+Mwv1b4u6ILHj1i2cM7iDNvBCA0TqDpvXOys+LoG4VK6KI6LRTrDt+hnA9zk7bYyFsQ2cZSLZEIFCLBAsw==
+"@artsy/cohesion@1.38.0":
+  version "1.38.0"
+  resolved "https://registry.yarnpkg.com/@artsy/cohesion/-/cohesion-1.38.0.tgz#b1049e46974d3149cbe014ece757e162c03f9761"
+  integrity sha512-LB7UB6pDaCetVcP+cSee/L2GApIBITZGyJlMookUVTs54x3jwllxRso7tpveZLGKsppMovkjci/CI5M2fcjKRg==
 
 "@artsy/detect-responsive-traits@^0.0.5":
   version "0.0.5"
@@ -4427,6 +4427,11 @@
   version "0.0.29"
   resolved "https://registry.yarnpkg.com/@types/json5/-/json5-0.0.29.tgz#ee28707ae94e11d2b827bcbe5270bcea7f3e71ee"
   integrity sha1-7ihweulOEdK4J7y+UnC86n8+ce4=
+
+"@types/jwt-decode@2.2.0":
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/@types/jwt-decode/-/jwt-decode-2.2.0.tgz#10c4945a1505f771e4c60d26838dd2d39024ae4c"
+  integrity sha512-iY8jTNNQtU+6msAbBP3KyiYvdWcT4oGBJJCKq5VTjMZDkhcz1PzXnbCYG/W/O6ntIm3IgbfBbFZj17FKh3pK7A==
 
 "@types/loadable__component@5.10.0":
   version "5.10.0"

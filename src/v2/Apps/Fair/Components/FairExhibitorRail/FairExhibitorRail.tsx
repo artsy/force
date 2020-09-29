@@ -6,9 +6,18 @@ import { useLazyLoadComponent } from "v2/Utils/Hooks/useLazyLoadComponent"
 import { FairExhibitorRailArtworksQueryRenderer as FairExhibitorRailArtworks } from "./FairExhibitorRailArtworks"
 import { FairExhibitorRailPlaceholder } from "./FairExhibitorRailPlaceholder"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
+import { useTracking } from "react-tracking"
+import {
+  ActionType,
+  ClickedArtworkGroup,
+  ContextModule,
+  OwnerType,
+} from "@artsy/cohesion"
 
 interface FairExhibitorRailProps extends BoxProps {
   show: FairExhibitorRail_show
+  fairID: string // needed for analytics
+  fairSlug: string // needed for analytics
 }
 
 /**
@@ -21,10 +30,25 @@ export const FAIR_EXHIBITOR_IMAGE_HEIGHT = 160
 
 export const FairExhibitorRail: React.FC<FairExhibitorRailProps> = ({
   show,
+  fairID,
+  fairSlug,
   ...rest
 }) => {
   const ref = useRef<HTMLDivElement | null>(null)
+  const tracking = useTracking()
   const { isEnteredView, Waypoint } = useLazyLoadComponent()
+
+  const tappedViewTrackingData: ClickedArtworkGroup = {
+    context_module: ContextModule.galleryBoothRail,
+    context_page_owner_type: OwnerType.fair,
+    context_page_owner_id: fairID,
+    context_page_owner_slug: fairSlug,
+    destination_page_owner_type: OwnerType.show,
+    destination_page_owner_id: show.internalID,
+    destination_page_owner_slug: show.slug,
+    type: "viewAll",
+    action: ActionType.clickedArtworkGroup,
+  }
 
   return (
     <>
@@ -45,7 +69,11 @@ export const FairExhibitorRail: React.FC<FairExhibitorRailProps> = ({
           </Box>
 
           {show.href && (
-            <Text variant="subtitle" color="black60">
+            <Text
+              variant="subtitle"
+              color="black60"
+              onClick={() => tracking.trackEvent(tappedViewTrackingData)}
+            >
               <RouterLink to={show.href} noUnderline>
                 View
               </RouterLink>
@@ -55,7 +83,11 @@ export const FairExhibitorRail: React.FC<FairExhibitorRailProps> = ({
 
         <Box height={FAIR_EXHIBITOR_RAIL_HEIGHT}>
           {isEnteredView ? (
-            <FairExhibitorRailArtworks id={show.internalID} />
+            <FairExhibitorRailArtworks
+              id={show.internalID}
+              fairID={fairID}
+              fairSlug={fairSlug}
+            />
           ) : (
             <FairExhibitorRailPlaceholder />
           )}
@@ -71,6 +103,7 @@ export const FairExhibitorRailFragmentContainer = createFragmentContainer(
     show: graphql`
       fragment FairExhibitorRail_show on Show {
         internalID
+        slug
         href
         partner {
           ... on Partner {
