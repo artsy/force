@@ -1,4 +1,4 @@
-import { Box, ReadMore, Text } from "@artsy/palette"
+import { Box, HTML, ReadMore, Text } from "@artsy/palette"
 import React, { Component } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Media } from "v2/Utils/Responsive"
@@ -39,11 +39,13 @@ export class ArtworkDetailsAboutTheWorkFromArtsy extends Component<
     const maxChars = xs ? READ_MORE_MAX_CHARS.xs : READ_MORE_MAX_CHARS.default
 
     return (
-      <ReadMore
-        maxChars={maxChars}
-        content={description}
-        onReadMoreClicked={this.trackReadMoreClick.bind(this)}
-      />
+      <HTML>
+        <ReadMore
+          maxChars={maxChars}
+          content={description}
+          onReadMoreClicked={this.trackReadMoreClick.bind(this)}
+        />
+      </HTML>
     )
   }
 

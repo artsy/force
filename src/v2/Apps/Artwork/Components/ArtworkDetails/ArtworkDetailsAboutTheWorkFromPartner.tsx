@@ -19,6 +19,7 @@ import { ContextModule, Intent } from "@artsy/cohesion"
 import {
   Box,
   EntityHeader,
+  HTML,
   ReadMore,
   Spacer,
   StackableBorderBox,
@@ -66,11 +67,13 @@ export class ArtworkDetailsAboutTheWorkFromPartner extends React.Component<
     const maxChars = xs ? READ_MORE_MAX_CHARS.xs : READ_MORE_MAX_CHARS.default
 
     return (
-      <ReadMore
-        maxChars={maxChars}
-        content={additional_information}
-        onReadMoreClicked={this.trackReadMoreClick.bind(this)}
-      />
+      <HTML>
+        <ReadMore
+          maxChars={maxChars}
+          content={additional_information}
+          onReadMoreClicked={this.trackReadMoreClick.bind(this)}
+        />
+      </HTML>
     )
   }
 
