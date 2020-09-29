@@ -42,6 +42,7 @@ To access the review app, you must create a DNS name for it. The name must match
 1. Change `Type` dropdown to `CNAME`
 1. Under `Name` enter `awesome-feature`
 1. Under `Target` say `nginx-staging.artsy.net`
+1. Under `Proxy status` toggle to `Proxied`
 1. Hit `Save`
 1. DNS will propagate and after a few minutes the review app will be available via `awesome-feature.artsy.net`
 
