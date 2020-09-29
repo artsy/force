@@ -15,12 +15,14 @@ import {
   Text,
   XCircleIcon,
 } from "@artsy/palette"
+import { data as sd } from "sharify"
 import { DateTime } from "luxon"
 import { PurchaseHistory_me } from "v2/__generated__/PurchaseHistory_me.graphql"
 import React, { useState } from "react"
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { Media } from "v2/Utils/Responsive"
+import { UserSettingsTabs } from "v2/components/UserSettings/UserSettingsTabs"
 
 interface OrderRowProps {
   order: PurchaseHistory_me["orders"]["edges"][number]["node"]
@@ -155,7 +157,7 @@ const OrderRow = (props: OrderRowProps) => {
         </Box>
       </Media>
       <Media greaterThanOrEqual="sm">
-        <BorderBox m={2} p={0} flexDirection="column">
+        <BorderBox my={2} mx="40px" p={0} flexDirection="column">
           <Flex
             bg="black5"
             width="100%"
@@ -310,10 +312,17 @@ const PurchaseHistory: React.FC<PurchaseHistoryProps> = (
   const myOrders = me.orders.edges && me.orders.edges.map(x => x.node)
   return !loading ? (
     <Box>
-      <Sans size="6" px={1} py={1.5}>
-        Order History
-      </Sans>
-      <Separator />
+      <Media greaterThanOrEqual="sm">
+        <Box mx="40px" mt="-5px">
+          <UserSettingsTabs route={sd.CURRENT_PATH} username={me.name} />
+        </Box>
+      </Media>
+      <Media lessThan="sm">
+        <Sans size="6" px={1} py={1.5}>
+          Order History
+        </Sans>
+        <Separator />
+      </Media>
       {myOrders.length ? (
         myOrders.map((order, i) => (
           <OrderRow
@@ -348,6 +357,7 @@ export const PurchaseHistoryFragmentContainer = createRefetchContainer(
           after: { type: "String" }
           before: { type: "String" }
         ) {
+        name
         orders(first: $first, last: $last, before: $before, after: $after) {
           edges {
             node {
