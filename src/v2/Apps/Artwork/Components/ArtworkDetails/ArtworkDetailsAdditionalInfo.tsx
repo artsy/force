@@ -1,6 +1,7 @@
 import {
   Col,
   Grid,
+  HTML,
   ReadMore,
   Row,
   StackableBorderBox,
@@ -88,13 +89,13 @@ export class ArtworkDetailsAdditionalInfo extends React.Component<
                 </Text>
               </Col>
               <Col xs={12} sm={6} md={6} lg={9}>
-                <Text variant="text" color="black60">
+                <HTML variant="text" color="black60">
                   {React.isValidElement(value) ? (
                     value
                   ) : (
                     <ReadMore maxChars={140} content={value} />
                   )}
-                </Text>
+                </HTML>
               </Col>
             </Row>
           ))}
