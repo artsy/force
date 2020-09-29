@@ -13,6 +13,7 @@ export type FairCollection_QueryResponse = {
 };
 export type FairCollection_QueryRawResponse = {
     readonly marketingCollection: ({
+        readonly id: string;
         readonly slug: string;
         readonly title: string;
         readonly category: string;
@@ -27,7 +28,6 @@ export type FairCollection_QueryRawResponse = {
             }) | null> | null;
             readonly id: string | null;
         }) | null;
-        readonly id: string | null;
     }) | null;
 };
 export type FairCollection_Query = {
@@ -49,6 +49,7 @@ query FairCollection_Query(
 }
 
 fragment FairCollection_collection on MarketingCollection {
+  id
   slug
   title
   category
@@ -129,6 +130,7 @@ return {
         "name": "marketingCollection",
         "plural": false,
         "selections": [
+          (v2/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -214,8 +216,7 @@ return {
               (v2/*: any*/)
             ],
             "storageKey": "artworksConnection(first:3)"
-          },
-          (v2/*: any*/)
+          }
         ],
         "storageKey": null
       }
@@ -226,7 +227,7 @@ return {
     "metadata": {},
     "name": "FairCollection_Query",
     "operationKind": "query",
-    "text": "query FairCollection_Query(\n  $slug: String!\n) {\n  marketingCollection(slug: $slug) {\n    ...FairCollection_collection\n    id\n  }\n}\n\nfragment FairCollection_collection on MarketingCollection {\n  slug\n  title\n  category\n  artworks: artworksConnection(first: 3) {\n    edges {\n      node {\n        image {\n          url(version: \"larger\")\n        }\n        id\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query FairCollection_Query(\n  $slug: String!\n) {\n  marketingCollection(slug: $slug) {\n    ...FairCollection_collection\n    id\n  }\n}\n\nfragment FairCollection_collection on MarketingCollection {\n  id\n  slug\n  title\n  category\n  artworks: artworksConnection(first: 3) {\n    edges {\n      node {\n        image {\n          url(version: \"larger\")\n        }\n        id\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();
