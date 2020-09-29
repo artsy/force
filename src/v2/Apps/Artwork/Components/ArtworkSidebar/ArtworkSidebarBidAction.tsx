@@ -18,7 +18,6 @@ import { ArtworkSidebarBidAction_me } from "v2/__generated__/ArtworkSidebarBidAc
 import * as Schema from "v2/Artsy/Analytics/Schema"
 import track from "react-tracking"
 import { getENV } from "v2/Utils/getENV"
-import { bidderNeedsIdentityVerification } from "v2/Utils/identityVerificationRequirements"
 
 export interface ArtworkSidebarBidActionProps {
   artwork: ArtworkSidebarBidAction_artwork
@@ -38,6 +37,14 @@ const RegisterToBidButton: React.FC<{ onClick: () => void }> = ({
     </Button>
   )
 }
+
+const VerifyIdentityButton: React.FC<{ id: string }> = ({ id }) => (
+  <a href={`/identity-verification/${id}`}>
+    <Button width="100%" size="large">
+      Verify identity
+    </Button>
+  </a>
+)
 
 const IdentityVerificationDisclaimer: React.FC = () => {
   return (
@@ -128,11 +135,14 @@ export class ArtworkSidebarBidAction extends React.Component<
     const myLotStanding = artwork.myLotStanding && artwork.myLotStanding[0]
     const hasMyBids = !!(myLotStanding && myLotStanding.most_recent_bid)
 
-    const userNeedsIdentityVerification = bidderNeedsIdentityVerification({
-      sale,
-      user: me,
-      bidder: sale.registrationStatus,
-    })
+    const userLacksIdentityVerification =
+      sale.requireIdentityVerification && !me?.identityVerified
+    const pendingIdentityVerification = me?.pendingIdentityVerification
+
+    const shouldPromptIdVerification =
+      !qualifiedForBidding &&
+      userLacksIdentityVerification &&
+      Boolean(pendingIdentityVerification)
 
     if (sale.is_preview) {
       let PreviewAction: React.FC
@@ -143,6 +153,10 @@ export class ArtworkSidebarBidAction extends React.Component<
             <Button width="100%" size="large" mt={1} disabled>
               Registration complete
             </Button>
+          )
+        } else if (shouldPromptIdVerification) {
+          PreviewAction = () => (
+            <VerifyIdentityButton id={pendingIdentityVerification.internalID} />
           )
         } else {
           PreviewAction = () => (
@@ -159,7 +173,7 @@ export class ArtworkSidebarBidAction extends React.Component<
       return (
         <Box>
           <PreviewAction />
-          {userNeedsIdentityVerification && <IdentityVerificationDisclaimer />}
+          {userLacksIdentityVerification && <IdentityVerificationDisclaimer />}
         </Box>
       )
     }
@@ -193,7 +207,7 @@ export class ArtworkSidebarBidAction extends React.Component<
             >
               Enter live bidding
             </Button>
-            {userNeedsIdentityVerification && (
+            {userLacksIdentityVerification && (
               <IdentityVerificationDisclaimer />
             )}
           </Box>
@@ -205,10 +219,16 @@ export class ArtworkSidebarBidAction extends React.Component<
       if (registrationAttempted && !qualifiedForBidding) {
         return (
           <Box>
-            <Button width="100%" size="large" disabled>
-              Registration pending
-            </Button>
-            {userNeedsIdentityVerification && (
+            {shouldPromptIdVerification ? (
+              <VerifyIdentityButton
+                id={pendingIdentityVerification.internalID}
+              />
+            ) : (
+              <Button width="100%" size="large" disabled>
+                Registration pending
+              </Button>
+            )}
+            {userLacksIdentityVerification && (
               <IdentityVerificationDisclaimer />
             )}
           </Box>
@@ -233,7 +253,7 @@ export class ArtworkSidebarBidAction extends React.Component<
         text: increment.display,
       }))
 
-      if (userNeedsIdentityVerification) {
+      if (!qualifiedForBidding && userLacksIdentityVerification) {
         return (
           <Box>
             <RegisterToBidButton onClick={this.redirectToRegister} />
@@ -307,6 +327,9 @@ export const ArtworkSidebarBidActionFragmentContainer = createFragmentContainer(
     me: graphql`
       fragment ArtworkSidebarBidAction_me on Me {
         identityVerified
+        pendingIdentityVerification {
+          internalID
+        }
       }
     `,
   }

@@ -81,18 +81,28 @@ export const ArtworkFromTimedAuctionRegistrationClosed: ArtworkSidebarBidAction_
   myLotStanding: null,
 }
 
-export const SaleRequiringIDV: Partial<ArtworkSidebarBidAction_Test_QueryRawResponse["artwork"]["sale"]> = {
+export const SaleRequiringIDV: Partial<
+  ArtworkSidebarBidAction_Test_QueryRawResponse["artwork"]["sale"]
+> = {
   requireIdentityVerification: true,
 }
 
 export const NotIDVedUser: ArtworkSidebarBidAction_Test_QueryRawResponse["me"] = {
   id: "user-id",
   identityVerified: false,
+  pendingIdentityVerification: undefined,
+}
+
+export const UserPendingIDV: ArtworkSidebarBidAction_Test_QueryRawResponse["me"] = {
+  id: "user-id",
+  identityVerified: false,
+  pendingIdentityVerification: { internalID: "idv-id", id: "idv-id" },
 }
 
 export const IDVedUser: ArtworkSidebarBidAction_Test_QueryRawResponse["me"] = {
   id: "user-id",
   identityVerified: true,
+  pendingIdentityVerification: undefined,
 }
 
 export const NoUser: ArtworkSidebarBidAction_Test_QueryRawResponse["me"] = null
