@@ -10,7 +10,6 @@ import {
   Avatar,
   BorderBox,
   Box,
-  Button,
   Flex,
   Sans,
   Serif,
@@ -85,17 +84,10 @@ export const LargeArtistCard: SFC<ArtistCardProps> = props => (
       <FollowArtistButton
         artist={props.artist}
         contextModule={props.contextModule}
-        render={({ is_followed }) => {
-          return (
-            <Button
-              variant="secondaryOutline"
-              size="small"
-              width={space(9)}
-              data-test="followButton"
-            >
-              {getButtonLabel(is_followed)}
-            </Button>
-          )
+        buttonProps={{
+          variant: "secondaryOutline",
+          size: "small",
+          width: space(9)
         }}
       />
     </Flex>
@@ -125,17 +117,9 @@ export const SmallArtistCard: SFC<ArtistCardProps> = props => (
       <FollowArtistButton
         artist={props.artist}
         contextModule={props.contextModule}
-        render={({ is_followed }) => {
-          // FIXME: use button props
-          return (
-            <Button
-              variant="secondaryOutline"
-              size="small"
-              data-test="followButton"
-            >
-              {getButtonLabel(is_followed)}
-            </Button>
-          )
+        buttonProps={{
+          variant: "secondaryOutline",
+          size: "small"
         }}
       />
     </Flex>
@@ -161,9 +145,3 @@ export const ArtistCardFragmentContainer = createFragmentContainer(
     `,
   }
 )
-
-// Helpers
-
-const getButtonLabel = (isFollowed: boolean): string => {
-  return isFollowed ? "Unfollow" : "Follow"
-}

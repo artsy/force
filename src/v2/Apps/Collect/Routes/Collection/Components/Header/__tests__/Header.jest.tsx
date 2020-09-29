@@ -471,7 +471,8 @@ describe("collections header", () => {
 
     it("opens auth modal with expected args when following an artist", () => {
       const component = mountComponent(props)
-      component.find(FollowArtistButton)
+      component
+        .find(FollowArtistButton)
         .first()
         .simulate("click")
       expect(context.mediator.trigger).toBeCalledWith("open:auth", {
