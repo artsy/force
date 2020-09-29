@@ -87,12 +87,12 @@ module.exports = class FollowButton extends Backbone.View
       return false
 
     analyticsOptions = {
-      context_module: @context_module,
-      context_owner_id: @context_page_owner_id,
-      context_owner_slug: @context_page_owner_slug,
-      context_owner_type: @context_page,
-      ownder_id: @model.get('_id'),
-      owner_slug: @model.id,
+      contextModule: @context_module,
+      contextOwnerId: @context_page_owner_id,
+      contextOwnerSlug: @context_page_owner_slug,
+      contextOwnerType: @context_page,
+      ownerId: @model.get('_id'),
+      ownerSlug: @model.id,
     }
 
     # trackEvent
