@@ -9,7 +9,6 @@ import {
 import { ArtistInfo_artist } from "v2/__generated__/ArtistInfo_artist.graphql"
 import { ArtistInfoQuery } from "v2/__generated__/ArtistInfoQuery.graphql"
 import { SystemContextConsumer } from "v2/Artsy"
-import { Mediator } from "v2/Artsy"
 import { track } from "v2/Artsy/Analytics"
 import * as Schema from "v2/Artsy/Analytics/Schema"
 import { renderWithLoadProgress } from "v2/Artsy/Relay/renderWithLoadProgress"
@@ -20,18 +19,16 @@ import { ArtistBioFragmentContainer as ArtistBio } from "v2/Components/ArtistBio
 import { ArtistMarketInsightsFragmentContainer as ArtistMarketInsights } from "v2/Components/ArtistMarketInsights"
 import { SelectedExhibitionFragmentContainer as SelectedExhibitions } from "v2/Components/SelectedExhibitions"
 
-import { ContextModule, Intent } from "@artsy/cohesion"
+import { ContextModule } from "@artsy/cohesion"
 import { MIN_EXHIBITIONS } from "v2/Components/SelectedExhibitions"
 import React, { Component } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { data as sd } from "sharify"
 import Events from "v2/Utils/Events"
 import { get } from "v2/Utils/get"
-import { openAuthToFollowSave } from "v2/Utils/openAuthModal"
 
 interface ArtistInfoProps {
   artist: ArtistInfo_artist
-  mediator?: Mediator
 }
 
 interface ArtistInfoState {
@@ -83,17 +80,9 @@ export class ArtistInfo extends Component<ArtistInfoProps, ArtistInfoState> {
     })
   }
 
-  handleOpenAuth = (mediator, artist) => {
-    openAuthToFollowSave(mediator, {
-      entity: artist,
-      contextModule: ContextModule.aboutTheWork,
-      intent: Intent.followArtist,
-    })
-  }
-
   render() {
     const { artist } = this.props
-    const { biographyBlurb, image, slug, internalID } = this.props.artist
+    const { biographyBlurb, image } = this.props.artist
     const showArtistBio = !!biographyBlurb.text
     const imageUrl = get(this.props, p => image.cropped.url)
     const showArtistInsightsButton =
@@ -109,140 +98,131 @@ export class ArtistInfo extends Component<ArtistInfoProps, ArtistInfoState> {
       : "Show artist insights"
 
     return (
-      <SystemContextConsumer>
-        {({ user, mediator }) => (
-          <>
-            <StackableBorderBox
-              p={2}
-              flexDirection="column"
-              data-test="artistInfo"
-            >
-              <EntityHeader
-                name={this.props.artist.name}
-                meta={this.props.artist.formatted_nationality_and_birthday}
-                imageUrl={imageUrl}
-                href={this.props.artist.href}
-                FollowButton={
-                  <FollowArtistButton
-                    artist={this.props.artist}
-                    user={user}
-                    trackingData={{
-                      modelName: Schema.OwnerType.Artist,
-                      context_module: Schema.ContextModule.Biography,
-                      entity_id: internalID,
-                      entity_slug: slug,
-                    }}
-                    onOpenAuthModal={() =>
-                      this.handleOpenAuth(mediator, this.props.artist)
-                    }
-                    render={({ is_followed }) => {
-                      return (
-                        <Text
-                          data-test="followButton"
-                          style={{
-                            cursor: "pointer",
-                            textDecoration: "underline",
-                          }}
-                        >
-                          {is_followed ? "Following" : "Follow"}
-                        </Text>
-                      )
-                    }}
-                  />
-                }
-              />
-              {showArtistBio && (
-                <>
-                  <Spacer mb={1} />
-                  <ArtistBio
-                    bio={this.props.artist}
-                    onReadMoreClicked={this.trackArtistBioReadMoreClick.bind(
-                      this
-                    )}
-                  />
-                </>
-              )}
-              {showArtistInsightsButton && (
-                <Flex flexDirection="column" alignItems="flex-start">
-                  <Button
-                    onClick={
-                      this.state.showArtistInsights
-                        ? this.closeArtistInsights.bind(this)
-                        : this.openArtistInsights.bind(this)
-                    }
-                    variant="secondaryGray"
-                    size="small"
-                    mt={1}
-                  >
-                    {buttonText}
-                  </Button>
-                </Flex>
-              )}
-            </StackableBorderBox>
-            {this.state.showArtistInsights && (
-              <>
-                <ArtistMarketInsights
-                  artist={this.props.artist}
-                  border={false}
-                  Container={Container}
-                />
-                <SelectedExhibitions
-                  artistID={this.props.artist.internalID}
-                  border={false}
-                  totalExhibitions={this.props.artist.counts.partner_shows}
-                  exhibitions={this.props.artist.exhibition_highlights}
-                  ViewAllLink={
-                    <a
-                      href={`${sd.APP_URL}/artist/${this.props.artist.slug}/cv`}
+      <>
+        <StackableBorderBox p={2} flexDirection="column" data-test="artistInfo">
+          <EntityHeader
+            name={artist.name}
+            meta={artist.formatted_nationality_and_birthday}
+            imageUrl={imageUrl}
+            href={artist.href}
+            FollowButton={
+              <FollowArtistButton
+                artist={artist}
+                contextModule={ContextModule.aboutTheWork}
+                render={({ is_followed }) => {
+                  return (
+                    <Text
+                      data-test="followButton"
+                      style={{
+                        cursor: "pointer",
+                        textDecoration: "underline",
+                      }}
                     >
-                      View all
-                    </a>
-                  }
-                  Container={Container}
-                />
-              </>
-            )}
+                      {is_followed ? "Following" : "Follow"}
+                    </Text>
+                  )
+                }}
+              />
+            }
+          />
+          {showArtistBio && (
+            <>
+              <Spacer mb={1} />
+              <ArtistBio
+                bio={artist}
+                onReadMoreClicked={this.trackArtistBioReadMoreClick.bind(this)}
+              />
+            </>
+          )}
+          {showArtistInsightsButton && (
+            <Flex flexDirection="column" alignItems="flex-start">
+              <Button
+                onClick={
+                  this.state.showArtistInsights
+                    ? this.closeArtistInsights.bind(this)
+                    : this.openArtistInsights.bind(this)
+                }
+                variant="secondaryGray"
+                size="small"
+                mt={1}
+              >
+                {buttonText}
+              </Button>
+            </Flex>
+          )}
+        </StackableBorderBox>
+        {this.state.showArtistInsights && (
+          <>
+            <ArtistMarketInsights
+              artist={artist}
+              border={false}
+              Container={Container}
+            />
+            <SelectedExhibitions
+              artistID={artist.internalID}
+              border={false}
+              totalExhibitions={artist.counts.partner_shows}
+              exhibitions={artist.exhibition_highlights}
+              ViewAllLink={
+                <a href={`${sd.APP_URL}/artist/${artist.slug}/cv`}>View all</a>
+              }
+              Container={Container}
+            />
           </>
         )}
-      </SystemContextConsumer>
+      </>
     )
   }
 }
 
 // ADDED COLLECTIONS, HIGHLIGHTS, AND AUCTION RESULTS TO FRAGMENT FOR SHOW ARTIST INSIGHTS BUTTON VISIBLILITY CHECK
 
-export const ArtistInfoFragmentContainer = createFragmentContainer(ArtistInfo, {
-  artist: graphql`
-    fragment ArtistInfo_artist on Artist
-      @argumentDefinitions(
-        partnerCategory: {
-          type: "[String]"
-          defaultValue: ["blue-chip", "top-established", "top-emerging"]
+export const ArtistInfoFragmentContainer = createFragmentContainer(
+  ArtistInfo as React.ComponentType<ArtistInfoProps>,
+  {
+    artist: graphql`
+      fragment ArtistInfo_artist on Artist
+        @argumentDefinitions(
+          partnerCategory: {
+            type: "[String]"
+            defaultValue: ["blue-chip", "top-established", "top-emerging"]
+          }
+        ) {
+        internalID
+        slug
+        name
+        href
+        image {
+          cropped(width: 100, height: 100) {
+            url
+          }
         }
-      ) {
-      internalID
-      slug
-      name
-      href
-      image {
-        cropped(width: 100, height: 100) {
-          url
+        formatted_nationality_and_birthday: formattedNationalityAndBirthday
+        counts {
+          partner_shows: partnerShows
         }
-      }
-      formatted_nationality_and_birthday: formattedNationalityAndBirthday
-      counts {
-        partner_shows: partnerShows
-      }
-      exhibition_highlights: exhibitionHighlights(size: 3) {
-        ...SelectedExhibitions_exhibitions
-      }
-      collections
-      highlights {
-        partnersConnection(
-          first: 10
-          displayOnPartnerProfile: true
-          representedBy: true
-          partnerCategory: $partnerCategory
+        exhibition_highlights: exhibitionHighlights(size: 3) {
+          ...SelectedExhibitions_exhibitions
+        }
+        collections
+        highlights {
+          partnersConnection(
+            first: 10
+            displayOnPartnerProfile: true
+            representedBy: true
+            partnerCategory: $partnerCategory
+          ) {
+            edges {
+              node {
+                __typename
+              }
+            }
+          }
+        }
+        auctionResultsConnection(
+          recordsTrusted: true
+          first: 1
+          sort: PRICE_AND_DATE_DESC
         ) {
           edges {
             node {
@@ -250,29 +230,18 @@ export const ArtistInfoFragmentContainer = createFragmentContainer(ArtistInfo, {
             }
           }
         }
-      }
-      auctionResultsConnection(
-        recordsTrusted: true
-        first: 1
-        sort: PRICE_AND_DATE_DESC
-      ) {
-        edges {
-          node {
-            __typename
-          }
+        ...ArtistBio_bio
+        ...ArtistMarketInsights_artist
+        ...FollowArtistButton_artist
+        # The below data is only used to determine whether a section
+        # should be rendered
+        biographyBlurb: biographyBlurb(format: HTML, partnerBio: true) {
+          text
         }
       }
-      ...ArtistBio_bio
-      ...ArtistMarketInsights_artist
-      ...FollowArtistButton_artist
-      # The below data is only used to determine whether a section
-      # should be rendered
-      biographyBlurb: biographyBlurb(format: HTML, partnerBio: true) {
-        text
-      }
-    }
-  `,
-})
+    `,
+  }
+)
 
 export const ArtistInfoQueryRenderer = ({ artistID }: { artistID: string }) => {
   return (

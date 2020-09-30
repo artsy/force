@@ -13,6 +13,7 @@ import { ArtistSeriesMetaFragmentContainer as ArtistSeriesMeta } from "./Compone
 import { LazyLoadComponent } from "react-lazy-load-image-component"
 import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { Media } from "v2/Utils/Responsive"
+import { AnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
 
 interface ArtistSeriesAppProps {
   artistSeries: ArtistSeriesApp_artistSeries
@@ -22,43 +23,51 @@ const ArtistSeriesApp: React.FC<ArtistSeriesAppProps> = ({ artistSeries }) => {
   if (artistSeries) {
     const { railArtist, internalID, slug } = artistSeries
     return (
-      <AppContainer maxWidth="100%">
-        {/* NOTE: react-head automatically moves these tags to the <head> element */}
-        <ArtistSeriesMeta artistSeries={artistSeries} />
-        <ArtistSeriesHeader artistSeries={artistSeries} />
-        <Box mx={3}>
-          <Media greaterThan="xs">
-            <Spacer my={3} />
-          </Media>
-          <Media at="xs">
-            <Separator my={2} />
-          </Media>
-          <AppContainer>
-            <ArtistSeriesArtworksFilter artistSeries={artistSeries} />
-            <Separator mt={6} mb={3} />
+      <AnalyticsContext.Provider
+        value={{
+          contextPageOwnerId: internalID,
+          contextPageOwnerSlug: slug,
+          contextPageOwnerType: OwnerType.artistSeries,
+        }}
+      >
+        <AppContainer maxWidth="100%">
+          {/* NOTE: react-head automatically moves these tags to the <head> element */}
+          <ArtistSeriesMeta artistSeries={artistSeries} />
+          <ArtistSeriesHeader artistSeries={artistSeries} />
+          <Box mx={3}>
+            <Media greaterThan="xs">
+              <Spacer my={3} />
+            </Media>
+            <Media at="xs">
+              <Separator my={2} />
+            </Media>
+            <AppContainer>
+              <ArtistSeriesArtworksFilter artistSeries={artistSeries} />
+              <Separator mt={6} mb={3} />
 
-            {/* HOTFIX FIXME: This rail was causing an error if included in SSR render
+              {/* HOTFIX FIXME: This rail was causing an error if included in SSR render
               pass and so it was deferred to the client.
 
               See: https://github.com/artsy/force/pull/6137
            */}
-            {railArtist.length && typeof window !== "undefined" && (
-              <LazyLoadComponent threshold={1000}>
-                <OtherArtistSeriesRail
-                  artist={railArtist[0]}
-                  title="Series by this artist"
-                  contextPageOwnerId={internalID}
-                  contextPageOwnerSlug={slug}
-                  contextModule={ContextModule.moreSeriesByThisArtist}
-                  contextPageOwnerType={OwnerType.artistSeries}
-                />
-              </LazyLoadComponent>
-            )}
-            <Separator mt={6} mb={3} />
-            <Footer />
-          </AppContainer>
-        </Box>
-      </AppContainer>
+              {railArtist.length && typeof window !== "undefined" && (
+                <LazyLoadComponent threshold={1000}>
+                  <OtherArtistSeriesRail
+                    artist={railArtist[0]}
+                    title="Series by this artist"
+                    contextPageOwnerId={internalID}
+                    contextPageOwnerSlug={slug}
+                    contextModule={ContextModule.moreSeriesByThisArtist}
+                    contextPageOwnerType={OwnerType.artistSeries}
+                  />
+                </LazyLoadComponent>
+              )}
+              <Separator mt={6} mb={3} />
+              <Footer />
+            </AppContainer>
+          </Box>
+        </AppContainer>
+      </AnalyticsContext.Provider>
     )
   } else {
     return <ErrorPage code={404} />

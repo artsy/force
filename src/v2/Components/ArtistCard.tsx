@@ -1,19 +1,15 @@
-import { AuthContextModule, Intent } from "@artsy/cohesion"
 import { ArtistCard_artist } from "v2/__generated__/ArtistCard_artist.graphql"
-import { Mediator } from "v2/Artsy"
 import { FollowArtistButtonFragmentContainer as FollowArtistButton } from "v2/Components/FollowButton/FollowArtistButton"
 import { Truncator } from "v2/Components/Truncator"
 import React, { SFC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { get } from "v2/Utils/get"
-import { openAuthToFollowSave } from "v2/Utils/openAuthModal"
 import { Media } from "v2/Utils/Responsive"
 
 import {
   Avatar,
   BorderBox,
   Box,
-  Button,
   Flex,
   Sans,
   Serif,
@@ -22,12 +18,11 @@ import {
 } from "@artsy/palette"
 import styled from "styled-components"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
+import { AuthContextModule } from "@artsy/cohesion"
 
 export interface ArtistCardProps {
   artist: ArtistCard_artist
   contextModule: AuthContextModule
-  user: User
-  mediator?: Mediator
   /** Lazy load the avatar image */
   lazyLoad?: boolean
   onClick?: () => void
@@ -88,19 +83,11 @@ export const LargeArtistCard: SFC<ArtistCardProps> = props => (
     <Flex flexDirection="column" alignItems="center" mt="auto">
       <FollowArtistButton
         artist={props.artist}
-        user={props.user}
-        onOpenAuthModal={() => handleOpenAuth(props)}
-        render={({ is_followed }) => {
-          return (
-            <Button
-              variant="secondaryOutline"
-              size="small"
-              width={space(9)}
-              data-test="followButton"
-            >
-              {getButtonLabel(is_followed)}
-            </Button>
-          )
+        contextModule={props.contextModule}
+        buttonProps={{
+          variant: "secondaryOutline",
+          size: "small",
+          width: space(9)
         }}
       />
     </Flex>
@@ -129,51 +116,32 @@ export const SmallArtistCard: SFC<ArtistCardProps> = props => (
 
       <FollowArtistButton
         artist={props.artist}
-        user={props.user}
-        onOpenAuthModal={() => handleOpenAuth(props)}
-        render={({ is_followed }) => {
-          return (
-            <Button
-              variant="secondaryOutline"
-              size="small"
-              data-test="followButton"
-            >
-              {getButtonLabel(is_followed)}
-            </Button>
-          )
+        contextModule={props.contextModule}
+        buttonProps={{
+          variant: "secondaryOutline",
+          size: "small"
         }}
       />
     </Flex>
   </BorderBox>
 )
 
-const handleOpenAuth = (props: ArtistCardProps) => {
-  openAuthToFollowSave(props.mediator, {
-    entity: props.artist,
-    contextModule: props.contextModule,
-    intent: Intent.followArtist,
-  })
-}
-
-export const ArtistCardFragmentContainer = createFragmentContainer(ArtistCard, {
-  artist: graphql`
-    fragment ArtistCard_artist on Artist {
-      name
-      slug
-      href
-      image {
-        cropped(width: 400, height: 300) {
-          url
+export const ArtistCardFragmentContainer = createFragmentContainer(
+  ArtistCard as React.ComponentType<ArtistCardProps>,
+  {
+    artist: graphql`
+      fragment ArtistCard_artist on Artist {
+        name
+        slug
+        href
+        image {
+          cropped(width: 400, height: 300) {
+            url
+          }
         }
+        formatted_nationality_and_birthday: formattedNationalityAndBirthday
+        ...FollowArtistButton_artist
       }
-      formatted_nationality_and_birthday: formattedNationalityAndBirthday
-      ...FollowArtistButton_artist
-    }
-  `,
-})
-
-// Helpers
-
-const getButtonLabel = (isFollowed: boolean): string => {
-  return isFollowed ? "Unfollow" : "Follow"
-}
+    `,
+  }
+)

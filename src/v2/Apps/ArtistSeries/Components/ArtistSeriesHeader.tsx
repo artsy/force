@@ -15,15 +15,8 @@ import {
 import { Media } from "v2/Utils/Responsive"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FollowArtistButtonFragmentContainer as FollowArtistButton } from "v2/Components/FollowButton/FollowArtistButton"
-import { openAuthToFollowSave } from "v2/Utils/openAuthModal"
 import { ArtistSeriesHeader_artistSeries } from "v2/__generated__/ArtistSeriesHeader_artistSeries.graphql"
-import { useSystemContext } from "v2/Artsy"
-import {
-  ContextModule,
-  Intent,
-  OwnerType,
-  followedArtist,
-} from "@artsy/cohesion"
+import { ContextModule } from "@artsy/cohesion"
 import styled from "styled-components"
 import { unitlessBreakpoints } from "@artsy/palette"
 import { AppContainer } from "v2/Apps/Components/AppContainer"
@@ -41,18 +34,7 @@ interface ArtistsInfoProps {
 const ArtistInfo: React.FC<ArtistsInfoProps> = props => {
   /* Displays artist name, avatar and follow button. We currently assume
      that an artist series will have one artist. */
-  const { user, mediator } = useSystemContext()
-  const { artist, contextOwnerId, contextOwnerSlug } = props
-  const { slug, internalID } = artist
-
-  const trackingData = followedArtist({
-    contextModule: ContextModule.featuredArtists,
-    contextOwnerType: OwnerType.artistSeries,
-    contextOwnerId,
-    contextOwnerSlug,
-    ownerId: internalID,
-    ownerSlug: slug,
-  })
+  const { artist } = props
 
   return (
     <EntityHeader
@@ -63,17 +45,7 @@ const ArtistInfo: React.FC<ArtistsInfoProps> = props => {
       FollowButton={
         <FollowArtistButton
           artist={artist}
-          useNewAnalyticsSchema
-          user={user}
-          trackingData={trackingData}
-          onOpenAuthModal={() =>
-            openAuthToFollowSave(mediator, {
-              entity: artist,
-              // FIXME: Add artist series to Cohesion
-              contextModule: null,
-              intent: Intent.followArtist,
-            })
-          }
+          contextModule={ContextModule.featuredArtists}
           render={({ is_followed }) => {
             return (
               <Clickable

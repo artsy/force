@@ -4,11 +4,11 @@ import { Mediator } from "v2/Artsy"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import FillwidthItem from "../Artwork/FillwidthItem"
-import Follow from "../Follow"
 import Text from "../Text"
 import TextLink from "../TextLink"
 import { Carousel } from "../Carousel"
 import styled from "styled-components"
+import { FollowArtistButtonFragmentContainer as FollowArtistButton } from "v2/Components/FollowButton/FollowArtistButton"
 
 const HEIGHT = 160
 
@@ -28,7 +28,7 @@ export class ArtistRow extends React.Component<Props, null> {
               {artist.name}
             </Text>
           </TextLink>
-          <Follow
+          <FollowArtistButton
             artist={artist}
             contextModule={ContextModule.featuredArtistsRail}
           />
@@ -66,7 +66,9 @@ export default createFragmentContainer(ArtistRow, {
     fragment ArtistRow_artist on Artist {
       name
       href
-      ...Follow_artist
+      internalID
+      slug
+      ...FollowArtistButton_artist
       artworks: artworksConnection(first: 6) {
         edges {
           node {

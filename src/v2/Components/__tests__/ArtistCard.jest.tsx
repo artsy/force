@@ -11,22 +11,24 @@ import {
   LargeArtistCard,
   SmallArtistCard,
 } from "../ArtistCard"
+import { SystemContextProvider } from "v2/Artsy"
 
 describe("ArtistCard", () => {
   let props: ArtistCardProps
-
+  let mediator
   const getWrapper = (breakpoint, passedProps: ArtistCardProps = props) => {
     return mount(
       <MockBoot breakpoint={breakpoint}>
-        <ArtistCard {...passedProps} />
+        <SystemContextProvider mediator={mediator}>
+          <ArtistCard {...passedProps} />
+        </SystemContextProvider>
       </MockBoot>
     )
   }
 
   beforeEach(() => {
+    mediator = { trigger: jest.fn() }
     props = {
-      mediator: { trigger: jest.fn() },
-      user: null,
       contextModule: ContextModule.artistsToFollowRail,
       artist: {
         image: {
@@ -65,11 +67,8 @@ describe("ArtistCard", () => {
 
   it("opens auth modal with expected args when following an artist", () => {
     const wrapper = getWrapper("lg")
-    wrapper
-      .find(FollowArtistButton)
-      .first()
-      .simulate("click")
-    expect(props.mediator.trigger).toBeCalledWith("open:auth", {
+    wrapper.find(FollowArtistButton).first().simulate("click")
+    expect(mediator.trigger).toBeCalledWith("open:auth", {
       mode: "signup",
       contextModule: "artistsToFollowRail",
       copy: "Sign up to follow Francesca DiMattio",

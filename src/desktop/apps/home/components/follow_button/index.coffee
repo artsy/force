@@ -1,7 +1,7 @@
 { Following, FollowButton } = require '../../../../components/follow_button/index.coffee'
 Artist = require '../../../../models/artist.coffee'
 Gene = require '../../../../models/gene.coffee'
-{ ContextModule } = require "@artsy/cohesion"
+{ ContextModule, OwnerType } = require "@artsy/cohesion"
 template = -> require('./template.jade') arguments...
 
 followableObject =
@@ -20,6 +20,8 @@ getContextModule = (key) ->
     when 'generic_gene' then ContextModule.categoryRail
     when 'popular_artists' then ContextModule.worksByPopularArtistsRail
     when 'live_auctions' then ContextModule.liveAuctionsRail
+    when 'followed_artist' then ContextModule.newWorksByArtistsYouFollowRail
+    when 'related_artists' then ContextModule.relatedArtistsRail
 
 module.exports = ({ module, user, $el }) ->
   return unless followableObject[module.key]?
@@ -42,6 +44,7 @@ module.exports = ({ module, user, $el }) ->
     model: model
     modelName: kind
     context_module: getContextModule(module.key)
+    context_page: OwnerType.home
 
   following?.syncFollows [followable.id]
 

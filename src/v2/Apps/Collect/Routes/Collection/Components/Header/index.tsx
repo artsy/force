@@ -1,12 +1,10 @@
-import { ContextModule, Intent } from "@artsy/cohesion"
+import { ContextModule } from "@artsy/cohesion"
 import { EntityHeader, ReadMore, Text, breakpoints } from "@artsy/palette"
 import { Box, Col, Flex, Grid, Row, Spacer, color, media } from "@artsy/palette"
 import { Header_artworks } from "v2/__generated__/Header_artworks.graphql"
 import { Header_collection } from "v2/__generated__/Header_collection.graphql"
 import { CollectionDefaultHeaderFragmentContainer as CollectionDefaultHeader } from "v2/Apps/Collect/Routes/Collection/Components/Header/DefaultHeader"
 import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
-import { useSystemContext } from "v2/Artsy"
-import { AnalyticsSchema } from "v2/Artsy/Analytics"
 import { unica } from "v2/Assets/Fonts"
 import { FollowArtistButtonFragmentContainer as FollowArtistButton } from "v2/Components/FollowButton/FollowArtistButton"
 import { Link } from "found"
@@ -15,7 +13,6 @@ import React, { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { slugify } from "underscore.string"
-import { openAuthToFollowSave } from "v2/Utils/openAuthModal"
 import { resize } from "v2/Utils/resizer"
 import { Responsive } from "v2/Utils/Responsive"
 import { FeaturedArtists } from "./FeaturedArtists"
@@ -23,14 +20,6 @@ import { FeaturedArtists } from "./FeaturedArtists"
 export interface Props {
   collection: Header_collection
   artworks: Header_artworks
-}
-
-const handleOpenAuth = (mediator, artist) => {
-  openAuthToFollowSave(mediator, {
-    entity: artist,
-    contextModule: ContextModule.featuredArtistsRail,
-    intent: Intent.followArtist,
-  })
 }
 
 export const getFeaturedArtists = (
@@ -56,10 +45,8 @@ export const getFeaturedArtists = (
 }
 
 export const featuredArtistsEntityCollection: (
-  artists: Header_artworks["merchandisableArtists"],
-  mediator: any,
-  user: any
-) => JSX.Element[] = (artists, mediator, user) => {
+  artists: Header_artworks["merchandisableArtists"]
+) => JSX.Element[] = artists => {
   return artists.map((artist, index) => {
     const hasArtistMetaData = artist.nationality && artist.birthday
     return (
@@ -81,15 +68,7 @@ export const featuredArtistsEntityCollection: (
           FollowButton={
             <FollowArtistButton
               artist={artist}
-              user={user}
-              trackingData={{
-                modelName: AnalyticsSchema.OwnerType.Artist,
-                context_module:
-                  AnalyticsSchema.ContextModule.CollectionDescription,
-                entity_id: artist.internalID,
-                entity_slug: artist.slug,
-              }}
-              onOpenAuthModal={() => handleOpenAuth(mediator, artist)}
+              contextModule={ContextModule.featuredArtistsRail}
               render={({ is_followed }) => {
                 return (
                   <Text
@@ -133,7 +112,6 @@ const imageHeightSizes = {
 }
 
 export const CollectionHeader: FC<Props> = ({ artworks, collection }) => {
-  const { user, mediator } = useSystemContext()
   const hasMultipleArtists =
     artworks.merchandisableArtists && artworks.merchandisableArtists.length > 1
 
@@ -158,9 +136,7 @@ export const CollectionHeader: FC<Props> = ({ artworks, collection }) => {
             artistsCount,
             collection,
             artworks.merchandisableArtists
-          ),
-          mediator,
-          user
+          )
         )
         const resizedHeaderImage =
           collection.headerImage &&
@@ -330,7 +306,7 @@ const ExtendedText = styled(Text)`
 `
 
 export const CollectionFilterFragmentContainer = createFragmentContainer(
-  CollectionHeader,
+  CollectionHeader as FC<Props>,
   {
     collection: graphql`
       fragment Header_collection on MarketingCollection {

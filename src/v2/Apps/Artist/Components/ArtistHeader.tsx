@@ -1,15 +1,11 @@
-import { ContextModule, Intent } from "@artsy/cohesion"
+import { ContextModule } from "@artsy/cohesion"
 import { Box, Text } from "@artsy/palette"
 import { ArtistHeader_artist } from "v2/__generated__/ArtistHeader_artist.graphql"
 import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
-import { Mediator, SystemContextConsumer } from "v2/Artsy"
-import { track } from "v2/Artsy/Analytics"
-import * as Schema from "v2/Artsy/Analytics/Schema"
 import { FollowArtistButtonFragmentContainer as FollowArtistButton } from "v2/Components/FollowButton/FollowArtistButton"
-import React, { Component } from "react"
+import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { get } from "v2/Utils/get"
-import { openAuthToFollowSave } from "v2/Utils/openAuthModal"
 import { Media } from "v2/Utils/Responsive"
 import { highestCategory } from "./MarketInsights/MarketInsights"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
@@ -49,60 +45,27 @@ const formatFollowerCount = (n: number) => {
   }
 }
 
-const handleOpenAuth = (mediator, artist) => {
-  openAuthToFollowSave(mediator, {
-    entity: artist,
-    contextModule: ContextModule.artistHeader,
-    intent: Intent.followArtist,
-  })
-}
-
 interface ArtistHeaderProps {
   artist: ArtistHeader_artist
-  user?: User
-  mediator?: Mediator
 }
 
-@track<ArtistHeaderProps>(
-  props =>
-    ({
-      context_module: "Header",
-      // TODO: Old schema for the Follow button
-      modelName: "artist",
-      entity_slug: props.artist.slug,
-      entity_id: props.artist.internalID,
-    } as Schema.ContextModule & Schema.Old)
-)
-export class ArtistHeader extends Component<ArtistHeaderProps> {
-  render() {
-    const props = this.props
-    return (
-      <SystemContextConsumer>
-        {({ mediator, user }) => {
-          return (
-            <>
-              <span id="jumpto-ArtistHeader" />
+export const ArtistHeader: React.FC<ArtistHeaderProps> = props => {
+  return (
+    <>
+      <span id="jumpto-ArtistHeader" />
 
-              <Media at="xs">
-                <SmallArtistHeader mediator={mediator} user={user} {...props} />
-              </Media>
+      <Media at="xs">
+        <SmallArtistHeader {...props} />
+      </Media>
 
-              <Media greaterThan="xs">
-                <LargeArtistHeader mediator={mediator} user={user} {...props} />
-              </Media>
-            </>
-          )
-        }}
-      </SystemContextConsumer>
-    )
-  }
+      <Media greaterThan="xs">
+        <LargeArtistHeader {...props} />
+      </Media>
+    </>
+  )
 }
 
-export const LargeArtistHeader: React.FC<ArtistHeaderProps> = ({
-  user,
-  artist,
-  mediator,
-}) => {
+export const LargeArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
   const topAuctionResult = getTopAuctionResult(artist)
   const highCategory = getHighCategory(artist)
 
@@ -172,24 +135,16 @@ export const LargeArtistHeader: React.FC<ArtistHeaderProps> = ({
           </Box>
 
           <FollowArtistButton
-            useDeprecatedButtonStyle={false}
             artist={artist}
-            user={user}
-            onOpenAuthModal={() => handleOpenAuth(mediator, artist)}
-          >
-            Follow
-          </FollowArtistButton>
+            contextModule={ContextModule.artistHeader}
+          />
         </Box>
       </Box>
     </HorizontalPadding>
   )
 }
 
-export const SmallArtistHeader: React.FC<ArtistHeaderProps> = ({
-  user,
-  artist,
-  mediator,
-}) => {
+export const SmallArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
   const topAuctionResult = getTopAuctionResult(artist)
   const highCategory = getHighCategory(artist)
 
@@ -236,11 +191,9 @@ export const SmallArtistHeader: React.FC<ArtistHeaderProps> = ({
 
       <Box mt={1.5}>
         <FollowArtistButton
-          user={user}
           artist={artist}
-          useDeprecatedButtonStyle={false}
+          contextModule={ContextModule.artistHeader}
           buttonProps={{ size: "small" }}
-          onOpenAuthModal={() => handleOpenAuth(mediator, artist)}
         />
       </Box>
     </Box>
@@ -248,7 +201,7 @@ export const SmallArtistHeader: React.FC<ArtistHeaderProps> = ({
 }
 
 export const ArtistHeaderFragmentContainer = createFragmentContainer(
-  ArtistHeader,
+  ArtistHeader as React.FC<ArtistHeaderProps>,
   {
     artist: graphql`
       fragment ArtistHeader_artist on Artist
