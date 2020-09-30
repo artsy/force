@@ -4,6 +4,8 @@ import { SystemContextProvider } from "@artsy/reaction/dist/Artsy"
 import { InfiniteScrollNewsArticle } from "desktop/apps/article/components/InfiniteScrollNewsArticle"
 import { data as sd } from "sharify"
 
+const mediator = require("desktop/lib/mediator.coffee")
+
 export interface Props {
   articles: ArticleData[]
   isMobile: boolean
@@ -13,7 +15,7 @@ export interface Props {
 export default class App extends Component<Props, any> {
   render() {
     return (
-      <SystemContextProvider user={sd.CURRENT_USER}>
+      <SystemContextProvider user={sd.CURRENT_USER} mediator={mediator}>
         <InfiniteScrollNewsArticle {...this.props} />
       </SystemContextProvider>
     )
