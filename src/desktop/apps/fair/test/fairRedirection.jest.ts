@@ -13,9 +13,19 @@ describe("redirectFairRequests", () => {
       params: { id: "big-expo" },
       route: "/:id",
     }
+
     res = {
+      locals: {
+        profile: {
+          get: jest.fn(attr => {
+            if (attr === "owner_type") return "Fair"
+            if (attr === "owner") return { id: "big-expo-2020" }
+          }),
+        },
+      },
       redirect: jest.fn(),
     }
+
     next = jest.fn()
   })
 
@@ -33,7 +43,7 @@ describe("redirectFairRequests", () => {
 
         redirectFairRequests(req, res, next)
 
-        expect(res.redirect).toHaveBeenCalledWith(301, "/fair/big-expo")
+        expect(res.redirect).toHaveBeenCalledWith(301, "/fair/big-expo-2020")
       })
     })
 
@@ -64,7 +74,7 @@ describe("redirectFairRequests", () => {
 
         redirectFairRequests(req, res, next)
 
-        expect(res.redirect).toHaveBeenCalledWith(301, "/fair/big-expo")
+        expect(res.redirect).toHaveBeenCalledWith(301, "/fair/big-expo-2020")
       })
     })
 
@@ -75,7 +85,7 @@ describe("redirectFairRequests", () => {
 
         redirectFairRequests(req, res, next)
 
-        expect(res.redirect).toHaveBeenCalledWith(301, "/fair/big-expo")
+        expect(res.redirect).toHaveBeenCalledWith(301, "/fair/big-expo-2020")
       })
     })
   })
@@ -123,29 +133,54 @@ describe("redirectFairRequests", () => {
 
       redirectFairRequests(req, res, next)
 
-      expect(res.redirect).toHaveBeenCalledWith(301, "/fair/big-expo")
+      expect(res.redirect).toHaveBeenCalledWith(301, "/fair/big-expo-2020")
     })
 
     it("redirects /:profileSlug/info --> /fair/:fairSlug/info", () => {
       const { redirectFairRequests } = require("../fairRedirection")
       req.params = { id: "big-expo" }
       req.route = { path: "/:id/:tab*" }
-      res.locals = { tab: "info" }
+      res.locals.tab = "info"
 
       redirectFairRequests(req, res, next)
 
-      expect(res.redirect).toHaveBeenCalledWith(301, "/fair/big-expo/info")
+      expect(res.redirect).toHaveBeenCalledWith(301, "/fair/big-expo-2020/info")
     })
 
     it("redirects /:profileSlug/browse/artworks --> /fair/:fairSlug/artworks", () => {
       const { redirectFairRequests } = require("../fairRedirection")
       req.params = { id: "big-expo", "0": "artworks" }
       req.route = { path: "/:id/browse/*" }
-      res.locals = { tab: "browse" }
+      res.locals.tab = "browse"
 
       redirectFairRequests(req, res, next)
 
-      expect(res.redirect).toHaveBeenCalledWith(301, "/fair/big-expo/artworks")
+      expect(res.redirect).toHaveBeenCalledWith(
+        301,
+        "/fair/big-expo-2020/artworks"
+      )
+    })
+  })
+
+  describe("when Profile is for something other than a Fair", () => {
+    beforeEach(() => {
+      jest.mock("../../../config", () => ({
+        ENABLE_FAIRS_UPDATE: true,
+      }))
+    })
+
+    it("does not redirect", () => {
+      const { redirectFairRequests } = require("../fairRedirection")
+
+      res.locals.profile.get = jest.fn(attr => {
+        if (attr === "owner_type") return "Partner"
+        if (attr === "owner") return { id: "some-partner" }
+      })
+
+      redirectFairRequests(req, res, next)
+
+      expect(res.redirect).not.toHaveBeenCalled()
+      expect(next).toHaveBeenCalled()
     })
   })
 })

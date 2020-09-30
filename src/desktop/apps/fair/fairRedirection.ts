@@ -2,9 +2,11 @@
 import { DISABLE_FAIRS_UPDATE_SLUGS, ENABLE_FAIRS_UPDATE } from "../../config"
 
 export const redirectFairRequests = (req, res, next) => {
+  const isFairProfile = res.locals?.profile?.get("owner_type") === "Fair"
+  if (!isFairProfile) return next()
+
   // TODO: some time after launch of the updated fairs experience
-  // this entire function can be reduced to the res.redirect,
-  // sans conditional logic
+  // this conditional can be reduced to just the res.redirect
   if (shouldRedirectToNewFairPage(req)) {
     res.redirect(301, redirectPath(req, res))
   } else {
@@ -31,7 +33,8 @@ const shouldUserSeeNewFairPage = req => {
 }
 
 const redirectPath = (req, res) => {
-  const defaultPath = `/fair/${req.params.id}`
+  const fairId = res.locals.profile?.get("owner")?.id
+  const defaultPath = `/fair/${fairId}`
 
   try {
     // this matches all /:id/info/* requests
@@ -43,11 +46,11 @@ const redirectPath = (req, res) => {
       req.route.path === "/:id/browse/*" && req.params["0"] === "artworks"
 
     if (isInfoRequest) {
-      return `/fair/${req.params.id}/info`
+      return `/fair/${fairId}/info`
     }
 
     if (isBrowseArtworksRequest) {
-      return `/fair/${req.params.id}/artworks`
+      return `/fair/${fairId}/artworks`
     }
   } catch (e) {
     return defaultPath
