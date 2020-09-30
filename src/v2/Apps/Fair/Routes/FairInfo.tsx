@@ -23,13 +23,13 @@ const FairInfo: React.FC<FairInfoProps> = ({ fair }) => {
         <Col sm="9" pr={2}>
           {fair.summary && (
             <>
-              <TextWithNewlines variant="text">{fair.summary}</TextWithNewlines>
+              <HTML variant="text" html={fair.summary} />
               <Spacer my={3} />
             </>
           )}
           {fair.about && (
             <>
-              <TextWithNewlines variant="text">{fair.about}</TextWithNewlines>
+              <HTML variant="text" html={fair.about} />
               <Spacer my={3} />
             </>
           )}
@@ -98,7 +98,7 @@ const FairInfo: React.FC<FairInfoProps> = ({ fair }) => {
 export const FairInfoFragmentContainer = createFragmentContainer(FairInfo, {
   fair: graphql`
     fragment FairInfo_fair on Fair {
-      about
+      about(format: HTML)
       name
       slug
       tagline
@@ -109,7 +109,7 @@ export const FairInfoFragmentContainer = createFragmentContainer(FairInfo, {
       hours(format: HTML)
       links(format: HTML)
       tickets(format: HTML)
-      summary
+      summary(format: HTML)
       contact(format: HTML)
     }
   `,

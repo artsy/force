@@ -29,7 +29,7 @@ query routes_FairInfoQuery(
 }
 
 fragment FairInfo_fair on Fair {
-  about
+  about(format: HTML)
   name
   slug
   tagline
@@ -41,7 +41,7 @@ fragment FairInfo_fair on Fair {
   hours(format: HTML)
   links(format: HTML)
   tickets(format: HTML)
-  summary
+  summary(format: HTML)
   contact(format: HTML)
 }
 */
@@ -62,27 +62,20 @@ v1 = [
     "variableName": "slug"
   }
 ],
-v2 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "summary",
-  "storageKey": null
-},
+v2 = [
+  {
+    "kind": "Literal",
+    "name": "format",
+    "value": "HTML"
+  }
+],
 v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
-},
-v4 = [
-  {
-    "kind": "Literal",
-    "name": "format",
-    "value": "HTML"
-  }
-];
+};
 return {
   "fragment": {
     "argumentDefinitions": (v0/*: any*/),
@@ -125,10 +118,10 @@ return {
         "selections": [
           {
             "alias": null,
-            "args": null,
+            "args": (v2/*: any*/),
             "kind": "ScalarField",
             "name": "about",
-            "storageKey": null
+            "storageKey": "about(format:\"HTML\")"
           },
           {
             "alias": null,
@@ -159,7 +152,13 @@ return {
             "name": "location",
             "plural": false,
             "selections": [
-              (v2/*: any*/),
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "summary",
+                "storageKey": null
+              },
               (v3/*: any*/)
             ],
             "storageKey": null
@@ -173,29 +172,35 @@ return {
           },
           {
             "alias": null,
-            "args": (v4/*: any*/),
+            "args": (v2/*: any*/),
             "kind": "ScalarField",
             "name": "hours",
             "storageKey": "hours(format:\"HTML\")"
           },
           {
             "alias": null,
-            "args": (v4/*: any*/),
+            "args": (v2/*: any*/),
             "kind": "ScalarField",
             "name": "links",
             "storageKey": "links(format:\"HTML\")"
           },
           {
             "alias": null,
-            "args": (v4/*: any*/),
+            "args": (v2/*: any*/),
             "kind": "ScalarField",
             "name": "tickets",
             "storageKey": "tickets(format:\"HTML\")"
           },
-          (v2/*: any*/),
           {
             "alias": null,
-            "args": (v4/*: any*/),
+            "args": (v2/*: any*/),
+            "kind": "ScalarField",
+            "name": "summary",
+            "storageKey": "summary(format:\"HTML\")"
+          },
+          {
+            "alias": null,
+            "args": (v2/*: any*/),
             "kind": "ScalarField",
             "name": "contact",
             "storageKey": "contact(format:\"HTML\")"
@@ -211,7 +216,7 @@ return {
     "metadata": {},
     "name": "routes_FairInfoQuery",
     "operationKind": "query",
-    "text": "query routes_FairInfoQuery(\n  $slug: String!\n) {\n  fair(id: $slug) {\n    ...FairInfo_fair\n    id\n  }\n}\n\nfragment FairInfo_fair on Fair {\n  about\n  name\n  slug\n  tagline\n  location {\n    summary\n    id\n  }\n  ticketsLink\n  hours(format: HTML)\n  links(format: HTML)\n  tickets(format: HTML)\n  summary\n  contact(format: HTML)\n}\n"
+    "text": "query routes_FairInfoQuery(\n  $slug: String!\n) {\n  fair(id: $slug) {\n    ...FairInfo_fair\n    id\n  }\n}\n\nfragment FairInfo_fair on Fair {\n  about(format: HTML)\n  name\n  slug\n  tagline\n  location {\n    summary\n    id\n  }\n  ticketsLink\n  hours(format: HTML)\n  links(format: HTML)\n  tickets(format: HTML)\n  summary(format: HTML)\n  contact(format: HTML)\n}\n"
   }
 };
 })();
