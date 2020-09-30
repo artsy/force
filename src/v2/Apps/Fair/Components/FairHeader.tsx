@@ -5,6 +5,7 @@ import {
   Col,
   Flex,
   Grid,
+  HTML,
   ResponsiveBox,
   ResponsiveBoxProps,
   Row,
@@ -100,9 +101,7 @@ const FairHeader: React.FC<FairHeaderProps> = ({ fair, ...rest }) => {
           </Col>
 
           <Col sm="6" mt={[3, 0]}>
-            <Text variant="subtitle" lineHeight="body">
-              {previewText}
-            </Text>
+            <HTML variant="subtitle" html={previewText} />
 
             {canShowMoreInfoLink && (
               <ForwardLink
@@ -120,8 +119,8 @@ const FairHeader: React.FC<FairHeaderProps> = ({ fair, ...rest }) => {
 export const FairHeaderFragmentContainer = createFragmentContainer(FairHeader, {
   fair: graphql`
     fragment FairHeader_fair on Fair {
-      about
-      summary
+      about(format: HTML)
+      summary(format: HTML)
       ...FairTiming_fair
       name
       slug

@@ -96,7 +96,7 @@ export const FairEditorialItemFragmentContainer = createFragmentContainer(
         slug
         title
         href
-        publishedAt(format: "MMM Do, YY")
+        publishedAt(format: "MMM Do, YYYY")
         thumbnailTitle
         thumbnailImage {
           _1x: cropped(width: 140, height: 80) {
