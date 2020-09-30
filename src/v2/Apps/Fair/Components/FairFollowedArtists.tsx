@@ -28,7 +28,7 @@ export const FairFollowedArtists: React.FC<FairFollowedArtistsProps> = ({
 
         <Text variant="subtitle" color="black60">
           <RouterLink
-            to={`/fair2/${fair.slug}/artworks?include_artworks_by_followed_artists=true`}
+            to={`/fair/${fair.slug}/artworks?include_artworks_by_followed_artists=true`}
             noUnderline
           >
             View all

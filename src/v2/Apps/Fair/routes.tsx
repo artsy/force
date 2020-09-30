@@ -11,7 +11,7 @@ const FairInfoRoute = loadable(() => import("./Routes/FairInfo"))
 
 export const routes: RouteConfig[] = [
   {
-    path: "/fair2/:slug",
+    path: "/fair/:slug",
     ignoreScrollBehavior: true,
     getComponent: () => FairApp,
     prepare: () => {
@@ -95,7 +95,7 @@ export const routes: RouteConfig[] = [
   // NOTE: Nested sub-apps are mounted under the same top-level path as above.
   // The root `path: ""` matches the `FairExhibitorsRoute`.
   {
-    path: "/fair2/:slug",
+    path: "/fair/:slug",
     getComponent: () => FairSubApp,
     prepare: () => {
       FairSubApp.preload()

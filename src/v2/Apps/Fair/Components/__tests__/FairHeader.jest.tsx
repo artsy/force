@@ -58,7 +58,7 @@ describe("FairHeader", () => {
       .find(RouterLink)
       .filterWhere(t => t.text() === "More info")
     expect(MoreInfoButton.length).toEqual(1)
-    expect(MoreInfoButton.first().prop("to")).toEqual("/fair2/miart-2020/info")
+    expect(MoreInfoButton.first().prop("to")).toEqual("/fair/miart-2020/info")
   })
 
   it("doesn't display the More info link if there is no info", async () => {

@@ -106,7 +106,7 @@ const FairHeader: React.FC<FairHeaderProps> = ({ fair, ...rest }) => {
             {canShowMoreInfoLink && (
               <ForwardLink
                 linkText="More info"
-                path={`/fair2/${fair.slug}/info`}
+                path={`/fair/${fair.slug}/info`}
               />
             )}
           </Col>
