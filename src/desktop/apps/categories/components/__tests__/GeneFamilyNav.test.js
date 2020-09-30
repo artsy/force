@@ -9,14 +9,16 @@ describe("GeneFamilyNav", () => {
   beforeEach(() => {
     geneFamilies = [
       {
-        id: "materials",
+        id: 123,
+        slug: "materials",
         name: "Materials",
         genes: [
           /* … */
         ],
       },
       {
-        id: "styles",
+        id: 456,
+        slug: "styles",
         name: "Styles",
         genes: [
           /* … */
@@ -28,15 +30,7 @@ describe("GeneFamilyNav", () => {
 
   it("renders links for each family", () => {
     rendered.find("a").length.should.equal(2)
-    rendered
-      .find("a")
-      .eq(0)
-      .text()
-      .should.equal("Materials")
-    rendered
-      .find("a")
-      .eq(1)
-      .text()
-      .should.equal("Styles")
+    rendered.find("a").eq(0).text().should.equal("Materials")
+    rendered.find("a").eq(1).text().should.equal("Styles")
   })
 })

@@ -3,8 +3,8 @@ import PropTypes from "prop-types"
 import styled from "styled-components"
 import Scrollspy from "react-scrollspy"
 
+import { Text } from "@artsy/palette"
 import colors from "v2/Assets/Colors"
-import { avantgarde } from "v2/Assets/Fonts"
 import FrameAnimator from "desktop/components/frame_animator"
 
 const propTypes = {
@@ -33,12 +33,10 @@ const GeneFamilyList = styled(Scrollspy)`
   padding-right: 2em;
   background: white;
   z-index: 1;
-
-  ${avantgarde("s13")};
 `
 
 const GeneFamilyItem = styled.li`
-  margin-bottom: 1em;
+  margin-bottom: 0.76em;
   &.is-current a {
     color: ${colors.purpleRegular};
   }
@@ -82,12 +80,14 @@ class GeneFamilyNav extends React.Component {
         >
           {geneFamilies.map(geneFamily => (
             <GeneFamilyItem key={geneFamily.slug}>
-              <GeneFamilyLink
-                href={`#${geneFamily.slug}`}
-                onClick={this.handleClick}
-              >
-                {geneFamily.name}
-              </GeneFamilyLink>
+              <Text variant="mediumText">
+                <GeneFamilyLink
+                  href={`#${geneFamily.slug}`}
+                  onClick={this.handleClick}
+                >
+                  {geneFamily.name}
+                </GeneFamilyLink>
+              </Text>
             </GeneFamilyItem>
           ))}
         </GeneFamilyList>
