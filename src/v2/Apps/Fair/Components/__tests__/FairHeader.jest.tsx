@@ -131,6 +131,10 @@ const FairHeaderFixture: FairHeader_QueryRawResponse = {
       _2x: {
         src: "https://cloudfront.com/square.jpg",
       },
+      md_1x: { src: "https://cloudfront.com/square.jpg" },
+      md_2x: { src: "https://cloudfront.com/square.jpg" },
+      lg_1x: { src: "https://cloudfront.com/square.jpg" },
+      lg_2x: { src: "https://cloudfront.com/square.jpg" },
     },
     tagline: "",
     location: null,

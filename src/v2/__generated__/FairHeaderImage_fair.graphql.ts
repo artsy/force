@@ -14,6 +14,18 @@ export type FairHeaderImage_fair = {
         readonly _2x: {
             readonly src: string | null;
         } | null;
+        readonly md_1x: {
+            readonly src: string | null;
+        } | null;
+        readonly md_2x: {
+            readonly src: string | null;
+        } | null;
+        readonly lg_1x: {
+            readonly src: string | null;
+        } | null;
+        readonly lg_2x: {
+            readonly src: string | null;
+        } | null;
     } | null;
     readonly " $fragmentRefs": FragmentRefs<"FairHeaderIcon_fair">;
     readonly " $refType": "FairHeaderImage_fair";
@@ -38,7 +50,10 @@ v1 = {
   "kind": "ScalarField",
   "name": "url",
   "storageKey": null
-};
+},
+v2 = [
+  (v1/*: any*/)
+];
 return {
   "argumentDefinitions": [],
   "kind": "Fragment",
@@ -117,10 +132,96 @@ return {
           "kind": "LinkedField",
           "name": "cropped",
           "plural": false,
-          "selections": [
-            (v1/*: any*/)
-          ],
+          "selections": (v2/*: any*/),
           "storageKey": "cropped(height:1000,version:\"wide\",width:750)"
+        },
+        {
+          "alias": "md_1x",
+          "args": [
+            {
+              "kind": "Literal",
+              "name": "height",
+              "value": 800
+            },
+            (v0/*: any*/),
+            {
+              "kind": "Literal",
+              "name": "width",
+              "value": 600
+            }
+          ],
+          "concreteType": "CroppedImageUrl",
+          "kind": "LinkedField",
+          "name": "cropped",
+          "plural": false,
+          "selections": (v2/*: any*/),
+          "storageKey": "cropped(height:800,version:\"wide\",width:600)"
+        },
+        {
+          "alias": "md_2x",
+          "args": [
+            {
+              "kind": "Literal",
+              "name": "height",
+              "value": 1600
+            },
+            (v0/*: any*/),
+            {
+              "kind": "Literal",
+              "name": "width",
+              "value": 1200
+            }
+          ],
+          "concreteType": "CroppedImageUrl",
+          "kind": "LinkedField",
+          "name": "cropped",
+          "plural": false,
+          "selections": (v2/*: any*/),
+          "storageKey": "cropped(height:1600,version:\"wide\",width:1200)"
+        },
+        {
+          "alias": "lg_1x",
+          "args": [
+            {
+              "kind": "Literal",
+              "name": "height",
+              "value": 1200
+            },
+            (v0/*: any*/),
+            {
+              "kind": "Literal",
+              "name": "width",
+              "value": 900
+            }
+          ],
+          "concreteType": "CroppedImageUrl",
+          "kind": "LinkedField",
+          "name": "cropped",
+          "plural": false,
+          "selections": (v2/*: any*/),
+          "storageKey": "cropped(height:1200,version:\"wide\",width:900)"
+        },
+        {
+          "alias": "lg_2x",
+          "args": [
+            {
+              "kind": "Literal",
+              "name": "height",
+              "value": 2400
+            },
+            (v0/*: any*/),
+            {
+              "kind": "Literal",
+              "name": "width",
+              "value": 1800
+            }
+          ],
+          "concreteType": "CroppedImageUrl",
+          "kind": "LinkedField",
+          "name": "cropped",
+          "plural": false,
+          "selections": (v2/*: any*/),
+          "storageKey": "cropped(height:2400,version:\"wide\",width:1800)"
         }
       ],
       "storageKey": null
@@ -134,5 +235,5 @@ return {
   "type": "Fair"
 };
 })();
-(node as any).hash = '516ccbcfb488427c3bc6506e1f9aa12a';
+(node as any).hash = 'cb0f8e50ce0a4cc0ef813f8b6b9f48cd';
 export default node;

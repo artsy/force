@@ -37,6 +37,18 @@ export type FairHeader_QueryRawResponse = {
             readonly _2x: ({
                 readonly src: string | null;
             }) | null;
+            readonly md_1x: ({
+                readonly src: string | null;
+            }) | null;
+            readonly md_2x: ({
+                readonly src: string | null;
+            }) | null;
+            readonly lg_1x: ({
+                readonly src: string | null;
+            }) | null;
+            readonly lg_2x: ({
+                readonly src: string | null;
+            }) | null;
         }) | null;
         readonly about: string | null;
         readonly summary: string | null;
@@ -97,6 +109,18 @@ fragment FairHeaderImage_fair on Fair {
       height
     }
     _2x: cropped(width: 750, height: 1000, version: "wide") {
+      src: url
+    }
+    md_1x: cropped(width: 600, height: 800, version: "wide") {
+      src: url
+    }
+    md_2x: cropped(width: 1200, height: 1600, version: "wide") {
+      src: url
+    }
+    lg_1x: cropped(width: 900, height: 1200, version: "wide") {
+      src: url
+    }
+    lg_2x: cropped(width: 1800, height: 2400, version: "wide") {
       src: url
     }
   }
@@ -380,6 +404,94 @@ return {
                 "plural": false,
                 "selections": (v4/*: any*/),
                 "storageKey": "cropped(height:1000,version:\"wide\",width:750)"
+              },
+              {
+                "alias": "md_1x",
+                "args": [
+                  {
+                    "kind": "Literal",
+                    "name": "height",
+                    "value": 800
+                  },
+                  (v6/*: any*/),
+                  {
+                    "kind": "Literal",
+                    "name": "width",
+                    "value": 600
+                  }
+                ],
+                "concreteType": "CroppedImageUrl",
+                "kind": "LinkedField",
+                "name": "cropped",
+                "plural": false,
+                "selections": (v4/*: any*/),
+                "storageKey": "cropped(height:800,version:\"wide\",width:600)"
+              },
+              {
+                "alias": "md_2x",
+                "args": [
+                  {
+                    "kind": "Literal",
+                    "name": "height",
+                    "value": 1600
+                  },
+                  (v6/*: any*/),
+                  {
+                    "kind": "Literal",
+                    "name": "width",
+                    "value": 1200
+                  }
+                ],
+                "concreteType": "CroppedImageUrl",
+                "kind": "LinkedField",
+                "name": "cropped",
+                "plural": false,
+                "selections": (v4/*: any*/),
+                "storageKey": "cropped(height:1600,version:\"wide\",width:1200)"
+              },
+              {
+                "alias": "lg_1x",
+                "args": [
+                  {
+                    "kind": "Literal",
+                    "name": "height",
+                    "value": 1200
+                  },
+                  (v6/*: any*/),
+                  {
+                    "kind": "Literal",
+                    "name": "width",
+                    "value": 900
+                  }
+                ],
+                "concreteType": "CroppedImageUrl",
+                "kind": "LinkedField",
+                "name": "cropped",
+                "plural": false,
+                "selections": (v4/*: any*/),
+                "storageKey": "cropped(height:1200,version:\"wide\",width:900)"
+              },
+              {
+                "alias": "lg_2x",
+                "args": [
+                  {
+                    "kind": "Literal",
+                    "name": "height",
+                    "value": 2400
+                  },
+                  (v6/*: any*/),
+                  {
+                    "kind": "Literal",
+                    "name": "width",
+                    "value": 1800
+                  }
+                ],
+                "concreteType": "CroppedImageUrl",
+                "kind": "LinkedField",
+                "name": "cropped",
+                "plural": false,
+                "selections": (v4/*: any*/),
+                "storageKey": "cropped(height:2400,version:\"wide\",width:1800)"
               }
             ],
             "storageKey": null
@@ -477,7 +589,7 @@ return {
     "metadata": {},
     "name": "FairHeader_Query",
     "operationKind": "query",
-    "text": "query FairHeader_Query(\n  $slug: String!\n) {\n  fair(id: $slug) {\n    ...FairHeader_fair\n    id\n  }\n}\n\nfragment FairHeaderIcon_fair on Fair {\n  name\n  profile {\n    icon {\n      _1x: cropped(width: 60, height: 60, version: \"square140\") {\n        src: url\n      }\n      _2x: cropped(width: 120, height: 120, version: \"square140\") {\n        src: url\n      }\n    }\n    id\n  }\n}\n\nfragment FairHeaderImage_fair on Fair {\n  ...FairHeaderIcon_fair\n  name\n  image {\n    _1x: cropped(width: 375, height: 500, version: \"wide\") {\n      src: url\n      width\n      height\n    }\n    _2x: cropped(width: 750, height: 1000, version: \"wide\") {\n      src: url\n    }\n  }\n}\n\nfragment FairHeader_fair on Fair {\n  ...FairTiming_fair\n  ...FairHeaderImage_fair\n  about(format: HTML)\n  summary(format: HTML)\n  name\n  slug\n  tagline\n  location {\n    summary\n    id\n  }\n  ticketsLink\n  hours(format: HTML)\n  links(format: HTML)\n  tickets(format: HTML)\n  contact(format: HTML)\n}\n\nfragment FairTiming_fair on Fair {\n  exhibitionPeriod\n  startAt\n  endAt\n}\n"
+    "text": "query FairHeader_Query(\n  $slug: String!\n) {\n  fair(id: $slug) {\n    ...FairHeader_fair\n    id\n  }\n}\n\nfragment FairHeaderIcon_fair on Fair {\n  name\n  profile {\n    icon {\n      _1x: cropped(width: 60, height: 60, version: \"square140\") {\n        src: url\n      }\n      _2x: cropped(width: 120, height: 120, version: \"square140\") {\n        src: url\n      }\n    }\n    id\n  }\n}\n\nfragment FairHeaderImage_fair on Fair {\n  ...FairHeaderIcon_fair\n  name\n  image {\n    _1x: cropped(width: 375, height: 500, version: \"wide\") {\n      src: url\n      width\n      height\n    }\n    _2x: cropped(width: 750, height: 1000, version: \"wide\") {\n      src: url\n    }\n    md_1x: cropped(width: 600, height: 800, version: \"wide\") {\n      src: url\n    }\n    md_2x: cropped(width: 1200, height: 1600, version: \"wide\") {\n      src: url\n    }\n    lg_1x: cropped(width: 900, height: 1200, version: \"wide\") {\n      src: url\n    }\n    lg_2x: cropped(width: 1800, height: 2400, version: \"wide\") {\n      src: url\n    }\n  }\n}\n\nfragment FairHeader_fair on Fair {\n  ...FairTiming_fair\n  ...FairHeaderImage_fair\n  about(format: HTML)\n  summary(format: HTML)\n  name\n  slug\n  tagline\n  location {\n    summary\n    id\n  }\n  ticketsLink\n  hours(format: HTML)\n  links(format: HTML)\n  tickets(format: HTML)\n  contact(format: HTML)\n}\n\nfragment FairTiming_fair on Fair {\n  exhibitionPeriod\n  startAt\n  endAt\n}\n"
   }
 };
 })();
