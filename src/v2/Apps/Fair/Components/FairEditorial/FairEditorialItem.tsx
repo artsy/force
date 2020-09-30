@@ -11,6 +11,7 @@ import {
   ContextModule,
   OwnerType,
 } from "@artsy/cohesion"
+import { useAnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
 
 const Container = styled(RouterLink)`
   display: flex;
@@ -25,22 +26,24 @@ const Thumbnail = styled.img`
 
 interface FairEditorialItemProps {
   article: FairEditorialItem_article
-  fairID: string // needed for analytics
-  fairSlug: string // needed for analytics
 }
 
 export const FairEditorialItem: React.FC<FairEditorialItemProps> = ({
   article,
-  fairID,
-  fairSlug,
 }) => {
   const tracking = useTracking()
 
+  const {
+    contextPageOwnerId,
+    contextPageOwnerSlug,
+    contextPageOwnerType,
+  } = useAnalyticsContext()
+
   const clickedArticleTrackingData: ClickedArticleGroup = {
     context_module: ContextModule.relatedArticles,
-    context_page_owner_type: OwnerType.fair,
-    context_page_owner_id: fairID,
-    context_page_owner_slug: fairSlug,
+    context_page_owner_type: contextPageOwnerType,
+    context_page_owner_id: contextPageOwnerId,
+    context_page_owner_slug: contextPageOwnerSlug,
     destination_page_owner_type: OwnerType.article,
     destination_page_owner_id: article.internalID,
     destination_page_owner_slug: article.slug,

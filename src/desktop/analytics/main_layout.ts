@@ -20,6 +20,7 @@ const excludedRoutes = [
   "/collect(.*)",
   "/collection(.*)",
   "/collections(.*)",
+  "/fair(.*)",
   "/feature(.*)",
   "/identity-verification(.*)",
   "/orders(.*)",

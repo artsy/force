@@ -14,19 +14,22 @@ import {
   OwnerType,
 } from "@artsy/cohesion"
 import { useTracking } from "react-tracking"
+import { useAnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
 
 export interface FairExhibitorRailArtworksProps {
   show: FairExhibitorRailArtworks_show
-  fairID: string
-  fairSlug: string
 }
 
 const FairExhibitorRailArtworks: React.FC<FairExhibitorRailArtworksProps> = ({
   show,
-  fairID,
-  fairSlug,
 }) => {
   const tracking = useTracking()
+
+  const {
+    contextPageOwnerId,
+    contextPageOwnerSlug,
+    contextPageOwnerType,
+  } = useAnalyticsContext()
 
   const clickedFairArtworkData = ({
     artworkID,
@@ -35,9 +38,9 @@ const FairExhibitorRailArtworks: React.FC<FairExhibitorRailArtworksProps> = ({
   }): ClickedArtworkGroup => {
     return {
       context_module: ContextModule.galleryBoothRail,
-      context_page_owner_type: OwnerType.fair,
-      context_page_owner_id: fairID,
-      context_page_owner_slug: fairSlug,
+      context_page_owner_type: contextPageOwnerType,
+      context_page_owner_id: contextPageOwnerId,
+      context_page_owner_slug: contextPageOwnerSlug,
       destination_page_owner_type: OwnerType.artwork,
       destination_page_owner_id: artworkID,
       destination_page_owner_slug: artworkSlug,
@@ -94,8 +97,6 @@ export const FairExhibitorRailArtworksFragmentContainer = createFragmentContaine
 
 export const FairExhibitorRailArtworksQueryRenderer: React.FC<{
   id: string
-  fairID: string
-  fairSlug: string
 }> = ({ id, ...rest }) => {
   const { relayEnvironment } = useSystemContext()
 

@@ -1,9 +1,4 @@
-import {
-  ActionType,
-  ClickedShowMore,
-  ContextModule,
-  OwnerType,
-} from "@artsy/cohesion"
+import { ActionType, ClickedShowMore, ContextModule } from "@artsy/cohesion"
 import { Button, Col, Grid, Row } from "@artsy/palette"
 import React, { useState } from "react"
 import {
@@ -12,6 +7,7 @@ import {
   graphql,
 } from "react-relay"
 import { useTracking } from "react-tracking"
+import { useAnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
 import { FairExhibitors_fair } from "v2/__generated__/FairExhibitors_fair.graphql"
 import { FairExhibitorRailFragmentContainer as FairExhibitorRail } from "../Components/FairExhibitorRail"
 
@@ -23,12 +19,17 @@ interface FairExhibitorsProps {
 const FairExhibitors: React.FC<FairExhibitorsProps> = ({ fair, relay }) => {
   const [isLoading, setIsLoading] = useState(false)
   const tracking = useTracking()
+  const {
+    contextPageOwnerId,
+    contextPageOwnerSlug,
+    contextPageOwnerType,
+  } = useAnalyticsContext()
 
   const clickShowMoreTrackingData: ClickedShowMore = {
     context_module: ContextModule.exhibitorsTab,
-    context_page_owner_type: OwnerType.fair,
-    context_page_owner_id: fair.internalID,
-    context_page_owner_slug: fair.slug,
+    context_page_owner_type: contextPageOwnerType,
+    context_page_owner_id: contextPageOwnerId,
+    context_page_owner_slug: contextPageOwnerSlug,
     subject: "Show More",
     action: ActionType.clickedShowMore,
   }
@@ -57,15 +58,7 @@ const FairExhibitors: React.FC<FairExhibitorsProps> = ({ fair, relay }) => {
           return null
         }
 
-        return (
-          <FairExhibitorRail
-            key={show.id}
-            show={show}
-            my={3}
-            fairID={fair.internalID}
-            fairSlug={fair.slug}
-          />
-        )
+        return <FairExhibitorRail key={show.id} show={show} my={3} />
       })}
 
       <Grid my={6}>

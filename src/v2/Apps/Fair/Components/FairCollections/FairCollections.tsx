@@ -22,8 +22,6 @@ export const FairCollections: React.FC<FairCollectionsProps> = ({
               key={collection.id}
               collection={collection}
               carouselIndex={index}
-              fairSlug={fair.slug}
-              fairID={fair.internalID}
             />
           )
         })}
@@ -37,8 +35,6 @@ export const FairCollectionsFragmentContainer = createFragmentContainer(
   {
     fair: graphql`
       fragment FairCollections_fair on Fair {
-        internalID
-        slug
         marketingCollections(size: 4) {
           id
           slug
