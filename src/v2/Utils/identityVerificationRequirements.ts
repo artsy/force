@@ -34,3 +34,39 @@ export const bidderNeedsIdentityVerification = ({
     !user?.identityVerified
   )
 }
+
+/**
+ * Process a list of bidder permissions based on a user-bidder-sale combination.
+ * @param sale
+ * @param user
+ * @param registration
+ */
+export const bidderQualifications = (
+  sale: { requireIdentityVerification: boolean },
+  user?: {
+    identityVerified: boolean
+    pendingIdentityVerification?: { internalID: string }
+  },
+  registration?: { qualifiedForBidding: boolean }
+) => {
+  const registrationAttempted = Boolean(registration)
+  const qualifiedForBidding =
+    registrationAttempted && registration.qualifiedForBidding
+
+  const userLacksIdentityVerification =
+    sale.requireIdentityVerification && !user?.identityVerified
+  const pendingIdentityVerification = user?.pendingIdentityVerification
+
+  const shouldPromptIdVerification =
+    !qualifiedForBidding &&
+    userLacksIdentityVerification &&
+    Boolean(pendingIdentityVerification)
+
+  return {
+    registrationAttempted,
+    qualifiedForBidding,
+    userLacksIdentityVerification,
+    pendingIdentityVerification,
+    shouldPromptIdVerification,
+  }
+}

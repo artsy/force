@@ -18,6 +18,7 @@ import { ArtworkSidebarBidAction_me } from "v2/__generated__/ArtworkSidebarBidAc
 import * as Schema from "v2/Artsy/Analytics/Schema"
 import track from "react-tracking"
 import { getENV } from "v2/Utils/getENV"
+import { bidderQualifications } from "v2/Utils/identityVerificationRequirements"
 
 export interface ArtworkSidebarBidActionProps {
   artwork: ArtworkSidebarBidAction_artwork
@@ -123,10 +124,6 @@ export class ArtworkSidebarBidAction extends React.Component<
 
     if (sale.is_closed) return null
 
-    const registrationAttempted = !!sale.registrationStatus
-    const qualifiedForBidding =
-      registrationAttempted && sale.registrationStatus.qualified_for_bidding
-
     /**
      * NOTE: This is making an incorrect assumption that there could only ever
      *       be 1 live sale with this work. When we run into that case, there is
@@ -135,14 +132,19 @@ export class ArtworkSidebarBidAction extends React.Component<
     const myLotStanding = artwork.myLotStanding && artwork.myLotStanding[0]
     const hasMyBids = !!(myLotStanding && myLotStanding.most_recent_bid)
 
-    const userLacksIdentityVerification =
-      sale.requireIdentityVerification && !me?.identityVerified
-    const pendingIdentityVerification = me?.pendingIdentityVerification
-
-    const shouldPromptIdVerification =
-      !qualifiedForBidding &&
-      userLacksIdentityVerification &&
-      Boolean(pendingIdentityVerification)
+    const {
+      registrationAttempted,
+      qualifiedForBidding,
+      userLacksIdentityVerification,
+      pendingIdentityVerification,
+      shouldPromptIdVerification,
+    } = bidderQualifications(
+      sale,
+      me,
+      sale.registrationStatus && {
+        qualifiedForBidding: sale.registrationStatus.qualified_for_bidding,
+      }
+    )
 
     if (sale.is_preview) {
       let PreviewAction: React.FC
