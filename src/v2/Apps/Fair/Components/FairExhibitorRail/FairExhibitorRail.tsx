@@ -13,11 +13,10 @@ import {
   ContextModule,
   OwnerType,
 } from "@artsy/cohesion"
+import { useAnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
 
 interface FairExhibitorRailProps extends BoxProps {
   show: FairExhibitorRail_show
-  fairID: string // needed for analytics
-  fairSlug: string // needed for analytics
 }
 
 /**
@@ -30,19 +29,22 @@ export const FAIR_EXHIBITOR_IMAGE_HEIGHT = 160
 
 export const FairExhibitorRail: React.FC<FairExhibitorRailProps> = ({
   show,
-  fairID,
-  fairSlug,
   ...rest
 }) => {
   const ref = useRef<HTMLDivElement | null>(null)
   const tracking = useTracking()
   const { isEnteredView, Waypoint } = useLazyLoadComponent()
+  const {
+    contextPageOwnerId,
+    contextPageOwnerSlug,
+    contextPageOwnerType,
+  } = useAnalyticsContext()
 
   const tappedViewTrackingData: ClickedArtworkGroup = {
     context_module: ContextModule.galleryBoothRail,
-    context_page_owner_type: OwnerType.fair,
-    context_page_owner_id: fairID,
-    context_page_owner_slug: fairSlug,
+    context_page_owner_type: contextPageOwnerType,
+    context_page_owner_id: contextPageOwnerId,
+    context_page_owner_slug: contextPageOwnerSlug,
     destination_page_owner_type: OwnerType.show,
     destination_page_owner_id: show.internalID,
     destination_page_owner_slug: show.slug,
@@ -58,7 +60,11 @@ export const FairExhibitorRail: React.FC<FairExhibitorRailProps> = ({
         <Box display="flex" mb={1}>
           <Box flex="1">
             <Text as="h3" variant="subtitle">
-              <RouterLink to={show.href} noUnderline>
+              <RouterLink
+                to={show.href}
+                noUnderline
+                onClick={() => tracking.trackEvent(tappedViewTrackingData)}
+              >
                 {show.partner.name}
               </RouterLink>
             </Text>
@@ -83,11 +89,7 @@ export const FairExhibitorRail: React.FC<FairExhibitorRailProps> = ({
 
         <Box height={FAIR_EXHIBITOR_RAIL_HEIGHT}>
           {isEnteredView ? (
-            <FairExhibitorRailArtworks
-              id={show.internalID}
-              fairID={fairID}
-              fairSlug={fairSlug}
-            />
+            <FairExhibitorRailArtworks id={show.internalID} />
           ) : (
             <FairExhibitorRailPlaceholder />
           )}

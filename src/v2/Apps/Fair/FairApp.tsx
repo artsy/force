@@ -14,6 +14,7 @@ import { FairCollectionsFragmentContainer as FairCollections } from "./Component
 import { FairFollowedArtistsFragmentContainer as FairFollowedArtists } from "./Components/FairFollowedArtists"
 import { useSystemContext } from "v2/Artsy"
 import { useTracking } from "react-tracking"
+import { AnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
 import {
   ActionType,
   ClickedNavigationTab,
@@ -56,83 +57,91 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
   }
 
   return (
-    <>
-      <FairMeta fair={fair} />
+    <AnalyticsContext.Provider
+      value={{
+        contextPageOwnerType: OwnerType.fair,
+        contextPageOwnerId: fair.internalID,
+        contextPageOwnerSlug: fair.slug,
+      }}
+    >
+      <>
+        <FairMeta fair={fair} />
 
-      <AppContainer>
-        <HorizontalPadding>
-          <FairHeader mt={2} fair={fair} />
+        <AppContainer>
+          <HorizontalPadding>
+            <FairHeader mt={2} fair={fair} />
 
-          {hasArticles && (
-            <Box my={3} pt={3} borderTop="1px solid" borderColor="black10">
-              <Text variant="subtitle" as="h3" mb={2}>
-                Related articles
-              </Text>
+            {hasArticles && (
+              <Box my={3} pt={3} borderTop="1px solid" borderColor="black10">
+                <Text variant="subtitle" as="h3" mb={2}>
+                  Related articles
+                </Text>
 
-              <CSSGrid
-                gridAutoFlow="row"
-                gridColumnGap={3}
-                gridRowGap={2}
-                gridTemplateColumns={[
-                  "repeat(1, 1fr)",
-                  `repeat(${columnCount}, 1fr)`,
-                ]}
+                <CSSGrid
+                  gridAutoFlow="row"
+                  gridColumnGap={3}
+                  gridRowGap={2}
+                  gridTemplateColumns={[
+                    "repeat(1, 1fr)",
+                    `repeat(${columnCount}, 1fr)`,
+                  ]}
+                >
+                  <FairEditorial fair={fair} />
+                </CSSGrid>
+              </Box>
+            )}
+
+            {hasCollections && (
+              <Box my={3} pt={3} borderTop="1px solid" borderColor="black10">
+                <Text variant="subtitle" as="h3" mb={2}>
+                  Curated highlights
+                </Text>
+
+                <FairCollections fair={fair} />
+              </Box>
+            )}
+
+            {!!user && (
+              <FairFollowedArtists
+                fair={fair}
+                my={3}
+                pt={3}
+                borderTop="1px solid"
+                borderColor="black10"
+              />
+            )}
+
+            <RouteTabs>
+              <RouteTab
+                to={`/fair2/${fair.slug}`}
+                exact
+                onClick={() =>
+                  tracking.trackEvent(clickedExhibitorsTabTrackingData)
+                }
               >
-                <FairEditorial fair={fair} />
-              </CSSGrid>
-            </Box>
-          )}
+                Exhibitors
+              </RouteTab>
 
-          {hasCollections && (
-            <Box my={3} pt={3} borderTop="1px solid" borderColor="black10">
-              <Text variant="subtitle" as="h3" mb={2}>
-                Curated highlights
-              </Text>
+              <RouteTab
+                to={`/fair2/${fair.slug}/artworks`}
+                exact
+                onClick={() =>
+                  tracking.trackEvent(clickedArtworksTabTrackingData)
+                }
+              >
+                Artworks
+              </RouteTab>
+            </RouteTabs>
 
-              <FairCollections fair={fair} />
-            </Box>
-          )}
+            {children}
 
-          {!!user && (
-            <FairFollowedArtists
-              fair={fair}
-              my={3}
-              pt={3}
-              borderTop="1px solid"
-              borderColor="black10"
-            />
-          )}
+            <Separator as="hr" my={3} />
 
-          <RouteTabs>
-            <RouteTab
-              to={`/fair2/${fair.slug}`}
-              exact
-              onClick={() =>
-                tracking.trackEvent(clickedExhibitorsTabTrackingData)
-              }
-            >
-              Exhibitors
-            </RouteTab>
-
-            <RouteTab
-              to={`/fair2/${fair.slug}/artworks`}
-              exact
-              onClick={() =>
-                tracking.trackEvent(clickedArtworksTabTrackingData)
-              }
-            >
-              Artworks
-            </RouteTab>
-          </RouteTabs>
-
-          {children}
-
-          <Separator as="hr" my={3} />
-
-          <Footer />
-        </HorizontalPadding>
-      </AppContainer>
-    </>
+            <Footer />
+          </HorizontalPadding>
+        </AppContainer>
+      </>
+    </AnalyticsContext.Provider>
   )
 }
 

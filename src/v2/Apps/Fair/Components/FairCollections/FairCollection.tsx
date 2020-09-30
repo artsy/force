@@ -12,6 +12,7 @@ import {
   ContextModule,
   OwnerType,
 } from "@artsy/cohesion"
+import { useAnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
 
 const CARD_WIDTH = 263
 const CARD_LARGE_IMAGE_SIZE = 170
@@ -25,24 +26,26 @@ const CARD_IMAGE_SIZES = [
 
 interface FairCollectionProps {
   collection: FairCollection_collection
-  fairID: string // needed for analytics
-  fairSlug: string // needed for analytics
   carouselIndex: number // needed for analytics
 }
 
 export const FairCollection: React.FC<FairCollectionProps> = ({
   collection,
-  fairID,
-  fairSlug,
   carouselIndex,
 }) => {
   const tracking = useTracking()
 
+  const {
+    contextPageOwnerId,
+    contextPageOwnerSlug,
+    contextPageOwnerType,
+  } = useAnalyticsContext()
+
   const collectionTrackingData: ClickedCollectionGroup = {
     context_module: ContextModule.curatedHighlightsRail,
-    context_page_owner_type: OwnerType.fair,
-    context_page_owner_id: fairID,
-    context_page_owner_slug: fairSlug,
+    context_page_owner_type: contextPageOwnerType,
+    context_page_owner_id: contextPageOwnerId,
+    context_page_owner_slug: contextPageOwnerSlug,
     destination_page_owner_type: OwnerType.collection,
     destination_page_owner_id: collection.id,
     destination_page_owner_slug: collection.slug,

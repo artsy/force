@@ -5,6 +5,8 @@ import { FairCollectionFragmentContainer } from "../FairCollections"
 import { FairCollection_QueryRawResponse } from "v2/__generated__/FairCollection_Query.graphql"
 import { useTracking } from "react-tracking"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
+import { OwnerType } from "@artsy/cohesion"
+import { AnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
@@ -18,12 +20,18 @@ describe("FairCollection", () => {
     return renderRelayTree({
       Component: ({ marketingCollection: collection }) => {
         return (
-          <FairCollectionFragmentContainer
-            collection={collection}
-            fairID="abc1234"
-            fairSlug="miart-2020"
-            carouselIndex={2}
-          />
+          <AnalyticsContext.Provider
+            value={{
+              contextPageOwnerId: "abc1234",
+              contextPageOwnerSlug: "miart-2020",
+              contextPageOwnerType: OwnerType.fair,
+            }}
+          >
+            <FairCollectionFragmentContainer
+              collection={collection}
+              carouselIndex={2}
+            />
+          </AnalyticsContext.Provider>
         )
       },
       query: graphql`

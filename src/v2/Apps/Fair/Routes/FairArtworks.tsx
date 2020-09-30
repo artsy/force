@@ -16,7 +16,8 @@ import { Box } from "@artsy/palette"
 import { FollowedArtistsFilter } from "v2/Components/v2/ArtworkFilter/ArtworkFilters/FollowedArtistsFilter"
 import { useSystemContext } from "v2/Artsy"
 import { useTracking } from "react-tracking"
-import { OwnerType, clickedMainArtworkGrid } from "@artsy/cohesion"
+import { clickedMainArtworkGrid } from "@artsy/cohesion"
+import { useAnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
 
 interface FairArtworksFilterProps {
   fair: FairArtworks_fair
@@ -26,9 +27,14 @@ interface FairArtworksFilterProps {
 
 const FairArtworksFilter: React.FC<FairArtworksFilterProps> = props => {
   const { match, relay, fair } = props
-  const { filtered_artworks, slug, internalID } = fair
+  const { filtered_artworks } = fair
   const { user } = useSystemContext()
   const tracking = useTracking()
+  const {
+    contextPageOwnerId,
+    contextPageOwnerSlug,
+    contextPageOwnerType,
+  } = useAnalyticsContext()
 
   const hasFilter = filtered_artworks && filtered_artworks.id
 
@@ -69,9 +75,9 @@ const FairArtworksFilter: React.FC<FairArtworksFilterProps> = props => {
       onArtworkBrickClick={artwork => {
         tracking.trackEvent(
           clickedMainArtworkGrid({
-            contextPageOwnerType: OwnerType.fair,
-            contextPageOwnerSlug: slug,
-            contextPageOwnerId: internalID,
+            contextPageOwnerType,
+            contextPageOwnerSlug,
+            contextPageOwnerId,
             destinationPageOwnerId: artwork.internalID,
             destinationPageOwnerSlug: artwork.slug,
           })
