@@ -9,9 +9,9 @@ import { FollowedArtistsFilter } from "../FollowedArtistsFilter"
 describe("FollowedArtistsFilter", () => {
   let context
 
-  const getWrapper = () => {
+  const getWrapper = (contextProps = {}) => {
     return mount(
-      <ArtworkFilterContextProvider>
+      <ArtworkFilterContextProvider {...contextProps}>
         <FollowedArtistsFilterTest />
       </ArtworkFilterContextProvider>
     )
@@ -23,12 +23,17 @@ describe("FollowedArtistsFilter", () => {
   }
 
   it("updates context on filter change", done => {
-    const wrapper = getWrapper()
+    const wrapper = getWrapper({ counts: { followedArtists: 5 } })
     wrapper.find("Checkbox").simulate("click")
 
     setTimeout(() => {
       expect(context.filters.includeArtworksByFollowedArtists).toEqual(true)
       done()
     }, 0)
+  })
+
+  it("is disabled if there are no results", () => {
+    const wrapper = getWrapper({ counts: { followedArtists: 0 } })
+    expect(wrapper.find("Checkbox").props().disabled).toBeTruthy()
   })
 })
