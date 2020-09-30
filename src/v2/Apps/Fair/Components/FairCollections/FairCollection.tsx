@@ -75,6 +75,8 @@ export const FairCollection: React.FC<FairCollectionProps> = ({
     }
   })
 
+  const count = collection.artworks.counts.total
+
   return (
     <RouterLink
       to={`/collection/${collection.slug}`}
@@ -84,7 +86,7 @@ export const FairCollection: React.FC<FairCollectionProps> = ({
       <SmallCard
         width={CARD_WIDTH}
         title={collection.title}
-        subtitle={collection.category}
+        subtitle={`${count} work${count === 1 ? "" : "s"}`}
         images={images}
       />
     </RouterLink>
@@ -99,8 +101,10 @@ export const FairCollectionFragmentContainer = createFragmentContainer(
         id
         slug
         title
-        category
         artworks: artworksConnection(first: 3) {
+          counts {
+            total
+          }
           edges {
             node {
               image {

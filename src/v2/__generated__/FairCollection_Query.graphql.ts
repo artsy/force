@@ -16,8 +16,10 @@ export type FairCollection_QueryRawResponse = {
         readonly id: string;
         readonly slug: string;
         readonly title: string;
-        readonly category: string;
         readonly artworks: ({
+            readonly counts: ({
+                readonly total: number | null;
+            }) | null;
             readonly edges: ReadonlyArray<({
                 readonly node: ({
                     readonly image: ({
@@ -52,8 +54,10 @@ fragment FairCollection_collection on MarketingCollection {
   id
   slug
   title
-  category
   artworks: artworksConnection(first: 3) {
+    counts {
+      total
+    }
     edges {
       node {
         image {
@@ -146,13 +150,6 @@ return {
             "storageKey": null
           },
           {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "category",
-            "storageKey": null
-          },
-          {
             "alias": "artworks",
             "args": [
               {
@@ -166,6 +163,24 @@ return {
             "name": "artworksConnection",
             "plural": false,
             "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "FilterArtworksCounts",
+                "kind": "LinkedField",
+                "name": "counts",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "total",
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              },
               {
                 "alias": null,
                 "args": null,
@@ -227,7 +242,7 @@ return {
     "metadata": {},
     "name": "FairCollection_Query",
     "operationKind": "query",
-    "text": "query FairCollection_Query(\n  $slug: String!\n) {\n  marketingCollection(slug: $slug) {\n    ...FairCollection_collection\n    id\n  }\n}\n\nfragment FairCollection_collection on MarketingCollection {\n  id\n  slug\n  title\n  category\n  artworks: artworksConnection(first: 3) {\n    edges {\n      node {\n        image {\n          url(version: \"larger\")\n        }\n        id\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query FairCollection_Query(\n  $slug: String!\n) {\n  marketingCollection(slug: $slug) {\n    ...FairCollection_collection\n    id\n  }\n}\n\nfragment FairCollection_collection on MarketingCollection {\n  id\n  slug\n  title\n  artworks: artworksConnection(first: 3) {\n    counts {\n      total\n    }\n    edges {\n      node {\n        image {\n          url(version: \"larger\")\n        }\n        id\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();

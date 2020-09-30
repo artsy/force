@@ -7,8 +7,10 @@ export type FairCollection_collection = {
     readonly id: string;
     readonly slug: string;
     readonly title: string;
-    readonly category: string;
     readonly artworks: {
+        readonly counts: {
+            readonly total: number | null;
+        } | null;
         readonly edges: ReadonlyArray<{
             readonly node: {
                 readonly image: {
@@ -55,13 +57,6 @@ const node: ReaderFragment = {
       "storageKey": null
     },
     {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "category",
-      "storageKey": null
-    },
-    {
       "alias": "artworks",
       "args": [
         {
@@ -75,6 +70,24 @@ const node: ReaderFragment = {
       "name": "artworksConnection",
       "plural": false,
       "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "FilterArtworksCounts",
+          "kind": "LinkedField",
+          "name": "counts",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "total",
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        },
         {
           "alias": null,
           "args": null,
@@ -127,5 +140,5 @@ const node: ReaderFragment = {
   ],
   "type": "MarketingCollection"
 };
-(node as any).hash = '9be90ef7795bbca6d5ca7b14a367ce72';
+(node as any).hash = 'c3b384ef9db0ce56407b1eff92a137a5';
 export default node;
