@@ -69,7 +69,7 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
 
         <AppContainer>
           <HorizontalPadding>
-            <FairHeader mt={2} fair={fair} />
+            <FairHeader mt={[0, 2]} fair={fair} />
 
             {hasArticles && (
               <Box my={3} pt={3} borderTop="1px solid" borderColor="black10">

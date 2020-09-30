@@ -123,10 +123,13 @@ const FairHeaderFixture: FairHeader_QueryRawResponse = {
     startAt: "2020-08-19T08:00:00+00:00",
     endAt: "2020-09-19T08:00:00+00:00",
     image: {
-      cropped: {
+      _1x: {
         src: "https://cloudfront.com/square.jpg",
         width: 100,
         height: 400,
+      },
+      _2x: {
+        src: "https://cloudfront.com/square.jpg",
       },
     },
     tagline: "",
@@ -140,7 +143,10 @@ const FairHeaderFixture: FairHeader_QueryRawResponse = {
     profile: {
       id: "profile",
       icon: {
-        cropped: {
+        _1x: {
+          src: "/path/to/cats.jpg",
+        },
+        _2x: {
           src: "/path/to/cats.jpg",
         },
       },
