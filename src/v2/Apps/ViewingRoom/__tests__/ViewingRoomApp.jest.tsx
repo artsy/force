@@ -11,6 +11,7 @@ import { ViewingRoomApp_UnfoundTest_QueryRawResponse } from "v2/__generated__/Vi
 import { ViewingRoomApp_LoggedOutTest_QueryRawResponse } from "v2/__generated__/ViewingRoomApp_LoggedOutTest_Query.graphql.ts"
 import { Breakpoint } from "@artsy/palette"
 
+jest.useFakeTimers()
 jest.unmock("react-relay")
 jest.mock("v2/Artsy/Router/useRouter", () => ({
   useRouter: () => ({
@@ -375,6 +376,7 @@ describe("ViewingRoomApp", () => {
       expect(wrapper.find("ViewingRoomTabBar").length).toBe(0)
       expect(wrapper.find("ViewingRoomContentNotAccessible").length).toBe(0)
       expect(wrapper.html()).not.toContain("some child")
+      jest.runAllTimers()
       expect(mediator.trigger).toHaveBeenCalled()
     })
   })

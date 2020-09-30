@@ -43,7 +43,7 @@ const FairHeader: React.FC<FairHeaderProps> = ({ fair, ...rest }) => {
       <FairHeaderImage fair={fair} />
 
       <CSSGrid
-        mt={2}
+        mt={[2, 4]}
         gridAutoFlow="row"
         gridColumnGap={3}
         gridRowGap={2}
