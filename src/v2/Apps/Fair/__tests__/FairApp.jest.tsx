@@ -12,6 +12,9 @@ jest.mock("react-tracking")
 const FAIR_APP_FIXTURE: FairApp_QueryRawResponse = {
   fair: {
     id: "fair12345",
+    counts: {
+      artworks: 10,
+    },
     internalID: "bson-fair",
     about: "Lorem ipsum",
     name: "Miart 2020",
@@ -245,11 +248,21 @@ describe("FairApp", () => {
     })
   })
 
+  it("renders the count of artworks in the tab", async () => {
+    const wrapper = await getWrapper()
+    const artworksTab = wrapper
+      .find("RouteTab")
+      .findWhere(t => !!t.text().match("Artworks"))
+      .first()
+
+    expect(artworksTab.text()).toContain("Artworks (10)")
+  })
+
   it("tracks clicks to the artworks tab", async () => {
     const wrapper = await getWrapper()
     const artworksTab = wrapper
       .find("RouteTab")
-      .findWhere(t => t.text() === "Artworks")
+      .findWhere(t => !!t.text().match("Artworks"))
       .first()
     artworksTab.simulate("click")
 

@@ -35,6 +35,7 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
   const hasArticles = (fair.articles?.edges?.length ?? 0) > 0
   const hasCollections = (fair.marketingCollections?.length ?? 0) > 0
   const columnCount = hasArticles && hasCollections ? 2 : 1
+  const artworkCount = fair.counts.artworks
 
   const clickedArtworksTabTrackingData: ClickedNavigationTab = {
     context_module: ContextModule.exhibitorsTab,
@@ -129,7 +130,7 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
                   tracking.trackEvent(clickedArtworksTabTrackingData)
                 }
               >
-                Artworks
+                Artworks ({artworkCount})
               </RouteTab>
             </RouteTabs>
 
@@ -163,6 +164,9 @@ export default createFragmentContainer(FairApp, {
       }
       marketingCollections(size: 4) {
         __typename
+      }
+      counts {
+        artworks
       }
     }
   `,

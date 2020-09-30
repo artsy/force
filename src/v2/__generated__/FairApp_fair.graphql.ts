@@ -14,6 +14,9 @@ export type FairApp_fair = {
     readonly marketingCollections: ReadonlyArray<{
         readonly __typename: string;
     } | null>;
+    readonly counts: {
+        readonly artworks: number | null;
+    } | null;
     readonly " $fragmentRefs": FragmentRefs<"FairMeta_fair" | "FairHeader_fair" | "FairEditorial_fair" | "FairCollections_fair" | "FairFollowedArtists_fair">;
     readonly " $refType": "FairApp_fair";
 };
@@ -104,6 +107,24 @@ return {
       "storageKey": "marketingCollections(size:4)"
     },
     {
+      "alias": null,
+      "args": null,
+      "concreteType": "FairCounts",
+      "kind": "LinkedField",
+      "name": "counts",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "artworks",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
+    },
+    {
       "args": null,
       "kind": "FragmentSpread",
       "name": "FairMeta_fair"
@@ -132,5 +153,5 @@ return {
   "type": "Fair"
 };
 })();
-(node as any).hash = 'e36e4e73c5f91ec2ea52e87d44b80161';
+(node as any).hash = '139ef03a2c47f1ec2d40873e29dc3d33';
 export default node;
