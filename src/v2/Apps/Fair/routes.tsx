@@ -40,7 +40,7 @@ export const routes: RouteConfig[] = [
         `,
       },
       {
-        path: "artworks",
+        path: "artworks(.*)?",
         getComponent: () => FairArtworksRoute,
         prepare: () => {
           FairArtworksRoute.preload()
