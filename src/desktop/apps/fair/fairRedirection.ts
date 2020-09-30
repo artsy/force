@@ -1,3 +1,4 @@
+// @ts-ignore
 import { DISABLE_FAIRS_UPDATE_SLUGS, ENABLE_FAIRS_UPDATE } from "../../config"
 
 export const redirectFairRequests = (req, res, next) => {

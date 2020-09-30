@@ -5,7 +5,7 @@
 express = require 'express'
 routes = require './routes'
 timeout = require 'connect-timeout'
-{ redirectFairRequests } = require('./fairRedirection')
+{ redirectFairRequests } = require('./fairRedirection.ts')
 
 app = module.exports = express()
 app.set 'views', __dirname + '/templates'
