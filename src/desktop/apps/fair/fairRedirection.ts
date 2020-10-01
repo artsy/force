@@ -33,27 +33,23 @@ const shouldUserSeeNewFairPage = req => {
 }
 
 const redirectPath = (req, res) => {
-  const fairId = res.locals.profile?.get("owner")?.id
+  const fairId = res.locals.profile.get("owner")?.id
   const defaultPath = `/fair/${fairId}`
 
-  try {
-    // this matches all /:id/info/* requests
-    const isInfoRequest =
-      req.route.path === "/:id/:tab*" && res.locals.tab === "info"
+  // this matches all /:id/info/* requests
+  const isInfoRequest =
+    req.route.path === "/:id/:tab*" && res.locals.tab === "info"
 
-    // this matches /:id/browse/artworks, but not /:id/browse/exhibitors
-    const isBrowseArtworksRequest =
-      req.route.path === "/:id/browse/*" && req.params["0"] === "artworks"
+  // this matches /:id/browse/artworks, but not /:id/browse/exhibitors
+  const isBrowseArtworksRequest =
+    req.route.path === "/:id/browse/*" && req.params["0"] === "artworks"
 
-    if (isInfoRequest) {
-      return `/fair/${fairId}/info`
-    }
+  if (isInfoRequest) {
+    return `/fair/${fairId}/info`
+  }
 
-    if (isBrowseArtworksRequest) {
-      return `/fair/${fairId}/artworks`
-    }
-  } catch (e) {
-    return defaultPath
+  if (isBrowseArtworksRequest) {
+    return `/fair/${fairId}/artworks`
   }
 
   return defaultPath
