@@ -5,6 +5,7 @@
 express = require 'express'
 routes = require './routes'
 timeout = require 'connect-timeout'
+{ redirectFairRequests } = require('./fairRedirection.ts')
 
 app = module.exports = express()
 app.set 'views', __dirname + '/templates'
@@ -22,20 +23,20 @@ getFairByOrganizerYear = [
 ]
 
 app.use routes.microsite
-app.get '/:id', getFairData, routes.overview
-app.get '/:id/:year([0-9]{4})', getFairByOrganizerYear, routes.overview
-app.get '/:id/overview', getFairData, routes.overview
-app.get '/:id/articles', getFairData, routes.fairArticles
-app.get '/:id/for-you', getFairData, routes.forYou
-app.get '/:id/search', getFairData, routes.search
-app.get '/:id/browse/show/:partner_id', getFairData, routes.showRedirect
-app.get '/:id/browse/artworks/artworks', routes.malformedFilterRedirect
-app.get '/:id/browse', getFairData, routes.browse
-app.get '/:id/browse/*', getFairData, routes.browse
-app.get '/:id/sign_up', getFairData, routes.overview
-app.get '/:id/sign_up/:action', getFairData, routes.overview
-app.get '/:id/capture', getFairData, routes.captureSignup, routes.overview
-app.get '/:id/capture/:action', getFairData, routes.captureSignup, routes.overview
+app.get '/:id', redirectFairRequests, getFairData, routes.overview
+app.get '/:id/:year([0-9]{4})', redirectFairRequests, getFairByOrganizerYear, routes.overview
+app.get '/:id/overview', redirectFairRequests, getFairData, routes.overview
+app.get '/:id/articles', redirectFairRequests, getFairData, routes.fairArticles
+app.get '/:id/for-you', redirectFairRequests, getFairData, routes.forYou
+app.get '/:id/search', redirectFairRequests, getFairData, routes.search
+app.get '/:id/browse/show/:partner_id', redirectFairRequests, getFairData, routes.showRedirect
+app.get '/:id/browse/artworks/artworks', redirectFairRequests, routes.malformedFilterRedirect
+app.get '/:id/browse', redirectFairRequests, getFairData, routes.browse
+app.get '/:id/browse/*', redirectFairRequests, getFairData, routes.browse
+app.get '/:id/sign_up', redirectFairRequests, getFairData, routes.overview
+app.get '/:id/sign_up/:action', redirectFairRequests, getFairData, routes.overview
+app.get '/:id/capture', redirectFairRequests, getFairData, routes.captureSignup, routes.overview
+app.get '/:id/capture/:action', redirectFairRequests, getFairData, routes.captureSignup, routes.overview
 # Handle microgravity urls that get crawled by google
-app.get '/:id/programming', getFairData, routes.overview
+app.get '/:id/programming', redirectFairRequests, getFairData, routes.overview
 
