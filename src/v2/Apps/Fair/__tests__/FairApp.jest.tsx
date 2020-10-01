@@ -88,8 +88,10 @@ const FAIR_EDITORIAL_ARTICLE_FIXTURE = {
 const FAIR_COLLECTION_FIXTURE = {
   slug: "collectible-sculptures",
   title: "Big Artists, Small Sculptures",
-  category: "Collectible Sculptures",
   artworks: {
+    counts: {
+      total: 10,
+    },
     edges: [
       {
         node: {
@@ -201,6 +203,7 @@ describe("FairApp", () => {
 
     expect(html).toContain("Curated highlights")
     expect(html).toContain("Big Artists, Small Sculptures")
+    expect(html).toContain("10 works")
   })
 
   it("does not render the collection when it is missing", async () => {

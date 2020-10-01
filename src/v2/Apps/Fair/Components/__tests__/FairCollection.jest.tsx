@@ -61,6 +61,7 @@ describe("FairCollection", () => {
     const wrapper = await getWrapper()
     const html = wrapper.html()
     expect(wrapper.text()).toContain("Contemporary Street Art")
+    expect(wrapper.text()).toContain("10 works")
     expect(wrapper.find("img").length).toBe(3)
     expect(html).toContain("first.jpg")
     expect(html).toContain("second.jpg")
@@ -73,9 +74,11 @@ describe("FairCollection", () => {
         id: "xxx",
         slug: "street-art-now",
         title: "Contemporary Street Art",
-        category: "Street Art",
         artworks: {
           id: "xxx1",
+          counts: {
+            total: 10,
+          },
           edges: [
             {
               node: {
@@ -108,6 +111,7 @@ describe("FairCollection", () => {
     const html = wrapper.html()
 
     expect(wrapper.text()).toContain("Contemporary Street Art")
+    expect(wrapper.text()).toContain("10 works")
     expect(wrapper.find("img").length).toBe(2)
     expect(html).toContain("first.jpg")
     expect(html).toContain("second.jpg")
@@ -138,9 +142,11 @@ const FAIR_COLLECTION_FIXTURE: FairCollection_QueryRawResponse = {
     id: "xxx",
     slug: "street-art-now",
     title: "Contemporary Street Art",
-    category: "Street Art",
     artworks: {
       id: "xxx1",
+      counts: {
+        total: 10,
+      },
       edges: [
         {
           node: {
