@@ -6,6 +6,7 @@ orbs:
   horizon: artsy/release@0.0.1
   node: artsy/node@1.0.0
   yarn: artsy/yarn@5.1.3
+  artsy-remote-docker: artsy/remote-docker@0.1.8
 
 jobs:
   run_deepcrawl_automator:
@@ -20,14 +21,6 @@ jobs:
       - run:
           name: Start automator crawl
           command: chmod +x automator.sh && ./automator.sh
-  acceptance_cypress:
-    docker:
-      - image: circleci/node:12-stretch-browsers
-    steps:
-      - yarn/setup
-      - run:
-          name: Cypress Tests
-          command: yarn test:smoke
 
   validate_production_schema:
     executor: node/build
@@ -36,29 +29,6 @@ jobs:
       - run:
           name: Validate Production Schema
           command: node scripts/validateSchemas.js production
-
-  build:
-    executor: node/build
-    steps:
-      - yarn/setup
-      - run:
-          name: Build force assets
-          command: yarn assets
-      - store_artifacts:
-          path: ~/project/.artifacts
-      - run:
-          name: Duplicates Report
-          command: curl "https://artsy-dupe-report.now.sh/packages/dupe-report/now.js?owner=artsy&repo=force&buildNum=$CIRCLE_BUILD_NUM"
-
-  # FIXME: Reenable after https://github.com/artsy/force/pull/5673 is addressed
-  # danger:
-  #   executor: node/build
-  #   steps:
-  #     - yarn/setup
-  #     - run:
-  #         name: Danger
-  #         # Formatted this way to prevent GitHub's token detection. This is intended to be committed and public.
-  #         command: DANGER_GITHUB_API_TOKEN="3f715685d9d032e17""48c3368dc8f22c672849136" yarn danger ci
 
   create_or_update_review_app:
     executor: hokusai/deploy
@@ -76,14 +46,80 @@ jobs:
           name: "Create or update review app"
           command: |
             review_app_name=$(echo $CIRCLE_BRANCH | sed 's/review-app-//')
-
             kubectl config use-context staging
-
             if $(kubectl get namespace | grep -qi $review_app_name); then
               ./scripts/update_review_app.sh $review_app_name
             else
               ./scripts/build_review_app.sh $review_app_name
             fi
+
+  mocha:
+    docker:
+      - image: 585031190124.dkr.ecr.us-east-1.amazonaws.com/force:$CIRCLE_SHA1-builder
+        aws_auth:
+          aws_access_key_id: $AWS_ACCESS_KEY_ID
+          aws_secret_access_key: $AWS_SECRET_ACCESS_KEY
+    working_directory: /app
+    environment:
+      - NODE_ENV: test
+    steps:
+      - run: yarn test:mocha
+
+  jest-v1:
+    docker:
+      - image: 585031190124.dkr.ecr.us-east-1.amazonaws.com/force:$CIRCLE_SHA1-builder
+        aws_auth:
+          aws_access_key_id: $AWS_ACCESS_KEY_ID
+          aws_secret_access_key: $AWS_SECRET_ACCESS_KEY
+    working_directory: /app
+    environment:
+      - NODE_ENV: test
+    steps:
+      - run: yarn test:jest:v1 -w 2
+
+  jest-v2:
+    docker:
+      - image: 585031190124.dkr.ecr.us-east-1.amazonaws.com/force:$CIRCLE_SHA1-builder
+        aws_auth:
+          aws_access_key_id: $AWS_ACCESS_KEY_ID
+          aws_secret_access_key: $AWS_SECRET_ACCESS_KEY
+    working_directory: /app
+    environment:
+      - NODE_ENV: test
+    steps:
+      - run: yarn test:jest:v2 -w 2
+
+  type-check:
+    docker:
+      - image: 585031190124.dkr.ecr.us-east-1.amazonaws.com/force:$CIRCLE_SHA1-builder
+        aws_auth:
+          aws_access_key_id: $AWS_ACCESS_KEY_ID
+          aws_secret_access_key: $AWS_SECRET_ACCESS_KEY
+    working_directory: /app
+    environment:
+      - NODE_ENV: test
+    steps:
+      - run: yarn type-check
+
+  acceptance:
+    docker:
+      - image: 585031190124.dkr.ecr.us-east-1.amazonaws.com/force:$CIRCLE_SHA1-electron-runner
+        aws_auth:
+          aws_access_key_id: $AWS_ACCESS_KEY_ID
+          aws_secret_access_key: $AWS_SECRET_ACCESS_KEY
+    working_directory: /app
+    steps:
+      - run: /app/scripts/xvfb-run.sh /usr/local/bin/yarn test:acceptance
+
+  acceptance-cypress:
+    docker:
+      - image: 585031190124.dkr.ecr.us-east-1.amazonaws.com/force:$CIRCLE_SHA1-electron-runner
+        aws_auth:
+          aws_access_key_id: $AWS_ACCESS_KEY_ID
+          aws_secret_access_key: $AWS_SECRET_ACCESS_KEY
+    working_directory: /app
+    steps:
+      - run: /app/scripts/xvfb-run.sh /usr/local/bin/yarn test:smoke
 
 not_master_or_staging_or_release: &not_master_or_staging_or_release
   filters:
@@ -115,80 +151,120 @@ only_release: &only_release
 workflows:
   default:
     jobs:
-      - horizon/block:
-          <<: *only_release
-          context: horizon
-          project_id: 11
-
-      # Pre-staging
-      - yarn/jest:
+      # Main build
+      - artsy-remote-docker/buildkit-build:
           <<: *not_staging_or_release
-          args: --runInBand
+          context: hokusai
+          name: builder-image-build
+          pre-steps:
+            - run:
+                command: echo 'export BUILD_TARGET="builder";' >> $BASH_ENV
 
-      - yarn/run:
+      - artsy-remote-docker/buildkit-push:
           <<: *not_staging_or_release
-          name: test:mocha
-          script: "test:mocha"
+          context: hokusai
+          name: builder-image-push
+          requires:
+            - builder-image-build
+          pre-steps:
+            - run:
+                command: echo 'export BUILD_TARGET="builder";' >> $BASH_ENV
 
-      # TODO: Disabled due to memory issues. Can we use our workflows above and
-      # upload coverage that way (similar to reaction). We save a lot of time
-      # by running outside of an unnecessary docker context.
+      # Electron Runner build
+      - artsy-remote-docker/buildkit-build:
+          <<: *not_staging_or_release
+          context: hokusai
+          name: electron-runner-image-build
+          requires:
+            - builder-image-build
+          pre-steps:
+            - run:
+                command: echo 'export BUILD_TARGET="electron-runner";' >> $BASH_ENV
 
-      # - hokusai/test:
-      #     name: test
-      #     <<: *not_staging_or_release
-      #     post-steps:
-      #       - run: mkdir -p ./coverage ./.nyc_output ./reports
-      #       - run:
-      #           name: Copy jest coverage artifacts
-      #           command: docker cp hokusai_force_1:/app/coverage ./
-      #           when: always
-      #       - codecov/upload:
-      #           file: ./coverage/lcov.info
-      #       - run:
-      #           name: Copy mocha coverage artifacts
-      #           command: docker cp hokusai_force_1:/app/.nyc_output ./
-      #           when: always
-      #       - codecov/upload:
-      #           file: ./.nyc_output/lcov.info
-      #       - run:
-      #           name: Copy coverage reports
-      #           command: docker cp hokusai_force_1:/app/reports ./
-      #           when: always
-      #       - store_test_results:
-      #           path: ./reports
+      - artsy-remote-docker/buildkit-push:
+          <<: *not_staging_or_release
+          context: hokusai
+          name: electron-runner-image-push
+          requires:
+            - electron-runner-image-build
+          pre-steps:
+            - run:
+                command: echo 'export BUILD_TARGET="electron-runner";' >> $BASH_ENV
 
-      - yarn/update-cache:
+      # Test steps
+      - mocha:
           <<: *not_staging_or_release
-      - yarn/type-check:
+          context: hokusai
+          requires:
+            - builder-image-push
+
+      - jest-v1:
           <<: *not_staging_or_release
-      - acceptance_cypress:
-          <<: *not_master_or_staging_or_release
-      - build:
+          context: hokusai
+          requires:
+            - builder-image-push
+
+      - jest-v2:
           <<: *not_staging_or_release
-      # - danger:
-      #     <<: *not_staging_or_release
+          context: hokusai
+          requires:
+            - builder-image-push
+
+      - type-check:
+          <<: *not_staging_or_release
+          context: hokusai
+          requires:
+            - builder-image-push
+
+      - acceptance:
+          <<: *not_staging_or_release
+          context: hokusai
+          requires:
+            - electron-runner-image-push
+
+      - acceptance-cypress:
+          <<: *not_staging_or_release
+          context: hokusai
+          requires:
+            - electron-runner-image-push
 
       # Staging
-      - hokusai/push:
-          name: push-staging-image
+      - artsy-remote-docker/buildkit-build:
           <<: *only_master
+          context: hokusai
+          name: production-image-build
           requires:
-            - yarn/type-check
-            - yarn/jest
-            - test:mocha
-            - build
+            - builder-image-build
+
+      - artsy-remote-docker/buildkit-push:
+          <<: *only_master
+          context: hokusai
+          name: production-image-push
+          requires:
+            - mocha
+            - jest-v1
+            - jest-v2
+            - type-check
+            - acceptance
+            - acceptance-cypress
+            - production-image-build
 
       - hokusai/deploy-staging:
           <<: *only_master
           name: deploy-staging
           project-name: force
           requires:
-            - push-staging-image
+            - production-image-push
 
       # Release
+      - horizon/block:
+          <<: *only_release
+          context: horizon
+          project_id: 11
+
       - validate_production_schema:
           <<: *only_release
+
       - hokusai/deploy-production:
           <<: *only_release
           name: deploy-production
@@ -196,6 +272,7 @@ workflows:
             - horizon/block
             - validate_production_schema
 
+      # Other
       - run_deepcrawl_automator:
           context: deepcrawl-automator
           requires:
