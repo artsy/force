@@ -33,8 +33,8 @@ const shouldUserSeeNewFairPage = req => {
 }
 
 const redirectPath = (req, res) => {
-  const fairId = res.locals.profile.get("owner")?.id
-  const defaultPath = `/fair/${fairId}`
+  const fairSlug = res.locals.profile.get("owner")?.id
+  const defaultPath = `/fair/${fairSlug}`
 
   // this matches all /:id/info/* requests
   const isInfoRequest =
@@ -45,11 +45,11 @@ const redirectPath = (req, res) => {
     req.route.path === "/:id/browse/*" && req.params["0"] === "artworks"
 
   if (isInfoRequest) {
-    return `/fair/${fairId}/info`
+    return `/fair/${fairSlug}/info`
   }
 
   if (isBrowseArtworksRequest) {
-    return `/fair/${fairId}/artworks`
+    return `/fair/${fairSlug}/artworks`
   }
 
   return defaultPath
