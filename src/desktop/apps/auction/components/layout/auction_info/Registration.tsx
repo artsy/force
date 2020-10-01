@@ -2,6 +2,7 @@ import React from "react"
 import block from "bem-cn-lite"
 import { connect } from "react-redux"
 import { Button, Sans } from "@artsy/palette"
+import { bidderQualifications } from "v2/Utils/identityVerificationRequirements"
 
 const RegistrationMessage: React.FC<{ color?: string }> = ({
   color = "black60",
@@ -57,10 +58,6 @@ const Registration: React.FC<RegistrationProps> = props => {
     userRegistration,
   } = props
 
-  const userLacksIdentityVerification =
-    auction.requireIdentityVerification && !user?.identityVerified
-  const pendingIdentityVerification = user?.pendingIdentityVerification
-
   const b = block("auction-Registration")
   const trackClick = desc => e => {
     window.analytics.track(desc, {
@@ -75,15 +72,21 @@ const Registration: React.FC<RegistrationProps> = props => {
     return null
   }
 
+  const {
+    registrationAttempted,
+    qualifiedForBidding,
+    userLacksIdentityVerification,
+    pendingIdentityVerification,
+    shouldPromptIdVerification,
+  } = bidderQualifications(auction, user, userRegistration)
+
   return (
     <div className={b()}>
       {(() => {
         if (auction.isClosed) {
           return null
-        } else if (Boolean(userRegistration)) {
-          // User is registered
-          if (userRegistration.qualifiedForBidding) {
-            // User is qualified
+        } else if (registrationAttempted) {
+          if (qualifiedForBidding) {
             return (
               <div className={b("approved")}>
                 <Sans mt="1" size="3" color="green100">
@@ -93,12 +96,7 @@ const Registration: React.FC<RegistrationProps> = props => {
               </div>
             )
           } else {
-            // User is registered, not qualified
-            if (
-              userLacksIdentityVerification &&
-              Boolean(pendingIdentityVerification)
-            ) {
-              // User needs IDV and has one pending
+            if (shouldPromptIdVerification) {
               return (
                 <div className={b("wrapper")}>
                   <a
@@ -117,7 +115,6 @@ const Registration: React.FC<RegistrationProps> = props => {
                 </div>
               )
             } else {
-              // Any other unqualified case, including a user lacking idv with no pending IDV available
               return (
                 <div className={b("wrapper")}>
                   <Button width="100%" size="large" disabled>
@@ -135,7 +132,6 @@ const Registration: React.FC<RegistrationProps> = props => {
             }
           }
         } else if (auction.isRegistrationEnded) {
-          // Registration is closed
           return (
             <div className={b("wrapper")}>
               <Button width="100%" size="large" disabled>

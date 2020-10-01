@@ -49,6 +49,10 @@ export type ArtworkSidebarBidAction_Test_QueryRawResponse = {
     }) | null;
     readonly me: ({
         readonly identityVerified: boolean | null;
+        readonly pendingIdentityVerification: ({
+            readonly internalID: string;
+            readonly id: string | null;
+        }) | null;
         readonly id: string | null;
     }) | null;
 };
@@ -108,6 +112,10 @@ fragment ArtworkSidebarBidAction_artwork on Artwork {
 
 fragment ArtworkSidebarBidAction_me on Me {
   identityVerified
+  pendingIdentityVerification {
+    internalID
+    id
+  }
 }
 */
 
@@ -138,6 +146,13 @@ v3 = {
   "args": null,
   "kind": "ScalarField",
   "name": "slug",
+  "storageKey": null
+},
+v4 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
   "storageKey": null
 };
 return {
@@ -238,13 +253,7 @@ return {
             "storageKey": "myLotStanding(live:true)"
           },
           (v3/*: any*/),
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "internalID",
-            "storageKey": null
-          },
+          (v4/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -369,6 +378,19 @@ return {
             "name": "identityVerified",
             "storageKey": null
           },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "IdentityVerification",
+            "kind": "LinkedField",
+            "name": "pendingIdentityVerification",
+            "plural": false,
+            "selections": [
+              (v4/*: any*/),
+              (v2/*: any*/)
+            ],
+            "storageKey": null
+          },
           (v2/*: any*/)
         ],
         "storageKey": null
@@ -380,7 +402,7 @@ return {
     "metadata": {},
     "name": "ArtworkSidebarBidAction_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkSidebarBidAction_Test_Query {\n  artwork(id: \"auction_artwork\") {\n    ...ArtworkSidebarBidAction_artwork\n    id\n  }\n  me {\n    ...ArtworkSidebarBidAction_me\n    id\n  }\n}\n\nfragment ArtworkSidebarBidAction_artwork on Artwork {\n  myLotStanding(live: true) {\n    most_recent_bid: mostRecentBid {\n      max_bid: maxBid {\n        cents\n      }\n      id\n    }\n  }\n  slug\n  internalID\n  sale {\n    slug\n    registrationStatus {\n      qualified_for_bidding: qualifiedForBidding\n      id\n    }\n    is_preview: isPreview\n    is_open: isOpen\n    is_live_open: isLiveOpen\n    is_closed: isClosed\n    is_registration_closed: isRegistrationClosed\n    requireIdentityVerification\n    id\n  }\n  sale_artwork: saleArtwork {\n    increments {\n      cents\n      display\n    }\n    id\n  }\n}\n\nfragment ArtworkSidebarBidAction_me on Me {\n  identityVerified\n}\n"
+    "text": "query ArtworkSidebarBidAction_Test_Query {\n  artwork(id: \"auction_artwork\") {\n    ...ArtworkSidebarBidAction_artwork\n    id\n  }\n  me {\n    ...ArtworkSidebarBidAction_me\n    id\n  }\n}\n\nfragment ArtworkSidebarBidAction_artwork on Artwork {\n  myLotStanding(live: true) {\n    most_recent_bid: mostRecentBid {\n      max_bid: maxBid {\n        cents\n      }\n      id\n    }\n  }\n  slug\n  internalID\n  sale {\n    slug\n    registrationStatus {\n      qualified_for_bidding: qualifiedForBidding\n      id\n    }\n    is_preview: isPreview\n    is_open: isOpen\n    is_live_open: isLiveOpen\n    is_closed: isClosed\n    is_registration_closed: isRegistrationClosed\n    requireIdentityVerification\n    id\n  }\n  sale_artwork: saleArtwork {\n    increments {\n      cents\n      display\n    }\n    id\n  }\n}\n\nfragment ArtworkSidebarBidAction_me on Me {\n  identityVerified\n  pendingIdentityVerification {\n    internalID\n    id\n  }\n}\n"
   }
 };
 })();
