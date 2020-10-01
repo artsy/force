@@ -1,8 +1,8 @@
 module.exports = '''
   query FairsQuery($page: Int) {
-    featured_fairs: ordered_sets(key: "art-fairs:featured") {
+    featured_fairs: orderedSets(key: "art-fairs:featured") {
       fairs: items {
-        ... on FeaturedLinkItem {
+        ... on FeaturedLink {
           title
           subtitle
           image {
@@ -11,18 +11,18 @@ module.exports = '''
         }
       }
     }
-    fairs(page: $page, has_listing: true, has_full_feature: true, sort: START_AT_DESC, size: 40) {
-      id
+    fairs(page: $page, hasListing: true, hasFullFeature: true, sort: START_AT_DESC, size: 40) {
+      id: slug
       href
       name
-      start_at
-      end_at
-      is_published
-      banner_size
+      start_at: startAt
+      end_at: endAt
+      is_published: isPublished
+      banner_size: bannerSize
       organizer {
-        profile_id
+        profile_id: profileID
         profile {
-          is_publically_visible
+          is_publically_visible: isPubliclyVisible
           href
         }
       }
@@ -35,7 +35,7 @@ module.exports = '''
       }
       profile {
         id
-        is_published
+        is_published: isPublished
         href
         icon {
           url(version: "square140")
