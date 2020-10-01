@@ -3,10 +3,7 @@ import { Article } from "@artsy/reaction/dist/Components/Publishing/Article"
 import { AppProps } from "../App"
 import { InfiniteScrollArticle } from "../InfiniteScrollArticle"
 import { shouldAdRender } from "desktop/apps/article/helpers"
-import {
-  handleScrollingAuthModal,
-  openAuthModal,
-} from "desktop/lib/openAuthModal"
+import { handleScrollingAuthModal } from "desktop/lib/openAuthModal"
 import { ContextModule, Intent } from "@artsy/cohesion"
 const SuperArticleView = require("desktop/components/article/client/super_article.coffee")
 const ArticleModel = require("desktop/models/article.coffee")
@@ -84,7 +81,6 @@ export class ArticleLayout extends React.Component<AppProps> {
             isMobile={isMobile}
             isLoggedIn={isLoggedIn}
             isSuper={isSuper}
-            onOpenAuthModal={openAuthModal}
             relatedArticlesForPanel={article.relatedArticlesPanel}
             relatedArticlesForCanvas={article.relatedArticlesCanvas}
             showTooltips={showTooltips}

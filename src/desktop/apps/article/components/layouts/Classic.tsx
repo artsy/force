@@ -1,7 +1,6 @@
 import React from "react"
 import { Article } from "@artsy/reaction/dist/Components/Publishing/Article"
 import { AppProps } from "../App"
-import { openAuthModal } from "desktop/lib/openAuthModal"
 
 const ArticlesGridView = require("desktop/components/articles_grid/view.coffee")
 const Articles = require("desktop/collections/articles.coffee")
@@ -50,7 +49,6 @@ export class ClassicArticleLayout extends React.Component<AppProps> {
           article={article}
           isMobile={isMobile}
           isLoggedIn={isLoggedIn}
-          onOpenAuthModal={openAuthModal}
         />
 
         {article.channel_id && (

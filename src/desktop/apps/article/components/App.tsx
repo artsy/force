@@ -9,6 +9,8 @@ import { data as sd } from "sharify"
 import { ArticleProps } from "@artsy/reaction/dist/Components/Publishing/Article"
 import { ClassicArticleLayout } from "desktop/apps/article/components/layouts/Classic"
 
+const mediator = require("desktop/lib/mediator.coffee")
+
 export interface AppProps extends ArticleProps {
   templates?: {
     SuperArticleFooter: string
@@ -56,7 +58,7 @@ export class App extends React.Component<AppProps> {
     return (
       <Fragment>
         <EditPortal article={article} />
-        <SystemContextProvider user={sd.CURRENT_USER}>
+        <SystemContextProvider user={sd.CURRENT_USER} mediator={mediator}>
           {this.getArticleLayout()}
         </SystemContextProvider>
       </Fragment>

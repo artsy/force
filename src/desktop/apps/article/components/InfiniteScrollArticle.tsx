@@ -11,7 +11,6 @@ import {
 import { articlesQuery } from "desktop/apps/article/queries/articles"
 import { ArticleData } from "@artsy/reaction/dist/Components/Publishing/Typings"
 import { shouldAdRender } from "desktop/apps/article/helpers"
-import { openAuthModal } from "desktop/lib/openAuthModal"
 
 const FETCH_TOP_OFFSET = 200
 
@@ -150,7 +149,6 @@ export class InfiniteScrollArticle extends React.Component<
               isTruncated={i !== 0}
               isMobile={isMobile}
               showTooltips={showTooltips}
-              onOpenAuthModal={openAuthModal}
               infiniteScrollEntrySlug={slug}
               shouldAdRender={renderAd}
               articleSerial={i + 1}
