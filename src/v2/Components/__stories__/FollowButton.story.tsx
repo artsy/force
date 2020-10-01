@@ -40,21 +40,27 @@ storiesOf("Components/Follow Button", module)
         <FollowProfileButton
           profile={
             {
-              internalID: "casey-kaplan",
-              id: "1234",
+              name: "Casey Kaplan",
+              slug: "casey-kaplan",
+              internalID: "1234",
+              id: "$1234",
               is_followed: false,
             } as any
           }
+          contextModule={ContextModule.aboutTheWork}
         />
         <br />
         <FollowProfileButton
           profile={
             {
-              internalID: "casey-kaplan",
-              id: "1234",
+              name: "Casey Kaplan",
+              slug: "casey-kaplan",
+              internalID: "1234",
+              id: "$1234",
               is_followed: true,
             } as any
           }
+          contextModule={ContextModule.aboutTheWork}
         />
       </div>
     )
