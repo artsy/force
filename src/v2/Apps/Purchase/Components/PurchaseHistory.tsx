@@ -71,19 +71,20 @@ const getColor = status => {
 const OrderRow = (props: OrderRowProps) => {
   const { order } = props
   const artwork = order.lineItems.edges[0].node.artwork
-  const { partner } = artwork
 
   const orderCreatedAt = DateTime.fromISO(order.createdAt)
   if (!artwork || order.state === "ABANDONED") {
     return null
   }
 
+  const { partner } = artwork
+
   const { creditCard, requestedFulfillment } = order
 
   const orderIsInactive =
     order.state === "CANCELED" || order.state === "REFUNDED"
 
-  const partnerImageUrl = partner.profile.icon?.url
+  const partnerImageUrl = partner?.profile?.icon?.url
   const partnerInitials = partner?.initials
   const creditCardNumber = creditCard?.lastDigits
   const fulfillment = requestedFulfillment?.__typename
@@ -128,7 +129,7 @@ const OrderRow = (props: OrderRowProps) => {
                 </Text>
               )}
               <Text variant="text" color="black60" letterSpacing="tight">
-                {artwork.partner.name}
+                {artwork.partner?.name}
               </Text>
               <Text variant="text" color="black60" letterSpacing="tight">
                 {orderCreatedAt.toLocaleString(DateTime.DATE_SHORT)}
@@ -212,7 +213,7 @@ const OrderRow = (props: OrderRowProps) => {
                 initials={partnerInitials}
               />
               <Flex flexDirection="column" ml={1}>
-                <Text variant="text">{artwork.partner.name}</Text>
+                <Text variant="text">{artwork.partner?.name}</Text>
                 <Text variant="text" color="black60">
                   {artwork.shippingOrigin.replace(/, US/g, "")}
                 </Text>
@@ -312,16 +313,16 @@ const PurchaseHistory: React.FC<PurchaseHistoryProps> = (
   const myOrders = me.orders.edges && me.orders.edges.map(x => x.node)
   return !loading ? (
     <Box>
-      <Media at="xs">
-        <Sans size="6" px={1} py={1.5}>
-          Order History
-        </Sans>
-        <Separator />
-      </Media>
       <Media greaterThanOrEqual="sm">
         <Box mx="40px" mt="-5px">
           <UserSettingsTabs route={sd.CURRENT_PATH} username={me.name} />
         </Box>
+      </Media>
+      <Media lessThan="sm">
+        <Sans size="6" px={1} py={1.5}>
+          Order History
+        </Sans>
+        <Separator />
       </Media>
       {myOrders.length ? (
         myOrders.map((order, i) => (
