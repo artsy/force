@@ -250,8 +250,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
     ) {
       this.props.dialog.showErrorDialog({
         title: "Can't ship to that address",
-        message:
-          "This work can only be shipped to the continental United States.",
+        message: "This work can only be shipped domestically.",
       })
     } else {
       this.props.dialog.showErrorDialog()
