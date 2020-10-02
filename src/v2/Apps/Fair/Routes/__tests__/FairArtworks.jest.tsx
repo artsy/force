@@ -36,10 +36,10 @@ describe("FairArtworks", () => {
     expect(wrapper.find("GridItem__ArtworkGridItem").length).toBe(2)
   })
 
-  it("includes the followed artist filter", async () => {
+  it("includes the artist filter", async () => {
     const wrapper = await getWrapper()
-    expect(wrapper.find("FollowedArtistsFilter").length).toBe(1)
-    expect(wrapper.find("FollowedArtistsFilter").text()).toMatch(
+    expect(wrapper.find("ArtistsFilter").length).toBe(1)
+    expect(wrapper.find("ArtistsFilter").text()).toMatch(
       "Artists I Follow (10)"
     )
   })
@@ -86,6 +86,16 @@ const FAIR_ARTWORKS_FIXTURE: FairArtworks_QueryRawResponse = {
             {
               value: "important-gallery",
               name: "Important Gallery",
+              count: 4,
+            },
+          ],
+        },
+        {
+          slice: "ARTIST",
+          counts: [
+            {
+              value: "catty-artst",
+              name: "Catty Artist",
               count: 4,
             },
           ],

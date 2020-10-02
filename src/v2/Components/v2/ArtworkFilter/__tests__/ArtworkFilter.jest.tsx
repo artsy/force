@@ -19,12 +19,12 @@ describe("ArtworkFilter", () => {
     passedProps = {}
   ) => {
     return await renderRelayTree({
-      Component: (props) => (
+      Component: props => (
         <ArtworkFilter {...(props as any)} {...passedProps} />
       ),
       query: ArtworkQueryFilter,
       mockData: ArtworkFilterFixture,
-      wrapper: (children) => {
+      wrapper: children => {
         return <MockBoot breakpoint={breakpoint}>{children}</MockBoot>
       },
     })
@@ -71,6 +71,7 @@ describe("ArtworkFilter", () => {
         page: 1,
         sizes: [],
         sort: "-decayed_merch",
+        artistIDs: [],
       })
     })
 
@@ -97,6 +98,7 @@ describe("ArtworkFilter", () => {
         page: 1,
         sizes: [],
         sort: "-decayed_merch",
+        artistIDs: [],
       })
     })
 
@@ -122,6 +124,7 @@ describe("ArtworkFilter", () => {
         page: 1,
         sizes: [],
         sort: "-partner_updated_at",
+        artistIDs: [],
       })
     })
 
@@ -141,6 +144,7 @@ describe("ArtworkFilter", () => {
           page: 1,
           sizes: [],
           sort: "-decayed_merch",
+          artistIDs: [],
         },
       })
     })
