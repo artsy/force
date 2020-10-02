@@ -206,11 +206,7 @@ export class ArtworkApp extends React.Component<Props> {
                 <Col>
                   <ArtworkImageBrowser artwork={artwork} />
                   <ArtworkSidebar artwork={artwork} me={me} />
-                  <ArtworkDetails
-                    // HACK: Forces component to re-render
-                    key={artwork.internalID}
-                    artwork={artwork}
-                  />
+                  <ArtworkDetails artwork={artwork} />
                   <PricingContext artwork={artwork} />
                   {this.renderArtists()}
                 </Col>
@@ -223,11 +219,7 @@ export class ArtworkApp extends React.Component<Props> {
                 <Col sm={8}>
                   <Box pr={4}>
                     <ArtworkImageBrowser artwork={artwork} />
-                    <ArtworkDetails
-                      // HACK: Forces component to re-render
-                      key={artwork.internalID}
-                      artwork={artwork}
-                    />
+                    <ArtworkDetails artwork={artwork} />
                     <PricingContext artwork={artwork} />
                     {this.renderArtists()}
                   </Box>
