@@ -34,7 +34,6 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
 
   const hasArticles = (fair.articles?.edges?.length ?? 0) > 0
   const hasCollections = (fair.marketingCollections?.length ?? 0) > 0
-  const columnCount = hasArticles && hasCollections ? 2 : 1
   const artworkCount = fair.counts.artworks
 
   const clickedArtworksTabTrackingData: ClickedNavigationTab = {
@@ -82,10 +81,7 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
                   gridAutoFlow="row"
                   gridColumnGap={3}
                   gridRowGap={2}
-                  gridTemplateColumns={[
-                    "repeat(1, 1fr)",
-                    `repeat(${columnCount}, 1fr)`,
-                  ]}
+                  gridTemplateColumns={["repeat(1, 1fr)", "repeat(2, 1fr)"]}
                 >
                   <FairEditorial fair={fair} />
                 </CSSGrid>
