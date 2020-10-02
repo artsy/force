@@ -28,6 +28,7 @@ import { ArtworkFilters } from "./ArtworkFilters"
 
 import {
   Box,
+  BoxProps,
   Button,
   FilterIcon,
   Flex,
@@ -80,17 +81,19 @@ export const ArtworkFilter: React.FC<
   )
 }
 
-export const BaseArtworkFilter: React.FC<{
-  relay: RelayRefetchProp
-  relayVariables?: object
-  viewer:
-    | ArtworkFilter_viewer
-    | Collection_collection
-    | ArtistArtworkFilter_artist
-    | ArtistSeriesArtworksFilter_artistSeries
-    | FairArtworks_fair
-  Filters?: React.FC
-}> = ({ relay, viewer, Filters, relayVariables = {}, ...props }) => {
+export const BaseArtworkFilter: React.FC<
+  BoxProps & {
+    relay: RelayRefetchProp
+    relayVariables?: object
+    viewer:
+      | ArtworkFilter_viewer
+      | Collection_collection
+      | ArtistArtworkFilter_artist
+      | ArtistSeriesArtworksFilter_artistSeries
+      | FairArtworks_fair
+    Filters?: React.FC
+  }
+> = ({ relay, viewer, Filters, relayVariables = {}, children, ...rest }) => {
   const { filtered_artworks } = viewer
   const hasFilter = filtered_artworks && filtered_artworks.id
 
@@ -174,7 +177,7 @@ export const BaseArtworkFilter: React.FC<{
   }
 
   return (
-    <Box>
+    <Box mt={[0, 0.5]} {...rest}>
       <Box id="jump--artworkFilter" />
 
       {/*
@@ -213,18 +216,18 @@ export const BaseArtworkFilter: React.FC<{
       */}
       <Media greaterThan="xs">
         <Flex>
-          <Box width="25%" mr={2} mt={0.5}>
+          <Box width="25%" mr={2}>
             {Filters ? <Filters /> : <ArtworkFilters />}
           </Box>
           <Box width="75%">
             <Box mb={2}>
-              <Box pb={2} mt={0.5}>
+              <Box pb={2}>
                 <Separator />
               </Box>
               <SortFilter />
             </Box>
 
-            {props.children || <ArtworkGrid />}
+            {children || <ArtworkGrid />}
           </Box>
         </Flex>
       </Media>
