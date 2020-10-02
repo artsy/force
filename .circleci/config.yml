@@ -63,7 +63,7 @@ jobs:
     environment:
       - NODE_ENV: test
     steps:
-      - run: yarn test:mocha
+      - run: yarn test:ci:mocha
 
   jest-v1:
     docker:
@@ -75,7 +75,7 @@ jobs:
     environment:
       - NODE_ENV: test
     steps:
-      - run: yarn test:jest:v1 -w 2
+      - run: ./scripts/jest.sh v1
 
   jest-v2:
     docker:
@@ -87,7 +87,7 @@ jobs:
     environment:
       - NODE_ENV: test
     steps:
-      - run: yarn test:jest:v2 -w 2
+      - run: ./scripts/jest.sh v2
 
   type-check:
     docker:

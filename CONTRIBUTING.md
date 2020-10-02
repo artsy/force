@@ -26,7 +26,7 @@ We accept [pull requests](https://github.com/artsy/force/pulls), and you may [pr
 - Run the tests:
 
         $ yarn type-check
-        $ yarn test:jest
+        $ yarn jest
 
 ## Setup Instructions
 
