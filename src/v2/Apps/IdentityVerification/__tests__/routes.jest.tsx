@@ -51,4 +51,13 @@ describe("IdentityVerification/routes", () => {
 
     expect(status).toBe(200)
   })
+
+  it("renders the Identity Verification error page", async () => {
+    const { status } = await render(
+      "/identity-verification/error",
+      IdentityVerificationAppQueryResponseFixture
+    )
+
+    expect(status).toBe(200)
+  })
 })
