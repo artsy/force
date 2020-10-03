@@ -51,10 +51,12 @@ const RegistrationPendingUnverified: ModalContent = ({ onClick }) => {
         </a>{" "}
         or contact verification@artsy.net.
         <br />
-        <br />A link to complete identity verification has been sent to your
+        <br />
+        To complete your registration and start bidding, please click the{" "}
+        <strong>Verify identity</strong> button or follow the link sent to your
         email.
       </Serif>
-      <ViewWorksButton onClick={onClick} />
+      <OKButton onClick={onClick} />
     </>
   )
 }
@@ -131,6 +133,14 @@ const ViewWorksButton = props => {
   return (
     <Button width="100%" onClick={props.onClick}>
       View works in this sale
+    </Button>
+  )
+}
+
+const OKButton = props => {
+  return (
+    <Button width="100%" onClick={props.onClick}>
+      OK
     </Button>
   )
 }

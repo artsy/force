@@ -5,7 +5,7 @@ import {
   ContentKey,
   PostRegistrationModal,
 } from "v2/Components/Auction/PostRegistrationModal"
-import { bidderNeedsIdentityVerification } from "v2/Utils/identityVerificationRequirements"
+import { bidderQualifications } from "v2/Utils/identityVerificationRequirements"
 
 const _ConfirmRegistrationModal = ({ me, modalType, onClose, sale }) => {
   useEffect(() => {
@@ -23,12 +23,16 @@ const _ConfirmRegistrationModal = ({ me, modalType, onClose, sale }) => {
 
   const bidder = me.bidders[0]
 
+  const { shouldPromptIdVerification } = bidderQualifications(sale, me, {
+    qualifiedForBidding: bidder.qualified_for_bidding,
+  })
+
   let contentKey: ContentKey
   if (bidder.qualified_for_bidding) {
     contentKey = "registrationConfirmed"
   } else if (modalType === "ConfirmBidAndRegistration") {
     contentKey = "bidPending"
-  } else if (bidderNeedsIdentityVerification({ sale, user: me })) {
+  } else if (shouldPromptIdVerification) {
     contentKey = "registrationPendingUnverified"
   } else {
     contentKey = "registrationPending"
