@@ -1,4 +1,4 @@
-import { Box, Button, CheckCircleIcon, Modal, Serif } from "@artsy/palette"
+import { Box, Button, CheckCircleIcon, Modal, Text } from "@artsy/palette"
 import React, { useEffect, useState } from "react"
 
 export type ContentKey =
@@ -18,9 +18,7 @@ const BidPending: ModalContent = ({ onClick }) => {
   return (
     <>
       <RegistrationPendingHeader />
-      <Serif my={3} size="3t">
-        We're sorry, your bid could not be placed.
-      </Serif>
+      <Text my={3}>We're sorry, your bid could not be placed.</Text>
       <ReviewingRegistrationContent />
       <ViewWorksButton onClick={onClick} />
     </>
@@ -41,7 +39,7 @@ const RegistrationPendingUnverified: ModalContent = ({ onClick }) => {
   return (
     <>
       <RegistrationPendingHeader />
-      <Serif my={3} size="3t">
+      <Text my={3}>
         This auction requires Artsy to verify your identity before bidding.
         <br />
         <br />
@@ -55,7 +53,7 @@ const RegistrationPendingUnverified: ModalContent = ({ onClick }) => {
         To complete your registration and start bidding, please click the{" "}
         <strong>Verify identity</strong> button or follow the link sent to your
         email.
-      </Serif>
+      </Text>
       <OKButton onClick={onClick} />
     </>
   )
@@ -64,13 +62,13 @@ const RegistrationPendingUnverified: ModalContent = ({ onClick }) => {
 const RegistrationComplete: ModalContent = ({ onClick }) => {
   return (
     <>
-      <Serif size="6">Registration complete</Serif>
+      <Text variant="title">Registration complete</Text>
       <CheckCircleIcon mt={2} height="28px" width="28px" fill="green100" />
-      <Serif mt={2} mb={3} size="3t">
+      <Text mt={2} mb={3} size="3t">
         Thank you for registering.
         <br />
         You’re now eligible to bid on lots in this sale.
-      </Serif>
+      </Text>
       <Button width="100%" onClick={onClick}>
         Start bidding
       </Button>
@@ -114,19 +112,19 @@ export const PostRegistrationModal: React.FC<Props> = ({
 
 const ReviewingRegistrationContent = () => {
   return (
-    <Serif my={3} size="3t">
+    <Text my={3}>
       Artsy is reviewing your registration and you will receive an email when it
       has been confirmed. Please email specialist@artsy.net with any questions.
       <br />
       <br />
       In the meantime, you can still view works and watch lots you’re interested
       in.
-    </Serif>
+    </Text>
   )
 }
 
 const RegistrationPendingHeader = () => {
-  return <Serif size="6">Registration pending</Serif>
+  return <Text variant="title">Registration pending</Text>
 }
 
 const ViewWorksButton = props => {
