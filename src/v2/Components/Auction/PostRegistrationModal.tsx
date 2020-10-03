@@ -22,7 +22,9 @@ const BidPending: ModalContent = ({ onClick }) => {
         We're sorry, your bid could not be placed.
       </Serif>
       <ReviewingRegistrationContent />
-      <ViewWorksButton onClick={onClick} />
+      <Button width="100%" onClick={onClick}>
+        View works in this sale
+      </Button>
     </>
   )
 }
@@ -32,7 +34,9 @@ const RegistrationPending: ModalContent = ({ onClick }) => {
     <>
       <RegistrationPendingHeader />
       <ReviewingRegistrationContent />
-      <ViewWorksButton onClick={onClick} />
+      <Button width="100%" onClick={onClick}>
+        View works in this sale
+      </Button>
     </>
   )
 }
@@ -56,7 +60,9 @@ const RegistrationPendingUnverified: ModalContent = ({ onClick }) => {
         <strong>Verify identity</strong> button or follow the link sent to your
         email.
       </Serif>
-      <OKButton onClick={onClick} />
+      <Button width="100%" onClick={onClick}>
+        OK
+      </Button>
     </>
   )
 }
@@ -127,20 +133,4 @@ const ReviewingRegistrationContent = () => {
 
 const RegistrationPendingHeader = () => {
   return <Serif size="6">Registration pending</Serif>
-}
-
-const ViewWorksButton = props => {
-  return (
-    <Button width="100%" onClick={props.onClick}>
-      View works in this sale
-    </Button>
-  )
-}
-
-const OKButton = props => {
-  return (
-    <Button width="100%" onClick={props.onClick}>
-      OK
-    </Button>
-  )
 }
