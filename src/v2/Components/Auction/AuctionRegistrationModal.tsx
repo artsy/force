@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 
 import { Box, Button, Flex, Modal, Sans, Serif } from "@artsy/palette"
-import { bidderNeedsIdentityVerification } from "v2/Utils/identityVerificationRequirements"
+import { bidderQualifications } from "v2/Utils/identityVerificationRequirements"
 import { ConditionsOfSaleCheckbox } from "./ConditionsOfSaleCheckbox"
 
 // For convenience even though sale is for now a single value
@@ -73,13 +73,18 @@ export const AuctionRegistrationModal: React.FC<Props> = ({
       handleSubmit(true)
     }
   }
+  const { userLacksIdentityVerification } = bidderQualifications(
+    auction,
+    me,
+    null
+  )
 
   return (
     <Modal show={show} onClose={closeModal}>
       <Box pt={[3, 0]} textAlign="center">
         <Serif size="6">Register for {auction.name}</Serif>
 
-        {bidderNeedsIdentityVerification({ sale: auction, user: me }) ? (
+        {userLacksIdentityVerification ? (
           <>
             <Serif my={3} size="4">
               This auction requires Artsy to verify your identity before

@@ -19,7 +19,7 @@ import {
   graphql,
 } from "react-relay"
 import { TrackingProp } from "react-tracking"
-import { bidderNeedsIdentityVerification } from "v2/Utils/identityVerificationRequirements"
+import { bidderQualifications } from "v2/Utils/identityVerificationRequirements"
 import createLogger from "v2/Utils/logger"
 import {
   createStripeWrapper,
@@ -153,6 +153,8 @@ export const RegisterRoute: React.FC<RegisterProps> = props => {
     }
   }
 
+  const { userLacksIdentityVerification } = bidderQualifications(sale, me, null)
+
   return (
     <AppContainer>
       <Title>Auction Registration</Title>
@@ -163,10 +165,7 @@ export const RegisterRoute: React.FC<RegisterProps> = props => {
         <RegistrationForm
           onSubmit={createTokenAndSubmit}
           trackSubmissionErrors={trackRegistrationFailed}
-          needsIdentityVerification={bidderNeedsIdentityVerification({
-            sale,
-            user: me,
-          })}
+          needsIdentityVerification={userLacksIdentityVerification}
         />
       </Box>
     </AppContainer>

@@ -4,54 +4,47 @@ interface IdentityVerificationRequireable {
 
 interface IdentityVerifiable {
   identityVerified: boolean
+  pendingIdentityVerification?: { internalID: string }
 }
 
 interface Bidder {
-  qualified_for_bidding: boolean
+  qualifiedForBidding: boolean
 }
 
-/**
- * Determine if the current user needs to perform identity verification
- * for the sale.
- *
- * Note: If the user is already registered to bid, then the sale doesn't
- * requireIdentityVerification OR the user was manually approved by an
- * admin. In either case, they don't need identity verification at this
- * time.
- */
-export const bidderNeedsIdentityVerification = ({
-  sale,
-  user,
-  bidder,
-}: {
-  sale: IdentityVerificationRequireable
-  user?: IdentityVerifiable
-  bidder?: Bidder
-}) => {
-  return (
-    !bidder?.qualified_for_bidding &&
-    sale.requireIdentityVerification &&
-    !user?.identityVerified
-  )
+interface BidderQualifications {
+  /** Presence of bidder */
+  registrationAttempted: boolean
+  /** Bidder is qualified */
+  qualifiedForBidding: boolean
+  /** Sale requires identity verification but the user does not have it */
+  userLacksIdentityVerification: boolean
+  /** User's pending identity verification, if present */
+  pendingIdentityVerification: {
+    internalID: string
+  } | null
+  /** Whether user should be prompted to verify ID, that is:
+   * - they are not qualified
+   * - they are lacking idv for a sale that requires it
+   * - they have an available pendingIdentityVerification
+   */
+  shouldPromptIdVerification: boolean
 }
 
 /**
  * Process a list of bidder permissions based on a user-bidder-sale combination.
- * @param sale
- * @param user
- * @param registration
+ * @param sale with requireIdentityVerification boolean
+ * @param user with identityVerified and pendingIdentityVerification properties
+ * @param bidder their bidder for this sale, if applicable
+ * @return BidderQualifications
  */
 export const bidderQualifications = (
-  sale: { requireIdentityVerification: boolean },
-  user?: {
-    identityVerified: boolean
-    pendingIdentityVerification?: { internalID: string }
-  },
-  registration?: { qualifiedForBidding: boolean }
-) => {
-  const registrationAttempted = Boolean(registration)
+  sale: IdentityVerificationRequireable,
+  user?: IdentityVerifiable,
+  bidder?: Bidder | null
+): BidderQualifications => {
+  const registrationAttempted = Boolean(bidder)
   const qualifiedForBidding =
-    registrationAttempted && registration.qualifiedForBidding
+    registrationAttempted && bidder.qualifiedForBidding
 
   const userLacksIdentityVerification =
     sale.requireIdentityVerification && !user?.identityVerified
