@@ -129,17 +129,23 @@ export const routes: RouteConfig[] = [
 ]
 
 function initializeVariablesWithFilterState(params, props) {
-  const initialFilterState = props.location ? props.location.query : {}
+  const initialFilterStateFromUrl = props.location ? props.location.query : {}
+  const camelCasedFilterStateFromUrl = paramsToCamelCase(
+    initialFilterStateFromUrl
+  )
 
   let aggregations: string[] = ["TOTAL", "GALLERY", "MAJOR_PERIOD", "ARTIST"]
   if (props.context.user) aggregations = aggregations.concat("FOLLOWED_ARTISTS")
 
   const state = {
     sort: "-decayed_merch",
-    ...paramsToCamelCase(initialFilterState),
+    ...camelCasedFilterStateFromUrl,
     ...params,
     aggregations,
     shouldFetchCounts: !!props.context.user,
+    includeArtworksByFollowedArtists:
+      !!props.context.user &&
+      camelCasedFilterStateFromUrl["includeArtworksByFollowedArtists"],
   }
 
   return state

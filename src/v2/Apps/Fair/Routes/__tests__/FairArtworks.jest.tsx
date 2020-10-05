@@ -5,6 +5,13 @@ import { graphql } from "react-relay"
 import { FairArtworks_QueryRawResponse } from "v2/__generated__/FairArtworks_Query.graphql"
 
 jest.unmock("react-relay")
+jest.mock("v2/Artsy/Router/useRouter", () => ({
+  useRouter: () => ({
+    match: {
+      location: { query: {} },
+    },
+  }),
+}))
 
 describe("FairArtworks", () => {
   const getWrapper = async (
@@ -40,7 +47,7 @@ describe("FairArtworks", () => {
     const wrapper = await getWrapper()
     expect(wrapper.find("ArtistsFilter").length).toBe(1)
     expect(wrapper.find("ArtistsFilter").text()).toMatch(
-      "Artists I Follow (10)"
+      "Artists I follow (10)"
     )
   })
 })
