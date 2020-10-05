@@ -175,7 +175,7 @@ describe("Confirm Registration Modal", () => {
         expect(wrapper.text()).toContain("Artsy is reviewing your registration")
       })
 
-      it("shows an IDV registration pending message if the sale requires IDV but the user is not verified", () => {
+      it("shows a registration pending message if the sale requires IDV and the user is not verified but has no startable IDV flow", () => {
         const { wrapper } = renderTestComponent({
           Component: ConfirmRegistrationModal,
           options: { renderMode: "mount" },
@@ -189,6 +189,36 @@ describe("Confirm Registration Modal", () => {
                   },
                 ],
                 identityVerified: false,
+                pendingIdentityVerification: null,
+              },
+              sale: {
+                requireIdentityVerification: true,
+              },
+            },
+          },
+        })
+
+        expect(wrapper.text()).toContain("Registration pending")
+        expect(wrapper.text()).toContain("Artsy is reviewing your registration")
+      })
+
+      it("shows an 'please verify identity' message if the sale requires IDV but the user, who is not verified, has an available IDV flow", () => {
+        const { wrapper } = renderTestComponent({
+          Component: ConfirmRegistrationModal,
+          options: { renderMode: "mount" },
+          data: {
+            app: {
+              modalType: "ConfirmRegistration",
+              me: {
+                bidders: [
+                  {
+                    qualified_for_bidding: false,
+                  },
+                ],
+                identityVerified: false,
+                pendingIdentityVerification: {
+                  internalID: "whatever",
+                },
               },
               auction: {
                 requireIdentityVerification: true,
@@ -199,7 +229,7 @@ describe("Confirm Registration Modal", () => {
 
         expect(wrapper.text()).toContain("Registration pending")
         expect(wrapper.text()).toContain(
-          "This auction requires Artsy to verify your identity before bidding."
+          "To complete your registration and start bidding, please click the Verify identity button or follow the link sent to your email."
         )
       })
     })
