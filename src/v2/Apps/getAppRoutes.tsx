@@ -11,6 +11,7 @@ import { routes as identityVerificationRoutes } from "v2/Apps/IdentityVerificati
 import { routes as orderRoutes } from "v2/Apps/Order/routes"
 import { routes as purchasesRoutes } from "v2/Apps/Purchase/routes"
 import { routes as searchRoutes } from "v2/Apps/Search/routes"
+import { routes as showRoutes } from "v2/Apps/Show/routes"
 import { routes as viewingRoomRoutes } from "./ViewingRoom/routes"
 import { debugRoutes } from "./Debug/debugRoutes"
 
@@ -48,6 +49,9 @@ export function getAppRoutes(): RouteConfig[] {
     },
     {
       routes: searchRoutes,
+    },
+    {
+      routes: showRoutes,
     },
     {
       routes: viewingRoomRoutes,
