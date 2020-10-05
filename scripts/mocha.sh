@@ -2,8 +2,6 @@
 
 set -ex
 
-#trap "exit" INT
-
 nyc mocha --no-cache \
   -c \
   --require test.mocha.js \

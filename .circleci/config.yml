@@ -63,7 +63,7 @@ jobs:
     environment:
       - NODE_ENV: test
     steps:
-      - run: yarn test:mocha
+      - run: yarn test:ci:mocha
 
   jest-v1:
     docker:
@@ -73,9 +73,9 @@ jobs:
           aws_secret_access_key: $AWS_SECRET_ACCESS_KEY
     working_directory: /app
     environment:
-      - NODE_ENV: test
+      - JEST_JUNIT_OUTPUT: reports/junit/js-test-results.xml
     steps:
-      - run: yarn test:jest:v1 -w 2
+      - run: yarn test:ci:jest:v1
 
   jest-v2:
     docker:
@@ -85,9 +85,9 @@ jobs:
           aws_secret_access_key: $AWS_SECRET_ACCESS_KEY
     working_directory: /app
     environment:
-      - NODE_ENV: test
+      - JEST_JUNIT_OUTPUT: reports/junit/js-test-results.xml
     steps:
-      - run: yarn test:jest:v2 -w 2
+      - run: yarn test:ci:jest:v2
 
   type-check:
     docker:

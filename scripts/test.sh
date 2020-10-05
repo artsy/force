@@ -2,5 +2,5 @@
 
 set -ex
 
-yarn jest
-yarn test:mocha
+yarn test:ci:jest
+yarn test:ci:mocha
