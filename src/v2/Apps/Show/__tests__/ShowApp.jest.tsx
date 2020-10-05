@@ -6,6 +6,10 @@ jest.mock("v2/Apps/Show/components/ShowMeta", () => ({
   ShowMetaFragmentContainer: () => null,
 }))
 
+jest.mock("v2/Apps/Show/components/ShowInstallShots", () => ({
+  ShowInstallShotsFragmentContainer: () => null,
+}))
+
 const SHOW_FIXTURE = { name: "Example Show" }
 
 describe("ShowApp", () => {
