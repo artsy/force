@@ -6,6 +6,7 @@ const IdentityVerificationApp = loadable(() =>
   import("./IdentityVerificationApp")
 )
 const Processing = loadable(() => import("./Processing"))
+const Error = loadable(() => import("./Error"))
 
 export const routes: RouteConfig[] = [
   {
@@ -13,6 +14,13 @@ export const routes: RouteConfig[] = [
     getComponent: () => Processing,
     prepare: () => {
       Processing.preload()
+    },
+  },
+  {
+    path: "/identity-verification/error",
+    getComponent: () => Error,
+    prepare: () => {
+      Error.preload()
     },
   },
   {
