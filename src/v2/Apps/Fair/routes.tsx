@@ -51,6 +51,7 @@ export const routes: RouteConfig[] = [
             $slug: String!
             $acquireable: Boolean
             $aggregations: [ArtworkAggregation]
+            $artistIDs: [String]
             $atAuction: Boolean
             $color: String
             $forSale: Boolean
@@ -71,6 +72,7 @@ export const routes: RouteConfig[] = [
                 @arguments(
                   acquireable: $acquireable
                   aggregations: $aggregations
+                  artistIDs: $artistIDs
                   atAuction: $atAuction
                   color: $color
                   forSale: $forSale
@@ -129,7 +131,7 @@ export const routes: RouteConfig[] = [
 function initializeVariablesWithFilterState(params, props) {
   const initialFilterState = props.location ? props.location.query : {}
 
-  let aggregations: string[] = ["TOTAL", "GALLERY", "MAJOR_PERIOD"]
+  let aggregations: string[] = ["TOTAL", "GALLERY", "MAJOR_PERIOD", "ARTIST"]
   if (props.context.user) aggregations = aggregations.concat("FOLLOWED_ARTISTS")
 
   const state = {

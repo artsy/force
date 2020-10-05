@@ -13,8 +13,7 @@ import { SizeFilter } from "v2/Components/v2/ArtworkFilter/ArtworkFilters/SizeFi
 import { TimePeriodFilter } from "v2/Components/v2/ArtworkFilter/ArtworkFilters/TimePeriodFilter"
 import { ColorFilter } from "v2/Components/v2/ArtworkFilter/ArtworkFilters/ColorFilter"
 import { Box } from "@artsy/palette"
-import { FollowedArtistsFilter } from "v2/Components/v2/ArtworkFilter/ArtworkFilters/FollowedArtistsFilter"
-import { useSystemContext } from "v2/Artsy"
+import { ArtistsFilter } from "v2/Components/v2/ArtworkFilter/ArtworkFilters/ArtistsFilter"
 import { useTracking } from "react-tracking"
 import { clickedMainArtworkGrid } from "@artsy/cohesion"
 import { useAnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
@@ -28,7 +27,6 @@ interface FairArtworksFilterProps {
 const FairArtworksFilter: React.FC<FairArtworksFilterProps> = props => {
   const { match, relay, fair } = props
   const { filtered_artworks } = fair
-  const { user } = useSystemContext()
   const tracking = useTracking()
   const {
     contextPageOwnerId,
@@ -46,8 +44,7 @@ const FairArtworksFilter: React.FC<FairArtworksFilterProps> = props => {
 
   const Filters = () => (
     <Box pr={2}>
-      {!!user && <FollowedArtistsFilter />}
-
+      <ArtistsFilter />
       <MediumFilter />
       <PriceRangeFilter />
       <WaysToBuyFilter />
@@ -105,6 +102,7 @@ export const FairArtworksRefetchContainer = createRefetchContainer(
         @argumentDefinitions(
           acquireable: { type: "Boolean" }
           aggregations: { type: "[ArtworkAggregation]" }
+          artistIDs: { type: "[String]" }
           atAuction: { type: "Boolean" }
           color: { type: "String" }
           forSale: { type: "Boolean" }
@@ -125,6 +123,7 @@ export const FairArtworksRefetchContainer = createRefetchContainer(
         filtered_artworks: filterArtworksConnection(
           acquireable: $acquireable
           aggregations: $aggregations
+          artistIDs: $artistIDs
           atAuction: $atAuction
           color: $color
           forSale: $forSale
@@ -154,6 +153,7 @@ export const FairArtworksRefetchContainer = createRefetchContainer(
     query FairArtworksQuery(
       $acquireable: Boolean
       $aggregations: [ArtworkAggregation] = [TOTAL]
+      $artistIDs: [String]
       $slug: String!
       $atAuction: Boolean
       $color: String
@@ -174,6 +174,7 @@ export const FairArtworksRefetchContainer = createRefetchContainer(
           @arguments(
             acquireable: $acquireable
             aggregations: $aggregations
+            artistIDs: $artistIDs
             atAuction: $atAuction
             color: $color
             forSale: $forSale

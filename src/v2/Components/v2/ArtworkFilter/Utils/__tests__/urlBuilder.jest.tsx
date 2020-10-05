@@ -7,12 +7,14 @@ describe(paramsToSnakeCase, () => {
       forSale: true,
       atAuction: true,
       inquireableOnly: false,
+      artistIDs: ["catty-gallery", "doggy-gallery"],
     }
     expect(paramsToSnakeCase(params)).toEqual({
       partner_id: "gagosian-gallery",
       for_sale: true,
       at_auction: true,
       inquireable_only: false,
+      artist_ids: ["catty-gallery", "doggy-gallery"],
     })
   })
 })
@@ -24,12 +26,14 @@ describe(paramsToCamelCase, () => {
       for_sale: true,
       at_auction: true,
       inquireable_only: false,
+      artist_ids: ["catty-gallery", "doggy-gallery"],
     }
     expect(paramsToCamelCase(params)).toEqual({
       partnerID: "gagosian-gallery",
       forSale: true,
       atAuction: true,
       inquireableOnly: false,
+      artistIDs: ["catty-gallery", "doggy-gallery"],
     })
   })
 })

@@ -11,7 +11,7 @@ export const isDefaultFilter: (
   switch (true) {
     case name === "majorPeriods":
       return value.length === 0
-    case name === "sizes":
+    case name === "sizes" || name === "artistIDs":
       return value.length === 0
     case name === "sort":
       return value === "-decayed_merch"

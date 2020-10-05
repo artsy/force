@@ -14,6 +14,7 @@ export const initialArtworkFilterState: ArtworkFilters = {
   page: 1,
   sizes: [],
   sort: "-decayed_merch",
+  artistIDs: [],
 
   // TODO: Remove these unneeded default props
   // height: "*-*",
@@ -27,6 +28,7 @@ export const initialArtworkFilterState: ArtworkFilters = {
 export interface ArtworkFilters {
   acquireable?: boolean
   artist_id?: string
+  artistIDs?: string[]
   atAuction?: boolean
   color?: string
   forSale?: boolean
@@ -66,6 +68,7 @@ export type Aggregations = Array<{
     | "PERIOD"
     | "PRICE_RANGE"
     | "TOTAL"
+    | "ARTIST"
   counts: Array<{
     count: number
     value: string
@@ -315,7 +318,7 @@ const artworkFilterReducer = (
   state: ArtworkFiltersState,
   action: ArtworkFiltersAction
 ): ArtworkFiltersState => {
-  const arrayFilterTypes: Array<keyof ArtworkFilters> = ["sizes"]
+  const arrayFilterTypes: Array<keyof ArtworkFilters> = ["sizes", "artistIDs"]
 
   switch (action.type) {
     /**
