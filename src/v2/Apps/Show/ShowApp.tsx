@@ -7,6 +7,7 @@ import { Footer } from "v2/Components/Footer"
 import { ErrorPage } from "v2/Components/ErrorPage"
 import { Separator, Text } from "@artsy/palette"
 import { ShowMetaFragmentContainer as ShowMeta } from "v2/Apps/Show/components/ShowMeta"
+import { ShowInstallShotsFragmentContainer as ShowInstallShots } from "./components/ShowInstallShots"
 
 interface ShowAppProps {
   show: ShowApp_show
@@ -21,6 +22,8 @@ export const ShowApp: React.FC<ShowAppProps> = ({ show }) => {
 
       <AppContainer>
         <HorizontalPadding>
+          <ShowInstallShots show={show} my={2} />
+
           <Text as="h1" variant="largeTitle" my={4}>
             {show.name}
           </Text>
@@ -40,6 +43,7 @@ export default createFragmentContainer(ShowApp, {
     fragment ShowApp_show on Show {
       name
       ...ShowMeta_show
+      ...ShowInstallShots_show
     }
   `,
 })
