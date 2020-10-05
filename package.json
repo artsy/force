@@ -335,6 +335,7 @@
     "relay-compiler": "9.1.0",
     "relay-compiler-language-typescript": "12.0.3",
     "relay-config": "9.1.0",
+    "relay-test-utils": "9.1.0",
     "rewire": "2.2.0",
     "should": "11.2.1",
     "simple-progress-webpack-plugin": "1.1.2",

@@ -17965,7 +17965,6 @@ pascalcase@^0.1.1:
 
 "passport-apple@https://github.com/artsy/passport-apple#f41adb7822c8344b72bc36a7d68312f6592cb14f":
   version "1.1.2"
-  uid f41adb7822c8344b72bc36a7d68312f6592cb14f
   resolved "https://github.com/artsy/passport-apple#f41adb7822c8344b72bc36a7d68312f6592cb14f"
   dependencies:
     jsonwebtoken "^8.5.1"
@@ -20390,6 +20389,15 @@ relay-runtime@9.1.0:
   dependencies:
     "@babel/runtime" "^7.0.0"
     fbjs "^1.0.0"
+
+relay-test-utils@9.1.0:
+  version "9.1.0"
+  resolved "https://registry.yarnpkg.com/relay-test-utils/-/relay-test-utils-9.1.0.tgz#b516a96c47f905e73f5a577df24d0195f2a65ea6"
+  integrity sha512-fTgtLbV/7nXD9u/Ujevc9ohRaZpsQBtvJogh076bUB+Vcvv4G9TQ1oZLKLXxJTBcnQEEzrgzLHGjrxVGRb548A==
+  dependencies:
+    "@babel/runtime" "^7.0.0"
+    fbjs "^1.0.0"
+    relay-runtime "9.1.0"
 
 release-zalgo@^1.0.0:
   version "1.0.0"
