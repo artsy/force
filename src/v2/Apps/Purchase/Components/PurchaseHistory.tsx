@@ -6,7 +6,6 @@ import {
   Flex,
   HelpIcon,
   Image,
-  LargePagination,
   Link,
   PendingCircleIcon,
   Sans,
@@ -16,6 +15,7 @@ import {
   XCircleIcon,
 } from "@artsy/palette"
 import { data as sd } from "sharify"
+import { PaginationFragmentContainer as Pagination } from "v2/Components/Pagination"
 import { DateTime } from "luxon"
 import { PurchaseHistory_me } from "v2/__generated__/PurchaseHistory_me.graphql"
 import React, { useState } from "react"
@@ -23,6 +23,7 @@ import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { Media } from "v2/Utils/Responsive"
 import { UserSettingsTabs } from "v2/components/UserSettings/UserSettingsTabs"
+import { themeGet } from "@styled-system/theme-get"
 
 interface OrderRowProps {
   order: PurchaseHistory_me["orders"]["edges"][number]["node"]
@@ -33,6 +34,18 @@ const StyledImage = styled(Image)`
   object-fit: cover;
   height: 50px;
   width: 50px;
+`
+const StyledBox = styled(Box)`
+  padding: 10px 40px 30px 40px;
+  svg {
+    top: 5px;
+  }
+  @media (max-width: ${themeGet("breakpoints.xs")}) {
+    padding: 10px 20px;
+    svg {
+      top: 0px;
+    }
+  }
 `
 const getIcon = status => {
   switch (status) {
@@ -313,17 +326,9 @@ const PurchaseHistory: React.FC<PurchaseHistoryProps> = (
   const myOrders = me.orders.edges && me.orders.edges.map(x => x.node)
   return !loading ? (
     <Box>
-      <Media greaterThanOrEqual="sm">
-        <Box mx="40px" mt="-5px">
-          <UserSettingsTabs route={sd.CURRENT_PATH} username={me.name} />
-        </Box>
-      </Media>
-      <Media lessThan="sm">
-        <Sans size="6" px={1} py={1.5}>
-          Order History
-        </Sans>
-        <Separator />
-      </Media>
+      <Box mx="40px" mt="-5px">
+        <UserSettingsTabs route={sd.CURRENT_PATH} username={me.name} />
+      </Box>
       {myOrders.length ? (
         myOrders.map((order, i) => (
           <OrderRow
@@ -335,12 +340,14 @@ const PurchaseHistory: React.FC<PurchaseHistoryProps> = (
       ) : (
         <Sans size="2">No Orders</Sans>
       )}
-      <LargePagination
-        pageCursors={me.orders.pageCursors}
-        hasNextPage
-        onClick={cursor => loadAfter(cursor, props.relay, setLoading)}
-        onNext={() => loadNext(pageInfo, props.relay, setLoading)}
-      />
+      <StyledBox>
+        <Pagination
+          pageCursors={me.orders.pageCursors}
+          hasNextPage
+          onClick={cursor => loadAfter(cursor, props.relay, setLoading)}
+          onNext={() => loadNext(pageInfo, props.relay, setLoading)}
+        />
+      </StyledBox>
     </Box>
   ) : (
     <Spinner />
