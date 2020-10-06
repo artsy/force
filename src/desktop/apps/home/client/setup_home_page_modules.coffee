@@ -60,6 +60,26 @@ getContextModule = (key) ->
     when 'popular_artists' then ContextModule.worksByPopularArtistsRail
     when 'live_auctions' then ContextModule.liveAuctionsRail
 
+setupAnalytics = () ->
+  window.analytics.trackLink(
+    $(".abrv-container a"),
+    "Clicked rail on homepage",
+    (el) ->
+      $el = $(el)
+      parentRail = $el.closest(".abrv-container")
+      railID = parentRail.attr("id")
+
+      return {
+        event_name: "click",
+        type: $el.context.parentElement.className,
+        label: "artwork",
+        context_module: railID.slice(4, -2),
+        value: railID.slice(-1),
+        flow: "home personalization rails",
+        destination_path: $el.attr("href"),
+      }
+  )
+
 module.exports = ->
   user = User.instantiate()
 
@@ -101,7 +121,6 @@ module.exports = ->
       view = new ArtworkBrickRailView options
 
       view.on 'post-render', ->
-
         setupFollowButton
           $el: $el.find(".abrv-follow-button")
           module: module
@@ -111,10 +130,11 @@ module.exports = ->
             html = contexts[module.key](module)
             $el.find(".abrv-context").html html
 
+        if index == USER_HOME_PAGE.length - 1
+          # Set up once for all rails once html is rendered
+          setupAnalytics()
+
       view.render()
     .catch (err) ->
       $el.remove()
       console.warn('Error rendering homepage rails', err.stack)
-
-
-
