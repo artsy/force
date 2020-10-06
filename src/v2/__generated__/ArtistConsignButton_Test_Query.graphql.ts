@@ -3,45 +3,22 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type ArtistConsignButton_Test_QueryVariables = {
-    artistID: string;
-};
+export type ArtistConsignButton_Test_QueryVariables = {};
 export type ArtistConsignButton_Test_QueryResponse = {
     readonly artist: {
         readonly " $fragmentRefs": FragmentRefs<"ArtistConsignButton_artist">;
     } | null;
 };
-export type ArtistConsignButton_Test_QueryRawResponse = {
-    readonly artist: ({
-        readonly targetSupply: ({
-            readonly isInMicrofunnel: boolean | null;
-            readonly isTargetSupply: boolean | null;
-        }) | null;
-        readonly internalID: string;
-        readonly slug: string;
-        readonly name: string | null;
-        readonly href: string | null;
-        readonly image: ({
-            readonly cropped: ({
-                readonly url: string | null;
-            }) | null;
-        }) | null;
-        readonly id: string | null;
-    }) | null;
-};
 export type ArtistConsignButton_Test_Query = {
     readonly response: ArtistConsignButton_Test_QueryResponse;
     readonly variables: ArtistConsignButton_Test_QueryVariables;
-    readonly rawResponse: ArtistConsignButton_Test_QueryRawResponse;
 };
 
 
 
 /*
-query ArtistConsignButton_Test_Query(
-  $artistID: String!
-) {
-  artist(id: $artistID) {
+query ArtistConsignButton_Test_Query {
+  artist(id: "alex-katz") {
     ...ArtistConsignButton_artist
     id
   }
@@ -67,29 +44,21 @@ fragment ArtistConsignButton_artist on Artist {
 const node: ConcreteRequest = (function(){
 var v0 = [
   {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "artistID",
-    "type": "String!"
-  }
-],
-v1 = [
-  {
-    "kind": "Variable",
+    "kind": "Literal",
     "name": "id",
-    "variableName": "artistID"
+    "value": "alex-katz"
   }
 ];
 return {
   "fragment": {
-    "argumentDefinitions": (v0/*: any*/),
+    "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
     "name": "ArtistConsignButton_Test_Query",
     "selections": [
       {
         "alias": null,
-        "args": (v1/*: any*/),
+        "args": (v0/*: any*/),
         "concreteType": "Artist",
         "kind": "LinkedField",
         "name": "artist",
@@ -101,20 +70,20 @@ return {
             "name": "ArtistConsignButton_artist"
           }
         ],
-        "storageKey": null
+        "storageKey": "artist(id:\"alex-katz\")"
       }
     ],
     "type": "Query"
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": (v0/*: any*/),
+    "argumentDefinitions": [],
     "kind": "Operation",
     "name": "ArtistConsignButton_Test_Query",
     "selections": [
       {
         "alias": null,
-        "args": (v1/*: any*/),
+        "args": (v0/*: any*/),
         "concreteType": "Artist",
         "kind": "LinkedField",
         "name": "artist",
@@ -221,7 +190,7 @@ return {
             "storageKey": null
           }
         ],
-        "storageKey": null
+        "storageKey": "artist(id:\"alex-katz\")"
       }
     ]
   },
@@ -230,9 +199,9 @@ return {
     "metadata": {},
     "name": "ArtistConsignButton_Test_Query",
     "operationKind": "query",
-    "text": "query ArtistConsignButton_Test_Query(\n  $artistID: String!\n) {\n  artist(id: $artistID) {\n    ...ArtistConsignButton_artist\n    id\n  }\n}\n\nfragment ArtistConsignButton_artist on Artist {\n  targetSupply {\n    isInMicrofunnel\n    isTargetSupply\n  }\n  internalID\n  slug\n  name\n  href\n  image {\n    cropped(width: 66, height: 66) {\n      url\n    }\n  }\n}\n"
+    "text": "query ArtistConsignButton_Test_Query {\n  artist(id: \"alex-katz\") {\n    ...ArtistConsignButton_artist\n    id\n  }\n}\n\nfragment ArtistConsignButton_artist on Artist {\n  targetSupply {\n    isInMicrofunnel\n    isTargetSupply\n  }\n  internalID\n  slug\n  name\n  href\n  image {\n    cropped(width: 66, height: 66) {\n      url\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'b38a3cd19b52d087ec99c55c9aeb0597';
+(node as any).hash = '51589b480b6186c9dd1c1c5eb91e6ed2';
 export default node;
