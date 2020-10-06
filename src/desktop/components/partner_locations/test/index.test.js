@@ -19,7 +19,11 @@ const PartnerPhoneNumberView = benv.requireWithJadeify(
 describe("PartnerLocations", function () {
   before(done =>
     benv.setup(function () {
-      benv.expose({ $: benv.require("jquery"), jQuery: benv.require("jquery") })
+      benv.expose({
+        $: benv.require("jquery"),
+        jQuery: benv.require("jquery"),
+        analytics: { track: sinon.stub() },
+      })
       Backbone.$ = $
       return done()
     })

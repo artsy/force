@@ -56,7 +56,6 @@ $(() =>
     require("../analytics/genes.js")
     require("../analytics/home.js")
     require("../analytics/inquiry_questionnaire.js")
-    require("../analytics/partner.js")
     require("../analytics/recently_viewed_artworks.js")
     require("../analytics/show_page.js")
   })
