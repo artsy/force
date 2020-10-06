@@ -53,7 +53,6 @@ $(() =>
     require("../analytics/embedded_inquiry.js")
     require("../analytics/galleries.js")
     require("../analytics/genes.js")
-    require("../analytics/home.js")
     require("../analytics/inquiry_questionnaire.js")
     require("../analytics/partner.js")
     require("../analytics/recently_viewed_artworks.js")

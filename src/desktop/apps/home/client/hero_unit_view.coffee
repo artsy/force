@@ -30,6 +30,7 @@ module.exports = class HeroUnitView extends Backbone.View
 
     @$('.home-hero-unit').swipeleft => @onLeftArrow()
     @$('.home-hero-unit').swiperight => @onRightArrow()
+    @trackHeroClick()
 
   setRetinaHeroTitles: =>
     @$('.hhu-title').each ->
@@ -71,6 +72,16 @@ module.exports = class HeroUnitView extends Backbone.View
       .eq(index)
       .addClass('hhud-active')
     @setBodyClass()
+
+  trackHeroClick: () ->
+    $heroUnits = $(".js-homepage-hero-unit")
+    window.analytics.trackLink($heroUnits, "Clicked homepage banner", (el) ->
+      $el = $(el)
+      return {
+        banner_link_path: el.href,
+        banner_position: $heroUnits.index($el),
+      }
+    )
 
   onKeyUp: (e) ->
     return if $(e.target).attr('id') is 'main-layout-search-bar-input'
