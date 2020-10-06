@@ -1,13 +1,19 @@
 import React from "react"
 import styled from "styled-components"
 import { RouteTab, RouteTabs } from "v2/Components/RouteTabs"
-import { data as sd } from "sharify"
 import { Box, Text } from "@artsy/palette"
+import { themeGet } from "@styled-system/theme-get"
 
 interface UserSettingsTabsProps {
   route?: string
   username?: string
 }
+
+const StyledRouteTab = styled(RouteTab)`
+  @media (max-width: ${themeGet("breakpoints.xs")}) {
+    padding-right: 10px;
+  }
+`
 
 const isCurrentTab = (tabUrl, route) => {
   const currentRoute =
@@ -23,7 +29,7 @@ export const UserSettingsTabs: React.FC<UserSettingsTabsProps> = ({
   return (
     <Box pt={1}>
       <Box>
-        <Text variant="title" my={2}>
+        <Text variant="title" m={2}>
           {username}
         </Text>
       </Box>
@@ -52,12 +58,13 @@ export const UserSettingsTabs: React.FC<UserSettingsTabsProps> = ({
         <RouteTab class={isCurrentTab("/user/edit", route)} to="/user/edit">
           Settings
         </RouteTab>
-        <RouteTab
+        <StyledRouteTab
+          pr={1}
           class={isCurrentTab("/user/payments", route)}
           to="/user/payments"
         >
           Payments
-        </RouteTab>
+        </StyledRouteTab>
       </RouteTabs>
     </Box>
   )
