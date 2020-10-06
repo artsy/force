@@ -34,33 +34,35 @@ export const UserSettingsTabs: React.FC<UserSettingsTabsProps> = ({
         </Text>
       </Box>
       <RouteTabs>
-        <RouteTab class={isCurrentTab("/user/saves", route)} to="/user/saves">
+        <RouteTab
+          className={isCurrentTab("/user/saves", route)}
+          to="/user/saves"
+        >
           Saves & Follows
         </RouteTab>
         <RouteTab
-          class={isCurrentTab("/profile/edit", route)}
+          className={isCurrentTab("/profile/edit", route)}
           to="/profile/edit"
         >
           Collector Profile
         </RouteTab>
         <RouteTab
-          class={isCurrentTab("/user/purchases", route)}
+          className={isCurrentTab("/user/purchases", route)}
           to="/user/purchases"
         >
           Order History
         </RouteTab>
         <RouteTab
-          class={isCurrentTab("/user/auctions", route)}
+          className={isCurrentTab("/user/auctions", route)}
           to="/user/auctions"
         >
           Bids
         </RouteTab>
-        <RouteTab class={isCurrentTab("/user/edit", route)} to="/user/edit">
+        <RouteTab className={isCurrentTab("/user/edit", route)} to="/user/edit">
           Settings
         </RouteTab>
         <StyledRouteTab
-          pr={1}
-          class={isCurrentTab("/user/payments", route)}
+          className={isCurrentTab("/user/payments", route)}
           to="/user/payments"
         >
           Payments
