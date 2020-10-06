@@ -32,8 +32,22 @@ jobs:
 
   create_or_update_review_app:
     executor: hokusai/deploy
+    parameters:
+      artsy_docker_host:
+        type: string
+        default: docker.artsy.net
+      artsy_docker_port:
+        type: integer
+        default: 2376
+      artsy_s3_path_root:
+        type: string
+        default: artsy-citadel/docker
     steps:
-      - hokusai/setup-docker
+      - hokusai/setup
+      - artsy-remote-docker/setup-artsy-remote-docker:
+          artsy_docker_host: << parameters.artsy_docker_host >>
+          artsy_docker_port: << parameters.artsy_docker_port >>
+          artsy_s3_path_root: << parameters.artsy_s3_path_root >>
       - hokusai/install-aws-iam-authenticator
       - hokusai/configure-hokusai
       - run:
@@ -283,3 +297,6 @@ workflows:
           filters:
             branches:
               only: /^review-app-.*/
+          pre-steps:
+            - run:
+                command: echo 'export DOCKER_BUILDKIT=1; export BUILDKIT_PROGRESS=plain; export COMPOSE_DOCKER_CLI_BUILD=1;' >> $BASH_ENV
