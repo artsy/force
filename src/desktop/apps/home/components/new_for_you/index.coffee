@@ -18,4 +18,5 @@ module.exports = (user) ->
       $('html, body').animate
         scrollTop: $('.abrv-container').first().offset().top - 50
       $('.new-for-you').addClass 'new-for-you__is-faded-out'
+      window.analytics.track('Clicked "New For You" on homepage')
       user.markNotifications 'viewed'
