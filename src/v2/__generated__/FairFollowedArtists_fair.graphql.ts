@@ -4,10 +4,13 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type FairFollowedArtists_fair = {
+    readonly internalID: string;
     readonly slug: string;
     readonly followedArtistArtworks: {
         readonly edges: ReadonlyArray<{
             readonly artwork: {
+                readonly internalID: string;
+                readonly slug: string;
                 readonly " $fragmentRefs": FragmentRefs<"FillwidthItem_artwork">;
             } | null;
         } | null> | null;
@@ -22,19 +25,29 @@ export type FairFollowedArtists_fair$key = {
 
 
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+},
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "slug",
+  "storageKey": null
+};
+return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
   "name": "FairFollowedArtists_fair",
   "selections": [
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "slug",
-      "storageKey": null
-    },
+    (v0/*: any*/),
+    (v1/*: any*/),
     {
       "alias": "followedArtistArtworks",
       "args": [
@@ -70,6 +83,8 @@ const node: ReaderFragment = {
               "name": "node",
               "plural": false,
               "selections": [
+                (v0/*: any*/),
+                (v1/*: any*/),
                 {
                   "args": null,
                   "kind": "FragmentSpread",
@@ -87,5 +102,6 @@ const node: ReaderFragment = {
   ],
   "type": "Fair"
 };
-(node as any).hash = 'f2a46b7155c7bf542cc4b9a10fb4fa5e';
+})();
+(node as any).hash = '7ae10ce6625902d40dcc690d39252781';
 export default node;
