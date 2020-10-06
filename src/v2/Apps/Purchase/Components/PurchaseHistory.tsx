@@ -41,7 +41,7 @@ const StyledBox = styled(Box)`
     top: 5px;
   }
   @media (max-width: ${themeGet("breakpoints.xs")}) {
-    padding: 10px 20px;
+    padding: 20px;
     svg {
       top: 0px;
     }
@@ -288,7 +288,7 @@ const loadNext = (pageInfo, relay, setLoading) => {
   const { hasNextPage, endCursor } = pageInfo
 
   if (hasNextPage) {
-    this.loadAfter(endCursor, relay, setLoading)
+    loadAfter(endCursor, relay, setLoading)
   }
 }
 
@@ -326,7 +326,7 @@ const PurchaseHistory: React.FC<PurchaseHistoryProps> = (
   const myOrders = me.orders.edges && me.orders.edges.map(x => x.node)
   return !loading ? (
     <Box>
-      <Box mx="40px" mt="-5px">
+      <Box mx={["0px", "40px", "40px", "40px"]} mt="-5px">
         <UserSettingsTabs route={sd.CURRENT_PATH} username={me.name} />
       </Box>
       {myOrders.length ? (
