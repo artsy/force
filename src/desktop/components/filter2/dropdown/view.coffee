@@ -37,6 +37,8 @@ module.exports = class DropdownView extends Backbone.View
     else
       @params.set @facet, val
 
-    analyticsHooks.trigger 'artwork_filter:activated', { attr: @facet, value: val }
-
+    window.analytics.track("Activated artworks filter", {
+      filter: @facet,
+      value: val,
+    })
     false
