@@ -16,7 +16,6 @@ $(() =>
 
     require("../analytics/global.ts")
     require("../analytics/show_page.js")
-    require("../analytics/commercial_filter.js")
     require("../analytics/fairs.js")
     require("../analytics/partners.js")
   })

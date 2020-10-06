@@ -119,7 +119,9 @@ module.exports = class FilterView extends Backbone.View
               @$('.filter-artworks').attr('data-state') is 'finished-paging'
     @params.set page: (@params.get('page') + 1) or 1
 
-    analyticsHooks.trigger 'artwork_filter:new_page', { page: @params.get('page') }
+    window.analytics.track("Artworks filter / Scrolled to new page", {
+      page: @params.get('page')
+    })
 
   reset: =>
     @params.
