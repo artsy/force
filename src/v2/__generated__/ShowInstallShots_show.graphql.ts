@@ -74,18 +74,6 @@ v4 = [
 ],
 v5 = [
   (v3/*: any*/)
-],
-v6 = [
-  {
-    "kind": "Literal",
-    "name": "height",
-    "value": 900
-  },
-  {
-    "kind": "Literal",
-    "name": "width",
-    "value": 900
-  }
 ];
 return {
   "argumentDefinitions": [],
@@ -156,7 +144,18 @@ return {
         },
         {
           "alias": "zoom1x",
-          "args": (v6/*: any*/),
+          "args": [
+            {
+              "kind": "Literal",
+              "name": "height",
+              "value": 900
+            },
+            {
+              "kind": "Literal",
+              "name": "width",
+              "value": 900
+            }
+          ],
           "concreteType": "ResizedImageUrl",
           "kind": "LinkedField",
           "name": "resized",
@@ -166,13 +165,24 @@ return {
         },
         {
           "alias": "zoom2x",
-          "args": (v6/*: any*/),
+          "args": [
+            {
+              "kind": "Literal",
+              "name": "height",
+              "value": 1800
+            },
+            {
+              "kind": "Literal",
+              "name": "width",
+              "value": 1800
+            }
+          ],
           "concreteType": "ResizedImageUrl",
           "kind": "LinkedField",
           "name": "resized",
           "plural": false,
           "selections": (v5/*: any*/),
-          "storageKey": "resized(height:900,width:900)"
+          "storageKey": "resized(height:1800,width:1800)"
         }
       ],
       "storageKey": null
@@ -181,5 +191,5 @@ return {
   "type": "Show"
 };
 })();
-(node as any).hash = '66883e6414fa8a3aa5b848e4efa81d33';
+(node as any).hash = '598dd19d028ceb644a767685493f339f';
 export default node;
