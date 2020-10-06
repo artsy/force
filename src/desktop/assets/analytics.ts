@@ -48,7 +48,6 @@ $(() =>
     require("../analytics/artist_page.js")
     require("../analytics/artists.js")
     require("../analytics/artwork.js")
-    require("../analytics/artwork_rail.js")
     require("../analytics/artworks_filter.js")
     require("../analytics/consignments.js")
     require("../analytics/contact.js")
