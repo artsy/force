@@ -14,8 +14,11 @@ const { fabricate } = require("@artsy/antigravity")
 describe("UserSettingsView", function () {
   beforeEach(function (done) {
     this.user = new CurrentUser(fabricate("user"))
-    return benv.setup(() => {
-      benv.expose({ $: benv.require("jquery") })
+    benv.setup(() => {
+      benv.expose({
+        $: benv.require("jquery"),
+        jQuery: require("jquery"),
+      })
       sinon.stub(Backbone, "sync")
       sinon.stub($, "ajax")
       global.location = { assign: sinon.stub() }
@@ -26,20 +29,20 @@ describe("UserSettingsView", function () {
 <div class='js--settings-logout'></div> \
 </div>`),
       })
-      return done()
+      done()
     })
   })
 
   afterEach(function () {
     $.ajax.restore()
     benv.teardown()
-    return Backbone.sync.restore()
+    Backbone.sync.restore()
   })
 
-  return describe("#logout", () =>
+  describe("#logout", () =>
     it("logs out a user who was signed in", function () {
       this.view.$(".js--settings-logout").click()
       $.ajax.args[0][0].success()
-      return global.location.assign.args[0][0].should.containEql("/")
+      global.location.assign.args[0][0].should.containEql("/")
     }))
 })
