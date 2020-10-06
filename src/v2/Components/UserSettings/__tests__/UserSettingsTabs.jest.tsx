@@ -29,7 +29,6 @@ describe("UserSettingsTabs", () => {
 
     tabs.forEach(([href, tabLabel], index) => {
       const tabLink = links.at(index)
-      // console.log("HREF tablink", tabLink.)
       expect(href).toEqual(tabLink.prop("to"))
       expect(tabLabel).toEqual(tabLink.text())
     })
