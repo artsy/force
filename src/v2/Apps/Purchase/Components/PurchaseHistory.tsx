@@ -6,16 +6,17 @@ import {
   Flex,
   HelpIcon,
   Image,
+  LargePagination,
   Link,
   PendingCircleIcon,
   Sans,
   Separator,
+  SmallPagination,
   Spinner,
   Text,
   XCircleIcon,
 } from "@artsy/palette"
 import { data as sd } from "sharify"
-import { PaginationFragmentContainer as Pagination } from "v2/Components/Pagination"
 import { DateTime } from "luxon"
 import { PurchaseHistory_me } from "v2/__generated__/PurchaseHistory_me.graphql"
 import React, { useState } from "react"
@@ -86,6 +87,7 @@ const OrderRow = (props: OrderRowProps) => {
   const artwork = order.lineItems.edges[0].node.artwork
 
   const orderCreatedAt = DateTime.fromISO(order.createdAt)
+  // TODO: pass desirable states to graphql query instead of filtering abandoned
   if (!artwork || order.state === "ABANDONED") {
     return null
   }
@@ -228,7 +230,8 @@ const OrderRow = (props: OrderRowProps) => {
               <Flex flexDirection="column" ml={1}>
                 <Text variant="text">{artwork.partner?.name}</Text>
                 <Text variant="text" color="black60">
-                  {artwork.shippingOrigin.replace(/, US/g, "")}
+                  {artwork.shippingOrigin &&
+                    artwork.shippingOrigin.replace(/, US/g, "")}
                 </Text>
               </Flex>
             </Flex>
@@ -324,6 +327,14 @@ const PurchaseHistory: React.FC<PurchaseHistoryProps> = (
   const { me } = props
   const pageInfo = me.orders.pageInfo
   const myOrders = me.orders.edges && me.orders.edges.map(x => x.node)
+
+  const paginationProps = {
+    pageCursors: props.me.orders.pageCursors,
+    hasNextPage: props.me.orders.pageInfo.hasNextPage,
+    onClick: cursor => loadAfter(cursor, props.relay, setLoading),
+    onNext: () => loadNext(pageInfo, props.relay, setLoading),
+  }
+
   return !loading ? (
     <Box>
       <Box mx={["0px", "40px", "40px", "40px"]} mt="-5px">
@@ -341,12 +352,15 @@ const PurchaseHistory: React.FC<PurchaseHistoryProps> = (
         <Sans size="2">No Orders</Sans>
       )}
       <StyledBox>
-        <Pagination
-          pageCursors={me.orders.pageCursors}
-          hasNextPage
-          onClick={cursor => loadAfter(cursor, props.relay, setLoading)}
-          onNext={() => loadNext(pageInfo, props.relay, setLoading)}
-        />
+        <Media at="xs">
+          <SmallPagination {...paginationProps} />
+        </Media>
+        <Media greaterThan="xs">
+          <Box>
+            <Separator mb={3} pr={2} />
+            <LargePagination {...paginationProps} />
+          </Box>
+        </Media>
       </StyledBox>
     </Box>
   ) : (
