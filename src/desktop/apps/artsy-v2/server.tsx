@@ -11,6 +11,7 @@ import { artistMiddleware } from "./apps/artist/artistMiddleware"
 import { userRequiredMiddleware } from "./middleware/userRequiredMiddleware"
 import { searchMiddleware } from "./apps/search/searchMiddleware"
 import { handleCollectionToArtistSeriesRedirect } from "./apps/collection/collectionMiddleware"
+import { getPageTypeFromReq } from "lib/getPageType"
 
 export const app = express()
 
@@ -58,8 +59,7 @@ app.get(
    */
   async (req: Request, res, next) => {
     try {
-      const pageParts = req.path.split("/")
-      const pageType = pageParts[1]
+      const { pageType } = getPageTypeFromReq(req)
 
       const {
         status,

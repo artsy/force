@@ -1,10 +1,11 @@
-import { getPageType } from "../../utils/getPageType"
+import { OwnerType } from "@artsy/cohesion"
+import { getPageTypeFromReq } from "lib/getPageType"
 
 export const artistMiddleware = (req, res, next) => {
-  const { pageType, pageParts } = getPageType(req)
+  const { pageType, pageSlug } = getPageTypeFromReq(req)
 
-  if (pageType === "artist") {
-    const artistID = pageParts[2]
+  if (pageType === OwnerType.artist) {
+    const artistID = pageSlug
     const user = req.user && req.user.toJSON()
     const { APP_URL, IS_MOBILE, REFERRER } = res.locals.sd
     const isExternalReferer = !(REFERRER && REFERRER.includes(APP_URL))
