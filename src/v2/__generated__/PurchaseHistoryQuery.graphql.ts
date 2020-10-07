@@ -34,63 +34,68 @@ query PurchaseHistoryQuery(
   }
 }
 
+fragment OrderRow_order on CommerceOrder {
+  internalID
+  code
+  state
+  mode
+  requestedFulfillment {
+    __typename
+    ... on CommerceShip {
+      __typename
+    }
+    ... on CommercePickup {
+      __typename
+    }
+  }
+  creditCard {
+    lastDigits
+    id
+  }
+  buyerTotal
+  createdAt
+  itemsTotal
+  lineItems {
+    edges {
+      node {
+        artwork {
+          date
+          image {
+            resized(width: 55) {
+              url
+            }
+          }
+          partner {
+            initials
+            name
+            profile {
+              icon {
+                url(version: "square140")
+              }
+              id
+            }
+            id
+          }
+          shippingOrigin
+          internalID
+          title
+          artist_names: artistNames
+          id
+        }
+        id
+      }
+    }
+  }
+}
+
 fragment PurchaseHistory_me_pbnwq on Me {
   name
   orders(first: $first, last: $last, before: $before, after: $after) {
     edges {
       node {
         __typename
-        internalID
         code
-        state
-        mode
-        requestedFulfillment {
-          __typename
-          ... on CommerceShip {
-            __typename
-          }
-          ... on CommercePickup {
-            __typename
-          }
-        }
-        creditCard {
-          lastDigits
-          id
-        }
-        buyerTotal
-        createdAt
-        itemsTotal
-        lineItems {
-          edges {
-            node {
-              artwork {
-                date
-                image {
-                  resized(width: 55) {
-                    url
-                  }
-                }
-                partner {
-                  initials
-                  name
-                  profile {
-                    icon {
-                      url(version: "square140")
-                    }
-                    id
-                  }
-                  id
-                }
-                shippingOrigin
-                internalID
-                title
-                artist_names: artistNames
-                id
-              }
-              id
-            }
-          }
-        }
+        ...OrderRow_order
         id
       }
     }
@@ -295,7 +300,6 @@ return {
                     "plural": false,
                     "selections": [
                       (v3/*: any*/),
-                      (v4/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -303,6 +307,7 @@ return {
                         "name": "code",
                         "storageKey": null
                       },
+                      (v4/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -656,7 +661,7 @@ return {
     "metadata": {},
     "name": "PurchaseHistoryQuery",
     "operationKind": "query",
-    "text": "query PurchaseHistoryQuery(\n  $first: Int!\n  $last: Int\n  $after: String\n  $before: String\n) {\n  me {\n    ...PurchaseHistory_me_pbnwq\n    id\n  }\n}\n\nfragment PurchaseHistory_me_pbnwq on Me {\n  name\n  orders(first: $first, last: $last, before: $before, after: $after) {\n    edges {\n      node {\n        __typename\n        internalID\n        code\n        state\n        mode\n        requestedFulfillment {\n          __typename\n          ... on CommerceShip {\n            __typename\n          }\n          ... on CommercePickup {\n            __typename\n          }\n        }\n        creditCard {\n          lastDigits\n          id\n        }\n        buyerTotal\n        createdAt\n        itemsTotal\n        lineItems {\n          edges {\n            node {\n              artwork {\n                date\n                image {\n                  resized(width: 55) {\n                    url\n                  }\n                }\n                partner {\n                  initials\n                  name\n                  profile {\n                    icon {\n                      url(version: \"square140\")\n                    }\n                    id\n                  }\n                  id\n                }\n                shippingOrigin\n                internalID\n                title\n                artist_names: artistNames\n                id\n              }\n              id\n            }\n          }\n        }\n        id\n      }\n    }\n    pageCursors {\n      around {\n        cursor\n        isCurrent\n        page\n      }\n      first {\n        cursor\n        isCurrent\n        page\n      }\n      last {\n        cursor\n        isCurrent\n        page\n      }\n      previous {\n        cursor\n        isCurrent\n        page\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n"
+    "text": "query PurchaseHistoryQuery(\n  $first: Int!\n  $last: Int\n  $after: String\n  $before: String\n) {\n  me {\n    ...PurchaseHistory_me_pbnwq\n    id\n  }\n}\n\nfragment OrderRow_order on CommerceOrder {\n  internalID\n  code\n  state\n  mode\n  requestedFulfillment {\n    __typename\n    ... on CommerceShip {\n      __typename\n    }\n    ... on CommercePickup {\n      __typename\n    }\n  }\n  creditCard {\n    lastDigits\n    id\n  }\n  buyerTotal\n  createdAt\n  itemsTotal\n  lineItems {\n    edges {\n      node {\n        artwork {\n          date\n          image {\n            resized(width: 55) {\n              url\n            }\n          }\n          partner {\n            initials\n            name\n            profile {\n              icon {\n                url(version: \"square140\")\n              }\n              id\n            }\n            id\n          }\n          shippingOrigin\n          internalID\n          title\n          artist_names: artistNames\n          id\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment PurchaseHistory_me_pbnwq on Me {\n  name\n  orders(first: $first, last: $last, before: $before, after: $after) {\n    edges {\n      node {\n        __typename\n        code\n        ...OrderRow_order\n        id\n      }\n    }\n    pageCursors {\n      around {\n        cursor\n        isCurrent\n        page\n      }\n      first {\n        cursor\n        isCurrent\n        page\n      }\n      last {\n        cursor\n        isCurrent\n        page\n      }\n      previous {\n        cursor\n        isCurrent\n        page\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n"
   }
 };
 })();
