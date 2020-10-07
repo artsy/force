@@ -14,7 +14,6 @@ import syncAuth from "lib/syncAuth"
 
 const mediator = require("./mediator.coffee")
 const FlashMessage = require("../components/flash/index.coffee")
-const analyticsHooks = require("./analytics_hooks.coffee")
 const templateModules = require("./template_modules.coffee")
 const listenForInvert = require("../components/eggs/invert/index.coffee")
 const listenForBounce = require("../components/eggs/bounce/index.coffee")
@@ -38,13 +37,17 @@ export function globalClientSetup() {
   mediator.on("auth:logout", logoutEventHandler)
 }
 
-function logoutEventHandler() {
+export function logoutEventHandler(path?: string) {
   $.ajax({
     url: "/users/sign_out",
     type: "DELETE",
     success() {
-      analyticsHooks.trigger("auth:logged-out")
-      location.reload()
+      window.analytics.reset()
+      if (path) {
+        location.assign(path)
+      } else {
+        location.reload()
+      }
     },
     error(_xhr, _status, errorMessage) {
       // tslint:disable-next-line:no-unused-expression

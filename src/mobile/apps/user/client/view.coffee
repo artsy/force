@@ -1,8 +1,6 @@
-_ = require 'underscore'
-sd = require('sharify').data
 Backbone = require 'backbone'
 bootstrap = require '../../../components/layout/bootstrap.coffee'
-analyticsHooks = require '../../../lib/analytics_hooks.coffee'
+{ logoutEventHandler } = require '../../../../desktop/lib/global_client_setup.tsx'
 
 module.exports.UserSettingsView = class UserSettingsView extends Backbone.View
 
@@ -11,16 +9,7 @@ module.exports.UserSettingsView = class UserSettingsView extends Backbone.View
 
   logout: (e) ->
     e.preventDefault()
-    $.ajax
-      url: '/users/sign_out'
-      type: 'DELETE'
-      success: ->
-        location.assign document.referrer or '/'
-      error: (xhr, status, errorMessage) ->
-        analyticsHooks.trigger 'auth:logged-out'
-        $('#settings-generic-error')
-          .text errorMessage
-          .css('display', 'block')
+    logoutEventHandler('/')
 
 module.exports.init = ->
   bootstrap()

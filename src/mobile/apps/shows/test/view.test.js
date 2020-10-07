@@ -19,7 +19,10 @@ describe("ShowCityView", function () {
         fabricate("show", { status: "running" }),
         fabricate("show"),
       ])
-      benv.expose({ $: benv.require("jquery") })
+      benv.expose({
+        $: benv.require("jquery"),
+        jQuery: benv.require("jquery"),
+      })
       Backbone.$ = $
       sinon.stub(Backbone, "sync")
       return benv.render(
