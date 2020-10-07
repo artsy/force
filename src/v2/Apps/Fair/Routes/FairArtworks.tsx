@@ -2,7 +2,6 @@ import { FairArtworks_fair } from "v2/__generated__/FairArtworks_fair.graphql"
 import { BaseArtworkFilter } from "v2/Components/v2/ArtworkFilter"
 import { ArtworkFilterContextProvider } from "v2/Components/v2/ArtworkFilter/ArtworkFilterContext"
 import { updateUrl } from "v2/Components/v2/ArtworkFilter/Utils/urlBuilder"
-import { Match, RouterState, withRouter } from "found"
 import React from "react"
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
 import { MediumFilter } from "v2/Components/v2/ArtworkFilter/ArtworkFilters/MediumFilter"
@@ -17,15 +16,17 @@ import { ArtistsFilter } from "v2/Components/v2/ArtworkFilter/ArtworkFilters/Art
 import { useTracking } from "react-tracking"
 import { clickedMainArtworkGrid } from "@artsy/cohesion"
 import { useAnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
+import { useSystemContext } from "v2/Artsy"
+import { useRouter } from "v2/Artsy/Router/useRouter"
 
 interface FairArtworksFilterProps {
   fair: FairArtworks_fair
   relay: RelayRefetchProp
-  match?: Match
 }
 
 const FairArtworksFilter: React.FC<FairArtworksFilterProps> = props => {
-  const { match, relay, fair } = props
+  const { relay, fair } = props
+  const { match } = useRouter()
   const { filtered_artworks } = fair
   const tracking = useTracking()
   const {
@@ -33,6 +34,8 @@ const FairArtworksFilter: React.FC<FairArtworksFilterProps> = props => {
     contextPageOwnerSlug,
     contextPageOwnerType,
   } = useAnalyticsContext()
+
+  const { relayEnvironment, user } = useSystemContext()
 
   const hasFilter = filtered_artworks && filtered_artworks.id
 
@@ -42,9 +45,16 @@ const FairArtworksFilter: React.FC<FairArtworksFilterProps> = props => {
 
   const { counts } = filtered_artworks
 
+  // TODO: You shouldn't have to pass `relayEnvironment` and `user` through below.
+  // For some reason, they are undefined when `useSystemContext()` is referenced
+  // in <ArtistsFilter />. So, pass as props for now.
   const Filters = () => (
     <Box pr={2}>
-      <ArtistsFilter />
+      <ArtistsFilter
+        fairID={fair.internalID}
+        relayEnvironment={relayEnvironment}
+        user={user}
+      />
       <MediumFilter />
       <PriceRangeFilter />
       <WaysToBuyFilter />
@@ -95,7 +105,7 @@ const FairArtworksFilter: React.FC<FairArtworksFilterProps> = props => {
 }
 
 export const FairArtworksRefetchContainer = createRefetchContainer(
-  withRouter<FairArtworksFilterProps & RouterState>(FairArtworksFilter),
+  FairArtworksFilter,
   {
     fair: graphql`
       fragment FairArtworks_fair on Fair
