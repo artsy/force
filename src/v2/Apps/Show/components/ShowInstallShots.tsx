@@ -31,7 +31,11 @@ export const ShowInstallShots: React.FC<ShowInstallShotsProps> = ({
       <Carousel {...rest}>
         {show.images.map((image, i) => {
           return (
-            <Clickable key={image.internalID} onClick={handleOpen(image)}>
+            <Clickable
+              key={image.internalID}
+              onClick={handleOpen(image)}
+              display="block"
+            >
               <Image
                 src={image._1x.src}
                 srcSet={`${image._1x.src} 1x, ${image._2x.src} 2x`}
