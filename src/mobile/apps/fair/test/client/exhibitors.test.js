@@ -12,7 +12,7 @@ const sinon = require("sinon")
 const benv = require("benv")
 const { resolve } = require("path")
 
-describe("Exhibitors page client-side code", function () {
+xdescribe("Exhibitors page client-side code", function () {
   beforeEach(function (done) {
     return benv.setup(() => {
       benv.expose({ $: benv.require("jquery") })
