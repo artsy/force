@@ -5,7 +5,7 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ShowApp_show = {
     readonly name: string | null;
-    readonly " $fragmentRefs": FragmentRefs<"ShowMeta_show" | "ShowInstallShots_show">;
+    readonly " $fragmentRefs": FragmentRefs<"ShowContextualLink_show" | "ShowMeta_show" | "ShowInstallShots_show">;
     readonly " $refType": "ShowApp_show";
 };
 export type ShowApp_show$data = ShowApp_show;
@@ -32,6 +32,11 @@ const node: ReaderFragment = {
     {
       "args": null,
       "kind": "FragmentSpread",
+      "name": "ShowContextualLink_show"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
       "name": "ShowMeta_show"
     },
     {
@@ -42,5 +47,5 @@ const node: ReaderFragment = {
   ],
   "type": "Show"
 };
-(node as any).hash = '56e700b805c8dd260c5f9f984e9c97a6';
+(node as any).hash = '7fdc785a6024be96e72075cf08f34bca';
 export default node;
