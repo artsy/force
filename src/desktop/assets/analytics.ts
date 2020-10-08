@@ -52,7 +52,6 @@ $(() =>
     require("../analytics/embedded_inquiry.js")
     require("../analytics/galleries.js")
     require("../analytics/inquiry_questionnaire.js")
-    require("../analytics/partner.js")
     require("../analytics/recently_viewed_artworks.js")
     require("../analytics/show_page.js")
   })
