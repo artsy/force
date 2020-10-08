@@ -42,6 +42,7 @@ import { ArtworkQueryFilter } from "./ArtworkQueryFilter"
 import { ArtistSeriesArtworksFilter_artistSeries } from "v2/__generated__/ArtistSeriesArtworksFilter_artistSeries.graphql"
 import { StickyContainer } from "./StickyContainer"
 import { FairArtworks_fair } from "v2/__generated__/FairArtworks_fair.graphql"
+import { ShowArtworks_show } from "v2/__generated__/ShowArtworks_show.graphql"
 
 /**
  * Primary ArtworkFilter which is wrapped with a context and refetch container.
@@ -91,6 +92,7 @@ export const BaseArtworkFilter: React.FC<
       | ArtistArtworkFilter_artist
       | ArtistSeriesArtworksFilter_artistSeries
       | FairArtworks_fair
+      | ShowArtworks_show
     Filters?: React.FC
   }
 > = ({ relay, viewer, Filters, relayVariables = {}, children, ...rest }) => {

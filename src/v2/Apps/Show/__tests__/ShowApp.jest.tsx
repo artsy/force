@@ -10,6 +10,10 @@ jest.mock("v2/Apps/Show/components/ShowMeta", () => ({
   ShowMetaFragmentContainer: () => null,
 }))
 
+jest.mock("v2/Apps/Show/components/ShowArtworks", () => ({
+  ShowArtworksRefetchContainer: () => null,
+}))
+
 jest.mock("v2/Apps/Show/components/ShowInstallShots", () => ({
   ShowInstallShotsFragmentContainer: () => null,
 }))

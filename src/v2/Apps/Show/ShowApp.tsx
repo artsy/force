@@ -13,6 +13,7 @@ import { ShowInstallShotsFragmentContainer as ShowInstallShots } from "./compone
 import { ShowContextualLinkFragmentContainer as ShowContextualLink } from "./components/ShowContextualLink"
 import { ShowViewingRoom } from "./components/ShowViewingRoom"
 import { ShowApp_show } from "v2/__generated__/ShowApp_show.graphql"
+import { ShowArtworksRefetchContainer as ShowArtworks } from "./components/ShowArtworks"
 
 interface ShowAppProps {
   show: ShowApp_show
@@ -69,6 +70,10 @@ export const ShowApp: React.FC<ShowAppProps> = ({ show }) => {
 
           <Separator as="hr" my={3} />
 
+          <ShowArtworks show={show} />
+
+          <Separator as="hr" my={3} />
+
           <Footer />
         </HorizontalPadding>
       </AppContainer>
@@ -79,7 +84,23 @@ export const ShowApp: React.FC<ShowAppProps> = ({ show }) => {
 // Top-level route needs to be exported for bundle splitting in the router
 export default createFragmentContainer(ShowApp, {
   show: graphql`
-    fragment ShowApp_show on Show {
+    fragment ShowApp_show on Show
+      @argumentDefinitions(
+        acquireable: { type: "Boolean" }
+        aggregations: { type: "[ArtworkAggregation]" }
+        atAuction: { type: "Boolean" }
+        color: { type: "String" }
+        forSale: { type: "Boolean" }
+        inquireableOnly: { type: "Boolean" }
+        majorPeriods: { type: "[String]" }
+        medium: { type: "String", defaultValue: "*" }
+        offerable: { type: "Boolean" }
+        page: { type: "Int" }
+        partnerID: { type: "ID" }
+        priceRange: { type: "String" }
+        sizes: { type: "[ArtworkSizes]" }
+        sort: { type: "String", defaultValue: "-decayed_merch" }
+      ) {
       name
       about: description
       pressRelease
@@ -88,6 +109,23 @@ export default createFragmentContainer(ShowApp, {
       ...ShowAbout_show
       ...ShowMeta_show
       ...ShowInstallShots_show
+      ...ShowArtworks_show
+        @arguments(
+          acquireable: $acquireable
+          aggregations: $aggregations
+          atAuction: $atAuction
+          color: $color
+          forSale: $forSale
+          inquireableOnly: $inquireableOnly
+          majorPeriods: $majorPeriods
+          medium: $medium
+          offerable: $offerable
+          page: $page
+          partnerID: $partnerID
+          priceRange: $priceRange
+          sizes: $sizes
+          sort: $sort
+        )
     }
   `,
 })
