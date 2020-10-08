@@ -1,6 +1,5 @@
 sd = require('sharify').data
 Backbone = require 'backbone'
-analyticsHooks = require '../../../lib/analytics_hooks.coffee'
 Profile = require '../../../models/profile.coffee'
 Partner = require '../../../models/partner.coffee'
 PartnerRouter = require './router.coffee'
@@ -18,4 +17,10 @@ module.exports.init = ->
 
   partner.on 'sync', ->
     unless partner.get('claimed')
-      analyticsHooks.trigger 'partner:non-claimed', id: partner.id
+      window.analytics.track(
+        "Non-claimed partner page",
+        {
+          id: partner.id,
+          nonInteraction: 1
+        }
+      )

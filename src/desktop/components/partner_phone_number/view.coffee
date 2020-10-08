@@ -1,10 +1,11 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-analyticsHooks = require '../../lib/analytics_hooks.coffee'
 template = -> require('./template.jade') arguments...
 
 logOnce = _.once (locations) ->
-  analyticsHooks.trigger 'show_number:displayed' if locations.length
+  window.analytics.track("Displayed 'show phone number' button", {
+    nonInteraction: 1,
+  }) if locations.length
 
 module.exports = class PartnerPhoneNumberView extends Backbone.View
   events:
