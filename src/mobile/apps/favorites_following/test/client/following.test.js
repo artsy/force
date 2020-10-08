@@ -1,8 +1,3 @@
-/*
- * decaffeinate suggestions:
- * DS102: Remove unnecessary code created because of implicit returns
- * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
- */
 const _ = require("underscore")
 const benv = require("benv")
 const sinon = require("sinon")
@@ -14,41 +9,42 @@ const FollowingView = benv.requireWithJadeify(
   ["profilesTemplate"]
 )
 
-describe("Follows client-side code", function () {
-  beforeEach(function (done) {
-    return benv.setup(() => {
+describe("Follows client-side code", () => {
+  let view
+  beforeEach(done => {
+    benv.setup(() => {
       benv.expose({ $: benv.require("jquery") })
-      Backbone.$ = $
-      $.onInfiniteScroll = function () {}
-      return benv.render(
+      $.onInfiniteScroll = () => {}
+      benv.render(
         resolve(__dirname, "../../templates/index.jade"),
         { sd: {} },
         () => {
-          this.profiles = () =>
+          Backbone.$ = $
+          const profiles = () =>
             _.times(5, () => ({
               profile: fabricate("profile", { id: _.uniqueId() }),
             }))
-          sinon.stub(Backbone, "sync").yieldsTo("success", this.profiles())
-          this.view = new FollowingView({ el: $("body") })
-          return done()
+          sinon.stub(Backbone, "sync").yieldsTo("success", profiles())
+          view = new FollowingView({ el: $("body") })
+          done()
         }
       )
     })
   })
 
-  afterEach(function () {
+  afterEach(() => {
     benv.teardown()
-    return Backbone.sync.restore()
+    Backbone.sync.restore()
   })
 
-  it("fetches the following profiles and renders them immediately", function () {
-    this.view.$list.length.should.equal(1)
-    return this.view.$(".profile-item").length.should.equal(5)
+  it("fetches the following profiles and renders them immediately", () => {
+    view.$list.length.should.equal(1)
+    view.$(".profile-item").length.should.equal(5)
   })
 
-  return it("appends new profiles once they are fetched", function () {
-    this.view.following.fetch()
-    this.view.$list.length.should.equal(1)
-    return this.view.$(".profile-item").length.should.equal(10)
+  it("appends new profiles once they are fetched", () => {
+    view.following.fetch()
+    view.$list.length.should.equal(1)
+    view.$(".profile-item").length.should.equal(10)
   })
 })
