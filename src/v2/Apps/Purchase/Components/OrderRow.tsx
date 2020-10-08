@@ -34,24 +34,25 @@ const OrderRow: React.FC<OrderRowProps> = props => {
   const artwork = order.lineItems.edges[0].node.artwork
 
   const orderCreatedAt = DateTime.fromISO(order.createdAt)
-  // TODO: pass desirable states to graphql query instead of filtering abandoned
-  if (!artwork || order.state === "ABANDONED") {
-    return null
-  }
-
-  const { partner } = artwork
 
   const { creditCard, requestedFulfillment } = order
 
   const orderIsInactive =
     order.state === "CANCELED" || order.state === "REFUNDED"
 
-  const partnerImageUrl = partner?.profile?.icon?.url
-  const partnerInitials = partner?.initials
+  const partnerImageUrl = artwork?.partner?.profile?.icon?.url
+  const partnerInitials = artwork?.partner?.initials
+  const partnerName = artwork?.partner?.name
   const creditCardNumber = creditCard?.lastDigits
   const fulfillment = requestedFulfillment?.__typename
 
   const isShip = fulfillment === "CommerceShip"
+
+  const artworkImage = artwork ? (
+    <StyledImage src={artwork.image?.resized?.url} alt={artwork.title} />
+  ) : (
+    <Box width="50px" height="50px" backgroundColor="black10" />
+  )
 
   const XSOrderRow = (
     <Box px={2}>
@@ -68,8 +69,9 @@ const OrderRow: React.FC<OrderRowProps> = props => {
           width="50px"
           mr={1.5}
         >
-          <StyledImage src={artwork.image?.resized?.url} alt={artwork.title} />
+          {artworkImage}
         </Flex>
+
         <Flex flexDirection="column" justifyContent="center" width="100%">
           {!orderIsInactive && (
             <Link
@@ -77,17 +79,17 @@ const OrderRow: React.FC<OrderRowProps> = props => {
               underlineBehavior="hover"
             >
               <Text variant="text" letterSpacing="tight">
-                {artwork.artist_names}
+                {artwork?.artist_names}
               </Text>
             </Link>
           )}
           {orderIsInactive && (
             <Text variant="text" letterSpacing="tight">
-              {artwork.artist_names}
+              {artwork?.artist_names}
             </Text>
           )}
           <Text variant="text" color="black60" letterSpacing="tight">
-            {artwork.partner?.name}
+            {artwork?.partner?.name}
           </Text>
           <Text variant="text" color="black60" letterSpacing="tight">
             {orderCreatedAt.toLocaleString(DateTime.DATE_SHORT)}
@@ -143,35 +145,31 @@ const OrderRow: React.FC<OrderRowProps> = props => {
       </Flex>
       <Flex p={2} width="100%" alignItems="center">
         <Flex width="50%">
-          <StyledImage
-            src={artwork.image?.resized?.url}
-            alt={artwork.title}
-            mr={1}
-          />
-          <Flex flexDirection="column">
+          {artworkImage}
+          <Flex flexDirection="column" ml={1}>
             {!orderIsInactive && (
               <Link
                 href={`/orders/${order.internalID}/status`}
                 underlineBehavior="hover"
               >
-                <Text variant="text">{artwork.artist_names}</Text>
+                <Text variant="text">{artwork?.artist_names}</Text>
               </Link>
             )}
             {orderIsInactive && (
-              <Text variant="text">{artwork.artist_names}</Text>
+              <Text variant="text">{artwork?.artist_names}</Text>
             )}
             <Text variant="text" color="black60">
-              {artwork.title}
+              {artwork?.title}
             </Text>
           </Flex>
         </Flex>
         <Flex width="50%">
           <Avatar size="xs" src={partnerImageUrl} initials={partnerInitials} />
           <Flex flexDirection="column" ml={1}>
-            <Text variant="text">{artwork.partner?.name}</Text>
+            <Text variant="text">{partnerName}</Text>
             <Text variant="text" color="black60">
-              {artwork.shippingOrigin &&
-                artwork.shippingOrigin.replace(/, US/g, "")}
+              {artwork?.shippingOrigin &&
+                artwork?.shippingOrigin.replace(/, US/g, "")}
             </Text>
           </Flex>
         </Flex>

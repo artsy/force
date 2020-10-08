@@ -3,7 +3,9 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
+export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "PENDING" | "REFUNDED" | "SUBMITTED" | "%future added value";
 export type PurchaseHistoryQueryVariables = {
+    states?: Array<CommerceOrderStateEnum> | null;
     first: number;
     last?: number | null;
     after?: string | null;
@@ -23,13 +25,14 @@ export type PurchaseHistoryQuery = {
 
 /*
 query PurchaseHistoryQuery(
+  $states: [CommerceOrderStateEnum!]
   $first: Int!
   $last: Int
   $after: String
   $before: String
 ) {
   me {
-    ...PurchaseHistory_me_pbnwq
+    ...PurchaseHistory_me_2dCEyL
     id
   }
 }
@@ -88,9 +91,9 @@ fragment OrderRow_order on CommerceOrder {
   }
 }
 
-fragment PurchaseHistory_me_pbnwq on Me {
+fragment PurchaseHistory_me_2dCEyL on Me {
   name
-  orders(first: $first, last: $last, before: $before, after: $after) {
+  orders(states: $states, first: $first, last: $last, before: $before, after: $after) {
     edges {
       node {
         __typename
@@ -136,6 +139,12 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
+    "name": "states",
+    "type": "[CommerceOrderStateEnum!]"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
     "name": "first",
     "type": "Int!"
   },
@@ -178,6 +187,11 @@ v1 = [
     "kind": "Variable",
     "name": "last",
     "variableName": "last"
+  },
+  {
+    "kind": "Variable",
+    "name": "states",
+    "variableName": "states"
   }
 ],
 v2 = {
@@ -661,9 +675,9 @@ return {
     "metadata": {},
     "name": "PurchaseHistoryQuery",
     "operationKind": "query",
-    "text": "query PurchaseHistoryQuery(\n  $first: Int!\n  $last: Int\n  $after: String\n  $before: String\n) {\n  me {\n    ...PurchaseHistory_me_pbnwq\n    id\n  }\n}\n\nfragment OrderRow_order on CommerceOrder {\n  internalID\n  code\n  state\n  mode\n  requestedFulfillment {\n    __typename\n    ... on CommerceShip {\n      __typename\n    }\n    ... on CommercePickup {\n      __typename\n    }\n  }\n  creditCard {\n    lastDigits\n    id\n  }\n  buyerTotal\n  createdAt\n  itemsTotal\n  lineItems {\n    edges {\n      node {\n        artwork {\n          date\n          image {\n            resized(width: 55) {\n              url\n            }\n          }\n          partner {\n            initials\n            name\n            profile {\n              icon {\n                url(version: \"square140\")\n              }\n              id\n            }\n            id\n          }\n          shippingOrigin\n          internalID\n          title\n          artist_names: artistNames\n          id\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment PurchaseHistory_me_pbnwq on Me {\n  name\n  orders(first: $first, last: $last, before: $before, after: $after) {\n    edges {\n      node {\n        __typename\n        code\n        ...OrderRow_order\n        id\n      }\n    }\n    pageCursors {\n      around {\n        cursor\n        isCurrent\n        page\n      }\n      first {\n        cursor\n        isCurrent\n        page\n      }\n      last {\n        cursor\n        isCurrent\n        page\n      }\n      previous {\n        cursor\n        isCurrent\n        page\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n"
+    "text": "query PurchaseHistoryQuery(\n  $states: [CommerceOrderStateEnum!]\n  $first: Int!\n  $last: Int\n  $after: String\n  $before: String\n) {\n  me {\n    ...PurchaseHistory_me_2dCEyL\n    id\n  }\n}\n\nfragment OrderRow_order on CommerceOrder {\n  internalID\n  code\n  state\n  mode\n  requestedFulfillment {\n    __typename\n    ... on CommerceShip {\n      __typename\n    }\n    ... on CommercePickup {\n      __typename\n    }\n  }\n  creditCard {\n    lastDigits\n    id\n  }\n  buyerTotal\n  createdAt\n  itemsTotal\n  lineItems {\n    edges {\n      node {\n        artwork {\n          date\n          image {\n            resized(width: 55) {\n              url\n            }\n          }\n          partner {\n            initials\n            name\n            profile {\n              icon {\n                url(version: \"square140\")\n              }\n              id\n            }\n            id\n          }\n          shippingOrigin\n          internalID\n          title\n          artist_names: artistNames\n          id\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment PurchaseHistory_me_2dCEyL on Me {\n  name\n  orders(states: $states, first: $first, last: $last, before: $before, after: $after) {\n    edges {\n      node {\n        __typename\n        code\n        ...OrderRow_order\n        id\n      }\n    }\n    pageCursors {\n      around {\n        cursor\n        isCurrent\n        page\n      }\n      first {\n        cursor\n        isCurrent\n        page\n      }\n      last {\n        cursor\n        isCurrent\n        page\n      }\n      previous {\n        cursor\n        isCurrent\n        page\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '1290b839c54d6117a01b4c8e69d3fa7a';
+(node as any).hash = '75a0c0a8565c1d118aaacce695d31b4f';
 export default node;

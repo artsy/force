@@ -78,6 +78,18 @@ var v0 = [
 return {
   "argumentDefinitions": [
     {
+      "defaultValue": [
+        "APPROVED",
+        "CANCELED",
+        "FULFILLED",
+        "REFUNDED",
+        "SUBMITTED"
+      ],
+      "kind": "LocalArgument",
+      "name": "states",
+      "type": "[CommerceOrderStateEnum!]"
+    },
+    {
       "defaultValue": 10,
       "kind": "LocalArgument",
       "name": "first",
@@ -135,6 +147,11 @@ return {
           "kind": "Variable",
           "name": "last",
           "variableName": "last"
+        },
+        {
+          "kind": "Variable",
+          "name": "states",
+          "variableName": "states"
         }
       ],
       "concreteType": "CommerceOrderConnectionWithTotalCount",
@@ -273,5 +290,5 @@ return {
   "type": "Me"
 };
 })();
-(node as any).hash = '314aab558327986a593ccab96597042c';
+(node as any).hash = '1209e7134c684e4488134dfc5ac291a5';
 export default node;

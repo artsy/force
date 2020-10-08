@@ -178,7 +178,7 @@ fragment PurchaseApp_me on Me {
 
 fragment PurchaseHistory_me on Me {
   name
-  orders(first: 10) {
+  orders(states: [APPROVED, CANCELED, FULFILLED, REFUNDED, SUBMITTED], first: 10) {
     edges {
       node {
         __typename
@@ -322,6 +322,17 @@ return {
                 "kind": "Literal",
                 "name": "first",
                 "value": 10
+              },
+              {
+                "kind": "Literal",
+                "name": "states",
+                "value": [
+                  "APPROVED",
+                  "CANCELED",
+                  "FULFILLED",
+                  "REFUNDED",
+                  "SUBMITTED"
+                ]
               }
             ],
             "concreteType": "CommerceOrderConnectionWithTotalCount",
@@ -694,7 +705,7 @@ return {
                 "storageKey": null
               }
             ],
-            "storageKey": "orders(first:10)"
+            "storageKey": "orders(first:10,states:[\"APPROVED\",\"CANCELED\",\"FULFILLED\",\"REFUNDED\",\"SUBMITTED\"])"
           },
           (v4/*: any*/)
         ],
@@ -707,7 +718,7 @@ return {
     "metadata": {},
     "name": "PurchaseAppTestQuery",
     "operationKind": "query",
-    "text": "query PurchaseAppTestQuery {\n  me {\n    ...PurchaseApp_me\n    id\n  }\n}\n\nfragment OrderRow_order on CommerceOrder {\n  internalID\n  code\n  state\n  mode\n  requestedFulfillment {\n    __typename\n    ... on CommerceShip {\n      __typename\n    }\n    ... on CommercePickup {\n      __typename\n    }\n  }\n  creditCard {\n    lastDigits\n    id\n  }\n  buyerTotal\n  createdAt\n  itemsTotal\n  lineItems {\n    edges {\n      node {\n        artwork {\n          date\n          image {\n            resized(width: 55) {\n              url\n            }\n          }\n          partner {\n            initials\n            name\n            profile {\n              icon {\n                url(version: \"square140\")\n              }\n              id\n            }\n            id\n          }\n          shippingOrigin\n          internalID\n          title\n          artist_names: artistNames\n          id\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment PurchaseApp_me on Me {\n  ...PurchaseHistory_me\n}\n\nfragment PurchaseHistory_me on Me {\n  name\n  orders(first: 10) {\n    edges {\n      node {\n        __typename\n        code\n        ...OrderRow_order\n        id\n      }\n    }\n    pageCursors {\n      around {\n        cursor\n        isCurrent\n        page\n      }\n      first {\n        cursor\n        isCurrent\n        page\n      }\n      last {\n        cursor\n        isCurrent\n        page\n      }\n      previous {\n        cursor\n        isCurrent\n        page\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n"
+    "text": "query PurchaseAppTestQuery {\n  me {\n    ...PurchaseApp_me\n    id\n  }\n}\n\nfragment OrderRow_order on CommerceOrder {\n  internalID\n  code\n  state\n  mode\n  requestedFulfillment {\n    __typename\n    ... on CommerceShip {\n      __typename\n    }\n    ... on CommercePickup {\n      __typename\n    }\n  }\n  creditCard {\n    lastDigits\n    id\n  }\n  buyerTotal\n  createdAt\n  itemsTotal\n  lineItems {\n    edges {\n      node {\n        artwork {\n          date\n          image {\n            resized(width: 55) {\n              url\n            }\n          }\n          partner {\n            initials\n            name\n            profile {\n              icon {\n                url(version: \"square140\")\n              }\n              id\n            }\n            id\n          }\n          shippingOrigin\n          internalID\n          title\n          artist_names: artistNames\n          id\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment PurchaseApp_me on Me {\n  ...PurchaseHistory_me\n}\n\nfragment PurchaseHistory_me on Me {\n  name\n  orders(states: [APPROVED, CANCELED, FULFILLED, REFUNDED, SUBMITTED], first: 10) {\n    edges {\n      node {\n        __typename\n        code\n        ...OrderRow_order\n        id\n      }\n    }\n    pageCursors {\n      around {\n        cursor\n        isCurrent\n        page\n      }\n      first {\n        cursor\n        isCurrent\n        page\n      }\n      last {\n        cursor\n        isCurrent\n        page\n      }\n      previous {\n        cursor\n        isCurrent\n        page\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n"
   }
 };
 })();

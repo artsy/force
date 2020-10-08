@@ -29,6 +29,14 @@ const StyledBox = styled(Box)`
   }
 `
 
+const ORDER_STATES = [
+  "APPROVED",
+  "SUBMITTED",
+  "CANCELED",
+  "FULFILLED",
+  "REFUNDED",
+]
+
 const PAGE_SIZE = 10
 
 const loadNext = (pageInfo, relay, setLoading) => {
@@ -42,22 +50,21 @@ const loadNext = (pageInfo, relay, setLoading) => {
 const loadAfter = (cursor, relay, setLoading) => {
   setLoading(true)
 
-  relay.refetch(
-    {
-      first: PAGE_SIZE,
-      after: cursor,
-      before: null,
-      last: null,
-    },
-    null,
-    error => {
-      setLoading(false)
+  const params = {
+    states: ORDER_STATES,
+    first: PAGE_SIZE,
+    after: cursor,
+    before: null,
+    last: null,
+  }
 
-      if (error) {
-        console.error(error)
-      }
+  relay.refetch(params, null, error => {
+    setLoading(false)
+
+    if (error) {
+      console.error(error)
     }
-  )
+  })
 }
 export interface PurchaseHistoryProps {
   me: PurchaseHistory_me
@@ -93,16 +100,22 @@ const PurchaseHistory: React.FC<PurchaseHistoryProps> = (
           />
         ))
       ) : (
-        <Sans size="2">No Orders</Sans>
+        <Sans size="4" py={2} px={4}>
+          No Orders
+        </Sans>
       )}
       <StyledBox>
         <Media at="xs">
-          <SmallPagination {...paginationProps} />
+          {props.me.orders.pageCursors && (
+            <SmallPagination {...paginationProps} />
+          )}
         </Media>
         <Media greaterThan="xs">
           <Box>
             <Separator mb={3} pr={2} />
-            <LargePagination {...paginationProps} />
+            {props.me.orders.pageCursors && (
+              <LargePagination {...paginationProps} />
+            )}
           </Box>
         </Media>
       </StyledBox>
@@ -118,13 +131,23 @@ export const PurchaseHistoryFragmentContainer = createRefetchContainer(
     me: graphql`
       fragment PurchaseHistory_me on Me
         @argumentDefinitions(
+          states: {
+            type: "[CommerceOrderStateEnum!]"
+            defaultValue: [APPROVED, CANCELED, FULFILLED, REFUNDED, SUBMITTED]
+          }
           first: { type: "Int", defaultValue: 10 }
           last: { type: "Int" }
           after: { type: "String" }
           before: { type: "String" }
         ) {
         name
-        orders(first: $first, last: $last, before: $before, after: $after) {
+        orders(
+          states: $states
+          first: $first
+          last: $last
+          before: $before
+          after: $after
+        ) {
           edges {
             node {
               code
@@ -165,6 +188,7 @@ export const PurchaseHistoryFragmentContainer = createRefetchContainer(
   },
   graphql`
     query PurchaseHistoryQuery(
+      $states: [CommerceOrderStateEnum!]
       $first: Int!
       $last: Int
       $after: String
@@ -172,7 +196,13 @@ export const PurchaseHistoryFragmentContainer = createRefetchContainer(
     ) {
       me {
         ...PurchaseHistory_me
-          @arguments(first: $first, last: $last, after: $after, before: $before)
+          @arguments(
+            states: $states
+            first: $first
+            last: $last
+            after: $after
+            before: $before
+          )
       }
     }
   `
