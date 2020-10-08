@@ -4,8 +4,7 @@ import { StyledLink } from "./StyledLink"
 import styled from "styled-components"
 
 interface ForwardLinkProps extends BoxProps {
-  linkText: string
-  path: string
+  to: string
 }
 
 const Link = styled(StyledLink)<BoxProps>`
@@ -23,20 +22,20 @@ const Link = styled(StyledLink)<BoxProps>`
 `
 
 export const ForwardLink: React.FC<ForwardLinkProps> = ({
-  linkText,
-  path,
+  children,
+  to,
   ...rest
 }) => {
   return (
     <Link
-      to={path}
+      to={to}
       display="flex"
       flexDirection="row"
       alignItems="center"
       {...rest}
     >
       <Text variant="mediumText" mr={0.3}>
-        {linkText}
+        {children}
       </Text>
 
       <ChevronIcon
