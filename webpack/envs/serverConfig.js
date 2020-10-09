@@ -15,7 +15,8 @@ export const serverConfig = {
   node: {
     __dirname: true,
   },
-  entry: path.join(basePath, "src/index.js"),
+  // entry: path.join(basePath, "src/index.js"),
+  entry: path.join(basePath, "src/v3/index.js"),
   output: {
     filename: "server.dist.js",
     chunkFilename: "[name].bundle.js",

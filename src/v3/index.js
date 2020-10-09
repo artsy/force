@@ -5,29 +5,31 @@ require("@babel/register")({
 })
 require("dotenv/config")
 
-const config = require("../../webpack")
 const express = require("express")
 const morgan = require("morgan")
 const path = require("path")
-const webpack = require("webpack")
 const sharify = require("sharify")
-require("../lib/setup_sharify")
+const compression = require("compression")
 const { createReloadable } = require("@artsy/express-reloadable")
+const { assetMiddleware } = require("../lib/middleware/assetMiddleware")
+
+require("../lib/setup_sharify")
 
 const { NODE_ENV, PORT } = process.env
 const isDevelopment = NODE_ENV === "development"
 const app = express()
 
+app.use(assetMiddleware())
 app.use(sharify)
+app.use(compression())
+app.use(express.static("public"))
 
 if (isDevelopment) {
   app.use(morgan("dev"))
   app.use(require("../lib/webpack-dev-server").app)
 
-  // app.use(require("./src/index.ts"))
   const mountAndReload = createReloadable(app, require)
   mountAndReload(path.resolve("src/v3/src"))
-  // app.use(mountAndReload(path.resolve(__dirname, "src")))
 } else {
   app.use(require("./src"))
 }

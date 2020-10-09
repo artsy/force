@@ -11,7 +11,13 @@ export const clientCommonConfig = {
   mode: env.nodeEnv,
   devtool: "source-map",
   stats: "normal", // or, `errors-only`
-  entry: getEntrypoints(),
+  entry: {
+    "artsy-v3": [
+      // "webpack-hot-middleware/client?reload=true",
+      path.resolve(process.cwd(), "src/desktop/assets/artsy-v3.tsx"),
+    ],
+  },
+  // entry: getEntrypoints(),
   output: {
     filename: "[name].js",
     path: path.resolve(basePath, "public/assets"),

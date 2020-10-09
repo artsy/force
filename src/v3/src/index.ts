@@ -1,40 +1,21 @@
-import express, { Request } from "express"
+import { NextFunction, Request, Response } from "express"
 import { buildServerApp } from "v2/Artsy/Router/server"
 import { getAppRoutes } from "v2/Apps/getAppRoutes"
 import { flatten } from "lodash"
-import mediator from "desktop/lib/mediator.coffee"
 import ReactDOM from "react-dom/server"
-import sharify from "sharify"
+import { buildServerAppContext } from "desktop/lib/buildServerAppContext"
 
-// export const app = express()
+// This export form is required for express-reloadable
 const app = (module.exports = require("express")())
-
-const isAllowedRoute = route => route !== "/" && route !== "*"
-
-const topLevelMetaRoute = getAppRoutes()[0]
-const allRoutes = flatten(
-  topLevelMetaRoute.children.map(app => {
-    // Only supports one level of nesting per app.
-    // For instance, these are tabs on the artist page, etc.
-    const allChildPaths = app.children
-      ?.map(child => child.path)
-      .filter(isAllowedRoute)
-
-    return allChildPaths
-      ? allChildPaths.map(child => app.path + "/" + child).concat(app.path)
-      : app.path
-  })
-)
 
 /**
  * Mount routes that will connect to global SSR router
  */
 app.get(
-  allRoutes,
-  /**
-   * Route handler
-   */
-  async (req: Request, res, next) => {
+  getRoutePaths(),
+
+  // Route handler
+  async (req: Request, res: Response, next: NextFunction) => {
     try {
       const {
         status,
@@ -44,12 +25,7 @@ app.get(
         bodyHTML,
         headTags,
       } = await buildServerApp({
-        context: {
-          // initialMatchingMediaQueries: res.locals.sd.IS_MOBILE ? ["xs"] : undefined,
-          user: req.user && req.user.toJSON(),
-          // isEigen: res.locals.sd.EIGEN,
-          mediator,
-        },
+        context: buildServerAppContext(req, res),
         routes: getAppRoutes(),
         url: req.url,
         userAgent: req.header("User-Agent"),
@@ -60,8 +36,9 @@ app.get(
         return
       }
 
-      const headTagsString = ReactDOM.renderToString(headTags)
+      const headTagsString = ReactDOM.renderToString(headTags as any)
       const sharifyData = res.locals.sharify.script()
+      const asset = res.locals.asset
 
       res.status(status).send(`
         <html>
@@ -71,17 +48,18 @@ app.get(
             ${sharifyData}
           </head>
           <body>
-            <script src="/assets/runtime.js"></script>
-            <script src="/assets/common.js"></script>
-            <script src="/assets/artsy-common.js"></script>
-            <script src="/assets/common-backbone.js"></script>
-            <script src="/assets/common-jquery.js"></script>
-            <script src="/assets/common-react.js"></script>
-            <script src="/assets/common-utility.js"></script>
-            <script src="/assets/artsy.js"></script>
-            <script src="/assets/artsy-v3.js"></script>
+            <script src="${asset("/assets/runtime.js")}"></script>
+            <script src="${asset("/assets/common.js")}"></script>
+            <script src="${asset("/assets/artsy-common.js")}"></script>
+            <script src="${asset("/assets/common-backbone.js")}"></script>
+            <script src="${asset("/assets/common-jquery.js")}"></script>
+            <script src="${asset("/assets/common-react.js")}"></script>
+            <script src="${asset("/assets/common-utility.js")}"></script>
+            <script src="${asset("/assets/artsy.js")}"></script>
+            <script src="${asset("/assets/artsy-v3.js")}"></script>
 
             ${scripts}
+
             <div id='react-root'>
               ${bodyHTML}
             </div>
@@ -94,3 +72,26 @@ app.get(
     }
   }
 )
+
+/**
+ * We can't use a wildcard route because of gallery vanity urls, so iterate
+ * over all app routes and return an array that we can explicity match against.
+ */
+function getRoutePaths() {
+  const routes = flatten(
+    getAppRoutes()[0].children.map(app => {
+      // Only supports one level of nesting per app. For instance, these are tabs
+      // on the artist page, etc.
+      const childRoutePaths = app.children
+        ?.map(child => child.path)
+        .filter(route => route !== "/" && route !== "*")
+
+      const allRoutes = childRoutePaths
+        ? childRoutePaths.map(child => app.path + "/" + child).concat(app.path)
+        : app.path
+
+      return allRoutes
+    })
+  )
+  return routes
+}
