@@ -97,24 +97,32 @@ export const ShowInstallShotsFragmentContainer = createFragmentContainer(
         name
         images {
           internalID
-          mobile1x: resized(height: 300) {
+          mobile1x: resized(height: 300, version: ["larger", "large"]) {
             width
             height
           }
-          _1x: resized(height: 400) {
+          _1x: resized(height: 400, version: ["larger", "large"]) {
             src: url
             width
             height
           }
-          _2x: resized(height: 400) {
+          _2x: resized(height: 400, version: ["larger", "large"]) {
             src: url
           }
-          zoom1x: resized(width: 900, height: 900) {
+          zoom1x: resized(
+            width: 900
+            height: 900
+            version: ["larger", "large"]
+          ) {
             src: url
             width
             height
           }
-          zoom2x: resized(width: 1800, height: 1800) {
+          zoom2x: resized(
+            width: 1800
+            height: 1800
+            version: ["larger", "large"]
+          ) {
             src: url
           }
         }
