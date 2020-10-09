@@ -10,11 +10,15 @@ const express = require("express")
 const morgan = require("morgan")
 const path = require("path")
 const webpack = require("webpack")
+const sharify = require("sharify")
+require("../lib/setup_sharify")
 const { createReloadable } = require("@artsy/express-reloadable")
 
 const { NODE_ENV, PORT } = process.env
 const isDevelopment = NODE_ENV === "development"
 const app = express()
+
+app.use(sharify)
 
 if (isDevelopment) {
   app.use(morgan("dev"))

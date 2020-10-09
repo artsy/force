@@ -4,6 +4,7 @@ import { getAppRoutes } from "v2/Apps/getAppRoutes"
 import { flatten } from "lodash"
 import mediator from "desktop/lib/mediator.coffee"
 import ReactDOM from "react-dom/server"
+import sharify from "sharify"
 
 // export const app = express()
 const app = (module.exports = require("express")())
@@ -59,17 +60,27 @@ app.get(
         return
       }
 
-      // Investigate where this goes
-      // console.log(headTags)
-      // console.log(styleTags)
+      const headTagsString = ReactDOM.renderToString(headTags)
+      const sharifyData = res.locals.sharify.script()
 
       res.status(status).send(`
         <html>
           <head>
             ${styleTags}
-            ${ReactDOM.renderToString(headTags)}
+            ${headTagsString}
+            ${sharifyData}
           </head>
           <body>
+            <script src="/assets/runtime.js"></script>
+            <script src="/assets/common.js"></script>
+            <script src="/assets/artsy-common.js"></script>
+            <script src="/assets/common-backbone.js"></script>
+            <script src="/assets/common-jquery.js"></script>
+            <script src="/assets/common-react.js"></script>
+            <script src="/assets/common-utility.js"></script>
+            <script src="/assets/artsy.js"></script>
+            <script src="/assets/artsy-v3.js"></script>
+
             ${scripts}
             <div id='react-root'>
               ${bodyHTML}

@@ -1,3 +1,5 @@
+import "desktop/lib/webpackPublicPath"
+
 import React from "react"
 import ReactDOM from "react-dom"
 import { buildClientApp } from "v2/Artsy/Router/client"
