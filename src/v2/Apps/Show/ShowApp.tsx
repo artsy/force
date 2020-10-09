@@ -68,9 +68,7 @@ export const ShowApp: React.FC<ShowAppProps> = ({ show }) => {
             )}
           </GridColumns>
 
-          <Separator as="hr" my={3} />
-
-          <ShowArtworks show={show} />
+          <ShowArtworks show={show} my={3} />
 
           <Separator as="hr" my={3} />
 

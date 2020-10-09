@@ -10,16 +10,19 @@ import { WaysToBuyFilter } from "v2/Components/v2/ArtworkFilter/ArtworkFilters/W
 import { SizeFilter } from "v2/Components/v2/ArtworkFilter/ArtworkFilters/SizeFilter"
 import { TimePeriodFilter } from "v2/Components/v2/ArtworkFilter/ArtworkFilters/TimePeriodFilter"
 import { ColorFilter } from "v2/Components/v2/ArtworkFilter/ArtworkFilters/ColorFilter"
-import { Box } from "@artsy/palette"
+import { Box, BoxProps } from "@artsy/palette"
 import { useRouter } from "v2/Artsy/Router/useRouter"
 
-interface ShowArtworksFilterProps {
+interface ShowArtworksFilterProps extends BoxProps {
   show: ShowArtworks_show
   relay: RelayRefetchProp
 }
 
-const ShowArtworksFilter: React.FC<ShowArtworksFilterProps> = props => {
-  const { relay, show } = props
+const ShowArtworksFilter: React.FC<ShowArtworksFilterProps> = ({
+  relay,
+  show,
+  ...rest
+}) => {
   const { match } = useRouter()
   const { filtered_artworks } = show
 
@@ -53,14 +56,15 @@ const ShowArtworksFilter: React.FC<ShowArtworksFilterProps> = props => {
       onChange={updateUrl}
     >
       <BaseArtworkFilter
-        mt="-2px"
+        mt={0}
         relay={relay}
         viewer={show}
         relayVariables={{
           aggregations: ["TOTAL"],
         }}
         Filters={Filters}
-      ></BaseArtworkFilter>
+        {...rest}
+      />
     </ArtworkFilterContextProvider>
   )
 }
