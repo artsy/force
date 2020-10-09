@@ -3,17 +3,17 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type ShowApp_show = {
-    readonly name: string | null;
-    readonly about: string | null;
-    readonly pressRelease: string | null;
-    readonly " $fragmentRefs": FragmentRefs<"ShowContextualLink_show" | "ShowHeader_show" | "ShowAbout_show" | "ShowMeta_show" | "ShowInstallShots_show" | "ShowArtworks_show">;
-    readonly " $refType": "ShowApp_show";
+export type ShowArtworks_show = {
+    readonly filtered_artworks: {
+        readonly id: string;
+        readonly " $fragmentRefs": FragmentRefs<"ArtworkFilterArtworkGrid2_filtered_artworks">;
+    } | null;
+    readonly " $refType": "ShowArtworks_show";
 };
-export type ShowApp_show$data = ShowApp_show;
-export type ShowApp_show$key = {
-    readonly " $data"?: ShowApp_show$data;
-    readonly " $fragmentRefs": FragmentRefs<"ShowApp_show">;
+export type ShowArtworks_show$data = ShowArtworks_show;
+export type ShowArtworks_show$key = {
+    readonly " $data"?: ShowArtworks_show$data;
+    readonly " $fragmentRefs": FragmentRefs<"ShowArtworks_show">;
 };
 
 
@@ -107,60 +107,20 @@ const node: ReaderFragment = {
   ],
   "kind": "Fragment",
   "metadata": null,
-  "name": "ShowApp_show",
+  "name": "ShowArtworks_show",
   "selections": [
     {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "name",
-      "storageKey": null
-    },
-    {
-      "alias": "about",
-      "args": null,
-      "kind": "ScalarField",
-      "name": "description",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "pressRelease",
-      "storageKey": null
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "ShowContextualLink_show"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "ShowHeader_show"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "ShowAbout_show"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "ShowMeta_show"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "ShowInstallShots_show"
-    },
-    {
+      "alias": "filtered_artworks",
       "args": [
         {
           "kind": "Variable",
           "name": "acquireable",
           "variableName": "acquireable"
+        },
+        {
+          "kind": "Literal",
+          "name": "after",
+          "value": ""
         },
         {
           "kind": "Variable",
@@ -176,6 +136,11 @@ const node: ReaderFragment = {
           "kind": "Variable",
           "name": "color",
           "variableName": "color"
+        },
+        {
+          "kind": "Literal",
+          "name": "first",
+          "value": 20
         },
         {
           "kind": "Variable",
@@ -228,11 +193,28 @@ const node: ReaderFragment = {
           "variableName": "sort"
         }
       ],
-      "kind": "FragmentSpread",
-      "name": "ShowArtworks_show"
+      "concreteType": "FilterArtworksConnection",
+      "kind": "LinkedField",
+      "name": "filterArtworksConnection",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "id",
+          "storageKey": null
+        },
+        {
+          "args": null,
+          "kind": "FragmentSpread",
+          "name": "ArtworkFilterArtworkGrid2_filtered_artworks"
+        }
+      ],
+      "storageKey": null
     }
   ],
   "type": "Show"
 };
-(node as any).hash = '8a8c365bcf78731ae0be88369ffef7c6';
+(node as any).hash = '67d970b06c0e76621b1e6434a86a4ab3';
 export default node;
