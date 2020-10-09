@@ -24,66 +24,72 @@ query routes_PurchaseQuery {
   }
 }
 
+fragment OrderRow_order on CommerceOrder {
+  internalID
+  code
+  state
+  mode
+  requestedFulfillment {
+    __typename
+    ... on CommerceShip {
+      __typename
+    }
+    ... on CommercePickup {
+      __typename
+    }
+  }
+  creditCard {
+    lastDigits
+    id
+  }
+  buyerTotal
+  createdAt
+  itemsTotal
+  lineItems {
+    edges {
+      node {
+        artwork {
+          date
+          image {
+            resized(width: 55) {
+              url
+            }
+          }
+          partner {
+            initials
+            name
+            profile {
+              icon {
+                url(version: "square140")
+              }
+              id
+            }
+            id
+          }
+          shippingOrigin
+          internalID
+          title
+          artist_names: artistNames
+          id
+        }
+        id
+      }
+    }
+  }
+}
+
 fragment PurchaseApp_me on Me {
   ...PurchaseHistory_me
 }
 
 fragment PurchaseHistory_me on Me {
-  orders(first: 10) {
+  name
+  orders(states: [APPROVED, CANCELED, FULFILLED, REFUNDED, SUBMITTED], first: 10) {
     edges {
       node {
         __typename
-        internalID
         code
-        state
-        mode
-        requestedFulfillment {
-          __typename
-          ... on CommerceShip {
-            __typename
-          }
-          ... on CommercePickup {
-            __typename
-          }
-        }
-        creditCard {
-          lastDigits
-          id
-        }
-        buyerTotal
-        createdAt
-        itemsTotal
-        lineItems {
-          edges {
-            node {
-              artwork {
-                date
-                image {
-                  resized(width: 55) {
-                    url
-                  }
-                }
-                partner {
-                  initials
-                  name
-                  profile {
-                    icon {
-                      url(version: "square140")
-                    }
-                    id
-                  }
-                  id
-                }
-                shippingOrigin
-                internalID
-                title
-                artist_names: artistNames
-                id
-              }
-              id
-            }
-          }
-        }
+        ...OrderRow_order
         id
       }
     }
@@ -124,27 +130,34 @@ var v0 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "__typename",
+  "name": "name",
   "storageKey": null
 },
 v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
+  "name": "__typename",
+  "storageKey": null
+},
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
   "name": "internalID",
   "storageKey": null
 },
-v2 = [
-  (v0/*: any*/)
+v3 = [
+  (v1/*: any*/)
 ],
-v3 = {
+v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v4 = [
+v5 = [
   {
     "alias": null,
     "args": null,
@@ -207,6 +220,7 @@ return {
         "name": "me",
         "plural": false,
         "selections": [
+          (v0/*: any*/),
           {
             "alias": null,
             "args": [
@@ -214,6 +228,17 @@ return {
                 "kind": "Literal",
                 "name": "first",
                 "value": 10
+              },
+              {
+                "kind": "Literal",
+                "name": "states",
+                "value": [
+                  "APPROVED",
+                  "CANCELED",
+                  "FULFILLED",
+                  "REFUNDED",
+                  "SUBMITTED"
+                ]
               }
             ],
             "concreteType": "CommerceOrderConnectionWithTotalCount",
@@ -237,7 +262,6 @@ return {
                     "name": "node",
                     "plural": false,
                     "selections": [
-                      (v0/*: any*/),
                       (v1/*: any*/),
                       {
                         "alias": null,
@@ -246,6 +270,7 @@ return {
                         "name": "code",
                         "storageKey": null
                       },
+                      (v2/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -268,15 +293,15 @@ return {
                         "name": "requestedFulfillment",
                         "plural": false,
                         "selections": [
-                          (v0/*: any*/),
+                          (v1/*: any*/),
                           {
                             "kind": "InlineFragment",
-                            "selections": (v2/*: any*/),
+                            "selections": (v3/*: any*/),
                             "type": "CommerceShip"
                           },
                           {
                             "kind": "InlineFragment",
-                            "selections": (v2/*: any*/),
+                            "selections": (v3/*: any*/),
                             "type": "CommercePickup"
                           }
                         ],
@@ -297,7 +322,7 @@ return {
                             "name": "lastDigits",
                             "storageKey": null
                           },
-                          (v3/*: any*/)
+                          (v4/*: any*/)
                         ],
                         "storageKey": null
                       },
@@ -411,13 +436,7 @@ return {
                                             "name": "initials",
                                             "storageKey": null
                                           },
-                                          {
-                                            "alias": null,
-                                            "args": null,
-                                            "kind": "ScalarField",
-                                            "name": "name",
-                                            "storageKey": null
-                                          },
+                                          (v0/*: any*/),
                                           {
                                             "alias": null,
                                             "args": null,
@@ -450,11 +469,11 @@ return {
                                                 ],
                                                 "storageKey": null
                                               },
-                                              (v3/*: any*/)
+                                              (v4/*: any*/)
                                             ],
                                             "storageKey": null
                                           },
-                                          (v3/*: any*/)
+                                          (v4/*: any*/)
                                         ],
                                         "storageKey": null
                                       },
@@ -465,7 +484,7 @@ return {
                                         "name": "shippingOrigin",
                                         "storageKey": null
                                       },
-                                      (v1/*: any*/),
+                                      (v2/*: any*/),
                                       {
                                         "alias": null,
                                         "args": null,
@@ -480,11 +499,11 @@ return {
                                         "name": "artistNames",
                                         "storageKey": null
                                       },
-                                      (v3/*: any*/)
+                                      (v4/*: any*/)
                                     ],
                                     "storageKey": null
                                   },
-                                  (v3/*: any*/)
+                                  (v4/*: any*/)
                                 ],
                                 "storageKey": null
                               }
@@ -494,7 +513,7 @@ return {
                         ],
                         "storageKey": null
                       },
-                      (v3/*: any*/)
+                      (v4/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -516,7 +535,7 @@ return {
                     "kind": "LinkedField",
                     "name": "around",
                     "plural": true,
-                    "selections": (v4/*: any*/),
+                    "selections": (v5/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -526,7 +545,7 @@ return {
                     "kind": "LinkedField",
                     "name": "first",
                     "plural": false,
-                    "selections": (v4/*: any*/),
+                    "selections": (v5/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -536,7 +555,7 @@ return {
                     "kind": "LinkedField",
                     "name": "last",
                     "plural": false,
-                    "selections": (v4/*: any*/),
+                    "selections": (v5/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -546,7 +565,7 @@ return {
                     "kind": "LinkedField",
                     "name": "previous",
                     "plural": false,
-                    "selections": (v4/*: any*/),
+                    "selections": (v5/*: any*/),
                     "storageKey": null
                   }
                 ],
@@ -592,9 +611,9 @@ return {
                 "storageKey": null
               }
             ],
-            "storageKey": "orders(first:10)"
+            "storageKey": "orders(first:10,states:[\"APPROVED\",\"CANCELED\",\"FULFILLED\",\"REFUNDED\",\"SUBMITTED\"])"
           },
-          (v3/*: any*/)
+          (v4/*: any*/)
         ],
         "storageKey": null
       }
@@ -605,7 +624,7 @@ return {
     "metadata": {},
     "name": "routes_PurchaseQuery",
     "operationKind": "query",
-    "text": "query routes_PurchaseQuery {\n  me {\n    ...PurchaseApp_me\n    id\n  }\n}\n\nfragment PurchaseApp_me on Me {\n  ...PurchaseHistory_me\n}\n\nfragment PurchaseHistory_me on Me {\n  orders(first: 10) {\n    edges {\n      node {\n        __typename\n        internalID\n        code\n        state\n        mode\n        requestedFulfillment {\n          __typename\n          ... on CommerceShip {\n            __typename\n          }\n          ... on CommercePickup {\n            __typename\n          }\n        }\n        creditCard {\n          lastDigits\n          id\n        }\n        buyerTotal\n        createdAt\n        itemsTotal\n        lineItems {\n          edges {\n            node {\n              artwork {\n                date\n                image {\n                  resized(width: 55) {\n                    url\n                  }\n                }\n                partner {\n                  initials\n                  name\n                  profile {\n                    icon {\n                      url(version: \"square140\")\n                    }\n                    id\n                  }\n                  id\n                }\n                shippingOrigin\n                internalID\n                title\n                artist_names: artistNames\n                id\n              }\n              id\n            }\n          }\n        }\n        id\n      }\n    }\n    pageCursors {\n      around {\n        cursor\n        isCurrent\n        page\n      }\n      first {\n        cursor\n        isCurrent\n        page\n      }\n      last {\n        cursor\n        isCurrent\n        page\n      }\n      previous {\n        cursor\n        isCurrent\n        page\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n"
+    "text": "query routes_PurchaseQuery {\n  me {\n    ...PurchaseApp_me\n    id\n  }\n}\n\nfragment OrderRow_order on CommerceOrder {\n  internalID\n  code\n  state\n  mode\n  requestedFulfillment {\n    __typename\n    ... on CommerceShip {\n      __typename\n    }\n    ... on CommercePickup {\n      __typename\n    }\n  }\n  creditCard {\n    lastDigits\n    id\n  }\n  buyerTotal\n  createdAt\n  itemsTotal\n  lineItems {\n    edges {\n      node {\n        artwork {\n          date\n          image {\n            resized(width: 55) {\n              url\n            }\n          }\n          partner {\n            initials\n            name\n            profile {\n              icon {\n                url(version: \"square140\")\n              }\n              id\n            }\n            id\n          }\n          shippingOrigin\n          internalID\n          title\n          artist_names: artistNames\n          id\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment PurchaseApp_me on Me {\n  ...PurchaseHistory_me\n}\n\nfragment PurchaseHistory_me on Me {\n  name\n  orders(states: [APPROVED, CANCELED, FULFILLED, REFUNDED, SUBMITTED], first: 10) {\n    edges {\n      node {\n        __typename\n        code\n        ...OrderRow_order\n        id\n      }\n    }\n    pageCursors {\n      around {\n        cursor\n        isCurrent\n        page\n      }\n      first {\n        cursor\n        isCurrent\n        page\n      }\n      last {\n        cursor\n        isCurrent\n        page\n      }\n      previous {\n        cursor\n        isCurrent\n        page\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n"
   }
 };
 })();
