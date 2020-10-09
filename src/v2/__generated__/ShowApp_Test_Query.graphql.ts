@@ -3,26 +3,22 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type routes_ShowQueryVariables = {
-    slug: string;
-};
-export type routes_ShowQueryResponse = {
+export type ShowApp_Test_QueryVariables = {};
+export type ShowApp_Test_QueryResponse = {
     readonly show: {
         readonly " $fragmentRefs": FragmentRefs<"ShowApp_show">;
     } | null;
 };
-export type routes_ShowQuery = {
-    readonly response: routes_ShowQueryResponse;
-    readonly variables: routes_ShowQueryVariables;
+export type ShowApp_Test_Query = {
+    readonly response: ShowApp_Test_QueryResponse;
+    readonly variables: ShowApp_Test_QueryVariables;
 };
 
 
 
 /*
-query routes_ShowQuery(
-  $slug: String!
-) {
-  show(id: $slug) {
+query ShowApp_Test_Query {
+  show(id: "xxx") {
     ...ShowApp_show
     id
   }
@@ -129,86 +125,78 @@ fragment ShowMeta_show on Show {
 const node: ConcreteRequest = (function(){
 var v0 = [
   {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "slug",
-    "type": "String!"
-  }
-],
-v1 = [
-  {
-    "kind": "Variable",
+    "kind": "Literal",
     "name": "id",
-    "variableName": "slug"
+    "value": "xxx"
   }
 ],
-v2 = {
+v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "name",
   "storageKey": null
 },
-v3 = {
+v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "href",
   "storageKey": null
 },
-v4 = {
+v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v5 = {
+v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "width",
   "storageKey": null
 },
-v6 = {
+v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "height",
   "storageKey": null
 },
-v7 = [
+v6 = [
   {
     "kind": "Literal",
     "name": "height",
     "value": 400
   }
 ],
-v8 = {
+v7 = {
   "alias": "src",
   "args": null,
   "kind": "ScalarField",
   "name": "url",
   "storageKey": null
 },
-v9 = [
-  (v8/*: any*/),
-  (v5/*: any*/),
-  (v6/*: any*/)
+v8 = [
+  (v7/*: any*/),
+  (v4/*: any*/),
+  (v5/*: any*/)
 ],
-v10 = [
-  (v8/*: any*/)
+v9 = [
+  (v7/*: any*/)
 ];
 return {
   "fragment": {
-    "argumentDefinitions": (v0/*: any*/),
+    "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "routes_ShowQuery",
+    "name": "ShowApp_Test_Query",
     "selections": [
       {
         "alias": null,
-        "args": (v1/*: any*/),
+        "args": (v0/*: any*/),
         "concreteType": "Show",
         "kind": "LinkedField",
         "name": "show",
@@ -220,26 +208,26 @@ return {
             "name": "ShowApp_show"
           }
         ],
-        "storageKey": null
+        "storageKey": "show(id:\"xxx\")"
       }
     ],
     "type": "Query"
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": (v0/*: any*/),
+    "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "routes_ShowQuery",
+    "name": "ShowApp_Test_Query",
     "selections": [
       {
         "alias": null,
-        "args": (v1/*: any*/),
+        "args": (v0/*: any*/),
         "concreteType": "Show",
         "kind": "LinkedField",
         "name": "show",
         "plural": false,
         "selections": [
-          (v2/*: any*/),
+          (v1/*: any*/),
           {
             "alias": "about",
             "args": null,
@@ -269,9 +257,9 @@ return {
             "name": "fair",
             "plural": false,
             "selections": [
-              (v3/*: any*/),
               (v2/*: any*/),
-              (v4/*: any*/)
+              (v1/*: any*/),
+              (v3/*: any*/)
             ],
             "storageKey": null
           },
@@ -290,7 +278,7 @@ return {
                 "name": "__typename",
                 "storageKey": null
               },
-              (v4/*: any*/),
+              (v3/*: any*/),
               {
                 "kind": "InlineFragment",
                 "selections": [
@@ -301,15 +289,15 @@ return {
                     "name": "isLinkable",
                     "storageKey": null
                   },
-                  (v2/*: any*/),
-                  (v3/*: any*/)
+                  (v1/*: any*/),
+                  (v2/*: any*/)
                 ],
                 "type": "Partner"
               },
               {
                 "kind": "InlineFragment",
                 "selections": [
-                  (v2/*: any*/)
+                  (v1/*: any*/)
                 ],
                 "type": "ExternalPartner"
               }
@@ -356,7 +344,7 @@ return {
             "name": "endAt",
             "storageKey": "endAt(format:\"MMMM D, YYYY\")"
           },
-          (v3/*: any*/),
+          (v2/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -424,29 +412,29 @@ return {
                 "name": "resized",
                 "plural": false,
                 "selections": [
-                  (v5/*: any*/),
-                  (v6/*: any*/)
+                  (v4/*: any*/),
+                  (v5/*: any*/)
                 ],
                 "storageKey": "resized(height:300)"
               },
               {
                 "alias": "_1x",
-                "args": (v7/*: any*/),
+                "args": (v6/*: any*/),
+                "concreteType": "ResizedImageUrl",
+                "kind": "LinkedField",
+                "name": "resized",
+                "plural": false,
+                "selections": (v8/*: any*/),
+                "storageKey": "resized(height:400)"
+              },
+              {
+                "alias": "_2x",
+                "args": (v6/*: any*/),
                 "concreteType": "ResizedImageUrl",
                 "kind": "LinkedField",
                 "name": "resized",
                 "plural": false,
                 "selections": (v9/*: any*/),
-                "storageKey": "resized(height:400)"
-              },
-              {
-                "alias": "_2x",
-                "args": (v7/*: any*/),
-                "concreteType": "ResizedImageUrl",
-                "kind": "LinkedField",
-                "name": "resized",
-                "plural": false,
-                "selections": (v10/*: any*/),
                 "storageKey": "resized(height:400)"
               },
               {
@@ -467,7 +455,7 @@ return {
                 "kind": "LinkedField",
                 "name": "resized",
                 "plural": false,
-                "selections": (v9/*: any*/),
+                "selections": (v8/*: any*/),
                 "storageKey": "resized(height:900,width:900)"
               },
               {
@@ -488,26 +476,26 @@ return {
                 "kind": "LinkedField",
                 "name": "resized",
                 "plural": false,
-                "selections": (v10/*: any*/),
+                "selections": (v9/*: any*/),
                 "storageKey": "resized(height:1800,width:1800)"
               }
             ],
             "storageKey": null
           },
-          (v4/*: any*/)
+          (v3/*: any*/)
         ],
-        "storageKey": null
+        "storageKey": "show(id:\"xxx\")"
       }
     ]
   },
   "params": {
     "id": null,
     "metadata": {},
-    "name": "routes_ShowQuery",
+    "name": "ShowApp_Test_Query",
     "operationKind": "query",
-    "text": "query routes_ShowQuery(\n  $slug: String!\n) {\n  show(id: $slug) {\n    ...ShowApp_show\n    id\n  }\n}\n\nfragment ShowAbout_show on Show {\n  about: description\n  pressRelease\n  href\n}\n\nfragment ShowApp_show on Show {\n  name\n  about: description\n  pressRelease\n  ...ShowContextualLink_show\n  ...ShowHeader_show\n  ...ShowAbout_show\n  ...ShowMeta_show\n  ...ShowInstallShots_show\n}\n\nfragment ShowContextualLink_show on Show {\n  isFairBooth\n  fair {\n    href\n    name\n    id\n  }\n  partner {\n    __typename\n    ... on Partner {\n      isLinkable\n      name\n      href\n    }\n    ... on Node {\n      id\n    }\n    ... on ExternalPartner {\n      id\n    }\n  }\n}\n\nfragment ShowHeader_show on Show {\n  name\n  startAt\n  endAt\n  formattedStartAt: startAt(format: \"MMMM D\")\n  formattedEndAt: endAt(format: \"MMMM D, YYYY\")\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on ExternalPartner {\n      name\n      id\n    }\n    ... on Node {\n      id\n    }\n  }\n}\n\nfragment ShowInstallShots_show on Show {\n  name\n  images {\n    internalID\n    mobile1x: resized(height: 300) {\n      width\n      height\n    }\n    _1x: resized(height: 400) {\n      src: url\n      width\n      height\n    }\n    _2x: resized(height: 400) {\n      src: url\n    }\n    zoom1x: resized(width: 900, height: 900) {\n      src: url\n      width\n      height\n    }\n    zoom2x: resized(width: 1800, height: 1800) {\n      src: url\n    }\n  }\n}\n\nfragment ShowMeta_show on Show {\n  name\n  slug\n  metaDescription: description\n  metaImage {\n    src: url(version: \"large\")\n  }\n}\n"
+    "text": "query ShowApp_Test_Query {\n  show(id: \"xxx\") {\n    ...ShowApp_show\n    id\n  }\n}\n\nfragment ShowAbout_show on Show {\n  about: description\n  pressRelease\n  href\n}\n\nfragment ShowApp_show on Show {\n  name\n  about: description\n  pressRelease\n  ...ShowContextualLink_show\n  ...ShowHeader_show\n  ...ShowAbout_show\n  ...ShowMeta_show\n  ...ShowInstallShots_show\n}\n\nfragment ShowContextualLink_show on Show {\n  isFairBooth\n  fair {\n    href\n    name\n    id\n  }\n  partner {\n    __typename\n    ... on Partner {\n      isLinkable\n      name\n      href\n    }\n    ... on Node {\n      id\n    }\n    ... on ExternalPartner {\n      id\n    }\n  }\n}\n\nfragment ShowHeader_show on Show {\n  name\n  startAt\n  endAt\n  formattedStartAt: startAt(format: \"MMMM D\")\n  formattedEndAt: endAt(format: \"MMMM D, YYYY\")\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on ExternalPartner {\n      name\n      id\n    }\n    ... on Node {\n      id\n    }\n  }\n}\n\nfragment ShowInstallShots_show on Show {\n  name\n  images {\n    internalID\n    mobile1x: resized(height: 300) {\n      width\n      height\n    }\n    _1x: resized(height: 400) {\n      src: url\n      width\n      height\n    }\n    _2x: resized(height: 400) {\n      src: url\n    }\n    zoom1x: resized(width: 900, height: 900) {\n      src: url\n      width\n      height\n    }\n    zoom2x: resized(width: 1800, height: 1800) {\n      src: url\n    }\n  }\n}\n\nfragment ShowMeta_show on Show {\n  name\n  slug\n  metaDescription: description\n  metaImage {\n    src: url(version: \"large\")\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'b6a500c743304c6db9a3cbaa7109e21f';
+(node as any).hash = '7fa78ef8909514aa70ba8bfff4a97dcd';
 export default node;
