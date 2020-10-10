@@ -8,6 +8,21 @@ import { buildServerAppContext } from "desktop/lib/buildServerAppContext"
 // This export form is required for express-reloadable
 const app = (module.exports = require("express")())
 
+app.get("/", (req, res) => {
+  res.send(`
+    <!doctype html>
+      <body>
+        <ul>
+          <li><a href='/debug/baseline'>Baseline</a></li>
+          <li><a href='/feature/artsy-vanguard-2020'>Feature Page</a></li>
+          <li><a href='/artist/pablo-picasso'>Artist</a></li>
+          <li><a href='/artwork/pablo-picasso-couple-posant-pour-un-portrait-en-medaillon-couple-posing-for-a-medallion-portrait'>Artwork</a></li>
+        </ul>
+      </body>
+    </html>
+  `)
+})
+
 /**
  * Mount routes that will connect to global SSR router
  */

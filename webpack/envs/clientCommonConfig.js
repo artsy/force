@@ -4,7 +4,7 @@ const path = require("path")
 const webpack = require("webpack")
 const LoadablePlugin = require("@loadable/webpack-plugin")
 const { RetryChunkLoadPlugin } = require("webpack-retry-chunk-load-plugin")
-const { getEntrypoints } = require("../utils/getEntrypoints")
+// const { getEntrypoints } = require("../utils/getEntrypoints")
 const { basePath, env } = require("../utils/env")
 
 export const clientCommonConfig = {

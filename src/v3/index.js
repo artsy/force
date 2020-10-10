@@ -1,9 +1,9 @@
+require("dotenv/config")
 require("coffeescript/register")
 require("@babel/register")({
   extensions: [".ts", ".js", ".tsx", ".jsx"],
   plugins: ["babel-plugin-dynamic-import-node"],
 })
-require("dotenv/config")
 
 const express = require("express")
 const morgan = require("morgan")
@@ -39,6 +39,7 @@ app.listen(PORT, () => {
     ? `\n[App] Booting...  \n`
     : `\n[App] Started on http://localhost:5000  \n`
 
+  // eslint-disable-next-line no-console
   console.log(bootMessage)
 })
 
