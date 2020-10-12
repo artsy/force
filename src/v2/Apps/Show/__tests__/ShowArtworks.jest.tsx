@@ -1,7 +1,7 @@
 import { MockBoot } from "v2/DevTools"
 import { Breakpoint } from "@artsy/palette"
 import React from "react"
-import { ShowArtworksRefetchContainer } from "../components/ShowArtworks"
+import { ShowArtworksRefetchContainer } from "../Components/ShowArtworks"
 import { QueryRenderer, graphql } from "react-relay"
 import { ShowArtworks_Query } from "v2/__generated__/ShowArtworks_Query.graphql"
 import { MockPayloadGenerator, createMockEnvironment } from "relay-test-utils"

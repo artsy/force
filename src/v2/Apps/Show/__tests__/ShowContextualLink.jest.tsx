@@ -1,6 +1,6 @@
 import React from "react"
 import { mount } from "enzyme"
-import { ContextualLink } from "../components/ShowContextualLink"
+import { ContextualLink } from "../Components/ShowContextualLink"
 import { Link } from "@artsy/palette"
 
 const SHOW_FIXTURE = {
