@@ -202,7 +202,7 @@ export const clientCommonConfig = {
           name: "common",
           chunks: "all",
           minSize: 0,
-          minChunks: 1,
+          minChunks: 2,
           reuseExistingChunk: true,
           enforce: true,
         },
