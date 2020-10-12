@@ -6,15 +6,15 @@ import ShowApp from "../ShowApp"
 
 jest.unmock("react-relay")
 
-jest.mock("v2/Apps/Show/components/ShowMeta", () => ({
+jest.mock("v2/Apps/Show/Components/ShowMeta", () => ({
   ShowMetaFragmentContainer: () => null,
 }))
 
-jest.mock("v2/Apps/Show/components/ShowArtworks", () => ({
+jest.mock("v2/Apps/Show/Components/ShowArtworks", () => ({
   ShowArtworksRefetchContainer: () => null,
 }))
 
-jest.mock("v2/Apps/Show/components/ShowInstallShots", () => ({
+jest.mock("v2/Apps/Show/Components/ShowInstallShots", () => ({
   ShowInstallShotsFragmentContainer: () => null,
 }))
 
