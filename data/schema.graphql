@@ -9337,6 +9337,7 @@ enum SearchEntity {
   SALE
   SHOW
   TAG
+  VIEWING_ROOM
 }
 
 enum SearchMode {
