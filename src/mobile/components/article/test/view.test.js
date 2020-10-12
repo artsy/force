@@ -1,8 +1,3 @@
-/*
- * decaffeinate suggestions:
- * DS102: Remove unnecessary code created because of implicit returns
- * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
- */
 const _ = require("underscore")
 const benv = require("benv")
 const sinon = require("sinon")
@@ -13,16 +8,16 @@ const sd = require("sharify").data
 const { resolve } = require("path")
 const { fabricate } = require("@artsy/antigravity")
 
-describe("ArticleView", function () {
-  beforeEach(function (done) {
-    return benv.setup(() => {
+describe("ArticleView", () => {
+  let article
+  let ArticleView
+  beforeEach(done => {
+    benv.setup(() => {
       benv.expose({
         $: benv.require("jquery"),
         Element: window.Element,
       })
-      // benv bug that doesn't attach globals to window
-      Backbone.$ = $
-      this.article = fabricate("article", {
+      article = fabricate("article", {
         sections: [
           {
             type: "video",
@@ -37,10 +32,10 @@ describe("ArticleView", function () {
         section_ids: [],
       })
 
-      return benv.render(
+      benv.render(
         resolve(__dirname, "../templates/index.jade"),
         {
-          article: new Article(this.article),
+          article: new Article(article),
           asset() {},
           sd: {},
           resize() {},
@@ -51,28 +46,32 @@ describe("ArticleView", function () {
           relatedArticles: new Articles(),
         },
         () => {
-          this.ArticleView = benv.requireWithJadeify(
+          Backbone.$ = $
+          ArticleView = benv.requireWithJadeify(
             resolve(__dirname, "../client/view"),
             []
           )
           sinon.stub(Backbone, "sync")
-          return done()
+          done()
         }
       )
     })
   })
 
-  afterEach(function () {
+  afterEach(() => {
     benv.teardown()
-    return Backbone.sync.restore()
+    Backbone.sync.restore()
   })
 
-  return describe("#clickPlay", () =>
-    it("replaces iFrame with an autoplay attribute", function () {
-      this.view = new this.ArticleView({ el: $("body") })
-      $(".article-video-play-button").click()
-      return $(".article-section-video iframe")
+  describe("#clickPlay", () => {
+    let view
+    it("replaces iFrame with an autoplay attribute", () => {
+      view = new ArticleView({ el: $("body") })
+      view.$(".article-video-play-button").click()
+      view
+        .$(".article-section-video iframe")
         .attr("src")
         .should.containEql("autoplay=1")
-    }))
+    })
+  })
 })
