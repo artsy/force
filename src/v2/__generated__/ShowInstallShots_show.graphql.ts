@@ -7,6 +7,7 @@ export type ShowInstallShots_show = {
     readonly name: string | null;
     readonly images: ReadonlyArray<{
         readonly internalID: string | null;
+        readonly caption: string | null;
         readonly mobile1x: {
             readonly width: number | null;
             readonly height: number | null;
@@ -113,6 +114,13 @@ return {
           "storageKey": null
         },
         {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "caption",
+          "storageKey": null
+        },
+        {
           "alias": "mobile1x",
           "args": [
             {
@@ -203,5 +211,5 @@ return {
   "type": "Show"
 };
 })();
-(node as any).hash = '765f3dda0ef6dce79a38699f450fc587';
+(node as any).hash = '9cb209920fb37eb5a8fe1e71d3ebdb4e';
 export default node;

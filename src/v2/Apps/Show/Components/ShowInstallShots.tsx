@@ -1,5 +1,11 @@
 import React, { useState } from "react"
-import { Clickable, Image, ModalBase, ResponsiveBox } from "@artsy/palette"
+import {
+  Clickable,
+  Image,
+  ModalBase,
+  ResponsiveBox,
+  Text,
+} from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Carousel, CarouselProps } from "v2/Components/Carousel"
 import { ShowInstallShots_show } from "v2/__generated__/ShowInstallShots_show.graphql"
@@ -44,11 +50,23 @@ export const ShowInstallShots: React.FC<ShowInstallShotsProps> = ({
                 alt={`${show.name}, installation view`}
                 lazyLoad={i > 2}
               />
+
+              {image.caption && (
+                <Text
+                  mt={1}
+                  color="black60"
+                  textAlign="left"
+                  maxWidth={image._1x.width}
+                  title={image.caption}
+                  overflowEllipsis
+                >
+                  {image.caption}
+                </Text>
+              )}
             </Clickable>
           )
         })}
       </Carousel>
-
       {selectedImage !== null && (
         <ModalBase
           onClose={handleClose}
@@ -97,6 +115,7 @@ export const ShowInstallShotsFragmentContainer = createFragmentContainer(
         name
         images {
           internalID
+          caption
           mobile1x: resized(height: 300, version: ["larger", "large"]) {
             width
             height
