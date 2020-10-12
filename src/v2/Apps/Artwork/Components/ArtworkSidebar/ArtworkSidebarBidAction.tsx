@@ -33,7 +33,7 @@ const RegisterToBidButton: React.FC<{ onClick: () => void }> = ({
   onClick,
 }) => {
   return (
-    <Button width="100%" size="large" mt={1} onClick={onClick}>
+    <Button width="100%" size="large" mt={1} onClick={onClick} data-test="bid">
       Register to bid
     </Button>
   )
@@ -279,6 +279,7 @@ export class ArtworkSidebarBidAction extends React.Component<
             <Button
               width="100%"
               size="large"
+              data-test="bid"
               onClick={() => this.redirectToBid(firstIncrement.cents)}
             >
               {hasMyBids ? "Increase max bid" : "Bid"}
