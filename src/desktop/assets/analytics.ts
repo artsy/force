@@ -44,11 +44,9 @@ $(() =>
     onAnalyticsReady()
     setupSplitTests()
 
-    require("../analytics/articles.js")
     require("../analytics/artwork.js")
     require("../analytics/consignments.js")
     require("../analytics/contact.js")
-    require("../analytics/embedded_inquiry.js")
     require("../analytics/galleries.js")
     require("../analytics/inquiry_questionnaire.js")
     require("../analytics/recently_viewed_artworks.js")

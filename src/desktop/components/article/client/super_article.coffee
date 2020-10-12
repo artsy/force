@@ -4,6 +4,11 @@ initCarousel = require '../../merry_go_round/horizontal_nav_mgr.coffee'
 sd = require('sharify').data
 
 module.exports = class SuperArticleView extends Backbone.View
+  events:
+    'click .article-sa-primary-logo a': 'trackPrimaryLogoClick'
+    'click .article-sa-secondary-logo a': 'trackSecondaryLogoClick'
+    'click .article-sa-cta-container a': 'trackCtaClick'
+    'click .article-sa-footer-blurb a': 'trackFooterBlurbClick'
 
   initialize: (options) ->
     { @article } = options
@@ -79,3 +84,31 @@ module.exports = class SuperArticleView extends Backbone.View
     else
       @$superArticleNavToc.css 'height', '100vh'
       @$body.addClass 'is-open'
+
+  trackPrimaryLogoClick: (e) ->
+    window.analytics.track("Clicked primary partner logo", {
+      destination_path: e.currentTarget.href,
+      impression_type: "sa_primary_logo",
+      context_type: "article_fixed",
+    })
+
+  trackSecondaryLogoClick: (e) ->
+    window.analytics.track("Clicked secondary partner logo", {
+      destination_path: e.currentTarget.href,
+      impression_type: "sa_secondary_logo",
+      context_type: "article_fixed",
+    })
+
+  trackCtaClick: (e) ->
+    window.analytics.track("Clicked partner cta link", {
+      destination_path: e.currentTarget.href,
+      impression_type: "sa_partner_cta",
+      context_type: "article_fixed",
+    })
+
+  trackFooterBlurbClick: (e) ->
+    window.analytics.track("Clicked partner cta link in footer blurb", {
+      destination_path: e.currentTarget.href,
+      impression_type: "sa_partner_cta",
+      context_type: "article_fixed",
+    })

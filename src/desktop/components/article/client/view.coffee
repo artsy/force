@@ -20,6 +20,8 @@ module.exports = class ArticleView extends Backbone.View
     .articles-section-left-chevron': 'toggleSectionCarousel'
     'click .article-video-play-button': 'playVideo'
     'click .article-section-image-set__remaining, .article-section-image-set__image-container': 'toggleModal'
+    'click .article-social a': 'trackArticleSocialShare'
+    'click .article-share-fixed a': 'trackArticleFixedShare'
 
   initialize: (options) ->
     @user = CurrentUser.orNull()
@@ -269,3 +271,17 @@ module.exports = class ArticleView extends Backbone.View
       else
         $('.article-social').show()
     , { offset: 'bottom-in-view' }
+
+  trackArticleSocialShare: (e) =>
+    window.analytics.track("Article Share", {
+      article_id: @article.id,
+      context_type: "article_fixed"
+      service: e.currentTarget.getAttribute('data-service'),
+    })
+
+  trackArticleFixedShare: (e) =>
+    window.analytics.track("Article Share", {
+      article_id: @article.id,
+      context_type: "article_sticky",
+      service: e.currentTarget.getAttribute('data-service'),
+    })
