@@ -9,6 +9,7 @@ const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin")
 const FriendlyErrorsWebpackPlugin = require("friendly-errors-webpack-plugin")
 const WebpackNotifierPlugin = require("webpack-notifier")
 const SimpleProgressWebpackPlugin = require("simple-progress-webpack-plugin")
+const CaseSensitivePathsPlugin = require("case-sensitive-paths-webpack-plugin")
 const { basePath, env } = require("../utils/env")
 
 const cacheDirectory = path.resolve(basePath, ".cache")
@@ -55,6 +56,7 @@ export const clientDevelopmentConfig = {
     ],
   },
   plugins: [
+    new CaseSensitivePathsPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     // @ts-ignore
     new SimpleProgressWebpackPlugin({
