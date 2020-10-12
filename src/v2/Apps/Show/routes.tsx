@@ -4,6 +4,8 @@ import { RouteConfig } from "found"
 import { paramsToCamelCase } from "v2/Components/v2/ArtworkFilter/Utils/urlBuilder"
 
 const ShowApp = loadable(() => import("./ShowApp"))
+const ShowSubApp = loadable(() => import("./ShowSubApp"))
+const ShowInfoRoute = loadable(() => import("./Routes/ShowInfo"))
 
 export const routes: RouteConfig[] = [
   {
@@ -52,6 +54,38 @@ export const routes: RouteConfig[] = [
         }
       }
     `,
+  },
+  // NOTE: Nested sub-apps are mounted under the same top-level path as above.
+  // The root `path: ""` matches the `ShowApp` route.
+  {
+    path: "/show2/:slug",
+    getComponent: () => ShowSubApp,
+    prepare: () => {
+      ShowSubApp.preload()
+    },
+    query: graphql`
+      query routes_ShowSubAppQuery($slug: String!) {
+        show(id: $slug) {
+          ...ShowSubApp_show
+        }
+      }
+    `,
+    children: [
+      {
+        path: "info",
+        getComponent: () => ShowInfoRoute,
+        prepare: () => {
+          ShowInfoRoute.preload()
+        },
+        query: graphql`
+          query routes_ShowInfoQuery($slug: String!) {
+            show(id: $slug) {
+              ...ShowInfo_show
+            }
+          }
+        `,
+      },
+    ],
   },
 ]
 

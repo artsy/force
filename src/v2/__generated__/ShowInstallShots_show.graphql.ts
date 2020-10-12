@@ -7,6 +7,7 @@ export type ShowInstallShots_show = {
     readonly name: string | null;
     readonly images: ReadonlyArray<{
         readonly internalID: string | null;
+        readonly caption: string | null;
         readonly mobile1x: {
             readonly width: number | null;
             readonly height: number | null;
@@ -40,40 +41,49 @@ export type ShowInstallShots_show$key = {
 
 const node: ReaderFragment = (function(){
 var v0 = {
+  "kind": "Literal",
+  "name": "version",
+  "value": [
+    "larger",
+    "large"
+  ]
+},
+v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "width",
   "storageKey": null
 },
-v1 = {
+v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "height",
   "storageKey": null
 },
-v2 = [
+v3 = [
   {
     "kind": "Literal",
     "name": "height",
     "value": 400
-  }
+  },
+  (v0/*: any*/)
 ],
-v3 = {
+v4 = {
   "alias": "src",
   "args": null,
   "kind": "ScalarField",
   "name": "url",
   "storageKey": null
 },
-v4 = [
-  (v3/*: any*/),
-  (v0/*: any*/),
-  (v1/*: any*/)
-],
 v5 = [
-  (v3/*: any*/)
+  (v4/*: any*/),
+  (v1/*: any*/),
+  (v2/*: any*/)
+],
+v6 = [
+  (v4/*: any*/)
 ];
 return {
   "argumentDefinitions": [],
@@ -104,43 +114,51 @@ return {
           "storageKey": null
         },
         {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "caption",
+          "storageKey": null
+        },
+        {
           "alias": "mobile1x",
           "args": [
             {
               "kind": "Literal",
               "name": "height",
               "value": 300
-            }
+            },
+            (v0/*: any*/)
           ],
           "concreteType": "ResizedImageUrl",
           "kind": "LinkedField",
           "name": "resized",
           "plural": false,
           "selections": [
-            (v0/*: any*/),
-            (v1/*: any*/)
+            (v1/*: any*/),
+            (v2/*: any*/)
           ],
-          "storageKey": "resized(height:300)"
+          "storageKey": "resized(height:300,version:[\"larger\",\"large\"])"
         },
         {
           "alias": "_1x",
-          "args": (v2/*: any*/),
-          "concreteType": "ResizedImageUrl",
-          "kind": "LinkedField",
-          "name": "resized",
-          "plural": false,
-          "selections": (v4/*: any*/),
-          "storageKey": "resized(height:400)"
-        },
-        {
-          "alias": "_2x",
-          "args": (v2/*: any*/),
+          "args": (v3/*: any*/),
           "concreteType": "ResizedImageUrl",
           "kind": "LinkedField",
           "name": "resized",
           "plural": false,
           "selections": (v5/*: any*/),
-          "storageKey": "resized(height:400)"
+          "storageKey": "resized(height:400,version:[\"larger\",\"large\"])"
+        },
+        {
+          "alias": "_2x",
+          "args": (v3/*: any*/),
+          "concreteType": "ResizedImageUrl",
+          "kind": "LinkedField",
+          "name": "resized",
+          "plural": false,
+          "selections": (v6/*: any*/),
+          "storageKey": "resized(height:400,version:[\"larger\",\"large\"])"
         },
         {
           "alias": "zoom1x",
@@ -150,6 +168,7 @@ return {
               "name": "height",
               "value": 900
             },
+            (v0/*: any*/),
             {
               "kind": "Literal",
               "name": "width",
@@ -160,8 +179,8 @@ return {
           "kind": "LinkedField",
           "name": "resized",
           "plural": false,
-          "selections": (v4/*: any*/),
-          "storageKey": "resized(height:900,width:900)"
+          "selections": (v5/*: any*/),
+          "storageKey": "resized(height:900,version:[\"larger\",\"large\"],width:900)"
         },
         {
           "alias": "zoom2x",
@@ -171,6 +190,7 @@ return {
               "name": "height",
               "value": 1800
             },
+            (v0/*: any*/),
             {
               "kind": "Literal",
               "name": "width",
@@ -181,8 +201,8 @@ return {
           "kind": "LinkedField",
           "name": "resized",
           "plural": false,
-          "selections": (v5/*: any*/),
-          "storageKey": "resized(height:1800,width:1800)"
+          "selections": (v6/*: any*/),
+          "storageKey": "resized(height:1800,version:[\"larger\",\"large\"],width:1800)"
         }
       ],
       "storageKey": null
@@ -191,5 +211,5 @@ return {
   "type": "Show"
 };
 })();
-(node as any).hash = '598dd19d028ceb644a767685493f339f';
+(node as any).hash = '9cb209920fb37eb5a8fe1e71d3ebdb4e';
 export default node;
