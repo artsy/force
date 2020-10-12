@@ -12,11 +12,8 @@ block body
     class='js-settings-page'
   )
     .main-layout-container
-      header.settings-page__header
-        h1.settings-page__header__name
-          = user.get('name')
-
-        include ../components/tabs/index
+      #stitch-settings-tabs
+        != stitch.components.UserSettingsTabs({ mountId: 'stitch-settings-tabs', route: sd.CURRENT_PATH, username: user.get('name')})
 
       .settings-page__content
         .settings-page__content__main(

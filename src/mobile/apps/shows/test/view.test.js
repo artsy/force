@@ -1,8 +1,3 @@
-/*
- * decaffeinate suggestions:
- * DS102: Remove unnecessary code created because of implicit returns
- * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
- */
 const benv = require("benv")
 const Backbone = require("backbone")
 const sinon = require("sinon")
@@ -11,18 +6,21 @@ const PartnerShows = require("../../../collections/partner_shows.coffee")
 const Show = require("../../../models/show.coffee")
 const { fabricate } = require("@artsy/antigravity")
 
-describe("ShowCityView", function () {
-  beforeEach(function (done) {
-    return benv.setup(() => {
+describe("ShowCityView", () => {
+  let view
+  beforeEach(done => {
+    benv.setup(() => {
       const partnerShows = new PartnerShows([
         fabricate("show", { status: "running" }),
         fabricate("show", { status: "running" }),
         fabricate("show"),
       ])
-      benv.expose({ $: benv.require("jquery") })
-      Backbone.$ = $
+      benv.expose({
+        $: benv.require("jquery"),
+        jQuery: benv.require("jquery"),
+      })
       sinon.stub(Backbone, "sync")
-      return benv.render(
+      benv.render(
         path.resolve(__dirname, "../templates/city.jade"),
         {
           sd: {},
@@ -40,36 +38,38 @@ describe("ShowCityView", function () {
             path.resolve(__dirname, "../client/shows.coffee"),
             ["showTemplate"]
           ))
-          this.view = new ShowCityView({
+          Backbone.$ = $
+          view = new ShowCityView({
             collection: partnerShows,
             el: $("body"),
             params: {},
           })
-          return done()
+          done()
         }
       )
     })
   })
 
-  afterEach(function () {
+  afterEach(() => {
     benv.teardown()
-    return Backbone.sync.restore()
+    Backbone.sync.restore()
   })
 
-  describe("#initialize", function () {
-    it("should start fetching at page 1", function () {
-      return this.view.page.should.equal(1)
+  describe("#initialize", () => {
+    it("should start fetching at page 1", () => {
+      view.page.should.equal(1)
     })
 
-    return it("should make the initial fetch", function () {
-      this.view.onInitialFetch()
-      return $("#running li").length.should.equal(3)
+    it("should make the initial fetch", () => {
+      view.onInitialFetch()
+      view.$("#running li").length.should.equal(3)
     })
   })
 
-  return describe("#onInfiniteScroll", () =>
-    it("fetches more shows", function () {
-      this.view.onInfiniteScroll()
-      return Backbone.sync.callCount.should.equal(2)
-    }))
+  describe("#onInfiniteScroll", () => {
+    it("fetches more shows", () => {
+      view.onInfiniteScroll()
+      Backbone.sync.callCount.should.equal(2)
+    })
+  })
 })

@@ -5806,6 +5806,24 @@ type FollowedFairEdge {
 }
 
 # A connection to a list of items.
+type FollowedGalleryConnection {
+  # A list of edges.
+  edges: [FollowedGalleryEdge]
+
+  # Information to aid in pagination.
+  pageInfo: PageInfo!
+}
+
+# An edge in a connection.
+type FollowedGalleryEdge {
+  # A cursor for use in pagination
+  cursor: String!
+
+  # The item at the end of the edge
+  node: Partner
+}
+
+# A connection to a list of items.
 type FollowedShowConnection {
   # A list of edges.
   edges: [FollowedShowEdge]
@@ -5907,6 +5925,14 @@ type FollowsAndSaves {
     first: Int
     last: Int
   ): FollowedFairConnection
+
+  # A list of the current user’s currently followed gallery profiles
+  galleriesConnection(
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): FollowedGalleryConnection
 
   # A list of the current user’s inquiry requests
   genesConnection(
@@ -7014,7 +7040,7 @@ type Me implements Node {
     mode: CommerceOrderModeEnum
     sellerId: String
     sort: CommerceOrderConnectionSortEnum
-    state: CommerceOrderStateEnum
+    states: [CommerceOrderStateEnum!]
   ): CommerceOrderConnectionWithTotalCount
   paddleNumber: String
 
@@ -7461,6 +7487,7 @@ input MyCollectionUpdateArtworkInput {
   depth: String
   editionNumber: String
   editionSize: String
+  externalImageUrls: [String]
   height: String
   medium: String
   metric: String
@@ -8294,7 +8321,7 @@ type Query {
     mode: CommerceOrderModeEnum
     sellerId: String
     sort: CommerceOrderConnectionSortEnum
-    state: CommerceOrderStateEnum
+    states: [CommerceOrderStateEnum!]
   ): CommerceOrderConnectionWithTotalCount
 
   # Find an order by ID
@@ -9310,6 +9337,7 @@ enum SearchEntity {
   SALE
   SHOW
   TAG
+  VIEWING_ROOM
 }
 
 enum SearchMode {

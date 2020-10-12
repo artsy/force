@@ -63,11 +63,12 @@ const FairHeader: React.FC<FairHeaderProps> = ({ fair, ...rest }) => {
 
           {canShowMoreInfoLink && (
             <ForwardLink
-              linkText="More info"
-              path={`/fair/${fair.slug}/info`}
+              to={`/fair/${fair.slug}/info`}
               mt={previewText ? 1 : undefined}
               justifyContent={columnCount === 1 ? "center" : undefined}
-            />
+            >
+              More info
+            </ForwardLink>
           )}
         </Box>
       </CSSGrid>

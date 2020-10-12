@@ -1,8 +1,3 @@
-/*
- * decaffeinate suggestions:
- * DS102: Remove unnecessary code created because of implicit returns
- * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
- */
 const _ = require("underscore")
 const Backbone = require("backbone")
 const Fair = require("../../../../models/fair")
@@ -12,15 +7,15 @@ const sinon = require("sinon")
 const benv = require("benv")
 const { resolve } = require("path")
 
-describe("Main page client-side code", function () {
-  beforeEach(function (done) {
-    return benv.setup(() => {
+describe("Main page client-side code", () => {
+  let view
+  beforeEach(done => {
+    benv.setup(() => {
       benv.expose({ $: benv.require("jquery") })
-      Backbone.$ = $
       $.onInfiniteScroll = function () {}
       sinon.stub(Backbone.history, "start")
       sinon.stub(Backbone, "sync")
-      return benv.render(
+      benv.render(
         resolve(__dirname, "../../templates/main_page.jade"),
         {
           fair: new Fair(fabricate("fair")),
@@ -47,33 +42,34 @@ describe("Main page client-side code", function () {
               "imageNavItemTemplate",
             ]
           )
-          this.view = new FairMainPageView({
+          Backbone.$ = $
+          view = new FairMainPageView({
             el: $("body"),
             model: new Fair(fabricate("fair")),
           })
-          return done()
+          done()
         }
       )
     })
   })
 
-  afterEach(function () {
+  afterEach(() => {
     benv.teardown()
     Backbone.sync.restore()
-    return Backbone.history.start.restore()
+    Backbone.history.start.restore()
   })
 
-  return describe("FairMainPageView", () =>
-    describe("#renderFeaturedLinks", function () {
-      it("fetches the fairs sets", function () {
-        this.view.renderFeaturedLinks()
-        return _.last(Backbone.sync.args)[2].url.should.containEql(
+  describe("FairMainPageView", () => {
+    describe("#renderFeaturedLinks", () => {
+      it("fetches the fairs sets", () => {
+        view.renderFeaturedLinks()
+        _.last(Backbone.sync.args)[2].url.should.containEql(
           "/sets?owner_type=Fair"
         )
       })
 
-      return it("renders the featured links", function () {
-        this.view.renderFeaturedLinks()
+      it("renders the featured links", () => {
+        view.renderFeaturedLinks()
         _.last(Backbone.sync.args)[2].success([
           fabricate("set", { key: "editorial", display_on_martsy: true }),
         ])
@@ -83,9 +79,8 @@ describe("Main page client-side code", function () {
             display_on_martsy: true,
           }),
         ])
-        return this.view.$el
-          .html()
-          .should.containEql("Featured link for this awesome page")
+        view.$el.html().should.containEql("Featured link for this awesome page")
       })
-    }))
+    })
+  })
 })

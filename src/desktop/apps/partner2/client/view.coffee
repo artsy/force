@@ -33,6 +33,8 @@ module.exports = class PartnerView extends Backbone.View
   events:
     # Links that uses router should have a partner-route-link class
     'click .partner2-route-link': 'intercept'
+    'click #partner2-contact .email-gallery': 'trackEmailClick'
+    'click #partner2-contact .partner2-website': 'trackExternalSiteClick'
 
   defaults:
     currentSection: 'overview'
@@ -64,6 +66,19 @@ module.exports = class PartnerView extends Backbone.View
     e.preventDefault()
 
     Backbone.history.navigate $(e.currentTarget).attr('href'), trigger: true
+
+  trackEmailClick: (e) ->
+    window.analytics.track("Click", {
+      partner_id: $(e.currentTarget).data("partner-id"),
+      label: "Contact gallery by email",
+    })
+
+  trackExternalSiteClick: (e) ->
+    window.analytics.track("Click", {
+      partner_id: $(e.currentTarget).data("partner-id"),
+      label: "External partner site",
+      destination_path: $(e.currentTarget).attr("href"),
+    })
 
   #
   # cache is a dictionary of section_name: data pair. We simply pass the data

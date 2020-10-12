@@ -13,18 +13,18 @@ const Profile = require("../../../../models/profile")
 const { fabricate } = require("@artsy/antigravity")
 
 describe("PartnerArtworksView", function () {
-  beforeEach(function (done) {
-    return benv.setup(() => {
-      benv.expose({ $: benv.require("jquery") })
+  let view
+  beforeEach(done => {
+    benv.setup(() => {
+      benv.expose({ $: benv.require("jquery"), jQuery: benv.require("jquery") })
       $.onInfiniteScroll = sinon.stub()
-      Backbone.$ = $
       sinon.stub(Backbone, "sync")
 
       const artworkColumns = [
         [new Artwork(fabricate("artwork"))],
         [new Artwork(fabricate("artwork"))],
       ]
-      return benv.render(
+      benv.render(
         path.resolve(__dirname, "../../templates/artworks.jade"),
         {
           sd: {},
@@ -36,12 +36,13 @@ describe("PartnerArtworksView", function () {
             path.resolve(__dirname, "../../client/artworks.coffee"),
             ["artworkColumnsTemplate"]
           )
-          this.view = new PartnerArtworksView({
+          Backbone.$ = $
+          view = new PartnerArtworksView({
             collection: new Artworks([]),
             el: $("body"),
             params: {},
           })
-          return done()
+          done()
         }
       )
     })
@@ -49,11 +50,11 @@ describe("PartnerArtworksView", function () {
 
   afterEach(function () {
     benv.teardown()
-    return Backbone.sync.restore()
+    Backbone.sync.restore()
   })
 
-  return describe("#render", () =>
-    it("appends artworks in collection to columns", function () {
+  describe("#render", () => {
+    it("appends artworks in collection to columns", () => {
       $(".artwork-columns-column").length.should.equal(2)
       $(".artwork-columns-column")
         .eq(0)
@@ -69,17 +70,18 @@ describe("PartnerArtworksView", function () {
         fabricate("artwork"),
         fabricate("artwork"),
       ])
-      this.view.collection = artworks
-      this.view.render()
+      view.collection = artworks
+      view.render()
 
       $(".artwork-columns-column").length.should.equal(2)
       $(".artwork-columns-column")
         .eq(0)
         .find(".artwork-columns-artwork")
         .length.should.equal(3)
-      return $(".artwork-columns-column")
+      $(".artwork-columns-column")
         .eq(1)
         .find(".artwork-columns-artwork")
         .length.should.equal(2)
-    }))
+    })
+  })
 })

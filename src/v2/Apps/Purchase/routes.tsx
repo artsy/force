@@ -18,11 +18,6 @@ export const routes: RouteConfig[] = [
         }
       }
     `,
-    prepareVariables: (params, props) => {
-      return {
-        first: 10,
-      }
-    },
     cacheConfig: {
       force: true,
     },

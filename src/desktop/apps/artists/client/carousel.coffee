@@ -62,6 +62,7 @@ module.exports = class CarouselView extends Backbone.View
         @active -= @$images.length
       @active += @increment
       @moveToActive()
+      window.analytics.track("Next page in /artists carousel")
 
   prev: (e) ->
     e?.preventDefault()
@@ -70,6 +71,7 @@ module.exports = class CarouselView extends Backbone.View
         @active = @$images.length
       @active -= @increment
       @moveToActive()
+      window.analytics.track("Previous page in /artists carousel")
 
   keyUp: (e) ->
     switch e.keyCode

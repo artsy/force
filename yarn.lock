@@ -53,10 +53,10 @@
   dependencies:
     uuid "^8.3.0"
 
-"@artsy/palette@13.8.0":
-  version "13.8.0"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-13.8.0.tgz#a6d31a33d5befc921b6f3ecc54a94fd9f11c32eb"
-  integrity sha512-dNnyLg/E3dHqExtCTnxRbELhHZSBZZlJtps9FBOO64yiMWODnLJBt5RtsPSFzWWGVX3xL/JwNb0D5PwlfmwC/g==
+"@artsy/palette@13.10.0":
+  version "13.10.0"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-13.10.0.tgz#b5f749b2e97a5ee4fd276cac5c1b983e55fda12f"
+  integrity sha512-F7dqPbLXK3YJeujoxgW60ifUQ2sgTMIuB2Ibq5Nof/1SySU9O/xxNyRpLLHUfcBuPnoXt0YBtokAMd+y7xDeag==
   dependencies:
     "@styled-system/theme-get" "^5.1.2"
     babel-plugin-styled-components "^1.10.0"
@@ -17489,12 +17489,7 @@ opener@^1.5.1:
   resolved "https://registry.yarnpkg.com/opener/-/opener-1.5.1.tgz#6d2f0e77f1a0af0032aca716c2c1fbb8e7e8abed"
   integrity sha512-goYSy5c2UXE4Ra1xixabeVh1guIX/ZV/YokJksb6q2lubWu6UbvPQ20p542/sFIll1nl8JnCyK9oBaOcCWXwvA==
 
-openseadragon@2.4.0:
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/openseadragon/-/openseadragon-2.4.0.tgz#d0b28b37a953602c82432a0dbd8a3779dadf756f"
-  integrity sha512-e2fsoEiCDkmwc3vyrv396lkYu4c9CGlpbSX4kYE07eW0ZlEF5DnLbeY2PhqPTskkC1jlsPu2TGZwaZ9VhaAn/w==
-
-openseadragon@^2.4.2:
+openseadragon@2.4.2, openseadragon@^2.4.2:
   version "2.4.2"
   resolved "https://registry.yarnpkg.com/openseadragon/-/openseadragon-2.4.2.tgz#f25d833d0ab9941599d65a3e2b44bec546c9f15c"
   integrity sha512-398KbZwRtOYA6OmeWRY4Q0737NTacQ9Q6whmr9Lp1MNQO3p0eBz5LIASRne+4gwequcSM1vcHcjfy3dIndQziw==

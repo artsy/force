@@ -1,6 +1,5 @@
 import { extend, omit, pick } from "lodash"
 import { data as sd } from "sharify"
-const analyticsHooks = require("../lib/analytics_hooks.coffee")
 
 /**
  * Format and fire events triggered via react-tracking and cohesion
@@ -54,8 +53,6 @@ export const onAnalyticsReady = () => {
     window.analytics.identify(sd.CURRENT_USER.id, traits, {
       integrations: { Marketo: false },
     })
-    // clear analytics cache when user logs out
-    analyticsHooks.on("auth:logged-out", () => window.analytics.reset())
   }
 }
 

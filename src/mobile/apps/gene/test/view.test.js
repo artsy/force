@@ -76,9 +76,12 @@ xdescribe("GeneArtworksView", function () {
   })
 })
 
-describe("GeneArtistsView", function () {
-  beforeEach(function (done) {
-    return benv.setup(() => {
+describe("GeneArtistsView", () => {
+  let e
+  let view
+  let politeScroll
+  beforeEach(done => {
+    benv.setup(() => {
       let module
       const artists = new Artists([
         fabricate("artist"),
@@ -89,8 +92,7 @@ describe("GeneArtistsView", function () {
       const gene = new Gene(fabricate("gene"))
       benv.expose({ $: benv.require("jquery") })
       $.fn.error = sinon.stub()
-      Backbone.$ = $
-      this.e = new $.Event("click")
+      e = new $.Event("click")
       benv.render(path.resolve(__dirname, "../templates/index.jade"), {
         sd: {},
         asset() {},
@@ -101,59 +103,66 @@ describe("GeneArtistsView", function () {
       const { GeneArtistsView } = (module = benv.requireWithJadeify(filename, [
         "artistTemplate",
       ]))
-      this.PoliteInfiniteScrollView = module.__get__("PoliteInfiniteScrollView")
-      this.politeScroll = sinon.stub(
-        this.PoliteInfiniteScrollView.prototype,
+      const PoliteInfiniteScrollView = module.__get__(
+        "PoliteInfiniteScrollView"
+      )
+      politeScroll = sinon.stub(
+        PoliteInfiniteScrollView.prototype,
         "initialize"
       )
-      this.view = new GeneArtistsView({
+      Backbone.$ = $
+      view = new GeneArtistsView({
         collection: artists,
         el: $("body"),
         model: gene,
         params: {},
       })
-      this.view.params = {}
-      return done()
+      view.params = {}
+      done()
     })
   })
 
   afterEach(function () {
     benv.teardown()
     Backbone.sync.restore()
-    return this.politeScroll.restore()
+    politeScroll.restore()
   })
 
-  describe("#initialize", () =>
-    it("should fetch one more page", function () {
-      this.view.onInitialFetch()
-      return Backbone.sync.callCount.should.equal(1)
-    }))
+  describe("#initialize", () => {
+    it("should fetch one more page", () => {
+      view.onInitialFetch()
+      Backbone.sync.callCount.should.equal(1)
+    })
+  })
 
-  describe("#onSync", function () {
-    it("shows correct message when no artists are available", function () {
-      this.view.collection = []
-      this.view.onSync()
-      return $("#gene-artists-empty-message")
+  describe("#onSync", () => {
+    it("shows correct message when no artists are available", () => {
+      view.collection = []
+      view.onSync()
+      view
+        .$("#gene-artists-empty-message")
         .css("display")
         .should.not.containEql("none")
     })
 
-    return it("adds collection to page when artists are available", function () {
-      this.view.onSync()
-      $("#gene-artists-empty-message").css("display").should.equal("none")
-      return $("#gene-artists-container a").length.should.equal(3)
+    it("adds collection to page when artists are available", () => {
+      view.onSync()
+      view.$("#gene-artists-empty-message").css("display").should.equal("none")
+      view.$("#gene-artists-container a").length.should.equal(3)
     })
   })
 
-  return describe("#readMore", function () {
-    it("initially covers text with fade", () =>
-      $(".gene-read-more-fade").css("display").should.not.containEql("none"))
+  describe("#readMore", () => {
+    it("initially covers text with fade", () => {
+      view
+        .$(".gene-read-more-fade")
+        .css("display")
+        .should.not.containEql("none")
+    })
 
-    return it("shows rest of description on click", function () {
-      this.view.readMore(this.e)
-      return $(".gene-description-text")
-        .css("max-height")
-        .should.containEql(9999)
+    it("shows rest of description on click", () => {
+      view.readMore(e)
+      view.$(".gene-description-text").css("max-height").should.containEql(9999)
     })
   })
 })

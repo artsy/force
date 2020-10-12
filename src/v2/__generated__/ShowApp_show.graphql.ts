@@ -5,7 +5,9 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ShowApp_show = {
     readonly name: string | null;
-    readonly " $fragmentRefs": FragmentRefs<"ShowMeta_show" | "ShowInstallShots_show">;
+    readonly about: string | null;
+    readonly pressRelease: string | null;
+    readonly " $fragmentRefs": FragmentRefs<"ShowContextualLink_show" | "ShowHeader_show" | "ShowAbout_show" | "ShowMeta_show" | "ShowInstallShots_show" | "ShowArtworks_show">;
     readonly " $refType": "ShowApp_show";
 };
 export type ShowApp_show$data = ShowApp_show;
@@ -17,7 +19,92 @@ export type ShowApp_show$key = {
 
 
 const node: ReaderFragment = {
-  "argumentDefinitions": [],
+  "argumentDefinitions": [
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "acquireable",
+      "type": "Boolean"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "aggregations",
+      "type": "[ArtworkAggregation]"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "atAuction",
+      "type": "Boolean"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "color",
+      "type": "String"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "forSale",
+      "type": "Boolean"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "inquireableOnly",
+      "type": "Boolean"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "majorPeriods",
+      "type": "[String]"
+    },
+    {
+      "defaultValue": "*",
+      "kind": "LocalArgument",
+      "name": "medium",
+      "type": "String"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "offerable",
+      "type": "Boolean"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "page",
+      "type": "Int"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "partnerID",
+      "type": "ID"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "priceRange",
+      "type": "String"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "sizes",
+      "type": "[ArtworkSizes]"
+    },
+    {
+      "defaultValue": "-decayed_merch",
+      "kind": "LocalArgument",
+      "name": "sort",
+      "type": "String"
+    }
+  ],
   "kind": "Fragment",
   "metadata": null,
   "name": "ShowApp_show",
@@ -30,6 +117,35 @@ const node: ReaderFragment = {
       "storageKey": null
     },
     {
+      "alias": "about",
+      "args": null,
+      "kind": "ScalarField",
+      "name": "description",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "pressRelease",
+      "storageKey": null
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ShowContextualLink_show"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ShowHeader_show"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ShowAbout_show"
+    },
+    {
       "args": null,
       "kind": "FragmentSpread",
       "name": "ShowMeta_show"
@@ -38,9 +154,85 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "FragmentSpread",
       "name": "ShowInstallShots_show"
+    },
+    {
+      "args": [
+        {
+          "kind": "Variable",
+          "name": "acquireable",
+          "variableName": "acquireable"
+        },
+        {
+          "kind": "Variable",
+          "name": "aggregations",
+          "variableName": "aggregations"
+        },
+        {
+          "kind": "Variable",
+          "name": "atAuction",
+          "variableName": "atAuction"
+        },
+        {
+          "kind": "Variable",
+          "name": "color",
+          "variableName": "color"
+        },
+        {
+          "kind": "Variable",
+          "name": "forSale",
+          "variableName": "forSale"
+        },
+        {
+          "kind": "Variable",
+          "name": "inquireableOnly",
+          "variableName": "inquireableOnly"
+        },
+        {
+          "kind": "Variable",
+          "name": "majorPeriods",
+          "variableName": "majorPeriods"
+        },
+        {
+          "kind": "Variable",
+          "name": "medium",
+          "variableName": "medium"
+        },
+        {
+          "kind": "Variable",
+          "name": "offerable",
+          "variableName": "offerable"
+        },
+        {
+          "kind": "Variable",
+          "name": "page",
+          "variableName": "page"
+        },
+        {
+          "kind": "Variable",
+          "name": "partnerID",
+          "variableName": "partnerID"
+        },
+        {
+          "kind": "Variable",
+          "name": "priceRange",
+          "variableName": "priceRange"
+        },
+        {
+          "kind": "Variable",
+          "name": "sizes",
+          "variableName": "sizes"
+        },
+        {
+          "kind": "Variable",
+          "name": "sort",
+          "variableName": "sort"
+        }
+      ],
+      "kind": "FragmentSpread",
+      "name": "ShowArtworks_show"
     }
   ],
   "type": "Show"
 };
-(node as any).hash = '56e700b805c8dd260c5f9f984e9c97a6';
+(node as any).hash = '8a8c365bcf78731ae0be88369ffef7c6';
 export default node;
