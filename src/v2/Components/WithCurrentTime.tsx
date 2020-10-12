@@ -1,8 +1,5 @@
-import { useSystemContext } from "v2/Artsy"
-import { DateTime } from "luxon"
-import React, { useEffect, useState } from "react"
-import { getCurrentTimeAsIsoString } from "v2/Utils/getCurrentTimeAsIsoString"
-import { getOffsetBetweenGravityClock } from "v2/Utils/time"
+import React from "react"
+import { useCurrentTime } from "v2/Utils/Hooks/useCurrentTime"
 
 /**
  * Render prop component to provide the current time as an ISO string, and
@@ -36,32 +33,6 @@ export const WithCurrentTime: React.FC<WithCurrentTimeProps> = ({
   interval = 1000,
   syncWithServer,
 }) => {
-  const { relayEnvironment } = useSystemContext()
-  const [currentTime, setCurrentTime] = useState(getCurrentTimeAsIsoString())
-  const [timeOffsetInMilliseconds, setTimeOffsetInMilliseconds] = useState(0)
-  let intervalId
-
-  function updateCurrentTime() {
-    setCurrentTime(getCurrentTimeAsIsoString())
-  }
-
-  useEffect(() => {
-    if (syncWithServer) {
-      getOffsetBetweenGravityClock(relayEnvironment).then(offset => {
-        setTimeOffsetInMilliseconds(offset)
-      })
-    }
-
-    intervalId = setInterval(updateCurrentTime, interval || 1000)
-
-    return () => {
-      clearInterval(intervalId)
-    }
-  }, [])
-
-  return children(
-    DateTime.fromISO(currentTime)
-      .minus({ millisecond: timeOffsetInMilliseconds })
-      .toString()
-  )
+  const time = useCurrentTime({ interval, syncWithServer })
+  return children(time)
 }

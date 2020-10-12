@@ -2,8 +2,14 @@
 - options = options ? Object.assign({}, defaultOptions, options) : defaultOptions
 
 //- Common bundle
-script( src=asset("/assets/runtime-manifest.js") )
+script( src=asset("/assets/runtime.js") )
 script( src=asset("/assets/common.js") )
+script( src=asset("/assets/artsy-common.js") )
+script( src=asset("/assets/common-backbone.js") )
+script( src=asset("/assets/common-jquery.js") )
+script( src=asset("/assets/common-react.js") )
+script( src=asset("/assets/common-utility.js") )
+script( src=asset("/assets/artsy.js") )
 
 //- Marketo Tracking
 if options.marketo && !sd.THIRD_PARTIES_DISABLED

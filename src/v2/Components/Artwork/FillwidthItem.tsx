@@ -1,8 +1,7 @@
 import { AuthContextModule } from "@artsy/cohesion"
 import { Box, Image, space } from "@artsy/palette"
 import { FillwidthItem_artwork } from "v2/__generated__/FillwidthItem_artwork.graphql"
-import { SystemContextProps } from "v2/Artsy"
-import { Mediator } from "v2/Artsy"
+import { Mediator, SystemContextProps, withSystemContext } from "v2/Artsy"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
@@ -190,7 +189,7 @@ export const FillwidthItem = styled(FillwidthItemContainer)<
   }
 `
 
-export default createFragmentContainer(FillwidthItem, {
+export default createFragmentContainer(withSystemContext(FillwidthItem), {
   artwork: graphql`
     fragment FillwidthItem_artwork on Artwork {
       image {

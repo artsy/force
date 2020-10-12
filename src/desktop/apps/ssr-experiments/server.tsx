@@ -25,8 +25,15 @@ app.get("/ssr-experiments", adminOnly, (_req, res, _next) => {
   <body>
     <div id='react-root'>${html}</div>
 
-    <script src='/assets/runtime-manifest.js'></script>
+    <script src='/assets/runtime.js'></script>
+    <script src='/assets/artsy.js'></script>
+    <script src='/assets/common-artsy.js'></script>
+    <script src='/assets/common-backbone.js'></script>
+    <script src='/assets/common-jquery.js'></script>
+    <script src='/assets/common-react.js'></script>
+    <script src='/assets/common-utility.js'></script>
     <script src='/assets/common.js'></script>
+
     <script src='/assets/ssr-experiments.js'></script>
   </body>
 </html>

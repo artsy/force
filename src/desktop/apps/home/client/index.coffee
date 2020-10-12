@@ -16,6 +16,21 @@ sd = require('sharify').data
 _ = require 'underscore'
 _s = require 'underscore.string'
 
+setupAnalytics = () ->
+  window.analytics.trackLink($("#hpm-recommended_works-6 a"), "Clicked recommendation on homepage")
+  window.analytics.trackLink(
+    $(".js-homepage-featured-links a"),
+    "Clicked homepage featured link",
+    (el) ->
+      $el = $(el)
+      return {
+        featured_link_path: $el.attr("href"),
+        context_type: $el
+          .closest(".js-homepage-featured-links")
+          .data("context"),
+      }
+  )
+
 module.exports.HomeView = class HomeView extends Backbone.View
 
   initialize: () ->
@@ -57,3 +72,4 @@ module.exports.init = ->
   setupHomePageModules()
   setupArtistsToFollow user
   maybeShowBubble user
+  setupAnalytics()

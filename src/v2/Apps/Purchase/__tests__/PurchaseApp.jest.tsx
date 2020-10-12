@@ -89,6 +89,7 @@ describe("Purchase app", () => {
         // TODO: revisit mocking and remove `artist_names` alias from PurchseHistory
         const mockMe = {
           id: "34343267",
+          name: "Moira Rose",
           orders: {
             edges: [{ node: UntouchedBuyOrder }],
             pageInfo,
@@ -98,7 +99,7 @@ describe("Purchase app", () => {
         const component = await render(mockMe, userType)
         const text = component.text()
         expect(text).toContain(
-          "Order History Dec 19, 2019pendingLisa BreslowGramercy Park SouthA GalleryNew York, NYOrder No.abcdefgTotal$12,000"
+          "Moira RoseSaves & FollowsCollector ProfileOrder HistoryBidsSettingsPayments Dec 19, 2019pendingLisa BreslowGramercy Park SouthA GalleryNew York, NYOrder No.abcdefgTotal$12,000"
         )
       })
     })
@@ -106,6 +107,7 @@ describe("Purchase app", () => {
       it("renders pagination component", async () => {
         const mockMe = {
           id: "111",
+          name: "Moira Rose",
           orders: {
             edges: [{ node: UntouchedBuyOrder }],
             pageInfo,
@@ -134,6 +136,7 @@ describe("Purchase app", () => {
       it("shows No orders", async () => {
         const mockMe = {
           id: "111",
+          name: "Moira Rose",
           orders: { edges: [], pageInfo, pageCursors },
         }
         const component = await render(mockMe, userType)
@@ -148,6 +151,7 @@ describe("Purchase app", () => {
     it("gives error", async () => {
       const mockMe = {
         id: "111",
+        name: "Moira Rose",
         orders: { edges: [{ node: UntouchedBuyOrder }], pageInfo, pageCursors },
       }
       const component = await render(mockMe, { type: "regular-user" })

@@ -1,6 +1,6 @@
 import React from "react"
 import { mount } from "enzyme"
-import { ShowInstallShots } from "../components/ShowInstallShots"
+import { ShowInstallShots } from "../Components/ShowInstallShots"
 
 jest.mock("v2/Components/Carousel", () => ({
   Carousel: ({ children }) => children,

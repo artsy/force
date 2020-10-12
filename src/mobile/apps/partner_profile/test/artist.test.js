@@ -17,15 +17,16 @@ const { resolve } = require("path")
 const { fabricate } = require("@artsy/antigravity")
 
 describe("PartnerArtistView", function () {
+  let view
   beforeEach(function (done) {
-    return benv.setup(() => {
+    benv.setup(() => {
       this._location = global.location
       global.location = { search: "" }
       benv.expose({
         $: benv.require("jquery"),
+        jQuery: benv.require("jquery"),
         analytics: { track: sinon.stub() },
       })
-      Backbone.$ = $
       sinon.stub(Backbone, "sync")
       return benv.render(
         resolve(__dirname, "../templates/artist.jade"),
@@ -41,8 +42,9 @@ describe("PartnerArtistView", function () {
             resolve(__dirname, "../client/artist"),
             ["artworksTemplate"]
           ))
-          mod.__set__("ShareView", (this.ShareView = sinon.stub()))
-          this.view = new PartnerArtistView({
+          mod.__set__("ShareView", sinon.stub())
+          Backbone.$ = $
+          view = new PartnerArtistView({
             artist: new Artist(fabricate("artist")),
             partner: new Partner(fabricate("partner")),
             user: null,
@@ -56,7 +58,7 @@ describe("PartnerArtistView", function () {
   afterEach(function () {
     global.location = this._location
     benv.teardown()
-    return Backbone.sync.restore()
+    Backbone.sync.restore()
   })
 
   describe("#initialize", function () {
@@ -72,9 +74,9 @@ describe("PartnerArtistView", function () {
     })
 
     return xit("renders on add", function () {
-      const spy = sinon.spy(this.view, "renderArtworks")
+      const spy = sinon.spy(view, "renderArtworks")
       // need to call initialize again to bind the spied renderArtworks()
-      this.view.initialize({
+      view.initialize({
         artist: new Artist(fabricate("artist")),
         partner: new Partner(fabricate("partner")),
         user: null,
@@ -82,21 +84,18 @@ describe("PartnerArtistView", function () {
       Backbone.sync.args[0][2].success([
         fabricate("artwork", { title: "Andy Foobar's Finger Painting" }),
       ])
-      this.view.artworks.trigger("add")
-      this.view.artworks.trigger("add")
+      view.artworks.trigger("add")
+      view.artworks.trigger("add")
       return spy.calledThrice.should.be.ok()
     })
   })
 
   describe("#renderArtworks", () =>
     it("hides the see more if reached max", function () {
-      this.view.artist.set({ published_artworks_count: 0 })
-      this.view.artworks = new Artworks([
-        fabricate("artwork"),
-        fabricate("artwork"),
-      ])
-      this.view.renderArtworks()
-      return this.view
+      view.artist.set({ published_artworks_count: 0 })
+      view.artworks = new Artworks([fabricate("artwork"), fabricate("artwork")])
+      view.renderArtworks()
+      return view
         .$(".artist-page-artwork-see-more-container")
         .css("display")
         .should.equal("none")
@@ -104,23 +103,23 @@ describe("PartnerArtistView", function () {
 
   describe("#seeMoreArtworks", () =>
     xit("fetches more artworks and adds them to the collection", function () {
-      this.view.seeMoreArtworks()
+      view.seeMoreArtworks()
       _.last(Backbone.sync.args)[2].data.page.should.equal(2)
       _.last(Backbone.sync.args)[2].success([
         fabricate("artwork"),
         fabricate("artwork"),
       ])
-      return this.view.artworks.length.should.equal(2)
+      return view.artworks.length.should.equal(2)
     }))
 
   describe("#toggleShare", () =>
     it("toggles the share menu", function () {
       this.e = new $.Event("click")
-      this.view.$(".artist-share-menu").css("display") === "none"
-      this.view.toggleShare(this.e)
-      this.view.$(".artist-share-menu").css("display") === "block"
-      this.view.toggleShare(this.e)
-      return this.view.$(".artist-share-menu").css("display") === "none"
+      view.$(".artist-share-menu").css("display") === "none"
+      view.toggleShare(this.e)
+      view.$(".artist-share-menu").css("display") === "block"
+      view.toggleShare(this.e)
+      return view.$(".artist-share-menu").css("display") === "none"
     }))
 
   return describe("#followArtist", function () {
@@ -129,17 +128,14 @@ describe("PartnerArtistView", function () {
     })
 
     it("should render init button state", function () {
-      return this.view.$(".artist-follow").data("state").should.equal("follow")
+      return view.$(".artist-follow").data("state").should.equal("follow")
     })
 
     describe("with a user", function () {
       beforeEach(function () {
-        this.view.followButtonView.isLoggedIn = true
-        this.spyFollow = sinon.spy(this.view.followArtists, "follow")
-        return (this.spyUnfollow = sinon.spy(
-          this.view.followArtists,
-          "unfollow"
-        ))
+        view.followButtonView.isLoggedIn = true
+        this.spyFollow = sinon.spy(view.followArtists, "follow")
+        return (this.spyUnfollow = sinon.spy(view.followArtists, "unfollow"))
       })
 
       afterEach(function () {
@@ -148,22 +144,22 @@ describe("PartnerArtistView", function () {
       })
 
       it("should follow the artist", function () {
-        this.view.followButtonView.onToggle(this.e)
+        view.followButtonView.onToggle(this.e)
         _.last(Backbone.sync.args)[2].success({
           id: 123,
-          artist: this.view.artist.attributes,
+          artist: view.artist.attributes,
         })
         return this.spyFollow.calledOnce.should.be.true()
       })
 
       return it("should toggle button state", function () {
-        this.view.$(".artist-follow").data("state").should.equal("follow")
-        this.view.followButtonView.onToggle(this.e)
+        view.$(".artist-follow").data("state").should.equal("follow")
+        view.followButtonView.onToggle(this.e)
         _.last(Backbone.sync.args)[2].success({
           id: 123,
-          artist: this.view.artist.attributes,
+          artist: view.artist.attributes,
         })
-        return this.view
+        return view
           .$(".artist-follow")
           .attr("data-state")
           .should.equal("following")
@@ -172,11 +168,11 @@ describe("PartnerArtistView", function () {
 
     describe("without a user", () =>
       it("should redirect to log in", function () {
-        this.view.followButtonView.isLoggedIn = false
-        const spy = sinon.spy(this.view.followArtists, "follow")
-        this.view.followButtonView.onToggle(this.e)
+        view.followButtonView.isLoggedIn = false
+        const spy = sinon.spy(view.followArtists, "follow")
+        view.followButtonView.onToggle(this.e)
         spy.called.should.be.false()
-        this.view.followArtists.follow.restore()
+        view.followArtists.follow.restore()
         location.href.should.containEql(
           "/sign_up?action=follow&objectId=pablo-picasso"
         )
@@ -187,8 +183,8 @@ describe("PartnerArtistView", function () {
 
     return describe("#resetArtworks", () =>
       it("fetches the artworks with the params", function () {
-        this.view.artworkParams.foo = "bar"
-        this.view.resetArtworks()
+        view.artworkParams.foo = "bar"
+        view.resetArtworks()
         return Backbone.sync.args[0][2].data.foo.should.equal("bar")
       }))
   })
