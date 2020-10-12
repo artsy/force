@@ -285,7 +285,7 @@
     "babel-plugin-styled-components": "1.11.1",
     "benv": "3.3.0",
     "cache-loader": "1.2.2",
-    "case-sensitive-paths-webpack-plugin": "^2.3.0",
+    "case-sensitive-paths-webpack-plugin": "2.3.0",
     "coffee-loader": "0.8.0",
     "coffeescript": "1.11.1",
     "cypress": "5.1.0",
