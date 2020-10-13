@@ -11,6 +11,8 @@ facetDefaults = require '../filter_facet/facet_defaults.coffee'
 module.exports = class PrimaryCarousel extends Backbone.View
   events:
     'click .js-gpc-dot': 'dotClicked'
+    'click .gpc-carousel [class*="is-selected"]': 'trackClickedBannerImage'
+    'click .gpc-overlay': 'trackClickedBanner'
     'click .js-gpc-next': -> @flickity.next()
     'click .js-gpc-prev': -> @flickity.previous()
 
@@ -71,3 +73,30 @@ module.exports = class PrimaryCarousel extends Backbone.View
   remove: ->
     @destroyFlickity()
     super()
+
+  trackClickedBanner: (e) ->
+    $e = $(e.currentTarget)
+    partnerSlug = $e
+      .find(".gpc-headline")
+      .attr("href")
+      .split("/")[1]
+    showSlug = $e
+      .find("[href*='/show']")
+      .attr("href")
+      .split("/")[2]
+    pos = $e.data("idx")
+    window.analytics.track("Clicked Galleries Banner", {
+      show_slug: showSlug,
+      partner_slug: partnerSlug,
+      position: pos,
+    })
+
+  trackClickedBannerImage: (e) ->
+    $e = $(e.currentTarget)
+    showSlug = $e
+      .find(".gpc-carousel-figure")
+      .attr("href")
+      .split("/")[2]
+    window.analytics.track("Clicked Galleries Banner", {
+      show_slug: showSlug,
+    })

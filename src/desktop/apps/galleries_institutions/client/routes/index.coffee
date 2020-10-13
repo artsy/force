@@ -12,6 +12,8 @@ FetchFilterPartners = require '../../components/parameters/fetch_filter_partners
 initFacets = require '../../components/filter_facet/init_filter_facets.coffee'
 
 module.exports = class PartnersView extends Backbone.View
+  events:
+    'click .galleries-institutions-carousels .mgr-cell.js-mgr-cell.partner-cell a': 'trackCellClick'
 
   initialize: ({ @params, @root }) ->
     @listenTo @params, 'change', @paramsChanged
@@ -76,3 +78,9 @@ module.exports = class PartnersView extends Backbone.View
       "/#{@root}?#{@params.urlQueryString()}"
     else
       "/#{@root}"
+
+  trackCellClick: (e) ->
+    partnerSlug = e.currentTarget.pathname.replace('/', '')
+    window.analytics.track("Clicked Galleries Featured Link", {
+      partner_slug: partnerSlug,
+    })
