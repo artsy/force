@@ -117,11 +117,7 @@ export const CollectApp: React.FC<CollectAppProps> = ({
                     const url = buildUrlForCollectApp(filters)
 
                     if (typeof window !== "undefined") {
-                      // FIXME: Is this the best way to guard against history updates
-                      // in Storybooks?
-                      if (!process.env.IS_STORYBOOK) {
-                        window.history.replaceState({}, "", url)
-                      }
+                      window.history.replaceState({}, "", url)
                     }
 
                     /**

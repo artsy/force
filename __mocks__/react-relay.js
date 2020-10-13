@@ -1,7 +1,4 @@
-// Comes from https://github.com/facebook/relay/issues/161
-// Should be used in tests as a replacement for `react-storybooks-relay-container`
-
-var React = require.requireActual("react")
+let React = require.requireActual("react")
 
 // This is a template string function, which returns the original string
 // It's based on https://github.com/lleaff/tagged-template-noop

@@ -47,7 +47,6 @@ module.exports = {
         extensions: [".js", ".jsx", ".ts", ".tsx"],
         root: ["./src"],
         alias: {
-          storybook: "./src/v2/__stories__",
           v2: "./src/v2",
         },
       },
