@@ -1,7 +1,7 @@
 import React from "react"
 import { ContextModule } from "@artsy/cohesion"
 import { createFragmentContainer, graphql } from "react-relay"
-import { Clickable, EntityHeader, Text } from "@artsy/palette"
+import { EntityHeader, Text } from "@artsy/palette"
 import { useSystemContext } from "v2/Artsy"
 import { filterLocations } from "v2/Apps/Artwork/Utils/filterLocations"
 import { limitWithCount } from "v2/Apps/Artwork/Utils/limitWithCount"
@@ -45,9 +45,14 @@ const ShowPartnerEntityHeader: React.FC<ShowPartnerEntityHeaderProps> = ({
             contextModule={ContextModule.partnerHeader}
             render={profile => {
               return (
-                <Clickable textDecoration="underline" data-test="followButton">
-                  <Text>{profile.is_followed ? "Following" : "Follow"}</Text>
-                </Clickable>
+                <Text
+                  style={{
+                    cursor: "pointer",
+                    textDecoration: "underline",
+                  }}
+                >
+                  {profile.is_followed ? "Following" : "Follow"}
+                </Text>
               )
             }}
           />

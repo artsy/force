@@ -124,7 +124,9 @@ export class FollowProfileButton extends React.Component<Props> {
     // Custom button renderer
     if (render) {
       return (
-        <Clickable onClick={this.handleFollow}>{render(profile)}</Clickable>
+        <Clickable onClick={this.handleFollow} data-test="followButton">
+          {render(profile)}
+        </Clickable>
       )
     } else {
       return (
