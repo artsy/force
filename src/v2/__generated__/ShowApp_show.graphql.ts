@@ -6,6 +6,8 @@ import { FragmentRefs } from "relay-runtime";
 export type ShowApp_show = {
     readonly name: string | null;
     readonly href: string | null;
+    readonly internalID: string;
+    readonly slug: string;
     readonly about: string | null;
     readonly " $fragmentRefs": FragmentRefs<"ShowContextualLink_show" | "ShowHeader_show" | "ShowAbout_show" | "ShowMeta_show" | "ShowInstallShots_show" | "ShowArtworks_show" | "ShowContextCard_show">;
     readonly " $refType": "ShowApp_show";
@@ -124,6 +126,20 @@ const node: ReaderFragment = {
       "storageKey": null
     },
     {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "internalID",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "slug",
+      "storageKey": null
+    },
+    {
       "alias": "about",
       "args": null,
       "kind": "ScalarField",
@@ -239,5 +255,5 @@ const node: ReaderFragment = {
   ],
   "type": "Show"
 };
-(node as any).hash = '44a6eda6f952169cc33f678f11431002';
+(node as any).hash = '63efbbcfebe108fa0b87c36f3c08ce5b';
 export default node;

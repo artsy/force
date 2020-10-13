@@ -5,6 +5,8 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ShowSubApp_show = {
     readonly id: string;
+    readonly internalID: string;
+    readonly slug: string;
     readonly name: string | null;
     readonly href: string | null;
     readonly partner: {
@@ -45,6 +47,20 @@ return {
       "name": "id",
       "storageKey": null
     },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "internalID",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "slug",
+      "storageKey": null
+    },
     (v0/*: any*/),
     {
       "alias": null,
@@ -83,5 +99,5 @@ return {
   "type": "Show"
 };
 })();
-(node as any).hash = '54f298f8f04dbca856c6bad4e4041e8e';
+(node as any).hash = 'd249d36ed8cf73dc9f2331be62de2c15';
 export default node;
