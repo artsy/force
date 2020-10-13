@@ -1,0 +1,1 @@
+import "novo/src/client"

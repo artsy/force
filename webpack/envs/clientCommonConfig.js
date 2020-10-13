@@ -12,9 +12,9 @@ export const clientCommonConfig = {
   devtool: "source-map",
   stats: "normal", // or, `errors-only`
   entry: {
-    "artsy-v3": [
+    "artsy-novo": [
       // "webpack-hot-middleware/client?reload=true",
-      path.resolve(process.cwd(), "src/desktop/assets/artsy-v3.tsx"),
+      path.resolve(process.cwd(), "src/desktop/assets/artsy-novo.tsx"),
     ],
   },
   // entry: getEntrypoints(),

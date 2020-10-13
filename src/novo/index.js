@@ -29,7 +29,7 @@ if (isDevelopment) {
   app.use(require("../lib/webpack-dev-server").app)
 
   const mountAndReload = createReloadable(app, require)
-  mountAndReload(path.resolve("src/v3/src"))
+  mountAndReload(path.resolve("src/novo/src"))
 } else {
   app.use(require("./src"))
 }

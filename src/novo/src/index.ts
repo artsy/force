@@ -71,7 +71,7 @@ app.get(
             <script src="${asset("/assets/common-react.js")}"></script>
             <script src="${asset("/assets/common-utility.js")}"></script>
             <script src="${asset("/assets/artsy.js")}"></script>
-            <script src="${asset("/assets/artsy-v3.js")}"></script>
+            <script src="${asset("/assets/artsy-novo.js")}"></script>
 
             ${scripts}
 
