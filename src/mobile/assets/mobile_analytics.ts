@@ -8,7 +8,7 @@ const Events = require("../../v2/Utils/Events").default
 // Send Reaction events to Segment
 Events.onEvent(trackEvent)
 
-require("../analytics/before_ready.ts")
+require("../analytics/before_ready")
 
 $(() =>
   window.analytics.ready(function () {
