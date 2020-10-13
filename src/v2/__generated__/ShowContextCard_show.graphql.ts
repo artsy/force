@@ -5,6 +5,22 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ShowContextCard_show = {
     readonly isFairBooth: boolean | null;
+    readonly partner: {
+        readonly href?: string | null;
+        readonly name?: string | null;
+        readonly locations?: ReadonlyArray<{
+            readonly city: string | null;
+        } | null> | null;
+        readonly artworksConnection?: {
+            readonly edges: ReadonlyArray<{
+                readonly node: {
+                    readonly image: {
+                        readonly url: string | null;
+                    } | null;
+                } | null;
+            } | null> | null;
+        } | null;
+    } | null;
     readonly fair: {
         readonly href: string | null;
         readonly name: string | null;
@@ -20,7 +36,22 @@ export type ShowContextCard_show$key = {
 
 
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "href",
+  "storageKey": null
+},
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "name",
+  "storageKey": null
+};
+return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
@@ -36,25 +67,118 @@ const node: ReaderFragment = {
     {
       "alias": null,
       "args": null,
+      "concreteType": null,
+      "kind": "LinkedField",
+      "name": "partner",
+      "plural": false,
+      "selections": [
+        {
+          "kind": "InlineFragment",
+          "selections": [
+            (v0/*: any*/),
+            (v1/*: any*/),
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "Location",
+              "kind": "LinkedField",
+              "name": "locations",
+              "plural": true,
+              "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "city",
+                  "storageKey": null
+                }
+              ],
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": [
+                {
+                  "kind": "Literal",
+                  "name": "first",
+                  "value": 3
+                },
+                {
+                  "kind": "Literal",
+                  "name": "sort",
+                  "value": "MERCHANDISABILITY_DESC"
+                }
+              ],
+              "concreteType": "ArtworkConnection",
+              "kind": "LinkedField",
+              "name": "artworksConnection",
+              "plural": false,
+              "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "concreteType": "ArtworkEdge",
+                  "kind": "LinkedField",
+                  "name": "edges",
+                  "plural": true,
+                  "selections": [
+                    {
+                      "alias": null,
+                      "args": null,
+                      "concreteType": "Artwork",
+                      "kind": "LinkedField",
+                      "name": "node",
+                      "plural": false,
+                      "selections": [
+                        {
+                          "alias": null,
+                          "args": null,
+                          "concreteType": "Image",
+                          "kind": "LinkedField",
+                          "name": "image",
+                          "plural": false,
+                          "selections": [
+                            {
+                              "alias": null,
+                              "args": [
+                                {
+                                  "kind": "Literal",
+                                  "name": "version",
+                                  "value": "larger"
+                                }
+                              ],
+                              "kind": "ScalarField",
+                              "name": "url",
+                              "storageKey": "url(version:\"larger\")"
+                            }
+                          ],
+                          "storageKey": null
+                        }
+                      ],
+                      "storageKey": null
+                    }
+                  ],
+                  "storageKey": null
+                }
+              ],
+              "storageKey": "artworksConnection(first:3,sort:\"MERCHANDISABILITY_DESC\")"
+            }
+          ],
+          "type": "Partner"
+        }
+      ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
       "concreteType": "Fair",
       "kind": "LinkedField",
       "name": "fair",
       "plural": false,
       "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "href",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "name",
-          "storageKey": null
-        },
+        (v0/*: any*/),
+        (v1/*: any*/),
         {
           "args": null,
           "kind": "FragmentSpread",
@@ -71,5 +195,6 @@ const node: ReaderFragment = {
   ],
   "type": "Show"
 };
-(node as any).hash = 'ea85047a36b8c234f951d098a1f0218f';
+})();
+(node as any).hash = 'd8e5c343e1e13827c9a4479ba239d484';
 export default node;

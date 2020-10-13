@@ -7,7 +7,6 @@ export type ShowApp_show = {
     readonly name: string | null;
     readonly href: string | null;
     readonly about: string | null;
-    readonly isFairBooth: boolean | null;
     readonly " $fragmentRefs": FragmentRefs<"ShowContextualLink_show" | "ShowHeader_show" | "ShowAbout_show" | "ShowMeta_show" | "ShowInstallShots_show" | "ShowArtworks_show" | "ShowContextCard_show">;
     readonly " $refType": "ShowApp_show";
 };
@@ -132,13 +131,6 @@ const node: ReaderFragment = {
       "storageKey": null
     },
     {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "isFairBooth",
-      "storageKey": null
-    },
-    {
       "args": null,
       "kind": "FragmentSpread",
       "name": "ShowContextualLink_show"
@@ -247,5 +239,5 @@ const node: ReaderFragment = {
   ],
   "type": "Show"
 };
-(node as any).hash = '5322f51a90080340da4f33fc85285043';
+(node as any).hash = '44a6eda6f952169cc33f678f11431002';
 export default node;
