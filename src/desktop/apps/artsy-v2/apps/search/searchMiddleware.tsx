@@ -3,12 +3,13 @@ import { stringify } from "querystring"
 import { SearchResultsSkeleton } from "v2/Apps/Search/Components/SearchResultsSkeleton"
 import { StitchWrapper } from "desktop/components/react/stitch_components/StitchWrapper"
 import { stitch } from "@artsy/stitch"
-import { getPageType } from "../../utils/getPageType"
+import { getPageTypeFromReq } from "lib/getPageType"
+import { OwnerType } from "@artsy/cohesion"
 
 export const searchMiddleware = async (req, res, next) => {
-  const { pageType } = getPageType(req)
+  const { pageType } = getPageTypeFromReq(req)
 
-  if (pageType === "search") {
+  if (pageType === OwnerType.search) {
     try {
       if (!req.query.term) {
         if (req.query.q) {

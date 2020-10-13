@@ -7,6 +7,8 @@ import { data as sd } from "sharify"
 import { reportLoadTimeToVolley } from "lib/volley"
 import { match } from "path-to-regexp"
 import { timeOnPageListener } from "./timeOnPageListener"
+import { getPageTypeFromClient } from "lib/getPageType"
+import { OwnerType } from "@artsy/cohesion"
 
 // We exclude these routes from analytics.page calls because they're already
 // taken care of in Reaction.
@@ -32,8 +34,7 @@ const excludedRoutes = [
 
 // Track pageview
 const pathname = new URL(window.location.href).pathname
-let slug = pathname.split("/")[2]
-let pageType = window.sd.PAGE_TYPE || pathname.split("/")[1]
+const { pageType, pageSlug } = getPageTypeFromClient()
 
 const foundExcludedPath = excludedRoutes.some(excludedPath => {
   const matcher = match(excludedPath, { decode: decodeURIComponent })
@@ -48,7 +49,7 @@ if (!foundExcludedPath) {
   )
 }
 
-if (pageType === "auction") {
+if (pageType === OwnerType.sale) {
   // Let reaction track reaction-based app routes
   const matcher = match("/auction/:saleID/bid(2)?/:artworkID", {
     decode: decodeURIComponent,
@@ -57,7 +58,7 @@ if (pageType === "auction") {
   if (!matchedBidRoute) {
     window.addEventListener("load", function () {
       // distinct event required for marketing integrations (Criteo)
-      window.analytics.track("Auction Pageview", { auction_slug: slug })
+      window.analytics.track("Auction Pageview", { auction_slug: pageSlug })
     })
   }
 }

@@ -1,6 +1,8 @@
 import { enableIntercom } from "lib/intercom"
 import { recordArtworkView } from "lib/components/record_artwork_view"
 import { data as sd } from "sharify"
+import { getPageTypeFromClient } from "lib/getPageType"
+import { OwnerType } from "@artsy/cohesion"
 
 export const artworkClient = () => {
   const User = require("desktop/models/user.coffee")
@@ -13,11 +15,10 @@ export const artworkClient = () => {
 
   const $ = require("jquery")
   const mediator = require("desktop/lib/mediator.coffee")
-  const pageType = window.location.pathname.split("/")[1]
+  const { pageType, pageSlug } = getPageTypeFromClient()
 
-  if (pageType === "artwork") {
-    const artworkSlug = location.pathname.replace(/\/artwork\//, "")
-    recordArtworkView(artworkSlug, sd.CURRENT_USER)
+  if (pageType === OwnerType.artwork) {
+    recordArtworkView(pageSlug, sd.CURRENT_USER)
   }
 
   const openInquireableModal = (
