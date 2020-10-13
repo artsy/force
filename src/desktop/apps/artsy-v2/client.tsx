@@ -6,6 +6,8 @@ import { data as sd } from "sharify"
 import { artworkClient } from "./apps/artwork/artworkClient"
 import { artistClient } from "./apps/artist/artistClient"
 import { loadableReady } from "@loadable/component"
+import { getPageTypeFromClient } from "lib/getPageType"
+import { OwnerType } from "@artsy/cohesion"
 
 const mediator = require("desktop/lib/mediator.coffee")
 
@@ -35,9 +37,9 @@ buildClientApp({
         <ClientApp />,
         document.getElementById("react-root"),
         () => {
-          const pageType = window.location.pathname.split("/")[1]
+          const { pageType } = getPageTypeFromClient()
 
-          if (pageType === "search") {
+          if (pageType === OwnerType.search) {
             document.getElementById("loading-container").remove()
             document.getElementById("search-page-header").remove()
           }
@@ -45,7 +47,7 @@ buildClientApp({
       )
     })
   })
-  .catch((error) => {
+  .catch(error => {
     console.error(error)
   })
 

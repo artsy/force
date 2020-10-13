@@ -63,6 +63,7 @@ declare module "sharify" {
       ARTIST_PAGE_CTA_ENABLED: string
       ARTSY_EDITORIAL_CHANNEL: string
       ARTSY_XAPP_TOKEN: string
+      ARTWORK?: any // mobile artist app data
       AUCTION?: any
       CSRF_TOKEN: string
       CHANNEL?: { slug?: string } // Articles
