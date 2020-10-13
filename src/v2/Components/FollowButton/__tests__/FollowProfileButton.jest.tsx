@@ -4,11 +4,12 @@ import "jest-styled-components"
 import React from "react"
 import { commitMutation } from "react-relay"
 import { FollowButton } from "../Button"
-import { FollowArtistButtonFragmentContainer as FollowArtistButton } from "../FollowArtistButton"
+import { FollowProfileButtonFragmentContainer as FollowProfileButton } from "../FollowProfileButton"
 import { ContextModule, OwnerType } from "@artsy/cohesion"
 import * as openAuthModal from "v2/Utils/openAuthModal"
 import renderer from "react-test-renderer"
 import { AnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
+import { ArtworkDetailsFixture } from "v2/Apps/__tests__/Fixtures/Artwork/ArtworkDetails"
 
 const openAuthToFollowSave = jest.spyOn(openAuthModal, "openAuthToFollowSave")
 jest.mock("react-relay", () => ({
@@ -16,10 +17,10 @@ jest.mock("react-relay", () => ({
   createFragmentContainer: component => component,
 }))
 
-describe("FollowArtistButton", () => {
+describe("FollowProfileButton", () => {
   let props
   let mediator
-  const getWrapper = (passedProps = props, user = {}) => {
+  const getWrapper = (passedProps = props, user = { id: "1234" }) => {
     return mount(
       <SystemContextProvider user={user} mediator={mediator}>
         <AnalyticsContext.Provider
@@ -29,30 +30,19 @@ describe("FollowArtistButton", () => {
             contextPageOwnerSlug: "andy-warhol-skull",
           }}
         >
-          <FollowArtistButton {...passedProps} />
+          <FollowProfileButton {...passedProps} />
         </AnalyticsContext.Provider>
       </SystemContextProvider>
     )
   }
 
-  Object.defineProperty(window, "location", {
-    writable: true,
-    value: { assign: jest.fn() },
-  })
-
   beforeEach(() => {
     mediator = { trigger: jest.fn() }
     props = {
-      artist: {
-        internalID: "12345",
-        slug: "damon-zucconi",
-        name: "Damon Zucconi",
-        is_followed: false,
-        counts: { follows: 99 },
-      },
+      profile: { ...ArtworkDetailsFixture.partner.profile },
       relay: { environment: "" },
       tracking: { trackEvent: jest.fn() },
-      contextModule: ContextModule.artistsToFollowRail,
+      contextModule: ContextModule.aboutTheWork,
     }
   })
 
@@ -61,7 +51,7 @@ describe("FollowArtistButton", () => {
       const component = renderer
         .create(
           <SystemContextProvider>
-            <FollowArtistButton {...props} />
+            <FollowProfileButton {...props} />
           </SystemContextProvider>
         )
         .toJSON()
@@ -71,84 +61,79 @@ describe("FollowArtistButton", () => {
 
   describe("unit", () => {
     it("Calls #onOpenAuthModal if no current user", () => {
-      const component = getWrapper()
+      const component = getWrapper(props, {} as any)
       component.find(FollowButton).simulate("click")
 
       expect(openAuthToFollowSave).toBeCalledWith(mediator, {
-        contextModule: "artistsToFollowRail",
+        contextModule: "aboutTheWork",
         entity: {
-          counts: {
-            follows: 99,
-          },
-          internalID: "12345",
-          is_followed: false,
-          name: "Damon Zucconi",
-          slug: "damon-zucconi",
+          name: "Salon 94",
+          slug: "salon-94",
         },
-        intent: "followArtist",
+        intent: "followPartner",
       })
       expect(mediator.trigger).toBeCalledWith("open:auth", {
         afterSignUpAction: {
           action: "follow",
-          kind: "artist",
-          objectId: "damon-zucconi",
+          kind: "profile",
+          objectId: "salon-94",
         },
-        contextModule: "artistsToFollowRail",
-        copy: "Sign up to follow Damon Zucconi",
-        intent: "followArtist",
+        contextModule: "aboutTheWork",
+        copy: "Sign up to follow Salon 94",
+        intent: "followPartner",
         mode: "signup",
       })
     })
 
-    it("Follows an artist if current user", () => {
-      const component = getWrapper(props, { id: "uid" })
+    it("Follows partner if current user", () => {
+      const component = getWrapper()
       component.find(FollowButton).simulate("click")
       const mutation = (commitMutation as any).mock.calls[0][1].variables.input
 
-      expect(mutation.artistID).toBe("12345")
+      expect(mutation.profileID).toBe("54321")
       expect(mutation.unfollow).toBe(false)
     })
 
-    it("Unfollows an artist if current user", () => {
-      props.artist.is_followed = true
-      const component = getWrapper(props, { id: "uid" })
+    it("Unfollows partner if current user", () => {
+      props.profile.is_followed = true
+      const component = getWrapper()
       component.find(FollowButton).simulate("click")
       const mutation = (commitMutation as any).mock.calls[1][1].variables.input
 
-      expect(mutation.artistID).toBe("12345")
+      expect(mutation.profileID).toBe("54321")
       expect(mutation.unfollow).toBe(true)
     })
 
     it("Tracks follow click when following", () => {
-      const component = getWrapper(props, { id: "uid" })
+      const component = getWrapper()
       component.find(FollowButton).simulate("click")
 
       expect(props.tracking.trackEvent).toBeCalledWith({
-        action: "followedArtist",
-        context_module: "artistsToFollowRail",
+        action: "followedPartner",
+        context_module: "aboutTheWork",
         context_owner_id: "54321",
         context_owner_slug: "andy-warhol-skull",
         context_owner_type: "artwork",
-        owner_id: "12345",
-        owner_slug: "damon-zucconi",
-        owner_type: "artist",
+        owner_id: "54321",
+        owner_slug: "salon-94",
+        owner_type: "partner",
       })
     })
 
     it("Tracks unfollow click when unfollowing", () => {
-      props.artist.is_followed = true
-      const component = getWrapper(props, { id: "1234" })
+      props.profile.is_followed = true
+      const component = getWrapper()
       component.find(FollowButton).simulate("click")
 
       expect(props.tracking.trackEvent).toBeCalledWith({
-        action: "unfollowedArtist",
-        context_module: "artistsToFollowRail",
+        action: "unfollowedPartner",
+        context_module: "aboutTheWork",
         context_owner_id: "54321",
         context_owner_slug: "andy-warhol-skull",
         context_owner_type: "artwork",
-        owner_id: "12345",
-        owner_slug: "damon-zucconi",
-        owner_type: "artist",
+        owner_id: "54321",
+        owner_slug: "salon-94",
+        owner_type: "partner",
       })
     })
   })
