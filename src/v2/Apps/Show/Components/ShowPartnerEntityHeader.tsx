@@ -1,5 +1,5 @@
 import React from "react"
-import { ContextModule, Intent } from "@artsy/cohesion"
+import { ContextModule } from "@artsy/cohesion"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Clickable, EntityHeader, Text } from "@artsy/palette"
 import { useSystemContext } from "v2/Artsy"
@@ -7,7 +7,6 @@ import { filterLocations } from "v2/Apps/Artwork/Utils/filterLocations"
 import { limitWithCount } from "v2/Apps/Artwork/Utils/limitWithCount"
 import { FollowProfileButtonFragmentContainer as FollowProfileButton } from "v2/Components/FollowButton/FollowProfileButton"
 import { ShowPartnerEntityHeader_partner } from "v2/__generated__/ShowPartnerEntityHeader_partner.graphql"
-import { openAuthToFollowSave } from "v2/Utils/openAuthModal"
 
 interface ShowPartnerEntityHeaderProps {
   partner: ShowPartnerEntityHeader_partner
@@ -16,7 +15,7 @@ interface ShowPartnerEntityHeaderProps {
 const ShowPartnerEntityHeader: React.FC<ShowPartnerEntityHeaderProps> = ({
   partner,
 }) => {
-  const { user, mediator } = useSystemContext()
+  const { user } = useSystemContext()
 
   if (!partner) {
     return null
@@ -31,14 +30,6 @@ const ShowPartnerEntityHeader: React.FC<ShowPartnerEntityHeaderProps> = ({
     2
   ).join(", ")
 
-  const handleOpenAuthModal = () => {
-    openAuthToFollowSave(mediator, {
-      intent: Intent.followPartner,
-      entity: { slug: partner.slug, name: partner.name },
-      contextModule: ContextModule.partnerHeader, // ?
-    })
-  }
-
   return (
     <EntityHeader
       name={partner.name}
@@ -51,7 +42,7 @@ const ShowPartnerEntityHeader: React.FC<ShowPartnerEntityHeaderProps> = ({
           <FollowProfileButton
             user={user}
             profile={partner.profile}
-            onOpenAuthModal={handleOpenAuthModal}
+            contextModule={ContextModule.partnerHeader}
             render={profile => {
               return (
                 <Clickable textDecoration="underline" data-test="followButton">
