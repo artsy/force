@@ -90,13 +90,9 @@ export const ShowApp: React.FC<ShowAppProps> = ({ show }) => {
 
           <Separator as="hr" my={3} />
 
-          {show.isFairBooth && (
-            <>
-              <ShowContextCard show={show} />
+          <ShowContextCard show={show} />
 
-              <Separator as="hr" my={3} />
-            </>
-          )}
+          <Separator as="hr" my={3} />
 
           <Footer />
         </HorizontalPadding>
@@ -150,7 +146,7 @@ export default createFragmentContainer(ShowApp, {
           sizes: $sizes
           sort: $sort
         )
-      isFairBooth
+
       ...ShowContextCard_show
     }
   `,
