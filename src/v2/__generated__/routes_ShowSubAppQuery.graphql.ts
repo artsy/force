@@ -39,6 +39,8 @@ fragment ShowMeta_show on Show {
 
 fragment ShowSubApp_show on Show {
   id
+  internalID
+  slug
   name
   href
   partner {
@@ -132,6 +134,20 @@ return {
         "plural": false,
         "selections": [
           (v2/*: any*/),
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "internalID",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "slug",
+            "storageKey": null
+          },
           (v3/*: any*/),
           {
             "alias": null,
@@ -167,13 +183,6 @@ return {
                 "type": "ExternalPartner"
               }
             ],
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "slug",
             "storageKey": null
           },
           {
@@ -217,7 +226,7 @@ return {
     "metadata": {},
     "name": "routes_ShowSubAppQuery",
     "operationKind": "query",
-    "text": "query routes_ShowSubAppQuery(\n  $slug: String!\n) {\n  show(id: $slug) {\n    ...ShowSubApp_show\n    id\n  }\n}\n\nfragment ShowMeta_show on Show {\n  name\n  slug\n  metaDescription: description\n  metaImage {\n    src: url(version: \"large\")\n  }\n}\n\nfragment ShowSubApp_show on Show {\n  id\n  name\n  href\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on ExternalPartner {\n      name\n      id\n    }\n    ... on Node {\n      id\n    }\n  }\n  ...ShowMeta_show\n}\n"
+    "text": "query routes_ShowSubAppQuery(\n  $slug: String!\n) {\n  show(id: $slug) {\n    ...ShowSubApp_show\n    id\n  }\n}\n\nfragment ShowMeta_show on Show {\n  name\n  slug\n  metaDescription: description\n  metaImage {\n    src: url(version: \"large\")\n  }\n}\n\nfragment ShowSubApp_show on Show {\n  id\n  internalID\n  slug\n  name\n  href\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on ExternalPartner {\n      name\n      id\n    }\n    ... on Node {\n      id\n    }\n  }\n  ...ShowMeta_show\n}\n"
   }
 };
 })();

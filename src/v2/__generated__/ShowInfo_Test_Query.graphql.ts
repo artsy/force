@@ -26,6 +26,8 @@ query ShowInfo_Test_Query {
 
 fragment FollowProfileButton_profile on Profile {
   id
+  slug
+  name
   internalID
   is_followed: isFollowed
 }
@@ -159,6 +161,13 @@ v8 = {
   "args": null,
   "kind": "ScalarField",
   "name": "name",
+  "storageKey": null
+},
+v9 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "slug",
   "storageKey": null
 };
 return {
@@ -310,13 +319,7 @@ return {
                     "name": "type",
                     "storageKey": null
                   },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "slug",
-                    "storageKey": null
-                  },
+                  (v9/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -361,6 +364,8 @@ return {
                     "plural": false,
                     "selections": [
                       (v7/*: any*/),
+                      (v9/*: any*/),
+                      (v8/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -419,7 +424,7 @@ return {
     "metadata": {},
     "name": "ShowInfo_Test_Query",
     "operationKind": "query",
-    "text": "query ShowInfo_Test_Query {\n  show(id: \"xxx\") {\n    ...ShowInfo_show\n    id\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  internalID\n  is_followed: isFollowed\n}\n\nfragment ShowInfoLocation_show on Show {\n  fair {\n    location {\n      address\n      address2\n      city\n      state\n      country\n      summary\n      id\n    }\n    id\n  }\n  location {\n    display\n    address\n    address2\n    city\n    state\n    country\n    summary\n    id\n  }\n}\n\nfragment ShowInfo_show on Show {\n  ...ShowInfoLocation_show\n  name\n  about: description\n  pressRelease(format: HTML)\n  hasLocation\n  partner {\n    __typename\n    ... on Partner {\n      ...ShowPartnerEntityHeader_partner\n      type\n    }\n    ... on Node {\n      id\n    }\n    ... on ExternalPartner {\n      id\n    }\n  }\n}\n\nfragment ShowPartnerEntityHeader_partner on Partner {\n  type\n  slug\n  href\n  name\n  initials\n  locations {\n    city\n    id\n  }\n  isDefaultProfilePublic\n  profile {\n    ...FollowProfileButton_profile\n    icon {\n      url(version: \"square140\")\n    }\n    id\n  }\n}\n"
+    "text": "query ShowInfo_Test_Query {\n  show(id: \"xxx\") {\n    ...ShowInfo_show\n    id\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  is_followed: isFollowed\n}\n\nfragment ShowInfoLocation_show on Show {\n  fair {\n    location {\n      address\n      address2\n      city\n      state\n      country\n      summary\n      id\n    }\n    id\n  }\n  location {\n    display\n    address\n    address2\n    city\n    state\n    country\n    summary\n    id\n  }\n}\n\nfragment ShowInfo_show on Show {\n  ...ShowInfoLocation_show\n  name\n  about: description\n  pressRelease(format: HTML)\n  hasLocation\n  partner {\n    __typename\n    ... on Partner {\n      ...ShowPartnerEntityHeader_partner\n      type\n    }\n    ... on Node {\n      id\n    }\n    ... on ExternalPartner {\n      id\n    }\n  }\n}\n\nfragment ShowPartnerEntityHeader_partner on Partner {\n  type\n  slug\n  href\n  name\n  initials\n  locations {\n    city\n    id\n  }\n  isDefaultProfilePublic\n  profile {\n    ...FollowProfileButton_profile\n    icon {\n      url(version: \"square140\")\n    }\n    id\n  }\n}\n"
   }
 };
 })();

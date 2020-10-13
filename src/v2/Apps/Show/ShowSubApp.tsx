@@ -8,6 +8,8 @@ import { Footer } from "v2/Components/Footer"
 import { ErrorPage } from "v2/Components/ErrorPage"
 import { BackLink } from "v2/Components/Links/BackLink"
 import { ShowMetaFragmentContainer as ShowMeta } from "./Components/ShowMeta"
+import { AnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
+import { OwnerType } from "@artsy/cohesion"
 
 interface ShowAppProps {
   show: ShowSubApp_show
@@ -21,18 +23,26 @@ const ShowApp: React.FC<ShowAppProps> = ({ children, show }) => {
       <ShowMeta show={show} />
 
       <AppContainer>
-        <HorizontalPadding>
-          <BackLink my={3} to={show.href.replace("/show", "/show2")}>
-            Back to {show.name}
-            {show.partner?.name && <> at {show.partner.name}</>}
-          </BackLink>
+        <AnalyticsContext.Provider
+          value={{
+            contextPageOwnerId: show.internalID,
+            contextPageOwnerSlug: show.slug,
+            contextPageOwnerType: OwnerType.show,
+          }}
+        >
+          <HorizontalPadding>
+            <BackLink my={3} to={show.href.replace("/show", "/show2")}>
+              Back to {show.name}
+              {show.partner?.name && <> at {show.partner.name}</>}
+            </BackLink>
 
-          {children}
+            {children}
 
-          <Separator as="hr" my={3} />
+            <Separator as="hr" my={3} />
 
-          <Footer />
-        </HorizontalPadding>
+            <Footer />
+          </HorizontalPadding>
+        </AnalyticsContext.Provider>
       </AppContainer>
     </>
   )
@@ -43,6 +53,8 @@ export default createFragmentContainer(ShowApp, {
   show: graphql`
     fragment ShowSubApp_show on Show {
       id
+      internalID
+      slug
       name
       href
       partner {
