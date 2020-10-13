@@ -18,7 +18,6 @@ describe("For You View", () => {
     user = new CurrentUser(fabricate("user", { id: "current-user-id" }))
     benv.setup(() => {
       benv.expose({ $: benv.require("jquery") })
-      Backbone.$ = $
       $.onInfiniteScroll = function () {}
       sinon.stub(CurrentUser, "orNull").returns(user)
       sinon.stub(Backbone, "sync")
@@ -31,6 +30,7 @@ describe("For You View", () => {
         },
         () => {
           const { ForYouView } = require("../../client/for_you")
+          Backbone.$ = $
           view = new ForYouView({
             el: $("#fair-for-you"),
             fair: fair,
