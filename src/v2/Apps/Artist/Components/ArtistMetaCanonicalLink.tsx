@@ -5,12 +5,16 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { ArtistMetaCanonicalLink_artist } from "v2/__generated__/ArtistMetaCanonicalLink_artist.graphql"
 import { hasSections as showMarketInsights } from "v2/Apps/Artist/Components/MarketInsights/MarketInsights"
 import { hasOverviewContent } from "v2/Apps/Artist/Components/NavigationTabs"
+import { useRouter } from "v2/Artsy/Router/useRouter"
 
 export const computeCanonicalPath = (
-  artist: ArtistMetaCanonicalLink_artist
+  artist: ArtistMetaCanonicalLink_artist,
+  path: string
 ) => {
   const basePath = `/artist/${artist.slug}`
   const pathParts = [basePath]
+
+  const isConsignPage = path === "consign"
 
   const hasArtistInsights =
     showMarketInsights(artist) ||
@@ -19,7 +23,9 @@ export const computeCanonicalPath = (
   const hasArtistContent = hasOverviewContent(artist)
   const canShowOverview = hasArtistInsights || hasArtistContent
 
-  if (canShowOverview) {
+  if (isConsignPage) {
+    pathParts.push("/consign")
+  } else if (!canShowOverview) {
     pathParts.push("/works-for-sale")
   }
 
@@ -33,7 +39,8 @@ export type ArtistMetaCanonicalLinkProps = {
 export const ArtistMetaCanonicalLink: React.FC<ArtistMetaCanonicalLinkProps> = ({
   artist,
 }) => {
-  const canonicalPath = computeCanonicalPath(artist)
+  const { pathname } = useRouter().match.location
+  const canonicalPath = computeCanonicalPath(artist, pathname)
   const canonicalUrl = `${sd.APP_URL}${canonicalPath}`
   return <Link rel="canonical" href={canonicalUrl} />
 }
