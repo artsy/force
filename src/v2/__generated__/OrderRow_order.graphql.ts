@@ -29,6 +29,7 @@ export type OrderRow_order = {
         readonly edges: ReadonlyArray<{
             readonly node: {
                 readonly artwork: {
+                    readonly slug: string;
                     readonly date: string | null;
                     readonly image: {
                         readonly resized: {
@@ -36,6 +37,7 @@ export type OrderRow_order = {
                         } | null;
                     } | null;
                     readonly partner: {
+                        readonly slug: string;
                         readonly initials: string | null;
                         readonly name: string | null;
                         readonly profile: {
@@ -48,6 +50,9 @@ export type OrderRow_order = {
                     readonly internalID: string;
                     readonly title: string | null;
                     readonly artist_names: string | null;
+                    readonly artists: ReadonlyArray<{
+                        readonly slug: string;
+                    } | null> | null;
                 } | null;
             } | null;
         } | null> | null;
@@ -78,7 +83,14 @@ v1 = [
     "name": "__typename",
     "storageKey": null
   }
-];
+],
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "slug",
+  "storageKey": null
+};
 return {
   "argumentDefinitions": [],
   "kind": "Fragment",
@@ -199,6 +211,7 @@ return {
                   "name": "artwork",
                   "plural": false,
                   "selections": [
+                    (v2/*: any*/),
                     {
                       "alias": null,
                       "args": null,
@@ -249,6 +262,7 @@ return {
                       "name": "partner",
                       "plural": false,
                       "selections": [
+                        (v2/*: any*/),
                         {
                           "alias": null,
                           "args": null,
@@ -322,6 +336,18 @@ return {
                       "kind": "ScalarField",
                       "name": "artistNames",
                       "storageKey": null
+                    },
+                    {
+                      "alias": null,
+                      "args": null,
+                      "concreteType": "Artist",
+                      "kind": "LinkedField",
+                      "name": "artists",
+                      "plural": true,
+                      "selections": [
+                        (v2/*: any*/)
+                      ],
+                      "storageKey": null
                     }
                   ],
                   "storageKey": null
@@ -339,5 +365,5 @@ return {
   "type": "CommerceOrder"
 };
 })();
-(node as any).hash = '2114f408758d43e6e539f1dc1c6ab241';
+(node as any).hash = 'ba4ba2f29553a58567679cb06f07bac1';
 export default node;

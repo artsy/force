@@ -54,6 +54,11 @@ const OrderRow: React.FC<OrderRowProps> = props => {
     <Box width="50px" height="50px" backgroundColor="black10" />
   )
 
+  const orderURL = `/orders/${order.internalID}/status`
+  const artworkURL = `/artwork/${artwork?.slug}`
+  const artistURL = `/artist/${artwork?.artists?.[0]?.slug}`
+  const partnerURL = `/${artwork?.partner?.slug}`
+
   const XSOrderRow = (
     <Box px={2}>
       <Flex
@@ -74,10 +79,7 @@ const OrderRow: React.FC<OrderRowProps> = props => {
 
         <Flex flexDirection="column" justifyContent="center" width="100%">
           {!orderIsInactive && (
-            <Link
-              href={`/orders/${order.internalID}/status`}
-              underlineBehavior="hover"
-            >
+            <Link href={orderURL} underlineBehavior="hover">
               <Text variant="text" letterSpacing="tight">
                 {artwork?.artist_names}
               </Text>
@@ -89,7 +91,7 @@ const OrderRow: React.FC<OrderRowProps> = props => {
             </Text>
           )}
           <Text variant="text" color="black60" letterSpacing="tight">
-            {artwork?.partner?.name}
+            {partnerName}
           </Text>
           <Text variant="text" color="black60" letterSpacing="tight">
             {orderCreatedAt.toLocaleString(DateTime.DATE_SHORT)}
@@ -147,26 +149,24 @@ const OrderRow: React.FC<OrderRowProps> = props => {
         <Flex width="50%">
           {artworkImage}
           <Flex flexDirection="column" ml={1}>
-            {!orderIsInactive && (
-              <Link
-                href={`/orders/${order.internalID}/status`}
-                underlineBehavior="hover"
-              >
-                <Text variant="text">{artwork?.artist_names}</Text>
-              </Link>
-            )}
-            {orderIsInactive && (
+            <Link href={artistURL} underlineBehavior="hover">
               <Text variant="text">{artwork?.artist_names}</Text>
-            )}
-            <Text variant="text" color="black60">
-              {artwork?.title}
-            </Text>
+            </Link>
+            <Link href={artworkURL} underlineBehavior="hover">
+              <Text variant="text" color="black60">
+                {artwork?.title}
+              </Text>
+            </Link>
           </Flex>
         </Flex>
         <Flex width="50%">
           <Avatar size="xs" src={partnerImageUrl} initials={partnerInitials} />
           <Flex flexDirection="column" ml={1}>
-            <Text variant="text">{partnerName}</Text>
+            <Link href={partnerURL} underlineBehavior="hover">
+              <Text variant="text" color="black60" letterSpacing="tight">
+                {partnerName}
+              </Text>
+            </Link>{" "}
             <Text variant="text" color="black60">
               {artwork?.shippingOrigin &&
                 artwork?.shippingOrigin.replace(/, US/g, "")}
@@ -180,9 +180,18 @@ const OrderRow: React.FC<OrderRowProps> = props => {
       <Flex p={2}>
         <Flex flexDirection="column" width="25%">
           <Text variant="text">Order No.</Text>
-          <Text variant="text" color="black60">
-            {order.code}
-          </Text>
+          {!orderIsInactive && (
+            <Link href={orderURL} underlineBehavior="hover">
+              <Text variant="text" letterSpacing="tight">
+                {order.code}
+              </Text>
+            </Link>
+          )}
+          {orderIsInactive && (
+            <Text variant="text" letterSpacing="tight">
+              {order.code}
+            </Text>
+          )}
         </Flex>
         <Flex flexDirection="column" width="25%">
           <Text variant="text">Total</Text>
@@ -255,6 +264,7 @@ export const OrderRowFragmentContainer = createFragmentContainer(
           edges {
             node {
               artwork {
+                slug
                 date
                 image {
                   resized(width: 55) {
@@ -262,6 +272,7 @@ export const OrderRowFragmentContainer = createFragmentContainer(
                   }
                 }
                 partner {
+                  slug
                   initials
                   name
                   profile {
@@ -274,6 +285,9 @@ export const OrderRowFragmentContainer = createFragmentContainer(
                 internalID
                 title
                 artist_names: artistNames
+                artists {
+                  slug
+                }
               }
             }
           }
