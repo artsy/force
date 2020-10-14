@@ -16,6 +16,8 @@ import { ShowApp_show } from "v2/__generated__/ShowApp_show.graphql"
 import { ShowArtworksRefetchContainer as ShowArtworks } from "./Components/ShowArtworks"
 import { ForwardLink } from "v2/Components/Links/ForwardLink"
 import { ShowContextCardFragmentContainer as ShowContextCard } from "./Components/ShowContextCard"
+import { AnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
+import { OwnerType } from "@artsy/cohesion"
 
 interface ShowAppProps {
   show: ShowApp_show
@@ -44,62 +46,69 @@ export const ShowApp: React.FC<ShowAppProps> = ({ show }) => {
       <ShowMeta show={show} />
 
       <AppContainer>
-        <HorizontalPadding>
-          <Box my={2}>
-            <ShowContextualLink show={show} />
-            <FullScreenSeparator as="hr" my={2} />
-          </Box>
+        <AnalyticsContext.Provider
+          value={{
+            contextPageOwnerId: show.internalID,
+            contextPageOwnerSlug: show.slug,
+            contextPageOwnerType: OwnerType.show,
+          }}
+        >
+          <HorizontalPadding>
+            <Box my={2}>
+              <ShowContextualLink show={show} />
+              <FullScreenSeparator as="hr" my={2} />
+            </Box>
 
-          <ShowInstallShots show={show} my={2} />
+            <ShowInstallShots show={show} my={2} />
 
-          <GridColumns>
-            <Column span={hasWideHeader ? [12, 8, 6] : 6} wrap={hasWideHeader}>
-              <ShowHeader show={show} />
+            <GridColumns>
+              <Column
+                span={hasWideHeader ? [12, 8, 6] : 6}
+                wrap={hasWideHeader}
+              >
+                <ShowHeader show={show} />
 
-              {!hasAbout && (
-                <ForwardLink
-                  to={`${show.href.replace("/show", "/show2")}/info`}
-                  mt={1}
-                >
-                  More info
-                </ForwardLink>
+                {!hasAbout && (
+                  <ForwardLink
+                    to={`${show.href.replace("/show", "/show2")}/info`}
+                    mt={1}
+                  >
+                    More info
+                  </ForwardLink>
+                )}
+              </Column>
+
+              {hasAbout && (
+                <Column span={6}>
+                  <ShowAbout show={show} />
+
+                  <ForwardLink
+                    to={`${show.href.replace("/show", "/show2")}/info`}
+                    mt={2}
+                  >
+                    More info
+                  </ForwardLink>
+                </Column>
               )}
-            </Column>
 
-            {hasAbout && (
-              <Column span={6}>
-                <ShowAbout show={show} />
+              {hasViewingRoom && (
+                <Column span={5} start={8}>
+                  <ShowViewingRoom />
+                </Column>
+              )}
+            </GridColumns>
 
-                <ForwardLink
-                  to={`${show.href.replace("/show", "/show2")}/info`}
-                  mt={2}
-                >
-                  More info
-                </ForwardLink>
-              </Column>
-            )}
+            <ShowArtworks show={show} my={3} />
 
-            {hasViewingRoom && (
-              <Column span={5} start={8}>
-                <ShowViewingRoom />
-              </Column>
-            )}
-          </GridColumns>
+            <Separator as="hr" my={3} />
 
-          <ShowArtworks show={show} my={3} />
+            <ShowContextCard show={show} />
 
-          <Separator as="hr" my={3} />
+            <Separator as="hr" my={3} />
 
-          {show.isFairBooth && (
-            <>
-              <ShowContextCard show={show} />
-
-              <Separator as="hr" my={3} />
-            </>
-          )}
-
-          <Footer />
-        </HorizontalPadding>
+            <Footer />
+          </HorizontalPadding>
+        </AnalyticsContext.Provider>
       </AppContainer>
     </>
   )
@@ -127,6 +136,8 @@ export default createFragmentContainer(ShowApp, {
       ) {
       name
       href
+      internalID
+      slug
       about: description
       ...ShowContextualLink_show
       ...ShowHeader_show
@@ -150,7 +161,7 @@ export default createFragmentContainer(ShowApp, {
           sizes: $sizes
           sort: $sort
         )
-      isFairBooth
+
       ...ShowContextCard_show
     }
   `,

@@ -117,16 +117,7 @@ export class ArtworkDetailsAboutTheWorkFromPartner extends React.Component<
                       <FollowProfileButton
                         profile={partner.profile}
                         user={user}
-                        trackingData={{
-                          modelName: Schema.OwnerType.Partner,
-                          context_module:
-                            Schema.ContextModule.AboutTheWorkPartner,
-                          entity_id: partner.internalID,
-                          entity_slug: partner.slug,
-                        }}
-                        onOpenAuthModal={() =>
-                          this.handleOpenAuth(mediator, partner)
-                        }
+                        contextModule={ContextModule.aboutTheWork}
                         render={(profile: FollowProfileButton_profile) => {
                           const is_followed = profile.is_followed || false
                           return (
@@ -141,9 +132,7 @@ export class ArtworkDetailsAboutTheWorkFromPartner extends React.Component<
                             </Text>
                           )
                         }}
-                      >
-                        Follow
-                      </FollowProfileButton>
+                      />
                     )
                   }
                 />

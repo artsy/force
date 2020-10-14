@@ -48,6 +48,33 @@ fragment FairTiming_fair on Fair {
 
 fragment ShowContextCard_show on Show {
   isFairBooth
+  partner {
+    __typename
+    ... on Partner {
+      href
+      name
+      locations {
+        city
+        id
+      }
+      artworksConnection(first: 3, sort: MERCHANDISABILITY_DESC) {
+        edges {
+          node {
+            image {
+              url(version: "larger")
+            }
+            id
+          }
+        }
+      }
+    }
+    ... on Node {
+      id
+    }
+    ... on ExternalPartner {
+      id
+    }
+  }
   fair {
     href
     name
@@ -75,11 +102,32 @@ v1 = [
   }
 ],
 v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "href",
+  "storageKey": null
+},
+v4 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "name",
+  "storageKey": null
+},
+v5 = {
   "kind": "Literal",
   "name": "version",
   "value": "wide"
 },
-v3 = [
+v6 = [
   {
     "alias": "src",
     "args": null,
@@ -87,14 +135,7 @@ v3 = [
     "name": "url",
     "storageKey": null
   }
-],
-v4 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "id",
-  "storageKey": null
-};
+];
 return {
   "fragment": {
     "argumentDefinitions": (v0/*: any*/),
@@ -145,25 +186,128 @@ return {
           {
             "alias": null,
             "args": null,
-            "concreteType": "Fair",
+            "concreteType": null,
             "kind": "LinkedField",
-            "name": "fair",
+            "name": "partner",
             "plural": false,
             "selections": [
               {
                 "alias": null,
                 "args": null,
                 "kind": "ScalarField",
-                "name": "href",
+                "name": "__typename",
                 "storageKey": null
               },
+              (v2/*: any*/),
               {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "name",
-                "storageKey": null
-              },
+                "kind": "InlineFragment",
+                "selections": [
+                  (v3/*: any*/),
+                  (v4/*: any*/),
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "Location",
+                    "kind": "LinkedField",
+                    "name": "locations",
+                    "plural": true,
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "city",
+                        "storageKey": null
+                      },
+                      (v2/*: any*/)
+                    ],
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": [
+                      {
+                        "kind": "Literal",
+                        "name": "first",
+                        "value": 3
+                      },
+                      {
+                        "kind": "Literal",
+                        "name": "sort",
+                        "value": "MERCHANDISABILITY_DESC"
+                      }
+                    ],
+                    "concreteType": "ArtworkConnection",
+                    "kind": "LinkedField",
+                    "name": "artworksConnection",
+                    "plural": false,
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "ArtworkEdge",
+                        "kind": "LinkedField",
+                        "name": "edges",
+                        "plural": true,
+                        "selections": [
+                          {
+                            "alias": null,
+                            "args": null,
+                            "concreteType": "Artwork",
+                            "kind": "LinkedField",
+                            "name": "node",
+                            "plural": false,
+                            "selections": [
+                              {
+                                "alias": null,
+                                "args": null,
+                                "concreteType": "Image",
+                                "kind": "LinkedField",
+                                "name": "image",
+                                "plural": false,
+                                "selections": [
+                                  {
+                                    "alias": null,
+                                    "args": [
+                                      {
+                                        "kind": "Literal",
+                                        "name": "version",
+                                        "value": "larger"
+                                      }
+                                    ],
+                                    "kind": "ScalarField",
+                                    "name": "url",
+                                    "storageKey": "url(version:\"larger\")"
+                                  }
+                                ],
+                                "storageKey": null
+                              },
+                              (v2/*: any*/)
+                            ],
+                            "storageKey": null
+                          }
+                        ],
+                        "storageKey": null
+                      }
+                    ],
+                    "storageKey": "artworksConnection(first:3,sort:\"MERCHANDISABILITY_DESC\")"
+                  }
+                ],
+                "type": "Partner"
+              }
+            ],
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "Fair",
+            "kind": "LinkedField",
+            "name": "fair",
+            "plural": false,
+            "selections": [
+              (v3/*: any*/),
+              (v4/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -201,7 +345,7 @@ return {
                         "name": "height",
                         "value": 512
                       },
-                      (v2/*: any*/),
+                      (v5/*: any*/),
                       {
                         "kind": "Literal",
                         "name": "width",
@@ -212,7 +356,7 @@ return {
                     "kind": "LinkedField",
                     "name": "cropped",
                     "plural": false,
-                    "selections": (v3/*: any*/),
+                    "selections": (v6/*: any*/),
                     "storageKey": "cropped(height:512,version:\"wide\",width:768)"
                   },
                   {
@@ -223,7 +367,7 @@ return {
                         "name": "height",
                         "value": 1024
                       },
-                      (v2/*: any*/),
+                      (v5/*: any*/),
                       {
                         "kind": "Literal",
                         "name": "width",
@@ -234,17 +378,17 @@ return {
                     "kind": "LinkedField",
                     "name": "cropped",
                     "plural": false,
-                    "selections": (v3/*: any*/),
+                    "selections": (v6/*: any*/),
                     "storageKey": "cropped(height:1024,version:\"wide\",width:1536)"
                   }
                 ],
                 "storageKey": null
               },
-              (v4/*: any*/)
+              (v2/*: any*/)
             ],
             "storageKey": null
           },
-          (v4/*: any*/)
+          (v2/*: any*/)
         ],
         "storageKey": null
       }
@@ -255,7 +399,7 @@ return {
     "metadata": {},
     "name": "ShowContextCard_Test_Query",
     "operationKind": "query",
-    "text": "query ShowContextCard_Test_Query(\n  $slug: String!\n) {\n  show(id: $slug) {\n    ...ShowContextCard_show\n    id\n  }\n}\n\nfragment FairCard_fair on Fair {\n  name\n  image {\n    _1x: cropped(width: 768, height: 512, version: \"wide\") {\n      src: url\n    }\n    _2x: cropped(width: 1536, height: 1024, version: \"wide\") {\n      src: url\n    }\n  }\n}\n\nfragment FairTiming_fair on Fair {\n  exhibitionPeriod\n  startAt\n  endAt\n}\n\nfragment ShowContextCard_show on Show {\n  isFairBooth\n  fair {\n    href\n    name\n    ...FairTiming_fair\n    ...FairCard_fair\n    id\n  }\n}\n"
+    "text": "query ShowContextCard_Test_Query(\n  $slug: String!\n) {\n  show(id: $slug) {\n    ...ShowContextCard_show\n    id\n  }\n}\n\nfragment FairCard_fair on Fair {\n  name\n  image {\n    _1x: cropped(width: 768, height: 512, version: \"wide\") {\n      src: url\n    }\n    _2x: cropped(width: 1536, height: 1024, version: \"wide\") {\n      src: url\n    }\n  }\n}\n\nfragment FairTiming_fair on Fair {\n  exhibitionPeriod\n  startAt\n  endAt\n}\n\nfragment ShowContextCard_show on Show {\n  isFairBooth\n  partner {\n    __typename\n    ... on Partner {\n      href\n      name\n      locations {\n        city\n        id\n      }\n      artworksConnection(first: 3, sort: MERCHANDISABILITY_DESC) {\n        edges {\n          node {\n            image {\n              url(version: \"larger\")\n            }\n            id\n          }\n        }\n      }\n    }\n    ... on Node {\n      id\n    }\n    ... on ExternalPartner {\n      id\n    }\n  }\n  fair {\n    href\n    name\n    ...FairTiming_fair\n    ...FairCard_fair\n    id\n  }\n}\n"
   }
 };
 })();

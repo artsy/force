@@ -123,7 +123,7 @@ describe("ArtworkDetails", () => {
       wrapper = await getWrapper()
       const html = wrapper.html()
       expect(html).toContain("About the work")
-      expect(html).toContain("Following")
+      expect(html).toContain("Follow")
       expect(html).toContain("Articles")
       expect(html).toContain("Exhibition history")
       expect(html).toContain("Bibliography")
@@ -217,7 +217,7 @@ describe("ArtworkDetails", () => {
           type: "NOT Auction House",
         },
       })
-      expect(wrapper.html()).toContain("Following")
+      expect(wrapper.html()).toContain("Follow")
     })
 
     it("does not render partner follow button if artwork is from an auction partner", async () => {

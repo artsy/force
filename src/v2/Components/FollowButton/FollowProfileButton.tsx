@@ -1,13 +1,22 @@
 import { FollowProfileButtonMutation } from "v2/__generated__/FollowProfileButtonMutation.graphql"
 import * as Artsy from "v2/Artsy"
-import { extend } from "lodash"
 import React from "react"
 import track, { TrackingProp } from "react-tracking"
 import { FollowProfileButton_profile } from "../../__generated__/FollowProfileButton_profile.graphql"
 import { FollowButton } from "./Button"
-import { FollowDeprecatedTrackingData } from "./Typings"
-
-import { ButtonProps } from "@artsy/palette"
+import { openAuthToFollowSave } from "v2/Utils/openAuthModal"
+import {
+  AuthContextModule,
+  FollowedArgs,
+  Intent,
+  followedPartner,
+  unfollowedPartner,
+} from "@artsy/cohesion"
+import {
+  AnalyticsContextProps,
+  withAnalyticsContext,
+} from "v2/Artsy/Analytics/AnalyticsContext"
+import { ButtonProps, Clickable } from "@artsy/palette"
 import {
   RelayProp,
   commitMutation,
@@ -17,16 +26,18 @@ import {
 
 interface Props
   extends React.HTMLProps<FollowProfileButton>,
-    Artsy.SystemContextProps {
+    Artsy.SystemContextProps,
+    AnalyticsContextProps {
   relay?: RelayProp
   profile?: FollowProfileButton_profile
   tracking?: TrackingProp
-  trackingData?: FollowDeprecatedTrackingData
-  onOpenAuthModal?: (type: "register" | "login", config?: object) => void
-
+  contextModule: AuthContextModule
+  /**
+   * Pass palette props to button
+   */
   buttonProps?: Partial<ButtonProps>
   /**
-   * Custom renderer for alternative button displays
+   * Custom renderer if palette button is not desired
    */
   render?: (profile: FollowProfileButton_profile) => JSX.Element
 }
@@ -39,17 +50,32 @@ export class FollowProfileButton extends React.Component<Props> {
   trackFollow = () => {
     const {
       tracking,
-      profile: { is_followed },
+      profile,
+      contextModule,
+      contextPageOwnerId,
+      contextPageOwnerSlug,
+      contextPageOwnerType,
     } = this.props
-    const trackingData: FollowDeprecatedTrackingData = this.props.trackingData || {}
-    const action = is_followed ? "Unfollowed Profile" : "Followed Profile"
 
-    tracking.trackEvent(extend({ action }, trackingData))
+    const args: FollowedArgs = {
+      ownerId: profile.internalID,
+      ownerSlug: profile.slug,
+      contextModule,
+      contextOwnerId: contextPageOwnerId,
+      contextOwnerSlug: contextPageOwnerSlug,
+      contextOwnerType: contextPageOwnerType,
+    }
+
+    const analyticsData = profile.is_followed
+      ? unfollowedPartner(args)
+      : followedPartner(args)
+
+    tracking.trackEvent(analyticsData)
   }
 
   handleFollow = e => {
     e.preventDefault() // If this button is part of a link, we _probably_ dont want to actually follow the link.
-    const { profile, user, relay, onOpenAuthModal } = this.props
+    const { contextModule, profile, user, relay, mediator } = this.props
 
     if (user && user.id) {
       commitMutation<FollowProfileButtonMutation>(relay.environment, {
@@ -81,12 +107,14 @@ export class FollowProfileButton extends React.Component<Props> {
       })
       this.trackFollow()
     } else {
-      onOpenAuthModal &&
-        onOpenAuthModal("register", {
-          contextModule: "intextTooltip",
-          intent: "follow profile",
-          copy: "Sign up to follow profile",
-        })
+      openAuthToFollowSave(mediator, {
+        entity: {
+          name: profile.name,
+          slug: profile.slug,
+        },
+        contextModule,
+        intent: Intent.followPartner,
+      })
     }
   }
 
@@ -95,7 +123,11 @@ export class FollowProfileButton extends React.Component<Props> {
 
     // Custom button renderer
     if (render) {
-      return <span onClick={this.handleFollow}>{render(profile)}</span>
+      return (
+        <Clickable onClick={this.handleFollow} data-test="followButton">
+          {render(profile)}
+        </Clickable>
+      )
     } else {
       return (
         <FollowButton
@@ -109,13 +141,20 @@ export class FollowProfileButton extends React.Component<Props> {
 }
 
 export const FollowProfileButtonFragmentContainer = track({})(
-  createFragmentContainer(Artsy.withSystemContext(FollowProfileButton), {
-    profile: graphql`
-      fragment FollowProfileButton_profile on Profile {
-        id
-        internalID
-        is_followed: isFollowed
-      }
-    `,
-  })
+  createFragmentContainer(
+    Artsy.withSystemContext(
+      withAnalyticsContext(FollowProfileButton)
+    ) as React.ComponentType<Props>,
+    {
+      profile: graphql`
+        fragment FollowProfileButton_profile on Profile {
+          id
+          slug
+          name
+          internalID
+          is_followed: isFollowed
+        }
+      `,
+    }
+  )
 )

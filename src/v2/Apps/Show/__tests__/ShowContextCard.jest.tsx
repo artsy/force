@@ -12,7 +12,7 @@ jest.unmock("react-relay")
 describe("ShowContextCard", () => {
   let env = createMockEnvironment() as ReturnType<typeof createMockEnvironment>
 
-  const getWrapper = (breakpoint = "xs") => {
+  const getWrapper = (breakpoint = "xs", types = {}) => {
     const TestRenderer = () => (
       <QueryRenderer<ShowContextCard_Test_Query>
         environment={env}
@@ -40,13 +40,7 @@ describe("ShowContextCard", () => {
 
     const wrapper = mount(<TestRenderer />)
     env.mock.resolveMostRecentOperation(operation =>
-      MockPayloadGenerator.generate(operation, {
-        Fair: () => {
-          return {
-            name: "Catty Art Fair",
-          }
-        },
-      })
+      MockPayloadGenerator.generate(operation, types)
     )
     wrapper.update()
     return wrapper
@@ -60,8 +54,32 @@ describe("ShowContextCard", () => {
     jest.clearAllMocks()
   })
 
-  it("renders correctly", () => {
-    const wrapper = getWrapper()
+  it("renders correctly for a fair", () => {
+    const wrapper = getWrapper("lg", {
+      Fair: () => {
+        return {
+          name: "Catty Art Fair",
+        }
+      },
+    })
     expect(wrapper.text()).toContain("Part of Catty Art Fair")
+  })
+
+  it("renders correctly for a partner", () => {
+    const wrapper = getWrapper("lg", {
+      Show: () => {
+        return {
+          isFairBooth: false,
+        }
+      },
+      Partner: () => {
+        return {
+          name: "Catty Gallery",
+          locations: [{ city: "Wakefield" }],
+        }
+      },
+    })
+    expect(wrapper.text()).toContain("Presented by Catty Gallery")
+    expect(wrapper.text()).toContain("Wakefield")
   })
 })
