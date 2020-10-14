@@ -4,14 +4,12 @@ const path = require("path")
 const webpack = require("webpack")
 const LoadablePlugin = require("@loadable/webpack-plugin")
 const { RetryChunkLoadPlugin } = require("webpack-retry-chunk-load-plugin")
-const { getEntrypoints } = require("../utils/getEntrypoints")
 const { basePath, env } = require("../utils/env")
 
 export const clientCommonConfig = {
   mode: env.nodeEnv,
   devtool: "source-map",
-  stats: "normal", // or, `errors-only`
-  entry: getEntrypoints(),
+  stats: "normal",
   output: {
     filename: "[name].js",
     path: path.resolve(basePath, "public/assets"),

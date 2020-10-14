@@ -126,8 +126,14 @@ COPY .env.oss \
 FROM builder-src as builder-assets
 
 # Build application
-RUN BUILD_CLIENT=true yarn assets
-RUN BUILD_NOVO_CLIENT=true yarn assets
+RUN yarn build:assets
+
+# ---------------------------------------------------------
+# Compile novo assets
+# ---------------------------------------------------------
+FROM builder-src as builder-assets-novo
+
+RUN yarn build:assets:novo
 
 # ---------------------------------------------------------
 # Compile server
@@ -135,8 +141,14 @@ RUN BUILD_NOVO_CLIENT=true yarn assets
 FROM builder-src as builder-server
 
 # Build application
-RUN BUILD_SERVER=true yarn assets
-RUN BUILD_NOVO_SERVER=true yarn assets
+RUN yarn build:server
+
+# ---------------------------------------------------------
+# Compile novo server
+# ---------------------------------------------------------
+FROM builder-src as builder-server-novo
+
+RUN yarn build:server:novo
 
 # ---------------------------------------------------------
 # All development assets
@@ -151,9 +163,16 @@ COPY --from=builder-assets /app/manifest.json .
 COPY --from=builder-assets /app/public ./public
 COPY --from=builder-assets /app/src ./src
 
+# Client (Novo) assets
+COPY --from=builder-assets-novo /app/public ./public
+
 # Server assets
 COPY --from=builder-server /app/server.dist.js .
 COPY --from=builder-server /app/server.dist.js.map .
+
+# Server (Novo) assets
+COPY --from=builder-server-novo /app/server-novo.dist.js .
+COPY --from=builder-server-novo /app/server-novo.dist.js.map .
 
 # ---------------------------------------------------------
 # Image with xvfb to run Electron with a virtual display

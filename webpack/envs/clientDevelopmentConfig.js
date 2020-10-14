@@ -11,6 +11,7 @@ const WebpackNotifierPlugin = require("webpack-notifier")
 const SimpleProgressWebpackPlugin = require("simple-progress-webpack-plugin")
 const CaseSensitivePathsPlugin = require("case-sensitive-paths-webpack-plugin")
 const { basePath, env } = require("../utils/env")
+const { getEntrypoints } = require("../utils/getEntrypoints")
 
 const cacheDirectory = path.resolve(basePath, ".cache")
 
@@ -18,7 +19,7 @@ if (!env.onCi && !fs.existsSync(cacheDirectory)) {
   console.log(
     chalk.yellow(
       "\n[!] No existing `.cache` directory detected, initial " +
-        "launch will take a while.\n"
+      "launch will take a while.\n"
     )
   )
 }
@@ -26,6 +27,7 @@ if (!env.onCi && !fs.existsSync(cacheDirectory)) {
 export const clientDevelopmentConfig = {
   devtool: env.webpackDevtool || "eval",
   stats: env.webpackStats || "errors-only",
+  entry: getEntrypoints(),
   module: {
     // Why do we only compile css in development mode?
     rules: [
