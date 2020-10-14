@@ -92,12 +92,12 @@ export const FEATURE = {
   subheadline:
     "<p>Alserkal Art Week Online</p>\n<p>Discover new exhibitions by Alserkal Avenue Galleries</p>\n",
   defaultImage: {
-    _1x: { url: null },
-    _2x: { url: null },
+    _1x: { url: "https://example.com/example.jpg" },
+    _2x: { url: "https://example.com/example.jpg" },
   },
   fullImage: {
-    _1x: { url: null },
-    _2x: { url: null },
+    _1x: { url: "https://example.com/example.jpg" },
+    _2x: { url: "https://example.com/example.jpg" },
   },
   description:
     "<p>Alserkal Art Week Online</p>\n<p>Discover new exhibitions by Alserkal Avenue Galleries</p>\n",
