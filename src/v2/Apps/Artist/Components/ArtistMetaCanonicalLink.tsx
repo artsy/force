@@ -9,6 +9,9 @@ import { hasOverviewContent } from "v2/Apps/Artist/Components/NavigationTabs"
 export const computeCanonicalPath = (
   artist: ArtistMetaCanonicalLink_artist
 ) => {
+  const basePath = `/artist/${artist.slug}`
+  const pathParts = [basePath]
+
   const hasArtistInsights =
     showMarketInsights(artist) ||
     (artist.insights && artist.insights.length > 0)
@@ -16,9 +19,11 @@ export const computeCanonicalPath = (
   const hasArtistContent = hasOverviewContent(artist)
   const canShowOverview = hasArtistInsights || hasArtistContent
 
-  return canShowOverview
-    ? `/artist/${artist.slug}`
-    : `/artist/${artist.slug}/works-for-sale`
+  if (canShowOverview) {
+    pathParts.push("/works-for-sale")
+  }
+
+  return pathParts.join("")
 }
 
 export type ArtistMetaCanonicalLinkProps = {
