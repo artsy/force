@@ -27,8 +27,8 @@ export const FairHeaderIcon: React.FC<FairHeaderIconProps> = ({
       justifyContent="center"
     >
       <img
-        src={icon._1x.src}
-        srcSet={`${icon._1x.src} 1x, ${icon._2x.src} 2x`}
+        src={icon.cropped.src}
+        srcSet={icon.cropped.srcSet}
         alt={`Logo of ${name}`}
         width={60}
         height={60}
@@ -45,11 +45,9 @@ export const FairHeaderIconFragmentContainer = createFragmentContainer(
         name
         profile {
           icon {
-            _1x: cropped(width: 60, height: 60, version: "square140") {
-              src: url
-            }
-            _2x: cropped(width: 120, height: 120, version: "square140") {
-              src: url
+            cropped(width: 60, height: 60, version: "square140") {
+              src
+              srcSet
             }
           }
         }

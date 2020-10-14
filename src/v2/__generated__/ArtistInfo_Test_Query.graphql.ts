@@ -17,7 +17,7 @@ export type ArtistInfo_Test_QueryRawResponse = {
         readonly href: string | null;
         readonly image: ({
             readonly cropped: ({
-                readonly url: string | null;
+                readonly url: string;
             }) | null;
         }) | null;
         readonly formatted_nationality_and_birthday: string | null;
@@ -42,7 +42,7 @@ export type ArtistInfo_Test_QueryRawResponse = {
             readonly start_at: string | null;
             readonly cover_image: ({
                 readonly cropped: ({
-                    readonly url: string | null;
+                    readonly url: string;
                 }) | null;
             }) | null;
             readonly city: string | null;

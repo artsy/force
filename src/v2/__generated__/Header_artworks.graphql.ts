@@ -10,7 +10,7 @@ export type Header_artworks = {
         readonly name: string | null;
         readonly image: {
             readonly resized: {
-                readonly url: string | null;
+                readonly url: string;
             } | null;
         } | null;
         readonly birthday: string | null;

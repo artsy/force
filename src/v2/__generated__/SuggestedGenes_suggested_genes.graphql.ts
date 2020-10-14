@@ -10,7 +10,7 @@ export type SuggestedGenes_suggested_genes = ReadonlyArray<{
     readonly name: string | null;
     readonly image: {
         readonly cropped: {
-            readonly url: string | null;
+            readonly url: string;
         } | null;
     } | null;
     readonly " $refType": "SuggestedGenes_suggested_genes";

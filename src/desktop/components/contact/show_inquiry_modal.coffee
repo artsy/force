@@ -1,7 +1,6 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 ContactView = require './view.coffee'
-analyticsHooks = require '../../lib/analytics_hooks.coffee'
 FlashMessage = require '../flash/index.coffee'
 openInquiryQuestionnaireFor = require '../inquiry_questionnaire/index.coffee'
 User = require '../../models/user.coffee'
@@ -35,7 +34,10 @@ module.exports = class ShowInquiryModal extends ContactView
   initialize: (options) ->
     { @show } = options
 
-    analyticsHooks.trigger 'show_feed:contact', show: @show
+    window.analytics.track('Clicked "Contact Gallery"', {
+      show_id: @show.get("_id"),
+      context_type: "fair exhibitors browse",
+    })
 
     @partner = new Partner @show.get('partner')
     @partner.related().locations.fetch complete: =>
@@ -86,7 +88,9 @@ module.exports = class ShowInquiryModal extends ContactView
             state_attrs: inquiry: @model
 
         @listenToOnce @model, 'sync', =>
-          analyticsHooks.trigger 'show_feed:inquiry:sent',
-            inquiry: @model
-            show: @show
+          window.analytics.track("Sent show inquiry", {
+            inquiry_id: @model.id,
+            show_id: @show.get("_id"),
+            show_slug: @show.id,
             fair_id: @show.get('fair')?.id
+          })

@@ -11,7 +11,7 @@ export type SelectedExhibitions_exhibitions = ReadonlyArray<{
     readonly start_at: string | null;
     readonly cover_image: {
         readonly cropped: {
-            readonly url: string | null;
+            readonly url: string;
         } | null;
     } | null;
     readonly city: string | null;

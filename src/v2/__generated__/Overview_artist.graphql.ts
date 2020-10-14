@@ -50,9 +50,9 @@ export type Overview_artist = {
                 readonly exhibitionPeriod: string | null;
                 readonly coverImage: {
                     readonly cropped: {
-                        readonly url: string | null;
-                        readonly width: number | null;
-                        readonly height: number | null;
+                        readonly url: string;
+                        readonly width: number;
+                        readonly height: number;
                     } | null;
                 } | null;
             } | null;
@@ -66,7 +66,7 @@ export type Overview_artist = {
                 readonly publishedAt: string | null;
                 readonly thumbnailImage: {
                     readonly cropped: {
-                        readonly url: string | null;
+                        readonly url: string;
                     } | null;
                 } | null;
             } | null;

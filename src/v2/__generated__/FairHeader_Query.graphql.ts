@@ -19,35 +19,26 @@ export type FairHeader_QueryRawResponse = {
         readonly name: string | null;
         readonly profile: ({
             readonly icon: ({
-                readonly _1x: ({
-                    readonly src: string | null;
-                }) | null;
-                readonly _2x: ({
-                    readonly src: string | null;
+                readonly cropped: ({
+                    readonly src: string;
+                    readonly srcSet: string;
                 }) | null;
             }) | null;
             readonly id: string | null;
         }) | null;
         readonly image: ({
-            readonly _1x: ({
-                readonly src: string | null;
-                readonly width: number | null;
-                readonly height: number | null;
+            readonly small: ({
+                readonly src: string;
+                readonly srcSet: string;
+                readonly width: number;
+                readonly height: number;
             }) | null;
-            readonly _2x: ({
-                readonly src: string | null;
+            readonly medium: ({
+                readonly src: string;
+                readonly srcSet: string;
             }) | null;
-            readonly md_1x: ({
-                readonly src: string | null;
-            }) | null;
-            readonly md_2x: ({
-                readonly src: string | null;
-            }) | null;
-            readonly lg_1x: ({
-                readonly src: string | null;
-            }) | null;
-            readonly lg_2x: ({
-                readonly src: string | null;
+            readonly large: ({
+                readonly srcSet: string;
             }) | null;
         }) | null;
         readonly about: string | null;
@@ -88,11 +79,9 @@ fragment FairHeaderIcon_fair on Fair {
   name
   profile {
     icon {
-      _1x: cropped(width: 60, height: 60, version: "square140") {
-        src: url
-      }
-      _2x: cropped(width: 120, height: 120, version: "square140") {
-        src: url
+      cropped(width: 60, height: 60, version: "square140") {
+        src
+        srcSet
       }
     }
     id
@@ -103,25 +92,18 @@ fragment FairHeaderImage_fair on Fair {
   ...FairHeaderIcon_fair
   name
   image {
-    _1x: cropped(width: 375, height: 500, version: "wide") {
-      src: url
+    small: cropped(width: 375, height: 500, version: "wide") {
+      src
+      srcSet
       width
       height
     }
-    _2x: cropped(width: 750, height: 1000, version: "wide") {
-      src: url
+    medium: cropped(width: 600, height: 800, version: "wide") {
+      src
+      srcSet
     }
-    md_1x: cropped(width: 600, height: 800, version: "wide") {
-      src: url
-    }
-    md_2x: cropped(width: 1200, height: 1600, version: "wide") {
-      src: url
-    }
-    lg_1x: cropped(width: 900, height: 1200, version: "wide") {
-      src: url
-    }
-    lg_2x: cropped(width: 1800, height: 2400, version: "wide") {
-      src: url
+    large: cropped(width: 900, height: 1200, version: "wide") {
+      srcSet
     }
   }
 }
@@ -169,18 +151,21 @@ v1 = [
   }
 ],
 v2 = {
-  "kind": "Literal",
-  "name": "version",
-  "value": "square140"
-},
-v3 = {
-  "alias": "src",
+  "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "url",
+  "name": "src",
+  "storageKey": null
+},
+v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "srcSet",
   "storageKey": null
 },
 v4 = [
+  (v2/*: any*/),
   (v3/*: any*/)
 ],
 v5 = {
@@ -287,14 +272,18 @@ return {
                 "plural": false,
                 "selections": [
                   {
-                    "alias": "_1x",
+                    "alias": null,
                     "args": [
                       {
                         "kind": "Literal",
                         "name": "height",
                         "value": 60
                       },
-                      (v2/*: any*/),
+                      {
+                        "kind": "Literal",
+                        "name": "version",
+                        "value": "square140"
+                      },
                       {
                         "kind": "Literal",
                         "name": "width",
@@ -307,28 +296,6 @@ return {
                     "plural": false,
                     "selections": (v4/*: any*/),
                     "storageKey": "cropped(height:60,version:\"square140\",width:60)"
-                  },
-                  {
-                    "alias": "_2x",
-                    "args": [
-                      {
-                        "kind": "Literal",
-                        "name": "height",
-                        "value": 120
-                      },
-                      (v2/*: any*/),
-                      {
-                        "kind": "Literal",
-                        "name": "width",
-                        "value": 120
-                      }
-                    ],
-                    "concreteType": "CroppedImageUrl",
-                    "kind": "LinkedField",
-                    "name": "cropped",
-                    "plural": false,
-                    "selections": (v4/*: any*/),
-                    "storageKey": "cropped(height:120,version:\"square140\",width:120)"
                   }
                 ],
                 "storageKey": null
@@ -346,7 +313,7 @@ return {
             "plural": false,
             "selections": [
               {
-                "alias": "_1x",
+                "alias": "small",
                 "args": [
                   {
                     "kind": "Literal",
@@ -365,6 +332,7 @@ return {
                 "name": "cropped",
                 "plural": false,
                 "selections": [
+                  (v2/*: any*/),
                   (v3/*: any*/),
                   {
                     "alias": null,
@@ -384,29 +352,7 @@ return {
                 "storageKey": "cropped(height:500,version:\"wide\",width:375)"
               },
               {
-                "alias": "_2x",
-                "args": [
-                  {
-                    "kind": "Literal",
-                    "name": "height",
-                    "value": 1000
-                  },
-                  (v6/*: any*/),
-                  {
-                    "kind": "Literal",
-                    "name": "width",
-                    "value": 750
-                  }
-                ],
-                "concreteType": "CroppedImageUrl",
-                "kind": "LinkedField",
-                "name": "cropped",
-                "plural": false,
-                "selections": (v4/*: any*/),
-                "storageKey": "cropped(height:1000,version:\"wide\",width:750)"
-              },
-              {
-                "alias": "md_1x",
+                "alias": "medium",
                 "args": [
                   {
                     "kind": "Literal",
@@ -428,29 +374,7 @@ return {
                 "storageKey": "cropped(height:800,version:\"wide\",width:600)"
               },
               {
-                "alias": "md_2x",
-                "args": [
-                  {
-                    "kind": "Literal",
-                    "name": "height",
-                    "value": 1600
-                  },
-                  (v6/*: any*/),
-                  {
-                    "kind": "Literal",
-                    "name": "width",
-                    "value": 1200
-                  }
-                ],
-                "concreteType": "CroppedImageUrl",
-                "kind": "LinkedField",
-                "name": "cropped",
-                "plural": false,
-                "selections": (v4/*: any*/),
-                "storageKey": "cropped(height:1600,version:\"wide\",width:1200)"
-              },
-              {
-                "alias": "lg_1x",
+                "alias": "large",
                 "args": [
                   {
                     "kind": "Literal",
@@ -468,30 +392,10 @@ return {
                 "kind": "LinkedField",
                 "name": "cropped",
                 "plural": false,
-                "selections": (v4/*: any*/),
-                "storageKey": "cropped(height:1200,version:\"wide\",width:900)"
-              },
-              {
-                "alias": "lg_2x",
-                "args": [
-                  {
-                    "kind": "Literal",
-                    "name": "height",
-                    "value": 2400
-                  },
-                  (v6/*: any*/),
-                  {
-                    "kind": "Literal",
-                    "name": "width",
-                    "value": 1800
-                  }
+                "selections": [
+                  (v3/*: any*/)
                 ],
-                "concreteType": "CroppedImageUrl",
-                "kind": "LinkedField",
-                "name": "cropped",
-                "plural": false,
-                "selections": (v4/*: any*/),
-                "storageKey": "cropped(height:2400,version:\"wide\",width:1800)"
+                "storageKey": "cropped(height:1200,version:\"wide\",width:900)"
               }
             ],
             "storageKey": null
@@ -589,7 +493,7 @@ return {
     "metadata": {},
     "name": "FairHeader_Query",
     "operationKind": "query",
-    "text": "query FairHeader_Query(\n  $slug: String!\n) {\n  fair(id: $slug) {\n    ...FairHeader_fair\n    id\n  }\n}\n\nfragment FairHeaderIcon_fair on Fair {\n  name\n  profile {\n    icon {\n      _1x: cropped(width: 60, height: 60, version: \"square140\") {\n        src: url\n      }\n      _2x: cropped(width: 120, height: 120, version: \"square140\") {\n        src: url\n      }\n    }\n    id\n  }\n}\n\nfragment FairHeaderImage_fair on Fair {\n  ...FairHeaderIcon_fair\n  name\n  image {\n    _1x: cropped(width: 375, height: 500, version: \"wide\") {\n      src: url\n      width\n      height\n    }\n    _2x: cropped(width: 750, height: 1000, version: \"wide\") {\n      src: url\n    }\n    md_1x: cropped(width: 600, height: 800, version: \"wide\") {\n      src: url\n    }\n    md_2x: cropped(width: 1200, height: 1600, version: \"wide\") {\n      src: url\n    }\n    lg_1x: cropped(width: 900, height: 1200, version: \"wide\") {\n      src: url\n    }\n    lg_2x: cropped(width: 1800, height: 2400, version: \"wide\") {\n      src: url\n    }\n  }\n}\n\nfragment FairHeader_fair on Fair {\n  ...FairTiming_fair\n  ...FairHeaderImage_fair\n  about(format: HTML)\n  summary(format: HTML)\n  name\n  slug\n  tagline\n  location {\n    summary\n    id\n  }\n  ticketsLink\n  hours(format: HTML)\n  links(format: HTML)\n  tickets(format: HTML)\n  contact(format: HTML)\n}\n\nfragment FairTiming_fair on Fair {\n  exhibitionPeriod\n  startAt\n  endAt\n}\n"
+    "text": "query FairHeader_Query(\n  $slug: String!\n) {\n  fair(id: $slug) {\n    ...FairHeader_fair\n    id\n  }\n}\n\nfragment FairHeaderIcon_fair on Fair {\n  name\n  profile {\n    icon {\n      cropped(width: 60, height: 60, version: \"square140\") {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment FairHeaderImage_fair on Fair {\n  ...FairHeaderIcon_fair\n  name\n  image {\n    small: cropped(width: 375, height: 500, version: \"wide\") {\n      src\n      srcSet\n      width\n      height\n    }\n    medium: cropped(width: 600, height: 800, version: \"wide\") {\n      src\n      srcSet\n    }\n    large: cropped(width: 900, height: 1200, version: \"wide\") {\n      srcSet\n    }\n  }\n}\n\nfragment FairHeader_fair on Fair {\n  ...FairTiming_fair\n  ...FairHeaderImage_fair\n  about(format: HTML)\n  summary(format: HTML)\n  name\n  slug\n  tagline\n  location {\n    summary\n    id\n  }\n  ticketsLink\n  hours(format: HTML)\n  links(format: HTML)\n  tickets(format: HTML)\n  contact(format: HTML)\n}\n\nfragment FairTiming_fair on Fair {\n  exhibitionPeriod\n  startAt\n  endAt\n}\n"
   }
 };
 })();

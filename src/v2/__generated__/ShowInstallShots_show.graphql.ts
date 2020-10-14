@@ -8,25 +8,21 @@ export type ShowInstallShots_show = {
     readonly images: ReadonlyArray<{
         readonly internalID: string | null;
         readonly caption: string | null;
-        readonly mobile1x: {
+        readonly mobile: {
             readonly width: number | null;
             readonly height: number | null;
         } | null;
-        readonly _1x: {
-            readonly src: string | null;
+        readonly desktop: {
+            readonly src: string;
+            readonly srcSet: string;
             readonly width: number | null;
             readonly height: number | null;
         } | null;
-        readonly _2x: {
-            readonly src: string | null;
-        } | null;
-        readonly zoom1x: {
-            readonly src: string | null;
+        readonly zoom: {
+            readonly src: string;
+            readonly srcSet: string;
             readonly width: number | null;
             readonly height: number | null;
-        } | null;
-        readonly zoom2x: {
-            readonly src: string | null;
         } | null;
     } | null> | null;
     readonly " $refType": "ShowInstallShots_show";
@@ -41,6 +37,20 @@ export type ShowInstallShots_show$key = {
 
 const node: ReaderFragment = (function(){
 var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "width",
+  "storageKey": null
+},
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "height",
+  "storageKey": null
+},
+v2 = {
   "kind": "Literal",
   "name": "version",
   "value": [
@@ -48,42 +58,23 @@ var v0 = {
     "large"
   ]
 },
-v1 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "width",
-  "storageKey": null
-},
-v2 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "height",
-  "storageKey": null
-},
 v3 = [
   {
-    "kind": "Literal",
-    "name": "height",
-    "value": 400
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "src",
+    "storageKey": null
   },
-  (v0/*: any*/)
-],
-v4 = {
-  "alias": "src",
-  "args": null,
-  "kind": "ScalarField",
-  "name": "url",
-  "storageKey": null
-},
-v5 = [
-  (v4/*: any*/),
-  (v1/*: any*/),
-  (v2/*: any*/)
-],
-v6 = [
-  (v4/*: any*/)
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "srcSet",
+    "storageKey": null
+  },
+  (v0/*: any*/),
+  (v1/*: any*/)
 ];
 return {
   "argumentDefinitions": [],
@@ -121,54 +112,50 @@ return {
           "storageKey": null
         },
         {
-          "alias": "mobile1x",
+          "alias": "mobile",
           "args": [
             {
               "kind": "Literal",
               "name": "height",
               "value": 300
-            },
-            (v0/*: any*/)
+            }
           ],
           "concreteType": "ResizedImageUrl",
           "kind": "LinkedField",
           "name": "resized",
           "plural": false,
           "selections": [
-            (v1/*: any*/),
+            (v0/*: any*/),
+            (v1/*: any*/)
+          ],
+          "storageKey": "resized(height:300)"
+        },
+        {
+          "alias": "desktop",
+          "args": [
+            {
+              "kind": "Literal",
+              "name": "height",
+              "value": 400
+            },
             (v2/*: any*/)
           ],
-          "storageKey": "resized(height:300,version:[\"larger\",\"large\"])"
-        },
-        {
-          "alias": "_1x",
-          "args": (v3/*: any*/),
           "concreteType": "ResizedImageUrl",
           "kind": "LinkedField",
           "name": "resized",
           "plural": false,
-          "selections": (v5/*: any*/),
+          "selections": (v3/*: any*/),
           "storageKey": "resized(height:400,version:[\"larger\",\"large\"])"
         },
         {
-          "alias": "_2x",
-          "args": (v3/*: any*/),
-          "concreteType": "ResizedImageUrl",
-          "kind": "LinkedField",
-          "name": "resized",
-          "plural": false,
-          "selections": (v6/*: any*/),
-          "storageKey": "resized(height:400,version:[\"larger\",\"large\"])"
-        },
-        {
-          "alias": "zoom1x",
+          "alias": "zoom",
           "args": [
             {
               "kind": "Literal",
               "name": "height",
               "value": 900
             },
-            (v0/*: any*/),
+            (v2/*: any*/),
             {
               "kind": "Literal",
               "name": "width",
@@ -179,30 +166,8 @@ return {
           "kind": "LinkedField",
           "name": "resized",
           "plural": false,
-          "selections": (v5/*: any*/),
+          "selections": (v3/*: any*/),
           "storageKey": "resized(height:900,version:[\"larger\",\"large\"],width:900)"
-        },
-        {
-          "alias": "zoom2x",
-          "args": [
-            {
-              "kind": "Literal",
-              "name": "height",
-              "value": 1800
-            },
-            (v0/*: any*/),
-            {
-              "kind": "Literal",
-              "name": "width",
-              "value": 1800
-            }
-          ],
-          "concreteType": "ResizedImageUrl",
-          "kind": "LinkedField",
-          "name": "resized",
-          "plural": false,
-          "selections": (v6/*: any*/),
-          "storageKey": "resized(height:1800,version:[\"larger\",\"large\"],width:1800)"
         }
       ],
       "storageKey": null
@@ -211,5 +176,5 @@ return {
   "type": "Show"
 };
 })();
-(node as any).hash = '9cb209920fb37eb5a8fe1e71d3ebdb4e';
+(node as any).hash = '48f83943eb8d954b7ccea620505af800';
 export default node;

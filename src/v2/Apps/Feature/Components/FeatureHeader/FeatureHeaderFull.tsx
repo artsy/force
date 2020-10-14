@@ -24,8 +24,8 @@ export const FeatureHeaderFull: React.FC<FeatureHeaderFullProps> = ({
       {image && (
         <Box height={`calc(95vh - ${NAV_BAR_HEIGHT}px)`} bg="black10">
           <Image
-            src={image._1x.url}
-            srcSet={`${image._1x.url} 1x, ${image._2x.url} 2x`}
+            src={image.cropped.src}
+            srcSet={image.cropped.srcSet}
             alt={name}
           />
         </Box>
@@ -59,11 +59,9 @@ export const FeatureHeaderFullFragmentContainer = createFragmentContainer(
         name
         subheadline(format: HTML)
         fullImage: image {
-          _1x: cropped(width: 2000, height: 1000, version: ["main", "wide"]) {
-            url
-          }
-          _2x: cropped(width: 4000, height: 2000, version: ["main", "wide"]) {
-            url
+          cropped(width: 2000, height: 1000, version: ["main", "wide"]) {
+            src
+            srcSet
           }
         }
       }

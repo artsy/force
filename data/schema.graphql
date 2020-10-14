@@ -4955,9 +4955,11 @@ type CreditCardPayload {
 }
 
 type CroppedImageUrl {
-  height: Int
-  url: String
-  width: Int
+  height: Int!
+  src: String!
+  srcSet: String!
+  url: String!
+  width: Int!
 }
 
 type CurrentEvent {
@@ -8792,9 +8794,11 @@ type RequestCredentialsForAssetUploadPayload {
 }
 
 type ResizedImageUrl {
-  factor: Float
+  factor: Float!
   height: Int
-  url: String
+  src: String!
+  srcSet: String!
+  url: String!
   width: Int
 }
 

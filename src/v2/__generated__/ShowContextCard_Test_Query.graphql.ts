@@ -31,11 +31,9 @@ query ShowContextCard_Test_Query(
 fragment FairCard_fair on Fair {
   name
   image {
-    _1x: cropped(width: 768, height: 512, version: "wide") {
-      src: url
-    }
-    _2x: cropped(width: 1536, height: 1024, version: "wide") {
-      src: url
+    cropped(width: 768, height: 512, version: "wide") {
+      src
+      srcSet
     }
   }
 }
@@ -121,21 +119,7 @@ v4 = {
   "kind": "ScalarField",
   "name": "name",
   "storageKey": null
-},
-v5 = {
-  "kind": "Literal",
-  "name": "version",
-  "value": "wide"
-},
-v6 = [
-  {
-    "alias": "src",
-    "args": null,
-    "kind": "ScalarField",
-    "name": "url",
-    "storageKey": null
-  }
-];
+};
 return {
   "fragment": {
     "argumentDefinitions": (v0/*: any*/),
@@ -338,14 +322,18 @@ return {
                 "plural": false,
                 "selections": [
                   {
-                    "alias": "_1x",
+                    "alias": null,
                     "args": [
                       {
                         "kind": "Literal",
                         "name": "height",
                         "value": 512
                       },
-                      (v5/*: any*/),
+                      {
+                        "kind": "Literal",
+                        "name": "version",
+                        "value": "wide"
+                      },
                       {
                         "kind": "Literal",
                         "name": "width",
@@ -356,30 +344,23 @@ return {
                     "kind": "LinkedField",
                     "name": "cropped",
                     "plural": false,
-                    "selections": (v6/*: any*/),
-                    "storageKey": "cropped(height:512,version:\"wide\",width:768)"
-                  },
-                  {
-                    "alias": "_2x",
-                    "args": [
+                    "selections": [
                       {
-                        "kind": "Literal",
-                        "name": "height",
-                        "value": 1024
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "src",
+                        "storageKey": null
                       },
-                      (v5/*: any*/),
                       {
-                        "kind": "Literal",
-                        "name": "width",
-                        "value": 1536
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "srcSet",
+                        "storageKey": null
                       }
                     ],
-                    "concreteType": "CroppedImageUrl",
-                    "kind": "LinkedField",
-                    "name": "cropped",
-                    "plural": false,
-                    "selections": (v6/*: any*/),
-                    "storageKey": "cropped(height:1024,version:\"wide\",width:1536)"
+                    "storageKey": "cropped(height:512,version:\"wide\",width:768)"
                   }
                 ],
                 "storageKey": null
@@ -399,7 +380,7 @@ return {
     "metadata": {},
     "name": "ShowContextCard_Test_Query",
     "operationKind": "query",
-    "text": "query ShowContextCard_Test_Query(\n  $slug: String!\n) {\n  show(id: $slug) {\n    ...ShowContextCard_show\n    id\n  }\n}\n\nfragment FairCard_fair on Fair {\n  name\n  image {\n    _1x: cropped(width: 768, height: 512, version: \"wide\") {\n      src: url\n    }\n    _2x: cropped(width: 1536, height: 1024, version: \"wide\") {\n      src: url\n    }\n  }\n}\n\nfragment FairTiming_fair on Fair {\n  exhibitionPeriod\n  startAt\n  endAt\n}\n\nfragment ShowContextCard_show on Show {\n  isFairBooth\n  partner {\n    __typename\n    ... on Partner {\n      href\n      name\n      locations {\n        city\n        id\n      }\n      artworksConnection(first: 3, sort: MERCHANDISABILITY_DESC) {\n        edges {\n          node {\n            image {\n              url(version: \"larger\")\n            }\n            id\n          }\n        }\n      }\n    }\n    ... on Node {\n      id\n    }\n    ... on ExternalPartner {\n      id\n    }\n  }\n  fair {\n    href\n    name\n    ...FairTiming_fair\n    ...FairCard_fair\n    id\n  }\n}\n"
+    "text": "query ShowContextCard_Test_Query(\n  $slug: String!\n) {\n  show(id: $slug) {\n    ...ShowContextCard_show\n    id\n  }\n}\n\nfragment FairCard_fair on Fair {\n  name\n  image {\n    cropped(width: 768, height: 512, version: \"wide\") {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment FairTiming_fair on Fair {\n  exhibitionPeriod\n  startAt\n  endAt\n}\n\nfragment ShowContextCard_show on Show {\n  isFairBooth\n  partner {\n    __typename\n    ... on Partner {\n      href\n      name\n      locations {\n        city\n        id\n      }\n      artworksConnection(first: 3, sort: MERCHANDISABILITY_DESC) {\n        edges {\n          node {\n            image {\n              url(version: \"larger\")\n            }\n            id\n          }\n        }\n      }\n    }\n    ... on Node {\n      id\n    }\n    ... on ExternalPartner {\n      id\n    }\n  }\n  fair {\n    href\n    name\n    ...FairTiming_fair\n    ...FairCard_fair\n    id\n  }\n}\n"
   }
 };
 })();

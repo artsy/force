@@ -13,7 +13,7 @@ export type WorksForYouArtistFeed_viewer = {
         } | null;
         readonly image: {
             readonly resized: {
-                readonly url: string | null;
+                readonly url: string;
             } | null;
         } | null;
         readonly artworks_connection: {

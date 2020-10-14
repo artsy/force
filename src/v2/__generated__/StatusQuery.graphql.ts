@@ -52,7 +52,7 @@ export type StatusQueryRawResponse = {
                         readonly shippingOrigin: string | null;
                         readonly image: ({
                             readonly resized_ArtworkSummaryItem: ({
-                                readonly url: string | null;
+                                readonly url: string;
                             }) | null;
                         }) | null;
                         readonly id: string | null;
@@ -153,7 +153,7 @@ export type StatusQueryRawResponse = {
                         readonly shippingOrigin: string | null;
                         readonly image: ({
                             readonly resized_ArtworkSummaryItem: ({
-                                readonly url: string | null;
+                                readonly url: string;
                             }) | null;
                         }) | null;
                         readonly id: string | null;

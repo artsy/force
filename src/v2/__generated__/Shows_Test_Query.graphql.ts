@@ -60,7 +60,7 @@ export type Shows_Test_QueryRawResponse = {
                         readonly exhibition_period: string | null;
                         readonly cover_image: ({
                             readonly cropped: ({
-                                readonly url: string | null;
+                                readonly url: string;
                             }) | null;
                         }) | null;
                         readonly city: string | null;
@@ -117,7 +117,7 @@ export type Shows_Test_QueryRawResponse = {
                         readonly exhibition_period: string | null;
                         readonly cover_image: ({
                             readonly cropped: ({
-                                readonly url: string | null;
+                                readonly url: string;
                             }) | null;
                         }) | null;
                         readonly city: string | null;
@@ -174,7 +174,7 @@ export type Shows_Test_QueryRawResponse = {
                         readonly exhibition_period: string | null;
                         readonly cover_image: ({
                             readonly cropped: ({
-                                readonly url: string | null;
+                                readonly url: string;
                             }) | null;
                         }) | null;
                         readonly city: string | null;
