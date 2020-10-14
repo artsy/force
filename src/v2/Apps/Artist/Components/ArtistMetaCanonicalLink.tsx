@@ -28,7 +28,9 @@ export type ArtistMetaCanonicalLinkProps = {
 export const ArtistMetaCanonicalLink: React.FC<ArtistMetaCanonicalLinkProps> = ({
   artist,
 }) => {
-  return <Link rel="canonical" href={`${sd.APP_URL}${computeCanonicalPath(artist)}`} />
+  const canonicalPath = computeCanonicalPath(artist)
+  const canonicalUrl = `${sd.APP_URL}${canonicalPath}`
+  return <Link rel="canonical" href={canonicalUrl} />
 }
 
 export const ArtistMetaCanonicalLinkFragmentContainer = createFragmentContainer(
