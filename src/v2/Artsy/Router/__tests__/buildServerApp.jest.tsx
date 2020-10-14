@@ -3,13 +3,11 @@
  */
 
 import { SystemContextConsumer } from "v2/Artsy"
-// import { createRelaySSREnvironment } from "v2/Artsy/Relay/createRelaySSREnvironment"
 import {
   ServerRouterConfig,
   __TEST_INTERNAL_SERVER_APP__,
   buildServerApp,
 } from "v2/Artsy/Router/buildServerApp"
-// import { createMockNetworkLayer } from "v2/DevTools"
 import { render } from "enzyme"
 import React from "react"
 import ReactDOMServer from "react-dom/server"
@@ -17,6 +15,7 @@ import { Title } from "react-head"
 import { graphql } from "react-relay"
 import { Media } from "v2/Utils/Responsive"
 import { Request, Response } from "express"
+import { createMockNetworkLayer } from "v2/DevTools/createMockNetworkLayer"
 
 jest.unmock("react-relay")
 
@@ -236,26 +235,41 @@ describe("buildServerApp", () => {
 
   describe("concerning GraphQL errors", () => {
     const consoleError = console.error
+    jest.mock("v2/Artsy/Relay/createRelaySSREnvironment", () => ({
+      createRelaySSREnvironment: jest.fn(),
+    }))
+
+    const createRelaySSREnvironment = require("v2/Artsy/Relay/createRelaySSREnvironment")
+      .createRelaySSREnvironment as jest.Mock
 
     beforeAll(() => {
+      // @ts-ignore
+      global.fetch = jest.fn().mockResolvedValueOnce({
+        ok: null,
+        json: jest.fn(),
+      })
       console.error = jest.fn()
     })
 
     afterAll(() => {
       console.error = consoleError
+      // @ts-ignore
+      global.fetch.mockRestore()
     })
 
     it("rejects with a GraphQL error", async () => {
-      // FIXME:
-      // const relayNetwork = createMockNetworkLayer({
-      //   Query: () => ({
-      //     me: () => {
-      //       throw new Error("Oh noes")
-      //     },
-      //   }),
-      // })
-      // const relayEnvironment = createRelaySSREnvironment({ relayNetwork })
-      options.req.url = "/relay"
+      const relay = () => {
+        const relayNetwork = createMockNetworkLayer({
+          Query: () => ({
+            me: () => {
+              throw new Error("Oh noes")
+            },
+          }),
+        })
+        return createRelaySSREnvironment({ relayNetwork })
+      }
+      createRelaySSREnvironment.mockReturnValue(relay())
+
       try {
         await getWrapper(defaultComponent, options)
       } catch (error) {

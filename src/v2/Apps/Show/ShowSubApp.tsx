@@ -9,7 +9,6 @@ import { ErrorPage } from "v2/Components/ErrorPage"
 import { BackLink } from "v2/Components/Links/BackLink"
 import { ShowMetaFragmentContainer as ShowMeta } from "./Components/ShowMeta"
 import { AnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
-import { OwnerType } from "@artsy/cohesion"
 
 interface ShowAppProps {
   show: ShowSubApp_show
@@ -26,8 +25,6 @@ const ShowApp: React.FC<ShowAppProps> = ({ children, show }) => {
         <AnalyticsContext.Provider
           value={{
             contextPageOwnerId: show.internalID,
-            contextPageOwnerSlug: show.slug,
-            contextPageOwnerType: OwnerType.show,
           }}
         >
           <HorizontalPadding>

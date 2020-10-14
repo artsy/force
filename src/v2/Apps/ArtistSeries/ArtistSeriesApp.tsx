@@ -26,8 +26,6 @@ const ArtistSeriesApp: React.FC<ArtistSeriesAppProps> = ({ artistSeries }) => {
       <AnalyticsContext.Provider
         value={{
           contextPageOwnerId: internalID,
-          contextPageOwnerSlug: slug,
-          contextPageOwnerType: OwnerType.artistSeries,
         }}
       >
         <AppContainer maxWidth="100%">

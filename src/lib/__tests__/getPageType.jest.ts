@@ -56,12 +56,12 @@ describe("getPageTypeFromClient", () => {
 
 describe("formatOwnerTypes", () => {
   it("handles article path types", () => {
-    expect(formatOwnerTypes("news")).toBe(OwnerType.article)
-    expect(formatOwnerTypes("series")).toBe(OwnerType.article)
-    expect(formatOwnerTypes("video")).toBe(OwnerType.article)
+    expect(formatOwnerTypes("/news")).toBe(OwnerType.article)
+    expect(formatOwnerTypes("/series")).toBe(OwnerType.article)
+    expect(formatOwnerTypes("/video")).toBe(OwnerType.article)
   })
 
   it("handles auction page types", () => {
-    expect(formatOwnerTypes("auction")).toBe(OwnerType.sale)
+    expect(formatOwnerTypes("/auction")).toBe(OwnerType.sale)
   })
 })

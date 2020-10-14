@@ -31,7 +31,6 @@ import { RouterContext } from "found"
 import { TrackingProp } from "react-tracking"
 import { Media } from "v2/Utils/Responsive"
 import { AnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
-import { OwnerType } from "@artsy/cohesion"
 
 export interface Props {
   artwork: ArtworkApp_artwork
@@ -184,8 +183,6 @@ export class ArtworkApp extends React.Component<Props> {
       <AnalyticsContext.Provider
         value={{
           contextPageOwnerId: artwork.internalID,
-          contextPageOwnerSlug: artwork.slug,
-          contextPageOwnerType: OwnerType.artwork,
         }}
       >
         <AppContainer>

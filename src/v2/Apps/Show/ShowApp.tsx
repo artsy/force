@@ -17,7 +17,6 @@ import { ShowArtworksRefetchContainer as ShowArtworks } from "./Components/ShowA
 import { ForwardLink } from "v2/Components/Links/ForwardLink"
 import { ShowContextCardFragmentContainer as ShowContextCard } from "./Components/ShowContextCard"
 import { AnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
-import { OwnerType } from "@artsy/cohesion"
 
 interface ShowAppProps {
   show: ShowApp_show
@@ -49,8 +48,6 @@ export const ShowApp: React.FC<ShowAppProps> = ({ show }) => {
         <AnalyticsContext.Provider
           value={{
             contextPageOwnerId: show.internalID,
-            contextPageOwnerSlug: show.slug,
-            contextPageOwnerType: OwnerType.show,
           }}
         >
           <HorizontalPadding>

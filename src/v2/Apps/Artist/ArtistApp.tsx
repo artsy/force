@@ -26,7 +26,6 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { ArtistHeaderFragmentContainer as ArtistHeader } from "./Components/ArtistHeader"
 import { StyledLink } from "./Components/StyledLink"
 import { AnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
-import { OwnerType } from "@artsy/cohesion"
 
 export interface ArtistAppProps {
   artist: ArtistApp_artist
@@ -157,8 +156,6 @@ const TrackingWrappedArtistApp: React.FC<ArtistAppProps> = props => {
     <AnalyticsContext.Provider
       value={{
         contextPageOwnerId: internalID,
-        contextPageOwnerSlug: slug,
-        contextPageOwnerType: OwnerType.artist,
       }}
     >
       <Component {...props} />

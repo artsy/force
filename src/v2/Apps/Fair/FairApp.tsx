@@ -59,9 +59,7 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
   return (
     <AnalyticsContext.Provider
       value={{
-        contextPageOwnerType: OwnerType.fair,
         contextPageOwnerId: fair.internalID,
-        contextPageOwnerSlug: fair.slug,
       }}
     >
       <>

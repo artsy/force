@@ -1,7 +1,6 @@
 import { SystemContextConsumer } from "v2/Artsy"
-// import { createRelaySSREnvironment } from "v2/Artsy/Relay/createRelaySSREnvironment"
 import { buildClientApp } from "v2/Artsy/Router/buildClientApp"
-// import { createMockNetworkLayer } from "v2/DevTools"
+import { createMockNetworkLayer } from "v2/DevTools"
 import { mount } from "enzyme"
 import React from "react"
 import { graphql } from "react-relay"
@@ -140,6 +139,12 @@ describe("buildClientApp", () => {
 
   describe("concerning GraphQL errors", () => {
     const consoleError = console.error
+    jest.mock("v2/Artsy/Relay/createRelaySSREnvironment", () => ({
+      createRelaySSREnvironment: jest.fn(),
+    }))
+
+    const createRelaySSREnvironment = require("v2/Artsy/Relay/createRelaySSREnvironment")
+      .createRelaySSREnvironment as jest.Mock
 
     beforeAll(() => {
       console.error = jest.fn()
@@ -150,15 +155,17 @@ describe("buildClientApp", () => {
     })
 
     it("rejects with a GraphQL error", async () => {
-      // FIXME:
-      // const relayNetwork = createMockNetworkLayer({
-      //   Query: () => ({
-      //     me: () => {
-      //       throw new Error("Oh noes")
-      //     },
-      //   }),
-      // })
-      // const relayEnvironment = createRelaySSREnvironment({ relayNetwork })
+      const relay = () => {
+        const relayNetwork = createMockNetworkLayer({
+          Query: () => ({
+            me: () => {
+              throw new Error("Oh noes")
+            },
+          }),
+        })
+        return createRelaySSREnvironment({ relayNetwork })
+      }
+      createRelaySSREnvironment.mockReturnValue(relay())
 
       try {
         const { ClientApp } = await buildClientApp({
@@ -178,7 +185,6 @@ describe("buildClientApp", () => {
               `,
             },
           ],
-          context: {},
         })
 
         mount(<ClientApp />)

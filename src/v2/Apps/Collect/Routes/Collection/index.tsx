@@ -27,7 +27,7 @@ import {
 } from "v2/Components/v2/ArtworkFilter/ArtworkFilterContext"
 import { updateUrl } from "v2/Components/v2/ArtworkFilter/Utils/urlBuilder"
 import { TrackingProp } from "react-tracking"
-import { OwnerType, clickedMainArtworkGrid } from "@artsy/cohesion"
+import { clickedMainArtworkGrid } from "@artsy/cohesion"
 
 interface CollectionAppProps extends SystemContextProps {
   collection: Collection_collection
@@ -81,9 +81,7 @@ export class CollectionApp extends Component<CollectionAppProps> {
     return (
       <AnalyticsContext.Provider
         value={{
-          contextPageOwnerType: OwnerType.collection,
           contextPageOwnerId: collection.id,
-          contextPageOwnerSlug: collection.slug,
         }}
       >
         <>
