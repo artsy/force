@@ -1,5 +1,4 @@
 import { buildServerApp } from "v2/Artsy/Router/server"
-import { buildServerAppContext } from "desktop/lib/buildServerAppContext"
 import { routes } from "v2/Apps/Auction/routes"
 import { stitch } from "@artsy/stitch"
 
@@ -13,10 +12,9 @@ const renderPage = async ({ layoutTemplate }, req, res, next) => {
       scripts,
       styleTags,
     } = await buildServerApp({
+      req,
+      res,
       routes,
-      url: req.url,
-      userAgent: req.header("User-Agent"),
-      context: buildServerAppContext(req, res),
     })
 
     if (redirect) {

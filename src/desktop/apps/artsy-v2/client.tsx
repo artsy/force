@@ -2,21 +2,14 @@ import React from "react"
 import ReactDOM from "react-dom"
 import { buildClientApp } from "v2/Artsy/Router/client"
 import { getAppRoutes } from "v2/Apps/getAppRoutes"
-import { data as sd } from "sharify"
 import { artworkClient } from "./apps/artwork/artworkClient"
 import { artistClient } from "./apps/artist/artistClient"
 import { loadableReady } from "@loadable/component"
 import { getPageTypeFromClient } from "lib/getPageType"
 import { OwnerType } from "@artsy/cohesion"
 
-const mediator = require("desktop/lib/mediator.coffee")
-
 buildClientApp({
   routes: getAppRoutes(),
-  context: {
-    user: sd.CURRENT_USER,
-    mediator,
-  } as any,
 })
   .then(({ ClientApp }) => {
     /**
