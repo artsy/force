@@ -8,10 +8,10 @@ export type FeatureHeaderFull_feature = {
     readonly subheadline: string | null;
     readonly fullImage: {
         readonly _1x: {
-            readonly url: string | null;
+            readonly url: string;
         } | null;
         readonly _2x: {
-            readonly url: string | null;
+            readonly url: string;
         } | null;
     } | null;
     readonly " $refType": "FeatureHeaderFull_feature";

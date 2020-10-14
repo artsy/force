@@ -11,12 +11,12 @@ export type DefaultHeaderArtwork_artwork = {
         readonly slug: string;
         readonly image: {
             readonly large: {
-                readonly url: string | null;
+                readonly url: string;
                 readonly width: number | null;
                 readonly height: number | null;
             } | null;
             readonly small: {
-                readonly url: string | null;
+                readonly url: string;
                 readonly width: number | null;
                 readonly height: number | null;
             } | null;

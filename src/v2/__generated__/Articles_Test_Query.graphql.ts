@@ -51,7 +51,7 @@ export type Articles_Test_QueryRawResponse = {
                     readonly published_at: string | null;
                     readonly thumbnail_image: ({
                         readonly resized: ({
-                            readonly url: string | null;
+                            readonly url: string;
                         }) | null;
                     }) | null;
                     readonly id: string | null;

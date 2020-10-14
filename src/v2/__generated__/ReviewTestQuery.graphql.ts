@@ -35,10 +35,10 @@ export type ReviewTestQueryRawResponse = {
                         }) | null;
                         readonly image: ({
                             readonly resized: ({
-                                readonly url: string | null;
+                                readonly url: string;
                             }) | null;
                             readonly resized_ArtworkSummaryItem: ({
-                                readonly url: string | null;
+                                readonly url: string;
                             }) | null;
                         }) | null;
                         readonly edition_sets: ReadonlyArray<({
@@ -150,10 +150,10 @@ export type ReviewTestQueryRawResponse = {
                         }) | null;
                         readonly image: ({
                             readonly resized: ({
-                                readonly url: string | null;
+                                readonly url: string;
                             }) | null;
                             readonly resized_ArtworkSummaryItem: ({
-                                readonly url: string | null;
+                                readonly url: string;
                             }) | null;
                         }) | null;
                         readonly edition_sets: ReadonlyArray<({

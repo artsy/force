@@ -7,10 +7,10 @@ export type FairCard_fair = {
     readonly name: string | null;
     readonly image: {
         readonly _1x: {
-            readonly src: string | null;
+            readonly src: string;
         } | null;
         readonly _2x: {
-            readonly src: string | null;
+            readonly src: string;
         } | null;
     } | null;
     readonly " $refType": "FairCard_fair";

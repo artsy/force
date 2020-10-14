@@ -25,14 +25,14 @@ export type FeatureAKGRoute_Test_QueryRawResponse = {
             readonly publishedAt: string | null;
             readonly thumbnailImage: ({
                 readonly cropped: ({
-                    readonly width: number | null;
-                    readonly height: number | null;
-                    readonly url: string | null;
+                    readonly width: number;
+                    readonly height: number;
+                    readonly url: string;
                 }) | null;
             }) | null;
             readonly tinyImage: ({
                 readonly cropped: ({
-                    readonly url: string | null;
+                    readonly url: string;
                 }) | null;
             }) | null;
             readonly href: string | null;

@@ -49,7 +49,7 @@ export type ShippingTestQueryRawResponse = {
                         readonly shippingOrigin: string | null;
                         readonly image: ({
                             readonly resized_ArtworkSummaryItem: ({
-                                readonly url: string | null;
+                                readonly url: string;
                             }) | null;
                         }) | null;
                     }) | null;
@@ -138,7 +138,7 @@ export type ShippingTestQueryRawResponse = {
                         readonly shippingOrigin: string | null;
                         readonly image: ({
                             readonly resized_ArtworkSummaryItem: ({
-                                readonly url: string | null;
+                                readonly url: string;
                             }) | null;
                         }) | null;
                     }) | null;

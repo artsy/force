@@ -8,7 +8,7 @@ export type FollowArtistPopoverRow_artist = {
     readonly name: string | null;
     readonly image: {
         readonly cropped: {
-            readonly url: string | null;
+            readonly url: string;
         } | null;
     } | null;
     readonly " $refType": "FollowArtistPopoverRow_artist";

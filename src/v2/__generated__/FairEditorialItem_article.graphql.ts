@@ -13,14 +13,14 @@ export type FairEditorialItem_article = {
     readonly thumbnailTitle: string | null;
     readonly thumbnailImage: {
         readonly _1x: {
-            readonly width: number | null;
-            readonly height: number | null;
-            readonly src: string | null;
+            readonly width: number;
+            readonly height: number;
+            readonly src: string;
         } | null;
         readonly _2x: {
-            readonly width: number | null;
-            readonly height: number | null;
-            readonly src: string | null;
+            readonly width: number;
+            readonly height: number;
+            readonly src: string;
         } | null;
     } | null;
     readonly " $refType": "FairEditorialItem_article";

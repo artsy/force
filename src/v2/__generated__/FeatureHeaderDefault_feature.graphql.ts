@@ -8,10 +8,10 @@ export type FeatureHeaderDefault_feature = {
     readonly subheadline: string | null;
     readonly defaultImage: {
         readonly _1x: {
-            readonly url: string | null;
+            readonly url: string;
         } | null;
         readonly _2x: {
-            readonly url: string | null;
+            readonly url: string;
         } | null;
     } | null;
     readonly " $refType": "FeatureHeaderDefault_feature";

@@ -25,7 +25,7 @@ export type Collection_collection = {
             readonly node: {
                 readonly image: {
                     readonly resized: {
-                        readonly url: string | null;
+                        readonly url: string;
                     } | null;
                 } | null;
             } | null;

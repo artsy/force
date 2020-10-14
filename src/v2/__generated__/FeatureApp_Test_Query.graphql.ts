@@ -25,18 +25,18 @@ export type FeatureApp_Test_QueryRawResponse = {
         readonly subheadline: string | null;
         readonly defaultImage: ({
             readonly _1x: ({
-                readonly url: string | null;
+                readonly url: string;
             }) | null;
             readonly _2x: ({
-                readonly url: string | null;
+                readonly url: string;
             }) | null;
         }) | null;
         readonly fullImage: ({
             readonly _1x: ({
-                readonly url: string | null;
+                readonly url: string;
             }) | null;
             readonly _2x: ({
-                readonly url: string | null;
+                readonly url: string;
             }) | null;
         }) | null;
         readonly layout: FeatureLayouts;
@@ -114,22 +114,22 @@ export type FeatureApp_Test_QueryRawResponse = {
                                 readonly description: string | null;
                                 readonly image: ({
                                     readonly small: ({
-                                        readonly src: string | null;
-                                        readonly width: number | null;
-                                        readonly height: number | null;
+                                        readonly src: string;
+                                        readonly width: number;
+                                        readonly height: number;
                                     }) | null;
                                     readonly medium: ({
-                                        readonly src: string | null;
-                                        readonly width: number | null;
-                                        readonly height: number | null;
+                                        readonly src: string;
+                                        readonly width: number;
+                                        readonly height: number;
                                     }) | null;
                                     readonly large: ({
-                                        readonly src: string | null;
-                                        readonly width: number | null;
-                                        readonly height: number | null;
+                                        readonly src: string;
+                                        readonly width: number;
+                                        readonly height: number;
                                     }) | null;
                                     readonly full: ({
-                                        readonly src: string | null;
+                                        readonly src: string;
                                         readonly width: number | null;
                                         readonly height: number | null;
                                     }) | null;

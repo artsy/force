@@ -10,7 +10,7 @@ export type CurrentEvent_artist = {
         };
         readonly image: {
             readonly resized: {
-                readonly url: string | null;
+                readonly url: string;
             } | null;
         } | null;
         readonly name: string | null;

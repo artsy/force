@@ -27,7 +27,7 @@ export type ConsignRoute_Test_QueryRawResponse = {
                             readonly resized: ({
                                 readonly width: number | null;
                                 readonly height: number | null;
-                                readonly url: string | null;
+                                readonly url: string;
                             }) | null;
                             readonly url: string | null;
                             readonly aspectRatio: number;

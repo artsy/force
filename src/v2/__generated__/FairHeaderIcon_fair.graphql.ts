@@ -8,10 +8,10 @@ export type FairHeaderIcon_fair = {
     readonly profile: {
         readonly icon: {
             readonly _1x: {
-                readonly src: string | null;
+                readonly src: string;
             } | null;
             readonly _2x: {
-                readonly src: string | null;
+                readonly src: string;
             } | null;
         } | null;
     } | null;

@@ -10,22 +10,22 @@ export type FeatureFeaturedLink_featuredLink = {
     readonly description: string | null;
     readonly image: {
         readonly small: {
-            readonly src: string | null;
-            readonly width: number | null;
-            readonly height: number | null;
+            readonly src: string;
+            readonly width: number;
+            readonly height: number;
         } | null;
         readonly medium: {
-            readonly src: string | null;
-            readonly width: number | null;
-            readonly height: number | null;
+            readonly src: string;
+            readonly width: number;
+            readonly height: number;
         } | null;
         readonly large: {
-            readonly src: string | null;
-            readonly width: number | null;
-            readonly height: number | null;
+            readonly src: string;
+            readonly width: number;
+            readonly height: number;
         } | null;
         readonly full: {
-            readonly src: string | null;
+            readonly src: string;
             readonly width: number | null;
             readonly height: number | null;
         } | null;
