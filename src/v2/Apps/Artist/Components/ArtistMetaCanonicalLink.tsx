@@ -7,10 +7,13 @@ import { hasSections as showMarketInsights } from "v2/Apps/Artist/Components/Mar
 import { hasOverviewContent } from "v2/Apps/Artist/Components/NavigationTabs"
 
 export const computeCanonicalPath = (
-  artist: ArtistMetaCanonicalLink_artist
+  artist: ArtistMetaCanonicalLink_artist,
+  path: string
 ) => {
   const basePath = `/artist/${artist.slug}`
   const pathParts = [basePath]
+
+  const isConsignPage = path === "consign"
 
   const hasArtistInsights =
     showMarketInsights(artist) ||
@@ -19,7 +22,9 @@ export const computeCanonicalPath = (
   const hasArtistContent = hasOverviewContent(artist)
   const canShowOverview = hasArtistInsights || hasArtistContent
 
-  if (canShowOverview) {
+  if (isConsignPage) {
+    pathParts.push("/consign")
+  } else if (canShowOverview) {
     pathParts.push("/works-for-sale")
   }
 
@@ -28,12 +33,14 @@ export const computeCanonicalPath = (
 
 export type ArtistMetaCanonicalLinkProps = {
   artist: ArtistMetaCanonicalLink_artist
+  path: string
 }
 
 export const ArtistMetaCanonicalLink: React.FC<ArtistMetaCanonicalLinkProps> = ({
   artist,
+  path,
 }) => {
-  const canonicalPath = computeCanonicalPath(artist)
+  const canonicalPath = computeCanonicalPath(artist, path)
   const canonicalUrl = `${sd.APP_URL}${canonicalPath}`
   return <Link rel="canonical" href={canonicalUrl} />
 }

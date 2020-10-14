@@ -52,7 +52,7 @@ export const ArtistApp: React.FC<ArtistAppProps> = props => {
 
   return (
     <AppContainer maxWidth={maxWidth}>
-      <ArtistMeta artist={artist} />
+      <ArtistMeta artist={artist} path={route.path} />
       {route.displayNavigationTabs && (
         <Row>
           <Col>

@@ -10,6 +10,7 @@ import { ArtistMetaCanonicalLinkFragmentContainer as ArtistMetaCanonicalLink } f
 
 interface Props {
   artist: ArtistMeta_artist
+  path: string
 }
 
 type ArtworkNode = ArtistMeta_artist["artworks_connection"]["edges"][0]["node"]
@@ -193,12 +194,12 @@ export class ArtistMeta extends Component<Props> {
   }
 
   render() {
-    const { artist } = this.props
+    const { artist, path } = this.props
     return (
       <>
         <Title>{artist.meta.title}</Title>
 
-        <ArtistMetaCanonicalLink artist={artist} />
+        <ArtistMetaCanonicalLink artist={artist} path={path} />
 
         <Meta property="og:title" content={artist.meta.title} />
         <Meta name="description" content={artist.meta.description} />
