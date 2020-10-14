@@ -95,7 +95,7 @@ export const FeatureFeaturedLink: React.FC<FeatureFeaturedLinkProps> = ({
             maxWidth="100%"
             bg="black10"
           >
-            <img src={img.src} alt={title} />
+            <img src={img.src} srcSet={img.srcSet} alt={title} />
           </ResponsiveImage>
 
           <Title color="white100" p={2} pt={9}>
@@ -142,31 +142,31 @@ export const FeatureFeaturedLinkFragmentContainer = createFragmentContainer(
         subtitle(format: HTML)
         description(format: HTML)
         image {
-          # 4:5 - 400×500 native max dimensions * 2 for retina
-          small: cropped(width: 800, height: 1000, version: ["main", "wide"]) {
-            src: url
+          # 4:5
+          small: cropped(width: 400, height: 500, version: ["main", "wide"]) {
+            src
+            srcSet
             width
             height
           }
-          # 4:5 - 546×682.5 native max dimensions * 2 for retina
-          medium: cropped(
-            width: 1092
-            height: 1365
-            version: ["main", "wide"]
-          ) {
-            src: url
+          # 4:5
+          medium: cropped(width: 546, height: 683, version: ["main", "wide"]) {
+            src
+            srcSet
             width
             height
           }
-          # 16:9 - 1112×626 native max dimensions * 2 for retina
-          large: cropped(width: 2224, height: 1252, version: ["main", "wide"]) {
-            src: url
+          # 16:9
+          large: cropped(width: 1112, height: 626, version: ["main", "wide"]) {
+            src
+            srcSet
             width
             height
           }
-          # ?:? - 1112×1112 native max dimensions * 2 for retina
-          full: resized(width: 2224, height: 2224, version: ["main", "wide"]) {
-            src: url
+          # ?:?
+          full: resized(width: 1112, height: 1112, version: ["main", "wide"]) {
+            src
+            srcSet
             width
             height
           }
