@@ -6,7 +6,9 @@ import { ArtistMetaCanonicalLink_artist } from "v2/__generated__/ArtistMetaCanon
 import { hasSections as showMarketInsights } from "v2/Apps/Artist/Components/MarketInsights/MarketInsights"
 import { hasOverviewContent } from "v2/Apps/Artist/Components/NavigationTabs"
 
-export const canonicalPath = (artist: ArtistMetaCanonicalLink_artist) => {
+export const computeCanonicalPath = (
+  artist: ArtistMetaCanonicalLink_artist
+) => {
   const hasArtistInsights =
     showMarketInsights(artist) ||
     (artist.insights && artist.insights.length > 0)
@@ -26,7 +28,7 @@ export type ArtistMetaCanonicalLinkProps = {
 export const ArtistMetaCanonicalLink: React.FC<ArtistMetaCanonicalLinkProps> = ({
   artist,
 }) => {
-  return <Link rel="canonical" href={`${sd.APP_URL}${canonicalPath(artist)}`} />
+  return <Link rel="canonical" href={`${sd.APP_URL}${computeCanonicalPath(artist)}`} />
 }
 
 export const ArtistMetaCanonicalLinkFragmentContainer = createFragmentContainer(
