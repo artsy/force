@@ -38,6 +38,9 @@ node_modules
 server.dist.js
 server.dist.js.map
 
+server-novo.dist.js
+server-novo.dist.js.map
+
 # Test utils
 coverage*
 cypress/screenshots

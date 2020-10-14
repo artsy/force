@@ -198,13 +198,9 @@ RUN apt-get update && apt-get install -y \
 COPY --from=builder /app /app
 
 # ---------------------------------------------------------
-# Release image
+# Release base image
 # ---------------------------------------------------------
-#
-# Release stage. This stage creates the final docker iamge that will be
-# released. It contains only production dependencies and artifacts.
-#
-FROM node:12.14-alpine as production
+FROM node:12.14-alpine as production-base
 
 RUN apk --no-cache --quiet add \
   bash \
@@ -215,48 +211,21 @@ WORKDIR /app
 RUN chown deploy:deploy $(pwd)
 
 USER deploy
-
-# Base code
-COPY --chown=deploy:deploy --from=builder /app/data ./data
-COPY --chown=deploy:deploy --from=builder /app/package.json .
-COPY --chown=deploy:deploy --from=builder /app/scripts ./scripts
-COPY --chown=deploy:deploy --from=builder /app/webpack ./webpack
-COPY --chown=deploy:deploy --from=builder /app/yarn.lock .
-
-# Client assets
-COPY --chown=deploy:deploy --from=builder /app/manifest.json .
-COPY --chown=deploy:deploy --from=builder /app/public ./public
-COPY --chown=deploy:deploy --from=builder /app/src ./src
-
-# Server assets
-COPY --chown=deploy:deploy --from=builder /app/server.dist.js .
-COPY --chown=deploy:deploy --from=builder /app/server.dist.js.map .
-
 
 # Production node modules.
 COPY --chown=deploy:deploy --from=yarn-deps /opt/node_modules.prod ./node_modules
 
-ENTRYPOINT ["/usr/bin/dumb-init", "--"]
-CMD ["node", "--max_old_space_size=3072", "-r", "dotenv/config", "./server.dist.js"]
-
-FROM node:12.14-alpine as production-novo
-
-RUN apk --no-cache --quiet add \
-  bash \
-  dumb-init \
-  && adduser -D -g '' deploy
-
-WORKDIR /app
-RUN chown deploy:deploy $(pwd)
-
-USER deploy
-
 # Base code
 COPY --chown=deploy:deploy --from=builder /app/data ./data
 COPY --chown=deploy:deploy --from=builder /app/package.json .
 COPY --chown=deploy:deploy --from=builder /app/scripts ./scripts
 COPY --chown=deploy:deploy --from=builder /app/webpack ./webpack
 COPY --chown=deploy:deploy --from=builder /app/yarn.lock .
+
+# ---------------------------------------------------------
+# Release (Novo) image
+# ---------------------------------------------------------
+FROM production-base as production-novo
 
 # Client assets
 COPY --chown=deploy:deploy --from=builder /app/manifest.json .
@@ -267,9 +236,26 @@ COPY --chown=deploy:deploy --from=builder /app/src ./src
 COPY --chown=deploy:deploy --from=builder /app/server-novo.dist.js .
 COPY --chown=deploy:deploy --from=builder /app/server-novo.dist.js.map .
 
-
-# Production node modules.
-COPY --chown=deploy:deploy --from=yarn-deps /opt/node_modules.prod ./node_modules
-
 ENTRYPOINT ["/usr/bin/dumb-init", "--"]
 CMD ["node", "--max_old_space_size=3072", "-r", "dotenv/config", "./server-novo.dist.js"]
+
+# ---------------------------------------------------------
+# Release image
+# ---------------------------------------------------------
+#
+# Release stage. This stage creates the final docker iamge that will be
+# released. It contains only production dependencies and artifacts.
+#
+FROM production-base as production
+
+# Client assets
+COPY --chown=deploy:deploy --from=builder /app/manifest.json .
+COPY --chown=deploy:deploy --from=builder /app/public ./public
+COPY --chown=deploy:deploy --from=builder /app/src ./src
+
+# Server assets
+COPY --chown=deploy:deploy --from=builder /app/server.dist.js .
+COPY --chown=deploy:deploy --from=builder /app/server.dist.js.map .
+
+ENTRYPOINT ["/usr/bin/dumb-init", "--"]
+CMD ["node", "--max_old_space_size=3072", "-r", "dotenv/config", "./server.dist.js"]
