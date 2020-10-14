@@ -83,6 +83,7 @@ COPY patches ./patches
 FROM yarn-base as yarn-deps
 
 RUN --mount=type=cache,target=/usr/local/share/.cache \
+  --mount=type=cache,target=/root/.cache/Cypress \
   yarn install --production --frozen-lockfile --quiet \
   && mv node_modules /opt/node_modules.prod \
   && yarn install --frozen-lockfile --quiet
