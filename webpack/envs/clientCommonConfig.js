@@ -4,14 +4,20 @@ const path = require("path")
 const webpack = require("webpack")
 const LoadablePlugin = require("@loadable/webpack-plugin")
 const { RetryChunkLoadPlugin } = require("webpack-retry-chunk-load-plugin")
-const { getEntrypoints } = require("../utils/getEntrypoints")
+// const { getEntrypoints } = require("../utils/getEntrypoints")
 const { basePath, env } = require("../utils/env")
 
 export const clientCommonConfig = {
   mode: env.nodeEnv,
   devtool: "source-map",
   stats: "normal", // or, `errors-only`
-  entry: getEntrypoints(),
+  entry: {
+    "artsy-novo": [
+      // "webpack-hot-middleware/client?reload=true",
+      path.resolve(process.cwd(), "src/desktop/assets/artsy-novo.tsx"),
+    ],
+  },
+  // entry: getEntrypoints(),
   output: {
     filename: "[name].js",
     path: path.resolve(basePath, "public/assets"),
