@@ -76,8 +76,8 @@ export const FairEditorialItem: React.FC<FairEditorialItemProps> = ({
       >
         {article.thumbnailImage && (
           <Thumbnail
-            src={article.thumbnailImage._1x.src}
-            srcSet={`${article.thumbnailImage._1x.src} 1x, ${article.thumbnailImage._2x.src} 2x`}
+            src={article.thumbnailImage.cropped.src}
+            srcSet={article.thumbnailImage.cropped.srcSet}
             alt={article.thumbnailTitle}
           />
         )}
@@ -99,15 +99,11 @@ export const FairEditorialItemFragmentContainer = createFragmentContainer(
         publishedAt(format: "MMM Do, YYYY")
         thumbnailTitle
         thumbnailImage {
-          _1x: cropped(width: 140, height: 80) {
+          cropped(width: 140, height: 80) {
             width
             height
-            src: url
-          }
-          _2x: cropped(width: 280, height: 160) {
-            width
-            height
-            src: url
+            src
+            srcSet
           }
         }
       }

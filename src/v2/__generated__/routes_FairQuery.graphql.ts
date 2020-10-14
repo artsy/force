@@ -161,15 +161,11 @@ fragment FairEditorialItem_article on Article {
   publishedAt(format: "MMM Do, YYYY")
   thumbnailTitle
   thumbnailImage {
-    _1x: cropped(width: 140, height: 80) {
+    cropped(width: 140, height: 80) {
       width
       height
-      src: url
-    }
-    _2x: cropped(width: 280, height: 160) {
-      width
-      height
-      src: url
+      src
+      srcSet
     }
   }
 }
@@ -205,11 +201,9 @@ fragment FairHeaderIcon_fair on Fair {
   name
   profile {
     icon {
-      _1x: cropped(width: 60, height: 60, version: "square140") {
-        src: url
-      }
-      _2x: cropped(width: 120, height: 120, version: "square140") {
-        src: url
+      cropped(width: 60, height: 60, version: "square140") {
+        src
+        srcSet
       }
     }
     id
@@ -220,25 +214,18 @@ fragment FairHeaderImage_fair on Fair {
   ...FairHeaderIcon_fair
   name
   image {
-    _1x: cropped(width: 375, height: 500, version: "wide") {
-      src: url
+    small: cropped(width: 375, height: 500, version: "wide") {
+      src
+      srcSet
       width
       height
     }
-    _2x: cropped(width: 750, height: 1000, version: "wide") {
-      src: url
+    medium: cropped(width: 600, height: 800, version: "wide") {
+      src
+      srcSet
     }
-    md_1x: cropped(width: 600, height: 800, version: "wide") {
-      src: url
-    }
-    md_2x: cropped(width: 1200, height: 1600, version: "wide") {
-      src: url
-    }
-    lg_1x: cropped(width: 900, height: 1200, version: "wide") {
-      src: url
-    }
-    lg_2x: cropped(width: 1800, height: 2400, version: "wide") {
-      src: url
+    large: cropped(width: 900, height: 1200, version: "wide") {
+      srcSet
     }
   }
 }
@@ -343,18 +330,21 @@ v4 = {
   "storageKey": null
 },
 v5 = {
-  "kind": "Literal",
-  "name": "version",
-  "value": "square140"
-},
-v6 = {
-  "alias": "src",
+  "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "url",
+  "name": "src",
+  "storageKey": null
+},
+v6 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "srcSet",
   "storageKey": null
 },
 v7 = [
+  (v5/*: any*/),
   (v6/*: any*/)
 ],
 v8 = {
@@ -404,26 +394,21 @@ v14 = {
   "name": "href",
   "storageKey": null
 },
-v15 = [
-  (v10/*: any*/),
-  (v11/*: any*/),
-  (v6/*: any*/)
-],
-v16 = {
+v15 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "__typename",
   "storageKey": null
 },
-v17 = [
+v16 = [
   {
     "kind": "Literal",
     "name": "shallow",
     "value": true
   }
 ],
-v18 = [
+v17 = [
   {
     "alias": null,
     "args": null,
@@ -544,14 +529,18 @@ return {
                 "plural": false,
                 "selections": [
                   {
-                    "alias": "_1x",
+                    "alias": null,
                     "args": [
                       {
                         "kind": "Literal",
                         "name": "height",
                         "value": 60
                       },
-                      (v5/*: any*/),
+                      {
+                        "kind": "Literal",
+                        "name": "version",
+                        "value": "square140"
+                      },
                       {
                         "kind": "Literal",
                         "name": "width",
@@ -564,28 +553,6 @@ return {
                     "plural": false,
                     "selections": (v7/*: any*/),
                     "storageKey": "cropped(height:60,version:\"square140\",width:60)"
-                  },
-                  {
-                    "alias": "_2x",
-                    "args": [
-                      {
-                        "kind": "Literal",
-                        "name": "height",
-                        "value": 120
-                      },
-                      (v5/*: any*/),
-                      {
-                        "kind": "Literal",
-                        "name": "width",
-                        "value": 120
-                      }
-                    ],
-                    "concreteType": "CroppedImageUrl",
-                    "kind": "LinkedField",
-                    "name": "cropped",
-                    "plural": false,
-                    "selections": (v7/*: any*/),
-                    "storageKey": "cropped(height:120,version:\"square140\",width:120)"
                   }
                 ],
                 "storageKey": null
@@ -603,7 +570,7 @@ return {
             "plural": false,
             "selections": [
               {
-                "alias": "_1x",
+                "alias": "small",
                 "args": [
                   {
                     "kind": "Literal",
@@ -622,6 +589,7 @@ return {
                 "name": "cropped",
                 "plural": false,
                 "selections": [
+                  (v5/*: any*/),
                   (v6/*: any*/),
                   (v10/*: any*/),
                   (v11/*: any*/)
@@ -629,29 +597,7 @@ return {
                 "storageKey": "cropped(height:500,version:\"wide\",width:375)"
               },
               {
-                "alias": "_2x",
-                "args": [
-                  {
-                    "kind": "Literal",
-                    "name": "height",
-                    "value": 1000
-                  },
-                  (v9/*: any*/),
-                  {
-                    "kind": "Literal",
-                    "name": "width",
-                    "value": 750
-                  }
-                ],
-                "concreteType": "CroppedImageUrl",
-                "kind": "LinkedField",
-                "name": "cropped",
-                "plural": false,
-                "selections": (v7/*: any*/),
-                "storageKey": "cropped(height:1000,version:\"wide\",width:750)"
-              },
-              {
-                "alias": "md_1x",
+                "alias": "medium",
                 "args": [
                   {
                     "kind": "Literal",
@@ -673,29 +619,7 @@ return {
                 "storageKey": "cropped(height:800,version:\"wide\",width:600)"
               },
               {
-                "alias": "md_2x",
-                "args": [
-                  {
-                    "kind": "Literal",
-                    "name": "height",
-                    "value": 1600
-                  },
-                  (v9/*: any*/),
-                  {
-                    "kind": "Literal",
-                    "name": "width",
-                    "value": 1200
-                  }
-                ],
-                "concreteType": "CroppedImageUrl",
-                "kind": "LinkedField",
-                "name": "cropped",
-                "plural": false,
-                "selections": (v7/*: any*/),
-                "storageKey": "cropped(height:1600,version:\"wide\",width:1200)"
-              },
-              {
-                "alias": "lg_1x",
+                "alias": "large",
                 "args": [
                   {
                     "kind": "Literal",
@@ -713,30 +637,10 @@ return {
                 "kind": "LinkedField",
                 "name": "cropped",
                 "plural": false,
-                "selections": (v7/*: any*/),
-                "storageKey": "cropped(height:1200,version:\"wide\",width:900)"
-              },
-              {
-                "alias": "lg_2x",
-                "args": [
-                  {
-                    "kind": "Literal",
-                    "name": "height",
-                    "value": 2400
-                  },
-                  (v9/*: any*/),
-                  {
-                    "kind": "Literal",
-                    "name": "width",
-                    "value": 1800
-                  }
+                "selections": [
+                  (v6/*: any*/)
                 ],
-                "concreteType": "CroppedImageUrl",
-                "kind": "LinkedField",
-                "name": "cropped",
-                "plural": false,
-                "selections": (v7/*: any*/),
-                "storageKey": "cropped(height:2400,version:\"wide\",width:1800)"
+                "storageKey": "cropped(height:1200,version:\"wide\",width:900)"
               }
             ],
             "storageKey": null
@@ -885,7 +789,7 @@ return {
                         "plural": false,
                         "selections": [
                           {
-                            "alias": "_1x",
+                            "alias": null,
                             "args": [
                               {
                                 "kind": "Literal",
@@ -902,29 +806,13 @@ return {
                             "kind": "LinkedField",
                             "name": "cropped",
                             "plural": false,
-                            "selections": (v15/*: any*/),
-                            "storageKey": "cropped(height:80,width:140)"
-                          },
-                          {
-                            "alias": "_2x",
-                            "args": [
-                              {
-                                "kind": "Literal",
-                                "name": "height",
-                                "value": 160
-                              },
-                              {
-                                "kind": "Literal",
-                                "name": "width",
-                                "value": 280
-                              }
+                            "selections": [
+                              (v10/*: any*/),
+                              (v11/*: any*/),
+                              (v5/*: any*/),
+                              (v6/*: any*/)
                             ],
-                            "concreteType": "CroppedImageUrl",
-                            "kind": "LinkedField",
-                            "name": "cropped",
-                            "plural": false,
-                            "selections": (v15/*: any*/),
-                            "storageKey": "cropped(height:160,width:280)"
+                            "storageKey": "cropped(height:80,width:140)"
                           }
                         ],
                         "storageKey": null
@@ -932,7 +820,7 @@ return {
                     ],
                     "storageKey": null
                   },
-                  (v16/*: any*/)
+                  (v15/*: any*/)
                 ],
                 "storageKey": null
               }
@@ -1039,7 +927,7 @@ return {
                 ],
                 "storageKey": "artworksConnection(first:3)"
               },
-              (v16/*: any*/)
+              (v15/*: any*/)
             ],
             "storageKey": "marketingCollections(size:4)"
           },
@@ -1143,7 +1031,7 @@ return {
                       },
                       {
                         "alias": null,
-                        "args": (v17/*: any*/),
+                        "args": (v16/*: any*/),
                         "concreteType": "Artist",
                         "kind": "LinkedField",
                         "name": "artists",
@@ -1164,7 +1052,7 @@ return {
                       },
                       {
                         "alias": null,
-                        "args": (v17/*: any*/),
+                        "args": (v16/*: any*/),
                         "concreteType": "Partner",
                         "kind": "LinkedField",
                         "name": "partner",
@@ -1270,7 +1158,7 @@ return {
                             "kind": "LinkedField",
                             "name": "highestBid",
                             "plural": false,
-                            "selections": (v18/*: any*/),
+                            "selections": (v17/*: any*/),
                             "storageKey": null
                           },
                           {
@@ -1280,7 +1168,7 @@ return {
                             "kind": "LinkedField",
                             "name": "openingBid",
                             "plural": false,
-                            "selections": (v18/*: any*/),
+                            "selections": (v17/*: any*/),
                             "storageKey": null
                           },
                           (v8/*: any*/)
@@ -1348,7 +1236,7 @@ return {
     "metadata": {},
     "name": "routes_FairQuery",
     "operationKind": "query",
-    "text": "query routes_FairQuery(\n  $slug: String!\n) {\n  fair(id: $slug) {\n    ...FairApp_fair\n    id\n  }\n}\n\nfragment Badge_artwork on Artwork {\n  is_biddable: isBiddable\n  href\n  sale {\n    is_preview: isPreview\n    display_timely_at: displayTimelyAt\n    id\n  }\n}\n\nfragment Contact_artwork on Artwork {\n  href\n  is_inquireable: isInquireable\n  sale {\n    is_auction: isAuction\n    is_live_open: isLiveOpen\n    is_open: isOpen\n    is_closed: isClosed\n    id\n  }\n  partner(shallow: true) {\n    type\n    id\n  }\n  sale_artwork: saleArtwork {\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    counts {\n      bidder_positions: bidderPositions\n    }\n    id\n  }\n}\n\nfragment Details_artwork on Artwork {\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n}\n\nfragment FairApp_fair on Fair {\n  internalID\n  slug\n  ...FairMeta_fair\n  ...FairHeader_fair\n  ...FairEditorial_fair\n  ...FairCollections_fair\n  ...FairFollowedArtists_fair\n  articles: articlesConnection(first: 5, sort: PUBLISHED_AT_DESC) {\n    edges {\n      __typename\n    }\n  }\n  marketingCollections(size: 4) {\n    __typename\n    id\n  }\n  counts {\n    artworks\n  }\n}\n\nfragment FairCollection_collection on MarketingCollection {\n  id\n  slug\n  title\n  artworks: artworksConnection(first: 3) {\n    counts {\n      total\n    }\n    edges {\n      node {\n        image {\n          url(version: \"larger\")\n        }\n        id\n      }\n    }\n    id\n  }\n}\n\nfragment FairCollections_fair on Fair {\n  marketingCollections(size: 4) {\n    id\n    slug\n    ...FairCollection_collection\n  }\n}\n\nfragment FairEditorialItem_article on Article {\n  id\n  internalID\n  slug\n  title\n  href\n  publishedAt(format: \"MMM Do, YYYY\")\n  thumbnailTitle\n  thumbnailImage {\n    _1x: cropped(width: 140, height: 80) {\n      width\n      height\n      src: url\n    }\n    _2x: cropped(width: 280, height: 160) {\n      width\n      height\n      src: url\n    }\n  }\n}\n\nfragment FairEditorial_fair on Fair {\n  articles: articlesConnection(first: 5, sort: PUBLISHED_AT_DESC) {\n    edges {\n      node {\n        id\n        ...FairEditorialItem_article\n      }\n    }\n  }\n}\n\nfragment FairFollowedArtists_fair on Fair {\n  internalID\n  slug\n  followedArtistArtworks: filterArtworksConnection(includeArtworksByFollowedArtists: true, first: 20) {\n    edges {\n      artwork: node {\n        internalID\n        slug\n        ...FillwidthItem_artwork\n        id\n      }\n    }\n    id\n  }\n}\n\nfragment FairHeaderIcon_fair on Fair {\n  name\n  profile {\n    icon {\n      _1x: cropped(width: 60, height: 60, version: \"square140\") {\n        src: url\n      }\n      _2x: cropped(width: 120, height: 120, version: \"square140\") {\n        src: url\n      }\n    }\n    id\n  }\n}\n\nfragment FairHeaderImage_fair on Fair {\n  ...FairHeaderIcon_fair\n  name\n  image {\n    _1x: cropped(width: 375, height: 500, version: \"wide\") {\n      src: url\n      width\n      height\n    }\n    _2x: cropped(width: 750, height: 1000, version: \"wide\") {\n      src: url\n    }\n    md_1x: cropped(width: 600, height: 800, version: \"wide\") {\n      src: url\n    }\n    md_2x: cropped(width: 1200, height: 1600, version: \"wide\") {\n      src: url\n    }\n    lg_1x: cropped(width: 900, height: 1200, version: \"wide\") {\n      src: url\n    }\n    lg_2x: cropped(width: 1800, height: 2400, version: \"wide\") {\n      src: url\n    }\n  }\n}\n\nfragment FairHeader_fair on Fair {\n  ...FairTiming_fair\n  ...FairHeaderImage_fair\n  about(format: HTML)\n  summary(format: HTML)\n  name\n  slug\n  tagline\n  location {\n    summary\n    id\n  }\n  ticketsLink\n  hours(format: HTML)\n  links(format: HTML)\n  tickets(format: HTML)\n  contact(format: HTML)\n}\n\nfragment FairMeta_fair on Fair {\n  name\n  slug\n  metaDescription: summary\n  metaImage: image {\n    src: url(version: \"large_rectangle\")\n  }\n}\n\nfragment FairTiming_fair on Fair {\n  exhibitionPeriod\n  startAt\n  endAt\n}\n\nfragment FillwidthItem_artwork on Artwork {\n  image {\n    url(version: \"large\")\n    aspectRatio\n  }\n  imageTitle\n  title\n  href\n  ...Metadata_artwork\n  ...Save_artwork\n  ...Badge_artwork\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  ...Contact_artwork\n  href\n}\n\nfragment Save_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n"
+    "text": "query routes_FairQuery(\n  $slug: String!\n) {\n  fair(id: $slug) {\n    ...FairApp_fair\n    id\n  }\n}\n\nfragment Badge_artwork on Artwork {\n  is_biddable: isBiddable\n  href\n  sale {\n    is_preview: isPreview\n    display_timely_at: displayTimelyAt\n    id\n  }\n}\n\nfragment Contact_artwork on Artwork {\n  href\n  is_inquireable: isInquireable\n  sale {\n    is_auction: isAuction\n    is_live_open: isLiveOpen\n    is_open: isOpen\n    is_closed: isClosed\n    id\n  }\n  partner(shallow: true) {\n    type\n    id\n  }\n  sale_artwork: saleArtwork {\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    counts {\n      bidder_positions: bidderPositions\n    }\n    id\n  }\n}\n\nfragment Details_artwork on Artwork {\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n}\n\nfragment FairApp_fair on Fair {\n  internalID\n  slug\n  ...FairMeta_fair\n  ...FairHeader_fair\n  ...FairEditorial_fair\n  ...FairCollections_fair\n  ...FairFollowedArtists_fair\n  articles: articlesConnection(first: 5, sort: PUBLISHED_AT_DESC) {\n    edges {\n      __typename\n    }\n  }\n  marketingCollections(size: 4) {\n    __typename\n    id\n  }\n  counts {\n    artworks\n  }\n}\n\nfragment FairCollection_collection on MarketingCollection {\n  id\n  slug\n  title\n  artworks: artworksConnection(first: 3) {\n    counts {\n      total\n    }\n    edges {\n      node {\n        image {\n          url(version: \"larger\")\n        }\n        id\n      }\n    }\n    id\n  }\n}\n\nfragment FairCollections_fair on Fair {\n  marketingCollections(size: 4) {\n    id\n    slug\n    ...FairCollection_collection\n  }\n}\n\nfragment FairEditorialItem_article on Article {\n  id\n  internalID\n  slug\n  title\n  href\n  publishedAt(format: \"MMM Do, YYYY\")\n  thumbnailTitle\n  thumbnailImage {\n    cropped(width: 140, height: 80) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment FairEditorial_fair on Fair {\n  articles: articlesConnection(first: 5, sort: PUBLISHED_AT_DESC) {\n    edges {\n      node {\n        id\n        ...FairEditorialItem_article\n      }\n    }\n  }\n}\n\nfragment FairFollowedArtists_fair on Fair {\n  internalID\n  slug\n  followedArtistArtworks: filterArtworksConnection(includeArtworksByFollowedArtists: true, first: 20) {\n    edges {\n      artwork: node {\n        internalID\n        slug\n        ...FillwidthItem_artwork\n        id\n      }\n    }\n    id\n  }\n}\n\nfragment FairHeaderIcon_fair on Fair {\n  name\n  profile {\n    icon {\n      cropped(width: 60, height: 60, version: \"square140\") {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment FairHeaderImage_fair on Fair {\n  ...FairHeaderIcon_fair\n  name\n  image {\n    small: cropped(width: 375, height: 500, version: \"wide\") {\n      src\n      srcSet\n      width\n      height\n    }\n    medium: cropped(width: 600, height: 800, version: \"wide\") {\n      src\n      srcSet\n    }\n    large: cropped(width: 900, height: 1200, version: \"wide\") {\n      srcSet\n    }\n  }\n}\n\nfragment FairHeader_fair on Fair {\n  ...FairTiming_fair\n  ...FairHeaderImage_fair\n  about(format: HTML)\n  summary(format: HTML)\n  name\n  slug\n  tagline\n  location {\n    summary\n    id\n  }\n  ticketsLink\n  hours(format: HTML)\n  links(format: HTML)\n  tickets(format: HTML)\n  contact(format: HTML)\n}\n\nfragment FairMeta_fair on Fair {\n  name\n  slug\n  metaDescription: summary\n  metaImage: image {\n    src: url(version: \"large_rectangle\")\n  }\n}\n\nfragment FairTiming_fair on Fair {\n  exhibitionPeriod\n  startAt\n  endAt\n}\n\nfragment FillwidthItem_artwork on Artwork {\n  image {\n    url(version: \"large\")\n    aspectRatio\n  }\n  imageTitle\n  title\n  href\n  ...Metadata_artwork\n  ...Save_artwork\n  ...Badge_artwork\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  ...Contact_artwork\n  href\n}\n\nfragment Save_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n"
   }
 };
 })();

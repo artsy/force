@@ -43,10 +43,10 @@ export const ShowInstallShots: React.FC<ShowInstallShotsProps> = ({
               display="block"
             >
               <Image
-                src={image._1x.src}
-                srcSet={`${image._1x.src} 1x, ${image._2x.src} 2x`}
-                width={[image.mobile1x.width, image._1x.width]}
-                height={[image.mobile1x.height, image._1x.height]}
+                src={image.desktop.src}
+                srcSet={image.desktop.srcSet}
+                width={[image.mobile.width, image.desktop.width]}
+                height={[image.mobile.height, image.desktop.height]}
                 alt={`${show.name}, installation view`}
                 lazyLoad={i > 2}
               />
@@ -56,7 +56,7 @@ export const ShowInstallShots: React.FC<ShowInstallShotsProps> = ({
                   mt={1}
                   color="black60"
                   textAlign="left"
-                  maxWidth={image._1x.width}
+                  maxWidth={image.desktop.width}
                   title={image.caption}
                   overflowEllipsis
                 >
@@ -86,14 +86,14 @@ export const ShowInstallShots: React.FC<ShowInstallShotsProps> = ({
             onClick={handleClose}
           >
             <ResponsiveBox
-              maxWidth={selectedImage.zoom1x.width}
-              maxHeight={selectedImage.zoom1x.width}
-              aspectWidth={selectedImage.zoom1x.width}
-              aspectHeight={selectedImage.zoom1x.height}
+              maxWidth={selectedImage.zoom.width}
+              maxHeight={selectedImage.zoom.width}
+              aspectWidth={selectedImage.zoom.width}
+              aspectHeight={selectedImage.zoom.height}
             >
               <Image
-                src={selectedImage.zoom1x.src}
-                srcSet={`${selectedImage.zoom1x.src} 1x, ${selectedImage.zoom2x.src} 2x`}
+                src={selectedImage.zoom.src}
+                srcSet={selectedImage.zoom.srcSet}
                 width="100%"
                 height="100%"
                 alt={`${show.name}, installation view`}
@@ -116,33 +116,21 @@ export const ShowInstallShotsFragmentContainer = createFragmentContainer(
         images {
           internalID
           caption
-          mobile1x: resized(height: 300, version: ["larger", "large"]) {
+          mobile: resized(height: 300) {
             width
             height
           }
-          _1x: resized(height: 400, version: ["larger", "large"]) {
-            src: url
+          desktop: resized(height: 400, version: ["larger", "large"]) {
+            src
+            srcSet
             width
             height
           }
-          _2x: resized(height: 400, version: ["larger", "large"]) {
-            src: url
-          }
-          zoom1x: resized(
-            width: 900
-            height: 900
-            version: ["larger", "large"]
-          ) {
-            src: url
+          zoom: resized(width: 900, height: 900, version: ["larger", "large"]) {
+            src
+            srcSet
             width
             height
-          }
-          zoom2x: resized(
-            width: 1800
-            height: 1800
-            version: ["larger", "large"]
-          ) {
-            src: url
           }
         }
       }

@@ -123,18 +123,19 @@ const FairHeaderFixture: FairHeader_QueryRawResponse = {
     startAt: "2020-08-19T08:00:00+00:00",
     endAt: "2020-09-19T08:00:00+00:00",
     image: {
-      _1x: {
+      small: {
         src: "https://cloudfront.com/square.jpg",
+        srcSet: "https://cloudfront.com/square.jpg",
         width: 100,
         height: 400,
       },
-      _2x: {
+      medium: {
         src: "https://cloudfront.com/square.jpg",
+        srcSet: "https://cloudfront.com/square.jpg",
       },
-      md_1x: { src: "https://cloudfront.com/square.jpg" },
-      md_2x: { src: "https://cloudfront.com/square.jpg" },
-      lg_1x: { src: "https://cloudfront.com/square.jpg" },
-      lg_2x: { src: "https://cloudfront.com/square.jpg" },
+      large: {
+        srcSet: "https://cloudfront.com/square.jpg",
+      },
     },
     tagline: "",
     location: null,
@@ -147,11 +148,9 @@ const FairHeaderFixture: FairHeader_QueryRawResponse = {
     profile: {
       id: "profile",
       icon: {
-        _1x: {
+        cropped: {
           src: "/path/to/cats.jpg",
-        },
-        _2x: {
-          src: "/path/to/cats.jpg",
+          srcSet: "/path/to/cats.jpg",
         },
       },
     },

@@ -18,42 +18,34 @@ const SHOW_FIXTURE = {
   images: [
     {
       internalID: "example-image-0",
-      mobile1x: { width: 449, height: 300 },
-      _1x: {
+      mobile: { width: 449, height: 300 },
+      desktop: {
         src: "0_example1x.jpg",
+        srcSet: "0_example1x.jpg",
         width: 599,
         height: 400,
       },
-      _2x: {
-        src: "0_example2X.jpg",
-      },
-      zoom1x: {
+      zoom: {
         src: "0_zoomExample1x.jpg",
+        srcSet: "0_zoomExample1x.jpg",
         width: 900,
         height: 600,
-      },
-      zoom2x: {
-        src: "0_zoomExample2X.jpg",
       },
     },
     {
       internalID: "example-image-1",
-      mobile1x: { width: 449, height: 300 },
-      _1x: {
+      mobile: { width: 449, height: 300 },
+      desktop: {
         src: "1_example1x.jpg",
+        srcSet: "1_example1x.jpg",
         width: 599,
         height: 400,
       },
-      _2x: {
-        src: "1_example2X.jpg",
-      },
-      zoom1x: {
+      zoom: {
         src: "1_zoomExample1x.jpg",
+        srcSet: "1_zoomExample1x.jpg",
         width: 900,
         height: 600,
-      },
-      zoom2x: {
-        src: "1_zoomExample2X.jpg",
       },
     },
   ],
