@@ -62,11 +62,11 @@ WORKDIR /app
 
 # Install system dependencies
 RUN apk --no-cache --quiet add \
-      bash \
-      build-base \
-      curl \
-      git \
-      python
+  bash \
+  build-base \
+  curl \
+  git \
+  python
 
 # ---------------------------------------------------------
 # Yarn base
@@ -125,7 +125,8 @@ COPY .env.oss \
 FROM builder-src as builder-assets
 
 # Build application
-RUN yarn assets
+RUN BUILD_CLIENT=true yarn assets
+RUN BUILD_NOVO_CLIENT=true yarn assets
 
 # ---------------------------------------------------------
 # Compile server
@@ -133,7 +134,8 @@ RUN yarn assets
 FROM builder-src as builder-server
 
 # Build application
-RUN yarn build:server
+RUN BUILD_SERVER=true yarn assets
+RUN BUILD_NOVO_SERVER=true yarn assets
 
 # ---------------------------------------------------------
 # All development assets
@@ -215,4 +217,39 @@ COPY --chown=deploy:deploy --from=builder /app/server.dist.js.map .
 COPY --chown=deploy:deploy --from=yarn-deps /opt/node_modules.prod ./node_modules
 
 ENTRYPOINT ["/usr/bin/dumb-init", "--"]
-CMD ["yarn", "start"]
+CMD ["node", "--max_old_space_size=3072", "-r", "dotenv/config", "./server.dist.js"]
+
+FROM node:12.14-alpine as production-novo
+
+RUN apk --no-cache --quiet add \
+  bash \
+  dumb-init \
+  && adduser -D -g '' deploy
+
+WORKDIR /app
+RUN chown deploy:deploy $(pwd)
+
+USER deploy
+
+# Base code
+COPY --chown=deploy:deploy --from=builder /app/data ./data
+COPY --chown=deploy:deploy --from=builder /app/package.json .
+COPY --chown=deploy:deploy --from=builder /app/scripts ./scripts
+COPY --chown=deploy:deploy --from=builder /app/webpack ./webpack
+COPY --chown=deploy:deploy --from=builder /app/yarn.lock .
+
+# Client assets
+COPY --chown=deploy:deploy --from=builder /app/manifest.json .
+COPY --chown=deploy:deploy --from=builder /app/public ./public
+COPY --chown=deploy:deploy --from=builder /app/src ./src
+
+# Server assets
+COPY --chown=deploy:deploy --from=builder /app/server-novo.dist.js .
+COPY --chown=deploy:deploy --from=builder /app/server-novo.dist.js.map .
+
+
+# Production node modules.
+COPY --chown=deploy:deploy --from=yarn-deps /opt/node_modules.prod ./node_modules
+
+ENTRYPOINT ["/usr/bin/dumb-init", "--"]
+CMD ["node", "--max_old_space_size=3072", "-r", "dotenv/config", "./server-novo.dist.js"]

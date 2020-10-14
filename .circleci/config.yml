@@ -249,6 +249,9 @@ workflows:
           name: production-image-build
           requires:
             - builder-image-build
+          pre-steps:
+            - run:
+                command: echo 'export BUILD_TARGET="production";' >> $BASH_ENV
 
       - artsy-remote-docker/buildkit-push:
           <<: *only_master

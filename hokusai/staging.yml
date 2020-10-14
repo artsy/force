@@ -107,6 +107,27 @@ spec:
     component: web
   type: ClusterIP
 ---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: force
+    component: web
+    layer: application
+  name: force-web-novo-internal
+  namespace: default
+spec:
+  ports:
+    - port: 5000
+      protocol: TCP
+      name: force-http
+      targetPort: force-http
+  selector:
+    app: force
+    layer: application
+    component: web
+  type: ClusterIP
+---
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
@@ -118,6 +139,10 @@ spec:
     - host: staging.artsy.net
       http:
         paths:
+          - path: /novo/
+            backend:
+              serviceName: force-web-novo-internal
+              servicePort: force-http
           - path: /
             backend:
               serviceName: force-web-internal

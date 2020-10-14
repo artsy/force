@@ -7,7 +7,7 @@ const TerserPlugin = require("terser-webpack-plugin")
 const { removeEmpty } = require("webpack-config-utils")
 const { basePath, env } = require("../utils/env")
 
-export const serverConfig = {
+export const serverNovoConfig = {
   mode: env.nodeEnv,
   devtool: "source-map",
   target: "node",
@@ -15,9 +15,9 @@ export const serverConfig = {
   node: {
     __dirname: true,
   },
-  entry: path.join(basePath, "src/index.js"),
+  entry: path.join(basePath, "src/novo/index.js"),
   output: {
-    filename: "server.dist.js",
+    filename: "server-novo.dist.js",
     chunkFilename: "[name].bundle.js",
     path: path.resolve(basePath),
   },
