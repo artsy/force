@@ -45,8 +45,6 @@ $(() =>
     setupSplitTests()
 
     require("../analytics/artwork.js")
-    require("../analytics/contact.js")
-    require("../analytics/galleries.js")
     require("../analytics/inquiry_questionnaire.js")
     require("../analytics/recently_viewed_artworks.js")
     require("../analytics/show_page.js")
