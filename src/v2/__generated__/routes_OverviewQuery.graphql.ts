@@ -23,7 +23,7 @@ export type routes_OverviewQueryRawResponse = {
             };
             readonly image: ({
                 readonly resized: ({
-                    readonly url: string | null;
+                    readonly url: string;
                 }) | null;
             }) | null;
             readonly name: string | null;
@@ -159,7 +159,7 @@ export type routes_OverviewQueryRawResponse = {
         readonly href: string | null;
         readonly image: ({
             readonly cropped: ({
-                readonly url: string | null;
+                readonly url: string;
             }) | null;
         }) | null;
         readonly filterArtworksConnection: ({
@@ -230,9 +230,9 @@ export type routes_OverviewQueryRawResponse = {
                     readonly exhibitionPeriod: string | null;
                     readonly coverImage: ({
                         readonly cropped: ({
-                            readonly url: string | null;
-                            readonly width: number | null;
-                            readonly height: number | null;
+                            readonly url: string;
+                            readonly width: number;
+                            readonly height: number;
                         }) | null;
                     }) | null;
                     readonly id: string | null;
@@ -247,7 +247,7 @@ export type routes_OverviewQueryRawResponse = {
                     readonly publishedAt: string | null;
                     readonly thumbnailImage: ({
                         readonly cropped: ({
-                            readonly url: string | null;
+                            readonly url: string;
                         }) | null;
                     }) | null;
                     readonly id: string | null;

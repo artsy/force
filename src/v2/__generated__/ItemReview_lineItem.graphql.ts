@@ -18,7 +18,7 @@ export type ItemReview_lineItem = {
         } | null;
         readonly image: {
             readonly resized: {
-                readonly url: string | null;
+                readonly url: string;
             } | null;
         } | null;
         readonly edition_sets: ReadonlyArray<{

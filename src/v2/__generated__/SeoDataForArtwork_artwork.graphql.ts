@@ -30,7 +30,7 @@ export type SeoDataForArtwork_artwork = {
         readonly resized: {
             readonly width: number | null;
             readonly height: number | null;
-            readonly url: string | null;
+            readonly url: string;
         } | null;
     } | null;
     readonly meta: {
@@ -43,7 +43,7 @@ export type SeoDataForArtwork_artwork = {
         readonly profile: {
             readonly image: {
                 readonly resized: {
-                    readonly url: string | null;
+                    readonly url: string;
                 } | null;
             } | null;
         } | null;

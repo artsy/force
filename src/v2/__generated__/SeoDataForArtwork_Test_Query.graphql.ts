@@ -35,7 +35,7 @@ export type SeoDataForArtwork_Test_QueryRawResponse = {
             readonly resized: ({
                 readonly width: number | null;
                 readonly height: number | null;
-                readonly url: string | null;
+                readonly url: string;
             }) | null;
         }) | null;
         readonly meta: ({
@@ -48,7 +48,7 @@ export type SeoDataForArtwork_Test_QueryRawResponse = {
             readonly profile: ({
                 readonly image: ({
                     readonly resized: ({
-                        readonly url: string | null;
+                        readonly url: string;
                     }) | null;
                 }) | null;
                 readonly id: string | null;

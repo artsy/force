@@ -43,7 +43,7 @@ export type PurchaseAppTestQueryRawResponse = {
                                     readonly date: string | null;
                                     readonly image: ({
                                         readonly resized: ({
-                                            readonly url: string | null;
+                                            readonly url: string;
                                         }) | null;
                                     }) | null;
                                     readonly partner: ({

@@ -18,7 +18,7 @@ export type CurrentEvent_Test_QueryRawResponse = {
             };
             readonly image: ({
                 readonly resized: ({
-                    readonly url: string | null;
+                    readonly url: string;
                 }) | null;
             }) | null;
             readonly name: string | null;

@@ -20,34 +20,34 @@ export type FairHeader_QueryRawResponse = {
         readonly profile: ({
             readonly icon: ({
                 readonly _1x: ({
-                    readonly src: string | null;
+                    readonly src: string;
                 }) | null;
                 readonly _2x: ({
-                    readonly src: string | null;
+                    readonly src: string;
                 }) | null;
             }) | null;
             readonly id: string | null;
         }) | null;
         readonly image: ({
             readonly _1x: ({
-                readonly src: string | null;
-                readonly width: number | null;
-                readonly height: number | null;
+                readonly src: string;
+                readonly width: number;
+                readonly height: number;
             }) | null;
             readonly _2x: ({
-                readonly src: string | null;
+                readonly src: string;
             }) | null;
             readonly md_1x: ({
-                readonly src: string | null;
+                readonly src: string;
             }) | null;
             readonly md_2x: ({
-                readonly src: string | null;
+                readonly src: string;
             }) | null;
             readonly lg_1x: ({
-                readonly src: string | null;
+                readonly src: string;
             }) | null;
             readonly lg_2x: ({
-                readonly src: string | null;
+                readonly src: string;
             }) | null;
         }) | null;
         readonly about: string | null;

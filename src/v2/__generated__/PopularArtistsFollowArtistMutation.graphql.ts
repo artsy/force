@@ -20,7 +20,7 @@ export type PopularArtistsFollowArtistMutationResponse = {
             readonly name: string | null;
             readonly image: {
                 readonly cropped: {
-                    readonly url: string | null;
+                    readonly url: string;
                 } | null;
             } | null;
         } | null> | null;
@@ -36,7 +36,7 @@ export type PopularArtistsFollowArtistMutationResponse = {
                             readonly name: string | null;
                             readonly image: {
                                 readonly cropped: {
-                                    readonly url: string | null;
+                                    readonly url: string;
                                 } | null;
                             } | null;
                         } | null;

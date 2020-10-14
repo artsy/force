@@ -83,7 +83,7 @@ export type Works_Test_QueryRawResponse = {
                     readonly artworksCountMessage: string | null;
                     readonly image: ({
                         readonly cropped: ({
-                            readonly url: string | null;
+                            readonly url: string;
                         }) | null;
                     }) | null;
                 }) | null;

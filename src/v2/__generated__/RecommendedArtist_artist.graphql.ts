@@ -11,7 +11,7 @@ export type RecommendedArtist_artist = {
     readonly href: string | null;
     readonly image: {
         readonly cropped: {
-            readonly url: string | null;
+            readonly url: string;
         } | null;
     } | null;
     readonly artworks_connection: {

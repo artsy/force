@@ -10,7 +10,7 @@ export type PopularArtists_popular_artists = ReadonlyArray<{
     readonly name: string | null;
     readonly image: {
         readonly cropped: {
-            readonly url: string | null;
+            readonly url: string;
         } | null;
     } | null;
     readonly " $refType": "PopularArtists_popular_artists";

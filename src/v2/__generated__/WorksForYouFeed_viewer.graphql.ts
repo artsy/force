@@ -23,7 +23,7 @@ export type WorksForYouFeed_viewer = {
                         } | null;
                         readonly image: {
                             readonly resized: {
-                                readonly url: string | null;
+                                readonly url: string;
                             } | null;
                         } | null;
                     } | null;

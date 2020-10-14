@@ -16,7 +16,7 @@ export type NotificationsMenuQueryResponse = {
                         readonly published_at: string | null;
                         readonly image: {
                             readonly thumb: {
-                                readonly url: string | null;
+                                readonly url: string;
                             } | null;
                         } | null;
                     } | null;

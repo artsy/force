@@ -17,7 +17,7 @@ export type ArtistCollectionEntity_collection = {
                 readonly title: string | null;
                 readonly image: {
                     readonly resized: {
-                        readonly url: string | null;
+                        readonly url: string;
                     } | null;
                 } | null;
             } | null;

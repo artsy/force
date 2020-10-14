@@ -13,20 +13,20 @@ export type ShowInstallShots_show = {
             readonly height: number | null;
         } | null;
         readonly _1x: {
-            readonly src: string | null;
+            readonly src: string;
             readonly width: number | null;
             readonly height: number | null;
         } | null;
         readonly _2x: {
-            readonly src: string | null;
+            readonly src: string;
         } | null;
         readonly zoom1x: {
-            readonly src: string | null;
+            readonly src: string;
             readonly width: number | null;
             readonly height: number | null;
         } | null;
         readonly zoom2x: {
-            readonly src: string | null;
+            readonly src: string;
         } | null;
     } | null> | null;
     readonly " $refType": "ShowInstallShots_show";

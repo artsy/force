@@ -12,7 +12,7 @@ export type ArtistConsignHeaderImages_artist = {
                         readonly resized: {
                             readonly width: number | null;
                             readonly height: number | null;
-                            readonly url: string | null;
+                            readonly url: string;
                         } | null;
                     } | null;
                     readonly " $fragmentRefs": FragmentRefs<"FillwidthItem_artwork">;

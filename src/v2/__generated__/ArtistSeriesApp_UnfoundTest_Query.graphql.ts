@@ -36,10 +36,10 @@ export type ArtistSeriesApp_UnfoundTest_QueryRawResponse = {
         readonly descriptionFormatted: string | null;
         readonly image: ({
             readonly xs: ({
-                readonly url: string | null;
+                readonly url: string;
             }) | null;
             readonly sm: ({
-                readonly url: string | null;
+                readonly url: string;
             }) | null;
             readonly url: string | null;
         }) | null;
@@ -54,7 +54,7 @@ export type ArtistSeriesApp_UnfoundTest_QueryRawResponse = {
                         readonly artworksCountMessage: string | null;
                         readonly image: ({
                             readonly cropped: ({
-                                readonly url: string | null;
+                                readonly url: string;
                             }) | null;
                         }) | null;
                     }) | null;
