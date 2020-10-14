@@ -14,7 +14,7 @@
     "build:assets:novo": "NODE_ENV=production BUILD_NOVO_CLIENT=true yarn webpack",
     "build:dev": "yarn clean && yarn relay && BUILD_CLIENT=true yarn webpack",
     "build:server": "NODE_ENV=production BUILD_SERVER=true yarn webpack",
-    "build:server:novo": "NODE_ENV=production BUILD_SERVER=true yarn webpack",
+    "build:server:novo": "NODE_ENV=production BUILD_NOVO_SERVER=true yarn webpack",
     "bundle-report": "NODE_ENV=production WEBPACK_ANALYZE=true yarn assets",
     "bundle-report:dev": "NODE_ENV=development WEBPACK_ANALYZE=true yarn assets",
     "bundle-report:server": "NODE_ENV=production BUILD_SERVER=true WEBPACK_ANALYZE=true yarn webpack",
