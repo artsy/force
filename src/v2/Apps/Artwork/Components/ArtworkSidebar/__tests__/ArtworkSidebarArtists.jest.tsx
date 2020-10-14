@@ -10,6 +10,7 @@ import { FollowArtistButton } from "v2/Components/FollowButton/FollowArtistButto
 import { renderRelayTree } from "v2/DevTools"
 import React from "react"
 import { graphql } from "react-relay"
+import { mockLocation } from "v2/DevTools/mockLocation"
 
 jest.unmock("react-relay")
 
@@ -17,10 +18,7 @@ describe("ArtworkSidebarArtists", () => {
   let mediator: Mediator
   beforeEach(() => {
     mediator = { trigger: jest.fn() }
-    Object.defineProperty(window, "location", {
-      writable: true,
-      value: { assign: jest.fn() },
-    })
+    mockLocation()
   })
 
   const getWrapper = async (
@@ -66,10 +64,7 @@ describe("ArtworkSidebarArtists", () => {
     })
 
     it("Opens auth with expected args when following an artist", () => {
-      wrapper
-        .find(FollowArtistButton)
-        .at(0)
-        .simulate("click")
+      wrapper.find(FollowArtistButton).at(0).simulate("click")
       expect(mediator.trigger).toBeCalledWith("open:auth", {
         afterSignUpAction: {
           action: "follow",

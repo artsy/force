@@ -11,6 +11,7 @@ import { MobileForgotPasswordForm } from "../Mobile/ForgotPasswordForm"
 import { MobileLoginForm } from "../Mobile/LoginForm"
 import { MobileSignUpForm } from "../Mobile/SignUpForm"
 import { ModalType } from "../Types"
+import { mockLocation } from "v2/DevTools/mockLocation"
 
 jest.mock("sharify", () => ({
   data: {
@@ -91,10 +92,7 @@ describe("FormSwitcher", () => {
 
   describe("#handleTypeChange", () => {
     beforeEach(() => {
-      Object.defineProperty(window, "location", {
-        writable: true,
-        value: { assign: jest.fn(), search: "" },
-      })
+      mockLocation({ search: "" })
     })
 
     it("redirects to a url if static or mobile", () => {
@@ -103,10 +101,7 @@ describe("FormSwitcher", () => {
         isMobile: true,
       })
 
-      wrapper
-        .find(Link)
-        .at(2)
-        .simulate("click")
+      wrapper.find(Link).at(2).simulate("click")
 
       expect(window.location.assign).toHaveBeenCalledWith(
         "/signup?contextModule=header&copy=Foo%20Bar&destination=%2Fcollect&intent=followArtist&redirectTo=%2Ffoo&triggerSeconds=1"
@@ -118,10 +113,7 @@ describe("FormSwitcher", () => {
         type: ModalType.login,
       })
 
-      wrapper
-        .find(Link)
-        .at(3)
-        .simulate("click")
+      wrapper.find(Link).at(3).simulate("click")
 
       expect((wrapper.state() as any).type).toMatch("signup")
       expect(wrapper.props().handleTypeChange).toBeCalled()
@@ -130,10 +122,7 @@ describe("FormSwitcher", () => {
 
   describe("Third party sign in", () => {
     beforeEach(() => {
-      Object.defineProperty(window, "location", {
-        writable: true,
-        value: { assign: jest.fn(), search: "" },
-      })
+      mockLocation({ search: "" })
     })
 
     it("fires social auth event and redirects", () => {
@@ -150,10 +139,7 @@ describe("FormSwitcher", () => {
         onSocialAuthEvent: jest.fn(),
       })
 
-      wrapper
-        .find(Link)
-        .at(1)
-        .simulate("click")
+      wrapper.find(Link).at(1).simulate("click")
 
       expect(wrapper.props().onSocialAuthEvent).toHaveBeenCalledWith(
         expect.objectContaining({

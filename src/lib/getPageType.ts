@@ -11,8 +11,7 @@ export function getPageTypeFromReq(
 } {
   const pageParts = req.path.split("/")
   const pageSlug = pageParts[2]
-  const type = formatOwnerTypes(pageParts[1])
-  const pageType = OwnerType[type] || type
+  const pageType = formatOwnerTypes(req.path)
 
   return {
     pageParts,
@@ -31,8 +30,7 @@ export function getPageTypeFromClient(): {
     const { pathname } = window.location
     const pageParts = pathname.split("/")
     const pageSlug = pageParts[2]
-    let type = formatOwnerTypes(PAGE_TYPE || pageParts[1])
-    const pageType = OwnerType[type] || type
+    const pageType = PAGE_TYPE || formatOwnerTypes(pathname)
 
     return {
       pageParts,
@@ -42,8 +40,13 @@ export function getPageTypeFromClient(): {
   }
 }
 
-export const formatOwnerTypes = (type: string) => {
+export const formatOwnerTypes = (path: string) => {
+  const type = path.split("/")[1]
   let formattedType = camelCase(type)
+
+  if (path === "/") {
+    formattedType = OwnerType.home
+  }
 
   switch (type) {
     case "auction":
@@ -62,5 +65,5 @@ export const formatOwnerTypes = (type: string) => {
     )
   }
 
-  return formattedType
+  return OwnerType[formattedType] || formattedType
 }

@@ -23,6 +23,7 @@ import { ArtworkSidebarCommercialContainer } from "v2/Apps/Artwork/Components/Ar
 import { ErrorModal } from "v2/Components/Modal/ErrorModal"
 import { ModalButton } from "v2/Components/Modal/ModalDialog"
 import { MockBoot } from "v2/DevTools"
+import { mockLocation } from "v2/DevTools/mockLocation"
 
 const commitMutation = _commitMutation as jest.Mock<any>
 
@@ -177,10 +178,7 @@ describe("ArtworkSidebarCommercial", () => {
   })
 
   it("displays an error modal when a Buy Now mutation fails", () => {
-    Object.defineProperty(window, "location", {
-      writable: true,
-      value: { assign: jest.fn() },
-    })
+    mockLocation()
     const component = getWrapper(ArtworkBuyNow)
 
     commitMutation.mockImplementationOnce((_environment, { onCompleted }) => {
@@ -223,10 +221,7 @@ describe("ArtworkSidebarCommercial", () => {
   })
 
   it("displays an error modal when a Make Offer mutation fails", () => {
-    Object.defineProperty(window, "location", {
-      writable: true,
-      value: { assign: jest.fn() },
-    })
+    mockLocation()
     const component = getWrapper(ArtworkMakeOffer)
 
     commitMutation.mockImplementationOnce((_environment, { onCompleted }) => {

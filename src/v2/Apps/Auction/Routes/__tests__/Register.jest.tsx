@@ -19,6 +19,7 @@ import { stripeTokenResponse } from "../__fixtures__/Stripe"
 import { RegisterRouteFragmentContainer } from "../Register"
 import { RegisterTestPage, ValidFormValues } from "./Utils/RegisterTestPage"
 import { CreditCardInput } from "v2/Apps/Order/Components/CreditCardInput"
+import { mockLocation } from "v2/DevTools/mockLocation"
 
 jest.unmock("react-relay")
 jest.unmock("react-tracking")
@@ -85,10 +86,7 @@ describe("Routes/Register ", () => {
   })
 
   beforeEach(() => {
-    Object.defineProperty(window, "location", {
-      writable: true,
-      value: { assign: jest.fn() },
-    })
+    mockLocation()
   })
 
   afterEach(() => {

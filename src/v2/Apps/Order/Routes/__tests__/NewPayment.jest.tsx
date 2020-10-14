@@ -17,6 +17,7 @@ import {
 import { NewPaymentFragmentContainer } from "../NewPayment"
 import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
 import { GlobalData } from "sharify"
+import { mockLocation } from "v2/DevTools/mockLocation"
 
 jest.unmock("react-tracking")
 jest.unmock("react-relay")
@@ -39,11 +40,6 @@ const realSetInterval = global.setInterval
 jest.mock("v2/Utils/getCurrentTimeAsIsoString")
 const NOW = "2018-12-05T13:47:16.446Z"
 require("v2/Utils/getCurrentTimeAsIsoString").__setCurrentTime(NOW)
-
-Object.defineProperty(window, "location", {
-  writable: true,
-  value: { assign: jest.fn() },
-})
 
 const testOrder: NewPaymentTestQueryRawResponse["order"] = {
   ...OfferOrderWithShippingDetails,
@@ -94,7 +90,7 @@ describe("Payment", () => {
   })
 
   beforeEach(() => {
-    ;(window.location.assign as any).mockReset()
+    mockLocation()
     global.setInterval = jest.fn()
   })
 

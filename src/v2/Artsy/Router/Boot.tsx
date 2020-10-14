@@ -66,7 +66,7 @@ export const Boot = track(null, {
       <HeadProvider headTags={headTags}>
         <StateProvider>
           <SystemContextProvider {...contextProps}>
-            <AnalyticsContext.Provider value={context.analytics}>
+            <AnalyticsContext.Provider value={context && context.analytics}>
               <ErrorBoundary>
                 <MediaContextProvider onlyMatch={onlyMatchMediaQueries}>
                   <ResponsiveProvider

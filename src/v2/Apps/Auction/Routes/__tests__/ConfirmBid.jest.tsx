@@ -54,6 +54,7 @@ import { ConfirmBidTestPage } from "./Utils/ConfirmBidTestPage"
 import { ValidFormValues } from "./Utils/RegisterTestPage"
 import { CreditCardInput } from "v2/Apps/Order/Components/CreditCardInput"
 import { ErrorModal } from "v2/Components/Modal/ErrorModal"
+import { mockLocation } from "v2/DevTools/mockLocation"
 
 jest.unmock("react-relay")
 jest.unmock("react-tracking")
@@ -66,17 +67,18 @@ const createTokenMock = require("react-stripe-elements").__stripeMock
   .createToken as jest.Mock
 
 const mockEnablePriceTransparency = jest.fn()
-const mockLocation: Partial<Location> = {
+const mockedLocation: Partial<Location> = {
   query: {
     bid: null,
   },
 }
 
 const setupTestEnv = ({
-  location = mockLocation,
+  location = mockedLocation,
 }: {
   location?: Partial<Location>
 } = {}) => {
+  mockLocation(location)
   return createTestEnv({
     TestPage: ConfirmBidTestPage,
     Component: (
@@ -135,10 +137,7 @@ describe("Routes/ConfirmBid", () => {
     // tslint:disable-next-line:no-empty
     window.Stripe = () => {}
 
-    Object.defineProperty(window, "location", {
-      writable: true,
-      value: { assign: jest.fn(), search: "" },
-    })
+    mockLocation({ search: "" })
   })
 
   afterEach(() => {

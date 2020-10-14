@@ -7,6 +7,7 @@ describe("buildServerAppContext", () => {
       user: {
         toJSON: () => ({ id: "user-id" }),
       },
+      path: "/",
     }
     res = {
       locals: {

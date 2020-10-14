@@ -11,6 +11,7 @@ import { ReactWrapper } from "enzyme"
 import React from "react"
 import { graphql } from "react-relay"
 import { flushPromiseQueue } from "v2/DevTools"
+import { mockLocation } from "v2/DevTools/mockLocation"
 
 jest.unmock("react-relay")
 
@@ -98,10 +99,7 @@ describe("SearchBar", () => {
     simulateTyping(component, "blah") // Any text of non-zero length.
     await flushPromiseQueue()
 
-    Object.defineProperty(window, "location", {
-      writable: true,
-      value: { assign: jest.fn() },
-    })
+    mockLocation()
     component.find(SuggestionItem).at(0).simulate("click")
 
     expect(window.location.assign).toHaveBeenCalledWith("/cat/percy-z")
