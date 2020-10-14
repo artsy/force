@@ -8,8 +8,6 @@
     "yarn": "1.x.x"
   },
   "scripts": {
-    "acceptance-record": "scripts/acceptance_record.sh",
-    "acceptance": "scripts/acceptance.sh",
     "assets": "NODE_ENV=production yarn build",
     "build:server": "BUILD_SERVER=true NODE_ENV=production yarn webpack",
     "build": "yarn clean && yarn relay && BUILD_CLIENT=true yarn webpack",
@@ -37,9 +35,9 @@
     "start": "scripts/start.sh",
     "storybook": "concurrently --raw --kill-others 'yarn relay --watch' 'start-storybook --quiet -s ./public -p 9001'",
     "sync-schema": "scripts/sync-schema-pull.sh",
-    "test:acceptance": "yarn acceptance src/test/acceptance/*.js",
+    "test:acceptance": "scripts/acceptance.sh src/test/acceptance/*.js",
     "test:smoke": "scripts/smoke_test.sh",
-    "test": "scripts/test.sh",
+    "test": "concurrently 'yarn test:ci:jest:v1' 'yarn test:ci:jest:v2' 'yarn test:ci:mocha'",
     "test:ci:jest:v1": "scripts/jest.sh v1",
     "test:ci:jest:v2": "scripts/jest.sh v2",
     "test:ci:mocha": "yarn mocha $(find src -name '*.test.js')",

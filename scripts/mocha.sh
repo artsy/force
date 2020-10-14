@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/bin/bash
 
 set -ex
 
@@ -8,4 +8,4 @@ nyc mocha --no-cache \
   --timeout 30000 \
   --reporter mocha-multi-reporters \
   --reporter-options configFile=package.json \
-   $@
+   "$@"
