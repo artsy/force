@@ -1,3 +1,6 @@
+### for canonical ###
+
+---
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
@@ -103,6 +106,119 @@ spec:
     layer: application
     component: web
   type: ClusterIP
+
+### for novo ###
+
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: force-web-novo
+spec:
+  strategy:
+    rollingUpdate:
+      maxSurge: 2
+      maxUnavailable: 0
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: force-novo
+        layer: application
+        component: web
+      name: force-web-novo
+      namespace: default
+    spec:
+      containers:
+        - name: force-web-novo
+          env:
+            - name: PORT
+              value: "5000"
+            - name: DD_TRACE_AGENT_HOSTNAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
+          envFrom:
+            - configMapRef:
+                name: force-environment
+          image: 585031190124.dkr.ecr.us-east-1.amazonaws.com/force:production
+          imagePullPolicy: Always
+          ports:
+            - name: force-http
+              containerPort: 5000
+          readinessProbe:
+            httpGet:
+              port: force-http
+              path: /system/up
+              httpHeaders:
+                - name: X-FORWARDED-PROTO
+                  value: https
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            timeoutSeconds: 10
+          resources:
+            requests:
+              cpu: 1000m
+              memory: 1536Mi
+            limits:
+              memory: 3.5Gi
+          lifecycle:
+            preStop:
+              exec:
+                command: ["sh", "-c", "sleep 10"]
+      dnsPolicy: ClusterFirst
+      dnsConfig:
+        options:
+          - name: ndots
+            value: "1"
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: tier
+                    operator: In
+                    values:
+                      - foreground
+---
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: force-web-novo
+  namespace: default
+spec:
+  scaleTargetRef:
+    apiVersion: extensions/v1beta1
+    kind: Deployment
+    name: force-web-novo
+  minReplicas: 3
+  maxReplicas: 20
+  targetCPUUtilizationPercentage: 70
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: force-novo
+    component: web
+    layer: application
+  name: force-web-novo-internal
+  namespace: default
+spec:
+  ports:
+    - port: 5000
+      protocol: TCP
+      name: force-http
+      targetPort: force-http
+  selector:
+    app: force-novo
+    layer: application
+    component: web
+  type: ClusterIP
+
+### for canonical and for novo ###
+
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress
@@ -115,7 +231,12 @@ spec:
     - host: www.artsy.net
       http:
         paths:
+          - path: /novo/
+            backend:
+              serviceName: force-web-novo-internal
+              servicePort: force-http
           - path: /
             backend:
               serviceName: force-web-internal
               servicePort: force-http
+
