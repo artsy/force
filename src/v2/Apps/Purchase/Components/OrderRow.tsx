@@ -2,9 +2,11 @@ import {
   Avatar,
   BorderBox,
   Box,
+  Button,
   Flex,
   HelpIcon,
   Image,
+  Join,
   Link,
   Separator,
   Text,
@@ -45,6 +47,9 @@ const OrderRow: React.FC<OrderRowProps> = props => {
   const partnerName = artwork?.partner?.name
   const creditCardNumber = creditCard?.lastDigits
   const fulfillment = requestedFulfillment?.__typename
+  const trackingId =
+    order?.lineItems?.edges?.[0]?.node?.fulfillments?.edges?.[0]?.node
+      ?.trackingId
 
   const isShip = fulfillment === "CommerceShip"
 
@@ -54,8 +59,14 @@ const OrderRow: React.FC<OrderRowProps> = props => {
     <Box width="50px" height="50px" backgroundColor="black10" />
   )
 
+  const orderURL = `/orders/${order.internalID}/status`
+  const artworkURL = `/artwork/${artwork?.slug}`
+  const artistURL = `/artist/${artwork?.artists?.[0]?.slug}`
+  const partnerURL = `/${artwork?.partner?.slug}`
+  const trackingURL = `https://google.com/search?q=${trackingId}`
+
   const XSOrderRow = (
-    <Box px={2}>
+    <Flex px={2} flexDirection="column">
       <Flex
         py={1.5}
         flexDirection="row"
@@ -73,23 +84,11 @@ const OrderRow: React.FC<OrderRowProps> = props => {
         </Flex>
 
         <Flex flexDirection="column" justifyContent="center" width="100%">
-          {!orderIsInactive && (
-            <Link
-              href={`/orders/${order.internalID}/status`}
-              underlineBehavior="hover"
-            >
-              <Text variant="text" letterSpacing="tight">
-                {artwork?.artist_names}
-              </Text>
-            </Link>
-          )}
-          {orderIsInactive && (
-            <Text variant="text" letterSpacing="tight">
-              {artwork?.artist_names}
-            </Text>
-          )}
+          <Text variant="text" letterSpacing="tight">
+            {artwork?.artist_names}
+          </Text>
           <Text variant="text" color="black60" letterSpacing="tight">
-            {artwork?.partner?.name}
+            {partnerName}
           </Text>
           <Text variant="text" color="black60" letterSpacing="tight">
             {orderCreatedAt.toLocaleString(DateTime.DATE_SHORT)}
@@ -114,8 +113,37 @@ const OrderRow: React.FC<OrderRowProps> = props => {
           </Text>
         </Flex>
       </Flex>
-      {props.hasDivider && <Separator />}
-    </Box>
+      <Flex>
+        <Join separator={<Box ml={1} />}>
+          {!orderIsInactive && (
+            <Box flexGrow={1}>
+              <Button
+                width="100%"
+                onClick={() => {
+                  window.location.href = orderURL
+                }}
+                variant="secondaryGray"
+              >
+                View Order
+              </Button>
+            </Box>
+          )}
+          {trackingId && (
+            <Box flexGrow={1}>
+              <Button
+                width="100%"
+                onClick={() => {
+                  window.open(trackingURL)
+                }}
+              >
+                Track Order
+              </Button>
+            </Box>
+          )}
+        </Join>
+      </Flex>
+      {props.hasDivider && <Separator mt={2} />}
+    </Flex>
   )
 
   const SMOrderRow = (
@@ -141,32 +169,40 @@ const OrderRow: React.FC<OrderRowProps> = props => {
           >
             {order.state.toLowerCase()}
           </Text>
+          {trackingId && (
+            <>
+              <Text variant="text" mx={1}>
+                &#8226;
+              </Text>
+              <Link target="_blank" rel="noopener noreferrer" href={trackingURL}>
+                <Text variant="text">Track order</Text>
+              </Link>
+            </>
+          )}
         </Flex>
       </Flex>
       <Flex p={2} width="100%" alignItems="center">
         <Flex width="50%">
           {artworkImage}
           <Flex flexDirection="column" ml={1}>
-            {!orderIsInactive && (
-              <Link
-                href={`/orders/${order.internalID}/status`}
-                underlineBehavior="hover"
-              >
-                <Text variant="text">{artwork?.artist_names}</Text>
-              </Link>
-            )}
-            {orderIsInactive && (
+            <Link href={artistURL} underlineBehavior="hover">
               <Text variant="text">{artwork?.artist_names}</Text>
-            )}
-            <Text variant="text" color="black60">
-              {artwork?.title}
-            </Text>
+            </Link>
+            <Link href={artworkURL} underlineBehavior="hover">
+              <Text variant="text" color="black60">
+                {artwork?.title}
+              </Text>
+            </Link>
           </Flex>
         </Flex>
         <Flex width="50%">
           <Avatar size="xs" src={partnerImageUrl} initials={partnerInitials} />
           <Flex flexDirection="column" ml={1}>
-            <Text variant="text">{partnerName}</Text>
+            <Link href={partnerURL} underlineBehavior="hover">
+              <Text variant="text" color="black60" letterSpacing="tight">
+                {partnerName}
+              </Text>
+            </Link>{" "}
             <Text variant="text" color="black60">
               {artwork?.shippingOrigin &&
                 artwork?.shippingOrigin.replace(/, US/g, "")}
@@ -180,9 +216,18 @@ const OrderRow: React.FC<OrderRowProps> = props => {
       <Flex p={2}>
         <Flex flexDirection="column" width="25%">
           <Text variant="text">Order No.</Text>
-          <Text variant="text" color="black60">
-            {order.code}
-          </Text>
+          {!orderIsInactive && (
+            <Link href={orderURL} underlineBehavior="hover">
+              <Text variant="text" letterSpacing="tight">
+                {order.code}
+              </Text>
+            </Link>
+          )}
+          {orderIsInactive && (
+            <Text variant="text" letterSpacing="tight">
+              {order.code}
+            </Text>
+          )}
         </Flex>
         <Flex flexDirection="column" width="25%">
           <Text variant="text">Total</Text>
@@ -255,6 +300,7 @@ export const OrderRowFragmentContainer = createFragmentContainer(
           edges {
             node {
               artwork {
+                slug
                 date
                 image {
                   resized(width: 55) {
@@ -262,6 +308,7 @@ export const OrderRowFragmentContainer = createFragmentContainer(
                   }
                 }
                 partner {
+                  slug
                   initials
                   name
                   profile {
@@ -274,6 +321,16 @@ export const OrderRowFragmentContainer = createFragmentContainer(
                 internalID
                 title
                 artist_names: artistNames
+                artists {
+                  slug
+                }
+              }
+              fulfillments(first: 1) {
+                edges {
+                  node {
+                    trackingId
+                  }
+                }
               }
             }
           }

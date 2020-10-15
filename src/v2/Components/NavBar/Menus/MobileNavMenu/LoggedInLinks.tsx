@@ -20,6 +20,10 @@ export const LoggedInLinks: React.FC<
     title: "Account",
     links: [
       {
+        text: "Order history",
+        href: "/user/purchases",
+      },
+      {
         text: "Saves & Follows",
         href: "/user/saves",
       },
