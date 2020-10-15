@@ -156,7 +156,7 @@ COPY --from=builder-server /app/server.dist.js.map .
 # ---------------------------------------------------------
 # Image with xvfb to run Electron with a virtual display
 # ---------------------------------------------------------
-FROM node:12.18.4-stretch as electron-runner
+FROM node:12.18.4-stretch-slim as electron-runner
 
 WORKDIR /app
 
