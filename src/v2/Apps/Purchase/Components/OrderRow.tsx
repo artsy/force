@@ -45,6 +45,9 @@ const OrderRow: React.FC<OrderRowProps> = props => {
   const partnerName = artwork?.partner?.name
   const creditCardNumber = creditCard?.lastDigits
   const fulfillment = requestedFulfillment?.__typename
+  const trackingId =
+    order?.lineItems?.edges?.[0]?.node?.fulfillments?.edges?.[0]?.node
+      ?.trackingId
 
   const isShip = fulfillment === "CommerceShip"
 
@@ -143,6 +146,16 @@ const OrderRow: React.FC<OrderRowProps> = props => {
           >
             {order.state.toLowerCase()}
           </Text>
+          {trackingId && (
+            <>
+              <Text variant="text" mx={1}>
+                &#8226;
+              </Text>
+              <Link href={`https://google.com?q=${trackingId}`}>
+                <Text variant="text">Track order</Text>
+              </Link>
+            </>
+          )}
         </Flex>
       </Flex>
       <Flex p={2} width="100%" alignItems="center">
@@ -287,6 +300,13 @@ export const OrderRowFragmentContainer = createFragmentContainer(
                 artist_names: artistNames
                 artists {
                   slug
+                }
+              }
+              fulfillments(first: 1) {
+                edges {
+                  node {
+                    trackingId
+                  }
                 }
               }
             }

@@ -54,6 +54,13 @@ export type OrderRow_order = {
                         readonly slug: string;
                     } | null> | null;
                 } | null;
+                readonly fulfillments: {
+                    readonly edges: ReadonlyArray<{
+                        readonly node: {
+                            readonly trackingId: string | null;
+                        } | null;
+                    } | null> | null;
+                } | null;
             } | null;
         } | null> | null;
     } | null;
@@ -351,6 +358,52 @@ return {
                     }
                   ],
                   "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": [
+                    {
+                      "kind": "Literal",
+                      "name": "first",
+                      "value": 1
+                    }
+                  ],
+                  "concreteType": "CommerceFulfillmentConnection",
+                  "kind": "LinkedField",
+                  "name": "fulfillments",
+                  "plural": false,
+                  "selections": [
+                    {
+                      "alias": null,
+                      "args": null,
+                      "concreteType": "CommerceFulfillmentEdge",
+                      "kind": "LinkedField",
+                      "name": "edges",
+                      "plural": true,
+                      "selections": [
+                        {
+                          "alias": null,
+                          "args": null,
+                          "concreteType": "CommerceFulfillment",
+                          "kind": "LinkedField",
+                          "name": "node",
+                          "plural": false,
+                          "selections": [
+                            {
+                              "alias": null,
+                              "args": null,
+                              "kind": "ScalarField",
+                              "name": "trackingId",
+                              "storageKey": null
+                            }
+                          ],
+                          "storageKey": null
+                        }
+                      ],
+                      "storageKey": null
+                    }
+                  ],
+                  "storageKey": "fulfillments(first:1)"
                 }
               ],
               "storageKey": null
@@ -365,5 +418,5 @@ return {
   "type": "CommerceOrder"
 };
 })();
-(node as any).hash = 'ba4ba2f29553a58567679cb06f07bac1';
+(node as any).hash = 'caf31ec76a2a0380704c38617ee2d129';
 export default node;

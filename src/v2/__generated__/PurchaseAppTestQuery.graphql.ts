@@ -69,6 +69,14 @@ export type PurchaseAppTestQueryRawResponse = {
                                     }) | null> | null;
                                     readonly id: string | null;
                                 }) | null;
+                                readonly fulfillments: ({
+                                    readonly edges: ReadonlyArray<({
+                                        readonly node: ({
+                                            readonly trackingId: string | null;
+                                            readonly id: string | null;
+                                        }) | null;
+                                    }) | null> | null;
+                                }) | null;
                                 readonly id: string | null;
                             }) | null;
                         }) | null> | null;
@@ -177,6 +185,14 @@ fragment OrderRow_order on CommerceOrder {
             id
           }
           id
+        }
+        fulfillments(first: 1) {
+          edges {
+            node {
+              trackingId
+              id
+            }
+          }
         }
         id
       }
@@ -631,6 +647,53 @@ return {
                                     ],
                                     "storageKey": null
                                   },
+                                  {
+                                    "alias": null,
+                                    "args": [
+                                      {
+                                        "kind": "Literal",
+                                        "name": "first",
+                                        "value": 1
+                                      }
+                                    ],
+                                    "concreteType": "CommerceFulfillmentConnection",
+                                    "kind": "LinkedField",
+                                    "name": "fulfillments",
+                                    "plural": false,
+                                    "selections": [
+                                      {
+                                        "alias": null,
+                                        "args": null,
+                                        "concreteType": "CommerceFulfillmentEdge",
+                                        "kind": "LinkedField",
+                                        "name": "edges",
+                                        "plural": true,
+                                        "selections": [
+                                          {
+                                            "alias": null,
+                                            "args": null,
+                                            "concreteType": "CommerceFulfillment",
+                                            "kind": "LinkedField",
+                                            "name": "node",
+                                            "plural": false,
+                                            "selections": [
+                                              {
+                                                "alias": null,
+                                                "args": null,
+                                                "kind": "ScalarField",
+                                                "name": "trackingId",
+                                                "storageKey": null
+                                              },
+                                              (v4/*: any*/)
+                                            ],
+                                            "storageKey": null
+                                          }
+                                        ],
+                                        "storageKey": null
+                                      }
+                                    ],
+                                    "storageKey": "fulfillments(first:1)"
+                                  },
                                   (v4/*: any*/)
                                 ],
                                 "storageKey": null
@@ -752,7 +815,7 @@ return {
     "metadata": {},
     "name": "PurchaseAppTestQuery",
     "operationKind": "query",
-    "text": "query PurchaseAppTestQuery {\n  me {\n    ...PurchaseApp_me\n    id\n  }\n}\n\nfragment OrderRow_order on CommerceOrder {\n  internalID\n  code\n  state\n  mode\n  requestedFulfillment {\n    __typename\n    ... on CommerceShip {\n      __typename\n    }\n    ... on CommercePickup {\n      __typename\n    }\n  }\n  creditCard {\n    lastDigits\n    id\n  }\n  buyerTotal\n  createdAt\n  itemsTotal\n  lineItems {\n    edges {\n      node {\n        artwork {\n          slug\n          date\n          image {\n            resized(width: 55) {\n              url\n            }\n          }\n          partner {\n            slug\n            initials\n            name\n            profile {\n              icon {\n                url(version: \"square140\")\n              }\n              id\n            }\n            id\n          }\n          shippingOrigin\n          internalID\n          title\n          artist_names: artistNames\n          artists {\n            slug\n            id\n          }\n          id\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment PurchaseApp_me on Me {\n  ...PurchaseHistory_me\n}\n\nfragment PurchaseHistory_me on Me {\n  name\n  orders(states: [APPROVED, CANCELED, FULFILLED, REFUNDED, SUBMITTED], first: 10) {\n    edges {\n      node {\n        __typename\n        code\n        ...OrderRow_order\n        id\n      }\n    }\n    pageCursors {\n      around {\n        cursor\n        isCurrent\n        page\n      }\n      first {\n        cursor\n        isCurrent\n        page\n      }\n      last {\n        cursor\n        isCurrent\n        page\n      }\n      previous {\n        cursor\n        isCurrent\n        page\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n"
+    "text": "query PurchaseAppTestQuery {\n  me {\n    ...PurchaseApp_me\n    id\n  }\n}\n\nfragment OrderRow_order on CommerceOrder {\n  internalID\n  code\n  state\n  mode\n  requestedFulfillment {\n    __typename\n    ... on CommerceShip {\n      __typename\n    }\n    ... on CommercePickup {\n      __typename\n    }\n  }\n  creditCard {\n    lastDigits\n    id\n  }\n  buyerTotal\n  createdAt\n  itemsTotal\n  lineItems {\n    edges {\n      node {\n        artwork {\n          slug\n          date\n          image {\n            resized(width: 55) {\n              url\n            }\n          }\n          partner {\n            slug\n            initials\n            name\n            profile {\n              icon {\n                url(version: \"square140\")\n              }\n              id\n            }\n            id\n          }\n          shippingOrigin\n          internalID\n          title\n          artist_names: artistNames\n          artists {\n            slug\n            id\n          }\n          id\n        }\n        fulfillments(first: 1) {\n          edges {\n            node {\n              trackingId\n              id\n            }\n          }\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment PurchaseApp_me on Me {\n  ...PurchaseHistory_me\n}\n\nfragment PurchaseHistory_me on Me {\n  name\n  orders(states: [APPROVED, CANCELED, FULFILLED, REFUNDED, SUBMITTED], first: 10) {\n    edges {\n      node {\n        __typename\n        code\n        ...OrderRow_order\n        id\n      }\n    }\n    pageCursors {\n      around {\n        cursor\n        isCurrent\n        page\n      }\n      first {\n        cursor\n        isCurrent\n        page\n      }\n      last {\n        cursor\n        isCurrent\n        page\n      }\n      previous {\n        cursor\n        isCurrent\n        page\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n"
   }
 };
 })();
