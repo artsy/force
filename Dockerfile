@@ -161,7 +161,8 @@ FROM node:12.18.4-stretch-slim as electron-runner
 WORKDIR /app
 
 # Install electron deps
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt-get install -y --no-install-recommends \
+  curl \
   libgtk2.0-0 \
   libgtk-3-0 \
   libgbm-dev \
@@ -172,7 +173,8 @@ RUN apt-get update && apt-get install -y \
   libasound2 \
   libxtst6 \
   xauth \
-  xvfb
+  xvfb \
+  && rm -rf /var/lib/apt/lists/*
 
 COPY --from=builder /app /app
 
