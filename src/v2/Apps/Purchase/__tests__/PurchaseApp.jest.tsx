@@ -82,8 +82,8 @@ const render = (me: PurchaseAppTestQueryRawResponse["me"], user: User) =>
   })
 
 describe("Purchase app", () => {
-  describe("User with admin privilages", () => {
-    const userType = { type: "Admin" }
+  const userType = { type: "User" }
+  describe("A logged in use", () => {
     describe("having previous orders", () => {
       it("renders orders", async () => {
         // TODO: revisit mocking and remove `artist_names` alias from PurchseHistory
@@ -145,23 +145,6 @@ describe("Purchase app", () => {
         const btn = component.find("Button")
         expect(btn.length).toBe(0)
       })
-    })
-  })
-  describe("User without admin privileges", () => {
-    it("gives error", async () => {
-      const mockMe = {
-        id: "111",
-        name: "Moira Rose",
-        orders: { edges: [{ node: UntouchedBuyOrder }], pageInfo, pageCursors },
-      }
-      const component = await render(mockMe, { type: "regular-user" })
-      const text = component.text()
-      expect(text).not.toContain(
-        "PurchasesLisa BreslowGramercy Park South, 2016buypending"
-      )
-      expect(text).toContain(
-        "Sorry, the page you were looking for doesn’t exist at this URL."
-      )
     })
   })
 })
