@@ -174,7 +174,7 @@ const OrderRow: React.FC<OrderRowProps> = props => {
               <Text variant="text" mx={1}>
                 &#8226;
               </Text>
-              <Link target="_blank" href={trackingURL}>
+              <Link target="_blank" rel="noopener noreferrer" href={trackingURL}>
                 <Text variant="text">Track order</Text>
               </Link>
             </>
