@@ -99,7 +99,7 @@ describe("Purchase app", () => {
         const component = await render(mockMe, userType)
         const text = component.text()
         expect(text).toContain(
-          "Moira RoseSaves & FollowsCollector ProfileOrder HistoryBidsSettingsPayments Dec 19, 2019pendingLisa BreslowGramercy Park SouthA GalleryNew York, NYOrder No.abcdefgTotal$12,000"
+          "Moira RoseSaves & FollowsCollector ProfileOrder HistoryBidsSettingsPayments Dec 19, 2019pending•Track orderLisa BreslowGramercy Park SouthA Gallery New York, NYOrder No.abcdefgTotal$12,000Payment MethodN/AFulfillmentPickupMore infoNeed Help? Contact Us.1234...7Navigate left PrevNext Navigate right"
         )
       })
     })

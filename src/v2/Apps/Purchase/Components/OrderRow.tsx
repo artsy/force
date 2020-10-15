@@ -2,9 +2,11 @@ import {
   Avatar,
   BorderBox,
   Box,
+  Button,
   Flex,
   HelpIcon,
   Image,
+  Join,
   Link,
   Separator,
   Text,
@@ -61,9 +63,10 @@ const OrderRow: React.FC<OrderRowProps> = props => {
   const artworkURL = `/artwork/${artwork?.slug}`
   const artistURL = `/artist/${artwork?.artists?.[0]?.slug}`
   const partnerURL = `/${artwork?.partner?.slug}`
+  const trackingURL = `https://google.com/search?q=${trackingId}`
 
   const XSOrderRow = (
-    <Box px={2}>
+    <Flex px={2} flexDirection="column">
       <Flex
         py={1.5}
         flexDirection="row"
@@ -81,18 +84,9 @@ const OrderRow: React.FC<OrderRowProps> = props => {
         </Flex>
 
         <Flex flexDirection="column" justifyContent="center" width="100%">
-          {!orderIsInactive && (
-            <Link href={orderURL} underlineBehavior="hover">
-              <Text variant="text" letterSpacing="tight">
-                {artwork?.artist_names}
-              </Text>
-            </Link>
-          )}
-          {orderIsInactive && (
-            <Text variant="text" letterSpacing="tight">
-              {artwork?.artist_names}
-            </Text>
-          )}
+          <Text variant="text" letterSpacing="tight">
+            {artwork?.artist_names}
+          </Text>
           <Text variant="text" color="black60" letterSpacing="tight">
             {partnerName}
           </Text>
@@ -119,8 +113,37 @@ const OrderRow: React.FC<OrderRowProps> = props => {
           </Text>
         </Flex>
       </Flex>
-      {props.hasDivider && <Separator />}
-    </Box>
+      <Flex>
+        <Join separator={<Box ml={1} />}>
+          {!orderIsInactive && (
+            <Box flexGrow={1}>
+              <Button
+                width="100%"
+                onClick={() => {
+                  window.location.href = orderURL
+                }}
+                variant="secondaryGray"
+              >
+                View Order
+              </Button>
+            </Box>
+          )}
+          {trackingId && (
+            <Box flexGrow={1}>
+              <Button
+                width="100%"
+                onClick={() => {
+                  window.open(trackingURL)
+                }}
+              >
+                Track Order
+              </Button>
+            </Box>
+          )}
+        </Join>
+      </Flex>
+      {props.hasDivider && <Separator mt={2} />}
+    </Flex>
   )
 
   const SMOrderRow = (
@@ -151,7 +174,7 @@ const OrderRow: React.FC<OrderRowProps> = props => {
               <Text variant="text" mx={1}>
                 &#8226;
               </Text>
-              <Link href={`https://google.com?q=${trackingId}`}>
+              <Link target="_blank" href={trackingURL}>
                 <Text variant="text">Track order</Text>
               </Link>
             </>
