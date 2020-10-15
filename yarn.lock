@@ -18985,10 +18985,10 @@ void-elements@^2.0.1, void-elements@~2.0.1:
   resolved "https://registry.yarnpkg.com/void-elements/-/void-elements-2.0.1.tgz#c066afb582bb1cb4128d60ea92392e94d5e9dbec"
   integrity sha1-wGavtYK7HLQSjWDqkjkulNXp2+w=
 
-vscode-apollo-relay@1.5.0:
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/vscode-apollo-relay/-/vscode-apollo-relay-1.5.0.tgz#cd427a49093c3c055ef0f0028bd46deb1e225fc0"
-  integrity sha512-NWOEEmB0s1PZgIntLlpHPuRA95TPvVJfw4bSePphr+rY0e+4XvuvVvxe+EE/9BirM8G2cGY1UM4yukWpP778Qg==
+vscode-apollo-relay@1.5.1:
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/vscode-apollo-relay/-/vscode-apollo-relay-1.5.1.tgz#6c98bef9a127c5bb80d10f6de35dd60ab851415e"
+  integrity sha512-+tEyseQVbjEqFR7wda9taij5bayVxE1x9XkgCAtBK2qqCq+V/5ohbEsrOdFRL0Ir3o9U+i+I2gz7y7Jn4dDiPA==
 
 vscode-css-languageservice@^4.0.2:
   version "4.2.0"
