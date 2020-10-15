@@ -23,18 +23,19 @@ const FAIR_APP_FIXTURE: FairApp_QueryRawResponse = {
     startAt: "2020-08-19T08:00:00+00:00",
     endAt: "2020-09-19T08:00:00+00:00",
     image: {
-      _1x: {
+      small: {
         src: "https://cloudfront.com/square.jpg",
+        srcSet: "https://cloudfront.com/square.jpg",
         width: 100,
         height: 400,
       },
-      _2x: {
+      medium: {
         src: "https://cloudfront.com/square.jpg",
+        srcSet: "https://cloudfront.com/square.jpg",
       },
-      md_1x: { src: "https://cloudfront.com/square.jpg" },
-      md_2x: { src: "https://cloudfront.com/square.jpg" },
-      lg_1x: { src: "https://cloudfront.com/square.jpg" },
-      lg_2x: { src: "https://cloudfront.com/square.jpg" },
+      large: {
+        srcSet: "https://cloudfront.com/square.jpg",
+      },
     },
     tagline: "",
     location: null,
@@ -51,11 +52,9 @@ const FAIR_APP_FIXTURE: FairApp_QueryRawResponse = {
     profile: {
       id: "profile",
       icon: {
-        _1x: {
+        cropped: {
           src: "/path/to/cats.jpg",
-        },
-        _2x: {
-          src: "/path/to/cats.jpg",
+          srcSet: "/path/to/cats.jpg",
         },
       },
     },
@@ -75,15 +74,11 @@ const FAIR_EDITORIAL_ARTICLE_FIXTURE = {
   publishedAt: "Jun 9th, 2020",
   thumbnailTitle: "IFPDA Fine Art Print Fair 2019: Programming and Projects",
   thumbnailImage: {
-    _1x: {
+    cropped: {
       width: 140,
       height: 80,
       src: "example.jpg",
-    },
-    _2x: {
-      width: 280,
-      height: 160,
-      src: "example.jpg",
+      srcSet: "example.jpg",
     },
   },
 }

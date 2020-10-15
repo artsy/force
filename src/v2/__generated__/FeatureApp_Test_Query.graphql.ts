@@ -24,19 +24,15 @@ export type FeatureApp_Test_QueryRawResponse = {
         readonly name: string;
         readonly subheadline: string | null;
         readonly defaultImage: ({
-            readonly _1x: ({
-                readonly url: string | null;
-            }) | null;
-            readonly _2x: ({
-                readonly url: string | null;
+            readonly cropped: ({
+                readonly src: string;
+                readonly srcSet: string;
             }) | null;
         }) | null;
         readonly fullImage: ({
-            readonly _1x: ({
-                readonly url: string | null;
-            }) | null;
-            readonly _2x: ({
-                readonly url: string | null;
+            readonly cropped: ({
+                readonly src: string;
+                readonly srcSet: string;
             }) | null;
         }) | null;
         readonly layout: FeatureLayouts;
@@ -114,22 +110,26 @@ export type FeatureApp_Test_QueryRawResponse = {
                                 readonly description: string | null;
                                 readonly image: ({
                                     readonly small: ({
-                                        readonly src: string | null;
-                                        readonly width: number | null;
-                                        readonly height: number | null;
+                                        readonly src: string;
+                                        readonly srcSet: string;
+                                        readonly width: number;
+                                        readonly height: number;
                                     }) | null;
                                     readonly medium: ({
-                                        readonly src: string | null;
-                                        readonly width: number | null;
-                                        readonly height: number | null;
+                                        readonly src: string;
+                                        readonly srcSet: string;
+                                        readonly width: number;
+                                        readonly height: number;
                                     }) | null;
                                     readonly large: ({
-                                        readonly src: string | null;
-                                        readonly width: number | null;
-                                        readonly height: number | null;
+                                        readonly src: string;
+                                        readonly srcSet: string;
+                                        readonly width: number;
+                                        readonly height: number;
                                     }) | null;
                                     readonly full: ({
-                                        readonly src: string | null;
+                                        readonly src: string;
+                                        readonly srcSet: string;
                                         readonly width: number | null;
                                         readonly height: number | null;
                                     }) | null;
@@ -259,23 +259,27 @@ fragment FeatureFeaturedLink_featuredLink on FeaturedLink {
   subtitle(format: HTML)
   description(format: HTML)
   image {
-    small: cropped(width: 800, height: 1000, version: ["main", "wide"]) {
-      src: url
+    small: cropped(width: 400, height: 500, version: ["main", "wide"]) {
+      src
+      srcSet
       width
       height
     }
-    medium: cropped(width: 1092, height: 1365, version: ["main", "wide"]) {
-      src: url
+    medium: cropped(width: 546, height: 683, version: ["main", "wide"]) {
+      src
+      srcSet
       width
       height
     }
-    large: cropped(width: 2224, height: 1252, version: ["main", "wide"]) {
-      src: url
+    large: cropped(width: 1112, height: 626, version: ["main", "wide"]) {
+      src
+      srcSet
       width
       height
     }
-    full: resized(width: 2224, height: 2224, version: ["main", "wide"]) {
-      src: url
+    full: resized(width: 1112, height: 1112, version: ["main", "wide"]) {
+      src
+      srcSet
       width
       height
     }
@@ -286,11 +290,9 @@ fragment FeatureHeaderDefault_feature on Feature {
   name
   subheadline(format: HTML)
   defaultImage: image {
-    _1x: cropped(width: 1000, height: 1000, version: ["main", "wide"]) {
-      url
-    }
-    _2x: cropped(width: 2000, height: 2000, version: ["main", "wide"]) {
-      url
+    cropped(width: 1000, height: 1000, version: ["main", "wide"]) {
+      src
+      srcSet
     }
   }
 }
@@ -299,11 +301,9 @@ fragment FeatureHeaderFull_feature on Feature {
   name
   subheadline(format: HTML)
   fullImage: image {
-    _1x: cropped(width: 2000, height: 1000, version: ["main", "wide"]) {
-      url
-    }
-    _2x: cropped(width: 4000, height: 2000, version: ["main", "wide"]) {
-      url
+    cropped(width: 2000, height: 1000, version: ["main", "wide"]) {
+      src
+      srcSet
     }
   }
 }
@@ -459,25 +459,24 @@ v6 = {
     "wide"
   ]
 },
-v7 = [
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "url",
-    "storageKey": null
-  }
-],
+v7 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "src",
+  "storageKey": null
+},
 v8 = {
-  "kind": "Literal",
-  "name": "height",
-  "value": 2000
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "srcSet",
+  "storageKey": null
 },
-v9 = {
-  "kind": "Literal",
-  "name": "width",
-  "value": 2000
-},
+v9 = [
+  (v7/*: any*/),
+  (v8/*: any*/)
+],
 v10 = {
   "alias": null,
   "args": null,
@@ -537,13 +536,8 @@ v17 = [
   }
 ],
 v18 = [
-  {
-    "alias": "src",
-    "args": null,
-    "kind": "ScalarField",
-    "name": "url",
-    "storageKey": null
-  },
+  (v7/*: any*/),
+  (v8/*: any*/),
   {
     "alias": null,
     "args": null,
@@ -562,7 +556,7 @@ v18 = [
 v19 = {
   "kind": "Literal",
   "name": "width",
-  "value": 2224
+  "value": 1112
 };
 return {
   "fragment": {
@@ -648,7 +642,7 @@ return {
             "plural": false,
             "selections": [
               {
-                "alias": "_1x",
+                "alias": null,
                 "args": [
                   (v5/*: any*/),
                   (v6/*: any*/),
@@ -662,22 +656,8 @@ return {
                 "kind": "LinkedField",
                 "name": "cropped",
                 "plural": false,
-                "selections": (v7/*: any*/),
+                "selections": (v9/*: any*/),
                 "storageKey": "cropped(height:1000,version:[\"main\",\"wide\"],width:1000)"
-              },
-              {
-                "alias": "_2x",
-                "args": [
-                  (v8/*: any*/),
-                  (v6/*: any*/),
-                  (v9/*: any*/)
-                ],
-                "concreteType": "CroppedImageUrl",
-                "kind": "LinkedField",
-                "name": "cropped",
-                "plural": false,
-                "selections": (v7/*: any*/),
-                "storageKey": "cropped(height:2000,version:[\"main\",\"wide\"],width:2000)"
               }
             ],
             "storageKey": null
@@ -691,36 +671,22 @@ return {
             "plural": false,
             "selections": [
               {
-                "alias": "_1x",
+                "alias": null,
                 "args": [
                   (v5/*: any*/),
-                  (v6/*: any*/),
-                  (v9/*: any*/)
-                ],
-                "concreteType": "CroppedImageUrl",
-                "kind": "LinkedField",
-                "name": "cropped",
-                "plural": false,
-                "selections": (v7/*: any*/),
-                "storageKey": "cropped(height:1000,version:[\"main\",\"wide\"],width:2000)"
-              },
-              {
-                "alias": "_2x",
-                "args": [
-                  (v8/*: any*/),
                   (v6/*: any*/),
                   {
                     "kind": "Literal",
                     "name": "width",
-                    "value": 4000
+                    "value": 2000
                   }
                 ],
                 "concreteType": "CroppedImageUrl",
                 "kind": "LinkedField",
                 "name": "cropped",
                 "plural": false,
-                "selections": (v7/*: any*/),
-                "storageKey": "cropped(height:2000,version:[\"main\",\"wide\"],width:4000)"
+                "selections": (v9/*: any*/),
+                "storageKey": "cropped(height:1000,version:[\"main\",\"wide\"],width:2000)"
               }
             ],
             "storageKey": null
@@ -1081,12 +1047,16 @@ return {
                                           {
                                             "alias": "small",
                                             "args": [
-                                              (v5/*: any*/),
+                                              {
+                                                "kind": "Literal",
+                                                "name": "height",
+                                                "value": 500
+                                              },
                                               (v6/*: any*/),
                                               {
                                                 "kind": "Literal",
                                                 "name": "width",
-                                                "value": 800
+                                                "value": 400
                                               }
                                             ],
                                             "concreteType": "CroppedImageUrl",
@@ -1094,7 +1064,7 @@ return {
                                             "name": "cropped",
                                             "plural": false,
                                             "selections": (v18/*: any*/),
-                                            "storageKey": "cropped(height:1000,version:[\"main\",\"wide\"],width:800)"
+                                            "storageKey": "cropped(height:500,version:[\"main\",\"wide\"],width:400)"
                                           },
                                           {
                                             "alias": "medium",
@@ -1102,13 +1072,13 @@ return {
                                               {
                                                 "kind": "Literal",
                                                 "name": "height",
-                                                "value": 1365
+                                                "value": 683
                                               },
                                               (v6/*: any*/),
                                               {
                                                 "kind": "Literal",
                                                 "name": "width",
-                                                "value": 1092
+                                                "value": 546
                                               }
                                             ],
                                             "concreteType": "CroppedImageUrl",
@@ -1116,7 +1086,7 @@ return {
                                             "name": "cropped",
                                             "plural": false,
                                             "selections": (v18/*: any*/),
-                                            "storageKey": "cropped(height:1365,version:[\"main\",\"wide\"],width:1092)"
+                                            "storageKey": "cropped(height:683,version:[\"main\",\"wide\"],width:546)"
                                           },
                                           {
                                             "alias": "large",
@@ -1124,7 +1094,7 @@ return {
                                               {
                                                 "kind": "Literal",
                                                 "name": "height",
-                                                "value": 1252
+                                                "value": 626
                                               },
                                               (v6/*: any*/),
                                               (v19/*: any*/)
@@ -1134,7 +1104,7 @@ return {
                                             "name": "cropped",
                                             "plural": false,
                                             "selections": (v18/*: any*/),
-                                            "storageKey": "cropped(height:1252,version:[\"main\",\"wide\"],width:2224)"
+                                            "storageKey": "cropped(height:626,version:[\"main\",\"wide\"],width:1112)"
                                           },
                                           {
                                             "alias": "full",
@@ -1142,7 +1112,7 @@ return {
                                               {
                                                 "kind": "Literal",
                                                 "name": "height",
-                                                "value": 2224
+                                                "value": 1112
                                               },
                                               (v6/*: any*/),
                                               (v19/*: any*/)
@@ -1152,7 +1122,7 @@ return {
                                             "name": "resized",
                                             "plural": false,
                                             "selections": (v18/*: any*/),
-                                            "storageKey": "resized(height:2224,version:[\"main\",\"wide\"],width:2224)"
+                                            "storageKey": "resized(height:1112,version:[\"main\",\"wide\"],width:1112)"
                                           }
                                         ],
                                         "storageKey": null
@@ -1189,7 +1159,7 @@ return {
     "metadata": {},
     "name": "FeatureApp_Test_Query",
     "operationKind": "query",
-    "text": "query FeatureApp_Test_Query(\n  $slug: ID!\n) {\n  feature(id: $slug) {\n    ...FeatureApp_feature\n    id\n  }\n}\n\nfragment Badge_artwork on Artwork {\n  is_biddable: isBiddable\n  href\n  sale {\n    is_preview: isPreview\n    display_timely_at: displayTimelyAt\n    id\n  }\n}\n\nfragment Contact_artwork on Artwork {\n  href\n  is_inquireable: isInquireable\n  sale {\n    is_auction: isAuction\n    is_live_open: isLiveOpen\n    is_open: isOpen\n    is_closed: isClosed\n    id\n  }\n  partner(shallow: true) {\n    type\n    id\n  }\n  sale_artwork: saleArtwork {\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    counts {\n      bidder_positions: bidderPositions\n    }\n    id\n  }\n}\n\nfragment Details_artwork on Artwork {\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n}\n\nfragment FeatureApp_feature on Feature {\n  ...FeatureMeta_feature\n  ...FeatureHeader_feature\n  description(format: HTML)\n  callout(format: HTML)\n  sets: setsConnection(first: 20) {\n    edges {\n      node {\n        id\n        ...FeatureSet_set\n      }\n    }\n  }\n}\n\nfragment FeatureFeaturedLink_featuredLink on FeaturedLink {\n  href\n  title\n  subtitle(format: HTML)\n  description(format: HTML)\n  image {\n    small: cropped(width: 800, height: 1000, version: [\"main\", \"wide\"]) {\n      src: url\n      width\n      height\n    }\n    medium: cropped(width: 1092, height: 1365, version: [\"main\", \"wide\"]) {\n      src: url\n      width\n      height\n    }\n    large: cropped(width: 2224, height: 1252, version: [\"main\", \"wide\"]) {\n      src: url\n      width\n      height\n    }\n    full: resized(width: 2224, height: 2224, version: [\"main\", \"wide\"]) {\n      src: url\n      width\n      height\n    }\n  }\n}\n\nfragment FeatureHeaderDefault_feature on Feature {\n  name\n  subheadline(format: HTML)\n  defaultImage: image {\n    _1x: cropped(width: 1000, height: 1000, version: [\"main\", \"wide\"]) {\n      url\n    }\n    _2x: cropped(width: 2000, height: 2000, version: [\"main\", \"wide\"]) {\n      url\n    }\n  }\n}\n\nfragment FeatureHeaderFull_feature on Feature {\n  name\n  subheadline(format: HTML)\n  fullImage: image {\n    _1x: cropped(width: 2000, height: 1000, version: [\"main\", \"wide\"]) {\n      url\n    }\n    _2x: cropped(width: 4000, height: 2000, version: [\"main\", \"wide\"]) {\n      url\n    }\n  }\n}\n\nfragment FeatureHeader_feature on Feature {\n  ...FeatureHeaderDefault_feature\n  ...FeatureHeaderFull_feature\n  layout\n}\n\nfragment FeatureMeta_feature on Feature {\n  slug\n  meta {\n    name\n    description\n    image\n  }\n}\n\nfragment FeatureSetContainer_set on OrderedSet {\n  id\n  layout\n  itemType\n  orderedItems: orderedItemsConnection(first: 35) {\n    edges {\n      __typename\n    }\n  }\n}\n\nfragment FeatureSetItem_setItem on OrderedSetItem {\n  __typename\n  ... on FeaturedLink {\n    id\n  }\n  ... on Artwork {\n    id\n  }\n  ...GridItem_artwork\n  ...FeatureFeaturedLink_featuredLink\n}\n\nfragment FeatureSetMeta_set on OrderedSet {\n  name\n  description(format: HTML)\n}\n\nfragment FeatureSet_set on OrderedSet {\n  id\n  layout\n  name\n  description(format: HTML)\n  itemType\n  orderedItems: orderedItemsConnection(first: 35) {\n    edges {\n      __typename\n      node {\n        __typename\n        ... on Artwork {\n          id\n        }\n        ... on FeaturedLink {\n          id\n        }\n        ...FeatureSetItem_setItem\n        ... on Node {\n          id\n        }\n      }\n    }\n  }\n  ...FeatureSetMeta_set\n  ...FeatureSetContainer_set\n}\n\nfragment GridItem_artwork on Artwork {\n  internalID\n  title\n  image_title: imageTitle\n  image {\n    placeholder\n    url(version: \"large\")\n    aspect_ratio: aspectRatio\n  }\n  href\n  ...Metadata_artwork\n  ...Save_artwork\n  ...Badge_artwork\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  ...Contact_artwork\n  href\n}\n\nfragment Save_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n"
+    "text": "query FeatureApp_Test_Query(\n  $slug: ID!\n) {\n  feature(id: $slug) {\n    ...FeatureApp_feature\n    id\n  }\n}\n\nfragment Badge_artwork on Artwork {\n  is_biddable: isBiddable\n  href\n  sale {\n    is_preview: isPreview\n    display_timely_at: displayTimelyAt\n    id\n  }\n}\n\nfragment Contact_artwork on Artwork {\n  href\n  is_inquireable: isInquireable\n  sale {\n    is_auction: isAuction\n    is_live_open: isLiveOpen\n    is_open: isOpen\n    is_closed: isClosed\n    id\n  }\n  partner(shallow: true) {\n    type\n    id\n  }\n  sale_artwork: saleArtwork {\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    counts {\n      bidder_positions: bidderPositions\n    }\n    id\n  }\n}\n\nfragment Details_artwork on Artwork {\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n}\n\nfragment FeatureApp_feature on Feature {\n  ...FeatureMeta_feature\n  ...FeatureHeader_feature\n  description(format: HTML)\n  callout(format: HTML)\n  sets: setsConnection(first: 20) {\n    edges {\n      node {\n        id\n        ...FeatureSet_set\n      }\n    }\n  }\n}\n\nfragment FeatureFeaturedLink_featuredLink on FeaturedLink {\n  href\n  title\n  subtitle(format: HTML)\n  description(format: HTML)\n  image {\n    small: cropped(width: 400, height: 500, version: [\"main\", \"wide\"]) {\n      src\n      srcSet\n      width\n      height\n    }\n    medium: cropped(width: 546, height: 683, version: [\"main\", \"wide\"]) {\n      src\n      srcSet\n      width\n      height\n    }\n    large: cropped(width: 1112, height: 626, version: [\"main\", \"wide\"]) {\n      src\n      srcSet\n      width\n      height\n    }\n    full: resized(width: 1112, height: 1112, version: [\"main\", \"wide\"]) {\n      src\n      srcSet\n      width\n      height\n    }\n  }\n}\n\nfragment FeatureHeaderDefault_feature on Feature {\n  name\n  subheadline(format: HTML)\n  defaultImage: image {\n    cropped(width: 1000, height: 1000, version: [\"main\", \"wide\"]) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment FeatureHeaderFull_feature on Feature {\n  name\n  subheadline(format: HTML)\n  fullImage: image {\n    cropped(width: 2000, height: 1000, version: [\"main\", \"wide\"]) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment FeatureHeader_feature on Feature {\n  ...FeatureHeaderDefault_feature\n  ...FeatureHeaderFull_feature\n  layout\n}\n\nfragment FeatureMeta_feature on Feature {\n  slug\n  meta {\n    name\n    description\n    image\n  }\n}\n\nfragment FeatureSetContainer_set on OrderedSet {\n  id\n  layout\n  itemType\n  orderedItems: orderedItemsConnection(first: 35) {\n    edges {\n      __typename\n    }\n  }\n}\n\nfragment FeatureSetItem_setItem on OrderedSetItem {\n  __typename\n  ... on FeaturedLink {\n    id\n  }\n  ... on Artwork {\n    id\n  }\n  ...GridItem_artwork\n  ...FeatureFeaturedLink_featuredLink\n}\n\nfragment FeatureSetMeta_set on OrderedSet {\n  name\n  description(format: HTML)\n}\n\nfragment FeatureSet_set on OrderedSet {\n  id\n  layout\n  name\n  description(format: HTML)\n  itemType\n  orderedItems: orderedItemsConnection(first: 35) {\n    edges {\n      __typename\n      node {\n        __typename\n        ... on Artwork {\n          id\n        }\n        ... on FeaturedLink {\n          id\n        }\n        ...FeatureSetItem_setItem\n        ... on Node {\n          id\n        }\n      }\n    }\n  }\n  ...FeatureSetMeta_set\n  ...FeatureSetContainer_set\n}\n\nfragment GridItem_artwork on Artwork {\n  internalID\n  title\n  image_title: imageTitle\n  image {\n    placeholder\n    url(version: \"large\")\n    aspect_ratio: aspectRatio\n  }\n  href\n  ...Metadata_artwork\n  ...Save_artwork\n  ...Badge_artwork\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  ...Contact_artwork\n  href\n}\n\nfragment Save_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n"
   }
 };
 })();

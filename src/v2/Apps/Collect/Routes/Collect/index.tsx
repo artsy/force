@@ -112,29 +112,25 @@ export const CollectApp: React.FC<CollectAppProps> = ({
               const url = buildUrlForCollectApp(filters)
 
               if (typeof window !== "undefined") {
-                // FIXME: Is this the best way to guard against history updates
-                // in Storybooks?
-                if (!process.env.IS_STORYBOOK) {
-                  window.history.replaceState({}, "", url)
-                }
+                window.history.replaceState({}, "", url)
               }
 
               /**
-               * FIXME: Ideally we route using our router, but are running into
-               * synchronization issues between router state and URL bar state.
-               *
-               * See below example as an illustration:
-               *
-                const newLocation = router.createLocation(url)
+             * FIXME: Ideally we route using our router, but are running into
+             * synchronization issues between router state and URL bar state.
+             *
+             * See below example as an illustration:
+             *
+              const newLocation = router.createLocation(url)
 
-                router.replace({
-                  ...newLocation,
-                  state: {
-                    scrollTo: "#jump--artworkFilter"
-                  },
-                })
-              *
-              */
+              router.replace({
+                ...newLocation,
+                state: {
+                  scrollTo: "#jump--artworkFilter"
+                },
+              })
+            *
+            */
             }}
           />
         </Box>

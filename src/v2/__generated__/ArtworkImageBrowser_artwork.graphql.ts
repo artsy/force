@@ -12,7 +12,7 @@ export type ArtworkImageBrowser_artwork = {
         readonly internalID: string | null;
         readonly uri: string | null;
         readonly placeholder: {
-            readonly url: string | null;
+            readonly url: string;
         } | null;
         readonly aspectRatio: number;
         readonly is_zoomable: boolean | null;

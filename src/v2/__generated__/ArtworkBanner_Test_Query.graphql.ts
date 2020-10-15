@@ -39,7 +39,7 @@ export type ArtworkBanner_Test_QueryRawResponse = {
                 readonly initials: string | null;
                 readonly icon: ({
                     readonly img: ({
-                        readonly url: string | null;
+                        readonly url: string;
                     }) | null;
                 }) | null;
                 readonly id: string | null;
@@ -52,7 +52,7 @@ export type ArtworkBanner_Test_QueryRawResponse = {
             readonly status: string | null;
             readonly thumbnail: ({
                 readonly img: ({
-                    readonly url: string | null;
+                    readonly url: string;
                 }) | null;
             }) | null;
         } | {

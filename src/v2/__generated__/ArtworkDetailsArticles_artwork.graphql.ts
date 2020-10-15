@@ -12,7 +12,7 @@ export type ArtworkDetailsArticles_artwork = {
         readonly published_at: string | null;
         readonly thumbnail_image: {
             readonly resized: {
-                readonly url: string | null;
+                readonly url: string;
             } | null;
         } | null;
         readonly thumbnail_title: string | null;

@@ -6,7 +6,7 @@ import { FragmentRefs } from "relay-runtime";
 export type AuctionCard_sale = {
     readonly cover_image: {
         readonly cropped: {
-            readonly url: string | null;
+            readonly url: string;
         } | null;
     } | null;
     readonly isBenefit: boolean | null;

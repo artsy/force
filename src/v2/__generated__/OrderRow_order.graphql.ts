@@ -29,13 +29,15 @@ export type OrderRow_order = {
         readonly edges: ReadonlyArray<{
             readonly node: {
                 readonly artwork: {
+                    readonly slug: string;
                     readonly date: string | null;
                     readonly image: {
                         readonly resized: {
-                            readonly url: string | null;
+                            readonly url: string;
                         } | null;
                     } | null;
                     readonly partner: {
+                        readonly slug: string;
                         readonly initials: string | null;
                         readonly name: string | null;
                         readonly profile: {
@@ -48,6 +50,16 @@ export type OrderRow_order = {
                     readonly internalID: string;
                     readonly title: string | null;
                     readonly artist_names: string | null;
+                    readonly artists: ReadonlyArray<{
+                        readonly slug: string;
+                    } | null> | null;
+                } | null;
+                readonly fulfillments: {
+                    readonly edges: ReadonlyArray<{
+                        readonly node: {
+                            readonly trackingId: string | null;
+                        } | null;
+                    } | null> | null;
                 } | null;
             } | null;
         } | null> | null;
@@ -78,7 +90,14 @@ v1 = [
     "name": "__typename",
     "storageKey": null
   }
-];
+],
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "slug",
+  "storageKey": null
+};
 return {
   "argumentDefinitions": [],
   "kind": "Fragment",
@@ -199,6 +218,7 @@ return {
                   "name": "artwork",
                   "plural": false,
                   "selections": [
+                    (v2/*: any*/),
                     {
                       "alias": null,
                       "args": null,
@@ -249,6 +269,7 @@ return {
                       "name": "partner",
                       "plural": false,
                       "selections": [
+                        (v2/*: any*/),
                         {
                           "alias": null,
                           "args": null,
@@ -322,9 +343,67 @@ return {
                       "kind": "ScalarField",
                       "name": "artistNames",
                       "storageKey": null
+                    },
+                    {
+                      "alias": null,
+                      "args": null,
+                      "concreteType": "Artist",
+                      "kind": "LinkedField",
+                      "name": "artists",
+                      "plural": true,
+                      "selections": [
+                        (v2/*: any*/)
+                      ],
+                      "storageKey": null
                     }
                   ],
                   "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": [
+                    {
+                      "kind": "Literal",
+                      "name": "first",
+                      "value": 1
+                    }
+                  ],
+                  "concreteType": "CommerceFulfillmentConnection",
+                  "kind": "LinkedField",
+                  "name": "fulfillments",
+                  "plural": false,
+                  "selections": [
+                    {
+                      "alias": null,
+                      "args": null,
+                      "concreteType": "CommerceFulfillmentEdge",
+                      "kind": "LinkedField",
+                      "name": "edges",
+                      "plural": true,
+                      "selections": [
+                        {
+                          "alias": null,
+                          "args": null,
+                          "concreteType": "CommerceFulfillment",
+                          "kind": "LinkedField",
+                          "name": "node",
+                          "plural": false,
+                          "selections": [
+                            {
+                              "alias": null,
+                              "args": null,
+                              "kind": "ScalarField",
+                              "name": "trackingId",
+                              "storageKey": null
+                            }
+                          ],
+                          "storageKey": null
+                        }
+                      ],
+                      "storageKey": null
+                    }
+                  ],
+                  "storageKey": "fulfillments(first:1)"
                 }
               ],
               "storageKey": null
@@ -339,5 +418,5 @@ return {
   "type": "CommerceOrder"
 };
 })();
-(node as any).hash = '2114f408758d43e6e539f1dc1c6ab241';
+(node as any).hash = 'caf31ec76a2a0380704c38617ee2d129';
 export default node;

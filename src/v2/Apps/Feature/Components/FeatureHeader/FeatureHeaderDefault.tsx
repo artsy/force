@@ -48,8 +48,8 @@ export const FeatureHeaderDefault: React.FC<FeatureHeaderDefaultProps> = ({
       {image && (
         <Figure height={["50vh", "auto"]}>
           <Image
-            src={image._1x.url}
-            srcSet={`${image._1x.url} 1x, ${image._2x.url} 2x`}
+            src={image.cropped.src}
+            srcSet={image.cropped.srcSet}
             alt={name}
           />
         </Figure>
@@ -83,11 +83,9 @@ export const FeatureHeaderDefaultFragmentContainer = createFragmentContainer(
         name
         subheadline(format: HTML)
         defaultImage: image {
-          _1x: cropped(width: 1000, height: 1000, version: ["main", "wide"]) {
-            url
-          }
-          _2x: cropped(width: 2000, height: 2000, version: ["main", "wide"]) {
-            url
+          cropped(width: 1000, height: 1000, version: ["main", "wide"]) {
+            src
+            srcSet
           }
         }
       }

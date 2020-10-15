@@ -28,7 +28,7 @@ export type ArtworkBanner_artwork = {
             readonly initials: string | null;
             readonly icon: {
                 readonly img: {
-                    readonly url: string | null;
+                    readonly url: string;
                 } | null;
             } | null;
         } | null;
@@ -39,7 +39,7 @@ export type ArtworkBanner_artwork = {
         readonly status: string | null;
         readonly thumbnail: {
             readonly img: {
-                readonly url: string | null;
+                readonly url: string;
             } | null;
         } | null;
     } | {

@@ -56,8 +56,8 @@ export const FairHeaderImage: React.FC<FairHeaderImageProps> = ({
         <Box position="relative" mx={-2}>
           <AspectRatioBox ratio={ASPECT_HEIGHT / ASPECT_WIDTH} bg="black10">
             <Image
-              src={image._1x.src}
-              srcSet={`${image._1x.src} 1x, ${image._2x.src} 2x`}
+              src={image.small.src}
+              srcSet={image.small.srcSet}
               alt={name}
               lazyLoad
             />
@@ -77,14 +77,10 @@ export const FairHeaderImage: React.FC<FairHeaderImageProps> = ({
           height={`${HEIGHT_VH}vh`}
         >
           <picture>
-            <source
-              srcSet={`${image.lg_1x.src} 1x, ${image.lg_2x.src} 2x`}
-              media="(min-height: 900px)"
-            />
+            <source srcSet={image.large.srcSet} media="(min-height: 900px)" />
+            <source srcSet={image.medium.srcSet} />
 
-            <source srcSet={`${image.md_1x.src} 1x, ${image.md_2x.src} 2x`} />
-
-            <Image src={image.md_1x.src} alt={name} lazyLoad />
+            <Image src={image.medium.src} alt={name} lazyLoad />
           </picture>
           <FairHeaderIcon fair={fair} />
         </Container>
@@ -102,26 +98,19 @@ export const FairHeaderImageFragmentContainer = createFragmentContainer(
         name
         image {
           # xs
-          _1x: cropped(width: 375, height: 500, version: "wide") {
-            src: url
+          small: cropped(width: 375, height: 500, version: "wide") {
+            src
+            srcSet
             width
             height
           }
-          _2x: cropped(width: 750, height: 1000, version: "wide") {
-            src: url
-          }
           # > xs
-          md_1x: cropped(width: 600, height: 800, version: "wide") {
-            src: url
+          medium: cropped(width: 600, height: 800, version: "wide") {
+            src
+            srcSet
           }
-          md_2x: cropped(width: 1200, height: 1600, version: "wide") {
-            src: url
-          }
-          lg_1x: cropped(width: 900, height: 1200, version: "wide") {
-            src: url
-          }
-          lg_2x: cropped(width: 1800, height: 2400, version: "wide") {
-            src: url
+          large: cropped(width: 900, height: 1200, version: "wide") {
+            srcSet
           }
         }
       }

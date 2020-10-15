@@ -18,8 +18,8 @@ export const FairCard: React.FC<FairHeaderImageProps> = ({
       bg="black60"
     >
       <Image
-        src={image._1x.src}
-        srcSet={`${image._1x.src} 1x, ${image._2x.src} 2x`}
+        src={image.cropped.src}
+        srcSet={image.cropped.srcSet}
         alt={name}
         lazyLoad
         borderRadius="4px"
@@ -35,12 +35,9 @@ export const FairCardFragmentContainer = createFragmentContainer(FairCard, {
       image {
         # Width = largest possible size, full width at 'xs' breakpoint.
         # Height = Width / 1.5
-        _1x: cropped(width: 768, height: 512, version: "wide") {
-          src: url
-        }
-        # Above dimension multiplied by 2 for retina.
-        _2x: cropped(width: 1536, height: 1024, version: "wide") {
-          src: url
+        cropped(width: 768, height: 512, version: "wide") {
+          src
+          srcSet
         }
       }
     }

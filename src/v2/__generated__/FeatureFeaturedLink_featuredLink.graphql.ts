@@ -10,22 +10,26 @@ export type FeatureFeaturedLink_featuredLink = {
     readonly description: string | null;
     readonly image: {
         readonly small: {
-            readonly src: string | null;
-            readonly width: number | null;
-            readonly height: number | null;
+            readonly src: string;
+            readonly srcSet: string;
+            readonly width: number;
+            readonly height: number;
         } | null;
         readonly medium: {
-            readonly src: string | null;
-            readonly width: number | null;
-            readonly height: number | null;
+            readonly src: string;
+            readonly srcSet: string;
+            readonly width: number;
+            readonly height: number;
         } | null;
         readonly large: {
-            readonly src: string | null;
-            readonly width: number | null;
-            readonly height: number | null;
+            readonly src: string;
+            readonly srcSet: string;
+            readonly width: number;
+            readonly height: number;
         } | null;
         readonly full: {
-            readonly src: string | null;
+            readonly src: string;
+            readonly srcSet: string;
             readonly width: number | null;
             readonly height: number | null;
         } | null;
@@ -58,10 +62,17 @@ v1 = {
 },
 v2 = [
   {
-    "alias": "src",
+    "alias": null,
     "args": null,
     "kind": "ScalarField",
-    "name": "url",
+    "name": "src",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "srcSet",
     "storageKey": null
   },
   {
@@ -82,7 +93,7 @@ v2 = [
 v3 = {
   "kind": "Literal",
   "name": "width",
-  "value": 2224
+  "value": 1112
 };
 return {
   "argumentDefinitions": [],
@@ -132,13 +143,13 @@ return {
             {
               "kind": "Literal",
               "name": "height",
-              "value": 1000
+              "value": 500
             },
             (v1/*: any*/),
             {
               "kind": "Literal",
               "name": "width",
-              "value": 800
+              "value": 400
             }
           ],
           "concreteType": "CroppedImageUrl",
@@ -146,7 +157,7 @@ return {
           "name": "cropped",
           "plural": false,
           "selections": (v2/*: any*/),
-          "storageKey": "cropped(height:1000,version:[\"main\",\"wide\"],width:800)"
+          "storageKey": "cropped(height:500,version:[\"main\",\"wide\"],width:400)"
         },
         {
           "alias": "medium",
@@ -154,13 +165,13 @@ return {
             {
               "kind": "Literal",
               "name": "height",
-              "value": 1365
+              "value": 683
             },
             (v1/*: any*/),
             {
               "kind": "Literal",
               "name": "width",
-              "value": 1092
+              "value": 546
             }
           ],
           "concreteType": "CroppedImageUrl",
@@ -168,7 +179,7 @@ return {
           "name": "cropped",
           "plural": false,
           "selections": (v2/*: any*/),
-          "storageKey": "cropped(height:1365,version:[\"main\",\"wide\"],width:1092)"
+          "storageKey": "cropped(height:683,version:[\"main\",\"wide\"],width:546)"
         },
         {
           "alias": "large",
@@ -176,7 +187,7 @@ return {
             {
               "kind": "Literal",
               "name": "height",
-              "value": 1252
+              "value": 626
             },
             (v1/*: any*/),
             (v3/*: any*/)
@@ -186,7 +197,7 @@ return {
           "name": "cropped",
           "plural": false,
           "selections": (v2/*: any*/),
-          "storageKey": "cropped(height:1252,version:[\"main\",\"wide\"],width:2224)"
+          "storageKey": "cropped(height:626,version:[\"main\",\"wide\"],width:1112)"
         },
         {
           "alias": "full",
@@ -194,7 +205,7 @@ return {
             {
               "kind": "Literal",
               "name": "height",
-              "value": 2224
+              "value": 1112
             },
             (v1/*: any*/),
             (v3/*: any*/)
@@ -204,7 +215,7 @@ return {
           "name": "resized",
           "plural": false,
           "selections": (v2/*: any*/),
-          "storageKey": "resized(height:2224,version:[\"main\",\"wide\"],width:2224)"
+          "storageKey": "resized(height:1112,version:[\"main\",\"wide\"],width:1112)"
         }
       ],
       "storageKey": null
@@ -213,5 +224,5 @@ return {
   "type": "FeaturedLink"
 };
 })();
-(node as any).hash = 'b427ed43f8f143e92c1332e3f1ed0e63';
+(node as any).hash = 'cb4a054d338fc3c7f4c9df3b09d7a4a1';
 export default node;

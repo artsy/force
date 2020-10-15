@@ -21,7 +21,7 @@ export type ViewingRoomWorksRoute_Test_QueryRawResponse = {
                     readonly images: ReadonlyArray<({
                         readonly internalID: string | null;
                         readonly resized: ({
-                            readonly url: string | null;
+                            readonly url: string;
                             readonly width: number | null;
                             readonly height: number | null;
                         }) | null;

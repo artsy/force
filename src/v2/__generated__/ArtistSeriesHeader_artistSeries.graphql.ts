@@ -11,10 +11,10 @@ export type ArtistSeriesHeader_artistSeries = {
     readonly descriptionFormatted: string | null;
     readonly image: {
         readonly xs: {
-            readonly url: string | null;
+            readonly url: string;
         } | null;
         readonly sm: {
-            readonly url: string | null;
+            readonly url: string;
         } | null;
         readonly url: string | null;
     } | null;

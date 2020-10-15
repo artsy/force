@@ -13,7 +13,7 @@ export type GeneSearchResults_viewer = {
                 readonly internalID?: string;
                 readonly image?: {
                     readonly cropped: {
-                        readonly url: string | null;
+                        readonly url: string;
                     } | null;
                 } | null;
             } | null;

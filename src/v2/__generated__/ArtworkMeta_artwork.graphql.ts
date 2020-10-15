@@ -20,7 +20,7 @@ export type ArtworkMeta_artwork = {
         readonly resized: {
             readonly width: number | null;
             readonly height: number | null;
-            readonly url: string | null;
+            readonly url: string;
         } | null;
     } | null;
     readonly meta: {

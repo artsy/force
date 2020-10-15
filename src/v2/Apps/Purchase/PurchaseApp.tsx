@@ -1,11 +1,8 @@
 import { PurchaseApp_me } from "v2/__generated__/PurchaseApp_me.graphql"
 import { AppContainer } from "v2/Apps/Components/AppContainer"
-import { SystemContext } from "v2/Artsy"
-import { ErrorPage } from "v2/Components/ErrorPage"
-import React, { useContext } from "react"
+import React from "react"
 import { Title } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
-import { userIsAdmin } from "v2/Utils/user"
 import { PurchaseHistoryFragmentContainer as PurchaseHistory } from "./Components/PurchaseHistory"
 import { Spacer } from "@artsy/palette"
 
@@ -15,20 +12,13 @@ export interface PurchaseAppProps {
 
 export const PurchaseApp = (props: any) => {
   const { me } = props
-  const { user } = useContext(SystemContext)
-  const isAdmin = userIsAdmin(user)
-  if (isAdmin) {
-    return (
-      <AppContainer>
-        <Title>My Orders | Artsy</Title>
-        <Spacer mt={2} />
-        <PurchaseHistory me={me} />
-      </AppContainer>
-    )
-  } else {
-    // not an admin
-    return <ErrorPage code={404} />
-  }
+  return (
+    <AppContainer>
+      <Title>My Orders | Artsy</Title>
+      <Spacer mt={2} />
+      <PurchaseHistory me={me} />
+    </AppContainer>
+  )
 }
 
 const PurchaseAppFragmentContainer = createFragmentContainer(PurchaseApp, {

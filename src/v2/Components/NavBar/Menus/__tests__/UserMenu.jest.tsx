@@ -26,6 +26,7 @@ describe("UserMenu", () => {
 
   // Label also includes SVG image title
   const defaultLinks = [
+    ["/user/purchases", "Pending Order History"],
     ["/user/saves", "Save Saves & Follows"],
     ["/profile/edit", "User Collector Profile"],
     ["/user/edit", "Settings Settings"],
@@ -59,11 +60,6 @@ describe("UserMenu", () => {
     it("shows admin button if admin", () => {
       const wrapper = getWrapper({ user: { type: "Admin" } })
       expect(wrapper.html()).toContain("Admin")
-    })
-
-    it("hides order history button if not admin", () => {
-      const wrapper = getWrapper({ user: { type: "NotAdmin" } })
-      expect(wrapper.html()).not.toContain("Order History")
     })
 
     it("shows order history button if admin", () => {

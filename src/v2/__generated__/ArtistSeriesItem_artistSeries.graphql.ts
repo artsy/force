@@ -11,7 +11,7 @@ export type ArtistSeriesItem_artistSeries = {
     readonly artworksCountMessage: string | null;
     readonly image: {
         readonly cropped: {
-            readonly url: string | null;
+            readonly url: string;
         } | null;
     } | null;
     readonly " $refType": "ArtistSeriesItem_artistSeries";

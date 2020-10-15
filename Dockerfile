@@ -156,12 +156,13 @@ COPY --from=builder-server /app/server.dist.js.map .
 # ---------------------------------------------------------
 # Image with xvfb to run Electron with a virtual display
 # ---------------------------------------------------------
-FROM node:12.18.4-stretch as electron-runner
+FROM node:12.18.4-stretch-slim as electron-runner
 
 WORKDIR /app
 
 # Install electron deps
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt-get install -y --no-install-recommends \
+  curl \
   libgtk2.0-0 \
   libgtk-3-0 \
   libgbm-dev \
@@ -172,7 +173,8 @@ RUN apt-get update && apt-get install -y \
   libasound2 \
   libxtst6 \
   xauth \
-  xvfb
+  xvfb \
+  && rm -rf /var/lib/apt/lists/*
 
 COPY --from=builder /app /app
 

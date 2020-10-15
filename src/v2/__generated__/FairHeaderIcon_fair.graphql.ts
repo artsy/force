@@ -7,11 +7,9 @@ export type FairHeaderIcon_fair = {
     readonly name: string | null;
     readonly profile: {
         readonly icon: {
-            readonly _1x: {
-                readonly src: string | null;
-            } | null;
-            readonly _2x: {
-                readonly src: string | null;
+            readonly cropped: {
+                readonly src: string;
+                readonly srcSet: string;
             } | null;
         } | null;
     } | null;
@@ -25,22 +23,7 @@ export type FairHeaderIcon_fair$key = {
 
 
 
-const node: ReaderFragment = (function(){
-var v0 = {
-  "kind": "Literal",
-  "name": "version",
-  "value": "square140"
-},
-v1 = [
-  {
-    "alias": "src",
-    "args": null,
-    "kind": "ScalarField",
-    "name": "url",
-    "storageKey": null
-  }
-];
-return {
+const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
@@ -70,14 +53,18 @@ return {
           "plural": false,
           "selections": [
             {
-              "alias": "_1x",
+              "alias": null,
               "args": [
                 {
                   "kind": "Literal",
                   "name": "height",
                   "value": 60
                 },
-                (v0/*: any*/),
+                {
+                  "kind": "Literal",
+                  "name": "version",
+                  "value": "square140"
+                },
                 {
                   "kind": "Literal",
                   "name": "width",
@@ -88,30 +75,23 @@ return {
               "kind": "LinkedField",
               "name": "cropped",
               "plural": false,
-              "selections": (v1/*: any*/),
+              "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "src",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "srcSet",
+                  "storageKey": null
+                }
+              ],
               "storageKey": "cropped(height:60,version:\"square140\",width:60)"
-            },
-            {
-              "alias": "_2x",
-              "args": [
-                {
-                  "kind": "Literal",
-                  "name": "height",
-                  "value": 120
-                },
-                (v0/*: any*/),
-                {
-                  "kind": "Literal",
-                  "name": "width",
-                  "value": 120
-                }
-              ],
-              "concreteType": "CroppedImageUrl",
-              "kind": "LinkedField",
-              "name": "cropped",
-              "plural": false,
-              "selections": (v1/*: any*/),
-              "storageKey": "cropped(height:120,version:\"square140\",width:120)"
             }
           ],
           "storageKey": null
@@ -122,6 +102,5 @@ return {
   ],
   "type": "Fair"
 };
-})();
-(node as any).hash = '6b3f161b7a66370b8df88c9c32573f12';
+(node as any).hash = '27a269adfac8119f2f2b7fd2975d2cf0';
 export default node;

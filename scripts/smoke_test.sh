@@ -18,8 +18,9 @@ fi
 NODE_ENV=production nohup yarn start &
 
 # wait for it to accept connections
-./node_modules/.bin/wait-on http://localhost:5000
-sleep 10
+while ! curl --output /dev/null --silent --head --fail http://localhost:5000; do
+    sleep 1
+done
 
 export ELECTRON_EXTRA_LAUNCH_ARGS=disable-dev-shm-usage
 

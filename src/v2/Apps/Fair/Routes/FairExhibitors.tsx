@@ -41,8 +41,17 @@ const FairExhibitors: React.FC<FairExhibitorsProps> = ({ fair, relay }) => {
 
     setIsLoading(true)
 
+    const previousScrollY = window.scrollY
+
     relay.loadMore(15, err => {
       setIsLoading(false)
+
+      if (window.scrollY > previousScrollY) {
+        window.scrollTo({
+          top: previousScrollY,
+          behavior: "auto",
+        })
+      }
 
       if (err) {
         console.error(err)
