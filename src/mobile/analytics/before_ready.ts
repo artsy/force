@@ -1,13 +1,13 @@
 import { data as sd } from "sharify"
 import { reportLoadTimeToVolley } from "lib/volley"
 import { OwnerType } from "@artsy/cohesion"
-import { getPageTypeFromClient } from "lib/getPageType"
+import { getContextPageFromClient } from "lib/getContextPage"
 
 //
 // Analytics code that needs to run before page load and analytics.ready
 //
 
-const { pageType } = getPageTypeFromClient()
+const { pageType } = getContextPageFromClient()
 
 // Disable Parsely firing on non-article/section pages
 if (pageType !== OwnerType.article) {

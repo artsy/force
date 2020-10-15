@@ -1,7 +1,7 @@
 // @ts-ignore
 import mediator from "desktop/lib/mediator.coffee"
 import { Request, Response } from "express"
-import { getPageTypeFromReq } from "lib/getPageType"
+import { getContextPageFromReq } from "lib/getContextPage"
 
 /**
  * Builds initial context for Reaction components from server load. Put commonly
@@ -16,7 +16,7 @@ export const buildServerAppContext = (
   res: Response,
   context: { injectedData?: object } = {}
 ) => {
-  const { pageType, pageSlug } = getPageTypeFromReq(req)
+  const { pageType, pageSlug } = getContextPageFromReq(req)
   return {
     initialMatchingMediaQueries: res.locals.sd.IS_MOBILE ? ["xs"] : undefined,
     user: req.user && req.user.toJSON(),

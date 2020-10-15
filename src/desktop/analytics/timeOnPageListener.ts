@@ -1,10 +1,10 @@
 import { trackEvent } from "./helpers"
 import { timeOnPage } from "@artsy/cohesion"
-import { getPageTypeFromClient } from "lib/getPageType"
+import { getContextPageFromClient } from "lib/getContextPage"
 
 export const timeOnPageListener = (delay: number = 15000) => {
   setTimeout(() => {
-    const { pageType, pageSlug } = getPageTypeFromClient()
+    const { pageType, pageSlug } = getContextPageFromClient()
     const pathname = new URL(window.location.href).pathname
 
     const referrer = window.analytics.__artsyClientSideRoutingReferrer

@@ -1,7 +1,7 @@
 import { enableIntercom } from "lib/intercom"
 import { recordArtworkView } from "lib/components/record_artwork_view"
 import { data as sd } from "sharify"
-import { getPageTypeFromClient } from "lib/getPageType"
+import { getContextPageFromClient } from "lib/getContextPage"
 import { OwnerType } from "@artsy/cohesion"
 
 export const artworkClient = () => {
@@ -15,7 +15,7 @@ export const artworkClient = () => {
 
   const $ = require("jquery")
   const mediator = require("desktop/lib/mediator.coffee")
-  const { pageType, pageSlug } = getPageTypeFromClient()
+  const { pageType, pageSlug } = getContextPageFromClient()
 
   if (pageType === OwnerType.artwork) {
     recordArtworkView(pageSlug, sd.CURRENT_USER)

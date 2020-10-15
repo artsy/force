@@ -171,7 +171,9 @@ app.get("/:slug", async (req, res, next) => {
 buildClientApp({
   routes,
   context: {
-    injectedData: sd.MY_TEST,
+    injectedData: {
+      myTest: sd.MY_TEST,
+    },
   },
 }).then(({ ClientApp }) => {
   ReactDOM.hydrate(<ClientApp />, document.getElementById("react-root"))

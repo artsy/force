@@ -1,4 +1,4 @@
-import { getPageTypeFromClient } from "lib/getPageType"
+import { getContextPageFromClient } from "lib/getContextPage"
 import { data as sd } from "sharify"
 import { AnalyticsContextProps } from "v2/Artsy/Analytics/AnalyticsContext"
 import { Mediator } from "v2/Artsy/SystemContext"
@@ -13,7 +13,7 @@ export interface ClientContext {
 export const buildClientAppContext = (
   context: { injectedData?: object } = {}
 ) => {
-  const { pageSlug, pageType } = getPageTypeFromClient()
+  const { pageSlug, pageType } = getContextPageFromClient()
 
   return {
     analytics: {

@@ -5,7 +5,7 @@ import { getAppRoutes } from "v2/Apps/getAppRoutes"
 import { artworkClient } from "./apps/artwork/artworkClient"
 import { artistClient } from "./apps/artist/artistClient"
 import { loadableReady } from "@loadable/component"
-import { getPageTypeFromClient } from "lib/getPageType"
+import { getContextPageFromClient } from "lib/getContextPage"
 import { OwnerType } from "@artsy/cohesion"
 
 buildClientApp({
@@ -30,7 +30,7 @@ buildClientApp({
         <ClientApp />,
         document.getElementById("react-root"),
         () => {
-          const { pageType } = getPageTypeFromClient()
+          const { pageType } = getContextPageFromClient()
 
           if (pageType === OwnerType.search) {
             document.getElementById("loading-container").remove()

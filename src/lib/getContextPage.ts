@@ -1,29 +1,37 @@
 import { Request } from "express"
 import { OwnerType, PageOwnerType } from "@artsy/cohesion"
 import { camelCase } from "lodash"
+import { data as sd } from "sharify"
 
-export function getPageTypeFromReq(
-  req: Request
-): {
+export function getContextPageFromReq({
+  path,
+}: Request): {
+  canonicalUrl: string
   pageParts: string[]
   pageType: PageOwnerType
   pageSlug: string
+  path: string
 } {
-  const pageParts = req.path.split("/")
+  const pageParts = path.split("/")
   const pageSlug = pageParts[2]
-  const pageType = formatOwnerTypes(req.path)
+  const pageType = formatOwnerTypes(path)
+  const canonicalUrl = `${sd.APP_URL}${path}`
 
   return {
+    canonicalUrl,
     pageParts,
     pageSlug,
     pageType,
+    path,
   }
 }
 
-export function getPageTypeFromClient(): {
+export function getContextPageFromClient(): {
+  canonicalUrl: string
   pageParts: string[]
   pageSlug: string
   pageType: PageOwnerType
+  path: string
 } {
   if (window) {
     const PAGE_TYPE = window.sd && window.sd.PAGE_TYPE
@@ -31,11 +39,14 @@ export function getPageTypeFromClient(): {
     const pageParts = pathname.split("/")
     const pageSlug = pageParts[2]
     const pageType = PAGE_TYPE || formatOwnerTypes(pathname)
+    const canonicalUrl = `${sd.APP_URL}${pathname}`
 
     return {
+      canonicalUrl,
       pageParts,
       pageSlug,
       pageType,
+      path: pathname,
     }
   }
 }
