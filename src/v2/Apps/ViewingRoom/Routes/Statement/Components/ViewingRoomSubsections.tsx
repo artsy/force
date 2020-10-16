@@ -36,7 +36,9 @@ const ViewingRoomSubsections: React.FC<ViewingRoomSubsectionsProps> = ({
                 <>
                   <Spacer my={1} />
                   <Box>
-                    <Serif size={["4", "5"]}>{body}</Serif>
+                    <Serif size={["4", "5"]} style={{ whiteSpace: "pre-wrap" }}>
+                      {body}
+                    </Serif>
                   </Box>
                 </>
               )}
