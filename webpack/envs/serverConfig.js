@@ -62,9 +62,7 @@ export const serverConfig = {
     minimize: env.isProduction && !env.webpackDebug,
     minimizer: [
       new TerserPlugin({
-        cache: false,
         parallel: env.onCi ? env.webpackCiCpuLimit : true, // Only use 4 cpus (default) in CircleCI, by default it will try using 36 and OOM
-        sourceMap: true, // Must be set to true if using source-maps in production
       }),
     ],
   },
@@ -72,8 +70,8 @@ export const serverConfig = {
     env.enableWebpackAnalyze
       ? undefined
       : new webpack.optimize.LimitChunkCountPlugin({
-          maxChunks: 1,
-        }),
+        maxChunks: 1,
+      }),
   ]),
   resolve: {
     extensions: [".js", ".jsx", ".ts", ".tsx", ".json", ".coffee"],

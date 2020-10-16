@@ -60,11 +60,13 @@ export const clientCommonConfig = {
           },
         ],
       },
-      // ESM support. See: https://github.com/apollographql/react-apollo/issues/1737#issuecomment-371178602
+      // Required for webpack 5 to allow interop with with non-ESM modules is handled.
+      // TODO: This may be removed once all dependant references to @babel/runtime-corejs3 are removed.
       {
-        type: "javascript/auto",
-        test: /\.mjs$/,
-        use: [],
+        test: /\.m?js/,
+        resolve: {
+          fullySpecified: false,
+        },
       },
     ],
   },
@@ -75,20 +77,13 @@ export const clientCommonConfig = {
       },
     }),
     // Remove moment.js localization files
-    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+    new webpack.IgnorePlugin({
+      resourceRegExp: /^\.\/locale$/,
+      contextRegExp: /moment$/,
+    }),
     // Remove server-only modules from client bundles
-    ...[
-      // Remove server side of relay network layer.
-      new webpack.IgnorePlugin(
-        /^react-relay-network-modern-ssr\/node8\/server/
-      ),
-      // No matter what, we don't want the graphql-js package in client
-      // bundles. This /may/ lead to a broken build when e.g. a reaction
-      // module that's used on the client side imports something from
-      // graphql-js, but that's better than silently including this.
-      new webpack.IgnorePlugin(/^graphql(\/.*)?$/),
-    ],
-    new webpack.NamedModulesPlugin(),
+    // TODO: Why would these end up in the client bundle?
+    new webpack.IgnorePlugin({ resourceRegExp: /^graphql(\/.*)?$/ }),
     new webpack.ProvidePlugin({
       $: "jquery",
       jQuery: "jquery",
@@ -135,6 +130,11 @@ export const clientCommonConfig = {
     // Symlink issues should be fixed via `yarn --pnp`
     modules: [path.resolve(basePath, "src"), "node_modules"],
     symlinks: false,
+    fallback: {
+      path: false,
+      os: require.resolve("os-browserify/browser"),
+      buffer: require.resolve("buffer/"),
+    },
   },
   optimization: {
     // Extract webpack runtime code into it's own file
