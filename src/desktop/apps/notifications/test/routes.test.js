@@ -10,7 +10,7 @@ const sinon = require("sinon")
 const Backbone = require("backbone")
 const rewire = require("rewire")
 const routes = rewire("../routes")
-const CurrentUser = require("../../../models/current_user.coffee")
+const CurrentUser = require("../../../models/current_user")
 const Artist = require("../../../models/artist.coffee")
 
 describe("Notification Routing", function () {

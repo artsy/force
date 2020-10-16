@@ -1,6 +1,6 @@
 FeedbackView = require './views/feedback.coffee'
 modalize = require '../modalize/index.coffee'
-defaults = require './defaults.coffee'
+defaults = require './defaults'
 FlashMessage = require '../flash/index.coffee'
 
 module.exports = ->

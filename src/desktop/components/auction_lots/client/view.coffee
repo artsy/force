@@ -2,11 +2,11 @@ Backbone = require 'backbone'
 zoom = require '../../../components/zoom/index.coffee'
 { openAuthModal } = require '../../../lib/openAuthModal'
 { ModalType } = require "../../../../v2/Components/Authentication/Types"
-CurrentUser = require '../../../models/current_user.coffee'
+CurrentUser = require '../../../models/current_user'
 { isTouchDevice } = require '../../../components/util/device.coffee'
 FillwidthView = require '../../../components/fillwidth_row/view.coffee'
 { Intent } = require "@artsy/cohesion"
-{ Following, FollowButton } = require '../../../components/follow_button/index.coffee'
+{ Following, FollowButton } = require '../../../components/follow_button/index'
 
 module.exports = class AuctionResultsView extends Backbone.View
   events:

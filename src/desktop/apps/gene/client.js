@@ -13,11 +13,11 @@ import { MediaContextProvider } from "v2/Utils/Responsive"
 import { Boot } from "v2/Artsy/Router"
 
 const Gene = require("../../models/gene.coffee")
-const CurrentUser = require("../../models/current_user.coffee")
+const CurrentUser = require("../../models/current_user")
 const {
   Following,
   FollowButton,
-} = require("../../components/follow_button/index.coffee")
+} = require("../../components/follow_button/index")
 const ShareView = require("../../components/share/view.coffee")
 const blurb = require("../../components/gradient_blurb/index.coffee")
 const mediator = require("desktop/lib/mediator.coffee")

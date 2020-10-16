@@ -9,7 +9,7 @@ const routes = rewire("../routes")
 const sinon = require("sinon")
 const Backbone = require("backbone")
 const { fabricate } = require("@artsy/antigravity")
-const CurrentUser = require("../../../models/current_user.coffee")
+const CurrentUser = require("../../../models/current_user")
 const moment = require("moment")
 
 const openSale = fabricate("sale", {

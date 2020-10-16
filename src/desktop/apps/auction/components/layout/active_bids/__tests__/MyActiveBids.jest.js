@@ -2,7 +2,7 @@ import MyActiveBids from "desktop/apps/auction/components/layout/active_bids/MyA
 import renderTestComponent from "desktop/apps/auction/__tests__/utils/renderTestComponent"
 import { initialState } from "desktop/apps/auction/reducers"
 const Auction = require("desktop/models/auction.coffee")
-const CurrentUser = require("desktop/models/current_user.coffee")
+const CurrentUser = require("desktop/models/current_user")
 
 // FIXME: Add required props
 xdescribe("apps/auction/components/layout/active_bids/MyActiveBids", () => {

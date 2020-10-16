@@ -9,7 +9,7 @@ viewHelpers = require './view_helpers.coffee'
 welcomeHero = require './welcome'
 browseCategories = require './browse_categories.coffee'
 query = require './queries/initial'
-CurrentUser = require '../../models/current_user.coffee'
+CurrentUser = require '../../models/current_user'
 
 positionWelcomeHeroMethod = (req, res) ->
   method = if req.cookies?['hide-welcome-hero']? then 'push' else 'unshift'

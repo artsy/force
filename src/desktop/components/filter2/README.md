@@ -10,7 +10,7 @@ The initial render of the component is done server side. Using the tag app as an
 Backbone = require 'backbone'
 Tag = require '../../models/tag'
 FilterArtworks = require '../../collections/filter_artworks'
-aggregationParams = require './aggregations.coffee'
+aggregationParams = require './aggregations'
 
 @index = (req, res, next) ->
   tag = new Tag(id: req.params.id)
@@ -65,7 +65,7 @@ On the client-side, you can use the same aggregationParams array that was passed
 ```coffeescript
 { TAG } = require('sharify').data
 { setupFilter } = require '../../components/filter2/index.coffee'
-aggregationParams = require './aggregations.coffee'
+aggregationParams = require './aggregations'
 
 module.exports.init = ->
   tag = new Tag TAG

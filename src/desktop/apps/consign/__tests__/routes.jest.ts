@@ -6,7 +6,7 @@ import Analytics from "analytics-node"
 import * as routes from "../routes"
 
 const metaphysics = require("lib/metaphysics.coffee")
-const CurrentUser = require("../../../models/current_user.coffee")
+const CurrentUser = require("../../../models/current_user")
 
 jest.mock("superagent")
 jest.mock("analytics-node", () => jest.fn())
