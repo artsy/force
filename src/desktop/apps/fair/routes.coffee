@@ -35,6 +35,7 @@ DEFAULT_CACHE_TIME = 60
     res.locals.sd.INCLUDE_SAILTHRU = true
     filterArtworks.fetch
       data: filterData
+      error: res.backboneError
       success: ->
         res.render 'overview',
           counts: filterArtworks.counts
@@ -56,6 +57,7 @@ DEFAULT_CACHE_TIME = 60
   filterData = { size: 0, fair_id: fair.id, aggregations: aggregationParams }
   filterArtworks.fetch
     data: filterData
+    error: res.backboneError
     success: ->
       res.locals.sd.SECTION = 'browse'
 
@@ -161,7 +163,7 @@ DEFAULT_CACHE_TIME = 60
     cache: true
     cacheTime: DEFAULT_CACHE_TIME
     error: res.backboneError
-    success: (primarySets) =>
+    success: (primarySets) ->
       res.locals.primarySets = primarySets
       end = (data) ->
         res.locals[k] = v for k, v of data
@@ -200,6 +202,7 @@ DEFAULT_CACHE_TIME = 60
     cache: true
     data:
       fair_organizer_id: fairOrg.id
+    error: res.backboneError
     success: ->
       # find the fair whose year matches the requested year
       fair = pastFairs.find (fair) ->
@@ -214,6 +217,7 @@ DEFAULT_CACHE_TIME = 60
         data: data
         cache: true
         cacheTime: 300
+        error: res.backboneError
         success: (profile) ->
           res.locals.profile = profile
           req.params.id = profile.fairOwnerId()

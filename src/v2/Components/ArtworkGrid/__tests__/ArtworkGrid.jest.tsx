@@ -7,7 +7,7 @@ import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ExtractProps } from "v2/Utils/ExtractProps"
 import GridItem, { ArtworkGridItem } from "../../Artwork/GridItem"
-import { ArtworkGridFixture } from "../__stories__/ArtworkGridFixture"
+import { ArtworkGridFixture } from "./ArtworkGridFixture"
 import ArtworkGrid, {
   ArtworkGridContainer,
   ArtworkGridContainerState,

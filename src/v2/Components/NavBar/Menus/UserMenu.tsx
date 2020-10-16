@@ -57,16 +57,14 @@ export const UserMenu: React.FC = () => {
         </>
       )}
 
-      {isAdmin && (
-        <MenuItem
-          variant="small"
-          aria-label="View your purchases"
-          href="/user/purchases"
-          onClick={trackClick}
-        >
-          <ReceiptIcon mr={1} aria-hidden="true" /> Order History
-        </MenuItem>
-      )}
+      <MenuItem
+        variant="small"
+        aria-label="View your purchases"
+        href="/user/purchases"
+        onClick={trackClick}
+      >
+        <ReceiptIcon mr={1} aria-hidden="true" /> Order History
+      </MenuItem>
 
       <MenuItem
         variant="small"

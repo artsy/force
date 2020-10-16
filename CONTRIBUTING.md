@@ -13,11 +13,6 @@ We accept [pull requests](https://github.com/artsy/force/pulls), and you may [pr
         $ cp .env.oss .env
         $ yarn install
 
-- Development of components happen in [storybooks](https://storybook.js.org/):
-
-        $ yarn storybook
-        $ open http://localhost:9001
-
 - To run the full Artsy.net server:
 
         $ yarn start

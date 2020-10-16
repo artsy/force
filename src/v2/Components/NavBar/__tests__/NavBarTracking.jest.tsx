@@ -103,7 +103,7 @@ describe("NavBarTracking", () => {
       expect(trackEvent).toBeCalledWith({
         action_type: AnalyticsSchema.ActionType.Click,
         context_module: AnalyticsSchema.ContextModule.HeaderUserDropdown,
-        destination_path: "/user/saves",
+        destination_path: "/user/purchases",
       })
     })
   })

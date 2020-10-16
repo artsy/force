@@ -1,20 +1,17 @@
 import { Box, Spinner, Tab, Tabs } from "@artsy/palette"
 import { RelatedWorksArtworkGrid_artwork } from "v2/__generated__/RelatedWorksArtworkGrid_artwork.graphql"
-import { RelatedWorksArtworkGridQuery } from "v2/__generated__/RelatedWorksArtworkGridQuery.graphql"
 import { hideGrid } from "v2/Apps/Artwork/Components/OtherWorks"
 import { Header } from "v2/Apps/Artwork/Components/OtherWorks/Header"
-import { Mediator, SystemContext, withSystemContext } from "v2/Artsy"
+import { Mediator, withSystemContext } from "v2/Artsy"
 import { track } from "v2/Artsy/Analytics"
 import * as Schema from "v2/Artsy/Analytics/Schema"
-import { renderWithLoadProgress } from "v2/Artsy/Relay/renderWithLoadProgress"
 import ArtworkGrid from "v2/Components/ArtworkGrid"
 import { take } from "lodash"
-import React, { useContext } from "react"
+import React from "react"
 import styled from "styled-components"
 import createLogger from "v2/Utils/logger"
 
 import { ContextModule } from "@artsy/cohesion"
-import { SystemQueryRenderer as QueryRenderer } from "v2/Artsy/Relay/SystemQueryRenderer"
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
 import { get } from "v2/Utils/get"
 
@@ -36,8 +33,8 @@ interface RelatedWorksArtworkGridState {
   context_module: Schema.ContextModule.RelatedWorks,
 })
 class RelatedWorksArtworkGrid extends React.Component<
-  RelatedWorksArtworkGridProps,
-  RelatedWorksArtworkGridState
+RelatedWorksArtworkGridProps,
+RelatedWorksArtworkGridState
 > {
   state = {
     isLoading: false,
@@ -106,15 +103,15 @@ class RelatedWorksArtworkGrid extends React.Component<
                   {this.state.isLoading ? (
                     <Spinner />
                   ) : (
-                    <ArtworkGrid
-                      contextModule={ContextModule.relatedWorksRail}
-                      artworks={artworksConnection}
-                      columnCount={[2, 3, 4]}
-                      preloadImageCount={0}
-                      mediator={mediator}
-                      onBrickClick={this.trackBrickClick.bind(this)}
-                    />
-                  )}
+                      <ArtworkGrid
+                        contextModule={ContextModule.relatedWorksRail}
+                        artworks={artworksConnection}
+                        columnCount={[2, 3, 4]}
+                        preloadImageCount={0}
+                        mediator={mediator}
+                        onBrickClick={this.trackBrickClick.bind(this)}
+                      />
+                    )}
                 </ArtworksContainer>
               </Tab>
             )
@@ -164,31 +161,6 @@ export const RelatedWorksArtworkGridRefetchContainer = createRefetchContainer<
     }
   `
 )
-
-// FIXME: Move to storybooks
-
-export const RelatedWorksArtworkGridQueryRenderer: React.SFC<{
-  artworkSlug: string
-}> = ({ artworkSlug }) => {
-  const { relayEnvironment } = useContext(SystemContext)
-
-  return (
-    <QueryRenderer<RelatedWorksArtworkGridQuery>
-      environment={relayEnvironment}
-      variables={{
-        artworkSlug,
-      }}
-      query={graphql`
-        query RelatedWorksArtworkGridQuery($artworkSlug: String!) {
-          artwork(id: $artworkSlug) {
-            ...RelatedWorksArtworkGrid_artwork
-          }
-        }
-      `}
-      render={renderWithLoadProgress(RelatedWorksArtworkGridRefetchContainer)}
-    />
-  )
-}
 
 // Set min-height so that spinner doesn't collapse area on tab switch
 const ArtworksContainer = styled.div`

@@ -77,6 +77,7 @@ export const UntouchedOrder = {
               name: "A Gallery",
               id: "1234",
               initials: "AG",
+              slug: "a-g",
               profile: {
                 id: "12345",
                 icon: {
