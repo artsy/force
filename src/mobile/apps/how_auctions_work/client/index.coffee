@@ -6,7 +6,7 @@ bootstrap = require '../../../components/layout/bootstrap.coffee'
 markdown = require '../../../components/util/markdown.coffee'
 sd = require('sharify').data
 bidIncrements = require '../bid_increments.coffee'
-CurrentUser = require '../../../models/current_user.coffee'
+CurrentUser = require '../../../models/current_user'
 template = -> require('../templates/learn_more.jade') arguments...
 
 module.exports.init = ->

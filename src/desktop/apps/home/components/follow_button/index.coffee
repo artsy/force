@@ -1,4 +1,4 @@
-{ Following, FollowButton } = require '../../../../components/follow_button/index.coffee'
+{ Following, FollowButton } = require '../../../../components/follow_button/index'
 Artist = require '../../../../models/artist.coffee'
 Gene = require '../../../../models/gene.coffee'
 { ContextModule, OwnerType } = require "@artsy/cohesion"

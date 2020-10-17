@@ -3,18 +3,18 @@ import benv from "benv"
 import sinon from "sinon"
 import Backbone from "backbone"
 import { fabricate } from "@artsy/antigravity"
-const CurrentUser = require("../../../../models/current_user.coffee")
+const CurrentUser = require("../../../../models/current_user")
 const LoggedOutUser = require("../../../../models/logged_out_user.coffee")
 const Artwork = require("../../../../models/artwork.coffee")
 const ArtworkInquiry = require("../../../../models/artwork_inquiry.coffee")
 const State = require("../../../branching_state/index.coffee")
 
 export const setup = cb =>
-  _.wrap(cb, function(cb) {
+  _.wrap(cb, function (cb) {
     // @ts-ignore
-    before(function(done) {
+    before(function (done) {
       sinon.stub(_, "defer", cb => cb())
-      return benv.setup(function() {
+      return benv.setup(function () {
         benv.expose({
           $: benv.require("jquery"),
           jQuery: benv.require("jquery"),
@@ -35,13 +35,13 @@ export const setup = cb =>
     })
 
     // @ts-ignore
-    after(function() {
+    after(function () {
       // @ts-ignore
       _.defer.restore()
       return benv.teardown()
     })
 
-    beforeEach(function() {
+    beforeEach(function () {
       // @ts-ignore
       window.grecaptcha.execute.reset()
       this.currentUser = new CurrentUser(fabricate("user"))

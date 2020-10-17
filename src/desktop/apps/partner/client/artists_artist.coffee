@@ -1,14 +1,14 @@
 _ = require 'underscore'
 sd = require('sharify').data
 Backbone = require 'backbone'
-CurrentUser = require '../../../models/current_user.coffee'
+CurrentUser = require '../../../models/current_user'
 Artist = require '../../../models/artist.coffee'
 Partner = require '../../../models/partner.coffee'
 PartnerArtistArtworks = require '../../../collections/partner_artist_artworks.coffee'
 ArtworkColumnsView = require '../../../components/artwork_columns/view.coffee'
 BlurbView = require '../../../components/blurb/view.coffee'
 template = -> require('../templates/artists_artist.jade') arguments...
-{ Following, FollowButton } = require '../../../components/follow_button/index.coffee'
+{ Following, FollowButton } = require '../../../components/follow_button/index'
 { ContextModule } = require "@artsy/cohesion"
 
 module.exports = class PartnerArtistsArtistView extends Backbone.View

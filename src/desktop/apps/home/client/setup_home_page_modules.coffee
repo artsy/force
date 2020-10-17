@@ -8,7 +8,7 @@ MyActiveBids = require '../../../components/my_active_bids/view.coffee'
 ArtworkBrickRailView = require '../../../components/artwork_brick_rail/view.coffee'
 { viewAllUrl, timeSpan } = require '../view_helpers.coffee'
 FollowedArtistsRailView = require '../components/followed_artists/view.coffee'
-setupFollowButton = require '../components/follow_button/index.coffee'
+setupFollowButton = require '../components/follow_button/index'
 { ContextModule } = require "@artsy/cohesion"
 
 relatedArtistsAnnotation = -> require('../components/related_artists_context/annotation.jade') arguments ...

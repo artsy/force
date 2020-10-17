@@ -5,7 +5,7 @@ scrollFrame = require 'scroll-frame'
 ShareView = require '../../components/share/view.coffee'
 { TAG } = sd = require('sharify').data
 { setupFilter } = require '../../components/filter2/index.coffee'
-aggregationParams = require './aggregations.coffee'
+aggregationParams = require './aggregations'
 
 module.exports.init = ->
   tag = new Tag TAG

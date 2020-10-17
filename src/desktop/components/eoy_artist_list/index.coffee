@@ -1,7 +1,7 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-CurrentUser = require '../../models/current_user.coffee'
-{ Following, FollowButton } = require '../follow_button/index.coffee'
+CurrentUser = require '../../models/current_user'
+{ Following, FollowButton } = require '../follow_button/index'
 
 module.exports = (page = 'EOY 2016') ->
   user = CurrentUser.orNull()

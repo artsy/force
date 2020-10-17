@@ -12,7 +12,7 @@ cache = require '../../lib/cache'
 { captureSignup, validActions } = require './components/capture_signup/index.coffee'
 { parse, format } = require 'url'
 FilterArtworks = require '../../collections/filter_artworks'
-aggregationParams = require './components/browse/aggregations.coffee'
+aggregationParams = require './components/browse/aggregations'
 InfoMenu = require '../../components/info_menu/index.coffee'
 
 DEFAULT_CACHE_TIME = 60

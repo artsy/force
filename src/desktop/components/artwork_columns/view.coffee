@@ -2,11 +2,11 @@ _ = require 'underscore'
 sd = require('sharify').data
 AdditionalImage = require '../../models/additional_image.coffee'
 Backbone = require 'backbone'
-CurrentUser = require '../../models/current_user.coffee'
+CurrentUser = require '../../models/current_user'
 User = require '../../models/user.coffee'
 ArtworkInquiry = require '../../models/artwork_inquiry.coffee'
 openInquiryQuestionnaireFor = require '../inquiry_questionnaire/index.coffee'
-SaveControls = require '../artwork_item/save_controls.coffee'
+SaveControls = require '../artwork_item/save_controls'
 artworkColumns = -> require('./template.jade') arguments...
 artworkItem = -> require('../artwork_item/templates/artwork.jade') arguments...
 

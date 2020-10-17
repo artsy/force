@@ -1,7 +1,7 @@
 Backbone = require 'backbone'
 _ = require 'underscore'
 metaphysics = require '../../../../../lib/metaphysics.coffee'
-partnerTypes = require '../../queries/partner_types.coffee'
+partnerTypes = require '../../queries/partner_types'
 query = require '../../queries/partners_filter_query.coffee'
 facetDefaults = require '../filter_facet/facet_defaults.coffee'
 { Cities } = require '../../../../components/partner_cities/index.coffee'

@@ -1,6 +1,6 @@
 Backbone = require 'backbone'
 Artists = require '../../../../collections/artists.coffee'
-{ Following } = require '../../../../components/follow_button/index.coffee'
+{ Following } = require '../../../../components/follow_button/index'
 QuasiInfiniteView = require '../quasi_infinite/view.coffee'
 ArtistFillwidthListView = require '../../../../components/artist_fillwidth_list/view.coffee'
 

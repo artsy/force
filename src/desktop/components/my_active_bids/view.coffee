@@ -2,7 +2,7 @@ sd = require('sharify').data
 Backbone = require 'backbone'
 query = require './query.coffee'
 metaphysics = require '../../../lib/metaphysics.coffee'
-CurrentUser = require '../../models/current_user.coffee'
+CurrentUser = require '../../models/current_user'
 template = -> require('./template.jade') arguments...
 {getLiveAuctionUrl} = require('../../../utils/domain/auctions/urls')
 

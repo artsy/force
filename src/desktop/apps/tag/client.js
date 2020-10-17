@@ -7,7 +7,7 @@ import { Contents } from "v2/Components/Tag"
 import { SystemContextProvider } from "v2/Artsy"
 
 const Tag = require("../../models/tag.coffee")
-const CurrentUser = require("../../models/current_user.coffee")
+const CurrentUser = require("../../models/current_user")
 const mediator = require("desktop/lib/mediator.coffee")
 
 // Update URL with current filters/mode/sort, for ease of sharing.

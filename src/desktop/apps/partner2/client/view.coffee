@@ -1,7 +1,7 @@
 _ = require 'underscore'
 sd = require('sharify').data
 Backbone = require 'backbone'
-CurrentUser = require '../../../models/current_user.coffee'
+CurrentUser = require '../../../models/current_user'
 Partner = require '../../../models/partner.coffee'
 Profile = require '../../../models/profile.coffee'
 Articles = require '../../../collections/articles.coffee'
@@ -13,7 +13,7 @@ ArticlesView = require './articles.coffee'
 ContactView = require './contact.coffee'
 tablistTemplate = -> require('../templates/tablist.jade') arguments...
 mediator = require '../../../lib/mediator.coffee'
-{ Following, FollowButton } = require '../../../components/follow_button/index.coffee'
+{ Following, FollowButton } = require '../../../components/follow_button/index'
 require '../../../../lib/promiseDone'
 { ContextModule } = require "@artsy/cohesion"
 

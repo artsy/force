@@ -8,7 +8,7 @@ mediator = require '../../lib/mediator.coffee'
 { modelNameAndIdToLabel } = require '../../lib/analytics_helpers.coffee'
 itemTemplate = -> require('./templates/item.jade') arguments...
 emptyItemTemplate = -> require('./templates/empty-item.jade') arguments...
-CurrentUser = require '../../models/current_user.coffee'
+CurrentUser = require '../../models/current_user'
 SearchResult = require '../../models/search_result.coffee'
 splitTest = require '../split_test/index.coffee'
 

@@ -1,7 +1,7 @@
 _ = require 'underscore'
 sd = require('sharify').data
 Backbone = require 'backbone'
-CurrentUser = require '../../../models/current_user.coffee'
+CurrentUser = require '../../../models/current_user'
 Partner = require '../../../models/partner.coffee'
 Artist = require '../../../models/artist.coffee'
 PartnerArtists = require '../../../collections/partner_artists.coffee'
