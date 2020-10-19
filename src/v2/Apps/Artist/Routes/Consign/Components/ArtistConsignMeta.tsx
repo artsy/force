@@ -1,5 +1,5 @@
 import React from "react"
-import { Link, Meta, Title } from "react-head"
+import { Meta, Title } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
 import { getENV } from "v2/Utils/getENV"
 
@@ -29,7 +29,6 @@ export const ArtistConsignMeta: React.FC<ArtistConsignMeta> = props => {
       <Title>{title}</Title>
       <Meta name="description" content={description} />
       {imageURL && <Meta name="thumbnail" content={imageURL} />}
-      <Link rel="canonical" href={`${appURL}${href}/consign`} />
       <Meta property="twitter:description" content={description} />
       <Meta property="og:title" content={title} />
       <Meta property="og:description" content={description} />

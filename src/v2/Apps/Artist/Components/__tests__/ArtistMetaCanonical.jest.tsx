@@ -4,6 +4,17 @@ import { HeadProvider } from "react-head"
 import { ArtistMetaCanonicalLink_artist } from "v2/__generated__/ArtistMetaCanonicalLink_artist.graphql"
 import { ArtistMetaCanonicalLink } from "../ArtistMetaCanonicalLink"
 
+jest.mock("v2/Artsy/Router/useRouter", () => ({
+  useRouter: () => ({
+    match: {
+      location: {
+        pathname: "anything",
+      },
+    },
+  }),
+  useIsRouteActive: () => false,
+}))
+
 const MISSING_OVERVIEW_ARTIST_FIXTURE: ArtistMetaCanonicalLink_artist = {
   " $refType": "ArtistMetaCanonicalLink_artist",
   slug: "gina-lombardi-bratter",
