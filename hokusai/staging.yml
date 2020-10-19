@@ -118,7 +118,7 @@ spec:
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: force-web-novo
+  name: force-novo-web
 spec:
   strategy:
     rollingUpdate:
@@ -131,11 +131,11 @@ spec:
         app: force-novo
         layer: application
         component: web
-      name: force-web-novo
+      name: force-novo-web
       namespace: default
     spec:
       containers:
-        - name: force-web-novo
+        - name: force-novo-web
           env:
             - name: PORT
               value: "5000"
@@ -193,13 +193,13 @@ spec:
 apiVersion: autoscaling/v1
 kind: HorizontalPodAutoscaler
 metadata:
-  name: force-web-novo
+  name: force-novo-web
   namespace: default
 spec:
   scaleTargetRef:
     apiVersion: extensions/v1beta1
     kind: Deployment
-    name: force-web-novo
+    name: force-novo-web
   minReplicas: 2
   maxReplicas: 3
   targetCPUUtilizationPercentage: 70
@@ -212,7 +212,7 @@ metadata:
     app: force-novo
     component: web
     layer: application
-  name: force-web-novo-internal
+  name: force-novo-web-internal
   namespace: default
 spec:
   ports:
@@ -242,7 +242,7 @@ spec:
         paths:
           - path: /novo/
             backend:
-              serviceName: force-web-novo-internal
+              serviceName: force-novo-web-internal
               servicePort: force-http
           - path: /
             backend:
