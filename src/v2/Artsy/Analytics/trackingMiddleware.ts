@@ -92,6 +92,8 @@ export function trackingMiddleware(options: TrackingMiddlewareOptions = {}) {
             })
           }
 
+          console.warn("firing here...'")
+
           // Reset timers that track time on page since we're tracking each order
           // checkout view as a separate page.
           const desktopPageTimeTrackers =
@@ -101,6 +103,7 @@ export function trackingMiddleware(options: TrackingMiddlewareOptions = {}) {
           if (desktopPageTimeTrackers) {
             desktopPageTimeTrackers.forEach(tracker => {
               // No need to reset the tracker if we're on the same page.
+              console.log(pathname)
               if (pathname !== tracker.path) {
                 tracker.reset(pathname)
               }

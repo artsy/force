@@ -3,6 +3,7 @@ import { timeOnPage } from "@artsy/cohesion"
 import { getPageTypeFromClient } from "lib/getPageType"
 
 export const timeOnPageListener = (delay: number = 15000) => {
+  console.warn(".........................")
   setTimeout(() => {
     const { pageType, pageSlug } = getPageTypeFromClient()
     const pathname = new URL(window.location.href).pathname
