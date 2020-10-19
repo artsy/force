@@ -1,10 +1,3 @@
-require("dotenv/config")
-require("coffeescript/register")
-require("@babel/register")({
-  extensions: [".ts", ".js", ".tsx", ".jsx"],
-  plugins: ["babel-plugin-dynamic-import-node"],
-})
-
 const express = require("express")
 const morgan = require("morgan")
 const path = require("path")
@@ -19,7 +12,7 @@ const { NODE_ENV, PORT } = process.env
 const isDevelopment = NODE_ENV === "development"
 const app = express()
 
-app.use(assetMiddleware())
+app.use(assetMiddleware("manifest-novo.json"))
 app.use(sharify)
 app.use(compression())
 app.use(express.static("public"))
@@ -34,13 +27,20 @@ if (isDevelopment) {
   app.use(require("./src"))
 }
 
-app.listen(PORT, () => {
-  const bootMessage = isDevelopment
-    ? `\n[App] Booting...  \n`
-    : `\n[App] Started on http://localhost:5000  \n`
+// app.listen(PORT, () => {
+//   const bootMessage = isDevelopment
+//     ? `\n[App] Booting...  \n`
+//     : `\n[App] Started on http://localhost:5000  \n`
 
-  // eslint-disable-next-line no-console
-  console.log(bootMessage)
+//   // eslint-disable-next-line no-console
+//   console.log(bootMessage)
+// })
+
+app._router.stack.forEach(function (r) {
+  if (r.route && r.route.path) {
+    console.log(r.route.path)
+  }
 })
 
 /////////////////////////////////////////////
+module.exports = app

@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const chalk = require("chalk")
 const path = require("path")
 const yn = require("yn")
@@ -7,7 +8,6 @@ const env = {
   buildClient: yn(process.env.BUILD_CLIENT, { default: false }),
   buildServer: yn(process.env.BUILD_SERVER, { default: false }),
   buildNovoClient: yn(process.env.BUILD_NOVO_CLIENT, { default: false }),
-  buildNovoServer: yn(process.env.BUILD_NOVO_SERVER, { default: false }),
   enableWebpackAnalyze: yn(process.env.WEBPACK_ANALYZE, { default: false }),
   enableWebpackMeasure: yn(process.env.WEBPACK_MEASURE, { default: false }),
   enableWebpackDumpConfig: process.env.WEBPACK_DUMP_CONFIG,
@@ -34,7 +34,6 @@ console.log("  basePath".padEnd(30), chalk.yellow(basePath))
 console.log("  BUILD_CLIENT".padEnd(30), chalk.yellow(env.buildClient))
 console.log("  BUILD_SERVER".padEnd(30), chalk.yellow(env.buildServer))
 console.log("  BUILD_NOVO_CLIENT".padEnd(30), chalk.yellow(env.buildNovoClient))
-console.log("  BUILD_NOVO_SERVER".padEnd(30), chalk.yellow(env.buildNovoServer))
 console.log("  CI".padEnd(30), chalk.yellow(env.onCi))
 console.log(
   "  NODE_ENV == 'isDevelopment'".padEnd(30),

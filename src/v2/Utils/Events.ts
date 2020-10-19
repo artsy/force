@@ -1,3 +1,4 @@
+// TODO: Swap with eventemitter3
 import EventEmitter from "events"
 
 declare global {
@@ -9,7 +10,7 @@ declare global {
 const emitter =
   typeof window !== "undefined"
     ? window.__reactionEventsEventEmitter ||
-      (window.__reactionEventsEventEmitter = new EventEmitter())
+    (window.__reactionEventsEventEmitter = new EventEmitter())
     : new EventEmitter()
 
 /**

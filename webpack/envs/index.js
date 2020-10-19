@@ -2,17 +2,16 @@
 
 const { clientCommonConfig } = require("./clientCommonConfig")
 const { clientDevelopmentConfig } = require("./clientDevelopmentConfig")
+const { clientNovoDevelopmentConfig } = require("./clientNovoDevelopmentConfig")
+const { clientNovoProductionConfig } = require("./clientNovoProductionConfig")
 const { clientProductionConfig } = require("./clientProductionConfig")
 const { serverConfig } = require("./serverConfig")
-const { serverNovoConfig } = require("./serverNovoConfig")
-const { clientNovoConfig } = require("./clientNovoConfig")
-
 
 export {
   clientCommonConfig,
   clientDevelopmentConfig,
+  clientNovoDevelopmentConfig,
+  clientNovoProductionConfig,
   clientProductionConfig,
   serverConfig,
-  serverNovoConfig,
-  clientNovoConfig
 }

@@ -144,13 +144,6 @@ FROM builder-src as builder-server
 RUN yarn build:server
 
 # ---------------------------------------------------------
-# Compile novo server
-# ---------------------------------------------------------
-FROM builder-src as builder-server-novo
-
-RUN yarn build:server:novo
-
-# ---------------------------------------------------------
 # All development assets
 # ---------------------------------------------------------
 FROM builder-src as builder
@@ -164,15 +157,12 @@ COPY --from=builder-assets /app/public ./public
 COPY --from=builder-assets /app/src ./src
 
 # Client (Novo) assets
+COPY --from=builder-assets-novo /app/manifest-novo.json .
 COPY --from=builder-assets-novo /app/public ./public
 
 # Server assets
 COPY --from=builder-server /app/server.dist.js .
 COPY --from=builder-server /app/server.dist.js.map .
-
-# Server (Novo) assets
-COPY --from=builder-server-novo /app/server-novo.dist.js .
-COPY --from=builder-server-novo /app/server-novo.dist.js.map .
 
 # ---------------------------------------------------------
 # Image with xvfb to run Electron with a virtual display
@@ -200,9 +190,13 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 COPY --from=builder /app /app
 
 # ---------------------------------------------------------
-# Release base image
+# Release image
 # ---------------------------------------------------------
-FROM node:12.14-alpine as production-base
+#
+# Release stage. This stage creates the final docker iamge that will be
+# released. It contains only production dependencies and artifacts.
+#
+FROM production-base as production
 
 RUN apk --no-cache --quiet add \
   bash \
@@ -224,34 +218,9 @@ COPY --chown=deploy:deploy --from=builder /app/scripts ./scripts
 COPY --chown=deploy:deploy --from=builder /app/webpack ./webpack
 COPY --chown=deploy:deploy --from=builder /app/yarn.lock .
 
-# ---------------------------------------------------------
-# Release (Novo) image
-# ---------------------------------------------------------
-FROM production-base as production-novo
-
 # Client assets
 COPY --chown=deploy:deploy --from=builder /app/manifest.json .
-COPY --chown=deploy:deploy --from=builder /app/public ./public
-COPY --chown=deploy:deploy --from=builder /app/src ./src
-
-# Server assets
-COPY --chown=deploy:deploy --from=builder /app/server-novo.dist.js .
-COPY --chown=deploy:deploy --from=builder /app/server-novo.dist.js.map .
-
-ENTRYPOINT ["/usr/bin/dumb-init", "--"]
-CMD ["node", "--max_old_space_size=3072", "-r", "dotenv/config", "./server-novo.dist.js"]
-
-# ---------------------------------------------------------
-# Release image
-# ---------------------------------------------------------
-#
-# Release stage. This stage creates the final docker iamge that will be
-# released. It contains only production dependencies and artifacts.
-#
-FROM production-base as production
-
-# Client assets
-COPY --chown=deploy:deploy --from=builder /app/manifest.json .
+COPY --chown=deploy:deploy --from=builder /app/manifest-novo.json .
 COPY --chown=deploy:deploy --from=builder /app/public ./public
 COPY --chown=deploy:deploy --from=builder /app/src ./src
 
@@ -260,4 +229,4 @@ COPY --chown=deploy:deploy --from=builder /app/server.dist.js .
 COPY --chown=deploy:deploy --from=builder /app/server.dist.js.map .
 
 ENTRYPOINT ["/usr/bin/dumb-init", "--"]
-CMD ["node", "--max_old_space_size=3072", "-r", "dotenv/config", "./server.dist.js"]
+CMD ["node", "--max_old_space_size=3072", "./server.dist.js"]

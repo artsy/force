@@ -1,5 +1,3 @@
-_ = require 'underscore'
-Backbone = require 'backbone'
-
-mediator = _.extend({}, Backbone.Events)
+Backbone = require('../../novo/src/Backbone.Events')
+mediator = Backbone
 module.exports = (window?.__mediator ?= mediator) or mediator
