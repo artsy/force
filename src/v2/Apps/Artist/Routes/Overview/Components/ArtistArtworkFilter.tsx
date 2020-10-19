@@ -7,8 +7,9 @@ import { Match, RouterState, withRouter } from "found"
 import React from "react"
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
 import { ZeroState } from "./ZeroState"
-import { OwnerType, clickedMainArtworkGrid } from "@artsy/cohesion"
+import { clickedMainArtworkGrid } from "@artsy/cohesion"
 import { useTracking } from "v2/Artsy/Analytics"
+import { useAnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
 
 interface ArtistArtworkFilterProps {
   artist: ArtistArtworkFilter_artist
@@ -24,6 +25,11 @@ const ArtistArtworkFilter: React.FC<ArtistArtworkFilterProps> = props => {
   const hasFilter = filtered_artworks && filtered_artworks.id
 
   const tracking = useTracking()
+  const {
+    contextPageOwnerId,
+    contextPageOwnerSlug,
+    contextPageOwnerType,
+  } = useAnalyticsContext()
 
   // If there was an error fetching the filter,
   // we still want to render the rest of the page.
@@ -47,9 +53,9 @@ const ArtistArtworkFilter: React.FC<ArtistArtworkFilterProps> = props => {
       onArtworkBrickClick={artwork => {
         tracking.trackEvent(
           clickedMainArtworkGrid({
-            contextPageOwnerType: OwnerType.artist,
-            contextPageOwnerSlug: artist.slug,
-            contextPageOwnerId: artist.internalID,
+            contextPageOwnerId,
+            contextPageOwnerSlug,
+            contextPageOwnerType,
             destinationPageOwnerId: artwork.internalID,
             destinationPageOwnerSlug: artwork.slug,
           }) as any

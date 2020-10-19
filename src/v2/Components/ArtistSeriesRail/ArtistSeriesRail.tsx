@@ -4,26 +4,16 @@ import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtistSeriesRail_artist } from "v2/__generated__/ArtistSeriesRail_artist.graphql"
 import { ArtistSeriesItemFragmentContainer as ArtistSeriesItem } from "./ArtistSeriesItem"
-import { ContextModule, PageOwnerType } from "@artsy/cohesion"
+import { ContextModule } from "@artsy/cohesion"
 
 interface Props extends BoxProps {
   artist: ArtistSeriesRail_artist
   title?: string
-  contextPageOwnerId: string
-  contextPageOwnerSlug: string
   contextModule: ContextModule
-  contextPageOwnerType: PageOwnerType
 }
 
 const ArtistSeriesRail: React.FC<Props> = props => {
-  const {
-    artist,
-    contextPageOwnerId,
-    contextPageOwnerSlug,
-    contextModule,
-    contextPageOwnerType,
-    ...rest
-  } = props
+  const { artist, contextModule, ...rest } = props
 
   if (!artist) return null
 
@@ -44,13 +34,10 @@ const ArtistSeriesRail: React.FC<Props> = props => {
             return (
               <ArtistSeriesItem
                 key={node.internalID}
-                contextPageOwnerSlug={contextPageOwnerSlug}
-                contextPageOwnerId={contextPageOwnerId}
                 lazyLoad={index > 5}
                 artistSeries={node}
                 index={index}
                 contextModule={contextModule}
-                contextPageOwnerType={contextPageOwnerType}
               />
             )
           })}
@@ -63,7 +50,7 @@ const ArtistSeriesRail: React.FC<Props> = props => {
 }
 
 export const ArtistSeriesRailFragmentContainer = createFragmentContainer(
-  ArtistSeriesRail,
+  ArtistSeriesRail as React.FC<Props>,
   {
     artist: graphql`
       fragment ArtistSeriesRail_artist on Artist {

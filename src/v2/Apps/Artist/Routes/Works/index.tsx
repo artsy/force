@@ -7,7 +7,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { get } from "v2/Utils/get"
 import { ArtistTopWorksRailFragmentContainer as ArtistTopWorksRail } from "v2/Apps/Artist/Components/ArtistTopWorksRail/ArtistTopWorksRail"
 import { ArtistSeriesRailFragmentContainer as ArtistSeriesRail } from "v2/Components/ArtistSeriesRail/ArtistSeriesRail"
-import { ContextModule, OwnerType } from "@artsy/cohesion"
+import { ContextModule } from "@artsy/cohesion"
 import { ArtistCollectionsRailContent as ArtistCollectionsRail } from "v2/Apps/Artist/Components/ArtistCollectionsRail"
 
 export interface WorksRouteProps {
@@ -16,7 +16,7 @@ export interface WorksRouteProps {
 
 export const WorksRoute: React.FC<WorksRouteProps> = props => {
   const { artist } = props
-  const { sidebarAggregations, internalID, slug } = artist
+  const { sidebarAggregations } = artist
 
   const isClient = typeof window !== "undefined"
   const showRecommendations =
@@ -37,10 +37,7 @@ export const WorksRoute: React.FC<WorksRouteProps> = props => {
           borderTop="1px solid"
           borderColor="black10"
           artist={artist}
-          contextPageOwnerId={internalID}
-          contextPageOwnerSlug={slug}
           contextModule={ContextModule.artistSeriesRail}
-          contextPageOwnerType={OwnerType.artist}
         />
       ) : (
         <ArtistCollectionsRail artistID={artist.internalID} />
