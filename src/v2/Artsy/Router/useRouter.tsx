@@ -1,7 +1,5 @@
 import { useContext } from "react"
 
-// FIXME: Upgrade to Found 5.0: https://github.com/4Catalyzer/found/releases/tag/v0.5.0
-// @ts-ignore
 import { Match, Router, RouterContext } from "found"
 
 export function useRouter(): {
