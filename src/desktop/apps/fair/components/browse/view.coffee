@@ -6,7 +6,7 @@ BoothsView = require '../booths/view.coffee'
 deslugify = require '../../../../components/deslugify/index.coffee'
 humanize = require('underscore.string').humanize
 { API_URL, SECTION } = require('sharify').data
-aggregationParams = require './aggregations.coffee'
+aggregationParams = require './aggregations'
 
 module.exports = class FairBrowseView extends Backbone.View
 

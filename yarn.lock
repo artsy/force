@@ -22,10 +22,10 @@
     qs "5.2.0"
     underscore "*"
 
-"@artsy/cohesion@1.41.0":
-  version "1.41.0"
-  resolved "https://registry.yarnpkg.com/@artsy/cohesion/-/cohesion-1.41.0.tgz#02dce62cb373798b556ae09320d5f0ae32ec8f74"
-  integrity sha512-Q9uzquKwmhlx2nQ8MlRJ6i0s7hPgkmzbwPJ9SyOIR4cwXz2+lqvSLA+LgIKL411TwJ6lhAG5TNbVW+qFAUmLnQ==
+"@artsy/cohesion@1.42.0":
+  version "1.42.0"
+  resolved "https://registry.yarnpkg.com/@artsy/cohesion/-/cohesion-1.42.0.tgz#af4f6a88dcf51f7963b1c44163e239a10fc7ed09"
+  integrity sha512-25y2PDTJ8D08IGqWTaXIoVpKw53hwKkrzENuelQMIUvJGkYqXGkmk66j4eV/PQZxQ7uppHjHeI/6Cg0XTkAlnQ==
 
 "@artsy/detect-responsive-traits@^0.0.5":
   version "0.0.5"
@@ -53,10 +53,10 @@
   dependencies:
     uuid "^8.3.0"
 
-"@artsy/palette@13.10.1":
-  version "13.10.1"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-13.10.1.tgz#387c22fad2337c4350c652997d26aff39b276a14"
-  integrity sha512-pMtOV4eI2bAsN3Q2xzTRfLZEzbBOpsr8TuRsfUSYkyYzfIFBjdvqVurByeu1yQraot5F9Vetv7RHdryX1wrVkA==
+"@artsy/palette@13.11.0":
+  version "13.11.0"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-13.11.0.tgz#f5f36632a1b9f379630c9e57e0e8cc6ebac22e16"
+  integrity sha512-tFTnb72rvpDPwh4KgzS8WZ0wtLyx2RCr5r1hoHGinwUSUOdnSfOLd7bOuwDQee5s45A8UFr8HljszyZgssSZwg==
   dependencies:
     "@styled-system/theme-get" "^5.1.2"
     babel-plugin-styled-components "^1.10.0"
@@ -74,7 +74,7 @@
     styled-bootstrap-grid "3.1.0"
     styled-system "^5.1.5"
     trunc-html "^1.1.2"
-    use-cursor "^1.2.0"
+    use-cursor "^1.2.2"
 
 "@artsy/passport-local-with-otp@^0.3.0":
   version "0.3.0"
@@ -108,10 +108,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/react-html-parser/-/react-html-parser-3.0.2.tgz#6213d662441acf0bd8c9ee953aa77ac8d9cf1cdd"
   integrity sha512-FXiRSqfSvwpz/QgwaqFvjJsbDmo9qMGpvUp/0p1V6muaJbGnfxkTSxAYWmYlFst6bmjhVxCYKxvgQhEVE03Wfg==
 
-"@artsy/reaction@28.8.0":
-  version "28.8.0"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-28.8.0.tgz#a48212b36e17091b497f31c97e4a2d0ca37ed4bc"
-  integrity sha512-mKotEg9c8O67KYejWL088xCMGy4CH4W2ZfGNF0UdelGrZkb9QoW+1axri9IsGsguhNtIpX2X2h7KOOLd2OBPLg==
+"@artsy/reaction@28.10.0":
+  version "28.10.0"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-28.10.0.tgz#d580ee4799babbf4202e658169607f38059f0a9e"
+  integrity sha512-j7ZezXeM0EKug8BGNwT3WBwaqkIebk1gMlot7NDU9VuuXb4IK6D49qoBE2ayJMHT5ZwPUq37l46gDChIT3U0fQ==
   dependencies:
     "@artsy/detect-responsive-traits" "^0.0.5"
     "@artsy/fresnel" "^1.0.13"
@@ -18836,10 +18836,10 @@ use-callback-ref@^1.2.3:
   resolved "https://registry.yarnpkg.com/use-callback-ref/-/use-callback-ref-1.2.4.tgz#d86d1577bfd0b955b6e04aaf5971025f406bea3c"
   integrity sha512-rXpsyvOnqdScyied4Uglsp14qzag1JIemLeTWGKbwpotWht57hbP78aNT+Q4wdFKQfQibbUX4fb6Qb4y11aVOQ==
 
-use-cursor@^1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/use-cursor/-/use-cursor-1.2.0.tgz#41f4bd0c99dc8c4b7c5b49973ca9c3c6f4bffaee"
-  integrity sha512-oljIxk/VFhTHrnrrY4nhHGMjVrQm0P7K1zsqRP3m3Oe9lNtikruMiyF98PE0tCDAD3LRPENrp7rwPDwfWyciIA==
+use-cursor@^1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/use-cursor/-/use-cursor-1.2.2.tgz#9f9fe356cff043fc7b3b59835245782c40526ed3"
+  integrity sha512-x6UBGPjqsjs3zIrCQFRP93hD60uzY8njRUnsBIKXB53uwZwCbHZHMQnAw8Gw9VeD0jhWxqyPicdpKSFyK21Q5w==
   dependencies:
     map-cursor-to-max "^1.0.0"
 

@@ -1,7 +1,7 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 Form = require '../../mixins/form.coffee'
-CurrentUser = require '../../../models/current_user.coffee'
+CurrentUser = require '../../../models/current_user'
 mediator = require '../../../lib/mediator.coffee'
 sd = require('sharify').data
 

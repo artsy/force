@@ -173,7 +173,7 @@ describe("FairApp", () => {
 
     const html = wrapper.html()
 
-    expect(html).toContain("Related articles")
+    expect(html).toContain("Related Reading")
     expect(html).toContain(
       "IFPDA Fine Art Print Fair 2019: Programming and Projects"
     )
@@ -183,7 +183,7 @@ describe("FairApp", () => {
     const wrapper = await getWrapper()
     const html = wrapper.html()
 
-    expect(html).not.toContain("Related articles")
+    expect(html).not.toContain("Related Reading")
     expect(html).not.toContain(
       "IFPDA Fine Art Print Fair 2019: Programming and Projects"
     )
@@ -199,7 +199,7 @@ describe("FairApp", () => {
 
     const html = wrapper.html()
 
-    expect(html).toContain("Curated highlights")
+    expect(html).toContain("Curated Highlights")
     expect(html).toContain("Big Artists, Small Sculptures")
     expect(html).toContain("10 works")
   })
@@ -208,7 +208,7 @@ describe("FairApp", () => {
     const wrapper = await getWrapper()
     const html = wrapper.html()
 
-    expect(html).not.toContain("Curated highlights")
+    expect(html).not.toContain("Curated Highlights")
     expect(html).not.toContain("Big Artists, Small Sculptures")
   })
 

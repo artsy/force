@@ -10,7 +10,7 @@ OverviewView = require './overview.coffee'
 FairFooter = require './footer.coffee'
 Profile = require '../../../models/profile.coffee'
 Fair = require '../../../models/fair.coffee'
-CurrentUser = require '../../../models/current_user.coffee'
+CurrentUser = require '../../../models/current_user'
 scrollFrame = require 'scroll-frame'
 
 module.exports.FairView = class FairView extends Backbone.View

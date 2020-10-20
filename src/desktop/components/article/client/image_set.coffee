@@ -3,7 +3,7 @@ Backbone = require 'backbone'
 sd = require('sharify').data
 Artist = require '../../../models/artist.coffee'
 template = -> require('../templates/image_set.jade') arguments...
-{ Following, FollowButton } = Follow = require '../../follow_button/index.coffee'
+{ Following, FollowButton } = Follow = require '../../follow_button/index'
 imagesLoaded = require 'imagesloaded'
 { resize } = require '../../resizer/index.coffee'
 initCarousel = require '../../merry_go_round/horizontal_nav_mgr.coffee'

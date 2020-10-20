@@ -1,6 +1,6 @@
 { globalClientSetup } = require '../../lib/global_client_setup'
 FooterView = require './footer/view.coffee'
-CurrentUser = require '../../models/current_user.coffee'
+CurrentUser = require '../../models/current_user'
 FlashMessage = require '../flash/index.coffee'
 Cookies = require 'cookies-js'
 { triggerMarketingModal } = require '../marketing_signup_modal/triggerMarketingModal.ts'

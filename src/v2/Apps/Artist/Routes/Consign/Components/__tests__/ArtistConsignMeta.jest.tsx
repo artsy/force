@@ -79,12 +79,6 @@ describe("ArtistConsignMeta", () => {
     const wrapper = getWrapper()
     expect(
       wrapper
-        .find("Link")
-        .findWhere(c => c.props().rel === "canonical")
-        .debug()
-    ).toContain(consignHref)
-    expect(
-      wrapper
         .find("Meta")
         .findWhere(c => c.props().property === "og:url")
         .debug()

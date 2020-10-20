@@ -12,7 +12,7 @@ const Fair = require("../../../../models/fair.coffee")
 const { resolve } = require("path")
 const sinon = require("sinon")
 const mediator = require("../../../../lib/mediator.coffee")
-const CurrentUser = require("../../../../models/current_user.coffee")
+const CurrentUser = require("../../../../models/current_user")
 const { fabricate } = require("@artsy/antigravity")
 
 describe("HeaderView", function () {

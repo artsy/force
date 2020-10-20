@@ -5,7 +5,7 @@ Clock = require '../../../components/clock/view.coffee'
 Artists = require '../../../collections/artists.coffee'
 ForYouView = require './for_you.coffee'
 { ContextModule } = require "@artsy/cohesion"
-{ Following, FollowButton } = require '../../../components/follow_button/index.coffee'
+{ Following, FollowButton } = require '../../../components/follow_button/index'
 forYouTemplate = -> require('../templates/for_you_logged_in.jade') arguments...
 fairOverviewTop = -> require('../templates/overview_top.jade')
 

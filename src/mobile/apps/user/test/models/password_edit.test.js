@@ -5,7 +5,7 @@
  */
 const _ = require("underscore")
 const Backbone = require("backbone")
-const CurrentUser = require("../../../../models/current_user.coffee")
+const CurrentUser = require("../../../../models/current_user")
 const PasswordEdit = require("../../models/password_edit.coffee")
 const { fabricate } = require("@artsy/antigravity")
 

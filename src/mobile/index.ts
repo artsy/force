@@ -8,7 +8,7 @@ const app = (module.exports = require("express")())
 // See: https://github.com/artsy/stitch/tree/master/src/internal for more info.
 app.use(
   stitchMiddleware({
-    modules: globalReactModules,
+    modules: globalReactModules as any,
     wrapper: globalReactModules.StitchWrapper,
   })
 )

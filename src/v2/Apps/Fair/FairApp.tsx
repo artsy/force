@@ -72,7 +72,7 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
             {hasArticles && (
               <Box my={3} pt={3} borderTop="1px solid" borderColor="black10">
                 <Text variant="subtitle" as="h3" mb={2}>
-                  Related articles
+                  Related Reading
                 </Text>
 
                 <CSSGrid
@@ -89,7 +89,7 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
             {hasCollections && (
               <Box my={3} pt={3} borderTop="1px solid" borderColor="black10">
                 <Text variant="subtitle" as="h3" mb={2}>
-                  Curated highlights
+                  Curated Highlights
                 </Text>
 
                 <FairCollections fair={fair} />

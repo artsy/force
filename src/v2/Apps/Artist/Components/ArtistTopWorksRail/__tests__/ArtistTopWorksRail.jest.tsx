@@ -6,6 +6,8 @@ import { Carousel } from "v2/Components/Carousel"
 import FillwidthItem from "v2/Components/Artwork/FillwidthItem"
 import { useTracking } from "v2/Artsy/Analytics/useTracking"
 import { StyledLink } from "v2/Apps/Artist/Components/StyledLink"
+import { OwnerType } from "@artsy/cohesion"
+import { AnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
 
 jest.mock("v2/Artsy/Analytics/useTracking")
 
@@ -22,12 +24,26 @@ describe("Artist Notable Works Rail Component", () => {
     })
   })
 
+  const getWrapper = (passedProps = props) => {
+    return mount(
+      <AnalyticsContext.Provider
+        value={{
+          contextPageOwnerId: "artist-id",
+          contextPageOwnerSlug: "artist-slug",
+          contextPageOwnerType: OwnerType.artist,
+        }}
+      >
+        <ArtistTopWorksRail {...passedProps} />
+      </AnalyticsContext.Provider>
+    )
+  }
+
   afterEach(() => {
     jest.clearAllMocks()
   })
 
   it("renders the Notable Works Rail", () => {
-    const component = mount(<ArtistTopWorksRail {...props} />)
+    const component = getWrapper()
 
     expect(component.text()).toMatch("Notable Works")
     expect(component.text()).toMatch("View all works")
@@ -36,7 +52,7 @@ describe("Artist Notable Works Rail Component", () => {
   })
 
   it("tracks the analytics properties when an artwork is clicked on the Notable Works rail", () => {
-    const component = mount(<ArtistTopWorksRail {...props} />)
+    const component = getWrapper()
     const elem = component.find(FillwidthItem).first()
     elem.props().onClick({})
 
@@ -46,7 +62,7 @@ describe("Artist Notable Works Rail Component", () => {
       context_page_owner_id: "artist-id",
       context_page_owner_slug: "artist-slug",
       context_page_owner_type: "artist",
-      destination_page_owner_id: "QXJ0d29yazo1ZGVjZDRiYjNjN2NiMTAwMTAwYWQzNmQ=",
+      destination_page_owner_id: "artwork-id",
       destination_page_owner_slug: "artwork-slug",
       destination_page_owner_type: "artwork",
       horizontal_slide_position: 1,
@@ -55,7 +71,7 @@ describe("Artist Notable Works Rail Component", () => {
   })
 
   it("tracks the analytics properties when View All is clicked", () => {
-    const component = mount(<ArtistTopWorksRail {...props} />)
+    const component = getWrapper()
     const elem = component.find(StyledLink).first()
     elem.props().onClick(null)
 
@@ -65,7 +81,7 @@ describe("Artist Notable Works Rail Component", () => {
       context_page_owner_id: "artist-id",
       context_page_owner_slug: "artist-slug",
       context_page_owner_type: "artist",
-      destination_page_owner_id: "artist-slug",
+      destination_page_owner_id: "artist-id",
       destination_page_owner_slug: "artist-slug",
       destination_page_owner_type: "artist",
       horizontal_slide_position: undefined,
@@ -76,7 +92,7 @@ describe("Artist Notable Works Rail Component", () => {
 
 const topWorksContent: ArtistTopWorksRail_artist = {
   slug: "artist-slug",
-  id: "artist-id",
+  internalID: "artist-id",
   " $refType": null,
   filterArtworksConnection: {
     edges: [
@@ -84,7 +100,7 @@ const topWorksContent: ArtistTopWorksRail_artist = {
         node: {
           slug: "artwork-slug",
           " $fragmentRefs": null,
-          id: "QXJ0d29yazo1ZGVjZDRiYjNjN2NiMTAwMTAwYWQzNmQ=",
+          internalID: "artwork-id",
         },
       },
     ],

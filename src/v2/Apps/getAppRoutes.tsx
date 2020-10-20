@@ -13,6 +13,7 @@ import { routes as purchasesRoutes } from "v2/Apps/Purchase/routes"
 import { routes as searchRoutes } from "v2/Apps/Search/routes"
 import { routes as showRoutes } from "v2/Apps/Show/routes"
 import { routes as viewingRoomRoutes } from "./ViewingRoom/routes"
+import { consignRoutes } from "v2/Apps/Consign/consignRoutes"
 import { debugRoutes } from "./Debug/debugRoutes"
 
 export function getAppRoutes(): RouteConfig[] {
@@ -28,6 +29,9 @@ export function getAppRoutes(): RouteConfig[] {
     },
     {
       routes: collectRoutes,
+    },
+    {
+      routes: consignRoutes,
     },
     {
       routes: conversationRoutes,

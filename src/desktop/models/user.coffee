@@ -55,7 +55,7 @@ module.exports = class User extends Backbone.Model
     @related().account.id?
 
   @instantiate: (attributes = {}) ->
-    CurrentUser = require './current_user.coffee'
+    CurrentUser = require './current_user'
     LoggedOutUser = require './logged_out_user.coffee'
 
     CurrentUser.orNull() or

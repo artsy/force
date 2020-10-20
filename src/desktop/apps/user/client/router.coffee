@@ -1,6 +1,6 @@
 { USER } = require('sharify').data
 Backbone = require 'backbone'
-CurrentUser = require '../../../models/current_user.coffee'
+CurrentUser = require '../../../models/current_user'
 JumpView = require '../../../components/jump/view.coffee'
 SettingsTabsView = require '../components/tabs/view.coffee'
 SettingsView = require '../pages/settings/index.coffee'

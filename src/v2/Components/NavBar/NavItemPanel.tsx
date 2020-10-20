@@ -5,12 +5,12 @@ import styled, { css } from "styled-components"
 export type MenuAnchor = "left" | "right" | "center" | "full"
 
 const AnimatedPanel = styled(animated.div)<{
-  menuAnchor: MenuAnchor
-  offsetLeft?: number
+  "data-menuanchor": MenuAnchor
+  "data-offsetleft"?: number
 }>`
   position: absolute;
   top: 100%;
-  ${({ menuAnchor, offsetLeft = 0 }) =>
+  ${({ ...props }) =>
     ({
       right: css`
         right: 0;
@@ -25,9 +25,9 @@ const AnimatedPanel = styled(animated.div)<{
       full: css`
         left: 0;
         right: 0;
-        margin-left: -${offsetLeft}px;
+        margin-left: -${props["data-offsetleft"] ?? 0}px;
       `,
-    }[menuAnchor])}
+    }[props["data-menuanchor"]])}
 `
 
 const ANIMATION_STATES = {
@@ -66,8 +66,8 @@ export const NavItemPanel: React.FC<NavItemPanelProps> = ({
   return (
     <AnimatedPanel
       style={animation}
-      menuAnchor={menuAnchor}
-      offsetLeft={relativeTo.current?.offsetLeft}
+      data-menuanchor={menuAnchor}
+      data-offsetleft={relativeTo.current?.offsetLeft}
     >
       {children}
     </AnimatedPanel>

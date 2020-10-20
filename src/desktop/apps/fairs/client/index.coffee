@@ -1,7 +1,7 @@
 _ = require 'underscore'
 sd = require('sharify').data
 Backbone = require 'backbone'
-CurrentUser = require '../../../models/current_user.coffee'
+CurrentUser = require '../../../models/current_user'
 Profile = require '../../../models/profile.coffee'
 initCarousel = require '../../../components/merry_go_round/bottom_nav_mgr.coffee'
 metaphysics = require '../../../../lib/metaphysics2.coffee'
@@ -9,7 +9,7 @@ ViewHelpers = require '../helpers/view_helpers.coffee'
 query = require '../query.coffee'
 { openAuthModal } = require '../../../lib/openAuthModal'
 { ModalType } = require "../../../../v2/Components/Authentication/Types"
-{ Following, FollowButton } = require '../../../components/follow_button/index.coffee'
+{ Following, FollowButton } = require '../../../components/follow_button/index'
 { Intent, ContextModule } = require "@artsy/cohesion"
 
 pastFairsTemplate = -> require('../templates/past_fairs.jade') arguments...

@@ -1,5 +1,5 @@
 import { index } from "../routes"
-const CurrentUser = require("desktop/models/current_user.coffee")
+const CurrentUser = require("desktop/models/current_user")
 
 jest.mock("@artsy/stitch", () => ({
   stitch: jest.fn(),

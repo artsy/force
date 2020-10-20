@@ -1,6 +1,6 @@
 bootstrap = require '../../../components/layout/bootstrap.coffee'
 sd = require('sharify').data
-CurrentUser = require '../../../models/current_user.coffee'
+CurrentUser = require '../../../models/current_user'
 Profile = require '../../../models/profile.coffee'
 FollowProfiles = require '../../../collections/follow_profiles.coffee'
 FollowButtonView = require '../../../components/follow_button/view.coffee'

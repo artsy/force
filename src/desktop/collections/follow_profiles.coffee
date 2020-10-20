@@ -1,7 +1,7 @@
 _ = require 'underscore'
 sd = require('sharify').data
 Backbone = require 'backbone'
-CurrentUser = require '../models/current_user.coffee'
+CurrentUser = require '../models/current_user'
 FollowProfile = require '../models/follow_profile.coffee'
 
 #
@@ -46,7 +46,7 @@ module.exports = class FollowProfiles extends Backbone.Collection
 
   follow: (profileId, options={}) ->
     window.analytics.track("Followed profile", { message: "Follow profile" })
-    
+
     error = options.error
     options.error = (model, response, options) =>
       @remove model

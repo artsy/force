@@ -1,5 +1,5 @@
 _ = require 'underscore'
-CurrentUser = require '../../../../models/current_user.coffee'
+CurrentUser = require '../../../../models/current_user'
 SaveControls = require './../artwork_item_metaphysics/save_controls/view.coffee'
 { ContextModule } = require "@artsy/cohesion"
 

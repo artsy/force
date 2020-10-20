@@ -53,10 +53,7 @@ const ArtistSeriesApp: React.FC<ArtistSeriesAppProps> = ({ artistSeries }) => {
                   <OtherArtistSeriesRail
                     artist={railArtist[0]}
                     title="Series by this artist"
-                    contextPageOwnerId={internalID}
-                    contextPageOwnerSlug={slug}
                     contextModule={ContextModule.moreSeriesByThisArtist}
-                    contextPageOwnerType={OwnerType.artistSeries}
                   />
                 </LazyLoadComponent>
               )}

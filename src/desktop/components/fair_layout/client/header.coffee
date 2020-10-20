@@ -5,7 +5,7 @@ Profile = require '../../../models/profile.coffee'
 Fair = require '../../../models/fair.coffee'
 { openAuthModal } = require '../../../lib/openAuthModal'
 { ModalType } = require "../../../../v2/Components/Authentication/Types"
-CurrentUser = require '../../../models/current_user.coffee'
+CurrentUser = require '../../../models/current_user'
 FlashMessage = require '../../flash/index.coffee'
 { Intent, ContextModule } = require "@artsy/cohesion"
 
