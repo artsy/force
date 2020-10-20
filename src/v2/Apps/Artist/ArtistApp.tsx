@@ -25,7 +25,10 @@ import { LazyLoadComponent } from "react-lazy-load-image-component"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtistHeaderFragmentContainer as ArtistHeader } from "./Components/ArtistHeader"
 import { StyledLink } from "./Components/StyledLink"
-import { AnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
+import {
+  AnalyticsContext,
+  useAnalyticsContext,
+} from "v2/Artsy/Analytics/AnalyticsContext"
 
 export interface ArtistAppProps {
   artist: ArtistApp_artist
@@ -142,13 +145,14 @@ export const ArtistApp: React.FC<ArtistAppProps> = props => {
 
 const TrackingWrappedArtistApp: React.FC<ArtistAppProps> = props => {
   const {
-    artist: { internalID, slug },
+    artist: { internalID },
   } = props
+  const { contextPageOwnerSlug, contextPageOwnerType } = useAnalyticsContext()
   // FIXME: old schema to be deprecated - new events use AnalyticsContext
   const Component = track<ArtistAppProps>(_p => ({
     context_page: Schema.PageName.ArtistPage,
     context_page_owner_id: internalID,
-    context_page_owner_slug: slug,
+    context_page_owner_slug: contextPageOwnerSlug,
     context_page_owner_type: Schema.OwnerType.Artist,
   }))(ArtistApp)
 
@@ -156,6 +160,8 @@ const TrackingWrappedArtistApp: React.FC<ArtistAppProps> = props => {
     <AnalyticsContext.Provider
       value={{
         contextPageOwnerId: internalID,
+        contextPageOwnerSlug,
+        contextPageOwnerType,
       }}
     >
       <Component {...props} />

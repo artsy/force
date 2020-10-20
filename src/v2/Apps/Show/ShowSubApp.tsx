@@ -8,13 +8,18 @@ import { Footer } from "v2/Components/Footer"
 import { ErrorPage } from "v2/Components/ErrorPage"
 import { BackLink } from "v2/Components/Links/BackLink"
 import { ShowMetaFragmentContainer as ShowMeta } from "./Components/ShowMeta"
-import { AnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
+import {
+  AnalyticsContext,
+  useAnalyticsContext,
+} from "v2/Artsy/Analytics/AnalyticsContext"
 
 interface ShowAppProps {
   show: ShowSubApp_show
 }
 
 const ShowApp: React.FC<ShowAppProps> = ({ children, show }) => {
+  const { contextPageOwnerSlug, contextPageOwnerType } = useAnalyticsContext()
+
   if (!show) return <ErrorPage code={404} />
 
   return (
@@ -25,6 +30,8 @@ const ShowApp: React.FC<ShowAppProps> = ({ children, show }) => {
         <AnalyticsContext.Provider
           value={{
             contextPageOwnerId: show.internalID,
+            contextPageOwnerSlug,
+            contextPageOwnerType,
           }}
         >
           <HorizontalPadding>

@@ -11,10 +11,7 @@ import { buildUrlForCollectApp } from "v2/Apps/Collect/Utils/urlBuilder"
 import { AppContainer } from "v2/Apps/Components/AppContainer"
 
 import { useTracking } from "v2/Artsy/Analytics"
-import {
-  useAnalyticsContext,
-  withAnalyticsContext,
-} from "v2/Artsy/Analytics/AnalyticsContext"
+import { useAnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
 import { FrameWithRecentlyViewed } from "v2/Components/FrameWithRecentlyViewed"
 import { BreadCrumbList } from "v2/Components/Seo"
 
@@ -139,17 +136,14 @@ export const CollectApp: React.FC<CollectAppProps> = ({
   )
 }
 
-export const CollectAppFragmentContainer = createFragmentContainer(
-  withAnalyticsContext(CollectApp),
-  {
-    marketingHubCollections: graphql`
-      fragment Collect_marketingHubCollections on MarketingCollection
-        @relay(plural: true) {
-        ...CollectionsHubsNav_marketingHubCollections
-      }
-    `,
-  }
-)
+export const CollectAppFragmentContainer = createFragmentContainer(CollectApp, {
+  marketingHubCollections: graphql`
+    fragment Collect_marketingHubCollections on MarketingCollection
+      @relay(plural: true) {
+      ...CollectionsHubsNav_marketingHubCollections
+    }
+  `,
+})
 
 // Top-level route needs to be exported for bundle splitting in the router
 export default CollectAppFragmentContainer
