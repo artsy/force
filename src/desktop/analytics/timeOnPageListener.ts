@@ -2,8 +2,14 @@ import { trackEvent } from "./helpers"
 import { timeOnPage } from "@artsy/cohesion"
 import { getPageTypeFromClient } from "lib/getPageType"
 
+let interval
+
 export const timeOnPageListener = (delay: number = 15000) => {
-  setTimeout(() => {
+  if (interval) {
+    clearInterval(interval)
+  }
+
+  interval = setTimeout(() => {
     const { pageType, pageSlug } = getPageTypeFromClient()
     const pathname = new URL(window.location.href).pathname
 

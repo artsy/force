@@ -71,7 +71,12 @@ export const RouterLink: React.FC<RouterLinkProps> = ({
         href={to as string}
         className={(props as LinkPropsSimple).className}
         style={Object.assign(styleProps, (props as LinkPropsSimple).style)}
-        {...omit(props, ["activeClassName", "hasLighterTextColor"])}
+        {...omit(props, [
+          "activeClassName",
+          "alignItems",
+          "hasLighterTextColor",
+          "underlineBehavior",
+        ])}
       >
         {children}
       </a>
