@@ -20,9 +20,9 @@ if [ "${NODE_ENV}" != "production" ]; then
     echo
     echo "WARNING! You are already debugging another node process!"
     echo
-    echo "    force will start without --inspect-brk unless you kill the other process"
+    echo "    force will start without --inspect unless you kill the other process"
   else
-    OPT+=(--inspect-brk)
+    OPT+=(--inspect)
   fi
 
   yarn relay --watch & BUILD_CLIENT=true exec node "${OPT[@]}" ./src
