@@ -6060,7 +6060,7 @@ cors@2.8.3:
     object-assign "^4"
     vary "^1"
 
-cosmiconfig@^5.0.5, cosmiconfig@^5.2.1:
+cosmiconfig@^5.0.5, cosmiconfig@^5.1.0, cosmiconfig@^5.2.1:
   version "5.2.1"
   resolved "https://registry.yarnpkg.com/cosmiconfig/-/cosmiconfig-5.2.1.tgz#040f726809c591e77a17c0a3626ca45b4f168b1a"
   integrity sha512-H65gsXo1SKjf8zmrJ67eJk8aIRKV5ff2D4uKZIBZShbhGSpEmsQOPW/SKMKYhSTrqR7ufy6RP69rPogdaPh/kA==
@@ -14969,6 +14969,15 @@ pug@2.0.3:
     pug-parser "^5.0.0"
     pug-runtime "^2.0.4"
     pug-strip-comments "^1.0.3"
+
+pull-lock@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/pull-lock/-/pull-lock-1.0.0.tgz#6a0ab2719a3b7e6f49838b52168a30b8fdd84188"
+  integrity sha512-DKc72YeAuRSv9jEPMKoRA5xMs9THQ9kUExSR8WsZPhnLvBgnJ1evXxYPSIpQsmEA6yQYWSt9Uy1EX1/TNyvdXQ==
+  dependencies:
+    cosmiconfig "^5.1.0"
+    debug "^4.1.1"
+    execa "^1.0.0"
 
 pump@^2.0.0:
   version "2.0.1"
