@@ -5,6 +5,7 @@ import { graphql } from "react-relay"
 import { Title } from "react-head"
 import { FairApp_QueryRawResponse } from "v2/__generated__/FairApp_Query.graphql"
 import { useTracking } from "react-tracking"
+import { OwnerType } from "@artsy/cohesion"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
@@ -128,7 +129,15 @@ describe("FairApp", () => {
     return renderRelayTree({
       Component: ({ fair }) => {
         return (
-          <MockBoot>
+          <MockBoot
+            context={{
+              analytics: {
+                contextPageOwnerId: "bson-fair",
+                contextPageOwnerSlug: "miart-2020",
+                contextPageOwnerType: OwnerType.fair,
+              },
+            }}
+          >
             <FairApp fair={fair} />
           </MockBoot>
         )

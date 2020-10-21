@@ -4,7 +4,6 @@ import { routes } from "v2/Apps/FeatureAKG/routes"
 // @ts-ignore
 import JSONPage from "../../components/json_page"
 import React from "react"
-import { buildServerAppContext } from "desktop/lib/buildServerAppContext"
 import { NextFunction, Request, Response } from "express"
 
 export const landingPage = async (
@@ -25,10 +24,10 @@ export const landingPage = async (
       styleTags,
       scripts,
     } = await buildServerApp({
-      context: buildServerAppContext(req, res, { injectedData: data }),
+      req,
+      res,
+      context: { injectedData: data },
       routes: routes,
-      url: req.url,
-      userAgent: req.header("User-Agent"),
     })
 
     if (redirect) {

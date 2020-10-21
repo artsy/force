@@ -33,8 +33,8 @@ interface RelatedWorksArtworkGridState {
   context_module: Schema.ContextModule.RelatedWorks,
 })
 class RelatedWorksArtworkGrid extends React.Component<
-RelatedWorksArtworkGridProps,
-RelatedWorksArtworkGridState
+  RelatedWorksArtworkGridProps,
+  RelatedWorksArtworkGridState
 > {
   state = {
     isLoading: false,
@@ -103,15 +103,15 @@ RelatedWorksArtworkGridState
                   {this.state.isLoading ? (
                     <Spinner />
                   ) : (
-                      <ArtworkGrid
-                        contextModule={ContextModule.relatedWorksRail}
-                        artworks={artworksConnection}
-                        columnCount={[2, 3, 4]}
-                        preloadImageCount={0}
-                        mediator={mediator}
-                        onBrickClick={this.trackBrickClick.bind(this)}
-                      />
-                    )}
+                    <ArtworkGrid
+                      contextModule={ContextModule.relatedWorksRail}
+                      artworks={artworksConnection}
+                      columnCount={[2, 3, 4]}
+                      preloadImageCount={0}
+                      mediator={mediator}
+                      onBrickClick={this.trackBrickClick.bind(this)}
+                    />
+                  )}
                 </ArtworksContainer>
               </Tab>
             )

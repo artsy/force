@@ -10,6 +10,7 @@ import { ViewingRoomApp_ClosedTest_QueryRawResponse } from "v2/__generated__/Vie
 import { ViewingRoomApp_UnfoundTest_QueryRawResponse } from "v2/__generated__/ViewingRoomApp_UnfoundTest_Query.graphql"
 import { ViewingRoomApp_LoggedOutTest_QueryRawResponse } from "v2/__generated__/ViewingRoomApp_LoggedOutTest_Query.graphql.ts"
 import { Breakpoint } from "@artsy/palette"
+import { mockLocation } from "v2/DevTools/mockLocation"
 
 jest.useFakeTimers()
 jest.unmock("react-relay")
@@ -30,6 +31,7 @@ describe("ViewingRoomApp", () => {
   const slug = "subscription-demo-gg-guy-yanai"
 
   beforeEach(() => {
+    mockLocation()
     user = { id: "blah" }
     mediator = { trigger: jest.fn() }
     window.history.pushState({}, "Viewing Room Title", slug)
@@ -305,12 +307,14 @@ describe("ViewingRoomApp", () => {
       return renderRelayTree({
         Component: ({ viewingRoom }) => {
           return (
-            <MockBoot breakpoint={breakpoint}>
-              <SystemContextProvider mediator={mediator} user={user}>
-                <ViewingRoomApp viewingRoom={viewingRoom}>
-                  some child
-                </ViewingRoomApp>
-              </SystemContextProvider>
+            <MockBoot
+              breakpoint={breakpoint}
+              user={user}
+              context={{ mediator }}
+            >
+              <ViewingRoomApp viewingRoom={viewingRoom}>
+                some child
+              </ViewingRoomApp>
             </MockBoot>
           )
         },
@@ -345,12 +349,14 @@ describe("ViewingRoomApp", () => {
       return renderRelayTree({
         Component: ({ viewingRoom }) => {
           return (
-            <MockBoot breakpoint={breakpoint}>
-              <SystemContextProvider mediator={mediator} user={null}>
-                <ViewingRoomApp viewingRoom={viewingRoom}>
-                  some child
-                </ViewingRoomApp>
-              </SystemContextProvider>
+            <MockBoot
+              breakpoint={breakpoint}
+              user={null}
+              context={{ mediator }}
+            >
+              <ViewingRoomApp viewingRoom={viewingRoom}>
+                some child
+              </ViewingRoomApp>
             </MockBoot>
           )
         },

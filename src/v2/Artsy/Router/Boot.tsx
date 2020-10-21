@@ -18,10 +18,12 @@ import {
   MediaContextProvider,
   ResponsiveProvider,
 } from "v2/Utils/Responsive"
+import { AnalyticsContext } from "../Analytics/AnalyticsContext"
+import { ClientContext } from "desktop/lib/buildClientAppContext"
 
 export interface BootProps {
   children: React.ReactNode
-  context: object
+  context: ClientContext
   headTags?: JSX.Element[]
   onlyMatchMediaQueries?: MatchingMediaQueries
   relayEnvironment: Environment
@@ -64,23 +66,25 @@ export const Boot = track(null, {
       <HeadProvider headTags={headTags}>
         <StateProvider>
           <SystemContextProvider {...contextProps}>
-            <ErrorBoundary>
-              <MediaContextProvider onlyMatch={onlyMatchMediaQueries}>
-                <ResponsiveProvider
-                  mediaQueries={themeProps.mediaQueries}
-                  initialMatchingMediaQueries={onlyMatchMediaQueries as any}
-                >
-                  <Grid fluid maxWidth="100%">
-                    <GlobalStyles />
-                    <FocusVisible />
-                    {children}
-                    {process.env.NODE_ENV === "development" && (
-                      <BreakpointVisualizer />
-                    )}
-                  </Grid>
-                </ResponsiveProvider>
-              </MediaContextProvider>
-            </ErrorBoundary>
+            <AnalyticsContext.Provider value={context?.analytics}>
+              <ErrorBoundary>
+                <MediaContextProvider onlyMatch={onlyMatchMediaQueries}>
+                  <ResponsiveProvider
+                    mediaQueries={themeProps.mediaQueries}
+                    initialMatchingMediaQueries={onlyMatchMediaQueries as any}
+                  >
+                    <Grid fluid maxWidth="100%">
+                      <GlobalStyles />
+                      <FocusVisible />
+                      {children}
+                      {process.env.NODE_ENV === "development" && (
+                        <BreakpointVisualizer />
+                      )}
+                    </Grid>
+                  </ResponsiveProvider>
+                </MediaContextProvider>
+              </ErrorBoundary>
+            </AnalyticsContext.Provider>
           </SystemContextProvider>
         </StateProvider>
       </HeadProvider>

@@ -27,6 +27,7 @@ import { RouterConfig } from "./"
 import { trackingMiddleware } from "v2/Artsy/Analytics/trackingMiddleware"
 import { RenderError, RenderPending, RenderReady } from "./RenderStatus"
 import { shouldUpdateScroll } from "./Utils/shouldUpdateScroll"
+import { buildClientAppContext } from "desktop/lib/buildClientAppContext"
 
 interface Resolve {
   ClientApp: ComponentType<any>
@@ -43,14 +44,13 @@ export function buildClientApp(config: RouterConfig): Promise<Resolve> {
         initialRoute = "/",
         routes = [],
       } = config
+      const clientContext = buildClientAppContext(context)
 
-      const user = getUser(context.user)
-      const relayEnvironment =
-        context.relayEnvironment ||
-        createRelaySSREnvironment({
-          cache: JSON.parse(window.__RELAY_BOOTSTRAP__ || "{}"),
-          user,
-        })
+      const user = getUser(clientContext.user)
+      const relayEnvironment = createRelaySSREnvironment({
+        cache: JSON.parse(window.__RELAY_BOOTSTRAP__ || "{}"),
+        user,
+      })
 
       const getHistoryProtocol = () => {
         switch (history.protocol) {
@@ -104,7 +104,7 @@ export function buildClientApp(config: RouterConfig): Promise<Resolve> {
       const ClientApp = () => {
         return (
           <Boot
-            context={context}
+            context={clientContext}
             user={user}
             relayEnvironment={relayEnvironment}
             routes={routes}

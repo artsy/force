@@ -11,23 +11,28 @@ import { ErrorPage } from "v2/Components/ErrorPage"
 import { ArtistSeriesRailFragmentContainer as OtherArtistSeriesRail } from "v2/Components/ArtistSeriesRail/ArtistSeriesRail"
 import { ArtistSeriesMetaFragmentContainer as ArtistSeriesMeta } from "./Components/ArtistSeriesMeta"
 import { LazyLoadComponent } from "react-lazy-load-image-component"
-import { ContextModule, OwnerType } from "@artsy/cohesion"
+import { ContextModule } from "@artsy/cohesion"
 import { Media } from "v2/Utils/Responsive"
-import { AnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
+import {
+  AnalyticsContext,
+  useAnalyticsContext,
+} from "v2/Artsy/Analytics/AnalyticsContext"
 
 interface ArtistSeriesAppProps {
   artistSeries: ArtistSeriesApp_artistSeries
 }
 
 const ArtistSeriesApp: React.FC<ArtistSeriesAppProps> = ({ artistSeries }) => {
+  const { contextPageOwnerType, contextPageOwnerSlug } = useAnalyticsContext()
+
   if (artistSeries) {
-    const { railArtist, internalID, slug } = artistSeries
+    const { railArtist, internalID } = artistSeries
     return (
       <AnalyticsContext.Provider
         value={{
           contextPageOwnerId: internalID,
-          contextPageOwnerSlug: slug,
-          contextPageOwnerType: OwnerType.artistSeries,
+          contextPageOwnerSlug,
+          contextPageOwnerType,
         }}
       >
         <AppContainer maxWidth="100%">

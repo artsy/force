@@ -5,13 +5,12 @@ import { getAppRoutes } from "v2/Apps/getAppRoutes"
 import { stitch } from "@artsy/stitch"
 import { flatten } from "lodash"
 
-import { buildServerAppContext } from "desktop/lib/buildServerAppContext"
 import { handleArtworkImageDownload } from "./apps/artwork/artworkMiddleware"
 import { artistMiddleware } from "./apps/artist/artistMiddleware"
 import { userRequiredMiddleware } from "./middleware/userRequiredMiddleware"
 import { searchMiddleware } from "./apps/search/searchMiddleware"
 import { handleCollectionToArtistSeriesRedirect } from "./apps/collection/collectionMiddleware"
-import { getPageTypeFromReq } from "lib/getPageType"
+import { getContextPageFromReq } from "lib/getContextPage"
 
 export const app = express()
 
@@ -59,8 +58,7 @@ app.get(
    */
   async (req: Request, res, next) => {
     try {
-      const { pageType } = getPageTypeFromReq(req)
-
+      const { pageType } = getContextPageFromReq(req)
       const {
         status,
         styleTags,
@@ -69,10 +67,9 @@ app.get(
         bodyHTML,
         headTags,
       } = await buildServerApp({
-        context: buildServerAppContext(req, res),
+        req,
+        res,
         routes: getAppRoutes(),
-        url: req.url,
-        userAgent: req.header("User-Agent"),
       })
 
       if (redirect) {

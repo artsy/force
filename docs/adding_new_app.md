@@ -67,7 +67,7 @@ Extending the example above, lets add a server-side redirect if the user isn't l
 
 ```tsx
 export function myNewAppNameMiddleware(req, res, next) {
-  const { pageType, pageParts } = getPageType(req)
+  const { pageType, pageParts } = getContextPageFromReq(req)
 
   if (pageType === "myNewApp") {
     if (!res.locals.sd.CURRENT_USER) {

@@ -3,19 +3,19 @@
  */
 
 import { SystemContextConsumer } from "v2/Artsy"
-import { createRelaySSREnvironment } from "v2/Artsy/Relay/createRelaySSREnvironment"
 import {
   ServerRouterConfig,
   __TEST_INTERNAL_SERVER_APP__,
   buildServerApp,
 } from "v2/Artsy/Router/buildServerApp"
-import { createMockNetworkLayer } from "v2/DevTools"
 import { render } from "enzyme"
 import React from "react"
 import ReactDOMServer from "react-dom/server"
 import { Title } from "react-head"
 import { graphql } from "react-relay"
 import { Media } from "v2/Utils/Responsive"
+import { Request, Response } from "express"
+import { createMockNetworkLayer } from "v2/DevTools/createMockNetworkLayer"
 
 jest.unmock("react-relay")
 
@@ -34,14 +34,32 @@ jest.mock("@loadable/server", () => ({
 const defaultComponent = () => <div>hi!</div>
 
 describe("buildServerApp", () => {
-  const getWrapper = async ({
-    url = "/",
-    Component = defaultComponent,
-    ...options
-  }: { Component?: React.ComponentType } & Pick<
+  let res: Response
+  let req: Request
+  let options: Pick<
     ServerRouterConfig,
     Exclude<keyof ServerRouterConfig, "routes">
-  > = {}) => {
+  > = { req, res }
+
+  beforeEach(() => {
+    res = {
+      locals: { sd: {} },
+    } as Response
+    let req = ({
+      path: "/",
+      url: "/",
+      header: jest.fn().mockReturnValue("A random user-agent"),
+    } as unknown) as Request
+    options = {
+      res,
+      req,
+    }
+  })
+
+  const getWrapper = async (
+    Component = defaultComponent,
+    passedOptions = options
+  ) => {
     const result = await buildServerApp({
       routes: [
         {
@@ -60,9 +78,7 @@ describe("buildServerApp", () => {
           `,
         },
       ],
-      url,
-      userAgent: "A random user-agent",
-      ...options,
+      ...passedOptions,
     })
     const ServerApp = Object.getOwnPropertyDescriptor(
       result,
@@ -108,19 +124,19 @@ describe("buildServerApp", () => {
   })
 
   it("resolves with a 200 status if url matches request", async () => {
-    const { status } = await getWrapper({ url: "/" })
+    const { status } = await getWrapper()
     expect(status).toEqual(200)
   })
 
   it("resolves with a 404 status if url does not match request", async () => {
-    const { status } = await getWrapper({ url: "/bad-url" })
+    options.req.url = "/bad-url"
+    const { status } = await getWrapper(defaultComponent, options)
     expect(status).toEqual(404)
   })
 
   it("resolves with headTags if react-head components present", async () => {
-    const { headTags } = await getWrapper({
-      Component: () => <Title>test</Title>,
-    })
+    const component = () => <Title>test</Title>
+    const { headTags } = await getWrapper(component)
     // Enzyme won't render the right results for the title for whatever reason
     // It renders fine with renderToString though. ¯\_(ツ)_/¯
     expect(headTags[headTags.length - 1].type).toBe("title")
@@ -133,6 +149,8 @@ describe("buildServerApp", () => {
         <SystemContextConsumer>
           {context => {
             expect(Object.keys(context).sort()).toEqual([
+              "analytics",
+              "initialMatchingMediaQueries",
               "isEigen",
               "isFetching",
               "mediator",
@@ -151,14 +169,7 @@ describe("buildServerApp", () => {
       )
     }
 
-    await getWrapper({
-      Component: HomeApp,
-      context: {
-        mediator: {
-          trigger: jest.fn(),
-        },
-      },
-    })
+    await getWrapper(HomeApp)
   })
 
   it("passes along rendered css", async () => {
@@ -185,10 +196,8 @@ describe("buildServerApp", () => {
     )
 
     it("renders all media queries when no user-agent exists", async () => {
-      const { wrapper } = await getWrapper({
-        Component: MediaComponent,
-        userAgent: undefined,
-      })
+      options.req.header = jest.fn().mockReturnValue(undefined)
+      const { wrapper } = await getWrapper(MediaComponent, options)
       expect(
         wrapper
           .find("span")
@@ -198,10 +207,9 @@ describe("buildServerApp", () => {
     })
 
     it("renders all media queries for unknown devices", async () => {
-      const { wrapper } = await getWrapper({
-        Component: MediaComponent,
-        userAgent: "Unknown device",
-      })
+      options.req.header = jest.fn().mockReturnValue("Unknown device")
+      const { wrapper } = await getWrapper(MediaComponent, options)
+
       expect(
         wrapper
           .find("span")
@@ -211,10 +219,11 @@ describe("buildServerApp", () => {
     })
 
     it("renders some media queries for known devices", async () => {
-      const { wrapper } = await getWrapper({
-        Component: MediaComponent,
-        userAgent: "Something iPhone; something",
-      })
+      options.req.header = jest
+        .fn()
+        .mockReturnValue("Something iPhone; something")
+      const { wrapper } = await getWrapper(MediaComponent, options)
+
       expect(
         wrapper
           .find("span")
@@ -226,29 +235,43 @@ describe("buildServerApp", () => {
 
   describe("concerning GraphQL errors", () => {
     const consoleError = console.error
+    jest.mock("v2/Artsy/Relay/createRelaySSREnvironment", () => ({
+      createRelaySSREnvironment: jest.fn(),
+    }))
+
+    const createRelaySSREnvironment = require("v2/Artsy/Relay/createRelaySSREnvironment")
+      .createRelaySSREnvironment as jest.Mock
 
     beforeAll(() => {
+      // @ts-ignore
+      global.fetch = jest.fn().mockResolvedValueOnce({
+        ok: null,
+        json: jest.fn(),
+      })
       console.error = jest.fn()
     })
 
     afterAll(() => {
       console.error = consoleError
+      // @ts-ignore
+      global.fetch.mockRestore()
     })
 
     it("rejects with a GraphQL error", async () => {
-      const relayNetwork = createMockNetworkLayer({
-        Query: () => ({
-          me: () => {
-            throw new Error("Oh noes")
-          },
-        }),
-      })
-      const relayEnvironment = createRelaySSREnvironment({ relayNetwork })
-      try {
-        await getWrapper({
-          url: "/relay",
-          context: { relayEnvironment },
+      const relay = () => {
+        const relayNetwork = createMockNetworkLayer({
+          Query: () => ({
+            me: () => {
+              throw new Error("Oh noes")
+            },
+          }),
         })
+        return createRelaySSREnvironment({ relayNetwork })
+      }
+      createRelaySSREnvironment.mockReturnValue(relay())
+
+      try {
+        await getWrapper(defaultComponent, options)
       } catch (error) {
         expect(error.message).toMatch(/Oh noes/)
       }

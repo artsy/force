@@ -12,7 +12,7 @@ import {
   getFarceResult,
 } from "found/server"
 import qs from "qs"
-
+import { Request, Response } from "express"
 import { createQueryMiddleware } from "farce"
 
 import { createRelaySSREnvironment } from "v2/Artsy/Relay/createRelaySSREnvironment"
@@ -32,6 +32,8 @@ import { ChunkExtractor } from "@loadable/server"
 import { getENV } from "v2/Utils/getENV"
 import { PermanentRedirectException } from "v2/Artsy/Router/PermanentRedirectException"
 import RelayServerSSR from "react-relay-network-modern-ssr/lib/server"
+import { buildServerAppContext } from "desktop/lib/buildServerAppContext"
+import { RouteConfig } from "found"
 
 export interface ServerAppResolve {
   bodyHTML?: string
@@ -48,7 +50,12 @@ const MediaStyle = createMediaStyle()
 const logger = createLogger("Artsy/Router/buildServerApp.tsx")
 
 export interface ServerRouterConfig extends RouterConfig {
-  userAgent?: string
+  req: Request
+  res: Response
+  routes: RouteConfig[]
+  context?: {
+    injectedData?: any
+  }
 }
 
 export function buildServerApp(
@@ -56,11 +63,11 @@ export function buildServerApp(
 ): Promise<ServerAppResolve> {
   return new Promise(async (resolve, reject) => {
     try {
-      const { context = {}, routes = [], url, userAgent } = config
-      const user = getUser(context.user)
-      const relayEnvironment =
-        context.relayEnvironment ||
-        createRelaySSREnvironment({ user, userAgent })
+      const { context = {}, routes = [], res, req } = config
+      const serverContext = buildServerAppContext(req, res, context)
+      const userAgent = req.header("User-Agent")
+      const user = getUser(serverContext.user)
+      const relayEnvironment = createRelaySSREnvironment({ user, userAgent })
       const historyMiddlewares = [
         createQueryMiddleware({
           parse: queryStringParsing,
@@ -76,11 +83,11 @@ export function buildServerApp(
       })
 
       const farceResults = await getFarceResult({
-        url,
+        url: req.url,
         historyMiddlewares,
         routeConfig: createRouteConfig(routes),
         resolver,
-        matchContext: context,
+        matchContext: serverContext,
         render: props => <Render {...props} />,
       })
 
@@ -100,7 +107,7 @@ export function buildServerApp(
         const ServerApp = ({ tags = [] }) => {
           return (
             <Boot
-              context={context}
+              context={serverContext}
               user={user}
               headTags={tags}
               onlyMatchMediaQueries={matchingMediaQueries}

@@ -148,12 +148,13 @@ app.get("/:slug", async (req, res, next) => {
       const {
         ...
       } = await buildServerApp({
+        req,
+        res,
         routes,
-        url: req.url,
-        userAgent: req.header("User-Agent"),
         context: {
-          ...buildServerAppContext(req, res),
-          showMyTest: MY_TEST === "experiment"
+          injectedData: {
+            showMyTest: MY_TEST === "experiment"
+          }
         },
       })
     // Render layout logic
@@ -170,7 +171,9 @@ app.get("/:slug", async (req, res, next) => {
 buildClientApp({
   routes,
   context: {
-    myTest: sd.MY_TEST,
+    injectedData: {
+      myTest: sd.MY_TEST,
+    },
   },
 }).then(({ ClientApp }) => {
   ReactDOM.hydrate(<ClientApp />, document.getElementById("react-root"))

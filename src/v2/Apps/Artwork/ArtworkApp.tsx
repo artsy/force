@@ -20,18 +20,18 @@ import { OtherWorksFragmentContainer as OtherWorks } from "./Components/OtherWor
 import { ArtworkArtistSeriesFragmentContainer as ArtworkArtistSeries } from "./Components/ArtworkArtistSeries"
 import { PricingContextFragmentContainer as PricingContext } from "./Components/PricingContext"
 
-import { SystemContextConsumer } from "v2/Artsy"
-import { track } from "v2/Artsy/Analytics"
+import { Mediator, withSystemContext } from "v2/Artsy"
 import * as Schema from "v2/Artsy/Analytics/Schema"
-// import { trackExperimentViewed } from "v2/Artsy/Analytics/trackExperimentViewed"
 import { useRouteTracking } from "v2/Artsy/Analytics/useRouteTracking"
 import { Footer } from "v2/Components/Footer"
 import { RecentlyViewedQueryRenderer as RecentlyViewed } from "v2/Components/RecentlyViewed"
 import { RouterContext } from "found"
 import { TrackingProp } from "react-tracking"
 import { Media } from "v2/Utils/Responsive"
-import { AnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
-import { OwnerType } from "@artsy/cohesion"
+import {
+  AnalyticsContext,
+  useAnalyticsContext,
+} from "v2/Artsy/Analytics/AnalyticsContext"
 
 export interface Props {
   artwork: ArtworkApp_artwork
@@ -40,10 +40,11 @@ export interface Props {
   routerPathname: string
   shouldTrackPageView: boolean
   me: ArtworkApp_me
+  mediator: Mediator
 }
 
 declare const window: any
-@track()
+
 export class ArtworkApp extends React.Component<Props> {
   /**
    * On mount, trigger a page view and product view
@@ -139,16 +140,15 @@ export class ArtworkApp extends React.Component<Props> {
     }
   }
 
-  enableIntercomForBuyers(mediator) {
+  enableIntercomForBuyers() {
     const {
+      mediator,
       artwork: { is_offerable, is_acquireable },
     } = this.props
-    mediator &&
-      mediator.trigger &&
-      mediator.trigger("enableIntercomForBuyers", {
-        is_offerable,
-        is_acquireable,
-      })
+    mediator.trigger("enableIntercomForBuyers", {
+      is_offerable,
+      is_acquireable,
+    })
   }
 
   renderArtists() {
@@ -181,136 +181,140 @@ export class ArtworkApp extends React.Component<Props> {
   render() {
     const { artwork, me } = this.props
     return (
-      <AnalyticsContext.Provider
-        value={{
-          contextPageOwnerId: artwork.internalID,
-          contextPageOwnerSlug: artwork.slug,
-          contextPageOwnerType: OwnerType.artwork,
-        }}
-      >
-        <AppContainer>
-          <HorizontalPadding>
-            {/* NOTE: react-head automatically moves these tags to the <head> element */}
-            <ArtworkMeta artwork={artwork} />
+      <AppContainer>
+        <HorizontalPadding>
+          {/* NOTE: react-head automatically moves these tags to the <head> element */}
+          <ArtworkMeta artwork={artwork} />
 
+          <Row>
+            <Col sm={8}>
+              <ArtworkBanner artwork={artwork} />
+              <Spacer mb={2} />
+            </Col>
+          </Row>
+
+          {/* Mobile */}
+          <Media at="xs">
             <Row>
-              <Col sm={8}>
-                <ArtworkBanner artwork={artwork} />
-                <Spacer mb={2} />
+              <Col>
+                <ArtworkImageBrowser artwork={artwork} />
+                <ArtworkSidebar artwork={artwork} me={me} />
+                <ArtworkDetails artwork={artwork} />
+                <PricingContext artwork={artwork} />
+                {this.renderArtists()}
               </Col>
             </Row>
+          </Media>
 
-            {/* Mobile */}
-            <Media at="xs">
-              <Row>
-                <Col>
+          {/* Desktop */}
+          <Media greaterThan="xs">
+            <Row>
+              <Col sm={8}>
+                <Box pr={4}>
                   <ArtworkImageBrowser artwork={artwork} />
-                  <ArtworkSidebar artwork={artwork} me={me} />
                   <ArtworkDetails artwork={artwork} />
                   <PricingContext artwork={artwork} />
                   {this.renderArtists()}
-                </Col>
-              </Row>
-            </Media>
-
-            {/* Desktop */}
-            <Media greaterThan="xs">
-              <Row>
-                <Col sm={8}>
-                  <Box pr={4}>
-                    <ArtworkImageBrowser artwork={artwork} />
-                    <ArtworkDetails artwork={artwork} />
-                    <PricingContext artwork={artwork} />
-                    {this.renderArtists()}
-                  </Box>
-                </Col>
-                <Col sm={4}>
-                  <ArtworkSidebar artwork={artwork} me={me} />
-                </Col>
-              </Row>
-            </Media>
-
-            <Row>
-              <Col>
-                <Box mt={3}>
-                  <ArtworkArtistSeries artwork={artwork} />
                 </Box>
               </Col>
-            </Row>
-
-            <Row>
-              <Col>
-                <Box mt={3}>
-                  <OtherWorks artwork={artwork} />
-                </Box>
+              <Col sm={4}>
+                <ArtworkSidebar artwork={artwork} me={me} />
               </Col>
             </Row>
+          </Media>
 
-            {artwork.artist && (
+          <Row>
+            <Col>
+              <Box mt={3}>
+                <ArtworkArtistSeries artwork={artwork} />
+              </Box>
+            </Col>
+          </Row>
+
+          <Row>
+            <Col>
+              <Box mt={3}>
+                <OtherWorks artwork={artwork} />
+              </Box>
+            </Col>
+          </Row>
+
+          {artwork.artist && (
+            <Row>
+              <Col>
+                <RelatedArtists artwork={artwork} />
+              </Col>
+            </Row>
+          )}
+
+          {typeof window !== "undefined" && (
+            <LazyLoadComponent threshold={1000}>
               <Row>
                 <Col>
-                  <RelatedArtists artwork={artwork} />
+                  <RecentlyViewed />
                 </Col>
               </Row>
-            )}
+            </LazyLoadComponent>
+          )}
 
-            {typeof window !== "undefined" && (
-              <LazyLoadComponent threshold={1000}>
-                <Row>
-                  <Col>
-                    <RecentlyViewed />
-                  </Col>
-                </Row>
-              </LazyLoadComponent>
-            )}
+          <Row>
+            <Col>
+              <Separator mt={6} mb={3} />
+              <Footer />
+            </Col>
+          </Row>
 
-            <Row>
-              <Col>
-                <Separator mt={6} mb={3} />
-                <Footer />
-              </Col>
-            </Row>
-
-            <div
-              id="lightbox-container"
-              style={{
-                position: "absolute",
-                top: 0,
-                zIndex: 1100, // over top nav
-              }}
-            />
-            <SystemContextConsumer>
-              {({ mediator }) => <>{this.enableIntercomForBuyers(mediator)}</>}
-            </SystemContextConsumer>
-          </HorizontalPadding>
-        </AppContainer>
-      </AnalyticsContext.Provider>
+          <div
+            id="lightbox-container"
+            style={{
+              position: "absolute",
+              top: 0,
+              zIndex: 1100, // over top nav
+            }}
+          />
+          <>{this.enableIntercomForBuyers()}</>
+        </HorizontalPadding>
+      </AppContainer>
     )
   }
 }
 
-export const ArtworkAppFragmentContainer = createFragmentContainer(
-  (props: Props) => {
-    const {
-      match: {
-        location: { pathname, state },
-      },
-    } = useContext(RouterContext)
+const TrackingWrappedArtworkApp: React.FC<Props> = props => {
+  const {
+    artwork: { internalID },
+  } = props
+  const {
+    match: {
+      location: { pathname, state },
+    },
+  } = useContext(RouterContext)
+  const { contextPageOwnerSlug, contextPageOwnerType } = useAnalyticsContext()
 
-    // Check to see if referrer comes from link interception.
-    // @see interceptLinks.ts
-    const referrer = state && state.previousHref
-    const shouldTrackPageView = useRouteTracking()
+  // Check to see if referrer comes from link interception.
+  // @see interceptLinks.ts
+  const referrer = state && state.previousHref
+  const shouldTrackPageView = useRouteTracking()
 
-    return (
+  return (
+    <AnalyticsContext.Provider
+      value={{
+        contextPageOwnerId: internalID,
+        contextPageOwnerSlug,
+        contextPageOwnerType,
+      }}
+    >
       <ArtworkApp
         {...props}
         routerPathname={pathname}
         referrer={referrer}
         shouldTrackPageView={shouldTrackPageView}
       />
-    )
-  },
+    </AnalyticsContext.Provider>
+  )
+}
+
+export const ArtworkAppFragmentContainer = createFragmentContainer(
+  withSystemContext(TrackingWrappedArtworkApp),
   {
     artwork: graphql`
       fragment ArtworkApp_artwork on Artwork {
