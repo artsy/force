@@ -13,7 +13,7 @@ const rewire = require("rewire")
 const FollowButton = rewire("../view.coffee")
 const { fabricate } = require("@artsy/antigravity")
 const Following = require("../collection")
-const mediator = require("../../../lib/mediator.coffee")
+import { mediator } from "lib/mediator"
 
 describe("FollowButton", function () {
   before(function (done) {

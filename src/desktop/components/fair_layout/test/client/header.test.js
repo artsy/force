@@ -11,7 +11,7 @@ const Profile = require("../../../../models/profile.coffee")
 const Fair = require("../../../../models/fair.coffee")
 const { resolve } = require("path")
 const sinon = require("sinon")
-const mediator = require("../../../../lib/mediator.coffee")
+import { mediator } from "lib/mediator"
 const CurrentUser = require("../../../../models/current_user")
 const { fabricate } = require("@artsy/antigravity")
 

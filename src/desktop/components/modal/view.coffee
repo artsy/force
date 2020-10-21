@@ -1,6 +1,6 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-mediator = require '../../lib/mediator.coffee'
+{ mediator } = require '../../../lib/mediator'
 Transition = require '../mixins/transition.coffee'
 { isTouchDevice } = require '../util/device.coffee'
 Scrollbar = require '../scrollbar/index.coffee'

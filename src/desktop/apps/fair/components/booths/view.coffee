@@ -7,7 +7,7 @@ BorderedPulldown = require '../../../../components/bordered_pulldown/view.coffee
 qs = require 'querystring'
 FilterNav = require '../../../../components/filter/nav/view.coffee'
 deslugify = require '../../../../components/deslugify/index.coffee'
-mediator = require '../../../../lib/mediator.coffee'
+{ mediator } = require '../../../../../lib/mediator'
 { ContextModule } = require "@artsy/cohesion"
 
 navSectionsTemplate = -> require('./nav_sections.jade') arguments...

@@ -16,24 +16,27 @@ export interface ArtworkEventOptions {
 }
 
 /**
- *
+ * Open auction BuyerPremium from artwork page
  */
 export interface BuyerPremiumEventOptions {
   auctionId: string
 }
 
 /**
- * Launch intercom from artwork
+ * Launch intercom from artwork page
  */
 export interface IntercomEventOptions {
   is_offerable: boolean
   is_acquireable: boolean
 }
 
+/**
+ * Logout user and optionally redirect
+ */
 export type LogoutEventOptions = { redirectPath?: string }
 
 /**
- * Open viewInRoom for artwork
+ * Open viewInRoom from artwork page
  */
 export interface ViewInRoomEventOptions {
   dimensions?: any

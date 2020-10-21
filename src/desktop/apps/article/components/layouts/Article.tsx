@@ -5,10 +5,10 @@ import { InfiniteScrollArticle } from "../InfiniteScrollArticle"
 import { shouldAdRender } from "desktop/apps/article/helpers"
 import { handleScrollingAuthModal } from "desktop/lib/openAuthModal"
 import { ContextModule, Intent } from "@artsy/cohesion"
+import { mediator } from "lib/mediator"
 const SuperArticleView = require("desktop/components/article/client/super_article.coffee")
 const ArticleModel = require("desktop/models/article.coffee")
 const Cookies = require("desktop/components/cookies/index.coffee")
-const mediator = require("desktop/lib/mediator.coffee")
 
 export class ArticleLayout extends React.Component<AppProps> {
   componentDidMount() {

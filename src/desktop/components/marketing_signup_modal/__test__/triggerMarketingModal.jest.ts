@@ -2,10 +2,12 @@ import { triggerMarketingModal } from "../triggerMarketingModal"
 import { data as sd } from "sharify"
 import { Intent } from "@artsy/cohesion"
 
-jest.mock("desktop/lib/mediator.coffee", () => ({
-  trigger: jest.fn(),
+jest.mock("lib/mediator", () => ({
+  mediator: {
+    trigger: jest.fn(),
+  },
 }))
-const mediator = require("desktop/lib/mediator.coffee").trigger as jest.Mock
+const mediator = require("lib/mediator").mediator.trigger as jest.Mock
 
 jest.mock("querystring", () => ({
   parse: jest.fn().mockReturnValue({ "m-id": "ca12" }),

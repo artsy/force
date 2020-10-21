@@ -8,8 +8,7 @@ import { ArticleLayout } from "./layouts/Article"
 import { data as sd } from "sharify"
 import { ArticleProps } from "@artsy/reaction/dist/Components/Publishing/Article"
 import { ClassicArticleLayout } from "desktop/apps/article/components/layouts/Classic"
-
-const mediator = require("desktop/lib/mediator.coffee")
+import { mediator } from "lib/mediator"
 
 export interface AppProps extends ArticleProps {
   templates?: {

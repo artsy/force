@@ -1,6 +1,6 @@
 sd = require('sharify').data
 Backbone = require 'backbone'
-mediator = require '../../../lib/mediator.coffee'
+{ mediator } = require '../../../../lib/mediator'
 Artist = require '../../../models/artist.coffee'
 Artworks = require '../../../collections/artworks.coffee'
 AuctionLot = require '../../../models/auction_lot.coffee'

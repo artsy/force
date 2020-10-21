@@ -3,6 +3,13 @@ import { recordArtworkView } from "lib/components/record_artwork_view"
 import { data as sd } from "sharify"
 import { getContextPageFromClient } from "lib/getContextPage"
 import { OwnerType } from "@artsy/cohesion"
+import { mediator } from "lib/mediator"
+import {
+  ArtworkEventOptions,
+  BuyerPremiumEventOptions,
+  IntercomEventOptions,
+  ViewInRoomEventOptions,
+} from "typings/mediator"
 
 export const artworkClient = () => {
   const User = require("desktop/models/user.coffee")
@@ -14,7 +21,6 @@ export const artworkClient = () => {
   const openMultiPageModal = require("desktop/components/multi_page_modal/index.coffee")
 
   const $ = require("jquery")
-  const mediator = require("desktop/lib/mediator.coffee")
   const { pageType, pageSlug } = getContextPageFromClient()
 
   if (pageType === OwnerType.artwork) {
@@ -48,21 +54,27 @@ export const artworkClient = () => {
     })
   }
 
-  mediator.on("launchInquiryFlow", options => {
+  mediator.on("launchInquiryFlow", (options: ArtworkEventOptions) => {
     openInquireableModal(options.artworkId, { ask_specialist: false })
   })
 
-  mediator.on("openBuyNowAskSpecialistModal", options => {
-    openInquireableModal(options.artworkId, { ask_specialist: true })
-  })
+  mediator.on(
+    "openBuyNowAskSpecialistModal",
+    (options: ArtworkEventOptions) => {
+      openInquireableModal(options.artworkId, { ask_specialist: true })
+    }
+  )
 
-  mediator.on("openAuctionAskSpecialistModal", options => {
-    openInquireableModal(
-      options.artworkId,
-      { ask_specialist: true },
-      { is_in_auction: true }
-    )
-  })
+  mediator.on(
+    "openAuctionAskSpecialistModal",
+    (options: ArtworkEventOptions) => {
+      openInquireableModal(
+        options.artworkId,
+        { ask_specialist: true },
+        { is_in_auction: true }
+      )
+    }
+  )
 
   mediator.on("openCollectorFAQModal", () => {
     openMultiPageModal("collector-faqs")
@@ -72,10 +84,10 @@ export const artworkClient = () => {
     openMultiPageModal("auction-faqs")
   })
 
-  mediator.on("openViewInRoom", options => {
+  mediator.on("openViewInRoom", (options: ViewInRoomEventOptions) => {
     try {
-      const { dimensions } = options
-      const { url, width, height } = options.image
+      const { dimensions, image } = options
+      const { url, width, height } = image
 
       let newWidth = width
       let newHeight = height
@@ -122,11 +134,14 @@ export const artworkClient = () => {
     }
   })
 
-  mediator.on("openAuctionBuyerPremium", options => {
-    openAuctionBuyerPremium(options.auctionId)
-  })
+  mediator.on(
+    "openAuctionBuyerPremium",
+    ({ auctionId }: BuyerPremiumEventOptions) => {
+      openAuctionBuyerPremium(auctionId)
+    }
+  )
 
-  mediator.on("enableIntercomForBuyers", options => {
+  mediator.on("enableIntercomForBuyers", (options: IntercomEventOptions) => {
     enableIntercom(options)
   })
 }

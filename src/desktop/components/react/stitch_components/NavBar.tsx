@@ -5,8 +5,7 @@ import { FlashBannerQueryRenderer as FlashBanner } from "v2/Components/FlashBann
 import { data as sd } from "sharify"
 import { SystemContextProps, SystemContextProvider } from "v2/Artsy"
 import { StagingBanner } from "./StagingBanner"
-
-const mediator = require("desktop/lib/mediator.coffee")
+import { mediator } from "lib/mediator"
 
 const NavBarContainer = styled.div`
   z-index: 990;

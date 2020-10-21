@@ -11,8 +11,9 @@ import { initModalManager } from "desktop/apps/authentication/client/index"
 import { Components } from "@artsy/stitch/dist/internal/types"
 import { omit } from "lodash"
 import syncAuth from "lib/syncAuth"
+import { mediator } from "lib/mediator"
+import { LogoutEventOptions } from "typings/mediator"
 
-const mediator = require("./mediator.coffee")
 const FlashMessage = require("../components/flash/index.coffee")
 const templateModules = require("./template_modules.coffee")
 const listenForInvert = require("../components/eggs/invert/index.coffee")
@@ -37,14 +38,15 @@ export function globalClientSetup() {
   mediator.on("auth:logout", logoutEventHandler)
 }
 
-export function logoutEventHandler(path?: string) {
+export const logoutEventHandler = (options?: LogoutEventOptions) => {
+  const redirectPath = options?.redirectPath
   $.ajax({
     url: "/users/sign_out",
     type: "DELETE",
     success() {
       window.analytics.reset()
-      if (path) {
-        location.assign(path)
+      if (redirectPath) {
+        location.assign(redirectPath)
       } else {
         location.reload()
       }

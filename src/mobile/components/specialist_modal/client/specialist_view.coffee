@@ -2,7 +2,7 @@ _ = require 'underscore'
 Backbone = require 'backbone'
 Form = require '../../mixins/form.coffee'
 CurrentUser = require '../../../models/current_user'
-mediator = require '../../../lib/mediator.coffee'
+{ mediator } = require '../../../../lib/mediator'
 sd = require('sharify').data
 
 template = -> require('../templates/form.jade') arguments...

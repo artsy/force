@@ -12,13 +12,14 @@ jest.mock("desktop/components/cookies/index.coffee", () => ({
   get: jest.fn(),
   set: jest.fn(),
 }))
-jest.mock("desktop/lib/mediator.coffee", () => ({
-  trigger: jest.fn(),
-  on: jest.fn(),
+jest.mock("lib/mediator", () => ({
+  mediator: {
+    trigger: jest.fn(),
+    on: jest.fn(),
+  },
 }))
-const mediatorTrigger = require("desktop/lib/mediator.coffee")
-  .trigger as jest.Mock
-const mediatorOn = require("desktop/lib/mediator.coffee").on as jest.Mock
+const mediatorTrigger = require("lib/mediator").mediator.trigger as jest.Mock
+const mediatorOn = require("lib/mediator").mediator.on as jest.Mock
 const qsMock = require("querystring").parse as jest.Mock
 const CookiesGetMock = require("desktop/components/cookies/index.coffee")
   .get as jest.Mock
@@ -39,7 +40,6 @@ describe("AuthWrapper", () => {
   })
 
   afterEach(() => {
-    mediatorOn.mockClear()
     mediatorTrigger.mockClear()
     mediatorOn.mockClear()
     // FIXME: reaction migration

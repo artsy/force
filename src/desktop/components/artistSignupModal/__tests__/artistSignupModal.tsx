@@ -5,9 +5,11 @@ jest.mock("desktop/components/cookies/index.coffee", () => ({
   get: jest.fn(),
   set: jest.fn(),
 }))
-jest.mock("desktop/lib/mediator.coffee", () => ({
-  trigger: jest.fn(),
-  on: jest.fn(),
+jest.mock("lib/mediator", () => ({
+  mediator: {
+    trigger: jest.fn(),
+    on: jest.fn(),
+  },
 }))
 
 const CookiesSetMock = require("desktop/components/cookies/index.coffee")
@@ -16,7 +18,7 @@ const CookiesSetMock = require("desktop/components/cookies/index.coffee")
 const CookiesGetMock = require("desktop/components/cookies/index.coffee")
   .get as jest.Mock
 
-const mediatorOn = require("desktop/lib/mediator.coffee").on as jest.Mock
+const mediatorOn = require("lib/mediator").mediator.on as jest.Mock
 
 jest.mock("lib/metaphysics2.coffee", () =>
   jest.fn().mockReturnValue(Promise.resolve({}))

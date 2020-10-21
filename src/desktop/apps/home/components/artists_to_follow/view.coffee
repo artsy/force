@@ -1,6 +1,6 @@
 Backbone = require 'backbone'
 metaphysics = require '../../../../../lib/metaphysics2.coffee'
-mediator = require '../../../../lib/mediator.coffee'
+{ mediator } = require '../../../../../lib/mediator'
 tabQuery = require './query.coffee'
 artistSuggestionQuery = require './artist_suggestion_query.coffee'
 initCarousel = require '../../../../components/merry_go_round/horizontal_nav_mgr.coffee'
@@ -21,7 +21,7 @@ module.exports = class ArtistsToFollowView extends Backbone.View
   initialize: ({ @user, @state, @results })->
     @listenTo @state, 'change', @selectTab
     @listenTo @state, 'change', @updateResults
-    @listenTo mediator, 'follow-button:follow', @afterFollow
+    mediator.on 'follow-button:follow', @afterFollow
 
   selectTab: (type) ->
     @$(".artists-to-follow-tab.is-active").removeClass('is-active')

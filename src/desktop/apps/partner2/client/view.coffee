@@ -12,7 +12,7 @@ ArtistsView = require './artists.coffee'
 ArticlesView = require './articles.coffee'
 ContactView = require './contact.coffee'
 tablistTemplate = -> require('../templates/tablist.jade') arguments...
-mediator = require '../../../lib/mediator.coffee'
+{ mediator } = require '../../../../lib/mediator'
 { Following, FollowButton } = require '../../../components/follow_button/index'
 require '../../../../lib/promiseDone'
 { ContextModule } = require "@artsy/cohesion"

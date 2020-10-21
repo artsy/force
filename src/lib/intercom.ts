@@ -1,9 +1,14 @@
 const { intercom } = require("./components/intercom/index")
 import { data as sd } from "sharify"
+import { IntercomEventOptions } from "typings/mediator"
 
 // We show an Intercom chat widget on artwork pages where the
 // artwork is commercial (offerable or acquireable).
-export function enableIntercom({ is_offerable, is_acquireable }) {
+
+export function enableIntercom({
+  is_offerable,
+  is_acquireable,
+}: IntercomEventOptions) {
   const {
     INTERCOM_BUYER_ENABLED,
     INTERCOM_BUYER_APP_ID,

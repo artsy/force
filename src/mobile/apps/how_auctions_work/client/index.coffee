@@ -1,7 +1,7 @@
 _ = require 'underscore'
 openMultiPage = require '../../../components/multi_page/index.coffee'
 ModalView = require '../../../components/modal/view.coffee'
-mediator = require '../../../lib/mediator.coffee'
+{ mediator } = require '../../../../lib/mediator'
 bootstrap = require '../../../components/layout/bootstrap.coffee'
 markdown = require '../../../components/util/markdown.coffee'
 sd = require('sharify').data

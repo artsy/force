@@ -1,5 +1,5 @@
 import { test } from "../DOM"
-import mediator from "desktop/lib/mediator.coffee"
+import { mediator } from "lib/mediator"
 
 const { DOM } = test
 
@@ -7,8 +7,10 @@ jest.mock("jquery", x => () => ({
   foo: "bar",
 }))
 
-jest.mock("desktop/lib/mediator.coffee", x => ({
-  trigger: jest.fn(),
+jest.mock("lib/mediator", () => ({
+  mediator: {
+    trigger: jest.fn(),
+  },
 }))
 
 jest.useFakeTimers()

@@ -2,7 +2,7 @@ import { MediatorEventOptions } from "typings/mediator"
 import EventEmitter from "eventemitter3"
 
 export interface Mediator {
-  emitter: any
+  emitter: EventEmitter
   trigger: (action: string, options?: MediatorEventOptions) => void
   on: (event: string, cb?: (payload?: MediatorEventOptions) => void) => void
   off: (event: string) => void
@@ -11,25 +11,26 @@ export interface Mediator {
 
 declare global {
   interface Window {
-    __mediator: Mediator["emitter"]
+    __mediator: EventEmitter
   }
 }
 
-const emitter: Mediator["emitter"] =
+const emitter: EventEmitter =
   typeof window !== "undefined"
     ? window.__mediator || (window.__mediator = new EventEmitter())
     : new EventEmitter()
 
 const trigger: Mediator["trigger"] = (
   eventName: string,
-  options?: MediatorEventOptions
+  options?: MediatorEventOptions,
+  optionalData?: object
 ) => {
-  emitter.emit(eventName, options)
+  emitter.emit(eventName, options, optionalData)
 }
 
 const on: Mediator["on"] = (
   eventName: string,
-  callback: (options?: MediatorEventOptions) => void
+  callback: (options?: MediatorEventOptions, optionalData?: object) => void
 ) => {
   emitter.on(eventName, callback)
 }

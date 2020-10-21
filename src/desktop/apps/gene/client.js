@@ -11,6 +11,7 @@ import { SystemContextProvider } from "v2/Artsy"
 import { ContextModule } from "@artsy/cohesion"
 import { MediaContextProvider } from "v2/Utils/Responsive"
 import { Boot } from "v2/Artsy/Router"
+import { mediator } from "lib/mediator"
 
 const Gene = require("../../models/gene.coffee")
 const CurrentUser = require("../../models/current_user")
@@ -20,7 +21,6 @@ const {
 } = require("../../components/follow_button/index")
 const ShareView = require("../../components/share/view.coffee")
 const blurb = require("../../components/gradient_blurb/index.coffee")
-const mediator = require("desktop/lib/mediator.coffee")
 
 imagesLoaded.makeJQueryPlugin($)
 
