@@ -8,6 +8,7 @@ ShareView = require '../../../components/share/view.coffee'
 RelatedArticlesView = require '../components/related_articles/view.coffee'
 attachFollowArtists = require '../components/follow_artists/index.coffee'
 Show = require '../../../models/show.coffee'
+require("./analytics")
 
 module.exports.ShowView = class ShowView extends Backbone.View
 
