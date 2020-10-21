@@ -1,8 +1,6 @@
 import $ from "jquery"
 import { data as sd } from "sharify"
 import { onAnalyticsReady, trackEvent } from "desktop/analytics/helpers"
-const analyticsHooks = require("../lib/analytics_hooks.coffee")
-const mediator = require("../lib/mediator.coffee")
 const setupSplitTests = require("../components/split_test/setup.coffee")
 window._ = require("underscore")
 window.Cookies = require("cookies-js")
@@ -10,11 +8,6 @@ window.Cookies = require("cookies-js")
 // This event bus also connects to reaction's publishing event emitter because
 // both piggyback on `window`. See Utils/Events for more info.
 const Events = require("../../v2/Utils/Events").default
-
-// All Force mediator events can be hooked into for tracking purposes
-mediator.on("all", (actionName: string, data?: object) =>
-  analyticsHooks.trigger(`mediator:${actionName}`, data)
-)
 
 if (sd.SHOW_ANALYTICS_CALLS) {
   // Log all pageviews
