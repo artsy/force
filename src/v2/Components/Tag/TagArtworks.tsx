@@ -1,6 +1,5 @@
 import { ContextModule } from "@artsy/cohesion"
 import { TagArtworks_tag } from "v2/__generated__/TagArtworks_tag.graphql"
-import { Mediator } from "v2/Artsy"
 import ArtworkGrid from "v2/Components/ArtworkGrid"
 import React from "react"
 import {
@@ -16,6 +15,7 @@ import Headline from "../ArtworkFilter/Headline"
 import TotalCount from "../ArtworkFilter/TotalCount"
 import BorderedPulldown from "../BorderedPulldown"
 import Spinner from "../Spinner"
+import { Mediator } from "lib/mediator"
 
 interface Props extends Filters {
   mediator: Mediator

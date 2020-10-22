@@ -1,12 +1,11 @@
-import { MediatorEventOptions } from "typings/mediator"
 import EventEmitter from "eventemitter3"
 
 export interface Mediator {
   emitter: EventEmitter
-  trigger: (action: string, options?: MediatorEventOptions) => void
-  on: (event: string, cb?: (payload?: MediatorEventOptions) => void) => void
-  off: (event: string) => void
-  once: (event: string, cb?: (payload?: MediatorEventOptions) => void) => void
+  trigger: (eventName: string, options?: unknown) => void
+  on: (eventName: string, cb?: (options?: unknown) => void) => void
+  off: (eventName: string) => void
+  once: (eventName: string, cb?: (options?: unknown) => void) => void
 }
 
 declare global {
@@ -22,15 +21,15 @@ const emitter: EventEmitter =
 
 const trigger: Mediator["trigger"] = (
   eventName: string,
-  options?: MediatorEventOptions,
-  optionalData?: object
+  options?: unknown,
+  optionalData?: unknown
 ) => {
   emitter.emit(eventName, options, optionalData)
 }
 
 const on: Mediator["on"] = (
   eventName: string,
-  callback: (options?: MediatorEventOptions, optionalData?: object) => void
+  callback: (options?: unknown, optionalData?: unknown) => void
 ) => {
   emitter.on(eventName, callback)
 }
@@ -41,7 +40,7 @@ const off: Mediator["off"] = (eventName: string) => {
 
 const once: Mediator["once"] = (
   eventName: string,
-  callback: (options?: MediatorEventOptions) => void
+  callback: (options?: unknown) => void
 ) => {
   emitter.once(eventName, callback)
 }

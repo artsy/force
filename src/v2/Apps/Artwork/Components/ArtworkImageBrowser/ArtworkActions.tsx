@@ -1,5 +1,5 @@
 import { ArtworkActions_artwork } from "v2/__generated__/ArtworkActions_artwork.graphql"
-import { Mediator, SystemContext } from "v2/Artsy"
+import { SystemContext } from "v2/Artsy"
 import { track } from "v2/Artsy/Analytics"
 import * as Schema from "v2/Artsy/Analytics/Schema"
 import SaveButton, { SaveProps, SaveState } from "v2/Components/Artwork/Save"
@@ -34,6 +34,7 @@ import {
 } from "@artsy/palette"
 import { userIsAdmin } from "v2/Utils/user"
 import { ArtworkPopoutPanel } from "./ArtworkPopoutPanel"
+import { Mediator } from "lib/mediator"
 
 interface ArtworkActionsProps {
   artwork: ArtworkActions_artwork

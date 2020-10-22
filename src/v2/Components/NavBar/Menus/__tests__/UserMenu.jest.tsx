@@ -2,6 +2,7 @@ import { SystemContextProvider } from "v2/Artsy"
 import { mount } from "enzyme"
 import React from "react"
 import { UserMenu } from "../UserMenu"
+import { mediator } from "lib/mediator"
 
 jest.mock("v2/Artsy/Analytics/useTracking", () => {
   return {
@@ -12,13 +13,11 @@ jest.mock("v2/Artsy/Analytics/useTracking", () => {
 })
 
 describe("UserMenu", () => {
-  const mediator = {
-    trigger: jest.fn(),
-  }
+  jest.spyOn(mediator, "trigger")
 
   const getWrapper = (props = {}) => {
     return mount(
-      <SystemContextProvider mediator={mediator} user={{}} {...props}>
+      <SystemContextProvider user={{}} {...props}>
         <UserMenu />
       </SystemContextProvider>
     )

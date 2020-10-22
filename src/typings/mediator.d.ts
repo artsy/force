@@ -1,13 +1,5 @@
 import { ModalOptions } from "v2/Components/Authentication/Types"
 
-export type MediatorEventOptions =
-  | ModalOptions
-  | LogoutEventOptions
-  | ArtworkEventOptions
-  | ViewInRoomEventOptions
-  | IntercomEventOptions
-  | BuyerPremiumEventOptions
-
 /**
  * Start an inquiry, or ask a specialist
  */

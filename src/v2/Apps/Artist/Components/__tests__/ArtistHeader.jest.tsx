@@ -1,22 +1,22 @@
 import { ArtistHeader_Test_QueryRawResponse } from "v2/__generated__/ArtistHeader_Test_Query.graphql"
 import { ArtistHeaderFixture } from "v2/Apps/__tests__/Fixtures/Artist/Components/ArtistHeader"
 import { ArtistHeaderFragmentContainer as ArtistHeader } from "v2/Apps/Artist/Components/ArtistHeader"
-import { Mediator, SystemContextProvider } from "v2/Artsy"
+import { SystemContextProvider } from "v2/Artsy"
 import { useTracking } from "v2/Artsy/Analytics/useTracking"
 import { FollowArtistButton } from "v2/Components/FollowButton/FollowArtistButton"
 import { renderRelayTree } from "v2/DevTools"
 import React from "react"
 import { Environment, graphql } from "react-relay"
+import { mediator } from "lib/mediator"
 
 jest.unmock("react-relay")
 jest.mock("v2/Artsy/Analytics/useTracking")
 
 describe("ArtistHeader", () => {
-  let mediator: Mediator
   let trackEvent
   beforeEach(() => {
+    jest.spyOn(mediator, "trigger")
     trackEvent = jest.fn()
-    mediator = { trigger: jest.fn() }
     ;(useTracking as jest.Mock).mockImplementation(() => {
       return {
         trackEvent,
@@ -26,7 +26,7 @@ describe("ArtistHeader", () => {
 
   const getWrapper = async (
     response: ArtistHeader_Test_QueryRawResponse["artist"] = ArtistHeaderFixture,
-    context = { mediator, relayEnvironment: {} as Environment, user: null }
+    context = { relayEnvironment: {} as Environment, user: null }
   ) => {
     return renderRelayTree({
       Component: ({ artist }: any) => {

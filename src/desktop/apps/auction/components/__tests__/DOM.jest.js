@@ -7,12 +7,6 @@ jest.mock("jquery", x => () => ({
   foo: "bar",
 }))
 
-jest.mock("lib/mediator", () => ({
-  mediator: {
-    trigger: jest.fn(),
-  },
-}))
-
 jest.useFakeTimers()
 
 describe("DOM Interactions", () => {
@@ -31,12 +25,12 @@ describe("DOM Interactions", () => {
 
   describe(".handleRegister", () => {
     beforeEach(() => {
+      jest.spyOn(mediator, "trigger")
       mockDispatch.mockReset()
     })
 
     afterEach(() => {
       jest.resetAllMocks()
-      mediator.trigger.mockReset()
     })
     it("user has credit card: opens the conditions of sale modal", () => {
       DOM.prototype.componentDidMount = jest.fn()

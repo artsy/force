@@ -1,8 +1,4 @@
-import {
-  Mediator,
-  SystemContextProvider,
-  useSystemContext,
-} from "v2/Artsy/SystemContext"
+import { SystemContextProvider, useSystemContext } from "v2/Artsy/SystemContext"
 import { mount } from "enzyme"
 import React from "react"
 import { buildAppRoutes } from "../buildAppRoutes"
@@ -23,12 +19,6 @@ jest.mock("v2/Artsy/Analytics/useTracking", () => ({
 }))
 
 describe("buildAppRoutes", () => {
-  const mediator: Mediator = {
-    trigger: jest.fn(),
-    on: jest.fn(),
-    off: jest.fn(),
-  }
-
   it("creates a master route list", () => {
     const routes = buildAppRoutes([
       {
@@ -114,7 +104,7 @@ describe("buildAppRoutes", () => {
     })
 
     mount(
-      <SystemContextProvider mediator={mediator}>
+      <SystemContextProvider>
         <ClientApp />
       </SystemContextProvider>
     )
@@ -139,7 +129,7 @@ describe("buildAppRoutes", () => {
     })
 
     const wrapper = mount(
-      <SystemContextProvider mediator={mediator}>
+      <SystemContextProvider>
         <ClientApp />
       </SystemContextProvider>
     )

@@ -1,4 +1,4 @@
-import { Mediator, useSystemContext } from "v2/Artsy"
+import { useSystemContext } from "v2/Artsy"
 import React from "react"
 import styled from "styled-components"
 import { FlexDirectionProps } from "styled-system"
@@ -17,6 +17,7 @@ import {
   space,
 } from "@artsy/palette"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
+import { Mediator } from "lib/mediator"
 
 const Column = styled(Flex).attrs({
   flex: 1,

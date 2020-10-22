@@ -15,10 +15,10 @@ module.exports = class FooterView extends Backbone.View
     mediator.on 'infinite:scroll:start', @hide
     mediator.on 'infinite:scroll:end', @show
 
-  hide: ->
+  hide: =>
     @$el.hide()
 
-  show: ->
+  show: =>
     @$el.show()
 
   signup: (e) ->

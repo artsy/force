@@ -1,13 +1,7 @@
 import { handleScrollingAuthModal, openAuthModal } from "../openAuthModal"
 import { ModalType } from "v2/Components/Authentication/Types"
 import { ContextModule, Intent } from "@artsy/cohesion"
-
-jest.mock("lib/mediator", () => ({
-  mediator: {
-    trigger: jest.fn(),
-  },
-}))
-const mediator = require("lib/mediator").mediator.trigger as jest.Mock
+import { mediator } from "lib/mediator"
 
 jest.mock("sharify", () => {
   return {
@@ -26,15 +20,16 @@ jest.useFakeTimers()
 
 describe("Authentication Helpers", () => {
   beforeEach(() => {
+    jest.spyOn(mediator, "trigger")
     // @ts-ignore
     window.addEventListener = jest.fn((_type, cb) => cb())
-    window.location.assign = jest.fn()
     sd.IS_MOBILE = false
     sd.CURRENT_USER = null
   })
 
   afterEach(() => {
-    mediator.mockClear()
+    // @ts-ignore
+    mediator.trigger.mockClear()
     // @ts-ignore
     window.addEventListener.mockClear()
   })
@@ -45,7 +40,7 @@ describe("Authentication Helpers", () => {
         intent: Intent.followArtist,
         contextModule: ContextModule.artistHeader,
       })
-      expect(mediator).toBeCalledWith("open:auth", {
+      expect(mediator.trigger).toBeCalledWith("open:auth", {
         contextModule: "artistHeader",
         intent: "followArtist",
         mode: "signup",
@@ -61,7 +56,7 @@ describe("Authentication Helpers", () => {
       })
       expect(window.addEventListener).toBeCalled()
       jest.runAllTimers()
-      expect(mediator).toBeCalledWith("open:auth", {
+      expect(mediator.trigger).toBeCalledWith("open:auth", {
         contextModule: "popUpModal",
         intent: "followArtist",
         mode: "signup",
@@ -77,7 +72,7 @@ describe("Authentication Helpers", () => {
       })
       expect(window.addEventListener).not.toBeCalled()
       jest.runAllTimers()
-      expect(mediator).not.toBeCalled()
+      expect(mediator.trigger).not.toBeCalled()
     })
 
     it("does not open auth if current user", () => {
@@ -88,7 +83,7 @@ describe("Authentication Helpers", () => {
       })
       expect(window.addEventListener).not.toBeCalled()
       jest.runAllTimers()
-      expect(mediator).not.toBeCalled()
+      expect(mediator.trigger).not.toBeCalled()
     })
   })
 })

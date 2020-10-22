@@ -1,5 +1,4 @@
 import { Artists_gene } from "v2/__generated__/Artists_gene.graphql"
-import { Mediator } from "v2/Artsy"
 import { avantgarde } from "v2/Assets/Fonts"
 import React from "react"
 import {
@@ -14,6 +13,8 @@ import { ButtonState } from "../Buttons/Default"
 import Button from "../Buttons/Ghost"
 import Spinner from "../Spinner"
 import ArtistRow from "./ArtistRow"
+import { Mediator } from "lib/mediator"
+import { Clickable } from "@artsy/palette"
 
 const PageSize = 10
 
@@ -39,7 +40,7 @@ const LoadMoreContainer = styled.div`
   align-items: center;
 `
 
-const LoadMoreButton = styled.a`
+const LoadMoreButton = styled(Clickable)`
   font-family: ${avantgarde("s13")};
   cursor: pointer;
   text-transform: uppercase;

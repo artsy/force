@@ -22,17 +22,17 @@ import { RelayProp, commitMutation as _commitMutation } from "react-relay"
 import { ArtworkSidebarCommercialContainer } from "v2/Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarCommercial"
 import { ErrorModal } from "v2/Components/Modal/ErrorModal"
 import { ModalButton } from "v2/Components/Modal/ModalDialog"
-import { MockBoot } from "v2/DevTools"
 import { mockLocation } from "v2/DevTools/mockLocation"
+import { SystemContextProvider } from "v2/Artsy"
+import { mediator } from "lib/mediator"
 
 const commitMutation = _commitMutation as jest.Mock<any>
 
 describe("ArtworkSidebarCommercial", () => {
   let user
-  const mediator = { trigger: jest.fn() }
   const getWrapper = (artwork, otherProps = {}) => {
     return mount(
-      <MockBoot>
+      <SystemContextProvider>
         <ArtworkSidebarCommercialContainer
           artwork={artwork}
           user={user}
@@ -40,11 +40,12 @@ describe("ArtworkSidebarCommercial", () => {
           relay={{ environment: {} } as RelayProp}
           {...otherProps}
         />
-      </MockBoot>
+      </SystemContextProvider>
     )
   }
 
   beforeEach(() => {
+    jest.spyOn(mediator, "trigger")
     user = { id: "blah" }
     window.history.pushState({}, "Artwork Title", "/artwork/the-id")
     commitMutation.mockReset()

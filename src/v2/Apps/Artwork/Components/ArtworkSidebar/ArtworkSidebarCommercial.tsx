@@ -13,7 +13,7 @@ import {
 import { ArtworkSidebarCommercial_artwork } from "v2/__generated__/ArtworkSidebarCommercial_artwork.graphql"
 import { ArtworkSidebarCommercialOfferOrderMutation } from "v2/__generated__/ArtworkSidebarCommercialOfferOrderMutation.graphql"
 import { ArtworkSidebarCommercialOrderMutation } from "v2/__generated__/ArtworkSidebarCommercialOrderMutation.graphql"
-import { Mediator, SystemContext } from "v2/Artsy"
+import { SystemContext } from "v2/Artsy"
 import { track } from "v2/Artsy/Analytics"
 import * as Schema from "v2/Artsy/Analytics/Schema"
 import { ModalType } from "v2/Components/Authentication/Types"
@@ -32,6 +32,7 @@ import { get } from "v2/Utils/get"
 import createLogger from "v2/Utils/logger"
 import { openAuthModal } from "v2/Utils/openAuthModal"
 import { ArtworkSidebarSizeInfoFragmentContainer as SizeInfo } from "./ArtworkSidebarSizeInfo"
+import { Mediator } from "lib/mediator"
 
 type EditionSet = ArtworkSidebarCommercial_artwork["edition_sets"][0]
 

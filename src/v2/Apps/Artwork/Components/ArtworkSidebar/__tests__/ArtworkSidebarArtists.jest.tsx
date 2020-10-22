@@ -5,30 +5,29 @@ import {
   SingleFollowedArtist,
 } from "v2/Apps/__tests__/Fixtures/Artwork/ArtworkSidebar/ArtworkSidebarArtists"
 import { ArtworkSidebarArtistsFragmentContainer } from "v2/Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarArtists"
-import { Mediator, SystemContextProvider } from "v2/Artsy"
+import { SystemContextProvider } from "v2/Artsy"
 import { FollowArtistButton } from "v2/Components/FollowButton/FollowArtistButton"
 import { renderRelayTree } from "v2/DevTools"
 import React from "react"
 import { graphql } from "react-relay"
 import { mockLocation } from "v2/DevTools/mockLocation"
+import { mediator } from "lib/mediator"
 
 jest.unmock("react-relay")
 
 describe("ArtworkSidebarArtists", () => {
-  let mediator: Mediator
   beforeEach(() => {
-    mediator = { trigger: jest.fn() }
+    jest.spyOn(mediator, "trigger")
     mockLocation()
   })
 
   const getWrapper = async (
-    response: ArtworkSidebarArtists_Test_QueryRawResponse["artwork"] = SingleFollowedArtist,
-    context = { mediator, user: null }
+    response: ArtworkSidebarArtists_Test_QueryRawResponse["artwork"] = SingleFollowedArtist
   ) => {
     return await renderRelayTree({
       Component: ({ artwork }: any) => {
         return (
-          <SystemContextProvider {...context}>
+          <SystemContextProvider>
             <ArtworkSidebarArtistsFragmentContainer artwork={artwork} />
           </SystemContextProvider>
         )

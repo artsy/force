@@ -1,7 +1,7 @@
 import React, { Fragment } from "react"
 import ReactDOM from "react-dom"
 import { Article } from "@artsy/reaction/dist/Components/Publishing"
-import { SystemContextProvider } from "@artsy/reaction/dist/Artsy"
+import { Mediator, SystemContextProvider } from "@artsy/reaction/dist/Artsy"
 import { InfiniteScrollNewsArticle } from "./InfiniteScrollNewsArticle"
 import { EditButton } from "desktop/apps/article/components/EditButton"
 import { ArticleLayout } from "./layouts/Article"
@@ -57,7 +57,10 @@ export class App extends React.Component<AppProps> {
     return (
       <Fragment>
         <EditPortal article={article} />
-        <SystemContextProvider user={sd.CURRENT_USER} mediator={mediator}>
+        <SystemContextProvider
+          user={sd.CURRENT_USER}
+          mediator={mediator as Mediator}
+        >
           {this.getArticleLayout()}
         </SystemContextProvider>
       </Fragment>
