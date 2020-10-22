@@ -5,7 +5,6 @@ import { FairApp_fair } from "v2/__generated__/FairApp_fair.graphql"
 import { Box, CSSGrid, Separator, Text } from "@artsy/palette"
 import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
 import { Footer } from "v2/Components/Footer"
-import { ErrorPage } from "v2/Components/ErrorPage"
 import { FairEditorialFragmentContainer as FairEditorial } from "./Components/FairEditorial"
 import { FairHeaderFragmentContainer as FairHeader } from "./Components/FairHeader"
 import { RouteTab, RouteTabs } from "v2/Components/RouteTabs"
@@ -36,8 +35,6 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
     contextPageOwnerSlug,
     contextPageOwnerType,
   } = useAnalyticsContext()
-
-  if (!fair) return <ErrorPage code={404} />
 
   const hasArticles = (fair.articles?.edges?.length ?? 0) > 0
   const hasCollections = (fair.marketingCollections?.length ?? 0) > 0
