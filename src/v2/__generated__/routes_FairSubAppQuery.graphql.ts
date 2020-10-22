@@ -22,7 +22,7 @@ export type routes_FairSubAppQuery = {
 query routes_FairSubAppQuery(
   $slug: String!
 ) {
-  fair(id: $slug) {
+  fair(id: $slug) @principalField {
     ...FairSubApp_fair
     id
   }
@@ -163,9 +163,9 @@ return {
     "metadata": {},
     "name": "routes_FairSubAppQuery",
     "operationKind": "query",
-    "text": "query routes_FairSubAppQuery(\n  $slug: String!\n) {\n  fair(id: $slug) {\n    ...FairSubApp_fair\n    id\n  }\n}\n\nfragment FairMeta_fair on Fair {\n  name\n  slug\n  metaDescription: summary\n  metaImage: image {\n    src: url(version: \"large_rectangle\")\n  }\n}\n\nfragment FairSubApp_fair on Fair {\n  id\n  name\n  slug\n  ...FairMeta_fair\n}\n"
+    "text": "query routes_FairSubAppQuery(\n  $slug: String!\n) {\n  fair(id: $slug) @principalField {\n    ...FairSubApp_fair\n    id\n  }\n}\n\nfragment FairMeta_fair on Fair {\n  name\n  slug\n  metaDescription: summary\n  metaImage: image {\n    src: url(version: \"large_rectangle\")\n  }\n}\n\nfragment FairSubApp_fair on Fair {\n  id\n  name\n  slug\n  ...FairMeta_fair\n}\n"
   }
 };
 })();
-(node as any).hash = 'ec9bac122b91b1082956c853bae8a34a';
+(node as any).hash = '3e45c8f2ece0db0a949807f5e0b56fc1';
 export default node;

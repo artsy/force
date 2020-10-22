@@ -22,7 +22,7 @@ export type routes_FairInfoQuery = {
 query routes_FairInfoQuery(
   $slug: String!
 ) {
-  fair(id: $slug) {
+  fair(id: $slug) @principalField {
     ...FairInfo_fair
     id
   }
@@ -216,9 +216,9 @@ return {
     "metadata": {},
     "name": "routes_FairInfoQuery",
     "operationKind": "query",
-    "text": "query routes_FairInfoQuery(\n  $slug: String!\n) {\n  fair(id: $slug) {\n    ...FairInfo_fair\n    id\n  }\n}\n\nfragment FairInfo_fair on Fair {\n  about(format: HTML)\n  name\n  slug\n  tagline\n  location {\n    summary\n    id\n  }\n  ticketsLink\n  hours(format: HTML)\n  links(format: HTML)\n  tickets(format: HTML)\n  summary(format: HTML)\n  contact(format: HTML)\n}\n"
+    "text": "query routes_FairInfoQuery(\n  $slug: String!\n) {\n  fair(id: $slug) @principalField {\n    ...FairInfo_fair\n    id\n  }\n}\n\nfragment FairInfo_fair on Fair {\n  about(format: HTML)\n  name\n  slug\n  tagline\n  location {\n    summary\n    id\n  }\n  ticketsLink\n  hours(format: HTML)\n  links(format: HTML)\n  tickets(format: HTML)\n  summary(format: HTML)\n  contact(format: HTML)\n}\n"
   }
 };
 })();
-(node as any).hash = 'd0fdf69923e4836dc6a43fcce92b1319';
+(node as any).hash = '911f5716826171867af4493b9412730e';
 export default node;
