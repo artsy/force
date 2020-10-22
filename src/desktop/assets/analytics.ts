@@ -39,6 +39,5 @@ $(() =>
 
     require("../analytics/artwork.js")
     require("../analytics/inquiry_questionnaire.js")
-    require("../analytics/show_page.js")
   })
 )

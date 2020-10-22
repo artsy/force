@@ -12,6 +12,7 @@ FurtherArtworksView = require '../components/artwork_columns_metaphysics/view.co
 FurtherInstallShotsView = require '../components/flickity_zoom_sequence/view.coffee'
 template = require '../components/artwork_columns_metaphysics/template.jade'
 { ContextModule } = require "@artsy/cohesion"
+require("./analytics")
 
 module.exports.init = ->
   bootstrappedShow = sd.PARTNER_SHOW
