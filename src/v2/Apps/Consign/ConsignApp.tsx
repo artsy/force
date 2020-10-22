@@ -30,9 +30,9 @@ const ConsignApp = props => {
         <AppContainer maxWidth="100%">
           <Header />
           <GetPriceEstimate />
+          <SellArtDifferently />
 
           <HorizontalPadding>
-            <SellArtDifferently />
             <HowToSell />
             <ConsignInDemandNow />
             <SoldRecently />
@@ -41,8 +41,6 @@ const ConsignApp = props => {
             <FAQ />
             <SellWithArtsy />
             <Footer />
-
-            {/* hello hiii consign app {props.artist.name} */}
           </HorizontalPadding>
         </AppContainer>
       </>
