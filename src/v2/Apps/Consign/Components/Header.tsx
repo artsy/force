@@ -10,17 +10,11 @@ import {
   Spacer,
 } from "@artsy/palette"
 import { Media } from "v2/Utils/Responsive"
+import { SectionContainer } from "./SectionContainer"
 
 export const Header: React.FC = () => {
   return (
-    <Flex
-      bg="black5"
-      height={[415, 546]}
-      justifyContent="center"
-      alignItems="center"
-      position="relative"
-      overflow="hidden"
-    >
+    <SectionContainer background="black5" height={[415, 546]}>
       <HeaderImageContainer>
         <Flex width="100%" justifyContent="space-between" m="auto">
           <Media greaterThan="md">
@@ -48,9 +42,9 @@ export const Header: React.FC = () => {
       <Box textAlign="center" width={350} position="relative" zIndex={3}>
         <Sans size="14">Sell with Artsy</Sans>
         <Spacer mt={5} />
-        <Button size="large">Get a free Valuation</Button>
+        <Button size="large">Get a free valuation</Button>
       </Box>
-    </Flex>
+    </SectionContainer>
   )
 }
 

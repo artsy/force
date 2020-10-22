@@ -15,7 +15,6 @@ import { ContactUs } from "./Components/ContactUs"
 import { FAQ } from "./Components/FAQ"
 import { SellWithArtsy } from "./Components/SellWithArtsy"
 import { Footer } from "v2/Components/Footer"
-import { Spacer } from "@artsy/palette"
 
 const ConsignApp = props => {
   return (
@@ -30,10 +29,10 @@ const ConsignApp = props => {
 
         <AppContainer maxWidth="100%">
           <Header />
-          <Spacer my={3} />
+          <GetPriceEstimate />
+
           <HorizontalPadding>
             <SellArtDifferently />
-            <GetPriceEstimate />
             <HowToSell />
             <ConsignInDemandNow />
             <SoldRecently />
