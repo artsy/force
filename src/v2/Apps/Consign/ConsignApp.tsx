@@ -27,11 +27,12 @@ const ConsignApp = props => {
       <>
         <ConsignMeta />
 
-        <AppContainer>
+        <AppContainer maxWidth="100%">
+          <Header />
+          <GetPriceEstimate />
+
           <HorizontalPadding>
-            <Header />
             <SellArtDifferently />
-            <GetPriceEstimate />
             <HowToSell />
             <ConsignInDemandNow />
             <SoldRecently />
