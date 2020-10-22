@@ -10,7 +10,6 @@ Artist = require '../../../../../models/artist.coffee'
 FlashMessage = require '../../../../../components/flash/index.coffee'
 { Following, FollowButton } = require '../../../../../components/follow_button/index'
 videoDescription = -> require('../templates/video_description.jade') arguments...
-analyticsHooks = require '../../../../../lib/analytics_hooks.coffee'
 markdown = require '../../../../../components/util/markdown.coffee'
 
 module.exports = class VeniceView extends Backbone.View

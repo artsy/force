@@ -2,7 +2,6 @@ _ = require 'underscore'
 Backbone = require 'backbone'
 Artworks = require '../../../models/artwork.coffee'
 sd = require('sharify').data
-analyticsHooks = require '../../../lib/analytics_hooks.coffee'
 { mediator } = require '../../../../lib/mediator'
 CurrentUser = require '../../../models/current_user'
 FeedItems = require '../collections/feed_items.coffee'
@@ -99,7 +98,6 @@ module.exports = class FeedView extends Backbone.View
   fetchMoreItems: =>
     @doneInitializingFeedItems = false
     @waiting = true
-    analyticsHooks.trigger 'feed:paginating'
     @feedItems.fetchFeedItems
       additionalParams: @additionalParams
       artworks: true
@@ -175,9 +173,7 @@ module.exports = class FeedView extends Backbone.View
     if @scrollTop > scrollPosition and not @scrollPositionsTracked[scrollPosition]
       @scrollPositionsTracked[scrollPosition] = true
       @lastScrollIntervalTracked = scrollPosition
-      analyticsHooks.trigger 'feed:scroll',
-        name: @feedName
-        scrollPosition: scrollPosition
+      window.analytics.track(@feedName + " scroll: " + scrollPosition)
 
   feedExhausted: ->
     mediator.trigger 'infinite:scroll:end'
