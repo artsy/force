@@ -56,6 +56,19 @@ describe("Artist Series Rail Item", () => {
       type: "thumbnail",
     })
   })
+
+  it("does not try to render a null image", () => {
+    const wrapper = mount(<ArtistSeriesItem {...props} />)
+    expect(wrapper.find("img")).toHaveLength(1)
+
+    wrapper.setProps({
+      ...props,
+      artistSeries: { image: null },
+    })
+    wrapper.update()
+
+    expect(wrapper.find("img")).toHaveLength(0)
+  })
 })
 
 const itemContent: ArtistSeriesItem_artistSeries = {

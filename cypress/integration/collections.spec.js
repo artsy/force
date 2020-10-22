@@ -27,8 +27,8 @@ describe("/collections", () => {
   })
 
   it("renders collection links", () => {
-    cy.contains("KAWS: Toys")
-    cy.contains("Abstract Expressionism: Works on Paper")
-    cy.contains("Chuck Close: Self-Portraits")
+    cy.contains("Minimalist Prints")
+    cy.contains("Gifts under $1,000")
+    cy.contains("Latin American Artists")
   })
 })
