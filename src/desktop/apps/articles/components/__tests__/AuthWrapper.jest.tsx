@@ -3,6 +3,7 @@ import { mount } from "enzyme"
 import { AuthWrapper } from "../AuthWrapper"
 import sharify, { data as sd } from "sharify"
 import * as helpers from "desktop/lib/openAuthModal"
+import { mediator } from "lib/mediator"
 
 jest.mock("sharify")
 jest.mock("querystring", () => ({
@@ -12,13 +13,7 @@ jest.mock("desktop/components/cookies/index.coffee", () => ({
   get: jest.fn(),
   set: jest.fn(),
 }))
-jest.mock("desktop/lib/mediator.coffee", () => ({
-  trigger: jest.fn(),
-  on: jest.fn(),
-}))
-const mediatorTrigger = require("desktop/lib/mediator.coffee")
-  .trigger as jest.Mock
-const mediatorOn = require("desktop/lib/mediator.coffee").on as jest.Mock
+
 const qsMock = require("querystring").parse as jest.Mock
 const CookiesGetMock = require("desktop/components/cookies/index.coffee")
   .get as jest.Mock
@@ -33,15 +28,13 @@ jest.useFakeTimers()
 
 describe("AuthWrapper", () => {
   beforeEach(() => {
+    jest.spyOn(mediator, "on")
     delete sd.IS_MOBILE
     delete sd.CURRENT_USER
     window.addEventListener = jest.fn()
   })
 
   afterEach(() => {
-    mediatorOn.mockClear()
-    mediatorTrigger.mockClear()
-    mediatorOn.mockClear()
     // FIXME: reaction migration
     // @ts-ignore
     sharify.mockClear()
@@ -56,21 +49,21 @@ describe("AuthWrapper", () => {
     it("does nothing if IS_MOBILE", () => {
       sd.IS_MOBILE = true
       getWrapper()
-      expect(mediatorOn).not.toBeCalled()
+      expect(mediator.on).not.toBeCalled()
       expect(handleScrollingAuthModal).not.toBeCalled()
     })
 
     it("does nothing if CURRENT_USER", () => {
       sd.CURRENT_USER = { name: "Carter" }
       getWrapper()
-      expect(mediatorOn).not.toBeCalled()
+      expect(mediator.on).not.toBeCalled()
       expect(handleScrollingAuthModal).not.toBeCalled()
     })
 
     it("does nothing if user has dismiss cookie", () => {
       CookiesGetMock.mockReturnValueOnce(1)
       getWrapper()
-      expect(mediatorOn).not.toBeCalled()
+      expect(mediator.on).not.toBeCalled()
       expect(handleScrollingAuthModal).not.toBeCalled()
     })
 
@@ -79,17 +72,17 @@ describe("AuthWrapper", () => {
         utm_source: "sailthru",
       })
       getWrapper()
-      expect(mediatorOn).not.toBeCalled()
+      expect(mediator.on).not.toBeCalled()
       expect(handleScrollingAuthModal).not.toBeCalled()
     })
 
     it("sets up scrolling auth modal", () => {
       const component = getWrapper().instance() as AuthWrapper
-      expect(mediatorOn).toBeCalledWith(
+      expect(mediator.on).toBeCalledWith(
         "modal:closed",
         component.setDismissCookie
       )
-      expect(mediatorOn).toBeCalledWith(
+      expect(mediator.on).toBeCalledWith(
         "auth:sign_up:success",
         component.setDismissCookie
       )

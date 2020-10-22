@@ -1,6 +1,6 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-mediator = require '../../../lib/mediator.coffee'
+{ mediator } = require '../../../../lib/mediator'
 { openAuthModal } = require '../../../lib/openAuthModal'
 { ModalType } = require "../../../../v2/Components/Authentication/Types"
 { Intent, ContextModule } = require "@artsy/cohesion"
@@ -12,13 +12,13 @@ module.exports = class FooterView extends Backbone.View
     'click .mlf-signup': 'signup'
 
   initialize: ->
-    @listenTo mediator, 'infinite:scroll:start', @hide
-    @listenTo mediator, 'infinite:scroll:end', @show
+    mediator.on 'infinite:scroll:start', @hide
+    mediator.on 'infinite:scroll:end', @show
 
-  hide: ->
+  hide: =>
     @$el.hide()
 
-  show: ->
+  show: =>
     @$el.show()
 
   signup: (e) ->

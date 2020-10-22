@@ -4,8 +4,8 @@ import React from "react"
 import { ModalManager } from "v2/Components/Authentication/Desktop/ModalManager"
 import { ModalContainer } from "../ModalContainer"
 import { ContextModule, Intent } from "@artsy/cohesion"
-import { ModalType } from "v2/Components/Authentication/Types"
-const mediator = require("../../../../lib/mediator.coffee")
+import { ModalOptions, ModalType } from "v2/Components/Authentication/Types"
+import { mediator } from "lib/mediator"
 
 jest.mock("sharify")
 jest.mock("cookies-js", () => ({
@@ -27,7 +27,7 @@ describe("ModalContainer", () => {
 
   it("Mediator can open a login modal", () => {
     const component = mount(<ModalContainer />)
-    mediator.trigger("open:auth", { mode: "login" })
+    mediator.trigger("open:auth", { mode: ModalType.login } as ModalOptions)
     jest.advanceTimersByTime(1000)
     const form = component.find(ModalManager).instance().state
     // FIXME: reaction migration
@@ -37,7 +37,7 @@ describe("ModalContainer", () => {
 
   it("Mediator can open a signup modal", () => {
     const component = mount(<ModalContainer />)
-    mediator.trigger("open:auth", { mode: "signup" })
+    mediator.trigger("open:auth", { mode: ModalType.signup } as ModalOptions)
     jest.advanceTimersByTime(1000)
     const form = component.find(ModalManager).instance().state
     // FIXME: reaction migration
@@ -47,7 +47,7 @@ describe("ModalContainer", () => {
 
   it("Mediator can open a reset_password modal", () => {
     const component = mount(<ModalContainer />)
-    mediator.trigger("open:auth", { mode: "reset_password" })
+    mediator.trigger("open:auth", { mode: "reset_password" } as any)
 
     jest.advanceTimersByTime(1000)
     const form = component.find(ModalManager).instance().state
@@ -58,7 +58,10 @@ describe("ModalContainer", () => {
 
   it("Sets a cookie when opening the modal", () => {
     mount(<ModalContainer />)
-    mediator.trigger("open:auth", { mode: "login", destination: "foo" })
+    mediator.trigger("open:auth", {
+      mode: ModalType.login,
+      destination: "foo",
+    } as ModalOptions)
 
     expect(cookieSet).toBeCalledWith("destination", "foo", { expires: 86400 })
   })

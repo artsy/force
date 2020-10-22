@@ -7,6 +7,7 @@ import { RequestConditionReportQueryResponse } from "v2/__generated__/RequestCon
 import { AnalyticsSchema as Schema } from "v2/Artsy"
 import { RequestConditionReportFragmentContainer } from "../RequestConditionReport"
 import { RequestConditionReportTestPage } from "./Utils/RequestConditionReportTestPage"
+import { mediator } from "lib/mediator"
 
 jest.unmock("react-relay")
 jest.unmock("react-tracking")
@@ -14,10 +15,6 @@ jest.mock("v2/Utils/Events", () => ({
   postEvent: jest.fn(),
 }))
 const mockPostEvent = require("v2/Utils/Events").postEvent as jest.Mock
-
-const mediator = {
-  trigger: jest.fn(),
-}
 
 const setupTestEnv = () => {
   return createTestEnv({
@@ -52,6 +49,10 @@ const setupTestEnv = () => {
 }
 
 describe("RequestConditionReport ", () => {
+  beforeEach(() => {
+    jest.spyOn(mediator, "trigger")
+  })
+
   it("requests a condition report and tracks click event", async () => {
     const env = setupTestEnv()
 

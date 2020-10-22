@@ -1,7 +1,7 @@
 import { AuthContextModule } from "@artsy/cohesion"
 import { Box, Image, space } from "@artsy/palette"
 import { FillwidthItem_artwork } from "v2/__generated__/FillwidthItem_artwork.graphql"
-import { Mediator, SystemContextProps, withSystemContext } from "v2/Artsy"
+import { SystemContextProps, withSystemContext } from "v2/Artsy"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
@@ -13,6 +13,7 @@ import Badge from "./Badge"
 import Metadata from "./Metadata"
 import SaveButton from "./Save"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
+import { Mediator } from "lib/mediator"
 
 const logger = createLogger("FillwidthItem.tsx")
 

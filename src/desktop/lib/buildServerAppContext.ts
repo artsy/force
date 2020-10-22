@@ -1,5 +1,4 @@
-// @ts-ignore
-import mediator from "desktop/lib/mediator.coffee"
+import { mediator } from "lib/mediator"
 import { Request, Response } from "express"
 import { getContextPageFromReq } from "lib/getContextPage"
 

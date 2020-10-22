@@ -3,6 +3,7 @@
  * DS102: Remove unnecessary code created because of implicit returns
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
  */
+import { mediator } from "lib/mediator"
 const rewire = require("rewire")
 const _ = require("underscore")
 const benv = require("benv")
@@ -16,7 +17,6 @@ const { FairsView } = benv.requireWithJadeify(
 )
 const ViewHelpers = require("../helpers/view_helpers.coffee")
 const moment = require("moment")
-const mediator = require("../../../lib/mediator.coffee")
 
 describe("FairsView", function () {
   before(done =>

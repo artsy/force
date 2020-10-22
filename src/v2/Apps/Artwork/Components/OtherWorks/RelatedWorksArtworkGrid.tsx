@@ -2,7 +2,7 @@ import { Box, Spinner, Tab, Tabs } from "@artsy/palette"
 import { RelatedWorksArtworkGrid_artwork } from "v2/__generated__/RelatedWorksArtworkGrid_artwork.graphql"
 import { hideGrid } from "v2/Apps/Artwork/Components/OtherWorks"
 import { Header } from "v2/Apps/Artwork/Components/OtherWorks/Header"
-import { Mediator, withSystemContext } from "v2/Artsy"
+import { withSystemContext } from "v2/Artsy"
 import { track } from "v2/Artsy/Analytics"
 import * as Schema from "v2/Artsy/Analytics/Schema"
 import ArtworkGrid from "v2/Components/ArtworkGrid"
@@ -14,6 +14,7 @@ import createLogger from "v2/Utils/logger"
 import { ContextModule } from "@artsy/cohesion"
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
 import { get } from "v2/Utils/get"
+import { Mediator } from "lib/mediator"
 
 const logger = createLogger("RelatedWorksArtworkGrid.tsx")
 

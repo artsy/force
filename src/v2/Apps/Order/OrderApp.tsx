@@ -2,7 +2,7 @@ import { Box } from "@artsy/palette"
 import { OrderApp_order } from "v2/__generated__/OrderApp_order.graphql"
 import { AppContainer } from "v2/Apps/Components/AppContainer"
 import { StickyFooter } from "v2/Apps/Order/Components/StickyFooter"
-import { Mediator, SystemContextConsumer, withSystemContext } from "v2/Artsy"
+import { SystemContextConsumer, withSystemContext } from "v2/Artsy"
 import { findCurrentRoute } from "v2/Artsy/Router/Utils/findCurrentRoute"
 import { ErrorPage } from "v2/Components/ErrorPage"
 import { MinimalNavBar } from "v2/Components/NavBar/MinimalNavBar"
@@ -15,6 +15,7 @@ import styled from "styled-components"
 import { get } from "v2/Utils/get"
 import { ConnectedModalDialog } from "./Dialogs"
 import { GlobalData } from "sharify"
+import { Mediator } from "lib/mediator"
 
 declare global {
   interface Window {

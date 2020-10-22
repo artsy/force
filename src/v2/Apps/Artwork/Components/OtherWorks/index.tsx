@@ -4,13 +4,14 @@ import { OtherWorks_artwork } from "v2/__generated__/OtherWorks_artwork.graphql"
 import { OtherAuctionsQueryRenderer as OtherAuctions } from "v2/Apps/Artwork/Components/OtherAuctions"
 import { Header } from "v2/Apps/Artwork/Components/OtherWorks/Header"
 import { RelatedWorksArtworkGridRefetchContainer as RelatedWorksArtworkGrid } from "v2/Apps/Artwork/Components/OtherWorks/RelatedWorksArtworkGrid"
-import { Mediator, SystemContextProps, withSystemContext } from "v2/Artsy"
+import { SystemContextProps, withSystemContext } from "v2/Artsy"
 import { track, useTracking } from "v2/Artsy/Analytics"
 import * as Schema from "v2/Artsy/Analytics/Schema"
 import ArtworkGrid from "v2/Components/ArtworkGrid"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { get } from "v2/Utils/get"
+import { Mediator } from "lib/mediator"
 
 export interface OtherWorksContextProps {
   artwork: OtherWorks_artwork

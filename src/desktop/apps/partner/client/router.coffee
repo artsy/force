@@ -4,7 +4,7 @@ FilterArtworks = require '../../../collections/filter_artworks.coffee'
 filterSettings = require './filter_settings.coffee'
 _ = require 'underscore'
 sd = require('sharify').data
-mediator = require '../../../lib/mediator.coffee'
+{ mediator } = require '../../../../lib/mediator'
 
 module.exports = class PartnerRouter extends Backbone.Router
   routes:

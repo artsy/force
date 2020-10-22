@@ -1,6 +1,6 @@
 Backbone = require 'backbone'
 setupClocks = require './clocks.coffee'
-mediator = require '../../../lib/mediator.coffee'
+{ mediator } = require '../../../../lib/mediator'
 
 module.exports.init = ->
   Backbone.history.start(pushState: true)

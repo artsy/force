@@ -20,7 +20,7 @@ import { OtherWorksFragmentContainer as OtherWorks } from "./Components/OtherWor
 import { ArtworkArtistSeriesFragmentContainer as ArtworkArtistSeries } from "./Components/ArtworkArtistSeries"
 import { PricingContextFragmentContainer as PricingContext } from "./Components/PricingContext"
 
-import { Mediator, withSystemContext } from "v2/Artsy"
+import { withSystemContext } from "v2/Artsy"
 import * as Schema from "v2/Artsy/Analytics/Schema"
 import { useRouteTracking } from "v2/Artsy/Analytics/useRouteTracking"
 import { Footer } from "v2/Components/Footer"
@@ -32,6 +32,7 @@ import {
   AnalyticsContext,
   useAnalyticsContext,
 } from "v2/Artsy/Analytics/AnalyticsContext"
+import { Mediator } from "lib/mediator"
 
 export interface Props {
   artwork: ArtworkApp_artwork

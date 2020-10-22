@@ -22,11 +22,7 @@ describe("NavBarTracking", () => {
   const trackEvent = jest.fn()
 
   const Wrapper = ({ children, user = { id: "foo" } }) => {
-    return (
-      <SystemContextProvider user={user} mediator={{ trigger: jest.fn() }}>
-        {children}
-      </SystemContextProvider>
-    )
+    return <SystemContextProvider user={user}>{children}</SystemContextProvider>
   }
 
   beforeEach(() => {

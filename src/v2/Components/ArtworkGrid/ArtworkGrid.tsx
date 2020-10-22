@@ -1,7 +1,6 @@
 import { AuthContextModule, ContextModule } from "@artsy/cohesion"
 import { Flex } from "@artsy/palette"
 import { ArtworkGrid_artworks } from "v2/__generated__/ArtworkGrid_artworks.graphql"
-import { Mediator } from "v2/Artsy"
 import { ArtworkGridEmptyState } from "v2/Components/ArtworkGrid/ArtworkGridEmptyState"
 import { isEqual } from "lodash"
 import memoizeOnce from "memoize-one"
@@ -12,6 +11,7 @@ import { ComponentRef, createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { Media, valuesWithBreakpointProps } from "v2/Utils/Responsive"
 import GridItem from "../Artwork/GridItem"
+import { Mediator } from "lib/mediator"
 
 type SectionedArtworks = Array<Array<ArtworkGrid_artworks["edges"][0]["node"]>>
 

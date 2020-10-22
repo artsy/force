@@ -1,6 +1,6 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-mediator = require '../../lib/mediator.coffee'
+{ mediator } = require '../../../lib/mediator'
 template = -> require('./template.jade') arguments...
 
 module.exports = class ModalView extends Backbone.View
@@ -10,7 +10,7 @@ module.exports = class ModalView extends Backbone.View
     "click .modal__close": "fadeOut"
 
   initialize: ->
-    @listenTo mediator, 'modal:close', @fadeOut
+    mediator.on 'modal:close', @fadeOut
 
   render: ->
     @$el.html template

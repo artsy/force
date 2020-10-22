@@ -4,6 +4,7 @@ import { ReactWrapper, mount } from "enzyme"
 import React from "react"
 import { ExtractProps } from "v2/Utils/ExtractProps"
 import { OfferNote } from "../OfferNote"
+import { mediator } from "lib/mediator"
 
 const simulateTyping = (wrapper: ReactWrapper, text: string) => {
   const textArea = wrapper.find("textarea")
@@ -14,11 +15,13 @@ const simulateTyping = (wrapper: ReactWrapper, text: string) => {
 
 describe("OfferNote", () => {
   const onChange = jest.fn()
-  const mediator = { trigger: jest.fn() }
+  beforeEach(() => {
+    jest.spyOn(mediator, "trigger")
+  })
 
   const getWrapper = (props: Partial<ExtractProps<typeof OfferNote>> = {}) =>
     mount(
-      <SystemContextProvider mediator={mediator}>
+      <SystemContextProvider>
         <OfferNote onChange={onChange} artworkId="artwork-id" {...props} />
       </SystemContextProvider>
     )

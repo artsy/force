@@ -1,8 +1,7 @@
 import { getContextPageFromClient } from "lib/getContextPage"
 import { data as sd } from "sharify"
 import { AnalyticsContextProps } from "v2/Artsy/Analytics/AnalyticsContext"
-import { Mediator } from "v2/Artsy/SystemContext"
-const mediator = require("desktop/lib/mediator.coffee")
+import { Mediator, mediator } from "lib/mediator"
 
 export interface ClientContext {
   user: object

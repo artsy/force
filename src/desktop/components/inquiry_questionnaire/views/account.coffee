@@ -11,7 +11,7 @@ templates =
   forgot: -> require('../templates/account/forgot.jade') arguments...
 { recaptcha } = require "../../../../v2/Utils/recaptcha"
 
-mediator = require('../../../lib/mediator.coffee')
+{ mediator } = require('../../../../lib/mediator')
 
 module.exports = class Account extends StepView
   _.extend @prototype, FormMixin

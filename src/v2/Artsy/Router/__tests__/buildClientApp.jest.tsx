@@ -127,11 +127,7 @@ describe("buildClientApp", () => {
           Component: HomeApp,
         },
       ],
-      context: {
-        mediator: {
-          trigger: jest.fn(),
-        },
-      },
+      context: {},
     })
 
     mount(<ClientApp />)

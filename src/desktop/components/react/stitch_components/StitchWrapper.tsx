@@ -4,8 +4,7 @@ import { SystemContextProvider } from "v2/Artsy"
 import { MediaContextProvider } from "v2/Utils/Responsive"
 import { Theme } from "@artsy/palette"
 import { FocusVisible } from "v2/Components/FocusVisible"
-
-const mediator = require("desktop/lib/mediator.coffee")
+import { mediator } from "lib/mediator"
 
 export const StitchWrapper = props => {
   return (

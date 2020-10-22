@@ -1,6 +1,7 @@
 import React from "react"
 import { mount } from "enzyme"
 import { BannerPopUp, Container } from "../BannerPopUp"
+import { mediator } from "lib/mediator"
 
 jest.mock("sharify", () => ({
   data: {
@@ -14,11 +15,6 @@ jest.mock("sharify", () => ({
   },
 }))
 
-jest.mock("desktop/lib/mediator.coffee", () => ({
-  trigger: jest.fn(),
-}))
-const mediator = require("desktop/lib/mediator.coffee").trigger as jest.Mock
-
 describe("BannerPopUp", () => {
   let props = {
     ctaTitle: "CTA Title",
@@ -28,6 +24,10 @@ describe("BannerPopUp", () => {
   const getWrapper = props => {
     return mount(<BannerPopUp {...props} />)
   }
+
+  beforeEach(() => {
+    jest.spyOn(mediator, "trigger")
+  })
 
   it("renders title and image", () => {
     const component = getWrapper(props)
@@ -39,7 +39,7 @@ describe("BannerPopUp", () => {
   it("Calls #triggerMarketingModal on click", () => {
     const component = getWrapper(props)
     component.find(Container).simulate("click")
-    expect(mediator).toBeCalledWith("open:auth", {
+    expect(mediator.trigger).toBeCalledWith("open:auth", {
       copy: "Discover and Buy Works from Art Fairs",
       destination: "https://artsy.net/",
       image: "http://files.artsy.net/images/art-fair.jpg",

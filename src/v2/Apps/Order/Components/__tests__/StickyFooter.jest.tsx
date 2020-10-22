@@ -4,13 +4,13 @@ import { mockTracking } from "v2/Artsy/Analytics"
 import { mount } from "enzyme"
 import React from "react"
 import { StickyFooter } from "../StickyFooter"
+import { mediator } from "lib/mediator"
 jest.unmock("react-tracking")
 
 describe("Sticky footer", () => {
-  const mediatorMock = {
-    trigger: jest.fn(),
-  }
-
+  beforeEach(() => {
+    jest.spyOn(mediator, "trigger")
+  })
   // FIXME: Reenable when React 16.4.5 is release
   // https://github.com/facebook/react/issues/13150#issuecomment-411134477
 
@@ -42,14 +42,14 @@ describe("Sticky footer", () => {
 
   it("handles contact specialist modal", () => {
     const component = mount(
-      <SystemContextProvider mediator={mediatorMock}>
+      <SystemContextProvider>
         <StickyFooter orderType="OFFER" artworkId="whatever" />
       </SystemContextProvider>
     )
 
     component.find("a").at(1).simulate("click")
 
-    expect(mediatorMock.trigger).toHaveBeenCalledWith(
+    expect(mediator.trigger).toHaveBeenCalledWith(
       "openOrdersContactArtsyModal",
       {
         artworkId: "whatever",
@@ -86,7 +86,7 @@ describe("Sticky footer", () => {
       it("tracks click on 'ask a question'", () => {
         const { Component, dispatch } = mockTracking(StickyFooter)
         const component = mount(
-          <SystemContextProvider mediator={mediatorMock}>
+          <SystemContextProvider>
             <Component orderType="OFFER" artworkId="whatever" />
           </SystemContextProvider>
         )
@@ -121,7 +121,7 @@ describe("Sticky footer", () => {
       it("tracks click on 'ask a question'", () => {
         const { Component, dispatch } = mockTracking(StickyFooter)
         const component = mount(
-          <SystemContextProvider mediator={mediatorMock}>
+          <SystemContextProvider>
             <Component orderType="BUY" artworkId="whatever" />
           </SystemContextProvider>
         )

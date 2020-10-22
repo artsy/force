@@ -1,7 +1,6 @@
 import { AuthContextModule, ContextModule } from "@artsy/cohesion"
 import { Image as BaseImage, color } from "@artsy/palette"
 import { GridItem_artwork } from "v2/__generated__/GridItem_artwork.graphql"
-import { Mediator } from "v2/Artsy"
 import { withSystemContext } from "v2/Artsy"
 import { isFunction } from "lodash"
 import React from "react"
@@ -13,6 +12,7 @@ import Badge from "./Badge"
 import Metadata from "./Metadata"
 import SaveButton from "./Save"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
+import { Mediator } from "lib/mediator"
 
 let IMAGE_LAZY_LOADING = true
 

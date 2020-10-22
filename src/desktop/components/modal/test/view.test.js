@@ -7,7 +7,7 @@ const rewire = require("rewire")
 const benv = require("benv")
 const Backbone = require("backbone")
 const sinon = require("sinon")
-const mediator = require("../../../lib/mediator.coffee")
+import { mediator } from "lib/mediator"
 const { resolve } = require("path")
 const ModalView = benv.requireWithJadeify(resolve(__dirname, "../view"), [
   "modalTemplate",

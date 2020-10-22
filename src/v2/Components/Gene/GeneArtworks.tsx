@@ -18,10 +18,10 @@ import TotalCount from "../ArtworkFilter/TotalCount"
 import BorderedPulldown from "../BorderedPulldown"
 
 import { GeneArtworks_gene } from "v2/__generated__/GeneArtworks_gene.graphql"
-import { Mediator } from "v2/Artsy"
 import ArtworkGrid from "v2/Components/ArtworkGrid"
 import { Filters } from "."
 import Spinner from "../Spinner"
+import { Mediator } from "lib/mediator"
 
 interface Props extends Filters {
   gene: GeneArtworks_gene

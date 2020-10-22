@@ -3,7 +3,7 @@ _s = require 'underscore.string'
 qs = require 'querystring'
 sd = require('sharify').data
 Backbone = require 'backbone'
-mediator = require '../../lib/mediator.coffee'
+{ mediator } = require '../../../lib/mediator'
 bootstrap = require '../../components/layout/bootstrap.coffee'
 PoliteInfiniteScrollView = require '../../components/polite_infinite_scroll/client/view.coffee'
 DropdownView = require './dropdown/view.coffee'
@@ -22,7 +22,7 @@ module.exports = class FilterView extends PoliteInfiniteScrollView
   initialize: ({ @params, @stuckFacet, @stuckParam, @aggregations })->
     @listenTo @collection, 'initial:fetch', @render
     @listenTo @collection, 'sync', @onSync
-    @listenTo mediator, 'select:changed', @setParams
+    mediator.on 'select:changed', @setParams
 
     @facets = _.keys @labelMap
 

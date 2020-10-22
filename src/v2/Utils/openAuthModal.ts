@@ -1,8 +1,8 @@
 import { AuthContextModule, AuthIntent, Intent } from "@artsy/cohesion"
-import { Mediator } from "v2/Artsy/SystemContext"
 import { ModalOptions, ModalType } from "v2/Components/Authentication/Types"
 import qs from "qs"
 import { data as sd } from "sharify"
+import { Mediator } from "lib/mediator"
 
 export interface AuthModalOptions extends ModalOptions {
   entity: {

@@ -11,8 +11,8 @@ import {
   successfullyLoggedIn,
 } from "@artsy/cohesion"
 import { omit } from "lodash"
+import { mediator } from "lib/mediator"
 
-const mediator = require("desktop/lib/mediator.coffee")
 const LoggedOutUser = require("desktop/models/logged_out_user.coffee")
 
 export const handleSubmit = (

@@ -1,13 +1,10 @@
 import { query, setCookie, setupArtistSignUpModal } from "../artistSignupModal"
 import * as helpers from "desktop/lib/openAuthModal"
+import { mediator } from "lib/mediator"
 
 jest.mock("desktop/components/cookies/index.coffee", () => ({
   get: jest.fn(),
   set: jest.fn(),
-}))
-jest.mock("desktop/lib/mediator.coffee", () => ({
-  trigger: jest.fn(),
-  on: jest.fn(),
 }))
 
 const CookiesSetMock = require("desktop/components/cookies/index.coffee")
@@ -15,8 +12,6 @@ const CookiesSetMock = require("desktop/components/cookies/index.coffee")
 
 const CookiesGetMock = require("desktop/components/cookies/index.coffee")
   .get as jest.Mock
-
-const mediatorOn = require("desktop/lib/mediator.coffee").on as jest.Mock
 
 jest.mock("lib/metaphysics2.coffee", () =>
   jest.fn().mockReturnValue(Promise.resolve({}))
@@ -78,12 +73,12 @@ describe("CTA", () => {
 
   let addEventListener
   beforeEach(() => {
+    jest.spyOn(mediator, "on")
     addEventListener = jest.spyOn(window, "addEventListener")
     mockMetaphysics.mockReturnValue(Promise.resolve({ artist }))
   })
 
   afterEach(() => {
-    mediatorOn.mockClear()
     handleScrollingAuthModal.mockClear()
   })
 
@@ -122,7 +117,7 @@ describe("CTA", () => {
   })
   it("calls set cookie on modal close", async () => {
     await setupArtistSignUpModal()
-    expect(mediatorOn).toBeCalledWith("modal:closed", setCookie)
+    expect(mediator.on).toBeCalledWith("modal:closed", setCookie)
   })
 
   it("doesn't open the modal if the dismissed modal cookie is set", () => {
