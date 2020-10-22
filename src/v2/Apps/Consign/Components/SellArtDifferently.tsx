@@ -1,23 +1,13 @@
 import React from "react"
 import { Box, EditIcon, Flex, Separator, Text, color } from "@artsy/palette"
 import { SectionContainer } from "v2/Apps/Artist/Routes/Consign/Components/SectionContainer"
-import { Media } from "v2/Utils/Responsive"
 
 export const SellArtDifferently: React.FC = () => {
   return (
     <SectionContainer>
-      <Box>
-        <Media greaterThanOrEqual="md">
-          <Text textAlign={["center", "left"]} mb={2} variant={"title"}>
-            Selling Art Differently
-          </Text>
-        </Media>
-        <Media lessThan="md">
-          <Text textAlign={["center", "left"]} mb={2} variant={"largeTitle"}>
-            Selling Art Differently
-          </Text>
-        </Media>
-      </Box>
+      <Text textAlign={["center", "left"]} mb={2} variant={"largeTitle"}>
+        Selling Art Differently
+      </Text>
       <Separator />
 
       <Flex
