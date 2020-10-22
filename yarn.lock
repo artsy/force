@@ -14970,7 +14970,7 @@ pug@2.0.3:
     pug-runtime "^2.0.4"
     pug-strip-comments "^1.0.3"
 
-pull-lock@^1.0.0:
+pull-lock@1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/pull-lock/-/pull-lock-1.0.0.tgz#6a0ab2719a3b7e6f49838b52168a30b8fdd84188"
   integrity sha512-DKc72YeAuRSv9jEPMKoRA5xMs9THQ9kUExSR8WsZPhnLvBgnJ1evXxYPSIpQsmEA6yQYWSt9Uy1EX1/TNyvdXQ==
