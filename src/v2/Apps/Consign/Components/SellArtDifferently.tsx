@@ -1,11 +1,11 @@
 import React from "react"
-import { Box, EditIcon, Flex, Separator, Text, color } from "@artsy/palette"
+import { Box, EditIcon, Flex, Separator, Text } from "@artsy/palette"
 import { SectionContainer } from "v2/Apps/Artist/Routes/Consign/Components/SectionContainer"
 
 export const SellArtDifferently: React.FC = () => {
   return (
     <SectionContainer>
-      <Text textAlign={["center", "left"]} mb={2} variant={"largeTitle"}>
+      <Text textAlign={["center", "left"]} mb={2} variant="largeTitle">
         Selling Art Differently
       </Text>
       <Separator />
@@ -50,12 +50,10 @@ const Section: React.FC<{
     >
       <Box>{icon}</Box>
       <Box mt={[0, 1]} mb={[0, 2]}>
-        <Text variant="subtitle" color={color("black100")}>
-          {text}
-        </Text>
+        <Text variant="subtitle">{text}</Text>
       </Box>
       <Box>
-        <Text variant="text" color={color("black60")}>
+        <Text variant="text" color="black60">
           {description}
         </Text>
       </Box>
