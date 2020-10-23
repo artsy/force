@@ -5,7 +5,6 @@ Popover = require 'popover'
 listTemplate = -> require('./artist_suggestions.jade') arguments...
 rowTemplate = -> require('./artist_suggestion.jade') arguments...
 Artist = require '../../models/artist.coffee'
-analyticsHooks = require '../../lib/analytics_hooks.coffee'
 
 module.exports = class ArtistSuggestions extends Backbone.View
 

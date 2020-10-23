@@ -8,7 +8,6 @@ bodyView = -> require('./templates/body.jade') arguments...
 sd = require('sharify').data
 markdown = require '../../../../components/util/markdown.coffee'
 { resize, crop } = require '../../../../components/resizer/index.coffee'
-analyticsHooks = require '../../../../lib/analytics_hooks.coffee'
 
 module.exports.EoyView = class EoyView extends Backbone.View
 
@@ -21,7 +20,6 @@ module.exports.EoyView = class EoyView extends Backbone.View
     @windowHeight = $(window).height()
     @headerHeight = if sd.IS_MOBILE then 0 else 55
     @setupSliderHeight()
-    @trackScrollIntoBody = _.once @trackScroll
     @watchWindow()
     @article = new Article sd.SUPER_ARTICLE
     new SuperArticleView el: $('body'), article: @article
@@ -67,7 +65,7 @@ module.exports.EoyView = class EoyView extends Backbone.View
 
   autoScroll: =>
     if @windowPosition < @openHeight
-      window.scrollBy(0,1);
+      window.scrollBy(0,1)
       scrolldelay = setTimeout(@autoScroll,25)
 
   watchScrolling: =>
@@ -136,10 +134,9 @@ module.exports.EoyView = class EoyView extends Backbone.View
       @setupCarousel()
       @boundaries = @getBodySectionTopBoundaries()
 
-  bodyInView: =>
-    $('.article-body').waypoint (direction) =>
+  bodyInView: ->
+    $('.article-body').waypoint (direction) ->
       if direction is 'down'
-        @trackScrollIntoBody()
         $('.article-body section[data-section="1"]').addClass('active')
     , {offset: '50%'}
 
@@ -226,9 +223,6 @@ module.exports.EoyView = class EoyView extends Backbone.View
           $('html, body').animate({
             scrollTop: target.offset().top - 100
             }, 2500)
-
-  trackScroll: ->
-    analyticsHooks.trigger 'scroll:sa-body'
 
 module.exports.init = ->
   new EoyView

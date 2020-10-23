@@ -1,6 +1,5 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-analyticsHooks = require '../../lib/analytics_hooks.coffee'
 
 module.exports = class JumpView extends Backbone.View
 

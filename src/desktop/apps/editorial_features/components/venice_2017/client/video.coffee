@@ -3,7 +3,6 @@ _ = require 'underscore'
 sd = require('sharify').data
 moment = require 'moment'
 noUiSlider = require 'nouislider'
-analyticsHooks = require '../../../../../lib/analytics_hooks.coffee'
 
 module.exports = class VeniceVideoView extends Backbone.View
 
@@ -58,7 +57,6 @@ module.exports = class VeniceVideoView extends Backbone.View
 
   onVRViewReady: =>
     @duration = @vrView.getDuration()
-    @setupAnalytics()
     @scrubber = noUiSlider.create $('.venice-video__scrubber')[0],
       start: 0
       behaviour: 'snap'
@@ -113,36 +111,6 @@ module.exports = class VeniceVideoView extends Backbone.View
     "#{sd.APP_URL}/vanity/vrview/index.html?video=" +
     video +
     "&is_stereo=false&is_vr_off=false&loop=false"
-
-  setupAnalytics: ->
-    @quarterDuration = @duration * .25
-    @halfDuration = @duration * .5
-    @threeQuarterDuration = @duration * .75
-    @fullDuration = @duration
-    @trackQuarter = _.once ->
-      analyticsHooks.trigger 'video:duration',
-        duration: '25%'
-        slug: @slug
-    @trackHalf = _.once ->
-      analyticsHooks.trigger 'video:duration',
-        duration: '50%'
-        slug: @slug
-    @trackThreeQuarter = _.once ->
-      analyticsHooks.trigger 'video:duration',
-        duration: '75%'
-        slug: @slug
-    @trackFull = _.once ->
-      analyticsHooks.trigger 'video:duration',
-        duration: '100%'
-        slug: @slug
-    @trackThreeSeconds = _.once ->
-      analyticsHooks.trigger 'video:seconds',
-        seconds: '3'
-        slug: @slug
-    @trackTenSeconds = _.once ->
-      analyticsHooks.trigger 'video:seconds',
-        seconds: '10'
-        slug: @slug
 
   onCloseVideo: ->
     @trigger 'closeVideo'
