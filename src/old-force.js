@@ -13,7 +13,6 @@ const {
   PORT,
   KEEPALIVE_TIMEOUT_SECONDS,
   HEADERS_TIMEOUT_SECONDS,
-  PROFILE_MEMORY,
 } = process.env
 
 const chalk = require("chalk")
@@ -33,10 +32,6 @@ const setup = require("./lib/setup").default
 
 const app = express()
 module.exports = app
-
-if (PROFILE_MEMORY) {
-  require("./lib/memory_profiler")()
-}
 
 const initCache = cb => {
   cache.setup(() => relayCacheSetup(cb))

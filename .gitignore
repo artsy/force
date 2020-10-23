@@ -19,7 +19,6 @@ dump.rdb
 lib-cov
 logs
 manifest.json
-manifest-novo.json
 npm-debug.log
 pids
 results
@@ -35,9 +34,6 @@ node_modules
 # Compiled server code
 server.dist.js
 server.dist.js.map
-
-server-novo.dist.js
-server-novo.dist.js.map
 
 # Test utils
 coverage*
