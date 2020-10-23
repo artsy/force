@@ -1,6 +1,6 @@
 import React from "react"
 import { Box, EditIcon, Flex, Separator, Text } from "@artsy/palette"
-import { SectionContainer } from "v2/Apps/Artist/Routes/Consign/Components/SectionContainer"
+import { SectionContainer } from "./SectionContainer"
 
 export const SellArtDifferently: React.FC = () => {
   return (
