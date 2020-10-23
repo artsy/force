@@ -18,7 +18,7 @@ representation = (fair) ->
       resolve set
   )
 
-module.exports.overview = (req, res, next) ->
+@overview = (req, res, next) ->
   return next() if (not res.locals.fairOrg)
   res.locals.sd.PAGE_TYPE = 'fair-organizer'
   res.render 'index'
@@ -26,7 +26,7 @@ module.exports.overview = (req, res, next) ->
 #
 # For now this is specific to the Armory Show, eventually can be adapted to suit any fair organizer.
 #
-module.exports.fetchFairOrgData = (req, res, next) ->
+@fetchFairOrgData = (req, res, next) ->
   profile = res.locals.profile = req.profile
 
   return next() unless profile?.isFairOrganizer()
@@ -37,26 +37,29 @@ module.exports.fetchFairOrgData = (req, res, next) ->
   fairOrg = new FairOrganizer profile.get('owner')
 
   fairs = new Fairs
-
-  # This grabs all the past fairs by passing fair_organizer_id
-  # to the /fairs endpoing
-  request = fairs.fetch
+  options = 
     data:
       fair_organizer_id: fairOrg.id
       sort: "-start_at"
-    success: (models, response, options)->
-      articles = new Articles()
 
+  # This grabs all the past fairs by passing fair_organizer_id
+  # to the /fairs endpoint
+  Promise.resolve(fairs.fetch(options))
+    .then ->
       # find if we have a current fair
       current = fairs.find (fair)->
-        moment().utc().isBetween fair.get('autopublish_artworks_at'), fair.get('end_at')
+        moment().utc().isBetween fair.get('start_at'), fair.get('end_at')
 
-      # redirect to fair if there is a fair currently running.
-      return res.redirect(current.href()) if current
-
+      throw new Error() unless current?
+      Promise.resolve(current.related().profile.fetch())
+    .then (profile) ->
+      # redirect to fair if there is a fair currently running and its profile is public.
+      res.redirect(new Profile(profile).href())
+    .catch ->
       # fetch the past fairs and their respective representations
       # to get the two small images
       # also, grab all the articles associated with the fair from positron
+      articles = new Articles()
       promises = _.compact _.flatten [
         fairs.map representation
         articles.fetch(
@@ -90,4 +93,4 @@ module.exports.fetchFairOrgData = (req, res, next) ->
         res.locals.emptyMessage = "About"
         res.locals.extraClasses = "fair-organization-page__tabs avant-garde-tabs--table"
         next()
-      ).done()
+      )
