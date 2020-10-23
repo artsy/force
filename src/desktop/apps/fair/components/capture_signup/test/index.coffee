@@ -6,7 +6,7 @@ Backbone = require 'backbone'
 Fair = require '../../../../../models/fair.coffee'
 rewire = require 'rewire'
 { fabricate } = require '@artsy/antigravity'
-CurrentUser = require '../../../../../models/current_user.coffee'
+CurrentUser = require '../../../../../models/current_user'
 capture = rewire '../index.coffee'
 
 describe 'captureSignup', ->

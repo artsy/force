@@ -3,7 +3,7 @@ sd = require('sharify').data
 Backbone = require 'backbone'
 ModalView = require '../modal/view.coffee'
 Form = require '../mixins/form.coffee'
-CurrentUser = require '../../models/current_user.coffee'
+CurrentUser = require '../../models/current_user'
 analyticsHooks = require '../../lib/analytics_hooks.coffee'
 FlashMessage = require '../flash/index.coffee'
 

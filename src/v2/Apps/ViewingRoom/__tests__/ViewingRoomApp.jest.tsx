@@ -1,6 +1,6 @@
 import React from "react"
 import { MockBoot, renderRelayTree } from "v2/DevTools"
-import { Mediator, SystemContextProvider } from "v2/Artsy"
+import { SystemContextProvider } from "v2/Artsy"
 import ViewingRoomApp from "../ViewingRoomApp"
 import { graphql } from "react-relay"
 import { ViewingRoomApp_DraftTest_QueryRawResponse } from "v2/__generated__/ViewingRoomApp_DraftTest_Query.graphql"
@@ -10,6 +10,8 @@ import { ViewingRoomApp_ClosedTest_QueryRawResponse } from "v2/__generated__/Vie
 import { ViewingRoomApp_UnfoundTest_QueryRawResponse } from "v2/__generated__/ViewingRoomApp_UnfoundTest_Query.graphql"
 import { ViewingRoomApp_LoggedOutTest_QueryRawResponse } from "v2/__generated__/ViewingRoomApp_LoggedOutTest_Query.graphql.ts"
 import { Breakpoint } from "@artsy/palette"
+import { mockLocation } from "v2/DevTools/mockLocation"
+import { mediator } from "lib/mediator"
 
 jest.useFakeTimers()
 jest.unmock("react-relay")
@@ -26,12 +28,12 @@ jest.mock("v2/Artsy/Router/useRouter", () => ({
 
 describe("ViewingRoomApp", () => {
   let user
-  let mediator: Mediator
   const slug = "subscription-demo-gg-guy-yanai"
 
   beforeEach(() => {
+    jest.spyOn(mediator, "trigger")
+    mockLocation()
     user = { id: "blah" }
-    mediator = { trigger: jest.fn() }
     window.history.pushState({}, "Viewing Room Title", slug)
   })
 
@@ -51,7 +53,7 @@ describe("ViewingRoomApp", () => {
         Component: ({ viewingRoom }) => {
           return (
             <MockBoot breakpoint={breakpoint}>
-              <SystemContextProvider mediator={mediator} user={user}>
+              <SystemContextProvider user={user}>
                 <ViewingRoomApp viewingRoom={viewingRoom}>
                   some child
                 </ViewingRoomApp>
@@ -95,7 +97,7 @@ describe("ViewingRoomApp", () => {
         Component: ({ viewingRoom }) => {
           return (
             <MockBoot breakpoint={breakpoint}>
-              <SystemContextProvider mediator={mediator} user={user}>
+              <SystemContextProvider user={user}>
                 <ViewingRoomApp viewingRoom={viewingRoom}>
                   some child
                 </ViewingRoomApp>
@@ -163,7 +165,7 @@ describe("ViewingRoomApp", () => {
         Component: ({ viewingRoom }) => {
           return (
             <MockBoot breakpoint={breakpoint}>
-              <SystemContextProvider mediator={mediator} user={user}>
+              <SystemContextProvider user={user}>
                 <ViewingRoomApp viewingRoom={viewingRoom}>
                   some child
                 </ViewingRoomApp>
@@ -240,7 +242,7 @@ describe("ViewingRoomApp", () => {
         Component: ({ viewingRoom }) => {
           return (
             <MockBoot breakpoint={breakpoint}>
-              <SystemContextProvider mediator={mediator} user={user}>
+              <SystemContextProvider user={user}>
                 <ViewingRoomApp viewingRoom={viewingRoom}>
                   some child
                 </ViewingRoomApp>
@@ -305,12 +307,10 @@ describe("ViewingRoomApp", () => {
       return renderRelayTree({
         Component: ({ viewingRoom }) => {
           return (
-            <MockBoot breakpoint={breakpoint}>
-              <SystemContextProvider mediator={mediator} user={user}>
-                <ViewingRoomApp viewingRoom={viewingRoom}>
-                  some child
-                </ViewingRoomApp>
-              </SystemContextProvider>
+            <MockBoot breakpoint={breakpoint} user={user}>
+              <ViewingRoomApp viewingRoom={viewingRoom}>
+                some child
+              </ViewingRoomApp>
             </MockBoot>
           )
         },
@@ -345,12 +345,10 @@ describe("ViewingRoomApp", () => {
       return renderRelayTree({
         Component: ({ viewingRoom }) => {
           return (
-            <MockBoot breakpoint={breakpoint}>
-              <SystemContextProvider mediator={mediator} user={null}>
-                <ViewingRoomApp viewingRoom={viewingRoom}>
-                  some child
-                </ViewingRoomApp>
-              </SystemContextProvider>
+            <MockBoot breakpoint={breakpoint} user={null}>
+              <ViewingRoomApp viewingRoom={viewingRoom}>
+                some child
+              </ViewingRoomApp>
             </MockBoot>
           )
         },

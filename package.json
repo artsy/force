@@ -8,8 +8,6 @@
     "yarn": "1.x.x"
   },
   "scripts": {
-    "acceptance-record": "scripts/acceptance_record.sh",
-    "acceptance": "scripts/acceptance.sh",
     "build:assets": "NODE_ENV=production BUILD_CLIENT=true yarn webpack",
     "build:assets:novo": "NODE_ENV=production BUILD_NOVO_CLIENT=true yarn webpack",
     "build:dev": "yarn clean && yarn relay && BUILD_CLIENT=true yarn webpack",
@@ -37,9 +35,9 @@
     "start:prod:local": "NODE_ENV=production node --inspect --max_old_space_size=3072 -r dotenv/config ./server.dist.js",
     "start": "scripts/start.sh",
     "sync-schema": "scripts/sync-schema-pull.sh",
-    "test:acceptance": "yarn acceptance src/test/acceptance/*.js",
+    "test:acceptance": "scripts/acceptance.sh src/test/acceptance/*.js",
     "test:smoke": "scripts/smoke_test.sh",
-    "test": "scripts/test.sh",
+    "test": "concurrently 'yarn test:ci:jest:v1' 'yarn test:ci:jest:v2' 'yarn test:ci:mocha'",
     "test:ci:jest:v1": "scripts/jest.sh v1",
     "test:ci:jest:v2": "scripts/jest.sh v2",
     "test:ci:mocha": "yarn mocha $(find src -name '*.test.js')",
@@ -65,12 +63,12 @@
   },
   "dependencies": {
     "@artsy/backbone-mixins": "2.0.0",
-    "@artsy/cohesion": "1.41.0",
+    "@artsy/cohesion": "1.44.0",
     "@artsy/express-reloadable": "1.4.8",
     "@artsy/gemup": "0.1.0",
-    "@artsy/palette": "13.10.1",
+    "@artsy/palette": "13.11.0",
     "@artsy/passport": "1.5.0",
-    "@artsy/reaction": "28.9.0",
+    "@artsy/reaction": "28.11.0",
     "@artsy/stitch": "6.1.6",
     "@artsy/xapp": "1.0.6",
     "@loadable/component": "5.12.0",
@@ -109,6 +107,7 @@
     "dotenv": "4.0.0",
     "embed-video": "1.6.0",
     "es7-object-polyfill": "0.0.7",
+    "eventemitter3": "4.0.7",
     "express": "4.16.4",
     "express-ipfilter": "0.2.1",
     "express-request-id": "1.4.0",
@@ -326,6 +325,7 @@
     "prettier": "2.0.5",
     "promise.allsettled": "1.0.2",
     "pug-loader": "2.4.0",
+    "pull-lock": "1.0.0",
     "raw-loader": "0.5.1",
     "react-test-renderer": "16.8.6",
     "react-use-dimensions": "1.2.1",
@@ -365,6 +365,7 @@
   },
   "husky": {
     "hooks": {
+      "post-merge": "pull-lock",
       "pre-commit": "lint-staged",
       "pre-push": "yarn type-check"
     }
@@ -402,5 +403,8 @@
     "semi": false,
     "singleQuote": false,
     "trailingComma": "es5"
+  },
+  "pull-lock": {
+    "yarn.lock": "yarn install"
   }
 }

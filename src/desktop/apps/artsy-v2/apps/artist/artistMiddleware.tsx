@@ -1,8 +1,8 @@
 import { OwnerType } from "@artsy/cohesion"
-import { getPageTypeFromReq } from "lib/getPageType"
+import { getContextPageFromReq } from "lib/getContextPage"
 
 export const artistMiddleware = (req, res, next) => {
-  const { pageType, pageSlug } = getPageTypeFromReq(req)
+  const { pageType, pageSlug } = getContextPageFromReq(req)
 
   if (pageType === OwnerType.artist) {
     const artistID = pageSlug

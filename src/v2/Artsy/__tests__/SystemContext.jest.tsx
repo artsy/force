@@ -45,6 +45,7 @@ describe("Artsy context", () => {
             expect(Object.keys(props).sort()).toEqual([
               "isEigen",
               "isFetching",
+              "mediator",
               "relayEnvironment",
               "router",
               "setFetching",

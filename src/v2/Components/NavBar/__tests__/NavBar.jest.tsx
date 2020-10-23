@@ -5,6 +5,7 @@ import { mount } from "enzyme"
 import React from "react"
 import { NavBar } from "../NavBar"
 import { InboxNotificationCount } from "../Menus/MobileNavMenu/InboxNotificationCount"
+import { mediator } from "lib/mediator"
 
 jest.mock("v2/Components/Search/SearchBar", () => {
   return {
@@ -22,21 +23,18 @@ jest.mock("lib/isServer", () => ({
 }))
 
 describe("NavBar", () => {
-  const mediator = {
-    trigger: jest.fn(),
-  }
-
   const trackEvent = jest.fn()
 
   const getWrapper = ({ user = null } = {}) => {
     return mount(
-      <SystemContextProvider user={user} mediator={mediator}>
+      <SystemContextProvider user={user}>
         <NavBar />
       </SystemContextProvider>
     )
   }
 
   beforeEach(() => {
+    jest.spyOn(mediator, "trigger")
     ;(useTracking as jest.Mock).mockImplementation(() => {
       return {
         trackEvent,
@@ -109,10 +107,6 @@ describe("NavBar", () => {
   })
 
   describe("mediator actions", () => {
-    afterEach(() => {
-      mediator.trigger.mockReset()
-    })
-
     it("calls login auth action on login button click", () => {
       const wrapper = getWrapper()
       wrapper.find("Button").first().simulate("click")

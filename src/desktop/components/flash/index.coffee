@@ -1,6 +1,6 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-mediator = require '../../lib/mediator.coffee'
+{ mediator } = require '../../../lib/mediator'
 safe = _.template "<span><%- message %></span>"
 unsafe = _.template "<span><%= message %></span>"
 
@@ -32,7 +32,7 @@ module.exports = class FlashMessage extends Backbone.View
       @visibleDuration
       @backdrop } = _.defaults options, @defaults
 
-    @listenTo mediator, 'flash:close', @close
+    mediator.on 'flash:close', @close
 
     @open() if @autoopen
 

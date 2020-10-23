@@ -7,6 +7,7 @@ import { graphql } from "react-relay"
 import { IdentityVerificationAppQueryResponseFixture } from "../__fixtures__/routes_IdentityVerificationAppQuery"
 import { IdentityVerificationAppFragmentContainer } from "../IdentityVerificationApp"
 import { IdentityVerificationAppTestPage } from "./Utils/IdentityVerificationAppTestPage"
+import { mockLocation } from "v2/DevTools/mockLocation"
 
 jest.unmock("react-relay")
 jest.unmock("react-tracking")
@@ -131,10 +132,7 @@ describe("IdentityVerification route", () => {
 
     describe("user enters verification flow", () => {
       beforeEach(() => {
-        Object.defineProperty(window, "location", {
-          writable: true,
-          value: { assign: jest.fn() },
-        })
+        mockLocation()
       })
 
       it("user click on 'continue to verification' button is tracked", async () => {

@@ -1,6 +1,5 @@
 import { ContextModule } from "@artsy/cohesion"
 import { ArtistRow_artist } from "v2/__generated__/ArtistRow_artist.graphql"
-import { Mediator } from "v2/Artsy"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import FillwidthItem from "../Artwork/FillwidthItem"
@@ -9,6 +8,7 @@ import TextLink from "../TextLink"
 import { Carousel } from "../Carousel"
 import styled from "styled-components"
 import { FollowArtistButtonFragmentContainer as FollowArtistButton } from "v2/Components/FollowButton/FollowArtistButton"
+import { Mediator } from "lib/mediator"
 
 const HEIGHT = 160
 

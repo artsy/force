@@ -7,7 +7,7 @@ import { getAppNovoRoutes } from "v2/Apps/getAppNovoRoutes"
 import { data as sd } from "sharify"
 import { loadableReady } from "@loadable/component"
 
-import { mediator } from "desktop/lib/mediator"
+import { mediator } from "lib/mediator"
 
 buildClientApp({
   routes: getAppNovoRoutes(),

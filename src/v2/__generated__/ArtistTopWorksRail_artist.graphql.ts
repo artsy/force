@@ -5,11 +5,11 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ArtistTopWorksRail_artist = {
     readonly slug: string;
-    readonly id: string;
+    readonly internalID: string;
     readonly filterArtworksConnection: {
         readonly edges: ReadonlyArray<{
             readonly node: {
-                readonly id: string;
+                readonly internalID: string;
                 readonly slug: string;
                 readonly " $fragmentRefs": FragmentRefs<"FillwidthItem_artwork">;
             } | null;
@@ -37,7 +37,7 @@ v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "id",
+  "name": "internalID",
   "storageKey": null
 };
 return {
@@ -103,5 +103,5 @@ return {
   "type": "Artist"
 };
 })();
-(node as any).hash = 'c56c2e07e4b148b4aa16bcf9ded2f102';
+(node as any).hash = '23ffc8e0260d30befd1e692a5fe0cfd2';
 export default node;

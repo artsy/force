@@ -1,5 +1,5 @@
 import { Box, Separator, Spacer, Text } from "@artsy/palette"
-import { OwnerType, clickedMainArtworkGrid } from "@artsy/cohesion"
+import { clickedMainArtworkGrid } from "@artsy/cohesion"
 import { Match, Router } from "found"
 import React from "react"
 import { Link, Meta, Title } from "react-head"
@@ -11,7 +11,7 @@ import { buildUrlForCollectApp } from "v2/Apps/Collect/Utils/urlBuilder"
 import { AppContainer } from "v2/Apps/Components/AppContainer"
 
 import { useTracking } from "v2/Artsy/Analytics"
-import { AnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
+import { useAnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
 import { FrameWithRecentlyViewed } from "v2/Components/FrameWithRecentlyViewed"
 import { BreadCrumbList } from "v2/Components/Seo"
 
@@ -52,98 +52,87 @@ export const CollectApp: React.FC<CollectAppProps> = ({
   }
 
   const tracking = useTracking()
+  const { contextPageOwnerType } = useAnalyticsContext()
 
   return (
-    <AnalyticsContext.Provider
-      value={{
-        contextPageOwnerType: OwnerType.collect,
-      }}
-    >
-      <AnalyticsContext.Consumer>
-        {({ contextPageOwnerType }) => (
-          <AppContainer>
-            <FrameWithRecentlyViewed>
-              <Title>{title}</Title>
-              <Meta property="og:url" content={`${sd.APP_URL}/collect`} />
-              <Meta
-                property="og:image"
-                content={`${sd.APP_URL}/images/og_image.jpg`}
-              />
-              <Meta name="description" content={description} />
-              <Meta property="og:description" content={description} />
-              <Meta property="twitter:description" content={description} />
-              <Link rel="canonical" href={canonicalHref} />
+    <AppContainer>
+      <FrameWithRecentlyViewed>
+        <Title>{title}</Title>
+        <Meta property="og:url" content={`${sd.APP_URL}/collect`} />
+        <Meta
+          property="og:image"
+          content={`${sd.APP_URL}/images/og_image.jpg`}
+        />
+        <Meta name="description" content={description} />
+        <Meta property="og:description" content={description} />
+        <Meta property="twitter:description" content={description} />
+        <Link rel="canonical" href={canonicalHref} />
 
-              <BreadCrumbList items={items} />
+        <BreadCrumbList items={items} />
 
-              {filterArtworks && (
-                <SeoProductsForArtworks artworks={filterArtworks} />
-              )}
+        {filterArtworks && <SeoProductsForArtworks artworks={filterArtworks} />}
 
-              <Box mt={3}>
-                <Text variant="largeTitle">
-                  <h1>Collect art and design online</h1>
-                </Text>
-                <Separator mt={2} mb={[2, 2, 2, 4]} />
+        <Box mt={3}>
+          <Text variant="largeTitle">
+            <h1>Collect art and design online</h1>
+          </Text>
+          <Separator mt={2} mb={[2, 2, 2, 4]} />
 
-                <CollectionsHubsNav
-                  marketingHubCollections={marketingHubCollections}
-                />
+          <CollectionsHubsNav
+            marketingHubCollections={marketingHubCollections}
+          />
 
-                <Spacer mb={2} mt={[2, 2, 2, 4]} />
-              </Box>
+          <Spacer mb={2} mt={[2, 2, 2, 4]} />
+        </Box>
 
-              <Box>
-                <ArtworkFilter
-                  viewer={viewer}
-                  filters={location.query as any}
-                  sortOptions={[
-                    { value: "-decayed_merch", text: "Default" },
-                    { value: "-partner_updated_at", text: "Recently updated" },
-                    { value: "-published_at", text: "Recently added" },
-                    { value: "-year", text: "Artwork year (desc.)" },
-                    { value: "year", text: "Artwork year (asc.)" },
-                  ]}
-                  onArtworkBrickClick={artwork => {
-                    tracking.trackEvent(
-                      clickedMainArtworkGrid({
-                        contextPageOwnerType,
-                        destinationPageOwnerId: artwork.internalID,
-                        destinationPageOwnerSlug: artwork.slug,
-                      })
-                    )
-                  }}
-                  onChange={filters => {
-                    const url = buildUrlForCollectApp(filters)
+        <Box>
+          <ArtworkFilter
+            viewer={viewer}
+            filters={location.query as any}
+            sortOptions={[
+              { value: "-decayed_merch", text: "Default" },
+              { value: "-partner_updated_at", text: "Recently updated" },
+              { value: "-published_at", text: "Recently added" },
+              { value: "-year", text: "Artwork year (desc.)" },
+              { value: "year", text: "Artwork year (asc.)" },
+            ]}
+            onArtworkBrickClick={artwork => {
+              tracking.trackEvent(
+                clickedMainArtworkGrid({
+                  contextPageOwnerType,
+                  destinationPageOwnerId: artwork.internalID,
+                  destinationPageOwnerSlug: artwork.slug,
+                })
+              )
+            }}
+            onChange={filters => {
+              const url = buildUrlForCollectApp(filters)
 
-                    if (typeof window !== "undefined") {
-                      window.history.replaceState({}, "", url)
-                    }
+              if (typeof window !== "undefined") {
+                window.history.replaceState({}, "", url)
+              }
 
-                    /**
-                   * FIXME: Ideally we route using our router, but are running into
-                   * synchronization issues between router state and URL bar state.
-                   *
-                   * See below example as an illustration:
-                   *
-                    const newLocation = router.createLocation(url)
+              /**
+             * FIXME: Ideally we route using our router, but are running into
+             * synchronization issues between router state and URL bar state.
+             *
+             * See below example as an illustration:
+             *
+              const newLocation = router.createLocation(url)
 
-                    router.replace({
-                      ...newLocation,
-                      state: {
-                        scrollTo: "#jump--artworkFilter"
-                      },
-                    })
-                  *
-                  */
-                  }}
-                />
-              </Box>
-            </FrameWithRecentlyViewed>
-          </AppContainer>
-        )}
-      </AnalyticsContext.Consumer>
-    </AnalyticsContext.Provider>
+              router.replace({
+                ...newLocation,
+                state: {
+                  scrollTo: "#jump--artworkFilter"
+                },
+              })
+            *
+            */
+            }}
+          />
+        </Box>
+      </FrameWithRecentlyViewed>
+    </AppContainer>
   )
 }
 

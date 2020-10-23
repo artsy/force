@@ -5,12 +5,7 @@ import { Environment } from "relay-runtime"
 
 import { createRelaySSREnvironment } from "v2/Artsy/Relay/createRelaySSREnvironment"
 import { getUser } from "v2/Utils/user"
-
-export interface Mediator {
-  trigger: (action: string, config?: object) => void
-  on?: (event: string, cb?: (payload?: object) => void) => void
-  off?: (event: string) => void
-}
+import { Mediator, mediator } from "lib/mediator"
 
 /**
  * FIXME: Use a proper state management library. Ran into problems with useReducer
@@ -98,6 +93,7 @@ export const SystemContextProvider: SFC<SystemContextProps> = ({
   const providerValues = {
     ...props,
     isFetching,
+    mediator: props.mediator || mediator,
     setFetching,
     router,
     setRouter,

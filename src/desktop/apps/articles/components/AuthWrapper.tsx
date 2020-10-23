@@ -3,9 +3,9 @@ import { data as sd } from "sharify"
 import qs from "querystring"
 import { handleScrollingAuthModal } from "desktop/lib/openAuthModal"
 import { ContextModule, Intent } from "@artsy/cohesion"
+import { mediator } from "lib/mediator"
 
 const Cookies = require("desktop/components/cookies/index.coffee")
-const mediator = require("desktop/lib/mediator.coffee")
 
 export class AuthWrapper extends React.Component {
   public openModal

@@ -7,7 +7,7 @@ import { data as sd } from "sharify"
 import { reportLoadTimeToVolley } from "lib/volley"
 import { match } from "path-to-regexp"
 import { timeOnPageListener } from "./timeOnPageListener"
-import { getPageTypeFromClient } from "lib/getPageType"
+import { getContextPageFromClient } from "lib/getContextPage"
 import { OwnerType } from "@artsy/cohesion"
 
 // We exclude these routes from analytics.page calls because they're already
@@ -34,7 +34,7 @@ const excludedRoutes = [
 
 // Track pageview
 const pathname = new URL(window.location.href).pathname
-const { pageType, pageSlug } = getPageTypeFromClient()
+const { pageType, pageSlug } = getContextPageFromClient()
 
 const foundExcludedPath = excludedRoutes.some(excludedPath => {
   const matcher = match(excludedPath, { decode: decodeURIComponent })

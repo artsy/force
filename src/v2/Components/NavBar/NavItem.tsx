@@ -60,7 +60,6 @@ interface NavItemProps extends BoxProps, React.HTMLAttributes<HTMLDivElement> {
   }>
   Overlay?: React.FC
   active?: boolean
-  className?: string
   href?: string
   label?: string
   menuAnchor?: MenuAnchor
@@ -72,8 +71,6 @@ export const NavItem: React.FC<NavItemProps> = ({
   Overlay,
   active = false,
   children,
-  className,
-  display = "block",
   href,
   label,
   menuAnchor = "left",
@@ -176,8 +173,6 @@ export const NavItem: React.FC<NavItemProps> = ({
         color={color}
         underlineBehavior="none"
         px={1}
-        display={display}
-        className={className}
         aria-label={label}
         tabIndex={tabIndex}
         role={role}

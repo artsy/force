@@ -1,8 +1,8 @@
+import { mediator } from "lib/mediator"
 const benv = require("benv")
 const sinon = require("sinon")
 const Backbone = require("backbone")
 const SaveButton = require("../view")
-const mediator = require("../../../lib/mediator")
 const { resolve } = require("path")
 
 const model = new Backbone.Model({ id: "artwork" })

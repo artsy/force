@@ -1,15 +1,14 @@
 import React, { Fragment } from "react"
 import ReactDOM from "react-dom"
 import { Article } from "@artsy/reaction/dist/Components/Publishing"
-import { SystemContextProvider } from "@artsy/reaction/dist/Artsy"
+import { Mediator, SystemContextProvider } from "@artsy/reaction/dist/Artsy"
 import { InfiniteScrollNewsArticle } from "./InfiniteScrollNewsArticle"
 import { EditButton } from "desktop/apps/article/components/EditButton"
 import { ArticleLayout } from "./layouts/Article"
 import { data as sd } from "sharify"
 import { ArticleProps } from "@artsy/reaction/dist/Components/Publishing/Article"
 import { ClassicArticleLayout } from "desktop/apps/article/components/layouts/Classic"
-
-const mediator = require("desktop/lib/mediator.coffee")
+import { mediator } from "lib/mediator"
 
 export interface AppProps extends ArticleProps {
   templates?: {
@@ -58,7 +57,10 @@ export class App extends React.Component<AppProps> {
     return (
       <Fragment>
         <EditPortal article={article} />
-        <SystemContextProvider user={sd.CURRENT_USER} mediator={mediator}>
+        <SystemContextProvider
+          user={sd.CURRENT_USER}
+          mediator={mediator as Mediator}
+        >
           {this.getArticleLayout()}
         </SystemContextProvider>
       </Fragment>

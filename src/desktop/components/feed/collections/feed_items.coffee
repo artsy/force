@@ -2,7 +2,7 @@ _ = require 'underscore'
 sd = require('sharify').data
 Backbone = require 'backbone'
 FeedItem = require '../models/feed_item.coffee'
-CurrentUser = require '../../../models/current_user.coffee'
+CurrentUser = require '../../../models/current_user'
 
 module.exports = class FeedItems extends Backbone.Collection
 

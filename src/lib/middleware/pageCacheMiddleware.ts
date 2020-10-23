@@ -18,7 +18,7 @@ const runningTests = Object.keys(
   require("desktop/components/split_test/running_tests.coffee")
 ).sort()
 const cacheablePageTypes: string[] = PAGE_CACHE_TYPES.split("|")
-import { getPageTypeFromReq } from "lib/getPageType"
+import { getContextPageFromReq } from "lib/getContextPage"
 
 // Middleware will `next` and do nothing if any of the following is true:
 //
@@ -36,7 +36,7 @@ export const pageCacheMiddleware = async (
 
   // Returns true if the page type corresponding to `url` is configured cacheable.
   const isCacheablePageType = (req: Request) => {
-    const { pageType } = getPageTypeFromReq(req)
+    const { pageType } = getContextPageFromReq(req)
 
     return cacheablePageTypes.includes(pageType)
   }

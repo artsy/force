@@ -9,7 +9,7 @@ const sinon = require("sinon")
 const Backbone = require("backbone")
 const routes = require("../routes")
 const Profile = require("../../../models/profile.coffee")
-const CurrentUser = require("../../../models/current_user.coffee")
+const CurrentUser = require("../../../models/current_user")
 
 describe("Partner routes", function () {
   beforeEach(function () {

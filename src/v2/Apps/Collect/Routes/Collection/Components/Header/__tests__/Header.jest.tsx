@@ -12,6 +12,7 @@ import { cloneDeep } from "lodash"
 import React from "react"
 import sharify from "sharify"
 import { CollectionHeader, Props, getFeaturedArtists } from "../index"
+import { mediator } from "lib/mediator"
 
 jest.mock("sharify", () => ({
   get data() {
@@ -33,7 +34,10 @@ jest.mock("v2/Artsy/Analytics/useTracking", () => {
 })
 
 describe("collections header", () => {
-  const context = { mediator: { trigger: jest.fn() }, user: null }
+  beforeEach(() => {
+    jest.spyOn(mediator, "trigger")
+  })
+
   const props: Props = {
     artworks: collectionHeaderArtworks,
     collection: {
@@ -59,7 +63,7 @@ describe("collections header", () => {
   ) {
     return mount(
       <MockBoot breakpoint={breakpoint}>
-        <SystemContextProvider {...context}>
+        <SystemContextProvider>
           <CollectionHeader {...theProps} />
         </SystemContextProvider>
       </MockBoot>
@@ -471,11 +475,8 @@ describe("collections header", () => {
 
     it("opens auth modal with expected args when following an artist", () => {
       const component = mountComponent(props)
-      component
-        .find(FollowArtistButton)
-        .first()
-        .simulate("click")
-      expect(context.mediator.trigger).toBeCalledWith("open:auth", {
+      component.find(FollowArtistButton).first().simulate("click")
+      expect(mediator.trigger).toBeCalledWith("open:auth", {
         mode: "signup",
         contextModule: "featuredArtistsRail",
         copy: "Sign up to follow KAWS",

@@ -4,29 +4,23 @@ import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
-import {
-  ContextModule,
-  PageOwnerType,
-  clickedArtistSeriesGroup,
-} from "@artsy/cohesion"
+import { ContextModule, clickedArtistSeriesGroup } from "@artsy/cohesion"
 import { useTracking } from "v2/Artsy/Analytics/useTracking"
+import {
+  AnalyticsContextProps,
+  useAnalyticsContext,
+} from "v2/Artsy/Analytics/AnalyticsContext"
 
-interface Props {
+interface Props extends AnalyticsContextProps {
   artistSeries: ArtistSeriesItem_artistSeries
   lazyLoad: boolean
-  contextPageOwnerId: string
-  contextPageOwnerSlug: string
   contextModule: ContextModule
-  contextPageOwnerType: PageOwnerType
   index: number
 }
 
-export const ArtistSeriesItem: React.SFC<Props> = props => {
+export const ArtistSeriesItem: React.FC<Props> = props => {
   const {
-    contextPageOwnerId,
-    contextPageOwnerSlug,
     contextModule,
-    contextPageOwnerType,
     index,
     artistSeries: {
       internalID,
@@ -39,6 +33,11 @@ export const ArtistSeriesItem: React.SFC<Props> = props => {
     lazyLoad,
   } = props
   const { trackEvent } = useTracking()
+  const {
+    contextPageOwnerId,
+    contextPageOwnerSlug,
+    contextPageOwnerType,
+  } = useAnalyticsContext()
 
   const onClick = () => {
     trackEvent(
@@ -57,13 +56,17 @@ export const ArtistSeriesItem: React.SFC<Props> = props => {
   return (
     <Box border="1px solid" borderColor="black10" borderRadius="2px">
       <StyledLink onClick={onClick} to={`/artist-series/${slug}`}>
-        <SeriesImage
-          src={image.cropped.url}
-          alt={title}
-          lazyLoad={lazyLoad}
-          width={160}
-          style={{ objectFit: "cover", objectPosition: "center" }}
-        />
+        {!!image ? (
+          <SeriesImage
+            src={image.cropped.url}
+            alt={title}
+            lazyLoad={lazyLoad}
+            width={160}
+            style={{ objectFit: "cover", objectPosition: "center" }}
+          />
+        ) : (
+          <Box width={160} height={160} bg="black10"></Box>
+        )}
         <Box my={1} mx={2}>
           <SeriesTitle size={"3"}>{title}</SeriesTitle>
           <Sans size={"3"} color={"black60"}>

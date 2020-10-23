@@ -1,7 +1,7 @@
 _ = require 'underscore'
 bootstrap = require '../../../components/layout/bootstrap.coffee'
 Backbone = require 'backbone'
-CurrentUser = require '../../../models/current_user.coffee'
+CurrentUser = require '../../../models/current_user'
 sd = require('sharify').data
 Fair = require '../../../models/fair.coffee'
 Artist = require '../../../models/artist.coffee'

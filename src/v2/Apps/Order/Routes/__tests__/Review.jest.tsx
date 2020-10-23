@@ -27,6 +27,7 @@ import {
 import { ReviewFragmentContainer } from "../Review"
 import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
 import { GlobalData } from "sharify"
+import { mockLocation } from "v2/DevTools/mockLocation"
 
 jest.unmock("react-relay")
 
@@ -52,6 +53,10 @@ describe("Review", () => {
     }
 
     window.sd = { STRIPE_PUBLISHABLE_KEY: "" } as GlobalData
+  })
+
+  beforeEach(() => {
+    mockLocation()
   })
 
   const { buildPage, mutations, routes } = createTestEnv({
@@ -108,11 +113,6 @@ describe("Review", () => {
     })
 
     it("shows a modal that redirects to the artwork page if there is an artwork_version_mismatch", async () => {
-      Object.defineProperty(window, "location", {
-        writable: true,
-        value: { assign: jest.fn() },
-      })
-
       mutations.useResultsOnce(submitOrderWithVersionMismatchFailure)
       await page.clickSubmit()
       await page.expectAndDismissErrorDialogMatching(
@@ -123,11 +123,6 @@ describe("Review", () => {
     })
 
     it("shows a modal with a helpful error message if a user has not entered shipping and payment information", async () => {
-      Object.defineProperty(window, "location", {
-        writable: true,
-        value: { assign: jest.fn() },
-      })
-
       mutations.useResultsOnce(submitOrderWithMissingInfo)
 
       await page.clickSubmit()
@@ -158,11 +153,6 @@ describe("Review", () => {
     })
 
     it("shows a modal that redirects to the artist page if there is an insufficient inventory", async () => {
-      Object.defineProperty(window, "location", {
-        writable: true,
-        value: { assign: jest.fn() },
-      })
-
       mutations.useResultsOnce(submitOrderWithNoInventoryFailure)
       await page.clickSubmit()
       await page.expectAndDismissErrorDialogMatching(
@@ -243,11 +233,6 @@ describe("Review", () => {
     })
 
     it("shows a modal that redirects to the artwork page if there is an artwork_version_mismatch", async () => {
-      Object.defineProperty(window, "location", {
-        writable: true,
-        value: { assign: jest.fn() },
-      })
-
       mutations.useResultsOnce(submitOfferOrderWithVersionMismatchFailure)
 
       await page.clickSubmit()
@@ -260,11 +245,6 @@ describe("Review", () => {
     })
 
     it("shows a modal if there is a payment_method_confirmation_failed", async () => {
-      Object.defineProperty(window, "location", {
-        writable: true,
-        value: { assign: jest.fn() },
-      })
-
       mutations.useResultsOnce(submitOfferOrderFailedConfirmation)
 
       await page.clickSubmit()

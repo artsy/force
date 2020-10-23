@@ -68,8 +68,9 @@ app.get("/ssr-experiments/stitch", adminOnly, async (_req, res, next) => {
 app.get("/ssr-experiments/router", adminOnly, async (req, res, next) => {
   try {
     const { bodyHTML, styleTags } = await buildServerApp({
+      req,
+      res,
       routes,
-      url: req.url,
     })
 
     res.send(
@@ -98,8 +99,9 @@ app.get("/ssr-experiments/router", adminOnly, async (req, res, next) => {
 app.get("/ssr-experiments/all*", adminOnly, async (req, res, next) => {
   try {
     const { bodyHTML, styleTags } = await buildServerApp({
+      req,
+      res,
       routes,
-      url: req.url,
     })
 
     const layout = await stitch({

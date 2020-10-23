@@ -7,7 +7,7 @@ const _ = require("underscore")
 const routes = require("../routes")
 const sinon = require("sinon")
 const Backbone = require("backbone")
-const CurrentUser = require("../../../models/current_user.coffee")
+const CurrentUser = require("../../../models/current_user")
 const { fabricate } = require("@artsy/antigravity")
 
 describe("/user", function () {

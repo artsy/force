@@ -1,6 +1,6 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-mediator = require '../../lib/mediator.coffee'
+{ mediator } = require '../../../lib/mediator'
 { modelNameAndIdToLabel } = require '../../lib/analytics_helpers.coffee'
 ArtistSuggestions = require './artist_suggestions.coffee'
 { ARTIST_PAGE_CTA_ENABLED } = require('sharify').data

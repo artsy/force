@@ -2,7 +2,7 @@ _ = require 'underscore'
 Backbone = require 'backbone'
 geo = require '../geo/index.coffee'
 { isTouchDevice } = require '../util/device.coffee'
-mediator = require '../../lib/mediator.coffee'
+{ mediator } = require '../../../lib/mediator'
 
 template = -> require('./template.jade') arguments...
 

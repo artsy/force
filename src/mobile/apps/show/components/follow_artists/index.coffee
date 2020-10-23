@@ -1,5 +1,5 @@
 _ = require 'underscore'
-CurrentUser = require '../../../../models/current_user.coffee'
+CurrentUser = require '../../../../models/current_user'
 FollowButtonView = require '../../../../components/follow_button/view.coffee'
 FollowArtists = require '../../../../collections/follow_artists.coffee'
 

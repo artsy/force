@@ -181,6 +181,8 @@ type AnalyticsPartnerInquiryCountTimeSeriesStats {
 # Inquiry stats of a partner
 type AnalyticsPartnerInquiryStats {
   inquiryCount: Int!
+
+  # Inquiry response time in seconds
   inquiryResponseTime: Int
   partnerId: String!
   period: AnalyticsQueryPeriodEnum!
@@ -194,6 +196,8 @@ type AnalyticsPartnerInquiryStats {
 # Sales stats of a partner
 type AnalyticsPartnerSalesStats {
   orderCount: Int!
+
+  # Order response time in seconds
   orderResponseTime: Int
   partnerId: String!
   period: AnalyticsQueryPeriodEnum!
@@ -230,9 +234,17 @@ type AnalyticsPartnerSalesTimeSeriesStats {
 # Partner Stats
 type AnalyticsPartnerStats {
   # Time series data on number of artworks published
+  artworkPublished(
+    period: AnalyticsQueryPeriodEnum!
+  ): AnalyticsPartnerStatsArtworksPublished
+
+  # Time series data on number of artworks published
   artworksPublished(
     period: AnalyticsQueryPeriodEnum!
   ): AnalyticsArtworksPublishedStats
+    @deprecated(
+      reason: "Use artworkPublished for refactored time series bucket code"
+    )
 
   # Audience stats
   audience(period: AnalyticsQueryPeriodEnum!): AnalyticsPartnerAudienceStats
@@ -259,7 +271,11 @@ type AnalyticsPartnerStats {
   inquiry(period: AnalyticsQueryPeriodEnum!): AnalyticsPartnerInquiryStats
 
   # Different types of partner pageviews
+  pageview(period: AnalyticsQueryPeriodEnum!): AnalyticsPartnerStatsPageviews
+
+  # Different types of partner pageviews
   pageviews(period: AnalyticsQueryPeriodEnum!): AnalyticsPageviewStats
+    @deprecated(reason: "Use pageview for refactored time series bucket code")
   partnerId: String!
 
   # Artworks, shows, or artists ranked by views. Capped at 20 by the underlying sql query.
@@ -301,6 +317,50 @@ type AnalyticsPartnerStats {
   # Number of unique visitors
   uniqueVisitors(period: AnalyticsQueryPeriodEnum!): Int
     @deprecated(reason: "Use audience() { uniqueVisitors } instead")
+}
+
+# Publish artwork Series Stats
+type AnalyticsPartnerStatsArtworksPublished {
+  partnerId: String!
+  percentageChanged: Int!
+  period: AnalyticsQueryPeriodEnum!
+
+  # Partner artworks published count time series
+  timeSeries(
+    cumulative: Boolean = false
+  ): [AnalyticsPartnerStatsArtworksPublishedTimeSeries!]!
+  totalCount: Int!
+}
+
+# Artworks published time series data of a partner
+type AnalyticsPartnerStatsArtworksPublishedTimeSeries {
+  count: Int
+  endTime: AnalyticsDateTime
+  startTime: AnalyticsDateTime
+}
+
+# Stats for pageviews of partner content
+type AnalyticsPartnerStatsPageviews {
+  artworkViews: Int!
+  galleryViews: Int!
+  partnerId: String!
+  percentageChanged: Int!
+  period: AnalyticsQueryPeriodEnum!
+  showViews: Int!
+
+  # Pageviews time series
+  timeSeries(
+    cumulative: Boolean = false
+  ): [AnalyticsPartnerStatsPageviewsTimeSeries!]
+  totalCount: Int!
+  uniqueVisitors: Int!
+}
+
+# Pageviews time series data of a partner
+type AnalyticsPartnerStatsPageviewsTimeSeries {
+  count: Int
+  endTime: AnalyticsDateTime
+  startTime: AnalyticsDateTime
 }
 
 # Partner Time Series Stats
@@ -6449,6 +6509,8 @@ type ImageURLs {
   normalized: String
 }
 
+union InquiryItemType = Artwork | Show
+
 type InquiryQuestion {
   # A globally unique ID.
   id: ID!
@@ -6456,6 +6518,24 @@ type InquiryQuestion {
   # A type-specific ID.
   internalID: ID!
   question: String!
+}
+
+input InquiryQuestionInput {
+  details: String
+  questionID: String!
+}
+
+# A request to inquire on an artwork
+type InquiryRequest {
+  # A globally unique ID.
+  id: ID!
+  inquireable: InquiryItemType
+  inquirer: User
+
+  # A type-specific ID likely used as a database ID.
+  internalID: ID!
+  questions: [String]
+  shippingLocation: Location
 }
 
 enum Intents {
@@ -6910,6 +6990,9 @@ type Me implements Node {
 
   # A list of the current user’s bidder registrations
   bidders(
+    # Limit results to bidders in active auctions
+    active: Boolean
+
     # The slug or ID of a Sale
     saleID: String
   ): [Bidder]
@@ -6982,6 +7065,9 @@ type Me implements Node {
     @deprecated(
       reason: "Payment Request was deprecated. The field was kept for legacy client support. [Will be removed in v2]"
     )
+
+  # List of lab features for this user
+  labFeatures: [String!]!
 
   # Sale Artworks search results
   lotsByFollowedArtistsConnection(
@@ -7363,6 +7449,11 @@ type Mutation {
   startIdentityVerification(
     input: startIdentityVerificationMutationInput!
   ): startIdentityVerificationMutationPayload
+
+  # Create an artwork inquiry request
+  submitInquiryRequestMutation(
+    input: SubmitInquiryRequestMutationInput!
+  ): SubmitInquiryRequestMutationPayload
   unpublishViewingRoom(
     input: UnpublishViewingRoomInput!
   ): UnpublishViewingRoomPayload
@@ -8101,6 +8192,7 @@ type Query {
 
     # Returns the first _n_ elements from the list.
     first: Int
+    ids: [ID!]
 
     # Returns the last _n_ elements from the list.
     last: Int
@@ -8112,6 +8204,9 @@ type Query {
     # Returns only viewing rooms with these statuses
     statuses: [ViewingRoomStatusEnum!] = [live]
   ): ViewingRoomsConnection
+
+  # Last updated timestamp
+  analyticsLastUpdatedAt: AnalyticsDateTime
 
   # Find PartnerStats
   analyticsPartnerStats(partnerId: String!): AnalyticsPartnerStats
@@ -9692,6 +9787,8 @@ type Show implements EntityWithFilterArtworksConnectionInterface & Node {
 
   # Is it a fair booth or a show?
   type: String
+  viewingRoomIDs: [String!]!
+  viewingRoomsConnection: ViewingRoomsConnection
 }
 
 type ShowArtworkGrid implements ArtworkContextGrid {
@@ -9882,6 +9979,29 @@ type SubmissionEdge {
 
   # The item at the end of the edge.
   node: ConsignmentSubmission
+}
+
+input SubmitInquiryRequestMutationInput {
+  clientMutationId: String
+
+  # The inquireable object id (Artwork ID or Show ID)
+  inquireableID: String!
+
+  # The type of inquireable object (Artwork or Show)
+  inquireableType: String!
+
+  # Optional inquiry message
+  message: String
+
+  # List of structured inquiry questions
+  questions: [InquiryQuestionInput]
+}
+
+type SubmitInquiryRequestMutationPayload {
+  clientMutationId: String
+
+  # Artwork Inquiry request
+  inquiryRequest: InquiryRequest
 }
 
 type System {

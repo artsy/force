@@ -16,8 +16,10 @@ import { ShowApp_show } from "v2/__generated__/ShowApp_show.graphql"
 import { ShowArtworksRefetchContainer as ShowArtworks } from "./Components/ShowArtworks"
 import { ForwardLink } from "v2/Components/Links/ForwardLink"
 import { ShowContextCardFragmentContainer as ShowContextCard } from "./Components/ShowContextCard"
-import { AnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
-import { OwnerType } from "@artsy/cohesion"
+import {
+  AnalyticsContext,
+  useAnalyticsContext,
+} from "v2/Artsy/Analytics/AnalyticsContext"
 
 interface ShowAppProps {
   show: ShowApp_show
@@ -34,6 +36,8 @@ const FullScreenSeparator = styled(Separator)`
 `
 
 export const ShowApp: React.FC<ShowAppProps> = ({ show }) => {
+  const { contextPageOwnerSlug, contextPageOwnerType } = useAnalyticsContext()
+
   if (!show) return <ErrorPage code={404} />
 
   const hasViewingRoom = false // TODO
@@ -49,8 +53,8 @@ export const ShowApp: React.FC<ShowAppProps> = ({ show }) => {
         <AnalyticsContext.Provider
           value={{
             contextPageOwnerId: show.internalID,
-            contextPageOwnerSlug: show.slug,
-            contextPageOwnerType: OwnerType.show,
+            contextPageOwnerSlug,
+            contextPageOwnerType,
           }}
         >
           <HorizontalPadding>

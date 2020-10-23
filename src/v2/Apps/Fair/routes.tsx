@@ -19,7 +19,7 @@ export const routes: RouteConfig[] = [
     },
     query: graphql`
       query routes_FairQuery($slug: String!) {
-        fair(id: $slug) {
+        fair(id: $slug) @principalField {
           ...FairApp_fair
         }
       }
@@ -33,7 +33,7 @@ export const routes: RouteConfig[] = [
         },
         query: graphql`
           query routes_FairExhibitorsQuery($slug: String!) {
-            fair(id: $slug) {
+            fair(id: $slug) @principalField {
               ...FairExhibitors_fair
             }
           }
@@ -67,7 +67,7 @@ export const routes: RouteConfig[] = [
             $sort: String
             $shouldFetchCounts: Boolean!
           ) {
-            fair(id: $slug) {
+            fair(id: $slug) @principalField {
               ...FairArtworks_fair
                 @arguments(
                   acquireable: $acquireable
@@ -104,7 +104,7 @@ export const routes: RouteConfig[] = [
     },
     query: graphql`
       query routes_FairSubAppQuery($slug: String!) {
-        fair(id: $slug) {
+        fair(id: $slug) @principalField {
           ...FairSubApp_fair
         }
       }
@@ -118,7 +118,7 @@ export const routes: RouteConfig[] = [
         },
         query: graphql`
           query routes_FairInfoQuery($slug: String!) {
-            fair(id: $slug) {
+            fair(id: $slug) @principalField {
               ...FairInfo_fair
             }
           }

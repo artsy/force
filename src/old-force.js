@@ -24,28 +24,12 @@ console.log(chalk.green(`\n[Force] NODE_ENV=${NODE_ENV}\n`))
 require("./lib/datadog")
 
 const path = require("path")
-const { setAliases } = require("require-control")
-
-// Force resolution of potentially `yarn link`'d modules to the local node_modules
-// folder. This gets around SSR issues involving single react context requirements,
-// amongst other things. This is server-side only. Client-side must be resolved
-// via webpack.
-setAliases({
-  react: path.resolve(path.join(__dirname, "../node_modules/react")),
-  "react-dom": path.resolve(path.join(__dirname, "../node_modules/react-dom")),
-  "styled-components": path.resolve(
-    path.join(__dirname, "../node_modules/styled-components")
-  ),
-})
-
 const artsyXapp = require("@artsy/xapp")
 const cache = require("./lib/cache")
 const { setup: relayCacheSetup } = require("./lib/cacheClient")
 const express = require("express")
 const once = require("lodash").once
 const setup = require("./lib/setup").default
-const http = require("http")
-// const withGracefulShutdown = require("http-shutdown")
 
 const app = express()
 module.exports = app
@@ -53,42 +37,6 @@ module.exports = app
 if (PROFILE_MEMORY) {
   require("./lib/memory_profiler")()
 }
-
-// const startServer = once(() => {
-//   if (module === require.main) {
-//     const message =
-//       NODE_ENV === "development"
-//         ? `\n\n  [Force] Booting on port ${PORT}... \n`
-//         : `\n\n  [Force] Started on ${APP_URL}. \n`
-
-//     const server = withGracefulShutdown(http.createServer(app))
-
-//     const stopServer = once(() => {
-//       server.shutdown(() => {
-//         console.log("Closed existing connections.")
-//         process.exit(0)
-//       })
-//     })
-
-//     if (KEEPALIVE_TIMEOUT_SECONDS) {
-//       console.log(
-//         "Setting keepAliveTimeout to " + KEEPALIVE_TIMEOUT_SECONDS + " sec."
-//       )
-//       server.keepAliveTimeout = Number(KEEPALIVE_TIMEOUT_SECONDS) * 1000
-//     }
-
-//     if (HEADERS_TIMEOUT_SECONDS) {
-//       console.log(
-//         "Setting headersTimeout to " + HEADERS_TIMEOUT_SECONDS + " sec."
-//       )
-//       server.headersTimeout = Number(HEADERS_TIMEOUT_SECONDS) * 1000
-//     }
-
-//     server.listen(PORT, "0.0.0.0", () => console.log(message))
-
-//     process.on("SIGTERM", stopServer)
-//   }
-// })
 
 const initCache = cb => {
   cache.setup(() => relayCacheSetup(cb))

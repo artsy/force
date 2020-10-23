@@ -3,11 +3,11 @@ import { stringify } from "querystring"
 import { SearchResultsSkeleton } from "v2/Apps/Search/Components/SearchResultsSkeleton"
 import { StitchWrapper } from "desktop/components/react/stitch_components/StitchWrapper"
 import { stitch } from "@artsy/stitch"
-import { getPageTypeFromReq } from "lib/getPageType"
+import { getContextPageFromReq } from "lib/getContextPage"
 import { OwnerType } from "@artsy/cohesion"
 
 export const searchMiddleware = async (req, res, next) => {
-  const { pageType } = getPageTypeFromReq(req)
+  const { pageType } = getContextPageFromReq(req)
 
   if (pageType === OwnerType.search) {
     try {

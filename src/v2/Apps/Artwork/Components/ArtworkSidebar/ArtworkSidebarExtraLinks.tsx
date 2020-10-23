@@ -1,7 +1,7 @@
 // FIXME -- Remove this lint disable
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { Box, Link, Separator, Spacer, Text } from "@artsy/palette"
-import { Mediator, SystemContext } from "v2/Artsy"
+import { SystemContext } from "v2/Artsy"
 import { track } from "v2/Artsy/Analytics"
 import * as Schema from "v2/Artsy/Analytics/Schema"
 import React, { SFC, useContext } from "react"
@@ -9,6 +9,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { data as sd } from "sharify"
 
 import { ArtworkSidebarExtraLinks_artwork } from "v2/__generated__/ArtworkSidebarExtraLinks_artwork.graphql"
+import { Mediator } from "lib/mediator"
 
 export interface ArtworkSidebarExtraLinksProps {
   artwork: ArtworkSidebarExtraLinks_artwork

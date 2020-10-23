@@ -1,5 +1,6 @@
 import { ContextModule, Intent } from "@artsy/cohesion"
 import { ModalType } from "v2/Components/Authentication/Types"
+import { mockLocation } from "v2/DevTools/mockLocation"
 import {
   AuthModalOptions,
   openAuthModal,
@@ -43,10 +44,7 @@ describe("openAuth Helpers", () => {
     mediator = {
       trigger: jest.fn(),
     }
-    Object.defineProperty(window, "location", {
-      writable: true,
-      value: { href: "http://localhost/", assign: jest.fn() },
-    })
+    mockLocation({ href: "http://localhost/" })
   })
 
   describe("#openAuthModal", () => {

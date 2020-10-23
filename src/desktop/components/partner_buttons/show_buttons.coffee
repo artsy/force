@@ -1,8 +1,8 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 Profile = require '../../models/profile.coffee'
-{ Following, FollowButton } = require '../../components/follow_button/index.coffee'
-CurrentUser = require '../../models/current_user.coffee'
+{ Following, FollowButton } = require '../../components/follow_button/index'
+CurrentUser = require '../../models/current_user'
 ShowInquiryModal = require '../contact/show_inquiry_modal.coffee'
 
 module.exports = class PartnerShowButtons extends Backbone.View

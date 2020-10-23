@@ -12,7 +12,7 @@ import {
 import { Box, Button, Flex, Separator, Spacer } from "@artsy/palette"
 import { ArtistAuctionResultItem_auctionResult } from "v2/__generated__/ArtistAuctionResultItem_auctionResult.graphql"
 import { AnalyticsSchema, SystemContextProps } from "v2/Artsy"
-import { Mediator, SystemContext } from "v2/Artsy"
+import { SystemContext } from "v2/Artsy"
 import { ModalType } from "v2/Components/Authentication/Types"
 import { DateTime } from "luxon"
 import React, { SFC, useContext, useState } from "react"
@@ -26,6 +26,7 @@ import {
   ImageWithFallback,
   renderFallbackImage,
 } from "./Components/ImageWithFallback"
+import { Mediator } from "lib/mediator"
 
 export interface Props extends SystemContextProps {
   expanded?: boolean

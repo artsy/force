@@ -22,10 +22,10 @@
     qs "5.2.0"
     underscore "*"
 
-"@artsy/cohesion@1.41.0":
-  version "1.41.0"
-  resolved "https://registry.yarnpkg.com/@artsy/cohesion/-/cohesion-1.41.0.tgz#02dce62cb373798b556ae09320d5f0ae32ec8f74"
-  integrity sha512-Q9uzquKwmhlx2nQ8MlRJ6i0s7hPgkmzbwPJ9SyOIR4cwXz2+lqvSLA+LgIKL411TwJ6lhAG5TNbVW+qFAUmLnQ==
+"@artsy/cohesion@1.44.0":
+  version "1.44.0"
+  resolved "https://registry.yarnpkg.com/@artsy/cohesion/-/cohesion-1.44.0.tgz#c13ee91ea739af61b817e215a0dba0e8677547dc"
+  integrity sha512-SnKfCojWEIY0YwwP1kREtosH9LsuqkCvx8P6i7qu3LgXLNbuu4okFlIg7rDFRYWMJ3dhU5LmJ3sYX88FMEWg/g==
 
 "@artsy/detect-responsive-traits@^0.0.5":
   version "0.0.5"
@@ -53,10 +53,10 @@
   dependencies:
     uuid "^8.3.0"
 
-"@artsy/palette@13.10.1":
-  version "13.10.1"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-13.10.1.tgz#387c22fad2337c4350c652997d26aff39b276a14"
-  integrity sha512-pMtOV4eI2bAsN3Q2xzTRfLZEzbBOpsr8TuRsfUSYkyYzfIFBjdvqVurByeu1yQraot5F9Vetv7RHdryX1wrVkA==
+"@artsy/palette@13.11.0":
+  version "13.11.0"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-13.11.0.tgz#f5f36632a1b9f379630c9e57e0e8cc6ebac22e16"
+  integrity sha512-tFTnb72rvpDPwh4KgzS8WZ0wtLyx2RCr5r1hoHGinwUSUOdnSfOLd7bOuwDQee5s45A8UFr8HljszyZgssSZwg==
   dependencies:
     "@styled-system/theme-get" "^5.1.2"
     babel-plugin-styled-components "^1.10.0"
@@ -74,7 +74,7 @@
     styled-bootstrap-grid "3.1.0"
     styled-system "^5.1.5"
     trunc-html "^1.1.2"
-    use-cursor "^1.2.0"
+    use-cursor "^1.2.2"
 
 "@artsy/passport-local-with-otp@^0.3.0":
   version "0.3.0"
@@ -108,10 +108,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/react-html-parser/-/react-html-parser-3.0.2.tgz#6213d662441acf0bd8c9ee953aa77ac8d9cf1cdd"
   integrity sha512-FXiRSqfSvwpz/QgwaqFvjJsbDmo9qMGpvUp/0p1V6muaJbGnfxkTSxAYWmYlFst6bmjhVxCYKxvgQhEVE03Wfg==
 
-"@artsy/reaction@28.9.0":
-  version "28.9.0"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-28.9.0.tgz#f5d4e32e979f19fef7bbd75f825b3b55c2af59be"
-  integrity sha512-gBg6IBuVszbXRNJ/IcGhaARBofHyzZ+LcfCXsDREnMsyo7RSBWqtxYUFM1W5vJTua/9R26oFYufko3+AK6hx6A==
+"@artsy/reaction@28.11.0":
+  version "28.11.0"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-28.11.0.tgz#d91fb29a6cc890851a66c271d22492f8504295d1"
+  integrity sha512-3XyMry4rRL6K86cFQlxskK9rKw5jtKqlIIBzMwbGgdO8oj/DfO7RxnvAIb0PctbLDituzrZw62Wx0SZYVJXp1A==
   dependencies:
     "@artsy/detect-responsive-traits" "^0.0.5"
     "@artsy/fresnel" "^1.0.13"
@@ -6060,7 +6060,7 @@ cors@2.8.3:
     object-assign "^4"
     vary "^1"
 
-cosmiconfig@^5.0.5, cosmiconfig@^5.2.1:
+cosmiconfig@^5.0.5, cosmiconfig@^5.1.0, cosmiconfig@^5.2.1:
   version "5.2.1"
   resolved "https://registry.yarnpkg.com/cosmiconfig/-/cosmiconfig-5.2.1.tgz#040f726809c591e77a17c0a3626ca45b4f168b1a"
   integrity sha512-H65gsXo1SKjf8zmrJ67eJk8aIRKV5ff2D4uKZIBZShbhGSpEmsQOPW/SKMKYhSTrqR7ufy6RP69rPogdaPh/kA==
@@ -7833,6 +7833,11 @@ eventemitter2@^6.4.2:
   version "6.4.3"
   resolved "https://registry.yarnpkg.com/eventemitter2/-/eventemitter2-6.4.3.tgz#35c563619b13f3681e7eb05cbdaf50f56ba58820"
   integrity sha512-t0A2msp6BzOf+QAcI6z9XMktLj52OjGQg+8SJH6v5+3uxNpWYRR3wQmfA+6xtMU9kOC59qk9licus5dYcrYkMQ==
+
+eventemitter3@4.0.7:
+  version "4.0.7"
+  resolved "https://registry.yarnpkg.com/eventemitter3/-/eventemitter3-4.0.7.tgz#2de9b68f6528d5644ef5c59526a1b4a07306169f"
+  integrity sha512-8guHBZCwKnFhYdHr2ysuRWErTwhoN2X8XELRlrRwpmfeY2jjuUN4taQMsULKUVo1K4DvZl+0pgfyoysHxvmvEw==
 
 eventemitter3@^2.0.2:
   version "2.0.3"
@@ -14970,6 +14975,15 @@ pug@2.0.3:
     pug-runtime "^2.0.4"
     pug-strip-comments "^1.0.3"
 
+pull-lock@1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/pull-lock/-/pull-lock-1.0.0.tgz#6a0ab2719a3b7e6f49838b52168a30b8fdd84188"
+  integrity sha512-DKc72YeAuRSv9jEPMKoRA5xMs9THQ9kUExSR8WsZPhnLvBgnJ1evXxYPSIpQsmEA6yQYWSt9Uy1EX1/TNyvdXQ==
+  dependencies:
+    cosmiconfig "^5.1.0"
+    debug "^4.1.1"
+    execa "^1.0.0"
+
 pump@^2.0.0:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/pump/-/pump-2.0.1.tgz#12399add6e4cf7526d973cbc8b5ce2e2908b3909"
@@ -18836,10 +18850,10 @@ use-callback-ref@^1.2.3:
   resolved "https://registry.yarnpkg.com/use-callback-ref/-/use-callback-ref-1.2.4.tgz#d86d1577bfd0b955b6e04aaf5971025f406bea3c"
   integrity sha512-rXpsyvOnqdScyied4Uglsp14qzag1JIemLeTWGKbwpotWht57hbP78aNT+Q4wdFKQfQibbUX4fb6Qb4y11aVOQ==
 
-use-cursor@^1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/use-cursor/-/use-cursor-1.2.0.tgz#41f4bd0c99dc8c4b7c5b49973ca9c3c6f4bffaee"
-  integrity sha512-oljIxk/VFhTHrnrrY4nhHGMjVrQm0P7K1zsqRP3m3Oe9lNtikruMiyF98PE0tCDAD3LRPENrp7rwPDwfWyciIA==
+use-cursor@^1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/use-cursor/-/use-cursor-1.2.2.tgz#9f9fe356cff043fc7b3b59835245782c40526ed3"
+  integrity sha512-x6UBGPjqsjs3zIrCQFRP93hD60uzY8njRUnsBIKXB53uwZwCbHZHMQnAw8Gw9VeD0jhWxqyPicdpKSFyK21Q5w==
   dependencies:
     map-cursor-to-max "^1.0.0"
 

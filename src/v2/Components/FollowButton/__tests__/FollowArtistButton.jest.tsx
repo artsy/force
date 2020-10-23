@@ -9,6 +9,7 @@ import { ContextModule, OwnerType } from "@artsy/cohesion"
 import * as openAuthModal from "v2/Utils/openAuthModal"
 import renderer from "react-test-renderer"
 import { AnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
+import { mockLocation } from "v2/DevTools/mockLocation"
 
 const openAuthToFollowSave = jest.spyOn(openAuthModal, "openAuthToFollowSave")
 jest.mock("react-relay", () => ({
@@ -35,12 +36,8 @@ describe("FollowArtistButton", () => {
     )
   }
 
-  Object.defineProperty(window, "location", {
-    writable: true,
-    value: { assign: jest.fn() },
-  })
-
   beforeEach(() => {
+    mockLocation()
     mediator = { trigger: jest.fn() }
     props = {
       artist: {

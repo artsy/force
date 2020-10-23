@@ -17,6 +17,7 @@ import styled from "styled-components"
 import { openAuthToFollowSave } from "v2/Utils/openAuthModal"
 import colors from "../../Assets/Colors"
 import Icon from "../Icon"
+import { Mediator } from "lib/mediator"
 
 const SIZE = 40
 
@@ -32,7 +33,7 @@ export interface SaveProps
   style?: any
   relay?: RelayProp
   relayEnvironment?: RelayRuntimeTypes.Environment
-  mediator?: Artsy.Mediator
+  mediator?: Mediator
   render?: (props, state) => JSX.Element
   trackingData?: SaveTrackingProps
   tracking?: TrackingProp

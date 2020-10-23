@@ -4,7 +4,7 @@ import { WorksForYou } from "v2/Apps/WorksForYou"
 
 import { SystemContextProvider } from "v2/Artsy"
 
-import CurrentUser from "../../../models/current_user.coffee"
+import CurrentUser from "../../../models/current_user"
 
 function setupReactGrid(options = {}) {
   const user = CurrentUser.orNull()

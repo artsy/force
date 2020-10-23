@@ -5,6 +5,7 @@ import { graphql } from "react-relay"
 import { Title } from "react-head"
 import { FairApp_QueryRawResponse } from "v2/__generated__/FairApp_Query.graphql"
 import { useTracking } from "react-tracking"
+import { OwnerType } from "@artsy/cohesion"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
@@ -128,7 +129,15 @@ describe("FairApp", () => {
     return renderRelayTree({
       Component: ({ fair }) => {
         return (
-          <MockBoot>
+          <MockBoot
+            context={{
+              analytics: {
+                contextPageOwnerId: "bson-fair",
+                contextPageOwnerSlug: "miart-2020",
+                contextPageOwnerType: OwnerType.fair,
+              },
+            }}
+          >
             <FairApp fair={fair} />
           </MockBoot>
         )
@@ -173,7 +182,7 @@ describe("FairApp", () => {
 
     const html = wrapper.html()
 
-    expect(html).toContain("Related articles")
+    expect(html).toContain("Related Reading")
     expect(html).toContain(
       "IFPDA Fine Art Print Fair 2019: Programming and Projects"
     )
@@ -183,7 +192,7 @@ describe("FairApp", () => {
     const wrapper = await getWrapper()
     const html = wrapper.html()
 
-    expect(html).not.toContain("Related articles")
+    expect(html).not.toContain("Related Reading")
     expect(html).not.toContain(
       "IFPDA Fine Art Print Fair 2019: Programming and Projects"
     )
@@ -199,7 +208,7 @@ describe("FairApp", () => {
 
     const html = wrapper.html()
 
-    expect(html).toContain("Curated highlights")
+    expect(html).toContain("Curated Highlights")
     expect(html).toContain("Big Artists, Small Sculptures")
     expect(html).toContain("10 works")
   })
@@ -208,7 +217,7 @@ describe("FairApp", () => {
     const wrapper = await getWrapper()
     const html = wrapper.html()
 
-    expect(html).not.toContain("Curated highlights")
+    expect(html).not.toContain("Curated Highlights")
     expect(html).not.toContain("Big Artists, Small Sculptures")
   })
 

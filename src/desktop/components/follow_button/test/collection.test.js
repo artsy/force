@@ -14,7 +14,7 @@ const Follow = require("../model")
 const Profile = require("../../../models/profile")
 const { fabricate } = require("@artsy/antigravity")
 const Following = require("../collection")
-const CurrentUser = require("../../../models/current_user.coffee")
+const CurrentUser = require("../../../models/current_user")
 
 describe("Following collection", function () {
   before(done =>

@@ -10,7 +10,7 @@ PoliteInfiniteScrollView = require '../../components/polite_infinite_scroll/clie
 { setupFilter } = require '../../components/filter2/index.coffee'
 FollowGene = require '../../collections/follow_genes.coffee'
 FollowButtonView = require '../../components/follow_button/view.coffee'
-CurrentUser = require '../../models/current_user.coffee'
+CurrentUser = require '../../models/current_user'
 artworkColumnsTemplate = -> require('../../components/artwork_columns/template.jade') arguments...
 artistTemplate = -> require('./templates/artist_list.jade') arguments...
 

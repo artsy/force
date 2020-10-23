@@ -4,11 +4,11 @@ Backbone = require 'backbone'
 request = require 'superagent'
 sd = require('sharify').data
 Search = require './collections/search.coffee'
-mediator = require '../../lib/mediator.coffee'
+{ mediator } = require '../../../lib/mediator'
 { modelNameAndIdToLabel } = require '../../lib/analytics_helpers.coffee'
 itemTemplate = -> require('./templates/item.jade') arguments...
 emptyItemTemplate = -> require('./templates/empty-item.jade') arguments...
-CurrentUser = require '../../models/current_user.coffee'
+CurrentUser = require '../../models/current_user'
 SearchResult = require '../../models/search_result.coffee'
 splitTest = require '../split_test/index.coffee'
 

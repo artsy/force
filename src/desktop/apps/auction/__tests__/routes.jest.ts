@@ -6,7 +6,7 @@ jest.mock("lib/metaphysics2.coffee", () => jest.fn())
 
 const metaphysics = require("lib/metaphysics.coffee") as jest.Mock
 const metaphysics2 = require("lib/metaphysics2.coffee") as jest.Mock
-const CurrentUser = require("desktop/models/current_user.coffee")
+const CurrentUser = require("desktop/models/current_user")
 
 import * as routes from "../routes"
 

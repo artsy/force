@@ -17,6 +17,7 @@ import {
 } from "../__fixtures__/MutationResults"
 import { AcceptFragmentContainer } from "../Accept"
 import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
+import { mockLocation } from "v2/DevTools/mockLocation"
 
 jest.unmock("react-relay")
 
@@ -26,21 +27,12 @@ require("v2/Utils/getCurrentTimeAsIsoString").__setCurrentTime(NOW)
 
 const realSetInterval = global.setInterval
 
-Object.defineProperty(window, "location", {
-  writable: true,
-  value: { assign: jest.fn() },
-})
-
 const testOrder = {
   ...OfferOrderWithShippingDetails,
-  stateExpiresAt: DateTime.fromISO(NOW)
-    .plus({ days: 1 })
-    .toString(),
+  stateExpiresAt: DateTime.fromISO(NOW).plus({ days: 1 }).toString(),
   lastOffer: {
     ...OfferWithTotals,
-    createdAt: DateTime.fromISO(NOW)
-      .minus({ days: 1 })
-      .toString(),
+    createdAt: DateTime.fromISO(NOW).minus({ days: 1 }).toString(),
     amount: "$sellers.offer",
     fromParticipant: "SELLER",
   },
@@ -49,6 +41,10 @@ const testOrder = {
 }
 
 describe("Accept seller offer", () => {
+  beforeEach(() => {
+    mockLocation()
+  })
+
   const { mutations, buildPage, routes } = createTestEnv({
     Component: AcceptFragmentContainer,
     query: graphql`
@@ -70,10 +66,6 @@ describe("Accept seller offer", () => {
       ...acceptOfferSuccess,
     },
     TestPage: OrderAppTestPage,
-  })
-
-  beforeEach(() => {
-    ;(window.location.assign as any).mockReset()
   })
 
   describe("with default data", () => {

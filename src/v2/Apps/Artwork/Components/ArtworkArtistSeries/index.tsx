@@ -1,7 +1,7 @@
 import React from "react"
 import { withSystemContext } from "v2/Artsy"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ContextModule, OwnerType } from "@artsy/cohesion"
+import { ContextModule } from "@artsy/cohesion"
 import { ArtistSeriesArtworkRailFragmentContainer as ArtistSeriesArtworkRail } from "v2/Apps/Artwork/Components/ArtworkArtistSeries/ArtistSeriesArtworkRail"
 import { ArtistSeriesRailFragmentContainer as ArtistSeriesRail } from "v2/Components/ArtistSeriesRail/ArtistSeriesRail"
 import { ArtworkArtistSeries_artwork } from "v2/__generated__/ArtworkArtistSeries_artwork.graphql"
@@ -40,10 +40,7 @@ const ArtworkArtistSeries: React.FC<ArtworkArtistSeriesProps> = props => {
           <ArtistSeriesRail
             artist={artwork.seriesArtist}
             title="Series by this artist"
-            contextPageOwnerId={artwork.internalID}
-            contextPageOwnerSlug={artwork.slug}
             contextModule={ContextModule.moreSeriesByThisArtist}
-            contextPageOwnerType={OwnerType.artwork}
           />
         </>
       )}

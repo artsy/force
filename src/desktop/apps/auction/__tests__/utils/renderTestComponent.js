@@ -1,6 +1,6 @@
 import Articles from "desktop/collections/articles.coffee"
 import Auction from "desktop/models/auction.coffee"
-import CurrentUser from "desktop/models/current_user.coffee"
+import CurrentUser from "desktop/models/current_user"
 import React from "react"
 import auctions from "desktop/apps/auction/reducers"
 import bootstrap from "desktop/apps/auction/__tests__/fixtures/auction"
@@ -8,7 +8,7 @@ import thunk from "redux-thunk"
 import { Provider } from "react-redux"
 import { applyMiddleware, createStore } from "redux"
 import { isEmpty } from "underscore"
-import { merge, cloneDeep } from "lodash"
+import { cloneDeep, merge } from "lodash"
 import { mount, render, shallow } from "enzyme"
 
 export default function renderTestComponent({

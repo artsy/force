@@ -1,6 +1,6 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-CurrentUser = require '../../../models/current_user.coffee'
+CurrentUser = require '../../../models/current_user'
 moment = require 'moment'
 bootstrap = require '../../../components/layout/bootstrap.coffee'
 AvantGardeTabsView = require '../../../components/avant_garde_tabs/view.coffee'

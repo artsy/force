@@ -21,11 +21,11 @@ import {
   graphql,
 } from "react-relay"
 import { openAuthToFollowSave } from "v2/Utils/openAuthModal"
-import { Mediator } from "v2/Artsy"
 import {
   AnalyticsContextProps,
   withAnalyticsContext,
 } from "v2/Artsy/Analytics/AnalyticsContext"
+import { Mediator } from "lib/mediator"
 
 interface Props
   extends React.HTMLProps<FollowArtistButton>,

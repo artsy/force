@@ -8,6 +8,7 @@ import {
   MobileNavMenu,
   MobileSubmenuLink,
 } from "../../MobileNavMenu/MobileNavMenu"
+import { mediator } from "lib/mediator"
 
 jest.mock("v2/Artsy/Analytics/useTracking")
 jest.mock("lib/isServer", () => ({
@@ -15,14 +16,12 @@ jest.mock("lib/isServer", () => ({
 }))
 
 describe("MobileNavMenu", () => {
-  const mediator = {
-    trigger: jest.fn(),
-  }
+  jest.spyOn(mediator, "trigger")
   const trackEvent = jest.fn()
   const noop = () => {}
   const getWrapper = props => {
     return mount(
-      <SystemContextProvider mediator={mediator} user={props.user}>
+      <SystemContextProvider user={props.user}>
         <MobileNavMenu isOpen onClose={noop} />
       </SystemContextProvider>
     )

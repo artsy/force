@@ -8,7 +8,7 @@ Trail = require './trail.coffee'
 analytics = require './analytics.coffee'
 openErrorFlash = require './error.coffee'
 sd = require('sharify').data
-mediator = require('../../lib/mediator.coffee')
+{ mediator } = require('../../../lib/mediator')
 { steps, decisions, views } = require './map.coffee'
 
 module.exports = ({ user, artwork, inquiry, bypass, state_attrs, ask_specialist }) ->

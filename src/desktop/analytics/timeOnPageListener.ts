@@ -1,11 +1,16 @@
 import { trackEvent } from "./helpers"
 import { timeOnPage } from "@artsy/cohesion"
-import { getPageTypeFromClient } from "lib/getPageType"
+import { getContextPageFromClient } from "lib/getContextPage"
+
+let interval
 
 export const timeOnPageListener = (delay: number = 15000) => {
-  setTimeout(() => {
-    const { pageType, pageSlug } = getPageTypeFromClient()
-    const pathname = new URL(window.location.href).pathname
+  if (interval) {
+    clearInterval(interval)
+  }
+
+  interval = setTimeout(() => {
+    const { pageType, pageSlug, path } = getContextPageFromClient()
 
     const referrer = window.analytics.__artsyClientSideRoutingReferrer
     // Grab referrer from our trackingMiddleware in Reaction, since we're in a
@@ -19,7 +24,7 @@ export const timeOnPageListener = (delay: number = 15000) => {
         },
       }
     }
-    const contextPageOwnerSlug = pageType === "partner" ? pathname : pageSlug
+    const contextPageOwnerSlug = pageType === "partner" ? path : pageSlug
 
     trackEvent(
       timeOnPage({

@@ -8,7 +8,7 @@ FairOrganizer = require '../../../models/fair_organizer.coffee'
 Articles = require '../../../collections/articles.coffee'
 Clock = require '../../../components/clock/view.coffee'
 { resize, crop } = require '../../../components/resizer/index.coffee'
-{ Following, FollowButton } = require '../../../components/follow_button/index.coffee'
+{ Following, FollowButton } = require '../../../components/follow_button/index'
 articlesTemplate = -> require('../templates/articles.jade') arguments...
 
 module.exports.FairOrganizerView = class FairOrganizerView extends Backbone.View

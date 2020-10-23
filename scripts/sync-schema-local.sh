@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
-
-cd ../metaphysics
-yarn dump-schema v2 "$OLDPWD/data/"
+# Create a subshell to prevent the local shell from changing directories after
+# the script has terminated.
+(
+  cd ../metaphysics || exit 1
+  yarn dump-schema v2 "$OLDPWD/data/"
+)

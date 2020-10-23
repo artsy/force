@@ -5,15 +5,11 @@ import React from "react"
 import ReactDOM from "react-dom"
 import { loadableReady } from "@loadable/component"
 
-const mediator = require("desktop/lib/mediator.coffee")
-
 buildClientApp({
   routes: routes,
   context: {
-    user: sd.CURRENT_USER,
-    mediator,
     injectedData: sd.JSON_PAGE_DATA,
-  } as any,
+  },
 })
   .then(({ ClientApp }) => {
     loadableReady(() => {

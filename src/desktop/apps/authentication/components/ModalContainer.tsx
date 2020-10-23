@@ -10,8 +10,7 @@ import {
 import { handleSubmit, setCookies } from "../helpers"
 import { ModalManager } from "v2/Components/Authentication/Desktop/ModalManager"
 import { ModalOptions, ModalType } from "v2/Components/Authentication/Types"
-
-const mediator = require("../../../lib/mediator.coffee")
+import { mediator } from "lib/mediator"
 
 interface SocialAuthArgs extends ModalOptions {
   service: AuthService

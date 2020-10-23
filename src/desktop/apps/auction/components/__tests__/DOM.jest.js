@@ -1,14 +1,10 @@
 import { test } from "../DOM"
-import mediator from "desktop/lib/mediator.coffee"
+import { mediator } from "lib/mediator"
 
 const { DOM } = test
 
 jest.mock("jquery", x => () => ({
   foo: "bar",
-}))
-
-jest.mock("desktop/lib/mediator.coffee", x => ({
-  trigger: jest.fn(),
 }))
 
 jest.useFakeTimers()
@@ -29,12 +25,12 @@ describe("DOM Interactions", () => {
 
   describe(".handleRegister", () => {
     beforeEach(() => {
+      jest.spyOn(mediator, "trigger")
       mockDispatch.mockReset()
     })
 
     afterEach(() => {
       jest.resetAllMocks()
-      mediator.trigger.mockReset()
     })
     it("user has credit card: opens the conditions of sale modal", () => {
       DOM.prototype.componentDidMount = jest.fn()

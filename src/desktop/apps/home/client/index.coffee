@@ -1,6 +1,6 @@
 Backbone = require 'backbone'
 Cookies = require 'cookies-js'
-CurrentUser = require '../../../models/current_user.coffee'
+CurrentUser = require '../../../models/current_user'
 HeroUnitView = require './hero_unit_view.coffee'
 JumpView = require '../../../components/jump/view.coffee'
 SearchBarView = require '../../../components/search_bar/view.coffee'

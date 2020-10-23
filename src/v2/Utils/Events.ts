@@ -1,5 +1,4 @@
-// TODO: Swap with eventemitter3
-import EventEmitter from "events"
+import EventEmitter from "eventemitter3"
 
 declare global {
   interface Window {
@@ -10,7 +9,7 @@ declare global {
 const emitter =
   typeof window !== "undefined"
     ? window.__reactionEventsEventEmitter ||
-    (window.__reactionEventsEventEmitter = new EventEmitter())
+      (window.__reactionEventsEventEmitter = new EventEmitter())
     : new EventEmitter()
 
 /**

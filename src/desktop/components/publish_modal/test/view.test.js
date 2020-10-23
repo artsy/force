@@ -3,11 +3,11 @@
  * DS102: Remove unnecessary code created because of implicit returns
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
  */
+import { mediator } from "lib/mediator"
 const benv = require("benv")
 const sinon = require("sinon")
 const Backbone = require("backbone")
 const sd = require("sharify").data
-const mediator = require("../../../lib/mediator")
 const rewire = require("rewire")
 const { resolve } = require("path")
 

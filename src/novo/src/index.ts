@@ -25,6 +25,7 @@ app.get("/", (req, res) => {
 
 const routes = getAppNovoRoutes()
 
+// eslint-disable-next-line
 console.log(getRoutePaths())
 
 /**
@@ -44,10 +45,10 @@ app.get(
         bodyHTML,
         headTags,
       } = await buildServerApp({
+        req,
+        res,
         context: buildServerAppContext(req, res),
         routes,
-        url: req.url,
-        userAgent: req.header("User-Agent"),
       })
 
       if (redirect) {

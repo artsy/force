@@ -23,11 +23,6 @@ jest.mock("desktop/components/cookies/index.coffee", () => ({
 const mockCookies = require("desktop/components/cookies/index.coffee")
   .get as jest.Mock
 
-jest.mock("desktop/lib/mediator.coffee", () => ({
-  trigger: jest.fn(),
-}))
-const mockMediator = require("desktop/lib/mediator.coffee").trigger as jest.Mock
-
 jest.mock("desktop/lib/openAuthModal", () => ({
   handleScrollingAuthModal: jest.fn(),
 }))
@@ -74,10 +69,6 @@ describe("InfiniteScrollNewsArticle", () => {
     }
 
     sd.CURRENT_USER = { id: "123" }
-  })
-
-  afterEach(() => {
-    mockMediator.mockClear()
   })
 
   it("#hasNewDate returns true if article date is different from previous article", () => {
