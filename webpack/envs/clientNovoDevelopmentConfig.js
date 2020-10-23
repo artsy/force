@@ -4,7 +4,6 @@ const { basePath, env } = require("../utils/env")
 const { getCSSManifest } = require("../utils/getCSSManifest")
 const { HashedModuleIdsPlugin } = require("webpack")
 const { RetryChunkLoadPlugin } = require("webpack-retry-chunk-load-plugin")
-const LoadablePlugin = require("@loadable/webpack-plugin")
 const path = require("path")
 const webpack = require("webpack")
 const WebpackManifestPlugin = require("webpack-manifest-plugin")
@@ -16,7 +15,7 @@ export const clientNovoDevelopmentConfig = {
   devtool: "source-map",
   entry: {
     "artsy-novo": [
-      path.resolve(process.cwd(), "src/desktop/assets/artsy-novo.tsx"),
+      path.resolve(process.cwd(), "src/novo/src/client.tsx"),
     ],
   },
   output: {
@@ -103,7 +102,6 @@ export const clientNovoDevelopmentConfig = {
       jade: "jade/runtime.js",
       waypoints: "jquery-waypoints/waypoints.js",
     }),
-    new LoadablePlugin(),
 
     /**
      * If something goes wrong while loading a dynmic split chunk (import())

@@ -32,7 +32,7 @@
     "publish-assets": "node scripts/uploadToS3.js",
     "relay": "relay-compiler",
     "sentry": "scripts/sentry.sh",
-    "start:dev": "NODE_ENV=development BUILD_CLIENT=true node --inspect --max_old_space_size=3072 -r dotenv/config ./src",
+    "start:dev": "NODE_ENV=development BUILD_CLIENT=true node --inspect --max_old_space_size=3072 -r dotenv/config ./src/dev.index.js",
     "start:prod": "yarn build:assets && yarn build:server && NODE_ENV=production yarn start",
     "start:prod:local": "NODE_ENV=production node --inspect --max_old_space_size=3072 -r dotenv/config ./server.dist.js",
     "start": "scripts/start.sh",

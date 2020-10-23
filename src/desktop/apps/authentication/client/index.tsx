@@ -3,7 +3,7 @@ import ReactDOM from "react-dom"
 import { AuthStatic } from "../components/AuthStatic"
 import { MobileAuthStatic } from "../components/MobileAuthStatic"
 import { ModalContainer } from "../components/ModalContainer"
-import { setCookies } from "../helpers"
+import { setCookies } from "../helpers.setCookies"
 import { data as sd } from "sharify"
 
 export const init = () => {

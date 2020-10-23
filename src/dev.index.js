@@ -5,4 +5,4 @@ require("@babel/register")({
   plugins: ["babel-plugin-dynamic-import-node"],
 })
 
-require('index')
+require('./index')

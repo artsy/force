@@ -32,6 +32,8 @@ const allRoutes = flatten(
   })
 )
 
+console.log(allRoutes)
+
 /**
  * Mount non-Reaction routes that are relevant to specific global router routes
  */

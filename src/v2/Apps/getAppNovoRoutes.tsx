@@ -1,13 +1,13 @@
 import { buildAppRoutes } from "v2/Artsy/Router/buildAppRoutes"
 import { RouteConfig } from "found"
-import { debugRoutes } from "./Debug/debugRoutes"
+import { debugNovoRoutes } from "./Debug/debugNovoRoutes"
 
 export function getAppNovoRoutes(): RouteConfig[] {
   return buildAppRoutes([
     // For debugging baseline app shell stuff
     {
-      routes: debugRoutes.map(route => {
-        route.path = `/novo${route.path}`
+      routes: debugNovoRoutes.map(route => {
+        route.path = `${route.path}`
         return route
       }),
     },
