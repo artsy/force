@@ -22,7 +22,9 @@ const shouldRedirectToNewFairPage = req => {
 }
 
 const isNewFairPageDisabledForThisFair = req => {
-  return !!DISABLE_FAIRS_UPDATE_SLUGS?.split(/\s*,\s*/).includes(req.params.id)
+  // Comes in as `id` via desktop routes and `profileId` via mobile routes
+  const fairSlug = req.params.id || req.params.profileId
+  return !!DISABLE_FAIRS_UPDATE_SLUGS?.split(/\s*,\s*/).includes(fairSlug)
 }
 
 const shouldUserSeeNewFairPage = req => {
