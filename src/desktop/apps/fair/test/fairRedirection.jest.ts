@@ -117,6 +117,16 @@ describe("redirectFairRequests", () => {
       expect(res.redirect).not.toHaveBeenCalled()
       expect(next).toHaveBeenCalled()
     })
+
+    it("does not redirect, when loading via mobile routes", () => {
+      const { redirectFairRequests } = require("../fairRedirection")
+      req.params = { profileId: "foo-fair" }
+
+      redirectFairRequests(req, res, next)
+
+      expect(res.redirect).not.toHaveBeenCalled()
+      expect(next).toHaveBeenCalled()
+    })
   })
 
   describe("paths to redirect", () => {
