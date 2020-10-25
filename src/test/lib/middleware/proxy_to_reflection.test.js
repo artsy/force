@@ -17,9 +17,19 @@ describe("proxyToReflection", function () {
     this.request.returns(this.request)
     this.request.head = sinon.stub().returns(this.request)
     this.request.end = sinon.stub().returns(this.request)
+    proxyToReflection.__set__({
+      process: {
+        env: {
+          REFLECTION_URL: "reflection.url",
+          REFLECTION_IGNORE: "/artist/banksy,/artist/pablo-picasso",
+        },
+      },
+    })
     proxyToReflection.__set__("request", this.request)
-    proxyToReflection.__set__("proxy", (this.proxy = { web: sinon.stub() }))
-    return proxyToReflection.__set__("REFLECTION_URL", "reflection.url")
+    return proxyToReflection.__set__(
+      "proxy",
+      (this.proxy = { web: sinon.stub() })
+    )
   })
 
   it("passes through when there is no escaped fragment query param", function () {
@@ -33,6 +43,13 @@ describe("proxyToReflection", function () {
     const err = new Error("Unauthorized")
     err.status = 403
     this.request.end.callsArgWith(0, err)
+    proxyToReflection(this.req, this.res, this.next)
+    return this.next.called.should.be.ok()
+  })
+
+  it("passes through if path is ignored", function () {
+    this.req.query._escaped_fragment_ = ""
+    this.req.url = "https://www.artsy.net/artist/banksy"
     proxyToReflection(this.req, this.res, this.next)
     return this.next.called.should.be.ok()
   })
