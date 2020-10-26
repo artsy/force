@@ -3,7 +3,7 @@ import { Box, Flex, Link, MediumCard, Sans, Spacer } from "@artsy/palette"
 import { ViewingRoomsFeaturedRail_featuredViewingRooms } from "v2/__generated__/ViewingRoomsFeaturedRail_featuredViewingRooms.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ViewingRoomCarousel } from "./ViewingRoomCarousel"
-import { getTagProps } from "../Components/ViewingRoomsLatestGrid"
+import { getTagProps } from "v2/Components/ViewingRoomCard"
 import { crop } from "v2/Utils/resizer"
 
 interface ViewingRoomsFeaturedRailProps {

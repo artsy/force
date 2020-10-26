@@ -1,13 +1,5 @@
 import React, { useState } from "react"
-import {
-  Box,
-  Button,
-  CSSGrid,
-  CardTagProps,
-  Flex,
-  Sans,
-  SmallCard,
-} from "@artsy/palette"
+import { Box, Button, CSSGrid, Flex, Sans, SmallCard } from "@artsy/palette"
 import {
   RelayPaginationProp,
   createPaginationContainer,
@@ -17,44 +9,11 @@ import { scrollIntoView } from "v2/Utils/scrollHelpers"
 import { ViewingRoomsLatestGrid_viewingRooms } from "v2/__generated__/ViewingRoomsLatestGrid_viewingRooms.graphql"
 import { crop } from "v2/Utils/resizer"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
+import { getTagProps } from "v2/Components/ViewingRoomCard"
 
 export interface ViewingRoomsLatestGridProps {
   relay: RelayPaginationProp
   viewingRooms: ViewingRoomsLatestGrid_viewingRooms
-}
-
-export const getTagProps = (
-  status: string,
-  distanceToOpen: string | null,
-  distanceToClose: string | null
-): CardTagProps | null => {
-  switch (status) {
-    case "closed":
-      return {
-        text: "Closed",
-        textColor: "white100",
-        color: "black100",
-        borderColor: "black100",
-      }
-    case "live":
-      return distanceToClose
-        ? {
-            text: `${distanceToClose} left`,
-            textColor: "black60",
-            color: "white100",
-            borderColor: "black5",
-          }
-        : null
-    case "scheduled":
-      return distanceToOpen
-        ? {
-            text: "Opening soon",
-            textColor: "white100",
-            color: "black100",
-            borderColor: "black100",
-          }
-        : null
-  }
 }
 
 export const PAGE_SIZE = 12
