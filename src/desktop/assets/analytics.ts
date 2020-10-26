@@ -37,7 +37,6 @@ $(() =>
     onAnalyticsReady()
     setupSplitTests()
 
-    require("../analytics/artwork.js")
     require("../analytics/inquiry_questionnaire.js")
   })
 )
