@@ -5,7 +5,12 @@ import { SectionContainer } from "v2/Apps/Artist/Routes/Consign/Components/Secti
 export const SellArtDifferently: React.FC = () => {
   return (
     <SectionContainer>
-      <Text textAlign={["center", "left"]} mb={2} variant="largeTitle">
+      <Text
+        width="100%"
+        textAlign={["center", "left"]}
+        mb={2}
+        variant="largeTitle"
+      >
         Selling Art Differently
       </Text>
       <Separator />
