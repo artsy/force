@@ -3,8 +3,8 @@ import { Box, BoxProps, MediumCard, ResponsiveBox, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ShowViewingRoom_show } from "v2/__generated__/ShowViewingRoom_show.graphql"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
-import { crop } from "v2/Utils/resizer"
 import { getTagProps } from "v2/Components/ViewingRoomCard"
+import { cropped } from "v2/Utils/resized"
 
 interface ShowViewingRoomProps extends BoxProps {
   show: ShowViewingRoom_show
@@ -16,9 +16,9 @@ export const ShowViewingRoom: React.FC<ShowViewingRoomProps> = ({
 }) => {
   const [{ node: viewingRoom }] = show.viewingRoomsConnection.edges
 
-  const thumbnail = crop(viewingRoom.image.imageURLs.normalized, {
-    width: 900,
-    height: 1200,
+  const image = cropped(viewingRoom.image?.imageURLs?.normalized, {
+    width: 450,
+    height: 600,
   })
 
   return (
@@ -32,7 +32,7 @@ export const ShowViewingRoom: React.FC<ShowViewingRoomProps> = ({
           <MediumCard
             width="100%"
             height="100%"
-            image={thumbnail}
+            image={image}
             title={viewingRoom.title}
             subtitle={show.partner?.name}
             tag={getTagProps(
