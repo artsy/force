@@ -13,8 +13,6 @@ require("../analytics/before_ready")
 $(() =>
   window.analytics.ready(function () {
     onAnalyticsReady()
-
     require("../analytics/global.ts")
-    require("../analytics/partners.js")
   })
 )

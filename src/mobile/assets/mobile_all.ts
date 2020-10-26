@@ -20,6 +20,7 @@ const routes = {
   "^/profile/.*": require("../apps/profile/client.coffee"),
   "^/collect$": require("../apps/browse/client.coffee").init,
   "^/.*/articles.*": require("../apps/partner_profile/client/articles.coffee"),
+  "^/.*/contact.*": require("../apps/partner_profile/client/contact.ts"),
   "^/.*/(collection|shop)[/]?": require("../apps/partner_profile/client/artworks.coffee")
     .init,
   "^/art-fairs": require("../apps/art_fairs/client/art_fairs.coffee").init,
