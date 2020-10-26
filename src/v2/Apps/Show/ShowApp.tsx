@@ -4,7 +4,6 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { AppContainer } from "v2/Apps/Components/AppContainer"
 import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
 import { Footer } from "v2/Components/Footer"
-import { ErrorPage } from "v2/Components/ErrorPage"
 import { Box, Column, GridColumns, Separator } from "@artsy/palette"
 import { ShowMetaFragmentContainer as ShowMeta } from "v2/Apps/Show/Components/ShowMeta"
 import { ShowHeaderFragmentContainer as ShowHeader } from "./Components/ShowHeader"
@@ -37,8 +36,6 @@ const FullScreenSeparator = styled(Separator)`
 
 export const ShowApp: React.FC<ShowAppProps> = ({ show }) => {
   const { contextPageOwnerSlug, contextPageOwnerType } = useAnalyticsContext()
-
-  if (!show) return <ErrorPage code={404} />
 
   const hasViewingRoom = show.viewingRoomIDs.length > 0
   const hasAbout = !!show.about
