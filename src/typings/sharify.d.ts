@@ -84,8 +84,10 @@ declare module "sharify" {
       PC_AUCTION_CHANNEL: string
       POSITRON_URL: string
       PROFILE?: any // mobile partner app data
+      RESET_PASSWORD_REDIRECT_TO: string
       SECTION?: { slug?: string } // FIXME: used only for /venice-biennale-2015
       SESSION_ID?: string
+      SET_PASSWORD: string
       SHOW_ANALYTICS_CALLS: boolean
       SUBMISSION: string
       SUBMISSION_ID: string
