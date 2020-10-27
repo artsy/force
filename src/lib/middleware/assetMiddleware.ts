@@ -4,7 +4,7 @@ import chalk from "chalk"
 
 const { CDN_URL, NODE_ENV } = process.env
 
-export function assetMiddleware(manifestFileName = "manifest.json") {
+export default function assetMiddleware(manifestFileName = "manifest.json") {
   if (NODE_ENV === "production") {
     const manifestPath = path.resolve(process.cwd(), manifestFileName)
 

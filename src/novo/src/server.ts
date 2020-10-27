@@ -1,14 +1,21 @@
-import { NextFunction, Request, Response } from "express"
+import type { NextFunction, Request, Response } from "express"
 import { buildServerApp } from "v2/Artsy/Router/server"
 import { getAppNovoRoutes } from "v2/Apps/getAppNovoRoutes"
 import { flatten } from "lodash"
 import ReactDOM from "react-dom/server"
 import { buildServerAppContext } from "desktop/lib/buildServerAppContext"
+import express from "express"
 
 // This export form is required for express-reloadable
-const app = (module.exports = require("express")())
+const app = express()
+module.exports = app;
 
-app.get("/", (req, res) => {
+app.use('/novo', (res, req, next) => {
+  console.log('novo')
+  next()
+})
+
+app.get("/novo", (req, res) => {
   res.send(`
     <!doctype html>
       <body>
@@ -24,9 +31,6 @@ app.get("/", (req, res) => {
 })
 
 const routes = getAppNovoRoutes()
-
-// eslint-disable-next-line
-console.log(getRoutePaths())
 
 /**
  * Mount routes that will connect to global SSR router

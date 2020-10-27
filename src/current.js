@@ -1,8 +1,18 @@
-/* eslint-disable no-console */
-// TODO: Do we still need this.
-require("source-map-support").install()
-require("regenerator-runtime/runtime")
-require("./lib/DOMParser")
+import artsyXapp from "@artsy/xapp"
+import Backbone from "backbone"
+import chalk from "chalk"
+import express from "express"
+import path from "path"
+import superSync from "backbone-super-sync"
+import cache from "./lib/cache"
+import { setup as relayCacheSetup } from "./lib/cacheClient"
+import setup from "./lib/setup"
+import config from "./config"
+
+const {
+  API_REQUEST_TIMEOUT,
+  DEFAULT_CACHE_TIME,
+} = config
 
 const {
   APP_URL,
@@ -15,30 +25,38 @@ const {
   HEADERS_TIMEOUT_SECONDS,
 } = process.env
 
-const chalk = require("chalk")
 console.log(chalk.green(`\n[Force] NODE_ENV=${NODE_ENV}\n`))
 
-// This must come before any other instrumented module.
-// See https://docs.datadoghq.com/tracing/languages/nodejs/ for more info.
-require("./lib/datadog")
-
-const path = require("path")
-const artsyXapp = require("@artsy/xapp")
-const cache = require("./lib/cache")
-const { setup: relayCacheSetup } = require("./lib/cacheClient")
-const express = require("express")
-const once = require("lodash").once
-const setup = require("./lib/setup").default
-
 const app = express()
-module.exports = app
+
+app.use((res, req, next) => {
+  console.log('current')
+  next()
+})
 
 const initCache = cb => {
   cache.setup(() => relayCacheSetup(cb))
 }
 
+function swapBackboneSync() {
+  // Override Backbone to use server-side sync, inject the XAPP token,
+  // add redis caching, and timeout for slow responses.
+  superSync.timeout = API_REQUEST_TIMEOUT
+  superSync.cacheClient = cache.client
+  superSync.defaultCacheTime = DEFAULT_CACHE_TIME
+  Backbone.sync = function (method, model, options) {
+    if (options.headers == null) {
+      options.headers = {}
+    }
+    options.headers["X-XAPP-TOKEN"] = artsyXapp.token || ""
+    return superSync(method, model, options)
+  }
+}
+
 // Connect to Redis
 initCache(() => {
+  swapBackboneSync()
+
   // Add all of the middleware and global setup
   setup(app)
 
@@ -74,3 +92,5 @@ also could be gravity being down. Retrying...`)
     }
   )
 })
+
+module.exports = app;

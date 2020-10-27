@@ -5,8 +5,6 @@ require("@babel/register")({
   plugins: ["babel-plugin-dynamic-import-node"],
 })
 
-require("./index")
-
 // Force resolution of potentially `yarn link`'d modules to the local node_modules
 // folder. This gets around SSR issues involving single react context requirements,
 // amongst other things. This is server-side only. Client-side must be resolved
@@ -19,3 +17,5 @@ setAliases({
     path.join(__dirname, "../node_modules/styled-components")
   ),
 })
+
+require("./index")

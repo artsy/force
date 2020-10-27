@@ -4,47 +4,45 @@
 // populating sharify data
 //
 
-import config from "../config"
-import _ from "underscore"
+import "./setup_sharify"
+
+import { extend } from "lodash"
 import addRequestId from "express-request-id"
 import artsyPassport from "@artsy/passport"
 import artsyXapp from "@artsy/xapp"
-import Backbone from "backbone"
 import bodyParser from "body-parser"
+// import compression from "compression"
 import cookieParser from "cookie-parser"
-import express from "express"
-import favicon from "serve-favicon"
-import glob from "glob"
+// import express from "express"
+// import favicon from "serve-favicon"
+// import glob from "glob"
 import helmet from "helmet"
-import logger from "artsy-morgan"
 import path from "path"
-import session from "cookie-session"
-import sharify from "sharify"
-import siteAssociation from "artsy-eigen-web-association"
-import superSync from "backbone-super-sync"
-import { IpFilter as ipfilter } from "express-ipfilter"
+// import sharify from "sharify"
+// import siteAssociation from "artsy-eigen-web-association"
 import timeout from "connect-timeout"
-import "./setup_sharify"
 import cache from "./cache"
+import CurrentUser from "./current_user"
+import config from "../config"
+import addIntercomUserHash from "./middleware/intercom"
+import assetMiddleware from "./middleware/assetMiddleware"
+import backboneErrorHelper from "./middleware/backbone_error_helper"
 import downcase from "./middleware/downcase"
 import ensureSSL from "./middleware/ensure_ssl"
+import errorHandlingMiddleware from "./middleware/error_handler"
 import escapedFragmentMiddleware from "./middleware/escaped_fragment"
 import hardcodedRedirects from "./middleware/hardcoded_redirects"
 import hstsMiddleware from "./middleware/hsts"
+import ipFilter from "./middleware/ipFilter"
 import localsMiddleware from "./middleware/locals"
+import marketingModals from "./middleware/marketing_modals"
+import pageCacheMiddleware from "./middleware/pageCacheMiddleware"
 import proxyGravity from "./middleware/proxy_to_gravity"
 import proxyReflection from "./middleware/proxy_to_reflection"
 import sameOriginMiddleware from "./middleware/same_origin"
-import errorHandlingMiddleware from "./middleware/error_handler"
-import backboneErrorHelper from "./middleware/backbone_error_helper"
-import CurrentUser from "./current_user"
+import sessionMiddleware from './middleware/sessionMiddleware'
 import splitTestMiddleware from "../desktop/components/split_test/middleware"
-import marketingModals from "./middleware/marketing_modals"
-import { addIntercomUserHash } from "./middleware/intercom"
-import compression from "compression"
-import { assetMiddleware } from "./middleware/assetMiddleware"
-import { unsupportedBrowserCheck } from "lib/middleware/unsupportedBrowser"
-import { pageCacheMiddleware } from "lib/middleware/pageCacheMiddleware"
+import unsupportedBrowserCheckMiddleware from "./middleware/unsupportedBrowser"
 
 // FIXME: When deploying new Sentry SDK to prod we quickly start to see errors
 // like "`CURRENT_USER` is undefined". We need more investigation because this
@@ -55,34 +53,21 @@ import { pageCacheMiddleware } from "lib/middleware/pageCacheMiddleware"
 import RavenServer from "raven"
 
 const {
-  API_REQUEST_TIMEOUT,
   API_URL,
   APP_TIMEOUT,
   CLIENT_ID,
   CLIENT_SECRET,
-  COOKIE_DOMAIN,
-  DEFAULT_CACHE_TIME,
   IP_DENYLIST,
   NODE_ENV,
   SENTRY_PRIVATE_DSN,
   SEGMENT_WRITE_KEY_SERVER,
-  SESSION_COOKIE_KEY,
-  SESSION_COOKIE_MAX_AGE,
-  SESSION_SECRET,
 } = config
 
 export default function (app) {
-  app.set("trust proxy", true)
 
   // Denied IPs
   if (IP_DENYLIST && IP_DENYLIST.length > 0) {
-    app.use(
-      ipfilter(IP_DENYLIST.split(","), {
-        allowedHeaders: ["x-forwarded-for"],
-        log: false,
-        mode: "deny",
-      })
-    )
+    app.use(ipFilter(IP_DENYLIST))
   }
 
   // Timeout middleware
@@ -92,7 +77,9 @@ export default function (app) {
 
   // Inject sharify data and asset middleware before any app code so that when
   // crashing errors occur we'll at least get a 500 error page.
-  app.use(sharify)
+  // app.use(sharify)
+
+  // Static asset routing
   app.use(assetMiddleware())
 
   // Error reporting
@@ -101,7 +88,8 @@ export default function (app) {
     app.use(RavenServer.requestHandler())
   }
 
-  app.use(compression())
+  // Ensure all responses are gzip compressed
+  // app.use(compression())
 
   // Blank page used by Eigen for caching web views.
   // See: https://github.com/artsy/microgravity-private/pull/1138
@@ -109,8 +97,11 @@ export default function (app) {
 
   // Make sure we're using SSL and prevent clickjacking
   app.use(ensureSSL)
+
+  // Use HSTS to prevent downgrade attacks.
   app.use(hstsMiddleware)
 
+  // Prevent frame nesting in development and production.
   if (!NODE_ENV === "test") {
     app.use(helmet.frameguard())
   }
@@ -118,35 +109,17 @@ export default function (app) {
   // Inject UUID for each request into the X-Request-Id header
   app.use(addRequestId())
 
-  // Override Backbone to use server-side sync, inject the XAPP token,
-  // add redis caching, and timeout for slow responses.
-  superSync.timeout = API_REQUEST_TIMEOUT
-  superSync.cacheClient = cache.client
-  superSync.defaultCacheTime = DEFAULT_CACHE_TIME
-  Backbone.sync = function (method, model, options) {
-    if (options.headers == null) {
-      options.headers = {}
-    }
-    options.headers["X-XAPP-TOKEN"] = artsyXapp.token || ""
-    return superSync(method, model, options)
-  }
-
   // Cookie and session middleware
   app.use(cookieParser())
-  app.use(
-    session({
-      secret: SESSION_SECRET,
-      domain: process.env.NODE_ENV === "development" ? "" : COOKIE_DOMAIN,
-      name: SESSION_COOKIE_KEY,
-      maxAge: SESSION_COOKIE_MAX_AGE,
-      secure: process.env.NODE_ENV === "production" || NODE_ENV === "staging",
-      httpOnly: false,
-    })
-  )
+
+  //
+  app.use(sessionMiddleware())
 
   // Body parser has to be after proxy middleware for
   // node-http-proxy to work with POST/PUT/DELETE
-  app.use("/api", proxyGravity.api)
+  // TODO: Remove the gravity proxy.
+  // app.use("/api", proxyGravity.api)
+
   app.use(proxyReflection)
   app.use(bodyParser.json())
   app.use(bodyParser.urlencoded({ extended: true }))
@@ -154,7 +127,7 @@ export default function (app) {
   // Passport middleware for authentication.
   app.use(
     artsyPassport(
-      _.extend({}, config, {
+      extend({}, config, {
         CurrentUser: CurrentUser,
         ARTSY_URL: API_URL,
         ARTSY_ID: CLIENT_ID,
@@ -207,19 +180,19 @@ export default function (app) {
   // Static assets
 
   // Mount static assets from root public folder
-  app.use(express.static("public"))
+  // app.use(express.static("public"))
 
   // Mount static assets from sub-app /app `public` folders
-  glob
-    .sync(`${__dirname}/../{public,{desktop,mobile}/**/public}`)
-    .forEach(folder => {
-      app.use(express.static(folder))
-    })
+  // glob
+  //   .sync(`${__dirname}/../{public,{desktop,mobile}/**/public}`)
+  //   .forEach(folder => {
+  //     app.use(express.static(folder))
+  //   })
 
-  app.use(
-    favicon(path.resolve(__dirname, "../mobile/public/images/favicon.ico"))
-  )
-  app.use("/(.well-known/)?apple-app-site-association", siteAssociation)
+  // app.use(
+  //   favicon(path.resolve(__dirname, "../mobile/public/images/favicon.ico"))
+  // )
+  // app.use("/(.well-known/)?apple-app-site-association", siteAssociation)
 
   // Redirect requests before they even have to deal with Force routing
   app.use(downcase)
@@ -228,8 +201,7 @@ export default function (app) {
   app.use(backboneErrorHelper)
   app.use(sameOriginMiddleware)
   app.use(escapedFragmentMiddleware)
-  app.use(logger)
-  app.use(unsupportedBrowserCheck)
+  app.use(unsupportedBrowserCheckMiddleware)
   app.use(addIntercomUserHash)
   app.use(pageCacheMiddleware)
 
@@ -290,6 +262,7 @@ export default function (app) {
 
   // Ensure CurrentUser is set for Artsy Passport
   // TODO: Investigate race condition b/t reaction's use of AP
+  // TODO: This is only run once, does it need to still happen
   artsyPassport.options.CurrentUser = CurrentUser
 
   // 404 handler
