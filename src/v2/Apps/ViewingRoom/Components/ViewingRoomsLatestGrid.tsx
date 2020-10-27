@@ -7,9 +7,9 @@ import {
 } from "react-relay"
 import { scrollIntoView } from "v2/Utils/scrollHelpers"
 import { ViewingRoomsLatestGrid_viewingRooms } from "v2/__generated__/ViewingRoomsLatestGrid_viewingRooms.graphql"
-import { crop } from "v2/Utils/resizer"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import { getTagProps } from "v2/Components/ViewingRoomCard"
+import { cropped } from "v2/Utils/resized"
 
 export interface ViewingRoomsLatestGridProps {
   relay: RelayPaginationProp
@@ -88,14 +88,16 @@ export const ViewingRoomsLatestGrid: React.FC<ViewingRoomsLatestGridProps> = pro
               distanceToClose,
               artworksConnection,
             } = vr
-            const heroImageURL = crop(image?.imageURLs?.normalized, {
-              height: 800,
-              width: 800,
+            const heroImageURL = cropped(image?.imageURLs?.normalized, {
+              height: 490,
+              width: 490,
             })
             const artworksCount = artworksConnection.totalCount
-            const artworkImages = artworksConnection.edges.map(({ node }) =>
-              artworksCount < 2 ? node.image.regular : node.image.square
-            )
+            const artworkImages = artworksConnection.edges.map(({ node }) => {
+              const src =
+                artworksCount < 2 ? node.image.regular : node.image.square
+              return { src, srcSet: src }
+            })
             const tag = getTagProps(status, distanceToOpen, distanceToClose)
 
             return (
