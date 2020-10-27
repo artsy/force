@@ -72,9 +72,6 @@ xdescribe("Venice Video", function () {
               set: sinon.stub(),
             }),
           })
-          VeniceVideoView.__set__("analyticsHooks", {
-            trigger: (this.analytics = sinon.stub()),
-          })
           this.view = new VeniceVideoView({
             el: $("body"),
             video: "/vanity/videos/scenic_mono_3.mp4",

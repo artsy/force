@@ -9,7 +9,8 @@ export type ShowApp_show = {
     readonly internalID: string;
     readonly slug: string;
     readonly about: string | null;
-    readonly " $fragmentRefs": FragmentRefs<"ShowContextualLink_show" | "ShowHeader_show" | "ShowAbout_show" | "ShowMeta_show" | "ShowInstallShots_show" | "ShowArtworks_show" | "ShowContextCard_show">;
+    readonly viewingRoomIDs: ReadonlyArray<string>;
+    readonly " $fragmentRefs": FragmentRefs<"ShowContextualLink_show" | "ShowHeader_show" | "ShowAbout_show" | "ShowMeta_show" | "ShowInstallShots_show" | "ShowViewingRoom_show" | "ShowArtworks_show" | "ShowContextCard_show">;
     readonly " $refType": "ShowApp_show";
 };
 export type ShowApp_show$data = ShowApp_show;
@@ -147,6 +148,13 @@ const node: ReaderFragment = {
       "storageKey": null
     },
     {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "viewingRoomIDs",
+      "storageKey": null
+    },
+    {
       "args": null,
       "kind": "FragmentSpread",
       "name": "ShowContextualLink_show"
@@ -170,6 +178,11 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "FragmentSpread",
       "name": "ShowInstallShots_show"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ShowViewingRoom_show"
     },
     {
       "args": [
@@ -255,5 +268,5 @@ const node: ReaderFragment = {
   ],
   "type": "Show"
 };
-(node as any).hash = '63efbbcfebe108fa0b87c36f3c08ce5b';
+(node as any).hash = 'f52fc3659d5ac4437d1653283f2b0413';
 export default node;

@@ -1,4 +1,3 @@
-import analyticsHooks from "desktop/lib/analytics_hooks.coffee"
 import _metaphysics from "lib/metaphysics.coffee"
 import { filterQuery } from "desktop/apps/auction/queries/filter"
 import { worksByFollowedArtists } from "desktop/apps/auction/queries/worksByFollowedArtists"
@@ -66,14 +65,6 @@ export function fetchArtworks() {
           id: requestID,
         },
       })
-
-      if (filter_sale_artworks.hits && filter_sale_artworks.hits.length) {
-        analyticsHooks.trigger("auction:artworks:loaded", {
-          data: filter_sale_artworks.hits.map(
-            sale_artwork => sale_artwork.artwork._id
-          ),
-        })
-      }
 
       const aggregations = filter_sale_artworks.aggregations
       const artistAggregation = aggregations.filter(

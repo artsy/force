@@ -1,11 +1,16 @@
 import React from "react"
 import { Box, EditIcon, Flex, Separator, Text } from "@artsy/palette"
-import { SectionContainer } from "v2/Apps/Artist/Routes/Consign/Components/SectionContainer"
+import { SectionContainer } from "./SectionContainer"
 
 export const SellArtDifferently: React.FC = () => {
   return (
     <SectionContainer>
-      <Text textAlign={["center", "left"]} mb={2} variant="largeTitle">
+      <Text
+        width="100%"
+        textAlign={["center", "left"]}
+        mb={2}
+        variant="largeTitle"
+      >
         Selling Art Differently
       </Text>
       <Separator />

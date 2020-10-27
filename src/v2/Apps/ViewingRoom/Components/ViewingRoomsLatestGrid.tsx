@@ -1,13 +1,5 @@
 import React, { useState } from "react"
-import {
-  Box,
-  Button,
-  CSSGrid,
-  CardTagProps,
-  Flex,
-  Sans,
-  SmallCard,
-} from "@artsy/palette"
+import { Box, Button, CSSGrid, Flex, Sans, SmallCard } from "@artsy/palette"
 import {
   RelayPaginationProp,
   createPaginationContainer,
@@ -15,46 +7,13 @@ import {
 } from "react-relay"
 import { scrollIntoView } from "v2/Utils/scrollHelpers"
 import { ViewingRoomsLatestGrid_viewingRooms } from "v2/__generated__/ViewingRoomsLatestGrid_viewingRooms.graphql"
-import { crop } from "v2/Utils/resizer"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
+import { getTagProps } from "v2/Components/ViewingRoomCard"
+import { cropped } from "v2/Utils/resized"
 
 export interface ViewingRoomsLatestGridProps {
   relay: RelayPaginationProp
   viewingRooms: ViewingRoomsLatestGrid_viewingRooms
-}
-
-export const getTagProps = (
-  status: string,
-  distanceToOpen: string | null,
-  distanceToClose: string | null
-): CardTagProps | null => {
-  switch (status) {
-    case "closed":
-      return {
-        text: "Closed",
-        textColor: "white100",
-        color: "black100",
-        borderColor: "black100",
-      }
-    case "live":
-      return distanceToClose
-        ? {
-            text: `${distanceToClose} left`,
-            textColor: "black60",
-            color: "white100",
-            borderColor: "black5",
-          }
-        : null
-    case "scheduled":
-      return distanceToOpen
-        ? {
-            text: "Opening soon",
-            textColor: "white100",
-            color: "black100",
-            borderColor: "black100",
-          }
-        : null
-  }
 }
 
 export const PAGE_SIZE = 12
@@ -129,14 +88,14 @@ export const ViewingRoomsLatestGrid: React.FC<ViewingRoomsLatestGridProps> = pro
               distanceToClose,
               artworksConnection,
             } = vr
-            const heroImageURL = crop(image?.imageURLs?.normalized, {
-              height: 800,
-              width: 800,
+            const heroImageURL = cropped(image?.imageURLs?.normalized, {
+              height: 490,
+              width: 490,
             })
             const artworksCount = artworksConnection.totalCount
-            const artworkImages = artworksConnection.edges.map(({ node }) =>
-              artworksCount < 2 ? node.image.regular : node.image.square
-            )
+            const artworkImages = artworksConnection.edges.map(({ node }) => {
+              return artworksCount < 2 ? node.image.tall : node.image.square
+            })
             const tag = getTagProps(status, distanceToOpen, distanceToClose)
 
             return (
@@ -205,8 +164,14 @@ export const ViewingRoomsLatestGridFragmentContainer = createPaginationContainer
                 edges {
                   node {
                     image {
-                      square: url(version: "square")
-                      regular: url(version: "large")
+                      tall: cropped(width: 140, height: 280) {
+                        src
+                        srcSet
+                      }
+                      square: cropped(width: 140, height: 140) {
+                        src
+                        srcSet
+                      }
                     }
                   }
                 }

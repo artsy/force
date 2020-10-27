@@ -1,13 +1,9 @@
 Backbone = require 'backbone'
-analyticsHooks = require '../../../../../lib/analytics_hooks.coffee'
 { openAuthModal } = require '../../../../../lib/openAuthModal'
 { ModalType } = require "../../../../../../v2/Components/Authentication/Types"
 { Intent } = require "@artsy/cohesion"
 
 module.exports = class SaveControls extends Backbone.View
-  analyticsRemoveMessage: "Removed artwork from collection, via result rows"
-  analyticsSaveMessage: "Added artwork to collection, via result rows"
-
   events:
     'click .overlay-button-save': 'save'
 
@@ -29,7 +25,6 @@ module.exports = class SaveControls extends Backbone.View
   save: (e) ->
     e.preventDefault()
     unless @artworkCollection
-      analyticsHooks.trigger 'save:sign-up'
       openAuthModal(ModalType.signup, {
         copy: 'Sign up to save artworks'
         contextModule: @context_module
@@ -49,11 +44,17 @@ module.exports = class SaveControls extends Backbone.View
     }
 
     if @artworkCollection.isSaved(@artwork)
-      analyticsHooks.trigger 'save:artwork-remove',trackedProperties
+      window.analytics.track(
+        "Removed artwork from collection, via result rows",
+        trackedProperties
+      )
       @artworkCollection.unsaveArtwork @artwork.id,
         error: => @$button.attr 'data-state', 'saved'
     else
-      analyticsHooks.trigger 'save:artwork-save', trackedProperties
+      window.analytics.track(
+        "Added artwork to collection, via result rows",
+        trackedProperties
+      )
       @artworkCollection.saveArtwork @artwork.id,
         error: => @$button.attr 'data-state', 'unsaved'
 

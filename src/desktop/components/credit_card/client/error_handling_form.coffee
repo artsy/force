@@ -4,8 +4,6 @@ isCreditCard = require('validator').isCreditCard
 xssFilters = require 'xss-filters'
 isEmail = require('validator').isEmail
 
-analyticsHooks = require '../../../lib/analytics_hooks.coffee'
-
 module.exports = class ErrorHandlingForm extends Backbone.View
 
   fields: {}
@@ -82,7 +80,7 @@ module.exports = class ErrorHandlingForm extends Backbone.View
     message += " #{response.error.additional}" if response?.error?.additional
 
     @$submit.removeClass('is-loading').before "<div class='error'>#{message}</div>"
-    analyticsHooks.trigger 'error', description
+    window.analytics.track("Error: " + description)
 
   internationalizeFields: ->
     @$('select.country').change =>

@@ -33,7 +33,7 @@ export const routes: RouteConfig[] = [
         $sizes: [ArtworkSizes]
         $sort: String
       ) {
-        show(id: $slug) {
+        show(id: $slug) @principalField {
           ...ShowApp_show
             @arguments(
               acquireable: $acquireable
@@ -65,7 +65,7 @@ export const routes: RouteConfig[] = [
     },
     query: graphql`
       query routes_ShowSubAppQuery($slug: String!) {
-        show(id: $slug) {
+        show(id: $slug) @principalField {
           ...ShowSubApp_show
         }
       }
@@ -79,7 +79,7 @@ export const routes: RouteConfig[] = [
         },
         query: graphql`
           query routes_ShowInfoQuery($slug: String!) {
-            show(id: $slug) {
+            show(id: $slug) @principalField {
               ...ShowInfo_show
             }
           }

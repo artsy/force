@@ -1,7 +1,6 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 FilterArtworks = require '../../../collections/filter_artworks.coffee'
-analyticsHooks = require '../../../lib/analytics_hooks.coffee'
 
 template = -> require('./template.jade') arguments...
 

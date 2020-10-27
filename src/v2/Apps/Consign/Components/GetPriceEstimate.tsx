@@ -8,7 +8,6 @@ import {
   MagnifyingGlassIcon,
   Spacer,
   Text,
-  breakpoints,
 } from "@artsy/palette"
 import { SectionContainer } from "./SectionContainer"
 
@@ -16,8 +15,6 @@ export const GetPriceEstimate: React.FC = () => {
   return (
     <SectionContainer background="black5">
       <Flex
-        width="100%"
-        maxWidth={breakpoints.xl}
         flexDirection={["column", "column", "column", "row"]}
         justifyContent="center"
       >

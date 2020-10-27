@@ -48,8 +48,7 @@ representation = (fair) ->
     .then ->
       # find if we have a current fair
       current = fairs.find (fair)->
-        moment().utc().isBetween fair.get('autopublish_artworks_at'), fair.get('end_at')
-
+        moment().utc().isBetween fair.get('start_at'), fair.get('end_at')
       throw new Error() unless current?
       Promise.resolve(current.related().profile.fetch())
     .then (profile) ->

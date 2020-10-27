@@ -4,7 +4,6 @@ Backbone = require 'backbone'
 ModalView = require '../modal/view.coffee'
 Form = require '../mixins/form.coffee'
 CurrentUser = require '../../models/current_user'
-analyticsHooks = require '../../lib/analytics_hooks.coffee'
 FlashMessage = require '../flash/index.coffee'
 
 template = -> require('./templates/index.jade') arguments...
@@ -42,14 +41,14 @@ module.exports = class ContactView extends ModalView
       placeholder: @options.placeholder
 
     @on 'click:close', ->
-      analyticsHooks.trigger 'contact:close-x'
+      window.analytics.track "Closed the inquiry form via the '×' button"
     @on 'click:backdrop', ->
-      analyticsHooks.trigger 'contact:close-back'
+      window.analytics.track "Closed the inquiry form by clicking the modal window backdrop"
 
     super @options
 
   logHover: ->
-    analyticsHooks.trigger 'contact:hover'
+    window.analytics.track "Hovered over contact form 'Send' button"
 
   postRender: ->
     @renderTemplates()
@@ -76,7 +75,7 @@ module.exports = class ContactView extends ModalView
       success: =>
         @close =>
           new FlashMessage message: @options.successMessage
-          analyticsHooks.trigger 'contact:submitted', attributes: @model.attributes
+          window.analytics.track("Contact form submitted", @model.attributes)
       error: (model, xhr, options) =>
         @reenableForm()
         @$errors.text @errorMessage(xhr)
