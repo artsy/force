@@ -25,8 +25,14 @@ export type ViewingRoomsLatestGrid_viewingRooms = {
                     readonly edges: ReadonlyArray<{
                         readonly node: {
                             readonly image: {
-                                readonly square: string | null;
-                                readonly regular: string | null;
+                                readonly tall: {
+                                    readonly src: string;
+                                    readonly srcSet: string;
+                                } | null;
+                                readonly square: {
+                                    readonly src: string;
+                                    readonly srcSet: string;
+                                } | null;
                             } | null;
                         } | null;
                     } | null> | null;
@@ -50,6 +56,27 @@ var v0 = [
     "kind": "Literal",
     "name": "short",
     "value": true
+  }
+],
+v1 = {
+  "kind": "Literal",
+  "name": "width",
+  "value": 140
+},
+v2 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "src",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "srcSet",
+    "storageKey": null
   }
 ];
 return {
@@ -234,30 +261,38 @@ return {
                               "plural": false,
                               "selections": [
                                 {
+                                  "alias": "tall",
+                                  "args": [
+                                    {
+                                      "kind": "Literal",
+                                      "name": "height",
+                                      "value": 280
+                                    },
+                                    (v1/*: any*/)
+                                  ],
+                                  "concreteType": "CroppedImageUrl",
+                                  "kind": "LinkedField",
+                                  "name": "cropped",
+                                  "plural": false,
+                                  "selections": (v2/*: any*/),
+                                  "storageKey": "cropped(height:280,width:140)"
+                                },
+                                {
                                   "alias": "square",
                                   "args": [
                                     {
                                       "kind": "Literal",
-                                      "name": "version",
-                                      "value": "square"
-                                    }
+                                      "name": "height",
+                                      "value": 140
+                                    },
+                                    (v1/*: any*/)
                                   ],
-                                  "kind": "ScalarField",
-                                  "name": "url",
-                                  "storageKey": "url(version:\"square\")"
-                                },
-                                {
-                                  "alias": "regular",
-                                  "args": [
-                                    {
-                                      "kind": "Literal",
-                                      "name": "version",
-                                      "value": "large"
-                                    }
-                                  ],
-                                  "kind": "ScalarField",
-                                  "name": "url",
-                                  "storageKey": "url(version:\"large\")"
+                                  "concreteType": "CroppedImageUrl",
+                                  "kind": "LinkedField",
+                                  "name": "cropped",
+                                  "plural": false,
+                                  "selections": (v2/*: any*/),
+                                  "storageKey": "cropped(height:140,width:140)"
                                 }
                               ],
                               "storageKey": null
@@ -323,5 +358,5 @@ return {
   "type": "Viewer"
 };
 })();
-(node as any).hash = 'b6896b93750dae0588d5bf553f583f93';
+(node as any).hash = '5749e886d2569028cc98ad3edf47a9df';
 export default node;

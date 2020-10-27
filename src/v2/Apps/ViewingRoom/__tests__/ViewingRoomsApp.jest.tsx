@@ -168,8 +168,14 @@ const ViewingRoomsAppFixture: ViewingRoomsApp_Test_QueryRawResponse = {
                   node: {
                     id: "hello",
                     image: {
-                      square: "https://www.example.com/square-mat.jpg",
-                      regular: "https://www.example.com/regular-mat.jpg",
+                      square: {
+                        src: "https://www.example.com/square-mat.jpg",
+                        srcSet: "https://www.example.com/square-mat.jpg",
+                      },
+                      tall: {
+                        src: "https://www.example.com/tall-mat.jpg",
+                        srcSet: "https://www.example.com/tall-mat.jpg",
+                      },
                     },
                   },
                 },
@@ -202,8 +208,14 @@ const ViewingRoomsAppFixture: ViewingRoomsApp_Test_QueryRawResponse = {
                   node: {
                     id: "hello",
                     image: {
-                      square: "https://www.example.com/square-fat.jpg",
-                      regular: "https://www.example.com/regular-fat.jpg",
+                      square: {
+                        src: "https://www.example.com/square-fat.jpg",
+                        srcSet: "https://www.example.com/square-fat.jpg",
+                      },
+                      tall: {
+                        src: "https://www.example.com/tall-fat.jpg",
+                        srcSet: "https://www.example.com/tall-fat.jpg",
+                      },
                     },
                   },
                 },
@@ -211,8 +223,14 @@ const ViewingRoomsAppFixture: ViewingRoomsApp_Test_QueryRawResponse = {
                   node: {
                     id: "there",
                     image: {
-                      square: "https://www.example.com/square-pet.jpg",
-                      regular: "https://www.example.com/regular-pet.jpg",
+                      square: {
+                        src: "https://www.example.com/square-pet.jpg",
+                        srcSet: "https://www.example.com/square-pet.jpg",
+                      },
+                      tall: {
+                        src: "https://www.example.com/tall-pet.jpg",
+                        srcSet: "https://www.example.com/tall-pet.jpg",
+                      },
                     },
                   },
                 },
@@ -245,8 +263,14 @@ const ViewingRoomsAppFixture: ViewingRoomsApp_Test_QueryRawResponse = {
                   node: {
                     id: "hello",
                     image: {
-                      square: "https://www.example.com/square-cat.jpg",
-                      regular: "https://www.example.com/regular-cat.jpg",
+                      square: {
+                        src: "https://www.example.com/square-cat.jpg",
+                        srcSet: "https://www.example.com/square-cat.jpg",
+                      },
+                      tall: {
+                        src: "https://www.example.com/tall-cat.jpg",
+                        srcSet: "https://www.example.com/tall-cat.jpg",
+                      },
                     },
                   },
                 },
@@ -254,8 +278,14 @@ const ViewingRoomsAppFixture: ViewingRoomsApp_Test_QueryRawResponse = {
                   node: {
                     id: "there",
                     image: {
-                      square: "https://www.example.com/square-bat.jpg",
-                      regular: "https://www.example.com/regular-bat.jpg",
+                      square: {
+                        src: "https://www.example.com/square-bat.jpg",
+                        srcSet: "https://www.example.com/square-bat.jpg",
+                      },
+                      tall: {
+                        src: "https://www.example.com/tall-bat.jpg",
+                        srcSet: "https://www.example.com/tall-bat.jpg",
+                      },
                     },
                   },
                 },

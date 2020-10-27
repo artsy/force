@@ -94,9 +94,7 @@ export const ViewingRoomsLatestGrid: React.FC<ViewingRoomsLatestGridProps> = pro
             })
             const artworksCount = artworksConnection.totalCount
             const artworkImages = artworksConnection.edges.map(({ node }) => {
-              const src =
-                artworksCount < 2 ? node.image.regular : node.image.square
-              return { src, srcSet: src }
+              return artworksCount < 2 ? node.image.tall : node.image.square
             })
             const tag = getTagProps(status, distanceToOpen, distanceToClose)
 
@@ -166,8 +164,14 @@ export const ViewingRoomsLatestGridFragmentContainer = createPaginationContainer
                 edges {
                   node {
                     image {
-                      square: url(version: "square")
-                      regular: url(version: "large")
+                      tall: cropped(width: 140, height: 280) {
+                        src
+                        srcSet
+                      }
+                      square: cropped(width: 140, height: 140) {
+                        src
+                        srcSet
+                      }
                     }
                   }
                 }
