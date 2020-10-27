@@ -3,8 +3,8 @@ import { Box, Flex, Link, MediumCard, Sans, Spacer } from "@artsy/palette"
 import { ViewingRoomsFeaturedRail_featuredViewingRooms } from "v2/__generated__/ViewingRoomsFeaturedRail_featuredViewingRooms.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ViewingRoomCarousel } from "./ViewingRoomCarousel"
-import { getTagProps } from "../Components/ViewingRoomsLatestGrid"
-import { crop } from "v2/Utils/resizer"
+import { getTagProps } from "v2/Components/ViewingRoomCard"
+import { cropped } from "v2/Utils/resized"
 
 interface ViewingRoomsFeaturedRailProps {
   featuredViewingRooms: ViewingRoomsFeaturedRail_featuredViewingRooms
@@ -30,9 +30,9 @@ export const ViewingRoomsFeaturedRail: React.FC<ViewingRoomsFeaturedRailProps> =
     slideIndex: number
   ): React.ReactElement => {
     const tag = getTagProps(status, distanceToOpen, distanceToClose)
-    const heroImageURL = crop(image?.imageURLs?.normalized, {
-      height: 740,
-      width: 560,
+    const sized = cropped(image?.imageURLs?.normalized, {
+      width: 280,
+      height: 370,
     })
 
     return (
@@ -40,7 +40,7 @@ export const ViewingRoomsFeaturedRail: React.FC<ViewingRoomsFeaturedRailProps> =
         {slideIndex !== 0 && <Spacer ml="15px" />}
         <Link href={`/viewing-room/${slug}`} key={slug} noUnderline>
           <MediumCard
-            image={heroImageURL}
+            image={sized}
             title={title}
             subtitle={partner.name}
             tag={tag}

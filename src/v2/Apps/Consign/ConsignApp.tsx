@@ -29,12 +29,12 @@ const ConsignApp = props => {
 
         <AppContainer maxWidth="100%">
           <Header />
-          <GetPriceEstimate />
           <SellArtDifferently />
+          <GetPriceEstimate />
+          <HowToSell />
+          <ConsignInDemandNow />
 
           <HorizontalPadding>
-            <HowToSell />
-            <ConsignInDemandNow />
             <SoldRecently />
             <ReadMore />
             <ContactUs />

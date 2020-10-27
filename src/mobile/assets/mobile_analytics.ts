@@ -1,18 +1,15 @@
-import { onAnalyticsReady, trackEvent } from "desktop/analytics/helpers"
-import $ from "jquery"
-
-window._ = require("underscore")
+import {
+  beforeAnalyticsReady,
+  onAnalyticsReady,
+} from "desktop/analytics/helpers"
+import { trackPageView } from "desktop/analytics/trackPageView"
 window.Cookies = require("cookies-js")
-const Events = require("../../v2/Utils/Events").default
 
-// Send Reaction events to Segment
-Events.onEvent(trackEvent)
+beforeAnalyticsReady()
+trackPageView()
 
-require("../analytics/before_ready")
-
-$(() =>
-  window.analytics.ready(function () {
+document.addEventListener("DOMContentLoaded", () => {
+  window.analytics.ready(() => {
     onAnalyticsReady()
-    require("../analytics/global.ts")
   })
-)
+})

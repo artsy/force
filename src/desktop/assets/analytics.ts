@@ -1,42 +1,38 @@
-import $ from "jquery"
-import { data as sd } from "sharify"
-import { onAnalyticsReady, trackEvent } from "desktop/analytics/helpers"
-const setupSplitTests = require("../components/split_test/setup.coffee")
-window._ = require("underscore")
+import {
+  beforeAnalyticsReady,
+  onAnalyticsReady,
+} from "desktop/analytics/helpers"
+import { trackPageView } from "desktop/analytics/trackPageView"
 window.Cookies = require("cookies-js")
 
-// This event bus also connects to reaction's publishing event emitter because
-// both piggyback on `window`. See Utils/Events for more info.
-const Events = require("../../v2/Utils/Events").default
+// We exclude these routes from analytics.page calls because
+// they're already tracked in v2/Artsy/Analytics/trackingMiddleware
+const excludedRoutes = [
+  "/artist(.*)",
+  "/artwork(.*)",
+  "/auction-faq",
+  "/auction/:saleID/bid(2)?/:artworkID",
+  "/auction-registration(2)?/:saleID",
+  "/campaign(.*)",
+  "/collect(.*)",
+  "/collection(.*)",
+  "/collections(.*)",
+  "/fair(.*)",
+  "/feature(.*)",
+  "/identity-verification(.*)",
+  "/orders(.*)",
+  "/search(.*)",
+  "/viewing-room(.*)",
+  "/user/conversations(.*)",
+  "/user/purchases(.*)",
+]
 
-if (sd.SHOW_ANALYTICS_CALLS) {
-  // Log all pageviews
-  window.analytics.on("page", function () {
-    console.info("ANALYTICS PAGEVIEW: ", arguments[2], arguments[3])
-  })
-  // Log all track calls
-  window.analytics.on("track", (actionName: string, data?: any) => {
-    console.info("ANALYTICS TRACK:", actionName, data)
-  })
-  // Log all identify calls
-  window.analytics.on(
-    "identify",
-    (userId: string, data: object, context: any) => {
-      console.info("ANALYTICS IDENTIFY:", userId, data, context)
-    }
-  )
-}
+beforeAnalyticsReady()
+trackPageView(excludedRoutes)
 
-// Send Reaction events to Segment
-Events.onEvent(trackEvent)
-
-require("../analytics/main_layout.ts")
-
-$(() =>
-  window.analytics.ready(function () {
+document.addEventListener("DOMContentLoaded", () => {
+  window.analytics.ready(() => {
     onAnalyticsReady()
-    setupSplitTests()
-
     require("../analytics/inquiry_questionnaire.js")
   })
-)
+})

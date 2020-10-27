@@ -270,6 +270,7 @@ export default function (app) {
         "@artsy/reaction",
         "@artsy/stitch",
         "@artsy/palette",
+        "@artsy/fresnel",
       ],
     })
 

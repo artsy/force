@@ -4,14 +4,13 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { AppContainer } from "v2/Apps/Components/AppContainer"
 import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
 import { Footer } from "v2/Components/Footer"
-import { ErrorPage } from "v2/Components/ErrorPage"
 import { Box, Column, GridColumns, Separator } from "@artsy/palette"
 import { ShowMetaFragmentContainer as ShowMeta } from "v2/Apps/Show/Components/ShowMeta"
 import { ShowHeaderFragmentContainer as ShowHeader } from "./Components/ShowHeader"
 import { ShowAboutFragmentContainer as ShowAbout } from "./Components/ShowAbout"
 import { ShowInstallShotsFragmentContainer as ShowInstallShots } from "./Components/ShowInstallShots"
 import { ShowContextualLinkFragmentContainer as ShowContextualLink } from "./Components/ShowContextualLink"
-import { ShowViewingRoom } from "./Components/ShowViewingRoom"
+import { ShowViewingRoomFragmentContainer as ShowViewingRoom } from "./Components/ShowViewingRoom"
 import { ShowApp_show } from "v2/__generated__/ShowApp_show.graphql"
 import { ShowArtworksRefetchContainer as ShowArtworks } from "./Components/ShowArtworks"
 import { ForwardLink } from "v2/Components/Links/ForwardLink"
@@ -38,9 +37,7 @@ const FullScreenSeparator = styled(Separator)`
 export const ShowApp: React.FC<ShowAppProps> = ({ show }) => {
   const { contextPageOwnerSlug, contextPageOwnerType } = useAnalyticsContext()
 
-  if (!show) return <ErrorPage code={404} />
-
-  const hasViewingRoom = false // TODO
+  const hasViewingRoom = show.viewingRoomIDs.length > 0
   const hasAbout = !!show.about
   const hasWideHeader =
     (hasAbout && hasViewingRoom) || (!hasAbout && !hasViewingRoom)
@@ -97,7 +94,7 @@ export const ShowApp: React.FC<ShowAppProps> = ({ show }) => {
 
               {hasViewingRoom && (
                 <Column span={5} start={8}>
-                  <ShowViewingRoom />
+                  <ShowViewingRoom show={show} />
                 </Column>
               )}
             </GridColumns>
@@ -143,11 +140,13 @@ export default createFragmentContainer(ShowApp, {
       internalID
       slug
       about: description
+      viewingRoomIDs
       ...ShowContextualLink_show
       ...ShowHeader_show
       ...ShowAbout_show
       ...ShowMeta_show
       ...ShowInstallShots_show
+      ...ShowViewingRoom_show
       ...ShowArtworks_show
         @arguments(
           acquireable: $acquireable
@@ -165,7 +164,6 @@ export default createFragmentContainer(ShowApp, {
           sizes: $sizes
           sort: $sort
         )
-
       ...ShowContextCard_show
     }
   `,

@@ -22,7 +22,7 @@ export type routes_ShowSubAppQuery = {
 query routes_ShowSubAppQuery(
   $slug: String!
 ) {
-  show(id: $slug) {
+  show(id: $slug) @principalField {
     ...ShowSubApp_show
     id
   }
@@ -226,9 +226,9 @@ return {
     "metadata": {},
     "name": "routes_ShowSubAppQuery",
     "operationKind": "query",
-    "text": "query routes_ShowSubAppQuery(\n  $slug: String!\n) {\n  show(id: $slug) {\n    ...ShowSubApp_show\n    id\n  }\n}\n\nfragment ShowMeta_show on Show {\n  name\n  slug\n  metaDescription: description\n  metaImage {\n    src: url(version: \"large\")\n  }\n}\n\nfragment ShowSubApp_show on Show {\n  id\n  internalID\n  slug\n  name\n  href\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on ExternalPartner {\n      name\n      id\n    }\n    ... on Node {\n      id\n    }\n  }\n  ...ShowMeta_show\n}\n"
+    "text": "query routes_ShowSubAppQuery(\n  $slug: String!\n) {\n  show(id: $slug) @principalField {\n    ...ShowSubApp_show\n    id\n  }\n}\n\nfragment ShowMeta_show on Show {\n  name\n  slug\n  metaDescription: description\n  metaImage {\n    src: url(version: \"large\")\n  }\n}\n\nfragment ShowSubApp_show on Show {\n  id\n  internalID\n  slug\n  name\n  href\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on ExternalPartner {\n      name\n      id\n    }\n    ... on Node {\n      id\n    }\n  }\n  ...ShowMeta_show\n}\n"
   }
 };
 })();
-(node as any).hash = '7a7f53253dff9b5b41d81574761e4f61';
+(node as any).hash = '4ffbbfb8c5e312ffcbab70ed2d73f61e';
 export default node;

@@ -14,7 +14,7 @@ import { SectionContainer } from "./SectionContainer"
 
 export const Header: React.FC = () => {
   return (
-    <SectionContainer background="black5" height={[415, 546]}>
+    <SectionContainer background="black5" height={[415, 546]} constrain={false}>
       <HeaderImageContainer>
         <Flex width="100%" justifyContent="space-between" m="auto">
           <Media greaterThan="md">

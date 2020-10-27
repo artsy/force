@@ -1,4 +1,4 @@
-import { media, space } from "@artsy/palette"
+import { Box, media, space } from "@artsy/palette"
 import styled, { css } from "styled-components"
 import { SpaceProps } from "styled-system"
 
@@ -6,7 +6,7 @@ export interface HorizontalPaddingProps {
   px?: SpaceProps["px"]
 }
 
-export const HorizontalPadding = styled.div<HorizontalPaddingProps>`
+export const HorizontalPadding = styled(Box)<HorizontalPaddingProps>`
   ${p =>
     media.xs`
       padding-right: ${(p.px[0] && space(p.px[0])) || 0}px;

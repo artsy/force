@@ -5,7 +5,6 @@ import { Separator } from "@artsy/palette"
 import { ShowSubApp_show } from "v2/__generated__/ShowSubApp_show.graphql"
 import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
 import { Footer } from "v2/Components/Footer"
-import { ErrorPage } from "v2/Components/ErrorPage"
 import { BackLink } from "v2/Components/Links/BackLink"
 import { ShowMetaFragmentContainer as ShowMeta } from "./Components/ShowMeta"
 import {
@@ -19,8 +18,6 @@ interface ShowAppProps {
 
 const ShowApp: React.FC<ShowAppProps> = ({ children, show }) => {
   const { contextPageOwnerSlug, contextPageOwnerType } = useAnalyticsContext()
-
-  if (!show) return <ErrorPage code={404} />
 
   return (
     <>

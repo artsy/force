@@ -22,7 +22,7 @@ export type routes_ShowInfoQuery = {
 query routes_ShowInfoQuery(
   $slug: String!
 ) {
-  show(id: $slug) {
+  show(id: $slug) @principalField {
     ...ShowInfo_show
     id
   }
@@ -436,9 +436,9 @@ return {
     "metadata": {},
     "name": "routes_ShowInfoQuery",
     "operationKind": "query",
-    "text": "query routes_ShowInfoQuery(\n  $slug: String!\n) {\n  show(id: $slug) {\n    ...ShowInfo_show\n    id\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  is_followed: isFollowed\n}\n\nfragment ShowInfoLocation_show on Show {\n  fair {\n    location {\n      address\n      address2\n      city\n      state\n      country\n      summary\n      id\n    }\n    id\n  }\n  location {\n    display\n    address\n    address2\n    city\n    state\n    country\n    summary\n    id\n  }\n}\n\nfragment ShowInfo_show on Show {\n  ...ShowInfoLocation_show\n  name\n  about: description\n  pressRelease(format: HTML)\n  hasLocation\n  partner {\n    __typename\n    ... on Partner {\n      ...ShowPartnerEntityHeader_partner\n      type\n    }\n    ... on Node {\n      id\n    }\n    ... on ExternalPartner {\n      id\n    }\n  }\n}\n\nfragment ShowPartnerEntityHeader_partner on Partner {\n  type\n  slug\n  href\n  name\n  initials\n  locations {\n    city\n    id\n  }\n  isDefaultProfilePublic\n  profile {\n    ...FollowProfileButton_profile\n    icon {\n      url(version: \"square140\")\n    }\n    id\n  }\n}\n"
+    "text": "query routes_ShowInfoQuery(\n  $slug: String!\n) {\n  show(id: $slug) @principalField {\n    ...ShowInfo_show\n    id\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  is_followed: isFollowed\n}\n\nfragment ShowInfoLocation_show on Show {\n  fair {\n    location {\n      address\n      address2\n      city\n      state\n      country\n      summary\n      id\n    }\n    id\n  }\n  location {\n    display\n    address\n    address2\n    city\n    state\n    country\n    summary\n    id\n  }\n}\n\nfragment ShowInfo_show on Show {\n  ...ShowInfoLocation_show\n  name\n  about: description\n  pressRelease(format: HTML)\n  hasLocation\n  partner {\n    __typename\n    ... on Partner {\n      ...ShowPartnerEntityHeader_partner\n      type\n    }\n    ... on Node {\n      id\n    }\n    ... on ExternalPartner {\n      id\n    }\n  }\n}\n\nfragment ShowPartnerEntityHeader_partner on Partner {\n  type\n  slug\n  href\n  name\n  initials\n  locations {\n    city\n    id\n  }\n  isDefaultProfilePublic\n  profile {\n    ...FollowProfileButton_profile\n    icon {\n      url(version: \"square140\")\n    }\n    id\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'a8e430926e22d7050bee2953eb678f91';
+(node as any).hash = '8718ce3a5c1df145b9e450f1a35e234e';
 export default node;

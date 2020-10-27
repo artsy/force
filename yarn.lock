@@ -41,6 +41,11 @@
     chokidar "^3.0.0"
     decache "^4.4.0"
 
+"@artsy/fresnel@1.3.0":
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/@artsy/fresnel/-/fresnel-1.3.0.tgz#9467a232f4e7cf9da67836d599752c48760e2c99"
+  integrity sha512-IHOBEcxJ8NUzTcvOLq19Zt8Yhz5cgy+z9W/VUhU1hpFdJAbwfQWa4PVIVjo4Kuudfv2e6nGS6FnbfJ/2O7Et4w==
+
 "@artsy/fresnel@^1.0.13":
   version "1.0.13"
   resolved "https://registry.yarnpkg.com/@artsy/fresnel/-/fresnel-1.0.13.tgz#4bbbda274e74e0d63b471a36d72360d33d571598"
@@ -53,10 +58,10 @@
   dependencies:
     uuid "^8.3.0"
 
-"@artsy/palette@13.13.0":
-  version "13.13.0"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-13.13.0.tgz#7d503eae0db06fe4f2eb95e0b929494be673567d"
-  integrity sha512-mpkIHjrb9YNmb+KWUluQWP4ctQ4wHB6OYVLzpLqjRbhl4DFrHUtiv7gJQilOO6cRRPihhRc5LfG/9va/YlFrGw==
+"@artsy/palette@13.15.0":
+  version "13.15.0"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-13.15.0.tgz#968bfb0f836b4d0f021bc701cd8904fcf25dd862"
+  integrity sha512-LKXuqw9tom7hsQ9fm7+/lcuaHAq2XN9mWvH9J1DL9UpMmb7+md6ZwZUAfcxbpRBJMAJ+L5WqrwWtrU8cJrxI1w==
   dependencies:
     "@styled-system/theme-get" "^5.1.2"
     babel-plugin-styled-components "^1.10.0"

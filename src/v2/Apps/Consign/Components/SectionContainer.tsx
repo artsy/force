@@ -1,13 +1,16 @@
-import { Color, Flex, FlexProps } from "@artsy/palette"
+import { Color, Flex, FlexProps, breakpoints } from "@artsy/palette"
 import React from "react"
+import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
 
 interface SectionContainerProps extends FlexProps {
   background?: Color
+  constrain?: boolean
 }
 
 export const SectionContainer: React.FC<SectionContainerProps> = ({
   children,
   background = "white100",
+  constrain = true,
   ...rest
 }) => {
   return (
@@ -22,7 +25,13 @@ export const SectionContainer: React.FC<SectionContainerProps> = ({
       top={-1}
       {...rest}
     >
-      {children}
+      {constrain ? (
+        <HorizontalPadding maxWidth={breakpoints.xl} width="100%">
+          {children}
+        </HorizontalPadding>
+      ) : (
+        <>{children}</>
+      )}
     </Flex>
   )
 }
