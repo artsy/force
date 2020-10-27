@@ -1,5 +1,5 @@
 import React from "react"
-import { Box, ChevronIcon, Flex, Image, Spacer, Text } from "@artsy/palette"
+import { Box, ChevronIcon, Flex, Image, Text } from "@artsy/palette"
 import { SectionContainer } from "./SectionContainer"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import { Media } from "v2/Utils/Responsive"
@@ -7,7 +7,7 @@ import { Media } from "v2/Utils/Responsive"
 export const ReadMore: React.FC = () => {
   return (
     <SectionContainer>
-      <Text width="100%" textAlign={"left"} mb={4} variant="largeTitle">
+      <Text width="100%" textAlign="left" mb={4} variant="largeTitle">
         Read more about selling your artwork
       </Text>
 
