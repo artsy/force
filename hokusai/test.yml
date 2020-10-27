@@ -3,9 +3,7 @@ version: "3.8"
 services:
   force:
     command: yarn test
-    extends:
-      file: build.yml
-      service: force
+{% include 'templates/docker-compose-service.yml.j2' %}
     environment:
       - CI=true
       - CIRCLE_NODE_INDEX
