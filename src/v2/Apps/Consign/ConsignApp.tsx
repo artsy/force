@@ -9,10 +9,7 @@ import { SellArtDifferently } from "./Components/SellArtDifferently"
 import { GetPriceEstimate } from "./Components/GetPriceEstimate"
 import { HowToSell } from "./Components/HowToSell"
 import { ConsignInDemandNow } from "./Components/InDemandNow/ConsignInDemandNow"
-import {
-  SoldRecently,
-  SoldRecentlyQueryRenderer,
-} from "./Components/SoldRecently"
+import { SoldRecentlyQueryRenderer } from "./Components/SoldRecently"
 import { ReadMore } from "./Components/ReadMore"
 import { ContactUs } from "./Components/ContactUs"
 import { FAQ } from "./Components/FAQ"

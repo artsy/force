@@ -58,7 +58,7 @@ export const ReadMore: React.FC = () => {
         </Media>
       </Flex>
 
-      <Media lessThan="lg">
+      <Media lessThan="md">
         <RouterLink
           to="/series/guide-consigning-art"
           style={{ textDecoration: "none" }}

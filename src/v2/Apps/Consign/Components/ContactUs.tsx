@@ -5,7 +5,7 @@ import { SectionContainer } from "./SectionContainer"
 export const ContactUs: React.FC = () => {
   return (
     <SectionContainer background="black5">
-      <Text width="100%" textAlign={"left"} mb={3} variant="largeTitle">
+      <Text width="100%" textAlign="left" mb={3} variant="largeTitle">
         Need to speak to a specialist? Contact us.
       </Text>
 

@@ -19,8 +19,7 @@ export const SectionContainer: React.FC<SectionContainerProps> = ({
       flexDirection="column"
       justifyContent="center"
       alignItems="center"
-      // FIXME: Do we need this?
-      // overflow="hidden"
+      overflow="hidden"
       px={[2, 4]}
       py={6}
       position="relative"

@@ -149,29 +149,8 @@ export const FAQ: React.FC = () => {
 const ToggleButton: React.FC<{
   expanded?: boolean
   label: string
-  children: JSX.Element
 }> = ({ expanded, label, children }) => {
   const [isExpanded, toggleExpand] = useState(expanded)
-
-  const PlusMinusIcon = ({ children }) => (
-    <Flex
-      width={13}
-      mr={1}
-      justifyContent="center"
-      alignContent="center"
-      textAlign="center"
-    >
-      <Text
-        variant="largeTitle"
-        fontWeight="medium"
-        color="black60"
-        position="relative"
-        top="2px"
-      >
-        {children}
-      </Text>
-    </Flex>
-  )
 
   return (
     <Box mb={2}>
@@ -182,7 +161,9 @@ const ToggleButton: React.FC<{
           ) : (
             <PlusMinusIcon>+</PlusMinusIcon>
           )}
-          <Text variant="subtitle">{label}</Text>
+          <Text variant="subtitle" textAlign="left">
+            {label}
+          </Text>
         </Flex>
       </Clickable>
 
@@ -195,7 +176,27 @@ const ToggleButton: React.FC<{
   )
 }
 
-const TextItem = ({ children }) => {
+const PlusMinusIcon: React.FC = ({ children }) => (
+  <Flex
+    width={13}
+    mr={1}
+    justifyContent="center"
+    alignContent="center"
+    textAlign="center"
+  >
+    <Text
+      variant="largeTitle"
+      fontWeight="medium"
+      color="black60"
+      position="relative"
+      top="2px"
+    >
+      {children}
+    </Text>
+  </Flex>
+)
+
+const TextItem: React.FC = ({ children }) => {
   return (
     <Text variant="text" color="black60" maxWidth={650}>
       {children}
