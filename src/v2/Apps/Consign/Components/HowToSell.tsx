@@ -1,8 +1,8 @@
 import React from "react"
 import { Box, Button, EditIcon, Flex, Separator, Text } from "@artsy/palette"
-import { SectionContainer } from "v2/Apps/Artist/Routes/Consign/Components/SectionContainer"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import { Media } from "v2/Utils/Responsive"
+import { SectionContainer } from "./SectionContainer"
 
 export const HowToSell: React.FC = () => {
   const navigateTo = "/consign/submission"
