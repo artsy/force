@@ -11,7 +11,5 @@ trackPageView()
 document.addEventListener("DOMContentLoaded", () => {
   window.analytics.ready(() => {
     onAnalyticsReady()
-    require("../analytics/fairs.js")
-    require("../analytics/partners.js")
   })
 })
