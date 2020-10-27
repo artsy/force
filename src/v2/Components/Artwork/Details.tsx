@@ -131,17 +131,11 @@ export class Details extends React.Component<Props, null> {
     }
   }
 
-  saleLine() {
-    const artwork = this.props.artwork
-    const hasSaleMessage =
-      artwork.sale_message && artwork.sale_message !== "Contact For Price"
-    const notInAuction = !(artwork.sale && artwork.sale.is_auction)
-    if (hasSaleMessage && notInAuction) {
-      return <div>{artwork.sale_message}</div>
-    }
-  }
-
   saleInfoLine() {
+    const { showSaleLine } = this.props
+    if (!showSaleLine) {
+      return null
+    }
     return (
       <Flex>
         <TruncatedLine>

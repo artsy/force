@@ -8,14 +8,8 @@ export type SoldRecently_targetSupply = {
         readonly artworksConnection: {
             readonly edges: ReadonlyArray<{
                 readonly node: {
-                    readonly slug: string;
-                    readonly internalID: string;
-                    readonly href: string | null;
-                    readonly artistNames: string | null;
-                    readonly image: {
-                        readonly imageURL: string | null;
-                    } | null;
                     readonly realizedPrice: string | null;
+                    readonly " $fragmentRefs": FragmentRefs<"FillwidthItem_artwork">;
                 } | null;
             } | null> | null;
         } | null;
@@ -78,54 +72,13 @@ const node: ReaderFragment = {
                       "alias": null,
                       "args": null,
                       "kind": "ScalarField",
-                      "name": "slug",
-                      "storageKey": null
-                    },
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "internalID",
-                      "storageKey": null
-                    },
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "href",
-                      "storageKey": null
-                    },
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "artistNames",
-                      "storageKey": null
-                    },
-                    {
-                      "alias": null,
-                      "args": null,
-                      "concreteType": "Image",
-                      "kind": "LinkedField",
-                      "name": "image",
-                      "plural": false,
-                      "selections": [
-                        {
-                          "alias": null,
-                          "args": null,
-                          "kind": "ScalarField",
-                          "name": "imageURL",
-                          "storageKey": null
-                        }
-                      ],
-                      "storageKey": null
-                    },
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
                       "name": "realizedPrice",
                       "storageKey": null
+                    },
+                    {
+                      "args": null,
+                      "kind": "FragmentSpread",
+                      "name": "FillwidthItem_artwork"
                     }
                   ],
                   "storageKey": null
@@ -142,5 +95,5 @@ const node: ReaderFragment = {
   ],
   "type": "TargetSupply"
 };
-(node as any).hash = '563ea16941f5ba0312111eb887571d74';
+(node as any).hash = '078b6c58d241220af9fc51e433ca4fd7';
 export default node;

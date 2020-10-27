@@ -1,25 +1,77 @@
 import React from "react"
-import { Box, Text } from "@artsy/palette"
+import { Flex, Spacer, Text } from "@artsy/palette"
 import { QueryRenderer, createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "v2/Artsy"
 import { SoldRecentlyQuery } from "v2/__generated__/SoldRecentlyQuery.graphql"
 import { SoldRecently_targetSupply } from "v2/__generated__/SoldRecently_targetSupply.graphql"
 import { extractNodes } from "v2/Utils/ExtractNodes"
+import FillwidthItem from "v2/Components/Artwork/FillwidthItem"
+import { Carousel } from "v2/Components/Carousel"
+import { SectionContainer } from "./SectionContainer"
+import { Media } from "v2/Utils/Responsive"
+
+const HEIGHT = 300
 
 interface SoldRecentlyProps {
   targetSupply: SoldRecently_targetSupply
 }
 
 export const SoldRecently: React.FC<SoldRecentlyProps> = ({ targetSupply }) => {
-  const artworks = targetSupply.microfunnel.map(microfunnel => {
+  const recentlySoldArtworks = targetSupply.microfunnel.map(microfunnel => {
     return extractNodes(microfunnel.artworksConnection)
   })
 
   return (
-    <Box>
-      <Text variant="title">Sold recently on Artsy</Text>
-      <Text variant="subtitle">{artworks.length}</Text>
-    </Box>
+    <SectionContainer>
+      <Text mb={[3, 2]} variant="largeTitle">
+        Sold recently on Artsy
+      </Text>
+      <Flex flexDirection="column">
+        <Carousel arrowHeight={HEIGHT}>
+          {recentlySoldArtworks.map(([artwork, _], key) => {
+            return (
+              <Flex
+                key={key}
+                flexDirection="column"
+                style={{ textAlign: "left" }}
+              >
+                <FillwidthItem
+                  artwork={artwork}
+                  hidePartnerName
+                  imageHeight={HEIGHT}
+                  showExtended={false}
+                />
+                {artwork.realizedPrice && (
+                  <>
+                    <Media greaterThanOrEqual="sm">
+                      <Flex flexDirection="row" alignItems="baseline">
+                        <Text variant="largeTitle">
+                          {artwork.realizedPrice}
+                        </Text>
+                        <Spacer ml={0.5} />
+                        <Text variant="caption" color="black60">
+                          Realized price
+                        </Text>
+                      </Flex>
+                    </Media>
+                    <Media lessThan="sm">
+                      <Flex flexDirection="column">
+                        <Text variant="caption" color="black60">
+                          Realized price
+                        </Text>
+                        <Text variant="largeTitle">
+                          {artwork.realizedPrice}
+                        </Text>
+                      </Flex>
+                    </Media>
+                  </>
+                )}
+              </Flex>
+            )
+          })}
+        </Carousel>
+      </Flex>
+    </SectionContainer>
   )
 }
 
@@ -30,13 +82,7 @@ const SoldRecentlyFragmentContainer = createFragmentContainer(SoldRecently, {
         artworksConnection(first: 1) {
           edges {
             node {
-              slug
-              internalID
-              href
-              artistNames
-              image {
-                imageURL
-              }
+              ...FillwidthItem_artwork
               realizedPrice
             }
           }
