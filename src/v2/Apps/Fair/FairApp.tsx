@@ -22,6 +22,8 @@ import {
   ClickedNavigationTab,
   ContextModule,
 } from "@artsy/cohesion"
+import { HttpError } from "found"
+import { userIsAdmin } from "v2/Utils/user"
 
 interface FairAppProps {
   fair: FairApp_fair
@@ -140,9 +142,18 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
 
 const TrackingWrappedFairApp: React.FC<FairAppProps> = props => {
   const {
-    fair: { internalID },
+    fair: { internalID, profile },
   } = props
+
   const { contextPageOwnerSlug, contextPageOwnerType } = useAnalyticsContext()
+
+  // If a fair's profile is inaccessible, that means it's private, which in turn means
+  // the fair is only visible to admins.
+  const { user } = useSystemContext()
+  if (!profile && !userIsAdmin(user)) {
+    throw new HttpError(404)
+  }
+
   return (
     <AnalyticsContext.Provider
       value={{
@@ -177,6 +188,9 @@ export default createFragmentContainer(TrackingWrappedFairApp, {
       }
       counts {
         artworks
+      }
+      profile {
+        __typename
       }
     }
   `,

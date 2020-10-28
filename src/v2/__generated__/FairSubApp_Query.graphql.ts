@@ -13,12 +13,16 @@ export type FairSubApp_QueryResponse = {
 };
 export type FairSubApp_QueryRawResponse = {
     readonly fair: ({
-        readonly id: string;
         readonly name: string | null;
         readonly slug: string;
         readonly metaDescription: string | null;
         readonly metaImage: ({
             readonly src: string | null;
+        }) | null;
+        readonly id: string;
+        readonly profile: ({
+            readonly __typename: "Profile";
+            readonly id: string | null;
         }) | null;
     }) | null;
 };
@@ -50,10 +54,14 @@ fragment FairMeta_fair on Fair {
 }
 
 fragment FairSubApp_fair on Fair {
+  ...FairMeta_fair
   id
   name
   slug
-  ...FairMeta_fair
+  profile {
+    __typename
+    id
+  }
 }
 */
 
@@ -72,7 +80,14 @@ v1 = [
     "name": "id",
     "variableName": "slug"
   }
-];
+],
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+};
 return {
   "fragment": {
     "argumentDefinitions": (v0/*: any*/),
@@ -117,13 +132,6 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "id",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
             "name": "name",
             "storageKey": null
           },
@@ -164,6 +172,26 @@ return {
               }
             ],
             "storageKey": null
+          },
+          (v2/*: any*/),
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "Profile",
+            "kind": "LinkedField",
+            "name": "profile",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "__typename",
+                "storageKey": null
+              },
+              (v2/*: any*/)
+            ],
+            "storageKey": null
           }
         ],
         "storageKey": null
@@ -175,7 +203,7 @@ return {
     "metadata": {},
     "name": "FairSubApp_Query",
     "operationKind": "query",
-    "text": "query FairSubApp_Query(\n  $slug: String!\n) {\n  fair(id: $slug) {\n    ...FairSubApp_fair\n    id\n  }\n}\n\nfragment FairMeta_fair on Fair {\n  name\n  slug\n  metaDescription: summary\n  metaImage: image {\n    src: url(version: \"large_rectangle\")\n  }\n}\n\nfragment FairSubApp_fair on Fair {\n  id\n  name\n  slug\n  ...FairMeta_fair\n}\n"
+    "text": "query FairSubApp_Query(\n  $slug: String!\n) {\n  fair(id: $slug) {\n    ...FairSubApp_fair\n    id\n  }\n}\n\nfragment FairMeta_fair on Fair {\n  name\n  slug\n  metaDescription: summary\n  metaImage: image {\n    src: url(version: \"large_rectangle\")\n  }\n}\n\nfragment FairSubApp_fair on Fair {\n  ...FairMeta_fair\n  id\n  name\n  slug\n  profile {\n    __typename\n    id\n  }\n}\n"
   }
 };
 })();
