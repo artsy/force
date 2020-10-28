@@ -91,7 +91,13 @@ return {
     },
     {
       "alias": null,
-      "args": null,
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "default",
+          "value": false
+        }
+      ],
       "concreteType": "Image",
       "kind": "LinkedField",
       "name": "images",
@@ -170,11 +176,11 @@ return {
           "storageKey": "resized(height:900,version:[\"larger\",\"large\"],width:900)"
         }
       ],
-      "storageKey": null
+      "storageKey": "images(default:false)"
     }
   ],
   "type": "Show"
 };
 })();
-(node as any).hash = '48f83943eb8d954b7ccea620505af800';
+(node as any).hash = 'b1d347685462f87af8dac940d946276a';
 export default node;
