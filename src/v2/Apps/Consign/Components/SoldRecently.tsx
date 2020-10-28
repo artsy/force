@@ -16,7 +16,7 @@ interface SoldRecentlyProps {
   targetSupply: SoldRecently_targetSupply
 }
 
-export const SoldRecently: React.FC<SoldRecentlyProps> = ({ targetSupply }) => {
+const SoldRecently: React.FC<SoldRecentlyProps> = ({ targetSupply }) => {
   const recentlySoldArtworks = targetSupply.microfunnel.map(microfunnel => {
     return extractNodes(microfunnel.artworksConnection)
   })

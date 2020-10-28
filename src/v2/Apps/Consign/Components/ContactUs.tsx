@@ -1,17 +1,20 @@
 import React from "react"
-import { Box, Button, Text } from "@artsy/palette"
+import { Button, Text } from "@artsy/palette"
+import { SectionContainer } from "./SectionContainer"
 
 export const ContactUs: React.FC = () => {
   return (
-    <Box>
-      <Box>
-        <Text variant="title">Need to speak to a specialist? Contact us.</Text>
-        <Text variant="text">
-          Schedule a call with one of our specialist team members for more
-          information on how Artsy can sell your artwork.{" "}
-        </Text>
-      </Box>
-      <Button variant="secondaryGray">Book an appointment</Button>
-    </Box>
+    <SectionContainer background="black5">
+      <Text width="100%" textAlign="left" mb={3} variant="largeTitle">
+        Need to speak to a specialist? Contact us.
+      </Text>
+
+      <Text variant="text" color="black60" mb={4}>
+        Schedule a call with one of our specialist team members for <br />
+        more information on how Artsy can sell your artwork.
+      </Text>
+
+      <Button variant="secondaryOutline">Book an appointment</Button>
+    </SectionContainer>
   )
 }
