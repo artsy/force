@@ -51,6 +51,7 @@ const FAIR_APP_FIXTURE: FairApp_QueryRawResponse = {
     },
     marketingCollections: [],
     profile: {
+      __typename: "Profile",
       id: "profile",
       icon: {
         cropped: {

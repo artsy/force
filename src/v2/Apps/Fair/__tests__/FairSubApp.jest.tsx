@@ -14,6 +14,10 @@ const FAIR_APP_FIXTURE: FairSubApp_QueryRawResponse = {
     slug: "miart-2020",
     metaDescription: null,
     metaImage: null,
+    profile: {
+      __typename: "Profile",
+      id: "profile",
+    },
   },
 }
 
