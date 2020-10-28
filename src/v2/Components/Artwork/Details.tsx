@@ -15,17 +15,17 @@ const TruncatedLine = styled.div`
 `
 
 export interface Props extends React.HTMLProps<Details> {
-  showSaleLine: boolean
   includeLinks: boolean
   artwork: Details_artwork
+  hideSaleInfo?: boolean
   hideArtistName?: boolean
   hidePartnerName?: boolean
 }
 
 export class Details extends React.Component<Props, null> {
   static defaultProps = {
-    showSaleLine: true,
     includeLinks: true,
+    hideSaleInfo: false,
   }
 
   artistLine() {
@@ -131,17 +131,11 @@ export class Details extends React.Component<Props, null> {
     }
   }
 
-  saleLine() {
-    const artwork = this.props.artwork
-    const hasSaleMessage =
-      artwork.sale_message && artwork.sale_message !== "Contact For Price"
-    const notInAuction = !(artwork.sale && artwork.sale.is_auction)
-    if (hasSaleMessage && notInAuction) {
-      return <div>{artwork.sale_message}</div>
-    }
-  }
-
   saleInfoLine() {
+    const { hideSaleInfo } = this.props
+    if (hideSaleInfo) {
+      return null
+    }
     return (
       <Flex>
         <TruncatedLine>
