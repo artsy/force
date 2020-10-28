@@ -9,7 +9,7 @@ import { SellArtDifferently } from "./Components/SellArtDifferently"
 import { GetPriceEstimate } from "./Components/GetPriceEstimate"
 import { HowToSell } from "./Components/HowToSell"
 import { ConsignInDemandNow } from "./Components/InDemandNow/ConsignInDemandNow"
-import { SoldRecentlyQueryRenderer as SoldRecently } from "./Components/SoldRecently"
+import { SoldRecentlyQueryRenderer } from "./Components/SoldRecently"
 import { ReadMore } from "./Components/ReadMore"
 import { ContactUs } from "./Components/ContactUs"
 import { FAQ } from "./Components/FAQ"
@@ -33,7 +33,7 @@ const ConsignApp = props => {
           <GetPriceEstimate />
           <HowToSell />
           <ConsignInDemandNow />
-          <SoldRecently />
+          <SoldRecentlyQueryRenderer />
 
           <HorizontalPadding>
             <ReadMore />
