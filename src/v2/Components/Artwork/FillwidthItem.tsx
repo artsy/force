@@ -31,6 +31,7 @@ export interface FillwidthItemContainerProps
   contextModule: AuthContextModule
   hideArtistName?: boolean
   hidePartnerName?: boolean
+  hideSaleInfo?: boolean
   imageHeight: number
   lazyLoad?: boolean
   marginLeft?: number
@@ -103,6 +104,7 @@ export class FillwidthItemContainer extends React.Component<
       user,
       hidePartnerName,
       hideArtistName,
+      hideSaleInfo,
     } = this.props
 
     let userSpread = {}
@@ -165,6 +167,7 @@ export class FillwidthItemContainer extends React.Component<
             extended={showExtended}
             hidePartnerName={hidePartnerName}
             hideArtistName={hideArtistName}
+            hideSaleInfo={hideSaleInfo}
           />
         )}
       </Box>

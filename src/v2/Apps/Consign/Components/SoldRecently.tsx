@@ -38,6 +38,7 @@ export const SoldRecently: React.FC<SoldRecentlyProps> = ({ targetSupply }) => {
                 <FillwidthItem
                   artwork={artwork}
                   hidePartnerName
+                  hideSaleInfo
                   imageHeight={HEIGHT}
                   showExtended={false}
                 />
