@@ -8,12 +8,7 @@ import express from "express"
 
 // This export form is required for express-reloadable
 const app = express()
-module.exports = app;
-
-app.use('/novo', (res, req, next) => {
-  console.log('novo')
-  next()
-})
+module.exports = app
 
 app.get("/novo", (req, res) => {
   res.send(`
@@ -48,12 +43,17 @@ app.get(
         redirect,
         bodyHTML,
         headTags,
-      } = await buildServerApp({
-        req,
-        res,
-        context: buildServerAppContext(req, res),
-        routes,
-      })
+      } = await buildServerApp(
+        {
+          req,
+          res,
+          context: buildServerAppContext(req, res),
+          routes,
+        },
+        "loadable-novo-stats.json",
+        "public/assets-novo",
+        "/assets-novo"
+      )
 
       if (redirect) {
         res.redirect(status ?? 302, redirect.url)
@@ -72,19 +72,25 @@ app.get(
             ${sharifyData}
           </head>
           <body>
-            <script src="${asset("/assets/novo-runtime.js")}"></script>
-            <script src="${asset("/assets/novo-common.js")}"></script>
-            <script src="${asset("/assets/novo-artsy-common.js")}"></script>
-            <script src="${asset("/assets/novo-common-react.js")}"></script>
-            <script src="${asset("/assets/novo-common-utility.js")}"></script>
-            <script src="${asset("/assets/novo-artsy.js")}"></script>
+            <script src="${asset("/assets-novo/novo-runtime.js")}"></script>
+            <script src="${asset("/assets-novo/novo-common.js")}"></script>
+            <script src="${asset(
+              "/assets-novo/novo-artsy-common.js"
+            )}"></script>
+            <script src="${asset(
+              "/assets-novo/novo-common-react.js"
+            )}"></script>
+            <script src="${asset(
+              "/assets-novo/novo-common-utility.js"
+            )}"></script>
+            <script src="${asset("/assets-novo/novo-artsy.js")}"></script>
 
             <div id='react-root'>
             ${bodyHTML}
             </div>
 
             ${scripts}
-            <script src="${asset("/assets/novo-artsy-novo.js")}"></script>
+            <script src="${asset("/assets-novo/novo-artsy-novo.js")}"></script>
           </body>
         </html>
       `)

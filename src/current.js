@@ -9,10 +9,7 @@ import { setup as relayCacheSetup } from "./lib/cacheClient"
 import setup from "./lib/setup"
 import config from "./config"
 
-const {
-  API_REQUEST_TIMEOUT,
-  DEFAULT_CACHE_TIME,
-} = config
+const { API_REQUEST_TIMEOUT, DEFAULT_CACHE_TIME } = config
 
 const {
   APP_URL,
@@ -25,14 +22,10 @@ const {
   HEADERS_TIMEOUT_SECONDS,
 } = process.env
 
+// eslint-disable-next-line no-console
 console.log(chalk.green(`\n[Force] NODE_ENV=${NODE_ENV}\n`))
 
 const app = express()
-
-app.use((res, req, next) => {
-  console.log('current')
-  next()
-})
 
 const initCache = cb => {
   cache.setup(() => relayCacheSetup(cb))
@@ -53,6 +46,7 @@ function swapBackboneSync() {
   }
 }
 
+// TODO: Should we still hold off the server spin up until after the cache is loaded?
 // Connect to Redis
 initCache(() => {
   swapBackboneSync()
@@ -86,6 +80,7 @@ also could be gravity being down. Retrying...`)
     { url: API_URL, id: CLIENT_ID, secret: CLIENT_SECRET },
     err => {
       if (!err) {
+        // eslint-disable-next-line no-console
         console.log("Successfully fetched xapp token.")
         // startServer()
       }
@@ -93,4 +88,4 @@ also could be gravity being down. Retrying...`)
   )
 })
 
-module.exports = app;
+module.exports = app

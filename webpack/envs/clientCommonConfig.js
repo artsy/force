@@ -139,7 +139,6 @@ export const clientCommonConfig = {
     runtimeChunk: "single",
     splitChunks: {
       maxInitialRequests: Infinity,
-      // chunks: "all",
       cacheGroups: {
         artsy: {
           test: /.*node_modules[\\/](@artsy)[\\/]/,

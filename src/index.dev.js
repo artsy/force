@@ -4,6 +4,7 @@ require("@babel/register")({
   extensions: [".ts", ".js", ".tsx", ".jsx"],
   plugins: ["babel-plugin-dynamic-import-node"],
 })
+const path = require("path")
 
 // Force resolution of potentially `yarn link`'d modules to the local node_modules
 // folder. This gets around SSR issues involving single react context requirements,

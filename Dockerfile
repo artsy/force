@@ -196,7 +196,7 @@ COPY --from=builder /app /app
 # Release stage. This stage creates the final docker iamge that will be
 # released. It contains only production dependencies and artifacts.
 #
-FROM production-base as production
+FROM node:12.14-alpine as production
 
 RUN apk --no-cache --quiet add \
   bash \

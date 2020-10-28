@@ -1,5 +1,5 @@
 // @ts-check
-
+/* eslint-disable no-console */
 const chalk = require("chalk")
 const fs = require("fs")
 const path = require("path")
@@ -19,7 +19,7 @@ if (!env.onCi && !fs.existsSync(cacheDirectory)) {
   console.log(
     chalk.yellow(
       "\n[!] No existing `.cache` directory detected, initial " +
-      "launch will take a while.\n"
+        "launch will take a while.\n"
     )
   )
 }

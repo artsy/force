@@ -1,3 +1,7 @@
+// Required for @artsy/react-html-parser which is included by @artsy/reaction
+// TODO: Find a way to remove JSDOM from our server.
+import "./lib/DOMParser"
+
 // TODO: Publish artsy morgan as an npm module.
 import logger from "artsy-morgan"
 import express from "express"

@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 // TODO: Do we still need this.
-import 'source-map-support/register'
+import "source-map-support/register"
 
 // Do we still use regenerator?
 import "regenerator-runtime/runtime"
@@ -9,30 +9,11 @@ import "regenerator-runtime/runtime"
 // See https://docs.datadoghq.com/tracing/languages/nodejs/ for more info.
 import "./lib/datadog"
 
-// TODO: Do we need JSDOM server-side?
-import "./lib/DOMParser"
-
-// TODO: Publish artsy morgan as an npm module.
-import logger from "artsy-morgan"
 import express from "express"
-
-const {
-  NODE_ENV,
-} = process.env
-
-const isDevelopment = NODE_ENV === "development"
 
 const app = express()
 
-// TODO: Refactor dev server to exist in index.dev.js
-if (isDevelopment) {
-  app.use(require("./lib/webpack-dev-server").app)
-
-  const mountAndReload = createReloadable(novo, require)
-  mountAndReload(path.resolve("src/common-app"))
-} else {
-  app.use(require("./common-app"))
-}
+app.use(require("./common-app"))
 
 app.listen(5000, () => {
   const bootMessage = true
@@ -81,3 +62,5 @@ app.listen(5000, () => {
 //     process.on("SIGTERM", stopServer)
 //   }
 // })
+
+module.exports = app
