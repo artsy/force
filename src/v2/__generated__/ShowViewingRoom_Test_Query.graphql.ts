@@ -18,7 +18,7 @@ export type ShowViewingRoom_Test_Query = {
 
 /*
 query ShowViewingRoom_Test_Query {
-  show(id: "xxx") {
+  show(id: "example-show-id") {
     ...ShowViewingRoom_show
     id
   }
@@ -41,6 +41,8 @@ fragment ShowViewingRoom_show on Show {
   viewingRoomsConnection {
     edges {
       node {
+        internalID
+        slug
         status
         distanceToOpen(short: true)
         distanceToClose(short: true)
@@ -62,7 +64,7 @@ var v0 = [
   {
     "kind": "Literal",
     "name": "id",
-    "value": "xxx"
+    "value": "example-show-id"
   }
 ],
 v1 = {
@@ -109,7 +111,7 @@ return {
             "name": "ShowViewingRoom_show"
           }
         ],
-        "storageKey": "show(id:\"xxx\")"
+        "storageKey": "show(id:\"example-show-id\")"
       }
     ],
     "type": "Query"
@@ -185,6 +187,20 @@ return {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
+                        "name": "internalID",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "slug",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
                         "name": "status",
                         "storageKey": null
                       },
@@ -256,7 +272,7 @@ return {
           },
           (v1/*: any*/)
         ],
-        "storageKey": "show(id:\"xxx\")"
+        "storageKey": "show(id:\"example-show-id\")"
       }
     ]
   },
@@ -265,9 +281,9 @@ return {
     "metadata": {},
     "name": "ShowViewingRoom_Test_Query",
     "operationKind": "query",
-    "text": "query ShowViewingRoom_Test_Query {\n  show(id: \"xxx\") {\n    ...ShowViewingRoom_show\n    id\n  }\n}\n\nfragment ShowViewingRoom_show on Show {\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on ExternalPartner {\n      name\n      id\n    }\n    ... on Node {\n      id\n    }\n  }\n  viewingRoomsConnection {\n    edges {\n      node {\n        status\n        distanceToOpen(short: true)\n        distanceToClose(short: true)\n        title\n        href\n        image {\n          imageURLs {\n            normalized\n          }\n        }\n      }\n    }\n  }\n}\n"
+    "text": "query ShowViewingRoom_Test_Query {\n  show(id: \"example-show-id\") {\n    ...ShowViewingRoom_show\n    id\n  }\n}\n\nfragment ShowViewingRoom_show on Show {\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on ExternalPartner {\n      name\n      id\n    }\n    ... on Node {\n      id\n    }\n  }\n  viewingRoomsConnection {\n    edges {\n      node {\n        internalID\n        slug\n        status\n        distanceToOpen(short: true)\n        distanceToClose(short: true)\n        title\n        href\n        image {\n          imageURLs {\n            normalized\n          }\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '2f49a69c316d32cf03136f9c59c3fe82';
+(node as any).hash = 'bec8042116318c954034d518468782db';
 export default node;

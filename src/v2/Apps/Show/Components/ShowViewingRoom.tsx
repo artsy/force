@@ -5,6 +5,9 @@ import { ShowViewingRoom_show } from "v2/__generated__/ShowViewingRoom_show.grap
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import { getTagProps } from "v2/Components/ViewingRoomCard"
 import { cropped } from "v2/Utils/resized"
+import { useTracking } from "v2/Artsy"
+import { useAnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
+import { ContextModule, OwnerType } from "@artsy/cohesion"
 
 interface ShowViewingRoomProps extends BoxProps {
   show: ShowViewingRoom_show
@@ -21,6 +24,26 @@ export const ShowViewingRoom: React.FC<ShowViewingRoomProps> = ({
     height: 600,
   })
 
+  const tracking = useTracking()
+  const {
+    contextPageOwnerId,
+    contextPageOwnerSlug,
+    contextPageOwnerType,
+  } = useAnalyticsContext()
+
+  const handleClick = () => {
+    tracking.trackEvent({
+      context_module: ContextModule.associatedViewingRoom,
+      context_page_owner_type: contextPageOwnerType,
+      context_page_owner_id: contextPageOwnerId,
+      context_page_owner_slug: contextPageOwnerSlug,
+      destination_page_owner_type: OwnerType.viewingRoom,
+      destination_page_owner_id: viewingRoom.internalID,
+      destination_page_owner_slug: viewingRoom.slug,
+      type: "thumbnail",
+    })
+  }
+
   return (
     <Box {...rest}>
       <Text variant="mediumText" mb={1}>
@@ -28,7 +51,7 @@ export const ShowViewingRoom: React.FC<ShowViewingRoomProps> = ({
       </Text>
 
       <ResponsiveBox maxWidth="100%" aspectWidth={3} aspectHeight={4}>
-        <RouterLink to={viewingRoom.href}>
+        <RouterLink to={viewingRoom.href} onClick={handleClick}>
           <MediumCard
             width="100%"
             height="100%"
@@ -63,6 +86,8 @@ export const ShowViewingRoomFragmentContainer = createFragmentContainer(
         viewingRoomsConnection {
           edges {
             node {
+              internalID
+              slug
               status
               distanceToOpen(short: true)
               distanceToClose(short: true)
