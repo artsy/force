@@ -76,14 +76,19 @@ const onClickedReadMore = data => {
     { path: pathname },
     { integrations: { Marketo: false } }
   )
-  if (window.PARSELY) {
+  // guard for aggressive ad blockers
+  if (
+    window.PARSELY &&
+    window.PARSELY.beacon &&
+    window.PARSELY.beacon.trackPageView
+  ) {
     window.PARSELY.beacon.trackPageView({
       url: href,
       js: 1,
       action_name: "infinite",
     })
   }
-  if (window.Sailthru) {
+  if (window.Sailthru && window.Sailthru.track) {
     window.Sailthru.track({
       domain: "horizon.artsy.net",
       spider: true,
