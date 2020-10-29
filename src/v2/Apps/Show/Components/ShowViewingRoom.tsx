@@ -7,7 +7,12 @@ import { getTagProps } from "v2/Components/ViewingRoomCard"
 import { cropped } from "v2/Utils/resized"
 import { useTracking } from "v2/Artsy"
 import { useAnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
-import { ContextModule, OwnerType } from "@artsy/cohesion"
+import {
+  ActionType,
+  ClickedViewingRoomCard,
+  ContextModule,
+  OwnerType,
+} from "@artsy/cohesion"
 
 interface ShowViewingRoomProps extends BoxProps {
   show: ShowViewingRoom_show
@@ -32,7 +37,8 @@ export const ShowViewingRoom: React.FC<ShowViewingRoomProps> = ({
   } = useAnalyticsContext()
 
   const handleClick = () => {
-    tracking.trackEvent({
+    const payload: ClickedViewingRoomCard = {
+      action: ActionType.clickedViewingRoomCard,
       context_module: ContextModule.associatedViewingRoom,
       context_page_owner_type: contextPageOwnerType,
       context_page_owner_id: contextPageOwnerId,
@@ -41,7 +47,9 @@ export const ShowViewingRoom: React.FC<ShowViewingRoomProps> = ({
       destination_page_owner_id: viewingRoom.internalID,
       destination_page_owner_slug: viewingRoom.slug,
       type: "thumbnail",
-    })
+    }
+
+    tracking.trackEvent(payload)
   }
 
   return (

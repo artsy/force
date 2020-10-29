@@ -94,6 +94,7 @@ describe("ShowViewingRoom", () => {
     wrapper.find("a").first().simulate("click")
 
     expect(trackEvent).toHaveBeenCalledWith({
+      action: "clickedViewingRoomCard",
       context_module: "associatedViewingRoom",
       context_page_owner_id: "example-show-id",
       context_page_owner_slug: "example-show-slug",

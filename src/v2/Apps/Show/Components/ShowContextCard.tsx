@@ -18,7 +18,13 @@ import { filterLocations } from "v2/Apps/Artwork/Utils/filterLocations"
 import { cropped } from "v2/Utils/resized"
 import { useTracking } from "v2/Artsy"
 import { useAnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
-import { ContextModule, OwnerType } from "@artsy/cohesion"
+import {
+  ActionType,
+  ClickedFairCard,
+  ClickedPartnerCard,
+  ContextModule,
+  OwnerType,
+} from "@artsy/cohesion"
 
 interface Props {
   show: ShowContextCard_show
@@ -46,7 +52,8 @@ export const ShowContextCard: React.FC<Props> = ({ show }) => {
 
   const FairInfo = () => {
     const handleClick = () => {
-      tracking.trackEvent({
+      const payload: ClickedFairCard = {
+        action: ActionType.clickedFairCard,
         context_module: ContextModule.presentingFair,
         context_page_owner_type: contextPageOwnerType,
         context_page_owner_id: contextPageOwnerId,
@@ -55,7 +62,9 @@ export const ShowContextCard: React.FC<Props> = ({ show }) => {
         destination_page_owner_id: fair.internalID,
         destination_page_owner_slug: fair.slug,
         type: "thumbnail",
-      })
+      }
+
+      tracking.trackEvent(payload)
     }
 
     return (
@@ -97,7 +106,8 @@ export const ShowContextCard: React.FC<Props> = ({ show }) => {
     ).join(", ")
 
     const handleClick = () => {
-      tracking.trackEvent({
+      const payload: ClickedPartnerCard = {
+        action: ActionType.clickedPartnerCard,
         context_module: ContextModule.presentingPartner,
         context_page_owner_type: contextPageOwnerType,
         context_page_owner_id: contextPageOwnerId,
@@ -106,7 +116,9 @@ export const ShowContextCard: React.FC<Props> = ({ show }) => {
         destination_page_owner_id: partner.internalID,
         destination_page_owner_slug: partner.slug,
         type: "thumbnail",
-      })
+      }
+
+      tracking.trackEvent(payload)
     }
 
     return (
