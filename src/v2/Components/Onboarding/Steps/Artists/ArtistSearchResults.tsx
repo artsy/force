@@ -182,7 +182,12 @@ const ArtistSearchResultsContentContainer = createFragmentContainer(
   {
     viewer: graphql`
       fragment ArtistSearchResults_viewer on Viewer {
-        searchConnection(query: $term, mode: AUTOSUGGEST, entities: [ARTIST]) {
+        searchConnection(
+          query: $term
+          mode: AUTOSUGGEST
+          entities: [ARTIST]
+          first: 10
+        ) {
           edges {
             node {
               ... on SearchableItem {
