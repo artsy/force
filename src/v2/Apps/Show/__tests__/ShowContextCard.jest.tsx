@@ -108,6 +108,7 @@ describe("ShowContextCard", () => {
     wrapper.find("a").first().simulate("click")
 
     expect(trackEvent).toHaveBeenCalledWith({
+      action: "clickedPartnerCard",
       context_module: "presentingPartner",
       context_page_owner_id: "example-show-id",
       context_page_owner_slug: "example-show-slug",
@@ -131,6 +132,7 @@ describe("ShowContextCard", () => {
     wrapper.find("a").first().simulate("click")
 
     expect(trackEvent).toHaveBeenCalledWith({
+      action: "clickedFairCard",
       context_module: "presentingFair",
       context_page_owner_id: "example-show-id",
       context_page_owner_slug: "example-show-slug",
