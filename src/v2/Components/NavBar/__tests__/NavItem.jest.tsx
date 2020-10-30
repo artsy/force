@@ -51,8 +51,12 @@ describe("NavItem", () => {
       </NavItem>
     )
     expect(wrapper.html()).toContain("Menu Item")
+    expect(wrapper.html()).toContain('aria-expanded="true"')
+    expect(wrapper.html()).not.toContain('aria-expanded="false"')
     toggle()
-    expect(wrapper.html()).not.toContain("Menu Item")
+    expect(wrapper.html()).toContain("Menu Item")
+    expect(wrapper.html()).toContain('aria-expanded="false"')
+    expect(wrapper.html()).not.toContain('aria-expanded="true"')
   })
 
   it("shows / hides Menu on mouse interactions", () => {
@@ -61,13 +65,13 @@ describe("NavItem", () => {
         hello how are you
       </NavItem>
     )
-    expect(wrapper.html()).not.toContain("Menu Item")
+    expect(wrapper.html()).toContain('aria-expanded="false"')
     wrapper.simulate("mouseenter")
     jest.runAllTimers()
-    expect(wrapper.html()).toContain("Menu Item")
+    expect(wrapper.html()).toContain('aria-expanded="true"')
     wrapper.simulate("mouseleave")
     jest.runAllTimers()
-    expect(wrapper.html()).not.toContain("Menu Item")
+    expect(wrapper.html()).toContain('aria-expanded="false"')
   })
 
   it("shows / hides Menu on button click", () => {
@@ -76,11 +80,11 @@ describe("NavItem", () => {
         hello how are you
       </NavItem>
     )
-    expect(wrapper.html()).not.toContain("Menu Item")
+    expect(wrapper.html()).toContain('aria-expanded="false"')
     wrapper.find("button").simulate("click")
-    expect(wrapper.html()).toContain("Menu Item")
+    expect(wrapper.html()).toContain('aria-expanded="true"')
     wrapper.find("button").simulate("click")
-    expect(wrapper.html()).not.toContain("Menu Item")
+    expect(wrapper.html()).toContain('aria-expanded="false"')
   })
 
   it("renders a Overlay", () => {
