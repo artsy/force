@@ -7,18 +7,24 @@ import { ConsignPriceEstimateContext_SearchConnection_Query } from "v2/__generat
 import { ConsignPriceEstimateContext_ArtistInsights_Query } from "v2/__generated__/ConsignPriceEstimateContext_ArtistInsights_Query.graphql"
 
 interface PriceEstimateContextProps {
-  artistInsights?: object
+  artistInsights?: ArtistInsights
   fetchSuggestions?: (searchQuery: string) => void
   searchQuery?: string
-  selectSuggestion?: (suggestion: any) => void
+  selectSuggestion?: (suggestion: Suggestion) => void
+  selectedSuggestion?: Suggestion
   setSearchQuery?: (searchQuery: string) => void
-  suggestions?: any[]
+  suggestions?: Suggestions
 }
+
+type ArtistInsights = ConsignPriceEstimateContext_ArtistInsights_Query["response"]
+type Suggestions = ConsignPriceEstimateContext_SearchConnection_Query["response"]
+type Suggestion = Suggestions["searchConnection"]["edges"][0]
 
 const initialState = {
   artistInsights: null,
   searchQuery: "",
-  suggestions: [],
+  selectedSuggestion: null,
+  suggestions: null,
 }
 
 const PriceEstimateContext = createContext<PriceEstimateContextProps>(
@@ -62,6 +68,7 @@ function getActions(dispatch, relayEnvironment) {
                   displayLabel
                   ... on Artist {
                     internalID
+                    imageUrl
                   }
                 }
               }
@@ -82,8 +89,15 @@ function getActions(dispatch, relayEnvironment) {
     /**
      * Handler for when a drop down item is selected
      */
-    selectSuggestion: suggestion => {
-      actions.fetchArtistInsights(suggestion.node.internalID)
+    selectSuggestion: (selectedSuggestion: Suggestion) => {
+      dispatch({
+        type: "selectedSuggestion",
+        payload: {
+          selectedSuggestion,
+        },
+      })
+
+      actions.fetchArtistInsights(selectedSuggestion.node.internalID)
     },
 
     /**

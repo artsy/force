@@ -17,6 +17,10 @@ interface SoldRecentlyProps {
 }
 
 const SoldRecently: React.FC<SoldRecentlyProps> = ({ targetSupply }) => {
+  if (!targetSupply.microfunnel) {
+    return null
+  }
+
   const recentlySoldArtworks = targetSupply.microfunnel.map(microfunnel => {
     return extractNodes(microfunnel.artworksConnection)
   })

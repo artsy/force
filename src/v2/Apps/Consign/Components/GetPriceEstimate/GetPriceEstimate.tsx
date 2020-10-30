@@ -2,7 +2,7 @@ import React from "react"
 import { SectionContainer } from "../SectionContainer"
 import { ConsignArtistAutosuggest } from "./ConsignArtistAutosuggest"
 import { PriceEstimateContextProvider } from "./ConsignPriceEstimateContext"
-import { Flex, MagnifyingGlassIcon, Spacer, Text } from "@artsy/palette"
+import { Flex, Spacer, Text } from "@artsy/palette"
 import { EstimateResults } from "./EstimateResults"
 
 export const GetPriceEstimate: React.FC = () => {
@@ -31,7 +31,6 @@ export const GetPriceEstimate: React.FC = () => {
             {/* TODO: Wire up search bar */}
             <Flex position="relative" maxWidth={360} width="100%">
               <ConsignArtistAutosuggest />
-              <MagnifyingGlassIcon position="absolute" right="2%" top={1} />
             </Flex>
           </Flex>
 

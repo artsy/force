@@ -1,6 +1,6 @@
 import Autosuggest from "react-autosuggest"
 import React from "react"
-import { Input, Text } from "@artsy/palette"
+import { Input, MagnifyingGlassIcon, Text } from "@artsy/palette"
 import { usePriceEstimateContext } from "./ConsignPriceEstimateContext"
 
 export const ConsignArtistAutosuggest: React.FC = () => {
@@ -14,12 +14,12 @@ export const ConsignArtistAutosuggest: React.FC = () => {
 
   return (
     <Autosuggest
-      suggestions={suggestions}
+      suggestions={suggestions ?? []}
       onSuggestionsFetchRequested={() => fetchSuggestions(searchQuery)}
       onSuggestionsClearRequested={x => x} // FIXME: implement
       onSuggestionSelected={(_, { suggestion }) => selectSuggestion(suggestion)}
       getSuggestionValue={suggestion => suggestion.node.displayLabel}
-      renderInputComponent={AutosugggestInput}
+      renderInputComponent={AutosuggestInput}
       renderSuggestion={Suggestion}
       inputProps={{
         placeholder: "Tell me the value of my…",
@@ -37,14 +37,17 @@ export const ConsignArtistAutosuggest: React.FC = () => {
   )
 }
 
-const AutosugggestInput: React.FC = props => {
+const AutosuggestInput: React.FC = props => {
   return (
-    <Input
-      width="100%"
-      height={40}
-      style={{ boxShadow: "0px 2px 10px rgba(0,0,0,0.1)" }}
-      {...props}
-    />
+    <>
+      <Input
+        width="100%"
+        height={40}
+        style={{ boxShadow: "0px 2px 10px rgba(0,0,0,0.1)" }}
+        {...props}
+      />
+      <MagnifyingGlassIcon position="absolute" right="2%" top={1} />
+    </>
   )
 }
 

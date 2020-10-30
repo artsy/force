@@ -1,6 +1,7 @@
 import React from "react"
 import { Box, Flex, Image, Join, Spacer, Text } from "@artsy/palette"
 import { usePriceEstimateContext } from "./ConsignPriceEstimateContext"
+import { ArtistInsightResult } from "./ArtistInsightResult"
 
 export const EstimateResults: React.FC = () => {
   const { artistInsights } = usePriceEstimateContext()
@@ -11,11 +12,7 @@ export const EstimateResults: React.FC = () => {
       alignItems="center"
       justifyContent="center"
     >
-      {artistInsights ? (
-        <Box>Found artist insights: {JSON.stringify(artistInsights)}</Box>
-      ) : (
-        <PlaceholderItems />
-      )}
+      {artistInsights ? <ArtistInsightResult /> : <PlaceholderItems />}
     </Flex>
   )
 }
