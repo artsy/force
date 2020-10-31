@@ -9,8 +9,9 @@ export type ConsignPriceEstimateContext_ArtistInsights_QueryVariables = {
 export type ConsignPriceEstimateContext_ArtistInsights_QueryResponse = {
     readonly marketPriceInsights: {
         readonly artistName: string | null;
-        readonly highRangeCents: unknown | null;
         readonly lowRangeCents: unknown | null;
+        readonly midRangeCents: unknown | null;
+        readonly highRangeCents: unknown | null;
     } | null;
 };
 export type ConsignPriceEstimateContext_ArtistInsights_Query = {
@@ -27,8 +28,9 @@ query ConsignPriceEstimateContext_ArtistInsights_Query(
 ) {
   marketPriceInsights(artistId: $artistInternalID, medium: $medium) {
     artistName
-    highRangeCents
     lowRangeCents
+    midRangeCents
+    highRangeCents
   }
 }
 */
@@ -79,14 +81,21 @@ v1 = [
         "alias": null,
         "args": null,
         "kind": "ScalarField",
-        "name": "highRangeCents",
+        "name": "lowRangeCents",
         "storageKey": null
       },
       {
         "alias": null,
         "args": null,
         "kind": "ScalarField",
-        "name": "lowRangeCents",
+        "name": "midRangeCents",
+        "storageKey": null
+      },
+      {
+        "alias": null,
+        "args": null,
+        "kind": "ScalarField",
+        "name": "highRangeCents",
         "storageKey": null
       }
     ],
@@ -114,9 +123,9 @@ return {
     "metadata": {},
     "name": "ConsignPriceEstimateContext_ArtistInsights_Query",
     "operationKind": "query",
-    "text": "query ConsignPriceEstimateContext_ArtistInsights_Query(\n  $artistInternalID: ID!\n  $medium: String!\n) {\n  marketPriceInsights(artistId: $artistInternalID, medium: $medium) {\n    artistName\n    highRangeCents\n    lowRangeCents\n  }\n}\n"
+    "text": "query ConsignPriceEstimateContext_ArtistInsights_Query(\n  $artistInternalID: ID!\n  $medium: String!\n) {\n  marketPriceInsights(artistId: $artistInternalID, medium: $medium) {\n    artistName\n    lowRangeCents\n    midRangeCents\n    highRangeCents\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '02cecdf35c246564798e7d0ead43b2d7';
+(node as any).hash = '716b1d0d03d9730aa14067094a885c59';
 export default node;

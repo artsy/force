@@ -24,17 +24,18 @@ export const ArtistInsightResult: React.FC = () => {
   const lowRangeCents: number = Number(
     artistInsights.marketPriceInsights.lowRangeCents
   )
+  const midRangeCents: number = Number(
+    artistInsights.marketPriceInsights.midRangeCents
+  )
   const highRangeCents: number = Number(
     artistInsights.marketPriceInsights.highRangeCents
   )
 
   const lowEstimateDollars = formatCentsToDollars(lowRangeCents)
   const highEstimateDollars = formatCentsToDollars(highRangeCents)
-  const medianEstimate = formatCentsToDollars(
-    (lowRangeCents + highRangeCents) / 2
-  )
+  const medianEstimateDollars = formatCentsToDollars(midRangeCents)
 
-  const imageUrl = selectedSuggestion.node.imageUrl
+  const imageUrl = selectedSuggestion?.node?.imageUrl
 
   return (
     <Box>
@@ -54,7 +55,7 @@ export const ArtistInsightResult: React.FC = () => {
             <Text variant="largeTitle">
               {lowEstimateDollars} – {highEstimateDollars}
             </Text>
-            <Text variant="text">Median: {medianEstimate}</Text>
+            <Text variant="text">Median: {medianEstimateDollars}</Text>
           </Box>
         </Flex>
 

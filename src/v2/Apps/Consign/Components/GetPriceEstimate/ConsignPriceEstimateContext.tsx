@@ -10,9 +10,11 @@ interface PriceEstimateContextProps {
   artistInsights?: ArtistInsights
   fetchArtistInsights?: (artistInternalID: string) => void
   fetchSuggestions?: (searchQuery: string) => void
+  isFetching?: boolean
   searchQuery?: string
   selectSuggestion?: (suggestion: Suggestion) => void
   selectedSuggestion?: Suggestion
+  setFetching?: (isFetching: boolean) => void
   setSearchQuery?: (searchQuery: string) => void
   suggestions?: Suggestions
 }
@@ -23,7 +25,11 @@ type Suggestion = Suggestions[0]
 
 type State = Pick<
   PriceEstimateContextProps,
-  "artistInsights" | "searchQuery" | "selectedSuggestion" | "suggestions"
+  | "artistInsights"
+  | "isFetching"
+  | "searchQuery"
+  | "selectedSuggestion"
+  | "suggestions"
 >
 
 type Actions = Pick<
@@ -31,6 +37,7 @@ type Actions = Pick<
   | "fetchArtistInsights"
   | "fetchSuggestions"
   | "selectSuggestion"
+  | "setFetching"
   | "setSearchQuery"
 >
 
@@ -43,6 +50,7 @@ type Action = {
 
 const initialState: State = {
   artistInsights: null,
+  isFetching: false,
   searchQuery: "",
   selectedSuggestion: null,
   suggestions: null,
@@ -54,6 +62,15 @@ const PriceEstimateContext = createContext<PriceEstimateContextProps>(
 
 function getActions(dispatch: Dispatch<Action>, relayEnvironment: Environment) {
   const actions: Actions = {
+    setFetching: isFetching => {
+      dispatch({
+        type: "isFetching",
+        payload: {
+          isFetching,
+        },
+      })
+    },
+
     /**
      * Updates state with current search query
      */
@@ -110,21 +127,23 @@ function getActions(dispatch: Dispatch<Action>, relayEnvironment: Environment) {
     /**
      * Handler for when a drop down item is selected
      */
-    selectSuggestion: selectedSuggestion => {
+    selectSuggestion: async selectedSuggestion => {
+      await actions.fetchArtistInsights(selectedSuggestion.node.internalID)
+
       dispatch({
         type: "selectedSuggestion",
         payload: {
           selectedSuggestion,
         },
       })
-
-      actions.fetchArtistInsights(selectedSuggestion.node.internalID)
     },
 
     /**
      * Fetch artist insights based on artist's internalID.
      */
     fetchArtistInsights: async artistInternalID => {
+      actions.setFetching(true)
+
       const artistInsights = await fetchQuery<
         ConsignPriceEstimateContext_ArtistInsights_Query
       >(
@@ -136,8 +155,9 @@ function getActions(dispatch: Dispatch<Action>, relayEnvironment: Environment) {
           ) {
             marketPriceInsights(artistId: $artistInternalID, medium: $medium) {
               artistName
-              highRangeCents
               lowRangeCents
+              midRangeCents
+              highRangeCents
             }
           }
         `,
@@ -147,6 +167,8 @@ function getActions(dispatch: Dispatch<Action>, relayEnvironment: Environment) {
           medium: "PAINTING",
         }
       )
+
+      actions.setFetching(false)
 
       dispatch({
         type: "artistInsights",
