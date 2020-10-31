@@ -1,6 +1,6 @@
-import React, { useContext, useReducer } from "react"
+import React, { Dispatch, useContext, useReducer } from "react"
 import { createContext } from "react"
-import { fetchQuery, graphql } from "react-relay"
+import { Environment, fetchQuery, graphql } from "react-relay"
 import { useSystemContext } from "v2/Artsy"
 
 import { ConsignPriceEstimateContext_SearchConnection_Query } from "v2/__generated__/ConsignPriceEstimateContext_SearchConnection_Query.graphql"
@@ -8,6 +8,7 @@ import { ConsignPriceEstimateContext_ArtistInsights_Query } from "v2/__generated
 
 interface PriceEstimateContextProps {
   artistInsights?: ArtistInsights
+  fetchArtistInsights?: (artistInternalID: string) => void
   fetchSuggestions?: (searchQuery: string) => void
   searchQuery?: string
   selectSuggestion?: (suggestion: Suggestion) => void
@@ -17,10 +18,30 @@ interface PriceEstimateContextProps {
 }
 
 type ArtistInsights = ConsignPriceEstimateContext_ArtistInsights_Query["response"]
-type Suggestions = ConsignPriceEstimateContext_SearchConnection_Query["response"]
-type Suggestion = Suggestions["searchConnection"]["edges"][0]
+type Suggestions = ConsignPriceEstimateContext_SearchConnection_Query["response"]["searchConnection"]["edges"]
+type Suggestion = Suggestions[0]
 
-const initialState = {
+type State = Pick<
+  PriceEstimateContextProps,
+  "artistInsights" | "searchQuery" | "selectedSuggestion" | "suggestions"
+>
+
+type Actions = Pick<
+  PriceEstimateContextProps,
+  | "fetchArtistInsights"
+  | "fetchSuggestions"
+  | "selectSuggestion"
+  | "setSearchQuery"
+>
+
+type Action = {
+  type: keyof State
+  payload: {
+    [P in keyof State]: State[P]
+  }
+}
+
+const initialState: State = {
   artistInsights: null,
   searchQuery: "",
   selectedSuggestion: null,
@@ -31,8 +52,8 @@ const PriceEstimateContext = createContext<PriceEstimateContextProps>(
   initialState
 )
 
-function getActions(dispatch, relayEnvironment) {
-  const actions = {
+function getActions(dispatch: Dispatch<Action>, relayEnvironment: Environment) {
+  const actions: Actions = {
     /**
      * Updates state with current search query
      */
@@ -89,7 +110,7 @@ function getActions(dispatch, relayEnvironment) {
     /**
      * Handler for when a drop down item is selected
      */
-    selectSuggestion: (selectedSuggestion: Suggestion) => {
+    selectSuggestion: selectedSuggestion => {
       dispatch({
         type: "selectedSuggestion",
         payload: {
@@ -114,31 +135,9 @@ function getActions(dispatch, relayEnvironment) {
             $medium: String!
           ) {
             marketPriceInsights(artistId: $artistInternalID, medium: $medium) {
-              annualLotsSold
-              annualValueSoldCents
-              artistId
               artistName
-              artsyQInventory
-              createdAt
-              demandRank
-              demandTrend
               highRangeCents
-              largeHighRangeCents
-              largeLowRangeCents
-              largeMidRangeCents
-              liquidityRank
               lowRangeCents
-              medianSaleToEstimateRatio
-              medium
-              mediumHighRangeCents
-              mediumLowRangeCents
-              mediumMidRangeCents
-              midRangeCents
-              sellThroughRate
-              smallHighRangeCents
-              smallLowRangeCents
-              smallMidRangeCents
-              updatedAt
             }
           }
         `,
@@ -161,7 +160,7 @@ function getActions(dispatch, relayEnvironment) {
   return actions
 }
 
-function reducer(state, action) {
+function reducer(state: State, action: Action): State {
   return {
     ...state,
     [action.type]: action.payload[action.type],

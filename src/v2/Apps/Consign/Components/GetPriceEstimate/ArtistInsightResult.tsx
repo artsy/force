@@ -13,7 +13,7 @@ import {
 } from "@artsy/palette"
 import styled from "styled-components"
 
-export const ArtistInsightResult = props => {
+export const ArtistInsightResult: React.FC = () => {
   const { artistInsights, selectedSuggestion } = usePriceEstimateContext()
 
   if (!artistInsights?.marketPriceInsights) {
@@ -37,7 +37,7 @@ export const ArtistInsightResult = props => {
   const imageUrl = selectedSuggestion.node.imageUrl
 
   return (
-    <>
+    <Box>
       <Container>
         <Flex>
           <Box pr={4}>
@@ -80,7 +80,7 @@ export const ArtistInsightResult = props => {
           artist + category combination.
         </Text>
       </Flex>
-    </>
+    </Box>
   )
 }
 
