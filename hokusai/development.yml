@@ -2,9 +2,7 @@
 version: "3.8"
 services:
   force:
-    extends:
-      file: build.yml
-      service: force
+{% include 'templates/docker-compose-service.yml.j2' %}
     environment:
       - NODE_ENV=development
       - REDIS_URL=redis://force-redis:6379/0
