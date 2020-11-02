@@ -1,32 +1,76 @@
-import React, { useContext, useReducer } from "react"
+import React, { Dispatch, useContext, useReducer } from "react"
 import { createContext } from "react"
-import { fetchQuery, graphql } from "react-relay"
+import { Environment, fetchQuery, graphql } from "react-relay"
 import { useSystemContext } from "v2/Artsy"
 
 import { ConsignPriceEstimateContext_SearchConnection_Query } from "v2/__generated__/ConsignPriceEstimateContext_SearchConnection_Query.graphql"
 import { ConsignPriceEstimateContext_ArtistInsights_Query } from "v2/__generated__/ConsignPriceEstimateContext_ArtistInsights_Query.graphql"
 
 interface PriceEstimateContextProps {
-  artistInsights?: object
+  artistInsights?: ArtistInsights
+  fetchArtistInsights?: (artistInternalID: string) => void
   fetchSuggestions?: (searchQuery: string) => void
+  isFetching?: boolean
   searchQuery?: string
-  selectSuggestion?: (suggestion: any) => void
+  selectSuggestion?: (suggestion: Suggestion) => void
+  selectedSuggestion?: Suggestion
+  setFetching?: (isFetching: boolean) => void
   setSearchQuery?: (searchQuery: string) => void
-  suggestions?: any[]
+  suggestions?: Suggestions
 }
 
-const initialState = {
+type ArtistInsights = ConsignPriceEstimateContext_ArtistInsights_Query["response"]
+type Suggestions = ConsignPriceEstimateContext_SearchConnection_Query["response"]["searchConnection"]["edges"]
+type Suggestion = Suggestions[0]
+
+type State = Pick<
+  PriceEstimateContextProps,
+  | "artistInsights"
+  | "isFetching"
+  | "searchQuery"
+  | "selectedSuggestion"
+  | "suggestions"
+>
+
+type Actions = Pick<
+  PriceEstimateContextProps,
+  | "fetchArtistInsights"
+  | "fetchSuggestions"
+  | "selectSuggestion"
+  | "setFetching"
+  | "setSearchQuery"
+>
+
+type Action = {
+  type: keyof State
+  payload: {
+    [P in keyof State]: State[P]
+  }
+}
+
+const initialState: State = {
   artistInsights: null,
+  isFetching: false,
   searchQuery: "",
-  suggestions: [],
+  selectedSuggestion: null,
+  suggestions: null,
 }
 
 const PriceEstimateContext = createContext<PriceEstimateContextProps>(
   initialState
 )
 
-function getActions(dispatch, relayEnvironment) {
-  const actions = {
+function getActions(dispatch: Dispatch<Action>, relayEnvironment: Environment) {
+  const actions: Actions = {
+    setFetching: isFetching => {
+      dispatch({
+        type: "isFetching",
+        payload: {
+          isFetching,
+        },
+      })
+    },
+
     /**
      * Updates state with current search query
      */
@@ -62,6 +106,7 @@ function getActions(dispatch, relayEnvironment) {
                   displayLabel
                   ... on Artist {
                     internalID
+                    imageUrl
                   }
                 }
               }
@@ -82,14 +127,23 @@ function getActions(dispatch, relayEnvironment) {
     /**
      * Handler for when a drop down item is selected
      */
-    selectSuggestion: suggestion => {
-      actions.fetchArtistInsights(suggestion.node.internalID)
+    selectSuggestion: async selectedSuggestion => {
+      await actions.fetchArtistInsights(selectedSuggestion.node.internalID)
+
+      dispatch({
+        type: "selectedSuggestion",
+        payload: {
+          selectedSuggestion,
+        },
+      })
     },
 
     /**
      * Fetch artist insights based on artist's internalID.
      */
     fetchArtistInsights: async artistInternalID => {
+      actions.setFetching(true)
+
       const artistInsights = await fetchQuery<
         ConsignPriceEstimateContext_ArtistInsights_Query
       >(
@@ -100,31 +154,10 @@ function getActions(dispatch, relayEnvironment) {
             $medium: String!
           ) {
             marketPriceInsights(artistId: $artistInternalID, medium: $medium) {
-              annualLotsSold
-              annualValueSoldCents
-              artistId
               artistName
-              artsyQInventory
-              createdAt
-              demandRank
-              demandTrend
-              highRangeCents
-              largeHighRangeCents
-              largeLowRangeCents
-              largeMidRangeCents
-              liquidityRank
               lowRangeCents
-              medianSaleToEstimateRatio
-              medium
-              mediumHighRangeCents
-              mediumLowRangeCents
-              mediumMidRangeCents
               midRangeCents
-              sellThroughRate
-              smallHighRangeCents
-              smallLowRangeCents
-              smallMidRangeCents
-              updatedAt
+              highRangeCents
             }
           }
         `,
@@ -134,6 +167,8 @@ function getActions(dispatch, relayEnvironment) {
           medium: "PAINTING",
         }
       )
+
+      actions.setFetching(false)
 
       dispatch({
         type: "artistInsights",
@@ -147,7 +182,7 @@ function getActions(dispatch, relayEnvironment) {
   return actions
 }
 
-function reducer(state, action) {
+function reducer(state: State, action: Action): State {
   return {
     ...state,
     [action.type]: action.payload[action.type],
