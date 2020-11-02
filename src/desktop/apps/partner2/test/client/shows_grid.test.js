@@ -228,35 +228,43 @@ describe("PartnerShowsGridView", function () {
       return $(".js-partner-shows-more").length.should.equal(1)
     })
 
-    it("tries to fetch more shows if there are not enough shows", function () {
+    it("tries to fetch more shows if there are not enough shows", function (done) {
+      $("figure").length.should.equal(31)
       const src = []
       this.partnerShows.fetch = options => {
         const { page } = options.data
         const { size } = options.data
         this.partnerShows.reset()
         this.partnerShows.add(src)
-        return typeof options.success === "function"
-          ? options.success()
-          : undefined
+        return Promise.resolve(
+          typeof options.success === "function" ? options.success() : undefined
+        )
       }
       $(".js-partner-shows-more").click()
-      return $("figure").length.should.equal(35)
+      setImmediate(() => {
+        $("figure").length.should.equal(35)
+        done()
+      })
     })
 
-    return it("adds the fetched items if there are more", function () {
+    it("adds the fetched items if there are more", function (done) {
+      $("figure").length.should.equal(31)
       const src = [fabricate("show", { name: "show36", status: "closed" })]
       this.partnerShows.fetch = options => {
         const { page } = options.data
         const { size } = options.data
         this.partnerShows.reset()
         this.partnerShows.add(src)
-        return typeof options.success === "function"
-          ? options.success()
-          : undefined
+        return Promise.resolve(
+          typeof options.success === "function" ? options.success() : undefined
+        )
       }
       $(".js-partner-shows-more").click()
-      $("figure").length.should.equal(36)
-      return $("body").html().should.not.containEql("See More")
+      setImmediate(() => {
+        $("figure").length.should.equal(36)
+        $("body").html().should.not.containEql("See More")
+        done()
+      })
     })
   })
 })
