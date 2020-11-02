@@ -10,18 +10,15 @@ import {
   resetYourPassword,
   successfullyLoggedIn,
 } from "@artsy/cohesion"
-import { omit } from "lodash"
+import { omit, pick } from "lodash"
 import { mediator } from "lib/mediator"
 
-const LoggedOutUser = require("desktop/models/logged_out_user.coffee")
-
-export const handleSubmit = (
+export const handleSubmit = async (
   type: ModalType,
   modalOptions: ModalOptions,
   values,
   formikBag
 ) => {
-  const user = new LoggedOutUser()
   const {
     contextModule,
     copy,
@@ -38,15 +35,14 @@ export const handleSubmit = (
    */
   const userAttributes = Object.assign({}, values, {
     _csrf: Cookies && Cookies.get && Cookies.get("CSRF_TOKEN"),
+    session_id: sd.SESSION_ID,
     signupIntent: intent,
     signupReferer,
     agreed_to_receive_emails: values.accepted_terms_of_service,
   })
 
-  user.set(userAttributes)
-
   const options = {
-    success: async (_, res) => {
+    success: async res => {
       formikBag.setSubmitting(false)
       const analytics = (window as any).analytics
 
@@ -93,8 +89,7 @@ export const handleSubmit = (
 
       window.location.assign(result.href)
     },
-    error: (_, res) => {
-      const error = res.responseJSON
+    error: error => {
       formikBag.setStatus(error)
       formikBag.setSubmitting(false)
       mediator.trigger("auth:error", error.message)
@@ -103,13 +98,13 @@ export const handleSubmit = (
 
   switch (type) {
     case ModalType.login:
-      user.login(options)
+      await loginUser(userAttributes, options)
       break
     case ModalType.signup:
-      user.signup(options)
+      await signupUser(userAttributes, options)
       break
     case ModalType.forgot:
-      user.forgot(options)
+      await forgotUserPassword(userAttributes, options)
       break
   }
 }
@@ -181,4 +176,123 @@ export function getRedirect(type): URL {
     default:
       return new URL(window.location.href, appBaseURL)
   }
+}
+
+export const loginUser = async (
+  userAttributes: object,
+  options: {
+    success: (res: any) => Promise<void>
+    error: (err: any) => void
+  }
+) => {
+  const url = `${sd.APP_URL}${sd.AP.loginPagePath}`
+  const user = pick(userAttributes, [
+    "email",
+    "password",
+    "otp_attempt",
+    "session_id",
+    "_csrf",
+  ])
+
+  await fetch(url, {
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "X-Requested-With": "XMLHttpRequest",
+    },
+    method: "POST",
+    credentials: "same-origin",
+    body: JSON.stringify(user),
+  })
+    .then(response => response.json())
+    .then(async data => {
+      if (data.success) {
+        await options.success(data)
+      } else {
+        options.error(data)
+      }
+    })
+    .catch(e => captureException(e))
+}
+
+export const signupUser = async (
+  userAttributes: object,
+  options: {
+    success: (res: any) => Promise<void>
+    error: (err: any) => void
+  }
+) => {
+  const url = `${sd.APP_URL}${sd.AP.signupPagePath}`
+  const user = pick(userAttributes, [
+    "name",
+    "email",
+    "password",
+    "_csrf",
+    "session_id",
+    "signupIntent",
+    "signupReferer",
+    "accepted_terms_of_service",
+    "agreed_to_receive_emails",
+    "recaptcha_token",
+  ])
+
+  await fetch(url, {
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "X-Requested-With": "XMLHttpRequest",
+    },
+    method: "POST",
+    credentials: "same-origin",
+    body: JSON.stringify(user),
+  })
+    .then(response => response.json())
+    .then(async data => {
+      if (data.success) {
+        await options.success(data)
+      } else {
+        options.error(data)
+      }
+    })
+    .catch(e => captureException(e))
+}
+
+export const forgotUserPassword = async (
+  userAttributes: object,
+  options: {
+    success: (res: any) => Promise<void>
+    error: (err: any) => void
+  }
+) => {
+  const url = `${sd.API_URL}/api/v1/users/send_reset_password_instructions`
+  const reset_password_redirect_to = sd.RESET_PASSWORD_REDIRECT_TO || null
+  const mode =
+    sd.SET_PASSWORD === "true" ? "fair_set_password" : sd.SET_PASSWORD || null
+
+  let user = pick(userAttributes, ["email", "session_id"])
+  user = {
+    reset_password_redirect_to,
+    mode,
+    ...user,
+  }
+  await fetch(url, {
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "X-Requested-With": "XMLHttpRequest",
+      "X-XAPP-TOKEN": sd.ARTSY_XAPP_TOKEN,
+    },
+    method: "POST",
+    credentials: "same-origin",
+    body: JSON.stringify(user),
+  })
+    .then(response => response.json())
+    .then(async data => {
+      if (data.status === "success") {
+        await options.success(data)
+      } else {
+        options.error(data)
+      }
+    })
+    .catch(e => captureException(e))
 }
