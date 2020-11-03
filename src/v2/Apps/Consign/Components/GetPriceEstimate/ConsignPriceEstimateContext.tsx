@@ -151,20 +151,25 @@ function getActions(dispatch: Dispatch<Action>, relayEnvironment: Environment) {
         graphql`
           query ConsignPriceEstimateContext_ArtistInsights_Query(
             $artistInternalID: ID!
-            $medium: String!
           ) {
-            marketPriceInsights(artistId: $artistInternalID, medium: $medium) {
-              artistName
-              lowRangeCents
-              midRangeCents
-              highRangeCents
+            priceInsights(
+              artistId: $artistInternalID
+              sort: DEMAND_RANK_DESC
+              first: 1
+            ) {
+              edges {
+                node {
+                  artistName
+                  lowRangeCents
+                  midRangeCents
+                  highRangeCents
+                }
+              }
             }
           }
         `,
         {
           artistInternalID,
-          // FIXME: Figure out how to handle this constraint
-          medium: "PAINTING",
         }
       )
 
