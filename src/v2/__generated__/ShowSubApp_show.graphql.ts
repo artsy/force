@@ -9,6 +9,7 @@ export type ShowSubApp_show = {
     readonly slug: string;
     readonly name: string | null;
     readonly href: string | null;
+    readonly isFairBooth: boolean | null;
     readonly partner: {
         readonly name?: string | null;
     } | null;
@@ -72,6 +73,13 @@ return {
     {
       "alias": null,
       "args": null,
+      "kind": "ScalarField",
+      "name": "isFairBooth",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
       "concreteType": null,
       "kind": "LinkedField",
       "name": "partner",
@@ -99,5 +107,5 @@ return {
   "type": "Show"
 };
 })();
-(node as any).hash = 'd249d36ed8cf73dc9f2331be62de2c15';
+(node as any).hash = 'caf51c83f9a13f825d772ba7aabd2366';
 export default node;

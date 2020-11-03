@@ -9,6 +9,7 @@ export interface MetadataProps extends BoxProps {
   extended?: boolean
   hidePartnerName?: boolean
   hideArtistName?: boolean
+  hideSaleInfo?: boolean
   className?: string
 }
 
@@ -25,6 +26,7 @@ export class Metadata extends React.Component<MetadataProps> {
       extended,
       hidePartnerName,
       hideArtistName,
+      hideSaleInfo,
       ...boxProps
     } = this.props
 
@@ -33,8 +35,8 @@ export class Metadata extends React.Component<MetadataProps> {
         <Box textAlign="left" className={className} {...(boxProps as any)}>
           <Details
             includeLinks={false}
-            showSaleLine={extended}
             artwork={artwork}
+            hideSaleInfo={hideSaleInfo}
             hidePartnerName={hidePartnerName}
             hideArtistName={hideArtistName}
           />

@@ -22,10 +22,10 @@
     qs "5.2.0"
     underscore "*"
 
-"@artsy/cohesion@1.44.0":
-  version "1.44.0"
-  resolved "https://registry.yarnpkg.com/@artsy/cohesion/-/cohesion-1.44.0.tgz#c13ee91ea739af61b817e215a0dba0e8677547dc"
-  integrity sha512-SnKfCojWEIY0YwwP1kREtosH9LsuqkCvx8P6i7qu3LgXLNbuu4okFlIg7rDFRYWMJ3dhU5LmJ3sYX88FMEWg/g==
+"@artsy/cohesion@1.45.0":
+  version "1.45.0"
+  resolved "https://registry.yarnpkg.com/@artsy/cohesion/-/cohesion-1.45.0.tgz#f97ff2237033cf9704e452fb35a50b769dd4ef14"
+  integrity sha512-WH+TiBLuWtA8XITmXv5OJLr0RcT0VXNaXyYE+gur1MEg8c9s1eh9rfpwy8CPYjl1cPOAXyJVZeIMf1vlNsCNyA==
 
 "@artsy/detect-responsive-traits@^0.0.5":
   version "0.0.5"
@@ -58,10 +58,10 @@
   dependencies:
     uuid "^8.3.0"
 
-"@artsy/palette@13.15.0":
-  version "13.15.0"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-13.15.0.tgz#968bfb0f836b4d0f021bc701cd8904fcf25dd862"
-  integrity sha512-LKXuqw9tom7hsQ9fm7+/lcuaHAq2XN9mWvH9J1DL9UpMmb7+md6ZwZUAfcxbpRBJMAJ+L5WqrwWtrU8cJrxI1w==
+"@artsy/palette@13.16.0":
+  version "13.16.0"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-13.16.0.tgz#17dc75a087002b360bfd696c5ba3bd204b5c165f"
+  integrity sha512-2q7lacfHVwNBO6Ybnl+jQfhAHD3/LQrHqZNaD3VlVOaDVxDJsV5Cn3JjMxrDcuuDYz/cWqQCQyDUwxhDYuLmmA==
   dependencies:
     "@styled-system/theme-get" "^5.1.2"
     babel-plugin-styled-components "^1.10.0"
@@ -7020,9 +7020,9 @@ dont-sniff-mimetype@1.0.0:
   integrity sha1-WTKJDcn04vGeXrAqIAJuXl78j1g=
 
 dot-prop@^4.1.0:
-  version "4.2.0"
-  resolved "https://registry.yarnpkg.com/dot-prop/-/dot-prop-4.2.0.tgz#1f19e0c2e1aa0e32797c49799f2837ac6af69c57"
-  integrity sha512-tUMXrxlExSW6U2EXiiKGSBVdYgtV8qlHL+C10TsW4PURY/ic+eaysnSkwB4kA/mBlCyy/IKDJ+Lc3wbWeaXtuQ==
+  version "4.2.1"
+  resolved "https://registry.yarnpkg.com/dot-prop/-/dot-prop-4.2.1.tgz#45884194a71fc2cda71cbb4bceb3a4dd2f433ba4"
+  integrity sha512-l0p4+mIuJIua0mhxGoh4a+iNL9bmeK5DvnSVQa6T0OhrVmaEa1XScX5Etc673FePCJOArq/4Pa2cLGODUWTPOQ==
   dependencies:
     is-obj "^1.0.0"
 
@@ -18348,9 +18348,9 @@ transformers@2.1.0:
     uglify-js "~2.2.5"
 
 tree-kill@^1.1.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/tree-kill/-/tree-kill-1.2.0.tgz#5846786237b4239014f05db156b643212d4c6f36"
-  integrity sha512-DlX6dR0lOIRDFxI0mjL9IYg6OTncLm/Zt+JiBhE5OlFcAR8yc9S7FFXU9so0oda47frdM/JFsk7UjNt9vscKcg==
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/tree-kill/-/tree-kill-1.2.2.tgz#4ca09a9092c88b73a7cdc5e8a01b507b0790a0cc"
+  integrity sha512-L0Orpi8qGpRG//Nd+H90vFB+3iHnue1zSSGmNOOCh1GLJ7rUKVwV2HvijphGQS2UmhUZewS9VgvxYIdgr+fG1A==
 
 trim-newlines@^1.0.0:
   version "1.0.0"

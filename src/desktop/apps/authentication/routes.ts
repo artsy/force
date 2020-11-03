@@ -180,7 +180,7 @@ export const getRedirectTo = req => {
     req.query["redirect_uri"] ||
     (!isStaticAuth ? referrer : undefined)
 
-  if (redirectTo === "/reset_password") {
+  if (redirectTo === ("/reset_password" || "/user/delete")) {
     return "/"
   } else {
     return redirectTo

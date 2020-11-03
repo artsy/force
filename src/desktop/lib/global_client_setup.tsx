@@ -44,7 +44,10 @@ export const logoutEventHandler = (options?: LogoutEventOptions) => {
     url: "/users/sign_out",
     type: "DELETE",
     success() {
-      window.analytics.reset()
+      if (window.analytics && window.analytics.reset) {
+        // guard for aggressive ad blockers
+        window.analytics.reset()
+      }
       if (redirectPath) {
         location.assign(redirectPath)
       } else {

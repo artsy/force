@@ -28,7 +28,7 @@ query ArtistSearchResultsQuery(
 }
 
 fragment ArtistSearchResults_viewer on Viewer {
-  searchConnection(query: $term, mode: AUTOSUGGEST, entities: [ARTIST]) {
+  searchConnection(query: $term, mode: AUTOSUGGEST, entities: [ARTIST], first: 10) {
     edges {
       node {
         __typename
@@ -106,6 +106,11 @@ return {
                 "value": [
                   "ARTIST"
                 ]
+              },
+              {
+                "kind": "Literal",
+                "name": "first",
+                "value": 10
               },
               {
                 "kind": "Literal",
@@ -206,7 +211,7 @@ return {
     "metadata": {},
     "name": "ArtistSearchResultsQuery",
     "operationKind": "query",
-    "text": "query ArtistSearchResultsQuery(\n  $term: String!\n) {\n  viewer {\n    ...ArtistSearchResults_viewer\n  }\n}\n\nfragment ArtistSearchResults_viewer on Viewer {\n  searchConnection(query: $term, mode: AUTOSUGGEST, entities: [ARTIST]) {\n    edges {\n      node {\n        __typename\n        ... on SearchableItem {\n          id\n          slug\n          internalID\n          displayLabel\n          imageUrl\n        }\n        ... on Node {\n          id\n        }\n      }\n    }\n  }\n}\n"
+    "text": "query ArtistSearchResultsQuery(\n  $term: String!\n) {\n  viewer {\n    ...ArtistSearchResults_viewer\n  }\n}\n\nfragment ArtistSearchResults_viewer on Viewer {\n  searchConnection(query: $term, mode: AUTOSUGGEST, entities: [ARTIST], first: 10) {\n    edges {\n      node {\n        __typename\n        ... on SearchableItem {\n          id\n          slug\n          internalID\n          displayLabel\n          imageUrl\n        }\n        ... on Node {\n          id\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();

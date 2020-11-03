@@ -73,10 +73,9 @@ describe("NavBar", () => {
 
       const links = wrapper.find("NavItem")
 
-      defaultLinks.forEach(([href, linkLabel], index) => {
+      defaultLinks.forEach(([href], index) => {
         const navLink = links.at(index)
         expect(href).toEqual(navLink.prop("href"))
-        expect(linkLabel).toEqual(navLink.text())
       })
     })
 
@@ -93,7 +92,7 @@ describe("NavBar", () => {
       expect(wrapper.html()).not.toContain("Log in")
       expect(wrapper.html()).not.toContain("Sign up")
       expect(wrapper.find(BellIcon).length).toEqual(1)
-      expect(wrapper.find(SoloIcon).length).toEqual(1)
+      expect(wrapper.find(SoloIcon).length).toEqual(2)
     })
 
     describe("lab features", () => {
@@ -103,6 +102,12 @@ describe("NavBar", () => {
         })
         expect(wrapper.find(EnvelopeIcon).length).toEqual(1)
       })
+    })
+
+    it("includes the sub-menus when rendering", () => {
+      const wrapper = getWrapper()
+      expect(wrapper.html()).toContain("View all artists")
+      expect(wrapper.html()).toContain("View all artworks")
     })
   })
 

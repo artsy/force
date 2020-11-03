@@ -178,6 +178,7 @@ const GeneSearchResultsContentContainer = createFragmentContainer(
           query: $term
           mode: AUTOSUGGEST
           entities: [GENE]
+          first: 10
         ) {
           edges {
             node {

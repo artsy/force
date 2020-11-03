@@ -31,36 +31,34 @@ const AnimatedPanel = styled(animated.div)<{
 `
 
 const ANIMATION_STATES = {
-  in: {
+  hidden: {
+    display: "none",
     opacity: 0,
     transform: "translate3d(0, -25px, 0)",
   },
-  out: {
+  visible: {
+    display: "block",
     opacity: 1,
     transform: "translate3d(0, 0, 0)",
   },
 }
 
 interface NavItemPanelProps {
+  visible: boolean
   menuAnchor: MenuAnchor
   relativeTo: React.MutableRefObject<HTMLDivElement>
 }
 
 export const NavItemPanel: React.FC<NavItemPanelProps> = ({
+  visible,
   menuAnchor,
   relativeTo,
   children,
 }) => {
   const animation = useSpring({
-    ...ANIMATION_STATES.out,
-    from: ANIMATION_STATES.in,
+    ...(visible ? ANIMATION_STATES.visible : ANIMATION_STATES.hidden),
     config: name =>
-      name === "opacity"
-        ? config.stiff
-        : {
-            friction: 10,
-            mass: 0.1,
-          },
+      name === "opacity" ? config.stiff : { friction: 10, mass: 0.1 },
   })
 
   return (

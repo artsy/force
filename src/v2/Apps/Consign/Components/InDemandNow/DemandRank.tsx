@@ -11,10 +11,7 @@ import styled from "styled-components"
 export const DemandRank: React.FC<{ demandRank: number }> = ({
   demandRank,
 }) => {
-  let width = demandRank * 100
-  if (width > 100) {
-    width = 100
-  }
+  const width = Math.min(demandRank * 100, 100)
 
   return (
     <Box>

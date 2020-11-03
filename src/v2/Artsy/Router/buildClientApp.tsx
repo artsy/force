@@ -87,7 +87,7 @@ export function buildClientApp(config: RouterConfig): Promise<Resolve> {
         historyMiddlewares,
         historyOptions: history.options,
         routeConfig: createRouteConfig(routes),
-        matchContext: context,
+        matchContext: clientContext,
         resolver,
         render: renderArgs => {
           return (

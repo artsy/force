@@ -13,9 +13,18 @@ import { FairTimingFragmentContainer as FairTiming } from "v2/Apps/Fair/Componen
 import { FairCardFragmentContainer as FairCard } from "v2/Components/FairCard"
 import { StyledLink } from "v2/Components/Links/StyledLink"
 import { compact } from "lodash"
-import { crop } from "v2/Utils/resizer"
 import { limitWithCount } from "v2/Apps/Artwork/Utils/limitWithCount"
 import { filterLocations } from "v2/Apps/Artwork/Utils/filterLocations"
+import { cropped } from "v2/Utils/resized"
+import { useTracking } from "v2/Artsy"
+import { useAnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
+import {
+  ActionType,
+  ClickedFairCard,
+  ClickedPartnerCard,
+  ContextModule,
+  OwnerType,
+} from "@artsy/cohesion"
 
 interface Props {
   show: ShowContextCard_show
@@ -34,14 +43,37 @@ const CARD_IMAGE_WIDTHS = [
 export const ShowContextCard: React.FC<Props> = ({ show }) => {
   const { isFairBooth, fair, partner } = show
 
+  const tracking = useTracking()
+  const {
+    contextPageOwnerId,
+    contextPageOwnerSlug,
+    contextPageOwnerType,
+  } = useAnalyticsContext()
+
   const FairInfo = () => {
+    const handleClick = () => {
+      const payload: ClickedFairCard = {
+        action: ActionType.clickedFairCard,
+        context_module: ContextModule.presentingFair,
+        context_page_owner_type: contextPageOwnerType,
+        context_page_owner_id: contextPageOwnerId,
+        context_page_owner_slug: contextPageOwnerSlug,
+        destination_page_owner_type: OwnerType.fair,
+        destination_page_owner_id: fair.internalID,
+        destination_page_owner_slug: fair.slug,
+        type: "thumbnail",
+      }
+
+      tracking.trackEvent(payload)
+    }
+
     return (
       <GridColumns>
         <Column span={6}>
           <Text variant="subtitle">Part of {fair.name}</Text>
         </Column>
         <Column span={6}>
-          <StyledLink noUnderline to={fair.href}>
+          <StyledLink noUnderline to={fair.href} onClick={handleClick}>
             <FairCard fair={fair} />
 
             <Spacer mb={2} />
@@ -65,21 +97,7 @@ export const ShowContextCard: React.FC<Props> = ({ show }) => {
 
     const images = imageUrls.map((url, i) => {
       const imageWidth = CARD_IMAGE_WIDTHS[i]
-
-      const _1x = crop(url, {
-        width: imageWidth,
-        height: imageWidth,
-      })
-
-      const _2x = crop(url, {
-        width: imageWidth * 2,
-        height: imageWidth * 2,
-      })
-
-      return {
-        src: _1x,
-        srcSet: `${_1x} 1x, ${_2x} 2x`,
-      }
+      return cropped(url, { width: imageWidth, height: imageWidth })
     })
 
     const locationNames = limitWithCount(
@@ -87,13 +105,29 @@ export const ShowContextCard: React.FC<Props> = ({ show }) => {
       2
     ).join(", ")
 
+    const handleClick = () => {
+      const payload: ClickedPartnerCard = {
+        action: ActionType.clickedPartnerCard,
+        context_module: ContextModule.presentingPartner,
+        context_page_owner_type: contextPageOwnerType,
+        context_page_owner_id: contextPageOwnerId,
+        context_page_owner_slug: contextPageOwnerSlug,
+        destination_page_owner_type: OwnerType.partner,
+        destination_page_owner_id: partner.internalID,
+        destination_page_owner_slug: partner.slug,
+        type: "thumbnail",
+      }
+
+      tracking.trackEvent(payload)
+    }
+
     return (
       <GridColumns>
         <Column span={6}>
           <Text variant="subtitle">Presented by {partnerName}</Text>
         </Column>
         <Column span={6}>
-          <StyledLink to={partnerHref} noUnderline>
+          <StyledLink to={partnerHref} noUnderline onClick={handleClick}>
             <SmallCard
               title={partnerName}
               subtitle={locationNames}
@@ -116,6 +150,8 @@ export const ShowContextCardFragmentContainer = createFragmentContainer(
         isFairBooth
         partner {
           ... on Partner {
+            internalID
+            slug
             href
             name
             locations {
@@ -133,6 +169,8 @@ export const ShowContextCardFragmentContainer = createFragmentContainer(
           }
         }
         fair {
+          internalID
+          slug
           href
           name
           ...FairTiming_fair

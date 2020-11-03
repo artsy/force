@@ -113,7 +113,7 @@ export const ShowInstallShotsFragmentContainer = createFragmentContainer(
     show: graphql`
       fragment ShowInstallShots_show on Show {
         name
-        images {
+        images(default: false) {
           internalID
           caption
           mobile: resized(height: 300) {

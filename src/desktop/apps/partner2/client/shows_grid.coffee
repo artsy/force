@@ -97,7 +97,7 @@ module.exports = class PartnerShowsGridView extends Backbone.View
     shows = @getRemainingShows type
 
     # Try and fetch more shows if there are less than 30
-    if shows.length < 30
+    getMoreShows = if shows.length < 30
       moreShows = new PartnerShows()
       moreShows.url = "#{@partner.url()}/shows"
       moreShows.fetch
@@ -109,17 +109,16 @@ module.exports = class PartnerShowsGridView extends Backbone.View
           @remainingUpcoming = @remainingUpcoming.concat moreShows.upcoming().models
           @remainingPast = @remainingPast.concat moreShows.past().models
           shows = @getRemainingShows type #get updated shows list from fetch
-          displayMore = shows.length > 30
     else
-      displayMore = false
+      Promise.resolve()
 
-    $(".#{type} .loading-spinner").remove()
-    $(".#{type} .partner2-shows-container").append showFiguresTemplate
-      shows: shows
-      type: type
-      displayMore: displayMore
-      isFeatured: false
-    @sliceRemaining type
+    getMoreShows.then =>
+      $(".#{type} .loading-spinner").remove()
+      $(".#{type} .partner2-shows-container").append showFiguresTemplate
+        shows: shows
+        type: type
+        isFeatured: false
+      @sliceRemaining type
 
   getRemainingShows: (type) ->
     switch type

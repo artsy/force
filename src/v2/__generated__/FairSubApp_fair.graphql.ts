@@ -7,6 +7,9 @@ export type FairSubApp_fair = {
     readonly id: string;
     readonly name: string | null;
     readonly slug: string;
+    readonly profile: {
+        readonly __typename: string;
+    } | null;
     readonly " $fragmentRefs": FragmentRefs<"FairMeta_fair">;
     readonly " $refType": "FairSubApp_fair";
 };
@@ -46,6 +49,24 @@ const node: ReaderFragment = {
       "storageKey": null
     },
     {
+      "alias": null,
+      "args": null,
+      "concreteType": "Profile",
+      "kind": "LinkedField",
+      "name": "profile",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "__typename",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
+    },
+    {
       "args": null,
       "kind": "FragmentSpread",
       "name": "FairMeta_fair"
@@ -53,5 +74,5 @@ const node: ReaderFragment = {
   ],
   "type": "Fair"
 };
-(node as any).hash = '1405fb6b99e017d32230404b85456dac';
+(node as any).hash = '6e764f17377d6510ad976161b446cef9';
 export default node;

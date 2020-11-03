@@ -9,16 +9,10 @@ jest.unmock("react-relay")
 describe("Details", () => {
   let props
 
-  beforeEach(() => {
-    props = {
-      showSaleLine: true,
-    }
-  })
-
   const getWrapper = async (
     response: Details_Test_QueryRawResponse["artwork"],
     restProps?: {
-      showSaleLine: boolean
+      hideSaleInfo: boolean
       hidePartnerName: boolean
       hideArtistName: boolean
     }
@@ -43,7 +37,7 @@ describe("Details", () => {
   describe("in artist Notable Works rail", () => {
     it("removes artwork's partner and artist name metadata", async () => {
       props = {
-        showSaleLine: false,
+        hideSaleInfo: false,
         hidePartnerName: true,
         hideArtistName: true,
       }
@@ -55,6 +49,18 @@ describe("Details", () => {
       expect(html).not.toContain("This Really Great Gallery")
       expect(html).toContain("$2,600")
       expect(html).toContain("Tulips (P17)")
+    })
+  })
+
+  describe("sale info line", () => {
+    it("hides the sale info line when hideSaleInfo is true", async () => {
+      props = {
+        hideSaleInfo: true,
+      }
+      const wrapper = await getWrapper(artworkInAuction, props)
+      const html = wrapper.html()
+
+      expect(html).not.toContain("$2,600")
     })
   })
 

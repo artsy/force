@@ -1,9 +1,10 @@
 import React from "react"
-import { Box, Column, GridColumns, HTML, Text } from "@artsy/palette"
+import { Box, Column, GridColumns, HTML, ReadMore, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ShowInfo_show } from "v2/__generated__/ShowInfo_show.graphql"
 import { ShowPartnerEntityHeaderFragmentContainer as ShowPartnerEntityHeader } from "../Components/ShowPartnerEntityHeader"
 import { ShowInfoLocationFragmentContainer as ShowInfoLocation } from "../Components/ShowInfoLocation"
+import { Media } from "v2/Utils/Responsive"
 
 interface ShowInfoProps {
   show: ShowInfo_show
@@ -47,7 +48,15 @@ export const ShowInfo: React.FC<ShowInfoProps> = ({
                 Press Release
               </Text>
 
-              <HTML variant="text" html={pressRelease} />
+              <HTML variant="text">
+                <Media lessThan="sm">
+                  <ReadMore content={pressRelease} maxChars={400} />
+                </Media>
+
+                <Media greaterThanOrEqual="sm">
+                  <ReadMore content={pressRelease} maxChars={600} />
+                </Media>
+              </HTML>
             </Box>
           )}
         </Column>

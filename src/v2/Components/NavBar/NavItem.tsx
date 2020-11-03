@@ -191,8 +191,12 @@ export const NavItem: React.FC<NavItemProps> = ({
         </Text>
       </HitArea>
 
-      {showMenu && (
-        <NavItemPanel menuAnchor={menuAnchor} relativeTo={containerRef}>
+      {!!Menu && (
+        <NavItemPanel
+          menuAnchor={menuAnchor}
+          relativeTo={containerRef}
+          visible={showMenu}
+        >
           <Menu setIsVisible={setIsVisible} />
         </NavItemPanel>
       )}

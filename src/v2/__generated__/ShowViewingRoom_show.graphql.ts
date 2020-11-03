@@ -10,6 +10,8 @@ export type ShowViewingRoom_show = {
     readonly viewingRoomsConnection: {
         readonly edges: ReadonlyArray<{
             readonly node: {
+                readonly internalID: string;
+                readonly slug: string;
                 readonly status: string;
                 readonly distanceToOpen: string | null;
                 readonly distanceToClose: string | null;
@@ -105,6 +107,20 @@ return {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
+                  "name": "internalID",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "slug",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
                   "name": "status",
                   "storageKey": null
                 },
@@ -178,5 +194,5 @@ return {
   "type": "Show"
 };
 })();
-(node as any).hash = '09bab27d9e3b70bb4bebe0b71478d25a';
+(node as any).hash = '278b82eedaec02337601445e11a81cd1';
 export default node;

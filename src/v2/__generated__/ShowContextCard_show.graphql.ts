@@ -6,6 +6,8 @@ import { FragmentRefs } from "relay-runtime";
 export type ShowContextCard_show = {
     readonly isFairBooth: boolean | null;
     readonly partner: {
+        readonly internalID?: string;
+        readonly slug?: string;
         readonly href?: string | null;
         readonly name?: string | null;
         readonly locations?: ReadonlyArray<{
@@ -22,6 +24,8 @@ export type ShowContextCard_show = {
         } | null;
     } | null;
     readonly fair: {
+        readonly internalID: string;
+        readonly slug: string;
         readonly href: string | null;
         readonly name: string | null;
         readonly " $fragmentRefs": FragmentRefs<"FairTiming_fair" | "FairCard_fair">;
@@ -41,10 +45,24 @@ var v0 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "href",
+  "name": "internalID",
   "storageKey": null
 },
 v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "slug",
+  "storageKey": null
+},
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "href",
+  "storageKey": null
+},
+v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -77,6 +95,8 @@ return {
           "selections": [
             (v0/*: any*/),
             (v1/*: any*/),
+            (v2/*: any*/),
+            (v3/*: any*/),
             {
               "alias": null,
               "args": null,
@@ -179,6 +199,8 @@ return {
       "selections": [
         (v0/*: any*/),
         (v1/*: any*/),
+        (v2/*: any*/),
+        (v3/*: any*/),
         {
           "args": null,
           "kind": "FragmentSpread",
@@ -196,5 +218,5 @@ return {
   "type": "Show"
 };
 })();
-(node as any).hash = 'd8e5c343e1e13827c9a4479ba239d484';
+(node as any).hash = '4a7b702ff782b0ab05a7c4baaec36f72';
 export default node;

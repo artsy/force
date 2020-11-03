@@ -53,6 +53,11 @@ const node: ReaderFragment = {
         },
         {
           "kind": "Literal",
+          "name": "first",
+          "value": 10
+        },
+        {
+          "kind": "Literal",
           "name": "mode",
           "value": "AUTOSUGGEST"
         },
@@ -169,5 +174,5 @@ const node: ReaderFragment = {
   ],
   "type": "Viewer"
 };
-(node as any).hash = '87a366c563b27a6b122d374b15ad6c54';
+(node as any).hash = '9d2ceaedd49be58a9d88754a1547e4a7';
 export default node;

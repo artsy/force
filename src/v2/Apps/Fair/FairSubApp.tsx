@@ -5,16 +5,23 @@ import { FairSubApp_fair } from "v2/__generated__/FairSubApp_fair.graphql"
 import { Separator } from "@artsy/palette"
 import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
 import { Footer } from "v2/Components/Footer"
-import { ErrorPage } from "v2/Components/ErrorPage"
 import { BackLink } from "v2/Components/Links/BackLink"
 import { FairMetaFragmentContainer as FairMeta } from "./Components/FairMeta"
+import { useSystemContext } from "v2/Artsy"
+import { userIsAdmin } from "v2/Utils/user"
+import { HttpError } from "found"
 
 interface FairAppProps {
   fair: FairSubApp_fair
 }
 
 const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
-  if (!fair) return <ErrorPage code={404} />
+  // If a fair's profile is inaccessible, that means it's private, which in turn means
+  // the fair is only visible to admins.
+  const { user } = useSystemContext()
+  if (!fair.profile && !userIsAdmin(user)) {
+    throw new HttpError(404)
+  }
 
   return (
     <>
@@ -41,10 +48,13 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
 export default createFragmentContainer(FairApp, {
   fair: graphql`
     fragment FairSubApp_fair on Fair {
+      ...FairMeta_fair
       id
       name
       slug
-      ...FairMeta_fair
+      profile {
+        __typename
+      }
     }
   `,
 })

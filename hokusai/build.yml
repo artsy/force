@@ -2,7 +2,4 @@
 version: "3.8"
 services:
   force:
-    image: "hokusai_force:${BUILD_TAG:-latest}"
-    build:
-      context: ../
-      target: "${BUILD_TARGET}"
+{% include 'templates/docker-compose-service.yml.j2' %}

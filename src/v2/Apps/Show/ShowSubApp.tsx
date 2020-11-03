@@ -1,7 +1,7 @@
 import React from "react"
 import { AppContainer } from "v2/Apps/Components/AppContainer"
 import { createFragmentContainer, graphql } from "react-relay"
-import { Separator } from "@artsy/palette"
+import { Box, Separator } from "@artsy/palette"
 import { ShowSubApp_show } from "v2/__generated__/ShowSubApp_show.graphql"
 import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
 import { Footer } from "v2/Components/Footer"
@@ -34,10 +34,12 @@ const ShowApp: React.FC<ShowAppProps> = ({ children, show }) => {
           <HorizontalPadding>
             <BackLink my={3} to={show.href.replace("/show", "/show2")}>
               Back to {show.name}
-              {show.partner?.name && <> at {show.partner.name}</>}
+              {!show.isFairBooth && show.partner?.name && (
+                <> at {show.partner.name}</>
+              )}
             </BackLink>
 
-            {children}
+            <Box minHeight="50vh">{children}</Box>
 
             <Separator as="hr" my={3} />
 
@@ -58,6 +60,7 @@ export default createFragmentContainer(ShowApp, {
       slug
       name
       href
+      isFairBooth
       partner {
         ... on Partner {
           name

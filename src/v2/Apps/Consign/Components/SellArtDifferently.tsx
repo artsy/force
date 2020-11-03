@@ -1,5 +1,5 @@
 import React from "react"
-import { Box, EditIcon, Flex, Separator, Text } from "@artsy/palette"
+import { Box, EditIcon, Flex, Text, color } from "@artsy/palette"
 import { SectionContainer } from "./SectionContainer"
 
 export const SellArtDifferently: React.FC = () => {
@@ -8,12 +8,12 @@ export const SellArtDifferently: React.FC = () => {
       <Text
         width="100%"
         textAlign={["center", "left"]}
-        mb={2}
+        pb={3}
         variant="largeTitle"
+        borderBottom={`1px solid ${color("black60")}`}
       >
         Selling Art Differently
       </Text>
-      <Separator />
 
       <Flex
         flexDirection={["column", "row"]}
