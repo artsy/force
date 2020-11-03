@@ -103,7 +103,7 @@ export const FairExhibitorsFragmentContainer = createPaginationContainer(
         exhibitors: showsConnection(
           first: $first
           after: $after
-          sort: FEATURED_ASC
+          sort: FEATURED_DESC
         ) @connection(key: "FairExhibitorsQuery_exhibitors") {
           edges {
             node {
