@@ -16,26 +16,23 @@ import styled from "styled-components"
 export const ArtistInsightResult: React.FC = () => {
   const { artistInsights, selectedSuggestion } = usePriceEstimateContext()
 
-  if (!artistInsights?.marketPriceInsights) {
+  if (!artistInsights?.priceInsights?.edges?.[0]?.node) {
     return <ZeroState />
   }
 
+  const { node } = artistInsights.priceInsights.edges[0]
+
   // TODO: Look into why we need to coerce these types from mp
-  const lowRangeCents: number = Number(
-    artistInsights.marketPriceInsights.lowRangeCents
-  )
-  const midRangeCents: number = Number(
-    artistInsights.marketPriceInsights.midRangeCents
-  )
-  const highRangeCents: number = Number(
-    artistInsights.marketPriceInsights.highRangeCents
-  )
+  const lowRangeCents: number = Number(node.lowRangeCents)
+  const midRangeCents: number = Number(node.midRangeCents)
+  const highRangeCents: number = Number(node.highRangeCents)
 
   const lowEstimateDollars = formatCentsToDollars(lowRangeCents)
   const highEstimateDollars = formatCentsToDollars(highRangeCents)
   const medianEstimateDollars = formatCentsToDollars(midRangeCents)
 
   const imageUrl = selectedSuggestion?.node?.imageUrl
+  const { artistName } = node
 
   return (
     <Box>
@@ -45,9 +42,7 @@ export const ArtistInsightResult: React.FC = () => {
             <Image src={imageUrl} width={120} height={120} />
           </Box>
           <Box>
-            <Text variant="largeTitle">
-              {artistInsights.marketPriceInsights.artistName}
-            </Text>
+            <Text variant="largeTitle">{artistName}</Text>
             <Separator mt={0.5} mb={2} />
             <Text variant="small" color="black60">
               Price estimate
