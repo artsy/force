@@ -72,13 +72,14 @@ export const MobileNavMenu: React.FC<Props> = ({
 
           <AnimatingMenuWrapper isOpen={isOpen}>
             <ul>
+              <MobileSubmenuLink menu={ARTISTS_SUBMENU_DATA.menu}>
+                {ARTISTS_SUBMENU_DATA.menu.title}
+              </MobileSubmenuLink>
+
               <MobileSubmenuLink menu={ARTWORKS_SUBMENU_DATA.menu}>
                 {ARTWORKS_SUBMENU_DATA.menu.title}
               </MobileSubmenuLink>
 
-              <MobileSubmenuLink menu={ARTISTS_SUBMENU_DATA.menu}>
-                {ARTISTS_SUBMENU_DATA.menu.title}
-              </MobileSubmenuLink>
               <MobileLink href="/auctions">Auctions</MobileLink>
               <MobileLink href="/viewing-rooms">Viewing Rooms</MobileLink>
               <MobileLink href="/articles">Editorial</MobileLink>
@@ -90,6 +91,7 @@ export const MobileNavMenu: React.FC<Props> = ({
               <MobileLink href="/gallery-partnerships">
                 Artsy for Galleries
               </MobileLink>
+
               {user ? <LoggedInLinks /> : <AuthenticateLinks />}
             </ul>
           </AnimatingMenuWrapper>

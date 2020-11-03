@@ -64,10 +64,10 @@ describe("MobileNavMenu", () => {
       expect(mobileSubmenuLinks.length).toBe(2)
 
       let linkText = mobileSubmenuLinks.first().text()
-      expect(linkText).toContain("Artworks")
+      expect(linkText).toContain("Artists")
 
       linkText = mobileSubmenuLinks.last().text()
-      expect(linkText).toContain("Artists")
+      expect(linkText).toContain("Artworks")
 
       // TODO: Not sure these specs make any kind of sense:
       // We don't use the data for rendering these links (why?)
@@ -126,7 +126,7 @@ describe("MobileNavMenu", () => {
         action_type: "Click",
         context_module: "Header",
         flow: "Header",
-        subject: "Artworks",
+        subject: "Artists",
       })
     })
   })
