@@ -8,7 +8,7 @@ import styled from "styled-components"
 import { get } from "v2/Utils/get"
 import { getENV } from "v2/Utils/getENV"
 import createLogger from "v2/Utils/logger"
-import { userIsAdmin } from "v2/Utils/user"
+import { userIsTeam } from "v2/Utils/user"
 import Badge from "./Badge"
 import Metadata from "./Metadata"
 import SaveButton from "./Save"
@@ -111,7 +111,7 @@ export class FillwidthItemContainer extends React.Component<
     if (user) {
       userSpread = { user }
     }
-    const isAdmin = userIsAdmin(user)
+    const isTeam = userIsTeam(user)
 
     const image = get(this.props, p => p.artwork.image)
 
@@ -140,7 +140,7 @@ export class FillwidthItemContainer extends React.Component<
               width="100%"
               height={imageHeight}
               lazyLoad={lazyLoad}
-              preventRightClick={!isAdmin}
+              preventRightClick={!isTeam}
               alt={artwork?.imageTitle}
             />
           </RouterLink>
