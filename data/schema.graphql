@@ -2204,16 +2204,7 @@ type BuyersPremium {
     thousand: String = ","
   ): String
   cents: Int
-
-  # A globally unique ID.
-  id: ID!
-
-  # A type-specific ID likely used as a database ID.
-  internalID: ID!
   percent: Float
-
-  # A slug ID.
-  slug: ID!
 }
 
 type CalculatedCost {
