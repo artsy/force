@@ -1,5 +1,5 @@
 import React from "react"
-import { Box, Button, EditIcon, Flex, Separator, Text } from "@artsy/palette"
+import { Box, Button, EditIcon, Flex, Text, color } from "@artsy/palette"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import { Media } from "v2/Utils/Responsive"
 import { SectionContainer } from "./SectionContainer"
@@ -11,13 +11,13 @@ export const HowToSell: React.FC = () => {
       <Text
         width="100%"
         textAlign={["center", "left"]}
-        mb={2}
+        pb={3}
         variant="largeTitle"
+        borderBottom={`1px solid ${color("black60")}`}
       >
         3 Simple Steps:
         <br /> How to sell artwork from your collection
       </Text>
-      <Separator />
 
       <Flex
         flexDirection={["column", "row"]}
