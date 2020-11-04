@@ -1,7 +1,8 @@
 import React from "react"
-import { Box, Flex, Image, Join, Spacer, Text } from "@artsy/palette"
+import { Box, Flex, Image, Join, Spacer, Text, color } from "@artsy/palette"
 import { usePriceEstimateContext } from "./ConsignPriceEstimateContext"
 import { ArtistInsightResult } from "./ArtistInsightResult"
+import styled from "styled-components"
 
 export const EstimateResults: React.FC = () => {
   const { artistInsights, isFetching } = usePriceEstimateContext()
@@ -12,13 +13,18 @@ export const EstimateResults: React.FC = () => {
       alignItems="center"
       justifyContent="center"
     >
-      {isFetching && <Box>fetching...</Box>}
-      {artistInsights ? <ArtistInsightResult /> : <PlaceholderItems />}
+      {isFetching ? (
+        <LoadingPlaceholderItems />
+      ) : artistInsights ? (
+        <ArtistInsightResult />
+      ) : (
+        <ArtistInsightExample />
+      )}
     </Flex>
   )
 }
 
-const PlaceholderItems: React.FC = () => {
+const ArtistInsightExample: React.FC = () => {
   return (
     <>
       <Join separator={<Spacer mr={5} />}>
@@ -74,6 +80,24 @@ const ArtworkItem: React.FC<{
       <Text variant="small">{artistName}</Text>
       <Text variant="small">Average Sale Price:</Text>
       <Text variant="largeTitle">{salePrice}</Text>
+    </Box>
+  )
+}
+
+const PlaceholderText = styled(Box)`
+  background-color: ${color("black10")}
+  height: 20px
+  width: 75%
+  margin-bottom: 10px
+`
+
+const LoadingPlaceholderItems: React.FC = () => {
+  return (
+    <Box height="100%" width="100%">
+      <Box mb={2} height="80px" width="80px" bg="black10" />
+      <PlaceholderText />
+      <PlaceholderText />
+      <PlaceholderText />
     </Box>
   )
 }
