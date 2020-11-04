@@ -69,7 +69,7 @@ export const ShowApp: React.FC<ShowAppProps> = ({ show }) => {
               >
                 <ShowHeader show={show} />
 
-                {!hasAbout && (
+                {!hasAbout && show.href && (
                   <ForwardLink
                     to={`${show.href.replace("/show", "/show2")}/info`}
                     mt={1}
@@ -83,12 +83,14 @@ export const ShowApp: React.FC<ShowAppProps> = ({ show }) => {
                 <Column span={6}>
                   <ShowAbout show={show} />
 
-                  <ForwardLink
-                    to={`${show.href.replace("/show", "/show2")}/info`}
-                    mt={2}
-                  >
-                    More info
-                  </ForwardLink>
+                  {show.href && (
+                    <ForwardLink
+                      to={`${show.href.replace("/show", "/show2")}/info`}
+                      mt={2}
+                    >
+                      More info
+                    </ForwardLink>
+                  )}
                 </Column>
               )}
 
