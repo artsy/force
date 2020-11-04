@@ -10,11 +10,20 @@ import {
   Separator,
   Spacer,
   Text,
+  color,
 } from "@artsy/palette"
 import styled from "styled-components"
 
 export const ArtistInsightResult: React.FC = () => {
-  const { artistInsights, selectedSuggestion } = usePriceEstimateContext()
+  const {
+    artistInsights,
+    isFetching,
+    selectedSuggestion,
+  } = usePriceEstimateContext()
+
+  if (isFetching) {
+    return <LoadingPlaceholder />
+  }
 
   if (!artistInsights?.priceInsights?.edges?.[0]?.node) {
     return <ZeroState />
@@ -121,3 +130,21 @@ const Container = styled(Box).attrs({
   background: white;
   box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
 `
+
+const PlaceholderText = styled(Box)`
+  background-color: ${color("black10")};
+  height: 20px;
+  width: 75%;
+  margin-bottom: 10px;
+`
+
+const LoadingPlaceholder: React.FC = () => {
+  return (
+    <Container>
+      <Box mb={2} height="80px" width="80px" bg="black10" />
+      <PlaceholderText />
+      <PlaceholderText />
+      <PlaceholderText />
+    </Container>
+  )
+}
