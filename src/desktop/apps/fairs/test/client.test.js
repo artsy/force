@@ -1,11 +1,5 @@
-/*
- * decaffeinate suggestions:
- * DS102: Remove unnecessary code created because of implicit returns
- * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
- */
 import { mediator } from "lib/mediator"
 const rewire = require("rewire")
-const _ = require("underscore")
 const benv = require("benv")
 const Backbone = require("backbone")
 const sinon = require("sinon")
@@ -18,76 +12,77 @@ const { FairsView } = benv.requireWithJadeify(
 const ViewHelpers = require("../helpers/view_helpers.coffee")
 const moment = require("moment")
 
-describe("FairsView", function () {
+describe("FairsView", () => {
+  let view
+  const image = { url: "https://www.example.com/cat.jpg" }
+  const profile = {
+    is_published: true,
+    icon: { url: "https://www.example.com/cat.jpg" },
+  }
+
   before(done =>
-    benv.setup(function () {
+    benv.setup(() => {
       benv.expose({ $: benv.require("jquery") })
       Backbone.$ = $
       sinon.spy(mediator, "trigger")
-      return done()
+      done()
     })
   )
 
-  after(function () {
+  after(() => {
     mediator.trigger.restore()
-    return benv.teardown()
+    benv.teardown()
   })
 
-  beforeEach(function (done) {
-    this.image = { url: "https://www.example.com/cat.jpg" }
-    this.profile = {
-      is_published: true,
-      icon: { url: "https://www.example.com/cat.jpg" },
-    }
-    const fair = fabricate("fair", { image: this.image, profile: this.profile })
-    this.fairs = [fair]
-    return benv.render(
+  beforeEach(done => {
+    const fairs = [fabricate("fair", { image: image, profile: profile })]
+    benv.render(
       resolve(__dirname, "../templates/index.jade"),
       {
-        sd: { FAIRS: this.fairs },
-        featuredFairs: this.fairs,
-        currentFairRows: ViewHelpers.currentRows(this.fairs),
-        upcomingFairs: this.fairs,
-        pastFairs: this.fairs,
+        sd: { FAIRS: fairs },
+        featuredFairs: fairs,
+        currentFairRows: ViewHelpers.currentRows(fairs),
+        upcomingFairs: fairs,
+        pastFairs: fairs,
         ViewHelpers,
         asset() {},
       },
       () => {
-        this.view = new FairsView({
+        view = new FairsView({
           el: $("body"),
           user: null,
         })
-        return done()
+        done()
       }
     )
   })
 
-  describe("#renderPastFairs", function () {
-    beforeEach(function () {
-      return this.view.initialize({ el: $("body") })
+  describe("#renderPastFairs", () => {
+    beforeEach(() => {
+      view.initialize({ el: $("body") })
     })
 
-    return it("appends the additional fair(s)", function () {
-      this.view.$(".fairs__past-fairs-list a").length.should.eql(1)
-      this.view.renderPastFairs([
+    it("appends the additional fair(s)", () => {
+      view.$(".fairs__past-fairs-list a").length.should.eql(1)
+      view.renderPastFairs([
         fabricate("fair", {
           is_published: true,
           has_listing: true,
           has_full_feature: true,
-          image: this.image,
-          profile: this.profile,
+          image: image,
+          profile: profile,
           end_at: moment().subtract(10, "days").format(),
         }),
       ])
-      return this.view.$(".fairs__past-fairs-list a").length.should.eql(2)
+      view.$(".fairs__past-fairs-list a").length.should.eql(2)
     })
   })
 
-  return it("opens the auth modal with expected args", function () {
-    this.view.$(".fairs__promo__sign-up").click()
+  it("opens the auth modal with expected args", () => {
+    view.$(".fairs__promo__sign-up").click()
     mediator.trigger.args[0][0].should.containEql("open:auth")
     mediator.trigger.args[0][1].mode.should.containEql("signup")
-    return mediator.trigger.args[0][1].copy.should.containEql(
+    mediator.trigger.args[0][1].copy.should.containEql(
       "Sign up to follow fairs"
     )
   })
