@@ -51,16 +51,17 @@ describe("ArtworkActions", () => {
     })
   }
 
-  it("renders proper components for an admin", async () => {
+  it("renders proper components for a team user", async () => {
     const wrapper = await getWrapper()
     expect(wrapper.find(EditIcon).length).toBe(1)
     expect(wrapper.find(GenomeIcon).length).toBe(1)
     expect(wrapper.find(MoreIcon).length).toBe(0)
   })
 
-  it("renders proper components for a non-admin", async () => {
+  it("renders proper components for a non-team user", async () => {
     const data = cloneDeep(ArtworkActionsFixture)
     data.user.type = "User"
+    data.user.roles = ["user"]
     const wrapper = await getWrapper("lg", data)
     expect(wrapper.find(HeartFillIcon).length).toBe(1)
     expect(wrapper.find(ShareIcon).length).toBe(1)
@@ -197,6 +198,7 @@ describe("ArtworkActions", () => {
           user: {
             ...ArtworkActionsFixture.user,
             type: "User",
+            roles: [],
           },
         }
         const wrapper = await getWrapper("lg", data)
@@ -235,6 +237,7 @@ describe("ArtworkActions", () => {
         user: {
           ...ArtworkActionsFixture.user,
           type: "User",
+          roles: [],
         },
       }
       const wrapper = await getWrapper("xs", data)

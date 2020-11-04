@@ -5,6 +5,7 @@ export const ArtworkActionsFixture: ArtworkActions_Test_QueryRawResponse & {
 } = {
   user: {
     type: "Admin",
+    roles: ["admin", "team"],
   },
   artwork: {
     id:

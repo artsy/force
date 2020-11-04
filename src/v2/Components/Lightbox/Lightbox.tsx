@@ -7,7 +7,7 @@ import React from "react"
 import ReactDOM from "react-dom"
 import track from "react-tracking"
 import styled from "styled-components"
-import { userIsAdmin } from "v2/Utils/user"
+import { userIsTeam } from "v2/Utils/user"
 import { CloseButton } from "./CloseButton"
 import { Slider, SliderProps } from "./LightboxSlider"
 
@@ -292,7 +292,7 @@ class LightboxComponent extends React.Component<LightboxProps, LightboxState> {
       user,
     } = this.props
     const height = initialHeight || "auto"
-    const isAdmin = userIsAdmin(user)
+    const isTeam = userIsTeam(user)
 
     // Only render client-side
     if (!this.state.element) {
@@ -323,7 +323,7 @@ class LightboxComponent extends React.Component<LightboxProps, LightboxState> {
             alt={imageAlt}
             data-type="artwork-image"
             data-is-default={isDefault}
-            preventRightClick={!isAdmin}
+            preventRightClick={!isTeam}
           />
         </Flex>
       </>

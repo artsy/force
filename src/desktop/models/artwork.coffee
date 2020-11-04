@@ -50,7 +50,7 @@ module.exports = class Artwork extends Backbone.Model
     _s.slugify(@toOneLine()) + '.jpg'
 
   downloadableUrl: (user) ->
-    if user?.isAdmin()
+    if user?.isTeam()
       "#{@url()}/image/#{@defaultImage().id}/original.jpg"
     else
       @defaultImageUrl 'larger'
@@ -318,7 +318,7 @@ module.exports = class Artwork extends Backbone.Model
     not _.isFunction @saleMessage
 
   showActionsList: (user) ->
-    @get('website') or @isDownloadable() or (user and user.isAdmin())
+    @get('website') or @isDownloadable() or (user and user.isTeam())
 
   toJSONLD: ->
     creator =

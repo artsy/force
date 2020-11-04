@@ -7,7 +7,7 @@ import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { data as sd } from "sharify"
 import styled from "styled-components"
-import { userIsAdmin } from "v2/Utils/user"
+import { userIsTeam } from "v2/Utils/user"
 import Badge from "./Badge"
 import Metadata from "./Metadata"
 import SaveButton from "./Save"
@@ -106,7 +106,7 @@ class ArtworkGridItemContainer extends React.Component<Props, State> {
     if (user) {
       userSpread = { user }
     }
-    const isAdmin = userIsAdmin(user)
+    const isTeam = userIsTeam(user)
 
     // the 'artwork-item' className and data-id={artwork._id} are required to
     // track Artwork impressions
@@ -135,7 +135,7 @@ class ArtworkGridItemContainer extends React.Component<Props, State> {
               alt={artwork.image_title}
               src={this.getImageUrl()}
               lazyLoad={IMAGE_LAZY_LOADING && lazyLoad}
-              preventRightClick={!isAdmin}
+              preventRightClick={!isTeam}
             />
           </Link>
 

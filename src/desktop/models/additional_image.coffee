@@ -12,4 +12,4 @@ module.exports = class AdditionalImage extends Backbone.Model
   _.extend @prototype, DeepZoom(SECURE_IMAGES_URL)
 
   isDownloadable: (user) ->
-    (@get('downloadable') and @hasImage('larger')) or !!user?.isAdmin()
+    (@get('downloadable') and @hasImage('larger')) or !!user?.isTeam()
