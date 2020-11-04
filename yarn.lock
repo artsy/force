@@ -88,10 +88,10 @@
   dependencies:
     passport-strategy "1.x.x"
 
-"@artsy/passport@1.5.0":
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/@artsy/passport/-/passport-1.5.0.tgz#11553d0cf82ac5867db4be7c06469a9a4f4ce41a"
-  integrity sha512-bPsnZ5o5gKAc23wX2K9N/dQJF+MqGPJ6iZRF1xR1R4+b7uuitsVKmGh1yyexVVigh48AV3ucJgTepVN1OpPVZQ==
+"@artsy/passport@1.5.1":
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/@artsy/passport/-/passport-1.5.1.tgz#dfc9d4447cbf7f335cd640dd338acc79cfa96852"
+  integrity sha512-mzkrd3JfAk6I/Etwe7xkm+6jKFoo3UPKMkMKi7cT5s8EN6ghOsRrs8w76UDEmGb1WLoMtz6mE1dkDWOFgmcbIg==
   dependencies:
     "@artsy/passport-local-with-otp" "^0.3.0"
     "@artsy/xapp" "^1.0.6"
@@ -103,7 +103,7 @@
     ip "^1.1.5"
     mailcheck "^1.1.1"
     passport "^0.3.0"
-    passport-apple "https://github.com/artsy/passport-apple#f41adb7822c8344b72bc36a7d68312f6592cb14f"
+    passport-apple "git+https://github.com/artsy/passport-apple.git#f41adb7822c8344b72bc36a7d68312f6592cb14f"
     passport-facebook "^2.0.0"
     superagent "^1.2.0"
     underscore.string "^3.2.2"
@@ -14259,9 +14259,10 @@ pascalcase@^0.1.1:
   resolved "https://registry.yarnpkg.com/pascalcase/-/pascalcase-0.1.1.tgz#b363e55e8006ca6fe21784d2db22bd15d7917f14"
   integrity sha1-s2PlXoAGym/iF4TS2yK9FdeRfxQ=
 
-"passport-apple@https://github.com/artsy/passport-apple#f41adb7822c8344b72bc36a7d68312f6592cb14f":
+"passport-apple@git+https://github.com/artsy/passport-apple.git#f41adb7822c8344b72bc36a7d68312f6592cb14f":
   version "1.1.2"
-  resolved "https://github.com/artsy/passport-apple#f41adb7822c8344b72bc36a7d68312f6592cb14f"
+  uid f41adb7822c8344b72bc36a7d68312f6592cb14f
+  resolved "git+https://github.com/artsy/passport-apple.git#f41adb7822c8344b72bc36a7d68312f6592cb14f"
   dependencies:
     jsonwebtoken "^8.5.1"
     passport-oauth2 "^1.5.0"
