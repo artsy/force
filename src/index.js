@@ -1,8 +1,8 @@
 /* eslint-disable no-console */
-// TODO: Do we still need this.
+// TODO: Does source map support provide additional server side value?
 import "source-map-support/register"
 
-// Do we still use regenerator?
+// TODO: Is the regenerator runtime still required?
 import "regenerator-runtime/runtime"
 
 // This must come before any other instrumented module.
@@ -16,9 +16,10 @@ const app = express()
 app.use(require("./common-app"))
 
 app.listen(5000, () => {
-  const bootMessage = true
-    ? `\n[App] Booting Global Force...  \n`
-    : `\n[App] Started on http://localhost:5000  \n`
+  const bootMessage =
+    process.env.NODE_ENV === "production"
+      ? `\n[App] Booting Global Force...  \n`
+      : `\n[App] Started on http://localhost:5000  \n`
 
   // eslint-disable-next-line no-console
   console.log(bootMessage)

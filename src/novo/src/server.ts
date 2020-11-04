@@ -4,11 +4,12 @@ import { getAppNovoRoutes } from "v2/Apps/getAppNovoRoutes"
 import { flatten } from "lodash"
 import ReactDOM from "react-dom/server"
 import { buildServerAppContext } from "desktop/lib/buildServerAppContext"
+import loadAssetManifest from "lib/manifest"
 import express from "express"
 
-// This export form is required for express-reloadable
+const novoManifest = loadAssetManifest("manifest-novo.json")
+
 const app = express()
-module.exports = app
 
 app.get("/novo", (req, res) => {
   res.send(`
@@ -62,7 +63,6 @@ app.get(
 
       const headTagsString = ReactDOM.renderToString(headTags as any)
       const sharifyData = res.locals.sharify.script()
-      const asset = res.locals.asset
 
       res.status(status).send(`
         <html>
@@ -72,25 +72,33 @@ app.get(
             ${sharifyData}
           </head>
           <body>
-            <script src="${asset("/assets-novo/novo-runtime.js")}"></script>
-            <script src="${asset("/assets-novo/novo-common.js")}"></script>
-            <script src="${asset(
+            <script src="${novoManifest.lookup(
+              "/assets-novo/novo-runtime.js"
+            )}"></script>
+            <script src="${novoManifest.lookup(
+              "/assets-novo/novo-common.js"
+            )}"></script>
+            <script src="${novoManifest.lookup(
               "/assets-novo/novo-artsy-common.js"
             )}"></script>
-            <script src="${asset(
+            <script src="${novoManifest.lookup(
               "/assets-novo/novo-common-react.js"
             )}"></script>
-            <script src="${asset(
+            <script src="${novoManifest.lookup(
               "/assets-novo/novo-common-utility.js"
             )}"></script>
-            <script src="${asset("/assets-novo/novo-artsy.js")}"></script>
+            <script src="${novoManifest.lookup(
+              "/assets-novo/novo-artsy.js"
+            )}"></script>
 
             <div id='react-root'>
             ${bodyHTML}
             </div>
 
             ${scripts}
-            <script src="${asset("/assets-novo/novo-artsy-novo.js")}"></script>
+            <script src="${novoManifest.lookup(
+              "/assets-novo/novo-artsy-novo.js"
+            )}"></script>
           </body>
         </html>
       `)
@@ -123,3 +131,6 @@ function getRoutePaths() {
   )
   return flatRoutes
 }
+
+// This export form is required for express-reloadable
+module.exports = app
