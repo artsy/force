@@ -12,13 +12,16 @@ export const EstimateResults: React.FC = () => {
       alignItems="center"
       justifyContent="center"
     >
-      {isFetching && <Box>fetching...</Box>}
-      {artistInsights ? <ArtistInsightResult /> : <PlaceholderItems />}
+      {isFetching || artistInsights ? (
+        <ArtistInsightResult />
+      ) : (
+        <ArtistInsightExample />
+      )}
     </Flex>
   )
 }
 
-const PlaceholderItems: React.FC = () => {
+const ArtistInsightExample: React.FC = () => {
   return (
     <>
       <Join separator={<Spacer mr={5} />}>
