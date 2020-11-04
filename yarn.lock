@@ -113,11 +113,12 @@
   resolved "https://registry.yarnpkg.com/@artsy/react-html-parser/-/react-html-parser-3.0.2.tgz#6213d662441acf0bd8c9ee953aa77ac8d9cf1cdd"
   integrity sha512-FXiRSqfSvwpz/QgwaqFvjJsbDmo9qMGpvUp/0p1V6muaJbGnfxkTSxAYWmYlFst6bmjhVxCYKxvgQhEVE03Wfg==
 
-"@artsy/reaction@28.11.0":
-  version "28.11.0"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-28.11.0.tgz#d91fb29a6cc890851a66c271d22492f8504295d1"
-  integrity sha512-3XyMry4rRL6K86cFQlxskK9rKw5jtKqlIIBzMwbGgdO8oj/DfO7RxnvAIb0PctbLDituzrZw62Wx0SZYVJXp1A==
+"@artsy/reaction@28.12.0":
+  version "28.12.0"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-28.12.0.tgz#cf1b164f02ff2345ce66b8ca07b8e4fadf01dee0"
+  integrity sha512-59OAkFk/vPHPOHO9FomvuoxQqNt+3w4DzA8OpJwmAX9iIBzezQFePICUQatTNrfmCZsUl4k5IH7oqGDeDwnl7Q==
   dependencies:
+    "@artsy/cohesion" "1.45.0"
     "@artsy/detect-responsive-traits" "^0.0.5"
     "@artsy/fresnel" "^1.0.13"
     "@artsy/react-html-parser" "^3.0.2"
@@ -181,10 +182,10 @@
     use-deep-compare-effect "^1.2.0"
     yup "^0.24.1"
 
-"@artsy/stitch@6.1.6":
-  version "6.1.6"
-  resolved "https://registry.yarnpkg.com/@artsy/stitch/-/stitch-6.1.6.tgz#f91308ac2f0910e8acc4abd056aa132eeb7a9dbd"
-  integrity sha512-3BOpqvX9Lp4ufsFPYqMqWuO4DPOFYUM4xkMzRkt7emn/2DdRCwdsak0TzPISJS8g6utKPzdHlKvLaf0gS9H1eQ==
+"@artsy/stitch@6.2.0":
+  version "6.2.0"
+  resolved "https://registry.yarnpkg.com/@artsy/stitch/-/stitch-6.2.0.tgz#125ec81aca8ef7ea3e88347aa877445b44abbb20"
+  integrity sha512-X9G+crRFE8x8deYWu91YHrujoao5i7LWfANzX5699s29BxOhTMTzosIOlSrYVFVu5C10g8AkT+sbr7skZJaZIw==
   dependencies:
     consolidate "^0.14.5"
     lodash "^4.17.11"
