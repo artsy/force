@@ -170,6 +170,7 @@ export default function (app) {
           "name",
           "paddle_number",
           "phone",
+          "roles",
           "type",
         ],
       })
