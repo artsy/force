@@ -1,7 +1,7 @@
 script.
-  var isAdmin = #{!!(user && user.get('type') === 'Admin')};
+  var isTeam = #{!!(user && (user.get('roles') && user.get('roles').includes('team')))};
   document.addEventListener('contextmenu', function(e) {
-    if (isAdmin) return;
+    if (isTeam) return;
     if (['IMG', 'CANVAS'].indexOf(e.target.nodeName) < 0) return;
     var classes = e.target.className + ' ' + e.target.parentElement.className;
     if (classes.match('seadragon')) e.preventDefault();

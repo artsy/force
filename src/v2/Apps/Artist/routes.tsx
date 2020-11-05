@@ -14,7 +14,6 @@ import {
   ArtworkFilters,
   initialArtworkFilterState,
 } from "v2/Components/v2/ArtworkFilter/ArtworkFilterContext"
-import { PermanentRedirectException } from "v2/Artsy/Router/PermanentRedirectException"
 
 graphql`
   fragment routes_Artist on Artist {
@@ -118,12 +117,13 @@ export const routes: RouteConfig[] = [
       const canShowOverview = showArtistInsights || hasArtistContent
 
       if (pathname === `/artist/${artist.slug}/`) {
-        throw new PermanentRedirectException(`/artist/${artist.slug}`)
+        throw new RedirectException(`/artist/${artist.slug}`, 301)
       }
 
       if (!canShowOverview && !alreadyAtWorksForSalePath) {
-        throw new PermanentRedirectException(
-          `/artist/${artist.slug}/works-for-sale`
+        throw new RedirectException(
+          `/artist/${artist.slug}/works-for-sale`,
+          301
         )
       }
 

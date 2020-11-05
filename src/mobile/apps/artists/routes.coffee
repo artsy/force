@@ -2,6 +2,7 @@ _ = require 'underscore'
 sd = require('sharify').data
 Backbone = require 'backbone'
 Genes = require '../../collections/genes'
+ArtistsByLetter = require '../../../desktop/apps/artists/collections/artists_by_letter'
 { Fetch } = require '@artsy/backbone-mixins'
 
 module.exports.index = (req, res, next) ->
@@ -18,4 +19,4 @@ module.exports.index = (req, res, next) ->
         cache: true
         error: res.backboneError
         success: (genes) ->
-          res.render 'index', { genes: genes.models }
+          res.render 'index', { genes: genes.models, letters: ArtistsByLetter::range }

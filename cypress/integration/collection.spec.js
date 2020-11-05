@@ -1,8 +1,9 @@
 import { artworkGridRenders } from "../helpers/artworkGridRenders"
+import { visitWithStatusRetries } from "../helpers/visitWithStatusRetries"
 
 describe("/collection/:id", () => {
   before(() => {
-    cy.visit("/collection/emerging-photographers")
+    visitWithStatusRetries("/collection/emerging-photographers")
   })
 
   it("renders metadata", () => {
@@ -23,7 +24,7 @@ describe("/collection/:id", () => {
 
 describe("/collection/:id (a collection hub)", () => {
   before(() => {
-    cy.visit("/collection/contemporary")
+    visitWithStatusRetries("/collection/contemporary")
   })
   it("renders metadata", () => {
     cy.title().should("eq", "Contemporary Art - For Sale on Artsy")

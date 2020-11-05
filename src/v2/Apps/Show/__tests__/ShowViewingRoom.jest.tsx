@@ -1,21 +1,18 @@
 import React from "react"
-import { mount } from "enzyme"
-import { MockPayloadGenerator, createMockEnvironment } from "relay-test-utils"
-import { QueryRenderer, graphql } from "react-relay"
+import { graphql } from "react-relay"
 import { ShowViewingRoomFragmentContainer as ShowViewingRoom } from "../Components/ShowViewingRoom"
 import { ShowViewingRoom_Test_Query } from "v2/__generated__/ShowViewingRoom_Test_Query.graphql"
 import { useTracking } from "react-tracking"
 import { AnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
 import { OwnerType } from "@artsy/cohesion"
+import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
 
-jest.unmock("react-relay")
 jest.mock("react-tracking")
+jest.unmock("react-relay")
 
-describe("ShowViewingRoom", () => {
-  const getWrapper = (mocks = {}) => {
-    const env = createMockEnvironment()
-
-    const TestRenderer = () => (
+const { getWrapper } = setupTestWrapper<ShowViewingRoom_Test_Query>({
+  Component: props => {
+    return (
       <AnalyticsContext.Provider
         value={{
           contextPageOwnerId: "example-show-id",
@@ -23,38 +20,20 @@ describe("ShowViewingRoom", () => {
           contextPageOwnerType: OwnerType.show,
         }}
       >
-        <QueryRenderer<ShowViewingRoom_Test_Query>
-          environment={env}
-          variables={{}}
-          query={graphql`
-            query ShowViewingRoom_Test_Query {
-              show(id: "example-show-id") {
-                ...ShowViewingRoom_show
-              }
-            }
-          `}
-          render={({ props, error }) => {
-            if (props?.show) {
-              return <ShowViewingRoom show={props.show} />
-            } else if (error) {
-              console.error(error)
-            }
-          }}
-        />
+        <ShowViewingRoom {...props} />
       </AnalyticsContext.Provider>
     )
+  },
+  query: graphql`
+    query ShowViewingRoom_Test_Query {
+      show(id: "example-show-id") {
+        ...ShowViewingRoom_show
+      }
+    }
+  `,
+})
 
-    const wrapper = mount(<TestRenderer />)
-
-    env.mock.resolveMostRecentOperation(operation =>
-      MockPayloadGenerator.generate(operation, {
-        ...mocks,
-      })
-    )
-    wrapper.update()
-    return wrapper
-  }
-
+describe("ShowViewingRoom", () => {
   let trackEvent
   beforeEach(() => {
     trackEvent = jest.fn()

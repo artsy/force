@@ -240,6 +240,9 @@ module.exports = class CurrentUser extends Backbone.Model
   isAdmin: ->
     (@get('type') is 'Admin') and ! @get('is_slumming')
 
+  isTeam: ->
+    @get('roles').includes('team')
+
   markNotifications: (status = 'read', options) ->
     request.put("#{@url()}/notifications")
       .set('X-ACCESS-TOKEN': @get 'accessToken')

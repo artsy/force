@@ -19,6 +19,7 @@ import {
   AnalyticsContext,
   useAnalyticsContext,
 } from "v2/Artsy/Analytics/AnalyticsContext"
+import { ShowArtworksEmptyStateFragmentContainer as ShowArtworksEmptyState } from "./Components/ShowArtworksEmptyState"
 
 interface ShowAppProps {
   show: ShowApp_show
@@ -69,7 +70,7 @@ export const ShowApp: React.FC<ShowAppProps> = ({ show }) => {
               >
                 <ShowHeader show={show} />
 
-                {!hasAbout && (
+                {!hasAbout && show.href && (
                   <ForwardLink
                     to={`${show.href.replace("/show", "/show2")}/info`}
                     mt={1}
@@ -83,12 +84,14 @@ export const ShowApp: React.FC<ShowAppProps> = ({ show }) => {
                 <Column span={6}>
                   <ShowAbout show={show} />
 
-                  <ForwardLink
-                    to={`${show.href.replace("/show", "/show2")}/info`}
-                    mt={2}
-                  >
-                    More info
-                  </ForwardLink>
+                  {show.href && (
+                    <ForwardLink
+                      to={`${show.href.replace("/show", "/show2")}/info`}
+                      mt={2}
+                    >
+                      More info
+                    </ForwardLink>
+                  )}
                 </Column>
               )}
 
@@ -99,7 +102,14 @@ export const ShowApp: React.FC<ShowAppProps> = ({ show }) => {
               )}
             </GridColumns>
 
-            <ShowArtworks show={show} my={3} />
+            {show.counts.eligibleArtworks > 0 ? (
+              <ShowArtworks show={show} my={3} />
+            ) : (
+              <>
+                <Separator my={3} />
+                <ShowArtworksEmptyState show={show} />
+              </>
+            )}
 
             <Separator as="hr" my={3} />
 
@@ -141,12 +151,16 @@ export default createFragmentContainer(ShowApp, {
       slug
       about: description
       viewingRoomIDs
+      counts {
+        eligibleArtworks
+      }
       ...ShowContextualLink_show
       ...ShowHeader_show
       ...ShowAbout_show
       ...ShowMeta_show
       ...ShowInstallShots_show
       ...ShowViewingRoom_show
+      ...ShowArtworksEmptyState_show
       ...ShowArtworks_show
         @arguments(
           acquireable: $acquireable

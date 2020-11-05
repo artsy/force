@@ -1,4 +1,4 @@
-import { userHasLabFeature, userIsAdmin } from "../user"
+import { userHasLabFeature, userIsAdmin, userIsTeam } from "../user"
 
 describe("user", () => {
   describe("userHasLabFeature", () => {
@@ -66,6 +66,36 @@ describe("user", () => {
       }
 
       const result = userIsAdmin(user)
+
+      expect(result).toEqual(true)
+    })
+  })
+
+  describe("userIsTeam", () => {
+    it("returns undefined if user is undefined", () => {
+      const user: User = undefined
+
+      const result = userIsTeam(user)
+
+      expect(result).toEqual(false)
+    })
+
+    it("returns false if user roles do not include 'team'", () => {
+      const user: User = {
+        roles: ["genomer"],
+      }
+
+      const result = userIsTeam(user)
+
+      expect(result).toEqual(false)
+    })
+
+    it("returns true if user is of type 'Team'", () => {
+      const user: User = {
+        roles: ["team"],
+      }
+
+      const result = userIsTeam(user)
 
       expect(result).toEqual(true)
     })

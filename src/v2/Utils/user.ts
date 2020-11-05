@@ -37,6 +37,13 @@ export function userIsAdmin(user?: User): boolean {
   return isAdmin
 }
 
+export function userIsTeam(user?: User): boolean {
+  const isTeam = Boolean(
+    user && user.roles && user.roles.includes("team") ? true : false
+  )
+  return isTeam
+}
+
 export function userHasAccessToPartner(user: User, partnerId: string): boolean {
   const token = get(user, u => u.accessToken)
   if (!token) {

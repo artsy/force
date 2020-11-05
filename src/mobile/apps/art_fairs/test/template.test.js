@@ -1,9 +1,3 @@
-/*
- * decaffeinate suggestions:
- * DS102: Remove unnecessary code created because of implicit returns
- * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
- */
-const _ = require("underscore")
 const benv = require("benv")
 const moment = require("moment")
 const cheerio = require("cheerio")
@@ -11,9 +5,14 @@ const Backbone = require("backbone")
 const { resolve } = require("path")
 const { fabricate } = require("@artsy/antigravity")
 const Helpers = require("../helpers.coffee")
+import { times, uniqueId } from "lodash"
 
-describe("Art fairs template", function () {
-  before(function () {
+describe("Art fairs template", () => {
+  let currentFairs
+  let pastFairs
+  let upcomingFairs
+
+  before(() => {
     const profile = {
       is_published: true,
       icon: { url: "https://www.example.com/cat.jpg" },
@@ -23,8 +22,8 @@ describe("Art fairs template", function () {
       icon: { url: "https://www.example.com/cat.jpg" },
     }
     const location = { city: "New York", state: "NY", country: "US" }
-    this.currentFairs = _.times(2, function () {
-      const fair = fabricate("fair", {
+    currentFairs = times(2, () =>
+      fabricate("fair", {
         location,
         image: {
           url: {
@@ -33,44 +32,42 @@ describe("Art fairs template", function () {
           },
         },
         profile,
-        id: _.uniqueId(),
+        id: uniqueId(),
         is_published: true,
         has_full_feature: true,
         has_listing: true,
         organizer: fabricate("fair_organizer"),
         end_at: moment().add(10, "days"),
       })
-      return fair
-    })
-    this.pastFairs = _.times(4, function () {
-      const fair = fabricate("fair", {
+    )
+    pastFairs = times(4, () =>
+      fabricate("fair", {
         location,
         profile,
-        id: _.uniqueId(),
+        id: uniqueId(),
         is_published: true,
         has_full_feature: true,
         has_listing: true,
         organizer: fabricate("fair_organizer"),
         end_at: moment().subtract(10, "days"),
       })
-      return fair
-    })
-    return (this.upcomingFairs = _.times(3, () =>
+    )
+    upcomingFairs = times(3, () =>
       fabricate("fair", {
         profile: unpublished_profile,
-        id: _.uniqueId(),
+        id: uniqueId(),
         is_published: true,
         has_full_feature: true,
         has_listing: true,
         organizer: null,
         end_at: moment().add(10, "days"),
       })
-    ))
+    )
   })
 
-  describe("with currentFairs", function () {
-    before(function (done) {
-      return benv.setup(() => {
+  describe("with currentFairs", () => {
+    before(done => {
+      benv.setup(() => {
         benv.expose({ $: benv.require("jquery") })
         Backbone.$ = $
         benv.render(resolve(__dirname, "../templates/index.jade"), {
@@ -78,68 +75,63 @@ describe("Art fairs template", function () {
           asset() {},
           _: require("underscore"),
           navItems: [
-            { name: "Current", hasItems: this.currentFairs.length },
-            { name: "Upcoming", hasItems: this.upcomingFairs.length },
-            { name: "Past", hasItems: this.pastFairs.length },
+            { name: "Current", hasItems: currentFairs.length },
+            { name: "Upcoming", hasItems: upcomingFairs.length },
+            { name: "Past", hasItems: pastFairs.length },
           ],
           emptyMessage: "Past Events",
           extraClasses: "art-fairs-tabs",
-          featuredFairs: this.currentFairs,
-          currentFairs: this.currentFairs,
-          pastFairs: this.pastFairs,
-          upcomingFairs: this.upcomingFairs,
+          featuredFairs: currentFairs,
+          currentFairs: currentFairs,
+          pastFairs: pastFairs,
+          upcomingFairs: upcomingFairs,
           Helpers,
           remainingPastFairs: [],
         })
-        return done()
+        done()
       })
     })
 
     after(() => benv.teardown())
 
-    // this test always fails ci
-    return it("renders header with current fairs active", function () {
+    it("renders header with current fairs active", () => {
       $(".art-fairs-header").html().should.containEql("Collect from leading")
-      return $(".art-fairs-tab[data-tab=current]").hasClass(
-        "art-fairs-tab--active"
-      )
+      $(".art-fairs-tab[data-tab=current]").hasClass("art-fairs-tab--active")
     })
   })
 
-  return describe("without currentFairs", function () {
-    before(function (done) {
-      return benv.setup(() => {
+  describe("without currentFairs", () => {
+    before(done => {
+      benv.setup(() => {
         benv.expose({ $: benv.require("jquery") })
         Backbone.$ = $
         benv.render(resolve(__dirname, "../templates/index.jade"), {
           sd: {},
           _: require("underscore"),
           navItems: [
-            { name: "Current", hasItems: this.currentFairs.length },
-            { name: "Upcoming", hasItems: this.upcomingFairs.length },
-            { name: "Past", hasItems: this.pastFairs.length },
+            { name: "Current", hasItems: currentFairs.length },
+            { name: "Upcoming", hasItems: upcomingFairs.length },
+            { name: "Past", hasItems: pastFairs.length },
           ],
           emptyMessage: "Past Events",
           extraClasses: "art-fairs-tabs",
           asset() {},
           currentFairs: [],
-          pastFairs: this.pastFairs,
-          upcomingFairs: this.upcomingFairs,
+          pastFairs: pastFairs,
+          upcomingFairs: upcomingFairs,
           Helpers,
           remainingPastFairs: [],
         })
-        return done()
+        done()
       })
     })
 
     after(() => benv.teardown())
 
-    return it("renders header with upcoming fairs active", function () {
+    it("renders header with upcoming fairs active", () => {
       $(".art-fairs-header").html().should.containEql("Collect from leading")
       $(".art-fairs-header").hasClass("art-fairs-header--background-image")
-      return $(".art-fairs-tab[data-tab=upcoming]").hasClass(
-        "art-fairs-tab--active"
-      )
+      $(".art-fairs-tab[data-tab=upcoming]").hasClass("art-fairs-tab--active")
     })
   })
 })

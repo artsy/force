@@ -32,7 +32,7 @@ import {
   Text,
   color,
 } from "@artsy/palette"
-import { userIsAdmin } from "v2/Utils/user"
+import { userIsAdmin, userIsTeam } from "v2/Utils/user"
 import { ArtworkPopoutPanel } from "./ArtworkPopoutPanel"
 import { Mediator } from "lib/mediator"
 
@@ -81,12 +81,16 @@ export class ArtworkActions extends React.Component<
     return userIsAdmin(this.props.user)
   }
 
+  get isTeam() {
+    return userIsTeam(this.props.user)
+  }
+
   getDownloadableImageUrl() {
     const {
       artwork: { is_downloadable, href, artists, title, date },
     } = this.props
 
-    if (is_downloadable || this.isAdmin) {
+    if (is_downloadable || this.isTeam) {
       const artistNames = artists.map(({ name }) => name).join(", ")
       const filename = slugify(compact([artistNames, title, date]).join(" "))
       const downloadableImageUrl = `${href}/download/${filename}.jpg` // prettier-ignore

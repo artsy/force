@@ -72,6 +72,7 @@ export default function forceMiddleware(app) {
           "name",
           "paddle_number",
           "phone",
+          "roles",
           "type",
         ],
       })
