@@ -5,7 +5,6 @@ import { Resolver } from "found-relay"
 import { FarceRedirectResult, getFarceResult } from "found/server"
 import React from "react"
 import { Environment, RecordSource, Store } from "relay-runtime"
-import { PermanentRedirectException } from "v2/Artsy/Router/PermanentRedirectException"
 
 describe("Artist/routes", () => {
   async function render(url, mockData: routes_ArtistTopLevelQueryRawResponse) {
@@ -44,13 +43,12 @@ describe("Artist/routes", () => {
   it("redirects trailing a trailing slash on the artist page back to the root", async () => {
     await expect(
       render("/artist/juan-gris/", mockResolver(overviewArtist))
-    ).rejects.toThrow(PermanentRedirectException)
-
-    try {
-      await render("/artist/juan-gris/", mockResolver(overviewArtist))
-    } catch (err) {
-      expect(err.pathname).toEqual("/artist/juan-gris")
-    }
+    ).resolves.toEqual({
+      redirect: {
+        url: "/artist/juan-gris",
+      },
+      status: 301,
+    })
   })
 
   it("doesn't redirect from /auction-results to /works-for-sale if auction-results", async () => {
@@ -106,8 +104,8 @@ describe("Artist/routes", () => {
   })
 
   it("redirects from / to the /works-for-sale page if there is no data", async () => {
-    const exec = async () =>
-      await render(
+    await expect(
+      render(
         "/artist/juan-gris",
         mockResolver({
           ...overviewArtist,
@@ -129,14 +127,12 @@ describe("Artist/routes", () => {
           },
         })
       )
-
-    await expect(exec()).rejects.toThrow(PermanentRedirectException)
-
-    try {
-      await exec()
-    } catch (err) {
-      expect(err.pathname).toEqual("/artist/juan-gris/works-for-sale")
-    }
+    ).resolves.toEqual({
+      redirect: {
+        url: "/artist/juan-gris/works-for-sale",
+      },
+      status: 301,
+    })
   })
 
   it("does not redirect from /cv", async () => {
@@ -167,8 +163,8 @@ describe("Artist/routes", () => {
   })
 
   it("redirects from /cv to the /works-for-sale page if there is no data", async () => {
-    const exec = async () =>
-      await render(
+    await expect(
+      render(
         "/artist/juan-gris/cv",
         mockResolver({
           ...overviewArtist,
@@ -187,14 +183,10 @@ describe("Artist/routes", () => {
           },
         })
       )
-
-    await expect(exec()).rejects.toThrow(PermanentRedirectException)
-
-    try {
-      await exec()
-    } catch (err) {
-      expect(err.pathname).toEqual("/artist/juan-gris/works-for-sale")
-    }
+    ).resolves.toEqual({
+      redirect: { url: "/artist/juan-gris/works-for-sale" },
+      status: 301,
+    })
   })
 })
 
