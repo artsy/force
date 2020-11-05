@@ -10,22 +10,22 @@ append locals
   - assetPackage = 'artists_artworks'
 
 block body
-  #artists-page.main-layout-container
+  #artists-page.main-layout-container(class=sd.IS_MOBILE ? "mobile" : "")
     nav.alphabetical-index
       .alphabetical-index-label
-        | Browse 40,000 artists
+        | Browse 100,000 artists
       .alphabetical-index-range
         for letter in letterRange
           - var href = '/artists/artists-starting-with-' + letter;
           a( href=href, class=activeClass(href) )= letter
 
     #letter-page
-      h1.avant-garde-header-center
-        | Artists &ndash; #{letter}
-
       a.contextual-return-link( href='/artists' )
         i.icon-chevron-small-left
         | Back to featured artists
+
+      h1.avant-garde-header-center
+        | Artists &ndash; #{letter}
 
       .artists-columns
         for artist in artists.models
