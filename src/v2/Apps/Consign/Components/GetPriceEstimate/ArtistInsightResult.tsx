@@ -51,8 +51,14 @@ export const ArtistInsightResult: React.FC = () => {
             <Image src={imageUrl} width={120} height={120} />
           </Box>
           <Box>
-            <Text variant="largeTitle">{artistName}</Text>
-            <Separator mt={0.5} mb={2} />
+            <Text
+              variant="largeTitle"
+              borderBottom={`1px solid ${color("black60")}`}
+              pb={0.5}
+              mb={2}
+            >
+              {artistName}
+            </Text>
             <Text variant="small" color="black60">
               Price estimate
             </Text>
