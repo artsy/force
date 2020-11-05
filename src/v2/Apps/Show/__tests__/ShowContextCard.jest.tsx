@@ -1,70 +1,45 @@
 import React from "react"
 import { ShowContextCardFragmentContainer } from "../Components/ShowContextCard"
-import { QueryRenderer, graphql } from "react-relay"
+import { graphql } from "react-relay"
 import { ShowContextCard_Test_Query } from "v2/__generated__/ShowContextCard_Test_Query.graphql"
-import { MockPayloadGenerator, createMockEnvironment } from "relay-test-utils"
-import { mount } from "enzyme"
-import { useTracking } from "react-tracking"
 import { AnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
 import { OwnerType } from "@artsy/cohesion"
+import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
+import { useTracking } from "react-tracking"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
 
-describe("ShowContextCard", () => {
-  let env = createMockEnvironment() as ReturnType<typeof createMockEnvironment>
-
-  const getWrapper = (mocks = {}) => {
-    const TestRenderer = () => (
-      <AnalyticsContext.Provider
-        value={{
-          contextPageOwnerId: "example-show-id",
-          contextPageOwnerSlug: "example-show-slug",
-          contextPageOwnerType: OwnerType.show,
-        }}
-      >
-        <QueryRenderer<ShowContextCard_Test_Query>
-          environment={env}
-          query={graphql`
-            query ShowContextCard_Test_Query($slug: String!) {
-              show(id: $slug) {
-                ...ShowContextCard_show
-              }
-            }
-          `}
-          variables={{ slug: "show-id" }}
-          render={({ props, error }) => {
-            if (props?.show) {
-              return <ShowContextCardFragmentContainer show={props.show} />
-            } else if (error) {
-              console.error(error)
-            }
-          }}
-        />
-      </AnalyticsContext.Provider>
-    )
-
-    const wrapper = mount(<TestRenderer />)
-    env.mock.resolveMostRecentOperation(operation =>
-      MockPayloadGenerator.generate(operation, mocks)
-    )
-    wrapper.update()
-    return wrapper
-  }
-
-  let trackEvent
-  beforeEach(() => {
-    env = createMockEnvironment()
-    trackEvent = jest.fn()
-    ;(useTracking as jest.Mock).mockImplementation(() => {
-      return {
-        trackEvent,
+const { getWrapper } = setupTestWrapper<ShowContextCard_Test_Query>({
+  Component: props => (
+    <AnalyticsContext.Provider
+      value={{
+        contextPageOwnerId: "example-show-id",
+        contextPageOwnerSlug: "example-show-slug",
+        contextPageOwnerType: OwnerType.show,
+      }}
+    >
+      <ShowContextCardFragmentContainer {...props} />
+    </AnalyticsContext.Provider>
+  ),
+  query: graphql`
+    query ShowContextCard_Test_Query {
+      show(id: "xxx") {
+        ...ShowContextCard_show
       }
-    })
+    }
+  `,
+})
+
+describe("ShowContextCard", () => {
+  const trackEvent = jest.fn()
+
+  beforeEach(() => {
+    ;(useTracking as jest.Mock).mockImplementation(() => ({ trackEvent }))
   })
 
   afterEach(() => {
-    jest.clearAllMocks()
+    trackEvent.mockClear()
   })
 
   it("renders correctly for a fair", () => {
@@ -118,6 +93,8 @@ describe("ShowContextCard", () => {
       destination_page_owner_type: "partner",
       type: "thumbnail",
     })
+
+    expect(trackEvent).toBeCalledTimes(1)
   })
 
   it("tracks clicks for fair cards", () => {
@@ -142,5 +119,7 @@ describe("ShowContextCard", () => {
       destination_page_owner_type: "fair",
       type: "thumbnail",
     })
+
+    expect(trackEvent).toBeCalledTimes(1)
   })
 })
