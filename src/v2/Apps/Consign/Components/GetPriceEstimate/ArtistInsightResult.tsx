@@ -41,7 +41,7 @@ export const ArtistInsightResult: React.FC = () => {
   const medianEstimateDollars = formatCentsToDollars(midRangeCents)
 
   const imageUrl = selectedSuggestion?.node?.imageUrl
-  const { artistName } = node
+  const { artistName, medium } = node
 
   return (
     <Box>
@@ -60,7 +60,7 @@ export const ArtistInsightResult: React.FC = () => {
               {artistName}
             </Text>
             <Text variant="small" color="black60">
-              Price estimate
+              Based on {medium.toLowerCase()} auction data
             </Text>
             <Text variant="largeTitle">
               {lowEstimateDollars} – {highEstimateDollars}

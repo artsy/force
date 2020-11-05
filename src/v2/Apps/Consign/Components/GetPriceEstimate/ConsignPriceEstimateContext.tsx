@@ -160,6 +160,7 @@ function getActions(dispatch: Dispatch<Action>, relayEnvironment: Environment) {
               edges {
                 node {
                   artistName
+                  medium
                   lowRangeCents
                   midRangeCents
                   highRangeCents
