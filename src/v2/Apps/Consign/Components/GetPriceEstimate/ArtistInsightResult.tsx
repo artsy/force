@@ -96,12 +96,12 @@ export const ArtistInsightResult: React.FC = () => {
 }
 
 const ZeroState: React.FC = () => {
-  const { searchQuery } = usePriceEstimateContext()
+  const { selectedSuggestion } = usePriceEstimateContext()
 
   return (
     <Container>
       <Box>
-        <Text variant="largeTitle">{searchQuery}</Text>
+        <Text variant="largeTitle">{selectedSuggestion.node.displayLabel}</Text>
         <Separator mt={0.5} mb={2} />
         <Text variant="small" color="black60">
           Sorry, there isn’t enough secondary market data to provide a price
