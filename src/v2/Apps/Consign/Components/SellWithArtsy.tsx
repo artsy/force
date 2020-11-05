@@ -19,18 +19,17 @@ export const SellWithArtsy: React.FC = () => {
         </Box>
         <Box>
           <Media greaterThanOrEqual="sm">
-            {/* FIXME: Move images to vanity.artsy.net */}
             <Image
               height={320}
               width="auto"
-              src="https://user-images.githubusercontent.com/236943/97369833-e73bfb80-186a-11eb-9085-2ff4b2bcbb21.png"
+              src="https://files.artsy.net/consign/banner-large.jpg"
             />
           </Media>
           <Media lessThan="sm">
             <Image
               height={270}
               width="auto"
-              src="https://user-images.githubusercontent.com/236943/97369845-ef943680-186a-11eb-96d8-d4563313b9f4.png"
+              src="https://files.artsy.net/consign/banner-small.jpg"
             />
           </Media>
         </Box>
