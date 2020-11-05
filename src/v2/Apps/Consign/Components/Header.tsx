@@ -11,6 +11,7 @@ import {
 } from "@artsy/palette"
 import { Media } from "v2/Utils/Responsive"
 import { SectionContainer } from "./SectionContainer"
+import { RouterLink } from "v2/Artsy/Router/RouterLink"
 
 export const Header: React.FC = () => {
   return (
@@ -42,7 +43,10 @@ export const Header: React.FC = () => {
       <Box textAlign="center" width={350} position="relative" zIndex={3}>
         <Sans size="14">Sell with Artsy</Sans>
         <Spacer mt={5} />
-        <Button size="large">Get a free valuation</Button>
+
+        <RouterLink to="/consign/submission">
+          <Button size="large">Get a free valuation</Button>
+        </RouterLink>
       </Box>
     </SectionContainer>
   )

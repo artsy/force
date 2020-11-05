@@ -2,7 +2,6 @@ import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { AppContainer } from "../Components/AppContainer"
 import { AnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
-import { HorizontalPadding } from "../Components/HorizontalPadding"
 import { ConsignMeta } from "./Components/ConsignMeta"
 import { Header } from "./Components/Header"
 import { SellArtDifferently } from "./Components/SellArtDifferently"
@@ -15,6 +14,7 @@ import { ContactUs } from "./Components/ContactUs"
 import { FAQ } from "./Components/FAQ"
 import { SellWithArtsy } from "./Components/SellWithArtsy"
 import { Footer } from "v2/Components/Footer"
+import { SectionContainer } from "./Components/SectionContainer"
 
 const ConsignApp = props => {
   return (
@@ -40,9 +40,9 @@ const ConsignApp = props => {
           <SellWithArtsy />
           <SoldRecentlyQueryRenderer />
 
-          <HorizontalPadding>
+          <SectionContainer>
             <Footer />
-          </HorizontalPadding>
+          </SectionContainer>
         </AppContainer>
       </>
     </AnalyticsContext.Provider>

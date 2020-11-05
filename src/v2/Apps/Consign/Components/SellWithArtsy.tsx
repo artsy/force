@@ -1,5 +1,5 @@
 import React from "react"
-import { Box, Button, Flex, Image, Spacer, Text } from "@artsy/palette"
+import { Box, Button, Flex, Image, Link, Spacer, Text } from "@artsy/palette"
 import { SectionContainer } from "./SectionContainer"
 import { Media } from "v2/Utils/Responsive"
 
@@ -13,9 +13,12 @@ export const SellWithArtsy: React.FC = () => {
           </Text>
           <Text variant="text">Selling art differently</Text>
           <Spacer mt={6} />
-
-          {/* FIXME: todo link */}
-          <Button>Download the app</Button>
+          <Link
+            href="https://apps.apple.com/us/app/artsy-buy-sell-original-art/id703796080"
+            target="_blank"
+          >
+            <Button>Download the app</Button>
+          </Link>
         </Box>
         <Box>
           <Media greaterThanOrEqual="sm">
