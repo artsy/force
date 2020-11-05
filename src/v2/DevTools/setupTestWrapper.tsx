@@ -3,6 +3,7 @@ import { mount } from "enzyme"
 import { QueryRenderer } from "react-relay"
 import { MockPayloadGenerator, createMockEnvironment } from "relay-test-utils"
 import { GraphQLTaggedNode, OperationType } from "relay-runtime"
+import { MockResolvers } from "relay-test-utils/lib/RelayMockPayloadGenerator"
 
 type SetupTestWrapper<T extends OperationType> = {
   Component: React.ComponentType<T["response"]>
@@ -15,7 +16,7 @@ export const setupTestWrapper = <T extends OperationType>({
   query,
   variables = {},
 }: SetupTestWrapper<T>) => {
-  const getWrapper = (mocks = {}) => {
+  const getWrapper = (mockResolvers: MockResolvers = {}) => {
     const env = createMockEnvironment()
 
     const TestRenderer = () => (
@@ -36,7 +37,7 @@ export const setupTestWrapper = <T extends OperationType>({
     const wrapper = mount(<TestRenderer />)
 
     env.mock.resolveMostRecentOperation(operation => {
-      return MockPayloadGenerator.generate(operation, { ...mocks })
+      return MockPayloadGenerator.generate(operation, mockResolvers)
     })
 
     wrapper.update()
