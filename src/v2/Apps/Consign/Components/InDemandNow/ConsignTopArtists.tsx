@@ -98,39 +98,41 @@ const TopArtists: React.FC<ConsignTopArtistsQuery["response"]> = props => {
     <Box textAlign="left">
       <Flex flexDirection="row" width="100%" overflow="scroll">
         <Join separator={<Spacer mr={3} />}>
-          {recentlySoldArtworks.map((artworkSet, index) => {
+          {recentlySoldArtworks.map((artworkSet, recentlySoldIndex) => {
             return (
-              <Box>
-                {artworkSet.map((recentlySoldArtwork: ArtworkProps, index) => {
-                  const {
-                    image,
-                    artistNames,
-                    realizedPrice,
-                  } = recentlySoldArtwork
-                  const imageUrl = image.imageURL.replace(":version", "small")
+              <Box key={recentlySoldIndex}>
+                {artworkSet.map(
+                  (recentlySoldArtwork: ArtworkProps, artworkSetIndex) => {
+                    const {
+                      image,
+                      artistNames,
+                      realizedPrice,
+                    } = recentlySoldArtwork
+                    const imageUrl = image.imageURL.replace(":version", "small")
 
-                  return (
-                    <Box key={index}>
-                      <Flex
-                        mb={2}
-                        alignItems="center"
-                        style={{ whiteSpace: "nowrap" }}
-                      >
-                        <Box pr={1}>
-                          <Avatar src={imageUrl} size="xs" />
-                        </Box>
-                        <Box>
-                          <Text variant="text" fontWeight="bold">
-                            {artistNames}
-                          </Text>
-                          <Text variant="text">
-                            Average Sale Price: {realizedPrice}
-                          </Text>
-                        </Box>
-                      </Flex>
-                    </Box>
-                  )
-                })}
+                    return (
+                      <Box key={artworkSetIndex}>
+                        <Flex
+                          mb={2}
+                          alignItems="center"
+                          style={{ whiteSpace: "nowrap" }}
+                        >
+                          <Box pr={1}>
+                            <Avatar src={imageUrl} size="xs" />
+                          </Box>
+                          <Box>
+                            <Text variant="text" fontWeight="bold">
+                              {artistNames}
+                            </Text>
+                            <Text variant="text">
+                              Average Sale Price: {realizedPrice}
+                            </Text>
+                          </Box>
+                        </Flex>
+                      </Box>
+                    )
+                  }
+                )}
               </Box>
             )
           })}

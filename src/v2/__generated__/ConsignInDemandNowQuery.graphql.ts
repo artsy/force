@@ -20,6 +20,9 @@ export type ConsignInDemandNowQueryResponse = {
                     readonly images: {
                         readonly thumbnail: {
                             readonly url: string | null;
+                            readonly resized: {
+                                readonly srcSet: string;
+                            } | null;
                         } | null;
                     } | null;
                     readonly description: string | null;
@@ -87,6 +90,9 @@ query ConsignInDemandNowQuery(
           images {
             thumbnail {
               url
+              resized {
+                srcSet
+              }
             }
           }
           description
@@ -229,6 +235,24 @@ v8 = {
           "args": null,
           "kind": "ScalarField",
           "name": "url",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "ResizedImageUrl",
+          "kind": "LinkedField",
+          "name": "resized",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "srcSet",
+              "storageKey": null
+            }
+          ],
           "storageKey": null
         }
       ],
@@ -631,9 +655,9 @@ return {
     "metadata": {},
     "name": "ConsignInDemandNowQuery",
     "operationKind": "query",
-    "text": "query ConsignInDemandNowQuery(\n  $artistInternalId: ID!\n  $artistSlug: String!\n  $medium: String!\n) {\n  artist(id: $artistSlug) {\n    birthday\n    nationality\n    auctionResultsConnection(first: 1, sort: DATE_DESC) {\n      edges {\n        node {\n          internalID\n          title\n          dimensionText\n          images {\n            thumbnail {\n              url\n            }\n          }\n          description\n          dateText\n          organization\n          saleDate\n          priceRealized {\n            display\n            centsUSD\n          }\n          id\n        }\n      }\n    }\n    id\n  }\n  marketPriceInsights(artistId: $artistInternalId, medium: $medium) {\n    annualLotsSold\n    annualValueSoldCents\n    artistId\n    artistName\n    artsyQInventory\n    createdAt\n    demandRank\n    demandTrend\n    highRangeCents\n    largeHighRangeCents\n    largeLowRangeCents\n    largeMidRangeCents\n    liquidityRank\n    lowRangeCents\n    medianSaleToEstimateRatio\n    medium\n    mediumHighRangeCents\n    mediumLowRangeCents\n    mediumMidRangeCents\n    midRangeCents\n    sellThroughRate\n    smallHighRangeCents\n    smallLowRangeCents\n    smallMidRangeCents\n    updatedAt\n  }\n}\n"
+    "text": "query ConsignInDemandNowQuery(\n  $artistInternalId: ID!\n  $artistSlug: String!\n  $medium: String!\n) {\n  artist(id: $artistSlug) {\n    birthday\n    nationality\n    auctionResultsConnection(first: 1, sort: DATE_DESC) {\n      edges {\n        node {\n          internalID\n          title\n          dimensionText\n          images {\n            thumbnail {\n              url\n              resized {\n                srcSet\n              }\n            }\n          }\n          description\n          dateText\n          organization\n          saleDate\n          priceRealized {\n            display\n            centsUSD\n          }\n          id\n        }\n      }\n    }\n    id\n  }\n  marketPriceInsights(artistId: $artistInternalId, medium: $medium) {\n    annualLotsSold\n    annualValueSoldCents\n    artistId\n    artistName\n    artsyQInventory\n    createdAt\n    demandRank\n    demandTrend\n    highRangeCents\n    largeHighRangeCents\n    largeLowRangeCents\n    largeMidRangeCents\n    liquidityRank\n    lowRangeCents\n    medianSaleToEstimateRatio\n    medium\n    mediumHighRangeCents\n    mediumLowRangeCents\n    mediumMidRangeCents\n    midRangeCents\n    sellThroughRate\n    smallHighRangeCents\n    smallLowRangeCents\n    smallMidRangeCents\n    updatedAt\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'c0d0cbc29810b597927ea72f5dcaf098';
+(node as any).hash = '569806281f642e911fd414a3f0ffc263';
 export default node;
