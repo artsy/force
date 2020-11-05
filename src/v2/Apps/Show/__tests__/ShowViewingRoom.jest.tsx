@@ -34,14 +34,14 @@ const { getWrapper } = setupTestWrapper<ShowViewingRoom_Test_Query>({
 })
 
 describe("ShowViewingRoom", () => {
-  let trackEvent
+  const trackEvent = jest.fn()
+
   beforeEach(() => {
-    trackEvent = jest.fn()
-    ;(useTracking as jest.Mock).mockImplementation(() => {
-      return {
-        trackEvent,
-      }
-    })
+    ;(useTracking as jest.Mock).mockImplementation(() => ({ trackEvent }))
+  })
+
+  afterEach(() => {
+    trackEvent.mockClear()
   })
 
   it("renders correctly", () => {
@@ -83,5 +83,7 @@ describe("ShowViewingRoom", () => {
       destination_page_owner_type: "viewingRoom",
       type: "thumbnail",
     })
+
+    expect(trackEvent).toBeCalledTimes(1)
   })
 })

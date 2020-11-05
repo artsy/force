@@ -3,9 +3,7 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type ShowContextCard_Test_QueryVariables = {
-    slug: string;
-};
+export type ShowContextCard_Test_QueryVariables = {};
 export type ShowContextCard_Test_QueryResponse = {
     readonly show: {
         readonly " $fragmentRefs": FragmentRefs<"ShowContextCard_show">;
@@ -19,10 +17,8 @@ export type ShowContextCard_Test_Query = {
 
 
 /*
-query ShowContextCard_Test_Query(
-  $slug: String!
-) {
-  show(id: $slug) {
+query ShowContextCard_Test_Query {
+  show(id: "xxx") {
     ...ShowContextCard_show
     id
   }
@@ -90,48 +86,40 @@ fragment ShowContextCard_show on Show {
 const node: ConcreteRequest = (function(){
 var v0 = [
   {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "slug",
-    "type": "String!"
-  }
-],
-v1 = [
-  {
-    "kind": "Variable",
+    "kind": "Literal",
     "name": "id",
-    "variableName": "slug"
+    "value": "xxx"
   }
 ],
-v2 = {
+v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v3 = {
+v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "internalID",
   "storageKey": null
 },
-v4 = {
+v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "slug",
   "storageKey": null
 },
-v5 = {
+v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "href",
   "storageKey": null
 },
-v6 = {
+v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -140,14 +128,14 @@ v6 = {
 };
 return {
   "fragment": {
-    "argumentDefinitions": (v0/*: any*/),
+    "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
     "name": "ShowContextCard_Test_Query",
     "selections": [
       {
         "alias": null,
-        "args": (v1/*: any*/),
+        "args": (v0/*: any*/),
         "concreteType": "Show",
         "kind": "LinkedField",
         "name": "show",
@@ -159,20 +147,20 @@ return {
             "name": "ShowContextCard_show"
           }
         ],
-        "storageKey": null
+        "storageKey": "show(id:\"xxx\")"
       }
     ],
     "type": "Query"
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": (v0/*: any*/),
+    "argumentDefinitions": [],
     "kind": "Operation",
     "name": "ShowContextCard_Test_Query",
     "selections": [
       {
         "alias": null,
-        "args": (v1/*: any*/),
+        "args": (v0/*: any*/),
         "concreteType": "Show",
         "kind": "LinkedField",
         "name": "show",
@@ -200,14 +188,14 @@ return {
                 "name": "__typename",
                 "storageKey": null
               },
-              (v2/*: any*/),
+              (v1/*: any*/),
               {
                 "kind": "InlineFragment",
                 "selections": [
+                  (v2/*: any*/),
                   (v3/*: any*/),
                   (v4/*: any*/),
                   (v5/*: any*/),
-                  (v6/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -223,7 +211,7 @@ return {
                         "name": "city",
                         "storageKey": null
                       },
-                      (v2/*: any*/)
+                      (v1/*: any*/)
                     ],
                     "storageKey": null
                   },
@@ -286,7 +274,7 @@ return {
                                 ],
                                 "storageKey": null
                               },
-                              (v2/*: any*/)
+                              (v1/*: any*/)
                             ],
                             "storageKey": null
                           }
@@ -310,10 +298,10 @@ return {
             "name": "fair",
             "plural": false,
             "selections": [
+              (v2/*: any*/),
               (v3/*: any*/),
               (v4/*: any*/),
               (v5/*: any*/),
-              (v6/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -387,13 +375,13 @@ return {
                 ],
                 "storageKey": null
               },
-              (v2/*: any*/)
+              (v1/*: any*/)
             ],
             "storageKey": null
           },
-          (v2/*: any*/)
+          (v1/*: any*/)
         ],
-        "storageKey": null
+        "storageKey": "show(id:\"xxx\")"
       }
     ]
   },
@@ -402,9 +390,9 @@ return {
     "metadata": {},
     "name": "ShowContextCard_Test_Query",
     "operationKind": "query",
-    "text": "query ShowContextCard_Test_Query(\n  $slug: String!\n) {\n  show(id: $slug) {\n    ...ShowContextCard_show\n    id\n  }\n}\n\nfragment FairCard_fair on Fair {\n  name\n  image {\n    cropped(width: 768, height: 512, version: \"wide\") {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment FairTiming_fair on Fair {\n  exhibitionPeriod\n  startAt\n  endAt\n}\n\nfragment ShowContextCard_show on Show {\n  isFairBooth\n  partner {\n    __typename\n    ... on Partner {\n      internalID\n      slug\n      href\n      name\n      locations {\n        city\n        id\n      }\n      artworksConnection(first: 3, sort: MERCHANDISABILITY_DESC) {\n        edges {\n          node {\n            image {\n              url(version: \"larger\")\n            }\n            id\n          }\n        }\n      }\n    }\n    ... on Node {\n      id\n    }\n    ... on ExternalPartner {\n      id\n    }\n  }\n  fair {\n    internalID\n    slug\n    href\n    name\n    ...FairTiming_fair\n    ...FairCard_fair\n    id\n  }\n}\n"
+    "text": "query ShowContextCard_Test_Query {\n  show(id: \"xxx\") {\n    ...ShowContextCard_show\n    id\n  }\n}\n\nfragment FairCard_fair on Fair {\n  name\n  image {\n    cropped(width: 768, height: 512, version: \"wide\") {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment FairTiming_fair on Fair {\n  exhibitionPeriod\n  startAt\n  endAt\n}\n\nfragment ShowContextCard_show on Show {\n  isFairBooth\n  partner {\n    __typename\n    ... on Partner {\n      internalID\n      slug\n      href\n      name\n      locations {\n        city\n        id\n      }\n      artworksConnection(first: 3, sort: MERCHANDISABILITY_DESC) {\n        edges {\n          node {\n            image {\n              url(version: \"larger\")\n            }\n            id\n          }\n        }\n      }\n    }\n    ... on Node {\n      id\n    }\n    ... on ExternalPartner {\n      id\n    }\n  }\n  fair {\n    internalID\n    slug\n    href\n    name\n    ...FairTiming_fair\n    ...FairCard_fair\n    id\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'a7359cd327930945e900c214fa9d3907';
+(node as any).hash = '62c6d9dafbebe75585281066ca84ae6a';
 export default node;
