@@ -35,7 +35,7 @@ export const FairCollectionsFragmentContainer = createFragmentContainer(
   {
     fair: graphql`
       fragment FairCollections_fair on Fair {
-        marketingCollections(size: 4) {
+        marketingCollections(size: 5) {
           id
           slug
           ...FairCollection_collection
