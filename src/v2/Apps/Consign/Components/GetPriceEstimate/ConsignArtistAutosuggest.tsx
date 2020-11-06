@@ -32,6 +32,11 @@ export const ConsignArtistAutosuggest: React.FC = () => {
         container: {
           width: "100%",
         },
+        suggestionsContainer: {
+          marginTop: "4px",
+          boxShadow:
+            "0px 0px 1px rgba(0, 0, 0, 0.08), 0px 2px 8px rgba(0, 0, 0, 0.12)",
+        },
       }}
     />
   )
@@ -53,7 +58,7 @@ const AutosuggestInput: React.FC = props => {
 
 const Suggestion: React.FC<{ node: any /* FIXME */ }> = ({ node }) => {
   return (
-    <Text width="100%" background="white">
+    <Text width="100%" background="white" py={0.5} paddingLeft={1}>
       {node.displayLabel}
     </Text>
   )
