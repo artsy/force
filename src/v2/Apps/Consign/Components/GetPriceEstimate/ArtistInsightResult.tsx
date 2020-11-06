@@ -85,7 +85,7 @@ export const ArtistInsightResult: React.FC = () => {
 
       <Flex width="100%" justifyContent="center">
         <Text variant="small" color="black60" maxWidth={495}>
-          Price Estimate is based on 36 months of secondary market data for this
+          Price estimate is based on 36 months of secondary market data for this
           artist + category combination.
         </Text>
       </Flex>
@@ -101,7 +101,7 @@ const ZeroState: React.FC = () => {
     <Container>
       <Box>
         <Text variant="small" color="black60">
-          Price Estimate for works by
+          Price estimate for works by
         </Text>
         <Text
           variant="largeTitle"
