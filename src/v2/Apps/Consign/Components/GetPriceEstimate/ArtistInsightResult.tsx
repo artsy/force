@@ -13,6 +13,7 @@ import {
   color,
 } from "@artsy/palette"
 import styled from "styled-components"
+import { RouterLink } from "v2/Artsy/Router/RouterLink"
 
 export const ArtistInsightResult: React.FC = () => {
   const {
@@ -41,6 +42,7 @@ export const ArtistInsightResult: React.FC = () => {
   const medianEstimateDollars = formatCentsToDollars(midRangeCents)
 
   const imageUrl = selectedSuggestion?.node?.imageUrl
+  const artistSlug = selectedSuggestion?.node?.slug
   const { artistName, medium } = node
 
   return (
@@ -76,9 +78,11 @@ export const ArtistInsightResult: React.FC = () => {
             An Artsy specialist can provide a custom valuation for your work.
           </Text>
           <Spacer mb={2} />
-          <Button width={230} variant="secondaryOutline" mr={2}>
-            Explore auction data
-          </Button>
+          <RouterLink to={`/artist/${artistSlug}/auction-results`}>
+            <Button width={230} variant="secondaryOutline" mr={2}>
+              Explore auction data
+            </Button>
+          </RouterLink>
           <Button width={230}>Get a valuation</Button>
         </Box>
       </Container>

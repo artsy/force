@@ -105,6 +105,7 @@ function getActions(dispatch: Dispatch<Action>, relayEnvironment: Environment) {
                 node {
                   displayLabel
                   ... on Artist {
+                    slug
                     internalID
                     imageUrl
                   }
