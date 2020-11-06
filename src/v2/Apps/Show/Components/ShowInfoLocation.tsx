@@ -11,10 +11,7 @@ export const ShowInfoLocation: React.FC<ShowInfoLocationProps> = ({
   show,
   ...rest
 }) => {
-  // Merge show location and fair location into a single object, favoring show
-  const location = Object.entries(show.location).reduce((acc, [key, value]) => {
-    return { ...acc, [key]: value ?? show.fair?.location?.[key] }
-  }, {} as typeof show.location)
+  const location = show.location ?? show.fair?.location
 
   const lines = [
     location.display,
@@ -42,6 +39,7 @@ export const ShowInfoLocationFragmentContainer = createFragmentContainer(
       fragment ShowInfoLocation_show on Show {
         fair {
           location {
+            display
             address
             address2
             city
