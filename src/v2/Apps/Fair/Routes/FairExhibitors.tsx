@@ -104,6 +104,7 @@ export const FairExhibitorsFragmentContainer = createPaginationContainer(
           first: $first
           after: $after
           sort: FEATURED_DESC
+          totalCount: true
         ) @connection(key: "FairExhibitorsQuery_exhibitors") {
           edges {
             node {
