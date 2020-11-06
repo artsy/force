@@ -100,6 +100,9 @@ const ZeroState: React.FC = () => {
   return (
     <Container>
       <Box>
+        <Text variant="small" color="black60">
+          Price Estimate for works by
+        </Text>
         <Text
           variant="largeTitle"
           borderBottom={`1px solid ${color("black60")}`}
