@@ -183,7 +183,7 @@ export default createFragmentContainer(TrackingWrappedFairApp, {
           __typename
         }
       }
-      marketingCollections(size: 4) {
+      marketingCollections(size: 5) {
         __typename
       }
       counts {
