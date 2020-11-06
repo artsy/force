@@ -2,18 +2,10 @@ import React from "react"
 import { usePriceEstimateContext } from "./ConsignPriceEstimateContext"
 import { formatCentsToDollars } from "../../Utils/formatCentsToDollars"
 
-import {
-  Box,
-  Button,
-  Flex,
-  Image,
-  Separator,
-  Spacer,
-  Text,
-  color,
-} from "@artsy/palette"
+import { Box, Button, Flex, Image, Spacer, Text, color } from "@artsy/palette"
 import styled from "styled-components"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
+import { useSystemContext } from "v2/Artsy/SystemContext"
 
 export const ArtistInsightResult: React.FC = () => {
   const {
@@ -103,6 +95,7 @@ export const ArtistInsightResult: React.FC = () => {
 
 const ZeroState: React.FC = () => {
   const { selectedSuggestion } = usePriceEstimateContext()
+  const { user } = useSystemContext()
 
   return (
     <Container>
@@ -120,21 +113,29 @@ const ZeroState: React.FC = () => {
           estimate for this artist.
         </Text>
         <Spacer mb={3} />
-        <Text variant="text">
-          The market is unique for every artwork. Log in or sign up to access
-          auction result data from thousands of artists.
-        </Text>
-      </Box>
+        {user ? (
+          <Text variant="text">Try searching for another artist.</Text>
+        ) : (
+          <>
+            <Box>
+              <Text variant="text">
+                The market is unique for every artwork. Log in or sign up to
+                access auction result data from thousands of artists.
+              </Text>
+            </Box>
 
-      <Spacer mb={3} />
+            <Spacer mb={3} />
 
-      <Box>
-        <Button width={230} mr={2}>
-          Sign up
-        </Button>
-        <Button width={230} variant="secondaryOutline">
-          Log in
-        </Button>
+            <Box>
+              <Button width={230} mr={2}>
+                Sign up
+              </Button>
+              <Button width={230} variant="secondaryOutline">
+                Log in
+              </Button>
+            </Box>
+          </>
+        )}
       </Box>
     </Container>
   )
