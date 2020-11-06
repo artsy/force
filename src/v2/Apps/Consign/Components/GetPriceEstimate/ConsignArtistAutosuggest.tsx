@@ -2,8 +2,12 @@ import Autosuggest from "react-autosuggest"
 import React from "react"
 import { Input, MagnifyingGlassIcon, Text } from "@artsy/palette"
 import { usePriceEstimateContext } from "./ConsignPriceEstimateContext"
+import { useTracking } from "v2/Artsy"
+// import { OwnerType } from "@artsy/cohesion"
 
 export const ConsignArtistAutosuggest: React.FC = () => {
+  const tracking = useTracking()
+
   const {
     fetchSuggestions,
     searchQuery,
@@ -11,6 +15,18 @@ export const ConsignArtistAutosuggest: React.FC = () => {
     setSearchQuery,
     suggestions,
   } = usePriceEstimateContext()
+
+  const trackFocusedOnSearchInput = () => {
+    tracking.trackEvent({})
+  }
+
+  const trackSelectedItemFromSearch = () => {
+    tracking.trackEvent({})
+  }
+
+  const trackSearchedWithNoResults = () => {
+    tracking.trackEvent({})
+  }
 
   return (
     <Autosuggest
@@ -24,6 +40,9 @@ export const ConsignArtistAutosuggest: React.FC = () => {
       inputProps={{
         placeholder: "Tell me the value of my…",
         value: searchQuery,
+        onFocus: () => {
+          //
+        },
         onChange: (_, { newValue }) => {
           setSearchQuery(newValue)
         },
