@@ -32,9 +32,24 @@ fragment FollowProfileButton_profile on Profile {
   is_followed: isFollowed
 }
 
+fragment ShowHours_show on Show {
+  location {
+    ...ShowLocationHours_location
+    id
+  }
+  fair {
+    location {
+      ...ShowLocationHours_location
+      id
+    }
+    id
+  }
+}
+
 fragment ShowInfoLocation_show on Show {
   fair {
     location {
+      display
       address
       address2
       city
@@ -59,6 +74,7 @@ fragment ShowInfoLocation_show on Show {
 
 fragment ShowInfo_show on Show {
   ...ShowInfoLocation_show
+  ...ShowHours_show
   name
   about: description
   pressRelease(format: HTML)
@@ -74,6 +90,21 @@ fragment ShowInfo_show on Show {
     }
     ... on ExternalPartner {
       id
+    }
+  }
+}
+
+fragment ShowLocationHours_location on Location {
+  openingHours {
+    __typename
+    ... on OpeningHoursArray {
+      schedules {
+        days
+        hours
+      }
+    }
+    ... on OpeningHoursText {
+      text
     }
   }
 }
@@ -111,59 +142,142 @@ v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "address",
+  "name": "city",
   "storageKey": null
 },
 v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "address2",
+  "name": "id",
   "storageKey": null
 },
 v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "city",
+  "name": "__typename",
   "storageKey": null
 },
 v4 = {
   "alias": null,
   "args": null,
-  "kind": "ScalarField",
-  "name": "state",
+  "concreteType": "Location",
+  "kind": "LinkedField",
+  "name": "location",
+  "plural": false,
+  "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "display",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "address",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "address2",
+      "storageKey": null
+    },
+    (v1/*: any*/),
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "state",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "country",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "summary",
+      "storageKey": null
+    },
+    (v2/*: any*/),
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": null,
+      "kind": "LinkedField",
+      "name": "openingHours",
+      "plural": false,
+      "selections": [
+        (v3/*: any*/),
+        {
+          "kind": "InlineFragment",
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "FormattedDaySchedules",
+              "kind": "LinkedField",
+              "name": "schedules",
+              "plural": true,
+              "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "days",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "hours",
+                  "storageKey": null
+                }
+              ],
+              "storageKey": null
+            }
+          ],
+          "type": "OpeningHoursArray"
+        },
+        {
+          "kind": "InlineFragment",
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "text",
+              "storageKey": null
+            }
+          ],
+          "type": "OpeningHoursText"
+        }
+      ],
+      "storageKey": null
+    }
+  ],
   "storageKey": null
 },
 v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "country",
-  "storageKey": null
-},
-v6 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "summary",
-  "storageKey": null
-},
-v7 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "id",
-  "storageKey": null
-},
-v8 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
   "name": "name",
   "storageKey": null
 },
-v9 = {
+v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -218,54 +332,13 @@ return {
             "name": "fair",
             "plural": false,
             "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": "Location",
-                "kind": "LinkedField",
-                "name": "location",
-                "plural": false,
-                "selections": [
-                  (v1/*: any*/),
-                  (v2/*: any*/),
-                  (v3/*: any*/),
-                  (v4/*: any*/),
-                  (v5/*: any*/),
-                  (v6/*: any*/),
-                  (v7/*: any*/)
-                ],
-                "storageKey": null
-              },
-              (v7/*: any*/)
-            ],
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "concreteType": "Location",
-            "kind": "LinkedField",
-            "name": "location",
-            "plural": false,
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "display",
-                "storageKey": null
-              },
-              (v1/*: any*/),
-              (v2/*: any*/),
-              (v3/*: any*/),
               (v4/*: any*/),
-              (v5/*: any*/),
-              (v6/*: any*/),
-              (v7/*: any*/)
+              (v2/*: any*/)
             ],
             "storageKey": null
           },
-          (v8/*: any*/),
+          (v4/*: any*/),
+          (v5/*: any*/),
           {
             "alias": "about",
             "args": null,
@@ -301,14 +374,8 @@ return {
             "name": "partner",
             "plural": false,
             "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "__typename",
-                "storageKey": null
-              },
-              (v7/*: any*/),
+              (v3/*: any*/),
+              (v2/*: any*/),
               {
                 "kind": "InlineFragment",
                 "selections": [
@@ -319,7 +386,7 @@ return {
                     "name": "type",
                     "storageKey": null
                   },
-                  (v9/*: any*/),
+                  (v6/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -327,7 +394,7 @@ return {
                     "name": "href",
                     "storageKey": null
                   },
-                  (v8/*: any*/),
+                  (v5/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -343,8 +410,8 @@ return {
                     "name": "locations",
                     "plural": true,
                     "selections": [
-                      (v3/*: any*/),
-                      (v7/*: any*/)
+                      (v1/*: any*/),
+                      (v2/*: any*/)
                     ],
                     "storageKey": null
                   },
@@ -363,9 +430,9 @@ return {
                     "name": "profile",
                     "plural": false,
                     "selections": [
-                      (v7/*: any*/),
-                      (v9/*: any*/),
-                      (v8/*: any*/),
+                      (v2/*: any*/),
+                      (v6/*: any*/),
+                      (v5/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -413,7 +480,7 @@ return {
             ],
             "storageKey": null
           },
-          (v7/*: any*/)
+          (v2/*: any*/)
         ],
         "storageKey": "show(id:\"xxx\")"
       }
@@ -424,7 +491,7 @@ return {
     "metadata": {},
     "name": "ShowInfo_Test_Query",
     "operationKind": "query",
-    "text": "query ShowInfo_Test_Query {\n  show(id: \"xxx\") {\n    ...ShowInfo_show\n    id\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  is_followed: isFollowed\n}\n\nfragment ShowInfoLocation_show on Show {\n  fair {\n    location {\n      address\n      address2\n      city\n      state\n      country\n      summary\n      id\n    }\n    id\n  }\n  location {\n    display\n    address\n    address2\n    city\n    state\n    country\n    summary\n    id\n  }\n}\n\nfragment ShowInfo_show on Show {\n  ...ShowInfoLocation_show\n  name\n  about: description\n  pressRelease(format: HTML)\n  hasLocation\n  partner {\n    __typename\n    ... on Partner {\n      ...ShowPartnerEntityHeader_partner\n      type\n    }\n    ... on Node {\n      id\n    }\n    ... on ExternalPartner {\n      id\n    }\n  }\n}\n\nfragment ShowPartnerEntityHeader_partner on Partner {\n  type\n  slug\n  href\n  name\n  initials\n  locations {\n    city\n    id\n  }\n  isDefaultProfilePublic\n  profile {\n    ...FollowProfileButton_profile\n    icon {\n      url(version: \"square140\")\n    }\n    id\n  }\n}\n"
+    "text": "query ShowInfo_Test_Query {\n  show(id: \"xxx\") {\n    ...ShowInfo_show\n    id\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  is_followed: isFollowed\n}\n\nfragment ShowHours_show on Show {\n  location {\n    ...ShowLocationHours_location\n    id\n  }\n  fair {\n    location {\n      ...ShowLocationHours_location\n      id\n    }\n    id\n  }\n}\n\nfragment ShowInfoLocation_show on Show {\n  fair {\n    location {\n      display\n      address\n      address2\n      city\n      state\n      country\n      summary\n      id\n    }\n    id\n  }\n  location {\n    display\n    address\n    address2\n    city\n    state\n    country\n    summary\n    id\n  }\n}\n\nfragment ShowInfo_show on Show {\n  ...ShowInfoLocation_show\n  ...ShowHours_show\n  name\n  about: description\n  pressRelease(format: HTML)\n  hasLocation\n  partner {\n    __typename\n    ... on Partner {\n      ...ShowPartnerEntityHeader_partner\n      type\n    }\n    ... on Node {\n      id\n    }\n    ... on ExternalPartner {\n      id\n    }\n  }\n}\n\nfragment ShowLocationHours_location on Location {\n  openingHours {\n    __typename\n    ... on OpeningHoursArray {\n      schedules {\n        days\n        hours\n      }\n    }\n    ... on OpeningHoursText {\n      text\n    }\n  }\n}\n\nfragment ShowPartnerEntityHeader_partner on Partner {\n  type\n  slug\n  href\n  name\n  initials\n  locations {\n    city\n    id\n  }\n  isDefaultProfilePublic\n  profile {\n    ...FollowProfileButton_profile\n    icon {\n      url(version: \"square140\")\n    }\n    id\n  }\n}\n"
   }
 };
 })();

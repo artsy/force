@@ -6,6 +6,7 @@ import { FragmentRefs } from "relay-runtime";
 export type ShowInfoLocation_show = {
     readonly fair: {
         readonly location: {
+            readonly display: string | null;
             readonly address: string | null;
             readonly address2: string | null;
             readonly city: string | null;
@@ -37,43 +38,61 @@ const node: ReaderFragment = (function(){
 var v0 = {
   "alias": null,
   "args": null,
-  "kind": "ScalarField",
-  "name": "address",
-  "storageKey": null
-},
-v1 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "address2",
-  "storageKey": null
-},
-v2 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "city",
-  "storageKey": null
-},
-v3 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "state",
-  "storageKey": null
-},
-v4 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "country",
-  "storageKey": null
-},
-v5 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "summary",
+  "concreteType": "Location",
+  "kind": "LinkedField",
+  "name": "location",
+  "plural": false,
+  "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "display",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "address",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "address2",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "city",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "state",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "country",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "summary",
+      "storageKey": null
+    }
+  ],
   "storageKey": null
 };
 return {
@@ -90,53 +109,14 @@ return {
       "name": "fair",
       "plural": false,
       "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "concreteType": "Location",
-          "kind": "LinkedField",
-          "name": "location",
-          "plural": false,
-          "selections": [
-            (v0/*: any*/),
-            (v1/*: any*/),
-            (v2/*: any*/),
-            (v3/*: any*/),
-            (v4/*: any*/),
-            (v5/*: any*/)
-          ],
-          "storageKey": null
-        }
+        (v0/*: any*/)
       ],
       "storageKey": null
     },
-    {
-      "alias": null,
-      "args": null,
-      "concreteType": "Location",
-      "kind": "LinkedField",
-      "name": "location",
-      "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "display",
-          "storageKey": null
-        },
-        (v0/*: any*/),
-        (v1/*: any*/),
-        (v2/*: any*/),
-        (v3/*: any*/),
-        (v4/*: any*/),
-        (v5/*: any*/)
-      ],
-      "storageKey": null
-    }
+    (v0/*: any*/)
   ],
   "type": "Show"
 };
 })();
-(node as any).hash = '32f8e92fef4dc6b8d0d82dac3e7291c5';
+(node as any).hash = '85703778e703310bfac0d88513c68778';
 export default node;
