@@ -107,8 +107,14 @@ const ZeroState: React.FC = () => {
   return (
     <Container>
       <Box>
-        <Text variant="largeTitle">{selectedSuggestion.node.displayLabel}</Text>
-        <Separator mt={0.5} mb={2} />
+        <Text
+          variant="largeTitle"
+          borderBottom={`1px solid ${color("black60")}`}
+          pb={0.5}
+          mb={2}
+        >
+          {selectedSuggestion.node.displayLabel}
+        </Text>
         <Text variant="small" color="black60">
           Sorry, there isn’t enough secondary market data to provide a price
           estimate for this artist.
