@@ -30,7 +30,7 @@ const ArtistInsightExample: React.FC = () => {
             <Image
               width={165}
               height="auto"
-              src="https://d32dm0rphc51dk.cloudfront.net/3mOXPUFZdK7G6kejFVBSbA/large.jpg"
+              src="https://files.artsy.net/consign/price-estimate-1.jpg"
             />
           }
           artistName="Andy Warhol"
@@ -42,7 +42,7 @@ const ArtistInsightExample: React.FC = () => {
             <Image
               width={200}
               height="auto"
-              src="https://d32dm0rphc51dk.cloudfront.net/rc-gsfGM9zs2aDXTKY9pOg/large.jpg"
+              src="https://files.artsy.net/consign/price-estimate-2.jpg"
             />
           }
           artistName="Katharina Grosse"
@@ -54,7 +54,7 @@ const ArtistInsightExample: React.FC = () => {
             <Image
               width={163}
               height="auto"
-              src="https://d32dm0rphc51dk.cloudfront.net/_5zMF8NB0M49MMqCqVBcSg/large.jpg"
+              src="https://files.artsy.net/consign/price-estimate-3.jpg"
             />
           }
           artistName="George Condo"

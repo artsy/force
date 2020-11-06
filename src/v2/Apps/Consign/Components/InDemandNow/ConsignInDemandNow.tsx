@@ -70,6 +70,9 @@ const ConsignInDemandNowQueryRenderer: React.FC = () => {
                   images {
                     thumbnail {
                       url
+                      resized {
+                        srcSet
+                      }
                     }
                   }
                   description
@@ -178,6 +181,8 @@ const InDemandNowSmall: React.FC<
           <Box>
             <Image
               src={lastAuctionResult.images.thumbnail.url}
+              srcSet={lastAuctionResult.images.thumbnail.resized.srcSet}
+              alt={lastAuctionResult.title}
               width={100}
               height="auto"
             />
@@ -314,6 +319,8 @@ const InDemandNowLarge: React.FC<
             <Box>
               <Image
                 src={lastAuctionResult.images.thumbnail.url}
+                srcSet={lastAuctionResult.images.thumbnail.resized.srcSet}
+                alt={lastAuctionResult.title}
                 width={211}
                 height="auto"
               />

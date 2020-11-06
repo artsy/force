@@ -11,6 +11,7 @@ import {
 } from "@artsy/palette"
 import { Media } from "v2/Utils/Responsive"
 import { SectionContainer } from "./SectionContainer"
+import { RouterLink } from "v2/Artsy/Router/RouterLink"
 
 export const Header: React.FC = () => {
   return (
@@ -20,7 +21,7 @@ export const Header: React.FC = () => {
           <Media greaterThan="md">
             <LeftImage>
               <ResponsiveImage
-                src="https://d32dm0rphc51dk.cloudfront.net/-_sLkPLUzeqj55jCDVXokA/large.jpg"
+                src="https://files.artsy.net/consign/header-1.jpg"
                 style={{
                   backgroundPosition: "left",
                   transformOrigin: "left",
@@ -29,11 +30,11 @@ export const Header: React.FC = () => {
             </LeftImage>
           </Media>
           <CenterImage>
-            <ResponsiveImage src="https://d7hftxdivxxvm.cloudfront.net/?resize_to=fit&width=438&height=300&quality=80&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FQWFS4DMaS6a7qYextLx0yw%2Flarge.jpg" />
+            <ResponsiveImage src="https://files.artsy.net/consign/header-2.jpg" />
           </CenterImage>
           <Media greaterThan="md">
             <RightImage>
-              <ResponsiveImage src="https://d32dm0rphc51dk.cloudfront.net/_5zMF8NB0M49MMqCqVBcSg/large.jpg" />
+              <ResponsiveImage src="https://files.artsy.net/consign/header-3.jpg" />
             </RightImage>
           </Media>
         </Flex>
@@ -42,7 +43,10 @@ export const Header: React.FC = () => {
       <Box textAlign="center" width={350} position="relative" zIndex={3}>
         <Sans size="14">Sell with Artsy</Sans>
         <Spacer mt={5} />
-        <Button size="large">Get a free valuation</Button>
+
+        <RouterLink to="/consign/submission">
+          <Button size="large">Get a free valuation</Button>
+        </RouterLink>
       </Box>
     </SectionContainer>
   )

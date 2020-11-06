@@ -31,7 +31,7 @@ const node: ReaderFragment = {
         {
           "kind": "Literal",
           "name": "size",
-          "value": 4
+          "value": 5
         }
       ],
       "concreteType": "MarketingCollection",
@@ -59,10 +59,10 @@ const node: ReaderFragment = {
           "name": "FairCollection_collection"
         }
       ],
-      "storageKey": "marketingCollections(size:4)"
+      "storageKey": "marketingCollections(size:5)"
     }
   ],
   "type": "Fair"
 };
-(node as any).hash = '39e214126b8900a7d665f6628d4c2fad';
+(node as any).hash = '8ecebb5e5de44baf510cad3eaceda047';
 export default node;

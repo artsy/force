@@ -1,5 +1,5 @@
 import React from "react"
-import { Box, Button, Flex, Image, Spacer, Text } from "@artsy/palette"
+import { Box, Button, Flex, Image, Link, Spacer, Text } from "@artsy/palette"
 import { SectionContainer } from "./SectionContainer"
 import { Media } from "v2/Utils/Responsive"
 
@@ -13,24 +13,26 @@ export const SellWithArtsy: React.FC = () => {
           </Text>
           <Text variant="text">Selling art differently</Text>
           <Spacer mt={6} />
-
-          {/* FIXME: todo link */}
-          <Button>Download the app</Button>
+          <Link
+            href="https://apps.apple.com/us/app/artsy-buy-sell-original-art/id703796080"
+            target="_blank"
+          >
+            <Button>Download the app</Button>
+          </Link>
         </Box>
         <Box>
           <Media greaterThanOrEqual="sm">
-            {/* FIXME: Move images to vanity.artsy.net */}
             <Image
               height={320}
               width="auto"
-              src="https://user-images.githubusercontent.com/236943/97369833-e73bfb80-186a-11eb-9085-2ff4b2bcbb21.png"
+              src="https://files.artsy.net/consign/banner-large.jpg"
             />
           </Media>
           <Media lessThan="sm">
             <Image
               height={270}
               width="auto"
-              src="https://user-images.githubusercontent.com/236943/97369845-ef943680-186a-11eb-96d8-d4563313b9f4.png"
+              src="https://files.artsy.net/consign/banner-small.jpg"
             />
           </Media>
         </Box>

@@ -27,10 +27,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/cohesion/-/cohesion-1.45.0.tgz#f97ff2237033cf9704e452fb35a50b769dd4ef14"
   integrity sha512-WH+TiBLuWtA8XITmXv5OJLr0RcT0VXNaXyYE+gur1MEg8c9s1eh9rfpwy8CPYjl1cPOAXyJVZeIMf1vlNsCNyA==
 
-"@artsy/cohesion@1.47.0":
-  version "1.47.0"
-  resolved "https://registry.yarnpkg.com/@artsy/cohesion/-/cohesion-1.47.0.tgz#42cd47aea81eda519dd62052e07e0d6f776319c4"
-  integrity sha512-lk3n14PR+jOZ3SG82S9OUZy62cBk2h4rNBwBWJ3Xk8FtOru4i1FSadgF4tjKPcVyh9qo+VZo7ESAbZ1f9l4odQ==
+"@artsy/cohesion@1.48.0":
+  version "1.48.0"
+  resolved "https://registry.yarnpkg.com/@artsy/cohesion/-/cohesion-1.48.0.tgz#fb54d314786c51d9fdc3b9caa150aaf424306615"
+  integrity sha512-W2Xqurj200DAdA5xAOrV8n6BD4DzEIxH7wJdAzSvcivCG9F99QmNbfUKEfFiszk/Achfpfy7SU6r9cvdapu2Xw==
 
 "@artsy/detect-responsive-traits@^0.0.5":
   version "0.0.5"
@@ -93,10 +93,10 @@
   dependencies:
     passport-strategy "1.x.x"
 
-"@artsy/passport@1.6.0":
-  version "1.6.0"
-  resolved "https://registry.yarnpkg.com/@artsy/passport/-/passport-1.6.0.tgz#18d85390b4d2bd34441cf5bf1226bc4c5a5541d7"
-  integrity sha512-IssPmgM8weVl4J2u4T174Lc3k/mYhxmQMmAZhWgW9oL4JPo59dDfB6njpIbEPSL+I77qfi3q63cHm5o1S668vQ==
+"@artsy/passport@1.7.0":
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/@artsy/passport/-/passport-1.7.0.tgz#1b0581e0ad5b02a402a5bd37fd4e40fb6041d4c1"
+  integrity sha512-DQgwPnslTHlxTyM66QWjSrNjCtozEWLg/vt2O2U35QE0FWzrw5OUbQzYcF53sVqFU+QXZNwb8IfPFm0sZ0282w==
   dependencies:
     "@artsy/passport-local-with-otp" "0.3.1"
     "@artsy/xapp" "1.0.6"
@@ -3000,6 +3000,14 @@
     "@types/react" "*"
     "@types/react-transition-group" "*"
 
+"@types/react-relay@*":
+  version "7.0.17"
+  resolved "https://registry.yarnpkg.com/@types/react-relay/-/react-relay-7.0.17.tgz#83f6b85c41b5fd3bb27d04d759fa4c0e4dd6a8d4"
+  integrity sha512-cJqOFIbp3M3/QkRpxlL4pwWRWB0lPGHevJFW8unuebkkITre8ptgknkGhAKe5IlA6ENTRJqVQXMuNdyLxl+0cQ==
+  dependencies:
+    "@types/react" "*"
+    "@types/relay-runtime" "*"
+
 "@types/react-relay@7.0.9":
   version "7.0.9"
   resolved "https://registry.yarnpkg.com/@types/react-relay/-/react-relay-7.0.9.tgz#aae453888d5383dc13d7c5b55beb6b5933939ae8"
@@ -3070,6 +3078,15 @@
   version "9.1.6"
   resolved "https://registry.yarnpkg.com/@types/relay-runtime/-/relay-runtime-9.1.6.tgz#5a9afc37552d7e5b7966779d33ab26dce7da6771"
   integrity sha512-rdylQOGAoqjDjtzC2uKdjIqeDRcAvUsjONQB+FZld3cAP9qU4eEwTfMKJ7MdZSw2YbWRcTphczT4OpKKlLxY3Q==
+
+"@types/relay-test-utils@6.0.3":
+  version "6.0.3"
+  resolved "https://registry.yarnpkg.com/@types/relay-test-utils/-/relay-test-utils-6.0.3.tgz#aea2fa30e754c94f0d45b4abe78dfb2e35e2b45d"
+  integrity sha512-vVI8RcdnrP9pBaIN6Sg/ngni9Yh509WGbbX4tjPYlpNwsHGXs/O0e2Bjd4GZGQdInFvsrs/OOiGUG0dxoLscDQ==
+  dependencies:
+    "@types/react" "*"
+    "@types/react-relay" "*"
+    "@types/relay-runtime" "*"
 
 "@types/serve-static@*":
   version "1.13.1"

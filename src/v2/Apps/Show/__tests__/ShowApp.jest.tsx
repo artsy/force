@@ -1,9 +1,8 @@
-import React from "react"
-import { mount } from "enzyme"
-import { MockPayloadGenerator, createMockEnvironment } from "relay-test-utils"
-import { QueryRenderer, graphql } from "react-relay"
+import { graphql } from "react-relay"
 import ShowApp from "../ShowApp"
 import { ShowViewingRoom } from "../Components/ShowViewingRoom"
+import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
+import { ShowApp_Test_Query } from "v2/__generated__/ShowApp_Test_Query.graphql"
 
 jest.unmock("react-relay")
 
@@ -19,40 +18,18 @@ jest.mock("v2/Apps/Show/Components/ShowInstallShots", () => ({
   ShowInstallShotsFragmentContainer: () => null,
 }))
 
+const { getWrapper } = setupTestWrapper<ShowApp_Test_Query>({
+  Component: ShowApp,
+  query: graphql`
+    query ShowApp_Test_Query {
+      show(id: "xxx") {
+        ...ShowApp_show
+      }
+    }
+  `,
+})
+
 describe("ShowApp", () => {
-  const getWrapper = (mocks = {}) => {
-    const env = createMockEnvironment()
-
-    const TestRenderer = () => (
-      <QueryRenderer<any>
-        environment={env}
-        variables={{}}
-        query={graphql`
-          query ShowApp_Test_Query {
-            show(id: "xxx") {
-              ...ShowApp_show
-            }
-          }
-        `}
-        render={({ props, error }) => {
-          if (props?.show) {
-            return <ShowApp show={props.show} />
-          } else if (error) {
-            console.error(error)
-          }
-        }}
-      />
-    )
-
-    const wrapper = mount(<TestRenderer />)
-
-    env.mock.resolveMostRecentOperation(operation =>
-      MockPayloadGenerator.generate(operation, mocks)
-    )
-    wrapper.update()
-    return wrapper
-  }
-
   it("renders the title", () => {
     const wrapper = getWrapper({
       Show: () => ({ name: "Example Show" }),
