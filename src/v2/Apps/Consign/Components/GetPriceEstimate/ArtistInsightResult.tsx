@@ -83,7 +83,9 @@ export const ArtistInsightResult: React.FC = () => {
               Explore auction data
             </Button>
           </RouterLink>
-          <Button width={230}>Get a valuation</Button>
+          <RouterLink to="/consign/submission">
+            <Button width={230}>Get a valuation</Button>
+          </RouterLink>
         </Box>
       </Container>
 
