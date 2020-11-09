@@ -34,7 +34,7 @@ fetchMetaphysicsData = (req, showHeroUnits, showCollectionsHubs)->
   featuredLinks = new Items [], id: '529939e2275b245e290004a0', item_type: 'FeaturedLink'
 
   jsonLD = {
-    "@context": "http://schema.org",
+    "@context": "https://schema.org",
     "@type": "WebSite",
     "url": "https://www.artsy.net/",
     "potentialAction": {
