@@ -1,4 +1,3 @@
-import { data as sd } from "sharify"
 import {
   ContextModule,
   Intent,
@@ -8,30 +7,11 @@ import {
 import $ from "jquery"
 import { omit } from "lodash"
 import { analyticsHooks } from "desktop/components/inquiry_questionnaire/analytics/analyticsHooks"
-
-const analytics = window.analytics
+import { setAnalyticsClientReferrerOptions } from "desktop/analytics/helpers"
 ;(function () {
   "use strict"
 
   let namespace, track, trackWithoutNamespace, bind, bindOnce
-
-  function getTrackingOptions() {
-    let trackingOptions = {}
-
-    const referrer = window.analytics.__artsyClientSideRoutingReferrer
-    // Grab referrer from our trackingMiddleware in Reaction, since we're in a
-    // single-page-app context and the value will need to be refreshed on route
-    // change. See: https://github.com/artsy/force/blob/master/src/v2/Artsy/Analytics/trackingMiddleware.ts
-    if (referrer) {
-      trackingOptions = {
-        page: {
-          referrer,
-        },
-      }
-    }
-
-    return trackingOptions
-  }
 
   namespace = function (name) {
     return "inquiry_questionnaire:" + name
@@ -39,11 +19,11 @@ const analytics = window.analytics
 
   track = function (event, props = {}) {
     event = namespace(" " + event)
-    analytics.track(event, props, getTrackingOptions())
+    window.analytics.track(event, props, setAnalyticsClientReferrerOptions())
   }
 
   trackWithoutNamespace = function (event, props = {}) {
-    analytics.track(event, props, getTrackingOptions())
+    window.analytics.track(event, props, setAnalyticsClientReferrerOptions())
   }
 
   bind = function (name, handler) {
@@ -99,15 +79,15 @@ const analytics = window.analytics
   })
 
   // Proxied events
-  bind("modal:opened", function (context) {
+  bind("modal:opened", function (_context) {
     track("Opened inquiry flow")
   })
 
-  bind("modal:closed", function (context) {
+  bind("modal:closed", function (_context) {
     track("Closed inquiry flow")
   })
 
-  bind("state:completed", function (context) {
+  bind("state:completed", function (_context) {
     track("Completed inquiry flow")
   })
 
@@ -142,15 +122,15 @@ const analytics = window.analytics
     })
   })
 
-  bind("user:sync", function (context) {
+  bind("user:sync", function (_context) {
     track("User data saved")
   })
 
-  bind("collector_profile:sync", function (context) {
+  bind("collector_profile:sync", function (_context) {
     track("CollectorProfile data saved")
   })
 
-  bindOnce("inquiry:sync", function (context) {
+  bindOnce("inquiry:sync", function (_context) {
     track("Inquiry successfully sent")
   })
 

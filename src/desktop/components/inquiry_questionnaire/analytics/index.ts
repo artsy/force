@@ -1,6 +1,7 @@
 import { underscored } from "underscore.string"
 import { pick } from "lodash"
 import { analyticsHooks } from "./analyticsHooks"
+require("./events")
 
 const proxy = [
   "user",
