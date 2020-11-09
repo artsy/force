@@ -33,9 +33,7 @@ describe("Artworks template", function () {
     })
 
     return it("renders correctly", function () {
-      this.page.should.containEql(
-        '<a href="/the-armory-show/browse/artworks?filter=true">All Works</a>'
-      )
+      this.page.should.containEql('<a href="/fair/armory-show-2013')
       this.page.should.containEql("fairs-artworks-categories")
       return this.page.should.not.containEql("fair-artworks-list")
     })
