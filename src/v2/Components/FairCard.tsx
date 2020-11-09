@@ -15,15 +15,18 @@ export const FairCard: React.FC<FairHeaderImageProps> = ({
       aspectWidth={3}
       aspectHeight={2}
       maxWidth="100%"
-      bg="black60"
+      bg="black10"
+      borderRadius={4}
     >
-      <Image
-        src={image.cropped.src}
-        srcSet={image.cropped.srcSet}
-        alt={name}
-        lazyLoad
-        borderRadius="4px"
-      />
+      {image && (
+        <Image
+          src={image.cropped.src}
+          srcSet={image.cropped.srcSet}
+          alt={name}
+          lazyLoad
+          borderRadius={4}
+        />
+      )}
     </ResponsiveBox>
   )
 }
