@@ -6,7 +6,7 @@ import {
 } from "@artsy/cohesion"
 import { omit } from "lodash"
 import { analyticsHooks } from "desktop/components/inquiry_questionnaire/analytics/analyticsHooks"
-import { setAnalyticsClientReferrerOptions } from "desktop/analytics/helpers"
+import { setAnalyticsClientReferrerOptions } from "desktop/analytics/setAnalyticsClientReferrerOptions"
 ;(function () {
   "use strict"
 

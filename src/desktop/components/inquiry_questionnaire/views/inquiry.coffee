@@ -8,7 +8,7 @@ hasSeen = require '../../has_seen/index.coffee'
 sd = require('sharify').data
 template = -> require('../templates/inquiry.jade') arguments...
 { recaptcha } = require "../../../../v2/Utils/recaptcha"
-{ setAnalyticsClientReferrerOptions } = require "../../../analytics/helpers"
+{ setAnalyticsClientReferrerOptions } = require "../../../analytics/setAnalyticsClientReferrerOptions"
 
 module.exports = class Inquiry extends StepView
 

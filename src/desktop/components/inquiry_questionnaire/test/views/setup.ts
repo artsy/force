@@ -21,6 +21,9 @@ export const setup = cb =>
           sd: {
             AP: { loginPagePath: "/login" },
           },
+          analytics: {
+            track: sinon.stub(),
+          },
           grecaptcha: {
             ready: cb => {
               return cb()

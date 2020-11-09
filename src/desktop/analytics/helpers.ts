@@ -3,28 +3,9 @@ import { reportLoadTimeToVolley } from "lib/volley"
 import { extend, omit, pick } from "lodash"
 import { data as sd } from "sharify"
 import { trackTimeOnPage } from "./timeOnPageListener"
+import { setAnalyticsClientReferrerOptions } from "./setAnalyticsClientReferrerOptions"
 const setupSplitTests = require("../components/split_test/setup.coffee")
 const Events = require("../../v2/Utils/Events").default
-
-/**
- * Grabs referrer from v2 trackingMiddleware.
- * In single-page-app context, value needs to refresh on route changes
- * See: https://github.com/artsy/force/blob/master/src/v2/Artsy/Analytics/trackingMiddleware.ts
- * @param options
- */
-export const setAnalyticsClientReferrerOptions = (options: object = {}) => {
-  const referrer = window.analytics.__artsyClientSideRoutingReferrer
-  let trackingOptions = options
-
-  if (referrer) {
-    trackingOptions = {
-      page: {
-        referrer,
-      },
-    }
-  }
-  return trackingOptions
-}
 
 /**
  * Format and fire events triggered via react-tracking and cohesion

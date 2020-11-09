@@ -10,7 +10,7 @@ templates =
   login: -> require('../templates/account/login.jade') arguments...
   forgot: -> require('../templates/account/forgot.jade') arguments...
 { recaptcha } = require "../../../../v2/Utils/recaptcha"
-{ setAnalyticsClientReferrerOptions } = require "../../../analytics/helpers"
+{ setAnalyticsClientReferrerOptions } = require "../../../analytics/setAnalyticsClientReferrerOptions"
 
 { mediator } = require('../../../../lib/mediator')
 
