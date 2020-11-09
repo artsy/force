@@ -111,26 +111,6 @@ describe("SearchResult", function () {
     })
   })
 
-  describe("#updateForFair", () =>
-    it("modifies location and display model for fair booths", function () {
-      const fair = new Fair(fabricate("fair"))
-      const modelA = new SearchResult(
-        fabricate("show", { model: "partnershow" })
-      )
-      const modelB = new SearchResult(fabricate("artist", { model: "artist" }))
-
-      modelA.updateForFair(fair)
-      modelB.updateForFair(fair)
-
-      modelA.get("display_model").should.equal("Booth")
-      modelA
-        .get("location")
-        .should.containEql("/show/gagosian-gallery-inez-and-vinoodh")
-      return modelB
-        .get("location")
-        .should.containEql("/the-armory-show/browse/artist/pablo")
-    }))
-
   describe("#formatArticleAbout", () =>
     it("constructs about based on publish time and excerpt", function () {
       const article = fabricate("article", {
