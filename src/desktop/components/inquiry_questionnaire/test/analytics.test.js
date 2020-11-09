@@ -10,7 +10,9 @@ const { fabricate } = require("@artsy/antigravity")
 const CurrentUser = require("../../../models/current_user")
 const Artwork = require("../../../models/artwork")
 const ArtworkInquiry = require("../../../models/artwork_inquiry")
-const analytics = rewire("../analytics")
+const { attachInquiryAnalyticsHooks, teardownInquiryAnalyticsHooks } = rewire(
+  "../analytics"
+)
 
 describe("analytics proxy", function () {
   beforeEach(function () {
@@ -28,12 +30,12 @@ describe("analytics proxy", function () {
       foo: "not eventable",
     }
 
-    return analytics.attach(this.context)
+    return attachInquiryAnalyticsHooks(this.context)
   })
 
   afterEach(function () {
     this.hooks.trigger.restore()
-    return analytics.teardown(this.context)
+    return teardownInquiryAnalyticsHooks(this.context)
   })
 
   return describe("#attach", () =>

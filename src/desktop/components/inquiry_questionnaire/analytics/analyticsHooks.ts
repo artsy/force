@@ -4,6 +4,7 @@ export interface AnalyticsHooks {
   emitter: EventEmitter
   trigger: (eventHook: string, options?: unknown) => void
   on: (eventHook: string, cb?: (options?: unknown) => void) => void
+  off: (eventHook: string, cb?: (options?: unknown) => void) => void
 }
 
 declare global {
@@ -32,6 +33,13 @@ const on: AnalyticsHooks["on"] = (
   emitter.on(eventHook, callback)
 }
 
+const off: AnalyticsHooks["off"] = (
+  eventHook: string,
+  callback: (options?: unknown, optionalData?: unknown) => void
+) => {
+  emitter.off(eventHook, callback)
+}
+
 /**
  * @deprecated Event emitter used ONLY for inquiry analytics
  * @param eventHook name to identify events
@@ -40,5 +48,6 @@ const on: AnalyticsHooks["on"] = (
 export const analyticsHooks: AnalyticsHooks = {
   emitter,
   on,
+  off,
   trigger,
 }

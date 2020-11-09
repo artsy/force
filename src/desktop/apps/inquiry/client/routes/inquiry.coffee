@@ -8,7 +8,7 @@ StateView = require '../../../../components/branching_state/view.coffee'
 openErrorFlash = require '../../../../components/inquiry_questionnaire/error.coffee'
 Logger = require '../../../../components/logger/index.coffee'
 Trail = require '../../../../components/inquiry_questionnaire/trail.coffee'
-analytics = require '../../../../components/inquiry_questionnaire/analytics.coffee'
+{ attachInquiryAnalyticsHooks } = require '../../../../components/inquiry_questionnaire/analytics'
 FastClick = require 'fastclick'
 { steps, decisions, views } = require '../map.coffee'
 
@@ -44,7 +44,7 @@ module.exports = (id, bypass) ->
     state: state
     trail: trail
 
-  analytics.attach state.context
+  attachInquiryAnalyticsHooks state.context
 
   state
     .on 'next', (step) ->
