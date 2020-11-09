@@ -7,6 +7,26 @@ const setupSplitTests = require("../components/split_test/setup.coffee")
 const Events = require("../../v2/Utils/Events").default
 
 /**
+ * Grabs referrer from v2 trackingMiddleware.
+ * In single-page-app context, value needs to refresh on route changes
+ * See: https://github.com/artsy/force/blob/master/src/v2/Artsy/Analytics/trackingMiddleware.ts
+ * @param options
+ */
+export const setAnalyticsClientReferrerOptions = (options: object = {}) => {
+  const referrer = window.analytics.__artsyClientSideRoutingReferrer
+  let trackingOptions = options
+
+  if (referrer) {
+    trackingOptions = {
+      page: {
+        referrer,
+      },
+    }
+  }
+  return trackingOptions
+}
+
+/**
  * Format and fire events triggered via react-tracking and cohesion
  */
 export const trackEvent = (data: any, options: object = {}) => {
@@ -16,22 +36,11 @@ export const trackEvent = (data: any, options: object = {}) => {
   if (actionName) {
     // Fire only page (not track) when expanding articles
     if (actionName === "Clicked read more") {
-      // Send Reaction's read more as a page view
+      // Send read more event as a page view
       return onClickedReadMore(data)
     }
-    // Grab referrer from our trackingMiddleware in Reaction, since we're in a
-    // single-page-app context and the value will need to be refreshed on route
-    // change. See: https://github.com/artsy/force/blob/master/src/v2/Artsy/Analytics/trackingMiddleware.ts
-    const referrer = window.analytics.__artsyClientSideRoutingReferrer
-    let trackingOptions = options
+    const trackingOptions = setAnalyticsClientReferrerOptions(options)
 
-    if (referrer) {
-      trackingOptions = {
-        page: {
-          referrer,
-        },
-      }
-    }
     // Send event to segment
     window.analytics.track(actionName, trackingData, trackingOptions)
   } else {
