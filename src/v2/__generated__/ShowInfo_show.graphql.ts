@@ -17,7 +17,7 @@ export type ShowInfo_show = {
         value in case none of the concrete values match.*/
         readonly __typename: "%other";
     }) | null;
-    readonly " $fragmentRefs": FragmentRefs<"ShowInfoLocation_show">;
+    readonly " $fragmentRefs": FragmentRefs<"ShowInfoLocation_show" | "ShowHours_show">;
     readonly " $refType": "ShowInfo_show";
 };
 export type ShowInfo_show$data = ShowInfo_show;
@@ -108,9 +108,14 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "FragmentSpread",
       "name": "ShowInfoLocation_show"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ShowHours_show"
     }
   ],
   "type": "Show"
 };
-(node as any).hash = '50b7636a17da1314beb092a89d9d0cac';
+(node as any).hash = '84b0d3a43686b45691ad2cbb75214684';
 export default node;

@@ -92,6 +92,11 @@ return {
           "kind": "Literal",
           "name": "sort",
           "value": "FEATURED_DESC"
+        },
+        {
+          "kind": "Literal",
+          "name": "totalCount",
+          "value": true
         }
       ],
       "concreteType": "ShowConnection",
@@ -206,11 +211,11 @@ return {
           "storageKey": null
         }
       ],
-      "storageKey": "__FairExhibitorsQuery_exhibitors_connection(sort:\"FEATURED_DESC\")"
+      "storageKey": "__FairExhibitorsQuery_exhibitors_connection(sort:\"FEATURED_DESC\",totalCount:true)"
     }
   ],
   "type": "Fair"
 };
 })();
-(node as any).hash = '5fa0506fdcaa36c853a92b1655f8036a';
+(node as any).hash = '25b654a42281e69fef43b63319eb3b10';
 export default node;

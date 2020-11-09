@@ -55,6 +55,7 @@ export const TimePeriodFilter: FC<TimePeriodFilterProps> = ({
 }
 
 const allowedPeriods = [
+  "2020",
   "2010",
   "2000",
   "1990",

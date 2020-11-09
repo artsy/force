@@ -51,7 +51,7 @@ describe("TimePeriodFilter", () => {
     wrapper.find("Radio").first().find("Flex").first().simulate("click")
 
     setTimeout(() => {
-      expect(context.filters.majorPeriods).toEqual(["2010"])
+      expect(context.filters.majorPeriods).toEqual(["2020"])
       done()
     }, 0)
   })

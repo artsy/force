@@ -1,17 +1,17 @@
 import React from "react"
-import { Text } from "@artsy/palette"
+import { Box, BoxProps, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ShowInfoLocation_show } from "v2/__generated__/ShowInfoLocation_show.graphql"
 
-interface ShowInfoLocationProps {
+interface ShowInfoLocationProps extends BoxProps {
   show: ShowInfoLocation_show
 }
 
-export const ShowInfoLocation: React.FC<ShowInfoLocationProps> = ({ show }) => {
-  // Merge show location and fair location into a single object, favoring show
-  const location = Object.entries(show.location).reduce((acc, [key, value]) => {
-    return { ...acc, [key]: value ?? show.fair?.location?.[key] }
-  }, {} as typeof show.location)
+export const ShowInfoLocation: React.FC<ShowInfoLocationProps> = ({
+  show,
+  ...rest
+}) => {
+  const location = show.location ?? show.fair?.location
 
   const lines = [
     location.display,
@@ -24,11 +24,11 @@ export const ShowInfoLocation: React.FC<ShowInfoLocationProps> = ({ show }) => {
   ].filter(Boolean)
 
   return (
-    <>
+    <Box {...rest}>
       {lines.map(line => (
         <Text key={line}>{line}</Text>
       ))}
-    </>
+    </Box>
   )
 }
 
@@ -39,6 +39,7 @@ export const ShowInfoLocationFragmentContainer = createFragmentContainer(
       fragment ShowInfoLocation_show on Show {
         fair {
           location {
+            display
             address
             address2
             city
