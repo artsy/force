@@ -7,7 +7,8 @@ import {
 } from "@artsy/cohesion"
 import $ from "jquery"
 import { omit } from "lodash"
-const analyticsHooks = require("desktop/lib/analytics_hooks.coffee")
+import { analyticsHooks } from "desktop/components/inquiry_questionnaire/analytics/analyticsHooks"
+
 const analytics = window.analytics
 ;(function () {
   "use strict"

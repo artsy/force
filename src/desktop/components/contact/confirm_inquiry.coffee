@@ -1,7 +1,7 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 ContactView = require './view.coffee'
-analyticsHooks = require '../../lib/analytics_hooks.coffee'
+{ analyticsHooks } = require "../inquiry_questionnaire/analytics/analyticsHooks"
 { modelNameAndIdToLabel } = require '../../lib/analytics_helpers.coffee'
 Partner = require '../../models/partner.coffee'
 Cookies = require 'cookies-js'
