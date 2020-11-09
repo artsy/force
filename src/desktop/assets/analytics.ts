@@ -25,6 +25,8 @@ const excludedRoutes = [
   "/viewing-room(.*)",
   "/user/conversations(.*)",
   "/user/purchases(.*)",
+  // TODO: Change to show route once launched
+  "/show2(.*)",
 ]
 
 beforeAnalyticsReady()
