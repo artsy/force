@@ -1,7 +1,7 @@
 Backbone = require 'backbone'
 SearchBarView = require '../../search_bar/view.coffee'
 teleport = require './teleport.coffee'
-{ modelNameAndIdToLabel } = require '../../../lib/analytics_helpers.coffee'
+{ capitalize } = require('underscore.string')
 
 module.exports = class FairNavView extends Backbone.View
   initialize: ({ fair, model }) ->
@@ -21,8 +21,9 @@ module.exports = class FairNavView extends Backbone.View
     @searchBarView.on 'search:selected', (e, model) ->
       return false unless model and model.get('published')
       model.updateForFair fair
+      label = capitalize(model.get('display_model')) + ':' + model.id
       window.analytics.track "Selected item from fair search",
-        label: modelNameAndIdToLabel model.get('display_model'), model.id
+        label: label
         query: @query
       @selected = true
 

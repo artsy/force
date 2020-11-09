@@ -2,7 +2,6 @@ _ = require 'underscore'
 Backbone = require 'backbone'
 ContactView = require './view.coffee'
 { analyticsHooks } = require "../inquiry_questionnaire/analytics/analyticsHooks"
-{ modelNameAndIdToLabel } = require '../../lib/analytics_helpers.coffee'
 CurrentUser = require '../../models/current_user'
 Cookies = require 'cookies-js'
 defaultMessage = require './default_message.coffee'
@@ -66,7 +65,7 @@ module.exports = class ContactPartnerView extends ContactView
     @submit()
 
     analyticsHooks.trigger 'inquiry:sent',
-      label: modelNameAndIdToLabel('artwork', @artwork.get('id'))
+      label: 'Artwork:' + @artwork.get('id')
       changed: if @model.get('message') is defaultMessage(@artwork, @partner) then 'Did not change' else 'Changed'
       session_id: SESSION_ID
       attributes: @artwork.attributes

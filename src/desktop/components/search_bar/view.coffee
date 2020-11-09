@@ -5,7 +5,6 @@ request = require 'superagent'
 sd = require('sharify').data
 Search = require './collections/search.coffee'
 { mediator } = require '../../../lib/mediator'
-{ modelNameAndIdToLabel } = require '../../lib/analytics_helpers.coffee'
 itemTemplate = -> require('./templates/item.jade') arguments...
 emptyItemTemplate = -> require('./templates/empty-item.jade') arguments...
 CurrentUser = require '../../models/current_user'

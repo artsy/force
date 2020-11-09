@@ -2,7 +2,6 @@ _ = require 'underscore'
 Backbone = require 'backbone'
 ContactView = require './view.coffee'
 { analyticsHooks } = require "../inquiry_questionnaire/analytics/analyticsHooks"
-{ modelNameAndIdToLabel } = require '../../lib/analytics_helpers.coffee'
 Partner = require '../../models/partner.coffee'
 Cookies = require 'cookies-js'
 Form = require '../mixins/form.coffee'
@@ -93,7 +92,7 @@ module.exports = class ConfirmInquiryView extends ContactView
 
   inquirySentAnalytics: =>
     analyticsHooks.trigger 'inquiry:sent',
-      label: modelNameAndIdToLabel('artwork', @artwork.get('id'))
+      label: 'Artwork:' + @artwork.get('id')
       changed: if @model.get('message').trim() is @inputMessage.trim() then 'Did not change' else 'Changed'
       session_id: SESSION_ID
       attributes: @artwork.attributes
