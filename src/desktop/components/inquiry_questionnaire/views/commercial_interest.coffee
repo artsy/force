@@ -1,4 +1,6 @@
 StepView = require './step.coffee'
+{ setAnalyticsClientReferrerOptions } = require "../../../analytics/helpers"
+
 template = -> require('../templates/commercial_interest.jade') arguments...
 
 module.exports = class CommercialInterest extends StepView
@@ -6,6 +8,7 @@ module.exports = class CommercialInterest extends StepView
 
   __events__:
     'click button': 'serialize'
+    'click .js-iq-collector-level': 'trackCommercialInterestClick'
 
   serialize: (e) ->
     e.preventDefault()
@@ -21,3 +24,12 @@ module.exports = class CommercialInterest extends StepView
     @user.related().collectorProfile.save(attributes)
       .always => @next()
       .done()
+
+  trackCommercialInterestClick: (e) ->
+    collector_level = $(e.currentTarget).value
+    options = setAnalyticsClientReferrerOptions()
+    window.analytics.track(
+      'inquiry_questionnaire: Clicked "Yes" or "No" button on commercial_interest',
+      { collector_level: collector_level }
+      options
+    )

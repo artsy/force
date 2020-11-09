@@ -10,6 +10,7 @@ templates =
   login: -> require('../templates/account/login.jade') arguments...
   forgot: -> require('../templates/account/forgot.jade') arguments...
 { recaptcha } = require "../../../../v2/Utils/recaptcha"
+{ setAnalyticsClientReferrerOptions } = require "../../../analytics/helpers"
 
 { mediator } = require('../../../../lib/mediator')
 
@@ -24,7 +25,8 @@ module.exports = class Account extends StepView
   __events__:
     'click button': 'onSubmit'
     'click .js-mode': 'change'
-    'click .js-iq-save-skip': 'next'
+    'click .js-login-email': 'trackLoginClick'
+    'click .js-forgot-password': 'trackForgotClick'
 
   initialize: ({ @user, @inquiry, @artwork, @state, @modal }) ->
     @modal?.dialog 'bounce-in'
@@ -105,3 +107,11 @@ module.exports = class Account extends StepView
   change: (e) ->
     e.preventDefault()
     @active.set 'mode', $(e.currentTarget).data 'mode'
+
+  trackLoginClick: (e) ->
+    options = setAnalyticsClientReferrerOptions()
+    window.analytics.track('inquiry_questionnaire: Clicked "Log in"', {}, options)
+
+  trackForgotClick: (e) ->
+    options = setAnalyticsClientReferrerOptions()
+    window.analytics.track('inquiry_questionnaire: Clicked "Forgot Password?"', {}, options)

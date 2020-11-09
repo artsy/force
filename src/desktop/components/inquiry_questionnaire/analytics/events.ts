@@ -4,7 +4,6 @@ import {
   createdAccount,
   successfullyLoggedIn,
 } from "@artsy/cohesion"
-import $ from "jquery"
 import { omit } from "lodash"
 import { analyticsHooks } from "desktop/components/inquiry_questionnaire/analytics/analyticsHooks"
 import { setAnalyticsClientReferrerOptions } from "desktop/analytics/helpers"
@@ -37,46 +36,6 @@ import { setAnalyticsClientReferrerOptions } from "desktop/analytics/helpers"
     // between pages. See: https://github.com/artsy/force/pull/5232
     analyticsHooks.on(namespace(name), handler)
   }
-
-  // DOM events
-  let $document = $(document)
-
-  $document.on("click", ".js-choice", function () {
-    let choice = $(this).data("value")
-    track("Clicked on how_can_we_help option", {
-      choice: choice,
-    })
-  })
-
-  $document.on("click", ".js-iq-collector-level", function (e) {
-    track('Clicked "Yes" or "No" button on commercial_interest', {
-      collector_level: e.currentTarget.value,
-    })
-  })
-
-  $document.on("click", ".js-login-email", function () {
-    track('Clicked "Log in"')
-  })
-
-  $document.on("click", ".js-forgot-password", function () {
-    track('Clicked "Forgot Password?"')
-  })
-
-  $document.on("click", ".js-send-inquiry", function () {
-    track('Clicked "Send" on inquiry form')
-  })
-
-  $document.one("input", ".js-inquiry-message", function (e) {
-    track("User changed inquiry message from default")
-  })
-
-  $document.on("alert", ".js-inquiry-message", function (e) {
-    track("User nudged to change inquiry message from default")
-  })
-
-  $document.on("click", ".js-iq-save-skip", function () {
-    track('Clicked on "No thanks don’t save my information"')
-  })
 
   // Proxied events
   bind("modal:opened", function (_context) {
@@ -218,15 +177,15 @@ import { setAnalyticsClientReferrerOptions } from "desktop/analytics/helpers"
     })
   })
 
-  bindOnce("contact:hover", function (context) {
+  bindOnce("contact:hover", function (_context) {
     trackWithoutNamespace("Hovered over contact form 'Send' button")
   })
 
-  bindOnce("contact:close-x", function (context) {
+  bindOnce("contact:close-x", function (_context) {
     trackWithoutNamespace("Closed the inquiry form via the '×' button")
   })
 
-  bindOnce("contact:close-back", function (context) {
+  bindOnce("contact:close-back", function (_context) {
     trackWithoutNamespace(
       "Closed the inquiry form by clicking the modal window backdrop"
     )

@@ -1,4 +1,5 @@
 StepView = require './step.coffee'
+{ setAnalyticsClientReferrerOptions } = require "../../../analytics/helpers"
 template = -> require('../templates/how_can_we_help.jade') arguments...
 
 module.exports = class HowCanWeHelp extends StepView
@@ -10,6 +11,12 @@ module.exports = class HowCanWeHelp extends StepView
 
   choose: (e) ->
     e.preventDefault()
-    choice = $(e.currentTarget).data 'value'
+    choice = $(e.currentTarget).value
     @state.set 'value', choice
+    options = setAnalyticsClientReferrerOptions()
+    window.analytics.track(
+      "inquiry_questionnaire: Clicked on how_can_we_help option",
+      { choice: choice },
+      options
+    )
     @next()
