@@ -8,11 +8,11 @@
     "yarn": "1.x.x"
   },
   "scripts": {
+    "build": "yarn build:assets && yarn build:assets:novo && yarn build:server",
     "build:assets": "NODE_ENV=production BUILD_CLIENT=true yarn webpack",
     "build:assets:novo": "NODE_ENV=production BUILD_NOVO_CLIENT=true yarn webpack",
     "build:dev": "yarn clean && yarn relay && NODE_ENV=development BUILD_CLIENT=true yarn webpack",
     "build:server": "NODE_ENV=production BUILD_SERVER=true yarn webpack",
-    "build:all": "yarn build:assets && yarn build:assets:novo && yarn build:server",
     "bundle-report:assets": "NODE_ENV=production WEBPACK_ANALYZE=true yarn build:assets",
     "bundle-report:assets:novo": "NODE_ENV=production WEBPACK_ANALYZE=true yarn build:assets:novo",
     "bundle-report:server": "NODE_ENV=production WEBPACK_ANALYZE=true yarn build:server",

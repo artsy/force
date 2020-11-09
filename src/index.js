@@ -9,59 +9,55 @@ import "regenerator-runtime/runtime"
 // See https://docs.datadoghq.com/tracing/languages/nodejs/ for more info.
 import "./lib/datadog"
 
+import { once } from "lodash"
 import express from "express"
+import http from "http"
+import withGracefulShutdown from "http-shutdown"
+import { initialize } from "./common-app"
 
 const app = express()
+const commonApp = initialize(once(startServer))
+app.use(commonApp)
 
-app.use(require("./common-app"))
+// Run start server as a callback for now until waiting on the xapp token and
+// cache have a chance to be refactored.
+function startServer() {
+  const message =
+    process.env.NODE_ENV === "development"
+      ? `\n\n  [Force] Booting on port ${process.env.PORT}... \n`
+      : `\n\n  [Force] Started on ${process.env.APP_URL}. \n`
 
-app.listen(5000, () => {
-  const bootMessage =
-    process.env.NODE_ENV === "production"
-      ? `\n[App] Booting Global Force...  \n`
-      : `\n[App] Started on http://localhost:5000  \n`
+  const server = withGracefulShutdown(http.createServer(app))
 
-  // eslint-disable-next-line no-console
-  console.log(bootMessage)
-})
+  const stopServer = once(() => {
+    server.shutdown(() => {
+      console.log("Closed existing connections.")
+      process.exit(0)
+    })
+  })
 
-// const once = require("lodash").once
-// const http = require("http")
-// const withGracefulShutdown = require("http-shutdown")
-// const startServer = once(() => {
-//   if (module === require.main) {
-//     const message =
-//       NODE_ENV === "development"
-//         ? `\n\n  [Force] Booting on port ${PORT}... \n`
-//         : `\n\n  [Force] Started on ${APP_URL}. \n`
+  if (process.env.KEEPALIVE_TIMEOUT_SECONDS) {
+    console.log(
+      "Setting keepAliveTimeout to " +
+        process.env.KEEPALIVE_TIMEOUT_SECONDS +
+        " sec."
+    )
+    server.keepAliveTimeout =
+      Number(process.env.KEEPALIVE_TIMEOUT_SECONDS) * 1000
+  }
 
-//     const server = withGracefulShutdown(http.createServer(app))
+  if (process.env.HEADERS_TIMEOUT_SECONDS) {
+    console.log(
+      "Setting headersTimeout to " +
+        process.env.HEADERS_TIMEOUT_SECONDS +
+        " sec."
+    )
+    server.headersTimeout = Number(process.env.HEADERS_TIMEOUT_SECONDS) * 1000
+  }
 
-//     const stopServer = once(() => {
-//       server.shutdown(() => {
-//         console.log("Closed existing connections.")
-//         process.exit(0)
-//       })
-//     })
+  server.listen(process.env.PORT, "0.0.0.0", () => console.log(message))
 
-//     if (KEEPALIVE_TIMEOUT_SECONDS) {
-//       console.log(
-//         "Setting keepAliveTimeout to " + KEEPALIVE_TIMEOUT_SECONDS + " sec."
-//       )
-//       server.keepAliveTimeout = Number(KEEPALIVE_TIMEOUT_SECONDS) * 1000
-//     }
-
-//     if (HEADERS_TIMEOUT_SECONDS) {
-//       console.log(
-//         "Setting headersTimeout to " + HEADERS_TIMEOUT_SECONDS + " sec."
-//       )
-//       server.headersTimeout = Number(HEADERS_TIMEOUT_SECONDS) * 1000
-//     }
-
-//     server.listen(PORT, "0.0.0.0", () => console.log(message))
-
-//     process.on("SIGTERM", stopServer)
-//   }
-// })
+  process.on("SIGTERM", stopServer)
+}
 
 module.exports = app

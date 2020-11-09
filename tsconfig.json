@@ -34,9 +34,6 @@
       "package.json": [
         "./package.json"
       ],
-      "storybook/*": [
-        "./v2/__stories__/*"
-      ],
       "v2/*": [
         "./v2/*"
       ],
@@ -50,22 +47,10 @@
   },
   "include": [
     "./src",
-    "./src/v2/Typings/*.d.ts",
-    "typings/*.d.ts"
   ],
   "exclude": [
-<<<<<<< HEAD
-    "node_modules",
-    "dist",
-    "data",
-    "externals",
-    "danger",
-    "src/__generated__/**.ts",
-    "src/v2/__generated__/**.ts"
-=======
     "src/**/__generated__/*.ts",
     "**/node_modules",
     "**/.*/",
->>>>>>> 6aaba9968... build:all
   ]
 }

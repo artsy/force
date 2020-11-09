@@ -112,6 +112,7 @@ const warn = e => console.log("warning", chalk.yellow(e))
 const startForce = port =>
   new Promise((resolve, reject) => {
     const app = require("../../../common-app")
+    app.initialize(() => {})
     servers.push(
       app.listen(port, err => {
         if (err) reject(err)
