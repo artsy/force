@@ -27,7 +27,7 @@ module.exports = class Fair extends Backbone.Model
   urlRoot: "#{sd.API_URL}/api/v1/fair"
 
   href: ->
-    "/#{@profileId()}"
+    "/fair/#{@get('id')}"
 
   profileId: ->
     @get('default_profile_id') || @get('organizer')?.profile_id

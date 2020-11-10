@@ -64,7 +64,7 @@ describe("header", function () {
       const $ = cheerio.load(this.template)
       return $(".show-page-location-map")
         .html()
-        .should.containEql('a href="/the-armory-show"')
+        .should.containEql('a href="/fair/armory-show-2013"')
     })
   })
 

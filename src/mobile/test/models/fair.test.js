@@ -27,10 +27,8 @@ describe("Fair", function () {
     }))
 
   describe("#href", () =>
-    it("returns a client link using the organizer profile id", function () {
-      return this.fair
-        .href()
-        .should.equal(`/${this.fair.get("organizer").profile_id}`)
+    it("returns a client link using the id", function () {
+      return this.fair.href().should.equal("/fair/armory-show-2013")
     }))
 
   describe("#small", () =>
