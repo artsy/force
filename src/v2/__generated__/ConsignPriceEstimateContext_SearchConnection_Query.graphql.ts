@@ -10,6 +10,7 @@ export type ConsignPriceEstimateContext_SearchConnection_QueryResponse = {
         readonly edges: ReadonlyArray<{
             readonly node: {
                 readonly displayLabel: string | null;
+                readonly slug?: string;
                 readonly internalID?: string;
                 readonly imageUrl?: string | null;
             } | null;
@@ -33,6 +34,7 @@ query ConsignPriceEstimateContext_SearchConnection_Query(
         __typename
         displayLabel
         ... on Artist {
+          slug
           internalID
           imageUrl
         }
@@ -86,6 +88,13 @@ v2 = {
 v3 = {
   "kind": "InlineFragment",
   "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "slug",
+      "storageKey": null
+    },
     {
       "alias": null,
       "args": null,
@@ -210,9 +219,9 @@ return {
     "metadata": {},
     "name": "ConsignPriceEstimateContext_SearchConnection_Query",
     "operationKind": "query",
-    "text": "query ConsignPriceEstimateContext_SearchConnection_Query(\n  $searchQuery: String!\n) {\n  searchConnection(query: $searchQuery, entities: ARTIST, mode: AUTOSUGGEST, first: 7) {\n    edges {\n      node {\n        __typename\n        displayLabel\n        ... on Artist {\n          internalID\n          imageUrl\n        }\n        ... on Node {\n          id\n        }\n      }\n    }\n  }\n}\n"
+    "text": "query ConsignPriceEstimateContext_SearchConnection_Query(\n  $searchQuery: String!\n) {\n  searchConnection(query: $searchQuery, entities: ARTIST, mode: AUTOSUGGEST, first: 7) {\n    edges {\n      node {\n        __typename\n        displayLabel\n        ... on Artist {\n          slug\n          internalID\n          imageUrl\n        }\n        ... on Node {\n          id\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'd18065d3e7f21c7a191a8802d5f46811';
+(node as any).hash = 'a4578f37f2d07686a62cc67a819c17f8';
 export default node;

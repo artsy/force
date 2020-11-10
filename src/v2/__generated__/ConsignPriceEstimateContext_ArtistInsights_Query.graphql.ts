@@ -10,6 +10,7 @@ export type ConsignPriceEstimateContext_ArtistInsights_QueryResponse = {
         readonly edges: ReadonlyArray<{
             readonly node: {
                 readonly artistName: string | null;
+                readonly medium: string | null;
                 readonly lowRangeCents: unknown | null;
                 readonly midRangeCents: unknown | null;
                 readonly highRangeCents: unknown | null;
@@ -32,6 +33,7 @@ query ConsignPriceEstimateContext_ArtistInsights_Query(
     edges {
       node {
         artistName
+        medium
         lowRangeCents
         midRangeCents
         highRangeCents
@@ -102,6 +104,13 @@ v1 = [
                 "alias": null,
                 "args": null,
                 "kind": "ScalarField",
+                "name": "medium",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
                 "name": "lowRangeCents",
                 "storageKey": null
               },
@@ -150,9 +159,9 @@ return {
     "metadata": {},
     "name": "ConsignPriceEstimateContext_ArtistInsights_Query",
     "operationKind": "query",
-    "text": "query ConsignPriceEstimateContext_ArtistInsights_Query(\n  $artistInternalID: ID!\n) {\n  priceInsights(artistId: $artistInternalID, sort: DEMAND_RANK_DESC, first: 1) {\n    edges {\n      node {\n        artistName\n        lowRangeCents\n        midRangeCents\n        highRangeCents\n      }\n    }\n  }\n}\n"
+    "text": "query ConsignPriceEstimateContext_ArtistInsights_Query(\n  $artistInternalID: ID!\n) {\n  priceInsights(artistId: $artistInternalID, sort: DEMAND_RANK_DESC, first: 1) {\n    edges {\n      node {\n        artistName\n        medium\n        lowRangeCents\n        midRangeCents\n        highRangeCents\n      }\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '9d289258b4d28ff49f51456b8c61dc58';
+(node as any).hash = '1d1dd0a1a76be6a4d797a161481cf5fa';
 export default node;
