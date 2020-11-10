@@ -41,7 +41,7 @@ export const GetPriceEstimate: React.FC = () => {
             justifyContent="center"
             flex="1"
             px={[0, 0, 0, 3]}
-            width={["100%", "auto"]}
+            width={["100%", "100%", "100%", "auto"]}
           />
         </Flex>
       </SectionContainer>

@@ -10,6 +10,7 @@ import {
 } from "@artsy/palette"
 import { usePriceEstimateContext } from "./ConsignPriceEstimateContext"
 import { ArtistInsightResult } from "./ArtistInsightResult"
+import { Media } from "v2/Utils/Responsive"
 
 export const EstimateResults: React.FC<FlexProps> = ({ ...rest }) => {
   const { artistInsights, isFetching } = usePriceEstimateContext()
@@ -79,11 +80,16 @@ const ArtworkItem: React.FC<{
   salePrice: string
 }> = ({ image, artistName, salePrice }) => {
   return (
-    <Box flex="1" mx={2}>
+    <Box flex="1" mx={[0.5, 2]}>
       {image}
       <Spacer my={1} />
       <Text variant="small">{artistName}</Text>
-      <Text variant="small">Average Sale Price:</Text>
+      <Media greaterThanOrEqual="sm">
+        <Text variant="small">Average Sale Price:</Text>
+      </Media>
+      <Media lessThan="sm">
+        <Text variant="small">Avg Sale Price:</Text>
+      </Media>
       <Text variant="largeTitle">{salePrice}</Text>
     </Box>
   )
