@@ -154,7 +154,7 @@ export const FairArtworksRefetchContainer = createRefetchContainer(
           counts @include(if: $shouldFetchCounts) {
             followedArtists
           }
-          ...ArtworkFilterArtworkGrid2_filtered_artworks
+          ...ArtworkFilterArtworkGrid_filtered_artworks
         }
       }
     `,

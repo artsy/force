@@ -4,7 +4,7 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkAggregation = "ARTIST" | "COLOR" | "DIMENSION_RANGE" | "FOLLOWED_ARTISTS" | "GALLERY" | "INSTITUTION" | "MAJOR_PERIOD" | "MEDIUM" | "MERCHANDISABLE_ARTISTS" | "PARTNER_CITY" | "PERIOD" | "PRICE_RANGE" | "TOTAL" | "%future added value";
-export type ArtworkFilterArtworkGrid2_filtered_artworks = {
+export type ArtworkFilterArtworkGrid_filtered_artworks = {
     readonly id: string;
     readonly aggregations: ReadonlyArray<{
         readonly slice: ArtworkAggregation | null;
@@ -27,12 +27,12 @@ export type ArtworkFilterArtworkGrid2_filtered_artworks = {
         } | null;
     } | null> | null;
     readonly " $fragmentRefs": FragmentRefs<"ArtworkGrid_artworks">;
-    readonly " $refType": "ArtworkFilterArtworkGrid2_filtered_artworks";
+    readonly " $refType": "ArtworkFilterArtworkGrid_filtered_artworks";
 };
-export type ArtworkFilterArtworkGrid2_filtered_artworks$data = ArtworkFilterArtworkGrid2_filtered_artworks;
-export type ArtworkFilterArtworkGrid2_filtered_artworks$key = {
-    readonly " $data"?: ArtworkFilterArtworkGrid2_filtered_artworks$data;
-    readonly " $fragmentRefs": FragmentRefs<"ArtworkFilterArtworkGrid2_filtered_artworks">;
+export type ArtworkFilterArtworkGrid_filtered_artworks$data = ArtworkFilterArtworkGrid_filtered_artworks;
+export type ArtworkFilterArtworkGrid_filtered_artworks$key = {
+    readonly " $data"?: ArtworkFilterArtworkGrid_filtered_artworks$data;
+    readonly " $fragmentRefs": FragmentRefs<"ArtworkFilterArtworkGrid_filtered_artworks">;
 };
 
 
@@ -49,7 +49,7 @@ return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "ArtworkFilterArtworkGrid2_filtered_artworks",
+  "name": "ArtworkFilterArtworkGrid_filtered_artworks",
   "selections": [
     (v0/*: any*/),
     {
@@ -175,5 +175,5 @@ return {
   "type": "FilterArtworksConnection"
 };
 })();
-(node as any).hash = '3b186cfca981d2185ec31f15f09ca8f2';
+(node as any).hash = '7e8fc516dbd99a441ba323c173b47077';
 export default node;

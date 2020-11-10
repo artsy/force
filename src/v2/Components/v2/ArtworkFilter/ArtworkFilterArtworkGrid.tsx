@@ -3,7 +3,7 @@ import { isEmpty } from "lodash"
 import React, { useEffect } from "react"
 import { RelayProp, createFragmentContainer, graphql } from "react-relay"
 
-import { ArtworkFilterArtworkGrid2_filtered_artworks } from "v2/__generated__/ArtworkFilterArtworkGrid2_filtered_artworks.graphql"
+import { ArtworkFilterArtworkGrid_filtered_artworks } from "v2/__generated__/ArtworkFilterArtworkGrid_filtered_artworks.graphql"
 import { useSystemContext } from "v2/Artsy"
 import ArtworkGrid from "v2/Components/ArtworkGrid"
 import { PaginationFragmentContainer as Pagination } from "v2/Components/Pagination"
@@ -13,7 +13,7 @@ import { Aggregations, useArtworkFilterContext } from "./ArtworkFilterContext"
 
 interface ArtworkFilterArtworkGridProps {
   columnCount: number[]
-  filtered_artworks: ArtworkFilterArtworkGrid2_filtered_artworks
+  filtered_artworks: ArtworkFilterArtworkGrid_filtered_artworks
   isLoading?: boolean
   relay: RelayProp
 }
@@ -96,7 +96,7 @@ export const ArtworkFilterArtworkGridRefetchContainer = createFragmentContainer(
   ArtworkFilterArtworkGrid,
   {
     filtered_artworks: graphql`
-      fragment ArtworkFilterArtworkGrid2_filtered_artworks on FilterArtworksConnection {
+      fragment ArtworkFilterArtworkGrid_filtered_artworks on FilterArtworksConnection {
         id
         aggregations {
           slice

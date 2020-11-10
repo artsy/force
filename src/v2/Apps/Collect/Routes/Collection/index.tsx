@@ -325,7 +325,7 @@ export const CollectionRefetchContainer = createRefetchContainer(
           width: $width
         ) {
           id
-          ...ArtworkFilterArtworkGrid2_filtered_artworks
+          ...ArtworkFilterArtworkGrid_filtered_artworks
         }
       }
     `,

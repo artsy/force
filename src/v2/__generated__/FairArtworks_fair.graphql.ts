@@ -11,7 +11,7 @@ export type FairArtworks_fair = {
         readonly counts?: {
             readonly followedArtists: number | null;
         } | null;
-        readonly " $fragmentRefs": FragmentRefs<"ArtworkFilterArtworkGrid2_filtered_artworks">;
+        readonly " $fragmentRefs": FragmentRefs<"ArtworkFilterArtworkGrid_filtered_artworks">;
     } | null;
     readonly " $refType": "FairArtworks_fair";
 };
@@ -280,7 +280,7 @@ const node: ReaderFragment = {
         {
           "args": null,
           "kind": "FragmentSpread",
-          "name": "ArtworkFilterArtworkGrid2_filtered_artworks"
+          "name": "ArtworkFilterArtworkGrid_filtered_artworks"
         }
       ],
       "storageKey": null
@@ -288,5 +288,5 @@ const node: ReaderFragment = {
   ],
   "type": "Fair"
 };
-(node as any).hash = '191d55abe04178038276e723b4ef0093';
+(node as any).hash = '4e501546f9556b01c184615a7911ed5f';
 export default node;

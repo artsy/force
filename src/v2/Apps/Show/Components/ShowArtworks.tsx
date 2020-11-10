@@ -130,7 +130,7 @@ export const ShowArtworksRefetchContainer = createRefetchContainer(
           sort: $sort
         ) {
           id
-          ...ArtworkFilterArtworkGrid2_filtered_artworks
+          ...ArtworkFilterArtworkGrid_filtered_artworks
         }
       }
     `,

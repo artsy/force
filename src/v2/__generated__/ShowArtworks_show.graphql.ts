@@ -6,7 +6,7 @@ import { FragmentRefs } from "relay-runtime";
 export type ShowArtworks_show = {
     readonly filtered_artworks: {
         readonly id: string;
-        readonly " $fragmentRefs": FragmentRefs<"ArtworkFilterArtworkGrid2_filtered_artworks">;
+        readonly " $fragmentRefs": FragmentRefs<"ArtworkFilterArtworkGrid_filtered_artworks">;
     } | null;
     readonly " $refType": "ShowArtworks_show";
 };
@@ -208,7 +208,7 @@ const node: ReaderFragment = {
         {
           "args": null,
           "kind": "FragmentSpread",
-          "name": "ArtworkFilterArtworkGrid2_filtered_artworks"
+          "name": "ArtworkFilterArtworkGrid_filtered_artworks"
         }
       ],
       "storageKey": null
@@ -216,5 +216,5 @@ const node: ReaderFragment = {
   ],
   "type": "Show"
 };
-(node as any).hash = '67d970b06c0e76621b1e6434a86a4ab3';
+(node as any).hash = '2e8f2af69f6b9596b7a8854dc18805ba';
 export default node;

@@ -13,7 +13,7 @@ import { Media } from "v2/Utils/Responsive"
 import { ArtworkFilter_viewer } from "v2/__generated__/ArtworkFilter_viewer.graphql"
 import { ArtworkQueryFilterQuery as ArtworkFilterQueryType } from "v2/__generated__/ArtworkQueryFilterQuery.graphql"
 
-import { ArtworkFilterArtworkGridRefetchContainer as ArtworkFilterArtworkGrid } from "./ArtworkFilterArtworkGrid2"
+import { ArtworkFilterArtworkGridRefetchContainer as ArtworkFilterArtworkGrid } from "./ArtworkFilterArtworkGrid"
 import { SortFilter } from "./ArtworkFilters/SortFilter"
 
 import {
@@ -287,7 +287,7 @@ export const ArtworkFilterRefetchContainer = createRefetchContainer(
           first: $first
         ) {
           id
-          ...ArtworkFilterArtworkGrid2_filtered_artworks
+          ...ArtworkFilterArtworkGrid_filtered_artworks
         }
       }
     `,
