@@ -2,8 +2,25 @@ import React from "react"
 import { Box, Button, Flex, Image, Link, Spacer, Text } from "@artsy/palette"
 import { SectionContainer } from "./SectionContainer"
 import { Media } from "v2/Utils/Responsive"
+import { useTracking } from "react-tracking"
+import { clickedAppDownload } from "@artsy/cohesion"
+
+const DOWNLOAD_URL =
+  'https://apps.apple.com/us/app/artsy-buy-sell-original-art/id703796080"'
 
 export const SellWithArtsy: React.FC = () => {
+  const tracking = useTracking()
+
+  const trackDownloadAppClick = () => {
+    tracking.trackEvent(
+      clickedAppDownload({
+        context_page_owner_id: "",
+        context_page_owner_slug: "",
+        destination_path: DOWNLOAD_URL,
+      })
+    )
+  }
+
   return (
     <SectionContainer background="black5" py={0}>
       <Flex alignItems="center" justifyContent="space-between">
@@ -14,8 +31,9 @@ export const SellWithArtsy: React.FC = () => {
           <Text variant="text">Selling art differently</Text>
           <Spacer mt={6} />
           <Link
-            href="https://apps.apple.com/us/app/artsy-buy-sell-original-art/id703796080"
+            href={DOWNLOAD_URL}
             target="_blank"
+            onClick={trackDownloadAppClick}
           >
             <Button>Download the app</Button>
           </Link>

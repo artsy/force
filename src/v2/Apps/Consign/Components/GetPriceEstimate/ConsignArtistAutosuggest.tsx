@@ -2,8 +2,13 @@ import Autosuggest from "react-autosuggest"
 import React from "react"
 import { Input, MagnifyingGlassIcon, Text } from "@artsy/palette"
 import { usePriceEstimateContext } from "./ConsignPriceEstimateContext"
-import { useTracking } from "v2/Artsy"
-// import { OwnerType } from "@artsy/cohesion"
+import { useTracking } from "react-tracking"
+import {
+  OwnerType,
+  focusedOnSearchInput,
+  searchedWithNoResults,
+  selectedItemFromSearch,
+} from "@artsy/cohesion"
 
 export const ConsignArtistAutosuggest: React.FC = () => {
   const tracking = useTracking()
@@ -17,15 +22,39 @@ export const ConsignArtistAutosuggest: React.FC = () => {
   } = usePriceEstimateContext()
 
   const trackFocusedOnSearchInput = () => {
-    tracking.trackEvent({})
+    tracking.trackEvent(
+      focusedOnSearchInput({
+        context_owner_id: "foo",
+        context_owner_slug: "bar",
+      })
+    )
   }
 
   const trackSelectedItemFromSearch = () => {
-    tracking.trackEvent({})
+    tracking.trackEvent(
+      selectedItemFromSearch({
+        context_owner_id: "",
+        context_owner_slug: "",
+        destination_owner_id: "",
+        destination_owner_slug: "",
+        destination_owner_type: "",
+        owner_id: "",
+        owner_slug: "",
+        owner_type: "",
+        query: "",
+      })
+    )
   }
 
   const trackSearchedWithNoResults = () => {
-    tracking.trackEvent({})
+    tracking.trackEvent(
+      searchedWithNoResults({
+        context_owner_id: "",
+        context_owner_slug: "",
+        destination_owner_type: "",
+        query: "",
+      })
+    )
   }
 
   return (

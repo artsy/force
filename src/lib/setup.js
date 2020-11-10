@@ -269,6 +269,7 @@ export default function (app) {
       watchModules: [
         path.resolve(process.cwd(), "src/v2"),
         "@artsy/reaction",
+        "@artsy/cohesion",
         "@artsy/stitch",
         "@artsy/palette",
         "@artsy/fresnel",

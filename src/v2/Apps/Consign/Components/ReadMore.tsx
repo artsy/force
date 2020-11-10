@@ -3,6 +3,8 @@ import { Box, ChevronIcon, Flex, Image, Text } from "@artsy/palette"
 import { SectionContainer } from "./SectionContainer"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import { Media } from "v2/Utils/Responsive"
+import { useTracking } from "react-tracking"
+import { clickedArticleGroup } from "@artsy/cohesion"
 
 export const ReadMore: React.FC = () => {
   return (
@@ -81,8 +83,25 @@ const Article: React.FC<{
   author: string
   imageSrc: string
 }> = ({ href, title, author, imageSrc }) => {
+  const tracking = useTracking()
+
+  const trackClick = () => {
+    tracking.trackEvent(
+      clickedArticleGroup({
+        destination_page_owner_id: "",
+        destination_page_owner_slug: "",
+        destination_page_owner_type: "",
+      })
+    )
+  }
+
   return (
-    <RouterLink to={href} target="_blank" style={{ textDecoration: "none" }}>
+    <RouterLink
+      to={href}
+      target="_blank"
+      style={{ textDecoration: "none" }}
+      onClick={trackClick}
+    >
       <Flex maxWidth={450}>
         <Box pr={2} pb={4}>
           <Text variant="subtitle">{title}</Text>

@@ -9,6 +9,8 @@ import FillwidthItem from "v2/Components/Artwork/FillwidthItem"
 import { Carousel } from "v2/Components/Carousel"
 import { SectionContainer } from "./SectionContainer"
 import { Media } from "v2/Utils/Responsive"
+import { useTracking } from "react-tracking"
+import { clickedArtworkGroup } from "@artsy/cohesion"
 
 const HEIGHT = 300
 
@@ -17,6 +19,8 @@ interface SoldRecentlyProps {
 }
 
 const SoldRecently: React.FC<SoldRecentlyProps> = ({ targetSupply }) => {
+  const tracking = useTracking()
+
   if (!targetSupply.microfunnel) {
     return null
   }
@@ -24,6 +28,17 @@ const SoldRecently: React.FC<SoldRecentlyProps> = ({ targetSupply }) => {
   const recentlySoldArtworks = targetSupply.microfunnel.map(microfunnel => {
     return extractNodes(microfunnel.artworksConnection)
   })
+
+  const trackArtworkItemClick = artwork => () => {
+    tracking.trackEvent(
+      clickedArtworkGroup({
+        destination_page_owner_id: "",
+        destination_page_owner_slug: "",
+        destination_page_owner_type: "",
+        type: "",
+      })
+    )
+  }
 
   return (
     <SectionContainer>
@@ -38,6 +53,7 @@ const SoldRecently: React.FC<SoldRecentlyProps> = ({ targetSupply }) => {
                 key={key}
                 flexDirection="column"
                 style={{ textAlign: "left" }}
+                onClick={trackArtworkItemClick(artwork)}
               >
                 <FillwidthItem
                   artwork={artwork}
