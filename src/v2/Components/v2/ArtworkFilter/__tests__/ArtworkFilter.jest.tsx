@@ -143,10 +143,11 @@ describe("ArtworkFilter", () => {
       wrapper.find("WaysToBuyFilter").find("Checkbox").first().simulate("click")
 
       expect(trackEvent).toHaveBeenCalledWith({
-        action_type: "Commercial filter params changed",
-        context_page_owner_id: undefined,
-        context_page_owner_slug: undefined,
-        context_page_owner_type: "home",
+        action: "commercialFilterParamsChanged",
+        context_module: "artworkGrid",
+        context_owner_id: undefined,
+        context_owner_slug: undefined,
+        context_owner_type: "home",
         changed: { acquireable: true },
         current: {
           acquireable: true,

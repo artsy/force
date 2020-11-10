@@ -63,7 +63,6 @@ export enum ActionType {
    */
   ClickedReadMore = "Clicked read more",
 
-  CommercialFilterParamsChanged = "Commercial filter params changed",
   AuctionResultFilterParamChanged = "Auction results filter params changed",
   AuctionResultItemClicked = "Auction result item clicked",
 

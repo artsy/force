@@ -4,7 +4,7 @@ import useDeepCompareEffect from "use-deep-compare-effect"
 
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
 
-import { AnalyticsSchema, useSystemContext } from "v2/Artsy"
+import { useSystemContext } from "v2/Artsy"
 import { useTracking } from "v2/Artsy/Analytics/useTracking"
 import { renderWithLoadProgress } from "v2/Artsy/Relay/renderWithLoadProgress"
 import { usePrevious } from "v2/Utils/Hooks/usePrevious"
@@ -44,6 +44,7 @@ import { StickyContainer } from "./StickyContainer"
 import { FairArtworks_fair } from "v2/__generated__/FairArtworks_fair.graphql"
 import { ShowArtworks_show } from "v2/__generated__/ShowArtworks_show.graphql"
 import { useAnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
+import { commercialFilterParamsChanged } from "@artsy/cohesion"
 
 /**
  * Primary ArtworkFilter which is wrapped with a context and refetch container.
@@ -137,17 +138,17 @@ export const BaseArtworkFilter: React.FC<
         if (filtersHaveUpdated) {
           fetchResults()
 
-          tracking.trackEvent({
-            action_type:
-              AnalyticsSchema.ActionType.CommercialFilterParamsChanged,
-            current: filterContext.filters,
-            changed: {
-              [filterKey]: filterContext.filters[filterKey],
-            },
-            context_page_owner_id: contextPageOwnerId,
-            context_page_owner_slug: contextPageOwnerSlug,
-            context_page_owner_type: contextPageOwnerType,
-          })
+          tracking.trackEvent(
+            commercialFilterParamsChanged({
+              current: filterContext.filters,
+              changed: {
+                [filterKey]: filterContext.filters[filterKey],
+              },
+              contextOwnerId: contextPageOwnerId,
+              contextOwnerSlug: contextPageOwnerSlug,
+              contextOwnerType: contextPageOwnerType,
+            })
+          )
         }
       }
     )
