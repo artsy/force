@@ -43,6 +43,7 @@ import { ArtistSeriesArtworksFilter_artistSeries } from "v2/__generated__/Artist
 import { StickyContainer } from "./StickyContainer"
 import { FairArtworks_fair } from "v2/__generated__/FairArtworks_fair.graphql"
 import { ShowArtworks_show } from "v2/__generated__/ShowArtworks_show.graphql"
+import { useAnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
 
 /**
  * Primary ArtworkFilter which is wrapped with a context and refetch container.
@@ -61,7 +62,6 @@ export const ArtworkFilter: React.FC<
   counts,
   filters,
   sortOptions,
-  onArtworkBrickClick,
   onFilterClick,
   onChange,
   ZeroState,
@@ -72,7 +72,6 @@ export const ArtworkFilter: React.FC<
       counts={counts}
       filters={filters}
       sortOptions={sortOptions}
-      onArtworkBrickClick={onArtworkBrickClick}
       onFilterClick={onFilterClick}
       onChange={onChange}
       ZeroState={ZeroState}
@@ -100,6 +99,11 @@ export const BaseArtworkFilter: React.FC<
   const hasFilter = filtered_artworks && filtered_artworks.id
 
   const tracking = useTracking()
+  const {
+    contextPageOwnerId,
+    contextPageOwnerSlug,
+    contextPageOwnerType,
+  } = useAnalyticsContext()
   const [isFetching, toggleFetching] = useState(false)
   const [showMobileActionSheet, toggleMobileActionSheet] = useState(false)
   const filterContext = useArtworkFilterContext()
@@ -140,6 +144,9 @@ export const BaseArtworkFilter: React.FC<
             changed: {
               [filterKey]: filterContext.filters[filterKey],
             },
+            context_page_owner_id: contextPageOwnerId,
+            context_page_owner_slug: contextPageOwnerSlug,
+            context_page_owner_type: contextPageOwnerType,
           })
         }
       }

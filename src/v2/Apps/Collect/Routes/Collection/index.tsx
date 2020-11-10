@@ -21,7 +21,6 @@ import {
   AnalyticsContext,
   AnalyticsContextProps,
   useAnalyticsContext,
-  withAnalyticsContext,
 } from "v2/Artsy/Analytics/AnalyticsContext"
 
 import { BaseArtworkFilter } from "v2/Components/v2/ArtworkFilter"
@@ -31,7 +30,6 @@ import {
 } from "v2/Components/v2/ArtworkFilter/ArtworkFilterContext"
 import { updateUrl } from "v2/Components/v2/ArtworkFilter/Utils/urlBuilder"
 import { TrackingProp } from "react-tracking"
-import { clickedMainArtworkGrid } from "@artsy/cohesion"
 import { ErrorPage } from "v2/Components/ErrorPage"
 
 interface CollectionAppProps extends SystemContextProps, AnalyticsContextProps {
@@ -46,13 +44,7 @@ export const CollectionApp: React.FC<CollectionAppProps> = props => {
     collection,
     match: { location },
     relay,
-    tracking,
   } = props
-  const {
-    contextPageOwnerId,
-    contextPageOwnerType,
-    contextPageOwnerSlug,
-  } = useAnalyticsContext()
 
   if (!collection) return <ErrorPage code={404} />
 
@@ -145,17 +137,6 @@ export const CollectionApp: React.FC<CollectionAppProps> = props => {
                   artworksConnection.aggregations as SharedArtworkFilterContextProps["aggregations"]
                 }
                 onChange={updateUrl}
-                onArtworkBrickClick={artwork => {
-                  tracking.trackEvent(
-                    clickedMainArtworkGrid({
-                      contextPageOwnerType,
-                      contextPageOwnerId,
-                      contextPageOwnerSlug,
-                      destinationPageOwnerId: artwork.internalID,
-                      destinationPageOwnerSlug: artwork.slug,
-                    })
-                  )
-                }}
               >
                 <BaseArtworkFilter
                   relay={relay}
@@ -211,7 +192,7 @@ const TrackingWrappedCollectionApp: React.FC<CollectionAppProps> = props => {
 }
 
 export const CollectionRefetchContainer = createRefetchContainer(
-  withSystemContext(withAnalyticsContext(TrackingWrappedCollectionApp)),
+  withSystemContext(TrackingWrappedCollectionApp),
   {
     collection: graphql`
       fragment Collection_collection on MarketingCollection

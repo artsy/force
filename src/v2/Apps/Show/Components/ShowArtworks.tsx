@@ -12,9 +12,6 @@ import { TimePeriodFilter } from "v2/Components/v2/ArtworkFilter/ArtworkFilters/
 import { ColorFilter } from "v2/Components/v2/ArtworkFilter/ArtworkFilters/ColorFilter"
 import { Box, BoxProps } from "@artsy/palette"
 import { useRouter } from "v2/Artsy/Router/useRouter"
-import { useTracking } from "react-tracking"
-import { useAnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
-import { clickedMainArtworkGrid } from "@artsy/cohesion"
 
 interface ShowArtworksFilterProps extends BoxProps {
   show: ShowArtworks_show
@@ -30,13 +27,6 @@ const ShowArtworksFilter: React.FC<ShowArtworksFilterProps> = ({
   const { filtered_artworks } = show
 
   const hasFilter = filtered_artworks && filtered_artworks.id
-
-  const tracking = useTracking()
-  const {
-    contextPageOwnerId,
-    contextPageOwnerSlug,
-    contextPageOwnerType,
-  } = useAnalyticsContext()
 
   if (!hasFilter) return null
 
@@ -64,17 +54,6 @@ const ShowArtworksFilter: React.FC<ShowArtworksFilterProps> = ({
         { value: "year", text: "Artwork year (asc.)" },
       ]}
       onChange={updateUrl}
-      onArtworkBrickClick={artwork => {
-        tracking.trackEvent(
-          clickedMainArtworkGrid({
-            contextPageOwnerType,
-            contextPageOwnerSlug,
-            contextPageOwnerId,
-            destinationPageOwnerId: artwork.internalID,
-            destinationPageOwnerSlug: artwork.slug,
-          })
-        )
-      }}
     >
       <BaseArtworkFilter
         mt={0}

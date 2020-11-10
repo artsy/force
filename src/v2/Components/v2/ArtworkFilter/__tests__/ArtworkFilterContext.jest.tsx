@@ -35,13 +35,6 @@ describe("ArtworkFilterContext", () => {
   })
 
   describe("behaviors", () => {
-    it("#onArtworkBrickClick", () => {
-      const spy = jest.fn()
-      getWrapper({ onArtworkBrickClick: spy })
-      context.onArtworkBrickClick(null, null)
-      expect(spy).toHaveBeenCalled()
-    })
-
     it("#onFilterClick", () => {
       const spy = jest.fn()
       getWrapper({ onFilterClick: spy })

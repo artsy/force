@@ -13,9 +13,6 @@ import { TimePeriodFilter } from "v2/Components/v2/ArtworkFilter/ArtworkFilters/
 import { ColorFilter } from "v2/Components/v2/ArtworkFilter/ArtworkFilters/ColorFilter"
 import { Box } from "@artsy/palette"
 import { ArtistsFilter } from "v2/Components/v2/ArtworkFilter/ArtworkFilters/ArtistsFilter"
-import { useTracking } from "react-tracking"
-import { clickedMainArtworkGrid } from "@artsy/cohesion"
-import { useAnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
 import { useSystemContext } from "v2/Artsy"
 import { useRouter } from "v2/Artsy/Router/useRouter"
 
@@ -28,13 +25,6 @@ const FairArtworksFilter: React.FC<FairArtworksFilterProps> = props => {
   const { relay, fair } = props
   const { match } = useRouter()
   const { filtered_artworks } = fair
-  const tracking = useTracking()
-  const {
-    contextPageOwnerId,
-    contextPageOwnerSlug,
-    contextPageOwnerType,
-  } = useAnalyticsContext()
-
   const { relayEnvironment, user } = useSystemContext()
 
   const hasFilter = filtered_artworks && filtered_artworks.id
@@ -79,17 +69,6 @@ const FairArtworksFilter: React.FC<FairArtworksFilterProps> = props => {
         { value: "year", text: "Artwork year (asc.)" },
       ]}
       onChange={updateUrl}
-      onArtworkBrickClick={artwork => {
-        tracking.trackEvent(
-          clickedMainArtworkGrid({
-            contextPageOwnerType,
-            contextPageOwnerSlug,
-            contextPageOwnerId,
-            destinationPageOwnerId: artwork.internalID,
-            destinationPageOwnerSlug: artwork.slug,
-          })
-        )
-      }}
     >
       <BaseArtworkFilter
         mt="-2px"

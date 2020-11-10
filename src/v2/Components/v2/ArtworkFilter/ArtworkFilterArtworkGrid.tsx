@@ -4,12 +4,14 @@ import React, { useEffect } from "react"
 import { RelayProp, createFragmentContainer, graphql } from "react-relay"
 
 import { ArtworkFilterArtworkGrid_filtered_artworks } from "v2/__generated__/ArtworkFilterArtworkGrid_filtered_artworks.graphql"
-import { useSystemContext } from "v2/Artsy"
+import { useSystemContext, useTracking } from "v2/Artsy"
 import ArtworkGrid from "v2/Components/ArtworkGrid"
 import { PaginationFragmentContainer as Pagination } from "v2/Components/Pagination"
 import { get } from "v2/Utils/get"
 import { LoadingArea } from "../../LoadingArea"
 import { Aggregations, useArtworkFilterContext } from "./ArtworkFilterContext"
+import { ContextModule, clickedMainArtworkGrid } from "@artsy/cohesion"
+import { useAnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
 
 interface ArtworkFilterArtworkGridProps {
   columnCount: number[]
@@ -20,6 +22,12 @@ interface ArtworkFilterArtworkGridProps {
 
 const ArtworkFilterArtworkGrid: React.FC<ArtworkFilterArtworkGridProps> = props => {
   const { user, mediator } = useSystemContext()
+  const { trackEvent } = useTracking()
+  const {
+    contextPageOwnerType,
+    contextPageOwnerSlug,
+    contextPageOwnerId,
+  } = useAnalyticsContext()
   const context = useArtworkFilterContext()
   const aggregations = get(props, p => p.filtered_artworks.aggregations)
 
@@ -63,6 +71,7 @@ const ArtworkFilterArtworkGrid: React.FC<ArtworkFilterArtworkGridProps> = props 
         <ArtworkGrid
           artworks={props.filtered_artworks}
           columnCount={columnCount}
+          contextModule={ContextModule.artworkGrid}
           preloadImageCount={6}
           itemMargin={40}
           user={user}
@@ -70,9 +79,15 @@ const ArtworkFilterArtworkGrid: React.FC<ArtworkFilterArtworkGridProps> = props 
           onClearFilters={context.resetFilters}
           emptyStateComponent={context.ZeroState && <context.ZeroState />}
           onBrickClick={artwork => {
-            if (context.onArtworkBrickClick) {
-              context.onArtworkBrickClick(artwork, props)
-            }
+            trackEvent(
+              clickedMainArtworkGrid({
+                contextPageOwnerType,
+                contextPageOwnerSlug,
+                contextPageOwnerId,
+                destinationPageOwnerId: artwork.internalID,
+                destinationPageOwnerSlug: artwork.slug,
+              })
+            )
           }}
         />
 

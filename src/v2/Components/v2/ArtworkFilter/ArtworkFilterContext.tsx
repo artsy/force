@@ -109,7 +109,6 @@ export interface ArtworkFilterContextProps {
   setCounts?: (counts: Counts) => void
 
   // Handlers
-  onArtworkBrickClick?: (artwork: any, props: any) => void
   onFilterClick?: (
     key: keyof ArtworkFilters,
     value: string,
@@ -159,7 +158,6 @@ export type SharedArtworkFilterContextProps = Pick<
   | "counts"
   | "filters"
   | "sortOptions"
-  | "onArtworkBrickClick"
   | "onFilterClick"
   | "ZeroState"
 > & {
@@ -175,7 +173,6 @@ export const ArtworkFilterContextProvider: React.FC<
   children,
   counts = {},
   filters = {},
-  onArtworkBrickClick,
   onChange,
   onFilterClick,
   sortOptions,
@@ -226,7 +223,6 @@ export const ArtworkFilterContextProvider: React.FC<
     currentlySelectedFilters: currentlySelectedFilters,
 
     // Handlers
-    onArtworkBrickClick,
     onFilterClick,
 
     // Sorting

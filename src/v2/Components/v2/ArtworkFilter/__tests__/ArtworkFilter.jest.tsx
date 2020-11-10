@@ -76,13 +76,20 @@ describe("ArtworkFilter", () => {
     })
 
     it("triggers #onBrickClick on brick click", async () => {
-      const onArtworkBrickClick = jest.fn()
-      const wrapper = await getWrapper("lg", {
-        onArtworkBrickClick,
-      })
+      const wrapper = await getWrapper()
       wrapper.find("ArtworkGridItemContainer a").first().simulate("click")
 
-      expect(onArtworkBrickClick).toHaveBeenCalled()
+      expect(trackEvent).toHaveBeenCalledWith({
+        action: "clickedMainArtworkGrid",
+        context_module: "artworkGrid",
+        context_page_owner_id: undefined,
+        context_page_owner_slug: undefined,
+        context_page_owner_type: "home",
+        destination_page_owner_id: "5d041931e607c200127ef3c1",
+        destination_page_owner_slug: "andy-warhol-kenny-burrell",
+        destination_page_owner_type: "artwork",
+        type: "thumbnail",
+      })
     })
 
     it("triggers #onChange when filters change, passing back filter state", async () => {
@@ -137,6 +144,9 @@ describe("ArtworkFilter", () => {
 
       expect(trackEvent).toHaveBeenCalledWith({
         action_type: "Commercial filter params changed",
+        context_page_owner_id: undefined,
+        context_page_owner_slug: undefined,
+        context_page_owner_type: "home",
         changed: { acquireable: true },
         current: {
           acquireable: true,
