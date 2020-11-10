@@ -1,6 +1,6 @@
 import Autosuggest from "react-autosuggest"
 import React from "react"
-import { Input, MagnifyingGlassIcon, Text } from "@artsy/palette"
+import { Input, MagnifyingGlassIcon, Text, color } from "@artsy/palette"
 import { usePriceEstimateContext } from "./ConsignPriceEstimateContext"
 
 export const ConsignArtistAutosuggest: React.FC = () => {
@@ -16,7 +16,6 @@ export const ConsignArtistAutosuggest: React.FC = () => {
     <Autosuggest
       suggestions={suggestions ?? []}
       onSuggestionsFetchRequested={() => fetchSuggestions(searchQuery)}
-      onSuggestionsClearRequested={x => x} // FIXME: implement
       onSuggestionSelected={(_, { suggestion }) => selectSuggestion(suggestion)}
       getSuggestionValue={suggestion => suggestion.node.displayLabel}
       renderInputComponent={AutosuggestInput}
@@ -56,9 +55,17 @@ const AutosuggestInput: React.FC = props => {
   )
 }
 
-const Suggestion: React.FC<{ node: any /* FIXME */ }> = ({ node }) => {
+const Suggestion: React.FC<{ node: any /* FIXME */ }> = (
+  { node },
+  { isHighlighted }
+) => {
   return (
-    <Text width="100%" background="white" py={0.5} paddingLeft={1}>
+    <Text
+      width="100%"
+      background={isHighlighted ? color("black10") : "white"}
+      py={0.5}
+      paddingLeft={1}
+    >
       {node.displayLabel}
     </Text>
   )

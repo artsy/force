@@ -40,7 +40,7 @@ export const GetPriceEstimate: React.FC = () => {
             alignItems="center"
             justifyContent="center"
             flex="1"
-            px={3}
+            px={[0, 0, 0, 3]}
           />
         </Flex>
       </SectionContainer>
