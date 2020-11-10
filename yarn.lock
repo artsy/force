@@ -27,10 +27,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/cohesion/-/cohesion-1.45.0.tgz#f97ff2237033cf9704e452fb35a50b769dd4ef14"
   integrity sha512-WH+TiBLuWtA8XITmXv5OJLr0RcT0VXNaXyYE+gur1MEg8c9s1eh9rfpwy8CPYjl1cPOAXyJVZeIMf1vlNsCNyA==
 
-"@artsy/cohesion@1.54.0":
-  version "1.54.0"
-  resolved "https://registry.yarnpkg.com/@artsy/cohesion/-/cohesion-1.54.0.tgz#f75588849a0937e75d8ab9801bcf5487545c971b"
-  integrity sha512-G8m8clfcxW2BoafL5BYwlzsn0+mEF5daP/Xc11Go+6P93hq7kb2m1HPSnppXMfYUeflfgUj5tnFH0RHoO/r4Iw==
+"@artsy/cohesion@1.55.0":
+  version "1.55.0"
+  resolved "https://registry.yarnpkg.com/@artsy/cohesion/-/cohesion-1.55.0.tgz#fd624093035f3126aa1d9165f4afef3be826c4fa"
+  integrity sha512-gWXaluPCouMZHNSD1OI0OjUELSR2bid6OGQ1GJNAl0l48S/zJilj0+SrHEvv5nj+Qw9yFA2Gi+y99d25fs5Djw==
 
 "@artsy/detect-responsive-traits@^0.0.5":
   version "0.0.5"
