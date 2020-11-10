@@ -4,7 +4,6 @@ import {
   Flex,
   FlexProps,
   Image,
-  Join,
   ResponsiveBox,
   Spacer,
   Text,

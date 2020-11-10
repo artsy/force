@@ -141,7 +141,7 @@ const ZeroState: React.FC = () => {
 }
 
 const Container = styled(Box).attrs({
-  width: ["100%", "100%", 550, 550],
+  width: ["100%", 550],
   p: 3,
 })`
   background: white;
