@@ -5,7 +5,6 @@ import { formatCentsToDollars } from "../../Utils/formatCentsToDollars"
 import { Box, Button, Flex, Image, Spacer, Text, color } from "@artsy/palette"
 import styled from "styled-components"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
-import { useSystemContext } from "v2/Artsy/SystemContext"
 import { Media } from "v2/Utils/Responsive"
 
 export const ArtistInsightResult: React.FC = () => {
@@ -117,7 +116,6 @@ export const ArtistInsightResult: React.FC = () => {
 
 const ZeroState: React.FC = () => {
   const { selectedSuggestion } = usePriceEstimateContext()
-  const { user } = useSystemContext()
 
   return (
     <Container>
@@ -137,44 +135,7 @@ const ZeroState: React.FC = () => {
         estimate for this artist.
       </Text>
       <Spacer mb={3} />
-      {user ? (
-        <Text variant="text">Try searching for another artist.</Text>
-      ) : (
-        <>
-          <Box>
-            <Text variant="text">
-              The market is unique for every artwork. Log in or sign up to
-              access auction result data from thousands of artists.
-            </Text>
-          </Box>
-
-          <Spacer mb={3} />
-
-          <Box>
-            <Media greaterThanOrEqual="md">
-              <Button width={230} mr={2}>
-                Sign up
-              </Button>
-              <Button width={230} variant="secondaryOutline">
-                Log in
-              </Button>
-            </Media>
-            <Media lessThan="md">
-              <Button size="large" block width="100%" mb={2}>
-                Sign up
-              </Button>
-              <Button
-                variant="secondaryOutline"
-                size="large"
-                block
-                width="100%"
-              >
-                Log in
-              </Button>
-            </Media>
-          </Box>
-        </>
-      )}
+      <Text variant="text">Try searching for another artist.</Text>
     </Container>
   )
 }
