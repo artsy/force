@@ -41,7 +41,7 @@ export const ArtistInsightResult: React.FC = () => {
   return (
     <Box>
       <Container>
-        <Flex flexDirection={["column", "row"]}>
+        <Flex flexDirection={["column", "column", "row", "row"]}>
           <Box pr={4} mb={[2, 2, 0]}>
             <Image
               src={imageUrl}
@@ -77,12 +77,12 @@ export const ArtistInsightResult: React.FC = () => {
           <Spacer mb={2} />
           <Media greaterThanOrEqual="md">
             <RouterLink to={`/artist/${artistSlug}/auction-results`}>
-              <Button width="50%" variant="secondaryOutline" mr={2}>
+              <Button width={230} variant="secondaryOutline" mr={2}>
                 Explore auction data
               </Button>
             </RouterLink>
             <RouterLink to="/consign/submission">
-              <Button width="50%">Get a valuation</Button>
+              <Button width={230}>Get a valuation</Button>
             </RouterLink>
           </Media>
           <Media lessThan="md">
@@ -180,7 +180,7 @@ const ZeroState: React.FC = () => {
 }
 
 const Container = styled(Box).attrs({
-  maxWidth: 550,
+  width: ["100%", "100%", 550, 550],
   p: 3,
 })`
   background: white;
@@ -196,7 +196,7 @@ const PlaceholderText = styled(Box)`
 
 const LoadingPlaceholder: React.FC = () => {
   return (
-    <Container width={["100%", "100%", "550px"]}>
+    <Container>
       <Box mb={2} height="80px" width="80px" bg="black10" />
       <PlaceholderText />
       <PlaceholderText />
