@@ -2,11 +2,13 @@
 // TODO: Find a way to remove JSDOM from our server.
 import "./lib/DOMParser"
 
+// Needs to be first, due to sharify side-effects.
+import commonMiddlewareSetup from "./common-middleware"
+
 import express from "express"
 import RavenServer from "raven"
 import { initializeForce } from "./current"
 import { initializeNovo } from "./novo/src/server"
-import commonMiddlewareSetup from "./common-middleware"
 import config from "./config"
 import errorHandlingMiddleware from "./lib/middleware/error_handler"
 import morganMiddleware from "./lib/middleware/morganMiddleware"
