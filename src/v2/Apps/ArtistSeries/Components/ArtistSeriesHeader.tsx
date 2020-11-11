@@ -40,7 +40,7 @@ const ArtistInfo: React.FC<ArtistsInfoProps> = props => {
     <EntityHeader
       smallVariant
       name={artist.name}
-      imageUrl={artist.image?.url}
+      imageUrl={artist.image?.cropped?.src}
       href={artist.href}
       FollowButton={
         <FollowArtistButton
@@ -235,7 +235,9 @@ export const ArtistSeriesHeaderFragmentContainer = createFragmentContainer(
         artists(size: 1) {
           name
           image {
-            url
+            cropped(width: 30, height: 30) {
+              src
+            }
           }
           href
           slug
