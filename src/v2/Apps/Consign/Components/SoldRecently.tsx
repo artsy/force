@@ -10,7 +10,7 @@ import { Carousel } from "v2/Components/Carousel"
 import { SectionContainer } from "./SectionContainer"
 import { Media } from "v2/Utils/Responsive"
 import { useTracking } from "react-tracking"
-import { clickedArtworkGroup } from "@artsy/cohesion"
+import { ContextModule, OwnerType, clickedArtworkGroup } from "@artsy/cohesion"
 
 const HEIGHT = 300
 
@@ -29,13 +29,14 @@ const SoldRecently: React.FC<SoldRecentlyProps> = ({ targetSupply }) => {
     return extractNodes(microfunnel.artworksConnection)
   })
 
-  const trackArtworkItemClick = artwork => () => {
+  const trackArtworkItemClick = (artwork, horizontalSlidePosition) => () => {
     tracking.trackEvent(
       clickedArtworkGroup({
-        destination_page_owner_id: "",
-        destination_page_owner_slug: "",
-        destination_page_owner_type: "",
-        type: "",
+        artworkID: artwork.internalID,
+        artworkSlug: artwork.slug,
+        contextModule: ContextModule.artworkRecentlySoldGrid,
+        contextPageOwnerType: OwnerType.consign,
+        horizontalSlidePosition,
       })
     )
   }
@@ -47,13 +48,13 @@ const SoldRecently: React.FC<SoldRecentlyProps> = ({ targetSupply }) => {
       </Text>
       <Flex flexDirection="column">
         <Carousel arrowHeight={HEIGHT}>
-          {recentlySoldArtworks.map(([artwork, _], key) => {
+          {recentlySoldArtworks.map(([artwork, _], index) => {
             return (
               <Flex
-                key={key}
+                key={index}
                 flexDirection="column"
                 style={{ textAlign: "left" }}
-                onClick={trackArtworkItemClick(artwork)}
+                onClick={trackArtworkItemClick(artwork, index)}
               >
                 <FillwidthItem
                   artwork={artwork}

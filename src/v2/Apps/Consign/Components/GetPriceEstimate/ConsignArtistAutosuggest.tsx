@@ -1,14 +1,16 @@
 import Autosuggest from "react-autosuggest"
-import React from "react"
+import React, { useEffect } from "react"
 import { Input, MagnifyingGlassIcon, Text } from "@artsy/palette"
 import { usePriceEstimateContext } from "./ConsignPriceEstimateContext"
 import { useTracking } from "react-tracking"
 import {
+  ContextModule,
   OwnerType,
   focusedOnSearchInput,
   searchedWithNoResults,
   selectedItemFromSearch,
 } from "@artsy/cohesion"
+import { Suggestion as ConsignSearchSuggestion } from "v2/Apps/Consign/Components/GetPriceEstimate/ConsignPriceEstimateContext.tsx"
 
 export const ConsignArtistAutosuggest: React.FC = () => {
   const tracking = useTracking()
@@ -24,24 +26,23 @@ export const ConsignArtistAutosuggest: React.FC = () => {
   const trackFocusedOnSearchInput = () => {
     tracking.trackEvent(
       focusedOnSearchInput({
-        context_owner_id: "foo",
-        context_owner_slug: "bar",
+        context_module: ContextModule.priceEstimate,
+        context_owner_type: OwnerType.consign,
       })
     )
   }
 
-  const trackSelectedItemFromSearch = () => {
+  const trackSelectedItemFromSearch = (
+    suggestion: ConsignSearchSuggestion["node"]
+  ) => {
     tracking.trackEvent(
       selectedItemFromSearch({
-        context_owner_id: "",
-        context_owner_slug: "",
-        destination_owner_id: "",
-        destination_owner_slug: "",
-        destination_owner_type: "",
-        owner_id: "",
-        owner_slug: "",
-        owner_type: "",
-        query: "",
+        context_module: ContextModule.priceEstimate,
+        context_owner_type: OwnerType.consign,
+        owner_id: suggestion.internalID,
+        owner_slug: suggestion.slug,
+        owner_type: OwnerType.artist,
+        query: searchQuery,
       })
     )
   }
@@ -49,29 +50,36 @@ export const ConsignArtistAutosuggest: React.FC = () => {
   const trackSearchedWithNoResults = () => {
     tracking.trackEvent(
       searchedWithNoResults({
-        context_owner_id: "",
-        context_owner_slug: "",
-        destination_owner_type: "",
-        query: "",
+        context_module: ContextModule.priceEstimate,
+        context_owner_type: OwnerType.consign,
+        query: searchQuery,
       })
     )
   }
+
+  useEffect(() => {
+    if (suggestions.length === 0) {
+      trackSearchedWithNoResults()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [suggestions])
 
   return (
     <Autosuggest
       suggestions={suggestions ?? []}
       onSuggestionsFetchRequested={() => fetchSuggestions(searchQuery)}
       onSuggestionsClearRequested={x => x} // FIXME: implement
-      onSuggestionSelected={(_, { suggestion }) => selectSuggestion(suggestion)}
+      onSuggestionSelected={(_, { suggestion }) => {
+        trackSelectedItemFromSearch(suggestion)
+        selectSuggestion(suggestion)
+      }}
       getSuggestionValue={suggestion => suggestion.node.displayLabel}
       renderInputComponent={AutosuggestInput}
       renderSuggestion={Suggestion}
       inputProps={{
         placeholder: "Tell me the value of my…",
         value: searchQuery,
-        onFocus: () => {
-          //
-        },
+        onFocus: trackFocusedOnSearchInput,
         onChange: (_, { newValue }) => {
           setSearchQuery(newValue)
         },
