@@ -10,7 +10,8 @@ fi
 
 # # prepare a production build
 if [ ! -f server.dist.js ]; then
-    yarn build:all
+    yarn assets
+    yarn build:server
 fi
 
 # start server in the background in production mode

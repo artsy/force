@@ -62,11 +62,11 @@ WORKDIR /app
 
 # Install system dependencies
 RUN apk --no-cache --quiet add \
-  bash \
-  build-base \
-  curl \
-  git \
-  python
+      bash \
+      build-base \
+      curl \
+      git \
+      python
 
 # ---------------------------------------------------------
 # Yarn base
@@ -126,14 +126,7 @@ COPY .env.oss \
 FROM builder-src as builder-assets
 
 # Build application
-RUN yarn build:assets
-
-# ---------------------------------------------------------
-# Compile novo assets
-# ---------------------------------------------------------
-FROM builder-src as builder-assets-novo
-
-RUN yarn build:assets:novo
+RUN yarn assets
 
 # ---------------------------------------------------------
 # Compile server
@@ -155,10 +148,6 @@ COPY ./scripts ./scripts
 COPY --from=builder-assets /app/manifest.json .
 COPY --from=builder-assets /app/public ./public
 COPY --from=builder-assets /app/src ./src
-
-# Client (Novo) assets
-COPY --from=builder-assets-novo /app/manifest-novo.json .
-COPY --from=builder-assets-novo /app/public ./public
 
 # Server assets
 COPY --from=builder-server /app/server.dist.js .
@@ -208,9 +197,6 @@ RUN chown deploy:deploy $(pwd)
 
 USER deploy
 
-# Production node modules.
-COPY --chown=deploy:deploy --from=yarn-deps /opt/node_modules.prod ./node_modules
-
 # Base code
 COPY --chown=deploy:deploy --from=builder /app/data ./data
 COPY --chown=deploy:deploy --from=builder /app/package.json .
@@ -220,7 +206,6 @@ COPY --chown=deploy:deploy --from=builder /app/yarn.lock .
 
 # Client assets
 COPY --chown=deploy:deploy --from=builder /app/manifest.json .
-COPY --chown=deploy:deploy --from=builder /app/manifest-novo.json .
 COPY --chown=deploy:deploy --from=builder /app/public ./public
 COPY --chown=deploy:deploy --from=builder /app/src ./src
 
@@ -228,7 +213,9 @@ COPY --chown=deploy:deploy --from=builder /app/src ./src
 COPY --chown=deploy:deploy --from=builder /app/server.dist.js .
 COPY --chown=deploy:deploy --from=builder /app/server.dist.js.map .
 
-ENTRYPOINT ["/usr/bin/dumb-init", "--"]
 
-# TODO: Reduce production memory, this is not a concern
-CMD ["node", "--max_old_space_size=3072", "./server.dist.js"]
+# Production node modules.
+COPY --chown=deploy:deploy --from=yarn-deps /opt/node_modules.prod ./node_modules
+
+ENTRYPOINT ["/usr/bin/dumb-init", "--"]
+CMD ["yarn", "start"]

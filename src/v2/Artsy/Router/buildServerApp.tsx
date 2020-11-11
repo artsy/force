@@ -58,10 +58,7 @@ export interface ServerRouterConfig extends RouterConfig {
 }
 
 export function buildServerApp(
-  config: ServerRouterConfig,
-  loadableFile: string = "loadable-stats.json",
-  loadablePath: string = "public/assets",
-  assetsPath: string = "/assets"
+  config: ServerRouterConfig
 ): Promise<ServerAppResolve> {
   return new Promise(async (resolve, reject) => {
     try {
@@ -138,7 +135,11 @@ export function buildServerApp(
          */
         let statsFile
         try {
-          statsFile = path.resolve(process.cwd(), loadablePath, loadableFile)
+          statsFile = path.resolve(
+            process.cwd(),
+            "public/assets",
+            "loadable-stats.json"
+          )
         } catch (error) {
           console.error(
             "[Artsy/Router/buildServerApp.tsx] Error:",
@@ -146,7 +147,7 @@ export function buildServerApp(
           )
         }
 
-        const assetPublicPath = (getENV("CDN_URL") || "") + assetsPath
+        const assetPublicPath = (getENV("CDN_URL") || "") + "/assets"
         const extractor = new ChunkExtractor({
           statsFile,
           entrypoints: [],

@@ -10,3 +10,4 @@ const jsdom = new JSDOM()
 
 const _global = global
 _global.DOMParser = jsdom.window.DOMParser
+_global.Node = jsdom.window.Node

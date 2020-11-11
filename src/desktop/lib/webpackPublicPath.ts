@@ -22,13 +22,7 @@ if (process.env.NODE_ENV === "production") {
     cdnUrl = "https://d1rmpw1xlv9rxa.cloudfront.net"
   }
 
-  // TODO: Ugh, this is a mess. Figure out a way to not relying on custom
-  // webpack pathing client side.
-  if (window.location.pathname.startsWith("/novo")) {
-    __webpack_public_path__ = cdnUrl + "/assets-novo/"
-  } else {
-    __webpack_public_path__ = cdnUrl + "/assets/"
-  }
+  __webpack_public_path__ = cdnUrl + "/assets/"
 
   // @ts-ignore
   window.__getPublicPath = () => __webpack_public_path__
