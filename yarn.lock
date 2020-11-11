@@ -108,7 +108,7 @@
     ip "1.1.5"
     mailcheck "1.1.1"
     passport "0.3.2"
-    passport-apple "git+https://github.com/artsy/passport-apple.git#f41adb7822c8344b72bc36a7d68312f6592cb14f"
+    passport-apple "https://github.com/artsy/passport-apple#f41adb7822c8344b72bc36a7d68312f6592cb14f"
     passport-facebook "2.1.1"
     superagent "1.8.4"
     underscore.string "3.3.4"
@@ -14346,7 +14346,6 @@ pascalcase@^0.1.1:
 
 "passport-apple@git+https://github.com/artsy/passport-apple.git#f41adb7822c8344b72bc36a7d68312f6592cb14f":
   version "1.1.2"
-  uid f41adb7822c8344b72bc36a7d68312f6592cb14f
   resolved "git+https://github.com/artsy/passport-apple.git#f41adb7822c8344b72bc36a7d68312f6592cb14f"
   dependencies:
     jsonwebtoken "^8.5.1"
