@@ -2,13 +2,14 @@
 
 set -ex
 
-export NODE_ENV=production
-
 if [ ! -f server.dist.js ]; then
-  yarn build:assets
-  yarn build:assets:novo
+  # Build the client assets for testing
+  export BUILD_CLIENT=true
 
-  # TODO: We don't need the server to be built here, these tests only rely on assets.
+  # CSS is only compiled during a development build?
+  export NODE_ENV=production
+
+  yarn assets
   yarn build:server
 fi
 

@@ -72,8 +72,8 @@ export const serverConfig = {
     env.enableWebpackAnalyze
       ? undefined
       : new webpack.optimize.LimitChunkCountPlugin({
-        maxChunks: 1,
-      }),
+          maxChunks: 1,
+        }),
   ]),
   resolve: {
     extensions: [".js", ".jsx", ".ts", ".tsx", ".json", ".coffee"],

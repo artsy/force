@@ -27,11 +27,11 @@ import { getContextPageFromReq } from "lib/getContextPage"
 // * this isnt a supported cacheable path (there is an allow-list set in ENV).
 // * the page content is uncached.
 // * the cache errors.
-export default async function pageCacheMiddleware(
+export const pageCacheMiddleware = async (
   req: Request,
   res: Response,
   next: NextFunction
-) {
+) => {
   if (!PAGE_CACHE_ENABLED) return next()
 
   // Returns true if the page type corresponding to `url` is configured cacheable.
