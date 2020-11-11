@@ -1,4 +1,5 @@
 // @ts-check
+/* eslint-disable no-console */
 
 const chalk = require("chalk")
 const merge = require("webpack-merge")
@@ -9,6 +10,8 @@ const { env } = require("./utils/env")
 const {
   clientCommonConfig,
   clientDevelopmentConfig,
+  clientNovoDevelopmentConfig,
+  clientNovoProductionConfig,
   clientProductionConfig,
   serverConfig,
 } = require("./envs")
@@ -36,11 +39,31 @@ const getClientConfig = () => {
   }
 }
 
+const getNovoClientConfig = () => {
+  switch (true) {
+    case env.isDevelopment:
+      console.log("[Force Novo] Building client-side development code...")
+      return clientNovoDevelopmentConfig
+
+    case env.isProduction:
+      console.log("[Force Novo] Building client-side production code...")
+      return clientNovoProductionConfig
+  }
+}
+
 // Verify that only a single build is selected.
-if (!env.buildClient && !env.buildServer) {
+if (
+  !env.buildClient &&
+  !env.buildServer &&
+  !env.buildNovoClient &&
+  !env.buildNovoServer
+) {
   console.log("Must build either the CLIENT or SERVER.")
   process.exit(1)
-} else if (env.buildClient && env.buildServer) {
+} else if (
+  (env.buildClient && env.buildServer) ||
+  (env.buildNovoClient && env.buildNovoServer)
+) {
   console.log("Must only build CLIENT or SERVER.")
   process.exit(1)
 }
@@ -51,6 +74,8 @@ if (env.buildClient) {
   config = getClientConfig()
 } else if (env.buildServer) {
   config = getServerConfig()
+} else if (env.buildNovoClient) {
+  config = getNovoClientConfig()
 } else {
   console.log(chalk.red("No build selected."))
   process.exit(1)

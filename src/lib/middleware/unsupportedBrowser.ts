@@ -1,7 +1,7 @@
 import { parse } from "url"
 import useragent from "useragent"
 
-export const unsupportedBrowserCheck = (req, res, next) => {
+export default function unsupportedBrowserCheckMiddleware(req, res, next) {
   const ua = useragent.parse(req.headers["user-agent"])
   if (!res.locals.sd.BROWSER) {
     res.locals.sd.BROWSER = ua

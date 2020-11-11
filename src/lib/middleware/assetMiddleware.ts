@@ -4,9 +4,9 @@ import chalk from "chalk"
 
 const { CDN_URL, NODE_ENV } = process.env
 
-export function assetMiddleware() {
+export default function assetMiddleware(manifestFileName = "manifest.json") {
   if (NODE_ENV === "production") {
-    const manifestPath = path.resolve(process.cwd(), "manifest.json")
+    const manifestPath = path.resolve(process.cwd(), manifestFileName)
 
     let manifest = {}
     try {
@@ -18,6 +18,7 @@ export function assetMiddleware() {
     return (_req, res, next) => {
       res.locals.asset = filename => {
         let manifestFile = manifest[filename] || filename
+        // TODO: Is this path still used? If no remove it.
         if (CDN_URL) {
           manifestFile = CDN_URL + manifestFile
         }

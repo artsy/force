@@ -1,5 +1,5 @@
 // @ts-check
-
+/* eslint-disable no-console */
 const chalk = require("chalk")
 const fs = require("fs")
 const path = require("path")
@@ -11,6 +11,7 @@ const WebpackNotifierPlugin = require("webpack-notifier")
 const SimpleProgressWebpackPlugin = require("simple-progress-webpack-plugin")
 const CaseSensitivePathsPlugin = require("case-sensitive-paths-webpack-plugin")
 const { basePath, env } = require("../utils/env")
+const { getEntrypoints } = require("../utils/getEntrypoints")
 
 const cacheDirectory = path.resolve(basePath, ".cache")
 
@@ -26,6 +27,7 @@ if (!env.onCi && !fs.existsSync(cacheDirectory)) {
 export const clientDevelopmentConfig = {
   devtool: env.webpackDevtool || "eval",
   stats: env.webpackStats || "errors-only",
+  entry: getEntrypoints(),
   module: {
     // Why do we only compile css in development mode?
     rules: [

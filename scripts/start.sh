@@ -25,7 +25,7 @@ if [ "${NODE_ENV}" != "production" ]; then
     OPT+=(--inspect)
   fi
 
-  yarn relay --watch & BUILD_CLIENT=true exec node "${OPT[@]}" ./src
+  yarn relay --watch & BUILD_CLIENT=true exec node "${OPT[@]}" ./src/index.dev.js
 else
   exec node "${OPT[@]}" ./server.dist.js
 fi
