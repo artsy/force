@@ -8,6 +8,7 @@ hasSeen = require '../../has_seen/index.coffee'
 sd = require('sharify').data
 template = -> require('../templates/inquiry.jade') arguments...
 { recaptcha } = require "../../../../v2/Utils/recaptcha"
+{ setAnalyticsClientReferrerOptions } = require "../../../analytics/setAnalyticsClientReferrerOptions"
 
 module.exports = class Inquiry extends StepView
 
@@ -22,6 +23,9 @@ module.exports = class Inquiry extends StepView
 
   __events__:
     'click button': 'serialize'
+    'click .js-send-inquiry': 'onInquirySend'
+    'input .js-inquiry-message': 'onInquiryInput'
+    'alert .js-inquiry-message': 'onInquiryAlert'
 
   defaultMessage: ->
     defaultMessage @artwork, @artwork.related().partner
@@ -86,3 +90,27 @@ module.exports = class Inquiry extends StepView
           @next()
       , (e) ->
         form.error null, e
+
+  onInquirySend: (e) ->
+    options = setAnalyticsClientReferrerOptions()
+    window.analytics.track(
+      'inquiry_questionnaire: Clicked "Send" on inquiry form',
+      {}
+      options
+    )
+
+  onInquiryInput: (e) ->
+    options = setAnalyticsClientReferrerOptions()
+    window.analytics.track(
+      'inquiry_questionnaire: User changed inquiry message from default',
+      {}
+      options
+    )
+
+  onInquiryAlert: (e) ->
+    options = setAnalyticsClientReferrerOptions()
+    window.analytics.track(
+      'User nudged to change inquiry message from default',
+      {}
+      options
+    )

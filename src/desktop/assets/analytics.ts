@@ -35,6 +35,5 @@ trackPageView(excludedRoutes)
 document.addEventListener("DOMContentLoaded", () => {
   window.analytics.ready(() => {
     onAnalyticsReady()
-    require("../analytics/inquiry_questionnaire.js")
   })
 })

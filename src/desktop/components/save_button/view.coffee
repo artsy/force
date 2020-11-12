@@ -1,6 +1,5 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-{ modelNameAndIdToLabel } = require '../../lib/analytics_helpers.coffee'
 { openAuthModal } = require '../../lib/openAuthModal'
 { ModalType } = require "../../../v2/Components/Authentication/Types"
 { Intent } = require "@artsy/cohesion"
