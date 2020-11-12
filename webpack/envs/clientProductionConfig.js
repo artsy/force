@@ -6,11 +6,13 @@ const { HashedModuleIdsPlugin } = require("webpack")
 const { getCSSManifest } = require("../utils/getCSSManifest")
 const TerserPlugin = require("terser-webpack-plugin")
 const { basePath, env } = require("../utils/env")
+const { getEntrypoints } = require("../utils/getEntrypoints")
 
 export const clientProductionConfig = {
   parallelism: 100,
   mode: env.webpackDebug ? "development" : env.nodeEnv,
   devtool: "source-map",
+  entry: getEntrypoints(),
   output: {
     filename: "[name].22820.[contenthash].js",
     // NOTE: On the client, we're setting `publicPath` during runtime in order to
