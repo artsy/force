@@ -27,10 +27,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/cohesion/-/cohesion-1.45.0.tgz#f97ff2237033cf9704e452fb35a50b769dd4ef14"
   integrity sha512-WH+TiBLuWtA8XITmXv5OJLr0RcT0VXNaXyYE+gur1MEg8c9s1eh9rfpwy8CPYjl1cPOAXyJVZeIMf1vlNsCNyA==
 
-"@artsy/cohesion@1.56.0":
-  version "1.56.0"
-  resolved "https://registry.yarnpkg.com/@artsy/cohesion/-/cohesion-1.56.0.tgz#4ea89fab51f5f03ccc0a2e31b1354f0fbf130ec0"
-  integrity sha512-7+Gm5nNxYgVaAclfco132LQnFvGhLL5xGLbrFBa99jltC1etJxZhjYDI8jUok78NO+BBm0mt/QSzBOGq5KnLRw==
+"@artsy/cohesion@1.57.0":
+  version "1.57.0"
+  resolved "https://registry.yarnpkg.com/@artsy/cohesion/-/cohesion-1.57.0.tgz#c959282fa6fbc752a0e4b931ec43507e7449c6cb"
+  integrity sha512-jtzPcTDIU1ypkA+g6o5ittd/69vGmDZW403L2Trt2BwdsmcA3TsaPG8aPnUxtwY5liCk5H1rA9P6UrPhHWi7nQ==
 
 "@artsy/detect-responsive-traits@^0.0.5":
   version "0.0.5"
@@ -63,10 +63,10 @@
   dependencies:
     uuid "^8.3.0"
 
-"@artsy/palette@13.17.1-canary.812.13759.0":
-  version "13.17.1-canary.812.13759.0"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-13.17.1-canary.812.13759.0.tgz#a201b7299f1648990a6fa3d13ec41560ef7bc0fa"
-  integrity sha512-usduwJ7Hk6cul8F74RJ3k0cefit/Nnzbw1H5b93U8TQ9Dvzpy2mqO6CRtRznSd5Eq1Hqrgc37GUp4fJ6ZMVLSQ==
+"@artsy/palette@13.18.0":
+  version "13.18.0"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-13.18.0.tgz#efdbb96bc190234b75aa599fa3caf7ad5eafb300"
+  integrity sha512-1d024rdmQ5rbZJ3mU8FVzgsioZJOoJq5FqFZWBC/3Fd/pHt8se9ZmZ0hrTGkdDZBAci1kmCMP1ioJxgpJ1UbBA==
   dependencies:
     "@styled-system/theme-get" "^5.1.2"
     babel-plugin-styled-components "^1.10.0"
@@ -14344,9 +14344,10 @@ pascalcase@^0.1.1:
   resolved "https://registry.yarnpkg.com/pascalcase/-/pascalcase-0.1.1.tgz#b363e55e8006ca6fe21784d2db22bd15d7917f14"
   integrity sha1-s2PlXoAGym/iF4TS2yK9FdeRfxQ=
 
-"passport-apple@git+https://github.com/artsy/passport-apple.git#f41adb7822c8344b72bc36a7d68312f6592cb14f":
+"passport-apple@https://github.com/artsy/passport-apple#f41adb7822c8344b72bc36a7d68312f6592cb14f":
   version "1.1.2"
-  resolved "git+https://github.com/artsy/passport-apple.git#f41adb7822c8344b72bc36a7d68312f6592cb14f"
+  uid f41adb7822c8344b72bc36a7d68312f6592cb14f
+  resolved "https://github.com/artsy/passport-apple#f41adb7822c8344b72bc36a7d68312f6592cb14f"
   dependencies:
     jsonwebtoken "^8.5.1"
     passport-oauth2 "^1.5.0"

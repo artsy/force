@@ -4,11 +4,13 @@ import { graphql } from "react-relay"
 import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
 import { ShowArtworks_Test_Query } from "v2/__generated__/ShowArtworks_Test_Query.graphql"
 import { MockBoot } from "v2/DevTools"
+import { useTracking } from "v2/Artsy/Analytics/useTracking"
 
 jest.unmock("react-relay")
 jest.mock("v2/Artsy/Router/useRouter", () => ({
   useRouter: () => ({ match: { location: { query: {} } } }),
 }))
+jest.mock("v2/Artsy/Analytics/useTracking")
 
 const { getWrapper } = setupTestWrapper<ShowArtworks_Test_Query>({
   Component: props => (
@@ -26,6 +28,16 @@ const { getWrapper } = setupTestWrapper<ShowArtworks_Test_Query>({
 })
 
 describe("ShowArtworks", () => {
+  const trackEvent = jest.fn()
+
+  beforeEach(() => {
+    ;(useTracking as jest.Mock).mockImplementation(() => {
+      return {
+        trackEvent,
+      }
+    })
+  })
+
   it("renders correctly", () => {
     const wrapper = getWrapper()
 

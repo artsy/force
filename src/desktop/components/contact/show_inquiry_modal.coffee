@@ -4,7 +4,6 @@ ContactView = require './view.coffee'
 FlashMessage = require '../flash/index.coffee'
 openInquiryQuestionnaireFor = require '../inquiry_questionnaire/index.coffee'
 User = require '../../models/user.coffee'
-{ modelNameAndIdToLabel } = require '../../lib/analytics_helpers.coffee'
 Partner = require '../../models/partner.coffee'
 { SESSION_ID, API_URL } = require('sharify').data
 

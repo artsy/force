@@ -247,7 +247,7 @@ const ArtistSeriesAppFixture: ArtistSeriesApp_QueryRawResponse = {
       {
         name: "Yayoi Kusama",
         image: {
-          url: "https://test.artsy.net/yayoi-kusama.jpg",
+          cropped: { src: "https://test.artsy.net/yayoi-kusama.jpg" },
         },
         href: "/artist/yayoi-kusama",
         slug: "yayoi-kusama",

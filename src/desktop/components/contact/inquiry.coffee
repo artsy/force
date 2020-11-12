@@ -2,9 +2,10 @@ _ = require 'underscore'
 Backbone = require 'backbone'
 Cookies = require '../cookies/index.coffee'
 ContactView = require './view.coffee'
-analyticsHooks = require '../../lib/analytics_hooks.coffee'
 formTemplate = -> require('./templates/inquiry_form.jade') arguments...
 { SESSION_ID, API_URL } = sd = require('sharify').data
+{ analyticsHooks } = require "../inquiry_questionnaire/analytics/analyticsHooks"
+
 
 module.exports = class InquiryView extends ContactView
   # Prevents clicks on the backdrop from closing

@@ -1,36 +1,16 @@
-import { data as sd } from "sharify"
 import {
   ContextModule,
   Intent,
   createdAccount,
   successfullyLoggedIn,
 } from "@artsy/cohesion"
-import $ from "jquery"
 import { omit } from "lodash"
-const analyticsHooks = require("desktop/lib/analytics_hooks.coffee")
-const analytics = window.analytics
+import { analyticsHooks } from "desktop/components/inquiry_questionnaire/analytics/analyticsHooks"
+import { setAnalyticsClientReferrerOptions } from "desktop/analytics/setAnalyticsClientReferrerOptions"
 ;(function () {
   "use strict"
 
   let namespace, track, trackWithoutNamespace, bind, bindOnce
-
-  function getTrackingOptions() {
-    let trackingOptions = {}
-
-    const referrer = window.analytics.__artsyClientSideRoutingReferrer
-    // Grab referrer from our trackingMiddleware in Reaction, since we're in a
-    // single-page-app context and the value will need to be refreshed on route
-    // change. See: https://github.com/artsy/force/blob/master/src/v2/Artsy/Analytics/trackingMiddleware.ts
-    if (referrer) {
-      trackingOptions = {
-        page: {
-          referrer,
-        },
-      }
-    }
-
-    return trackingOptions
-  }
 
   namespace = function (name) {
     return "inquiry_questionnaire:" + name
@@ -38,11 +18,11 @@ const analytics = window.analytics
 
   track = function (event, props = {}) {
     event = namespace(" " + event)
-    analytics.track(event, props, getTrackingOptions())
+    window.analytics.track(event, props, setAnalyticsClientReferrerOptions())
   }
 
   trackWithoutNamespace = function (event, props = {}) {
-    analytics.track(event, props, getTrackingOptions())
+    window.analytics.track(event, props, setAnalyticsClientReferrerOptions())
   }
 
   bind = function (name, handler) {
@@ -57,56 +37,16 @@ const analytics = window.analytics
     analyticsHooks.on(namespace(name), handler)
   }
 
-  // DOM events
-  let $document = $(document)
-
-  $document.on("click", ".js-choice", function () {
-    let choice = $(this).data("value")
-    track("Clicked on how_can_we_help option", {
-      choice: choice,
-    })
-  })
-
-  $document.on("click", ".js-iq-collector-level", function (e) {
-    track('Clicked "Yes" or "No" button on commercial_interest', {
-      collector_level: e.currentTarget.value,
-    })
-  })
-
-  $document.on("click", ".js-login-email", function () {
-    track('Clicked "Log in"')
-  })
-
-  $document.on("click", ".js-forgot-password", function () {
-    track('Clicked "Forgot Password?"')
-  })
-
-  $document.on("click", ".js-send-inquiry", function () {
-    track('Clicked "Send" on inquiry form')
-  })
-
-  $document.one("input", ".js-inquiry-message", function (e) {
-    track("User changed inquiry message from default")
-  })
-
-  $document.on("alert", ".js-inquiry-message", function (e) {
-    track("User nudged to change inquiry message from default")
-  })
-
-  $document.on("click", ".js-iq-save-skip", function () {
-    track('Clicked on "No thanks don’t save my information"')
-  })
-
   // Proxied events
-  bind("modal:opened", function (context) {
+  bind("modal:opened", function (_context) {
     track("Opened inquiry flow")
   })
 
-  bind("modal:closed", function (context) {
+  bind("modal:closed", function (_context) {
     track("Closed inquiry flow")
   })
 
-  bind("state:completed", function (context) {
+  bind("state:completed", function (_context) {
     track("Completed inquiry flow")
   })
 
@@ -141,15 +81,15 @@ const analytics = window.analytics
     })
   })
 
-  bind("user:sync", function (context) {
+  bind("user:sync", function (_context) {
     track("User data saved")
   })
 
-  bind("collector_profile:sync", function (context) {
+  bind("collector_profile:sync", function (_context) {
     track("CollectorProfile data saved")
   })
 
-  bindOnce("inquiry:sync", function (context) {
+  bindOnce("inquiry:sync", function (_context) {
     track("Inquiry successfully sent")
   })
 
@@ -237,15 +177,15 @@ const analytics = window.analytics
     })
   })
 
-  bindOnce("contact:hover", function (context) {
+  bindOnce("contact:hover", function (_context) {
     trackWithoutNamespace("Hovered over contact form 'Send' button")
   })
 
-  bindOnce("contact:close-x", function (context) {
+  bindOnce("contact:close-x", function (_context) {
     trackWithoutNamespace("Closed the inquiry form via the '×' button")
   })
 
-  bindOnce("contact:close-back", function (context) {
+  bindOnce("contact:close-back", function (_context) {
     trackWithoutNamespace(
       "Closed the inquiry form by clicking the modal window backdrop"
     )

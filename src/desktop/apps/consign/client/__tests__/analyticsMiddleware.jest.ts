@@ -3,7 +3,6 @@ import { applyMiddleware, createStore } from "redux"
 
 import analyticsMiddleware from "../analytics_middleware"
 
-jest.mock("desktop/lib/analytics_hooks.coffee")
 jest.mock("sharify", () => ({
   data: {
     CURRENT_USER: {

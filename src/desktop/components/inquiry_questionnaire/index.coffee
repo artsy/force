@@ -5,7 +5,7 @@ State = require '../branching_state/index.coffee'
 StateView = require '../branching_state/view.coffee'
 Logger = require '../logger/index.coffee'
 Trail = require './trail.coffee'
-analytics = require './analytics.coffee'
+{ attachInquiryAnalyticsHooks, teardownInquiryAnalyticsHooks } = require './analytics'
 openErrorFlash = require './error.coffee'
 sd = require('sharify').data
 { mediator } = require('../../../lib/mediator')
@@ -51,9 +51,9 @@ module.exports = ({ user, artwork, inquiry, bypass, state_attrs, ask_specialist 
     ask_specialist: ask_specialist
 
   # Attach/teardown analytics events
-  analytics.attach state.context
+  attachInquiryAnalyticsHooks state.context
   modal.view.on 'closed', ->
-    analytics.teardown state.context
+    teardownInquiryAnalyticsHooks state.context
 
     # Dispatch a reload event to the new reaction app shell. If user has created
     # account or logged in, page will reload to sync logged in state.

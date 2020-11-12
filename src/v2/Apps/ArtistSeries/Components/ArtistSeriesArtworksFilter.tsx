@@ -5,8 +5,6 @@ import { updateUrl } from "v2/Components/v2/ArtworkFilter/Utils/urlBuilder"
 import { Match, RouterState, withRouter } from "found"
 import React from "react"
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
-import { track } from "v2/Artsy"
-import * as Schema from "v2/Artsy/Analytics/Schema"
 
 interface ArtistSeriesArtworksFilterProps {
   artistSeries: ArtistSeriesArtworksFilter_artistSeries
@@ -50,10 +48,8 @@ const ArtistSeriesArtworksFilter: React.FC<ArtistSeriesArtworksFilterProps> = pr
 }
 
 export const ArtistSeriesArtworksFilterRefetchContainer = createRefetchContainer(
-  track({ context_page: Schema.PageName.ArtistSeriesPage })(
-    withRouter<ArtistSeriesArtworksFilterProps & RouterState>(
-      ArtistSeriesArtworksFilter
-    )
+  withRouter<ArtistSeriesArtworksFilterProps & RouterState>(
+    ArtistSeriesArtworksFilter
   ),
   {
     artistSeries: graphql`
@@ -101,7 +97,7 @@ export const ArtistSeriesArtworksFilterRefetchContainer = createRefetchContainer
           width: $width
         ) {
           id
-          ...ArtworkFilterArtworkGrid2_filtered_artworks
+          ...ArtworkFilterArtworkGrid_filtered_artworks
         }
       }
     `,

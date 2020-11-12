@@ -1,5 +1,4 @@
 import { Box, Separator, Spacer, Text } from "@artsy/palette"
-import { clickedMainArtworkGrid } from "@artsy/cohesion"
 import { Match, Router } from "found"
 import React from "react"
 import { Link, Meta, Title } from "react-head"
@@ -10,8 +9,6 @@ import { SeoProductsForArtworks } from "v2/Apps/Collect/Components/SeoProductsFo
 import { buildUrlForCollectApp } from "v2/Apps/Collect/Utils/urlBuilder"
 import { AppContainer } from "v2/Apps/Components/AppContainer"
 
-import { useTracking } from "v2/Artsy/Analytics"
-import { useAnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
 import { FrameWithRecentlyViewed } from "v2/Components/FrameWithRecentlyViewed"
 import { BreadCrumbList } from "v2/Components/Seo"
 
@@ -50,9 +47,6 @@ export const CollectApp: React.FC<CollectAppProps> = ({
       name: breadcrumbTitle,
     })
   }
-
-  const tracking = useTracking()
-  const { contextPageOwnerType } = useAnalyticsContext()
 
   return (
     <AppContainer>
@@ -96,15 +90,6 @@ export const CollectApp: React.FC<CollectAppProps> = ({
               { value: "-year", text: "Artwork year (desc.)" },
               { value: "year", text: "Artwork year (asc.)" },
             ]}
-            onArtworkBrickClick={artwork => {
-              tracking.trackEvent(
-                clickedMainArtworkGrid({
-                  contextPageOwnerType,
-                  destinationPageOwnerId: artwork.internalID,
-                  destinationPageOwnerSlug: artwork.slug,
-                })
-              )
-            }}
             onChange={filters => {
               const url = buildUrlForCollectApp(filters)
 
