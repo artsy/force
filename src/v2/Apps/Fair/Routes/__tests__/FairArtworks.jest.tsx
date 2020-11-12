@@ -3,6 +3,7 @@ import React from "react"
 import { FairArtworksRefetchContainer } from "../FairArtworks"
 import { graphql } from "react-relay"
 import { FairArtworks_QueryRawResponse } from "v2/__generated__/FairArtworks_Query.graphql"
+import { useTracking } from "v2/Artsy/Analytics/useTracking"
 
 jest.unmock("react-relay")
 jest.mock("v2/Artsy/Router/useRouter", () => ({
@@ -12,8 +13,19 @@ jest.mock("v2/Artsy/Router/useRouter", () => ({
     },
   }),
 }))
+jest.mock("v2/Artsy/Analytics/useTracking")
 
 describe("FairArtworks", () => {
+  const trackEvent = jest.fn()
+
+  beforeEach(() => {
+    ;(useTracking as jest.Mock).mockImplementation(() => {
+      return {
+        trackEvent,
+      }
+    })
+  })
+
   const getWrapper = async (
     response: FairArtworks_QueryRawResponse = FAIR_ARTWORKS_FIXTURE
   ) => {

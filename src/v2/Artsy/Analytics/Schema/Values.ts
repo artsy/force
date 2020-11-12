@@ -13,7 +13,6 @@ export enum PageName {
   SearchPage = "Search page",
   HomePage = "Home",
   IdentityVerificationPage = "Identity Verification page",
-  ArtistSeriesPage = "Artist Series",
 }
 
 /**
@@ -64,7 +63,6 @@ export enum ActionType {
    */
   ClickedReadMore = "Clicked read more",
 
-  CommercialFilterParamsChanged = "Commercial filter params changed",
   AuctionResultFilterParamChanged = "Auction results filter params changed",
   AuctionResultItemClicked = "Auction result item clicked",
 

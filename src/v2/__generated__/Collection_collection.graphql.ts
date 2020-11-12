@@ -50,7 +50,7 @@ export type Collection_collection = {
     } | null;
     readonly filtered_artworks: {
         readonly id: string;
-        readonly " $fragmentRefs": FragmentRefs<"ArtworkFilterArtworkGrid2_filtered_artworks">;
+        readonly " $fragmentRefs": FragmentRefs<"ArtworkFilterArtworkGrid_filtered_artworks">;
     } | null;
     readonly " $fragmentRefs": FragmentRefs<"Header_collection">;
     readonly " $refType": "Collection_collection";
@@ -591,7 +591,7 @@ return {
         {
           "args": null,
           "kind": "FragmentSpread",
-          "name": "ArtworkFilterArtworkGrid2_filtered_artworks"
+          "name": "ArtworkFilterArtworkGrid_filtered_artworks"
         }
       ],
       "storageKey": null
@@ -605,5 +605,5 @@ return {
   "type": "MarketingCollection"
 };
 })();
-(node as any).hash = '66d4cfde758ac48f948a0880e33e9ed4';
+(node as any).hash = '383a1048ea33968c8a3759d311e13958';
 export default node;

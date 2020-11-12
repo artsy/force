@@ -17,7 +17,7 @@ export type ArtistArtworkFilter_artist = {
     readonly internalID: string;
     readonly filtered_artworks: {
         readonly id: string;
-        readonly " $fragmentRefs": FragmentRefs<"ArtworkFilterArtworkGrid2_filtered_artworks">;
+        readonly " $fragmentRefs": FragmentRefs<"ArtworkFilterArtworkGrid_filtered_artworks">;
     } | null;
     readonly " $refType": "ArtistArtworkFilter_artist";
 };
@@ -348,7 +348,7 @@ const node: ReaderFragment = {
         {
           "args": null,
           "kind": "FragmentSpread",
-          "name": "ArtworkFilterArtworkGrid2_filtered_artworks"
+          "name": "ArtworkFilterArtworkGrid_filtered_artworks"
         }
       ],
       "storageKey": null
@@ -356,5 +356,5 @@ const node: ReaderFragment = {
   ],
   "type": "Artist"
 };
-(node as any).hash = 'caa1cb1ee80638fc72aea4d53608a99d';
+(node as any).hash = '750a2d6e98b4564ad89e36e7e1be68ac';
 export default node;

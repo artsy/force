@@ -53,7 +53,8 @@ export function getContextPageFromClient(): {
 
 export const formatOwnerTypes = (path: string) => {
   const type = path.split("/")[1]
-  let formattedType = camelCase(type)
+  // Remove '2' to ensure that show2/fair2/etc are schema compliant
+  let formattedType = camelCase(type).replace("2", "")
 
   if (path === "/") {
     formattedType = OwnerType.home
