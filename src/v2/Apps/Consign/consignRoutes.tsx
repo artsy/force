@@ -19,16 +19,13 @@ export const consignRoutes = [
     `,
   },
   {
-    path: "/consign/:submissionID/offer/:offerID",
+    path: "/consign/offer/:offerID",
     getComponent: () => OfferDetailApp,
     prepare: () => {
       OfferDetailApp.preload()
     },
     query: graphql`
-      query consignRoutes_OfferDetailQuery($submissionID: ID!, $offerID: ID!) {
-        submission(id: $submissionID) {
-          ...OfferDetailApp_submission
-        }
+      query consignRoutes_OfferDetailQuery($offerID: ID!) {
         offer(id: $offerID, gravityPartnerId: "ssshhhhh") {
           ...OfferDetailApp_offer
         }

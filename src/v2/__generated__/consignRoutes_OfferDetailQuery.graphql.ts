@@ -4,13 +4,9 @@
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type consignRoutes_OfferDetailQueryVariables = {
-    submissionID: string;
     offerID: string;
 };
 export type consignRoutes_OfferDetailQueryResponse = {
-    readonly submission: {
-        readonly " $fragmentRefs": FragmentRefs<"OfferDetailApp_submission">;
-    } | null;
     readonly offer: {
         readonly " $fragmentRefs": FragmentRefs<"OfferDetailApp_offer">;
     } | null;
@@ -24,13 +20,8 @@ export type consignRoutes_OfferDetailQuery = {
 
 /*
 query consignRoutes_OfferDetailQuery(
-  $submissionID: ID!
   $offerID: ID!
 ) {
-  submission(id: $submissionID) {
-    ...OfferDetailApp_submission
-    id
-  }
   offer(id: $offerID, gravityPartnerId: "ssshhhhh") {
     ...OfferDetailApp_offer
     id
@@ -39,10 +30,10 @@ query consignRoutes_OfferDetailQuery(
 
 fragment OfferDetailApp_offer on ConsignmentOffer {
   saleName
-}
-
-fragment OfferDetailApp_submission on ConsignmentSubmission {
-  title
+  submission {
+    title
+    id
+  }
 }
 */
 
@@ -51,24 +42,11 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "submissionID",
-    "type": "ID!"
-  },
-  {
-    "defaultValue": null,
-    "kind": "LocalArgument",
     "name": "offerID",
     "type": "ID!"
   }
 ],
 v1 = [
-  {
-    "kind": "Variable",
-    "name": "id",
-    "variableName": "submissionID"
-  }
-],
-v2 = [
   {
     "kind": "Literal",
     "name": "gravityPartnerId",
@@ -80,7 +58,7 @@ v2 = [
     "variableName": "offerID"
   }
 ],
-v3 = {
+v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -97,22 +75,6 @@ return {
       {
         "alias": null,
         "args": (v1/*: any*/),
-        "concreteType": "ConsignmentSubmission",
-        "kind": "LinkedField",
-        "name": "submission",
-        "plural": false,
-        "selections": [
-          {
-            "args": null,
-            "kind": "FragmentSpread",
-            "name": "OfferDetailApp_submission"
-          }
-        ],
-        "storageKey": null
-      },
-      {
-        "alias": null,
-        "args": (v2/*: any*/),
         "concreteType": "ConsignmentOffer",
         "kind": "LinkedField",
         "name": "offer",
@@ -138,25 +100,6 @@ return {
       {
         "alias": null,
         "args": (v1/*: any*/),
-        "concreteType": "ConsignmentSubmission",
-        "kind": "LinkedField",
-        "name": "submission",
-        "plural": false,
-        "selections": [
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "title",
-            "storageKey": null
-          },
-          (v3/*: any*/)
-        ],
-        "storageKey": null
-      },
-      {
-        "alias": null,
-        "args": (v2/*: any*/),
         "concreteType": "ConsignmentOffer",
         "kind": "LinkedField",
         "name": "offer",
@@ -169,7 +112,26 @@ return {
             "name": "saleName",
             "storageKey": null
           },
-          (v3/*: any*/)
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "ConsignmentSubmission",
+            "kind": "LinkedField",
+            "name": "submission",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "title",
+                "storageKey": null
+              },
+              (v2/*: any*/)
+            ],
+            "storageKey": null
+          },
+          (v2/*: any*/)
         ],
         "storageKey": null
       }
@@ -180,9 +142,9 @@ return {
     "metadata": {},
     "name": "consignRoutes_OfferDetailQuery",
     "operationKind": "query",
-    "text": "query consignRoutes_OfferDetailQuery(\n  $submissionID: ID!\n  $offerID: ID!\n) {\n  submission(id: $submissionID) {\n    ...OfferDetailApp_submission\n    id\n  }\n  offer(id: $offerID, gravityPartnerId: \"ssshhhhh\") {\n    ...OfferDetailApp_offer\n    id\n  }\n}\n\nfragment OfferDetailApp_offer on ConsignmentOffer {\n  saleName\n}\n\nfragment OfferDetailApp_submission on ConsignmentSubmission {\n  title\n}\n"
+    "text": "query consignRoutes_OfferDetailQuery(\n  $offerID: ID!\n) {\n  offer(id: $offerID, gravityPartnerId: \"ssshhhhh\") {\n    ...OfferDetailApp_offer\n    id\n  }\n}\n\nfragment OfferDetailApp_offer on ConsignmentOffer {\n  saleName\n  submission {\n    title\n    id\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '8c804336da18e3de954c8a6ae85b34bb';
+(node as any).hash = 'fa0ce41addb3039c5d33a7345e3ab367';
 export default node;

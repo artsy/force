@@ -5,6 +5,9 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type OfferDetailApp_offer = {
     readonly saleName: string | null;
+    readonly submission: {
+        readonly title: string | null;
+    };
     readonly " $refType": "OfferDetailApp_offer";
 };
 export type OfferDetailApp_offer$data = OfferDetailApp_offer;
@@ -27,9 +30,27 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "saleName",
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "ConsignmentSubmission",
+      "kind": "LinkedField",
+      "name": "submission",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "title",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
     }
   ],
   "type": "ConsignmentOffer"
 };
-(node as any).hash = 'd6e0667e943bf860cb9de40db810239b';
+(node as any).hash = '85ddd78e68eb27c4c5e39a583d155c32';
 export default node;
