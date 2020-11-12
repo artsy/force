@@ -27,10 +27,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/cohesion/-/cohesion-1.45.0.tgz#f97ff2237033cf9704e452fb35a50b769dd4ef14"
   integrity sha512-WH+TiBLuWtA8XITmXv5OJLr0RcT0VXNaXyYE+gur1MEg8c9s1eh9rfpwy8CPYjl1cPOAXyJVZeIMf1vlNsCNyA==
 
-"@artsy/cohesion@1.56.1-canary.130.1884.0":
-  version "1.56.1-canary.130.1884.0"
-  resolved "https://registry.yarnpkg.com/@artsy/cohesion/-/cohesion-1.56.1-canary.130.1884.0.tgz#c605fac4632956dc225a90323b2cc065d5a960c4"
-  integrity sha512-paiG+OFRdx0txIQO+qmfoPpwXx5JFYMOWWTJ+DCF0C/vfhVNp8fk0xptpfAy659ooppe/GRKc8oGmB/aTls0/Q==
+"@artsy/cohesion@1.57.0":
+  version "1.57.0"
+  resolved "https://registry.yarnpkg.com/@artsy/cohesion/-/cohesion-1.57.0.tgz#c959282fa6fbc752a0e4b931ec43507e7449c6cb"
+  integrity sha512-jtzPcTDIU1ypkA+g6o5ittd/69vGmDZW403L2Trt2BwdsmcA3TsaPG8aPnUxtwY5liCk5H1rA9P6UrPhHWi7nQ==
 
 "@artsy/detect-responsive-traits@^0.0.5":
   version "0.0.5"
@@ -14346,7 +14346,7 @@ pascalcase@^0.1.1:
 
 "passport-apple@https://github.com/artsy/passport-apple#f41adb7822c8344b72bc36a7d68312f6592cb14f":
   version "1.1.2"
-  resolved "https://github.com/artsy/passport-apple#f41adb7822c8344b72bc36a7d68312f6592cb14f"
+  resolved "git+https://github.com/artsy/passport-apple.git#f41adb7822c8344b72bc36a7d68312f6592cb14f"
   dependencies:
     jsonwebtoken "^8.5.1"
     passport-oauth2 "^1.5.0"

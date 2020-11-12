@@ -105,6 +105,7 @@ function getActions(dispatch: Dispatch<Action>, relayEnvironment: Environment) {
                 node {
                   displayLabel
                   ... on Artist {
+                    slug
                     internalID
                     imageUrl
                   }
@@ -128,14 +129,14 @@ function getActions(dispatch: Dispatch<Action>, relayEnvironment: Environment) {
      * Handler for when a drop down item is selected
      */
     selectSuggestion: async selectedSuggestion => {
-      await actions.fetchArtistInsights(selectedSuggestion.node.internalID)
-
       dispatch({
         type: "selectedSuggestion",
         payload: {
           selectedSuggestion,
         },
       })
+
+      await actions.fetchArtistInsights(selectedSuggestion.node.internalID)
     },
 
     /**
@@ -160,6 +161,7 @@ function getActions(dispatch: Dispatch<Action>, relayEnvironment: Environment) {
               edges {
                 node {
                   artistName
+                  medium
                   lowRangeCents
                   midRangeCents
                   highRangeCents

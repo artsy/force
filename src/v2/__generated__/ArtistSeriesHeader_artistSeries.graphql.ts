@@ -21,7 +21,9 @@ export type ArtistSeriesHeader_artistSeries = {
     readonly artists: ReadonlyArray<{
         readonly name: string | null;
         readonly image: {
-            readonly url: string | null;
+            readonly cropped: {
+                readonly src: string;
+            } | null;
         } | null;
         readonly href: string | null;
         readonly slug: string;
@@ -185,7 +187,37 @@ return {
           "kind": "LinkedField",
           "name": "image",
           "plural": false,
-          "selections": (v3/*: any*/),
+          "selections": [
+            {
+              "alias": null,
+              "args": [
+                {
+                  "kind": "Literal",
+                  "name": "height",
+                  "value": 30
+                },
+                {
+                  "kind": "Literal",
+                  "name": "width",
+                  "value": 30
+                }
+              ],
+              "concreteType": "CroppedImageUrl",
+              "kind": "LinkedField",
+              "name": "cropped",
+              "plural": false,
+              "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "src",
+                  "storageKey": null
+                }
+              ],
+              "storageKey": "cropped(height:30,width:30)"
+            }
+          ],
           "storageKey": null
         },
         {
@@ -209,5 +241,5 @@ return {
   "type": "ArtistSeries"
 };
 })();
-(node as any).hash = '33dcfd92bf44cb71b54eebec95d18d55';
+(node as any).hash = '5016913354319b0b15f300a51a6bc6b5';
 export default node;

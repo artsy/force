@@ -11,13 +11,16 @@ export const GetPriceEstimate: React.FC = () => {
       <SectionContainer background="black5">
         <Flex
           flexDirection={["column", "column", "column", "row"]}
+          alignItems={["center", "center", "center", "start"]}
           justifyContent="center"
         >
           <Flex
-            width={["100%", "100%", "100%", "40%"]}
             flexDirection="column"
-            alignItems={["center", "center", "center", "normal"]}
-            textAlign={["center", "center", "center", "left"]}
+            pr={[0, 0, 0, 5]}
+            mb={4}
+            width="100%"
+            maxWidth={360}
+            alignItems={["center", "center", "center", "start"]}
           >
             <Text variant="largeTitle">Get a Price Estimate</Text>
             <Spacer my={1} />
@@ -28,15 +31,18 @@ export const GetPriceEstimate: React.FC = () => {
 
             <Spacer mt={3} />
 
-            {/* TODO: Wire up search bar */}
-            <Flex position="relative" maxWidth={360} width="100%">
+            <Flex position="relative" width="100%">
               <ConsignArtistAutosuggest />
             </Flex>
           </Flex>
 
-          <Spacer mb={[4, 4, 4, 0]} />
-
-          <EstimateResults />
+          <EstimateResults
+            alignItems="center"
+            justifyContent="center"
+            flex="1"
+            px={[0, 0, 0, 3]}
+            width={["100%", "100%", "100%", "auto"]}
+          />
         </Flex>
       </SectionContainer>
     </PriceEstimateContextProvider>
