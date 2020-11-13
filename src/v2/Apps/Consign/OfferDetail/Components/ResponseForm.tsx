@@ -56,8 +56,10 @@ const ResponseForm: React.FC<ResponseFormProps> = ({ offer }) => {
                 key="ACCEPTED"
                 name="intendedState"
               >
-                Yes, I would like to accept this offer. I have no additional
-                questions and would like to be introduced to the partner.
+                <Text variant="caption" mt={0.3}>
+                  Yes, I would like to accept this offer. I have no additional
+                  questions and would like to be introduced to the partner.
+                </Text>
                 <Text variant="small" color="black60">
                   By accepting this offer, you agree to be introduced to the
                   partner with the terms extended (this means the estimate,
@@ -66,14 +68,18 @@ const ResponseForm: React.FC<ResponseFormProps> = ({ offer }) => {
                 </Text>
               </BorderedRadio>
               <BorderedRadio value="REVIEW" key="REVIEW" name="intendedState">
-                Yes I am interested, but I have additional questions.
+                <Text variant="caption" mt={0.3}>
+                  Yes I am interested, but I have additional questions.
+                </Text>
               </BorderedRadio>
               <BorderedRadio
                 value="REJECTED"
                 key="REJECTED"
                 name="intendedState"
               >
-                No, I am not interested in this offer.
+                <Text variant="caption" mt={0.3}>
+                  No, I am not interested in this offer.
+                </Text>
               </BorderedRadio>
             </RadioGroup>
             <Button
