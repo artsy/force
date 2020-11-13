@@ -64,9 +64,6 @@ fragment SubmissionSummary_offer on ConsignmentOffer {
 }
 
 fragment Summary_offer on ConsignmentOffer {
-  saleDate
-  saleName
-  saleLocation
   ...SubmissionSummary_offer
   ...OfferSummary_offer
 }
@@ -149,27 +146,6 @@ return {
           {
             "alias": null,
             "args": null,
-            "kind": "ScalarField",
-            "name": "saleDate",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "saleName",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "saleLocation",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
             "concreteType": "ConsignmentSubmission",
             "kind": "LinkedField",
             "name": "submission",
@@ -231,6 +207,27 @@ return {
               (v2/*: any*/)
             ],
             "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "saleDate",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "saleLocation",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "saleName",
+            "storageKey": null
           }
         ],
         "storageKey": null
@@ -242,7 +239,7 @@ return {
     "metadata": {},
     "name": "consignRoutes_OfferDetailQuery",
     "operationKind": "query",
-    "text": "query consignRoutes_OfferDetailQuery(\n  $offerID: ID!\n) {\n  offer(id: $offerID) {\n    ...OfferDetailApp_offer\n    id\n  }\n}\n\nfragment OfferDetailApp_offer on ConsignmentOffer {\n  ...ResponseForm_offer\n  ...Summary_offer\n}\n\nfragment OfferSummary_offer on ConsignmentOffer {\n  saleDate\n  saleLocation\n  saleName\n}\n\nfragment ResponseForm_offer on ConsignmentOffer {\n  id\n}\n\nfragment SubmissionSummary_offer on ConsignmentOffer {\n  submission {\n    artist {\n      name\n      id\n    }\n    title\n    year\n    assets {\n      imageUrls\n      id\n    }\n    primaryImage {\n      imageUrls\n      id\n    }\n    id\n  }\n}\n\nfragment Summary_offer on ConsignmentOffer {\n  saleDate\n  saleName\n  saleLocation\n  ...SubmissionSummary_offer\n  ...OfferSummary_offer\n}\n"
+    "text": "query consignRoutes_OfferDetailQuery(\n  $offerID: ID!\n) {\n  offer(id: $offerID) {\n    ...OfferDetailApp_offer\n    id\n  }\n}\n\nfragment OfferDetailApp_offer on ConsignmentOffer {\n  ...ResponseForm_offer\n  ...Summary_offer\n}\n\nfragment OfferSummary_offer on ConsignmentOffer {\n  saleDate\n  saleLocation\n  saleName\n}\n\nfragment ResponseForm_offer on ConsignmentOffer {\n  id\n}\n\nfragment SubmissionSummary_offer on ConsignmentOffer {\n  submission {\n    artist {\n      name\n      id\n    }\n    title\n    year\n    assets {\n      imageUrls\n      id\n    }\n    primaryImage {\n      imageUrls\n      id\n    }\n    id\n  }\n}\n\nfragment Summary_offer on ConsignmentOffer {\n  ...SubmissionSummary_offer\n  ...OfferSummary_offer\n}\n"
   }
 };
 })();

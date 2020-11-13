@@ -27,9 +27,6 @@ const Summary: React.FC<SummaryProps> = ({ offer }) => {
 export const SummaryFragmentContainer = createFragmentContainer(Summary, {
   offer: graphql`
     fragment Summary_offer on ConsignmentOffer {
-      saleDate
-      saleName
-      saleLocation
       ...SubmissionSummary_offer
       ...OfferSummary_offer
     }

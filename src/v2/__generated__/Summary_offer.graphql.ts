@@ -4,9 +4,6 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type Summary_offer = {
-    readonly saleDate: string | null;
-    readonly saleName: string | null;
-    readonly saleLocation: string | null;
     readonly " $fragmentRefs": FragmentRefs<"SubmissionSummary_offer" | "OfferSummary_offer">;
     readonly " $refType": "Summary_offer";
 };
@@ -25,27 +22,6 @@ const node: ReaderFragment = {
   "name": "Summary_offer",
   "selections": [
     {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "saleDate",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "saleName",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "saleLocation",
-      "storageKey": null
-    },
-    {
       "args": null,
       "kind": "FragmentSpread",
       "name": "SubmissionSummary_offer"
@@ -58,5 +34,5 @@ const node: ReaderFragment = {
   ],
   "type": "ConsignmentOffer"
 };
-(node as any).hash = '0f7484468e23a2976edf0159f509b80a';
+(node as any).hash = '3ae4545efea3f5a3d58228322f6a0928';
 export default node;
