@@ -2,7 +2,6 @@ import { Box, Image, StackableBorderBox, Text } from "@artsy/palette"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
-import { get } from "v2/Utils/get"
 
 import { SubmissionSummary_offer } from "v2/__generated__/SubmissionSummary_offer.graphql"
 
@@ -52,8 +51,8 @@ export const SubmissionSummaryFragmentContainer = createFragmentContainer(
 
 function renderImage(submission: SubmissionSummary_offer["submission"]) {
   const imageURL =
-    get(submission, s => (s.primaryImage.imageUrls as any).thumbnail) ||
-    get(submission, s => (s.assets[0].imageUrls as any).thumbnail)
+    (submission.primaryImage?.imageUrls as any)?.thumbnail ||
+    (submission.assets?.[0]?.imageUrls as any)?.thumbnail
 
   if (!imageURL) {
     return null
