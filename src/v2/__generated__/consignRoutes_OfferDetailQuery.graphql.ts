@@ -22,18 +22,41 @@ export type consignRoutes_OfferDetailQuery = {
 query consignRoutes_OfferDetailQuery(
   $offerID: ID!
 ) {
-  offer(id: $offerID, gravityPartnerId: "ssshhhhh") {
+  offer(id: $offerID, gravityPartnerId: "4d8b92c44eb68a1b2c0004cb") {
     ...OfferDetailApp_offer
     id
   }
 }
 
 fragment OfferDetailApp_offer on ConsignmentOffer {
-  saleName
+  ...Summary_offer
+}
+
+fragment Submission_offer on ConsignmentOffer {
   submission {
+    artist {
+      name
+      id
+    }
     title
+    year
+    assets {
+      imageUrls
+      id
+    }
+    primaryImage {
+      imageUrls
+      id
+    }
     id
   }
+}
+
+fragment Summary_offer on ConsignmentOffer {
+  saleDate
+  saleName
+  saleLocation
+  ...Submission_offer
 }
 */
 
@@ -50,7 +73,7 @@ v1 = [
   {
     "kind": "Literal",
     "name": "gravityPartnerId",
-    "value": "ssshhhhh"
+    "value": "4d8b92c44eb68a1b2c0004cb"
   },
   {
     "kind": "Variable",
@@ -64,7 +87,17 @@ v2 = {
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
-};
+},
+v3 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "imageUrls",
+    "storageKey": null
+  },
+  (v2/*: any*/)
+];
 return {
   "fragment": {
     "argumentDefinitions": (v0/*: any*/),
@@ -109,7 +142,21 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
+            "name": "saleDate",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
             "name": "saleName",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "saleLocation",
             "storageKey": null
           },
           {
@@ -123,8 +170,54 @@ return {
               {
                 "alias": null,
                 "args": null,
+                "concreteType": "Artist",
+                "kind": "LinkedField",
+                "name": "artist",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "name",
+                    "storageKey": null
+                  },
+                  (v2/*: any*/)
+                ],
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
                 "kind": "ScalarField",
                 "name": "title",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "year",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "ConsignmentSubmissionCategoryAsset",
+                "kind": "LinkedField",
+                "name": "assets",
+                "plural": true,
+                "selections": (v3/*: any*/),
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "ConsignmentSubmissionCategoryAsset",
+                "kind": "LinkedField",
+                "name": "primaryImage",
+                "plural": false,
+                "selections": (v3/*: any*/),
                 "storageKey": null
               },
               (v2/*: any*/)
@@ -142,9 +235,9 @@ return {
     "metadata": {},
     "name": "consignRoutes_OfferDetailQuery",
     "operationKind": "query",
-    "text": "query consignRoutes_OfferDetailQuery(\n  $offerID: ID!\n) {\n  offer(id: $offerID, gravityPartnerId: \"ssshhhhh\") {\n    ...OfferDetailApp_offer\n    id\n  }\n}\n\nfragment OfferDetailApp_offer on ConsignmentOffer {\n  saleName\n  submission {\n    title\n    id\n  }\n}\n"
+    "text": "query consignRoutes_OfferDetailQuery(\n  $offerID: ID!\n) {\n  offer(id: $offerID, gravityPartnerId: \"4d8b92c44eb68a1b2c0004cb\") {\n    ...OfferDetailApp_offer\n    id\n  }\n}\n\nfragment OfferDetailApp_offer on ConsignmentOffer {\n  ...Summary_offer\n}\n\nfragment Submission_offer on ConsignmentOffer {\n  submission {\n    artist {\n      name\n      id\n    }\n    title\n    year\n    assets {\n      imageUrls\n      id\n    }\n    primaryImage {\n      imageUrls\n      id\n    }\n    id\n  }\n}\n\nfragment Summary_offer on ConsignmentOffer {\n  saleDate\n  saleName\n  saleLocation\n  ...Submission_offer\n}\n"
   }
 };
 })();
-(node as any).hash = 'fa0ce41addb3039c5d33a7345e3ab367';
+(node as any).hash = '31ef1777d09bcbe2d3350ae9ee7ba6ee';
 export default node;

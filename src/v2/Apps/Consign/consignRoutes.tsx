@@ -2,7 +2,7 @@ import loadable from "@loadable/component"
 import { graphql } from "react-relay"
 
 const ConsignApp = loadable(() => import("./ConsignApp"))
-const OfferDetailApp = loadable(() => import("./OfferDetailApp"))
+const OfferDetailApp = loadable(() => import("./OfferDetail/OfferDetailApp"))
 export const consignRoutes = [
   {
     path: "/consign2",
@@ -26,7 +26,7 @@ export const consignRoutes = [
     },
     query: graphql`
       query consignRoutes_OfferDetailQuery($offerID: ID!) {
-        offer(id: $offerID, gravityPartnerId: "ssshhhhh") {
+        offer(id: $offerID) {
           ...OfferDetailApp_offer
         }
       }
