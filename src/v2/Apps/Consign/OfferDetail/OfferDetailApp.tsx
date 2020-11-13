@@ -31,7 +31,7 @@ const OfferDetailApp: React.FC<OfferDetailAppProps> = ({ offer }) => {
             content="width=device-width, initial-scale=1, maximum-scale=5 viewport-fit=cover"
           />
 
-          <HorizontalPadding px={[0, 4]}>
+          <HorizontalPadding px={[0, 4]} mb="75px">
             <TwoColumnLayout
               Content={<Form />}
               Sidebar={<Summary offer={offer} />}

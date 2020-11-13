@@ -3,7 +3,7 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type Submission_offer = {
+export type SubmissionSummary_offer = {
     readonly submission: {
         readonly artist: {
             readonly name: string | null;
@@ -17,12 +17,12 @@ export type Submission_offer = {
             readonly imageUrls: unknown | null;
         } | null;
     };
-    readonly " $refType": "Submission_offer";
+    readonly " $refType": "SubmissionSummary_offer";
 };
-export type Submission_offer$data = Submission_offer;
-export type Submission_offer$key = {
-    readonly " $data"?: Submission_offer$data;
-    readonly " $fragmentRefs": FragmentRefs<"Submission_offer">;
+export type SubmissionSummary_offer$data = SubmissionSummary_offer;
+export type SubmissionSummary_offer$key = {
+    readonly " $data"?: SubmissionSummary_offer$data;
+    readonly " $fragmentRefs": FragmentRefs<"SubmissionSummary_offer">;
 };
 
 
@@ -41,7 +41,7 @@ return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "Submission_offer",
+  "name": "SubmissionSummary_offer",
   "selections": [
     {
       "alias": null,
@@ -110,5 +110,5 @@ return {
   "type": "ConsignmentOffer"
 };
 })();
-(node as any).hash = '3c52dd5d244c4ccbc41791ce08f70692';
+(node as any).hash = 'f5e1a0b923edc7fa6da599850e5fc957';
 export default node;

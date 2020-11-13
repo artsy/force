@@ -4,17 +4,17 @@ import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { get } from "v2/Utils/get"
 
-import { Submission_offer } from "v2/__generated__/Submission_offer.graphql"
+import { SubmissionSummary_offer } from "v2/__generated__/SubmissionSummary_offer.graphql"
 
-interface SubmissionProps {
-  offer: Submission_offer
+interface SubmissionSummaryProps {
+  offer: SubmissionSummary_offer
 }
 
-const Submission: React.FC<SubmissionProps> = ({ offer }) => {
+const SubmissionSummary: React.FC<SubmissionSummaryProps> = ({ offer }) => {
   const { submission } = offer
 
   return (
-    <StackableBorderBox flexDirection="row">
+    <StackableBorderBox>
       <Box height="auto">{renderImage(submission)}</Box>
       <Box>
         <TruncatedLine>
@@ -27,27 +27,30 @@ const Submission: React.FC<SubmissionProps> = ({ offer }) => {
   )
 }
 
-export const SubmissionFragmentContainer = createFragmentContainer(Submission, {
-  offer: graphql`
-    fragment Submission_offer on ConsignmentOffer {
-      submission {
-        artist {
-          name
-        }
-        title
-        year
-        assets {
-          imageUrls
-        }
-        primaryImage {
-          imageUrls
+export const SubmissionSummaryFragmentContainer = createFragmentContainer(
+  SubmissionSummary,
+  {
+    offer: graphql`
+      fragment SubmissionSummary_offer on ConsignmentOffer {
+        submission {
+          artist {
+            name
+          }
+          title
+          year
+          assets {
+            imageUrls
+          }
+          primaryImage {
+            imageUrls
+          }
         }
       }
-    }
-  `,
-})
+    `,
+  }
+)
 
-function renderImage(submission: Submission_offer["submission"]) {
+function renderImage(submission: SubmissionSummary_offer["submission"]) {
   const imageURL =
     get(submission, s => (s.primaryImage.imageUrls as any).thumbnail) ||
     get(submission, s => (s.assets[0].imageUrls as any).thumbnail)
@@ -59,7 +62,7 @@ function renderImage(submission: Submission_offer["submission"]) {
   return <Image src={imageURL} alt={submission.title} width={55} mr={1} />
 }
 
-function renderTitleLine(submission: Submission_offer["submission"]) {
+function renderTitleLine(submission: SubmissionSummary_offer["submission"]) {
   return (
     <TruncatedLine>
       <Text variant="text" color="black60">

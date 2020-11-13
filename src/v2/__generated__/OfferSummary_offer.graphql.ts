@@ -3,17 +3,16 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type Summary_offer = {
+export type OfferSummary_offer = {
     readonly saleDate: string | null;
-    readonly saleName: string | null;
     readonly saleLocation: string | null;
-    readonly " $fragmentRefs": FragmentRefs<"SubmissionSummary_offer" | "OfferSummary_offer">;
-    readonly " $refType": "Summary_offer";
+    readonly saleName: string | null;
+    readonly " $refType": "OfferSummary_offer";
 };
-export type Summary_offer$data = Summary_offer;
-export type Summary_offer$key = {
-    readonly " $data"?: Summary_offer$data;
-    readonly " $fragmentRefs": FragmentRefs<"Summary_offer">;
+export type OfferSummary_offer$data = OfferSummary_offer;
+export type OfferSummary_offer$key = {
+    readonly " $data"?: OfferSummary_offer$data;
+    readonly " $fragmentRefs": FragmentRefs<"OfferSummary_offer">;
 };
 
 
@@ -22,7 +21,7 @@ const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "Summary_offer",
+  "name": "OfferSummary_offer",
   "selections": [
     {
       "alias": null,
@@ -35,28 +34,18 @@ const node: ReaderFragment = {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "saleName",
+      "name": "saleLocation",
       "storageKey": null
     },
     {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "saleLocation",
+      "name": "saleName",
       "storageKey": null
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "SubmissionSummary_offer"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "OfferSummary_offer"
     }
   ],
   "type": "ConsignmentOffer"
 };
-(node as any).hash = '0f7484468e23a2976edf0159f509b80a';
+(node as any).hash = '0172c6e132f964672fe23acc4f22fa2d';
 export default node;

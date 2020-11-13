@@ -32,7 +32,13 @@ fragment OfferDetailApp_offer on ConsignmentOffer {
   ...Summary_offer
 }
 
-fragment Submission_offer on ConsignmentOffer {
+fragment OfferSummary_offer on ConsignmentOffer {
+  saleDate
+  saleLocation
+  saleName
+}
+
+fragment SubmissionSummary_offer on ConsignmentOffer {
   submission {
     artist {
       name
@@ -56,7 +62,8 @@ fragment Summary_offer on ConsignmentOffer {
   saleDate
   saleName
   saleLocation
-  ...Submission_offer
+  ...SubmissionSummary_offer
+  ...OfferSummary_offer
 }
 */
 
@@ -235,7 +242,7 @@ return {
     "metadata": {},
     "name": "consignRoutes_OfferDetailQuery",
     "operationKind": "query",
-    "text": "query consignRoutes_OfferDetailQuery(\n  $offerID: ID!\n) {\n  offer(id: $offerID, gravityPartnerId: \"4d8b92c44eb68a1b2c0004cb\") {\n    ...OfferDetailApp_offer\n    id\n  }\n}\n\nfragment OfferDetailApp_offer on ConsignmentOffer {\n  ...Summary_offer\n}\n\nfragment Submission_offer on ConsignmentOffer {\n  submission {\n    artist {\n      name\n      id\n    }\n    title\n    year\n    assets {\n      imageUrls\n      id\n    }\n    primaryImage {\n      imageUrls\n      id\n    }\n    id\n  }\n}\n\nfragment Summary_offer on ConsignmentOffer {\n  saleDate\n  saleName\n  saleLocation\n  ...Submission_offer\n}\n"
+    "text": "query consignRoutes_OfferDetailQuery(\n  $offerID: ID!\n) {\n  offer(id: $offerID, gravityPartnerId: \"4d8b92c44eb68a1b2c0004cb\") {\n    ...OfferDetailApp_offer\n    id\n  }\n}\n\nfragment OfferDetailApp_offer on ConsignmentOffer {\n  ...Summary_offer\n}\n\nfragment OfferSummary_offer on ConsignmentOffer {\n  saleDate\n  saleLocation\n  saleName\n}\n\nfragment SubmissionSummary_offer on ConsignmentOffer {\n  submission {\n    artist {\n      name\n      id\n    }\n    title\n    year\n    assets {\n      imageUrls\n      id\n    }\n    primaryImage {\n      imageUrls\n      id\n    }\n    id\n  }\n}\n\nfragment Summary_offer on ConsignmentOffer {\n  saleDate\n  saleName\n  saleLocation\n  ...SubmissionSummary_offer\n  ...OfferSummary_offer\n}\n"
   }
 };
 })();

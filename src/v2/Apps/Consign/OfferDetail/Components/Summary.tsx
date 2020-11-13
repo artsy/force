@@ -1,10 +1,11 @@
-import { Box, Text } from "@artsy/palette"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
+import { Box, StackableBorderBox, Text } from "@artsy/palette"
 
 import { Summary_offer } from "v2/__generated__/Summary_offer.graphql"
 
-import { SubmissionFragmentContainer as Submission } from "./Submission"
+import { SubmissionSummaryFragmentContainer as SubmissionSummary } from "./SubmissionSummary"
+import { OfferSummaryFragmentContainer as OfferSummary } from "./OfferSummary"
 
 interface SummaryProps {
   offer: Summary_offer
@@ -13,8 +14,12 @@ interface SummaryProps {
 const Summary: React.FC<SummaryProps> = ({ offer }) => {
   return (
     <Box>
-      <Submission offer={offer} />
-      <Text>sale name: {offer.saleName}</Text>
+      <StackableBorderBox>
+        <Text variant="subtitle">Review your offer</Text>
+      </StackableBorderBox>
+
+      <SubmissionSummary offer={offer} />
+      <OfferSummary offer={offer} />
     </Box>
   )
 }
@@ -25,7 +30,8 @@ export const SummaryFragmentContainer = createFragmentContainer(Summary, {
       saleDate
       saleName
       saleLocation
-      ...Submission_offer
+      ...SubmissionSummary_offer
+      ...OfferSummary_offer
     }
   `,
 })
