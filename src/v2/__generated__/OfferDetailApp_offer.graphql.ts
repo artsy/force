@@ -4,7 +4,7 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type OfferDetailApp_offer = {
-    readonly " $fragmentRefs": FragmentRefs<"Summary_offer">;
+    readonly " $fragmentRefs": FragmentRefs<"ResponseForm_offer" | "Summary_offer">;
     readonly " $refType": "OfferDetailApp_offer";
 };
 export type OfferDetailApp_offer$data = OfferDetailApp_offer;
@@ -24,10 +24,15 @@ const node: ReaderFragment = {
     {
       "args": null,
       "kind": "FragmentSpread",
+      "name": "ResponseForm_offer"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
       "name": "Summary_offer"
     }
   ],
   "type": "ConsignmentOffer"
 };
-(node as any).hash = '828b8242f1e6f860b683041152664fde';
+(node as any).hash = '442617a1fd96750195887af82696e427';
 export default node;

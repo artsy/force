@@ -3,6 +3,11 @@ import { graphql } from "react-relay"
 
 const ConsignApp = loadable(() => import("./ConsignApp"))
 const OfferDetailApp = loadable(() => import("./OfferDetail/OfferDetailApp"))
+
+if (typeof window !== "undefined") {
+  OfferDetailApp.preload()
+}
+
 export const consignRoutes = [
   {
     path: "/consign2",
@@ -23,6 +28,11 @@ export const consignRoutes = [
     getComponent: () => OfferDetailApp,
     prepare: () => {
       OfferDetailApp.preload()
+    },
+    prepareVariables: ({ offerID }) => {
+      return {
+        offerID,
+      }
     },
     query: graphql`
       query consignRoutes_OfferDetailQuery($offerID: ID!) {

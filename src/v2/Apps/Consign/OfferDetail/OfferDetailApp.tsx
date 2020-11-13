@@ -9,11 +9,11 @@ import { ErrorPage } from "v2/Components/ErrorPage"
 import { OfferDetailApp_offer } from "v2/__generated__/OfferDetailApp_offer.graphql"
 import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
 import { TwoColumnLayout } from "v2/Apps/Order/Components/TwoColumnLayout"
-import { Form } from "./Components/Form"
+import { ResponseFormFragmentContainer as ResponseForm } from "./Components/ResponseForm"
 import { SummaryFragmentContainer as Summary } from "./Components/Summary"
 import { StickyFooter } from "./Components/StickyFooter"
 
-interface OfferDetailAppProps {
+export interface OfferDetailAppProps {
   offer: OfferDetailApp_offer
 }
 
@@ -33,7 +33,7 @@ const OfferDetailApp: React.FC<OfferDetailAppProps> = ({ offer }) => {
 
           <HorizontalPadding px={[0, 4]} mb="75px">
             <TwoColumnLayout
-              Content={<Form />}
+              Content={<ResponseForm offer={offer} />}
               Sidebar={<Summary offer={offer} />}
             />
           </HorizontalPadding>
@@ -47,6 +47,7 @@ const OfferDetailApp: React.FC<OfferDetailAppProps> = ({ offer }) => {
 export default createFragmentContainer(OfferDetailApp, {
   offer: graphql`
     fragment OfferDetailApp_offer on ConsignmentOffer {
+      ...ResponseForm_offer
       ...Summary_offer
     }
   `,

@@ -22,13 +22,14 @@ export type consignRoutes_OfferDetailQuery = {
 query consignRoutes_OfferDetailQuery(
   $offerID: ID!
 ) {
-  offer(id: $offerID, gravityPartnerId: "4d8b92c44eb68a1b2c0004cb") {
+  offer(id: $offerID) {
     ...OfferDetailApp_offer
     id
   }
 }
 
 fragment OfferDetailApp_offer on ConsignmentOffer {
+  ...ResponseForm_offer
   ...Summary_offer
 }
 
@@ -36,6 +37,10 @@ fragment OfferSummary_offer on ConsignmentOffer {
   saleDate
   saleLocation
   saleName
+}
+
+fragment ResponseForm_offer on ConsignmentOffer {
+  id
 }
 
 fragment SubmissionSummary_offer on ConsignmentOffer {
@@ -77,11 +82,6 @@ var v0 = [
   }
 ],
 v1 = [
-  {
-    "kind": "Literal",
-    "name": "gravityPartnerId",
-    "value": "4d8b92c44eb68a1b2c0004cb"
-  },
   {
     "kind": "Variable",
     "name": "id",
@@ -145,6 +145,7 @@ return {
         "name": "offer",
         "plural": false,
         "selections": [
+          (v2/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -230,8 +231,7 @@ return {
               (v2/*: any*/)
             ],
             "storageKey": null
-          },
-          (v2/*: any*/)
+          }
         ],
         "storageKey": null
       }
@@ -242,9 +242,9 @@ return {
     "metadata": {},
     "name": "consignRoutes_OfferDetailQuery",
     "operationKind": "query",
-    "text": "query consignRoutes_OfferDetailQuery(\n  $offerID: ID!\n) {\n  offer(id: $offerID, gravityPartnerId: \"4d8b92c44eb68a1b2c0004cb\") {\n    ...OfferDetailApp_offer\n    id\n  }\n}\n\nfragment OfferDetailApp_offer on ConsignmentOffer {\n  ...Summary_offer\n}\n\nfragment OfferSummary_offer on ConsignmentOffer {\n  saleDate\n  saleLocation\n  saleName\n}\n\nfragment SubmissionSummary_offer on ConsignmentOffer {\n  submission {\n    artist {\n      name\n      id\n    }\n    title\n    year\n    assets {\n      imageUrls\n      id\n    }\n    primaryImage {\n      imageUrls\n      id\n    }\n    id\n  }\n}\n\nfragment Summary_offer on ConsignmentOffer {\n  saleDate\n  saleName\n  saleLocation\n  ...SubmissionSummary_offer\n  ...OfferSummary_offer\n}\n"
+    "text": "query consignRoutes_OfferDetailQuery(\n  $offerID: ID!\n) {\n  offer(id: $offerID) {\n    ...OfferDetailApp_offer\n    id\n  }\n}\n\nfragment OfferDetailApp_offer on ConsignmentOffer {\n  ...ResponseForm_offer\n  ...Summary_offer\n}\n\nfragment OfferSummary_offer on ConsignmentOffer {\n  saleDate\n  saleLocation\n  saleName\n}\n\nfragment ResponseForm_offer on ConsignmentOffer {\n  id\n}\n\nfragment SubmissionSummary_offer on ConsignmentOffer {\n  submission {\n    artist {\n      name\n      id\n    }\n    title\n    year\n    assets {\n      imageUrls\n      id\n    }\n    primaryImage {\n      imageUrls\n      id\n    }\n    id\n  }\n}\n\nfragment Summary_offer on ConsignmentOffer {\n  saleDate\n  saleName\n  saleLocation\n  ...SubmissionSummary_offer\n  ...OfferSummary_offer\n}\n"
   }
 };
 })();
-(node as any).hash = '31ef1777d09bcbe2d3350ae9ee7ba6ee';
+(node as any).hash = 'a0b8e054b0db5301b045a90b94898074';
 export default node;
