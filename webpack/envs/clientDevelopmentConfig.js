@@ -1,5 +1,4 @@
 // @ts-check
-/* eslint-disable no-console */
 const chalk = require("chalk")
 const fs = require("fs")
 const path = require("path")
@@ -46,10 +45,7 @@ export const clientDevelopmentConfig = {
             loader: "stylus-loader",
             options: {
               import: ["~nib/lib/nib/index.styl"],
-              paths: [
-                /* "node_modules/artsy-elan", */
-                "node_modules/nib/lib/nib",
-              ],
+              paths: ["node_modules/nib/lib/nib"],
               use: [require("nib")()],
             },
           },
@@ -60,7 +56,6 @@ export const clientDevelopmentConfig = {
   plugins: [
     new CaseSensitivePathsPlugin(),
     new webpack.HotModuleReplacementPlugin(),
-    // @ts-ignore
     new SimpleProgressWebpackPlugin({
       format: "compact",
     }),

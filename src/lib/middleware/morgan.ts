@@ -1,5 +1,7 @@
+import type { RequestHandler } from "express"
+import type { ArtsyRequest, ArtsyResponse } from "./artsyExpress"
+
 import chalk from "chalk"
-import type { Request, Response } from "express"
 import morgan from "morgan"
 
 function colorize(url: string, status: number): string {
@@ -17,14 +19,18 @@ function colorize(url: string, status: number): string {
   }
 }
 
-function skipAssets(req: Request, res: Response): boolean {
+function skipAssets(req: ArtsyRequest, res: ArtsyResponse): boolean {
   return (
     req.originalUrl.startsWith("/assets") ||
     req.originalUrl.startsWith("/image")
   )
 }
 
-export function logFormat(tokens: any, req: Request, res: Response): string {
+export function logFormat(
+  tokens: any,
+  req: ArtsyRequest,
+  res: ArtsyResponse
+): string {
   const url = tokens.url(req, res)
   const status = tokens.status(req, res)
 
@@ -47,7 +53,7 @@ type Options = {
   logAssets: boolean
 }
 
-export default function morganMiddleware(options: Options) {
+export function morganMiddleware(options: Options): RequestHandler {
   if (options.development) {
     return morgan("dev", {
       skip: options.logAssets ? null : skipAssets,

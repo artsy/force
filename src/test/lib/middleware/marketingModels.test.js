@@ -1,12 +1,10 @@
-/*
- * decaffeinate suggestions:
- * DS102: Remove unnecessary code created because of implicit returns
- * DS207: Consider shorter variations of null checks
- * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
- */
-const sinon = require("sinon")
-const rewire = require("rewire")
-const middleware = rewire("../../../lib/middleware/marketing_modals")
+import sinon from "sinon"
+import rewire from "rewire"
+import should from "should"
+const rewiredMarketingModalsMiddleware = rewire(
+  "../../../lib/middleware/marketingModals"
+)
+const { marketingModalsMiddleware } = rewiredMarketingModalsMiddleware
 
 describe("showMarketingSignupModal", function () {
   beforeEach(function () {
@@ -31,7 +29,7 @@ describe("showMarketingSignupModal", function () {
         modal: { slug: "foo", copy: "welcome to artsy", image: "img.jpg" },
       },
     }
-    return middleware.__set__(
+    rewiredMarketingModalsMiddleware.__set__(
       "JSONPage",
       (MockJSONPage = class MockJSONPage {
         get() {
@@ -42,28 +40,24 @@ describe("showMarketingSignupModal", function () {
   })
 
   it("shows the modal if coming from a campaign", function () {
-    return middleware(this.req, this.res, () => {
-      return (this.res.locals.showMarketingSignupModal != null).should.be.ok()
+    marketingModalsMiddleware(this.req, this.res, () => {
+      should(this.res.locals.showMarketingSignupModal).be.ok()
     })
   })
 
   it("does not show the modal if coming from artsy", function () {
     this.req.query = {}
-    return middleware(this.req, this.res, () => {
-      return (
-        this.res.locals.showMarketingSignupModal != null
-      ).should.not.be.ok()
+    marketingModalsMiddleware(this.req, this.res, () => {
+      should(this.res.locals.showMarketingSignupModal).not.be.ok()
     })
   })
 
-  return it("does not show the modal if logged in", function () {
+  it("does not show the modal if logged in", function () {
     this.req.user = { name: "Andy" }
     this.req.path = "/foo"
     this.req.get = sinon.stub().returns("google.com")
-    return middleware(this.req, this.res, () => {
-      return (
-        this.res.locals.showMarketingSignupModal != null
-      ).should.not.be.ok()
+    marketingModalsMiddleware(this.req, this.res, () => {
+      should(this.res.locals.showMarketingSignupModal).not.be.ok()
     })
   })
 })

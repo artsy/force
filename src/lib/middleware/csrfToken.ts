@@ -1,14 +1,12 @@
-import type { NextFunction, Request, Response } from "express"
+import type { NextFunction } from "express"
+import type { ArtsyRequest, ArtsyResponse } from "./artsyExpress"
 
-interface ArtsyResponse extends Response {
-  cookie: any
-  locals: any
-}
-
-// Add CSRF to the cookie and remove it from the page. This will allows the
-// caching on the html.
-export default function csrfTokenMiddleware(
-  req: Request,
+/**
+ * Add CSRF to the cookie and remove it from the page. This will allows the
+ * caching on the html.
+ */
+export function csrfTokenMiddleware(
+  req: ArtsyRequest,
   res: ArtsyResponse,
   next: NextFunction
 ) {

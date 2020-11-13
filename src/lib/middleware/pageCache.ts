@@ -1,24 +1,23 @@
-import {
-  // @ts-ignore
+import type { NextFunction } from "express"
+import type { ArtsyRequest, ArtsyResponse } from "./artsyExpress"
+
+import { getContextPageFromReq } from "lib/getContextPage"
+import cache from "lib/cache"
+import config from "../../config"
+
+const {
   PAGE_CACHE_ENABLED,
-  // @ts-ignore
   PAGE_CACHE_EXPIRY_SECONDS,
-  // @ts-ignore
   PAGE_CACHE_NAMESPACE,
-  // @ts-ignore
   PAGE_CACHE_RETRIEVAL_TIMEOUT_MS,
-  // @ts-ignore
   PAGE_CACHE_TYPES,
-  // @ts-ignore
   PAGE_CACHE_VERSION,
-} from "../../config"
-import { NextFunction, Request, Response } from "express"
-const cache = require("lib/cache")
+} = config
+
 const runningTests = Object.keys(
   require("desktop/components/split_test/running_tests.coffee")
 ).sort()
 const cacheablePageTypes: string[] = PAGE_CACHE_TYPES.split("|")
-import { getContextPageFromReq } from "lib/getContextPage"
 
 // Middleware will `next` and do nothing if any of the following is true:
 //
@@ -27,15 +26,15 @@ import { getContextPageFromReq } from "lib/getContextPage"
 // * this isnt a supported cacheable path (there is an allow-list set in ENV).
 // * the page content is uncached.
 // * the cache errors.
-export default async function pageCacheMiddleware(
-  req: Request,
-  res: Response,
+export async function pageCacheMiddleware(
+  req: ArtsyRequest,
+  res: ArtsyResponse,
   next: NextFunction
 ) {
   if (!PAGE_CACHE_ENABLED) return next()
 
   // Returns true if the page type corresponding to `url` is configured cacheable.
-  const isCacheablePageType = (req: Request) => {
+  const isCacheablePageType = (req: ArtsyRequest) => {
     const { pageType } = getContextPageFromReq(req)
 
     return cacheablePageTypes.includes(pageType)

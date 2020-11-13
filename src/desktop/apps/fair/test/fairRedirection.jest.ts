@@ -1,7 +1,8 @@
-import { NextFunction, Request, Response } from "express"
+import type { NextFunction } from "express"
+import type { ArtsyRequest, ArtsyResponse } from "lib/middleware/artsyExpress"
 
-let req: Partial<Request>
-let res: Partial<Response>
+let req: Partial<ArtsyRequest>
+let res: Partial<ArtsyResponse>
 let next: jest.Mock<NextFunction>
 
 describe("redirectFairRequests", () => {

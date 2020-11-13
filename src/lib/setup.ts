@@ -1,26 +1,26 @@
 import { extend } from "lodash"
 import artsyPassport from "@artsy/passport"
-import artsyXapp from "@artsy/xapp"
 import bodyParser from "body-parser"
 import path from "path"
-import cache from "./cache"
-import CurrentUser from "./current_user"
+
+const CurrentUser = require("./current_user.coffee")
 import config from "../config"
 import { unlessStartsWith } from "./middleware/unless"
-import addIntercomUserHash from "./middleware/intercom"
-import assetMiddleware from "./middleware/assetMiddleware"
-import backboneErrorHelper from "./middleware/backbone_error_helper"
-import csrfTokenMiddleware from "./middleware/csrfTokenMiddleware"
-import downcase from "./middleware/downcase"
-import escapedFragmentMiddleware from "./middleware/escaped_fragment"
-import hardcodedRedirects from "./middleware/hardcoded_redirects"
-import localsMiddleware from "./middleware/locals"
-import marketingModals from "./middleware/marketing_modals"
-import pageCacheMiddleware from "./middleware/pageCacheMiddleware"
-import proxyReflection from "./middleware/proxy_to_reflection"
-import sameOriginMiddleware from "./middleware/same_origin"
-import splitTestMiddleware from "../desktop/components/split_test/middleware"
-import unsupportedBrowserCheckMiddleware from "./middleware/unsupportedBrowser"
+import { intercomMiddleware } from "./middleware/intercom"
+import { assetMiddleware } from "./middleware/asset"
+import { backboneErrorHandlerMiddleware } from "./middleware/backboneErrorHandler"
+import { csrfTokenMiddleware } from "./middleware/csrfToken"
+import { downcaseMiddleware } from "./middleware/downcase"
+import { escapedFragmentMiddleware } from "./middleware/escapedFragment"
+import { hardcodedRedirectsMiddleware } from "./middleware/hardcodedRedirects"
+import { localsMiddleware } from "./middleware/locals"
+import { marketingModalsMiddleware } from "./middleware/marketingModals"
+import { pageCacheMiddleware } from "./middleware/pageCache"
+import { proxyReflectionMiddleware } from "./middleware/proxyReflection"
+import { sameOriginMiddleware } from "./middleware/sameOrigin"
+import { unsupportedBrowserMiddleware } from "./middleware/unsupportedBrowser"
+
+const splitTestMiddleware = require("../desktop/components/split_test/middleware.coffee")
 
 // FIXME: When deploying new Sentry SDK to prod we quickly start to see errors
 // like "`CURRENT_USER` is undefined". We need more investigation because this
@@ -49,7 +49,7 @@ export default function forceMiddleware(app) {
   }
 
   //
-  app.use(proxyReflection)
+  app.use(proxyReflectionMiddleware)
   app.use(bodyParser.json())
   app.use(bodyParser.urlencoded({ extended: true }))
 
@@ -85,18 +85,18 @@ export default function forceMiddleware(app) {
   app.use(csrfTokenMiddleware)
 
   // Redirect requests before they even have to deal with Force routing
-  app.use(unlessStartsWith("/novo", downcase))
-  app.use(unlessStartsWith("/novo", hardcodedRedirects))
+  app.use(unlessStartsWith("/novo", downcaseMiddleware))
+  app.use(unlessStartsWith("/novo", hardcodedRedirectsMiddleware))
   app.use(unlessStartsWith("/novo", localsMiddleware))
-  app.use(unlessStartsWith("/novo", backboneErrorHelper))
+  app.use(unlessStartsWith("/novo", backboneErrorHandlerMiddleware))
   app.use(unlessStartsWith("/novo", sameOriginMiddleware))
   app.use(unlessStartsWith("/novo", escapedFragmentMiddleware))
-  app.use(unlessStartsWith("/novo", unsupportedBrowserCheckMiddleware))
-  app.use(unlessStartsWith("/novo", addIntercomUserHash))
+  app.use(unlessStartsWith("/novo", unsupportedBrowserMiddleware))
+  app.use(unlessStartsWith("/novo", intercomMiddleware))
   app.use(unlessStartsWith("/novo", pageCacheMiddleware))
 
   // Sets up mobile marketing signup modal
-  app.use(marketingModals)
+  app.use(marketingModalsMiddleware)
 
   if (process.env.NODE_ENV !== "test") {
     app.use(splitTestMiddleware)

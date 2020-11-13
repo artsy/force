@@ -1,6 +1,8 @@
+import type { RequestHandler } from "express"
+
 import { IpFilter as ipfilter } from "express-ipfilter"
 
-export default function ipFilter(IP_DENYLIST: string) {
+export function ipFilter(IP_DENYLIST: string): RequestHandler {
   return ipfilter(IP_DENYLIST.split(","), {
     allowedHeaders: ["x-forwarded-for"],
     log: false,

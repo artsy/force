@@ -13,10 +13,10 @@ import path from "path"
 import sharify from "sharify"
 import siteAssociation from "artsy-eigen-web-association"
 import timeout from "connect-timeout"
-import ensureSSL from "./lib/middleware/ensure_ssl"
-import hstsMiddleware from "./lib/middleware/hsts"
-import ipFilterMiddleware from "./lib/middleware/ipFilter"
-import sessionMiddleware from "./lib/middleware/sessionMiddleware"
+import { ensureSslMiddleware } from "./lib/middleware/ensureSsl"
+import { hstsMiddleware } from "./lib/middleware/hsts"
+import { ipFilter } from "./lib/middleware/ipFilter"
+import { sessionMiddleware } from "./lib/middleware/session"
 import config from "./config"
 
 const { APP_TIMEOUT, IP_DENYLIST, NODE_ENV } = config
@@ -33,13 +33,13 @@ function securityMiddleware(app) {
   }
 
   // Make sure we're using SSL and prevent clickjacking
-  app.use(ensureSSL)
+  app.use(ensureSslMiddleware)
 
   // Use HSTS to prevent downgrade attacks.
   app.use(hstsMiddleware)
 
   // Prevent frame nesting in development and production.
-  if (!NODE_ENV === "test") {
+  if (NODE_ENV !== "test") {
     app.use(helmet.frameguard())
   }
 

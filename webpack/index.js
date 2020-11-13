@@ -1,6 +1,4 @@
 // @ts-check
-/* eslint-disable no-console */
-
 const chalk = require("chalk")
 const merge = require("webpack-merge")
 const fs = require("fs")

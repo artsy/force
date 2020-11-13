@@ -173,7 +173,7 @@ export function buildServerApp(
             .map(script => {
               /**
                * In production, prefix injected script src with CDN endpoint.
-               * @see https://github.com/artsy/force/blob/master/src/lib/middleware/assetMiddleware.ts#L23
+               * @see https://github.com/artsy/force/blob/master/src/lib/middleware/asset.ts#L23
                */
               if (getENV("CDN_URL")) {
                 const scriptTagWithCDN = script.replace(

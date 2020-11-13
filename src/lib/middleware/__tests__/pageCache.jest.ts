@@ -1,4 +1,4 @@
-import pageCacheMiddleware from "../pageCacheMiddleware"
+import { pageCacheMiddleware } from "../pageCache"
 
 const cache = require("lib/cache")
 

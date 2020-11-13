@@ -1,5 +1,4 @@
 // @ts-check
-/* eslint-disable no-console */
 const chalk = require("chalk")
 const glob = require("glob")
 const fs = require("fs")

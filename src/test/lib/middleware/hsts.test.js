@@ -1,11 +1,7 @@
-/*
- * decaffeinate suggestions:
- * DS102: Remove unnecessary code created because of implicit returns
- * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
- */
-const rewire = require("rewire")
-const sinon = require("sinon")
-const hsts = rewire("../../../lib/middleware/hsts")
+import rewire from "rewire"
+import sinon from "sinon"
+const rewiredHstsMiddleware = rewire("../../../lib/middleware/hsts")
+const { hstsMiddleware } = rewiredHstsMiddleware
 
 describe("HTTP strict transport security middleware", function () {
   beforeEach(function () {
@@ -13,17 +9,17 @@ describe("HTTP strict transport security middleware", function () {
     this.res = {
       headers: [],
       set(name, value) {
-        return (this.headers[name] = value)
+        this.headers[name] = value
       },
     }
-    return (this.next = sinon.stub())
+    this.next = sinon.stub()
   })
 
-  return it("adds Strict-Transport-Security header", function () {
-    hsts.__set__("APP_URL", "https://foobart.sy")
+  it("adds Strict-Transport-Security header", function () {
+    rewiredHstsMiddleware.__set__("APP_URL", "https://foobart.sy")
     this.req.get = () => "https"
-    hsts(this.req, this.res, this.next)
-    return this.res.headers["Strict-Transport-Security"].should.equal(
+    hstsMiddleware(this.req, this.res, this.next)
+    this.res.headers["Strict-Transport-Security"].should.equal(
       "max-age=31536000"
     )
   })

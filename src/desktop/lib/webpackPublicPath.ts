@@ -1,7 +1,7 @@
 /**
  * Set webpack public-path asset lookup to CDN in production, but only on
  * the client, as we use the assetMiddleware helper to map URLs on the server.
- * @see https://github.com/artsy/force/blob/master/src/lib/middleware/assetMiddleware.ts
+ * @see https://github.com/artsy/force/blob/master/src/lib/middleware/asset.ts
  *
  * FIXME: Move this into Circle config and or Docker
  */

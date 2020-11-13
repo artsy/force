@@ -10,8 +10,8 @@ import RavenServer from "raven"
 import { initializeForce } from "./current"
 import { initializeNovo } from "./novo/src/server"
 import config from "./config"
-import errorHandlingMiddleware from "./lib/middleware/error_handler"
-import morganMiddleware from "./lib/middleware/morganMiddleware"
+import { errorHandlerMiddleware } from "./lib/middleware/errorHandler"
+import { morganMiddleware } from "./lib/middleware/morgan"
 
 const { SENTRY_PRIVATE_DSN } = config
 
@@ -64,7 +64,9 @@ function initialize(startServerCallback) {
   // *****************************************************************************
   // Force (Current)
   // *****************************************************************************
-  const forceApp = initializeForce(startServerCallback)
+  const forceApp = initializeForce(() => {
+    startServerCallback()
+  })
   app.use("/", forceApp)
 
   // *****************************************************************************
@@ -94,7 +96,7 @@ function initialize(startServerCallback) {
     app.use(RavenServer.errorHandler())
   }
 
-  app.use(errorHandlingMiddleware)
+  app.use(errorHandlerMiddleware)
 
   return app
 }
