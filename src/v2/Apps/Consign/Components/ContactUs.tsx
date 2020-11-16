@@ -43,16 +43,18 @@ export const ContactUs: React.FC<{ darkVariant?: boolean }> = ({
           555-555-5555
         </Text>
       </Flex>
-      <Link href="mailto:consign@artsy.net">
-        <Media greaterThanOrEqual="sm">
+      <Media greaterThanOrEqual="sm">
+        <Link href="mailto:consign@artsy.net">
           <Button variant="secondaryOutline">Send an email</Button>
-        </Media>
-        <Media lessThan="sm">
+        </Link>
+      </Media>
+      <Media lessThan="sm">
+        <Link href="mailto:consign@artsy.net">
           <Button variant="secondaryOutline" size="large" block width="100%">
             Send an email
           </Button>
-        </Media>
-      </Link>
+        </Link>
+      </Media>
     </SectionContainer>
   )
 }

@@ -1,5 +1,14 @@
 import React from "react"
-import { Box, Button, EditIcon, Flex, Text, color } from "@artsy/palette"
+import {
+  AddItemIcon,
+  ArtworkWithCheckIcon,
+  Box,
+  Button,
+  Flex,
+  MultipleOffersIcon,
+  Text,
+  color,
+} from "@artsy/palette"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import { Media } from "v2/Utils/Responsive"
 import { SectionContainer } from "./SectionContainer"
@@ -24,31 +33,34 @@ export const HowToSell: React.FC = () => {
         alignItems="center"
         justifyContent="space-between"
         pt={[1, 4]}
+        mb={[0, 4, 0, 0]}
       >
         <Section
-          icon={<EditIcon width={50} height={50} />}
-          text="Submit the Artwork"
+          icon={<AddItemIcon width={50} height={50} />}
+          text="Submit your artwork"
           description="Submit your artwork details and images. Artsy will review and approve qualified submissions."
         />
         <Section
-          icon={<EditIcon width={50} height={50} />}
-          text="Receive Multiple Offers"
-          description="If your work is accepted, you’ll receive competitive consignment offers from auction houses, galleries, and collectors."
+          icon={<MultipleOffersIcon width={50} height={50} />}
+          text="Receive multiple offers"
+          description="If your work is accepted, you’ll receive competitive consignment offers from Artsy’s curated auctions, auction houses, and galleries."
         />
         <Section
-          icon={<EditIcon width={50} height={50} />}
-          text="Match and Sell"
-          description="With our specialists’ expert guidance, evaluate your offers, choose the best one for you, and sell your work. We’ll help you ship it safely."
+          icon={<ArtworkWithCheckIcon width={50} height={50} />}
+          text="Match and sell"
+          description="Our specialists will guide you in choosing the best option to sell your work."
         />
       </Flex>
       <Box width="100%" textAlign="center">
-        <RouterLink to={navigateTo}>
-          <Media greaterThanOrEqual="sm">
+        <Media greaterThanOrEqual="sm">
+          <RouterLink to={navigateTo}>
             <Button variant="primaryBlack" size="large" mt={6}>
               Submit your artwork
             </Button>
-          </Media>
-          <Media lessThan="sm">
+          </RouterLink>
+        </Media>
+        <Media lessThan="sm">
+          <RouterLink to={navigateTo}>
             <Button
               variant="primaryBlack"
               size="large"
@@ -58,8 +70,8 @@ export const HowToSell: React.FC = () => {
             >
               Submit your artwork
             </Button>
-          </Media>
-        </RouterLink>
+          </RouterLink>
+        </Media>
       </Box>
     </SectionContainer>
   )
@@ -71,10 +83,12 @@ const Section: React.FC<{
   description: string
 }> = ({ icon, text, description }) => {
   return (
-    <Box
-      width={["100%", "25%"]}
+    <Flex
+      flexDirection="column"
+      width="100%"
       height={["100%", 170]}
       my={[1, 0]}
+      mx={1}
       textAlign="center"
     >
       <Box>{icon}</Box>
@@ -86,6 +100,6 @@ const Section: React.FC<{
           {description}
         </Text>
       </Box>
-    </Box>
+    </Flex>
   )
 }
