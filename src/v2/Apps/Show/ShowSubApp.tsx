@@ -32,7 +32,7 @@ const ShowApp: React.FC<ShowAppProps> = ({ children, show }) => {
           }}
         >
           <HorizontalPadding>
-            <BackLink my={3} to={show.href.replace("/show", "/show2")}>
+            <BackLink my={3} to={show.href}>
               Back to {show.name}
               {!show.isFairBooth && show.partner?.name && (
                 <> at {show.partner.name}</>

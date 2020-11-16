@@ -58,7 +58,7 @@ describe("ShowApp", () => {
       .find("a")
       .findWhere(node => node.text() === "More info")
       .first()
-    expect(moreInfoLink.prop("href")).toEqual("/show2/example-href/info")
+    expect(moreInfoLink.prop("href")).toEqual("/show/example-href/info")
   })
 
   it("renders a viewing room if there are any", () => {
