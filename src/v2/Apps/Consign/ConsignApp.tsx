@@ -34,11 +34,11 @@ const ConsignApp = props => {
           <HowToSell />
           <ContactUs />
           <ConsignInDemandNow />
+          <SoldRecentlyQueryRenderer />
           <ReadMore />
           <ContactUs darkVariant />
           <FAQ />
           <SellWithArtsy />
-          <SoldRecentlyQueryRenderer />
 
           <SectionContainer>
             <Footer />
