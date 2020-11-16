@@ -1,5 +1,14 @@
 import React from "react"
-import { Box, Button, EditIcon, Flex, Text, color } from "@artsy/palette"
+import {
+  AddItemIcon,
+  ArtworkWithCheckIcon,
+  Box,
+  Button,
+  Flex,
+  MultipleOffersIcon,
+  Text,
+  color,
+} from "@artsy/palette"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import { Media } from "v2/Utils/Responsive"
 import { SectionContainer } from "./SectionContainer"
@@ -26,19 +35,19 @@ export const HowToSell: React.FC = () => {
         pt={[1, 4]}
       >
         <Section
-          icon={<EditIcon width={50} height={50} />}
-          text="Submit the Artwork"
+          icon={<AddItemIcon width={50} height={50} />}
+          text="Submit your artwork"
           description="Submit your artwork details and images. Artsy will review and approve qualified submissions."
         />
         <Section
-          icon={<EditIcon width={50} height={50} />}
-          text="Receive Multiple Offers"
-          description="If your work is accepted, you’ll receive competitive consignment offers from auction houses, galleries, and collectors."
+          icon={<MultipleOffersIcon width={50} height={50} />}
+          text="Receive multiple offers"
+          description="If your work is accepted, you’ll receive competitive consignment offers from Artsy’s curated auctions, auction houses, and galleries."
         />
         <Section
-          icon={<EditIcon width={50} height={50} />}
-          text="Match and Sell"
-          description="With our specialists’ expert guidance, evaluate your offers, choose the best one for you, and sell your work. We’ll help you ship it safely."
+          icon={<ArtworkWithCheckIcon width={50} height={50} />}
+          text="Match and sell"
+          description="Our specialists will guide you in choosing the best option to sell your work."
         />
       </Flex>
       <Box width="100%" textAlign="center">

@@ -1,5 +1,13 @@
 import React from "react"
-import { Box, EditIcon, Flex, Text, color } from "@artsy/palette"
+import {
+  ArtworkWithBadgeIcon,
+  Box,
+  Flex,
+  LightningBoltIcon,
+  Text,
+  UserWithChartIcon,
+  color,
+} from "@artsy/palette"
 import { SectionContainer } from "./SectionContainer"
 
 export const SellArtDifferently: React.FC = () => {
@@ -22,19 +30,19 @@ export const SellArtDifferently: React.FC = () => {
         pt={[1, 4]}
       >
         <Section
-          icon={<EditIcon width={50} height={50} />}
-          text="More selling options"
-          description="We’ll introduce your work to leading buyers around the world and help compare their offers to get you the best deal."
+          icon={<ArtworkWithBadgeIcon width={50} height={50} />}
+          text="Risk-free sales"
+          description="We offer no upfront fees, our auctions are confidential, and best of all, you keep your artwork until it’s sold."
         />
         <Section
-          icon={<EditIcon width={50} height={50} />}
-          text="Unique market insights"
-          description="Our expertise, primary and secondary art market data, and relationships with buyers provide a best-in-class reselling experience."
+          icon={<UserWithChartIcon width={50} height={50} />}
+          text="Insights-driven matching"
+          description="Our proprietary data-driven insights and the largest global audience of collectors ensures better matchmaking to sell your work."
         />
         <Section
-          icon={<EditIcon width={50} height={50} />}
+          icon={<LightningBoltIcon width={50} height={50} />}
           text="Speed anad efficiency"
-          description="Guaranteed offer within 24 hours, and you’ll always be presented with a sales option to sell your work in a month. Plus, we’ll help you ship."
+          description="We will present you with a sales option that will allow you to sell your work quickly."
         />
       </Flex>
     </SectionContainer>
