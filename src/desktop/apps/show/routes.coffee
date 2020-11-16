@@ -5,6 +5,8 @@ metaphysics = require '../../../lib/metaphysics2'
 DateHelpers = require '../../components/util/date_helpers'
 ViewHelpers = require './helpers/view_helpers'
 
+sd = require('sharify').data
+
 query = """
   query ShowMetadataQuery($id: String!) {
     partner_show: show(id: $id) {
@@ -146,6 +148,9 @@ query = """
 """
 
 @index = (req, res, next) ->
+  # caught by src/v2/Apps/Show/routes.tsx
+  return next() if sd.ENABLE_SHOW_UPDATE
+
   send = query: query, variables: req.params
 
   return if metaphysics.debug req, res, send

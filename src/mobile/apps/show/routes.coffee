@@ -7,6 +7,9 @@ require '../../../lib/promiseDone'
 
 
 module.exports.index = (req, res, next) ->
+  # caught by src/v2/Apps/Show/routes.tsx
+  return next() if sd.ENABLE_SHOW_UPDATE
+
   show = new Show id: req.params.id
 
   Promise.all([
@@ -56,6 +59,9 @@ module.exports.index = (req, res, next) ->
   .done()
 
 module.exports.hours = (req, res, next) ->
+  # caught by src/v2/Apps/Show/routes.tsx
+  return next() if sd.ENABLE_SHOW_UPDATE
+
   show = new Show id: req.params.id
 
   show.fetch

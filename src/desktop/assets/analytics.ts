@@ -5,6 +5,8 @@ import {
 import { trackPageView } from "desktop/analytics/trackPageView"
 window.Cookies = require("cookies-js")
 
+import { data as sd } from "sharify"
+
 // We exclude these routes from analytics.page calls because
 // they're already tracked in v2/Artsy/Analytics/trackingMiddleware
 const excludedRoutes = [
@@ -25,9 +27,11 @@ const excludedRoutes = [
   "/viewing-room(.*)",
   "/user/conversations(.*)",
   "/user/purchases(.*)",
-  // TODO: Change to show route once launched
-  "/show2(.*)",
 ]
+
+if (sd.ENABLE_SHOW_UPDATE) {
+  excludedRoutes.push("/show(.*)")
+}
 
 beforeAnalyticsReady()
 trackPageView(excludedRoutes)

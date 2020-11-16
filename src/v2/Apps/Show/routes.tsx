@@ -1,6 +1,6 @@
 import loadable from "@loadable/component"
 import { graphql } from "react-relay"
-import { RouteConfig } from "found"
+import { RedirectException, RouteConfig } from "found"
 import { paramsToCamelCase } from "v2/Components/v2/ArtworkFilter/Utils/urlBuilder"
 
 const ShowApp = loadable(() => import("./ShowApp"))
@@ -9,7 +9,7 @@ const ShowInfoRoute = loadable(() => import("./Routes/ShowInfo"))
 
 export const routes: RouteConfig[] = [
   {
-    path: "/show2/:slug",
+    path: "/show/:slug",
     getComponent: () => ShowApp,
     prepare: () => {
       ShowApp.preload()
@@ -58,7 +58,7 @@ export const routes: RouteConfig[] = [
   // NOTE: Nested sub-apps are mounted under the same top-level path as above.
   // The root `path: ""` matches the `ShowApp` route.
   {
-    path: "/show2/:slug",
+    path: "/show/:slug",
     getComponent: () => ShowSubApp,
     prepare: () => {
       ShowSubApp.preload()
@@ -84,6 +84,12 @@ export const routes: RouteConfig[] = [
             }
           }
         `,
+      },
+      {
+        path: "hours",
+        render: props => {
+          throw new RedirectException(`/show/${props.match.params.slug}`, 302)
+        },
       },
     ],
   },
