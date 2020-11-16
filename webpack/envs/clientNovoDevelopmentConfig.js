@@ -1,19 +1,25 @@
 // @ts-check
 
+const { basePath, env } = require("../utils/env")
+const { getCSSManifest } = require("../utils/getCSSManifest")
+const { HashedModuleIdsPlugin } = require("webpack")
+const { RetryChunkLoadPlugin } = require("webpack-retry-chunk-load-plugin")
 const path = require("path")
 const webpack = require("webpack")
-const LoadablePlugin = require("@loadable/webpack-plugin")
-const { RetryChunkLoadPlugin } = require("webpack-retry-chunk-load-plugin")
-const { basePath, env } = require("../utils/env")
+const WebpackManifestPlugin = require("webpack-manifest-plugin")
 
-export const clientCommonConfig = {
-  mode: env.nodeEnv,
-  devtool: "source-map",
+export const clientNovoDevelopmentConfig = {
   stats: "normal",
+  parallelism: 100,
+  mode: env.webpackDebug ? "development" : env.nodeEnv,
+  devtool: "source-map",
+  entry: {
+    "artsy-novo": [path.resolve(process.cwd(), "src/novo/src/client.tsx")],
+  },
   output: {
-    filename: "[name].js",
-    path: path.resolve(basePath, "public/assets"),
-    publicPath: "/assets/",
+    filename: "novo-[name].js",
+    path: path.resolve(basePath, "public/assets-novo"),
+    publicPath: "/assets-novo/",
   },
   module: {
     rules: [
@@ -75,17 +81,13 @@ export const clientCommonConfig = {
     // Remove moment.js localization files
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
     // Remove server-only modules from client bundles
-    ...[
-      // Remove server side of relay network layer.
-      new webpack.IgnorePlugin(
-        /^react-relay-network-modern-ssr\/node8\/server/
-      ),
-      // No matter what, we don't want the graphql-js package in client
-      // bundles. This /may/ lead to a broken build when e.g. a reaction
-      // module that's used on the client side imports something from
-      // graphql-js, but that's better than silently including this.
-      new webpack.IgnorePlugin(/^graphql(\/.*)?$/),
-    ],
+    // Remove server side of relay network layer.
+    new webpack.IgnorePlugin(/^react-relay-network-modern-ssr\/node8\/server/),
+    // No matter what, we don't want the graphql-js package in client
+    // bundles. This /may/ lead to a broken build when e.g. a reaction
+    // module that's used on the client side imports something from
+    // graphql-js, but that's better than silently including this.
+    new webpack.IgnorePlugin(/^graphql(\/.*)?$/),
     new webpack.NamedModulesPlugin(),
     new webpack.ProvidePlugin({
       $: "jquery",
@@ -94,7 +96,6 @@ export const clientCommonConfig = {
       jade: "jade/runtime.js",
       waypoints: "jquery-waypoints/waypoints.js",
     }),
-    new LoadablePlugin(),
 
     /**
      * If something goes wrong while loading a dynmic split chunk (import())
@@ -108,6 +109,12 @@ export const clientCommonConfig = {
       cacheBust: `function() {
         return "cache-bust=" + Date.now();
       }`,
+    }),
+    new HashedModuleIdsPlugin(),
+    new WebpackManifestPlugin({
+      fileName: path.resolve(basePath, "manifest-novo.json"),
+      basePath: "/assets-novo/",
+      seed: env.isProduction ? getCSSManifest() : {},
     }),
   ],
   resolve: {

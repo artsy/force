@@ -1,24 +1,31 @@
-//
-// Inject common project-wide [view locals](http://expressjs.com/api.html#app.locals).
-//
+import type { NextFunction } from "express"
+import type { ArtsyRequest, ArtsyResponse } from "./artsyExpress"
 
-const _ = require("underscore")
-const _s = require("underscore.string")
-const artsyXapp = require("@artsy/xapp")
-const moment = require("moment")
-const Referrer = require("referer-parser")
-const uuid = require("node-uuid")
-const { parse, format } = require("url")
-const helpers = require("../template_helpers")
-const templateModules = require("../../desktop/lib/template_modules")
-const { NODE_ENV } = require("../../config")
+import { string } from "underscore"
+import artsyXapp from "@artsy/xapp"
+import moment from "moment"
+import Referrer from "referer-parser"
+import uuid from "node-uuid"
+import { parse } from "url"
+import * as helpers from "../template_helpers"
+import config from "../../config"
+const templateModules = require("../../desktop/lib/template_modules.coffee")
 
-module.exports = function locals(req, res, next) {
+const { NODE_ENV } = config
+
+/**
+ * Inject common project-wide [view locals](http://expressjs.com/api.html#app.locals).
+ */
+export function localsMiddleware(
+  req: ArtsyRequest,
+  res: ArtsyResponse,
+  next: NextFunction
+) {
   let referrer
   const ua = req.get("user-agent") || ""
 
-  // Attach libraries to locals
-  res.locals._s = _s
+  // Attach libraries to locals, many of these are used in jade templates
+  res.locals._s = string //
   res.locals.moment = moment
   res.locals.helpers = helpers
   for (let key in templateModules) {

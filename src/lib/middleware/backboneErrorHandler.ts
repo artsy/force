@@ -1,4 +1,11 @@
-module.exports = function backboneErrorHandler(req, res, next) {
+import type { NextFunction } from "express"
+import type { ArtsyRequest, ArtsyResponse } from "./artsyExpress"
+
+export function backboneErrorHandlerMiddleware(
+  req: ArtsyRequest,
+  res: ArtsyResponse,
+  next: NextFunction
+): void {
   res.backboneError = function (model, err) {
     let message, status
     try {
@@ -28,9 +35,9 @@ module.exports = function backboneErrorHandler(req, res, next) {
     err = new Error()
     err.message = message
     err.status = status
-    return next(err)
+    next(err)
   }
-  return next()
+  next()
 }
 
 function __guard__(value, transform) {
