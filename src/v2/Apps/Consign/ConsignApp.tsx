@@ -16,6 +16,7 @@ import { SellWithArtsy } from "./Components/SellWithArtsy"
 import { Footer } from "v2/Components/Footer"
 import { SectionContainer } from "./Components/SectionContainer"
 import { ArtworkCredits } from "./Components/ArtworkCredits"
+import { TemporaryOffer } from "./Components/TemporaryOffer"
 
 const ConsignApp = props => {
   return (
@@ -30,6 +31,7 @@ const ConsignApp = props => {
 
         <AppContainer maxWidth="100%">
           <Header />
+          <TemporaryOffer />
           <SellArtDifferently />
           <GetPriceEstimate />
           <HowToSell />
