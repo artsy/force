@@ -15,6 +15,7 @@ import { FAQ } from "./Components/FAQ"
 import { SellWithArtsy } from "./Components/SellWithArtsy"
 import { Footer } from "v2/Components/Footer"
 import { SectionContainer } from "./Components/SectionContainer"
+import { ArtworkCredits } from "./Components/ArtworkCredits"
 
 const ConsignApp = props => {
   return (
@@ -39,6 +40,7 @@ const ConsignApp = props => {
           <ContactUs darkVariant />
           <FAQ />
           <SellWithArtsy />
+          <ArtworkCredits />
 
           <SectionContainer>
             <Footer />
