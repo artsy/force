@@ -52,13 +52,15 @@ export const HowToSell: React.FC = () => {
         />
       </Flex>
       <Box width="100%" textAlign="center">
-        <RouterLink to={navigateTo}>
-          <Media greaterThanOrEqual="sm">
+        <Media greaterThanOrEqual="sm">
+          <RouterLink to={navigateTo}>
             <Button variant="primaryBlack" size="large" mt={6}>
               Submit your artwork
             </Button>
-          </Media>
-          <Media lessThan="sm">
+          </RouterLink>
+        </Media>
+        <Media lessThan="sm">
+          <RouterLink to={navigateTo}>
             <Button
               variant="primaryBlack"
               size="large"
@@ -68,8 +70,8 @@ export const HowToSell: React.FC = () => {
             >
               Submit your artwork
             </Button>
-          </Media>
-        </RouterLink>
+          </RouterLink>
+        </Media>
       </Box>
     </SectionContainer>
   )
