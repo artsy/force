@@ -33,6 +33,7 @@ export const HowToSell: React.FC = () => {
         alignItems="center"
         justifyContent="space-between"
         pt={[1, 4]}
+        mb={[0, 4, 0, 0]}
       >
         <Section
           icon={<AddItemIcon width={50} height={50} />}
@@ -80,10 +81,12 @@ const Section: React.FC<{
   description: string
 }> = ({ icon, text, description }) => {
   return (
-    <Box
-      width={["100%", "25%"]}
+    <Flex
+      flexDirection="column"
+      width="100%"
       height={["100%", 170]}
       my={[1, 0]}
+      mx={1}
       textAlign="center"
     >
       <Box>{icon}</Box>
@@ -95,6 +98,6 @@ const Section: React.FC<{
           {description}
         </Text>
       </Box>
-    </Box>
+    </Flex>
   )
 }
