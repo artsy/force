@@ -1,18 +1,23 @@
 import React from "react"
-import { Box, Button, Flex, Image, Link, Spacer, Text } from "@artsy/palette"
+import { Box, Button, Flex, Image, Link, Text, color } from "@artsy/palette"
 import { SectionContainer } from "./SectionContainer"
 import { Media } from "v2/Utils/Responsive"
 
 export const SellWithArtsy: React.FC = () => {
   return (
-    <SectionContainer background="black5" py={0}>
+    <SectionContainer
+      borderBottom={`1px solid ${color("black10")}`}
+      borderTop={`1px solid ${color("black10")}`}
+      py={0}
+    >
       <Flex alignItems="center" justifyContent="space-between">
-        <Box pr={9}>
+        <Box pr={[2, 9]}>
           <Text variant="largeTitle" mb={1}>
-            Sell with Artsy
+            Get the Artsy iOS app
           </Text>
-          <Text variant="text">Selling art differently</Text>
-          <Spacer mt={6} />
+          <Text variant="text" color="black60" mb={4}>
+            A Smarter, Faster Way to Sell Your Art.
+          </Text>
           <Link
             href="https://apps.apple.com/us/app/artsy-buy-sell-original-art/id703796080"
             target="_blank"
