@@ -11,7 +11,7 @@ import {
   ModalType,
 } from "v2/Components/Authentication/Types"
 import { SignUpValidator } from "v2/Components/Authentication/Validators"
-import PasswordInput from "v2/Components/PasswordInput"
+import { PasswordInput } from "v2/Components/PasswordInput"
 import QuickInput from "v2/Components/QuickInput"
 import { Formik, FormikProps } from "formik"
 import React, { Component } from "react"

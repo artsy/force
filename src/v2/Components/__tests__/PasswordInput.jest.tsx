@@ -3,7 +3,7 @@ import "jest-styled-components"
 import React from "react"
 import renderer from "react-test-renderer"
 
-import PasswordInput from "../PasswordInput"
+import { PasswordInput } from "../PasswordInput"
 
 describe("PasswordInput", () => {
   it("renders a PasswordInput", () => {

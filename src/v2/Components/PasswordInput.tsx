@@ -1,15 +1,10 @@
 import { ClosedEyeIcon, OpenEyeIcon, space } from "@artsy/palette"
-import React from "react"
+import React, { useState } from "react"
 import styled from "styled-components"
-
 import QuickInput, { QuickInputProps } from "./QuickInput"
 
 export interface PasswordInputProps extends QuickInputProps {
   showPasswordMessage?: boolean
-}
-
-export interface PasswordInputState {
-  showPassword: boolean
 }
 
 /**
@@ -17,47 +12,37 @@ export interface PasswordInputState {
  * Renders the label inside of the textbox; shows/hides the password.
  *
  */
-export class PasswordInput extends React.Component<
-  PasswordInputProps,
-  PasswordInputState
-> {
-  state = {
-    showPassword: false,
-  }
+export const PasswordInput: React.FC<PasswordInputProps> = ({
+  error,
+  showPasswordMessage,
+  ref,
+  ...newProps
+}) => {
+  const [showPassword, toggleShowPassword] = useState(false)
 
-  getRightViewForPassword() {
-    const icon = this.state.showPassword ? (
-      <ClosedEyeIcon onClick={this.toggleShowPassword} />
+  const eyeIcon = () => {
+    const icon = showPassword ? (
+      <ClosedEyeIcon onClick={() => toggleShowPassword(false)} />
     ) : (
-      <OpenEyeIcon onClick={this.toggleShowPassword} />
+      <OpenEyeIcon onClick={() => toggleShowPassword(true)} />
     )
 
-    return <Eye onClick={this.toggleShowPassword}>{icon}</Eye>
+    return <Eye>{icon}</Eye>
   }
 
-  toggleShowPassword = () => {
-    this.setState({
-      showPassword: !this.state.showPassword,
-    })
-  }
+  const type = showPassword ? "text" : "password"
+  const note =
+    !error && showPasswordMessage && "Password must be at least 8 characters."
 
-  render() {
-    const { error, showPasswordMessage, ref, ...newProps } = this.props
-
-    const type = this.state.showPassword ? "text" : "password"
-    const note =
-      !error && showPasswordMessage && "Password must be at least 8 characters."
-
-    return (
-      <QuickInput
-        {...newProps}
-        error={error}
-        type={type}
-        rightAddOn={this.getRightViewForPassword()}
-        note={note}
-      />
-    )
-  }
+  return (
+    <QuickInput
+      {...newProps}
+      error={error}
+      type={type}
+      rightAddOn={eyeIcon()}
+      note={note}
+    />
+  )
 }
 
 const Eye = styled.span`
@@ -65,5 +50,3 @@ const Eye = styled.span`
   right: ${space(1)}px;
   z-index: 1;
 `
-
-export default PasswordInput

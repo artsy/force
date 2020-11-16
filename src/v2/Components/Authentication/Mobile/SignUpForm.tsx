@@ -19,7 +19,7 @@ import {
 } from "v2/Components/Authentication/Types"
 import { MobileSignUpValidator } from "v2/Components/Authentication/Validators"
 import Icon from "v2/Components/Icon"
-import PasswordInput from "v2/Components/PasswordInput"
+import { PasswordInput } from "v2/Components/PasswordInput"
 import { ProgressIndicator } from "v2/Components/ProgressIndicator"
 import QuickInput from "v2/Components/QuickInput"
 import { Step, Wizard } from "v2/Components/Wizard"
@@ -39,10 +39,10 @@ export const currentStepActionName = {
 
 @track()
 class TrackedMobileSignUpForm extends Component<
-FormProps & {
-  relayEnvironment: Environment
-},
-MobileSignUpFormState
+  FormProps & {
+    relayEnvironment: Environment
+  },
+  MobileSignUpFormState
 > {
   state = {
     isSocialSignUp: false,
@@ -100,72 +100,72 @@ MobileSignUpFormState
           wizard,
           form: { errors, values, handleChange, handleBlur, setTouched },
         }) => (
-            <Fragment>
-              <QuickInput
-                block
-                error={!this.state.isSocialSignUp && errors.email}
-                placeholder="Enter your email address"
-                name="email"
-                label="Email"
-                type="email"
-                value={values.email}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                setTouched={setTouched}
-                touchedOnChange={false}
-                autoFocus
-              />
-              <TermsOfServiceCheckbox
-                error={errors.accepted_terms_of_service}
-                checked={values.accepted_terms_of_service}
-                value={values.accepted_terms_of_service}
-                type="checkbox"
-                name="accepted_terms_of_service"
-                onChange={handleChange}
-                onBlur={handleBlur}
-              />
-            </Fragment>
-          )}
+          <Fragment>
+            <QuickInput
+              block
+              error={!this.state.isSocialSignUp && errors.email}
+              placeholder="Enter your email address"
+              name="email"
+              label="Email"
+              type="email"
+              value={values.email}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              setTouched={setTouched}
+              touchedOnChange={false}
+              autoFocus
+            />
+            <TermsOfServiceCheckbox
+              error={errors.accepted_terms_of_service}
+              checked={values.accepted_terms_of_service}
+              value={values.accepted_terms_of_service}
+              type="checkbox"
+              name="accepted_terms_of_service"
+              onChange={handleChange}
+              onBlur={handleBlur}
+            />
+          </Fragment>
+        )}
       </Step>,
       <Step validationSchema={MobileSignUpValidator.password}>
         {({
           wizard,
           form: { errors, values, handleChange, handleBlur, setTouched },
         }) => (
-            <PasswordInput
-              block
-              error={errors.password}
-              name="password"
-              label="Password"
-              placeholder="Password"
-              value={values.password}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              setTouched={setTouched}
-              touchedOnChange={false}
-              showPasswordMessage
-            />
-          )}
+          <PasswordInput
+            block
+            error={errors.password}
+            name="password"
+            label="Password"
+            placeholder="Password"
+            value={values.password}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            setTouched={setTouched}
+            touchedOnChange={false}
+            showPasswordMessage
+          />
+        )}
       </Step>,
       <Step validationSchema={MobileSignUpValidator.name}>
         {({
           wizard,
           form: { errors, values, handleChange, handleBlur, setTouched },
         }) => (
-            <QuickInput
-              block
-              error={errors.name}
-              name="name"
-              label="Name"
-              placeholder="Name"
-              type="text"
-              value={values.name}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              setTouched={setTouched}
-              touchedOnChange={false}
-            />
-          )}
+          <QuickInput
+            block
+            error={errors.name}
+            name="name"
+            label="Name"
+            placeholder="Name"
+            type="text"
+            value={values.name}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            setTouched={setTouched}
+            touchedOnChange={false}
+          />
+        )}
       </Step>,
     ]
 
@@ -189,7 +189,7 @@ MobileSignUpFormState
                 <BackButton
                   onClick={e =>
                     this.props.onBackButtonClicked &&
-                      wizard.currentStepIndex === 0
+                    wizard.currentStepIndex === 0
                       ? this.props.onBackButtonClicked(e as any)
                       : wizard.previous(e, values)
                   }
