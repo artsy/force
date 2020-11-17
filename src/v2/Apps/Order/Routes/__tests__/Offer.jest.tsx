@@ -57,7 +57,7 @@ describe("Offer InitialMutation", () => {
       expect(page.offerInput.text()).toContain("Your offer")
     })
 
-    it("shows the list price just below the input", () => {
+    it("shows artwork sale message as list price just below the input", () => {
       const container = page.find("div#offer-page-left-column")
       expect(container.text()).toContain("List price: $16,000")
     })
@@ -87,7 +87,7 @@ describe("Offer InitialMutation", () => {
       })
     })
 
-    it("shows the list price just below the input", () => {
+    it("shows artwork sale message as list price just below the input", () => {
       const container = page.find("div#offer-page-left-column")
       expect(container.text()).toContain("List price: £16,000")
     })

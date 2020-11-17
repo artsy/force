@@ -22,7 +22,7 @@ const emDash = "—"
 
 export class TransactionDetailsSummaryItem extends React.Component<
   TransactionDetailsSummaryItemProps
-  > {
+> {
   static defaultProps: Partial<TransactionDetailsSummaryItemProps> = {
     offerContextPrice: "LIST_PRICE",
   }
@@ -86,6 +86,7 @@ export class TransactionDetailsSummaryItem extends React.Component<
     if (order.mode === "BUY") {
       return <Entry label="Price" value={order.itemsTotal} />
     }
+    const artwork = order.lineItems.edges[0].node.artwork
     const offer = this.getOffer()
     const isBuyerOffer =
       offerOverride != null || !offer || offer.fromParticipant === "BUYER"
@@ -97,18 +98,18 @@ export class TransactionDetailsSummaryItem extends React.Component<
           value={offerOverride || (offer && offer.amount) || emDash}
         />
         {offerContextPrice === "LIST_PRICE" ? (
-          <SecondaryEntry label="List price" value={order.totalListPrice} />
+          <SecondaryEntry label="List price" value={artwork.saleMessage} />
         ) : (
-            // show last offer
-            <SecondaryEntry
-              label={
-                order.lastOffer.fromParticipant === "SELLER"
-                  ? "Seller's offer"
-                  : "Your offer"
-              }
-              value={order.lastOffer.amount}
-            />
-          )}
+          // show last offer
+          <SecondaryEntry
+            label={
+              order.lastOffer.fromParticipant === "SELLER"
+                ? "Seller's offer"
+                : "Your offer"
+            }
+            value={order.lastOffer.amount}
+          />
+        )}
       </>
     )
   }
@@ -203,7 +204,15 @@ export const TransactionDetailsSummaryItemFragmentContainer = createFragmentCont
         taxTotal(precision: 2)
         taxTotalCents
         itemsTotal(precision: 2)
-        totalListPrice(precision: 2)
+        lineItems {
+          edges {
+            node {
+              artwork {
+                saleMessage
+              }
+            }
+          }
+        }
         buyerTotal(precision: 2)
         ... on CommerceOfferOrder {
           lastOffer {

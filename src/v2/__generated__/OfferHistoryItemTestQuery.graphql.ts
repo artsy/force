@@ -13,7 +13,17 @@ export type OfferHistoryItemTestQueryResponse = {
 export type OfferHistoryItemTestQueryRawResponse = {
     readonly order: ({
         readonly __typename: "CommerceOfferOrder";
-        readonly totalListPrice: string | null;
+        readonly lineItems: ({
+            readonly edges: ReadonlyArray<({
+                readonly node: ({
+                    readonly artwork: ({
+                        readonly saleMessage: string | null;
+                        readonly id: string | null;
+                    }) | null;
+                    readonly id: string | null;
+                }) | null;
+            }) | null> | null;
+        }) | null;
         readonly id: string | null;
         readonly offers: ({
             readonly edges: ReadonlyArray<({
@@ -37,7 +47,17 @@ export type OfferHistoryItemTestQueryRawResponse = {
         }) | null;
     } | {
         readonly __typename: string | null;
-        readonly totalListPrice: string | null;
+        readonly lineItems: ({
+            readonly edges: ReadonlyArray<({
+                readonly node: ({
+                    readonly artwork: ({
+                        readonly saleMessage: string | null;
+                        readonly id: string | null;
+                    }) | null;
+                    readonly id: string | null;
+                }) | null;
+            }) | null> | null;
+        }) | null;
         readonly id: string | null;
     }) | null;
 };
@@ -59,6 +79,17 @@ query OfferHistoryItemTestQuery {
 }
 
 fragment OfferHistoryItem_order on CommerceOrder {
+  lineItems {
+    edges {
+      node {
+        artwork {
+          saleMessage
+          id
+        }
+        id
+      }
+    }
+  }
   ... on CommerceOfferOrder {
     offers {
       edges {
@@ -81,7 +112,6 @@ fragment OfferHistoryItem_order on CommerceOrder {
       id
     }
   }
-  totalListPrice(precision: 2)
 }
 */
 
@@ -93,30 +123,30 @@ var v0 = [
     "value": "foo"
   }
 ],
-v1 = [
-  {
-    "kind": "Literal",
-    "name": "precision",
-    "value": 2
-  }
-],
-v2 = {
+v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v3 = {
+v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "internalID",
   "storageKey": null
 },
+v3 = [
+  {
+    "kind": "Literal",
+    "name": "precision",
+    "value": 2
+  }
+],
 v4 = {
   "alias": null,
-  "args": (v1/*: any*/),
+  "args": (v3/*: any*/),
   "kind": "ScalarField",
   "name": "amount",
   "storageKey": "amount(precision:2)"
@@ -177,12 +207,58 @@ return {
           },
           {
             "alias": null,
-            "args": (v1/*: any*/),
-            "kind": "ScalarField",
-            "name": "totalListPrice",
-            "storageKey": "totalListPrice(precision:2)"
+            "args": null,
+            "concreteType": "CommerceLineItemConnection",
+            "kind": "LinkedField",
+            "name": "lineItems",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "CommerceLineItemEdge",
+                "kind": "LinkedField",
+                "name": "edges",
+                "plural": true,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "CommerceLineItem",
+                    "kind": "LinkedField",
+                    "name": "node",
+                    "plural": false,
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "Artwork",
+                        "kind": "LinkedField",
+                        "name": "artwork",
+                        "plural": false,
+                        "selections": [
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "saleMessage",
+                            "storageKey": null
+                          },
+                          (v1/*: any*/)
+                        ],
+                        "storageKey": null
+                      },
+                      (v1/*: any*/)
+                    ],
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
           },
-          (v2/*: any*/),
+          (v1/*: any*/),
           {
             "kind": "InlineFragment",
             "selections": [
@@ -210,7 +286,7 @@ return {
                         "name": "node",
                         "plural": false,
                         "selections": [
-                          (v3/*: any*/),
+                          (v2/*: any*/),
                           (v4/*: any*/),
                           {
                             "alias": null,
@@ -226,7 +302,7 @@ return {
                             "storageKey": "createdAt(format:\"MMM D\")"
                           },
                           (v5/*: any*/),
-                          (v2/*: any*/)
+                          (v1/*: any*/)
                         ],
                         "storageKey": null
                       }
@@ -244,19 +320,19 @@ return {
                 "name": "lastOffer",
                 "plural": false,
                 "selections": [
-                  (v3/*: any*/),
+                  (v2/*: any*/),
                   (v5/*: any*/),
                   (v4/*: any*/),
                   {
                     "alias": null,
-                    "args": (v1/*: any*/),
+                    "args": (v3/*: any*/),
                     "kind": "ScalarField",
                     "name": "shippingTotal",
                     "storageKey": "shippingTotal(precision:2)"
                   },
                   {
                     "alias": null,
-                    "args": (v1/*: any*/),
+                    "args": (v3/*: any*/),
                     "kind": "ScalarField",
                     "name": "taxTotal",
                     "storageKey": "taxTotal(precision:2)"
@@ -268,7 +344,7 @@ return {
                     "name": "note",
                     "storageKey": null
                   },
-                  (v2/*: any*/)
+                  (v1/*: any*/)
                 ],
                 "storageKey": null
               }
@@ -285,7 +361,7 @@ return {
     "metadata": {},
     "name": "OfferHistoryItemTestQuery",
     "operationKind": "query",
-    "text": "query OfferHistoryItemTestQuery {\n  order: commerceOrder(id: \"foo\") {\n    __typename\n    ...OfferHistoryItem_order\n    id\n  }\n}\n\nfragment OfferHistoryItem_order on CommerceOrder {\n  ... on CommerceOfferOrder {\n    offers {\n      edges {\n        node {\n          internalID\n          amount(precision: 2)\n          createdAt(format: \"MMM D\")\n          fromParticipant\n          id\n        }\n      }\n    }\n    lastOffer {\n      internalID\n      fromParticipant\n      amount(precision: 2)\n      shippingTotal(precision: 2)\n      taxTotal(precision: 2)\n      note\n      id\n    }\n  }\n  totalListPrice(precision: 2)\n}\n"
+    "text": "query OfferHistoryItemTestQuery {\n  order: commerceOrder(id: \"foo\") {\n    __typename\n    ...OfferHistoryItem_order\n    id\n  }\n}\n\nfragment OfferHistoryItem_order on CommerceOrder {\n  lineItems {\n    edges {\n      node {\n        artwork {\n          saleMessage\n          id\n        }\n        id\n      }\n    }\n  }\n  ... on CommerceOfferOrder {\n    offers {\n      edges {\n        node {\n          internalID\n          amount(precision: 2)\n          createdAt(format: \"MMM D\")\n          fromParticipant\n          id\n        }\n      }\n    }\n    lastOffer {\n      internalID\n      fromParticipant\n      amount(precision: 2)\n      shippingTotal(precision: 2)\n      taxTotal(precision: 2)\n      note\n      id\n    }\n  }\n}\n"
   }
 };
 })();

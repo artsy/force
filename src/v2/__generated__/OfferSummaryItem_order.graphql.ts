@@ -4,7 +4,15 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type OfferSummaryItem_order = {
-    readonly totalListPrice: string | null;
+    readonly lineItems: {
+        readonly edges: ReadonlyArray<{
+            readonly node: {
+                readonly artwork: {
+                    readonly saleMessage: string | null;
+                } | null;
+            } | null;
+        } | null> | null;
+    } | null;
     readonly myLastOffer?: {
         readonly amount: string | null;
         readonly note: string | null;
@@ -19,15 +27,7 @@ export type OfferSummaryItem_order$key = {
 
 
 
-const node: ReaderFragment = (function(){
-var v0 = [
-  {
-    "kind": "Literal",
-    "name": "precision",
-    "value": 2
-  }
-];
-return {
+const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
@@ -35,10 +35,54 @@ return {
   "selections": [
     {
       "alias": null,
-      "args": (v0/*: any*/),
-      "kind": "ScalarField",
-      "name": "totalListPrice",
-      "storageKey": "totalListPrice(precision:2)"
+      "args": null,
+      "concreteType": "CommerceLineItemConnection",
+      "kind": "LinkedField",
+      "name": "lineItems",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "CommerceLineItemEdge",
+          "kind": "LinkedField",
+          "name": "edges",
+          "plural": true,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "CommerceLineItem",
+              "kind": "LinkedField",
+              "name": "node",
+              "plural": false,
+              "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "concreteType": "Artwork",
+                  "kind": "LinkedField",
+                  "name": "artwork",
+                  "plural": false,
+                  "selections": [
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "saleMessage",
+                      "storageKey": null
+                    }
+                  ],
+                  "storageKey": null
+                }
+              ],
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
     },
     {
       "kind": "InlineFragment",
@@ -53,7 +97,13 @@ return {
           "selections": [
             {
               "alias": null,
-              "args": (v0/*: any*/),
+              "args": [
+                {
+                  "kind": "Literal",
+                  "name": "precision",
+                  "value": 2
+                }
+              ],
               "kind": "ScalarField",
               "name": "amount",
               "storageKey": "amount(precision:2)"
@@ -74,6 +124,5 @@ return {
   ],
   "type": "CommerceOrder"
 };
-})();
-(node as any).hash = '0261dbe6d5bf78317ddcbcc13f207aa5';
+(node as any).hash = 'a540f4a4d15ca1f1096175478d695e02';
 export default node;

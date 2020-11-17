@@ -12,7 +12,6 @@ export type Respond_order = {
     readonly currencyCode: string;
     readonly itemsTotal: string | null;
     readonly itemsTotalCents: number | null;
-    readonly totalListPrice: string | null;
     readonly totalListPriceCents: number;
     readonly stateExpiresAt: string | null;
     readonly lineItems: {
@@ -20,6 +19,7 @@ export type Respond_order = {
             readonly node: {
                 readonly artwork: {
                     readonly slug: string;
+                    readonly saleMessage: string | null;
                 } | null;
             } | null;
         } | null> | null;
@@ -51,14 +51,7 @@ var v0 = {
   "name": "internalID",
   "storageKey": null
 },
-v1 = [
-  {
-    "kind": "Literal",
-    "name": "precision",
-    "value": 2
-  }
-],
-v2 = {
+v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -95,7 +88,13 @@ return {
     },
     {
       "alias": null,
-      "args": (v1/*: any*/),
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "precision",
+          "value": 2
+        }
+      ],
       "kind": "ScalarField",
       "name": "itemsTotal",
       "storageKey": "itemsTotal(precision:2)"
@@ -106,13 +105,6 @@ return {
       "kind": "ScalarField",
       "name": "itemsTotalCents",
       "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": (v1/*: any*/),
-      "kind": "ScalarField",
-      "name": "totalListPrice",
-      "storageKey": "totalListPrice(precision:2)"
     },
     {
       "alias": null,
@@ -166,6 +158,13 @@ return {
                       "kind": "ScalarField",
                       "name": "slug",
                       "storageKey": null
+                    },
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "saleMessage",
+                      "storageKey": null
                     }
                   ],
                   "storageKey": null
@@ -190,7 +189,7 @@ return {
           "name": "lastOffer",
           "plural": false,
           "selections": [
-            (v2/*: any*/),
+            (v1/*: any*/),
             (v0/*: any*/),
             {
               "alias": null,
@@ -210,7 +209,7 @@ return {
           "name": "myLastOffer",
           "plural": false,
           "selections": [
-            (v2/*: any*/)
+            (v1/*: any*/)
           ],
           "storageKey": null
         }
@@ -246,5 +245,5 @@ return {
   "type": "CommerceOrder"
 };
 })();
-(node as any).hash = '5b8133ec8a17977aa86f219db0b50846';
+(node as any).hash = 'c0e6c9fdda7f99bcc8e8a089ab9526e8';
 export default node;

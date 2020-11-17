@@ -5,7 +5,15 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type CommerceOrderParticipantEnum = "BUYER" | "SELLER" | "%future added value";
 export type OfferHistoryItem_order = {
-    readonly totalListPrice: string | null;
+    readonly lineItems: {
+        readonly edges: ReadonlyArray<{
+            readonly node: {
+                readonly artwork: {
+                    readonly saleMessage: string | null;
+                } | null;
+            } | null;
+        } | null> | null;
+    } | null;
     readonly offers?: {
         readonly edges: ReadonlyArray<{
             readonly node: {
@@ -35,23 +43,23 @@ export type OfferHistoryItem_order$key = {
 
 
 const node: ReaderFragment = (function(){
-var v0 = [
-  {
-    "kind": "Literal",
-    "name": "precision",
-    "value": 2
-  }
-],
-v1 = {
+var v0 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "internalID",
   "storageKey": null
 },
+v1 = [
+  {
+    "kind": "Literal",
+    "name": "precision",
+    "value": 2
+  }
+],
 v2 = {
   "alias": null,
-  "args": (v0/*: any*/),
+  "args": (v1/*: any*/),
   "kind": "ScalarField",
   "name": "amount",
   "storageKey": "amount(precision:2)"
@@ -71,10 +79,54 @@ return {
   "selections": [
     {
       "alias": null,
-      "args": (v0/*: any*/),
-      "kind": "ScalarField",
-      "name": "totalListPrice",
-      "storageKey": "totalListPrice(precision:2)"
+      "args": null,
+      "concreteType": "CommerceLineItemConnection",
+      "kind": "LinkedField",
+      "name": "lineItems",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "CommerceLineItemEdge",
+          "kind": "LinkedField",
+          "name": "edges",
+          "plural": true,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "CommerceLineItem",
+              "kind": "LinkedField",
+              "name": "node",
+              "plural": false,
+              "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "concreteType": "Artwork",
+                  "kind": "LinkedField",
+                  "name": "artwork",
+                  "plural": false,
+                  "selections": [
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "saleMessage",
+                      "storageKey": null
+                    }
+                  ],
+                  "storageKey": null
+                }
+              ],
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
     },
     {
       "kind": "InlineFragment",
@@ -103,7 +155,7 @@ return {
                   "name": "node",
                   "plural": false,
                   "selections": [
-                    (v1/*: any*/),
+                    (v0/*: any*/),
                     (v2/*: any*/),
                     {
                       "alias": null,
@@ -136,19 +188,19 @@ return {
           "name": "lastOffer",
           "plural": false,
           "selections": [
-            (v1/*: any*/),
+            (v0/*: any*/),
             (v3/*: any*/),
             (v2/*: any*/),
             {
               "alias": null,
-              "args": (v0/*: any*/),
+              "args": (v1/*: any*/),
               "kind": "ScalarField",
               "name": "shippingTotal",
               "storageKey": "shippingTotal(precision:2)"
             },
             {
               "alias": null,
-              "args": (v0/*: any*/),
+              "args": (v1/*: any*/),
               "kind": "ScalarField",
               "name": "taxTotal",
               "storageKey": "taxTotal(precision:2)"
@@ -170,5 +222,5 @@ return {
   "type": "CommerceOrder"
 };
 })();
-(node as any).hash = '6209a00aa1b92262f730863b082250c1';
+(node as any).hash = '6548e4815a3025731236f8e53c62893d';
 export default node;

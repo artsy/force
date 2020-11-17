@@ -220,7 +220,6 @@ export const CounterFragmentContainer = createFragmentContainer(
         mode
         state
         itemsTotal(precision: 2)
-        totalListPrice(precision: 2)
         stateExpiresAt
         ... on CommerceOfferOrder {
           lastOffer {
@@ -235,6 +234,7 @@ export const CounterFragmentContainer = createFragmentContainer(
             node {
               artwork {
                 slug
+                saleMessage
               }
             }
           }

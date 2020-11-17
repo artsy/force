@@ -10,13 +10,13 @@ export type Counter_order = {
     readonly mode: CommerceOrderModeEnum | null;
     readonly state: CommerceOrderStateEnum;
     readonly itemsTotal: string | null;
-    readonly totalListPrice: string | null;
     readonly stateExpiresAt: string | null;
     readonly lineItems: {
         readonly edges: ReadonlyArray<{
             readonly node: {
                 readonly artwork: {
                     readonly slug: string;
+                    readonly saleMessage: string | null;
                 } | null;
             } | null;
         } | null> | null;
@@ -45,14 +45,7 @@ var v0 = {
   "kind": "ScalarField",
   "name": "internalID",
   "storageKey": null
-},
-v1 = [
-  {
-    "kind": "Literal",
-    "name": "precision",
-    "value": 2
-  }
-];
+};
 return {
   "argumentDefinitions": [],
   "kind": "Fragment",
@@ -76,17 +69,16 @@ return {
     },
     {
       "alias": null,
-      "args": (v1/*: any*/),
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "precision",
+          "value": 2
+        }
+      ],
       "kind": "ScalarField",
       "name": "itemsTotal",
       "storageKey": "itemsTotal(precision:2)"
-    },
-    {
-      "alias": null,
-      "args": (v1/*: any*/),
-      "kind": "ScalarField",
-      "name": "totalListPrice",
-      "storageKey": "totalListPrice(precision:2)"
     },
     {
       "alias": null,
@@ -132,6 +124,13 @@ return {
                       "args": null,
                       "kind": "ScalarField",
                       "name": "slug",
+                      "storageKey": null
+                    },
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "saleMessage",
                       "storageKey": null
                     }
                   ],
@@ -211,5 +210,5 @@ return {
   "type": "CommerceOrder"
 };
 })();
-(node as any).hash = '94f9a012a54b189d77961bad98cde61a';
+(node as any).hash = '56cd07c5ed13a4bd0982f678b64959bd';
 export default node;

@@ -362,7 +362,6 @@ export const RespondFragmentContainer = createFragmentContainer(
         currencyCode
         itemsTotal(precision: 2)
         itemsTotalCents
-        totalListPrice(precision: 2)
         totalListPriceCents
         stateExpiresAt
         lineItems {
@@ -370,6 +369,7 @@ export const RespondFragmentContainer = createFragmentContainer(
             node {
               artwork {
                 slug
+                saleMessage
               }
             }
           }

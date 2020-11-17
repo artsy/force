@@ -13,7 +13,15 @@ export type TransactionDetailsSummaryItem_order = {
     readonly taxTotal: string | null;
     readonly taxTotalCents: number | null;
     readonly itemsTotal: string | null;
-    readonly totalListPrice: string | null;
+    readonly lineItems: {
+        readonly edges: ReadonlyArray<{
+            readonly node: {
+                readonly artwork: {
+                    readonly saleMessage: string | null;
+                } | null;
+            } | null;
+        } | null> | null;
+    } | null;
     readonly buyerTotal: string | null;
     readonly lastOffer?: {
         readonly internalID: string;
@@ -176,10 +184,54 @@ return {
     },
     {
       "alias": null,
-      "args": (v0/*: any*/),
-      "kind": "ScalarField",
-      "name": "totalListPrice",
-      "storageKey": "totalListPrice(precision:2)"
+      "args": null,
+      "concreteType": "CommerceLineItemConnection",
+      "kind": "LinkedField",
+      "name": "lineItems",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "CommerceLineItemEdge",
+          "kind": "LinkedField",
+          "name": "edges",
+          "plural": true,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "CommerceLineItem",
+              "kind": "LinkedField",
+              "name": "node",
+              "plural": false,
+              "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "concreteType": "Artwork",
+                  "kind": "LinkedField",
+                  "name": "artwork",
+                  "plural": false,
+                  "selections": [
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "saleMessage",
+                      "storageKey": null
+                    }
+                  ],
+                  "storageKey": null
+                }
+              ],
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
     },
     (v5/*: any*/),
     {
@@ -212,5 +264,5 @@ return {
   "type": "CommerceOrder"
 };
 })();
-(node as any).hash = 'e207bab0483d25f4386054ee2b0365c6';
+(node as any).hash = 'b757b9cd793d985630a1acb99b6f920b';
 export default node;

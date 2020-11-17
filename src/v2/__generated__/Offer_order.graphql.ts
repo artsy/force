@@ -9,7 +9,6 @@ export type Offer_order = {
     readonly internalID: string;
     readonly mode: CommerceOrderModeEnum | null;
     readonly state: CommerceOrderStateEnum;
-    readonly totalListPrice: string | null;
     readonly totalListPriceCents: number;
     readonly currencyCode: string;
     readonly lineItems: {
@@ -17,6 +16,7 @@ export type Offer_order = {
             readonly node: {
                 readonly artwork: {
                     readonly slug: string;
+                    readonly saleMessage: string | null;
                 } | null;
             } | null;
         } | null> | null;
@@ -58,19 +58,6 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "state",
       "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": [
-        {
-          "kind": "Literal",
-          "name": "precision",
-          "value": 2
-        }
-      ],
-      "kind": "ScalarField",
-      "name": "totalListPrice",
-      "storageKey": "totalListPrice(precision:2)"
     },
     {
       "alias": null,
@@ -124,6 +111,13 @@ const node: ReaderFragment = {
                       "kind": "ScalarField",
                       "name": "slug",
                       "storageKey": null
+                    },
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "saleMessage",
+                      "storageKey": null
                     }
                   ],
                   "storageKey": null
@@ -150,5 +144,5 @@ const node: ReaderFragment = {
   ],
   "type": "CommerceOrder"
 };
-(node as any).hash = 'ed652f82e3ec77a94451ec21b8d1cc15';
+(node as any).hash = '4f791812e572d9a8b2d7e4250dd7052a';
 export default node;

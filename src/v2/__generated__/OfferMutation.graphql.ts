@@ -19,7 +19,6 @@ export type OfferMutationResponse = {
             readonly order?: {
                 readonly internalID: string;
                 readonly mode: CommerceOrderModeEnum | null;
-                readonly totalListPrice: string | null;
                 readonly totalListPriceCents: number;
                 readonly myLastOffer?: {
                     readonly internalID: string;
@@ -55,7 +54,6 @@ mutation OfferMutation(
           __typename
           internalID
           mode
-          totalListPrice
           totalListPriceCents
           ... on CommerceOfferOrder {
             myLastOffer {
@@ -121,31 +119,24 @@ v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "totalListPrice",
+  "name": "totalListPriceCents",
   "storageKey": null
 },
 v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "totalListPriceCents",
+  "name": "amountCents",
   "storageKey": null
 },
 v7 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "amountCents",
-  "storageKey": null
-},
-v8 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
   "name": "note",
   "storageKey": null
 },
-v9 = {
+v8 = {
   "kind": "InlineFragment",
   "selections": [
     {
@@ -183,7 +174,7 @@ v9 = {
   ],
   "type": "CommerceOrderWithMutationFailure"
 },
-v10 = {
+v9 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -228,7 +219,6 @@ return {
                       (v3/*: any*/),
                       (v4/*: any*/),
                       (v5/*: any*/),
-                      (v6/*: any*/),
                       {
                         "kind": "InlineFragment",
                         "selections": [
@@ -241,8 +231,8 @@ return {
                             "plural": false,
                             "selections": [
                               (v3/*: any*/),
-                              (v7/*: any*/),
-                              (v8/*: any*/)
+                              (v6/*: any*/),
+                              (v7/*: any*/)
                             ],
                             "storageKey": null
                           }
@@ -255,7 +245,7 @@ return {
                 ],
                 "type": "CommerceOrderWithMutationSuccess"
               },
-              (v9/*: any*/)
+              (v8/*: any*/)
             ],
             "storageKey": null
           }
@@ -304,8 +294,7 @@ return {
                       (v3/*: any*/),
                       (v4/*: any*/),
                       (v5/*: any*/),
-                      (v6/*: any*/),
-                      (v10/*: any*/),
+                      (v9/*: any*/),
                       {
                         "kind": "InlineFragment",
                         "selections": [
@@ -318,9 +307,9 @@ return {
                             "plural": false,
                             "selections": [
                               (v3/*: any*/),
+                              (v6/*: any*/),
                               (v7/*: any*/),
-                              (v8/*: any*/),
-                              (v10/*: any*/)
+                              (v9/*: any*/)
                             ],
                             "storageKey": null
                           }
@@ -333,7 +322,7 @@ return {
                 ],
                 "type": "CommerceOrderWithMutationSuccess"
               },
-              (v9/*: any*/)
+              (v8/*: any*/)
             ],
             "storageKey": null
           }
@@ -347,9 +336,9 @@ return {
     "metadata": {},
     "name": "OfferMutation",
     "operationKind": "mutation",
-    "text": "mutation OfferMutation(\n  $input: CommerceAddInitialOfferToOrderInput!\n) {\n  commerceAddInitialOfferToOrder(input: $input) {\n    orderOrError {\n      __typename\n      ... on CommerceOrderWithMutationSuccess {\n        __typename\n        order {\n          __typename\n          internalID\n          mode\n          totalListPrice\n          totalListPriceCents\n          ... on CommerceOfferOrder {\n            myLastOffer {\n              internalID\n              amountCents\n              note\n              id\n            }\n          }\n          id\n        }\n      }\n      ... on CommerceOrderWithMutationFailure {\n        error {\n          type\n          code\n          data\n        }\n      }\n    }\n  }\n}\n"
+    "text": "mutation OfferMutation(\n  $input: CommerceAddInitialOfferToOrderInput!\n) {\n  commerceAddInitialOfferToOrder(input: $input) {\n    orderOrError {\n      __typename\n      ... on CommerceOrderWithMutationSuccess {\n        __typename\n        order {\n          __typename\n          internalID\n          mode\n          totalListPriceCents\n          ... on CommerceOfferOrder {\n            myLastOffer {\n              internalID\n              amountCents\n              note\n              id\n            }\n          }\n          id\n        }\n      }\n      ... on CommerceOrderWithMutationFailure {\n        error {\n          type\n          code\n          data\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '0fd563773d66cf6524c984c87c3194e9';
+(node as any).hash = '7caa8b8452afa1cbc95f845c77fec29e';
 export default node;

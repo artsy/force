@@ -111,7 +111,6 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
                 order {
                   internalID
                   mode
-                  totalListPrice
                   totalListPriceCents
                   ... on CommerceOfferOrder {
                     myLastOffer {
@@ -208,7 +207,8 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
   render() {
     const { order, isCommittingMutation } = this.props
 
-    const artworkId = order.lineItems.edges[0].node.artwork.slug
+    const artwork = order.lineItems.edges[0].node.artwork
+    const artworkId = artwork.slug
     const orderCurrency = order.currencyCode
 
     return (
@@ -239,9 +239,9 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
                     onFocus={this.onOfferInputFocus.bind(this)}
                   />
                 </Flex>
-                {Boolean(order.totalListPrice) && (
+                {Boolean(artwork.saleMessage) && (
                   <Sans size="2" color="black60">
-                    List price: {order.totalListPrice}
+                    List price: {artwork.saleMessage}
                   </Sans>
                 )}
                 <Spacer mb={[2, 3]} />
@@ -319,7 +319,6 @@ export const OfferFragmentContainer = createFragmentContainer(
         internalID
         mode
         state
-        totalListPrice(precision: 2)
         totalListPriceCents
         currencyCode
         lineItems {
@@ -327,6 +326,7 @@ export const OfferFragmentContainer = createFragmentContainer(
             node {
               artwork {
                 slug
+                saleMessage
               }
             }
           }

@@ -40,7 +40,6 @@ export const UntouchedOrder = {
   stateReason: null,
   stateExpiresAt: "Jan 15",
   itemsTotal: "$12,000",
-  totalListPrice: "$12,000",
   totalListPriceCents: 1200000,
   shippingTotal: null,
   shippingTotalCents: null,
@@ -73,6 +72,7 @@ export const UntouchedOrder = {
             shippingCountry: "US",
             is_acquireable: true as boolean,
             is_offerable: false as boolean,
+            saleMessage: "$12,000",
             partner: {
               name: "A Gallery",
               id: "1234",
@@ -176,7 +176,6 @@ export const UntouchedOfferOrder = {
   __typename: "CommerceOfferOrder",
   mode: "OFFER",
   currencyCode: "USD",
-  totalListPrice: "$16,000",
   totalListPriceCents: 1600000,
   itemsTotal: "$16,000",
   itemsTotalCents: 1600000,
