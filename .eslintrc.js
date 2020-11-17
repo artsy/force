@@ -6,9 +6,8 @@ module.exports = {
   plugins: [
     "react-hooks",
     "@typescript-eslint",
+    "sort-keys-fix",
     "styled-components-a11y",
-    // TODO: Add support for Graphql
-    /*, "graphql" */
   ],
   extends: [
     "eslint:recommended",
@@ -23,9 +22,6 @@ module.exports = {
       jsx: true,
     },
     ecmaVersion: 6,
-    // This significantly slows down linting and is needed for type-aware lint
-    // checks which we don't have atm.
-    // project: "./tsconfig.json",
     sourceType: "module",
   },
   settings: {
@@ -51,17 +47,17 @@ module.exports = {
     "@typescript-eslint/no-use-before-define": 0,
     "@typescript-eslint/no-unused-vars": 0,
     "@typescript-eslint/no-var-requires": 0,
+    "no-console": [
+      "error",
+      {
+        allow: ["warn", "error", "info", "group", "groupEnd", "groupCollapsed"],
+      },
+    ],
     "react/display-name": 0,
     "react/prop-types": 0,
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
-    "sort-imports": [
-      "warn",
-      {
-        // Unfortunately there's no autofixer for this
-        ignoreDeclarationSort: true,
-      },
-    ],
+    "sort-keys-fix/sort-keys-fix": "warn",
 
     // FIXME: Investigate / reenable these rules. Disabled to introduce eslint
     // into codebase.
@@ -87,29 +83,6 @@ module.exports = {
     "@typescript-eslint/no-empty-function": 0,
     "@typescript-eslint/no-empty-interface": 0,
     "@typescript-eslint/no-non-null-assertion": 0,
-    // artsyPaletteCanonicalImport: 0,
-    // "@typescript-eslint/no-unused-vars": [
-    //   "error",
-    //   {
-    //     argsIgnorePattern: "^_",
-    //   },
-    // ],
-    "no-console": [
-      "error",
-      {
-        allow: ["warn", "error", "info", "group", "groupEnd", "groupCollapsed"],
-      },
-    ],
-
-    // TODO: Add support for Graphql, but first need to fetch .json schema
-    // "graphql/template-strings": [
-    //   "error",
-    //   {
-    //     env: "relay",
-    //     schemaJsonFilepath: path.resolve(__dirname, "./data/schema.json"),
-    //     tagName: "graphql",
-    //   },
-    // ],
   },
   overrides: [
     {
