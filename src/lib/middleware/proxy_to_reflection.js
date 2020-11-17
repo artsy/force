@@ -1,24 +1,14 @@
-import type { NextFunction } from "express"
-import type { ArtsyRequest, ArtsyResponse } from "./artsyExpress"
-
-import httpProxy from "http-proxy"
-import { parse } from "url"
-
-// TODO: Required for rewire
+//
+// When Google requests _escaped_fragment_ proxy to Reflection
+// https://github.com/artsy/reflection
+//
+const httpProxy = require("http-proxy")
 const request = require("superagent")
-
-const { REFLECTION_URL } = process.env
 const proxy = httpProxy.createProxyServer()
+const { parse } = require("url")
+const { REFLECTION_URL } = process.env
 
-/**
- * When Google requests _escaped_fragment_ proxy to Reflection
- * https://github.com/artsy/reflection
- */
-export function proxyReflectionMiddleware(
-  req: ArtsyRequest,
-  res: ArtsyResponse,
-  next: NextFunction
-) {
+module.exports = function proxyToReflection(req, res, next) {
   if (req.query._escaped_fragment_ == null) {
     return next()
   }
@@ -36,7 +26,7 @@ export function proxyReflectionMiddleware(
   })
 }
 
-const reflectionProxyUrl = function (req: ArtsyRequest) {
+const reflectionProxyUrl = function (req) {
   const url = parse(req.url)
   let dest = REFLECTION_URL + url.pathname
   const query =

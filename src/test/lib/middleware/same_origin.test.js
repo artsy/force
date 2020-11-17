@@ -5,9 +5,9 @@
  */
 const rewire = require("rewire")
 const sinon = require("sinon")
-const hsts = rewire("../../../lib/middleware/hsts")
+const sameOrign = rewire("../../../lib/middleware/same_origin")
 
-describe("HTTP strict transport security middleware", function () {
+describe("Same origin middleware", function () {
   beforeEach(function () {
     this.req = {}
     this.res = {
@@ -19,12 +19,9 @@ describe("HTTP strict transport security middleware", function () {
     return (this.next = sinon.stub())
   })
 
-  return it("adds Strict-Transport-Security header", function () {
-    hsts.__set__("APP_URL", "https://foobart.sy")
-    this.req.get = () => "https"
-    hsts(this.req, this.res, this.next)
-    return this.res.headers["Strict-Transport-Security"].should.equal(
-      "max-age=31536000"
-    )
+  return it("adds x-frame-options header", function () {
+    this.req.get = () => "http:"
+    sameOrign(this.req, this.res, this.next)
+    return this.res.headers["X-Frame-Options"].should.equal("SAMEORIGIN")
   })
 })

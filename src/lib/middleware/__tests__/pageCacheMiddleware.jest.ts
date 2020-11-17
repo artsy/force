@@ -1,5 +1,4 @@
-import { pageCacheMiddleware } from "../pageCache"
-
+import { pageCacheMiddleware } from "../pageCacheMiddleware"
 const cache = require("lib/cache")
 
 jest.mock("lib/cache", () => ({

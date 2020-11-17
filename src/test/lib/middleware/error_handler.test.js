@@ -1,11 +1,13 @@
-import _ from "lodash"
-import sinon from "sinon"
-import rewire from "rewire"
-import { IpDeniedError } from "express-ipfilter"
-const rewiredErrorHandlerMiddleware = rewire(
-  "../../../lib/middleware/errorHandler"
-)
-const { errorHandlerMiddleware } = rewiredErrorHandlerMiddleware
+/*
+ * decaffeinate suggestions:
+ * DS102: Remove unnecessary code created because of implicit returns
+ * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
+ */
+const _ = require("underscore")
+const sinon = require("sinon")
+const rewire = require("rewire")
+const errorHandler = rewire("../../../lib/middleware/error_handler")
+const { IpDeniedError } = require("express-ipfilter")
 
 describe("errorHandler", function () {
   beforeEach(function () {
@@ -13,16 +15,16 @@ describe("errorHandler", function () {
     this.res = {
       status: sinon.stub().returns(this.renderStub),
     }
-    this.err = {
+    return (this.err = {
       status: 420,
       message: "When they go low, we go high",
       stack: "mad fat stacks",
-    }
+    })
   })
 
   it("invokes the error handler template with the right parameters (and the right status code for the page)", function () {
-    rewiredErrorHandlerMiddleware.__set__("NODE_ENV", "development")
-    errorHandlerMiddleware(this.err, {}, this.res, {})
+    errorHandler.__set__("NODE_ENV", "development")
+    errorHandler(this.err, {}, this.res, {})
     this.res.status.args[0][0].should.equal(420)
     this.renderStub.render.args[0][0].should.containEql(
       "desktop/components/error_handler/index.jade"
@@ -31,29 +33,28 @@ describe("errorHandler", function () {
       "When they go low, we go high"
     )
     this.renderStub.render.args[0][1].code.should.equal(420)
-    this.renderStub.render.args[0][1].detail.should.equal("mad fat stacks")
+    return this.renderStub.render.args[0][1].detail.should.equal(
+      "mad fat stacks"
+    )
   })
 
   it("passes undefined in production", function () {
-    rewiredErrorHandlerMiddleware.__set__("NODE_ENV", "production")
-    errorHandlerMiddleware(this.err, {}, this.res, {})
+    errorHandler.__set__("NODE_ENV", "production")
+    errorHandler(this.err, {}, this.res, {})
     this.res.status.args[0][0].should.equal(420)
     this.renderStub.render.args[0][0].should.containEql(
       "desktop/components/error_handler/index.jade"
     )
     _.isUndefined(this.renderStub.render.args[0][1].message).should.be.ok()
     this.renderStub.render.args[0][1].code.should.equal(420)
-    _.isUndefined(this.renderStub.render.args[0][1].detail).should.be.ok()
+    return _.isUndefined(
+      this.renderStub.render.args[0][1].detail
+    ).should.be.ok()
   })
 
-  it("returns a 401 when an IP is denied", function () {
-    errorHandlerMiddleware(
-      new IpDeniedError("You've been blocked"),
-      {},
-      this.res,
-      {}
-    )
+  return it("returns a 401 when an IP is denied", function () {
+    errorHandler(new IpDeniedError("You've been blocked"), {}, this.res, {})
     this.res.status.args[0][0].should.equal(401)
-    this.renderStub.render.args[0][1].code.should.equal(401)
+    return this.renderStub.render.args[0][1].code.should.equal(401)
   })
 })

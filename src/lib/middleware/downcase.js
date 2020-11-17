@@ -1,11 +1,4 @@
-import type { NextFunction } from "express"
-import type { ArtsyRequest, ArtsyResponse } from "./artsyExpress"
-
-export function downcaseMiddleware(
-  req: ArtsyRequest,
-  res: ArtsyResponse,
-  next: NextFunction
-) {
+module.exports = function downcase(req, res, next) {
   const url = req._parsedUrl
 
   if (url.pathname.includes("/browse/booths/section/")) {

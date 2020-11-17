@@ -1,7 +1,5 @@
 {
-  "editor.rulers": [
-    80
-  ],
+  "editor.rulers": [80],
   "editor.tabSize": 2,
   "javascript.validate.enable": true,
   "search.exclude": {
@@ -15,6 +13,7 @@
   "[json]": {
     "editor.formatOnSave": false
   },
+  "typescript.tsdk": "./node_modules/typescript/lib",
   "debug.node.autoAttach": "off",
   "cSpell.ignoreWords": [],
   "cSpell.diagnosticLevel": "Hint",
