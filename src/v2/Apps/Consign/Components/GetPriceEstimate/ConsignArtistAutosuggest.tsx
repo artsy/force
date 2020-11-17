@@ -65,7 +65,7 @@ export const ConsignArtistAutosuggest: React.FC = () => {
   )
 
   useEffect(() => {
-    if (suggestions.length === 0) {
+    if (suggestions?.length === 0) {
       debouncedTrackSearchWithNoResults()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
