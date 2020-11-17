@@ -272,6 +272,7 @@ export default function (app) {
         "@artsy/stitch",
         "@artsy/palette",
         "@artsy/fresnel",
+        "@artsy/cohesion",
       ],
     })
 

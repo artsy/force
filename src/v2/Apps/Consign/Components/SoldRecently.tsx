@@ -9,6 +9,8 @@ import FillwidthItem from "v2/Components/Artwork/FillwidthItem"
 import { Carousel } from "v2/Components/Carousel"
 import { SectionContainer } from "./SectionContainer"
 import { Media } from "v2/Utils/Responsive"
+import { useTracking } from "react-tracking"
+import { ContextModule, OwnerType, clickedArtworkGroup } from "@artsy/cohesion"
 
 const HEIGHT = 300
 
@@ -17,6 +19,8 @@ interface SoldRecentlyProps {
 }
 
 const SoldRecently: React.FC<SoldRecentlyProps> = ({ targetSupply }) => {
+  const tracking = useTracking()
+
   if (!targetSupply.microfunnel) {
     return null
   }
@@ -25,6 +29,18 @@ const SoldRecently: React.FC<SoldRecentlyProps> = ({ targetSupply }) => {
     return extractNodes(microfunnel.artworksConnection)
   })
 
+  const trackArtworkItemClick = (artwork, horizontalSlidePosition) => () => {
+    tracking.trackEvent(
+      clickedArtworkGroup({
+        artworkID: artwork.internalID,
+        artworkSlug: artwork.slug,
+        contextModule: ContextModule.artworkRecentlySoldGrid,
+        contextPageOwnerType: OwnerType.consign,
+        horizontalSlidePosition,
+      })
+    )
+  }
+
   return (
     <SectionContainer>
       <Text mb={[3, 2]} variant="largeTitle">
@@ -32,10 +48,10 @@ const SoldRecently: React.FC<SoldRecentlyProps> = ({ targetSupply }) => {
       </Text>
       <Flex flexDirection="column">
         <Carousel arrowHeight={HEIGHT}>
-          {recentlySoldArtworks.map(([artwork, _], key) => {
+          {recentlySoldArtworks.map(([artwork, _], index) => {
             return (
               <Flex
-                key={key}
+                key={index}
                 flexDirection="column"
                 style={{ textAlign: "left" }}
               >
@@ -45,6 +61,7 @@ const SoldRecently: React.FC<SoldRecentlyProps> = ({ targetSupply }) => {
                   hideSaleInfo
                   imageHeight={HEIGHT}
                   showExtended={false}
+                  onClick={trackArtworkItemClick(artwork, index)}
                 />
                 {artwork.realizedPrice && (
                   <>

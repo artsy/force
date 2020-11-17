@@ -2,8 +2,26 @@ import React from "react"
 import { Box, Button, Flex, Image, Link, Text, color } from "@artsy/palette"
 import { SectionContainer } from "./SectionContainer"
 import { Media } from "v2/Utils/Responsive"
+import { useTracking } from "react-tracking"
+import { ContextModule, OwnerType, clickedAppDownload } from "@artsy/cohesion"
+
+const DOWNLOAD_URL =
+  "https://apps.apple.com/us/app/artsy-buy-sell-original-art/id703796080"
 
 export const SellWithArtsy: React.FC = () => {
+  const tracking = useTracking()
+
+  const trackDownloadAppClick = () => {
+    tracking.trackEvent(
+      clickedAppDownload({
+        context_module: ContextModule.sellFooter,
+        context_page_owner_type: OwnerType.consign,
+        destination_path: DOWNLOAD_URL,
+        subject: "Download the app",
+      })
+    )
+  }
+
   return (
     <SectionContainer
       borderBottom={`1px solid ${color("black10")}`}
@@ -19,8 +37,9 @@ export const SellWithArtsy: React.FC = () => {
             A Smarter, Faster Way to Sell Your Art.
           </Text>
           <Link
-            href="https://apps.apple.com/us/app/artsy-buy-sell-original-art/id703796080"
+            href={DOWNLOAD_URL}
             target="_blank"
+            onClick={trackDownloadAppClick}
           >
             <Button>Download the app</Button>
           </Link>
