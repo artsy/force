@@ -1,7 +1,7 @@
 import {
   getRedirectTo,
   isUnsupported,
-  unsupportedBrowserCheck,
+  unsupportedBrowserMiddleware,
 } from "../unsupportedBrowser"
 import useragent from "useragent"
 
@@ -39,59 +39,59 @@ describe("unsupported browsers", () => {
   })
 
   it("sets sd.BROWSER", () => {
-    unsupportedBrowserCheck(req, res, next)
+    unsupportedBrowserMiddleware(req, res, next)
     expect(res.locals.sd.BROWSER.family).toBe("Chrome")
   })
 
   it("does not overwrite existing sd.BROWSER", () => {
     req.headers["user-agent"] = validSafari
     res.locals.sd.BROWSER = useragent.parse(validChrome)
-    unsupportedBrowserCheck(req, res, next)
+    unsupportedBrowserMiddleware(req, res, next)
     expect(res.locals.sd.BROWSER.family).toBe("Chrome")
   })
 
   it("sets sd.UNSUPPORTED_BROWSER_REDIRECT if isUnsupported", () => {
     req.headers["user-agent"] = invalidSafari
-    unsupportedBrowserCheck(req, res, next)
+    unsupportedBrowserMiddleware(req, res, next)
     expect(res.locals.sd.UNSUPPORTED_BROWSER_REDIRECT).toBe("/")
   })
 
   it("redirects if browser is unsupported", () => {
     req.headers["user-agent"] = invalidSafari
-    unsupportedBrowserCheck(req, res, next)
+    unsupportedBrowserMiddleware(req, res, next)
     expect(res.redirect).toBeCalledWith("/unsupported-browser")
   })
 
   it("nexts if browser is supported", () => {
-    unsupportedBrowserCheck(req, res, next)
+    unsupportedBrowserMiddleware(req, res, next)
     expect(next).toBeCalled()
   })
 
   it("ignores requests for fonts", () => {
     req.headers["user-agent"] = invalidSafari
     req.path = "/fonts/avante-garde.ttf"
-    unsupportedBrowserCheck(req, res, next)
+    unsupportedBrowserMiddleware(req, res, next)
     expect(next).toBeCalled()
   })
 
   it("ignores requests for assets", () => {
     req.headers["user-agent"] = invalidSafari
     req.path = "/assets/css/all.css"
-    unsupportedBrowserCheck(req, res, next)
+    unsupportedBrowserMiddleware(req, res, next)
     expect(next).toBeCalled()
   })
 
   it("ignores requests for images", () => {
     req.headers["user-agent"] = invalidSafari
     req.path = "/images/logo.png"
-    unsupportedBrowserCheck(req, res, next)
+    unsupportedBrowserMiddleware(req, res, next)
     expect(next).toBeCalled()
   })
 
   it("ignores requests for /unsupported-browser", () => {
     req.headers["user-agent"] = invalidSafari
     req.path = "/unsupported-browser"
-    unsupportedBrowserCheck(req, res, next)
+    unsupportedBrowserMiddleware(req, res, next)
     expect(next).toBeCalled()
   })
 

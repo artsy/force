@@ -1,3 +1,4 @@
+---
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
@@ -103,6 +104,7 @@ spec:
     layer: application
     component: web
   type: ClusterIP
+
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress
@@ -119,3 +121,4 @@ spec:
             backend:
               serviceName: force-web-internal
               servicePort: force-http
+
