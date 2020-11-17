@@ -1,5 +1,5 @@
 import { mediator } from "lib/mediator"
-import type { ArtsyRequest, ArtsyResponse } from "lib/middleware/artsyExpress"
+import { Request, Response } from "express"
 import { getContextPageFromReq } from "lib/getContextPage"
 
 /**
@@ -11,8 +11,8 @@ import { getContextPageFromReq } from "lib/getContextPage"
  * @param context Custom data to be added to context (optionally).
  */
 export const buildServerAppContext = (
-  req: ArtsyRequest,
-  res: ArtsyResponse,
+  req: Request,
+  res: Response,
   context: { injectedData?: object } = {}
 ) => {
   const { pageType, pageSlug } = getContextPageFromReq(req)

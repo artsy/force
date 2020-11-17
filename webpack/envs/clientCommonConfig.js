@@ -4,12 +4,14 @@ const path = require("path")
 const webpack = require("webpack")
 const LoadablePlugin = require("@loadable/webpack-plugin")
 const { RetryChunkLoadPlugin } = require("webpack-retry-chunk-load-plugin")
+const { getEntrypoints } = require("../utils/getEntrypoints")
 const { basePath, env } = require("../utils/env")
 
 export const clientCommonConfig = {
   mode: env.nodeEnv,
   devtool: "source-map",
-  stats: "normal",
+  stats: "normal", // or, `errors-only`
+  entry: getEntrypoints(),
   output: {
     filename: "[name].js",
     path: path.resolve(basePath, "public/assets"),
@@ -139,6 +141,7 @@ export const clientCommonConfig = {
     runtimeChunk: "single",
     splitChunks: {
       maxInitialRequests: Infinity,
+      // chunks: "all",
       cacheGroups: {
         artsy: {
           test: /.*node_modules[\\/](@artsy)[\\/]/,

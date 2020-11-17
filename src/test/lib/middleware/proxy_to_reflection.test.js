@@ -1,9 +1,12 @@
-import sinon from "sinon"
-import rewire from "rewire"
-const rewiredProxyReflectionMiddleware = rewire(
-  "../../../lib/middleware/proxyReflection"
-)
-const { proxyReflectionMiddleware } = rewiredProxyReflectionMiddleware
+/*
+ * decaffeinate suggestions:
+ * DS102: Remove unnecessary code created because of implicit returns
+ * DS205: Consider reworking code to avoid use of IIFEs
+ * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
+ */
+const sinon = require("sinon")
+const rewire = require("rewire")
+const proxyToReflection = rewire("../../../lib/middleware/proxy_to_reflection")
 
 describe("proxyToReflection", function () {
   beforeEach(function () {
@@ -14,18 +17,15 @@ describe("proxyToReflection", function () {
     this.request.returns(this.request)
     this.request.head = sinon.stub().returns(this.request)
     this.request.end = sinon.stub().returns(this.request)
-    rewiredProxyReflectionMiddleware.__set__("request", this.request)
-    rewiredProxyReflectionMiddleware.__set__(
-      "proxy",
-      (this.proxy = { web: sinon.stub() })
-    )
-    rewiredProxyReflectionMiddleware.__set__("REFLECTION_URL", "reflection.url")
+    proxyToReflection.__set__("request", this.request)
+    proxyToReflection.__set__("proxy", (this.proxy = { web: sinon.stub() }))
+    return proxyToReflection.__set__("REFLECTION_URL", "reflection.url")
   })
 
   it("passes through when there is no escaped fragment query param", function () {
     this.req.query._escaped_fragment_ = null
-    proxyReflectionMiddleware(this.req, this.res, this.next)
-    this.next.called.should.be.ok()
+    proxyToReflection(this.req, this.res, this.next)
+    return this.next.called.should.be.ok()
   })
 
   it("passes through if reflection fails", function () {
@@ -33,11 +33,11 @@ describe("proxyToReflection", function () {
     const err = new Error("Unauthorized")
     err.status = 403
     this.request.end.callsArgWith(0, err)
-    proxyReflectionMiddleware(this.req, this.res, this.next)
-    this.next.called.should.be.ok()
+    proxyToReflection(this.req, this.res, this.next)
+    return this.next.called.should.be.ok()
   })
 
-  context("with _escaped_fragment_", function () {
+  return context("with _escaped_fragment_", function () {
     const paths = {
       "/artwork/foo-bar?_escaped_fragment_=": "/artwork/foo-bar",
       "/artwork/foo-bar?a=b&c=d&_escaped_fragment_=":
@@ -55,7 +55,7 @@ describe("proxyToReflection", function () {
             this.req.url = source
             this.req.query._escaped_fragment_ = ""
             this.request.end.callsArg(0)
-            proxyReflectionMiddleware(this.req, this.res, this.next)
+            proxyToReflection(this.req, this.res, this.next)
             const options = this.proxy.web.args[0][2]
             return options.target.should.equal(`reflection.url${dest}`)
           })

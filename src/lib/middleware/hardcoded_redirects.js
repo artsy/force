@@ -1,12 +1,9 @@
-import type { ArtsyRequest, ArtsyResponse } from "./artsyExpress"
-
-import url from "url"
-import express from "express"
-
+const url = require("url")
+const express = require("express")
 const router = express.Router()
 
 const to = path =>
-  function (req: ArtsyRequest, res: ArtsyResponse) {
+  function (req, res) {
     const queryString = url.parse(req.url).search || ""
     res.redirect(301, path + queryString)
   }
@@ -57,4 +54,4 @@ for (let from in redirects) {
   router.get(from, to(path))
 }
 
-export const hardcodedRedirectsMiddleware = router
+module.exports = router

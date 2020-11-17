@@ -113,7 +113,7 @@ module.exports = {
   },
   overrides: [
     {
-      files: ["webpack/**/*"],
+      files: ["src/v2/**/*.story.tsx"],
       rules: {
         "no-console": "off",
       },
