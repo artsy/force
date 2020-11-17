@@ -18,6 +18,9 @@ export type CreateOfferResponseMutationResponse = {
     readonly createConsignmentOfferResponse: {
         readonly consignmentOfferResponse: {
             readonly intendedState: IntendedState;
+            readonly phoneNumber: string | null;
+            readonly rejectionReason: string | null;
+            readonly comments: string | null;
         } | null;
     } | null;
 };
@@ -35,6 +38,9 @@ mutation CreateOfferResponseMutation(
   createConsignmentOfferResponse(input: $input) {
     consignmentOfferResponse {
       intendedState
+      phoneNumber
+      rejectionReason
+      comments
       id
     }
   }
@@ -63,6 +69,27 @@ v2 = {
   "kind": "ScalarField",
   "name": "intendedState",
   "storageKey": null
+},
+v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "phoneNumber",
+  "storageKey": null
+},
+v4 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "rejectionReason",
+  "storageKey": null
+},
+v5 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "comments",
+  "storageKey": null
 };
 return {
   "fragment": {
@@ -87,7 +114,10 @@ return {
             "name": "consignmentOfferResponse",
             "plural": false,
             "selections": [
-              (v2/*: any*/)
+              (v2/*: any*/),
+              (v3/*: any*/),
+              (v4/*: any*/),
+              (v5/*: any*/)
             ],
             "storageKey": null
           }
@@ -120,6 +150,9 @@ return {
             "plural": false,
             "selections": [
               (v2/*: any*/),
+              (v3/*: any*/),
+              (v4/*: any*/),
+              (v5/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -140,9 +173,9 @@ return {
     "metadata": {},
     "name": "CreateOfferResponseMutation",
     "operationKind": "mutation",
-    "text": "mutation CreateOfferResponseMutation(\n  $input: CreateOfferResponseMutationInput!\n) {\n  createConsignmentOfferResponse(input: $input) {\n    consignmentOfferResponse {\n      intendedState\n      id\n    }\n  }\n}\n"
+    "text": "mutation CreateOfferResponseMutation(\n  $input: CreateOfferResponseMutationInput!\n) {\n  createConsignmentOfferResponse(input: $input) {\n    consignmentOfferResponse {\n      intendedState\n      phoneNumber\n      rejectionReason\n      comments\n      id\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'c62173b99e9ba5703c2630c0b0478681';
+(node as any).hash = '38225decca85af87db989478a5811786';
 export default node;

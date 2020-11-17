@@ -7,7 +7,7 @@ import {
 
 type CreateOfferResponseValues = Pick<
   CreateOfferResponseMutationInput,
-  "intendedState"
+  "intendedState" | "phoneNumber" | "rejectionReason" | "comments"
 >
 
 export const CreateOfferResponse = (
@@ -26,6 +26,9 @@ export const CreateOfferResponse = (
           createConsignmentOfferResponse(input: $input) {
             consignmentOfferResponse {
               intendedState
+              phoneNumber
+              rejectionReason
+              comments
             }
           }
         }
@@ -34,6 +37,9 @@ export const CreateOfferResponse = (
         input: {
           offerId: offerID,
           intendedState: values.intendedState,
+          phoneNumber: values.phoneNumber,
+          rejectionReason: values.rejectionReason,
+          comments: values.comments,
         },
       },
     })
