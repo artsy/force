@@ -32,16 +32,6 @@ export const ContactUs: React.FC<{ darkVariant?: boolean }> = ({
         >
           consign@artsy.net
         </Text>
-        <Text
-          variant="text"
-          color={darkVariant ? "black5" : "black60"}
-          mr={0.5}
-        >
-          or call
-        </Text>
-        <Text variant="mediumText" color={darkVariant ? "black5" : "black60"}>
-          555-555-5555
-        </Text>
       </Flex>
       <Media greaterThanOrEqual="sm">
         <Link href="mailto:consign@artsy.net">
