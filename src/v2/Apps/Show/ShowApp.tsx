@@ -38,7 +38,7 @@ const FullScreenSeparator = styled(Separator)`
 export const ShowApp: React.FC<ShowAppProps> = ({ show }) => {
   const { contextPageOwnerSlug, contextPageOwnerType } = useAnalyticsContext()
 
-  const hasViewingRoom = show.viewingRoomIDs.length > 0
+  const hasViewingRoom = show.viewingRoomsConnection?.edges.length > 0
   const hasAbout = !!show.about
   const hasWideHeader =
     (hasAbout && hasViewingRoom) || (!hasAbout && !hasViewingRoom)
@@ -144,7 +144,11 @@ export default createFragmentContainer(ShowApp, {
       internalID
       slug
       about: description
-      viewingRoomIDs
+      viewingRoomsConnection {
+        edges {
+          __typename
+        }
+      }
       counts {
         eligibleArtworks
       }

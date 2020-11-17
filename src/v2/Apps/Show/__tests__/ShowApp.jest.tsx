@@ -64,7 +64,13 @@ describe("ShowApp", () => {
   it("renders a viewing room if there are any", () => {
     const wrapper = getWrapper({
       Show: () => ({
-        viewingRoomIDs: ["xxx"],
+        viewingRoomsConnection: {
+          edges: [
+            {
+              __typename: "ViewingRoom",
+            },
+          ],
+        },
       }),
     })
 
