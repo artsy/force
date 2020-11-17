@@ -21,7 +21,7 @@ interface PriceEstimateContextProps {
 
 type ArtistInsights = ConsignPriceEstimateContext_ArtistInsights_Query["response"]
 type Suggestions = ConsignPriceEstimateContext_SearchConnection_Query["response"]["searchConnection"]["edges"]
-type Suggestion = Suggestions[0]
+export type Suggestion = Suggestions[0]
 
 type State = Pick<
   PriceEstimateContextProps,

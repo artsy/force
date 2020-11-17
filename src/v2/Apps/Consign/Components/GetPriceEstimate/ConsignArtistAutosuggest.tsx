@@ -1,7 +1,18 @@
 import Autosuggest from "react-autosuggest"
-import React from "react"
+import React, { useEffect } from "react"
 import { Input, MagnifyingGlassIcon, Text, color } from "@artsy/palette"
 import { usePriceEstimateContext } from "./ConsignPriceEstimateContext"
+import { useTracking } from "react-tracking"
+import { Suggestion as ConsignSearchSuggestion } from "v2/Apps/Consign/Components/GetPriceEstimate/ConsignPriceEstimateContext"
+
+import {
+  ContextModule,
+  OwnerType,
+  focusedOnSearchInput,
+  searchedWithNoResults,
+  selectedItemFromSearch,
+} from "@artsy/cohesion"
+import { debounce } from "lodash"
 
 export const ConsignArtistAutosuggest: React.FC = () => {
   const {
@@ -12,17 +23,70 @@ export const ConsignArtistAutosuggest: React.FC = () => {
     suggestions,
   } = usePriceEstimateContext()
 
+  const tracking = useTracking()
+
+  const trackFocusedOnSearchInput = () => {
+    tracking.trackEvent(
+      focusedOnSearchInput({
+        context_module: ContextModule.priceEstimate,
+        context_owner_type: OwnerType.consign,
+      })
+    )
+  }
+
+  const trackSelectedItemFromSearch = (
+    suggestion: ConsignSearchSuggestion["node"]
+  ) => {
+    tracking.trackEvent(
+      selectedItemFromSearch({
+        context_module: ContextModule.priceEstimate,
+        context_owner_type: OwnerType.consign,
+        owner_id: suggestion.internalID,
+        owner_slug: suggestion.slug,
+        owner_type: OwnerType.artist,
+        query: searchQuery,
+      })
+    )
+  }
+
+  const trackSearchedWithNoResults = () => {
+    tracking.trackEvent(
+      searchedWithNoResults({
+        context_module: ContextModule.priceEstimate,
+        context_owner_type: OwnerType.consign,
+        query: searchQuery,
+      })
+    )
+  }
+
+  const debouncedTrackSearchWithNoResults = debounce(
+    trackSearchedWithNoResults,
+    100
+  )
+
+  useEffect(() => {
+    if (suggestions.length === 0) {
+      debouncedTrackSearchWithNoResults()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [suggestions])
+
   return (
     <Autosuggest
       suggestions={suggestions ?? []}
+      onSuggestionsClearRequested={x => x}
       onSuggestionsFetchRequested={() => fetchSuggestions(searchQuery)}
-      onSuggestionSelected={(_, { suggestion }) => selectSuggestion(suggestion)}
+      onSuggestionSelected={(_, { suggestion }) => {
+        trackSelectedItemFromSearch(suggestion)
+        selectSuggestion(suggestion)
+      }}
       getSuggestionValue={suggestion => suggestion.node.displayLabel}
       renderInputComponent={AutosuggestInput}
       renderSuggestion={Suggestion}
       inputProps={{
         placeholder: "Tell me the value of my…",
         value: searchQuery,
+        onFocus: trackFocusedOnSearchInput,
         onChange: (_, { newValue }) => {
           setSearchQuery(newValue)
         },
