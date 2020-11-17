@@ -14,8 +14,11 @@ import {
   Join,
   Spacer,
 } from "@artsy/palette"
+import { formatCentsToDollars } from "../../Utils/formatCentsToDollars"
 
-type ArtworkProps = ConsignTopArtistsQuery["response"]["targetSupply"]["microfunnel"][0]["artworksConnection"]["edges"][0]["node"]
+type ArtworkProps = ConsignTopArtistsQuery["response"]["targetSupply"]["microfunnel"][0]["artworksConnection"]["edges"][0]["node"] & {
+  realizedPriceAverage: string
+}
 
 export const ConsignTopArtists: React.FC = () => {
   return (
@@ -42,7 +45,9 @@ const ConsignTopArtistsQueryRenderer: React.FC = () => {
         query ConsignTopArtistsQuery {
           targetSupply {
             microfunnel {
-              artworksConnection(first: 1) {
+              # Generally there aren't many artworks in a microfunnel; take
+              # the first 10 and then average realized price below
+              artworksConnection(first: 10) {
                 edges {
                   node {
                     slug
@@ -85,11 +90,40 @@ const TopArtists: React.FC<ConsignTopArtistsQuery["response"]> = props => {
     return null
   }
 
+  // Iterate over microfunnel artworks and a) group into "chunks" of four for
+  // displaying in rows; b) average each artwork realized price; c) shuffle the
+  // display so that its a bit less static.
   const recentlySoldArtworks = chunk(
     shuffle(
-      microfunnelItems.map(
-        artwork => artwork?.artworksConnection?.edges?.[0]?.node
-      )
+      microfunnelItems.map(artwork => {
+        if (artwork?.artworksConnection?.edges?.length === 0) {
+          return null
+        }
+
+        const { edges } = artwork.artworksConnection
+
+        const realizedPriceAverage = formatCentsToDollars(
+          100 *
+            edges
+              .map(artwork =>
+                Number(
+                  artwork.node.realizedPrice.replace("$", "").replace(",", "")
+                )
+              )
+              .filter(maybeArtworkPrice => !!maybeArtworkPrice)
+              .reduce((avgArtworkPrice, artworkPrice, _, artworkPrices) => {
+                return avgArtworkPrice + artworkPrice / artworkPrices.length
+              }, 0)
+        )
+
+        // For artist info, image, etc
+        const firstNode = edges[0].node
+
+        return {
+          ...firstNode,
+          realizedPriceAverage: realizedPriceAverage,
+        }
+      })
     ),
     4
   )
@@ -106,7 +140,7 @@ const TopArtists: React.FC<ConsignTopArtistsQuery["response"]> = props => {
                     const {
                       image,
                       artistNames,
-                      realizedPrice,
+                      realizedPriceAverage,
                     } = recentlySoldArtwork
                     const imageUrl = image.imageURL.replace(":version", "small")
 
@@ -125,7 +159,7 @@ const TopArtists: React.FC<ConsignTopArtistsQuery["response"]> = props => {
                               {artistNames}
                             </Text>
                             <Text variant="text">
-                              Average Sale Price: {realizedPrice}
+                              Average Sale Price: {realizedPriceAverage}
                             </Text>
                           </Box>
                         </Flex>
