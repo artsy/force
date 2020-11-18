@@ -107,7 +107,7 @@ export const ArtistInsightResult: React.FC = () => {
       <Flex width="100%" justifyContent="center">
         <Text variant="small" color="black60" maxWidth={495}>
           Price estimate is based on 36 months of secondary market data for this
-          artist + category combination.
+          artist.
         </Text>
       </Flex>
     </Box>
@@ -141,8 +141,8 @@ const ZeroState: React.FC = () => {
 }
 
 const Container = styled(Box).attrs({
-  width: ["100%", 550],
   p: 3,
+  width: ["100%", 550],
 })`
   background: white;
   box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
