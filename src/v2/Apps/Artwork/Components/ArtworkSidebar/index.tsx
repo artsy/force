@@ -22,6 +22,7 @@ import { SystemQueryRenderer as QueryRenderer } from "v2/Artsy/Relay/SystemQuery
 import { AuthenticityCertificateFragmentContainer as AuthenticityCertificate } from "../TrustSignals/AuthenticityCertificate"
 import { SecurePaymentFragmentContainer as SecurePayment } from "../TrustSignals/SecurePayment"
 import { VerifiedSellerFragmentContainer as VerifiedSeller } from "../TrustSignals/VerifiedSeller"
+import { BuyerGuaranteeFragmentContainer as BuyerGuarantee } from "../TrustSignals/BuyerGuarantee"
 
 export interface ArtworkSidebarProps {
   artwork: ArtworkSidebar_artwork
@@ -75,6 +76,7 @@ export class ArtworkSidebar extends Component<ArtworkSidebarProps> {
           <AuthenticityCertificate artwork={artwork} />
           <SecurePayment artwork={artwork} />
           <VerifiedSeller artwork={artwork} />
+          <BuyerGuarantee artwork={artwork} />
         </TrustSignalsContainer>
 
         <ExtraLinks artwork={artwork} />
@@ -100,6 +102,7 @@ export const ArtworkSidebarFragmentContainer = createFragmentContainer(
         ...SecurePayment_artwork
         ...VerifiedSeller_artwork
         ...AuthenticityCertificate_artwork
+        ...BuyerGuarantee_artwork
         sale {
           is_closed: isClosed
           ...AuctionTimer_sale
