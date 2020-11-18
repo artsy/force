@@ -97,10 +97,10 @@ export class SearchBar extends Component<Props, State> {
   private userClickedOnDescendant: boolean
 
   state = {
-    term: getSearchTerm(window.location),
     entityID: null,
     entityType: null,
     focused: false,
+    term: getSearchTerm(window.location),
   }
 
   // Throttled method to toggle previews.
@@ -114,8 +114,8 @@ export class SearchBar extends Component<Props, State> {
     if (entityType === "FirstItem") return
 
     this.setState({
-      entityType,
       entityID,
+      entityType,
     })
   }
 
@@ -136,8 +136,8 @@ export class SearchBar extends Component<Props, State> {
 
     relay.refetch(
       {
-        term,
         hasTerm: true,
+        term,
       },
       null,
       error => {
@@ -170,17 +170,17 @@ export class SearchBar extends Component<Props, State> {
     const deviceType = sd.IS_MOBILE ? "mobile" : "desktop"
 
     const metricPayload = {
-      type: "timing",
       name: "autocomplete-search-response",
-      timing: duration,
       tags: [`device-type:${deviceType}`, "design:rich"],
+      timing: duration,
+      type: "timing",
     }
 
     request
       .post(sd.VOLLEY_ENDPOINT)
       .send({
-        serviceName: "force",
         metrics: [metricPayload],
+        serviceName: "force",
       })
       .end()
   }
@@ -238,12 +238,12 @@ export class SearchBar extends Component<Props, State> {
       ]
     ) => ({
       action_type: Schema.ActionType.SelectedItemFromSearch,
-      query: state.term,
       destination_path:
         displayType === "Artist" ? `${href}/works-for-sale` : href,
-      item_type: displayType,
       item_id: id,
       item_number: suggestionIndex,
+      item_type: displayType,
+      query: state.term,
     })
   )
   onSuggestionSelected({
@@ -345,12 +345,10 @@ export class SearchBar extends Component<Props, State> {
 
     const inputProps = {
       "aria-label": "Search Artsy",
+      name: "term",
+      onBlur: this.onBlur,
       onChange: this.searchTextChanged,
       onFocus: this.onFocus.bind(this),
-      onBlur: this.onBlur,
-      placeholder: xs ? PLACEHOLDER_XS : PLACEHOLDER,
-      value: term,
-      name: "term",
       onKeyDown: (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (
           event.keyCode === 13 && // Enter key press ...
@@ -369,14 +367,16 @@ export class SearchBar extends Component<Props, State> {
           })
         }
       },
+      placeholder: xs ? PLACEHOLDER_XS : PLACEHOLDER,
+      value: term,
     }
 
     const firstSuggestionPlaceholder = {
       node: {
-        isFirstItem: true,
-        displayType: "FirstItem",
         displayLabel: term,
+        displayType: "FirstItem",
         href: `/search?term=${term}`,
+        isFirstItem: true,
       },
     }
 
@@ -412,9 +412,6 @@ export class SearchBar extends Component<Props, State> {
       <Form
         action="/search"
         method="GET"
-        itemProp="potentialAction"
-        itemScope
-        itemType="http://schema.org/SearchAction"
         onSubmit={event => {
           if (router) {
             event.preventDefault()
@@ -516,8 +513,8 @@ export const SearchBarQueryRenderer: React.FC<BoxProps> = props => {
         }
       `}
       variables={{
-        term: "",
         hasTerm: false,
+        term: "",
       }}
       render={({ props }) => {
         if (props) {
