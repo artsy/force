@@ -143,3 +143,7 @@ export const SoldRecentlyQueryRenderer: React.FC = () => {
     />
   )
 }
+
+export const tests = {
+  SoldRecentlyFragmentContainer,
+}

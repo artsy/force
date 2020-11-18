@@ -61,7 +61,8 @@ export const ConsignArtistAutosuggest: React.FC = () => {
 
   const debouncedTrackSearchWithNoResults = debounce(
     trackSearchedWithNoResults,
-    100
+    100,
+    { leading: true }
   )
 
   useEffect(() => {
@@ -84,21 +85,21 @@ export const ConsignArtistAutosuggest: React.FC = () => {
       renderInputComponent={AutosuggestInput}
       renderSuggestion={Suggestion}
       inputProps={{
-        placeholder: "Tell me the value of my…",
-        value: searchQuery,
-        onFocus: trackFocusedOnSearchInput,
         onChange: (_, { newValue }) => {
           setSearchQuery(newValue)
         },
+        onFocus: trackFocusedOnSearchInput,
+        placeholder: "Tell me the value of my…",
+        value: searchQuery,
       }}
       theme={{
         container: {
           width: "100%",
         },
         suggestionsContainer: {
-          marginTop: "4px",
           boxShadow:
             "0px 0px 1px rgba(0, 0, 0, 0.08), 0px 2px 8px rgba(0, 0, 0, 0.12)",
+          marginTop: "4px",
         },
       }}
     />
@@ -133,4 +134,9 @@ const Suggestion: React.FC<{ node: any /* FIXME */ }> = (
       {node.displayLabel}
     </Text>
   )
+}
+
+export const tests = {
+  AutosuggestInput,
+  Suggestion,
 }

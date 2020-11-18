@@ -87,3 +87,8 @@ const RightImage = styled(Box)`
   transform: translateY(-50%);
   width: 31%;
 `
+
+// Tests
+LeftImage.displayName = "LeftImage"
+CenterImage.displayName = "CenterImage"
+RightImage.displayName = "RightImage"

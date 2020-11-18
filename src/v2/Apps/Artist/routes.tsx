@@ -1,3 +1,4 @@
+/* eslint-disable sort-keys-fix/sort-keys-fix */
 import loadable from "@loadable/component"
 import { Redirect, RedirectException, RouteConfig } from "found"
 import React from "react"

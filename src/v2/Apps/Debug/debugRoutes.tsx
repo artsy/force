@@ -1,3 +1,4 @@
+/* eslint-disable sort-keys-fix/sort-keys-fix */
 import React from "react"
 import { Title } from "react-head"
 

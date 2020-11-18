@@ -115,6 +115,7 @@ export const ReadMore: React.FC = () => {
         <RouterLink
           to="/series/guide-consigning-art"
           style={{ textDecoration: "none" }}
+          data-test="viewAllLink"
         >
           <Flex>
             <Text variant="text" fontWeight="medium">

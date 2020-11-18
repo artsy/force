@@ -12,10 +12,11 @@ const graphql = (strings, ...keys) => {
 }
 
 module.exports = {
-  graphql,
-  commitMutation: jest.fn(),
   QueryRenderer: props => React.createElement("div", {}),
+  commitMutation: jest.fn(),
   createFragmentContainer: component => component,
   createPaginationContainer: component => component,
   createRefetchContainer: component => component,
+  fetchQuery: jest.fn(),
+  graphql,
 }

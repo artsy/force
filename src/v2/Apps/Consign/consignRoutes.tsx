@@ -1,3 +1,4 @@
+/* eslint-disable sort-keys-fix/sort-keys-fix */
 import loadable from "@loadable/component"
 import { graphql } from "react-relay"
 
@@ -11,13 +12,6 @@ export const consignRoutes = [
     prepare: () => {
       ConsignApp.preload()
     },
-    query: graphql`
-      query consignRoutes_ArtworkQuery {
-        artist(id: "andy-warhol") @principalField {
-          ...ConsignApp_artist
-        }
-      }
-    `,
   },
   {
     path: "/consign/offer/:offerID",

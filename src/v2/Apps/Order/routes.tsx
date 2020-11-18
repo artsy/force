@@ -1,3 +1,4 @@
+/* eslint-disable sort-keys-fix/sort-keys-fix */
 import loadable from "@loadable/component"
 import { getRedirect } from "v2/Apps/Order/getRedirect"
 import { redirects } from "v2/Apps/Order/redirects"

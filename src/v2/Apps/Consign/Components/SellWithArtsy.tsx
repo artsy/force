@@ -64,3 +64,7 @@ export const SellWithArtsy: React.FC = () => {
     </SectionContainer>
   )
 }
+
+export const tests = {
+  DOWNLOAD_URL,
+}
