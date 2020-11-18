@@ -1,31 +1,35 @@
-/*
- * decaffeinate suggestions:
- * DS102: Remove unnecessary code created because of implicit returns
- * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
- */
-const _ = require("underscore")
-const sinon = require("sinon")
-const Backbone = require("backbone")
+import _ from "underscore"
+import sinon from "sinon"
+import Backbone from "backbone"
 const Feature = require("../../models/feature.coffee")
-const { fabricate } = require("@artsy/antigravity")
+import { fabricate } from "@artsy/antigravity"
 
-describe("Feature", function () {
-  beforeEach(function () {
-    this.feature = new Feature(fabricate("feature"))
-    return sinon.stub(Backbone, "sync")
+describe("Feature", () => {
+  let testContext
+
+  beforeEach(() => {
+    testContext = {}
   })
 
-  afterEach(() => Backbone.sync.restore())
+  beforeEach(() => {
+    testContext.feature = new Feature(fabricate("feature"))
+    sinon.stub(Backbone, "sync")
+  })
 
-  describe("#hasImage", () =>
-    it("returns false if version not there", function () {
-      this.feature.set({ image_versions: [] })
-      return this.feature.hasImage("wide").should.not.be.ok()
-    }))
+  afterEach(() => {
+    Backbone.sync.restore()
+  })
 
-  describe("#fetchSets", function () {
-    it("collects the sets and items", function (done) {
-      this.feature.fetchSets({
+  describe("#hasImage", () => {
+    it("returns false if version not there", () => {
+      testContext.feature.set({ image_versions: [] })
+      testContext.feature.hasImage("wide").should.not.be.ok()
+    })
+  })
+
+  describe("#fetchSets", () => {
+    it("collects the sets and items", done => {
+      testContext.feature.fetchSets({
         success(sets) {
           sets[0].get("type").should.equal("featured links")
           sets[0].get("name").should.equal("Explore this bidness")
@@ -34,23 +38,23 @@ describe("Feature", function () {
             .first()
             .get("title")
             .should.equal("Featured link for this awesome page")
-          return done()
+          done()
         },
       })
 
       _.last(Backbone.sync.args)[2].success([
-        fabricate("set", { name: "Explore this bidness", id: "abc" }),
+        fabricate("set", { id: "abc", name: "Explore this bidness" }),
       ])
       _.last(Backbone.sync.args)[2].success([
         fabricate("featured_link", {
           title: "Featured link for this awesome page",
         }),
       ])
-      return _.last(Backbone.sync.args)[2].success([])
+      _.last(Backbone.sync.args)[2].success([])
     })
 
-    it("callsback when the sets are fetched", function (done) {
-      this.feature.fetchSets({
+    it("callsback when the sets are fetched", done => {
+      testContext.feature.fetchSets({
         setsSuccess(sets) {
           sets[0].get("type").should.equal("featured links")
           sets[0].get("name").should.equal("Explore this bidness")
@@ -59,48 +63,48 @@ describe("Feature", function () {
             .first()
             .get("title")
             .should.equal("Featured link for this awesome page")
-          return done()
+          done()
         },
       })
 
       _.last(Backbone.sync.args)[2].success([
-        fabricate("set", { name: "Explore this bidness", id: "abc" }),
+        fabricate("set", { id: "abc", name: "Explore this bidness" }),
       ])
       _.last(Backbone.sync.args)[2].success([
         fabricate("featured_link", {
           title: "Featured link for this awesome page",
         }),
       ])
-      return _.last(Backbone.sync.args)[2].success([])
+      _.last(Backbone.sync.args)[2].success([])
     })
 
-    it("callsback when the artworks are fetched page and success", function (done) {
+    it("callsback when the artworks are fetched page and success", done => {
       const successStub = sinon.stub()
       const sale = fabricate("sale")
 
-      this.feature.fetchSets({
+      testContext.feature.fetchSets({
         artworkPageSuccess: successStub,
         artworksSuccess: saleFeaturedSet => {
           successStub.called.should.be.ok()
           saleFeaturedSet.get("type").should.equal("artworks")
-          this.feature.get("sale").id.should.equal(sale.id)
-          return done()
+          testContext.feature.get("sale").id.should.equal(sale.id)
+          done()
         },
       })
 
       _.last(Backbone.sync.args)[2].success([
         fabricate("set", {
-          name: "Explore this bidness",
           id: "abc",
           item_type: "Sale",
+          name: "Explore this bidness",
         }),
       ])
       _.last(Backbone.sync.args)[2].success([sale])
-      return _.last(Backbone.sync.args)[2].success([])
+      _.last(Backbone.sync.args)[2].success([])
     })
 
-    it("fetches until end for sets whose items are featured links", function (done) {
-      this.feature.fetchSets({
+    it("fetches until end for sets whose items are featured links", done => {
+      testContext.feature.fetchSets({
         success(sets) {
           sets[0].get("type").should.equal("featured links")
           sets[0].get("name").should.equal("Explore this bidness top")
@@ -110,15 +114,15 @@ describe("Feature", function () {
             .get("title")
             .should.equal("Featured link for this awesome page")
           sets[0].get("data").should.have.lengthOf(12)
-          return done()
+          done()
         },
       })
 
       _.last(Backbone.sync.args)[2].success([
         fabricate("set", {
-          name: "Explore this bidness top",
-          key: "0hello",
           id: "def",
+          key: "0hello",
+          name: "Explore this bidness top",
         }),
       ])
 
@@ -162,28 +166,31 @@ describe("Feature", function () {
           title: "Featured link for this awesome page",
         }),
       ])
-      return _.last(Backbone.sync.args)[2].success([])
+      _.last(Backbone.sync.args)[2].success([])
     })
 
     xit("sorts sets by key", function () {})
 
-    return xdescribe("fetching a sale", () =>
-      it("proxies the display_artist_list attribute", function () {}))
+    xdescribe("fetching a sale", () => {
+      it("proxies the display_artist_list attribute", () => {})
+    })
   })
 
-  describe("#shareTitle", () =>
-    it("returns the name, a link, and truncates to a tweet", function () {
-      const shareThis = this.feature.shareTitle()
-      shareThis.should.containEql(this.feature.get("name"))
+  describe("#shareTitle", () => {
+    it("returns the name, a link, and truncates to a tweet", () => {
+      const shareThis = testContext.feature.shareTitle()
+      shareThis.should.containEql(testContext.feature.get("name"))
       shareThis.should.containEql("on Artsy")
-      return shareThis.should.containEql(this.feature.href())
-    }))
+      shareThis.should.containEql(testContext.feature.href())
+    })
+  })
 
-  return describe("#metaDescription", () =>
-    it("Strips markdown in the description", function () {
-      return this.feature.set({
+  describe("#metaDescription", () => {
+    it("Strips markdown in the description", () => {
+      testContext.feature.set({
         description:
           "**Children’s Museum of the Arts’ Art Auction** All proceeds support CMA’s Community Programs. To purchase tickets, click [here](http://cmany.org/events/art-auction/)!]",
       })
-    }))
+    })
+  })
 })
