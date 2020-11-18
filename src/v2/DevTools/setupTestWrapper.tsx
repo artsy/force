@@ -11,6 +11,8 @@ type SetupTestWrapper<T extends OperationType> = {
   variables?: T["variables"]
 }
 
+jest.unmock("react-relay")
+
 export const setupTestWrapper = <T extends OperationType>({
   Component,
   query,
