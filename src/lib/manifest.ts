@@ -16,7 +16,14 @@ class ManifestManager {
         fs.readFileSync(manifestPath, { encoding: "utf8" })
       )
     } catch (error) {
-      console.error(chalk.red("\n[Force] Error parsing manifest:"), error)
+      if (NODE_ENV === "production") {
+        console.error(
+          chalk.red("\n[Force] Error parsing manifest:"),
+          error.message
+        )
+      } else {
+        console.warn("[Force] Manifest is generating.")
+      }
       this.loadError = true
     }
   }

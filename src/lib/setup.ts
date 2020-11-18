@@ -103,9 +103,6 @@ export default function forceMiddleware(app) {
   }
 
   if (process.env.NODE_ENV === "development") {
-    // Development servers
-    app.use(require("./webpack-dev-server").app)
-
     app.use(
       require("stylus").middleware({
         src: path.resolve(__dirname, "../desktop"),

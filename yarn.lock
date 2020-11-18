@@ -15173,11 +15173,6 @@ qs@6.7.0:
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.7.0.tgz#41dc1a015e3d581f1621776be31afb2876a9b1bc"
   integrity sha512-VCdBRNFTX1fyE7Nb6FYoURo/SPe62QCaAyzJvUjwRaIsc+NePBEniHlvxFmmX56+HZphIGtV0XeCirBtpDrTyQ==
 
-qs@^6.5.2:
-  version "6.9.4"
-  resolved "https://registry.yarnpkg.com/qs/-/qs-6.9.4.tgz#9090b290d1f91728d3c22e54843ca44aea5ab687"
-  integrity sha512-A1kFqHekCTM7cz0udomYUoYNWjBebHm/5wzU/XqrBRBNWectVH0QIiN+NEcZ0Dte5hvzHwbr8+XQmguPhJ6WdQ==
-
 query-string@5.1.1, query-string@^5.1.1:
   version "5.1.1"
   resolved "https://registry.yarnpkg.com/query-string/-/query-string-5.1.1.tgz#a78c012b71c17e05f2e3fa2319dd330682efb3cb"
@@ -19319,20 +19314,6 @@ webpack-cli@3.3.12:
     supports-color "^6.1.0"
     v8-compile-cache "^2.1.1"
     yargs "^13.3.2"
-
-webpack-combine-loaders@2.0.4:
-  version "2.0.4"
-  resolved "https://registry.yarnpkg.com/webpack-combine-loaders/-/webpack-combine-loaders-2.0.4.tgz#27814d52b8329ed6565be39009aac76361e7e22c"
-  integrity sha512-5O5PYVE5tZ3I3uUm3QB7niLEJzLketl8hvAcJwa4YmwNWS/vixfVsqhtUaBciP8J4u/GwIHV52d7kkgZJFvDnw==
-  dependencies:
-    qs "^6.5.2"
-
-webpack-config-utils@2.3.1:
-  version "2.3.1"
-  resolved "https://registry.yarnpkg.com/webpack-config-utils/-/webpack-config-utils-2.3.1.tgz#a51826ddd4de26c10dfdb81cbff8aac0debb0a36"
-  integrity sha512-0uC5uj7sThFTePTQjfpe5Wqcbw3KSCxqswOmW96lwk2ZI2CU098rWY2ZqOVGJQYJ3hfEltmjcLNkKutw8LJAlg==
-  dependencies:
-    webpack-combine-loaders "2.0.4"
 
 webpack-dev-middleware@3.5.1:
   version "3.5.1"

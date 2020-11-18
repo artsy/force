@@ -2,6 +2,8 @@
 
 set -ex
 
+NODE_ENV=test
+
 nyc mocha --no-cache \
   -c \
   --require test.mocha.js \

@@ -4,12 +4,12 @@ set -ex
 
 export NODE_ENV=production
 
-if [ ! -f server.dist.js ]; then
+if [ ! -d public/assets ]; then
   yarn build:assets
-  yarn build:assets:novo
+fi
 
-  # TODO: We don't need the server to be built here, these tests only rely on assets.
-  yarn build:server
+if [ ! -d public/assets-novo ]; then
+  yarn build:assets:novo
 fi
 
 mocha \

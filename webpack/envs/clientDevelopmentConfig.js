@@ -1,4 +1,5 @@
 // @ts-check
+
 const chalk = require("chalk")
 const fs = require("fs")
 const path = require("path")
@@ -24,15 +25,35 @@ if (!env.onCi && !fs.existsSync(cacheDirectory)) {
 }
 
 export const clientDevelopmentConfig = {
+  devServer: {
+    hot: true,
+  },
   devtool: env.webpackDevtool || "eval",
-  stats: env.webpackStats || "errors-only",
   entry: getEntrypoints(),
   module: {
     // Why do we only compile css in development mode?
     rules: [
       {
-        test: /\.styl$/,
+        include: path.resolve(basePath, "src/desktop/assets"),
+        test: /\.ts$/,
+        use: [
+          {
+            loader: path.resolve(basePath, "webpack/utils/autohot.js"),
+          },
+        ],
+      },
+      {
+        include: path.resolve(basePath, "src/mobile/assets"),
+        test: /\.ts$/,
+        use: [
+          {
+            loader: path.resolve(basePath, "webpack/utils/autohot.js"),
+          },
+        ],
+      },
+      {
         include: path.resolve(basePath, "src"),
+        test: /\.styl$/,
         use: [
           {
             loader: "style-loader",
@@ -53,6 +74,7 @@ export const clientDevelopmentConfig = {
       },
     ],
   },
+  name: "force",
   plugins: [
     new CaseSensitivePathsPlugin(),
     new webpack.HotModuleReplacementPlugin(),
@@ -60,9 +82,9 @@ export const clientDevelopmentConfig = {
       format: "compact",
     }),
     new ForkTsCheckerWebpackPlugin({
+      checkSyntacticErrors: true,
       formatter: "codeframe",
       formatterOptions: "highlightCode",
-      checkSyntacticErrors: true,
       watch: ["./src"],
     }),
     new ForkTsCheckerNotifierWebpackPlugin({
@@ -78,4 +100,5 @@ export const clientDevelopmentConfig = {
     }),
     new WebpackNotifierPlugin(),
   ],
+  stats: env.webpackStats || "errors-only",
 }

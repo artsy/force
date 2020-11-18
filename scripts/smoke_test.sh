@@ -8,9 +8,9 @@ if [ ! -f ".env" ]; then
     cp .env.oss .env
 fi
 
-# # prepare a production build
+# prepare a production build
 if [ ! -f server.dist.js ]; then
-    yarn build:all
+    yarn build
 fi
 
 # start server in the background in production mode

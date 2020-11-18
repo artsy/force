@@ -7,14 +7,19 @@ const { RetryChunkLoadPlugin } = require("webpack-retry-chunk-load-plugin")
 const path = require("path")
 const webpack = require("webpack")
 const WebpackManifestPlugin = require("webpack-manifest-plugin")
+const LoadablePlugin = require("@loadable/webpack-plugin")
 
 export const clientNovoDevelopmentConfig = {
+  name: "novo",
   stats: "normal",
   parallelism: 100,
   mode: env.webpackDebug ? "development" : env.nodeEnv,
   devtool: "source-map",
   entry: {
-    "artsy-novo": [path.resolve(process.cwd(), "src/novo/src/client.tsx")],
+    "artsy-novo": [
+      "webpack-hot-middleware/client?name=novo",
+      path.resolve(process.cwd(), "src/novo/src/client.tsx"),
+    ],
   },
   output: {
     filename: "novo-[name].js",
@@ -110,7 +115,12 @@ export const clientNovoDevelopmentConfig = {
         return "cache-bust=" + Date.now();
       }`,
     }),
+    new LoadablePlugin({
+      filename: "loadable-novo-stats.json",
+      path: path.resolve(basePath, "public", "assets-novo"),
+    }),
     new HashedModuleIdsPlugin(),
+    new webpack.HotModuleReplacementPlugin(),
     new WebpackManifestPlugin({
       fileName: path.resolve(basePath, "manifest-novo.json"),
       basePath: "/assets-novo/",
