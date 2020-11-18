@@ -45,3 +45,15 @@ export const MobileLoginValidator = {
   password: Yup.object().shape({ password: loginPassword }),
   otpAttempt: Yup.object().shape({ otp_attempt: otpAttempt }),
 }
+
+export const ChangeEmailValidator = Yup.object().shape({
+  name,
+  email,
+  // password: Yup.string().when("email", {
+  //     is: value => value && value.length > 0,
+  //     then: Yup.string().required(
+  //         "password is required when changing email address"
+  //     ),
+  //     otherwise: Yup.string()
+  // }),
+})
