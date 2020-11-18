@@ -1,50 +1,33 @@
-/*
- * decaffeinate suggestions:
- * DS102: Remove unnecessary code created because of implicit returns
- * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
- */
-const _ = require("underscore")
-const { fabricate } = require("@artsy/antigravity")
-const InstallShots = require("../../collections/install_shots")
+import { times } from "lodash"
+import { fabricate } from "@artsy/antigravity"
+const InstallShots = require("../../collections/install_shots.coffee")
 
 // A WILD API RESPONSE APPEARS
 const response = [
   {
-    artworks: [],
     artists: [],
-    id: "52c501be139b21a7550001e6",
-    position: 1,
+    artworks: [],
+    aspect_ratio: 1.34,
     caption: null,
     default: false,
-    aspect_ratio: 1.34,
-    original_height: 2232,
-    original_width: 3000,
+    id: "52c501be139b21a7550001e6",
     image_url:
       "http://static2.artsy.net/partner_show_images/52c501be139b21a7550001e6/27/:version.jpg",
-    image_versions: [],
     image_urls: {},
+    image_versions: [],
+    original_height: 2232,
+    original_width: 3000,
+    position: 1,
   },
   {
-    artworks: [],
     artists: [],
-    id: "52c501c5275b24e37a0001e1",
-    position: 2,
+    artworks: [],
+    aspect_ratio: 1.5,
     caption: null,
     default: false,
-    aspect_ratio: 1.5,
-    original_height: 2000,
-    original_width: 3000,
+    id: "52c501c5275b24e37a0001e1",
     image_url:
       "https://d32dm0rphc51dk.cloudfront.net/Ex2z1yt6iCXtA_uFH0bAfQ/:version.jpg",
-    image_versions: [
-      "featured",
-      "general",
-      "large",
-      "larger",
-      "medium",
-      "square",
-      "tall",
-    ],
     image_urls: {
       featured:
         "https://d32dm0rphc51dk.cloudfront.net/Ex2z1yt6iCXtA_uFH0bAfQ/featured.jpg",
@@ -61,19 +44,6 @@ const response = [
       tall:
         "https://d32dm0rphc51dk.cloudfront.net/Ex2z1yt6iCXtA_uFH0bAfQ/tall.jpg",
     },
-  },
-  {
-    artworks: [],
-    artists: [],
-    id: "52c501e3cd530eee010001d1",
-    position: 3,
-    caption: null,
-    default: false,
-    aspect_ratio: 1.41,
-    original_height: 2121,
-    original_width: 3000,
-    image_url:
-      "https://d32dm0rphc51dk.cloudfront.net/3-De7pl-mH9FU78JYmtHmQ/:version.jpg",
     image_versions: [
       "featured",
       "general",
@@ -83,6 +53,19 @@ const response = [
       "square",
       "tall",
     ],
+    original_height: 2000,
+    original_width: 3000,
+    position: 2,
+  },
+  {
+    artists: [],
+    artworks: [],
+    aspect_ratio: 1.41,
+    caption: null,
+    default: false,
+    id: "52c501e3cd530eee010001d1",
+    image_url:
+      "https://d32dm0rphc51dk.cloudfront.net/3-De7pl-mH9FU78JYmtHmQ/:version.jpg",
     image_urls: {
       featured:
         "https://d32dm0rphc51dk.cloudfront.net/3-De7pl-mH9FU78JYmtHmQ/featured.jpg",
@@ -99,19 +82,6 @@ const response = [
       tall:
         "https://d32dm0rphc51dk.cloudfront.net/3-De7pl-mH9FU78JYmtHmQ/tall.jpg",
     },
-  },
-  {
-    artworks: [],
-    artists: [],
-    id: "52c501e79c18db8ea4000172",
-    position: 4,
-    caption: null,
-    default: false,
-    aspect_ratio: 1.43,
-    original_height: 2096,
-    original_width: 3000,
-    image_url:
-      "https://d32dm0rphc51dk.cloudfront.net/F_uFnffgp0yyJSgkvlGjTA/:version.jpg",
     image_versions: [
       "featured",
       "general",
@@ -121,6 +91,19 @@ const response = [
       "square",
       "tall",
     ],
+    original_height: 2121,
+    original_width: 3000,
+    position: 3,
+  },
+  {
+    artists: [],
+    artworks: [],
+    aspect_ratio: 1.43,
+    caption: null,
+    default: false,
+    id: "52c501e79c18db8ea4000172",
+    image_url:
+      "https://d32dm0rphc51dk.cloudfront.net/F_uFnffgp0yyJSgkvlGjTA/:version.jpg",
     image_urls: {
       featured:
         "https://d32dm0rphc51dk.cloudfront.net/F_uFnffgp0yyJSgkvlGjTA/featured.jpg",
@@ -137,21 +120,35 @@ const response = [
       tall:
         "https://d32dm0rphc51dk.cloudfront.net/F_uFnffgp0yyJSgkvlGjTA/tall.jpg",
     },
+    image_versions: [
+      "featured",
+      "general",
+      "large",
+      "larger",
+      "medium",
+      "square",
+      "tall",
+    ],
+    original_height: 2096,
+    original_width: 3000,
+    position: 4,
   },
 ]
 
-describe("InstallShots", function () {
-  before(function () {
-    return (this.installShots = new InstallShots(response, { parse: true }))
+describe("InstallShots", () => {
+  let installShots
+
+  beforeAll(() => {
+    installShots = new InstallShots(response, { parse: true })
   })
 
-  it("filters out images without versions", function () {
-    this.installShots.should.have.lengthOf(3)
-    response.should.have.lengthOf(4)
-    return this.installShots
+  it("filters out images without versions", () => {
+    installShots.should.have.lengthOf(3)
+    expect(response.length).toBe(4)
+    installShots
       .pluck("image_versions")
       .should.eql(
-        _.times(3, () => [
+        times(3, () => [
           "featured",
           "general",
           "large",
@@ -163,17 +160,18 @@ describe("InstallShots", function () {
       )
   })
 
-  it("is comformtable there are no vertsions, as well", function () {
-    this.installShots.reset([{ id: "bad" }, fabricate("show_install_shot")], {
+  it("is comformtable there are no vertsions, as well", () => {
+    installShots.reset([{ id: "bad" }, fabricate("show_install_shot")], {
       parse: true,
     })
-    return this.installShots.should.have.lengthOf
+    installShots.should.have.lengthOf(1)
   })
 
-  return describe("#hasCaptions", () =>
-    it("returns true if there is at least one caption", function () {
-      this.installShots.hasCaptions().should.be.false()
-      this.installShots.first().set("caption", "existy")
-      return this.installShots.hasCaptions().should.be.true()
-    }))
+  describe("#hasCaptions", () => {
+    it("returns true if there is at least one caption", () => {
+      installShots.hasCaptions().should.be.false()
+      installShots.first().set("caption", "existy")
+      installShots.hasCaptions().should.be.true()
+    })
+  })
 })
