@@ -9,136 +9,71 @@ export const FAQ: React.FC = () => {
         Frequently Asked Questions Read more about selling your artwork
       </Text>
       <Box>
-        <ToggleButton label="How does selling on Artsy work?">
+        <ToggleButton label="What does it cost to sell with Artsy?">
           <TextItem>
-            Artsy helps you find the best sales solution for works in your
-            collection. We review the works you’re interested in selling,
-            determine the strength of the secondary market demand, and suggest
-            an appropriate sales strategy. <br />
-            <br />
-            This can involve matching you with the right seller (e.g., an
-            auction house or a gallery), selling qualified works via Artsy’s
-            online marketplace, or selling the work privately through our
-            network of trusted partners and collectors. <br />
-            <br />
-            This service is free, and the nominal, pre-agreed seller’s
-            commission is due only when your work sells. Artsy specialists guide
-            you along the way and help you choose the right sales strategy. To
-            get started, submit works you’re interested in selling here.
+            We offer no upfront fees. When the artwork sells, we charge a
+            nominal seller’s commission as a percentage of the sale price. The
+            commission is determined based on the total value of works you sell
+            with us. You won’t be asked to cover any additional costs, such as
+            shipping, insurance, or photography. <br />
           </TextItem>
         </ToggleButton>
 
-        <ToggleButton label="What happens once I submit a work to Artsy Consignments?">
+        <ToggleButton label="What happens once I submit an artwork?">
           <TextItem>
-            Artsy helps you find the best sales solution for works in your
-            collection. We review the works you’re interested in selling,
-            determine the strength of the secondary market demand, and suggest
-            an appropriate sales strategy. <br />
-            <br />
-            This can involve matching you with the right seller (e.g., an
-            auction house or a gallery), selling qualified works via Artsy’s
-            online marketplace, or selling the work privately through our
-            network of trusted partners and collectors. <br />
-            <br />
-            This service is free, and the nominal, pre-agreed seller’s
-            commission is due only when your work sells. Artsy specialists guide
-            you along the way and help you choose the right sales strategy. To
-            get started, submit works you’re interested in selling here.
+            Based on our proprietary market data, we will let you know within 48
+            hours whether your artwork has sufficient demand within the
+            secondary market. If so, your work will be approved. Once approved,
+            you will receive an offer from Artsy to include your work in an
+            upcoming online auction. The offer will have an estimated artwork
+            range and auction details. If you are interested in selling your
+            work based on the offer, you can accept it or ask further questions
+            to our specialists, who will guide you through the process.
           </TextItem>
         </ToggleButton>
 
-        <ToggleButton label="Where can I see my work on Artsy?">
+        <ToggleButton label="How is selling with Artsy different from consigning with a traditional auction house?">
           <TextItem>
-            Artsy helps you find the best sales solution for works in your
-            collection. We review the works you’re interested in selling,
-            determine the strength of the secondary market demand, and suggest
-            an appropriate sales strategy. <br />
-            <br />
-            This can involve matching you with the right seller (e.g., an
-            auction house or a gallery), selling qualified works via Artsy’s
-            online marketplace, or selling the work privately through our
-            network of trusted partners and collectors. <br />
-            <br />
-            This service is free, and the nominal, pre-agreed seller’s
-            commission is due only when your work sells. Artsy specialists guide
-            you along the way and help you choose the right sales strategy. To
-            get started, submit works you’re interested in selling here.
+            Unlike a consignment with a traditional auction house, Artsy does
+            not require any upfront costs of shipping, insurance, or marketing.
+            This means no upfront fees for you. This also allows you to sell
+            your work in an online auction faster, as we hold multiple auctions
+            a month. In case your work doesn’t find a buyer right away, the
+            auction results won’t be published and the work won’t get “burned.”
           </TextItem>
         </ToggleButton>
 
-        <ToggleButton label="Which auction houses and galleries are in Artsy’s consignment partner network?">
+        <ToggleButton label="How long does it take to sell art with Artsy?">
           <TextItem>
-            Artsy helps you find the best sales solution for works in your
-            collection. We review the works you’re interested in selling,
-            determine the strength of the secondary market demand, and suggest
-            an appropriate sales strategy. <br />
-            <br />
-            This can involve matching you with the right seller (e.g., an
-            auction house or a gallery), selling qualified works via Artsy’s
-            online marketplace, or selling the work privately through our
-            network of trusted partners and collectors. <br />
-            <br />
-            This service is free, and the nominal, pre-agreed seller’s
-            commission is due only when your work sells. Artsy specialists guide
-            you along the way and help you choose the right sales strategy. To
-            get started, submit works you’re interested in selling here.
+            We hold multiple themed auctions per month, which means that your
+            artwork can be sold within 2–6 weeks.
           </TextItem>
         </ToggleButton>
 
-        <ToggleButton label="I’m an artist. Can I submit my own work to consign?">
+        <ToggleButton label="I am an artist. Can I sell my art with Artsy?">
           <TextItem>
-            Artsy helps you find the best sales solution for works in your
-            collection. We review the works you’re interested in selling,
-            determine the strength of the secondary market demand, and suggest
-            an appropriate sales strategy. <br />
-            <br />
-            This can involve matching you with the right seller (e.g., an
-            auction house or a gallery), selling qualified works via Artsy’s
-            online marketplace, or selling the work privately through our
-            network of trusted partners and collectors. <br />
-            <br />
-            This service is free, and the nominal, pre-agreed seller’s
-            commission is due only when your work sells. Artsy specialists guide
-            you along the way and help you choose the right sales strategy. To
-            get started, submit works you’re interested in selling here.
+            Based on the collector demand on our Artsy’s marketplace, we are
+            only able to accommodate works by artists with established demand
+            and a resale market consistent with our partners’ current interests.
+            As such, we do not accept submissions from artists selling their own
+            work.
           </TextItem>
         </ToggleButton>
 
-        <ToggleButton label="How can I edit my submission?">
+        <ToggleButton label="Can I edit my submission?">
           <TextItem>
-            Artsy helps you find the best sales solution for works in your
-            collection. We review the works you’re interested in selling,
-            determine the strength of the secondary market demand, and suggest
-            an appropriate sales strategy. <br />
-            <br />
-            This can involve matching you with the right seller (e.g., an
-            auction house or a gallery), selling qualified works via Artsy’s
-            online marketplace, or selling the work privately through our
-            network of trusted partners and collectors. <br />
-            <br />
-            This service is free, and the nominal, pre-agreed seller’s
-            commission is due only when your work sells. Artsy specialists guide
-            you along the way and help you choose the right sales strategy. To
-            get started, submit works you’re interested in selling here.
+            To edit your existing submissions or add further details, please
+            contact consign@artsy.net with the subject line “Edit my submission”
+            and one of our specialists will assist you. In the body of your
+            email, please include the submission ID number, which can be found
+            in the email receipt you received from Artsy.
           </TextItem>
         </ToggleButton>
 
-        <ToggleButton label="I have another question">
+        <ToggleButton label="How do I contact an Artsy specialist?">
           <TextItem>
-            Artsy helps you find the best sales solution for works in your
-            collection. We review the works you’re interested in selling,
-            determine the strength of the secondary market demand, and suggest
-            an appropriate sales strategy. <br />
-            <br />
-            This can involve matching you with the right seller (e.g., an
-            auction house or a gallery), selling qualified works via Artsy’s
-            online marketplace, or selling the work privately through our
-            network of trusted partners and collectors. <br />
-            <br />
-            This service is free, and the nominal, pre-agreed seller’s
-            commission is due only when your work sells. Artsy specialists guide
-            you along the way and help you choose the right sales strategy. To
-            get started, submit works you’re interested in selling here.
+            You can contact an Artsy specialist at any time by emailing
+            consign@artsy.net.
           </TextItem>
         </ToggleButton>
       </Box>
