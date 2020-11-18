@@ -9,8 +9,8 @@ const ShowInfoRoute = loadable(() => import("./Routes/ShowInfo"))
 
 export const routes: RouteConfig[] = [
   {
-    path: "/show/:slug",
     getComponent: () => ShowApp,
+    path: "/show/:slug",
     prepare: () => {
       ShowApp.preload()
     },
@@ -58,22 +58,10 @@ export const routes: RouteConfig[] = [
   // NOTE: Nested sub-apps are mounted under the same top-level path as above.
   // The root `path: ""` matches the `ShowApp` route.
   {
-    path: "/show/:slug",
-    getComponent: () => ShowSubApp,
-    prepare: () => {
-      ShowSubApp.preload()
-    },
-    query: graphql`
-      query routes_ShowSubAppQuery($slug: String!) {
-        show(id: $slug) @principalField {
-          ...ShowSubApp_show
-        }
-      }
-    `,
     children: [
       {
-        path: "info",
         getComponent: () => ShowInfoRoute,
+        path: "info",
         prepare: () => {
           ShowInfoRoute.preload()
         },
@@ -92,6 +80,18 @@ export const routes: RouteConfig[] = [
         },
       },
     ],
+    getComponent: () => ShowSubApp,
+    path: "/show/:slug",
+    prepare: () => {
+      ShowSubApp.preload()
+    },
+    query: graphql`
+      query routes_ShowSubAppQuery($slug: String!) {
+        show(id: $slug) @principalField {
+          ...ShowSubApp_show
+        }
+      }
+    `,
   },
 ]
 
@@ -99,7 +99,7 @@ function initializeVariablesWithFilterState(params, props) {
   const initialFilterState = props.location ? props.location.query : {}
 
   const state = {
-    sort: "-decayed_merch",
+    sort: "partner_show_position",
     ...paramsToCamelCase(initialFilterState),
     ...params,
   }
