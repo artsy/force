@@ -24,9 +24,13 @@ export const GetPriceEstimate: React.FC = () => {
           >
             <Text variant="largeTitle">Get a Price Estimate</Text>
             <Spacer my={1} />
-            <Text variant="subtitle" color="black60">
-              Discover the potential of reselling an <br />
-              artwork you own.
+            <Text
+              variant="subtitle"
+              color="black60"
+              textAlign={["center", "center", "left"]}
+            >
+              Our proprietary market data allows us to price your artwork
+              accurately and quickly
             </Text>
 
             <Spacer mt={3} />
