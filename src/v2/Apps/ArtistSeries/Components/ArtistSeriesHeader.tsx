@@ -145,7 +145,7 @@ const ArtistSeriesHeaderLarge: React.FC<ArtistSeriesHeaderProps> = props => {
                 alignItems="center"
               >
                 {/** The max width for the image is ~600px, so we need that */}
-                <HeaderImage src={image?.sm?.url} />
+                <HeaderImage src={image?.sm?.url} alt={title} />
               </Box>
             </Col>
           </Row>
@@ -175,7 +175,7 @@ const ArtistSeriesHeaderSmall: React.FC<ArtistSeriesHeaderProps> = props => {
       <Separator />
 
       <Box m={3}>
-        <HeaderImage src={image?.xs?.url} pb={1} />
+        <HeaderImage src={image?.xs?.url} pb={1} alt={title} />
 
         <Text as="h1" variant="largeTitle" my={1}>
           {title}
