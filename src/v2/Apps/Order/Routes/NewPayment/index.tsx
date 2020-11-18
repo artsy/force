@@ -27,8 +27,9 @@ import {
   injectCommitMutation,
 } from "v2/Apps/Order/Utils/commitMutation"
 import { get } from "v2/Utils/get"
+import { BuyerGuarantee } from "../../Components/BuyerGuarantee"
 
-export const ContinueButton = (props) => (
+export const ContinueButton = props => (
   <Button size="large" width="100%" {...props}>
     Continue
   </Button>
@@ -200,6 +201,7 @@ export class NewPaymentRoute extends Component<
                   <ArtworkSummaryItem order={order} />
                   <TransactionDetailsSummaryItem order={order} />
                 </Flex>
+                <BuyerGuarantee />
                 <Spacer mb={[2, 3]} />
                 <Media at="xs">
                   <>
@@ -295,7 +297,7 @@ export class NewPaymentRoute extends Component<
   artistId() {
     return get(
       this.props.order,
-      (o) => o.lineItems.edges[0].node.artwork.artists[0].slug
+      o => o.lineItems.edges[0].node.artwork.artists[0].slug
     )
   }
 

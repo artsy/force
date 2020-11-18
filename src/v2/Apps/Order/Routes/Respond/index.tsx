@@ -39,6 +39,7 @@ import {
   counterofferFlowSteps,
 } from "../../Components/OrderStepper"
 import { ShippingSummaryItemFragmentContainer as ShippingSummaryItem } from "../../Components/ShippingSummaryItem"
+import { BuyerGuarantee } from "../../Components/BuyerGuarantee"
 
 export interface RespondProps {
   order: Respond_order
@@ -329,6 +330,7 @@ export class RespondRoute extends Component<RespondProps, RespondState> {
                   <ShippingSummaryItem order={order} locked />
                   <CreditCardSummaryItem order={order} locked />
                 </Flex>
+                <BuyerGuarantee />
                 <Spacer mb={2} />
                 <Media at="xs">
                   <>

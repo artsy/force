@@ -1,6 +1,7 @@
 import { Button } from "@artsy/palette"
 import { Stepper } from "@artsy/palette"
 import { ArtworkSummaryItemFragmentContainer } from "v2/Apps/Order/Components/ArtworkSummaryItem"
+import { BuyerGuarantee } from "v2/Apps/Order/Components/BuyerGuarantee"
 import { ConditionsOfSaleDisclaimer } from "v2/Apps/Order/Components/ConditionsOfSaleDisclaimer"
 import { CreditCardSummaryItemFragmentContainer } from "v2/Apps/Order/Components/CreditCardSummaryItem"
 import { OfferInput } from "v2/Apps/Order/Components/OfferInput"
@@ -39,6 +40,10 @@ export class OrderAppTestPage extends RootTestPage {
     return expectOne(this.root.find(CreditCardSummaryItemFragmentContainer))
   }
 
+  get buyerGuarantee() {
+    return expectOne(this.root.find(BuyerGuarantee))
+  }
+
   get countdownTimer() {
     return expectOne(this.root.find(CountdownTimer))
   }
@@ -67,10 +72,7 @@ export class OrderAppTestPage extends RootTestPage {
   }
 
   async dismissModal() {
-    this.modalDialog
-      .find(ModalButton)
-      .last()
-      .simulate("click")
+    this.modalDialog.find(ModalButton).last().simulate("click")
     await this.update()
   }
 

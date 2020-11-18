@@ -126,6 +126,10 @@ describe("Accept seller offer", () => {
       )
     })
 
+    it("shows buyer guarentee", () => {
+      expect(page.buyerGuarantee.length).toBe(1)
+    })
+
     it("shows the submit button", async () => {
       expect(page.submitButton.text()).toBe("Submit")
     })

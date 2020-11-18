@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   Col,
   Flex,
@@ -6,7 +7,6 @@ import {
   Message,
   Row,
   Spacer,
-  Box,
 } from "@artsy/palette"
 import { Review_order } from "v2/__generated__/Review_order.graphql"
 import { ReviewSubmitOfferOrderMutation } from "v2/__generated__/ReviewSubmitOfferOrderMutation.graphql"
@@ -39,6 +39,7 @@ import { Media } from "v2/Utils/Responsive"
 import { CreditCardSummaryItemFragmentContainer as CreditCardSummaryItem } from "../../Components/CreditCardSummaryItem"
 import { OfferSummaryItemFragmentContainer as OfferSummaryItem } from "../../Components/OfferSummaryItem"
 import { TwoColumnLayout } from "../../Components/TwoColumnLayout"
+import { BuyerGuarantee } from "../../Components/BuyerGuarantee"
 
 export interface ReviewProps {
   order: Review_order
@@ -399,6 +400,7 @@ export class ReviewRoute extends Component<ReviewProps, ReviewState> {
                   <ArtworkSummaryItem order={order} />
                   <TransactionDetailsSummaryItem order={order} />
                 </Flex>
+                <BuyerGuarantee />
                 <Spacer mb={[2, 3]} />
                 <Media at="xs">
                   <Button
