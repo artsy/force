@@ -1,7 +1,7 @@
 import { uniqueId } from "lodash"
 import Backbone from "backbone"
 import { fabricate } from "@artsy/antigravity"
-const BidderPositions = require("../../collections/bidder_positions.coffee")
+const BidderPositions = require("../bidder_positions.coffee")
 const SaleArtwork = require("../../models/sale_artwork.coffee")
 const Sale = require("../../models/sale.coffee")
 

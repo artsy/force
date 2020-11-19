@@ -2,7 +2,7 @@ import Backbone from "backbone"
 import { fabricate } from "@artsy/antigravity"
 import { map } from "lodash"
 const CurrentUser = require("../../../lib/current_user.coffee")
-const ArtworkCollections = require("../../collections/artwork_collections.coffee")
+const ArtworkCollections = require("../artwork_collections.coffee")
 const Artwork = require("../../models/artwork.coffee")
 
 describe("ArtworkCollections", () => {

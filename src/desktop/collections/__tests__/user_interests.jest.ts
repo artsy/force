@@ -1,5 +1,5 @@
 import Backbone from "backbone"
-const UserInterests = require("../../collections/user_interests.coffee")
+const UserInterests = require("../user_interests.coffee")
 
 describe("UserInterests", () => {
   let userInterests

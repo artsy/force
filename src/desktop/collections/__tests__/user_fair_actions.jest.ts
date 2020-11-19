@@ -1,4 +1,4 @@
-const UserFairActions = require("../../collections/user_fair_actions.coffee")
+const UserFairActions = require("../user_fair_actions.coffee")
 
 describe("UserFairActions", () => {
   let userFairActions

@@ -1,4 +1,4 @@
-const Sales = require("../../collections/sales.coffee")
+const Sales = require("../sales.coffee")
 
 describe("Sales", () => {
   let sales

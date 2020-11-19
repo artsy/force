@@ -1,7 +1,7 @@
 import Backbone from "backbone"
 import { fabricate } from "@artsy/antigravity"
 import { times } from "lodash"
-const Artworks = require("../../collections/artworks.coffee")
+const Artworks = require("../artworks.coffee")
 
 describe("Artworks", () => {
   let artworks

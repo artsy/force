@@ -1,6 +1,6 @@
 import { fabricate } from "@artsy/antigravity"
-const Artworks = require("../../collections/artworks.coffee")
-const PartnerArtistArtworks = require("../../collections/partner_artist_artworks.coffee")
+const Artworks = require("../artworks.coffee")
+const PartnerArtistArtworks = require("../partner_artist_artworks.coffee")
 
 describe("PartnerArtistArtworks", () => {
   let artworks

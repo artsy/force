@@ -1,5 +1,5 @@
 import { uniqueId } from "lodash"
-const AdditionalImages = require("../../collections/additional_images.coffee")
+const AdditionalImages = require("../additional_images.coffee")
 
 describe("AdditionalImages", () => {
   let collection

@@ -1,6 +1,6 @@
 import { fabricate } from "@artsy/antigravity"
 import moment from "moment"
-const Auctions = require("../../collections/auctions.coffee")
+const Auctions = require("../auctions.coffee")
 const Auction = require("../../models/auction.coffee")
 
 describe("Auctions", () => {

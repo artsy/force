@@ -1,7 +1,7 @@
 import { fabricate2 } from "@artsy/antigravity"
 import Backbone from "backbone"
 import { keys } from "lodash"
-const FilterArtworks = require("../../collections/filter_artworks.coffee")
+const FilterArtworks = require("../filter_artworks.coffee")
 
 describe("Filter Artworks", () => {
   let artworks

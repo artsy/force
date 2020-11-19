@@ -1,6 +1,6 @@
 import { fabricate } from "@artsy/antigravity"
 const FairEvent = require("../../models/fair_event.coffee")
-const FairEvents = require("../../collections/fair_events.coffee")
+const FairEvents = require("../fair_events.coffee")
 
 describe("FairEvents", () => {
   let fairEvent1

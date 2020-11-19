@@ -1,8 +1,8 @@
 import Backbone from "backbone"
 import { clone, extend } from "lodash"
 import moment from "moment"
-const fixtures = require("../helpers/fixtures.coffee")
-const Sections = require("../../collections/sections.coffee")
+const fixtures = require("../../test/helpers/fixtures.coffee")
+const Sections = require("../sections.coffee")
 
 describe("Sections", () => {
   let sections

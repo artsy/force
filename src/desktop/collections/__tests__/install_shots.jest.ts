@@ -1,6 +1,6 @@
 import { times } from "lodash"
 import { fabricate } from "@artsy/antigravity"
-const InstallShots = require("../../collections/install_shots.coffee")
+const InstallShots = require("../install_shots.coffee")
 
 // A WILD API RESPONSE APPEARS
 const response = [
