@@ -62,83 +62,6 @@ const PriceEstimateContext = createContext<PriceEstimateContextProps>(
 
 function getActions(dispatch: Dispatch<Action>, relayEnvironment: Environment) {
   const actions: Actions = {
-    setFetching: isFetching => {
-      dispatch({
-        type: "isFetching",
-        payload: {
-          isFetching,
-        },
-      })
-    },
-
-    /**
-     * Updates state with current search query
-     */
-    setSearchQuery: searchQuery => {
-      dispatch({
-        type: "searchQuery",
-        payload: {
-          searchQuery,
-        },
-      })
-    },
-
-    /**
-     * Fetches artist search suggestions based on searchQuery
-     */
-    fetchSuggestions: async searchQuery => {
-      const suggestions = await fetchQuery<
-        ConsignPriceEstimateContext_SearchConnection_Query
-      >(
-        relayEnvironment,
-        graphql`
-          query ConsignPriceEstimateContext_SearchConnection_Query(
-            $searchQuery: String!
-          ) {
-            searchConnection(
-              query: $searchQuery
-              entities: ARTIST
-              mode: AUTOSUGGEST
-              first: 7
-            ) {
-              edges {
-                node {
-                  displayLabel
-                  ... on Artist {
-                    slug
-                    internalID
-                    imageUrl
-                  }
-                }
-              }
-            }
-          }
-        `,
-        { searchQuery }
-      )
-
-      dispatch({
-        type: "suggestions",
-        payload: {
-          suggestions: suggestions.searchConnection.edges,
-        },
-      })
-    },
-
-    /**
-     * Handler for when a drop down item is selected
-     */
-    selectSuggestion: async selectedSuggestion => {
-      dispatch({
-        type: "selectedSuggestion",
-        payload: {
-          selectedSuggestion,
-        },
-      })
-
-      await actions.fetchArtistInsights(selectedSuggestion.node.internalID)
-    },
-
     /**
      * Fetch artist insights based on artist's internalID.
      */
@@ -178,10 +101,87 @@ function getActions(dispatch: Dispatch<Action>, relayEnvironment: Environment) {
       actions.setFetching(false)
 
       dispatch({
-        type: "artistInsights",
         payload: {
           artistInsights,
         },
+        type: "artistInsights",
+      })
+    },
+
+    /**
+     * Fetches artist search suggestions based on searchQuery
+     */
+    fetchSuggestions: async searchQuery => {
+      const suggestions = await fetchQuery<
+        ConsignPriceEstimateContext_SearchConnection_Query
+      >(
+        relayEnvironment,
+        graphql`
+          query ConsignPriceEstimateContext_SearchConnection_Query(
+            $searchQuery: String!
+          ) {
+            searchConnection(
+              query: $searchQuery
+              entities: ARTIST
+              mode: AUTOSUGGEST
+              first: 7
+            ) {
+              edges {
+                node {
+                  displayLabel
+                  ... on Artist {
+                    slug
+                    internalID
+                    imageUrl
+                  }
+                }
+              }
+            }
+          }
+        `,
+        { searchQuery }
+      )
+
+      dispatch({
+        payload: {
+          suggestions: suggestions.searchConnection.edges,
+        },
+        type: "suggestions",
+      })
+    },
+
+    /**
+     * Handler for when a drop down item is selected
+     */
+    selectSuggestion: async selectedSuggestion => {
+      dispatch({
+        payload: {
+          selectedSuggestion,
+        },
+        type: "selectedSuggestion",
+      })
+
+      await actions.fetchArtistInsights(selectedSuggestion.node.internalID)
+    },
+
+    setFetching: isFetching => {
+      dispatch({
+        payload: {
+          isFetching,
+        },
+        type: "isFetching",
+      })
+    },
+
+    /**
+     * Updates state with current search query
+     */
+    setSearchQuery: searchQuery => {
+      dispatch({
+        payload: {
+          searchQuery,
+        },
+        type: "searchQuery",
       })
     },
   }
@@ -215,4 +215,9 @@ export const PriceEstimateContextProvider: React.FC = ({ children }) => {
 export const usePriceEstimateContext = () => {
   const context = useContext(PriceEstimateContext)
   return context
+}
+
+export const tests = {
+  getActions,
+  reducer,
 }

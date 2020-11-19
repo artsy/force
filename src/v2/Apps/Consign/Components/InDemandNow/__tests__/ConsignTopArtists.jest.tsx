@@ -1,0 +1,5 @@
+describe("ConsignTopArtists", () => {
+  it("works", () => {
+    //
+  })
+})

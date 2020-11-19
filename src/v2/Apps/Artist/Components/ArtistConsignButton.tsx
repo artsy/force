@@ -28,13 +28,13 @@ export const ArtistConsignButton: React.FC<ArtistConsignButtonProps> = ({
   const trackGetStartedClick = ({ destinationPath }) => {
     tracking.trackEvent({
       action_type: AnalyticsSchema.ActionType.Click,
+      context_module: AnalyticsSchema.ContextModule.ArtistConsignment,
       context_page: AnalyticsSchema.PageName.ArtistPage,
       context_page_owner_id: artist.internalID,
       context_page_owner_slug: artist.slug,
       context_page_owner_type: AnalyticsSchema.OwnerType.Artist,
-      context_module: AnalyticsSchema.ContextModule.ArtistConsignment,
-      subject: AnalyticsSchema.Subject.GetStarted,
       destination_path: destinationPath,
+      subject: AnalyticsSchema.Subject.GetStarted,
     })
   }
 
@@ -163,10 +163,10 @@ function getData(props) {
   const consignURL = isInMicrofunnel ? `${href}/consign` : "/consign"
 
   return {
-    showImage,
-    imageURL,
-    headline,
     consignURL,
+    headline,
+    imageURL,
+    showImage,
   }
 }
 

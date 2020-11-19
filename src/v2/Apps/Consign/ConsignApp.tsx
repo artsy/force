@@ -1,5 +1,4 @@
 import React from "react"
-import { createFragmentContainer, graphql } from "react-relay"
 import { AppContainer } from "../Components/AppContainer"
 import { AnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
 import { ConsignMeta } from "./Components/ConsignMeta"
@@ -18,7 +17,7 @@ import { SectionContainer } from "./Components/SectionContainer"
 import { ArtworkCredits } from "./Components/ArtworkCredits"
 import { TemporaryOffer } from "./Components/TemporaryOffer"
 
-const ConsignApp = props => {
+const ConsignApp = () => {
   return (
     <AnalyticsContext.Provider
       value={{
@@ -53,10 +52,4 @@ const ConsignApp = props => {
   )
 }
 
-export default createFragmentContainer(ConsignApp, {
-  artist: graphql`
-    fragment ConsignApp_artist on Artist {
-      name
-    }
-  `,
-})
+export default ConsignApp

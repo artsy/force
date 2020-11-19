@@ -6,7 +6,7 @@ export const FAQ: React.FC = () => {
   return (
     <SectionContainer>
       <Text width="100%" textAlign="left" mb={4} variant="largeTitle">
-        Frequently Asked Questions Read more about selling your artwork
+        Frequently Asked Questions
       </Text>
       <Box>
         <ToggleButton label="What does it cost to sell with Artsy?">
