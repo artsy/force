@@ -141,6 +141,8 @@ const ConsignInDemandNowQueryRenderer: React.FC = () => {
 const InDemandNowSmall: React.FC<
   ConsignInDemandNowQuery["response"]
 > = props => {
+  const IMAGE_SIZE = 100
+
   // FIXME: Add skeleton loading state
   if (!props?.marketPriceInsights || !props?.artist) {
     return null
@@ -178,19 +180,20 @@ const InDemandNowSmall: React.FC<
 
       <Flex justifyContent="space-between">
         <Box>
-          <Box>
+          <Box maxWidth={IMAGE_SIZE}>
             <Image
               src={lastAuctionResult.images.thumbnail.url}
               srcSet={lastAuctionResult.images.thumbnail.resized.srcSet}
               alt={lastAuctionResult.title}
-              width={100}
+              width={IMAGE_SIZE}
               height="auto"
             />
             <Spacer my={0.5} />
-            <Text variant="caption">
-              {lastAuctionResult.title}, {lastAuctionResult.dateText}
-            </Text>
-            <Text variant="caption">{lastAuctionResult.saleDate}</Text>
+            <TruncatedLine>
+              <Text variant="caption">
+                {lastAuctionResult.title}, {lastAuctionResult.dateText}
+              </Text>
+            </TruncatedLine>
             <Text variant="caption">{lastAuctionResult.organization}</Text>
           </Box>
           <Box>
@@ -227,8 +230,8 @@ const InDemandNowSmall: React.FC<
       <DemandRank demandRank={demandRank} />
       <Spacer mt={5} />
 
-      <Box>
-        <Box>
+      <Box textAlign="center">
+        <Box textAlign="left">
           <Text>Average Sale Price, 2010–2020</Text>
           <Text variant="largeTitle">{averageSalePrice}</Text>
         </Box>
@@ -241,6 +244,8 @@ const InDemandNowSmall: React.FC<
 const InDemandNowLarge: React.FC<
   ConsignInDemandNowQuery["response"]
 > = props => {
+  const IMAGE_WIDTH = 225
+
   // FIXME: Add skeleton loading state
   if (!props?.marketPriceInsights || !props?.artist) {
     return null
@@ -302,7 +307,12 @@ const InDemandNowLarge: React.FC<
           </Box>
         </Column>
         <Column span={[12, 12, 4]}>
-          <Flex alignItems="center" flexDirection="column">
+          <Flex
+            flexDirection="column"
+            maxWidth={IMAGE_WIDTH}
+            ml="auto"
+            mr="auto"
+          >
             <Box>
               <Text>Recent Auction Result</Text>
               <Text variant="largeTitle">
@@ -315,14 +325,15 @@ const InDemandNowLarge: React.FC<
                 src={lastAuctionResult.images.thumbnail.url}
                 srcSet={lastAuctionResult.images.thumbnail.resized.srcSet}
                 alt={lastAuctionResult.title}
-                width={211}
+                width={IMAGE_WIDTH}
                 height="auto"
               />
               <Spacer my={0.5} />
-              <Text variant="caption">
-                {lastAuctionResult.title}, {lastAuctionResult.dateText}
-              </Text>
-              <Text variant="caption">{lastAuctionResult.saleDate}</Text>
+              <TruncatedLine>
+                <Text variant="caption">
+                  {lastAuctionResult.title}, {lastAuctionResult.dateText}
+                </Text>
+              </TruncatedLine>
               <Text variant="caption">{lastAuctionResult.organization}</Text>
             </Box>
           </Flex>
@@ -377,14 +388,24 @@ const computeProps = ({ artist, marketPriceInsights }) => {
   }
 }
 
+const TruncatedLine = styled.div`
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+`
+
 const AverageSalePriceChart: React.FC = () => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="375"
+      preserveAspectRatio="none"
+      width="100%"
       height="320"
       fill="none"
       viewBox="0 0 375 320"
+      style={{ maxWidth: "375px" }}
     >
       <path
         fill="#fff"
