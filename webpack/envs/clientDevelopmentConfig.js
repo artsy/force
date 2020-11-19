@@ -11,6 +11,7 @@ const WebpackNotifierPlugin = require("webpack-notifier")
 const SimpleProgressWebpackPlugin = require("simple-progress-webpack-plugin")
 const CaseSensitivePathsPlugin = require("case-sensitive-paths-webpack-plugin")
 const { basePath, env } = require("../utils/env")
+const { getEntrypoints } = require("../utils/getEntrypoints")
 
 const cacheDirectory = path.resolve(basePath, ".cache")
 
@@ -24,14 +25,35 @@ if (!env.onCi && !fs.existsSync(cacheDirectory)) {
 }
 
 export const clientDevelopmentConfig = {
+  devServer: {
+    hot: true,
+  },
   devtool: env.webpackDevtool || "eval",
-  stats: env.webpackStats || "errors-only",
+  entry: getEntrypoints(),
   module: {
     // Why do we only compile css in development mode?
     rules: [
       {
-        test: /\.styl$/,
+        include: path.resolve(basePath, "src/desktop/assets"),
+        test: /\.ts$/,
+        use: [
+          {
+            loader: path.resolve(basePath, "webpack/utils/autohot.js"),
+          },
+        ],
+      },
+      {
+        include: path.resolve(basePath, "src/mobile/assets"),
+        test: /\.ts$/,
+        use: [
+          {
+            loader: path.resolve(basePath, "webpack/utils/autohot.js"),
+          },
+        ],
+      },
+      {
         include: path.resolve(basePath, "src"),
+        test: /\.styl$/,
         use: [
           {
             loader: "style-loader",
@@ -44,10 +66,7 @@ export const clientDevelopmentConfig = {
             loader: "stylus-loader",
             options: {
               import: ["~nib/lib/nib/index.styl"],
-              paths: [
-                /* "node_modules/artsy-elan", */
-                "node_modules/nib/lib/nib",
-              ],
+              paths: ["node_modules/nib/lib/nib"],
               use: [require("nib")()],
             },
           },
@@ -55,17 +74,17 @@ export const clientDevelopmentConfig = {
       },
     ],
   },
+  name: "force",
   plugins: [
     new CaseSensitivePathsPlugin(),
     new webpack.HotModuleReplacementPlugin(),
-    // @ts-ignore
     new SimpleProgressWebpackPlugin({
       format: "compact",
     }),
     new ForkTsCheckerWebpackPlugin({
+      checkSyntacticErrors: true,
       formatter: "codeframe",
       formatterOptions: "highlightCode",
-      checkSyntacticErrors: true,
       watch: ["./src"],
     }),
     new ForkTsCheckerNotifierWebpackPlugin({
@@ -81,4 +100,5 @@ export const clientDevelopmentConfig = {
     }),
     new WebpackNotifierPlugin(),
   ],
+  stats: env.webpackStats || "errors-only",
 }

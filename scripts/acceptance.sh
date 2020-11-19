@@ -2,15 +2,14 @@
 
 set -ex
 
-if [ ! -f server.dist.js ]; then
-  # Build the client assets for testing
-  export BUILD_CLIENT=true
+export NODE_ENV=production
 
-  # CSS is only compiled during a development build?
-  export NODE_ENV=production
+if [ ! -d public/assets ]; then
+  yarn build:assets
+fi
 
-  yarn assets
-  yarn build:server
+if [ ! -d public/assets-novo ]; then
+  yarn build:assets:novo
 fi
 
 mocha \

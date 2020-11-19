@@ -1,5 +1,4 @@
 // @ts-check
-
 const chalk = require("chalk")
 const glob = require("glob")
 const fs = require("fs")
@@ -7,6 +6,7 @@ const path = require("path")
 const crypto = require("crypto")
 const { execSync } = require("child_process")
 const { clientCommonConfig } = require("../envs")
+const { env } = require("./env")
 
 // Ouput
 const DEST = "public/assets"
@@ -65,13 +65,24 @@ function createManifest() {
   return manifest
 }
 
+// Do to how the configuartions are exported css compilation is likely to
+// execute multiple times. Cache the first results.
+let cachedManifest = null
+
 export function getCSSManifest() {
   try {
+    if (env.buildServer) {
+      return {}
+    }
+    if (cachedManifest) {
+      console.log(chalk.green(`[Force compileCSS] Using Cache.`))
+      return cachedManifest
+    }
     clean()
     compile()
-    const manifest = createManifest()
+    cachedManifest = createManifest()
     console.log(chalk.green(`[Force compileCSS] Complete.`))
-    return manifest
+    return cachedManifest
   } catch (error) {
     console.error(chalk.red("[Force compileCSS] Error:", error))
     process.exit(1)
