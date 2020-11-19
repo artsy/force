@@ -1,6 +1,9 @@
 import { CircleBlackCheckIcon, Flex, Link, Text, color } from "@artsy/palette"
 import React from "react"
 
+export const BUYER_GUARANTEE_URL =
+  "https://support.artsy.net/hc/en-us/articles/360048946973-How-does-Artsy-protect-me"
+
 export const BuyerGuarantee: React.FC = () => {
   return (
     <Flex p={2} my={1} backgroundColor={color("black10")}>
@@ -12,7 +15,7 @@ export const BuyerGuarantee: React.FC = () => {
           <Link
             target="_blank"
             rel="noopener noreferrer"
-            href="https://support.artsy.net/hc/en-us/articles/360048946973-How-does-Artsy-protect-me"
+            href={BUYER_GUARANTEE_URL}
           >
             Artsy’s buyer protection.
           </Link>

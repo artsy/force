@@ -4,6 +4,7 @@ import { BuyerGuarantee_artwork } from "v2/__generated__/BuyerGuarantee_artwork.
 
 import { createFragmentContainer, graphql } from "react-relay"
 import { TrustSignal } from "./TrustSignal"
+import { BUYER_GUARANTEE_URL } from "v2/Apps/Order/Components/BuyerGuarantee"
 
 interface Props {
   artwork: BuyerGuarantee_artwork
@@ -20,7 +21,7 @@ const BuyerGuarantee: React.FC<Props> = props => {
           <>
             {"Learn more about "}
             <Link
-              href="https://support.artsy.net/hc/en-us/articles/360048946973-How-does-Artsy-protect-me"
+              href={BUYER_GUARANTEE_URL}
               target="_blank"
               rel="noopener noreferrer"
             >
