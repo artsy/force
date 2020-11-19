@@ -13,12 +13,14 @@ import React from "react"
 import track, { TrackingProp } from "react-tracking"
 import styled from "styled-components"
 import { FollowArtistButton_artist } from "../../__generated__/FollowArtistButton_artist.graphql"
+import { FollowArtistButtonQuery } from "../../__generated__/FollowArtistButtonQuery.graphql"
 import { FollowButton } from "./Button"
 import {
   RelayProp,
   commitMutation,
   createFragmentContainer,
   graphql,
+  QueryRenderer,
 } from "react-relay"
 import { openAuthToFollowSave } from "v2/Utils/openAuthModal"
 import {
@@ -26,6 +28,7 @@ import {
   withAnalyticsContext,
 } from "v2/Artsy/Analytics/AnalyticsContext"
 import { Mediator } from "lib/mediator"
+import { useSystemContext } from "v2/Artsy"
 
 interface Props
   extends React.HTMLProps<FollowArtistButton>,
@@ -63,8 +66,8 @@ const Container = styled.span`
 @track()
 export class FollowArtistButton extends React.Component<Props, State> {
   static defaultProps = {
-    triggerSuggestions: false,
     buttonProps: {},
+    triggerSuggestions: false,
   }
 
   state = { openSuggestions: false }
@@ -80,12 +83,12 @@ export class FollowArtistButton extends React.Component<Props, State> {
     } = this.props
 
     const args: FollowedArgs = {
-      ownerId: artist.internalID,
-      ownerSlug: artist.slug,
       contextModule,
       contextOwnerId: contextPageOwnerId,
       contextOwnerSlug: contextPageOwnerSlug,
       contextOwnerType: contextPageOwnerType,
+      ownerId: artist.internalID,
+      ownerSlug: artist.slug,
     }
 
     const analyticsData = artist.is_followed
@@ -103,8 +106,8 @@ export class FollowArtistButton extends React.Component<Props, State> {
       this.followArtistForUser()
     } else {
       openAuthToFollowSave(mediator, {
-        entity: artist,
         contextModule,
+        entity: artist,
         intent: Intent.followArtist,
       })
     }
@@ -132,19 +135,13 @@ export class FollowArtistButton extends React.Component<Props, State> {
           }
         }
       `,
-      variables: {
-        input: {
-          artistID: artist.internalID,
-          unfollow: artist.is_followed,
-        },
-      },
       optimisticResponse: {
         followArtist: {
           artist: {
-            id: artist.id,
-            slug: artist.slug,
-            is_followed: !artist.is_followed,
             counts: { follows: newFollowCount },
+            id: artist.id,
+            is_followed: !artist.is_followed,
+            slug: artist.slug,
           },
         },
       },
@@ -154,6 +151,12 @@ export class FollowArtistButton extends React.Component<Props, State> {
         artistProxy
           .getLinkedRecord("counts")
           .setValue(newFollowCount, "follows")
+      },
+      variables: {
+        input: {
+          artistID: artist.internalID,
+          unfollow: artist.is_followed,
+        },
       },
     })
     this.trackFollow()
@@ -233,3 +236,32 @@ export const FollowArtistButtonFragmentContainer = createFragmentContainer(
     `,
   }
 )
+
+export const FollowArtistButtonQueryRenderer: React.FC<
+  {
+    id: string
+  } & Props
+> = ({ id, ...rest }) => {
+  const { relayEnvironment } = useSystemContext()
+
+  return (
+    <QueryRenderer<FollowArtistButtonQuery>
+      environment={relayEnvironment}
+      query={graphql`
+        query FollowArtistButtonQuery($id: String!) {
+          artist(id: $id) {
+            ...FollowArtistButton_artist
+          }
+        }
+      `}
+      variables={{ id }}
+      render={({ error, props }) => {
+        if (error || !props) {
+          return <FollowArtistButtonFragmentContainer {...rest} artist={null} />
+        }
+
+        return <FollowArtistButtonFragmentContainer {...rest} {...props} />
+      }}
+    />
+  )
+}
