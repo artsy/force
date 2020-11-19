@@ -5,8 +5,8 @@ import { GlobalData } from "sharify"
 describe("#trackEvent", () => {
   beforeEach(() => {
     window.analytics = {
-      track: jest.fn(),
       page: jest.fn(),
+      track: jest.fn(),
     } as any
     window.sd = { APP_URL: "https://artsy.net" } as GlobalData
     console.error = jest.fn()

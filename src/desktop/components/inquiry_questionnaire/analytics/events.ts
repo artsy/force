@@ -6,7 +6,7 @@ import {
 } from "@artsy/cohesion"
 import { omit } from "lodash"
 import { analyticsHooks } from "desktop/components/inquiry_questionnaire/analytics/analyticsHooks"
-import { setAnalyticsClientReferrerOptions } from "desktop/analytics/setAnalyticsClientReferrerOptions"
+import { setAnalyticsClientReferrerOptions } from "lib/analytics/setAnalyticsClientReferrerOptions"
 ;(function () {
   "use strict"
 
@@ -159,15 +159,15 @@ import { setAnalyticsClientReferrerOptions } from "desktop/analytics/setAnalytic
   bindOnce("inquiry:sync", function (context) {
     trackWithoutNamespace("Sent artwork inquiry", {
       artwork_id: context.artwork.get("_id"),
-      products: [
-        {
-          product_id: context.artwork.get("_id"),
-          quantity: 1,
-          price: context.artwork.get("price") || 6000,
-        },
-      ],
       artwork_slug: context.artwork.id,
       inquiry_id: context.inquiry.id,
+      products: [
+        {
+          price: context.artwork.get("price") || 6000,
+          product_id: context.artwork.get("_id"),
+          quantity: 1,
+        },
+      ],
     })
   })
 

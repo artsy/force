@@ -1,5 +1,5 @@
 StepView = require './step.coffee'
-{ setAnalyticsClientReferrerOptions } = require "../../../analytics/setAnalyticsClientReferrerOptions"
+{ setAnalyticsClientReferrerOptions } = require "../../../../lib/analytics/setAnalyticsClientReferrerOptions"
 
 template = -> require('../templates/commercial_interest.jade') arguments...
 
