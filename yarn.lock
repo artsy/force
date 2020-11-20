@@ -2423,7 +2423,7 @@
     "@types/yargs" "^15.0.0"
     chalk "^4.0.0"
 
-"@loadable/babel-plugin@^5.13.2":
+"@loadable/babel-plugin@5.13.2":
   version "5.13.2"
   resolved "https://registry.yarnpkg.com/@loadable/babel-plugin/-/babel-plugin-5.13.2.tgz#373cddc64ee5437814f7dca1c1b6a7b2c1665a9f"
   integrity sha512-vSZUVeTH1S1sDbk8Tzft0plZSkN7W4zmVR5w/Bmy4UmvBiu9lin7ztrDpoUTUzxpoups+OJbTc/OosvN0aMXWg==
@@ -2461,7 +2461,7 @@
   dependencies:
     lodash "^4.17.15"
 
-"@loadable/webpack-plugin@^5.14.0":
+"@loadable/webpack-plugin@5.14.0":
   version "5.14.0"
   resolved "https://registry.yarnpkg.com/@loadable/webpack-plugin/-/webpack-plugin-5.14.0.tgz#656cb298c4b30d3b93cfe6ebf227d9709685f357"
   integrity sha512-md9Nm6o+OjWJH6RgHcYsbko36YDKG2zuM19rFYkQsktdfq+JnbwOCp3hVhZM7L8V1M4MP3uJfmxKh6QGOnk4+w==
@@ -2922,7 +2922,7 @@
   resolved "https://registry.yarnpkg.com/@types/jwt-decode/-/jwt-decode-2.2.0.tgz#10c4945a1505f771e4c60d26838dd2d39024ae4c"
   integrity sha512-iY8jTNNQtU+6msAbBP3KyiYvdWcT4oGBJJCKq5VTjMZDkhcz1PzXnbCYG/W/O6ntIm3IgbfBbFZj17FKh3pK7A==
 
-"@types/loadable__component@^5.13.1":
+"@types/loadable__component@5.13.1":
   version "5.13.1"
   resolved "https://registry.yarnpkg.com/@types/loadable__component/-/loadable__component-5.13.1.tgz#97c24081676a194b29722ff6e3c24a3676984f2e"
   integrity sha512-Zb/Qkw3BnlRoFkL6FJwDvhFhOfeotXRCWd7dHdjVLusHZ3dZjKNi3ERngYBt3tffk2NF4roGVKA/oZMA1KdbCg==
