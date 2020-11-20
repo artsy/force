@@ -1,8 +1,6 @@
 import $ from "jquery"
 
 const routes = {
-  "/artists": require("../apps/artists/client/index.coffee").init,
-
   "/inquiry": require("../apps/inquiry/client/index.coffee"),
 }
 

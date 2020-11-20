@@ -1,19 +1,5 @@
-{ extend } = require 'underscore'
 { capitalize } = require 'underscore.string'
 ArtistsByLetter = require './collections/artists_by_letter'
-metaphysics = require '../../../lib/metaphysics2'
-
-@index = (req, res, next) ->
-  send = query: require './query'
-
-  return if metaphysics.debug req, res, send
-
-  metaphysics send
-    .then (data) ->
-      res.render 'index', extend data,
-        letters: ArtistsByLetter::range
-
-  .catch next
 
 @letter = (req, res, next) ->
   currentPage = parseInt(req.query.page) or 1

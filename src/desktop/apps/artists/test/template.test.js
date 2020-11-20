@@ -7,7 +7,6 @@ const $ = require("cheerio")
 const _ = require("underscore")
 const fs = require("fs")
 const jade = require("jade")
-const fixture = require("./fixtures/artists")
 const { fabricate } = require("@artsy/antigravity")
 const ArtistsByLetter = require("../collections/artists_by_letter")
 const sd = require("sharify").data
@@ -18,53 +17,6 @@ const render = function (template) {
 }
 
 describe("Artists", function () {
-  describe("#index", function () {
-    before(function () {
-      const data = _.extend(fixture.data, {
-        letters: ArtistsByLetter.prototype.range,
-        asset() {},
-        sd,
-      })
-      this.html = render("index")(data)
-      return (this.$ = $.load(this.html))
-    })
-
-    it("renders the alphabetical nav", function () {
-      return this.$(".alphabetical-index-range")
-        .text()
-        .should.equal("abcdefghijklmnopqrstuvwxyz")
-    })
-
-    it("has a single <h1> that displays the name of the artists set", function () {
-      const $h1 = this.$("h1")
-      $h1.length.should.equal(1)
-      return $h1.text().should.equal("Featured Artists")
-    })
-
-    it("renders the featured artists", function () {
-      return this.$(".afc-artist-name")
-        .map(function () {
-          return $(this).text()
-        })
-        .get()
-        .should.eql(["Jeff Koons", "Jeff Koons", "Jeff Koons", "Jeff Koons"])
-    })
-
-    it("renders the gene sets", function () {
-      return this.$(".artists-featured-genes-gene").length.should.equal(2)
-    })
-
-    it("renders 4 trending artists for each gene", function () {
-      return this.$(".artist-cell-item").length.should.equal(8)
-    })
-
-    return it("has jump links to the various gene pages", function () {
-      const $links = this.$(".avant-garde-jump-link")
-      $links.length.should.equal(2)
-      return $links.first().text().should.equal("Emerging Art")
-    })
-  })
-
   return describe("letter page", function () {
     before(function () {
       const artists = [
@@ -78,15 +30,15 @@ describe("Artists", function () {
       })
 
       const template = render("letter")({
+        artists: this.artistsByLetter,
+        asset() {},
+        letter: "A",
+        letterRange: ["a", "b", "c"],
         sd: _.extend(sd, {
           APP_URL: "http://localhost:5000",
           CURRENT_PATH: "/artists-starting-with-a",
           WEBFONT_URL: "http://webfonts.artsy.net/",
         }),
-        letter: "A",
-        letterRange: ["a", "b", "c"],
-        artists: this.artistsByLetter,
-        asset() {},
       })
 
       return (this.$ = $.load(template))
