@@ -236,7 +236,7 @@ export const routes: RouteConfig[] = [
           AuctionResultsRoute.preload()
         },
         displayNavigationTabs: true,
-        ignoreScrollBehavior: true,
+        ignoreScrollBehavior: false,
         query: graphql`
           query routes_AuctionResultsQuery($artistID: String!) {
             artist(id: $artistID) {
