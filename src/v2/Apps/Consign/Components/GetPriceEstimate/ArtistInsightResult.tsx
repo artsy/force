@@ -75,7 +75,10 @@ export const ArtistInsightResult: React.FC = () => {
           </Text>
           <Spacer mb={2} />
           <Media greaterThanOrEqual="md">
-            <RouterLink to={`/artist/${artistSlug}/auction-results`}>
+            <RouterLink
+              to={`/artist/${artistSlug}/auction-results`}
+              onClick={() => window.scrollTo(0, 0)}
+            >
               <Button width={230} variant="secondaryOutline" mr={2}>
                 Explore auction data
               </Button>

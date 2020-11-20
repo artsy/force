@@ -77,18 +77,16 @@ export function buildClientApp(config: RouterConfig): Promise<Resolve> {
       const resolver = new Resolver(relayEnvironment)
 
       const Renderer = createRender({
+        renderError: RenderError,
         renderPending: RenderPending,
         renderReady: RenderReady,
-        renderError: RenderError,
       })
 
       const Router = await createInitialFarceRouter({
-        historyProtocol: getHistoryProtocol(),
         historyMiddlewares,
         historyOptions: history.options,
-        routeConfig: createRouteConfig(routes),
+        historyProtocol: getHistoryProtocol(),
         matchContext: clientContext,
-        resolver,
         render: renderArgs => {
           return (
             <ScrollManager
@@ -99,6 +97,8 @@ export function buildClientApp(config: RouterConfig): Promise<Resolve> {
             </ScrollManager>
           )
         },
+        resolver,
+        routeConfig: createRouteConfig(routes),
       })
 
       const ClientApp = () => {

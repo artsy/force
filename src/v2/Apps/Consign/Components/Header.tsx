@@ -41,7 +41,9 @@ export const Header: React.FC = () => {
       </HeaderImageContainer>
 
       <Box textAlign="center" width={350} position="relative" zIndex={3}>
-        <Sans size="14">Sell with Artsy</Sans>
+        <Sans size="14" element="h1">
+          Sell with Artsy
+        </Sans>
         <Spacer mt={5} />
 
         <RouterLink to="/consign/submission">

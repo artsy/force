@@ -92,8 +92,8 @@ const Section: React.FC<{
       textAlign="center"
     >
       <Box>{icon}</Box>
-      <Box mt={[0, 1]} mb={[0, 2]}>
-        <Text variant="subtitle">{text}</Text>
+      <Box mt={[0, 1]} mb={[0.5, 2]}>
+        <Text variant={["mediumText", "subtitle"]}>{text}</Text>
       </Box>
       <Box>
         <Text variant="text" color="black60">

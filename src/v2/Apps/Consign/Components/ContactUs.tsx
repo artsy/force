@@ -46,6 +46,13 @@ export const ContactUs: React.FC<{ darkVariant?: boolean }> = ({
         >
           +1-646-797-3423
         </Text>
+        <Text
+          variant="text"
+          color={darkVariant ? "black5" : "black60"}
+          mr={0.5}
+        >
+          for more information on how Artsy can sell your artwork.
+        </Text>
       </Flex>
       <Media greaterThanOrEqual="sm">
         <Link href="mailto:consign@artsy.net">
