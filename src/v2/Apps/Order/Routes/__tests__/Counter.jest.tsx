@@ -24,16 +24,12 @@ const realSetInterval = global.setInterval
 
 const testOrder: CounterTestQueryRawResponse["order"] = {
   ...OfferOrderWithShippingDetails,
-  stateExpiresAt: DateTime.fromISO(NOW)
-    .plus({ days: 1 })
-    .toString(),
+  stateExpiresAt: DateTime.fromISO(NOW).plus({ days: 1 }).toString(),
   lastOffer: {
     ...OfferWithTotals,
     internalID: "lastOffer",
     id: "lastOffer",
-    createdAt: DateTime.fromISO(NOW)
-      .minus({ days: 1 })
-      .toString(),
+    createdAt: DateTime.fromISO(NOW).minus({ days: 1 }).toString(),
     amount: "$sellers.offer",
   },
   myLastOffer: {
@@ -125,6 +121,10 @@ describe("Submit Pending Counter Offer", () => {
       expect(page.paymentSummary.text()).toMatchInlineSnapshot(
         `"Lockedvisa•••• 4444   Exp 03/21"`
       )
+    })
+
+    it("shows buyer guarentee", () => {
+      expect(page.buyerGuarantee.length).toBe(1)
     })
 
     it("shows the submit button", () => {

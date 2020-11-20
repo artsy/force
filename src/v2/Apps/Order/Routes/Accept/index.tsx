@@ -27,6 +27,7 @@ import { get } from "v2/Utils/get"
 import createLogger from "v2/Utils/logger"
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "../../Components/ArtworkSummaryItem"
 import { CreditCardSummaryItemFragmentContainer as CreditCardSummaryItem } from "../../Components/CreditCardSummaryItem"
+import { BuyerGuarantee } from "../../Components/BuyerGuarantee"
 
 interface AcceptProps {
   order: Accept_order
@@ -228,6 +229,7 @@ export class Accept extends Component<AcceptProps> {
                   <ShippingSummaryItem order={order} locked />
                   <CreditCardSummaryItem order={order} locked />
                 </Flex>
+                <BuyerGuarantee />
                 <Media greaterThan="xs">
                   <Spacer mb={2} />
                 </Media>

@@ -1,21 +1,21 @@
 import { graphql } from "react-relay"
-import { SecurePaymentFragmentContainer } from "../SecurePayment"
+import { BuyerGuaranteeFragmentContainer } from "../BuyerGuarantee"
 import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
 
 jest.unmock("react-relay")
 
 const { getWrapper } = setupTestWrapper({
-  Component: SecurePaymentFragmentContainer,
+  Component: BuyerGuaranteeFragmentContainer,
   query: graphql`
-    query SecurePaymentTestQuery {
+    query BuyerGuaranteeTestQuery {
       artwork(id: "whatevs") {
-        ...SecurePayment_artwork
+        ...BuyerGuarantee_artwork
       }
     }
   `,
 })
 
-describe("SecurePayment", () => {
+describe("BuyerGuarantee", () => {
   it("Doesn't render when work is neither acquireable nor offerable", async () => {
     const component = getWrapper({
       Artwork: () => {

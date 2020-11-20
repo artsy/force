@@ -30,6 +30,7 @@ import { RelayProp, createFragmentContainer, graphql } from "react-relay"
 import createLogger from "v2/Utils/logger"
 import { Media } from "v2/Utils/Responsive"
 import { OrderStepper, offerFlowSteps } from "../../Components/OrderStepper"
+import { BuyerGuarantee } from "../../Components/BuyerGuarantee"
 
 export interface OfferProps {
   order: Offer_order
@@ -288,6 +289,7 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
                     }
                   />
                 </Flex>
+                <BuyerGuarantee />
                 <Spacer mb={[2, 3]} />
                 <Media at="xs">
                   <>
