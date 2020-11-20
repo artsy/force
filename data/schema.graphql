@@ -7882,7 +7882,6 @@ type Partner implements Node {
   viewingRoomsConnection(
     after: String
     first: Int
-    published: Boolean = true
     statuses: [ViewingRoomStatusEnum!]
   ): ViewingRoomsConnection
 
@@ -8410,9 +8409,6 @@ type Query {
     # Returns the last _n_ elements from the list.
     last: Int
     partnerID: ID
-
-    # (Deprecated) Use statuses
-    published: Boolean
 
     # Returns only viewing rooms with these statuses
     statuses: [ViewingRoomStatusEnum!] = [live]
@@ -11094,7 +11090,6 @@ type Viewer {
     after: String
     first: Int
     partnerID: ID
-    published: Boolean = true
     statuses: [ViewingRoomStatusEnum!]
   ): ViewingRoomsConnection
 }

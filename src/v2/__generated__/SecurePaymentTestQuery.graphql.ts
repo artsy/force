@@ -9,17 +9,9 @@ export type SecurePaymentTestQueryResponse = {
         readonly " $fragmentRefs": FragmentRefs<"SecurePayment_artwork">;
     } | null;
 };
-export type SecurePaymentTestQueryRawResponse = {
-    readonly artwork: ({
-        readonly is_acquireable: boolean | null;
-        readonly is_offerable: boolean | null;
-        readonly id: string | null;
-    }) | null;
-};
 export type SecurePaymentTestQuery = {
     readonly response: SecurePaymentTestQueryResponse;
     readonly variables: SecurePaymentTestQueryVariables;
-    readonly rawResponse: SecurePaymentTestQueryRawResponse;
 };
 
 
@@ -121,5 +113,5 @@ return {
   }
 };
 })();
-(node as any).hash = 'e4ce9cd4c7b6db43aa9600e859dee9a0';
+(node as any).hash = '165920d44caabb5774c28db0aa6f8de1';
 export default node;
