@@ -33,7 +33,7 @@ export const SellWithArtsy: React.FC = () => {
           <Text variant="largeTitle" mb={1}>
             Get the Artsy iOS app
           </Text>
-          <Text variant="text" color="black60" mb={4}>
+          <Text variant="text" color="black60" mb={2}>
             A Smarter, Faster Way to Sell Your Art.
           </Text>
           <Link

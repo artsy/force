@@ -14,8 +14,8 @@ export const ReadMore: React.FC = () => {
       clickedArticleGroup({
         context_module: ContextModule.relatedArticles,
         context_page_owner_type: OwnerType.consign,
-        destination_page_owner_slug: slug,
         destination_page_owner_id: internalID,
+        destination_page_owner_slug: slug,
         destination_page_owner_type: OwnerType.article,
       })
     )
@@ -36,8 +36,8 @@ export const ReadMore: React.FC = () => {
           href="https://www.artsy.net/series/artsy-editorial-decide-consign-art"
           onClick={() => {
             trackClick({
-              slug: "artsy-editorial-decide-consign-art",
               internalID: "5e6fc79cb77f450020738595",
+              slug: "artsy-editorial-decide-consign-art",
             })
           }}
         />
@@ -48,8 +48,8 @@ export const ReadMore: React.FC = () => {
           href="https://www.artsy.net/series/artsy-editorial-beginners-guide-consigning-art-sale"
           onClick={() => {
             trackClick({
-              slug: "artsy-editorial-beginners-guide-consigning-art-sale",
               internalID: "5e458e6c4c9c6b00211fb7f4",
+              slug: "artsy-editorial-beginners-guide-consigning-art-sale",
             })
           }}
         />
@@ -60,8 +60,8 @@ export const ReadMore: React.FC = () => {
           href="https://www.artsy.net/article/artsy-editorial-artwork-appraised-pandemic"
           onClick={() => {
             trackClick({
-              slug: "artsy-editorial-artwork-appraised-pandemic",
               internalID: "5f1afb54b24a600020d60a19",
+              slug: "artsy-editorial-artwork-appraised-pandemic",
             })
           }}
         />
@@ -74,8 +74,8 @@ export const ReadMore: React.FC = () => {
             href="https://www.artsy.net/series/guide-consigning-art/artsy-editorial-inherit-art-collection"
             onClick={() => {
               trackClick({
-                slug: "artsy-editorial-inherit-art-collection",
                 internalID: "5d8e276b1eecc00021ea1a2d",
+                slug: "artsy-editorial-inherit-art-collection",
               })
             }}
           />
@@ -88,8 +88,8 @@ export const ReadMore: React.FC = () => {
             href="https://www.artsy.net/series/artsy-editorial-resell-art-hurting-anyones-feelings"
             onClick={() => {
               trackClick({
-                slug: "artsy-editorial-resell-art-hurting-anyones-feelings",
                 internalID: "5938691a4e9b7a0017bfe070",
+                slug: "artsy-editorial-resell-art-hurting-anyones-feelings",
               })
             }}
           />
@@ -102,16 +102,16 @@ export const ReadMore: React.FC = () => {
             href="https://www.artsy.net/series/guide-consigning-art/artsy-editorial-5-questions-auction-house-consigning-work"
             onClick={() => {
               trackClick({
+                internalID: "597f71d5749d600077dd288e",
                 slug:
                   "artsy-editorial-5-questions-auction-house-consigning-work",
-                internalID: "597f71d5749d600077dd288e",
               })
             }}
           />
         </Media>
       </Flex>
 
-      <Media lessThan="md">
+      <Media lessThan="lg">
         <RouterLink
           to="/series/guide-consigning-art"
           style={{ textDecoration: "none" }}
