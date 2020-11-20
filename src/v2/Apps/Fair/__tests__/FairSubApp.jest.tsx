@@ -1,6 +1,6 @@
 import { MockBoot, renderRelayTree } from "v2/DevTools"
 import React from "react"
-import FairSubApp from "../FairSubApp"
+import { FairSubAppFragmentContainer } from "../FairSubApp"
 import { graphql } from "react-relay"
 import { Title } from "react-head"
 import { FairSubApp_QueryRawResponse } from "v2/__generated__/FairSubApp_Query.graphql"
@@ -10,14 +10,14 @@ jest.unmock("react-relay")
 const FAIR_APP_FIXTURE: FairSubApp_QueryRawResponse = {
   fair: {
     id: "fair12345",
-    name: "Miart 2020",
-    slug: "miart-2020",
     metaDescription: null,
     metaImage: null,
+    name: "Miart 2020",
     profile: {
       __typename: "Profile",
       id: "profile",
     },
+    slug: "miart-2020",
   },
 }
 
@@ -29,10 +29,11 @@ describe("FairSubApp", () => {
       Component: ({ fair }) => {
         return (
           <MockBoot>
-            <FairSubApp fair={fair} />
+            <FairSubAppFragmentContainer fair={fair} />
           </MockBoot>
         )
       },
+      mockData: response,
       query: graphql`
         query FairSubApp_Query($slug: String!) @raw_response_type {
           fair(id: $slug) {
@@ -43,7 +44,6 @@ describe("FairSubApp", () => {
       variables: {
         slug: "miart-2020",
       },
-      mockData: response,
     })
   }
 

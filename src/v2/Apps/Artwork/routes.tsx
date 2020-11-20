@@ -2,7 +2,9 @@
 import loadable from "@loadable/component"
 import { graphql } from "react-relay"
 
-const ArtworkApp = loadable(() => import("./ArtworkApp"))
+const ArtworkApp = loadable(() => import("./ArtworkApp"), {
+  resolveComponent: component => component.ArtworkAppFragmentContainer,
+})
 
 export const routes = [
   {

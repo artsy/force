@@ -21,12 +21,13 @@ export const PurchaseApp = (props: any) => {
   )
 }
 
-const PurchaseAppFragmentContainer = createFragmentContainer(PurchaseApp, {
-  me: graphql`
-    fragment PurchaseApp_me on Me {
-      ...PurchaseHistory_me
-    }
-  `,
-})
-
-export default PurchaseAppFragmentContainer
+export const PurchaseAppFragmentContainer = createFragmentContainer(
+  PurchaseApp,
+  {
+    me: graphql`
+      fragment PurchaseApp_me on Me {
+        ...PurchaseHistory_me
+      }
+    `,
+  }
+)

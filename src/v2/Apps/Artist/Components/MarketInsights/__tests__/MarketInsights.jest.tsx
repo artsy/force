@@ -2,14 +2,18 @@ import { mount } from "enzyme"
 import "jest-styled-components"
 import React from "react"
 import renderer from "react-test-renderer"
-import MarketInsights from "../MarketInsights"
+import { MarketInsightsFragmentContainer } from "../MarketInsights"
 import { MarketInsightsArtists } from "./Fixtures/Artists.fixture"
 
 describe("MarketInsights", () => {
   describe("snapshots", () => {
     it("renders correctly", () => {
       const marketInsights = renderer
-        .create(<MarketInsights artist={MarketInsightsArtists[0] as any} />)
+        .create(
+          <MarketInsightsFragmentContainer
+            artist={MarketInsightsArtists[0] as any}
+          />
+        )
         .toJSON()
       expect(marketInsights).toMatchSnapshot()
     })
@@ -18,7 +22,9 @@ describe("MarketInsights", () => {
   describe("unit", () => {
     it("renders market data if present", () => {
       const component = mount(
-        <MarketInsights artist={MarketInsightsArtists[0] as any} />
+        <MarketInsightsFragmentContainer
+          artist={MarketInsightsArtists[0] as any}
+        />
       )
       expect(component.text()).toMatch("$63m auction record")
       expect(component.text()).toMatch("Represented by blue chip galleries")
@@ -30,7 +36,9 @@ describe("MarketInsights", () => {
 
     it("renders nothing if no market data", () => {
       const component = mount(
-        <MarketInsights artist={MarketInsightsArtists[1] as any} />
+        <MarketInsightsFragmentContainer
+          artist={MarketInsightsArtists[1] as any}
+        />
       )
       expect(component.html()).toBe(null)
     })
@@ -38,7 +46,9 @@ describe("MarketInsights", () => {
     describe("#renderGalleryCategory", () => {
       it("prints single results", () => {
         const component = mount(
-          <MarketInsights artist={MarketInsightsArtists[0] as any} />
+          <MarketInsightsFragmentContainer
+            artist={MarketInsightsArtists[0] as any}
+          />
         )
         const {
           props: { children },
@@ -49,7 +59,9 @@ describe("MarketInsights", () => {
 
       it("prints plural results", () => {
         const component = mount(
-          <MarketInsights artist={MarketInsightsArtists[0] as any} />
+          <MarketInsightsFragmentContainer
+            artist={MarketInsightsArtists[0] as any}
+          />
         )
         const {
           props: { children },

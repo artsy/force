@@ -1,5 +1,5 @@
 import { graphql } from "react-relay"
-import ShowApp from "../ShowApp"
+import { ShowAppFragmentContainer } from "../ShowApp"
 import { ShowViewingRoom } from "../Components/ShowViewingRoom"
 import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
 import { ShowApp_Test_Query } from "v2/__generated__/ShowApp_Test_Query.graphql"
@@ -19,7 +19,7 @@ jest.mock("v2/Apps/Show/Components/ShowInstallShots", () => ({
 }))
 
 const { getWrapper } = setupTestWrapper<ShowApp_Test_Query>({
-  Component: ShowApp,
+  Component: ShowAppFragmentContainer,
   query: graphql`
     query ShowApp_Test_Query {
       show(id: "xxx") {
@@ -40,13 +40,13 @@ describe("ShowApp", () => {
 
   it("renders the appropriate info", () => {
     const wrapper = getWrapper({
+      Partner: () => ({
+        name: "Example Partner",
+      }),
       Show: () => ({
         href: "/show/example-href",
         metaDescription: "Information about the show",
         pressRelease: "Press Release",
-      }),
-      Partner: () => ({
-        name: "Example Partner",
       }),
     })
 

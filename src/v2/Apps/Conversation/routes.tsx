@@ -7,7 +7,11 @@ export const conversationRoutes: RouteConfig[] = [
   {
     path: "/user/conversations",
     displayFullPage: true,
-    getComponent: () => loadable(() => import("./ConversationApp")),
+    getComponent: () =>
+      loadable(() => import("./ConversationApp"), {
+        resolveComponent: component =>
+          component.ConversationAppFragmentContainer,
+      }),
     query: graphql`
       query routes_ConversationQuery {
         me {
@@ -27,7 +31,9 @@ export const conversationRoutes: RouteConfig[] = [
   {
     path: "/user/conversations/:conversationID",
     displayFullPage: true,
-    Component: loadable(() => import("./Routes/Conversation")),
+    Component: loadable(() => import("./Routes/Conversation"), {
+      resolveComponent: component => component.ConversationPaginationContainer,
+    }),
     prepareVariables: (params, _props) => {
       return {
         conversationID: params.conversationID,

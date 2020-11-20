@@ -7,10 +7,10 @@ import { RouteSpinner } from "v2/Artsy/Relay/renderWithLoadProgress"
 import { ArtworkQueryFilter } from "v2/Components/v2/ArtworkFilter/ArtworkQueryFilter"
 import { paramsToCamelCase } from "v2/Components/v2/ArtworkFilter/Utils/urlBuilder"
 
-import ArtistsRoute from "./Routes/Artists/SearchResultsArtists"
-import ArtworksRoute from "./Routes/Artworks"
-import SearchResultsEntity from "./Routes/Entity/SearchResultsEntity"
-import SearchApp from "./SearchApp"
+import { SearchResultsArtistsRouteFragmentContainer } from "./Routes/Artists/SearchResultsArtists"
+import { SearchResultsArtworksRoute } from "./Routes/Artworks"
+import { SearchResultsEntityRouteFragmentContainer } from "./Routes/Entity/SearchResultsEntity"
+import { SearchAppFragmentContainer } from "./SearchApp"
 
 const prepareVariables = (_params, { location }) => {
   return {
@@ -35,7 +35,7 @@ const tabsToEntitiesMap = {
 const entityTabs = Object.entries(tabsToEntitiesMap).map(([key, entities]) => {
   return {
     path: key,
-    Component: SearchResultsEntity,
+    Component: SearchResultsEntityRouteFragmentContainer,
 
     // FIXME: We shouldn't overwrite our route functionality, as that breaks
     // global route configuration behavior.
@@ -69,7 +69,7 @@ const entityTabs = Object.entries(tabsToEntitiesMap).map(([key, entities]) => {
 export const routes: RouteConfig[] = [
   {
     path: "/search",
-    Component: SearchApp,
+    Component: SearchAppFragmentContainer,
     query: graphql`
       query routes_SearchResultsTopLevelQuery($keyword: String!) {
         viewer {
@@ -81,13 +81,13 @@ export const routes: RouteConfig[] = [
     children: [
       {
         path: "/",
-        Component: ArtworksRoute,
+        Component: SearchResultsArtworksRoute,
         prepareVariables,
         query: ArtworkQueryFilter,
       },
       {
         path: "artists",
-        Component: ArtistsRoute,
+        Component: SearchResultsArtistsRouteFragmentContainer,
         prepareVariables,
         query: graphql`
           query routes_SearchResultsArtistsQuery(

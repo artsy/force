@@ -93,5 +93,3 @@ export const ConversationPaginationContainer = createRefetchContainer(
     }
   `
 )
-
-export default ConversationPaginationContainer

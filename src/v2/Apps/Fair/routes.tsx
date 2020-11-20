@@ -4,11 +4,21 @@ import { graphql } from "react-relay"
 import { RouteConfig } from "found"
 import { paramsToCamelCase } from "v2/Components/v2/ArtworkFilter/Utils/urlBuilder"
 
-const FairApp = loadable(() => import("./FairApp"))
-const FairSubApp = loadable(() => import("./FairSubApp"))
-const FairExhibitorsRoute = loadable(() => import("./Routes/FairExhibitors"))
-const FairArtworksRoute = loadable(() => import("./Routes/FairArtworks"))
-const FairInfoRoute = loadable(() => import("./Routes/FairInfo"))
+const FairApp = loadable(() => import("./FairApp"), {
+  resolveComponent: component => component.FairAppFragmentContainer,
+})
+const FairSubApp = loadable(() => import("./FairSubApp"), {
+  resolveComponent: component => component.FairSubAppFragmentContainer,
+})
+const FairExhibitorsRoute = loadable(() => import("./Routes/FairExhibitors"), {
+  resolveComponent: component => component.FairExhibitorsFragmentContainer,
+})
+const FairArtworksRoute = loadable(() => import("./Routes/FairArtworks"), {
+  resolveComponent: component => component.FairArtworksRefetchContainer,
+})
+const FairInfoRoute = loadable(() => import("./Routes/FairInfo"), {
+  resolveComponent: component => component.FairInfoFragmentContainer,
+})
 
 export const routes: RouteConfig[] = [
   {

@@ -6,9 +6,15 @@ import { graphql } from "react-relay"
 import { paramsToCamelCase } from "v2/Components/v2/ArtworkFilter/Utils/urlBuilder"
 import { CollectionAppQuery } from "./Routes/Collection/CollectionAppQuery"
 
-const CollectApp = loadable(() => import("./Routes/Collect"))
-const CollectionsApp = loadable(() => import("./Routes/Collections"))
-const CollectionApp = loadable(() => import("./Routes/Collection"))
+const CollectApp = loadable(() => import("./Routes/Collect"), {
+  resolveComponent: component => component.CollectAppFragmentContainer,
+})
+const CollectionsApp = loadable(() => import("./Routes/Collections"), {
+  resolveComponent: component => component.CollectionsAppFragmentContainer,
+})
+const CollectionApp = loadable(() => import("./Routes/Collection"), {
+  resolveComponent: component => component.CollectionRefetchContainer,
+})
 
 export const collectRoutes: RouteConfig[] = [
   {

@@ -81,10 +81,10 @@ export class ArtworkApp extends React.Component<Props> {
 
     if (typeof window.analytics !== "undefined") {
       const properties: any = {
-        path,
         acquireable: is_acquireable,
-        offerable: is_offerable,
         availability,
+        offerable: is_offerable,
+        path,
         price_listed: !!listPrice,
         url: sd.APP_URL + path,
       }
@@ -134,8 +134,8 @@ export class ArtworkApp extends React.Component<Props> {
         action_type: Schema.ActionType.ViewedLot,
         artwork_id: internalID,
         artwork_slug: slug,
-        sale_id: sale.internalID,
         auction_slug: sale.slug,
+        sale_id: sale.internalID,
       }
       tracking.trackEvent(trackingData)
     }
@@ -147,8 +147,8 @@ export class ArtworkApp extends React.Component<Props> {
       artwork: { is_offerable, is_acquireable },
     } = this.props
     mediator.trigger("enableIntercomForBuyers", {
-      is_offerable,
       is_acquireable,
+      is_offerable,
     })
   }
 
@@ -365,6 +365,3 @@ export const ArtworkAppFragmentContainer = createFragmentContainer(
     `,
   }
 )
-
-// Top-level route needs to be exported for bundle splitting in the router
-export default ArtworkAppFragmentContainer

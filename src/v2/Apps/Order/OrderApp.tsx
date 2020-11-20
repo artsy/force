@@ -57,8 +57,8 @@ class OrderApp extends React.Component<OrderAppProps, OrderAppState> {
     if (artwork && this.mediator && this.mediator.trigger) {
       const { is_offerable, is_acquireable } = artwork
       this.mediator.trigger("enableIntercomForBuyers", {
-        is_offerable,
         is_acquireable,
+        is_offerable,
       })
     }
 
@@ -163,9 +163,6 @@ class OrderApp extends React.Component<OrderAppProps, OrderAppState> {
 const OrderAppWithRouter = withRouter(withSystemContext(OrderApp))
 
 export { OrderAppWithRouter as OrderApp }
-
-// For bundle splitting at router level
-export default OrderAppWithRouter
 
 const SafeAreaContainer = styled(Box)`
   padding: env(safe-area-inset-top) env(safe-area-inset-right)

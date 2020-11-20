@@ -3,9 +3,13 @@ import loadable from "@loadable/component"
 import { graphql } from "react-relay"
 
 const MarketingLandingApp = loadable(() =>
-  import("./Routes/MarketingLanding/MarketingLandingApp")
+  import("./Routes/MarketingLanding/MarketingLandingApp"), {
+  resolveComponent: component => component.MarketingLandingApp,
+}
 )
-const OfferDetailApp = loadable(() => import("./Routes/Offer/OfferDetailApp"))
+const OfferDetailApp = loadable(() => import("./Routes/Offer/OfferDetailApp"), {
+  resolveComponent: component => component.OfferDetailAppFragmentContainer,
+})
 
 export const consignRoutes = [
   {

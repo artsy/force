@@ -1,16 +1,16 @@
 import React from "react"
 import { MockBoot, renderRelayTree } from "v2/DevTools"
-import ViewingRoomsApp from "../ViewingRoomsApp"
+import { ViewingRoomsAppFragmentContainer } from "../ViewingRoomsApp"
 import { graphql } from "react-relay"
 import { ViewingRoomsApp_Test_QueryRawResponse } from "v2/__generated__/ViewingRoomsApp_Test_Query.graphql"
 import { Breakpoint } from "@artsy/palette"
 
 jest.unmock("react-relay")
 jest.mock("v2/Artsy/Router/useRouter", () => ({
+  useIsRouteActive: () => false,
   useRouter: () => ({
     match: {},
   }),
-  useIsRouteActive: () => false,
 }))
 
 describe("ViewingRoomsApp", () => {
@@ -23,13 +23,14 @@ describe("ViewingRoomsApp", () => {
         Component: ({ allViewingRooms, featuredViewingRooms }) => {
           return (
             <MockBoot breakpoint={breakpoint}>
-              <ViewingRoomsApp
+              <ViewingRoomsAppFragmentContainer
                 allViewingRooms={allViewingRooms}
                 featuredViewingRooms={featuredViewingRooms}
               />
             </MockBoot>
           )
         },
+        mockData: response,
         query: graphql`
           query ViewingRoomsApp_Test_Query @raw_response_type {
             allViewingRooms: viewer {
@@ -40,7 +41,6 @@ describe("ViewingRoomsApp", () => {
             }
           }
         `,
-        mockData: response,
       })
     }
 
@@ -121,48 +121,34 @@ const ViewingRoomsAppFixture: ViewingRoomsApp_Test_QueryRawResponse = {
     viewingRoomsConnection: {
       edges: [
         {
+          cursor: "one",
           node: {
             __typename: "ViewingRoom",
-            status: "draft",
-            slug: "test-draft",
-            title: "Draft VR",
+            artworksConnection: {
+              edges: [],
+              totalCount: 0,
+            },
+            distanceToClose: null,
+            distanceToOpen: null,
             image: {
               imageURLs: {
                 normalized: "https://www.example.com/rikki.jpg",
               },
             },
-            distanceToClose: null,
-            distanceToOpen: null,
             partner: {
               id: "rikki",
               name: "Rikki",
             },
-            artworksConnection: {
-              totalCount: 0,
-              edges: [],
-            },
+            slug: "test-draft",
+            status: "draft",
+            title: "Draft VR",
           },
-          cursor: "one",
         },
         {
+          cursor: "two",
           node: {
             __typename: "ViewingRoom",
-            status: "scheduled",
-            slug: "test-scheduled",
-            title: "Scheduled VR",
-            image: {
-              imageURLs: {
-                normalized: "https://www.example.com/tikki.jpg",
-              },
-            },
-            distanceToOpen: "soon",
-            distanceToClose: null,
-            partner: {
-              id: "tikki",
-              name: "Tikki",
-            },
             artworksConnection: {
-              totalCount: 1,
               edges: [
                 {
                   node: {
@@ -180,29 +166,29 @@ const ViewingRoomsAppFixture: ViewingRoomsApp_Test_QueryRawResponse = {
                   },
                 },
               ],
+              totalCount: 1,
             },
-          },
-          cursor: "two",
-        },
-        {
-          node: {
-            __typename: "ViewingRoom",
-            status: "live",
-            slug: "test-live",
-            title: "Live VR",
+            distanceToClose: null,
+            distanceToOpen: "soon",
             image: {
               imageURLs: {
-                normalized: "https://www.example.com/tavi.jpg",
+                normalized: "https://www.example.com/tikki.jpg",
               },
             },
-            distanceToOpen: null,
-            distanceToClose: "3 days",
             partner: {
-              id: "tavi",
-              name: "Tavi",
+              id: "tikki",
+              name: "Tikki",
             },
+            slug: "test-scheduled",
+            status: "scheduled",
+            title: "Scheduled VR",
+          },
+        },
+        {
+          cursor: "three",
+          node: {
+            __typename: "ViewingRoom",
             artworksConnection: {
-              totalCount: 2,
               edges: [
                 {
                   node: {
@@ -235,29 +221,29 @@ const ViewingRoomsAppFixture: ViewingRoomsApp_Test_QueryRawResponse = {
                   },
                 },
               ],
+              totalCount: 2,
             },
-          },
-          cursor: "three",
-        },
-        {
-          node: {
-            __typename: "ViewingRoom",
-            status: "closed",
-            slug: "test-closed",
-            title: "Closed VR",
+            distanceToClose: "3 days",
+            distanceToOpen: null,
             image: {
               imageURLs: {
-                normalized: "https://www.example.com/nag.jpg",
+                normalized: "https://www.example.com/tavi.jpg",
               },
             },
-            distanceToOpen: null,
-            distanceToClose: null,
             partner: {
-              id: "nag",
-              name: "Nag",
+              id: "tavi",
+              name: "Tavi",
             },
+            slug: "test-live",
+            status: "live",
+            title: "Live VR",
+          },
+        },
+        {
+          cursor: "four",
+          node: {
+            __typename: "ViewingRoom",
             artworksConnection: {
-              totalCount: 3,
               edges: [
                 {
                   node: {
@@ -290,9 +276,23 @@ const ViewingRoomsAppFixture: ViewingRoomsApp_Test_QueryRawResponse = {
                   },
                 },
               ],
+              totalCount: 3,
             },
+            distanceToClose: null,
+            distanceToOpen: null,
+            image: {
+              imageURLs: {
+                normalized: "https://www.example.com/nag.jpg",
+              },
+            },
+            partner: {
+              id: "nag",
+              name: "Nag",
+            },
+            slug: "test-closed",
+            status: "closed",
+            title: "Closed VR",
           },
-          cursor: "four",
         },
       ],
       pageInfo: {
@@ -305,20 +305,20 @@ const ViewingRoomsAppFixture: ViewingRoomsApp_Test_QueryRawResponse = {
     edges: [
       {
         node: {
-          status: "live",
-          slug: "test-featured-live",
-          title: "Featured Live VR",
+          distanceToClose: "4 days",
+          distanceToOpen: null,
           image: {
             imageURLs: {
               normalized: "https://www.example.com/featured-live.jpg",
             },
           },
-          distanceToOpen: null,
-          distanceToClose: "4 days",
           partner: {
             id: "featured",
             name: "Featured",
           },
+          slug: "test-featured-live",
+          status: "live",
+          title: "Featured Live VR",
         },
       },
     ],

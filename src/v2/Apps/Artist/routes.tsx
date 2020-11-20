@@ -61,14 +61,30 @@ graphql`
   }
 `
 
-const ArtistApp = loadable(() => import("./ArtistApp"))
-const OverviewRoute = loadable(() => import("./Routes/Overview"))
-const WorksForSaleRoute = loadable(() => import("./Routes/Works"))
-const AuctionResultsRoute = loadable(() => import("./Routes/AuctionResults"))
-const ConsignRoute = loadable(() => import("./Routes/Consign"))
-const CVRoute = loadable(() => import("./Routes/CV"))
-const ArticlesRoute = loadable(() => import("./Routes/Articles"))
-const ShowsRoute = loadable(() => import("./Routes/Shows"))
+const ArtistApp = loadable(() => import("./ArtistApp"), {
+  resolveComponent: component => component.ArtistAppFragmentContainer,
+})
+const OverviewRoute = loadable(() => import("./Routes/Overview"), {
+  resolveComponent: component => component.OverviewRouteFragmentContainer,
+})
+const WorksForSaleRoute = loadable(() => import("./Routes/Works"), {
+  resolveComponent: component => component.WorksRouteFragmentContainer,
+})
+const AuctionResultsRoute = loadable(() => import("./Routes/AuctionResults"), {
+  resolveComponent: component => component.AuctionResultsRouteFragmentContainer,
+})
+const ConsignRoute = loadable(() => import("./Routes/Consign"), {
+  resolveComponent: component => component.ConsignRouteFragmentContainer,
+})
+const CVRoute = loadable(() => import("./Routes/CV"), {
+  resolveComponent: component => component.CVRouteFragmentContainer,
+})
+const ArticlesRoute = loadable(() => import("./Routes/Articles"), {
+  resolveComponent: component => component.ArticlesRouteFragmentContainer,
+})
+const ShowsRoute = loadable(() => import("./Routes/Shows"), {
+  resolveComponent: component => component.ShowsRouteFragmentContainer,
+})
 
 // Artist pages tend to load almost instantly, so just preload it up front
 if (typeof window !== "undefined") {
@@ -81,64 +97,15 @@ if (typeof window !== "undefined") {
 // * `Redirect` needs to be casted, as it’s not compatible with `RouteConfig`
 export const routes: RouteConfig[] = [
   {
-    path: "/artist/:artistID",
-    getComponent: () => ArtistApp,
-    prepare: () => {
-      ArtistApp.preload()
-    },
-    query: graphql`
-      query routes_ArtistTopLevelQuery($artistID: String!) @raw_response_type {
-        artist(id: $artistID) @principalField {
-          ...ArtistApp_artist
-          ...routes_Artist @relay(mask: false)
-        }
-      }
-    `,
-    render: ({ Component, props, match }) => {
-      if (!(Component && props)) {
-        return null
-      }
-
-      const { artist } = props as any
-      const { pathname } = match.location
-
-      if (!artist) {
-        return undefined
-      }
-
-      const showArtistInsights =
-        showMarketInsights(artist) ||
-        (artist.insights && artist.insights.length > 0)
-      const hasArtistContent = hasOverviewContent(artist)
-
-      const alreadyAtWorksForSalePath = pathname.includes(
-        `${artist.slug}/works-for-sale`
-      )
-
-      const canShowOverview = showArtistInsights || hasArtistContent
-
-      if (pathname === `/artist/${artist.slug}/`) {
-        throw new RedirectException(`/artist/${artist.slug}`, 301)
-      }
-
-      if (!canShowOverview && !alreadyAtWorksForSalePath) {
-        throw new RedirectException(
-          `/artist/${artist.slug}/works-for-sale`,
-          301
-        )
-      }
-
-      return <Component {...props} />
-    },
     children: [
       // Routes in tabs
       {
-        path: "/",
+        displayNavigationTabs: true,
         getComponent: () => OverviewRoute,
+        path: "/",
         prepare: () => {
           OverviewRoute.preload()
         },
-        displayNavigationTabs: true,
         query: graphql`
           query routes_OverviewQuery($artistID: String!) @raw_response_type {
             artist(id: $artistID) {
@@ -148,13 +115,32 @@ export const routes: RouteConfig[] = [
         `,
       },
       {
-        path: "works-for-sale",
+        displayNavigationTabs: true,
         getComponent: () => WorksForSaleRoute,
+        ignoreScrollBehavior: true,
+        path: "works-for-sale",
         prepare: () => {
           WorksForSaleRoute.preload()
         },
-        displayNavigationTabs: true,
-        ignoreScrollBehavior: true,
+        prepareVariables: (params, props) => {
+          // FIXME: The initial render includes `location` in props, but subsequent
+          // renders (such as tabbing back to this route in your browser) will not.
+          const filterStateFromUrl = props.location ? props.location.query : {}
+
+          const filterParams = {
+            ...initialArtworkFilterState,
+            ...paramsToCamelCase(filterStateFromUrl),
+            ...params,
+          }
+
+          filterParams.hasFilter = Object.entries(filterParams).some(
+            ([k, v]: [keyof ArtworkFilters, any]) => {
+              return !isDefaultFilter(k, v)
+            }
+          )
+
+          return filterParams
+        },
         query: graphql`
           query routes_WorksQuery(
             $acquireable: Boolean
@@ -209,34 +195,15 @@ export const routes: RouteConfig[] = [
             }
           }
         `,
-        prepareVariables: (params, props) => {
-          // FIXME: The initial render includes `location` in props, but subsequent
-          // renders (such as tabbing back to this route in your browser) will not.
-          const filterStateFromUrl = props.location ? props.location.query : {}
-
-          const filterParams = {
-            ...initialArtworkFilterState,
-            ...paramsToCamelCase(filterStateFromUrl),
-            ...params,
-          }
-
-          filterParams.hasFilter = Object.entries(filterParams).some(
-            ([k, v]: [keyof ArtworkFilters, any]) => {
-              return !isDefaultFilter(k, v)
-            }
-          )
-
-          return filterParams
-        },
       },
       {
-        path: "auction-results",
+        displayNavigationTabs: true,
         getComponent: () => AuctionResultsRoute,
+        ignoreScrollBehavior: false,
+        path: "auction-results",
         prepare: () => {
           AuctionResultsRoute.preload()
         },
-        displayNavigationTabs: true,
-        ignoreScrollBehavior: false,
         query: graphql`
           query routes_AuctionResultsQuery($artistID: String!) {
             artist(id: $artistID) {
@@ -249,12 +216,23 @@ export const routes: RouteConfig[] = [
       // Routes not in tabs
 
       {
-        path: "consign",
+        displayFullPage: true,
         getComponent: () => ConsignRoute,
+        path: "consign",
         prepare: () => {
           ConsignRoute.preload()
         },
-        displayFullPage: true,
+        query: graphql`
+          query routes_ArtistConsignQuery($artistID: String!) {
+            artist(id: $artistID) {
+              ...Consign_artist
+
+              targetSupply {
+                isInMicrofunnel
+              }
+            }
+          }
+        `,
         render: ({ Component, props, match }) => {
           if (!(Component && props)) {
             return undefined
@@ -270,21 +248,10 @@ export const routes: RouteConfig[] = [
             throw new RedirectException(artistPathName)
           }
         },
-        query: graphql`
-          query routes_ArtistConsignQuery($artistID: String!) {
-            artist(id: $artistID) {
-              ...Consign_artist
-
-              targetSupply {
-                isInMicrofunnel
-              }
-            }
-          }
-        `,
       },
       {
-        path: "cv",
         getComponent: () => CVRoute,
+        path: "cv",
         prepare: () => {
           CVRoute.preload()
         },
@@ -297,8 +264,8 @@ export const routes: RouteConfig[] = [
         `,
       },
       {
-        path: "articles",
         getComponent: () => ArticlesRoute,
+        path: "articles",
         prepare: () => {
           ArticlesRoute.preload()
         },
@@ -311,8 +278,8 @@ export const routes: RouteConfig[] = [
         `,
       },
       {
-        path: "shows",
         getComponent: () => ShowsRoute,
+        path: "shows",
         prepare: () => {
           ShowsRoute.preload()
         },
@@ -335,5 +302,54 @@ export const routes: RouteConfig[] = [
         to: "/artist/:artistID",
       }) as any,
     ],
+    getComponent: () => ArtistApp,
+    path: "/artist/:artistID",
+    prepare: () => {
+      ArtistApp.preload()
+    },
+    query: graphql`
+      query routes_ArtistTopLevelQuery($artistID: String!) @raw_response_type {
+        artist(id: $artistID) @principalField {
+          ...ArtistApp_artist
+          ...routes_Artist @relay(mask: false)
+        }
+      }
+    `,
+    render: ({ Component, props, match }) => {
+      if (!(Component && props)) {
+        return null
+      }
+
+      const { artist } = props as any
+      const { pathname } = match.location
+
+      if (!artist) {
+        return undefined
+      }
+
+      const showArtistInsights =
+        showMarketInsights(artist) ||
+        (artist.insights && artist.insights.length > 0)
+      const hasArtistContent = hasOverviewContent(artist)
+
+      const alreadyAtWorksForSalePath = pathname.includes(
+        `${artist.slug}/works-for-sale`
+      )
+
+      const canShowOverview = showArtistInsights || hasArtistContent
+
+      if (pathname === `/artist/${artist.slug}/`) {
+        throw new RedirectException(`/artist/${artist.slug}`, 301)
+      }
+
+      if (!canShowOverview && !alreadyAtWorksForSalePath) {
+        throw new RedirectException(
+          `/artist/${artist.slug}/works-for-sale`,
+          301
+        )
+      }
+
+      return <Component {...props} />
+    },
   },
 ]

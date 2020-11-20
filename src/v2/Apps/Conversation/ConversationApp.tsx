@@ -118,5 +118,3 @@ export const ConversationAppFragmentContainer = createFragmentContainer(
     `,
   }
 )
-
-export default ConversationAppFragmentContainer

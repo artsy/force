@@ -45,7 +45,7 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
 }
 
 // Top-level route needs to be exported for bundle splitting in the router
-export default createFragmentContainer(FairApp, {
+export const FairSubAppFragmentContainer = createFragmentContainer(FairApp, {
   fair: graphql`
     fragment FairSubApp_fair on Fair {
       ...FairMeta_fair

@@ -76,8 +76,6 @@ export const ConfirmBidRoute: React.FC<ConfirmBidProps> = props => {
     return new Promise<ConfirmBidCreateBidderPositionMutationResponse>(
       (resolve, reject) => {
         commitMutation<ConfirmBidCreateBidderPositionMutation>(environment, {
-          onCompleted: resolve,
-          onError: reject,
           mutation: graphql`
             mutation ConfirmBidCreateBidderPositionMutation(
               $input: BidderPositionInput!
@@ -101,11 +99,13 @@ export const ConfirmBidRoute: React.FC<ConfirmBidProps> = props => {
               }
             }
           `,
+          onCompleted: resolve,
+          onError: reject,
           variables: {
             input: {
-              saleID: sale.internalID,
               artworkID: artwork.internalID,
               maxBidAmountCents,
+              saleID: sale.internalID,
             },
           },
         })
@@ -157,14 +157,14 @@ export const ConfirmBidRoute: React.FC<ConfirmBidProps> = props => {
   ) {
     trackEvent({
       action_type: Schema.ActionType.ConfirmBidSubmitted,
-      bidder_position_id: positionId,
       bidder_id: bidderId,
+      bidder_position_id: positionId,
       order_id: bidderId,
       products: [
         {
+          price: selectedBidAmountCents / 100,
           product_id: artwork.internalID,
           quantity: 1,
-          price: selectedBidAmountCents / 100,
         },
       ],
     })
@@ -333,9 +333,9 @@ export const ConfirmBidRoute: React.FC<ConfirmBidProps> = props => {
 const StripeWrappedConfirmBidRoute = createStripeWrapper(ConfirmBidRoute)
 
 const TrackingWrappedConfirmBidRoute = track<ConfirmBidProps>(props => ({
-  context_page: Schema.PageName.AuctionConfirmBidPage,
-  auction_slug: props.artwork.saleArtwork.sale.slug,
   artwork_slug: props.artwork.slug,
+  auction_slug: props.artwork.saleArtwork.sale.slug,
+  context_page: Schema.PageName.AuctionConfirmBidPage,
   sale_id: props.artwork.saleArtwork.sale.internalID,
   user_id: props.me.internalID,
 }))(StripeWrappedConfirmBidRoute)
@@ -352,6 +352,3 @@ export const ConfirmBidRouteFragmentContainer = createFragmentContainer(
     `,
   }
 )
-
-// For bundle splitting in router
-export default ConfirmBidRouteFragmentContainer

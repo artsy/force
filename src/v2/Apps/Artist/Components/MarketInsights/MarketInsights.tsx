@@ -46,8 +46,8 @@ interface Props extends React.HTMLProps<MarketInsights> {
 
 const Categories = {
   "blue-chip": "Blue Chip",
-  "top-established": "Top Established",
   "top-emerging": "Top Emerging",
+  "top-established": "Top Established",
 }
 
 const orderedCategories = ["blue-chip", "top-established", "top-emerging"]
@@ -55,10 +55,10 @@ const orderedCategories = ["blue-chip", "top-established", "top-emerging"]
 const CategoryTooltipContent = {
   "blue-chip":
     "Blue chip galleries have multiple locations internationally and participate in major art fairs.",
-  "top-established":
-    "Top established galleries have been industry leaders in their region or specialty for decades.",
   "top-emerging":
     "Top emerging dealers participate in curated, up-and-coming art fairs.",
+  "top-established":
+    "Top established galleries have been industry leaders in their region or specialty for decades.",
 }
 
 const groupedByCategories = edges => {
@@ -222,46 +222,49 @@ export class MarketInsights extends React.Component<Props, null> {
   }
 }
 
-export default createFragmentContainer(MarketInsights, {
-  artist: graphql`
-    fragment MarketInsights_artist on Artist
-      @argumentDefinitions(
-        partnerCategory: {
-          type: "[String]"
-          defaultValue: ["blue-chip", "top-established", "top-emerging"]
+export const MarketInsightsFragmentContainer = createFragmentContainer(
+  MarketInsights,
+  {
+    artist: graphql`
+      fragment MarketInsights_artist on Artist
+        @argumentDefinitions(
+          partnerCategory: {
+            type: "[String]"
+            defaultValue: ["blue-chip", "top-established", "top-emerging"]
+          }
+        ) {
+        internalID
+        collections
+        highlights {
+          partnersConnection(
+            first: 10
+            displayOnPartnerProfile: true
+            representedBy: true
+            partnerCategory: $partnerCategory
+          ) {
+            edges {
+              node {
+                categories {
+                  slug
+                }
+              }
+            }
+          }
         }
-      ) {
-      internalID
-      collections
-      highlights {
-        partnersConnection(
-          first: 10
-          displayOnPartnerProfile: true
-          representedBy: true
-          partnerCategory: $partnerCategory
+        auctionResultsConnection(
+          recordsTrusted: true
+          first: 1
+          sort: PRICE_AND_DATE_DESC
         ) {
           edges {
             node {
-              categories {
-                slug
+              price_realized: priceRealized {
+                display(format: "0a")
               }
             }
           }
         }
       }
-      auctionResultsConnection(
-        recordsTrusted: true
-        first: 1
-        sort: PRICE_AND_DATE_DESC
-      ) {
-        edges {
-          node {
-            price_realized: priceRealized {
-              display(format: "0a")
-            }
-          }
-        }
-      }
-    }
-  `,
-})
+    `,
+  }
+)

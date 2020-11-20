@@ -4,9 +4,15 @@ import { graphql } from "react-relay"
 import { RedirectException, RouteConfig } from "found"
 import { paramsToCamelCase } from "v2/Components/v2/ArtworkFilter/Utils/urlBuilder"
 
-const ShowApp = loadable(() => import("./ShowApp"))
-const ShowSubApp = loadable(() => import("./ShowSubApp"))
-const ShowInfoRoute = loadable(() => import("./Routes/ShowInfo"))
+const ShowApp = loadable(() => import("./ShowApp"), {
+  resolveComponent: component => component.ShowAppFragmentContainer,
+})
+const ShowSubApp = loadable(() => import("./ShowSubApp"), {
+  resolveComponent: component => component.ShowSubAppFragmentContainer,
+})
+const ShowInfoRoute = loadable(() => import("./Routes/ShowInfo"), {
+  resolveComponent: component => component.ShowInfoFragmentContainer,
+})
 
 export const routes: RouteConfig[] = [
   {

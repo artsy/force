@@ -32,5 +32,3 @@ export const Processing: React.FC = () => {
     </AppContainer>
   )
 }
-
-export default Processing
