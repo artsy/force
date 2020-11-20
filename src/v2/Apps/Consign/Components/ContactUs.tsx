@@ -18,39 +18,8 @@ export const ContactUs: React.FC<{ darkVariant?: boolean }> = ({
         Questions? Speak to an Artsy Specialist
       </Text>
       <Flex flexDirection="row" flexWrap="wrap" mb={3}>
-        <Text
-          variant="text"
-          color={darkVariant ? "black5" : "black60"}
-          mr={0.5}
-        >
-          Email us at
-        </Text>
-        <Text
-          variant="mediumText"
-          color={darkVariant ? "black5" : "black60"}
-          mr={0.5}
-        >
-          consign@artsy.net
-        </Text>
-        <Text
-          variant="text"
-          color={darkVariant ? "black5" : "black60"}
-          mr={0.5}
-        >
-          or call
-        </Text>
-        <Text
-          variant="mediumText"
-          color={darkVariant ? "black5" : "black60"}
-          mr={0.5}
-        >
-          +1-646-797-3423
-        </Text>
-        <Text
-          variant="text"
-          color={darkVariant ? "black5" : "black60"}
-          mr={0.5}
-        >
+        <Text variant="text" color={darkVariant ? "black5" : "black60"}>
+          Email us at <b>consign@artsy.net</b> or call <b>+1-646-797-3423</b>{" "}
           for more information on how Artsy can sell your artwork.
         </Text>
       </Flex>
