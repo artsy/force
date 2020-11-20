@@ -9,17 +9,9 @@ export type BuyerGuaranteeTestQueryResponse = {
         readonly " $fragmentRefs": FragmentRefs<"BuyerGuarantee_artwork">;
     } | null;
 };
-export type BuyerGuaranteeTestQueryRawResponse = {
-    readonly artwork: ({
-        readonly is_acquireable: boolean | null;
-        readonly is_offerable: boolean | null;
-        readonly id: string | null;
-    }) | null;
-};
 export type BuyerGuaranteeTestQuery = {
     readonly response: BuyerGuaranteeTestQueryResponse;
     readonly variables: BuyerGuaranteeTestQueryVariables;
-    readonly rawResponse: BuyerGuaranteeTestQueryRawResponse;
 };
 
 
@@ -121,5 +113,5 @@ return {
   }
 };
 })();
-(node as any).hash = '7ce2a96a940575d1a1eb9fcac346bcaf';
+(node as any).hash = 'de621d52ac2587b8a82786b6a78ded16';
 export default node;
