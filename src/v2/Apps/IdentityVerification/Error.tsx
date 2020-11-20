@@ -3,7 +3,7 @@ import { AppContainer } from "v2/Apps/Components/AppContainer"
 import React from "react"
 import { Title as HeadTitle } from "react-head"
 
-export const Processing: React.FC = () => {
+export const Error: React.FC = () => {
   return (
     <AppContainer>
       <HeadTitle>Artsy | ID Verification</HeadTitle>
@@ -30,5 +30,3 @@ export const Processing: React.FC = () => {
     </AppContainer>
   )
 }
-
-export default Processing

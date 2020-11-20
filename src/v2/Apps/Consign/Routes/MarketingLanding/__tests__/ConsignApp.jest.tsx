@@ -1,5 +1,5 @@
 import React from "react"
-import MarketingLandingApp from "../MarketingLandingApp"
+import { MarketingLandingApp } from "../MarketingLandingApp"
 import { mount } from "enzyme"
 
 jest.mock("v2/Artsy/Analytics/AnalyticsContext", () => ({

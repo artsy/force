@@ -44,11 +44,14 @@ const OfferDetailApp: React.FC<OfferDetailAppProps> = ({ offer }) => {
   )
 }
 
-export default createFragmentContainer(OfferDetailApp, {
-  offer: graphql`
-    fragment OfferDetailApp_offer on ConsignmentOffer {
-      ...ResponseForm_offer
-      ...Summary_offer
-    }
-  `,
-})
+export const OfferDetailAppFragmentContainer = createFragmentContainer(
+  OfferDetailApp,
+  {
+    offer: graphql`
+      fragment OfferDetailApp_offer on ConsignmentOffer {
+        ...ResponseForm_offer
+        ...Summary_offer
+      }
+    `,
+  }
+)

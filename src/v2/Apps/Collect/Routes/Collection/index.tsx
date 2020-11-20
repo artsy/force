@@ -83,8 +83,8 @@ export const CollectionApp: React.FC<CollectionAppProps> = props => {
       <Link rel="canonical" href={collectionHref} />
       <BreadCrumbList
         items={[
-          { path: "/collections", name: "Collections" },
-          { path: `/collection/${slug}`, name: title },
+          { name: "Collections", path: "/collections" },
+          { name: title, path: `/collection/${slug}` },
         ]}
       />
       {artworksConnection && (
@@ -116,22 +116,22 @@ export const CollectionApp: React.FC<CollectionAppProps> = props => {
               <ArtworkFilterContextProvider
                 filters={location.query}
                 sortOptions={[
-                  { value: "-decayed_merch", text: "Default" },
+                  { text: "Default", value: "-decayed_merch" },
                   {
-                    value: "sold,-has_price,-prices",
                     text: "Price (desc.)",
+                    value: "sold,-has_price,-prices",
                   },
                   {
-                    value: "sold,-has_price,prices",
                     text: "Price (asc.)",
+                    value: "sold,-has_price,prices",
                   },
                   {
-                    value: "-partner_updated_at",
                     text: "Recently updated",
+                    value: "-partner_updated_at",
                   },
-                  { value: "-published_at", text: "Recently added" },
-                  { value: "-year", text: "Artwork year (desc.)" },
-                  { value: "year", text: "Artwork year (asc.)" },
+                  { text: "Recently added", value: "-published_at" },
+                  { text: "Artwork year (desc.)", value: "-year" },
+                  { text: "Artwork year (asc.)", value: "year" },
                 ]}
                 aggregations={
                   artworksConnection.aggregations as SharedArtworkFilterContextProps["aggregations"]
@@ -142,8 +142,8 @@ export const CollectionApp: React.FC<CollectionAppProps> = props => {
                   relay={relay}
                   viewer={collection}
                   relayVariables={{
-                    slug: collection.slug,
                     first: 30,
+                    slug: collection.slug,
                   }}
                 />
               </ArtworkFilterContextProvider>
@@ -313,6 +313,3 @@ export const CollectionRefetchContainer = createRefetchContainer(
   },
   CollectionAppQuery
 )
-
-// Top-level route needs to be exported for bundle splitting in the router
-export default CollectionRefetchContainer

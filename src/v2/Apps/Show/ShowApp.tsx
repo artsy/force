@@ -120,7 +120,7 @@ export const ShowApp: React.FC<ShowAppProps> = ({ show }) => {
 }
 
 // Top-level route needs to be exported for bundle splitting in the router
-export default createFragmentContainer(ShowApp, {
+export const ShowAppFragmentContainer = createFragmentContainer(ShowApp, {
   show: graphql`
     fragment ShowApp_show on Show
       @argumentDefinitions(

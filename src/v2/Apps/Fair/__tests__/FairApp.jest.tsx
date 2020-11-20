@@ -1,6 +1,6 @@
 import { MockBoot, renderRelayTree } from "v2/DevTools"
 import React from "react"
-import FairApp from "../FairApp"
+import { FairAppFragmentContainer } from "../FairApp"
 import { graphql } from "react-relay"
 import { Title } from "react-head"
 import { FairApp_QueryRawResponse } from "v2/__generated__/FairApp_Query.graphql"
@@ -12,82 +12,80 @@ jest.mock("react-tracking")
 
 const FAIR_APP_FIXTURE: FairApp_QueryRawResponse = {
   fair: {
-    id: "fair12345",
+    about: "Lorem ipsum",
+    articles: {
+      edges: [],
+    },
+    contact: "<b>Contact us</b>",
     counts: {
       artworks: 10,
     },
-    internalID: "bson-fair",
-    about: "Lorem ipsum",
-    name: "Miart 2020",
-    exhibitionPeriod: "Aug 19 - Sep 19",
-    slug: "miart-2020",
-    startAt: "2020-08-19T08:00:00+00:00",
     endAt: "2020-09-19T08:00:00+00:00",
+    exhibitionPeriod: "Aug 19 - Sep 19",
+    followedArtistArtworks: null,
+    hours: "",
+    id: "fair12345",
     image: {
-      small: {
-        src: "https://cloudfront.com/square.jpg",
+      large: {
         srcSet: "https://cloudfront.com/square.jpg",
-        width: 100,
-        height: 400,
       },
       medium: {
         src: "https://cloudfront.com/square.jpg",
         srcSet: "https://cloudfront.com/square.jpg",
       },
-      large: {
+      small: {
+        height: 400,
+        src: "https://cloudfront.com/square.jpg",
         srcSet: "https://cloudfront.com/square.jpg",
+        width: 100,
       },
     },
-    tagline: "",
-    location: null,
-    ticketsLink: "",
-    hours: "",
+    internalID: "bson-fair",
     links: "",
-    tickets: "<b>Tickets available today</b>",
-    contact: "<b>Contact us</b>",
-    summary: "This is the summary.",
-    articles: {
-      edges: [],
-    },
+    location: null,
     marketingCollections: [],
+    metaDescription: null,
+    metaImage: null,
+    name: "Miart 2020",
     profile: {
       __typename: "Profile",
-      id: "profile",
       icon: {
         cropped: {
           src: "/path/to/cats.jpg",
           srcSet: "/path/to/cats.jpg",
         },
       },
+      id: "profile",
     },
-    metaDescription: null,
-    metaImage: null,
-    followedArtistArtworks: null,
+    slug: "miart-2020",
+    startAt: "2020-08-19T08:00:00+00:00",
+    summary: "This is the summary.",
+    tagline: "",
+    tickets: "<b>Tickets available today</b>",
+    ticketsLink: "",
   },
 }
 
 const FAIR_EDITORIAL_ARTICLE_FIXTURE = {
-  id: "QXJ0aWNsZTo1ZGE1ZTQ1YjQ2NzY5NDAwMjBkODI4NWM=",
-  slug: "article-slug",
-  internalID: "articleID",
-  title: "IFPDA Fine Art Print Fair 2019: Programming and Projects",
   href:
     "/article/ifpda-fine-art-print-fair-ifpda-fine-art-print-fair-2019-programming-projects",
+  id: "QXJ0aWNsZTo1ZGE1ZTQ1YjQ2NzY5NDAwMjBkODI4NWM=",
+  internalID: "articleID",
   publishedAt: "Jun 9th, 2020",
-  thumbnailTitle: "IFPDA Fine Art Print Fair 2019: Programming and Projects",
+  slug: "article-slug",
   thumbnailImage: {
     cropped: {
-      width: 140,
       height: 80,
       src: "example.jpg",
       srcSet: "example.jpg",
+      width: 140,
     },
   },
+  thumbnailTitle: "IFPDA Fine Art Print Fair 2019: Programming and Projects",
+  title: "IFPDA Fine Art Print Fair 2019: Programming and Projects",
 }
 
 const FAIR_COLLECTION_FIXTURE = {
-  slug: "collectible-sculptures",
-  title: "Big Artists, Small Sculptures",
   artworks: {
     counts: {
       total: 10,
@@ -119,6 +117,8 @@ const FAIR_COLLECTION_FIXTURE = {
       },
     ],
   },
+  slug: "collectible-sculptures",
+  title: "Big Artists, Small Sculptures",
 }
 
 describe("FairApp", () => {
@@ -139,10 +139,11 @@ describe("FairApp", () => {
               },
             }}
           >
-            <FairApp fair={fair} />
+            <FairAppFragmentContainer fair={fair} />
           </MockBoot>
         )
       },
+      mockData: response,
       query: graphql`
         query FairApp_Query($slug: String!) @raw_response_type {
           fair(id: $slug) {
@@ -153,7 +154,6 @@ describe("FairApp", () => {
       variables: {
         slug: "miart-2020",
       },
-      mockData: response,
     })
   }
 

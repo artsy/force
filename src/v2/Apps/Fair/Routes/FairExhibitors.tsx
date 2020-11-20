@@ -26,12 +26,12 @@ const FairExhibitors: React.FC<FairExhibitorsProps> = ({ fair, relay }) => {
   } = useAnalyticsContext()
 
   const clickShowMoreTrackingData: ClickedShowMore = {
+    action: ActionType.clickedShowMore,
     context_module: ContextModule.exhibitorsTab,
-    context_page_owner_type: contextPageOwnerType,
     context_page_owner_id: contextPageOwnerId,
     context_page_owner_slug: contextPageOwnerSlug,
+    context_page_owner_type: contextPageOwnerType,
     subject: "Show More",
-    action: ActionType.clickedShowMore,
   }
 
   const handleClick = () => {
@@ -48,8 +48,8 @@ const FairExhibitors: React.FC<FairExhibitorsProps> = ({ fair, relay }) => {
 
       if (window.scrollY > previousScrollY) {
         window.scrollTo({
-          top: previousScrollY,
           behavior: "auto",
+          top: previousScrollY,
         })
       }
 
@@ -130,7 +130,7 @@ export const FairExhibitorsFragmentContainer = createPaginationContainer(
   {
     direction: "forward",
     getVariables({ fair: { slug: id } }, { cursor: after }, { first }) {
-      return { first, after, id }
+      return { after, first, id }
     },
     query: graphql`
       query FairExhibitorsQuery($id: String!, $first: Int!, $after: String) {
@@ -141,6 +141,3 @@ export const FairExhibitorsFragmentContainer = createPaginationContainer(
     `,
   }
 )
-
-// Top-level route needs to be exported for bundle splitting in the router
-export default FairExhibitorsFragmentContainer

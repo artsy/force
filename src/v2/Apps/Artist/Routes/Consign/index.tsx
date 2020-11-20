@@ -55,6 +55,3 @@ export const ConsignRouteFragmentContainer = createFragmentContainer(
     `,
   }
 )
-
-// Export default for bundle splitting at route
-export default ConsignRouteFragmentContainer

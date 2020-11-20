@@ -36,7 +36,7 @@ export class CollectionsApp extends Component<CollectionsAppProps> {
         <Meta property="og:description" content={META_DESCRIPTION} />
         <Meta property="twitter:description" content={META_DESCRIPTION} />
         <BreadCrumbList
-          items={[{ path: "/collections", name: "Collections" }]}
+          items={[{ name: "Collections", path: "/collections" }]}
         />
 
         <AppContainer>
@@ -121,6 +121,3 @@ export const CollectionsAppFragmentContainer = createFragmentContainer(
     `,
   }
 )
-
-// Top-level route needs to be exported for bundle splitting in the router
-export default CollectionsAppFragmentContainer

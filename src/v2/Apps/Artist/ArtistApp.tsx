@@ -96,8 +96,8 @@ export const ArtistApp: React.FC<ArtistAppProps> = props => {
                         onClick={() =>
                           trackEvent({
                             action_type: Schema.ActionType.Click,
-                            subject: "Back to artist link",
                             destination_path: `/artist/${artist.slug}`,
+                            subject: "Back to artist link",
                           })
                         }
                       >
@@ -184,6 +184,3 @@ export const ArtistAppFragmentContainer = createFragmentContainer(
     `,
   }
 )
-
-// Top-level route needs to be exported for bundle splitting in the router
-export default ArtistAppFragmentContainer

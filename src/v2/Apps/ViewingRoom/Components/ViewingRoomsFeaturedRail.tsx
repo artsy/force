@@ -31,8 +31,8 @@ export const ViewingRoomsFeaturedRail: React.FC<ViewingRoomsFeaturedRailProps> =
   ): React.ReactElement => {
     const tag = getTagProps(status, distanceToOpen, distanceToClose)
     const sized = cropped(image?.imageURLs?.normalized, {
-      width: 280,
       height: 370,
+      width: 280,
     })
 
     return (
@@ -90,5 +90,3 @@ export const ViewingRoomsFeaturedRailFragmentContainer = createFragmentContainer
     `,
   }
 )
-
-export default ViewingRoomsFeaturedRailFragmentContainer

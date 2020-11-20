@@ -38,8 +38,6 @@ function createBidder(
   return new Promise<RegisterCreateBidderMutationResponse>(
     (resolve, reject) => {
       commitMutation<RegisterCreateBidderMutation>(relayEnvironment, {
-        onCompleted: resolve,
-        onError: reject,
         // TODO: Inputs to the mutation might have changed case of the keys!
         mutation: graphql`
           mutation RegisterCreateBidderMutation($input: CreateBidderInput!) {
@@ -50,6 +48,10 @@ function createBidder(
             }
           }
         `,
+
+        onCompleted: resolve,
+
+        onError: reject,
         variables: {
           input: { saleID },
         },
@@ -182,6 +184,12 @@ const TrackingWrappedRegisterRoute = track({
 export const RegisterRouteFragmentContainer = createFragmentContainer(
   TrackingWrappedRegisterRoute,
   {
+    me: graphql`
+      fragment Register_me on Me {
+        internalID
+        identityVerified
+      }
+    `,
     sale: graphql`
       fragment Register_sale on Sale {
         slug
@@ -190,14 +198,5 @@ export const RegisterRouteFragmentContainer = createFragmentContainer(
         requireIdentityVerification
       }
     `,
-    me: graphql`
-      fragment Register_me on Me {
-        internalID
-        identityVerified
-      }
-    `,
   }
 )
-
-// For bundle splitting in router
-export default RegisterRouteFragmentContainer

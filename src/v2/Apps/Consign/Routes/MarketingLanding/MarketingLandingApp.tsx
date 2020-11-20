@@ -17,7 +17,7 @@ import { SectionContainer } from "./Components/SectionContainer"
 import { ArtworkCredits } from "./Components/ArtworkCredits"
 import { TemporaryOffer } from "./Components/TemporaryOffer"
 
-const MarketingLandingApp = () => {
+export const MarketingLandingApp = () => {
   return (
     <AnalyticsContext.Provider
       value={{
@@ -51,6 +51,3 @@ const MarketingLandingApp = () => {
     </AnalyticsContext.Provider>
   )
 }
-
-// Export default for bundle splitting at route level
-export default MarketingLandingApp

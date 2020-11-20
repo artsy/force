@@ -59,5 +59,3 @@ export const FeatureAKGAppFragmentContainer = createFragmentContainer(
     `,
   }
 )
-
-export default FeatureAKGAppFragmentContainer

@@ -1,6 +1,6 @@
 import React from "react"
 import { MockBoot, renderRelayTree } from "v2/DevTools"
-import FeatureApp from "../FeatureApp"
+import { FeatureAppFragmentContainer } from "../FeatureApp"
 import { graphql } from "react-relay"
 import { FeatureApp_Test_QueryRawResponse } from "v2/__generated__/FeatureApp_Test_Query.graphql"
 import { Breakpoint } from "@artsy/palette"
@@ -8,6 +8,7 @@ import { FEATURE_APP_FIXTURE } from "./fixtures"
 
 jest.unmock("react-relay")
 jest.mock("v2/Artsy/Router/useRouter", () => ({
+  useIsRouteActive: () => false,
   useRouter: () => ({
     match: {
       params: {
@@ -15,7 +16,6 @@ jest.mock("v2/Artsy/Router/useRouter", () => ({
       },
     },
   }),
-  useIsRouteActive: () => false,
 }))
 
 describe("FeatureApp", () => {
@@ -29,10 +29,11 @@ describe("FeatureApp", () => {
       Component: ({ feature }) => {
         return (
           <MockBoot breakpoint={breakpoint}>
-            <FeatureApp feature={feature} />
+            <FeatureAppFragmentContainer feature={feature} />
           </MockBoot>
         )
       },
+      mockData: response,
       query: graphql`
         query FeatureApp_Test_Query($slug: ID!) @raw_response_type {
           feature(id: $slug) {
@@ -41,7 +42,6 @@ describe("FeatureApp", () => {
         }
       `,
       variables: { slug },
-      mockData: response,
     })
   }
 

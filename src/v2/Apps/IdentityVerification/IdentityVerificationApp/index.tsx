@@ -45,9 +45,9 @@ const IdentityVerificationApp: React.FC<Props> = ({ me, relay }) => {
   }
   const trackClickedContinueToVerification = () => {
     trackEvent({
-      context_page_owner_id: identityVerification.internalID,
       action_type: Schema.ActionType.ClickedContinueToIdVerification,
       context_page: Schema.PageName.IdentityVerificationPage,
+      context_page_owner_id: identityVerification.internalID,
     })
   }
 
@@ -74,10 +74,6 @@ const IdentityVerificationApp: React.FC<Props> = ({ me, relay }) => {
             }
           }
         `,
-        variables: {
-          input: { identityVerificationId: identityVerification.internalID },
-        },
-        onError: reject,
         onCompleted: (response, errors) => {
           if (errors && errors.length > 0) {
             reject(new Error(JSON.stringify(errors)))
@@ -96,6 +92,10 @@ const IdentityVerificationApp: React.FC<Props> = ({ me, relay }) => {
               resolve(identityVerificationFlowUrl)
             }
           }
+        },
+        onError: reject,
+        variables: {
+          input: { identityVerificationId: identityVerification.internalID },
         },
       })
     })
@@ -212,4 +212,3 @@ export const IdentityVerificationAppFragmentContainer = createFragmentContainer(
     `,
   }
 )
-export default IdentityVerificationAppFragmentContainer
