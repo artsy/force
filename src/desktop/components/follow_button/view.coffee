@@ -17,7 +17,7 @@ ArtistSuggestions = require './artist_suggestions.coffee'
   followedPartner,
   unfollowedPartner
 } = require "@artsy/cohesion"
-{ trackEvent } = require "../../analytics/helpers.ts"
+{ trackEvent } = require "../../../lib/analytics/helpers.ts"
 
 module.exports = class FollowButton extends Backbone.View
 

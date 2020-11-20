@@ -1,5 +1,5 @@
 StepView = require './step.coffee'
-{ setAnalyticsClientReferrerOptions } = require "../../../analytics/setAnalyticsClientReferrerOptions"
+{ setAnalyticsClientReferrerOptions } = require "../../../../lib/analytics/setAnalyticsClientReferrerOptions"
 template = -> require('../templates/how_can_we_help.jade') arguments...
 
 module.exports = class HowCanWeHelp extends StepView
