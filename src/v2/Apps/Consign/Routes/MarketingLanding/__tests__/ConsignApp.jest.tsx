@@ -1,5 +1,5 @@
 import React from "react"
-import ConsignApp from "../ConsignApp"
+import MarketingLandingApp from "../MarketingLandingApp"
 import { mount } from "enzyme"
 
 jest.mock("v2/Artsy/Analytics/AnalyticsContext", () => ({
@@ -53,9 +53,9 @@ jest.mock("v2/Components/Footer", () => ({
   Footer: () => <div />,
 }))
 
-describe("ConsignApp", () => {
+describe("MarketingLandingApp", () => {
   it("renders correct components", () => {
-    const wrapper = mount(<ConsignApp />)
+    const wrapper = mount(<MarketingLandingApp />)
     expect(wrapper.find("ConsignMeta").length).toBe(1)
     expect(wrapper.find("Header").length).toBe(1)
     expect(wrapper.find("SellArtDifferently").length).toBe(1)
@@ -72,7 +72,7 @@ describe("ConsignApp", () => {
   })
 
   it("shows temporary discount banner", () => {
-    const wrapper = mount(<ConsignApp />)
+    const wrapper = mount(<MarketingLandingApp />)
     expect(wrapper.find("TemporaryOffer").length).toBe(1)
   })
 })

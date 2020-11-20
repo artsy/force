@@ -6,11 +6,11 @@ export function formatCentsToDollars(value: number) {
   const CENTS_IN_DOLLAR = 100
 
   return new Intl.NumberFormat("en-US", {
-    style: "currency",
-
     // TODO: While artwork price insight stuff is all currently calculated
     // in dollars, we might need to return to this later.
     currency: "USD",
+
+    style: "currency",
   })
     .format(Math.round(value / CENTS_IN_DOLLAR))
     .replace(".00", "")

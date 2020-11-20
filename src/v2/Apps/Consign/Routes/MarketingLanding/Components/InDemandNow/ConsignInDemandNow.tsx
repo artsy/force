@@ -18,7 +18,7 @@ import { ConsignInDemandNowQuery } from "v2/__generated__/ConsignInDemandNowQuer
 import { ConsignTopArtists } from "./ConsignTopArtists"
 import styled from "styled-components"
 import { DemandRank } from "./DemandRank"
-import { formatCentsToDollars } from "../../Utils/formatCentsToDollars"
+import { formatCentsToDollars } from "v2/Apps/Consign/Routes/MarketingLanding/Utils/formatCentsToDollars"
 import { SectionContainer } from "../SectionContainer"
 import { Media } from "v2/Utils/Responsive"
 

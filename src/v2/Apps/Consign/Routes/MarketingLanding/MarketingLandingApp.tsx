@@ -1,5 +1,5 @@
 import React from "react"
-import { AppContainer } from "../Components/AppContainer"
+import { AppContainer } from "v2/Apps/Components/AppContainer"
 import { AnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
 import { ConsignMeta } from "./Components/ConsignMeta"
 import { Header } from "./Components/Header"
@@ -17,7 +17,7 @@ import { SectionContainer } from "./Components/SectionContainer"
 import { ArtworkCredits } from "./Components/ArtworkCredits"
 import { TemporaryOffer } from "./Components/TemporaryOffer"
 
-const ConsignApp = () => {
+const MarketingLandingApp = () => {
   return (
     <AnalyticsContext.Provider
       value={{
@@ -52,4 +52,5 @@ const ConsignApp = () => {
   )
 }
 
-export default ConsignApp
+// Export default for bundle splitting at route level
+export default MarketingLandingApp

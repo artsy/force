@@ -33,7 +33,9 @@ describe("ContactUs", () => {
 
   it("contains correct email in body", () => {
     const wrapper = getWrapper()
-    expect(wrapper.text()).toContain("Email us atconsign@artsy.net") // pull text minus divs
+    expect(wrapper.text()).toContain(
+      "Email us at consign@artsy.net or call +1-646-797-3423 for more information on how Artsy can sell your artwork."
+    ) // pull text minus divs
   })
 
   it("has correct email link", () => {

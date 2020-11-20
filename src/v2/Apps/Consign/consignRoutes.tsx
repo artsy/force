@@ -2,15 +2,17 @@
 import loadable from "@loadable/component"
 import { graphql } from "react-relay"
 
-const ConsignApp = loadable(() => import("./ConsignApp"))
-const OfferDetailApp = loadable(() => import("./OfferDetail/OfferDetailApp"))
+const MarketingLandingApp = loadable(() =>
+  import("./Routes/MarketingLanding/MarketingLandingApp")
+)
+const OfferDetailApp = loadable(() => import("./Routes/Offer/OfferDetailApp"))
 
 export const consignRoutes = [
   {
-    path: "/consign2",
-    getComponent: () => ConsignApp,
+    path: "/consign",
+    getComponent: () => MarketingLandingApp,
     prepare: () => {
-      ConsignApp.preload()
+      MarketingLandingApp.preload()
     },
   },
   {
