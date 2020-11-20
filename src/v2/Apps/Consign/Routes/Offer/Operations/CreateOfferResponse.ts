@@ -17,8 +17,6 @@ export const CreateOfferResponse = (
 ) => {
   return new Promise<CreateOfferResponseMutationResponse>((resolve, reject) => {
     commitMutation<CreateOfferResponseMutation>(relayEnvironment, {
-      onCompleted: (data, errors) => (errors ? reject(errors) : resolve(data)),
-      onError: reject,
       mutation: graphql`
         mutation CreateOfferResponseMutation(
           $input: CreateOfferResponseMutationInput!
@@ -30,10 +28,12 @@ export const CreateOfferResponse = (
           }
         }
       `,
+      onCompleted: (data, errors) => (errors ? reject(errors) : resolve(data)),
+      onError: reject,
       variables: {
         input: {
-          offerId: offerID,
           intendedState: values.intendedState,
+          offerId: offerID,
         },
       },
     })

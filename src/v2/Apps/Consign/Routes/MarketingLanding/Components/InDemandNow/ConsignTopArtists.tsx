@@ -14,7 +14,7 @@ import {
   Join,
   Spacer,
 } from "@artsy/palette"
-import { formatCentsToDollars } from "../../Utils/formatCentsToDollars"
+import { formatCentsToDollars } from "v2/Apps/Consign/Routes/MarketingLanding/Utils/formatCentsToDollars"
 
 type ArtworkProps = ConsignTopArtistsQuery["response"]["targetSupply"]["microfunnel"][0]["artworksConnection"]["edges"][0]["node"] & {
   realizedPriceAverage: string

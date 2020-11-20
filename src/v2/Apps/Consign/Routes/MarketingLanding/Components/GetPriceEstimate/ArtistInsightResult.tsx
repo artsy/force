@@ -1,6 +1,6 @@
 import React from "react"
 import { usePriceEstimateContext } from "./ConsignPriceEstimateContext"
-import { formatCentsToDollars } from "../../Utils/formatCentsToDollars"
+import { formatCentsToDollars } from "v2/Apps/Consign/Routes/MarketingLanding/Utils/formatCentsToDollars"
 
 import { Box, Button, Flex, Image, Spacer, Text, color } from "@artsy/palette"
 import styled from "styled-components"

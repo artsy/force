@@ -3,7 +3,7 @@ import React, { useEffect } from "react"
 import { Input, MagnifyingGlassIcon, Text, color } from "@artsy/palette"
 import { usePriceEstimateContext } from "./ConsignPriceEstimateContext"
 import { useTracking } from "react-tracking"
-import { Suggestion as ConsignSearchSuggestion } from "v2/Apps/Consign/Components/GetPriceEstimate/ConsignPriceEstimateContext"
+import { Suggestion as ConsignSearchSuggestion } from "v2/Apps/Consign/Routes/MarketingLanding/Components/GetPriceEstimate/ConsignPriceEstimateContext"
 
 import {
   ContextModule,
