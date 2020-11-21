@@ -131,7 +131,7 @@ describe("ConsignArtistAutosugggest", () => {
       it("#placeholder: renders correct placeholder text", () => {
         const { autosuggestWrapper } = setupTest()
         expect(autosuggestWrapper.props().inputProps.placeholder).toEqual(
-          "Tell me the value of my…"
+          "Search by artist name"
         )
       })
 

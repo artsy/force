@@ -24,8 +24,7 @@ export const HowToSell: React.FC = () => {
         variant="largeTitle"
         borderBottom={`1px solid ${color("black60")}`}
       >
-        3 Simple Steps:
-        <br /> How to sell artwork from your collection
+        How It Works
       </Text>
 
       <Flex
