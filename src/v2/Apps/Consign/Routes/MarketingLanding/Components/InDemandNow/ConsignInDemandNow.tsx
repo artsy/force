@@ -68,7 +68,7 @@ const ConsignInDemandNowQueryRenderer: React.FC = () => {
                   title
                   dimensionText
                   images {
-                    thumbnail {
+                    larger {
                       url
                       resized {
                         srcSet
@@ -138,113 +138,10 @@ const ConsignInDemandNowQueryRenderer: React.FC = () => {
   )
 }
 
-const InDemandNowSmall: React.FC<
-  ConsignInDemandNowQuery["response"]
-> = props => {
-  const IMAGE_SIZE = 100
-
-  // FIXME: Add skeleton loading state
-  if (!props?.marketPriceInsights || !props?.artist) {
-    return null
-  }
-
-  const {
-    artistName,
-    averageSalePrice,
-    birthday,
-    demandRank,
-    highRangeDollars,
-    lastAuctionResult,
-    medianSaleToEstimateRatio,
-    nationality,
-    sellThroughRate,
-  } = computeProps(props)
-
-  return (
-    <>
-      <Box>
-        <Text textAlign={"left"} variant="largeTitle">
-          {artistName}
-        </Text>
-        <Spacer mt={1} />
-        <Text variant="text">
-          {nationality}, b. {birthday}
-        </Text>
-        <Flex>
-          <BlueChipIcon width={15} height={15} fill="white100" mr={0.3} />{" "}
-          <Text variant="small">Blue Chip Representation</Text>
-        </Flex>
-
-        <Spacer mt={3} />
-      </Box>
-
-      <Flex justifyContent="space-between">
-        <Box>
-          <Box maxWidth={IMAGE_SIZE}>
-            <Image
-              src={lastAuctionResult.images.thumbnail.url}
-              srcSet={lastAuctionResult.images.thumbnail.resized.srcSet}
-              alt={lastAuctionResult.title}
-              width={IMAGE_SIZE}
-              height="auto"
-            />
-            <Spacer my={0.5} />
-            <TruncatedLine>
-              <Text variant="caption">
-                {lastAuctionResult.title}, {lastAuctionResult.dateText}
-              </Text>
-            </TruncatedLine>
-            <Text variant="caption">{lastAuctionResult.organization}</Text>
-          </Box>
-          <Box>
-            <Text color="black30">Realized Price</Text>
-            <Text variant="largeTitle">
-              {lastAuctionResult.priceRealized.display}
-            </Text>
-          </Box>
-        </Box>
-        <Box>
-          <Box>
-            <Text>Highest Realized Price</Text>
-            <Text variant="largeTitle">{highRangeDollars}</Text>
-          </Box>
-
-          <Spacer my={1} />
-
-          <Box>
-            <Text>Sell-Through Rate</Text>
-            <Text variant="largeTitle">{sellThroughRate}</Text>
-          </Box>
-
-          <Spacer my={1} />
-
-          <Box>
-            <Text>Realized Price/Estimate</Text>
-            {/* TODO: Follow-up on how real diffusion number (1.84) maps to designs (184%) */}
-            <Text variant="largeTitle">{medianSaleToEstimateRatio * 100}%</Text>
-          </Box>
-        </Box>
-      </Flex>
-
-      <Spacer mt={5} />
-      <DemandRank demandRank={demandRank} />
-      <Spacer mt={5} />
-
-      <Box textAlign="center">
-        <Box textAlign="left">
-          <Text>Average Sale Price, 2010–2020</Text>
-          <Text variant="largeTitle">{averageSalePrice}</Text>
-        </Box>
-        <AverageSalePriceChart />
-      </Box>
-    </>
-  )
-}
-
 const InDemandNowLarge: React.FC<
   ConsignInDemandNowQuery["response"]
 > = props => {
-  const IMAGE_WIDTH = 225
+  const IMAGE_SIZE = 225
 
   // FIXME: Add skeleton loading state
   if (!props?.marketPriceInsights || !props?.artist) {
@@ -295,7 +192,7 @@ const InDemandNowLarge: React.FC<
 
           <Box>
             <Text>Sell-Through Rate</Text>
-            <Text variant="largeTitle">{sellThroughRate}</Text>
+            <Text variant="largeTitle">{sellThroughRate}%</Text>
           </Box>
 
           <Spacer my={1} />
@@ -309,26 +206,34 @@ const InDemandNowLarge: React.FC<
         <Column span={[12, 12, 4]}>
           <Flex
             flexDirection="column"
-            maxWidth={IMAGE_WIDTH}
+            maxWidth={IMAGE_SIZE}
             ml="auto"
             mr="auto"
           >
             <Box>
               <Text>Recent Auction Result</Text>
-              <Text variant="largeTitle">
-                {lastAuctionResult.priceRealized.display}
-              </Text>
+              <Flex alignItems="baseline">
+                <Text variant="largeTitle">
+                  $176,400
+                  {/* FIXME: This data is null in diffusion */}
+                  {/* {lastAuctionResult.priceRealized.display} */}
+                </Text>
+                <Spacer mr={0.5} />
+                <Text>Realized price</Text>
+              </Flex>
             </Box>
+
+            <Spacer my={0.5} />
 
             <Box>
               <Image
-                src={lastAuctionResult.images.thumbnail.url}
-                srcSet={lastAuctionResult.images.thumbnail.resized.srcSet}
+                src={lastAuctionResult.images.larger.url}
+                srcSet={lastAuctionResult.images.larger.resized.srcSet}
                 alt={lastAuctionResult.title}
-                width={IMAGE_WIDTH}
+                width={IMAGE_SIZE}
                 height="auto"
               />
-              <Spacer my={0.5} />
+              <Spacer my={1} />
               <TruncatedLine>
                 <Text variant="caption">
                   {lastAuctionResult.title}, {lastAuctionResult.dateText}
@@ -348,6 +253,112 @@ const InDemandNowLarge: React.FC<
           </Flex>
         </Column>
       </GridColumns>
+    </>
+  )
+}
+
+const InDemandNowSmall: React.FC<
+  ConsignInDemandNowQuery["response"]
+> = props => {
+  const IMAGE_SIZE = 100
+
+  // FIXME: Add skeleton loading state
+  if (!props?.marketPriceInsights || !props?.artist) {
+    return null
+  }
+
+  const {
+    artistName,
+    averageSalePrice,
+    birthday,
+    demandRank,
+    highRangeDollars,
+    lastAuctionResult,
+    medianSaleToEstimateRatio,
+    nationality,
+    sellThroughRate,
+  } = computeProps(props)
+
+  return (
+    <>
+      <Box>
+        <Text textAlign={"left"} variant="largeTitle">
+          {artistName}
+        </Text>
+        <Spacer mt={1} />
+        <Text variant="text">
+          {nationality}, b. {birthday}
+        </Text>
+        <Flex>
+          <BlueChipIcon width={15} height={15} fill="white100" mr={0.3} />{" "}
+          <Text variant="small">Blue Chip Representation</Text>
+        </Flex>
+
+        <Spacer mt={3} />
+      </Box>
+
+      <Flex justifyContent="space-between">
+        <Box>
+          <Box maxWidth={IMAGE_SIZE}>
+            <Image
+              src={lastAuctionResult.images.larger.url}
+              srcSet={lastAuctionResult.images.larger.resized.srcSet}
+              alt={lastAuctionResult.title}
+              width={IMAGE_SIZE}
+              height="auto"
+            />
+            <Spacer my={0.5} />
+            <TruncatedLine>
+              <Text variant="caption">
+                {lastAuctionResult.title}, {lastAuctionResult.dateText}
+              </Text>
+            </TruncatedLine>
+            <Text variant="caption">{lastAuctionResult.organization}</Text>
+          </Box>
+          <Spacer my={1} />
+          <Box>
+            <Text variant="largeTitle">
+              $176,400
+              {/* FIXME: This data is null in diffusion */}
+              {/* {lastAuctionResult.priceRealized.display} */}
+            </Text>
+            <Text color="black30">Realized Price</Text>
+          </Box>
+        </Box>
+        <Box>
+          <Box>
+            <Text>Highest Realized Price</Text>
+            <Text variant="largeTitle">{highRangeDollars}</Text>
+          </Box>
+
+          <Spacer my={1} />
+
+          <Box>
+            <Text>Sell-Through Rate</Text>
+            <Text variant="largeTitle">{sellThroughRate}%</Text>
+          </Box>
+
+          <Spacer my={1} />
+
+          <Box>
+            <Text>Realized Price/Estimate</Text>
+            {/* TODO: Follow-up on how real diffusion number (1.84) maps to designs (184%) */}
+            <Text variant="largeTitle">{medianSaleToEstimateRatio * 100}%</Text>
+          </Box>
+        </Box>
+      </Flex>
+
+      <Spacer mt={5} />
+      <DemandRank demandRank={demandRank} />
+      <Spacer mt={5} />
+
+      <Box textAlign="center">
+        <Box textAlign="left">
+          <Text>Average Sale Price, 2010–2020</Text>
+          <Text variant="largeTitle">{averageSalePrice}</Text>
+        </Box>
+        <AverageSalePriceChart />
+      </Box>
     </>
   )
 }

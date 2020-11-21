@@ -89,7 +89,7 @@ export const ConsignArtistAutosuggest: React.FC = () => {
           setSearchQuery(newValue)
         },
         onFocus: trackFocusedOnSearchInput,
-        placeholder: "Tell me the value of my…",
+        placeholder: "Search by artist name",
         value: searchQuery,
       }}
       theme={{

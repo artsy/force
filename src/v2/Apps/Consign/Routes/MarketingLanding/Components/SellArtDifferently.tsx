@@ -20,7 +20,7 @@ export const SellArtDifferently: React.FC = () => {
         variant="largeTitle"
         borderBottom={`1px solid ${color("black60")}`}
       >
-        Selling Art Differently
+        A Smarter, Faster Way to Sell Your Art
       </Text>
 
       <Flex

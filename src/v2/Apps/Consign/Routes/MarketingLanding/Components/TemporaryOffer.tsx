@@ -12,8 +12,8 @@ export const TemporaryOffer: React.FC = () => {
   return (
     <SectionContainer bg="black100" py={3}>
       <Text variant="subtitle" color="white100" textAlign="center">
-        Now through November 30, 2020 — we are offering 0% commission on any
-        work sold with Artsy.
+        Now through December 31, 2020 — we are offering 0% commission on any
+        work sold with Artsy
       </Text>
     </SectionContainer>
   )

@@ -18,7 +18,7 @@ export type ConsignInDemandNowQueryResponse = {
                     readonly title: string | null;
                     readonly dimensionText: string | null;
                     readonly images: {
-                        readonly thumbnail: {
+                        readonly larger: {
                             readonly url: string | null;
                             readonly resized: {
                                 readonly srcSet: string;
@@ -88,7 +88,7 @@ query ConsignInDemandNowQuery(
           title
           dimensionText
           images {
-            thumbnail {
+            larger {
               url
               resized {
                 srcSet
@@ -227,7 +227,7 @@ v8 = {
       "args": null,
       "concreteType": "Image",
       "kind": "LinkedField",
-      "name": "thumbnail",
+      "name": "larger",
       "plural": false,
       "selections": [
         {
@@ -655,9 +655,9 @@ return {
     "metadata": {},
     "name": "ConsignInDemandNowQuery",
     "operationKind": "query",
-    "text": "query ConsignInDemandNowQuery(\n  $artistInternalId: ID!\n  $artistSlug: String!\n  $medium: String!\n) {\n  artist(id: $artistSlug) {\n    birthday\n    nationality\n    auctionResultsConnection(first: 1, sort: DATE_DESC) {\n      edges {\n        node {\n          internalID\n          title\n          dimensionText\n          images {\n            thumbnail {\n              url\n              resized {\n                srcSet\n              }\n            }\n          }\n          description\n          dateText\n          organization\n          saleDate\n          priceRealized {\n            display\n            centsUSD\n          }\n          id\n        }\n      }\n    }\n    id\n  }\n  marketPriceInsights(artistId: $artistInternalId, medium: $medium) {\n    annualLotsSold\n    annualValueSoldCents\n    artistId\n    artistName\n    artsyQInventory\n    createdAt\n    demandRank\n    demandTrend\n    highRangeCents\n    largeHighRangeCents\n    largeLowRangeCents\n    largeMidRangeCents\n    liquidityRank\n    lowRangeCents\n    medianSaleToEstimateRatio\n    medium\n    mediumHighRangeCents\n    mediumLowRangeCents\n    mediumMidRangeCents\n    midRangeCents\n    sellThroughRate\n    smallHighRangeCents\n    smallLowRangeCents\n    smallMidRangeCents\n    updatedAt\n  }\n}\n"
+    "text": "query ConsignInDemandNowQuery(\n  $artistInternalId: ID!\n  $artistSlug: String!\n  $medium: String!\n) {\n  artist(id: $artistSlug) {\n    birthday\n    nationality\n    auctionResultsConnection(first: 1, sort: DATE_DESC) {\n      edges {\n        node {\n          internalID\n          title\n          dimensionText\n          images {\n            larger {\n              url\n              resized {\n                srcSet\n              }\n            }\n          }\n          description\n          dateText\n          organization\n          saleDate\n          priceRealized {\n            display\n            centsUSD\n          }\n          id\n        }\n      }\n    }\n    id\n  }\n  marketPriceInsights(artistId: $artistInternalId, medium: $medium) {\n    annualLotsSold\n    annualValueSoldCents\n    artistId\n    artistName\n    artsyQInventory\n    createdAt\n    demandRank\n    demandTrend\n    highRangeCents\n    largeHighRangeCents\n    largeLowRangeCents\n    largeMidRangeCents\n    liquidityRank\n    lowRangeCents\n    medianSaleToEstimateRatio\n    medium\n    mediumHighRangeCents\n    mediumLowRangeCents\n    mediumMidRangeCents\n    midRangeCents\n    sellThroughRate\n    smallHighRangeCents\n    smallLowRangeCents\n    smallMidRangeCents\n    updatedAt\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '569806281f642e911fd414a3f0ffc263';
+(node as any).hash = 'f54709154acdcdc5085aa6cb22ccf421';
 export default node;
