@@ -62,6 +62,7 @@ const HeaderImageContainer = styled(Flex).attrs({
   height: 100%;
   position: absolute;
   margin: auto;
+  max-width: 1670px;
 `
 
 const LeftImage = styled(Box)`
