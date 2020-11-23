@@ -2,6 +2,7 @@
 // TODO: Export a function instead of loading on import.
 import "./lib/setup_sharify"
 
+import artsyPassport from "@artsy/passport"
 import addRequestId from "express-request-id"
 import compression from "compression"
 import cookieParser from "cookie-parser"
@@ -18,8 +19,22 @@ import { hstsMiddleware } from "./lib/middleware/hsts"
 import { ipFilter } from "./lib/middleware/ipFilter"
 import { sessionMiddleware } from "./lib/middleware/session"
 import config from "./config"
+import { assetMiddleware } from "./lib/middleware/asset"
+import { unlessStartsWith } from "./lib/middleware/unless"
+import bodyParser from "body-parser"
+import { csrfTokenMiddleware } from "./lib/middleware/csrfToken"
 
-const { APP_TIMEOUT, IP_DENYLIST, NODE_ENV } = config
+const CurrentUser = require("./lib/current_user.coffee")
+
+const {
+  APP_TIMEOUT,
+  IP_DENYLIST,
+  NODE_ENV,
+  CLIENT_ID,
+  CLIENT_SECRET,
+  API_URL,
+  SEGMENT_WRITE_KEY_SERVER,
+} = config
 
 function securityMiddleware(app) {
   // Denied IPs
@@ -51,6 +66,41 @@ function securityMiddleware(app) {
 
   // Session cookie
   app.use(sessionMiddleware())
+
+  // JSON Body Parser is required for getting the `_csurf` token for passport.
+  app.use(bodyParser.json())
+  app.use(bodyParser.urlencoded({ extended: true }))
+
+  // Passport middleware for authentication.
+  app.use(
+    artsyPassport({
+      ...config,
+      ...{
+        ARTSY_ID: CLIENT_ID,
+        ARTSY_SECRET: CLIENT_SECRET,
+        ARTSY_URL: API_URL,
+        CurrentUser: CurrentUser,
+        SEGMENT_WRITE_KEY: SEGMENT_WRITE_KEY_SERVER,
+        userKeys: [
+          "collector_level",
+          "default_profile_id",
+          "email",
+          "has_partner_access",
+          "id",
+          "lab_features",
+          "name",
+          "paddle_number",
+          "phone",
+          "roles",
+          "type",
+        ],
+      },
+    })
+  )
+
+  // Add CSRF to the cookie and remove it from the page. This will allows the
+  // caching on the html and is used by the Login Modal to make secure requests.
+  app.use(csrfTokenMiddleware)
 }
 
 function staticAssetMiddlewares(app) {
@@ -69,12 +119,19 @@ function staticAssetMiddlewares(app) {
 }
 
 export default function commonMiddlewareSetup(app) {
-  // Ensure basic security settings
-  securityMiddleware(app)
-
   // Inject sharify data and asset middleware before any app code so that when
   // crashing errors occur we'll at least get a 500 error page.
+
+  // Attach sharify object to `locals` because almost all other middleware
+  // relies on it existing.
   app.use(sharify)
+
+  // Static asset routing, required for all legacy code and must come early
+  // because `local.asset` is required to render the error page.
+  app.use(unlessStartsWith("/novo", assetMiddleware()))
+
+  // Ensure basic security settings
+  securityMiddleware(app)
 
   // Ensure all responses are gzip compressed
   app.use(compression())

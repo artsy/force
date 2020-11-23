@@ -20,6 +20,7 @@ import {
 } from "v2/Utils/Responsive"
 import { AnalyticsContext } from "../Analytics/AnalyticsContext"
 import { ClientContext } from "desktop/lib/buildClientAppContext"
+import { FlashMessage } from "v2/Components/Modal/FlashModal"
 
 export interface BootProps {
   children: React.ReactNode
@@ -75,6 +76,7 @@ export const Boot = track(null, {
                   >
                     <Grid fluid maxWidth="100%">
                       <GlobalStyles />
+                      <FlashMessage />
                       <FocusVisible />
                       {children}
                       {process.env.NODE_ENV === "development" && (

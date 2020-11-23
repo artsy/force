@@ -2,7 +2,6 @@ import React from "react"
 import ReactDOM from "react-dom"
 import { AuthStatic } from "../components/AuthStatic"
 import { MobileAuthStatic } from "../components/MobileAuthStatic"
-import { ModalContainer } from "../components/ModalContainer"
 import { setCookies } from "../helpers"
 import { data as sd } from "sharify"
 
@@ -17,13 +16,5 @@ export const init = () => {
 
     // Start app
     ReactDOM.hydrate(<Component {...bootstrapData} />, el)
-  }
-}
-
-export const initModalManager = () => {
-  const el = document.getElementById("react-modal-container")
-
-  if (el) {
-    ReactDOM.render(<ModalContainer />, el)
   }
 }

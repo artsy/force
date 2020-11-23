@@ -4,7 +4,7 @@ import { getENV } from "v2/Utils/getENV"
 import { ModalDialog } from "./ModalDialog"
 import { ModalWidth } from "./ModalWrapper"
 
-interface ErrorModalProps {
+export interface ErrorModalProps {
   show?: boolean
   headerText?: string
   detailText?: string
@@ -17,8 +17,8 @@ interface ErrorModalProps {
 
 export class ErrorModal extends React.Component<ErrorModalProps> {
   static defaultProps = {
-    headerText: "An error occurred",
     closeText: "Continue",
+    headerText: "An error occurred",
   }
 
   close = () => {

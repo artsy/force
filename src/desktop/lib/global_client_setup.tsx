@@ -7,7 +7,7 @@ import * as Sentry from "@sentry/browser"
 import { data as sd } from "sharify"
 import * as globalReactModules from "./global_react_modules"
 import { hydrate as hydrateStitch } from "@artsy/stitch/dist/internal/hydrate"
-import { initModalManager } from "desktop/apps/authentication/client/index"
+import { initModalManager } from "desktop/apps/authentication/client/initModalManager"
 import { Components } from "@artsy/stitch/dist/internal/types"
 import { omit } from "lodash"
 import syncAuth from "lib/syncAuth"
@@ -41,8 +41,10 @@ export function globalClientSetup() {
 export const logoutEventHandler = (options?: LogoutEventOptions) => {
   const redirectPath = options?.redirectPath
   $.ajax({
-    url: "/users/sign_out",
-    type: "DELETE",
+    error(_xhr, _status, errorMessage) {
+      // tslint:disable-next-line:no-unused-expression
+      new FlashMessage({ message: errorMessage })
+    },
     success() {
       if (window.analytics && window.analytics.reset) {
         // guard for aggressive ad blockers
@@ -54,10 +56,8 @@ export const logoutEventHandler = (options?: LogoutEventOptions) => {
         location.reload()
       }
     },
-    error(_xhr, _status, errorMessage) {
-      // tslint:disable-next-line:no-unused-expression
-      new FlashMessage({ message: errorMessage })
-    },
+    type: "DELETE",
+    url: "/users/sign_out",
   })
 }
 
@@ -94,9 +94,9 @@ function setupJquery() {
     return setTimeout(() => $el.css({ display: "" }), 200)
   }
   $.ajaxSettings.headers = {
-    "X-XAPP-TOKEN": sd.ARTSY_XAPP_TOKEN,
     "X-ACCESS-TOKEN":
       sd.CURRENT_USER != null ? sd.CURRENT_USER.accessToken : undefined,
+    "X-XAPP-TOKEN": sd.ARTSY_XAPP_TOKEN,
   }
   for (let key in templateModules) {
     const helper = templateModules[key]
@@ -120,8 +120,8 @@ function setupErrorReporting() {
 
 function mountStitchComponents() {
   hydrateStitch({
-    sharifyData: sd,
     modules: globalReactModules as Components,
+    sharifyData: sd,
     wrapper: globalReactModules.StitchWrapper,
   })
 }
