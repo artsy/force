@@ -64,49 +64,49 @@ export const logger = createLogger("Order/Routes/Respond/index.tsx")
 @track()
 export class RespondRoute extends Component<RespondProps, RespondState> {
   state: RespondState = {
-    offerValue: 0,
-    offerNoteValue: { value: "", exceedsCharacterLimit: false },
-    responseOption: null,
     formIsDirty: false,
-    lowSpeedBumpEncountered: false,
     highSpeedBumpEncountered: false,
+    lowSpeedBumpEncountered: false,
+    offerNoteValue: { exceedsCharacterLimit: false, value: "" },
+    offerValue: 0,
+    responseOption: null,
   }
 
   @track<RespondProps>(props => ({
-    order_id: props.order.internalID,
     action_type: Schema.ActionType.FocusedOnOfferInput,
     flow: Schema.Flow.MakeOffer,
+    order_id: props.order.internalID,
   }))
   onOfferInputFocus() {
     // noop
   }
 
   @track<RespondProps>(props => ({
-    order_id: props.order.internalID,
     action_type: Schema.ActionType.ViewedOfferTooLow,
     flow: Schema.Flow.MakeOffer,
+    order_id: props.order.internalID,
   }))
   showLowSpeedbump() {
     this.setState({ lowSpeedBumpEncountered: true })
     this.props.dialog.showErrorDialog({
-      title: "Offer may be too low",
+      continueButtonText: "OK",
       message:
         "Offers within 25% of the seller's offer are most likely to receive a response.",
-      continueButtonText: "OK",
+      title: "Offer may be too low",
     })
   }
 
   @track<RespondProps>(props => ({
-    order_id: props.order.internalID,
     action_type: Schema.ActionType.ViewedOfferHigherThanListPrice,
     flow: Schema.Flow.MakeOffer,
+    order_id: props.order.internalID,
   }))
   showHighSpeedbump() {
     this.setState({ highSpeedBumpEncountered: true })
     this.props.dialog.showErrorDialog({
-      title: "Offer higher than seller's offer",
-      message: "You’re making an offer higher than the seller's offer.",
       continueButtonText: "OK",
+      message: "You’re making an offer higher than the seller's offer.",
+      title: "Offer higher than seller's offer",
     })
   }
 
@@ -161,9 +161,9 @@ export class RespondRoute extends Component<RespondProps, RespondState> {
       const orderOrError = (
         await this.createCounterOffer({
           input: {
-            offerId: this.props.order.lastOffer.internalID,
             amountCents: this.state.offerValue * 100,
             note: this.state.offerNoteValue && this.state.offerNoteValue.value,
+            offerId: this.props.order.lastOffer.internalID,
           },
         })
       ).commerceBuyerCounterOffer.orderOrError
@@ -183,7 +183,6 @@ export class RespondRoute extends Component<RespondProps, RespondState> {
 
   createCounterOffer(variables: RespondCounterOfferMutation["variables"]) {
     return this.props.commitMutation<RespondCounterOfferMutation>({
-      variables,
       // TODO: Inputs to the mutation might have changed case of the keys!
       mutation: graphql`
         mutation RespondCounterOfferMutation(
@@ -207,6 +206,8 @@ export class RespondRoute extends Component<RespondProps, RespondState> {
           }
         }
       `,
+
+      variables,
     })
   }
 
@@ -364,8 +365,6 @@ export const RespondFragmentContainer = createFragmentContainer(
         currencyCode
         itemsTotal(precision: 2)
         itemsTotalCents
-        totalListPrice(precision: 2)
-        totalListPriceCents
         stateExpiresAt
         lineItems {
           edges {

@@ -12,7 +12,8 @@ const OfferHistoryItem: React.SFC<
   {
     order: OfferHistoryItem_order
   } & StepSummaryItemProps
-> = ({ order: { totalListPrice, lastOffer, offers }, ...others }) => {
+> = ({ order: { lastOffer, offers, lineItems }, ...others }) => {
+  const offerItem = lineItems.edges[0].node.artworkOrEditionSet
   const previousOffers = offers.edges.filter(
     ({ node: { internalID } }) => internalID !== lastOffer.internalID
   )
@@ -32,7 +33,7 @@ const OfferHistoryItem: React.SFC<
       <Row>
         <div />
         <Sans size="2" color="black60">
-          List price: {totalListPrice}
+          List price: {(offerItem as any).price}
         </Sans>
       </Row>
       {lastOffer.note && (
@@ -91,6 +92,21 @@ export const OfferHistoryItemFragmentContainer = createFragmentContainer(
   {
     order: graphql`
       fragment OfferHistoryItem_order on CommerceOrder {
+        lineItems {
+          edges {
+            node {
+              artworkOrEditionSet {
+                __typename
+                ... on Artwork {
+                  price
+                }
+                ... on EditionSet {
+                  price
+                }
+              }
+            }
+          }
+        }
         ... on CommerceOfferOrder {
           offers {
             edges {
@@ -111,7 +127,6 @@ export const OfferHistoryItemFragmentContainer = createFragmentContainer(
             note
           }
         }
-        totalListPrice(precision: 2)
       }
     `,
   }

@@ -22,7 +22,7 @@ const emDash = "—"
 
 export class TransactionDetailsSummaryItem extends React.Component<
   TransactionDetailsSummaryItemProps
-  > {
+> {
   static defaultProps: Partial<TransactionDetailsSummaryItemProps> = {
     offerContextPrice: "LIST_PRICE",
   }
@@ -89,6 +89,7 @@ export class TransactionDetailsSummaryItem extends React.Component<
     const offer = this.getOffer()
     const isBuyerOffer =
       offerOverride != null || !offer || offer.fromParticipant === "BUYER"
+    const offerItem = order.lineItems.edges[0].node.artworkOrEditionSet
 
     return (
       <>
@@ -97,18 +98,18 @@ export class TransactionDetailsSummaryItem extends React.Component<
           value={offerOverride || (offer && offer.amount) || emDash}
         />
         {offerContextPrice === "LIST_PRICE" ? (
-          <SecondaryEntry label="List price" value={order.totalListPrice} />
+          <SecondaryEntry label="List price" value={(offerItem as any).price} />
         ) : (
-            // show last offer
-            <SecondaryEntry
-              label={
-                order.lastOffer.fromParticipant === "SELLER"
-                  ? "Seller's offer"
-                  : "Your offer"
-              }
-              value={order.lastOffer.amount}
-            />
-          )}
+          // show last offer
+          <SecondaryEntry
+            label={
+              order.lastOffer.fromParticipant === "SELLER"
+                ? "Seller's offer"
+                : "Your offer"
+            }
+            value={order.lastOffer.amount}
+          />
+        )}
       </>
     )
   }
@@ -197,13 +198,29 @@ export const TransactionDetailsSummaryItemFragmentContainer = createFragmentCont
     order: graphql`
       fragment TransactionDetailsSummaryItem_order on CommerceOrder {
         __typename
+        lineItems {
+          edges {
+            node {
+              artworkOrEditionSet {
+                __typename
+                ... on Artwork {
+                  price
+                  displayPriceRange
+                }
+                ... on EditionSet {
+                  price
+                  displayPriceRange
+                }
+              }
+            }
+          }
+        }
         mode
         shippingTotal(precision: 2)
         shippingTotalCents
         taxTotal(precision: 2)
         taxTotalCents
         itemsTotal(precision: 2)
-        totalListPrice(precision: 2)
         buyerTotal(precision: 2)
         ... on CommerceOfferOrder {
           lastOffer {

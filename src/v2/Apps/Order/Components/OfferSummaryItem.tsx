@@ -6,6 +6,7 @@ import {
 } from "v2/Components/StepSummaryItem"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
+import { get } from "v2/Utils/get"
 
 const OfferSummaryItem = ({
   order,
@@ -14,6 +15,11 @@ const OfferSummaryItem = ({
   order: OfferSummaryItem_order
 } & StepSummaryItemProps) => {
   const offerNote = order.myLastOffer.note
+  const offerItem = get(
+    {},
+    props => order.lineItems.edges[0].node.artworkOrEditionSet
+  )
+  console.log(offerItem)
 
   return (
     <StepSummaryItem title="Your offer" {...others}>
@@ -21,7 +27,7 @@ const OfferSummaryItem = ({
         {order.myLastOffer.amount}
       </Serif>
       <Sans size="2" color="black60">
-        List price: {order.totalListPrice}
+        List price: {(offerItem as any).price}
       </Sans>
       {offerNote && (
         <>
@@ -43,7 +49,23 @@ export const OfferSummaryItemFragmentContainer = createFragmentContainer(
   {
     order: graphql`
       fragment OfferSummaryItem_order on CommerceOrder {
-        totalListPrice(precision: 2)
+        lineItems {
+          edges {
+            node {
+              artworkOrEditionSet {
+                __typename
+                ... on Artwork {
+                  price
+                  displayPriceRange
+                }
+                ... on EditionSet {
+                  price
+                  displayPriceRange
+                }
+              }
+            }
+          }
+        }
         ... on CommerceOfferOrder {
           myLastOffer {
             amount(precision: 2)
