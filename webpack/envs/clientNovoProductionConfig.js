@@ -9,141 +9,6 @@ const TerserPlugin = require("terser-webpack-plugin")
 const webpack = require("webpack")
 const WebpackManifestPlugin = require("webpack-manifest-plugin")
 const LoadablePlugin = require("@loadable/webpack-plugin")
-const crypto = require("crypto")
-
-const splits = {
-  current: {
-    cacheGroups: {
-      "arsty-common": {
-        chunks: "all",
-        enforce: true,
-        minChunks: 5,
-        minSize: 0,
-        name: "artsy-common",
-        reuseExistingChunk: true,
-        test: /.*src[\\/]/,
-      },
-      artsy: {
-        chunks: "all",
-        enforce: true,
-        minChunks: 1,
-        minSize: 0,
-        name: "artsy",
-        reuseExistingChunk: true,
-        test: /.*node_modules[\\/](@artsy)[\\/]/,
-      },
-      "common-backbone": {
-        chunks: "all",
-        enforce: true,
-        minChunks: 1,
-        minSize: 0,
-        name: "common-backbone",
-        reuseExistingChunk: true,
-        test: /.*node_modules[\\/](backbone.*)[\\/]/,
-      },
-      "common-jquery": {
-        chunks: "all",
-        enforce: true,
-        minChunks: 1,
-        minSize: 0,
-        name: "common-jquery",
-        reuseExistingChunk: true,
-        test: /.*node_modules[\\/](jquery.*)[\\/]/,
-      },
-      "common-react": {
-        chunks: "all",
-        enforce: true,
-        minChunks: 1,
-        minSize: 0,
-        name: "common-react",
-        reuseExistingChunk: true,
-        test: /.*node_modules[\\/](react|react-dom)[\\/]/,
-      },
-      "common-utility": {
-        chunks: "all",
-        enforce: true,
-        minChunks: 1,
-        minSize: 0,
-        name: "common-utility",
-        reuseExistingChunk: true,
-        test: /.*node_modules[\\/](lodash.*|moment.*)[\\/]/,
-      },
-      commons: {
-        chunks: "all",
-        enforce: true,
-        minChunks: 2,
-        minSize: 0,
-        name: "common",
-        reuseExistingChunk: true,
-        test: /.*node_modules[\\/](?!(@artsy[\\/]|react[\\/]|react-dom[\\/]|backbone.*[\\/]|lodash.*[\\/]|moment.*[\\/]|jquery.*[\\/]))/,
-      },
-    },
-    maxInitialRequests: Infinity,
-  },
-  prodGranular: {
-    cacheGroups: {
-      commons: {
-        chunks: "all",
-        minChunks: 8,
-        name: "commons",
-        priority: 20,
-      },
-      default: false,
-      framework: {
-        chunks: "all",
-        name: "framework",
-        priority: 40,
-        test: /[\\/]node_modules[\\/](react|react-dom|scheduler|prop-types)[\\/]/,
-      },
-      lib: {
-        minChunks: 1,
-        name(module) {
-          const rawRequest =
-            module.rawRequest &&
-            module.rawRequest.replace(/^@(\w+)[/\\]/, "$1-")
-          if (rawRequest) return rawRequest
-
-          const identifier = module.identifier()
-          const trimmedIdentifier = /(?:^|[/\\])node_modules[/\\](.*)/.exec(
-            identifier
-          )
-          const processedIdentifier =
-            trimmedIdentifier &&
-            trimmedIdentifier[1].replace(/^@(\w+)[/\\]/, "$1-")
-
-          return processedIdentifier || identifier
-        },
-        priority: 30,
-        reuseExistingChunk: true,
-        test(module) {
-          return (
-            module.size() > 160000 &&
-            /node_modules[/\\]/.test(module.identifier())
-          )
-        },
-      },
-      shared: {
-        minChunks: 2,
-        name(module, chunks) {
-          return crypto
-            .createHash("sha1")
-            .update(
-              chunks.reduce((acc, chunk) => {
-                return acc + chunk.name
-              }, "")
-            )
-            .digest("base64")
-            .replace(/\//g, "")
-        },
-        priority: 10,
-        reuseExistingChunk: true,
-      },
-      vendors: false,
-    },
-    chunks: "all",
-    maxInitialRequests: 20,
-  },
-}
 
 export const clientNovoProductionConfig = {
   devtool: "source-map",
@@ -219,7 +84,74 @@ export const clientNovoProductionConfig = {
     ],
     // Extract webpack runtime code into it's own file
     runtimeChunk: "single",
-    splitChunks: splits.prodGranular,
+    splitChunks: {
+      cacheGroups: {
+        "arsty-common": {
+          name: "artsy-common",
+          chunks: "all",
+          test: /.*src[\\/]/,
+          minChunks: 5,
+          enforce: true,
+          minSize: 0,
+          reuseExistingChunk: true,
+        },
+        artsy: {
+          name: "artsy",
+          chunks: "all",
+          test: /.*node_modules[\\/](@artsy)[\\/]/,
+          minChunks: 1,
+          enforce: true,
+          minSize: 0,
+          reuseExistingChunk: true,
+        },
+        "common-backbone": {
+          chunks: "all",
+          name: "common-backbone",
+          minChunks: 1,
+          test: /.*node_modules[\\/](backbone.*)[\\/]/,
+          enforce: true,
+          minSize: 0,
+          reuseExistingChunk: true,
+        },
+        "common-jquery": {
+          chunks: "all",
+          name: "common-jquery",
+          minChunks: 1,
+          test: /.*node_modules[\\/](jquery.*)[\\/]/,
+          enforce: true,
+          minSize: 0,
+          reuseExistingChunk: true,
+        },
+        "common-react": {
+          chunks: "all",
+          name: "common-react",
+          minChunks: 1,
+          test: /.*node_modules[\\/](react|react-dom)[\\/]/,
+          enforce: true,
+          minSize: 0,
+          reuseExistingChunk: true,
+        },
+        "common-utility": {
+          chunks: "all",
+          name: "common-utility",
+          minChunks: 1,
+          test: /.*node_modules[\\/](lodash.*|moment.*)[\\/]/,
+          enforce: true,
+          minSize: 0,
+          reuseExistingChunk: true,
+        },
+        commons: {
+          chunks: "all",
+          name: "common",
+          minChunks: 2,
+          test: /.*node_modules[\\/](?!(@artsy[\\/]|react[\\/]|react-dom[\\/]|backbone.*[\\/]|lodash.*[\\/]|moment.*[\\/]|jquery.*[\\/]))/,
+          enforce: true,
+          minSize: 0,
+          reuseExistingChunk: true,
+        },
+      },
+      maxInitialRequests: Infinity,
+    },
   },
   output: {
     filename: "novo-[name].js",
