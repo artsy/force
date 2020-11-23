@@ -1,6 +1,8 @@
 import { DateTime } from "luxon"
 import { stripTags } from "underscore.string"
-import { CalendarEventProps } from "v2/Components/AddToCalendar/AddToCalendar"
+import { CalendarEventProps as CalendarEventComponentProps } from "v2/Components/AddToCalendar/AddToCalendar"
+
+type CalendarEventProps = Omit<CalendarEventComponentProps, "contextModule">
 
 /** @returns URL to create a new Google Calendar event */
 export const generateGoogleCalendarUrl = ({

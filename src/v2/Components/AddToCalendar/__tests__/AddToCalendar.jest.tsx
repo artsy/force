@@ -2,22 +2,43 @@ import React from "react"
 import { mount } from "enzyme"
 import { AddToCalendar, CalendarEventProps } from "../AddToCalendar"
 import { MenuItem } from "@artsy/palette"
+import { ContextModule, OwnerType } from "@artsy/cohesion"
+import { AnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
+import { useTracking } from "react-tracking"
 
 describe("AddToCalendar", () => {
   let props: CalendarEventProps
+  let trackEvent
 
   beforeEach(() => {
+    trackEvent = jest.fn()
+    ;(useTracking as jest.Mock).mockImplementation(() => {
+      return {
+        trackEvent,
+      }
+    })
     props = {
+      contextModule: ContextModule.auctionHome,
+      description: "Artsy presents an auction.",
       endDate: new Date("2024-01-11").toISOString(),
       href: "http://artsy.net/auction/auction-slug",
       startDate: new Date("2024-01-10").toISOString(),
       title: "Heritage: Signature Urban Art",
-      description: "Artsy presents an auction.",
     }
   })
 
   const getWrapper = (passedProps = props) =>
-    mount(<AddToCalendar {...passedProps} />)
+    mount(
+      <AnalyticsContext.Provider
+        value={{
+          contextPageOwnerId: "context-page-owner-id",
+          contextPageOwnerSlug: "context-page-owner-slug",
+          contextPageOwnerType: OwnerType.artist,
+        }}
+      >
+        <AddToCalendar {...passedProps} />
+      </AnalyticsContext.Provider>
+    )
 
   it("Open/closes menu", () => {
     const wrapper = getWrapper()
@@ -63,5 +84,19 @@ describe("AddToCalendar", () => {
     expect(href).toContain(
       "ADTSTART:20240110T000000Z%0ADTEND:20240111T000000Z%0ASUMMARY:Heritage:%20Signature%20Urban%20Art%0AURL:http://artsy.net/auction/auction-slug%0AURL:%0ADESCRIPTION:Artsy%20presents%20an%20auction.%0ALOCATION:%0AEND:VEVENT%0AEND:VCALENDAR"
     )
+  })
+
+  it("tracks link clicks", () => {
+    const wrapper = getWrapper()
+    wrapper.find("button").simulate("click")
+    wrapper.find(MenuItem).at(0).simulate("click")
+    expect(trackEvent).toBeCalledWith({
+      action: "addToCalendar",
+      context_module: "auctionHome",
+      context_owner_id: "context-page-owner-id",
+      context_owner_slug: "context-page-owner-slug",
+      context_owner_type: "artist",
+      subject: "google",
+    })
   })
 })

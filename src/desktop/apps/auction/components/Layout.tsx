@@ -13,6 +13,8 @@ import React from "react"
 import block from "bem-cn-lite"
 import { connect } from "react-redux"
 import { showModal } from "../actions/app"
+import { AnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
+import { OwnerType } from "@artsy/cohesion"
 
 // FIXME: Rewire
 let Banner = _Banner
@@ -46,38 +48,46 @@ function Layout(props) {
   }
 
   return (
-    <div className={b()}>
-      {Modal && (
-        <Modal
-          auction={auction}
-          me={me}
-          onClose={() => {
-            dispatch(showModal(null))
-          }}
-        />
-      )}
-      <Banner />
-      <div className={b("container", "responsive-layout-container")}>
-        <AuctionInfoContainer />
-
-        {showAssociatedAuctions && (
-          <AuctionBlock sale={associatedSale} relatedAuction />
+    <AnalyticsContext.Provider
+      value={{
+        contextPageOwnerId: auction.get("_id"),
+        contextPageOwnerSlug: auction.id,
+        contextPageOwnerType: OwnerType.sale,
+      }}
+    >
+      <div className={b()}>
+        {Modal && (
+          <Modal
+            auction={auction}
+            me={me}
+            onClose={() => {
+              dispatch(showModal(null))
+            }}
+          />
         )}
+        <Banner />
+        <div className={b("container", "responsive-layout-container")}>
+          <AuctionInfoContainer />
 
-        {showMyActiveBids && <MyActiveBids />}
+          {showAssociatedAuctions && (
+            <AuctionBlock sale={associatedSale} relatedAuction />
+          )}
 
-        <PromotedSaleArtworks />
-        <ArtworksByFollowedArtists />
+          {showMyActiveBids && <MyActiveBids />}
 
-        {showFilter && !showInfoWindow && (
-          <div className="auction-main-page">
-            <ArtworkBrowser />
-          </div>
-        )}
+          <PromotedSaleArtworks />
+          <ArtworksByFollowedArtists />
 
-        {showFooter && <Footer />}
+          {showFilter && !showInfoWindow && (
+            <div className="auction-main-page">
+              <ArtworkBrowser />
+            </div>
+          )}
+
+          {showFooter && <Footer />}
+        </div>
       </div>
-    </div>
+    </AnalyticsContext.Provider>
   )
 }
 
@@ -86,9 +96,9 @@ Layout.propTypes = {
   me: PropTypes.object,
   showAssociatedAuctions: PropTypes.bool.isRequired,
   showFilter: PropTypes.bool.isRequired,
+  showFooter: PropTypes.bool.isRequired,
   showInfoWindow: PropTypes.bool.isRequired,
   showMyActiveBids: PropTypes.bool.isRequired,
-  showFooter: PropTypes.bool.isRequired,
 }
 
 const mapStateToProps = state => {
@@ -130,9 +140,9 @@ const mapStateToProps = state => {
     showAssociatedAuctions,
     showFilter,
     showFollowedArtistsRail,
+    showFooter,
     showInfoWindow,
     showMyActiveBids,
-    showFooter,
   }
 }
 
