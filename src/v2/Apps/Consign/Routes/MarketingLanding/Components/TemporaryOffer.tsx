@@ -3,8 +3,8 @@ import { Text } from "@artsy/palette"
 import { SectionContainer } from "./SectionContainer"
 
 export const TemporaryOffer: React.FC = () => {
-  const now = new Date()
-  const expirationDate = new Date(2020, 11, 1)
+  const now = new Date(Date.now())
+  const expirationDate = new Date(2021, 0, 1)
   if (now > expirationDate) {
     return null
   }
