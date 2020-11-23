@@ -71,7 +71,7 @@ export const formatOwnerTypes = (path: string) => {
       break
   }
 
-  if (!OwnerType[formattedType]) {
+  if (!OwnerType[formattedType] && sd.SHOW_ANALYTICS_CALLS) {
     console.warn(
       `OwnerType ${formattedType} is not part of @artsy/cohesion's schema.`
     )
