@@ -1,7 +1,7 @@
 sd = require('sharify').data
 Backbone = require 'backbone'
 query = require './query.coffee'
-metaphysics = require '../../../lib/metaphysics.coffee'
+metaphysics2 = require '../../../lib/metaphysics2.coffee'
 CurrentUser = require '../../models/current_user'
 template = -> require('./template.jade') arguments...
 {getLiveAuctionUrl} = require('../../../utils/domain/auctions/urls')
@@ -23,7 +23,7 @@ module.exports = class MyActiveBids extends Backbone.View
     this
 
   fetch: ->
-    metaphysics(
+    metaphysics2(
       query: query
       variables: live: true, sale_id: @saleId
       req: user: @user

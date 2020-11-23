@@ -1,5 +1,5 @@
 Backbone = require 'backbone'
-metaphysics = require '../../../../../lib/metaphysics.coffee'
+metaphysics2 = require '../../../../../lib/metaphysics2.coffee'
 query = require '../../../../components/my_active_bids/query.coffee'
 template = -> require('./index.jade') arguments...
 
@@ -10,7 +10,7 @@ module.exports = class BidHistoryView extends Backbone.View
     @me = {}
 
   fetch: ->
-    metaphysics
+    metaphysics2
       query: query
       variables: live: false
       req: user: @user
