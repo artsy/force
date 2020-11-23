@@ -8,6 +8,7 @@ import { collectRoutes } from "v2/Apps/Collect/collectRoutes"
 import { consignRoutes } from "v2/Apps/Consign/consignRoutes"
 import { conversationRoutes } from "v2/Apps/Conversation/conversationRoutes"
 import { debugRoutes } from "./Debug/debugRoutes"
+import { exampleRoutes } from "./Example/exampleRoutes"
 import { fairRoutes } from "v2/Apps/Fair/fairRoutes"
 import { featureRoutes } from "v2/Apps/Feature/featureRoutes"
 import { identityVerificationRoutes } from "v2/Apps/IdentityVerification/identityVerificationRoutes"
@@ -39,6 +40,9 @@ export function getAppRoutes(): RouteConfig[] {
     },
     {
       routes: conversationRoutes,
+    },
+    {
+      routes: exampleRoutes,
     },
     {
       routes: fairRoutes,
