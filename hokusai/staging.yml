@@ -1,14 +1,23 @@
 ---
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: force-web
+  labels:
+    app: force
+    layer: application
+    component: web
 spec:
   strategy:
     rollingUpdate:
       maxSurge: 2
       maxUnavailable: 0
     type: RollingUpdate
+  selector:
+    matchLabels:
+      app: force
+      layer: application
+      component: web
   template:
     metadata:
       labels:
@@ -81,7 +90,7 @@ metadata:
   namespace: default
 spec:
   scaleTargetRef:
-    apiVersion: extensions/v1beta1
+    apiVersion: apps/v1
     kind: Deployment
     name: force-web
   minReplicas: 2
@@ -111,18 +120,20 @@ spec:
   type: ClusterIP
 
 ---
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
   name: force
   annotations:
     nginx.ingress.kubernetes.io/whitelist-source-range: "{{ cloudflareIpSourceRanges|join(',') }}"
 spec:
+  ingressClassName: nginx
   rules:
     - host: staging.artsy.net
       http:
         paths:
           - path: /
+            pathType: Prefix
             backend:
               serviceName: force-web-internal
               servicePort: force-http
