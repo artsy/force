@@ -7,9 +7,12 @@ const ExampleApp = loadable(() => import("./Routes/Example/ExampleApp"), {
   resolveComponent: component => component.ExampleAppFragmentContainer,
 })
 
-const ArtistApp = loadable(() => import("./Routes/Artist/ArtistApp"), {
-  resolveComponent: component => component.ArtistApp,
-})
+const ArtistApp = loadable(
+  () => import("./Routes/ExampleArtist/ExampleArtistApp"),
+  {
+    resolveComponent: component => component.ExampleArtistAppFragmentContainer,
+  }
+)
 
 const ArtworkApp = loadable(() => import("./Routes/Artwork/ArtworkApp"), {
   resolveComponent: component => component.ArtworkApp,
@@ -42,9 +45,9 @@ export const exampleRoutes = [
         },
         query: graphql`
           query exampleRoutes_ArtistQuery($slug: String!) {
-            artist(id: $slug) {
+            artist(id: $slug) @principalField {
               id
-              # ...ArtistApp_artist
+              ...ExampleArtistApp_artist
             }
           }
         `,
