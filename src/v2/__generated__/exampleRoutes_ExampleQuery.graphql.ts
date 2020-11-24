@@ -2,10 +2,11 @@
 /* eslint-disable */
 
 import { ConcreteRequest } from "relay-runtime";
+import { FragmentRefs } from "relay-runtime";
 export type exampleRoutes_ExampleQueryVariables = {};
 export type exampleRoutes_ExampleQueryResponse = {
-    readonly me: {
-        readonly id: string;
+    readonly system: {
+        readonly " $fragmentRefs": FragmentRefs<"ExampleApp_system">;
     } | null;
 };
 export type exampleRoutes_ExampleQuery = {
@@ -17,40 +18,44 @@ export type exampleRoutes_ExampleQuery = {
 
 /*
 query exampleRoutes_ExampleQuery {
-  me {
-    id
+  system {
+    ...ExampleApp_system
+  }
+}
+
+fragment ExampleApp_system on System {
+  time {
+    day
+    month
+    year
   }
 }
 */
 
-const node: ConcreteRequest = (function(){
-var v0 = [
-  {
-    "alias": null,
-    "args": null,
-    "concreteType": "Me",
-    "kind": "LinkedField",
-    "name": "me",
-    "plural": false,
-    "selections": [
-      {
-        "alias": null,
-        "args": null,
-        "kind": "ScalarField",
-        "name": "id",
-        "storageKey": null
-      }
-    ],
-    "storageKey": null
-  }
-];
-return {
+const node: ConcreteRequest = {
   "fragment": {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
     "name": "exampleRoutes_ExampleQuery",
-    "selections": (v0/*: any*/),
+    "selections": [
+      {
+        "alias": null,
+        "args": null,
+        "concreteType": "System",
+        "kind": "LinkedField",
+        "name": "system",
+        "plural": false,
+        "selections": [
+          {
+            "args": null,
+            "kind": "FragmentSpread",
+            "name": "ExampleApp_system"
+          }
+        ],
+        "storageKey": null
+      }
+    ],
     "type": "Query"
   },
   "kind": "Request",
@@ -58,16 +63,59 @@ return {
     "argumentDefinitions": [],
     "kind": "Operation",
     "name": "exampleRoutes_ExampleQuery",
-    "selections": (v0/*: any*/)
+    "selections": [
+      {
+        "alias": null,
+        "args": null,
+        "concreteType": "System",
+        "kind": "LinkedField",
+        "name": "system",
+        "plural": false,
+        "selections": [
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "SystemTime",
+            "kind": "LinkedField",
+            "name": "time",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "day",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "month",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "year",
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
+          }
+        ],
+        "storageKey": null
+      }
+    ]
   },
   "params": {
     "id": null,
     "metadata": {},
     "name": "exampleRoutes_ExampleQuery",
     "operationKind": "query",
-    "text": "query exampleRoutes_ExampleQuery {\n  me {\n    id\n  }\n}\n"
+    "text": "query exampleRoutes_ExampleQuery {\n  system {\n    ...ExampleApp_system\n  }\n}\n\nfragment ExampleApp_system on System {\n  time {\n    day\n    month\n    year\n  }\n}\n"
   }
 };
-})();
-(node as any).hash = '198d54b91d38ed37bc65484bf08ab78a';
+(node as any).hash = '5878a11299e2592a0669ac8089848737';
 export default node;

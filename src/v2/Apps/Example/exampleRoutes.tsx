@@ -4,7 +4,7 @@ import { graphql } from "react-relay"
 import { WelcomeApp } from "./Routes/Welcome/WelcomeApp"
 
 const ExampleApp = loadable(() => import("./Routes/Example/ExampleApp"), {
-  resolveComponent: component => component.ExampleApp,
+  resolveComponent: component => component.ExampleAppFragmentContainer,
 })
 
 const ArtistApp = loadable(() => import("./Routes/Artist/ArtistApp"), {
@@ -24,9 +24,8 @@ export const exampleRoutes = [
     },
     query: graphql`
       query exampleRoutes_ExampleQuery {
-        me {
-          id
-          # ...ExampleApp_me
+        system {
+          ...ExampleApp_system
         }
       }
     `,
