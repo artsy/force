@@ -40,8 +40,10 @@ export type UpdateUserInformationMutationResponse = {
             } | null;
             readonly mutationError?: {
                 readonly type: string | null;
-                readonly message: string | null;
-                readonly detail: string | null;
+                readonly fieldErrors: ReadonlyArray<{
+                    readonly name: string;
+                    readonly message: string;
+                } | null> | null;
             } | null;
         } | null;
     } | null;
@@ -58,8 +60,10 @@ export type UpdateUserInformationMutationRawResponse = {
             readonly __typename: "UpdateMyProfileMutationFailure";
             readonly mutationError: ({
                 readonly type: string | null;
-                readonly message: string | null;
-                readonly detail: string | null;
+                readonly fieldErrors: ReadonlyArray<({
+                    readonly name: string;
+                    readonly message: string;
+                }) | null> | null;
             }) | null;
         } | {
             readonly __typename: string | null;
@@ -90,8 +94,10 @@ mutation UpdateUserInformationMutation(
       ... on UpdateMyProfileMutationFailure {
         mutationError {
           type
-          message
-          detail
+          fieldErrors {
+            name
+            message
+          }
         }
       }
     }
@@ -143,15 +149,26 @@ v3 = {
         {
           "alias": null,
           "args": null,
-          "kind": "ScalarField",
-          "name": "message",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "detail",
+          "concreteType": "FieldErrorResults",
+          "kind": "LinkedField",
+          "name": "fieldErrors",
+          "plural": true,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "name",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "message",
+              "storageKey": null
+            }
+          ],
           "storageKey": null
         }
       ],
@@ -279,9 +296,9 @@ return {
     "metadata": {},
     "name": "UpdateUserInformationMutation",
     "operationKind": "mutation",
-    "text": "mutation UpdateUserInformationMutation(\n  $input: UpdateMyProfileInput!\n) {\n  updateMyUserProfile(input: $input) {\n    userOrError {\n      __typename\n      ... on UpdateMyProfileMutationSuccess {\n        user {\n          internalID\n          id\n        }\n      }\n      ... on UpdateMyProfileMutationFailure {\n        mutationError {\n          type\n          message\n          detail\n        }\n      }\n    }\n  }\n}\n"
+    "text": "mutation UpdateUserInformationMutation(\n  $input: UpdateMyProfileInput!\n) {\n  updateMyUserProfile(input: $input) {\n    userOrError {\n      __typename\n      ... on UpdateMyProfileMutationSuccess {\n        user {\n          internalID\n          id\n        }\n      }\n      ... on UpdateMyProfileMutationFailure {\n        mutationError {\n          type\n          fieldErrors {\n            name\n            message\n          }\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'ac722fef99fd281a2e2581a2eb5ea9a9';
+(node as any).hash = '2fa95dbd1d2432e7c3e18b16503d7a92';
 export default node;

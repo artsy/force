@@ -33,7 +33,9 @@ export const UserInformation: React.FC<UserInformationProps> = ({ me, relay }) =
       })
       if (userOrError.mutationError) {
         debugger
-        formikBag.setStatus(userOrError.mutationError)
+        const formattedErrors = formatGravityErrors(userOrError.mutationError)
+        debugger
+        // formikBag.setErrors(formattedErrors)
       } else {
         debugger
         console.log('in the else', userOrError.user)
@@ -189,4 +191,15 @@ export const UserInformationQueryRenderer = () => {
       render={renderWithLoadProgress(UserInformationRefetchContainer)}
     />
   )
+}
+
+const formatGravityErrors = ({ fieldErrors }) => {
+  debugger
+  const formattedErrors = fieldErrors.map((err: any) => {
+    const formatted = {}
+    debugger
+    formatted[err['name']] = err.message.split(", ")
+    return formatted
+  })
+  debugger
 }

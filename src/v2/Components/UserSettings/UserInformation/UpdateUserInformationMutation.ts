@@ -10,7 +10,6 @@ export const UpdateUserInformation = (
       commitMutation<UpdateUserInformationMutation>(environment, {
         onCompleted: (data, errors) =>
           errors ? reject(errors) : resolve(data),
-        onError: reject,
         mutation: graphql`
           mutation UpdateUserInformationMutation($input: UpdateMyProfileInput!)
             @raw_response_type {
@@ -24,8 +23,10 @@ export const UpdateUserInformation = (
                 ... on UpdateMyProfileMutationFailure {
                   mutationError {
                     type
-                    message
-                    detail
+                    fieldErrors {
+                      name
+                      message
+                    }
                   }
                 }
               }
