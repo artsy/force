@@ -8,6 +8,7 @@ import {
   StepSummaryItemProps,
 } from "v2/Components/StepSummaryItem"
 import { Omit } from "lodash"
+import { getOfferItemFromOrder } from "v2/Apps/Order/Utils/offerItemExtractor"
 
 export interface TransactionDetailsSummaryItemProps
   extends Omit<StepSummaryItemProps, "order"> {
@@ -89,7 +90,8 @@ export class TransactionDetailsSummaryItem extends React.Component<
     const offer = this.getOffer()
     const isBuyerOffer =
       offerOverride != null || !offer || offer.fromParticipant === "BUYER"
-    const offerItem = order.lineItems.edges[0].node.artworkOrEditionSet
+
+    const offerItem = getOfferItemFromOrder(order.lineItems)
 
     return (
       <>
@@ -98,7 +100,9 @@ export class TransactionDetailsSummaryItem extends React.Component<
           value={offerOverride || (offer && offer.amount) || emDash}
         />
         {offerContextPrice === "LIST_PRICE" ? (
-          <SecondaryEntry label="List price" value={(offerItem as any).price} />
+          offerItem && (
+            <SecondaryEntry label="List price" value={offerItem.price} />
+          )
         ) : (
           // show last offer
           <SecondaryEntry

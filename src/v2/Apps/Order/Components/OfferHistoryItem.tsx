@@ -7,13 +7,14 @@ import {
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RevealButton } from "./RevealButton"
+import { getOfferItemFromOrder } from "v2/Apps/Order/Utils/offerItemExtractor"
 
 const OfferHistoryItem: React.SFC<
   {
     order: OfferHistoryItem_order
   } & StepSummaryItemProps
 > = ({ order: { lastOffer, offers, lineItems }, ...others }) => {
-  const offerItem = lineItems.edges[0].node.artworkOrEditionSet
+  const offerItem = getOfferItemFromOrder(lineItems)
   const previousOffers = offers.edges.filter(
     ({ node: { internalID } }) => internalID !== lastOffer.internalID
   )
@@ -30,12 +31,15 @@ const OfferHistoryItem: React.SFC<
           {lastOffer.amount}
         </Serif>
       </Row>
-      <Row>
-        <div />
-        <Sans size="2" color="black60">
-          List price: {(offerItem as any).price}
-        </Sans>
-      </Row>
+      {offerItem && (
+        <Row>
+          <div />
+          <Sans size="2" color="black60">
+            List price: {offerItem.price}
+          </Sans>
+        </Row>
+      )}
+
       {lastOffer.note && (
         <>
           <Spacer mb={2} />

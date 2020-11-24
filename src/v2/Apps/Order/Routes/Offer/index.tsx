@@ -31,6 +31,7 @@ import createLogger from "v2/Utils/logger"
 import { Media } from "v2/Utils/Responsive"
 import { OrderStepper, offerFlowSteps } from "../../Components/OrderStepper"
 import { BuyerGuarantee } from "../../Components/BuyerGuarantee"
+import { getOfferItemFromOrder } from "v2/Apps/Order/Utils/offerItemExtractor"
 
 export interface OfferProps {
   order: Offer_order
@@ -211,8 +212,8 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
     const { order, isCommittingMutation } = this.props
 
     const artworkId = order.lineItems.edges[0].node.artwork.slug
-    const offerItem = order.lineItems.edges[0].node.artworkOrEditionSet
     const orderCurrency = order.currencyCode
+    const offerItem = getOfferItemFromOrder(order.lineItems)
 
     return (
       <>
@@ -242,9 +243,9 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
                     onFocus={this.onOfferInputFocus.bind(this)}
                   />
                 </Flex>
-                {Boolean((offerItem as any).price) && (
+                {Boolean(offerItem?.price) && (
                   <Sans size="2" color="black60">
-                    List price: {(offerItem as any).price}
+                    List price: {offerItem.price}
                   </Sans>
                 )}
                 <Spacer mb={[2, 3]} />
