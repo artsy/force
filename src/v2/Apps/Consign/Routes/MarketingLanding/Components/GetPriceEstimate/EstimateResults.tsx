@@ -10,7 +10,6 @@ import {
 } from "@artsy/palette"
 import { usePriceEstimateContext } from "./ConsignPriceEstimateContext"
 import { ArtistInsightResult } from "./ArtistInsightResult"
-import { Media } from "v2/Utils/Responsive"
 
 export const EstimateResults: React.FC<FlexProps> = ({ ...rest }) => {
   const { artistInsights, isFetching } = usePriceEstimateContext()
@@ -40,7 +39,7 @@ const ArtistInsightExample: React.FC = () => {
           </ResponsiveBox>
         }
         artistName="Andy Warhol"
-        salePrice="300k"
+        salePrice="298k"
       />
 
       <ArtworkItem
@@ -53,8 +52,8 @@ const ArtistInsightExample: React.FC = () => {
             />
           </ResponsiveBox>
         }
-        artistName="Katharina Grosse"
-        salePrice="220k"
+        artistName="Yayoi Kusama"
+        salePrice="88k"
       />
 
       <ArtworkItem
@@ -68,7 +67,7 @@ const ArtistInsightExample: React.FC = () => {
           </ResponsiveBox>
         }
         artistName="George Condo"
-        salePrice="120k"
+        salePrice="260k"
       />
     </>
   )
@@ -84,12 +83,7 @@ const ArtworkItem: React.FC<{
       {image}
       <Spacer my={1} />
       <Text variant="small">{artistName}</Text>
-      <Media greaterThanOrEqual="sm">
-        <Text variant="small">Average Sale Price:</Text>
-      </Media>
-      <Media lessThan="sm">
-        <Text variant="small">Avg Sale Price:</Text>
-      </Media>
+      <Text variant="small">Median:</Text>
       <Text variant="largeTitle">{salePrice}</Text>
     </Box>
   )
