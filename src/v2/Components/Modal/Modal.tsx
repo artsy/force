@@ -1,5 +1,4 @@
-import { color } from "@artsy/palette"
-import Icon from "v2/Components/Icon"
+import { CloseIcon, Clickable } from "@artsy/palette"
 import React from "react"
 import styled from "styled-components"
 
@@ -26,16 +25,16 @@ export interface ModalProps extends React.HTMLProps<Modal> {
  */
 export class Modal extends React.Component<ModalProps> {
   static defaultProps = {
-    show: false,
     blurContainerSelector: "",
+    show: false,
   }
 
   state = {
-    isAnimating: this.props.show || false,
-    isShown: this.props.show || false,
     blurContainers: this.props.blurContainerSelector
       ? Array.from(document.querySelectorAll(this.props.blurContainerSelector))
       : [],
+    isAnimating: this.props.show || false,
+    isShown: this.props.show || false,
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
@@ -74,8 +73,14 @@ export class Modal extends React.Component<ModalProps> {
         fullscreenResponsiveModal
         disableCloseOnBackgroundClick={disableCloseOnBackgroundClick}
       >
-        <CloseButton name="close" onClick={this.close} />
-
+        <Clickable
+          position="absolute"
+          top="15px"
+          right="12px"
+          onClick={this.close}
+        >
+          <CloseIcon />
+        </Clickable>
         {image && <Image image={image} />}
 
         <ModalContent cta={cta} hasImage={image && true}>
@@ -122,16 +127,6 @@ export const ModalOverlay = styled.div`
   top: 0;
   left: 0;
   background: rgba(200, 200, 200, 0.5);
-`
-
-export const CloseButton = styled(Icon).attrs({
-  color: color("black60"),
-  fontSize: "16px",
-})`
-  position: absolute;
-  top: 15px;
-  right: 12px;
-  cursor: pointer;
 `
 
 export const Image = styled.div<{ image: string }>`
