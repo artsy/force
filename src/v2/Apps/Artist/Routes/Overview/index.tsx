@@ -34,6 +34,7 @@ import styled from "styled-components"
 import { get } from "v2/Utils/get"
 import { Media } from "v2/Utils/Responsive"
 import { ArtistRecommendationsQueryRenderer as ArtistRecommendations } from "./Components/ArtistRecommendations"
+import { Title } from "react-head"
 
 export interface OverviewRouteProps {
   artist: Overview_artist
@@ -180,8 +181,11 @@ export class OverviewRoute extends React.Component<OverviewRouteProps, {}> {
       get(artist, a => a.articlesConnection.edges.length) &&
       artist.articlesConnection.edges.map(({ node }) => node)
 
+    const titleString = `${artist.name} - ${artist.counts.artworks} Artworks, Bio & Shows on Artsy`
+
     return (
       <>
+        <Title>{titleString}</Title>
         <Media greaterThan="xs">
           <Row>
             <Col>

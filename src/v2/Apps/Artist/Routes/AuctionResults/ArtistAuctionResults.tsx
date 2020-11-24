@@ -26,6 +26,7 @@ import { AuctionResultsControls } from "./Components/AuctionResultsControls"
 import { auctionResultsFilterResetState } from "./AuctionResultsFilterContext"
 import { openAuthModal } from "v2/Utils/openAuthModal"
 import { ModalType } from "v2/Components/Authentication/Types"
+import { Title } from "react-head"
 
 const logger = createLogger("ArtistAuctionResults.tsx")
 
@@ -54,7 +55,7 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
   }
 
   const loadPage = (cursor, pageNum) => {
-    filterContext.setFilter("pageAndCursor", { page: pageNum, cursor: cursor })
+    filterContext.setFilter("pageAndCursor", { cursor: cursor, page: pageNum })
   }
 
   const [isLoading, setIsLoading] = useState(false)
@@ -84,23 +85,23 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
           // If user is not logged-in, show auth modal, but only if it was never shown before.
           if (!user && !authShownForFiltering) {
             openAuthModal(mediator, {
-              mode: ModalType.signup,
-              copy: `Sign up to see auction results for ${artistName}`,
               contextModule: ContextModule.auctionResults,
+              copy: `Sign up to see auction results for ${artistName}`,
               intent: Intent.viewAuctionResults,
+              mode: ModalType.signup,
             })
             // Remember to not show auth modal again for this activity.
             toggleAuthShowForFiltering(true)
           }
 
           tracking.trackEvent({
-            context_page: AnalyticsSchema.PageName.ArtistAuctionResults,
             action_type:
               AnalyticsSchema.ActionType.AuctionResultFilterParamChanged,
-            current: filterContext.filters,
             changed: {
               [filterKey]: filterContext.filters[filterKey],
             },
+            context_page: AnalyticsSchema.PageName.ArtistAuctionResults,
+            current: filterContext.filters,
           })
         }
       }
@@ -112,10 +113,10 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
     setIsLoading(true)
 
     const relayParams = {
-      first: PAGE_SIZE,
-      artistID: artist.slug,
       after: filterContext.filters.pageAndCursor.cursor,
+      artistID: artist.slug,
       before: null,
+      first: PAGE_SIZE,
       last: null,
     }
 
@@ -152,8 +153,11 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
     </LoadingArea>
   )
 
+  const titleString = `${artist.name} - Auction Results on Artsy`
+
   return (
     <>
+      <Title>{titleString}</Title>
       {showMobileActionSheet && (
         <AuctionFilterMobileActionSheet
           onClose={() => toggleMobileActionSheet(false)}
