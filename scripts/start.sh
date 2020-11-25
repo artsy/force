@@ -2,10 +2,6 @@
 
 set -e
 
-if [ "${NODE_ENV}" == "production" ]; then
-  set -x
-fi
-
 # Set debug run options
 OPT=("--max_old_space_size=${MAX_OLD_SPACE_SIZE:-3072}" -r dotenv/config)
 
