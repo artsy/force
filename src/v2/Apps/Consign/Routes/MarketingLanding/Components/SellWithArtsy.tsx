@@ -30,12 +30,19 @@ export const SellWithArtsy: React.FC = () => {
     >
       <Flex alignItems="center" justifyContent="space-between">
         <Box pr={[2, 9]}>
-          <Text variant="largeTitle" mb={1}>
-            Get the Artsy iOS app
-          </Text>
-          <Text variant="text" color="black60" mb={2}>
-            A Smarter, Faster Way to Sell Your Art.
-          </Text>
+          <Box minWidth={[160, 183]}>
+            <Text variant="largeTitle" mb={1}>
+              Get the Artsy iOS app
+            </Text>
+            <Text
+              variant="text"
+              color="black60"
+              mb={2}
+              maxWidth={["100%", 150]}
+            >
+              A Smarter, Faster Way to Sell Your Art.
+            </Text>
+          </Box>
           <Link
             href={DOWNLOAD_URL}
             target="_blank"
