@@ -44,7 +44,7 @@ const ArtistInsightExample: React.FC = () => {
 
       <ArtworkItem
         image={
-          <ResponsiveBox aspectWidth={640} aspectHeight={473} maxWidth="100%">
+          <ResponsiveBox aspectWidth={508} aspectHeight={640} maxWidth="100%">
             <Image
               width="100%"
               height="100%"
@@ -58,7 +58,7 @@ const ArtistInsightExample: React.FC = () => {
 
       <ArtworkItem
         image={
-          <ResponsiveBox aspectWidth={526} aspectHeight={640} maxWidth="100%">
+          <ResponsiveBox aspectWidth={508} aspectHeight={640} maxWidth="100%">
             <Image
               width="100%"
               height="100%"

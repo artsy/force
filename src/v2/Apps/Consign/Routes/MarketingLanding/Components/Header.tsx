@@ -85,7 +85,7 @@ const CenterImage = styled(Box)`
 
 const RightImage = styled(Box)`
   position: absolute;
-  right: 3%;
+  right: 4%;
   transform-origin: center;
   transform: translateY(-50%);
   width: 31%;
