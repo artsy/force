@@ -112,7 +112,6 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
                 order {
                   internalID
                   mode
-                  totalListPrice
                   totalListPriceCents
                   ... on CommerceOfferOrder {
                     myLastOffer {

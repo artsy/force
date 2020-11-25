@@ -32,6 +32,112 @@ export const mockResolver = (
   }),
 })
 
+const OrderArtworkNode = {
+  artwork: {
+    artist_names: "Lisa Breslow",
+    artists: [
+      {
+        id: "239084092",
+        internalID: "artistId",
+        slug: "artistId",
+      },
+    ],
+    attribution_class: null,
+    date: "2016",
+    dimensions: {
+      cm: "91.4 × 91.4 cm",
+      in: "36 × 36 in",
+    },
+    edition_sets: [],
+    euShippingOrigin: false,
+    href: "/artwork/artworkID",
+    id: "02393",
+    image: {
+      resized: {
+        url:
+          "https://d7hftxdivxxvm.cloudfront.net?resize_to=fit&width=185&height=184&quality=80&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FtOfWds4sIX_9WpRf3RqaQQ%2Flarge.jpg",
+      },
+      resized_ArtworkSummaryItem: {
+        url:
+          "https://d7hftxdivxxvm.cloudfront.net?resize_to=fit&width=185&height=184&quality=80&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FtOfWds4sIX_9WpRf3RqaQQ%2Flarge.jpg",
+      },
+    },
+    internalID: "artworkId",
+    is_acquireable: true as boolean,
+    is_offerable: true as boolean,
+    medium: "Oil and pencil on panel",
+    onlyShipsDomestically: false,
+    partner: {
+      id: "1234",
+      initials: "AG",
+      name: "A Gallery",
+      profile: {
+        icon: {
+          url: "www.artsy.net",
+        },
+        id: "12345",
+      },
+      slug: "a-g",
+    },
+    pickup_available: true,
+    shippingCountry: "US",
+    shippingOrigin: "New York, NY",
+    slug: "artworkId",
+    title: "Gramercy Park South",
+  },
+}
+
+const OrderArtworkOrEditionSetkNode_Artwork = {
+  artworkOrEditionSet: {
+    __typename: "Artwork",
+    displayPriceRange: false as boolean,
+    id: "art123",
+    price: "$12,000",
+  },
+}
+
+const OfferArtworkOrEditionSetkNode_Artwork = {
+  artworkOrEditionSet: {
+    __typename: "Artwork",
+    displayPriceRange: false as boolean,
+    id: "art123",
+    price: "$16,000",
+  },
+}
+
+const OfferArtworkOrEditionSetkNode_ArtworkInPounds = {
+  artworkOrEditionSet: {
+    __typename: "Artwork",
+    displayPriceRange: false as boolean,
+    id: "art123",
+    price: "£16,000",
+  },
+}
+
+const OfferArtworkOrEditionSetkNode_Range = {
+  artworkOrEditionSet: {
+    __typename: "EditionSet",
+    displayPriceRange: true as boolean,
+    id: "ed123",
+    price: "$14,000 - 18,000",
+  },
+}
+
+const OrderArtworFflfillmentsNode = {
+  fulfillments: {
+    edges: [
+      {
+        node: {
+          courier: "UPS",
+          estimatedDelivery: "Friday, August 6",
+          id: "fullfillment-id",
+          trackingId: "AP234345634",
+        },
+      },
+    ],
+  },
+}
+
 export const UntouchedOrder = {
   buyerTotal: "$12,000",
   code: "abcdefg",
@@ -46,78 +152,11 @@ export const UntouchedOrder = {
     edges: [
       {
         node: {
-          artwork: {
-            artist_names: "Lisa Breslow",
-            artists: [
-              {
-                id: "239084092",
-                internalID: "artistId",
-                slug: "artistId",
-              },
-            ],
-            attribution_class: null,
-            date: "2016",
-            dimensions: {
-              cm: "91.4 × 91.4 cm",
-              in: "36 × 36 in",
-            },
-            edition_sets: [],
-            euShippingOrigin: false,
-            href: "/artwork/artworkID",
-            id: "02393",
-            image: {
-              resized: {
-                url:
-                  "https://d7hftxdivxxvm.cloudfront.net?resize_to=fit&width=185&height=184&quality=80&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FtOfWds4sIX_9WpRf3RqaQQ%2Flarge.jpg",
-              },
-              resized_ArtworkSummaryItem: {
-                url:
-                  "https://d7hftxdivxxvm.cloudfront.net?resize_to=fit&width=185&height=184&quality=80&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FtOfWds4sIX_9WpRf3RqaQQ%2Flarge.jpg",
-              },
-            },
-            internalID: "artworkId",
-            is_acquireable: true as boolean,
-            is_offerable: false as boolean,
-            medium: "Oil and pencil on panel",
-            onlyShipsDomestically: false,
-            partner: {
-              id: "1234",
-              initials: "AG",
-              name: "A Gallery",
-              profile: {
-                icon: {
-                  url: "www.artsy.net",
-                },
-                id: "12345",
-              },
-              slug: "a-g",
-            },
-            pickup_available: true,
-            shippingCountry: "US",
-            shippingOrigin: "New York, NY",
-            slug: "artworkId",
-            title: "Gramercy Park South",
-          },
-          artworkOrEditionSet: {
-            __typename: "Artwork",
-            displayPriceRange: false as boolean,
-            id: "art123",
-            price: "$12,000",
-          },
           editionSetId: null,
-          fulfillments: {
-            edges: [
-              {
-                node: {
-                  courier: "UPS",
-                  estimatedDelivery: "Friday, August 6",
-                  id: "fullfillment-id",
-                  trackingId: "AP234345634",
-                },
-              },
-            ],
-          },
           id: "line-item-node-id",
+          ...OrderArtworkNode,
+          ...OrderArtworkOrEditionSetkNode_Artwork,
+          ...OrderArtworFflfillmentsNode,
         },
       },
     ],
@@ -142,7 +181,6 @@ export const UntouchedOrder = {
   stateReason: null,
   taxTotal: null,
   taxTotalCents: null,
-  totalListPrice: "$12,000",
   totalListPriceCents: 1200000,
 } as const
 
@@ -185,12 +223,61 @@ export const UntouchedOfferOrder = {
   itemsTotal: "$16,000",
   itemsTotalCents: 1600000,
   lastOffer: null,
+  lineItems: {
+    edges: [
+      {
+        node: {
+          editionSetId: null,
+          id: "line-item-node-id",
+          ...OrderArtworkNode,
+          ...OfferArtworkOrEditionSetkNode_Artwork,
+          ...OrderArtworFflfillmentsNode,
+        },
+      },
+    ],
+  },
   mode: "OFFER",
   myLastOffer: null,
   offers: {
     edges: [{ node: OfferWithTotals }],
   },
-  totalListPrice: "$16,000",
+  totalListPriceCents: 1600000,
+} as const
+
+export const UntouchedOfferOrderInPounds = {
+  ...UntouchedOfferOrder,
+  currencyCode: "GBP",
+  itemsTotal: "£16,000",
+  lineItems: {
+    edges: [
+      {
+        node: {
+          editionSetId: null,
+          id: "line-item-node-id",
+          ...OrderArtworkNode,
+          ...OfferArtworkOrEditionSetkNode_ArtworkInPounds,
+          ...OrderArtworFflfillmentsNode,
+        },
+      },
+    ],
+  },
+} as const
+
+export const UntouchedOfferOrderWithRange = {
+  ...UntouchedOfferOrder,
+  lineItems: {
+    edges: [
+      {
+        node: {
+          editionSetId: null,
+          id: "line-item-node-id",
+          ...OrderArtworkNode,
+          ...OfferArtworkOrEditionSetkNode_Range,
+          ...OrderArtworFflfillmentsNode,
+        },
+      },
+    ],
+  },
 } as const
 
 export const OfferOrderWithOffers = {

@@ -47,7 +47,6 @@ export class CounterRoute extends Component<CounterProps> {
 
   submitPendingOffer(variables: CounterSubmitMutation["variables"]) {
     return this.props.commitMutation<CounterSubmitMutation>({
-      variables,
       // TODO: Inputs to the mutation might have changed case of the keys!
       mutation: graphql`
         mutation CounterSubmitMutation(
@@ -74,6 +73,8 @@ export class CounterRoute extends Component<CounterProps> {
           }
         }
       `,
+
+      variables,
     })
   }
 
@@ -103,8 +104,8 @@ export class CounterRoute extends Component<CounterProps> {
     logger.error(error)
     if (error.code === "insufficient_inventory") {
       this.props.dialog.showErrorDialog({
-        title: "This work has already been sold.",
         message: "Please contact orders@artsy.net with any questions.",
+        title: "This work has already been sold.",
       })
     } else {
       this.props.dialog.showErrorDialog()
@@ -222,7 +223,6 @@ export const CounterFragmentContainer = createFragmentContainer(
         mode
         state
         itemsTotal(precision: 2)
-        totalListPrice(precision: 2)
         stateExpiresAt
         ... on CommerceOfferOrder {
           lastOffer {
