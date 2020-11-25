@@ -39,7 +39,7 @@ const ArtistInsightExample: React.FC = () => {
           </ResponsiveBox>
         }
         artistName="Andy Warhol"
-        salePrice="298k"
+        salePrice="$298k"
       />
 
       <ArtworkItem
@@ -53,7 +53,7 @@ const ArtistInsightExample: React.FC = () => {
           </ResponsiveBox>
         }
         artistName="Yayoi Kusama"
-        salePrice="88k"
+        salePrice="$88k"
       />
 
       <ArtworkItem
@@ -67,7 +67,7 @@ const ArtistInsightExample: React.FC = () => {
           </ResponsiveBox>
         }
         artistName="George Condo"
-        salePrice="260k"
+        salePrice="$260k"
       />
     </>
   )
