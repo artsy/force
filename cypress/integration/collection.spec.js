@@ -18,8 +18,7 @@ describe("/collection/:id", () => {
 
   it("renders page content", () => {
     cy.get("h1").should("contain", "Emerging Photographers")
-    // FIXME: Reenable once ES issue is solved on staging
-    // artworkGridRenders()
+    artworkGridRenders()
   })
 })
 
@@ -39,7 +38,6 @@ describe("/collection/:id (a collection hub)", () => {
 
   it("renders page content", () => {
     cy.get("h1").should("contain", "Contemporary")
-    // FIXME: Reenable once ES issue is solved on staging
-    // artworkGridRenders()
+    artworkGridRenders()
   })
 })
