@@ -12,8 +12,6 @@ export type Respond_order = {
     readonly currencyCode: string;
     readonly itemsTotal: string | null;
     readonly itemsTotalCents: number | null;
-    readonly totalListPrice: string | null;
-    readonly totalListPriceCents: number;
     readonly stateExpiresAt: string | null;
     readonly lineItems: {
         readonly edges: ReadonlyArray<{
@@ -51,14 +49,7 @@ var v0 = {
   "name": "internalID",
   "storageKey": null
 },
-v1 = [
-  {
-    "kind": "Literal",
-    "name": "precision",
-    "value": 2
-  }
-],
-v2 = {
+v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -95,7 +86,13 @@ return {
     },
     {
       "alias": null,
-      "args": (v1/*: any*/),
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "precision",
+          "value": 2
+        }
+      ],
       "kind": "ScalarField",
       "name": "itemsTotal",
       "storageKey": "itemsTotal(precision:2)"
@@ -105,20 +102,6 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "itemsTotalCents",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": (v1/*: any*/),
-      "kind": "ScalarField",
-      "name": "totalListPrice",
-      "storageKey": "totalListPrice(precision:2)"
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "totalListPriceCents",
       "storageKey": null
     },
     {
@@ -190,7 +173,7 @@ return {
           "name": "lastOffer",
           "plural": false,
           "selections": [
-            (v2/*: any*/),
+            (v1/*: any*/),
             (v0/*: any*/),
             {
               "alias": null,
@@ -210,7 +193,7 @@ return {
           "name": "myLastOffer",
           "plural": false,
           "selections": [
-            (v2/*: any*/)
+            (v1/*: any*/)
           ],
           "storageKey": null
         }
@@ -246,5 +229,5 @@ return {
   "type": "CommerceOrder"
 };
 })();
-(node as any).hash = '5b8133ec8a17977aa86f219db0b50846';
+(node as any).hash = 'f8e18cf18bcd3fdc517a9e12b40c73d6';
 export default node;

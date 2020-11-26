@@ -8,6 +8,7 @@ import {
   StepSummaryItemProps,
 } from "v2/Components/StepSummaryItem"
 import { Omit } from "lodash"
+import { getOfferItemFromOrder } from "v2/Apps/Order/Utils/offerItemExtractor"
 
 export interface TransactionDetailsSummaryItemProps
   extends Omit<StepSummaryItemProps, "order"> {
@@ -22,7 +23,7 @@ const emDash = "—"
 
 export class TransactionDetailsSummaryItem extends React.Component<
   TransactionDetailsSummaryItemProps
-  > {
+> {
   static defaultProps: Partial<TransactionDetailsSummaryItemProps> = {
     offerContextPrice: "LIST_PRICE",
   }
@@ -87,6 +88,7 @@ export class TransactionDetailsSummaryItem extends React.Component<
       return <Entry label="Price" value={order.itemsTotal} />
     }
     const offer = this.getOffer()
+    const offerItem = getOfferItemFromOrder(order.lineItems)
     const isBuyerOffer =
       offerOverride != null || !offer || offer.fromParticipant === "BUYER"
 
@@ -97,18 +99,20 @@ export class TransactionDetailsSummaryItem extends React.Component<
           value={offerOverride || (offer && offer.amount) || emDash}
         />
         {offerContextPrice === "LIST_PRICE" ? (
-          <SecondaryEntry label="List price" value={order.totalListPrice} />
+          offerItem && (
+            <SecondaryEntry label="List price" value={offerItem.price} />
+          )
         ) : (
-            // show last offer
-            <SecondaryEntry
-              label={
-                order.lastOffer.fromParticipant === "SELLER"
-                  ? "Seller's offer"
-                  : "Your offer"
-              }
-              value={order.lastOffer.amount}
-            />
-          )}
+          // show last offer
+          <SecondaryEntry
+            label={
+              order.lastOffer.fromParticipant === "SELLER"
+                ? "Seller's offer"
+                : "Your offer"
+            }
+            value={order.lastOffer.amount}
+          />
+        )}
       </>
     )
   }
@@ -197,13 +201,27 @@ export const TransactionDetailsSummaryItemFragmentContainer = createFragmentCont
     order: graphql`
       fragment TransactionDetailsSummaryItem_order on CommerceOrder {
         __typename
+        lineItems {
+          edges {
+            node {
+              artworkOrEditionSet {
+                __typename
+                ... on Artwork {
+                  price
+                }
+                ... on EditionSet {
+                  price
+                }
+              }
+            }
+          }
+        }
         mode
         shippingTotal(precision: 2)
         shippingTotalCents
         taxTotal(precision: 2)
         taxTotalCents
         itemsTotal(precision: 2)
-        totalListPrice(precision: 2)
         buyerTotal(precision: 2)
         ... on CommerceOfferOrder {
           lastOffer {
