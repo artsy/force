@@ -170,15 +170,22 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
     }
 
     const listPriceCents = this.props.order.totalListPriceCents
+    const isRangeOffer = getOfferItemFromOrder(this.props.order.lineItems)
+      ?.displayPriceRange
 
-    if (!lowSpeedBumpEncountered && offerValue * 100 < listPriceCents * 0.75) {
+    if (
+      !lowSpeedBumpEncountered &&
+      offerValue * 100 < listPriceCents * 0.75 &&
+      !isRangeOffer
+    ) {
       this.showLowSpeedbump()
       return
     }
 
     if (
       !highSpeedBumpEncountered &&
-      this.state.offerValue * 100 > listPriceCents
+      this.state.offerValue * 100 > listPriceCents &&
+      !isRangeOffer
     ) {
       this.showHighSpeedbump()
       return

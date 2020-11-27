@@ -123,6 +123,18 @@ describe("Offer InitialMutation", () => {
       const container = page.find("div#offer-page-left-column")
       expect(container.text()).toContain("List price: $14,000 - 18,000")
     })
+
+    it("does not show the offer is too small warning", async () => {
+      await page.setOfferAmount(1000)
+      await page.clickSubmit()
+      expect(mutations.mockFetch).toHaveBeenCalledTimes(1)
+    })
+
+    it("does not show the offer amount is too high warning", async () => {
+      await page.setOfferAmount(17000)
+      await page.clickSubmit()
+      expect(mutations.mockFetch).toHaveBeenCalledTimes(1)
+    })
   })
 
   describe("mutation", () => {
