@@ -1,7 +1,6 @@
 import { ArtistArtworkFilterRefetchContainer as ArtworkFilter } from "v2/Apps/Artist/Routes/Overview/Components/ArtistArtworkFilter"
 import { WorksRouteFragmentContainer } from "v2/Apps/Artist/Routes/Works"
 import { MockBoot } from "v2/DevTools"
-import { ReactWrapper } from "enzyme"
 import React from "react"
 import { graphql } from "react-relay"
 import { ArtistTopWorksRailFragmentContainer as ArtistTopWorksRail } from "v2/Apps/Artist/Components/ArtistTopWorksRail/ArtistTopWorksRail"
@@ -45,7 +44,6 @@ describe("Works Route", () => {
   afterEach(() => {
     jest.clearAllMocks()
   })
-  let wrapper: ReactWrapper
 
   const { getWrapper } = setupTestWrapper({
     Component: (props: any) => {
@@ -129,13 +127,13 @@ describe("Works Route", () => {
 
   describe("Artist Series Rail", () => {
     it("Displays artist series rail if data is present", () => {
-      wrapper = getWrapper()
+      const wrapper = getWrapper()
       expect(wrapper.find("ArtistSeriesRail").length).toBe(1)
       expect(wrapper.find("ArtistSeriesItem").length).toBe(1)
     })
 
     it("Displays collections as a fallback if artist series data is not present", () => {
-      wrapper = getWrapper({
+      const wrapper = getWrapper({
         Artist: () => ({
           artistSeriesConnection: null,
         }),
