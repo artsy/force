@@ -15,6 +15,8 @@ export const computeCanonicalPath = (
   const pathParts = [basePath]
 
   const isConsignPage = path === "consign"
+  const isWorksForSalePage = path.endsWith("works-for-sale")
+  const isAuctionResultsPage = path.endsWith("auction-results")
 
   const hasArtistInsights =
     showMarketInsights(artist) ||
@@ -25,8 +27,10 @@ export const computeCanonicalPath = (
 
   if (isConsignPage) {
     pathParts.push("/consign")
-  } else if (!canShowOverview) {
+  } else if (isWorksForSalePage || !canShowOverview) {
     pathParts.push("/works-for-sale")
+  } else if (isAuctionResultsPage) {
+    pathParts.push("/auction-results")
   }
 
   return pathParts.join("")
