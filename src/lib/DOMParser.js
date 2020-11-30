@@ -10,4 +10,6 @@ const jsdom = new JSDOM()
 
 const _global = global
 _global.DOMParser = jsdom.window.DOMParser
+
+// TDOO: Determine what is using this, fails in staging and works in review apps?
 _global.Node = jsdom.window.Node

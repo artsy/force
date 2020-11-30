@@ -90,8 +90,8 @@ describe("OfferHistoryItem", () => {
     const offerHistory = await render({
       lastOffer: {
         ...OfferWithTotals,
-        id: "buyer-last-offer",
         fromParticipant: "BUYER",
+        id: "buyer-last-offer",
       } as any,
     })
 

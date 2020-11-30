@@ -4,7 +4,7 @@ import { graphql } from "react-relay"
 import { MarketInsightsContentsQuery } from "v2/__generated__/MarketInsightsContentsQuery.graphql"
 import { SystemContextProps, withSystemContext } from "v2/Artsy"
 import { SystemQueryRenderer as QueryRenderer } from "v2/Artsy/Relay/SystemQueryRenderer"
-import MarketInsights from "./MarketInsights"
+import { MarketInsightsFragmentContainer } from "./MarketInsights"
 
 export interface Props extends SystemContextProps {
   artistID: string
@@ -26,7 +26,7 @@ class MarketInsightsContents extends React.Component<Props, null> {
         variables={{ artistID }}
         render={({ props }) => {
           if (props) {
-            return <MarketInsights artist={props.artist} />
+            return <MarketInsightsFragmentContainer artist={props.artist} />
           } else {
             return null
           }

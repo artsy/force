@@ -9,7 +9,11 @@ export type ShowApp_show = {
     readonly internalID: string;
     readonly slug: string;
     readonly about: string | null;
-    readonly viewingRoomIDs: ReadonlyArray<string>;
+    readonly viewingRoomsConnection: {
+        readonly edges: ReadonlyArray<{
+            readonly __typename: string;
+        } | null> | null;
+    } | null;
     readonly counts: {
         readonly eligibleArtworks: number | null;
     } | null;
@@ -153,8 +157,30 @@ const node: ReaderFragment = {
     {
       "alias": null,
       "args": null,
-      "kind": "ScalarField",
-      "name": "viewingRoomIDs",
+      "concreteType": "ViewingRoomsConnection",
+      "kind": "LinkedField",
+      "name": "viewingRoomsConnection",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "ViewingRoomsEdge",
+          "kind": "LinkedField",
+          "name": "edges",
+          "plural": true,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "__typename",
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        }
+      ],
       "storageKey": null
     },
     {
@@ -294,5 +320,5 @@ const node: ReaderFragment = {
   ],
   "type": "Show"
 };
-(node as any).hash = '960ba3e24d5c9206cc85e43b88cf06e8';
+(node as any).hash = '9ec0b438bd6802c25dbae621a3ed9500';
 export default node;

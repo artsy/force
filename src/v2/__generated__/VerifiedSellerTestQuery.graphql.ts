@@ -9,21 +9,9 @@ export type VerifiedSellerTestQueryResponse = {
         readonly " $fragmentRefs": FragmentRefs<"VerifiedSeller_artwork">;
     } | null;
 };
-export type VerifiedSellerTestQueryRawResponse = {
-    readonly artwork: ({
-        readonly is_biddable: boolean | null;
-        readonly partner: ({
-            readonly isVerifiedSeller: boolean | null;
-            readonly name: string | null;
-            readonly id: string | null;
-        }) | null;
-        readonly id: string | null;
-    }) | null;
-};
 export type VerifiedSellerTestQuery = {
     readonly response: VerifiedSellerTestQueryResponse;
     readonly variables: VerifiedSellerTestQueryVariables;
-    readonly rawResponse: VerifiedSellerTestQueryRawResponse;
 };
 
 
@@ -149,5 +137,5 @@ return {
   }
 };
 })();
-(node as any).hash = '85ea1b419e11f7fdb8e102bb7a1dbd5f';
+(node as any).hash = '84408f8b9b2e5182fb105912e8cb83a3';
 export default node;

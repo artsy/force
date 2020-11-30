@@ -1,3 +1,4 @@
+/* eslint-disable sort-keys-fix/sort-keys-fix */
 import loadable from "@loadable/component"
 import { getRedirect } from "v2/Apps/Order/getRedirect"
 import { redirects } from "v2/Apps/Order/redirects"
@@ -17,7 +18,9 @@ import { AcceptFragmentContainer as AcceptRoute } from "./Routes/Accept"
 import { RejectFragmentContainer as DeclineRoute } from "./Routes/Reject"
 import { StatusFragmentContainer as StatusRoute } from "./Routes/Status"
 
-const OrderApp = loadable(() => import("./OrderApp"))
+const OrderApp = loadable(() => import("./OrderApp"), {
+  resolveComponent: component => component.OrderApp,
+})
 
 // FIXME:
 // * `render` functions requires casting

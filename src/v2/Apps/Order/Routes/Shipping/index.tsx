@@ -54,6 +54,7 @@ import { RelayProp, createFragmentContainer, graphql } from "react-relay"
 import { get } from "v2/Utils/get"
 import createLogger from "v2/Utils/logger"
 import { Media } from "v2/Utils/Responsive"
+import { BuyerGuarantee } from "../../Components/BuyerGuarantee"
 
 export interface ShippingProps {
   order: Shipping_order
@@ -445,6 +446,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
                   <ArtworkSummaryItem order={order} />
                   <TransactionDetailsSummaryItem order={order} />
                 </Flex>
+                <BuyerGuarantee />
                 <Spacer mb={[2, 3]} />
                 <Media at="xs">
                   <Spacer mb={3} />

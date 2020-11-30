@@ -9,17 +9,9 @@ export type AuthenticityCertificateTestQueryResponse = {
         readonly " $fragmentRefs": FragmentRefs<"AuthenticityCertificate_artwork">;
     } | null;
 };
-export type AuthenticityCertificateTestQueryRawResponse = {
-    readonly artwork: ({
-        readonly hasCertificateOfAuthenticity: boolean | null;
-        readonly is_biddable: boolean | null;
-        readonly id: string | null;
-    }) | null;
-};
 export type AuthenticityCertificateTestQuery = {
     readonly response: AuthenticityCertificateTestQueryResponse;
     readonly variables: AuthenticityCertificateTestQueryVariables;
-    readonly rawResponse: AuthenticityCertificateTestQueryRawResponse;
 };
 
 
@@ -121,5 +113,5 @@ return {
   }
 };
 })();
-(node as any).hash = 'dad823a90dc192a9c17a406d84cdc0c8';
+(node as any).hash = '4eb77c6a8491f223fde8a34290f5c854';
 export default node;

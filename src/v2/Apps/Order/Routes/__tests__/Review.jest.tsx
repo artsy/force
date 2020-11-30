@@ -100,6 +100,10 @@ describe("Review", () => {
       expect(routes.mockPushRoute).toBeCalledWith("/orders/1234/payment")
     })
 
+    it("shows buyer guarentee", () => {
+      expect(page.buyerGuarantee.length).toBe(1)
+    })
+
     it("shows an error modal when there is an error in submitOrderPayload", async () => {
       mutations.useResultsOnce(submitOrderWithFailure)
       await page.clickSubmit()

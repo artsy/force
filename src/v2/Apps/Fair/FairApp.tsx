@@ -43,23 +43,23 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
   const artworkCount = fair.counts.artworks
 
   const clickedArtworksTabTrackingData: ClickedNavigationTab = {
+    action: ActionType.clickedNavigationTab,
     context_module: ContextModule.exhibitorsTab,
-    context_page_owner_type: contextPageOwnerType,
     context_page_owner_id: contextPageOwnerId,
     context_page_owner_slug: contextPageOwnerSlug,
+    context_page_owner_type: contextPageOwnerType,
     destination_path: `fair/${fair.slug}/artworks`,
     subject: "Artworks",
-    action: ActionType.clickedNavigationTab,
   }
 
   const clickedExhibitorsTabTrackingData: ClickedNavigationTab = {
+    action: ActionType.clickedNavigationTab,
     context_module: ContextModule.artworksTab,
-    context_page_owner_type: contextPageOwnerType,
     context_page_owner_id: contextPageOwnerId,
     context_page_owner_slug: contextPageOwnerSlug,
+    context_page_owner_type: contextPageOwnerType,
     destination_path: `fair/${fair.slug}`,
     subject: "Exhibitors",
-    action: ActionType.clickedNavigationTab,
   }
 
   return (
@@ -168,30 +168,33 @@ const TrackingWrappedFairApp: React.FC<FairAppProps> = props => {
 }
 
 // Top-level route needs to be exported for bundle splitting in the router
-export default createFragmentContainer(TrackingWrappedFairApp, {
-  fair: graphql`
-    fragment FairApp_fair on Fair {
-      internalID
-      slug
-      ...FairMeta_fair
-      ...FairHeader_fair
-      ...FairEditorial_fair
-      ...FairCollections_fair
-      ...FairFollowedArtists_fair
-      articles: articlesConnection(first: 5, sort: PUBLISHED_AT_DESC) {
-        edges {
+export const FairAppFragmentContainer = createFragmentContainer(
+  TrackingWrappedFairApp,
+  {
+    fair: graphql`
+      fragment FairApp_fair on Fair {
+        internalID
+        slug
+        ...FairMeta_fair
+        ...FairHeader_fair
+        ...FairEditorial_fair
+        ...FairCollections_fair
+        ...FairFollowedArtists_fair
+        articles: articlesConnection(first: 5, sort: PUBLISHED_AT_DESC) {
+          edges {
+            __typename
+          }
+        }
+        marketingCollections(size: 5) {
+          __typename
+        }
+        counts {
+          artworks
+        }
+        profile {
           __typename
         }
       }
-      marketingCollections(size: 5) {
-        __typename
-      }
-      counts {
-        artworks
-      }
-      profile {
-        __typename
-      }
-    }
-  `,
-})
+    `,
+  }
+)

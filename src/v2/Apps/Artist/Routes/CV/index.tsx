@@ -56,6 +56,3 @@ export const CVRouteFragmentContainer = createFragmentContainer(CVRoute, {
     }
   `,
 })
-
-// Top-level route needs to be exported for bundle splitting in the router
-export default CVRouteFragmentContainer

@@ -1,21 +1,6 @@
 export const mockResolver = (
   orderDetails: any = BuyOrderWithShippingDetails
 ) => ({
-  Query: () => ({
-    me: {
-      name: "Alice Jane",
-    },
-  }),
-  CommerceOrder: (_, { id, ...others }) => {
-    return {
-      ...orderDetails,
-      id,
-      ...others,
-      __resolveType(obj, _context, _info) {
-        return obj.mode === "BUY" ? "CommerceBuyOrder" : "CommerceOfferOrder"
-      },
-    }
-  },
   CommerceBuyOrder: (_, { id, ...others }) => {
     return {
       ...orderDetails,
@@ -30,114 +15,173 @@ export const mockResolver = (
       ...others,
     }
   },
+  CommerceOrder: (_, { id, ...others }) => {
+    return {
+      ...orderDetails,
+      id,
+      ...others,
+      __resolveType(obj, _context, _info) {
+        return obj.mode === "BUY" ? "CommerceBuyOrder" : "CommerceOfferOrder"
+      },
+    }
+  },
+  Query: () => ({
+    me: {
+      name: "Alice Jane",
+    },
+  }),
 })
 
-export const UntouchedOrder = {
-  internalID: "2939023",
-  id: "2939023",
-  code: "abcdefg",
-  state: "PENDING",
-  stateReason: null,
-  stateExpiresAt: "Jan 15",
-  itemsTotal: "$12,000",
-  totalListPrice: "$12,000",
-  totalListPriceCents: 1200000,
-  shippingTotal: null,
-  shippingTotalCents: null,
-  taxTotal: null,
-  taxTotalCents: null,
-  creditCard: null,
-  buyerTotal: "$12,000",
-  requestedFulfillment: null,
-  lastTransactionFailed: false,
-  currencyCode: "USD",
-  createdAt: "2019-12-19T06:01:17.171Z",
-  lineItems: {
+const OrderArtworkNode = {
+  artwork: {
+    artist_names: "Lisa Breslow",
+    artists: [
+      {
+        id: "239084092",
+        internalID: "artistId",
+        slug: "artistId",
+      },
+    ],
+    attribution_class: null,
+    date: "2016",
+    dimensions: {
+      cm: "91.4 × 91.4 cm",
+      in: "36 × 36 in",
+    },
+    edition_sets: [],
+    euShippingOrigin: false,
+    href: "/artwork/artworkID",
+    id: "02393",
+    image: {
+      resized: {
+        url:
+          "https://d7hftxdivxxvm.cloudfront.net?resize_to=fit&width=185&height=184&quality=80&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FtOfWds4sIX_9WpRf3RqaQQ%2Flarge.jpg",
+      },
+      resized_ArtworkSummaryItem: {
+        url:
+          "https://d7hftxdivxxvm.cloudfront.net?resize_to=fit&width=185&height=184&quality=80&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FtOfWds4sIX_9WpRf3RqaQQ%2Flarge.jpg",
+      },
+    },
+    internalID: "artworkId",
+    is_acquireable: true as boolean,
+    is_offerable: true as boolean,
+    medium: "Oil and pencil on panel",
+    onlyShipsDomestically: false,
+    partner: {
+      id: "1234",
+      initials: "AG",
+      name: "A Gallery",
+      profile: {
+        icon: {
+          url: "www.artsy.net",
+        },
+        id: "12345",
+      },
+      slug: "a-g",
+    },
+    pickup_available: true,
+    shippingCountry: "US",
+    shippingOrigin: "New York, NY",
+    slug: "artworkId",
+    title: "Gramercy Park South",
+  },
+}
+
+const OrderArtworkOrEditionSetkNode_Artwork = {
+  artworkOrEditionSet: {
+    __typename: "Artwork",
+    displayPriceRange: false as boolean,
+    id: "art123",
+    price: "$12,000",
+  },
+}
+
+const OfferArtworkOrEditionSetkNode_Artwork = {
+  artworkOrEditionSet: {
+    __typename: "Artwork",
+    displayPriceRange: false as boolean,
+    id: "art123",
+    price: "$16,000",
+  },
+}
+
+const OfferArtworkOrEditionSetkNode_ArtworkInPounds = {
+  artworkOrEditionSet: {
+    __typename: "Artwork",
+    displayPriceRange: false as boolean,
+    id: "art123",
+    price: "£16,000",
+  },
+}
+
+const OfferArtworkOrEditionSetkNode_Range = {
+  artworkOrEditionSet: {
+    __typename: "EditionSet",
+    displayPriceRange: true as boolean,
+    id: "ed123",
+    price: "$14,000 - 18,000",
+  },
+}
+
+const OrderArtworFflfillmentsNode = {
+  fulfillments: {
     edges: [
       {
         node: {
-          id: "line-item-node-id",
-          artwork: {
-            id: "02393",
-            internalID: "artworkId",
-            href: "/artwork/artworkID",
-            slug: "artworkId",
-            pickup_available: true,
-            artist_names: "Lisa Breslow",
-            title: "Gramercy Park South",
-            date: "2016",
-            shippingOrigin: "New York, NY",
-            medium: "Oil and pencil on panel",
-            onlyShipsDomestically: false,
-            euShippingOrigin: false,
-            shippingCountry: "US",
-            is_acquireable: true as boolean,
-            is_offerable: false as boolean,
-            partner: {
-              name: "A Gallery",
-              id: "1234",
-              initials: "AG",
-              slug: "a-g",
-              profile: {
-                id: "12345",
-                icon: {
-                  url: "www.artsy.net",
-                },
-              },
-            },
-            dimensions: {
-              in: "36 × 36 in",
-              cm: "91.4 × 91.4 cm",
-            },
-            edition_sets: [],
-            artists: [
-              {
-                internalID: "artistId",
-                slug: "artistId",
-                id: "239084092",
-              },
-            ],
-            attribution_class: null,
-            image: {
-              resized: {
-                url:
-                  "https://d7hftxdivxxvm.cloudfront.net?resize_to=fit&width=185&height=184&quality=80&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FtOfWds4sIX_9WpRf3RqaQQ%2Flarge.jpg",
-              },
-              resized_ArtworkSummaryItem: {
-                url:
-                  "https://d7hftxdivxxvm.cloudfront.net?resize_to=fit&width=185&height=184&quality=80&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FtOfWds4sIX_9WpRf3RqaQQ%2Flarge.jpg",
-              },
-            },
-          },
-          fulfillments: {
-            edges: [
-              {
-                node: {
-                  id: "fullfillment-id",
-                  courier: "UPS",
-                  trackingId: "AP234345634",
-                  estimatedDelivery: "Friday, August 6",
-                },
-              },
-            ],
-          },
-          editionSetId: null,
+          courier: "UPS",
+          estimatedDelivery: "Friday, August 6",
+          id: "fullfillment-id",
+          trackingId: "AP234345634",
         },
       },
     ],
   },
-  sellerDetails: {
-    __typename: "Partner",
-    id: "partner-node-id",
-    name: "Kathryn Markel Fine Arts",
-    locations: [
+}
+
+export const UntouchedOrder = {
+  buyerTotal: "$12,000",
+  code: "abcdefg",
+  createdAt: "2019-12-19T06:01:17.171Z",
+  creditCard: null,
+  currencyCode: "USD",
+  id: "2939023",
+  internalID: "2939023",
+  itemsTotal: "$12,000",
+  lastTransactionFailed: false,
+  lineItems: {
+    edges: [
       {
-        city: "New York",
-        state: "NY",
-        country: "US",
+        node: {
+          editionSetId: null,
+          id: "line-item-node-id",
+          ...OrderArtworkNode,
+          ...OrderArtworkOrEditionSetkNode_Artwork,
+          ...OrderArtworFflfillmentsNode,
+        },
       },
     ],
   },
+  requestedFulfillment: null,
+  sellerDetails: {
+    __typename: "Partner",
+    id: "partner-node-id",
+    locations: [
+      {
+        city: "New York",
+        country: "US",
+        state: "NY",
+      },
+    ],
+    name: "Kathryn Markel Fine Arts",
+  },
+  shippingTotal: null,
+  shippingTotalCents: null,
+  state: "PENDING",
+  stateExpiresAt: "Jan 15",
+  stateReason: null,
+  taxTotal: null,
+  taxTotalCents: null,
+  totalListPriceCents: 1200000,
 } as const
 
 export const UntouchedBuyOrder = {
@@ -157,34 +201,82 @@ export const ShippingTotals = {
 } as const
 
 export const OfferWithTotals = {
-  id: "myoffer-id",
-  internalID: "myoffer-id",
   amount: "$14,000",
   amountCents: 1400000,
   currencyCode: "USD",
+  id: "myoffer-id",
+  internalID: "myoffer-id",
   ...ShippingTotals,
   ...TaxTotals,
-  createdAt: "2019-08-01T20:34:27.467Z",
-  fromParticipant: "SELLER",
   buyerTotal: "$14,320",
   buyerTotalCents: 1432000,
+  createdAt: "2019-08-01T20:34:27.467Z",
+  fromParticipant: "SELLER",
   note: "Another note!",
 } as const
 
 export const UntouchedOfferOrder = {
   ...UntouchedOrder,
   __typename: "CommerceOfferOrder",
-  mode: "OFFER",
+  awaitingResponseFrom: null,
   currencyCode: "USD",
-  totalListPrice: "$16,000",
-  totalListPriceCents: 1600000,
   itemsTotal: "$16,000",
   itemsTotalCents: 1600000,
   lastOffer: null,
-  awaitingResponseFrom: null,
+  lineItems: {
+    edges: [
+      {
+        node: {
+          editionSetId: null,
+          id: "line-item-node-id",
+          ...OrderArtworkNode,
+          ...OfferArtworkOrEditionSetkNode_Artwork,
+          ...OrderArtworFflfillmentsNode,
+        },
+      },
+    ],
+  },
+  mode: "OFFER",
   myLastOffer: null,
   offers: {
     edges: [{ node: OfferWithTotals }],
+  },
+  totalListPriceCents: 1600000,
+} as const
+
+export const UntouchedOfferOrderInPounds = {
+  ...UntouchedOfferOrder,
+  currencyCode: "GBP",
+  itemsTotal: "£16,000",
+  lineItems: {
+    edges: [
+      {
+        node: {
+          editionSetId: null,
+          id: "line-item-node-id",
+          ...OrderArtworkNode,
+          ...OfferArtworkOrEditionSetkNode_ArtworkInPounds,
+          ...OrderArtworFflfillmentsNode,
+        },
+      },
+    ],
+  },
+} as const
+
+export const UntouchedOfferOrderWithRange = {
+  ...UntouchedOfferOrder,
+  lineItems: {
+    edges: [
+      {
+        node: {
+          editionSetId: null,
+          id: "line-item-node-id",
+          ...OrderArtworkNode,
+          ...OfferArtworkOrEditionSetkNode_Range,
+          ...OrderArtworFflfillmentsNode,
+        },
+      },
+    ],
   },
 } as const
 
@@ -193,9 +285,9 @@ export const OfferOrderWithOffers = {
   lastOffer: OfferWithTotals,
   myLastOffer: {
     ...OfferWithTotals,
-    internalID: "my-last-offer-id-no-note",
-    id: "my-last-offer-id-no-note",
     fromParticipant: "BUYER",
+    id: "my-last-offer-id-no-note",
+    internalID: "my-last-offer-id-no-note",
     note: null,
   },
 } as const
@@ -205,9 +297,9 @@ export const OfferOrderWithOffersAndNote = {
   lastOffer: OfferWithTotals,
   myLastOffer: {
     ...OfferWithTotals,
-    internalID: "my-last-offer-id-with-note",
-    id: "my-last-offer-id-with-note",
     fromParticipant: "BUYER",
+    id: "my-last-offer-id-with-note",
+    internalID: "my-last-offer-id-with-note",
     note: "This is a note!",
   },
 } as const
@@ -216,33 +308,33 @@ export const ShippingDetails = {
   buyerPhoneNumber: "120938120983",
   requestedFulfillment: {
     __typename: "CommerceShip",
-    fulfillmentType: "SHIP",
-    name: "Joelle Van Dyne",
     addressLine1: "401 Broadway",
     addressLine2: "Suite 25",
     city: "New York",
+    country: "US",
+    fulfillmentType: "SHIP",
+    name: "Joelle Van Dyne",
+    phoneNumber: "120938120983",
     postalCode: "10013",
     region: "NY",
-    country: "US",
-    phoneNumber: "120938120983",
   },
 } as const
 
 export const PaymentDetails = {
   creditCard: {
-    id: "relay-node-id",
-    internalID: "gravity-credit-card-id",
-    name: "Dr. Collector",
-    street1: "1 Art st",
-    street2: null,
-    city: "New York",
-    state: "NY",
-    country: "USA",
-    postalCode: "90210",
     brand: "Visa",
-    lastDigits: "4444",
+    city: "New York",
+    country: "USA",
     expirationMonth: 3,
     expirationYear: 21,
+    id: "relay-node-id",
+    internalID: "gravity-credit-card-id",
+    lastDigits: "4444",
+    name: "Dr. Collector",
+    postalCode: "90210",
+    state: "NY",
+    street1: "1 Art st",
+    street2: null,
   },
 } as const
 
@@ -297,42 +389,42 @@ export const Seller = {
 export const Offers = [
   {
     node: {
-      id: OfferWithTotals.id,
-      internalID: OfferWithTotals.internalID,
-      currencyCode: "USD",
-      fromParticipant: OfferWithTotals.fromParticipant,
       amount: OfferWithTotals.amount,
       createdAt: "May 22",
+      currencyCode: "USD",
+      fromParticipant: OfferWithTotals.fromParticipant,
+      id: OfferWithTotals.id,
+      internalID: OfferWithTotals.internalID,
     },
   },
   {
     node: {
-      id: "0",
-      internalID: "0",
-      currencyCode: "USD",
-      fromParticipant: "BUYER",
       amount: "$1,200.00",
       createdAt: "May 21",
-    },
-  },
-  {
-    node: {
-      id: "1",
-      internalID: "1",
-      currencyCode: "USD",
-      fromParticipant: "SELLER",
-      amount: "$1,500.00",
-      createdAt: "Apr 30",
-    },
-  },
-  {
-    node: {
-      id: "2",
-      internalID: "2",
       currencyCode: "USD",
       fromParticipant: "BUYER",
+      id: "0",
+      internalID: "0",
+    },
+  },
+  {
+    node: {
+      amount: "$1,500.00",
+      createdAt: "Apr 30",
+      currencyCode: "USD",
+      fromParticipant: "SELLER",
+      id: "1",
+      internalID: "1",
+    },
+  },
+  {
+    node: {
       amount: "$1,100.00",
       createdAt: "Apr 5",
+      currencyCode: "USD",
+      fromParticipant: "BUYER",
+      id: "2",
+      internalID: "2",
     },
   },
 ] as const

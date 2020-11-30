@@ -9,15 +9,15 @@ import React from "react"
 import { HeadProvider } from "react-head"
 import { graphql } from "react-relay"
 import { PurchaseHistoryProps } from "../Components/PurchaseHistory"
-import PurchaseAppFragmentContainer from "../PurchaseApp"
+import { PurchaseAppFragmentContainer } from "../PurchaseApp"
 
 jest.unmock("react-relay")
 
 const pageInfo: PurchaseAppTestQueryRawResponse["me"]["orders"]["pageInfo"] = {
-  startCursor: "NQ",
   endCursor: "MQ",
   hasNextPage: true,
   hasPreviousPage: false,
+  startCursor: "NQ",
 }
 
 const pageCursors: PurchaseAppTestQueryRawResponse["me"]["orders"]["pageCursors"] = {
@@ -92,8 +92,8 @@ describe("Purchase app", () => {
           name: "Moira Rose",
           orders: {
             edges: [{ node: UntouchedBuyOrder }],
-            pageInfo,
             pageCursors,
+            pageInfo,
           },
         }
         const component = await render(mockMe, userType)
@@ -110,8 +110,8 @@ describe("Purchase app", () => {
           name: "Moira Rose",
           orders: {
             edges: [{ node: UntouchedBuyOrder }],
-            pageInfo,
             pageCursors,
+            pageInfo,
           },
         }
         const component = await render(mockMe, userType)
@@ -128,7 +128,7 @@ describe("Purchase app", () => {
         pagination.find("button").at(1).simulate("click")
         expect(refetchSpy).toHaveBeenCalledTimes(1)
         expect(refetchSpy.mock.calls[0][0]).toEqual(
-          expect.objectContaining({ first: 10, after: "NQ" })
+          expect.objectContaining({ after: "NQ", first: 10 })
         )
       })
     })
@@ -137,7 +137,7 @@ describe("Purchase app", () => {
         const mockMe = {
           id: "111",
           name: "Moira Rose",
-          orders: { edges: [], pageInfo, pageCursors },
+          orders: { edges: [], pageCursors, pageInfo },
         }
         const component = await render(mockMe, userType)
         const text = component.text()

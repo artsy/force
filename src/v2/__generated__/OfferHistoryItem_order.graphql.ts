@@ -5,7 +5,23 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type CommerceOrderParticipantEnum = "BUYER" | "SELLER" | "%future added value";
 export type OfferHistoryItem_order = {
-    readonly totalListPrice: string | null;
+    readonly lineItems: {
+        readonly edges: ReadonlyArray<{
+            readonly node: {
+                readonly artworkOrEditionSet: ({
+                    readonly __typename: "Artwork";
+                    readonly price: string | null;
+                } | {
+                    readonly __typename: "EditionSet";
+                    readonly price: string | null;
+                } | {
+                    /*This will never be '%other', but we need some
+                    value in case none of the concrete values match.*/
+                    readonly __typename: "%other";
+                }) | null;
+            } | null;
+        } | null> | null;
+    } | null;
     readonly offers?: {
         readonly edges: ReadonlyArray<{
             readonly node: {
@@ -37,9 +53,11 @@ export type OfferHistoryItem_order$key = {
 const node: ReaderFragment = (function(){
 var v0 = [
   {
-    "kind": "Literal",
-    "name": "precision",
-    "value": 2
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "price",
+    "storageKey": null
   }
 ],
 v1 = {
@@ -49,14 +67,21 @@ v1 = {
   "name": "internalID",
   "storageKey": null
 },
-v2 = {
+v2 = [
+  {
+    "kind": "Literal",
+    "name": "precision",
+    "value": 2
+  }
+],
+v3 = {
   "alias": null,
-  "args": (v0/*: any*/),
+  "args": (v2/*: any*/),
   "kind": "ScalarField",
   "name": "amount",
   "storageKey": "amount(precision:2)"
 },
-v3 = {
+v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -71,10 +96,64 @@ return {
   "selections": [
     {
       "alias": null,
-      "args": (v0/*: any*/),
-      "kind": "ScalarField",
-      "name": "totalListPrice",
-      "storageKey": "totalListPrice(precision:2)"
+      "args": null,
+      "concreteType": "CommerceLineItemConnection",
+      "kind": "LinkedField",
+      "name": "lineItems",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "CommerceLineItemEdge",
+          "kind": "LinkedField",
+          "name": "edges",
+          "plural": true,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "CommerceLineItem",
+              "kind": "LinkedField",
+              "name": "node",
+              "plural": false,
+              "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "concreteType": null,
+                  "kind": "LinkedField",
+                  "name": "artworkOrEditionSet",
+                  "plural": false,
+                  "selections": [
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "__typename",
+                      "storageKey": null
+                    },
+                    {
+                      "kind": "InlineFragment",
+                      "selections": (v0/*: any*/),
+                      "type": "Artwork"
+                    },
+                    {
+                      "kind": "InlineFragment",
+                      "selections": (v0/*: any*/),
+                      "type": "EditionSet"
+                    }
+                  ],
+                  "storageKey": null
+                }
+              ],
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
     },
     {
       "kind": "InlineFragment",
@@ -104,7 +183,7 @@ return {
                   "plural": false,
                   "selections": [
                     (v1/*: any*/),
-                    (v2/*: any*/),
+                    (v3/*: any*/),
                     {
                       "alias": null,
                       "args": [
@@ -118,7 +197,7 @@ return {
                       "name": "createdAt",
                       "storageKey": "createdAt(format:\"MMM D\")"
                     },
-                    (v3/*: any*/)
+                    (v4/*: any*/)
                   ],
                   "storageKey": null
                 }
@@ -137,18 +216,18 @@ return {
           "plural": false,
           "selections": [
             (v1/*: any*/),
+            (v4/*: any*/),
             (v3/*: any*/),
-            (v2/*: any*/),
             {
               "alias": null,
-              "args": (v0/*: any*/),
+              "args": (v2/*: any*/),
               "kind": "ScalarField",
               "name": "shippingTotal",
               "storageKey": "shippingTotal(precision:2)"
             },
             {
               "alias": null,
-              "args": (v0/*: any*/),
+              "args": (v2/*: any*/),
               "kind": "ScalarField",
               "name": "taxTotal",
               "storageKey": "taxTotal(precision:2)"
@@ -170,5 +249,5 @@ return {
   "type": "CommerceOrder"
 };
 })();
-(node as any).hash = '6209a00aa1b92262f730863b082250c1';
+(node as any).hash = '36cf4150cb84ee1f60b885d5e58146c2';
 export default node;

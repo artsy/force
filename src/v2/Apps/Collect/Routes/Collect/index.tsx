@@ -40,11 +40,11 @@ export const CollectApp: React.FC<CollectAppProps> = ({
     ? `${sd.APP_URL}/collect/${medium}`
     : `${sd.APP_URL}/collect`
 
-  const items = [{ path: "/collect", name: "Collect" }]
+  const items = [{ name: "Collect", path: "/collect" }]
   if (medium) {
     items.push({
-      path: `/collect/${medium}`,
       name: breadcrumbTitle,
+      path: `/collect/${medium}`,
     })
   }
 
@@ -84,11 +84,11 @@ export const CollectApp: React.FC<CollectAppProps> = ({
             viewer={viewer}
             filters={location.query as any}
             sortOptions={[
-              { value: "-decayed_merch", text: "Default" },
-              { value: "-partner_updated_at", text: "Recently updated" },
-              { value: "-published_at", text: "Recently added" },
-              { value: "-year", text: "Artwork year (desc.)" },
-              { value: "year", text: "Artwork year (asc.)" },
+              { text: "Default", value: "-decayed_merch" },
+              { text: "Recently updated", value: "-partner_updated_at" },
+              { text: "Recently added", value: "-published_at" },
+              { text: "Artwork year (desc.)", value: "-year" },
+              { text: "Artwork year (asc.)", value: "year" },
             ]}
             onChange={filters => {
               const url = buildUrlForCollectApp(filters)
@@ -129,6 +129,3 @@ export const CollectAppFragmentContainer = createFragmentContainer(CollectApp, {
     }
   `,
 })
-
-// Top-level route needs to be exported for bundle splitting in the router
-export default CollectAppFragmentContainer

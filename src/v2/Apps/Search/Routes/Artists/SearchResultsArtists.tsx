@@ -64,9 +64,9 @@ export class SearchResultsArtistsRoute extends React.Component<Props, State> {
 
     this.props.relay.refetch(
       {
-        first: PAGE_SIZE,
         after: cursor,
         before: null,
+        first: PAGE_SIZE,
         last: null,
         page: null,
       },
@@ -83,8 +83,8 @@ export class SearchResultsArtistsRoute extends React.Component<Props, State> {
         } = this.props
         const { term } = get(location, l => l.query)
         const urlParams = qs.stringify({
-          term,
           page,
+          term,
         })
         // TODO: Look into using router push w/ query params.
         // this.props.router.replace(`/search/artists?${urlParams}`)
@@ -227,6 +227,3 @@ export const SearchResultsArtistsRouteFragmentContainer = createRefetchContainer
     }
   `
 )
-
-// Top-level route needs to be exported for bundle splitting in the router
-export default SearchResultsArtistsRouteFragmentContainer

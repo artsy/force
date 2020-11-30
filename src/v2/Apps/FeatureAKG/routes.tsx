@@ -1,8 +1,11 @@
+/* eslint-disable sort-keys-fix/sort-keys-fix */
 import loadable from "@loadable/component"
 import { RouteConfig } from "found"
 import { graphql } from "react-relay"
 
-const FeatureAKGApp = loadable(() => import("./FeatureAKGApp"))
+const FeatureAKGApp = loadable(() => import("./FeatureAKGApp"), {
+  resolveComponent: component => component.FeatureAKGAppFragmentContainer,
+})
 
 export const routes: RouteConfig[] = [
   {

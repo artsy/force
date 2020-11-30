@@ -18,7 +18,7 @@ import { ReactStripeElements } from "react-stripe-elements"
 import createLogger from "v2/Utils/logger"
 import { Media } from "v2/Utils/Responsive"
 
-import { Button, Col, Flex, Row, Spacer, Box } from "@artsy/palette"
+import { Box, Button, Col, Flex, Row, Spacer } from "@artsy/palette"
 import {
   PaymentPicker,
   PaymentPickerFragmentContainer,
@@ -29,6 +29,7 @@ import {
   injectCommitMutation,
 } from "v2/Apps/Order/Utils/commitMutation"
 import { AnalyticsSchema, track } from "v2/Artsy"
+import { BuyerGuarantee } from "../../Components/BuyerGuarantee"
 
 export const ContinueButton = props => (
   <Button size="large" width="100%" {...props}>
@@ -156,6 +157,7 @@ export class PaymentRoute extends Component<PaymentProps, PaymentState> {
                   <ArtworkSummaryItem order={order} />
                   <TransactionDetailsSummaryItem order={order} />
                 </Flex>
+                <BuyerGuarantee />
                 <Spacer mb={[2, 3]} />
                 <Media at="xs">
                   <>

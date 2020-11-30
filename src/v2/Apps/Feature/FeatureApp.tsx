@@ -57,7 +57,7 @@ const FeatureApp: React.FC<FeatureAppProps> = ({ feature }) => {
 }
 
 // Top-level route needs to be exported for bundle splitting in the router
-export default createFragmentContainer(FeatureApp, {
+export const FeatureAppFragmentContainer = createFragmentContainer(FeatureApp, {
   feature: graphql`
     fragment FeatureApp_feature on Feature {
       ...FeatureMeta_feature

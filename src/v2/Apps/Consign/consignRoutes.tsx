@@ -1,22 +1,23 @@
+/* eslint-disable sort-keys-fix/sort-keys-fix */
 import loadable from "@loadable/component"
 import { graphql } from "react-relay"
 
-const ConsignApp = loadable(() => import("./ConsignApp"))
-const OfferDetailApp = loadable(() => import("./OfferDetailApp"))
+const MarketingLandingApp = loadable(() =>
+  import("./Routes/MarketingLanding/MarketingLandingApp"), {
+  resolveComponent: component => component.MarketingLandingApp,
+}
+)
+const OfferDetailApp = loadable(() => import("./Routes/Offer/OfferDetailApp"), {
+  resolveComponent: component => component.OfferDetailAppFragmentContainer,
+})
+
 export const consignRoutes = [
   {
-    path: "/consign2",
-    getComponent: () => ConsignApp,
+    path: "/consign",
+    getComponent: () => MarketingLandingApp,
     prepare: () => {
-      ConsignApp.preload()
+      MarketingLandingApp.preload()
     },
-    query: graphql`
-      query consignRoutes_ArtworkQuery {
-        artist(id: "andy-warhol") @principalField {
-          ...ConsignApp_artist
-        }
-      }
-    `,
   },
   {
     path: "/consign/offer/:offerID",
@@ -26,7 +27,7 @@ export const consignRoutes = [
     },
     query: graphql`
       query consignRoutes_OfferDetailQuery($offerID: ID!) {
-        offer(id: $offerID, gravityPartnerId: "ssshhhhh") {
+        offer(id: $offerID) {
           ...OfferDetailApp_offer
         }
       }

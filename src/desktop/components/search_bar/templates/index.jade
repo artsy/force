@@ -1,10 +1,7 @@
-#main-layout-search-bar-container( itemscope, itemtype='http://schema.org/WebSite' )
+#main-layout-search-bar-container
   form(
     action='/search'
     method='GET'
-    itemprop='potentialAction'
-    itemscope
-    itemtype='http://schema.org/SearchAction'
   )
 
     input#main-layout-search-bar-input.bordered-input(
@@ -23,7 +20,7 @@
     )
 
     a#main-layout-search-bar-icon.icon-search
-    
+
     #main-layout-search-bar-spinner: .loading-spinner-small
     #main-layout-search-bar-feedback.autocomplete-feedback
       //- Rendered client-side

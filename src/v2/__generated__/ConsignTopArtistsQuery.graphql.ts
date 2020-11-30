@@ -34,7 +34,7 @@ export type ConsignTopArtistsQuery = {
 query ConsignTopArtistsQuery {
   targetSupply {
     microfunnel {
-      artworksConnection(first: 1) {
+      artworksConnection(first: 10) {
         edges {
           node {
             slug
@@ -59,7 +59,7 @@ var v0 = [
   {
     "kind": "Literal",
     "name": "first",
-    "value": 1
+    "value": 10
   }
 ],
 v1 = {
@@ -175,7 +175,7 @@ return {
                     "storageKey": null
                   }
                 ],
-                "storageKey": "artworksConnection(first:1)"
+                "storageKey": "artworksConnection(first:10)"
               }
             ],
             "storageKey": null
@@ -252,7 +252,7 @@ return {
                     "storageKey": null
                   }
                 ],
-                "storageKey": "artworksConnection(first:1)"
+                "storageKey": "artworksConnection(first:10)"
               }
             ],
             "storageKey": null
@@ -267,9 +267,9 @@ return {
     "metadata": {},
     "name": "ConsignTopArtistsQuery",
     "operationKind": "query",
-    "text": "query ConsignTopArtistsQuery {\n  targetSupply {\n    microfunnel {\n      artworksConnection(first: 1) {\n        edges {\n          node {\n            slug\n            internalID\n            href\n            artistNames\n            image {\n              imageURL\n            }\n            realizedPrice\n            id\n          }\n        }\n      }\n    }\n  }\n}\n"
+    "text": "query ConsignTopArtistsQuery {\n  targetSupply {\n    microfunnel {\n      artworksConnection(first: 10) {\n        edges {\n          node {\n            slug\n            internalID\n            href\n            artistNames\n            image {\n              imageURL\n            }\n            realizedPrice\n            id\n          }\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '888650d7614fe8edd3b2f04d710b8b86';
+(node as any).hash = 'ba6ed510e0104cf8bcb1953dcae2e2b2';
 export default node;

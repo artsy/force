@@ -1,8 +1,7 @@
 import { unica } from "v2/Assets/Fonts"
 import { groupBy } from "lodash"
 import React from "react"
-// @ts-ignore
-import { ComponentRef, createFragmentContainer, graphql } from "react-relay"
+import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 
 export const MarketDataSummaryContainer = styled.div`
@@ -16,8 +15,8 @@ export interface Props extends React.HTMLProps<MarketDataSummary> {
 
 const Categories = {
   "blue-chip": "Blue Chip",
-  "top-established": "Top Established",
   "top-emerging": "Top Emerging",
+  "top-established": "Top Established",
 }
 const orderedCategories = ["blue-chip", "top-established", "top-emerging"]
 
@@ -151,46 +150,49 @@ export class MarketDataSummary extends React.Component<Props, null> {
   }
 }
 
-export default createFragmentContainer(MarketDataSummary, {
-  artist: graphql`
-    fragment MarketDataSummary_artist on Artist
-      @argumentDefinitions(
-        partnerCategory: {
-          type: "[String]"
-          defaultValue: ["blue-chip", "top-established", "top-emerging"]
+export const MarketDataSummaryFragmentContainer = createFragmentContainer(
+  MarketDataSummary,
+  {
+    artist: graphql`
+      fragment MarketDataSummary_artist on Artist
+        @argumentDefinitions(
+          partnerCategory: {
+            type: "[String]"
+            defaultValue: ["blue-chip", "top-established", "top-emerging"]
+          }
+        ) {
+        internalID
+        collections
+        highlights {
+          partnersConnection(
+            first: 10
+            displayOnPartnerProfile: true
+            representedBy: true
+            partnerCategory: $partnerCategory
+          ) {
+            edges {
+              node {
+                categories {
+                  slug
+                }
+              }
+            }
+          }
         }
-      ) {
-      internalID
-      collections
-      highlights {
-        partnersConnection(
-          first: 10
-          displayOnPartnerProfile: true
-          representedBy: true
-          partnerCategory: $partnerCategory
+        auctionResultsConnection(
+          recordsTrusted: true
+          first: 1
+          sort: PRICE_AND_DATE_DESC
         ) {
           edges {
             node {
-              categories {
-                slug
+              price_realized: priceRealized {
+                display(format: "0a")
               }
             }
           }
         }
       }
-      auctionResultsConnection(
-        recordsTrusted: true
-        first: 1
-        sort: PRICE_AND_DATE_DESC
-      ) {
-        edges {
-          node {
-            price_realized: priceRealized {
-              display(format: "0a")
-            }
-          }
-        }
-      }
-    }
-  `,
-})
+    `,
+  }
+)

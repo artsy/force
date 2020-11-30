@@ -9,7 +9,6 @@ export type Offer_order = {
     readonly internalID: string;
     readonly mode: CommerceOrderModeEnum | null;
     readonly state: CommerceOrderStateEnum;
-    readonly totalListPrice: string | null;
     readonly totalListPriceCents: number;
     readonly currencyCode: string;
     readonly lineItems: {
@@ -18,6 +17,19 @@ export type Offer_order = {
                 readonly artwork: {
                     readonly slug: string;
                 } | null;
+                readonly artworkOrEditionSet: ({
+                    readonly __typename: "Artwork";
+                    readonly price: string | null;
+                    readonly displayPriceRange: boolean | null;
+                } | {
+                    readonly __typename: "EditionSet";
+                    readonly price: string | null;
+                    readonly displayPriceRange: boolean | null;
+                } | {
+                    /*This will never be '%other', but we need some
+                    value in case none of the concrete values match.*/
+                    readonly __typename: "%other";
+                }) | null;
             } | null;
         } | null> | null;
     } | null;
@@ -32,7 +44,24 @@ export type Offer_order$key = {
 
 
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "price",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "displayPriceRange",
+    "storageKey": null
+  }
+];
+return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
@@ -58,19 +87,6 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "state",
       "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": [
-        {
-          "kind": "Literal",
-          "name": "precision",
-          "value": 2
-        }
-      ],
-      "kind": "ScalarField",
-      "name": "totalListPrice",
-      "storageKey": "totalListPrice(precision:2)"
     },
     {
       "alias": null,
@@ -127,6 +143,34 @@ const node: ReaderFragment = {
                     }
                   ],
                   "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "concreteType": null,
+                  "kind": "LinkedField",
+                  "name": "artworkOrEditionSet",
+                  "plural": false,
+                  "selections": [
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "__typename",
+                      "storageKey": null
+                    },
+                    {
+                      "kind": "InlineFragment",
+                      "selections": (v0/*: any*/),
+                      "type": "Artwork"
+                    },
+                    {
+                      "kind": "InlineFragment",
+                      "selections": (v0/*: any*/),
+                      "type": "EditionSet"
+                    }
+                  ],
+                  "storageKey": null
                 }
               ],
               "storageKey": null
@@ -150,5 +194,6 @@ const node: ReaderFragment = {
   ],
   "type": "CommerceOrder"
 };
-(node as any).hash = 'ed652f82e3ec77a94451ec21b8d1cc15';
+})();
+(node as any).hash = 'f11a48dea3912df6a019d310ff64d25e';
 export default node;

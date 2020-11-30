@@ -1,8 +1,5 @@
-import {
-  beforeAnalyticsReady,
-  onAnalyticsReady,
-} from "desktop/analytics/helpers"
-import { trackPageView } from "desktop/analytics/trackPageView"
+import { beforeAnalyticsReady, onAnalyticsReady } from "lib/analytics/helpers"
+import { trackPageView } from "lib/analytics/trackPageView"
 window.Cookies = require("cookies-js")
 
 import { data as sd } from "sharify"
@@ -19,6 +16,7 @@ const excludedRoutes = [
   "/collect(.*)",
   "/collection(.*)",
   "/collections(.*)",
+  "/consign(.*)",
   "/fair(.*)",
   "/feature(.*)",
   "/identity-verification(.*)",

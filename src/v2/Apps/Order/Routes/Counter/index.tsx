@@ -25,6 +25,7 @@ import React, { Component } from "react"
 import { RelayProp, createFragmentContainer, graphql } from "react-relay"
 import createLogger from "v2/Utils/logger"
 import { Media } from "v2/Utils/Responsive"
+import { BuyerGuarantee } from "../../Components/BuyerGuarantee"
 
 export interface CounterProps {
   order: Counter_order
@@ -46,7 +47,6 @@ export class CounterRoute extends Component<CounterProps> {
 
   submitPendingOffer(variables: CounterSubmitMutation["variables"]) {
     return this.props.commitMutation<CounterSubmitMutation>({
-      variables,
       // TODO: Inputs to the mutation might have changed case of the keys!
       mutation: graphql`
         mutation CounterSubmitMutation(
@@ -73,6 +73,8 @@ export class CounterRoute extends Component<CounterProps> {
           }
         }
       `,
+
+      variables,
     })
   }
 
@@ -102,8 +104,8 @@ export class CounterRoute extends Component<CounterProps> {
     logger.error(error)
     if (error.code === "insufficient_inventory") {
       this.props.dialog.showErrorDialog({
-        title: "This work has already been sold.",
         message: "Please contact orders@artsy.net with any questions.",
+        title: "This work has already been sold.",
       })
     } else {
       this.props.dialog.showErrorDialog()
@@ -184,6 +186,7 @@ export class CounterRoute extends Component<CounterProps> {
                   <ShippingSummaryItem order={order} locked />
                   <CreditCardSummaryItem order={order} locked />
                 </Flex>
+                <BuyerGuarantee />
                 <Media greaterThan="xs">
                   <Spacer mb={2} />
                 </Media>
@@ -220,7 +223,6 @@ export const CounterFragmentContainer = createFragmentContainer(
         mode
         state
         itemsTotal(precision: 2)
-        totalListPrice(precision: 2)
         stateExpiresAt
         ... on CommerceOfferOrder {
           lastOffer {

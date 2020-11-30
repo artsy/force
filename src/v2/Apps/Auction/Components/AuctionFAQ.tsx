@@ -145,5 +145,3 @@ export const AuctionFAQFragmentContainer = createFragmentContainer(AuctionFAQ, {
     }
   `,
 })
-
-export default AuctionFAQFragmentContainer

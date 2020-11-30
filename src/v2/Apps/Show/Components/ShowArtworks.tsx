@@ -41,17 +41,24 @@ const ShowArtworksFilter: React.FC<ShowArtworksFilterProps> = ({
     </Box>
   )
 
+  // Inject custom default sort into artwork filter.
+  const filters = {
+    sort: "partner_show_position",
+    ...(match && match.location.query),
+  }
+
   return (
     <ArtworkFilterContextProvider
-      filters={match && match.location.query}
+      filters={filters}
       sortOptions={[
-        { value: "-decayed_merch", text: "Default" },
-        { value: "-has_price,-prices", text: "Price (desc.)" },
-        { value: "-has_price,prices", text: "Price (asc.)" },
-        { value: "-partner_updated_at", text: "Recently updated" },
-        { value: "-published_at", text: "Recently added" },
-        { value: "-year", text: "Artwork year (desc.)" },
-        { value: "year", text: "Artwork year (asc.)" },
+        { text: "Gallery Curated", value: "partner_show_position" },
+        { text: "Default", value: "-decayed_merch" },
+        { text: "Price (desc.)", value: "-has_price,-prices" },
+        { text: "Price (asc.)", value: "-has_price,prices" },
+        { text: "Recently updated", value: "-partner_updated_at" },
+        { text: "Recently added", value: "-published_at" },
+        { text: "Artwork year (desc.)", value: "-year" },
+        { text: "Artwork year (asc.)", value: "year" },
       ]}
       onChange={updateUrl}
     >

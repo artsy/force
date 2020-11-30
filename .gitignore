@@ -19,6 +19,7 @@ dump.rdb
 lib-cov
 logs
 manifest.json
+manifest-novo.json
 npm-debug.log
 pids
 results

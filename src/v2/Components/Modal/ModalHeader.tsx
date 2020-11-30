@@ -1,46 +1,22 @@
-import { Serif, space } from "@artsy/palette"
-import Icon from "v2/Components/Icon"
-import React, { SFC } from "react"
-import styled from "styled-components"
-import { media } from "../Helpers"
+import { ArtsyLogoBlackIcon, Flex, Serif, space } from "@artsy/palette"
+import React, { FC } from "react"
 
-export const ModalHeader: SFC<{
+export const ModalHeader: FC<{
   title?: string
   hasLogo?: boolean
 }> = props => {
   const { hasLogo, title } = props
 
   return (
-    <Header>
-      {hasLogo && <Logo name="logotype" />}
-      {title && (
-        <Title size="5" weight="semibold">
-          {title}
-        </Title>
+    <Flex flexDirection="column" alignItems="center" justifyContent="center">
+      {hasLogo && (
+        <ArtsyLogoBlackIcon fontSize="34px" display="block" mb={space(1)} />
       )}
-    </Header>
+      {title && (
+        <Serif size="5" weight="semibold" pb={space(1)}>
+          {title}
+        </Serif>
+      )}
+    </Flex>
   )
 }
-
-const Logo = styled(Icon).attrs({
-  color: "black",
-  fontSize: "34px",
-})`
-  display: block;
-  line-height: 1em;
-  padding-bottom: ${space(1)}px;
-  ${media.sm`
-    display: none;
-  `};
-`
-
-const Title = styled(Serif)`
-  padding-bottom: ${space(1)}px;
-`
-
-const Header = styled.div`
-  display: flex;
-  text-align: center;
-  justify-content: center;
-  flex-direction: column;
-`

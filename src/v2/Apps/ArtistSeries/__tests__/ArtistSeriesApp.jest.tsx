@@ -1,6 +1,6 @@
 import React from "react"
 import { MockBoot, renderRelayTree } from "v2/DevTools"
-import ArtistSeriesApp from "../ArtistSeriesApp"
+import { ArtistSeriesAppFragmentContainer } from "../ArtistSeriesApp"
 import { graphql } from "react-relay"
 import { ArtistSeriesApp_QueryRawResponse } from "v2/__generated__/ArtistSeriesApp_Query.graphql"
 import { ArtistSeriesApp_UnfoundTest_QueryRawResponse } from "v2/__generated__/ArtistSeriesApp_UnfoundTest_Query.graphql"
@@ -11,6 +11,7 @@ import { useTracking } from "v2/Artsy/Analytics/useTracking"
 jest.mock("v2/Artsy/Analytics/useTracking")
 jest.unmock("react-relay")
 jest.mock("v2/Artsy/Router/useRouter", () => ({
+  useIsRouteActive: () => false,
   useRouter: () => ({
     match: {
       params: {
@@ -18,7 +19,6 @@ jest.mock("v2/Artsy/Router/useRouter", () => ({
       },
     },
   }),
-  useIsRouteActive: () => false,
 }))
 
 describe("ArtistSeriesApp", () => {
@@ -43,10 +43,11 @@ describe("ArtistSeriesApp", () => {
           Component: ({ artistSeries }) => {
             return (
               <MockBoot breakpoint={breakpoint}>
-                <ArtistSeriesApp artistSeries={artistSeries} />
+                <ArtistSeriesAppFragmentContainer artistSeries={artistSeries} />
               </MockBoot>
             )
           },
+          mockData: response,
           query: graphql`
             query ArtistSeriesApp_Query($slug: ID!) @raw_response_type {
               artistSeries(id: $slug) {
@@ -57,7 +58,6 @@ describe("ArtistSeriesApp", () => {
           variables: {
             slug,
           },
-          mockData: response,
         })
       }
 
@@ -174,10 +174,11 @@ describe("ArtistSeriesApp", () => {
         Component: ({ artistSeries }) => {
           return (
             <MockBoot breakpoint={breakpoint}>
-              <ArtistSeriesApp artistSeries={artistSeries} />
+              <ArtistSeriesAppFragmentContainer artistSeries={artistSeries} />
             </MockBoot>
           )
         },
+        mockData: response,
         query: graphql`
           query ArtistSeriesApp_UnfoundTest_Query($slug: ID!)
             @raw_response_type {
@@ -189,7 +190,6 @@ describe("ArtistSeriesApp", () => {
         variables: {
           slug: "nonexistent slug",
         },
-        mockData: response,
       })
     }
 
@@ -205,158 +205,102 @@ describe("ArtistSeriesApp", () => {
 
 const ArtistSeriesAppFixture: ArtistSeriesApp_QueryRawResponse = {
   artistSeries: {
-    slug: "slug",
-    internalID: "internal-id",
-    railArtist: [
-      {
-        id: "yayoi-kusama",
-        artistSeriesConnection: {
-          edges: [
-            {
-              node: {
-                internalID: "id",
-                slug: "aardvark",
-                artworksCountMessage: "20 available",
-                image: {
-                  cropped: {
-                    url: "/path/to/aardvarks.jpg",
-                  },
-                },
-                title: "Aardvark Series",
-                featured: true,
-              },
-            },
-          ],
-        },
-      },
-    ],
-    title: "Pumpkins",
-    artworksCountMessage: "20 available",
-    description: "All of the pumpkins",
-    descriptionFormatted: "All of the pumpkins",
-    image: {
-      xs: {
-        url: "https://test.artsy.net/pumpkins-header-image-xs.jpg",
-      },
-      sm: {
-        url: "https://test.artsy.net/pumpkins-header-image-sm.jpg",
-      },
-      url: "https://test.artsy.net/pumpkins-header-image.jpg",
-    },
     artists: [
       {
-        name: "Yayoi Kusama",
-        image: {
-          cropped: { src: "https://test.artsy.net/yayoi-kusama.jpg" },
-        },
-        href: "/artist/yayoi-kusama",
-        slug: "yayoi-kusama",
-        id: "artistabc123",
-        internalID: "yyy123",
-        is_followed: false,
         counts: {
           follows: 0,
         },
+        href: "/artist/yayoi-kusama",
+        id: "artistabc123",
+        image: {
+          cropped: { src: "https://test.artsy.net/yayoi-kusama.jpg" },
+        },
+        internalID: "yyy123",
+        is_followed: false,
+        name: "Yayoi Kusama",
+        slug: "yayoi-kusama",
       },
     ],
+    artworksCountMessage: "20 available",
+    description: "All of the pumpkins",
+    descriptionFormatted: "All of the pumpkins",
     filtered_artworks: {
-      id: "filteredartworksabc123",
       aggregations: [
         {
-          slice: "INSTITUTION",
           counts: [],
+          slice: "INSTITUTION",
         },
         {
-          slice: "MEDIUM",
           counts: [
             {
-              value: "sculpture",
-              name: "Sculpture",
               count: 22222,
+              name: "Sculpture",
+              value: "sculpture",
             },
           ],
+          slice: "MEDIUM",
         },
         {
-          slice: "MAJOR_PERIOD",
           counts: [
             {
-              value: "2020",
-              name: "2020",
               count: 1,
+              name: "2020",
+              value: "2020",
             },
           ],
+          slice: "MAJOR_PERIOD",
         },
         {
-          slice: "GALLERY",
           counts: [
             {
-              value: "important-gallery",
-              name: "Important Gallery",
               count: 4,
+              name: "Important Gallery",
+              value: "important-gallery",
             },
           ],
+          slice: "GALLERY",
         },
       ],
-      pageInfo: {
-        hasNextPage: true,
-        endCursor: "endCursor",
-      },
-      pageCursors: {
-        around: [
-          {
-            cursor: "pageOneCursor",
-            page: 1,
-            isCurrent: true,
-          },
-          {
-            cursor: "pageTwoCursor",
-            page: 2,
-            isCurrent: false,
-          },
-        ],
-        first: null,
-        last: null,
-        previous: null,
-      },
       edges: [
         {
+          id: "nodeidabc",
           node: {
-            id: "ggg123",
-            slug: "yayoi-kusama-pumpkin-2222222222222222",
+            artists: [
+              {
+                href: "/artist/yayoi-kusama",
+                id: "artistabc123",
+                name: "Yayoi Kusama",
+              },
+            ],
+            collecting_institution: null,
+            cultural_maker: null,
+            date: "2020",
             href: "/artwork/yayoi-kusama-pumpkin-2222222222222222",
-            internalID: "zzz123",
+            id: "ggg123",
             image: {
               aspect_ratio: 1.27,
               placeholder: "78.76427829698858%",
               url: "https://test.artsy.net/image",
             },
-            title: "Pumpkin",
             image_title: "Yayoi Kusama, ‘Pumpkin’, 2222",
-            date: "2020",
-            sale_message: "Contact For Price",
-            cultural_maker: null,
-            artists: [
-              {
-                id: "artistabc123",
-                href: "/artist/yayoi-kusama",
-                name: "Yayoi Kusama",
-              },
-            ],
-            collecting_institution: null,
+            internalID: "zzz123",
+            is_biddable: true,
+            is_inquireable: true,
+            is_saved: false,
             partner: {
-              name: "Important Auction House",
               href: "/auction/important-auction-house",
               id: "ahabc123",
+              name: "Important Auction House",
               type: "Auction House",
             },
             sale: {
+              display_timely_at: "live in 3d",
+              id: "saleabc123",
               is_auction: true,
               is_closed: false,
-              id: "saleabc123",
               is_live_open: false,
               is_open: true,
               is_preview: false,
-              display_timely_at: "live in 3d",
             },
             sale_artwork: {
               counts: {
@@ -365,57 +309,113 @@ const ArtistSeriesAppFixture: ArtistSeriesApp_QueryRawResponse = {
               highest_bid: {
                 display: null,
               },
+              id: "idabc123",
               opening_bid: {
                 display: "USD $2222",
               },
-              id: "idabc123",
             },
-            is_inquireable: true,
-            is_saved: false,
-            is_biddable: true,
+            sale_message: "Contact For Price",
+            slug: "yayoi-kusama-pumpkin-2222222222222222",
+            title: "Pumpkin",
           },
-          id: "nodeidabc",
         },
         {
+          id: "nodeid123",
           node: {
-            id: "abc123",
-            slug: "yayoi-kusama-pumpkin-33333333333333333",
+            artists: [
+              {
+                href: "/artist/yayoi-kusama",
+                id: "artistabc123",
+                name: "Yayoi Kusama",
+              },
+            ],
+            collecting_institution: null,
+            cultural_maker: null,
+            date: "2020",
             href: "/artwork/yayoi-kusama-pumpkin-33333333333333333",
-            internalID: "xxx123",
+            id: "abc123",
             image: {
               aspect_ratio: 1.43,
               placeholder: "69.82024597918638%",
               url: "https://test.artsy.net/image2",
             },
-            title: "Pumpkin",
             image_title: "Yayoi Kusama, ‘Pumpkin’, 3333",
-            date: "2020",
-            sale_message: "Contact For Price",
-            cultural_maker: null,
-            artists: [
-              {
-                id: "artistabc123",
-                href: "/artist/yayoi-kusama",
-                name: "Yayoi Kusama",
-              },
-            ],
-            collecting_institution: null,
+            internalID: "xxx123",
+            is_biddable: false,
+            is_inquireable: true,
+            is_saved: false,
             partner: {
-              name: "Important Gallery",
               href: "/important-gallery",
               id: "galleryabc123",
+              name: "Important Gallery",
               type: "Gallery",
             },
             sale: null,
             sale_artwork: null,
-            is_inquireable: true,
-            is_saved: false,
-            is_biddable: false,
+            sale_message: "Contact For Price",
+            slug: "yayoi-kusama-pumpkin-33333333333333333",
+            title: "Pumpkin",
           },
-          id: "nodeid123",
         },
       ],
+      id: "filteredartworksabc123",
+      pageCursors: {
+        around: [
+          {
+            cursor: "pageOneCursor",
+            isCurrent: true,
+            page: 1,
+          },
+          {
+            cursor: "pageTwoCursor",
+            isCurrent: false,
+            page: 2,
+          },
+        ],
+        first: null,
+        last: null,
+        previous: null,
+      },
+      pageInfo: {
+        endCursor: "endCursor",
+        hasNextPage: true,
+      },
     },
+    image: {
+      sm: {
+        url: "https://test.artsy.net/pumpkins-header-image-sm.jpg",
+      },
+      url: "https://test.artsy.net/pumpkins-header-image.jpg",
+      xs: {
+        url: "https://test.artsy.net/pumpkins-header-image-xs.jpg",
+      },
+    },
+    internalID: "internal-id",
+    railArtist: [
+      {
+        artistSeriesConnection: {
+          edges: [
+            {
+              node: {
+                artworksCountMessage: "20 available",
+                featured: true,
+                image: {
+                  cropped: {
+                    url: "/path/to/aardvarks.jpg",
+                  },
+                },
+                internalID: "id",
+                slug: "aardvark",
+                title: "Aardvark Series",
+              },
+            },
+          ],
+        },
+        id: "yayoi-kusama",
+      },
+    ],
+    slug: "slug",
+    title: "Pumpkins",
   },
 }
 

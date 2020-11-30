@@ -2,7 +2,11 @@ import { OfferTestQueryRawResponse } from "v2/__generated__/OfferTestQuery.graph
 import { createTestEnv } from "v2/DevTools/createTestEnv"
 import { graphql } from "react-relay"
 import { commitMutation as _commitMutation } from "react-relay"
-import { UntouchedOfferOrder } from "../../../__tests__/Fixtures/Order"
+import {
+  UntouchedOfferOrder,
+  UntouchedOfferOrderInPounds,
+  UntouchedOfferOrderWithRange,
+} from "../../../__tests__/Fixtures/Order"
 import {
   initialOfferFailedAmountIsInvalid,
   initialOfferFailedCannotOffer,
@@ -23,7 +27,7 @@ jest.mock("v2/Utils/Events", () => ({
 
 const mockPostEvent = require("v2/Utils/Events").postEvent as jest.Mock
 
-const testOrder: OfferTestQueryRawResponse["order"] = {
+const testOffer: OfferTestQueryRawResponse["order"] = {
   ...UntouchedOfferOrder,
   internalID: "1234",
 }
@@ -31,13 +35,13 @@ const testOrder: OfferTestQueryRawResponse["order"] = {
 describe("Offer InitialMutation", () => {
   const { buildPage, mutations, routes } = createTestEnv({
     Component: OfferFragmentContainer,
+    TestPage: OrderAppTestPage,
     defaultData: {
-      order: testOrder,
+      order: testOffer,
     },
     defaultMutationResults: {
       ...initialOfferSuccess,
     },
-    TestPage: OrderAppTestPage,
     query: graphql`
       query OfferTestQuery @raw_response_type {
         order: commerceOrder(id: "unused") {
@@ -79,9 +83,8 @@ describe("Offer InitialMutation", () => {
       page = await buildPage({
         mockData: {
           order: {
-            ...testOrder,
-            currencyCode: "GBP",
-            totalListPrice: "£16,000",
+            ...testOffer,
+            ...UntouchedOfferOrderInPounds,
           },
         },
       })
@@ -100,6 +103,37 @@ describe("Offer InitialMutation", () => {
 
       page.setOfferAmount(1023)
       expect(page.transactionSummary.text()).toContain("Your offer£1,023.00")
+    })
+  })
+
+  describe("an offer on the work with range display", () => {
+    let page: OrderAppTestPage
+    beforeAll(async () => {
+      page = await buildPage({
+        mockData: {
+          order: {
+            ...testOffer,
+            ...UntouchedOfferOrderWithRange,
+          },
+        },
+      })
+    })
+
+    it("shows the list price as a range", () => {
+      const container = page.find("div#offer-page-left-column")
+      expect(container.text()).toContain("List price: $14,000 - 18,000")
+    })
+
+    it("does not show the offer is too small warning", async () => {
+      await page.setOfferAmount(1000)
+      await page.clickSubmit()
+      expect(mutations.mockFetch).toHaveBeenCalledTimes(1)
+    })
+
+    it("does not show the offer amount is too high warning", async () => {
+      await page.setOfferAmount(17000)
+      await page.clickSubmit()
+      expect(mutations.mockFetch).toHaveBeenCalledTimes(1)
     })
   })
 
@@ -217,9 +251,9 @@ describe("Offer InitialMutation", () => {
 
       expect(mockPostEvent).toHaveBeenCalledTimes(1)
       expect(mockPostEvent).toHaveBeenLastCalledWith({
-        order_id: "1234",
         action_type: "Focused on offer input",
         flow: "Make offer",
+        order_id: "1234",
       })
     })
 
@@ -231,9 +265,9 @@ describe("Offer InitialMutation", () => {
       await page.clickSubmit()
 
       expect(mockPostEvent).toHaveBeenLastCalledWith({
-        order_id: "1234",
         action_type: "Viewed offer too low",
         flow: "Make offer",
+        order_id: "1234",
       })
     })
 
@@ -245,9 +279,9 @@ describe("Offer InitialMutation", () => {
       await page.clickSubmit()
 
       expect(mockPostEvent).toHaveBeenLastCalledWith({
-        order_id: "1234",
         action_type: "Viewed offer higher than listed price",
         flow: "Make offer",
+        order_id: "1234",
       })
     })
   })

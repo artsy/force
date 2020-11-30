@@ -1,16 +1,23 @@
+/* eslint-disable sort-keys-fix/sort-keys-fix */
 import loadable from "@loadable/component"
 import { graphql } from "react-relay"
 import { RedirectException, RouteConfig } from "found"
 import { paramsToCamelCase } from "v2/Components/v2/ArtworkFilter/Utils/urlBuilder"
 
-const ShowApp = loadable(() => import("./ShowApp"))
-const ShowSubApp = loadable(() => import("./ShowSubApp"))
-const ShowInfoRoute = loadable(() => import("./Routes/ShowInfo"))
+const ShowApp = loadable(() => import("./ShowApp"), {
+  resolveComponent: component => component.ShowAppFragmentContainer,
+})
+const ShowSubApp = loadable(() => import("./ShowSubApp"), {
+  resolveComponent: component => component.ShowSubAppFragmentContainer,
+})
+const ShowInfoRoute = loadable(() => import("./Routes/ShowInfo"), {
+  resolveComponent: component => component.ShowInfoFragmentContainer,
+})
 
 export const routes: RouteConfig[] = [
   {
-    path: "/show/:slug",
     getComponent: () => ShowApp,
+    path: "/show/:slug",
     prepare: () => {
       ShowApp.preload()
     },
@@ -58,22 +65,10 @@ export const routes: RouteConfig[] = [
   // NOTE: Nested sub-apps are mounted under the same top-level path as above.
   // The root `path: ""` matches the `ShowApp` route.
   {
-    path: "/show/:slug",
-    getComponent: () => ShowSubApp,
-    prepare: () => {
-      ShowSubApp.preload()
-    },
-    query: graphql`
-      query routes_ShowSubAppQuery($slug: String!) {
-        show(id: $slug) @principalField {
-          ...ShowSubApp_show
-        }
-      }
-    `,
     children: [
       {
-        path: "info",
         getComponent: () => ShowInfoRoute,
+        path: "info",
         prepare: () => {
           ShowInfoRoute.preload()
         },
@@ -92,6 +87,18 @@ export const routes: RouteConfig[] = [
         },
       },
     ],
+    getComponent: () => ShowSubApp,
+    path: "/show/:slug",
+    prepare: () => {
+      ShowSubApp.preload()
+    },
+    query: graphql`
+      query routes_ShowSubAppQuery($slug: String!) {
+        show(id: $slug) @principalField {
+          ...ShowSubApp_show
+        }
+      }
+    `,
   },
 ]
 
@@ -99,7 +106,7 @@ function initializeVariablesWithFilterState(params, props) {
   const initialFilterState = props.location ? props.location.query : {}
 
   const state = {
-    sort: "-decayed_merch",
+    sort: "partner_show_position",
     ...paramsToCamelCase(initialFilterState),
     ...params,
   }

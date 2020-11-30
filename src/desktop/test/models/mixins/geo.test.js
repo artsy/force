@@ -34,19 +34,19 @@ const googleyAddress = {
   formatted_address: "New York, NY, USA",
   geometry: {
     location: {
-      lb: 40.7143528,
-      mb: -74.0059731,
       lat() {
         return 40.7143528
       },
+      lb: 40.7143528,
       lng() {
         return -74.0059731
       },
+      mb: -74.0059731,
     },
     viewport: {
       ea: {
-        d: 40.496006,
         b: 40.91525559999999,
+        d: 40.496006,
       },
       fa: {
         b: -74.2557349,
@@ -54,6 +54,7 @@ const googleyAddress = {
       },
     },
   },
+  html_attributions: [],
   icon: "http://maps.gstatic.com/mapfiles/place_api/icons/geocode-71.png",
   id: "7eae6a016a9c6f58e2044573fb8f14227b6e1f96",
   name: "New York",
@@ -63,27 +64,26 @@ const googleyAddress = {
   url:
     "https://maps.google.com/maps/place?q=New+York&ftid=0x89c24fa5d33f083b:0xc80b8f06e177fe62",
   vicinity: "New York",
-  html_attributions: [],
 }
 
 const geoFormatter = {
   getCity() {
     return "My city"
   },
-  getState() {
-    return "My state"
-  },
-  getStateCode() {
-    return "My statecode"
-  },
-  getPostalCode() {
-    return "My postalcode"
-  },
   getCoordinates() {
     return [0, 0]
   },
   getCountry() {
     return "My country"
+  },
+  getPostalCode() {
+    return "My postalcode"
+  },
+  getState() {
+    return "My state"
+  },
+  getStateCode() {
+    return "My statecode"
   },
 }
 

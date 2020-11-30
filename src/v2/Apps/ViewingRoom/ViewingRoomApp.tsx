@@ -34,15 +34,15 @@ const ViewingRoomApp: React.FC<ViewingRoomAppProps> = ({
     // is mounted, use setTimeout to fire after next tick
     const timeoutID = setTimeout(() => {
       openAuthModal(mediator, {
-        mode: ModalType.signup,
-        redirectTo: window.location.href,
-        contextModule: ContextModule.viewingRoom,
-        intent: Intent.viewViewingRoom,
-        copy: "Sign up to enter viewing rooms",
-        disableCloseOnBackgroundClick: true,
         afterClose: () => {
           router.push("/viewing-rooms")
         },
+        contextModule: ContextModule.viewingRoom,
+        copy: "Sign up to enter viewing rooms",
+        disableCloseOnBackgroundClick: true,
+        intent: Intent.viewViewingRoom,
+        mode: ModalType.signup,
+        redirectTo: window.location.href,
       })
     }, 0)
 
@@ -102,16 +102,19 @@ const ViewingRoomApp: React.FC<ViewingRoomAppProps> = ({
 }
 
 // Top-level route needs to be exported for bundle splitting in the router
-export default createFragmentContainer(ViewingRoomApp, {
-  viewingRoom: graphql`
-    fragment ViewingRoomApp_viewingRoom on ViewingRoom {
-      ...ViewingRoomMeta_viewingRoom
-      ...ViewingRoomHeader_viewingRoom
-      ...ViewingRoomContentNotAccessible_viewingRoom
-      partner {
-        internalID
+export const ViewingRoomAppFragmentContainer = createFragmentContainer(
+  ViewingRoomApp,
+  {
+    viewingRoom: graphql`
+      fragment ViewingRoomApp_viewingRoom on ViewingRoom {
+        ...ViewingRoomMeta_viewingRoom
+        ...ViewingRoomHeader_viewingRoom
+        ...ViewingRoomContentNotAccessible_viewingRoom
+        partner {
+          internalID
+        }
+        status
       }
-      status
-    }
-  `,
-})
+    `,
+  }
+)

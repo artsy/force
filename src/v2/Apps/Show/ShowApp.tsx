@@ -38,7 +38,7 @@ const FullScreenSeparator = styled(Separator)`
 export const ShowApp: React.FC<ShowAppProps> = ({ show }) => {
   const { contextPageOwnerSlug, contextPageOwnerType } = useAnalyticsContext()
 
-  const hasViewingRoom = show.viewingRoomIDs.length > 0
+  const hasViewingRoom = show.viewingRoomsConnection?.edges.length > 0
   const hasAbout = !!show.about
   const hasWideHeader =
     (hasAbout && hasViewingRoom) || (!hasAbout && !hasViewingRoom)
@@ -120,7 +120,7 @@ export const ShowApp: React.FC<ShowAppProps> = ({ show }) => {
 }
 
 // Top-level route needs to be exported for bundle splitting in the router
-export default createFragmentContainer(ShowApp, {
+export const ShowAppFragmentContainer = createFragmentContainer(ShowApp, {
   show: graphql`
     fragment ShowApp_show on Show
       @argumentDefinitions(
@@ -144,7 +144,11 @@ export default createFragmentContainer(ShowApp, {
       internalID
       slug
       about: description
-      viewingRoomIDs
+      viewingRoomsConnection {
+        edges {
+          __typename
+        }
+      }
       counts {
         eligibleArtworks
       }

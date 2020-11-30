@@ -59,8 +59,8 @@ const NavLink: React.FC<NavLinkProps> = props => {
           onClick={() =>
             tracking.trackEvent({
               action_type: Schema.ActionType.Click,
-              subject: props.label,
               destination_path: props.path,
+              subject: props.label,
             })
           }
         >
@@ -111,9 +111,10 @@ export const FeaturedArticlesItem = styled(Flex)`
 export class OverviewRoute extends React.Component<OverviewRouteProps, {}> {
   @track<OverviewRouteProps>(props => ({
     action_type: Schema.ActionType.Click,
+
+    destination_path: props.artist.href,
     // TODO: Feel like these should become enums too
     subject: "Learn more about consignment",
-    destination_path: props.artist.href,
   }))
   handleConsignClick() {
     // no-op
@@ -121,9 +122,9 @@ export class OverviewRoute extends React.Component<OverviewRouteProps, {}> {
 
   @track<OverviewRouteProps>(props => ({
     action_type: Schema.ActionType.Click,
-    subject: "Browse all works for sale",
     context_module: "Overview",
     destination_path: `artist/${props.artist.slug}/works-for-sale`,
+    subject: "Browse all works for sale",
   }))
   handleBrowseWorksClick() {
     // no-op
@@ -132,8 +133,8 @@ export class OverviewRoute extends React.Component<OverviewRouteProps, {}> {
   @carouselSlideTrack((_props, _state, [slide]) => {
     return {
       action_type: Schema.ActionType.Click,
-      subject: "showCarouselSlide",
       destination_path: slide.href,
+      subject: "showCarouselSlide",
     }
   })
   onClickSlide(slide) {
@@ -142,8 +143,8 @@ export class OverviewRoute extends React.Component<OverviewRouteProps, {}> {
 
   @track((_props, _state, [tab, destination_path]: string[]) => ({
     action_type: Schema.ActionType.Click,
-    subject: tab,
     destination_path,
+    subject: tab,
   }))
   handleNavigationClick(tab: string, destination_path: string) {
     // no-op
@@ -540,6 +541,3 @@ export const OverviewRouteFragmentContainer = createFragmentContainer(
     `,
   }
 )
-
-// Top-level route needs to be exported for bundle splitting in the router
-export default OverviewRouteFragmentContainer

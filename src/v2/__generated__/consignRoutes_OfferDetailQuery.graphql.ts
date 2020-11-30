@@ -22,18 +22,50 @@ export type consignRoutes_OfferDetailQuery = {
 query consignRoutes_OfferDetailQuery(
   $offerID: ID!
 ) {
-  offer(id: $offerID, gravityPartnerId: "ssshhhhh") {
+  offer(id: $offerID) {
     ...OfferDetailApp_offer
     id
   }
 }
 
 fragment OfferDetailApp_offer on ConsignmentOffer {
+  ...ResponseForm_offer
+  ...Summary_offer
+}
+
+fragment OfferSummary_offer on ConsignmentOffer {
+  saleDate
+  saleLocation
   saleName
+}
+
+fragment ResponseForm_offer on ConsignmentOffer {
+  id
+}
+
+fragment SubmissionSummary_offer on ConsignmentOffer {
   submission {
+    artist {
+      name
+      id
+    }
     title
+    year
+    assets {
+      imageUrls
+      id
+    }
+    primaryImage {
+      imageUrls
+      id
+    }
     id
   }
+}
+
+fragment Summary_offer on ConsignmentOffer {
+  ...SubmissionSummary_offer
+  ...OfferSummary_offer
 }
 */
 
@@ -48,11 +80,6 @@ var v0 = [
 ],
 v1 = [
   {
-    "kind": "Literal",
-    "name": "gravityPartnerId",
-    "value": "ssshhhhh"
-  },
-  {
     "kind": "Variable",
     "name": "id",
     "variableName": "offerID"
@@ -64,7 +91,17 @@ v2 = {
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
-};
+},
+v3 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "imageUrls",
+    "storageKey": null
+  },
+  (v2/*: any*/)
+];
 return {
   "fragment": {
     "argumentDefinitions": (v0/*: any*/),
@@ -105,13 +142,7 @@ return {
         "name": "offer",
         "plural": false,
         "selections": [
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "saleName",
-            "storageKey": null
-          },
+          (v2/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -123,15 +154,81 @@ return {
               {
                 "alias": null,
                 "args": null,
+                "concreteType": "Artist",
+                "kind": "LinkedField",
+                "name": "artist",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "name",
+                    "storageKey": null
+                  },
+                  (v2/*: any*/)
+                ],
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
                 "kind": "ScalarField",
                 "name": "title",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "year",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "ConsignmentSubmissionCategoryAsset",
+                "kind": "LinkedField",
+                "name": "assets",
+                "plural": true,
+                "selections": (v3/*: any*/),
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "ConsignmentSubmissionCategoryAsset",
+                "kind": "LinkedField",
+                "name": "primaryImage",
+                "plural": false,
+                "selections": (v3/*: any*/),
                 "storageKey": null
               },
               (v2/*: any*/)
             ],
             "storageKey": null
           },
-          (v2/*: any*/)
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "saleDate",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "saleLocation",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "saleName",
+            "storageKey": null
+          }
         ],
         "storageKey": null
       }
@@ -142,9 +239,9 @@ return {
     "metadata": {},
     "name": "consignRoutes_OfferDetailQuery",
     "operationKind": "query",
-    "text": "query consignRoutes_OfferDetailQuery(\n  $offerID: ID!\n) {\n  offer(id: $offerID, gravityPartnerId: \"ssshhhhh\") {\n    ...OfferDetailApp_offer\n    id\n  }\n}\n\nfragment OfferDetailApp_offer on ConsignmentOffer {\n  saleName\n  submission {\n    title\n    id\n  }\n}\n"
+    "text": "query consignRoutes_OfferDetailQuery(\n  $offerID: ID!\n) {\n  offer(id: $offerID) {\n    ...OfferDetailApp_offer\n    id\n  }\n}\n\nfragment OfferDetailApp_offer on ConsignmentOffer {\n  ...ResponseForm_offer\n  ...Summary_offer\n}\n\nfragment OfferSummary_offer on ConsignmentOffer {\n  saleDate\n  saleLocation\n  saleName\n}\n\nfragment ResponseForm_offer on ConsignmentOffer {\n  id\n}\n\nfragment SubmissionSummary_offer on ConsignmentOffer {\n  submission {\n    artist {\n      name\n      id\n    }\n    title\n    year\n    assets {\n      imageUrls\n      id\n    }\n    primaryImage {\n      imageUrls\n      id\n    }\n    id\n  }\n}\n\nfragment Summary_offer on ConsignmentOffer {\n  ...SubmissionSummary_offer\n  ...OfferSummary_offer\n}\n"
   }
 };
 })();
-(node as any).hash = 'fa0ce41addb3039c5d33a7345e3ab367';
+(node as any).hash = 'a0b8e054b0db5301b045a90b94898074';
 export default node;

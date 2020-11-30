@@ -1,9 +1,12 @@
+/* eslint-disable sort-keys-fix/sort-keys-fix */
 import loadable from "@loadable/component"
 import { graphql } from "react-relay"
 import { RouteConfig } from "found"
 import { paramsToCamelCase } from "v2/Components/v2/ArtworkFilter/Utils/urlBuilder"
 
-const ArtistSeriesApp = loadable(() => import("./ArtistSeriesApp"))
+const ArtistSeriesApp = loadable(() => import("./ArtistSeriesApp"), {
+  resolveComponent: component => component.ArtistSeriesAppFragmentContainer,
+})
 
 export const routes: RouteConfig[] = [
   {

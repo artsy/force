@@ -1,3 +1,4 @@
+/* eslint-disable sort-keys-fix/sort-keys-fix */
 import loadable from "@loadable/component"
 import { ErrorPage } from "v2/Components/ErrorPage"
 import { RedirectException, RouteConfig } from "found"
@@ -8,9 +9,15 @@ import { Redirect, confirmBidRedirect, registerRedirect } from "./getRedirect"
 
 const logger = createLogger("Apps/Auction/routes")
 
-const AuctionFAQRoute = loadable(() => import("./Components/AuctionFAQ"))
-const ConfirmBidRoute = loadable(() => import("./Routes/ConfirmBid"))
-const RegisterRoute = loadable(() => import("./Routes/Register"))
+const AuctionFAQRoute = loadable(() => import("./Components/AuctionFAQ"), {
+  resolveComponent: component => component.AuctionFAQFragmentContainer,
+})
+const ConfirmBidRoute = loadable(() => import("./Routes/ConfirmBid"), {
+  resolveComponent: component => component.ConfirmBidRouteFragmentContainer,
+})
+const RegisterRoute = loadable(() => import("./Routes/Register"), {
+  resolveComponent: component => component.RegisterRouteFragmentContainer,
+})
 
 export const routes: RouteConfig[] = [
   {
