@@ -7,12 +7,14 @@ import {
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RevealButton } from "./RevealButton"
+import { getOfferItemFromOrder } from "v2/Apps/Order/Utils/offerItemExtractor"
 
 const OfferHistoryItem: React.SFC<
   {
     order: OfferHistoryItem_order
   } & StepSummaryItemProps
-> = ({ order: { totalListPrice, lastOffer, offers }, ...others }) => {
+> = ({ order: { lastOffer, lineItems, offers }, ...others }) => {
+  const offerItem = getOfferItemFromOrder(lineItems)
   const previousOffers = offers.edges.filter(
     ({ node: { internalID } }) => internalID !== lastOffer.internalID
   )
@@ -29,12 +31,14 @@ const OfferHistoryItem: React.SFC<
           {lastOffer.amount}
         </Serif>
       </Row>
-      <Row>
-        <div />
-        <Sans size="2" color="black60">
-          List price: {totalListPrice}
-        </Sans>
-      </Row>
+      {offerItem && (
+        <Row>
+          <div />
+          <Sans size="2" color="black60">
+            List price: {offerItem.price}
+          </Sans>
+        </Row>
+      )}
       {lastOffer.note && (
         <>
           <Spacer mb={2} />
@@ -91,6 +95,21 @@ export const OfferHistoryItemFragmentContainer = createFragmentContainer(
   {
     order: graphql`
       fragment OfferHistoryItem_order on CommerceOrder {
+        lineItems {
+          edges {
+            node {
+              artworkOrEditionSet {
+                __typename
+                ... on Artwork {
+                  price
+                }
+                ... on EditionSet {
+                  price
+                }
+              }
+            }
+          }
+        }
         ... on CommerceOfferOrder {
           offers {
             edges {
@@ -111,7 +130,6 @@ export const OfferHistoryItemFragmentContainer = createFragmentContainer(
             note
           }
         }
-        totalListPrice(precision: 2)
       }
     `,
   }

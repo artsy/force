@@ -31,6 +31,7 @@ import createLogger from "v2/Utils/logger"
 import { Media } from "v2/Utils/Responsive"
 import { OrderStepper, offerFlowSteps } from "../../Components/OrderStepper"
 import { BuyerGuarantee } from "../../Components/BuyerGuarantee"
+import { getOfferItemFromOrder } from "v2/Apps/Order/Utils/offerItemExtractor"
 
 export interface OfferProps {
   order: Offer_order
@@ -54,54 +55,53 @@ const logger = createLogger("Order/Routes/Offer/index.tsx")
 @track()
 export class OfferRoute extends Component<OfferProps, OfferState> {
   state: OfferState = {
-    offerValue: 0,
-    offerNoteValue: { value: "", exceedsCharacterLimit: false },
     formIsDirty: false,
-    lowSpeedBumpEncountered: false,
     highSpeedBumpEncountered: false,
+    lowSpeedBumpEncountered: false,
+    offerNoteValue: { exceedsCharacterLimit: false, value: "" },
+    offerValue: 0,
   }
 
   @track<OfferProps>(props => ({
-    order_id: props.order.internalID,
     action_type: Schema.ActionType.FocusedOnOfferInput,
     flow: Schema.Flow.MakeOffer,
+    order_id: props.order.internalID,
   }))
   onOfferInputFocus() {
     // noop
   }
 
   @track<OfferProps>(props => ({
-    order_id: props.order.internalID,
     action_type: Schema.ActionType.ViewedOfferTooLow,
     flow: Schema.Flow.MakeOffer,
+    order_id: props.order.internalID,
   }))
   showLowSpeedbump() {
     this.setState({ lowSpeedBumpEncountered: true })
     this.props.dialog.showErrorDialog({
-      title: "Offer may be too low",
+      continueButtonText: "OK",
       message:
         "Offers within 25% of the list price are most likely to receive a response.",
-      continueButtonText: "OK",
+      title: "Offer may be too low",
     })
   }
 
   @track<OfferProps>(props => ({
-    order_id: props.order.internalID,
     action_type: Schema.ActionType.ViewedOfferHigherThanListPrice,
     flow: Schema.Flow.MakeOffer,
+    order_id: props.order.internalID,
   }))
   showHighSpeedbump() {
     this.setState({ highSpeedBumpEncountered: true })
     this.props.dialog.showErrorDialog({
-      title: "Offer higher than list price",
-      message: "You’re making an offer higher than the list price.",
       continueButtonText: "OK",
+      message: "You’re making an offer higher than the list price.",
+      title: "Offer higher than list price",
     })
   }
 
   addInitialOfferToOrder(variables: OfferMutation["variables"]) {
     return this.props.commitMutation<OfferMutation>({
-      variables,
       // TODO: Inputs to the mutation might have changed case of the keys!
       mutation: graphql`
         mutation OfferMutation($input: CommerceAddInitialOfferToOrderInput!) {
@@ -112,7 +112,6 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
                 order {
                   internalID
                   mode
-                  totalListPrice
                   totalListPriceCents
                   ... on CommerceOfferOrder {
                     myLastOffer {
@@ -134,6 +133,8 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
           }
         }
       `,
+
+      variables,
     })
   }
 
@@ -142,9 +143,9 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
     switch (error.code) {
       case "invalid_amount_cents": {
         this.props.dialog.showErrorDialog({
-          title: "Invalid offer",
           message:
             "The offer amount is either missing or invalid. Please try again.",
+          title: "Invalid offer",
         })
         break
       }
@@ -169,15 +170,22 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
     }
 
     const listPriceCents = this.props.order.totalListPriceCents
+    const isRangeOffer = getOfferItemFromOrder(this.props.order.lineItems)
+      ?.displayPriceRange
 
-    if (!lowSpeedBumpEncountered && offerValue * 100 < listPriceCents * 0.75) {
+    if (
+      !lowSpeedBumpEncountered &&
+      offerValue * 100 < listPriceCents * 0.75 &&
+      !isRangeOffer
+    ) {
       this.showLowSpeedbump()
       return
     }
 
     if (
       !highSpeedBumpEncountered &&
-      this.state.offerValue * 100 > listPriceCents
+      this.state.offerValue * 100 > listPriceCents &&
+      !isRangeOffer
     ) {
       this.showHighSpeedbump()
       return
@@ -187,9 +195,9 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
       const orderOrError = (
         await this.addInitialOfferToOrder({
           input: {
+            amountCents: offerValue * 100,
             note: this.state.offerNoteValue && this.state.offerNoteValue.value,
             orderId: this.props.order.internalID,
-            amountCents: offerValue * 100,
           },
         })
       ).commerceAddInitialOfferToOrder.orderOrError
@@ -209,6 +217,7 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
   render() {
     const { order, isCommittingMutation } = this.props
 
+    const offerItem = getOfferItemFromOrder(order.lineItems)
     const artworkId = order.lineItems.edges[0].node.artwork.slug
     const orderCurrency = order.currencyCode
 
@@ -240,9 +249,9 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
                     onFocus={this.onOfferInputFocus.bind(this)}
                   />
                 </Flex>
-                {Boolean(order.totalListPrice) && (
+                {Boolean(offerItem?.price) && (
                   <Sans size="2" color="black60">
-                    List price: {order.totalListPrice}
+                    List price: {offerItem.price}
                   </Sans>
                 )}
                 <Spacer mb={[2, 3]} />
@@ -282,9 +291,9 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
                     offerOverride={
                       this.state.offerValue &&
                       this.state.offerValue.toLocaleString("en-US", {
-                        style: "currency",
                         currency: orderCurrency,
                         minimumFractionDigits: 2,
+                        style: "currency",
                       })
                     }
                   />
@@ -321,7 +330,6 @@ export const OfferFragmentContainer = createFragmentContainer(
         internalID
         mode
         state
-        totalListPrice(precision: 2)
         totalListPriceCents
         currencyCode
         lineItems {
@@ -329,6 +337,17 @@ export const OfferFragmentContainer = createFragmentContainer(
             node {
               artwork {
                 slug
+              }
+              artworkOrEditionSet {
+                __typename
+                ... on Artwork {
+                  price
+                  displayPriceRange
+                }
+                ... on EditionSet {
+                  price
+                  displayPriceRange
+                }
               }
             }
           }

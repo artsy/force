@@ -13,7 +13,25 @@ export type OfferHistoryItemTestQueryResponse = {
 export type OfferHistoryItemTestQueryRawResponse = {
     readonly order: ({
         readonly __typename: "CommerceOfferOrder";
-        readonly totalListPrice: string | null;
+        readonly lineItems: ({
+            readonly edges: ReadonlyArray<({
+                readonly node: ({
+                    readonly artworkOrEditionSet: ({
+                        readonly __typename: "Artwork";
+                        readonly id: string | null;
+                        readonly price: string | null;
+                    } | {
+                        readonly __typename: "EditionSet";
+                        readonly id: string | null;
+                        readonly price: string | null;
+                    } | {
+                        readonly __typename: string;
+                        readonly id: string | null;
+                    }) | null;
+                    readonly id: string | null;
+                }) | null;
+            }) | null> | null;
+        }) | null;
         readonly id: string | null;
         readonly offers: ({
             readonly edges: ReadonlyArray<({
@@ -37,7 +55,25 @@ export type OfferHistoryItemTestQueryRawResponse = {
         }) | null;
     } | {
         readonly __typename: string | null;
-        readonly totalListPrice: string | null;
+        readonly lineItems: ({
+            readonly edges: ReadonlyArray<({
+                readonly node: ({
+                    readonly artworkOrEditionSet: ({
+                        readonly __typename: "Artwork";
+                        readonly id: string | null;
+                        readonly price: string | null;
+                    } | {
+                        readonly __typename: "EditionSet";
+                        readonly id: string | null;
+                        readonly price: string | null;
+                    } | {
+                        readonly __typename: string;
+                        readonly id: string | null;
+                    }) | null;
+                    readonly id: string | null;
+                }) | null;
+            }) | null> | null;
+        }) | null;
         readonly id: string | null;
     }) | null;
 };
@@ -59,6 +95,26 @@ query OfferHistoryItemTestQuery {
 }
 
 fragment OfferHistoryItem_order on CommerceOrder {
+  lineItems {
+    edges {
+      node {
+        artworkOrEditionSet {
+          __typename
+          ... on Artwork {
+            price
+          }
+          ... on EditionSet {
+            price
+            id
+          }
+          ... on Node {
+            id
+          }
+        }
+        id
+      }
+    }
+  }
   ... on CommerceOfferOrder {
     offers {
       edges {
@@ -81,7 +137,6 @@ fragment OfferHistoryItem_order on CommerceOrder {
       id
     }
   }
-  totalListPrice(precision: 2)
 }
 */
 
@@ -93,13 +148,13 @@ var v0 = [
     "value": "foo"
   }
 ],
-v1 = [
-  {
-    "kind": "Literal",
-    "name": "precision",
-    "value": 2
-  }
-],
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "__typename",
+  "storageKey": null
+},
 v2 = {
   "alias": null,
   "args": null,
@@ -107,21 +162,37 @@ v2 = {
   "name": "id",
   "storageKey": null
 },
-v3 = {
+v3 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "price",
+    "storageKey": null
+  }
+],
+v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "internalID",
   "storageKey": null
 },
-v4 = {
+v5 = [
+  {
+    "kind": "Literal",
+    "name": "precision",
+    "value": 2
+  }
+],
+v6 = {
   "alias": null,
-  "args": (v1/*: any*/),
+  "args": (v5/*: any*/),
   "kind": "ScalarField",
   "name": "amount",
   "storageKey": "amount(precision:2)"
 },
-v5 = {
+v7 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -168,19 +239,63 @@ return {
         "name": "commerceOrder",
         "plural": false,
         "selections": [
+          (v1/*: any*/),
           {
             "alias": null,
             "args": null,
-            "kind": "ScalarField",
-            "name": "__typename",
+            "concreteType": "CommerceLineItemConnection",
+            "kind": "LinkedField",
+            "name": "lineItems",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "CommerceLineItemEdge",
+                "kind": "LinkedField",
+                "name": "edges",
+                "plural": true,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "CommerceLineItem",
+                    "kind": "LinkedField",
+                    "name": "node",
+                    "plural": false,
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": null,
+                        "kind": "LinkedField",
+                        "name": "artworkOrEditionSet",
+                        "plural": false,
+                        "selections": [
+                          (v1/*: any*/),
+                          (v2/*: any*/),
+                          {
+                            "kind": "InlineFragment",
+                            "selections": (v3/*: any*/),
+                            "type": "Artwork"
+                          },
+                          {
+                            "kind": "InlineFragment",
+                            "selections": (v3/*: any*/),
+                            "type": "EditionSet"
+                          }
+                        ],
+                        "storageKey": null
+                      },
+                      (v2/*: any*/)
+                    ],
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              }
+            ],
             "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": (v1/*: any*/),
-            "kind": "ScalarField",
-            "name": "totalListPrice",
-            "storageKey": "totalListPrice(precision:2)"
           },
           (v2/*: any*/),
           {
@@ -210,8 +325,8 @@ return {
                         "name": "node",
                         "plural": false,
                         "selections": [
-                          (v3/*: any*/),
                           (v4/*: any*/),
+                          (v6/*: any*/),
                           {
                             "alias": null,
                             "args": [
@@ -225,7 +340,7 @@ return {
                             "name": "createdAt",
                             "storageKey": "createdAt(format:\"MMM D\")"
                           },
-                          (v5/*: any*/),
+                          (v7/*: any*/),
                           (v2/*: any*/)
                         ],
                         "storageKey": null
@@ -244,19 +359,19 @@ return {
                 "name": "lastOffer",
                 "plural": false,
                 "selections": [
-                  (v3/*: any*/),
-                  (v5/*: any*/),
                   (v4/*: any*/),
+                  (v7/*: any*/),
+                  (v6/*: any*/),
                   {
                     "alias": null,
-                    "args": (v1/*: any*/),
+                    "args": (v5/*: any*/),
                     "kind": "ScalarField",
                     "name": "shippingTotal",
                     "storageKey": "shippingTotal(precision:2)"
                   },
                   {
                     "alias": null,
-                    "args": (v1/*: any*/),
+                    "args": (v5/*: any*/),
                     "kind": "ScalarField",
                     "name": "taxTotal",
                     "storageKey": "taxTotal(precision:2)"
@@ -285,7 +400,7 @@ return {
     "metadata": {},
     "name": "OfferHistoryItemTestQuery",
     "operationKind": "query",
-    "text": "query OfferHistoryItemTestQuery {\n  order: commerceOrder(id: \"foo\") {\n    __typename\n    ...OfferHistoryItem_order\n    id\n  }\n}\n\nfragment OfferHistoryItem_order on CommerceOrder {\n  ... on CommerceOfferOrder {\n    offers {\n      edges {\n        node {\n          internalID\n          amount(precision: 2)\n          createdAt(format: \"MMM D\")\n          fromParticipant\n          id\n        }\n      }\n    }\n    lastOffer {\n      internalID\n      fromParticipant\n      amount(precision: 2)\n      shippingTotal(precision: 2)\n      taxTotal(precision: 2)\n      note\n      id\n    }\n  }\n  totalListPrice(precision: 2)\n}\n"
+    "text": "query OfferHistoryItemTestQuery {\n  order: commerceOrder(id: \"foo\") {\n    __typename\n    ...OfferHistoryItem_order\n    id\n  }\n}\n\nfragment OfferHistoryItem_order on CommerceOrder {\n  lineItems {\n    edges {\n      node {\n        artworkOrEditionSet {\n          __typename\n          ... on Artwork {\n            price\n          }\n          ... on EditionSet {\n            price\n            id\n          }\n          ... on Node {\n            id\n          }\n        }\n        id\n      }\n    }\n  }\n  ... on CommerceOfferOrder {\n    offers {\n      edges {\n        node {\n          internalID\n          amount(precision: 2)\n          createdAt(format: \"MMM D\")\n          fromParticipant\n          id\n        }\n      }\n    }\n    lastOffer {\n      internalID\n      fromParticipant\n      amount(precision: 2)\n      shippingTotal(precision: 2)\n      taxTotal(precision: 2)\n      note\n      id\n    }\n  }\n}\n"
   }
 };
 })();

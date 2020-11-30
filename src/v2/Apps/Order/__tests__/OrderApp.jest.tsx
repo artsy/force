@@ -25,9 +25,9 @@ import { Environment, RecordSource, Store } from "relay-runtime"
 import { GlobalData } from "sharify"
 
 jest.mock("react-stripe-elements", () => ({
+  CardElement: () => jest.fn(),
   Elements: ({ children }) => children,
   StripeProvider: ({ children }) => children,
-  CardElement: () => jest.fn(),
   injectStripe: () => jest.fn(),
 }))
 
@@ -43,18 +43,18 @@ describe("OrderApp routing redirects", () => {
     const environment = new Environment({ network, store })
 
     const result = await getFarceResult({
-      url,
-      routeConfig: routes,
-      resolver: new Resolver(environment),
       render: () => <div>hello</div>,
+      resolver: new Resolver(environment),
+      routeConfig: routes,
+      url,
     })
 
     return result as FarceRedirectResult
   }
 
   const mockResolver = (data: routes_OrderQueryRawResponse["order"]) => ({
+    me: { id: "alice_jane", name: "Alice Jane" },
     order: data,
-    me: { name: "Alice Jane", id: "alice_jane" },
   })
 
   it("does not redirect to the status route if the order is pending", async () => {
@@ -84,23 +84,23 @@ describe("OrderApp routing redirects", () => {
       "/orders/2939023/shipping",
       mockResolver({
         ...BuyOrderPickup,
-        state: "ABANDONED",
         lineItems: {
           edges: [
             {
               node: {
-                id: "node id",
                 artwork: {
-                  id: "artwork-id",
-                  slug: "artwork-id",
                   href: "/artwork/artwork-id",
+                  id: "artwork-id",
                   is_acquireable: true,
-                  is_offerable: false,
+                  is_offerable: true,
+                  slug: "artwork-id",
                 },
+                id: "node id",
               },
             },
           ],
         },
+        state: "ABANDONED",
       })
     )
     expect(redirect.url).toBe("/artwork/artwork-id")
@@ -111,8 +111,8 @@ describe("OrderApp routing redirects", () => {
       "/orders/2939023/shipping",
       mockResolver({
         ...BuyOrderPickup,
-        state: "ABANDONED",
         lineItems: null,
+        state: "ABANDONED",
       })
     )
     expect(redirect.url).toBe("/")
@@ -123,8 +123,8 @@ describe("OrderApp routing redirects", () => {
       "/orders/2939023/shipping",
       mockResolver({
         ...UntouchedBuyOrder,
-        state: "PENDING",
         requestedFulfillment: null,
+        state: "PENDING",
       })
     )
     expect(redirect).toBe(undefined)
@@ -135,8 +135,8 @@ describe("OrderApp routing redirects", () => {
       "/orders/2939023/payment",
       mockResolver({
         ...UntouchedBuyOrder,
-        state: "PENDING",
         requestedFulfillment: null,
+        state: "PENDING",
       })
     )
     expect(redirect.url).toBe("/orders/2939023/shipping")
@@ -147,11 +147,11 @@ describe("OrderApp routing redirects", () => {
       "/orders/2939023/payment",
       mockResolver({
         ...UntouchedBuyOrder,
-        state: "PENDING",
+        creditCard: null,
         requestedFulfillment: {
           __typename: "CommerceShip",
         },
-        creditCard: null,
+        state: "PENDING",
       })
     )
     expect(redirect).toBe(undefined)
@@ -162,9 +162,9 @@ describe("OrderApp routing redirects", () => {
       "/orders/2939023/review",
       mockResolver({
         ...UntouchedBuyOrder,
-        state: "PENDING",
-        requestedFulfillment: null,
         creditCard: null,
+        requestedFulfillment: null,
+        state: "PENDING",
       })
     )
     expect(redirect.url).toBe("/orders/2939023/shipping")
@@ -175,11 +175,11 @@ describe("OrderApp routing redirects", () => {
       "/orders/2939023/review",
       mockResolver({
         ...UntouchedBuyOrder,
-        state: "PENDING",
+        creditCard: null,
         requestedFulfillment: {
           __typename: "CommerceShip",
         },
-        creditCard: null,
+        state: "PENDING",
       })
     )
     expect(redirect.url).toBe("/orders/2939023/payment")
@@ -190,14 +190,14 @@ describe("OrderApp routing redirects", () => {
       "/orders/2939023/review",
       mockResolver({
         ...UntouchedBuyOrder,
-        state: "PENDING",
-        requestedFulfillment: {
-          __typename: "CommerceShip",
-        },
         creditCard: {
           id: "",
           internalID: "29390235",
         },
+        requestedFulfillment: {
+          __typename: "CommerceShip",
+        },
+        state: "PENDING",
       })
     )
     expect(redirect).toBe(undefined)
@@ -208,14 +208,14 @@ describe("OrderApp routing redirects", () => {
       "/orders/2939023/status",
       mockResolver({
         ...UntouchedBuyOrder,
-        state: "PENDING",
-        requestedFulfillment: {
-          __typename: "CommerceShip",
-        },
         creditCard: {
           id: "",
           internalID: "12345",
         },
+        requestedFulfillment: {
+          __typename: "CommerceShip",
+        },
+        state: "PENDING",
       })
     )
     expect(redirect.url).toBe("/orders/2939023/review")
@@ -226,14 +226,14 @@ describe("OrderApp routing redirects", () => {
       "/orders/2939023/status",
       mockResolver({
         ...UntouchedBuyOrder,
-        state: "SUBMITTED",
-        requestedFulfillment: {
-          __typename: "CommerceShip",
-        },
         creditCard: {
           id: "",
           internalID: "29390235",
         },
+        requestedFulfillment: {
+          __typename: "CommerceShip",
+        },
+        state: "SUBMITTED",
       })
     )
     expect(redirect).toBe(undefined)
@@ -293,8 +293,8 @@ describe("OrderApp routing redirects", () => {
       mockResolver({
         ...OfferOrderWithShippingDetails,
 
-        state: "PENDING",
         awaitingResponseFrom: "BUYER",
+        state: "PENDING",
       })
     )
     expect(redirect.url).toBe("/orders/2939023/status")
@@ -306,8 +306,8 @@ describe("OrderApp routing redirects", () => {
       mockResolver({
         ...OfferOrderWithShippingDetails,
 
-        state: "SUBMITTED",
         awaitingResponseFrom: "BUYER",
+        state: "SUBMITTED",
       })
     )
     expect(redirect).toBe(undefined)
@@ -319,8 +319,8 @@ describe("OrderApp routing redirects", () => {
       mockResolver({
         ...OfferOrderWithShippingDetails,
 
-        state: "SUBMITTED",
         awaitingResponseFrom: "BUYER",
+        state: "SUBMITTED",
       })
     )
     expect(redirect.url).toBe("/orders/2939023/respond")
@@ -329,20 +329,20 @@ describe("OrderApp routing redirects", () => {
   describe("visiting the /review/counter page", () => {
     const counterOfferOrder: routes_OrderQueryRawResponse["order"] = {
       ...OfferOrderWithShippingDetails,
+      awaitingResponseFrom: "BUYER",
       id: "2939023",
-      state: "SUBMITTED",
       lastOffer: {
         ...OfferWithTotals,
+        createdAt: DateTime.local().minus({ days: 1 }).toString(),
         id: "last-offer",
         internalID: "last-offer",
-        createdAt: DateTime.local().minus({ days: 1 }).toString(),
       },
       myLastOffer: {
+        createdAt: DateTime.local().toString(),
         id: "my-last-offer",
         internalID: "my-last-offer",
-        createdAt: DateTime.local().toString(),
       },
-      awaitingResponseFrom: "BUYER",
+      state: "SUBMITTED",
     } as const
     it("stays on the /review/counter page if all conditions are met", async () => {
       const { redirect } = await render(
@@ -404,20 +404,20 @@ describe("OrderApp routing redirects", () => {
     const counterOfferOrder: routes_OrderQueryRawResponse["order"] = {
       ...OfferOrderWithShippingDetails,
 
-      state: "SUBMITTED",
+      awaitingResponseFrom: "BUYER",
       lastOffer: {
         ...OfferWithTotals,
-        internalID: "last-offer",
-        id: "last-offer",
         createdAt: DateTime.local().minus({ days: 1 }).toString(),
+        id: "last-offer",
+        internalID: "last-offer",
       },
-      myLastOffer: {
-        internalID: "my-last-offer",
-        id: "my-last-offer",
-        createdAt: DateTime.local().toString(),
-      },
-      awaitingResponseFrom: "BUYER",
       lastTransactionFailed: true,
+      myLastOffer: {
+        createdAt: DateTime.local().toString(),
+        id: "my-last-offer",
+        internalID: "my-last-offer",
+      },
+      state: "SUBMITTED",
     } as const
     it("stays on the /payment/new page if all conditions are met", async () => {
       const { redirect } = await render(
@@ -485,20 +485,20 @@ describe("OrderApp", () => {
   const getProps = ({ state, location, replace }: any = {}) => {
     return {
       children: false,
+      location: { pathname: location || "/order/123/shipping" },
+      order: {
+        ...UntouchedBuyOrder,
+        state: state || "PENDING",
+      },
       params: {
         orderID: "123",
       },
-      location: { pathname: location || "/order/123/shipping" },
+      routeIndices: [],
       router: {
         // tslint:disable-next-line:no-empty
         addNavigationListener: () => {},
         replace,
       },
-      order: {
-        ...UntouchedBuyOrder,
-        state: state || "PENDING",
-      },
-      routeIndices: [],
       routes: [],
     }
   }
@@ -506,10 +506,10 @@ describe("OrderApp", () => {
   it("enables intercom", () => {
     const trigger = jest.fn()
     const props = getProps()
-    getWrapper({ props, context: { mediator: { trigger } } })
+    getWrapper({ context: { mediator: { trigger } }, props })
     expect(trigger).toHaveBeenCalledWith("enableIntercomForBuyers", {
       is_acquireable: true,
-      is_offerable: false,
+      is_offerable: true,
     })
   })
 
@@ -526,7 +526,7 @@ describe("OrderApp", () => {
 
   it("includes meta viewport tag if Eigen", () => {
     const props = getProps()
-    const subject = getWrapper({ props, context: { isEigen: true } }) as any
+    const subject = getWrapper({ context: { isEigen: true }, props }) as any
     const viewportMetaTags = subject
       .find(Meta)
       .filterWhere(meta => meta.props().name === "viewport")
@@ -536,14 +536,16 @@ describe("OrderApp", () => {
   it("shows the sticky 'need help?' footer", () => {
     const props = getProps() as any
     const subject = getWrapper({ props }) as any
-    expect(subject.text()).toMatch("Need help? Visit our help center or ask a question.")
+    expect(subject.text()).toMatch(
+      "Need help? Visit our help center or ask a question."
+    )
   })
 
   it("shows an error page if the order is missing", () => {
     const props = getProps()
     const subject = getWrapper({
-      props: { ...props, order: null },
       context: { isEigen: true },
+      props: { ...props, order: null },
     })
 
     subject.find(ErrorPage)

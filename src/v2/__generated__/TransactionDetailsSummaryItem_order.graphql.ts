@@ -7,13 +7,29 @@ export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
 export type CommerceOrderParticipantEnum = "BUYER" | "SELLER" | "%future added value";
 export type TransactionDetailsSummaryItem_order = {
     readonly __typename: string;
+    readonly lineItems: {
+        readonly edges: ReadonlyArray<{
+            readonly node: {
+                readonly artworkOrEditionSet: ({
+                    readonly __typename: "Artwork";
+                    readonly price: string | null;
+                } | {
+                    readonly __typename: "EditionSet";
+                    readonly price: string | null;
+                } | {
+                    /*This will never be '%other', but we need some
+                    value in case none of the concrete values match.*/
+                    readonly __typename: "%other";
+                }) | null;
+            } | null;
+        } | null> | null;
+    } | null;
     readonly mode: CommerceOrderModeEnum | null;
     readonly shippingTotal: string | null;
     readonly shippingTotalCents: number | null;
     readonly taxTotal: string | null;
     readonly taxTotalCents: number | null;
     readonly itemsTotal: string | null;
-    readonly totalListPrice: string | null;
     readonly buyerTotal: string | null;
     readonly lastOffer?: {
         readonly internalID: string;
@@ -52,49 +68,65 @@ export type TransactionDetailsSummaryItem_order$key = {
 
 
 const node: ReaderFragment = (function(){
-var v0 = [
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "__typename",
+  "storageKey": null
+},
+v1 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "price",
+    "storageKey": null
+  }
+],
+v2 = [
   {
     "kind": "Literal",
     "name": "precision",
     "value": 2
   }
 ],
-v1 = {
+v3 = {
   "alias": null,
-  "args": (v0/*: any*/),
+  "args": (v2/*: any*/),
   "kind": "ScalarField",
   "name": "shippingTotal",
   "storageKey": "shippingTotal(precision:2)"
 },
-v2 = {
+v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "shippingTotalCents",
   "storageKey": null
 },
-v3 = {
+v5 = {
   "alias": null,
-  "args": (v0/*: any*/),
+  "args": (v2/*: any*/),
   "kind": "ScalarField",
   "name": "taxTotal",
   "storageKey": "taxTotal(precision:2)"
 },
-v4 = {
+v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "taxTotalCents",
   "storageKey": null
 },
-v5 = {
+v7 = {
   "alias": null,
-  "args": (v0/*: any*/),
+  "args": (v2/*: any*/),
   "kind": "ScalarField",
   "name": "buyerTotal",
   "storageKey": "buyerTotal(precision:2)"
 },
-v6 = [
+v8 = [
   {
     "alias": null,
     "args": null,
@@ -104,7 +136,7 @@ v6 = [
   },
   {
     "alias": null,
-    "args": (v0/*: any*/),
+    "args": (v2/*: any*/),
     "kind": "ScalarField",
     "name": "amount",
     "storageKey": "amount(precision:2)"
@@ -116,11 +148,11 @@ v6 = [
     "name": "amountCents",
     "storageKey": null
   },
-  (v1/*: any*/),
-  (v2/*: any*/),
   (v3/*: any*/),
   (v4/*: any*/),
   (v5/*: any*/),
+  (v6/*: any*/),
+  (v7/*: any*/),
   {
     "alias": null,
     "args": null,
@@ -149,11 +181,60 @@ return {
   "metadata": null,
   "name": "TransactionDetailsSummaryItem_order",
   "selections": [
+    (v0/*: any*/),
     {
       "alias": null,
       "args": null,
-      "kind": "ScalarField",
-      "name": "__typename",
+      "concreteType": "CommerceLineItemConnection",
+      "kind": "LinkedField",
+      "name": "lineItems",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "CommerceLineItemEdge",
+          "kind": "LinkedField",
+          "name": "edges",
+          "plural": true,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "CommerceLineItem",
+              "kind": "LinkedField",
+              "name": "node",
+              "plural": false,
+              "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "concreteType": null,
+                  "kind": "LinkedField",
+                  "name": "artworkOrEditionSet",
+                  "plural": false,
+                  "selections": [
+                    (v0/*: any*/),
+                    {
+                      "kind": "InlineFragment",
+                      "selections": (v1/*: any*/),
+                      "type": "Artwork"
+                    },
+                    {
+                      "kind": "InlineFragment",
+                      "selections": (v1/*: any*/),
+                      "type": "EditionSet"
+                    }
+                  ],
+                  "storageKey": null
+                }
+              ],
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        }
+      ],
       "storageKey": null
     },
     {
@@ -163,25 +244,18 @@ return {
       "name": "mode",
       "storageKey": null
     },
-    (v1/*: any*/),
-    (v2/*: any*/),
     (v3/*: any*/),
     (v4/*: any*/),
+    (v5/*: any*/),
+    (v6/*: any*/),
     {
       "alias": null,
-      "args": (v0/*: any*/),
+      "args": (v2/*: any*/),
       "kind": "ScalarField",
       "name": "itemsTotal",
       "storageKey": "itemsTotal(precision:2)"
     },
-    {
-      "alias": null,
-      "args": (v0/*: any*/),
-      "kind": "ScalarField",
-      "name": "totalListPrice",
-      "storageKey": "totalListPrice(precision:2)"
-    },
-    (v5/*: any*/),
+    (v7/*: any*/),
     {
       "kind": "InlineFragment",
       "selections": [
@@ -192,7 +266,7 @@ return {
           "kind": "LinkedField",
           "name": "lastOffer",
           "plural": false,
-          "selections": (v6/*: any*/),
+          "selections": (v8/*: any*/),
           "storageKey": null
         },
         {
@@ -202,7 +276,7 @@ return {
           "kind": "LinkedField",
           "name": "myLastOffer",
           "plural": false,
-          "selections": (v6/*: any*/),
+          "selections": (v8/*: any*/),
           "storageKey": null
         }
       ],
@@ -212,5 +286,5 @@ return {
   "type": "CommerceOrder"
 };
 })();
-(node as any).hash = 'e207bab0483d25f4386054ee2b0365c6';
+(node as any).hash = '636e45b93363a4168b366f5e4410947d';
 export default node;
