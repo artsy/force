@@ -23,6 +23,10 @@ export type Works_artist = {
             } | null> | null;
         } | null;
     } | null;
+    readonly name: string | null;
+    readonly counts: {
+        readonly forSaleArtworks: number | null;
+    } | null;
     readonly sidebarAggregations: {
         readonly aggregations: ReadonlyArray<{
             readonly slice: ArtworkAggregation | null;
@@ -52,16 +56,23 @@ var v0 = {
   "storageKey": null
 },
 v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "name",
+  "storageKey": null
+},
+v2 = {
   "kind": "Variable",
   "name": "aggregations",
   "variableName": "aggregations"
 },
-v2 = {
+v3 = {
   "kind": "Variable",
   "name": "page",
   "variableName": "page"
 },
-v3 = {
+v4 = {
   "kind": "Variable",
   "name": "sort",
   "variableName": "sort"
@@ -292,6 +303,25 @@ return {
       ],
       "storageKey": null
     },
+    (v1/*: any*/),
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "ArtistCounts",
+      "kind": "LinkedField",
+      "name": "counts",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "forSaleArtworks",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
+    },
     {
       "alias": "sidebarAggregations",
       "args": [
@@ -300,14 +330,14 @@ return {
           "name": "after",
           "value": ""
         },
-        (v1/*: any*/),
+        (v2/*: any*/),
         {
           "kind": "Literal",
           "name": "first",
           "value": 30
         },
-        (v2/*: any*/),
-        (v3/*: any*/)
+        (v3/*: any*/),
+        (v4/*: any*/)
       ],
       "concreteType": "FilterArtworksConnection",
       "kind": "LinkedField",
@@ -337,13 +367,7 @@ return {
               "name": "counts",
               "plural": true,
               "selections": [
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "name",
-                  "storageKey": null
-                },
+                (v1/*: any*/),
                 {
                   "alias": null,
                   "args": null,
@@ -377,7 +401,7 @@ return {
           "name": "acquireable",
           "variableName": "acquireable"
         },
-        (v1/*: any*/),
+        (v2/*: any*/),
         {
           "kind": "Variable",
           "name": "artistID",
@@ -433,7 +457,7 @@ return {
           "name": "offerable",
           "variableName": "offerable"
         },
-        (v2/*: any*/),
+        (v3/*: any*/),
         {
           "kind": "Variable",
           "name": "partnerID",
@@ -449,7 +473,7 @@ return {
           "name": "sizes",
           "variableName": "sizes"
         },
-        (v3/*: any*/),
+        (v4/*: any*/),
         {
           "kind": "Variable",
           "name": "width",
@@ -463,5 +487,5 @@ return {
   "type": "Artist"
 };
 })();
-(node as any).hash = 'c05257d7967737f31c309780489b8f99';
+(node as any).hash = 'fe76faa9729b51368abaa2311dd18120';
 export default node;

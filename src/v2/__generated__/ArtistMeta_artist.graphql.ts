@@ -12,7 +12,6 @@ export type ArtistMeta_artist = {
     readonly gender: string | null;
     readonly href: string | null;
     readonly meta: {
-        readonly title: string | null;
         readonly description: string | null;
     } | null;
     readonly alternate_names: ReadonlyArray<string | null> | null;
@@ -100,17 +99,10 @@ v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "title",
-  "storageKey": null
-},
-v3 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
   "name": "description",
   "storageKey": null
 },
-v4 = {
+v3 = {
   "alias": "large",
   "args": [
     {
@@ -123,15 +115,15 @@ v4 = {
   "name": "url",
   "storageKey": "url(version:\"large\")"
 },
-v5 = {
+v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "major",
   "storageKey": null
 },
-v6 = [
-  (v5/*: any*/),
+v5 = [
+  (v4/*: any*/),
   {
     "alias": null,
     "args": null,
@@ -140,7 +132,7 @@ v6 = [
     "storageKey": null
   }
 ],
-v7 = {
+v6 = {
   "alias": null,
   "args": null,
   "concreteType": "Image",
@@ -161,7 +153,7 @@ v7 = {
       "name": "url",
       "storageKey": "url(version:\"small\")"
     },
-    (v4/*: any*/)
+    (v3/*: any*/)
   ],
   "storageKey": null
 };
@@ -216,8 +208,7 @@ return {
       "name": "meta",
       "plural": false,
       "selections": [
-        (v2/*: any*/),
-        (v3/*: any*/)
+        (v2/*: any*/)
       ],
       "storageKey": null
     },
@@ -243,7 +234,7 @@ return {
           "name": "versions",
           "storageKey": null
         },
-        (v4/*: any*/),
+        (v3/*: any*/),
         {
           "alias": "square",
           "args": [
@@ -325,7 +316,13 @@ return {
               "name": "node",
               "plural": false,
               "selections": [
-                (v2/*: any*/),
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "title",
+                  "storageKey": null
+                },
                 {
                   "alias": null,
                   "args": null,
@@ -333,7 +330,7 @@ return {
                   "name": "date",
                   "storageKey": null
                 },
-                (v3/*: any*/),
+                (v2/*: any*/),
                 {
                   "alias": null,
                   "args": null,
@@ -373,7 +370,7 @@ return {
                           "kind": "LinkedField",
                           "name": "minPrice",
                           "plural": false,
-                          "selections": (v6/*: any*/),
+                          "selections": (v5/*: any*/),
                           "storageKey": null
                         },
                         {
@@ -384,7 +381,7 @@ return {
                           "name": "maxPrice",
                           "plural": false,
                           "selections": [
-                            (v5/*: any*/)
+                            (v4/*: any*/)
                           ],
                           "storageKey": null
                         }
@@ -393,7 +390,7 @@ return {
                     },
                     {
                       "kind": "InlineFragment",
-                      "selections": (v6/*: any*/),
+                      "selections": (v5/*: any*/),
                       "type": "Money"
                     }
                   ],
@@ -407,7 +404,7 @@ return {
                   "storageKey": null
                 },
                 (v1/*: any*/),
-                (v7/*: any*/),
+                (v6/*: any*/),
                 {
                   "alias": null,
                   "args": null,
@@ -426,7 +423,7 @@ return {
                       "name": "profile",
                       "plural": false,
                       "selections": [
-                        (v7/*: any*/)
+                        (v6/*: any*/)
                       ],
                       "storageKey": null
                     }
@@ -451,5 +448,5 @@ return {
   "type": "Artist"
 };
 })();
-(node as any).hash = '8f5b53faf93d5c15172918be714fa039';
+(node as any).hash = 'a16a38b3bce624e4b8e514d8fadd4416';
 export default node;

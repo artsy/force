@@ -14,62 +14,43 @@ jest.mock("sharify", () => ({
 
 describe("Meta", () => {
   const artist: ArtistMeta_artist = {
-    " $refType": null,
     " $fragmentRefs": null,
-    slug: "claes-oldenburg",
-    name: "Claes Oldenburg",
-    nationality: "Swedish",
-    birthday: "1929",
+    " $refType": null,
     alternate_names: null,
-    counts: null,
+    birthday: "1929",
     blurb: null,
-    deathday: null,
-    gender: "male",
-    href: "/artist/claes-oldenburg",
-    meta: {
-      title: "cool art",
-      description:
-        "Find the latest shows, biography, and artworks for sale by Claes Oldenburg. “I am for an art that is political-erotical-mystical, that does something more th…",
-    },
-    image: {
-      versions: ["small", "large"],
-      large:
-        "https://d32dm0rphc51dk.cloudfront.net/6q6LeyKvA_vpT5YzHRSNUA/large.jpg",
-      square:
-        "https://d32dm0rphc51dk.cloudfront.net/6q6LeyKvA_vpT5YzHRSNUA/square.jpg",
-    },
     artworks_connection: {
       edges: [
         {
           node: {
             date: "1993",
+            availability: "for sale",
             title:
               "'25 Years Studio',  1993, SIGNED by the BIG-8 Contemporary Artists, Gemini G.E.L.",
-            availability: "for sale",
-            description: null,
             category: "Drawing, Collage or other Work on Paper",
-            price_currency: "USD",
+            description: null,
             listPrice: {
               __typename: "Money",
               major: 1000,
               currencyCode: "USD",
             },
+            price_currency: "USD",
             href:
               "/artwork/robert-rauschenberg-25-years-studio-1993-signed-by-the-big-8-contemporary-artists-gemini-gel",
             image: {
-              small:
-                "https://d32dm0rphc51dk.cloudfront.net/PmBrn30fGmg9dGwk2Nf51w/small.jpg",
               large:
                 "https://d32dm0rphc51dk.cloudfront.net/PmBrn30fGmg9dGwk2Nf51w/large.jpg",
+              small:
+                "https://d32dm0rphc51dk.cloudfront.net/PmBrn30fGmg9dGwk2Nf51w/small.jpg",
             },
             partner: {
-              name: "VINCE fine arts/ephemera",
               href: "/vince-fine-arts-slash-ephemera",
+              name: "VINCE fine arts/ephemera",
               profile: {
                 image: {
-                  small:
-                    "https://d32dm0rphc51dk.cloudfront.net/vIzxQvuBS8gZVPUOKc4tPQ/wide.jpg",
                   large:
+                    "https://d32dm0rphc51dk.cloudfront.net/vIzxQvuBS8gZVPUOKc4tPQ/wide.jpg",
+                  small:
                     "https://d32dm0rphc51dk.cloudfront.net/vIzxQvuBS8gZVPUOKc4tPQ/wide.jpg",
                 },
               },
@@ -78,6 +59,24 @@ describe("Meta", () => {
         },
       ],
     },
+    counts: null,
+    deathday: null,
+    gender: "male",
+    href: "/artist/claes-oldenburg",
+    name: "Claes Oldenburg",
+    image: {
+      large:
+        "https://d32dm0rphc51dk.cloudfront.net/6q6LeyKvA_vpT5YzHRSNUA/large.jpg",
+      square:
+        "https://d32dm0rphc51dk.cloudfront.net/6q6LeyKvA_vpT5YzHRSNUA/square.jpg",
+      versions: ["small", "large"],
+    },
+    slug: "claes-oldenburg",
+    meta: {
+      description:
+        "Find the latest shows, biography, and artworks for sale by Claes Oldenburg. “I am for an art that is political-erotical-mystical, that does something more th…",
+    },
+    nationality: "Swedish",
   }
 
   type ArtworkMeta = ArtistMeta_artist["artworks_connection"]["edges"][number]["node"]
@@ -106,19 +105,13 @@ describe("Meta", () => {
 
       expect(json).toEqual({
         additionalType: "Artist",
-        name: "Claes Oldenburg",
-        url: "https://www.artsy-test.net/artist/claes-oldenburg",
+        birthDate: "1929",
+        description:
+          "Find the latest shows, biography, and artworks for sale by Claes Oldenburg. “I am for an art that is political-erotical-mystical, that does something more th…",
         gender: "male",
         image:
           "https://d32dm0rphc51dk.cloudfront.net/6q6LeyKvA_vpT5YzHRSNUA/large.jpg",
-        birthDate: "1929",
         mainEntityOfPage: "https://www.artsy-test.net/artist/claes-oldenburg",
-        description:
-          "Find the latest shows, biography, and artworks for sale by Claes Oldenburg. “I am for an art that is political-erotical-mystical, that does something more th…",
-        nationality: {
-          "@type": "Country",
-          name: "Swedish",
-        },
         makesOffer: [
           {
             "@type": "Offer",
@@ -153,8 +146,6 @@ describe("Meta", () => {
             seller: {
               "@context": "http://schema.org",
               "@type": "ArtGallery",
-              name: "VINCE fine arts/ephemera",
-              url: "https://www.artsy-test.net/vince-fine-arts-slash-ephemera",
               image: {
                 "@type": "ImageObject",
                 thumbnailUrl:
@@ -162,9 +153,17 @@ describe("Meta", () => {
                 url:
                   "https://d32dm0rphc51dk.cloudfront.net/vIzxQvuBS8gZVPUOKc4tPQ/wide.jpg",
               },
+              name: "VINCE fine arts/ephemera",
+              url: "https://www.artsy-test.net/vince-fine-arts-slash-ephemera",
             },
           },
         ],
+        name: "Claes Oldenburg",
+        nationality: {
+          "@type": "Country",
+          name: "Swedish",
+        },
+        url: "https://www.artsy-test.net/artist/claes-oldenburg",
       })
     })
 
@@ -188,12 +187,11 @@ describe("Meta", () => {
             },
             image: {
               "@type": "ImageObject",
-              url:
-                "https://d32dm0rphc51dk.cloudfront.net/PmBrn30fGmg9dGwk2Nf51w/large.jpg",
               thumbnailUrl:
                 "https://d32dm0rphc51dk.cloudfront.net/PmBrn30fGmg9dGwk2Nf51w/small.jpg",
+              url:
+                "https://d32dm0rphc51dk.cloudfront.net/PmBrn30fGmg9dGwk2Nf51w/large.jpg",
             },
-            productionDate: "1993",
             name:
               "'25 Years Studio',  1993, SIGNED by the BIG-8 Contemporary Artists, Gemini G.E.L.",
             offers: {
@@ -202,6 +200,7 @@ describe("Meta", () => {
               price: 1000,
               priceCurrency: "USD",
             },
+            productionDate: "1993",
             url:
               "https://www.artsy-test.net/artwork/robert-rauschenberg-25-years-studio-1993-signed-by-the-big-8-contemporary-artists-gemini-gel",
           },
@@ -209,8 +208,6 @@ describe("Meta", () => {
           seller: {
             "@context": "http://schema.org",
             "@type": "ArtGallery",
-            name: "VINCE fine arts/ephemera",
-            url: "https://www.artsy-test.net/vince-fine-arts-slash-ephemera",
             image: {
               "@type": "ImageObject",
               thumbnailUrl:
@@ -218,6 +215,8 @@ describe("Meta", () => {
               url:
                 "https://d32dm0rphc51dk.cloudfront.net/vIzxQvuBS8gZVPUOKc4tPQ/wide.jpg",
             },
+            name: "VINCE fine arts/ephemera",
+            url: "https://www.artsy-test.net/vince-fine-arts-slash-ephemera",
           },
         },
       ])
@@ -230,7 +229,17 @@ describe("Meta", () => {
       expect(json).toEqual({
         "@type": "Product",
         additionalType: "Drawing, Collage or other Work on Paper",
-        productionDate: "1993",
+        brand: {
+          "@type": "Person",
+          name: "Claes Oldenburg",
+        },
+        image: {
+          "@type": "ImageObject",
+          thumbnailUrl:
+            "https://d32dm0rphc51dk.cloudfront.net/PmBrn30fGmg9dGwk2Nf51w/small.jpg",
+          url:
+            "https://d32dm0rphc51dk.cloudfront.net/PmBrn30fGmg9dGwk2Nf51w/large.jpg",
+        },
         name:
           "'25 Years Studio',  1993, SIGNED by the BIG-8 Contemporary Artists, Gemini G.E.L.",
         offers: {
@@ -239,19 +248,9 @@ describe("Meta", () => {
           price: 1000,
           priceCurrency: "USD",
         },
+        productionDate: "1993",
         url:
           "https://www.artsy-test.net/artwork/robert-rauschenberg-25-years-studio-1993-signed-by-the-big-8-contemporary-artists-gemini-gel",
-        image: {
-          "@type": "ImageObject",
-          thumbnailUrl:
-            "https://d32dm0rphc51dk.cloudfront.net/PmBrn30fGmg9dGwk2Nf51w/small.jpg",
-          url:
-            "https://d32dm0rphc51dk.cloudfront.net/PmBrn30fGmg9dGwk2Nf51w/large.jpg",
-        },
-        brand: {
-          "@type": "Person",
-          name: "Claes Oldenburg",
-        },
       })
     })
 
@@ -272,8 +271,8 @@ describe("Meta", () => {
             major: 1000,
           },
           minPrice: {
-            major: 100,
             currencyCode: "USD",
+            major: 100,
           },
         } as const,
       })
@@ -307,11 +306,11 @@ describe("Meta", () => {
       const modifiedArtist = artistWithArtworkOverrides({
         listPrice: {
           __typename: "PriceRange",
-          minPrice: {
-            major: 100,
-            currencyCode: "USD",
-          },
           maxPrice: null,
+          minPrice: {
+            currencyCode: "USD",
+            major: 100,
+          },
         } as const,
       })
       const artwork = modifiedArtist.artworks_connection.edges[0].node
@@ -330,8 +329,6 @@ describe("Meta", () => {
       expect(json).toEqual({
         "@context": "http://schema.org",
         "@type": "ArtGallery",
-        name: "VINCE fine arts/ephemera",
-        url: "https://www.artsy-test.net/vince-fine-arts-slash-ephemera",
         image: {
           "@type": "ImageObject",
           thumbnailUrl:
@@ -339,6 +336,8 @@ describe("Meta", () => {
           url:
             "https://d32dm0rphc51dk.cloudfront.net/vIzxQvuBS8gZVPUOKc4tPQ/wide.jpg",
         },
+        name: "VINCE fine arts/ephemera",
+        url: "https://www.artsy-test.net/vince-fine-arts-slash-ephemera",
       })
     })
   })
