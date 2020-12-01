@@ -1,7 +1,8 @@
 include ../../templates/mixins
 
-+settings-section('information', 'Information')
-  include ../../components/information/index
++settings-section('information', '')
+  #stitch-user-information
+    != stitch.components.UserInformation({ mountId: 'stitch-user-information' })
 
 +settings-section('password', 'Password')
   include ../../components/password/index

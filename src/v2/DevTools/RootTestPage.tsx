@@ -23,4 +23,7 @@ export class RootTestPage {
   text(): string {
     return this.root.text()
   }
+  html(): string {
+    return this.root.html()
+  }
 }

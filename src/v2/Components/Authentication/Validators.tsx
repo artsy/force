@@ -19,12 +19,12 @@ const accepted_terms_of_service = Yup.boolean()
   .oneOf([true])
 
 export const SignUpValidator = Yup.object().shape({
-  name,
+  accepted_terms_of_service,
   email,
+  name,
   password: Yup.string()
     .required("Password required")
     .min(8, "Password must be at least 8 characters."),
-  accepted_terms_of_service,
 })
 
 export const ForgotPasswordValidator = Yup.object().shape({ email })
@@ -35,13 +35,18 @@ export const LoginValidator = Yup.object().shape({
 })
 
 export const MobileSignUpValidator = {
-  email: Yup.object().shape({ email, accepted_terms_of_service }),
+  email: Yup.object().shape({ accepted_terms_of_service, email }),
   name: Yup.object().shape({ name }),
   password: Yup.object().shape({ password }),
 }
 
 export const MobileLoginValidator = {
   email: Yup.object().shape({ email }),
-  password: Yup.object().shape({ password: loginPassword }),
   otpAttempt: Yup.object().shape({ otp_attempt: otpAttempt }),
+  password: Yup.object().shape({ password: loginPassword }),
 }
+
+export const ChangeUserInformationValidator = Yup.object().shape({
+  email,
+  name,
+})

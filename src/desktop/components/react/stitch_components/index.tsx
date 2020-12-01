@@ -19,5 +19,6 @@ export {
 export {
   TwoFactorAuthenticationQueryRenderer as TwoFactorAuthentication,
 } from "v2/Components/UserSettings/TwoFactorAuthentication"
+export { UserInformationQueryRenderer as UserInformation } from "v2/Components/UserSettings/UserInformation"
 export { ReactionCCPARequest as CCPARequest } from "./CCPARequest"
 export { UserSettingsTabs } from "v2/Components/UserSettings/UserSettingsTabs"
