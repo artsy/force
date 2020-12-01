@@ -4,6 +4,13 @@ import {
   generateGoogleCalendarUrl,
   generateIcsCalendarUrl,
 } from "v2/Components/AddToCalendar/helpers"
+import {
+  AddToCalendar as AddToCalendarEvent,
+  addToCalendar,
+  ContextModule,
+} from "@artsy/cohesion"
+import { useTracking } from "v2/Artsy"
+import { useAnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
 
 export interface CalendarEventProps {
   title: string
@@ -13,13 +20,31 @@ export interface CalendarEventProps {
   address?: string
   href: string
   liveAuctionUrl?: string
+  contextModule: ContextModule
 }
 
 export const AddToCalendar: React.FC<CalendarEventProps> = props => {
   const [isVisible, setIsVisible] = useState(false)
-
+  const { trackEvent } = useTracking()
+  const {
+    contextPageOwnerId,
+    contextPageOwnerSlug,
+    contextPageOwnerType,
+  } = useAnalyticsContext()
   const googleUrl = generateGoogleCalendarUrl(props)
   const icsUrl = generateIcsCalendarUrl(props)
+
+  const trackClick = (subject: AddToCalendarEvent["subject"]) => {
+    trackEvent(
+      addToCalendar({
+        context_module: props.contextModule,
+        context_owner_id: contextPageOwnerId,
+        context_owner_slug: contextPageOwnerSlug,
+        context_owner_type: contextPageOwnerType,
+        subject,
+      })
+    )
+  }
 
   return (
     <Box display="inline-block">
@@ -38,11 +63,19 @@ export const AddToCalendar: React.FC<CalendarEventProps> = props => {
           onBlur={() => setIsVisible(false)}
         >
           <Menu>
-            <MenuItem href={googleUrl} target="_blank">
+            <MenuItem
+              href={googleUrl}
+              onClick={() => trackClick("google")}
+              target="_blank"
+            >
               Google
             </MenuItem>
-            <MenuItem href={icsUrl}>iCal</MenuItem>
-            <MenuItem href={icsUrl}>Outlook</MenuItem>
+            <MenuItem href={icsUrl} onClick={() => trackClick("iCal")}>
+              iCal
+            </MenuItem>
+            <MenuItem href={icsUrl} onClick={() => trackClick("outlook")}>
+              Outlook
+            </MenuItem>
           </Menu>
         </Box>
       )}

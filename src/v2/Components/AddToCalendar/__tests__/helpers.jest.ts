@@ -1,4 +1,3 @@
-import { CalendarEventProps } from "../AddToCalendar"
 import {
   formatIsoDateNoZoneOffset,
   generateGoogleCalendarUrl,
@@ -6,15 +5,15 @@ import {
 } from "../helpers"
 
 describe("AddToCalendar date helpers", () => {
-  let event: CalendarEventProps
+  let event
 
   beforeEach(() => {
     event = {
+      description: "Artsy presents an auction.",
       endDate: new Date("2024-01-11").toISOString(),
       href: "http://artsy.net/auction/auction-slug",
       startDate: new Date("2024-01-10").toISOString(),
       title: "Heritage: Signature Urban Art",
-      description: "Artsy presents an auction.",
     }
   })
 
