@@ -27,10 +27,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/cohesion/-/cohesion-1.45.0.tgz#f97ff2237033cf9704e452fb35a50b769dd4ef14"
   integrity sha512-WH+TiBLuWtA8XITmXv5OJLr0RcT0VXNaXyYE+gur1MEg8c9s1eh9rfpwy8CPYjl1cPOAXyJVZeIMf1vlNsCNyA==
 
-"@artsy/cohesion@1.62.0":
-  version "1.62.0"
-  resolved "https://registry.yarnpkg.com/@artsy/cohesion/-/cohesion-1.62.0.tgz#2ba1f86c45e3f1cdc90727e0ea877ff62671af43"
-  integrity sha512-MvwLfTY+hC/FsaPhVpbZGDQtP9yru+5W/J48lVAOsueTvXDjacAeQehB+p5DdYGLbLSVAe5kIwkAlMZdWI2PAQ==
+"@artsy/cohesion@1.64.0":
+  version "1.64.0"
+  resolved "https://registry.yarnpkg.com/@artsy/cohesion/-/cohesion-1.64.0.tgz#a6a01066158069273917ee2985c228e2e268c1e3"
+  integrity sha512-hf0NXWy8VaZL8kAdQsP0X4pdOV/kodNCPCXCT2L3fjqG1ugZCiH7yvJb7gu2YLIxh/gjknv9TYz5PpQneY7mYw==
 
 "@artsy/detect-responsive-traits@^0.0.5":
   version "0.0.5"
@@ -2965,11 +2965,6 @@
   version "7.0.18"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-7.0.18.tgz#cd67f27d3dc0cfb746f0bdd5e086c4c5d55be173"
   integrity sha1-zWfyfT3Az7dG8L3V4IbExdVb4XM=
-
-"@types/node@^8.0.24":
-  version "8.10.38"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-8.10.38.tgz#e05c201a668492e534b48102aca0294898f449f6"
-  integrity sha512-EibsnbJerd0hBFaDjJStFrVbVBAtOy4dgL8zZFw0uOvPqzBAX59Ci8cgjg3+RgJIWhsB5A4c+pi+D4P9tQQh/A==
 
 "@types/normalize-package-data@^2.4.0":
   version "2.4.0"
@@ -6657,7 +6652,7 @@ debug@^1.0.2:
   dependencies:
     ms "2.0.0"
 
-debug@^3.0.0, debug@^3.1.0, debug@^3.2.6:
+debug@^3.1.0, debug@^3.2.6:
   version "3.2.6"
   resolved "https://registry.yarnpkg.com/debug/-/debug-3.2.6.tgz#e83d17de16d8a7efb7717edbe5fb10135eee629b"
   integrity sha512-mel+jf7nrtEl5Pn1Qx46zARXKDpBbvzezse7p7LqINmdoIk8PYP5SySaxEmYv6TZ0JyEKA1hsCId6DIhgITtWQ==
@@ -7148,34 +7143,10 @@ electron-download@^3.0.1:
     semver "^5.3.0"
     sumchecker "^1.2.0"
 
-electron-download@^4.1.0:
-  version "4.1.1"
-  resolved "https://registry.yarnpkg.com/electron-download/-/electron-download-4.1.1.tgz#02e69556705cc456e520f9e035556ed5a015ebe8"
-  integrity sha512-FjEWG9Jb/ppK/2zToP+U5dds114fM1ZOJqMAR4aXXL5CvyPE9fiqBK/9YcwC9poIFQTEJk/EM/zyRwziziRZrg==
-  dependencies:
-    debug "^3.0.0"
-    env-paths "^1.0.0"
-    fs-extra "^4.0.1"
-    minimist "^1.2.0"
-    nugget "^2.0.1"
-    path-exists "^3.0.0"
-    rc "^1.2.1"
-    semver "^5.4.1"
-    sumchecker "^2.0.2"
-
 electron-to-chromium@^1.3.413:
   version "1.3.448"
   resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.448.tgz#682831ecf3ce505231978f7c795a2813740cae7c"
   integrity sha512-WOr3SrZ55lUFYugA6sUu3H3ZoxVIH5o3zTSqYS+2DOJJP4hnHmBiD1w432a2YFW/H2G5FIxE6DB06rv+9dUL5g==
-
-electron@3.0.16:
-  version "3.0.16"
-  resolved "https://registry.yarnpkg.com/electron/-/electron-3.0.16.tgz#a1279c8707cd2c2b11b9a756dd8db50e99e9fab6"
-  integrity sha512-H1FCMT/yhAzOcKqGVL2nZU238aJSa+3Wc7gQS7UcngHdznHVocNZiakalBruk7roFbqjKxdi6TQ8/PGuBg87oA==
-  dependencies:
-    "@types/node" "^8.0.24"
-    electron-download "^4.1.0"
-    extract-zip "^1.0.3"
 
 electron@^1.4.4:
   version "1.7.8"
@@ -7314,11 +7285,6 @@ entities@^1.1.1, "entities@~ 1.1.1", entities@~1.1.1:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/entities/-/entities-1.1.2.tgz#bdfa735299664dfafd34529ed4f8522a275fea56"
   integrity sha512-f2LZMYl1Fzu7YSBKg+RoROelpOaNrcGmE9AZubeDfrCEia483oW4MI4VyFd5VNHIgQ/7qm1I0wUHK1eJnn2y2w==
-
-env-paths@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/env-paths/-/env-paths-1.0.0.tgz#4168133b42bb05c38a35b1ae4397c8298ab369e0"
-  integrity sha1-QWgTO0K7BcOKNbGuQ5fIKYqzaeA=
 
 enzyme-adapter-react-16@1.14.0:
   version "1.14.0"
@@ -8894,7 +8860,7 @@ fs-extra@^0.30.0:
     path-is-absolute "^1.0.0"
     rimraf "^2.2.8"
 
-fs-extra@^4.0.1, fs-extra@^4.0.3:
+fs-extra@^4.0.3:
   version "4.0.3"
   resolved "https://registry.yarnpkg.com/fs-extra/-/fs-extra-4.0.3.tgz#0d852122e5bc5beb453fb028e9c0c9bf36340c94"
   integrity sha512-q6rbdDd1o2mAnQreO7YADIxf/Whx4AHBiRf6d+/cVT8h44ss+lHgxf1FemcqDnQt9X3ct4McHr+JMGlYSsK7Cg==
@@ -13654,7 +13620,7 @@ nth-check@~1.0.1:
   dependencies:
     boolbase "~1.0.0"
 
-nugget@^2.0.0, nugget@^2.0.1:
+nugget@^2.0.0:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/nugget/-/nugget-2.0.1.tgz#201095a487e1ad36081b3432fa3cada4f8d071b0"
   integrity sha1-IBCVpIfhrTYIGzQy+jytpPjQcbA=
@@ -15407,7 +15373,7 @@ rc-util@^4.0.4, rc-util@^4.15.3, rc-util@^4.4.0:
     react-lifecycles-compat "^3.0.4"
     shallowequal "^1.1.0"
 
-rc@^1.0.1, rc@^1.1.2, rc@^1.1.6, rc@^1.2.1, rc@^1.2.8:
+rc@^1.0.1, rc@^1.1.2, rc@^1.1.6, rc@^1.2.8:
   version "1.2.8"
   resolved "https://registry.yarnpkg.com/rc/-/rc-1.2.8.tgz#cd924bf5200a075b83c188cd6b9e211b7fc0d3ed"
   integrity sha512-y3bGgqKj3QBdxLbLkomlohkvsA8gdAiUQlSBJnBhfn+BPxg4bc62d8TcBW15wavDfgexCgccckhcZvywyQYPOw==
@@ -17988,13 +17954,6 @@ sumchecker@^1.2.0:
   dependencies:
     debug "^2.2.0"
     es6-promise "^4.0.5"
-
-sumchecker@^2.0.2:
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/sumchecker/-/sumchecker-2.0.2.tgz#0f42c10e5d05da5d42eea3e56c3399a37d6c5b3e"
-  integrity sha1-D0LBDl0F2l1C7qPlbDOZo31sWz4=
-  dependencies:
-    debug "^2.2.0"
 
 superagent-retry@^0.6.0:
   version "0.6.0"

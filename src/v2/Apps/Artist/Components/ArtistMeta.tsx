@@ -2,7 +2,7 @@ import { ArtistMeta_artist } from "v2/__generated__/ArtistMeta_artist.graphql"
 import { Person as SeoDataForArtist } from "v2/Components/Seo/Person"
 import { identity, pickBy } from "lodash"
 import React, { Component } from "react"
-import { Meta, Title } from "react-head"
+import { Meta } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
 import { data as sd } from "sharify"
 import { get } from "v2/Utils/get"
@@ -22,9 +22,9 @@ export const sellerFromPartner = (partner: ArtworkNode["partner"]) => {
     return {
       "@context": "http://schema.org",
       "@type": "ArtGallery",
+      image,
       name: partner.name,
       url: `${sd.APP_URL}${partner.href}`,
-      image,
     }
   }
 }
@@ -70,9 +70,9 @@ export const offersAttributes = (artist: ArtistMeta_artist) => {
         return {
           "@type": "Offer",
           availability,
+          itemOffered,
           priceCurrency: node.price_currency,
           seller,
-          itemOffered,
         }
       })
       .filter(offer => !!offer)
@@ -91,15 +91,15 @@ export const productAttributes = (
   return {
     "@type": "Product",
     additionalType: artwork.category,
-    productionDate: artwork.date,
-    name: artwork.title,
-    url: `${sd.APP_URL}${artwork.href}`,
-    image,
-    offers,
     brand: {
       "@type": "Person",
       name: artist.name,
     },
+    image,
+    name: artwork.title,
+    offers,
+    productionDate: artwork.date,
+    url: `${sd.APP_URL}${artwork.href}`,
   }
 }
 
@@ -114,16 +114,16 @@ export const offerAttributes = (artwork: ArtworkNode) => {
       const highPrice = get(artwork.listPrice, price => price.maxPrice.major)
       return {
         "@type": "AggregateOffer",
-        lowPrice: artwork.listPrice.minPrice.major,
         highPrice,
+        lowPrice: artwork.listPrice.minPrice.major,
         priceCurrency: artwork.listPrice.minPrice.currencyCode,
       }
     case "Money":
       return {
         "@type": "Offer",
+        availability: "InStock",
         price: artwork.listPrice.major,
         priceCurrency: artwork.listPrice.currencyCode,
-        availability: "InStock",
       }
     default:
       return null
@@ -137,19 +137,19 @@ export const structuredDataAttributes = (artist: ArtistMeta_artist) => {
   }
   const attributes = {
     additionalType: "Artist",
-    image: artist.image ? artist.image.large : "",
-    name: artist.name,
-    url: `${sd.APP_URL}${artist.href}`,
-    gender: artist.gender,
     birthDate: artist.birthday,
     deathDate: artist.deathday,
-    mainEntityOfPage: `${sd.APP_URL}${artist.href}`,
     description: artist.meta ? artist.meta.description : "",
+    gender: artist.gender,
+    image: artist.image ? artist.image.large : "",
+    mainEntityOfPage: `${sd.APP_URL}${artist.href}`,
+    makesOffer,
+    name: artist.name,
     nationality: {
       "@type": "Country",
       name: artist.nationality,
     },
-    makesOffer,
+    url: `${sd.APP_URL}${artist.href}`,
   }
   return pickBy(attributes, identity)
 }
@@ -196,11 +196,8 @@ export class ArtistMeta extends Component<Props> {
     const { artist } = this.props
     return (
       <>
-        <Title>{artist.meta.title}</Title>
-
         <ArtistMetaCanonicalLink artist={artist} />
 
-        <Meta property="og:title" content={artist.meta.title} />
         <Meta name="description" content={artist.meta.description} />
         <Meta property="og:description" content={artist.meta.description} />
         <Meta
@@ -244,7 +241,6 @@ export const ArtistMetaFragmentContainer = createFragmentContainer(ArtistMeta, {
       gender
       href
       meta {
-        title
         description
       }
       alternate_names: alternateNames

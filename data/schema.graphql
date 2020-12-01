@@ -1840,7 +1840,10 @@ type AuctionsLotStanding implements AuctionsNode {
   leadingBidAmount: AuctionsMoney!
 
   # whether this user has the leading bid
-  lotState: AuctionsLotState!
+  lot: AuctionsLotState!
+
+  # whether this user has the leading bid
+  lotState: AuctionsLotState! @deprecated(reason: "prefer `lot`")
   rawId: String!
   saleArtwork: SaleArtwork
 }
@@ -1863,13 +1866,14 @@ type AuctionsLotStandingEdge {
   node: AuctionsLotStanding!
 }
 
-# A lot in a sale
+# The state of a lot
 type AuctionsLotState {
   # total number of bids placed on the lot
   bidCount: Int!
+  floorSellingPrice: Money
 
-  # selling price on the live auction floor
-  floorSellingPrice: AuctionsMoney
+  # selling price, in minor unit, on the live auction floor
+  floorSellingPriceCents: Long
 
   # The bidder currently winning the online portion of the auction
   floorWinningBidder: AuctionsBidder
@@ -1879,9 +1883,10 @@ type AuctionsLotState {
 
   # The Gravity Lot ID.
   internalID: ID!
+  onlineAskingPrice: Money
 
-  # asking price for online bidders
-  onlineAskingPrice: AuctionsMoney!
+  # asking price, in minor unit, for online bidders
+  onlineAskingPriceCents: Long!
 
   # The bidder currently winning the online portion of the auction
   onlineSellingToBidder: AuctionsBidder
@@ -1987,7 +1992,7 @@ enum AuctionsReserveStatus {
   ReserveNotMet
 }
 
-# A collection of lots.
+# The state of a sale
 type AuctionsSaleState {
   # Users not allowed to participate in the sale
   bannedUsers: [AuctionsUser!]!
@@ -1998,7 +2003,7 @@ type AuctionsSaleState {
   # The Gravity Sale ID.
   id: ID!
 
-  # The Gravity Lot ID.
+  # The Gravity Sale ID.
   internalID: ID!
 
   # Lot ids that had an Artsy bid that was the highest bid on the lot but did not win
@@ -8505,6 +8510,30 @@ type Query {
     sort: ArtistSorts
   ): [Artist]
 
+  # A list of artists
+  artistsConnection(
+    after: String
+    before: String
+    first: Int
+
+    #
+    #         Only return artists matching specified ids.
+    #         Accepts list of ids.
+    #
+    ids: [String]
+    last: Int
+    letter: String
+    page: Int
+    size: Int
+
+    #
+    #         Only return artists matching specified slugs.
+    #         Accepts list of slugs. (e.g. 'andy-warhol', 'banksy')
+    #
+    slugs: [String]
+    sort: ArtistSorts
+  ): ArtistConnection
+
   # Find an artist series by ID
   artistSeries(id: ID!): ArtistSeries
 
@@ -10516,6 +10545,9 @@ input UpdateMyProfileInput {
   # The given name of the user.
   name: String
 
+  # The user's password, required to change email address.
+  password: String
+
   # The given phone number of the user.
   phone: String
 
@@ -10794,6 +10826,30 @@ type Viewer {
     slugs: [String]
     sort: ArtistSorts
   ): [Artist]
+
+  # A list of artists
+  artistsConnection(
+    after: String
+    before: String
+    first: Int
+
+    #
+    #         Only return artists matching specified ids.
+    #         Accepts list of ids.
+    #
+    ids: [String]
+    last: Int
+    letter: String
+    page: Int
+    size: Int
+
+    #
+    #         Only return artists matching specified slugs.
+    #         Accepts list of slugs. (e.g. 'andy-warhol', 'banksy')
+    #
+    slugs: [String]
+    sort: ArtistSorts
+  ): ArtistConnection
 
   # An Artwork
   artwork(

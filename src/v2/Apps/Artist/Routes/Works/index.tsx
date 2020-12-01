@@ -9,6 +9,7 @@ import { ArtistTopWorksRailFragmentContainer as ArtistTopWorksRail } from "v2/Ap
 import { ArtistSeriesRailFragmentContainer as ArtistSeriesRail } from "v2/Components/ArtistSeriesRail/ArtistSeriesRail"
 import { ContextModule } from "@artsy/cohesion"
 import { ArtistCollectionsRailContent as ArtistCollectionsRail } from "v2/Apps/Artist/Components/ArtistCollectionsRail"
+import { Title } from "react-head"
 
 export interface WorksRouteProps {
   artist: Works_artist
@@ -26,8 +27,11 @@ export const WorksRoute: React.FC<WorksRouteProps> = props => {
   const hasArtistSeries =
     get(artist, a => a.artistSeriesConnection.edges.length, 0) > 0
 
+  const titleString = `${artist.name} - ${artist.counts.forSaleArtworks} Artworks for Sale on Artsy`
+
   return (
     <>
+      <Title>{titleString}</Title>
       <ArtistTopWorksRail artist={artist} />
 
       {hasArtistSeries ? (
@@ -116,6 +120,11 @@ export const WorksRouteFragmentContainer = createFragmentContainer(WorksRoute, {
             }
           }
         }
+      }
+
+      name
+      counts {
+        forSaleArtworks
       }
 
       sidebarAggregations: filterArtworksConnection(
