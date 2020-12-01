@@ -39,7 +39,7 @@ Data should be loaded from [Metaphysics](https://github.com/artsy/metaphysics), 
   - [A top-level route-based Relay request](https://github.com/artsy/force/blob/0b291f005763e7c2600a5077786c9510bf655079/src/v2/Apps/Consign/consignRoutes.tsx#L28-L34)
   - [A fragment container](https://github.com/artsy/force/blob/0b291f005763e7c2600a5077786c9510bf655079/src/v2/Apps/Consign/Routes/Offer/OfferDetailApp.tsx#L47-L57)
 
-### Prefer Relay containers (higher order components) over hooks
+### Prefer Relay containers (higher order components) over relay-hooks
 
 We have a preference for Relay containers due to [`relay-hooks`](https://github.com/relay-tools/relay-hooks) hooks not being compatible with Relay containers which represent the majority of our components using Relay. (This could change once Relay releases its official hooks implementation.)
 
@@ -78,6 +78,44 @@ If there's a component that might be shared across multiple sub-apps, it should 
 
 Framework code is located in [`v2/Artsy`](https://github.com/artsy/force/tree/1842553ad34475bc3b804f00c6410d7f23d64f65/src/v2/Artsy).
 
+### Naming, imports and exports
+
+Verbose is better than concise:
+
+```js
+// avoid
+export const Thing = createFragmentContainer(...)
+
+// good
+export const ThingFragmentContainer = createFragmentContainer(...)
+```
+
+Avoid default exports:
+
+```js
+// avoid
+export default function foo() {
+  ...
+}
+
+// good
+export function foo() {
+  ...
+}
+
+export const bar = 'baz'
+```
+
+Avoid aliasing imports:
+
+```js
+// avoid
+import { FooFragmentContainer as Foo } from './Foo'
+
+// good
+import { FooFragmentContainer } from 'Foo' over
+```
+
 ### Write unit tests for new components
 
 We use [Jest](https://jestjs.io/) for our unit tests, and [Mocha](https://mochajs.org/) for testing legacy code.
@@ -92,3 +130,9 @@ Here are some great examples of what tests and test coverage should look like.
 
 - [ShowApp.jest.tsx](https://github.com/artsy/force/blob/0b291f005763e7c2600a5077786c9510bf655079/src/v2/Apps/Show/__tests__/ShowApp.jest.tsx)
 - [ConsignPriceEstimateContext.jest.tsx](https://github.com/artsy/force/blob/0b291f005763e7c2600a5077786c9510bf655079/src/v2/Apps/Consign/Routes/MarketingLanding/Components/GetPriceEstimate/__tests__/ConsignPriceEstimateContext.jest.tsx)
+
+### Add smoke tests for new routes
+
+We use [Cypress.io](https://docs.cypress.io/guides/overview/why-cypress.html#In-a-nutshell) to ensure that whole sections of the app (e.g., a route like `/artist/:id`) work as expected. If adding a new route or feature that might benefit benefit from a higher level of testing, check out [this folder](https://github.com/artsy/force/tree/master/cypress/integration) for some patterns. We generally add a simple check just to ensire the route doesn't error out.
+
+> Related: For more sophisticated and secure end-to-end testing we use [Integrity](https://github.com/artsy/integrity), also built on Cypress. Check out [the repo](https://github.com/artsy/integrity) for more information.
