@@ -1,6 +1,5 @@
 { API_URL } = require('sharify').data
 Auctions = require '../../collections/auctions'
-metaphysics = require '../../../lib/metaphysics'
 require '../../../lib/promiseDone'
 
 setupUser = (user, auction) ->

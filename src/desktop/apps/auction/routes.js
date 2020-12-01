@@ -12,7 +12,7 @@ import auctionReducer from "desktop/apps/auction/reducers"
 import configureStore from "desktop/components/react/utils/configureStore"
 import footerItems from "desktop/apps/auction/utils/footerItems"
 import { get, isEmpty } from "lodash"
-import _metaphysics from "lib/metaphysics.coffee"
+import { metaphysics } from "lib/metaphysics"
 import metaphysics2 from "lib/metaphysics2.coffee"
 import u from "updeep"
 import { initialState as appInitialState } from "desktop/apps/auction/reducers/app"
@@ -20,8 +20,7 @@ import { initialState as auctionWorksInitialState } from "desktop/apps/auction/r
 import { getLiveAuctionUrl } from "utils/domain/auctions/urls"
 import { stitch as _stitch } from "@artsy/stitch"
 
-// FIXME: Metaphysics
-let metaphysics = _metaphysics
+// FIXME: Rewire
 let stitch = _stitch
 
 export async function index(req, res, next) {
@@ -30,8 +29,8 @@ export async function index(req, res, next) {
   try {
     const { sale } = await metaphysics2({
       query: saleV2Query,
-      variables: { saleId },
       req,
+      variables: { saleId },
     })
 
     // For compatibility for MP V1
@@ -74,8 +73,8 @@ export async function index(req, res, next) {
       try {
         ;({ me } = await metaphysics2({
           query: meV2Query,
-          variables: { saleId: sale._id },
           req,
+          variables: { saleId: sale._id },
         }))
       } catch (error) {
         console.error(
@@ -139,23 +138,23 @@ export async function index(req, res, next) {
     try {
       const layout = await stitch({
         basePath: res.app.get("views"),
-        layout: "../../../../components/main_layout/templates/react_index.jade",
+        blocks: {
+          body: props => <App store={store} {...props} />,
+          head: "meta.jade",
+        },
         config: {
           styledComponents: true,
-        },
-        blocks: {
-          head: "meta.jade",
-          body: props => <App store={store} {...props} />,
-        },
-        locals: {
-          ...res.locals,
-          assetPackage: "auctions",
-          bodyClass: "auction-body body-header-fixed body-no-margins",
         },
         data: {
           app: store.getState().app,
           artworkBrowser: store.getState().artworkBrowser,
           sd: res.locals.sd,
+        },
+        layout: "../../../../components/main_layout/templates/react_index.jade",
+        locals: {
+          ...res.locals,
+          assetPackage: "auctions",
+          bodyClass: "auction-body body-header-fixed body-no-margins",
         },
       })
 

@@ -1,5 +1,5 @@
 Backbone = require 'backbone'
-metaphysics = require '../../../../../lib/metaphysics.coffee'
+{ metaphysics } = require '../../../../../lib/metaphysics'
 query = require './query.coffee'
 template = -> require('./index.jade') arguments...
 sd = require("sharify").data
