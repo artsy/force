@@ -38,8 +38,8 @@ export const UpdateUserInformation = (
             }
           }
         `,
-        onCompleted: (data, errors) =>
-          errors ? reject(errors) : resolve(data),
+        onCompleted: resolve,
+        onError: reject,
         variables: {
           input,
         },

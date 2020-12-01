@@ -7,26 +7,35 @@ import { UserInformationTestPage } from "./UserInformationTestPage"
 
 jest.unmock("react-relay")
 
+const defaultData = {
+  me: {
+    email: "foo@email.com",
+    internalID: "1234ABCD",
+    name: "Foo Bar",
+    paddleNumber: "12345",
+    phone: "555-123-4567",
+  },
+}
+
 const setupTestEnv = () => {
   return createTestEnv({
     Component: (props: UserInformationQueryResponse) => (
       <UserInformationRefetchContainer {...props} />
     ),
     TestPage: UserInformationTestPage,
-    defaultData: {
-      me: {
-        email: "foo@email.com",
-        internalID: "1234ABCD",
-        name: "Foo Bar",
-        paddleNumber: "12345",
-        phone: "555-123-4567",
+    defaultData,
+    defaultMutationResults: {
+      updateMyUserProfile: {
+        userOrError: {
+          __typename: "UpdateMyProfileMutationSuccess",
+          user: {
+            internalID: "foo",
+          },
+        },
       },
     },
-    defaultMutationResults: {
-      updateMyUserProfile: {},
-    },
     query: graphql`
-      query UserInformationQuery {
+      query UserInformationTestQuery {
         me {
           ...UserInformation_me
         }
@@ -40,26 +49,35 @@ describe("UserInformation", () => {
     const env = setupTestEnv()
     const page = await env.buildPage()
 
-    expect(page.submitButton.exists).toBeTruthy
-    expect(page.nameInput.exists).toBeTruthy
-    expect(page.emailInput.exists).toBeTruthy
-    expect(page.phoneInput.exists).toBeTruthy
-    expect(page.paddleNumberInput.exists).toBeTruthy
-    expect(page.passwordInput.exists).toBeFalsy
+    expect(page.find("button[type='submit']").length).toBe(1)
+    expect(page.find("QuickInput[name='email']").props().value).toEqual(
+      defaultData.me.email
+    )
+    expect(page.find("QuickInput[name='name']").props().value).toEqual(
+      defaultData.me.name
+    )
+    expect(page.find("QuickInput[name='phone']").props().value).toEqual(
+      defaultData.me.phone
+    )
+    expect(page.find("QuickInput[name='paddleNumber']").props().value).toEqual(
+      defaultData.me.paddleNumber
+    )
+    expect(page.find("PasswordInput").length).toBe(0)
   })
 
   it("diplays password field if email address has changed", async () => {
     const env = setupTestEnv()
     const page = await env.buildPage()
     await page.changeEmailInput()
-    expect(page.passwordInput.exists).toBeTruthy
+    expect(page.find("PasswordInput").length).toBe(1)
+    expect(page.html()).toMatch("Password is required to change email.")
   })
 
   it("does not show password when changing non-email fields", async () => {
     const env = setupTestEnv()
     const page = await env.buildPage()
     await page.changeNameInput()
-    expect(page.passwordInput.exists).toBeFalsy
+    expect(page.find("PasswordInput").length).toBe(0)
   })
 
   it("displays client validation errors", async () => {
@@ -69,7 +87,33 @@ describe("UserInformation", () => {
     expect(page.html()).toMatch("Name is required.")
   })
 
-  xit("displays fieldErrors returned by gravity", async () => {
+  it("displays fieldErrors returned by gravity", async () => {
+    const env = setupTestEnv()
+    env.mutations.useResultsOnce({
+      updateMyUserProfile: {
+        userOrError: {
+          __typename: "UpdateMyProfileMutationFailure",
+          mutationError: {
+            detail: null,
+            error: null,
+            fieldErrors: [
+              {
+                message: "Email address already exists",
+                name: "email",
+              },
+            ],
+            message: null,
+            type: "error",
+          },
+        },
+      },
+    })
+    const page = await env.buildPage()
+    await page.clickSubmitButton()
+    expect(page.html()).toMatch("Email address already exists")
+  })
+
+  it("displays a generic error message returned by gravity", async () => {
     const env = setupTestEnv()
     env.mutations.useResultsOnce({
       updateMyUserProfile: {
@@ -87,7 +131,6 @@ describe("UserInformation", () => {
     })
     const page = await env.buildPage()
     await page.clickSubmitButton()
+    expect(page.html()).toMatch("Password Invalid")
   })
-
-  it("displays generic returned by gravity", () => {})
 })

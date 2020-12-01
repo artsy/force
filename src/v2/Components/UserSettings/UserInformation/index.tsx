@@ -13,7 +13,7 @@ import { Error } from "v2/Components/Authentication/commonElements"
 import { UserInformation_me } from "v2/__generated__/UserInformation_me.graphql"
 import { UserInformationQuery } from "v2/__generated__/UserInformationQuery.graphql.ts"
 import { Box, Button, Serif, Text, space } from "@artsy/palette"
-import { ChangeEmailValidator } from "v2/Components/Authentication/Validators"
+import { ChangeUserInformationValidator } from "v2/Components/Authentication/Validators"
 import { PasswordInput } from "v2/Components/PasswordInput"
 import { SystemContextProps } from "@artsy/reaction/dist/Artsy"
 import { UpdateUserInformation } from "./UpdateUserInformationMutation"
@@ -72,7 +72,7 @@ export const UserInformation: React.FC<UserInformationProps> = ({
       </Serif>
       <Formik
         initialValues={me}
-        validationSchema={ChangeEmailValidator}
+        validationSchema={ChangeUserInformationValidator}
         onSubmit={onSubmit}
       >
         {({
@@ -135,7 +135,9 @@ export const UserInformation: React.FC<UserInformationProps> = ({
                 <PasswordInput
                   autoFocus
                   block
-                  error={!values.password && "Password is required"}
+                  error={
+                    !values.password && "Password is required to change email."
+                  }
                   placeholder="Enter your password"
                   name="password"
                   value={values.password}
