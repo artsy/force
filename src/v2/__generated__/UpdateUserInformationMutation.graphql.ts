@@ -40,6 +40,9 @@ export type UpdateUserInformationMutationResponse = {
             } | null;
             readonly mutationError?: {
                 readonly type: string | null;
+                readonly message: string | null;
+                readonly detail: string | null;
+                readonly error: string | null;
                 readonly fieldErrors: ReadonlyArray<{
                     readonly name: string;
                     readonly message: string;
@@ -60,6 +63,9 @@ export type UpdateUserInformationMutationRawResponse = {
             readonly __typename: "UpdateMyProfileMutationFailure";
             readonly mutationError: ({
                 readonly type: string | null;
+                readonly message: string | null;
+                readonly detail: string | null;
+                readonly error: string | null;
                 readonly fieldErrors: ReadonlyArray<({
                     readonly name: string;
                     readonly message: string;
@@ -94,6 +100,9 @@ mutation UpdateUserInformationMutation(
       ... on UpdateMyProfileMutationFailure {
         mutationError {
           type
+          message
+          detail
+          error
           fieldErrors {
             name
             message
@@ -129,6 +138,13 @@ v2 = {
   "storageKey": null
 },
 v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "message",
+  "storageKey": null
+},
+v4 = {
   "kind": "InlineFragment",
   "selections": [
     {
@@ -146,6 +162,21 @@ v3 = {
           "name": "type",
           "storageKey": null
         },
+        (v3/*: any*/),
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "detail",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "error",
+          "storageKey": null
+        },
         {
           "alias": null,
           "args": null,
@@ -161,13 +192,7 @@ v3 = {
               "name": "name",
               "storageKey": null
             },
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "message",
-              "storageKey": null
-            }
+            (v3/*: any*/)
           ],
           "storageKey": null
         }
@@ -218,7 +243,7 @@ return {
                 ],
                 "type": "UpdateMyProfileMutationSuccess"
               },
-              (v3/*: any*/)
+              (v4/*: any*/)
             ],
             "storageKey": null
           }
@@ -282,7 +307,7 @@ return {
                 ],
                 "type": "UpdateMyProfileMutationSuccess"
               },
-              (v3/*: any*/)
+              (v4/*: any*/)
             ],
             "storageKey": null
           }
@@ -296,9 +321,9 @@ return {
     "metadata": {},
     "name": "UpdateUserInformationMutation",
     "operationKind": "mutation",
-    "text": "mutation UpdateUserInformationMutation(\n  $input: UpdateMyProfileInput!\n) {\n  updateMyUserProfile(input: $input) {\n    userOrError {\n      __typename\n      ... on UpdateMyProfileMutationSuccess {\n        user {\n          internalID\n          id\n        }\n      }\n      ... on UpdateMyProfileMutationFailure {\n        mutationError {\n          type\n          fieldErrors {\n            name\n            message\n          }\n        }\n      }\n    }\n  }\n}\n"
+    "text": "mutation UpdateUserInformationMutation(\n  $input: UpdateMyProfileInput!\n) {\n  updateMyUserProfile(input: $input) {\n    userOrError {\n      __typename\n      ... on UpdateMyProfileMutationSuccess {\n        user {\n          internalID\n          id\n        }\n      }\n      ... on UpdateMyProfileMutationFailure {\n        mutationError {\n          type\n          message\n          detail\n          error\n          fieldErrors {\n            name\n            message\n          }\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '2fa95dbd1d2432e7c3e18b16503d7a92';
+(node as any).hash = '5be28da989c97b97e4a1dd6e0d5a4168';
 export default node;

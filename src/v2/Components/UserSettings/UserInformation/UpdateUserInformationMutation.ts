@@ -1,5 +1,9 @@
 import { Environment, commitMutation, graphql } from "react-relay"
-import { UpdateMyProfileInput, UpdateUserInformationMutation, UpdateUserInformationMutationResponse } from "v2/__generated__/UpdateUserInformationMutation.graphql"
+import {
+  UpdateMyProfileInput,
+  UpdateUserInformationMutation,
+  UpdateUserInformationMutationResponse,
+} from "v2/__generated__/UpdateUserInformationMutation.graphql"
 
 export const UpdateUserInformation = (
   environment: Environment,
@@ -8,8 +12,6 @@ export const UpdateUserInformation = (
   return new Promise<UpdateUserInformationMutationResponse>(
     async (resolve, reject) => {
       commitMutation<UpdateUserInformationMutation>(environment, {
-        onCompleted: (data, errors) =>
-          errors ? reject(errors) : resolve(data),
         mutation: graphql`
           mutation UpdateUserInformationMutation($input: UpdateMyProfileInput!)
             @raw_response_type {
@@ -23,6 +25,9 @@ export const UpdateUserInformation = (
                 ... on UpdateMyProfileMutationFailure {
                   mutationError {
                     type
+                    message
+                    detail
+                    error
                     fieldErrors {
                       name
                       message
@@ -33,6 +38,8 @@ export const UpdateUserInformation = (
             }
           }
         `,
+        onCompleted: (data, errors) =>
+          errors ? reject(errors) : resolve(data),
         variables: {
           input,
         },
