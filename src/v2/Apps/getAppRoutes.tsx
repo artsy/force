@@ -1,6 +1,7 @@
 import { buildAppRoutes } from "v2/Artsy/Router/buildAppRoutes"
 import { RouteConfig } from "found"
 import { routes as artistRoutes } from "v2/Apps/Artist/routes"
+import { artistsRoutes } from "v2/Apps/Artists/artistsRoutes"
 import { routes as artistSeriesRoutes } from "./ArtistSeries/routes"
 import { routes as artworkRoutes } from "v2/Apps/Artwork/routes"
 import { collectRoutes } from "v2/Apps/Collect/collectRoutes"
@@ -20,6 +21,9 @@ export function getAppRoutes(): RouteConfig[] {
   return buildAppRoutes([
     {
       routes: artistRoutes,
+    },
+    {
+      routes: artistsRoutes,
     },
     {
       routes: artistSeriesRoutes,

@@ -54,7 +54,12 @@ export const RouterLink: React.ForwardRefExoticComponent<RouterLinkProps> = Reac
       ])
 
       return (
-        <Link ref={ref as any} to={to} {...allowedProps} style={styleProps}>
+        <Link
+          ref={ref as any}
+          to={to}
+          {...allowedProps}
+          style={{ ...styleProps, ...(props as LinkPropsSimple).style }}
+        >
           {children}
         </Link>
       )
@@ -64,7 +69,7 @@ export const RouterLink: React.ForwardRefExoticComponent<RouterLinkProps> = Reac
           ref={ref}
           href={to as string}
           className={(props as LinkPropsSimple).className}
-          style={Object.assign(styleProps, (props as LinkPropsSimple).style)}
+          style={{ ...styleProps, ...(props as LinkPropsSimple).style }}
           {...omit(props, [
             "activeClassName",
             "alignItems",
