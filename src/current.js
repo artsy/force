@@ -18,7 +18,7 @@ console.log(chalk.green(`\n[Force] NODE_ENV=${NODE_ENV}\n`))
 
 const app = express()
 
-function initializeCache(cb, startServerCallback) {
+function initializeCache(cb) {
   cache.setup(() => relayCacheSetup(cb))
 }
 
@@ -63,13 +63,13 @@ function initializeForce(startServerCallback) {
   also could be gravity being down. Retrying...`)
       console.error(err)
       setTimeout(() => {
-        artsyXapp.init({ url: API_URL, id: CLIENT_ID, secret: CLIENT_SECRET })
+        artsyXapp.init({ id: CLIENT_ID, secret: CLIENT_SECRET, url: API_URL })
       }, 30000)
     })
 
     // Get an xapp token
     artsyXapp.init(
-      { url: API_URL, id: CLIENT_ID, secret: CLIENT_SECRET },
+      { id: CLIENT_ID, secret: CLIENT_SECRET, url: API_URL },
       err => {
         if (!err) {
           // eslint-disable-next-line no-console

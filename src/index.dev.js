@@ -54,7 +54,8 @@ function startServer() {
       return (
         /loadable-stats/.test(filePath) ||
         /loadable-novo-stats/.test(filePath) ||
-        /manifest/.test(filePath)
+        /manifest/.test(filePath) ||
+        /\.ejs/.test(filePath)
       )
     },
   })
