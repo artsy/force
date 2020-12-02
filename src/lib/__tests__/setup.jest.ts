@@ -18,7 +18,7 @@ describe("setup", () => {
       })
 
       const app = express()
-      const setup = require("../setup").default
+      const setup = require("../../common-middleware").default
       setup(app)
 
       expect(artsyPassport.options.ARTSY_ID).toEqual("client-id-123")

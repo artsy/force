@@ -6,6 +6,10 @@ import ReactDOM from "react-dom/server"
 import loadAssetManifest from "lib/manifest"
 import express from "express"
 
+const config = require("../../config")
+
+const { RECAPTCHA_KEY } = config
+
 const novoManifest = loadAssetManifest("manifest-novo.json")
 
 const app = express()
@@ -113,14 +117,18 @@ function initializeNovo() {
                 "/assets-novo/novo-artsy.js"
               )}"></script>
 
-              <div id='react-root'>
-              ${bodyHTML}
-              </div>
+              <div id="react-modal-container"></div>
+              <div id='react-root'>${bodyHTML}</div>
 
               ${scripts}
+              <style type="text/css">
+              .grecaptcha-badge { visibility: hidden; }
+              </style>
               <script src="${novoManifest.lookup(
                 "/assets-novo/novo-artsy-novo.js"
               )}"></script>
+              <!-- TODO: add eigen exclude -->
+              <script id="google-recaptcha" src="https://www.google.com/recaptcha/api.js?render=${RECAPTCHA_KEY}" async></script>
             </body>
           </html>
         `)
@@ -130,7 +138,6 @@ function initializeNovo() {
       }
     }
   )
-
   return app
 }
 

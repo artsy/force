@@ -1,15 +1,8 @@
-import { extend } from "lodash"
-import artsyPassport from "@artsy/passport"
-import bodyParser from "body-parser"
 import path from "path"
-
-const CurrentUser = require("./current_user.coffee")
 import config from "../config"
 import { unlessStartsWith } from "./middleware/unless"
 import { intercomMiddleware } from "./middleware/intercom"
-import { assetMiddleware } from "./middleware/asset"
 import { backboneErrorHandlerMiddleware } from "./middleware/backboneErrorHandler"
-import { csrfTokenMiddleware } from "./middleware/csrfToken"
 import { downcaseMiddleware } from "./middleware/downcase"
 import { escapedFragmentMiddleware } from "./middleware/escapedFragment"
 import { hardcodedRedirectsMiddleware } from "./middleware/hardcodedRedirects"
@@ -30,18 +23,9 @@ const splitTestMiddleware = require("../desktop/components/split_test/middleware
 // Old Sentry SDK
 import RavenServer from "raven"
 
-const {
-  API_URL,
-  CLIENT_ID,
-  CLIENT_SECRET,
-  SENTRY_PRIVATE_DSN,
-  SEGMENT_WRITE_KEY_SERVER,
-} = config
+const { SENTRY_PRIVATE_DSN } = config
 
 export default function forceMiddleware(app) {
-  // Static asset routing
-  app.use(unlessStartsWith("/novo", assetMiddleware()))
-
   // Error reporting
   if (SENTRY_PRIVATE_DSN) {
     RavenServer.config(SENTRY_PRIVATE_DSN).install()
@@ -50,39 +34,6 @@ export default function forceMiddleware(app) {
 
   //
   app.use(proxyReflectionMiddleware)
-  app.use(bodyParser.json())
-  app.use(bodyParser.urlencoded({ extended: true }))
-
-  // Passport middleware for authentication.
-  app.use(
-    artsyPassport(
-      extend({}, config, {
-        CurrentUser: CurrentUser,
-        ARTSY_URL: API_URL,
-        ARTSY_ID: CLIENT_ID,
-        ARTSY_SECRET: CLIENT_SECRET,
-        SEGMENT_WRITE_KEY: SEGMENT_WRITE_KEY_SERVER,
-        userKeys: [
-          "collector_level",
-          "default_profile_id",
-          "email",
-          "has_partner_access",
-          "id",
-          "lab_features",
-          "name",
-          "paddle_number",
-          "phone",
-          "roles",
-          "type",
-        ],
-      })
-    )
-  )
-
-  // Add CSRF to the cookie and remove it from the page. This will allows the
-  // caching on the html.
-  // TODO: Verify if this must occur after passport and after cookie parser
-  app.use(csrfTokenMiddleware)
 
   // Redirect requests before they even have to deal with Force routing
   app.use(unlessStartsWith("/novo", downcaseMiddleware))
@@ -105,14 +56,14 @@ export default function forceMiddleware(app) {
   if (process.env.NODE_ENV === "development") {
     app.use(
       require("stylus").middleware({
-        src: path.resolve(__dirname, "../desktop"),
         dest: path.resolve(__dirname, "../desktop/public"),
+        src: path.resolve(__dirname, "../desktop"),
       })
     )
     app.use(
       require("stylus").middleware({
-        src: path.resolve(__dirname, "../mobile"),
         dest: path.resolve(__dirname, "../mobile/public"),
+        src: path.resolve(__dirname, "../mobile"),
       })
     )
 
@@ -156,9 +107,4 @@ export default function forceMiddleware(app) {
     // Mount desktop app
     app.use(require("../desktop"))
   }
-
-  // Ensure CurrentUser is set for Artsy Passport
-  // TODO: Investigate race condition b/t reaction's use of AP
-  // TODO: This is only run once, does it need to still happen
-  artsyPassport.options.CurrentUser = CurrentUser
 }
