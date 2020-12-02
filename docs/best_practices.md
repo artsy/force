@@ -123,7 +123,7 @@ We use [Jest](https://jestjs.io/) for our unit tests, and [Mocha](https://mochaj
 Some top-level notes:
 
 - We use [`enzyme`](https://enzymejs.github.io/enzyme/)
-- We don't like snapshot tests; they produce too much churn for too little value.
+- We avoid snapshot tests; they produce too much churn for too little value.
 - We use the `relay-test-utils` package for testing Relay code, and [this helper](https://github.com/artsy/force/blob/0b291f005763e7c2600a5077786c9510bf655079/src/v2/DevTools/setupTestWrapper.tsx) for quickly spinning up tests.
 
 Here are some great examples of what tests and test coverage should look like.
