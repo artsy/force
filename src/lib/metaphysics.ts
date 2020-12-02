@@ -31,7 +31,7 @@ interface ArtsyRequet extends Request {
 
 interface MetaphysicsRequest {
   query: string
-  variables?: string
+  variables?: any
   req?: ArtsyRequet
   method?: string
 }

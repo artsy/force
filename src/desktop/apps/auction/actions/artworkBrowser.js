@@ -1,4 +1,4 @@
-import { metaphysics } from "lib/metaphysics.ts"
+import { metaphysics } from "lib/metaphysics"
 import { filterQuery } from "desktop/apps/auction/queries/filter"
 import { worksByFollowedArtists } from "desktop/apps/auction/queries/worksByFollowedArtists"
 

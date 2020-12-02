@@ -18,10 +18,7 @@ import u from "updeep"
 import { initialState as appInitialState } from "desktop/apps/auction/reducers/app"
 import { initialState as auctionWorksInitialState } from "desktop/apps/auction/reducers/artworkBrowser"
 import { getLiveAuctionUrl } from "utils/domain/auctions/urls"
-import { stitch as _stitch } from "@artsy/stitch"
-
-// FIXME: Rewire
-let stitch = _stitch
+import { stitch } from "@artsy/stitch"
 
 export async function index(req, res, next) {
   const saleId = req.params.id
