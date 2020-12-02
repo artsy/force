@@ -12,11 +12,11 @@ import { usePriceEstimateContext } from "./ConsignPriceEstimateContext"
 import { ArtistInsightResult } from "./ArtistInsightResult"
 
 export const EstimateResults: React.FC<FlexProps> = ({ ...rest }) => {
-  const { artistInsights, isFetching } = usePriceEstimateContext()
+  const { artistInsight, isFetching } = usePriceEstimateContext()
 
   return (
     <Flex {...rest}>
-      {isFetching || artistInsights ? (
+      {isFetching || artistInsight || artistInsight === null ? (
         <ArtistInsightResult />
       ) : (
         <ArtistInsightExample />

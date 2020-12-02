@@ -4,29 +4,37 @@ import { Environment, fetchQuery, graphql } from "react-relay"
 import { useSystemContext } from "v2/Artsy"
 
 import { ConsignPriceEstimateContext_SearchConnection_Query } from "v2/__generated__/ConsignPriceEstimateContext_SearchConnection_Query.graphql"
+import { ConsignPriceEstimateContext_ArtistInsightByMedium_Query } from "v2/__generated__/ConsignPriceEstimateContext_ArtistInsightByMedium_Query.graphql"
 import { ConsignPriceEstimateContext_ArtistInsights_Query } from "v2/__generated__/ConsignPriceEstimateContext_ArtistInsights_Query.graphql"
 
 interface PriceEstimateContextProps {
-  artistInsights?: ArtistInsights
+  artistInsight?: ArtistInsight
+  fetchArtistInsightByMedium?: (
+    artistInternalID: string,
+    medium: string
+  ) => void
   fetchArtistInsights?: (artistInternalID: string) => void
   fetchSuggestions?: (searchQuery: string) => void
   isFetching?: boolean
+  mediums?: string[]
   searchQuery?: string
   selectSuggestion?: (suggestion: Suggestion) => void
   selectedSuggestion?: Suggestion
   setFetching?: (isFetching: boolean) => void
+  setMediums?: (mediums: PriceEstimateContextProps["mediums"]) => void
   setSearchQuery?: (searchQuery: string) => void
   suggestions?: Suggestions
 }
 
-type ArtistInsights = ConsignPriceEstimateContext_ArtistInsights_Query["response"]
+type ArtistInsight = ConsignPriceEstimateContext_ArtistInsights_Query["response"]["priceInsights"]["edges"][0]["node"]
 type Suggestions = ConsignPriceEstimateContext_SearchConnection_Query["response"]["searchConnection"]["edges"]
 export type Suggestion = Suggestions[0]
 
 type State = Pick<
   PriceEstimateContextProps,
-  | "artistInsights"
+  | "artistInsight"
   | "isFetching"
+  | "mediums"
   | "searchQuery"
   | "selectedSuggestion"
   | "suggestions"
@@ -34,10 +42,12 @@ type State = Pick<
 
 type Actions = Pick<
   PriceEstimateContextProps,
+  | "fetchArtistInsightByMedium"
   | "fetchArtistInsights"
   | "fetchSuggestions"
   | "selectSuggestion"
   | "setFetching"
+  | "setMediums"
   | "setSearchQuery"
 >
 
@@ -49,8 +59,9 @@ type Action = {
 }
 
 const initialState: State = {
-  artistInsights: null,
+  artistInsight: undefined,
   isFetching: false,
+  mediums: [],
   searchQuery: "",
   selectedSuggestion: null,
   suggestions: null,
@@ -62,13 +73,48 @@ const PriceEstimateContext = createContext<PriceEstimateContextProps>(
 
 function getActions(dispatch: Dispatch<Action>, relayEnvironment: Environment) {
   const actions: Actions = {
+    fetchArtistInsightByMedium: async (artistInternalID, medium) => {
+      const response = await fetchQuery<
+        ConsignPriceEstimateContext_ArtistInsightByMedium_Query
+      >(
+        relayEnvironment,
+        graphql`
+          query ConsignPriceEstimateContext_ArtistInsightByMedium_Query(
+            $artistInternalID: ID!
+            $medium: String!
+          ) {
+            marketPriceInsights(artistId: $artistInternalID, medium: $medium) {
+              artistName
+              medium
+              lowRangeCents
+              midRangeCents
+              highRangeCents
+            }
+          }
+        `,
+        {
+          artistInternalID,
+          medium,
+        }
+      )
+
+      const artistInsight = response.marketPriceInsights
+
+      dispatch({
+        payload: {
+          artistInsight,
+        },
+        type: "artistInsight",
+      })
+    },
+
     /**
      * Fetch artist insights based on artist's internalID.
      */
     fetchArtistInsights: async artistInternalID => {
       actions.setFetching(true)
 
-      const artistInsights = await fetchQuery<
+      const response = await fetchQuery<
         ConsignPriceEstimateContext_ArtistInsights_Query
       >(
         relayEnvironment,
@@ -79,7 +125,7 @@ function getActions(dispatch: Dispatch<Action>, relayEnvironment: Environment) {
             priceInsights(
               artistId: $artistInternalID
               sort: DEMAND_RANK_DESC
-              first: 1
+              first: 99
             ) {
               edges {
                 node {
@@ -98,21 +144,30 @@ function getActions(dispatch: Dispatch<Action>, relayEnvironment: Environment) {
         }
       )
 
-      actions.setFetching(false)
+      let artistInsight = null
+
+      const edges = response?.priceInsights?.edges
+      if (edges?.length) {
+        artistInsight = edges[0].node
+        const mediums = edges.map(({ node }) => node.medium).sort()
+        actions.setMediums(mediums)
+      }
 
       dispatch({
         payload: {
-          artistInsights,
+          artistInsight,
         },
-        type: "artistInsights",
+        type: "artistInsight",
       })
+
+      actions.setFetching(false)
     },
 
     /**
      * Fetches artist search suggestions based on searchQuery
      */
     fetchSuggestions: async searchQuery => {
-      const suggestions = await fetchQuery<
+      const response = await fetchQuery<
         ConsignPriceEstimateContext_SearchConnection_Query
       >(
         relayEnvironment,
@@ -142,9 +197,11 @@ function getActions(dispatch: Dispatch<Action>, relayEnvironment: Environment) {
         { searchQuery }
       )
 
+      const suggestions = response.searchConnection.edges
+
       dispatch({
         payload: {
-          suggestions: suggestions.searchConnection.edges,
+          suggestions,
         },
         type: "suggestions",
       })
@@ -170,6 +227,15 @@ function getActions(dispatch: Dispatch<Action>, relayEnvironment: Environment) {
           isFetching,
         },
         type: "isFetching",
+      })
+    },
+
+    setMediums: mediums => {
+      dispatch({
+        payload: {
+          mediums,
+        },
+        type: "mediums",
       })
     },
 

@@ -13,15 +13,18 @@ describe("ConsignPriceEstimateContext", () => {
     const Test = () => {
       const context = usePriceEstimateContext()
       expect(Object.keys(context)).toEqual([
-        "artistInsights",
+        "artistInsight",
         "isFetching",
+        "mediums",
         "searchQuery",
         "selectedSuggestion",
         "suggestions",
+        "fetchArtistInsightByMedium",
         "fetchArtistInsights",
         "fetchSuggestions",
         "selectSuggestion",
         "setFetching",
+        "setMediums",
         "setSearchQuery",
       ])
       done()
@@ -45,11 +48,34 @@ describe("ConsignPriceEstimateContext", () => {
       jest.resetAllMocks()
     })
 
+    it("#fetchArtistInsightByMedium", async () => {
+      const actions = getActions(mockDispatch, mockEnvironment)
+
+      mockFetchQuery.mockImplementation(() => {
+        return { marketPriceInsights: "foo" }
+      })
+
+      await actions.fetchArtistInsightByMedium("some-id", "some-medium")
+
+      expect(mockFetchQuery).toHaveBeenCalledWith(
+        expect.anything(),
+        expect.anything(),
+        { artistInternalID: "some-id", medium: "some-medium" }
+      )
+
+      expect(mockDispatch).toHaveBeenCalledWith({
+        payload: {
+          artistInsight: "foo",
+        },
+        type: "artistInsight",
+      })
+    })
+
     it("#fetchArtistInsights", async () => {
       const actions = getActions(mockDispatch, mockEnvironment)
 
       mockFetchQuery.mockImplementation(() => {
-        return "foo"
+        return { priceInsights: { edges: [{ node: { medium: "bar" } }] } }
       })
 
       await actions.fetchArtistInsights("some-id")
@@ -69,16 +95,25 @@ describe("ConsignPriceEstimateContext", () => {
 
       expect(mockDispatch).toHaveBeenNthCalledWith(2, {
         payload: {
-          isFetching: false,
+          mediums: ["bar"],
         },
-        type: "isFetching",
+        type: "mediums",
       })
 
       expect(mockDispatch).toHaveBeenNthCalledWith(3, {
         payload: {
-          artistInsights: "foo",
+          artistInsight: {
+            medium: "bar",
+          },
         },
-        type: "artistInsights",
+        type: "artistInsight",
+      })
+
+      expect(mockDispatch).toHaveBeenNthCalledWith(4, {
+        payload: {
+          isFetching: false,
+        },
+        type: "isFetching",
       })
     })
 
