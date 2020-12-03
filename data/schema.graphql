@@ -7605,6 +7605,7 @@ input MyCollectionCreateArtworkInput {
   height: String
   medium: String!
   metric: String
+  provenance: String
   title: String
   width: String
 }
@@ -7648,6 +7649,7 @@ input MyCollectionUpdateArtworkInput {
   height: String
   medium: String
   metric: String
+  provenance: String
   title: String
   width: String
 }
