@@ -11,15 +11,19 @@ interface PriceEstimateContextProps {
   fetchArtistInsights?: (artistInternalID: string) => void
   fetchSuggestions?: (searchQuery: string) => void
   isFetching?: boolean
+  medium?: string
+  mediums?: string[]
   searchQuery?: string
   selectSuggestion?: (suggestion: Suggestion) => void
   selectedSuggestion?: Suggestion
   setFetching?: (isFetching: boolean) => void
+  setMedium?: (medium: string) => void
+  setMediums?: (mediums: string[]) => void
   setSearchQuery?: (searchQuery: string) => void
   suggestions?: Suggestions
 }
 
-type ArtistInsights = ConsignPriceEstimateContext_ArtistInsights_Query["response"]
+type ArtistInsights = ConsignPriceEstimateContext_ArtistInsights_Query["response"]["priceInsights"]["edges"]
 type Suggestions = ConsignPriceEstimateContext_SearchConnection_Query["response"]["searchConnection"]["edges"]
 export type Suggestion = Suggestions[0]
 
@@ -27,6 +31,8 @@ type State = Pick<
   PriceEstimateContextProps,
   | "artistInsights"
   | "isFetching"
+  | "medium"
+  | "mediums"
   | "searchQuery"
   | "selectedSuggestion"
   | "suggestions"
@@ -38,6 +44,8 @@ type Actions = Pick<
   | "fetchSuggestions"
   | "selectSuggestion"
   | "setFetching"
+  | "setMedium"
+  | "setMediums"
   | "setSearchQuery"
 >
 
@@ -51,6 +59,8 @@ type Action = {
 const initialState: State = {
   artistInsights: null,
   isFetching: false,
+  medium: null,
+  mediums: [],
   searchQuery: "",
   selectedSuggestion: null,
   suggestions: null,
@@ -68,7 +78,7 @@ function getActions(dispatch: Dispatch<Action>, relayEnvironment: Environment) {
     fetchArtistInsights: async artistInternalID => {
       actions.setFetching(true)
 
-      const artistInsights = await fetchQuery<
+      const response = await fetchQuery<
         ConsignPriceEstimateContext_ArtistInsights_Query
       >(
         relayEnvironment,
@@ -79,7 +89,7 @@ function getActions(dispatch: Dispatch<Action>, relayEnvironment: Environment) {
             priceInsights(
               artistId: $artistInternalID
               sort: DEMAND_RANK_DESC
-              first: 1
+              first: 20
             ) {
               edges {
                 node {
@@ -98,21 +108,29 @@ function getActions(dispatch: Dispatch<Action>, relayEnvironment: Environment) {
         }
       )
 
-      actions.setFetching(false)
+      const artistInsights = response?.priceInsights?.edges || []
+
+      if (artistInsights.length) {
+        const mediums = artistInsights.map(({ node }) => node.medium)
+        const medium = artistInsights[0].node.medium
+
+        actions.setMediums(mediums)
+        actions.setMedium(medium)
+      }
 
       dispatch({
-        payload: {
-          artistInsights,
-        },
+        payload: { artistInsights },
         type: "artistInsights",
       })
+
+      actions.setFetching(false)
     },
 
     /**
      * Fetches artist search suggestions based on searchQuery
      */
     fetchSuggestions: async searchQuery => {
-      const suggestions = await fetchQuery<
+      const response = await fetchQuery<
         ConsignPriceEstimateContext_SearchConnection_Query
       >(
         relayEnvironment,
@@ -142,10 +160,10 @@ function getActions(dispatch: Dispatch<Action>, relayEnvironment: Environment) {
         { searchQuery }
       )
 
+      const suggestions = response.searchConnection.edges
+
       dispatch({
-        payload: {
-          suggestions: suggestions.searchConnection.edges,
-        },
+        payload: { suggestions },
         type: "suggestions",
       })
     },
@@ -155,9 +173,7 @@ function getActions(dispatch: Dispatch<Action>, relayEnvironment: Environment) {
      */
     selectSuggestion: async selectedSuggestion => {
       dispatch({
-        payload: {
-          selectedSuggestion,
-        },
+        payload: { selectedSuggestion },
         type: "selectedSuggestion",
       })
 
@@ -166,10 +182,22 @@ function getActions(dispatch: Dispatch<Action>, relayEnvironment: Environment) {
 
     setFetching: isFetching => {
       dispatch({
-        payload: {
-          isFetching,
-        },
+        payload: { isFetching },
         type: "isFetching",
+      })
+    },
+
+    setMedium: medium => {
+      dispatch({
+        payload: { medium },
+        type: "medium",
+      })
+    },
+
+    setMediums: mediums => {
+      dispatch({
+        payload: { mediums },
+        type: "mediums",
       })
     },
 
@@ -178,9 +206,7 @@ function getActions(dispatch: Dispatch<Action>, relayEnvironment: Environment) {
      */
     setSearchQuery: searchQuery => {
       dispatch({
-        payload: {
-          searchQuery,
-        },
+        payload: { searchQuery },
         type: "searchQuery",
       })
     },

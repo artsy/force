@@ -112,6 +112,7 @@ const AutosuggestInput: React.FC = props => {
       <Input
         width="100%"
         height={40}
+        spellCheck={false}
         style={{ boxShadow: "0px 2px 10px rgba(0,0,0,0.1)" }}
         {...props}
       />
@@ -130,6 +131,9 @@ const Suggestion: React.FC<{ node: any /* FIXME */ }> = (
       background={isHighlighted ? color("black10") : "white"}
       py={0.5}
       paddingLeft={1}
+      style={{
+        cursor: "pointer",
+      }}
     >
       {node.displayLabel}
     </Text>

@@ -29,7 +29,7 @@ export type ConsignPriceEstimateContext_ArtistInsights_Query = {
 query ConsignPriceEstimateContext_ArtistInsights_Query(
   $artistInternalID: ID!
 ) {
-  priceInsights(artistId: $artistInternalID, sort: DEMAND_RANK_DESC, first: 1) {
+  priceInsights(artistId: $artistInternalID, sort: DEMAND_RANK_DESC, first: 20) {
     edges {
       node {
         artistName
@@ -64,7 +64,7 @@ v1 = [
       {
         "kind": "Literal",
         "name": "first",
-        "value": 1
+        "value": 20
       },
       {
         "kind": "Literal",
@@ -159,9 +159,9 @@ return {
     "metadata": {},
     "name": "ConsignPriceEstimateContext_ArtistInsights_Query",
     "operationKind": "query",
-    "text": "query ConsignPriceEstimateContext_ArtistInsights_Query(\n  $artistInternalID: ID!\n) {\n  priceInsights(artistId: $artistInternalID, sort: DEMAND_RANK_DESC, first: 1) {\n    edges {\n      node {\n        artistName\n        medium\n        lowRangeCents\n        midRangeCents\n        highRangeCents\n      }\n    }\n  }\n}\n"
+    "text": "query ConsignPriceEstimateContext_ArtistInsights_Query(\n  $artistInternalID: ID!\n) {\n  priceInsights(artistId: $artistInternalID, sort: DEMAND_RANK_DESC, first: 20) {\n    edges {\n      node {\n        artistName\n        medium\n        lowRangeCents\n        midRangeCents\n        highRangeCents\n      }\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '1d1dd0a1a76be6a4d797a161481cf5fa';
+(node as any).hash = 'fd748455cd7168dcb4ec330cbe7a81bc';
 export default node;

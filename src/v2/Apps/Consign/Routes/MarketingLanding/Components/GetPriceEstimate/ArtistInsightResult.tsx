@@ -2,7 +2,16 @@ import React from "react"
 import { usePriceEstimateContext } from "./ConsignPriceEstimateContext"
 import { formatCentsToDollars } from "v2/Apps/Consign/Routes/MarketingLanding/Utils/formatCentsToDollars"
 
-import { Box, Button, Flex, Image, Spacer, Text, color } from "@artsy/palette"
+import {
+  Box,
+  Button,
+  Flex,
+  Image,
+  Spacer,
+  Text,
+  color,
+  SelectSmall,
+} from "@artsy/palette"
 import styled from "styled-components"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import { Media } from "v2/Utils/Responsive"
@@ -11,23 +20,33 @@ export const ArtistInsightResult: React.FC = () => {
   const {
     artistInsights,
     isFetching,
+    mediums,
+    medium,
     selectedSuggestion,
+    setMedium,
   } = usePriceEstimateContext()
 
   if (isFetching) {
     return <LoadingPlaceholder />
   }
 
-  if (!artistInsights?.priceInsights?.edges?.[0]?.node) {
+  if (!artistInsights.length) {
     return <ZeroState />
   }
 
-  const { node } = artistInsights.priceInsights.edges[0]
+  const mediumSelectOptions = mediums.map(medium => ({
+    text: medium,
+    value: medium,
+  }))
+
+  const { node: artistInsight } = artistInsights.find(
+    ({ node }) => node.medium === medium
+  )
 
   // TODO: Look into why we need to coerce these types from mp
-  const lowRangeCents: number = Number(node.lowRangeCents)
-  const midRangeCents: number = Number(node.midRangeCents)
-  const highRangeCents: number = Number(node.highRangeCents)
+  const lowRangeCents: number = Number(artistInsight.lowRangeCents)
+  const midRangeCents: number = Number(artistInsight.midRangeCents)
+  const highRangeCents: number = Number(artistInsight.highRangeCents)
 
   const lowEstimateDollars = formatCentsToDollars(lowRangeCents)
   const highEstimateDollars = formatCentsToDollars(highRangeCents)
@@ -35,7 +54,11 @@ export const ArtistInsightResult: React.FC = () => {
 
   const imageUrl = selectedSuggestion?.node?.imageUrl
   const artistSlug = selectedSuggestion?.node?.slug
-  const { artistName, medium } = node
+  const { artistName } = artistInsight
+
+  const handleMediumChange = medium => {
+    setMedium(medium)
+  }
 
   return (
     <Box>
@@ -44,22 +67,21 @@ export const ArtistInsightResult: React.FC = () => {
           <Box pr={4} mb={[2, 2, 0]}>
             <Image
               src={imageUrl}
-              width={[80, 80, 120]}
-              height={[80, 80, 120]}
+              width={[80, 80, 122]}
+              height={[80, 80, 122]}
             />
           </Box>
           <Box>
-            <Text
-              variant="largeTitle"
-              borderBottom={`1px solid ${color("black60")}`}
-              pb={0.5}
-              mb={2}
-            >
+            <Text variant="largeTitle" mt="-6px">
               {artistName}
             </Text>
-            <Text variant="small" color="black60">
-              Based on {medium.toLowerCase()} auction data
-            </Text>
+            <Box mt={0.3} mb={0.5}>
+              <SelectSmall
+                selected={artistInsight.medium}
+                options={mediumSelectOptions}
+                onSelect={handleMediumChange}
+              />
+            </Box>
             <Text variant="largeTitle">
               {lowEstimateDollars} – {highEstimateDollars}
             </Text>

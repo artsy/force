@@ -16,7 +16,7 @@ export const EstimateResults: React.FC<FlexProps> = ({ ...rest }) => {
 
   return (
     <Flex {...rest}>
-      {isFetching || artistInsights ? (
+      {isFetching || artistInsights != null ? (
         <ArtistInsightResult />
       ) : (
         <ArtistInsightExample />
