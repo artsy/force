@@ -13,17 +13,18 @@ describe("ConsignPriceEstimateContext", () => {
     const Test = () => {
       const context = usePriceEstimateContext()
       expect(Object.keys(context)).toEqual([
-        "artistInsight",
+        "artistInsights",
         "isFetching",
+        "medium",
         "mediums",
         "searchQuery",
         "selectedSuggestion",
         "suggestions",
-        "fetchArtistInsightByMedium",
         "fetchArtistInsights",
         "fetchSuggestions",
         "selectSuggestion",
         "setFetching",
+        "setMedium",
         "setMediums",
         "setSearchQuery",
       ])
@@ -48,34 +49,12 @@ describe("ConsignPriceEstimateContext", () => {
       jest.resetAllMocks()
     })
 
-    it("#fetchArtistInsightByMedium", async () => {
-      const actions = getActions(mockDispatch, mockEnvironment)
-
-      mockFetchQuery.mockImplementation(() => {
-        return { marketPriceInsights: "foo" }
-      })
-
-      await actions.fetchArtistInsightByMedium("some-id", "some-medium")
-
-      expect(mockFetchQuery).toHaveBeenCalledWith(
-        expect.anything(),
-        expect.anything(),
-        { artistInternalID: "some-id", medium: "some-medium" }
-      )
-
-      expect(mockDispatch).toHaveBeenCalledWith({
-        payload: {
-          artistInsight: "foo",
-        },
-        type: "artistInsight",
-      })
-    })
-
     it("#fetchArtistInsights", async () => {
       const actions = getActions(mockDispatch, mockEnvironment)
+      const medium = "some-medium"
 
       mockFetchQuery.mockImplementation(() => {
-        return { priceInsights: { edges: [{ node: { medium: "bar" } }] } }
+        return { priceInsights: { edges: [{ node: { medium } }] } }
       })
 
       await actions.fetchArtistInsights("some-id")
@@ -87,32 +66,35 @@ describe("ConsignPriceEstimateContext", () => {
       )
 
       expect(mockDispatch).toHaveBeenNthCalledWith(1, {
-        payload: {
-          isFetching: true,
-        },
+        payload: { isFetching: true },
         type: "isFetching",
       })
 
       expect(mockDispatch).toHaveBeenNthCalledWith(2, {
-        payload: {
-          mediums: ["bar"],
-        },
+        payload: { mediums: [medium] },
         type: "mediums",
       })
 
       expect(mockDispatch).toHaveBeenNthCalledWith(3, {
-        payload: {
-          artistInsight: {
-            medium: "bar",
-          },
-        },
-        type: "artistInsight",
+        payload: { medium },
+        type: "medium",
       })
 
       expect(mockDispatch).toHaveBeenNthCalledWith(4, {
         payload: {
-          isFetching: false,
+          artistInsights: [
+            {
+              node: {
+                medium,
+              },
+            },
+          ],
         },
+        type: "artistInsights",
+      })
+
+      expect(mockDispatch).toHaveBeenNthCalledWith(5, {
+        payload: { isFetching: false },
         type: "isFetching",
       })
     })
@@ -174,6 +156,26 @@ describe("ConsignPriceEstimateContext", () => {
           isFetching,
         },
         type: "isFetching",
+      })
+    })
+
+    it("#setMedium", async () => {
+      const actions = getActions(mockDispatch, mockEnvironment)
+      const medium = "some-medium"
+      actions.setMedium(medium)
+      expect(mockDispatch).toHaveBeenCalledWith({
+        payload: { medium },
+        type: "medium",
+      })
+    })
+
+    it("#setMediums", async () => {
+      const actions = getActions(mockDispatch, mockEnvironment)
+      const mediums = ["foo", "bar", "baz"]
+      actions.setMediums(mediums)
+      expect(mockDispatch).toHaveBeenCalledWith({
+        payload: { mediums },
+        type: "mediums",
       })
     })
 

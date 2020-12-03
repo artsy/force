@@ -18,25 +18,30 @@ import { Media } from "v2/Utils/Responsive"
 
 export const ArtistInsightResult: React.FC = () => {
   const {
-    artistInsight,
+    artistInsights,
     isFetching,
     mediums,
+    medium,
     selectedSuggestion,
-    fetchArtistInsightByMedium,
+    setMedium,
   } = usePriceEstimateContext()
 
   if (isFetching) {
     return <LoadingPlaceholder />
   }
 
-  if (!artistInsight) {
+  if (!artistInsights.length) {
     return <ZeroState />
   }
 
-  const mediumsSelectOptions = mediums.map(medium => ({
+  const mediumSelectOptions = mediums.map(medium => ({
     text: medium,
-    value: medium.toLowerCase(),
+    value: medium,
   }))
+
+  const { node: artistInsight } = artistInsights.find(
+    ({ node }) => node.medium === medium
+  )
 
   // TODO: Look into why we need to coerce these types from mp
   const lowRangeCents: number = Number(artistInsight.lowRangeCents)
@@ -52,7 +57,7 @@ export const ArtistInsightResult: React.FC = () => {
   const { artistName } = artistInsight
 
   const handleMediumChange = medium => {
-    fetchArtistInsightByMedium(selectedSuggestion.node.internalID, medium)
+    setMedium(medium)
   }
 
   return (
@@ -72,8 +77,8 @@ export const ArtistInsightResult: React.FC = () => {
             </Text>
             <Box mt={0.3} mb={0.5}>
               <SelectSmall
-                selected={artistInsight.medium.toLowerCase()}
-                options={mediumsSelectOptions}
+                selected={artistInsight.medium}
+                options={mediumSelectOptions}
                 onSelect={handleMediumChange}
               />
             </Box>
