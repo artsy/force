@@ -5,15 +5,18 @@ import { fabricate } from "@artsy/antigravity"
 import Analytics from "analytics-node"
 import * as routes from "../routes"
 
-const metaphysics = require("lib/metaphysics.coffee")
 const CurrentUser = require("../../../models/current_user")
 
 jest.mock("superagent")
 jest.mock("analytics-node", () => jest.fn())
-jest.mock("lib/metaphysics.coffee")
+jest.mock("lib/metaphysics", () => ({
+  metaphysics: jest.fn(),
+}))
 jest.mock("desktop/apps/consign/helpers", () => ({
   fetchToken: () => "foo-token",
 }))
+
+const metaphysics = require("lib/metaphysics").metaphysics as jest.Mock
 
 describe("#redirectToSubmissionFlow", () => {
   let req
@@ -132,12 +135,12 @@ describe("#submissionFlowWithFetch", () => {
       await routes.submissionFlow(req, res, next)
       expect(spy).toHaveBeenCalledWith({
         event: "Clicked consign",
-        userId: "some-userid",
         properties: {
           context_page_path: "foo",
           flow: "Consignments",
           subject: "bar",
         },
+        userId: "some-userid",
       })
     })
   })

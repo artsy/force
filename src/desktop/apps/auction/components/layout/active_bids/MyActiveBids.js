@@ -5,7 +5,7 @@ import PropTypes from "prop-types"
 import React, { Component } from "react"
 import block from "bem-cn-lite"
 import { get } from "lodash"
-import metaphysics from "lib/metaphysics.coffee"
+import { metaphysics } from "lib/metaphysics"
 import { connect } from "react-redux"
 import { data as sd } from "sharify"
 

@@ -3,11 +3,11 @@ import { extend } from "underscore"
 import { fetchToken } from "./helpers"
 import Analytics from "analytics-node"
 import { AnalyticsSchema } from "v2/Artsy"
+import { metaphysics } from "lib/metaphysics"
 
 const Items = require("../../collections/items")
 const JSONPage = require("../../components/json_page")
 const markdown = require("../../components/util/markdown")
-const metaphysics = require("lib/metaphysics.coffee")
 
 const landing = new JSONPage({ name: "consignments-landing" })
 
@@ -30,10 +30,10 @@ export const landingPage = async (req, res, next) => {
     res.locals.sd.IN_DEMAND = inDemand.toJSON()
 
     const pageData = extend(data, {
-      recentlySold: recentlySold.artworks,
-      sales: sales,
       inDemand: inDemand,
       markdown: markdown,
+      recentlySold: recentlySold.artworks,
+      sales: sales,
     })
     res.render("landing", pageData)
   } catch (e) {
@@ -100,12 +100,12 @@ function sendTrackingEvent(req, res) {
   const analytics = new Analytics(res.locals.sd.SEGMENT_WRITE_KEY)
   const event = {
     event: AnalyticsSchema.ActionType.ClickedConsign,
-    userId: req.user.id,
     properties: {
       context_page_path: contextPath,
       flow: AnalyticsSchema.Flow.Consignments,
       subject,
     },
+    userId: req.user.id,
   }
   analytics.track(event)
 }
