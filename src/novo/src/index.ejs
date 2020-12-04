@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <%- content.style %>
+  <%- content.head %>
+  <%- content.data %>
+</head>
+
+<body>
+  <% if (env === 'production') { %>
+  <script type="text/javascript" src="<%= manifest.novoRuntime %>"></script>
+  <script type="text/javascript" src="<%= manifest.novoCommon %>"></script>
+  <script type="text/javascript" src="<%= manifest.novoArtsyCommon %>"></script>
+  <script type="text/javascript" src="<%= manifest.novoCommonReact %>"></script>
+  <script type="text/javascript" src="<%= manifest.novoCommonUtility %>"></script>
+  <script type="text/javascript" src="<%= manifest.novoArtsy %>"></script>
+  <% } %>
+
+  <%- content.scripts %>
+
+  <div id="react-modal-container"></div>
+  <div id="react-root"><%- content.body %></div>
+
+  <% if (env === 'production') { %>
+  <script type="text/javascript" src="<%= manifest.novoArtsyNovo %>"></script>
+  <% } %>
+
+  <% if (!sd.EIGEN) { %>
+  <style type="text/css">
+    .grecaptcha-badge { visibility: hidden; }
+  </style>
+  <script id="google-recaptcha" src="https://www.google.com/recaptcha/api.js?render=<%= sd.RECAPTCHA_KEY %>" defer></script>
+  <% } %>
+</body>
+
+</html>

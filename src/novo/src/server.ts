@@ -1,3 +1,4 @@
+import sharify from "sharify"
 import type { NextFunction, Request, Response } from "express"
 import { buildServerApp } from "v2/Artsy/Router/server"
 import { getAppNovoRoutes } from "v2/Apps/getAppNovoRoutes"
@@ -5,15 +6,15 @@ import { flatten } from "lodash"
 import ReactDOM from "react-dom/server"
 import loadAssetManifest from "lib/manifest"
 import express from "express"
+import path from "path"
 
 const config = require("../../config")
+const { NODE_ENV } = config
 
-const { RECAPTCHA_KEY } = config
-
-const novoManifest = loadAssetManifest("manifest-novo.json")
+const PUBLIC_DIR = path.resolve(__dirname, '../../../public')
+const NOVO_MANIFEST = loadAssetManifest("manifest-novo.json")
 
 const app = express()
-
 const routes = getAppNovoRoutes()
 
 /**
@@ -90,48 +91,30 @@ function initializeNovo() {
         const headTagsString = ReactDOM.renderToString(headTags as any)
         const sharifyData = res.locals.sharify.script()
 
-        res.status(status).send(`
-          <html>
-            <head>
-              ${styleTags}
-              ${headTagsString}
-              ${sharifyData}
-            </head>
-            <body>
-              <script src="${novoManifest.lookup(
-                "/assets-novo/novo-runtime.js"
-              )}"></script>
-              <script src="${novoManifest.lookup(
-                "/assets-novo/novo-common.js"
-              )}"></script>
-              <script src="${novoManifest.lookup(
-                "/assets-novo/novo-artsy-common.js"
-              )}"></script>
-              <script src="${novoManifest.lookup(
-                "/assets-novo/novo-common-react.js"
-              )}"></script>
-              <script src="${novoManifest.lookup(
-                "/assets-novo/novo-common-utility.js"
-              )}"></script>
-              <script src="${novoManifest.lookup(
-                "/assets-novo/novo-artsy.js"
-              )}"></script>
+        const options = {
+          content: {
+            body: bodyHTML,
+            data: sharifyData,
+            head: headTagsString,
+            scripts,
+            style: styleTags
+          },
+          env: NODE_ENV,
+          manifest: {
+            "novoArtsy": NOVO_MANIFEST.lookup("/assets-novo/novo-artsy.js"),
+            "novoArtsyCommon": NOVO_MANIFEST.lookup("/assets-novo/novo-artsy-common.js"),
+            "novoArtsyNovo": NOVO_MANIFEST.lookup("/assets-novo/novo-artsy-novo.js"),
+            "novoCommon": NOVO_MANIFEST.lookup("/assets-novo/novo-common.js"),
+            "novoCommonReact": NOVO_MANIFEST.lookup("/assets-novo/novo-common-react.js"),
+            "novoCommonUtility": NOVO_MANIFEST.lookup("/assets-novo/novo-common-utility.js"),
+            "novoRuntime": NOVO_MANIFEST.lookup("/assets-novo/novo-runtime.js"),
+          },
+          sd: sharify.data,
+        }
 
-              <div id="react-modal-container"></div>
-              <div id='react-root'>${bodyHTML}</div>
-
-              ${scripts}
-              <style type="text/css">
-              .grecaptcha-badge { visibility: hidden; }
-              </style>
-              <script src="${novoManifest.lookup(
-                "/assets-novo/novo-artsy-novo.js"
-              )}"></script>
-              <!-- TODO: add eigen exclude -->
-              <script id="google-recaptcha" src="https://www.google.com/recaptcha/api.js?render=${RECAPTCHA_KEY}" async></script>
-            </body>
-          </html>
-        `)
+        res.render(`${PUBLIC_DIR}/index.ejs`, {
+          ...options,
+        })
       } catch (error) {
         console.error(error)
         next(error)

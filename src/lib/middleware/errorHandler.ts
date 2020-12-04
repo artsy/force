@@ -17,10 +17,7 @@ export function errorHandlerMiddleware(
   let code
   let detail
   let message
-  const file = path.resolve(
-    __dirname,
-    "../../desktop/components/error_handler/index.jade"
-  )
+  const file = path.resolve(__dirname, "../../desktop/components/error_handler/index.jade")
 
   if (req.timedout) {
     code = 504
@@ -33,8 +30,7 @@ export function errorHandlerMiddleware(
     code = 401
   }
 
-  const enableLogging =
-    NODE_ENV === "development" || argv.verbose || VERBOSE_LOGGING === true
+  const enableLogging = NODE_ENV === "development" || argv.verbose || VERBOSE_LOGGING === true
   if (enableLogging) {
     message = err.message || err.text || err.toString()
     detail = err.stack
@@ -45,5 +41,5 @@ export function errorHandlerMiddleware(
     }
   }
 
-  res.status(code).render(file, { message, detail, code })
+  res.status(code).render(file, { code, detail, message })
 }
