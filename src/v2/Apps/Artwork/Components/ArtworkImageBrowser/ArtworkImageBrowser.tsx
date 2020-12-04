@@ -31,14 +31,15 @@ export const ArtworkImageBrowser = (props: ArtworkBrowserProps) => {
 
 export class LargeArtworkImageBrowser extends React.Component<
   ArtworkBrowserProps
-> {
+  > {
   render() {
     const hasMultipleImages = this.props.images.length > 1
     const { imageAlt, images, setCarouselRef } = this.props
 
+    const videoObj = { 'is_video': true }
     // FIXME: During SSR pass want to hide other images. Work around for lack
     // of SSR support in Flickity.
-    const carouselImages = typeof window === "undefined" ? [images[0]] : images
+    const carouselImages = typeof window === "undefined" ? [images[0]] : images.concat([videoObj])
 
     const options = {
       prevNextButtons: false,
@@ -86,7 +87,7 @@ export class LargeArtworkImageBrowser extends React.Component<
             </Col>
           )}
           // maxHeight is needed for google search indexing
-          render={(image: Image) => {
+          render={(image: Image | any) => {
             return (
               <Flex
                 flexDirection="column"
@@ -96,15 +97,19 @@ export class LargeArtworkImageBrowser extends React.Component<
                 height="60vh"
                 maxHeight="2000px"
               >
-                <Lightbox
-                  imageAlt={imageAlt}
-                  deepZoom={image.deepZoom}
-                  enabled={image.is_zoomable}
-                  isDefault={image.is_default}
-                  src={image.uri}
-                  initialHeight="60vh"
-                  maxHeight="2000px"
-                />
+                {image.is_video ?
+                  <video src="https://stream.mux.com/CkCU9DiRNfPiKVnoUjxPchxchZNu3HWQz6LdQVFvzsE.m3u8" controls height="600" width="440" />
+                  :
+                  <Lightbox
+                    imageAlt={imageAlt}
+                    deepZoom={image.deepZoom}
+                    enabled={image.is_zoomable}
+                    isDefault={image.is_default}
+                    src={image.uri}
+                    initialHeight="60vh"
+                    maxHeight="2000px"
+                  />
+                }
               </Flex>
             )
           }}
@@ -116,7 +121,7 @@ export class LargeArtworkImageBrowser extends React.Component<
 
 export class SmallArtworkImageBrowser extends React.Component<
   ArtworkBrowserProps
-> {
+  > {
   render() {
     const { images, imageAlt, setCarouselRef } = this.props
     // FIXME: During SSR pass want to hide other images. Work around for lack

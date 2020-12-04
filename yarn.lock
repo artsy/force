@@ -13335,6 +13335,11 @@ mute-stream@0.0.8:
   resolved "https://registry.yarnpkg.com/mute-stream/-/mute-stream-0.0.8.tgz#1630c42b2251ff81e2a283de96a5497ea92e5e0d"
   integrity sha512-nnbWWOkoWyUsTjKrhgD0dcz22mdkSnpYqbEjIm2nhwhuxlSkpywJmBo8h0ZqJdkp73mb90SssHkN4rsRaBAfAA==
 
+mux-embed@^3.4.1:
+  version "3.4.1"
+  resolved "https://registry.yarnpkg.com/mux-embed/-/mux-embed-3.4.1.tgz#48e4581a12427c03e3707560f5ce4718489be338"
+  integrity sha512-07onZf5P2I+7TzN4oSuce/yqUaMAgTYHSqIPEbxCCiLj8SPojtBQlwwCC658k1n9GiZACp5WQlJnwerpvldcdg==
+
 nan@^2.12.1:
   version "2.14.1"
   resolved "https://registry.yarnpkg.com/nan/-/nan-2.14.1.tgz#d7be34dfa3105b91494c3147089315eff8874b01"
@@ -14346,7 +14351,6 @@ pascalcase@^0.1.1:
 
 "passport-apple@https://github.com/artsy/passport-apple#f41adb7822c8344b72bc36a7d68312f6592cb14f":
   version "1.1.2"
-  uid f41adb7822c8344b72bc36a7d68312f6592cb14f
   resolved "https://github.com/artsy/passport-apple#f41adb7822c8344b72bc36a7d68312f6592cb14f"
   dependencies:
     jsonwebtoken "^8.5.1"

@@ -151,6 +151,7 @@
     "moment": "2.22.2",
     "moment-timezone": "0.5.25",
     "moment-twitter": "0.2.0",
+    "mux-embed": "^3.4.1",
     "nib": "1.1.2",
     "nock": "9.0.13",
     "node-uuid": "1.4.8",
