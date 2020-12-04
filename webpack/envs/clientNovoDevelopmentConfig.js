@@ -13,7 +13,7 @@ export const clientNovoDevelopmentConfig = {
   devtool: "source-map",
   entry: {
     "artsy-novo": [
-      "webpack-hot-middleware/client?name=novo",
+      "webpack-hot-middleware/client?name=novo&reload=true",
       path.resolve(process.cwd(), "src/novo/src/client.tsx"),
     ],
   },
