@@ -2,8 +2,16 @@
 <html>
 
 <head>
-  <%- content.style %>
+  <% if (env === 'production') { %>
+  <link rel="preload" href="<%= manifest.novoRuntime %>" as="script">
+  <link rel="preload" href="<%= manifest.novoCommon %>" as="script">
+  <link rel="preload" href="<%= manifest.novoArtsyCommon %>" as="script">
+  <link rel="preload" href="<%= manifest.novoCommonReact %>" as="script">
+  <link rel="preload" href="<%= manifest.novoCommonUtility %>" as="script">
+  <link rel="preload" href="<%= manifest.novoArtsy %>" as="script">
+  <% } %>
   <%- content.head %>
+  <%- content.style %>
   <%- content.data %>
 </head>
 
@@ -28,9 +36,12 @@
 
   <% if (!sd.EIGEN) { %>
   <style type="text/css">
-    .grecaptcha-badge { visibility: hidden; }
+    .grecaptcha-badge {
+      visibility: hidden;
+    }
   </style>
-  <script id="google-recaptcha" src="https://www.google.com/recaptcha/api.js?render=<%= sd.RECAPTCHA_KEY %>" defer></script>
+  <script id="google-recaptcha" src="https://www.google.com/recaptcha/api.js?render=<%= sd.RECAPTCHA_KEY %>"
+    defer></script>
   <% } %>
 </body>
 
