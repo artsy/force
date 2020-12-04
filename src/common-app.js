@@ -6,14 +6,12 @@ import "./lib/DOMParser"
 import commonMiddlewareSetup from "./common-middleware"
 
 import express from "express"
-import path from "path"
 import RavenServer from "raven"
 import { initializeForce } from "./current"
-import { app as novoApp } from "./novo/src/server"
+import { initializeNovo } from "./novo/src/server"
 import config from "./config"
 import { errorHandlerMiddleware } from "./lib/middleware/errorHandler"
 import { morganMiddleware } from "./lib/middleware/morgan"
-import { createReloadable } from "@artsy/express-reloadable"
 
 const { SENTRY_PRIVATE_DSN } = config
 
@@ -60,15 +58,8 @@ function initialize(startServerCallback) {
   // *****************************************************************************
   // Force (Novo)
   // *****************************************************************************
-
-  if (process.env.NODE_ENV === "development") {
-    const mountAndReload = createReloadable(app, require)
-    mountAndReload(path.resolve("src/novo/src/server.ts"), {
-      watchModules: [path.resolve(process.cwd(), "src/v2")],
-    })
-  } else {
-    app.use("/", novoApp)
-  }
+  const novoApp = initializeNovo()
+  app.use("/", novoApp)
 
   // *****************************************************************************
   // Force (Current)
