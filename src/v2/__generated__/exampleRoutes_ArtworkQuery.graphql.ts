@@ -2,12 +2,14 @@
 /* eslint-disable */
 
 import { ConcreteRequest } from "relay-runtime";
+import { FragmentRefs } from "relay-runtime";
 export type exampleRoutes_ArtworkQueryVariables = {
     slug: string;
 };
 export type exampleRoutes_ArtworkQueryResponse = {
     readonly artwork: {
         readonly id: string;
+        readonly " $fragmentRefs": FragmentRefs<"ExampleArtworkApp_artwork">;
     } | null;
 };
 export type exampleRoutes_ArtworkQuery = {
@@ -23,7 +25,16 @@ query exampleRoutes_ArtworkQuery(
 ) {
   artwork(id: $slug) {
     id
+    ...ExampleArtworkApp_artwork
   }
+}
+
+fragment ExampleArtworkApp_artwork on Artwork {
+  title
+  artistNames
+  medium
+  imageUrl
+  date
 }
 */
 
@@ -38,37 +49,43 @@ var v0 = [
 ],
 v1 = [
   {
-    "alias": null,
-    "args": [
-      {
-        "kind": "Variable",
-        "name": "id",
-        "variableName": "slug"
-      }
-    ],
-    "concreteType": "Artwork",
-    "kind": "LinkedField",
-    "name": "artwork",
-    "plural": false,
-    "selections": [
-      {
-        "alias": null,
-        "args": null,
-        "kind": "ScalarField",
-        "name": "id",
-        "storageKey": null
-      }
-    ],
-    "storageKey": null
+    "kind": "Variable",
+    "name": "id",
+    "variableName": "slug"
   }
-];
+],
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+};
 return {
   "fragment": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
     "name": "exampleRoutes_ArtworkQuery",
-    "selections": (v1/*: any*/),
+    "selections": [
+      {
+        "alias": null,
+        "args": (v1/*: any*/),
+        "concreteType": "Artwork",
+        "kind": "LinkedField",
+        "name": "artwork",
+        "plural": false,
+        "selections": [
+          (v2/*: any*/),
+          {
+            "args": null,
+            "kind": "FragmentSpread",
+            "name": "ExampleArtworkApp_artwork"
+          }
+        ],
+        "storageKey": null
+      }
+    ],
     "type": "Query"
   },
   "kind": "Request",
@@ -76,16 +93,64 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "exampleRoutes_ArtworkQuery",
-    "selections": (v1/*: any*/)
+    "selections": [
+      {
+        "alias": null,
+        "args": (v1/*: any*/),
+        "concreteType": "Artwork",
+        "kind": "LinkedField",
+        "name": "artwork",
+        "plural": false,
+        "selections": [
+          (v2/*: any*/),
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "title",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "artistNames",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "medium",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "imageUrl",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "date",
+            "storageKey": null
+          }
+        ],
+        "storageKey": null
+      }
+    ]
   },
   "params": {
     "id": null,
     "metadata": {},
     "name": "exampleRoutes_ArtworkQuery",
     "operationKind": "query",
-    "text": "query exampleRoutes_ArtworkQuery(\n  $slug: String!\n) {\n  artwork(id: $slug) {\n    id\n  }\n}\n"
+    "text": "query exampleRoutes_ArtworkQuery(\n  $slug: String!\n) {\n  artwork(id: $slug) {\n    id\n    ...ExampleArtworkApp_artwork\n  }\n}\n\nfragment ExampleArtworkApp_artwork on Artwork {\n  title\n  artistNames\n  medium\n  imageUrl\n  date\n}\n"
   }
 };
 })();
-(node as any).hash = '107019a40c4b388113557a5b0c70e9fc';
+(node as any).hash = 'da115c64db3be7296145b17049a36d41';
 export default node;

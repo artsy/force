@@ -14,9 +14,12 @@ const ArtistApp = loadable(
   }
 )
 
-const ArtworkApp = loadable(() => import("./Routes/Artwork/ArtworkApp"), {
-  resolveComponent: component => component.ArtworkApp,
-})
+const ArtworkApp = loadable(
+  () => import("./Routes/ExampleArtwork/ExampleArtworkApp"),
+  {
+    resolveComponent: component => component.ExampleArtworkAppFragmentContainer,
+  }
+)
 
 export const exampleRoutes = [
   {
@@ -62,7 +65,7 @@ export const exampleRoutes = [
           query exampleRoutes_ArtworkQuery($slug: String!) {
             artwork(id: $slug) {
               id
-              # ...ArtworkApp_artwork
+              ...ExampleArtworkApp_artwork
             }
           }
         `,
