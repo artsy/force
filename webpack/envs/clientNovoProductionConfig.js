@@ -138,7 +138,7 @@ export const clientNovoProductionConfig = {
           minSize: 0,
           name: "common-utility",
           reuseExistingChunk: true,
-          test: /.*node_modules[\\/](lodash.*|moment.*)[\\/]/,
+          test: /.*node_modules[\\/](lodash.*|moment.*|luxon.*)[\\/]/,
         },
         commons: {
           chunks: "all",
@@ -147,7 +147,7 @@ export const clientNovoProductionConfig = {
           minSize: 0,
           name: "common",
           reuseExistingChunk: true,
-          test: /.*node_modules[\\/](?!(@artsy[\\/]|react[\\/]|react-dom[\\/]|backbone.*[\\/]|lodash.*[\\/]|moment.*[\\/]|jquery.*[\\/]))/,
+          test: /.*node_modules[\\/](?!(@artsy[\\/]|react[\\/]|react-dom[\\/]|backbone.*[\\/]|lodash.*[\\/]|moment.*[\\/]|luxon.*[\\/]|jquery.*[\\/]))/,
         },
       },
       maxInitialRequests: Infinity,
@@ -215,7 +215,13 @@ export const clientNovoProductionConfig = {
       //   removeComments: true,
       // },
       inject: false,
-      template: `!!raw-loader!${path.resolve(basePath, "src", "novo", "src", "index.ejs")}`,
+      template: `!!raw-loader!${path.resolve(
+        basePath,
+        "src",
+        "novo",
+        "src",
+        "index.ejs"
+      )}`,
     }),
   ],
   resolve: {
