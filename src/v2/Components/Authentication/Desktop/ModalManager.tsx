@@ -11,36 +11,38 @@ import {
   ModalType,
   SubmitHandler,
 } from "v2/Components/Authentication/Types"
+import { ReCaptchaContainer } from "v2/Utils/ReCaptchaContainer"
 
 export interface ModalManagerProps {
-  submitUrls?: { [P in ModalType]: string } & {
-    apple: string
-    facebook: string
-    twitter?: string
-    forgot?: string
-  }
+  blurContainerSelector?: string
   csrf?: string
-  redirectTo?: string
-  tracking?: TrackingProp
-  type?: ModalType
   handleSubmit?: (
     type: ModalType,
     options: ModalOptions,
     values: InputValues,
     formikBag: FormikProps<InputValues>
   ) => void
-  blurContainerSelector?: string
-  onSocialAuthEvent?: (options) => void
-  onModalOpen?: () => void
-  onModalClose?: () => void
-  showRecaptchaDisclaimer?: boolean
   image?: string
+  onModalClose?: () => void
+  onModalOpen?: () => void
+  onSocialAuthEvent?: (options) => void
+  redirectTo?: string
+  showRecaptchaDisclaimer?: boolean
+  submitUrls?: { [P in ModalType]: string } & {
+    apple: string
+    facebook: string
+    twitter?: string
+    forgot?: string
+  }
+  tracking?: TrackingProp
+  type?: ModalType
 }
 
 export interface ModalManagerState {
   currentType?: ModalType
-  options?: ModalOptions
   error?: string
+  options?: ModalOptions
+  recaptchaLoaded: boolean
   switchedForms: boolean
 }
 
@@ -51,6 +53,7 @@ export class ModalManager extends Component<
   state: ModalManagerState = {
     currentType: null,
     options: {} as ModalOptions,
+    recaptchaLoaded: false,
     switchedForms: false,
   }
 
@@ -60,6 +63,7 @@ export class ModalManager extends Component<
     this.setState({
       currentType: mode,
       options,
+      recaptchaLoaded: true,
     })
 
     document.body.style.overflowY = "hidden"
@@ -134,6 +138,7 @@ export class ModalManager extends Component<
           options?.disableCloseOnBackgroundClick
         )}
       >
+        {this.state.recaptchaLoaded ? <ReCaptchaContainer /> : null}
         <FormSwitcher
           type={currentType}
           error={error}

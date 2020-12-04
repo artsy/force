@@ -36,16 +36,6 @@
   <% if (env === 'production') { %>
   <script type="text/javascript" src="<%= manifest.artsyNovo %>"></script>
   <% } %>
-
-  <% if (!sd.EIGEN) { %>
-  <style type="text/css">
-    .grecaptcha-badge {
-      visibility: hidden;
-    }
-  </style>
-  <script id="google-recaptcha" src="https://www.google.com/recaptcha/api.js?render=<%= sd.RECAPTCHA_KEY %>"
-    defer></script>
-  <% } %>
 </body>
 
 </html>
