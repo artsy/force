@@ -83,16 +83,16 @@ app.get(
 
       const layout = await stitch({
         basePath: __dirname,
-        layout: "../../components/main_layout/templates/artsy_v2.jade",
         blocks: {
           body: bodyHTML,
           head: () => <>{headTags}</>,
         },
+        layout: "../../components/main_layout/templates/artsy_v2.jade",
         locals: {
           ...res.locals,
+          pageType,
           scripts,
           styleTags,
-          pageType,
 
           /**
            * NOTE: The asset package isn't needed here because we're dynamically
@@ -105,7 +105,7 @@ app.get(
         },
       })
 
-      res.locals.PAGE_CACHE = { status, key: req.url, html: layout }
+      res.locals.PAGE_CACHE = { html: layout, key: req.url, status }
       res.status(status).send(layout)
     } catch (error) {
       console.error(error)

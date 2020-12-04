@@ -1,48 +1,57 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
 
-<head>
-  <% if (env === 'production') { %>
-  <link rel="preload" href="<%= manifest.novoRuntime %>" as="script">
-  <link rel="preload" href="<%= manifest.novoCommon %>" as="script">
-  <link rel="preload" href="<%= manifest.novoArtsyCommon %>" as="script">
-  <link rel="preload" href="<%= manifest.novoCommonReact %>" as="script">
-  <link rel="preload" href="<%= manifest.novoCommonUtility %>" as="script">
-  <link rel="preload" href="<%= manifest.novoArtsy %>" as="script">
-  <% } %>
-  <%- content.head %>
-  <%- content.style %>
-  <%- content.data %>
-</head>
+    <% if (env === 'production') { %>
+      <link rel="preload" href="<%= manifest.novoRuntime %>" as="script" />
+      <link rel="preload" href="<%= manifest.novoCommon %>" as="script" />
+      <link rel="preload" href="<%= manifest.novoArtsyCommon %>" as="script" />
+      <link rel="preload" href="<%= manifest.novoCommonReact %>" as="script" />
+      <link rel="preload" href="<%= manifest.novoCommonUtility %>" as="script" />
+      <link rel="preload" href="<%= manifest.novoArtsy %>" as="script" />
+    <% } %>
 
-<body>
-  <% if (env === 'production') { %>
-  <script type="text/javascript" src="<%= manifest.novoRuntime %>"></script>
-  <script type="text/javascript" src="<%= manifest.novoCommon %>"></script>
-  <script type="text/javascript" src="<%= manifest.novoArtsyCommon %>"></script>
-  <script type="text/javascript" src="<%= manifest.novoCommonReact %>"></script>
-  <script type="text/javascript" src="<%= manifest.novoCommonUtility %>"></script>
-  <script type="text/javascript" src="<%= manifest.novoArtsy %>"></script>
-  <% } %>
+    <%- content.head %>
+    <%- content.style %>
+    <%- content.data %>
+  </head>
 
-  <%- content.scripts %>
+  <body>
+    <% if (env === 'production') { %>
+      <script type="text/javascript" src="<%= manifest.novoRuntime %>"></script>
+      <script type="text/javascript" src="<%= manifest.novoCommon %>"></script>
+      <script type="text/javascript" src="<%= manifest.novoArtsyCommon %>"></script>
+      <script type="text/javascript" src="<%= manifest.novoCommonReact %>"></script>
+      <script type="text/javascript" src="<%= manifest.novoCommonUtility %>"></script>
+      <script type="text/javascript" src="<%= manifest.novoArtsy %>"></script>
+    <% } %>
 
-  <div id="react-modal-container"></div>
-  <div id="react-root"><%- content.body %></div>
+    <%- content.scripts %>
 
-  <% if (env === 'production') { %>
-  <script type="text/javascript" src="<%= manifest.novoArtsyNovo %>"></script>
-  <% } %>
+    <div id="react-modal-container"></div>
+    <div id="react-root">
+      <%- content.body %>
+    </div>
 
-  <% if (!sd.EIGEN) { %>
-  <style type="text/css">
-    .grecaptcha-badge {
-      visibility: hidden;
-    }
-  </style>
-  <script id="google-recaptcha" src="https://www.google.com/recaptcha/api.js?render=<%= sd.RECAPTCHA_KEY %>"
-    defer></script>
-  <% } %>
-</body>
+    <% if (env === 'production') { %>
+      <script type="text/javascript" src="<%= manifest.novoArtsyNovo %>"></script>
+    <% } %>
 
+    <% if (!sd.EIGEN) { %>
+      <style type="text/css">
+        .grecaptcha-badge {
+          visibility: hidden;
+        }
+      </style>
+      <script
+        id="google-recaptcha"
+        src="https://www.google.com/recaptcha/api.js?render=<%= sd.RECAPTCHA_KEY %>"
+        defer
+      ></script>
+    <% } %>
+  </body>
 </html>

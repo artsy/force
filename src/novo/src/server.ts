@@ -11,7 +11,7 @@ import path from "path"
 const config = require("../../config")
 const { NODE_ENV } = config
 
-const PUBLIC_DIR = path.resolve(__dirname, '../../../public')
+const PUBLIC_DIR = path.resolve(__dirname, "../../../public")
 const NOVO_MANIFEST = loadAssetManifest("manifest-novo.json")
 
 const app = express()
@@ -40,91 +40,95 @@ function getRoutePaths(): string[] {
   return flatRoutes
 }
 
-function initializeNovo() {
-  app.get("/novo", (req, res) => {
-    res.send(`
-      <!doctype html>
-        <body>
-          <ul>
-            <li><a href='/novo/debug/baseline'>Baseline</a></li>
-            <li><a href='/novo/feature/artsy-vanguard-2020'>Feature Page</a></li>
-            <li><a href='/novo/artist/pablo-picasso'>Artist</a></li>
-            <li><a href='/novo/artwork/pablo-picasso-couple-posant-pour-un-portrait-en-medaillon-couple-posing-for-a-medallion-portrait'>Artwork</a></li>
-          </ul>
-        </body>
-      </html>
-    `)
-  })
+app.get("/novo", (req, res) => {
+  res.send(`
+    <!doctype html>
+      <body>
+        <ul>
+          <li><a href='/novo/debug/baseline'>Baseline</a></li>
+          <li><a href='/novo/feature/artsy-vanguard-2020'>Feature Page</a></li>
+          <li><a href='/novo/artist/pablo-picasso'>Artist</a></li>
+          <li><a href='/novo/artwork/pablo-picasso-couple-posant-pour-un-portrait-en-medaillon-couple-posing-for-a-medallion-portrait'>Artwork</a></li>
+        </ul>
+      </body>
+    </html>
+  `)
+})
 
-  /**
-   * Mount routes that will connect to global SSR router
-   */
-  app.get(
-    getRoutePaths(),
+/**
+ * Mount routes that will connect to global SSR router
+ */
+app.get(
+  getRoutePaths(),
 
-    // Route handler
-    async (req: Request, res: Response, next: NextFunction) => {
-      try {
-        const {
-          status,
-          styleTags,
-          scripts,
-          redirect,
-          bodyHTML,
-          headTags,
-        } = await buildServerApp(
-          {
-            req,
-            res,
-            routes,
-          },
-          "loadable-novo-stats.json",
-          "public/assets-novo",
-          "/assets-novo"
-        )
+  // Route handler
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const {
+        status,
+        styleTags,
+        scripts,
+        redirect,
+        bodyHTML,
+        headTags,
+      } = await buildServerApp(
+        {
+          req,
+          res,
+          routes,
+        },
+        "loadable-novo-stats.json",
+        "public/assets-novo",
+        "/assets-novo"
+      )
 
-        if (redirect) {
-          res.redirect(status ?? 302, redirect.url)
-          return
-        }
-
-        const headTagsString = ReactDOM.renderToString(headTags as any)
-        const sharifyData = res.locals.sharify.script()
-
-        const options = {
-          content: {
-            body: bodyHTML,
-            data: sharifyData,
-            head: headTagsString,
-            scripts,
-            style: styleTags
-          },
-          env: NODE_ENV,
-          manifest: {
-            "novoArtsy": NOVO_MANIFEST.lookup("/assets-novo/novo-artsy.js"),
-            "novoArtsyCommon": NOVO_MANIFEST.lookup("/assets-novo/novo-artsy-common.js"),
-            "novoArtsyNovo": NOVO_MANIFEST.lookup("/assets-novo/novo-artsy-novo.js"),
-            "novoCommon": NOVO_MANIFEST.lookup("/assets-novo/novo-common.js"),
-            "novoCommonReact": NOVO_MANIFEST.lookup("/assets-novo/novo-common-react.js"),
-            "novoCommonUtility": NOVO_MANIFEST.lookup("/assets-novo/novo-common-utility.js"),
-            "novoRuntime": NOVO_MANIFEST.lookup("/assets-novo/novo-runtime.js"),
-          },
-          sd: sharify.data,
-        }
-
-        res.render(`${PUBLIC_DIR}/index.ejs`, {
-          ...options,
-        })
-      } catch (error) {
-        console.error(error)
-        next(error)
+      if (redirect) {
+        res.redirect(status ?? 302, redirect.url)
+        return
       }
+
+      const headTagsString = ReactDOM.renderToString(headTags as any)
+      const sharifyData = res.locals.sharify.script()
+
+      const options = {
+        content: {
+          body: bodyHTML,
+          data: sharifyData,
+          head: headTagsString,
+          scripts,
+          style: styleTags,
+        },
+        env: NODE_ENV,
+        manifest: {
+          novoArtsy: NOVO_MANIFEST.lookup("/assets-novo/novo-artsy.js"),
+          novoArtsyCommon: NOVO_MANIFEST.lookup(
+            "/assets-novo/novo-artsy-common.js"
+          ),
+          novoArtsyNovo: NOVO_MANIFEST.lookup(
+            "/assets-novo/novo-artsy-novo.js"
+          ),
+          novoCommon: NOVO_MANIFEST.lookup("/assets-novo/novo-common.js"),
+          novoCommonReact: NOVO_MANIFEST.lookup(
+            "/assets-novo/novo-common-react.js"
+          ),
+          novoCommonUtility: NOVO_MANIFEST.lookup(
+            "/assets-novo/novo-common-utility.js"
+          ),
+          novoRuntime: NOVO_MANIFEST.lookup("/assets-novo/novo-runtime.js"),
+        },
+        sd: sharify.data,
+      }
+
+      res.render(`${PUBLIC_DIR}/index.ejs`, {
+        ...options,
+      })
+    } catch (error) {
+      console.error(error)
+      next(error)
     }
-  )
-  return app
-}
+  }
+)
 
 // This export form is required for express-reloadable
 // TODO: Remove when no longer needed for hot reloading
 module.exports = app
-module.exports.initializeNovo = initializeNovo

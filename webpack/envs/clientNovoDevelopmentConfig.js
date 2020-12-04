@@ -14,7 +14,7 @@ export const clientNovoDevelopmentConfig = {
   devtool: "source-map",
   entry: {
     "artsy-novo": [
-      "webpack-hot-middleware/client?name=novo",
+      "webpack-hot-middleware/client?name=novo&reload=true",
       path.resolve(process.cwd(), "src/novo/src/client.tsx"),
     ],
   },
@@ -203,7 +203,13 @@ export const clientNovoDevelopmentConfig = {
     }),
     new HtmlWebpackPlugin({
       filename: path.resolve(basePath, "public", "index.ejs"),
-      template: `!!raw-loader!${path.resolve(basePath, "src", "novo", "src", "index.ejs")}`,
+      template: `!!raw-loader!${path.resolve(
+        basePath,
+        "src",
+        "novo",
+        "src",
+        "index.ejs"
+      )}`,
     }),
   ],
   resolve: {
