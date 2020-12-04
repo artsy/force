@@ -4,6 +4,7 @@ const USER_REQUIRED_ROUTES = [
   "/identity-verification(.*)",
   "/orders(.*)",
   "/user/conversations(.*)",
+  "/user/purchases(.*)",
 ]
 
 const isRequestRequiringUser = req => {
