@@ -4,7 +4,7 @@ import { getENV } from "v2/Utils/getENV"
 
 export const ConsignMeta: React.FC = () => {
   const title = `Sell Artwork with Artsy | Art Consignment | Artsy`
-  const href = `${getENV("APP_URL")}/consign2` // FIXME: consign2
+  const href = `${getENV("APP_URL")}/consign`
   const metaDescription =
     "Sell and consign your art with Artsy. Get competitive offers from the world’s top auction houses and galleries to sell art from your collection. Submit today at no cost."
   const metaImage = null // FIXME: Need image for embeds
