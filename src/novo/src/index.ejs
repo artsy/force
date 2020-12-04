@@ -3,12 +3,13 @@
 
 <head>
   <% if (env === 'production') { %>
-  <link rel="preload" href="<%= manifest.novoRuntime %>" as="script">
-  <link rel="preload" href="<%= manifest.novoCommon %>" as="script">
-  <link rel="preload" href="<%= manifest.novoArtsyCommon %>" as="script">
-  <link rel="preload" href="<%= manifest.novoCommonReact %>" as="script">
-  <link rel="preload" href="<%= manifest.novoCommonUtility %>" as="script">
-  <link rel="preload" href="<%= manifest.novoArtsy %>" as="script">
+  <link rel="preload" href="<%= manifest.artsy %>" as="script">
+  <link rel="preload" href="<%= manifest.artsyCommon %>" as="script">
+  <link rel="preload" href="<%= manifest.artsyNovo %>" as="script">
+  <link rel="preload" href="<%= manifest.common %>" as="script">
+  <link rel="preload" href="<%= manifest.commonReact %>" as="script">
+  <link rel="preload" href="<%= manifest.commonUtility %>" as="script">
+  <link rel="preload" href="<%= manifest.runtime %>" as="script">
   <% } %>
   <%- content.head %>
   <%- content.style %>
@@ -17,12 +18,12 @@
 
 <body>
   <% if (env === 'production') { %>
-  <script type="text/javascript" src="<%= manifest.novoRuntime %>"></script>
-  <script type="text/javascript" src="<%= manifest.novoCommon %>"></script>
-  <script type="text/javascript" src="<%= manifest.novoArtsyCommon %>"></script>
-  <script type="text/javascript" src="<%= manifest.novoCommonReact %>"></script>
-  <script type="text/javascript" src="<%= manifest.novoCommonUtility %>"></script>
-  <script type="text/javascript" src="<%= manifest.novoArtsy %>"></script>
+  <script type="text/javascript" src="<%= manifest.runtime %>"></script>
+  <script type="text/javascript" src="<%= manifest.common %>"></script>
+  <script type="text/javascript" src="<%= manifest.artsyCommon %>"></script>
+  <script type="text/javascript" src="<%= manifest.commonReact %>"></script>
+  <script type="text/javascript" src="<%= manifest.commonUtility %>"></script>
+  <script type="text/javascript" src="<%= manifest.artsy %>"></script>
   <% } %>
 
   <%- content.scripts %>
@@ -31,7 +32,7 @@
   <div id="react-root"><%- content.body %></div>
 
   <% if (env === 'production') { %>
-  <script type="text/javascript" src="<%= manifest.novoArtsyNovo %>"></script>
+  <script type="text/javascript" src="<%= manifest.artsyNovo %>"></script>
   <% } %>
 
   <% if (!sd.EIGEN) { %>

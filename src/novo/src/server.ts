@@ -11,7 +11,7 @@ import path from "path"
 const config = require("../../config")
 const { NODE_ENV } = config
 
-const PUBLIC_DIR = path.resolve(__dirname, '../../../public')
+const PUBLIC_DIR = path.resolve(__dirname, "../../../public")
 const NOVO_MANIFEST = loadAssetManifest("manifest-novo.json")
 
 const app = express()
@@ -97,17 +97,19 @@ function initializeNovo() {
             data: sharifyData,
             head: headTagsString,
             scripts,
-            style: styleTags
+            style: styleTags,
           },
           env: NODE_ENV,
           manifest: {
-            "novoArtsy": NOVO_MANIFEST.lookup("/assets-novo/novo-artsy.js"),
-            "novoArtsyCommon": NOVO_MANIFEST.lookup("/assets-novo/novo-artsy-common.js"),
-            "novoArtsyNovo": NOVO_MANIFEST.lookup("/assets-novo/novo-artsy-novo.js"),
-            "novoCommon": NOVO_MANIFEST.lookup("/assets-novo/novo-common.js"),
-            "novoCommonReact": NOVO_MANIFEST.lookup("/assets-novo/novo-common-react.js"),
-            "novoCommonUtility": NOVO_MANIFEST.lookup("/assets-novo/novo-common-utility.js"),
-            "novoRuntime": NOVO_MANIFEST.lookup("/assets-novo/novo-runtime.js"),
+            artsy: NOVO_MANIFEST.lookup("/assets-novo/artsy.js"),
+            artsyCommon: NOVO_MANIFEST.lookup("/assets-novo/artsy-common.js"),
+            artsyNovo: NOVO_MANIFEST.lookup("/assets-novo/artsy-novo.js"),
+            common: NOVO_MANIFEST.lookup("/assets-novo/common.js"),
+            commonReact: NOVO_MANIFEST.lookup("/assets-novo/common-react.js"),
+            commonUtility: NOVO_MANIFEST.lookup(
+              "/assets-novo/common-utility.js"
+            ),
+            runtime: NOVO_MANIFEST.lookup("/assets-novo/runtime.js"),
           },
           sd: sharify.data,
         }

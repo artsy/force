@@ -6,7 +6,7 @@ const { CDN_URL, NODE_ENV } = process.env
 
 class ManifestManager {
   private loadError = false
-  private manifest = {}
+  private manifest: { [key: string]: string } = {}
 
   constructor(private manifestFileName = "manifest.json") {
     const manifestPath = path.resolve(process.cwd(), this.manifestFileName)
@@ -35,7 +35,7 @@ class ManifestManager {
     }
 
     const manifestFile = this.manifest[assetFilename]
-    if (!manifestFile) {
+    if (!manifestFile || manifestFile.length === 0) {
       chalk.yellow(
         `[Asset Manager]: manifest lookup failed -> ${assetFilename}`
       )
