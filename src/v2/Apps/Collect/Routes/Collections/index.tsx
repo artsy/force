@@ -4,13 +4,14 @@ import { AppContainer } from "v2/Apps/Components/AppContainer"
 import { withSystemContext } from "v2/Artsy"
 import { FrameWithRecentlyViewed } from "v2/Components/FrameWithRecentlyViewed"
 import { BreadCrumbList } from "v2/Components/Seo"
-import { Link, Router } from "found"
+import { Router } from "found"
 import React, { Component, useState } from "react"
 import { Meta, Title } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
 import { TrackingProp } from "react-tracking"
 import { data as sd } from "sharify"
 import { CollectionEntity, CollectionsGrid } from "./Components/CollectionsGrid"
+import { RouterLink } from "v2/Artsy/Router/RouterLink"
 
 interface CollectionsAppProps {
   marketingCategories: Collections_marketingCategories
@@ -45,15 +46,16 @@ export class CollectionsApp extends Component<CollectionsAppProps> {
               mt={3}
               mb={4}
               justifyContent="space-between"
-              alignItems="flex-end"
+              alignItems={["left", "center"]}
+              flexDirection={["column", "row"]}
             >
               <Text variant="largeTitle" as="h1">
                 Collections
               </Text>
 
-              <Box pb={0.3}>
+              <Box>
                 <Text variant="mediumText">
-                  <Link to="/collect">View works</Link>
+                  <RouterLink to="/collect">View works</RouterLink>
                 </Text>
               </Box>
             </Flex>
