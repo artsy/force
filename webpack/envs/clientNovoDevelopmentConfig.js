@@ -8,7 +8,6 @@ const path = require("path")
 const webpack = require("webpack")
 const WebpackManifestPlugin = require("webpack-manifest-plugin")
 const { basePath, env } = require("../utils/env")
-const { getCSSManifest } = require("../utils/getCSSManifest")
 
 export const clientNovoDevelopmentConfig = {
   devtool: "source-map",
@@ -66,7 +65,6 @@ export const clientNovoDevelopmentConfig = {
           },
         ],
       },
-      // ESM support. See: https://github.com/apollographql/react-apollo/issues/1737#issuecomment-371178602
       {
         test: /\.mjs$/,
         type: "javascript/auto",
@@ -199,11 +197,16 @@ export const clientNovoDevelopmentConfig = {
     new WebpackManifestPlugin({
       basePath: "/assets-novo/",
       fileName: path.resolve(basePath, "manifest-novo.json"),
-      seed: env.isProduction ? getCSSManifest() : {},
     }),
     new HtmlWebpackPlugin({
       filename: path.resolve(basePath, "public", "index.ejs"),
-      template: `!!raw-loader!${path.resolve(basePath, "src", "novo", "src", "index.ejs")}`,
+      template: `!!raw-loader!${path.resolve(
+        basePath,
+        "src",
+        "novo",
+        "src",
+        "index.ejs"
+      )}`,
     }),
   ],
   resolve: {

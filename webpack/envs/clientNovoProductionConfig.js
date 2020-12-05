@@ -1,15 +1,14 @@
 // @ts-check
 
-const { basePath, env } = require("../utils/env")
-const { getCSSManifest } = require("../utils/getCSSManifest")
 const { HashedModuleIdsPlugin } = require("webpack")
 const { RetryChunkLoadPlugin } = require("webpack-retry-chunk-load-plugin")
+const HtmlWebpackPlugin = require("html-webpack-plugin")
+const LoadablePlugin = require("@loadable/webpack-plugin")
 const path = require("path")
 const TerserPlugin = require("terser-webpack-plugin")
 const webpack = require("webpack")
 const WebpackManifestPlugin = require("webpack-manifest-plugin")
-const LoadablePlugin = require("@loadable/webpack-plugin")
-const HtmlWebpackPlugin = require("html-webpack-plugin")
+const { basePath, env } = require("../utils/env")
 
 export const clientNovoProductionConfig = {
   devtool: "source-map",
@@ -64,7 +63,6 @@ export const clientNovoProductionConfig = {
           },
         ],
       },
-      // ESM support. See: https://github.com/apollographql/react-apollo/issues/1737#issuecomment-371178602
       {
         test: /\.mjs$/,
         type: "javascript/auto",
@@ -154,7 +152,7 @@ export const clientNovoProductionConfig = {
     },
   },
   output: {
-    filename: "novo-[name].js",
+    filename: "novo-[name].22820.[contenthash].js",
     path: path.resolve(basePath, "public/assets-novo"),
     publicPath: "/assets-novo/",
   },
@@ -205,16 +203,15 @@ export const clientNovoProductionConfig = {
     new WebpackManifestPlugin({
       basePath: "/assets-novo/",
       fileName: path.resolve(basePath, "manifest-novo.json"),
-      seed: env.isProduction ? getCSSManifest() : {},
     }),
     new HtmlWebpackPlugin({
       filename: path.resolve(basePath, "public", "index.ejs"),
-      // minify: {
-      //   collapseWhitespace: true,
-      //   conservativeCollapse: true,
-      //   removeComments: true,
-      // },
       inject: false,
+      minify: {
+        collapseWhitespace: true,
+        conservativeCollapse: true,
+        removeComments: true,
+      },
       template: `!!raw-loader!${path.resolve(
         basePath,
         "src",
