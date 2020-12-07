@@ -99,6 +99,10 @@ function initializeNovo() {
             scripts,
             style: styleTags,
           },
+          css: {
+            // TODO: Old global asset, possibly move into styled components.
+            global: res.locals.asset("/assets/main_layout.css"),
+          },
           env: NODE_ENV,
           manifest: {
             artsy: NOVO_MANIFEST.lookup("/assets-novo/artsy.js"),
