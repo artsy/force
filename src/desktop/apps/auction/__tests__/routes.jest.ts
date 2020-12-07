@@ -1,12 +1,10 @@
 import Backbone from "backbone"
 import { stitch } from "@artsy/stitch"
 
-jest.mock("lib/metaphysics", () => ({
-  metaphysics: jest.fn(),
-}))
+jest.mock("lib/metaphysics.coffee", () => jest.fn())
 jest.mock("lib/metaphysics2.coffee", () => jest.fn())
 
-const metaphysics = require("lib/metaphysics").metaphysics as jest.Mock
+const metaphysics = require("lib/metaphysics.coffee") as jest.Mock
 const metaphysics2 = require("lib/metaphysics2.coffee") as jest.Mock
 const CurrentUser = require("desktop/models/current_user")
 
@@ -22,10 +20,10 @@ jest.mock("@artsy/stitch", () => ({
 }))
 
 jest.mock("desktop/apps/auction/actions/artworkBrowser", () => ({
-  fetchArtworks: () => ({
+  fetchArtworksByFollowedArtists: () => ({
     type: "GET_ARTWORKS_SUCCESS",
   }),
-  fetchArtworksByFollowedArtists: () => ({
+  fetchArtworks: () => ({
     type: "GET_ARTWORKS_SUCCESS",
   }),
 }))
@@ -71,8 +69,8 @@ describe("routes", () => {
     it("renders the index with the correct variables", async () => {
       metaphysics.mockResolvedValue({ articles: [] })
       metaphysics2.mockResolvedValue({
-        me: meV2,
         sale: saleV2,
+        me: meV2,
       })
 
       await routes.index(req, res, next)
@@ -91,8 +89,8 @@ describe("routes", () => {
     it("renders the index with a promoted sale", async () => {
       metaphysics.mockResolvedValue({ articles: [] })
       metaphysics2.mockResolvedValue({
-        me: null,
         sale: saleV2,
+        me: null,
       })
 
       await routes.index(req, res, next)
@@ -142,6 +140,12 @@ describe("routes", () => {
 
     it("redirects on confirm if the auction is live and bidder is qualified", async () => {
       const mockAuctionQueries = {
+        sale: {
+          id: "foo",
+          is_auction: true,
+          auction_state: "open",
+          is_live_open: true,
+        },
         me: {
           bidders: [
             {
@@ -153,12 +157,6 @@ describe("routes", () => {
             },
           ],
         },
-        sale: {
-          auction_state: "open",
-          id: "foo",
-          is_auction: true,
-          is_live_open: true,
-        },
       }
 
       metaphysics.mockResolvedValue(mockAuctionQueries)
@@ -169,6 +167,12 @@ describe("routes", () => {
 
     it("does not redirect if bidder is not qualified", async () => {
       const mockAuctionQueries = {
+        sale: {
+          id: "foo",
+          is_auction: true,
+          auction_state: "open",
+          is_live_open: true,
+        },
         me: {
           bidders: [
             {
@@ -179,12 +183,6 @@ describe("routes", () => {
               },
             },
           ],
-        },
-        sale: {
-          auction_state: "open",
-          id: "foo",
-          is_auction: true,
-          is_live_open: true,
         },
       }
 
@@ -197,6 +195,12 @@ describe("routes", () => {
 
     it("does not redirect if the auction is not live", async () => {
       const mockAuctionQueries = {
+        sale: {
+          id: "foo",
+          is_auction: true,
+          auction_state: "open",
+          is_live_open: false,
+        },
         me: {
           bidders: [
             {
@@ -207,12 +211,6 @@ describe("routes", () => {
               },
             },
           ],
-        },
-        sale: {
-          auction_state: "open",
-          id: "foo",
-          is_auction: true,
-          is_live_open: false,
         },
       }
 

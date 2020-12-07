@@ -59,7 +59,6 @@ declare module "sharify" {
         loginPagePath?: string
       }
       API_URL: string
-      API_REQUEST_TIMEOUT?: number
       APPLICATION_NAME: string
       ARTIST_PAGE_CTA_ARTIST_ID: string
       ARTIST_PAGE_CTA_ENABLED: string
@@ -86,7 +85,6 @@ declare module "sharify" {
       PC_AUCTION_CHANNEL: string
       POSITRON_URL: string
       PROFILE?: any // mobile partner app data
-      REQUEST_ID?: string
       RESET_PASSWORD_REDIRECT_TO: string
       SECTION?: { slug?: string } // FIXME: used only for /venice-biennale-2015
       SESSION_ID?: string
