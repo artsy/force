@@ -84,7 +84,7 @@ export const ArtistsByLetter: React.FC<ArtistsByLetterProps> = ({
           <RouterLink to="/artists2" noUnderline>
             Artists
           </RouterLink>{" "}
-          / Browse all 50,000 artists
+          / Browse over 100,000 artists
         </Text>
 
         <ArtistsTopNav my={3}>

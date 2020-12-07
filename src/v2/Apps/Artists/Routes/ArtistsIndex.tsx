@@ -28,7 +28,7 @@ export const ArtistsIndex: React.FC<ArtistsIndexProps> = ({
       <ArtistsIndexMeta />
 
       <ArtistsTopNav my={3}>
-        <Text>Browse all 50,000 artists</Text>
+        <Text>Browse over 100,000 artists</Text>
       </ArtistsTopNav>
 
       <Media greaterThanOrEqual="sm">
