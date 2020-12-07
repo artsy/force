@@ -1,4 +1,4 @@
-import { Box, Separator, Spacer, Text } from "@artsy/palette"
+import { Box, Separator, Spacer, Text, Flex } from "@artsy/palette"
 import { Match, Router } from "found"
 import React from "react"
 import { Link, Meta, Title } from "react-head"
@@ -18,6 +18,7 @@ import { Collect_marketingHubCollections } from "v2/__generated__/Collect_market
 import { collectRoutes_ArtworkFilterQueryResponse } from "v2/__generated__/collectRoutes_ArtworkFilterQuery.graphql"
 import { CollectionsHubsNavFragmentContainer as CollectionsHubsNav } from "v2/Components/CollectionsHubsNav"
 import { ArtworkFilter } from "v2/Components/v2/ArtworkFilter"
+import { RouterLink } from "v2/Artsy/Router/RouterLink"
 
 export interface CollectAppProps {
   match: Match
@@ -67,9 +68,18 @@ export const CollectApp: React.FC<CollectAppProps> = ({
         {filterArtworks && <SeoProductsForArtworks artworks={filterArtworks} />}
 
         <Box mt={3}>
-          <Text variant="largeTitle">
-            <h1>Collect art and design online</h1>
-          </Text>
+          <Flex
+            justifyContent="space-between"
+            alignItems={["left", "center"]}
+            flexDirection={["column", "row"]}
+          >
+            <Text variant="largeTitle">
+              <h1>Collect art and design online</h1>
+            </Text>
+            <Text variant="mediumText">
+              <RouterLink to="/collections">Browse by collection</RouterLink>
+            </Text>
+          </Flex>
           <Separator mt={2} mb={[2, 2, 2, 4]} />
 
           <CollectionsHubsNav
