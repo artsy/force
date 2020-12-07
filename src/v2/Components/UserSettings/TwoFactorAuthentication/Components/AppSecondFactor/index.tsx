@@ -16,11 +16,11 @@ import { useSystemContext } from "v2/Artsy"
 import { AppSecondFactorModal } from "./Modal"
 import { ApiError } from "../../ApiError"
 import { ApiErrorModal } from "../ApiErrorModal"
-import { DisableSecondFactor } from "../Mutation/DisableSecondFactor"
 import { CreateAppSecondFactor } from "./Mutation/CreateAppSecondFactor"
 import { DisableFactorConfirmation } from "../DisableFactorConfirmation"
 
 import { AppSecondFactor_me } from "v2/__generated__/AppSecondFactor_me.graphql"
+import { ConfirmPasswordModal } from "v2/Components/ConfirmPasswordModal"
 
 interface AppSecondFactorProps extends BorderBoxProps {
   me: AppSecondFactor_me
@@ -31,10 +31,11 @@ export const AppSecondFactor: React.FC<AppSecondFactorProps> = props => {
   const { me, relayRefetch } = props
   const [apiErrors, setApiErrors] = useState<ApiError[]>([])
   const [showConfirmDisable, setShowConfirmDisable] = useState(false)
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [showSetupModal, setShowSetupModal] = useState(false)
   const [showCompleteModal, setShowCompleteModal] = useState(false)
   const [stagedSecondFactor, setStagedSecondFactor] = useState(null)
-  const [isDisabling, setDisabling] = useState(false)
+  const [isDisabling] = useState(false)
   const [isCreating, setCreating] = useState(false)
 
   const { relayEnvironment } = useSystemContext()
@@ -80,6 +81,7 @@ export const AppSecondFactor: React.FC<AppSecondFactorProps> = props => {
         attributes: {},
       })
       setStagedSecondFactor(response.createAppSecondFactor.secondFactorOrErrors)
+      setShowConfirmPassword(false)
       setShowSetupModal(true)
     } catch (error) {
       handleMutationError(error)
@@ -88,25 +90,10 @@ export const AppSecondFactor: React.FC<AppSecondFactorProps> = props => {
     setCreating(false)
   }
 
-  async function disableSecondFactor() {
-    setShowConfirmDisable(false)
-    setDisabling(true)
-
-    if (me.appSecondFactors[0].__typename !== "AppSecondFactor") {
-      return
-    }
-
-    try {
-      await DisableSecondFactor(relayEnvironment, {
-        secondFactorID: me.appSecondFactors[0].internalID,
-      })
-      relayRefetch.refetch({}, {}, () => {
-        setDisabling(false)
-      })
-    } catch (error) {
-      setDisabling(false)
-      handleMutationError(error)
-    }
+  function disableSecondFactor() {
+    relayRefetch.refetch({}, {}, () => {
+      setShowConfirmDisable(false)
+    })
   }
 
   const DisableButton = props => (
@@ -123,7 +110,7 @@ export const AppSecondFactor: React.FC<AppSecondFactorProps> = props => {
 
   const SetupButton = props => (
     <Button
-      onClick={createSecondFactor}
+      onClick={() => setShowConfirmPassword(true)}
       loading={isCreating}
       disabled={isCreating}
       {...props}
@@ -153,28 +140,34 @@ export const AppSecondFactor: React.FC<AppSecondFactorProps> = props => {
         </Flex>
         <Flex mt={[3, 0]} flexDirection={["column", "row"]} alignItems="center">
           {me.appSecondFactors.length &&
-            me.appSecondFactors[0].__typename === "AppSecondFactor" ? (
-              <>
-                <Sans color="black60" size="3" weight="medium">
-                  {me.appSecondFactors[0].name || "Unnamed"}
-                </Sans>
-                <DisableButton width={["100%", "auto"]} ml={[0, 1]} mt={[1, 0]} />
-                <SetupButton
-                  width={["100%", "auto"]}
-                  ml={[0, 1]}
-                  mt={[1, 0]}
-                  variant="secondaryGray"
-                >
-                  Edit
+          me.appSecondFactors[0].__typename === "AppSecondFactor" ? (
+            <>
+              <Sans color="black60" size="3" weight="medium">
+                {me.appSecondFactors[0].name || "Unnamed"}
+              </Sans>
+              <DisableButton width={["100%", "auto"]} ml={[0, 1]} mt={[1, 0]} />
+              <SetupButton
+                width={["100%", "auto"]}
+                ml={[0, 1]}
+                mt={[1, 0]}
+                variant="secondaryGray"
+              >
+                Edit
               </SetupButton>
-              </>
-            ) : (
-              <SetupButton width={["100%", "auto"]} ml={[0, 1]} mt={[1, 0]}>
-                Set up
-              </SetupButton>
-            )}
+            </>
+          ) : (
+            <SetupButton width={["100%", "auto"]} ml={[0, 1]} mt={[1, 0]}>
+              Set up
+            </SetupButton>
+          )}
         </Flex>
       </Flex>
+      <ConfirmPasswordModal
+        show={showConfirmPassword}
+        onConfirm={createSecondFactor}
+        onCancel={() => setShowConfirmPassword(false)}
+        inputMessage="Password is required to change 2FA settings."
+      />
       <AppSecondFactorModal
         show={showSetupModal}
         secondFactor={stagedSecondFactor}
@@ -186,11 +179,15 @@ export const AppSecondFactor: React.FC<AppSecondFactorProps> = props => {
         show={!!apiErrors.length}
         errors={apiErrors}
       />
-      <DisableFactorConfirmation
-        show={showConfirmDisable}
-        onConfirm={disableSecondFactor}
-        onCancel={() => setShowConfirmDisable(false)}
-      />
+      {me.appSecondFactors.length > 0 &&
+        me.appSecondFactors[0].__typename === "AppSecondFactor" && (
+          <DisableFactorConfirmation
+            show={showConfirmDisable}
+            onConfirm={disableSecondFactor}
+            onCancel={() => setShowConfirmDisable(false)}
+            secondFactorID={me.appSecondFactors[0].internalID}
+          />
+        )}
       <Modal
         title="Set up with app"
         onClose={onCompleteConfirmed}
