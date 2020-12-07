@@ -1,5 +1,8 @@
 import React from "react"
 import styled from "styled-components"
+import { Media } from "v2/Utils/Responsive"
+import { SectionContainer } from "./SectionContainer"
+import { RouterLink } from "v2/Artsy/Router/RouterLink"
 
 import {
   Box,
@@ -8,34 +11,35 @@ import {
   ResponsiveImage,
   Sans,
   Spacer,
+  Image,
 } from "@artsy/palette"
-import { Media } from "v2/Utils/Responsive"
-import { SectionContainer } from "./SectionContainer"
-import { RouterLink } from "v2/Artsy/Router/RouterLink"
 
 export const Header: React.FC = () => {
   return (
     <SectionContainer background="black5" height={[415, 546]} constrain={false}>
       <HeaderImageContainer>
-        <Flex width="100%" justifyContent="space-between" m="auto">
-          <Media greaterThan="md">
-            <LeftImage>
-              <ResponsiveImage
-                src="https://files.artsy.net/consign/header-1.jpg"
-                style={{
-                  backgroundPosition: "left",
-                  transformOrigin: "left",
-                }}
-              />
-            </LeftImage>
+        <Flex
+          width="100%"
+          justifyContent="space-between"
+          m="auto"
+          maxWidth={1280}
+        >
+          <Media greaterThan="xs">
+            <Image
+              src="https://files.artsy.net/consign/header-1.jpg"
+              width={380}
+              height={550}
+            />
           </Media>
           <CenterImage>
             <ResponsiveImage src="https://files.artsy.net/consign/header-2.jpg" />
           </CenterImage>
-          <Media greaterThan="md">
-            <RightImage>
-              <ResponsiveImage src="https://files.artsy.net/consign/header-3.jpg" />
-            </RightImage>
+          <Media greaterThan="xs">
+            <Image
+              src="https://files.artsy.net/consign/header-3.jpg"
+              width={380}
+              height={550}
+            />
           </Media>
         </Flex>
       </HeaderImageContainer>
@@ -65,17 +69,10 @@ const HeaderImageContainer = styled(Flex).attrs({
   max-width: 1670px;
 `
 
-const LeftImage = styled(Box)`
-  left: 9%;
-  position: absolute;
-  transform-origin: center;
-  transform: translateY(-50%);
-  width: 31%;
-`
-
 const CenterImage = styled(Box)`
   position: absolute;
   left: 50%;
+  top: 50%;
   transform-origin: center;
   transform: translateX(-50%) translateY(-50%);
   width: 670px;
@@ -83,15 +80,4 @@ const CenterImage = styled(Box)`
   z-index: 2;
 `
 
-const RightImage = styled(Box)`
-  position: absolute;
-  right: 4%;
-  transform-origin: center;
-  transform: translateY(-50%);
-  width: 31%;
-`
-
-// Tests
-LeftImage.displayName = "LeftImage"
 CenterImage.displayName = "CenterImage"
-RightImage.displayName = "RightImage"

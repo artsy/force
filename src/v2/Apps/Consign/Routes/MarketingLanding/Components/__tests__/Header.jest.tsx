@@ -25,18 +25,16 @@ describe("Header", () => {
   describe("desktop", () => {
     it("shows all images", () => {
       const wrapper = getWrapper()
-      expect(wrapper.find("LeftImage").length).toBe(1)
+      expect(wrapper.find("Image").length).toBe(2)
       expect(wrapper.find("CenterImage").length).toBe(1)
-      expect(wrapper.find("RightImage").length).toBe(1)
     })
   })
 
   describe("mobile", () => {
     it("shows only one image", () => {
-      const wrapper = getWrapper("sm")
-      expect(wrapper.find("LeftImage").length).toBe(0)
+      const wrapper = getWrapper("xs")
+      expect(wrapper.find("Image").length).toBe(0)
       expect(wrapper.find("CenterImage").length).toBe(1)
-      expect(wrapper.find("RightImage").length).toBe(0)
     })
   })
 })
