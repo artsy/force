@@ -1,6 +1,6 @@
 import { userRequiredMiddleware } from "../userRequiredMiddleware"
 
-describe.only("userRequiredMiddleware", () => {
+describe("userRequiredMiddleware", () => {
   it("does not redirect for non-matching route", () => {
     const req = {
       path: "/do-not-match",
