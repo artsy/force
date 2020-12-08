@@ -104,6 +104,13 @@ function initializeNovo() {
             global: res.locals.asset("/assets/main_layout.css"),
           },
           env: NODE_ENV,
+          icons: {
+            // TODO: Move to new assset pipeline, this adds the CDN for images.
+            favicon: res.locals.asset("/images/favicon.ico"),
+            icon120: res.locals.asset("/images/icon-120.png"),
+            icon152: res.locals.asset("/images/icon-152.png"),
+            icon76: res.locals.asset("/images/icon-76.png"),
+          },
           manifest: {
             artsy: NOVO_MANIFEST.lookup("/assets-novo/artsy.js"),
             artsyCommon: NOVO_MANIFEST.lookup("/assets-novo/artsy-common.js"),
