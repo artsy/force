@@ -37,7 +37,7 @@ function findAssets(folder) {
     asset[fileName].unshift(path.join(basePath, "./src/lib/global_modules"))
     if (env.isDevelopment) {
       asset[fileName].unshift(
-        "webpack-hot-middleware/client?name=force&reload=true"
+        "webpack-hot-middleware/client?path=http://localhost:3001/__webpack_hmr&name=force&reload=true"
       )
     }
 

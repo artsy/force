@@ -59,5 +59,3 @@ function startServer() {
 
   process.on("SIGTERM", stopServer)
 }
-
-module.exports = app

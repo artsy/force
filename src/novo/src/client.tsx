@@ -18,7 +18,19 @@ import("v2/Artsy/Router/client")
       ReactDOM.hydrate(<ClientApp />, document.getElementById("react-root"))
     })
   })
-  .then(() => { return import("desktop/apps/authentication/client/initModalManager") })
-  .then(({ initModalManager }) => { initModalManager() })
-  .then(() => { mediator.on("auth:logout", logoutEventHandler) })
-  .catch(error => { console.error(error) })
+  .then(() => {
+    return import("desktop/apps/authentication/client/initModalManager")
+  })
+  .then(({ initModalManager }) => {
+    initModalManager()
+  })
+  .then(() => {
+    mediator.on("auth:logout", logoutEventHandler)
+  })
+  .catch(error => {
+    console.error(error)
+  })
+
+if (module.hot) {
+  module.hot.accept()
+}

@@ -39,7 +39,7 @@ function productionAssets(manifestFileName: string): RequestHandler {
  */
 function developmentAssets(): RequestHandler {
   return (_req: ArtsyRequest, res: ArtsyResponse, next: NextFunction) => {
-    res.locals.asset = filename => filename
+    res.locals.asset = filename => `http://localhost:3001${filename}`
     next()
   }
 }

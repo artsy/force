@@ -2,22 +2,29 @@
 // TODO: Find a way to remove JSDOM from our server.
 import "./lib/DOMParser"
 
-// Needs to be first, due to sharify side-effects.
-import commonMiddlewareSetup from "./common-middleware"
+// Setup sharify
+// TODO: Export a function instead of loading on import.
+import "./lib/setup_sharify"
 
+import chalk from "chalk"
 import express from "express"
 import RavenServer from "raven"
+
+import { errorHandlerMiddleware } from "./lib/middleware/errorHandler"
 import { initializeForce } from "./current"
 import { initializeNovo } from "./novo/src/server"
-import config from "./config"
-import { errorHandlerMiddleware } from "./lib/middleware/errorHandler"
 import { morganMiddleware } from "./lib/middleware/morgan"
+import commonMiddlewareSetup from "./common-middleware"
+import config from "./config"
 
-const { SENTRY_PRIVATE_DSN } = config
+const { NODE_ENV, SENTRY_PRIVATE_DSN } = config
 
 const app = express()
 
-function initialize(startServerCallback) {
+// eslint-disable-next-line no-console
+console.log(chalk.green(`\n[Force] NODE_ENV=${NODE_ENV}\n`))
+
+export function initialize(startServerCallback) {
   app.set("trust proxy", true)
 
   // Log all routes
@@ -78,7 +85,7 @@ function initialize(startServerCallback) {
   // 404 handler
   app.get("*", (req, res, next) => {
     const err = new Error()
-    err.status = 404
+    ;(err as any).status = 404
     err.message = "Not Found"
     next(err)
   })
@@ -100,7 +107,3 @@ function initialize(startServerCallback) {
 
   return app
 }
-
-// TODO: Remove when no longer needed for hot reloading
-module.exports = app
-module.exports.initialize = initialize

@@ -40,7 +40,7 @@ function getRoutePaths(): string[] {
   return flatRoutes
 }
 
-function initializeNovo() {
+export function initializeNovo() {
   app.get("/novo", (req, res) => {
     res.send(`
       <!doctype html>
@@ -136,8 +136,3 @@ function initializeNovo() {
   )
   return app
 }
-
-// This export form is required for express-reloadable
-// TODO: Remove when no longer needed for hot reloading
-module.exports = app
-module.exports.initializeNovo = initializeNovo

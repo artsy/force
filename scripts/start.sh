@@ -11,7 +11,9 @@ if [ "${NODE_ENV}" != "production" ]; then
   fi
   OPT+=(--preserve-symlinks)
 
-  yarn relay --watch & BUILD_CLIENT=true exec node "${OPT[@]}" ./src/index.dev.js
+  yarn relay --watch & \
+    exec ./node_modules/.bin/nodemon "${OPT[@]}" ./src/index.server.js & \
+    exec node "${OPT[@]}" ./src/index.hot.js
 else
   exec node "${OPT[@]}" ./server.dist.js
 fi

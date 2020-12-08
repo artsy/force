@@ -2,43 +2,50 @@ require("dotenv/config")
 require("coffeescript/register")
 require("@babel/register")({
   extensions: [".ts", ".js", ".tsx", ".jsx"],
-  plugins: ["babel-plugin-dynamic-import-node"],
 })
 
 // Workaround until more appropriate methods for generating an individual config
 // are implemented.
 process.env.AUTO_CONFIGURE = true
 
-// Force resolution of potentially `yarn link`'d modules to the local node_modules
-// folder. This gets around SSR issues involving single react context requirements,
-// amongst other things. This is server-side only. Client-side must be resolved
-// via webpack.
-const { setAliases } = require("require-control")
-
 const express = require("express")
+const glob = require("glob")
 const path = require("path")
 const webpack = require("webpack")
 const webpackDevMiddleware = require("webpack-dev-middleware")
 const webpackHotMiddleware = require("webpack-hot-middleware")
 const { createConfig } = require("../webpack/index")
 
-setAliases({
-  react: path.resolve(path.join(__dirname, "../node_modules/react")),
-  "react-dom": path.resolve(path.join(__dirname, "../node_modules/react-dom")),
-  "styled-components": path.resolve(
-    path.join(__dirname, "../node_modules/styled-components")
-  ),
-})
-
 const clientNovoConfig = createConfig("novo.dev")
 const clientForceConfig = createConfig("force.dev")
 
-const force = require("./common-app")
+const stylusMiddleware = require("stylus").middleware
 
 function startServer() {
   const compiler = webpack([clientNovoConfig, clientForceConfig])
 
   const app = express()
+
+  // Stylus dev assets. TODO: Compile to public folder.
+  glob
+    .sync(`${__dirname}/{public,{desktop,mobile}/**/public}`)
+    .forEach(folder => {
+      app.use(express.static(folder))
+    })
+
+  app.use(
+    stylusMiddleware({
+      dest: path.resolve(__dirname, "../desktop/public"),
+      src: path.resolve(__dirname, "../desktop"),
+    })
+  )
+  app.use(
+    stylusMiddleware({
+      dest: path.resolve(__dirname, "../mobile/public"),
+      src: path.resolve(__dirname, "../mobile"),
+    })
+  )
+
   const wdm = webpackDevMiddleware(compiler, {
     publicPath: clientForceConfig.output.publicPath,
     quiet: true,
@@ -55,12 +62,11 @@ function startServer() {
         /loadable-stats/.test(filePath) ||
         /loadable-novo-stats/.test(filePath) ||
         /manifest/.test(filePath) ||
-        /\.ejs/.test(filePath)
+        /\.ejs/.test(filePath) ||
+        /\.css/.test(filePath)
       )
     },
   })
-
-  force.initialize(() => {})
 
   app.use(wdm)
   app.use(
@@ -68,16 +74,15 @@ function startServer() {
       log: false,
     })
   )
-  app.use(force)
 
-  const server = app.listen(5000, "localhost", err => {
+  const server = app.listen(3001, "localhost", err => {
     if (err) {
       console.error(err)
       return
     }
 
     // eslint-disable-next-line no-console
-    console.log("Listening on localhost:5000")
+    console.log("Listening on localhost:3001")
   })
 
   process.on("SIGTERM", () => {

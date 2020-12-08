@@ -13,7 +13,7 @@ export const clientNovoDevelopmentConfig = {
   devtool: "source-map",
   entry: {
     "artsy-novo": [
-      "webpack-hot-middleware/client?name=novo",
+      "webpack-hot-middleware/client?path=http://localhost:3001/__webpack_hmr&name=novo",
       path.resolve(process.cwd(), "src/novo/src/client.tsx"),
     ],
   },
@@ -70,6 +70,19 @@ export const clientNovoDevelopmentConfig = {
         type: "javascript/auto",
         use: [],
       },
+      // https://github.com/bazilio91/ejs-compiled-loader/issues/46
+      {
+        test: /\.ejs$/,
+        use: {
+          loader: "ejs-compiled-loader",
+          options: {
+            htmlmin: true,
+            htmlminOptions: {
+              removeComments: true,
+            },
+          },
+        },
+      },
     ],
   },
   name: "novo",
@@ -77,6 +90,7 @@ export const clientNovoDevelopmentConfig = {
     // Extract webpack runtime code into it's own file
     runtimeChunk: "single",
     splitChunks: {
+      automaticNameDelimiter: "-",
       cacheGroups: {
         "arsty-common": {
           chunks: "all",
@@ -96,24 +110,6 @@ export const clientNovoDevelopmentConfig = {
           reuseExistingChunk: true,
           test: /.*node_modules[\\/](@artsy)[\\/]/,
         },
-        "common-backbone": {
-          chunks: "all",
-          enforce: true,
-          minChunks: 1,
-          minSize: 0,
-          name: "common-backbone",
-          reuseExistingChunk: true,
-          test: /.*node_modules[\\/](backbone.*)[\\/]/,
-        },
-        "common-jquery": {
-          chunks: "all",
-          enforce: true,
-          minChunks: 1,
-          minSize: 0,
-          name: "common-jquery",
-          reuseExistingChunk: true,
-          test: /.*node_modules[\\/](jquery.*)[\\/]/,
-        },
         "common-react": {
           chunks: "all",
           enforce: true,
@@ -130,7 +126,7 @@ export const clientNovoDevelopmentConfig = {
           minSize: 0,
           name: "common-utility",
           reuseExistingChunk: true,
-          test: /.*node_modules[\\/](lodash.*|moment.*)[\\/]/,
+          test: /.*node_modules[\\/](lodash.*|moment.*|luxon.*)[\\/]/,
         },
         commons: {
           chunks: "all",
@@ -139,16 +135,18 @@ export const clientNovoDevelopmentConfig = {
           minSize: 0,
           name: "common",
           reuseExistingChunk: true,
-          test: /.*node_modules[\\/](?!(@artsy[\\/]|react[\\/]|react-dom[\\/]|backbone.*[\\/]|lodash.*[\\/]|moment.*[\\/]|jquery.*[\\/]))/,
+          test: /.*node_modules[\\/](?!(@artsy[\\/]|react[\\/]|react-dom[\\/]|backbone.*[\\/]|lodash.*[\\/]|moment.*[\\/]|luxon.*[\\/]|jquery.*[\\/]))/,
         },
       },
       maxInitialRequests: Infinity,
+      maxSize: 1000000,
+      minSize: 700000,
     },
   },
   output: {
     filename: "novo-[name].js",
     path: path.resolve(basePath, "public/assets-novo"),
-    publicPath: "/assets-novo/",
+    publicPath: "http://localhost:3001/assets-novo/",
   },
   parallelism: 100,
   plugins: [
@@ -200,13 +198,8 @@ export const clientNovoDevelopmentConfig = {
     }),
     new HtmlWebpackPlugin({
       filename: path.resolve(basePath, "public", "index.ejs"),
-      template: `!!raw-loader!${path.resolve(
-        basePath,
-        "src",
-        "novo",
-        "src",
-        "index.ejs"
-      )}`,
+      inject: false,
+      template: path.resolve(basePath, "src", "novo", "src", "index.ejs"),
     }),
   ],
   resolve: {

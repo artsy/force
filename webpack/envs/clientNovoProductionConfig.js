@@ -68,6 +68,19 @@ export const clientNovoProductionConfig = {
         type: "javascript/auto",
         use: [],
       },
+      // https://github.com/bazilio91/ejs-compiled-loader/issues/46
+      {
+        test: /\.ejs$/,
+        use: {
+          loader: "ejs-compiled-loader",
+          options: {
+            htmlmin: true,
+            htmlminOptions: {
+              removeComments: true,
+            },
+          },
+        },
+      },
     ],
   },
   optimization: {
@@ -83,6 +96,7 @@ export const clientNovoProductionConfig = {
     // Extract webpack runtime code into it's own file
     runtimeChunk: "single",
     splitChunks: {
+      automaticNameDelimiter: "-",
       cacheGroups: {
         "arsty-common": {
           chunks: "all",
@@ -101,24 +115,6 @@ export const clientNovoProductionConfig = {
           name: "artsy",
           reuseExistingChunk: true,
           test: /.*node_modules[\\/](@artsy)[\\/]/,
-        },
-        "common-backbone": {
-          chunks: "all",
-          enforce: true,
-          minChunks: 1,
-          minSize: 0,
-          name: "common-backbone",
-          reuseExistingChunk: true,
-          test: /.*node_modules[\\/](backbone.*)[\\/]/,
-        },
-        "common-jquery": {
-          chunks: "all",
-          enforce: true,
-          minChunks: 1,
-          minSize: 0,
-          name: "common-jquery",
-          reuseExistingChunk: true,
-          test: /.*node_modules[\\/](jquery.*)[\\/]/,
         },
         "common-react": {
           chunks: "all",
@@ -149,10 +145,12 @@ export const clientNovoProductionConfig = {
         },
       },
       maxInitialRequests: Infinity,
+      maxSize: 1000000,
+      minSize: 700000,
     },
   },
   output: {
-    filename: "novo-[name].22820.[contenthash].js",
+    filename: "novo-[name].[chunkhash:8].js",
     path: path.resolve(basePath, "public/assets-novo"),
     publicPath: "/assets-novo/",
   },
@@ -212,13 +210,7 @@ export const clientNovoProductionConfig = {
         conservativeCollapse: true,
         removeComments: true,
       },
-      template: `!!raw-loader!${path.resolve(
-        basePath,
-        "src",
-        "novo",
-        "src",
-        "index.ejs"
-      )}`,
+      template: path.resolve(basePath, "src", "novo", "src", "index.ejs"),
     }),
   ],
   resolve: {

@@ -1,4 +1,3 @@
-import path from "path"
 import config from "../config"
 import { unlessStartsWith } from "./middleware/unless"
 import { intercomMiddleware } from "./middleware/intercom"
@@ -53,58 +52,17 @@ export default function forceMiddleware(app) {
     app.use(splitTestMiddleware)
   }
 
-  if (process.env.NODE_ENV === "development") {
-    app.use(
-      require("stylus").middleware({
-        dest: path.resolve(__dirname, "../desktop/public"),
-        src: path.resolve(__dirname, "../desktop"),
-      })
-    )
-    app.use(
-      require("stylus").middleware({
-        dest: path.resolve(__dirname, "../mobile/public"),
-        src: path.resolve(__dirname, "../mobile"),
-      })
-    )
+  app.use((req, res, next) => {
+    if (res.locals.sd.IS_MOBILE) {
+      // Mount mobile app
+      require("../mobile")(req, res, next)
+    } else {
+      next()
+    }
+  })
 
-    // Setup hot-swap loader. See https://github.com/artsy/express-reloadable
-    const { createReloadable } = require("@artsy/express-reloadable")
-    const mountAndReload = createReloadable(app, require)
-
-    app.use((req, res, next) => {
-      if (res.locals.sd.IS_MOBILE) {
-        // Mount reloadable mobile app
-        const mobileApp = mountAndReload(path.resolve("src/mobile"))
-        mobileApp(req, res, next)
-      } else {
-        next()
-      }
-    })
-
-    // Mount reloadable desktop
-    mountAndReload(path.resolve("src/desktop"), {
-      watchModules: [
-        path.resolve(process.cwd(), "src/v2"),
-        "@artsy/cohesion",
-        "@artsy/fresnel",
-        "@artsy/palette",
-        "@artsy/reaction",
-        "@artsy/stitch",
-      ],
-    })
-
-    // In staging or prod, mount routes normally
-  } else {
-    app.use((req, res, next) => {
-      if (res.locals.sd.IS_MOBILE) {
-        // Mount mobile app
-        require("../mobile")(req, res, next)
-      } else {
-        next()
-      }
-    })
-
-    // Mount desktop app
-    app.use(require("../desktop"))
-  }
+  // Mount desktop app
+  app.use((req, res, next) => {
+    require("../desktop")(req, res, next)
+  })
 }

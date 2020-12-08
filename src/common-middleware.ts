@@ -1,7 +1,3 @@
-// Setup sharify
-// TODO: Export a function instead of loading on import.
-import "./lib/setup_sharify"
-
 import artsyPassport from "@artsy/passport"
 import addRequestId from "express-request-id"
 import compression from "compression"
@@ -107,6 +103,7 @@ function staticAssetMiddlewares(app) {
   app.use(express.static("public"))
 
   // Mount static assets from sub-app /app `public` folders
+  // TODO: Are these only dev assets? Move to hot only.
   glob
     .sync(`${__dirname}/{public,{desktop,mobile}/**/public}`)
     .forEach(folder => {

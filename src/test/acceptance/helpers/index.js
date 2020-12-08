@@ -36,11 +36,11 @@ export const setup = async () => {
   metaphysics = await startApp(METAPHYSICS_PORT)
   force = await startForce(FORCE_PORT)
   browser = Nightmare({
-    waitTimeout: TIMEOUT,
+    executionTimeout: TIMEOUT,
     gotoTimeout: TIMEOUT,
     loadTimeout: TIMEOUT,
-    executionTimeout: TIMEOUT,
     typeInterval: 10,
+    waitTimeout: TIMEOUT,
   })
 
   initializeBrowser(browser)
@@ -56,7 +56,7 @@ export const setup = async () => {
   process.removeAllListeners("uncaughtException")
   process.on("uncaughtException", warn)
 
-  return { force, gravity, metaphysics, positron, browser }
+  return { browser, force, gravity, metaphysics, positron }
 }
 
 // Closes all of the mocked API servers
@@ -111,8 +111,8 @@ const warn = e => console.log("warning", chalk.yellow(e))
 
 const startForce = port =>
   new Promise((resolve, reject) => {
-    const app = require("../../../common-app")
-    app.initialize(() => {})
+    const { initialize } = require("../../../common-app")
+    const app = initialize(() => {})
     servers.push(
       app.listen(port, err => {
         if (err) reject(err)
@@ -142,18 +142,18 @@ const startGravity = port =>
     })
     app.get("/api/v1/xapp_token", (req, res) => {
       res.send({
-        xapp_token: "xapp-token",
         expires_in: moment().add(100, "days").utc().format(),
+        xapp_token: "xapp-token",
       })
     })
     app.get("/api/v1/profile/pace-gallery", (req, res) => {
       res.send(
         fabricate("profile", {
-          owner_type: "PartnerGallery",
           owner: fabricate("partner", {
             id: "pace-gallery",
             profile_layout: "gallery_one",
           }),
+          owner_type: "PartnerGallery",
         })
       )
     })

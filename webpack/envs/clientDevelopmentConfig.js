@@ -31,7 +31,6 @@ export const clientDevelopmentConfig = {
   devtool: env.webpackDevtool || "eval",
   entry: getEntrypoints(),
   module: {
-    // Why do we only compile css in development mode?
     rules: [
       {
         include: path.resolve(basePath, "src/desktop/assets"),
@@ -51,6 +50,7 @@ export const clientDevelopmentConfig = {
           },
         ],
       },
+      // Why do we only compile css in development mode?
       {
         include: path.resolve(basePath, "src"),
         test: /\.styl$/,
@@ -75,6 +75,9 @@ export const clientDevelopmentConfig = {
     ],
   },
   name: "force",
+  output: {
+    publicPath: "http://localhost:3001/assets/",
+  },
   plugins: [
     new CaseSensitivePathsPlugin(),
     new webpack.HotModuleReplacementPlugin(),
