@@ -6,18 +6,20 @@ import { FragmentRefs } from "relay-runtime";
 export type ArtistConsignHeaderImages_artist = {
     readonly targetSupply: {
         readonly microfunnel: {
-            readonly artworks: ReadonlyArray<{
-                readonly artwork: {
-                    readonly image: {
-                        readonly resized: {
-                            readonly width: number | null;
-                            readonly height: number | null;
-                            readonly url: string;
+            readonly artworksConnection: {
+                readonly edges: ReadonlyArray<{
+                    readonly node: {
+                        readonly image: {
+                            readonly resized: {
+                                readonly width: number | null;
+                                readonly height: number | null;
+                                readonly url: string;
+                            } | null;
                         } | null;
+                        readonly " $fragmentRefs": FragmentRefs<"FillwidthItem_artwork">;
                     } | null;
-                    readonly " $fragmentRefs": FragmentRefs<"FillwidthItem_artwork">;
-                } | null;
-            } | null> | null;
+                } | null> | null;
+            } | null;
         } | null;
     } | null;
     readonly " $refType": "ArtistConsignHeaderImages_artist";
@@ -55,72 +57,83 @@ const node: ReaderFragment = {
             {
               "alias": null,
               "args": null,
-              "concreteType": "ArtistTargetSupplyMicrofunnelArtwork",
+              "concreteType": "ArtworkConnection",
               "kind": "LinkedField",
-              "name": "artworks",
-              "plural": true,
+              "name": "artworksConnection",
+              "plural": false,
               "selections": [
                 {
                   "alias": null,
                   "args": null,
-                  "concreteType": "Artwork",
+                  "concreteType": "ArtworkEdge",
                   "kind": "LinkedField",
-                  "name": "artwork",
-                  "plural": false,
+                  "name": "edges",
+                  "plural": true,
                   "selections": [
                     {
                       "alias": null,
                       "args": null,
-                      "concreteType": "Image",
+                      "concreteType": "Artwork",
                       "kind": "LinkedField",
-                      "name": "image",
+                      "name": "node",
                       "plural": false,
                       "selections": [
                         {
                           "alias": null,
-                          "args": [
-                            {
-                              "kind": "Literal",
-                              "name": "height",
-                              "value": 395
-                            }
-                          ],
-                          "concreteType": "ResizedImageUrl",
+                          "args": null,
+                          "concreteType": "Image",
                           "kind": "LinkedField",
-                          "name": "resized",
+                          "name": "image",
                           "plural": false,
                           "selections": [
                             {
                               "alias": null,
-                              "args": null,
-                              "kind": "ScalarField",
-                              "name": "width",
-                              "storageKey": null
-                            },
-                            {
-                              "alias": null,
-                              "args": null,
-                              "kind": "ScalarField",
-                              "name": "height",
-                              "storageKey": null
-                            },
-                            {
-                              "alias": null,
-                              "args": null,
-                              "kind": "ScalarField",
-                              "name": "url",
-                              "storageKey": null
+                              "args": [
+                                {
+                                  "kind": "Literal",
+                                  "name": "height",
+                                  "value": 395
+                                }
+                              ],
+                              "concreteType": "ResizedImageUrl",
+                              "kind": "LinkedField",
+                              "name": "resized",
+                              "plural": false,
+                              "selections": [
+                                {
+                                  "alias": null,
+                                  "args": null,
+                                  "kind": "ScalarField",
+                                  "name": "width",
+                                  "storageKey": null
+                                },
+                                {
+                                  "alias": null,
+                                  "args": null,
+                                  "kind": "ScalarField",
+                                  "name": "height",
+                                  "storageKey": null
+                                },
+                                {
+                                  "alias": null,
+                                  "args": null,
+                                  "kind": "ScalarField",
+                                  "name": "url",
+                                  "storageKey": null
+                                }
+                              ],
+                              "storageKey": "resized(height:395)"
                             }
                           ],
-                          "storageKey": "resized(height:395)"
+                          "storageKey": null
+                        },
+                        {
+                          "args": null,
+                          "kind": "FragmentSpread",
+                          "name": "FillwidthItem_artwork"
                         }
                       ],
                       "storageKey": null
-                    },
-                    {
-                      "args": null,
-                      "kind": "FragmentSpread",
-                      "name": "FillwidthItem_artwork"
                     }
                   ],
                   "storageKey": null
@@ -137,5 +150,5 @@ const node: ReaderFragment = {
   ],
   "type": "Artist"
 };
-(node as any).hash = 'f7f772023dc79dc472421a1b53b4cffd';
+(node as any).hash = '64c51ded546f812a6837400f30c8ca29';
 export default node;

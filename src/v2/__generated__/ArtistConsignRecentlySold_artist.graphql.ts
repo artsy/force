@@ -6,12 +6,14 @@ import { FragmentRefs } from "relay-runtime";
 export type ArtistConsignRecentlySold_artist = {
     readonly targetSupply: {
         readonly microfunnel: {
-            readonly artworks: ReadonlyArray<{
-                readonly artwork: {
-                    readonly " $fragmentRefs": FragmentRefs<"FillwidthItem_artwork">;
-                } | null;
-                readonly realizedPrice: string | null;
-            } | null> | null;
+            readonly artworksConnection: {
+                readonly edges: ReadonlyArray<{
+                    readonly node: {
+                        readonly realizedPrice: string | null;
+                        readonly " $fragmentRefs": FragmentRefs<"FillwidthItem_artwork">;
+                    } | null;
+                } | null> | null;
+            } | null;
         } | null;
     } | null;
     readonly name: string | null;
@@ -50,32 +52,43 @@ const node: ReaderFragment = {
             {
               "alias": null,
               "args": null,
-              "concreteType": "ArtistTargetSupplyMicrofunnelArtwork",
+              "concreteType": "ArtworkConnection",
               "kind": "LinkedField",
-              "name": "artworks",
-              "plural": true,
+              "name": "artworksConnection",
+              "plural": false,
               "selections": [
                 {
                   "alias": null,
                   "args": null,
-                  "concreteType": "Artwork",
+                  "concreteType": "ArtworkEdge",
                   "kind": "LinkedField",
-                  "name": "artwork",
-                  "plural": false,
+                  "name": "edges",
+                  "plural": true,
                   "selections": [
                     {
+                      "alias": null,
                       "args": null,
-                      "kind": "FragmentSpread",
-                      "name": "FillwidthItem_artwork"
+                      "concreteType": "Artwork",
+                      "kind": "LinkedField",
+                      "name": "node",
+                      "plural": false,
+                      "selections": [
+                        {
+                          "alias": null,
+                          "args": null,
+                          "kind": "ScalarField",
+                          "name": "realizedPrice",
+                          "storageKey": null
+                        },
+                        {
+                          "args": null,
+                          "kind": "FragmentSpread",
+                          "name": "FillwidthItem_artwork"
+                        }
+                      ],
+                      "storageKey": null
                     }
                   ],
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "realizedPrice",
                   "storageKey": null
                 }
               ],
@@ -97,5 +110,5 @@ const node: ReaderFragment = {
   ],
   "type": "Artist"
 };
-(node as any).hash = '9554efc6c368bc6a4feebaeb434924ed';
+(node as any).hash = '4bb367f104df6c1ffe6a26b0eeb0555b';
 export default node;

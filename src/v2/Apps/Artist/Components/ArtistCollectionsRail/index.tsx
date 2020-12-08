@@ -20,9 +20,9 @@ export const ArtistCollectionsRailContent: React.SFC<Props> = passedProps => {
       <QueryRenderer<ArtistCollectionsRailQuery>
         environment={relayEnvironment}
         variables={{
+          artistID: passedProps.artistID,
           isFeaturedArtistContent: true,
           size: 16,
-          artistID: passedProps.artistID,
         }}
         query={graphql`
           query ArtistCollectionsRailQuery(

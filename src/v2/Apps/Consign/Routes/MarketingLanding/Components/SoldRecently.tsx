@@ -67,23 +67,37 @@ const SoldRecently: React.FC<SoldRecentlyProps> = ({ targetSupply }) => {
                   <>
                     <Media greaterThanOrEqual="sm">
                       <Flex flexDirection="row" alignItems="baseline">
+                        <Text variant="largeTitle">
+                          {artwork.realizedPrice}
+                        </Text>
+                        <Spacer ml={0.5} />
                         <Text variant="caption" color="black60">
                           Realized price
                         </Text>
-                        <Spacer ml={0.5} />
-                        <Text variant="largeTitle">
-                          {artwork.realizedPrice}
+                      </Flex>
+                      <Flex flexDirection="row" alignItems="baseline">
+                        <Text
+                          variant="caption"
+                          fontWeight="bold"
+                          color="#00A03E"
+                        >
+                          2.22x
+                        </Text>
+                        <Spacer ml={0.3} />
+                        <Text variant="caption" color="black60">
+                          estimate
                         </Text>
                       </Flex>
                     </Media>
                     <Media lessThan="sm">
                       <Flex flexDirection="column">
-                        <Text variant="caption" color="black60">
-                          Realized price
-                        </Text>
                         <Text variant="largeTitle">
                           {artwork.realizedPrice}
                         </Text>
+                        <Text variant="caption" color="black60">
+                          Realized price
+                        </Text>
+                        <Text variant="text">2.22x</Text>
                       </Flex>
                     </Media>
                   </>

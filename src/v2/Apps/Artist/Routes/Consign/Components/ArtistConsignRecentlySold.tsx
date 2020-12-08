@@ -16,7 +16,7 @@ interface ArtistConsignRecentlySoldProps {
 export const ArtistConsignRecentlySold: React.FC<ArtistConsignRecentlySoldProps> = ({
   artist,
 }) => {
-  if (!artist.targetSupply.microfunnel.artworks) {
+  if (artist.targetSupply.microfunnel.artworksConnection.edges.length === 0) {
     return null
   }
 
@@ -29,8 +29,8 @@ export const ArtistConsignRecentlySold: React.FC<ArtistConsignRecentlySoldProps>
           <Spacer my={4} />
 
           <Flex justifyContent={["center", "center"]} flexWrap="wrap">
-            {artist.targetSupply.microfunnel.artworks.map(
-              ({ artwork, realizedPrice }, key) => {
+            {artist.targetSupply.microfunnel.artworksConnection.edges.map(
+              ({ node }, key) => {
                 return (
                   <Flex
                     p={2}
@@ -39,14 +39,14 @@ export const ArtistConsignRecentlySold: React.FC<ArtistConsignRecentlySoldProps>
                     style={{ textAlign: "left" }}
                   >
                     <FillwidthItem
-                      artwork={artwork}
+                      artwork={node}
                       imageHeight={150}
                       showExtended={false}
                       contextModule={ContextModule.artistRecentlySold}
                     />
-                    {realizedPrice && (
+                    {node.realizedPrice && (
                       <Sans size="2" weight="medium">
-                        Sold for {realizedPrice}
+                        Sold for {node.realizedPrice}
                       </Sans>
                     )}
                   </Flex>
@@ -67,15 +67,16 @@ export const ArtistConsignRecentlySoldFragmentContainer = createFragmentContaine
       fragment ArtistConsignRecentlySold_artist on Artist {
         targetSupply {
           microfunnel {
-            artworks {
-              artwork {
-                ...FillwidthItem_artwork
+            artworksConnection {
+              edges {
+                node {
+                  ...FillwidthItem_artwork
+                  realizedPrice
+                }
               }
-              realizedPrice
             }
           }
         }
-
         name
       }
     `,

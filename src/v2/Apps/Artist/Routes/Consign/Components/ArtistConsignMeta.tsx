@@ -17,7 +17,7 @@ export const ArtistConsignMeta: React.FC<ArtistConsignMeta> = props => {
 
   const imageURL = get(
     targetSupply,
-    p => p.microfunnel.artworks[0].artwork.image.imageURL
+    p => p.microfunnel.artworksConnection.edges[0].node.image.imageURL
   )
 
   const appURL = getENV("APP_URL")
@@ -50,10 +50,12 @@ export const ArtistConsignMetaFragmentContainer = createFragmentContainer(
         href
         targetSupply {
           microfunnel {
-            artworks {
-              artwork {
-                image {
-                  imageURL: url(version: "medium")
+            artworksConnection {
+              edges {
+                node {
+                  image {
+                    imageURL: url(version: "medium")
+                  }
                 }
               }
             }
