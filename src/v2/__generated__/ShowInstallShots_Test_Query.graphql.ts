@@ -26,7 +26,7 @@ query ShowInstallShots_Test_Query {
 
 fragment ShowInstallShots_show on Show {
   name
-  images(default: false) {
+  images(default: false, size: 100) {
     internalID
     caption
     mobile: resized(height: 300) {
@@ -151,6 +151,11 @@ return {
                 "kind": "Literal",
                 "name": "default",
                 "value": false
+              },
+              {
+                "kind": "Literal",
+                "name": "size",
+                "value": 100
               }
             ],
             "concreteType": "Image",
@@ -231,7 +236,7 @@ return {
                 "storageKey": "resized(height:900,version:[\"larger\",\"large\"],width:900)"
               }
             ],
-            "storageKey": "images(default:false)"
+            "storageKey": "images(default:false,size:100)"
           },
           {
             "alias": null,
@@ -250,7 +255,7 @@ return {
     "metadata": {},
     "name": "ShowInstallShots_Test_Query",
     "operationKind": "query",
-    "text": "query ShowInstallShots_Test_Query {\n  show(id: \"xxx\") {\n    ...ShowInstallShots_show\n    id\n  }\n}\n\nfragment ShowInstallShots_show on Show {\n  name\n  images(default: false) {\n    internalID\n    caption\n    mobile: resized(height: 300) {\n      width\n      height\n    }\n    desktop: resized(height: 400, version: [\"larger\", \"large\"]) {\n      src\n      srcSet\n      width\n      height\n    }\n    zoom: resized(width: 900, height: 900, version: [\"larger\", \"large\"]) {\n      src\n      srcSet\n      width\n      height\n    }\n  }\n}\n"
+    "text": "query ShowInstallShots_Test_Query {\n  show(id: \"xxx\") {\n    ...ShowInstallShots_show\n    id\n  }\n}\n\nfragment ShowInstallShots_show on Show {\n  name\n  images(default: false, size: 100) {\n    internalID\n    caption\n    mobile: resized(height: 300) {\n      width\n      height\n    }\n    desktop: resized(height: 400, version: [\"larger\", \"large\"]) {\n      src\n      srcSet\n      width\n      height\n    }\n    zoom: resized(width: 900, height: 900, version: [\"larger\", \"large\"]) {\n      src\n      srcSet\n      width\n      height\n    }\n  }\n}\n"
   }
 };
 })();
