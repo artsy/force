@@ -45,7 +45,7 @@ export const artistsRoutes: RouteConfig[] = [
       },
 
       {
-        path: "artists-starting-with-:letter",
+        path: "artists-starting-with-:letter([a-zA-Z])",
         getComponent: () => ArtistsByLetterRoute,
         prepare: () => {
           return ArtistsByLetterRoute.preload()
