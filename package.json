@@ -294,6 +294,7 @@
     "coffeescript": "1.11.1",
     "cypress": "5.1.0",
     "danger": "7.0.16",
+    "ejs-compiled-loader": "3.0.0",
     "enzyme": "3.10.0",
     "enzyme-adapter-react-16": "1.14.0",
     "eslint": "6.8.0",

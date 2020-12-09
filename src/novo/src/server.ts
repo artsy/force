@@ -8,8 +8,9 @@ import loadAssetManifest from "lib/manifest"
 import express from "express"
 import path from "path"
 
-const config = require("../../config")
-const { NODE_ENV } = config
+// TODO: Use the same variables as the asset middleware. Both config and sharify
+// have a default CDN_URL while this does not.
+const { CDN_URL, NODE_ENV } = process.env
 
 const PUBLIC_DIR = path.resolve(__dirname, "../../../public")
 const NOVO_MANIFEST = loadAssetManifest("manifest-novo.json")
@@ -92,6 +93,7 @@ function initializeNovo() {
         const sharifyData = res.locals.sharify.script()
 
         const options = {
+          cdnUrl: NODE_ENV === "production" ? CDN_URL : "",
           content: {
             body: bodyHTML,
             data: sharifyData,
@@ -122,6 +124,7 @@ function initializeNovo() {
             ),
             runtime: NOVO_MANIFEST.lookup("/assets-novo/runtime.js"),
           },
+          // TODO: Post-release review that sharify is still used in the template.
           sd: sharify.data,
         }
 

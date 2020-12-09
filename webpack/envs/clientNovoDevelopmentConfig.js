@@ -70,6 +70,19 @@ export const clientNovoDevelopmentConfig = {
         type: "javascript/auto",
         use: [],
       },
+      // https://github.com/bazilio91/ejs-compiled-loader/issues/46
+      {
+        test: /\.ejs$/,
+        use: {
+          loader: "ejs-compiled-loader",
+          options: {
+            htmlmin: true,
+            htmlminOptions: {
+              removeComments: true,
+            },
+          },
+        },
+      },
     ],
   },
   name: "novo",
@@ -200,13 +213,8 @@ export const clientNovoDevelopmentConfig = {
     }),
     new HtmlWebpackPlugin({
       filename: path.resolve(basePath, "public", "index.ejs"),
-      template: `!!raw-loader!${path.resolve(
-        basePath,
-        "src",
-        "novo",
-        "src",
-        "index.ejs"
-      )}`,
+      inject: false,
+      template: path.resolve(basePath, "src", "novo", "src", "index.ejs"),
     }),
   ],
   resolve: {
