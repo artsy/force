@@ -144,7 +144,7 @@ git config --global user.email "contributor@example.com"
 Prefix your branch with your Github username:
 
 ```sh
-git checkout -b <usenrame>/branch-name
+git checkout -b <username>/branch-name
 git add .
 git commit -m 'Some descriptive commit message'
 ```
@@ -155,7 +155,7 @@ At this point a [series of githooks](https://github.com/artsy/force/blob/f549353
 git push
 ```
 
-This will then run `yarn type-check` to ensure that type-errors aren't committed which in turn will save time and unnecessary CI churn. (The reason we run type-checking before `git push` (vs `git commit`) is that it's common for developers to create temporary `wip` commits, which often contain type errors.)
+This will then run `yarn type-check` to ensure that type-errors aren't committed upstream, which in turn will prevent unnecessary CI churn when working on a feature. (The reason we run type-checking before `git push` (vs `git commit`) is that it's common for developers to create temporary `wip` commits, which often contain type errors.)
 
 > NOTE: For those who prefer to **not** use our git-hooks workflow, you can easily opt out by prefixing `HUSKY_SKIP_HOOKS=1` to executed commands, or by using `--no-verify`. To opt out globally, add this env var to your `.bashrc` (or related).
 
