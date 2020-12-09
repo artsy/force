@@ -141,30 +141,32 @@ git config --global user.name "Your Name"
 git config --global user.email "contributor@example.com"
 ```
 
-## Push
+Prefix your branch with your Github username:
 
 ```sh
-git push origin my-feature-branch
+git checkout -b <username>/branch-name
+git add .
+git commit -m 'Some descriptive commit message'
 ```
+
+At this point a [series of githooks](https://github.com/artsy/force/blob/f549353687203e0bd0abfe5239a8509d66e53fb2/package.json#L375-L381) will run via [Husky](https://github.com/typicode/husky) to ensure staged code is free of linting errors and is formatted properly with Prettier. If all good, then run
+
+```sh
+git push
+```
+
+This will then run `yarn type-check` to ensure that type-errors aren't committed upstream, which in turn will prevent unnecessary CI churn when working on a feature. (The reason we run type-checking before `git push` (vs `git commit`) is that it's common for developers to create temporary `wip` commits, which often contain type errors.)
+
+> NOTE: For those who prefer to **not** use our git-hooks workflow, you can easily opt out by prefixing `HUSKY_SKIP_HOOKS=1` to executed commands, or by using `--no-verify`. To opt out globally, add this env var to your `.bashrc` (or related).
 
 ## Make a Pull Request
 
-Go to https://github.com/contributor/force and select your feature branch.
+Go to https://github.com/artsy/force and select your branch.
 Click the 'Pull Request' button and fill out the form. Pull requests are usually reviewed within a few days.
-
-## Rebase
-
-If you've been working on a change for a while, rebase with upstream/master.
-
-```
-git fetch upstream
-git rebase upstream/master
-git push origin my-feature-branch -f
-```
 
 ## Check on Your Pull Request
 
-Go back to your pull request after a few minutes and see whether it passed muster with Semaphore. Everything should look green, otherwise fix issues and amend your commit as described above.
+Go back to your pull request after a few minutes and see whether it passed muster with Circle. Everything should look green, otherwise fix issues and amend your commit as described above.
 
 ## Be Patient
 
