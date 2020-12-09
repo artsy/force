@@ -10,19 +10,21 @@ jest.mock("v2/Utils/getENV", () => ({
 describe("ArtistConsignMeta", () => {
   const props = {
     artist: {
-      name: "Alex Katz",
       href: "/artist/alex-katz",
+      name: "Alex Katz",
       targetSupply: {
         microfunnel: {
-          artworks: [
-            {
-              artwork: {
-                image: {
-                  imageURL: "path/to/image.jpg",
+          artworksConnection: {
+            edges: [
+              {
+                node: {
+                  image: {
+                    imageURL: "path/to/image.jpg",
+                  },
                 },
               },
-            },
-          ],
+            ],
+          },
         },
       },
     },
@@ -107,15 +109,17 @@ describe("ArtistConsignMeta", () => {
         artist: {
           targetSupply: {
             microfunnel: {
-              artworks: [
-                {
-                  artwork: {
-                    image: {
-                      imageURL: null,
+              artworksConnection: {
+                edges: [
+                  {
+                    node: {
+                      image: {
+                        imageURL: null,
+                      },
                     },
                   },
-                },
-              ],
+                ],
+              },
             },
           },
         },
