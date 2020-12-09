@@ -374,7 +374,7 @@
   },
   "husky": {
     "hooks": {
-      "post-merge": "pull-lock",
+      "post-merge": "sh scripts/pull-lock.sh",
       "pre-commit": "lint-staged",
       "pre-push": "yarn type-check"
     }
