@@ -5,36 +5,27 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <meta charset='utf-8' />
 
-  <link rel='apple-touch-icon' href="<%= icons.icon152 %>" />
-  <link rel='apple-touch-icon' sizes='120x120' href="<% icons.icon120 %>" />
-  <link rel='apple-touch-icon' sizes='152x152' href="<%= icons.icon152 %>" />
-  <link rel='apple-touch-icon' sizes='76x76' href="<%= icons.icon76 %>" />
-  <link rel='icon' type='image/png' href="<%= icons.favicon %>" />
+  <link rel='apple-touch-icon' href="<%%= icons.icon152 %>" />
+  <link rel='apple-touch-icon' sizes='120x120' href="<%%= icons.icon120 %>" />
+  <link rel='apple-touch-icon' sizes='152x152' href="<%%= icons.icon152 %>" />
+  <link rel='apple-touch-icon' sizes='76x76' href="<%%= icons.icon76 %>" />
+  <link rel='icon' type='image/png' href="<%%= icons.favicon %>" />
 
-  <link type="text/css" rel='stylesheet' href="<%= css.global %>" />
-  <%- content.head %>
-  <%- content.style %>
-  <%- content.data %>
+  <link type="text/css" rel='stylesheet' href="<%%= css.global %>" />
+
+  <!-- String concatenation is needed allow outputting a template tag -->
+  <%- htmlWebpackPlugin.tags.bodyTags.map((tag) => { tag.attributes['src'] = "<" + "%= cdnUrl %" + ">" + tag.attributes['src']; tag.attributes['async'] = true; return tag; }) %>
+
+  <%%- content.head %>
+  <%%- content.style %>
+  <%%- content.data %>
 </head>
 
 <body>
-  <% if (env === 'production') { %>
-  <script type="text/javascript" src="<%= manifest.runtime %>"></script>
-  <script type="text/javascript" src="<%= manifest.common %>"></script>
-  <script type="text/javascript" src="<%= manifest.artsyCommon %>"></script>
-  <script type="text/javascript" src="<%= manifest.commonReact %>"></script>
-  <script type="text/javascript" src="<%= manifest.commonUtility %>"></script>
-  <script type="text/javascript" src="<%= manifest.artsy %>"></script>
-  <% } %>
-
-  <%- content.scripts %>
+  <%%- content.scripts %>
 
   <div id="react-modal-container"></div>
-  <div id="react-root"><%- content.body %></div>
-
-  <% if (env === 'production') { %>
-  <script type="text/javascript" src="<%= manifest.artsyNovo %>"></script>
-  <% } %>
+  <div id="react-root"><%%- content.body %></div>
 </body>
 
 </html>
