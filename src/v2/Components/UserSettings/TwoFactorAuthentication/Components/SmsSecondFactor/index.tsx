@@ -16,7 +16,7 @@ import { useSystemContext } from "v2/Artsy"
 import { ApiError } from "../../ApiError"
 import { SmsSecondFactorModal } from "./Modal"
 import { CreateSmsSecondFactor } from "./Mutation/CreateSmsSecondFactor"
-
+import { CreateSmsSecondFactorInput } from "v2/__generated__/CreateSmsSecondFactorMutation.graphql"
 import { SmsSecondFactor_me } from "v2/__generated__/SmsSecondFactor_me.graphql"
 import { ApiErrorModal } from "../ApiErrorModal"
 import { DisableFactorConfirmation } from "../DisableFactorConfirmation"
@@ -73,12 +73,15 @@ export const SmsSecondFactor: React.FC<SmsSecondFactorProps> = props => {
     setApiErrors(errors)
   }
 
-  async function createSecondFactor() {
+  async function createSecondFactor(
+    password: CreateSmsSecondFactorInput["password"]
+  ) {
     setCreating(true)
 
     try {
       const response = await CreateSmsSecondFactor(relayEnvironment, {
         attributes: {},
+        password,
       })
       const factor = response.createSmsSecondFactor.secondFactorOrErrors
       setStagedSecondFactor(factor)
@@ -91,7 +94,7 @@ export const SmsSecondFactor: React.FC<SmsSecondFactorProps> = props => {
     setCreating(false)
   }
 
-  async function disableSecondFactor() {
+  async function onDisableSecondFactor() {
     relayRefetch.refetch({}, {}, () => {
       setShowConfirmDisable(false)
     })
@@ -161,7 +164,8 @@ export const SmsSecondFactor: React.FC<SmsSecondFactorProps> = props => {
         show={showConfirmPassword}
         onConfirm={createSecondFactor}
         onCancel={() => setShowConfirmPassword(false)}
-        inputMessage="Password is required to change 2FA settings."
+        title="Set up with text message"
+        subTitle="Confirm your password to continue."
       />
       <SmsSecondFactorModal
         show={showSetupModal}
@@ -178,7 +182,7 @@ export const SmsSecondFactor: React.FC<SmsSecondFactorProps> = props => {
         me.smsSecondFactors[0].__typename === "SmsSecondFactor" && (
           <DisableFactorConfirmation
             show={showConfirmDisable}
-            onConfirm={disableSecondFactor}
+            onConfirm={onDisableSecondFactor}
             onCancel={() => setShowConfirmDisable(false)}
             secondFactorID={me.smsSecondFactors[0].internalID}
           />

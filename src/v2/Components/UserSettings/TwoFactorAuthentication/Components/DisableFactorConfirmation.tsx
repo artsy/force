@@ -45,7 +45,8 @@ export const DisableFactorConfirmation: React.FC<DisableFactorConfirmationProps>
       onCancel={onCancel}
       onConfirm={onSubmit}
       title="Disable 2FA method?"
-      inputMessage="Password is required to change 2FA settings."
+      subTitle="Enter your password to confirm this change."
+      buttonText="Disable"
     />
   )
 }

@@ -18,9 +18,9 @@ import { ApiError } from "../../ApiError"
 import { ApiErrorModal } from "../ApiErrorModal"
 import { CreateAppSecondFactor } from "./Mutation/CreateAppSecondFactor"
 import { DisableFactorConfirmation } from "../DisableFactorConfirmation"
-
 import { AppSecondFactor_me } from "v2/__generated__/AppSecondFactor_me.graphql"
 import { ConfirmPasswordModal } from "v2/Components/ConfirmPasswordModal"
+import { CreateAppSecondFactorInput } from "v2/__generated__/CreateAppSecondFactorMutation.graphql"
 
 interface AppSecondFactorProps extends BorderBoxProps {
   me: AppSecondFactor_me
@@ -73,12 +73,15 @@ export const AppSecondFactor: React.FC<AppSecondFactorProps> = props => {
     setApiErrors(errors)
   }
 
-  async function createSecondFactor() {
+  async function createSecondFactor(
+    password: CreateAppSecondFactorInput["password"]
+  ) {
     setCreating(true)
 
     try {
       const response = await CreateAppSecondFactor(relayEnvironment, {
         attributes: {},
+        password,
       })
       setStagedSecondFactor(response.createAppSecondFactor.secondFactorOrErrors)
       setShowConfirmPassword(false)
@@ -90,7 +93,7 @@ export const AppSecondFactor: React.FC<AppSecondFactorProps> = props => {
     setCreating(false)
   }
 
-  function disableSecondFactor() {
+  function onDisableSecondFactor() {
     relayRefetch.refetch({}, {}, () => {
       setShowConfirmDisable(false)
     })
@@ -166,7 +169,8 @@ export const AppSecondFactor: React.FC<AppSecondFactorProps> = props => {
         show={showConfirmPassword}
         onConfirm={createSecondFactor}
         onCancel={() => setShowConfirmPassword(false)}
-        inputMessage="Password is required to change 2FA settings."
+        title="Set up with app"
+        subTitle="Confirm your password to continue."
       />
       <AppSecondFactorModal
         show={showSetupModal}
@@ -183,7 +187,7 @@ export const AppSecondFactor: React.FC<AppSecondFactorProps> = props => {
         me.appSecondFactors[0].__typename === "AppSecondFactor" && (
           <DisableFactorConfirmation
             show={showConfirmDisable}
-            onConfirm={disableSecondFactor}
+            onConfirm={onDisableSecondFactor}
             onCancel={() => setShowConfirmDisable(false)}
             secondFactorID={me.appSecondFactors[0].internalID}
           />

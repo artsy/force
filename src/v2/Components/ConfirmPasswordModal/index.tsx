@@ -1,4 +1,4 @@
-import { Button, Flex, Modal, space } from "@artsy/palette"
+import { Button, Flex, Modal, space, Text } from "@artsy/palette"
 import React from "react"
 import { useSystemContext } from "v2/Artsy"
 import { PasswordInput } from "v2/Components/PasswordInput"
@@ -6,17 +6,18 @@ import { Form, Formik, FormikProps } from "formik"
 import { Error } from "v2/Components/Authentication/commonElements"
 import { ConfirmPassword } from "./Mutations/ConfirmPassword"
 import { ConfirmPasswordInput } from "v2/__generated__/ConfirmPasswordMutation.graphql"
-
+import { loginPassword } from "v2/Components/Authentication/Validators"
 interface ConfirmPasswordModalProps {
   onConfirm: (password: string, formikBag: FormikProps<any>) => void
   onCancel: () => void
   show: boolean
   title?: string
-  inputMessage?: string
+  subTitle?: string
+  buttonText?: string
 }
 
 export const ConfirmPasswordModal: React.FC<ConfirmPasswordModalProps> = props => {
-  const { onCancel, onConfirm, show, title, inputMessage } = props
+  const { buttonText, onCancel, onConfirm, show, title, subTitle } = props
   const { relayEnvironment } = useSystemContext()
 
   const onSubmit = async (
@@ -45,13 +46,16 @@ export const ConfirmPasswordModal: React.FC<ConfirmPasswordModalProps> = props =
       title={title || "Confirm your password"}
       onClose={onCancel}
     >
+      {subTitle && <Text pb={space(1)}>{subTitle}</Text>}
       <Formik
         initialValues={{
           password: "",
         }}
         onSubmit={onSubmit}
+        validationSchema={loginPassword}
       >
         {({
+          errors,
           handleBlur,
           handleChange,
           handleSubmit,
@@ -71,9 +75,8 @@ export const ConfirmPasswordModal: React.FC<ConfirmPasswordModalProps> = props =
             <PasswordInput
               autoFocus
               block
-              error={
-                !values.password && (inputMessage || "Password is required.")
-              }
+              // FIXME: Formik typing issue
+              error={errors.password as any}
               placeholder="Enter your password"
               name="password"
               value={values.password}
@@ -90,7 +93,7 @@ export const ConfirmPasswordModal: React.FC<ConfirmPasswordModalProps> = props =
                 loading={isSubmitting}
                 disabled={!values.password}
               >
-                Submit
+                {buttonText || "Confirm"}
               </Button>
             </Flex>
           </Form>

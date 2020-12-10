@@ -36,17 +36,15 @@ describe("ConfirmPasswordModal", () => {
           onCancel={onCancel}
           onConfirm={onConfirm}
           show={true}
-          inputMessage="Password is required to change 2FA settings."
         />
       </SystemContextProvider>
     )
 
   it("requires password to submit", () => {
     const wrapper = getWrapper()
-    wrapper.find("button[type='submit']").simulate("submit")
-    expect(wrapper.text()).toContain(
-      "Password is required to change 2FA settings."
-    )
+    const button = wrapper.find("button[type='submit']")
+    button.simulate("submit")
+    expect(button.props().disabled).toBeTruthy()
     expect(ConfirmPassword).not.toBeCalled()
   })
 

@@ -10,7 +10,7 @@ const password = Yup.string()
   .required("Password required")
   .min(8, "Your password must be at least 8 characters")
 
-const loginPassword = Yup.string().required("Password required")
+export const loginPassword = Yup.string().required("Password required")
 
 const otpAttempt = Yup.string().required("Enter a code")
 
