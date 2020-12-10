@@ -8,6 +8,7 @@ module.exports = {
     "@typescript-eslint",
     "sort-keys-fix",
     "styled-components-a11y",
+    "jest",
   ],
   extends: [
     "eslint:recommended",
@@ -16,6 +17,7 @@ module.exports = {
     "plugin:@typescript-eslint/recommended",
     "prettier",
     "plugin:styled-components-a11y/recommended",
+    "plugin:jest/recommended",
   ],
   parserOptions: {
     ecmaFeatures: {

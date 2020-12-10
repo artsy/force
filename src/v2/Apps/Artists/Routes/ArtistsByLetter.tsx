@@ -8,8 +8,6 @@ import { PaginationFragmentContainer } from "v2/Components/Pagination"
 import { ArtistsTopNav } from "../Components/ArtistsTopNav"
 import { ArtistsByLetter_viewer } from "v2/__generated__/ArtistsByLetter_viewer.graphql"
 import { ArtistsByLetterMeta } from "../Components/ArtistsByLetterMeta"
-import { LETTERS } from "../Components/ArtistsLetterNav"
-import { HttpError } from "found"
 
 const Columns = styled(Box)<{ isLoading: boolean }>`
   column-count: 4;
@@ -41,11 +39,6 @@ export const ArtistsByLetter: React.FC<ArtistsByLetterProps> = ({
 }) => {
   const { match } = useRouter()
   const [isLoading, setLoading] = useState(false)
-
-  // If the `letter` param isn't part of the nav, 404
-  if (!LETTERS.includes(match.params.letter?.toUpperCase())) {
-    throw new HttpError(404)
-  }
 
   if (!viewer.artistsConnection?.artists) {
     return null
@@ -84,7 +77,7 @@ export const ArtistsByLetter: React.FC<ArtistsByLetterProps> = ({
           <RouterLink to="/artists2" noUnderline>
             Artists
           </RouterLink>{" "}
-          / Browse all 50,000 artists
+          / Browse over 100,000 artists
         </Text>
 
         <ArtistsTopNav my={3}>

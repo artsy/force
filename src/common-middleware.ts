@@ -20,7 +20,6 @@ import { ipFilter } from "./lib/middleware/ipFilter"
 import { sessionMiddleware } from "./lib/middleware/session"
 import config from "./config"
 import { assetMiddleware } from "./lib/middleware/asset"
-import { unlessStartsWith } from "./lib/middleware/unless"
 import bodyParser from "body-parser"
 import { csrfTokenMiddleware } from "./lib/middleware/csrfToken"
 
@@ -128,7 +127,7 @@ export default function commonMiddlewareSetup(app) {
 
   // Static asset routing, required for all legacy code and must come early
   // because `local.asset` is required to render the error page.
-  app.use(unlessStartsWith("/novo", assetMiddleware()))
+  app.use(assetMiddleware())
 
   // Ensure basic security settings
   securityMiddleware(app)

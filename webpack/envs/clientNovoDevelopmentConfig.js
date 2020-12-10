@@ -13,7 +13,7 @@ export const clientNovoDevelopmentConfig = {
   devtool: "source-map",
   entry: {
     "artsy-novo": [
-      "webpack-hot-middleware/client?name=novo",
+      "webpack-hot-middleware/client?name=novo&reload=true",
       path.resolve(process.cwd(), "src/novo/src/client.tsx"),
     ],
   },
@@ -69,6 +69,19 @@ export const clientNovoDevelopmentConfig = {
         test: /\.mjs$/,
         type: "javascript/auto",
         use: [],
+      },
+      // https://github.com/bazilio91/ejs-compiled-loader/issues/46
+      {
+        test: /\.ejs$/,
+        use: {
+          loader: "ejs-compiled-loader",
+          options: {
+            htmlmin: true,
+            htmlminOptions: {
+              removeComments: true,
+            },
+          },
+        },
       },
     ],
   },
@@ -200,13 +213,8 @@ export const clientNovoDevelopmentConfig = {
     }),
     new HtmlWebpackPlugin({
       filename: path.resolve(basePath, "public", "index.ejs"),
-      template: `!!raw-loader!${path.resolve(
-        basePath,
-        "src",
-        "novo",
-        "src",
-        "index.ejs"
-      )}`,
+      inject: false,
+      template: path.resolve(basePath, "src", "novo", "src", "index.ejs"),
     }),
   ],
   resolve: {

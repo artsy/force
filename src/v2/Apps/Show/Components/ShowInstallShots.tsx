@@ -71,9 +71,9 @@ export const ShowInstallShots: React.FC<ShowInstallShotsProps> = ({
         <ModalBase
           onClose={handleClose}
           dialogProps={{
-            width: "100%",
-            height: "100%",
             background: "rgba(0, 0, 0, 0.6)",
+            height: "100%",
+            width: "100%",
           }}
         >
           <Clickable
@@ -113,7 +113,7 @@ export const ShowInstallShotsFragmentContainer = createFragmentContainer(
     show: graphql`
       fragment ShowInstallShots_show on Show {
         name
-        images(default: false) {
+        images(default: false, size: 100) {
           internalID
           caption
           mobile: resized(height: 300) {

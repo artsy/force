@@ -34,9 +34,9 @@ jest.mock("react-stripe-elements", () => {
   }
 
   return {
+    CardElement: ({ onReady, hidePostalCode, ...props }) => <div {...props} />,
     Elements: ({ children }) => children,
     StripeProvider: ({ children }) => children,
-    CardElement: ({ onReady, hidePostalCode, ...props }) => <div {...props} />,
     __stripeMock: stripeMock,
     injectStripe: Component => props => (
       <Component stripe={stripeMock} {...props} />
@@ -57,8 +57,14 @@ const setupTestEnv = (
   defaultData: routes_RegisterQueryRawResponse = RegisterQueryResponseFixture
 ) => {
   return createTestEnv({
-    TestPage: RegisterTestPage,
     Component: RegisterRouteFragmentContainer,
+    TestPage: RegisterTestPage,
+    defaultData,
+    defaultMutationResults: {
+      createBidder: {},
+      createCreditCard: {},
+      updateMyUserProfile: {},
+    },
     query: graphql`
       query RegisterValidTestQuery @raw_response_type {
         sale(id: "example-auction-id") {
@@ -69,16 +75,10 @@ const setupTestEnv = (
         }
       }
     `,
-    defaultData,
-    defaultMutationResults: {
-      createCreditCard: {},
-      createBidder: {},
-      updateMyUserProfile: {},
-    },
   })
 }
 
-describe("Routes/Register ", () => {
+describe("Routes/Register", () => {
   beforeAll(() => {
     // @ts-ignore
     // tslint:disable-next-line:no-empty
@@ -101,17 +101,17 @@ describe("Routes/Register ", () => {
 
     expect(mockPostEvent).toBeCalledWith({
       action_type: Schema.ActionType.RegistrationSubmitFailed,
-      context_page: Schema.PageName.AuctionRegistrationPage,
       auction_slug: RegisterQueryResponseFixture.sale.slug,
       auction_state: RegisterQueryResponseFixture.sale.status,
+      context_page: Schema.PageName.AuctionRegistrationPage,
       error_messages: [
         "You must agree to the Conditions of Sale",
-        "Name is required",
         "Address is required",
         "City is required",
-        "State is required",
-        "Postal code is required",
+        "Name is required",
         "Telephone is required",
+        "Postal code is required",
+        "State is required",
       ],
       sale_id: RegisterQueryResponseFixture.sale.internalID,
       user_id: RegisterQueryResponseFixture.me.internalID,
@@ -165,10 +165,10 @@ describe("Routes/Register ", () => {
 
     expect(mockPostEvent).toBeCalledWith({
       action_type: Schema.ActionType.RegistrationSubmitted,
-      context_page: Schema.PageName.AuctionRegistrationPage,
       auction_slug: RegisterQueryResponseFixture.sale.slug,
       auction_state: RegisterQueryResponseFixture.sale.status,
       bidder_id: createBidderSuccessful.createBidder.bidder.internalID,
+      context_page: Schema.PageName.AuctionRegistrationPage,
       sale_id: RegisterQueryResponseFixture.sale.internalID,
       user_id: RegisterQueryResponseFixture.me.internalID,
     })
@@ -195,9 +195,9 @@ describe("Routes/Register ", () => {
 
     expect(mockPostEvent).toBeCalledWith({
       action_type: Schema.ActionType.RegistrationSubmitFailed,
-      context_page: Schema.PageName.AuctionRegistrationPage,
       auction_slug: RegisterQueryResponseFixture.sale.slug,
       auction_state: RegisterQueryResponseFixture.sale.status,
+      context_page: Schema.PageName.AuctionRegistrationPage,
       error_messages: [
         "Your card was declined. Please contact your bank or use a different card.",
       ],
@@ -209,8 +209,8 @@ describe("Routes/Register ", () => {
     expect(window.location.assign).not.toBeCalled()
   })
 
-  it("displays an error modal if the `createBidder` mutation fails", async () => {
-    pending("until we can mimic Gravity-provided `createBidder` errors")
+  it.skip("displays an error modal if the `createBidder` mutation fails", () => {
+    // pending("until we can mimic Gravity-provided `createBidder` errors")
   })
 
   it("validates against an empty phone number", async () => {

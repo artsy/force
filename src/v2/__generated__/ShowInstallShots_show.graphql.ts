@@ -96,6 +96,11 @@ return {
           "kind": "Literal",
           "name": "default",
           "value": false
+        },
+        {
+          "kind": "Literal",
+          "name": "size",
+          "value": 100
         }
       ],
       "concreteType": "Image",
@@ -176,11 +181,11 @@ return {
           "storageKey": "resized(height:900,version:[\"larger\",\"large\"],width:900)"
         }
       ],
-      "storageKey": "images(default:false)"
+      "storageKey": "images(default:false,size:100)"
     }
   ],
   "type": "Show"
 };
 })();
-(node as any).hash = 'b1d347685462f87af8dac940d946276a';
+(node as any).hash = 'f7228839ace1bac8491579a0dae40f48';
 export default node;
