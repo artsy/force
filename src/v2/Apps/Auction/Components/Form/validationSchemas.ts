@@ -1,4 +1,4 @@
-import Yup from "yup"
+import * as Yup from "yup"
 
 Yup.addMethod(Yup.string, "present", function (message) {
   return this.test("test-present", message, value => {
@@ -7,13 +7,20 @@ Yup.addMethod(Yup.string, "present", function (message) {
 })
 
 const address = Yup.object({
-  name: Yup.string().present("Name is required"),
+  // @ts-ignore
   addressLine1: Yup.string().present("Address is required"),
-  country: Yup.string().present("Country is required"),
+  // @ts-ignore
   city: Yup.string().present("City is required"),
-  region: Yup.string().present("State is required"),
-  postalCode: Yup.string().present("Postal code is required"),
+  // @ts-ignore
+  country: Yup.string().present("Country is required"),
+  // @ts-ignore
+  name: Yup.string().present("Name is required"),
+  // @ts-ignore
   phoneNumber: Yup.string().present("Telephone is required"),
+  // @ts-ignore
+  postalCode: Yup.string().present("Postal code is required"),
+  // @ts-ignore
+  region: Yup.string().present("State is required"),
 })
 
 const agreeToTerms = Yup.bool().oneOf(
