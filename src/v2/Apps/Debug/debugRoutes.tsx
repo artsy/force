@@ -7,7 +7,7 @@ import { Title } from "react-head"
  * Calibre, assets loaded on page, and other debugging things that might
  * impact global performance.
  */
-export const debugRoutes = [
+export const routes = [
   {
     path: "/debug",
     Component: ({ children }) => children,
