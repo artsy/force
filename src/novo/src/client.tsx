@@ -6,6 +6,7 @@ import { getAppNovoRoutes } from "v2/Apps/getAppNovoRoutes"
 import { loadableReady } from "@loadable/component"
 import { logoutEventHandler } from "desktop/lib/logoutHandler"
 import { mediator } from "lib/mediator"
+import { beforeAnalyticsReady, onAnalyticsReady } from "lib/analytics/helpers"
 
 import("v2/Artsy/Router/client")
   .then(({ buildClientApp }) => {
@@ -16,6 +17,12 @@ import("v2/Artsy/Router/client")
   .then(({ ClientApp }) => {
     loadableReady(() => {
       ReactDOM.hydrate(<ClientApp />, document.getElementById("react-root"))
+    })
+  })
+  .then(() => {
+    beforeAnalyticsReady()
+    window.analytics.ready(() => {
+      onAnalyticsReady()
     })
   })
   .then(() => {
