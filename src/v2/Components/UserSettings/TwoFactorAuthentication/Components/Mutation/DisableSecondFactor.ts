@@ -12,23 +12,6 @@ export const DisableSecondFactor = (
   return new Promise<DisableSecondFactorMutationResponse>(
     async (resolve, reject) => {
       commitMutation<DisableSecondFactorMutation>(environment, {
-        onCompleted: data => {
-          const response = data.disableSecondFactor.secondFactorOrErrors
-
-          switch (response.__typename) {
-            case "AppSecondFactor":
-              resolve(data)
-              break
-            case "SmsSecondFactor":
-              resolve(data)
-              break
-            case "Errors":
-              reject(response.errors)
-          }
-        },
-        onError: error => {
-          reject(error)
-        },
         mutation: graphql`
           mutation DisableSecondFactorMutation(
             $input: DisableSecondFactorInput!
@@ -54,6 +37,25 @@ export const DisableSecondFactor = (
             }
           }
         `,
+
+        onCompleted: (data, err) => {
+          if (err) {
+            reject(err)
+          } else if (data.disableSecondFactor) {
+            const response = data.disableSecondFactor.secondFactorOrErrors
+
+            switch (response.__typename) {
+              case "AppSecondFactor":
+                resolve(data)
+                break
+              case "SmsSecondFactor":
+                resolve(data)
+                break
+              case "Errors":
+                reject(response.errors)
+            }
+          }
+        },
         variables: {
           input,
         },
