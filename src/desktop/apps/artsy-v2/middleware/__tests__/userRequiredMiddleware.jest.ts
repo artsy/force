@@ -21,16 +21,16 @@ describe("userRequiredMiddleware", () => {
 
   it("does not redirect for matching route when current user is present", () => {
     const req = {
-      path: "/orders/",
       originalUrl: "/orders/",
+      path: "/orders/",
     }
     const res = {
-      redirect: jest.fn(),
       locals: {
         sd: {
           CURRENT_USER: { id: "1" },
         },
       },
+      redirect: jest.fn(),
     }
     const next = jest.fn()
 
@@ -43,20 +43,20 @@ describe("userRequiredMiddleware", () => {
     it("performs redirect on a /orders route", () => {
       const spy = jest.fn()
       const req = {
-        path: "/orders/",
-        url: "/orders/",
         originalUrl: "/orders/",
+        path: "/orders/",
         query: {
           "accepted-conditions": false,
         },
+        url: "/orders/",
       }
       const res = {
-        redirect: spy,
         locals: {
           sd: {
             CURRENT_USER: null,
           },
         },
+        redirect: spy,
       }
 
       const next = jest.fn()
@@ -67,23 +67,49 @@ describe("userRequiredMiddleware", () => {
       expect(next).not.toHaveBeenCalled()
     })
 
-    it("performs redirect on an /identity-verification route", () => {
+    it("performs redirect on a /purchases route", () => {
       const spy = jest.fn()
       const req = {
-        path: "/identity-verification/123",
-        url: "/identity-verification/123",
-        originalUrl: "/identity-verification/123",
+        originalUrl: "/user/purchases/",
+        path: "/user/purchases/",
         query: {
           "accepted-conditions": false,
         },
       }
       const res = {
-        redirect: spy,
         locals: {
           sd: {
             CURRENT_USER: null,
           },
         },
+        redirect: spy,
+      }
+      const next = jest.fn()
+
+      userRequiredMiddleware(req, res, next)
+      expect(res.redirect).toHaveBeenCalledWith(
+        "/login?redirectTo=%2Fuser%2Fpurchases%2F"
+      )
+      expect(next).not.toHaveBeenCalled()
+    })
+
+    it("performs redirect on an /identity-verification route", () => {
+      const spy = jest.fn()
+      const req = {
+        originalUrl: "/identity-verification/123",
+        path: "/identity-verification/123",
+        query: {
+          "accepted-conditions": false,
+        },
+        url: "/identity-verification/123",
+      }
+      const res = {
+        locals: {
+          sd: {
+            CURRENT_USER: null,
+          },
+        },
+        redirect: spy,
       }
       const next = jest.fn()
 
@@ -96,16 +122,16 @@ describe("userRequiredMiddleware", () => {
 
     it("redirects when visiting conversations route", () => {
       const req = {
-        path: "/user/conversations",
         originalUrl: "/user/conversations",
+        path: "/user/conversations",
       }
       const res = {
-        redirect: jest.fn(),
         locals: {
           sd: {
             CURRENT_USER: null,
           },
         },
+        redirect: jest.fn(),
       }
       const next = jest.fn()
 
@@ -118,16 +144,16 @@ describe("userRequiredMiddleware", () => {
 
     it("redirects when visiting nested conversations route", () => {
       const req = {
-        path: "/user/conversations/123",
         originalUrl: "/user/conversations/123",
+        path: "/user/conversations/123",
       }
       const res = {
-        redirect: jest.fn(),
         locals: {
           sd: {
             CURRENT_USER: null,
           },
         },
+        redirect: jest.fn(),
       }
       const next = jest.fn()
 
