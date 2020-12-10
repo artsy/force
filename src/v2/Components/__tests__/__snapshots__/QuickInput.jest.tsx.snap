@@ -7,7 +7,7 @@ exports[`QuickInput renders a focused QuickInput as a snapshot 1`] = `
   font-size: 12px;
   line-height: 1.4em;
   margin-top: 10px;
-  color: #F7625A;
+  color: #E82F1D;
   -webkit-transition: visibility 0.2s linear;
   transition: visibility 0.2s linear;
   -webkit-animation: eBtoLo 0.25s linear;
@@ -181,7 +181,7 @@ exports[`QuickInput renders an unfocused QuickInput as a snapshot 1`] = `
   font-size: 12px;
   line-height: 1.4em;
   margin-top: 10px;
-  color: #F7625A;
+  color: #E82F1D;
   -webkit-transition: visibility 0.2s linear;
   transition: visibility 0.2s linear;
   -webkit-animation: eBtoLo 0.25s linear;
