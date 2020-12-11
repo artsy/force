@@ -32,10 +32,10 @@ export interface ArtworkDetailsProps {
 export class ArtworkDetails extends Component<ArtworkDetailsProps> {
   @track((_props, _state, [{ data }]) => {
     return {
-      flow: Schema.Flow.ArtworkAboutTheArtist,
-      type: Schema.Type.Tab,
-      label: data.trackingLabel,
       action_type: Schema.ActionType.Click,
+      flow: Schema.Flow.ArtworkAboutTheArtist,
+      label: data.trackingLabel,
+      type: Schema.Type.Tab,
     }
   })
   trackTabChange() {
@@ -135,6 +135,7 @@ export const ArtworkDetailsQueryRenderer = ({
 const TabContainer = styled(Box)`
   > * {
     margin-block-start: 0;
+    white-space: pre-wrap;
   }
 `
 
