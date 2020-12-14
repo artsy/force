@@ -35,12 +35,18 @@ export class Pagination extends React.Component<Props> {
     return (
       <ScrollIntoView selector={this.props.scrollTo}>
         <Media at="xs">
-          <SmallPagination {...this.props} />
+          <SmallPagination
+            {...this.props}
+            pageCursors={this.props.pageCursors as any}
+          />
         </Media>
         <Media greaterThan="xs">
           <Box>
             <Separator mb={3} pr={2} />
-            <LargePagination {...this.props} />
+            <LargePagination
+              {...this.props}
+              pageCursors={this.props.pageCursors as any}
+            />
           </Box>
         </Media>
       </ScrollIntoView>

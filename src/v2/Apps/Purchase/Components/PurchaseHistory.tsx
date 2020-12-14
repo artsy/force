@@ -51,11 +51,11 @@ const loadAfter = (cursor, relay, setLoading) => {
   setLoading(true)
 
   const params = {
-    states: ORDER_STATES,
-    first: PAGE_SIZE,
     after: cursor,
     before: null,
+    first: PAGE_SIZE,
     last: null,
+    states: ORDER_STATES,
   }
 
   relay.refetch(params, null, error => {
@@ -80,10 +80,10 @@ const PurchaseHistory: React.FC<PurchaseHistoryProps> = (
   const myOrders = me.orders.edges && me.orders.edges.map(x => x.node)
 
   const paginationProps = {
-    pageCursors: props.me.orders.pageCursors,
     hasNextPage: props.me.orders.pageInfo.hasNextPage,
     onClick: cursor => loadAfter(cursor, props.relay, setLoading),
     onNext: () => loadNext(pageInfo, props.relay, setLoading),
+    pageCursors: props.me.orders.pageCursors,
   }
 
   return !loading ? (
@@ -107,14 +107,20 @@ const PurchaseHistory: React.FC<PurchaseHistoryProps> = (
       <StyledBox>
         <Media at="xs">
           {props.me.orders.pageCursors && (
-            <SmallPagination {...paginationProps} />
+            <SmallPagination
+              {...paginationProps}
+              pageCursors={paginationProps.pageCursors as any}
+            />
           )}
         </Media>
         <Media greaterThan="xs">
           <Box>
             <Separator mb={3} pr={2} />
             {props.me.orders.pageCursors && (
-              <LargePagination {...paginationProps} />
+              <LargePagination
+                {...paginationProps}
+                pageCursors={paginationProps.pageCursors as any}
+              />
             )}
           </Box>
         </Media>
