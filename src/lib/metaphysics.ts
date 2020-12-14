@@ -48,7 +48,9 @@ export const metaphysics = function (
       .set("X-Request-Id", sentRequestId)
       .timeout(API_REQUEST_TIMEOUT)
 
-    const token = req?.user?.get("accessToken") || req?.user?.accessToken
+    const token =
+      (req?.user?.get && req?.user?.get("accessToken")) ||
+      req?.user?.accessToken
     const remoteAddress = req?.connection?.remoteAddress
 
     if (token) {
