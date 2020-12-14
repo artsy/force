@@ -4,11 +4,6 @@ import { mount } from "enzyme"
 import React from "react"
 import { SearchApp } from "../SearchApp"
 
-jest.mock("v2/Components/RouteTabs", () => ({
-  RouteTab: ({ children }) => children,
-  TabCarousel: ({ tabs }) => tabs,
-}))
-
 describe("SearchApp", () => {
   const getWrapper = (searchProps: any) => {
     const trackEvent = jest.fn()
@@ -29,22 +24,22 @@ describe("SearchApp", () => {
       },
     },
     viewer: {
-      searchConnection: {
-        aggregations: [
-          {
-            slice: "TYPE",
-            counts: [
-              { name: "PartnerGallery", count: 100 },
-              { name: "artist", count: 320 },
-              { name: "gene", count: 0 },
-            ],
-          },
-        ],
-      },
       artworksConnection: {
         counts: {
           total: 100,
         },
+      },
+      searchConnection: {
+        aggregations: [
+          {
+            counts: [
+              { count: 100, name: "PartnerGallery" },
+              { count: 320, name: "artist" },
+              { count: 0, name: "gene" },
+            ],
+            slice: "TYPE",
+          },
+        ],
       },
     },
   }

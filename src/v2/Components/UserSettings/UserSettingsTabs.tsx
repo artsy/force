@@ -52,6 +52,7 @@ export const UserSettingsTabs: React.FC<UserSettingsTabsProps> = ({
           {username}
         </Text>
       </Box>
+
       <RouteTabs>
         {routes.map((route, index) => (
           <RouteTab

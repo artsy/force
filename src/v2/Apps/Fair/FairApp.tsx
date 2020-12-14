@@ -107,7 +107,7 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
             />
           )}
 
-          <RouteTabs>
+          <RouteTabs position="relative">
             <RouteTab
               to={`/fair/${fair.slug}`}
               exact
@@ -125,7 +125,10 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
                 tracking.trackEvent(clickedArtworksTabTrackingData)
               }
             >
-              Artworks ({artworkCount})
+              Artworks
+              <Text variant="text" display="inline">
+                &nbsp;({artworkCount})
+              </Text>
             </RouteTab>
           </RouteTabs>
 

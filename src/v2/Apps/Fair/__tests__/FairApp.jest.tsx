@@ -260,7 +260,7 @@ describe("FairApp", () => {
       .findWhere(t => !!t.text().match("Artworks"))
       .first()
 
-    expect(artworksTab.text()).toContain("Artworks (10)")
+    expect(artworksTab.text()).toContain("Artworks (10)")
   })
 
   it("tracks clicks to the artworks tab", async () => {
