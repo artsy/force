@@ -1,4 +1,4 @@
-import metaphysics from "lib/metaphysics.coffee"
+import { metaphysics } from "lib/metaphysics"
 import { currentAuctions } from "desktop/apps/auctions2/utils/queries"
 
 export const GET_AUCTIONS_REQUEST = "GET_AUCTIONS_REQUEST"
@@ -19,10 +19,10 @@ export function getAuctionsFailure() {
 
 export function getAuctionsSuccess(auctions) {
   return {
-    type: GET_AUCTIONS_SUCCESS,
     payload: {
       auctions,
     },
+    type: GET_AUCTIONS_SUCCESS,
   }
 }
 
