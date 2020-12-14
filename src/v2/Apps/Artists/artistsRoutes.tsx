@@ -18,7 +18,7 @@ const ArtistsByLetterRoute = loadable(
   }
 )
 
-export const artistsRoutes: RouteConfig[] = [
+export const routes: RouteConfig[] = [
   {
     path: "/artists2",
     getComponent: () => ArtistsApp,

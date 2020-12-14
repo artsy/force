@@ -3,7 +3,7 @@ import loadable from "@loadable/component"
 import { RouteConfig } from "found"
 import { graphql } from "react-relay"
 
-export const conversationRoutes: RouteConfig[] = [
+export const routes: RouteConfig[] = [
   {
     path: "/user/conversations",
     displayFullPage: true,
