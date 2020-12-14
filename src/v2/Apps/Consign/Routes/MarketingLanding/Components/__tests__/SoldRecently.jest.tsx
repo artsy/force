@@ -39,5 +39,8 @@ describe("SoldRecently", () => {
   it("contains additional fields in the carousel artworks", () => {
     const wrapper = getWrapper()
     expect(wrapper.html()).toContain('mock-value-for-field-"realizedPrice"')
+    expect(wrapper.html()).toContain(
+      'mock-value-for-field-"realizedToEstimate"'
+    )
   })
 })

@@ -11,6 +11,7 @@ import { SectionContainer } from "./SectionContainer"
 import { Media } from "v2/Utils/Responsive"
 import { useTracking } from "react-tracking"
 import { ContextModule, OwnerType, clickedArtworkGroup } from "@artsy/cohesion"
+import { flatten, shuffle } from "lodash"
 
 const HEIGHT = 300
 
@@ -25,9 +26,16 @@ const SoldRecently: React.FC<SoldRecentlyProps> = ({ targetSupply }) => {
     return null
   }
 
-  const recentlySoldArtworks = targetSupply.microfunnel.map(microfunnel => {
-    return extractNodes(microfunnel.artworksConnection)
-  })
+  const recentlySoldArtworks = shuffle(
+    flatten(
+      targetSupply.microfunnel.map(microfunnel => {
+        const artworks = extractNodes(microfunnel.artworksConnection)
+        return artworks.filter(
+          artwork => artwork.realizedPrice && artwork.realizedToEstimate
+        )
+      })
+    )
+  )
 
   const trackArtworkItemClick = (artwork, horizontalSlidePosition) => () => {
     tracking.trackEvent(
@@ -48,7 +56,7 @@ const SoldRecently: React.FC<SoldRecentlyProps> = ({ targetSupply }) => {
       </Text>
       <Flex flexDirection="column">
         <Carousel arrowHeight={HEIGHT}>
-          {recentlySoldArtworks.map(([artwork, _], index) => {
+          {recentlySoldArtworks.map((artwork, index) => {
             return (
               <Flex
                 key={index}
@@ -63,31 +71,47 @@ const SoldRecently: React.FC<SoldRecentlyProps> = ({ targetSupply }) => {
                   showExtended={false}
                   onClick={trackArtworkItemClick(artwork, index)}
                 />
-                {artwork.realizedPrice && (
-                  <>
-                    <Media greaterThanOrEqual="sm">
+                <>
+                  <Media greaterThanOrEqual="sm">
+                    <Flex flexDirection="row" alignItems="baseline">
+                      <Text variant="largeTitle">{artwork.realizedPrice}</Text>
+                      <Spacer ml={0.5} />
+                      <Text variant="caption" color="black60">
+                        Realized price
+                      </Text>
+                    </Flex>
+                    <Flex flexDirection="row" alignItems="baseline">
+                      <Text variant="caption" fontWeight="bold" color="#00A03E">
+                        {artwork.realizedToEstimate + "x"}
+                      </Text>
+                      <Spacer ml={0.3} />
+                      <Text variant="caption" color="black60">
+                        estimate
+                      </Text>
+                    </Flex>
+                  </Media>
+                  <Media lessThan="sm">
+                    <Flex flexDirection="column">
+                      <Text variant="caption" color="black60" mt={0.5}>
+                        Realized price
+                      </Text>
+                      <Text variant="largeTitle">{artwork.realizedPrice}</Text>
                       <Flex flexDirection="row" alignItems="baseline">
-                        <Text variant="caption" color="black60">
-                          Realized price
+                        <Text
+                          variant="caption"
+                          fontWeight="bold"
+                          color="#00A03E"
+                        >
+                          {artwork.realizedToEstimate + "x"}
                         </Text>
-                        <Spacer ml={0.5} />
-                        <Text variant="largeTitle">
-                          {artwork.realizedPrice}
+                        <Spacer ml={0.3} />
+                        <Text variant="caption" color="black60">
+                          estimate
                         </Text>
                       </Flex>
-                    </Media>
-                    <Media lessThan="sm">
-                      <Flex flexDirection="column">
-                        <Text variant="caption" color="black60">
-                          Realized price
-                        </Text>
-                        <Text variant="largeTitle">
-                          {artwork.realizedPrice}
-                        </Text>
-                      </Flex>
-                    </Media>
-                  </>
-                )}
+                    </Flex>
+                  </Media>
+                </>
               </Flex>
             )
           })}
@@ -101,11 +125,12 @@ const SoldRecentlyFragmentContainer = createFragmentContainer(SoldRecently, {
   targetSupply: graphql`
     fragment SoldRecently_targetSupply on TargetSupply {
       microfunnel {
-        artworksConnection(first: 1) {
+        artworksConnection {
           edges {
             node {
               ...FillwidthItem_artwork
               realizedPrice
+              realizedToEstimate
             }
           }
         }

@@ -8,13 +8,15 @@ export type ArtistConsignMeta_artist = {
     readonly href: string | null;
     readonly targetSupply: {
         readonly microfunnel: {
-            readonly artworks: ReadonlyArray<{
-                readonly artwork: {
-                    readonly image: {
-                        readonly imageURL: string | null;
+            readonly artworksConnection: {
+                readonly edges: ReadonlyArray<{
+                    readonly node: {
+                        readonly image: {
+                            readonly imageURL: string | null;
+                        } | null;
                     } | null;
-                } | null;
-            } | null> | null;
+                } | null> | null;
+            } | null;
         } | null;
     } | null;
     readonly " $refType": "ArtistConsignMeta_artist";
@@ -66,39 +68,50 @@ const node: ReaderFragment = {
             {
               "alias": null,
               "args": null,
-              "concreteType": "ArtistTargetSupplyMicrofunnelArtwork",
+              "concreteType": "ArtworkConnection",
               "kind": "LinkedField",
-              "name": "artworks",
-              "plural": true,
+              "name": "artworksConnection",
+              "plural": false,
               "selections": [
                 {
                   "alias": null,
                   "args": null,
-                  "concreteType": "Artwork",
+                  "concreteType": "ArtworkEdge",
                   "kind": "LinkedField",
-                  "name": "artwork",
-                  "plural": false,
+                  "name": "edges",
+                  "plural": true,
                   "selections": [
                     {
                       "alias": null,
                       "args": null,
-                      "concreteType": "Image",
+                      "concreteType": "Artwork",
                       "kind": "LinkedField",
-                      "name": "image",
+                      "name": "node",
                       "plural": false,
                       "selections": [
                         {
-                          "alias": "imageURL",
-                          "args": [
+                          "alias": null,
+                          "args": null,
+                          "concreteType": "Image",
+                          "kind": "LinkedField",
+                          "name": "image",
+                          "plural": false,
+                          "selections": [
                             {
-                              "kind": "Literal",
-                              "name": "version",
-                              "value": "medium"
+                              "alias": "imageURL",
+                              "args": [
+                                {
+                                  "kind": "Literal",
+                                  "name": "version",
+                                  "value": "medium"
+                                }
+                              ],
+                              "kind": "ScalarField",
+                              "name": "url",
+                              "storageKey": "url(version:\"medium\")"
                             }
                           ],
-                          "kind": "ScalarField",
-                          "name": "url",
-                          "storageKey": "url(version:\"medium\")"
+                          "storageKey": null
                         }
                       ],
                       "storageKey": null
@@ -118,5 +131,5 @@ const node: ReaderFragment = {
   ],
   "type": "Artist"
 };
-(node as any).hash = 'cdb304af5dff2c7987ce5b9833fa7914';
+(node as any).hash = '70e6df5913a21146421466fe0a7e143d';
 export default node;

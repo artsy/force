@@ -5,20 +5,22 @@ import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 
-type Artworks = ArtistConsignHeaderImages_artist["targetSupply"]["microfunnel"]["artworks"]
+type Artworks = ArtistConsignHeaderImages_artist["targetSupply"]["microfunnel"]["artworksConnection"]["edges"]
 
 interface HeaderImageProps {
   artist: ArtistConsignHeaderImages_artist
 }
 
 export const ArtistConsignHeaderImages: React.FC<HeaderImageProps> = props => {
-  const { error, leftImage, rightImage } = getImages(
-    props.artist.targetSupply.microfunnel.artworks
-  )
+  const leftImage =
+    props.artist.targetSupply.microfunnel?.artworksConnection?.edges?.[0]?.node
+  const rightImage = last(
+    props.artist.targetSupply.microfunnel?.artworksConnection?.edges
+  )?.node
+  const error = !(leftImage && rightImage)
   if (error) {
     return null
   }
-
   return (
     <HeaderImageContainer>
       <Flex width="100%" justifyContent="space-between" m="auto">
@@ -40,16 +42,18 @@ export const ArtistConsignHeaderImagesFragmentContainer = createFragmentContaine
       fragment ArtistConsignHeaderImages_artist on Artist {
         targetSupply {
           microfunnel {
-            artworks {
-              artwork {
-                image {
-                  resized(height: 395) {
-                    width
-                    height
-                    url
+            artworksConnection {
+              edges {
+                node {
+                  image {
+                    resized(height: 395) {
+                      width
+                      height
+                      url
+                    }
                   }
+                  ...FillwidthItem_artwork
                 }
-                ...FillwidthItem_artwork
               }
             }
           }
@@ -58,32 +62,8 @@ export const ArtistConsignHeaderImagesFragmentContainer = createFragmentContaine
     `,
   }
 )
-
-export const getImages = (artworks: Artworks) => {
-  try {
-    const leftImage = last(artworks)
-    const rightImage = artworks[1]
-    const foundImages = leftImage && rightImage
-
-    if (!foundImages) {
-      return {
-        error: true,
-      }
-    }
-
-    return {
-      leftImage: leftImage.artwork,
-      rightImage: rightImage.artwork,
-    }
-  } catch {
-    return {
-      error: true,
-    }
-  }
-}
-
 interface ImageProps {
-  image: Artworks[0]["artwork"]["image"]
+  image: Artworks[0]["node"]["image"]
 }
 const LeftImagePhoto: React.FC<ImageProps> = ({ image }) => {
   return (

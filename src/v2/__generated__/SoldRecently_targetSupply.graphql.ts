@@ -9,6 +9,7 @@ export type SoldRecently_targetSupply = {
             readonly edges: ReadonlyArray<{
                 readonly node: {
                     readonly realizedPrice: string | null;
+                    readonly realizedToEstimate: string | null;
                     readonly " $fragmentRefs": FragmentRefs<"FillwidthItem_artwork">;
                 } | null;
             } | null> | null;
@@ -40,13 +41,7 @@ const node: ReaderFragment = {
       "selections": [
         {
           "alias": null,
-          "args": [
-            {
-              "kind": "Literal",
-              "name": "first",
-              "value": 1
-            }
-          ],
+          "args": null,
           "concreteType": "ArtworkConnection",
           "kind": "LinkedField",
           "name": "artworksConnection",
@@ -76,6 +71,13 @@ const node: ReaderFragment = {
                       "storageKey": null
                     },
                     {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "realizedToEstimate",
+                      "storageKey": null
+                    },
+                    {
                       "args": null,
                       "kind": "FragmentSpread",
                       "name": "FillwidthItem_artwork"
@@ -87,7 +89,7 @@ const node: ReaderFragment = {
               "storageKey": null
             }
           ],
-          "storageKey": "artworksConnection(first:1)"
+          "storageKey": null
         }
       ],
       "storageKey": null
@@ -95,5 +97,5 @@ const node: ReaderFragment = {
   ],
   "type": "TargetSupply"
 };
-(node as any).hash = '078b6c58d241220af9fc51e433ca4fd7';
+(node as any).hash = '4f4f9bb3ce9930f44af7ff5436942d46';
 export default node;
