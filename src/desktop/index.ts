@@ -63,7 +63,6 @@ app.use(require("./apps/notifications"))
 app.use(require("./apps/personalize"))
 app.use(require("./apps/press"))
 
-app.use(require("./apps/show"))
 app.use(require("./apps/shows"))
 app.use(require("./apps/tag"))
 app.use(require("./apps/unsubscribe"))

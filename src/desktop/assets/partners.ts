@@ -13,13 +13,12 @@ const routes = {
       require("../apps/partner/client/index.coffee").init()
     }
   },
-  "/galleries": require("../apps/galleries_institutions/client/index.coffee"),
-  "/institutions": require("../apps/galleries_institutions/client/index.coffee"),
   "/auction-partnerships": require("../apps/partnerships/client/index.coffee")
     .init,
+  "/galleries": require("../apps/galleries_institutions/client/index.coffee"),
   "/institution-partnerships": require("../apps/partnerships/client/index.coffee")
     .init,
-  "/show/.*": require("../apps/show/client/index.coffee").init,
+  "/institutions": require("../apps/galleries_institutions/client/index.coffee"),
   "/shows": require("../apps/shows/client/index.coffee").init,
 }
 

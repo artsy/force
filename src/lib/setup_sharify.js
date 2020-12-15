@@ -47,7 +47,6 @@ sharify.data = _.extend(
     "EMBEDLY_KEY",
     "ENABLE_INSTANT_PAGE",
     "ENABLE_REQUEST_CONDITION_REPORT",
-    "ENABLE_SHOW_UPDATE",
     "ENABLE_SERVER_SIDE_CACHE",
     "ENABLE_SIGN_IN_WITH_APPLE",
     "ENABLE_QUERY_BATCHING",
@@ -106,11 +105,11 @@ sharify.data = _.extend(
     "WEBFONT_URL"
   ),
   {
-    JS_EXT: ["production", "staging"].includes(config.NODE_ENV)
-      ? ".min.js.cgz"
-      : ".js",
     CSS_EXT: ["production", "staging"].includes(config.NODE_ENV)
       ? ".min.css.cgz"
       : ".css",
+    JS_EXT: ["production", "staging"].includes(config.NODE_ENV)
+      ? ".min.js.cgz"
+      : ".js",
   }
 )
