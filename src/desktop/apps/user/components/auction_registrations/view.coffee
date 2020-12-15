@@ -1,5 +1,5 @@
 Backbone = require 'backbone'
-{ metaphysics } = require '../../../../../lib/metaphysics'
+metaphysics2 = require '../../../../../lib/metaphysics2'
 query = require './query.coffee'
 template = -> require('./index.jade') arguments...
 sd = require("sharify").data
@@ -14,7 +14,7 @@ module.exports = class AuctionRegistrationsView extends Backbone.View
     @me = {}
 
   fetch: ->
-    metaphysics query: query, req: user: @user
+    metaphysics2 query: query, req: user: @user
       .then ({ @me }) => @render()
       .catch console.error.bind(console)
 

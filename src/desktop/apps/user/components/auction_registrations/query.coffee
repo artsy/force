@@ -1,14 +1,14 @@
 module.exports = """
   query AuctionRegistrationsQuery {
     me {
-      sale_registrations(published: true, is_auction: true, sort: CREATED_AT_DESC) {
-        is_registered
+      sale_registrations: saleRegistrations(published: true, isAuction: true, sort: CREATED_AT_DESC) {
+        is_registered: isRegistered
         sale {
           id
           name
           href
-          start_at(format: "MMMM D, h:mmA")
-          is_closed
+          start_at: eventStartAt(format: "MMMM D, h:mmA")
+          is_closed: isClosed
           profile {
             icon {
               url
