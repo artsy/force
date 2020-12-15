@@ -1,8 +1,8 @@
-import { Flex, Sans } from "@artsy/palette"
+import { Text } from "@artsy/palette"
 import { NavigationTabs_searchableConnection } from "v2/__generated__/NavigationTabs_searchableConnection.graphql"
 import { track } from "v2/Artsy/Analytics"
 import * as Schema from "v2/Artsy/Analytics/Schema"
-import { RouteTab, TabCarousel } from "v2/Components/RouteTabs"
+import { RouteTab, RouteTabs } from "v2/Components/RouteTabs"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { get } from "v2/Utils/get"
@@ -17,16 +17,16 @@ export interface Props extends SystemContextProps {
 const MORE_TABS = ["tag", "city", "feature", "page"]
 
 const TAB_NAME_MAP = {
-  artist: "Artists",
-  marketing_collection: "Collections",
-  artist_series: "Artist Series",
   PartnerGallery: "Galleries",
-  partner_show: "Shows",
-  fair: "Fairs",
   PartnerInstitution: "Institutions",
   PartnerInstitutionalSeller: "Institutions",
-  gene: "Categories",
   article: "Articles",
+  artist: "Artists",
+  artist_series: "Artist Series",
+  fair: "Fairs",
+  gene: "Categories",
+  marketing_collection: "Collections",
+  partner_show: "Shows",
   sale: "Auctions",
 }
 
@@ -36,8 +36,8 @@ const TAB_NAME_MAP = {
 export class NavigationTabs extends React.Component<Props> {
   @track((_props, _state, [tab, destination_path]: string[]) => ({
     action_type: Schema.ActionType.Click,
-    subject: tab,
     destination_path,
+    subject: tab,
   }))
   trackClick(tab: string, destination_path: string) {
     // noop
@@ -67,14 +67,12 @@ export class NavigationTabs extends React.Component<Props> {
         }}
         key={to}
       >
-        <Flex mr={[0, 2]}>
-          {text}
-          {count != null && (
-            <Sans ml={0.5} size="3t" weight="regular">
-              ({count})
-            </Sans>
-          )}
-        </Flex>
+        {text}
+        {count != null && (
+          <Text variant="text" display="inline">
+            &nbsp;({count})
+          </Text>
+        )}
       </RouteTab>
     )
   }
@@ -99,8 +97,8 @@ export class NavigationTabs extends React.Component<Props> {
     !!artworkCount &&
       tabs.push(
         this.renderTab("Artworks", route(""), {
-          exact: true,
           count: artworkCount,
+          exact: true,
         })
       )
 
@@ -126,12 +124,9 @@ export class NavigationTabs extends React.Component<Props> {
 
   render() {
     return (
-      <Flex mx={[-2, 0]}>
-        <TabCarousel
-          key={`tab-carousel-${this.props.term}`}
-          tabs={this.tabs()}
-        />
-      </Flex>
+      <RouteTabs key={`tab-carousel-${this.props.term}`}>
+        {this.tabs()}
+      </RouteTabs>
     )
   }
 }

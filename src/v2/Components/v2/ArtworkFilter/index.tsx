@@ -54,9 +54,10 @@ import { commercialFilterParamsChanged } from "@artsy/cohesion"
  * `Apps/Collection` for an example, which queries Kaws for data.
  */
 export const ArtworkFilter: React.FC<
-  SharedArtworkFilterContextProps & {
-    viewer: any // FIXME: We need to support multiple types implementing different viewer interfaces
-  }
+  BoxProps &
+    SharedArtworkFilterContextProps & {
+      viewer: any // FIXME: We need to support multiple types implementing different viewer interfaces
+    }
 > = ({
   viewer,
   aggregations,
@@ -66,6 +67,7 @@ export const ArtworkFilter: React.FC<
   onFilterClick,
   onChange,
   ZeroState,
+  ...rest
 }) => {
   return (
     <ArtworkFilterContextProvider
@@ -77,7 +79,7 @@ export const ArtworkFilter: React.FC<
       onChange={onChange}
       ZeroState={ZeroState}
     >
-      <ArtworkFilterRefetchContainer viewer={viewer} />
+      <ArtworkFilterRefetchContainer viewer={viewer} {...rest} />
     </ArtworkFilterContextProvider>
   )
 }
@@ -140,13 +142,13 @@ export const BaseArtworkFilter: React.FC<
 
           tracking.trackEvent(
             commercialFilterParamsChanged({
-              current: filterContext.filters,
               changed: {
                 [filterKey]: filterContext.filters[filterKey],
               },
               contextOwnerId: contextPageOwnerId,
               contextOwnerSlug: contextPageOwnerSlug,
               contextOwnerType: contextPageOwnerType,
+              current: filterContext.filters,
             })
           )
         }

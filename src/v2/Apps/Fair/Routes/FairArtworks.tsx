@@ -71,7 +71,7 @@ const FairArtworksFilter: React.FC<FairArtworksFilterProps> = props => {
       onChange={updateUrl}
     >
       <BaseArtworkFilter
-        mt="-2px"
+        mt={[0, "-1px"]}
         relay={relay}
         viewer={fair}
         relayVariables={{

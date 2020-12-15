@@ -33,8 +33,8 @@ buildClientApp({
           const { pageType } = getContextPageFromClient()
 
           if (pageType === OwnerType.search) {
-            document.getElementById("loading-container").remove()
-            document.getElementById("search-page-header").remove()
+            document.getElementById("loading-container")?.remove()
+            document.getElementById("search-page-header")?.remove()
           }
         }
       )
