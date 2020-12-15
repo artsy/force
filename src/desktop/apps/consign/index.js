@@ -1,6 +1,6 @@
 import * as routes from "./routes"
 import JSONPage from "../../components/json_page"
-import adminOnly from "../../lib/admin_only"
+// import adminOnly from "../../lib/admin_only"
 import express from "express"
 
 export const app = express()

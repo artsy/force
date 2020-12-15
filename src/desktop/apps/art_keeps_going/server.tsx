@@ -1,7 +1,7 @@
 import express from "express"
 // @ts-ignore
 import JSONPage from "../../components/json_page"
-import adminOnly from "desktop/lib/admin_only"
+import { adminOnly } from "desktop/lib/admin_only"
 import { landingPage } from "./routes"
 
 export const app = express()
@@ -9,8 +9,8 @@ export const app = express()
 const landing = new JSONPage({
   name: "art-keeps-going",
   paths: {
-    show: "/campaign/art-keeps-going",
     edit: "/campaign/art-keeps-going/edit",
+    show: "/campaign/art-keeps-going",
   },
 })
 

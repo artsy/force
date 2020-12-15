@@ -2,7 +2,7 @@ import queryString from "query-string"
 import { merge } from "lodash"
 import { stitch } from "@artsy/stitch"
 
-import adminOnly from "../../lib/admin_only"
+import { adminOnly } from "../../lib/admin_only"
 import JSONPage from "../../components/json_page/es6"
 import { MiamiFairWeekPage } from "./components/MiamiFairWeekPage"
 import { FairWeekMeta } from "desktop/components/fair_week_marketing/Meta"
@@ -31,19 +31,19 @@ class EditableMiamFairWeekPage extends JSONPage {
       const data = await this.jsonPage.get()
       const layout = await stitch({
         basePath: __dirname,
-        layout: "../../components/main_layout/templates/react_index.jade",
+        blocks: {
+          body: MiamiFairWeekPage,
+          head: FairWeekMeta,
+        },
         config: {
           styledComponents: true,
-        },
-        blocks: {
-          head: FairWeekMeta,
-          body: MiamiFairWeekPage,
         },
         data: {
           ...res.locals,
           ...data,
           data,
         },
+        layout: "../../components/main_layout/templates/react_index.jade",
       })
 
       res.send(layout)
@@ -55,5 +55,5 @@ class EditableMiamFairWeekPage extends JSONPage {
 
 export const app = new EditableMiamFairWeekPage({
   name: SLUG,
-  paths: { show: `/${SLUG}`, edit: `/${SLUG}/edit` },
+  paths: { edit: `/${SLUG}/edit`, show: `/${SLUG}` },
 }).app

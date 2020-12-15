@@ -9,7 +9,7 @@ import uuid from "node-uuid"
 import { parse } from "url"
 import * as helpers from "../template_helpers"
 import config from "../../config"
-const templateModules = require("../../desktop/lib/template_modules.coffee")
+import * as templateModules from "../../desktop/lib/template_modules"
 
 const { NODE_ENV } = config
 

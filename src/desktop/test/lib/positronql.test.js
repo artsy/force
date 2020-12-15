@@ -2,7 +2,7 @@ import sinon from "sinon"
 import Backbone from "backbone"
 import { positronql, __RewireAPI__ as RewireApi } from "desktop/lib/positronql"
 
-xdescribe("positronql", () => {
+describe.skip("positronql", () => {
   const request = {}
   beforeEach(() => {
     request.set = sinon.stub().returns(request)
