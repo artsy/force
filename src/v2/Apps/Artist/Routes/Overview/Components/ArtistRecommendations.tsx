@@ -1,4 +1,4 @@
-import { Box, Button, Flex, Sans } from "@artsy/palette"
+import { Box, Button, Flex, Text } from "@artsy/palette"
 import { ArtistRecommendations_artist } from "v2/__generated__/ArtistRecommendations_artist.graphql"
 import { ArtistRecommendationsRendererQuery } from "v2/__generated__/ArtistRecommendationsRendererQuery.graphql"
 import { SystemContext, useTracking } from "v2/Artsy"
@@ -53,9 +53,10 @@ export const ArtistRecommendations: React.FC<ArtistRecommendationsProps> = ({
 
   return (
     <Box>
-      <Sans size="5" color="black100" mb={2}>
+      <Text variant="subtitle" mb={2}>
         Related Artists
-      </Sans>
+      </Text>
+
       {relatedArtists}
 
       {relay.hasMore() && (
@@ -79,8 +80,8 @@ const ShowMoreButton: React.FC<{ onClick: () => void; loading: boolean }> = ({
         onClick={() => {
           tracking.trackEvent({
             action_type: Schema.ActionType.Click,
-            subject: "Show more",
             context_module: Schema.ContextModule.RecommendedArtists,
+            subject: "Show more",
           })
           onClick()
         }}
@@ -138,9 +139,9 @@ export const ArtistRecommendationsPaginationContainer = createPaginationContaine
     ) {
       return {
         ...fragmentVariables,
+        artistID: props.artist.slug,
         count,
         cursor,
-        artistID: props.artist.slug,
       }
     },
     query: graphql`
