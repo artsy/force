@@ -55,11 +55,16 @@ export const Pagination: React.FC<Props> = ({
     onClick(cursor, page)
   }
 
+  const handleNext = event => {
+    event.preventDefault()
+    onNext()
+  }
+
   const paginationProps: PaginationProps = {
     getHref,
     hasNextPage,
     onClick: handleClick,
-    onNext,
+    onNext: handleNext,
     pageCursors: pageCursors as any,
     scrollTo,
   }
