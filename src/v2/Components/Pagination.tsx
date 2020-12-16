@@ -21,42 +21,38 @@ interface Props {
   scrollTo?: string
 }
 
-export class Pagination extends React.Component<Props> {
-  static defaultProps = {
-    onClick: _cursor => ({}),
-    onNext: () => ({}),
-    scrollTo: null,
+export const Pagination: React.FC<Props> = ({
+  hasNextPage,
+  onClick = _cursor => ({}),
+  onNext = () => ({}),
+  pageCursors,
+  scrollTo = null,
+}) => {
+  if (pageCursors.around.length === 1) {
+    return null
   }
 
-  render() {
-    const { hasNextPage, onClick, onNext, pageCursors, scrollTo } = this.props
-
-    if (pageCursors.around.length === 1) {
-      return null
-    }
-
-    const paginationProps: PaginationProps = {
-      hasNextPage,
-      onClick,
-      onNext,
-      pageCursors: pageCursors as any,
-      scrollTo,
-    }
-
-    return (
-      <ScrollIntoView selector={scrollTo}>
-        <Media at="xs">
-          <SmallPagination {...paginationProps} />
-        </Media>
-        <Media greaterThan="xs">
-          <Box>
-            <Separator mb={3} pr={2} />
-            <LargePagination {...paginationProps} />
-          </Box>
-        </Media>
-      </ScrollIntoView>
-    )
+  const paginationProps: PaginationProps = {
+    hasNextPage,
+    onClick,
+    onNext,
+    pageCursors: pageCursors as any,
+    scrollTo,
   }
+
+  return (
+    <ScrollIntoView selector={scrollTo}>
+      <Media at="xs">
+        <SmallPagination {...paginationProps} />
+      </Media>
+      <Media greaterThan="xs">
+        <Box>
+          <Separator mb={3} pr={2} />
+          <LargePagination {...paginationProps} />
+        </Box>
+      </Media>
+    </ScrollIntoView>
+  )
 }
 
 export const PaginationFragmentContainer = createFragmentContainer(Pagination, {
