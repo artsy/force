@@ -10,6 +10,7 @@ import {
   LargePagination,
   Separator,
   SmallPagination,
+  PaginationProps,
 } from "@artsy/palette"
 
 interface Props {
@@ -34,15 +35,20 @@ export class Pagination extends React.Component<Props> {
       return null
     }
 
+    const paginationProps: PaginationProps = {
+      ...this.props,
+      pageCursors: pageCursors as any,
+    }
+
     return (
       <ScrollIntoView selector={scrollTo}>
         <Media at="xs">
-          <SmallPagination {...this.props} pageCursors={pageCursors as any} />
+          <SmallPagination {...paginationProps} />
         </Media>
         <Media greaterThan="xs">
           <Box>
             <Separator mb={3} pr={2} />
-            <LargePagination {...this.props} pageCursors={pageCursors as any} />
+            <LargePagination {...paginationProps} />
           </Box>
         </Media>
       </ScrollIntoView>
