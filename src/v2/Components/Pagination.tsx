@@ -28,25 +28,21 @@ export class Pagination extends React.Component<Props> {
   }
 
   render() {
-    if (this.props.pageCursors.around.length === 1) {
+    const { pageCursors, scrollTo } = this.props
+
+    if (pageCursors.around.length === 1) {
       return null
     }
 
     return (
-      <ScrollIntoView selector={this.props.scrollTo}>
+      <ScrollIntoView selector={scrollTo}>
         <Media at="xs">
-          <SmallPagination
-            {...this.props}
-            pageCursors={this.props.pageCursors as any}
-          />
+          <SmallPagination {...this.props} pageCursors={pageCursors as any} />
         </Media>
         <Media greaterThan="xs">
           <Box>
             <Separator mb={3} pr={2} />
-            <LargePagination
-              {...this.props}
-              pageCursors={this.props.pageCursors as any}
-            />
+            <LargePagination {...this.props} pageCursors={pageCursors as any} />
           </Box>
         </Media>
       </ScrollIntoView>
