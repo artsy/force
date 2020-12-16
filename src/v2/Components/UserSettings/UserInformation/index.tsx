@@ -39,14 +39,16 @@ export const UserInformation: React.FC<UserInformationProps> = ({
   ) => {
     formikBag.setStatus({ error: undefined })
     try {
-      const {
-        updateMyUserProfile: { userOrError },
-      } = await UpdateUserInformation(relayEnvironment, {
+      const variables = {
         email,
         name,
         password,
         phone,
-      })
+      }
+
+      const response = await UpdateUserInformation(relayEnvironment, variables)
+      const userOrError = response.updateMyUserProfile.userOrError
+
       if (userOrError.mutationError) {
         const { message, fieldErrors } = userOrError.mutationError
         if (fieldErrors) {
