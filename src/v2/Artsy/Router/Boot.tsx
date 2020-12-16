@@ -45,7 +45,20 @@ export const Boot = track(null, {
     document.body.setAttribute("data-test", "AppReady") //
 
     if (getENV("NODE_ENV") === "production") {
-      Sentry.init({ dsn: sd.SENTRY_PUBLIC_DSN })
+      Sentry.init(
+        {
+          dsn: sd.SENTRY_PUBLIC_DSN,
+          beforeSend(event, hint) {
+            const error = hint.originalException;
+            if (error && error.message) {
+              if (error.message.match(/pktAnnotationHighlighter/i)) {
+                return null;
+              }
+            }
+            return event;
+          }
+        }
+      )
     }
   }, [])
 
