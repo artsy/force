@@ -32,12 +32,11 @@ export const paramsToCamelCase = params => {
   }, {})
 }
 
-export const buildUrl = (state: ArtworkFilters): string => {
+export const buildUrl = (state: ArtworkFilters, pathname?: string): string => {
   const params = removeDefaultValues(state)
   const queryString = qs.stringify(paramsToSnakeCase(params))
-  let pathname = ""
 
-  if (typeof window !== "undefined") {
+  if (!pathname && typeof window !== "undefined") {
     pathname = window.location.pathname
   }
 
