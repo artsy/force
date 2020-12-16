@@ -1575,15 +1575,9 @@ type ArtworkMutationFailure {
   mutationError: GravityMutationError
 }
 
-type ArtworkMutationSuccess {
-  artwork: Artwork
-  artworkEdge: ArtworkEdgeInterface
-}
-
 union ArtworkMutationType =
     ArtworkMutationDeleteSuccess
   | ArtworkMutationFailure
-  | ArtworkMutationSuccess
 
 union ArtworkOrEditionSetType = Artwork | EditionSet
 
@@ -1730,6 +1724,7 @@ type AuctionResult implements Node {
 
   # A type-specific ID likely used as a database ID.
   internalID: ID!
+  location: String
   mediumText: String
   organization: String
   priceRealized: AuctionResultPriceRealized
