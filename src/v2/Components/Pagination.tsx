@@ -14,10 +14,10 @@ import {
 } from "@artsy/palette"
 
 interface Props {
+  hasNextPage: boolean
   onClick?: (cursor: string, page: number) => void
   onNext?: () => void
   pageCursors: Pagination_pageCursors
-  hasNextPage: boolean
   scrollTo?: string
 }
 
@@ -29,15 +29,18 @@ export class Pagination extends React.Component<Props> {
   }
 
   render() {
-    const { pageCursors, scrollTo } = this.props
+    const { hasNextPage, onClick, onNext, pageCursors, scrollTo } = this.props
 
     if (pageCursors.around.length === 1) {
       return null
     }
 
     const paginationProps: PaginationProps = {
-      ...this.props,
+      hasNextPage,
+      onClick,
+      onNext,
       pageCursors: pageCursors as any,
+      scrollTo,
     }
 
     return (
