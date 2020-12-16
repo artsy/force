@@ -1,5 +1,5 @@
 import { buildServerApp } from "v2/Artsy/Router/server"
-import { routes } from "v2/Apps/Auction/routes"
+import { auctionRoutes } from "v2/Apps/Auction/auctionRoutes"
 import { stitch } from "@artsy/stitch"
 
 const renderPage = async ({ layoutTemplate }, req, res, next) => {
@@ -14,7 +14,7 @@ const renderPage = async ({ layoutTemplate }, req, res, next) => {
     } = await buildServerApp({
       req,
       res,
-      routes,
+      routes: auctionRoutes,
     })
 
     if (redirect) {
@@ -25,11 +25,11 @@ const renderPage = async ({ layoutTemplate }, req, res, next) => {
     // Render layout
     const layout = await stitch({
       basePath: __dirname,
-      layout: `../../components/main_layout/templates/${layoutTemplate}.jade`,
       blocks: {
-        head: () => headTags,
         body: bodyHTML,
+        head: () => headTags,
       },
+      layout: `../../components/main_layout/templates/${layoutTemplate}.jade`,
       locals: {
         ...res.locals,
         assetPackage: "auction_reaction",

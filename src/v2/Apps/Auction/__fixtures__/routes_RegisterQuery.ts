@@ -1,64 +1,64 @@
-import { routes_RegisterQueryRawResponse } from "v2/__generated__/routes_RegisterQuery.graphql"
+import { auctionRoutes_RegisterQueryRawResponse } from "v2/__generated__/auctionRoutes_RegisterQuery.graphql"
 
-export const RegisterQueryResponseFixture: routes_RegisterQueryRawResponse = {
+export const RegisterQueryResponseFixture: auctionRoutes_RegisterQueryRawResponse = {
   me: {
-    id: "opaque-me-id",
     hasQualifiedCreditCards: false,
-    internalID: "userid",
+    id: "opaque-me-id",
     identityVerified: false,
+    internalID: "userid",
   },
   sale: {
     id: "opaque-sale-id",
+    internalID: "id123",
     isAuction: true,
-    slug: "an-example-auction-sale",
-    isRegistrationClosed: false,
     isOpen: true,
     isPreview: false,
+    isRegistrationClosed: false,
     registrationStatus: null,
-    internalID: "id123",
-    status: "open",
     requireIdentityVerification: true,
+    slug: "an-example-auction-sale",
+    status: "open",
   },
 }
 
-export const RegisterQueryResponseFixtureWithVerifiedUser: routes_RegisterQueryRawResponse = {
+export const RegisterQueryResponseFixtureWithVerifiedUser: auctionRoutes_RegisterQueryRawResponse = {
   me: {
-    id: "opaque-me-id",
     hasQualifiedCreditCards: false,
-    internalID: "userid",
+    id: "opaque-me-id",
     identityVerified: true,
+    internalID: "userid",
   },
   sale: {
     id: "opaque-sale-id",
+    internalID: "id123",
     isAuction: true,
-    slug: "an-example-auction-sale",
-    isRegistrationClosed: false,
     isOpen: true,
     isPreview: false,
+    isRegistrationClosed: false,
     registrationStatus: null,
-    internalID: "id123",
-    status: "open",
     requireIdentityVerification: true,
+    slug: "an-example-auction-sale",
+    status: "open",
   },
 }
 
-export const RegisterQueryResponseFixtureWithoutVerificationNeeded: routes_RegisterQueryRawResponse = {
+export const RegisterQueryResponseFixtureWithoutVerificationNeeded: auctionRoutes_RegisterQueryRawResponse = {
   me: {
-    id: "opaque-me-id",
     hasQualifiedCreditCards: false,
-    internalID: "userid",
+    id: "opaque-me-id",
     identityVerified: false,
+    internalID: "userid",
   },
   sale: {
     id: "opaque-sale-id",
+    internalID: "id123",
     isAuction: true,
-    slug: "an-example-auction-sale",
-    isRegistrationClosed: false,
     isOpen: true,
     isPreview: false,
+    isRegistrationClosed: false,
     registrationStatus: null,
-    internalID: "id123",
-    status: "open",
     requireIdentityVerification: false,
+    slug: "an-example-auction-sale",
+    status: "open",
   },
 }

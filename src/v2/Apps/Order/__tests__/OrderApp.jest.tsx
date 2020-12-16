@@ -1,4 +1,4 @@
-import { routes } from "v2/Apps/Order/routes"
+import { orderRoutes } from "v2/Apps/Order/orderRoutes"
 import { SystemContextProvider } from "v2/Artsy"
 import { ErrorPage } from "v2/Components/ErrorPage"
 import { mount } from "enzyme"
@@ -8,7 +8,7 @@ import React from "react"
 import { HeadProvider, Meta } from "react-head"
 import { OrderApp } from "../OrderApp"
 
-import { routes_OrderQueryRawResponse } from "v2/__generated__/routes_OrderQuery.graphql"
+import { orderRoutes_OrderQueryRawResponse } from "v2/__generated__/orderRoutes_OrderQuery.graphql"
 import {
   BuyOrderPickup,
   BuyOrderWithShippingDetails,
@@ -35,7 +35,7 @@ describe("OrderApp routing redirects", () => {
   // FIXME: move to DevTools folder
   async function render(
     url: string,
-    mockData: routes_OrderQueryRawResponse
+    mockData: orderRoutes_OrderQueryRawResponse
   ): Promise<FarceRedirectResult> {
     const network = createMockNetworkLayer2({ mockData })
     const source = new RecordSource()
@@ -45,14 +45,14 @@ describe("OrderApp routing redirects", () => {
     const result = await getFarceResult({
       render: () => <div>hello</div>,
       resolver: new Resolver(environment),
-      routeConfig: routes,
+      routeConfig: orderRoutes,
       url,
     })
 
     return result as FarceRedirectResult
   }
 
-  const mockResolver = (data: routes_OrderQueryRawResponse["order"]) => ({
+  const mockResolver = (data: orderRoutes_OrderQueryRawResponse["order"]) => ({
     me: { id: "alice_jane", name: "Alice Jane" },
     order: data,
   })
@@ -327,7 +327,7 @@ describe("OrderApp routing redirects", () => {
   })
 
   describe("visiting the /review/counter page", () => {
-    const counterOfferOrder: routes_OrderQueryRawResponse["order"] = {
+    const counterOfferOrder: orderRoutes_OrderQueryRawResponse["order"] = {
       ...OfferOrderWithShippingDetails,
       awaitingResponseFrom: "BUYER",
       id: "2939023",
@@ -401,7 +401,7 @@ describe("OrderApp routing redirects", () => {
   })
 
   describe("visiting the /payment/new page", () => {
-    const counterOfferOrder: routes_OrderQueryRawResponse["order"] = {
+    const counterOfferOrder: orderRoutes_OrderQueryRawResponse["order"] = {
       ...OfferOrderWithShippingDetails,
 
       awaitingResponseFrom: "BUYER",

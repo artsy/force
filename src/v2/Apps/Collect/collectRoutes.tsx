@@ -16,7 +16,7 @@ const CollectionApp = loadable(() => import("./Routes/Collection"), {
   resolveComponent: component => component.CollectionRefetchContainer,
 })
 
-export const routes: RouteConfig[] = [
+export const collectRoutes: RouteConfig[] = [
   {
     path: "/collect/:medium?",
     getComponent: () => CollectApp,

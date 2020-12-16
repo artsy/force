@@ -1,8 +1,8 @@
-import { routes_ConfirmBidQueryRawResponse } from "v2/__generated__/routes_ConfirmBidQuery.graphql"
-import { routes_RegisterQueryRawResponse } from "v2/__generated__/routes_RegisterQuery.graphql"
+import { auctionRoutes_ConfirmBidQueryRawResponse } from "v2/__generated__/auctionRoutes_ConfirmBidQuery.graphql"
+import { auctionRoutes_RegisterQueryRawResponse } from "v2/__generated__/auctionRoutes_RegisterQuery.graphql"
 import { ConfirmBidQueryResponseFixture } from "v2/Apps/Auction/__fixtures__/routes_ConfirmBidQuery"
 import { RegisterQueryResponseFixture } from "v2/Apps/Auction/__fixtures__/routes_RegisterQuery"
-import { routes } from "v2/Apps/Auction/routes"
+import { auctionRoutes } from "v2/Apps/Auction/auctionRoutes"
 import deepMerge from "deepmerge"
 import { createMockNetworkLayer2 } from "v2/DevTools/createMockNetworkLayer"
 import { createRender } from "found"
@@ -16,8 +16,8 @@ describe("Auction/routes", () => {
   async function render(
     url,
     mockData:
-      | routes_ConfirmBidQueryRawResponse
-      | routes_RegisterQueryRawResponse
+      | auctionRoutes_ConfirmBidQueryRawResponse
+      | auctionRoutes_RegisterQueryRawResponse
   ) {
     const network = createMockNetworkLayer2({ mockData })
     const source = new RecordSource()
@@ -25,26 +25,26 @@ describe("Auction/routes", () => {
     const environment = new Environment({ network, store })
 
     return (await getFarceResult({
-      url,
-      routeConfig: routes,
-      resolver: new Resolver(environment),
       render: createRender({}),
+      resolver: new Resolver(environment),
+      routeConfig: auctionRoutes,
+      url,
     })) as Partial<FarceRedirectResult & FarceElementResult>
   }
 
   const mockRegisterResolver = (
-    data: routes_RegisterQueryRawResponse
-  ): routes_RegisterQueryRawResponse => ({
-    sale: data.sale,
+    data: auctionRoutes_RegisterQueryRawResponse
+  ): auctionRoutes_RegisterQueryRawResponse => ({
     me: data.me,
+    sale: data.sale,
   })
 
   const mockConfirmBidResolver = (
-    data: DeepPartial<routes_ConfirmBidQueryRawResponse> = {}
-  ): routes_ConfirmBidQueryRawResponse =>
+    data: DeepPartial<auctionRoutes_ConfirmBidQueryRawResponse> = {}
+  ): auctionRoutes_ConfirmBidQueryRawResponse =>
     deepMerge<
-      routes_ConfirmBidQueryRawResponse,
-      DeepPartial<routes_ConfirmBidQueryRawResponse>
+      auctionRoutes_ConfirmBidQueryRawResponse,
+      DeepPartial<auctionRoutes_ConfirmBidQueryRawResponse>
     >(ConfirmBidQueryResponseFixture, data)
 
   it("renders the Auction FAQ view", async () => {
@@ -62,7 +62,7 @@ describe("Auction/routes", () => {
       )
 
       expect(status).toBe(200)
-      expect(redirect).toBeUndefined
+      expect(redirect).toBeUndefined()
     })
 
     it("redirects to confirm registration page if user is registered but not qualified to bid (to remind them)", async () => {
@@ -121,8 +121,8 @@ describe("Auction/routes", () => {
         artwork: {
           saleArtwork: {
             sale: {
-              registrationStatus: null,
               isRegistrationClosed: true,
+              registrationStatus: null,
             },
           },
         },
@@ -141,8 +141,8 @@ describe("Auction/routes", () => {
         artwork: {
           saleArtwork: {
             sale: {
-              registrationStatus: null,
               isRegistrationClosed: false,
+              registrationStatus: null,
             },
           },
         },
@@ -153,7 +153,7 @@ describe("Auction/routes", () => {
       )
 
       expect(status).toBe(200)
-      expect(redirect).toBeUndefined
+      expect(redirect).toBeUndefined()
     })
   })
 
@@ -165,7 +165,7 @@ describe("Auction/routes", () => {
       )
 
       expect(status).toBe(200)
-      expect(redirect).toBeUndefined
+      expect(redirect).toBeUndefined()
     })
 
     it("also responds to auction-registration2 route", async () => {

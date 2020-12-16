@@ -1,21 +1,21 @@
 import { buildAppRoutes } from "v2/Artsy/Router/buildAppRoutes"
 import { RouteConfig } from "found"
-import { routes as artistRoutes } from "v2/Apps/Artist/routes"
-import { routes as artistSeriesRoutes } from "./ArtistSeries/routes"
-import { routes as artistsRoutes } from "v2/Apps/Artists/artistsRoutes"
-import { routes as artworkRoutes } from "v2/Apps/Artwork/routes"
-import { routes as collectRoutes } from "v2/Apps/Collect/collectRoutes"
-import { routes as consignRoutes } from "v2/Apps/Consign/consignRoutes"
-import { routes as conversationRoutes } from "v2/Apps/Conversation/routes"
-import { routes as debugRoutes } from "./Debug/debugRoutes"
-import { routes as fairRoutes } from "v2/Apps/Fair/routes"
-import { routes as featureRoutes } from "v2/Apps/Feature/routes"
-import { routes as identityVerificationRoutes } from "v2/Apps/IdentityVerification/routes"
-import { routes as orderRoutes } from "v2/Apps/Order/routes"
-import { routes as purchasesRoutes } from "v2/Apps/Purchase/routes"
-import { routes as searchRoutes } from "v2/Apps/Search/routes"
-import { routes as showRoutes } from "v2/Apps/Show/routes"
-import { routes as viewingRoomRoutes } from "./ViewingRoom/routes"
+import { artistRoutes } from "v2/Apps/Artist/artistRoutes"
+import { artistSeriesRoutes } from "./ArtistSeries/artistSeriesRoutes"
+import { artistsRoutes } from "v2/Apps/Artists/artistsRoutes"
+import { artworkRoutes } from "v2/Apps/Artwork/artworkRoutes"
+import { collectRoutes } from "v2/Apps/Collect/collectRoutes"
+import { consignRoutes } from "v2/Apps/Consign/consignRoutes"
+import { conversationRoutes } from "v2/Apps/Conversation/conversationRoutes"
+import { debugRoutes } from "./Debug/debugRoutes"
+import { fairRoutes } from "v2/Apps/Fair/fairRoutes"
+import { featureRoutes } from "v2/Apps/Feature/featureRoutes"
+import { identityVerificationRoutes } from "v2/Apps/IdentityVerification/identityVerificationRoutes"
+import { orderRoutes } from "v2/Apps/Order/orderRoutes"
+import { purchaseRoutes } from "v2/Apps/Purchase/purchaseRoutes"
+import { searchRoutes } from "v2/Apps/Search/searchRoutes"
+import { showRoutes } from "v2/Apps/Show/showRoutes"
+import { viewingRoomRoutes } from "./ViewingRoom/viewingRoomRoutes"
 
 export function getAppRoutes(): RouteConfig[] {
   return buildAppRoutes([
@@ -53,7 +53,7 @@ export function getAppRoutes(): RouteConfig[] {
       routes: orderRoutes,
     },
     {
-      routes: purchasesRoutes,
+      routes: purchaseRoutes,
     },
     {
       routes: searchRoutes,

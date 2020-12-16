@@ -1,49 +1,80 @@
 import { buildAppRoutes } from "v2/Artsy/Router/buildAppRoutes"
 import { RouteConfig } from "found"
-import * as artistRoutes from "v2/Apps/Artist/routes"
-import * as artistSeriesRoutes from "./ArtistSeries/routes"
-import * as artistsRoutes from "v2/Apps/Artists/artistsRoutes"
-import * as artworkRoutes from "v2/Apps/Artwork/routes"
-import * as collectRoutes from "v2/Apps/Collect/collectRoutes"
-import * as consignRoutes from "v2/Apps/Consign/consignRoutes"
-import * as conversationRoutes from "v2/Apps/Conversation/routes"
-import * as debugRoutes from "./Debug/debugRoutes"
-import * as fairRoutes from "v2/Apps/Fair/routes"
-import * as featureRoutes from "v2/Apps/Feature/routes"
-import * as identityVerificationRoutes from "v2/Apps/IdentityVerification/routes"
-import * as orderRoutes from "v2/Apps/Order/routes"
-import * as purchasesRoutes from "v2/Apps/Purchase/routes"
-import * as searchRoutes from "v2/Apps/Search/routes"
-import * as showRoutes from "v2/Apps/Show/routes"
-import * as viewingRoomRoutes from "./ViewingRoom/routes"
-
-const NOVO_ENABLED_ROUTES = [
-  artistRoutes,
-  artistsRoutes,
-  artistSeriesRoutes,
-  artworkRoutes,
-  collectRoutes,
-  consignRoutes,
-  conversationRoutes,
-  debugRoutes,
-  fairRoutes,
-  featureRoutes,
-  identityVerificationRoutes,
-  orderRoutes,
-  purchasesRoutes,
-  searchRoutes,
-  showRoutes,
-  viewingRoomRoutes,
-] as Array<{ routes: RouteConfig[] }>
+import { artistRoutes } from "v2/Apps/Artist/artistRoutes"
+import { artistSeriesRoutes } from "./ArtistSeries/artistSeriesRoutes"
+import { artistsRoutes } from "v2/Apps/Artists/artistsRoutes"
+import { artworkRoutes } from "v2/Apps/Artwork/artworkRoutes"
+import { collectRoutes } from "v2/Apps/Collect/collectRoutes"
+import { consignRoutes } from "v2/Apps/Consign/consignRoutes"
+import { conversationRoutes } from "v2/Apps/Conversation/conversationRoutes"
+import { debugRoutes } from "./Debug/debugRoutes"
+import { fairRoutes } from "v2/Apps/Fair/fairRoutes"
+import { featureRoutes } from "v2/Apps/Feature/featureRoutes"
+import { identityVerificationRoutes } from "v2/Apps/IdentityVerification/identityVerificationRoutes"
+import { orderRoutes } from "v2/Apps/Order/orderRoutes"
+import { purchaseRoutes } from "v2/Apps/Purchase/purchaseRoutes"
+import { searchRoutes } from "v2/Apps/Search/searchRoutes"
+import { showRoutes } from "v2/Apps/Show/showRoutes"
+import { viewingRoomRoutes } from "./ViewingRoom/viewingRoomRoutes"
 
 export function getAppNovoRoutes(): RouteConfig[] {
   return buildAppRoutes(
-    NOVO_ENABLED_ROUTES.map(route => {
-      if (!route.routes) {
-        return
-      }
+    [
+      {
+        routes: artistRoutes,
+      },
+      {
+        disabled: true,
+        routes: artistsRoutes,
+      },
+      {
+        routes: artistSeriesRoutes,
+      },
+      {
+        routes: artworkRoutes,
+      },
+      {
+        routes: collectRoutes,
+      },
+      {
+        routes: consignRoutes,
+      },
+      {
+        routes: conversationRoutes,
+      },
+      {
+        routes: fairRoutes,
+      },
+      {
+        routes: featureRoutes,
+      },
+      {
+        routes: identityVerificationRoutes,
+      },
+      {
+        routes: orderRoutes,
+      },
+      {
+        routes: purchaseRoutes,
+      },
+      {
+        routes: searchRoutes,
+      },
+      {
+        routes: showRoutes,
+      },
+      {
+        routes: viewingRoomRoutes,
+      },
+
+      // For debugging baseline app shell stuff
+      {
+        routes: debugRoutes,
+      },
+    ].map((routeConfig: { disabled: boolean; routes: RouteConfig[] }) => {
       return {
-        routes: route.routes.map(route => ({
+        ...routeConfig,
+        routes: routeConfig.routes.map(route => ({
           ...route,
           path: `/novo${route.path}`,
         })),

@@ -14,9 +14,9 @@ jest.mock("react-stripe-elements", () => {
   }
 
   return {
+    CardElement: ({ onReady, hidePostalCode, ...props }) => <div {...props} />,
     Elements: ({ children }) => children,
     StripeProvider: ({ children }) => children,
-    CardElement: ({ onReady, hidePostalCode, ...props }) => <div {...props} />,
     __stripeMock: stripeMock,
     injectStripe: Component => props => (
       <Component stripe={stripeMock} {...props} />
@@ -31,7 +31,7 @@ import React from "react"
 import { graphql } from "react-relay"
 import { LargeSelect } from "@artsy/palette"
 
-import { routes_ConfirmBidQueryResponse } from "v2/__generated__/routes_ConfirmBidQuery.graphql"
+import { auctionRoutes_ConfirmBidQueryResponse } from "v2/__generated__/auctionRoutes_ConfirmBidQuery.graphql"
 import { ConfirmBidQueryResponseFixture } from "v2/Apps/Auction/__fixtures__/routes_ConfirmBidQuery"
 import { bidderPositionQuery } from "v2/Apps/Auction/Operations/BidderPositionQuery"
 import { AnalyticsSchema } from "v2/Artsy/Analytics"
@@ -80,15 +80,21 @@ const setupTestEnv = ({
 } = {}) => {
   mockLocation(location)
   return createTestEnv({
-    TestPage: ConfirmBidTestPage,
     Component: (
-      props: routes_ConfirmBidQueryResponse & { tracking: TrackingProp }
+      props: auctionRoutes_ConfirmBidQueryResponse & { tracking: TrackingProp }
     ) => (
       <ConfirmBidRouteFragmentContainer
         match={{ location } as Match}
         {...props}
       />
     ),
+    TestPage: ConfirmBidTestPage,
+    defaultData: ConfirmBidQueryResponseFixture as ConfirmBidValidTestQueryRawResponse,
+    defaultMutationResults: {
+      createBidderPosition: {},
+      createCreditCard: {},
+      updateMyUserProfile: {},
+    },
     query: graphql`
       query ConfirmBidValidTestQuery @raw_response_type {
         artwork(id: "artwork-id") {
@@ -120,12 +126,6 @@ const setupTestEnv = ({
         }
       }
     `,
-    defaultData: ConfirmBidQueryResponseFixture as ConfirmBidValidTestQueryRawResponse,
-    defaultMutationResults: {
-      createBidderPosition: {},
-      createCreditCard: {},
-      updateMyUserProfile: {},
-    },
   })
 }
 
@@ -295,21 +295,21 @@ describe("Routes/ConfirmBid", () => {
       expect(mockPostEvent).toHaveBeenCalledTimes(1)
       expect(mockPostEvent).toHaveBeenCalledWith({
         action_type: AnalyticsSchema.ActionType.ConfirmBidSubmitted,
-        context_page: AnalyticsSchema.PageName.AuctionConfirmBidPage,
-        auction_slug: "saleslug",
         artwork_slug: "artworkslug",
+        auction_slug: "saleslug",
         bidder_id: "existing-bidder-id",
         bidder_position_id: "winning-bidder-position-id-from-polling",
-        sale_id: "saleid",
-        user_id: "my-user-id",
+        context_page: AnalyticsSchema.PageName.AuctionConfirmBidPage,
         order_id: "existing-bidder-id",
         products: [
           {
+            price: 50000,
             product_id: "artworkid",
             quantity: 1,
-            price: 50000,
           },
         ],
+        sale_id: "saleid",
+        user_id: "my-user-id",
       })
     })
 
@@ -322,14 +322,14 @@ describe("Routes/ConfirmBid", () => {
       expect(mockPostEvent).toHaveBeenCalledTimes(1)
       expect(mockPostEvent).toHaveBeenCalledWith({
         action_type: AnalyticsSchema.ActionType.SelectedMaxBid,
-        context_page: AnalyticsSchema.PageName.AuctionConfirmBidPage,
-        auction_slug: "saleslug",
         artwork_slug: "artworkslug",
+        auction_slug: "saleslug",
         bidder_id: "existing-bidder-id",
+        context_page: AnalyticsSchema.PageName.AuctionConfirmBidPage,
+        order_id: "existing-bidder-id",
         sale_id: "saleid",
         selected_max_bid_minor: "6000000",
         user_id: "my-user-id",
-        order_id: "existing-bidder-id",
       })
     })
 
@@ -421,11 +421,11 @@ describe("Routes/ConfirmBid", () => {
       expect(mockPostEvent).toHaveBeenCalledTimes(1)
       expect(mockPostEvent).toBeCalledWith({
         action_type: AnalyticsSchema.ActionType.ConfirmBidFailed,
+        artwork_slug: "artworkslug",
+        auction_slug: "saleslug",
+        bidder_id: "existing-bidder-id",
         context_page: AnalyticsSchema.PageName.AuctionConfirmBidPage,
         error_messages: ["Lot closed"],
-        auction_slug: "saleslug",
-        artwork_slug: "artworkslug",
-        bidder_id: "existing-bidder-id",
         sale_id: "saleid",
         user_id: "my-user-id",
       })
@@ -442,11 +442,11 @@ describe("Routes/ConfirmBid", () => {
       expect(mockPostEvent).toHaveBeenCalledTimes(1)
       expect(mockPostEvent).toBeCalledWith({
         action_type: AnalyticsSchema.ActionType.ConfirmBidFailed,
+        artwork_slug: "artworkslug",
+        auction_slug: "saleslug",
+        bidder_id: "existing-bidder-id",
         context_page: AnalyticsSchema.PageName.AuctionConfirmBidPage,
         error_messages: ["JavaScript error: failed to fetch"],
-        auction_slug: "saleslug",
-        artwork_slug: "artworkslug",
-        bidder_id: "existing-bidder-id",
         sale_id: "saleid",
         user_id: "my-user-id",
       })
@@ -465,11 +465,11 @@ describe("Routes/ConfirmBid", () => {
       expect(mockPostEvent).toHaveBeenCalledTimes(1)
       expect(mockPostEvent).toBeCalledWith({
         action_type: AnalyticsSchema.ActionType.ConfirmBidFailed,
+        artwork_slug: "artworkslug",
+        auction_slug: "saleslug",
+        bidder_id: "existing-bidder-id",
         context_page: AnalyticsSchema.PageName.AuctionConfirmBidPage,
         error_messages: ["Your bid wasn’t high enough"],
-        auction_slug: "saleslug",
-        artwork_slug: "artworkslug",
-        bidder_id: "existing-bidder-id",
         sale_id: "saleid",
         user_id: "my-user-id",
       })
@@ -480,15 +480,15 @@ describe("Routes/ConfirmBid", () => {
     const FixtureForUnregisteredUserWithCreditCard = deepMerge(
       ConfirmBidQueryResponseFixture,
       {
-        me: {
-          hasQualifiedCreditCards: true,
-        },
         artwork: {
           saleArtwork: {
             sale: {
               registrationStatus: null,
             },
           },
+        },
+        me: {
+          hasQualifiedCreditCards: true,
         },
       }
     )
@@ -537,30 +537,30 @@ describe("Routes/ConfirmBid", () => {
       expect(mockPostEvent).toHaveBeenCalledTimes(2)
       expect(mockPostEvent.mock.calls[0][0]).toEqual({
         action_type: AnalyticsSchema.ActionType.RegistrationSubmitted,
-        context_page: AnalyticsSchema.PageName.AuctionConfirmBidPage,
-        auction_slug: "saleslug",
         artwork_slug: "artworkslug",
+        auction_slug: "saleslug",
         bidder_id: "new-bidder-id",
+        context_page: AnalyticsSchema.PageName.AuctionConfirmBidPage,
         sale_id: "saleid",
         user_id: "my-user-id",
       })
       expect(mockPostEvent.mock.calls[1][0]).toEqual({
         action_type: AnalyticsSchema.ActionType.ConfirmBidSubmitted,
-        context_page: AnalyticsSchema.PageName.AuctionConfirmBidPage,
-        auction_slug: "saleslug",
         artwork_slug: "artworkslug",
+        auction_slug: "saleslug",
         bidder_id: "new-bidder-id",
         bidder_position_id: "winning-bidder-position-id-from-polling",
-        sale_id: "saleid",
-        user_id: "my-user-id",
+        context_page: AnalyticsSchema.PageName.AuctionConfirmBidPage,
         order_id: "new-bidder-id",
         products: [
           {
+            price: 50000,
             product_id: "artworkid",
             quantity: 1,
-            price: 50000,
           },
         ],
+        sale_id: "saleid",
+        user_id: "my-user-id",
       })
     })
 
@@ -590,20 +590,20 @@ describe("Routes/ConfirmBid", () => {
       expect(mockPostEvent).toHaveBeenCalledTimes(2)
       expect(mockPostEvent.mock.calls[0][0]).toEqual({
         action_type: AnalyticsSchema.ActionType.RegistrationSubmitted,
-        context_page: AnalyticsSchema.PageName.AuctionConfirmBidPage,
-        auction_slug: "saleslug",
         artwork_slug: "artworkslug",
+        auction_slug: "saleslug",
         bidder_id: undefined,
+        context_page: AnalyticsSchema.PageName.AuctionConfirmBidPage,
         sale_id: "saleid",
         user_id: "my-user-id",
       })
       expect(mockPostEvent.mock.calls[1][0]).toEqual({
         action_type: AnalyticsSchema.ActionType.ConfirmBidFailed,
+        artwork_slug: "artworkslug",
+        auction_slug: "saleslug",
+        bidder_id: undefined,
         context_page: AnalyticsSchema.PageName.AuctionConfirmBidPage,
         error_messages: ["Lot closed"],
-        auction_slug: "saleslug",
-        artwork_slug: "artworkslug",
-        bidder_id: undefined,
         sale_id: "saleid",
         user_id: "my-user-id",
       })
@@ -622,11 +622,11 @@ describe("Routes/ConfirmBid", () => {
       expect(mockPostEvent).toHaveBeenCalledTimes(1)
       expect(mockPostEvent).toBeCalledWith({
         action_type: AnalyticsSchema.ActionType.ConfirmBidFailed,
+        artwork_slug: "artworkslug",
+        auction_slug: "saleslug",
+        bidder_id: undefined,
         context_page: AnalyticsSchema.PageName.AuctionConfirmBidPage,
         error_messages: ["JavaScript error: failed to fetch"],
-        auction_slug: "saleslug",
-        artwork_slug: "artworkslug",
-        bidder_id: undefined,
         sale_id: "saleid",
         user_id: "my-user-id",
       })
@@ -648,20 +648,20 @@ describe("Routes/ConfirmBid", () => {
       expect(mockPostEvent).toHaveBeenCalledTimes(2)
       expect(mockPostEvent.mock.calls[0][0]).toEqual({
         action_type: AnalyticsSchema.ActionType.RegistrationSubmitted,
-        context_page: AnalyticsSchema.PageName.AuctionConfirmBidPage,
-        auction_slug: "saleslug",
         artwork_slug: "artworkslug",
+        auction_slug: "saleslug",
         bidder_id: "new-bidder-id",
+        context_page: AnalyticsSchema.PageName.AuctionConfirmBidPage,
         sale_id: "saleid",
         user_id: "my-user-id",
       })
       expect(mockPostEvent.mock.calls[1][0]).toEqual({
         action_type: AnalyticsSchema.ActionType.ConfirmBidFailed,
+        artwork_slug: "artworkslug",
+        auction_slug: "saleslug",
+        bidder_id: "new-bidder-id",
         context_page: AnalyticsSchema.PageName.AuctionConfirmBidPage,
         error_messages: ["Your bid wasn’t high enough"],
-        auction_slug: "saleslug",
-        artwork_slug: "artworkslug",
-        bidder_id: "new-bidder-id",
         sale_id: "saleid",
         user_id: "my-user-id",
       })
@@ -723,21 +723,21 @@ describe("Routes/ConfirmBid", () => {
       expect(mockPostEvent).toHaveBeenCalledTimes(1)
       expect(mockPostEvent).toHaveBeenCalledWith({
         action_type: AnalyticsSchema.ActionType.ConfirmBidSubmitted,
-        context_page: AnalyticsSchema.PageName.AuctionConfirmBidPage,
-        auction_slug: "saleslug",
         artwork_slug: "artworkslug",
+        auction_slug: "saleslug",
         bidder_id: "new-bidder-id",
         bidder_position_id: "winning-bidder-position-id-from-polling",
-        sale_id: "saleid",
-        user_id: "my-user-id",
+        context_page: AnalyticsSchema.PageName.AuctionConfirmBidPage,
         order_id: "new-bidder-id",
         products: [
           {
+            price: 50000,
             product_id: "artworkid",
             quantity: 1,
-            price: 50000,
           },
         ],
+        sale_id: "saleid",
+        user_id: "my-user-id",
       })
     })
   })
@@ -746,15 +746,15 @@ describe("Routes/ConfirmBid", () => {
     const FixtureForUnregisteredUserWithoutCreditCard = deepMerge(
       ConfirmBidQueryResponseFixture,
       {
-        me: {
-          hasQualifiedCreditCards: false,
-        },
         artwork: {
           saleArtwork: {
             sale: {
               registrationStatus: null,
             },
           },
+        },
+        me: {
+          hasQualifiedCreditCards: false,
         },
       }
     )
@@ -879,11 +879,11 @@ describe("Routes/ConfirmBid", () => {
       expect(mockPostEvent).toHaveBeenCalledTimes(1)
       expect(mockPostEvent).toBeCalledWith({
         action_type: AnalyticsSchema.ActionType.ConfirmBidFailed,
+        artwork_slug: "artworkslug",
+        auction_slug: "saleslug",
+        bidder_id: undefined,
         context_page: AnalyticsSchema.PageName.AuctionConfirmBidPage,
         error_messages: ["Your card number is incomplete."],
-        auction_slug: "saleslug",
-        artwork_slug: "artworkslug",
-        bidder_id: undefined,
         sale_id: "saleid",
         user_id: "my-user-id",
       })
@@ -909,11 +909,11 @@ describe("Routes/ConfirmBid", () => {
       expect(mockPostEvent).toHaveBeenCalledTimes(1)
       expect(mockPostEvent).toBeCalledWith({
         action_type: AnalyticsSchema.ActionType.ConfirmBidFailed,
+        artwork_slug: "artworkslug",
+        auction_slug: "saleslug",
+        bidder_id: undefined,
         context_page: AnalyticsSchema.PageName.AuctionConfirmBidPage,
         error_messages: ["JavaScript error: Network request failed"],
-        auction_slug: "saleslug",
-        artwork_slug: "artworkslug",
-        bidder_id: undefined,
         sale_id: "saleid",
         user_id: "my-user-id",
       })
@@ -940,13 +940,13 @@ describe("Routes/ConfirmBid", () => {
       expect(mockPostEvent).toHaveBeenCalledTimes(1)
       expect(mockPostEvent).toBeCalledWith({
         action_type: AnalyticsSchema.ActionType.ConfirmBidFailed,
+        artwork_slug: "artworkslug",
+        auction_slug: "saleslug",
+        bidder_id: undefined,
         context_page: AnalyticsSchema.PageName.AuctionConfirmBidPage,
         error_messages: [
           "Your card was declined. Please contact your bank or use a different card.",
         ],
-        auction_slug: "saleslug",
-        artwork_slug: "artworkslug",
-        bidder_id: undefined,
         sale_id: "saleid",
         user_id: "my-user-id",
       })
@@ -970,11 +970,11 @@ describe("Routes/ConfirmBid", () => {
       expect(mockPostEvent).toHaveBeenCalledTimes(1)
       expect(mockPostEvent).toHaveBeenCalledWith({
         action_type: AnalyticsSchema.ActionType.ConfirmBidFailed,
+        artwork_slug: "artworkslug",
+        auction_slug: "saleslug",
+        bidder_id: undefined,
         context_page: AnalyticsSchema.PageName.AuctionConfirmBidPage,
         error_messages: ["Telephone is required"],
-        auction_slug: "saleslug",
-        artwork_slug: "artworkslug",
-        bidder_id: undefined,
         sale_id: "saleid",
         user_id: "my-user-id",
       })

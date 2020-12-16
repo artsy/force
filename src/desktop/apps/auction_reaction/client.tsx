@@ -1,15 +1,15 @@
 import { buildClientApp } from "v2/Artsy/Router/client"
-import { routes } from "v2/Apps/Auction/routes"
+import { auctionRoutes } from "v2/Apps/Auction/auctionRoutes"
 import { data as sd } from "sharify"
 import React from "react"
 import ReactDOM from "react-dom"
 import { loadableReady } from "@loadable/component"
 
 buildClientApp({
-  routes,
   context: {
     user: sd.CURRENT_USER,
   },
+  routes: auctionRoutes,
 })
   .then(({ ClientApp }) => {
     loadableReady(() => {
