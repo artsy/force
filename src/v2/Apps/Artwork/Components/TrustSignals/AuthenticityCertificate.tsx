@@ -43,7 +43,7 @@ export const AuthenticityCertificate: React.FC<AuthenticityCertificateProps> = (
         >
           <Flex flexGrow={1} flexDirection="column">
             <Text variant="text" pb={2}>
-              A certificate of authenticity (COA) is a signed document from an
+              A certificate of authenticity (COA) is a document from an
               authoritative source that verifies the artwork’s authenticity.
               While many COAs are signed by the artist, others will be signed by
               the representing gallery or the printmaker who collaborated with
