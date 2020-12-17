@@ -1239,7 +1239,7 @@ type Artwork implements Node & Searchable & Sellable {
   # Represents the "**medium type**", such as _Painting_. (This field is also
   # commonly referred to as just "medium", but should not be confused with the
   # artwork attribute called `medium`.)
-  category: String
+  category: String @deprecated(reason: "Prefer to use `mediumType`.")
 
   # Returns the display label and detail for artwork certificate of authenticity
   certificateOfAuthenticity: ArtworkInfoRow
@@ -1359,6 +1359,11 @@ type Artwork implements Node & Searchable & Sellable {
   # canvas_. (This should not be confused with the artwork attribute called
   # `category`, which is commonly referred to as "medium" or "medium type")
   medium: String
+
+  # Represents the "**medium type**", such as _Painting_. (This field is also
+  # commonly referred to as just "medium", but should not be confused with the
+  # artwork attribute called `medium`.)
+  mediumType: MediumType
   meta: ArtworkMeta
 
   # The unit of length of the artwork, expressed in `in` or `cm`
@@ -7263,6 +7268,23 @@ type Me implements Node {
   unreadNotificationsCount: Int!
 }
 
+# Collection of fields that describe medium type, such as _Painting_. (This field
+# is also commonly referred to as just "medium", but should not be confused with
+# the artwork attribute called `medium`.)
+type MediumType {
+  # A globally unique ID.
+  id: ID!
+
+  # A type-specific ID likely used as a database ID.
+  internalID: ID!
+
+  # Long descriptive phrase
+  longDescription: String
+
+  # Shortest form of medium type display
+  name: String
+}
+
 # A message in a conversation.
 type Message implements Node {
   attachments: [Attachment]
@@ -8604,6 +8626,9 @@ type Query {
 
   # List of all artwork attribution classes
   artworkAttributionClasses: [AttributionClass]
+
+  # List of all artwork medium types
+  artworkMediumTypes: [MediumType]
 
   # A list of Artworks
   artworks(
@@ -10900,6 +10925,9 @@ type Viewer {
 
   # List of all artwork attribution classes
   artworkAttributionClasses: [AttributionClass]
+
+  # List of all artwork medium types
+  artworkMediumTypes: [MediumType]
 
   # A list of Artworks
   artworks(
