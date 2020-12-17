@@ -7,7 +7,7 @@ import {
   ConfirmBidCreateBidderPositionMutation,
   ConfirmBidCreateBidderPositionMutationResponse,
 } from "v2/__generated__/ConfirmBidCreateBidderPositionMutation.graphql"
-import { routes_ConfirmBidQueryResponse } from "v2/__generated__/routes_ConfirmBidQuery.graphql"
+import { auctionRoutes_ConfirmBidQueryResponse } from "v2/__generated__/auctionRoutes_ConfirmBidQuery.graphql"
 import { BidFormFragmentContainer as BidForm } from "v2/Apps/Auction/Components/BidForm"
 import { LotInfoFragmentContainer as LotInfo } from "v2/Apps/Auction/Components/LotInfo"
 import { bidderPositionQuery } from "v2/Apps/Auction/Operations/BidderPositionQuery"
@@ -48,7 +48,7 @@ interface BidderPosition {
 }
 
 interface ConfirmBidProps extends ReactStripeElements.InjectedStripeProps {
-  artwork: routes_ConfirmBidQueryResponse["artwork"]
+  artwork: auctionRoutes_ConfirmBidQueryResponse["artwork"]
   me: ConfirmBid_me
   relay: RelayProp
   match: Match

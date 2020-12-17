@@ -12,7 +12,7 @@ const OfferDetailApp = loadable(() => import("./Routes/Offer/OfferDetailApp"), {
   resolveComponent: component => component.OfferDetailAppFragmentContainer,
 })
 
-export const routes = [
+export const consignRoutes = [
   {
     path: "/consign",
     getComponent: () => MarketingLandingApp,

@@ -1,6 +1,6 @@
 import { buildServerApp } from "v2/Artsy/Router/server"
 import { stitch } from "@artsy/stitch"
-import { routes } from "v2/Apps/FeatureAKG/routes"
+import { featureAKGRoutes } from "v2/Apps/FeatureAKG/featureAKGRoutes"
 // @ts-ignore
 import JSONPage from "../../components/json_page"
 import React from "react"
@@ -24,10 +24,10 @@ export const landingPage = async (
       styleTags,
       scripts,
     } = await buildServerApp({
+      context: { injectedData: data },
       req,
       res,
-      context: { injectedData: data },
-      routes: routes,
+      routes: featureAKGRoutes,
     })
 
     if (redirect) {
@@ -38,17 +38,17 @@ export const landingPage = async (
     // Render layout
     const layout = await stitch({
       basePath: __dirname,
-      layout: "../../components/main_layout/templates/react_redesign.jade",
       blocks: {
-        head: () => <React.Fragment>{headTags}</React.Fragment>,
         body: bodyHTML,
+        head: () => <React.Fragment>{headTags}</React.Fragment>,
       },
+      layout: "../../components/main_layout/templates/react_redesign.jade",
       locals: {
         ...res.locals,
         assetPackage: "art_keeps_going",
+        data,
         scripts,
         styleTags,
-        data,
       },
     })
 

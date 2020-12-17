@@ -1,15 +1,15 @@
-import { routes_IdentityVerificationAppQueryRawResponse } from "v2/__generated__/routes_IdentityVerificationAppQuery.graphql"
+import { identityVerificationRoutes_IdentityVerificationAppQueryRawResponse } from "v2/__generated__/identityVerificationRoutes_IdentityVerificationAppQuery.graphql"
 
-export const IdentityVerificationAppQueryResponseFixture: routes_IdentityVerificationAppQueryRawResponse = {
+export const IdentityVerificationAppQueryResponseFixture: identityVerificationRoutes_IdentityVerificationAppQueryRawResponse = {
   me: {
-    internalID: "my-user-id",
     email: "barry@example.com",
     id: "unused-user",
     identityVerification: {
-      internalID: "identity-verification-id",
       id: "unused-idv",
-      userID: "my-user-id",
+      internalID: "identity-verification-id",
       state: "pending",
+      userID: "my-user-id",
     },
+    internalID: "my-user-id",
   },
 }

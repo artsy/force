@@ -8,9 +8,9 @@ import {
 } from "found/server"
 import { Environment, RecordSource, Store } from "relay-runtime"
 
-import { routes } from "v2/Apps/IdentityVerification/routes"
+import { identityVerificationRoutes } from "v2/Apps/IdentityVerification/identityVerificationRoutes"
 
-import { routes_IdentityVerificationAppQueryRawResponse } from "v2/__generated__/routes_IdentityVerificationAppQuery.graphql"
+import { identityVerificationRoutes_IdentityVerificationAppQueryRawResponse } from "v2/__generated__/identityVerificationRoutes_IdentityVerificationAppQuery.graphql"
 import { createRender } from "found"
 
 describe("IdentityVerification/routes", () => {
@@ -19,7 +19,7 @@ describe("IdentityVerification/routes", () => {
       .internalID
   async function render(
     url,
-    mockData: routes_IdentityVerificationAppQueryRawResponse
+    mockData: identityVerificationRoutes_IdentityVerificationAppQueryRawResponse
   ) {
     const network = createMockNetworkLayer2({ mockData })
     const source = new RecordSource()
@@ -27,10 +27,10 @@ describe("IdentityVerification/routes", () => {
     const environment = new Environment({ network, store })
 
     return (await getFarceResult({
-      url,
-      routeConfig: routes,
-      resolver: new Resolver(environment),
       render: createRender({}),
+      resolver: new Resolver(environment),
+      routeConfig: identityVerificationRoutes,
+      url,
     })) as Partial<FarceRedirectResult & FarceElementResult>
   }
 

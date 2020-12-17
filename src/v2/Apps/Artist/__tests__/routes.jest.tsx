@@ -1,5 +1,5 @@
-import { routes_ArtistTopLevelQueryRawResponse } from "v2/__generated__/routes_ArtistTopLevelQuery.graphql"
-import { routes } from "v2/Apps/Artist/routes"
+import { artistRoutes_ArtistTopLevelQueryRawResponse } from "v2/__generated__/artistRoutes_ArtistTopLevelQuery.graphql"
+import { artistRoutes } from "v2/Apps/Artist/artistRoutes"
 import { createMockNetworkLayer2 } from "v2/DevTools/createMockNetworkLayer"
 import { Resolver } from "found-relay"
 import { FarceRedirectResult, getFarceResult } from "found/server"
@@ -7,7 +7,10 @@ import React from "react"
 import { Environment, RecordSource, Store } from "relay-runtime"
 
 describe("Artist/routes", () => {
-  async function render(url, mockData: routes_ArtistTopLevelQueryRawResponse) {
+  async function render(
+    url,
+    mockData: artistRoutes_ArtistTopLevelQueryRawResponse
+  ) {
     const network = createMockNetworkLayer2({ mockData })
     const source = new RecordSource()
     const store = new Store(source)
@@ -15,18 +18,18 @@ describe("Artist/routes", () => {
     const user = {}
 
     const result = await getFarceResult({
-      url,
-      routeConfig: routes,
       matchContext: { user },
-      resolver: new Resolver(environment),
       render: () => <div>hello</div>,
+      resolver: new Resolver(environment),
+      routeConfig: artistRoutes,
+      url,
     })
 
     return result as FarceRedirectResult
   }
 
   const mockResolver = (
-    artist: routes_ArtistTopLevelQueryRawResponse["artist"]
+    artist: artistRoutes_ArtistTopLevelQueryRawResponse["artist"]
   ) => ({
     artist,
   })
@@ -81,21 +84,21 @@ describe("Artist/routes", () => {
       "/artist/juan-gris/works-for-sale",
       mockResolver({
         ...overviewArtist,
-        highlights: {
-          partnersConnection: null,
-        },
-        statuses: {
-          shows: false,
-          articles: false,
-          cv: false,
-          auctionLots: false,
-          artworks: false,
-        },
         biographyBlurb: {
           text: null,
         },
+        highlights: {
+          partnersConnection: null,
+        },
         related: {
           genes: null,
+        },
+        statuses: {
+          articles: false,
+          artworks: false,
+          auctionLots: false,
+          cv: false,
+          shows: false,
         },
       })
     )
@@ -109,21 +112,21 @@ describe("Artist/routes", () => {
         "/artist/juan-gris",
         mockResolver({
           ...overviewArtist,
-          highlights: {
-            partnersConnection: null,
-          },
-          statuses: {
-            shows: false,
-            articles: false,
-            cv: false,
-            auctionLots: false,
-            artworks: false,
-          },
           biographyBlurb: {
             text: null,
           },
+          highlights: {
+            partnersConnection: null,
+          },
           related: {
             genes: null,
+          },
+          statuses: {
+            articles: false,
+            artworks: false,
+            auctionLots: false,
+            cv: false,
+            shows: false,
           },
         })
       )
@@ -168,18 +171,18 @@ describe("Artist/routes", () => {
         "/artist/juan-gris/cv",
         mockResolver({
           ...overviewArtist,
-          statuses: {
-            shows: false,
-            articles: false,
-            cv: false,
-            auctionLots: false,
-            artworks: false,
-          },
           biographyBlurb: {
             text: null,
           },
           related: {
             genes: null,
+          },
+          statuses: {
+            articles: false,
+            artworks: false,
+            auctionLots: false,
+            cv: false,
+            shows: false,
           },
         })
       )
@@ -190,22 +193,43 @@ describe("Artist/routes", () => {
   })
 })
 
-const overviewArtist: routes_ArtistTopLevelQueryRawResponse["artist"] = {
-  id: "opaque-artist-id",
-  slug: "juan-gris",
-  formattedNationalityAndBirthday: "British, 1890-1970",
-  is_followed: false,
-  statuses: {
-    shows: true,
-    articles: true,
-    cv: true,
-    auctionLots: true,
-    artworks: true,
+const overviewArtist: artistRoutes_ArtistTopLevelQueryRawResponse["artist"] = {
+  alternate_names: null,
+  artistHighlights: {
+    partnersConnection: {
+      edges: [],
+    },
   },
+  artworks_connection: null,
+  auctionResultsConnection: null,
   biographyBlurb: {
     text:
       '<p>Originally trained in math and physics, Juan Gris moved to Paris in 1906, where he met <a href="/artist/pablo-picasso">Pablo Picasso</a> and <a href="/artist/georges-braque">Georges Braque</a> and became involved in the <a href="/gene/cubism">Cubist</a> movement. Gris took a highly mathematical approach to Cubist painting, rendering discrete forms with precision and exactitude, the resulting images almost resembling technical drawings. The composition of <em>Jar, Flask, and Glass</em> (1911), for example, was derived from an underlying grid structure, the different modules depicting different planar perspectives and yielding an overall composition that is both fractured and flattened. Gris also experimented with <a href="/gene/pointillism">Pointillism</a> in works such as <a href="/artwork/juan-gris-newspaper-and-fruit-dish"><em>Newspaper and Fruit Dish</em></a> (1916), and often alluded to earlier artists such as <a href="/artist/jean-baptiste-camille-corot">Jean-Baptiste-Camille Corot</a> and <a href="/artist/paul-cezanne">Paul Cézanne</a> through both style and subject matter.</p>\n',
   },
+  birthday: "Feb 15",
+  blurb: "blurb",
+  counts: {
+    artworks: 12,
+    follows: 1234,
+    forSaleArtworks: 10,
+  },
+  deathday: null,
+  formattedNationalityAndBirthday: "British, 1890-1970",
+  gender: "male",
+  highlights: {
+    partnersConnection: {
+      edges: [],
+    },
+  },
+  href: "/artist/juan-gris",
+  id: "opaque-artist-id",
+  image: null,
+  insights: [],
+  internalID: "4d8b928e4eb68a1b2c000222",
+  is_followed: false,
+  meta: null,
+  name: "Juan Gris",
+  nationality: "",
   related: {
     genes: {
       edges: [
@@ -219,33 +243,12 @@ const overviewArtist: routes_ArtistTopLevelQueryRawResponse["artist"] = {
       ],
     },
   },
-  internalID: "4d8b928e4eb68a1b2c000222",
-  highlights: {
-    partnersConnection: {
-      edges: [],
-    },
+  slug: "juan-gris",
+  statuses: {
+    articles: true,
+    artworks: true,
+    auctionLots: true,
+    cv: true,
+    shows: true,
   },
-  artistHighlights: {
-    partnersConnection: {
-      edges: [],
-    },
-  },
-  insights: [],
-  name: "Juan Gris",
-  nationality: "",
-  birthday: "Feb 15",
-  gender: "male",
-  deathday: null,
-  href: "/artist/juan-gris",
-  meta: null,
-  alternate_names: null,
-  image: null,
-  counts: {
-    artworks: 12,
-    follows: 1234,
-    forSaleArtworks: 10,
-  },
-  blurb: "blurb",
-  artworks_connection: null,
-  auctionResultsConnection: null,
 }

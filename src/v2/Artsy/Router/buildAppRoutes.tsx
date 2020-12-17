@@ -44,9 +44,9 @@ export function buildAppRoutes(routeList: RouteList[]): RouteConfig[] {
   // then mounted into the router.
   return [
     {
-      path: "",
       Component: withRouter(Component),
       children: routes,
+      path: "",
     },
   ]
 }

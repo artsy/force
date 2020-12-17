@@ -1,5 +1,5 @@
-import { routes_ConfirmBidQueryResponse } from "v2/__generated__/routes_ConfirmBidQuery.graphql"
-import { routes_RegisterQueryResponse } from "v2/__generated__/routes_RegisterQuery.graphql"
+import { auctionRoutes_ConfirmBidQueryResponse } from "v2/__generated__/auctionRoutes_ConfirmBidQuery.graphql"
+import { auctionRoutes_RegisterQueryResponse } from "v2/__generated__/auctionRoutes_RegisterQuery.graphql"
 
 export interface Redirect {
   path: string
@@ -9,7 +9,7 @@ export interface Redirect {
 export function registerRedirect({
   me,
   sale,
-}: routes_RegisterQueryResponse): Redirect | null {
+}: auctionRoutes_RegisterQueryResponse): Redirect | null {
   if (me.hasQualifiedCreditCards) {
     return {
       path: registrationFlowPath(sale),
@@ -36,7 +36,7 @@ export function registerRedirect({
 }
 
 export function confirmBidRedirect(
-  data: routes_ConfirmBidQueryResponse,
+  data: auctionRoutes_ConfirmBidQueryResponse,
   location: Location
 ): Redirect | null {
   const { artwork, me } = data
