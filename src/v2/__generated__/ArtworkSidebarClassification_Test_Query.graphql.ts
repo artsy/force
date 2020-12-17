@@ -11,8 +11,8 @@ export type ArtworkSidebarClassification_Test_QueryResponse = {
 };
 export type ArtworkSidebarClassification_Test_QueryRawResponse = {
     readonly artwork: ({
-        readonly attribution_class: ({
-            readonly short_description: string | null;
+        readonly attributionClass: ({
+            readonly shortDescription: string | null;
             readonly id: string | null;
         }) | null;
         readonly id: string | null;
@@ -35,8 +35,8 @@ query ArtworkSidebarClassification_Test_Query {
 }
 
 fragment ArtworkSidebarClassification_artwork on Artwork {
-  attribution_class: attributionClass {
-    short_description: shortDescription
+  attributionClass {
+    shortDescription
     id
   }
 }
@@ -98,7 +98,7 @@ return {
         "plural": false,
         "selections": [
           {
-            "alias": "attribution_class",
+            "alias": null,
             "args": null,
             "concreteType": "AttributionClass",
             "kind": "LinkedField",
@@ -106,7 +106,7 @@ return {
             "plural": false,
             "selections": [
               {
-                "alias": "short_description",
+                "alias": null,
                 "args": null,
                 "kind": "ScalarField",
                 "name": "shortDescription",
@@ -127,7 +127,7 @@ return {
     "metadata": {},
     "name": "ArtworkSidebarClassification_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkSidebarClassification_Test_Query {\n  artwork(id: \"josef-albers-homage-to-the-square-85\") {\n    ...ArtworkSidebarClassification_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarClassification_artwork on Artwork {\n  attribution_class: attributionClass {\n    short_description: shortDescription\n    id\n  }\n}\n"
+    "text": "query ArtworkSidebarClassification_Test_Query {\n  artwork(id: \"josef-albers-homage-to-the-square-85\") {\n    ...ArtworkSidebarClassification_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarClassification_artwork on Artwork {\n  attributionClass {\n    shortDescription\n    id\n  }\n}\n"
   }
 };
 })();

@@ -4,8 +4,8 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkSidebarClassification_artwork = {
-    readonly attribution_class: {
-        readonly short_description: string | null;
+    readonly attributionClass: {
+        readonly shortDescription: string | null;
     } | null;
     readonly " $refType": "ArtworkSidebarClassification_artwork";
 };
@@ -24,7 +24,7 @@ const node: ReaderFragment = {
   "name": "ArtworkSidebarClassification_artwork",
   "selections": [
     {
-      "alias": "attribution_class",
+      "alias": null,
       "args": null,
       "concreteType": "AttributionClass",
       "kind": "LinkedField",
@@ -32,7 +32,7 @@ const node: ReaderFragment = {
       "plural": false,
       "selections": [
         {
-          "alias": "short_description",
+          "alias": null,
           "args": null,
           "kind": "ScalarField",
           "name": "shortDescription",
@@ -44,5 +44,5 @@ const node: ReaderFragment = {
   ],
   "type": "Artwork"
 };
-(node as any).hash = '8207b17fc2db26e6b886dd476a7920bf';
+(node as any).hash = '6a721c8be12ea96c63dfb430081f0a4a';
 export default node;

@@ -3,32 +3,33 @@ import { FullArtworkFixture } from "v2/Apps/__tests__/Fixtures/Artwork/FullArtwo
 
 export const FilledOutMetadataNoEditions: ArtworkSidebarMetadata_Test_QueryRawResponse["artwork"] = {
   ...FullArtworkFixture,
-  id: "filled_out_metadata_no_editions",
-  is_biddable: false,
-  sale_artwork: null,
-  title: "Easel (Vydock)",
+  attributionClass: {
+    id: "opaque-attribution-class-id",
+    shortDescription: "This is a unique work",
+  },
   date: "1995",
-  medium: "Acrylic and graphite on bonded aluminium",
-  edition_sets: [],
   dimensions: {
-    in: "97 × 15 in",
     cm: "246.4 × 38.1 cm",
+    in: "97 × 15 in",
   },
   edition_of: "",
-  attribution_class: {
-    id: "opaque-attribution-class-id",
-    short_description: "This is a unique work",
-  },
+  edition_sets: [],
+  id: "filled_out_metadata_no_editions",
+  is_biddable: false,
+  medium: "Acrylic and graphite on bonded aluminium",
+  sale_artwork: null,
+  title: "Easel (Vydock)",
 }
 
 export const FilledOutMetadataOneEditionSet: ArtworkSidebarMetadata_Test_QueryRawResponse["artwork"] = {
   ...FullArtworkFixture,
-  id: "filled_out_metadata_one_editions_set:richard-anuszkiewicz-sun-keyed",
-  is_biddable: false,
-  sale_artwork: null,
-  title: "Sun Keyed",
+  attributionClass: {
+    id: "opauqe-attribution-class-id",
+    shortDescription: "This is part of a limited edition set",
+  },
   date: "1972",
-  medium: "Serigraph",
+  dimensions: { cm: "35.6 × 45.7 cm", in: "14 × 18 in" },
+  edition_of: "Edition of 3000",
   edition_sets: [
     {
       __typename: "Artwork",
@@ -39,22 +40,22 @@ export const FilledOutMetadataOneEditionSet: ArtworkSidebarMetadata_Test_QueryRa
       // is_acquireable: true,
     },
   ],
-  dimensions: { in: "14 × 18 in", cm: "35.6 × 45.7 cm" },
-  edition_of: "Edition of 3000",
-  attribution_class: {
-    id: "opauqe-attribution-class-id",
-    short_description: "This is part of a limited edition set",
-  },
+  id: "filled_out_metadata_one_editions_set:richard-anuszkiewicz-sun-keyed",
+  is_biddable: false,
+  medium: "Serigraph",
+  sale_artwork: null,
+  title: "Sun Keyed",
 }
 
 export const FilledOutMetadataMultipleEditionSets: ArtworkSidebarMetadata_Test_QueryRawResponse["artwork"] = {
   ...FullArtworkFixture,
-  id: "filled_out_multiple_edition_set:kim-keever-abstract-36742",
-  is_biddable: false,
-  sale_artwork: null,
-  title: "Abstract 36742",
+  attributionClass: {
+    id: "opauqe-attribution-class-id",
+    shortDescription: "This is part of a limited edition set",
+  },
   date: "2018",
-  medium: "Premium high gloss archival print",
+  dimensions: { cm: "101.6 × 106.7 cm", in: "40 × 42 in" },
+  edition_of: "Edition of 3000",
   edition_sets: [
     {
       __typename: "Artwork",
@@ -73,39 +74,33 @@ export const FilledOutMetadataMultipleEditionSets: ArtworkSidebarMetadata_Test_Q
       // is_acquireable: true,
     },
   ],
-  dimensions: { in: "40 × 42 in", cm: "101.6 × 106.7 cm" },
-  edition_of: "Edition of 3000",
-  attribution_class: {
-    id: "opauqe-attribution-class-id",
-    short_description: "This is part of a limited edition set",
-  },
+  id: "filled_out_multiple_edition_set:kim-keever-abstract-36742",
+  is_biddable: false,
+  medium: "Premium high gloss archival print",
+  sale_artwork: null,
+  title: "Abstract 36742",
 }
 
 export const EmptyMetadataNoEditions: ArtworkSidebarMetadata_Test_QueryRawResponse["artwork"] = {
   ...FullArtworkFixture,
-  id: "empty_metadata_no_editions",
-  title: "Empty metadata / No editions",
-  is_biddable: false,
-  sale_artwork: null,
+  attributionClass: null,
   date: " ",
-  medium: "",
-  dimensions: { in: null, cm: null },
+  dimensions: { cm: null, in: null },
   edition_of: "",
-  attribution_class: null,
   edition_sets: [],
+  id: "empty_metadata_no_editions",
+  is_biddable: false,
+  medium: "",
+  sale_artwork: null,
+  title: "Empty metadata / No editions",
 }
 
 export const EmptyMetadataOneEditionSet: ArtworkSidebarMetadata_Test_QueryRawResponse["artwork"] = {
   ...FullArtworkFixture,
-  id: "empty_metadata_one_edition",
-  title: "Empty metadata / One edition set",
-  is_biddable: false,
-  sale_artwork: null,
+  attributionClass: null,
   date: " ",
-  medium: "",
-  dimensions: { in: null, cm: null },
+  dimensions: { cm: null, in: null },
   edition_of: "",
-  attribution_class: null,
   edition_sets: [
     {
       __typename: "Artwork",
@@ -114,19 +109,19 @@ export const EmptyMetadataOneEditionSet: ArtworkSidebarMetadata_Test_QueryRawRes
       // is_acquireable: true,
     },
   ],
+  id: "empty_metadata_one_edition",
+  is_biddable: false,
+  medium: "",
+  sale_artwork: null,
+  title: "Empty metadata / One edition set",
 }
 
 export const EmptyMetadataMultipleEditionSets: ArtworkSidebarMetadata_Test_QueryRawResponse["artwork"] = {
   ...FullArtworkFixture,
-  id: "empty_metadata_multple_editions",
-  title: "Empty metadata / Multiple edition Sets",
-  is_biddable: false,
-  sale_artwork: null,
+  attributionClass: null,
   date: " ",
-  medium: "",
-  dimensions: { in: null, cm: null },
+  dimensions: { cm: null, in: null },
   edition_of: "",
-  attribution_class: null,
   edition_sets: [
     {
       __typename: "Artwork",
@@ -141,26 +136,31 @@ export const EmptyMetadataMultipleEditionSets: ArtworkSidebarMetadata_Test_Query
       // is_acquireable: true,
     },
   ],
+  id: "empty_metadata_multple_editions",
+  is_biddable: false,
+  medium: "",
+  sale_artwork: null,
+  title: "Empty metadata / Multiple edition Sets",
 }
 
 export const MetadataForAuctionWork: ArtworkSidebarMetadata_Test_QueryRawResponse["artwork"] = {
   ...FullArtworkFixture,
+  attributionClass: {
+    id: "opauqe-attribution-class-id",
+    shortDescription: "This is part of a limited edition set",
+  },
+  date: "1948",
+  dimensions: { cm: "43.2 × 33 cm", in: "17 × 13 in" },
+  edition_of: "",
+  edition_sets: [],
   id:
     "metadata_for_auction_work:marc-chagall-then-the-boy-displayed-to-the-dervish-his-bosom-saying-look-at-my-breasts-which-be-goodlier-than-the-breasts-of-maidens-and-my-lipdews-are-sweeter-than-sugar-candy-dot-dot-dot-from-four-tales-from-the-arabian-nights",
   is_biddable: true,
+  medium: "Lithograph in colors, on laid paper",
   sale_artwork: {
     id: "opaque-sale-arwork-id",
     lot_label: "210",
   },
   title:
     'Then the boy displayed to the Dervish his bosom, saying: "Look at my breasts which be goodlier than the breasts of maidens and my lipdews are sweeter than sugar candy...", from Four Tales from the Arabian Nights',
-  date: "1948",
-  medium: "Lithograph in colors, on laid paper",
-  edition_sets: [],
-  dimensions: { in: "17 × 13 in", cm: "43.2 × 33 cm" },
-  edition_of: "",
-  attribution_class: {
-    id: "opauqe-attribution-class-id",
-    short_description: "This is part of a limited edition set",
-  },
 }

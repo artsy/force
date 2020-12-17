@@ -1,87 +1,66 @@
-import { ArtworkSidebarClassification_Test_QueryRawResponse } from "v2/__generated__/ArtworkSidebarClassification_Test_Query.graphql"
-import { renderRelayTree } from "v2/DevTools"
-import { ReactWrapper } from "enzyme"
 import { graphql } from "react-relay"
 import { ArtworkSidebarClassificationFragmentContainer } from "../../ArtworkSidebar/ArtworkSidebarClassification"
-import { ClassificationLink } from "../../ArtworkSidebar/ArtworkSidebarClassification"
+import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
+
+jest.mock("v2/Components/ArtworkClassifications", () => ({
+  ArtworkClassificationsQueryRenderer: () =>
+    "ArtworkClassificationsQueryRenderer",
+}))
+
+jest.mock("v2/Components/Modal/Modal", () => ({
+  __esModule: true,
+  default: ({ show, children }: any) => {
+    return show ? children : null
+  },
+}))
 
 jest.unmock("react-relay")
 
-describe("ArtworkSidebarClassification", () => {
-  let wrapper = null
-
-  const getWrapper = async (
-    response: ArtworkSidebarClassification_Test_QueryRawResponse["artwork"] = {
-      id: "opaque-artwork-id",
-      attribution_class: {
-        id: "opaque-attribution-class-id",
-        short_description: "This is a unique work",
-      },
+const { getWrapper } = setupTestWrapper({
+  Component: ArtworkSidebarClassificationFragmentContainer,
+  query: graphql`
+    query ArtworkSidebarClassification_Test_Query @raw_response_type {
+      artwork(id: "josef-albers-homage-to-the-square-85") {
+        ...ArtworkSidebarClassification_artwork
+      }
     }
-  ) => {
-    return renderRelayTree({
-      Component: ArtworkSidebarClassificationFragmentContainer,
-      query: graphql`
-        query ArtworkSidebarClassification_Test_Query @raw_response_type {
-          artwork(id: "josef-albers-homage-to-the-square-85") {
-            ...ArtworkSidebarClassification_artwork
-          }
-        }
-      `,
-      mockData: {
-        artwork: response,
-      } as ArtworkSidebarClassification_Test_QueryRawResponse,
-    })
-  }
+  `,
+})
 
+describe("ArtworkSidebarClassification", () => {
   describe("for artwork with classification", () => {
-    beforeAll(async () => {
-      wrapper = await getWrapper()
-    })
-
     it("displays classification", () => {
+      const wrapper = getWrapper({
+        AttributionClass: () => ({
+          shortDescription: "This is a unique works",
+        }),
+      })
+
       expect(wrapper.html()).toContain("This is a unique work")
     })
 
     describe("modal pop up", () => {
-      let modalWrapper: ReactWrapper
-
-      beforeAll(() => {
-        wrapper
-          .find(ClassificationLink)
-          .last()
-          .simulate("click")
-        wrapper.update()
-        modalWrapper = wrapper.find("Modal")
-      })
-
       it("shows a modal on Classification details click", () => {
-        expect(modalWrapper.length).toEqual(1)
-      })
+        const wrapper = getWrapper()
 
-      it("renders the proper modal content", () => {
-        const html = modalWrapper.html()
-        expect(html).toContain("Unique")
-        expect(html).toContain("Limited edition")
-        expect(html).toContain("Made-to-order")
-        expect(html).toContain("Reproduction")
-        expect(html).toContain("Editioned multiple")
-        expect(html).toContain("Non-editioned multiple")
-        expect(html).toContain("Ephemera")
-      })
-    })
-  })
+        expect(wrapper.html()).not.toContain(
+          "ArtworkClassificationsQueryRenderer"
+        )
 
-  describe("for artwork without classification", () => {
-    beforeAll(async () => {
-      wrapper = await getWrapper({
-        id: "opaque-artwork-id",
-        attribution_class: null,
+        wrapper.find("button").simulate("click")
+
+        expect(wrapper.html()).toContain("ArtworkClassificationsQueryRenderer")
       })
     })
 
-    it("does not render anything", () => {
-      expect(wrapper.html()).toBeFalsy()
+    describe("for artwork without classification", () => {
+      it("does not render anything", () => {
+        const wrapper = getWrapper({
+          Artwork: () => ({ attributionClass: null }),
+        })
+
+        expect(wrapper.html()).toBeFalsy()
+      })
     })
   })
 })
