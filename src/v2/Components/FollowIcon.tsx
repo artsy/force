@@ -1,5 +1,10 @@
-import { Flex, Text, color } from "@artsy/palette"
-import Icon from "v2/Components/Icon"
+import {
+  Flex,
+  Text,
+  color,
+  AddCircleIcon,
+  CheckCircleIcon,
+} from "@artsy/palette"
 import React from "react"
 import styled from "styled-components"
 
@@ -55,34 +60,22 @@ const FollowHover = styled.div`
   }
 `
 
-export class FollowIcon extends React.Component<FollowIconProps> {
-  render() {
-    const { isFollowed } = this.props
-    const iconName = isFollowed ? "follow-circle.is-following" : "follow-circle"
-
-    return (
-      <FollowIconContainer data-test="followButton">
-        <Icon
-          name={iconName}
-          style={{
-            verticalAlign: "left",
-            color: "inherit",
-            margin: "0 0 0 -5px",
-          }}
-        />
-        {isFollowed ? (
-          <FollowingHover>
-            <Following />
-            <Unfollow />
-          </FollowingHover>
-        ) : (
-          <FollowHover>
-            <Follow />
-          </FollowHover>
-        )}
-      </FollowIconContainer>
-    )
-  }
+export const FollowIcon: React.FC<FollowIconProps> = ({ isFollowed }) => {
+  return (
+    <FollowIconContainer data-test="followButton">
+      {isFollowed ? <CheckCircleIcon mr="5px" /> : <AddCircleIcon mr="5px" />}
+      {isFollowed ? (
+        <FollowingHover>
+          <Following />
+          <Unfollow />
+        </FollowingHover>
+      ) : (
+        <FollowHover>
+          <Follow />
+        </FollowHover>
+      )}
+    </FollowIconContainer>
+  )
 }
 
 // Tests

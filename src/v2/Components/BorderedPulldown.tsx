@@ -1,10 +1,9 @@
 import React from "react"
 
-import Icon from "./Icon"
-
 import styled from "styled-components"
 import colors from "../Assets/Colors"
 import { garamond } from "../Assets/Fonts"
+import { ArrowDownIcon, Clickable, color } from "@artsy/palette"
 
 export interface BorderedPullDownProps
   extends React.HTMLProps<BorderedPulldown> {
@@ -47,9 +46,9 @@ export class BorderedPulldown extends React.Component<
 
     const optionEls = options.map(option => {
       return (
-        <a key={option.val} onClick={() => this.onChange(option)}>
+        <Clickable key={option.val} onClick={() => this.onChange(option)}>
           {option.name}
-        </a>
+        </Clickable>
       )
     })
 
@@ -74,7 +73,7 @@ export class BorderedPulldown extends React.Component<
         <Toggle>
           <span>{displayValue}</span>
           <CaretHolder>
-            <Icon name="arrow-down" fontSize="9px" color={colors.grayMedium} />
+            <ArrowDownIcon color="black60" />
           </CaretHolder>
         </Toggle>
         <PulldownOptions style={pulldownStyles}>{optionEls}</PulldownOptions>
@@ -107,29 +106,32 @@ const Toggle = styled.div`
 
 const CaretHolder = styled.div`
   float: right;
-  padding-left: 5px;
-  border-left: 1px solid ${colors.grayMedium};
+  padding-left: 8px;
+  border-left: 1px solid ${color("black60")};
 `
 
 const PulldownOptions = styled.div`
   display: none;
   position: absolute;
   background: white;
-  border: 2px solid ${colors.grayMedium};
+  border: 2px solid ${color("black60")};
   top: -2px;
   left: -2px;
   right: -2px;
   z-index: 2;
 
-  > a {
+  > button {
+    ${garamond("s17")};
     text-decoration: none;
     overflow: ellipsis;
     display: block;
     padding: 8px 10px 6px;
     cursor: pointer;
+    width: 100%;
+    text-align: left;
 
     &:hover {
-      background-color: ${colors.gray};
+      background-color: ${color("black10")};
     }
   }
 `

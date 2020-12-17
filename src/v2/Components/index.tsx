@@ -4,8 +4,6 @@ import React from "react"
 import Artwork, { ArtworkProps } from "./Artwork"
 // @ts-ignore
 import ArtworkGrid, { ArtworkGridProps } from "./ArtworkGrid/ArtworkGrid"
-// @ts-ignore
-import BorderedPulldown, { BorderedPullDownProps } from "./BorderedPulldown"
 import Buttons from "./Buttons"
 import Checkbox from "./Checkbox"
 // @ts-ignore
@@ -13,8 +11,6 @@ import Icon, { IconProps } from "./Icon"
 // @ts-ignore
 import Input, { InputProps } from "./Input"
 import Modal from "./Modal/Modal"
-// @ts-ignore
-import Nav, { NavBarProps } from "./Nav"
 // @ts-ignore
 import Text, { TextProps } from "./Text"
 import TextArea from "./TextArea"
@@ -46,11 +42,9 @@ export default {
   Buttons,
   Modal,
   ArtworkGrid,
-  BorderedPulldown,
   Checkbox,
   Icon,
   Input,
-  Nav,
   Text,
   TextArea,
   TextLink,
