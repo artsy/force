@@ -6,7 +6,6 @@ module.exports = {
   plugins: [
     "react-hooks",
     "@typescript-eslint",
-    "sort-keys-fix",
     "styled-components-a11y",
     "jest",
   ],
@@ -59,7 +58,6 @@ module.exports = {
     "react/prop-types": 0,
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
-    "sort-keys-fix/sort-keys-fix": "warn",
 
     // FIXME: Investigate / reenable these rules. Disabled to introduce eslint
     // into codebase.
