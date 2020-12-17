@@ -29,8 +29,8 @@ export const Header: React.SFC<HeaderProps> = props => {
         url={partner_url}
         logo={partner_logo}
         trackingData={{
-          type: "external link",
           destination_path: partner_url,
+          type: "external link",
         }}
       />
 

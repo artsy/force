@@ -60,9 +60,9 @@ export const MobileNavMenu: React.FC<Props> = ({
     <NavigatorContextProvider>
       <ModalBase
         dialogProps={{
-          width: "100%",
-          height: "100%",
           background: color("white100"),
+          height: "100%",
+          width: "100%",
         }}
       >
         <MenuViewport onClick={onNavButtonClick}>
@@ -289,8 +289,8 @@ export const MobileSubmenuLink: React.FC<any> = ({ children, menu }) => {
 const AuthenticateLinks: React.FC = () => {
   const authLink = (type: ModalType) => {
     return getMobileAuthLink(type, {
-      intent: Intent[type],
       contextModule: ContextModule.header,
+      intent: Intent[type],
     })
   }
 

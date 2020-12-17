@@ -14,9 +14,9 @@ interface StickyFooterProps {
 export class StickyFooter extends Component<StickyFooterProps> {
   @track<StickyFooterProps>(props => ({
     action_type: Schema.ActionType.Click,
+    flow: props.orderType === "OFFER" ? "make offer" : "buy now",
     subject: Schema.Subject.BNMOReadFAQ,
     type: "button",
-    flow: props.orderType === "OFFER" ? "make offer" : "buy now",
   }))
   onClickReadFAQ() {
     window.open("https://support.artsy.net/hc/en-us/sections/360008203114-Buy-Now-and-Make-Offer", "_blank")
@@ -24,9 +24,9 @@ export class StickyFooter extends Component<StickyFooterProps> {
 
   @track<StickyFooterProps>(props => ({
     action_type: Schema.ActionType.Click,
+    flow: props.orderType === "OFFER" ? "make offer" : "buy now",
     subject: Schema.Subject.BNMOAskSpecialist,
     type: "button",
-    flow: props.orderType === "OFFER" ? "make offer" : "buy now",
   }))
   onClickAskSpecialist(mediator) {
     mediator.trigger("openOrdersContactArtsyModal", {

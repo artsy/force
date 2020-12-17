@@ -61,11 +61,11 @@ describe("InfiniteScrollNewsArticle", () => {
     }
 
     nextArticle = {
-      layout: "news",
       id: "456",
-      slug: "next-news-article",
+      layout: "news",
       published_at: "2017-05-19T13:09:18.567Z",
-      sections: [{ type: "text", body: "News content" }],
+      sections: [{ body: "News content", type: "text" }],
+      slug: "next-news-article",
     }
 
     sd.CURRENT_USER = { id: "123" }
@@ -84,10 +84,10 @@ describe("InfiniteScrollNewsArticle", () => {
     const data = {
       articles: [
         extend({}, fixtures.article, {
-          slug: "foobar",
-          layout: "news",
           channel_id: "123",
           id: "678",
+          layout: "news",
+          slug: "foobar",
         }),
       ],
     }
@@ -109,17 +109,17 @@ describe("InfiniteScrollNewsArticle", () => {
     const data = {
       articles: times(6, () => {
         return extend({}, fixtures.article, {
-          slug: "foobar",
-          layout: "news",
           channel_id: "123",
           id: "678",
+          layout: "news",
+          slug: "foobar",
         })
       }),
       relatedArticlesCanvas: times(4, () => {
         return extend({}, fixtures.article, {
-          slug: "related-article",
           channel_id: "123",
           id: "456",
+          slug: "related-article",
         })
       }),
     }
@@ -194,10 +194,10 @@ describe("InfiniteScrollNewsArticle", () => {
 
     expect(handleScrollingAuthModal).toBeCalledWith({
       afterSignUpAction: { action: "editorialSignup" },
+      contextModule: "popUpModal",
       copy: "Sign up for the best stories in art and visual culture",
       destination: "https://artsy.net/",
       intent: "viewEditorial",
-      contextModule: "popUpModal",
     })
   })
 
@@ -258,7 +258,7 @@ describe("InfiniteScrollNewsArticle", () => {
 
   // FIXME: Reenable once scrolling date issue is resolved
   describe("#onDateChange", () => {
-    it("it sets date if it has a new one", () => {
+    it("sets date if it has a new one", () => {
       const component = getWrapper()
       const instance = component
         .find(InfiniteScrollNewsArticle)
@@ -267,7 +267,7 @@ describe("InfiniteScrollNewsArticle", () => {
       expect(instance.state.date).toBe("2018-07-20T17:19:55.909Z")
     })
 
-    it("it doesn't set date if it hasn't changed", () => {
+    it("doesn't set date if it hasn't changed", () => {
       const component = getWrapper()
       const instance = component
         .find(InfiniteScrollNewsArticle)

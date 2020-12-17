@@ -17,41 +17,41 @@ export const LoggedInLinks: React.FC<
 > = ({ error, me }) => {
   const { mediator } = useSystemContext()
   const menu = {
-    title: "Account",
     links: [
       {
-        text: "Order history",
         href: "/user/purchases",
+        text: "Order history",
       },
       {
-        text: "Saves & Follows",
         href: "/user/saves",
+        text: "Saves & Follows",
       },
       {
-        text: "Auctions",
         href: "/user/auctions",
+        text: "Auctions",
       },
       {
-        text: "Collector Profile",
         href: "/profile/edit",
+        text: "Collector Profile",
       },
       {
-        text: "Settings",
         href: "/user/edit",
+        text: "Settings",
       },
       {
-        text: "Payments",
         href: "/user/payments",
+        text: "Payments",
       },
       {
-        text: "Log out",
         href: "#logout",
         onClick: event => {
           event.preventDefault()
           mediator.trigger("auth:logout")
         },
+        text: "Log out",
       },
     ],
+    title: "Account",
   }
   const conversationCount =
     me?.unreadConversationCount || getConversationCount()

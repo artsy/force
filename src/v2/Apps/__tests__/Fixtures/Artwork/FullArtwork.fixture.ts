@@ -1,17 +1,255 @@
 export const FullArtworkFixture = {
-  slug: "andy-warhol-skull",
-  internalID: "4d8b93ba4eb68a1b2c001c5b",
-  is_acquireable: false,
-  is_offerable: false,
-  availability: "sold",
-  price: "",
-  is_in_auction: false,
+  artist: {
+    _id: "4d8b92b34eb68a1b2c0003f4",
+    name: "Andy Warhol",
+    href: "/artist/andy-warhol",
+    slug: "andy-warhol",
+    formatted_nationality_and_birthday: "American, 1928–1987",
+    counts: { follows: 154690, partner_shows: 663 },
+    image: {
+      cropped: {
+        url:
+          "https://d196wkiy8qx2u5.cloudfront.net?resize_to=fill&width=100&height=100&quality=80&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FE-k-uLoQADM8AjadsSKHrA%2Flarge.jpg",
+      },
+      id: "andy-warhol",
+    },
+    collections: [
+      "Tate",
+      "Museum of Modern Art (MoMA)",
+      "Indianapolis Museum of Art at Newfields",
+      "San Francisco Museum of Modern Art (SFMOMA) ",
+      "Whitney Museum of American Art",
+    ],
+    auctionResults: {
+      edges: [
+        {
+          node: {
+            __typename: "AuctionResult",
+            id: "QXVjdGlvblJlc3VsdDoxMDkzOQ==",
+            price_realized: { display: "$63m" },
+            organization: "Christie's",
+            sale_date: "2017",
+          },
+        },
+      ],
+    },
+    exhibition_highlights: [
+      {
+        partner: {
+          __typename: "Partner",
+          name: "Andy Warhol Museum",
+          id: "UGFydG5lcjphbmR5LXdhcmhvbC1tdXNldW0=",
+        },
+        name: '"Andy Warhol: Revelation"',
+        start_at: "2019",
+        cover_image: {
+          cropped: {
+            url:
+              "https://d196wkiy8qx2u5.cloudfront.net?resize_to=fill&width=800&height=600&quality=80&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FSmFF0qr4mikrFNaug3IsBg%2Flarge.jpg",
+          },
+          id: null,
+        },
+        city: "Pittsburgh",
+        id: "U2hvdzphbmR5LXdhcmhvbC1tdXNldW0tYW5keS13YXJob2wtcmV2ZWxhdGlvbg==",
+      },
+      {
+        partner: {
+          __typename: "Partner",
+          name: "New York Academy of Art",
+          id: "UGFydG5lcjpuZXcteW9yay1hY2FkZW15LW9mLWFydA==",
+        },
+        name: "Andy Warhol: By Hand, Drawings 1950s-1980s",
+        start_at: "2019",
+        cover_image: {
+          cropped: {
+            url:
+              "https://d196wkiy8qx2u5.cloudfront.net?resize_to=fill&width=800&height=600&quality=80&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FsxIHBhw00k6jAZnJmTt4Ww%2Flarge.jpg",
+          },
+          id: null,
+        },
+        city: "New York ",
+        id:
+          "U2hvdzpuZXcteW9yay1hY2FkZW15LW9mLWFydC1hbmR5LXdhcmhvbC1ieS1oYW5kLWRyYXdpbmdzLTE5NTBzLTE5ODBz",
+      },
+      {
+        partner: {
+          __typename: "Partner",
+          name: "Whitney Museum of American Art",
+          id: "UGFydG5lcjp3aGl0bmV5LW11c2V1bS1vZi1hbWVyaWNhbi1hcnQtMQ==",
+        },
+        name: "Andy Warhol: From A to B and Back Again",
+        start_at: "2018",
+        cover_image: {
+          cropped: {
+            url:
+              "https://d196wkiy8qx2u5.cloudfront.net?resize_to=fill&width=800&height=600&quality=80&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FqdSGWwHeMcScSAu3vKbyQQ%2Flarge.jpg",
+          },
+          id: null,
+        },
+        city: "New York",
+        id:
+          "U2hvdzp3aGl0bmV5LW11c2V1bS1vZi1hbWVyaWNhbi1hcnQtMS1hbmR5LXdhcmhvbC1mcm9tLWEtdG8tYi1hbmQtYmFjay1hZ2Fpbg==",
+      },
+    ],
+    biographyBlurb: {
+      text:
+        '<p>Obsessed with <a href="/collection/andy-warhol-celebrity-portraits">celebrity</a>, consumer culture, and mechanical (re)production, <a href="/gene/pop-art">Pop artist</a> Andy Warhol created some of the most iconic images of the 20th century. As famous for his quips as for his art—he variously mused that “art is what you can get away with” and “everyone will be famous for 15 minutes”—Warhol drew widely from popular culture and everyday subject matter, creating works like his <a href="/collection/andy-warhol-campbells-soup-can"><em>32 Campbell&#39;s Soup Cans</em></a> (1962), <a href="/collection/andy-warhol-brillo-boxes">Brillo pad box sculptures</a>, and portraits of <a href="/collection/andy-warhol-marilyn-monroe">Marilyn Monroe</a>, using the medium of silk-screen printmaking to achieve his characteristic hard edges and flat areas of color. Known for his cultivation of celebrity, Factory studio (a radical social and creative melting pot), and avant-garde films like <em>Chelsea Girls</em> (1966), Warhol was also a mentor to artists like <a href="/artist/keith-haring">Keith Haring</a> and <a href="/artist/jean-michel-basquiat">Jean-Michel Basquiat</a>. His Pop sensibility is now standard practice, taken up by major contemporary artists <a href="/artist/richard-prince">Richard Prince</a>, <a href="/artist/takashi-murakami">Takashi Murakami</a>, and <a href="/artist/jeff-koons">Jeff Koons</a>, among countless others.</p>\n',
+    },
+    highlights: {
+      partners: {
+        edges: [
+          {
+            node: {
+              __typename: "Partner",
+              id: "UGFydG5lcjpnYWdvc2lhbg==",
+              categories: [
+                { slug: "contemporary", id: "Q2F0ZWdvcnk6Y29udGVtcG9yYXJ5" },
+                { slug: "established", id: "Q2F0ZWdvcnk6ZXN0YWJsaXNoZWQ=" },
+                { slug: "modern", id: "Q2F0ZWdvcnk6bW9kZXJu" },
+                { slug: "painting", id: "Q2F0ZWdvcnk6cGFpbnRpbmc=" },
+                { slug: "blue-chip", id: "Q2F0ZWdvcnk6Ymx1ZS1jaGlw" },
+              ],
+            },
+            id: "UGFydG5lckFydGlzdEVkZ2U6NTIwM2Y1NWU4N2E1M2ViOWZkMDAwMDcw",
+          },
+          {
+            node: {
+              __typename: "Partner",
+              id: "UGFydG5lcjpnYWxlcmllLXRoYWRkYWV1cy1yb3BhYw==",
+              categories: [
+                { slug: "blue-chip", id: "Q2F0ZWdvcnk6Ymx1ZS1jaGlw" },
+              ],
+            },
+            id: "UGFydG5lckFydGlzdEVkZ2U6NTU0YWI2MDg3NzZmNzI1MzQyMDYwMDAw",
+          },
+          {
+            node: {
+              __typename: "Partner",
+              id: "UGFydG5lcjpza2Fyc3RlZHQtZ2FsbGVyeQ==",
+              categories: [
+                { slug: "blue-chip", id: "Q2F0ZWdvcnk6Ymx1ZS1jaGlw" },
+              ],
+            },
+            id: "UGFydG5lckFydGlzdEVkZ2U6NTFlNWE4Zjk4YjNiODFlNDQ4MDAwMDc1",
+          },
+          {
+            node: {
+              __typename: "Partner",
+              id: "UGFydG5lcjphbnRvbi1rZXJuLWdhbGxlcnk=",
+              categories: [
+                { slug: "contemporary", id: "Q2F0ZWdvcnk6Y29udGVtcG9yYXJ5" },
+                { slug: "established", id: "Q2F0ZWdvcnk6ZXN0YWJsaXNoZWQ=" },
+                { slug: "painting", id: "Q2F0ZWdvcnk6cGFpbnRpbmc=" },
+                { slug: "sculpture", id: "Q2F0ZWdvcnk6c2N1bHB0dXJl" },
+                {
+                  slug: "top-established",
+                  id: "Q2F0ZWdvcnk6dG9wLWVzdGFibGlzaGVk",
+                },
+              ],
+            },
+            id: "UGFydG5lckFydGlzdEVkZ2U6NTFlNThlZGQyNzViMjRjMzI3MDAwMWNj",
+          },
+        ],
+      },
+    },
+    id: "QXJ0aXN0OmFuZHktd2FyaG9s",
+    is_followed: false,
+    related: {
+      artists: {
+        edges: [
+          {
+            cursor: "YXJyYXljb25uZWN0aW9uOjA=",
+            node: {
+              name: "Robert Indiana",
+              slug: "robert-indiana",
+              href: "/artist/robert-indiana",
+              image: {
+                cropped: {
+                  url:
+                    "https://d196wkiy8qx2u5.cloudfront.net?resize_to=fill&width=400&height=300&quality=80&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FxPV7zLtiKJPPxRVJTEtHIA%2Flarge.jpg",
+                },
+                id: "robert-indiana",
+              },
+              formatted_nationality_and_birthday: "American, 1928–2018",
+              id: "QXJ0aXN0OnJvYmVydC1pbmRpYW5h",
+              is_followed: false,
+              counts: { follows: 22067 },
+              __typename: "Artist",
+            },
+          },
+          {
+            cursor: "YXJyYXljb25uZWN0aW9uOjE=",
+            node: {
+              name: "Tom Wesselmann",
+              slug: "tom-wesselmann",
+              href: "/artist/tom-wesselmann",
+              image: {
+                cropped: {
+                  url:
+                    "https://d196wkiy8qx2u5.cloudfront.net?resize_to=fill&width=400&height=300&quality=80&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2F8smV519M1L352CTihrfW7A%2Flarge.jpg",
+                },
+                id: "tom-wesselmann",
+              },
+              formatted_nationality_and_birthday: "American, 1931–2004",
+              id: "QXJ0aXN0OnRvbS13ZXNzZWxtYW5u",
+              is_followed: false,
+              counts: { follows: 46744 },
+              __typename: "Artist",
+            },
+          },
+          {
+            cursor: "YXJyYXljb25uZWN0aW9uOjI=",
+            node: {
+              name: "James Rosenquist",
+              slug: "james-rosenquist",
+              href: "/artist/james-rosenquist",
+              image: {
+                cropped: {
+                  url:
+                    "https://d196wkiy8qx2u5.cloudfront.net?resize_to=fill&width=400&height=300&quality=80&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2F3VUm07DpKQNQdA_QfCrPcA%2Flarge.jpg",
+                },
+                id: "james-rosenquist",
+              },
+              formatted_nationality_and_birthday: "American, 1933–2017",
+              id: "QXJ0aXN0OmphbWVzLXJvc2VucXVpc3Q=",
+              is_followed: false,
+              counts: { follows: 21339 },
+              __typename: "Artist",
+            },
+          },
+          {
+            cursor: "YXJyYXljb25uZWN0aW9uOjM=",
+            node: {
+              name: "Philip Hanson",
+              slug: "philip-hanson",
+              href: "/artist/philip-hanson",
+              image: {
+                cropped: {
+                  url:
+                    "https://d196wkiy8qx2u5.cloudfront.net?resize_to=fill&width=400&height=300&quality=80&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FJj5IyLzAjXA-HeVzm0oE0Q%2Flarge.jpg",
+                },
+                id: "philip-hanson",
+              },
+              formatted_nationality_and_birthday: "American, b. 1943",
+              id: "QXJ0aXN0OnBoaWxpcC1oYW5zb24=",
+              is_followed: false,
+              counts: { follows: 1105 },
+              __typename: "Artist",
+            },
+          },
+        ],
+        pageInfo: { endCursor: "YXJyYXljb25uZWN0aW9uOjM=", hasNextPage: true },
+      },
+    },
+  },
   artists: [
     {
-      slug: "andy-warhol",
       internalID: "4d8b92b34eb68a1b2c0003f4",
-      name: "Andy Warhol",
       href: "/artist/andy-warhol",
+      slug: "andy-warhol",
+      formatted_nationality_and_birthday: "American, 1928–1987",
+      name: "Andy Warhol",
+      counts: { follows: 154690, partner_shows: 663 },
       image: {
         cropped: {
           url:
@@ -19,8 +257,26 @@ export const FullArtworkFixture = {
         },
         id: "andy-warhol",
       },
-      formatted_nationality_and_birthday: "American, 1928–1987",
-      counts: { partner_shows: 663, follows: 154690 },
+      collections: [
+        "Tate",
+        "Museum of Modern Art (MoMA)",
+        "Indianapolis Museum of Art at Newfields",
+        "San Francisco Museum of Modern Art (SFMOMA) ",
+        "Whitney Museum of American Art",
+      ],
+      auctionResults: {
+        edges: [
+          {
+            node: {
+              __typename: "AuctionResult",
+              id: "QXVjdGlvblJlc3VsdDoxMDkzOQ==",
+              price_realized: { display: "$63m" },
+              organization: "Christie's",
+              sale_date: "2017",
+            },
+          },
+        ],
+      },
       exhibition_highlights: [
         {
           partner: {
@@ -80,13 +336,10 @@ export const FullArtworkFixture = {
             "U2hvdzp3aGl0bmV5LW11c2V1bS1vZi1hbWVyaWNhbi1hcnQtMS1hbmR5LXdhcmhvbC1mcm9tLWEtdG8tYi1hbmQtYmFjay1hZ2Fpbg==",
         },
       ],
-      collections: [
-        "Tate",
-        "Museum of Modern Art (MoMA)",
-        "Indianapolis Museum of Art at Newfields",
-        "San Francisco Museum of Modern Art (SFMOMA) ",
-        "Whitney Museum of American Art",
-      ],
+      biographyBlurb: {
+        text:
+          '<p>Obsessed with <a href="/collection/andy-warhol-celebrity-portraits">celebrity</a>, consumer culture, and mechanical (re)production, <a href="/gene/pop-art">Pop artist</a> Andy Warhol created some of the most iconic images of the 20th century. As famous for his quips as for his art—he variously mused that “art is what you can get away with” and “everyone will be famous for 15 minutes”—Warhol drew widely from popular culture and everyday subject matter, creating works like his <a href="/collection/andy-warhol-campbells-soup-can"><em>32 Campbell&#39;s Soup Cans</em></a> (1962), <a href="/collection/andy-warhol-brillo-boxes">Brillo pad box sculptures</a>, and portraits of <a href="/collection/andy-warhol-marilyn-monroe">Marilyn Monroe</a>, using the medium of silk-screen printmaking to achieve his characteristic hard edges and flat areas of color. Known for his cultivation of celebrity, Factory studio (a radical social and creative melting pot), and avant-garde films like <em>Chelsea Girls</em> (1966), Warhol was also a mentor to artists like <a href="/artist/keith-haring">Keith Haring</a> and <a href="/artist/jean-michel-basquiat">Jean-Michel Basquiat</a>. His Pop sensibility is now standard practice, taken up by major contemporary artists <a href="/artist/richard-prince">Richard Prince</a>, <a href="/artist/takashi-murakami">Takashi Murakami</a>, and <a href="/artist/jeff-koons">Jeff Koons</a>, among countless others.</p>\n',
+      },
       highlights: {
         partners: {
           edges: [
@@ -150,281 +403,35 @@ export const FullArtworkFixture = {
           ],
         },
       },
-      auctionResults: {
-        edges: [
-          {
-            node: {
-              __typename: "AuctionResult",
-              id: "QXVjdGlvblJlc3VsdDoxMDkzOQ==",
-              price_realized: { display: "$63m" },
-              organization: "Christie's",
-              sale_date: "2017",
-            },
-          },
-        ],
-      },
-      biographyBlurb: {
-        text:
-          '<p>Obsessed with <a href="/collection/andy-warhol-celebrity-portraits">celebrity</a>, consumer culture, and mechanical (re)production, <a href="/gene/pop-art">Pop artist</a> Andy Warhol created some of the most iconic images of the 20th century. As famous for his quips as for his art—he variously mused that “art is what you can get away with” and “everyone will be famous for 15 minutes”—Warhol drew widely from popular culture and everyday subject matter, creating works like his <a href="/collection/andy-warhol-campbells-soup-can"><em>32 Campbell&#39;s Soup Cans</em></a> (1962), <a href="/collection/andy-warhol-brillo-boxes">Brillo pad box sculptures</a>, and portraits of <a href="/collection/andy-warhol-marilyn-monroe">Marilyn Monroe</a>, using the medium of silk-screen printmaking to achieve his characteristic hard edges and flat areas of color. Known for his cultivation of celebrity, Factory studio (a radical social and creative melting pot), and avant-garde films like <em>Chelsea Girls</em> (1966), Warhol was also a mentor to artists like <a href="/artist/keith-haring">Keith Haring</a> and <a href="/artist/jean-michel-basquiat">Jean-Michel Basquiat</a>. His Pop sensibility is now standard practice, taken up by major contemporary artists <a href="/artist/richard-prince">Richard Prince</a>, <a href="/artist/takashi-murakami">Takashi Murakami</a>, and <a href="/artist/jeff-koons">Jeff Koons</a>, among countless others.</p>\n',
-      },
       id: "QXJ0aXN0OmFuZHktd2FyaG9s",
+      is_consignable: true,
       is_followed: false,
       related: { suggested: null },
-      is_consignable: true,
     },
   ],
-  artist: {
-    _id: "4d8b92b34eb68a1b2c0003f4",
-    slug: "andy-warhol",
-    name: "Andy Warhol",
-    href: "/artist/andy-warhol",
-    image: {
-      cropped: {
-        url:
-          "https://d196wkiy8qx2u5.cloudfront.net?resize_to=fill&width=100&height=100&quality=80&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FE-k-uLoQADM8AjadsSKHrA%2Flarge.jpg",
-      },
-      id: "andy-warhol",
-    },
-    formatted_nationality_and_birthday: "American, 1928–1987",
-    counts: { partner_shows: 663, follows: 154690 },
-    exhibition_highlights: [
-      {
-        partner: {
-          __typename: "Partner",
-          name: "Andy Warhol Museum",
-          id: "UGFydG5lcjphbmR5LXdhcmhvbC1tdXNldW0=",
-        },
-        name: '"Andy Warhol: Revelation"',
-        start_at: "2019",
-        cover_image: {
-          cropped: {
-            url:
-              "https://d196wkiy8qx2u5.cloudfront.net?resize_to=fill&width=800&height=600&quality=80&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FSmFF0qr4mikrFNaug3IsBg%2Flarge.jpg",
-          },
-          id: null,
-        },
-        city: "Pittsburgh",
-        id: "U2hvdzphbmR5LXdhcmhvbC1tdXNldW0tYW5keS13YXJob2wtcmV2ZWxhdGlvbg==",
-      },
-      {
-        partner: {
-          __typename: "Partner",
-          name: "New York Academy of Art",
-          id: "UGFydG5lcjpuZXcteW9yay1hY2FkZW15LW9mLWFydA==",
-        },
-        name: "Andy Warhol: By Hand, Drawings 1950s-1980s",
-        start_at: "2019",
-        cover_image: {
-          cropped: {
-            url:
-              "https://d196wkiy8qx2u5.cloudfront.net?resize_to=fill&width=800&height=600&quality=80&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FsxIHBhw00k6jAZnJmTt4Ww%2Flarge.jpg",
-          },
-          id: null,
-        },
-        city: "New York ",
-        id:
-          "U2hvdzpuZXcteW9yay1hY2FkZW15LW9mLWFydC1hbmR5LXdhcmhvbC1ieS1oYW5kLWRyYXdpbmdzLTE5NTBzLTE5ODBz",
-      },
-      {
-        partner: {
-          __typename: "Partner",
-          name: "Whitney Museum of American Art",
-          id: "UGFydG5lcjp3aGl0bmV5LW11c2V1bS1vZi1hbWVyaWNhbi1hcnQtMQ==",
-        },
-        name: "Andy Warhol: From A to B and Back Again",
-        start_at: "2018",
-        cover_image: {
-          cropped: {
-            url:
-              "https://d196wkiy8qx2u5.cloudfront.net?resize_to=fill&width=800&height=600&quality=80&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FqdSGWwHeMcScSAu3vKbyQQ%2Flarge.jpg",
-          },
-          id: null,
-        },
-        city: "New York",
-        id:
-          "U2hvdzp3aGl0bmV5LW11c2V1bS1vZi1hbWVyaWNhbi1hcnQtMS1hbmR5LXdhcmhvbC1mcm9tLWEtdG8tYi1hbmQtYmFjay1hZ2Fpbg==",
-      },
-    ],
-    collections: [
-      "Tate",
-      "Museum of Modern Art (MoMA)",
-      "Indianapolis Museum of Art at Newfields",
-      "San Francisco Museum of Modern Art (SFMOMA) ",
-      "Whitney Museum of American Art",
-    ],
-    highlights: {
-      partners: {
-        edges: [
-          {
-            node: {
-              __typename: "Partner",
-              id: "UGFydG5lcjpnYWdvc2lhbg==",
-              categories: [
-                { slug: "contemporary", id: "Q2F0ZWdvcnk6Y29udGVtcG9yYXJ5" },
-                { slug: "established", id: "Q2F0ZWdvcnk6ZXN0YWJsaXNoZWQ=" },
-                { slug: "modern", id: "Q2F0ZWdvcnk6bW9kZXJu" },
-                { slug: "painting", id: "Q2F0ZWdvcnk6cGFpbnRpbmc=" },
-                { slug: "blue-chip", id: "Q2F0ZWdvcnk6Ymx1ZS1jaGlw" },
-              ],
-            },
-            id: "UGFydG5lckFydGlzdEVkZ2U6NTIwM2Y1NWU4N2E1M2ViOWZkMDAwMDcw",
-          },
-          {
-            node: {
-              __typename: "Partner",
-              id: "UGFydG5lcjpnYWxlcmllLXRoYWRkYWV1cy1yb3BhYw==",
-              categories: [
-                { slug: "blue-chip", id: "Q2F0ZWdvcnk6Ymx1ZS1jaGlw" },
-              ],
-            },
-            id: "UGFydG5lckFydGlzdEVkZ2U6NTU0YWI2MDg3NzZmNzI1MzQyMDYwMDAw",
-          },
-          {
-            node: {
-              __typename: "Partner",
-              id: "UGFydG5lcjpza2Fyc3RlZHQtZ2FsbGVyeQ==",
-              categories: [
-                { slug: "blue-chip", id: "Q2F0ZWdvcnk6Ymx1ZS1jaGlw" },
-              ],
-            },
-            id: "UGFydG5lckFydGlzdEVkZ2U6NTFlNWE4Zjk4YjNiODFlNDQ4MDAwMDc1",
-          },
-          {
-            node: {
-              __typename: "Partner",
-              id: "UGFydG5lcjphbnRvbi1rZXJuLWdhbGxlcnk=",
-              categories: [
-                { slug: "contemporary", id: "Q2F0ZWdvcnk6Y29udGVtcG9yYXJ5" },
-                { slug: "established", id: "Q2F0ZWdvcnk6ZXN0YWJsaXNoZWQ=" },
-                { slug: "painting", id: "Q2F0ZWdvcnk6cGFpbnRpbmc=" },
-                { slug: "sculpture", id: "Q2F0ZWdvcnk6c2N1bHB0dXJl" },
-                {
-                  slug: "top-established",
-                  id: "Q2F0ZWdvcnk6dG9wLWVzdGFibGlzaGVk",
-                },
-              ],
-            },
-            id: "UGFydG5lckFydGlzdEVkZ2U6NTFlNThlZGQyNzViMjRjMzI3MDAwMWNj",
-          },
-        ],
-      },
-    },
-    auctionResults: {
-      edges: [
-        {
-          node: {
-            __typename: "AuctionResult",
-            id: "QXVjdGlvblJlc3VsdDoxMDkzOQ==",
-            price_realized: { display: "$63m" },
-            organization: "Christie's",
-            sale_date: "2017",
-          },
-        },
-      ],
-    },
-    biographyBlurb: {
-      text:
-        '<p>Obsessed with <a href="/collection/andy-warhol-celebrity-portraits">celebrity</a>, consumer culture, and mechanical (re)production, <a href="/gene/pop-art">Pop artist</a> Andy Warhol created some of the most iconic images of the 20th century. As famous for his quips as for his art—he variously mused that “art is what you can get away with” and “everyone will be famous for 15 minutes”—Warhol drew widely from popular culture and everyday subject matter, creating works like his <a href="/collection/andy-warhol-campbells-soup-can"><em>32 Campbell&#39;s Soup Cans</em></a> (1962), <a href="/collection/andy-warhol-brillo-boxes">Brillo pad box sculptures</a>, and portraits of <a href="/collection/andy-warhol-marilyn-monroe">Marilyn Monroe</a>, using the medium of silk-screen printmaking to achieve his characteristic hard edges and flat areas of color. Known for his cultivation of celebrity, Factory studio (a radical social and creative melting pot), and avant-garde films like <em>Chelsea Girls</em> (1966), Warhol was also a mentor to artists like <a href="/artist/keith-haring">Keith Haring</a> and <a href="/artist/jean-michel-basquiat">Jean-Michel Basquiat</a>. His Pop sensibility is now standard practice, taken up by major contemporary artists <a href="/artist/richard-prince">Richard Prince</a>, <a href="/artist/takashi-murakami">Takashi Murakami</a>, and <a href="/artist/jeff-koons">Jeff Koons</a>, among countless others.</p>\n',
-    },
-    id: "QXJ0aXN0OmFuZHktd2FyaG9s",
-    is_followed: false,
-    related: {
-      artists: {
-        pageInfo: { hasNextPage: true, endCursor: "YXJyYXljb25uZWN0aW9uOjM=" },
-        edges: [
-          {
-            node: {
-              name: "Robert Indiana",
-              slug: "robert-indiana",
-              href: "/artist/robert-indiana",
-              image: {
-                cropped: {
-                  url:
-                    "https://d196wkiy8qx2u5.cloudfront.net?resize_to=fill&width=400&height=300&quality=80&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FxPV7zLtiKJPPxRVJTEtHIA%2Flarge.jpg",
-                },
-                id: "robert-indiana",
-              },
-              formatted_nationality_and_birthday: "American, 1928–2018",
-              id: "QXJ0aXN0OnJvYmVydC1pbmRpYW5h",
-              is_followed: false,
-              counts: { follows: 22067 },
-              __typename: "Artist",
-            },
-            cursor: "YXJyYXljb25uZWN0aW9uOjA=",
-          },
-          {
-            node: {
-              name: "Tom Wesselmann",
-              slug: "tom-wesselmann",
-              href: "/artist/tom-wesselmann",
-              image: {
-                cropped: {
-                  url:
-                    "https://d196wkiy8qx2u5.cloudfront.net?resize_to=fill&width=400&height=300&quality=80&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2F8smV519M1L352CTihrfW7A%2Flarge.jpg",
-                },
-                id: "tom-wesselmann",
-              },
-              formatted_nationality_and_birthday: "American, 1931–2004",
-              id: "QXJ0aXN0OnRvbS13ZXNzZWxtYW5u",
-              is_followed: false,
-              counts: { follows: 46744 },
-              __typename: "Artist",
-            },
-            cursor: "YXJyYXljb25uZWN0aW9uOjE=",
-          },
-          {
-            node: {
-              name: "James Rosenquist",
-              slug: "james-rosenquist",
-              href: "/artist/james-rosenquist",
-              image: {
-                cropped: {
-                  url:
-                    "https://d196wkiy8qx2u5.cloudfront.net?resize_to=fill&width=400&height=300&quality=80&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2F3VUm07DpKQNQdA_QfCrPcA%2Flarge.jpg",
-                },
-                id: "james-rosenquist",
-              },
-              formatted_nationality_and_birthday: "American, 1933–2017",
-              id: "QXJ0aXN0OmphbWVzLXJvc2VucXVpc3Q=",
-              is_followed: false,
-              counts: { follows: 21339 },
-              __typename: "Artist",
-            },
-            cursor: "YXJyYXljb25uZWN0aW9uOjI=",
-          },
-          {
-            node: {
-              name: "Philip Hanson",
-              slug: "philip-hanson",
-              href: "/artist/philip-hanson",
-              image: {
-                cropped: {
-                  url:
-                    "https://d196wkiy8qx2u5.cloudfront.net?resize_to=fill&width=400&height=300&quality=80&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FJj5IyLzAjXA-HeVzm0oE0Q%2Flarge.jpg",
-                },
-                id: "philip-hanson",
-              },
-              formatted_nationality_and_birthday: "American, b. 1943",
-              id: "QXJ0aXN0OnBoaWxpcC1oYW5zb24=",
-              is_followed: false,
-              counts: { follows: 1105 },
-              __typename: "Artist",
-            },
-            cursor: "YXJyYXljb25uZWN0aW9uOjM=",
-          },
-        ],
-      },
-    },
-  },
-  id: "QXJ0d29yazphbmR5LXdhcmhvbC1za3VsbA==",
-  href: "/artwork/andy-warhol-skull",
-  date: "1976",
+  availability: "sold",
   artist_names: "Andy Warhol",
-  sale_message: null,
+  internalID: "4d8b93ba4eb68a1b2c001c5b",
+  date: "1976",
+  is_acquireable: false,
+  href: "/artwork/andy-warhol-skull",
+  is_in_auction: false,
+  id: "QXJ0d29yazphbmR5LXdhcmhvbC1za3VsbA==",
+  slug: "andy-warhol-skull",
+  context: null,
+  image_rights:
+    "© 2012 The Andy Warhol Foundation for the Visual Arts, Inc. / Artists Rights Society (ARS), New York",
+  is_offerable: false,
+  category: "Painting",
+  price: "",
+  dimensions: { cm: "335.3 × 381 cm", in: "132 × 150 in" },
+  is_price_hidden: true,
+  artworkContextAuction: null,
+  is_shareable: false,
+  artworkContextFair: null,
   partner: {
-    name: "Gagosian",
     id: "UGFydG5lcjpnYWdvc2lhbg==",
-    type: "Gallery",
+    name: "Gagosian",
     profile: {
       image: {
         resized: {
@@ -442,8 +449,10 @@ export const FullArtworkFixture = {
         id: "592873b87622dd5258177ae1",
       },
     },
-    initials: "G",
+    type: "Gallery",
     href: "/gagosian-gallery",
+    initials: "G",
+    isVerifiedSeller: false,
     locations: [
       {
         city: "New York",
@@ -490,14 +499,21 @@ export const FullArtworkFixture = {
         id: "TG9jYXRpb246NTFlNzBkY2Q4YjNiODExNzFkMDAwMzYx",
       },
     ],
-    isVerifiedSeller: false,
     _id: "4d8b92c44eb68a1b2c0004cb",
-    slug: "gagosian",
     is_default_profile_public: true,
+    slug: "gagosian",
   },
-  image_rights:
-    "© 2012 The Andy Warhol Foundation for the Visual Arts, Inc. / Artists Rights Society (ARS), New York",
-  is_shareable: false,
+  artworkContextPartnerShow: null,
+  sale_message: null,
+  cultural_maker: null,
+  meta: {
+    description:
+      "From Gagosian, Andy Warhol, Skull (1976), Synthetic polymer paint and silkscreen ink on canvas, 132 × 150 in",
+    title: "Andy Warhol | Skull (1976) | Artsy",
+    long_description:
+      "From Gagosian, Andy Warhol, Skull (1976), Synthetic polymer paint and silkscreen ink on canvas, 132 × 150 in",
+  },
+  edition_sets: [],
   meta_image: {
     resized: {
       width: 640,
@@ -507,98 +523,45 @@ export const FullArtworkFixture = {
     },
     id: "4e68f259528702000104c329",
   },
-  meta: {
-    title: "Andy Warhol | Skull (1976) | Artsy",
-    description:
-      "From Gagosian, Andy Warhol, Skull (1976), Synthetic polymer paint and silkscreen ink on canvas, 132 × 150 in",
-    long_description:
-      "From Gagosian, Andy Warhol, Skull (1976), Synthetic polymer paint and silkscreen ink on canvas, 132 × 150 in",
-  },
-  context: null,
-  is_price_hidden: true,
-  is_price_range: false,
-  price_currency: "USD",
-  category: "Painting",
-  dimensions: { in: "132 × 150 in", cm: "335.3 × 381 cm" },
-  sale: null,
-  artworkContextAuction: null,
-  artworkContextFair: null,
-  artworkContextPartnerShow: null,
-  cultural_maker: null,
-  is_biddable: false,
-  edition_sets: [],
-  sale_artwork: null,
-  title: "Skull",
-  medium: "Synthetic polymer paint and silkscreen ink on canvas",
-  edition_of: null,
   attribution_class: null,
-  myLotStanding: null,
+  edition_of: null,
+  is_price_range: false,
+  is_biddable: false,
+  price_currency: "USD",
   is_for_sale: false,
-  is_inquireable: true,
-  priceIncludesTaxDisplay: null,
-  shippingInfo: "Shipping, tax, and additional fees quoted by seller",
-  shippingOrigin: null,
   hasCertificateOfAuthenticity: false,
-  description: null,
+  sale: null,
   additional_information: null,
-  series: null,
-  publisher: null,
-  manufacturer: null,
+  is_inquireable: true,
+  description: null,
+  medium: "Synthetic polymer paint and silkscreen ink on canvas",
   framed: null,
-  signatureInfo: null,
+  sale_artwork: null,
   conditionDescription: null,
-  certificateOfAuthenticity: null,
+  title: "Skull",
   articles: [],
-  literature: null,
+  certificateOfAuthenticity: null,
+  myLotStanding: null,
   exhibition_history: null,
-  provenance: null,
+  priceIncludesTaxDisplay: null,
   image_alt: "Andy Warhol, ‘Skull’, 1976, Gagosian",
-  is_saved: false,
-  images: [
-    {
-      url:
-        "https://d32dm0rphc51dk.cloudfront.net/vAYXuDl0rYz7QR0Jx4MK2Q/tall.jpg",
-      id: "4e68f259528702000104c329",
-      internalID: "4e68f259528702000104c329",
-      uri:
-        "https://d32dm0rphc51dk.cloudfront.net/vAYXuDl0rYz7QR0Jx4MK2Q/large.jpg",
-      placeholder: {
-        url:
-          "https://d196wkiy8qx2u5.cloudfront.net?resize_to=fit&width=30&height=26&quality=80&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FvAYXuDl0rYz7QR0Jx4MK2Q%2Fsmall.jpg",
-      },
-      aspectRatio: 1.14,
-      is_zoomable: true,
-      is_default: true,
-      deepZoom: {
-        Image: {
-          xmlns: "http://schemas.microsoft.com/deepzoom/2008",
-          Url:
-            "https://d32dm0rphc51dk.cloudfront.net/vAYXuDl0rYz7QR0Jx4MK2Q/dztiles/",
-          Format: "jpg",
-          TileSize: 512,
-          Overlap: 0,
-          Size: { Width: 1198, Height: 1050 },
-        },
-      },
-    },
-  ],
+  shippingInfo: "Shipping, tax, and additional fees quoted by seller",
   artworkMeta: { share: "Check out Andy Warhol, Skull (1976), From Gagosian" },
+  shippingOrigin: null,
   image: {
+    height: 1050,
     internalID: "4e68f259528702000104c329",
+    id: "4e68f259528702000104c329",
     url:
       "https://d32dm0rphc51dk.cloudfront.net/vAYXuDl0rYz7QR0Jx4MK2Q/larger.jpg",
-    height: 1050,
     width: 1198,
-    id: "4e68f259528702000104c329",
   },
-  is_downloadable: false,
-  is_hangable: true,
+  publisher: null,
   contextGrids: [
     {
       __typename: "ArtistArtworkGrid",
-      title: "Other works by Andy Warhol",
       ctaTitle: "View all works by Andy Warhol",
-      ctaHref: "/artist/andy-warhol",
+      title: "Other works by Andy Warhol",
       artworks: {
         edges: [
           {
@@ -975,12 +938,12 @@ export const FullArtworkFixture = {
           },
         ],
       },
+      ctaHref: "/artist/andy-warhol",
     },
     {
       __typename: "PartnerArtworkGrid",
-      title: "Other works from Gagosian",
       ctaTitle: "View all works from Gagosian",
-      ctaHref: "/gagosian-gallery",
+      title: "Other works from Gagosian",
       artworks: {
         edges: [
           {
@@ -1330,12 +1293,12 @@ export const FullArtworkFixture = {
           },
         ],
       },
+      ctaHref: "/gagosian-gallery",
     },
     {
       __typename: "RelatedArtworkGrid",
-      title: "Related works",
       ctaTitle: null,
-      ctaHref: null,
+      title: "Related works",
       artworks: {
         edges: [
           {
@@ -1634,54 +1597,53 @@ export const FullArtworkFixture = {
           },
         ],
       },
+      ctaHref: null,
     },
   ],
-  layers: [
+  series: null,
+  images: [
     {
-      name: "Most Similar",
-      internalID: "main",
-      id: "QXJ0d29ya0xheWVyOm1haW4=",
-    },
-    {
-      name: "Single Object",
-      internalID: "single-object",
-      id: "QXJ0d29ya0xheWVyOnNpbmdsZS1vYmplY3Q=",
-    },
-    {
-      name: "Mortality",
-      internalID: "mortality",
-      id: "QXJ0d29ya0xheWVyOm1vcnRhbGl0eQ==",
-    },
-    {
-      name: "Pop Art",
-      internalID: "pop-art",
-      id: "QXJ0d29ya0xheWVyOnBvcC1hcnQ=",
-    },
-    {
-      name: "Silkscreen",
-      internalID: "silkscreen-1",
-      id: "QXJ0d29ya0xheWVyOnNpbGtzY3JlZW4tMQ==",
-    },
-    {
-      name: "Figurative Painting",
-      internalID: "figurative-painting",
-      id: "QXJ0d29ya0xheWVyOmZpZ3VyYXRpdmUtcGFpbnRpbmc=",
-    },
-    {
-      name: "For Sale",
-      internalID: "for-sale",
-      id: "QXJ0d29ya0xheWVyOmZvci1zYWxl",
+      id: "4e68f259528702000104c329",
+      internalID: "4e68f259528702000104c329",
+      url:
+        "https://d32dm0rphc51dk.cloudfront.net/vAYXuDl0rYz7QR0Jx4MK2Q/tall.jpg",
+      placeholder: {
+        url:
+          "https://d196wkiy8qx2u5.cloudfront.net?resize_to=fit&width=30&height=26&quality=80&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FvAYXuDl0rYz7QR0Jx4MK2Q%2Fsmall.jpg",
+      },
+      aspectRatio: 1.14,
+      uri:
+        "https://d32dm0rphc51dk.cloudfront.net/vAYXuDl0rYz7QR0Jx4MK2Q/large.jpg",
+      is_default: true,
+      deepZoom: {
+        Image: {
+          Url:
+            "https://d32dm0rphc51dk.cloudfront.net/vAYXuDl0rYz7QR0Jx4MK2Q/dztiles/",
+          xmlns: "http://schemas.microsoft.com/deepzoom/2008",
+          Format: "jpg",
+          Overlap: 0,
+          TileSize: 512,
+          Size: { Height: 1050, Width: 1198 },
+        },
+      },
+      is_zoomable: true,
     },
   ],
+  manufacturer: null,
+  is_downloadable: false,
+  signatureInfo: null,
+  is_hangable: true,
+  is_saved: false,
   layer: {
-    name: "Most Similar",
     artworksConnection: {
       edges: [
         {
           node: {
-            id: "QXJ0d29yazpqaW0tZGluZS1ncmVhc2UtYm9uZS1hbmQtY29sb3I=",
-            slug: "jim-dine-grease-bone-and-color",
+            _id: "57051d50b202a36589000693",
             href: "/artwork/jim-dine-grease-bone-and-color",
+            date: "1993",
+            id: "QXJ0d29yazpqaW0tZGluZS1ncmVhc2UtYm9uZS1hbmQtY29sb3I=",
+            cultural_maker: null,
             image: {
               aspect_ratio: 0.91,
               id: "57051d51cd530e65900004f3",
@@ -1689,41 +1651,41 @@ export const FullArtworkFixture = {
               url:
                 "https://d32dm0rphc51dk.cloudfront.net/RMSBavzxDuAHYsWW1-cukA/large.jpg",
             },
-            _id: "57051d50b202a36589000693",
-            title: "Grease, Bone and Color",
-            image_title: "Jim Dine, ‘Grease, Bone and Color’, 1993",
-            date: "1993",
-            sale_message: "$10,000 - 15,000",
-            cultural_maker: null,
             artists: [
               {
-                id: "QXJ0aXN0OmppbS1kaW5l",
                 href: "/artist/jim-dine",
+                id: "QXJ0aXN0OmppbS1kaW5l",
                 name: "Jim Dine",
               },
             ],
+            slug: "jim-dine-grease-bone-and-color",
             collecting_institution: null,
-            partner: {
-              name: "Galerie de Bellefeuille",
-              href: "/galerie-de-bellefeuille",
-              id: "UGFydG5lcjpnYWxlcmllLWRlLWJlbGxlZmV1aWxsZQ==",
-              type: "Gallery",
-            },
-            sale: null,
-            sale_artwork: null,
+            image_title: "Jim Dine, ‘Grease, Bone and Color’, 1993",
             is_inquireable: true,
-            is_saved: false,
+            title: "Grease, Bone and Color",
             is_biddable: false,
             is_acquireable: false,
+            sale_message: "$10,000 - 15,000",
             is_offerable: false,
+            partner: {
+              href: "/galerie-de-bellefeuille",
+              id: "UGFydG5lcjpnYWxlcmllLWRlLWJlbGxlZmV1aWxsZQ==",
+              name: "Galerie de Bellefeuille",
+              type: "Gallery",
+            },
+            is_saved: false,
+            sale: null,
+            sale_artwork: null,
           },
         },
         {
           node: {
+            _id: "5220cce9139b212958000121",
+            href: "/artwork/roy-lichtenstein-still-life-with-cows-skull",
+            date: "1972",
             id:
               "QXJ0d29yazpyb3ktbGljaHRlbnN0ZWluLXN0aWxsLWxpZmUtd2l0aC1jb3dzLXNrdWxs",
-            slug: "roy-lichtenstein-still-life-with-cows-skull",
-            href: "/artwork/roy-lichtenstein-still-life-with-cows-skull",
+            cultural_maker: null,
             image: {
               aspect_ratio: 1.22,
               id: "5220cceaa09a671882000123",
@@ -1731,41 +1693,41 @@ export const FullArtworkFixture = {
               url:
                 "https://d32dm0rphc51dk.cloudfront.net/a_d1ziSj_lx3RcCRDUF9ow/large.jpg",
             },
-            _id: "5220cce9139b212958000121",
-            title: "Still Life with Cow's Skull",
-            image_title:
-              "Roy Lichtenstein, ‘Still Life with Cow's Skull’, 1972",
-            date: "1972",
-            sale_message: null,
-            cultural_maker: null,
             artists: [
               {
-                id: "QXJ0aXN0OnJveS1saWNodGVuc3RlaW4=",
                 href: "/artist/roy-lichtenstein",
+                id: "QXJ0aXN0OnJveS1saWNodGVuc3RlaW4=",
                 name: "Roy Lichtenstein",
               },
             ],
+            slug: "roy-lichtenstein-still-life-with-cows-skull",
             collecting_institution: null,
-            partner: {
-              name: "Gagosian",
-              href: "/gagosian-gallery",
-              id: "UGFydG5lcjpnYWdvc2lhbg==",
-              type: "Gallery",
-            },
-            sale: null,
-            sale_artwork: null,
+            image_title:
+              "Roy Lichtenstein, ‘Still Life with Cow's Skull’, 1972",
             is_inquireable: true,
-            is_saved: false,
+            title: "Still Life with Cow's Skull",
             is_biddable: false,
             is_acquireable: false,
+            sale_message: null,
             is_offerable: false,
+            partner: {
+              href: "/gagosian-gallery",
+              id: "UGFydG5lcjpnYWdvc2lhbg==",
+              name: "Gagosian",
+              type: "Gallery",
+            },
+            is_saved: false,
+            sale: null,
+            sale_artwork: null,
           },
         },
         {
           node: {
-            id: "QXJ0d29yazpqb2huLXdlc2xleS0yLXBob25l",
-            slug: "john-wesley-2-phone",
+            _id: "4f8b4866e9aa120001000019",
             href: "/artwork/john-wesley-2-phone",
+            date: "1982",
+            id: "QXJ0d29yazpqb2huLXdlc2xleS0yLXBob25l",
+            cultural_maker: null,
             image: {
               aspect_ratio: 1.21,
               id: "4f8b4866e9aa120001000018",
@@ -1773,41 +1735,41 @@ export const FullArtworkFixture = {
               url:
                 "https://d32dm0rphc51dk.cloudfront.net/58G85aUnWJTL3QsWm-cXDw/large.jpg",
             },
-            _id: "4f8b4866e9aa120001000019",
-            title: "Phone",
-            image_title: "John Wesley, ‘Phone’, 1982",
-            date: "1982",
-            sale_message: "Contact For Price",
-            cultural_maker: null,
             artists: [
               {
-                id: "QXJ0aXN0OmpvaG4td2VzbGV5LTI=",
                 href: "/artist/john-wesley-2",
+                id: "QXJ0aXN0OmpvaG4td2VzbGV5LTI=",
                 name: "John Wesley",
               },
             ],
+            slug: "john-wesley-2-phone",
             collecting_institution: null,
-            partner: {
-              name: "IKON Ltd. Contemporary Art",
-              href: "/ikon-ltd-contemporary-art",
-              id: "UGFydG5lcjppa29uLWx0ZC1jb250ZW1wb3JhcnktYXJ0",
-              type: "Gallery",
-            },
-            sale: null,
-            sale_artwork: null,
+            image_title: "John Wesley, ‘Phone’, 1982",
             is_inquireable: true,
-            is_saved: false,
+            title: "Phone",
             is_biddable: false,
             is_acquireable: false,
+            sale_message: "Contact For Price",
             is_offerable: false,
+            partner: {
+              href: "/ikon-ltd-contemporary-art",
+              id: "UGFydG5lcjppa29uLWx0ZC1jb250ZW1wb3JhcnktYXJ0",
+              name: "IKON Ltd. Contemporary Art",
+              type: "Gallery",
+            },
+            is_saved: false,
+            sale: null,
+            sale_artwork: null,
           },
         },
         {
           node: {
+            _id: "549ddb917261692d9fea0100",
+            href: "/artwork/damien-hirst-for-the-love-of-god-front",
+            date: "2011",
             id:
               "QXJ0d29yazpkYW1pZW4taGlyc3QtZm9yLXRoZS1sb3ZlLW9mLWdvZC1mcm9udA==",
-            slug: "damien-hirst-for-the-love-of-god-front",
-            href: "/artwork/damien-hirst-for-the-love-of-god-front",
+            cultural_maker: null,
             image: {
               aspect_ratio: 0.74,
               id: "549ddb967261693e2c620c00",
@@ -1815,41 +1777,41 @@ export const FullArtworkFixture = {
               url:
                 "https://d32dm0rphc51dk.cloudfront.net/iNVK07fWayBfTajoOrGbbw/large.jpg",
             },
-            _id: "549ddb917261692d9fea0100",
-            title: "For the Love of God (front)",
-            image_title: "Damien Hirst, ‘For the Love of God (front)’, 2011",
-            date: "2011",
-            sale_message: "Contact For Price",
-            cultural_maker: null,
             artists: [
               {
-                id: "QXJ0aXN0OmRhbWllbi1oaXJzdA==",
                 href: "/artist/damien-hirst",
+                id: "QXJ0aXN0OmRhbWllbi1oaXJzdA==",
                 name: "Damien Hirst",
               },
             ],
+            slug: "damien-hirst-for-the-love-of-god-front",
             collecting_institution: null,
-            partner: {
-              name: "Kenneth A. Friedman & Co.",
-              href: "/kenneth-a-friedman-and-co",
-              id: "UGFydG5lcjprZW5uZXRoLWEtZnJpZWRtYW4tYW5kLWNv",
-              type: "Gallery",
-            },
-            sale: null,
-            sale_artwork: null,
+            image_title: "Damien Hirst, ‘For the Love of God (front)’, 2011",
             is_inquireable: true,
-            is_saved: false,
+            title: "For the Love of God (front)",
             is_biddable: false,
             is_acquireable: false,
+            sale_message: "Contact For Price",
             is_offerable: false,
+            partner: {
+              href: "/kenneth-a-friedman-and-co",
+              id: "UGFydG5lcjprZW5uZXRoLWEtZnJpZWRtYW4tYW5kLWNv",
+              name: "Kenneth A. Friedman & Co.",
+              type: "Gallery",
+            },
+            is_saved: false,
+            sale: null,
+            sale_artwork: null,
           },
         },
         {
           node: {
+            _id: "56041e82726169662500008c",
+            href: "/artwork/donald-baechler-abstract-composition-with-skull",
+            date: "2009",
             id:
               "QXJ0d29yazpkb25hbGQtYmFlY2hsZXItYWJzdHJhY3QtY29tcG9zaXRpb24td2l0aC1za3VsbA==",
-            slug: "donald-baechler-abstract-composition-with-skull",
-            href: "/artwork/donald-baechler-abstract-composition-with-skull",
+            cultural_maker: null,
             image: {
               aspect_ratio: 1,
               id: "56041e84726169695b000630",
@@ -1857,42 +1819,42 @@ export const FullArtworkFixture = {
               url:
                 "https://d32dm0rphc51dk.cloudfront.net/9hX1cOC1LRxqQuwQJd7hUQ/large.jpg",
             },
-            _id: "56041e82726169662500008c",
-            title: "Abstract Composition with Skull",
-            image_title:
-              "Donald Baechler, ‘Abstract Composition with Skull’, 2009",
-            date: "2009",
-            sale_message: "Contact For Price",
-            cultural_maker: null,
             artists: [
               {
-                id: "QXJ0aXN0OmRvbmFsZC1iYWVjaGxlcg==",
                 href: "/artist/donald-baechler",
+                id: "QXJ0aXN0OmRvbmFsZC1iYWVjaGxlcg==",
                 name: "Donald Baechler",
               },
             ],
+            slug: "donald-baechler-abstract-composition-with-skull",
             collecting_institution: null,
-            partner: {
-              name: "Pace Prints",
-              href: "/pace-prints",
-              id: "UGFydG5lcjpwYWNlLXByaW50cw==",
-              type: "Gallery",
-            },
-            sale: null,
-            sale_artwork: null,
+            image_title:
+              "Donald Baechler, ‘Abstract Composition with Skull’, 2009",
             is_inquireable: true,
-            is_saved: false,
+            title: "Abstract Composition with Skull",
             is_biddable: false,
             is_acquireable: false,
+            sale_message: "Contact For Price",
             is_offerable: false,
+            partner: {
+              href: "/pace-prints",
+              id: "UGFydG5lcjpwYWNlLXByaW50cw==",
+              name: "Pace Prints",
+              type: "Gallery",
+            },
+            is_saved: false,
+            sale: null,
+            sale_artwork: null,
           },
         },
         {
           node: {
+            _id: "4dbe4ea7db8e540b80006c88",
+            href: "/artwork/takashi-murakami-time-camouflage-moss-green",
+            date: "2009",
             id:
               "QXJ0d29yazp0YWthc2hpLW11cmFrYW1pLXRpbWUtY2Ftb3VmbGFnZS1tb3NzLWdyZWVu",
-            slug: "takashi-murakami-time-camouflage-moss-green",
-            href: "/artwork/takashi-murakami-time-camouflage-moss-green",
+            cultural_maker: null,
             image: {
               aspect_ratio: 1,
               id: "4e81033be3ce4a0001002f01",
@@ -1900,41 +1862,41 @@ export const FullArtworkFixture = {
               url:
                 "https://d32dm0rphc51dk.cloudfront.net/7wuqPGg2xoCaVwNpr-Mgjw/large.jpg",
             },
-            _id: "4dbe4ea7db8e540b80006c88",
-            title: "TIME - camouflage moss green",
-            image_title:
-              "Takashi Murakami, ‘TIME - camouflage moss green’, 2009",
-            date: "2009",
-            sale_message: null,
-            cultural_maker: null,
             artists: [
               {
-                id: "QXJ0aXN0OnRha2FzaGktbXVyYWthbWk=",
                 href: "/artist/takashi-murakami",
+                id: "QXJ0aXN0OnRha2FzaGktbXVyYWthbWk=",
                 name: "Takashi Murakami",
               },
             ],
+            slug: "takashi-murakami-time-camouflage-moss-green",
             collecting_institution: null,
-            partner: {
-              name: "Gagosian",
-              href: "/gagosian-gallery",
-              id: "UGFydG5lcjpnYWdvc2lhbg==",
-              type: "Gallery",
-            },
-            sale: null,
-            sale_artwork: null,
+            image_title:
+              "Takashi Murakami, ‘TIME - camouflage moss green’, 2009",
             is_inquireable: true,
-            is_saved: false,
+            title: "TIME - camouflage moss green",
             is_biddable: false,
             is_acquireable: false,
+            sale_message: null,
             is_offerable: false,
+            partner: {
+              href: "/gagosian-gallery",
+              id: "UGFydG5lcjpnYWdvc2lhbg==",
+              name: "Gagosian",
+              type: "Gallery",
+            },
+            is_saved: false,
+            sale: null,
+            sale_artwork: null,
           },
         },
         {
           node: {
-            id: "QXJ0d29yazptYW8teWFuLW1hby15YW4tdW50aXRsZWQ=",
-            slug: "mao-yan-mao-yan-untitled",
+            _id: "5311714c9c18db40dd000221",
             href: "/artwork/mao-yan-mao-yan-untitled",
+            date: "2011",
+            id: "QXJ0d29yazptYW8teWFuLW1hby15YW4tdW50aXRsZWQ=",
+            cultural_maker: null,
             image: {
               aspect_ratio: 4.59,
               id: "531171538b3b81797f0001b7",
@@ -1942,39 +1904,77 @@ export const FullArtworkFixture = {
               url:
                 "https://d32dm0rphc51dk.cloudfront.net/oHVnTcNLVDBEPpOXA03YyA/large.jpg",
             },
-            _id: "5311714c9c18db40dd000221",
-            title: "Untitled",
-            image_title: "Mao Yan 毛焰, ‘Untitled’, 2011",
-            date: "2011",
-            sale_message: null,
-            cultural_maker: null,
             artists: [
               {
-                id: "QXJ0aXN0Om1hby15YW4tbWFvLXlhbg==",
                 href: "/artist/mao-yan-mao-yan",
+                id: "QXJ0aXN0Om1hby15YW4tbWFvLXlhbg==",
                 name: "Mao Yan 毛焰",
               },
             ],
+            slug: "mao-yan-mao-yan-untitled",
             collecting_institution: null,
-            partner: {
-              name: "Sifang Art Museum",
-              href: "/sifang-art-museum",
-              id: "UGFydG5lcjpzaWZhbmctYXJ0LW11c2V1bQ==",
-              type: "Institution",
-            },
-            sale: null,
-            sale_artwork: null,
+            image_title: "Mao Yan 毛焰, ‘Untitled’, 2011",
             is_inquireable: false,
-            is_saved: false,
+            title: "Untitled",
             is_biddable: false,
             is_acquireable: false,
+            sale_message: null,
             is_offerable: false,
+            partner: {
+              href: "/sifang-art-museum",
+              id: "UGFydG5lcjpzaWZhbmctYXJ0LW11c2V1bQ==",
+              name: "Sifang Art Museum",
+              type: "Institution",
+            },
+            is_saved: false,
+            sale: null,
+            sale_artwork: null,
           },
         },
       ],
     },
     id: "QXJ0d29ya0xheWVyOm1haW4=",
+    name: "Most Similar",
   },
+  literature: null,
+  layers: [
+    {
+      id: "QXJ0d29ya0xheWVyOm1haW4=",
+      internalID: "main",
+      name: "Most Similar",
+    },
+    {
+      id: "QXJ0d29ya0xheWVyOnNpbmdsZS1vYmplY3Q=",
+      internalID: "single-object",
+      name: "Single Object",
+    },
+    {
+      id: "QXJ0d29ya0xheWVyOm1vcnRhbGl0eQ==",
+      internalID: "mortality",
+      name: "Mortality",
+    },
+    {
+      id: "QXJ0d29ya0xheWVyOnBvcC1hcnQ=",
+      internalID: "pop-art",
+      name: "Pop Art",
+    },
+    {
+      id: "QXJ0d29ya0xheWVyOnNpbGtzY3JlZW4tMQ==",
+      internalID: "silkscreen-1",
+      name: "Silkscreen",
+    },
+    {
+      id: "QXJ0d29ya0xheWVyOmZpZ3VyYXRpdmUtcGFpbnRpbmc=",
+      internalID: "figurative-painting",
+      name: "Figurative Painting",
+    },
+    {
+      id: "QXJ0d29ya0xheWVyOmZvci1zYWxl",
+      internalID: "for-sale",
+      name: "For Sale",
+    },
+  ],
+  provenance: null,
   priceCents: null,
   pricingContext: null,
 }

@@ -31,6 +31,9 @@ describe("ArtworkSidebarCurrentBidInfo", () => {
   ) => {
     return renderRelayTree({
       Component,
+      mockData: {
+        artwork: response,
+      } as ArtworkSidebarCurrentBidInfo_Test_QueryRawResponse,
       query: graphql`
         query ArtworkSidebarCurrentBidInfo_Test_Query @raw_response_type {
           artwork(id: "auction_artwork_estimate_premium") {
@@ -38,9 +41,6 @@ describe("ArtworkSidebarCurrentBidInfo", () => {
           }
         }
       `,
-      mockData: {
-        artwork: response,
-      } as ArtworkSidebarCurrentBidInfo_Test_QueryRawResponse,
     })
   }
   describe("analytics", () => {

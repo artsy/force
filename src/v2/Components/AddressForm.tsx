@@ -23,14 +23,14 @@ export type AddressChangeHandler = (
 ) => void
 
 export const emptyAddress: Address = Object.freeze({
-  name: "",
-  country: "",
-  postalCode: "",
   addressLine1: "",
   addressLine2: "",
   city: "",
-  region: "",
+  country: "",
+  name: "",
   phoneNumber: "",
+  postalCode: "",
+  region: "",
 })
 export interface AddressFormProps {
   onChange: AddressChangeHandler

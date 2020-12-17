@@ -50,11 +50,14 @@ const ReveredColumnOnMobile = styled.div`
 const theme = {
   flexboxgrid: {
     breakpoints: {
-      // em, not pixels
-      xs: 0,
-      sm: 24,
-      md: 48,
+      
       lg: 64,
+      
+md: 48,
+      
+sm: 24,
+      // em, not pixels
+xs: 0,
     },
   },
 }
@@ -92,7 +95,7 @@ export const MiamiFairWeekPage: React.SFC<MiamiFairWeekPageProps> = ({
             </IntroductionText>
             <div>
               <img
-                style={{ marginTop: 30, marginBottom: 20, maxWidth: "100%" }}
+                style={{ marginBottom: 20, marginTop: 30, maxWidth: "100%" }}
                 src={introduction.image}
               />
             </div>
@@ -173,7 +176,7 @@ export const MiamiFairWeekPage: React.SFC<MiamiFairWeekPageProps> = ({
                 >
                   <Title
                     titleSize="small"
-                    style={{ margin: "0 0 5px", lineHeight: 1 }}
+                    style={{ lineHeight: 1, margin: "0 0 5px" }}
                   >
                     {article.title}
                   </Title>

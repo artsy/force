@@ -29,9 +29,9 @@ export function proxyReflectionMiddleware(
       return next()
     }
     return proxy.web(req, res, {
-      target: proxyUrl,
-      ignorePath: true,
       changeOrigin: true,
+      ignorePath: true,
+      target: proxyUrl,
     })
   })
 }

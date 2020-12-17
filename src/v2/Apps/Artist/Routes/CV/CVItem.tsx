@@ -234,9 +234,9 @@ export const CVPaginationContainer = createPaginationContainer(
         // in most cases, for variables other than connection filters like
         // `first`, `after`, etc. you may want to use the previous values.
         ...fragmentVariables,
+        artistID: props.artist.slug,
         count,
         cursor,
-        artistID: props.artist.slug,
       }
     },
     query: graphql`

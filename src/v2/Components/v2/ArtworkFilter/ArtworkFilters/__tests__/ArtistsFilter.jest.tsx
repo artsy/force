@@ -25,34 +25,34 @@ describe("ArtistsFilter", () => {
   describe("artists", () => {
     it("renders artists", () => {
       const wrapper = getWrapper({
-        counts: { followedArtists: 0 },
         aggregations: [
           {
+            counts: [{ count: 10, name: "Percy Z", value: "percy-z" }],
             slice: "ARTIST",
-            counts: [{ name: "Percy Z", count: 10, value: "percy-z" }],
           },
         ],
+        counts: { followedArtists: 0 },
       })
       expect(wrapper.find("Checkbox").last().text()).toContain("Percy Z")
     })
 
     describe("show more", () => {
       const wrapper = getWrapper({
-        counts: { followedArtists: 0 },
         aggregations: [
           {
-            slice: "ARTIST",
             counts: [
-              { name: "Percy A", count: 10, value: "percy-a" },
-              { name: "Percy B", count: 10, value: "percy-b" },
-              { name: "Percy C", count: 10, value: "percy-c" },
-              { name: "Percy D", count: 10, value: "percy-d" },
-              { name: "Percy E", count: 10, value: "percy-e" },
-              { name: "Percy F", count: 10, value: "percy-f" },
-              { name: "Percy G", count: 10, value: "percy-g" },
+              { count: 10, name: "Percy A", value: "percy-a" },
+              { count: 10, name: "Percy B", value: "percy-b" },
+              { count: 10, name: "Percy C", value: "percy-c" },
+              { count: 10, name: "Percy D", value: "percy-d" },
+              { count: 10, name: "Percy E", value: "percy-e" },
+              { count: 10, name: "Percy F", value: "percy-f" },
+              { count: 10, name: "Percy G", value: "percy-g" },
             ],
+            slice: "ARTIST",
           },
         ],
+        counts: { followedArtists: 0 },
       })
 
       it("renders the first 6 and includes a show more expand link", () => {
@@ -88,8 +88,8 @@ describe("ArtistsFilter", () => {
   describe("followed artists", () => {
     it("updates includeArtworksByFollowedArtists on filter change", done => {
       const wrapper = getWrapper({
+        aggregations: [{ counts: [{}], slice: "ARTIST" }],
         counts: { followedArtists: 5 },
-        aggregations: [{ slice: "ARTIST", counts: [{}] }],
       })
       wrapper.find("Checkbox").first().simulate("click")
 
@@ -101,8 +101,8 @@ describe("ArtistsFilter", () => {
 
     it("is disabled if there are no results", () => {
       const wrapper = getWrapper({
+        aggregations: [{ counts: [{}], slice: "ARTIST" }],
         counts: { followedArtists: 0 },
-        aggregations: [{ slice: "ARTIST", counts: [{}] }],
       })
       expect(wrapper.find("Checkbox").first().props().disabled).toBeTruthy()
     })

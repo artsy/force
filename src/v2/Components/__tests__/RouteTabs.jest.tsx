@@ -12,7 +12,6 @@ describe("RouteTabs", () => {
           initialRoute="/cv"
           routes={[
             {
-              path: "/",
               Component: () => {
                 return (
                   <RouteTabs>
@@ -33,6 +32,7 @@ describe("RouteTabs", () => {
                   path: "/shows",
                 },
               ],
+              path: "/",
             },
           ]}
         />

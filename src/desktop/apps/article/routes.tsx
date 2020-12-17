@@ -162,32 +162,32 @@ export const index = async (req, res, next) => {
 
     const layout = await stitch({
       basePath: res.app.get("views"),
-      layout: getLayoutTemplate(article),
+      blocks: {
+        body: App,
+        head: () => <ArticleMeta article={customMetaContent || article} />,
+      },
       config: {
         styledComponents: true,
       },
-      blocks: {
-        head: () => <ArticleMeta article={customMetaContent || article} />,
-        body: App,
+      data: {
+        article,
+        customEditorial,
+        isLoggedIn,
+        isMobile,
+        isSuper,
+        jsonLD: getJsonLd(article),
+        renderTime: getCurrentUnixTimestamp(),
+        showTooltips,
+        superArticle,
+        superSubArticles,
       },
+      layout: getLayoutTemplate(article),
       locals: {
         ...res.locals,
         assetPackage: "article",
         bodyClass: getBodyClass(article),
         crop,
         markdown,
-      },
-      data: {
-        article,
-        customEditorial,
-        isSuper,
-        isLoggedIn,
-        isMobile,
-        jsonLD: getJsonLd(article),
-        renderTime: getCurrentUnixTimestamp(),
-        showTooltips,
-        superArticle,
-        superSubArticles,
       },
       templates: getSuperArticleTemplates(article),
     })
@@ -228,26 +228,26 @@ export const classic = async (_req, res, next, article) => {
   try {
     const layout = await stitch({
       basePath: res.app.get("views"),
-      layout: getLayoutTemplate(article),
+      blocks: {
+        body: App,
+        head: () => <ArticleMeta article={article} />,
+      },
       config: {
         styledComponents: true,
-      },
-      blocks: {
-        head: () => <ArticleMeta article={article} />,
-        body: App,
-      },
-      locals: {
-        ...res.locals,
-        assetPackage: "article",
-        bodyClass: getBodyClass(article),
-        crop,
-        markdown,
       },
       data: {
         article,
         isLoggedIn,
         isMobile,
         jsonLD: getJsonLd(article),
+      },
+      layout: getLayoutTemplate(article),
+      locals: {
+        ...res.locals,
+        assetPackage: "article",
+        bodyClass: getBodyClass(article),
+        crop,
+        markdown,
       },
       templates: {
         ArticlesGridView: "../../../components/articles_grid/view.coffee",
@@ -278,10 +278,10 @@ export const amp = (req, res, next) => {
       data.article = prepForAMP(data.article)
       res.locals.jsonLD = stringifyJSONForWeb(data.article.toJSONLDAmp())
       return res.render("amp_article", {
-        resize,
+        _,
         crop,
         embed,
-        _,
+        resize,
         ...data,
       })
     },

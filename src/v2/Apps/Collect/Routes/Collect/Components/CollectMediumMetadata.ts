@@ -53,16 +53,16 @@ export function getMetadataForMedium(medium) {
 
   if (title && mediumDescription) {
     return {
-      title: `${title} - For Sale on Artsy`,
       breadcrumbTitle: title,
       description: `Buy, bid, and inquire on over ${mediumDescription} on Artsy, the world’s largest online marketplace for art and design.`,
+      title: `${title} - For Sale on Artsy`,
     }
   } else {
     return {
-      title: "Collect | Artsy",
       breadcrumbTitle: "Collect",
       description:
         "Find artworks by subject matter, style/technique, movement, price, and gallery/institution.",
+      title: "Collect | Artsy",
     }
   }
 }

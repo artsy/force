@@ -4,9 +4,9 @@ export const submitOfferOrderWithFailure = {
   commerceSubmitOrderWithOffer: {
     orderOrError: {
       error: {
-        type: "validation",
         code: "credit_card_not_found",
         data: '{"credit_card_id":"5b9987f72957190026d0ff54"}',
+        type: "validation",
       },
     },
   },
@@ -17,9 +17,9 @@ export const submitOfferOrderFailedConfirmation = {
     orderOrError: {
       __typename: "CommerceOrderWithMutationFailure",
       error: {
-        type: "processing",
         code: "payment_method_confirmation_failed",
         data: null,
+        type: "processing",
       },
     },
   },
@@ -29,9 +29,9 @@ export const submitOfferOrderWithVersionMismatchFailure = {
   commerceSubmitOrderWithOffer: {
     orderOrError: {
       error: {
-        type: "processing",
         code: "artwork_version_mismatch",
         data: null,
+        type: "processing",
       },
     },
   },
@@ -41,9 +41,9 @@ export const submitOfferOrderWithNoInventoryFailure = {
   commerceSubmitOrderWithOffer: {
     orderOrError: {
       error: {
-        type: "processing",
         code: "insufficient_inventory",
         data: null,
+        type: "processing",
       },
     },
   },

@@ -65,9 +65,9 @@ export const ArtworkRelatedArtists: React.FC<ArtworkRelatedArtistsProps> = track
                   contextModule={ContextModule.relatedArtistsRail}
                   onClick={() => {
                     trackEvent({
+                      action_type: Schema.ActionType.Click,
                       context_module: Schema.ContextModule.RelatedArtists,
                       type: Schema.Type.ArtistCard,
-                      action_type: Schema.ActionType.Click,
                     })
                   }}
                 />
@@ -145,9 +145,9 @@ export const ArtworkRelatedArtistsPaginationContainer = createPaginationContaine
     getVariables(props, { count, cursor }, fragmentVariables) {
       return {
         ...fragmentVariables,
+        artworkID: props.artwork.slug,
         count,
         cursor,
-        artworkID: props.artwork.slug,
       }
     },
     query: graphql`

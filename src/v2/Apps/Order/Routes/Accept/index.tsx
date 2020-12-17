@@ -45,11 +45,8 @@ const logger = createLogger("Order/Routes/Offer/index.tsx")
 export class Accept extends Component<AcceptProps> {
   acceptOffer() {
     return this.props.commitMutation<AcceptOfferMutation>({
-      variables: {
-        input: { offerId: this.props.order.lastOffer.internalID },
-      },
       // TODO: Inputs to the mutation might have changed case of the keys!
-      mutation: graphql`
+mutation: graphql`
         mutation AcceptOfferMutation($input: CommerceBuyerAcceptOfferInput!) {
           commerceBuyerAcceptOffer(input: $input) {
             orderOrError {
@@ -73,6 +70,10 @@ export class Accept extends Component<AcceptProps> {
           }
         }
       `,
+      
+      variables: {
+        input: { offerId: this.props.order.lastOffer.internalID },
+      },
     })
   }
 
@@ -102,23 +103,23 @@ export class Accept extends Component<AcceptProps> {
         // https://stripe.com/docs/declines/codes
         if (parsedData.decline_code === "insufficient_funds") {
           this.showCardFailureDialog({
-            title: "Insufficient funds",
             message:
               "There aren’t enough funds available on the card you provided. Please use a new card. Alternatively, contact your card provider, then press “Submit” again.",
+            title: "Insufficient funds",
           })
         } else {
           this.showCardFailureDialog({
-            title: "Charge failed",
             message:
               "Payment authorization has been declined. Please contact your card provider, then press “Submit” again. Alternatively, use a new card.",
+            title: "Charge failed",
           })
         }
         break
       }
       case "insufficient_inventory": {
         await this.props.dialog.showErrorDialog({
-          title: "Not available",
           message: "Sorry, the work is no longer available.",
+          title: "Not available",
         })
         this.routeToArtistPage()
         break

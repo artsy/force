@@ -4,7 +4,17 @@ import { MarketInsights_artist } from "v2/__generated__/MarketInsights_artist.gr
 export const MarketDataSummaryArtists: MarketDataSummary_artist[] = [
   {
     " $refType": null,
-    internalID: "589a6291275b2410d1beb6a5",
+    auctionResultsConnection: {
+      edges: [
+        {
+          node: {
+            price_realized: {
+              display: "$63m",
+            },
+          },
+        },
+      ],
+    },
     collections: ["Museum of Modern Art (MoMA)"],
     highlights: {
       partnersConnection: {
@@ -21,35 +31,27 @@ export const MarketDataSummaryArtists: MarketDataSummary_artist[] = [
         ],
       },
     },
-    auctionResultsConnection: {
-      edges: [
-        {
-          node: {
-            price_realized: {
-              display: "$63m",
-            },
-          },
-        },
-      ],
-    },
+    internalID: "589a6291275b2410d1beb6a5",
   },
   {
     " $refType": null,
-    internalID: "551361eb72616903f6d50300",
+    auctionResultsConnection: null,
     collections: null,
     highlights: {
       partnersConnection: {
         edges: [],
       },
     },
-    auctionResultsConnection: null,
+    internalID: "551361eb72616903f6d50300",
   },
 ]
 
 export const MarketInsightsArtists: MarketInsights_artist[] = [
   {
     " $refType": null,
-    internalID: "4d8b92b34eb68a1b2c0003f4",
+    auctionResultsConnection: {
+      edges: [{ node: { price_realized: { display: "$63m" } } }],
+    },
     collections: ["Tate", "Museum of Modern Art (MoMA)"],
     highlights: {
       partnersConnection: {
@@ -88,15 +90,13 @@ export const MarketInsightsArtists: MarketInsights_artist[] = [
         ],
       },
     },
-    auctionResultsConnection: {
-      edges: [{ node: { price_realized: { display: "$63m" } } }],
-    },
+    internalID: "4d8b92b34eb68a1b2c0003f4",
   },
   {
     " $refType": null,
-    internalID: "4d8b92b34eb68a1b2c0003f4",
+    auctionResultsConnection: null,
     collections: null,
     highlights: { partnersConnection: { edges: [] } },
-    auctionResultsConnection: null,
+    internalID: "4d8b92b34eb68a1b2c0003f4",
   },
 ]

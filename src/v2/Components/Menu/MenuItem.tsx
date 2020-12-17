@@ -12,8 +12,8 @@ import {
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
 
 const MENU_ITEM_DEFAULT_PROPS = {
-  display: "flex",
   alignItems: "center",
+  display: "flex",
   px: 2,
   py: 1,
 }

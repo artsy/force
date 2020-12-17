@@ -3,9 +3,9 @@ import { cropped, resized } from "../resized"
 describe("#cropped", () => {
   it("uses width, height, and quality", () => {
     const { src, srcSet } = cropped("https://media.artsy.net/img.jpg", {
-      width: 100,
       height: 100,
       quality: 80,
+      width: 100,
     })
 
     expect(src).toContain("d7hftxdivxxvm")

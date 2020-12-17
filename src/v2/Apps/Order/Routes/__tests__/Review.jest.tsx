@@ -61,6 +61,7 @@ describe("Review", () => {
 
   const { buildPage, mutations, routes } = createTestEnv({
     Component: ReviewFragmentContainer,
+    TestPage: ReviewTestPage,
     defaultData: {
       order: testOrder,
     },
@@ -75,7 +76,6 @@ describe("Review", () => {
         }
       }
     `,
-    TestPage: ReviewTestPage,
   })
 
   describe("buy-mode orders", () => {

@@ -22,8 +22,8 @@ describe("OtherCollectionEntity", () => {
 
   beforeEach(() => {
     props = {
-      member: CollectionHubFixture.linkedCollections[0].members[0],
       itemNumber: 1,
+      member: CollectionHubFixture.linkedCollections[0].members[0],
     }
     ;(useTracking as jest.Mock).mockImplementation(() => {
       return {
@@ -75,9 +75,9 @@ describe("OtherCollectionEntity", () => {
       expect(trackEvent).toBeCalledWith({
         action: "clickedCollectionGroup",
         context_module: "otherCollectionsRail",
-        context_page_owner_type: "collection",
         context_page_owner_id: "1234",
         context_page_owner_slug: "slug",
+        context_page_owner_type: "collection",
         destination_page_owner_id: "123456",
         destination_page_owner_slug: "artist-posters",
         destination_page_owner_type: "collection",

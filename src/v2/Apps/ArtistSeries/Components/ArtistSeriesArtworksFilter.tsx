@@ -26,13 +26,13 @@ const ArtistSeriesArtworksFilter: React.FC<ArtistSeriesArtworksFilterProps> = pr
     <ArtworkFilterContextProvider
       filters={match && match.location.query}
       sortOptions={[
-        { value: "-decayed_merch", text: "Default" },
-        { value: "-has_price,-prices", text: "Price (desc.)" },
-        { value: "-has_price,prices", text: "Price (asc.)" },
-        { value: "-partner_updated_at", text: "Recently updated" },
-        { value: "-published_at", text: "Recently added" },
-        { value: "-year", text: "Artwork year (desc.)" },
-        { value: "year", text: "Artwork year (asc.)" },
+        { text: "Default", value: "-decayed_merch" },
+        { text: "Price (desc.)", value: "-has_price,-prices" },
+        { text: "Price (asc.)", value: "-has_price,prices" },
+        { text: "Recently updated", value: "-partner_updated_at" },
+        { text: "Recently added", value: "-published_at" },
+        { text: "Artwork year (desc.)", value: "-year" },
+        { text: "Artwork year (asc.)", value: "year" },
       ]}
       onChange={updateUrl}
     >

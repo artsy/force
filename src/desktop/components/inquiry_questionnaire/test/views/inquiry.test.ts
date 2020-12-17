@@ -22,10 +22,10 @@ describe(
       describe("user with email and name", () => {
         beforeEach(function() {
           view = new Inquiry({
-            user: this.currentUser,
             artwork: this.artwork,
             inquiry: this.inquiry,
             state: this.state,
+            user: this.currentUser,
           })
 
           view.render()
@@ -64,10 +64,10 @@ describe(
           this.loggedOutUser.unset("email")
 
           view = new Inquiry({
-            user: this.loggedOutUser,
             artwork: this.artwork,
             inquiry: this.inquiry,
             state: this.state,
+            user: this.loggedOutUser,
           })
 
           view.render()
@@ -97,10 +97,10 @@ describe(
         this.state.set("steps", ["inquiry", "after_inquiry"])
 
         view = new Inquiry({
-          user: this.currentUser,
           artwork: this.artwork,
           inquiry: this.inquiry,
           state: this.state,
+          user: this.currentUser,
         })
 
         view.render()
@@ -144,10 +144,10 @@ describe(
         this.loggedOutUser.unset("email")
 
         view = new Inquiry({
-          user: this.loggedOutUser,
           artwork: this.artwork,
           inquiry: this.inquiry,
           state: this.state,
+          user: this.loggedOutUser,
         })
 
         view.render()
@@ -228,10 +228,10 @@ describe(
         this.artwork.related().fairs.add(fabricate("fair"))
 
         view = new Inquiry({
-          user: this.loggedOutUser,
           artwork: this.artwork,
           inquiry: this.inquiry,
           state: this.state,
+          user: this.loggedOutUser,
         })
       })
 
@@ -280,7 +280,7 @@ describe(
           })
         })
 
-        xit("continues on to the next state even when the UserFairAction errors", async () => {
+        it.skip("continues on to the next state even when the UserFairAction errors", async () => {
           // FIXME: promise mocking does not catch error or make it to callback
           Backbone.sync
             .onCall(0)

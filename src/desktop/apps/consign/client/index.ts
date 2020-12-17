@@ -20,11 +20,11 @@ export const init = () => {
     function (e) {
       const buttonText = $(e.target).text()
       window.analytics.track("click", {
-        type: "button",
-        label: buttonText,
-        flow: "consignments",
-        destination_path: "/consign/submission/choose-artist",
         context_module: "sell your works",
+        destination_path: "/consign/submission/choose-artist",
+        flow: "consignments",
+        label: buttonText,
+        type: "button",
       })
     }
   )
@@ -36,11 +36,11 @@ export const init = () => {
     function (e) {
       const buttonText = $(e.target).text()
       window.analytics.track("click", {
-        type: "button",
-        label: buttonText,
-        flow: "consignments",
-        destination_path: "/consign/submission/choose-artist",
         context_module: "how consignments work",
+        destination_path: "/consign/submission/choose-artist",
+        flow: "consignments",
+        label: buttonText,
+        type: "button",
       })
     }
   )
@@ -52,11 +52,11 @@ export const init = () => {
     function (e) {
       const buttonText = $(e.target).text()
       window.analytics.track("click", {
-        type: "button",
-        label: buttonText,
-        flow: "consignments",
-        destination_path: "/consign/submission/choose-artist",
         context_module: "top sale placements",
+        destination_path: "/consign/submission/choose-artist",
+        flow: "consignments",
+        label: buttonText,
+        type: "button",
       })
     }
   )
@@ -68,11 +68,11 @@ export const init = () => {
     function (e) {
       const buttonText = $(e.target).text()
       window.analytics.track("click", {
-        type: "button",
-        label: buttonText,
-        flow: "consignments",
-        destination_path: "/consign/submission/choose-artist",
         context_module: "upcoming partner sales",
+        destination_path: "/consign/submission/choose-artist",
+        flow: "consignments",
+        label: buttonText,
+        type: "button",
       })
     }
   )
@@ -84,11 +84,11 @@ export const init = () => {
     function (e) {
       const buttonText = $(e.target).text()
       window.analytics.track("click", {
-        type: "button",
-        label: buttonText,
-        flow: "consignments",
-        destination_path: "/consign/submission/choose-artist",
         context_module: "start your submission",
+        destination_path: "/consign/submission/choose-artist",
+        flow: "consignments",
+        label: buttonText,
+        type: "button",
       })
     }
   )

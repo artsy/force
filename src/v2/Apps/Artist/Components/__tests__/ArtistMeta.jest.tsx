@@ -17,24 +17,14 @@ describe("Meta", () => {
     " $fragmentRefs": null,
     " $refType": null,
     alternate_names: null,
-    birthday: "1929",
-    blurb: null,
     artworks_connection: {
       edges: [
         {
           node: {
-            date: "1993",
             availability: "for sale",
-            title:
-              "'25 Years Studio',  1993, SIGNED by the BIG-8 Contemporary Artists, Gemini G.E.L.",
             category: "Drawing, Collage or other Work on Paper",
+            date: "1993",
             description: null,
-            listPrice: {
-              __typename: "Money",
-              major: 1000,
-              currencyCode: "USD",
-            },
-            price_currency: "USD",
             href:
               "/artwork/robert-rauschenberg-25-years-studio-1993-signed-by-the-big-8-contemporary-artists-gemini-gel",
             image: {
@@ -42,6 +32,11 @@ describe("Meta", () => {
                 "https://d32dm0rphc51dk.cloudfront.net/PmBrn30fGmg9dGwk2Nf51w/large.jpg",
               small:
                 "https://d32dm0rphc51dk.cloudfront.net/PmBrn30fGmg9dGwk2Nf51w/small.jpg",
+            },
+            listPrice: {
+              __typename: "Money",
+              currencyCode: "USD",
+              major: 1000,
             },
             partner: {
               href: "/vince-fine-arts-slash-ephemera",
@@ -55,15 +50,19 @@ describe("Meta", () => {
                 },
               },
             },
+            price_currency: "USD",
+            title:
+              "'25 Years Studio',  1993, SIGNED by the BIG-8 Contemporary Artists, Gemini G.E.L.",
           },
         },
       ],
     },
+    birthday: "1929",
+    blurb: null,
     counts: null,
     deathday: null,
     gender: "male",
     href: "/artist/claes-oldenburg",
-    name: "Claes Oldenburg",
     image: {
       large:
         "https://d32dm0rphc51dk.cloudfront.net/6q6LeyKvA_vpT5YzHRSNUA/large.jpg",
@@ -71,12 +70,13 @@ describe("Meta", () => {
         "https://d32dm0rphc51dk.cloudfront.net/6q6LeyKvA_vpT5YzHRSNUA/square.jpg",
       versions: ["small", "large"],
     },
-    slug: "claes-oldenburg",
     meta: {
       description:
         "Find the latest shows, biography, and artworks for sale by Claes Oldenburg. “I am for an art that is political-erotical-mystical, that does something more th…",
     },
+    name: "Claes Oldenburg",
     nationality: "Swedish",
+    slug: "claes-oldenburg",
   }
 
   type ArtworkMeta = ArtistMeta_artist["artworks_connection"]["edges"][number]["node"]

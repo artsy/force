@@ -83,7 +83,7 @@ describe("createMockNetworkLayer", () => {
     it("returns the data if present", async () => {
       const data = await fetchArtworkQueryWithResolvers({
         mockData: {
-          artwork: { title: "Untitled", id: "untitled" },
+          artwork: { id: "untitled", title: "Untitled" },
         },
       })
       expect(data.artwork.title).toEqual("Untitled")
@@ -92,7 +92,7 @@ describe("createMockNetworkLayer", () => {
     it("returns null for nullable fields which are given as null", async () => {
       const data = await fetchArtworkQueryWithResolvers({
         mockData: {
-          artwork: { title: null, id: "null" },
+          artwork: { id: "null", title: null },
         },
       })
       expect(data.artwork.title).toEqual(null)
@@ -174,10 +174,10 @@ describe("createMockNetworkLayer", () => {
         mockData: {
           artist: {
             forSaleArtworks: { edges: [{ node: { id: "for-sale-work" } }] },
+            id: "id",
             notForSaleArtworks: {
               edges: [{ node: { id: "no-for-sale-work" } }],
             },
-            id: "id",
           },
         },
       },
@@ -217,8 +217,8 @@ describe("createMockNetworkLayer", () => {
       {
         mockData: {
           artist: {
-            forSaleArtworks: { edges: [{ node: { id: "for-sale-work" } }] },
             artworks: { edges: [{ node: { id: "no-for-sale-work" } }] },
+            forSaleArtworks: { edges: [{ node: { id: "for-sale-work" } }] },
             id: "id",
           },
         },
@@ -368,8 +368,8 @@ describe("createMockNetworkLayer", () => {
               order: {
                 id: "my-order",
                 internalID: "my-order",
-                state: "ABANDONED",
                 myLastOffer: {},
+                state: "ABANDONED",
               },
             },
           },
@@ -404,13 +404,13 @@ describe("createMockNetworkLayer", () => {
               },
             },
           },
+          mockNetworkFailure: true,
           query,
           variables: {
             input: {
               offerId: "offer-id",
             },
           },
-          mockNetworkFailure: true,
         })
       } catch (e) {
         expect(e.message).toMatchInlineSnapshot(`"failed to fetch"`)

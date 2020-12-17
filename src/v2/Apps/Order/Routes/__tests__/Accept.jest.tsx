@@ -29,15 +29,15 @@ const realSetInterval = global.setInterval
 
 const testOrder = {
   ...OfferOrderWithShippingDetails,
-  stateExpiresAt: DateTime.fromISO(NOW).plus({ days: 1 }).toString(),
+  buyer: Buyer,
   lastOffer: {
     ...OfferWithTotals,
-    createdAt: DateTime.fromISO(NOW).minus({ days: 1 }).toString(),
     amount: "$sellers.offer",
+    createdAt: DateTime.fromISO(NOW).minus({ days: 1 }).toString(),
     fromParticipant: "SELLER",
   },
   offers: { edges: Offers },
-  buyer: Buyer,
+  stateExpiresAt: DateTime.fromISO(NOW).plus({ days: 1 }).toString(),
 }
 
 describe("Accept seller offer", () => {
@@ -47,13 +47,7 @@ describe("Accept seller offer", () => {
 
   const { mutations, buildPage, routes } = createTestEnv({
     Component: AcceptFragmentContainer,
-    query: graphql`
-      query AcceptTestQuery @raw_response_type {
-        order: commerceOrder(id: "") {
-          ...Accept_order
-        }
-      }
-    `,
+    TestPage: OrderAppTestPage,
     defaultData: {
       order: testOrder,
       system: {
@@ -65,7 +59,13 @@ describe("Accept seller offer", () => {
     defaultMutationResults: {
       ...acceptOfferSuccess,
     },
-    TestPage: OrderAppTestPage,
+    query: graphql`
+      query AcceptTestQuery @raw_response_type {
+        order: commerceOrder(id: "") {
+          ...Accept_order
+        }
+      }
+    `,
   })
 
   describe("with default data", () => {

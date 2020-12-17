@@ -1,4 +1,5 @@
 export const selectProps = {
+  onSelect: x => x,
   options: [
     {
       text: "Price",
@@ -14,5 +15,4 @@ export const selectProps = {
     },
   ],
   selected: "price",
-  onSelect: x => x,
 }

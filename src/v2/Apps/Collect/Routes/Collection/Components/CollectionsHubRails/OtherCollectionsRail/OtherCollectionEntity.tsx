@@ -46,9 +46,9 @@ export const OtherCollectionEntity: React.FC<CollectionProps> = ({
           <ImageContainer>
             <ThumbnailImage
               src={resize(thumbnail, {
-                width: 60,
-                height: 60,
                 convert_to: "jpg",
+                height: 60,
+                width: 60,
               })}
             />
           </ImageContainer>

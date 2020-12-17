@@ -37,8 +37,8 @@ export const SeriesFooter: React.SFC<SeriesFooterProps> = props => {
               logo={logoSrc}
               url={logoUrl}
               trackingData={{
-                type: "external link",
                 destination_path: logoUrl,
+                type: "external link",
               }}
             />
           </Box>
@@ -53,8 +53,8 @@ export const SeriesFooter: React.SFC<SeriesFooterProps> = props => {
               logo={logoSrc}
               url={logoUrl}
               trackingData={{
-                type: "external link",
                 destination_path: logoUrl,
+                type: "external link",
               }}
             />
           </Box>

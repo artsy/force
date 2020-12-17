@@ -234,7 +234,7 @@ describe("ArtworkCollection", () => {
   })
 
   describe("#syncSavedArtworks", () => {
-    xit("requests the difference between this artworkCollection and the application artworks repository to determine what's saved", function () {
+    it.skip("requests the difference between this artworkCollection and the application artworks repository to determine what's saved", function () {
       this.artworkCollection.addRepoArtworks(
         new Artworks([
           new Artwork({ id: "moo", title: "Moo" }),
@@ -261,7 +261,7 @@ describe("ArtworkCollection", () => {
       this.artworkCollection.get("artworks").get("moo").should.be.false()
     })
 
-    xit("cleans up when all saves are fetched", function () {
+    it.skip("cleans up when all saves are fetched", function () {
       this.artworkCollection.syncSavedArtworks()
       this.artworkCollection.allFetched.should.be.false()
 
@@ -274,7 +274,7 @@ describe("ArtworkCollection", () => {
   })
 
   describe("#processRequests", () => {
-    xit("makes multiple requests determined by @requestSlugMax", function () {
+    it.skip("makes multiple requests determined by @requestSlugMax", function () {
       this.artworkCollection.artworkIdsToSync = sinon
         .stub()
         .returns(["moo", "foo", "bar"])

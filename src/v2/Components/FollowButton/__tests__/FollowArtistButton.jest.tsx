@@ -26,8 +26,8 @@ describe("FollowArtistButton", () => {
         <AnalyticsContext.Provider
           value={{
             contextPageOwnerId: "54321",
-            contextPageOwnerType: OwnerType.artwork,
             contextPageOwnerSlug: "andy-warhol-skull",
+            contextPageOwnerType: OwnerType.artwork,
           }}
         >
           <FollowArtistButton {...passedProps} />
@@ -41,15 +41,15 @@ describe("FollowArtistButton", () => {
     mediator = { trigger: jest.fn() }
     props = {
       artist: {
-        internalID: "12345",
-        slug: "damon-zucconi",
-        name: "Damon Zucconi",
-        is_followed: false,
         counts: { follows: 99 },
+        internalID: "12345",
+        is_followed: false,
+        name: "Damon Zucconi",
+        slug: "damon-zucconi",
       },
+      contextModule: ContextModule.artistsToFollowRail,
       relay: { environment: "" },
       tracking: { trackEvent: jest.fn() },
-      contextModule: ContextModule.artistsToFollowRail,
     }
   })
 

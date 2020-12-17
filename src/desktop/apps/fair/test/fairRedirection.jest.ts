@@ -10,9 +10,9 @@ describe("redirectFairRequests", () => {
     jest.resetModules()
 
     req = {
-      user: { hasLabFeature: jest.fn(() => false) },
       params: { id: "big-expo" },
       route: "/:id",
+      user: { hasLabFeature: jest.fn(() => false) },
     }
 
     res = {
@@ -94,8 +94,8 @@ describe("redirectFairRequests", () => {
   describe("when a fair is in DISABLE_FAIRS_UPDATE_SLUGS", () => {
     beforeEach(() => {
       jest.mock("../../../config", () => ({
-        ENABLE_FAIRS_UPDATE: true,
         DISABLE_FAIRS_UPDATE_SLUGS: "big-expo,foo-fair",
+        ENABLE_FAIRS_UPDATE: true,
       }))
     })
 
@@ -160,7 +160,7 @@ describe("redirectFairRequests", () => {
 
     it("redirects /:profileSlug/browse/artworks --> /fair/:fairSlug/artworks", () => {
       const { redirectFairRequests } = require("../fairRedirection")
-      req.params = { id: "big-expo", "0": "artworks" }
+      req.params = { "0": "artworks", id: "big-expo" }
       req.route = { path: "/:id/browse/*" }
       res.locals.tab = "browse"
 

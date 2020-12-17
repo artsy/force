@@ -21,6 +21,9 @@ describe("Details", () => {
       Component: props => (
         <DetailsFragmentContainer {...(props as any)} {...restProps} />
       ),
+      mockData: {
+        artwork: response,
+      } as Details_Test_QueryRawResponse,
       query: graphql`
         query Details_Test_Query @raw_response_type {
           artwork(id: "gerhard-richter-bagdad-ii-flow-p10-1") {
@@ -28,18 +31,15 @@ describe("Details", () => {
           }
         }
       `,
-      mockData: {
-        artwork: response,
-      } as Details_Test_QueryRawResponse,
     })
   }
 
   describe("in artist Notable Works rail", () => {
     it("removes artwork's partner and artist name metadata", async () => {
       props = {
-        hideSaleInfo: false,
-        hidePartnerName: true,
         hideArtistName: true,
+        hidePartnerName: true,
+        hideSaleInfo: false,
       }
       const wrapper = await getWrapper(artworkInAuction, props)
       const html = wrapper.html()
@@ -99,11 +99,11 @@ describe("Details", () => {
     it("shows Contact for price if sale_message equals the same", async () => {
       const data = {
         ...artworkInAuction,
-        sale_message: "Contact For Price",
         sale: {
           ...artworkInAuction.sale,
           is_auction: false,
         },
+        sale_message: "Contact For Price",
       }
       const wrapper = await getWrapper(data)
       const html = wrapper.html()
@@ -190,24 +190,22 @@ describe("Details", () => {
 })
 
 const artworkInAuction: Details_Test_QueryRawResponse["artwork"] = {
-  id: "opaque-artwork-id",
   artists: [
     {
-      id: "QXJ0aXN0OmdlcmhhcmQtcmljaHRlcg==",
       href: "/artist/gerhard-richter",
+      id: "QXJ0aXN0OmdlcmhhcmQtcmljaHRlcg==",
       name: "Gerhard Richter",
     },
   ],
-  href: "/artwork/gerhard-richter-tulips-p17-14",
-  date: "2017",
-  sale_message: "$450",
-  cultural_maker: null,
-  title: "Tulips (P17)",
   collecting_institution: "This Really Great Gallery",
+  cultural_maker: null,
+  date: "2017",
+  href: "/artwork/gerhard-richter-tulips-p17-14",
+  id: "opaque-artwork-id",
   partner: {
+    href: "/auction/forum-auctions",
     id: "opaque-partner-id",
     name: "Forum Auctions",
-    href: "/auction/forum-auctions",
   },
   sale: {
     id: "opaque-sale-id",
@@ -215,9 +213,11 @@ const artworkInAuction: Details_Test_QueryRawResponse["artwork"] = {
     is_closed: false,
   },
   sale_artwork: {
-    id: "opaque-sale-artwork-id",
-    highest_bid: { display: "$2,600" },
-    opening_bid: { display: "$2,400" },
     counts: { bidder_positions: 0 },
+    highest_bid: { display: "$2,600" },
+    id: "opaque-sale-artwork-id",
+    opening_bid: { display: "$2,400" },
   },
+  sale_message: "$450",
+  title: "Tulips (P17)",
 }

@@ -7,8 +7,8 @@ type CreditCardIdResult = UnpackPromise<
 >
 
 const goodResult: CreditCardIdResult = {
-  type: "success",
   creditCardId: "credit-card-id",
+  type: "success",
 }
 
 export const useGoodResult = () => {
@@ -24,16 +24,16 @@ export const useInvalidFormResult = () => {
 }
 
 const errorResult: CreditCardIdResult = {
-  type: "error",
   error: "This is the description of an error.",
+  type: "error",
 }
 export const useErrorResult = () => {
   PaymentPickerMock.getCreditCardId.mockResolvedValue(errorResult)
 }
 
 const internalErrorResult: CreditCardIdResult = {
-  type: "internal_error",
   error: "This is the description of an internal error.",
+  type: "internal_error",
 }
 export const useInternalErrorResult = () => {
   PaymentPickerMock.getCreditCardId.mockResolvedValue(internalErrorResult)

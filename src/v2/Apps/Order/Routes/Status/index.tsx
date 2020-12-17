@@ -53,16 +53,15 @@ export class StatusRoute extends Component<StatusProps> {
       case "SUBMITTED":
         return isOfferFlow
           ? {
-              title: "Your offer has been submitted",
               description: (
                 <>
                   The seller will respond to your offer by {stateExpiresAt}.
                   Keep in mind making an offer doesn’t guarantee you the work.
                 </>
               ),
+              title: "Your offer has been submitted",
             }
           : {
-              title: "Your order has been submitted",
               description: (
                 <>
                   Thank you for your purchase. You will receive a confirmation
@@ -72,10 +71,10 @@ export class StatusRoute extends Component<StatusProps> {
                   appreciate your understanding.
                 </>
               ),
+              title: "Your order has been submitted",
             }
       case "APPROVED":
         return {
-          title: isOfferFlow ? "Offer accepted" : "Your order is confirmed",
           description: isShip ? (
             <>
               Thank you for your purchase. You will be notified when the work
@@ -93,16 +92,17 @@ export class StatusRoute extends Component<StatusProps> {
               your understanding.
             </>
           ),
+          title: isOfferFlow ? "Offer accepted" : "Your order is confirmed",
         }
       case "FULFILLED": {
         return isShip
           ? {
-              title: "Your order has shipped",
               description: this.getFulfilmentDescription(),
+              title: "Your order has shipped",
             }
           : {
-              title: "Your order has been picked up",
               description: null,
+              title: "Your order has been picked up",
             }
       }
       case "CANCELED":
@@ -111,7 +111,6 @@ export class StatusRoute extends Component<StatusProps> {
           // stateReason === null for offer orders only if the order was rejected
           // after the offer was accepted.
           return {
-            title: "Your order was canceled and refunded",
             description: (
               <>
                 Please allow 5–7 business days for the refund to appear on your
@@ -120,6 +119,7 @@ export class StatusRoute extends Component<StatusProps> {
                 questions.
               </>
             ),
+            title: "Your order was canceled and refunded",
           }
         }
         // otherwise this was an offer order that was rejected before being
@@ -131,8 +131,8 @@ export class StatusRoute extends Component<StatusProps> {
         // (Aside from PENDING and ABANDONED)
         logger.error(`Unhandled order state: ${state}`)
         return {
-          title: "Your order",
           description: null,
+          title: "Your order",
         }
     }
   }
@@ -142,7 +142,6 @@ export class StatusRoute extends Component<StatusProps> {
     switch (stateReason) {
       case "buyer_rejected":
         return {
-          title: "Offer declined",
           description: (
             <>
               Thank you for your response. The seller will be informed of your
@@ -155,6 +154,7 @@ export class StatusRoute extends Component<StatusProps> {
             </>
           ),
           showTransactionSummary: false,
+          title: "Offer declined",
         }
       case "seller_rejected_offer_too_low":
       case "seller_rejected_shipping_unavailable":
@@ -162,7 +162,6 @@ export class StatusRoute extends Component<StatusProps> {
       case "seller_rejected_artwork_unavailable":
       case "seller_rejected_other":
         return {
-          title: "Offer declined",
           description: (
             <>
               Sorry, the seller declined your offer and has ended the
@@ -170,18 +169,18 @@ export class StatusRoute extends Component<StatusProps> {
             </>
           ),
           showTransactionSummary: false,
+          title: "Offer declined",
         }
       case "buyer_lapsed":
         return {
-          title: "Offer expired",
           description: (
             <>The seller’s offer expired because you didn’t respond in time.</>
           ),
           showTransactionSummary: false,
+          title: "Offer expired",
         }
       case "seller_lapsed":
         return {
-          title: "Offer expired",
           description: (
             <>
               Your offer expired because the seller didn’t respond to your offer
@@ -189,15 +188,16 @@ export class StatusRoute extends Component<StatusProps> {
             </>
           ),
           showTransactionSummary: false,
+          title: "Offer expired",
         }
       default:
         // This should not happen. Check the cancel reasons are all accounted for:
         // https://github.com/artsy/exchange/blob/master/app/models/order.rb
         logger.error(`Unhandled cancellation reason: ${stateReason}`)
         return {
-          title: "Offer declined",
           description: null,
           showTransactionSummary: false,
+          title: "Offer declined",
         }
     }
   }

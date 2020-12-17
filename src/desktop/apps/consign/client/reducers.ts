@@ -56,11 +56,11 @@ const initialState = {
     edition_size: 0,
     height: "",
     location_city: "",
-    location_state: "",
     location_country: "",
+    location_state: "",
     medium: "",
-    minimum_price_yesno: false,
     minimum_price_dollars: "",
+    minimum_price_yesno: false,
     phone: "",
     provenance: "",
     signature: false,
@@ -68,27 +68,41 @@ const initialState = {
     width: "",
     year: "",
   },
-  isMobile: false,
   isLoading: false,
+  isMobile: false,
   locationAutocompleteFrozen: false,
   locationAutocompleteSuggestions: [],
   locationAutocompleteValue: "",
-  notConsigningArtist: false,
-  processingImages: [],
-  progressBars: {},
-  redirectOnAuth: true,
-  resetPasswordSuccess: false,
-  steps: [],
-  submission: sd.SUBMISSION || {},
-  submissionIdFromServer: sd.SUBMISSION_ID,
-  uploadedImages: [],
-  user: sd.CURRENT_USER,
-
   /*
     Tracking parameters from Reaction
   */
-  contextPath: queryParams.contextPath, // Typically set if a user has entered a consignment from an artist /consign microfunnel page.
-  subject: queryParams.subject, // The subject of the event
+contextPath: queryParams.contextPath,
+  
+notConsigningArtist: false,
+  
+processingImages: [],
+  
+progressBars: {},
+  
+redirectOnAuth: true,
+  
+resetPasswordSuccess: false,
+  
+steps: [],
+  
+// Typically set if a user has entered a consignment from an artist /consign microfunnel page.
+subject: queryParams.subject,
+  
+
+submission: sd.SUBMISSION || {},
+  
+
+submissionIdFromServer: sd.SUBMISSION_ID,
+
+  
+  
+uploadedImages: [], 
+  user: sd.CURRENT_USER, // The subject of the event
 }
 
 function submissionFlow(state = initialState, action) {
@@ -460,10 +474,10 @@ function submissionFlow(state = initialState, action) {
 }
 
 export default combineReducers({
+  form: formReducer,
+  router: routerReducer,
   submissionFlow: composeReducers(
     responsiveWindowReducer,
     submissionFlow
   ) as any,
-  router: routerReducer,
-  form: formReducer,
 }) as any

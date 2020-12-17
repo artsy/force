@@ -26,12 +26,12 @@ export class CurrentEvent extends Component<CurrentEventProps> {
 export class LargeCurrentEvent extends Component<CurrentEventProps> {
   @track<CurrentEventProps>(props => ({
     action_type: Schema.ActionType.Click,
+    destination_path: props.artist.currentEvent.href,
     subject:
       props.artist.currentEvent.event.__typename === "Sale"
         ? // TODO: These are not action names!
           Schema.ActionName.InSale
         : Schema.ActionName.InShow,
-    destination_path: props.artist.currentEvent.href,
   }))
   handleClick() {
     // no-op

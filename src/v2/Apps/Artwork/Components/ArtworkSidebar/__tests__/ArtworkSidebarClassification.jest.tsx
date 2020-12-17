@@ -12,15 +12,18 @@ describe("ArtworkSidebarClassification", () => {
 
   const getWrapper = async (
     response: ArtworkSidebarClassification_Test_QueryRawResponse["artwork"] = {
-      id: "opaque-artwork-id",
       attribution_class: {
         id: "opaque-attribution-class-id",
         short_description: "This is a unique work",
       },
+      id: "opaque-artwork-id",
     }
   ) => {
     return renderRelayTree({
       Component: ArtworkSidebarClassificationFragmentContainer,
+      mockData: {
+        artwork: response,
+      } as ArtworkSidebarClassification_Test_QueryRawResponse,
       query: graphql`
         query ArtworkSidebarClassification_Test_Query @raw_response_type {
           artwork(id: "josef-albers-homage-to-the-square-85") {
@@ -28,9 +31,6 @@ describe("ArtworkSidebarClassification", () => {
           }
         }
       `,
-      mockData: {
-        artwork: response,
-      } as ArtworkSidebarClassification_Test_QueryRawResponse,
     })
   }
 
@@ -75,8 +75,8 @@ describe("ArtworkSidebarClassification", () => {
   describe("for artwork without classification", () => {
     beforeAll(async () => {
       wrapper = await getWrapper({
-        id: "opaque-artwork-id",
         attribution_class: null,
+        id: "opaque-artwork-id",
       })
     })
 

@@ -16,8 +16,8 @@ export class ArticleLayout extends React.Component<AppProps> {
     if (isSuper) {
       // @ts-ignore
       const _superArticleView = new SuperArticleView({
-        el: document.querySelector("body"),
         article: new ArticleModel(article),
+        el: document.querySelector("body"),
       })
     }
 
@@ -39,13 +39,13 @@ export class ArticleLayout extends React.Component<AppProps> {
 
   showAuthModal() {
     handleScrollingAuthModal({
-      intent: Intent.viewEditorial,
-      copy: "Sign up for the best stories in art and visual culture",
-      destination: location.href,
       afterSignUpAction: {
         action: "editorialSignup",
       },
       contextModule: ContextModule.popUpModal,
+      copy: "Sign up for the best stories in art and visual culture",
+      destination: location.href,
+      intent: Intent.viewEditorial,
     })
   }
 

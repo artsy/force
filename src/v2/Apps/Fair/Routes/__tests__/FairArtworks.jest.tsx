@@ -37,6 +37,7 @@ describe("FairArtworks", () => {
           </MockBoot>
         )
       },
+      mockData: response,
       query: graphql`
         query FairArtworks_Query($slug: String!) @raw_response_type {
           fair(id: $slug) {
@@ -45,7 +46,6 @@ describe("FairArtworks", () => {
         }
       `,
       variables: { slug: "miart-2020" },
-      mockData: response,
     })
   }
 
@@ -66,121 +66,100 @@ describe("FairArtworks", () => {
 
 const FAIR_ARTWORKS_FIXTURE: FairArtworks_QueryRawResponse = {
   fair: {
-    id: "xxx",
-    slug: "cool-fair",
-    internalID: "bson-fair",
     filtered_artworks: {
-      id: "filteredartworksabc123",
+      aggregations: [
+        {
+          counts: [],
+          slice: "INSTITUTION",
+        },
+        {
+          counts: [
+            {
+              count: 22222,
+              name: "Sculpture",
+              value: "sculpture",
+            },
+          ],
+          slice: "MEDIUM",
+        },
+        {
+          counts: [
+            {
+              count: 1,
+              name: "2020",
+              value: "2020",
+            },
+          ],
+          slice: "MAJOR_PERIOD",
+        },
+        {
+          counts: [
+            {
+              count: 4,
+              name: "Important Gallery",
+              value: "important-gallery",
+            },
+          ],
+          slice: "GALLERY",
+        },
+        {
+          counts: [
+            {
+              count: 4,
+              name: "Catty Artist",
+              value: "catty-artst",
+            },
+          ],
+          slice: "ARTIST",
+        },
+      ],
       counts: {
         followedArtists: 10,
       },
-      aggregations: [
-        {
-          slice: "INSTITUTION",
-          counts: [],
-        },
-        {
-          slice: "MEDIUM",
-          counts: [
-            {
-              value: "sculpture",
-              name: "Sculpture",
-              count: 22222,
-            },
-          ],
-        },
-        {
-          slice: "MAJOR_PERIOD",
-          counts: [
-            {
-              value: "2020",
-              name: "2020",
-              count: 1,
-            },
-          ],
-        },
-        {
-          slice: "GALLERY",
-          counts: [
-            {
-              value: "important-gallery",
-              name: "Important Gallery",
-              count: 4,
-            },
-          ],
-        },
-        {
-          slice: "ARTIST",
-          counts: [
-            {
-              value: "catty-artst",
-              name: "Catty Artist",
-              count: 4,
-            },
-          ],
-        },
-      ],
-      pageInfo: {
-        hasNextPage: true,
-        endCursor: "endCursor",
-      },
-      pageCursors: {
-        around: [
-          {
-            cursor: "pageOneCursor",
-            page: 1,
-            isCurrent: true,
-          },
-          {
-            cursor: "pageTwoCursor",
-            page: 2,
-            isCurrent: false,
-          },
-        ],
-        first: null,
-        last: null,
-        previous: null,
-      },
       edges: [
         {
+          id: "nodeidabc",
           node: {
-            id: "ggg123",
-            slug: "yayoi-kusama-pumpkin-2222222222222222",
             href: "/artwork/yayoi-kusama-pumpkin-2222222222222222",
-            internalID: "zzz123",
+            id: "ggg123",
             image: {
               aspect_ratio: 1.27,
               placeholder: "78.76427829698858%",
               url: "https://test.artsy.net/image",
             },
-            title: "Pumpkin",
             image_title: "Yayoi Kusama, ‘Pumpkin’, 2222",
+            slug: "yayoi-kusama-pumpkin-2222222222222222",
             date: "2020",
-            sale_message: "Contact For Price",
+            internalID: "zzz123",
             cultural_maker: null,
+            title: "Pumpkin",
             artists: [
               {
-                id: "artistabc123",
                 href: "/artist/yayoi-kusama",
+                id: "artistabc123",
                 name: "Yayoi Kusama",
               },
             ],
             collecting_institution: null,
+            sale_message: "Contact For Price",
+            is_inquireable: true,
             partner: {
-              name: "Important Auction House",
               href: "/auction/important-auction-house",
               id: "ahabc123",
+              name: "Important Auction House",
               type: "Auction House",
             },
+            is_biddable: true,
             sale: {
               is_auction: true,
-              is_closed: false,
               id: "saleabc123",
+              is_closed: false,
               is_live_open: false,
               is_open: true,
-              is_preview: false,
               display_timely_at: "live in 3d",
+              is_preview: false,
             },
+            is_saved: false,
             sale_artwork: {
               counts: {
                 bidder_positions: 0,
@@ -193,51 +172,72 @@ const FAIR_ARTWORKS_FIXTURE: FairArtworks_QueryRawResponse = {
               },
               id: "idabc123",
             },
-            is_inquireable: true,
-            is_saved: false,
-            is_biddable: true,
           },
-          id: "nodeidabc",
         },
         {
+          id: "nodeid123",
           node: {
-            id: "abc123",
-            slug: "yayoi-kusama-pumpkin-33333333333333333",
             href: "/artwork/yayoi-kusama-pumpkin-33333333333333333",
-            internalID: "xxx123",
+            id: "abc123",
             image: {
               aspect_ratio: 1.43,
               placeholder: "69.82024597918638%",
               url: "https://test.artsy.net/image2",
             },
-            title: "Pumpkin",
             image_title: "Yayoi Kusama, ‘Pumpkin’, 3333",
+            slug: "yayoi-kusama-pumpkin-33333333333333333",
             date: "2020",
-            sale_message: "Contact For Price",
+            internalID: "xxx123",
             cultural_maker: null,
+            title: "Pumpkin",
             artists: [
               {
-                id: "artistabc123",
                 href: "/artist/yayoi-kusama",
+                id: "artistabc123",
                 name: "Yayoi Kusama",
               },
             ],
             collecting_institution: null,
+            sale_message: "Contact For Price",
+            is_inquireable: true,
             partner: {
-              name: "Important Gallery",
               href: "/important-gallery",
               id: "galleryabc123",
+              name: "Important Gallery",
               type: "Gallery",
             },
-            sale: null,
-            sale_artwork: null,
-            is_inquireable: true,
-            is_saved: false,
             is_biddable: false,
+            sale: null,
+            is_saved: false,
+            sale_artwork: null,
           },
-          id: "nodeid123",
         },
       ],
+      id: "filteredartworksabc123",
+      pageCursors: {
+        around: [
+          {
+            cursor: "pageOneCursor",
+            isCurrent: true,
+            page: 1,
+          },
+          {
+            cursor: "pageTwoCursor",
+            isCurrent: false,
+            page: 2,
+          },
+        ],
+        first: null,
+        last: null,
+        previous: null,
+      },
+      pageInfo: {
+        endCursor: "endCursor",
+        hasNextPage: true,
+      },
     },
+    id: "xxx",
+    internalID: "bson-fair",
+    slug: "cool-fair",
   },
 }

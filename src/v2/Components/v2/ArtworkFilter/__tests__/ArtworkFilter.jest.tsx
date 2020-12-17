@@ -22,8 +22,8 @@ describe("ArtworkFilter", () => {
       Component: props => (
         <ArtworkFilter {...(props as any)} {...passedProps} />
       ),
-      query: ArtworkQueryFilter,
       mockData: ArtworkFilterFixture,
+      query: ArtworkQueryFilter,
       wrapper: children => {
         return <MockBoot breakpoint={breakpoint}>{children}</MockBoot>
       },
@@ -67,11 +67,11 @@ describe("ArtworkFilter", () => {
 
       expect(onFilterClick).toHaveBeenCalledWith("acquireable", true, {
         acquireable: true,
+        artistIDs: [],
         majorPeriods: [],
         page: 1,
         sizes: [],
         sort: "-decayed_merch",
-        artistIDs: [],
       })
     })
 
@@ -101,11 +101,11 @@ describe("ArtworkFilter", () => {
 
       expect(onChange).toHaveBeenCalledWith({
         acquireable: true,
+        artistIDs: [],
         majorPeriods: [],
         page: 1,
         sizes: [],
         sort: "-decayed_merch",
-        artistIDs: [],
       })
     })
 
@@ -119,19 +119,19 @@ describe("ArtworkFilter", () => {
       const wrapper = await getWrapper("lg", {
         onChange,
         sortOptions: [
-          { value: "-decayed_merch", text: "Default" },
-          { value: "-partner_updated_at", text: "Recently updated" },
+          { text: "Default", value: "-decayed_merch" },
+          { text: "Recently updated", value: "-partner_updated_at" },
         ],
       })
 
       wrapper.find("SelectSmall").find("option").at(1).simulate("change")
 
       expect(onChange).toHaveBeenCalledWith({
+        artistIDs: [],
         majorPeriods: [],
         page: 1,
         sizes: [],
         sort: "-partner_updated_at",
-        artistIDs: [],
       })
     })
 
@@ -144,18 +144,18 @@ describe("ArtworkFilter", () => {
 
       expect(trackEvent).toHaveBeenCalledWith({
         action: "commercialFilterParamsChanged",
+        changed: { acquireable: true },
         context_module: "artworkGrid",
         context_owner_id: undefined,
         context_owner_slug: undefined,
         context_owner_type: "home",
-        changed: { acquireable: true },
         current: {
           acquireable: true,
+          artistIDs: [],
           majorPeriods: [],
           page: 1,
           sizes: [],
           sort: "-decayed_merch",
-          artistIDs: [],
         },
       })
     })

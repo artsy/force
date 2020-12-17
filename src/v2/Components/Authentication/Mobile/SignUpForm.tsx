@@ -49,12 +49,12 @@ class TrackedMobileSignUpForm extends Component<
   }
 
   @track((props: { contextModule: string; intent: string }, state, args) => ({
-    action_type: Schema.ActionType.Click,
     action_name: currentStepActionName[args[0]],
+    action_type: Schema.ActionType.Click,
     contextModule: args[1],
     flow: "auth",
-    subject: "clicked next button",
     intent: props.intent,
+    subject: "clicked next button",
   }))
   trackNextClick(currentStepIndex, contextModule) {
     // no op
@@ -89,10 +89,10 @@ class TrackedMobileSignUpForm extends Component<
         validationSchema={MobileSignUpValidator.email}
         onSubmit={(values, actions) =>
           checkEmail({
-            relayEnvironment: this.props.relayEnvironment,
-            values,
             actions,
+            relayEnvironment: this.props.relayEnvironment,
             shouldExist: false,
+            values,
           })
         }
       >

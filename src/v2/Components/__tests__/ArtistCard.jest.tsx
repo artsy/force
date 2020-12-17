@@ -29,20 +29,20 @@ describe("ArtistCard", () => {
   beforeEach(() => {
     mediator = { trigger: jest.fn() }
     props = {
-      contextModule: ContextModule.artistsToFollowRail,
       artist: {
+        " $fragmentRefs": null,
+        " $refType": null,
+        formatted_nationality_and_birthday: "American, b. 1979",
+        href: "/artist/francesca-dimattio",
         image: {
           cropped: {
             url: "https://picsum.photos/110/110/?random",
           },
         },
-        href: "/artist/francesca-dimattio",
         name: "Francesca DiMattio",
-        formatted_nationality_and_birthday: "American, b. 1979",
         slug: "percy",
-        " $fragmentRefs": null,
-        " $refType": null,
       },
+      contextModule: ContextModule.artistsToFollowRail,
     }
     window.matchMedia = undefined // Immediately set matching media query in MockBoot
   })
@@ -69,15 +69,15 @@ describe("ArtistCard", () => {
     const wrapper = getWrapper("lg")
     wrapper.find(FollowArtistButton).first().simulate("click")
     expect(mediator.trigger).toBeCalledWith("open:auth", {
-      mode: "signup",
-      contextModule: "artistsToFollowRail",
-      copy: "Sign up to follow Francesca DiMattio",
-      intent: "followArtist",
       afterSignUpAction: {
         action: "follow",
         kind: "artist",
         objectId: "percy",
       },
+      contextModule: "artistsToFollowRail",
+      copy: "Sign up to follow Francesca DiMattio",
+      intent: "followArtist",
+      mode: "signup",
     })
   })
 })

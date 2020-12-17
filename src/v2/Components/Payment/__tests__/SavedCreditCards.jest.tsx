@@ -27,23 +27,23 @@ describe("SavedCreditCards", () => {
     console.error = jest.fn()
 
     testProps = {
-      me: { id: "1234" },
       creditCards: [
         {
-          internalID: "cc-db-id-1224",
           brand: "Visa",
-          lastDigits: "1224",
-          expirationYear: "2020",
           expirationMonth: "05",
+          expirationYear: "2020",
+          internalID: "cc-db-id-1224",
+          lastDigits: "1224",
         },
         {
-          internalID: "cc-db-id-2345",
           brand: "Visa",
-          lastDigits: "2345",
-          expirationYear: "2024",
           expirationMonth: "07",
+          expirationYear: "2024",
+          internalID: "cc-db-id-2345",
+          lastDigits: "2345",
         },
       ],
+      me: { id: "1234" },
       relay: { environment: {} } as RelayProp,
       stripe: jest.fn(),
     }

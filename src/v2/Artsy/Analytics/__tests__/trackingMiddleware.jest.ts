@@ -28,10 +28,10 @@ describe("trackingMiddleware", () => {
 
   it("tracks pageviews", () => {
     trackingMiddleware()(store)(noop)({
-      type: ActionTypes.UPDATE_LOCATION,
       payload: {
         pathname: "/foo",
       },
+      type: ActionTypes.UPDATE_LOCATION,
     })
 
     expect(global.analytics.page).toBeCalledWith(
@@ -45,10 +45,10 @@ describe("trackingMiddleware", () => {
 
   it("does not track pageviews for other events", () => {
     trackingMiddleware()(store)(noop)({
-      type: ActionTypes.PUSH,
       payload: {
         pathname: "/bar",
       },
+      type: ActionTypes.PUSH,
     })
     expect(global.analytics.page).not.toBeCalled()
   })
@@ -58,10 +58,10 @@ describe("trackingMiddleware", () => {
       trackingMiddleware({
         excludePaths: ["/artwork(.*)"],
       })(store)(noop)({
-        type: ActionTypes.UPDATE_LOCATION,
         payload: {
           pathname: "/artwork/some-id",
         },
+        type: ActionTypes.UPDATE_LOCATION,
       })
       expect(global.analytics.page).not.toBeCalled()
     })
@@ -70,10 +70,10 @@ describe("trackingMiddleware", () => {
       trackingMiddleware({
         excludePaths: ["/artwork/:slug"],
       })(store)(noop)({
-        type: ActionTypes.UPDATE_LOCATION,
         payload: {
           pathname: "/artwork/some-id",
         },
+        type: ActionTypes.UPDATE_LOCATION,
       })
       expect(global.analytics.page).not.toBeCalled()
     })
@@ -82,10 +82,10 @@ describe("trackingMiddleware", () => {
       trackingMiddleware({
         excludePaths: ["/artwork/:slug/:segment*"],
       })(store)(noop)({
-        type: ActionTypes.UPDATE_LOCATION,
         payload: {
           pathname: "/artwork/some-id/foo",
         },
+        type: ActionTypes.UPDATE_LOCATION,
       })
       expect(global.analytics.page).not.toBeCalled()
     })
@@ -94,10 +94,10 @@ describe("trackingMiddleware", () => {
       trackingMiddleware({
         excludePaths: ["/auction/:saleID/bid(2)?/:artworkID"],
       })(store)(noop)({
-        type: ActionTypes.UPDATE_LOCATION,
         payload: {
           pathname: "/auction/some-id/bid2/some-artwork",
         },
+        type: ActionTypes.UPDATE_LOCATION,
       })
       expect(global.analytics.page).not.toBeCalled()
     })
@@ -123,10 +123,10 @@ describe("trackingMiddleware", () => {
             }
           },
         })(noop)({
-          type: ActionTypes.UPDATE_LOCATION,
           payload: {
             pathname: pathToTest,
           },
+          type: ActionTypes.UPDATE_LOCATION,
         })
 
         expect(global.analytics.page).toBeCalledWith(

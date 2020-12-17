@@ -12,8 +12,8 @@ export function getUser(user: User | null | undefined): User | null {
 
     if (id && accessToken) {
       _user = {
-        id,
         accessToken,
+        id,
         type,
       }
 

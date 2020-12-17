@@ -54,8 +54,8 @@ export class StepMarker extends Component<StepMarkerProps, StepMarkerState> {
       return { ...step, isActive, isComplete }
     })
     return {
-      steps: stepState,
       currentStepIndex,
+      steps: stepState,
     }
   }
 

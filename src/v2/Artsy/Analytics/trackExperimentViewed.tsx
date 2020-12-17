@@ -13,9 +13,9 @@ export const trackExperimentViewed = (name: string, trackingData) => {
       {
         experiment_id: name,
         experiment_name: name,
+        nonInteraction: 1,
         variation_id: variation,
         variation_name: variation,
-        nonInteraction: 1,
       },
       {
         page: {

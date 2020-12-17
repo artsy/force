@@ -60,8 +60,8 @@ export const FeaturedCollectionEntity: React.FC<FeaturedCollectionEntityProps> =
 }) => {
   const { description, price_guidance, slug, id, thumbnail, title } = member
   const formattedPrice = currency(price_guidance, {
-    separator: ",",
     precision: 0,
+    separator: ",",
   }).format()
 
   const { trackEvent } = useTracking()
@@ -91,10 +91,10 @@ export const FeaturedCollectionEntity: React.FC<FeaturedCollectionEntityProps> =
         <Flex height={["190px", "190px", "280px", "280px"]}>
           <FeaturedImage
             src={resize(thumbnail, {
-              width: 500,
+              convert_to: "jpg",
               height: 500,
               quality: 80,
-              convert_to: "jpg",
+              width: 500,
             })}
           />
         </Flex>

@@ -18,6 +18,7 @@ describe("ArtworkBanner", () => {
   ) => {
     return await renderRelayTree({
       Component: ArtworkBannerFragmentContainer,
+      mockData: { artwork: response } as ArtworkBanner_Test_QueryRawResponse,
       query: graphql`
         query ArtworkBanner_Test_Query @raw_response_type {
           artwork(id: "richard-anuszkiewicz-lino-yellow-318") {
@@ -25,7 +26,6 @@ describe("ArtworkBanner", () => {
           }
         }
       `,
-      mockData: { artwork: response } as ArtworkBanner_Test_QueryRawResponse,
     })
   }
 

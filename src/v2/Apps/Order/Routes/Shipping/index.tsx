@@ -80,10 +80,6 @@ const logger = createLogger("Order/Routes/Shipping/index.tsx")
 @track()
 export class ShippingRoute extends Component<ShippingProps, ShippingState> {
   state: ShippingState = {
-    shippingOption: (this.props.order.requestedFulfillment &&
-    this.props.order.requestedFulfillment.__typename !== "CommerceShip"
-      ? "PICKUP"
-      : "SHIP") as CommerceOrderFulfillmentTypeEnum,
     address: this.startingAddress,
     addressErrors: {},
     addressTouched: {},
@@ -95,6 +91,10 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
         : "",
     phoneNumberError: "",
     phoneNumberTouched: false,
+    shippingOption: (this.props.order.requestedFulfillment &&
+    this.props.order.requestedFulfillment.__typename !== "CommerceShip"
+      ? "PICKUP"
+      : "SHIP") as CommerceOrderFulfillmentTypeEnum,
   }
 
   get startingAddress() {
@@ -111,22 +111,21 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
 
   get touchedAddress() {
     return {
-      name: true,
-      country: true,
-      postalCode: true,
       addressLine1: true,
       addressLine2: true,
       city: true,
-      region: true,
+      country: true,
+      name: true,
       phoneNumber: true,
+      postalCode: true,
+      region: true,
     }
   }
 
   setShipping(variables: ShippingOrderAddressUpdateMutation["variables"]) {
     return this.props.commitMutation<ShippingOrderAddressUpdateMutation>({
-      variables,
       // TODO: Inputs to the mutation might have changed case of the keys!
-      mutation: graphql`
+mutation: graphql`
         mutation ShippingOrderAddressUpdateMutation(
           $input: CommerceSetShippingInput!
         ) {
@@ -163,6 +162,8 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
           }
         }
       `,
+      
+      variables,
     })
   }
 
@@ -212,10 +213,10 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
       const orderOrError = (
         await this.setShipping({
           input: {
-            id: this.props.order.internalID,
             fulfillmentType: shippingOption,
-            shipping: address,
+            id: this.props.order.internalID,
             phoneNumber,
+            shipping: address,
           },
         })
       ).commerceSetShipping.orderOrError
@@ -241,17 +242,17 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
       error.code === "missing_postal_code"
     ) {
       this.props.dialog.showErrorDialog({
-        title: "Invalid address",
         message:
           "There was an error processing your address. Please review and try again.",
+        title: "Invalid address",
       })
     } else if (
       error.code === "unsupported_shipping_location" &&
       parsedData.failure_code === "domestic_shipping_only"
     ) {
       this.props.dialog.showErrorDialog({
-        title: "Can't ship to that address",
         message: "This work can only be shipped domestically.",
+        title: "Can't ship to that address",
       })
     } else {
       this.props.dialog.showErrorDialog()
@@ -262,12 +263,12 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
     const { name, addressLine1, city, region, country, postalCode } = address
     const usOrCanada = country === "US" || country === "CA"
     const errors = {
-      name: validatePresence(name),
       addressLine1: validatePresence(addressLine1),
       city: validatePresence(city),
-      region: usOrCanada && validatePresence(region),
       country: validatePresence(country),
+      name: validatePresence(name),
       postalCode: usOrCanada && validatePresence(postalCode),
+      region: usOrCanada && validatePresence(region),
     }
     const hasErrors = Object.keys(errors).filter(key => errors[key]).length > 0
 
@@ -313,11 +314,11 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
 
   @track((props, state, args) => ({
     action_type: Schema.ActionType.Click,
+    flow: "buy now",
     subject:
       args[0] === "SHIP"
         ? Schema.Subject.BNMOProvideShipping
         : Schema.Subject.BNMOArrangePickup,
-    flow: "buy now",
     type: "button",
   }))
   onSelectShippingOption(shippingOption: CommerceOrderFulfillmentTypeEnum) {

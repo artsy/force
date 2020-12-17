@@ -65,7 +65,7 @@ export const AuctionRegistrationModal: React.FC<Props> = ({
 
   function handleSubmit(acceptedTerms: boolean) {
     setSubmitting(true)
-    onSubmit({ setSubmitting, setError, auction, acceptedTerms })
+    onSubmit({ acceptedTerms, auction, setError, setSubmitting })
   }
 
   function validateAndSubmit() {

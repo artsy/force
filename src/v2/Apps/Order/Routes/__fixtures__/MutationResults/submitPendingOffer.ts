@@ -13,9 +13,9 @@ export const submitPendingOfferFailed = {
   commerceSubmitPendingOffer: {
     orderOrError: {
       error: {
-        type: "validation",
         code: "cannot_accept_offer",
         data: null,
+        type: "validation",
       },
     },
   },
@@ -25,9 +25,9 @@ export const insufficientInventoryResponse = {
   commerceSubmitPendingOffer: {
     orderOrError: {
       error: {
-        type: "validation",
         code: "insufficient_inventory",
         data: null,
+        type: "validation",
       },
     },
   },

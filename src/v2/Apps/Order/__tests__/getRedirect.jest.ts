@@ -9,9 +9,9 @@ describe("getRedirect", () => {
     children: Array<RedirectRecord<{}>>
   ): RedirectRecord<{}> {
     return {
+      children: [...children],
       path: "",
       rules: [aNonMatchingPredicate],
-      children: [...children],
     }
   }
 
@@ -42,14 +42,14 @@ describe("getRedirect", () => {
       return null
     }
     const rule: RedirectRecord<{}> = {
-      path: "",
-      rules: [isData],
       children: [
         {
           path: "hello",
           rules: [isData],
         },
       ],
+      path: "",
+      rules: [isData],
     }
 
     getRedirect(rule, "/hello", data)

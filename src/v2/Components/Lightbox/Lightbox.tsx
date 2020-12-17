@@ -80,28 +80,28 @@ class LightboxComponent extends React.Component<LightboxProps, LightboxState> {
   }
 
   state = {
-    element: null,
-    viewer: null,
-    shown: false,
     activityTimer: null,
-    showZoomSlider: true,
     deepZoomRef: React.createRef(),
+    element: null,
+    promisedDragon: null,
+    showZoomSlider: true,
+    shown: false,
     slider: {
-      min: 0,
       max: 1,
+      min: 0,
       step: 0.001,
       value: 0,
     },
-    promisedDragon: null,
+    viewer: null,
   }
 
   @track({
-    type: Schema.Type.Button,
-    flow: Schema.Flow.ArtworkZoom,
     action_type: Schema.ActionType.Click,
+    flow: Schema.Flow.ArtworkZoom,
+    type: Schema.Type.Button,
   })
   show(_event) {
-    this.setState({ shown: true, showZoomSlider: true })
+    this.setState({ showZoomSlider: true, shown: true })
   }
 
   hide = () => {
@@ -123,12 +123,12 @@ class LightboxComponent extends React.Component<LightboxProps, LightboxState> {
   detectActivity = throttle(() => {
     clearTimeout(this.state.activityTimer)
     this.setState({
-      showZoomSlider: true,
       activityTimer: setTimeout(() => {
         this.setState({
           showZoomSlider: false,
         })
       }, HIDE_ZOOM_SLIDER_AFTER),
+      showZoomSlider: true,
     })
   }, 500) as () => void
 
@@ -150,33 +150,33 @@ class LightboxComponent extends React.Component<LightboxProps, LightboxState> {
   initSeaDragon = () => {
     this.state.promisedDragon.then(OpenSeaDragon => {
       const viewer = OpenSeaDragon({
-        element: this.state.deepZoomRef.current,
-
-        debugMode: false,
-        showNavigationControl: false,
-        immediateRender: false,
-        useCanvas: true,
-        constrainDuringPan: false,
-        blendTime: 0.0,
         animationTime: 1.5,
-        springStiffness: 15.0,
-        maxZoomPixelRatio: 1.0,
-        minZoomImageRatio: 0.9,
-        zoomPerClick: ZOOM_PER_CLICK,
-        zoomPerScroll: 1.4,
-        clickDistThreshold: 5,
-        clickTimeThreshold: 300,
-        visibilityRatio: 1,
-        tileSources: this.props.deepZoom,
 
+        blendTime: 0.0,
+        constrainDuringPan: false,
+        clickDistThreshold: 5,
+        debugMode: false,
+        clickTimeThreshold: 300,
+        element: this.state.deepZoomRef.current,
+        immediateRender: false,
+        maxZoomPixelRatio: 1.0,
         gestureSettingsTouch: {
-          scrolltozoom: false,
           clicktozoom: true,
-          pinchtozoom: true,
           flickenabled: true,
+          scrolltozoom: false,
           flickminspeed: 20,
+          pinchtozoom: true,
           flickmomentum: 0.4,
         },
+        minZoomImageRatio: 0.9,
+        showNavigationControl: false,
+        springStiffness: 15.0,
+        tileSources: this.props.deepZoom,
+        useCanvas: true,
+        visibilityRatio: 1,
+        zoomPerClick: ZOOM_PER_CLICK,
+
+        zoomPerScroll: 1.4,
       })
       document.addEventListener(KEYBOARD_EVENT, this.handleKeyPress)
       this.setState({
@@ -194,8 +194,8 @@ class LightboxComponent extends React.Component<LightboxProps, LightboxState> {
     this.setState({
       slider: {
         ...this.state.slider,
-        min: this.state.viewer.viewport.getMinZoom(),
         max: this.state.viewer.viewport.getMaxZoom(),
+        min: this.state.viewer.viewport.getMinZoom(),
         value: this.state.viewer.viewport.getZoom(),
       },
     })
@@ -341,8 +341,8 @@ class LightboxComponent extends React.Component<LightboxProps, LightboxState> {
         this.setState({
           slider: {
             ...this.state.slider,
-            min: this.state.viewer.viewport.getMinZoom(),
             max: this.state.viewer.viewport.getMaxZoom(),
+            min: this.state.viewer.viewport.getMinZoom(),
             value: this.state.viewer.viewport.getHomeZoom(),
           },
         })

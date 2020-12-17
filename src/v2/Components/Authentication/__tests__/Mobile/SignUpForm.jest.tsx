@@ -25,9 +25,9 @@ describe("MobileSignUpForm", () => {
 
   beforeEach(() => {
     props = {
-      values: {},
       handleSubmit: jest.fn(),
       handleTypeChange: jest.fn(),
+      values: {},
     }
     window.grecaptcha.execute.mockClear()
   })
@@ -100,10 +100,10 @@ describe("MobileSignUpForm", () => {
 
           setTimeout(() => {
             expect(props.handleSubmit.mock.calls[0][0]).toEqual({
-              email: "email@email.com",
               accepted_terms_of_service: true,
-              password: "password",
+              email: "email@email.com",
               name: "User Name",
+              password: "password",
               recaptcha_token: "recaptcha-token",
             })
             done()
@@ -196,10 +196,10 @@ describe("MobileSignUpForm", () => {
     wrapper.update()
 
     expect(props.handleSubmit.mock.calls[0][0]).toEqual({
-      email: "email@email.com",
       accepted_terms_of_service: true,
-      password: "password",
+      email: "email@email.com",
       name: "User Name",
+      password: "password",
       recaptcha_token: "recaptcha-token",
     })
     expect(wrapper.html()).toMatch("some password error")

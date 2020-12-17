@@ -24,18 +24,18 @@ describe("SearchResultsArtworks", () => {
         edges: [
           {
             node: {
-              name: "Catty Artist",
-              imageUrl: "",
-              href: "/artist/catty-artist",
               bio: null,
+              href: "/artist/catty-artist",
+              imageUrl: "",
+              name: "Catty Artist",
             },
           },
         ],
-        pageInfo: {
-          hasNextPage: true,
-        },
         pageCursors: {
           around: [],
+        },
+        pageInfo: {
+          hasNextPage: true,
         },
       },
     },
@@ -46,11 +46,11 @@ describe("SearchResultsArtworks", () => {
     viewer: {
       searchConnection: {
         edges: [],
-        pageInfo: {
-          hasNextPage: true,
-        },
         pageCursors: {
           around: [],
+        },
+        pageInfo: {
+          hasNextPage: true,
         },
       },
     },

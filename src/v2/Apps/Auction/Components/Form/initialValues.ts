@@ -11,20 +11,20 @@ export interface FormValuesForBidding extends FormValuesForRegistration {
 }
 
 const address: Address = {
-  name: "",
   addressLine1: "",
   addressLine2: "",
-  country: "US",
   city: "",
-  region: "",
-  postalCode: "",
+  country: "US",
+  name: "",
   phoneNumber: "",
+  postalCode: "",
+  region: "",
 }
 
 export const initialValuesForRegistration: FormValuesForRegistration = {
   address,
-  creditCard: undefined,
   agreeToTerms: false,
+  creditCard: undefined,
 }
 
 export const initialValuesForBidding: FormValuesForBidding = {

@@ -32,17 +32,6 @@ jest.mock("sharify", () => ({
 
 describe("CTA", () => {
   const artist = {
-    id: "claes-oldenburg",
-    name: "Claes Oldenburg",
-    href: "/artist/claes-oldenburg",
-    image: {
-      thumb: {
-        resized: {
-          url:
-            "https://d32dm0rphc51dk.cloudfront.net/6q6LeyKvA_vpT5YzHRSNUA/large.jpg",
-        },
-      },
-    },
     artists: [
       {
         image: {
@@ -69,6 +58,17 @@ describe("CTA", () => {
         },
       ],
     },
+    href: "/artist/claes-oldenburg",
+    id: "claes-oldenburg",
+    image: {
+      thumb: {
+        resized: {
+          url:
+            "https://d32dm0rphc51dk.cloudfront.net/6q6LeyKvA_vpT5YzHRSNUA/large.jpg",
+        },
+      },
+    },
+    name: "Claes Oldenburg",
   }
 
   let addEventListener
@@ -96,13 +96,13 @@ describe("CTA", () => {
     await setupArtistSignUpModal()
 
     expect(handleScrollingAuthModal).toBeCalledWith({
+      contextModule: "popUpModal",
       copy:
         "Join Artsy to discover new works by Claes Oldenburg and more artists you love",
       destination: "https://artsy.net/",
       image: "https://d32dm0rphc51dk.cloudfront.net/6q6LeyKvA_vpT5YzHRSNUA",
       intent: "viewArtist",
       triggerSeconds: 4,
-      contextModule: "popUpModal",
     })
 
     expect(addEventListener).toHaveBeenCalled()

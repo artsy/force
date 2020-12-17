@@ -15,41 +15,60 @@ const to = path =>
 // Put em' here:
 
 const redirects = {
-  "/partners": "/galleries",
-  "/gallery": "/galleries",
-  "/institution": "/institutions",
-  "/filter/artworks": "/browse",
-  "/filter/artworks/*": "/browse",
   "/category": "/categories",
-  "/gene": "/categories",
-  "/genes": "/categories",
-  "/partner-application": "/apply",
   "/fair-application": "/apply/fair",
   "/fairs": "art-fairs",
-  "/feature/art-fairs": "art-fairs",
-  "/settings": "/user/edit",
   "/collector/edit": "/profile/edit",
-  "/_=_": "/", // Facebook passport bug, see: https://github.com/jaredhanson/passport-facebook/issues/12#issuecomment-5913711
-  "/press": "/press/in-the-media",
+  "/filter/artworks": "/browse",
+  "/_=_": "/",
+  "/filter/artworks/*": "/browse",
   "/about/press": "/press/press-releases",
-  "/about/page/press": "/press/press-releases",
+  "/gallery": "/galleries",
   "/about/page/events": "/press/in-the-media",
+  "/partners": "/galleries",
   "/about/jobs": "/jobs",
-  "/lama": "/auction/los-angeles-modern-auctions-march-2015", // HACK: Redirect the "auction" profile to the LAMA auction
-  "/home/featured_works": "/tag/apple/artworks",
-  "/home/featured%20works": "/tag/apple/artworks",
+  "/institution": "/institutions",
+  "/about/page/press": "/press/press-releases",
+  "/gene": "/categories", 
   "/dev": "/inquiry/development",
-  "/artist": "/artists",
-  "/job/mobile-engineer": "/article/artsy-jobs-mobile-engineer",
-  "/article/jesse-kedy-digital-marketing-manager-organic-growth-06-22-15":
+  
+"/genes": "/categories",
+  
+"/artist": "/artists",
+  
+"/partner-application": "/apply",
+  
+"/article/jesse-kedy-digital-marketing-manager-organic-growth-06-22-15":
     "/article/artsy-jobs-associate-director-of-organic-growth",
-  "/feature/artsy-education": "/artsy-education",
-  "/favorites": "/user/saves#saved-artworks",
-  "/following/artists": "/user/saves#artists",
+  
+
+"/feature/art-fairs": "art-fairs", 
+  
+
+"/favorites": "/user/saves#saved-artworks",
+  
+
+"/settings": "/user/edit",
+  
+
+"/feature/artsy-education": "/artsy-education",
+  
+
+"/artsy.net/artwork/marilyn-minter-miley": "/artwork/marilyn-minter-miley",
+  
+// Facebook passport bug, see: https://github.com/jaredhanson/passport-facebook/issues/12#issuecomment-5913711
+"/press": "/press/in-the-media",
+  
+"/article/artsy-editorial-the-year-in-art-2016": "/2016-year-in-art",
+  
+"/following/artists": "/user/saves#artists",
+  // HACK: Redirect the "auction" profile to the LAMA auction
+"/home/featured_works": "/tag/apple/artworks",
   "/following/genes": "/user/saves#categories",
+  "/lama": "/auction/los-angeles-modern-auctions-march-2015",
   "/following/profiles": "/user/saves#galleries-institutions",
-  "/artsy.net/artwork/marilyn-minter-miley": "/artwork/marilyn-minter-miley",
-  "/article/artsy-editorial-the-year-in-art-2016": "/2016-year-in-art",
+  "/home/featured%20works": "/tag/apple/artworks",
+  "/job/mobile-engineer": "/article/artsy-jobs-mobile-engineer",
 }
 
 for (let from in redirects) {

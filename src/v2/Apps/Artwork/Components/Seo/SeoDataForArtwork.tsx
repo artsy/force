@@ -27,9 +27,9 @@ export const SeoDataForArtwork: React.FC<SeoDataForArtworkProps> = ({
   const dimensions = parseDimensions(get(artwork, a => a.dimensions.in, ""))
 
   const artworkMetaData = {
-    name: artwork.meta.title,
-    image: get(artwork, a => a.meta_image.resized.url),
     description: get(artwork, a => a.meta.description),
+    image: get(artwork, a => a.meta_image.resized.url),
+    name: artwork.meta.title,
     url: `${APP_URL}${artwork.href}`,
     ...dimensions,
     brand: {
@@ -46,8 +46,8 @@ export const SeoDataForArtwork: React.FC<SeoDataForArtworkProps> = ({
   const offers = offerAttributes(artwork)
   const ecommerceData = {
     category: artwork.category,
-    productionDate: artwork.date,
     offers,
+    productionDate: artwork.date,
   }
 
   return (
@@ -130,8 +130,8 @@ export const offerAttributes = (artwork: SeoDataForArtwork_artwork) => {
   )
   const seller = galleryProfileImage && {
     "@type": "ArtGallery",
-    name: get(artwork, a => a.partner.name),
     image: galleryProfileImage,
+    name: get(artwork, a => a.partner.name),
   }
   const availability = AVAILABILITY[artwork.availability]
   switch (artwork.listPrice.__typename) {
@@ -143,18 +143,18 @@ export const offerAttributes = (artwork: SeoDataForArtwork_artwork) => {
       const highPrice = get(artwork.listPrice, price => price.maxPrice.major)
       return {
         "@type": "AggregateOffer",
-        lowPrice: artwork.listPrice.minPrice.major,
-        highPrice,
-        priceCurrency: artwork.listPrice.minPrice.currencyCode,
         availability,
+        highPrice,
+        lowPrice: artwork.listPrice.minPrice.major,
+        priceCurrency: artwork.listPrice.minPrice.currencyCode,
         seller,
       }
     case "Money":
       return {
         "@type": "Offer",
+        availability,
         price: artwork.listPrice.major,
         priceCurrency: artwork.listPrice.currencyCode,
-        availability,
         seller,
       }
     default:
@@ -169,16 +169,16 @@ const parseDimensions = (dimensions: string) => {
 
   if (segments.length === 2) {
     return {
-      width: `${trim(segments[0])} in`,
       height: `${trim(segments[1])} in`,
+      width: `${trim(segments[0])} in`,
     }
   }
 
   if (segments.length === 3) {
     return {
-      width: `${trim(segments[0])} in`,
-      height: `${trim(segments[1])} in`,
       depth: `${trim(segments[2])} in`,
+      height: `${trim(segments[1])} in`,
+      width: `${trim(segments[0])} in`,
     }
   }
 

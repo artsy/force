@@ -34,10 +34,10 @@ const logger = createLogger("Apps/Search/Components/SendFeedback.tsx")
 
 class SendFeedbackForm extends React.Component<SystemContextProps, State> {
   state = {
-    submitted: false,
+    email: "",
     message: "",
     name: "",
-    email: "",
+    submitted: false,
     triggeredValidation: false,
   }
 
@@ -69,20 +69,8 @@ class SendFeedbackForm extends React.Component<SystemContextProps, State> {
           }
         }
       `,
-      variables: {
-        input: { message, email, name },
-      },
-      // Add slight delay to make UX seem a bit nicer
-      optimisticUpdater: () => {
-        setTimeout(
-          () =>
-            this.setState({
-              submitted: true,
-            }),
-          500
-        )
-      },
-      onCompleted: data => {
+      
+onCompleted: data => {
         const {
           sendFeedback: { feedbackOrError },
         } = data
@@ -98,6 +86,20 @@ class SendFeedbackForm extends React.Component<SystemContextProps, State> {
             submitted: true,
           })
         }
+      },
+      
+      // Add slight delay to make UX seem a bit nicer
+optimisticUpdater: () => {
+        setTimeout(
+          () =>
+            this.setState({
+              submitted: true,
+            }),
+          500
+        )
+      },
+      variables: {
+        input: { email, message, name },
       },
     })
   }

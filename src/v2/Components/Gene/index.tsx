@@ -43,11 +43,11 @@ class GeneContents extends React.Component<Props, State> {
     super(props)
     const { forSale, priceRange, dimensionRange, medium } = this.props.filters
     this.state = {
+      dimensionRange: dimensionRange || "*",
       forSale: forSale || null,
       medium: medium || "*",
-      priceRange: priceRange || "*",
-      dimensionRange: dimensionRange || "*",
       mode: props.mode,
+      priceRange: priceRange || "*",
       sort: props.sort || "-partner_updated_at",
     }
   }
@@ -62,12 +62,12 @@ class GeneContents extends React.Component<Props, State> {
       mode,
     } = this.state
     const filters = {
+      dimensionRange,
       forSale,
       medium,
       priceRange,
-      dimensionRange,
     }
-    this.props.onStateChange({ filters, sort, mode })
+    this.props.onStateChange({ filters, mode, sort })
   }
 
   // Because `for_sale` is a proper filter of its own, but
@@ -109,8 +109,8 @@ class GeneContents extends React.Component<Props, State> {
   onSortSelect(sortEl) {
     this.setState(
       {
-        sort: sortEl.val,
         mode: "artworks",
+        sort: sortEl.val,
       },
       this.handleStateChange
     )
@@ -184,12 +184,12 @@ class GeneContents extends React.Component<Props, State> {
           }
         `}
         variables={{
+          dimensionRange,
+          forSale,
           geneID,
           medium,
           priceRange,
           sort,
-          forSale,
-          dimensionRange,
         }}
         render={({ props }) => {
           if (props) {

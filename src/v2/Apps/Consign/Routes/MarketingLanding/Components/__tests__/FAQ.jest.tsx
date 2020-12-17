@@ -13,7 +13,7 @@ describe("FAQ", () => {
     )
   }
 
-  it("it toggles FAQ questions", () => {
+  it("toggles FAQ questions", () => {
     const wrapper = getWrapper()
     expect(wrapper.html()).not.toContain(
       "We offer no upfront fees." // hidden

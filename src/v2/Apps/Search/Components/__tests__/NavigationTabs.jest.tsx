@@ -2,12 +2,10 @@ import { Props, tabCountMap } from "../NavigationTabs"
 
 const props: Props = {
   artworkCount: 601,
-  term: "whitney",
   searchableConnection: {
     " $refType": null,
     aggregations: [
       {
-        slice: "TYPE",
         counts: [
           {
             count: 424,
@@ -46,9 +44,11 @@ const props: Props = {
             name: "sale",
           },
         ],
+        slice: "TYPE",
       },
     ],
   },
+  term: "whitney",
 }
 
 describe("Search NavigationTabs tabCountMap", () => {

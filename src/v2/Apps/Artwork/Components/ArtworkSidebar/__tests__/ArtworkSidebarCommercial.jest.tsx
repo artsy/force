@@ -60,10 +60,10 @@ describe("ArtworkSidebarCommercial", () => {
       const component = getWrapper(ArtworkBuyNow)
       component.find(Button).simulate("click")
       expect(mediator.trigger).toBeCalledWith("open:auth", {
-        mode: "signup",
-        redirectTo: "http://localhost/artwork/the-id",
         contextModule: "artworkSidebar",
         intent: "buyNow",
+        mode: "signup",
+        redirectTo: "http://localhost/artwork/the-id",
       })
     })
 
@@ -71,10 +71,10 @@ describe("ArtworkSidebarCommercial", () => {
       const component = getWrapper(ArtworkMakeOffer)
       component.find(Button).simulate("click")
       expect(mediator.trigger).toBeCalledWith("open:auth", {
-        mode: "signup",
-        redirectTo: "http://localhost/artwork/the-id",
         contextModule: "artworkSidebar",
         intent: "makeOffer",
+        mode: "signup",
+        redirectTo: "http://localhost/artwork/the-id",
       })
     })
   })
@@ -83,8 +83,8 @@ describe("ArtworkSidebarCommercial", () => {
       {},
       {
         ...ArtworkBuyNowMakeOffer,
-        priceIncludesTaxDisplay: "VAT included in price",
         is_for_sale: true,
+        priceIncludesTaxDisplay: "VAT included in price",
       }
     )
 

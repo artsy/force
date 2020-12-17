@@ -21,11 +21,11 @@ export type BiddingStatus =
   | string
 
 const CARD_ERROR_MAPPING = {
-  "Your card was declined.":
-    "Please contact your bank or use a different card.",
+  "Your card has expired.": "Please contact your bank or use a different card.",
   "Your card has insufficient funds.":
     "Please contact your bank or use a different card.",
-  "Your card has expired.": "Please contact your bank or use a different card.",
+  "Your card was declined.":
+    "Please contact your bank or use a different card.",
   "Your card's security code is incorrect.": "Please try again.",
 }
 
@@ -52,13 +52,13 @@ export const errorMessageForBidding = (errorMessage: BiddingStatus) => {
 
 export const toStripeAddress = (address: Address): stripe.TokenOptions => {
   return {
-    name: address.name,
+    address_city: address.city,
+    address_country: address.country,
     address_line1: address.addressLine1,
     address_line2: address.addressLine2,
-    address_country: address.country,
-    address_city: address.city,
     address_state: address.region,
     address_zip: address.postalCode,
+    name: address.name,
   }
 }
 

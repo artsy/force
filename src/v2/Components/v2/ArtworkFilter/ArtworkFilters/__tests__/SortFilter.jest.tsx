@@ -14,12 +14,12 @@ describe("SortFilter", () => {
       <ArtworkFilterContextProvider
         sortOptions={[
           {
-            value: "foo",
             text: "foo",
+            value: "foo",
           },
           {
-            value: "bar",
             text: "bar",
+            value: "bar",
           },
         ]}
       >

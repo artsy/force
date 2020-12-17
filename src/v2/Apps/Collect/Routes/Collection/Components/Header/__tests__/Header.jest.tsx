@@ -42,18 +42,18 @@ describe("collections header", () => {
     artworks: collectionHeaderArtworks,
     collection: {
       " $refType": null,
-      id: "abcdefg1234",
-      title: "KAWS: Toys",
+      category: "Collectible Sculptures",
       credit: null,
       description: null,
-      category: "Collectible Sculptures",
-      slug: "kaws-toys",
+      featuredArtistExclusionIds: [],
       headerImage:
         "https://d32dm0rphc51dk.cloudfront.net/WhacjFyMKlMkNVzncPjlRA/square.jpg",
+      id: "abcdefg1234",
       query: {
         artistIDs: ["4e934002e340fa0001005336"],
       },
-      featuredArtistExclusionIds: [],
+      slug: "kaws-toys",
+      title: "KAWS: Toys",
     },
   }
 
@@ -138,14 +138,14 @@ describe("collections header", () => {
       const artist = results[0]
 
       expect(artist).toMatchObject({
-        name: "KAWS",
+        birthday: "1974",
         image: {
           resized: {
             url:
               "https://d7hftxdivxxvm.cloudfront.net?resize_to=fit&width=45&height=45&quality=80&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FWhacjFyMKlMkNVzncPjlRA%2Fsquare.jpg",
           },
         },
-        birthday: "1974",
+        name: "KAWS",
         nationality: "American",
       })
     })
@@ -304,18 +304,18 @@ describe("collections header", () => {
 
     function anArtist(): Header_artworks["merchandisableArtists"][number] {
       return {
-        slug: "medicom-toy-slash-china",
-        internalID: "5b9821af86c8aa21d364dde5",
-        name: "Medicom Toy/China",
+        " $fragmentRefs": null,
+        birthday: "",
         image: {
           resized: {
             url:
               "https://d7hftxdivxxvm.cloudfront.net?resize_to=fit&width=45&height=45&quality=80&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FnpEmyaOeaPzkfEHX5VsmQg%2Fsquare.jpg",
           },
         },
-        birthday: "",
+        internalID: "5b9821af86c8aa21d364dde5",
+        name: "Medicom Toy/China",
         nationality: "",
-        " $fragmentRefs": null,
+        slug: "medicom-toy-slash-china",
       }
     }
 
@@ -477,15 +477,15 @@ describe("collections header", () => {
       const component = mountComponent(props)
       component.find(FollowArtistButton).first().simulate("click")
       expect(mediator.trigger).toBeCalledWith("open:auth", {
-        mode: "signup",
-        contextModule: "featuredArtistsRail",
-        copy: "Sign up to follow KAWS",
-        intent: "followArtist",
         afterSignUpAction: {
           action: "follow",
           kind: "artist",
           objectId: "kaws",
         },
+        contextModule: "featuredArtistsRail",
+        copy: "Sign up to follow KAWS",
+        intent: "followArtist",
+        mode: "signup",
       })
     })
   })

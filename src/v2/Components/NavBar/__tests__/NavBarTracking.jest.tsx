@@ -51,9 +51,9 @@ describe("NavBarTracking", () => {
 
       expect(trackEvent).toBeCalledWith({
         action_type: AnalyticsSchema.ActionType.Click,
-        subject: AnalyticsSchema.Subject.NotificationBell,
         destination_path: "/works-for-you",
         new_notification_count: 0,
+        subject: AnalyticsSchema.Subject.NotificationBell,
       })
     })
   })
@@ -116,8 +116,8 @@ describe("NavBarTracking", () => {
 
       expect(trackEvent).toBeCalledWith({
         action_type: AnalyticsSchema.ActionType.Click,
-        subject: "Fairs",
         destination_path: "/art-fairs",
+        subject: "Fairs",
       })
     })
   })

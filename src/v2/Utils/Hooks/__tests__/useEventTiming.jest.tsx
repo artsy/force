@@ -25,13 +25,13 @@ const Wrapper = ({ currentTime, startAt, endAt }: WrapperProps) => {
             year: 2000,
             ...currentTime,
           }).toISO(),
-          startAt: DateTime.fromObject({
-            year: 2000,
-            ...startAt,
-          }).toISO(),
           endAt: DateTime.fromObject({
             year: 2000,
             ...endAt,
+          }).toISO(),
+          startAt: DateTime.fromObject({
+            year: 2000,
+            ...startAt,
           }).toISO(),
         })
       )}
@@ -47,8 +47,8 @@ describe("useEventTiming", () => {
     expect(
       renderHook({
         currentTime: { seconds: 21 },
-        startAt: { seconds: 0 },
         endAt: { seconds: 20 },
+        startAt: { seconds: 0 },
       })
     ).toStrictEqual({
       closesSoon: false,
@@ -69,8 +69,8 @@ describe("useEventTiming", () => {
     expect(
       renderHook({
         currentTime: { seconds: 0 },
-        startAt: { seconds: 10 },
         endAt: { seconds: 20 },
+        startAt: { seconds: 10 },
       })
     ).toStrictEqual({
       closesSoon: false,
@@ -91,8 +91,8 @@ describe("useEventTiming", () => {
     expect(
       renderHook({
         currentTime: { seconds: 10 },
-        startAt: { seconds: 0 },
         endAt: { day: 2, seconds: 10 },
+        startAt: { seconds: 0 },
       })
     ).toStrictEqual({
       closesSoon: true,
@@ -113,8 +113,8 @@ describe("useEventTiming", () => {
     expect(
       renderHook({
         currentTime: { seconds: 10 },
-        startAt: { seconds: 0 },
         endAt: { seconds: 20 },
+        startAt: { seconds: 0 },
       })
     ).toStrictEqual({
       closesSoon: false,

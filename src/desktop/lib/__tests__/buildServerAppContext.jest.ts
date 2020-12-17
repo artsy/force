@@ -4,10 +4,10 @@ describe("buildServerAppContext", () => {
   let req, res
   beforeEach(() => {
     req = {
+      path: "/",
       user: {
         toJSON: () => ({ id: "user-id" }),
       },
-      path: "/",
     }
     res = {
       locals: {

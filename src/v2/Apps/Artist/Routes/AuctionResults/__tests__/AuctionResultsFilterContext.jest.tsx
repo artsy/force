@@ -43,11 +43,11 @@ describe("AuctionResultsFilterContext", () => {
     it("#setFilter", done => {
       getWrapper()
       act(() => {
-        context.setFilter("pageAndCursor", { page: 10, cursor: null })
+        context.setFilter("pageAndCursor", { cursor: null, page: 10 })
         setTimeout(() => {
           expect(context.filters.pageAndCursor).toEqual({
-            page: 10,
             cursor: null,
+            page: 10,
           })
           done()
         })
@@ -57,7 +57,7 @@ describe("AuctionResultsFilterContext", () => {
     it("#setFilter resets pagination", done => {
       getWrapper({
         filters: {
-          pageAndCursor: { page: 10, cursor: null },
+          pageAndCursor: { cursor: null, page: 10 },
         },
       })
       act(() => {
@@ -65,8 +65,8 @@ describe("AuctionResultsFilterContext", () => {
         context.setFilter("sort", "relevant")
         setTimeout(() => {
           expect(context.filters.pageAndCursor).toEqual({
-            page: 1,
             cursor: null,
+            page: 1,
           })
           done()
         })
@@ -161,15 +161,15 @@ describe("AuctionResultsFilterContext", () => {
     it("#unsetFilter", done => {
       getWrapper()
       act(() => {
-        context.setFilter("pageAndCursor", { page: 10, cursor: null })
+        context.setFilter("pageAndCursor", { cursor: null, page: 10 })
         setTimeout(() => {
           expect(context.filters.pageAndCursor.page).toEqual(10)
           act(() => {
             context.unsetFilter("pageAndCursor")
             setTimeout(() => {
               expect(context.filters.pageAndCursor).toEqual({
-                page: 1,
                 cursor: null,
+                page: 1,
               })
               done()
             })
@@ -181,7 +181,7 @@ describe("AuctionResultsFilterContext", () => {
     it("#unsetFilter resets pagination", done => {
       getWrapper({
         filters: {
-          pageAndCursor: { page: 10, cursor: null },
+          pageAndCursor: { cursor: null, page: 10 },
           sort: "relevant",
         },
       })
@@ -190,8 +190,8 @@ describe("AuctionResultsFilterContext", () => {
         context.unsetFilter("sort")
         setTimeout(() => {
           expect(context.filters.pageAndCursor).toEqual({
-            page: 1,
             cursor: null,
+            page: 1,
           })
           done()
         })

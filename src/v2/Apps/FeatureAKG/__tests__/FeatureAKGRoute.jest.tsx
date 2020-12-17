@@ -14,18 +14,18 @@ describe("FeatureAKG", () => {
   const trackEvent = jest.fn()
   const defaultVariables = {
     articleIDs: ["article1", "article2", "article3", "article4"],
-    selectedWorksSetID: "set1",
+    auctionRailItemIDs: ["auction1", "auction2", "auction3", "auction4"],
     collectionRailItemIDs: [
       "collection1",
       "collection2",
       "collection3",
       "collection4",
     ],
-    auctionRailItemIDs: ["auction1", "auction2", "auction3", "auction4"],
     fairRailItemIDs: ["fair1", "fair2", "fair3", "fair4"],
-    hasCollectionRailItems: true,
     hasAuctionRailItems: true,
+    hasCollectionRailItems: true,
     hasFairRailItems: true,
+    selectedWorksSetID: "set1",
   }
 
   const getWrapper = async (
@@ -42,6 +42,7 @@ describe("FeatureAKG", () => {
           </MockBoot>
         )
       },
+      mockData: response,
       query: graphql`
         query FeatureAKGRoute_Test_Query(
           $articleIDs: [String]!
@@ -69,7 +70,6 @@ describe("FeatureAKG", () => {
         }
       `,
       variables,
-      mockData: response,
     })
   }
 
@@ -128,16 +128,16 @@ describe("FeatureAKG", () => {
       it("displays no videos if none specified at the large breakpoint", async () => {
         const largeWrapperData = {
           ...defaultData,
+          hero_video: {
+            ...defaultData.hero_video,
+            large_src: null,
+          },
           video_1: {
             ...defaultData.video_1,
             large_src: null,
           },
           video_2: {
             ...defaultData.video_2,
-            large_src: null,
-          },
-          hero_video: {
-            ...defaultData.hero_video,
             large_src: null,
           },
         }
@@ -160,16 +160,16 @@ describe("FeatureAKG", () => {
       it("displays no videos if none specified at the small breakpoint", async () => {
         const smallWrapperData = {
           ...defaultData,
+          hero_video: {
+            ...defaultData.hero_video,
+            small_src: null,
+          },
           video_1: {
             ...defaultData.video_1,
             small_src: null,
           },
           video_2: {
             ...defaultData.video_2,
-            small_src: null,
-          },
-          hero_video: {
-            ...defaultData.hero_video,
             small_src: null,
           },
         }
@@ -715,16 +715,16 @@ describe("FeatureAKG", () => {
           ...defaultData,
           browse: {
             ...defaultData.browse,
-            fairs_rail: {
-              ...defaultData.browse.fairs_rail,
-              items: [],
-            },
             auctions_rail: {
               ...defaultData.browse.auctions_rail,
               items: [],
             },
             collections_rail: {
               ...defaultData.browse.collections_rail,
+              items: [],
+            },
+            fairs_rail: {
+              ...defaultData.browse.fairs_rail,
               items: [],
             },
           },
@@ -894,22 +894,22 @@ const defaultData = {
     subtitle: null,
     title: "Featured This Week",
   },
+  hero_video: {
+    large_src: "http://files.artsy.net/hero_video_large.mp4",
+    small_src: "http://files.artsy.net/hero_video_small.mp4",
+  },
   selected_works: {
     set_id: "56e057c8139b213d70002393",
     subtitle: "10% of all proceeds to go to Charity Name",
     title: "Selected Works",
   },
   video_1: {
-    small_src: "http://files.artsy.net/video_1_small.mp4",
     large_src: "http://files.artsy.net/video_1_large.mp4",
+    small_src: "http://files.artsy.net/video_1_small.mp4",
   },
   video_2: {
-    small_src: "http://files.artsy.net/video_2_small.mp4",
     large_src: "http://files.artsy.net/video_2_large.mp4",
-  },
-  hero_video: {
-    small_src: "http://files.artsy.net/hero_video_small.mp4",
-    large_src: "http://files.artsy.net/hero_video_large.mp4",
+    small_src: "http://files.artsy.net/video_2_small.mp4",
   },
 }
 
@@ -917,84 +917,150 @@ const ArtKeepsGoingFixture: FeatureAKGRoute_Test_QueryRawResponse = {
   viewer: {
     articles: [
       {
+        href: "/article/article-1",
         id: "articleid-1",
-        thumbnailTitle: "This Article is Really Cool",
         publishedAt: "April 20, 2013",
         thumbnailImage: {
           cropped: {
-            width: 1,
             height: 1,
             url:
               "https://d32dm0rphc51dk.cloudfront.net/PCuKcu_h43P0IfBpXNkNcQ/large.jpg",
+            width: 1,
           },
         },
+        thumbnailTitle: "This Article is Really Cool",
         tinyImage: {
           cropped: {
             url:
               "https://d32dm0rphc51dk.cloudfront.net/PCuKcu_h43P0IfBpXNkNcQ/large.jpg",
           },
         },
-        href: "/article/article-1",
       },
       {
-        id: "articleid-2",
-        thumbnailTitle: "This Article is Really Cool",
-        publishedAt: "April 20, 2013",
-        thumbnailImage: {
-          cropped: {
-            width: 1,
-            height: 1,
-            url:
-              "https://d32dm0rphc51dk.cloudfront.net/PCuKcu_h43P0IfBpXNkNcQ/large.jpg",
-          },
-        },
-        tinyImage: {
-          cropped: {
-            url:
-              "https://d32dm0rphc51dk.cloudfront.net/PCuKcu_h43P0IfBpXNkNcQ/large.jpg",
-          },
-        },
         href: "/article/article-2",
+        id: "articleid-2",
+        publishedAt: "April 20, 2013",
+        thumbnailImage: {
+          cropped: {
+            height: 1,
+            url:
+              "https://d32dm0rphc51dk.cloudfront.net/PCuKcu_h43P0IfBpXNkNcQ/large.jpg",
+            width: 1,
+          },
+        },
+        thumbnailTitle: "This Article is Really Cool",
+        tinyImage: {
+          cropped: {
+            url:
+              "https://d32dm0rphc51dk.cloudfront.net/PCuKcu_h43P0IfBpXNkNcQ/large.jpg",
+          },
+        },
       },
       {
+        href: "/article/article-1",
         id: "articleid-3",
-        thumbnailTitle: "This Article is Really Cool",
         publishedAt: "April 20, 2013",
         thumbnailImage: {
           cropped: {
-            width: 1,
             height: 1,
             url:
               "https://d32dm0rphc51dk.cloudfront.net/PCuKcu_h43P0IfBpXNkNcQ/large.jpg",
+            width: 1,
           },
         },
+        thumbnailTitle: "This Article is Really Cool",
         tinyImage: {
           cropped: {
             url:
               "https://d32dm0rphc51dk.cloudfront.net/PCuKcu_h43P0IfBpXNkNcQ/large.jpg",
           },
         },
-        href: "/article/article-1",
       },
       {
+        href: "/article/article-1",
         id: "articleid-4",
-        thumbnailTitle: "This Article is Really Cool",
         publishedAt: "April 20, 2013",
         thumbnailImage: {
           cropped: {
-            width: 1,
             height: 1,
             url:
               "https://d32dm0rphc51dk.cloudfront.net/PCuKcu_h43P0IfBpXNkNcQ/large.jpg",
+            width: 1,
           },
         },
+        thumbnailTitle: "This Article is Really Cool",
         tinyImage: {
           cropped: {
             url:
               "https://d32dm0rphc51dk.cloudfront.net/PCuKcu_h43P0IfBpXNkNcQ/large.jpg",
           },
         },
-        href: "/article/article-1",
+      },
+    ],
+    auctions: {
+      edges: [
+        {
+          node: {
+            href: "/auction/auction-1",
+            id: "auction1",
+            name: "Auction 1",
+            slug: "seoul-auction-spring-online-auction-goat",
+          },
+        },
+        {
+          node: {
+            href: "/auction/auction-2",
+            id: "auction2",
+            name: "Auction 2",
+            slug: "heritage-signature-photographs-1",
+          },
+        },
+        {
+          node: {
+            href: "/auction/auction-3",
+            id: "auction3",
+            name: "Auction 3",
+            slug:
+              "dope-gallery-global-icons-slash-contemporary-prints-and-editions",
+          },
+        },
+      ],
+    },
+    collections: [
+      {
+        id: "collection-1",
+        slug: "jean-michel-basquiat-crowns",
+        title: "Kaws: Red",
+      },
+      {
+        id: "collection-2",
+        slug: "collect-by-color-orange",
+        title: "Kaws: Blue",
+      },
+      {
+        id: "collection-3",
+        slug: "minimalist-prints",
+        title: "Kaws: Green",
+      },
+    ],
+    fairs: [
+      {
+        href: "/fair/fair-1",
+        id: "fair-1",
+        internalID: "5dfcfda63f1d3b00127644ad",
+        name: "Fair 1",
+      },
+      {
+        href: "/fair/fair-2",
+        id: "fair-2",
+        internalID: "5e5e45095c859000102aa95f",
+        name: "Fair 2",
+      },
+      {
+        href: "/fair/fair-3",
+        id: "fair-3",
+        internalID: "5d88fbc5192508000efb03d4",
+        name: "Fair 3",
       },
     ],
     selectedWorks: {
@@ -1005,150 +1071,84 @@ const ArtKeepsGoingFixture: FeatureAKGRoute_Test_QueryRawResponse = {
             __typename: "Artwork",
             id: "edge-1",
             node: {
-              id: "QXJ0d29yazo1ODExMDA0ZDhiMGMxNDFkZDQwMDBiNjE=",
-              slug: "andy-warhol-cow-ii-dot-12-31",
               href: "/artwork/andy-warhol-cow-ii-dot-12-31",
+              date: "1971",
+              id: "QXJ0d29yazo1ODExMDA0ZDhiMGMxNDFkZDQwMDBiNjE=",
+              cultural_maker: null,
               image: {
                 aspect_ratio: 0.69,
                 placeholder: "foo",
                 url:
                   "https://d32dm0rphc51dk.cloudfront.net/TggVGbEkp8GPrxSRYyUrVw/large.jpg",
               },
-              image_title: "title",
-              internalID: "5811004d8b0c141dd4000b61",
-              title: "Cow, II.12",
-              date: "1971",
-              sale_message: "$32,500",
-              cultural_maker: null,
               artists: [
                 {
-                  id: "QXJ0aXN0OjRkOGI5MmIzNGViNjhhMWIyYzAwMDNmNA==",
                   href: "/artist/andy-warhol",
+                  id: "QXJ0aXN0OjRkOGI5MmIzNGViNjhhMWIyYzAwMDNmNA==",
                   name: "Andy Warhol",
                 },
               ],
+              image_title: "title",
               collecting_institution: null,
-              partner: {
-                name: "Hamilton-Selway Fine Art",
-                href: "/hamilton-selway-fine-art",
-                id: "UGFydG5lcjo1MTc1NmRkOTUxMDljZGNmOGMwMDAwNzU=",
-                type: "Gallery",
-              },
-              sale: null,
-              sale_artwork: null,
+              slug: "andy-warhol-cow-ii-dot-12-31",
+              internalID: "5811004d8b0c141dd4000b61",
+              is_biddable: false,
               is_inquireable: true,
               is_saved: false,
-              is_biddable: false,
+              title: "Cow, II.12",
+              partner: {
+                href: "/hamilton-selway-fine-art",
+                id: "UGFydG5lcjo1MTc1NmRkOTUxMDljZGNmOGMwMDAwNzU=",
+                name: "Hamilton-Selway Fine Art",
+                type: "Gallery",
+              },
+              sale_message: "$32,500",
+              sale: null,
+              sale_artwork: null,
             },
           },
           {
             __typename: "Artwork",
             id: "edge-2",
             node: {
-              id: "QXJ0d29yazo1ODExMDA0ZDhiMGMxNDFkZDQwMDBiNjE=sss",
-              slug: "andy-warhol-cow-ii-dot-12-31",
               href: "/artwork/andy-warhol-cow-ii-dot-12-31",
+              date: "1971",
+              id: "QXJ0d29yazo1ODExMDA0ZDhiMGMxNDFkZDQwMDBiNjE=sss",
+              cultural_maker: null,
               image: {
                 aspect_ratio: 0.69,
                 placeholder: "foo",
                 url:
                   "https://d32dm0rphc51dk.cloudfront.net/TggVGbEkp8GPrxSRYyUrVw/large.jpg",
               },
-              internalID: "5811004d8b0c141dd4000b61",
-              title: "Cow, II.12",
-              image_title: "title",
-              date: "1971",
-              sale_message: "$32,500",
-              cultural_maker: null,
               artists: [
                 {
-                  id: "QXJ0aXN0OjRkOGI5MmIzNGViNjhhMWIyYzAwMDNmNA==",
                   href: "/artist/andy-warhol",
+                  id: "QXJ0aXN0OjRkOGI5MmIzNGViNjhhMWIyYzAwMDNmNA==",
                   name: "Andy Warhol",
                 },
               ],
+              image_title: "title",
               collecting_institution: null,
+              slug: "andy-warhol-cow-ii-dot-12-31",
+              internalID: "5811004d8b0c141dd4000b61",
+              is_inquireable: true,
+              is_biddable: false,
+              title: "Cow, II.12",
+              is_saved: false,
               partner: {
-                name: "Hamilton-Selway Fine Art",
                 href: "/hamilton-selway-fine-art",
                 id: "UGFydG5lcjo1MTc1NmRkOTUxMDljZGNmOGMwMDAwNzU=",
+                name: "Hamilton-Selway Fine Art",
                 type: "Gallery",
               },
+              sale_message: "$32,500",
               sale: null,
               sale_artwork: null,
-              is_inquireable: true,
-              is_saved: false,
-              is_biddable: false,
             },
           },
         ],
       },
     },
-    collections: [
-      {
-        slug: "jean-michel-basquiat-crowns",
-        title: "Kaws: Red",
-        id: "collection-1",
-      },
-      {
-        slug: "collect-by-color-orange",
-        title: "Kaws: Blue",
-        id: "collection-2",
-      },
-      {
-        slug: "minimalist-prints",
-        title: "Kaws: Green",
-        id: "collection-3",
-      },
-    ],
-    auctions: {
-      edges: [
-        {
-          node: {
-            slug: "seoul-auction-spring-online-auction-goat",
-            name: "Auction 1",
-            href: "/auction/auction-1",
-            id: "auction1",
-          },
-        },
-        {
-          node: {
-            slug: "heritage-signature-photographs-1",
-            name: "Auction 2",
-            href: "/auction/auction-2",
-            id: "auction2",
-          },
-        },
-        {
-          node: {
-            slug:
-              "dope-gallery-global-icons-slash-contemporary-prints-and-editions",
-            name: "Auction 3",
-            href: "/auction/auction-3",
-            id: "auction3",
-          },
-        },
-      ],
-    },
-    fairs: [
-      {
-        internalID: "5dfcfda63f1d3b00127644ad",
-        name: "Fair 1",
-        id: "fair-1",
-        href: "/fair/fair-1",
-      },
-      {
-        internalID: "5e5e45095c859000102aa95f",
-        name: "Fair 2",
-        id: "fair-2",
-        href: "/fair/fair-2",
-      },
-      {
-        internalID: "5d88fbc5192508000efb03d4",
-        name: "Fair 3",
-        id: "fair-3",
-        href: "/fair/fair-3",
-      },
-    ],
   },
 }

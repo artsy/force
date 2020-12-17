@@ -92,15 +92,15 @@ export const SystemContextProvider: SFC<SystemContextProps> = ({
     props.relayEnvironment || createRelaySSREnvironment({ user })
   const providerValues = {
     ...props,
+    isEigen: sd.EIGEN,
     isFetching,
     mediator: props.mediator || mediator,
-    setFetching,
-    router,
-    setRouter,
     relayEnvironment,
-    user,
+    router,
+    setFetching,
+    setRouter,
     setUser,
-    isEigen: sd.EIGEN,
+    user,
   }
 
   return (

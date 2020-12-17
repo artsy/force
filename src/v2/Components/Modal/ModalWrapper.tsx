@@ -43,16 +43,16 @@ export class ModalWrapper extends React.Component<
   ModalWrapperState
 > {
   static defaultProps = {
-    show: false,
     blurContainerSelector: "",
+    show: false,
   }
 
   state = {
-    isAnimating: this.props.show || false,
-    isShown: this.props.show || false,
     blurContainers: this.props.blurContainerSelector
       ? Array.from(document.querySelectorAll(this.props.blurContainerSelector))
       : [],
+    isAnimating: this.props.show || false,
+    isShown: this.props.show || false,
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {

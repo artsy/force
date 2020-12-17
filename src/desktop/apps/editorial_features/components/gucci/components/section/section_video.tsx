@@ -21,8 +21,8 @@ export const SectionVideo: React.SFC<SectionVideoProps> = props => {
 
 function renderVideo(section) {
   const videoSection = {
-    url: section.video_url,
     cover_image_url: section.cover_image_url,
+    url: section.video_url,
   }
 
   if (section.published && videoSection.url) {
@@ -30,8 +30,8 @@ function renderVideo(section) {
       <Video
         section={videoSection}
         trackingData={{
-          type: "play video",
           label: section.featuring,
+          type: "play video",
         }}
       />
     )

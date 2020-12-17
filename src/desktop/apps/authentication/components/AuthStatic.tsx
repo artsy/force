@@ -30,11 +30,11 @@ export class AuthStatic extends React.Component<Props> {
             isStatic
             handleSubmit={handleSubmit.bind(this, type, options)}
             submitUrls={{
-              login: "/log_in",
-              forgot: "/forgot_password",
-              signup: "/sign_up",
               apple: "/users/auth/apple",
               facebook: "/users/auth/facebook",
+              forgot: "/forgot_password",
+              login: "/log_in",
+              signup: "/sign_up",
             }}
             showRecaptchaDisclaimer={true}
           />

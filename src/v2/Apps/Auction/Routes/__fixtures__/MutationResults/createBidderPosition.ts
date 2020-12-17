@@ -4,6 +4,7 @@ import { ConfirmBidCreateBidderPositionMutationResponse } from "v2/__generated__
 export const createBidderPositionSuccessful: ConfirmBidCreateBidderPositionMutationResponse = {
   createBidderPosition: {
     result: {
+      messageHeader: null,
       position: {
         internalID: "positionid",
         saleArtwork: {
@@ -16,7 +17,6 @@ export const createBidderPositionSuccessful: ConfirmBidCreateBidderPositionMutat
         },
       },
       status: "SUCCESS",
-      messageHeader: null,
     },
   },
 }
@@ -24,6 +24,7 @@ export const createBidderPositionSuccessful: ConfirmBidCreateBidderPositionMutat
 export const createBidderPositionSuccessfulAndBidder: ConfirmBidCreateBidderPositionMutationResponse = {
   createBidderPosition: {
     result: {
+      messageHeader: null,
       position: {
         internalID: "positionid",
         saleArtwork: {
@@ -36,7 +37,6 @@ export const createBidderPositionSuccessfulAndBidder: ConfirmBidCreateBidderPosi
         },
       },
       status: "SUCCESS",
-      messageHeader: null,
     },
   },
 }
@@ -44,9 +44,9 @@ export const createBidderPositionSuccessfulAndBidder: ConfirmBidCreateBidderPosi
 export const createBidderPositionFailed: ConfirmBidCreateBidderPositionMutationResponse = {
   createBidderPosition: {
     result: {
+      messageHeader: "Lot closed",
       position: null,
       status: "SALE_CLOSED",
-      messageHeader: "Lot closed",
     },
   },
 }
@@ -54,9 +54,9 @@ export const createBidderPositionFailed: ConfirmBidCreateBidderPositionMutationR
 export const createBidderPositionWithLiveBiddingStarted: ConfirmBidCreateBidderPositionMutationResponse = {
   createBidderPosition: {
     result: {
+      messageHeader: "Live bidding has started",
       position: null,
       status: "LIVE_BIDDING_STARTED",
-      messageHeader: "Live bidding has started",
     },
   },
 }
@@ -64,9 +64,9 @@ export const createBidderPositionWithLiveBiddingStarted: ConfirmBidCreateBidderP
 export const createBidderPositionWithErrorBidNotPlaced: ConfirmBidCreateBidderPositionMutationResponse = {
   createBidderPosition: {
     result: {
+      messageHeader: "Bid not placed",
       position: null,
       status: "ERROR",
-      messageHeader: "Bid not placed",
     },
   },
 }
@@ -74,9 +74,9 @@ export const createBidderPositionWithErrorBidNotPlaced: ConfirmBidCreateBidderPo
 export const createBidderPositionWithBidderNotQualified: ConfirmBidCreateBidderPositionMutationResponse = {
   createBidderPosition: {
     result: {
+      messageHeader: "Bid not placed",
       position: null,
       status: "BIDDER_NOT_QUALIFIED",
-      messageHeader: "Bid not placed",
     },
   },
 }
@@ -84,12 +84,12 @@ export const createBidderPositionWithBidderNotQualified: ConfirmBidCreateBidderP
 export const confirmBidBidderPositionQueryWithWinning: BidderPositionQueryResponse = {
   me: {
     bidderPosition: {
-      status: "WINNING",
       messageHeader: null,
       position: {
         internalID: "winning-bidder-position-id-from-polling",
         suggestedNextBid: null,
       },
+      status: "WINNING",
     },
   },
 }
@@ -97,12 +97,12 @@ export const confirmBidBidderPositionQueryWithWinning: BidderPositionQueryRespon
 export const confirmBidBidderPositionQueryWithPending: BidderPositionQueryResponse = {
   me: {
     bidderPosition: {
-      status: "PENDING",
       messageHeader: null,
       position: {
         internalID: "pending-bidder-position-id-from-polling",
         suggestedNextBid: null,
       },
+      status: "PENDING",
     },
   },
 }
@@ -110,12 +110,12 @@ export const confirmBidBidderPositionQueryWithPending: BidderPositionQueryRespon
 export const confirmBidBidderPositionQueryWithOutbid: BidderPositionQueryResponse = {
   me: {
     bidderPosition: {
-      status: "OUTBID",
       messageHeader: "Your bid wasn’t high enough",
       position: {
         internalID: "pending-bidder-position-id-from-polling",
         suggestedNextBid: null,
       },
+      status: "OUTBID",
     },
   },
 }

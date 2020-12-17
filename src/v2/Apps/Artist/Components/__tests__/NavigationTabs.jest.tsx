@@ -21,6 +21,9 @@ describe("ArtistHeader", () => {
           </SystemContextProvider>
         )
       },
+      mockData: {
+        artist: response,
+      } as NavigationTabs_Test_QueryRawResponse,
       query: graphql`
         query NavigationTabs_Test_Query @raw_response_type {
           artist(id: "pablo-picasso") {
@@ -28,9 +31,6 @@ describe("ArtistHeader", () => {
           }
         }
       `,
-      mockData: {
-        artist: response,
-      } as NavigationTabs_Test_QueryRawResponse,
     })
   }
 
@@ -75,14 +75,14 @@ describe("ArtistHeader", () => {
   it("renders no tabs if there is no content", async () => {
     const wrapper = await getWrapper({
       ...NavigationTabsFixture,
+      biographyBlurb: null,
       statuses: {
+        articles: false,
+        artworks: false,
         auctionLots: false,
         cv: false,
         shows: false,
-        articles: false,
-        artworks: false,
       },
-      biographyBlurb: null,
     })
     const html = wrapper.html()
     expect(html).toBeFalsy()
@@ -90,14 +90,8 @@ describe("ArtistHeader", () => {
 })
 
 const NavigationTabsFixture: NavigationTabs_Test_QueryRawResponse["artist"] = {
-  id: "blah",
-  slug: "andy-warhol",
-  statuses: {
-    auctionLots: true,
-    cv: true,
-    shows: true,
-    articles: true,
-    artworks: true,
+  biographyBlurb: {
+    text: "bio!",
   },
   counts: {
     forSaleArtworks: 0,
@@ -107,13 +101,19 @@ const NavigationTabsFixture: NavigationTabs_Test_QueryRawResponse["artist"] = {
       edges: [],
     },
   },
-  biographyBlurb: {
-    text: "bio!",
-  },
+  id: "blah",
   insights: null,
   related: {
     genes: {
       edges: [],
     },
+  },
+  slug: "andy-warhol",
+  statuses: {
+    articles: true,
+    artworks: true,
+    auctionLots: true,
+    cv: true,
+    shows: true,
   },
 }

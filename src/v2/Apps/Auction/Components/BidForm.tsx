@@ -68,9 +68,9 @@ export const BidForm: React.FC<Props> = ({
   const displayIncrements = dropWhile(
     saleArtwork.increments,
     increment => increment.cents < saleArtwork.minimumNextBid.cents
-  ).map(inc => ({ value: inc.cents.toString(), text: inc.display }))
+  ).map(inc => ({ text: inc.display, value: inc.cents.toString() }))
 
-  const selectedBid = getSelectedBid({ initialSelectedBid, displayIncrements })
+  const selectedBid = getSelectedBid({ displayIncrements, initialSelectedBid })
   const {
     requiresCheckbox,
     requiresPaymentInformation,
@@ -210,6 +210,11 @@ export const BidForm: React.FC<Props> = ({
 }
 
 export const BidFormFragmentContainer = createFragmentContainer(BidForm, {
+  me: graphql`
+    fragment BidForm_me on Me {
+      hasQualifiedCreditCards
+    }
+  `,
   saleArtwork: graphql`
     fragment BidForm_saleArtwork on SaleArtwork {
       minimumNextBid: minimumNextBid {
@@ -225,11 +230,6 @@ export const BidFormFragmentContainer = createFragmentContainer(BidForm, {
           qualifiedForBidding
         }
       }
-    }
-  `,
-  me: graphql`
-    fragment BidForm_me on Me {
-      hasQualifiedCreditCards
     }
   `,
 })

@@ -101,8 +101,8 @@ export const RelatedCollectionEntity: React.FC<CollectionProps> = ({
           <Sans size="2" color="black60">
             From $
             {currency(price_guidance, {
-              separator: ",",
               precision: 0,
+              separator: ",",
             }).format()}
           </Sans>
         )}

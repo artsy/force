@@ -33,12 +33,12 @@ export const crop = (
   }
 
   const config = {
+    convert_to,
+    height,
+    quality: quality || 80,
     resize_to: "fill",
     src,
     width,
-    height,
-    quality: quality || 80,
-    convert_to,
   }
 
   return [GEMINI_CLOUDFRONT_URL, qs.stringify(config)].join("?")
@@ -68,12 +68,12 @@ export const resize = (
   }
 
   const config = {
+    convert_to,
+    height,
+    quality: quality || 80,
     resize_to: resizeTo,
     src,
     width,
-    height,
-    quality: quality || 80,
-    convert_to,
   }
 
   return [GEMINI_CLOUDFRONT_URL, qs.stringify(config)].join("?")

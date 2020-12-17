@@ -23,13 +23,13 @@ describe("artworkMiddleware", () => {
       params: {
         artworkID: "test-artwork",
       },
+      pipe: () => ({
+        pipe: spy,
+      }),
       user: {
         canDownload: true,
         get: jest.fn(),
       },
-      pipe: () => ({
-        pipe: spy,
-      }),
     }
 
     const res = {}
@@ -45,13 +45,13 @@ describe("artworkMiddleware", () => {
       params: {
         artworkID: "test-artwork",
       },
+      pipe: () => ({
+        pipe: jest.fn(),
+      }),
       user: {
         canDownload: false,
         get: jest.fn(),
       },
-      pipe: () => ({
-        pipe: jest.fn(),
-      }),
     }
 
     const res = {}

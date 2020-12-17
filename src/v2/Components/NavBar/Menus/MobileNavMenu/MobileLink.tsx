@@ -28,9 +28,9 @@ export const MobileLink: React.FC<MobileLinkProps> = ({
     trackEvent({
       action_type: AnalyticsSchema.ActionType.Click,
       context_module: contextModule,
+      destination_path: linkHref,
       flow: "Header",
       subject: text,
-      destination_path: linkHref,
     })
   }
 

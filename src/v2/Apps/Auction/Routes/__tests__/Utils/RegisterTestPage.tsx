@@ -3,14 +3,14 @@ import { Address, AddressForm } from "v2/Components/AddressForm"
 import { RootTestPage, expectOne } from "v2/DevTools/RootTestPage"
 
 export const ValidFormValues = {
-  name: "Example Name",
   addressLine1: "123 Example Street",
   addressLine2: "Apt 1",
-  country: "United States",
   city: "New York",
-  region: "NY",
-  postalCode: "10012",
+  country: "United States",
+  name: "Example Name",
   phoneNumber: "+1 555 212 7878",
+  postalCode: "10012",
+  region: "NY",
 }
 
 export class RegisterTestPage extends RootTestPage {

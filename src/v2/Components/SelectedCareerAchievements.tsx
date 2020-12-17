@@ -16,13 +16,13 @@ export interface SelectedCareerAchievementsProps {
 
 const CATEGORIES = {
   "blue-chip": "Blue chip representation",
-  "top-established": "Established representation",
   "top-emerging": "Emerging representation",
+  "top-established": "Established representation",
 }
 const CATEGORY_LABEL_MAP = {
   "blue-chip": "Represented by internationally reputable galleries.",
-  "top-established": "Represented by industry leading galleries.",
   "top-emerging": "Represented by up-and-coming galleries.",
+  "top-established": "Represented by industry leading galleries.",
 }
 
 export class SelectedCareerAchievements extends React.Component<

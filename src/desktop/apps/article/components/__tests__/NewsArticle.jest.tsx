@@ -18,15 +18,15 @@ describe("InfiniteScrollArticle", () => {
   beforeEach(() => {
     props = {
       article: NewsArticleFixture,
+      isFirstArticle: true,
       isMobile: false,
       isTruncated: true,
-      isFirstArticle: true,
       nextArticle: {
         id: "1234",
         published_at: "5678",
       },
-      onDateChange: jest.fn(),
       onActiveArticleChange: jest.fn(),
+      onDateChange: jest.fn(),
     }
 
     window.history.replaceState = jest.fn()
@@ -60,9 +60,9 @@ describe("InfiniteScrollArticle", () => {
     it("#sets article metadata", () => {
       const instance = getWrapper().find(NewsArticle).instance() as NewsArticle
       instance.setMetadata({
+        id: "123",
         slug: "some-slug",
         thumbnail_title: "Some title",
-        id: "123",
       })
       expect(window.history.replaceState).toBeCalledWith(
         {},

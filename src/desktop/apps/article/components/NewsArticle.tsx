@@ -29,8 +29,8 @@ export class NewsArticle extends Component<Props, State> {
     super(props)
 
     this.state = {
-      isTruncated: props.isTruncated || false,
       bottomOffset: "200px",
+      isTruncated: props.isTruncated || false,
     }
   }
 

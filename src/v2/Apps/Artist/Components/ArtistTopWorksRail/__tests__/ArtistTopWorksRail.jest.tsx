@@ -91,18 +91,18 @@ describe("Artist Notable Works Rail Component", () => {
 })
 
 const topWorksContent: ArtistTopWorksRail_artist = {
-  slug: "artist-slug",
-  internalID: "artist-id",
   " $refType": null,
   filterArtworksConnection: {
     edges: [
       {
         node: {
-          slug: "artwork-slug",
           " $fragmentRefs": null,
           internalID: "artwork-id",
+          slug: "artwork-slug",
         },
       },
     ],
   },
+  internalID: "artist-id",
+  slug: "artist-slug",
 }

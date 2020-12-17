@@ -32,8 +32,8 @@ export class PageLoader extends React.Component<
 
   static defaultProps = {
     showBackground: true,
-    style: {},
     step: 2,
+    style: {},
   }
 
   currentProgress = 0

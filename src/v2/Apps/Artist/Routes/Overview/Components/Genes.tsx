@@ -19,7 +19,7 @@ export class Genes extends Component<Props> {
       return null
     }
     const tags = genes.edges.map(edge => {
-      return { name: edge.node.name, href: sd.APP_URL + edge.node.href }
+      return { href: sd.APP_URL + edge.node.href, name: edge.node.name }
     })
     return (
       <GeneFamily>

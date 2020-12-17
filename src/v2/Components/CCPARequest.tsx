@@ -49,7 +49,7 @@ const Feedback = ({ setNotes, notes, triggeredValidation }) => {
           }}
           placeholder="Describe your data request"
           required
-          error={errorForText({ triggeredValidation, text: notes })}
+          error={errorForText({ text: notes, triggeredValidation })}
         />
       </FeedbackTextAreaContainer>
     </>
@@ -68,12 +68,12 @@ const errorForText = ({ triggeredValidation, text }) => {
 }
 
 const hasErrors = ({ user, triggeredValidation, notes, name, email }) => {
-  if (user) return !!errorForText({ triggeredValidation, text: notes })
+  if (user) return !!errorForText({ text: notes, triggeredValidation })
 
   return !!(
-    errorForEmail({ triggeredValidation, email }) ||
-    errorForText({ triggeredValidation, text: name }) ||
-    errorForText({ triggeredValidation, text: notes })
+    errorForEmail({ email, triggeredValidation }) ||
+    errorForText({ text: name, triggeredValidation }) ||
+    errorForText({ text: notes, triggeredValidation })
   )
 }
 
@@ -198,14 +198,8 @@ const sendDataRequest = ({
         }
       }
     `,
-    variables: {
-      input: { notes, email, name, action: "user_data" },
-    },
-    // Add slight delay to make UX seem a bit nicer
-    optimisticUpdater: () => {
-      setTimeout(() => setSubmitted(true), 500)
-    },
-    onCompleted: data => {
+    
+onCompleted: data => {
       const {
         createAccountRequest: { accountRequestOrError },
       } = data
@@ -219,6 +213,14 @@ const sendDataRequest = ({
       } else {
         setSubmitted(true)
       }
+    },
+    
+    // Add slight delay to make UX seem a bit nicer
+optimisticUpdater: () => {
+      setTimeout(() => setSubmitted(true), 500)
+    },
+    variables: {
+      input: { action: "user_data", email, name, notes },
     },
   })
 }
@@ -260,15 +262,15 @@ export const CCPARequest: React.SFC<Props> = props => {
 
   useEffect(() => {
     if (clickedSubmit) {
-      if (hasErrors({ user, email, name, notes, triggeredValidation })) {
+      if (hasErrors({ email, name, notes, triggeredValidation, user })) {
         setClickedSubmit(false)
         return
       }
       sendDataRequest({
-        relayEnvironment,
         email,
         name,
         notes,
+        relayEnvironment,
         setSubmitted,
       })
     }

@@ -35,8 +35,8 @@ describe("CollectionsRail", () => {
 
   beforeEach(() => {
     props = {
-      title: "Street Art",
       collections: CollectionsRailFixture,
+      title: "Street Art",
     }
     ;(useTracking as jest.Mock).mockImplementation(() => {
       return {
@@ -59,11 +59,11 @@ describe("CollectionsRail", () => {
   it("does not render a carousel entry if it has no artworks", () => {
     const collectionsCopy = clone(props.collections)
     collectionsCopy.push({
-      slug: "jasper-johns-flags2",
-      headerImage: "http://files.artsy.net/images/jasperjohnsflag.png",
-      title: "Jasper Johns: Flags Part 2",
-      price_guidance: 1000,
       artworksConnection: null,
+      headerImage: "http://files.artsy.net/images/jasperjohnsflag.png",
+      price_guidance: 1000,
+      slug: "jasper-johns-flags2",
+      title: "Jasper Johns: Flags Part 2",
     })
     const component = getWrapper({ collections: collectionsCopy })
     expect(component.find(RelatedCollectionEntity).length).toBe(8)
@@ -94,10 +94,6 @@ describe("CollectionsRail", () => {
     it("Tracks carousel navigation", () => {
       const collectionsCopy = clone(props.collections)
       collectionsCopy.push({
-        slug: "jasper-johns-flags2",
-        headerImage: "http://files.artsy.net/images/jasperjohnsflag.png",
-        title: "Jasper Johns: Flags Part 2",
-        price_guidance: 1000,
         artworksConnection: {
           edges: [
             {
@@ -105,13 +101,13 @@ describe("CollectionsRail", () => {
                 artist: {
                   name: "Jasper Johns",
                 },
-                title: "Flag",
                 image: {
                   resized: {
                     url:
                       "https://d32dm0rphc51dk.cloudfront.net/4izTOpDv-ew-g1RFXeREcQ/small.jpg",
                   },
                 },
+                title: "Flag",
               },
             },
             {
@@ -119,13 +115,13 @@ describe("CollectionsRail", () => {
                 artist: {
                   name: "Jasper Johns",
                 },
-                title: "Flag (Moratorium)",
                 image: {
                   resized: {
                     url:
                       "https://d32dm0rphc51dk.cloudfront.net/Jyhryk2bLDdkpNflvWO0Lg/small.jpg",
                   },
                 },
+                title: "Flag (Moratorium)",
               },
             },
             {
@@ -133,17 +129,21 @@ describe("CollectionsRail", () => {
                 artist: {
                   name: "Jasper Johns",
                 },
-                title: "Flag I",
                 image: {
                   resized: {
                     url:
                       "https://d32dm0rphc51dk.cloudfront.net/gM-IwaZ9C24Y_RQTRW6F5A/small.jpg",
                   },
                 },
+                title: "Flag I",
               },
             },
           ],
         },
+        headerImage: "http://files.artsy.net/images/jasperjohnsflag.png",
+        price_guidance: 1000,
+        slug: "jasper-johns-flags2",
+        title: "Jasper Johns: Flags Part 2",
       })
       const component = getWrapper({ collections: collectionsCopy })
       component.find("a").at(2).simulate("click")

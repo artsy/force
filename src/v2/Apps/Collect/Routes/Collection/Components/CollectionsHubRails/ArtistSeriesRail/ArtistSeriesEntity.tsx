@@ -88,8 +88,8 @@ export const ArtistSeriesEntity: React.FC<ArtistSeriesEntityProps> = ({
           <Text variant="small" color="black60" pb={1}>
             From $
             {currency(price_guidance, {
-              separator: ",",
               precision: 0,
+              separator: ",",
             }).format()}
           </Text>
         )}

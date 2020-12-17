@@ -9,8 +9,8 @@ import { track } from "v2/Artsy/Analytics"
 import * as Schema from "v2/Artsy/Analytics/Schema"
 
 export const READ_MORE_MAX_CHARS = {
-  xs: 100,
   default: 320,
+  xs: 100,
 }
 
 export interface ArtworkDetailsAboutTheWorkFromArtsyProps {

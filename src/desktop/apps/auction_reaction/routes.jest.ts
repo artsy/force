@@ -20,8 +20,8 @@ describe("Reaction Auction app routes", () => {
     jest.resetAllMocks()
     mockStitch.mockResolvedValue(layout)
     const req = {
-      query: {},
       header: jest.fn(),
+      query: {},
     }
     const res = {
       locals: { sd: { CURRENT_USER: null } },
@@ -42,9 +42,9 @@ describe("Reaction Auction app routes", () => {
     beforeEach(() => {
       jest.resetAllMocks()
       req = {
-        query: {},
         header: jest.fn(),
         originalUrl: "testurl.artsy.net/auction/auctionid/bid/artworkid",
+        query: {},
       }
       res = {
         locals: { sd: { CURRENT_USER: { access_token: "1" } } },
@@ -77,9 +77,9 @@ describe("Reaction Auction app routes", () => {
     beforeEach(() => {
       jest.resetAllMocks()
       req = {
-        query: {},
         header: jest.fn(),
         originalUrl: "testurl.artsy.net/auction-registration/deluxe-art-sale",
+        query: {},
       }
       res = {
         locals: { sd: { CURRENT_USER: { access_token: "1" } } },

@@ -22,6 +22,9 @@ describe("ArtworkSidebarMetadata", () => {
   ) => {
     return await renderRelayTree({
       Component: ArtworkSidebarMetadataFragmentContainer,
+      mockData: {
+        artwork: response,
+      } as ArtworkSidebarMetadata_Test_QueryRawResponse,
       query: graphql`
         query ArtworkSidebarMetadata_Test_Query @raw_response_type {
           artwork(id: "josef-albers-homage-to-the-square-85") {
@@ -29,9 +32,6 @@ describe("ArtworkSidebarMetadata", () => {
           }
         }
       `,
-      mockData: {
-        artwork: response,
-      } as ArtworkSidebarMetadata_Test_QueryRawResponse,
     })
   }
 

@@ -4,7 +4,7 @@ import { mount } from "enzyme"
 import { FairWeekPageScaffold } from "../PageScaffold"
 
 // FIXME: Reaction migration
-xdescribe("FairWeekPageScaffold", () => {
+describe.skip("FairWeekPageScaffold", () => {
   const Fixture = require("desktop/apps/armory_week/fixture.json")
   const getWrapper = (data = {}) => {
     const props = extend(cloneDeep(Fixture), data)

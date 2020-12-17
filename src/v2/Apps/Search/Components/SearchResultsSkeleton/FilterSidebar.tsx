@@ -7,7 +7,7 @@ const FilterSidebarSection: React.SFC<any> = props => {
       <Box
         width={80}
         height={14}
-        style={{ marginBottom: "15px", backgroundColor: color("black10") }}
+        style={{ backgroundColor: color("black10"), marginBottom: "15px" }}
       />
       <Flex alignItems="center" mt={10}>
         <Box width={20} height={20} bg={color("black10")} mr={1} />

@@ -19,9 +19,9 @@ export class DesktopModal extends Component<DesktopModalProps> {
   onClose = () => {
     this.props.tracking.trackEvent({
       action: "Click",
-      type: "dismiss",
-      label: "dismiss auth modal",
       flow: "auth",
+      label: "dismiss auth modal",
+      type: "dismiss",
     })
 
     this.props.onClose()

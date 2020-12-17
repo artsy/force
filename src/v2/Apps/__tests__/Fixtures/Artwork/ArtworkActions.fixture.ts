@@ -3,33 +3,33 @@ import { ArtworkActions_Test_QueryRawResponse } from "v2/__generated__/ArtworkAc
 export const ArtworkActionsFixture: ArtworkActions_Test_QueryRawResponse & {
   user: User
 } = {
-  user: {
-    type: "Admin",
-    roles: ["admin", "team"],
-  },
   artwork: {
-    id:
-      "QXJ0d29yazpwYWJsby1waWNhc3NvLWZlbW1lLWFzc2lzZS1kYW5zLXVuLWZhdXRldWlsLXRyZXNzZQ==",
-    internalID: "5bae581fc60fcc53df98dfcc",
-    slug: "pablo-picasso-femme-assise-dans-un-fauteuil-tresse",
-    is_saved: true,
-    is_downloadable: true,
-    is_hangable: true,
-    href: "/artwork/pablo-picasso-femme-assise-dans-un-fauteuil-tresse",
     artists: [
       {
-        name: "Pablo Picasso",
         id: "asfds",
+        name: "Pablo Picasso",
       },
     ],
+    href: "/artwork/pablo-picasso-femme-assise-dans-un-fauteuil-tresse",
+    id:
+      "QXJ0d29yazpwYWJsby1waWNhc3NvLWZlbW1lLWFzc2lzZS1kYW5zLXVuLWZhdXRldWlsLXRyZXNzZQ==",
     image: {
       height: 540,
-      width: 540,
       internalID: "5aa17f397622dd4f3b006294",
       url:
         "https://d32dm0rphc51dk.cloudfront.net/sSoqyQKLQrfODvlAR-oOjw/larger.jpg",
+      width: 540,
     },
-    title: "FEMME ASSISE DANS UN FAUTEUIL TRESSE",
+    date: "1979-1982",
+    internalID: "5bae581fc60fcc53df98dfcc",
+    artworkMeta: {
+      share: "Share this please",
+    },
+    is_downloadable: true,
+    dimensions: {
+      cm: "76.2 × 55.9 cm",
+    },
+    is_saved: true,
     images: [
       {
         url:
@@ -44,21 +44,21 @@ export const ArtworkActionsFixture: ArtworkActions_Test_QueryRawResponse & {
           "https://d32dm0rphc51dk.cloudfront.net/d_bpX6nAmEDYjNPM1CshMQ/larger.jpg",
       },
     ],
-    date: "1979-1982",
-    dimensions: {
-      cm: "76.2 × 55.9 cm",
-    },
-    artworkMeta: {
-      share: "Share this please",
-    },
-    sale: {
-      id: "sdfdsf",
-      is_closed: true,
-      is_auction: false,
-    },
+    slug: "pablo-picasso-femme-assise-dans-un-fauteuil-tresse",
+    is_hangable: true,
     partner: {
       id: "foo",
       slug: "gallery",
     },
+    sale: {
+      id: "sdfdsf",
+      is_auction: false,
+      is_closed: true,
+    },
+    title: "FEMME ASSISE DANS UN FAUTEUIL TRESSE",
+  },
+  user: {
+    roles: ["admin", "team"],
+    type: "Admin",
   },
 }

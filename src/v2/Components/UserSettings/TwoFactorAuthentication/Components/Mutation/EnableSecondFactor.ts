@@ -12,23 +12,6 @@ export const EnableSecondFactor = (
   return new Promise<EnableSecondFactorMutationResponse>(
     async (resolve, reject) => {
       commitMutation<EnableSecondFactorMutation>(environment, {
-        onCompleted: data => {
-          const response = data.enableSecondFactor.secondFactorOrErrors
-
-          switch (response.__typename) {
-            case "AppSecondFactor":
-              resolve(data)
-              break
-            case "SmsSecondFactor":
-              resolve(data)
-              break
-            case "Errors":
-              reject(response.errors)
-          }
-        },
-        onError: error => {
-          reject(error)
-        },
         mutation: graphql`
           mutation EnableSecondFactorMutation($input: EnableSecondFactorInput!)
             @raw_response_type {
@@ -53,6 +36,23 @@ export const EnableSecondFactor = (
             }
           }
         `,
+        onCompleted: data => {
+          const response = data.enableSecondFactor.secondFactorOrErrors
+
+          switch (response.__typename) {
+            case "AppSecondFactor":
+              resolve(data)
+              break
+            case "SmsSecondFactor":
+              resolve(data)
+              break
+            case "Errors":
+              reject(response.errors)
+          }
+        },
+        onError: error => {
+          reject(error)
+        },
         variables: {
           input,
         },

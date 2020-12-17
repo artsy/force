@@ -14,8 +14,8 @@ describe("ModalDialog", () => {
     defaultProps = {
       heading: "Heading",
       primaryCta: {
-        text: "Submit",
         action: jest.fn(),
+        text: "Submit",
       },
       show: true,
     }
@@ -45,8 +45,8 @@ describe("ModalDialog", () => {
     it("shows the secondary cta button if present", () => {
       const dialog = getWrapper({
         secondaryCta: {
-          text: "Cancel",
           action: jest.fn(),
+          text: "Cancel",
         },
       })
 

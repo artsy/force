@@ -25,8 +25,8 @@ export const getMaxMinPrice = (
   )
 
   return {
-    min: leastExpensive.min || mostExpensive.min,
     max: mostExpensive.max || leastExpensive.max,
+    min: leastExpensive.min || mostExpensive.min,
   }
 }
 
@@ -34,7 +34,7 @@ const getPriceRange = (
   listPrice: SeoProductsForCollections_ascending_artworks["edges"][0]["node"]["listPrice"]
 ) => {
   if (!listPrice) {
-    return { min: undefined, max: undefined }
+    return { max: undefined, min: undefined }
   }
 
   switch (listPrice.__typename) {
@@ -43,13 +43,13 @@ const getPriceRange = (
       const localMax = get(listPrice, x => x.maxPrice.major)
 
       return {
-        min: localMin || localMax,
         max: localMax || localMin,
+        min: localMin || localMax,
       }
     case "Money":
       return {
-        min: get(listPrice, x => x.major),
         max: get(listPrice, x => x.major),
+        min: get(listPrice, x => x.major),
       }
   }
 }
@@ -76,16 +76,16 @@ export class SeoProducts extends React.Component<SeoProductsProps> {
       <>
         <Product
           data={{
-            name: collectionName,
             description: collectionDescription,
-            url: collectionURL,
+            name: collectionName,
             offers: {
               "@type": "AggregateOffer",
-              lowPrice: handledItems.min,
-              highPrice: handledItems.max,
-              priceCurrency: "USD",
               availability: "https://schema.org/InStock",
+              highPrice: handledItems.max,
+              lowPrice: handledItems.min,
+              priceCurrency: "USD",
             },
+            url: collectionURL,
           }}
         />
       </>
@@ -94,8 +94,8 @@ export class SeoProducts extends React.Component<SeoProductsProps> {
 }
 
 export const SeoProductsForCollections = createFragmentContainer(SeoProducts, {
-  descending_artworks: graphql`
-    fragment SeoProductsForCollections_descending_artworks on FilterArtworksConnection {
+  ascending_artworks: graphql`
+    fragment SeoProductsForCollections_ascending_artworks on FilterArtworksConnection {
       edges {
         node {
           id
@@ -121,8 +121,8 @@ export const SeoProductsForCollections = createFragmentContainer(SeoProducts, {
       }
     }
   `,
-  ascending_artworks: graphql`
-    fragment SeoProductsForCollections_ascending_artworks on FilterArtworksConnection {
+  descending_artworks: graphql`
+    fragment SeoProductsForCollections_descending_artworks on FilterArtworksConnection {
       edges {
         node {
           id

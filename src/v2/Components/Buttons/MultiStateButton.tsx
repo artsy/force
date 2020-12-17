@@ -78,8 +78,8 @@ export const StyledButton = styled(Button)`
 `
 
 StyledButton.defaultProps = {
-  state: MultiButtonState.Default,
   block: false,
+  state: MultiButtonState.Default,
 }
 
 export default StyledButton

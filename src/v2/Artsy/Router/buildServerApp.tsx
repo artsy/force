@@ -79,18 +79,18 @@ export function buildServerApp(
       const resolver = new Resolver(relayEnvironment)
 
       const Render = createRender({
+        renderError: RenderError,
         renderPending: RenderPending,
         renderReady: RenderReady,
-        renderError: RenderError,
       })
 
       const farceResults = await getFarceResult({
-        url: req.url,
         historyMiddlewares,
-        routeConfig: createRouteConfig(routes),
-        resolver,
         matchContext: serverContext,
         render: props => <Render {...props} />,
+        resolver,
+        routeConfig: createRouteConfig(routes),
+        url: req.url,
       })
 
       if (isRedirect(farceResults)) {
@@ -148,9 +148,9 @@ export function buildServerApp(
 
         const assetPublicPath = (getENV("CDN_URL") || "") + assetsPath
         const extractor = new ChunkExtractor({
-          statsFile,
           entrypoints: [],
           publicPath: assetPublicPath,
+          statsFile,
         })
 
         // Wrap component tree in library contexts to extract usage
@@ -231,10 +231,10 @@ export function buildServerApp(
 
         const result = {
           bodyHTML,
-          status: farceResults.status,
           headTags,
-          styleTags,
           scripts: scripts.join("\n"),
+          status: farceResults.status,
+          styleTags,
         }
 
         // Only exporting this for testing purposes, don't go around using this

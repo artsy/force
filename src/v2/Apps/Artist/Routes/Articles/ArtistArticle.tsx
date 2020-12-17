@@ -69,10 +69,10 @@ const LargeArticleItem: SFC<ArticleItemProps> = props => {
             <Image
               style={{
                 height: "100px",
-                width: "auto",
-                maxWidth: 140,
                 maxHeight: 280,
+                maxWidth: 140,
                 objectFit: "fill",
+                width: "auto",
               }}
               src={imageUrl}
               alt={title}

@@ -46,8 +46,8 @@ export class CollectionsGrid extends Component<CollectionsGridProps> {
               const imageUrl =
                 collection.headerImage &&
                 crop(collection.headerImage, {
-                  width: 50,
                   height: 50,
+                  width: 50,
                 })
 
               return (

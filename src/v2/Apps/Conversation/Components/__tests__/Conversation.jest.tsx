@@ -8,11 +8,10 @@ describe("Conversation", () => {
     describe("when inquiry item is an artwork", () => {
       const artworkItemProps: Conversation_conversation["items"][0]["item"] = {
         __typename: "Artwork",
-        id: "12345",
-        date: "June 22, 2020",
-        title: "Untitled",
         artistNames: "Banksy",
+        date: "June 22, 2020",
         href: "site.com/banksy",
+        id: "12345",
         image: {
           url: "image.com/banksy-image",
         },
@@ -20,6 +19,7 @@ describe("Conversation", () => {
           __typename: "Money",
           display: "$2000",
         },
+        title: "Untitled",
       }
 
       it("renders the artwork item", () => {
@@ -41,19 +41,19 @@ describe("Conversation", () => {
     describe("when inquiry item is a show", () => {
       const showItemProps: Conversation_conversation["items"][0]["item"] = {
         __typename: "Show",
-        id: "12345",
+        coverImage: {
+          url: "image.com/fair-image",
+        },
         fair: {
-          name: "Art Fair 2020",
           exhibitionPeriod: "June 25 - June 28",
           location: {
             city: "New York",
           },
+          name: "Art Fair 2020",
         },
         href: "site.com/art-fair-2020",
+        id: "12345",
         name: "Art Fair 2020",
-        coverImage: {
-          url: "image.com/fair-image",
-        },
       }
 
       it("renders the show item", () => {

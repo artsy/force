@@ -61,9 +61,9 @@ const Registration: React.FC<RegistrationProps> = props => {
   const b = block("auction-Registration")
   const trackClick = desc => e => {
     window.analytics.track(desc, {
-      context_type: "auctions landing",
       auction_slug: auction.id,
       auction_state: auction.auctionState,
+      context_type: "auctions landing",
       user_id: user?.id,
     })
   }
@@ -195,20 +195,20 @@ const mapStateToProps = (state): RegistrationProps => {
   const showContactInfo = !isMobile
   return {
     auction: {
-      id: auction.id,
-      requireIdentityVerification: auction.get("requireIdentityVerification"),
       auctionState: auction.get("auction_state"),
+      id: auction.id,
       isClosed: auction.isClosed() || auction.get("clockState") === "closed",
       isLiveOpen: auction.get("is_live_open"),
       isRegistrationEnded: auction.isRegistrationEnded(),
+      requireIdentityVerification: auction.get("requireIdentityVerification"),
     },
     isEcommerceSale,
     isMobile,
+    showContactInfo,
+    user,
     userRegistration: userRegistration && {
       qualifiedForBidding: userRegistration.qualified_for_bidding,
     },
-    showContactInfo,
-    user,
   }
 }
 

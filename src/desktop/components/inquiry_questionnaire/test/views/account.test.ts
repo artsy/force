@@ -24,10 +24,10 @@ describe(
     let view
     beforeEach(() => {
       view = new Account({
-        user: new LoggedOutUser(fabricate("user")),
         artwork: new Artwork(fabricate("artwork")),
-        state: new State(),
         inquiry: new ArtworkInquiry(),
+        state: new State(),
+        user: new LoggedOutUser(fabricate("user")),
       })
     })
 
@@ -217,10 +217,10 @@ describe(
         Account.__set__("Form", Form)
         const submitFunc = sinon.stub()
         const errorView = new Account({
-          user: new LoggedOutUser(fabricate("user")),
           artwork: new Artwork(fabricate("artwork")),
-          state: new State(),
           inquiry: new ArtworkInquiry(),
+          state: new State(),
+          user: new LoggedOutUser(fabricate("user")),
         })
         errorView.submit = submitFunc
         errorView.render()

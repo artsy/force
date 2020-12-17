@@ -27,18 +27,24 @@ export const SendConversationMessage = (
     ConnectionHandler.insertEdgeBefore(connection, newMessageEdge)
   }
   return commitMutation<SendConversationMessageMutation>(environment, {
-    onError,
-    onCompleted,
-    updater: storeUpdater,
-    variables: {
-      input: {
-        id: conversation.internalID,
-        from: conversation.from.email,
-        bodyText: text,
-        // Reply to the last message
-        replyToMessageID: conversation.lastMessageID,
+    configs: [
+      {
+        connectionName: "messagesConnection",
+        edgeName: "messageEdge",
+        connectionInfo: [
+          {
+            key: "Messages_messagesConnection",
+            rangeBehavior: "append",
+          },
+        ],
+        parentName: "conversation",
+        parentID: "id",
+        type: "RANGE_ADD",
+        rangeBehaviors: {
+          "": "append",
+        },
       },
-    },
+    ],
     mutation: graphql`
       mutation SendConversationMessageMutation(
         $input: SendConversationMessageMutationInput!
@@ -57,23 +63,17 @@ export const SendConversationMessage = (
         }
       }
     `,
-    configs: [
-      {
-        type: "RANGE_ADD",
-        parentName: "conversation",
-        parentID: "id",
-        connectionName: "messagesConnection",
-        edgeName: "messageEdge",
-        rangeBehaviors: {
-          "": "append",
-        },
-        connectionInfo: [
-          {
-            key: "Messages_messagesConnection",
-            rangeBehavior: "append",
-          },
-        ],
+    onCompleted,
+    onError,
+    updater: storeUpdater,
+    variables: {
+      input: {
+        bodyText: text,
+        from: conversation.from.email,
+        id: conversation.internalID,
+        // Reply to the last message
+        replyToMessageID: conversation.lastMessageID,
       },
-    ],
+    },
   })
 }

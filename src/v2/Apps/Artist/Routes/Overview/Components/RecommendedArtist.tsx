@@ -24,8 +24,8 @@ class RecommendedArtistWithTracking extends React.Component<
   RecommendedArtistProps
 > {
   @track({
-    type: Schema.Type.Thumbnail,
     action_type: Schema.ActionType.Click,
+    type: Schema.Type.Thumbnail,
   })
   trackArtworkClicked() {
     // noop

@@ -25,11 +25,11 @@ describe("MobileLoginForm", () => {
 
   beforeEach(() => {
     props = {
-      values: {},
       handleSubmit: jest.fn(),
       handleTypeChange: jest.fn(),
-      onFacebookLogin: jest.fn(),
       onAppleLogin: jest.fn(),
+      onFacebookLogin: jest.fn(),
+      values: {},
     }
     window.grecaptcha.execute.mockClear()
     location.assign = jest.fn()
@@ -198,8 +198,8 @@ describe("MobileLoginForm", () => {
           setTimeout(() => {
             expect(props.handleSubmit.mock.calls[0][0]).toEqual({
               email: "email@email.com",
-              password: "password",
               otp_attempt: "123456",
+              password: "password",
             })
             done()
           })

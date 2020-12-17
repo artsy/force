@@ -45,21 +45,21 @@ describe("Genes", () => {
           genes: {
             edges: [
               {
-                node: { id: "classic", name: "Classic", href: "/gene/classic" },
+                node: { href: "/gene/classic", id: "classic", name: "Classic" },
               },
-              { node: { id: "modern", name: "Modern", href: "/gene/modern" } },
+              { node: { href: "/gene/modern", id: "modern", name: "Modern" } },
               {
                 node: {
+                  href: "/gene/postmodern",
                   id: "postmodern",
                   name: "Postmodern",
-                  href: "/gene/postmodern",
                 },
               },
               {
                 node: {
+                  href: "/gene/contemporary",
                   id: "contemporary",
                   name: "Contemporary",
-                  href: "/gene/contemporary",
                 },
               },
             ],
@@ -78,56 +78,56 @@ describe("Genes", () => {
           genes: {
             edges: [
               {
-                node: { id: "classic", name: "Classic", href: "/gene/classic" },
+                node: { href: "/gene/classic", id: "classic", name: "Classic" },
               },
-              { node: { id: "modern", name: "Modern", href: "/gene/modern" } },
+              { node: { href: "/gene/modern", id: "modern", name: "Modern" } },
               {
                 node: {
+                  href: "/gene/modern-revival",
                   id: "modern-revival",
                   name: "Modern revival",
-                  href: "/gene/modern-revival",
                 },
               },
               {
                 node: {
+                  href: "/gene/pre-postmodern",
                   id: "pre-postmodern",
                   name: "Pre postmodern",
-                  href: "/gene/pre-postmodern",
                 },
               },
               {
                 node: {
+                  href: "/gene/postmodern",
                   id: "postmodern",
                   name: "Postmodern",
-                  href: "/gene/postmodern",
                 },
               },
               {
                 node: {
+                  href: "/gene/post-postmodern",
                   id: "post-postmodern",
                   name: "Post postmodern",
-                  href: "/gene/post-postmodern",
                 },
               },
               {
                 node: {
+                  href: "/gene/hypermodern",
                   id: "hyper-modern",
                   name: "Hyper modern",
-                  href: "/gene/hypermodern",
                 },
               },
               {
                 node: {
+                  href: "/gene/contemporary",
                   id: "contemporary",
                   name: "Contemporary",
-                  href: "/gene/contemporary",
                 },
               },
               {
                 node: {
+                  href: "/gene/post-contemporary",
                   id: "post-contmporary",
                   name: "Post contemporary",
-                  href: "/gene/post-contemporary",
                 },
               },
             ],

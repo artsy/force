@@ -1,6 +1,5 @@
 export const saleV2 = {
   _id: "5e94bcfaf9002800071b8769",
-  id: "yuki-mocktion-4-slash-13-4",
   associated_sale: {
     cover_image: {
       cropped: {
@@ -24,6 +23,7 @@ export const saleV2 = {
   description: "*She Inspires Art,*",
   eligible_sale_artworks_count: 10,
   end_at: "2020-04-27T19:26:00+00:00",
+  id: "yuki-mocktion-4-slash-13-4",
   is_auction: true,
   is_closed: false,
   is_live_open: false,
@@ -38,29 +38,29 @@ export const saleV2 = {
         {
           node: {
             artwork: {
-              id: "alexander-calder-sun-and-moon-3",
-              title: "Sun and Moon",
-              date: "1964",
-              sale_message: "Contact For Price",
-              is_in_auction: true,
-              image: {
-                placeholder: "100.05%",
-                url:
-                  "https://d32dm0rphc51dk.cloudfront.net/AEnsHOvswC0pGxrCUcxLSg/medium.jpg",
-                aspect_ratio: 1,
-              },
               artists: [
                 {
-                  id: "alexander-calder",
                   href: "/artist/alexander-calder",
+                  id: "alexander-calder",
                   name: "Alexander Calder",
                 },
               ],
+              date: "1964",
+              href: "/artwork/alexander-calder-sun-and-moon-3",
+              id: "alexander-calder-sun-and-moon-3",
+              image: {
+                aspect_ratio: 1,
+                placeholder: "100.05%",
+                url:
+                  "https://d32dm0rphc51dk.cloudfront.net/AEnsHOvswC0pGxrCUcxLSg/medium.jpg",
+              },
+              is_acquireable: false,
+              is_in_auction: true,
               partner: {
                 name: "Wright",
               },
-              href: "/artwork/alexander-calder-sun-and-moon-3",
-              is_acquireable: false,
+              sale_message: "Contact For Price",
+              title: "Sun and Moon",
             },
           },
         },

@@ -13,8 +13,8 @@ describe("ForgotPasswordForm", () => {
   beforeEach(() => {
     props = {
       handleSubmit: jest.fn(),
-      values: { email: "foo@bar.com" },
       handleTypeChange: jest.fn(),
+      values: { email: "foo@bar.com" },
     }
     window.grecaptcha.execute.mockClear()
   })

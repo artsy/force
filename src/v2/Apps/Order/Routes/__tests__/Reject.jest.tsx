@@ -20,28 +20,22 @@ const realSetInterval = global.setInterval
 
 const testOrder: RejectTestQueryRawResponse["order"] = {
   ...OfferOrderWithShippingDetails,
-  stateExpiresAt: DateTime.fromISO(NOW)
-    .plus({ days: 1 })
-    .toString(),
   lastOffer: {
-    internalID: "last-offer-id",
-    id: "last-offer-id",
     createdAt: DateTime.fromISO(NOW)
       .minus({ days: 1 })
       .toString(),
+    id: "last-offer-id",
+    internalID: "last-offer-id",
   },
+  stateExpiresAt: DateTime.fromISO(NOW)
+    .plus({ days: 1 })
+    .toString(),
 }
 
 describe("Buyer rejects seller offer", () => {
   const { mutations, buildPage, routes } = createTestEnv({
     Component: RejectFragmentContainer,
-    query: graphql`
-      query RejectTestQuery @raw_response_type {
-        order: commerceOrder(id: "unused") {
-          ...Reject_order
-        }
-      }
-    `,
+    TestPage: OrderAppTestPage,
     defaultData: {
       order: testOrder,
       system: {
@@ -53,7 +47,13 @@ describe("Buyer rejects seller offer", () => {
     defaultMutationResults: {
       ...rejectOfferSuccess,
     },
-    TestPage: OrderAppTestPage,
+    query: graphql`
+      query RejectTestQuery @raw_response_type {
+        order: commerceOrder(id: "unused") {
+          ...Reject_order
+        }
+      }
+    `,
   })
 
   describe("the page layout", () => {

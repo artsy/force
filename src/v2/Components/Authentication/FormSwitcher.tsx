@@ -80,8 +80,8 @@ export class FormSwitcher extends React.Component<FormSwitcherProps, State> {
     const event = Object.assign(
       {
         contextModule,
-        intent,
         copy: copy || title,
+        intent,
         triggerSeconds,
         type: AuthModalType[type],
       },
@@ -160,9 +160,9 @@ export class FormSwitcher extends React.Component<FormSwitcherProps, State> {
       options,
       {
         accepted_terms_of_service: true,
+        afterSignUpAction: this.getAfterSignupAction(options),
         agreed_to_receive_emails: true,
         "signup-referer": options.signupReferer,
-        afterSignUpAction: this.getAfterSignupAction(options),
       },
       options.redirectTo || options["redirect-to"]
         ? {
@@ -196,10 +196,10 @@ export class FormSwitcher extends React.Component<FormSwitcherProps, State> {
     const { handleSubmit, onBackButtonClicked, values } = this.props
 
     const defaultValues = {
-      email: this.getEmailValue(),
-      password: values.password || "",
-      name: values.name || "",
       accepted_terms_of_service: values.accepted_terms_of_service || false,
+      email: this.getEmailValue(),
+      name: values.name || "",
+      password: values.password || "",
     }
 
     return (

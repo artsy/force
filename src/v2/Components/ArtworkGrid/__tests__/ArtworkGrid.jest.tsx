@@ -117,6 +117,9 @@ describe("ArtworkGrid", () => {
       return await renderRelayTree({
         Component: TestContainer,
         componentProps,
+        mockData: {
+          artist: { artworks_connection: artworks },
+        } as ArtworkGrid_Test_QueryRawResponse,
         query: graphql`
           query ArtworkGrid_Test_Query @raw_response_type {
             artist(id: "pablo-picasso") {
@@ -124,9 +127,6 @@ describe("ArtworkGrid", () => {
             }
           }
         `,
-        mockData: {
-          artist: { artworks_connection: artworks },
-        } as ArtworkGrid_Test_QueryRawResponse,
       })
     }
 
@@ -152,8 +152,8 @@ describe("ArtworkGrid", () => {
     it("Can call onClearFilters from empty message", async () => {
       const onClearFilters = jest.fn()
       const wrapper = await getRelayWrapper({
-        onClearFilters,
         artworks: { ...props.artworks, edges: [] },
+        onClearFilters,
       })
       wrapper.find(ResetFilterLink).simulate("click")
       expect(onClearFilters).toBeCalled()
@@ -201,8 +201,8 @@ describe("ArtworkGrid", () => {
 
     it("Should preload same number of images as specified in preloadImageCount", async () => {
       const wrapper = await getRelayWrapper({
-        preloadImageCount: 2,
         columnCount: 2,
+        preloadImageCount: 2,
         ...props,
       })
       const gridItems = wrapper.find(GridItem)

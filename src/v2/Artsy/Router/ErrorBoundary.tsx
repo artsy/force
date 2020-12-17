@@ -19,8 +19,8 @@ interface State {
 export class ErrorBoundary extends React.Component<Props, State> {
   state = {
     asyncChunkLoadError: false,
-    genericError: false,
     errorStack: "",
+    genericError: false,
   }
 
   componentDidCatch(error, errorInfo) {
@@ -49,8 +49,8 @@ export class ErrorBoundary extends React.Component<Props, State> {
     }
 
     return {
-      genericError: true,
       errorStack,
+      genericError: true,
     }
   }
 

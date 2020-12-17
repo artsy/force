@@ -21,8 +21,6 @@ describe("ArtistSeriesRail", () => {
 
   function singleData() {
     return {
-      title: "1787 keyboard",
-      price_guidance: 10000,
       artworksConnection: {
         edges: [
           {
@@ -30,15 +28,17 @@ describe("ArtistSeriesRail", () => {
               artist: {
                 name: "Jasper Johns",
               },
-              title: "keyborad",
               image: {
                 url:
                   "https://d32dm0rphc51dk.cloudfront.net/4izTOpDv-ew-g1RFXeREcQ/small.jpg",
               },
+              title: "keyborad",
             },
           },
         ],
       },
+      price_guidance: 10000,
+      title: "1787 keyboard",
     }
   }
 

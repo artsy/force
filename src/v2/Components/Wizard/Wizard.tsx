@@ -89,13 +89,13 @@ export class Wizard extends React.Component<WizardProps, WizardState> {
   get wizardProps(): WizardRenderProps {
     return {
       currentStep: this.currentStep,
-      isLastStep: this.isLastStep,
-      previous: this.previous,
-      next: this.next,
       currentStepIndex: this.state.currentStepIndex,
-      steps: this.steps,
-      shouldAllowNext: false,
+      isLastStep: this.isLastStep,
+      next: this.next,
+      previous: this.previous,
       progressPercentage: (this.state.currentStepIndex + 1) / this.steps.length,
+      shouldAllowNext: false,
+      steps: this.steps,
     }
   }
 
@@ -163,8 +163,8 @@ export class Wizard extends React.Component<WizardProps, WizardState> {
       >
         {formikRenderProps => {
           const context: WizardContext = {
-            wizard: this.wizardProps,
             form: formikRenderProps,
+            wizard: this.wizardProps,
           }
 
           context.wizard.shouldAllowNext =
@@ -188,14 +188,14 @@ export class Wizard extends React.Component<WizardProps, WizardState> {
 
 class WizardContextProvider extends Component<WizardContext> {
   static childContextTypes = {
-    wizard: PropTypes.object,
     form: PropTypes.object,
+    wizard: PropTypes.object,
   }
 
   getChildContext(): WizardContext {
     return {
-      wizard: this.props.wizard,
       form: this.props.form,
+      wizard: this.props.wizard,
     }
   }
 

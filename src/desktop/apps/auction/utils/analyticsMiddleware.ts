@@ -55,10 +55,10 @@ function trackParamChange(changed, newState) {
   ]
 
   window.analytics.track("Commercial filter params changed", {
-    sale_id: _id,
     auction_slug: id,
-    user_id: USER_ID,
-    current,
     changed,
+    current,
+    sale_id: _id,
+    user_id: USER_ID,
   })
 }

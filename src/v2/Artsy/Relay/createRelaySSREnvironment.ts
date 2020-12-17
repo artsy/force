@@ -90,28 +90,35 @@ export function createRelaySSREnvironment(config: Config = {}) {
   const authenticatedHeaders = !!user
     ? {
         ...headers,
-        "X-USER-ID": user && user.id,
         "X-ACCESS-TOKEN": user && user.accessToken,
+        "X-USER-ID": user && user.id,
       }
     : headers
 
   const middlewares = [
     searchBarImmediateResolveMiddleware(),
     urlMiddleware({
-      url: METAPHYSICS_ENDPOINT,
       headers: authenticatedHeaders,
+      url: METAPHYSICS_ENDPOINT,
     }),
     relaySSRMiddleware.getMiddleware(),
     cacheMiddleware({
-      size: 100, // max 100 requests
-      ttl: 900000, // 15 minutes
-      clearOnMutation: true,
-      disableServerSideCache: !!user, // disable server-side cache if logged in
-      onInit: queryResponseCache => {
+      // 15 minutes
+clearOnMutation: true, 
+      
+disableServerSideCache: !!user, 
+      
+// disable server-side cache if logged in
+onInit: queryResponseCache => {
         if (!isServer) {
           hydrateCacheFromSSR(queryResponseCache)
         }
       },
+      
+
+size: 100, 
+      // max 100 requests
+ttl: 900000,
     }),
     principalFieldErrorHandlerMiddleware(),
     metaphysicsErrorHandlerMiddleware({ checkStatus }),
@@ -122,13 +129,21 @@ export function createRelaySSREnvironment(config: Config = {}) {
     ...(sd.ENABLE_QUERY_BATCHING
       ? [
           batchMiddleware({
-            headers: authenticatedHeaders,
-            batchUrl: `${METAPHYSICS_ENDPOINT}/batch`,
             // Period of time (integer in milliseconds) for gathering multiple requests
-            // before sending them to the server.
-            // Will delay sending of the requests on specified in this option period of time,
-            // so be careful and keep this value small. (default: 0)
-            batchTimeout: 0,
+// before sending them to the server.
+// Will delay sending of the requests on specified in this option period of time,
+// so be careful and keep this value small. (default: 0)
+batchTimeout: 0,
+            
+
+
+
+batchUrl: `${METAPHYSICS_ENDPOINT}/batch`,
+            
+            
+            
+            
+            headers: authenticatedHeaders,
           }),
         ]
       : []),

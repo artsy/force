@@ -1,7 +1,7 @@
 import { hasFilters } from "../hasFilters"
 
 describe("hasFilters", () => {
-  it("it returns false if only default filters have been applied", () => {
+  it("returns false if only default filters have been applied", () => {
     expect(
       hasFilters({
         height: "*-*",
@@ -14,7 +14,7 @@ describe("hasFilters", () => {
     ).toEqual(false)
   })
 
-  it("it returns true if additional filters have been applied", () => {
+  it("returns true if additional filters have been applied", () => {
     expect(
       hasFilters({
         acquireable: true,

@@ -70,30 +70,30 @@ describe("ArtistConsignButton", () => {
 
   describe("Top 20 (Microfunnel) and Target Supply Button", () => {
     const response = {
-      targetSupply: {
-        isInMicrofunnel: true,
-        isTargetSupply: true,
-      },
-      internalID: "fooBarBaz",
-      slug: "alex-katz",
-      name: "Alex Katz",
       href: "/artist/alex-katz",
+      id: "QXJ0aXN0OjRkOGQxMjBjODc2YzY5N2FlMTAwMDA0Ng==",
       image: {
         cropped: {
           url:
             "https://d7hftxdivxxvm.cloudfront.net?resize_to=fill&width=75&height=66&quality=80&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FbrHdWfNxoereaVk2VOneuw%2Flarge.jpg",
         },
       },
-      id: "QXJ0aXN0OjRkOGQxMjBjODc2YzY5N2FlMTAwMDA0Ng==",
+      internalID: "fooBarBaz",
+      name: "Alex Katz",
+      slug: "alex-katz",
+      targetSupply: {
+        isInMicrofunnel: true,
+        isTargetSupply: true,
+      },
     }
 
     const analyticsEvent = {
       action_type: "Click",
+      context_module: "ArtistConsignment",
       context_page: "Artist",
       context_page_owner_id: response.internalID,
       context_page_owner_slug: response.slug,
       context_page_owner_type: "Artist",
-      context_module: "ArtistConsignment",
       subject: "Get Started",
     }
 
@@ -196,30 +196,30 @@ describe("ArtistConsignButton", () => {
 
   describe("Default Button", () => {
     const response = {
-      targetSupply: {
-        isInMicrofunnel: false,
-        isTargetSupply: false,
-      },
-      internalID: "fooBarBaz",
-      slug: "alex-katz",
-      name: "Andy Warhol",
       href: "/artist/andy-warhol",
+      id: "QXJ0aXN0OjRkOGQxMjBjODc2YzY5N2FlMTAwMDA0Ng==",
       image: {
         cropped: {
           url:
             "https://d7hftxdivxxvm.cloudfront.net?resize_to=fill&width=75&height=66&quality=80&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FbrHdWfNxoereaVk2VOneuw%2Flarge.jpg",
         },
       },
-      id: "QXJ0aXN0OjRkOGQxMjBjODc2YzY5N2FlMTAwMDA0Ng==",
+      internalID: "fooBarBaz",
+      name: "Andy Warhol",
+      slug: "alex-katz",
+      targetSupply: {
+        isInMicrofunnel: false,
+        isTargetSupply: false,
+      },
     }
 
     const analyticsEvent = {
       action_type: "Click",
+      context_module: "ArtistConsignment",
       context_page: "Artist",
       context_page_owner_id: response.internalID,
       context_page_owner_slug: response.slug,
       context_page_owner_type: "Artist",
-      context_module: "ArtistConsignment",
       subject: "Get Started",
     }
 

@@ -22,10 +22,10 @@ const searchResults: SearchBarTestQueryRawResponse["viewer"] = {
         node: {
           __typename: "SearchableItem",
           displayLabel: "Percy Z",
-          href: "/cat/percy-z",
           displayType: "Cat",
-          slug: "percy-z",
+          href: "/cat/percy-z",
           id: "opaque-searchable-item-id",
+          slug: "percy-z",
         },
       },
     ],
@@ -46,6 +46,9 @@ const getWrapper = (
 ) => {
   return renderRelayTree({
     Component: SearchBar,
+    mockData: {
+      viewer,
+    } as SearchBarTestQueryRawResponse,
     query: graphql`
       query SearchBarTestQuery($term: String!, $hasTerm: Boolean!)
         @raw_response_type {
@@ -54,12 +57,9 @@ const getWrapper = (
         }
       }
     `,
-    mockData: {
-      viewer,
-    } as SearchBarTestQueryRawResponse,
     variables: {
-      term: "perc",
       hasTerm: true,
+      term: "perc",
     },
     wrapper: children => (
       <MockBoot breakpoint={breakpoint as any}>{children}</MockBoot>
@@ -119,15 +119,15 @@ describe("getSearchTerm", () => {
   function buildLocationWithQueryString(queryString: string): Location {
     return {
       ancestorOrigins: undefined,
+      assign: undefined,
+      hash: undefined,
       host: undefined,
       hostname: undefined,
       href: undefined,
       origin: undefined,
+      pathname: undefined,
       port: undefined,
       protocol: undefined,
-      assign: undefined,
-      hash: undefined,
-      pathname: undefined,
       reload: undefined,
       replace: undefined,
       search: queryString,

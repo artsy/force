@@ -23,8 +23,8 @@ const HEIGHT = 180
 })
 export class RecentlyViewed extends React.Component<RecentlyViewedProps> {
   @track({
-    type: Schema.Type.Thumbnail,
     action_type: Schema.ActionType.Click,
+    type: Schema.Type.Thumbnail,
   })
   trackClick() {
     //

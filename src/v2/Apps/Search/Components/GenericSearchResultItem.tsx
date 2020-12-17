@@ -32,11 +32,11 @@ export class GenericSearchResultItem extends React.Component<
 > {
   @track((props: GenericSearchResultItemProps) => ({
     action_type: Schema.ActionType.SelectedItemFromSearchPage,
-    query: props.term,
+    destination_path: props.href,
+    item_id: props.id,
     item_number: props.index,
     item_type: props.entityType,
-    item_id: props.id,
-    destination_path: props.href,
+    query: props.term,
   }))
   handleClick() {
     // no-op

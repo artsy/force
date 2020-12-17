@@ -1,27 +1,32 @@
 import { SeoDataForArtwork_Test_QueryRawResponse } from "v2/__generated__/SeoDataForArtwork_Test_Query.graphql"
 
 export const SeoDataForArtworkFixture: SeoDataForArtwork_Test_QueryRawResponse["artwork"] = {
-  id: "opaque-artwork-id",
-  href: "/artwork/an-artwork",
+  artist_names: "Artist McArtist",
+  availability: "for sale",
   date: "1950",
+  category: "Design/Decorative Art",
+  href: "/artwork/an-artwork",
+  dimensions: {
+    in: "1 × 2 in",
+  },
+  id: "opaque-artwork-id",
   is_price_hidden: false,
   is_price_range: false,
   listPrice: null,
+  meta: {
+    description: "artwork description",
+    title: "artwork title",
+  },
   meta_image: {
     resized: {
-      width: 640,
       height: 640,
       url: "artwork-image",
+      width: 640,
     },
-  },
-  meta: {
-    title: "artwork title",
-    description: "artwork description",
   },
   partner: {
     id: "opaque-partner-id",
     name: "Wright",
-    type: "Auction House",
     profile: {
       id: "opaque-profile-id",
       image: {
@@ -30,11 +35,6 @@ export const SeoDataForArtworkFixture: SeoDataForArtwork_Test_QueryRawResponse["
         },
       },
     },
-  },
-  artist_names: "Artist McArtist",
-  availability: "for sale",
-  category: "Design/Decorative Art",
-  dimensions: {
-    in: "1 × 2 in",
+    type: "Auction House",
   },
 }

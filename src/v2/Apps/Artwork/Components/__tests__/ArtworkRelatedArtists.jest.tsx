@@ -37,7 +37,7 @@ describe("ArtworkRelatedArtists", () => {
 
   it("tracks ArtistCard clicks", () => {
     const props = {
-      artwork: { artist: ArtworkRelatedArtistsFixture, " $refType": null },
+      artwork: { " $refType": null, artist: ArtworkRelatedArtistsFixture },
     }
 
     const wrapper = getWrapper(props)

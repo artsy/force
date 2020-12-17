@@ -49,8 +49,8 @@ export interface SaveState {
 @track()
 export class SaveButton extends React.Component<SaveProps, SaveState> {
   state = {
-    is_saved: null,
     isHovered: false,
+    is_saved: null,
   }
 
   get isSaved() {
@@ -69,8 +69,8 @@ export class SaveButton extends React.Component<SaveProps, SaveState> {
     const trackingData: SaveTrackingProps = this.props.trackingData || {}
     const action = is_saved ? "Removed Artwork" : "Saved Artwork"
     const entityInfo = {
-      entity_slug: slug,
       entity_id: internalID,
+      entity_slug: slug,
     }
 
     if (tracking) {
@@ -96,20 +96,12 @@ export class SaveButton extends React.Component<SaveProps, SaveState> {
             }
           }
         `,
-        variables: {
-          input: {
-            artworkID: artwork.internalID,
-            remove: this.isSaved,
-          },
-        },
-        optimisticResponse: {
-          saveArtwork: {
-            artwork: {
-              id: artwork.id,
-              slug: artwork.slug,
-              is_saved: !this.isSaved,
-            },
-          },
+        onCompleted: ({ saveArtwork }) => {
+          if (this.props.render) {
+            this.setState({
+              is_saved: saveArtwork.artwork.is_saved,
+            })
+          }
         },
         onError: error => {
           // Revert optimistic update
@@ -121,12 +113,20 @@ export class SaveButton extends React.Component<SaveProps, SaveState> {
 
           console.error("Artwork/Save Error saving artwork: ", error)
         },
-        onCompleted: ({ saveArtwork }) => {
-          if (this.props.render) {
-            this.setState({
-              is_saved: saveArtwork.artwork.is_saved,
-            })
-          }
+        optimisticResponse: {
+          saveArtwork: {
+            artwork: {
+              id: artwork.id,
+              is_saved: !this.isSaved,
+              slug: artwork.slug,
+            },
+          },
+        },
+        variables: {
+          input: {
+            artworkID: artwork.internalID,
+            remove: this.isSaved,
+          },
         },
       })
       this.trackSave()
@@ -134,8 +134,8 @@ export class SaveButton extends React.Component<SaveProps, SaveState> {
       openAuthToFollowSave(this.props.mediator, {
         contextModule: this.props.contextModule,
         entity: {
-          slug: this.props.artwork.slug,
           name: this.props.artwork.title,
+          slug: this.props.artwork.slug,
         },
         intent: Intent.saveArtwork,
       })

@@ -73,9 +73,9 @@ export class PaymentRoute extends Component<PaymentProps, PaymentState> {
 
       if (result.type === "error") {
         this.props.dialog.showErrorDialog({
-          title: result.error,
           message:
             "Please enter another payment method or contact your bank for more information.",
+          title: result.error,
         })
         return
       }
@@ -177,9 +177,8 @@ export class PaymentRoute extends Component<PaymentProps, PaymentState> {
   }
   setOrderPayment(variables: PaymentRouteSetOrderPaymentMutation["variables"]) {
     return this.props.commitMutation<PaymentRouteSetOrderPaymentMutation>({
-      variables,
       // TODO: Inputs to the mutation might have changed case of the keys!
-      mutation: graphql`
+mutation: graphql`
         mutation PaymentRouteSetOrderPaymentMutation(
           $input: CommerceSetPaymentInput!
         ) {
@@ -211,6 +210,8 @@ export class PaymentRoute extends Component<PaymentProps, PaymentState> {
           }
         }
       `,
+      
+      variables,
     })
   }
 }

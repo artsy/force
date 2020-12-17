@@ -4,14 +4,14 @@ import { validateAddress } from "../formValidators"
 describe("formValidators/validateAddress", () => {
   function buildAddress(): Address {
     return {
-      name: "Artsy UK Ltd",
       addressLine1: "14 Gower's Walk",
       addressLine2: "Suite 2.5, The Loom",
       city: "Whitechapel",
-      region: "London",
-      postalCode: "E1 8PY",
       country: "UK",
+      name: "Artsy UK Ltd",
       phoneNumber: "8475937743",
+      postalCode: "E1 8PY",
+      region: "London",
     }
   }
 

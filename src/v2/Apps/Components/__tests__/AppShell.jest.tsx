@@ -29,8 +29,8 @@ describe("AppShell", () => {
         {
           routes: [
             {
-              path: "/foo",
               Component: () => <div />,
+              path: "/foo",
             },
           ],
         },
@@ -55,8 +55,8 @@ describe("AppShell", () => {
         {
           routes: [
             {
-              path: "/foo",
               Component: () => <div />,
+              path: "/foo",
               prepare: () => {
                 done()
               },

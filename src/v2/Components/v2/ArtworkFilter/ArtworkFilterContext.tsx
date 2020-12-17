@@ -10,11 +10,11 @@ import { paramsToCamelCase } from "./Utils/urlBuilder"
  * Initial filter state
  */
 export const initialArtworkFilterState: ArtworkFilters = {
+  artistIDs: [],
   majorPeriods: [],
   page: 1,
   sizes: [],
   sort: "-decayed_merch",
-  artistIDs: [],
 
   // TODO: Remove these unneeded default props
   // height: "*-*",
@@ -136,6 +136,7 @@ export interface ArtworkFilterContextProps {
 export const ArtworkFilterContext = React.createContext<
   ArtworkFilterContextProps
 >({
+  ZeroState: null,
   filters: initialArtworkFilterState,
   hasFilters: false,
   isDefaultValue: null,
@@ -144,7 +145,6 @@ export const ArtworkFilterContext = React.createContext<
   setFilter: null,
   sortOptions: [],
   unsetFilter: null,
-  ZeroState: null,
 })
 
 export type SortOptions = Array<{
@@ -217,84 +217,117 @@ export const ArtworkFilterContextProvider: React.FC<
   }
 
   const artworkFilterContext = {
-    filters: artworkFilterState,
-    hasFilters: hasFilters(artworkFilterState),
-    stagedFilters: stagedArtworkFilterState,
-    currentlySelectedFilters: currentlySelectedFilters,
-
-    // Handlers
-    onFilterClick,
-
-    // Sorting
-    sortOptions,
     aggregations: filterAggregations,
-    setAggregations,
-    counts: artworkCounts,
-    setCounts,
-
     // Components
-    ZeroState,
+ZeroState,
+    
+counts: artworkCounts,
+    
 
-    // Filter manipulation
-    isDefaultValue: field => {
+currentlySelectedFilters: currentlySelectedFilters,
+
+    
+    
+
+filters: artworkFilterState,
+
+    
+    
+
+hasFilters: hasFilters(artworkFilterState),
+    
+
+
+// Filter manipulation
+isDefaultValue: field => {
       return isDefaultFilter(field, artworkFilterState[field])
     },
+    
 
-    rangeToTuple: range => {
+
+// Handlers
+onFilterClick,
+    
+
+
+rangeToTuple: range => {
       return rangeToTuple(currentlySelectedFilters(), range)
     },
+    
 
-    setFilter: (name, val) => {
+
+resetFilters: () => {
+      const action: ArtworkFiltersAction = {
+        payload: null,
+        type: "RESET",
+      }
+      dispatchOrStage(action)
+    },
+
+    
+    
+
+setAggregations,
+
+    
+    
+setCounts,
+
+    
+stagedFilters: stagedArtworkFilterState,
+
+    
+setFilter: (name, val) => {
       if (onFilterClick) {
         onFilterClick(name, val, { ...currentlySelectedFilters(), [name]: val })
       }
 
       const action: ArtworkFiltersAction = {
-        type: "SET",
         payload: {
           name,
           value: val,
         },
+        type: "SET",
       }
       dispatchOrStage(action)
     },
 
-    unsetFilter: name => {
+    
+setFilters: newState => {
       const action: ArtworkFiltersAction = {
-        type: "UNSET",
-        payload: {
-          name,
-        },
+        payload: newState,
+        type: "SET_FILTERS",
       }
-      dispatchOrStage(action)
+      dispatch(action)
     },
 
-    resetFilters: () => {
-      const action: ArtworkFiltersAction = {
-        type: "RESET",
-        payload: null,
-      }
-      dispatchOrStage(action)
-    },
+    // Sorting
+sortOptions,
 
-    // Staging & applying filter changes
-    shouldStageFilterChanges,
+    
     setShouldStageFilterChanges,
-
-    setStagedFilters: currentState => {
+    
+setStagedFilters: currentState => {
       const action: ArtworkFiltersAction = {
-        type: "SET_STAGED_FILTERS",
         payload: currentState,
+        type: "SET_STAGED_FILTERS",
       }
       stage(action)
     },
 
-    setFilters: newState => {
+    
+// Staging & applying filter changes
+shouldStageFilterChanges,
+
+    
+unsetFilter: name => {
       const action: ArtworkFiltersAction = {
-        type: "SET_FILTERS",
-        payload: newState,
+        payload: {
+          name,
+        },
+        type: "UNSET",
       }
-      dispatch(action)
+      dispatchOrStage(action)
     },
   }
 

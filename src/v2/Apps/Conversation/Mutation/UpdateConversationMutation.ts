@@ -7,12 +7,6 @@ export const UpdateConversation = (
   conversation: Conversation_conversation
 ) => {
   return commitMutation<UpdateConversationMutation>(environment, {
-    variables: {
-      input: {
-        conversationId: conversation.internalID,
-        fromLastViewedMessageId: conversation.lastMessageID,
-      },
-    },
     mutation: graphql`
       mutation UpdateConversationMutation(
         $input: UpdateConversationMutationInput!
@@ -36,6 +30,12 @@ export const UpdateConversation = (
     updater: (store, data) => {
       const conversationProxy = store.get(conversation.id)
       conversationProxy.setValue(false, "unread")
+    },
+    variables: {
+      input: {
+        conversationId: conversation.internalID,
+        fromLastViewedMessageId: conversation.lastMessageID,
+      },
     },
   })
 }

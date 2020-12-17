@@ -19,11 +19,11 @@ jest.unmock("react-tracking")
 jest.unmock("react-relay")
 
 const mockPricingContext: PricingContextTestQueryRawResponse["artwork"]["pricingContext"] = {
-  appliedFiltersDisplay: "Price ranges of small mocks by David Sheldrick",
   appliedFilters: {
     category: "PAINTING",
     dimension: "SMALL",
   },
+  appliedFiltersDisplay: "Price ranges of small mocks by David Sheldrick",
   bins: [
     {
       maxPrice: "$88",
@@ -157,11 +157,11 @@ describe("PricingContext", () => {
         ...mockArtwork,
         listPrice: {
           __typename: "PriceRange",
-          minPrice: {
-            minor: 15500,
-          },
           maxPrice: {
             minor: 25500,
+          },
+          minPrice: {
+            minor: 15500,
           },
         },
       },
@@ -176,6 +176,15 @@ describe("PricingContext", () => {
     const wrapper = await getWrapper({
       artwork: {
         ...mockArtwork,
+        listPrice: {
+          __typename: "PriceRange",
+          maxPrice: {
+            minor: 15500,
+          },
+          minPrice: {
+            minor: 15500,
+          },
+        },
         pricingContext: {
           ...mockArtwork.pricingContext,
           bins: [
@@ -194,15 +203,6 @@ describe("PricingContext", () => {
               numArtworks: 17,
             },
           ],
-        },
-        listPrice: {
-          __typename: "PriceRange",
-          minPrice: {
-            minor: 15500,
-          },
-          maxPrice: {
-            minor: 15500,
-          },
         },
       },
     })
@@ -219,6 +219,15 @@ Object {
     const wrapper = await getWrapper({
       artwork: {
         ...mockArtwork,
+        listPrice: {
+          __typename: "PriceRange",
+          maxPrice: {
+            minor: 32721,
+          },
+          minPrice: {
+            minor: 32721,
+          },
+        },
         pricingContext: {
           ...mockArtwork.pricingContext,
           bins: [
@@ -237,15 +246,6 @@ Object {
               numArtworks: 0,
             },
           ],
-        },
-        listPrice: {
-          __typename: "PriceRange",
-          minPrice: {
-            minor: 32721,
-          },
-          maxPrice: {
-            minor: 32721,
-          },
         },
       },
     })
@@ -270,9 +270,9 @@ Object {
       expect(dispatch).toBeCalledWith({
         action_type: "Impression",
         context_module: "Price Context",
+        flow: "Artwork Price Context",
         subject: "Histogram Bar",
         type: "Chart",
-        flow: "Artwork Price Context",
       })
     })
 
@@ -284,10 +284,10 @@ Object {
         .at(0)
         .simulate("mouseOver")
       expect(dispatch).toBeCalledWith({
-        context_module: "Price Context",
         action_type: "Hover",
-        subject: "Histogram Bar",
+        context_module: "Price Context",
         flow: "Artwork Price Context",
+        subject: "Histogram Bar",
         type: "Chart",
       })
       expect(dispatch).toHaveBeenCalledTimes(1)
@@ -302,10 +302,10 @@ Object {
         .simulate("click")
 
       expect(dispatch).toBeCalledWith({
-        context_module: "Price Context",
         action_type: "Click",
-        subject: "Browse works in this category",
+        context_module: "Price Context",
         flow: "Artwork Price Context",
+        subject: "Browse works in this category",
         type: "Chart",
       })
       expect(dispatch).toHaveBeenCalledTimes(1)

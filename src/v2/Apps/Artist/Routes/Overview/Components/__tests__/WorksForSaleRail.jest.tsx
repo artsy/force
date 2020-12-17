@@ -12,6 +12,9 @@ describe("Works For Sale Rail", () => {
   ) => {
     return await renderRelayTree({
       Component: WorksForSaleRail,
+      mockData: {
+        artist: response,
+      } as WorksForSaleRail_Test_QueryRawResponse,
       query: graphql`
         query WorksForSaleRail_Test_Query @raw_response_type {
           artist(id: "andy-warhol") {
@@ -19,9 +22,6 @@ describe("Works For Sale Rail", () => {
           }
         }
       `,
-      mockData: {
-        artist: response,
-      } as WorksForSaleRail_Test_QueryRawResponse,
     })
   }
 
@@ -57,90 +57,90 @@ describe("Works For Sale Rail", () => {
 })
 
 const defaultArtist: WorksForSaleRail_Test_QueryRawResponse["artist"] = {
-  internalID: "artist1234",
-  name: "Andy Warhol",
-  slug: "andy-warhol",
-  is_followed: false,
-  counts: {
-    follows: 100,
-  },
   artworksConnection: {
     edges: [
       {
         node: {
-          imageTitle: "This Image Has a Title, A. Artist, 2020",
-          id: "QXJ0d29yazo1ODExMDA0ZDhiMGMxNDFkZDQwMDBiNjE=",
-          slug: "andy-warhol-cow-ii-dot-12-31",
           href: "/artwork/andy-warhol-cow-ii-dot-12-31",
+          id: "QXJ0d29yazo1ODExMDA0ZDhiMGMxNDFkZDQwMDBiNjE=",
+          date: "1971",
           image: {
             aspectRatio: 0.69,
             url:
               "https://d32dm0rphc51dk.cloudfront.net/TggVGbEkp8GPrxSRYyUrVw/large.jpg",
           },
-          internalID: "5811004d8b0c141dd4000b61",
-          title: "Cow, II.12",
-          date: "1971",
-          sale_message: "$32,500",
           cultural_maker: null,
+          imageTitle: "This Image Has a Title, A. Artist, 2020",
           artists: [
             {
-              id: "QXJ0aXN0OjRkOGI5MmIzNGViNjhhMWIyYzAwMDNmNA==",
               href: "/artist/andy-warhol",
+              id: "QXJ0aXN0OjRkOGI5MmIzNGViNjhhMWIyYzAwMDNmNA==",
               name: "Andy Warhol",
             },
           ],
+          slug: "andy-warhol-cow-ii-dot-12-31",
           collecting_institution: null,
+          internalID: "5811004d8b0c141dd4000b61",
+          is_inquireable: true,
+          title: "Cow, II.12",
+          is_biddable: false,
+          sale_message: "$32,500",
+          is_saved: false,
           partner: {
-            name: "Hamilton-Selway Fine Art",
             href: "/hamilton-selway-fine-art",
             id: "UGFydG5lcjo1MTc1NmRkOTUxMDljZGNmOGMwMDAwNzU=",
+            name: "Hamilton-Selway Fine Art",
             type: "Gallery",
           },
           sale: null,
           sale_artwork: null,
-          is_inquireable: true,
-          is_saved: false,
-          is_biddable: false,
         },
       },
       {
         node: {
-          imageTitle: "This Image Has a Title, A. Artist, 2020",
-          id: "QXJ0d29yazo1ODExMDA0ZDhiMGMxNDFkZDQwMDBiNjE=sss",
-          slug: "andy-warhol-cow-ii-dot-12-31",
           href: "/artwork/andy-warhol-cow-ii-dot-12-31",
+          id: "QXJ0d29yazo1ODExMDA0ZDhiMGMxNDFkZDQwMDBiNjE=sss",
+          date: "1971",
           image: {
             aspectRatio: 0.69,
             url:
               "https://d32dm0rphc51dk.cloudfront.net/TggVGbEkp8GPrxSRYyUrVw/large.jpg",
           },
-          internalID: "5811004d8b0c141dd4000b61",
-          title: "Cow, II.12",
-          date: "1971",
-          sale_message: "$32,500",
           cultural_maker: null,
+          imageTitle: "This Image Has a Title, A. Artist, 2020",
           artists: [
             {
-              id: "QXJ0aXN0OjRkOGI5MmIzNGViNjhhMWIyYzAwMDNmNA==",
               href: "/artist/andy-warhol",
+              id: "QXJ0aXN0OjRkOGI5MmIzNGViNjhhMWIyYzAwMDNmNA==",
               name: "Andy Warhol",
             },
           ],
+          slug: "andy-warhol-cow-ii-dot-12-31",
           collecting_institution: null,
+          internalID: "5811004d8b0c141dd4000b61",
+          is_inquireable: true,
+          title: "Cow, II.12",
+          is_biddable: false,
+          sale_message: "$32,500",
+          is_saved: false,
           partner: {
-            name: "Hamilton-Selway Fine Art",
             href: "/hamilton-selway-fine-art",
             id: "UGFydG5lcjo1MTc1NmRkOTUxMDljZGNmOGMwMDAwNzU=",
+            name: "Hamilton-Selway Fine Art",
             type: "Gallery",
           },
           sale: null,
           sale_artwork: null,
-          is_inquireable: true,
-          is_saved: false,
-          is_biddable: false,
         },
       },
     ],
   },
+  counts: {
+    follows: 100,
+  },
   id: "QXJ0aXN0Omp1YW4tZ3Jpcw",
+  internalID: "artist1234",
+  is_followed: false,
+  name: "Andy Warhol",
+  slug: "andy-warhol",
 }

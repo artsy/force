@@ -49,8 +49,8 @@ const fillAddressForm = (component: any, address: Address) => {
 
 const testOrder: ShippingTestQueryRawResponse["order"] = {
   ...UntouchedBuyOrder,
-  internalID: "1234",
   id: "1234",
+  internalID: "1234",
 }
 
 class ShippingTestPage extends OrderAppTestPage {
@@ -63,6 +63,7 @@ class ShippingTestPage extends OrderAppTestPage {
 describe("Shipping", () => {
   const { mutations, buildPage, routes } = createTestEnv({
     Component: ShippingFragmentContainer,
+    TestPage: ShippingTestPage,
     defaultData: { order: testOrder },
     defaultMutationResults: {
       ...settingOrderShipmentSuccess,
@@ -74,7 +75,6 @@ describe("Shipping", () => {
         }
       }
     `,
-    TestPage: ShippingTestPage,
   })
 
   it("removes radio group if pickup_available flag is false", async () => {
@@ -139,8 +139,8 @@ describe("Shipping", () => {
 
     fillAddressForm(page.root, {
       ...validAddress,
-      region: "New Brunswick",
       country: "US",
+      region: "New Brunswick",
     })
 
     await page.clickSubmit()
@@ -281,14 +281,14 @@ describe("Shipping", () => {
 
       it("allows a missing postal code if the selected country is not US or Canada", async () => {
         const address = {
-          name: "Erik David",
           addressLine1: "401 Broadway",
           addressLine2: "",
           city: "New York",
-          region: "NY",
-          postalCode: "",
-          phoneNumber: "5555937743",
           country: "AQ",
+          name: "Erik David",
+          phoneNumber: "5555937743",
+          postalCode: "",
+          region: "NY",
         }
         fillAddressForm(page.root, address)
         await page.clickSubmit()
@@ -334,14 +334,14 @@ describe("Shipping", () => {
 
       it("does not submit the mutation without a phone number", async () => {
         const address = {
-          name: "Erik David",
           addressLine1: "401 Broadway",
           addressLine2: "",
           city: "New York",
-          region: "",
-          postalCode: "7Z",
-          phoneNumber: "",
           country: "AQ",
+          name: "Erik David",
+          phoneNumber: "",
+          postalCode: "7Z",
+          region: "",
         }
         fillAddressForm(page.root, address)
         await page.clickSubmit()
@@ -350,14 +350,14 @@ describe("Shipping", () => {
 
       it("allows a missing state/province if the selected country is not US or Canada", async () => {
         const address = {
-          name: "Erik David",
           addressLine1: "401 Broadway",
           addressLine2: "",
           city: "New York",
-          region: "",
-          postalCode: "7Z",
-          phoneNumber: "5555937743",
           country: "AQ",
+          name: "Erik David",
+          phoneNumber: "5555937743",
+          postalCode: "7Z",
+          region: "",
         }
         fillAddressForm(page.root, address)
         await page.clickSubmit()

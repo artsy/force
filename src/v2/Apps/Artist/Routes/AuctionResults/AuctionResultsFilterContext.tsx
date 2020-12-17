@@ -23,12 +23,12 @@ interface AuctionResultsFiltersState extends AuctionResultsFilters {
  * Initial filter state
  */
 export const initialAuctionResultsFilterState: AuctionResultsFilters = {
-  organizations: [],
-  categories: [],
-  sizes: [],
-  pageAndCursor: { page: 1, cursor: null },
-  sort: "DATE_DESC",
   allowEmptyCreatedDates: true,
+  categories: [],
+  organizations: [],
+  pageAndCursor: { cursor: null, page: 1 },
+  sizes: [],
+  sort: "DATE_DESC",
 }
 
 /**
@@ -59,8 +59,8 @@ export const AuctionResultsFilterContext = React.createContext<
   AuctionResultsFilterContextProps
 >({
   filters: initialAuctionResultsFilterState,
-  setFilter: null,
   resetFilters: null,
+  setFilter: null,
   unsetFilter: null,
 })
 
@@ -103,32 +103,32 @@ export const AuctionResultsFilterContextProvider: React.FC<
     // Handlers
     onFilterClick,
 
+    resetFilters: () => {
+      dispatch({
+        payload: null,
+        type: "RESET",
+      })
+    },
+
     setFilter: (name, val) => {
       if (onFilterClick) {
         onFilterClick(name, val, { ...auctionResultsFilterState, [name]: val })
       }
       dispatch({
-        type: "SET",
         payload: {
           name,
           value: val,
         },
+        type: "SET",
       })
     },
 
     unsetFilter: name => {
       dispatch({
-        type: "UNSET",
         payload: {
           name,
         },
-      })
-    },
-
-    resetFilters: () => {
-      dispatch({
-        type: "RESET",
-        payload: null,
+        type: "UNSET",
       })
     },
   }
@@ -160,7 +160,7 @@ const AuctionResultsFilterReducer = (
     case "SET": {
       const { name, value } = action.payload
       const filterState: AuctionResultsFilters = {
-        pageAndCursor: { page: 1, cursor: null },
+        pageAndCursor: { cursor: null, page: 1 },
       }
 
       arrayFilterTypes.forEach(filter => {
@@ -220,7 +220,7 @@ const AuctionResultsFilterReducer = (
       const { name } = action.payload as { name: keyof AuctionResultsFilters }
 
       const filterState: AuctionResultsFilters = {
-        pageAndCursor: { page: 1, cursor: null },
+        pageAndCursor: { cursor: null, page: 1 },
       }
 
       const filters: Array<keyof AuctionResultsFilters> = ["sort"]

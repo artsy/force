@@ -148,9 +148,9 @@ export const SmallCarousel = <T,>(props: CarouselProps<T>) => {
       {...props}
       options={{
         cellAlign: "left",
+        contain: true,
         draggable: hasMultipleSlides,
         freeScroll: true,
-        contain: true,
         friction: 0.3,
         pageDots: hasMultipleSlides,
         prevNextButtons: false,
@@ -173,8 +173,8 @@ export class BaseCarousel<T> extends React.Component<
 > {
   state = {
     currentSlideIndex: 0,
-    lastItemVisible: true,
     isMounted: false,
+    lastItemVisible: true,
   }
 
   /**
@@ -284,9 +284,9 @@ export class BaseCarousel<T> extends React.Component<
 
     if (onDragEnd) {
       onDragEnd({
-        state: this.state,
-        props: this.props,
         flickity: this.flickity,
+        props: this.props,
+        state: this.state,
       })
     }
   }
@@ -302,9 +302,9 @@ export class BaseCarousel<T> extends React.Component<
 
     if (onArrowClick) {
       onArrowClick({
-        state: this.state,
-        props: this.props,
         flickity: this.flickity,
+        props: this.props,
+        state: this.state,
       })
     }
   }

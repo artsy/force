@@ -8,8 +8,8 @@ describe("handleCollectionToArtistSeriesRedirect", () => {
       },
     }
     const res = {
-      redirect: jest.fn(),
       locals: { sd: {} },
+      redirect: jest.fn(),
     }
     const next = jest.fn()
 
@@ -27,10 +27,10 @@ describe("handleCollectionToArtistSeriesRedirect", () => {
       },
     }
     const res = {
-      redirect: spy,
       locals: {
         sd: {},
       },
+      redirect: spy,
     }
 
     const next = jest.fn()

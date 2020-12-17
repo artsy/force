@@ -76,8 +76,8 @@ describe("Sticky footer", () => {
         component.find(Link).at(0).simulate("click")
         expect(dispatch).toBeCalledWith({
           action_type: "Click",
-          subject: "Visit our help center",
           flow: "make offer",
+          subject: "Visit our help center",
           type: "button",
         })
         expect(dispatch).toHaveBeenCalledTimes(1)
@@ -94,8 +94,8 @@ describe("Sticky footer", () => {
 
         expect(dispatch).toBeCalledWith({
           action_type: "Click",
-          subject: "ask a specialist",
           flow: "make offer",
+          subject: "ask a specialist",
           type: "button",
         })
         expect(dispatch).toHaveBeenCalledTimes(1)
@@ -111,8 +111,8 @@ describe("Sticky footer", () => {
         component.find(Link).at(0).simulate("click")
         expect(dispatch).toBeCalledWith({
           action_type: "Click",
-          subject: "Visit our help center",
           flow: "buy now",
+          subject: "Visit our help center",
           type: "button",
         })
         expect(dispatch).toHaveBeenCalledTimes(1)
@@ -129,8 +129,8 @@ describe("Sticky footer", () => {
 
         expect(dispatch).toBeCalledWith({
           action_type: "Click",
-          subject: "ask a specialist",
           flow: "buy now",
+          subject: "ask a specialist",
           type: "button",
         })
         expect(dispatch).toHaveBeenCalledTimes(1)

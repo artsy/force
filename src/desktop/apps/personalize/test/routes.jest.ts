@@ -13,22 +13,22 @@ describe("Personalize routes", () => {
 
   beforeEach(() => {
     req = {
+      app: { get: jest.fn() },
       body: {},
       params: { slug: "interests" },
+      query: {
+        redirectTo: "",
+      },
       redirect: jest.fn(),
       user: new CurrentUser({
         name: "user",
       }),
-      app: { get: jest.fn() },
-      query: {
-        redirectTo: "",
-      },
     }
     res = {
-      send: jest.fn(),
       locals: {
         sd: {},
       },
+      send: jest.fn(),
     }
     next = jest.fn()
   })

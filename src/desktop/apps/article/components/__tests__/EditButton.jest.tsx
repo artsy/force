@@ -28,8 +28,8 @@ describe("EditButton", () => {
 
   beforeEach(() => {
     props = {
-      slug: "artsy-editorial-slug",
       channelId: "123",
+      slug: "artsy-editorial-slug",
     }
     mockPositronql.mockReset()
   })

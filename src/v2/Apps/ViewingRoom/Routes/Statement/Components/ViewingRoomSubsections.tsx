@@ -20,8 +20,8 @@ const ViewingRoomSubsections: React.FC<ViewingRoomSubsectionsProps> = ({
     <Box>
       {subsections.map(({ internalID, title, body, image, caption }) => {
         const imageURL = resize(image?.imageURLs?.normalized, {
-          width: 1200,
           convert_to: "jpg",
+          width: 1200,
         })
         return (
           <Fragment key={internalID}>

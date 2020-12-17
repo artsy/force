@@ -22,8 +22,8 @@ import { Mediator } from "lib/mediator"
 const Column = styled(Flex).attrs({
   flex: 1,
   flexDirection: "column",
-  mr: 2,
   mb: 3,
+  mr: 2,
 })`
   a {
     padding: ${space(1)}px 0;

@@ -14,9 +14,9 @@ export const fixFailedPaymentFailure = {
   commerceFixFailedPayment: {
     orderOrError: {
       error: {
-        type: "processing",
         code: "capture_failed",
         data: "Failed to capture payment",
+        type: "processing",
       },
     },
   },
@@ -26,9 +26,9 @@ export const fixFailedPaymentInsufficientInventoryFailure = {
   commerceFixFailedPayment: {
     orderOrError: {
       error: {
-        type: "processing",
         code: "insufficient_inventory",
         data: "No moar artwork (╯°□°）╯︵ ┻━┻",
+        type: "processing",
       },
     },
   },

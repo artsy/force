@@ -43,13 +43,13 @@ export function init(options: InitOptions) {
 
 export default {
   Artwork,
-  Buttons,
-  Modal,
   ArtworkGrid,
   BorderedPulldown,
+  Buttons,
   Checkbox,
   Icon,
   Input,
+  Modal,
   Nav,
   Text,
   TextArea,

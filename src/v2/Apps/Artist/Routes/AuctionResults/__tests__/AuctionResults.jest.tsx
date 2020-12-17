@@ -20,6 +20,7 @@ describe("AuctionResults", () => {
   const getWrapper = async (breakpoint: Breakpoint = "xl") => {
     return await renderRelayTree({
       Component: AuctionResultsRoute,
+      mockData: AuctionResultsFixture as AuctionResults_Test_QueryRawResponse,
       query: graphql`
         query AuctionResults_Test_Query($artistID: String!) @raw_response_type {
           artist(id: $artistID) {
@@ -27,7 +28,6 @@ describe("AuctionResults", () => {
           }
         }
       `,
-      mockData: AuctionResultsFixture as AuctionResults_Test_QueryRawResponse,
       variables: {
         artistID: "pablo-picasso",
       },
@@ -149,9 +149,9 @@ describe("AuctionResults", () => {
 
     describe("user interactions", () => {
       const defaultRelayParams = {
-        first: 10,
         after: null,
         artistID: "pablo-picasso",
+        first: 10,
         organizations: [],
         sort: "DATE_DESC",
       }
@@ -226,19 +226,19 @@ describe("AuctionResults", () => {
               expect(trackEvent).toHaveBeenCalledTimes(3)
               expect(trackEvent.mock.calls[0][0]).toEqual({
                 action_type: "Auction results filter params changed",
-                context_page: "Artist Auction Results",
                 changed: { categories: ["Work on Paper"] },
+                context_page: "Artist Auction Results",
                 current: {
+                  allowEmptyCreatedDates: true,
                   categories: ["Work on Paper"],
-                  pageAndCursor: { page: 1, cursor: null },
-                  sort: "DATE_DESC",
-                  organizations: [],
-                  sizes: [],
                   createdAfterYear: 1880,
                   createdBeforeYear: 1973,
                   earliestCreatedYear: 1880,
                   latestCreatedYear: 1973,
-                  allowEmptyCreatedDates: true,
+                  organizations: [],
+                  pageAndCursor: { cursor: null, page: 1 },
+                  sizes: [],
+                  sort: "DATE_DESC",
                 },
               })
 
@@ -329,19 +329,19 @@ describe("AuctionResults", () => {
               expect(trackEvent).toHaveBeenCalledTimes(3)
               expect(trackEvent.mock.calls[0][0]).toEqual({
                 action_type: "Auction results filter params changed",
-                context_page: "Artist Auction Results",
                 changed: { sizes: ["MEDIUM"] },
+                context_page: "Artist Auction Results",
                 current: {
-                  sizes: ["MEDIUM"],
-                  pageAndCursor: { page: 1, cursor: null },
-                  sort: "DATE_DESC",
-                  organizations: [],
+                  allowEmptyCreatedDates: true,
                   categories: [],
                   createdAfterYear: 1880,
                   createdBeforeYear: 1973,
                   earliestCreatedYear: 1880,
                   latestCreatedYear: 1973,
-                  allowEmptyCreatedDates: true,
+                  organizations: [],
+                  pageAndCursor: { cursor: null, page: 1 },
+                  sizes: ["MEDIUM"],
+                  sort: "DATE_DESC",
                 },
               })
 

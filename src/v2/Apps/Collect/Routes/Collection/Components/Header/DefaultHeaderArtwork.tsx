@@ -36,10 +36,10 @@ export const DefaultHeaderArtwork: React.FC<DefaultHeaderArtworkProps> = ({
     trackEvent({
       action_type: AnalyticsSchema.ActionType.Click,
       context_module: AnalyticsSchema.ContextModule.ArtworkBanner,
-      context_page_owner_type: AnalyticsSchema.OwnerType.Collection,
       context_page: AnalyticsSchema.PageName.CollectionPage,
       context_page_owner_id: collectionId,
       context_page_owner_slug: collectionSlug,
+      context_page_owner_type: AnalyticsSchema.OwnerType.Collection,
       destination_path: artwork.node.href,
     })
   }

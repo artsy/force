@@ -20,13 +20,13 @@ describe("Follow Artist Popover", () => {
             {
               node: {
                 id: "francesca-dimattio",
-                name: "Francesca DiMattio",
-                internalID: "mongo-id",
                 image: {
                   cropped: {
                     url: "/path/to/image.jpg",
                   },
                 },
+                internalID: "mongo-id",
+                name: "Francesca DiMattio",
               },
             },
           ],
@@ -38,6 +38,7 @@ describe("Follow Artist Popover", () => {
   const getWrapper = async (breakpoint: Breakpoint = "xl") => {
     return await renderRelayTree({
       Component: FollowArtistPopover,
+      mockData: artistResponse as FollowArtistPopover_Test_QueryRawResponse,
       query: graphql`
         query FollowArtistPopover_Test_Query($artistID: String!)
           @raw_response_type {
@@ -46,7 +47,6 @@ describe("Follow Artist Popover", () => {
           }
         }
       `,
-      mockData: artistResponse as FollowArtistPopover_Test_QueryRawResponse,
       variables: {
         artistID: "percy-z",
       },

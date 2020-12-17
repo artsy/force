@@ -8,9 +8,6 @@ export function createCreditCardAndUpdatePhone(relayEnvironment, phone, token) {
   return new Promise<CreateCreditCardAndUpdatePhoneMutationResponse>(
     (resolve, reject) => {
       commitMutation<CreateCreditCardAndUpdatePhoneMutation>(relayEnvironment, {
-        onCompleted: (data, errors) =>
-          errors ? reject(errors) : resolve(data),
-        onError: reject,
         mutation: graphql`
           mutation CreateCreditCardAndUpdatePhoneMutation(
             $creditCardInput: CreditCardInput!
@@ -42,6 +39,9 @@ export function createCreditCardAndUpdatePhone(relayEnvironment, phone, token) {
             }
           }
         `,
+        onCompleted: (data, errors) =>
+          errors ? reject(errors) : resolve(data),
+        onError: reject,
         variables: {
           creditCardInput: { token },
           profileInput: { phone },

@@ -83,7 +83,7 @@ describe("ErrorBoundary", () => {
     expect(wrapper.find("ErrorModalWithReload").length).toEqual(1)
   })
 
-  it("it only shows ErrorModalWithReload if error is related to failed chunks", () => {
+  it("only shows ErrorModalWithReload if error is related to failed chunks", () => {
     expect(
       ErrorBoundary.getDerivedStateFromError({
         message: "generic error",

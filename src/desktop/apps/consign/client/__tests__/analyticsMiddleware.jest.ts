@@ -6,8 +6,8 @@ import analyticsMiddleware from "../analytics_middleware"
 jest.mock("sharify", () => ({
   data: {
     CURRENT_USER: {
-      id: "some-id",
       email: "some@email.com",
+      id: "some-id",
     },
   },
 }))
@@ -20,8 +20,8 @@ describe("analyticsMiddleware", () => {
   it("tracks an artist confirmed action", () => {
     const store = createStore(reducers, applyMiddleware(analyticsMiddleware))
     store.dispatch({
-      type: "UPDATE_ARTIST_ID",
       payload: { artistId: "andy-warhol" },
+      type: "UPDATE_ARTIST_ID",
     })
     store.dispatch({ type: "SUBMIT_ARTIST" })
 
@@ -37,8 +37,8 @@ describe("analyticsMiddleware", () => {
   it("tracks an error on submission creation", () => {
     const store = createStore(reducers, applyMiddleware(analyticsMiddleware))
     store.dispatch({
-      type: "SUBMISSION_ERROR",
       payload: { errorType: "convection_create" },
+      type: "SUBMISSION_ERROR",
     })
 
     expect(window.analytics.track).toHaveBeenCalledTimes(1)
@@ -54,8 +54,8 @@ describe("analyticsMiddleware", () => {
   it("tracks an error on submission completion", () => {
     const store = createStore(reducers, applyMiddleware(analyticsMiddleware))
     store.dispatch({
-      type: "SUBMISSION_ERROR",
       payload: { errorType: "convection_complete_submission" },
+      type: "SUBMISSION_ERROR",
     })
 
     expect(window.analytics.track).toHaveBeenCalledTimes(1)
@@ -71,25 +71,25 @@ describe("analyticsMiddleware", () => {
   it("tracks a submission created with no assets", () => {
     const store = createStore(reducers, applyMiddleware(analyticsMiddleware))
     store.dispatch({
-      type: "SUBMISSION_CREATED",
       payload: { submissionId: 123 },
+      type: "SUBMISSION_CREATED",
     })
 
     expect(window.analytics.track).toHaveBeenCalledTimes(1)
     expect(window.analytics.track).toBeCalledWith("consignment_submitted", {
       contextPath: undefined,
-      submissionId: 123,
       subject: undefined,
-      userId: "some-id",
+      submissionId: 123,
       userEmail: "some@email.com",
+      userId: "some-id",
     })
   })
 
   it("tracks a submission completed with no assets", () => {
     const store = createStore(reducers, applyMiddleware(analyticsMiddleware))
     store.dispatch({
-      type: "UPDATE_SUBMISSION",
       payload: { submission: { id: 123 } },
+      type: "UPDATE_SUBMISSION",
     })
     store.dispatch({ type: "SUBMISSION_COMPLETED" })
 
@@ -97,8 +97,8 @@ describe("analyticsMiddleware", () => {
     expect(window.analytics.track).toBeCalledWith(
       "consignment_asset_uploaded",
       {
-        submissionId: 123,
         assetIds: [],
+        submissionId: 123,
       }
     )
   })

@@ -31,9 +31,9 @@ export default class Artists extends React.Component<StepProps, State> {
   static slug: "artists" = "artists"
 
   state = {
+    followCount: 0,
     inputText: "",
     inputTextQuery: "",
-    followCount: 0,
   }
 
   updateFollowCount(count: number) {

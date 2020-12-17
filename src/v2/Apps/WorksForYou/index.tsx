@@ -22,8 +22,8 @@ export interface Props extends SystemContextProps {
 })
 export class WorksForYou extends Component<Props> {
   static defaultProps = {
-    forSale: true,
     artistID: "",
+    forSale: true,
   }
 
   render() {
@@ -60,9 +60,9 @@ export class WorksForYou extends Component<Props> {
                   `}
                   variables={{
                     artistID,
-                    includeSelectedArtist,
-                    forSale,
                     filter,
+                    forSale,
+                    includeSelectedArtist,
                   }}
                   render={({ props }) => {
                     if (props) {

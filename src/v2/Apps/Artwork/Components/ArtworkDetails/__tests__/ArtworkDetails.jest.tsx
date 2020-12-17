@@ -27,6 +27,7 @@ describe("ArtworkDetails", () => {
           </SystemContextProvider>
         )
       },
+      mockData: { artwork: response } as ArtworkDetails_Test_QueryRawResponse,
       query: graphql`
         query ArtworkDetails_Test_Query @raw_response_type {
           artwork(id: "richard-prince-untitled-fashion") {
@@ -35,7 +36,6 @@ describe("ArtworkDetails", () => {
         }
       `,
       wrapper: n => <MockBoot breakpoint="xs">{n}</MockBoot>,
-      mockData: { artwork: response } as ArtworkDetails_Test_QueryRawResponse,
     })
   }
   let wrapper
@@ -58,8 +58,8 @@ describe("ArtworkDetails", () => {
         ...ArtworkDetailsFixture,
         canRequestLotConditionsReport: false,
         conditionDescription: {
-          label: "Condition details",
           details: "Slight discoloration from sun exposure",
+          label: "Condition details",
         },
       })
 
@@ -82,11 +82,11 @@ describe("ArtworkDetails", () => {
     it("renders additional info with just what is present", async () => {
       wrapper = await getWrapper({
         ...ArtworkDetailsFixture,
-        series: null,
-        publisher: null,
-        manufacturer: null,
-        image_rights: null,
         framed: null,
+        image_rights: null,
+        manufacturer: null,
+        publisher: null,
+        series: null,
       })
       expect(wrapper.html()).toContain("Medium")
       expect(wrapper.html()).toContain("Signature")
@@ -102,14 +102,14 @@ describe("ArtworkDetails", () => {
     const emptyData = {
       ...ArtworkDetailsFixture,
       category: null,
-      series: null,
-      publisher: null,
-      manufacturer: null,
-      image_rights: null,
-      framed: null,
-      signatureInfo: null,
-      conditionDescription: null,
       certificateOfAuthenticity: null,
+      conditionDescription: null,
+      framed: null,
+      image_rights: null,
+      manufacturer: null,
+      publisher: null,
+      series: null,
+      signatureInfo: null,
     }
 
     const emptyDataWrapper = await getWrapper(emptyData)
@@ -195,8 +195,8 @@ describe("ArtworkDetails", () => {
         ...ArtworkDetailsFixture,
         partner: {
           ...ArtworkDetailsFixture.partner,
-          profile: null,
           initials: null,
+          profile: null,
         },
       })
       expect(wrapper.find("img").length).toBe(0)

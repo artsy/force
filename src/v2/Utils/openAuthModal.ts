@@ -109,15 +109,15 @@ function getDesktopIntentToFollow({
 }: AuthModalOptions): ModalOptions {
   const kind = intent === Intent.followArtist ? "artist" : "profile"
   return {
-    mode: ModalType.signup,
-    contextModule,
-    copy: `Sign up to follow ${entity.name}`,
-    intent,
     afterSignUpAction: {
       action: "follow",
       kind,
       objectId: entity.slug,
     },
+    contextModule,
+    copy: `Sign up to follow ${entity.name}`,
+    intent,
+    mode: ModalType.signup,
   }
 }
 
@@ -127,15 +127,15 @@ function getDesktopIntentToSaveArtwork({
   intent,
 }: AuthModalOptions): ModalOptions {
   return {
-    mode: ModalType.signup,
-    contextModule,
-    copy: `Sign up to save artworks`,
-    intent,
     afterSignUpAction: {
       action: "save",
       kind: "artworks",
       objectId: entity.slug,
     },
+    contextModule,
+    copy: `Sign up to save artworks`,
+    intent,
+    mode: ModalType.signup,
   }
 }
 

@@ -9,8 +9,8 @@ export const app = express()
 const landing = new JSONPage({
   name: "art-keeps-going",
   paths: {
-    show: "/campaign/art-keeps-going",
     edit: "/campaign/art-keeps-going/edit",
+    show: "/campaign/art-keeps-going",
   },
 })
 

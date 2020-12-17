@@ -127,8 +127,8 @@ export const Message: React.FC<MessageProps> = props => {
         bg={bgColor}
         p={1}
         style={{
-          borderRadius: "15px",
           alignSelf,
+          borderRadius: "15px",
         }}
         maxWidth="66.67%"
         width="fit-content"

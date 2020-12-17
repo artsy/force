@@ -149,9 +149,9 @@ class ArtworkGridItemContainer extends React.Component<Props, State> {
               }
               artwork={artwork}
               style={{
+                bottom: "10px",
                 position: "absolute",
                 right: "10px",
-                bottom: "10px",
               }}
               {...userSpread}
               mediator={this.props.mediator}

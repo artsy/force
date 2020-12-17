@@ -13,17 +13,17 @@ export const NavigatorContextProvider: React.FC<NavigatorContextProps> = ({
 }) => {
   const [path, setPath] = useState([])
   const initialNavigatorContextValue = {
-    push: entry => {
-      setPath(prevState => {
-        return [...prevState, entry]
-      })
-    },
+    path,
     pop: () => {
       setPath(prevState => {
         return prevState.slice(0, prevState.length - 1)
       })
     },
-    path,
+    push: entry => {
+      setPath(prevState => {
+        return [...prevState, entry]
+      })
+    },
   }
 
   return (

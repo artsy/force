@@ -9,9 +9,9 @@ jest.mock("sharify", () => ({
 describe("createCollectUrl", () => {
   it("formats the collect page url correctly (large)", async () => {
     const result = createCollectUrl({
-      dimension: "LARGE",
-      category: "Painting",
       artistId: "evelyn-walg",
+      category: "Painting",
+      dimension: "LARGE",
     })
 
     expect(result).toMatchInlineSnapshot(
@@ -20,9 +20,9 @@ describe("createCollectUrl", () => {
   })
   it("formats the collect page url correctly (medium)", async () => {
     const result = createCollectUrl({
-      dimension: "MEDIUM",
-      category: "Video/Film/Animation",
       artistId: "evelyn-walg",
+      category: "Video/Film/Animation",
+      dimension: "MEDIUM",
     })
 
     expect(result).toMatchInlineSnapshot(
@@ -32,9 +32,9 @@ describe("createCollectUrl", () => {
 
   it("formats the collect page url correctly (small)", async () => {
     const result = createCollectUrl({
-      dimension: "SMALL",
-      category: "Drawing, Collage or other Work on Paper",
       artistId: "banksy",
+      category: "Drawing, Collage or other Work on Paper",
+      dimension: "SMALL",
     })
 
     expect(result).toMatchInlineSnapshot(
@@ -44,9 +44,9 @@ describe("createCollectUrl", () => {
 
   it("formats the collect page url correctly when not filtering by dimension", async () => {
     const result = createCollectUrl({
-      dimension: null,
-      category: "Drawing, Collage or other Work on Paper",
       artistId: "banksy",
+      category: "Drawing, Collage or other Work on Paper",
+      dimension: null,
     })
 
     expect(result).toMatchInlineSnapshot(
@@ -56,9 +56,9 @@ describe("createCollectUrl", () => {
 
   it("doesn't specify category in some cases", () => {
     const result = createCollectUrl({
-      dimension: "SMALL",
-      category: "Sound",
       artistId: "banksy",
+      category: "Sound",
+      dimension: "SMALL",
     })
 
     expect(result).toMatchInlineSnapshot(

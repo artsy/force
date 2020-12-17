@@ -14,6 +14,9 @@ describe("Genes", () => {
   const getWrapper = async (breakpoint: Breakpoint = "xl") => {
     return await renderRelayTree({
       Component: Genes,
+      mockData: {
+        artist: GenesFixture,
+      } as Genes_Test_QueryRawResponse,
       query: graphql`
         query Genes_Test_Query @raw_response_type {
           artist(id: "pablo-picasso") {
@@ -21,9 +24,6 @@ describe("Genes", () => {
           }
         }
       `,
-      mockData: {
-        artist: GenesFixture,
-      } as Genes_Test_QueryRawResponse,
     })
   }
 

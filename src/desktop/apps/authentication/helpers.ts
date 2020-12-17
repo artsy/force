@@ -35,13 +35,18 @@ export const handleSubmit = async (
    */
   const userAttributes = Object.assign({}, values, {
     _csrf: Cookies && Cookies.get && Cookies.get("CSRF_TOKEN"),
+    agreed_to_receive_emails: values.accepted_terms_of_service,
     session_id: sd.SESSION_ID,
     signupIntent: intent,
     signupReferer,
-    agreed_to_receive_emails: values.accepted_terms_of_service,
   })
 
   const options = {
+    error: error => {
+      formikBag.setStatus(error)
+      formikBag.setSubmitting(false)
+      mediator.trigger("auth:error", error.message)
+    },
     success: async res => {
       formikBag.setSubmitting(false)
       const analytics = (window as any).analytics
@@ -89,11 +94,6 @@ export const handleSubmit = async (
 
       window.location.assign(result.href)
     },
-    error: error => {
-      formikBag.setStatus(error)
-      formikBag.setSubmitting(false)
-      mediator.trigger("auth:error", error.message)
-    },
   }
 
   switch (type) {
@@ -137,8 +137,8 @@ export async function apiAuthWithRedirectUrl(
 
   try {
     const tokenResponse = await fetch(sd.API_URL + "/api/v1/me/trust_token", {
-      method: "POST",
       headers: { "X-Access-Token": accessToken },
+      method: "POST",
     })
 
     if (tokenResponse.ok) {
@@ -146,8 +146,8 @@ export async function apiAuthWithRedirectUrl(
       const trustToken = responseBody["trust_token"]
 
       const queryParams = qs.stringify({
-        trust_token: trustToken,
         redirect_uri: appRedirectURL.toString(),
+        trust_token: trustToken,
       })
       return new URL(`${sd.API_URL}/users/sign_in?${queryParams}`)
     } else {
@@ -195,14 +195,14 @@ export const loginUser = async (
   ])
 
   await fetch(url, {
+    body: JSON.stringify(user),
+    credentials: "same-origin",
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
       "X-Requested-With": "XMLHttpRequest",
     },
     method: "POST",
-    credentials: "same-origin",
-    body: JSON.stringify(user),
   })
     .then(response => response.json())
     .then(async data => {
@@ -237,14 +237,14 @@ export const signupUser = async (
   ])
 
   await fetch(url, {
+    body: JSON.stringify(user),
+    credentials: "same-origin",
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
       "X-Requested-With": "XMLHttpRequest",
     },
     method: "POST",
-    credentials: "same-origin",
-    body: JSON.stringify(user),
   })
     .then(response => response.json())
     .then(async data => {
@@ -271,11 +271,13 @@ export const forgotUserPassword = async (
 
   let user = pick(userAttributes, ["email", "session_id"])
   user = {
-    reset_password_redirect_to,
     mode,
+    reset_password_redirect_to,
     ...user,
   }
   await fetch(url, {
+    body: JSON.stringify(user),
+    credentials: "same-origin",
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
@@ -283,8 +285,6 @@ export const forgotUserPassword = async (
       "X-XAPP-TOKEN": sd.ARTSY_XAPP_TOKEN,
     },
     method: "POST",
-    credentials: "same-origin",
-    body: JSON.stringify(user),
   })
     .then(response => response.json())
     .then(async data => {

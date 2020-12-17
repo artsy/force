@@ -1,11 +1,6 @@
 import { CreateCreditCardAndUpdatePhoneMutationResponse } from "v2/__generated__/CreateCreditCardAndUpdatePhoneMutation.graphql"
 
 export const createCreditCardAndUpdatePhoneSuccessful: CreateCreditCardAndUpdatePhoneMutationResponse = {
-  updateMyUserProfile: {
-    user: {
-      internalID: "example-user-id",
-    },
-  },
   createCreditCard: {
     creditCardOrError: {
       creditCardEdge: {
@@ -15,21 +10,26 @@ export const createCreditCardAndUpdatePhoneSuccessful: CreateCreditCardAndUpdate
       },
     },
   },
-}
-
-export const createCreditCardAndUpdatePhoneFailed: CreateCreditCardAndUpdatePhoneMutationResponse = {
   updateMyUserProfile: {
     user: {
       internalID: "example-user-id",
     },
   },
+}
+
+export const createCreditCardAndUpdatePhoneFailed: CreateCreditCardAndUpdatePhoneMutationResponse = {
   createCreditCard: {
     creditCardOrError: {
       mutationError: {
+        detail: "Your card was declined.",
         message: "Payment information could not be processed.",
         type: "payment_error",
-        detail: "Your card was declined.",
       },
+    },
+  },
+  updateMyUserProfile: {
+    user: {
+      internalID: "example-user-id",
     },
   },
 }

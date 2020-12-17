@@ -190,8 +190,8 @@ class TestEnv<MutationNames extends string, TestPage extends RootTestPage> {
         )
       },
 
-      query,
       mockNetwork,
+      query,
     })
 
     return page as any

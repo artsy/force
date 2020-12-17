@@ -22,8 +22,8 @@ describe("ArtistSeriesEntity", () => {
 
   beforeEach(() => {
     props = {
-      member: CollectionsHubLinkedCollections.linkedCollections[0].members[0],
       itemNumber: 1,
+      member: CollectionsHubLinkedCollections.linkedCollections[0].members[0],
     }
     ;(useTracking as jest.Mock).mockImplementation(() => {
       return {
@@ -95,7 +95,7 @@ describe("ArtistSeriesEntity", () => {
     )
   })
 
-  it("if price_guidance is missing, NOT showing 'From $' ", () => {
+  it("if price_guidance is missing, NOT showing 'From $'", () => {
     delete props.member.price_guidance
     const component = getWrapper()
     expect(component.text()).not.toMatch("From $")

@@ -31,7 +31,6 @@ export const searchMiddleware = async (req, res, next) => {
 
       const layout = await stitch({
         basePath: __dirname,
-        layout: "../../../../components/main_layout/templates/artsy_v2.jade",
         blocks: {
           loadingComponent: _props => {
             return (
@@ -41,6 +40,7 @@ export const searchMiddleware = async (req, res, next) => {
             )
           },
         },
+        layout: "../../../../components/main_layout/templates/artsy_v2.jade",
         locals: {
           ...res.locals,
           pageType,
@@ -49,9 +49,9 @@ export const searchMiddleware = async (req, res, next) => {
 
       const status = 200
       res.locals.PAGE_CACHE = {
-        status,
-        key: req.url,
         html: layout,
+        key: req.url,
+        status,
       }
       res.status(status).send(layout)
       return

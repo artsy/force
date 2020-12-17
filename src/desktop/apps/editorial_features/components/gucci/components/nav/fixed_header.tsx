@@ -31,8 +31,8 @@ export class FixedHeader extends Component<FixedHeaderProps, FixedHeaderState> {
       isOpen = true
     }
     this.setState({
-      scrollPosition: document.documentElement.scrollTop,
       isOpen,
+      scrollPosition: document.documentElement.scrollTop,
     })
   }
 
@@ -47,7 +47,7 @@ export class FixedHeader extends Component<FixedHeaderProps, FixedHeaderState> {
       setOpen = true
     }
     if (fromTop !== scrollPosition) {
-      this.setState({ scrollPosition: fromTop, isOpen: setOpen })
+      this.setState({ isOpen: setOpen, scrollPosition: fromTop })
     }
   }
 

@@ -22,8 +22,8 @@ export function enableIntercom({
   if (isCommercialWork && intercomEnabled) {
     if (CURRENT_USER) {
       const userData = {
-        name: CURRENT_USER.name,
         email: CURRENT_USER.email,
+        name: CURRENT_USER.name,
         userHash: INTERCOM_BUYER_HASH,
       }
       intercom(INTERCOM_BUYER_APP_ID, userData)

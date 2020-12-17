@@ -19,18 +19,18 @@ export class ClassicArticleLayout extends React.Component<AppProps> {
     const collection = new Articles()
     // @ts-ignore
     const _ArticlesGridView = new ArticlesGridView({
-      el: document.querySelector("#articles-footer"),
-      hideMore: true,
-      header: `More from ${article.channel.name || "Artsy"}`,
       collection,
+      el: document.querySelector("#articles-footer"),
+      header: `More from ${article.channel.name || "Artsy"}`,
+      hideMore: true,
     })
 
     collection.fetch({
       data: {
+        channel_id: article.channel_id,
+        limit: 12,
         published: true,
         sort: "-published_at",
-        limit: 12,
-        channel_id: article.channel_id,
       },
     })
   }

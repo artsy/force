@@ -198,8 +198,8 @@ export const ViewingRoomsLatestGridFragmentContainer = createPaginationContainer
         // in most cases, for variables other than connection filters like
         // `first`, `after`, etc. you may want to use the previous values.
         ...fragmentVariables,
-        count,
         after: cursor,
+        count,
       }
     },
     query: graphql`

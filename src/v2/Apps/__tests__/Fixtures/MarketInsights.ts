@@ -1,11 +1,24 @@
 export const artistResponse = {
-  id: "blah",
-  internalID: "blah",
+  auctionResults: {
+    edges: [
+      {
+        node: {
+          id: "QXVjdGlvblJlc3VsdDoxMDkzOQ==",
+          organization: "Christie's",
+          price_realized: {
+            display: "$63m",
+          },
+          sale_date: "2017",
+        },
+      },
+    ],
+  },
   collections: ["Tate", "Museum of Modern Art (MoMA)"],
   highlights: {
     partners: {
       edges: [
         {
+          id: "UGFydG5lckFydGlzdEVkZ2U6NTIwM2Y1NWU4N2E1M2ViOWZkMDAwMDcw",
           node: {
             categories: [
               {
@@ -26,9 +39,9 @@ export const artistResponse = {
             ],
             id: "UGFydG5lcjpnYWdvc2lhbg==",
           },
-          id: "UGFydG5lckFydGlzdEVkZ2U6NTIwM2Y1NWU4N2E1M2ViOWZkMDAwMDcw",
         },
         {
+          id: "UGFydG5lckFydGlzdEVkZ2U6NTU0YWI2MDg3NzZmNzI1MzQyMDYwMDAw",
           node: {
             categories: [
               {
@@ -37,9 +50,9 @@ export const artistResponse = {
             ],
             id: "UGFydG5lcjpnYWxlcmllLXRoYWRkYWV1cy1yb3BhYw==",
           },
-          id: "UGFydG5lckFydGlzdEVkZ2U6NTU0YWI2MDg3NzZmNzI1MzQyMDYwMDAw",
         },
         {
+          id: "UGFydG5lckFydGlzdEVkZ2U6NTFlNWE4Zjk4YjNiODFlNDQ4MDAwMDc1",
           node: {
             categories: [
               {
@@ -48,9 +61,9 @@ export const artistResponse = {
             ],
             id: "UGFydG5lcjpza2Fyc3RlZHQtZ2FsbGVyeQ==",
           },
-          id: "UGFydG5lckFydGlzdEVkZ2U6NTFlNWE4Zjk4YjNiODFlNDQ4MDAwMDc1",
         },
         {
+          id: "UGFydG5lckFydGlzdEVkZ2U6NTFlNThlZGQyNzViMjRjMzI3MDAwMWNj",
           node: {
             categories: [
               {
@@ -65,23 +78,10 @@ export const artistResponse = {
             ],
             id: "UGFydG5lcjphbnRvbi1rZXJuLWdhbGxlcnk=",
           },
-          id: "UGFydG5lckFydGlzdEVkZ2U6NTFlNThlZGQyNzViMjRjMzI3MDAwMWNj",
         },
       ],
     },
   },
-  auctionResults: {
-    edges: [
-      {
-        node: {
-          price_realized: {
-            display: "$63m",
-          },
-          organization: "Christie's",
-          sale_date: "2017",
-          id: "QXVjdGlvblJlc3VsdDoxMDkzOQ==",
-        },
-      },
-    ],
-  },
+  id: "blah",
+  internalID: "blah",
 }

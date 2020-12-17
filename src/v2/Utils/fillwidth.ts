@@ -75,9 +75,9 @@ const fillwidthDimensions = (
     }
 
     return {
+      height: targetHeight,
       id,
       width: targetHeight * aspectRatio,
-      height: targetHeight,
     }
   })
 
@@ -98,12 +98,12 @@ const fillwidthDimensions = (
     count++
     if (count === MAX_ITERATIONS) {
       const data = {
-        items,
         containerWidth,
-        gutter,
-        targetHeight,
-        dir,
         dimensions,
+        dir,
+        gutter,
+        items,
+        targetHeight,
       }
       console.error(
         `Was unable to calculate a filling width for data: ${JSON.stringify(

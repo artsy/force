@@ -41,14 +41,14 @@ import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
 
 const testOrder = {
   ...OfferOrderWithShippingDetails,
-  stateExpiresAt: DateTime.fromISO(NOW).plus({ days: 1 }).toString(),
+  buyer: Buyer,
+  itemsTotalCents: 1000000,
   lastOffer: {
     ...OfferWithTotals,
     createdAt: DateTime.fromISO(NOW).minus({ days: 1 }).toString(),
   },
   offers: { edges: Offers },
-  buyer: Buyer,
-  itemsTotalCents: 1000000,
+  stateExpiresAt: DateTime.fromISO(NOW).plus({ days: 1 }).toString(),
 }
 
 class RespondTestPage extends OrderAppTestPage {
@@ -88,6 +88,7 @@ class RespondTestPage extends OrderAppTestPage {
 describe("The respond page", () => {
   const { buildPage, mutations, routes } = createTestEnv({
     Component: RespondFragmentContainer,
+    TestPage: RespondTestPage,
     defaultData: {
       order: testOrder,
       system: {
@@ -106,7 +107,6 @@ describe("The respond page", () => {
         }
       }
     `,
-    TestPage: RespondTestPage,
   })
 
   beforeEach(() => {
@@ -281,8 +281,8 @@ describe("The respond page", () => {
         expect(mutations.mockFetch).toHaveBeenCalledTimes(1)
         expect(mutations.lastFetchVariables).toMatchObject({
           input: {
-            offerId: "myoffer-id",
             amountCents: 9000 * 100,
+            offerId: "myoffer-id",
           },
         })
         expect(routes.mockPushRoute).toHaveBeenCalledWith(
@@ -307,8 +307,8 @@ describe("The respond page", () => {
         expect(mutations.mockFetch).toHaveBeenCalledTimes(1)
         expect(mutations.lastFetchVariables).toMatchObject({
           input: {
-            offerId: "myoffer-id",
             amountCents: 9000 * 100,
+            offerId: "myoffer-id",
           },
         })
         expect(routes.mockPushRoute).toHaveBeenCalledWith(
@@ -429,9 +429,9 @@ describe("The respond page", () => {
 
       expect(mockPostEvent).toHaveBeenCalledTimes(1)
       expect(mockPostEvent).toHaveBeenLastCalledWith({
-        order_id: "2939023",
         action_type: "Focused on offer input",
         flow: "Make offer",
+        order_id: "2939023",
       })
     })
 
@@ -444,9 +444,9 @@ describe("The respond page", () => {
       await page.clickSubmit()
 
       expect(mockPostEvent).toHaveBeenLastCalledWith({
-        order_id: "2939023",
         action_type: "Viewed offer too low",
         flow: "Make offer",
+        order_id: "2939023",
       })
     })
 
@@ -459,9 +459,9 @@ describe("The respond page", () => {
       await page.clickSubmit()
 
       expect(mockPostEvent).toHaveBeenLastCalledWith({
-        order_id: "2939023",
         action_type: "Viewed offer higher than listed price",
         flow: "Make offer",
+        order_id: "2939023",
       })
     })
   })

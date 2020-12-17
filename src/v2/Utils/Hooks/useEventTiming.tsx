@@ -73,16 +73,16 @@ export const useEventTiming = ({
   ])
 
   return {
-    formattedTime,
-    durationTilEnd,
-    daysTilEnd,
-    secondsTilEnd,
-    hasStarted,
-    hasEnded,
     closesSoon,
     closesToday,
+    daysTilEnd,
+    durationTilEnd,
+    formattedTime,
+    hasEnded,
+    hasStarted,
     hours,
     minutes,
     seconds,
+    secondsTilEnd,
   }
 }

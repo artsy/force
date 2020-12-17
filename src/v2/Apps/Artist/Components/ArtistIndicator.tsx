@@ -17,10 +17,10 @@ interface ArtistIndicatorProps {
 }
 
 const ICON_MAPPING = {
-  "high-auction": AuctionIcon,
   "blue-chip": BlueChipIcon,
-  "top-established": TopEstablishedIcon,
+  "high-auction": AuctionIcon,
   "top-emerging": TopEmergingIcon,
+  "top-established": TopEstablishedIcon,
 }
 
 const RoundedFlex = styled(Flex)`

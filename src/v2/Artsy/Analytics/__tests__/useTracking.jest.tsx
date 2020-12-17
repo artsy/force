@@ -10,7 +10,7 @@ jest.mock("../useTracking")
 describe("useTracking", () => {
   it("throws error if tracking context not present", () => {
     ;(useTracking as jest.Mock).mockImplementationOnce(
-      require.requireActual("../useTracking").useTracking
+      jest.requireActual("../useTracking").useTracking
     )
 
     const ThrowMissingContext = () => {

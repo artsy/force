@@ -16,11 +16,11 @@ interface MetricMap {
 
 const defaultMetrics: MetricMap = {
   "dom-complete": getDomComplete,
-  "dom-content-loaded-start": getDomContentLoadedStart,
   "dom-content-loaded-end": getDomContentLoadedEnd,
-  "load-event-end": getLoadEventEnd,
-  "first-paint": getFirstPaint,
+  "dom-content-loaded-start": getDomContentLoadedStart,
   "first-contentful-paint": getFirstContentfulPaint,
+  "first-paint": getFirstPaint,
+  "load-event-end": getLoadEventEnd,
   "time-to-interactive": getTTI,
 }
 
@@ -28,14 +28,14 @@ export const metricPayload = (pageType, deviceType, name, duration) => {
   return !duration
     ? null
     : {
-        type: "timing",
         name: "load-time",
-        timing: duration,
         tags: [
           `page-type:${pageType}`,
           `device-type:${deviceType}`,
           `mark:${name}`,
         ],
+        timing: duration,
+        type: "timing",
       }
 }
 
@@ -59,8 +59,8 @@ export async function reportLoadTimeToVolley(
     ).filter(metric => metric != null)
     if (metrics.length > 0) {
       return request.post(sd.VOLLEY_ENDPOINT).send({
-        serviceName: "force",
         metrics,
+        serviceName: "force",
       })
     }
   }

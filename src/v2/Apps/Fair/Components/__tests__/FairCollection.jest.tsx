@@ -34,6 +34,7 @@ describe("FairCollection", () => {
           </AnalyticsContext.Provider>
         )
       },
+      mockData: response,
       query: graphql`
         query FairCollection_Query($slug: String!) @raw_response_type {
           marketingCollection(slug: $slug) {
@@ -44,7 +45,6 @@ describe("FairCollection", () => {
       variables: {
         slug: "xxx",
       },
-      mockData: response,
     })
   }
 
@@ -71,11 +71,7 @@ describe("FairCollection", () => {
   it("renders despite missing images", async () => {
     const wrapper = await getWrapper({
       marketingCollection: {
-        id: "xxx",
-        slug: "street-art-now",
-        title: "Contemporary Street Art",
         artworks: {
-          id: "xxx1",
           counts: {
             total: 10,
           },
@@ -104,7 +100,11 @@ describe("FairCollection", () => {
               },
             },
           ],
+          id: "xxx1",
         },
+        id: "xxx",
+        slug: "street-art-now",
+        title: "Contemporary Street Art",
       },
     })
 
@@ -139,11 +139,7 @@ describe("FairCollection", () => {
 
 const FAIR_COLLECTION_FIXTURE: FairCollection_QueryRawResponse = {
   marketingCollection: {
-    id: "xxx",
-    slug: "street-art-now",
-    title: "Contemporary Street Art",
     artworks: {
-      id: "xxx1",
       counts: {
         total: 10,
       },
@@ -173,6 +169,10 @@ const FAIR_COLLECTION_FIXTURE: FairCollection_QueryRawResponse = {
           },
         },
       ],
+      id: "xxx1",
     },
+    id: "xxx",
+    slug: "street-art-now",
+    title: "Contemporary Street Art",
   },
 }

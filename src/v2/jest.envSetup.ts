@@ -48,8 +48,8 @@ if (typeof window !== "undefined") {
   window.matchMedia = undefined
 
   window.grecaptcha = {
-    ready: jest.fn(cb => cb()),
     execute: jest.fn().mockResolvedValue("recaptcha-token"),
+    ready: jest.fn(cb => cb()),
   }
   window.scrollTo = jest.fn()
   HTMLMediaElement.prototype.pause = jest.fn()

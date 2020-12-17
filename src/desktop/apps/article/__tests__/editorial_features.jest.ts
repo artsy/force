@@ -81,14 +81,14 @@ describe("Editorial Features", () => {
       ...StandardArticle,
       relatedArticles: [
         {
-          title: "Emerging",
-          thumbnail_title: "Emerging Artists to Know",
           relatedArticles: [
             {
-              title: "Genesis Belanger",
               thumbnail_title: "Vanguard 2019: Genesis Belanger",
+              title: "Genesis Belanger",
             },
           ],
+          thumbnail_title: "Emerging Artists to Know",
+          title: "Emerging",
         },
       ],
     }

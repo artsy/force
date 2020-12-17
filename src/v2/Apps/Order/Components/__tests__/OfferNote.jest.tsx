@@ -31,8 +31,8 @@ describe("OfferNote", () => {
     simulateTyping(wrapper, "hello world")
 
     expect(onChange).toHaveBeenCalledWith({
-      value: "hello world",
       exceedsCharacterLimit: false,
+      value: "hello world",
     })
 
     const twoHundredAs = new Array(200).fill("a").join("")
@@ -40,16 +40,16 @@ describe("OfferNote", () => {
     simulateTyping(wrapper, twoHundredAs)
 
     expect(onChange).toHaveBeenCalledWith({
-      value: twoHundredAs,
       exceedsCharacterLimit: false,
+      value: twoHundredAs,
     })
 
     const twoHundredAndOneAs = new Array(201).fill("a").join("")
     simulateTyping(wrapper, twoHundredAndOneAs)
 
     expect(onChange).toHaveBeenCalledWith({
-      value: twoHundredAndOneAs,
       exceedsCharacterLimit: true,
+      value: twoHundredAndOneAs,
     })
   })
 

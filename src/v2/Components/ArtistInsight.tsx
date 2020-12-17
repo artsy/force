@@ -23,15 +23,15 @@ interface ArtistInsightProps {
 }
 
 const ICON_MAPPING = {
-  HIGH_AUCTION: AuctionIcon,
-  SOLO_SHOW: SoloIcon,
-  GROUP_SHOW: GroupIcon,
   BIENNIAL: FairIcon,
-  REVIEWED: BookIcon,
-  COLLECTED: MuseumIcon,
   BLUE_CHIP: BlueChipIcon,
-  TOP_ESTABLISHED: TopEstablishedIcon,
+  COLLECTED: MuseumIcon,
+  GROUP_SHOW: GroupIcon,
+  HIGH_AUCTION: AuctionIcon,
+  REVIEWED: BookIcon,
+  SOLO_SHOW: SoloIcon,
   TOP_EMERGING: TopEmergingIcon,
+  TOP_ESTABLISHED: TopEstablishedIcon,
 }
 
 @track<ArtistInsightProps>(props => ({

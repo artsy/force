@@ -13,27 +13,27 @@ export const getTagProps = (
   switch (status) {
     case "closed":
       return {
+        borderColor: "black100",
+        color: "black100",
         text: "Closed",
         textColor: "white100",
-        color: "black100",
-        borderColor: "black100",
       }
     case "live":
       return distanceToClose
         ? {
+            borderColor: "black5",
+            color: "white100",
             text: `${distanceToClose} left`,
             textColor: "black60",
-            color: "white100",
-            borderColor: "black5",
           }
         : null
     case "scheduled":
       return distanceToOpen
         ? {
+            borderColor: "black100",
+            color: "black100",
             text: "Opening soon",
             textColor: "white100",
-            color: "black100",
-            borderColor: "black100",
           }
         : null
   }

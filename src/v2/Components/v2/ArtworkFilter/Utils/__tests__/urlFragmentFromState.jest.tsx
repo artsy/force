@@ -9,8 +9,8 @@ describe("urlFragmentFromState", () => {
   it("returns a queryParam-safe representation of artworkFilterState", () => {
     const artworkFilterState: ArtworkFilters = {
       ...initialArtworkFilterState,
-      priceRange: "100-200",
       height: "300-400",
+      priceRange: "100-200",
       width: "500-600",
     }
 

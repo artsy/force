@@ -26,10 +26,10 @@ export class ArtworkSidebarClassification extends React.Component<
   }
 
   @track({
+    action_type: Schema.ActionType.Click,
+    context_module: Schema.ContextModule.Sidebar,
     subject: Schema.Subject.Classification,
     type: Schema.Type.Link,
-    context_module: Schema.ContextModule.Sidebar,
-    action_type: Schema.ActionType.Click,
   })
   openModal() {
     this.setState({ isModalOpen: true })
@@ -50,7 +50,7 @@ export class ArtworkSidebarClassification extends React.Component<
           onClose={this.closeModal}
           show={this.state.isModalOpen}
           title="Artwork classifications"
-          cta={{ text: "OK", onClick: () => this.closeModal(), isFixed: false }}
+          cta={{ isFixed: false, onClick: () => this.closeModal(), text: "OK" }}
         >
           <ClassificationDetails />
         </Modal>
@@ -90,48 +90,48 @@ const ClassificationContainer = Box
 const ClassificationDetails = () => {
   const classificationOptions = [
     {
-      name: "Unique",
       long_description: "One of a kind piece, created by the artist.",
+      name: "Unique",
     },
     {
-      name: "Limited edition",
       long_description: [
         "Original works created in multiple with direct involvement of the artist.",
         "Generally, less than 150 pieces total.",
       ].join(" "),
+      name: "Limited edition",
     },
     {
-      name: "Made-to-order",
       long_description:
         "A piece that is made-to-order, taking into account the collector’s preferences.",
+      name: "Made-to-order",
     },
     {
-      name: "Reproduction",
       long_description: [
         "Reproduction of an original work authorized by artist’s studio or estate.",
         "The artist was not directly involved in production.",
       ].join(" "),
+      name: "Reproduction",
     },
     {
-      name: "Editioned multiple",
       long_description: [
         "Pieces created in larger limited editions, authorized by the artist’s studio or estate.",
         "Not produced with direct involvement of the artist.",
       ].join(" "),
+      name: "Editioned multiple",
     },
     {
-      name: "Non-editioned multiple",
       long_description: [
         "Works made in unlimited or unknown numbers of copies, authorized by the artist’s studio or estate.",
         "Not produced with direct involvement of the artist.",
       ].join(" "),
+      name: "Non-editioned multiple",
     },
     {
-      name: "Ephemera",
       long_description: [
         "Items related to the artist, created or manufactured for a specific, limited use.",
         "This includes exhibition materials, memorabilia, autographs, etc.",
       ].join(" "),
+      name: "Ephemera",
     },
   ]
 

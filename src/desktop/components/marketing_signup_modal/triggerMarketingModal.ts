@@ -22,13 +22,13 @@ export const triggerMarketingModal = (
     // @ts-ignore
     const { image, copy } = modalData
     const options: ModalOptions = {
-      copy,
-      intent,
-      destination: location.href,
-      image,
       contextModule: isScrolling
         ? ContextModule.popUpModal
         : ContextModule.bannerPopUp,
+      copy,
+      destination: location.href,
+      image,
+      intent,
     }
 
     if (isScrolling) {

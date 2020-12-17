@@ -23,10 +23,10 @@ interface CommitMutationProps {
 }
 
 const MutationContext = React.createContext<CommitMutationProps>({
-  isCommittingMutation: false,
   commitMutation() {
     throw new Error("no mutation context in react tree")
   },
+  isCommittingMutation: false,
 })
 
 class ProvideMutationContext extends React.Component<
@@ -46,7 +46,6 @@ class ProvideMutationContext extends React.Component<
       try {
         relayCommitMutation(this.props.relayEnvironment, {
           mutation,
-          variables,
           onCompleted: (data, errors) => {
             this.setState({ isCommittingMutation: false }, () => {
               if (errors) {
@@ -61,6 +60,7 @@ class ProvideMutationContext extends React.Component<
               reject(e)
             })
           },
+          variables,
         })
       } catch (e) {
         reject(e)

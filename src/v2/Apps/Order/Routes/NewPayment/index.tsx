@@ -90,9 +90,9 @@ export class NewPaymentRoute extends Component<
 
       if (result.type === "error") {
         this.props.dialog.showErrorDialog({
-          title: result.error,
           message:
             "Please enter another payment method or contact your bank for more information.",
+          title: result.error,
         })
         return
       }
@@ -126,8 +126,8 @@ export class NewPaymentRoute extends Component<
         )
         if (scaResult.error) {
           this.props.dialog.showErrorDialog({
-            title: "An error occurred",
             message: scaResult.error.message,
+            title: "An error occurred",
           })
           return
         } else {
@@ -224,9 +224,8 @@ export class NewPaymentRoute extends Component<
     variables: NewPaymentRouteSetOrderPaymentMutation["variables"]
   ) {
     return this.props.commitMutation<NewPaymentRouteSetOrderPaymentMutation>({
-      variables,
       // TODO: Inputs to the mutation might have changed case of the keys!
-      mutation: graphql`
+mutation: graphql`
         mutation NewPaymentRouteSetOrderPaymentMutation(
           $input: CommerceFixFailedPaymentInput!
         ) {
@@ -266,6 +265,8 @@ export class NewPaymentRoute extends Component<
           }
         }
       `,
+      
+      variables,
     })
   }
 
@@ -273,16 +274,16 @@ export class NewPaymentRoute extends Component<
     switch (code) {
       case "capture_failed": {
         this.props.dialog.showErrorDialog({
-          title: "Charge failed",
           message:
             "Payment authorization has been declined. Please contact your card provider and try again.",
+          title: "Charge failed",
         })
         break
       }
       case "insufficient_inventory": {
         await this.props.dialog.showErrorDialog({
-          title: "Not available",
           message: "Sorry, the work is no longer available.",
+          title: "Not available",
         })
         this.routeToArtistPage()
         break

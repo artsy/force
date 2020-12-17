@@ -17,9 +17,9 @@ const getWrapper = (
       submitUrls={{
         apple: "/users/auth/apple",
         facebook: "/users/auth/facebook",
+        forgot: "/forgot",
         login: "/login",
         signup: "/signup",
-        forgot: "/forgot",
       }}
       csrf="CSRF_TOKEN"
       {...props}
@@ -41,9 +41,9 @@ describe("ModalManager", () => {
     const manager = wrapper.instance() as ModalManager
 
     manager.openModal({
-      mode: ModalType.login,
-      intent: Intent.login,
       contextModule: ContextModule.header,
+      intent: Intent.login,
+      mode: ModalType.login,
     })
 
     expect(manager.state.currentType).toEqual("login")
@@ -65,9 +65,9 @@ describe("ModalManager", () => {
     expect(document.body.style.overflowY).toEqual("visible")
 
     manager.openModal({
-      mode: ModalType.login,
-      intent: Intent.login,
       contextModule: ContextModule.header,
+      intent: Intent.login,
+      mode: ModalType.login,
     })
 
     expect(document.body.style.overflowY).toEqual("hidden")
@@ -78,9 +78,9 @@ describe("ModalManager", () => {
     const manager = wrapper.instance() as ModalManager
 
     manager.openModal({
-      mode: ModalType.login,
-      intent: Intent.login,
       contextModule: ContextModule.header,
+      intent: Intent.login,
+      mode: ModalType.login,
     })
 
     manager.handleTypeChange("signup")
@@ -95,10 +95,10 @@ describe("ModalManager", () => {
     const manager = wrapper.instance() as ModalManager
 
     manager.openModal({
-      mode: ModalType.login,
-      intent: Intent.signup,
-      copy: "Foobar",
       contextModule: ContextModule.header,
+      copy: "Foobar",
+      intent: Intent.signup,
+      mode: ModalType.login,
     })
     expect(manager.getSubtitle()).toEqual("Foobar")
 

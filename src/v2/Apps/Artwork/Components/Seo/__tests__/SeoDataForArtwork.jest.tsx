@@ -24,7 +24,7 @@ describe("SeoDataForArtwork", () => {
   ) => {
     return await renderRelayTree({
       Component: SeoDataForArtworkFragmentContainer,
-      wrapper: renderer => <MockBoot>{renderer}</MockBoot>,
+      mockData: { artwork } as SeoDataForArtwork_Test_QueryRawResponse,
       query: graphql`
         query SeoDataForArtwork_Test_Query @raw_response_type {
           artwork(id: "richard-anuszkiewicz-lino-yellow-318") {
@@ -32,7 +32,7 @@ describe("SeoDataForArtwork", () => {
           }
         }
       `,
-      mockData: { artwork } as SeoDataForArtwork_Test_QueryRawResponse,
+      wrapper: renderer => <MockBoot>{renderer}</MockBoot>,
     })
   }
 
@@ -72,21 +72,21 @@ describe("SeoDataForArtwork", () => {
           name: "Artist McArtist",
         },
         description: "artwork description",
+        height: "2 in",
         image: "artwork-image",
         name: "artwork title",
         url: "test-url/artwork/an-artwork",
         width: "1 in",
-        height: "2 in",
       })
     })
 
-    it("Renders a Product for a non-institution ", async () => {
+    it("Renders a Product for a non-institution", async () => {
       const wrapper = await getWrapper({
         ...SeoDataForArtworkFixture,
         listPrice: {
           __typename: "Money",
-          major: 1000,
           currencyCode: "USD",
+          major: 1000,
         },
       })
 
@@ -100,6 +100,7 @@ describe("SeoDataForArtwork", () => {
         brand: { "@type": "Person", name: "Artist McArtist" },
         category: "Design/Decorative Art",
         description: "artwork description",
+        height: "2 in",
         image: "artwork-image",
         name: "artwork title",
         offers: {
@@ -109,14 +110,13 @@ describe("SeoDataForArtwork", () => {
           priceCurrency: "USD",
           seller: {
             "@type": "ArtGallery",
-            name: "Wright",
             image: "partner-image",
+            name: "Wright",
           },
         },
         productionDate: "1950",
         url: "test-url/artwork/an-artwork",
         width: "1 in",
-        height: "2 in",
       })
     })
 
@@ -124,12 +124,12 @@ describe("SeoDataForArtwork", () => {
       it("Renders InStock when 'for sale'", async () => {
         const wrapper = await getWrapper({
           ...SeoDataForArtworkFixture,
+          availability: "for sale",
           listPrice: {
             __typename: "Money",
-            major: 1000,
             currencyCode: "USD",
+            major: 1000,
           },
-          availability: "for sale",
         })
 
         expect(getProductData(wrapper).offers.availability).toEqual(
@@ -140,12 +140,12 @@ describe("SeoDataForArtwork", () => {
       it("Renders OutOfStock when not 'for sale'", async () => {
         const wrapper = await getWrapper({
           ...SeoDataForArtworkFixture,
+          availability: "sold",
           listPrice: {
             __typename: "Money",
-            major: 1000,
             currencyCode: "USD",
+            major: 1000,
           },
-          availability: "sold",
         })
 
         expect(getProductData(wrapper).offers.availability).toEqual(
@@ -158,8 +158,8 @@ describe("SeoDataForArtwork", () => {
       it("Doesn't render offer when price is hidden", async () => {
         const wrapper = await getWrapper({
           ...SeoDataForArtworkFixture,
-          is_price_range: true,
           is_price_hidden: true,
+          is_price_range: true,
         })
 
         expect(getProductData(wrapper).offers).toBeFalsy()
@@ -168,26 +168,26 @@ describe("SeoDataForArtwork", () => {
       it("Renders AggregateOffer when price range", async () => {
         const wrapper = await getWrapper({
           ...SeoDataForArtworkFixture,
-          is_price_range: false,
           is_price_hidden: false,
+          is_price_range: false,
           listPrice: {
             __typename: "PriceRange",
             maxPrice: {
               major: 1000,
             },
             minPrice: {
-              major: 100,
               currencyCode: "USD",
+              major: 100,
             },
           },
         })
 
         expect(getProductData(wrapper).offers).toEqual({
           "@type": "AggregateOffer",
-          lowPrice: 100,
-          highPrice: 1000,
-          priceCurrency: "USD",
           availability: "https://schema.org/InStock",
+          highPrice: 1000,
+          lowPrice: 100,
+          priceCurrency: "USD",
           seller: {
             "@type": "ArtGallery",
             image: "partner-image",
@@ -199,26 +199,26 @@ describe("SeoDataForArtwork", () => {
       it("Renders AggregateOffer when price range with low and high bounds", async () => {
         const wrapper = await getWrapper({
           ...SeoDataForArtworkFixture,
-          is_price_range: false,
           is_price_hidden: false,
+          is_price_range: false,
           listPrice: {
             __typename: "PriceRange",
             maxPrice: {
               major: 1000,
             },
             minPrice: {
-              major: 100,
               currencyCode: "USD",
+              major: 100,
             },
           },
         })
 
         expect(getProductData(wrapper).offers).toEqual({
           "@type": "AggregateOffer",
-          lowPrice: 100,
-          highPrice: 1000,
-          priceCurrency: "USD",
           availability: "https://schema.org/InStock",
+          highPrice: 1000,
+          lowPrice: 100,
+          priceCurrency: "USD",
           seller: {
             "@type": "ArtGallery",
             image: "partner-image",
@@ -230,23 +230,23 @@ describe("SeoDataForArtwork", () => {
       it("Renders AggregateOffer when price range only with low bound", async () => {
         const wrapper = await getWrapper({
           ...SeoDataForArtworkFixture,
-          is_price_range: false,
           is_price_hidden: false,
+          is_price_range: false,
           listPrice: {
             __typename: "PriceRange",
-            minPrice: {
-              major: 100,
-              currencyCode: "USD",
-            },
             maxPrice: null,
+            minPrice: {
+              currencyCode: "USD",
+              major: 100,
+            },
           },
         })
 
         expect(getProductData(wrapper).offers).toEqual({
           "@type": "AggregateOffer",
+          availability: "https://schema.org/InStock",
           lowPrice: 100,
           priceCurrency: "USD",
-          availability: "https://schema.org/InStock",
           seller: {
             "@type": "ArtGallery",
             image: "partner-image",
@@ -258,14 +258,14 @@ describe("SeoDataForArtwork", () => {
       it("Doesn't render offer when price range and no low bound", async () => {
         const wrapper = await getWrapper({
           ...SeoDataForArtworkFixture,
-          is_price_range: false,
           is_price_hidden: false,
+          is_price_range: false,
           listPrice: {
             __typename: "PriceRange",
-            minPrice: null,
             maxPrice: {
               major: 1000,
             },
+            minPrice: null,
           },
         })
 
@@ -275,24 +275,24 @@ describe("SeoDataForArtwork", () => {
       it("Does not render seller within offer when profile image (required) is not present", async () => {
         const wrapper = await getWrapper({
           ...SeoDataForArtworkFixture,
-          partner: {
-            id: "opaque-partner-id",
-            name: "Wright",
-            type: "Auction House",
-            profile: {
-              id: "opaque-profile-id",
-              image: null,
-            },
-          },
           listPrice: {
             __typename: "PriceRange",
             maxPrice: {
               major: 1000,
             },
             minPrice: {
-              major: 100,
               currencyCode: "USD",
+              major: 100,
             },
+          },
+          partner: {
+            id: "opaque-partner-id",
+            name: "Wright",
+            profile: {
+              id: "opaque-profile-id",
+              image: null,
+            },
+            type: "Auction House",
           },
         })
 

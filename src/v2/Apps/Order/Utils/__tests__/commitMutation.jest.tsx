@@ -61,14 +61,8 @@ describe(injectCommitMutation, () => {
             onClick={() => {
               props
                 .commitMutation<commitMutationTest1Mutation>({
-                  variables: {
-                    input: {
-                      creditCardId: "card",
-                      id: "order",
-                    },
-                  },
                   // TODO: Inputs to the mutation might have changed case of the keys!
-                  mutation: graphql`
+mutation: graphql`
                     mutation commitMutationTest1Mutation(
                       $input: CommerceSetPaymentInput!
                     ) {
@@ -83,6 +77,13 @@ describe(injectCommitMutation, () => {
                       }
                     }
                   `,
+                  
+                  variables: {
+                    input: {
+                      creditCardId: "card",
+                      id: "order",
+                    },
+                  },
                 })
                 .then(resultFn)
             }}

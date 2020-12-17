@@ -63,10 +63,10 @@ export const bidderQualifications = (
     Boolean(pendingIdentityVerification)
 
   return {
-    registrationAttempted,
-    qualifiedForBidding,
-    userLacksIdentityVerification,
     pendingIdentityVerification,
+    qualifiedForBidding,
+    registrationAttempted,
     shouldPromptIdVerification,
+    userLacksIdentityVerification,
   }
 }

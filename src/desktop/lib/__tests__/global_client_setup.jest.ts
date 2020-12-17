@@ -11,10 +11,10 @@ const sd = require("sharify").data
 describe("globalClientSetup", () => {
   describe("#trackAuthenticationEvents", () => {
     beforeEach(() => {
-      sd.CURRENT_USER = { id: "123", email: "user@email.com" }
+      sd.CURRENT_USER = { email: "user@email.com", id: "123" }
       window.analytics = {
-        track: jest.fn(),
         identify: jest.fn(),
+        track: jest.fn(),
       } as any
     })
 

@@ -92,8 +92,8 @@ class MobileLoginFormWithSystemContext extends Component<
     super(props)
 
     this.state = {
-      isSocialSignUp: false,
       error: props.error,
+      isSocialSignUp: false,
       showOtp: props.error === "missing two-factor authentication code",
     }
   }
@@ -122,10 +122,10 @@ class MobileLoginFormWithSystemContext extends Component<
       validationSchema={MobileLoginValidator.email}
       onSubmit={(values, actions) =>
         checkEmail({
-          relayEnvironment: this.props.relayEnvironment,
-          values,
           actions,
+          relayEnvironment: this.props.relayEnvironment,
           shouldExist: true,
+          values,
         })
       }
     >

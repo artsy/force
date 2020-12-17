@@ -25,8 +25,8 @@ export const ShowViewingRoom: React.FC<ShowViewingRoomProps> = ({
   const [{ node: viewingRoom }] = show.viewingRoomsConnection.edges
 
   const image = cropped(viewingRoom.image?.imageURLs?.normalized, {
-    width: 450,
     height: 600,
+    width: 450,
   })
 
   const tracking = useTracking()
@@ -40,12 +40,12 @@ export const ShowViewingRoom: React.FC<ShowViewingRoomProps> = ({
     const payload: ClickedViewingRoomCard = {
       action: ActionType.clickedViewingRoomCard,
       context_module: ContextModule.associatedViewingRoom,
-      context_page_owner_type: contextPageOwnerType,
       context_page_owner_id: contextPageOwnerId,
       context_page_owner_slug: contextPageOwnerSlug,
-      destination_page_owner_type: OwnerType.viewingRoom,
+      context_page_owner_type: contextPageOwnerType,
       destination_page_owner_id: viewingRoom.internalID,
       destination_page_owner_slug: viewingRoom.slug,
+      destination_page_owner_type: OwnerType.viewingRoom,
       type: "thumbnail",
     }
 

@@ -35,9 +35,9 @@ const ArtworkSummaryItem: React.SFC<ArtworkSummaryItemProps> = ({
     image.resized_ArtworkSummaryItem.url
 
   const truncateTextStyle = {
-    whiteSpace: "nowrap",
     overflow: "hidden",
     textOverflow: "ellipsis",
+    whiteSpace: "nowrap",
   } as any
 
   return (

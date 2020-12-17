@@ -7,8 +7,8 @@ export const GenesFixture = {
       edges: [
         {
           node: {
-            id: "catty-art",
             href: "/gene/catty-art",
+            id: "catty-art",
             name: "Catty Art",
           },
         },

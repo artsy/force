@@ -12,14 +12,14 @@ describe("searchMiddleware", () => {
     }
 
     const res = {
+      locals: {
+        asset: jest.fn(),
+        sd: {},
+      },
       redirect: jest.fn(),
       status: () => ({
         send: jest.fn(),
       }),
-      locals: {
-        sd: {},
-        asset: jest.fn(),
-      },
     }
 
     const next = jest.fn()
@@ -32,21 +32,21 @@ describe("searchMiddleware", () => {
       const req = {
         path: "/search",
         query: {
-          term: null,
           q: "foo",
+          term: null,
         },
       }
 
       const spy = jest.fn()
       const res = {
+        locals: {
+          asset: jest.fn(),
+          sd: {},
+        },
         redirect: spy,
         status: () => ({
           send: jest.fn(),
         }),
-        locals: {
-          sd: {},
-          asset: jest.fn(),
-        },
       }
 
       const next = jest.fn()
@@ -59,21 +59,21 @@ describe("searchMiddleware", () => {
       const req = {
         path: "/search",
         query: {
-          term: null,
           q: null,
+          term: null,
         },
       }
 
       const spy = jest.fn()
       const res = {
+        locals: {
+          asset: jest.fn(),
+          sd: {},
+        },
         redirect: spy,
         status: () => ({
           send: jest.fn(),
         }),
-        locals: {
-          sd: {},
-          asset: jest.fn(),
-        },
       }
 
       const next = jest.fn()
@@ -92,14 +92,14 @@ describe("searchMiddleware", () => {
 
     const spy = jest.fn()
     const res: any = {
+      locals: {
+        asset: jest.fn(),
+        sd: {},
+      },
       redirect: spy,
       status: () => ({
         send: jest.fn(),
       }),
-      locals: {
-        sd: {},
-        asset: jest.fn(),
-      },
     }
 
     const next = jest.fn()

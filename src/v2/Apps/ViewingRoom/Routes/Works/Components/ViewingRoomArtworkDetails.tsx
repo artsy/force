@@ -48,8 +48,8 @@ export const ViewingRoomArtworkDetails: React.FC<ViewingRoomArtworkDetailsProps>
             action_type: AnalyticsSchema.ActionType.ClickedBuyViewingGroup,
             context_module:
               AnalyticsSchema.ContextModule.ViewingRoomArtworkRail,
-            subject: AnalyticsSchema.Subject.Rail,
             destination_path: href,
+            subject: AnalyticsSchema.Subject.Rail,
           })
         }}
       >

@@ -31,10 +31,10 @@ const FeaturedAuctionsRail: React.FC<FeaturedAuctionsRailProps> = props => {
     if (matchingAuctionFromSpreadsheet) {
       return {
         ...auction,
+        href: auction.node.href,
         imageSrc: matchingAuctionFromSpreadsheet.image_src,
         subtitle: "Auction",
         title: auction.node.name,
-        href: auction.node.href,
       }
     } else {
       return null

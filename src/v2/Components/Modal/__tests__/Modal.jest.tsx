@@ -16,8 +16,8 @@ describe("Modal", () => {
   let props
   beforeEach(() => {
     props = {
-      onClose: jest.fn(),
       blurContainerSelector: "",
+      onClose: jest.fn(),
     }
   })
 
@@ -44,8 +44,8 @@ describe("Modal", () => {
 
     it("Renders ModalCta if props.cta", () => {
       props.cta = {
-        text: "Learn More",
         onClick: jest.fn(),
+        text: "Learn More",
       }
       const component = getWrapper(props)
 

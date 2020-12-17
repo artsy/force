@@ -25,13 +25,13 @@ export const createCollectUrl = ({
   }
 
   const query = qs.stringify({
+    acquireable: "true",
+    artist_id: artistId,
+    dimension_range: dimensionRange,
+    inquireable_only: "true",
+    offerable: "true",
     page: 1,
     sort: "-decayed_merch",
-    acquireable: "true",
-    offerable: "true",
-    inquireable_only: "true",
-    dimension_range: dimensionRange,
-    artist_id: artistId,
   })
 
   const path = [sd.APP_URL, "collect", filterCategories[category]]

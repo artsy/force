@@ -43,25 +43,25 @@ class PaymentForm extends Component<PaymentFormProps, PaymentFormState> {
 
   state = {
     address: { ...emptyAddress, country: "US" },
-    hideBillingAddress: true,
-    error: null,
-    isCommittingMutation: false,
-    isErrorModalOpen: false,
-    errorModalMessage: null,
     addressErrors: {},
     addressTouched: {},
+    error: null,
+    errorModalMessage: null,
+    hideBillingAddress: true,
+    isCommittingMutation: false,
+    isErrorModalOpen: false,
   }
 
   get touchedAddress() {
     return {
-      name: true,
-      country: true,
-      postalCode: true,
       addressLine1: true,
       addressLine2: true,
       city: true,
-      region: true,
+      country: true,
+      name: true,
       phoneNumber: true,
+      postalCode: true,
+      region: true,
     }
   }
 
@@ -72,9 +72,9 @@ class PaymentForm extends Component<PaymentFormProps, PaymentFormState> {
       const { errors, hasErrors } = validateAddress(this.state.address)
       if (hasErrors) {
         this.setState({
-          isCommittingMutation: false,
           addressErrors: errors,
           addressTouched: this.touchedAddress,
+          isCommittingMutation: false,
         })
         return
       }
@@ -86,7 +86,7 @@ class PaymentForm extends Component<PaymentFormProps, PaymentFormState> {
             isCommittingMutation: false,
           })
         } else {
-          this.createCreditCard({ token: token.id, me })
+          this.createCreditCard({ me, token: token.id })
         }
       })
     })
@@ -169,13 +169,13 @@ class PaymentForm extends Component<PaymentFormProps, PaymentFormState> {
     } = this.state.address
 
     return {
-      name,
+      address_city: city,
+      address_country: country,
       address_line1: addressLine1,
       address_line2: addressLine2,
-      address_city: city,
       address_state: region,
       address_zip: postalCode,
-      address_country: country,
+      name,
     }
   }
 
@@ -210,35 +210,8 @@ class PaymentForm extends Component<PaymentFormProps, PaymentFormState> {
     commitMutation<PaymentFormCreateCreditCardMutation>(
       this.props.relay.environment,
       {
-        onCompleted: (data, errors) => {
-          const {
-            createCreditCard: { creditCardOrError },
-          } = data
-
-          if (creditCardOrError.creditCardEdge) {
-            this.setState({
-              isCommittingMutation: false,
-              address: { ...emptyAddress, country: "US" },
-              addressErrors: {},
-              addressTouched: {},
-            })
-            this.cardElement && this.cardElement.cardInputElement.clear()
-            window.scrollTo(0, 0)
-          } else {
-            if (errors) {
-              errors.forEach(this.onMutationError.bind(this))
-            } else {
-              const mutationError = creditCardOrError.mutationError
-              this.onMutationError(
-                new ErrorWithMetadata(mutationError.message, mutationError),
-                mutationError.detail
-              )
-            }
-          }
-        },
-        onError: this.onMutationError.bind(this),
         // TODO: Inputs to the mutation might have changed case of the keys!
-        mutation: graphql`
+mutation: graphql`
           mutation PaymentFormCreateCreditCardMutation(
             $input: CreditCardInput!
           ) {
@@ -262,10 +235,39 @@ class PaymentForm extends Component<PaymentFormProps, PaymentFormState> {
             }
           }
         `,
+        
+onCompleted: (data, errors) => {
+          const {
+            createCreditCard: { creditCardOrError },
+          } = data
+
+          if (creditCardOrError.creditCardEdge) {
+            this.setState({
+              address: { ...emptyAddress, country: "US" },
+              addressErrors: {},
+              addressTouched: {},
+              isCommittingMutation: false,
+            })
+            this.cardElement && this.cardElement.cardInputElement.clear()
+            window.scrollTo(0, 0)
+          } else {
+            if (errors) {
+              errors.forEach(this.onMutationError.bind(this))
+            } else {
+              const mutationError = creditCardOrError.mutationError
+              this.onMutationError(
+                new ErrorWithMetadata(mutationError.message, mutationError),
+                mutationError.detail
+              )
+            }
+          }
+        },
+        
+        onError: this.onMutationError.bind(this),
+        updater: (store, data) => this.onCreditCardAdded(me, store, data),
         variables: {
           input: { token },
         },
-        updater: (store, data) => this.onCreditCardAdded(me, store, data),
       }
     )
   }
@@ -273,9 +275,9 @@ class PaymentForm extends Component<PaymentFormProps, PaymentFormState> {
   private onMutationError(error, errorModalMessage?) {
     logger.error(error)
     this.setState({
+      errorModalMessage,
       isCommittingMutation: false,
       isErrorModalOpen: true,
-      errorModalMessage,
     })
   }
 }

@@ -44,12 +44,12 @@ require("v2/Utils/getCurrentTimeAsIsoString").__setCurrentTime(NOW)
 const testOrder: NewPaymentTestQueryRawResponse["order"] = {
   ...OfferOrderWithShippingDetails,
   internalID: "1234",
-  state: "SUBMITTED",
-  stateExpiresAt: DateTime.fromISO(NOW).plus({ days: 1 }).toString(),
   lastOffer: {
     ...OfferWithTotals,
     createdAt: DateTime.fromISO(NOW).minus({ days: 1 }).toString(),
   },
+  state: "SUBMITTED",
+  stateExpiresAt: DateTime.fromISO(NOW).plus({ days: 1 }).toString(),
 }
 
 describe("Payment", () => {
@@ -63,9 +63,10 @@ describe("Payment", () => {
   })
   const { buildPage, mutations, routes } = createTestEnv({
     Component: NewPaymentFragmentContainer,
+    TestPage: OrderAppTestPage,
     defaultData: {
-      order: testOrder,
       me: { creditCards: { edges: [] } },
+      order: testOrder,
       system: {
         time: {
           unix: 222,
@@ -86,7 +87,6 @@ describe("Payment", () => {
         }
       }
     `,
-    TestPage: OrderAppTestPage,
   })
 
   beforeEach(() => {

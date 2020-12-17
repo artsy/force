@@ -6,10 +6,10 @@ import { PopoverArrowPositionProps, PopoverProps } from "./types"
 
 export class Popover extends React.Component<PopoverProps> {
   private readonly Arrows = {
-    top: <PopoverTopArrow />,
-    right: <PopoverRightArrow />,
     bottom: <PopoverBottomArrow />,
     left: <PopoverLeftArrow />,
+    right: <PopoverRightArrow />,
+    top: <PopoverTopArrow />,
   }
 
   render() {

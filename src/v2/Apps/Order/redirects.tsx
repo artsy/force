@@ -131,8 +131,6 @@ const goToRespondIfAwaitingBuyerResponse: OrderPredicate = ({ order }) => {
 }
 
 export const redirects: RedirectRecord<OrderQuery> = {
-  path: "",
-  rules: [goToArtworkIfOrderWasAbandoned],
   children: [
     {
       path: "respond",
@@ -211,6 +209,8 @@ export const redirects: RedirectRecord<OrderQuery> = {
       ],
     },
   ],
+  path: "",
+  rules: [goToArtworkIfOrderWasAbandoned],
 }
 
 graphql`

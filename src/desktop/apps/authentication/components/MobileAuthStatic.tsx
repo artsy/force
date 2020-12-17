@@ -15,11 +15,11 @@ export class MobileAuthStatic extends React.Component<Props> {
   render() {
     const { type, options } = this.props
     const submitUrls = {
-      login: "/log_in",
-      forgot: "/forgot_password",
-      signup: "/sign_up",
       apple: "/users/auth/apple",
       facebook: "/users/auth/facebook",
+      forgot: "/forgot_password",
+      login: "/log_in",
+      signup: "/sign_up",
     }
 
     return (

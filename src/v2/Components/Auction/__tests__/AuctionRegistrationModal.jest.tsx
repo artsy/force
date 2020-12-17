@@ -9,16 +9,16 @@ import { AuctionRegistrationModal } from "../AuctionRegistrationModal"
 const submitMock = jest.fn()
 const closeMock = jest.fn()
 const defaultProps = {
-  onSubmit: submitMock,
-  onClose: closeMock,
   auction: {
-    name: "Big Sale",
     id: 1,
+    name: "Big Sale",
     requireIdentityVerification: false,
   },
   me: {
     identityVerified: false,
   },
+  onClose: closeMock,
+  onSubmit: submitMock,
 }
 
 describe("AuctionRegistrationModal", () => {

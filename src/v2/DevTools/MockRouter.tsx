@@ -50,17 +50,17 @@ export class MockRouter extends React.Component<Props> {
         : undefined
 
       const { ClientApp } = await buildClientApp({
-        routes,
-        initialRoute,
-        history: {
-          protocol: "memory",
-          options: historyOptions,
-        },
         context: {
           ...context,
-          user,
           relayEnvironment,
+          user,
         } as any,
+        history: {
+          options: historyOptions,
+          protocol: "memory",
+        },
+        initialRoute,
+        routes,
       })
 
       this.setState({

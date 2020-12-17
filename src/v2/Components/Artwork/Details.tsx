@@ -24,8 +24,8 @@ export interface Props extends React.HTMLProps<Details> {
 
 export class Details extends React.Component<Props, null> {
   static defaultProps = {
-    includeLinks: true,
     hideSaleInfo: false,
+    includeLinks: true,
   }
 
   artistLine() {

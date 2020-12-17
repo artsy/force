@@ -11,7 +11,6 @@ describe("RouterLink", () => {
         initialRoute={props.initialRoute}
         routes={[
           {
-            path: "/*",
             Component: () => {
               return (
                 <RouterLink to="/foo" {...props}>
@@ -19,6 +18,7 @@ describe("RouterLink", () => {
                 </RouterLink>
               )
             },
+            path: "/*",
           },
         ]}
       />

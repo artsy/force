@@ -138,9 +138,9 @@ export const FeaturedRailCarousel: React.FC<FeaturedRailCarouselProps> = props =
     <Carousel>
       {itemsForCarousel.map(item => {
         const croppedImageUrl = crop(item.imageSrc, {
-          width: imgWidth * devicePixelRatio,
-          height: imgHeight * devicePixelRatio,
           convert_to: "jpg",
+          height: imgHeight * devicePixelRatio,
+          width: imgWidth * devicePixelRatio,
         })
 
         return (

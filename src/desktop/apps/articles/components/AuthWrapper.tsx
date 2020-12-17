@@ -38,13 +38,13 @@ export class AuthWrapper extends React.Component {
 
   onOpenModal = () => {
     handleScrollingAuthModal({
-      intent: Intent.viewEditorial,
-      contextModule: ContextModule.popUpModal,
-      copy: "Sign up for the best stories in art and visual culture",
-      destination: location.href,
       afterSignUpAction: {
         action: "editorialSignup",
       },
+      contextModule: ContextModule.popUpModal,
+      copy: "Sign up for the best stories in art and visual culture",
+      destination: location.href,
+      intent: Intent.viewEditorial,
     })
   }
 

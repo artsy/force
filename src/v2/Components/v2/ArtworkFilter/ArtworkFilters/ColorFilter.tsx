@@ -18,8 +18,8 @@ export const ColorFilter: FC<ColorFilterProps> = ({ expanded = false }) => {
   }
 
   const CheckmarkStyle = {
-    position: "relative",
     cursor: "pointer",
+    position: "relative",
     ...CheckmarkPositions[filterContext.currentlySelectedFilters().color],
   }
   return (
@@ -149,53 +149,53 @@ export const ColorFilter: FC<ColorFilterProps> = ({ expanded = false }) => {
 }
 
 const CheckmarkPositions = {
-  red: {
-    bottom: "63px",
-    left: "58px",
-  },
   "black-and-white": {
     bottom: "98px",
+  },
+  darkblue: {
+    bottom: "165px",
+  },
+  darkgreen: {
+    bottom: "132px",
+    right: "60px",
+  },
+  darkorange: {
+    bottom: "36px",
+    left: "36px",
+  },
+  darkviolet: {
+    bottom: "132px",
+    left: "58px",
+  },
+  gold: {
+    bottom: "36px",
+    right: "37px",
+  },
+  lightblue: {
+    bottom: "156px",
+    right: "37px",
+  },
+  lightgreen: {
+    bottom: "98px",
+    right: "69px",
+  },
+  orange: {
+    bottom: "28px",
   },
   pink: {
     bottom: "98px",
     left: "65px",
   },
-  darkviolet: {
-    bottom: "132px",
+  red: {
+    bottom: "63px",
     left: "58px",
   },
   violet: {
     bottom: "156px",
     left: "32px",
   },
-  darkblue: {
-    bottom: "165px",
-  },
-  lightblue: {
-    bottom: "156px",
-    right: "37px",
-  },
-  darkgreen: {
-    bottom: "132px",
-    right: "60px",
-  },
-  lightgreen: {
-    bottom: "98px",
-    right: "69px",
-  },
   yellow: {
     bottom: "63px",
     right: "60px",
-  },
-  gold: {
-    bottom: "36px",
-    right: "37px",
-  },
-  orange: {
-    bottom: "28px",
-  },
-  darkorange: {
-    bottom: "36px",
-    left: "36px",
   },
 }

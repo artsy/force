@@ -1,68 +1,68 @@
 export const Message = {
-  internalID: "message1",
+  attachments: [],
   body: "Body of the message",
   createdAt: "2020-02-17T22:51:15+00:00",
-  isFromUser: false,
   from: {
-    name: "Ashkan",
     email: "ashkan@ross.biz",
+    name: "Ashkan",
   },
-  attachments: [],
+  internalID: "message1",
+  isFromUser: false,
 }
 
 export const Items = [
   {
     item: {
       __typename: "Artwork",
-      id: "artwork1",
-      date: "2020-02-17",
-      title: "Title 1",
       artistNames: "Some Artists",
+      date: "2020-02-17",
+      id: "artwork1",
       image: {
         url: "http://test.com",
       },
+      title: "Title 1",
     },
   },
 ]
 
 export const MockedConversation = {
   __typename: "Conversation",
-  id: "123898",
-  internalID: "conversation1",
   from: {
-    name: "Bob",
     email: "bob@bob.biz",
+    name: "Bob",
   },
-  to: {
-    id: "partnerId",
-    name: "Ashkan Gallery",
-    initials: "AG",
-  },
+  id: "123898",
   initialMessage: "Im kind of interested in this work",
-  lastMessageID: "message1",
+  internalID: "conversation1",
+  items: Items,
   lastMessage: null,
   lastMessageAt: "2020-02-17T22:51:15+00:00",
-  unread: true,
-  items: Items,
+  lastMessageID: "message1",
   messages: {
     edges: [
       {
+        cursor: "message1",
         node: {
           ...Message,
         },
-        cursor: "message1",
       },
     ],
   },
   messagesConnection: {
-    totalCount: 1,
     edges: [
       {
+        cursor: "message1",
         node: {
           ...Message,
         },
-        cursor: "message1",
       },
     ],
+    totalCount: 1,
   },
+  to: {
+    id: "partnerId",
+    initials: "AG",
+    name: "Ashkan Gallery",
+  },
+  unread: true,
 } as const

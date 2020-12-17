@@ -18,48 +18,48 @@ describe("SearchResultsEntity", () => {
   }
 
   const props = {
+    entities: ["GALLERY"],
     match: { location: { query: { term: "andy" } } },
+    urlTab: "galleries",
     viewer: {
       searchConnection: {
         edges: [
           {
             node: {
-              id: "percy",
               displayLabel: "Cat",
-              href: "/cat/percy",
               displayType: "Artistic Cats",
+              href: "/cat/percy",
+              id: "percy",
             },
           },
         ],
-        pageInfo: {
-          hasNextPage: true,
-          endCursor: null,
-        },
         pageCursors: {
           around: [],
         },
+        pageInfo: {
+          endCursor: null,
+          hasNextPage: true,
+        },
       },
     },
-    entities: ["GALLERY"],
-    urlTab: "galleries",
   }
 
   const emptyResults = {
+    entities: ["GALLERY"],
     match: { location: { query: { term: "andy" } } },
+    urlTab: "galleries",
     viewer: {
       searchConnection: {
         edges: [],
-        pageInfo: {
-          hasNextPage: true,
-          endCursor: null,
-        },
         pageCursors: {
           around: [],
         },
+        pageInfo: {
+          endCursor: null,
+          hasNextPage: true,
+        },
       },
     },
-    entities: ["GALLERY"],
-    urlTab: "galleries",
   }
 
   it("renders the items", () => {

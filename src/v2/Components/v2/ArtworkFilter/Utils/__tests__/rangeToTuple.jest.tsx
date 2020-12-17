@@ -7,8 +7,8 @@ import { rangeToTuple } from "../rangeToTuple"
 describe("rangeToTuple", () => {
   const artworkFilterState: ArtworkFilters = {
     ...initialArtworkFilterState,
-    priceRange: "100-200",
     height: "300-400",
+    priceRange: "100-200",
     width: "500-600",
   }
 

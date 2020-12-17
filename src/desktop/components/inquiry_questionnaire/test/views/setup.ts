@@ -17,18 +17,18 @@ export const setup = cb =>
       return benv.setup(function () {
         benv.expose({
           $: benv.require("jquery"),
-          jQuery: benv.require("jquery"),
-          sd: {
-            AP: { loginPagePath: "/login" },
-          },
           analytics: {
             track: sinon.stub(),
           },
           grecaptcha: {
+            execute: sinon.stub().returns("test-token"),
             ready: cb => {
               return cb()
             },
-            execute: sinon.stub().returns("test-token"),
+          },
+          jQuery: benv.require("jquery"),
+          sd: {
+            AP: { loginPagePath: "/login" },
           },
         })
         // @ts-ignore

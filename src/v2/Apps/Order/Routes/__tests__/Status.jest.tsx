@@ -46,6 +46,10 @@ const testOrder: UnionToIntersection<StatusQueryRawResponse["order"]> = {
 describe("Status", () => {
   const env = createTestEnv({
     Component: StatusFragmentContainer,
+    TestPage: StatusTestPage,
+    defaultData: {
+      order: testOrder,
+    },
     query: graphql`
       query StatusQuery @raw_response_type {
         order: commerceOrder(id: "42") {
@@ -53,10 +57,6 @@ describe("Status", () => {
         }
       }
     `,
-    defaultData: {
-      order: testOrder,
-    },
-    TestPage: StatusTestPage,
   })
 
   function buildPageWithOrder<Order>(order: Order) {

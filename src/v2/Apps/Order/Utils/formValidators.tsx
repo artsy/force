@@ -12,12 +12,12 @@ export const validateAddress = (address: Address) => {
   const { name, addressLine1, city, region, country, postalCode } = address
   const usOrCanada = country === "US" || country === "CA"
   const errors = {
-    name: validatePresence(name),
     addressLine1: validatePresence(addressLine1),
     city: validatePresence(city),
-    region: usOrCanada && validatePresence(region),
     country: validatePresence(country),
+    name: validatePresence(name),
     postalCode: usOrCanada && validatePresence(postalCode),
+    region: usOrCanada && validatePresence(region),
   }
   const hasErrors = Object.keys(errors).filter(key => errors[key]).length > 0
 

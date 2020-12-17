@@ -31,6 +31,12 @@ describe("GeneRelatedLinks", () => {
   const getWrapper = (similarData = similar, artistsData = artists) => {
     return renderRelayTree({
       Component: GeneRelatedLinksFragmentContainer,
+      mockData: {
+        gene: {
+          artists: artistsData,
+          similar: similarData,
+        },
+      },
       query: graphql`
         query GeneRelatedLinks_Test_Query @raw_response_type {
           gene(id: "cats") {
@@ -38,12 +44,6 @@ describe("GeneRelatedLinks", () => {
           }
         }
       `,
-      mockData: {
-        gene: {
-          similar: similarData,
-          artists: artistsData,
-        },
-      },
     })
   }
 
@@ -68,8 +68,8 @@ describe("GeneRelatedLinks", () => {
   it("should comma seperate the list if multiple items are present", async () => {
     const wrapper = await getWrapper({
       edges: [
-        { node: { name: "a", href: "" } },
-        { node: { name: "b", href: "" } },
+        { node: { href: "", name: "a" } },
+        { node: { href: "", name: "b" } },
       ],
     })
     expect(wrapper.text().includes("a, b")).toBeTruthy()

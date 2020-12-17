@@ -30,11 +30,11 @@ export class MinimalCtaBanner extends React.Component<
   }
 
   @track({
-    action_type: Schema.ActionType.Click,
     action_name: Schema.ActionName.Dismiss,
-    subject: "dismiss auth banner for editorial cta on mobile",
-    intent: Schema.ActionName.ViewEditorial,
+    action_type: Schema.ActionType.Click,
     flow: "authentication",
+    intent: Schema.ActionName.ViewEditorial,
+    subject: "dismiss auth banner for editorial cta on mobile",
   })
   dismissCta() {
     this.setState({ dismissed: true })

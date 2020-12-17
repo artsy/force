@@ -34,8 +34,8 @@ const ArtistName = styled(Serif)`
 
 class FollowArtistPopoverRow extends React.Component<Props, State> {
   state: State = {
-    swappedArtist: null,
     followed: false,
+    swappedArtist: null,
   }
 
   handleClick(artistID: string) {
@@ -73,10 +73,6 @@ class FollowArtistPopoverRow extends React.Component<Props, State> {
             }
           }
         `,
-        variables: {
-          input: { artistID, unfollow: false },
-          excludeArtistIds,
-        },
         optimisticUpdater: () => {
           this.setState({
             followed: true,
@@ -95,14 +91,18 @@ class FollowArtistPopoverRow extends React.Component<Props, State> {
             () => {
               setTimeout(() => {
                 this.setState({
-                  swappedArtist: (node as unknown) as FollowArtistPopoverRow_artist,
                   followed: false,
+                  swappedArtist: (node as unknown) as FollowArtistPopoverRow_artist,
                 })
               }, 500)
             }
           )
 
           excludeArtistIdsState.addArtist(node.internalID)
+        },
+        variables: {
+          excludeArtistIds,
+          input: { artistID, unfollow: false },
         },
       })
     }

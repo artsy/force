@@ -34,8 +34,8 @@ export class QuickInput extends React.Component<
 > {
   state = {
     focused: false,
-    value: (this.props.value as string) || "",
     touchedOnChange: true,
+    value: (this.props.value as string) || "",
   }
 
   UNSAFE_componentWillReceiveProps(newProps) {

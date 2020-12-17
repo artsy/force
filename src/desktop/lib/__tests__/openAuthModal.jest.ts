@@ -6,11 +6,11 @@ import { mediator } from "lib/mediator"
 jest.mock("sharify", () => {
   return {
     data: {
-      API_URL: "https://api.example.com",
-      APP_URL: "https://app.example.com",
       AP: {
         loginPagePath: "foo",
       },
+      API_URL: "https://api.example.com",
+      APP_URL: "https://app.example.com",
     },
   }
 })
@@ -37,8 +37,8 @@ describe("Authentication Helpers", () => {
   describe("#openAuthModal", () => {
     it("opens the mediator with expected args", () => {
       openAuthModal(ModalType.signup, {
-        intent: Intent.followArtist,
         contextModule: ContextModule.artistHeader,
+        intent: Intent.followArtist,
       })
       expect(mediator.trigger).toBeCalledWith("open:auth", {
         contextModule: "artistHeader",
@@ -51,8 +51,8 @@ describe("Authentication Helpers", () => {
   describe("#handleScrollingAuthModal", () => {
     it("opens the mediator with expected args", () => {
       handleScrollingAuthModal({
-        intent: Intent.followArtist,
         contextModule: ContextModule.popUpModal,
+        intent: Intent.followArtist,
       })
       expect(window.addEventListener).toBeCalled()
       jest.runAllTimers()
@@ -67,8 +67,8 @@ describe("Authentication Helpers", () => {
     it("does not open auth on mobile", () => {
       sd.IS_MOBILE = true
       handleScrollingAuthModal({
-        intent: Intent.followArtist,
         contextModule: ContextModule.popUpModal,
+        intent: Intent.followArtist,
       })
       expect(window.addEventListener).not.toBeCalled()
       jest.runAllTimers()
@@ -78,8 +78,8 @@ describe("Authentication Helpers", () => {
     it("does not open auth if current user", () => {
       sd.CURRENT_USER = { id: "123" }
       handleScrollingAuthModal({
-        intent: Intent.followArtist,
         contextModule: ContextModule.popUpModal,
+        intent: Intent.followArtist,
       })
       expect(window.addEventListener).not.toBeCalled()
       jest.runAllTimers()

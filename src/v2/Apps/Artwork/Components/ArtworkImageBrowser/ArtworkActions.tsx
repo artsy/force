@@ -54,21 +54,21 @@ export class ArtworkActions extends React.Component<
   ArtworkActionsState
 > {
   state = {
-    showSharePanel: false,
     showMorePanel: false,
+    showSharePanel: false,
   }
 
   @track({
-    flow: Schema.Flow.ArtworkShare,
     action_type: Schema.ActionType.Click,
     context_module: Schema.ContextModule.ShareButton,
+    flow: Schema.Flow.ArtworkShare,
     type: Schema.Type.Button,
   })
   toggleSharePanel() {
     const showSharePanel = !this.state.showSharePanel
     this.setState({
-      showSharePanel,
       showMorePanel: false,
+      showSharePanel,
     })
   }
 
@@ -99,9 +99,9 @@ export class ArtworkActions extends React.Component<
   }
 
   @track({
-    flow: Schema.Flow.ArtworkViewInRoom,
     action_type: Schema.ActionType.Click,
     context_module: Schema.ContextModule.ViewInRoom,
+    flow: Schema.Flow.ArtworkViewInRoom,
     type: Schema.Type.Button,
   })
   openViewInRoom() {
@@ -182,26 +182,26 @@ export class ArtworkActions extends React.Component<
     const downloadableImageUrl = this.getDownloadableImageUrl()
 
     const actionsToShow = [
-      { name: "save", condition: true, renderer: this.renderSaveButton },
+      { condition: true, name: "save", renderer: this.renderSaveButton },
       {
-        name: "viewInRoom",
         condition: artwork.is_hangable,
+        name: "viewInRoom",
         renderer: this.renderViewInRoomButton,
       },
-      { name: "share", condition: true, renderer: this.renderShareButton },
+      { condition: true, name: "share", renderer: this.renderShareButton },
       {
-        name: "download",
         condition: !!downloadableImageUrl,
+        name: "download",
         renderer: this.renderDownloadButton,
       },
       {
-        name: "edit",
         condition: this.isAdmin,
+        name: "edit",
         renderer: this.renderEditButton,
       },
       {
-        name: "genome",
         condition: this.isAdmin,
+        name: "genome",
         renderer: this.renderGenomeButton,
       },
     ]

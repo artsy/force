@@ -6,11 +6,11 @@ import { createMedia } from "@artsy/fresnel"
 //       migration path for users of the current Responsive component some
 //       serious thought.
 const newThemeBreakpoints = {
-  xs: 0,
-  sm: 768,
-  md: 900,
   lg: 1024,
+  md: 900,
+  sm: 768,
   xl: 1192,
+  xs: 0,
 }
 
 const ReactionMedia = createMedia({

@@ -81,9 +81,9 @@ const ArtworkFilterArtworkGrid: React.FC<ArtworkFilterArtworkGridProps> = props 
           onBrickClick={artwork => {
             trackEvent(
               clickedMainArtworkGrid({
-                contextPageOwnerType,
-                contextPageOwnerSlug,
                 contextPageOwnerId,
+                contextPageOwnerSlug,
+                contextPageOwnerType,
                 destinationPageOwnerId: artwork.internalID,
                 destinationPageOwnerSlug: artwork.slug,
               })

@@ -58,17 +58,17 @@ export class CollectionEntity extends React.Component<CollectionProps> {
         >
           <Background
             collectionImage={resize(collection.headerImage, {
-              width: 645,
               height: 275,
               quality: 80,
+              width: 645,
             })}
           />
           <CollectionTitle size="4">{collection.title}</CollectionTitle>
           <Sans size="2">
             Works from $
             {currency(collection.price_guidance, {
-              separator: ",",
               precision: 0,
+              separator: ",",
             }).format()}
           </Sans>
         </StyledLink>

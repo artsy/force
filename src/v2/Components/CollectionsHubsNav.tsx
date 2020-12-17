@@ -27,7 +27,7 @@ export const CollectionsHubsNav: FC<CollectionsHubsNavProps> = props => {
       {props.marketingHubCollections.slice(0, 6).map(hub => (
         <ImageLink
           to={`/collection/${hub.slug}`}
-          src={resize(hub.thumbnail, { width: 357, height: 175 })}
+          src={resize(hub.thumbnail, { height: 175, width: 357 })}
           ratio={[0.49]}
           title={
             <Text variant="text" px={1}>
@@ -38,10 +38,10 @@ export const CollectionsHubsNav: FC<CollectionsHubsNavProps> = props => {
           onClick={() => {
             trackEvent({
               action_type: Schema.ActionType.Click,
-              context_page: Schema.PageName.CollectPage,
               context_module: Schema.ContextModule.CollectionHubEntryPoint,
-              type: Schema.Type.Thumbnail,
+              context_page: Schema.PageName.CollectPage,
               destination_path: `/collection/${hub.slug}`,
+              type: Schema.Type.Thumbnail,
             })
           }}
         />

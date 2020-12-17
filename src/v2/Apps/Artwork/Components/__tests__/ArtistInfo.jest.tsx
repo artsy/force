@@ -60,13 +60,13 @@ describe("ArtistInfo", () => {
     it("Hides 'Show artist insights' button if no market insights or selected exhibitions data", async () => {
       const artist = {
         ...ArtistInfoFixture,
+        auctionResultsConnection: null,
+        collections: null,
+        exhibition_highlights: null,
         highlights: {
           ...ArtistInfoFixture.highlights,
           partnersConnection: null,
         },
-        collections: null,
-        auctionResultsConnection: null,
-        exhibition_highlights: null,
       }
       const component = getWrapper({ artist })
       expect(component.find("Button").length).toBe(0)
@@ -75,15 +75,15 @@ describe("ArtistInfo", () => {
     it("Hides 'Show artist insights' button if exhibition count does not meet minimum", async () => {
       const artist = {
         ...ArtistInfoFixture,
-        highlights: {
-          ...ArtistInfoFixture.highlights,
-          partnersConnection: null,
-        },
-        collections: null,
         auctionResultsConnection: null,
+        collections: null,
         exhibition_highlights: {
           ...ArtistInfoFixture.exhibition_highlights,
           length: 1,
+        },
+        highlights: {
+          ...ArtistInfoFixture.highlights,
+          partnersConnection: null,
         },
       }
       const component = getWrapper({ artist })
@@ -105,12 +105,12 @@ describe("ArtistInfo", () => {
     it("hides MarketInsights if no data", async () => {
       const artist = {
         ...ArtistInfoFixture,
+        auctionResultsConnection: null,
+        collections: null,
         highlights: {
           ...ArtistInfoFixture.highlights,
           partnersConnection: null,
         },
-        collections: null,
-        auctionResultsConnection: null,
       }
       const component = getWrapper({ artist })
       component.find("Button").simulate("click")
@@ -135,15 +135,15 @@ describe("ArtistInfo", () => {
       .first()
       .simulate("click")
     expect(context.mediator.trigger).toBeCalledWith("open:auth", {
-      mode: "signup",
-      contextModule: "aboutTheWork",
-      copy: "Sign up to follow Pablo Picasso",
-      intent: "followArtist",
       afterSignUpAction: {
         action: "follow",
         kind: "artist",
         objectId: "pablo-picasso",
       },
+      contextModule: "aboutTheWork",
+      copy: "Sign up to follow Pablo Picasso",
+      intent: "followArtist",
+      mode: "signup",
     })
   })
 
@@ -156,8 +156,8 @@ describe("ArtistInfo", () => {
       expect(dispatch).toBeCalledWith({
         action_type: "Click",
         context_module: "Biography",
-        subject: "Show artist insights",
         flow: "Artwork about the artist",
+        subject: "Show artist insights",
         type: "Button",
       })
     })

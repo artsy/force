@@ -13,11 +13,11 @@ const {
 
 export function sessionMiddleware(): RequestHandler {
   return session({
-    secret: SESSION_SECRET,
     domain: process.env.NODE_ENV === "development" ? "" : COOKIE_DOMAIN,
-    name: SESSION_COOKIE_KEY,
-    maxAge: SESSION_COOKIE_MAX_AGE,
-    secure: process.env.NODE_ENV === "production" || NODE_ENV === "staging",
     httpOnly: false,
+    maxAge: SESSION_COOKIE_MAX_AGE,
+    name: SESSION_COOKIE_KEY,
+    secret: SESSION_SECRET,
+    secure: process.env.NODE_ENV === "production" || NODE_ENV === "staging",
   })
 }

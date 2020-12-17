@@ -46,13 +46,13 @@ describe("buildServerApp", () => {
       locals: { sd: {} },
     } as Response
     let req = ({
+      header: jest.fn().mockReturnValue("A random user-agent"),
       path: "/",
       url: "/",
-      header: jest.fn().mockReturnValue("A random user-agent"),
     } as unknown) as Request
     options = {
-      res,
       req,
+      res,
     }
   })
 
@@ -63,12 +63,12 @@ describe("buildServerApp", () => {
     const result = await buildServerApp({
       routes: [
         {
-          path: "/",
           Component,
+          path: "/",
         },
         {
-          path: "/relay",
           Component,
+          path: "/relay",
           query: graphql`
             query buildServerAppTestQuery {
               me {
@@ -245,8 +245,8 @@ describe("buildServerApp", () => {
     beforeAll(() => {
       // @ts-ignore
       global.fetch = jest.fn().mockResolvedValueOnce({
-        ok: null,
         json: jest.fn(),
+        ok: null,
       })
       console.error = jest.fn()
     })

@@ -45,13 +45,13 @@ app.get("/ssr-experiments/stitch", adminOnly, async (_req, res, next) => {
   try {
     const layout = await stitch({
       basePath: __dirname,
-      layout: "../../components/main_layout/templates/react_redesign.jade",
-      config: {
-        styledComponents: true,
-      },
       blocks: {
         body: App,
       },
+      config: {
+        styledComponents: true,
+      },
+      layout: "../../components/main_layout/templates/react_redesign.jade",
       locals: {
         ...res.locals,
         assetPackage: "ssr-experiments",
@@ -106,10 +106,10 @@ app.get("/ssr-experiments/all*", adminOnly, async (req, res, next) => {
 
     const layout = await stitch({
       basePath: __dirname,
-      layout: "../../components/main_layout/templates/react_redesign.jade",
       blocks: {
         body: bodyHTML,
       },
+      layout: "../../components/main_layout/templates/react_redesign.jade",
       locals: {
         ...res.locals,
         assetPackage: "ssr-experiments",

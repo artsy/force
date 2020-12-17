@@ -14,8 +14,8 @@ interface CollectionsHubsHomepageNavProps {
 
 export const CollectionsHubsHomepageNav = track(
   {
-    context_page: AnalyticsSchema.PageName.HomePage,
     context_module: AnalyticsSchema.ContextModule.CollectionHubEntryPoint,
+    context_page: AnalyticsSchema.PageName.HomePage,
     subject: AnalyticsSchema.Subject.FeaturedCategories,
   },
   { dispatch: data => Events.postEvent(data) }
@@ -34,7 +34,7 @@ export const CollectionsHubsHomepageNav = track(
       {props.marketingHubCollections.slice(0, 6).map(hub => (
         <ImageLink
           to={`/collection/${hub.slug}`}
-          src={resize(hub.thumbnail, { width: 357, height: 175 })}
+          src={resize(hub.thumbnail, { height: 175, width: 357 })}
           ratio={[0.49]}
           title={<Text variant="text">{hub.title}</Text>}
           subtitle={<Text variant="caption">{subtitleFor(hub.title)}</Text>}
@@ -42,8 +42,8 @@ export const CollectionsHubsHomepageNav = track(
           onClick={() => {
             trackEvent({
               action_type: AnalyticsSchema.ActionType.Click,
-              type: AnalyticsSchema.Type.Thumbnail,
               desination_path: `/collection/${hub.slug}`,
+              type: AnalyticsSchema.Type.Thumbnail,
             })
           }}
         />
@@ -81,10 +81,10 @@ export const CollectionsHubsHomepageNavFragmentContainer = createFragmentContain
 
 const subtitlesMapping = {
   Contemporary: "Today’s leading artists and emerging talents",
-  "Post-War": "From Abstract Expressionism to Pop Art",
   "Impressionist & Modern": "The birth of abstraction, Surrealism, and Dada",
-  "Pre-20th Century": "Ancient Rome, the Renaissance, Baroque, and more",
   Photography: "Through the lens—from daguerreotypes to digital",
+  "Post-War": "From Abstract Expressionism to Pop Art",
+  "Pre-20th Century": "Ancient Rome, the Renaissance, Baroque, and more",
   "Street Art": "The rise of graffiti, vinyl toys, and skate culture",
 }
 

@@ -33,7 +33,7 @@ export class CreditCard extends React.Component<
   CreditCardProps,
   CreditCardsState
 > {
-  state = { isErrorModalOpen: false, isCommittingMutation: false }
+  state = { isCommittingMutation: false, isErrorModalOpen: false }
 
   render() {
     return (
@@ -72,18 +72,6 @@ export class CreditCard extends React.Component<
       commitMutation<SavedCreditCardsDeleteCreditCardMutation>(
         this.props.relay.environment,
         {
-          onCompleted: (data, errors) => {
-            const {
-              deleteCreditCard: { creditCardOrError },
-            } = data
-
-            if (creditCardOrError.creditCard) {
-              this.setState({ isCommittingMutation: false })
-            } else {
-              this.onMutationError(errors)
-            }
-          },
-          onError: this.onMutationError.bind(this),
           mutation: graphql`
             mutation SavedCreditCardsDeleteCreditCardMutation(
               $input: DeleteCreditCardInput!
@@ -107,10 +95,22 @@ export class CreditCard extends React.Component<
               }
             }
           `,
+          onCompleted: (data, errors) => {
+            const {
+              deleteCreditCard: { creditCardOrError },
+            } = data
+
+            if (creditCardOrError.creditCard) {
+              this.setState({ isCommittingMutation: false })
+            } else {
+              this.onMutationError(errors)
+            }
+          },
+          onError: this.onMutationError.bind(this),
+          updater: (store, data) => this.onCreditCardDeleted(store, data),
           variables: {
             input: { id: this.props.creditCard.internalID },
           },
-          updater: (store, data) => this.onCreditCardDeleted(store, data),
         }
       )
     })
@@ -145,7 +145,7 @@ export class CreditCard extends React.Component<
 
   private onMutationError(errors) {
     console.error("SavedCreditCards.tsx", errors)
-    this.setState({ isErrorModalOpen: true, isCommittingMutation: false })
+    this.setState({ isCommittingMutation: false, isErrorModalOpen: true })
   }
 }
 

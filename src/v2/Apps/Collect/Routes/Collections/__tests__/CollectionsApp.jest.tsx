@@ -22,6 +22,15 @@ describe("CollectionApp", () => {
       return await renderRelayTree({
         Component: CollectionsApp,
         componentProps: { tracking },
+        mockData: {
+          marketingCategories: [
+            {
+              collections: [],
+              name: "Modern", // "Modern" exists to test sort order so no need to add collections
+            },
+            ...CategoriesFixture,
+          ],
+        } as CollectionsAppTestQueryRawResponse,
         query: graphql`
           query CollectionsAppTestQuery @raw_response_type {
             marketingCategories {
@@ -29,15 +38,6 @@ describe("CollectionApp", () => {
             }
           }
         `,
-        mockData: {
-          marketingCategories: [
-            {
-              name: "Modern",
-              collections: [], // "Modern" exists to test sort order so no need to add collections
-            },
-            ...CategoriesFixture,
-          ],
-        } as CollectionsAppTestQueryRawResponse,
         wrapper: children => <MockBoot breakpoint="lg">{children}</MockBoot>,
       })
     }
@@ -57,7 +57,7 @@ describe("CollectionApp", () => {
     const breadCrumbList = tree.find(BreadCrumbList)
 
     expect(breadCrumbList.props().items).toEqual([
-      { path: "/collections", name: "Collections" },
+      { name: "Collections", path: "/collections" },
     ])
   })
 })

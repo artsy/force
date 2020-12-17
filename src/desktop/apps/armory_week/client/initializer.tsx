@@ -12,7 +12,7 @@ const {
 
 ReactDOM.render(
   <BannerPopUp
-    {...{ ctaTitle, ctaImageUrl, overlayModalTitle, overlayModalImageUrl }}
+    {...{ ctaImageUrl, ctaTitle, overlayModalImageUrl, overlayModalTitle }}
   />,
   document.getElementById("react-root-for-cta")
 )

@@ -4,9 +4,9 @@ describe("resizer", () => {
   describe("#crop", () => {
     it("uses width, height, and quality", () => {
       const url = crop("https://media.artsy.net/img.jpg", {
-        width: 100,
         height: 100,
         quality: 80,
+        width: 100,
       })
       expect(url).toMatch("d7hftxdivxxvm")
       expect(url).toMatch("&width=100&height=100&quality=80")

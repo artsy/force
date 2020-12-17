@@ -14,10 +14,10 @@ import { ConversationAppFragmentContainer } from "../ConversationApp"
 jest.unmock("react-relay")
 
 const pageInfo: ConversationAppTestQueryRawResponse["me"]["conversationsConnection"]["pageInfo"] = {
-  startCursor: "NQ",
   endCursor: "MQ",
   hasNextPage: true,
   hasPreviousPage: false,
+  startCursor: "NQ",
 }
 
 const render = (me: ConversationAppTestQueryRawResponse["me"], user: User) =>
@@ -60,11 +60,11 @@ describe("Conversation app", () => {
       it("renders conversations", async () => {
         // TODO: revisit mocking and remove `artist_names` alias from PurchseHistory
         const mockMe = {
-          id: "111",
           conversationsConnection: {
-            edges: [{ node: MockedConversation, cursor: "absc" }],
+            edges: [{ cursor: "absc", node: MockedConversation }],
             pageInfo,
           },
+          id: "111",
         }
         const component = await render(mockMe, userType)
         const text = component.text()
@@ -74,8 +74,8 @@ describe("Conversation app", () => {
     describe("without previous conversations", () => {
       it("shows an empty state when loading the conversationsConnection", async () => {
         const mockMe = {
-          id: "111",
           conversationsConnection: { edges: [], pageInfo },
+          id: "111",
         }
 
         const component = await render(mockMe, userType)
@@ -95,8 +95,8 @@ describe("Conversation app", () => {
 
       it("shows an empty state on failure on loading the conversationsConnection", async () => {
         const mockMe = {
-          id: "111",
           conversationsConnection: null,
+          id: "111",
         }
 
         const component = await render(mockMe, userType)

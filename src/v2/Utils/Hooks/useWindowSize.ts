@@ -2,13 +2,13 @@ import { useEffect, useState } from "react"
 import { getViewportDimensions } from "v2/Utils/viewport"
 
 export const useWindowSize = () => {
-  const [size, setSize] = useState({ width: 0, height: 0 })
+  const [size, setSize] = useState({ height: 0, width: 0 })
 
   useEffect(() => {
     function resize() {
       const { width, height } = getViewportDimensions()
 
-      setSize({ width, height })
+      setSize({ height, width })
     }
     window.addEventListener("resize", resize)
     resize()
@@ -16,7 +16,7 @@ export const useWindowSize = () => {
   }, [])
 
   if (typeof window === "undefined") {
-    return { width: 0, height: 0 }
+    return { height: 0, width: 0 }
   }
 
   return size

@@ -39,9 +39,9 @@ export const ArtistTopWorksRail: React.FC<ArtistTopWorksRailProps> = ({
         contextPageOwnerId,
         contextPageOwnerSlug,
         contextPageOwnerType,
-        destinationPageOwnerType: OwnerType.artist,
         destinationPageOwnerId: artist.internalID,
         destinationPageOwnerSlug: artist.slug,
+        destinationPageOwnerType: OwnerType.artist,
         type: "viewAll",
       })
     )
@@ -102,9 +102,9 @@ export const ArtistTopWorksRail: React.FC<ArtistTopWorksRailProps> = ({
                     contextPageOwnerId,
                     contextPageOwnerSlug,
                     contextPageOwnerType,
-                    destinationPageOwnerType: OwnerType.artwork,
                     destinationPageOwnerId: internalID,
                     destinationPageOwnerSlug: slug,
+                    destinationPageOwnerType: OwnerType.artwork,
                     horizontalSlidePosition: index + 1,
                     type: "thumbnail",
                   })

@@ -35,13 +35,13 @@ export class BudgetComponent extends React.Component<
   static slug: "budget" = "budget"
 
   options = {
-    "UNDER $500": 500,
-    "UNDER $2,500": 2500,
-    "UNDER $5,000": 5000,
-    "UNDER $10,000": 10000,
-    "UNDER $25,000": 25000,
-    "UNDER $50,000": 50000,
     "NO BUDGET IN MIND": 1000000000000,
+    "UNDER $10,000": 10000,
+    "UNDER $2,500": 2500,
+    "UNDER $25,000": 25000,
+    "UNDER $5,000": 5000,
+    "UNDER $50,000": 50000,
+    "UNDER $500": 500,
   }
 
   state = {
@@ -73,8 +73,8 @@ export class BudgetComponent extends React.Component<
         `,
         variables: {
           input: {
-            priceRangeMin: -1,
             priceRangeMax,
+            priceRangeMin: -1,
           },
         },
       }

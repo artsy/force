@@ -5,8 +5,8 @@
 import $ from "jquery"
 
 const routes = {
-  "^/user/.*": require("../apps/user/client/view.coffee").init,
   "^/profile/.*": require("../apps/user/client/view.coffee").init,
+  "^/user/.*": require("../apps/user/client/view.coffee").init,
 }
 
 for (let path in routes) {

@@ -11,5 +11,5 @@ export const getViewportDimensions = () => {
   } catch (e) {
     height = 0
   }
-  return { width, height }
+  return { height, width }
 }

@@ -13,15 +13,15 @@ describe("Authentication Helpers", () => {
         })
       )
       checkEmail({
-        values: {
-          email: "kana@lalamail.com",
-        },
         actions: {
           setFieldError: jest.fn(),
           setSubmitting: jest.fn(),
         },
-        shouldExist: true,
         relayEnvironment: null,
+        shouldExist: true,
+        values: {
+          email: "kana@lalamail.com",
+        },
       }).then(result => {
         expect(result).toBeTruthy()
         done()
@@ -35,15 +35,15 @@ describe("Authentication Helpers", () => {
         })
       )
       checkEmail({
-        values: {
-          email: "kana@lalamail.com",
-        },
         actions: {
           setFieldError: jest.fn(),
           setSubmitting: jest.fn(),
         },
-        shouldExist: true,
         relayEnvironment: null,
+        shouldExist: true,
+        values: {
+          email: "kana@lalamail.com",
+        },
       }).then(result => {
         expect(result).toBeFalsy()
         done()
@@ -57,15 +57,15 @@ describe("Authentication Helpers", () => {
         })
       )
       checkEmail({
-        values: {
-          email: "kana@lalamail.com",
-        },
         actions: {
           setFieldError: jest.fn(),
           setSubmitting: jest.fn(),
         },
-        shouldExist: false,
         relayEnvironment: null,
+        shouldExist: false,
+        values: {
+          email: "kana@lalamail.com",
+        },
       }).then(result => {
         expect(result).toBeTruthy()
         done()
@@ -79,15 +79,15 @@ describe("Authentication Helpers", () => {
         })
       )
       checkEmail({
-        values: {
-          email: "kana@lalamail.com",
-        },
         actions: {
           setFieldError: jest.fn(),
           setSubmitting: jest.fn(),
         },
-        shouldExist: false,
         relayEnvironment: null,
+        shouldExist: false,
+        values: {
+          email: "kana@lalamail.com",
+        },
       }).then(result => {
         expect(result).toBeFalsy()
         done()
@@ -97,15 +97,15 @@ describe("Authentication Helpers", () => {
     it("should gracefully handle a missing user object as if it were a missing user", done => {
       mockFetchQuery.mockImplementationOnce(() => Promise.resolve({}))
       checkEmail({
-        values: {
-          email: "kana@lalamail.com",
-        },
         actions: {
           setFieldError: jest.fn(),
           setSubmitting: jest.fn(),
         },
-        shouldExist: true,
         relayEnvironment: null,
+        shouldExist: true,
+        values: {
+          email: "kana@lalamail.com",
+        },
       }).then(result => {
         expect(result).toBeFalsy()
         done()

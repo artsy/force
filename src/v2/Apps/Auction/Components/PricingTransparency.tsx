@@ -76,7 +76,7 @@ export const PricingTransparencyQueryRenderer = withSystemContext(
             }
           }
         `}
-        variables={{ saleId, artworkId, bidAmountMinor }}
+        variables={{ artworkId, bidAmountMinor, saleId }}
         render={({ props }) => {
           if (props) {
             return <PricingTransparency artwork={props.artwork} />

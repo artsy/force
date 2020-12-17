@@ -7,19 +7,27 @@ import {
 } from "v2/Apps/Auction/Components/Form"
 
 const HEADER_TEXT_MAPPING = {
-  SALE_CLOSED: "Sale Closed",
-  LIVE_BIDDING_STARTED: "Live Auction in Progress",
-
   // In case of bidder not qualified, the user would be redirected back to the
-  // sale top page (same behaviour as registration form) and we do not have to
-  // display error messages on the form.
-  BIDDER_NOT_QUALIFIED: null,
-  ERROR: null,
+// sale top page (same behaviour as registration form) and we do not have to
+// display error messages on the form.
+BIDDER_NOT_QUALIFIED: null,
+  
 
+
+ERROR: null,
+
+  
+  
+  
+  LIVE_BIDDING_STARTED: "Live Auction in Progress",
   // When the bid is low, the error message is inlined so the error modal does
-  // not have to host it here.
-  OUTBID: null,
+// not have to host it here.
+OUTBID: null,
+
+  
+  
   RESERVE_NOT_MET: null,
+  SALE_CLOSED: "Sale Closed",
 }
 
 interface AuctionErrorModalProps extends ComponentProps<typeof ErrorModal> {

@@ -83,10 +83,10 @@ const RegistrationComplete: ModalContent = ({ onClick }) => {
 }
 
 const contentFor: { [key in ContentKey]: ModalContent } = {
+  bidPending: BidPending,
   registrationConfirmed: RegistrationComplete,
   registrationPending: RegistrationPending,
   registrationPendingUnverified: RegistrationPendingUnverified,
-  bidPending: BidPending,
 }
 
 export const PostRegistrationModal: React.FC<Props> = ({

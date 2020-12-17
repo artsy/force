@@ -41,23 +41,6 @@ const testOrder: PaymentTestQueryRawResponse["order"] = {
 describe("Payment", () => {
   const { buildPage, mutations, routes } = createTestEnv({
     Component: PaymentFragmentContainer,
-    defaultData: {
-      order: testOrder,
-      me: { creditCards: { edges: [] } },
-    },
-    defaultMutationResults: {
-      ...settingOrderPaymentSuccess,
-    },
-    query: graphql`
-      query PaymentTestQuery @raw_response_type {
-        me {
-          ...Payment_me
-        }
-        order: commerceOrder(id: "unused") {
-          ...Payment_order
-        }
-      }
-    `,
     TestPage: class PaymentTestPage extends OrderAppTestPage {
       get nameInput() {
         return this.find("input[placeholder='Add full name']")
@@ -81,6 +64,23 @@ describe("Payment", () => {
         this.nameInput.simulate("change")
       }
     },
+    defaultData: {
+      me: { creditCards: { edges: [] } },
+      order: testOrder,
+    },
+    defaultMutationResults: {
+      ...settingOrderPaymentSuccess,
+    },
+    query: graphql`
+      query PaymentTestQuery @raw_response_type {
+        me {
+          ...Payment_me
+        }
+        order: commerceOrder(id: "unused") {
+          ...Payment_order
+        }
+      }
+    `,
   })
 
   it("shows the button spinner while loading the mutation", async () => {

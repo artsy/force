@@ -12,6 +12,9 @@ describe("ArtworkSidebarAuctionPartnerInfo", () => {
   ) => {
     return renderRelayTree({
       Component: ArtworkSidebarAuctionPartnerInfoFragmentContainer,
+      mockData: {
+        artwork: response,
+      } as ArtworkSidebarAuctionPartnerInfo_Test_QueryRawResponse,
       query: graphql`
         query ArtworkSidebarAuctionPartnerInfo_Test_Query @raw_response_type {
           artwork(id: "auction_artwork_estimate_premium") {
@@ -19,9 +22,6 @@ describe("ArtworkSidebarAuctionPartnerInfo", () => {
           }
         }
       `,
-      mockData: {
-        artwork: response,
-      } as ArtworkSidebarAuctionPartnerInfo_Test_QueryRawResponse,
     })
   }
 
@@ -35,7 +35,7 @@ describe("ArtworkSidebarAuctionPartnerInfo", () => {
       )
     })
 
-    xit("displays artwork without premium", async () => {
+    it.skip("displays artwork without premium", async () => {
       const wrapper = await getWrapper({
         ...ArtworkWithEstimateAndPremium,
         sale: {

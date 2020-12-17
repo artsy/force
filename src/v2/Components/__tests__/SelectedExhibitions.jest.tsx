@@ -6,10 +6,10 @@ import { SelectedExhibitions } from "../SelectedExhibitions"
 
 describe("SelectedExhibitions", () => {
   const props = {
-    exhibitions: exhibitions as any,
-    artistID: "andy-warhol",
-    totalExhibitions: 100,
     ViewAllLink: <a href="#">hi</a>,
+    artistID: "andy-warhol",
+    exhibitions: exhibitions as any,
+    totalExhibitions: 100,
   }
 
   beforeAll(() => {

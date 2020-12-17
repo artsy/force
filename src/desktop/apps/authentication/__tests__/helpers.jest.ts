@@ -10,23 +10,23 @@ import { mockLocation } from "v2/DevTools/mockLocation"
 import { mediator } from "lib/mediator"
 
 jest.mock("cookies-js", () => ({
-  set: jest.fn(),
   get: jest.fn().mockReturnValue("csrf-token"),
+  set: jest.fn(),
 }))
 const CookiesSet = require("cookies-js").set as jest.Mock
 
 jest.mock("sharify", () => {
   return {
     data: {
-      API_URL: "https://api.artsy.net",
-      APP_URL: "https://artsy.net",
       AP: {
         loginPagePath: "/login",
         signupPagePath: "/signup",
       },
+      API_URL: "https://api.artsy.net",
+      APP_URL: "https://artsy.net",
+      RESET_PASSWORD_REDIRECT_TO: "/fairs",
       SESSION_ID: "session-id",
       SET_PASSWORD: "true",
-      RESET_PASSWORD_REDIRECT_TO: "/fairs",
     },
   }
 })
@@ -34,28 +34,28 @@ jest.mock("sharify", () => {
 describe("Authentication Helpers", () => {
   beforeEach(() => {
     mockLocation({
-      pathname: "/articles",
       href: "/articles",
+      pathname: "/articles",
     })
     CookiesSet.mockClear()
     window.analytics = { track: jest.fn() } as any
     // @ts-ignore
     global.fetch = jest.fn(() =>
       Promise.resolve({
-        status: 200,
-        ok: true,
         json: () =>
           Promise.resolve({
-            trust_token: "a-trust-token",
-            issued_at: "some-datetime",
             expires_in: "some-datetime",
+            issued_at: "some-datetime",
+            trust_token: "a-trust-token",
           }),
+        ok: true,
+        status: 200,
       })
     )
   })
 
   describe("#setCookies", () => {
-    it("Sets a cookie for afterSignUpAction ", () => {
+    it("Sets a cookie for afterSignUpAction", () => {
       setCookies({
         afterSignUpAction: "an action",
       })
@@ -81,8 +81,8 @@ describe("Authentication Helpers", () => {
     let formikBag
     beforeEach(() => {
       formikBag = {
-        setSubmitting: jest.fn(),
         setStatus: jest.fn(),
+        setSubmitting: jest.fn(),
       }
       jest.spyOn(mediator, "trigger")
     })
@@ -91,26 +91,26 @@ describe("Authentication Helpers", () => {
       // @ts-ignore
       global.fetch.mockImplementationOnce(() =>
         Promise.resolve({
-          status: 200,
-          ok: true,
           json: () =>
             Promise.resolve({
               success: true,
             }),
+          ok: true,
+          status: 200,
         })
       )
       await handleSubmit(
         ModalType.login,
         {
           contextModule: ContextModule.popUpModal,
-          intent: Intent.viewEditorial,
           destination: "/articles",
+          intent: Intent.viewEditorial,
           triggerSeconds: 2,
         },
         {
           email: "foo@foo.com",
-          password: "password",
           otp_attempt: 123456,
+          password: "password",
         },
         formikBag
       ).then(() => {
@@ -147,27 +147,27 @@ describe("Authentication Helpers", () => {
       // @ts-ignore
       global.fetch.mockImplementationOnce(() =>
         Promise.resolve({
-          status: 200,
-          ok: true,
           json: () =>
             Promise.resolve({
               success: true,
             }),
+          ok: true,
+          status: 200,
         })
       )
       await handleSubmit(
         ModalType.signup,
         {
           contextModule: ContextModule.popUpModal,
-          intent: Intent.viewEditorial,
           destination: "/articles",
+          intent: Intent.viewEditorial,
           triggerSeconds: 2,
         },
         {
-          name: "foo",
-          email: "foo@foo.com",
-          password: "password",
           accepted_terms_of_service: true,
+          email: "foo@foo.com",
+          name: "foo",
+          password: "password",
         },
         formikBag
       ).then(() => {
@@ -177,13 +177,13 @@ describe("Authentication Helpers", () => {
         expect(url).toBe("https://artsy.net/signup")
         expect(JSON.parse(request.body)).toEqual({
           _csrf: "csrf-token",
-          name: "foo",
+          accepted_terms_of_service: true,
+          agreed_to_receive_emails: true,
           email: "foo@foo.com",
+          name: "foo",
           password: "password",
           session_id: "session-id",
           signupIntent: "viewEditorial",
-          accepted_terms_of_service: true,
-          agreed_to_receive_emails: true,
         })
         expect(formikBag.setSubmitting).toBeCalledWith(false)
         expect(window.analytics.track).toBeCalledWith("createdAccount", {
@@ -208,20 +208,20 @@ describe("Authentication Helpers", () => {
       // @ts-ignore
       global.fetch.mockImplementationOnce(() =>
         Promise.resolve({
-          status: 200,
-          ok: true,
           json: () =>
             Promise.resolve({
               status: "success",
             }),
+          ok: true,
+          status: 200,
         })
       )
       await handleSubmit(
         ModalType.forgot,
         {
           contextModule: ContextModule.popUpModal,
-          intent: Intent.viewEditorial,
           destination: "/articles",
+          intent: Intent.viewEditorial,
           triggerSeconds: 2,
         },
         {
@@ -237,9 +237,9 @@ describe("Authentication Helpers", () => {
         )
         expect(JSON.parse(request.body)).toEqual({
           email: "foo@foo.com",
-          session_id: "session-id",
           mode: "fair_set_password",
           reset_password_redirect_to: "/fairs",
+          session_id: "session-id",
         })
         expect(formikBag.setSubmitting).toBeCalledWith(false)
         expect(window.analytics.track).toBeCalledWith("resetYourPassword", {
@@ -262,20 +262,20 @@ describe("Authentication Helpers", () => {
       // @ts-ignore
       global.fetch.mockImplementationOnce(() =>
         Promise.resolve({
-          status: 200,
-          ok: true,
           json: () =>
             Promise.resolve({
               message: "Incorrect email or password",
             }),
+          ok: true,
+          status: 200,
         })
       )
       await handleSubmit(
         ModalType.login,
         {
           contextModule: ContextModule.popUpModal,
-          intent: Intent.viewEditorial,
           destination: "/articles",
+          intent: Intent.viewEditorial,
           triggerSeconds: 2,
         },
         {
@@ -352,13 +352,13 @@ describe("Authentication Helpers", () => {
           // @ts-ignore
           global.fetch = jest.fn(() =>
             Promise.resolve({
-              status: 401,
-              ok: false,
               json: () =>
                 Promise.resolve({
                   error: "Unauthorized",
                   text: "The access token is invalid or has expired.",
                 }),
+              ok: false,
+              status: 401,
             })
           )
         })

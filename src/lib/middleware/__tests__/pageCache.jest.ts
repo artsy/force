@@ -9,11 +9,11 @@ jest.mock("lib/cache", () => ({
 
 jest.mock("config", () => ({
   PAGE_CACHE_ENABLED: true,
-  PAGE_CACHE_TYPES: "artist",
-  PAGE_CACHE_NAMESPACE: "page-cache",
-  PAGE_CACHE_VERSION: "1",
   PAGE_CACHE_EXPIRY_SECONDS: 600,
+  PAGE_CACHE_NAMESPACE: "page-cache",
   PAGE_CACHE_RETRIEVAL_TIMEOUT_MS: 400,
+  PAGE_CACHE_TYPES: "artist",
+  PAGE_CACHE_VERSION: "1",
 }))
 
 describe("pageCacheMiddleware", () => {
@@ -26,14 +26,14 @@ describe("pageCacheMiddleware", () => {
       url: "https://artsy.net/artist/test-artist",
     }
     res = {
-      once: jest.fn((_e, cb) => cb()),
       locals: {
         PAGE_CACHE: {
-          status: 200,
-          key: "key",
           html: "html",
+          key: "key",
+          status: 200,
         },
       },
+      once: jest.fn((_e, cb) => cb()),
     }
     next = jest.fn()
     cache.get.mockClear()

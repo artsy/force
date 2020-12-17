@@ -18,10 +18,21 @@ const mockPostEvent = require("v2/Utils/Events").postEvent as jest.Mock
 
 const setupTestEnv = () => {
   return createTestEnv({
-    TestPage: RequestConditionReportTestPage,
     Component: (props: RequestConditionReportQueryResponse) => (
       <RequestConditionReportFragmentContainer {...props} />
     ),
+    TestPage: RequestConditionReportTestPage,
+    defaultData: {
+      artwork: {
+        internalID: "artwork-id",
+        saleArtwork: { internalID: "sale-artwork-id" },
+        slug: "artwork-slug",
+      },
+      me: { email: "user@example.com", internalID: "user-id" },
+    },
+    defaultMutationResults: {
+      requestConditionReport: {},
+    },
     query: graphql`
       query RequestConditionReportTestQuery @raw_response_type {
         me {
@@ -33,22 +44,11 @@ const setupTestEnv = () => {
         }
       }
     `,
-    defaultData: {
-      me: { internalID: "user-id", email: "user@example.com" },
-      artwork: {
-        internalID: "artwork-id",
-        slug: "artwork-slug",
-        saleArtwork: { internalID: "sale-artwork-id" },
-      },
-    },
-    defaultMutationResults: {
-      requestConditionReport: {},
-    },
     systemContextProps: { mediator },
   })
 }
 
-describe("RequestConditionReport ", () => {
+describe("RequestConditionReport", () => {
   beforeEach(() => {
     jest.spyOn(mediator, "trigger")
   })
@@ -68,13 +68,13 @@ describe("RequestConditionReport ", () => {
 
     expect(mockPostEvent).toHaveBeenCalledWith({
       action_type: Schema.ActionType.ClickedRequestConditionReport,
-      subject: Schema.Subject.RequestConditionReport,
-      context_page: Schema.PageName.ArtworkPage,
       context_module: Schema.ContextModule.AboutTheWorkCondition,
+      context_page: Schema.PageName.ArtworkPage,
       context_page_owner_id: "artwork-id",
       context_page_owner_slug: "artwork-slug",
       context_page_owner_type: "Artwork",
       sale_artwork_id: "sale-artwork-id",
+      subject: Schema.Subject.RequestConditionReport,
     })
 
     expect(page.text()).toContain("Condition report requested")
@@ -106,10 +106,10 @@ describe("RequestConditionReport ", () => {
       await page.clickLogInButton()
 
       expect(mediator.trigger).toHaveBeenCalledWith("open:auth", {
-        mode: "login",
-        redirectTo: "http://localhost/",
         contextModule: "aboutTheWork",
         intent: "requestConditionReport",
+        mode: "login",
+        redirectTo: "http://localhost/",
       })
 
       expect(mockPostEvent).toHaveBeenCalledWith({

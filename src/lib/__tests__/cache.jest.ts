@@ -2,13 +2,6 @@ jest.mock("redis", () => ({
   createClient: () => {
     const localCache = new Map()
     return {
-      set: (key, val) => {
-        localCache.set(key, val)
-      },
-      get: (key, cb) => {
-        const val = localCache.get(key)
-        cb(val)
-      },
       expire: () => {
         return null
       },
@@ -16,7 +9,14 @@ jest.mock("redis", () => ({
         localCache.clear()
         cb()
       },
+      get: (key, cb) => {
+        const val = localCache.get(key)
+        cb(val)
+      },
       on: () => {},
+      set: (key, val) => {
+        localCache.set(key, val)
+      },
     }
   },
 }))
@@ -27,8 +27,8 @@ describe("#cache", () => {
   beforeAll(async () => {
     process.env = {
       ...OLD_ENV,
-      OPENREDIS_URL: "test",
       NODE_ENV: "production",
+      OPENREDIS_URL: "test",
     }
     cache = await import("../cache")
     cache.setup(() => {})

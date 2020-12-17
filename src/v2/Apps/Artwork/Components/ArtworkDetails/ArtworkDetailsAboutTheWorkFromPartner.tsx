@@ -55,8 +55,8 @@ export class ArtworkDetailsAboutTheWorkFromPartner extends React.Component<
 
   handleOpenAuth = (mediator, partner) => {
     openAuthToFollowSave(mediator, {
-      entity: partner,
       contextModule: ContextModule.aboutTheWork,
+      entity: partner,
       intent: Intent.followPartner,
     })
   }

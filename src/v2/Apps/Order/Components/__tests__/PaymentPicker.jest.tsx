@@ -126,10 +126,10 @@ class PaymentPickerTestPage extends RootTestPage {
 
 const defaultData: PaymentPickerTestQueryRawResponse = {
   me: {
-    id: "my-id",
     creditCards: {
       edges: [],
     },
+    id: "my-id",
   },
   order: {
     ...BuyOrderWithShippingDetails,
@@ -249,34 +249,34 @@ describe("PaymentPickerFragmentContainer", () => {
       mockData: {
         order: {
           ...BuyOrderPickup,
-          id: "1234",
           creditCard: {
+            city: "London",
+            country: "UK",
+            expirationMonth: 12,
+            brand: "Visa",
+            expirationYear: 2022,
             internalID: "credit-card-id",
+            lastDigits: "1234",
             name: "Artsy UK Ltd",
+            postalCode: "E1 8PY",
+            state: "Whitechapel",
             street1: "14 Gower's Walk",
             street2: "Suite 2.5, The Loom",
-            city: "London",
-            state: "Whitechapel",
-            country: "UK",
-            postalCode: "E1 8PY",
-            expirationMonth: 12,
-            expirationYear: 2022,
-            lastDigits: "1234",
-            brand: "Visa",
           },
+          id: "1234",
         },
       },
     })
 
     expect(page.addressForm.props().value).toEqual({
-      name: "",
       addressLine1: "",
       addressLine2: "",
       city: "",
-      region: "",
-      postalCode: "",
       country: "US",
+      name: "",
       phoneNumber: "",
+      postalCode: "",
+      region: "",
     })
   })
 
@@ -285,8 +285,8 @@ describe("PaymentPickerFragmentContainer", () => {
       mockData: {
         order: {
           ...BuyOrderPickup,
-          id: "1234",
           creditCard: null,
+          id: "1234",
         },
       },
     })
@@ -296,13 +296,13 @@ describe("PaymentPickerFragmentContainer", () => {
     await page.getCreditCardId()
 
     expect(createTokenMock).toHaveBeenCalledWith({
-      name: "Artsy UK Ltd",
+      address_city: "Whitechapel",
+      address_country: "UK",
       address_line1: "14 Gower's Walk",
       address_line2: "Suite 2.5, The Loom",
-      address_city: "Whitechapel",
       address_state: "London",
       address_zip: "E1 8PY",
-      address_country: "UK",
+      name: "Artsy UK Ltd",
     })
   })
 
@@ -312,13 +312,13 @@ describe("PaymentPickerFragmentContainer", () => {
     await page.getCreditCardId()
 
     expect(createTokenMock).toHaveBeenCalledWith({
-      name: "Joelle Van Dyne",
+      address_city: "New York",
+      address_country: "US",
       address_line1: "401 Broadway",
       address_line2: "Suite 25",
-      address_city: "New York",
       address_state: "NY",
       address_zip: "10013",
-      address_country: "US",
+      name: "Joelle Van Dyne",
     })
   })
 
@@ -329,24 +329,24 @@ describe("PaymentPickerFragmentContainer", () => {
     await page.getCreditCardId()
 
     expect(createTokenMock).toHaveBeenCalledWith({
-      name: "Artsy UK Ltd",
+      address_city: "Whitechapel",
+      address_country: "UK",
       address_line1: "14 Gower's Walk",
       address_line2: "Suite 2.5, The Loom",
-      address_city: "Whitechapel",
       address_state: "London",
       address_zip: "E1 8PY",
-      address_country: "UK",
+      name: "Artsy UK Ltd",
     })
   })
 
   it("commits createCreditCard mutation with stripe token id", async () => {
     const stripeToken: stripe.TokenResponse = {
       token: {
-        id: "tokenId",
-        object: null,
         client_ip: null,
         created: null,
+        id: "tokenId",
         livemode: null,
+        object: null,
         type: null,
         used: null,
       },
@@ -367,12 +367,12 @@ describe("PaymentPickerFragmentContainer", () => {
   it("shows an error message when CreateToken passes in an error", async () => {
     const stripeError: stripe.TokenResponse = {
       error: {
-        type: null,
         charge: null,
-        message: "Your card number is invalid.",
         code: null,
         decline_code: null,
+        message: "Your card number is invalid.",
         param: null,
+        type: null,
       },
     }
 
@@ -390,51 +390,51 @@ describe("PaymentPickerFragmentContainer", () => {
   describe("when the user has existing credit cards", () => {
     const cards: Array<PaymentPicker_me["creditCards"]["edges"][0]["node"]> = [
       {
-        internalID: "card-id-1",
         brand: "MasterCard",
-        lastDigits: "1234",
         expirationMonth: 1,
         expirationYear: 2018,
+        internalID: "card-id-1",
+        lastDigits: "1234",
       },
       {
-        internalID: "card-id-2",
         brand: "Visa",
-        lastDigits: "2345",
         expirationMonth: 1,
         expirationYear: 2019,
+        internalID: "card-id-2",
+        lastDigits: "2345",
       },
     ]
 
     const orderCard = {
-      id: "card-id-2",
-      internalID: "card-id-2",
-      name: "Chareth Cutestory",
-      street1: "1 Art st",
-      street2: null,
-      city: "New York",
-      state: "NY",
-      country: "USA",
-      postalCode: "90210",
       brand: "Visa",
-      lastDigits: "2345",
+      city: "New York",
+      country: "USA",
       expirationMonth: 1,
       expirationYear: 2019,
+      id: "card-id-2",
+      internalID: "card-id-2",
+      lastDigits: "2345",
+      name: "Chareth Cutestory",
+      postalCode: "90210",
+      state: "NY",
+      street1: "1 Art st",
+      street2: null,
     }
 
     const unsavedOrderCard = {
-      id: "card-id-3",
-      internalID: "card-id-3",
-      name: "Chareth Cutestory",
-      street1: "101 Art st",
-      street2: null,
-      city: "New York",
-      state: "NY",
-      country: "USA",
-      postalCode: "90210",
       brand: "Visa",
-      lastDigits: "6789",
+      city: "New York",
+      country: "USA",
       expirationMonth: 12,
       expirationYear: 2022,
+      id: "card-id-3",
+      internalID: "card-id-3",
+      lastDigits: "6789",
+      name: "Chareth Cutestory",
+      postalCode: "90210",
+      state: "NY",
+      street1: "101 Art st",
+      street2: null,
     }
 
     const orderWithoutCard = {
@@ -517,8 +517,8 @@ describe("PaymentPickerFragmentContainer", () => {
       })
       it("returns the relevant credit card id if requested", async () => {
         expect(await page.getCreditCardId()).toMatchObject({
-          type: "success",
           creditCardId: "card-id-1",
+          type: "success",
         })
       })
       it("shows the 'use new card' section when you select that option", async () => {
@@ -573,15 +573,15 @@ describe("PaymentPickerFragmentContainer", () => {
       })
       it("returns the relevant credit card id if requested", async () => {
         expect(await page.getCreditCardId()).toMatchObject({
-          type: "success",
           creditCardId: "card-id-1",
+          type: "success",
         })
       })
       it("returns the relevante credit card id if you select a different card", async () => {
         await page.clickRadio(1)
         expect(await page.getCreditCardId()).toMatchObject({
-          type: "success",
           creditCardId: "card-id-2",
+          type: "success",
         })
       })
       it("shows the 'use new card' section when you select that option", async () => {
@@ -657,8 +657,8 @@ describe("PaymentPickerFragmentContainer", () => {
       await page.toggleSameAddressCheckbox()
       expect(mockPostEvent).toBeCalledWith({
         action_type: "Click",
-        subject: "use shipping address",
         flow: "buy now",
+        subject: "use shipping address",
         type: "checkbox",
       })
       expect(mockPostEvent).toHaveBeenCalledTimes(1)
@@ -751,14 +751,14 @@ describe("PaymentPickerFragmentContainer", () => {
       await page.toggleSameAddressCheckbox()
 
       const address = {
-        name: "Erik David",
         addressLine1: "401 Broadway",
         addressLine2: "",
         city: "New York",
-        region: "NY",
-        postalCode: "",
-        phoneNumber: "5555937743",
         country: "AQ",
+        name: "Erik David",
+        phoneNumber: "5555937743",
+        postalCode: "",
+        region: "NY",
       }
 
       fillAddressForm(page.root, address)
@@ -775,14 +775,14 @@ describe("PaymentPickerFragmentContainer", () => {
       await page.toggleSameAddressCheckbox()
 
       const address = {
-        name: "Erik David",
         addressLine1: "401 Broadway",
         addressLine2: "",
         city: "New York",
-        region: "",
-        postalCode: "7Z",
-        phoneNumber: "5555937743",
         country: "AQ",
+        name: "Erik David",
+        phoneNumber: "5555937743",
+        postalCode: "7Z",
+        region: "",
       }
       fillAddressForm(page.root, address)
 

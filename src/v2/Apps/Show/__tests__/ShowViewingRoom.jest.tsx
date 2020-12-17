@@ -46,12 +46,12 @@ describe("ShowViewingRoom", () => {
 
   it("renders correctly", () => {
     const wrapper = getWrapper({
-      ViewingRoom: () => ({
-        title: "Example Viewing Room",
-        status: "closed",
-      }),
       Partner: () => ({
         name: "Example Partner Name",
+      }),
+      ViewingRoom: () => ({
+        status: "closed",
+        title: "Example Viewing Room",
       }),
     })
 

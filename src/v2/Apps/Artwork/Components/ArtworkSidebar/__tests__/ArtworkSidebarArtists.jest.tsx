@@ -32,6 +32,9 @@ describe("ArtworkSidebarArtists", () => {
           </SystemContextProvider>
         )
       },
+      mockData: {
+        artwork: response,
+      } as ArtworkSidebarArtists_Test_QueryRawResponse,
       query: graphql`
         query ArtworkSidebarArtists_Test_Query @raw_response_type {
           artwork(id: "josef-albers-homage-to-the-square-85") {
@@ -39,9 +42,6 @@ describe("ArtworkSidebarArtists", () => {
           }
         }
       `,
-      mockData: {
-        artwork: response,
-      } as ArtworkSidebarArtists_Test_QueryRawResponse,
     })
   }
 

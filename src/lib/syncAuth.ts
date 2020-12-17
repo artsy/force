@@ -8,19 +8,20 @@ import { data as sd } from "sharify"
 export default function syncAuth() {
   if (sd.CURRENT_USER) {
     $.ajax({
-      url: `${sd.API_URL}/api/v1/me`,
       // success: ensureFreshUser, # this can cause an endless reload
-      statusCode: {
+statusCode: {
         401: () => {
           $.ajax({
-            method: "DELETE",
-            url: "/users/sign_out",
             complete() {
               return window.location.reload()
             },
+            method: "DELETE",
+            url: "/users/sign_out",
           })
         },
       },
+      
+      url: `${sd.API_URL}/api/v1/me`,
     })
   }
 }

@@ -17,14 +17,14 @@ export const buildServerAppContext = (
 ) => {
   const { pageType, pageSlug } = getContextPageFromReq(req)
   return {
+    analytics: {
+      contextPageOwnerSlug: pageSlug,
+      contextPageOwnerType: pageType,
+    },
     initialMatchingMediaQueries: res.locals.sd.IS_MOBILE ? ["xs"] : undefined,
-    user: req.user && req.user.toJSON(),
     isEigen: res.locals.sd.EIGEN,
     mediator,
-    analytics: {
-      contextPageOwnerType: pageType,
-      contextPageOwnerSlug: pageSlug,
-    },
+    user: req.user && req.user.toJSON(),
     ...context,
   }
 }

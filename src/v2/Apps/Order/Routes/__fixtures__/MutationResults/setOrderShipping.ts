@@ -4,9 +4,9 @@ export const settingOrderShipmentFailure = {
   commerceSetShipping: {
     orderOrError: {
       error: {
-        type: "validation",
         code: "Not permitted",
         data: null,
+        type: "validation",
       },
     },
   },
@@ -16,9 +16,9 @@ export const settingOrderShipmentMissingRegionFailure = {
   commerceSetShipping: {
     orderOrError: {
       error: {
-        type: "validation",
         code: "missing_region",
         data: null,
+        type: "validation",
       },
     },
   },
@@ -28,9 +28,9 @@ export const settingOrderShipmentMissingCountryFailure = {
   commerceSetShipping: {
     orderOrError: {
       error: {
-        type: "validation",
         code: "missing_country",
         data: null,
+        type: "validation",
       },
     },
   },

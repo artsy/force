@@ -2,148 +2,149 @@ import { ArtworkSidebarCurrentBidInfo_Test_QueryRawResponse } from "v2/__generat
 
 export const ClosedAuctionArtwork: ArtworkSidebarCurrentBidInfo_Test_QueryRawResponse["artwork"] = {
   id: "artwork_from_closed_auction",
+  myLotStanding: null,
   sale: {
     id: "salessale",
     internalID: "asdf1234",
-    is_with_buyers_premium: false,
     is_closed: true,
     is_live_open: false,
+    is_with_buyers_premium: false,
   },
   sale_artwork: {
+    counts: {
+      bidder_positions: 0,
+    },
+    current_bid: {
+      display: "$3,000",
+    },
     id: "salearwtork124",
     is_with_reserve: true,
     reserve_message: "This work has a reserve",
     reserve_status: "reserve_not_met",
-    current_bid: {
-      display: "$3,000",
-    },
-    counts: {
-      bidder_positions: 0,
-    },
   },
-  myLotStanding: null,
 }
 
 export const AuctionPreview: ArtworkSidebarCurrentBidInfo_Test_QueryRawResponse["artwork"] = {
   id: "artwork_from_auction_preview",
+  myLotStanding: null,
   sale: {
     id: "salessale",
     internalID: "asdf1234",
-    is_with_buyers_premium: false,
     is_closed: false,
     is_live_open: false,
+    is_with_buyers_premium: false,
   },
   sale_artwork: {
+    counts: {
+      bidder_positions: 0,
+    },
+    current_bid: {
+      display: "CHF 4,000",
+    },
     id: "salearwtork124",
     is_with_reserve: false,
     reserve_message: null,
     reserve_status: "no_reserve",
-    current_bid: {
-      display: "CHF 4,000",
-    },
-    counts: {
-      bidder_positions: 0,
-    },
   },
-  myLotStanding: null,
 }
 
 export const AuctionPreviewNoStartingBid: ArtworkSidebarCurrentBidInfo_Test_QueryRawResponse["artwork"] = {
   id: "artwork_from_auction_preview",
+  myLotStanding: null,
   sale: {
     id: "salessale",
     internalID: "asdf1234",
-    is_with_buyers_premium: false,
     is_closed: false,
     is_live_open: false,
+    is_with_buyers_premium: false,
   },
   sale_artwork: {
+    counts: {
+      bidder_positions: 0,
+    },
+    current_bid: null,
     id: "salearwtork124",
     is_with_reserve: false,
     reserve_message: null,
     reserve_status: "no_reserve",
-    current_bid: null,
-    counts: {
-      bidder_positions: 0,
-    },
   },
-  myLotStanding: null,
 }
 
 export const OpenAuctionNoReserveNoBids: ArtworkSidebarCurrentBidInfo_Test_QueryRawResponse["artwork"] = {
   id: "open_auction_no_reserve_no_bids",
+  myLotStanding: null,
   sale: {
     id: "salessale",
     internalID: "asdf1234",
-    is_with_buyers_premium: false,
     is_closed: false,
     is_live_open: false,
+    is_with_buyers_premium: false,
   },
   sale_artwork: {
+    counts: {
+      bidder_positions: 0,
+    },
+    current_bid: {
+      display: "$500",
+    },
     id: "salearwtork124",
     is_with_reserve: false,
     reserve_message: null,
     reserve_status: "no_reserve",
-    current_bid: {
-      display: "$500",
-    },
-    counts: {
-      bidder_positions: 0,
-    },
   },
-  myLotStanding: null,
 }
 
 export const OpenAuctionNoReserveWithBids: ArtworkSidebarCurrentBidInfo_Test_QueryRawResponse["artwork"] = {
   id: "artwork_from_open_auction",
+  myLotStanding: null,
   sale: {
     id: "salessale",
     internalID: "asdf1234",
-    is_with_buyers_premium: false,
     is_closed: false,
     is_live_open: false,
+    is_with_buyers_premium: false,
   },
   sale_artwork: {
+    counts: {
+      bidder_positions: 11,
+    },
+    current_bid: {
+      display: "$850",
+    },
     id: "salearwtork124",
     is_with_reserve: false,
     reserve_message: null,
     reserve_status: "no_reserve",
-    current_bid: {
-      display: "$850",
-    },
-    counts: {
-      bidder_positions: 11,
-    },
   },
-  myLotStanding: null,
 }
 
 export const OpenAuctionReserveNoBids: ArtworkSidebarCurrentBidInfo_Test_QueryRawResponse["artwork"] = {
   id: "open_auction_reserve_no_bids",
+  myLotStanding: null,
   sale: {
     id: "salessale",
     internalID: "asdf1234",
-    is_with_buyers_premium: false,
     is_closed: false,
     is_live_open: false,
+    is_with_buyers_premium: false,
   },
   sale_artwork: {
+    counts: {
+      bidder_positions: 0,
+    },
+    current_bid: {
+      display: "$3,000",
+    },
     id: "salearwtork124",
     is_with_reserve: true,
     reserve_message: "This work has a reserve",
     reserve_status: "reserve_not_met",
-    current_bid: {
-      display: "$3,000",
-    },
-    counts: {
-      bidder_positions: 0,
-    },
   },
-  myLotStanding: null,
 }
 
 export const OpenAuctionReserveNotMetWithBids: ArtworkSidebarCurrentBidInfo_Test_QueryRawResponse["artwork"] = {
   id: "open_auction_reserve_not_met_with_bids",
+  myLotStanding: null,
   sale: {
     id: "salessale",
     internalID: "asdf1234",
@@ -152,22 +153,22 @@ export const OpenAuctionReserveNotMetWithBids: ArtworkSidebarCurrentBidInfo_Test
     is_with_buyers_premium: false,
   },
   sale_artwork: {
+    counts: {
+      bidder_positions: 2,
+    },
+    current_bid: {
+      display: "$10,000",
+    },
     id: "salearwtork124",
     is_with_reserve: true,
     reserve_message: "Reserve not met",
     reserve_status: "reserve_not_met",
-    current_bid: {
-      display: "$10,000",
-    },
-    counts: {
-      bidder_positions: 2,
-    },
   },
-  myLotStanding: null,
 }
 
 export const OpenAuctionReserveMetWithBids: ArtworkSidebarCurrentBidInfo_Test_QueryRawResponse["artwork"] = {
   id: "open_auction_reserve_met_with_bids",
+  myLotStanding: null,
   sale: {
     id: "salessale",
     internalID: "asdf1234",
@@ -176,18 +177,17 @@ export const OpenAuctionReserveMetWithBids: ArtworkSidebarCurrentBidInfo_Test_Qu
     is_with_buyers_premium: true,
   },
   sale_artwork: {
+    counts: {
+      bidder_positions: 2,
+    },
+    current_bid: {
+      display: "$500",
+    },
     id: "salearwtork124",
     is_with_reserve: true,
     reserve_message: "Reserve met",
     reserve_status: "reserve_met",
-    current_bid: {
-      display: "$500",
-    },
-    counts: {
-      bidder_positions: 2,
-    },
   },
-  myLotStanding: null,
 }
 
 export const OpenAuctionReserveNotMetIncreasingOwnBid: ArtworkSidebarCurrentBidInfo_Test_QueryRawResponse["artwork"] = {
@@ -195,13 +195,13 @@ export const OpenAuctionReserveNotMetIncreasingOwnBid: ArtworkSidebarCurrentBidI
   ...OpenAuctionReserveNotMetWithBids,
   myLotStanding: [
     {
-      most_recent_bid: {
-        id: "bidbid",
-        max_bid: { display: "$15,000" },
-      },
       active_bid: {
         id: "activebid",
         is_winning: true,
+      },
+      most_recent_bid: {
+        id: "bidbid",
+        max_bid: { display: "$15,000" },
       },
     },
   ],
@@ -212,8 +212,8 @@ export const OpenAuctionReserveMetWithMyWinningBid: ArtworkSidebarCurrentBidInfo
   ...OpenAuctionReserveMetWithBids,
   myLotStanding: [
     {
-      most_recent_bid: { id: "bidbid", max_bid: { display: "$15,000" } },
       active_bid: { id: "activebid", is_winning: true },
+      most_recent_bid: { id: "bidbid", max_bid: { display: "$15,000" } },
     },
   ],
 }
@@ -223,28 +223,28 @@ export const OpenAuctionReserveMetWithMyLosingBid: ArtworkSidebarCurrentBidInfo_
   ...OpenAuctionReserveMetWithBids,
   myLotStanding: [
     {
-      most_recent_bid: { id: "bidbid", max_bid: { display: "$400" } },
       active_bid: null,
+      most_recent_bid: { id: "bidbid", max_bid: { display: "$400" } },
     },
   ],
 }
 
 export const LiveAuctionInProgress: ArtworkSidebarCurrentBidInfo_Test_QueryRawResponse["artwork"] = {
   id: "artwork_from_live_auction",
+  myLotStanding: null,
   sale: {
     id: "salessale",
     internalID: "asdf1234",
-    is_with_buyers_premium: false,
     is_closed: false,
     is_live_open: true,
+    is_with_buyers_premium: false,
   },
   sale_artwork: {
+    counts: { bidder_positions: 0 },
+    current_bid: { display: "€3,200" },
     id: "salearwtork124",
     is_with_reserve: false,
     reserve_message: null,
     reserve_status: "no_reserve",
-    current_bid: { display: "€3,200" },
-    counts: { bidder_positions: 0 },
   },
-  myLotStanding: null,
 }

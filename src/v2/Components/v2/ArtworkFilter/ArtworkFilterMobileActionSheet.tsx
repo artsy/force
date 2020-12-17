@@ -61,10 +61,10 @@ export const ArtworkFilterMobileActionSheet: React.FC<{
     <ModalBase
       onClose={onClose}
       dialogProps={{
-        width: "100%",
-        height: "100%",
         background: color("white100"),
         flexDirection: "column",
+        height: "100%",
+        width: "100%",
       }}
     >
       <Header p={1}>

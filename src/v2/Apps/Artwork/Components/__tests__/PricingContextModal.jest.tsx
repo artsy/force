@@ -121,10 +121,10 @@ describe("PricingContextModal", () => {
         .simulate("click")
 
       expect(dispatch).toBeCalledWith({
-        context_module: "Price Context",
         action_type: "Click",
-        subject: "Question Mark Informational Icon",
+        context_module: "Price Context",
         flow: "Artwork Price Context",
+        subject: "Question Mark Informational Icon",
       })
       expect(dispatch).toHaveBeenCalledTimes(1)
     })

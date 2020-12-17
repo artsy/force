@@ -19,15 +19,8 @@ const mockPostEvent = require("v2/Utils/Events").postEvent as jest.Mock
 
 const setupTestEnv = () => {
   return createTestEnv({
-    TestPage: IdentityVerificationAppTestPage,
     Component: IdentityVerificationAppFragmentContainer,
-    query: graphql`
-      query IdentityVerificationAppTestQuery @raw_response_type {
-        me {
-          ...IdentityVerificationApp_me @arguments(id: "idv-id")
-        }
-      }
-    `,
+    TestPage: IdentityVerificationAppTestPage,
     defaultData: IdentityVerificationAppQueryResponseFixture as IdentityVerificationAppTestQueryRawResponse,
     defaultMutationResults: {
       startIdentityVerification: {
@@ -37,6 +30,13 @@ const setupTestEnv = () => {
         },
       },
     },
+    query: graphql`
+      query IdentityVerificationAppTestQuery @raw_response_type {
+        me {
+          ...IdentityVerificationApp_me @arguments(id: "idv-id")
+        }
+      }
+    `,
   })
 }
 
@@ -117,10 +117,10 @@ describe("IdentityVerification route", () => {
         mockData: deepMerge(IdentityVerificationAppQueryResponseFixture, {
           me: {
             email: "barry@example.com",
-            internalID: "some-guy",
             identityVerification: {
               userID: "someone-else",
             },
+            internalID: "some-guy",
           },
         }),
       })
@@ -164,9 +164,9 @@ describe("IdentityVerification route", () => {
           startIdentityVerification: {
             startIdentityVerificationResponseOrError: {
               mutationError: {
+                detail: "beep boop beep",
                 error: "something bad :|",
                 message: "oh noes",
-                detail: "beep boop beep",
               },
             },
           },

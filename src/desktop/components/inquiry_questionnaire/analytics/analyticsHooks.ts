@@ -47,7 +47,7 @@ const off: AnalyticsHooks["off"] = (
  */
 export const analyticsHooks: AnalyticsHooks = {
   emitter,
-  on,
   off,
+  on,
   trigger,
 }

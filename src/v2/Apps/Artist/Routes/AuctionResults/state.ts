@@ -6,26 +6,26 @@ interface StateContainer {
 }
 
 export class AuctionResultsState extends Container<StateContainer> {
-  state = { showDetails: false, selectedAuction: null }
+  state = { selectedAuction: null, showDetails: false }
 
   openDetailsCollpase = selectedAuction => {
-    this.setState({ showDetails: true, selectedAuction })
+    this.setState({ selectedAuction, showDetails: true })
   }
 
   closeDetailsCollapse = () => {
-    this.setState({ showDetails: false, selectedAuction: null })
+    this.setState({ selectedAuction: null, showDetails: false })
   }
 
   toggleDetails = selectedAuction => {
     if (!this.state.showDetails) {
       this.setState({
-        showDetails: true,
         selectedAuction,
+        showDetails: true,
       })
     } else {
       this.setState({
-        showDetails: false,
         selectedAuction: null,
+        showDetails: false,
       })
     }
   }

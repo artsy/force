@@ -26,7 +26,6 @@ describe("TimePeriodFilter", () => {
     const wrapper = getWrapper({
       aggregations: [
         {
-          slice: "MAJOR_PERIOD",
           counts: [
             {
               name: "Late 19th Century",
@@ -37,6 +36,7 @@ describe("TimePeriodFilter", () => {
               value: "bar-period",
             },
           ],
+          slice: "MAJOR_PERIOD",
         },
       ],
     })

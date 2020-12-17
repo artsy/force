@@ -42,16 +42,16 @@ export const FairCollection: React.FC<FairCollectionProps> = ({
   } = useAnalyticsContext()
 
   const collectionTrackingData: ClickedCollectionGroup = {
+    action: ActionType.clickedCollectionGroup,
     context_module: ContextModule.curatedHighlightsRail,
-    context_page_owner_type: contextPageOwnerType,
     context_page_owner_id: contextPageOwnerId,
     context_page_owner_slug: contextPageOwnerSlug,
-    destination_page_owner_type: OwnerType.collection,
+    context_page_owner_type: contextPageOwnerType,
     destination_page_owner_id: collection.id,
     destination_page_owner_slug: collection.slug,
+    destination_page_owner_type: OwnerType.collection,
     horizontal_slide_position: carouselIndex,
     type: "thumbnail",
-    action: ActionType.clickedCollectionGroup,
   }
 
   const imageUrls = compact(
@@ -60,13 +60,13 @@ export const FairCollection: React.FC<FairCollectionProps> = ({
 
   const images = imageUrls.map((url, i) => {
     const _1x = crop(url, {
-      width: CARD_IMAGE_SIZES[i],
       height: CARD_IMAGE_SIZES[i],
+      width: CARD_IMAGE_SIZES[i],
     })
 
     const _2x = crop(url, {
-      width: CARD_IMAGE_SIZES[i] * 2,
       height: CARD_IMAGE_SIZES[i] * 2,
+      width: CARD_IMAGE_SIZES[i] * 2,
     })
 
     return {

@@ -83,9 +83,9 @@ export class ReviewRoute extends Component<ReviewProps, ReviewState> {
     order_id: props.order.internalID,
     products: [
       {
+        price: props.order.itemsTotal,
         product_id: props.order.lineItems.edges[0].node.artwork.internalID,
         quantity: 1,
-        price: props.order.itemsTotal,
       },
     ],
   }))
@@ -110,8 +110,8 @@ export class ReviewRoute extends Component<ReviewProps, ReviewState> {
           .then(result => {
             if (result.error) {
               this.props.dialog.showErrorDialog({
-                title: "An error occurred",
                 message: result.error.message,
+                title: "An error occurred",
               })
               return
             } else {
@@ -128,8 +128,8 @@ export class ReviewRoute extends Component<ReviewProps, ReviewState> {
           .then(result => {
             if (result.error) {
               this.props.dialog.showErrorDialog({
-                title: "An error occurred",
                 message: result.error.message,
+                title: "An error occurred",
               })
               return
             } else {
@@ -147,13 +147,8 @@ export class ReviewRoute extends Component<ReviewProps, ReviewState> {
 
   submitBuyOrder() {
     return this.props.commitMutation<ReviewSubmitOrderMutation>({
-      variables: {
-        input: {
-          id: this.props.order.internalID,
-        },
-      },
       // TODO: Inputs to the mutation might have changed case of the keys!
-      mutation: graphql`
+mutation: graphql`
         mutation ReviewSubmitOrderMutation($input: CommerceSubmitOrderInput!) {
           commerceSubmitOrder(input: $input) {
             orderOrError {
@@ -178,19 +173,19 @@ export class ReviewRoute extends Component<ReviewProps, ReviewState> {
           }
         }
       `,
+      
+      variables: {
+        input: {
+          id: this.props.order.internalID,
+        },
+      },
     })
   }
 
   submitOffer(setupIntentId: string | null) {
     return this.props.commitMutation<ReviewSubmitOfferOrderMutation>({
-      variables: {
-        input: {
-          offerId: this.props.order.myLastOffer.internalID,
-          confirmedSetupIntentId: setupIntentId,
-        },
-      },
       // TODO: Inputs to the mutation might have changed case of the keys!
-      mutation: graphql`
+mutation: graphql`
         mutation ReviewSubmitOfferOrderMutation(
           $input: CommerceSubmitOrderWithOfferInput!
         ) {
@@ -217,6 +212,13 @@ export class ReviewRoute extends Component<ReviewProps, ReviewState> {
           }
         }
       `,
+      
+      variables: {
+        input: {
+          confirmedSetupIntentId: setupIntentId,
+          offerId: this.props.order.myLastOffer.internalID,
+        },
+      },
     })
   }
 
@@ -225,16 +227,16 @@ export class ReviewRoute extends Component<ReviewProps, ReviewState> {
     switch (error.code) {
       case "missing_required_info": {
         this.props.dialog.showErrorDialog({
-          title: "Missing information",
           message:
             "Please review and update your shipping and/or payment details and try again.",
+          title: "Missing information",
         })
         break
       }
       case "insufficient_inventory": {
         await this.props.dialog.showErrorDialog({
-          title: "Not available",
           message: "Sorry, the work is no longer available.",
+          title: "Not available",
         })
         const artistId = this.artistId()
         if (artistId) {
@@ -245,8 +247,8 @@ export class ReviewRoute extends Component<ReviewProps, ReviewState> {
       case "failed_charge_authorize": {
         const parsedData = JSON.parse(error.data)
         this.props.dialog.showErrorDialog({
-          title: "An error occurred",
           message: parsedData.failure_message,
+          title: "An error occurred",
         })
         break
       }
@@ -258,32 +260,32 @@ export class ReviewRoute extends Component<ReviewProps, ReviewState> {
 
         if (data.decline_code === "insufficient_funds") {
           await this.props.dialog.showErrorDialog({
-            title: "Insufficient funds",
             message:
               "There aren't enough funds available on the payment methods you provided. Please contact your card provider or try another card.",
+            title: "Insufficient funds",
           })
         } else {
           await this.props.dialog.showErrorDialog({
-            title: "Charge failed",
             message:
               "Payment authorization has been declined. Please contact your card provider and try again.",
+            title: "Charge failed",
           })
         }
         break
       }
       case "payment_method_confirmation_failed": {
         await this.props.dialog.showErrorDialog({
-          title: "Your card was declined",
           message:
             "We couldn't authorize your credit card. Please enter another payment method or contact your bank for more information.",
+          title: "Your card was declined",
         })
         break
       }
       case "artwork_version_mismatch": {
         await this.props.dialog.showErrorDialog({
-          title: "Work has been updated",
           message:
             "Something about the work changed since you started checkout. Please review the work before submitting your order.",
+          title: "Work has been updated",
         })
         this.routeToArtworkPage()
         break

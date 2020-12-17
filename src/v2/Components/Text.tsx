@@ -14,18 +14,18 @@ export interface TextProps extends React.HTMLProps<HTMLParagraphElement> {
 }
 
 const textSizesForPrimaryStyle = {
-  xlarge: "24px",
   large: "17px",
   medium: "15px",
   small: "13px",
+  xlarge: "24px",
   xsmall: "11px",
 }
 
 const textSizesForSecondaryStyle = {
-  xlarge: "26px",
   large: "20px",
   medium: "17px",
   small: "15px",
+  xlarge: "26px",
   xsmall: "11px",
 }
 
@@ -57,10 +57,10 @@ const Text = styled(RawText)`
 `
 
 Text.defaultProps = {
-  textSize: "small",
-  textStyle: "secondary",
   align: "start",
   color: "currentcolor",
+  textSize: "small",
+  textStyle: "secondary",
 }
 
 export default Text

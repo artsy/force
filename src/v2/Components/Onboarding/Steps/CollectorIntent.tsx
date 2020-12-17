@@ -38,11 +38,11 @@ export class CollectorIntentComponent extends React.Component<Props, State> {
 
   static intentEnum = {
     "buy art & design": "BUY_ART_AND_DESIGN",
-    "sell art & design": "SELL_ART_AND_DESIGN",
-    "research art prices": "RESEARCH_ART_PRICES",
-    "learn about art": "LEARN_ABOUT_ART",
     "find out about new exhibitions": "FIND_ART_EXHIBITS",
+    "learn about art": "LEARN_ABOUT_ART",
     "read art market news": "READ_ART_MARKET_NEWS",
+    "research art prices": "RESEARCH_ART_PRICES",
+    "sell art & design": "SELL_ART_AND_DESIGN",
   }
 
   constructor(props) {

@@ -3,12 +3,12 @@ import { Location, Match, Router } from "found"
 
 describe("findCurrentRoute", () => {
   const getMatch = (config: Partial<Match>): Match => ({
-    routes: [],
-    router: ({} as unknown) as Router,
     context: {},
-    routeIndices: [0],
     location: ({} as unknown) as Location,
     params: {},
+    routeIndices: [0],
+    router: ({} as unknown) as Router,
+    routes: [],
     ...config,
   })
 
@@ -17,12 +17,12 @@ describe("findCurrentRoute", () => {
       routeIndices: [0, 0],
       routes: [
         {
-          path: "/artist/:artistID",
           children: [
             {
               path: "/",
             },
           ],
+          path: "/artist/:artistID",
         },
       ],
     })
@@ -34,7 +34,6 @@ describe("findCurrentRoute", () => {
       routeIndices: [0, 2],
       routes: [
         {
-          path: "/artist/:artistID",
           children: [
             {
               path: "/",
@@ -46,6 +45,7 @@ describe("findCurrentRoute", () => {
               path: "/cv",
             },
           ],
+          path: "/artist/:artistID",
         },
       ],
     })
@@ -57,7 +57,6 @@ describe("findCurrentRoute", () => {
       routeIndices: [0, 3, 0],
       routes: [
         {
-          path: "/artist/:artistID",
           children: [
             {
               path: "/",
@@ -72,16 +71,17 @@ describe("findCurrentRoute", () => {
               baz: "/foo",
               children: [
                 {
-                  path: "/bar",
                   children: [
                     {
                       path: "/dont-match",
                     },
                   ],
+                  path: "/bar",
                 },
               ],
             },
           ],
+          path: "/artist/:artistID",
         },
       ],
     })

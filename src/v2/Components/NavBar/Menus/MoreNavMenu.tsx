@@ -14,8 +14,8 @@ export const MoreNavMenu: React.FC<{ width?: number }> = ({ width = 160 }) => {
     trackEvent({
       action_type: AnalyticsSchema.ActionType.Click,
       context_module: AnalyticsSchema.ContextModule.HeaderMoreDropdown,
-      subject: text,
       destination_path: href,
+      subject: text,
     })
   }
 

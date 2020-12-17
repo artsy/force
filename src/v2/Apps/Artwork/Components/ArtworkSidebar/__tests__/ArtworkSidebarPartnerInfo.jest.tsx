@@ -15,6 +15,9 @@ describe("ArtworkSidebarPartnerInfo", () => {
   ) => {
     return await renderRelayTree({
       Component: ArtworkSidebarPartnerInfoFragmentContainer,
+      mockData: {
+        artwork: response,
+      } as ArtworkSidebarPartnerInfo_Test_QueryRawResponse,
       query: graphql`
         query ArtworkSidebarPartnerInfo_Test_Query @raw_response_type {
           artwork(id: "artwork_from_partner_with_locations") {
@@ -22,9 +25,6 @@ describe("ArtworkSidebarPartnerInfo", () => {
           }
         }
       `,
-      mockData: {
-        artwork: response,
-      } as ArtworkSidebarPartnerInfo_Test_QueryRawResponse,
     })
   }
 

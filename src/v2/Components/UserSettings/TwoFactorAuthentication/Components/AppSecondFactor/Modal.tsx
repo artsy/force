@@ -17,12 +17,12 @@ export interface FormValues {
 const presenceRegex = /.*\S+.*/
 
 const validationSchema = Yup.object().shape({
-  name: Yup.string()
-    .required("Enter a name")
-    .matches(presenceRegex, "Enter a name"),
   code: Yup.string()
     .required("Enter a code")
     .matches(presenceRegex, "Enter a code"),
+  name: Yup.string()
+    .required("Enter a name")
+    .matches(presenceRegex, "Enter a name"),
 })
 
 interface AppSecondFactorModalProps {
@@ -69,15 +69,15 @@ export const AppSecondFactorModal: React.FC<AppSecondFactorModalProps> = props =
   ) => {
     try {
       await UpdateAppSecondFactor(relayEnvironment, {
-        secondFactorID: secondFactor.internalID,
         attributes: {
           name: values.name,
         },
+        secondFactorID: secondFactor.internalID,
       })
 
       await EnableSecondFactor(relayEnvironment, {
-        secondFactorID: secondFactor.internalID,
         code: values.code,
+        secondFactorID: secondFactor.internalID,
       })
 
       actions.setSubmitting(false)
@@ -92,7 +92,7 @@ export const AppSecondFactorModal: React.FC<AppSecondFactorModalProps> = props =
     <Modal title="Set up with app" show={props.show} onClose={props.onClose}>
       <Formik
         validationSchema={validationSchema}
-        initialValues={{ name: secondFactor.name || "", code: "" }}
+        initialValues={{ code: "", name: secondFactor.name || "" }}
         onSubmit={handleSubmit}
       >
         {(formikProps: FormikProps<FormValues>) => (

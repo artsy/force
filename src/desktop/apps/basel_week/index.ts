@@ -31,22 +31,22 @@ export class EditableBaselWeekPage extends JSONPage {
       const data = await this.jsonPage.get()
       const layout = await stitch({
         basePath: __dirname,
-        layout: "../../components/main_layout/templates/react_index.jade",
+        blocks: {
+          body: FairWeekPageScaffold,
+          head: FairWeekMeta,
+        },
         config: {
           styledComponents: true,
-        },
-        blocks: {
-          head: FairWeekMeta,
-          body: FairWeekPageScaffold,
-        },
-        locals: {
-          assetPackage: "banner_pop_up",
         },
         data: {
           ...res.locals,
           ...data,
-          displayStickyFooter: !req.user,
           data,
+          displayStickyFooter: !req.user,
+        },
+        layout: "../../components/main_layout/templates/react_index.jade",
+        locals: {
+          assetPackage: "banner_pop_up",
         },
       })
 
@@ -59,5 +59,5 @@ export class EditableBaselWeekPage extends JSONPage {
 
 export const app = new EditableBaselWeekPage({
   name: SLUG,
-  paths: { show: `/${SLUG}`, edit: `/${SLUG}/edit` },
+  paths: { edit: `/${SLUG}/edit`, show: `/${SLUG}` },
 }).app

@@ -21,8 +21,8 @@ describe("ShowInstallShots", () => {
   describe("is a fair booth", () => {
     it("renders the fair link", () => {
       const wrapper = getWrapper({
-        Show: () => ({ isFairBooth: true }),
         Fair: () => ({ name: "Catty Fair" }),
+        Show: () => ({ isFairBooth: true }),
       })
 
       expect(wrapper.text()).toContain("Part of Catty Fair")
@@ -32,12 +32,12 @@ describe("ShowInstallShots", () => {
   describe("when not a fair booth", () => {
     it("renders the partner link when the partner is linkable", () => {
       const wrapper = getWrapper({
-        Show: () => ({ isFairBooth: false }),
         Partner: () => ({
-          name: "Catty Partner",
           href: "/catty-partner",
           isLinkable: true,
+          name: "Catty Partner",
         }),
+        Show: () => ({ isFairBooth: false }),
       })
 
       expect(wrapper.find(Link).length).toBeTruthy()
@@ -47,12 +47,12 @@ describe("ShowInstallShots", () => {
 
     it("does not render the partner link when the partner is not linkable", () => {
       const wrapper = getWrapper({
-        Show: () => ({ isFairBooth: false }),
         Partner: () => ({
-          name: "Catty Partner",
           href: "/catty-partner",
           isLinkable: false,
+          name: "Catty Partner",
         }),
+        Show: () => ({ isFairBooth: false }),
       })
 
       expect(wrapper.find(Link).length).not.toBeTruthy()

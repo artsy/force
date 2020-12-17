@@ -15,8 +15,8 @@ export const OrderWithFailure = {
     orderOrError: {
       __typename: "CommerceOrderWithMutationFailure",
       error: {
-        type: "processing",
         code: "insufficient_inventory",
+        type: "processing",
       },
     },
   },
@@ -39,8 +39,8 @@ export const OfferOrderWithFailure = {
     orderOrError: {
       __typename: "OrderWithMutationFailure",
       error: {
-        type: "processing",
         code: "insufficient_inventory",
+        type: "processing",
       },
     },
   },

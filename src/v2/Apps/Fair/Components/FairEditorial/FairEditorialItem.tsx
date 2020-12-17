@@ -40,15 +40,15 @@ export const FairEditorialItem: React.FC<FairEditorialItemProps> = ({
   } = useAnalyticsContext()
 
   const clickedArticleTrackingData: ClickedArticleGroup = {
+    action: ActionType.clickedArticleGroup,
     context_module: ContextModule.relatedArticles,
-    context_page_owner_type: contextPageOwnerType,
     context_page_owner_id: contextPageOwnerId,
     context_page_owner_slug: contextPageOwnerSlug,
-    destination_page_owner_type: OwnerType.article,
+    context_page_owner_type: contextPageOwnerType,
     destination_page_owner_id: article.internalID,
     destination_page_owner_slug: article.slug,
+    destination_page_owner_type: OwnerType.article,
     type: "thumbnail",
-    action: ActionType.clickedArticleGroup,
   }
 
   return (

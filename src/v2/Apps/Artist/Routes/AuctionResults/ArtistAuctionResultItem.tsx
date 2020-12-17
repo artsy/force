@@ -64,8 +64,8 @@ export const ArtistAuctionResultItem: SFC<Props> = props => {
 
     setExpanded(!expanded)
     tracking.trackEvent({
-      context_page: AnalyticsSchema.PageName.ArtistAuctionResults,
       action_type: AnalyticsSchema.ActionType.AuctionResultItemClicked,
+      context_page: AnalyticsSchema.PageName.ArtistAuctionResults,
       current: {
         expanded: expand,
       },
@@ -309,8 +309,8 @@ const getProps = (props: Props) => {
 
   return {
     ...props,
-    salePrice,
     estimatedPrice,
+    salePrice,
   }
 }
 
@@ -379,10 +379,10 @@ const renderPricing = (
         onClick={() => {
           mediator &&
             openAuthModal(mediator, {
-              mode: ModalType.signup,
-              copy: "Sign up to see full auction records — for free",
               contextModule: ContextModule.auctionResults,
+              copy: "Sign up to see full auction records — for free",
               intent: Intent.seePriceAuctionRecords,
+              mode: ModalType.signup,
             })
         }}
       >
@@ -406,10 +406,10 @@ const renderEstimate = (estimatedPrice, user, mediator) => {
         onClick={() => {
           mediator &&
             openAuthModal(mediator, {
-              mode: ModalType.signup,
-              copy: "Sign up to see full auction records — for free",
               contextModule: ContextModule.auctionResults,
+              copy: "Sign up to see full auction records — for free",
               intent: Intent.seeEstimateAuctionRecords,
+              mode: ModalType.signup,
             })
         }}
         textDecoration="underline"
@@ -442,10 +442,10 @@ const renderRealizedPrice = (
         onClick={() => {
           mediator &&
             openAuthModal(mediator, {
-              mode: ModalType.signup,
-              copy: "Sign up to see full auction records — for free",
               contextModule: ContextModule.auctionResults,
+              copy: "Sign up to see full auction records — for free",
               intent: Intent.seeRealizedPriceAuctionRecords,
+              mode: ModalType.signup,
             })
         }}
         textDecoration="underline"

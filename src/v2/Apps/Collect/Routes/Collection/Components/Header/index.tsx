@@ -91,24 +91,24 @@ export const featuredArtistsEntityCollection: (
 }
 
 const maxChars = {
-  xs: 350,
-  sm: 730,
-  md: 670,
   lg: 660,
+  md: 670,
+  sm: 730,
   xl: 820,
+  xs: 350,
 }
 
 const imageWidthSizes = {
-  xs: 320,
-  sm: 688,
-  md: 820,
   lg: 944,
+  md: 820,
+  sm: 688,
   xl: 1112,
+  xs: 320,
 }
 
 const imageHeightSizes = {
-  xs: 160,
   sm: 250,
+  xs: 160,
 }
 
 export const CollectionHeader: FC<Props> = ({ artworks, collection }) => {
@@ -141,10 +141,10 @@ export const CollectionHeader: FC<Props> = ({ artworks, collection }) => {
         const resizedHeaderImage =
           collection.headerImage &&
           resize(collection.headerImage, {
-            width: imageWidth * (xs ? 2 : 1),
+            convert_to: "jpg",
             height: imageHeight * (xs ? 2 : 1),
             quality: 80,
-            convert_to: "jpg",
+            width: imageWidth * (xs ? 2 : 1),
           })
 
         return (
@@ -308,21 +308,6 @@ const ExtendedText = styled(Text)`
 export const CollectionFilterFragmentContainer = createFragmentContainer(
   CollectionHeader as FC<Props>,
   {
-    collection: graphql`
-      fragment Header_collection on MarketingCollection {
-        category
-        credit
-        description
-        featuredArtistExclusionIds
-        headerImage
-        id
-        query {
-          artistIDs
-        }
-        slug
-        title
-      }
-    `,
     artworks: graphql`
       fragment Header_artworks on FilterArtworksConnection {
         ...DefaultHeader_headerArtworks
@@ -339,6 +324,21 @@ export const CollectionFilterFragmentContainer = createFragmentContainer(
           nationality
           ...FollowArtistButton_artist
         }
+      }
+    `,
+    collection: graphql`
+      fragment Header_collection on MarketingCollection {
+        category
+        credit
+        description
+        featuredArtistExclusionIds
+        headerImage
+        id
+        query {
+          artistIDs
+        }
+        slug
+        title
       }
     `,
   }

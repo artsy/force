@@ -29,8 +29,8 @@ const RefreshInterval = 150 // ms
 
 export class WorksForYouFeed extends Component<Props, State> {
   state = {
-    loading: false,
     interval: null,
+    loading: false,
   }
 
   componentDidMount() {

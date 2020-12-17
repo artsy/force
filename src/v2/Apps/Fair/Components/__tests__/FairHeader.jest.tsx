@@ -21,6 +21,7 @@ describe("FairHeader", () => {
           </MockBoot>
         )
       },
+      mockData: response,
       query: graphql`
         query FairHeader_Query($slug: String!) @raw_response_type {
           fair(id: $slug) {
@@ -31,7 +32,6 @@ describe("FairHeader", () => {
       variables: {
         slug: "miart-2020",
       },
-      mockData: response,
     })
   }
 
@@ -66,14 +66,14 @@ describe("FairHeader", () => {
       fair: {
         ...FairHeaderFixture.fair,
         about: "",
-        tagline: "",
-        location: null,
-        ticketsLink: "",
+        contact: "",
         hours: "",
         links: "",
-        tickets: "",
-        contact: "",
+        location: null,
         summary: "",
+        tagline: "",
+        tickets: "",
+        ticketsLink: "",
       },
     }
 
@@ -89,14 +89,14 @@ describe("FairHeader", () => {
       fair: {
         ...FairHeaderFixture.fair,
         about: "",
-        tagline: "I have a tagline",
-        location: null,
-        ticketsLink: "",
+        contact: "",
         hours: "",
         links: "",
-        tickets: "",
-        contact: "",
+        location: null,
         summary: "",
+        tagline: "I have a tagline",
+        tickets: "",
+        ticketsLink: "",
       },
     }
 
@@ -115,44 +115,44 @@ describe("FairHeader", () => {
 
 const FairHeaderFixture: FairHeader_QueryRawResponse = {
   fair: {
-    id: "fair12345",
     about: "This is the about.",
-    name: "Miart 2020",
-    exhibitionPeriod: "Aug 19 - Sep 19",
-    slug: "miart-2020",
-    startAt: "2020-08-19T08:00:00+00:00",
     endAt: "2020-09-19T08:00:00+00:00",
+    exhibitionPeriod: "Aug 19 - Sep 19",
+    hours: "",
+    id: "fair12345",
     image: {
-      small: {
-        src: "https://cloudfront.com/square.jpg",
+      large: {
         srcSet: "https://cloudfront.com/square.jpg",
-        width: 100,
-        height: 400,
       },
       medium: {
         src: "https://cloudfront.com/square.jpg",
         srcSet: "https://cloudfront.com/square.jpg",
       },
-      large: {
+      small: {
+        height: 400,
+        src: "https://cloudfront.com/square.jpg",
         srcSet: "https://cloudfront.com/square.jpg",
+        width: 100,
       },
     },
-    tagline: "",
-    location: null,
-    ticketsLink: "",
-    hours: "",
-    links: "",
-    tickets: "<b>Tickets available today</b>",
     contact: "<b>Contact us</b>",
-    summary: "This is the summary.",
+    links: "",
+    location: null,
+    name: "Miart 2020",
     profile: {
-      id: "profile",
       icon: {
         cropped: {
           src: "/path/to/cats.jpg",
           srcSet: "/path/to/cats.jpg",
         },
       },
+      id: "profile",
     },
+    slug: "miart-2020",
+    startAt: "2020-08-19T08:00:00+00:00",
+    summary: "This is the summary.",
+    tagline: "",
+    tickets: "<b>Tickets available today</b>",
+    ticketsLink: "",
   },
 }

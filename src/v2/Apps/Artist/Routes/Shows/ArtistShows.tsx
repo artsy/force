@@ -50,13 +50,13 @@ class ArtistShows extends Component<ArtistShowsProps, LoadingAreaState> {
 
     this.props.relay.refetch(
       {
-        first: PAGE_SIZE,
         after: cursor,
         artistID: this.props.artist.slug,
         before: null,
+        first: PAGE_SIZE,
         last: null,
-        status: this.props.status,
         sort: this.props.sort,
+        status: this.props.status,
       },
       null,
       error => {

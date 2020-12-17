@@ -55,15 +55,15 @@ describe("ShowContextCard", () => {
 
   it("renders correctly for a partner", () => {
     const wrapper = getWrapper({
+      Partner: () => {
+        return {
+          locations: [{ city: "Wakefield" }],
+          name: "Catty Gallery",
+        }
+      },
       Show: () => {
         return {
           isFairBooth: false,
-        }
-      },
-      Partner: () => {
-        return {
-          name: "Catty Gallery",
-          locations: [{ city: "Wakefield" }],
         }
       },
     })
@@ -73,11 +73,11 @@ describe("ShowContextCard", () => {
 
   it("tracks clicks for partner cards", () => {
     const wrapper = getWrapper({
-      Show: () => ({ isFairBooth: false }),
       Partner: () => ({
         internalID: "catty-gallery-id",
         slug: "catty-gallery-slug",
       }),
+      Show: () => ({ isFairBooth: false }),
     })
 
     wrapper.find("a").first().simulate("click")
@@ -99,11 +99,11 @@ describe("ShowContextCard", () => {
 
   it("tracks clicks for fair cards", () => {
     const wrapper = getWrapper({
-      Show: () => ({ isFairBooth: true }),
       Fair: () => ({
         internalID: "catty-fair-id",
         slug: "catty-fair-slug",
       }),
+      Show: () => ({ isFairBooth: true }),
     })
 
     wrapper.find("a").first().simulate("click")

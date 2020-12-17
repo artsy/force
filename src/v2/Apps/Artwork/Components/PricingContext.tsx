@@ -66,7 +66,7 @@ export class PricingContext extends React.Component<PricingContextProps> {
     category: FilterCategory
     artistId: string
   }) {
-    const url = createCollectUrl({ dimension, category, artistId })
+    const url = createCollectUrl({ artistId, category, dimension })
     if (typeof window !== "undefined") {
       window.open(url)
     }
@@ -106,9 +106,9 @@ export class PricingContext extends React.Component<PricingContextProps> {
         {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
         <Link
           onClick={this.collectPageLinkClick.bind(this, {
-            dimension: artwork.pricingContext.appliedFilters.dimension,
-            category: artwork.category,
             artistId,
+            category: artwork.category,
+            dimension: artwork.pricingContext.appliedFilters.dimension,
           })}
           color="black60"
         >
@@ -142,18 +142,18 @@ export class PricingContext extends React.Component<PricingContextProps> {
                   : bin.numArtworks
               const labelSuffix = binValue === 1 ? " work" : " works"
               return {
-                value: binValue,
-                label: {
-                  title,
-                  description: binValue + labelSuffix,
-                },
-                onHover: this.barchartHover.bind(this),
                 highlightLabel: artworkFallsInThisBin
                   ? {
-                      title,
                       description: "This work",
+                      title,
                     }
                   : undefined,
+                label: {
+                  description: binValue + labelSuffix,
+                  title,
+                },
+                onHover: this.barchartHover.bind(this),
+                value: binValue,
               }
             }
           )}

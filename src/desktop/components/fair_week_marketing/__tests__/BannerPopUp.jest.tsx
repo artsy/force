@@ -7,9 +7,9 @@ jest.mock("sharify", () => ({
   data: {
     MARKETING_SIGNUP_MODALS: [
       {
-        slug: "ca3",
         copy: "Discover and Buy Works from Art Fairs",
         image: "http://files.artsy.net/images/art-fair.jpg",
+        slug: "ca3",
       },
     ],
   },
@@ -17,8 +17,8 @@ jest.mock("sharify", () => ({
 
 describe("BannerPopUp", () => {
   let props = {
-    ctaTitle: "CTA Title",
     ctaImageUrl: "http://image.jpg",
+    ctaTitle: "CTA Title",
   }
 
   const getWrapper = props => {
@@ -40,12 +40,12 @@ describe("BannerPopUp", () => {
     const component = getWrapper(props)
     component.find(Container).simulate("click")
     expect(mediator.trigger).toBeCalledWith("open:auth", {
+      contextModule: "bannerPopUp",
       copy: "Discover and Buy Works from Art Fairs",
       destination: "https://artsy.net/",
       image: "http://files.artsy.net/images/art-fair.jpg",
       intent: "viewFair",
       mode: "signup",
-      contextModule: "bannerPopUp",
     })
   })
 })

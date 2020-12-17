@@ -5,16 +5,16 @@ const duration = 250
 
 export default props => {
   const defaultStyle = {
-    transition: `height ${duration}ms ease-in-out`,
     height: "0px",
+    transition: `height ${duration}ms ease-in-out`,
   }
 
   const transitionStyles = {
-    entering: {
-      height: "0px",
-    },
     entered: {
       height: props.height,
+    },
+    entering: {
+      height: "0px",
     },
   }
 

@@ -35,23 +35,23 @@ describe("ad display logic in Feature and Standard Articles", () => {
 
   beforeEach(() => {
     props = {
-      isMobile: false,
-      shouldAdRender: true,
-      articleSerial: 3,
       article: NewsArticleFixture,
-      isTruncated: true,
+      articleSerial: 3,
       isFirstArticle: true,
+      isMobile: false,
+      isTruncated: true,
       nextArticle: {
         id: "1234",
         published_at: "5678",
       },
-      onDateChange: jest.fn(),
       onActiveArticleChange: jest.fn(),
+      onDateChange: jest.fn(),
+      shouldAdRender: true,
     }
   })
 
   // FIXME:  System Context React hook is causing these tests to fail
-  xit("renders new ad component in a Standard article", () => {
+  it.skip("renders new ad component in a Standard article", () => {
     props.shouldAdRender = true
     props.article = StandardArticle
     const component = getWrapper()
@@ -59,7 +59,7 @@ describe("ad display logic in Feature and Standard Articles", () => {
   })
 
   // FIXME:  System Context React hook is causing these tests to fail
-  xit("renders new ad component in a Feature article", () => {
+  it.skip("renders new ad component in a Feature article", () => {
     props.article = FeatureArticle
     const component = getWrapper()
     expect(component.find(DisplayAd).length).toBe(2)
@@ -95,23 +95,23 @@ describe("ad display frequency logic in News Articles", () => {
 
   beforeEach(() => {
     props = {
-      isMobile: false,
-      shouldAdRender: true,
-      articleSerial: 3,
       article: NewsArticleFixture,
-      isTruncated: true,
+      articleSerial: 3,
       isFirstArticle: true,
+      isMobile: false,
+      isTruncated: true,
       nextArticle: {
         id: "1234",
         published_at: "5678",
       },
-      onDateChange: jest.fn(),
       onActiveArticleChange: jest.fn(),
+      onDateChange: jest.fn(),
+      shouldAdRender: true,
     }
   })
 
   // FIXME:  System Context React hook is causing these tests to fail
-  xit("checks that NewsArticle renders with the new ads", () => {
+  it.skip("checks that NewsArticle renders with the new ads", () => {
     const component = getWrapper()
     expect(component.find(DisplayAd).length).toBe(1)
   })

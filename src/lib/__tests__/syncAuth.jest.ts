@@ -14,7 +14,7 @@ $.ajax = jest.fn()
 
 describe("#syncAuth", () => {
   beforeEach(() => {
-    sd.CURRENT_USER = { id: "123", email: "user@email.com" }
+    sd.CURRENT_USER = { email: "user@email.com", id: "123" }
     $.ajax.mockReset()
   })
 

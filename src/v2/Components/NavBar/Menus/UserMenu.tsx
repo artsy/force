@@ -29,8 +29,8 @@ export const UserMenu: React.FC = () => {
     trackEvent({
       action_type: AnalyticsSchema.ActionType.Click,
       context_module: AnalyticsSchema.ContextModule.HeaderUserDropdown,
-      subject: text,
       destination_path: href,
+      subject: text,
     })
   }
 

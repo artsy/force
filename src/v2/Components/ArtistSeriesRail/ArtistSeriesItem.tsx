@@ -43,13 +43,13 @@ export const ArtistSeriesItem: React.FC<Props> = props => {
     trackEvent(
       clickedArtistSeriesGroup({
         contextModule,
-        contextPageOwnerType,
-        destinationPageOwnerId: internalID,
-        destinationPageOwnerSlug: slug,
         contextPageOwnerId,
         contextPageOwnerSlug,
-        horizontalSlidePosition: index,
+        contextPageOwnerType,
         curationBoost: featured,
+        destinationPageOwnerId: internalID,
+        destinationPageOwnerSlug: slug,
+        horizontalSlidePosition: index,
       })
     )
   }

@@ -143,8 +143,8 @@ export const ConversationListPaginationContainer = createPaginationContainer(
     },
     getVariables(props, { cursor }, { first }) {
       return {
-        first,
         after: cursor,
+        first,
       }
     },
     query: graphql`

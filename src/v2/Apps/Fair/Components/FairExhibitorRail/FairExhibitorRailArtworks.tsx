@@ -37,16 +37,16 @@ const FairExhibitorRailArtworks: React.FC<FairExhibitorRailArtworksProps> = ({
     carouselIndex,
   }): ClickedArtworkGroup => {
     return {
+      action: ActionType.clickedArtworkGroup,
       context_module: ContextModule.galleryBoothRail,
-      context_page_owner_type: contextPageOwnerType,
       context_page_owner_id: contextPageOwnerId,
       context_page_owner_slug: contextPageOwnerSlug,
-      destination_page_owner_type: OwnerType.artwork,
+      context_page_owner_type: contextPageOwnerType,
       destination_page_owner_id: artworkID,
       destination_page_owner_slug: artworkSlug,
+      destination_page_owner_type: OwnerType.artwork,
       horizontal_slide_position: carouselIndex,
       type: "thumbnail",
-      action: ActionType.clickedArtworkGroup,
     }
   }
 

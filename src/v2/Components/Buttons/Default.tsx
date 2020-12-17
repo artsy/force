@@ -84,8 +84,8 @@ export const StyledButton = styled(Button)`
 `
 
 StyledButton.defaultProps = {
-  state: ButtonState.Default,
   block: false,
+  state: ButtonState.Default,
 }
 
 export default StyledButton

@@ -75,17 +75,17 @@ describe("FormSwitcher", () => {
 
   describe("renders mobile states correctly", () => {
     it("login form", () => {
-      const wrapper = getWrapper({ type: ModalType.login, isMobile: true })
+      const wrapper = getWrapper({ isMobile: true, type: ModalType.login })
       expect(wrapper.find(MobileLoginForm).length).toEqual(1)
     })
 
     it("signup form", () => {
-      const wrapper = getWrapper({ type: ModalType.signup, isMobile: true })
+      const wrapper = getWrapper({ isMobile: true, type: ModalType.signup })
       expect(wrapper.find(MobileSignUpForm).length).toEqual(1)
     })
 
     it("forgot password form", () => {
-      const wrapper = getWrapper({ type: ModalType.forgot, isMobile: true })
+      const wrapper = getWrapper({ isMobile: true, type: ModalType.forgot })
       expect(wrapper.find(MobileForgotPasswordForm).length).toEqual(1)
     })
   })
@@ -97,8 +97,8 @@ describe("FormSwitcher", () => {
 
     it("redirects to a url if static or mobile", () => {
       const wrapper = getWrapper({
-        type: ModalType.login,
         isMobile: true,
+        type: ModalType.login,
       })
 
       wrapper.find(Link).at(2).simulate("click")
@@ -127,16 +127,16 @@ describe("FormSwitcher", () => {
 
     it("fires social auth event and redirects", () => {
       const wrapper = getWrapper({
-        type: ModalType.login,
+        onSocialAuthEvent: jest.fn(),
         submitURLs: {
           apple: "/users/auth/apple",
           facebook: "/users/auth/facebook",
-          twitter: "/users/auth/twitter",
+          forgot: "/forgot",
           login: "/login",
           signup: "/signup",
-          forgot: "/forgot",
+          twitter: "/users/auth/twitter",
         },
-        onSocialAuthEvent: jest.fn(),
+        type: ModalType.login,
       })
 
       wrapper.find(Link).at(1).simulate("click")
@@ -156,49 +156,49 @@ describe("FormSwitcher", () => {
   describe("Analytics", () => {
     it("tracks login impressions", () => {
       const tracking = { trackEvent: jest.fn() }
-      getWrapper({ type: ModalType.login, tracking })
+      getWrapper({ tracking, type: ModalType.login })
       expect(tracking.trackEvent).toBeCalledWith({
         action: "authImpression",
-        intent: "followArtist",
-        type: "login",
         context_module: "header",
+        intent: "followArtist",
         modal_copy: "Foo Bar",
         onboarding: false,
         trigger: "timed",
         trigger_seconds: 1,
+        type: "login",
       })
     })
 
     it("tracks forgot password impressions", () => {
       const tracking = { trackEvent: jest.fn() }
-      getWrapper({ type: ModalType.forgot, tracking })
+      getWrapper({ tracking, type: ModalType.forgot })
       expect(tracking.trackEvent).toBeCalledWith({
         action: "authImpression",
-        type: "forgot",
-        intent: "followArtist",
         context_module: "header",
+        intent: "followArtist",
         modal_copy: "Foo Bar",
         onboarding: false,
         trigger: "timed",
         trigger_seconds: 1,
+        type: "forgot",
       })
     })
 
     it("tracks signup impressions", () => {
       const tracking = { trackEvent: jest.fn() }
       getWrapper({
-        type: ModalType.signup,
         tracking,
+        type: ModalType.signup,
       })
       expect(tracking.trackEvent).toBeCalledWith({
         action: "authImpression",
-        type: "signup",
         context_module: "header",
-        onboarding: false,
         intent: "followArtist",
         modal_copy: "Foo Bar",
+        onboarding: false,
         trigger: "timed",
         trigger_seconds: 1,
+        type: "signup",
       })
     })
   })

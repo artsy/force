@@ -79,8 +79,8 @@ const Conversation: React.FC<ConversationProps> = props => {
       if (scrollContainer.current) {
         // Scrolling to former position
         scrollContainer.current.scrollTo({
-          top: scrollContainer.current.scrollHeight - scrollCursor,
           behavior: "smooth",
+          top: scrollContainer.current.scrollHeight - scrollCursor,
         })
       }
     })
@@ -231,10 +231,10 @@ export const ConversationPaginationContainer = createPaginationContainer(
     },
     getVariables(props, { cursor, count }) {
       return {
-        count,
-        cursor,
         after: cursor,
         conversationID: props.conversation.id,
+        count,
+        cursor,
       }
     },
     query: graphql`

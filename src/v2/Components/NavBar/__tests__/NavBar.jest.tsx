@@ -98,7 +98,7 @@ describe("NavBar", () => {
     describe("lab features", () => {
       it("shows inquiries icon if lab feature enabled", () => {
         const wrapper = getWrapper({
-          user: { type: "NotAdmin", lab_features: ["User Conversations View"] },
+          user: { lab_features: ["User Conversations View"], type: "NotAdmin" },
         })
         expect(wrapper.find(EnvelopeIcon).length).toEqual(1)
       })
@@ -155,7 +155,7 @@ describe("NavBar", () => {
 
     it("shows InboxNotificationCount when there are conversations", () => {
       const wrapper = getWrapper({
-        user: { type: "NotAdmin", lab_features: ["User Conversations View"] },
+        user: { lab_features: ["User Conversations View"], type: "NotAdmin" },
       })
       expect(wrapper.find(InboxNotificationCount).length).toBe(1)
     })

@@ -62,17 +62,17 @@ export function getUserTiming() {
   if (typeof PerformanceMark === "undefined") return null
   const marks = perf.getEntriesByType("mark").map(mark => {
     return {
-      type: "mark",
       name: mark.name,
       startTime: Math.round(mark.startTime),
+      type: "mark",
     }
   })
   const measures = perf.getEntriesByType("measure").map(measure => {
     return {
-      type: "measure",
+      duration: Math.round(measure.duration),
       name: measure.name,
       startTime: Math.round(measure.startTime),
-      duration: Math.round(measure.duration),
+      type: "measure",
     }
   })
   return marks.concat(measures)

@@ -70,9 +70,9 @@ class SuggestedGenesContent extends React.Component<Props> {
 
     this.props.tracking.trackEvent({
       action: "Followed Gene",
+      context_module: "onboarding recommended",
       entity_id: gene.internalID,
       entity_slug: gene.slug,
-      context_module: "onboarding recommended",
     })
   }
 
@@ -109,13 +109,13 @@ class SuggestedGenesContent extends React.Component<Props> {
             }
           }
         `,
+        updater: (store, data) => this.onGeneFollowed(gene, store, data),
         variables: {
+          excludedGeneIds: Array.from(this.excludedGeneIds),
           input: {
             geneID: gene.internalID,
           },
-          excludedGeneIds: Array.from(this.excludedGeneIds),
         },
-        updater: (store, data) => this.onGeneFollowed(gene, store, data),
       }
     )
   }

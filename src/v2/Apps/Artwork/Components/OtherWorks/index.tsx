@@ -97,11 +97,11 @@ export const OtherWorks = track()(
                     contextModule={contextModule}
                     onBrickClick={() =>
                       tracking.trackEvent({
-                        type: Schema.Type.ArtworkBrick,
                         action_type: Schema.ActionType.Click,
                         context_module: contextGridTypeToContextModule(
                           grid.__typename
                         ),
+                        type: Schema.Type.ArtworkBrick,
                       })
                     }
                   />

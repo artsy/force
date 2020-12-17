@@ -11,18 +11,24 @@ const routes = {
     require("../apps/about/client/easter_egg.coffee")()
   },
 
+  "/consign": require("../apps/consign/client").init,
+
+  "/consign/submission": require("../apps/consign/client/submission").init,
+
   "/contact": require("../apps/contact/client/index.coffee").init,
 
   "/jobs": require("../apps/jobs/client/index.coffee").init,
 
-  "/unsubscribe": require("../apps/unsubscribe/client/index.coffee").init,
-
-  "/consign/submission": require("../apps/consign/client/submission").init,
-
-  "/consign": require("../apps/consign/client").init,
+  "/profile/.*": require("../apps/user/client/index.coffee").init,
 
   "/reset_password": require("../apps/authentication/client/reset_password.coffee")
     .init,
+
+  "/search": require("../apps/search/client/index.coffee").init,
+
+  "/unsubscribe": require("../apps/unsubscribe/client/index.coffee").init,
+
+  "/user/.*": require("../apps/user/client/index.coffee").init,
 
   "/works-for-you": () => {
     require("../apps/notifications/client/index.coffee").init()
@@ -31,12 +37,6 @@ const routes = {
       { artistID: artist || artist_id }
     )
   },
-
-  "/profile/.*": require("../apps/user/client/index.coffee").init,
-
-  "/user/.*": require("../apps/user/client/index.coffee").init,
-
-  "/search": require("../apps/search/client/index.coffee").init,
 }
 
 for (let path in routes) {

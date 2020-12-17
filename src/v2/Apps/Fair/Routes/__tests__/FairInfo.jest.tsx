@@ -14,6 +14,7 @@ describe("FairInfo", () => {
       Component: ({ fair }) => {
         return <FairInfoFragmentContainer fair={fair} />
       },
+      mockData: response,
       query: graphql`
         query FairInfo_Query($slug: String!) @raw_response_type {
           fair(id: $slug) {
@@ -22,7 +23,6 @@ describe("FairInfo", () => {
         }
       `,
       variables: { slug: "miart-2020" },
-      mockData: response,
     })
   }
 
@@ -40,14 +40,14 @@ describe("FairInfo", () => {
       fair: {
         ...FAIR_INFO_FIXTURE.fair,
         about: "",
-        tagline: "",
-        location: null,
-        ticketsLink: "",
+        contact: "",
         hours: "",
         links: "",
-        tickets: "",
-        contact: "",
+        location: null,
         summary: "",
+        tagline: "",
+        tickets: "",
+        ticketsLink: "",
       },
     }
     const wrapper = await getWrapper(missingInfo)
@@ -62,20 +62,20 @@ describe("FairInfo", () => {
 
 const FAIR_INFO_FIXTURE: FairInfo_QueryRawResponse = {
   fair: {
-    id: "fair12345",
     about: "This is the about.",
-    name: "Miart 2020",
-    slug: "miart-2020",
-    tagline: "The tagline.",
+    contact: "<b>Contact us</b>",
+    hours: "Open every day at 5am",
+    id: "fair12345",
+    links: "<a href='google.com'>Google it</a>",
     location: {
       id: "location124",
       summary: "Javitz Center",
     },
-    ticketsLink: "https://eventbrite.com/cool-event",
-    hours: "Open every day at 5am",
-    links: "<a href='google.com'>Google it</a>",
-    tickets: "<b>Tickets available today</b>",
-    contact: "<b>Contact us</b>",
+    name: "Miart 2020",
+    slug: "miart-2020",
     summary: "This is the summary.",
+    tagline: "The tagline.",
+    tickets: "<b>Tickets available today</b>",
+    ticketsLink: "https://eventbrite.com/cool-event",
   },
 }

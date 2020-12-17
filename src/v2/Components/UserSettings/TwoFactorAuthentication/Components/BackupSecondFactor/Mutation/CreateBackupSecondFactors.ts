@@ -9,20 +9,6 @@ export const CreateBackupSecondFactors = (environment: Environment) => {
   return new Promise<CreateBackupSecondFactorsMutationResponse>(
     async (resolve, reject) => {
       commitMutation<CreateBackupSecondFactorsMutation>(environment, {
-        onCompleted: data => {
-          const response = data.createBackupSecondFactors.secondFactorsOrErrors
-
-          switch (response.__typename) {
-            case "BackupSecondFactors":
-              resolve(data)
-              break
-            case "Errors":
-              reject(response.errors)
-          }
-        },
-        onError: error => {
-          reject(error)
-        },
         mutation: graphql`
           mutation CreateBackupSecondFactorsMutation(
             $input: CreateBackupSecondFactorsInput!
@@ -47,6 +33,20 @@ export const CreateBackupSecondFactors = (environment: Environment) => {
             }
           }
         `,
+        onCompleted: data => {
+          const response = data.createBackupSecondFactors.secondFactorsOrErrors
+
+          switch (response.__typename) {
+            case "BackupSecondFactors":
+              resolve(data)
+              break
+            case "Errors":
+              reject(response.errors)
+          }
+        },
+        onError: error => {
+          reject(error)
+        },
         variables: {
           input: {},
         },

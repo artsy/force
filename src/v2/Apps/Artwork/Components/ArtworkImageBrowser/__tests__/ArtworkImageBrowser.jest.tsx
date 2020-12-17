@@ -17,6 +17,7 @@ describe("ArtworkImageBrowser", () => {
   ) => {
     return await renderRelayTree({
       Component: ArtworkImageBrowser,
+      mockData: data as ArtworkImageBrowser_Test_QueryRawResponse,
       query: graphql`
         query ArtworkImageBrowser_Test_Query($artworkID: String!)
           @raw_response_type {
@@ -25,7 +26,6 @@ describe("ArtworkImageBrowser", () => {
           }
         }
       `,
-      mockData: data as ArtworkImageBrowser_Test_QueryRawResponse,
       variables: {
         artworkID: "matt-z-and-percy-still-life",
       },

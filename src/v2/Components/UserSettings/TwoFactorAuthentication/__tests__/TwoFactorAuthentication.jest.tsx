@@ -26,10 +26,28 @@ HTMLCanvasElement.prototype.getContext = jest.fn()
 
 const setupTestEnv = () => {
   return createTestEnv({
-    TestPage: TwoFactorAuthenticationTestPage,
     Component: (props: TwoFactorAuthenticationQueryResponse) => (
       <TwoFactorAuthenticationRefetchContainer {...props} />
     ),
+    TestPage: TwoFactorAuthenticationTestPage,
+    defaultData: {
+      me: {
+        appSecondFactors: [],
+        backupSecondFactors: [],
+        hasSecondFactorEnabled: false,
+        smsSecondFactors: [],
+      },
+    },
+    defaultMutationResults: {
+      createAppSecondFactor: {},
+      createBackupSecondFactors: {},
+      createSmsSecondFactor: {},
+      deliverSecondFactor: {},
+      disableSecondFactor: {},
+      enableSecondFactor: {},
+      updateAppSecondFactor: {},
+      updateSmsSecondFactor: {},
+    },
     query: graphql`
       query TwoFactorAuthenticationTestQuery {
         me {
@@ -37,28 +55,10 @@ const setupTestEnv = () => {
         }
       }
     `,
-    defaultMutationResults: {
-      createBackupSecondFactors: {},
-      createSmsSecondFactor: {},
-      updateSmsSecondFactor: {},
-      createAppSecondFactor: {},
-      updateAppSecondFactor: {},
-      deliverSecondFactor: {},
-      enableSecondFactor: {},
-      disableSecondFactor: {},
-    },
-    defaultData: {
-      me: {
-        hasSecondFactorEnabled: false,
-        appSecondFactors: [],
-        smsSecondFactors: [],
-        backupSecondFactors: [],
-      },
-    },
   })
 }
 
-describe("TwoFactorAuthentication ", () => {
+describe("TwoFactorAuthentication", () => {
   it("shows current 2FA enrollment status", async () => {
     const env = setupTestEnv()
     const page = await env.buildPage()

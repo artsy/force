@@ -15,6 +15,7 @@ describe("Articles Route", () => {
   const getWrapper = async (breakpoint: Breakpoint = "xl") => {
     return await renderRelayTree({
       Component: ArticlesRoute,
+      mockData: ArticlesFixture as Articles_Test_QueryRawResponse,
       query: graphql`
         query Articles_Test_Query($artistID: String!) @raw_response_type {
           artist(id: $artistID) {
@@ -22,7 +23,6 @@ describe("Articles Route", () => {
           }
         }
       `,
-      mockData: ArticlesFixture as Articles_Test_QueryRawResponse,
       variables: {
         artistID: "pablo-picasso",
       },

@@ -44,9 +44,9 @@ export class ArtworkGridContainer extends React.Component<
 > {
   static defaultProps = {
     columnCount: [3],
-    sectionMargin: 20,
     itemMargin: 20,
     preloadImageCount: 6,
+    sectionMargin: 20,
   }
 
   state = {
@@ -145,8 +145,8 @@ export class ArtworkGridContainer extends React.Component<
 
       const sectionSpecificStyle = {
         flex: 1,
-        minWidth: 0,
         marginRight: column === columnCount - 1 ? 0 : this.props.sectionMargin,
+        minWidth: 0,
       }
 
       sections.push(

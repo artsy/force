@@ -73,80 +73,80 @@ describe("ArtistRecommendations", () => {
 })
 
 const artistFields = {
-  name: "",
+  artworks_connection: null,
+  __typename: "Artist",
+  counts: null,
   formatted_nationality_and_birthday: "",
   href: "",
   image: null,
-  artworks_connection: null,
-  is_followed: false,
-  counts: null,
-  slug: "",
   internalID: "",
-  __typename: "Artist",
+  is_followed: false,
+  name: "",
+  slug: "",
 }
 
 const defaultArtist = {
+  id: "QXJ0aXN0Omp1YW4tZ3Jpcw",
+  internalID: "QXJ0aXN0Omp1YW4tZ3Jpcw",
   name: "Juan Gris",
-  slug: "juan-gris",
   related: {
     artistsConnection: {
-      pageInfo: {
-        hasNextPage: false,
-        endCursor: "QXJ0aXN0OnBhYmxvLXBpY2Fzc28",
-      },
       edges: [
         {
+          cursor: "QXJ0aXN0OnBhYmxvLXBpY2Fzc28",
           node: {
             id: "QXJ0aXN0OnBhYmxvLXBpY2Fzc28",
             internalID: "QXJ0aXN0OnBhYmxvLXBpY2Fzc28",
             ...artistFields,
           },
-          cursor: "QXJ0aXN0OnBhYmxvLXBpY2Fzc28",
         },
       ],
+      pageInfo: {
+        endCursor: "QXJ0aXN0OnBhYmxvLXBpY2Fzc28",
+        hasNextPage: false,
+      },
     },
   },
-  id: "QXJ0aXN0Omp1YW4tZ3Jpcw",
-  internalID: "QXJ0aXN0Omp1YW4tZ3Jpcw",
+  slug: "juan-gris",
 } as ArtistRecommendations_Test_QueryRawResponse["artist"]
 
 const pagedArtist = {
+  id: "QXJ0aXN0Omp1YW4tZ3Jpcw",
+  internalID: "QXJ0aXN0Omp1YW4tZ3Jpcw",
   name: "Juan Gris",
-  slug: "juan-gris",
   related: {
     artistsConnection: {
-      pageInfo: {
-        hasNextPage: true,
-        endCursor: "QXJ0aXN0OnBhYmxvLXBpY2Fzc30",
-      },
       edges: [
         {
+          cursor: "QXJ0aXN0OnBhYmxvLXBpY2Fzc28",
           node: {
             id: "QXJ0aXN0OnBhYmxvLXBpY2Fzc28",
             internalID: "QXJ0aXN0OnBhYmxvLXBpY2Fzc28",
             ...artistFields,
           },
-          cursor: "QXJ0aXN0OnBhYmxvLXBpY2Fzc28",
         },
         {
+          cursor: "QXJ0aXN0OnBhYmxvLXBpY2Fzc29",
           node: {
             id: "QXJ0aXN0OnBhYmxvLXBpY2Fzc29",
             internalID: "QXJ0aXN0OnBhYmxvLXBpY2Fzc29",
             ...artistFields,
           },
-          cursor: "QXJ0aXN0OnBhYmxvLXBpY2Fzc29",
         },
         {
+          cursor: "QXJ0aXN0OnBhYmxvLXBpY2Fzc30",
           node: {
             id: "QXJ0aXN0OnBhYmxvLXBpY2Fzc30",
             internalID: "QXJ0aXN0OnBhYmxvLXBpY2Fzc30",
             ...artistFields,
           },
-          cursor: "QXJ0aXN0OnBhYmxvLXBpY2Fzc30",
         },
       ],
+      pageInfo: {
+        endCursor: "QXJ0aXN0OnBhYmxvLXBpY2Fzc30",
+        hasNextPage: true,
+      },
     },
   },
-  id: "QXJ0aXN0Omp1YW4tZ3Jpcw",
-  internalID: "QXJ0aXN0Omp1YW4tZ3Jpcw",
+  slug: "juan-gris",
 } as ArtistRecommendations_Test_QueryRawResponse["artist"]

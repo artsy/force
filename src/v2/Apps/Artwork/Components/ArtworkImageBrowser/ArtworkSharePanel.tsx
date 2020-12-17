@@ -18,13 +18,13 @@ interface ArtworkSharePanelState {
 }
 
 const MODAL = {
-  width: 750,
   height: 400,
+  width: 750,
 }
 
 const COPY_LABELS = {
-  copy: "Copy",
   copied: "Copied",
+  copy: "Copy",
 }
 
 export class ArtworkSharePanel extends React.Component<
@@ -73,11 +73,11 @@ export class ArtworkSharePanel extends React.Component<
     const top = wTop + window.innerHeight / 2 - height / 2 || 0
 
     const options = Object.entries({
-      status: 1,
-      width,
       height,
-      top,
       left,
+      status: 1,
+      top,
+      width,
     })
       .map(([key, value]) => `${key}=${value}`)
       .join(",")
@@ -137,15 +137,15 @@ export class ArtworkSharePanel extends React.Component<
         <Separator />
         <Flex flexDirection="row" flexWrap="wrap">
           {this.renderShareButton({
-            service: "facebook",
             label: "Facebook",
             message: "Post to Facebook",
+            service: "facebook",
             url: `https://www.facebook.com/sharer/sharer.php?u=${url}`,
           })}
           {this.renderShareButton({
-            service: "twitter",
             label: "Twitter",
             message: "Share on Twitter",
+            service: "twitter",
             url: `https://twitter.com/intent/tweet?original_referer=${url}&text=${share}&url=${url}&via=artsy`,
           })}
 
@@ -165,15 +165,15 @@ export class ArtworkSharePanel extends React.Component<
           </Flex>
 
           {this.renderShareButton({
-            service: "pinterest",
             label: "Pinterest",
             message: "Pin It on Pinterest",
+            service: "pinterest",
             url: `https://pinterest.com/pin/create/button/?url=${url}&media=${shareImageUrl}&description=${share}`,
           })}
           {this.renderShareButton({
-            service: "tumblr",
             label: "Tumblr",
             message: "",
+            service: "tumblr",
             url: `https://www.tumblr.com/share/photo?source=${shareImageUrl}&caption=${share}&clickthru=${url}`,
           })}
         </Flex>

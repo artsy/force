@@ -89,10 +89,10 @@ export class ModalContainer extends React.Component<any> {
         // FIXME: reaction migration
         // @ts-ignore
         submitUrls={{
-          login: sd.AP.loginPagePath,
-          signup: sd.AP.signupPagePath,
           apple: sd.AP.applePath,
           facebook: sd.AP.facebookPath,
+          login: sd.AP.loginPagePath,
+          signup: sd.AP.signupPagePath,
           twitter: sd.AP.twitterPath,
         }}
         csrf={Cookies && Cookies.get && Cookies.get("CSRF_TOKEN")}

@@ -27,9 +27,9 @@ const FeaturedCollectionsRail: React.FC<FeaturedCollectionsRailProps> = props =>
     if (matchingCollectionFromSpreadsheet) {
       return {
         ...collection,
+        href: `/collection/${collection.slug}`,
         imageSrc: matchingCollectionFromSpreadsheet.image_src,
         subtitle: "Collection",
-        href: `/collection/${collection.slug}`,
       }
     } else {
       return null

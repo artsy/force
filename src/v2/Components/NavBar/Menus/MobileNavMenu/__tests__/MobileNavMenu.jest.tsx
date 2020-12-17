@@ -28,7 +28,7 @@ describe("MobileNavMenu", () => {
   }
 
   const getMobileMenuLinkContainer = (userType = null, lab_features = []) =>
-    getWrapper({ user: userType ? { userType, lab_features } : null })
+    getWrapper({ user: userType ? { lab_features, userType } : null })
       .find(AnimatingMenuWrapper)
       .filterWhere(element => element.props().isOpen)
       .find("ul")

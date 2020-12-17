@@ -26,8 +26,8 @@ export class ArtworkSidebarCurrentBidInfo extends React.Component<
 > {
   @track(() => {
     return {
-      context_module: AnalyticsSchema.ContextModule.Sidebar,
       action_type: AnalyticsSchema.ActionType.Click,
+      context_module: AnalyticsSchema.ContextModule.Sidebar,
       subject: AnalyticsSchema.Subject.AuctionBuyerPremium,
       type: AnalyticsSchema.Type.Link,
     }

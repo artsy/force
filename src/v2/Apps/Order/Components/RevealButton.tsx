@@ -29,11 +29,11 @@ export class RevealButton extends React.Component<
           position="absolute"
           justifyContent={align === "left" ? "flex-start" : "flex-end"}
           style={{
-            right: "0",
             left: "0",
-            transition: "opacity 0.24s ease",
             opacity: showing ? 0 : 1,
             pointerEvents: showing ? "none" : "all",
+            right: "0",
+            transition: "opacity 0.24s ease",
           }}
         >
           <Button

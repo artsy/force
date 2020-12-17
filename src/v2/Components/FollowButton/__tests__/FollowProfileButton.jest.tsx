@@ -26,8 +26,8 @@ describe("FollowProfileButton", () => {
         <AnalyticsContext.Provider
           value={{
             contextPageOwnerId: "54321",
-            contextPageOwnerType: OwnerType.artwork,
             contextPageOwnerSlug: "andy-warhol-skull",
+            contextPageOwnerType: OwnerType.artwork,
           }}
         >
           <FollowProfileButton {...passedProps} />
@@ -39,10 +39,10 @@ describe("FollowProfileButton", () => {
   beforeEach(() => {
     mediator = { trigger: jest.fn() }
     props = {
+      contextModule: ContextModule.aboutTheWork,
       profile: { ...ArtworkDetailsFixture.partner.profile },
       relay: { environment: "" },
       tracking: { trackEvent: jest.fn() },
-      contextModule: ContextModule.aboutTheWork,
     }
   })
 

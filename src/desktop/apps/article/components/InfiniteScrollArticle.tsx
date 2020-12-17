@@ -30,11 +30,11 @@ export class InfiniteScrollArticle extends React.Component<
     super(props)
 
     this.state = {
-      isLoading: false,
       articles: [props.article],
-      offset: 0,
       error: false,
       isEnabled: true,
+      isLoading: false,
+      offset: 0,
     }
   }
 
@@ -48,9 +48,9 @@ export class InfiniteScrollArticle extends React.Component<
     try {
       const data = await positronql({
         query: articlesQuery({
-          offset,
-          limit: 3,
           channel: sd.ARTSY_EDITORIAL_CHANNEL,
+          limit: 3,
+          offset,
           omit: this.props.article.id,
         }),
       })
@@ -74,9 +74,9 @@ export class InfiniteScrollArticle extends React.Component<
       )
 
       this.setState({
+        error: true,
         isEnabled: false,
         isLoading: false,
-        error: true,
       })
     }
   }

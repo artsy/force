@@ -7,13 +7,6 @@ export default function createLogger(namespace = "reaction") {
   const formattedNamespace = `${namespace} |`
 
   return {
-    log: (...messages) => {
-      // eslint-disable-next-line no-console
-      console.log(formattedNamespace, ...messages, "\n")
-    },
-    warn: (...warnings) => {
-      console.warn(formattedNamespace, ...warnings, "\n")
-    },
     error: (...errors) => {
       const error = errors.find(e => e instanceof Error)
 
@@ -22,6 +15,13 @@ export default function createLogger(namespace = "reaction") {
       }
 
       console.error(formattedNamespace, ...errors, "\n")
+    },
+    log: (...messages) => {
+      // eslint-disable-next-line no-console
+      console.log(formattedNamespace, ...messages, "\n")
+    },
+    warn: (...warnings) => {
+      console.warn(formattedNamespace, ...warnings, "\n")
     },
   }
 }

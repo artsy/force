@@ -10,16 +10,16 @@ interface DialogState {
 
 export class DialogContainer extends Container<DialogState> {
   state: DialogState = {
-    props: {
-      show: false,
-      heading: null,
-      detail: null,
-      primaryCta: {
-        text: "",
-        action: () => void 0,
-      },
-    },
     onForceClose: () => Promise.resolve(),
+    props: {
+      detail: null,
+      heading: null,
+      primaryCta: {
+        action: () => void 0,
+        text: "",
+      },
+      show: false,
+    },
   }
 
   /**
@@ -52,7 +52,7 @@ export class DialogContainer extends Container<DialogState> {
     }
 
     return new Promise(resolve => {
-      this.setState({ props, onForceClose }, resolve)
+      this.setState({ onForceClose, props }, resolve)
     })
   }
 
@@ -78,21 +78,21 @@ export class DialogContainer extends Container<DialogState> {
       }
 
       this.show({
+        onForceClose: reject,
         props: {
-          show: true,
-          heading: title,
           detail: message,
+          heading: title,
+          onClose: reject,
           primaryCta: {
-            text: confirmButtonText,
             action: accept,
+            text: confirmButtonText,
           },
           secondaryCta: {
-            text: cancelButtonText,
             action: reject,
+            text: cancelButtonText,
           },
-          onClose: reject,
+          show: true,
         },
-        onForceClose: reject,
       })
     })
   }
@@ -129,17 +129,17 @@ export class DialogContainer extends Container<DialogState> {
       }
 
       this.show({
-        props: {
-          show: true,
-          heading: title,
-          detail: message,
-          primaryCta: {
-            text: continueButtonText,
-            action: onContinue,
-          },
-          onClose: onDismiss,
-        },
         onForceClose: onDismiss,
+        props: {
+          detail: message,
+          heading: title,
+          onClose: onDismiss,
+          primaryCta: {
+            action: onContinue,
+            text: continueButtonText,
+          },
+          show: true,
+        },
       })
     })
   }
@@ -151,10 +151,10 @@ const extractDialogHelpers = ({
   showErrorDialog,
   showConfirmDialog,
 }: DialogContainer) => ({
-  show,
   hide,
-  showErrorDialog,
+  show,
   showConfirmDialog,
+  showErrorDialog,
 })
 
 export type Dialog = ReturnType<typeof extractDialogHelpers>

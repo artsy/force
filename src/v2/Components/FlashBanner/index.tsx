@@ -45,10 +45,10 @@ export const FlashBanner: React.FC<FlashBannerProps> = props => {
      * logic internal to the component + its props) to banner content.
      */
     const contentMap: Record<string, string> = {
-      confirmed: "Your email has been confirmed.",
       already_confirmed: "You have already confirmed your email.",
-      invalid_token: "An error has occurred. Please contact support@artsy.net.",
       blank_token: "An error has occurred. Please contact support@artsy.net.",
+      confirmed: "Your email has been confirmed.",
+      invalid_token: "An error has occurred. Please contact support@artsy.net.",
     }
     switch (contentCode) {
       case "email_confirmation_cta":

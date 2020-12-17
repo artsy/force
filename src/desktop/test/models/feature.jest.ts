@@ -169,9 +169,9 @@ describe("Feature", () => {
       _.last(Backbone.sync.args)[2].success([])
     })
 
-    xit("sorts sets by key", function () {})
+    it.skip("sorts sets by key", function () {})
 
-    xdescribe("fetching a sale", () => {
+    describe.skip("fetching a sale", () => {
       it("proxies the display_artist_list attribute", () => {})
     })
   })

@@ -57,35 +57,32 @@ export class SeoProducts extends React.Component<SeoProductsProps> {
           <Product
             key={node.id}
             data={{
-              name: node.title,
-              image: image && image.url,
-              description: node.meta && node.meta.description,
-              url: `${APP_URL}${node.href}`,
               brand: {
                 "@type": "Person",
                 name: artistsName,
               },
+              description: node.meta && node.meta.description,
+              image: image && image.url,
+              name: node.title,
+              url: `${APP_URL}${node.href}`,
               ...(isInstitution
                 ? {}
                 : {
                   category: node.category,
-                  productionDate: node.date,
                   offers: {
                     "@type": "Offer",
+                    availability: availability && AVAILABILITY[availability],
                     price: !is_price_range
                       ? formatCurrency(display)
                       : {
-                        minPrice:
-                          display && formatCurrency(display.split("-")[0]),
                         maxPrice:
                           display && formatCurrency(display.split("-")[1]),
+                        minPrice:
+                          display && formatCurrency(display.split("-")[0]),
                       },
                     priceCurrency: node.price_currency,
-                    availability: availability && AVAILABILITY[availability],
                     seller: {
                       "@type": "ArtGallery",
-                      name: partner && partner.name,
-                      image: partnerImg,
                       address: location
                         ? [
                           location.address,
@@ -98,9 +95,12 @@ export class SeoProducts extends React.Component<SeoProductsProps> {
                           .filter(Boolean)
                           .join(", ")
                         : null,
+                      image: partnerImg,
+                      name: partner && partner.name,
                       telephone: location ? location.phone : null,
                     },
                   },
+                  productionDate: node.date,
                 }),
             }}
           />

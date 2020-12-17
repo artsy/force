@@ -26,22 +26,22 @@ type TestBuyOrder = Exclude<
 
 const transactionSummaryBuyOrder: TestBuyOrder = {
   ...UntouchedBuyOrder,
+  buyerTotal: "$215.25",
+  itemsTotal: "$200.00",
   shippingTotal: "$12.00",
   shippingTotalCents: 1200,
   taxTotal: "$3.25",
   taxTotalCents: 325,
-  itemsTotal: "$200.00",
-  buyerTotal: "$215.25",
 }
 
 const transactionSummaryOfferOrder: TestOfferOrder = {
   ...OfferOrderWithOffers,
+  buyerTotal: "$215.25",
+  itemsTotal: "$200.00",
   shippingTotal: "$12.00",
   shippingTotalCents: 1200,
   taxTotal: "$3.25",
   taxTotalCents: 325,
-  itemsTotal: "$200.00",
-  buyerTotal: "$215.25",
 }
 
 const render = (
@@ -83,10 +83,10 @@ describe("TransactionDetailsSummaryItem", () => {
     it("shows the shipping and tax price as dashes if null", async () => {
       const transactionSummary = await render({
         ...transactionSummaryBuyOrder,
-        taxTotal: null,
-        taxTotalCents: null,
         shippingTotal: null,
         shippingTotalCents: null,
+        taxTotal: null,
+        taxTotalCents: null,
       })
 
       const text = transactionSummary.text()
@@ -116,13 +116,13 @@ describe("TransactionDetailsSummaryItem", () => {
         __typename: "CommerceOfferOrder",
         myLastOffer: {
           ...OfferWithTotals,
-          taxTotal: null,
-          taxTotalCents: null,
-          shippingTotal: null,
-          shippingTotalCents: null,
           buyerTotal: null,
           buyerTotalCents: null,
           fromParticipant: "BUYER",
+          shippingTotal: null,
+          shippingTotalCents: null,
+          taxTotal: null,
+          taxTotalCents: null,
         },
       })
 
@@ -155,15 +155,15 @@ describe("TransactionDetailsSummaryItem", () => {
           __typename: "CommerceOfferOrder",
           lastOffer: {
             ...OfferWithTotals,
-            id: "last-offer",
             amount: "£poundz",
             fromParticipant: "SELLER",
+            id: "last-offer",
           },
           myLastOffer: {
             ...OfferWithTotals,
-            id: "my-last-offer",
             amount: "$dollaz",
             fromParticipant: "BUYER",
+            id: "my-last-offer",
           },
         },
         { useLastSubmittedOffer: true }
@@ -180,9 +180,9 @@ describe("TransactionDetailsSummaryItem", () => {
           ...transactionSummaryOfferOrder,
           lastOffer: {
             ...OfferWithTotals,
-            id: "seller-offer-id",
             amount: "£405.00",
             fromParticipant: "SELLER",
+            id: "seller-offer-id",
           },
         },
         { useLastSubmittedOffer: true }
@@ -199,12 +199,12 @@ describe("TransactionDetailsSummaryItem", () => {
           ...transactionSummaryOfferOrder,
           lastOffer: {
             ...OfferWithTotals,
-            id: "seller-offer-id",
             amount: "£405.00",
             fromParticipant: "SELLER",
+            id: "seller-offer-id",
           },
         },
-        { useLastSubmittedOffer: true, offerOverride: "$1billion" }
+        { offerOverride: "$1billion", useLastSubmittedOffer: true }
       )
 
       const text = transactionSummary.text()
@@ -219,14 +219,14 @@ describe("TransactionDetailsSummaryItem", () => {
           lastOffer: {
             ...OfferWithTotals,
             amount: "£405.00",
-            id: "last-offer",
             fromParticipant: "SELLER",
+            id: "last-offer",
           },
           myLastOffer: {
             ...OfferWithTotals,
-            id: "my-last-offer",
             amount: "£400.00",
             fromParticipant: "BUYER",
+            id: "my-last-offer",
           },
         },
         { offerContextPrice: "LAST_OFFER" }

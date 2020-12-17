@@ -60,27 +60,27 @@ export class PaymentPicker extends React.Component<
   PaymentPickerState
 > {
   state = {
-    hideBillingAddress: true,
-    stripeError: null,
-    isCreatingStripeToken: false,
     address: this.startingAddress(),
     addressErrors: {},
     addressTouched: {},
     creditCardSelection: this.getInitialCreditCardSelection(),
+    hideBillingAddress: true,
+    isCreatingStripeToken: false,
     saveNewCreditCard: true,
+    stripeError: null,
   }
 
   private getInitialCreditCardSelection(): PaymentPickerState["creditCardSelection"] {
     if (this.props.order.creditCard) {
       return {
-        type: "existing",
         id: this.props.order.creditCard.internalID,
+        type: "existing",
       }
     } else {
       return this.props.me.creditCards.edges.length
         ? {
-            type: "existing",
             id: this.props.me.creditCards.edges[0].node.internalID,
+            type: "existing",
           }
         : { type: "new" }
     }
@@ -95,14 +95,14 @@ export class PaymentPicker extends React.Component<
 
   private get touchedAddress() {
     return {
-      name: true,
-      country: true,
-      postalCode: true,
       addressLine1: true,
       addressLine2: true,
       city: true,
-      region: true,
+      country: true,
+      name: true,
       phoneNumber: true,
+      postalCode: true,
+      region: true,
     }
   }
 
@@ -124,7 +124,7 @@ export class PaymentPicker extends React.Component<
   > = async () => {
     const { creditCardSelection, saveNewCreditCard } = this.state
     if (creditCardSelection.type === "existing") {
-      return { type: "success", creditCardId: creditCardSelection.id }
+      return { creditCardId: creditCardSelection.id, type: "success" }
     }
 
     if (this.needsAddress()) {
@@ -149,8 +149,8 @@ export class PaymentPicker extends React.Component<
     const creditCardOrError = (
       await this.createCreditCard({
         input: {
-          token: stripeResult.token.id,
           oneTimeUse: !saveNewCreditCard,
+          token: stripeResult.token.id,
         },
       })
     ).createCreditCard.creditCardOrError
@@ -160,21 +160,21 @@ export class PaymentPicker extends React.Component<
       creditCardOrError.mutationError.detail
     ) {
       return {
-        type: "error",
         error: creditCardOrError.mutationError.detail,
+        type: "error",
       }
     } else if (
       creditCardOrError.mutationError &&
       creditCardOrError.mutationError.message
     ) {
       return {
-        type: "internal_error",
         error: creditCardOrError.mutationError.message,
+        type: "internal_error",
       }
     } else
       return {
-        type: "success",
         creditCardId: creditCardOrError.creditCard.internalID,
+        type: "success",
       }
   }
 
@@ -183,8 +183,8 @@ export class PaymentPicker extends React.Component<
     if (showBillingAddress && props.order.state === "PENDING") {
       return {
         action_type: Schema.ActionType.Click,
-        subject: Schema.Subject.BNMOUseShippingAddress,
         flow: "buy now",
+        subject: Schema.Subject.BNMOUseShippingAddress,
         type: "checkbox",
       }
     }
@@ -254,7 +254,7 @@ export class PaymentPicker extends React.Component<
                   this.setState({ creditCardSelection: { type: "new" } })
                 } else {
                   this.setState({
-                    creditCardSelection: { type: "existing", id: val },
+                    creditCardSelection: { id: val, type: "existing" },
                   })
                 }
               }}
@@ -365,13 +365,13 @@ export class PaymentPicker extends React.Component<
       country,
     } = selectedBillingAddress
     return {
-      name,
+      address_city: city,
+      address_country: country,
       address_line1: addressLine1,
       address_line2: addressLine2,
-      address_city: city,
       address_state: region,
       address_zip: postalCode,
-      address_country: country,
+      name,
     }
   }
 
@@ -379,7 +379,6 @@ export class PaymentPicker extends React.Component<
     variables: PaymentPickerCreateCreditCardMutation["variables"]
   ) {
     return this.props.commitMutation<PaymentPickerCreateCreditCardMutation>({
-      variables,
       mutation: graphql`
         mutation PaymentPickerCreateCreditCardMutation(
           $input: CreditCardInput!
@@ -413,6 +412,7 @@ export class PaymentPicker extends React.Component<
           }
         }
       `,
+      variables,
     })
   }
 

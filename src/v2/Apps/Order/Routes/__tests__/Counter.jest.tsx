@@ -24,37 +24,28 @@ const realSetInterval = global.setInterval
 
 const testOrder: CounterTestQueryRawResponse["order"] = {
   ...OfferOrderWithShippingDetails,
-  stateExpiresAt: DateTime.fromISO(NOW).plus({ days: 1 }).toString(),
   lastOffer: {
     ...OfferWithTotals,
-    internalID: "lastOffer",
-    id: "lastOffer",
-    createdAt: DateTime.fromISO(NOW).minus({ days: 1 }).toString(),
     amount: "$sellers.offer",
+    createdAt: DateTime.fromISO(NOW).minus({ days: 1 }).toString(),
+    id: "lastOffer",
+    internalID: "lastOffer",
   },
   myLastOffer: {
     ...OfferWithTotals,
-    internalID: "myLastOffer",
-    id: "myLastOffer",
     amount: "$your.offer",
     fromParticipant: "BUYER",
+    id: "myLastOffer",
+    internalID: "myLastOffer",
   },
   offers: { edges: Offers },
+  stateExpiresAt: DateTime.fromISO(NOW).plus({ days: 1 }).toString(),
 }
 
 describe("Submit Pending Counter Offer", () => {
   const { buildPage, mutations, routes } = createTestEnv({
     Component: CounterFragmentContainer,
-    query: graphql`
-      query CounterTestQuery @raw_response_type {
-        order: commerceOrder(id: "") {
-          ...Counter_order
-        }
-      }
-    `,
-    defaultMutationResults: {
-      ...submitPendingOfferSuccess,
-    },
+    TestPage: OrderAppTestPage,
     defaultData: {
       order: testOrder,
       system: {
@@ -63,7 +54,16 @@ describe("Submit Pending Counter Offer", () => {
         },
       },
     } as CounterTestQueryRawResponse,
-    TestPage: OrderAppTestPage,
+    defaultMutationResults: {
+      ...submitPendingOfferSuccess,
+    },
+    query: graphql`
+      query CounterTestQuery @raw_response_type {
+        order: commerceOrder(id: "") {
+          ...Counter_order
+        }
+      }
+    `,
   })
 
   describe("with default data", () => {

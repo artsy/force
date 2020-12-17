@@ -122,11 +122,14 @@ const Component = createFragmentContainer(
       <button
         onClick={() =>
           commitMutation<createTestEnvOrderMutation>(relay.environment, {
-            onCompleted,
-            onError,
-            variables: { input: { artworkId: "artwork-id" } },
             // tslint:disable-next-line:relay-operation-generics
-            mutation: orderMutation,
+mutation: orderMutation,
+            
+onCompleted,
+            
+onError,
+            
+            variables: { input: { artworkId: "artwork-id" } },
           })
         }
       >
@@ -136,11 +139,14 @@ const Component = createFragmentContainer(
       <button
         onClick={() =>
           commitMutation<createTestEnvCreditCardMutation>(relay.environment, {
-            onCompleted,
-            onError,
-            variables: { input: { token: "card-token", oneTimeUse: true } },
             // tslint:disable-next-line:relay-operation-generics
-            mutation: creditCardMutation,
+mutation: creditCardMutation,
+            
+onCompleted,
+            
+onError,
+            
+            variables: { input: { oneTimeUse: true, token: "card-token" } },
           })
         }
       >
@@ -188,8 +194,8 @@ describe("test envs", () => {
     },
     defaultData: {
       artwork: {
-        title: "Test Artwork",
         artist: { name: "David Sheldrick" },
+        title: "Test Artwork",
       },
     } as createTestEnvQueryRawResponse,
     defaultMutationResults: {
@@ -222,10 +228,10 @@ describe("test envs", () => {
     const page = await buildPage({
       mockData: {
         artwork: {
-          title: "New Artwork",
           artist: {
             name: "Daisy O'Doherty",
           },
+          title: "New Artwork",
         },
       },
     })

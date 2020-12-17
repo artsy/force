@@ -14,37 +14,37 @@ import { RelayProp } from "react-relay"
 import { GlobalData } from "sharify"
 
 jest.mock("react-stripe-elements", () => ({
+  CardElement: () => jest.fn(),
   Elements: ({ children }) => children,
   StripeProvider: () => <div />,
-  CardElement: () => jest.fn(),
   injectStripe: () => jest.fn(),
 }))
 
 const mockMe: UserSettingsPayments_me = {
   " $refType": null,
-  internalID: "1234",
-  id: "abcd1234",
   creditCards: { edges: [] },
+  id: "abcd1234",
+  internalID: "1234",
 }
 
 const mockCard: CreditCardType = {
   " $refType": null,
+  __typename: "CreditCard",
+  brand: "Visa",
+  expirationMonth: 2,
+  expirationYear: 2040,
   id: "abc123",
   internalID: "123",
   lastDigits: "3456",
-  expirationMonth: 2,
-  expirationYear: 2040,
-  brand: "Visa",
-  __typename: "CreditCard",
 }
 
 const mockMeWithCards: UserSettingsPayments_me = {
   " $refType": null,
-  internalID: "1234",
-  id: "abcd1234",
   creditCards: {
     edges: [{ node: { ...mockCard } }, { node: { ...mockCard } }],
   },
+  id: "abcd1234",
+  internalID: "1234",
 }
 
 describe("UserSettingsPayments", () => {

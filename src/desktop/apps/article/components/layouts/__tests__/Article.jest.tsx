@@ -49,8 +49,8 @@ describe("Article Layout", () => {
   it("renders a feature fullscreen article in a series", () => {
     props.article = clone({
       ...FeatureArticle,
-      seriesArticle: SeriesArticleSponsored,
       relatedArticles: [StandardArticle, BasicArticle],
+      seriesArticle: SeriesArticleSponsored,
     } as ArticleData)
     const component = getWrapper()
 
@@ -77,7 +77,7 @@ describe("Article Layout", () => {
       expect(component.find(InfiniteScrollArticle).length).toBe(0)
     })
 
-    it("it mounts backbone views for super articles", () => {
+    it("mounts backbone views for super articles", () => {
       props.templates = {
         SuperArticleFooter: "sa-footer",
         SuperArticleHeader: "sa-header",

@@ -22,8 +22,8 @@ import FormattedNumber from "./CustomScalars/formatted_number"
 export const createMockNetworkLayer = (mockResolvers: IMocks) => {
   return Network.create(
     getNetworkLayer({
-      schema,
       mocks: { FormattedNumber: () => FormattedNumber, ...mockResolvers },
+      schema,
     })
   )
 }
@@ -120,7 +120,6 @@ export const createMockFetchQuery = ({
           `A mock for field at path '${path}' of type '${type}' was expected for operation '${operationName}', but none was found.`
       )
     }) as GraphQLFieldResolver<any, any>,
-    schema,
     resolvers: {
       FormattedNumber: () => FormattedNumber,
       // here we map the mock fixture entries to resolver functions if they aren't
@@ -134,6 +133,7 @@ export const createMockFetchQuery = ({
         {}
       ),
     },
+    schema,
   })
 }
 
@@ -214,9 +214,9 @@ function error(
 ) {
   return new Error(
     renderMessage({
+      operationName: get(info, i => i.operation.name.value, "(unknown)"),
       path: responsePathAsArray(info.path).join("/"),
       type: info.returnType.inspect(),
-      operationName: get(info, i => i.operation.name.value, "(unknown)"),
     })
   )
 }

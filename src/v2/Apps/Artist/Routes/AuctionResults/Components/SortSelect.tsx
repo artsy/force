@@ -5,16 +5,16 @@ import { useAuctionResultsFilterContext } from "../AuctionResultsFilterContext"
 // TODO: move this to sortOptions?
 const SORTS = [
   {
-    value: "DATE_DESC",
     text: "Sale Date (Most recent)",
+    value: "DATE_DESC",
   },
   {
-    value: "ESTIMATE_AND_DATE_DESC",
     text: "Estimate",
+    value: "ESTIMATE_AND_DATE_DESC",
   },
   {
-    value: "PRICE_AND_DATE_DESC",
     text: "Sale price",
+    value: "PRICE_AND_DATE_DESC",
   },
 ]
 

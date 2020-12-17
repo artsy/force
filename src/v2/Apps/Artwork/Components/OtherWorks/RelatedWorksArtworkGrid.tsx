@@ -46,8 +46,8 @@ class RelatedWorksArtworkGrid extends React.Component<
 
     this.props.relay.refetch(
       {
-        layerId: tab.data.layerId,
         artworkSlug: this.props.artwork.slug,
+        layerId: tab.data.layerId,
       },
       null,
       error => {
@@ -62,8 +62,8 @@ class RelatedWorksArtworkGrid extends React.Component<
   }
 
   @track({
-    type: Schema.Type.ArtworkBrick,
     action_type: Schema.ActionType.Click,
+    type: Schema.Type.ArtworkBrick,
   })
   trackBrickClick() {
     // noop

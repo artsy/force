@@ -8,14 +8,14 @@ describe("ShippingAddress", () => {
       <ShippingAddress
         ship={
           {
-            name: "Yuki Nishijima",
             addressLine1: "401 Broadway",
             addressLine2: "Suite 25",
             city: "New York",
-            postalCode: "10013",
-            phoneNumber: "10013",
-            region: "NY",
             country: "US",
+            name: "Yuki Nishijima",
+            phoneNumber: "10013",
+            postalCode: "10013",
+            region: "NY",
           } as any
         }
       />
@@ -34,14 +34,14 @@ describe("ShippingAddress", () => {
       <ShippingAddress
         ship={
           {
-            name: "Yuki Nishijima",
             addressLine1: "401 Broadway",
             addressLine2: " ",
             city: "New York",
-            postalCode: "10013",
-            phoneNumber: "10013",
-            region: "NY",
             country: "US",
+            name: "Yuki Nishijima",
+            phoneNumber: "10013",
+            postalCode: "10013",
+            region: "NY",
           } as any
         }
       />
@@ -56,14 +56,14 @@ describe("ShippingAddress", () => {
       <ShippingAddress
         ship={
           {
-            name: "Yuki Nishijima",
             addressLine1: "401 Broadway",
             addressLine2: null,
             city: "New York",
-            postalCode: "10013",
-            phoneNumber: "10013",
-            region: "NY",
             country: "US",
+            name: "Yuki Nishijima",
+            phoneNumber: "10013",
+            postalCode: "10013",
+            region: "NY",
           } as any
         }
       />

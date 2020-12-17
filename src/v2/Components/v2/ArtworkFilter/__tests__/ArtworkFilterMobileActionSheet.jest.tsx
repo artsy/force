@@ -92,7 +92,7 @@ describe("ArtworkFilterMobileActionSheet", () => {
   it("counts the number of changing filters", async () => {
     // Zero state: a medium and a way to buy are *already* selected
     const wrapper = getWrapper({
-      filters: { medium: "painting", acquireable: true },
+      filters: { acquireable: true, medium: "painting" },
     })
 
     expect(wrapper.find("ApplyButton").text()).toEqual("Apply (0)")

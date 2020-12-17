@@ -41,12 +41,12 @@ describe("buildAppRoutes", () => {
 
     expect(routes[0].children).toEqual([
       {
-        path: "/foo",
         fetchIndicator: "overlay",
+        path: "/foo",
       },
       {
-        path: "/bar",
         fetchIndicator: "overlay",
+        path: "/bar",
       },
     ])
   })
@@ -61,19 +61,19 @@ describe("buildAppRoutes", () => {
         ],
       },
       {
+        disabled: true,
         routes: [
           {
             path: "/bar",
           },
         ],
-        disabled: true,
       },
     ])
 
     expect(routes[0].children).toEqual([
       {
-        path: "/foo",
         fetchIndicator: "overlay",
+        path: "/foo",
       },
     ])
   })
@@ -95,8 +95,8 @@ describe("buildAppRoutes", () => {
         {
           routes: [
             {
-              path: "/foo",
               Component: App,
+              path: "/foo",
             },
           ],
         },
@@ -120,8 +120,8 @@ describe("buildAppRoutes", () => {
         {
           routes: [
             {
-              path: "/foo",
               Component: () => <div />,
+              path: "/foo",
             },
           ],
         },

@@ -35,8 +35,8 @@ export const ViewWorksButton: React.FC<ViewWorksButtonProps> = ({
         tracking.trackEvent({
           action_type: AnalyticsSchema.ActionType.ClickedArtworkGroup,
           context_module: AnalyticsSchema.ContextModule.ViewingRoomArtworkRail,
-          subject: AnalyticsSchema.Subject.ViewWorks,
           destination_path: navigateTo,
+          subject: AnalyticsSchema.Subject.ViewWorks,
         })
       }}
     >

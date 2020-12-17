@@ -22,18 +22,18 @@ describe("OtherWorks", () => {
     })
 
     genericOtherWorksData = {
-      contextGrids: null,
+      " $fragmentRefs": null,
       context: {
         __typename: "ArtworkContextPartnerShow",
       },
-      sale: null,
-      internalID: "artwork1",
+      contextGrids: null,
       gravityID: "asdbsd",
-      layers: [],
+      internalID: "artwork1",
       layer: {
         artworksConnection: null,
       },
-      " $fragmentRefs": null,
+      layers: [],
+      sale: null,
     }
   })
 
@@ -52,9 +52,6 @@ describe("OtherWorks", () => {
     genericOtherWorksData.contextGrids = [
       {
         __typename: "ArtistArtworkGrid",
-        title: "Other works by Andy Warhol",
-        ctaTitle: "View all works by Andy Warhol",
-        ctaHref: "/artist/andy-warhol",
         artworksConnection: {
           edges: [
             {
@@ -64,6 +61,9 @@ describe("OtherWorks", () => {
             },
           ],
         },
+        ctaHref: "/artist/andy-warhol",
+        ctaTitle: "View all works by Andy Warhol",
+        title: "Other works by Andy Warhol",
       },
     ]
     const component = mount(<OtherWorks artwork={genericOtherWorksData} />)
@@ -75,17 +75,17 @@ describe("OtherWorks", () => {
     genericOtherWorksData.contextGrids = [
       {
         __typename: "ArtistArtworkGrid",
-        title: "Other works by Andy Warhol",
-        ctaTitle: "View all works by Andy Warhol",
-        ctaHref: "/artist/andy-warhol",
         artworksConnection: { edges: [{ node: { internalID: "artwork1" } }] },
+        ctaHref: "/artist/andy-warhol",
+        ctaTitle: "View all works by Andy Warhol",
+        title: "Other works by Andy Warhol",
       },
       {
         __typename: "PartnerArtworkGrid",
-        title: "Other works from Gagosian Gallery",
-        ctaTitle: "View all works from Gagosian Gallery",
-        ctaHref: "/gagosian-gallery",
         artworksConnection: { edges: [{ node: { internalID: "artwork1" } }] },
+        ctaHref: "/gagosian-gallery",
+        ctaTitle: "View all works from Gagosian Gallery",
+        title: "Other works from Gagosian Gallery",
       },
     ]
     const component = mount(<OtherWorks artwork={genericOtherWorksData} />)
@@ -102,15 +102,15 @@ describe("OtherWorks", () => {
     genericOtherWorksData.contextGrids = [
       {
         __typename: "ArtistArtworkGrid",
-        title: "Other works by Andy Warhol",
-        ctaTitle: "View all works by Andy Warhol",
-        ctaHref: "/artist/andy-warhol",
         artworksConnection: { edges: [{ node: { internalID: "artwork1" } }] },
+        ctaHref: "/artist/andy-warhol",
+        ctaTitle: "View all works by Andy Warhol",
+        title: "Other works by Andy Warhol",
       },
       {
         __typename: "RelatedArtworkGrid",
-        title: "Related works",
         artworksConnection: { edges: [{ node: { internalID: "artwork1" } }] },
+        title: "Related works",
       },
     ]
     const component = mount(<OtherWorks artwork={genericOtherWorksData} />)
@@ -122,24 +122,24 @@ describe("OtherWorks", () => {
     genericOtherWorksData.contextGrids = [
       {
         __typename: "ArtistArtworkGrid",
-        title: "Other works by Andy Warhol",
-        ctaTitle: "View all works by Andy Warhol",
-        ctaHref: "/artist/andy-warhol",
         artworksConnection: { edges: [{ node: { internalID: "artwork1" } }] },
+        ctaHref: "/artist/andy-warhol",
+        ctaTitle: "View all works by Andy Warhol",
+        title: "Other works by Andy Warhol",
       },
       {
         __typename: "PartnerArtworkGrid",
-        title: "Other works from Gagosian Gallery",
-        ctaTitle: "View all works from Gagosian Gallery",
-        ctaHref: "/gagosian-gallery",
         artworksConnection: null,
+        ctaHref: "/gagosian-gallery",
+        ctaTitle: "View all works from Gagosian Gallery",
+        title: "Other works from Gagosian Gallery",
       },
       {
         __typename: "ShowArtworkGrid",
-        title: "Other works from Gagosian Gallery at Art Basel 2019",
-        ctaTitle: "View all works from the booth",
-        ctaHref: "/show/gagosian-gallery-at-art-basel-2019",
         artworksConnection: { edges: [] },
+        ctaHref: "/show/gagosian-gallery-at-art-basel-2019",
+        ctaTitle: "View all works from the booth",
+        title: "Other works from Gagosian Gallery at Art Basel 2019",
       },
     ]
     const component = mount(<OtherWorks artwork={genericOtherWorksData} />)

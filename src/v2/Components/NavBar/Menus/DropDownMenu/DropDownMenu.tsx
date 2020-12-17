@@ -8,21 +8,21 @@ import { Menu, MenuItem } from "v2/Components/Menu"
 import { MenuData } from "../../menuData"
 
 const LinkMenuItem = styled(MenuItem).attrs({
+  color: "black60",
+  hasLighterTextColor: true,
   px: 1,
   py: 0.5,
-  color: "black60",
   variant: "text",
-  hasLighterTextColor: true,
 })``
 
 LinkMenuItem.displayName = "LinkMenuItem"
 
 const ViewAllMenuItem = styled(MenuItem).attrs({
+  color: "black100",
+  hasLighterTextColor: true,
   px: 1,
   py: 0.5,
-  color: "black100",
   variant: "text",
-  hasLighterTextColor: true,
 })`
   margin-top: auto;
   text-decoration: underline;
@@ -57,8 +57,8 @@ export const DropDownNavMenu: React.FC<DropDownNavMenuProps> = ({
     trackEvent({
       action_type: AnalyticsSchema.ActionType.Click,
       context_module: contextModule,
-      subject: text,
       destination_path: href,
+      subject: text,
     })
 
     if (onClick) {

@@ -13,7 +13,7 @@ describe("Confirm Registration Modal", () => {
   })
 
   describe("sanitizing the URL", () => {
-    xit("removes /confirm-registration from the url", () => {
+    it.skip("removes /confirm-registration from the url", () => {
       document.title = "big time"
       window.location.pathname = "/auction/auction-one/confirm-registration"
 
@@ -38,8 +38,6 @@ describe("Confirm Registration Modal", () => {
 
       const { wrapper } = renderTestComponent({
         Component: ConfirmRegistrationModal,
-        options: { renderMode: "mount" },
-        props: { onClose: mockOnClose },
         data: {
           app: {
             me: {
@@ -51,6 +49,8 @@ describe("Confirm Registration Modal", () => {
             },
           },
         },
+        options: { renderMode: "mount" },
+        props: { onClose: mockOnClose },
       })
       wrapper.find(Button).simulate("click")
       expect(mockOnClose).toHaveBeenCalled()
@@ -61,12 +61,12 @@ describe("Confirm Registration Modal", () => {
     it("does not render the modal if there is no user", () => {
       const { wrapper } = renderTestComponent({
         Component: ConfirmRegistrationModal,
-        options: { renderMode: "render" },
         data: {
           app: {
             me: null,
           },
         },
+        options: { renderMode: "render" },
       })
       expect(wrapper.text().length).toBe(0)
     })
@@ -77,10 +77,8 @@ describe("Confirm Registration Modal", () => {
       it("shows a qualified message", () => {
         const { wrapper } = renderTestComponent({
           Component: ConfirmRegistrationModal,
-          options: { renderMode: "mount" },
           data: {
             app: {
-              modalType: "ConfirmRegistration",
               me: {
                 bidders: [
                   {
@@ -88,8 +86,10 @@ describe("Confirm Registration Modal", () => {
                   },
                 ],
               },
+              modalType: "ConfirmRegistration",
             },
           },
+          options: { renderMode: "mount" },
         })
 
         expect(wrapper.text()).toEqual(
@@ -102,12 +102,8 @@ describe("Confirm Registration Modal", () => {
       it("shows a bid could not be placed message if the user was trying to bid + register", () => {
         const { wrapper } = renderTestComponent({
           Component: ConfirmRegistrationModal,
-          props: { cantBid: true },
-          options: { renderMode: "mount" },
           data: {
             app: {
-              modalType: "ConfirmBidAndRegistration",
-
               me: {
                 bidders: [
                   {
@@ -115,8 +111,12 @@ describe("Confirm Registration Modal", () => {
                   },
                 ],
               },
+
+              modalType: "ConfirmBidAndRegistration",
             },
           },
+          options: { renderMode: "mount" },
+          props: { cantBid: true },
         })
         expect(wrapper.text()).toEqual(
           expect.stringContaining("We're sorry, your bid could not be placed.")
@@ -126,10 +126,8 @@ describe("Confirm Registration Modal", () => {
       it("shows a registration pending message if the user was trying to register", () => {
         const { wrapper } = renderTestComponent({
           Component: ConfirmRegistrationModal,
-          options: { renderMode: "mount" },
           data: {
             app: {
-              modalType: "ConfirmRegistration",
               me: {
                 bidders: [
                   {
@@ -138,11 +136,13 @@ describe("Confirm Registration Modal", () => {
                 ],
                 identityVerified: false,
               },
+              modalType: "ConfirmRegistration",
               sale: {
                 requireIdentityVerification: false,
               },
             },
           },
+          options: { renderMode: "mount" },
         })
 
         expect(wrapper.text()).toContain("Registration pending")
@@ -152,10 +152,8 @@ describe("Confirm Registration Modal", () => {
       it("shows a registration pending message if the sale requires IDV and the user is verified", () => {
         const { wrapper } = renderTestComponent({
           Component: ConfirmRegistrationModal,
-          options: { renderMode: "mount" },
           data: {
             app: {
-              modalType: "ConfirmRegistration",
               me: {
                 bidders: [
                   {
@@ -164,11 +162,13 @@ describe("Confirm Registration Modal", () => {
                 ],
                 identityVerified: true,
               },
+              modalType: "ConfirmRegistration",
               sale: {
                 requireIdentityVerification: true,
               },
             },
           },
+          options: { renderMode: "mount" },
         })
 
         expect(wrapper.text()).toContain("Registration pending")
@@ -178,10 +178,8 @@ describe("Confirm Registration Modal", () => {
       it("shows a registration pending message if the sale requires IDV and the user is not verified but has no startable IDV flow", () => {
         const { wrapper } = renderTestComponent({
           Component: ConfirmRegistrationModal,
-          options: { renderMode: "mount" },
           data: {
             app: {
-              modalType: "ConfirmRegistration",
               me: {
                 bidders: [
                   {
@@ -191,11 +189,13 @@ describe("Confirm Registration Modal", () => {
                 identityVerified: false,
                 pendingIdentityVerification: null,
               },
+              modalType: "ConfirmRegistration",
               sale: {
                 requireIdentityVerification: true,
               },
             },
           },
+          options: { renderMode: "mount" },
         })
 
         expect(wrapper.text()).toContain("Registration pending")
@@ -205,10 +205,11 @@ describe("Confirm Registration Modal", () => {
       it("shows an 'please verify identity' message if the sale requires IDV but the user, who is not verified, has an available IDV flow", () => {
         const { wrapper } = renderTestComponent({
           Component: ConfirmRegistrationModal,
-          options: { renderMode: "mount" },
           data: {
             app: {
-              modalType: "ConfirmRegistration",
+              auction: {
+                requireIdentityVerification: true,
+              },
               me: {
                 bidders: [
                   {
@@ -220,11 +221,10 @@ describe("Confirm Registration Modal", () => {
                   internalID: "whatever",
                 },
               },
-              auction: {
-                requireIdentityVerification: true,
-              },
+              modalType: "ConfirmRegistration",
             },
           },
+          options: { renderMode: "mount" },
         })
 
         expect(wrapper.text()).toContain("Registration pending")

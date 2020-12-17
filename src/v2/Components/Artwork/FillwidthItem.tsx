@@ -154,9 +154,9 @@ export class FillwidthItemContainer extends React.Component<
             className="artwork-save"
             artwork={artwork}
             style={{
+              bottom: space(0.5),
               position: "absolute",
               right: space(0.5),
-              bottom: space(0.5),
             }}
           />
         </Placeholder>

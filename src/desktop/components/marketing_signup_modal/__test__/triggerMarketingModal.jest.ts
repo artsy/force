@@ -17,14 +17,14 @@ describe("MarketingSignupModal", () => {
     window.addEventListener = jest.fn((_type, cb) => cb())
     sd.MARKETING_SIGNUP_MODALS = [
       {
-        slug: "ca3",
         copy: "Discover Works from Art Fairs",
         image: "http://files.artsy.net/images/art.jpg",
+        slug: "ca3",
       },
       {
-        slug: "ca12",
         copy: "Buy Works from Art Fairs",
         image: "http://files.artsy.net/images/fair.jpg",
+        slug: "ca12",
       },
     ]
   })

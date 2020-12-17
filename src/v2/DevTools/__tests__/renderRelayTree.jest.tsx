@@ -10,26 +10,26 @@ describe("renderRelayTree", () => {
   it("resolves a promise once the full tree (including nested query renderers) has been rendered", async () => {
     const mockData: MockRelayRendererFixturesQueryRawResponse &
       MockRelayRendererFixturesArtistQueryRawResponse = {
-      artwork: {
-        id: "opaque-artwork-id",
-        title: "Mona Lisa",
-        image: {
-          url: "http://test/image.jpg",
-        },
-        artist: {
-          id: "opaque-artist-id",
-          slug: "leonardo-da-vinci",
-        },
-      },
       artist: {
         id: "opaque-artist-id",
         name: "Leonardo da Vinci",
       },
+      artwork: {
+        artist: {
+          id: "opaque-artist-id",
+          slug: "leonardo-da-vinci",
+        },
+        id: "opaque-artwork-id",
+        image: {
+          url: "http://test/image.jpg",
+        },
+        title: "Mona Lisa",
+      },
     }
     const tree = await renderRelayTree({
       Component: Artwork,
-      query,
       mockData,
+      query,
     })
     expect(tree.html()).toEqual(
       renderToString(
@@ -66,20 +66,20 @@ describe("renderRelayTree", () => {
 
     const mockData: MockRelayRendererFixturesQueryRawResponse = {
       artwork: {
+        artist: null,
         id: "opaque-artwork-id",
-        title: "Mona Lisa",
         image: {
           url: "http://test/image.jpg",
         },
-        artist: null,
+        title: "Mona Lisa",
       },
     }
 
     const tree = await renderRelayTree({
-      renderUntil: wrapper => wrapper.find(".much-later").text().length > 0,
       Component: Artwork,
-      query,
       mockData,
+      query,
+      renderUntil: wrapper => wrapper.find(".much-later").text().length > 0,
       wrapper: renderer => <Component>{renderer}</Component>,
     })
     expect(tree.find(".much-later").text()).toEqual("ohai")

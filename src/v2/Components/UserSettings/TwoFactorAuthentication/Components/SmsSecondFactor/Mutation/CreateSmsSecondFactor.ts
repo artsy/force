@@ -12,20 +12,6 @@ export const CreateSmsSecondFactor = (
   return new Promise<CreateSmsSecondFactorMutationResponse>(
     async (resolve, reject) => {
       commitMutation<CreateSmsSecondFactorMutation>(environment, {
-        onCompleted: data => {
-          const response = data.createSmsSecondFactor.secondFactorOrErrors
-
-          switch (response.__typename) {
-            case "SmsSecondFactor":
-              resolve(data)
-              break
-            case "Errors":
-              reject(response.errors)
-          }
-        },
-        onError: error => {
-          reject(error)
-        },
         mutation: graphql`
           mutation CreateSmsSecondFactorMutation(
             $input: CreateSmsSecondFactorInput!
@@ -48,6 +34,20 @@ export const CreateSmsSecondFactor = (
             }
           }
         `,
+        onCompleted: data => {
+          const response = data.createSmsSecondFactor.secondFactorOrErrors
+
+          switch (response.__typename) {
+            case "SmsSecondFactor":
+              resolve(data)
+              break
+            case "Errors":
+              reject(response.errors)
+          }
+        },
+        onError: error => {
+          reject(error)
+        },
         variables: {
           input,
         },

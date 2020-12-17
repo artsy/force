@@ -33,8 +33,8 @@ const Tab: React.FC<LinkProps> = ({ children, to }) => {
       width={["100%", "50%"]}
       textAlign="center"
       style={{
-        cursor: "pointer",
         borderBottom,
+        cursor: "pointer",
       }}
     >
       <TabLink to={to}>

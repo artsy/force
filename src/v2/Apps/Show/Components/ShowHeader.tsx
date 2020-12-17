@@ -13,7 +13,7 @@ export const ShowHeader: React.FC<ShowHeaderProps> = ({
   ...rest
 }) => {
   const currentTime = useCurrentTime({ syncWithServer: true })
-  const { formattedTime } = useEventTiming({ currentTime, startAt, endAt })
+  const { formattedTime } = useEventTiming({ currentTime, endAt, startAt })
 
   return (
     <Box {...rest}>

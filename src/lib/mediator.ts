@@ -52,8 +52,8 @@ const once: Mediator["once"] = (
  */
 export const mediator: Mediator = {
   emitter,
-  on,
   off,
+  on,
   once,
   trigger,
 }

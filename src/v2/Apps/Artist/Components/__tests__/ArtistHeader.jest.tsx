@@ -36,6 +36,9 @@ describe("ArtistHeader", () => {
           </SystemContextProvider>
         )
       },
+      mockData: {
+        artist: response,
+      } as ArtistHeader_Test_QueryRawResponse,
       query: graphql`
         query ArtistHeader_Test_Query @raw_response_type {
           artist(id: "cecily-brown") {
@@ -43,9 +46,6 @@ describe("ArtistHeader", () => {
           }
         }
       `,
-      mockData: {
-        artist: response,
-      } as ArtistHeader_Test_QueryRawResponse,
     })
   }
 

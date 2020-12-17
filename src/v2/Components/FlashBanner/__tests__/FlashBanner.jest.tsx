@@ -31,6 +31,8 @@ const getRelayWrapper = async ({
     Component: props => {
       return <FlashBanner {...props} {...passedProps} />
     },
+    mockData: data,
+    mockMutationResults: mutationResults,
     query: graphql`
       query FlashBannerTestQuery @raw_response_type {
         me {
@@ -39,8 +41,6 @@ const getRelayWrapper = async ({
       }
     `,
     variables: {},
-    mockData: data,
-    mockMutationResults: mutationResults,
   })
   return {
     wrapper,
@@ -73,7 +73,7 @@ describe("FlashBanner", () => {
   it("renders based on props.me.canRequestEmailConfirmation (from relay)", async () => {
     const { wrapper } = await getRelayWrapper({
       data: {
-        me: { id: "woot", canRequestEmailConfirmation: true },
+        me: { canRequestEmailConfirmation: true, id: "woot" },
       },
     })
 
@@ -141,7 +141,6 @@ describe("Email confirmation link expired", () => {
       data: {
         me: { canRequestEmailConfirmation: true },
       },
-      queryString: "?flash_message=expired_token",
       mutationResults: {
         sendConfirmationEmail: {
           confirmationOrError: {
@@ -149,6 +148,7 @@ describe("Email confirmation link expired", () => {
           },
         },
       },
+      queryString: "?flash_message=expired_token",
     })
 
     expect(wrapper.text()).toContain("Link expired.")
@@ -185,7 +185,6 @@ describe("Email confirmation link expired", () => {
       data: {
         me: { canRequestEmailConfirmation: true },
       },
-      queryString: "?flash_message=expired_token",
       mutationResults: {
         sendConfirmationEmail: {
           confirmationOrError: {
@@ -196,6 +195,7 @@ describe("Email confirmation link expired", () => {
           },
         },
       },
+      queryString: "?flash_message=expired_token",
     })
 
     expect(wrapper.text()).toContain("Link expired.")
@@ -219,7 +219,7 @@ describe("Email Confirmation CTA", () => {
     it("user is not prompted to request email confirmation if !me.canRequestEmailConfirmation", async () => {
       const { wrapper } = await getRelayWrapper({
         data: {
-          me: { id: "woot", canRequestEmailConfirmation: false },
+          me: { canRequestEmailConfirmation: false, id: "woot" },
         },
       })
 

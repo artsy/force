@@ -24,8 +24,8 @@ export class BorderedPulldown extends React.Component<
   BorderedPulldownState
 > {
   state = {
-    selected: null,
     isHovered: false,
+    selected: null,
   }
 
   toggleHover(value) {
@@ -36,8 +36,8 @@ export class BorderedPulldown extends React.Component<
 
   onChange(option) {
     this.setState({
-      selected: option,
       isHovered: false,
+      selected: option,
     })
     this.props.onChange(option)
   }

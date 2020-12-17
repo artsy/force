@@ -42,8 +42,8 @@ const HitArea = styled(Link)`
 `
 
 const UnfocusableAnchor = styled(RouterLink).attrs({
-  tabIndex: -1,
   role: "presentation",
+  tabIndex: -1,
 })`
   display: block;
   position: absolute;
@@ -90,8 +90,9 @@ export const NavItem: React.FC<NavItemProps> = ({
     if (href && isString(children)) {
       trackEvent({
         action_type: AnalyticsSchema.ActionType.Click,
-        subject: children, // Text passed into the NavItem
-        destination_path: href,
+        // Text passed into the NavItem
+destination_path: href, 
+        subject: children,
       })
     }
   }
@@ -165,9 +166,9 @@ export const NavItem: React.FC<NavItemProps> = ({
         ref={hitAreaRef as any}
         {...(!!Menu
           ? {
-              as: Clickable,
-              "aria-haspopup": true,
               "aria-expanded": showMenu,
+              "aria-haspopup": true,
+              as: Clickable,
             }
           : { as: RouterLink, to: href })}
         color={color}

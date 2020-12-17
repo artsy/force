@@ -56,15 +56,15 @@ const ViewingRoomHeaderLarge: React.FC<ViewingRoomHeaderProps> = props => {
   } = props
 
   const heroImageURL = resize(image?.imageURLs?.normalized, {
-    width: 1200,
     convert_to: "jpg",
+    width: 1200,
   })
 
   return (
     <Flex
       style={{
-        height: `calc(90vh - ${NAV_BAR_HEIGHT}px)`,
         borderBottom: `1px solid ${color("black10")}`,
+        height: `calc(90vh - ${NAV_BAR_HEIGHT}px)`,
       }}
     >
       <Box width="50%" style={{ overflow: "hidden" }}>
@@ -72,8 +72,8 @@ const ViewingRoomHeaderLarge: React.FC<ViewingRoomHeaderProps> = props => {
           src={heroImageURL}
           lazyLoad={false}
           style={{
-            backgroundSize: "cover",
             backgroundPosition: "center",
+            backgroundSize: "cover",
             height: "100%",
           }}
         />
@@ -105,8 +105,8 @@ const ViewingRoomHeaderSmall: React.FC<ViewingRoomHeaderProps> = props => {
 
   const HeaderHeight = `calc(100vh - ${NAV_BAR_HEIGHT * 2.8}px)`
   const heroImageURL = resize(image?.imageURLs?.normalized, {
-    width: 1200,
     convert_to: "jpg",
+    width: 1200,
   })
 
   return (
@@ -124,8 +124,8 @@ const ViewingRoomHeaderSmall: React.FC<ViewingRoomHeaderProps> = props => {
       <ResponsiveImage
         src={heroImageURL}
         style={{
-          backgroundSize: "cover",
           backgroundPosition: "center",
+          backgroundSize: "cover",
           height: "100%",
         }}
       />

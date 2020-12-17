@@ -4,12 +4,12 @@ import React, { useEffect, useRef, useState } from "react"
 import { NAV_BAR_HEIGHT } from "v2/Components/NavBar"
 
 const Container = styled(Flex).attrs({
-  top: NAV_BAR_HEIGHT,
-  py: 1,
-  mx: -2,
-  px: 2,
   bg: "white100",
   borderBottom: "1px solid",
+  mx: -2,
+  px: 2,
+  py: 1,
+  top: NAV_BAR_HEIGHT,
 })<{ stuck?: boolean }>`
   justify-content: space-between;
   align-items: center;

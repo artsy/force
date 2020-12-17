@@ -41,15 +41,15 @@ export const FairExhibitorRail: React.FC<FairExhibitorRailProps> = ({
   } = useAnalyticsContext()
 
   const tappedViewTrackingData: ClickedArtworkGroup = {
+    action: ActionType.clickedArtworkGroup,
     context_module: ContextModule.galleryBoothRail,
-    context_page_owner_type: contextPageOwnerType,
     context_page_owner_id: contextPageOwnerId,
     context_page_owner_slug: contextPageOwnerSlug,
-    destination_page_owner_type: OwnerType.show,
+    context_page_owner_type: contextPageOwnerType,
     destination_page_owner_id: show.internalID,
     destination_page_owner_slug: show.slug,
+    destination_page_owner_type: OwnerType.show,
     type: "viewAll",
-    action: ActionType.clickedArtworkGroup,
   }
 
   return (

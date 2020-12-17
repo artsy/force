@@ -14,13 +14,13 @@ import {
 
 describe("AuctionCard", () => {
   const props = {
-    src: "https://picsum.photos/200/180/?random",
-    headline: "Sotheby’s",
-    subHeadline: "Contemporary Day Sale",
     badge: "In progress",
+    headline: "Sotheby’s",
     href: "#",
-    isGalleryAuction: false,
     isBenefit: false,
+    isGalleryAuction: false,
+    src: "https://picsum.photos/200/180/?random",
+    subHeadline: "Contemporary Day Sale",
   }
 
   const defaultZone = Settings.defaultZoneName
@@ -133,22 +133,22 @@ describe("AuctionCard", () => {
           url: "",
         },
       },
-      isBenefit: false,
-      isGalleryAuction: false,
       end_at: "",
       href: "",
-      slug: "",
+      isBenefit: false,
+      isGalleryAuction: false,
+      is_closed: false,
       is_live_open: false,
       is_preview: false,
-      live_start_at: "",
-      registrationStatus: null,
       is_registration_closed: false,
+      live_start_at: "",
       name: "",
-      start_at: "",
-      is_closed: false,
       partner: {
         name: "",
       },
+      registrationStatus: null,
+      slug: "",
+      start_at: "",
     }
 
     it("handles preview sales", () => {
@@ -225,10 +225,10 @@ describe("AuctionCard", () => {
           upcomingLabel(
             {
               ...sale,
-              registrationStatus: { internalID: "" },
               live_start_at: now()
                 .plus({ days: 1 })
                 .toISO(),
+              registrationStatus: { internalID: "" },
             },
             now()
           )

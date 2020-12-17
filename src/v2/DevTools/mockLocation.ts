@@ -3,11 +3,11 @@
  */
 export const mockLocation = (options: Partial<Location> = {}) => {
   Object.defineProperty(window, "location", {
-    writable: true,
     value: {
       assign: jest.fn(),
       pathname: "/",
       ...options,
     },
+    writable: true,
   })
 }

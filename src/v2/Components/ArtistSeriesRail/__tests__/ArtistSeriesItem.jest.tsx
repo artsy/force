@@ -72,15 +72,15 @@ describe("Artist Series Rail Item", () => {
 })
 
 const itemContent: ArtistSeriesItem_artistSeries = {
-  artworksCountMessage: "5 available",
-  internalID: "internal-id",
-  slug: "slug",
-  title: "title",
-  featured: true,
   " $refType": null,
+  artworksCountMessage: "5 available",
+  featured: true,
   image: {
     cropped: {
       url: "/path/to/cats.jpg",
     },
   },
+  internalID: "internal-id",
+  slug: "slug",
+  title: "title",
 }

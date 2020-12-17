@@ -53,8 +53,8 @@ class WorksForSaleRailWithTracking extends React.Component<
   WorksForSaleRailProps
 > {
   @track({
-    type: Schema.Type.Thumbnail,
     action_type: Schema.ActionType.Click,
+    type: Schema.Type.Thumbnail,
   })
   trackArtworkClicked() {
     // noop

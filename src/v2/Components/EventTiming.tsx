@@ -14,7 +14,7 @@ export const EventTiming: React.FC<EventTimingProps> = ({
   endAt,
   ...rest
 }) => {
-  const { formattedTime } = useEventTiming({ currentTime, startAt, endAt })
+  const { formattedTime } = useEventTiming({ currentTime, endAt, startAt })
 
   return (
     <Text variant="mediumText" {...rest}>

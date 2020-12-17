@@ -39,7 +39,7 @@ export const ArtistsFilter: FC<ArtistsFilterProps> = ({
 
   useEffect(() => {
     if (relayEnvironment && user) {
-      fetchFollowedArtists({ relayEnvironment, fairID }).then(data => {
+      fetchFollowedArtists({ fairID, relayEnvironment }).then(data => {
         setFollowedArtists(data)
       })
     }

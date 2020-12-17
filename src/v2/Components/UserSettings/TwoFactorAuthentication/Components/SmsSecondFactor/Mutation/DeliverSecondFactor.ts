@@ -12,20 +12,6 @@ export const DeliverSecondFactor = (
   return new Promise<DeliverSecondFactorMutationResponse>(
     async (resolve, reject) => {
       commitMutation<DeliverSecondFactorMutation>(environment, {
-        onCompleted: data => {
-          const response = data.deliverSecondFactor.secondFactorOrErrors
-
-          switch (response.__typename) {
-            case "SmsSecondFactor":
-              resolve(data)
-              break
-            case "Errors":
-              reject(response.errors)
-          }
-        },
-        onError: error => {
-          reject(error)
-        },
         mutation: graphql`
           mutation DeliverSecondFactorMutation(
             $input: DeliverSecondFactorInput!
@@ -48,6 +34,20 @@ export const DeliverSecondFactor = (
             }
           }
         `,
+        onCompleted: data => {
+          const response = data.deliverSecondFactor.secondFactorOrErrors
+
+          switch (response.__typename) {
+            case "SmsSecondFactor":
+              resolve(data)
+              break
+            case "Errors":
+              reject(response.errors)
+          }
+        },
+        onError: error => {
+          reject(error)
+        },
         variables: {
           input,
         },

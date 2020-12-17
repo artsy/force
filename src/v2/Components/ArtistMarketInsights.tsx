@@ -16,13 +16,13 @@ export interface MarketInsightsProps {
 
 export const CATEGORIES = {
   "blue-chip": "Blue chip",
-  "top-established": "Established",
   "top-emerging": "Emerging",
+  "top-established": "Established",
 }
 const CATEGORY_LABEL_MAP = {
   "blue-chip": "Represented by internationally recognized galleries.",
-  "top-established": "Represented by industry leading galleries.",
   "top-emerging": "Represented by up-and-coming galleries.",
+  "top-established": "Represented by industry leading galleries.",
 }
 
 export class MarketInsights extends React.Component<MarketInsightsProps> {

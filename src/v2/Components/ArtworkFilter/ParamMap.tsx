@@ -1,19 +1,7 @@
 export const labelMap = {
-  price_range: {
-    label: "price",
-    plural: "prices",
-  },
-  medium: {
-    label: "medium",
-    plural: "mediums",
-  },
   dimension_range: {
     label: "size",
     plural: "sizes",
-  },
-  period: {
-    label: "time period",
-    plural: "time periods",
   },
   gallery: {
     label: "gallery",
@@ -22,5 +10,17 @@ export const labelMap = {
   institution: {
     label: "institution",
     plural: "institutions",
+  },
+  medium: {
+    label: "medium",
+    plural: "mediums",
+  },
+  period: {
+    label: "time period",
+    plural: "time periods",
+  },
+  price_range: {
+    label: "price",
+    plural: "prices",
   },
 }

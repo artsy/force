@@ -4,7 +4,7 @@ import { CountrySelect } from "../CountrySelect"
 
 describe("CountrySelect", () => {
   // TODO: Chris, this test needs finishing.
-  xit("triggers callback on change", done => {
+  it.skip("triggers callback on change", done => {
     const wrapper = mount(
       <CountrySelect
         onSelect={() => {

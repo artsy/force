@@ -5,12 +5,10 @@ import { GraphQLError } from "graphql/error"
 import { Kind } from "graphql/language"
 
 const FormattedNumber = new GraphQLScalarType({
-  name: "FormattedNumber",
   description:
     "The `FormattedNumber` type represents a number that can optionally be returned" +
     "as a formatted String. It does not try to coerce the type.",
-  serialize: x => x,
-  parseValue: x => x,
+  name: "FormattedNumber",
   parseLiteral: ast => {
     if (ast.kind !== Kind.STRING && ast.kind !== Kind.INT) {
       const error = `Query error: Can only parse strings and ints, got a: ${ast.kind}`
@@ -19,6 +17,8 @@ const FormattedNumber = new GraphQLScalarType({
 
     return ast.value
   },
+  parseValue: x => x,
+  serialize: x => x,
 })
 
 export default FormattedNumber

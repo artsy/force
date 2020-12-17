@@ -26,19 +26,20 @@ export class BreadCrumbList extends Component<BreadCrumbListProps> {
             itemListElement: [
               {
                 "@type": "ListItem",
-                position: 1,
                 item: {
                   "@id": APP_URL,
                   name: "Artsy",
                 },
+                position: 1,
               },
               ...this.props.items.map(({ path, name }, index) => ({
                 "@type": "ListItem",
-                position: index + 2, // adding 2 because `position` starts with 1 and there's a top-level item.
-                item: {
+                // adding 2 because `position` starts with 1 and there's a top-level item.
+item: {
                   "@id": `${APP_URL}${path}`,
                   name,
-                },
+                }, 
+                position: index + 2,
               })),
             ],
           }),

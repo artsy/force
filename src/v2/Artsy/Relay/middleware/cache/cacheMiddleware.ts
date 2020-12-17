@@ -31,9 +31,12 @@ export function cacheMiddleware(opts?: CacheMiddlewareOpts) {
   } = opts || {}
 
   const cache = new Cache({
-    size: size || 100, // 100 requests
-    ttl: ttl || 15 * 60 * 1000, // 15 minutes
-    disableServerSideCache,
+    // 15 minutes
+disableServerSideCache, 
+    
+size: size || 100, 
+    // 100 requests
+ttl: ttl || 15 * 60 * 1000,
   })
 
   if (isFunction(onInit)) {

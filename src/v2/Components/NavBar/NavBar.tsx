@@ -46,8 +46,8 @@ const NavSection: React.FC<FlexProps> = ({ children, ...rest }) => {
 
 export const NavBar: React.FC = track(
   {
-    flow: AnalyticsSchema.Flow.Header,
     context_module: AnalyticsSchema.ContextModule.Header,
+    flow: AnalyticsSchema.Flow.Header,
   },
   {
     dispatch: data => Events.postEvent(data),
@@ -182,9 +182,9 @@ export const NavBar: React.FC = track(
                     variant="secondaryOutline"
                     onClick={() => {
                       openAuthModal(mediator, {
-                        mode: ModalType.login,
-                        intent: Intent.login,
                         contextModule: ContextModule.header,
+                        intent: Intent.login,
+                        mode: ModalType.login,
                       })
                     }}
                   >
@@ -193,9 +193,9 @@ export const NavBar: React.FC = track(
                   <Button
                     onClick={() => {
                       openAuthModal(mediator, {
-                        mode: ModalType.signup,
-                        intent: Intent.signup,
                         contextModule: ContextModule.header,
+                        intent: Intent.signup,
+                        mode: ModalType.signup,
                       })
                     }}
                   >

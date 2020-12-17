@@ -12,8 +12,8 @@ describe("ErrorModal", () => {
   let props
   beforeEach(() => {
     props = {
-      onClose: jest.fn(),
       blurContainerSelector: "",
+      onClose: jest.fn(),
     }
   })
 

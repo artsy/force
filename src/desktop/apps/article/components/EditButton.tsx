@@ -28,13 +28,13 @@ export class EditButton extends React.Component<
   componentDidMount = async () => {
     const userId = sd.CURRENT_USER && sd.CURRENT_USER.id
     if (!userId) {
-      return this.setState({ showEditButton: false, hasButtonState: true })
+      return this.setState({ hasButtonState: true, showEditButton: false })
     }
     const data = await positronql({ query: ChannelMemberQuery(userId) })
     if (includes(map(data.channels, "id"), this.props.channelId)) {
-      this.setState({ showEditButton: true, hasButtonState: true })
+      this.setState({ hasButtonState: true, showEditButton: true })
     } else {
-      this.setState({ showEditButton: false, hasButtonState: true })
+      this.setState({ hasButtonState: true, showEditButton: false })
     }
   }
 

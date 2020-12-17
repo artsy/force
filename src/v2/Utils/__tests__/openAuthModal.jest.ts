@@ -13,8 +13,8 @@ const sd = require("sharify").data
 const artistArgs: AuthModalOptions = {
   contextModule: ContextModule.artistHeader,
   entity: {
-    slug: "andy-warhol",
     name: "Andy Warhol",
+    slug: "andy-warhol",
   },
   intent: Intent.followArtist,
 }
@@ -22,8 +22,8 @@ const artistArgs: AuthModalOptions = {
 const partnerArgs: AuthModalOptions = {
   contextModule: ContextModule.aboutTheWork,
   entity: {
-    slug: "david-zwirner",
     name: "David Zwirner",
+    slug: "david-zwirner",
   },
   intent: Intent.followPartner,
 }
@@ -31,8 +31,8 @@ const partnerArgs: AuthModalOptions = {
 const artworkArgs: AuthModalOptions = {
   contextModule: ContextModule.artworkGrid,
   entity: {
-    slug: "andy-warhol-skull",
     name: "Skull",
+    slug: "andy-warhol-skull",
   },
   intent: Intent.saveArtwork,
 }
@@ -50,10 +50,10 @@ describe("openAuth Helpers", () => {
   describe("#openAuthModal", () => {
     it("calls the mediator with expected args", () => {
       openAuthModal(mediator, {
-        mode: ModalType.signup,
-        intent: Intent.signup,
         contextModule: ContextModule.header,
         copy: "Sign up to do cool stuff",
+        intent: Intent.signup,
+        mode: ModalType.signup,
       })
 
       expect(mediator.trigger).toBeCalledWith("open:auth", {

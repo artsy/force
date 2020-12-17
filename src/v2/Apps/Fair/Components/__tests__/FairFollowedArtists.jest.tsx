@@ -11,8 +11,6 @@ jest.mock("v2/Components/Artwork/FillwidthItem", () => ({ onClick }) => (
 ))
 
 const FAIR_FOLLOWED_ARTISTS_FIXTURE = {
-  internalID: "example-fair-id",
-  slug: "example-fair-slug",
   followedArtistArtworks: {
     edges: [
       {
@@ -23,6 +21,8 @@ const FAIR_FOLLOWED_ARTISTS_FIXTURE = {
       },
     ],
   },
+  internalID: "example-fair-id",
+  slug: "example-fair-slug",
 }
 
 describe("FairFollowedArtists", () => {

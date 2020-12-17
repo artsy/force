@@ -14,10 +14,10 @@ const analyticsMiddleware = store => next => action => {
     case actions.SUBMISSION_CREATED: {
       window.analytics.track("consignment_submitted", {
         contextPath: nextState.submissionFlow.contextPath,
-        submissionId: action.payload.submissionId,
         subject: nextState.submissionFlow.subject,
-        userId: sd.CURRENT_USER.id,
+        submissionId: action.payload.submissionId,
         userEmail: sd.CURRENT_USER.email,
+        userId: sd.CURRENT_USER.id,
       })
       return result
     }
@@ -26,8 +26,8 @@ const analyticsMiddleware = store => next => action => {
       const submissionId = nextState.submissionFlow.submission.id
       const assetIds = nextState.submissionFlow.assetIds
       window.analytics.track("consignment_asset_uploaded", {
-        submissionId,
         assetIds,
+        submissionId,
       })
       return result
     }
@@ -44,8 +44,8 @@ const analyticsMiddleware = store => next => action => {
       }
 
       window.analytics.track("consignment_failed_to_submit", {
-        type: errorType,
         errors,
+        type: errorType,
       })
       return result
     }

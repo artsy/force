@@ -14,10 +14,10 @@ jest.mock("lib/metaphysics2.coffee", () => jest.fn())
 
 jest.mock("sharify", () => ({
   data: {
-    ARTSY_EDITORIAL_CHANNEL: "123",
-    GALLERY_INSIGHTS_CHANNEL: "987",
     APP_URL: "https://artsy.net",
+    ARTSY_EDITORIAL_CHANNEL: "123",
     EOY_2018_ARTISTS: "5bf30690d8b9430baaf6c6de",
+    GALLERY_INSIGHTS_CHANNEL: "987",
     PC_ARTSY_CHANNEL: "5759e508b5989e6f98f77999",
     PC_AUCTION_CHANNEL: "5759e4d7b5989e6f98f77997",
   },
@@ -49,16 +49,16 @@ describe("Article Routes", () => {
       locals: {
         sd,
       },
+      redirect: jest.fn(),
       render: jest.fn(),
       send: jest.fn(),
-      redirect: jest.fn(),
       status: jest.fn().mockReturnValue({ send: jest.fn() }),
     }
     next = jest.fn()
 
     article = extend({}, fixtures.StandardArticle, {
-      slug: "foobar",
       channel_id: "123",
+      slug: "foobar",
     })
 
     positronql.mockReturnValue(Promise.resolve({ article }))
@@ -242,8 +242,8 @@ describe("Article Routes", () => {
         }
         const articles = [
           extend({}, article, {
-            slug: "sub-article",
             is_super_sub_article: true,
+            slug: "sub-article",
           }),
         ]
         positronql
@@ -267,8 +267,8 @@ describe("Article Routes", () => {
         article.is_super_sub_article = true
         const articles = [
           extend({}, article, {
-            slug: "sub-article",
             is_super_sub_article: true,
+            slug: "sub-article",
           }),
         ]
         positronql
@@ -411,9 +411,9 @@ describe("Article Routes", () => {
   describe("#amp", () => {
     beforeEach(() => {
       article = extend(fixtures.StandardArticle, {
-        slug: "foobar",
         featured: true,
         published: true,
+        slug: "foobar",
       })
       Article.prototype.fetchWithRelated = jest.fn(options => {
         options.success({ article: new Article(article) })
@@ -473,19 +473,19 @@ describe("Article Routes", () => {
       article.layout = "standard"
       article.sections = [
         {
-          type: "text",
           body:
             '<a class="jump-link"></a><p>Preparing the article for AMP.</p>',
+          type: "text",
         },
         {
-          type: "image_collection",
           images: [
             {
-              type: "image",
               caption:
                 '<p isrender=true style="background-color:black;">A caption is <i isrender=true>really</i> important</p>',
+              type: "image",
             },
           ],
+          type: "image_collection",
         },
       ]
       routes.amp(req, res, next)
@@ -615,14 +615,14 @@ Array [
           id: "5d2f8bd0cdc74b00208b7e16",
           relatedArticles: [
             {
-              title: "Emerging",
-              thumbnail_title: "The Emerging Artists to Know",
               relatedArticles: [
                 {
-                  title: "Genesis Belanger",
                   thumbnail_title: "Vanguard 2019: Genesis Belanger",
+                  title: "Genesis Belanger",
                 },
               ],
+              thumbnail_title: "The Emerging Artists to Know",
+              title: "Emerging",
             },
           ],
         }
@@ -652,14 +652,14 @@ Array [
           id: "5d2f8bd0cdc74b00208b7e16",
           relatedArticles: [
             {
-              title: "Emerging",
-              thumbnail_title: "The Emerging Artists to Know",
               relatedArticles: [
                 {
-                  title: "Genesis Belanger",
                   thumbnail_title: "Vanguard 2019: Genesis Belanger",
+                  title: "Genesis Belanger",
                 },
               ],
+              thumbnail_title: "The Emerging Artists to Know",
+              title: "Emerging",
             },
           ],
         }

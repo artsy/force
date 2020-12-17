@@ -31,19 +31,19 @@ class EditableMiamFairWeekPage extends JSONPage {
       const data = await this.jsonPage.get()
       const layout = await stitch({
         basePath: __dirname,
-        layout: "../../components/main_layout/templates/react_index.jade",
+        blocks: {
+          body: MiamiFairWeekPage,
+          head: FairWeekMeta,
+        },
         config: {
           styledComponents: true,
-        },
-        blocks: {
-          head: FairWeekMeta,
-          body: MiamiFairWeekPage,
         },
         data: {
           ...res.locals,
           ...data,
           data,
         },
+        layout: "../../components/main_layout/templates/react_index.jade",
       })
 
       res.send(layout)
@@ -55,5 +55,5 @@ class EditableMiamFairWeekPage extends JSONPage {
 
 export const app = new EditableMiamFairWeekPage({
   name: SLUG,
-  paths: { show: `/${SLUG}`, edit: `/${SLUG}/edit` },
+  paths: { edit: `/${SLUG}/edit`, show: `/${SLUG}` },
 }).app

@@ -18,8 +18,8 @@ import { StepProps } from "./types"
  */
 export class Step extends Component<StepProps> {
   static contextTypes = {
-    wizard: PropTypes.object,
     form: PropTypes.object,
+    wizard: PropTypes.object,
   }
 
   render() {
@@ -27,6 +27,6 @@ export class Step extends Component<StepProps> {
       return null
     }
     const { wizard, form } = this.context
-    return React.createElement(this.props.children, { wizard, form })
+    return React.createElement(this.props.children, { form, wizard })
   }
 }

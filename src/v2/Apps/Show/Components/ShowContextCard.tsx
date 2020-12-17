@@ -55,12 +55,12 @@ export const ShowContextCard: React.FC<Props> = ({ show }) => {
       const payload: ClickedFairCard = {
         action: ActionType.clickedFairCard,
         context_module: ContextModule.presentingFair,
-        context_page_owner_type: contextPageOwnerType,
         context_page_owner_id: contextPageOwnerId,
         context_page_owner_slug: contextPageOwnerSlug,
-        destination_page_owner_type: OwnerType.fair,
+        context_page_owner_type: contextPageOwnerType,
         destination_page_owner_id: fair.internalID,
         destination_page_owner_slug: fair.slug,
+        destination_page_owner_type: OwnerType.fair,
         type: "thumbnail",
       }
 
@@ -97,7 +97,7 @@ export const ShowContextCard: React.FC<Props> = ({ show }) => {
 
     const images = imageUrls.map((url, i) => {
       const imageWidth = CARD_IMAGE_WIDTHS[i]
-      return cropped(url, { width: imageWidth, height: imageWidth })
+      return cropped(url, { height: imageWidth, width: imageWidth })
     })
 
     const locationNames = limitWithCount(
@@ -109,12 +109,12 @@ export const ShowContextCard: React.FC<Props> = ({ show }) => {
       const payload: ClickedPartnerCard = {
         action: ActionType.clickedPartnerCard,
         context_module: ContextModule.presentingPartner,
-        context_page_owner_type: contextPageOwnerType,
         context_page_owner_id: contextPageOwnerId,
         context_page_owner_slug: contextPageOwnerSlug,
-        destination_page_owner_type: OwnerType.partner,
+        context_page_owner_type: contextPageOwnerType,
         destination_page_owner_id: partner.internalID,
         destination_page_owner_slug: partner.slug,
+        destination_page_owner_type: OwnerType.partner,
         type: "thumbnail",
       }
 

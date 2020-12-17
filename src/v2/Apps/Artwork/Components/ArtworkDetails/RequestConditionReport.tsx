@@ -47,12 +47,6 @@ export const RequestConditionReport: React.FC<RequestConditionReportProps> = pro
     return new Promise<RequestConditionReportMutationResponse>(
       async (resolve, reject) => {
         commitMutation<RequestConditionReportMutation>(relayEnvironment, {
-          onCompleted: data => {
-            resolve(data)
-          },
-          onError: error => {
-            reject(error)
-          },
           mutation: graphql`
             mutation RequestConditionReportMutation(
               $input: RequestConditionReportInput!
@@ -64,6 +58,12 @@ export const RequestConditionReport: React.FC<RequestConditionReportProps> = pro
               }
             }
           `,
+          onCompleted: data => {
+            resolve(data)
+          },
+          onError: error => {
+            reject(error)
+          },
           variables: {
             input: { saleArtworkID: artwork.saleArtwork.internalID },
           },
@@ -90,14 +90,14 @@ export const RequestConditionReport: React.FC<RequestConditionReportProps> = pro
     // TODO: do we need this tracking?
     trackEvent({
       action_type: Schema.ActionType.Click,
-      subject: Schema.Subject.Login,
       sale_artwork_id: artwork.saleArtwork.internalID,
+      subject: Schema.Subject.Login,
     })
     openAuthModal(mediator, {
-      mode: ModalType.login,
-      redirectTo: location.href,
       contextModule: ContextModule.aboutTheWork,
       intent: Intent.requestConditionReport,
+      mode: ModalType.login,
+      redirectTo: location.href,
     })
   }
 
@@ -192,8 +192,8 @@ const TrackingWrappedRequestConditionReport: React.FC<RequestConditionReportProp
   RequestConditionReportProps
 >(props => {
   return {
-    context_page: Schema.PageName.ArtworkPage,
     context_module: Schema.ContextModule.AboutTheWorkCondition,
+    context_page: Schema.PageName.ArtworkPage,
     context_page_owner_id: props.artwork.internalID,
     context_page_owner_slug: props.artwork.slug,
     context_page_owner_type: "Artwork",
@@ -240,12 +240,6 @@ export const RequestConditionReportQueryRenderer: React.FC<{
 export const RequestConditionReportFragmentContainer = createFragmentContainer(
   TrackingWrappedRequestConditionReport,
   {
-    me: graphql`
-      fragment RequestConditionReport_me on Me {
-        email
-        internalID
-      }
-    `,
     artwork: graphql`
       fragment RequestConditionReport_artwork on Artwork {
         internalID
@@ -253,6 +247,12 @@ export const RequestConditionReportFragmentContainer = createFragmentContainer(
         saleArtwork {
           internalID
         }
+      }
+    `,
+    me: graphql`
+      fragment RequestConditionReport_me on Me {
+        email
+        internalID
       }
     `,
   }

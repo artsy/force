@@ -12,8 +12,8 @@ import { RouterLink } from "v2/Artsy/Router/RouterLink"
 
 const CATEGORIES = {
   "blue-chip": "Blue Chip Representation",
-  "top-established": "Established Representation",
   "top-emerging": "Emerging Representation",
+  "top-established": "Established Representation",
 }
 
 const getHighCategory = (artist: ArtistHeader_artist) => {
@@ -35,8 +35,8 @@ const formatFollowerCount = (n: number) => {
     const formatter = Intl.NumberFormat("en-US", {
       // https://github.com/microsoft/TypeScript/issues/36533
       // @ts-ignore
-      notation: "compact",
       compactDisplay: "short",
+      notation: "compact",
     })
 
     return formatter.format(n).toLocaleLowerCase()

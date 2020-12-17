@@ -33,9 +33,9 @@ describe("", () => {
     expect(trackEvent).toHaveBeenCalledWith({
       action_type: "Click",
       context_module: "Header",
+      destination_path: "/auctions",
       flow: "Header",
       subject: "Auctions",
-      destination_path: "/auctions",
     })
   })
 })

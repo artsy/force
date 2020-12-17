@@ -65,8 +65,8 @@ describe("SendFeedback", () => {
     it("does not call the mutation without a valid email", () => {
       const component = getWrapper({ user: null })
       simulateTypingNameAndEmail(component, {
-        name: "Percy Z",
         email: "percy cant read",
+        name: "Percy Z",
       })
       simulateTypingMessage(component, message)
       component.find(Button).simulate("click")
@@ -82,8 +82,8 @@ describe("SendFeedback", () => {
       })
 
       simulateTypingNameAndEmail(component, {
-        name: "Percy Z",
         email: "percy@example.com",
+        name: "Percy Z",
       })
       simulateTypingMessage(component, message)
 

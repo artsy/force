@@ -1,7 +1,6 @@
 const PartnerWithLocations = {
-  id: "UGFydG5lcjpnYWdvc2lhbg==",
-  name: "Gagosian",
   href: "/gagosian-gallery",
+  id: "UGFydG5lcjpnYWdvc2lhbg==",
   locations: [
     { city: "New York" },
     { city: "New York" },
@@ -20,24 +19,25 @@ const PartnerWithLocations = {
     { city: "Athens" },
     { city: "Central, Hong Kong" },
   ],
+  name: "Gagosian",
 }
 export const ArtworkFromPartnerWithLocations = {
-  internalID: "artwork_from_partner_with_locations",
   collecting_institution: null,
+  internalID: "artwork_from_partner_with_locations",
   partner: PartnerWithLocations,
   sale: null,
 }
 
 const PartnerWithoutLocations = {
-  id: "UGFydG5lcjpnYWxlcmllLWtyb25zYmVpbg==",
-  name: "Galerie Kronsbein",
   href: "/galerie-kronsbein",
+  id: "UGFydG5lcjpnYWxlcmllLWtyb25zYmVpbg==",
   locations: [],
+  name: "Galerie Kronsbein",
 }
 
 export const ArtworkFromPartnerWithoutLocations = {
-  id: "artwork_from_partner_without_locations",
   collecting_institution: null,
+  id: "artwork_from_partner_without_locations",
   partner: PartnerWithoutLocations,
 }
 
@@ -47,11 +47,11 @@ export const ArtworkWithCollectingInstitution = {
 }
 
 export const ArtworkInNonAuctionSale = {
-  id: "artwork_from_partner_without_locations",
   collecting_institution: null,
+  id: "artwork_from_partner_without_locations",
   partner: PartnerWithoutLocations,
   sale: {
-    name: "MASS MoCA Benefit Auction 2019: Buy Now",
     href: "/auction/mass-moca-benefit-auction-2019-buy-now",
+    name: "MASS MoCA Benefit Auction 2019: Buy Now",
   },
 }

@@ -44,8 +44,8 @@ export class CreateAccount extends React.Component<CreateAccountProps> {
     handleSubmit(
       type,
       {
-        copy: title,
         contextModule: ContextModule.consignSubmissionFlow,
+        copy: title,
         intent: Intent.consign,
         redirectTo: this.redirectUrl,
       },
@@ -65,8 +65,8 @@ export class CreateAccount extends React.Component<CreateAccountProps> {
         <ModalHeader title={this.props.title} />
         <FormSwitcher
           options={{
-            copy: this.props.title,
             contextModule: ContextModule.consignSubmissionFlow,
+            copy: this.props.title,
             intent: Intent.consign,
             redirectTo: this.redirectUrl,
           }}
@@ -74,11 +74,11 @@ export class CreateAccount extends React.Component<CreateAccountProps> {
           handleSubmit={this.handleSubmit}
           handleTypeChange={this.handleTypeChange}
           submitUrls={{
-            login: "/log_in",
-            forgot: "/forgot_password",
-            signup: "/sign_up",
             apple: "/users/auth/apple",
             facebook: "/users/auth/facebook",
+            forgot: "/forgot_password",
+            login: "/log_in",
+            signup: "/sign_up",
           }}
           showRecaptchaDisclaimer={true}
         />
@@ -99,9 +99,9 @@ const mapStateToProps = state => {
   } = state
 
   const stateToTitle = {
+    forgot: "Enter the email address associated with your account",
     login: "Log in",
     signup: "Create an account",
-    forgot: "Enter the email address associated with your account",
   }
 
   return {
@@ -109,8 +109,8 @@ const mapStateToProps = state => {
     artistName,
     contextPath,
     subject,
-    type: authFormState,
     title: stateToTitle[authFormState],
+    type: authFormState,
   }
 }
 

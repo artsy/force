@@ -9,10 +9,10 @@ const mockEnableRequestSignInWithApple = jest.fn()
 
 jest.mock("sharify", () => ({
   data: {
-    RECAPTCHA_KEY: "recaptcha-api-key",
     get ENABLE_SIGN_IN_WITH_APPLE() {
       return mockEnableRequestSignInWithApple()
     },
+    RECAPTCHA_KEY: "recaptcha-api-key",
   },
 }))
 
@@ -23,8 +23,8 @@ describe("SignUpForm", () => {
   beforeEach(() => {
     props = {
       handleSubmit: jest.fn(),
-      onFacebookLogin: jest.fn(),
       onAppleLogin: jest.fn(),
+      onFacebookLogin: jest.fn(),
     }
     window.grecaptcha.execute.mockClear()
   })
@@ -43,10 +43,10 @@ describe("SignUpForm", () => {
       setTimeout(() => {
         expect(props.handleSubmit).toBeCalledWith(
           {
-            email: "foo@bar.com",
-            password: "password123",
-            name: "John Doe",
             accepted_terms_of_service: true,
+            email: "foo@bar.com",
+            name: "John Doe",
+            password: "password123",
             recaptcha_token: "recaptcha-token",
           },
           expect.anything()

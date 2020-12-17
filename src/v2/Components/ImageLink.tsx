@@ -80,12 +80,13 @@ export const ImageLink: FC<ImageLinkProps> = ({
         </ImageOverlay>
       </ImageContainer>
       {React.cloneElement(title, {
-        // kind of like "default props" for a cloned element.
-        element: title.props.element || "h3",
-        mt: "1",
-        mb: "0.5",
-        textAlign: "center",
+        
         className: "title",
+        // kind of like "default props" for a cloned element.
+element: title.props.element || "h3",
+        mb: "0.5",
+        mt: "1",
+        textAlign: "center",
       })}
       <Media greaterThan="xs">
         {subtitle &&

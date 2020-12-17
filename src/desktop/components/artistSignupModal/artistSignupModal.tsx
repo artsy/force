@@ -51,12 +51,12 @@ export const setupArtistSignUpModal = () => {
       )
       mediator.on("modal:closed", setCookie)
       handleScrollingAuthModal({
+        contextModule: ContextModule.popUpModal,
         copy: `Join Artsy to discover new works by ${artistData.name} and more artists you love`,
-        intent: Intent.viewArtist,
-        triggerSeconds: 4,
         destination: location.href,
         image,
-        contextModule: ContextModule.popUpModal,
+        intent: Intent.viewArtist,
+        triggerSeconds: 4,
       })
     })
   }

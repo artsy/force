@@ -6,9 +6,9 @@ import { ArtistInsight } from "../ArtistInsight"
 
 describe("AuctionCard", () => {
   const props = {
+    entities: ["Tate", "MoMA PS1"],
     label: "Collected by a major institution",
     type: "COLLECTED",
-    entities: ["Tate", "MoMA PS1"],
   }
 
   const getWrapper = () =>

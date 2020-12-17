@@ -36,22 +36,22 @@ export const GridItem: React.SFC<BoxProps> = props => {
       <Placeholder
         width={80}
         height={14}
-        style={{ marginTop: 10, backgroundColor: color("black10") }}
+        style={{ backgroundColor: color("black10"), marginTop: 10 }}
       />
       <Placeholder
         width={140}
         height={14}
-        style={{ marginTop: 10, backgroundColor: color("black10") }}
+        style={{ backgroundColor: color("black10"), marginTop: 10 }}
       />
       <Placeholder
         width={120}
         height={14}
-        style={{ marginTop: 5, backgroundColor: color("black10") }}
+        style={{ backgroundColor: color("black10"), marginTop: 5 }}
       />
       <Placeholder
         width={110}
         height={14}
-        style={{ marginTop: 5, backgroundColor: color("black10") }}
+        style={{ backgroundColor: color("black10"), marginTop: 5 }}
       />
       <Spacer />
     </Box>

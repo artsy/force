@@ -25,29 +25,29 @@ const spin = keyframes`
 `
 
 const getSize = props => {
-  const base = { width: 25, height: 6 }
+  const base = { height: 6, width: 25 }
 
   // tslint:disable-next-line
   switch (props.spinnerSize) {
     case "small":
       return {
-        width: base.width * 0.5,
         height: base.height * 0.5,
+        width: base.width * 0.5,
       }
     case "medium":
       return {
-        width: base.width * 0.8,
         height: base.height * 0.8,
+        width: base.width * 0.8,
       }
     case "large":
       return {
-        width: base.width,
         height: base.height,
+        width: base.width,
       }
     default:
       return {
-        width: props.width,
         height: props.height,
+        width: props.width,
       }
   }
 }
@@ -70,8 +70,8 @@ const StyledSpinner = styled(Spinner)`
 `
 
 StyledSpinner.defaultProps = {
-  width: 25,
   height: 6,
+  width: 25,
 }
 
 export default StyledSpinner

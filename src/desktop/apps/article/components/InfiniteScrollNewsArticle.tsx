@@ -91,8 +91,8 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
     try {
       const data = await positronql({
         query: newsArticlesQuery({
-          offset,
           limit: 6,
+          offset,
           omit,
         }),
       })
@@ -104,9 +104,9 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
       if (newArticles.length) {
         this.setState({
           articles: articles.concat(newArticles),
-          relatedArticles: relatedArticles.concat(newRelatedArticles),
           isLoading: false,
           offset: offset + 6,
+          relatedArticles: relatedArticles.concat(newRelatedArticles),
         })
       } else {
         this.setState({
@@ -121,9 +121,9 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
       )
 
       this.setState({
+        error: true,
         isEnabled: false,
         isLoading: false,
-        error: true,
       })
     }
   }
@@ -192,9 +192,12 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
 
         // render ads on News Landing the 3rd and then every 6 news articles thereafter
         const adPosition = {
-          index: i + 1, // article index + 1
-          startIndex: 3, // render first ad after 3rd article
-          frequency: 6, // render subsequent ads after 6th article
+          // render first ad after 3rd article
+frequency: 6, 
+          
+index: i + 1, 
+          // article index + 1
+startIndex: 3, // render subsequent ads after 6th article
         }
 
         const renderAd = shouldAdRender(
@@ -226,13 +229,13 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
 
   showAuthModal() {
     handleScrollingAuthModal({
-      intent: Intent.viewEditorial,
-      copy: "Sign up for the best stories in art and visual culture",
-      destination: location.href,
       afterSignUpAction: {
         action: "editorialSignup",
       },
       contextModule: ContextModule.popUpModal,
+      copy: "Sign up for the best stories in art and visual culture",
+      destination: location.href,
+      intent: Intent.viewEditorial,
     })
   }
 

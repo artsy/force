@@ -14,8 +14,8 @@ describe("LoginForm", () => {
   beforeEach(() => {
     props = {
       handleSubmit: jest.fn(),
-      onFacebookLogin: jest.fn(),
       onAppleLogin: jest.fn(),
+      onFacebookLogin: jest.fn(),
     }
     window.grecaptcha.execute.mockClear()
   })
@@ -102,8 +102,8 @@ describe("LoginForm", () => {
       expect(props.handleSubmit).toBeCalledWith(
         {
           email: "foo@bar.com",
-          password: "password123",
           otp_attempt: "123456",
+          password: "password123",
         },
         expect.anything()
       )
@@ -214,8 +214,8 @@ describe("LoginForm", () => {
       expect(wrapper.html()).toMatch("invalid two-factor authentication code")
       expect(props.handleSubmit.mock.calls[1][0]).toEqual({
         email: "email@email.com",
-        password: "password",
         otp_attempt: "111111",
+        password: "password",
       })
 
       inputOtp.onChange(ChangeEvents.otpAttempt)
@@ -227,8 +227,8 @@ describe("LoginForm", () => {
       expect(wrapper.html()).not.toMatch("Error")
       expect(props.handleSubmit.mock.calls[2][0]).toEqual({
         email: "email@email.com",
-        password: "password",
         otp_attempt: "123456",
+        password: "password",
       })
     })
 

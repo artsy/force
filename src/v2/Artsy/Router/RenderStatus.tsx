@@ -35,8 +35,8 @@ export const RenderPending = () => {
           showBackground={false}
           step={10} // speed of progress bar, randomized between 1/x to simulate variable progress
           style={{
-            position: "fixed",
             left: 0,
+            position: "fixed",
             top: -6,
             zIndex: 1000,
           }}

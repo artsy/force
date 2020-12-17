@@ -58,18 +58,18 @@ export const section = (_req, res, next) => {
     success: section => {
       new Articles().fetch({
         data: {
-          published: true,
           limit: 50,
-          sort: "-published_at",
+          published: true,
           section_id: section.get("id"),
+          sort: "-published_at",
         },
         error: res.backboneError,
         success: articles => {
           res.locals.sd.ARTICLES = articles.toJSON()
           res.locals.sd.SECTION = section.toJSON()
           res.render("section", {
-            section,
             articles,
+            section,
           })
         },
       })
@@ -93,10 +93,10 @@ export const teamChannel = (req, res, next) => {
         parselyArticles => {
           new Articles().fetch({
             data: {
-              published: true,
-              limit: 6,
-              sort: "-published_at",
               ids: map(sortBy(channel.get("pinned_articles"), "index"), "id"),
+              limit: 6,
+              published: true,
+              sort: "-published_at",
             },
             error: res.backboneError,
             success: pinnedArticles => {
@@ -114,8 +114,8 @@ export const teamChannel = (req, res, next) => {
               res.locals.sd.CHANNEL = channel.toJSON()
               res.render("team_channel", {
                 channel,
-                pinnedArticles,
                 parselyArticles: first(newParselyArticles),
+                pinnedArticles,
               })
             },
           })
@@ -135,23 +135,23 @@ export async function news(_req, res, next) {
 
     const layout = await stitch({
       basePath: res.app.get("views"),
-      layout: "../../../components/main_layout/templates/react_index.jade",
-      config: {
-        styledComponents: true,
-      },
       blocks: {
         body: App,
         head: "./meta/news.jade",
       },
+      config: {
+        styledComponents: true,
+      },
+      data: {
+        articles,
+        isMobile,
+      },
+      layout: "../../../components/main_layout/templates/react_index.jade",
       locals: {
         ...res.locals,
         assetPackage: "articles",
         bodyClass: "body-no-margins",
         crop,
-      },
-      data: {
-        articles,
-        isMobile,
       },
     })
 

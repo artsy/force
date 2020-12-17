@@ -29,6 +29,10 @@ describe("ArtworkSidebarBidAction", () => {
   ) => {
     return renderRelayTree({
       Component: ArtworkSidebarBidActionFragmentContainer,
+      mockData: {
+        artwork: response.artwork,
+        me: response.me,
+      } as ArtworkSidebarBidAction_Test_QueryRawResponse,
       query: graphql`
         query ArtworkSidebarBidAction_Test_Query @raw_response_type {
           artwork(id: "auction_artwork") {
@@ -39,10 +43,6 @@ describe("ArtworkSidebarBidAction", () => {
           }
         }
       `,
-      mockData: {
-        artwork: response.artwork,
-        me: response.me,
-      } as ArtworkSidebarBidAction_Test_QueryRawResponse,
     })
   }
 
@@ -181,8 +181,8 @@ describe("ArtworkSidebarBidAction", () => {
                 me: {
                   ...NotIDVedUser,
                   pendingIdentityVerification: {
-                    internalID: "idv-id",
                     id: "idv-id",
+                    internalID: "idv-id",
                   },
                 },
               })

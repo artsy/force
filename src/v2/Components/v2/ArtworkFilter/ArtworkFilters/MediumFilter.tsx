@@ -6,8 +6,8 @@ import { OptionText } from "./OptionText"
 export const MediumFilter: FC = () => {
   const { aggregations, counts, ...filterContext } = useArtworkFilterContext()
   const mediums = aggregations.find(agg => agg.slice === "MEDIUM") || {
-    slice: "",
     counts: [],
+    slice: "",
   }
   const allowedMediums =
     mediums && mediums.counts.length ? mediums.counts : hardcodedMediums
@@ -43,47 +43,47 @@ export const MediumFilter: FC = () => {
 
 const hardcodedMediums = [
   {
-    value: "painting",
     name: "Painting",
+    value: "painting",
   },
   {
-    value: "photography",
     name: "Photography",
+    value: "photography",
   },
   {
-    value: "sculpture",
     name: "Sculpture",
+    value: "sculpture",
   },
   {
-    value: "prints",
     name: "Prints",
+    value: "prints",
   },
   {
-    value: "work-on-Paper",
     name: "Work on Paper",
+    value: "work-on-Paper",
   },
   {
-    value: "design",
     name: "Design",
+    value: "design",
   },
   {
-    value: "drawing",
     name: "Drawing",
+    value: "drawing",
   },
   {
-    value: "installation",
     name: "Installation",
+    value: "installation",
   },
   {
-    value: "film-slash-video",
     name: "Film/Video",
+    value: "film-slash-video",
   },
   {
-    value: "jewelry",
     name: "Jewelry",
+    value: "jewelry",
   },
   {
-    value: "performance-art",
     name: "Performance Art",
+    value: "performance-art",
   },
 ]

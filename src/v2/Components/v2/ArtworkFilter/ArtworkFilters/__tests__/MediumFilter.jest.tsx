@@ -26,13 +26,13 @@ describe("MediumFilter", () => {
     const wrapper = getWrapper({
       aggregations: [
         {
-          slice: "MEDIUM",
           counts: [
             {
               name: "Foo Medium",
               value: "foo-medium",
             },
           ],
+          slice: "MEDIUM",
         },
       ],
     })

@@ -18,9 +18,9 @@ export const CollectionsRailContent: React.FC<Props> = passedProps => {
     <QueryRenderer<CollectionsRailQuery>
       environment={relayEnvironment}
       variables={{
+        randomizationSeed: passedProps.articleId,
         showOnEditorial: true,
         size: 4,
-        randomizationSeed: passedProps.articleId,
       }}
       query={graphql`
         query CollectionsRailQuery(

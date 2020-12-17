@@ -30,7 +30,7 @@ interface State {
 export default class Genes extends React.Component<StepProps, State> {
   static slug = "categories"
 
-  state = { inputText: "", inputTextQuery: "", followCount: 0 }
+  state = { followCount: 0, inputText: "", inputTextQuery: "" }
 
   updateFollowCount(count: number) {
     this.setState({ followCount: count })

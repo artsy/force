@@ -119,11 +119,11 @@ export const Arrow: React.FC<{
       position="absolute"
       width={50}
       style={{
-        transition: "opacity .2s ease-out",
         backgroundColor: "rgba(255,255,255,.95)",
         cursor: opacity ? "pointer" : "inherit",
-        zIndex: 1,
         opacity,
+        transition: "opacity .2s ease-out",
+        zIndex: 1,
         ...position,
       }}
     >

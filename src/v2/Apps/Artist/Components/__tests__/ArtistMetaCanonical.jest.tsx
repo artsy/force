@@ -5,6 +5,7 @@ import { ArtistMetaCanonicalLink_artist } from "v2/__generated__/ArtistMetaCanon
 import { ArtistMetaCanonicalLink } from "../ArtistMetaCanonicalLink"
 
 jest.mock("v2/Artsy/Router/useRouter", () => ({
+  useIsRouteActive: () => false,
   useRouter: () => ({
     match: {
       location: {
@@ -12,44 +13,38 @@ jest.mock("v2/Artsy/Router/useRouter", () => ({
       },
     },
   }),
-  useIsRouteActive: () => false,
 }))
 
 const MISSING_OVERVIEW_ARTIST_FIXTURE: ArtistMetaCanonicalLink_artist = {
   " $refType": "ArtistMetaCanonicalLink_artist",
-  slug: "gina-lombardi-bratter",
-  statuses: {
-    shows: false,
-    cv: false,
-    articles: false,
-    auctionLots: false,
-    artworks: true,
+  biographyBlurb: {
+    text: "",
   },
   highlights: {
     partnersConnection: {
       edges: [],
     },
   },
-  biographyBlurb: {
-    text: "",
-  },
+  insights: [],
   related: {
     genes: {
       edges: [],
     },
   },
-  insights: [],
+  slug: "gina-lombardi-bratter",
+  statuses: {
+    articles: false,
+    artworks: true,
+    auctionLots: false,
+    cv: false,
+    shows: false,
+  },
 }
 
 const OVERVIEW_ARTIST_FIXTURE: ArtistMetaCanonicalLink_artist = {
   " $refType": "ArtistMetaCanonicalLink_artist",
-  slug: "damon-zucconi",
-  statuses: {
-    shows: true,
-    cv: true,
-    articles: true,
-    auctionLots: true,
-    artworks: true,
+  biographyBlurb: {
+    text: "",
   },
   highlights: {
     partnersConnection: {
@@ -60,9 +55,11 @@ const OVERVIEW_ARTIST_FIXTURE: ArtistMetaCanonicalLink_artist = {
       ],
     },
   },
-  biographyBlurb: {
-    text: "",
-  },
+  insights: [
+    {
+      __typename: "ArtistInsight",
+    },
+  ],
   related: {
     genes: {
       edges: [
@@ -159,11 +156,14 @@ const OVERVIEW_ARTIST_FIXTURE: ArtistMetaCanonicalLink_artist = {
       ],
     },
   },
-  insights: [
-    {
-      __typename: "ArtistInsight",
-    },
-  ],
+  slug: "damon-zucconi",
+  statuses: {
+    articles: true,
+    artworks: true,
+    auctionLots: true,
+    cv: true,
+    shows: true,
+  },
 }
 
 jest.mock("sharify", () => ({

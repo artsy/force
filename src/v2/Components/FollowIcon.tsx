@@ -65,9 +65,9 @@ export class FollowIcon extends React.Component<FollowIconProps> {
         <Icon
           name={iconName}
           style={{
-            verticalAlign: "left",
             color: "inherit",
             margin: "0 0 0 -5px",
+            verticalAlign: "left",
           }}
         />
         {isFollowed ? (

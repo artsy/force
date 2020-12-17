@@ -69,7 +69,7 @@ describe("PaymentForm", () => {
     }
 
     testPaymentFormProps = {
-      me: { id: "1234", creditCards: [] },
+      me: { creditCards: [], id: "1234" },
       relay: { environment: {} } as RelayProp,
       stripe: stripeMock,
     } as any
@@ -79,14 +79,14 @@ describe("PaymentForm", () => {
     const paymentWrapper = getWrapper()
 
     expect(paymentWrapper.find(AddressForm).props().value).toEqual({
-      name: "",
       addressLine1: "",
       addressLine2: "",
       city: "",
-      region: "",
-      postalCode: "",
       country: "US",
+      name: "",
       phoneNumber: "",
+      postalCode: "",
+      region: "",
     })
   })
 
@@ -99,13 +99,13 @@ describe("PaymentForm", () => {
     paymentWrapper.find(Button).simulate("click")
 
     expect(stripeMock.createToken).toHaveBeenCalledWith({
-      name: "Artsy UK Ltd",
+      address_city: "Whitechapel",
+      address_country: "UK",
       address_line1: "14 Gower's Walk",
       address_line2: "Suite 2.5, The Loom",
-      address_city: "Whitechapel",
       address_state: "London",
       address_zip: "E1 8PY",
-      address_country: "UK",
+      name: "Artsy UK Ltd",
     })
     expect(thenMock.mock.calls.length).toBe(1)
   })
@@ -113,11 +113,11 @@ describe("PaymentForm", () => {
   it("commits createCreditCard mutation with stripe token id", () => {
     const stripeToken: stripe.TokenResponse = {
       token: {
-        id: "tokenId",
-        object: null,
         client_ip: null,
         created: null,
+        id: "tokenId",
         livemode: null,
+        object: null,
         type: null,
         used: null,
       },
@@ -143,12 +143,12 @@ describe("PaymentForm", () => {
   it("shows an error message if you do not enter a credit card number", () => {
     const stripeError: stripe.TokenResponse = {
       error: {
-        type: null,
         charge: null,
-        message: "Your card number is invalid.",
         code: null,
         decline_code: null,
+        message: "Your card number is invalid.",
         param: null,
+        type: null,
       },
     }
 
@@ -250,14 +250,14 @@ describe("PaymentForm", () => {
       stripeMock.createToken.mockReturnValue({ then: jest.fn() })
 
       const address = {
-        name: "Erik David",
         addressLine1: "401 Broadway",
         addressLine2: "",
         city: "New York",
-        region: "NY",
-        postalCode: "",
-        phoneNumber: "5555937743",
         country: "AQ",
+        name: "Erik David",
+        phoneNumber: "5555937743",
+        postalCode: "",
+        region: "NY",
       }
       fillAddressForm(paymentWrapper, address)
       paymentWrapper.find(Button).simulate("click")
@@ -268,14 +268,14 @@ describe("PaymentForm", () => {
       const paymentWrapper = getWrapper()
       stripeMock.createToken.mockReturnValue({ then: jest.fn() })
       const address = {
-        name: "Erik David",
         addressLine1: "401 Broadway",
         addressLine2: "",
         city: "New York",
-        region: "",
-        postalCode: "7Z",
-        phoneNumber: "5555937743",
         country: "AQ",
+        name: "Erik David",
+        phoneNumber: "5555937743",
+        postalCode: "7Z",
+        region: "",
       }
       fillAddressForm(paymentWrapper, address)
       paymentWrapper.find(Button).simulate("click")

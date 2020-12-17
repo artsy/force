@@ -23,9 +23,9 @@ describe("unsupported browsers", () => {
     req = {
       body: {},
       cookies: {},
+      get: jest.fn(),
       headers: { "user-agent": validChrome },
       query: {},
-      get: jest.fn(),
     }
     res = {
       headers: [],

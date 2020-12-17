@@ -20,8 +20,8 @@ jest.mock("desktop/apps/consign/helpers", () => ({
 
 jest.mock("sharify", () => ({
   data: {
-    CURRENT_USER: { accessToken: "foo" },
     CONVECTION_APP_ID: "myapp",
+    CURRENT_USER: { accessToken: "foo" },
   },
 }))
 
@@ -50,9 +50,9 @@ describe("Reducers", () => {
       describe("#updateSubmission", () => {
         it("updates the current submission with json data", () => {
           const submission = {
+            authenticity_certificate: false,
             id: "submission-1",
             image_url: "http://test-image.png",
-            authenticity_certificate: false,
             signature: false,
           }
           const updatedSubmission = reducers(
@@ -120,10 +120,10 @@ describe("Reducers", () => {
         it("calls the correct actions", done => {
           const expectedActions = [
             {
-              type: "UPDATE_ARTIST_SUGGESTIONS",
               payload: {
                 suggestions: [{ name: "andy-warhol" }, { name: "kara-walker" }],
               },
+              type: "UPDATE_ARTIST_SUGGESTIONS",
             },
             { type: "HIDE_NOT_CONSIGNING_MESSAGE" },
           ]
@@ -146,9 +146,9 @@ describe("Reducers", () => {
 
           store = mockStore({
             submissionFlow: {
-              user: { accessToken: "foo", phone: "12345" },
-              submission: {},
               inputs: { phone: "12345" },
+              submission: {},
+              user: { accessToken: "foo", phone: "12345" },
             },
           })
 
@@ -170,27 +170,27 @@ describe("Reducers", () => {
         it("sends the correct actions on success without updating phone", done => {
           const expectedActions = [
             {
-              type: "SUBMISSION_CREATED",
               payload: { submissionId: "sub1" },
+              type: "SUBMISSION_CREATED",
             },
             {
-              type: "UPDATE_SUBMISSION",
               payload: { submission: { id: "sub1" } },
+              type: "UPDATE_SUBMISSION",
             },
             { type: "HIDE_LOADER" },
             {
-              type: "@@router/CALL_HISTORY_METHOD",
               payload: {
-                method: "push",
                 args: ["/consign/submission/sub1/describe-your-work"],
+                method: "push",
               },
+              type: "@@router/CALL_HISTORY_METHOD",
             },
             {
-              type: "@@router/CALL_HISTORY_METHOD",
               payload: {
-                method: "push",
                 args: ["/consign/submission/sub1/upload-photos"],
+                method: "push",
               },
+              type: "@@router/CALL_HISTORY_METHOD",
             },
           ]
           store
@@ -206,31 +206,31 @@ describe("Reducers", () => {
           store.dispatch(actions.updateUserPhone("6073490948"))
           const expectedActions = [
             {
-              type: "UPDATE_USER_PHONE",
               payload: { phone: "6073490948" },
+              type: "UPDATE_USER_PHONE",
             },
             {
-              type: "SUBMISSION_CREATED",
               payload: { submissionId: "sub1" },
+              type: "SUBMISSION_CREATED",
             },
             {
-              type: "UPDATE_SUBMISSION",
               payload: { submission: { id: "sub1" } },
+              type: "UPDATE_SUBMISSION",
             },
             { type: "HIDE_LOADER" },
             {
-              type: "@@router/CALL_HISTORY_METHOD",
               payload: {
-                method: "push",
                 args: ["/consign/submission/sub1/describe-your-work"],
+                method: "push",
               },
+              type: "@@router/CALL_HISTORY_METHOD",
             },
             {
-              type: "@@router/CALL_HISTORY_METHOD",
               payload: {
-                method: "push",
                 args: ["/consign/submission/sub1/upload-photos"],
+                method: "push",
               },
+              type: "@@router/CALL_HISTORY_METHOD",
             },
           ]
           store
@@ -242,23 +242,23 @@ describe("Reducers", () => {
             .catch(err => done(err))
         })
 
-        xit("sends the correct actions on error", done => {
+        it.skip("sends the correct actions on error", done => {
           // FIXME: request mocking cannot catch errors
           const expectedActions = [
             {
               type: "HIDE_LOADER",
             },
             {
-              type: "SUBMISSION_ERROR",
               payload: {
                 errorType: "convection_create",
               },
+              type: "SUBMISSION_ERROR",
             },
             {
-              type: "UPDATE_ERROR",
               payload: {
                 error: "Unable to submit at this time.",
               },
+              type: "UPDATE_ERROR",
             },
           ]
           request.send = sinon.stub().returns("TypeError")
@@ -352,8 +352,8 @@ describe("Reducers", () => {
           dispatch.callCount.should.eql(1)
           dispatch
             .calledWithExactly({
-              type: "UPDATE_LOCATION_CITY_VALUE",
               payload: { city: "My City" },
+              type: "UPDATE_LOCATION_CITY_VALUE",
             })
             .should.be.ok()
         })
@@ -366,25 +366,25 @@ describe("Reducers", () => {
           const store = mockStore({
             submissionFlow: {
               erroredImages: ["astronaut.jpg"],
-              uploadedImages: [
-                { fileName: "astronaut.jpg", src: "bloop", processing: true },
-              ],
               processingImages: ["astronaut.jpg"],
+              uploadedImages: [
+                { fileName: "astronaut.jpg", processing: true, src: "bloop" },
+              ],
             },
           })
 
           const expectedActions = [
             {
+              payload: { fileName: "astronaut.jpg" },
               type: "REMOVE_ERRORED_IMAGE",
-              payload: { fileName: "astronaut.jpg" },
             },
             {
+              payload: { fileName: "astronaut.jpg" },
               type: "STOP_PROCESSING_IMAGE",
-              payload: { fileName: "astronaut.jpg" },
             },
             {
-              type: "REMOVE_UPLOADED_IMAGE",
               payload: { fileName: "astronaut.jpg" },
+              type: "REMOVE_UPLOADED_IMAGE",
             },
           ]
           store.dispatch(actions.removeImage("astronaut.jpg"))
@@ -443,7 +443,7 @@ describe("Reducers", () => {
             actions.addImageToUploadedImages("astronaut.jpg", "bloop")
           )
           newUploadedImage.submissionFlow.uploadedImages.should.eql([
-            { fileName: "astronaut.jpg", src: "bloop", processing: true },
+            { fileName: "astronaut.jpg", processing: true, src: "bloop" },
           ])
         })
       })
@@ -461,7 +461,7 @@ describe("Reducers", () => {
             actions.addImageToUploadedImages("astronaut.jpg", "blahblah")
           )
           newUploadedImage.submissionFlow.uploadedImages.should.eql([
-            { fileName: "astronaut.jpg", src: "blahblah", processing: true },
+            { fileName: "astronaut.jpg", processing: true, src: "blahblah" },
           ])
           const stopNewImage = reducers(
             newUploadedImage,
@@ -524,8 +524,8 @@ describe("Reducers", () => {
           initialResponse.submissionFlow.inputs.title.should.eql("")
           const newInputs = {
             authenticity_certificate: true,
-            title: "My Artwork!",
             category: "Sculpture",
+            title: "My Artwork!",
           }
           const newInputsStep = reducers(
             initialResponse,
@@ -589,17 +589,17 @@ describe("Reducers", () => {
         it("errors if the image is not the right type", done => {
           const expectedActions = [
             {
-              type: "ADD_IMAGE_TO_UPLOADED_IMAGES",
               payload: { fileName: "hello.pdf", src: undefined },
+              type: "ADD_IMAGE_TO_UPLOADED_IMAGES",
             },
             {
-              type: "ERROR_ON_IMAGE",
               payload: { fileName: "hello.pdf" },
+              type: "ERROR_ON_IMAGE",
             },
           ]
           store
             .dispatch(
-              actions.handleImageUpload({ type: "pdf", name: "hello.pdf" })
+              actions.handleImageUpload({ name: "hello.pdf", type: "pdf" })
             )
             .then(() => {
               store.getActions().should.eql(expectedActions)
@@ -618,8 +618,8 @@ describe("Reducers", () => {
 
           store = mockStore({
             submissionFlow: {
-              user: { accessToken: "foo" },
               submission: { id: "sub1" },
+              user: { accessToken: "foo" },
             },
           })
 
@@ -641,10 +641,10 @@ describe("Reducers", () => {
         it("stops processing the image if it succeeds", done => {
           const expectedActions = [
             {
-              type: "STOP_PROCESSING_IMAGE",
               payload: { fileName: "astronaut.jpg" },
+              type: "STOP_PROCESSING_IMAGE",
             },
-            { type: "ADD_ASSET_ID", payload: { assetId: undefined } },
+            { payload: { assetId: undefined }, type: "ADD_ASSET_ID" },
           ]
           store
             .dispatch(
@@ -657,13 +657,13 @@ describe("Reducers", () => {
             .catch(err => done(err))
         })
 
-        xit("updates the error if it does not succeed", done => {
+        it.skip("updates the error if it does not succeed", done => {
           // FIXME: request mocking cannot catch errors
           request.post = sinon.stub().returns("TypeError")
           const expectedActions = [
             {
-              type: "ERROR_ON_IMAGE",
               payload: { fileName: "astronaut.jpg" },
+              type: "ERROR_ON_IMAGE",
             },
           ]
           const filePath = "http://s3.com/abcdefg%2Fastronaut.jpg"

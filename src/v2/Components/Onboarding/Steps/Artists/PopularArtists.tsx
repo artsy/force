@@ -79,9 +79,9 @@ class PopularArtistsContent extends React.Component<Props, null> {
 
     this.props.tracking.trackEvent({
       action: "Followed Artist",
+      context_module: "onboarding recommended",
       entity_id: artist.internalID,
       entity_slug: artist.slug,
-      context_module: "onboarding recommended",
     })
   }
 
@@ -138,14 +138,14 @@ class PopularArtistsContent extends React.Component<Props, null> {
             }
           }
         `,
+        updater: (store, data) => this.onArtistFollowed(artist, store, data),
         variables: {
+          excludedArtistIds: Array.from(this.excludedArtistIds),
           input: {
             artistID: artist.internalID,
             unfollow: false,
           },
-          excludedArtistIds: Array.from(this.excludedArtistIds),
         },
-        updater: (store, data) => this.onArtistFollowed(artist, store, data),
       }
     )
   }

@@ -28,6 +28,7 @@ describe("ConsignRoute", () => {
           </SystemContextProvider>
         )
       },
+      mockData: response,
       query: graphql`
         query ConsignRoute_Test_Query($artistID: String!) @raw_response_type {
           artist(id: $artistID) {
@@ -42,7 +43,6 @@ describe("ConsignRoute", () => {
       variables: {
         artistID: "alex-katz",
       },
-      mockData: response,
     })
   }
 

@@ -15,20 +15,20 @@ describe("Routes", () => {
   describe("#index", () => {
     beforeEach(() => {
       req = {
+        body: {},
+        get: jest.fn(),
+        header: () => "referrer",
         path: "/",
         query: {},
-        header: () => "referrer",
-        get: jest.fn(),
-        body: {},
       }
       res = {
+        cookie: jest.fn(),
         locals: {
           sd: {
             IS_MOBILE: false,
           },
         },
         send: jest.fn(),
-        cookie: jest.fn(),
       }
       next = jest.fn()
       stitch.mockReset()
@@ -214,11 +214,11 @@ describe("Routes", () => {
         req.query = {
           action: "follow",
           contextModule: "artistHeader",
-          kind: "profile",
-          objectId: "david-zwirner",
           copy: "Sign up to follow David Zwirner",
           intent: "followPartner",
+          kind: "profile",
           mode: "signup",
+          objectId: "david-zwirner",
           "redirect-to": "/david-zwirner",
         }
 
@@ -322,9 +322,9 @@ describe("Routes", () => {
       it("Sets afterSignUpAction cookie if corresponding query params are present", done => {
         req.query = {
           action: "follow",
-          objectId: "123",
-          kind: "artist",
           destination: "/foo",
+          kind: "artist",
+          objectId: "123",
           redirectTo: "/bar",
           signupReferer: "referrer",
         }
@@ -333,8 +333,8 @@ describe("Routes", () => {
           expect(res.cookie.mock.calls[0][1]).toBe(
             JSON.stringify({
               action: "follow",
-              objectId: "123",
               kind: "artist",
+              objectId: "123",
             })
           )
           done()
@@ -361,8 +361,8 @@ describe("Routes", () => {
     describe("Has reset_password_token", () => {
       beforeEach(() => {
         req.query = {
-          reset_password_token: "foobar",
           reset_password_redirect_to: "/articles",
+          reset_password_token: "foobar",
           set_password: "set password",
         }
       })
@@ -391,8 +391,8 @@ describe("Routes", () => {
     describe("Without reset_password_token", () => {
       beforeEach(() => {
         req.session = {
-          reset_password_token: "foobar",
           reset_password_redirect_to: "/articles",
+          reset_password_token: "foobar",
           set_password: "set password",
         }
       })
@@ -421,11 +421,11 @@ describe("Routes", () => {
         render: jest.fn(),
       }
       req = {
-        header: () => "referrer",
         body: {},
+        get: jest.fn(),
+        header: () => "referrer",
         query: {},
         session: {},
-        get: jest.fn(),
       }
     })
 

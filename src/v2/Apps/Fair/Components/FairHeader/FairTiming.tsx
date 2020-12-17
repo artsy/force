@@ -23,8 +23,8 @@ const FairTiming: React.FC<Props> = ({
           {currentTime => {
             const props = {
               currentTime,
-              startAt,
               endAt,
+              startAt,
             }
             return <EventTiming {...props} />
           }}

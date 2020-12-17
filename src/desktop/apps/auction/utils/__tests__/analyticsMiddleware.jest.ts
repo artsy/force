@@ -21,8 +21,8 @@ describe("analytics middleware", () => {
 
   it("tracks changes in mediums", () => {
     const action = {
-      type: "UPDATE_MEDIUM_ID",
       payload: { mediumId: "painting" },
+      type: "UPDATE_MEDIUM_ID",
     }
     const store = createStore(auctions, applyMiddleware(analyticsMiddleware))
     store.dispatch(action)
@@ -31,23 +31,23 @@ describe("analytics middleware", () => {
       "Commercial filter params changed",
       {
         auction_slug: "auction-slug",
-        sale_id: "123",
-        user_id: "321",
+        changed: { medium: "painting" },
         current: [
           { artists: [] },
           { medium: ["painting"] },
           { sort: "position" },
           { price: "" },
         ],
-        changed: { medium: "painting" },
+        sale_id: "123",
+        user_id: "321",
       }
     )
   })
 
   it("tracks changes in artists", () => {
     const action = {
-      type: "UPDATE_ARTIST_ID",
       payload: { artistId: "andy-warhol" },
+      type: "UPDATE_ARTIST_ID",
     }
     const store = createStore(auctions, applyMiddleware(analyticsMiddleware))
     store.dispatch(action)
@@ -56,23 +56,23 @@ describe("analytics middleware", () => {
       "Commercial filter params changed",
       {
         auction_slug: "auction-slug",
-        sale_id: "123",
-        user_id: "321",
+        changed: { artist: "andy-warhol" },
         current: [
           { artists: ["andy-warhol"] },
           { medium: [] },
           { sort: "position" },
           { price: "" },
         ],
-        changed: { artist: "andy-warhol" },
+        sale_id: "123",
+        user_id: "321",
       }
     )
   })
 
   it("correctly tracks artists when Artists You Follow is clicked", () => {
     const action = {
-      type: "UPDATE_ARTIST_ID",
       payload: { artistId: "artists-you-follow" },
+      type: "UPDATE_ARTIST_ID",
     }
     const store = createStore(auctions, applyMiddleware(analyticsMiddleware))
     store.dispatch(action)
@@ -81,23 +81,23 @@ describe("analytics middleware", () => {
       "Commercial filter params changed",
       {
         auction_slug: "auction-slug",
-        sale_id: "123",
-        user_id: "321",
+        changed: { artist: "artists-you-follow" },
         current: [
           { artists: ["artists-you-follow"] },
           { medium: [] },
           { sort: "position" },
           { price: "" },
         ],
-        changed: { artist: "artists-you-follow" },
+        sale_id: "123",
+        user_id: "321",
       }
     )
   })
 
   it("tracks changes in price", () => {
     const action = {
+      payload: { max: 50000, min: 100 },
       type: "UPDATE_ESTIMATE_RANGE",
-      payload: { min: 100, max: 50000 },
     }
     const store = createStore(auctions, applyMiddleware(analyticsMiddleware))
     store.dispatch(action)
@@ -106,21 +106,21 @@ describe("analytics middleware", () => {
       "Commercial filter params changed",
       {
         auction_slug: "auction-slug",
-        sale_id: "123",
-        user_id: "321",
+        changed: { price: "10000-*" },
         current: [
           { artists: [] },
           { medium: [] },
           { sort: "position" },
           { price: "10000-*" },
         ],
-        changed: { price: "10000-*" },
+        sale_id: "123",
+        user_id: "321",
       }
     )
   })
 
   it("tracks changes in sort", () => {
-    const action = { type: "UPDATE_SORT", payload: { sort: "lot_number" } }
+    const action = { payload: { sort: "lot_number" }, type: "UPDATE_SORT" }
     const store = createStore(auctions, applyMiddleware(analyticsMiddleware))
     store.dispatch(action)
 
@@ -128,21 +128,21 @@ describe("analytics middleware", () => {
       "Commercial filter params changed",
       {
         auction_slug: "auction-slug",
-        sale_id: "123",
-        user_id: "321",
+        changed: { sort: "lot_number" },
         current: [
           { artists: [] },
           { medium: [] },
           { sort: "lot_number" },
           { price: "" },
         ],
-        changed: { sort: "lot_number" },
+        sale_id: "123",
+        user_id: "321",
       }
     )
   })
 
   it("does not track other actions", () => {
-    const action = { type: "TOGGLE_LIST_VIEW", payload: { isListView: true } }
+    const action = { payload: { isListView: true }, type: "TOGGLE_LIST_VIEW" }
     const store = createStore(auctions, applyMiddleware(analyticsMiddleware))
     store.dispatch(action)
     expect(window.analytics.track).not.toBeCalled()

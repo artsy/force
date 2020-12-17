@@ -12,9 +12,9 @@ import {
 import React, { SFC } from "react"
 
 const iconMapping = {
-  Auction: AuctionIcon,
   Article: PublicationIcon,
   Artist: UserSingleIcon,
+  Auction: AuctionIcon,
   City: MapPinIcon,
   Fair: FairIcon,
   Institution: InstitutionIcon,

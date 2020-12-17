@@ -3,18 +3,18 @@ export const settingOrderPaymentSuccess = {
     orderOrError: {
       order: {
         __typename: "CommerceBuyOrder",
-        id: "1234",
         creditCard: {
+          city: "London",
+          country: "UK",
           id: "credit-card-id",
           internalID: "credit-card-id",
           name: "Artsy UK Ltd",
+          postal_code: "E1 8PY",
+          state: "Whitechapel",
           street1: "14 Gower's Walk",
           street2: "Suite 2.5, The Loom",
-          city: "London",
-          state: "Whitechapel",
-          country: "UK",
-          postal_code: "E1 8PY",
         },
+        id: "1234",
       },
     },
   },
@@ -24,9 +24,9 @@ export const settingOrderPaymentFailed = {
   commerceSetPayment: {
     orderOrError: {
       error: {
-        type: "validation",
         code: "invalid_state",
         data: '{"state":"canceled"}',
+        type: "validation",
       },
     },
   },

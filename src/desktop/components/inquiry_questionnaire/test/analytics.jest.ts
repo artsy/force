@@ -6,8 +6,8 @@ import {
 
 jest.mock("../analytics/analyticsHooks", () => ({
   analyticsHooks: {
-    trigger: jest.fn(),
     on: jest.fn(),
+    trigger: jest.fn(),
   },
 }))
 const analyticsHooks = require("../analytics/analyticsHooks").analyticsHooks
@@ -19,14 +19,14 @@ describe("analytics proxy", () => {
   beforeEach(() => {
     inquiry = new Backbone.Model()
     context = {
-      inquiry,
-      modal: { on: jest.fn(), off: jest.fn() },
-      user: new Backbone.Model(),
       artwork: new Backbone.Model(),
       collectorProfile: new Backbone.Model(),
-      userInterests: new Backbone.Model(),
-      state: new Backbone.Model(),
       foo: "not eventable",
+      inquiry,
+      modal: { off: jest.fn(), on: jest.fn() },
+      state: new Backbone.Model(),
+      user: new Backbone.Model(),
+      userInterests: new Backbone.Model(),
     }
     attachInquiryAnalyticsHooks(context)
   })

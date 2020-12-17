@@ -13,7 +13,7 @@ export const TermsOfServiceCheckbox = ({
 }) => {
   const color = error && !value ? "red100" : "black60"
   return (
-    <StyledCheckbox {...{ checked: value, error, onChange, onBlur, name }}>
+    <StyledCheckbox {...{ checked: value, error, name, onBlur, onChange }}>
       <Serif color={color} size="3t" ml={0.5}>
         {"I agree to Artsy’s "}
         <Link href="https://www.artsy.net/terms" target="_blank" color={color}>

@@ -25,7 +25,7 @@ describe("get", () => {
       description: string
     }
 
-    const place: Place = { name: "Hello", description: "how are you" }
+    const place: Place = { description: "how are you", name: "Hello" }
     const description = get<Place, string>(place, p => p.description)
     expect(description).toEqual("how are you")
   })

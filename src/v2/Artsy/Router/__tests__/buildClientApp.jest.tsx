@@ -24,12 +24,12 @@ describe("buildClientApp", () => {
       },
       routes: [
         {
-          path: "/",
           Component: () => <div>Hello Router</div>,
+          path: "/",
         },
         {
-          path: "/cv",
           Component: () => <div>CV Page</div>,
+          path: "/cv",
         },
       ],
     })
@@ -46,12 +46,12 @@ describe("buildClientApp", () => {
       initialRoute: "/cv",
       routes: [
         {
-          path: "/",
           Component: () => <div>Hello Router</div>,
+          path: "/",
         },
         {
-          path: "/cv",
           Component: () => <div>CV Page</div>,
+          path: "/cv",
         },
       ],
     })
@@ -74,12 +74,12 @@ describe("buildClientApp", () => {
       },
       routes: [
         {
-          path: "/",
           Component: () => <div>Hello Router</div>,
+          path: "/",
         },
         {
-          path: "/cv",
           Component: () => <div>CV Page</div>,
+          path: "/cv",
         },
       ],
     })
@@ -118,16 +118,16 @@ describe("buildClientApp", () => {
     }
 
     const { ClientApp } = await buildClientApp({
+      context: {},
       history: {
         protocol: "memory",
       },
       routes: [
         {
-          path: "/",
           Component: HomeApp,
+          path: "/",
         },
       ],
-      context: {},
     })
 
     mount(<ClientApp />)
@@ -170,8 +170,8 @@ describe("buildClientApp", () => {
           },
           routes: [
             {
-              path: "/",
               Component: () => null,
+              path: "/",
               query: graphql`
                 query buildClientAppTestQuery {
                   me {

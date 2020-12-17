@@ -29,7 +29,7 @@ const CircleIcon: React.SFC<CircleIconProps> = (props: CircleIconProps) => {
         fontSize={`${
           parseInt(props.fontSize || "24px", 10) * (props.ratio || 0.55)
         }px`}
-        style={{ margin: 0, alignSelf: "center" }}
+        style={{ alignSelf: "center", margin: 0 }}
       />
     </CircleIconContainer>
   )

@@ -47,86 +47,86 @@ describe("NotificationsMenu", () => {
 
 const NotificationMenuFixture = {
   me: {
-    unreadNotificationsCount: 0,
     followsAndSaves: {
       notifications: {
         edges: [
           {
+            cursor: "YXJyYXljb25uZWN0aW9uOjA=",
             node: {
-              href: "/artist/david-hockney",
-              summary: "1 work added",
+              __typename: "FollowedArtistsArtworksGroup",
               artists: "David Hockney",
-              published_at: "May 02",
+              href: "/artist/david-hockney",
+              id:
+                "Rm9sbG93ZWRBcnRpc3RzQXJ0d29ya3NHcm91cDo1Y2NiNzU3Y2Y5M2JmNjFmOWYxYjcyMDQ=",
               image: {
                 thumb: {
                   url:
                     "https://d7hftxdivxxvm.cloudfront.net?resize_to=fit&width=40&height=40&quality=80&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FkCJVZo7bcqVrjnQ22QHhvg%2Flarge.jpg",
                 },
               },
-              id:
-                "Rm9sbG93ZWRBcnRpc3RzQXJ0d29ya3NHcm91cDo1Y2NiNzU3Y2Y5M2JmNjFmOWYxYjcyMDQ=",
-              __typename: "FollowedArtistsArtworksGroup",
+              published_at: "May 02",
+              summary: "1 work added",
             },
-            cursor: "YXJyYXljb25uZWN0aW9uOjA=",
           },
           {
+            cursor: "YXJyYXljb25uZWN0aW9uOjE=",
             node: {
-              href: "/artist/pablo-picasso",
-              summary: "1 work added",
+              __typename: "FollowedArtistsArtworksGroup",
               artists: "Pablo Picasso",
-              published_at: "May 02",
+              href: "/artist/pablo-picasso",
+              id:
+                "Rm9sbG93ZWRBcnRpc3RzQXJ0d29ya3NHcm91cDo1Y2NiNjRmZWQ3ZjI2YjU5MTJlNWJlODc=",
               image: {
                 thumb: {
                   url:
                     "https://d7hftxdivxxvm.cloudfront.net?resize_to=fit&width=40&height=27&quality=80&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2Fi3rCA3IaKE-cLBnc-U5swQ%2Flarge.jpg",
                 },
               },
-              id:
-                "Rm9sbG93ZWRBcnRpc3RzQXJ0d29ya3NHcm91cDo1Y2NiNjRmZWQ3ZjI2YjU5MTJlNWJlODc=",
-              __typename: "FollowedArtistsArtworksGroup",
+              published_at: "May 02",
+              summary: "1 work added",
             },
-            cursor: "YXJyYXljb25uZWN0aW9uOjE=",
           },
           {
+            cursor: "YXJyYXljb25uZWN0aW9uOjI=",
             node: {
-              href: "/artist/jasper-johns",
-              summary: "7 works added",
+              __typename: "FollowedArtistsArtworksGroup",
               artists: "Jasper Johns",
-              published_at: "May 02",
+              href: "/artist/jasper-johns",
+              id:
+                "Rm9sbG93ZWRBcnRpc3RzQXJ0d29ya3NHcm91cDo1YjBmMTFkN2IyMDJhMzRkZmY3MjE2MWI=",
               image: {
                 thumb: {
                   url:
                     "https://d7hftxdivxxvm.cloudfront.net?resize_to=fit&width=40&height=40&quality=80&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FjLg7Y6inxaSUpVS9kYHwcg%2Flarge.jpg",
                 },
               },
-              id:
-                "Rm9sbG93ZWRBcnRpc3RzQXJ0d29ya3NHcm91cDo1YjBmMTFkN2IyMDJhMzRkZmY3MjE2MWI=",
-              __typename: "FollowedArtistsArtworksGroup",
+              published_at: "May 02",
+              summary: "7 works added",
             },
-            cursor: "YXJyYXljb25uZWN0aW9uOjI=",
           },
           {
+            cursor: "YXJyYXljb25uZWN0aW9uOjk=",
             node: {
-              href: "/artist/damien-hirst",
-              summary: "1 work added",
+              __typename: "FollowedArtistsArtworksGroup",
               artists: "Damien Hirst",
-              published_at: "May 02",
+              href: "/artist/damien-hirst",
+              id:
+                "Rm9sbG93ZWRBcnRpc3RzQXJ0d29ya3NHcm91cDo1Y2NiMjUzNjljZGQ4MDY0YzE3MWQ1Mzk=",
               image: {
                 thumb: {
                   url:
                     "https://d7hftxdivxxvm.cloudfront.net?resize_to=fit&width=39&height=40&quality=80&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FTLj5ypujA8_sBmcjWw6cRw%2Flarge.jpg",
                 },
               },
-              id:
-                "Rm9sbG93ZWRBcnRpc3RzQXJ0d29ya3NHcm91cDo1Y2NiMjUzNjljZGQ4MDY0YzE3MWQ1Mzk=",
-              __typename: "FollowedArtistsArtworksGroup",
+              published_at: "May 02",
+              summary: "1 work added",
             },
-            cursor: "YXJyYXljb25uZWN0aW9uOjk=",
           },
         ],
         pageInfo: { endCursor: "YXJyYXljb25uZWN0aW9uOjk=", hasNextPage: true },
       },
     },
     id: "TWU6NTg4MjhiMWU5YzE4ZGIzMGYzMDAyZmJh",
+    unreadNotificationsCount: 0,
   },
 }

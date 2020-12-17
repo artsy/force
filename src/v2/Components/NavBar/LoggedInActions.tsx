@@ -42,9 +42,9 @@ export const LoggedInActions: React.FC<
         onClick={() => {
           trackEvent({
             action_type: AnalyticsSchema.ActionType.Click,
-            subject: AnalyticsSchema.Subject.NotificationBell,
-            new_notification_count: getNotificationCount(),
             destination_path: "/works-for-you",
+            new_notification_count: getNotificationCount(),
+            subject: AnalyticsSchema.Subject.NotificationBell,
           })
         }}
       >

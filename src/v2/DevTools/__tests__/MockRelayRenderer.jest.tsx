@@ -29,11 +29,11 @@ describe("MockRelayRenderer", () => {
         mockData={
           {
             artwork: {
-              title: "Mona Lisa",
+              artist: null,
               image: {
                 url: "http://test/image.jpg",
               },
-              artist: null,
+              title: "Mona Lisa",
             },
           } as MockRelayRendererFixturesQueryRawResponse
         }
@@ -58,11 +58,11 @@ describe("MockRelayRenderer", () => {
         mockData={
           {
             something_that_is_not_expected: {
-              title: "Mona Lisa",
+              artist: null,
               image: {
                 url: "http://test/image.jpg",
               },
-              artist: null,
+              title: "Mona Lisa",
             },
           } as MockRelayRendererFixturesBadQueryRawResponse
         }

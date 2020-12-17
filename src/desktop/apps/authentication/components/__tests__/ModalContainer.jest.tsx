@@ -59,8 +59,8 @@ describe("ModalContainer", () => {
   it("Sets a cookie when opening the modal", () => {
     mount(<ModalContainer />)
     mediator.trigger("open:auth", {
-      mode: ModalType.login,
       destination: "foo",
+      mode: ModalType.login,
     } as ModalOptions)
 
     expect(cookieSet).toBeCalledWith("destination", "foo", { expires: 86400 })
@@ -70,10 +70,10 @@ describe("ModalContainer", () => {
     const component = mount(<ModalContainer />).instance() as ModalContainer
     component.onSocialAuthEvent({
       contextModule: ContextModule.popUpModal,
-      mode: ModalType.signup,
       intent: Intent.viewArtist,
-      service: "facebook",
+      mode: ModalType.signup,
       redirectTo: "/artist/andy-warhol",
+      service: "facebook",
       triggerSeconds: 2,
     })
 
@@ -88,10 +88,10 @@ describe("ModalContainer", () => {
     const component = mount(<ModalContainer />).instance() as ModalContainer
     component.onSocialAuthEvent({
       contextModule: ContextModule.popUpModal,
-      mode: ModalType.login,
       intent: Intent.viewArtist,
-      service: "apple",
+      mode: ModalType.login,
       redirectTo: "/artist/andy-warhol",
+      service: "apple",
       triggerSeconds: 2,
     })
 

@@ -58,12 +58,12 @@ export class FollowProfileButton extends React.Component<Props> {
     } = this.props
 
     const args: FollowedArgs = {
-      ownerId: profile.internalID,
-      ownerSlug: profile.slug,
       contextModule,
       contextOwnerId: contextPageOwnerId,
       contextOwnerSlug: contextPageOwnerSlug,
       contextOwnerType: contextPageOwnerType,
+      ownerId: profile.internalID,
+      ownerSlug: profile.slug,
     }
 
     const analyticsData = profile.is_followed
@@ -90,12 +90,6 @@ export class FollowProfileButton extends React.Component<Props> {
             }
           }
         `,
-        variables: {
-          input: {
-            profileID: profile.internalID,
-            unfollow: profile.is_followed,
-          },
-        },
         optimisticResponse: {
           followProfile: {
             profile: {
@@ -104,15 +98,21 @@ export class FollowProfileButton extends React.Component<Props> {
             },
           },
         },
+        variables: {
+          input: {
+            profileID: profile.internalID,
+            unfollow: profile.is_followed,
+          },
+        },
       })
       this.trackFollow()
     } else {
       openAuthToFollowSave(mediator, {
+        contextModule,
         entity: {
           name: profile.name,
           slug: profile.slug,
         },
-        contextModule,
         intent: Intent.followPartner,
       })
     }

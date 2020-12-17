@@ -19,6 +19,7 @@ describe("FairExhibitors", () => {
           </MockBoot>
         )
       },
+      mockData: response,
       query: graphql`
         query FairExhibitors_Query($slug: String!) @raw_response_type {
           fair(id: $slug) {
@@ -27,7 +28,6 @@ describe("FairExhibitors", () => {
         }
       `,
       variables: { slug: "miart-2020" },
-      mockData: response,
     })
   }
 
@@ -53,64 +53,64 @@ describe("FairExhibitors", () => {
 
 const FAIR_EXHIBITORS_FIXTURE: FairExhibitors_QueryRawResponse = {
   fair: {
-    id: "xxx",
-    internalID: "fair-ID",
-    slug: "xxx",
     exhibitors: {
-      pageInfo: {
-        endCursor: "xxx",
-        hasNextPage: false,
-      },
       edges: [
         {
           cursor: "xxx",
           node: {
             __typename: "Show",
-            id: "xxx-1",
-            internalID: "xxx-1",
-            slug: "show-slug",
             counts: { artworks: 0 },
             href: "/show/example-1",
+            id: "xxx-1",
+            internalID: "xxx-1",
             partner: {
               __typename: "Partner",
               id: "example-1",
               name: "Partner Without Artworks",
             },
+            slug: "show-slug",
           },
         },
         {
           cursor: "xxx",
           node: {
             __typename: "Show",
-            id: "xxx-2",
-            internalID: "xxx-2",
-            slug: "show-slug",
             counts: { artworks: 10 },
             href: "/show/example-2",
+            id: "xxx-2",
+            internalID: "xxx-2",
             partner: {
               __typename: "Partner",
               id: "example-2",
               name: "First Partner Has Artworks",
             },
+            slug: "show-slug",
           },
         },
         {
           cursor: "xxx",
           node: {
             __typename: "Show",
-            id: "xxx-3",
-            internalID: "xxx-3",
-            slug: "show-slug",
             counts: { artworks: 10 },
             href: "/show/example-3",
+            id: "xxx-3",
+            internalID: "xxx-3",
             partner: {
               __typename: "Partner",
               id: "example-3",
               name: "Second Partner Has Artworks",
             },
+            slug: "show-slug",
           },
         },
       ],
+      pageInfo: {
+        endCursor: "xxx",
+        hasNextPage: false,
+      },
     },
+    id: "xxx",
+    internalID: "fair-ID",
+    slug: "xxx",
   },
 }

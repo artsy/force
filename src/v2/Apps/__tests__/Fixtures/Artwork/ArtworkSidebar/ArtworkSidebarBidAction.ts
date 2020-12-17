@@ -1,19 +1,19 @@
 import { ArtworkSidebarBidAction_Test_QueryRawResponse } from "v2/__generated__/ArtworkSidebarBidAction_Test_Query.graphql"
 
 export const ArtworkFromAuctionPreview: ArtworkSidebarBidAction_Test_QueryRawResponse["artwork"] = {
-  slug: "artwork_from_preview_auction",
   id: "sdfsdfsdf2",
   internalID: "sdf12345",
+  myLotStanding: null,
   sale: {
     id: "sdfsdfsdf3",
-    slug: "cool-sale",
-    registrationStatus: null,
-    is_preview: true,
-    is_open: false,
-    is_live_open: false,
     is_closed: false,
+    is_live_open: false,
+    is_open: false,
+    is_preview: true,
     is_registration_closed: false,
+    registrationStatus: null,
     requireIdentityVerification: false,
+    slug: "cool-sale",
   },
   sale_artwork: {
     id: "sdfsdfsdf",
@@ -24,23 +24,23 @@ export const ArtworkFromAuctionPreview: ArtworkSidebarBidAction_Test_QueryRawRes
       { cents: 475000, display: "CHF4,750" },
     ],
   },
-  myLotStanding: null,
+  slug: "artwork_from_preview_auction",
 }
 
 export const ArtworkFromTimedAuctionRegistrationOpen: ArtworkSidebarBidAction_Test_QueryRawResponse["artwork"] = {
-  slug: "artwork_from_open_non_live_auction",
   id: "sdfsdfsdf2",
   internalID: "sdf12345",
+  myLotStanding: null,
   sale: {
     id: "sdfsdfsdf3",
-    slug: "cool-sale",
-    registrationStatus: null,
-    is_preview: false,
-    is_open: true,
-    is_live_open: false,
     is_closed: false,
+    is_live_open: false,
+    is_open: true,
+    is_preview: false,
     is_registration_closed: false,
+    registrationStatus: null,
     requireIdentityVerification: false,
+    slug: "cool-sale",
   },
   sale_artwork: {
     id: "sdfsdfsdf",
@@ -51,23 +51,23 @@ export const ArtworkFromTimedAuctionRegistrationOpen: ArtworkSidebarBidAction_Te
       { cents: 110000, display: "$1,100" },
     ],
   },
-  myLotStanding: null,
+  slug: "artwork_from_open_non_live_auction",
 }
 
 export const ArtworkFromTimedAuctionRegistrationClosed: ArtworkSidebarBidAction_Test_QueryRawResponse["artwork"] = {
-  slug: "artwork_from_registration_closed_timed_auction",
   id: "sdfsdfsdf2",
   internalID: "sdf12345",
+  myLotStanding: null,
   sale: {
     id: "sdfsdfsdf3",
-    slug: "cool-sale",
-    registrationStatus: null,
-    is_preview: false,
-    is_open: true,
-    is_live_open: false,
     is_closed: false,
+    is_live_open: false,
+    is_open: true,
+    is_preview: false,
     is_registration_closed: true,
+    registrationStatus: null,
     requireIdentityVerification: false,
+    slug: "cool-sale",
   },
   sale_artwork: {
     id: "sdfsdfsdf",
@@ -78,7 +78,7 @@ export const ArtworkFromTimedAuctionRegistrationClosed: ArtworkSidebarBidAction_
       { cents: 110000, display: "$1,100" },
     ],
   },
-  myLotStanding: null,
+  slug: "artwork_from_registration_closed_timed_auction",
 }
 
 export const SaleRequiringIDV: Partial<
@@ -96,7 +96,7 @@ export const NotIDVedUser: ArtworkSidebarBidAction_Test_QueryRawResponse["me"] =
 export const UserPendingIDV: ArtworkSidebarBidAction_Test_QueryRawResponse["me"] = {
   id: "user-id",
   identityVerified: false,
-  pendingIdentityVerification: { internalID: "idv-id", id: "idv-id" },
+  pendingIdentityVerification: { id: "idv-id", internalID: "idv-id" },
 }
 
 export const IDVedUser: ArtworkSidebarBidAction_Test_QueryRawResponse["me"] = {
@@ -108,19 +108,19 @@ export const IDVedUser: ArtworkSidebarBidAction_Test_QueryRawResponse["me"] = {
 export const NoUser: ArtworkSidebarBidAction_Test_QueryRawResponse["me"] = null
 
 export const ArtworkFromLiveAuctionRegistrationOpen: ArtworkSidebarBidAction_Test_QueryRawResponse["artwork"] = {
-  slug: "artwork_from_open_live_auction_open_registration",
   id: "sdfsdfsdf2",
   internalID: "sdf12345",
+  myLotStanding: null,
   sale: {
     id: "sdfsdfsdf3",
-    slug: "cool-sale",
-    registrationStatus: null,
-    is_preview: false,
-    is_open: true,
-    is_live_open: true,
     is_closed: false,
+    is_live_open: true,
+    is_open: true,
+    is_preview: false,
     is_registration_closed: false,
+    registrationStatus: null,
     requireIdentityVerification: false,
+    slug: "cool-sale",
   },
   sale_artwork: {
     id: "sdfsdfsdf",
@@ -131,23 +131,23 @@ export const ArtworkFromLiveAuctionRegistrationOpen: ArtworkSidebarBidAction_Tes
       { cents: 400000, display: "€4,000" },
     ],
   },
-  myLotStanding: null,
+  slug: "artwork_from_open_live_auction_open_registration",
 }
 
 export const ArtworkFromLiveAuctionRegistrationClosed: ArtworkSidebarBidAction_Test_QueryRawResponse["artwork"] = {
-  slug: "artwork_from_open_live_auction_closed_registration",
   id: "sdfsdfsdf2",
   internalID: "sdf12345",
+  myLotStanding: null,
   sale: {
     id: "sdfsdfsdf3",
-    slug: "cool-sale",
-    registrationStatus: null,
-    is_preview: false,
-    is_open: true,
-    is_live_open: true,
     is_closed: false,
+    is_live_open: true,
+    is_open: true,
+    is_preview: false,
     is_registration_closed: true,
+    registrationStatus: null,
     requireIdentityVerification: false,
+    slug: "cool-sale",
   },
   sale_artwork: {
     id: "sdfsdfsdf",
@@ -158,23 +158,23 @@ export const ArtworkFromLiveAuctionRegistrationClosed: ArtworkSidebarBidAction_T
       { cents: 400000, display: "€4,000" },
     ],
   },
-  myLotStanding: null,
+  slug: "artwork_from_open_live_auction_closed_registration",
 }
 
 export const ArtworkFromClosedAuction: ArtworkSidebarBidAction_Test_QueryRawResponse["artwork"] = {
-  slug: "artwork_from_closed_auction",
   id: "sdfsdfsdf2",
   internalID: "sdf12345",
+  myLotStanding: null,
   sale: {
     id: "sdfsdfsdf3",
-    slug: "cool-sale",
-    registrationStatus: null,
-    is_preview: false,
-    is_open: false,
-    is_live_open: false,
     is_closed: true,
+    is_live_open: false,
+    is_open: false,
+    is_preview: false,
     is_registration_closed: false,
+    registrationStatus: null,
     requireIdentityVerification: false,
+    slug: "cool-sale",
   },
   sale_artwork: {
     id: "sdfsdfsdf",
@@ -185,7 +185,7 @@ export const ArtworkFromClosedAuction: ArtworkSidebarBidAction_Test_QueryRawResp
       { cents: 500000, display: "£5,000" },
     ],
   },
-  myLotStanding: null,
+  slug: "artwork_from_closed_auction",
 }
 
 export const NotRegisteredToBid = {

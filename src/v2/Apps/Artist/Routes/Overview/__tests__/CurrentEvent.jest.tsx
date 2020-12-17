@@ -14,6 +14,9 @@ describe("CurrentEvent", () => {
   const getWrapper = async (breakpoint: Breakpoint = "xl") => {
     return await renderRelayTree({
       Component: CurrentEvent,
+      mockData: {
+        artist: CurrentEventFixture,
+      } as CurrentEvent_Test_QueryRawResponse,
       query: graphql`
         query CurrentEvent_Test_Query @raw_response_type {
           artist(id: "pablo-picasso") {
@@ -21,9 +24,6 @@ describe("CurrentEvent", () => {
           }
         }
       `,
-      mockData: {
-        artist: CurrentEventFixture,
-      } as CurrentEvent_Test_QueryRawResponse,
     })
   }
 

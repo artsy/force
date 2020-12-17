@@ -47,8 +47,8 @@ export const SmsSecondFactorModal: React.FC<SmsSecondFactorModalProps> = props =
 
     try {
       await EnableSecondFactor(relayEnvironment, {
-        secondFactorID: secondFactor.internalID,
         code: values.code,
+        secondFactorID: secondFactor.internalID,
       })
 
       onComplete()
@@ -93,11 +93,11 @@ export const SmsSecondFactorModal: React.FC<SmsSecondFactorModalProps> = props =
 
       try {
         await UpdateSmsSecondFactor(relayEnvironment, {
-          secondFactorID: secondFactor.internalID,
           attributes: {
-            phoneNumber: values.phoneNumber,
             countryCode: values.countryCode,
+            phoneNumber: values.phoneNumber,
           },
+          secondFactorID: secondFactor.internalID,
         })
         const response = await DeliverSecondFactor(relayEnvironment, {
           secondFactorID: secondFactor.internalID,
@@ -236,7 +236,7 @@ export const SmsSecondFactorModal: React.FC<SmsSecondFactorModalProps> = props =
     >
       <Wizard
         onComplete={handleOnComplete}
-        initialValues={{ countryCode: "US", phoneNumber: "", code: "" }}
+        initialValues={{ code: "", countryCode: "US", phoneNumber: "" }}
         steps={steps}
       >
         {wizardProps => {

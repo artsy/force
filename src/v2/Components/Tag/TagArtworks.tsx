@@ -118,9 +118,9 @@ export class TagArtworks extends React.Component<Props, State> {
 
   renderArtworks() {
     const pulldownOptions = [
-      { val: "-partner_updated_at", name: "Recently Updated" },
-      { val: "-year", name: "Artwork Year (desc.)" },
-      { val: "year", name: "Artwork Year (asc.)" },
+      { name: "Recently Updated", val: "-partner_updated_at" },
+      { name: "Artwork Year (desc.)", val: "-year" },
+      { name: "Artwork Year (asc.)", val: "year" },
     ]
     const selectedSort = pulldownOptions.find(
       sort => sort.val === this.props.sort

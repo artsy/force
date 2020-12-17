@@ -76,20 +76,20 @@ export class ArtworkSidebarBidAction extends React.Component<
   }
 
   @track((props: ArtworkSidebarBidActionProps) => ({
+    action_type: Schema.ActionType.ClickedBid,
     artwork_slug: props.artwork.slug,
+    auction_slug: props.artwork.sale.slug,
+    context_page: Schema.PageName.ArtworkPage,
     products: [
       {
-        product_id: props.artwork.internalID,
-        quantity: 1,
         price:
           props.artwork.myLotStanding &&
           props.artwork.myLotStanding[0] &&
           props.artwork.myLotStanding[0].most_recent_bid.max_bid.cents / 100,
+        product_id: props.artwork.internalID,
+        quantity: 1,
       },
     ],
-    auction_slug: props.artwork.sale.slug,
-    context_page: Schema.PageName.ArtworkPage,
-    action_type: Schema.ActionType.ClickedBid,
   }))
   redirectToBid(firstIncrement: number) {
     const { slug, sale } = this.props.artwork
@@ -99,11 +99,11 @@ export class ArtworkSidebarBidAction extends React.Component<
   }
 
   @track({
-    type: Schema.Type.Button,
+    action_type: Schema.ActionType.Click,
+    context_module: Schema.ContextModule.Sidebar,
     flow: Schema.Flow.Auctions,
     subject: Schema.Subject.EnterLiveAuction,
-    context_module: Schema.ContextModule.Sidebar,
-    action_type: Schema.ActionType.Click,
+    type: Schema.Type.Button,
   })
   redirectToLiveBidding(me: ArtworkSidebarBidAction_me | null) {
     const { slug } = this.props.artwork.sale
@@ -251,8 +251,8 @@ export class ArtworkSidebarBidAction extends React.Component<
       )
       const firstIncrement = increments[0]
       const selectOptions = increments.map(increment => ({
-        value: increment.cents.toString(),
         text: increment.display,
+        value: increment.cents.toString(),
       }))
 
       if (!qualifiedForBidding && userLacksIdentityVerification) {

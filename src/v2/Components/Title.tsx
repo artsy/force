@@ -11,11 +11,11 @@ export interface TitleProps extends React.HTMLProps<HTMLDivElement> {
 }
 
 const titleSizes = {
-  xxsmall: "s15",
-  small: "s23",
-  medium: "s30",
   large: "s37",
+  medium: "s30",
+  small: "s23",
   xlarge: "s50",
+  xxsmall: "s15",
 }
 
 /**
@@ -39,8 +39,8 @@ const StyledTitle = styled(Title)`
 `
 
 StyledTitle.defaultProps = {
-  titleSize: "medium",
   color: "inherit",
+  titleSize: "medium",
 }
 
 export default StyledTitle

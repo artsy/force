@@ -41,8 +41,8 @@ export class Dropdown extends React.Component<DropdownProps, DropdownState> {
 
   onSelect(slice: string, value: string) {
     this.setState({
-      selected: value,
       isHovered: false,
+      selected: value,
     })
     this.props.onSelected(slice, value)
   }
@@ -119,7 +119,7 @@ export class Dropdown extends React.Component<DropdownProps, DropdownState> {
             name="arrow-down"
             fontSize="9px"
             color={buttonTextColor}
-            style={{ position: "absolute", right: 15, lineHeight: "inherit" }}
+            style={{ lineHeight: "inherit", position: "absolute", right: 15 }}
           />
         </Button>
         <Nav style={navStyle}>{navItems}</Nav>

@@ -17,14 +17,14 @@ describe("AMP Templates", () => {
 
   beforeEach(() => {
     res = {
+      _,
       article: new Article(fixtures.article),
+      asset: jest.fn(),
       crop: url => url,
       embed,
-      resize: url => url,
       moment: jest.fn(),
-      asset: jest.fn(),
+      resize: url => url,
       sd: {},
-      _,
     }
   })
 
@@ -85,14 +85,14 @@ describe("AMP Templates", () => {
       res.article = new Article({
         sections: [
           {
-            type: "image_collection",
             images: [
               {
+                caption: "<p>An image caption.</p>",
                 type: "image",
                 url: "http://image.com",
-                caption: "<p>An image caption.</p>",
               },
             ],
+            type: "image_collection",
           },
         ],
       })
@@ -106,14 +106,14 @@ describe("AMP Templates", () => {
       res.article = new Article({
         sections: [
           {
-            type: "image_set",
             images: [
               {
+                caption: "<p>An image caption.</p>",
                 type: "image",
                 url: "http://image.com",
-                caption: "<p>An image caption.</p>",
               },
             ],
+            type: "image_set",
           },
         ],
       })

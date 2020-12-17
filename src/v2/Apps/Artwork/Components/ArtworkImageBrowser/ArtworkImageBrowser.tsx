@@ -41,12 +41,12 @@ export class LargeArtworkImageBrowser extends React.Component<
     const carouselImages = typeof window === "undefined" ? [images[0]] : images
 
     const options = {
-      prevNextButtons: false,
-      wrapAround: true,
-      pageDots: hasMultipleImages,
       cellAlign: "left",
       draggable: false,
       lazyLoad: true,
+      pageDots: hasMultipleImages,
+      prevNextButtons: false,
+      wrapAround: true,
     }
 
     // The maxHeight was added in order to fix how Google bot renders the page
@@ -124,11 +124,11 @@ export class SmallArtworkImageBrowser extends React.Component<
     const carouselImages = typeof window === "undefined" ? [images[0]] : images
     const hasMultipleImages = this.props.images.length > 1
     const options = {
-      prevNextButtons: false,
-      wrapAround: true,
       draggable: hasMultipleImages,
       groupCells: 1,
       pageDots: hasMultipleImages,
+      prevNextButtons: false,
+      wrapAround: true,
     }
 
     // The maxHeight was added in order to fix how Google bot renders the page

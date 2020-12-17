@@ -12,8 +12,8 @@ jest.unmock("react-relay")
 
 describe("ArtistBio", () => {
   const biographyBlurb = {
-    text: '<a href="hi">hello how are you</a>',
     credit: "",
+    text: '<a href="hi">hello how are you</a>',
   }
 
   const getWrapper = () => {
@@ -23,6 +23,12 @@ describe("ArtistBio", () => {
           <ArtistBio bio={bio} />
         </MockBoot>
       ),
+      mockData: {
+        bio: {
+          biographyBlurb,
+          id: "unused",
+        },
+      } as ArtistBioTestQueryRawResponse,
       query: graphql`
         query ArtistBioTestQuery @raw_response_type {
           bio: artist(id: "unused") {
@@ -30,12 +36,6 @@ describe("ArtistBio", () => {
           }
         }
       `,
-      mockData: {
-        bio: {
-          id: "unused",
-          biographyBlurb,
-        },
-      } as ArtistBioTestQueryRawResponse,
     })
   }
 

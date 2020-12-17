@@ -18,6 +18,7 @@ describe("ArtistSeriesMeta", () => {
           </MockBoot>
         )
       },
+      mockData: response,
       query: graphql`
         query ArtistSeriesMeta_TestQuery($slug: ID!) @raw_response_type {
           artistSeries(id: $slug) {
@@ -28,7 +29,6 @@ describe("ArtistSeriesMeta", () => {
       variables: {
         slug: "pumpkins",
       },
-      mockData: response,
     })
   }
   it("creates search and social meta tags for title", async () => {
@@ -72,23 +72,23 @@ describe("ArtistSeriesMeta", () => {
 
 const ArtistSeriesMetaFixture: ArtistSeriesMeta_TestQueryRawResponse = {
   artistSeries: {
-    title: "Pumpkins",
-    description:
-      "Yayoi Kusama's instantly recognizable pumpkins have become fixtures of contemporary art and popular culture—and have helped make her one of the world’s most expensive living female artists. Kusama began drawing pumpkins as a child in pre-war Japan, where her family owned a plant nursery that farmed kabocha squash. Her obsession only grew with time. Kusama’s signature dotted pumpkins have since appeared as works on paper, handheld figurines, towering sculptures, and in the artist’s immersive infinity room installations. To Kusama, the pumpkins are warm and humorous motifs with figures that, at times, feel human. “I was enchanted by their charming and winsome form,” Kusama once said. “What appealed to me most was the pumpkin's generous unpretentiousness.”",
     artists: [
       {
-        name: "Yayoi Kusama",
         id: "abc123",
+        name: "Yayoi Kusama",
       },
     ],
+    description:
+      "Yayoi Kusama's instantly recognizable pumpkins have become fixtures of contemporary art and popular culture—and have helped make her one of the world’s most expensive living female artists. Kusama began drawing pumpkins as a child in pre-war Japan, where her family owned a plant nursery that farmed kabocha squash. Her obsession only grew with time. Kusama’s signature dotted pumpkins have since appeared as works on paper, handheld figurines, towering sculptures, and in the artist’s immersive infinity room installations. To Kusama, the pumpkins are warm and humorous motifs with figures that, at times, feel human. “I was enchanted by their charming and winsome form,” Kusama once said. “What appealed to me most was the pumpkin's generous unpretentiousness.”",
+    title: "Pumpkins",
   },
 }
 
 const ArtistSeriesMetaFixtureNoArtist: ArtistSeriesMeta_TestQueryRawResponse = {
   artistSeries: {
-    title: "Squashes",
+    artists: [],
     description:
       "Squashes are a lot like pumpkins except that they don't belong to any particular holiday. The most independent gourd, they always remain in style throughout the year.",
-    artists: [],
+    title: "Squashes",
   },
 }

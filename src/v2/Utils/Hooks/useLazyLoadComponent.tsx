@@ -23,5 +23,5 @@ export const useLazyLoadComponent = () => {
     </LazyLoadComponent>
   )
 
-  return { isEnteredView, Waypoint }
+  return { Waypoint, isEnteredView }
 }

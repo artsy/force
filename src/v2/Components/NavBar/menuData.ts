@@ -20,354 +20,355 @@ export interface MenuLinkData {
 }
 
 export const ARTISTS_SUBMENU_DATA: MenuLinkData = {
-  text: "Artists",
   menu: {
-    title: "Artists",
     links: [
       {
-        text: "Portrayals of Queer Love",
         href: "/collection/queer-love-pride-month-2020",
+        text: "Portrayals of Queer Love",
       },
       {
-        text: "Contemporary Women Surrealists",
         href: "/collection/contemporary-women-surrealists",
+        text: "Contemporary Women Surrealists",
       },
       {
-        text: "Black Figurative Painters on the Rise",
         href: "/collection/black-figurative-painters",
+        text: "Black Figurative Painters on the Rise",
       },
       {
-        text: "Modern & Contemporary Masters",
+        dividerBelow: true,
         href: "/collection/master-works",
-        dividerBelow: true,
+        text: "Modern & Contemporary Masters",
       },
       {
-        text: "Career Stage",
         menu: {
-          title: "Career Stage",
           links: [
             {
-              text: "Blue-Chip Artists",
               href: "/collection/blue-chip-artists",
+              text: "Blue-Chip Artists",
             },
             {
-              text: "Critically Acclaimed Artists",
               href: "/collection/critically-acclaimed-artists",
+              text: "Critically Acclaimed Artists",
             },
             {
-              text: "Trending Emerging Artists",
               href: "/collection/trending-emerging-artists",
+              text: "Trending Emerging Artists",
             },
             {
-              text: "New & Noteworthy Artists",
               href: "/collection/new-and-noteworthy-artists",
+              text: "New & Noteworthy Artists",
             },
           ],
+          title: "Career Stage",
         },
+        text: "Career Stage",
       },
       {
-        text: "Artist Nationality & Region",
         menu: {
-          title: "Artist Nationality & Region",
           links: [
             {
-              text: "African",
               href: "/collection/african-artists",
+              text: "African",
             },
             {
-              text: "Asian",
               href: "/collection/asian-artists",
+              text: "Asian",
             },
             {
-              text: "Australian & Oceanian",
               href: "/collection/oceanian-artists",
+              text: "Australian & Oceanian",
             },
             {
-              text: "European",
               href: "/collection/european-artists",
+              text: "European",
             },
             {
-              text: "Latin American",
               href: "/collection/latin-american-artists",
+              text: "Latin American",
             },
             {
-              text: "Middle Eastern",
               href: "/collection/middle-eastern-artists",
+              text: "Middle Eastern",
             },
             {
-              text: "North American",
               href: "/collection/north-american-artists",
+              text: "North American",
             },
           ],
+          title: "Artist Nationality & Region",
         },
+        text: "Artist Nationality & Region",
       },
       {
-        text: "Featured Artists",
         menu: {
-          title: "Featured Artists",
           links: [
             {
-              text: "Agnes Martin",
               href: "/artist/agnes-martin/works-for-sale",
+              text: "Agnes Martin",
             },
             {
-              text: "Julie Mehretu",
               href: "/artist/julie-mehretu/works-for-sale",
+              text: "Julie Mehretu",
             },
             {
-              text: "Eddie Martinez",
               href: "/artist/eddie-martinez/works-for-sale",
+              text: "Eddie Martinez",
             },
             {
-              text: "Otis Kwame Kye Quaicoe",
               href: "/artist/otis-kwame-kye-quaicoe/works-for-sale",
+              text: "Otis Kwame Kye Quaicoe",
             },
             {
-              text: "Zanele Muholi",
               href: "/artist/zanele-muholi/works-for-sale",
+              text: "Zanele Muholi",
             },
             {
-              text: "Lee Ufan",
               href: "/artist/lee-ufan/works-for-sale",
+              text: "Lee Ufan",
             },
             {
-              text: "Massimo Vitali",
               href: "/artist/massimo-vitali/works-for-sale",
+              text: "Massimo Vitali",
             },
           ],
+          title: "Featured Artists",
         },
+        text: "Featured Artists",
       },
       {
-        text: "Top Categories",
+        dividerBelow: true,
         menu: {
-          title: "Top Categories",
           links: [
             {
-              text: "In-Demand Artists",
               href: "/collection/in-demand-artists",
+              text: "In-Demand Artists",
             },
             {
-              text: "Emerging Painters",
               href: "/collection/emerging-painters",
+              text: "Emerging Painters",
             },
             {
-              text: "Critically Acclaimed Photographers",
               href: "/collection/critically-acclaimed-photographers",
+              text: "Critically Acclaimed Photographers",
             },
             {
-              text: "Notable Street Artists",
               href: "/collection/notable-street-artists",
+              text: "Notable Street Artists",
             },
             {
-              text: "Limited-Edition Prints by Leading Artists",
               href: "/collection/limited-edition-prints-trending-artists",
+              text: "Limited-Edition Prints by Leading Artists",
             },
           ],
+          title: "Top Categories",
         },
-        dividerBelow: true,
+        text: "Top Categories",
       },
       {
-        text: "View all artists",
         href: "/artists",
+        text: "View all artists",
       },
     ],
+    title: "Artists",
   },
+  text: "Artists",
 }
 
 export const ARTWORKS_SUBMENU_DATA: MenuLinkData = {
-  text: "Artworks",
   menu: {
-    title: "Artworks",
     links: [
       {
-        text: "New This Week",
         href: "/collection/new-this-week",
+        text: "New This Week",
       },
       {
-        text: "What’s Trending",
         href: "/collection/highlights-this-month",
+        text: "What’s Trending",
       },
       {
-        text: "Exclusively on Artsy",
         href: "/collection/exclusively-on-artsy",
+        text: "Exclusively on Artsy",
       },
       {
-        text: "Limited Editions",
+        dividerBelow: true,
         href: "/collection/limited-edition-works",
-        dividerBelow: true,
+        text: "Limited Editions",
       },
       {
-        text: "Highlights From",
         menu: {
-          title: "Highlights From",
           links: [
             {
-              text: "Auction",
               href: "/collection/auction-highlights",
+              text: "Auction",
             },
             {
-              text: "Art Fairs",
               href: "/collection/art-fair-highlights",
+              text: "Art Fairs",
             },
             {
-              text: "Gallery Shows",
               href: "/collection/gallery-show-highlights",
+              text: "Gallery Shows",
             },
             {
-              text: "Nonprofit Shops",
               href: "/collection/nonprofit-shops",
+              text: "Nonprofit Shops",
             },
           ],
+          title: "Highlights From",
         },
+        text: "Highlights From",
       },
       {
-        text: "Price",
         menu: {
-          title: "Price",
           links: [
             {
-              text: "$50,000 and Above",
               href: "/collect?price_range=50000-%2A",
+              text: "$50,000 and Above",
             },
             {
-              text: "$25,000–$50,000",
               href: "/collect?price_range=25000-50000",
+              text: "$25,000–$50,000",
             },
             {
-              text: "$10,000–$25,000",
               href: "/collect?price_range=10000-25000",
+              text: "$10,000–$25,000",
             },
             {
-              text: "$5,000–$10,000",
               href: "/collect?price_range=5000-10000",
+              text: "$5,000–$10,000",
             },
             {
-              text: "Under $5,000",
               href: "/collect?price_range=0-5000",
+              text: "Under $5,000",
             },
           ],
+          title: "Price",
         },
+        text: "Price",
       },
       {
-        text: "Medium",
         menu: {
-          title: "Medium",
           links: [
             {
-              text: "Painting",
               href: "/collection/painting",
+              text: "Painting",
             },
             {
-              text: "Prints",
               href: "/collection/prints",
+              text: "Prints",
             },
             {
-              text: "Photography",
               href: "/collection/photography",
+              text: "Photography",
             },
             {
-              text: "Sculpture",
               href: "/collection/sculpture",
+              text: "Sculpture",
             },
             {
-              text: "Drawing",
               href: "/collection/drawing",
+              text: "Drawing",
             },
             {
-              text: "Mixed Media",
               href: "/collection/mixed-media",
+              text: "Mixed Media",
             },
             {
-              text: "Design",
               href: "/collection/design",
+              text: "Design",
             },
           ],
+          title: "Medium",
         },
+        text: "Medium",
       },
       {
-        text: "Movements",
+        dividerBelow: true,
         menu: {
-          title: "Movements",
           links: [
             {
-              text: "Contemporary",
               href: "/collection/contemporary",
+              text: "Contemporary",
             },
             {
-              text: "Street Art",
               href: "/collection/street-art",
+              text: "Street Art",
             },
             {
-              text: "Pop Art",
               href: "/collection/pop-art",
+              text: "Pop Art",
             },
             {
-              text: "Abstract Expressionism",
               href: "/collection/abstract-expressionism",
+              text: "Abstract Expressionism",
             },
             {
-              text: "Post-War",
               href: "/collection/post-war",
+              text: "Post-War",
             },
             {
-              text: "Impressionism & Modernism",
               href: "/collection/impressionist-and-modern",
+              text: "Impressionism & Modernism",
             },
             {
-              text: "Old Masters",
               href: "/collection/old-masters",
+              text: "Old Masters",
             },
           ],
+          title: "Movements",
         },
-        dividerBelow: true,
+        text: "Movements",
       },
-      { text: "View all artworks", href: "/collect" },
+      { href: "/collect", text: "View all artworks" },
     ],
+    title: "Artworks",
   },
+  text: "Artworks",
 }
 
 export const MENU_DATA: MenuData = {
-  title: "", // root menu, so no title
-  links: [
+  // root menu, so no title
+links: [
     { ...ARTISTS_SUBMENU_DATA },
     { ...ARTWORKS_SUBMENU_DATA },
     {
-      text: "Auctions",
       href: "/auctions",
+      text: "Auctions",
     },
     {
-      text: "Viewing Rooms",
       href: "/viewing-rooms",
+      text: "Viewing Rooms",
     },
     {
-      text: "Editorial",
       href: "/articles",
+      text: "Editorial",
     },
     {
-      text: "Galleries",
       href: "/galleries",
+      text: "Galleries",
     },
     {
-      text: "Fairs",
       href: "/fairs",
+      text: "Fairs",
     },
     {
-      text: "Shows",
       href: "/shows",
+      text: "Shows",
     },
     {
-      text: "Museums",
       href: "/institutions",
+      text: "Museums",
     },
     {
-      text: "Consign",
       href: "/consign",
+      text: "Consign",
     },
     {
-      text: "Artsy for Galleries",
       href: "/gallery-partnerships",
+      text: "Artsy for Galleries",
     },
     // NB. that desktop and mobile currently handle logged-in/out state links
     // such as "log in" or "account" separately
-  ],
+  ], 
+  title: "",
 }

@@ -15,6 +15,7 @@ describe("CV Route", () => {
   const getWrapper = async (breakpoint: Breakpoint = "xl") => {
     return await renderRelayTree({
       Component: CVRoute,
+      mockData: CVFixture,
       query: graphql`
         query CV_Test_Query($artistID: String!) @raw_response_type {
           viewer {
@@ -22,7 +23,6 @@ describe("CV Route", () => {
           }
         }
       `,
-      mockData: CVFixture,
       variables: {
         artistID: "pablo-picasso",
       },

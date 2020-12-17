@@ -40,12 +40,12 @@ export const ArtistSeriesArtworkRail: React.FC<Props> = ({ artwork }) => {
     const properties: ClickedArtworkGroup = {
       action: ActionType.clickedArtworkGroup,
       context_module: ContextModule.moreFromThisSeries,
-      context_page_owner_type: OwnerType.artwork,
-      context_page_owner_slug: artwork.slug,
       context_page_owner_id: artwork.internalID,
-      destination_page_owner_type: OwnerType.artwork,
+      context_page_owner_slug: artwork.slug,
+      context_page_owner_type: OwnerType.artwork,
       destination_page_owner_id: artworkID,
       destination_page_owner_slug: artworkSlug,
+      destination_page_owner_type: OwnerType.artwork,
       horizontal_slide_position: index,
       type: "thumbnail",
     }
@@ -56,12 +56,12 @@ export const ArtistSeriesArtworkRail: React.FC<Props> = ({ artwork }) => {
     const properties: ClickedArtworkGroup = {
       action: ActionType.clickedArtworkGroup,
       context_module: ContextModule.moreFromThisSeries,
-      context_page_owner_type: OwnerType.artwork,
-      context_page_owner_slug: artwork.slug,
       context_page_owner_id: artwork.internalID,
-      destination_page_owner_type: OwnerType.artistSeries,
+      context_page_owner_slug: artwork.slug,
+      context_page_owner_type: OwnerType.artwork,
       destination_page_owner_id: artistSeries.internalID,
       destination_page_owner_slug: artistSeries.slug,
+      destination_page_owner_type: OwnerType.artistSeries,
       type: "viewAll",
     }
     trackEvent(properties)

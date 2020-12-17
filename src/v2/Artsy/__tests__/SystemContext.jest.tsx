@@ -33,8 +33,8 @@ const WithRelayEnvironment = Artsy.withSystemContext(ShowRelayEnvironment)
 
 describe("Artsy context", () => {
   const user = {
-    id: "andy-warhol",
     accessToken: "secret",
+    id: "andy-warhol",
   }
 
   it("injects default renderProps", done => {
@@ -67,8 +67,8 @@ describe("Artsy context", () => {
     beforeAll(() => {
       originalEnv = process.env
       process.env = Object.assign({}, originalEnv, {
-        USER_ID: "user-id-from-env",
         USER_ACCESS_TOKEN: "user-access-token-from-env",
+        USER_ID: "user-id-from-env",
       })
     })
 

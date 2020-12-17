@@ -14,22 +14,22 @@ describe("ConversationMessages", () => {
               },
               {
                 node: {
+                  attachments: [],
+                  body: "",
+                  createdAt: Date.now().toString(),
                   id: "123",
                   internalID: "123",
-                  body: "",
                   isFromUser: true,
-                  createdAt: Date.now().toString(),
-                  attachments: [],
                 },
               },
               {
                 node: {
+                  attachments: [],
+                  body: "hello world",
+                  createdAt: Date.now().toString(),
                   id: "456",
                   internalID: "456",
-                  body: "hello world",
                   isFromUser: true,
-                  createdAt: Date.now().toString(),
-                  attachments: [],
                 },
               },
             ],

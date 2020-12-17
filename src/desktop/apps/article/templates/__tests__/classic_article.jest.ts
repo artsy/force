@@ -13,19 +13,19 @@ describe("Article Templates", () => {
   it("renders articles in a team channel", () => {
     const html = render("article")({
       article: new Article({
-        title: "Channel title",
-        sections: [],
         contributing_authors: [],
+        sections: [],
+        title: "Channel title",
       }),
+      asset: jest.fn(),
       channel: new Channel({
-        type: "team",
-        name: "Gallery Insights",
         links: [],
+        name: "Gallery Insights",
+        type: "team",
       }),
       crop: url => url,
-      resize: url => url,
       moment: jest.fn(),
-      asset: jest.fn(),
+      resize: url => url,
       sd: {},
       stitch: {
         components: {

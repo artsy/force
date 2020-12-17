@@ -77,8 +77,8 @@ describe("InfiniteScrollArticle", () => {
         .find(InfiniteScrollArticle)
         .instance() as InfiniteScrollArticle
       instance.onEnter(props.article, {
-        previousPosition: "below",
         currentPosition: "inside",
+        previousPosition: "below",
       })
 
       expect(window.history.replaceState).not.toBeCalled()
@@ -90,8 +90,8 @@ describe("InfiniteScrollArticle", () => {
         .find(InfiniteScrollArticle)
         .instance() as InfiniteScrollArticle
       instance.onEnter(props.article, {
-        previousPosition: "above",
         currentPosition: "inside",
+        previousPosition: "above",
       })
 
       expect(window.history.replaceState).toBeCalledWith(
@@ -113,8 +113,8 @@ describe("InfiniteScrollArticle", () => {
         .find(InfiniteScrollArticle)
         .instance() as InfiniteScrollArticle
       instance.onLeave(1, {
-        previousPosition: "inside",
         currentPosition: "below",
+        previousPosition: "inside",
       })
 
       expect(window.history.replaceState).not.toBeCalled()
@@ -127,8 +127,8 @@ describe("InfiniteScrollArticle", () => {
         .instance() as InfiniteScrollArticle
       instance.setState({ articles: [ShortStandardArticle, StandardArticle] })
       instance.onLeave(0, {
-        previousPosition: "inside",
         currentPosition: "above",
+        previousPosition: "inside",
       })
 
       expect(window.history.replaceState).toBeCalledWith(

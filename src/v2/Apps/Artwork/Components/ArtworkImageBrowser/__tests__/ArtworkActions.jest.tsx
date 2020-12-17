@@ -31,6 +31,7 @@ describe("ArtworkActions", () => {
     const { artwork, user } = data
     return await renderRelayTree({
       Component: ArtworkActions,
+      mockData: { artwork } as ArtworkActions_Test_QueryRawResponse,
       query: graphql`
         query ArtworkActions_Test_Query($artworkID: String!)
           @raw_response_type {
@@ -39,7 +40,6 @@ describe("ArtworkActions", () => {
           }
         }
       `,
-      mockData: { artwork } as ArtworkActions_Test_QueryRawResponse,
       variables: {
         artworkID: "matt-z-and-percy-still-life",
       },
@@ -197,8 +197,8 @@ describe("ArtworkActions", () => {
           },
           user: {
             ...ArtworkActionsFixture.user,
-            type: "User",
             roles: [],
+            type: "User",
           },
         }
         const wrapper = await getWrapper("lg", data)
@@ -236,8 +236,8 @@ describe("ArtworkActions", () => {
         },
         user: {
           ...ArtworkActionsFixture.user,
-          type: "User",
           roles: [],
+          type: "User",
         },
       }
       const wrapper = await getWrapper("xs", data)

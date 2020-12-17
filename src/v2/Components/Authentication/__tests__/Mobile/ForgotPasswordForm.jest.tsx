@@ -13,9 +13,9 @@ describe("MobileForgotPasswordForm", () => {
 
   beforeEach(() => {
     props = {
-      values: { email: "email@email.com" },
       handleSubmit: jest.fn(),
       handleTypeChange: jest.fn(),
+      values: { email: "email@email.com" },
     }
     window.grecaptcha.execute.mockClear()
   })

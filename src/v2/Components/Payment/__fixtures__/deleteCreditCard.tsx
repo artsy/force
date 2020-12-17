@@ -12,10 +12,10 @@ export const deletingCreditCardFailed = {
   deleteCreditCard: {
     creditCardOrError: {
       mutationError: {
-        type: "payment_error",
-        message: "Payment error",
         detail: "No card found",
         error: null,
+        message: "Payment error",
+        type: "payment_error",
       },
     },
   },

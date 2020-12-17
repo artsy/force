@@ -41,8 +41,8 @@ const StyledTextLink = styled(TextLink)`
 `
 
 StyledTextLink.defaultProps = {
-  underline: false,
   color: colors.grayBold,
+  underline: false,
 }
 
 export default StyledTextLink

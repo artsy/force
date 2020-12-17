@@ -26,14 +26,14 @@ export async function sendAuthData(
   values: { [key: string]: any; _csrf: string }
 ) {
   const res = await fetch(url, {
+    body: JSON.stringify(values),
+    credentials: "same-origin",
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
       "X-Requested-With": "XMLHttpRequest",
     },
     method: "POST",
-    credentials: "same-origin",
-    body: JSON.stringify(values),
   })
   const data = await res.json()
   return data

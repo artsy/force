@@ -41,8 +41,8 @@ describe("default header component", () => {
 
   beforeEach(() => {
     props = {
-      headerArtworks: defaultCollectionHeaderArtworks,
       defaultHeaderImageHeight: 1000,
+      headerArtworks: defaultCollectionHeaderArtworks,
     }
     ;(useTracking as jest.Mock).mockImplementation(() => {
       return {
@@ -55,7 +55,7 @@ describe("default header component", () => {
     return mount(<CollectionDefaultHeader {...headerProps} />)
   }
 
-  it("a header image's anchor tag references the correct artwork slug ", () => {
+  it("a header image's anchor tag references the correct artwork slug", () => {
     const wrapper = getWrapper(props)
 
     expect(
@@ -77,13 +77,13 @@ describe("default header component", () => {
 
       expect(trackEvent).toBeCalledWith({
         action_type: "Click",
-        context_page: "Collection",
         context_module: "ArtworkBanner",
+        context_page: "Collection",
+        context_page_owner_id: undefined,
+        context_page_owner_slug: undefined,
         context_page_owner_type: "Collection",
         destination_path:
           "/artwork/carrie-mae-weems-untitled-woman-feeding-bird",
-        context_page_owner_id: undefined,
-        context_page_owner_slug: undefined,
       })
     })
   })

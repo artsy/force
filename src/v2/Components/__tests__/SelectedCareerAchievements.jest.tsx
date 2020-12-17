@@ -17,6 +17,9 @@ describe("SelectedCareerAchievements", () => {
   ) => {
     return await renderRelayTree({
       Component: SelectedCareerAchievements,
+      mockData: {
+        artist: artistData,
+      } as SelectedCareerAchievementsTestQueryRawResponse,
       query: graphql`
         query SelectedCareerAchievementsTestQuery @raw_response_type {
           artist(id: "pablo-picasso") {
@@ -24,9 +27,6 @@ describe("SelectedCareerAchievements", () => {
           }
         }
       `,
-      mockData: {
-        artist: artistData,
-      } as SelectedCareerAchievementsTestQueryRawResponse,
     })
   }
 
@@ -101,44 +101,25 @@ describe("SelectedCareerAchievements", () => {
 })
 
 const artistResponse: SelectedCareerAchievementsTestQueryRawResponse["artist"] = {
-  id: "opaque-artist-id",
-  insights: [
-    {
-      type: "COLLECTED",
-      label: "Collected by a major institution",
-      entities: [
-        "Tate",
-        "Museum of Modern Art (MoMA)",
-        "National Gallery of Art, Washington, D.C.",
-        "Indianapolis Museum of Art at Newfields",
-        "San Francisco Museum of Modern Art (SFMOMA)",
-      ],
-    },
-    {
-      type: "SOLO_SHOW",
-      label: "Solo show at a major institution",
-      entities: ["Tate"],
-    },
-    {
-      type: "GROUP_SHOW",
-      label: "Group show at a major institution",
-      entities: ["MoMA PS1"],
-    },
-    {
-      type: "REVIEWED",
-      label: "Reviewed by a major art publication",
-      entities: ["Art Forum"],
-    },
-    {
-      type: "BIENNIAL",
-      label: "Included in a major biennial",
-      entities: ["frieze"],
-    },
-  ],
+  auctionResultsConnection: {
+    edges: [
+      {
+        node: {
+          id: "QXVjdGlvblJlc3VsdDoxMDkzOQ==",
+          organization: "Christie's",
+          price_realized: {
+            display: "$63m",
+          },
+          sale_date: "2017",
+        },
+      },
+    ],
+  },
   highlights: {
     partnersConnection: {
       edges: [
         {
+          id: "UGFydG5lckFydGlzdEVkZ2U6NTIwM2Y1NWU4N2E1M2ViOWZkMDAwMDcw",
           node: {
             categories: [
               {
@@ -164,9 +145,9 @@ const artistResponse: SelectedCareerAchievementsTestQueryRawResponse["artist"] =
             ],
             id: "UGFydG5lcjpnYWdvc2lhbg==",
           },
-          id: "UGFydG5lckFydGlzdEVkZ2U6NTIwM2Y1NWU4N2E1M2ViOWZkMDAwMDcw",
         },
         {
+          id: "UGFydG5lckFydGlzdEVkZ2U6NTU0YWI2MDg3NzZmNzI1MzQyMDYwMDAw",
           node: {
             categories: [
               {
@@ -176,9 +157,9 @@ const artistResponse: SelectedCareerAchievementsTestQueryRawResponse["artist"] =
             ],
             id: "UGFydG5lcjpnYWxlcmllLXRoYWRkYWV1cy1yb3BhYw==",
           },
-          id: "UGFydG5lckFydGlzdEVkZ2U6NTU0YWI2MDg3NzZmNzI1MzQyMDYwMDAw",
         },
         {
+          id: "UGFydG5lckFydGlzdEVkZ2U6NTFlNWE4Zjk4YjNiODFlNDQ4MDAwMDc1",
           node: {
             categories: [
               {
@@ -188,9 +169,9 @@ const artistResponse: SelectedCareerAchievementsTestQueryRawResponse["artist"] =
             ],
             id: "UGFydG5lcjpza2Fyc3RlZHQtZ2FsbGVyeQ==",
           },
-          id: "UGFydG5lckFydGlzdEVkZ2U6NTFlNWE4Zjk4YjNiODFlNDQ4MDAwMDc1",
         },
         {
+          id: "UGFydG5lckFydGlzdEVkZ2U6NTFlNThlZGQyNzViMjRjMzI3MDAwMWNj",
           node: {
             categories: [
               {
@@ -208,23 +189,42 @@ const artistResponse: SelectedCareerAchievementsTestQueryRawResponse["artist"] =
             ],
             id: "UGFydG5lcjphbnRvbi1rZXJuLWdhbGxlcnk=",
           },
-          id: "UGFydG5lckFydGlzdEVkZ2U6NTFlNThlZGQyNzViMjRjMzI3MDAwMWNj",
         },
       ],
     },
   },
-  auctionResultsConnection: {
-    edges: [
-      {
-        node: {
-          price_realized: {
-            display: "$63m",
-          },
-          organization: "Christie's",
-          sale_date: "2017",
-          id: "QXVjdGlvblJlc3VsdDoxMDkzOQ==",
-        },
-      },
-    ],
-  },
+  id: "opaque-artist-id",
+  insights: [
+    {
+      entities: [
+        "Tate",
+        "Museum of Modern Art (MoMA)",
+        "National Gallery of Art, Washington, D.C.",
+        "Indianapolis Museum of Art at Newfields",
+        "San Francisco Museum of Modern Art (SFMOMA)",
+      ],
+      label: "Collected by a major institution",
+      type: "COLLECTED",
+    },
+    {
+      entities: ["Tate"],
+      label: "Solo show at a major institution",
+      type: "SOLO_SHOW",
+    },
+    {
+      entities: ["MoMA PS1"],
+      label: "Group show at a major institution",
+      type: "GROUP_SHOW",
+    },
+    {
+      entities: ["Art Forum"],
+      label: "Reviewed by a major art publication",
+      type: "REVIEWED",
+    },
+    {
+      entities: ["frieze"],
+      label: "Included in a major biennial",
+      type: "BIENNIAL",
+    },
+  ],
 }

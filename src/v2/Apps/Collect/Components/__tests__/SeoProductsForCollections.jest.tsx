@@ -10,8 +10,8 @@ describe("Seo Products for Collection Page", () => {
     const minPriceObject = minPrice
       ? {
           minPrice: {
-            major: minPrice,
             currencyCode: "USD",
+            major: minPrice,
           },
         }
       : {}
@@ -19,8 +19,8 @@ describe("Seo Products for Collection Page", () => {
     const maxPriceObject = maxPrice
       ? {
           maxPrice: {
-            major: maxPrice,
             currencyCode: "USD",
+            major: maxPrice,
           },
         }
       : {}
@@ -35,8 +35,8 @@ describe("Seo Products for Collection Page", () => {
   function buildIndividualPrice(price) {
     return {
       __typename: "Money",
-      major: price,
       currencyCode: "USD",
+      major: price,
     }
   }
 
@@ -52,8 +52,8 @@ describe("Seo Products for Collection Page", () => {
       edges: [
         {
           node: {
-            id: "1",
             availability: "yes",
+            id: "1",
             listPrice,
           },
         },
@@ -69,8 +69,8 @@ describe("Seo Products for Collection Page", () => {
       edges: [
         {
           node: {
-            id: "1",
             availability: "yes",
+            id: "1",
             listPrice,
           },
         },
@@ -81,11 +81,11 @@ describe("Seo Products for Collection Page", () => {
   let props
   beforeEach(() => {
     props = {
-      descending_artworks: buildDescendingArtworks(buildPriceRange(8800, 9000)),
       ascending_artworks: buildAscendingArtworks(buildPriceRange(10, 20)),
       collectionDescription: "A fake description for collection",
-      collectionURL: "A fake URL for collection",
       collectionName: "A fake name for collection",
+      collectionURL: "A fake URL for collection",
+      descending_artworks: buildDescendingArtworks(buildPriceRange(8800, 9000)),
     }
   })
 
@@ -209,7 +209,7 @@ describe("Seo Products for Collection Page", () => {
   })
 
   describe("when both a Money and a PriceRange are present", () => {
-    it("it uses the maxPrice when the descending is a PriceRange", () => {
+    it("uses the maxPrice when the descending is a PriceRange", () => {
       props.ascending_artworks = buildAscendingArtworks(
         buildIndividualPrice(42)
       )
@@ -224,7 +224,7 @@ describe("Seo Products for Collection Page", () => {
       expect(html).toContain('"highPrice":420')
     })
 
-    it("it uses the minPrice when the ascending is a PriceRange", () => {
+    it("uses the minPrice when the ascending is a PriceRange", () => {
       props.ascending_artworks = buildAscendingArtworks(
         buildPriceRange(42, 100)
       )

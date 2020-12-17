@@ -13,8 +13,8 @@ interface State {
 
 export class FollowButton extends React.Component<Props, State> {
   static defaultProps = {
-    isFollowed: false,
     buttonProps: {},
+    isFollowed: false,
   }
 
   state = {

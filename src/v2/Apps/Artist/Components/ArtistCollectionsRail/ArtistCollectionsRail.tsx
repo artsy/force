@@ -34,8 +34,8 @@ export class ArtistCollectionsRail extends React.Component<
     action_type: Schema.ActionType.Click,
     context_module: Schema.ContextModule.CollectionsRail,
     context_page_owner_type: Schema.OwnerType.Artist,
-    type: Schema.Type.Button,
     subject: Schema.Subject.ClickedNextButton,
+    type: Schema.Type.Button,
   })
   trackCarouselNav() {
     // noop

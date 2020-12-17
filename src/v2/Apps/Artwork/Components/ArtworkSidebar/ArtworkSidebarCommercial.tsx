@@ -66,8 +66,8 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
   ArtworkSidebarCommercialContainerState
 > {
   state: ArtworkSidebarCommercialContainerState = {
-    isCommittingCreateOrderMutation: false,
     isCommittingCreateOfferOrderMutation: false,
+    isCommittingCreateOrderMutation: false,
     isErrorModalOpen: false,
     selectedEditionSet: this.firstAvailableEcommerceEditionSet(),
   }
@@ -149,11 +149,11 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
   }
 
   @track<ArtworkSidebarCommercialContainerProps>(props => ({
-    context_module: Schema.ContextModule.Sidebar,
     action_type: Schema.ActionType.ClickedContactGallery,
-    subject: Schema.Subject.ContactGallery,
     artwork_id: props.artwork.internalID,
     artwork_slug: props.artwork.slug,
+    context_module: Schema.ContextModule.Sidebar,
+    subject: Schema.Subject.ContactGallery,
   }))
   handleInquiry() {
     get(this.props, props => props.mediator.trigger) &&
@@ -164,17 +164,17 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
 
   @track<ArtworkSidebarCommercialContainerProps>((props, state, args) => ({
     action_type: Schema.ActionType.ClickedBuyNow,
-    flow: Schema.Flow.BuyNow,
-    type: Schema.Type.Button,
     artwork_id: props.artwork.internalID,
     artwork_slug: props.artwork.slug,
+    flow: Schema.Flow.BuyNow,
     products: [
       {
+        price: currency(props.artwork.listPrice.display).value,
         product_id: props.artwork.internalID,
         quantity: 1,
-        price: currency(props.artwork.listPrice.display).value,
       },
     ],
+    type: Schema.Type.Button,
   }))
   handleCreateOrder() {
     const { user, mediator } = this.props
@@ -209,15 +209,6 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
                   }
                 }
               `,
-              variables: {
-                input: {
-                  artworkId: this.props.artwork.internalID,
-                  editionSetId: get(
-                    this.state,
-                    state => state.selectedEditionSet.internalID
-                  ),
-                },
-              },
               onCompleted: data => {
                 this.setState(
                   { isCommittingCreateOrderMutation: false },
@@ -240,26 +231,35 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
                 )
               },
               onError: this.onMutationError,
+              variables: {
+                input: {
+                  artworkId: this.props.artwork.internalID,
+                  editionSetId: get(
+                    this.state,
+                    state => state.selectedEditionSet.internalID
+                  ),
+                },
+              },
             }
           )
         }
       })
     } else {
       openAuthModal(mediator, {
-        mode: ModalType.signup,
-        redirectTo: location.href,
         contextModule: ContextModule.artworkSidebar,
         intent: Intent.buyNow,
+        mode: ModalType.signup,
+        redirectTo: location.href,
       })
     }
   }
 
   @track<ArtworkSidebarCommercialContainerProps>((props, state, args) => ({
     action_type: Schema.ActionType.ClickedMakeOffer,
-    flow: Schema.Flow.MakeOffer,
-    type: Schema.Type.Button,
     artwork_id: props.artwork.internalID,
     artwork_slug: props.artwork.slug,
+    flow: Schema.Flow.MakeOffer,
+    type: Schema.Type.Button,
   }))
   handleCreateOfferOrder() {
     const { user, mediator } = this.props
@@ -294,15 +294,6 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
                   }
                 }
               `,
-              variables: {
-                input: {
-                  artworkId: this.props.artwork.internalID,
-                  editionSetId: get(
-                    this.state,
-                    state => state.selectedEditionSet.internalID
-                  ),
-                },
-              },
               onCompleted: data => {
                 this.setState(
                   { isCommittingCreateOfferOrderMutation: false },
@@ -325,16 +316,25 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
                 )
               },
               onError: this.onMutationError,
+              variables: {
+                input: {
+                  artworkId: this.props.artwork.internalID,
+                  editionSetId: get(
+                    this.state,
+                    state => state.selectedEditionSet.internalID
+                  ),
+                },
+              },
             }
           )
         }
       })
     } else {
       openAuthModal(mediator, {
-        mode: ModalType.signup,
-        redirectTo: location.href,
         contextModule: ContextModule.artworkSidebar,
         intent: Intent.makeOffer,
+        mode: ModalType.signup,
+        redirectTo: location.href,
       })
     }
   }

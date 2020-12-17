@@ -41,13 +41,13 @@ const Feature: React.FC<FeatureProps> = props => {
     !!featuredRails?.fairs_rail?.items?.length
 
   const resizedSmallPlaceholder = resize(heroVideo.small_placeholder_src, {
-    width: 600,
     convert_to: "jpg",
+    width: 600,
   })
 
   const resizedLargePlaceholder = resize(heroVideo.large_placeholder_src, {
-    width: 1500,
     convert_to: "jpg",
+    width: 1500,
   })
 
   return (
@@ -272,9 +272,9 @@ export const FeaturedContentLink: React.FC<FeaturedLinkType> = props => {
   const height = size === "medium" ? 435 : 490
 
   const croppedUrl = crop(props.image_src, {
-    width: width * devicePixelRatio,
-    height: height * devicePixelRatio,
     convert_to: "jpg",
+    height: height * devicePixelRatio,
+    width: width * devicePixelRatio,
   })
 
   const tracking = useTracking()

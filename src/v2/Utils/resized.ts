@@ -11,7 +11,7 @@ export const resized = (
   src: Resize[0],
   { width, height, ...rest }: Resize[1]
 ): Sized => {
-  const _1x = resize(src, { width, height, ...rest })
+  const _1x = resize(src, { height, width, ...rest })
   const _2x = resize(src, {
     ...(width ? { width: width * 2 } : {}),
     ...(height ? { height: height * 2 } : {}),
@@ -34,8 +34,8 @@ export const cropped = (
   src: Crop[0],
   { width, height, ...rest }: Crop[1]
 ): Sized => {
-  const _1x = crop(src, { width, height, ...rest })
-  const _2x = crop(src, { width: width * 2, height: height * 2, ...rest })
+  const _1x = crop(src, { height, width, ...rest })
+  const _2x = crop(src, { height: height * 2, width: width * 2, ...rest })
 
   return {
     src: _1x,

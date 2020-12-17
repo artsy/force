@@ -36,10 +36,10 @@ class TagContents extends React.Component<Props, State> {
     super(props)
     const { forSale, priceRange, dimensionRange, medium } = this.props.filters
     this.state = {
+      dimensionRange: dimensionRange || "*",
       forSale: forSale || null,
       medium: medium || "*",
       priceRange: priceRange || "*",
-      dimensionRange: dimensionRange || "*",
       sort: this.props.sort || "-partner_updated_at",
     }
   }
@@ -47,10 +47,10 @@ class TagContents extends React.Component<Props, State> {
   handleStateChange = () => {
     const { forSale, medium, priceRange, dimensionRange, sort } = this.state
     const filters = {
+      dimensionRange,
       forSale,
       medium,
       priceRange,
-      dimensionRange,
     }
     this.props.onStateChange({ filters, sort })
   }

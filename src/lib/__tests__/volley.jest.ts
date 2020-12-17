@@ -48,21 +48,21 @@ describe("Reporting metrics to Volley", () => {
     })
     expect(mockSend.mock.calls[0][0]).toEqual(
       expect.objectContaining({
-        serviceName: "force",
         metrics: [
           {
-            type: "timing",
             name: "load-time",
-            timing: 10,
             tags: [`page-type:`, `device-type:desktop`, `mark:dom-complete`],
+            timing: 10,
+            type: "timing",
           },
           {
-            type: "timing",
             name: "load-time",
-            timing: 5,
             tags: [`page-type:`, `device-type:desktop`, `mark:load-event-end`],
+            timing: 5,
+            type: "timing",
           },
         ],
+        serviceName: "force",
       })
     )
   })
@@ -74,21 +74,21 @@ describe("Reporting metrics to Volley", () => {
     })
     expect(mockSend.mock.calls[0][0]).toEqual(
       expect.objectContaining({
-        serviceName: "force",
         metrics: [
           {
-            type: "timing",
             name: "load-time",
-            timing: 10,
             tags: [`page-type:`, `device-type:mobile`, `mark:dom-complete`],
+            timing: 10,
+            type: "timing",
           },
           {
-            type: "timing",
             name: "load-time",
-            timing: 5,
             tags: [`page-type:`, `device-type:mobile`, `mark:load-event-end`],
+            timing: 5,
+            type: "timing",
           },
         ],
+        serviceName: "force",
       })
     )
   })
@@ -100,21 +100,21 @@ describe("Reporting metrics to Volley", () => {
     })
     expect(mockSend.mock.calls[0][0]).toEqual(
       expect.objectContaining({
-        serviceName: "force",
         metrics: [
           {
-            type: "timing",
             name: "load-time",
-            timing: 10,
             tags: [`page-type:`, `device-type:desktop`, `mark:dom-complete`],
+            timing: 10,
+            type: "timing",
           },
           {
-            type: "timing",
             name: "load-time",
-            timing: 5,
             tags: [`page-type:`, `device-type:desktop`, `mark:load-event-end`],
+            timing: 5,
+            type: "timing",
           },
         ],
+        serviceName: "force",
       })
     )
   })
@@ -126,15 +126,15 @@ describe("Reporting metrics to Volley", () => {
     })
     expect(mockSend.mock.calls[0][0]).toEqual(
       expect.objectContaining({
-        serviceName: "force",
         metrics: [
           {
-            type: "timing",
             name: "load-time",
-            timing: 10,
             tags: [`page-type:`, `device-type:desktop`, `mark:dom-complete`],
+            timing: 10,
+            type: "timing",
           },
         ],
+        serviceName: "force",
       })
     )
   })

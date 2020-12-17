@@ -48,10 +48,10 @@ export class ArtistArticles extends Component<
 
     this.props.relay.refetch(
       {
-        first: PAGE_SIZE,
         after: cursor,
         artistID: this.props.artist.slug,
         before: null,
+        first: PAGE_SIZE,
         last: null,
       },
       null,

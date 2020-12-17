@@ -25,6 +25,10 @@ const stepsConfig = {
     shortLabel: "Describe",
     submissionPath: "/consign/submission/:id/describe-your-work",
   },
+  thankYou: {
+    component: ThankYou,
+    submissionPath: "/consign/submission/:id/thank-you",
+  },
   uploadLanding: {
     component: UploadPhotoLanding,
     submissionPath: "/consign/submission/:id/upload",
@@ -34,10 +38,6 @@ const stepsConfig = {
     label: "Upload Photos",
     shortLabel: "Upload",
     submissionPath: "/consign/submission/:id/upload-photos",
-  },
-  thankYou: {
-    submissionPath: "/consign/submission/:id/thank-you",
-    component: ThankYou,
   },
 }
 

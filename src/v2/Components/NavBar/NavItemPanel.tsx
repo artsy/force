@@ -12,12 +12,6 @@ const AnimatedPanel = styled(animated.div)<{
   top: 100%;
   ${({ ...props }) =>
     ({
-      right: css`
-        right: 0;
-      `,
-      left: css`
-        left: 0;
-      `,
       center: css`
         left: 0;
         margin-left: -50%;
@@ -26,6 +20,12 @@ const AnimatedPanel = styled(animated.div)<{
         left: 0;
         right: 0;
         margin-left: -${props["data-offsetleft"] ?? 0}px;
+      `,
+      left: css`
+        left: 0;
+      `,
+      right: css`
+        right: 0;
       `,
     }[props["data-menuanchor"]])}
 `

@@ -12,21 +12,6 @@ export const UpdateAppSecondFactor = (
   return new Promise<UpdateAppSecondFactorMutationResponse>(
     async (resolve, reject) => {
       commitMutation<UpdateAppSecondFactorMutation>(environment, {
-        onCompleted: data => {
-          const response = data.updateAppSecondFactor.secondFactorOrErrors
-
-          switch (response.__typename) {
-            case "AppSecondFactor":
-              resolve(data)
-              break
-            case "Errors":
-              reject(response.errors)
-              break
-          }
-        },
-        onError: error => {
-          reject(error)
-        },
         mutation: graphql`
           mutation UpdateAppSecondFactorMutation(
             $input: UpdateAppSecondFactorInput!
@@ -48,6 +33,21 @@ export const UpdateAppSecondFactor = (
             }
           }
         `,
+        onCompleted: data => {
+          const response = data.updateAppSecondFactor.secondFactorOrErrors
+
+          switch (response.__typename) {
+            case "AppSecondFactor":
+              resolve(data)
+              break
+            case "Errors":
+              reject(response.errors)
+              break
+          }
+        },
+        onError: error => {
+          reject(error)
+        },
         variables: {
           input,
         },
