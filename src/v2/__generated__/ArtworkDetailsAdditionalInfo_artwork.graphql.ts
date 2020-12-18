@@ -27,6 +27,10 @@ export type ArtworkDetailsAdditionalInfo_artwork = {
         readonly label: string | null;
         readonly details: string | null;
     } | null;
+    readonly mediumType: {
+        readonly __typename: string;
+    } | null;
+    readonly " $fragmentRefs": FragmentRefs<"ArtworkDetailsMediumModal_artwork">;
     readonly " $refType": "ArtworkDetailsAdditionalInfo_artwork";
 };
 export type ArtworkDetailsAdditionalInfo_artwork$data = ArtworkDetailsAdditionalInfo_artwork;
@@ -148,10 +152,33 @@ return {
       "plural": false,
       "selections": (v0/*: any*/),
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "ArtworkMedium",
+      "kind": "LinkedField",
+      "name": "mediumType",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "__typename",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArtworkDetailsMediumModal_artwork"
     }
   ],
   "type": "Artwork"
 };
 })();
-(node as any).hash = '866bbb3484e7b8b12947081a9d28eb6a';
+(node as any).hash = '161cae3ba06592435e444531a87c7248';
 export default node;

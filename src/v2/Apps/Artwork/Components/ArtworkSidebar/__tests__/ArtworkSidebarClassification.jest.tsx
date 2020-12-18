@@ -2,17 +2,14 @@ import { graphql } from "react-relay"
 import { ArtworkSidebarClassificationFragmentContainer } from "../../ArtworkSidebar/ArtworkSidebarClassification"
 import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
 
-jest.mock("v2/Components/ArtworkClassifications", () => ({
-  ArtworkClassificationsQueryRenderer: () =>
-    "ArtworkClassificationsQueryRenderer",
-}))
-
-jest.mock("v2/Components/Modal/Modal", () => ({
-  __esModule: true,
-  default: ({ show, children }: any) => {
-    return show ? children : null
-  },
-}))
+jest.mock(
+  "v2/Apps/Artwork/Components/ArtworkSidebarClassificationsModal",
+  () => ({
+    ArtworkSidebarClassificationsModalQueryRenderer: ({ show }) => {
+      return show ? "ArtworkSidebarClassificationsModalQueryRenderer" : null
+    },
+  })
+)
 
 jest.unmock("react-relay")
 
@@ -44,12 +41,14 @@ describe("ArtworkSidebarClassification", () => {
         const wrapper = getWrapper()
 
         expect(wrapper.html()).not.toContain(
-          "ArtworkClassificationsQueryRenderer"
+          "ArtworkSidebarClassificationsModalQueryRenderer"
         )
 
         wrapper.find("button").simulate("click")
 
-        expect(wrapper.html()).toContain("ArtworkClassificationsQueryRenderer")
+        expect(wrapper.html()).toContain(
+          "ArtworkSidebarClassificationsModalQueryRenderer"
+        )
       })
     })
 

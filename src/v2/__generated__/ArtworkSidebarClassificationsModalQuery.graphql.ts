@@ -3,27 +3,27 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type ArtworkClassificationsQueryVariables = {};
-export type ArtworkClassificationsQueryResponse = {
+export type ArtworkSidebarClassificationsModalQueryVariables = {};
+export type ArtworkSidebarClassificationsModalQueryResponse = {
     readonly viewer: {
-        readonly " $fragmentRefs": FragmentRefs<"ArtworkClassifications_viewer">;
+        readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebarClassificationsModal_viewer">;
     } | null;
 };
-export type ArtworkClassificationsQuery = {
-    readonly response: ArtworkClassificationsQueryResponse;
-    readonly variables: ArtworkClassificationsQueryVariables;
+export type ArtworkSidebarClassificationsModalQuery = {
+    readonly response: ArtworkSidebarClassificationsModalQueryResponse;
+    readonly variables: ArtworkSidebarClassificationsModalQueryVariables;
 };
 
 
 
 /*
-query ArtworkClassificationsQuery {
+query ArtworkSidebarClassificationsModalQuery {
   viewer {
-    ...ArtworkClassifications_viewer
+    ...ArtworkSidebarClassificationsModal_viewer
   }
 }
 
-fragment ArtworkClassifications_viewer on Viewer {
+fragment ArtworkSidebarClassificationsModal_viewer on Viewer {
   artworkAttributionClasses {
     id
     name
@@ -37,7 +37,7 @@ const node: ConcreteRequest = {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "ArtworkClassificationsQuery",
+    "name": "ArtworkSidebarClassificationsModalQuery",
     "selections": [
       {
         "alias": null,
@@ -50,7 +50,7 @@ const node: ConcreteRequest = {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "ArtworkClassifications_viewer"
+            "name": "ArtworkSidebarClassificationsModal_viewer"
           }
         ],
         "storageKey": null
@@ -62,7 +62,7 @@ const node: ConcreteRequest = {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "ArtworkClassificationsQuery",
+    "name": "ArtworkSidebarClassificationsModalQuery",
     "selections": [
       {
         "alias": null,
@@ -112,10 +112,10 @@ const node: ConcreteRequest = {
   "params": {
     "id": null,
     "metadata": {},
-    "name": "ArtworkClassificationsQuery",
+    "name": "ArtworkSidebarClassificationsModalQuery",
     "operationKind": "query",
-    "text": "query ArtworkClassificationsQuery {\n  viewer {\n    ...ArtworkClassifications_viewer\n  }\n}\n\nfragment ArtworkClassifications_viewer on Viewer {\n  artworkAttributionClasses {\n    id\n    name\n    longDescription\n  }\n}\n"
+    "text": "query ArtworkSidebarClassificationsModalQuery {\n  viewer {\n    ...ArtworkSidebarClassificationsModal_viewer\n  }\n}\n\nfragment ArtworkSidebarClassificationsModal_viewer on Viewer {\n  artworkAttributionClasses {\n    id\n    name\n    longDescription\n  }\n}\n"
   }
 };
-(node as any).hash = '4b45dd5b527c03d6601e701b41bac3d9';
+(node as any).hash = 'a40434b7da7b4a9f4b3e7c4679014df1';
 export default node;

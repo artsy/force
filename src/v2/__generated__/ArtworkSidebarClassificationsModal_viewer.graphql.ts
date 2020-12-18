@@ -3,18 +3,18 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type ArtworkClassifications_viewer = {
+export type ArtworkSidebarClassificationsModal_viewer = {
     readonly artworkAttributionClasses: ReadonlyArray<{
         readonly id: string;
         readonly name: string | null;
         readonly longDescription: string | null;
     } | null> | null;
-    readonly " $refType": "ArtworkClassifications_viewer";
+    readonly " $refType": "ArtworkSidebarClassificationsModal_viewer";
 };
-export type ArtworkClassifications_viewer$data = ArtworkClassifications_viewer;
-export type ArtworkClassifications_viewer$key = {
-    readonly " $data"?: ArtworkClassifications_viewer$data;
-    readonly " $fragmentRefs": FragmentRefs<"ArtworkClassifications_viewer">;
+export type ArtworkSidebarClassificationsModal_viewer$data = ArtworkSidebarClassificationsModal_viewer;
+export type ArtworkSidebarClassificationsModal_viewer$key = {
+    readonly " $data"?: ArtworkSidebarClassificationsModal_viewer$data;
+    readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebarClassificationsModal_viewer">;
 };
 
 
@@ -23,7 +23,7 @@ const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "ArtworkClassifications_viewer",
+  "name": "ArtworkSidebarClassificationsModal_viewer",
   "selections": [
     {
       "alias": null,
@@ -60,5 +60,5 @@ const node: ReaderFragment = {
   ],
   "type": "Viewer"
 };
-(node as any).hash = '60146ae6d9196b132d4aadc948195461';
+(node as any).hash = '0c6d5da0f8afc199e5112214cda6ef0f';
 export default node;
