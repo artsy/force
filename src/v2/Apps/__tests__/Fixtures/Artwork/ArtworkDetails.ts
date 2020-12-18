@@ -71,4 +71,9 @@ export const ArtworkDetailsFixture: ArtworkDetails_Test_QueryRawResponse["artwor
   literature: "Some literature info goes here",
   exhibition_history: "And the work was so excibited!",
   sale: null,
+  mediumType: {
+    __typename: "ArtworkMedium",
+    name: "Medium",
+    longDescription: "Long description",
+  },
 }
