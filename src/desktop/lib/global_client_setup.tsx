@@ -13,9 +13,9 @@ import { omit } from "lodash"
 import syncAuth from "lib/syncAuth"
 import { mediator } from "lib/mediator"
 import { LogoutEventOptions } from "typings/mediator"
+import * as templateModules from "./template_modules"
 
 const FlashMessage = require("../components/flash/index.coffee")
-const templateModules = require("./template_modules.coffee")
 const listenForInvert = require("../components/eggs/invert/index.coffee")
 const listenForBounce = require("../components/eggs/bounce/index.coffee")
 const confirmation = require("../components/confirmation/index.coffee")

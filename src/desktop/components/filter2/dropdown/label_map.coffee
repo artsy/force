@@ -1,4 +1,4 @@
-# included in /lib/template_modules.coffee
+# included in /lib/template_modules
 module.exports =
   price_range:
     label: 'price'

@@ -6,7 +6,7 @@ const POSITRON_GRAPHQL_URL = POSITRON_URL + "/api/graphql"
 export const positronql = options => {
   const { method = "post", query, variables, req } = options
 
-  return new Promise((resolve, reject) => {
+  return new Promise<any>((resolve, reject) => {
     const r = request[method](POSITRON_GRAPHQL_URL).set(
       "Accept",
       "application/json"
@@ -31,10 +31,10 @@ export const positronql = options => {
 
         response.body.errors.map(({ message }) => {
           if (message.match(/Not Found/i)) {
-            error.status = 404
+            ;(error as any).status = 404
             return reject(error)
           } else if (message.match(/Must be a member/i)) {
-            error.status = 403
+            ;(error as any).status = 403
             return reject(error)
           }
         })
