@@ -6,8 +6,8 @@ import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import colors from "../../Assets/Colors"
 import { avantgarde, garamond } from "../../Assets/Fonts"
-import Icon from "../Icon"
 import { labelMap } from "./ParamMap"
+import { ArrowDownIcon } from "@artsy/palette"
 
 interface DropdownProps extends React.HTMLProps<Dropdown> {
   aggregation: Dropdown_aggregation
@@ -115,10 +115,7 @@ export class Dropdown extends React.Component<DropdownProps, DropdownState> {
             </SuperLabel>
           )}
           {labelText}
-          <Icon
-            name="arrow-down"
-            fontSize="9px"
-            color={buttonTextColor}
+          <ArrowDownIcon
             style={{ position: "absolute", right: 15, lineHeight: "inherit" }}
           />
         </Button>

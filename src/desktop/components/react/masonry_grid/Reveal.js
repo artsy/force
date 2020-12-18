@@ -1,3 +1,4 @@
+import { ArrowDownIcon } from "@artsy/palette"
 import PropTypes from "prop-types"
 import React, { Component } from "react"
 import styled, { css } from "styled-components"
@@ -61,14 +62,7 @@ export class Reveal extends Component {
         {maskContent && (
           <Revealer>
             <Button onClick={this.handleExpandClick}>
-              <Icon
-                name="chevron-down"
-                color="black"
-                fontSize="24px"
-                style={{
-                  fontWeight: "bold",
-                }}
-              />
+              <ArrowDownIcon />
             </Button>
           </Revealer>
         )}

@@ -10,8 +10,6 @@ const IconNames = {
   "chevron-up": "\ue606",
   "circle-chevron": "\ue630",
   "facebook-f": "\ue62d",
-  "follow-circle.is-following": "\ue628",
-  "follow-circle": "\ue629",
   "heart-small": "\ue622",
   "info-filled": "\ue605",
   "logo-unscaled": "\ue620",

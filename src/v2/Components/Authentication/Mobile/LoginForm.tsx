@@ -1,7 +1,6 @@
-import { Flex } from "@artsy/palette"
+import { ArrowLeftIcon, Flex } from "@artsy/palette"
 import { withSystemContext } from "v2/Artsy"
 import { checkEmail } from "v2/Components/Authentication/helpers"
-import Icon from "v2/Components/Icon"
 import { PasswordInput } from "v2/Components/PasswordInput"
 import { ProgressIndicator } from "v2/Components/ProgressIndicator"
 import QuickInput from "v2/Components/QuickInput"
@@ -215,7 +214,7 @@ class MobileLoginFormWithSystemContext extends Component<
                         : wizard.previous(e, values)
                     }
                   >
-                    <Icon name="chevron-left" color="black60" fontSize="16px" />
+                    <ArrowLeftIcon color="black60" />
                   </BackButton>
                 )}
                 <MobileHeader>Log in to Artsy</MobileHeader>

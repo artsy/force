@@ -364,11 +364,6 @@ export enum ContextModule {
   RelatedArticles = "Related articles",
 
   /**
-   * Authentication modal
-   */
-  MinimalCtaBanner = "MinimalCtaBanner",
-
-  /**
    * Buy Now Make Offer ("Works For You")
    */
   BNMOBanner = "BNMO Banner",

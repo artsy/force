@@ -18,7 +18,6 @@ import {
   ModalType,
 } from "v2/Components/Authentication/Types"
 import { MobileSignUpValidator } from "v2/Components/Authentication/Validators"
-import Icon from "v2/Components/Icon"
 import { PasswordInput } from "v2/Components/PasswordInput"
 import { ProgressIndicator } from "v2/Components/ProgressIndicator"
 import QuickInput from "v2/Components/QuickInput"
@@ -27,6 +26,7 @@ import { FormikProps } from "formik"
 import React, { Component, Fragment } from "react"
 import { Environment } from "relay-runtime"
 import { recaptcha } from "v2/Utils/recaptcha"
+import { ArrowLeftIcon } from "@artsy/palette"
 
 export interface MobileSignUpFormState {
   isSocialSignUp: boolean
@@ -194,7 +194,7 @@ class TrackedMobileSignUpForm extends Component<
                       : wizard.previous(e, values)
                   }
                 >
-                  <Icon name="chevron-left" color="black60" fontSize="16px" />
+                  <ArrowLeftIcon color="black60" />
                 </BackButton>
                 <MobileHeader>
                   {this.props.title || "Sign up for Artsy"}

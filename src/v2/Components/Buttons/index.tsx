@@ -1,16 +1,16 @@
 // @ts-ignore
 import Button, { ButtonProps } from "./Default"
-import FacebookButton from "./Facebook"
 import GhostButton from "./Ghost"
 import InvertedButton from "./Inverted"
 import MultiStateButton from "./MultiStateButton"
-import TwitterButton from "./Twitter"
 
+/**
+ * @deprecated in favor of our Design System Buttons in @artsy/palette
+ * https://palette.artsy.net/elements/buttons/button/
+ */
 export default {
   Button,
-  FacebookButton,
   GhostButton,
   InvertedButton,
   MultiStateButton,
-  TwitterButton,
 }

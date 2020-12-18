@@ -19,6 +19,10 @@ export enum ButtonState {
   Failure,
 }
 
+/**
+ * @deprecated in favor of our Design System Button in @artsy/palette
+ * https://palette.artsy.net/elements/buttons/button/
+ */
 export class Button extends React.Component<ButtonProps, any> {
   public static defaultProps: ButtonProps
 
