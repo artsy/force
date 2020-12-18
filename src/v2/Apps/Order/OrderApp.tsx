@@ -54,14 +54,6 @@ class OrderApp extends React.Component<OrderAppProps, OrderAppState> {
       () => this.props.order.lineItems.edges[0].node.artwork
     )
 
-    if (artwork && this.mediator && this.mediator.trigger) {
-      const { is_offerable, is_acquireable } = artwork
-      this.mediator.trigger("enableIntercomForBuyers", {
-        is_acquireable,
-        is_offerable,
-      })
-    }
-
     if (window.Stripe) {
       this.setState({
         stripe: window.Stripe(window.sd.STRIPE_PUBLISHABLE_KEY),

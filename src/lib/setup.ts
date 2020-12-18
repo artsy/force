@@ -1,7 +1,6 @@
 import path from "path"
 import config from "../config"
 import { unlessStartsWith } from "./middleware/unless"
-import { intercomMiddleware } from "./middleware/intercom"
 import { backboneErrorHandlerMiddleware } from "./middleware/backboneErrorHandler"
 import { downcaseMiddleware } from "./middleware/downcase"
 import { escapedFragmentMiddleware } from "./middleware/escapedFragment"
@@ -43,7 +42,6 @@ export default function forceMiddleware(app) {
   app.use(unlessStartsWith("/novo", sameOriginMiddleware))
   app.use(unlessStartsWith("/novo", escapedFragmentMiddleware))
   app.use(unlessStartsWith("/novo", unsupportedBrowserMiddleware))
-  app.use(unlessStartsWith("/novo", intercomMiddleware))
   app.use(unlessStartsWith("/novo", pageCacheMiddleware))
 
   // Sets up mobile marketing signup modal
