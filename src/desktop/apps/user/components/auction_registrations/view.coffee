@@ -12,7 +12,6 @@ module.exports = class AuctionRegistrationsView extends Backbone.View
 
   initialize: ({ @user }) ->
     @me = {}
-    @sale_registrations = []
 
   fetch: ->
     metaphysics2 query: query, req: user: @user
