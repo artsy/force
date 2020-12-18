@@ -12,6 +12,7 @@ module.exports = class AuctionRegistrationsView extends Backbone.View
 
   initialize: ({ @user }) ->
     @me = {}
+    @sale_registrations = []
 
   fetch: ->
     metaphysics2 query: query, req: user: @user
@@ -30,5 +31,5 @@ module.exports = class AuctionRegistrationsView extends Backbone.View
 
   render: ->
     @$el.html template
-      sale_registrations: @me.sale_registrations
+      sale_registrations: @me.sale_registrations?.edges.map (e) -> e.node
     this
