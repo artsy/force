@@ -49,11 +49,6 @@ class OrderApp extends React.Component<OrderAppProps, OrderAppState> {
 
     window.addEventListener("beforeunload", this.preventHardReload)
 
-    const artwork = get(
-      null,
-      () => this.props.order.lineItems.edges[0].node.artwork
-    )
-
     if (window.Stripe) {
       this.setState({
         stripe: window.Stripe(window.sd.STRIPE_PUBLISHABLE_KEY),
