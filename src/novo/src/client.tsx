@@ -31,10 +31,12 @@ async function loadStripe() {
     })
 
     // Attach analytics
-    beforeAnalyticsReady()
-    window.analytics.ready(() => {
-      onAnalyticsReady()
-    })
+    if (getParam("disableAnalytics") !== "true") {
+      beforeAnalyticsReady()
+      window.analytics.ready(() => {
+        onAnalyticsReady()
+      })
+    }
 
     // Wire up auth modal
     const { initModalManager } = await import(
@@ -46,11 +48,21 @@ async function loadStripe() {
     mediator.on("auth:logout", logoutEventHandler)
 
     // Third party analytics
-    await loadStripe()
+    if (getParam("disableStripe") !== "true") {
+      await loadStripe()
+    }
   } catch (error) {
     console.error(error)
   }
 })()
+
+function getParam(name: string): string | null {
+  const urlParams = new URLSearchParams(window.location.search)
+  if (urlParams.has(name)) {
+    return urlParams.get(name)
+  }
+  return null
+}
 
 // Enable hot-reloading if available.
 if (module.hot) {

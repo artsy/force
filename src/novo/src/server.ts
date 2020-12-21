@@ -93,6 +93,12 @@ app.get(flatRoutes, async (req: Request, res: Response, next: NextFunction) => {
         scripts,
         style: styleTags,
       },
+      disable: {
+        segment: getParam(req, "disableSegment") === "true",
+        sailthru: getParam(req, "disableSailthru") === "true",
+        stripe: getParam(req, "disableStripe") === "true",
+        analytics: getParam(req, "disableAnalytics") === "true",
+      },
       css: {
         // TODO: Old global asset, possibly move into styled components.
         global: res.locals.asset("/assets/main_layout.css"),
@@ -126,6 +132,13 @@ app.get(flatRoutes, async (req: Request, res: Response, next: NextFunction) => {
     next(error)
   }
 })
+
+function getParam(req, name): string | null {
+  if (req.query && req.query.hasOwnProperty(name)) {
+    return req.query[name]
+  }
+  return null
+}
 
 // This export form is required for express-reloadable
 // TODO: Remove when no longer needed for hot reloading
