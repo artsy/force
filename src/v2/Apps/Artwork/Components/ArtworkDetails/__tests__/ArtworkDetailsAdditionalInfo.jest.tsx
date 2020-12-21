@@ -67,6 +67,7 @@ describe("ArtworkDetailsAdditionalInfo", () => {
     wrapper.find("button").first().simulate("click")
 
     expect(trackEvent).toHaveBeenCalledWith({
+      action_type: "Click",
       context_module: "aboutTheWork",
       context_page_owner_id: "example-artwork-id",
       context_page_owner_slug: "example-artwork-slug",
