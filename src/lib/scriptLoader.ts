@@ -1,7 +1,10 @@
 // Track loaded scripts
 const LOADED_SCRIPTS = new Set<string>()
 
-export const loadScript = (urlOrId: string, source?: string): Promise<void> => {
+export const loadScript = (
+  urlOrId: string,
+  source: string = null
+): Promise<void> => {
   // Only load a script at most once.
   if (LOADED_SCRIPTS.has(urlOrId)) {
     return null

@@ -12,7 +12,7 @@ describe("/:partner_id", () => {
       .should("have.attr", "content")
       .and(
         "eq",
-        "Gagosian is a global gallery specializing in modern and contemporary art with eighteen locations worldwide."
+        "Gagosian is a global gallery specializing in modern and contemporary art with seventeen locations worldwide."
       )
   })
 
@@ -26,7 +26,7 @@ describe("/:partner_id", () => {
       cy.visit("gagosian-gallery")
     })
 
-    it("renders metadata", () => {
+    it("renders metadata 1", () => {
       cy.title().should(
         "eq",
         "Gagosian | Artists, Art for Sale, and Contact Info | Artsy"
@@ -35,11 +35,11 @@ describe("/:partner_id", () => {
         .should("have.attr", "content")
         .and(
           "eq",
-          "Gagosian is a global gallery specializing in modern and contemporary art with eighteen locations worldwide."
+          "Gagosian is a global gallery specializing in modern and contemporary art with seventeen locations worldwide."
         )
     })
 
-    it("renders page content", () => {
+    it("renders page content 1", () => {
       cy.get("h1").should("contain", "Gagosian")
     })
 
@@ -53,7 +53,7 @@ describe("/:partner_id", () => {
       cy.contains("Articles")
     })
 
-    xit("does not show contact information for non-active partner", () => {
+    it.skip("does not show contact information for non-active partner", () => {
       // TODO: cy.visit(":partner_id/contact")
       cy.contains(
         "Sorry, the page you were looking for doesn&#x2019;t exist at this URL."
