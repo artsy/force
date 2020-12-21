@@ -1,4 +1,3 @@
-import { enableIntercom } from "lib/intercom"
 import { recordArtworkView } from "lib/components/record_artwork_view"
 import { data as sd } from "sharify"
 import { getContextPageFromClient } from "lib/getContextPage"
@@ -7,7 +6,6 @@ import { mediator } from "lib/mediator"
 import {
   ArtworkEventOptions,
   BuyerPremiumEventOptions,
-  IntercomEventOptions,
   ViewInRoomEventOptions,
 } from "typings/mediator"
 
@@ -39,17 +37,17 @@ export const artworkClient = () => {
 
     // TODO: Look into why this is needed.
     $.ajaxSettings.headers = {
-      "X-XAPP-TOKEN": sd.ARTSY_XAPP_TOKEN,
       "X-ACCESS-TOKEN":
         sd.CURRENT_USER != null ? sd.CURRENT_USER.accessToken : undefined,
+      "X-XAPP-TOKEN": sd.ARTSY_XAPP_TOKEN,
     }
     artwork.fetch().then(() => {
       artwork.set(artworkOptions)
       openInquiryQuestionnaireFor({
-        user,
         artwork,
-        inquiry,
         ask_specialist,
+        inquiry,
+        user,
       })
     })
   }
@@ -114,18 +112,18 @@ export const artworkClient = () => {
       const newTop = bounds.top + Math.abs(bounds.height - newHeight) / 2
 
       const positionStyles = {
+        height: `${newHeight}px`,
+        left: `${newLeft}px`,
         position: "absolute",
         top: `${newTop}px`,
-        left: `${newLeft}px`,
         width: `${newWidth}px`,
-        height: `${newHeight}px`,
       }
 
       const viewInRoom = new ViewInRoomView({
+        dimensions: dimensions.cm,
         imgSelector: "[data-type=artwork-image]",
         imgUrl: url,
         positionStyles: positionStyles,
-        dimensions: dimensions.cm,
       })
 
       $("body").prepend(viewInRoom.render().$el)
@@ -140,8 +138,4 @@ export const artworkClient = () => {
       openAuctionBuyerPremium(auctionId)
     }
   )
-
-  mediator.on("enableIntercomForBuyers", (options: IntercomEventOptions) => {
-    enableIntercom(options)
-  })
 }

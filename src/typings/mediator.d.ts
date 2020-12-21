@@ -15,14 +15,6 @@ export interface BuyerPremiumEventOptions {
 }
 
 /**
- * Launch intercom from artwork page
- */
-export interface IntercomEventOptions {
-  is_offerable: boolean
-  is_acquireable: boolean
-}
-
-/**
  * Logout user and optionally redirect
  */
 export type LogoutEventOptions = { redirectPath?: string }

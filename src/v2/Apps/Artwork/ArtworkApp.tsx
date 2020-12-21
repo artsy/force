@@ -141,17 +141,6 @@ export class ArtworkApp extends React.Component<Props> {
     }
   }
 
-  enableIntercomForBuyers() {
-    const {
-      mediator,
-      artwork: { is_offerable, is_acquireable },
-    } = this.props
-    mediator.trigger("enableIntercomForBuyers", {
-      is_acquireable,
-      is_offerable,
-    })
-  }
-
   renderArtists() {
     const { artwork } = this.props
     const artists = artwork?.artists
@@ -273,7 +262,6 @@ export class ArtworkApp extends React.Component<Props> {
               zIndex: 1100, // over top nav
             }}
           />
-          <>{this.enableIntercomForBuyers()}</>
         </HorizontalPadding>
       </AppContainer>
     )

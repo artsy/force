@@ -71,9 +71,6 @@ declare module "sharify" {
       FAIR?: any // mobile fair app data
       FAIR_ORGANIZER?: any
       GALLERY_INSIGHTS_CHANNEL: string
-      INTERCOM_BUYER_APP_ID: string
-      INTERCOM_BUYER_ENABLED: boolean
-      INTERCOM_BUYER_HASH: string
       JSON_PAGE_DATA: any
       MARKETING_SIGNUP_MODALS: any
       MARKETING_SIGNUP_MODALS: any[]
