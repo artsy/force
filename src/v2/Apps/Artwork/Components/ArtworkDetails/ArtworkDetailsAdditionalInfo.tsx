@@ -62,6 +62,7 @@ export const ArtworkDetailsAdditionalInfo: React.FC<ArtworkDetailsAdditionalInfo
                   setOpen(true)
 
                   trackEvent({
+                    action_type: "Click",
                     context_module: ContextModule.aboutTheWork,
                     type: AnalyticsSchema.Type.Link,
                     subject: "Medium type info",
