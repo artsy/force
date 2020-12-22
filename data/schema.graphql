@@ -7134,6 +7134,9 @@ type Me implements Node {
     last: Int
   ): CreditCardConnection
   email: String
+
+  # Frequency of marketing emails.
+  emailFrequency: String
   followsAndSaves: FollowsAndSaves
   hasCreditCards: Boolean
   hasPassword: Boolean!
@@ -10593,6 +10596,9 @@ input UpdateMyProfileInput {
 
   # The given email of the user.
   email: String
+
+  # Frequency of marketing emails.
+  emailFrequency: String
 
   # The given location of the user as structured data
   location: EditableLocation
