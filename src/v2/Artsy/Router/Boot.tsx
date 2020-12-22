@@ -1,5 +1,4 @@
 import { Grid, Theme, injectGlobalStyles, themeProps } from "@artsy/palette"
-import * as Sentry from "@sentry/browser"
 import { SystemContextProvider, track } from "v2/Artsy"
 import { RouteConfig } from "found"
 import React, { useEffect } from "react"
@@ -21,6 +20,7 @@ import {
 import { AnalyticsContext } from "../Analytics/AnalyticsContext"
 import { ClientContext } from "desktop/lib/buildClientAppContext"
 import { FlashMessage } from "v2/Components/Modal/FlashModal"
+import { setupSentry } from "lib/setupSentry"
 
 export interface BootProps {
   children: React.ReactNode
@@ -45,7 +45,7 @@ export const Boot = track(null, {
     document.body.setAttribute("data-test", "AppReady") //
 
     if (getENV("NODE_ENV") === "production") {
-      Sentry.init({ dsn: sd.SENTRY_PUBLIC_DSN })
+      setupSentry(sd)
     }
   }, [])
 

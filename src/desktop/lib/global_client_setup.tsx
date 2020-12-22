@@ -14,6 +14,7 @@ import syncAuth from "lib/syncAuth"
 import { mediator } from "lib/mediator"
 import { LogoutEventOptions } from "typings/mediator"
 import * as templateModules from "./template_modules"
+import { setupSentry } from "lib/setupSentry"
 
 const FlashMessage = require("../components/flash/index.coffee")
 const listenForInvert = require("../components/eggs/invert/index.coffee")
@@ -106,7 +107,7 @@ function setupJquery() {
 
 function setupErrorReporting() {
   if (sd.NODE_ENV === "production") {
-    Sentry.init({ dsn: sd.SENTRY_PUBLIC_DSN })
+    setupSentry(sd)
 
     const user = sd && sd.CURRENT_USER
 
