@@ -1,4 +1,3 @@
-/* eslint-disable sort-keys-fix/sort-keys-fix */
 import loadable from "@loadable/component"
 import { graphql } from "react-relay"
 import { RouteConfig } from "found"
@@ -18,6 +17,9 @@ const FairArtworksRoute = loadable(() => import("./Routes/FairArtworks"), {
 })
 const FairInfoRoute = loadable(() => import("./Routes/FairInfo"), {
   resolveComponent: component => component.FairInfoFragmentContainer,
+})
+const FairArticlesRoute = loadable(() => import("./Routes/FairArticles"), {
+  resolveComponent: component => component.FairArticlesFragmentContainer,
 })
 
 export const fairRoutes: RouteConfig[] = [
@@ -131,6 +133,20 @@ export const fairRoutes: RouteConfig[] = [
           query fairRoutes_FairInfoQuery($slug: String!) {
             fair(id: $slug) @principalField {
               ...FairInfo_fair
+            }
+          }
+        `,
+      },
+      {
+        path: "articles",
+        getComponent: () => FairArticlesRoute,
+        prepare: () => {
+          FairArticlesRoute.preload()
+        },
+        query: graphql`
+          query fairRoutes_FaiArticlesQuery($slug: String!) {
+            fair(id: $slug) @principalField {
+              ...FairArticles_fair
             }
           }
         `,
