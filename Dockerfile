@@ -97,6 +97,7 @@ FROM yarn-deps as builder-src
 COPY __mocks__ ./__mocks__
 COPY cypress ./cypress
 COPY data ./data
+COPY packages ./packages
 COPY patches ./patches
 COPY src ./src
 COPY webpack ./webpack
@@ -214,6 +215,7 @@ COPY --chown=deploy:deploy --from=yarn-deps /opt/node_modules.prod ./node_module
 # Base code
 COPY --chown=deploy:deploy --from=builder /app/data ./data
 COPY --chown=deploy:deploy --from=builder /app/package.json .
+COPY --chown=deploy:deploy --from=builder /app/packages ./packages
 COPY --chown=deploy:deploy --from=builder /app/scripts ./scripts
 COPY --chown=deploy:deploy --from=builder /app/webpack ./webpack
 COPY --chown=deploy:deploy --from=builder /app/yarn.lock .
