@@ -11,6 +11,11 @@
 !src/
 !webpack/
 
+# Source Publish
+!packages/publish/package.json
+!packages/publish/uploadToS3.js
+!packages/publish/yarn.lock
+
 # Testing
 !__mocks__/
 !cypress/
