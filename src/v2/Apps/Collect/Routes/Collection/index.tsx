@@ -134,7 +134,9 @@ export const CollectionApp: React.FC<CollectionAppProps> = props => {
                   { text: "Artwork year (asc.)", value: "year" },
                 ]}
                 aggregations={
-                  artworksConnection.aggregations as SharedArtworkFilterContextProps["aggregations"]
+                  artworksConnection !== null
+                    ? (artworksConnection?.aggregations as SharedArtworkFilterContextProps["aggregations"])
+                    : null
                 }
                 onChange={updateUrl}
               >
