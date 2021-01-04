@@ -61,7 +61,7 @@ const FairExhibitors: React.FC<FairExhibitorsProps> = ({ fair, relay }) => {
 
   return (
     <>
-      {fair.exhibitors.edges.map(({ node: show }) => {
+      {fair.exhibitors?.edges.map(({ node: show }) => {
         if (show.counts.artworks === 0 || !show.partner) {
           // Skip rendering of booths without artworks
           return null
