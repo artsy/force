@@ -93,10 +93,10 @@ export const clientNovoProductionConfig = {
         sourceMap: true, // Must be set to true if using source-maps in production
       }),
     ],
-    // Extract webpack runtime code into it's own file
-    runtimeChunk: "single",
     splitChunks: {
       cacheGroups: {
+        vendors: false,
+        default: false,
         "arsty-common": {
           chunks: "all",
           enforce: true,
@@ -114,24 +114,6 @@ export const clientNovoProductionConfig = {
           name: "artsy",
           reuseExistingChunk: true,
           test: /.*node_modules[\\/](@artsy)[\\/]/,
-        },
-        "common-backbone": {
-          chunks: "all",
-          enforce: true,
-          minChunks: 1,
-          minSize: 0,
-          name: "common-backbone",
-          reuseExistingChunk: true,
-          test: /.*node_modules[\\/](backbone.*)[\\/]/,
-        },
-        "common-jquery": {
-          chunks: "all",
-          enforce: true,
-          minChunks: 1,
-          minSize: 0,
-          name: "common-jquery",
-          reuseExistingChunk: true,
-          test: /.*node_modules[\\/](jquery.*)[\\/]/,
         },
         "common-react": {
           chunks: "all",
@@ -158,7 +140,7 @@ export const clientNovoProductionConfig = {
           minSize: 0,
           name: "common",
           reuseExistingChunk: true,
-          test: /.*node_modules[\\/](?!(@artsy[\\/]|react[\\/]|react-dom[\\/]|backbone.*[\\/]|lodash.*[\\/]|moment.*[\\/]|luxon.*[\\/]|jquery.*[\\/]))/,
+          test: /.*node_modules[\\/](?!(@artsy[\\/]|react[\\/]|react-dom[\\/]|lodash.*[\\/]|moment.*[\\/]|luxon.*[\\/]))/,
         },
       },
       maxInitialRequests: Infinity,

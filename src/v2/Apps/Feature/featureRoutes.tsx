@@ -3,7 +3,7 @@ import loadable from "@loadable/component"
 import { graphql } from "react-relay"
 import { RouteConfig } from "found"
 
-const FeatureApp = loadable(() => import("./FeatureApp"), {
+const FeatureApp = loadable(() => import(/* webpackChunkName: "featureRoutes" */ "./FeatureApp"), {
   resolveComponent: component => component.FeatureAppFragmentContainer,
 })
 

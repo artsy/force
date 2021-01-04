@@ -3,22 +3,22 @@ import { graphql } from "react-relay"
 import { RouteConfig } from "found"
 import { paramsToCamelCase } from "v2/Components/v2/ArtworkFilter/Utils/urlBuilder"
 
-const FairApp = loadable(() => import("./FairApp"), {
+const FairApp = loadable(() => import(/* webpackChunkName: "fairRoutes" */ "./FairApp"), {
   resolveComponent: component => component.FairAppFragmentContainer,
 })
-const FairSubApp = loadable(() => import("./FairSubApp"), {
+const FairSubApp = loadable(() => import(/* webpackChunkName: "fairRoutes" */ "./FairSubApp"), {
   resolveComponent: component => component.FairSubAppFragmentContainer,
 })
-const FairExhibitorsRoute = loadable(() => import("./Routes/FairExhibitors"), {
+const FairExhibitorsRoute = loadable(() => import(/* webpackChunkName: "fairRoutes" */ "./Routes/FairExhibitors"), {
   resolveComponent: component => component.FairExhibitorsFragmentContainer,
 })
-const FairArtworksRoute = loadable(() => import("./Routes/FairArtworks"), {
+const FairArtworksRoute = loadable(() => import(/* webpackChunkName: "fairRoutes" */ "./Routes/FairArtworks"), {
   resolveComponent: component => component.FairArtworksRefetchContainer,
 })
-const FairInfoRoute = loadable(() => import("./Routes/FairInfo"), {
+const FairInfoRoute = loadable(() => import(/* webpackChunkName: "fairRoutes" */ "./Routes/FairInfo"), {
   resolveComponent: component => component.FairInfoFragmentContainer,
 })
-const FairArticlesRoute = loadable(() => import("./Routes/FairArticles"), {
+const FairArticlesRoute = loadable(() => import(/* webpackChunkName: "fairRoutes" */ "./Routes/FairArticles"), {
   resolveComponent: component => component.FairArticlesFragmentContainer,
 })
 

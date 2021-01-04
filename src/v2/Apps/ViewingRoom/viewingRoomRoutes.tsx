@@ -6,10 +6,10 @@ import { RouteConfig } from "found"
 import { ViewingRoomStatementRouteFragmentContainer as StatementRoute } from "./Routes/Statement/ViewingRoomStatementRoute"
 import { ViewingRoomWorksRouteFragmentContainer as WorksRoute } from "./Routes/Works/ViewingRoomWorksRoute"
 
-const ViewingRoomApp = loadable(() => import("./ViewingRoomApp"), {
+const ViewingRoomApp = loadable(/* webpackChunkName: "viewingroomRoutes" */ () => import("./ViewingRoomApp"), {
   resolveComponent: component => component.ViewingRoomAppFragmentContainer,
 })
-const ViewingRoomsApp = loadable(() => import("./ViewingRoomsApp"), {
+const ViewingRoomsApp = loadable(/* webpackChunkName: "viewingroomRoutes" */ () => import("./ViewingRoomsApp"), {
   resolveComponent: component => component.ViewingRoomsAppFragmentContainer,
 })
 
