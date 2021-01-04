@@ -1,6 +1,6 @@
 express = require 'express'
 routes = require './routes'
-{ redirectFairRequests } = require('../fair/fairRedirection')
+{ redirectFairRequests } = require('../fair/redirectFairRequests')
 
 app = module.exports = express()
 app.set 'views', __dirname + '/templates'
