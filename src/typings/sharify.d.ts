@@ -47,6 +47,7 @@ declare module "sharify" {
       readonly STRIPE_PUBLISHABLE_KEY: string
       readonly THIRD_PARTIES_DISABLED: boolean
       readonly VOLLEY_ENDPOINT: string
+      readonly WEBFONT_URL: string
       readonly XAPP_TOKEN: string
 
       // FORCE Tokens

@@ -84,6 +84,8 @@ app.get(flatRoutes, async (req: Request, res: Response, next: NextFunction) => {
     const headTagsString = ReactDOM.renderToString(headTags as any)
     const sharifyData = res.locals.sharify.script()
 
+    const { WEBFONT_URL } = sharify.data
+
     const options = {
       cdnUrl: NODE_ENV === "production" ? CDN_URL : "",
       content: {
@@ -104,6 +106,7 @@ app.get(flatRoutes, async (req: Request, res: Response, next: NextFunction) => {
         global: res.locals.asset("/assets/main_layout.css"),
       },
       env: NODE_ENV,
+      fontUrl: WEBFONT_URL,
       icons: {
         // TODO: Move to new assset pipeline, this adds the CDN for images.
         favicon: res.locals.asset("/images/favicon.ico"),
