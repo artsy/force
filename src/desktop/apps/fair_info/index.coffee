@@ -1,12 +1,12 @@
 express = require 'express'
 routes = require './routes'
-{ redirectFairRequests } = require('../fair/redirectFairRequests')
+{ fairRedirectionMiddleware } = require('../artsy-v2/apps/fair/fairRedirectionMiddleware')
 
 app = module.exports = express()
 app.set 'views', __dirname + '/templates'
 app.set 'view engine', 'jade'
 
-app.use '/:id/*', redirectFairRequests, routes.assignFair
+app.use '/:id/*', fairRedirectionMiddleware, routes.assignFair
 app.get '/:id/info', routes.info
 app.get '/:id/info/visitors', routes.visitors
 app.get '/:id/info/programming', routes.programming

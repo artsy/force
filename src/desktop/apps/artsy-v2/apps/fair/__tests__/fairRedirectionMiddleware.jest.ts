@@ -1,8 +1,8 @@
 import { NextFunction } from "express"
 import { ArtsyRequest, ArtsyResponse } from "lib/middleware/artsyExpress"
-import { redirectFairRequests } from "../redirectFairRequests"
+import { fairRedirectionMiddleware } from "../fairRedirectionMiddleware"
 
-describe("redirectFairRequests", () => {
+describe("fairRedirectionMiddleware", () => {
   let req: Partial<ArtsyRequest>
   let res: Partial<ArtsyResponse>
   let next: jest.Mock<NextFunction>
@@ -34,7 +34,7 @@ describe("redirectFairRequests", () => {
     req.params = { id: "big-expo" }
     req.route = "/:id"
 
-    redirectFairRequests(req, res, next)
+    fairRedirectionMiddleware(req, res, next)
 
     expect(res.redirect).toHaveBeenCalledWith(301, "/fair/big-expo-2020")
   })
@@ -44,7 +44,7 @@ describe("redirectFairRequests", () => {
     req.route = { path: "/:id/:tab*" }
     res.locals.tab = "info"
 
-    redirectFairRequests(req, res, next)
+    fairRedirectionMiddleware(req, res, next)
 
     expect(res.redirect).toHaveBeenCalledWith(301, "/fair/big-expo-2020/info")
   })
@@ -54,7 +54,7 @@ describe("redirectFairRequests", () => {
     req.route = { path: "/:id/browse/*" }
     res.locals.tab = "browse"
 
-    redirectFairRequests(req, res, next)
+    fairRedirectionMiddleware(req, res, next)
 
     expect(res.redirect).toHaveBeenCalledWith(
       301,
@@ -71,7 +71,7 @@ describe("redirectFairRequests", () => {
     req.params = { id: "big-expo" }
     req.route = { path: "/:id" }
 
-    redirectFairRequests(req, res, next)
+    fairRedirectionMiddleware(req, res, next)
 
     expect(res.redirect).toHaveBeenCalledWith(302, "/art-fairs")
   })
@@ -83,7 +83,7 @@ describe("redirectFairRequests", () => {
         if (attr === "owner") return { id: "some-partner" }
       })
 
-      redirectFairRequests(req, res, next)
+      fairRedirectionMiddleware(req, res, next)
 
       expect(res.redirect).not.toHaveBeenCalled()
       expect(next).toHaveBeenCalled()

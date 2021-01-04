@@ -1,7 +1,7 @@
 import { NextFunction } from "express"
 import { ArtsyRequest, ArtsyResponse } from "lib/middleware/artsyExpress"
 
-export const redirectFairRequests = (
+export const fairRedirectionMiddleware = (
   req: Partial<ArtsyRequest>,
   res: Partial<ArtsyResponse>,
   next: NextFunction
