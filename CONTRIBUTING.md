@@ -96,13 +96,19 @@ that behavior even for subdomains (such as local.artsy.net).
 127.0.0.1 local.artsy.net
 ```
 
-2. Update your `.env` file with the following setting:
+2. Fetch the staging recaptcha key with:
+```
+hokusai staging env get RECAPTCHA_KEY
+```
+
+3. Update your `.env` file's `APP_URL` and `RECAPTCHA_KEY`:
 
 ```
 APP_URL=http://local.artsy.net:5000
+RECAPTCHA_KEY=REPLACE_ME
 ```
 
-3. Visit [`http://local.artsy.net:5000`](http://local.artsy.net:5000).
+4. Visit [`http://local.artsy.net:5000`](http://local.artsy.net:5000).
 
 ## Creating a Review App
 
