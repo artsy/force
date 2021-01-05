@@ -1,18 +1,34 @@
 import { ZeroState } from "v2/Apps/Search/Components/ZeroState"
-import { SystemContextProvider } from "v2/Artsy"
 import { PaginationFragmentContainer as Pagination } from "v2/Components/Pagination"
 import { MockBoot } from "v2/DevTools"
 import { mount } from "enzyme"
 import React from "react"
 import { SearchResultsEntityRoute as SearchResultsEntity } from "../SearchResultsEntity"
 
+jest.mock("v2/Artsy/Router/useRouter", () => ({
+  useRouter: () => ({
+    match: {
+      location: {
+        pathname: "anything",
+      },
+    },
+  }),
+}))
+
+jest.mock("v2/Components/v2/ArtworkFilter/ArtworkFilterContext", () => ({
+  useArtworkFilterContext: () => ({
+    currentlySelectedFilters: () => ({}),
+    filters: {
+      term: "andy",
+    },
+  }),
+}))
+
 describe("SearchResultsEntity", () => {
   const getWrapper = searchProps => {
     return mount(
       <MockBoot>
-        <SystemContextProvider>
-          <SearchResultsEntity {...searchProps} />
-        </SystemContextProvider>
+        <SearchResultsEntity {...searchProps} />
       </MockBoot>
     )
   }
