@@ -15,7 +15,7 @@ export type RecentlyViewed_me = {
                 readonly imageTitle: string | null;
                 readonly title: string | null;
                 readonly href: string | null;
-                readonly " $fragmentRefs": FragmentRefs<"Metadata_artwork" | "Save_artwork" | "Badge_artwork">;
+                readonly " $fragmentRefs": FragmentRefs<"Metadata_artwork" | "SaveButton_artwork" | "Badge_artwork">;
             } | null;
         } | null> | null;
     } | null;
@@ -132,7 +132,7 @@ const node: ReaderFragment = {
                 {
                   "args": null,
                   "kind": "FragmentSpread",
-                  "name": "Save_artwork"
+                  "name": "SaveButton_artwork"
                 },
                 {
                   "args": null,

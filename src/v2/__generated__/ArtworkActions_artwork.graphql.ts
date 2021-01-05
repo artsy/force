@@ -29,7 +29,7 @@ export type ArtworkActions_artwork = {
         readonly is_closed: boolean | null;
         readonly is_auction: boolean | null;
     } | null;
-    readonly " $fragmentRefs": FragmentRefs<"Save_artwork" | "ArtworkSharePanel_artwork">;
+    readonly " $fragmentRefs": FragmentRefs<"SaveButton_artwork" | "ArtworkSharePanel_artwork">;
     readonly " $refType": "ArtworkActions_artwork";
 };
 export type ArtworkActions_artwork$data = ArtworkActions_artwork;
@@ -211,7 +211,7 @@ return {
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "Save_artwork"
+      "name": "SaveButton_artwork"
     },
     {
       "args": null,
@@ -222,5 +222,5 @@ return {
   "type": "Artwork"
 };
 })();
-(node as any).hash = '0fd4e8861bf45fabe612c87d54807954';
+(node as any).hash = 'e081b8438a5e8d7f65fc6eedfa916dfc';
 export default node;

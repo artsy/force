@@ -1,5 +1,5 @@
 import { AuthContextModule } from "@artsy/cohesion"
-import { Box, Image, space } from "@artsy/palette"
+import { Box, Image } from "@artsy/palette"
 import { FillwidthItem_artwork } from "v2/__generated__/FillwidthItem_artwork.graphql"
 import { SystemContextProps, withSystemContext } from "v2/Artsy"
 import React from "react"
@@ -11,7 +11,10 @@ import createLogger from "v2/Utils/logger"
 import { userIsTeam } from "v2/Utils/user"
 import Badge from "./Badge"
 import Metadata from "./Metadata"
-import SaveButton from "./Save"
+import {
+  ClickContainer,
+  SaveButtonFragmentContainer as SaveButton,
+} from "./SaveButton"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import { Mediator } from "lib/mediator"
 
@@ -151,13 +154,7 @@ export class FillwidthItemContainer extends React.Component<
             {...userSpread}
             mediator={mediator}
             contextModule={contextModule}
-            className="artwork-save"
             artwork={artwork}
-            style={{
-              position: "absolute",
-              right: space(0.5),
-              bottom: space(0.5),
-            }}
           />
         </Placeholder>
 
@@ -184,12 +181,10 @@ export const FillwidthItem = styled(FillwidthItemContainer)<
   margin-right: ${props => props.marginRight || 0}px;
   margin-left: ${props => props.marginLeft || 0}px;
 
-  .artwork-save {
-    opacity: 0;
-  }
-
-  &:hover .artwork-save {
-    opacity: 1;
+  &:hover {
+    ${ClickContainer} {
+      opacity: 1;
+    }
   }
 `
 
@@ -204,7 +199,7 @@ export default createFragmentContainer(withSystemContext(FillwidthItem), {
       title
       href
       ...Metadata_artwork
-      ...Save_artwork
+      ...SaveButton_artwork
       ...Badge_artwork
     }
   `,
