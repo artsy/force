@@ -101,10 +101,6 @@ app.get(flatRoutes, async (req: Request, res: Response, next: NextFunction) => {
         stripe: getParam(req, "disableStripe") === "true",
         analytics: getParam(req, "disableAnalytics") === "true",
       },
-      css: {
-        // TODO: Old global asset, possibly move into styled components.
-        global: res.locals.asset("/assets/main_layout.css"),
-      },
       env: NODE_ENV,
       fontUrl: WEBFONT_URL,
       icons: {
