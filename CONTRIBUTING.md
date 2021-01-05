@@ -96,10 +96,7 @@ that behavior even for subdomains (such as local.artsy.net).
 127.0.0.1 local.artsy.net
 ```
 
-2. Fetch the staging recaptcha key with:
-```
-hokusai staging env get RECAPTCHA_KEY
-```
+2. Fetch the local development Recaptcha key from 1Password.
 
 3. Update your `.env` file's `APP_URL` and `RECAPTCHA_KEY`:
 
