@@ -1,7 +1,0 @@
-include ../../../../components/filter/dropdown-mixin
-
-span#fair-booths-filter-nav
-  label By Exhibitor:
-  a#fair-filter-all-exhibitors.filter-button.is-active.filter-nav-all( href= fair.href() + '/browse/booths' ) All Exhibitors
-  span#fair-filter-sections
-    +filter-dropdown('Section', 'Sections', 'sector', { '...': '...' })

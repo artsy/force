@@ -33,43 +33,16 @@ const routes = {
   // Note that the order of iteration over a dictionary is not guaranteed.
   "^/[^/]*/artist/.*": require("../apps/partner_profile/client/artist.coffee")
     .init,
-  "^/.*/live": require("../apps/fair/client/trending.coffee").init,
-  "^/.*/feed": require("../apps/fair/client/feed.coffee").init,
-  "^/.*/for-you": require("../apps/fair/client/for_you.coffee").init,
-  "^/.*/programming.*": require("../apps/fair/client/programming.coffee").init,
-  "^/.*/events.*": require("../apps/fair_info/client/events.coffee").init,
-  "^/.*/armory-arts-week": require("../apps/fair_info/client/events.coffee")
-    .init,
-  "^/.*/browse/artist/.*": require("../apps/fair/client/artist.coffee").init,
-  "^/.*/browse/booths": require("../apps/fair/client/exhibitors.coffee").init,
-  "^/.*/browse/artworks": require("../apps/fair/client/artworks.coffee").init,
-  "(^/.*/browse/exhibitors)|(^/.*/browse/artists)|(^/.*/browse/filter)": require("../apps/fair/client/main_page.coffee")
-    .init,
   "^/.*/overview.*": () => {
-    if (sd.FAIR != null) {
-      if (location.pathname.match("info2")) {
-        return require("../apps/fair_info/client/index.coffee").init()
-      } else {
-        return require("../apps/fair/client/main_page.coffee").init()
-      }
-    } else if (sd.PROFILE != null) {
+    if (sd.PROFILE != null) {
       return require("../apps/profile/client.coffee")
     } else if (sd.PARTNER_PROFILE != null) {
       return require("../apps/partner_profile/client/index.coffee")
     }
   },
-  "^/.*/info.*": () => {
-    if (sd.FAIR != null) {
-      if (location.pathname.match("info2")) {
-        return require("../apps/fair_info/client/index.coffee").init()
-      }
-    }
-  },
   "^/([^/]+)$": () => {
     if (sd.FAIR_ORGANIZER != null) {
       return require("../apps/fair_organizer/client/fair_organizer.coffee").init()
-    } else if (sd.FAIR != null) {
-      return require("../apps/fair/client/main_page.coffee").init()
     } else if (sd.PARTNER_PROFILE != null) {
       return require("../apps/partner_profile/client/index.coffee")
     } else if (sd.PROFILE != null) {
