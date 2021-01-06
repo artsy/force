@@ -144,12 +144,4 @@ describe("#articles", function () {
     )
     return done()
   })
-
-  return it("fetches news articles", function (done) {
-    routes.articles(this.req, this.res, this.next)
-    this.res.render.args[0][1].newsArticles[0].title.should.containEql(
-      "News Article"
-    )
-    return done()
-  })
 })
