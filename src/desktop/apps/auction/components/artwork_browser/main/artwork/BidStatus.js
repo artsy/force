@@ -29,7 +29,9 @@ BidStatus.propTypes = {
 }
 
 const mapStateToProps = (state, props) => {
-  const { artworkItem: { artwork, counts = {}, current_bid } } = props
+  const {
+    artworkItem: { artwork, counts = {}, current_bid },
+  } = props
 
   const { bidder_positions } = counts
 

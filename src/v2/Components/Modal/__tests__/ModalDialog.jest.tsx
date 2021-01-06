@@ -28,11 +28,7 @@ describe("ModalDialog", () => {
 
     it("shows the cta button", () => {
       expect(getWrapper().text()).toMatch("Submit")
-      expect(
-        getWrapper()
-          .find(ModalButton)
-          .text()
-      ).toBe("Submit")
+      expect(getWrapper().find(ModalButton).text()).toBe("Submit")
     })
 
     it("shows the detail if present", () => {
@@ -85,10 +81,7 @@ describe("ModalDialog", () => {
       })
 
       expect(mockAction).not.toHaveBeenCalled()
-      dialog
-        .find(ModalButton)
-        .first()
-        .simulate("click")
+      dialog.find(ModalButton).first().simulate("click")
       expect(mockAction).toHaveBeenCalled()
       expect(defaultProps.primaryCta.action).not.toHaveBeenCalled()
     })

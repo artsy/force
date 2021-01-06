@@ -70,10 +70,8 @@ const writeRecordings = debounce(
               )
             )
 
-            fs.writeFile(
-              filename,
-              contents,
-              err => (err ? reject(err) : resolve())
+            fs.writeFile(filename, contents, err =>
+              err ? reject(err) : resolve()
             )
           })
         })

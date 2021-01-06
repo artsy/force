@@ -68,40 +68,40 @@ export class SeoProducts extends React.Component<SeoProductsProps> {
               ...(isInstitution
                 ? {}
                 : {
-                  category: node.category,
-                  productionDate: node.date,
-                  offers: {
-                    "@type": "Offer",
-                    price: !is_price_range
-                      ? formatCurrency(display)
-                      : {
-                        minPrice:
-                          display && formatCurrency(display.split("-")[0]),
-                        maxPrice:
-                          display && formatCurrency(display.split("-")[1]),
+                    category: node.category,
+                    productionDate: node.date,
+                    offers: {
+                      "@type": "Offer",
+                      price: !is_price_range
+                        ? formatCurrency(display)
+                        : {
+                            minPrice:
+                              display && formatCurrency(display.split("-")[0]),
+                            maxPrice:
+                              display && formatCurrency(display.split("-")[1]),
+                          },
+                      priceCurrency: node.price_currency,
+                      availability: availability && AVAILABILITY[availability],
+                      seller: {
+                        "@type": "ArtGallery",
+                        name: partner && partner.name,
+                        image: partnerImg,
+                        address: location
+                          ? [
+                              location.address,
+                              location.address_2,
+                              location.city,
+                              location.state,
+                              location.country,
+                              location.postal_code,
+                            ]
+                              .filter(Boolean)
+                              .join(", ")
+                          : null,
+                        telephone: location ? location.phone : null,
                       },
-                    priceCurrency: node.price_currency,
-                    availability: availability && AVAILABILITY[availability],
-                    seller: {
-                      "@type": "ArtGallery",
-                      name: partner && partner.name,
-                      image: partnerImg,
-                      address: location
-                        ? [
-                          location.address,
-                          location.address_2,
-                          location.city,
-                          location.state,
-                          location.country,
-                          location.postal_code,
-                        ]
-                          .filter(Boolean)
-                          .join(", ")
-                        : null,
-                      telephone: location ? location.phone : null,
                     },
-                  },
-                }),
+                  }),
             }}
           />
         )

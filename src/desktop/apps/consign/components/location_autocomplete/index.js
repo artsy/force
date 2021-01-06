@@ -39,11 +39,9 @@ function LocationAutocomplete(props) {
     <div>
       <input
         {...inputProps}
-        className={b
-          .builder()("input")
-          .mix("bordered-input")()}
+        className={b.builder()("input").mix("bordered-input")()}
       />
-      {touched && (error && <div className={b("error")}>{error}</div>)}
+      {touched && error && <div className={b("error")}>{error}</div>}
     </div>
   )
 
@@ -122,9 +120,10 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(
-  LocationAutocomplete
-)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(LocationAutocomplete)
 
 LocationAutocomplete.propTypes = {
   chooseLocationAction: PropTypes.func.isRequired,

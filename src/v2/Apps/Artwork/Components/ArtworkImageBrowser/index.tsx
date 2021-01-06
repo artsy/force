@@ -16,7 +16,7 @@ export interface ImageBrowserProps {
 
 export class ArtworkImageBrowserContainer extends React.Component<
   ImageBrowserProps
-  > {
+> {
   carousel = null
 
   render() {

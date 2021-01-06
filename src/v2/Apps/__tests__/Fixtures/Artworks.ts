@@ -542,9 +542,7 @@ export const OpenAuctionArtwork = {
     is_registration_closed: false,
     registrationStatus: null,
     live_start_at: null,
-    end_at: DateTime.local()
-      .plus({ days: 3 })
-      .toString(),
+    end_at: DateTime.local().plus({ days: 3 }).toString(),
   },
   sale_artwork: {
     lot_label: "2",
@@ -622,9 +620,7 @@ export const LiveAuctionArtwork = {
     is_with_buyers_premium: true,
     is_registration_closed: true,
     registrationStatus: null,
-    live_start_at: DateTime.local()
-      .plus({ days: 3 })
-      .toString(),
+    live_start_at: DateTime.local().plus({ days: 3 }).toString(),
     end_at: null,
     internalID: "sale_id",
   },
@@ -708,9 +704,7 @@ export const ClosedAuctionArtwork = {
     is_with_buyers_premium: true,
     is_registration_closed: true,
     live_start_at: null,
-    end_at: DateTime.local()
-      .minus({ days: 3 })
-      .toString(),
+    end_at: DateTime.local().minus({ days: 3 }).toString(),
     internalID: "sale_id",
   },
   sale_artwork: {

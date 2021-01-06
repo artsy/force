@@ -31,7 +31,9 @@ function StepMarker({ currentStep, isMobile, steps }) {
 }
 
 const mapStateToProps = state => {
-  const { submissionFlow: { currentStep, isMobile, steps } } = state
+  const {
+    submissionFlow: { currentStep, isMobile, steps },
+  } = state
 
   return {
     currentStep,

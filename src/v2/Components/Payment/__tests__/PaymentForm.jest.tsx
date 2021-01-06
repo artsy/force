@@ -160,12 +160,9 @@ describe("PaymentForm", () => {
     fillAddressForm(paymentWrapper, validAddress)
     paymentWrapper.find(Button).simulate("click")
 
-    expect(
-      paymentWrapper
-        .find(CreditCardInput)
-        .find(Sans)
-        .html()
-    ).toContain("Your card number is invalid.")
+    expect(paymentWrapper.find(CreditCardInput).find(Sans).html()).toContain(
+      "Your card number is invalid."
+    )
   })
 
   it("shows an error modal when there is an error in CreateCreditCardPayload", () => {

@@ -3,9 +3,7 @@ let now = baseTime
 import { DateTime } from "luxon"
 
 export function __advance(ms: number) {
-  now = DateTime.fromISO(now)
-    .plus({ milliseconds: ms })
-    .toString()
+  now = DateTime.fromISO(now).plus({ milliseconds: ms }).toString()
 }
 
 export function __reset() {

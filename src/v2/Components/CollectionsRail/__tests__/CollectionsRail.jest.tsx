@@ -30,10 +30,7 @@ describe("CollectionsRail", () => {
   it("Tracks impressions", () => {
     const { Component, dispatch } = mockTracking(CollectionsRail)
     const component = mount(<Component {...props} />)
-    component
-      .find(Waypoint)
-      .getElement()
-      .props.onEnter()
+    component.find(Waypoint).getElement().props.onEnter()
 
     expect(dispatch).toBeCalledWith({
       action_type: "Impression",

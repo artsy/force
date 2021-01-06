@@ -30,10 +30,7 @@ describe("DesktopModal", () => {
     it("tracks close", () => {
       const tracking = { trackEvent: jest.fn() }
       const wrapper = getWrapper({ tracking })
-      wrapper
-        .find("Icon")
-        .at(0)
-        .simulate("click")
+      wrapper.find("Icon").at(0).simulate("click")
 
       expect(tracking.trackEvent).toBeCalledWith({
         action: "Click",

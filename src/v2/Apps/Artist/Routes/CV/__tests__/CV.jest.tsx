@@ -51,10 +51,7 @@ describe("CV Route", () => {
 
     it("renders correct number of items per section", () => {
       const getRowsAt = index =>
-        wrapper
-          .find("CVItem")
-          .at(index)
-          .find("ShowEntry")
+        wrapper.find("CVItem").at(index).find("ShowEntry")
 
       expect(getRowsAt(0).length).toBe(10)
       expect(getRowsAt(1).length).toBe(10)
@@ -78,10 +75,7 @@ describe("CV Route", () => {
 
     it("calls loadMore on button click", () => {
       const spy = spyOn(
-        wrapper
-          .find("CVItem")
-          .at(0)
-          .instance() as CVItem,
+        wrapper.find("CVItem").at(0).instance() as CVItem,
         "loadMore"
       )
       const button = wrapper.find("Button").at(0)

@@ -25,10 +25,7 @@ describe("AuctionCard", () => {
     expect(text).toContain("Collected by a major institution")
     expect(text).toMatch(/Tate, and 1\smore/)
 
-    wrapper
-      .find(Link)
-      .first()
-      .simulate("click")
+    wrapper.find(Link).first().simulate("click")
 
     expect(wrapper.text()).toContain("Tate, MoMA PS1")
   })

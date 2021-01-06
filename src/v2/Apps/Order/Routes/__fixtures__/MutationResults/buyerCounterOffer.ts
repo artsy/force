@@ -6,9 +6,7 @@ export const buyerCounterOfferSuccess = {
     orderOrError: {
       order: {
         ...OfferOrderWithShippingDetails,
-        stateExpiresAt: DateTime.local()
-          .plus({ days: 1 })
-          .toString(),
+        stateExpiresAt: DateTime.local().plus({ days: 1 }).toString(),
       },
     },
   },

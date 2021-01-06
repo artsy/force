@@ -21,20 +21,20 @@ export const ShippingAddress = ({
     phoneNumber,
   },
 }: ShippingAddressProps) => (
-    <>
-      <Serif size={["2", "3t"]}>{name}</Serif>
-      <Serif size={["2", "3t"]}>
-        {[addressLine1, (addressLine2 || "").trim()].filter(Boolean).join(", ")}
-      </Serif>
-      <Serif size={["2", "3t"]}>
-        {city}, {region} {postalCode}
-      </Serif>
-      <Serif size={["2", "3t"]}>
-        {COUNTRY_CODE_TO_COUNTRY_NAME[country] || country}
-      </Serif>
-      {phoneNumber && <Serif size={["2", "3t"]}>{phoneNumber}</Serif>}
-    </>
-  )
+  <>
+    <Serif size={["2", "3t"]}>{name}</Serif>
+    <Serif size={["2", "3t"]}>
+      {[addressLine1, (addressLine2 || "").trim()].filter(Boolean).join(", ")}
+    </Serif>
+    <Serif size={["2", "3t"]}>
+      {city}, {region} {postalCode}
+    </Serif>
+    <Serif size={["2", "3t"]}>
+      {COUNTRY_CODE_TO_COUNTRY_NAME[country] || country}
+    </Serif>
+    {phoneNumber && <Serif size={["2", "3t"]}>{phoneNumber}</Serif>}
+  </>
+)
 
 export const ShippingAddressFragmentContainer = createFragmentContainer(
   ShippingAddress,

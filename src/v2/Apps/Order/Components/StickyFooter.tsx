@@ -19,7 +19,10 @@ export class StickyFooter extends Component<StickyFooterProps> {
     flow: props.orderType === "OFFER" ? "make offer" : "buy now",
   }))
   onClickReadFAQ() {
-    window.open("https://support.artsy.net/hc/en-us/sections/360008203114-Buy-Now-and-Make-Offer", "_blank")
+    window.open(
+      "https://support.artsy.net/hc/en-us/sections/360008203114-Buy-Now-and-Make-Offer",
+      "_blank"
+    )
   }
 
   @track<StickyFooterProps>(props => ({

@@ -19,10 +19,7 @@ describe("Gucci SectionsNav", () => {
 
   it("Calls onClick with section index on title click", () => {
     const component = mount(<SectionsNav {...props} />)
-    component
-      .find(SectionItem)
-      .last()
-      .simulate("click")
+    component.find(SectionItem).last().simulate("click")
     expect(props.onClick.args[0][0]).toBe(2)
   })
 })

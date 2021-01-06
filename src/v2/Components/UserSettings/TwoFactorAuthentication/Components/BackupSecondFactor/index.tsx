@@ -92,10 +92,10 @@ export const BackupSecondFactor: React.FC<BackupSecondFactorProps> = props => {
               </SetupButton>
             </>
           ) : (
-              <SetupButton width={["100%", "auto"]} ml={[0, 1]} mt={[1, 0]}>
-                Set up
-              </SetupButton>
-            )}
+            <SetupButton width={["100%", "auto"]} ml={[0, 1]} mt={[1, 0]}>
+              Set up
+            </SetupButton>
+          )}
         </Flex>
       </Flex>
       <Modal

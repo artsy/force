@@ -83,10 +83,7 @@ export class FixedHeader extends Component<FixedHeaderProps, FixedHeaderState> {
   }
 }
 
-const FixedHeaderContainer =
-  styled.div <
-  { isVisible: boolean } >
-  `
+const FixedHeaderContainer = styled.div<{ isVisible: boolean }>`
   width: 100%;
   padding: 15px 20px;
   background: white;

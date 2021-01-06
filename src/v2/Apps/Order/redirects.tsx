@@ -111,7 +111,7 @@ const goToRespondIfMyLastOfferIsNotMostRecentOffer: OrderPredicate = ({
     order.myLastOffer &&
     order.lastOffer &&
     DateTime.fromISO(order.myLastOffer.createdAt) >
-    DateTime.fromISO(order.lastOffer.createdAt)
+      DateTime.fromISO(order.lastOffer.createdAt)
   ) {
     return
   }

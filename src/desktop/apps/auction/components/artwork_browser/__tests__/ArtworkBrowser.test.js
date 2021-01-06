@@ -219,10 +219,7 @@ xdescribe("auction/components/artwork_browser/ArtworkBrowser.test.js", () => {
           .find('input[value="artists-all"]')
           .props()
           .checked.should.eql(false)
-        wrapper
-          .find('input[value="artist-1"]')
-          .props()
-          .checked.should.eql(true)
+        wrapper.find('input[value="artist-1"]').props().checked.should.eql(true)
       })
     })
   })
@@ -288,10 +285,7 @@ xdescribe("auction/components/artwork_browser/ArtworkBrowser.test.js", () => {
           .find('input[value="mediums-all"]')
           .props()
           .checked.should.eql(false)
-        wrapper
-          .find('input[value="painting"]')
-          .props()
-          .checked.should.eql(true)
+        wrapper.find('input[value="painting"]').props().checked.should.eql(true)
       })
     })
   })

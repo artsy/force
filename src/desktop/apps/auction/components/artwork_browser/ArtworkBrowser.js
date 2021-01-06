@@ -20,18 +20,10 @@ function ArtworkBrowser({ isMobile }) {
       ) : (
         // Desktop
         <div className={b("container")}>
-          <div
-            className={b
-              .builder()("left")
-              .mix("cf-sidebar")()}
-          >
+          <div className={b.builder()("left").mix("cf-sidebar")()}>
             <Sidebar />
           </div>
-          <div
-            className={b
-              .builder()("right")
-              .mix("cf-right")()}
-          >
+          <div className={b.builder()("right").mix("cf-right")()}>
             <HeaderDesktop />
             <ArtworkDisplay />
           </div>

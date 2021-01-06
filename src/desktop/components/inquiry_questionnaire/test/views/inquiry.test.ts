@@ -20,7 +20,7 @@ describe(
 
     describe("#render", () => {
       describe("user with email and name", () => {
-        beforeEach(function() {
+        beforeEach(function () {
           view = new Inquiry({
             user: this.currentUser,
             artwork: this.artwork,
@@ -32,10 +32,7 @@ describe(
         })
 
         it("renders the template", () => {
-          view
-            .$("h1")
-            .text()
-            .should.equal("Send message to gallery")
+          view.$("h1").text().should.equal("Send message to gallery")
           view
             .$(".scontact-description")
             .text()
@@ -59,7 +56,7 @@ describe(
       })
 
       describe("user without contact details", () => {
-        beforeEach(function() {
+        beforeEach(function () {
           this.loggedOutUser.unset("name")
           this.loggedOutUser.unset("email")
 
@@ -74,26 +71,20 @@ describe(
         })
 
         it("renders the template", () => {
-          view
-            .$("h1")
-            .text()
-            .should.equal("Send message to gallery")
+          view.$("h1").text().should.equal("Send message to gallery")
           view
             .$(".scontact-description")
             .text()
             .should.equal("To: Gagosian Gallery")
           view.$('input[type="text"][name="name"]').should.have.lengthOf(1)
           view.$('input[type="email"][name="email"]').should.have.lengthOf(1)
-          view
-            .$(".scontact-from")
-            .text()
-            .should.be.empty()
+          view.$(".scontact-from").text().should.be.empty()
         })
       })
     })
 
     describe("#next (with user)", () => {
-      beforeEach(function() {
+      beforeEach(function () {
         this.state.set("steps", ["inquiry", "after_inquiry"])
 
         view = new Inquiry({
@@ -137,7 +128,7 @@ describe(
     })
 
     describe("#next", () => {
-      beforeEach(function() {
+      beforeEach(function () {
         this.state.set("steps", ["inquiry", "after_inquiry"])
 
         this.loggedOutUser.unset("name")
@@ -183,7 +174,7 @@ describe(
         })
       })
 
-      it("prevents an initial send (but not subsequent) when submitting the default message", function() {
+      it("prevents an initial send (but not subsequent) when submitting the default message", function () {
         sinon.stub(Inquiry.prototype, "nudged").returns(false)
 
         view
@@ -206,10 +197,7 @@ describe(
             "We recommend personalizing your message to get a faster answer from the gallery."
           )
 
-        view
-          .$("button")
-          .text()
-          .should.equal("Send Anyway?")
+        view.$("button").text().should.equal("Send Anyway?")
         view.$("button").click()
 
         Backbone.sync.callCount.should.equal(2)
@@ -219,7 +207,7 @@ describe(
     })
 
     describe("in a fair context", () => {
-      beforeEach(function() {
+      beforeEach(function () {
         this.state.set("steps", ["inquiry", "after_inquiry"])
 
         this.loggedOutUser.unset("name")
@@ -236,7 +224,7 @@ describe(
       })
 
       describe("#render", () => {
-        it("renders the attendance checkbox for open fair", function() {
+        it("renders the attendance checkbox for open fair", function () {
           const tomorrow = new Date(new Date().getTime() + 24 * 60 * 60 * 1000)
           this.artwork
             .related()
@@ -246,7 +234,7 @@ describe(
           view.$el.html().should.containEql("I will attend Armory Show")
         })
 
-        it("renders the attendance checkbox for closed fair", function() {
+        it("renders the attendance checkbox for closed fair", function () {
           const yesterday = new Date(new Date().getTime() - 24 * 60 * 60 * 1000)
           this.artwork
             .related()

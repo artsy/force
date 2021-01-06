@@ -24,7 +24,9 @@ function SubmissionFlow(props) {
 }
 
 const mapStateToProps = state => {
-  const { submissionFlow: { currentStep } } = state
+  const {
+    submissionFlow: { currentStep },
+  } = state
 
   return {
     CurrentStepComponent: stepsConfig[currentStep].component,

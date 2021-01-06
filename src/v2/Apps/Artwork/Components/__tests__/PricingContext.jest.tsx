@@ -115,10 +115,7 @@ describe("PricingContext", () => {
   it("renders pricing context question mark icon and informational modal", async () => {
     const wrapper = await getWrapper()
     expect(wrapper.find(QuestionCircleIcon).length).toEqual(1)
-    wrapper
-      .find(QuestionCircleIcon)
-      .at(0)
-      .simulate("click")
+    wrapper.find(QuestionCircleIcon).at(0).simulate("click")
 
     await flushPromiseQueue()
 
@@ -262,10 +259,7 @@ Object {
     it("Tracks impressions", () => {
       const { Component, dispatch } = mockTracking(PricingContext)
       const component = mount(<Component artwork={mockArtwork as any} />)
-      component
-        .find(Waypoint)
-        .getElement()
-        .props.onEnter()
+      component.find(Waypoint).getElement().props.onEnter()
 
       expect(dispatch).toBeCalledWith({
         action_type: "Impression",
@@ -279,10 +273,7 @@ Object {
     it("tracks hovers on histogram bars", () => {
       const { Component, dispatch } = mockTracking(PricingContext)
       const component = mount(<Component artwork={mockArtwork as any} />)
-      component
-        .find("Bar")
-        .at(0)
-        .simulate("mouseOver")
+      component.find("Bar").at(0).simulate("mouseOver")
       expect(dispatch).toBeCalledWith({
         context_module: "Price Context",
         action_type: "Hover",
@@ -296,10 +287,7 @@ Object {
     it("tracks clicks on 'Browse works in this category' link", () => {
       const { Component, dispatch } = mockTracking(PricingContext)
       const component = mount(<Component artwork={mockArtwork as any} />)
-      component
-        .find(Link)
-        .at(0)
-        .simulate("click")
+      component.find(Link).at(0).simulate("click")
 
       expect(dispatch).toBeCalledWith({
         context_module: "Price Context",

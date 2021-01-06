@@ -25,7 +25,7 @@ interface PhoneNumberFormState {
 export class PhoneNumberForm extends React.Component<
   PhoneNumberFormProps,
   PhoneNumberFormState
-  > {
+> {
   state = {
     phoneNumber: this.props.value || emptyPhoneNumber,
   }

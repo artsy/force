@@ -45,12 +45,11 @@ function MasonryArtwork(props) {
         }}
       />
 
-      {isAuction &&
-        !isClosed && (
-          <div className={b("bid-status")}>
-            <BidStatus artworkItem={saleArtwork} />
-          </div>
-        )}
+      {isAuction && !isClosed && (
+        <div className={b("bid-status")}>
+          <BidStatus artworkItem={saleArtwork} />
+        </div>
+      )}
     </a>
   )
 }

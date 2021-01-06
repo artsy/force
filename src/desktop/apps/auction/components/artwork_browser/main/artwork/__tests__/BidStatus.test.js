@@ -15,10 +15,7 @@ xdescribe("auction/components/artwork_browser/main/artwork/BidStatus.test", () =
         },
       })
 
-      wrapper
-        .find(".auction-BidStatus__bid-label")
-        .text()
-        .should.eql("Sold")
+      wrapper.find(".auction-BidStatus__bid-label").text().should.eql("Sold")
     })
 
     it("renders artwork display and bidLabel if not sold", () => {
@@ -32,10 +29,7 @@ xdescribe("auction/components/artwork_browser/main/artwork/BidStatus.test", () =
       })
 
       wrapper.find(".auction-BidStatus__bid-label").length.should.eql(0)
-      wrapper
-        .find(".auction-BidStatus__bid-amount")
-        .text()
-        .should.eql("Hello")
+      wrapper.find(".auction-BidStatus__bid-amount").text().should.eql("Hello")
       wrapper.text().should.containEql("World")
     })
   })

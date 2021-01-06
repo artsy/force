@@ -53,10 +53,7 @@ describe("Shows Route", () => {
 
     it("renders correct top block items", () => {
       const getBlockAt = index =>
-        wrapper
-          .find("ArtistShowBlockItem")
-          .at(index)
-          .html()
+        wrapper.find("ArtistShowBlockItem").at(index).html()
 
       const titles = [
         "Autumn Contemporary - Gstaad, Switzerland",
@@ -72,10 +69,7 @@ describe("Shows Route", () => {
 
     it("renders the correct number of pages", () => {
       const getPaginationAt = index =>
-        wrapper
-          .find("Pagination")
-          .at(index)
-          .find("button")
+        wrapper.find("Pagination").at(index).find("button")
 
       expect(getPaginationAt(0).length).toBe(2)
       expect(getPaginationAt(1).length).toBe(3)

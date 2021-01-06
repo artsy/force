@@ -45,7 +45,7 @@ const Tab: React.FC<LinkProps> = ({ children, to }) => {
     </Box>
   )
 }
-export const ViewingRoomTabBar: React.FC<FlexProps> = (props) => {
+export const ViewingRoomTabBar: React.FC<FlexProps> = props => {
   const {
     match: {
       params: { slug },

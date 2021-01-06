@@ -28,7 +28,8 @@ export function UploadedImage(props) {
         <Alert />
       </div>
       <div className={b("error-content")}>
-        {file.fileName} failed to upload.<br />
+        {file.fileName} failed to upload.
+        <br />
         <b>The image file should be JPG or PNG and should be less than 30mb.</b>
       </div>
       <div

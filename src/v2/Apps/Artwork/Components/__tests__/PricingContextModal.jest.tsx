@@ -37,40 +37,28 @@ describe("PricingContextModal", () => {
 
     expect(component.find(Link).length).toBe(2)
 
-    expect(
-      component
-        .find(Link)
-        .first()
-        .props().href
-    ).toEqual("https://www.artsy.net/article/artsy-editorial-artworks-prices")
+    expect(component.find(Link).first().props().href).toEqual(
+      "https://www.artsy.net/article/artsy-editorial-artworks-prices"
+    )
   })
 
   it("renders the support mailto link", async () => {
     const component = mount(<PricingContextModal />)
 
-    component
-      .find(QuestionCircleIcon)
-      .at(0)
-      .simulate("click")
+    component.find(QuestionCircleIcon).at(0).simulate("click")
 
     await flushPromiseQueue()
     component.update()
 
-    expect(
-      component
-        .find(Link)
-        .at(1)
-        .props().href
-    ).toEqual("mailto:support@artsy.net")
+    expect(component.find(Link).at(1).props().href).toEqual(
+      "mailto:support@artsy.net"
+    )
   })
 
   it("opens the modal when the question mark icon is clicked", async () => {
     const component = mount(<PricingContextModal />)
 
-    component
-      .find(QuestionCircleIcon)
-      .at(0)
-      .simulate("click")
+    component.find(QuestionCircleIcon).at(0).simulate("click")
 
     await flushPromiseQueue()
     component.update()
@@ -83,10 +71,7 @@ describe("PricingContextModal", () => {
   it("closes the modal when the 'Got it' button is clicked", async () => {
     const component = mount(<PricingContextModal />)
 
-    component
-      .find(QuestionCircleIcon)
-      .at(0)
-      .simulate("click")
+    component.find(QuestionCircleIcon).at(0).simulate("click")
 
     await flushPromiseQueue()
     component.update()
@@ -115,10 +100,7 @@ describe("PricingContextModal", () => {
     it("tracks clicks on the question mark icon", () => {
       const { Component, dispatch } = mockTracking(PricingContextModal)
       const component = mount(<Component />)
-      component
-        .find(QuestionCircleIcon)
-        .at(0)
-        .simulate("click")
+      component.find(QuestionCircleIcon).at(0).simulate("click")
 
       expect(dispatch).toBeCalledWith({
         context_module: "Price Context",

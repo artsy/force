@@ -19,32 +19,20 @@ const realSetInterval = global.setInterval
 const defaultProps: ExtractProps<typeof CountdownTimer> = {
   action: "Respond",
   note: "Expired offers end the negotiation process permanently.",
-  countdownStart: DateTime.fromISO(DATE)
-    .minus({ days: 1 })
-    .toString(),
-  countdownEnd: DateTime.fromISO(DATE)
-    .plus({ days: 1 })
-    .toString(),
+  countdownStart: DateTime.fromISO(DATE).minus({ days: 1 }).toString(),
+  countdownEnd: DateTime.fromISO(DATE).plus({ days: 1 }).toString(),
 }
 
 const summerProps: typeof defaultProps = {
   ...defaultProps,
-  countdownStart: DateTime.fromISO(SUMMER_DATE)
-    .minus({ days: 1 })
-    .toString(),
-  countdownEnd: DateTime.fromISO(SUMMER_DATE)
-    .plus({ days: 1 })
-    .toString(),
+  countdownStart: DateTime.fromISO(SUMMER_DATE).minus({ days: 1 }).toString(),
+  countdownEnd: DateTime.fromISO(SUMMER_DATE).plus({ days: 1 }).toString(),
 }
 
 const getPropsWithTimeRemaining = duration => ({
   ...defaultProps,
-  countdownStart: DateTime.fromISO(DATE)
-    .minus({ days: 1 })
-    .toString(),
-  countdownEnd: DateTime.fromISO(DATE)
-    .plus(duration)
-    .toString(),
+  countdownStart: DateTime.fromISO(DATE).minus({ days: 1 }).toString(),
+  countdownEnd: DateTime.fromISO(DATE).plus(duration).toString(),
 })
 
 describe("CountdownTimer", () => {

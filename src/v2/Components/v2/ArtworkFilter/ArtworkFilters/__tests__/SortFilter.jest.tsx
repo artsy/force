@@ -35,11 +35,7 @@ describe("SortFilter", () => {
 
   it("updates context on filter change", done => {
     const wrapper = getWrapper()
-    wrapper
-      .find("SelectSmall")
-      .find("option")
-      .at(1)
-      .simulate("change")
+    wrapper.find("SelectSmall").find("option").at(1).simulate("change")
 
     setTimeout(() => {
       expect(context.filters.sort).toEqual("bar")

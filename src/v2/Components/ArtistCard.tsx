@@ -87,7 +87,7 @@ export const LargeArtistCard: SFC<ArtistCardProps> = props => (
         buttonProps={{
           variant: "secondaryOutline",
           size: "small",
-          width: space(9)
+          width: space(9),
         }}
       />
     </Flex>
@@ -119,7 +119,7 @@ export const SmallArtistCard: SFC<ArtistCardProps> = props => (
         contextModule={props.contextModule}
         buttonProps={{
           variant: "secondaryOutline",
-          size: "small"
+          size: "small",
         }}
       />
     </Flex>

@@ -17,11 +17,7 @@ function FilterSort(props) {
 
   return (
     <div className={b()}>
-      <span
-        className={b
-          .builder()("label")
-          .mix("bordered-pulldown-label")()}
-      >
+      <span className={b.builder()("label").mix("bordered-pulldown-label")()}>
         Sort by:
       </span>
       <div className="bordered-pulldown">
