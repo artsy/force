@@ -33,25 +33,11 @@ const routes = {
   // Note that the order of iteration over a dictionary is not guaranteed.
   "^/[^/]*/artist/.*": require("../apps/partner_profile/client/artist.coffee")
     .init,
-  "^/.*/events.*": require("../apps/fair_info/client/events.coffee").init,
-  "^/.*/armory-arts-week": require("../apps/fair_info/client/events.coffee")
-    .init,
   "^/.*/overview.*": () => {
-    if (sd.FAIR != null) {
-      if (location.pathname.match("info2")) {
-        return require("../apps/fair_info/client/index.coffee").init()
-      }
-    } else if (sd.PROFILE != null) {
+    if (sd.PROFILE != null) {
       return require("../apps/profile/client.coffee")
     } else if (sd.PARTNER_PROFILE != null) {
       return require("../apps/partner_profile/client/index.coffee")
-    }
-  },
-  "^/.*/info.*": () => {
-    if (sd.FAIR != null) {
-      if (location.pathname.match("info2")) {
-        return require("../apps/fair_info/client/index.coffee").init()
-      }
     }
   },
   "^/([^/]+)$": () => {
