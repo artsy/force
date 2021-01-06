@@ -9,6 +9,7 @@ import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
 
 jest.mock("v2/Artsy/Analytics/useTracking")
 jest.unmock("react-relay")
+jest.mock("v2/Components/Pagination/useComputeHref")
 
 jest.mock("v2/Components/Artwork/FillwidthItem", () => () => {
   const FillwidthItem = () => <div />

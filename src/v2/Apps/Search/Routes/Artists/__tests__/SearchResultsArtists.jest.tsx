@@ -6,6 +6,8 @@ import { mount } from "enzyme"
 import React from "react"
 import { SearchResultsArtistsRoute as SearchResultsArtists } from "../SearchResultsArtists"
 
+jest.mock("v2/Components/Pagination/useComputeHref")
+
 describe("SearchResultsArtworks", () => {
   const getWrapper = (searchProps: any) => {
     return mount(

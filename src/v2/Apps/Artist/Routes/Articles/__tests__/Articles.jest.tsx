@@ -8,6 +8,7 @@ import { graphql } from "react-relay"
 import { Breakpoint } from "v2/Utils/Responsive"
 
 jest.unmock("react-relay")
+jest.mock("v2/Components/Pagination/useComputeHref")
 
 describe("Articles Route", () => {
   let wrapper: ReactWrapper
@@ -40,7 +41,7 @@ describe("Articles Route", () => {
     it("renders proper elements", () => {
       expect(wrapper.find("ArticleItem").length).toBe(10)
       expect(wrapper.find("Pagination").length).toBe(1)
-      expect(wrapper.find("Pagination").find("button").length).toBe(4)
+      expect(wrapper.find("Pagination").find("a").length).toBe(6)
     })
 
     it("renders proper article contents", () => {

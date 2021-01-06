@@ -8,6 +8,7 @@ import { graphql } from "react-relay"
 import { Breakpoint } from "v2/Utils/Responsive"
 
 jest.unmock("react-relay")
+jest.mock("v2/Components/Pagination/useComputeHref")
 
 describe("Shows Route", () => {
   let wrapper: ReactWrapper
@@ -69,11 +70,11 @@ describe("Shows Route", () => {
 
     it("renders the correct number of pages", () => {
       const getPaginationAt = index =>
-        wrapper.find("Pagination").at(index).find("button")
+        wrapper.find("Pagination").at(index).find("a")
 
-      expect(getPaginationAt(0).length).toBe(2)
-      expect(getPaginationAt(1).length).toBe(3)
-      expect(getPaginationAt(2).length).toBe(5)
+      expect(getPaginationAt(0).length).toBe(4)
+      expect(getPaginationAt(1).length).toBe(5)
+      expect(getPaginationAt(2).length).toBe(7)
     })
   })
 })

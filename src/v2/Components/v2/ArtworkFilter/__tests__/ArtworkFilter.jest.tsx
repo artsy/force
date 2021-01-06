@@ -12,6 +12,7 @@ import { ArtworkFilterFixture } from "./fixtures/ArtworkFilter.fixture"
 
 jest.unmock("react-relay")
 jest.mock("v2/Artsy/Analytics/useTracking")
+jest.mock("v2/Components/Pagination/useComputeHref")
 
 describe("ArtworkFilter", () => {
   const getWrapper = async (

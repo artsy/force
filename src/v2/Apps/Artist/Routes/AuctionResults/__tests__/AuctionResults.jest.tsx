@@ -1,3 +1,4 @@
+/* eslint-disable jest/no-done-callback */
 import { AuctionResults_Test_QueryRawResponse } from "v2/__generated__/AuctionResults_Test_Query.graphql"
 import { AuctionResultsFixture } from "v2/Apps/__tests__/Fixtures/Artist/Routes/AuctionResultsFixture"
 import { AuctionResultsRouteFragmentContainer as AuctionResultsRoute } from "v2/Apps/Artist/Routes/AuctionResults"
@@ -13,6 +14,7 @@ import { openAuthModal } from "v2/Utils/openAuthModal"
 jest.unmock("react-relay")
 jest.mock("react-tracking")
 jest.mock("v2/Utils/openAuthModal")
+jest.mock("v2/Components/Pagination/useComputeHref")
 
 describe("AuctionResults", () => {
   let wrapper: ReactWrapper
@@ -64,13 +66,13 @@ describe("AuctionResults", () => {
 
     it("calls auth modal for 1st pagination but not for 2nd", done => {
       const pagination = wrapper.find("Pagination")
-      pagination.find("button").at(1).simulate("click")
+      pagination.find("a").at(1).simulate("click")
 
       setTimeout(() => {
         expect(mockOpenAuthModal).toHaveBeenCalledTimes(1)
       })
 
-      pagination.find("button").at(2).simulate("click")
+      pagination.find("a").at(2).simulate("click")
 
       setTimeout(() => {
         // expect no new call
@@ -158,7 +160,7 @@ describe("AuctionResults", () => {
         it("triggers relay refetch with after, and re-shows sign up to see price", done => {
           const pagination = wrapper.find("Pagination")
 
-          pagination.find("button").at(1).simulate("click")
+          pagination.find("a").at(1).simulate("click")
 
           setTimeout(() => {
             expect(refetchSpy).toHaveBeenCalledTimes(1)
