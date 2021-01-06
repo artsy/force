@@ -19,7 +19,7 @@ const FairInfoRoute = loadable(() => import("./Routes/FairInfo"), {
   resolveComponent: component => component.FairInfoFragmentContainer,
 })
 const FairArticlesRoute = loadable(() => import("./Routes/FairArticles"), {
-  resolveComponent: component => component.FairArticlesFragmentContainer,
+  resolveComponent: component => component.FairArticlesPaginationContainer,
 })
 
 export const fairRoutes: RouteConfig[] = [
