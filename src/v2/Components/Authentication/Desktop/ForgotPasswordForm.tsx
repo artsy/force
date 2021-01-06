@@ -19,7 +19,7 @@ export interface ForgotPasswordFormState {
 export class ForgotPasswordForm extends Component<
   FormProps,
   ForgotPasswordFormState
-  > {
+> {
   state = {
     error: this.props.error,
   }

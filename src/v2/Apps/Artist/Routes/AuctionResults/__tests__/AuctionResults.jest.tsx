@@ -64,19 +64,13 @@ describe("AuctionResults", () => {
 
     it("calls auth modal for 1st pagination but not for 2nd", done => {
       const pagination = wrapper.find("Pagination")
-      pagination
-        .find("button")
-        .at(1)
-        .simulate("click")
+      pagination.find("button").at(1).simulate("click")
 
       setTimeout(() => {
         expect(mockOpenAuthModal).toHaveBeenCalledTimes(1)
       })
 
-      pagination
-        .find("button")
-        .at(2)
-        .simulate("click")
+      pagination.find("button").at(2).simulate("click")
 
       setTimeout(() => {
         // expect no new call
@@ -133,10 +127,7 @@ describe("AuctionResults", () => {
 
     describe("collapsed details", () => {
       it("opens the collapse", () => {
-        wrapper
-          .find("ArrowDownIcon")
-          .first()
-          .simulate("click")
+        wrapper.find("ArrowDownIcon").first().simulate("click")
         wrapper.update()
         const html = wrapper.html()
         const data =
@@ -167,10 +158,7 @@ describe("AuctionResults", () => {
         it("triggers relay refetch with after, and re-shows sign up to see price", done => {
           const pagination = wrapper.find("Pagination")
 
-          pagination
-            .find("button")
-            .at(1)
-            .simulate("click")
+          pagination.find("button").at(1).simulate("click")
 
           setTimeout(() => {
             expect(refetchSpy).toHaveBeenCalledTimes(1)
@@ -387,10 +375,7 @@ describe("AuctionResults", () => {
         it("triggers relay refetch with correct params, and re-shows sign up to see price", done => {
           const sort = wrapper.find("SortSelect SelectSmall")
 
-          sort
-            .find("option")
-            .at(1)
-            .simulate("change")
+          sort.find("option").at(1).simulate("change")
 
           setTimeout(() => {
             expect(refetchSpy).toHaveBeenCalledTimes(1)

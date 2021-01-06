@@ -36,11 +36,7 @@ describe("SeoDataForArtwork", () => {
     })
   }
 
-  const getProductData = wrapper =>
-    wrapper
-      .find(Product)
-      .first()
-      .props().data
+  const getProductData = wrapper => wrapper.find(Product).first().props().data
 
   describe("SeoDataForArtworkFragmentContainer", () => {
     it("Renders without a partner", async () => {
@@ -62,10 +58,7 @@ describe("SeoDataForArtwork", () => {
 
       expect(wrapper.find(CreativeWork).length).toEqual(1)
 
-      const data = wrapper
-        .find(CreativeWork)
-        .first()
-        .props().data
+      const data = wrapper.find(CreativeWork).first().props().data
       expect(data).toEqual({
         brand: {
           "@type": "Person",
@@ -92,10 +85,7 @@ describe("SeoDataForArtwork", () => {
 
       expect(wrapper.find(Product).length).toEqual(1)
 
-      const data = wrapper
-        .find(Product)
-        .first()
-        .props().data
+      const data = wrapper.find(Product).first().props().data
       expect(data).toEqual({
         brand: { "@type": "Person", name: "Artist McArtist" },
         category: "Design/Decorative Art",

@@ -75,10 +75,7 @@ describe("ConsignRoute", () => {
     it("links out to consign page", async () => {
       const wrapper = await getWrapper()
       expect(
-        wrapper
-          .find("ArtistConsignHeader")
-          .find("RouterLink")
-          .html()
+        wrapper.find("ArtistConsignHeader").find("RouterLink").html()
       ).toContain(
         `href="/consign/submission?contextPath=%2Fartist%2Falex-katz%2Fconsign&amp;subject=Request%20a%20price%20estimate"`
       )
@@ -86,10 +83,7 @@ describe("ConsignRoute", () => {
 
     it("tracks event", async () => {
       const wrapper = await getWrapper()
-      wrapper
-        .find("ArtistConsignHeader")
-        .find("RouterLink")
-        .simulate("click")
+      wrapper.find("ArtistConsignHeader").find("RouterLink").simulate("click")
       expect(trackEvent).toHaveBeenCalledWith({
         action_type: "Click",
         context_module: "Sell Works by",
@@ -110,10 +104,7 @@ describe("ConsignRoute", () => {
     it("includes artist name in recently sold", async () => {
       const wrapper = await getWrapper()
       expect(
-        wrapper
-          .find("ArtistConsignRecentlySold")
-          .find("Subheader")
-          .text()
+        wrapper.find("ArtistConsignRecentlySold").find("Subheader").text()
       ).toContain("Alex Katz")
       expect(wrapper.find("ArtistConsignRecentlySold").text()).toContain(
         "Alex Katz"
@@ -177,10 +168,7 @@ describe("ConsignRoute", () => {
     it("includes button that links out to auction results", async () => {
       const wrapper = await getWrapper()
       expect(
-        wrapper
-          .find("ArtistConsignMarketTrends")
-          .find("RouterLink")
-          .html()
+        wrapper.find("ArtistConsignMarketTrends").find("RouterLink").html()
       ).toContain(`href="/artist/alex-katz/auction-results"`)
     })
 
@@ -201,10 +189,7 @@ describe("ConsignRoute", () => {
     it("includes button that links out to request estimate", async () => {
       const wrapper = await getWrapper()
       expect(
-        wrapper
-          .find("ArtistConsignHowtoSell")
-          .find("RouterLink")
-          .html()
+        wrapper.find("ArtistConsignHowtoSell").find("RouterLink").html()
       ).toContain(
         `href="/consign/submission?contextPath=%2Fartist%2Falex-katz%2Fconsign&amp;subject=Request%20a%20price%20estimate"`
       )
@@ -251,10 +236,7 @@ describe("ConsignRoute", () => {
     it("includes button that links out to request estimate", async () => {
       const wrapper = await getWrapper()
       expect(
-        wrapper
-          .find("ArtistConsignSellArt")
-          .find("RouterLink")
-          .html()
+        wrapper.find("ArtistConsignSellArt").find("RouterLink").html()
       ).toContain(
         `href="/consign/submission?contextPath=%2Fartist%2Falex-katz%2Fconsign&amp;subject=Request%20a%20price%20estimate"`
       )
@@ -262,10 +244,7 @@ describe("ConsignRoute", () => {
 
     it("tracks event", async () => {
       const wrapper = await getWrapper()
-      wrapper
-        .find("ArtistConsignSellArt")
-        .find("RouterLink")
-        .simulate("click")
+      wrapper.find("ArtistConsignSellArt").find("RouterLink").simulate("click")
       expect(trackEvent).toHaveBeenCalledWith({
         action_type: "Click",
         context_module: "Sell Art From Your Collection",

@@ -124,10 +124,7 @@ describe("SignUpForm", () => {
     props.values = SignupValues
     const wrapper = getWrapper()
 
-    wrapper
-      .find(Link)
-      .at(2)
-      .simulate("click")
+    wrapper.find(Link).at(2).simulate("click")
 
     setTimeout(() => {
       expect(props.onAppleLogin).toBeCalled()
@@ -159,10 +156,7 @@ describe("SignUpForm", () => {
     props.values.accepted_terms_of_service = false
     const wrapper = getWrapper()
 
-    wrapper
-      .find(Link)
-      .at(2)
-      .simulate("click")
+    wrapper.find(Link).at(2).simulate("click")
 
     wrapper.update()
 

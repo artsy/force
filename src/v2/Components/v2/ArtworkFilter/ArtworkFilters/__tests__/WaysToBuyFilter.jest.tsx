@@ -24,10 +24,7 @@ describe("WaysToBuyFilter", () => {
 
   it("updates context on filter change", done => {
     const wrapper = getWrapper()
-    wrapper
-      .find("Checkbox")
-      .first()
-      .simulate("click")
+    wrapper.find("Checkbox").first().simulate("click")
 
     setTimeout(() => {
       expect(context.filters.acquireable).toEqual(true)

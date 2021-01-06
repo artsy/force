@@ -26,20 +26,14 @@ describe("ModalCta", () => {
 
   it("Calls props.cta.onClick on click if provided", () => {
     const component = getWrapper(props)
-    component
-      .find("button")
-      .at(0)
-      .simulate("click")
+    component.find("button").at(0).simulate("click")
     expect(props.cta.onClick).toBeCalled()
   })
 
   it("Calls props.onClose if no props.cta.onClick", () => {
     props.cta.onClick = null
     const component = getWrapper(props)
-    component
-      .find("button")
-      .at(0)
-      .simulate("click")
+    component.find("button").at(0).simulate("click")
 
     expect(props.onClose).toBeCalled()
   })

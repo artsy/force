@@ -53,16 +53,10 @@ describe("SavedCreditCards", () => {
     const creditCardsWrapper = mount(<SavedCreditCards {...testProps} />)
     expect(creditCardsWrapper.find(CreditCard).length).toBe(2)
     expect(
-      creditCardsWrapper
-        .find(CreditCard)
-        .first()
-        .text()
+      creditCardsWrapper.find(CreditCard).first().text()
     ).toMatchInlineSnapshot(`"visa•••• 1224   Exp 05/20Remove"`)
     expect(
-      creditCardsWrapper
-        .find(CreditCard)
-        .last()
-        .text()
+      creditCardsWrapper.find(CreditCard).last().text()
     ).toMatchInlineSnapshot(`"visa•••• 2345   Exp 07/24Remove"`)
   })
 
@@ -90,12 +84,7 @@ describe("SavedCreditCards", () => {
       })
     )
 
-    expect(
-      creditCardsWrapper
-        .find(ErrorModal)
-        .first()
-        .props().show
-    ).toBe(false)
+    expect(creditCardsWrapper.find(ErrorModal).first().props().show).toBe(false)
   })
 
   it("shows an error modal if there is an error deleting the credit card", () => {
@@ -111,12 +100,7 @@ describe("SavedCreditCards", () => {
       .find(RemoveLink)
       .simulate("click")
 
-    expect(
-      creditCardsWrapper
-        .find(ErrorModal)
-        .first()
-        .props().show
-    ).toBe(true)
+    expect(creditCardsWrapper.find(ErrorModal).first().props().show).toBe(true)
   })
 
   it("shows an error modal if there is a network error", () => {
@@ -132,11 +116,6 @@ describe("SavedCreditCards", () => {
       .find(RemoveLink)
       .simulate("click")
 
-    expect(
-      creditCardsWrapper
-        .find(ErrorModal)
-        .first()
-        .props().show
-    ).toBe(true)
+    expect(creditCardsWrapper.find(ErrorModal).first().props().show).toBe(true)
   })
 })

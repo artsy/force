@@ -43,10 +43,7 @@ describe("RouteTabs", () => {
   it("renders nav items", async () => {
     const wrapper = getWrapper()
 
-    await wrapper
-      .find("MockRouter")
-      .instance()
-      .componentDidMount()
+    await wrapper.find("MockRouter").instance().componentDidMount()
 
     const html = wrapper.html()
     expect(html).toContain("Overview")

@@ -23,10 +23,7 @@ function timedDate(auction) {
 function formatDate(date, isStarted, isRegister) {
   let formatted
   if (isStarted) {
-    formatted =
-      moment(date)
-        .fromNow()
-        .replace("in ", "") + " left"
+    formatted = moment(date).fromNow().replace("in ", "") + " left"
   } else if (isRegister) {
     if (moment().diff(moment(date), "hours") > -24) {
       formatted = "Register by " + moment(date).format("ha")

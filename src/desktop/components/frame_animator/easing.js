@@ -33,8 +33,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 const pi = Math.PI
-export const sinIn = t => 1 - Math.cos(t * pi / 2)
-export const sinOut = t => Math.sin(t * pi / 2)
+export const sinIn = t => 1 - Math.cos((t * pi) / 2)
+export const sinOut = t => Math.sin((t * pi) / 2)
 export const sinInOut = t => (1 - Math.cos(pi * t)) / 2
 
 export const quadIn = t => t * t

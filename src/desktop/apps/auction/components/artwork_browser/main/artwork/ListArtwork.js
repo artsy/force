@@ -54,12 +54,11 @@ function ListArtwork(props) {
           }}
         />
 
-        {isAuction &&
-          !isClosed && (
-            <div className={b("bid-status")}>
-              <BidStatus artworkItem={saleArtwork} />
-            </div>
-          )}
+        {isAuction && !isClosed && (
+          <div className={b("bid-status")}>
+            <BidStatus artworkItem={saleArtwork} />
+          </div>
+        )}
       </div>
     </a>
   ) : (
@@ -89,12 +88,11 @@ function ListArtwork(props) {
         <div>{sale_message}</div>
       )}
 
-      {isAuction &&
-        !props.isClosed && (
-          <div className={b("bid-status")}>
-            <BidStatus artworkItem={saleArtwork} />
-          </div>
-        )}
+      {isAuction && !props.isClosed && (
+        <div className={b("bid-status")}>
+          <BidStatus artworkItem={saleArtwork} />
+        </div>
+      )}
     </a>
   )
 }

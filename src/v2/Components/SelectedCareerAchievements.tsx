@@ -27,7 +27,7 @@ const CATEGORY_LABEL_MAP = {
 
 export class SelectedCareerAchievements extends React.Component<
   SelectedCareerAchievementsProps
-  > {
+> {
   state = {
     showModal: false,
   }

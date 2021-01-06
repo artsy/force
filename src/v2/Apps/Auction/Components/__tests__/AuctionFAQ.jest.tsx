@@ -78,10 +78,7 @@ describe("AuctionFAQ", () => {
 
   it("renders content correctly", async () => {
     const wrapper = await getWrapper(viewerMockResponse)
-    const biddingContent = wrapper
-      .find(Toggle)
-      .at(0)
-      .find(Sans)
+    const biddingContent = wrapper.find(Toggle).at(0).find(Sans)
     biddingContent.simulate("click")
     wrapper.update()
     expect(wrapper.text()).toContain("How do I Register for an Auction?")

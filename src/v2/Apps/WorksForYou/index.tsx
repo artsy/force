@@ -76,11 +76,11 @@ export class WorksForYou extends Component<Props> {
                               user={user}
                             />
                           ) : (
-                              <WorksForYouFeed
-                                user={user}
-                                viewer={props.viewer}
-                              />
-                            )}
+                            <WorksForYouFeed
+                              user={user}
+                              viewer={props.viewer}
+                            />
+                          )}
                         </Box>
                       )
                     } else {

@@ -27,11 +27,7 @@ export default function CheckboxInput(props) {
         .mix("artsy-checkbox")()}
       onClick={() => onChange(!value)}
     >
-      <div
-        className={b
-          .builder()("input")
-          .mix("artsy-checkbox--checkbox")()}
-      >
+      <div className={b.builder()("input").mix("artsy-checkbox--checkbox")()}>
         <input
           type="checkbox"
           name={item}

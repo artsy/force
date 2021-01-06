@@ -67,12 +67,7 @@ describe("AuctionCard", () => {
         <AuctionCard {...props} />
       </MockBoot>
     )
-    expect(
-      large
-        .find(Serif)
-        .at(1)
-        .text()
-    ).toEqual("\u00A0")
+    expect(large.find(Serif).at(1).text()).toEqual("\u00A0")
   })
 
   it("Renders blank space instead of subHeadline for benefit auctions", () => {
@@ -89,12 +84,7 @@ describe("AuctionCard", () => {
         <AuctionCard {...props} />
       </MockBoot>
     )
-    expect(
-      large
-        .find(Serif)
-        .at(1)
-        .text()
-    ).toEqual("\u00A0")
+    expect(large.find(Serif).at(1).text()).toEqual("\u00A0")
   })
 
   const now = () => DateTime.fromISO("2019-04-16").setZone("America/New_York")
@@ -157,9 +147,7 @@ describe("AuctionCard", () => {
           {
             ...sale,
             is_preview: true,
-            start_at: now()
-              .plus({ hours: 25 })
-              .toISO(),
+            start_at: now().plus({ hours: 25 }).toISO(),
           },
           now()
         )
@@ -182,9 +170,7 @@ describe("AuctionCard", () => {
             {
               ...sale,
               is_live_open: true,
-              live_start_at: now()
-                .minus({ minutes: 1 })
-                .toISO(),
+              live_start_at: now().minus({ minutes: 1 }).toISO(),
             },
             now()
           )
@@ -196,9 +182,7 @@ describe("AuctionCard", () => {
           upcomingLabel(
             {
               ...sale,
-              live_start_at: now()
-                .plus({ days: 1 })
-                .toISO(),
+              live_start_at: now().plus({ days: 1 }).toISO(),
             },
             now()
           )
@@ -211,9 +195,7 @@ describe("AuctionCard", () => {
             {
               ...sale,
               is_registration_closed: true,
-              live_start_at: now()
-                .plus({ days: 1 })
-                .toISO(),
+              live_start_at: now().plus({ days: 1 }).toISO(),
             },
             now()
           )
@@ -226,9 +208,7 @@ describe("AuctionCard", () => {
             {
               ...sale,
               registrationStatus: { internalID: "" },
-              live_start_at: now()
-                .plus({ days: 1 })
-                .toISO(),
+              live_start_at: now().plus({ days: 1 }).toISO(),
             },
             now()
           )

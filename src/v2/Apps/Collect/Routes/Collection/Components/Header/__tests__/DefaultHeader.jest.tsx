@@ -58,22 +58,16 @@ describe("default header component", () => {
   it("a header image's anchor tag references the correct artwork slug ", () => {
     const wrapper = getWrapper(props)
 
-    expect(
-      wrapper
-        .find("a")
-        .at(0)
-        .props().href
-    ).toEqual("/artwork/carrie-mae-weems-untitled-woman-feeding-bird")
+    expect(wrapper.find("a").at(0).props().href).toEqual(
+      "/artwork/carrie-mae-weems-untitled-woman-feeding-bird"
+    )
   })
 
   describe("Tracking", () => {
     it("Tracks collection click", () => {
       const component = mount(<CollectionDefaultHeader {...props} />)
 
-      component
-        .find("a")
-        .at(0)
-        .simulate("click")
+      component.find("a").at(0).simulate("click")
 
       expect(trackEvent).toBeCalledWith({
         action_type: "Click",

@@ -83,20 +83,12 @@ describe("ForgotPasswordForm", () => {
   })
 
   it("can switch to login form", () => {
-    getWrapper()
-      .find(Footer)
-      .find(Link)
-      .at(0)
-      .simulate("click")
+    getWrapper().find(Footer).find(Link).at(0).simulate("click")
     expect(props.handleTypeChange).toBeCalledWith("login")
   })
 
   it("can switch to signup form", () => {
-    getWrapper()
-      .find(Footer)
-      .find(Link)
-      .at(1)
-      .simulate("click")
+    getWrapper().find(Footer).find(Link).at(1).simulate("click")
     expect(props.handleTypeChange).toBeCalledWith("signup")
   })
 })

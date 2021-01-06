@@ -4,8 +4,9 @@ import { sectionFragments } from "desktop/apps/article/queries/sectionFragments"
 export const newsArticlesQuery = ({ limit, offset }) => {
   return `
     query NewsArticlesQuery {
-      articles(published: true, layout: "news", limit: ${limit ||
-        50}, offset: ${offset || 0}, sort: "-published_at") {
+      articles(published: true, layout: "news", limit: ${
+        limit || 50
+      }, offset: ${offset || 0}, sort: "-published_at") {
         ${articleBody}
       }
     }

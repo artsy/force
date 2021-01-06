@@ -125,12 +125,7 @@ xdescribe("auction/components/layout/active_bids/ActiveBidItem.test", () => {
         },
       })
 
-      expect(
-        wrapper
-          .find("a")
-          .last()
-          .text()
-      ).toMatch("Bid Live")
+      expect(wrapper.find("a").last().text()).toMatch("Bid Live")
     })
 
     it("renders a bid button", () => {
@@ -147,12 +142,7 @@ xdescribe("auction/components/layout/active_bids/ActiveBidItem.test", () => {
         },
       })
 
-      expect(
-        wrapper
-          .find("a")
-          .last()
-          .text()
-      ).toMatch("Bid")
+      expect(wrapper.find("a").last().text()).toMatch("Bid")
     })
   })
 })

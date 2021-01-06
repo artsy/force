@@ -43,12 +43,7 @@ describe("MediumFilter", () => {
 
   it("selects mediums", done => {
     const wrapper = getWrapper()
-    wrapper
-      .find("Radio")
-      .first()
-      .find("Flex")
-      .first()
-      .simulate("click")
+    wrapper.find("Radio").first().find("Flex").first().simulate("click")
 
     setTimeout(() => {
       expect(context.filters.medium).toEqual("painting")

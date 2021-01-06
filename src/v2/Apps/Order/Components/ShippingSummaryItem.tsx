@@ -26,20 +26,20 @@ const ShippingSummaryItem = ({
       <ShippingAddress ship={requestedFulfillment} />
     </StepSummaryItem>
   ) : (
-      <StepSummaryItem
-        title={<>Pick up ({lineItems.edges[0].node.artwork.shippingOrigin})</>}
-        /* Fixes spacing issues with title when no pickup description copy is present */
-        mb={showPickupCopy(state) ? undefined : -1}
-        {...others}
-      >
-        {showPickupCopy(state) && (
-          <Serif size="3t">
-            After your order is confirmed, a specialist will contact you within 2
-            business days to coordinate pickup.
-          </Serif>
-        )}
-      </StepSummaryItem>
-    )
+    <StepSummaryItem
+      title={<>Pick up ({lineItems.edges[0].node.artwork.shippingOrigin})</>}
+      /* Fixes spacing issues with title when no pickup description copy is present */
+      mb={showPickupCopy(state) ? undefined : -1}
+      {...others}
+    >
+      {showPickupCopy(state) && (
+        <Serif size="3t">
+          After your order is confirmed, a specialist will contact you within 2
+          business days to coordinate pickup.
+        </Serif>
+      )}
+    </StepSummaryItem>
+  )
 }
 
 export const ShippingSummaryItemFragmentContainer = createFragmentContainer(

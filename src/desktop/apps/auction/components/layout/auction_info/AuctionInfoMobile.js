@@ -34,11 +34,7 @@ function AuctionInfoMobile(props) {
                 onClick={() => showInfoWindowAction(!showInfoWindow)}
                 className={b("info-window-close-button")}
               >
-                <span
-                  className={b
-                    .builder()("")
-                    .mix("icon-close")()}
-                />
+                <span className={b.builder()("").mix("icon-close")()} />
               </div>
             </div>
           )}

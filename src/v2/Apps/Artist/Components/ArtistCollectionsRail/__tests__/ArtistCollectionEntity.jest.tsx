@@ -15,10 +15,7 @@ describe("ArtistCollectionEntity", () => {
     expect(component.text()).toMatch("Flags")
     expect(component.text()).toMatch("From $1,000")
     expect(component.find(ArtworkImage).length).toBe(3)
-    const artworkImage = component
-      .find(ArtworkImage)
-      .at(0)
-      .getElement().props
+    const artworkImage = component.find(ArtworkImage).at(0).getElement().props
 
     expect(artworkImage.src).toBe(
       "https://d32dm0rphc51dk.cloudfront.net/4izTOpDv-ew-g1RFXeREcQ/small.jpg"
@@ -44,10 +41,7 @@ describe("ArtistCollectionEntity", () => {
     const component = mount(
       <ArtistCollectionEntity {...twoArtworkCollectionProps} />
     )
-    const artworkImage = component
-      .find(ArtworkImage)
-      .at(0)
-      .getElement().props
+    const artworkImage = component.find(ArtworkImage).at(0).getElement().props
 
     expect(component.find(ArtworkImage).length).toBe(2)
     expect(artworkImage.width).toBe(130)
@@ -76,10 +70,7 @@ describe("ArtistCollectionEntity", () => {
     const component = mount(
       <ArtistCollectionEntity {...noImageCollectionProps} />
     )
-    const artworkImage = component
-      .find(ArtworkImage)
-      .at(0)
-      .getElement().props
+    const artworkImage = component.find(ArtworkImage).at(0).getElement().props
 
     expect(component.find(ArtworkImage).length).toBe(2)
     expect(artworkImage.width).toBe(130)
@@ -98,10 +89,7 @@ describe("ArtistCollectionEntity", () => {
     const component = mount(
       <ArtistCollectionEntity {...noArtworksCollectionProps} />
     )
-    const artworkImage = component
-      .find(ArtworkImage)
-      .at(0)
-      .getElement().props
+    const artworkImage = component.find(ArtworkImage).at(0).getElement().props
 
     expect(component.find(ArtworkImage).length).toBe(1)
     expect(artworkImage.src).toBe(

@@ -43,7 +43,7 @@ describe(
           .should.containEql("Create an account to send your message")
         view
           .$("input")
-          .map(function() {
+          .map(function () {
             // @ts-ignore
             return $(this).attr("name")
           })
@@ -122,10 +122,7 @@ describe(
       })
 
       it("hides the OTP field initially in login form", () => {
-        view
-          .$(".iq-otp-field")
-          .hasClass("is-hidden")
-          .should.be.true()
+        view.$(".iq-otp-field").hasClass("is-hidden").should.be.true()
       })
 
       describe("when OTP is required but missing", () => {
@@ -151,10 +148,7 @@ describe(
           view.$("button").click()
 
           setTimeout(() => {
-            view
-              .$(".iq-otp-field")
-              .hasClass("is-hidden")
-              .should.be.false()
+            view.$(".iq-otp-field").hasClass("is-hidden").should.be.false()
             done()
           }, 1)
         })
@@ -298,10 +292,7 @@ describe(
         view.$("button").click()
 
         setTimeout(() => {
-          view
-            .$(".js-form-errors")
-            .text()
-            .should.eql("There was an error")
+          view.$(".js-form-errors").text().should.eql("There was an error")
           done()
         }, 1)
       })

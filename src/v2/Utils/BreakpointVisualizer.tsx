@@ -19,10 +19,10 @@ const BreakpointText: React.SFC<{ breakpoint: string; max?: boolean }> = ({
   breakpoint,
   max,
 }) => (
-    <Media {...{ [max ? "greaterThanOrEqual" : "at"]: breakpoint }}>
-      <Display size="8">{breakpoint}</Display>
-    </Media>
-  )
+  <Media {...{ [max ? "greaterThanOrEqual" : "at"]: breakpoint }}>
+    <Display size="8">{breakpoint}</Display>
+  </Media>
+)
 
 export const BreakpointVisualizer: React.SFC = () => (
   <React.Fragment>

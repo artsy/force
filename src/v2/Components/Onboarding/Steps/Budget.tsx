@@ -31,7 +31,7 @@ interface State {
 export class BudgetComponent extends React.Component<
   StepProps & SystemContextProps,
   State
-  > {
+> {
   static slug: "budget" = "budget"
 
   options = {

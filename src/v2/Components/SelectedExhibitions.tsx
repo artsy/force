@@ -133,7 +133,7 @@ export interface SelectedExhibitionsContainerProps
 
 export class SelectedExhibitionsContainer extends React.Component<
   SelectedExhibitionsContainerProps
-  > {
+> {
   static defaultProps = {
     border: true,
   }
@@ -173,13 +173,13 @@ export class SelectedExhibitionsContainer extends React.Component<
             expanded: this.state.expanded,
             ...this.props,
           }) && (
-              <FullExhibitionList
-                artistID={this.props.artistID}
-                exhibitions={this.props.exhibitions}
-                totalExhibitions={this.props.totalExhibitions}
-                ViewAllLink={this.props.ViewAllLink}
-              />
-            )}
+            <FullExhibitionList
+              artistID={this.props.artistID}
+              exhibitions={this.props.exhibitions}
+              totalExhibitions={this.props.totalExhibitions}
+              ViewAllLink={this.props.ViewAllLink}
+            />
+          )}
         </Flex>
       </Container>
     )

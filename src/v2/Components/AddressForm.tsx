@@ -51,7 +51,7 @@ interface AddressFormState {
 export class AddressForm extends React.Component<
   AddressFormProps,
   AddressFormState
-  > {
+> {
   state = {
     address: {
       ...emptyAddress,
@@ -121,7 +121,7 @@ export class AddressForm extends React.Component<
             <CountrySelect
               selected={
                 lockCountryToOrigin ||
-                  (lockCountriesToEU && !this.state.address.country)
+                (lockCountriesToEU && !this.state.address.country)
                   ? this.props.shippingCountry
                   : this.state.address.country
               }

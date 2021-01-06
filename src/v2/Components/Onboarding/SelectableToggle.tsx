@@ -72,8 +72,8 @@ class SelectableToggle extends React.Component<SelectableToggleProps, null> {
             {this.props.selected ? (
               <CircleBlackCheckIcon width="26" height="26" />
             ) : (
-                <EmptyCircle />
-              )}
+              <EmptyCircle />
+            )}
           </Col>
         </Link>
       </div>

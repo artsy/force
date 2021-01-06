@@ -41,9 +41,7 @@ describe("metadata template", () => {
     it("shows an inquiry CTA if the artwork is inquireable", () => {
       const $ = cheerio.load(render({ artwork }))
       $.text().should.containEql("My Artwork, 2007")
-      $(".artwork-metadata-stub__contact")
-        .text()
-        .should.eql("Contact gallery")
+      $(".artwork-metadata-stub__contact").text().should.eql("Contact gallery")
     })
   })
 
@@ -119,9 +117,7 @@ describe("metadata template", () => {
       auctionArtwork.sale.is_preview = true
       const $ = cheerio.load(render({ artwork: auctionArtwork }))
       $.text().should.containEql("My Artwork, 2007")
-      $(".artwork-metadata-stub__bid-now")
-        .text()
-        .should.containEql("$100")
+      $(".artwork-metadata-stub__bid-now").text().should.containEql("$100")
       $(".artwork-metadata-stub__sale-message").length.should.eql(0)
     })
 
@@ -144,9 +140,7 @@ describe("metadata template", () => {
       it("renders the opening bid if the auction is open and has no bids", () => {
         const $ = cheerio.load(render({ artwork: auctionArtwork }))
         $.text().should.containEql("My Artwork, 2007")
-        $(".artwork-metadata-stub__bid-now")
-          .text()
-          .should.containEql("$100")
+        $(".artwork-metadata-stub__bid-now").text().should.containEql("$100")
         $(".artwork-metadata-stub__sale-message").length.should.eql(0)
       })
 
@@ -155,9 +149,7 @@ describe("metadata template", () => {
         auctionArtwork.sale_artwork.highest_bid = { display: "$200" }
         const $ = cheerio.load(render({ artwork: auctionArtwork }))
         $.text().should.containEql("My Artwork, 2007")
-        $(".artwork-metadata-stub__bid-now")
-          .text()
-          .should.containEql("$200")
+        $(".artwork-metadata-stub__bid-now").text().should.containEql("$200")
         $(".artwork-metadata-stub__bid-now")
           .text()
           .should.containEql("(3 bids)")

@@ -125,10 +125,7 @@ xdescribe("<Layout />", () => {
       .find(".auction-AuctionInfo__title")
       .text()
       .should.equal("An Auction")
-    wrapper
-      .find(".js-register-button")
-      .text()
-      .should.equal("Register to bid")
+    wrapper.find(".js-register-button").text().should.equal("Register to bid")
     wrapper.find(".auction-MyActiveBids").length.should.eql(0)
     wrapper
       .find(".auction-AuctionInfo__callout")
@@ -157,10 +154,7 @@ xdescribe("<Layout />", () => {
       .find(".auction-AuctionInfo__title")
       .text()
       .should.equal("An Auction")
-    wrapper
-      .find(".js-register-button")
-      .text()
-      .should.equal("Register to bid")
+    wrapper.find(".js-register-button").text().should.equal("Register to bid")
     wrapper
       .find(".auction-Registration__small")
       .text()
@@ -334,9 +328,7 @@ xdescribe("<Layout />", () => {
             auction: {
               name: "An Auction",
               is_auction: true,
-              registration_ends_at: moment()
-                .subtract(2, "days")
-                .format(),
+              registration_ends_at: moment().subtract(2, "days").format(),
             },
           },
         },

@@ -22,9 +22,7 @@ describe("Page", () => {
   describe("/terms", () => {
     it("renders a markdown page of terms and conditions", async () => {
       const $ = await browser.page("/terms")
-      $("body")
-        .html()
-        .should.containEql("These Terms of Use")
+      $("body").html().should.containEql("These Terms of Use")
     })
   })
 
@@ -40,9 +38,7 @@ describe("Page", () => {
   describe("/dev/blank", () => {
     it("renders a blank page for Eigen", async () => {
       const $ = await browser.page("/dev/blank")
-      $("body")
-        .html()
-        .should.containEql("page intentionally left blank")
+      $("body").html().should.containEql("page intentionally left blank")
     })
   })
 

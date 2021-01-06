@@ -20,15 +20,11 @@ const realSetInterval = global.setInterval
 
 const testOrder: RejectTestQueryRawResponse["order"] = {
   ...OfferOrderWithShippingDetails,
-  stateExpiresAt: DateTime.fromISO(NOW)
-    .plus({ days: 1 })
-    .toString(),
+  stateExpiresAt: DateTime.fromISO(NOW).plus({ days: 1 }).toString(),
   lastOffer: {
     internalID: "last-offer-id",
     id: "last-offer-id",
-    createdAt: DateTime.fromISO(NOW)
-      .minus({ days: 1 })
-      .toString(),
+    createdAt: DateTime.fromISO(NOW).minus({ days: 1 }).toString(),
   },
 }
 

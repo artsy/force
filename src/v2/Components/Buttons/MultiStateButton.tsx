@@ -32,11 +32,11 @@ class Button extends React.Component<ButtonProps, any> {
         <span>{this.props.children}</span>
       </a>
     ) : (
-        <button className={this.props.className} {...newProps}>
-          {this.props.icon}
-          <span>{this.props.children}</span>
-        </button>
-      )
+      <button className={this.props.className} {...newProps}>
+        {this.props.icon}
+        <span>{this.props.children}</span>
+      </button>
+    )
   }
 }
 

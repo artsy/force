@@ -126,10 +126,7 @@ describe("MobileLoginForm", () => {
     await flushPromiseQueue()
     wrapper.update()
 
-    wrapper
-      .find(ForgotPassword)
-      .find(Link)
-      .simulate("click")
+    wrapper.find(ForgotPassword).find(Link).simulate("click")
     expect(location.assign).toBeCalledWith(
       "/forgot?intent=login&contextModule=header&destination=/"
     )
@@ -145,10 +142,7 @@ describe("MobileLoginForm", () => {
     await flushPromiseQueue()
     wrapper.update()
 
-    wrapper
-      .find(ForgotPassword)
-      .find(Link)
-      .simulate("click")
+    wrapper.find(ForgotPassword).find(Link).simulate("click")
     expect(location.assign).toBeCalledWith("/forgot")
   })
 
