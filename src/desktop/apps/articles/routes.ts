@@ -1,9 +1,6 @@
 import { stitch as _stitch } from "@artsy/stitch"
 import App from "desktop/apps/articles/components/App"
-import {
-  newsArticlesQuery,
-  newsPanelQuery,
-} from "./queries/news_articles_query"
+import { newsArticlesQuery } from "./queries/news_articles_query"
 import { positronql as _positronql } from "desktop/lib/positronql"
 import { first, last, map, reject, sortBy } from "lodash"
 const { crop } = require("desktop/components/resizer/index.coffee")
@@ -30,19 +27,7 @@ export const articles = (req, res, next) => {
       const articles = new Articles(result.articles)
       res.locals.sd.ARTICLES = articles.toJSON()
       res.locals.sd.PAGE = page
-
-      // Fetch News Panel Articles
-      positronql({ query: newsPanelQuery() }).then(result => {
-        const newsArticles = result.articles
-        res.locals.sd.NEWS_ARTICLES = newsArticles
-
-        res.render("articles", {
-          articles: articles,
-          crop,
-          newsArticles,
-          page,
-        })
-      })
+      res.render("articles", { articles, crop, page })
     })
     .catch(next)
 }
