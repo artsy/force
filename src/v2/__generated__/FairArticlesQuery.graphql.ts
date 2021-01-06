@@ -3,29 +3,39 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type FairArticles_Test_QueryVariables = {};
-export type FairArticles_Test_QueryResponse = {
+export type FairArticlesQueryVariables = {
+    id: string;
+    first: number;
+    after?: string | null;
+};
+export type FairArticlesQueryResponse = {
     readonly fair: {
         readonly " $fragmentRefs": FragmentRefs<"FairArticles_fair">;
     } | null;
 };
-export type FairArticles_Test_Query = {
-    readonly response: FairArticles_Test_QueryResponse;
-    readonly variables: FairArticles_Test_QueryVariables;
+export type FairArticlesQuery = {
+    readonly response: FairArticlesQueryResponse;
+    readonly variables: FairArticlesQueryVariables;
 };
 
 
 
 /*
-query FairArticles_Test_Query {
-  fair(id: "example") {
-    ...FairArticles_fair
+query FairArticlesQuery(
+  $id: String!
+  $first: Int!
+  $after: String
+) {
+  fair(id: $id) {
+    ...FairArticles_fair_2HEEH6
     id
   }
 }
 
-fragment FairArticles_fair on Fair {
-  articlesConnection(first: 10) {
+fragment FairArticles_fair_2HEEH6 on Fair {
+  slug
+  articlesConnection(first: $first, after: $after) {
+    totalCount
     articles: edges {
       article: node {
         internalID
@@ -38,13 +48,13 @@ fragment FairArticles_fair on Fair {
         publishedAt(format: "MMM Do, YYYY")
         thumbnailTitle
         thumbnailImage {
-          large: cropped(width: 546, height: 546) {
+          large: cropped(width: 733, height: 550) {
             width
             height
             src
             srcSet
           }
-          medium: cropped(width: 360, height: 270) {
+          medium: cropped(width: 267, height: 150) {
             width
             height
             src
@@ -54,6 +64,17 @@ fragment FairArticles_fair on Fair {
         id
       }
     }
+    edges {
+      cursor
+      node {
+        __typename
+        id
+      }
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
   }
 }
 */
@@ -61,19 +82,51 @@ fragment FairArticles_fair on Fair {
 const node: ConcreteRequest = (function(){
 var v0 = [
   {
-    "kind": "Literal",
+    "defaultValue": null,
+    "kind": "LocalArgument",
     "name": "id",
-    "value": "example"
+    "type": "String!"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "first",
+    "type": "Int!"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "after",
+    "type": "String"
   }
 ],
-v1 = {
+v1 = [
+  {
+    "kind": "Variable",
+    "name": "id",
+    "variableName": "id"
+  }
+],
+v2 = [
+  {
+    "kind": "Variable",
+    "name": "after",
+    "variableName": "after"
+  },
+  {
+    "kind": "Variable",
+    "name": "first",
+    "variableName": "first"
+  }
+],
+v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v2 = [
+v4 = [
   {
     "alias": null,
     "args": null,
@@ -105,39 +158,39 @@ v2 = [
 ];
 return {
   "fragment": {
-    "argumentDefinitions": [],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "FairArticles_Test_Query",
+    "name": "FairArticlesQuery",
     "selections": [
       {
         "alias": null,
-        "args": (v0/*: any*/),
+        "args": (v1/*: any*/),
         "concreteType": "Fair",
         "kind": "LinkedField",
         "name": "fair",
         "plural": false,
         "selections": [
           {
-            "args": null,
+            "args": (v2/*: any*/),
             "kind": "FragmentSpread",
             "name": "FairArticles_fair"
           }
         ],
-        "storageKey": "fair(id:\"example\")"
+        "storageKey": null
       }
     ],
     "type": "Query"
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": [],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "FairArticles_Test_Query",
+    "name": "FairArticlesQuery",
     "selections": [
       {
         "alias": null,
-        "args": (v0/*: any*/),
+        "args": (v1/*: any*/),
         "concreteType": "Fair",
         "kind": "LinkedField",
         "name": "fair",
@@ -145,18 +198,26 @@ return {
         "selections": [
           {
             "alias": null,
-            "args": [
-              {
-                "kind": "Literal",
-                "name": "first",
-                "value": 10
-              }
-            ],
+            "args": null,
+            "kind": "ScalarField",
+            "name": "slug",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": (v2/*: any*/),
             "concreteType": "ArticleConnection",
             "kind": "LinkedField",
             "name": "articlesConnection",
             "plural": false,
             "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "totalCount",
+                "storageKey": null
+              },
               {
                 "alias": "articles",
                 "args": null,
@@ -209,7 +270,7 @@ return {
                             "name": "name",
                             "storageKey": null
                           },
-                          (v1/*: any*/)
+                          (v3/*: any*/)
                         ],
                         "storageKey": null
                       },
@@ -247,20 +308,20 @@ return {
                               {
                                 "kind": "Literal",
                                 "name": "height",
-                                "value": 546
+                                "value": 550
                               },
                               {
                                 "kind": "Literal",
                                 "name": "width",
-                                "value": 546
+                                "value": 733
                               }
                             ],
                             "concreteType": "CroppedImageUrl",
                             "kind": "LinkedField",
                             "name": "cropped",
                             "plural": false,
-                            "selections": (v2/*: any*/),
-                            "storageKey": "cropped(height:546,width:546)"
+                            "selections": (v4/*: any*/),
+                            "storageKey": "cropped(height:550,width:733)"
                           },
                           {
                             "alias": "medium",
@@ -268,48 +329,119 @@ return {
                               {
                                 "kind": "Literal",
                                 "name": "height",
-                                "value": 270
+                                "value": 150
                               },
                               {
                                 "kind": "Literal",
                                 "name": "width",
-                                "value": 360
+                                "value": 267
                               }
                             ],
                             "concreteType": "CroppedImageUrl",
                             "kind": "LinkedField",
                             "name": "cropped",
                             "plural": false,
-                            "selections": (v2/*: any*/),
-                            "storageKey": "cropped(height:270,width:360)"
+                            "selections": (v4/*: any*/),
+                            "storageKey": "cropped(height:150,width:267)"
                           }
                         ],
                         "storageKey": null
                       },
-                      (v1/*: any*/)
+                      (v3/*: any*/)
                     ],
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "ArticleEdge",
+                "kind": "LinkedField",
+                "name": "edges",
+                "plural": true,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "cursor",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "Article",
+                    "kind": "LinkedField",
+                    "name": "node",
+                    "plural": false,
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "__typename",
+                        "storageKey": null
+                      },
+                      (v3/*: any*/)
+                    ],
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "PageInfo",
+                "kind": "LinkedField",
+                "name": "pageInfo",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "endCursor",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "hasNextPage",
                     "storageKey": null
                   }
                 ],
                 "storageKey": null
               }
             ],
-            "storageKey": "articlesConnection(first:10)"
+            "storageKey": null
           },
-          (v1/*: any*/)
+          {
+            "alias": null,
+            "args": (v2/*: any*/),
+            "filters": null,
+            "handle": "connection",
+            "key": "FairArticlesQuery_articlesConnection",
+            "kind": "LinkedHandle",
+            "name": "articlesConnection"
+          },
+          (v3/*: any*/)
         ],
-        "storageKey": "fair(id:\"example\")"
+        "storageKey": null
       }
     ]
   },
   "params": {
     "id": null,
     "metadata": {},
-    "name": "FairArticles_Test_Query",
+    "name": "FairArticlesQuery",
     "operationKind": "query",
-    "text": "query FairArticles_Test_Query {\n  fair(id: \"example\") {\n    ...FairArticles_fair\n    id\n  }\n}\n\nfragment FairArticles_fair on Fair {\n  articlesConnection(first: 10) {\n    articles: edges {\n      article: node {\n        internalID\n        title\n        href\n        author {\n          name\n          id\n        }\n        publishedAt(format: \"MMM Do, YYYY\")\n        thumbnailTitle\n        thumbnailImage {\n          large: cropped(width: 546, height: 546) {\n            width\n            height\n            src\n            srcSet\n          }\n          medium: cropped(width: 360, height: 270) {\n            width\n            height\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query FairArticlesQuery(\n  $id: String!\n  $first: Int!\n  $after: String\n) {\n  fair(id: $id) {\n    ...FairArticles_fair_2HEEH6\n    id\n  }\n}\n\nfragment FairArticles_fair_2HEEH6 on Fair {\n  slug\n  articlesConnection(first: $first, after: $after) {\n    totalCount\n    articles: edges {\n      article: node {\n        internalID\n        title\n        href\n        author {\n          name\n          id\n        }\n        publishedAt(format: \"MMM Do, YYYY\")\n        thumbnailTitle\n        thumbnailImage {\n          large: cropped(width: 733, height: 550) {\n            width\n            height\n            src\n            srcSet\n          }\n          medium: cropped(width: 267, height: 150) {\n            width\n            height\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n    edges {\n      cursor\n      node {\n        __typename\n        id\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '042e0e9ffb29ab964cfda270febbb5d9';
+(node as any).hash = '5a9982ee74c4d5ce1c506901a7d83f3c';
 export default node;

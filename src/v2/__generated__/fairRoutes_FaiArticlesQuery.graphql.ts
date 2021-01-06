@@ -29,7 +29,9 @@ query fairRoutes_FaiArticlesQuery(
 }
 
 fragment FairArticles_fair on Fair {
-  articlesConnection(first: 10) {
+  slug
+  articlesConnection(first: 7) {
+    totalCount
     articles: edges {
       article: node {
         internalID
@@ -42,13 +44,13 @@ fragment FairArticles_fair on Fair {
         publishedAt(format: "MMM Do, YYYY")
         thumbnailTitle
         thumbnailImage {
-          large: cropped(width: 546, height: 546) {
+          large: cropped(width: 733, height: 550) {
             width
             height
             src
             srcSet
           }
-          medium: cropped(width: 360, height: 270) {
+          medium: cropped(width: 267, height: 150) {
             width
             height
             src
@@ -57,6 +59,17 @@ fragment FairArticles_fair on Fair {
         }
         id
       }
+    }
+    edges {
+      cursor
+      node {
+        __typename
+        id
+      }
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
     }
   }
 }
@@ -78,14 +91,21 @@ v1 = [
     "variableName": "slug"
   }
 ],
-v2 = {
+v2 = [
+  {
+    "kind": "Literal",
+    "name": "first",
+    "value": 7
+  }
+],
+v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v3 = [
+v4 = [
   {
     "alias": null,
     "args": null,
@@ -157,18 +177,26 @@ return {
         "selections": [
           {
             "alias": null,
-            "args": [
-              {
-                "kind": "Literal",
-                "name": "first",
-                "value": 10
-              }
-            ],
+            "args": null,
+            "kind": "ScalarField",
+            "name": "slug",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": (v2/*: any*/),
             "concreteType": "ArticleConnection",
             "kind": "LinkedField",
             "name": "articlesConnection",
             "plural": false,
             "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "totalCount",
+                "storageKey": null
+              },
               {
                 "alias": "articles",
                 "args": null,
@@ -221,7 +249,7 @@ return {
                             "name": "name",
                             "storageKey": null
                           },
-                          (v2/*: any*/)
+                          (v3/*: any*/)
                         ],
                         "storageKey": null
                       },
@@ -259,20 +287,20 @@ return {
                               {
                                 "kind": "Literal",
                                 "name": "height",
-                                "value": 546
+                                "value": 550
                               },
                               {
                                 "kind": "Literal",
                                 "name": "width",
-                                "value": 546
+                                "value": 733
                               }
                             ],
                             "concreteType": "CroppedImageUrl",
                             "kind": "LinkedField",
                             "name": "cropped",
                             "plural": false,
-                            "selections": (v3/*: any*/),
-                            "storageKey": "cropped(height:546,width:546)"
+                            "selections": (v4/*: any*/),
+                            "storageKey": "cropped(height:550,width:733)"
                           },
                           {
                             "alias": "medium",
@@ -280,35 +308,106 @@ return {
                               {
                                 "kind": "Literal",
                                 "name": "height",
-                                "value": 270
+                                "value": 150
                               },
                               {
                                 "kind": "Literal",
                                 "name": "width",
-                                "value": 360
+                                "value": 267
                               }
                             ],
                             "concreteType": "CroppedImageUrl",
                             "kind": "LinkedField",
                             "name": "cropped",
                             "plural": false,
-                            "selections": (v3/*: any*/),
-                            "storageKey": "cropped(height:270,width:360)"
+                            "selections": (v4/*: any*/),
+                            "storageKey": "cropped(height:150,width:267)"
                           }
                         ],
                         "storageKey": null
                       },
-                      (v2/*: any*/)
+                      (v3/*: any*/)
                     ],
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "ArticleEdge",
+                "kind": "LinkedField",
+                "name": "edges",
+                "plural": true,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "cursor",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "Article",
+                    "kind": "LinkedField",
+                    "name": "node",
+                    "plural": false,
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "__typename",
+                        "storageKey": null
+                      },
+                      (v3/*: any*/)
+                    ],
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "PageInfo",
+                "kind": "LinkedField",
+                "name": "pageInfo",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "endCursor",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "hasNextPage",
                     "storageKey": null
                   }
                 ],
                 "storageKey": null
               }
             ],
-            "storageKey": "articlesConnection(first:10)"
+            "storageKey": "articlesConnection(first:7)"
           },
-          (v2/*: any*/)
+          {
+            "alias": null,
+            "args": (v2/*: any*/),
+            "filters": null,
+            "handle": "connection",
+            "key": "FairArticlesQuery_articlesConnection",
+            "kind": "LinkedHandle",
+            "name": "articlesConnection"
+          },
+          (v3/*: any*/)
         ],
         "storageKey": null
       }
@@ -319,7 +418,7 @@ return {
     "metadata": {},
     "name": "fairRoutes_FaiArticlesQuery",
     "operationKind": "query",
-    "text": "query fairRoutes_FaiArticlesQuery(\n  $slug: String!\n) {\n  fair(id: $slug) @principalField {\n    ...FairArticles_fair\n    id\n  }\n}\n\nfragment FairArticles_fair on Fair {\n  articlesConnection(first: 10) {\n    articles: edges {\n      article: node {\n        internalID\n        title\n        href\n        author {\n          name\n          id\n        }\n        publishedAt(format: \"MMM Do, YYYY\")\n        thumbnailTitle\n        thumbnailImage {\n          large: cropped(width: 546, height: 546) {\n            width\n            height\n            src\n            srcSet\n          }\n          medium: cropped(width: 360, height: 270) {\n            width\n            height\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query fairRoutes_FaiArticlesQuery(\n  $slug: String!\n) {\n  fair(id: $slug) @principalField {\n    ...FairArticles_fair\n    id\n  }\n}\n\nfragment FairArticles_fair on Fair {\n  slug\n  articlesConnection(first: 7) {\n    totalCount\n    articles: edges {\n      article: node {\n        internalID\n        title\n        href\n        author {\n          name\n          id\n        }\n        publishedAt(format: \"MMM Do, YYYY\")\n        thumbnailTitle\n        thumbnailImage {\n          large: cropped(width: 733, height: 550) {\n            width\n            height\n            src\n            srcSet\n          }\n          medium: cropped(width: 267, height: 150) {\n            width\n            height\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n    edges {\n      cursor\n      node {\n        __typename\n        id\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();

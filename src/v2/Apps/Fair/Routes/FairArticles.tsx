@@ -1,81 +1,128 @@
-import React from "react"
+import React, { useState } from "react"
 import {
   ResponsiveBox,
   Text,
   GridColumns,
   Column,
-  Box,
   Image,
+  Box,
+  Button,
+  Message,
 } from "@artsy/palette"
-import { createFragmentContainer, graphql } from "react-relay"
+import {
+  createPaginationContainer,
+  graphql,
+  RelayPaginationProp,
+} from "react-relay"
 import { FairArticles_fair } from "v2/__generated__/FairArticles_fair.graphql"
-import { Masonry } from "v2/Components/Masonry"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
+import { FairEditorialShare } from "../Components/FairEditorialShare"
 
 interface FairArticlesProps {
   fair: FairArticles_fair
+  relay: RelayPaginationProp
 }
 
-const FairArticles: React.FC<FairArticlesProps> = ({ fair }) => {
+const FairArticles: React.FC<FairArticlesProps> = ({ fair, relay }) => {
   const {
-    articlesConnection: { articles },
+    articlesConnection: { articles, totalCount },
   } = fair
+
+  const [isLoading, setIsLoading] = useState(false)
+
+  const handleClick = () => {
+    if (!relay.hasMore() || relay.isLoading()) return
+
+    setIsLoading(true)
+
+    relay.loadMore(
+      9, // 3 rows of 3
+      err => {
+        setIsLoading(false)
+
+        if (err) {
+          console.error(err)
+        }
+      }
+    )
+  }
+
+  if (totalCount === 0) {
+    return <Message>There aren’t any articles at this time.</Message>
+  }
 
   const [{ article: heroArticle }, ...remainingArticles] = articles
 
   return (
     <>
-      <Text as="h1" variant="largeTitle" fontSize={60} my={2}>
+      <Text as="h1" variant="largeTitle" my={3}>
         Articles
       </Text>
 
-      <GridColumns>
-        <Column
-          span={6}
-          start={4}
-          borderBottom="1px solid"
-          borderColor="black10"
-        >
-          <RouterLink
-            to={heroArticle.href}
-            style={{ display: "block", textDecoration: "none" }}
+      <GridColumns gridRowGap={[3, 6]}>
+        <Column span={12} position="relative">
+          {heroArticle.thumbnailImage && (
+            <GridColumns>
+              <Column span={8}>
+                <RouterLink
+                  to={heroArticle.href}
+                  style={{ display: "block", textDecoration: "none" }}
+                >
+                  <ResponsiveBox
+                    aspectWidth={heroArticle.thumbnailImage.large.width}
+                    aspectHeight={heroArticle.thumbnailImage.large.height}
+                    maxWidth="100%"
+                    bg="black10"
+                  >
+                    <Image
+                      src={heroArticle.thumbnailImage.large.src}
+                      srcSet={heroArticle.thumbnailImage.large.srcSet}
+                      alt={heroArticle.thumbnailTitle}
+                      width="100%"
+                      height="100%"
+                    />
+                  </ResponsiveBox>
+                </RouterLink>
+              </Column>
+            </GridColumns>
+          )}
+
+          <Box
+            width={["75%", "50%"]}
+            position="absolute"
+            bottom={0}
+            right={0}
+            bg="white100"
+            p={2}
           >
-            <ResponsiveBox
-              aspectWidth={1}
-              aspectHeight={1}
-              maxWidth="100%"
-              bg="black10"
+            <RouterLink
+              to={heroArticle.href}
+              style={{ display: "block", textDecoration: "none" }}
             >
-              <Image
-                src={heroArticle.thumbnailImage.large.src}
-                srcSet={heroArticle.thumbnailImage.large.srcSet}
-                alt={heroArticle.thumbnailTitle}
-                width="100%"
-                height="100%"
-              />
-            </ResponsiveBox>
-
-            <Text as="h3" mt={2} mb={1.5} variant="largeTitle">
-              {heroArticle.title}
-            </Text>
-
-            {heroArticle.author && (
-              <Text mt={1} variant="mediumText">
-                {heroArticle.author.name}
+              <Text as="h3" pt={[0, 6]} mb={0.5} variant="title">
+                {heroArticle.title}
               </Text>
-            )}
 
-            <Text mb={2} color="black60">
-              {heroArticle.publishedAt}
-            </Text>
-          </RouterLink>
+              {heroArticle.author && (
+                <Text variant="caption" color="black60">
+                  {heroArticle.author.name}
+                </Text>
+              )}
+
+              <Text variant="caption">{heroArticle.publishedAt}</Text>
+            </RouterLink>
+
+            <FairEditorialShare
+              mt={1}
+              subject={heroArticle.title}
+              url={`https://www.artsy.net${heroArticle.href}`}
+            />
+          </Box>
         </Column>
-      </GridColumns>
 
-      <Masonry columnCount={[1, 3]} gridColumnGap={20} my={4}>
         {remainingArticles.map(({ article }) => {
           return (
-            <Box key={article.internalID} mb={4}>
+            <Column key={article.internalID} span={4}>
               <RouterLink
                 to={article.href}
                 style={{ display: "block", textDecoration: "none" }}
@@ -89,7 +136,7 @@ const FairArticles: React.FC<FairArticlesProps> = ({ fair }) => {
                     <Image
                       src={article.thumbnailImage.medium.src}
                       srcSet={article.thumbnailImage.medium.srcSet}
-                      alt={article.thumbnailTitle}
+                      alt=""
                       width="100%"
                       height="100%"
                       lazyLoad
@@ -97,30 +144,68 @@ const FairArticles: React.FC<FairArticlesProps> = ({ fair }) => {
                   </ResponsiveBox>
                 )}
 
-                <Text as="h3" mt={1.5} mb={1} variant="subtitle">
+                <Text as="h3" variant="subtitle" mt={1} mb={0.5}>
                   {article.title}
                 </Text>
 
                 {article.author && (
-                  <Text variant="mediumText">{article.author.name}</Text>
+                  <Text color="black60" variant="caption">
+                    {article.author.name}
+                  </Text>
                 )}
 
-                <Text color="black60">{article.publishedAt}</Text>
+                <Text variant="caption">{article.publishedAt}</Text>
               </RouterLink>
-            </Box>
+
+              <FairEditorialShare
+                mt={1}
+                subject={article.title}
+                url={`https://www.artsy.net${article.href}`}
+              />
+            </Column>
           )
         })}
-      </Masonry>
+
+        {totalCount >= 7 && (
+          <Column span={6} start={4}>
+            <Button
+              width="100%"
+              variant="secondaryGray"
+              onClick={handleClick}
+              loading={isLoading}
+              disabled={!relay.hasMore()}
+            >
+              Show more
+            </Button>
+          </Column>
+        )}
+      </GridColumns>
     </>
   )
 }
 
-export const FairArticlesFragmentContainer = createFragmentContainer(
+export const FAIR_ARTICLES_QUERY = graphql`
+  query FairArticlesQuery($id: String!, $first: Int!, $after: String) {
+    fair(id: $id) {
+      ...FairArticles_fair @arguments(first: $first, after: $after)
+    }
+  }
+`
+
+export const FairArticlesPaginationContainer = createPaginationContainer(
   FairArticles,
   {
     fair: graphql`
-      fragment FairArticles_fair on Fair {
-        articlesConnection(first: 10) {
+      fragment FairArticles_fair on Fair
+        @argumentDefinitions(
+          # 1 hero article + 2 rows of 3
+          first: { type: "Int", defaultValue: 7 }
+          after: { type: "String" }
+        ) {
+        slug
+        articlesConnection(first: $first, after: $after)
+          @connection(key: "FairArticlesQuery_articlesConnection") {
+          totalCount
           articles: edges {
             article: node {
               internalID
@@ -132,13 +217,13 @@ export const FairArticlesFragmentContainer = createFragmentContainer(
               publishedAt(format: "MMM Do, YYYY")
               thumbnailTitle
               thumbnailImage {
-                large: cropped(width: 546, height: 546) {
+                large: cropped(width: 733, height: 550) {
                   width
                   height
                   src
                   srcSet
                 }
-                medium: cropped(width: 360, height: 270) {
+                medium: cropped(width: 267, height: 150) {
                   width
                   height
                   src
@@ -150,5 +235,12 @@ export const FairArticlesFragmentContainer = createFragmentContainer(
         }
       }
     `,
+  },
+  {
+    query: FAIR_ARTICLES_QUERY,
+    direction: "forward",
+    getVariables({ fair: { slug: id } }, { cursor: after }, { first }) {
+      return { after, first, id }
+    },
   }
 )
