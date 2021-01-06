@@ -6,6 +6,7 @@ import { ArtistsByLetter_Test_Query } from "v2/__generated__/ArtistsByLetter_Tes
 import { MockBoot } from "v2/DevTools"
 
 jest.unmock("react-relay")
+jest.mock("v2/Components/Pagination/useComputeHref")
 
 jest.mock("v2/Artsy/Router/useRouter", () => ({
   useRouter: () => ({ match: { params: { letter: "a" } } }),

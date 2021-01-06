@@ -2,10 +2,7 @@ import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Media } from "v2/Utils/Responsive"
 import { ScrollIntoView } from "v2/Utils/ScrollIntoView"
-import { useArtworkFilterContext } from "v2/Components/v2/ArtworkFilter/ArtworkFilterContext"
-import { useRouter } from "v2/Artsy/Router/useRouter"
 import { Pagination_pageCursors } from "v2/__generated__/Pagination_pageCursors.graphql"
-import { buildUrl } from "v2/Components/v2/ArtworkFilter/Utils/urlBuilder"
 
 import {
   Box,
@@ -14,6 +11,7 @@ import {
   SmallPagination,
   PaginationProps,
 } from "@artsy/palette"
+import { useComputeHref } from "./useComputeHref"
 
 interface Props {
   hasNextPage: boolean
@@ -30,24 +28,10 @@ export const Pagination: React.FC<Props> = ({
   pageCursors,
   scrollTo = null,
 }) => {
-  const filterContext = useArtworkFilterContext()
-  const routerContext = useRouter()
+  const getHref = useComputeHref()
 
   if (pageCursors.around.length === 1) {
     return null
-  }
-
-  const currentlySelectedFilters = filterContext.currentlySelectedFilters()
-  const pathname = routerContext?.match?.location?.pathname
-
-  const getHref = page => {
-    const filterState = {
-      ...currentlySelectedFilters,
-      page,
-    }
-
-    const href = buildUrl(filterState, pathname)
-    return href
   }
 
   const handleClick = (cursor, page, event) => {

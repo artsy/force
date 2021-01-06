@@ -109,6 +109,10 @@ const PurchaseHistory: React.FC<PurchaseHistoryProps> = (
           {props.me.orders.pageCursors && (
             <SmallPagination
               {...paginationProps}
+              getHref={x => {
+                // FIXME: wire this up properly
+                return ""
+              }}
               pageCursors={paginationProps.pageCursors as any}
             />
           )}
@@ -119,6 +123,10 @@ const PurchaseHistory: React.FC<PurchaseHistoryProps> = (
             {props.me.orders.pageCursors && (
               <LargePagination
                 {...paginationProps}
+                getHref={x => {
+                  // FIXME: wire this up properly
+                  return ""
+                }}
                 pageCursors={paginationProps.pageCursors as any}
               />
             )}

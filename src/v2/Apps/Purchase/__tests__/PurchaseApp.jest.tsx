@@ -12,6 +12,7 @@ import { PurchaseHistoryProps } from "../Components/PurchaseHistory"
 import { PurchaseAppFragmentContainer } from "../PurchaseApp"
 
 jest.unmock("react-relay")
+jest.mock("v2/Components/Pagination/useComputeHref")
 
 const pageInfo: PurchaseAppTestQueryRawResponse["me"]["orders"]["pageInfo"] = {
   endCursor: "MQ",
@@ -99,7 +100,7 @@ describe("Purchase app", () => {
         const component = await render(mockMe, userType)
         const text = component.text()
         expect(text).toContain(
-          "Moira RoseSaves & FollowsCollector ProfileOrder HistoryBidsSettingsPayments Dec 19, 2019pending•Track orderLisa BreslowGramercy Park SouthA Gallery New York, NYOrder No.abcdefgTotal$12,000Payment MethodN/AFulfillmentPickupMore infoNeed Help? Contact Us.1234...7Navigate left PrevNext Navigate right"
+          "pending•Track orderLisa BreslowGramercy Park SouthA Gallery New York, NYOrder No.abcdefgTotal$12,000Payment MethodN/AFulfillmentPickupMore infoNeed Help? Contact Us.1234...7Navigate leftPrevNextNavigate right"
         )
       })
     })
@@ -125,7 +126,7 @@ describe("Purchase app", () => {
         const pagination = component.find("LargePagination")
         expect(pagination.length).toBe(1)
         expect(pagination.text()).toContain("1234...7")
-        pagination.find("button").at(1).simulate("click")
+        pagination.find("a").at(1).simulate("click")
         expect(refetchSpy).toHaveBeenCalledTimes(1)
         expect(refetchSpy.mock.calls[0][0]).toEqual(
           expect.objectContaining({ after: "NQ", first: 10 })
