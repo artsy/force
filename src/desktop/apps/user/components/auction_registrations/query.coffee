@@ -1,17 +1,21 @@
 module.exports = """
   query AuctionRegistrationsQuery {
     me {
-      sale_registrations(published: true, is_auction: true, sort: CREATED_AT_DESC) {
-        is_registered
-        sale {
-          id
-          name
-          href
-          start_at(format: "MMMM D, h:mmA")
-          is_closed
-          profile {
-            icon {
-              url
+      sale_registrations: saleRegistrationsConnection(published: true, isAuction: true, sort: CREATED_AT_DESC, first: 10 ) {
+        edges {
+          node {
+            is_registered: isRegistered
+            sale {
+              id
+              name
+              href
+              start_at: startAt(format: "MMMM D, h:mmA")
+              is_closed: isClosed
+              profile {
+                icon {
+                  url
+                }
+              }
             }
           }
         }
