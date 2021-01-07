@@ -14,8 +14,9 @@ include ../../templates/mixins
 +settings-section('linked-accounts', 'Linked Accounts')
   include ../../components/linked_accounts/index
 
-+settings-section('email-preferences', 'Email Preferences')
-  include ../../components/email_preferences/index
++settings-section('user-email-preferences', '')
+  #stitch-user-email-preferences
+    != stitch.components.UserEmailPreferences({ mountId: 'stitch-user-email-preferences' })
 
 .settings-section
   .settings-section__main
