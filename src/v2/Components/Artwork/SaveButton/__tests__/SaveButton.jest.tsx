@@ -22,19 +22,28 @@ class SaveButtonTestPage extends RootTestPage {
 
 describe("Save artwork", () => {
   let defaultData
+  let defaultMutationResults
   let passedProps
   let trackEvent
+  let Component
 
   beforeEach(() => {
-    defaultData = {
-      artwork: {
-        id: "foo",
-        internalID: "abcd1234",
-        slug: "andy-warhol-skull",
-        is_saved: false,
-        title: "Skull",
-        " $fragmentRefs": null,
-        " $refType": null,
+    const artwork = {
+      id: "foo",
+      internalID: "abcd1234",
+      slug: "andy-warhol-skull",
+      is_saved: false,
+      title: "Skull",
+      " $fragmentRefs": null,
+      " $refType": null,
+    }
+    defaultData = { artwork }
+    defaultMutationResults = {
+      saveArtwork: {
+        artwork: {
+          ...artwork,
+          is_saved: true,
+        },
       },
     }
     trackEvent = jest.fn()
@@ -44,30 +53,19 @@ describe("Save artwork", () => {
         trackEvent,
       },
     }
+    Component = (props: SaveButtonProps) => (
+      <SaveButtonFragmentContainer {...props} {...passedProps} />
+    )
     jest.spyOn(mediator, "trigger")
     mockLocation()
   })
 
   const setupTestEnv = () => {
     return createTestEnv({
-      Component: (props: SaveButtonProps) => (
-        <SaveButtonFragmentContainer {...props} {...passedProps} />
-      ),
+      Component,
       TestPage: SaveButtonTestPage,
       defaultData,
-      defaultMutationResults: {
-        saveArtwork: {
-          artwork: {
-            id: "foo",
-            internalID: "abcd1234",
-            slug: "andy-warhol-skull",
-            is_saved: true,
-            title: "Skull",
-            " $fragmentRefs": null,
-            " $refType": null,
-          },
-        },
-      },
+      defaultMutationResults,
       query: graphql`
         query SaveButtonTestQuery {
           artwork(id: "example-artwork-id") {
@@ -91,15 +89,16 @@ describe("Save artwork", () => {
     })
   })
 
-  it("can un-save an artwork", async () => {
+  it("can remove a saved artwork", async () => {
     passedProps.user = { id: "blah" }
     defaultData.artwork.is_saved = true
+    defaultMutationResults.saveArtwork.artwork.is_saved = false
     const env = setupTestEnv()
     const page = await env.buildPage()
     await page.clickSaveButton()
     expect(mediator.trigger).not.toBeCalled()
     expect(trackEvent).toBeCalledWith({
-      action: "Saved Artwork",
+      action: "Removed Artwork",
       entity_id: "abcd1234",
       entity_slug: "andy-warhol-skull",
     })
