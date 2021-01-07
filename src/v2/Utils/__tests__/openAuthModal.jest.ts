@@ -7,14 +7,11 @@ import {
   openAuthToFollowSave,
 } from "../openAuthModal"
 
-jest.mock("sharify", () => ({ data: jest.fn() }))
-const sd = require("sharify").data
-
 const artistArgs: AuthModalOptions = {
   contextModule: ContextModule.artistHeader,
   entity: {
-    slug: "andy-warhol",
     name: "Andy Warhol",
+    slug: "andy-warhol",
   },
   intent: Intent.followArtist,
 }
@@ -22,8 +19,8 @@ const artistArgs: AuthModalOptions = {
 const partnerArgs: AuthModalOptions = {
   contextModule: ContextModule.aboutTheWork,
   entity: {
-    slug: "david-zwirner",
     name: "David Zwirner",
+    slug: "david-zwirner",
   },
   intent: Intent.followPartner,
 }
@@ -31,8 +28,8 @@ const partnerArgs: AuthModalOptions = {
 const artworkArgs: AuthModalOptions = {
   contextModule: ContextModule.artworkGrid,
   entity: {
-    slug: "andy-warhol-skull",
     name: "Skull",
+    slug: "andy-warhol-skull",
   },
   intent: Intent.saveArtwork,
 }
@@ -50,10 +47,10 @@ describe("openAuth Helpers", () => {
   describe("#openAuthModal", () => {
     it("calls the mediator with expected args", () => {
       openAuthModal(mediator, {
-        mode: ModalType.signup,
-        intent: Intent.signup,
         contextModule: ContextModule.header,
         copy: "Sign up to do cool stuff",
+        intent: Intent.signup,
+        mode: ModalType.signup,
       })
 
       expect(mediator.trigger).toBeCalledWith("open:auth", {
@@ -113,36 +110,6 @@ describe("openAuth Helpers", () => {
           intent: "saveArtwork",
           mode: "signup",
         })
-      })
-    })
-
-    describe("mobile", () => {
-      beforeEach(() => {
-        sd.IS_MOBILE = true
-      })
-
-      it("transforms args for following artists", () => {
-        openAuthToFollowSave(mediator, artistArgs)
-        expect(window.location.assign).toBeCalledWith(
-          "/sign_up?redirectTo=http%3A%2F%2Flocalhost%2F&action=follow&contextModule=artistHeader&copy=Sign%20up%20to%20follow%20Andy%20Warhol&intent=followArtist&kind=artist&objectId=andy-warhol"
-        )
-        expect(mediator.trigger).not.toBeCalled()
-      })
-
-      it("transforms args for following partners", () => {
-        openAuthToFollowSave(mediator, partnerArgs)
-        expect(window.location.assign).toBeCalledWith(
-          "/sign_up?redirectTo=http%3A%2F%2Flocalhost%2F&action=follow&contextModule=aboutTheWork&copy=Sign%20up%20to%20follow%20David%20Zwirner&intent=followPartner&kind=profile&objectId=david-zwirner"
-        )
-        expect(mediator.trigger).not.toBeCalled()
-      })
-
-      it("transforms args for saving artworks", () => {
-        openAuthToFollowSave(mediator, artworkArgs)
-        expect(window.location.assign).toBeCalledWith(
-          "/sign_up?redirectTo=http%3A%2F%2Flocalhost%2F&action=save&contextModule=artworkGrid&copy=Sign%20up%20to%20save%20artworks&intent=saveArtwork&kind=artworks&objectId=andy-warhol-skull"
-        )
-        expect(mediator.trigger).not.toBeCalled()
       })
     })
   })

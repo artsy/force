@@ -7,9 +7,6 @@ import { ForgotPasswordForm } from "../Desktop/ForgotPasswordForm"
 import { LoginForm } from "../Desktop/LoginForm"
 import { SignUpForm } from "../Desktop/SignUpForm"
 import { FormSwitcher } from "../FormSwitcher"
-import { MobileForgotPasswordForm } from "../Mobile/ForgotPasswordForm"
-import { MobileLoginForm } from "../Mobile/LoginForm"
-import { MobileSignUpForm } from "../Mobile/SignUpForm"
 import { ModalType } from "../Types"
 import { mockLocation } from "v2/DevTools/mockLocation"
 
@@ -36,7 +33,6 @@ describe("FormSwitcher", () => {
         }}
         submitUrls={props.submitURLs}
         onSocialAuthEvent={props.onSocialAuthEvent}
-        isMobile={props.isMobile || false}
         isStatic={props.isStatic || false}
         handleTypeChange={jest.fn()}
       />
@@ -73,35 +69,18 @@ describe("FormSwitcher", () => {
     })
   })
 
-  describe("renders mobile states correctly", () => {
-    it("login form", () => {
-      const wrapper = getWrapper({ type: ModalType.login, isMobile: true })
-      expect(wrapper.find(MobileLoginForm).length).toEqual(1)
-    })
-
-    it("signup form", () => {
-      const wrapper = getWrapper({ type: ModalType.signup, isMobile: true })
-      expect(wrapper.find(MobileSignUpForm).length).toEqual(1)
-    })
-
-    it("forgot password form", () => {
-      const wrapper = getWrapper({ type: ModalType.forgot, isMobile: true })
-      expect(wrapper.find(MobileForgotPasswordForm).length).toEqual(1)
-    })
-  })
-
   describe("#handleTypeChange", () => {
     beforeEach(() => {
       mockLocation({ search: "" })
     })
 
-    it("redirects to a url if static or mobile", () => {
+    it("redirects to a url if static", () => {
       const wrapper = getWrapper({
+        isStatic: true,
         type: ModalType.login,
-        isMobile: true,
       })
 
-      wrapper.find(Link).at(2).simulate("click")
+      wrapper.find(Link).at(3).simulate("click")
 
       expect(window.location.assign).toHaveBeenCalledWith(
         "/signup?contextModule=header&copy=Foo%20Bar&destination=%2Fcollect&intent=followArtist&redirectTo=%2Ffoo&triggerSeconds=1"
@@ -127,16 +106,16 @@ describe("FormSwitcher", () => {
 
     it("fires social auth event and redirects", () => {
       const wrapper = getWrapper({
-        type: ModalType.login,
+        onSocialAuthEvent: jest.fn(),
         submitURLs: {
           apple: "/users/auth/apple",
           facebook: "/users/auth/facebook",
-          twitter: "/users/auth/twitter",
+          forgot: "/forgot",
           login: "/login",
           signup: "/signup",
-          forgot: "/forgot",
+          twitter: "/users/auth/twitter",
         },
-        onSocialAuthEvent: jest.fn(),
+        type: ModalType.login,
       })
 
       wrapper.find(Link).at(1).simulate("click")
@@ -148,7 +127,7 @@ describe("FormSwitcher", () => {
       )
 
       expect((window.location.assign as any).mock.calls[0][0]).toEqual(
-        "/users/auth/apple?contextModule=header&copy=Foo%20Bar&destination=%2Fcollect&intent=followArtist&redirectTo=%2Ffoo&triggerSeconds=1&accepted_terms_of_service=true&agreed_to_receive_emails=true&signup-referer=&afterSignUpAction=&redirect-to=%2Ffoo&signup-intent=followArtist&service=apple"
+        "/users/auth/apple?contextModule=header&copy=Foo%20Bar&destination=%2Fcollect&intent=followArtist&redirectTo=%2Ffoo&triggerSeconds=1&accepted_terms_of_service=true&afterSignUpAction=&agreed_to_receive_emails=true&signup-referer=&redirect-to=%2Ffoo&signup-intent=followArtist&service=apple"
       )
     })
   })
@@ -156,49 +135,49 @@ describe("FormSwitcher", () => {
   describe("Analytics", () => {
     it("tracks login impressions", () => {
       const tracking = { trackEvent: jest.fn() }
-      getWrapper({ type: ModalType.login, tracking })
+      getWrapper({ tracking, type: ModalType.login })
       expect(tracking.trackEvent).toBeCalledWith({
         action: "authImpression",
-        intent: "followArtist",
-        type: "login",
         context_module: "header",
+        intent: "followArtist",
         modal_copy: "Foo Bar",
         onboarding: false,
         trigger: "timed",
         trigger_seconds: 1,
+        type: "login",
       })
     })
 
     it("tracks forgot password impressions", () => {
       const tracking = { trackEvent: jest.fn() }
-      getWrapper({ type: ModalType.forgot, tracking })
+      getWrapper({ tracking, type: ModalType.forgot })
       expect(tracking.trackEvent).toBeCalledWith({
         action: "authImpression",
-        type: "forgot",
-        intent: "followArtist",
         context_module: "header",
+        intent: "followArtist",
         modal_copy: "Foo Bar",
         onboarding: false,
         trigger: "timed",
         trigger_seconds: 1,
+        type: "forgot",
       })
     })
 
     it("tracks signup impressions", () => {
       const tracking = { trackEvent: jest.fn() }
       getWrapper({
-        type: ModalType.signup,
         tracking,
+        type: ModalType.signup,
       })
       expect(tracking.trackEvent).toBeCalledWith({
         action: "authImpression",
-        type: "signup",
         context_module: "header",
-        onboarding: false,
         intent: "followArtist",
         modal_copy: "Foo Bar",
+        onboarding: false,
         trigger: "timed",
         trigger_seconds: 1,
+        type: "signup",
       })
     })
   })

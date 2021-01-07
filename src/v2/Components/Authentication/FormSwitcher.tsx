@@ -9,9 +9,6 @@ import { SystemContextProvider } from "v2/Artsy"
 import { ForgotPasswordForm } from "v2/Components/Authentication/Desktop/ForgotPasswordForm"
 import { LoginForm } from "v2/Components/Authentication/Desktop/LoginForm"
 import { SignUpForm } from "v2/Components/Authentication/Desktop/SignUpForm"
-import { MobileForgotPasswordForm } from "v2/Components/Authentication/Mobile/ForgotPasswordForm"
-import { MobileLoginForm } from "v2/Components/Authentication/Mobile/LoginForm"
-import { MobileSignUpForm } from "v2/Components/Authentication/Mobile/SignUpForm"
 import {
   AfterSignUpAction,
   FormComponentType,
