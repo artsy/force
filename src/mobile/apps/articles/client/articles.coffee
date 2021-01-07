@@ -81,10 +81,13 @@ module.exports.init = ->
     collection: sd.ARTICLES
     offset: 0
 
-  ReactDOM.render(
-    React.createElement(
-      NewsPanel,
-      {articles: sd.NEWS_ARTICLES}
-    ),
-    document.getElementById('news-panel')
-  )
+  newsPanel = document.getElementById('news-panel')
+
+  if (newsPanel)
+    ReactDOM.render(
+      React.createElement(
+        NewsPanel,
+        {articles: sd.NEWS_ARTICLES}
+      ),
+      newsPanel
+    )

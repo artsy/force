@@ -21,13 +21,16 @@ module.exports.init = ->
       sort: '-published_at'
   feedView.render()
 
-  ReactDOM.render(
-    React.createElement(
-      NewsPanel,
-      {articles: sd.NEWS_ARTICLES}
-    ),
-    document.getElementById('news-panel')
-  )
+  newsPanel = document.getElementById('news-panel')
+
+  if (newsPanel)
+    ReactDOM.render(
+      React.createElement(
+        NewsPanel,
+        {articles: sd.NEWS_ARTICLES}
+      ),
+      newsPanel
+    )
 
   ReactDOM.render(
     React.createElement(

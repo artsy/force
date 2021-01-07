@@ -65,14 +65,6 @@ module.exports.articles = (req, res, next) ->
       }
     }
   """
-  newsQuery = """
-    {
-      articles(published: true, limit: 3, sort: "-published_at", layout: "news" ) {
-        title
-        slug
-      }
-    }
-  """
   # fetch recent articles
   request.post(sd.POSITRON_URL + '/api/graphql')
     .send(
@@ -81,17 +73,8 @@ module.exports.articles = (req, res, next) ->
       return next() if err
       articles = response.body.data?.articles
       email = res.locals.sd.CURRENT_USER?.email
-      # fetch news articles
-      request.post(sd.POSITRON_URL + '/api/graphql')
-        .send(
-          query: newsQuery
-        ).end (err, response) ->
-          newsArticles = response.body.data?.articles
-          res.locals.sd.ARTICLES = articles
-          res.locals.sd.NEWS_ARTICLES = newsArticles
-          res.render 'articles',
-            articles: articles,
-            newsArticles: newsArticles
+      res.locals.sd.ARTICLES = articles
+      res.render 'articles', articles: articles
 
 subscribedToEditorial = (email, cb) ->
   sailthru.apiGet 'user', { id: email }, (err, response) ->

@@ -34,21 +34,6 @@ describe("articles feed template", function () {
     html.should.not.containEql("article-item-first")
     return html.should.not.containEql("news-panel")
   })
-
-  return it("renders the NewsPanel", function () {
-    const html = render("articles_feed")({
-      articles: [_.clone(fixtures.article)],
-      crop(url) {
-        return url
-      },
-      newsArticles: [{ layout: "news" }],
-      sd: {},
-    })
-
-    html.should.containEql("article-item-first")
-    html.should.containEql("article-item")
-    return html.should.containEql("news-panel")
-  })
 })
 
 describe("section template", function () {
