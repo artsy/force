@@ -128,6 +128,9 @@ export interface ArtworkFilterContextProps {
   setShouldStageFilterChanges?: (value: boolean) => void
   setStagedFilters?: (state: ArtworkFilters) => void
   setFilters?: (state: ArtworkFilters) => void
+
+  // Has the ArtworkFilterContext been mounted in the tree
+  mountedContext?: boolean
 }
 
 /**
@@ -145,6 +148,7 @@ export const ArtworkFilterContext = React.createContext<
   sortOptions: [],
   unsetFilter: null,
   ZeroState: null,
+  mountedContext: false,
 })
 
 export type SortOptions = Array<{
@@ -217,6 +221,8 @@ export const ArtworkFilterContextProvider: React.FC<
   }
 
   const artworkFilterContext = {
+    mountedContext: true,
+
     filters: artworkFilterState,
     hasFilters: hasFilters(artworkFilterState),
     stagedFilters: stagedArtworkFilterState,
