@@ -22,7 +22,6 @@ export interface FormSwitcherProps {
   error?: string
   handleSubmit: SubmitHandler
   handleTypeChange?: (e: ModalType) => void
-  isMobile?: boolean
   isStatic?: boolean
   onAppleLogin?: (e: Event) => void
   onFacebookLogin?: (e: Event) => void
@@ -105,9 +104,9 @@ export class FormSwitcher extends React.Component<FormSwitcherProps, State> {
   }
 
   handleTypeChange = (newType: ModalType) => {
-    const { isMobile, isStatic, handleTypeChange, options } = this.props
+    const { isStatic, handleTypeChange, options } = this.props
 
-    if (isMobile || isStatic) {
+    if (isStatic) {
       if (typeof window !== "undefined") {
         window.location.assign(`/${newType}?${qs.stringify(options)}`)
       }
@@ -144,13 +143,7 @@ export class FormSwitcher extends React.Component<FormSwitcherProps, State> {
   }
 
   render() {
-    const {
-      error,
-      isMobile,
-      title,
-      options,
-      showRecaptchaDisclaimer,
-    } = this.props
+    const { error, title, options, showRecaptchaDisclaimer } = this.props
 
     const queryData = Object.assign(
       {},
