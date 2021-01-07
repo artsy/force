@@ -31,7 +31,13 @@ class ArtistShows extends Component<ArtistShowsProps, LoadingAreaState> {
     isLoading: false,
   }
 
+  scrollToTop = () => {
+    window.scrollTo(0, 0)
+  }
+
   loadNext = () => {
+    this.scrollToTop()
+
     const {
       artist: {
         showsConnection: {
@@ -46,6 +52,7 @@ class ArtistShows extends Component<ArtistShowsProps, LoadingAreaState> {
   }
 
   loadAfter = cursor => {
+    this.scrollToTop()
     this.toggleLoading(true)
 
     this.props.relay.refetch(

@@ -29,7 +29,13 @@ export class ArtistArticles extends Component<
     isLoading: false,
   }
 
+  scrollToTop = () => {
+    window.scrollTo(0, 0)
+  }
+
   loadNext = () => {
+    this.scrollToTop()
+
     const {
       artist: {
         articlesConnection: {
@@ -44,6 +50,7 @@ export class ArtistArticles extends Component<
   }
 
   loadAfter = cursor => {
+    this.scrollToTop()
     this.toggleLoading(true)
 
     this.props.relay.refetch(
