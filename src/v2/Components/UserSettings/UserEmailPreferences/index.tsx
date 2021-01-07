@@ -2,7 +2,10 @@ import React, { useState } from "react"
 import { Banner, Box, Flex, SelectSmall, Serif } from "@artsy/palette"
 import { useSystemContext } from "v2/Artsy/SystemContext"
 import { QueryRenderer, graphql } from "react-relay"
-import { UserInformationQuery } from "v2/__generated__/UserInformationQuery.graphql.ts"
+import {
+  UserEmailPreferencesQuery,
+  UserEmailPreferencesQueryResponse,
+} from "v2/__generated__/UserEmailPreferencesQuery.graphql.ts"
 import { UpdateUserEmailPreferencesMutation } from "./UserEmailPreferencesMutation"
 import { renderWithLoadProgress } from "v2/Artsy/Relay/renderWithLoadProgress"
 
@@ -14,14 +17,7 @@ const options = [
   { text: "Weekly", value: "weekly" },
 ]
 
-interface UserEmailPreferencesProps {
-  me: {
-    emailFrequency: string
-    id: string
-  }
-}
-
-export const UserEmailPreferences: React.FC<UserEmailPreferencesProps> = props => {
+export const UserEmailPreferences: React.FC<UserEmailPreferencesQueryResponse> = props => {
   const { relayEnvironment } = useSystemContext()
   const emailFrequency = props.me.emailFrequency || fallbackFrequency
   const [updated, setUpdated] = useState(false)
@@ -77,18 +73,20 @@ export const UserEmailPreferencesQueryRenderer = () => {
   }
 
   return (
-    <QueryRenderer<UserInformationQuery>
+    <QueryRenderer<UserEmailPreferencesQuery>
       environment={relayEnvironment}
       variables={{}}
       query={graphql`
-        query UserEmailPreferencesQuery @raw_response_type {
+        query UserEmailPreferencesQuery {
           me {
             emailFrequency
             id
           }
         }
       `}
-      render={renderWithLoadProgress(UserEmailPreferences)}
+      render={renderWithLoadProgress<UserEmailPreferencesQueryResponse>(
+        UserEmailPreferences
+      )}
     />
   )
 }

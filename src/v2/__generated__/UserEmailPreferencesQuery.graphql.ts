@@ -9,16 +9,9 @@ export type UserEmailPreferencesQueryResponse = {
         readonly id: string;
     } | null;
 };
-export type UserEmailPreferencesQueryRawResponse = {
-    readonly me: ({
-        readonly emailFrequency: string | null;
-        readonly id: string;
-    }) | null;
-};
 export type UserEmailPreferencesQuery = {
     readonly response: UserEmailPreferencesQueryResponse;
     readonly variables: UserEmailPreferencesQueryVariables;
-    readonly rawResponse: UserEmailPreferencesQueryRawResponse;
 };
 
 
@@ -85,5 +78,5 @@ return {
   }
 };
 })();
-(node as any).hash = '8a6606cd3574b35cb6067e12d4f1eca2';
+(node as any).hash = '40ba9b8060e5c7233e89cf00b348e15c';
 export default node;
