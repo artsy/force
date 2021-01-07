@@ -24,7 +24,10 @@ function productionAssets(manifestFileName: string): RequestHandler {
   return (_req: ArtsyRequest, res: ArtsyResponse, next: NextFunction) => {
     res.locals.asset = filename => {
       let manifestFile = manifest[filename] || filename
-      // TODO: Is this path still used? If no remove it.
+      // There are a few files that exist in the CDN and not the manifest this
+      // ensures that they have the correct path.
+      // - /images/browserconfig.xml
+      // - /images/opensearch.xml
       if (CDN_URL) {
         manifestFile = CDN_URL + manifestFile
       }

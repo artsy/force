@@ -84,7 +84,7 @@ app.get(flatRoutes, async (req: Request, res: Response, next: NextFunction) => {
     const headTagsString = ReactDOM.renderToString(headTags as any)
     const sharifyData = res.locals.sharify.script()
 
-    const { WEBFONT_URL } = sharify.data
+    const { APP_URL, CURRENT_PATH, WEBFONT_URL } = sharify.data
 
     const options = {
       cdnUrl: NODE_ENV === "production" ? CDN_URL : "",
@@ -114,10 +114,15 @@ app.get(flatRoutes, async (req: Request, res: Response, next: NextFunction) => {
         artsy: NOVO_MANIFEST.lookup("/assets-novo/artsy.js"),
         artsyCommon: NOVO_MANIFEST.lookup("/assets-novo/artsy-common.js"),
         artsyNovo: NOVO_MANIFEST.lookup("/assets-novo/artsy-novo.js"),
+        browserConfig: NOVO_MANIFEST.lookup("/images/browserconfig.xml"),
         common: NOVO_MANIFEST.lookup("/assets-novo/common.js"),
         commonReact: NOVO_MANIFEST.lookup("/assets-novo/common-react.js"),
         commonUtility: NOVO_MANIFEST.lookup("/assets-novo/common-utility.js"),
+        openSearch: NOVO_MANIFEST.lookup("/images/opensearch.xml"),
         runtime: NOVO_MANIFEST.lookup("/assets-novo/runtime.js"),
+      },
+      meta: {
+        appleItunesApp: `${APP_URL}${CURRENT_PATH}`,
       },
       // TODO: Post-release review that sharify is still used in the template.
       sd: sharify.data,

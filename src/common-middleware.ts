@@ -22,6 +22,7 @@ import config from "./config"
 import { assetMiddleware } from "./lib/middleware/asset"
 import bodyParser from "body-parser"
 import { csrfTokenMiddleware } from "./lib/middleware/csrfToken"
+import { sharifyLocalsMiddleware } from "./lib/middleware/sharifyLocals"
 
 const CurrentUser = require("./lib/current_user.coffee")
 
@@ -35,7 +36,7 @@ const {
   SEGMENT_WRITE_KEY_SERVER,
 } = config
 
-function securityMiddleware(app) {
+function applySecurityMiddleware(app) {
   // Denied IPs
   if (IP_DENYLIST && IP_DENYLIST.length > 0) {
     app.use(ipFilter(IP_DENYLIST))
@@ -102,7 +103,7 @@ function securityMiddleware(app) {
   app.use(csrfTokenMiddleware)
 }
 
-function staticAssetMiddlewares(app) {
+function applyStaticAssetMiddlewares(app) {
   // Mount static assets from root public folder
   app.use(express.static("public"))
 
@@ -113,6 +114,7 @@ function staticAssetMiddlewares(app) {
       app.use(express.static(folder))
     })
 
+  // TODO: Move to ./public/images
   app.use(favicon(path.resolve(__dirname, "mobile/public/images/favicon.ico")))
   app.use("/(.well-known/)?apple-app-site-association", siteAssociation)
 }
@@ -130,11 +132,14 @@ export default function commonMiddlewareSetup(app) {
   app.use(assetMiddleware())
 
   // Ensure basic security settings
-  securityMiddleware(app)
+  applySecurityMiddleware(app)
 
   // Ensure all responses are gzip compressed
   app.use(compression())
 
   // Static assets
-  staticAssetMiddlewares(app)
+  applyStaticAssetMiddlewares(app)
+
+  // Sharify locals
+  app.use(sharifyLocalsMiddleware)
 }
