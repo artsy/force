@@ -5,14 +5,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <meta charset='utf-8' />
 
+  <link rel="preload" href="<%%= fontUrl %>/ll-unica77_regular.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="<%%= fontUrl %>/ll-unica77_medium.woff2" as="font" type="font/woff2" crossorigin />
+
   <link rel='apple-touch-icon' href="<%%= icons.icon152 %>" />
   <link rel='apple-touch-icon' sizes='120x120' href="<%%= icons.icon120 %>" />
   <link rel='apple-touch-icon' sizes='152x152' href="<%%= icons.icon152 %>" />
   <link rel='apple-touch-icon' sizes='76x76' href="<%%= icons.icon76 %>" />
   <link rel='icon' type='image/png' href="<%%= icons.favicon %>" />
 
-  <link rel="preload" href="<%%= fontUrl %>/ll-unica77_regular.woff2" as="font" type="font/woff2" crossorigin />
-  <link rel="preload" href="<%%= fontUrl %>/ll-unica77_medium.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel='search' type='application/opensearchdescription+xml' href="<%%= manifest.openSearch %>" title='Artsy' />
+
+  <meta name="apple-itunes-app" content="app-id=703796080, app-argument=<%%= meta.appleItunesApp %>" />
+  <meta name='msapplication-config' content="<%%= manifest.browserconfig %>" />
+  <meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=5' />
+
+  <meta property="fb:admins" content="7961740" />
+  <meta property="fb:app_id" content="308278682573501" />
+  <meta property="fb:pages" content="342443413406" />
+
   <link type='text/css', rel='stylesheet', href='<%%= fontUrl %>/all-webfonts.css' />
 
   <!-- String concatenation is needed allow outputting a template tag -->

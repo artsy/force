@@ -28,28 +28,33 @@ class ManifestManager {
     }
   }
 
-  public lookup(assetFilename) {
+  public lookup(assetFilename: string) {
     if (this.loadError || NODE_ENV !== "production") {
-      chalk.yellow(`[Asset Manager]: error or development -> ${assetFilename}`)
       return assetFilename
     }
 
-    const manifestFile = this.manifest[assetFilename]
+    let canonicalFilename = this.applyManifest(assetFilename)
+    canonicalFilename = this.applyCdn(canonicalFilename)
+    return canonicalFilename
+  }
+
+  private applyManifest(filename: string) {
+    const manifestFile = this.manifest[filename]
     if (!manifestFile || manifestFile.length === 0) {
-      chalk.yellow(
-        `[Asset Manager]: manifest lookup failed -> ${assetFilename}`
-      )
-      return assetFilename
+      return filename
     }
-
-    // TODO: Is this path still used? If not remove it.
-    if (CDN_URL) {
-      chalk.yellow(`[Asset Manager]: cdn -> ${CDN_URL + manifestFile}`)
-      return CDN_URL + manifestFile
-    }
-
-    chalk.yellow(`[Asset Manager]: manifest found -> ${manifestFile}`)
     return manifestFile
+  }
+
+  private applyCdn(filename: string) {
+    // There are a few files that exist in the CDN and not the manifest this
+    // ensures that they have the correct path.
+    // - /images/browserconfig.xml
+    // - /images/opensearch.xml
+    if (CDN_URL) {
+      return CDN_URL + filename
+    }
+    return filename
   }
 }
 

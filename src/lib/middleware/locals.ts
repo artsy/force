@@ -6,7 +6,6 @@ import artsyXapp from "@artsy/xapp"
 import moment from "moment"
 import Referrer from "referer-parser"
 import uuid from "node-uuid"
-import { parse } from "url"
 import * as helpers from "../template_helpers"
 import config from "../../config"
 import * as templateModules from "../../desktop/lib/template_modules"
@@ -55,13 +54,11 @@ export function localsMiddleware(
         ? req.session.id
         : (req.session.id = uuid.v1())
       : undefined
-  res.locals.sd.CURRENT_PATH = parse(req.url).pathname
   res.locals.sd.ARTSY_XAPP_TOKEN = artsyXapp.token
   res.locals.sd.REFERRER = referrer = req.get("Referrer")
   if (referrer) {
     res.locals.sd.MEDIUM = new Referrer(referrer).medium
   }
-  res.locals.sd.EIGEN = ua.match("Artsy-Mobile") != null
   res.locals.sd.REFLECTION = ua.match("Artsy/Reflection") != null
   res.locals.sd.REQUEST_TIMESTAMP = Date.now()
   res.locals.sd.NOTIFICATION_COUNT =
