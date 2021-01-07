@@ -3,18 +3,18 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type Save_artwork = {
+export type SaveButton_artwork = {
     readonly id: string;
     readonly internalID: string;
     readonly slug: string;
     readonly is_saved: boolean | null;
     readonly title: string | null;
-    readonly " $refType": "Save_artwork";
+    readonly " $refType": "SaveButton_artwork";
 };
-export type Save_artwork$data = Save_artwork;
-export type Save_artwork$key = {
-    readonly " $data"?: Save_artwork$data;
-    readonly " $fragmentRefs": FragmentRefs<"Save_artwork">;
+export type SaveButton_artwork$data = SaveButton_artwork;
+export type SaveButton_artwork$key = {
+    readonly " $data"?: SaveButton_artwork$data;
+    readonly " $fragmentRefs": FragmentRefs<"SaveButton_artwork">;
 };
 
 
@@ -23,7 +23,7 @@ const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "Save_artwork",
+  "name": "SaveButton_artwork",
   "selections": [
     {
       "alias": null,
@@ -63,5 +63,5 @@ const node: ReaderFragment = {
   ],
   "type": "Artwork"
 };
-(node as any).hash = 'beeb9a74a0ff8d75076752d5be66523c';
+(node as any).hash = 'e15e9a796560eda039f1abee2994f420';
 export default node;

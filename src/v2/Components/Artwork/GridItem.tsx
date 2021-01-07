@@ -10,7 +10,10 @@ import styled from "styled-components"
 import { userIsTeam } from "v2/Utils/user"
 import Badge from "./Badge"
 import Metadata from "./Metadata"
-import SaveButton from "./Save"
+import {
+  SaveButtonFragmentContainer as SaveButton,
+  ClickContainer,
+} from "./SaveButton"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import { Mediator } from "lib/mediator"
 
@@ -143,16 +146,10 @@ class ArtworkGridItemContainer extends React.Component<Props, State> {
 
           {this.canHover && (
             <SaveButton
-              className="artwork-save"
               contextModule={
                 this.props.contextModule || ContextModule.artworkGrid
               }
               artwork={artwork}
-              style={{
-                position: "absolute",
-                right: "10px",
-                bottom: "10px",
-              }}
               {...userSpread}
               mediator={this.props.mediator}
             />
@@ -166,12 +163,10 @@ class ArtworkGridItemContainer extends React.Component<Props, State> {
 }
 
 export const ArtworkGridItem = styled(ArtworkGridItemContainer)`
-  .artwork-save {
-    opacity: 0;
-  }
-
-  &:hover .artwork-save {
-    opacity: 1;
+  &:hover {
+    ${ClickContainer} {
+      opacity: 1;
+    }
   }
 `
 
@@ -188,7 +183,7 @@ export default createFragmentContainer(withSystemContext(ArtworkGridItem), {
       }
       href
       ...Metadata_artwork
-      ...Save_artwork
+      ...SaveButton_artwork
       ...Badge_artwork
     }
   `,

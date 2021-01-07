@@ -2,7 +2,11 @@ import { ArtworkActions_artwork } from "v2/__generated__/ArtworkActions_artwork.
 import { SystemContext } from "v2/Artsy"
 import { track } from "v2/Artsy/Analytics"
 import * as Schema from "v2/Artsy/Analytics/Schema"
-import SaveButton, { SaveProps, SaveState } from "v2/Components/Artwork/Save"
+import {
+  SaveButtonFragmentContainer as SaveButton,
+  SaveButtonProps,
+  SaveButtonState,
+} from "v2/Components/Artwork/SaveButton"
 import { compact } from "lodash"
 import { isNull } from "lodash"
 import React, { useContext } from "react"
@@ -282,7 +286,7 @@ export const ArtworkActionsFragmentContainer = createFragmentContainer(
   {
     artwork: graphql`
       fragment ArtworkActions_artwork on Artwork {
-        ...Save_artwork
+        ...SaveButton_artwork
         ...ArtworkSharePanel_artwork
         artists {
           name
@@ -442,8 +446,8 @@ const Container = styled(Flex).attrs({
  * Custom renderer for SaveButton
  */
 const Save = (actionProps: ArtworkActionsProps) => (
-  props: SaveProps,
-  state: SaveState
+  props: SaveButtonProps,
+  state: SaveButtonState
 ) => {
   // Grab props from ArtworkActions to check if sale is open
   const { sale } = actionProps.artwork
