@@ -1,7 +1,8 @@
 import React, { useState } from "react"
 import { Banner, Box, Flex, SelectSmall, Serif } from "@artsy/palette"
 import { useSystemContext } from "v2/Artsy/SystemContext"
-import { QueryRenderer, graphql } from "react-relay"
+import { graphql } from "react-relay"
+import { SystemQueryRenderer as QueryRenderer } from "v2/Artsy/Relay/SystemQueryRenderer"
 import {
   UserEmailPreferencesQuery,
   UserEmailPreferencesQueryResponse,
