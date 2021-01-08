@@ -1,22 +1,23 @@
 import { buildUrl } from "v2/Components/v2/ArtworkFilter/Utils/urlBuilder"
 import { useArtworkFilterContext } from "v2/Components/v2/ArtworkFilter/ArtworkFilterContext"
 import { useRouter } from "v2/Artsy/Router/useRouter"
-
-const NOOP = () => ""
+import { stringify } from "qs"
 
 export function useComputeHref() {
-  // FIXME: This currently *only* only computes hrefs for artwork filter
-  // components. We'll need to update to work with other more generic
-  // usecases in the future
-  const filterContext = useArtworkFilterContext()
-  const routerContext = useRouter()
+  const {
+    match: { location },
+  } = useRouter()
+  const artworkFilterContext = useArtworkFilterContext()
 
-  if (!filterContext.mountedContext) {
-    return NOOP
+  // Generic
+  if (!artworkFilterContext.mountedContext) {
+    return (page: number) =>
+      `${location?.pathname}?${stringify({ ...location.query, page })}`
   }
 
-  const currentlySelectedFilters = filterContext.currentlySelectedFilters()
-  const pathname = routerContext?.match?.location?.pathname
+  // Artwork filter-specific
+  // (location doesn't update in the case of artwork filter)
+  const currentlySelectedFilters = artworkFilterContext.currentlySelectedFilters()
 
   const computeHref = page => {
     const filterState = {
@@ -24,7 +25,7 @@ export function useComputeHref() {
       page,
     }
 
-    const href = buildUrl(filterState, pathname)
+    const href = buildUrl(filterState, location?.pathname)
     return href
   }
 
