@@ -13,10 +13,10 @@ describe("getBidderStatus", () => {
     const auction = {
       is_registration_closed: false,
     }
-    getBidderStatus(me, auction).should.equal("qualified-to-bid")
+    expect(getBidderStatus(me, auction)).toEqual("qualified-to-bid")
   })
 
-  it("it returns qualified if you are qualified and registration is closed", () => {
+  it("returns qualified if you are qualified and registration is closed", () => {
     const me = {
       bidders: [
         {
@@ -29,10 +29,10 @@ describe("getBidderStatus", () => {
       is_registration_closed: true,
     }
 
-    getBidderStatus(me, auction).should.equal("qualified-to-bid")
+    expect(getBidderStatus(me, auction)).toEqual("qualified-to-bid")
   })
 
-  it("it returns registration-pending if you have registered and registration is closed", () => {
+  it("returns registration-pending if you have registered and registration is closed", () => {
     const me = {
       bidders: [
         {
@@ -45,10 +45,10 @@ describe("getBidderStatus", () => {
       is_registration_closed: true,
     }
 
-    getBidderStatus(me, auction).should.equal("registration-pending")
+    expect(getBidderStatus(me, auction)).toEqual("registration-pending")
   })
 
-  it("it returns registration-pending if registration is not closed but you are awaiting approval", () => {
+  it("returns registration-pending if registration is not closed but you are awaiting approval", () => {
     const me = {
       bidders: [
         {
@@ -61,7 +61,7 @@ describe("getBidderStatus", () => {
       is_registration_closed: false,
     }
 
-    getBidderStatus(me, auction).should.equal("registration-pending")
+    expect(getBidderStatus(me, auction)).toEqual("registration-pending")
   })
 
   it("returns registration closed if registration is closed and you have no bidders", () => {
@@ -73,7 +73,7 @@ describe("getBidderStatus", () => {
       is_registration_closed: true,
     }
 
-    getBidderStatus(me, auction).should.equal("registration-closed")
+    expect(getBidderStatus(me, auction)).toEqual("registration-closed")
   })
 
   it("returns logged-out if you are logged out and registration is not closed", () => {
@@ -81,7 +81,7 @@ describe("getBidderStatus", () => {
       is_registration_closed: false,
     }
 
-    getBidderStatus(null, auction).should.equal("logged-out")
+    expect(getBidderStatus(null, auction)).toEqual("logged-out")
   })
 
   it("returns logged-in if you have a me object and registration is not closed", () => {
@@ -89,7 +89,7 @@ describe("getBidderStatus", () => {
       is_registration_closed: false,
     }
 
-    getBidderStatus({}, auction).should.equal("logged-in")
+    expect(getBidderStatus({}, auction)).toEqual("logged-in")
   })
 
   it("returns approval-required if approval is required and you are logged in", () => {
@@ -98,7 +98,7 @@ describe("getBidderStatus", () => {
       require_bidder_approval: true,
     }
 
-    getBidderStatus({}, auction).should.equal("approval-required")
+    expect(getBidderStatus({}, auction)).toEqual("approval-required")
   })
 
   it("returns approval-required if approval is required and you are logged out", () => {
@@ -107,6 +107,6 @@ describe("getBidderStatus", () => {
       require_bidder_approval: true,
     }
 
-    getBidderStatus(null, auction).should.equal("approval-required")
+    expect(getBidderStatus(null, auction)).toEqual("approval-required")
   })
 })
