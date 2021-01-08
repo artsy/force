@@ -164,6 +164,7 @@ class ArtistShows extends Component<ArtistShowsProps, LoadingAreaState> {
                 <Col>
                   <Box>
                     <Pagination
+                      getHref={() => ""}
                       hasNextPage={
                         this.props.artist.showsConnection.pageInfo.hasNextPage
                       }

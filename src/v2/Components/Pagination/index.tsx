@@ -16,20 +16,22 @@ import { userIsForcingNavigation } from "v2/Artsy/Router/Utils/catchLinks"
 
 interface Props {
   hasNextPage: boolean
-  onClick?: (cursor: string, page: number) => void
-  onNext?: (page: number) => void
   pageCursors: Pagination_pageCursors
   scrollTo?: string
+  getHref?: PaginationProps["getHref"]
+  onClick?: (cursor: string, page: number) => void
+  onNext?: (page: number) => void
 }
 
 export const Pagination: React.FC<Props> = ({
   hasNextPage,
-  onClick = _cursor => ({}),
-  onNext = () => ({}),
   pageCursors,
   scrollTo = null,
+  getHref: __getHref__,
+  onClick = _cursor => ({}),
+  onNext = () => ({}),
 }) => {
-  const getHref = useComputeHref()
+  const getHref = __getHref__ ?? useComputeHref()
 
   if (pageCursors.around.length === 1) {
     return null
