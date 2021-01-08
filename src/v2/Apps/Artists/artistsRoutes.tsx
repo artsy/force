@@ -53,18 +53,19 @@ export const artistsRoutes: RouteConfig[] = [
           return {
             ...params,
             ...props,
-            first: 100,
+            page: props.location.query.page ?? 1,
+            size: 100,
           }
         },
         query: graphql`
           query artistsRoutes_ArtistsByLetterQuery(
             $letter: String!
-            $first: Int
-            $after: String
+            $page: Int
+            $size: Int
           ) {
             viewer {
               ...ArtistsByLetter_viewer
-                @arguments(letter: $letter, first: $first, after: $after)
+                @arguments(letter: $letter, size: $size, page: $page)
             }
           }
         `,

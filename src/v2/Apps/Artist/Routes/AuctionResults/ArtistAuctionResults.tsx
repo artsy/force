@@ -191,6 +191,7 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
         <Col>
           <Box>
             <Pagination
+              getHref={() => ""}
               hasNextPage={pageInfo.hasNextPage}
               pageCursors={artist.auctionResultsConnection.pageCursors}
               onClick={(_cursor, page) => loadPage(_cursor, page)}

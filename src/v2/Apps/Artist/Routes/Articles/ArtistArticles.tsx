@@ -111,6 +111,7 @@ export class ArtistArticles extends Component<
           <Col>
             <Box>
               <Pagination
+                getHref={() => ""}
                 pageCursors={this.props.artist.articlesConnection.pageCursors}
                 onClick={this.loadAfter}
                 onNext={this.loadNext}

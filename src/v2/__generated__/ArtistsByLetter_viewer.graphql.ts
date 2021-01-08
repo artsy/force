@@ -39,16 +39,16 @@ const node: ReaderFragment = {
       "type": "String"
     },
     {
-      "defaultValue": 100,
+      "defaultValue": 1,
       "kind": "LocalArgument",
-      "name": "first",
+      "name": "page",
       "type": "Int"
     },
     {
-      "defaultValue": null,
+      "defaultValue": 100,
       "kind": "LocalArgument",
-      "name": "after",
-      "type": "String"
+      "name": "size",
+      "type": "Int"
     }
   ],
   "kind": "Fragment",
@@ -60,18 +60,18 @@ const node: ReaderFragment = {
       "args": [
         {
           "kind": "Variable",
-          "name": "after",
-          "variableName": "after"
-        },
-        {
-          "kind": "Variable",
-          "name": "first",
-          "variableName": "first"
-        },
-        {
-          "kind": "Variable",
           "name": "letter",
           "variableName": "letter"
+        },
+        {
+          "kind": "Variable",
+          "name": "page",
+          "variableName": "page"
+        },
+        {
+          "kind": "Variable",
+          "name": "size",
+          "variableName": "size"
         }
       ],
       "concreteType": "ArtistConnection",
@@ -169,5 +169,5 @@ const node: ReaderFragment = {
   ],
   "type": "Viewer"
 };
-(node as any).hash = 'e724dc24a08c071997a89d5305202c36';
+(node as any).hash = '97218464334c75b3c3cf175a660276d8';
 export default node;

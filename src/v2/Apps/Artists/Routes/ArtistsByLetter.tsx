@@ -37,7 +37,10 @@ export const ArtistsByLetter: React.FC<ArtistsByLetterProps> = ({
   relay,
   viewer,
 }) => {
-  const { match } = useRouter()
+  const {
+    match: { params, location },
+    router,
+  } = useRouter()
   const [isLoading, setLoading] = useState(false)
 
   if (!viewer.artistsConnection?.artists) {
@@ -52,19 +55,24 @@ export const ArtistsByLetter: React.FC<ArtistsByLetterProps> = ({
     },
   } = viewer
 
-  const handleNext = () => {
-    handleClick(endCursor)
+  const handleNext = (page: number) => {
+    handleClick(endCursor, page)
   }
 
-  const handleClick = (cursor: string) => {
+  const handleClick = (cursor: string, page: number) => {
     setLoading(true)
 
-    relay.refetch({ after: cursor }, null, error => {
+    relay.refetch({ page }, null, error => {
       if (error) {
         console.error(error)
       }
 
       setLoading(false)
+
+      router.push({
+        pathname: location.pathname,
+        query: { ...location.query, page },
+      })
     })
   }
 
@@ -83,7 +91,7 @@ export const ArtistsByLetter: React.FC<ArtistsByLetterProps> = ({
         <ArtistsTopNav my={3}>
           <Text as="h1" variant="largeTitle">
             Artists
-            {match.params.letter && <> – {match.params.letter.toUpperCase()}</>}
+            {params.letter && <> – {params.letter.toUpperCase()}</>}
           </Text>
         </ArtistsTopNav>
 
@@ -108,6 +116,15 @@ export const ArtistsByLetter: React.FC<ArtistsByLetterProps> = ({
   )
 }
 
+export const ARTISTS_BY_LETTER_QUERY = graphql`
+  query ArtistsByLetterQuery($letter: String!, $size: Int, $page: Int) {
+    viewer {
+      ...ArtistsByLetter_viewer
+        @arguments(letter: $letter, page: $page, size: $size)
+    }
+  }
+`
+
 export const ArtistsByLetterFragmentContainer = createRefetchContainer(
   ArtistsByLetter,
   {
@@ -115,10 +132,10 @@ export const ArtistsByLetterFragmentContainer = createRefetchContainer(
       fragment ArtistsByLetter_viewer on Viewer
         @argumentDefinitions(
           letter: { type: "String", defaultValue: "a" }
-          first: { type: "Int", defaultValue: 100 }
-          after: { type: "String" }
+          page: { type: "Int", defaultValue: 1 }
+          size: { type: "Int", defaultValue: 100 }
         ) {
-        artistsConnection(letter: $letter, first: $first, after: $after) {
+        artistsConnection(letter: $letter, page: $page, size: $size) {
           pageInfo {
             endCursor
             hasNextPage
@@ -137,12 +154,5 @@ export const ArtistsByLetterFragmentContainer = createRefetchContainer(
       }
     `,
   },
-  graphql`
-    query ArtistsByLetterQuery($letter: String!, $first: Int, $after: String) {
-      viewer {
-        ...ArtistsByLetter_viewer
-          @arguments(letter: $letter, first: $first, after: $after)
-      }
-    }
-  `
+  ARTISTS_BY_LETTER_QUERY
 )
