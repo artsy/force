@@ -12,11 +12,12 @@ import {
   PaginationProps,
 } from "@artsy/palette"
 import { useComputeHref } from "./useComputeHref"
+import { userIsForcingNavigation } from "v2/Artsy/Router/Utils/catchLinks"
 
 interface Props {
   hasNextPage: boolean
   onClick?: (cursor: string, page: number) => void
-  onNext?: () => void
+  onNext?: (page: number) => void
   pageCursors: Pagination_pageCursors
   scrollTo?: string
 }
@@ -34,14 +35,20 @@ export const Pagination: React.FC<Props> = ({
     return null
   }
 
-  const handleClick = (cursor, page, event) => {
+  const handleClick = (
+    cursor: string,
+    page: number,
+    event: React.MouseEvent
+  ) => {
+    if (userIsForcingNavigation(event)) return
     event.preventDefault()
     onClick(cursor, page)
   }
 
-  const handleNext = event => {
+  const handleNext = (event: React.MouseEvent, page: number) => {
+    if (userIsForcingNavigation(event)) return
     event.preventDefault()
-    onNext()
+    onNext(page)
   }
 
   const paginationProps: PaginationProps = {

@@ -15,6 +15,9 @@ jest.unmock("react-relay")
 jest.mock("react-tracking")
 jest.mock("v2/Utils/openAuthModal")
 jest.mock("v2/Components/Pagination/useComputeHref")
+jest.mock("v2/Artsy/Router/Utils/catchLinks", () => ({
+  userIsForcingNavigation: () => false,
+}))
 
 describe("AuctionResults", () => {
   let wrapper: ReactWrapper
