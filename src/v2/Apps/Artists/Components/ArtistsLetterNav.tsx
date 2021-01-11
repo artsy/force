@@ -39,7 +39,7 @@ export const ArtistsLetterNav: React.FC<ArtistsLetterNavProps> = ({
             <Letter
               key={letter}
               activeClassName="active"
-              to={`/artists2/artists-starting-with-${letter.toLowerCase()}`}
+              to={`/artists/artists-starting-with-${letter.toLowerCase()}`}
               title={`View artists starting with “${letter}”`}
             >
               {letter}

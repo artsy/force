@@ -14,7 +14,7 @@ export const ArtistsByLetterMeta: React.FC = () => {
 
   const title = `Artists Starting with ${params.letter.toUpperCase()} | ${TITLE}`
   const description = `Research and discover artists starting with ${params.letter.toUpperCase()} on Artsy. Find works for sale, biographies, CVs, and auction results.`
-  const href = `${getENV("APP_URL")}/artists2/${params.letter}`
+  const href = `${getENV("APP_URL")}/artists/${params.letter}`
 
   return (
     <>

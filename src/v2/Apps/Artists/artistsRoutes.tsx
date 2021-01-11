@@ -19,7 +19,7 @@ const ArtistsByLetterRoute = loadable(
 
 export const artistsRoutes: RouteConfig[] = [
   {
-    path: "/artists2",
+    path: "/artists",
     getComponent: () => ArtistsApp,
     prepare: () => {
       return ArtistsApp.preload()

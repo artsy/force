@@ -59,7 +59,7 @@ export const ArtistsByLetter: React.FC<ArtistsByLetterProps> = ({
     handleClick(endCursor, page)
   }
 
-  const handleClick = (cursor: string, page: number) => {
+  const handleClick = (_cursor: string, page: number) => {
     setLoading(true)
 
     relay.refetch({ page }, null, error => {
@@ -82,7 +82,7 @@ export const ArtistsByLetter: React.FC<ArtistsByLetterProps> = ({
 
       <Box>
         <Text my={3}>
-          <RouterLink to="/artists2" noUnderline>
+          <RouterLink to="/artists" noUnderline>
             Artists
           </RouterLink>{" "}
           / Browse over 100,000 artists
