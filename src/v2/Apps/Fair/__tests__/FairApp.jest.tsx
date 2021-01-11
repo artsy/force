@@ -13,7 +13,8 @@ jest.mock("react-tracking")
 const FAIR_APP_FIXTURE: FairApp_QueryRawResponse = {
   fair: {
     about: "Lorem ipsum",
-    articles: {
+    articlesConnection: {
+      totalCount: 0,
       edges: [],
     },
     contact: "<b>Contact us</b>",
@@ -58,6 +59,7 @@ const FAIR_APP_FIXTURE: FairApp_QueryRawResponse = {
       id: "profile",
     },
     slug: "miart-2020",
+    href: "/fair/miart-2020",
     startAt: "2020-08-19T08:00:00+00:00",
     summary: "This is the summary.",
     tagline: "",
@@ -175,7 +177,8 @@ describe("FairApp", () => {
     const wrapper = await getWrapper({
       fair: {
         ...FAIR_APP_FIXTURE.fair,
-        articles: {
+        articlesConnection: {
+          totalCount: 1,
           edges: [{ node: FAIR_EDITORIAL_ARTICLE_FIXTURE } as any],
         },
       },
@@ -248,7 +251,7 @@ describe("FairApp", () => {
       context_page_owner_id: "bson-fair",
       context_page_owner_slug: "miart-2020",
       context_page_owner_type: "fair",
-      destination_path: "fair/miart-2020",
+      destination_path: "/fair/miart-2020",
       subject: "Exhibitors",
     })
   })
@@ -277,7 +280,7 @@ describe("FairApp", () => {
       context_page_owner_id: "bson-fair",
       context_page_owner_slug: "miart-2020",
       context_page_owner_type: "fair",
-      destination_path: "fair/miart-2020/artworks",
+      destination_path: "/fair/miart-2020/artworks",
       subject: "Artworks",
     })
   })
