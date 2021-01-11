@@ -18,18 +18,15 @@ const { getWrapper } = setupTestWrapper({
 describe("FairArticles", () => {
   it("renders the articles", () => {
     const wrapper = getWrapper({
-      ArticleConnection: () => ({ totalCount: 1 }),
       Article: () => ({ title: "Example Article" }),
       Author: () => ({ name: "Example Author" }),
     })
 
-    expect(wrapper.find("h1")).toHaveLength(1)
+    const html = wrapper.html()
 
-    // FIXME: Unable to mock the contents of the connection
-    // when using a pagination container
-    // const html = wrapper.html()
-    // expect(html).toContain("Example Article")
-    // expect(html).toContain("Example Author")
+    expect(wrapper.find("h1")).toHaveLength(1)
+    expect(html).toContain("Example Article")
+    expect(html).toContain("Example Author")
   })
 
   it("renders an empty state when there are no articles", () => {

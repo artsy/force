@@ -7,8 +7,8 @@ export type FairArticles_fair = {
     readonly slug: string;
     readonly articlesConnection: {
         readonly totalCount: number | null;
-        readonly articles: ReadonlyArray<{
-            readonly article: {
+        readonly edges: ReadonlyArray<{
+            readonly node: {
                 readonly internalID: string;
                 readonly title: string | null;
                 readonly href: string | null;
@@ -128,7 +128,7 @@ return {
           "storageKey": null
         },
         {
-          "alias": "articles",
+          "alias": null,
           "args": null,
           "concreteType": "ArticleEdge",
           "kind": "LinkedField",
@@ -136,7 +136,7 @@ return {
           "plural": true,
           "selections": [
             {
-              "alias": "article",
+              "alias": null,
               "args": null,
               "concreteType": "Article",
               "kind": "LinkedField",
@@ -254,36 +254,7 @@ return {
                     }
                   ],
                   "storageKey": null
-                }
-              ],
-              "storageKey": null
-            }
-          ],
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "concreteType": "ArticleEdge",
-          "kind": "LinkedField",
-          "name": "edges",
-          "plural": true,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "cursor",
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "concreteType": "Article",
-              "kind": "LinkedField",
-              "name": "node",
-              "plural": false,
-              "selections": [
+                },
                 {
                   "alias": null,
                   "args": null,
@@ -292,6 +263,13 @@ return {
                   "storageKey": null
                 }
               ],
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "cursor",
               "storageKey": null
             }
           ],
@@ -329,5 +307,5 @@ return {
   "type": "Fair"
 };
 })();
-(node as any).hash = 'ce88076e7255f174ecc5a566bad854f4';
+(node as any).hash = '56e400dcf32450d2dfdd524b1a3c6394';
 export default node;
