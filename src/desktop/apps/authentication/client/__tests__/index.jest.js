@@ -4,8 +4,7 @@ import ReactDOM from "react-dom"
 import { init } from "../index"
 import { initModalManager } from "../initModalManager"
 import { data as sd } from "sharify"
-import { AuthStatic } from "../../components/AuthStatic"
-import { MobileAuthStatic } from "../../components/MobileAuthStatic"
+import { FullPageAuthStatic } from "../../components/FullPageAuthStatic"
 import { ModalContainer } from "../../components/ModalContainer"
 
 jest.mock("cookies-js")
@@ -28,19 +27,11 @@ describe("Auth client", () => {
       ReactDOM.hydrate = jest.fn()
     })
 
-    it("Returns AuthStatic by default", () => {
+    it("Returns FullPageAuthStatic", () => {
       init()
       const component = ReactDOM.hydrate.mock.calls[0][0]
 
-      expect(component.type).toBe(AuthStatic)
-    })
-
-    it("Returns MobileAuthStatic if sd.IS_MOBILE", () => {
-      sd.IS_MOBILE = true
-      init()
-      const component = ReactDOM.hydrate.mock.calls[0][0]
-
-      expect(component.type).toBe(MobileAuthStatic)
+      expect(component.type).toBe(FullPageAuthStatic)
     })
 
     it("calls #setCookies", () => {

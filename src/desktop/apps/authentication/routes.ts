@@ -1,13 +1,12 @@
 import { stitch } from "@artsy/stitch"
-import { AuthStatic } from "./components/AuthStatic"
 import { ModalType } from "v2/Components/Authentication/Types"
 import { AuthenticationMeta } from "./components/meta"
-import { MobileAuthStatic } from "./components/MobileAuthStatic"
 import { parse } from "url"
+import { FullPageAuthStatic } from "./components/FullPageAuthStatic"
 
 export const index = async (req, res, next) => {
   let type: ModalType
-  const template = res.locals.sd.IS_MOBILE ? MobileAuthStatic : AuthStatic
+  const template = FullPageAuthStatic
 
   switch (req.path) {
     case "/signup":
@@ -85,28 +84,22 @@ export const index = async (req, res, next) => {
   const signupReferer = req.header("Referer") || req.hostname
 
   if (action) {
-    res.cookie("afterSignUpAction", JSON.stringify({ action, objectId, kind }))
+    res.cookie("afterSignUpAction", JSON.stringify({ action, kind, objectId }))
   }
 
   try {
     const layout = await stitch({
       basePath: __dirname,
-      layout: "../../components/main_layout/templates/react_blank_index.jade",
+      blocks: {
+        body: template,
+        head: AuthenticationMeta,
+      },
       config: {
         styledComponents: true,
       },
-      blocks: {
-        head: AuthenticationMeta,
-        body: template,
-      },
-      locals: {
-        ...res.locals,
-        assetPackage: "authentication",
-      },
       data: {
-        type,
-        meta,
         error,
+        meta,
         options: {
           action,
           afterSignUpAction,
@@ -121,6 +114,12 @@ export const index = async (req, res, next) => {
           signupReferer,
           trigger,
         },
+        type,
+      },
+      layout: "../../components/main_layout/templates/react_blank_index.jade",
+      locals: {
+        ...res.locals,
+        assetPackage: "authentication",
       },
     })
 

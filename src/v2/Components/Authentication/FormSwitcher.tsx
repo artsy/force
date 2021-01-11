@@ -9,9 +9,6 @@ import { SystemContextProvider } from "v2/Artsy"
 import { ForgotPasswordForm } from "v2/Components/Authentication/Desktop/ForgotPasswordForm"
 import { LoginForm } from "v2/Components/Authentication/Desktop/LoginForm"
 import { SignUpForm } from "v2/Components/Authentication/Desktop/SignUpForm"
-import { MobileForgotPasswordForm } from "v2/Components/Authentication/Mobile/ForgotPasswordForm"
-import { MobileLoginForm } from "v2/Components/Authentication/Mobile/LoginForm"
-import { MobileSignUpForm } from "v2/Components/Authentication/Mobile/SignUpForm"
 import {
   AfterSignUpAction,
   FormComponentType,
@@ -25,7 +22,6 @@ export interface FormSwitcherProps {
   error?: string
   handleSubmit: SubmitHandler
   handleTypeChange?: (e: ModalType) => void
-  isMobile?: boolean
   isStatic?: boolean
   onAppleLogin?: (e: Event) => void
   onFacebookLogin?: (e: Event) => void
@@ -80,8 +76,8 @@ export class FormSwitcher extends React.Component<FormSwitcherProps, State> {
     const event = Object.assign(
       {
         contextModule,
-        intent,
         copy: copy || title,
+        intent,
         triggerSeconds,
         type: AuthModalType[type],
       },
@@ -108,9 +104,9 @@ export class FormSwitcher extends React.Component<FormSwitcherProps, State> {
   }
 
   handleTypeChange = (newType: ModalType) => {
-    const { isMobile, isStatic, handleTypeChange, options } = this.props
+    const { isStatic, handleTypeChange, options } = this.props
 
-    if (isMobile || isStatic) {
+    if (isStatic) {
       if (typeof window !== "undefined") {
         window.location.assign(`/${newType}?${qs.stringify(options)}`)
       }
@@ -147,22 +143,16 @@ export class FormSwitcher extends React.Component<FormSwitcherProps, State> {
   }
 
   render() {
-    const {
-      error,
-      isMobile,
-      title,
-      options,
-      showRecaptchaDisclaimer,
-    } = this.props
+    const { error, title, options, showRecaptchaDisclaimer } = this.props
 
     const queryData = Object.assign(
       {},
       options,
       {
         accepted_terms_of_service: true,
+        afterSignUpAction: this.getAfterSignupAction(options),
         agreed_to_receive_emails: true,
         "signup-referer": options.signupReferer,
-        afterSignUpAction: this.getAfterSignupAction(options),
       },
       options.redirectTo || options["redirect-to"]
         ? {
@@ -181,13 +171,13 @@ export class FormSwitcher extends React.Component<FormSwitcherProps, State> {
     let Form: FormComponentType
     switch (this.state.type) {
       case ModalType.login:
-        Form = isMobile ? MobileLoginForm : LoginForm
+        Form = LoginForm
         break
       case ModalType.signup:
-        Form = isMobile ? MobileSignUpForm : SignUpForm
+        Form = SignUpForm
         break
       case ModalType.forgot:
-        Form = isMobile ? MobileForgotPasswordForm : ForgotPasswordForm
+        Form = ForgotPasswordForm
         break
       default:
         return null
@@ -196,10 +186,10 @@ export class FormSwitcher extends React.Component<FormSwitcherProps, State> {
     const { handleSubmit, onBackButtonClicked, values } = this.props
 
     const defaultValues = {
-      email: this.getEmailValue(),
-      password: values.password || "",
-      name: values.name || "",
       accepted_terms_of_service: values.accepted_terms_of_service || false,
+      email: this.getEmailValue(),
+      name: values.name || "",
+      password: values.password || "",
     }
 
     return (
