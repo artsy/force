@@ -357,15 +357,6 @@ export class SearchBar extends Component<Props, State> {
         ) {
           event.preventDefault()
         }
-
-        // Clear input after submit
-        if (event.key === "Enter") {
-          setTimeout(() => {
-            this.setState({
-              term: "",
-            })
-          })
-        }
       },
       placeholder: xs ? PLACEHOLDER_XS : PLACEHOLDER,
       value: term,
