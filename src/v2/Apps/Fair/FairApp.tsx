@@ -5,12 +5,15 @@ import { FairApp_fair } from "v2/__generated__/FairApp_fair.graphql"
 import { Box, CSSGrid, Separator, Text } from "@artsy/palette"
 import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
 import { Footer } from "v2/Components/Footer"
-import { FairEditorialFragmentContainer as FairEditorial } from "./Components/FairEditorial"
-import { FairHeaderFragmentContainer as FairHeader } from "./Components/FairHeader"
+import {
+  FairEditorialFragmentContainer,
+  FAIR_EDITORIAL_AMOUNT,
+} from "./Components/FairEditorial"
+import { FairHeaderFragmentContainer } from "./Components/FairHeader"
 import { RouteTab, RouteTabs } from "v2/Components/RouteTabs"
-import { FairMetaFragmentContainer as FairMeta } from "./Components/FairMeta"
-import { FairCollectionsFragmentContainer as FairCollections } from "./Components/FairCollections"
-import { FairFollowedArtistsFragmentContainer as FairFollowedArtists } from "./Components/FairFollowedArtists"
+import { FairMetaFragmentContainer } from "./Components/FairMeta"
+import { FairCollectionsFragmentContainer } from "./Components/FairCollections"
+import { FairFollowedArtistsFragmentContainer } from "./Components/FairFollowedArtists"
 import { useSystemContext } from "v2/Artsy"
 import { useTracking } from "react-tracking"
 import {
@@ -24,6 +27,7 @@ import {
 } from "@artsy/cohesion"
 import { HttpError } from "found"
 import { userIsAdmin } from "v2/Utils/user"
+import { RouterLink } from "v2/Artsy/Router/RouterLink"
 
 interface FairAppProps {
   fair: FairApp_fair
@@ -38,7 +42,7 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
     contextPageOwnerType,
   } = useAnalyticsContext()
 
-  const hasArticles = (fair.articles?.edges?.length ?? 0) > 0
+  const hasArticles = (fair.articlesConnection?.edges?.length ?? 0) > 0
   const hasCollections = (fair.marketingCollections?.length ?? 0) > 0
   const artworkCount = fair.counts.artworks
 
@@ -48,7 +52,7 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
     context_page_owner_id: contextPageOwnerId,
     context_page_owner_slug: contextPageOwnerSlug,
     context_page_owner_type: contextPageOwnerType,
-    destination_path: `fair/${fair.slug}/artworks`,
+    destination_path: `${fair.href}/artworks`,
     subject: "Artworks",
   }
 
@@ -58,23 +62,33 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
     context_page_owner_id: contextPageOwnerId,
     context_page_owner_slug: contextPageOwnerSlug,
     context_page_owner_type: contextPageOwnerType,
-    destination_path: `fair/${fair.slug}`,
+    destination_path: `${fair.href}`,
     subject: "Exhibitors",
   }
 
   return (
     <>
-      <FairMeta fair={fair} />
+      <FairMetaFragmentContainer fair={fair} />
 
       <AppContainer>
         <HorizontalPadding>
-          <FairHeader mt={[0, 2]} fair={fair} />
+          <FairHeaderFragmentContainer mt={[0, 2]} fair={fair} />
 
           {hasArticles && (
             <Box my={3} pt={3} borderTop="1px solid" borderColor="black10">
-              <Text variant="subtitle" as="h3" mb={2}>
-                Related Reading
-              </Text>
+              <Box display="flex" justifyContent="space-between">
+                <Text variant="subtitle" as="h3" mb={2}>
+                  Related Reading
+                </Text>
+
+                {fair.articlesConnection.totalCount > FAIR_EDITORIAL_AMOUNT && (
+                  <RouterLink to={`${fair.href}/articles`} noUnderline>
+                    <Text variant="subtitle" color="black60">
+                      View all
+                    </Text>
+                  </RouterLink>
+                )}
+              </Box>
 
               <CSSGrid
                 gridAutoFlow="row"
@@ -82,7 +96,7 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
                 gridRowGap={2}
                 gridTemplateColumns={["repeat(1, 1fr)", "repeat(2, 1fr)"]}
               >
-                <FairEditorial fair={fair} />
+                <FairEditorialFragmentContainer fair={fair} />
               </CSSGrid>
             </Box>
           )}
@@ -93,12 +107,12 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
                 Curated Highlights
               </Text>
 
-              <FairCollections fair={fair} />
+              <FairCollectionsFragmentContainer fair={fair} />
             </Box>
           )}
 
           {!!user && (
-            <FairFollowedArtists
+            <FairFollowedArtistsFragmentContainer
               fair={fair}
               my={3}
               pt={3}
@@ -109,7 +123,7 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
 
           <RouteTabs position="relative">
             <RouteTab
-              to={`/fair/${fair.slug}`}
+              to={`/${fair.href}`}
               exact
               onClick={() =>
                 tracking.trackEvent(clickedExhibitorsTabTrackingData)
@@ -119,7 +133,7 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
             </RouteTab>
 
             <RouteTab
-              to={`/fair/${fair.slug}/artworks`}
+              to={`/${fair.href}/artworks`}
               exact
               onClick={() =>
                 tracking.trackEvent(clickedArtworksTabTrackingData)
@@ -177,13 +191,14 @@ export const FairAppFragmentContainer = createFragmentContainer(
     fair: graphql`
       fragment FairApp_fair on Fair {
         internalID
-        slug
+        href
         ...FairMeta_fair
         ...FairHeader_fair
         ...FairEditorial_fair
         ...FairCollections_fair
         ...FairFollowedArtists_fair
-        articles: articlesConnection(first: 5, sort: PUBLISHED_AT_DESC) {
+        articlesConnection(first: 6, sort: PUBLISHED_AT_DESC) {
+          totalCount
           edges {
             __typename
           }

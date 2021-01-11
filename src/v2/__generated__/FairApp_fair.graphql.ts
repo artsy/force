@@ -5,8 +5,9 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type FairApp_fair = {
     readonly internalID: string;
-    readonly slug: string;
-    readonly articles: {
+    readonly href: string | null;
+    readonly articlesConnection: {
+        readonly totalCount: number | null;
         readonly edges: ReadonlyArray<{
             readonly __typename: string;
         } | null> | null;
@@ -58,16 +59,16 @@ return {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "slug",
+      "name": "href",
       "storageKey": null
     },
     {
-      "alias": "articles",
+      "alias": null,
       "args": [
         {
           "kind": "Literal",
           "name": "first",
-          "value": 5
+          "value": 6
         },
         {
           "kind": "Literal",
@@ -83,6 +84,13 @@ return {
         {
           "alias": null,
           "args": null,
+          "kind": "ScalarField",
+          "name": "totalCount",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
           "concreteType": "ArticleEdge",
           "kind": "LinkedField",
           "name": "edges",
@@ -91,7 +99,7 @@ return {
           "storageKey": null
         }
       ],
-      "storageKey": "articlesConnection(first:5,sort:\"PUBLISHED_AT_DESC\")"
+      "storageKey": "articlesConnection(first:6,sort:\"PUBLISHED_AT_DESC\")"
     },
     {
       "alias": null,
@@ -166,5 +174,5 @@ return {
   "type": "Fair"
 };
 })();
-(node as any).hash = '8a1f49e2759d1f7e31c9f755730e11ce';
+(node as any).hash = '341c1d9e91826c7c23eef628d3731d9f';
 export default node;

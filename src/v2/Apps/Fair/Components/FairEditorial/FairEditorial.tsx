@@ -3,6 +3,8 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { FairEditorial_fair } from "v2/__generated__/FairEditorial_fair.graphql"
 import { FairEditorialItemFragmentContainer as FairEditorialItem } from "./FairEditorialItem"
 
+export const FAIR_EDITORIAL_AMOUNT = 6
+
 interface FairEditorialProps {
   fair: FairEditorial_fair
 }
@@ -10,7 +12,7 @@ interface FairEditorialProps {
 export const FairEditorial: React.FC<FairEditorialProps> = ({ fair }) => {
   return (
     <>
-      {fair.articles.edges.map(({ node: article }) => {
+      {fair.articlesConnection.edges.map(({ node: article }) => {
         return <FairEditorialItem key={article.id} article={article} />
       })}
     </>
@@ -22,7 +24,7 @@ export const FairEditorialFragmentContainer = createFragmentContainer(
   {
     fair: graphql`
       fragment FairEditorial_fair on Fair {
-        articles: articlesConnection(first: 5, sort: PUBLISHED_AT_DESC) {
+        articlesConnection(first: 6, sort: PUBLISHED_AT_DESC) {
           edges {
             node {
               id
