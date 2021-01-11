@@ -25,7 +25,7 @@ interface FairArticlesProps {
 
 const FairArticles: React.FC<FairArticlesProps> = ({ fair, relay }) => {
   const {
-    articlesConnection: { articles, totalCount },
+    articlesConnection: { edges: articles, totalCount },
   } = fair
 
   const [isLoading, setIsLoading] = useState(false)
@@ -51,7 +51,7 @@ const FairArticles: React.FC<FairArticlesProps> = ({ fair, relay }) => {
     return <Message>There aren’t any articles at this time.</Message>
   }
 
-  const [{ article: heroArticle }, ...remainingArticles] = articles
+  const [{ node: heroArticle }, ...remainingArticles] = articles
 
   return (
     <>
@@ -120,7 +120,7 @@ const FairArticles: React.FC<FairArticlesProps> = ({ fair, relay }) => {
           </Box>
         </Column>
 
-        {remainingArticles.map(({ article }) => {
+        {remainingArticles.map(({ node: article }) => {
           return (
             <Column key={article.internalID} span={4}>
               <RouterLink
@@ -206,8 +206,8 @@ export const FairArticlesPaginationContainer = createPaginationContainer(
         articlesConnection(first: $first, after: $after)
           @connection(key: "FairArticlesQuery_articlesConnection") {
           totalCount
-          articles: edges {
-            article: node {
+          edges {
+            node {
               internalID
               title
               href

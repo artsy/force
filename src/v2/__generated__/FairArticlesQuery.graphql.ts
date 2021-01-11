@@ -36,8 +36,8 @@ fragment FairArticles_fair_2HEEH6 on Fair {
   slug
   articlesConnection(first: $first, after: $after) {
     totalCount
-    articles: edges {
-      article: node {
+    edges {
+      node {
         internalID
         title
         href
@@ -62,14 +62,9 @@ fragment FairArticles_fair_2HEEH6 on Fair {
           }
         }
         id
-      }
-    }
-    edges {
-      cursor
-      node {
         __typename
-        id
       }
+      cursor
     }
     pageInfo {
       endCursor
@@ -219,7 +214,7 @@ return {
                 "storageKey": null
               },
               {
-                "alias": "articles",
+                "alias": null,
                 "args": null,
                 "concreteType": "ArticleEdge",
                 "kind": "LinkedField",
@@ -227,7 +222,7 @@ return {
                 "plural": true,
                 "selections": [
                   {
-                    "alias": "article",
+                    "alias": null,
                     "args": null,
                     "concreteType": "Article",
                     "kind": "LinkedField",
@@ -347,45 +342,22 @@ return {
                         ],
                         "storageKey": null
                       },
-                      (v3/*: any*/)
-                    ],
-                    "storageKey": null
-                  }
-                ],
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": "ArticleEdge",
-                "kind": "LinkedField",
-                "name": "edges",
-                "plural": true,
-                "selections": [
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "cursor",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "concreteType": "Article",
-                    "kind": "LinkedField",
-                    "name": "node",
-                    "plural": false,
-                    "selections": [
+                      (v3/*: any*/),
                       {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
                         "name": "__typename",
                         "storageKey": null
-                      },
-                      (v3/*: any*/)
+                      }
                     ],
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "cursor",
                     "storageKey": null
                   }
                 ],
@@ -439,7 +411,7 @@ return {
     "metadata": {},
     "name": "FairArticlesQuery",
     "operationKind": "query",
-    "text": "query FairArticlesQuery(\n  $id: String!\n  $first: Int!\n  $after: String\n) {\n  fair(id: $id) {\n    ...FairArticles_fair_2HEEH6\n    id\n  }\n}\n\nfragment FairArticles_fair_2HEEH6 on Fair {\n  slug\n  articlesConnection(first: $first, after: $after) {\n    totalCount\n    articles: edges {\n      article: node {\n        internalID\n        title\n        href\n        author {\n          name\n          id\n        }\n        publishedAt(format: \"MMM Do, YYYY\")\n        thumbnailTitle\n        thumbnailImage {\n          large: cropped(width: 733, height: 550) {\n            width\n            height\n            src\n            srcSet\n          }\n          medium: cropped(width: 267, height: 150) {\n            width\n            height\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n    edges {\n      cursor\n      node {\n        __typename\n        id\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query FairArticlesQuery(\n  $id: String!\n  $first: Int!\n  $after: String\n) {\n  fair(id: $id) {\n    ...FairArticles_fair_2HEEH6\n    id\n  }\n}\n\nfragment FairArticles_fair_2HEEH6 on Fair {\n  slug\n  articlesConnection(first: $first, after: $after) {\n    totalCount\n    edges {\n      node {\n        internalID\n        title\n        href\n        author {\n          name\n          id\n        }\n        publishedAt(format: \"MMM Do, YYYY\")\n        thumbnailTitle\n        thumbnailImage {\n          large: cropped(width: 733, height: 550) {\n            width\n            height\n            src\n            srcSet\n          }\n          medium: cropped(width: 267, height: 150) {\n            width\n            height\n            src\n            srcSet\n          }\n        }\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
