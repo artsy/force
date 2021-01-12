@@ -159,14 +159,6 @@ export const ConfirmBidRoute: React.FC<ConfirmBidProps> = props => {
       action_type: Schema.ActionType.ConfirmBidSubmitted,
       bidder_id: bidderId,
       bidder_position_id: positionId,
-      order_id: bidderId,
-      products: [
-        {
-          price: selectedBidAmountCents / 100,
-          product_id: artwork.internalID,
-          quantity: 1,
-        },
-      ],
     })
   }
 
@@ -174,7 +166,6 @@ export const ConfirmBidRoute: React.FC<ConfirmBidProps> = props => {
     trackEvent({
       action_type: Schema.ActionType.SelectedMaxBid,
       bidder_id: bidderId,
-      order_id: bidderId,
       selected_max_bid_minor: maxBid,
     })
   }

@@ -282,7 +282,7 @@ describe("Routes/ConfirmBid", () => {
       expect(page.text()).toContain("Subtotal$72,000")
     })
 
-    it("tracks a success event to Segment including Criteo info", async () => {
+    it("tracks a success event to Segment", async () => {
       const env = setupTestEnv()
       const page = await env.buildPage()
       env.mutations.useResultsOnce(createBidderPositionSuccessful)
@@ -300,14 +300,6 @@ describe("Routes/ConfirmBid", () => {
         bidder_id: "existing-bidder-id",
         bidder_position_id: "winning-bidder-position-id-from-polling",
         context_page: AnalyticsSchema.PageName.AuctionConfirmBidPage,
-        order_id: "existing-bidder-id",
-        products: [
-          {
-            price: 50000,
-            product_id: "artworkid",
-            quantity: 1,
-          },
-        ],
         sale_id: "saleid",
         user_id: "my-user-id",
       })
@@ -326,7 +318,6 @@ describe("Routes/ConfirmBid", () => {
         auction_slug: "saleslug",
         bidder_id: "existing-bidder-id",
         context_page: AnalyticsSchema.PageName.AuctionConfirmBidPage,
-        order_id: "existing-bidder-id",
         sale_id: "saleid",
         selected_max_bid_minor: "6000000",
         user_id: "my-user-id",
@@ -521,7 +512,7 @@ describe("Routes/ConfirmBid", () => {
       )
     })
 
-    it("tracks registration submitted and success events to Segment including Criteo info", async () => {
+    it("tracks registration submitted and success events to Segment", async () => {
       const env = setupTestEnv()
       const page = await env.buildPage({
         mockData: FixtureForUnregisteredUserWithCreditCard,
@@ -551,14 +542,6 @@ describe("Routes/ConfirmBid", () => {
         bidder_id: "new-bidder-id",
         bidder_position_id: "winning-bidder-position-id-from-polling",
         context_page: AnalyticsSchema.PageName.AuctionConfirmBidPage,
-        order_id: "new-bidder-id",
-        products: [
-          {
-            price: 50000,
-            product_id: "artworkid",
-            quantity: 1,
-          },
-        ],
         sale_id: "saleid",
         user_id: "my-user-id",
       })
@@ -728,14 +711,6 @@ describe("Routes/ConfirmBid", () => {
         bidder_id: "new-bidder-id",
         bidder_position_id: "winning-bidder-position-id-from-polling",
         context_page: AnalyticsSchema.PageName.AuctionConfirmBidPage,
-        order_id: "new-bidder-id",
-        products: [
-          {
-            price: 50000,
-            product_id: "artworkid",
-            quantity: 1,
-          },
-        ],
         sale_id: "saleid",
         user_id: "my-user-id",
       })
