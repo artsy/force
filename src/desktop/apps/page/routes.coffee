@@ -8,7 +8,10 @@ Page = require '../../models/page'
       error: res.backboneError
 
 @index = (req, res) ->
-  new Page(id: req.params.id).fetch
+  if req.params.id == "collector-faqs-selling-on-artsy"
+    return res.redirect(301, "/consign")
+  else
+    return new Page(id: req.params.id).fetch
     cache: true
     success: (page) -> res.render 'template', page: page
     error: res.backboneError
