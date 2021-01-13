@@ -2,6 +2,24 @@ import * as Sentry from "@sentry/browser"
 
 let INITIALIZED = false
 
+/**
+ * Errors that should not be sent to segment
+ */
+const OMITTED_ERRORS = [
+  /pktAnnotationHighlighter/g, // Pocket ios app errors on opening articles
+  /SecurityError: Blocked a frame with origin/g, // Facebook scripts error on opening articles
+]
+
+export const maybeSendErrorToSentry = (error): boolean => {
+  let doSendError = true
+  OMITTED_ERRORS.map(err => {
+    if (error.message.match(err)) {
+      doSendError = false
+    }
+  })
+  return doSendError
+}
+
 export function setupSentry(sd) {
   if (INITIALIZED) {
     return
@@ -11,11 +29,11 @@ export function setupSentry(sd) {
     beforeSend(event, hint) {
       const error = hint.originalException
       if (error && error.message) {
-        if (error.message.match(/pktAnnotationHighlighter/i)) {
-          return null
+        const sendError = maybeSendErrorToSentry(error)
+        if (sendError) {
+          return event
         }
       }
-      return event
     },
   })
   INITIALIZED = true
