@@ -44,9 +44,9 @@ const entityTabs = Object.entries(tabsToEntitiesMap).map(([key, entities]) => {
       }
       return <Component {...props} tab={key} entities={entities} />
     },
-    prepareVariables: (params, { location }) => {
+    prepareVariables: (_params, { location }) => {
       return {
-        ...prepareVariables(params, { location }),
+        ...prepareVariables(_params, { location }),
         entities,
       }
     },

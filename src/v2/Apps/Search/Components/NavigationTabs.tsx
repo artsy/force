@@ -62,9 +62,7 @@ export class NavigationTabs extends React.Component<Props> {
       <RouteTab
         to={to}
         exact={exact}
-        onClick={event => {
-          event.preventDefault()
-          this.props.router.push(to)
+        onClick={() => {
           this.trackClick(tabName, to)
         }}
         key={to}
