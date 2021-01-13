@@ -4,6 +4,7 @@ import { buildServerApp } from "v2/Artsy/Router/server"
 import { getAppRoutes } from "v2/Apps/getAppRoutes"
 import { stitch } from "@artsy/stitch"
 import { flatten } from "lodash"
+import { stringify } from "qs"
 
 import { handleArtworkImageDownload } from "./apps/artwork/artworkMiddleware"
 import { artistMiddleware } from "./apps/artist/artistMiddleware"
@@ -36,6 +37,12 @@ const allRoutes = flatten(
  */
 app.get("/artwork/:artworkID/download/:filename", handleArtworkImageDownload)
 app.get("/collection/:collectionSlug", handleCollectionToArtistSeriesRedirect)
+
+// Redirect top-level /search?term=... style routes to /search/artworks?term=...
+app.get("/search", (req, res, next) => {
+  const queryParams = stringify(req.query)
+  return res.redirect(301, `/search/artworks?${queryParams}`)
+})
 
 /**
  * Mount routes that will connect to global SSR router

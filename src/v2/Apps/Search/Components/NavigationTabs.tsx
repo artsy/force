@@ -98,9 +98,8 @@ export class NavigationTabs extends React.Component<Props> {
 
     !!artworkCount &&
       tabs.push(
-        this.renderTab("Artworks", route(""), {
+        this.renderTab("Artworks", route("/artworks"), {
           count: artworkCount,
-          exact: true,
         })
       )
 

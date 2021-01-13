@@ -33,7 +33,7 @@ const tabsToEntitiesMap = {
 
 const entityTabs = Object.entries(tabsToEntitiesMap).map(([key, entities]) => {
   return {
-    path: key,
+    path: `${key}(.*)?`,
     Component: SearchResultsEntityRouteFragmentContainer,
 
     // FIXME: We shouldn't overwrite our route functionality, as that breaks
@@ -79,13 +79,7 @@ export const searchRoutes: RouteConfig[] = [
     prepareVariables,
     children: [
       {
-        path: "/",
-        Component: SearchResultsArtworksRoute,
-        prepareVariables,
-        query: ArtworkQueryFilter,
-      },
-      {
-        path: "artists",
+        path: "artists(.*)?",
         Component: SearchResultsArtistsRouteFragmentContainer,
         prepareVariables,
         query: graphql`
@@ -101,6 +95,12 @@ export const searchRoutes: RouteConfig[] = [
         `,
       },
       ...entityTabs,
+      {
+        path: "artworks(.*)?",
+        Component: SearchResultsArtworksRoute,
+        prepareVariables,
+        query: ArtworkQueryFilter,
+      },
     ],
   },
 ]

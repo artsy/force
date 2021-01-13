@@ -375,7 +375,7 @@ export class SearchBar extends Component<Props, State> {
       node: {
         displayLabel: term,
         displayType: "FirstItem",
-        href: `/search?term=${term}`,
+        href: `/search/artworks?term=${term}`,
         isFirstItem: true,
       },
     }
@@ -410,12 +410,12 @@ export class SearchBar extends Component<Props, State> {
 
     return (
       <Form
-        action="/search"
+        action="/search/artworks"
         method="GET"
         onSubmit={event => {
           if (router) {
             event.preventDefault()
-            router.push(`/search?term=${this.state.term}`)
+            router.push(`/search/artworks?term=${this.state.term}`)
             this.onBlur(event)
           } else {
             console.error(
