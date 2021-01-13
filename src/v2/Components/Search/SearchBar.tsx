@@ -96,6 +96,8 @@ export class SearchBar extends Component<Props, State> {
   // this behaviour  is acceptable.
   private userClickedOnDescendant: boolean
 
+  private removeNavigationListener: () => void
+
   state = {
     entityID: null,
     entityType: null,
@@ -158,11 +160,29 @@ export class SearchBar extends Component<Props, State> {
     this.throttledFetch = throttle(this.throttledFetch, 500, {
       leading: true,
     })
+
     this.throttledOnSuggestionHighlighted = throttle(
       this.throttledOnSuggestionHighlighted,
       500,
       { leading: true }
     )
+
+    // Clear the search term once you navigate away from search results
+    this.removeNavigationListener = this.props.router
+      ? this.props.router.addNavigationListener(location => {
+          if (!location.pathname.startsWith("/search")) {
+            this.setState({ term: "" })
+          }
+
+          return true
+        })
+      : () => {
+          // noop
+        }
+  }
+
+  componentWillUnmount() {
+    this.removeNavigationListener()
   }
 
   reportPerformanceMeasurement = performanceStart => {
