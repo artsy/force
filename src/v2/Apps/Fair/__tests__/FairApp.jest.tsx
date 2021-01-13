@@ -237,6 +237,17 @@ describe("FairApp", () => {
     expect(wrapper.find(Title).prop("children")).toEqual("Miart 2020 | Artsy")
   })
 
+  it("renders the exhibitors tab with an appropriate href", async () => {
+    const wrapper = await getWrapper()
+    const exhibitorsTab = wrapper
+      .find("RouteTab")
+      .findWhere(t => !!t.text().match("Exhibitors"))
+      .first()
+
+    expect(exhibitorsTab.text()).toContain("Exhibitors")
+    expect(exhibitorsTab.props().to).toEqual("/fair/miart-2020")
+  })
+
   it("tracks clicks to the exhibitors tab", async () => {
     const wrapper = await getWrapper()
     const exhibitorsTab = wrapper
@@ -256,7 +267,7 @@ describe("FairApp", () => {
     })
   })
 
-  it("renders the count of artworks in the tab", async () => {
+  it("renders the artworks tab with a count and appropriate href", async () => {
     const wrapper = await getWrapper()
     const artworksTab = wrapper
       .find("RouteTab")
@@ -264,6 +275,7 @@ describe("FairApp", () => {
       .first()
 
     expect(artworksTab.text()).toContain("Artworks (10)")
+    expect(artworksTab.props().to).toEqual("/fair/miart-2020/artworks")
   })
 
   it("tracks clicks to the artworks tab", async () => {
