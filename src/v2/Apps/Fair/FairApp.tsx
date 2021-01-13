@@ -123,7 +123,7 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
 
           <RouteTabs position="relative">
             <RouteTab
-              to={`/${fair.href}`}
+              to={fair.href}
               exact
               onClick={() =>
                 tracking.trackEvent(clickedExhibitorsTabTrackingData)
@@ -133,7 +133,7 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
             </RouteTab>
 
             <RouteTab
-              to={`/${fair.href}/artworks`}
+              to={`${fair.href}/artworks`}
               exact
               onClick={() =>
                 tracking.trackEvent(clickedArtworksTabTrackingData)
