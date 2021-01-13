@@ -32,6 +32,20 @@ query exampleRoutes_ArtistQuery(
 fragment ExampleArtistApp_artist on Artist {
   name
   bio
+  internalID
+  slug
+  ...FollowArtistButton_artist
+}
+
+fragment FollowArtistButton_artist on Artist {
+  id
+  internalID
+  name
+  slug
+  is_followed: isFollowed
+  counts {
+    follows
+  }
 }
 */
 
@@ -113,6 +127,45 @@ return {
             "kind": "ScalarField",
             "name": "bio",
             "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "internalID",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "slug",
+            "storageKey": null
+          },
+          {
+            "alias": "is_followed",
+            "args": null,
+            "kind": "ScalarField",
+            "name": "isFollowed",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "ArtistCounts",
+            "kind": "LinkedField",
+            "name": "counts",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "follows",
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
           }
         ],
         "storageKey": null
@@ -124,7 +177,7 @@ return {
     "metadata": {},
     "name": "exampleRoutes_ArtistQuery",
     "operationKind": "query",
-    "text": "query exampleRoutes_ArtistQuery(\n  $slug: String!\n) {\n  artist(id: $slug) @principalField {\n    id\n    ...ExampleArtistApp_artist\n  }\n}\n\nfragment ExampleArtistApp_artist on Artist {\n  name\n  bio\n}\n"
+    "text": "query exampleRoutes_ArtistQuery(\n  $slug: String!\n) {\n  artist(id: $slug) @principalField {\n    id\n    ...ExampleArtistApp_artist\n  }\n}\n\nfragment ExampleArtistApp_artist on Artist {\n  name\n  bio\n  internalID\n  slug\n  ...FollowArtistButton_artist\n}\n\nfragment FollowArtistButton_artist on Artist {\n  id\n  internalID\n  name\n  slug\n  is_followed: isFollowed\n  counts {\n    follows\n  }\n}\n"
   }
 };
 })();
