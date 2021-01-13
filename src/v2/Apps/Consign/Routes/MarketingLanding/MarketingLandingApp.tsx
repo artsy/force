@@ -1,6 +1,5 @@
 import React from "react"
 import { AppContainer } from "v2/Apps/Components/AppContainer"
-import { AnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
 import { ConsignMeta } from "./Components/ConsignMeta"
 import { Header } from "./Components/Header"
 import { SellArtDifferently } from "./Components/SellArtDifferently"
@@ -19,35 +18,28 @@ import { TemporaryOffer } from "./Components/TemporaryOffer"
 
 export const MarketingLandingApp = () => {
   return (
-    <AnalyticsContext.Provider
-      value={{
-        // TODO: Need proper tracking props
-        contextPageOwnerType: null,
-      }}
-    >
-      <>
-        <ConsignMeta />
+    <>
+      <ConsignMeta />
 
-        <AppContainer maxWidth="100%">
-          <Header />
-          <TemporaryOffer />
-          <SellArtDifferently />
-          <GetPriceEstimate />
-          <HowToSell />
-          <ContactUs />
-          <ConsignInDemandNow />
-          <SoldRecentlyQueryRenderer />
-          <ReadMore />
-          <ContactUs darkVariant />
-          <FAQ />
-          <SellWithArtsy />
-          <ArtworkCredits />
+      <AppContainer maxWidth="100%">
+        <Header />
+        <TemporaryOffer />
+        <SellArtDifferently />
+        <GetPriceEstimate />
+        <HowToSell />
+        <ContactUs />
+        <ConsignInDemandNow />
+        <SoldRecentlyQueryRenderer />
+        <ReadMore />
+        <ContactUs darkVariant />
+        <FAQ />
+        <SellWithArtsy />
+        <ArtworkCredits />
 
-          <SectionContainer>
-            <Footer />
-          </SectionContainer>
-        </AppContainer>
-      </>
-    </AnalyticsContext.Provider>
+        <SectionContainer>
+          <Footer />
+        </SectionContainer>
+      </AppContainer>
+    </>
   )
 }

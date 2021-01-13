@@ -159,10 +159,10 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
 
 const TrackingWrappedFairApp: React.FC<FairAppProps> = props => {
   const {
-    fair: { internalID, profile },
+    fair: { internalID, profile, slug },
   } = props
 
-  const { contextPageOwnerSlug, contextPageOwnerType } = useAnalyticsContext()
+  const { contextPageOwnerType } = useAnalyticsContext()
 
   // If a fair's profile is inaccessible, that means it's private, which in turn means
   // the fair is only visible to admins.
@@ -175,7 +175,7 @@ const TrackingWrappedFairApp: React.FC<FairAppProps> = props => {
     <AnalyticsContext.Provider
       value={{
         contextPageOwnerId: internalID,
-        contextPageOwnerSlug,
+        contextPageOwnerSlug: slug,
         contextPageOwnerType,
       }}
     >
@@ -192,6 +192,7 @@ export const FairAppFragmentContainer = createFragmentContainer(
       fragment FairApp_fair on Fair {
         internalID
         href
+        slug
         ...FairMeta_fair
         ...FairHeader_fair
         ...FairEditorial_fair
