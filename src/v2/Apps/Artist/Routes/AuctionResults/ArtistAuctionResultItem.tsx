@@ -132,6 +132,7 @@ const LargeAuctionItem: SFC<Props> = props => {
       title,
       mediumText,
       saleDate,
+      boughtIn,
     },
     salePrice,
   } = getProps(props)
@@ -194,7 +195,8 @@ const LargeAuctionItem: SFC<Props> = props => {
               props.user,
               props.mediator,
               "lg",
-              props.filtersAtDefault
+              props.filtersAtDefault,
+              boughtIn
             )}
           </Flex>
           <Flex width="10%" justifyContent="flex-end">
@@ -209,7 +211,7 @@ const LargeAuctionItem: SFC<Props> = props => {
 const ExtraSmallAuctionItem: SFC<Props> = props => {
   const {
     expanded,
-    auctionResult: { images, date_text, title, saleDate },
+    auctionResult: { images, date_text, title, saleDate, boughtIn },
     salePrice,
   } = getProps(props)
   const imageUrl = get(images, i => i.thumbnail.url, "")
@@ -236,7 +238,8 @@ const ExtraSmallAuctionItem: SFC<Props> = props => {
           props.user,
           props.mediator,
           "xs",
-          props.filtersAtDefault
+          props.filtersAtDefault,
+          boughtIn
         )}
         <Sans size="2" weight="medium" color="black60">
           {title}
@@ -272,6 +275,7 @@ export const AuctionResultItemFragmentContainer = createFragmentContainer(
         description
         date_text: dateText
         saleDate
+        boughtIn
         price_realized: priceRealized {
           display
           cents_usd: centsUSD
@@ -326,7 +330,8 @@ const renderPricing = (
   user,
   mediator,
   size,
-  filtersAtDefault
+  filtersAtDefault,
+  boughtIn
 ) => {
   const textSize = size === "xs" ? "2" : "3t"
 
@@ -352,6 +357,13 @@ const renderPricing = (
             )}
           </>
         )}
+        {!salePrice && boughtIn && (
+          <Box textAlign={textAlign}>
+            <Sans mb="2px" size={textSize} weight="medium">
+              Bought in
+            </Sans>
+          </Box>
+        )}
         {!salePrice && awaitingResults && (
           <Box textAlign={textAlign}>
             <Sans mb="2px" size={textSize} weight="medium">
@@ -359,7 +371,7 @@ const renderPricing = (
             </Sans>
           </Box>
         )}
-        {!salePrice && !awaitingResults && (
+        {!salePrice && !awaitingResults && !boughtIn && (
           <Box textAlign={textAlign}>
             <Sans mb="2px" size={textSize} weight="medium">
               Price not available
