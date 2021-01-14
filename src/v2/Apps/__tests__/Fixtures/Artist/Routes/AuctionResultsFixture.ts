@@ -251,7 +251,7 @@ export const AuctionResultsFixture: AuctionResults_Test_QueryRawResponse = {
             date_text: "1881-1973",
             saleDate: "2020-02-05T19:00:00Z",
             price_realized: { display: "$NaN", cents_usd: 0 },
-            boughtIn: false,
+            boughtIn: true,
             estimate: { display: "$7,000 - 10,000" },
             id: "QXVjdGlvblJlc3VsdDoyNDYyNw==",
             mediumText: "oil on canvas",

@@ -117,10 +117,10 @@ describe("AuctionResults", () => {
       expect(wrapper.html()).toContain("Showing 830 results")
     })
 
-    it("renders either realized price or price not avail", () => {
-      expect(wrapper.html()).toContain(
-        "Price not available" || "Realized price"
-      )
+    it("renders either realized price, bought in, or price not avail", () => {
+      expect(wrapper.html()).toContain("Price not available")
+      expect(wrapper.html()).toContain("Bought in")
+      expect(wrapper.html()).toContain("Realized Price")
     })
 
     it("renders proper select options", () => {
