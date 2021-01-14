@@ -1,7 +1,6 @@
 import { mount } from "enzyme"
 import "jest-styled-components"
 import React from "react"
-import renderer from "react-test-renderer"
 import { FollowButton } from "../Button"
 
 describe("FollowButton", () => {
@@ -13,13 +12,6 @@ describe("FollowButton", () => {
     handleFollow: jest.fn(),
     isFollowed: false,
   }
-
-  describe("snapshots", () => {
-    it("Renders FollowButton properly", () => {
-      const component = renderer.create(<FollowButton {...props} />).toJSON()
-      expect(component).toMatchSnapshot()
-    })
-  })
 
   describe("unit", () => {
     beforeEach(() => {
