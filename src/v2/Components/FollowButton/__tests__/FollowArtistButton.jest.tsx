@@ -7,7 +7,6 @@ import { FollowButton } from "../Button"
 import { FollowArtistButtonFragmentContainer as FollowArtistButton } from "../FollowArtistButton"
 import { ContextModule, OwnerType } from "@artsy/cohesion"
 import * as openAuthModal from "v2/Utils/openAuthModal"
-import renderer from "react-test-renderer"
 import { AnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
 import { mockLocation } from "v2/DevTools/mockLocation"
 
@@ -51,19 +50,6 @@ describe("FollowArtistButton", () => {
       tracking: { trackEvent: jest.fn() },
       contextModule: ContextModule.artistsToFollowRail,
     }
-  })
-
-  describe("snapshots", () => {
-    it("Renders properly", () => {
-      const component = renderer
-        .create(
-          <SystemContextProvider>
-            <FollowArtistButton {...props} />
-          </SystemContextProvider>
-        )
-        .toJSON()
-      expect(component).toMatchSnapshot()
-    })
   })
 
   describe("unit", () => {

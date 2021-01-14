@@ -7,7 +7,6 @@ import { FollowButton } from "../Button"
 import { FollowProfileButtonFragmentContainer as FollowProfileButton } from "../FollowProfileButton"
 import { ContextModule, OwnerType } from "@artsy/cohesion"
 import * as openAuthModal from "v2/Utils/openAuthModal"
-import renderer from "react-test-renderer"
 import { AnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
 import { ArtworkDetailsFixture } from "v2/Apps/__tests__/Fixtures/Artwork/ArtworkDetails"
 
@@ -44,19 +43,6 @@ describe("FollowProfileButton", () => {
       tracking: { trackEvent: jest.fn() },
       contextModule: ContextModule.aboutTheWork,
     }
-  })
-
-  describe("snapshots", () => {
-    it("Renders properly", () => {
-      const component = renderer
-        .create(
-          <SystemContextProvider>
-            <FollowProfileButton {...props} />
-          </SystemContextProvider>
-        )
-        .toJSON()
-      expect(component).toMatchSnapshot()
-    })
   })
 
   describe("unit", () => {
