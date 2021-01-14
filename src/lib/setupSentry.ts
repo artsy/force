@@ -3,7 +3,7 @@ import * as Sentry from "@sentry/browser"
 let INITIALIZED = false
 
 /**
- * Errors that should not be sent to segment
+ * Errors that should not be sent to sentry
  */
 const OMITTED_ERRORS = [
   /pktAnnotationHighlighter/g, // Pocket ios app errors on opening articles
@@ -32,6 +32,8 @@ export function setupSentry(sd) {
         const sendError = maybeSendErrorToSentry(error)
         if (sendError) {
           return event
+        } else {
+          return null
         }
       }
     },
