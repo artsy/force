@@ -8,13 +8,13 @@ Want to know more about Artsy's tech? Read the [Artsy Engineering Blog](http://a
 
 ## Meta
 
-* **State:** production
-* **Production:** [https://www.artsy.net](https://www.artsy.net) | [k8s](https://kubernetes.artsy.net/#!/search?q=force&namespace=default)
-* **Staging:** [https://staging.artsy.net](https://staging.artsy.net) | [k8s](https://kubernetes-staging.artsy.net/#!/search?q=force&namespace=default)
-* **GitHub:** [https://github.com/artsy/force](https://github.com/artsy/force)
-* **CI/Deploys:** [CircleCi](https://circleci.com/gh/artsy/force); merged PRs to `artsy/force#master` are automatically deployed to staging; PRs from `staging` to `release` are automatically deployed to production. [Start a deploy...](https://github.com/artsy/force/compare/release...staging?expand=1)
-* **BrowserStack:** For testing applications cross-browser use [BrowserStack](https://browserstack.com). Credentials are located in 1Password.
-* **Point People:** [@damassi](https://github.com/damassi), [@mzikherman](https://github.com/mzikherman)
+- **State:** production
+- **Production:** [https://www.artsy.net](https://www.artsy.net) | [k8s](https://kubernetes.prd.artsy.systems/#/search?q=force&namespace=default)
+- **Staging:** [https://staging.artsy.net](https://staging.artsy.net) | [k8s](https://kubernetes.stg.artsy.systems/#/search?q=force&namespace=default)
+- **GitHub:** [https://github.com/artsy/force](https://github.com/artsy/force)
+- **CI/Deploys:** [CircleCi](https://circleci.com/gh/artsy/force); merged PRs to `artsy/force#master` are automatically deployed to staging; PRs from `staging` to `release` are automatically deployed to production. [Start a deploy...](https://github.com/artsy/force/compare/release...staging?expand=1)
+- **BrowserStack:** For testing applications cross-browser use [BrowserStack](https://browserstack.com). Credentials are located in 1Password.
+- **Point People:** [@damassi](https://github.com/damassi), [@mzikherman](https://github.com/mzikherman)
 
 [![Build Status](https://circleci.com/gh/artsy/force.svg?style=svg)](https://circleci.com/gh/artsy/force)
 [![codecov](https://codecov.io/gh/artsy/force/branch/master/graph/badge.svg)](https://codecov.io/gh/artsy/force)
@@ -54,7 +54,6 @@ See [CONTRIBUTING](CONTRIBUTING.md).
 ## License
 
 MIT License. See [LICENSE](LICENSE).
-
 
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fartsy%2Fforce.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fartsy%2Fforce?ref=badge_large)
 
