@@ -164,7 +164,7 @@ export const RequestConditionReport: React.FC<RequestConditionReportProps> = pro
         <Link href="mailto:specialist@artsy.net">specialist@artsy.net</Link>.
       </Text>
 
-      <Button block mt={4} onClick={() => setShowRequestedModal(false)}>
+      <Button mt={4} onClick={() => setShowRequestedModal(false)}>
         OK
       </Button>
     </Modal>

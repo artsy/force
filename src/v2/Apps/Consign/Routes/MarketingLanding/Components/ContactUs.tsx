@@ -30,7 +30,7 @@ export const ContactUs: React.FC<{ darkVariant?: boolean }> = ({
       </Media>
       <Media lessThan="sm">
         <Link href="mailto:consign@artsy.net">
-          <Button variant="secondaryOutline" size="large" block width="100%">
+          <Button variant="secondaryOutline" size="large" width="100%">
             Send an email
           </Button>
         </Link>

@@ -184,7 +184,7 @@ const InnerForm: React.FC<InnerFormProps> = ({
           disabled={isSubmitting}
           width="100%"
           type="submit"
-          onClick={handleSubmit}
+          onClick={() => handleSubmit()}
         >
           Turn on
         </Button>

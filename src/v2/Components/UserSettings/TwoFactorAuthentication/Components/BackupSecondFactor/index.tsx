@@ -103,7 +103,7 @@ export const BackupSecondFactor: React.FC<BackupSecondFactorProps> = props => {
         show={showModal}
         onClose={() => setShowModal(false)}
         FixedButton={
-          <Button block width="100%" onClick={() => setShowModal(false)}>
+          <Button width="100%" onClick={() => setShowModal(false)}>
             Done
           </Button>
         }

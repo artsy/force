@@ -110,12 +110,7 @@ export const AuctionRegistrationModal: React.FC<Props> = ({
             </Sans>
           )}
         </Flex>
-        <Button
-          block
-          loading={submitting}
-          width="100%"
-          onClick={validateAndSubmit}
-        >
+        <Button loading={submitting} width="100%" onClick={validateAndSubmit}>
           Register
         </Button>
       </Box>
