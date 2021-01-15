@@ -249,7 +249,6 @@ export class ArtworkApp extends React.Component<Props> {
 
           <Row>
             <Col>
-              <Separator mt={6} mb={3} />
               <Footer />
             </Col>
           </Row>

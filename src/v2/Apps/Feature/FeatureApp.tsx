@@ -47,8 +47,6 @@ const FeatureApp: React.FC<FeatureAppProps> = ({ feature }) => {
               ({ node: set }) => set && <FeatureSet key={set.id} set={set} />
             )}
 
-          <Separator my={3} />
-
           <Footer />
         </HorizontalPadding>
       </AppContainer>

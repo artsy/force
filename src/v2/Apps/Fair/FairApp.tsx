@@ -148,8 +148,6 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
 
           {children}
 
-          <Separator as="hr" my={3} />
-
           <Footer />
         </HorizontalPadding>
       </AppContainer>

@@ -127,12 +127,6 @@ export const ArtistApp: React.FC<ArtistAppProps> = props => {
           </>
         )}
 
-        {route.displayFullPage ? (
-          <Spacer mb={3} />
-        ) : (
-          <Separator mt={6} mb={3} />
-        )}
-
         <Row>
           <Col>
             <Footer />

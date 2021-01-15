@@ -41,8 +41,6 @@ const ShowApp: React.FC<ShowAppProps> = ({ children, show }) => {
 
             <Box minHeight="50vh">{children}</Box>
 
-            <Separator as="hr" my={3} />
-
             <Footer />
           </HorizontalPadding>
         </AnalyticsContext.Provider>

@@ -1,6 +1,6 @@
 import React from "react"
 import { AppContainer } from "v2/Apps/Components/AppContainer"
-import { Box, Sans, Separator, breakpoints } from "@artsy/palette"
+import { Box, Sans, breakpoints } from "@artsy/palette"
 import { ViewingRoomsLatestGridFragmentContainer as ViewingRoomsLatestGrid } from "./Components/ViewingRoomsLatestGrid"
 import { Footer } from "v2/Components/Footer"
 import { ViewingRoomsMeta } from "./Components/ViewingRoomsMeta"
@@ -33,7 +33,6 @@ const ViewingRoomsApp: React.FC<ViewingRoomsAppProps> = props => {
           </Box>
         </Box>
         <Box mx={2}>
-          <Separator mt={6} mb={3} />
           <Footer />
         </Box>
       </AppContainer>

@@ -64,7 +64,6 @@ const ArtistSeriesApp: React.FC<ArtistSeriesAppProps> = ({ artistSeries }) => {
                   />
                 </LazyLoadComponent>
               )}
-              <Separator mt={6} mb={3} />
               <Footer />
             </AppContainer>
           </Box>

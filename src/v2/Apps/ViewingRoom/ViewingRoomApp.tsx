@@ -93,7 +93,6 @@ const ViewingRoomApp: React.FC<ViewingRoomAppProps> = ({
         <ViewingRoomHeader viewingRoom={viewingRoom} />
         {user && getView()}
         <Box mx={2}>
-          <Separator mt={6} mb={3} />
           <Footer />
         </Box>
       </AppContainer>

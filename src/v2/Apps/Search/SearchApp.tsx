@@ -89,8 +89,6 @@ export class SearchApp extends React.Component<Props> {
           </Col>
         </Row>
 
-        <Separator mt={6} mb={3} />
-
         <Row>
           <Col>
             <Footer />
