@@ -22,9 +22,21 @@ if (process.env.NODE_ENV === "production") {
     cdnUrl = "https://d1rmpw1xlv9rxa.cloudfront.net"
   }
 
+  // TODO: Remove this as its temporary while routes are being converted.
+  const convertedRoutes = ["/collections", "/collection", "/collect"]
+
+  function beenConverted() {
+    for (const convertedRoute of convertedRoutes) {
+      if (window.location.pathname.startsWith(convertedRoute)) {
+        return true
+      }
+    }
+    return false
+  }
+
   // TODO: Ugh, this is a mess. Figure out a way to not relying on custom
   // webpack pathing client side.
-  if (window.location.pathname.startsWith("/novo")) {
+  if (window.location.pathname.startsWith("/novo") || beenConverted()) {
     __webpack_public_path__ = cdnUrl + "/assets-novo/"
   } else {
     __webpack_public_path__ = cdnUrl + "/assets/"

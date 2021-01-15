@@ -34,6 +34,7 @@ export function getAppNovoRoutes(): RouteConfig[] {
         routes: artworkRoutes,
       },
       {
+        converted: true,
         routes: collectRoutes,
       },
       {
@@ -71,14 +72,25 @@ export function getAppNovoRoutes(): RouteConfig[] {
       {
         routes: debugRoutes,
       },
-    ].map((routeConfig: { disabled: boolean; routes: RouteConfig[] }) => {
-      return {
-        ...routeConfig,
-        routes: routeConfig.routes.map(route => ({
-          ...route,
-          path: `/novo${route.path}`,
-        })),
+    ].map(
+      (routeConfig: {
+        disabled?: boolean
+        routes: RouteConfig[]
+        converted?: boolean
+      }) => {
+        return {
+          ...routeConfig,
+          routes: routeConfig.routes.map(route => {
+            if (routeConfig.converted) {
+              return { ...route }
+            }
+            return {
+              ...route,
+              path: `/novo${route.path}`,
+            }
+          }),
+        }
       }
-    })
+    )
   )
 }
