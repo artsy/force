@@ -108,7 +108,7 @@ export const ArtistInsightResult: React.FC = () => {
           </Media>
           <Media lessThan="md">
             <RouterLink to="/consign/submission">
-              <Button mb={2} width="100%" block size="large">
+              <Button mb={2} width="100%" size="large">
                 Get a valuation
               </Button>
             </RouterLink>

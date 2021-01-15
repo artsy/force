@@ -198,7 +198,7 @@ export const AppSecondFactor: React.FC<AppSecondFactorProps> = props => {
         show={showCompleteModal}
         hideCloseButton={!me.hasSecondFactorEnabled}
         FixedButton={
-          <Button onClick={onCompleteConfirmed} block width="100%">
+          <Button onClick={onCompleteConfirmed} width="100%">
             {me.hasSecondFactorEnabled ? "OK" : "Log back in"}
           </Button>
         }

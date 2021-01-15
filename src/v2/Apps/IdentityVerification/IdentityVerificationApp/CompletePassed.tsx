@@ -22,7 +22,7 @@ export const CompletePassed: React.FC = () => {
         </Sans>
       </Box>
       <Link href="https://artsy.net">
-        <Button block width={["100%", 335]} mt={4}>
+        <Button width={["100%", 335]} mt={4}>
           Finish
         </Button>
       </Link>

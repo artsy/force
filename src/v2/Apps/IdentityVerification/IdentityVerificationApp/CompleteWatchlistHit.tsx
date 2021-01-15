@@ -30,7 +30,7 @@ export const CompleteWatchlistHit: React.FC = () => {
           In the meantime, you can still browse works on Artsy.
         </Sans>
         <RouterLink to="/">
-          <Button block width="100%" mt={2}>
+          <Button width="100%" mt={2}>
             Return home
           </Button>
         </RouterLink>

@@ -60,13 +60,7 @@ export const HowToSell: React.FC = () => {
         </Media>
         <Media lessThan="sm">
           <RouterLink to={navigateTo}>
-            <Button
-              variant="primaryBlack"
-              size="large"
-              mt={6}
-              block
-              width="100%"
-            >
+            <Button variant="primaryBlack" size="large" mt={6} width="100%">
               Submit your artwork
             </Button>
           </RouterLink>

@@ -39,7 +39,7 @@ const ArtworkSidebarClassificationsModal: React.FC<ArtworkSidebarClassifications
       show={show}
       title="Artwork classifications"
       FixedButton={
-        <Button onClick={onClose} width="100%" block>
+        <Button onClick={onClose} width="100%">
           OK
         </Button>
       }

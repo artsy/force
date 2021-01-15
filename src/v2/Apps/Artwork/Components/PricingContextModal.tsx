@@ -53,7 +53,7 @@ export class PricingContextModal extends React.Component<State> {
           show={this.state.isModalOpen}
           title="Price in context"
           FixedButton={
-            <Button onClick={this.closeModal} block width="100%">
+            <Button onClick={this.closeModal} width="100%">
               Got it
             </Button>
           }

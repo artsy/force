@@ -20,7 +20,7 @@ export const ArtworkDetailsMediumModal: React.FC<ArtworkDetailsMediumModalProps>
       onClose={onClose}
       title={artwork.mediumType.name}
       FixedButton={
-        <Button onClick={onClose} width="100%" block>
+        <Button onClick={onClose} width="100%">
           OK
         </Button>
       }

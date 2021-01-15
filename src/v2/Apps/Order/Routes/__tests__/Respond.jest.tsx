@@ -169,7 +169,9 @@ describe("The respond page", () => {
     it("shows the offer history item", () => {
       expect(page.showOfferHistoryButton.text()).toMatch("Show offer history")
 
-      page.showOfferHistoryButton.props().onClick({})
+      page.showOfferHistoryButton
+        .props()
+        .onClick({} as React.MouseEvent<HTMLButtonElement, MouseEvent>)
 
       expect(page.offerHistory.text()).toMatch(
         "You (May 21)$1,200.00Seller (Apr 30)$1,500.00You (Apr 5)$1,100.00"

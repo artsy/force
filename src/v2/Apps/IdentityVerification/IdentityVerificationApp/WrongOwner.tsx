@@ -32,7 +32,7 @@ export const WrongOwner: React.FC<Props> = ({ email }) => {
         </Sans>
       </Box>
       <a href="mailto:verification@artsy.net">
-        <Button block width={["100%", 335]} mt={4}>
+        <Button width={["100%", 335]} mt={4}>
           Contact support
         </Button>
       </a>
