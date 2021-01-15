@@ -32,17 +32,21 @@ const Column = styled(Flex).attrs({
 
 interface Props {
   mediator?: Mediator
+  useSeparator?: boolean
 }
 
 export const Footer: React.FC<Props> = props => {
   const { mediator } = useSystemContext()
+  const { useSeparator } = props
   return (
     <>
       <Media at="xs">
+        {useSeparator && <Separator as="hr" mt={6} mb={3} />}
         <SmallFooter mediator={mediator} />
       </Media>
 
       <Media greaterThan="xs">
+        {useSeparator && <Separator as="hr" mt={6} mb={3} />}
         <LargeFooter mediator={mediator} />
       </Media>
     </>
