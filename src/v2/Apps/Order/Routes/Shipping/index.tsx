@@ -81,19 +81,6 @@ export interface ShippingState {
   openAddressForm: boolean
 }
 
-// interface ListedAddress {
-//   addressLine1: string
-//   addressLine2: string
-//   addressLine3: string
-//   city: string
-//   country: string
-//   isDefault: string
-//   name: string
-//   phoneNumber: string
-//   postalCode: string
-//   region: string
-// }
-
 const logger = createLogger("Order/Routes/Shipping/index.tsx")
 
 @track()
@@ -331,13 +318,9 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
     })
   }
 
-  onSelectAddressOption = (address) => {
-    console.log('here')
-    this.setState({ address })
-    console.log(this.state)
-  }
-
-  openAddressForm = () => {}
+  // componentDidMount = () => {
+  //   this.setState()
+  // }
 
   formatAddressBox = (address, index: number) => {
     const {
@@ -346,6 +329,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
       addressLine3,
       city,
       country,
+      id,
       isDefault,
       name,
       phoneNumber,
@@ -357,7 +341,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
       .filter(el => el)
       .join(", ")
     return (
-      <BorderedRadio value={index === 0 ? "FIRST_VALUE" : addressLine1}>
+      <BorderedRadio value={`${index}`}>
         <Flex width="100%" justifyContent="space-around">
           <Flex flexDirection="column">
             {[name, addressLine1, addressLine2, addressLine3].map(
@@ -382,6 +366,10 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
         </Flex>
       </BorderedRadio>
     )
+  }
+
+  static getDerivedStateFromProps = nextProps => {
+    return {address: nextProps.me.addressConnection.edges[0].node}
   }
 
   @track((props, state, args) => ({
@@ -413,6 +401,13 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
       props => props.order.lineItems.edges[0].node.artwork
     )
     const addressList = this.props.me.addressConnection.edges
+    const defaultAddress = `${addressList
+      .findIndex(address => address.node.isDefault || 0)}`
+
+    const onSelectAddressOption = value => {
+      const selectedAddress = addressList[parseInt(value)].node
+      this.setState({ address: selectedAddress })
+    }
 
     // const initialOpenState =
     //   !artwork.pickup_available ||
@@ -511,10 +506,8 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
                 {addressList.length && (
                   <>
                     <RadioGroup
-                      onSelect={this.onSelectAddressOption.bind(this)}
-                      defaultValue={
-                        !this.state.openAddressForm && "FIRST_VALUE"
-                      }
+                      onSelect={(onSelectAddressOption.bind(this))}
+                      defaultValue={defaultAddress}
                     >
                       {addressList.map((address, index) =>
                         this.formatAddressBox(address.node, index)
