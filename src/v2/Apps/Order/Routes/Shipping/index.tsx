@@ -1,14 +1,17 @@
 import {
+  AddIcon,
   BorderedRadio,
   Box,
   Button,
   Col,
   Collapse,
   Flex,
+  Link,
   RadioGroup,
   Row,
   Sans,
   Spacer,
+  Text,
 } from "@artsy/palette"
 import { Shipping_order } from "v2/__generated__/Shipping_order.graphql"
 import {
@@ -55,9 +58,11 @@ import { get } from "v2/Utils/get"
 import createLogger from "v2/Utils/logger"
 import { Media } from "v2/Utils/Responsive"
 import { BuyerGuarantee } from "../../Components/BuyerGuarantee"
+import { Shipping_me } from "v2/__generated__/Shipping_me.graphql"
 
 export interface ShippingProps {
   order: Shipping_order
+  me: Shipping_me
   relay?: RelayProp
   router: Router
   dialog: Dialog
@@ -73,7 +78,21 @@ export interface ShippingState {
   phoneNumberTouched: PhoneNumberTouched
   addressErrors: AddressErrors
   addressTouched: AddressTouched
+  openAddressForm: boolean
 }
+
+// interface ListedAddress {
+//   addressLine1: string
+//   addressLine2: string
+//   addressLine3: string
+//   city: string
+//   country: string
+//   isDefault: string
+//   name: string
+//   phoneNumber: string
+//   postalCode: string
+//   region: string
+// }
 
 const logger = createLogger("Order/Routes/Shipping/index.tsx")
 
@@ -95,6 +114,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
         : "",
     phoneNumberError: "",
     phoneNumberTouched: false,
+    openAddressForm: false,
   }
 
   get startingAddress() {
@@ -311,6 +331,59 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
     })
   }
 
+  onSelectAddressOption = (address) => {
+    console.log('here')
+    this.setState({ address })
+    console.log(this.state)
+  }
+
+  openAddressForm = () => {}
+
+  formatAddressBox = (address, index: number) => {
+    const {
+      addressLine1,
+      addressLine2,
+      addressLine3,
+      city,
+      country,
+      isDefault,
+      name,
+      phoneNumber,
+      postalCode,
+      region,
+    } = address
+
+    const formattedAddressLine = [city, region, country, postalCode]
+      .filter(el => el)
+      .join(", ")
+    return (
+      <BorderedRadio value={index === 0 ? "FIRST_VALUE" : addressLine1}>
+        <Flex width="100%" justifyContent="space-around">
+          <Flex flexDirection="column">
+            {[name, addressLine1, addressLine2, addressLine3].map(
+              line =>
+                line && (
+                  <Text
+                    style={{ textTransform: "capitalize" }}
+                    variant="mediumText"
+                  >
+                    {line}
+                  </Text>
+                )
+            )}
+            <Text>{phoneNumber}</Text>
+            <Text style={{ textTransform: "capitalize" }}>
+              {formattedAddressLine}
+            </Text>
+          </Flex>
+          <Link href="#" color="blue100" underlineBehavior="none">
+            Edit
+          </Link>
+        </Flex>
+      </BorderedRadio>
+    )
+  }
+
   @track((props, state, args) => ({
     action_type: Schema.ActionType.Click,
     subject:
@@ -325,6 +398,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
   }
 
   render() {
+    console.log(this.state)
     const { order, isCommittingMutation } = this.props
     const {
       address,
@@ -338,6 +412,12 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
       this.props,
       props => props.order.lineItems.edges[0].node.artwork
     )
+    const addressList = this.props.me.addressConnection.edges
+
+    // const initialOpenState =
+    //   !artwork.pickup_available ||
+    //   (this.state.shippingOption === "SHIP" && !addressList.length)
+    // this.setState({ openAddressForm: initialOpenState })
 
     return (
       <Box data-test="orderShipping">
@@ -370,10 +450,10 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
                       onSelect={this.onSelectShippingOption.bind(this)}
                       defaultValue={this.state.shippingOption}
                     >
-                      <BorderedRadio
-                        value="SHIP"
-                        label="Add shipping address"
-                      />
+                      <Text variant="mediumText" mb="1">
+                        Delivery Method
+                      </Text>
+                      <BorderedRadio value="SHIP" label="Shipping" />
 
                       <BorderedRadio
                         value="PICKUP"
@@ -391,11 +471,12 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
                     <Spacer mb={3} />
                   </>
                 )}
-
                 <Collapse
                   open={
                     !artwork.pickup_available ||
-                    this.state.shippingOption === "SHIP"
+                    (this.state.shippingOption === "SHIP" &&
+                      !addressList.length) ||
+                    this.state.openAddressForm
                   }
                 >
                   <AddressForm
@@ -427,7 +508,38 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
                     label="Number to contact you for pickup logistics"
                   />
                 </Collapse>
-
+                {addressList.length && (
+                  <>
+                    <RadioGroup
+                      onSelect={this.onSelectAddressOption.bind(this)}
+                      defaultValue={
+                        !this.state.openAddressForm && "FIRST_VALUE"
+                      }
+                    >
+                      {addressList.map((address, index) =>
+                        this.formatAddressBox(address.node, index)
+                      )}
+                    </RadioGroup>
+                    {!this.state.openAddressForm ? (
+                      <Flex
+                        py="2"
+                        onClick={() => this.setState({ openAddressForm: true })}
+                        justifyContent="flex-start"
+                        alignItems="center"
+                        width="100%"
+                        style={{ cursor: "pointer" }}
+                        alignSelf="flex-start"
+                      >
+                        <AddIcon />
+                        <Text variant="mediumText">
+                          {" Use another address"}
+                        </Text>
+                      </Flex>
+                    ) : (
+                      <Spacer mb="2" />
+                    )}
+                  </>
+                )}
                 <Media greaterThan="xs">
                   <Button
                     onClick={this.onContinueButtonPressed}
@@ -507,6 +619,39 @@ export const ShippingFragmentContainer = createFragmentContainer(
         }
         ...ArtworkSummaryItem_order
         ...TransactionDetailsSummaryItem_order
+      }
+    `,
+    me: graphql`
+      fragment Shipping_me on Me
+        @argumentDefinitions(
+          first: { type: "Int", defaultValue: 30 }
+          last: { type: "Int" }
+          after: { type: "String" }
+          before: { type: "String" }
+        ) {
+        name
+        email
+        addressConnection(
+          first: $first
+          last: $last
+          before: $before
+          after: $after
+        ) {
+          edges {
+            node {
+              addressLine1
+              addressLine2
+              addressLine3
+              city
+              country
+              isDefault
+              name
+              phoneNumber
+              postalCode
+              region
+            }
+          }
+        }
       }
     `,
   }

@@ -115,6 +115,9 @@ export const orderRoutes: RouteConfig[] = [
             order: commerceOrder(id: $orderID) {
               ...Shipping_order
             }
+            me {
+              ...Shipping_me
+            }
           }
         `,
         cacheConfig: {
