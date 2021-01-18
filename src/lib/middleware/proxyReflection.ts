@@ -3,9 +3,7 @@ import type { ArtsyRequest, ArtsyResponse } from "./artsyExpress"
 
 import httpProxy from "http-proxy"
 import { parse } from "url"
-
-// TODO: Required for rewire
-const request = require("superagent")
+import request from "superagent"
 
 const { REFLECTION_URL } = process.env
 const proxy = httpProxy.createProxyServer()
