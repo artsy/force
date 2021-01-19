@@ -51,7 +51,7 @@ export const AppSecondFactorModal: React.FC<AppSecondFactorModalProps> = props =
     let statusMessage = ""
 
     errors.forEach(error => {
-      if (error.code === "invalid_otp") {
+      if (error.code === "invalid_otp" || error.code === "invalid") {
         actions.setFieldError("code", error.message)
       } else {
         statusMessage += `${error.message}\n`
