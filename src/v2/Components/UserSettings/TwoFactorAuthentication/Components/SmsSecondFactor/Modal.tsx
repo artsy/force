@@ -70,9 +70,13 @@ export const SmsSecondFactorModal: React.FC<SmsSecondFactorModalProps> = props =
     let statusMessage = ""
 
     errors.forEach(error => {
-      if (error.code === "invalid" && error.data.key === "phone_number") {
+      if (
+        error.code === "invalid" &&
+        error.data &&
+        error.data.key === "phone_number"
+      ) {
         actions.setFieldError("phoneNumber", error.message)
-      } else if (error.code === "invalid_otp") {
+      } else if (error.code === "invalid_otp" || error.code === "invalid") {
         actions.setFieldError("code", error.message)
       } else {
         statusMessage += `${error.message}\n`
