@@ -8917,6 +8917,24 @@ type Query {
     status: EventStatus
   ): [Fair]
 
+  # A list of fairs
+  fairsConnection(
+    after: String
+    before: String
+    fairOrganizerID: String
+    first: Int
+    hasFullFeature: Boolean
+    hasHomepageSection: Boolean
+    hasListing: Boolean
+
+    # Only return fairs matching specified IDs. Accepts list of IDs.
+    ids: [String]
+    last: Int
+    near: Near
+    sort: FairSorts
+    status: EventStatus
+  ): FairConnection
+
   # A Feature
   feature(
     # The slug or ID of the Feature
@@ -11208,6 +11226,24 @@ type Viewer {
     sort: FairSorts
     status: EventStatus
   ): [Fair]
+
+  # A list of fairs
+  fairsConnection(
+    after: String
+    before: String
+    fairOrganizerID: String
+    first: Int
+    hasFullFeature: Boolean
+    hasHomepageSection: Boolean
+    hasListing: Boolean
+
+    # Only return fairs matching specified IDs. Accepts list of IDs.
+    ids: [String]
+    last: Int
+    near: Near
+    sort: FairSorts
+    status: EventStatus
+  ): FairConnection
 
   # A Feature
   feature(
