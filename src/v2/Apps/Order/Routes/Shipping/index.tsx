@@ -1,18 +1,18 @@
 import {
-  AddIcon,
   BorderedRadio,
   Box,
   Button,
+  Checkbox,
   Col,
   Collapse,
   Flex,
-  Link,
   RadioGroup,
   Row,
   Sans,
   Spacer,
   Text,
 } from "@artsy/palette"
+import styled from "styled-components"
 import { Shipping_order } from "v2/__generated__/Shipping_order.graphql"
 import {
   CommerceOrderFulfillmentTypeEnum,
@@ -78,10 +78,16 @@ export interface ShippingState {
   phoneNumberTouched: PhoneNumberTouched
   addressErrors: AddressErrors
   addressTouched: AddressTouched
-  openAddressForm: boolean
+  showEditModal: boolean
 }
 
 const logger = createLogger("Order/Routes/Shipping/index.tsx")
+
+const EditButton = styled(Text)`
+  &:hover {
+    text-decoration: underline;
+  }
+`
 
 @track()
 export class ShippingRoute extends Component<ShippingProps, ShippingState> {
@@ -96,7 +102,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
     phoneNumber: this.startingPhoneNumber,
     phoneNumberError: "",
     phoneNumberTouched: false,
-    openAddressForm: false,
+    showEditModal: false,
   }
 
   get startingPhoneNumber() {
@@ -369,29 +375,26 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
             {[name, addressLine1, addressLine2, addressLine3].map(
               line =>
                 line && (
-                  <Text
-                    style={{ textTransform: "capitalize" }}
-                    variant="mediumText"
-                  >
+                  <Text style={{ textTransform: "capitalize" }} variant="text">
                     {line}
                   </Text>
                 )
             )}
-            <Text>{phoneNumber}</Text>
-            <Text style={{ textTransform: "capitalize" }}>
+            <Text textColor="black60">{phoneNumber}</Text>
+            <Text textColor="black60" style={{ textTransform: "capitalize" }}>
               {formattedAddressLine}
             </Text>
           </Flex>
-          <Link
-            href="#"
-            color="blue100"
-            underlineBehavior="none"
+          <EditButton
             position="absolute"
             top={"20px"}
             right={"20px"}
+            onClick={() => "hi"}
+            textColor="blue100"
+            size="2"
           >
-            <Sans size="2">Edit</Sans>
-          </Link>
+            Edit
+          </EditButton>
         </Flex>
       </BorderedRadio>
     )
@@ -435,14 +438,14 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
     }
 
     const onSelectAddressOption = value => {
-      const selectedAddress = addressList[parseInt(value)].node
-      this.setState({ address: selectedAddress })
+      if (value == "NEW_ADDRESS") {
+        // opens address form
+        // this.setState({ openAddressForm: true })
+      } else {
+        const selectedAddress = addressList[parseInt(value)].node
+        this.setState({ address: selectedAddress })
+      }
     }
-
-    // const initialOpenState =
-    //   !artwork.pickup_available ||
-    //   (this.state.shippingOption === "SHIP" && !addressList.length)
-    // this.setState({ openAddressForm: initialOpenState })
 
     return (
       <Box data-test="orderShipping">
@@ -500,8 +503,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
                   open={
                     !artwork.pickup_available ||
                     (this.state.shippingOption === "SHIP" &&
-                      !addressList.length) ||
-                    this.state.openAddressForm
+                      !addressList.length)
                   }
                 >
                   <AddressForm
@@ -542,30 +544,11 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
                       {addressList.map((address, index) =>
                         this.formatAddressBox(address.node, index)
                       )}
+                      <BorderedRadio value={"NEW_ADDRESS"}>
+                        <Text variant="text">Add a new shipping address</Text>
+                      </BorderedRadio>
                     </RadioGroup>
-                    {!this.state.openAddressForm ? (
-                      <Flex
-                        py="2"
-                        onClick={() =>
-                          this.setState({
-                            openAddressForm: true,
-                            address: this.initialAddress,
-                          })
-                        }
-                        justifyContent="flex-start"
-                        alignItems="center"
-                        width="100%"
-                        style={{ cursor: "pointer" }}
-                        alignSelf="flex-start"
-                      >
-                        <AddIcon />
-                        <Text variant="mediumText">
-                          {" Use another address"}
-                        </Text>
-                      </Flex>
-                    ) : (
-                      <Spacer mb="2" />
-                    )}
+                    <Spacer p="2" />
                   </>
                 )}
                 <Media greaterThan="xs">
