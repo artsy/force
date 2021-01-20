@@ -293,14 +293,13 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
     }
   }
 
+  handleClickEdit = () => {
+    // Open edit modal
+  }
+
   private validateAddress(address: Address) {
     const { name, addressLine1, city, region, country, postalCode } = address
     const usOrCanada = country === "US" || country === "CA"
-    console.log(name, "name")
-    console.log(addressLine1, "addressLine1")
-    console.log(city, "city")
-    console.log(city, "region")
-    console.log(city, "postalCode")
     const errors = {
       name: validatePresence(name),
       addressLine1: validatePresence(addressLine1),
@@ -318,7 +317,6 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
   }
 
   private validatePhoneNumber(phoneNumber: string) {
-    console.log("hello", phoneNumber)
     const error = validatePresence(phoneNumber)
     const hasError = error !== null
 
@@ -350,6 +348,12 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
       phoneNumberError: error,
       phoneNumberTouched: true,
     })
+  }
+
+  renderAddressList = addressList => {
+    return addressList.map((address, index) =>
+      this.formatAddressBox(address.node, index)
+    )
   }
 
   formatAddressBox = (address, index: number) => {
@@ -389,7 +393,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
             position="absolute"
             top={"20px"}
             right={"20px"}
-            onClick={() => "hi"}
+            onClick={() => this.handleClickEdit.bind(this)}
             textColor="blue100"
             size="2"
           >
@@ -414,7 +418,6 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
   }
 
   render() {
-    console.log(this.state)
     const { order, isCommittingMutation } = this.props
     const {
       address,
@@ -444,6 +447,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
       } else {
         const selectedAddress = addressList[parseInt(value)].node
         this.setState({ address: selectedAddress })
+        this.setState({ phoneNumber: selectedAddress.phoneNumber })
       }
     }
 
@@ -541,9 +545,10 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
                       onSelect={onSelectAddressOption.bind(this)}
                       defaultValue={defaultAddressIndex()}
                     >
-                      {addressList.map((address, index) =>
+                      {/* {addressList.map((address, index) =>
                         this.formatAddressBox(address.node, index)
-                      )}
+                      )} */}
+                      {this.renderAddressList(addressList)}
                       <BorderedRadio value={"NEW_ADDRESS"}>
                         <Text variant="text">Add a new shipping address</Text>
                       </BorderedRadio>
