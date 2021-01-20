@@ -178,7 +178,7 @@ export function getRedirect(type): URL {
   }
 }
 
-export const loginUser = async (
+const loginUser = async (
   userAttributes: object,
   options: {
     success: (res: any) => Promise<void>
@@ -215,7 +215,7 @@ export const loginUser = async (
     .catch(e => captureException(e))
 }
 
-export const signupUser = async (
+const signupUser = async (
   userAttributes: object,
   options: {
     success: (res: any) => Promise<void>
@@ -257,7 +257,7 @@ export const signupUser = async (
     .catch(e => captureException(e))
 }
 
-export const forgotUserPassword = async (
+const forgotUserPassword = async (
   userAttributes: object,
   options: {
     success: (res: any) => Promise<void>

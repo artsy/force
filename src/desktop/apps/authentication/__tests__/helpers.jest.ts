@@ -55,7 +55,7 @@ describe("Authentication Helpers", () => {
   })
 
   describe("#setCookies", () => {
-    it("Sets a cookie for afterSignUpAction ", () => {
+    it("Sets a cookie for afterSignUpAction", () => {
       setCookies({
         afterSignUpAction: "an action",
       })
