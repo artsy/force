@@ -25,7 +25,7 @@ export interface ArtworkGridProps
   preloadImageCount?: number
   itemMargin?: number
   mediator?: Mediator
-  onBrickClick?: (artwork?: Artwork) => void
+  onBrickClick?: (artwork: Artwork, artworkIndex: number) => void
   onClearFilters?: () => any
   onLoadMore?: () => any
   sectionMargin?: number
@@ -130,7 +130,7 @@ export class ArtworkGridContainer extends React.Component<
             lazyLoad={artworkIndex >= preloadImageCount}
             onClick={() => {
               if (this.props.onBrickClick) {
-                this.props.onBrickClick(artwork)
+                this.props.onBrickClick(artwork, artworkIndex)
               }
             }}
           />

@@ -89,6 +89,8 @@ describe("ArtworkFilter", () => {
         destination_page_owner_id: "5d041931e607c200127ef3c1",
         destination_page_owner_slug: "andy-warhol-kenny-burrell",
         destination_page_owner_type: "artwork",
+        position: 0,
+        sort: "-decayed_merch",
         type: "thumbnail",
       })
     })

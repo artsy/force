@@ -78,7 +78,7 @@ const ArtworkFilterArtworkGrid: React.FC<ArtworkFilterArtworkGridProps> = props 
           mediator={mediator}
           onClearFilters={context.resetFilters}
           emptyStateComponent={context.ZeroState && <context.ZeroState />}
-          onBrickClick={artwork => {
+          onBrickClick={(artwork, artworkIndex) => {
             trackEvent(
               clickedMainArtworkGrid({
                 contextPageOwnerType,
@@ -86,6 +86,8 @@ const ArtworkFilterArtworkGrid: React.FC<ArtworkFilterArtworkGridProps> = props 
                 contextPageOwnerId,
                 destinationPageOwnerId: artwork.internalID,
                 destinationPageOwnerSlug: artwork.slug,
+                position: artworkIndex,
+                sort: context.filters.sort,
               })
             )
           }}
