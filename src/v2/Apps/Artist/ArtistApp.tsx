@@ -1,13 +1,4 @@
-import {
-  Box,
-  ChevronIcon,
-  Col,
-  Flex,
-  Row,
-  Sans,
-  Separator,
-  Spacer,
-} from "@artsy/palette"
+import { Box, ChevronIcon, Col, Flex, Row, Sans, Spacer } from "@artsy/palette"
 import { ArtistApp_artist } from "v2/__generated__/ArtistApp_artist.graphql"
 import { ArtistMetaFragmentContainer as ArtistMeta } from "v2/Apps/Artist/Components/ArtistMeta"
 import { NavigationTabsFragmentContainer as NavigationTabs } from "v2/Apps/Artist/Components/NavigationTabs"

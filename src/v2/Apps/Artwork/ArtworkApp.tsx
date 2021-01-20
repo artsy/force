@@ -1,4 +1,4 @@
-import { Box, Col, Row, Separator, Spacer } from "@artsy/palette"
+import { Box, Col, Row, Spacer } from "@artsy/palette"
 import React, { useContext } from "react"
 import { LazyLoadComponent } from "react-lazy-load-image-component"
 import { createFragmentContainer, graphql } from "react-relay"
