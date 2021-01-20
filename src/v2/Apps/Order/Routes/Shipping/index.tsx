@@ -105,15 +105,25 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
   }
 
   get startingAddress() {
-    return {
-      ...emptyAddress,
-      country: this.props.order.lineItems.edges[0].node.artwork.shippingCountry,
-
-      // We need to pull out _only_ the values specified by the Address type,
-      // since our state will be used for Relay variables later on. The
-      // easiest way to do this is with the emptyAddress.
-      ...pick(this.props.order.requestedFulfillment, Object.keys(emptyAddress)),
+    const addressList = this.props.me.addressConnection.edges
+    if (addressList.length > 0) {
+      const defaultAddress =
+        addressList.find(address => address.node.isDefault)?.node ||
+        addressList[0].node
+      return defaultAddress
+    } else {
+      return this.initialAddress
     }
+  }
+
+  initialAddress = {
+    ...emptyAddress,
+    country: this.props.order.lineItems.edges[0].node.artwork.shippingCountry,
+
+    // We need to pull out _only_ the values specified by the Address type,
+    // since our state will be used for Relay variables later on. The
+    // easiest way to do this is with the emptyAddress.
+    ...pick(this.props.order.requestedFulfillment, Object.keys(emptyAddress)),
   }
 
   get touchedAddress() {
@@ -268,6 +278,11 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
   private validateAddress(address: Address) {
     const { name, addressLine1, city, region, country, postalCode } = address
     const usOrCanada = country === "US" || country === "CA"
+    console.log(name, "name")
+    console.log(addressLine1, "addressLine1")
+    console.log(city, "city")
+    console.log(city, "region")
+    console.log(city, "postalCode")
     const errors = {
       name: validatePresence(name),
       addressLine1: validatePresence(addressLine1),
@@ -285,6 +300,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
   }
 
   private validatePhoneNumber(phoneNumber: string) {
+    console.log("hello", phoneNumber)
     const error = validatePresence(phoneNumber)
     const hasError = error !== null
 
@@ -318,10 +334,6 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
     })
   }
 
-  // componentDidMount = () => {
-  //   this.setState()
-  // }
-
   formatAddressBox = (address, index: number) => {
     const {
       addressLine1,
@@ -329,8 +341,6 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
       addressLine3,
       city,
       country,
-      id,
-      isDefault,
       name,
       phoneNumber,
       postalCode,
@@ -341,8 +351,8 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
       .filter(el => el)
       .join(", ")
     return (
-      <BorderedRadio value={`${index}`}>
-        <Flex width="100%" justifyContent="space-around">
+      <BorderedRadio value={`${index}`} key={index} position="relative">
+        <Flex width="100%">
           <Flex flexDirection="column">
             {[name, addressLine1, addressLine2, addressLine3].map(
               line =>
@@ -360,16 +370,19 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
               {formattedAddressLine}
             </Text>
           </Flex>
-          <Link href="#" color="blue100" underlineBehavior="none">
-            Edit
+          <Link
+            href="#"
+            color="blue100"
+            underlineBehavior="none"
+            position="absolute"
+            top={"20px"}
+            right={"20px"}
+          >
+            <Sans size="2">Edit</Sans>
           </Link>
         </Flex>
       </BorderedRadio>
     )
-  }
-
-  static getDerivedStateFromProps = nextProps => {
-    return {address: nextProps.me.addressConnection.edges[0].node}
   }
 
   @track((props, state, args) => ({
@@ -401,8 +414,13 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
       props => props.order.lineItems.edges[0].node.artwork
     )
     const addressList = this.props.me.addressConnection.edges
-    const defaultAddress = `${addressList
-      .findIndex(address => address.node.isDefault || 0)}`
+
+    const defaultAddressIndex = () => {
+      const indexOfDefaultAddress = addressList.findIndex(
+        address => address.node.isDefault
+      )
+      return `${indexOfDefaultAddress > -1 ? indexOfDefaultAddress : 0}`
+    }
 
     const onSelectAddressOption = value => {
       const selectedAddress = addressList[parseInt(value)].node
@@ -503,11 +521,11 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
                     label="Number to contact you for pickup logistics"
                   />
                 </Collapse>
-                {addressList.length && (
+                {addressList.length > 0 && (
                   <>
                     <RadioGroup
-                      onSelect={(onSelectAddressOption.bind(this))}
-                      defaultValue={defaultAddress}
+                      onSelect={onSelectAddressOption.bind(this)}
+                      defaultValue={defaultAddressIndex()}
                     >
                       {addressList.map((address, index) =>
                         this.formatAddressBox(address.node, index)
@@ -516,7 +534,12 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
                     {!this.state.openAddressForm ? (
                       <Flex
                         py="2"
-                        onClick={() => this.setState({ openAddressForm: true })}
+                        onClick={() =>
+                          this.setState({
+                            openAddressForm: true,
+                            address: this.initialAddress,
+                          })
+                        }
                         justifyContent="flex-start"
                         alignItems="center"
                         width="100%"
