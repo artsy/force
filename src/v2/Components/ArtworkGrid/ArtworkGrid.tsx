@@ -118,9 +118,9 @@ export class ArtworkGridContainer extends React.Component<
          *
          * Here's a stackoverflow explaining the math: https://stackoverflow.com/questions/1730961/convert-a-2d-array-index-into-a-1d-index
          */
-        const artworkIndex = column * columnCount + row
-
+        const artworkIndex = row * columnCount + column
         const artwork = sectionedArtworks[column][row]
+
         artworkComponents.push(
           <GridItem
             contextModule={contextModule}

@@ -193,7 +193,7 @@ describe("ArtworkGrid", () => {
       expect(artworks[0].length).toBe(2)
     })
 
-    it("Renders artworks if present", async () => {
+    it("Renders artworks if present (2)", async () => {
       const wrapper = (await getRelayWrapper(props)).find(ArtworkGridContainer)
       expect(wrapper.text()).toMatch(ArtworkGridFixture.edges[0].node.title)
       expect(wrapper.find(ArtworkGridItem).length).toBe(4)
@@ -205,11 +205,17 @@ describe("ArtworkGrid", () => {
         columnCount: 2,
         ...props,
       })
+
+      // DOM order looks like:
+      // |0|2| - preload
+      // |1|3| - lazyload
+
       const gridItems = wrapper.find(GridItem)
-      expect(gridItems.get(0).props.lazyLoad).toBeFalsy()
-      expect(gridItems.get(1).props.lazyLoad).toBeFalsy()
-      expect(gridItems.get(2).props.lazyLoad).toBeTruthy()
-      expect(gridItems.get(3).props.lazyLoad).toBeTruthy()
+
+      expect(gridItems.get(0).props.lazyLoad).toBe(false)
+      expect(gridItems.get(1).props.lazyLoad).toBe(true)
+      expect(gridItems.get(2).props.lazyLoad).toBe(false)
+      expect(gridItems.get(3).props.lazyLoad).toBe(true)
     })
   })
 })
