@@ -93,15 +93,27 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
     address: this.startingAddress,
     addressErrors: {},
     addressTouched: {},
-    phoneNumber:
+    phoneNumber: this.startingPhoneNumber,
+    phoneNumberError: "",
+    phoneNumberTouched: false,
+    openAddressForm: false,
+  }
+
+  get startingPhoneNumber() {
+    const addressList = this.props.me.addressConnection.edges
+    const defaultPhoneNumber =
+      addressList.length > 0 &&
+      (addressList.find(address => address.node.isDefault)?.node.phoneNumber ||
+        addressList[0].node.phoneNumber)
+    if (defaultPhoneNumber) {
+      return defaultPhoneNumber
+    } else {
       this.props.order.requestedFulfillment &&
       (this.props.order.requestedFulfillment.__typename === "CommerceShip" ||
         this.props.order.requestedFulfillment.__typename === "CommercePickup")
         ? this.props.order.requestedFulfillment.phoneNumber
-        : "",
-    phoneNumberError: "",
-    phoneNumberTouched: false,
-    openAddressForm: false,
+        : ""
+    }
   }
 
   get startingAddress() {
