@@ -2,7 +2,6 @@ import {
   BorderedRadio,
   Box,
   Button,
-  Checkbox,
   Col,
   Collapse,
   Flex,
@@ -59,6 +58,7 @@ import createLogger from "v2/Utils/logger"
 import { Media } from "v2/Utils/Responsive"
 import { BuyerGuarantee } from "../../Components/BuyerGuarantee"
 import { Shipping_me } from "v2/__generated__/Shipping_me.graphql"
+import { omit } from "lodash"
 
 export interface ShippingProps {
   order: Shipping_order
@@ -106,23 +106,44 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
   }
 
   get startingPhoneNumber() {
-    const addressList = this.props.me.addressConnection.edges
-    const defaultPhoneNumber =
-      addressList.length > 0 &&
-      (addressList.find(address => address.node.isDefault)?.node.phoneNumber ||
-        addressList[0].node.phoneNumber)
+    const defaultPhoneNumber = this.defaultAddress?.phoneNumber
     if (defaultPhoneNumber) {
       return defaultPhoneNumber
     } else {
-      this.props.order.requestedFulfillment &&
-      (this.props.order.requestedFulfillment.__typename === "CommerceShip" ||
-        this.props.order.requestedFulfillment.__typename === "CommercePickup")
+      return this.props.order.requestedFulfillment &&
+        (this.props.order.requestedFulfillment.__typename === "CommerceShip" ||
+          this.props.order.requestedFulfillment.__typename === "CommercePickup")
         ? this.props.order.requestedFulfillment.phoneNumber
         : ""
     }
   }
 
   get startingAddress() {
+    const defaultAddress = this.defaultAddress
+    if (defaultAddress) {
+      const startingAddress = this.convertShippingAddressForExchange(
+        defaultAddress
+      )
+      return startingAddress
+    } else {
+      const initialAddress = {
+        ...emptyAddress,
+        country: this.props.order.lineItems.edges[0].node.artwork
+          .shippingCountry,
+
+        // We need to pull out _only_ the values specified by the Address type,
+        // since our state will be used for Relay variables later on. The
+        // easiest way to do this is with the emptyAddress.
+        ...pick(
+          this.props.order.requestedFulfillment,
+          Object.keys(emptyAddress)
+        ),
+      }
+      return initialAddress
+    }
+  }
+
+  get defaultAddress() {
     const addressList = this.props.me.addressConnection.edges
     if (addressList.length > 0) {
       const defaultAddress =
@@ -130,18 +151,8 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
         addressList[0].node
       return defaultAddress
     } else {
-      return this.initialAddress
+      return null
     }
-  }
-
-  initialAddress = {
-    ...emptyAddress,
-    country: this.props.order.lineItems.edges[0].node.artwork.shippingCountry,
-
-    // We need to pull out _only_ the values specified by the Address type,
-    // since our state will be used for Relay variables later on. The
-    // easiest way to do this is with the emptyAddress.
-    ...pick(this.props.order.requestedFulfillment, Object.keys(emptyAddress)),
   }
 
   get touchedAddress() {
@@ -155,6 +166,11 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
       region: true,
       phoneNumber: true,
     }
+  }
+
+  // Gravity address has isDefault and addressLine3 but exchange does not
+  convertShippingAddressForExchange(address) {
+    return omit(address, ["isDefault", "addressLine3"])
   }
 
   setShipping(variables: ShippingOrderAddressUpdateMutation["variables"]) {
@@ -373,21 +389,30 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
       .filter(el => el)
       .join(", ")
     return (
-      <BorderedRadio value={`${index}`} key={index} position="relative">
+      <BorderedRadio
+        value={`${index}`}
+        key={index}
+        position="relative"
+        data-test="savedAddress"
+      >
         <Flex width="100%">
           <Flex flexDirection="column">
             {[name, addressLine1, addressLine2, addressLine3].map(
-              line =>
+              (line, index) =>
                 line && (
-                  <Text style={{ textTransform: "capitalize" }} variant="text">
+                  <Text
+                    style={{ textTransform: "capitalize" }}
+                    variant="text"
+                    key={index}
+                  >
                     {line}
                   </Text>
                 )
             )}
-            <Text textColor="black60">{phoneNumber}</Text>
             <Text textColor="black60" style={{ textTransform: "capitalize" }}>
               {formattedAddressLine}
             </Text>
+            <Text textColor="black60">{phoneNumber}</Text>
           </Flex>
           <EditButton
             position="absolute"
@@ -418,6 +443,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
   }
 
   render() {
+    console.log(this.state)
     const { order, isCommittingMutation } = this.props
     const {
       address,
@@ -445,7 +471,9 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
         // opens address form
         // this.setState({ openAddressForm: true })
       } else {
-        const selectedAddress = addressList[parseInt(value)].node
+        const selectedAddress = this.convertShippingAddressForExchange(
+          addressList[parseInt(value)].node
+        )
         this.setState({ address: selectedAddress })
         this.setState({ phoneNumber: selectedAddress.phoneNumber })
       }
@@ -490,6 +518,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
                       <BorderedRadio
                         value="PICKUP"
                         label="Arrange for pickup (free)"
+                        data-test="pickupOption"
                       >
                         <Collapse open={this.state.shippingOption === "PICKUP"}>
                           <Sans size="2" color="black60">
@@ -504,6 +533,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
                   </>
                 )}
                 <Collapse
+                  data-test="addressFormCollapse"
                   open={
                     !artwork.pickup_available ||
                     (this.state.shippingOption === "SHIP" &&
@@ -530,8 +560,12 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
                   />
                 </Collapse>
 
-                <Collapse open={this.state.shippingOption === "PICKUP"}>
+                <Collapse
+                  data-test="phoneNumberCollapse"
+                  open={this.state.shippingOption === "PICKUP"}
+                >
                   <PhoneNumberForm
+                    data-test="pickupPhoneNumberForm"
                     value={phoneNumber}
                     errors={phoneNumberError}
                     touched={phoneNumberTouched}
@@ -545,9 +579,6 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
                       onSelect={onSelectAddressOption.bind(this)}
                       defaultValue={defaultAddressIndex()}
                     >
-                      {/* {addressList.map((address, index) =>
-                        this.formatAddressBox(address.node, index)
-                      )} */}
                       {this.renderAddressList(addressList)}
                       <BorderedRadio value={"NEW_ADDRESS"}>
                         <Text variant="text">Add a new shipping address</Text>
