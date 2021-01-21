@@ -30,6 +30,7 @@ describe("Article Templates", () => {
       stitch: {
         components: {
           NavBar: x => x,
+          Footer: x => x,
         },
       },
     })
