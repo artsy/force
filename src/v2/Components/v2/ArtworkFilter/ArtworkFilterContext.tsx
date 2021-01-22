@@ -15,6 +15,7 @@ export const initialArtworkFilterState: ArtworkFilters = {
   sizes: [],
   sort: "-decayed_merch",
   artistIDs: [],
+  attributionClass: [],
 
   // TODO: Remove these unneeded default props
   // height: "*-*",
@@ -28,6 +29,7 @@ export const initialArtworkFilterState: ArtworkFilters = {
 export interface ArtworkFilters {
   acquireable?: boolean
   artist_id?: string
+  attributionClass?: string[]
   artistIDs?: string[]
   atAuction?: boolean
   color?: string
@@ -320,7 +322,11 @@ const artworkFilterReducer = (
   state: ArtworkFiltersState,
   action: ArtworkFiltersAction
 ): ArtworkFiltersState => {
-  const arrayFilterTypes: Array<keyof ArtworkFilters> = ["sizes", "artistIDs"]
+  const arrayFilterTypes: Array<keyof ArtworkFilters> = [
+    "sizes",
+    "artistIDs",
+    "attributionClass",
+  ]
 
   switch (action.type) {
     /**

@@ -9,11 +9,13 @@ import { PriceRangeFilter } from "./PriceRangeFilter"
 import { SizeFilter } from "./SizeFilter"
 import { TimePeriodFilter } from "./TimePeriodFilter"
 import { WaysToBuyFilter } from "./WaysToBuyFilter"
+import { AttributionClassFilter } from "./AttributionClassFilter"
 
 export const ArtworkFilters: React.FC = () => {
   return (
     <Box pr={2}>
       <MediumFilter />
+      <AttributionClassFilter />
       <PriceRangeFilter />
       <WaysToBuyFilter />
       <GalleryFilter />
