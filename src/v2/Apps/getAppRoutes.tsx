@@ -17,6 +17,7 @@ import { purchaseRoutes } from "v2/Apps/Purchase/purchaseRoutes"
 import { searchRoutes } from "v2/Apps/Search/searchRoutes"
 import { showRoutes } from "v2/Apps/Show/showRoutes"
 import { viewingRoomRoutes } from "./ViewingRoom/viewingRoomRoutes"
+import { auctionsRoutes } from "./Auctions/auctionsRoutes"
 
 export function getAppRoutes(): RouteConfig[] {
   return buildAppRoutes([
@@ -31,6 +32,9 @@ export function getAppRoutes(): RouteConfig[] {
     },
     {
       routes: artworkRoutes,
+    },
+    {
+      routes: auctionsRoutes,
     },
     // NOTE: Converted to use NOVO template.
     // {
