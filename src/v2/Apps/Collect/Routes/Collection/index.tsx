@@ -201,6 +201,7 @@ export const CollectionRefetchContainer = createRefetchContainer(
         @argumentDefinitions(
           acquireable: { type: "Boolean" }
           aggregations: { type: "[ArtworkAggregation]" }
+          attributionClass: { type: "[String]" }
           atAuction: { type: "Boolean" }
           color: { type: "String" }
           forSale: { type: "Boolean" }
@@ -292,6 +293,7 @@ export const CollectionRefetchContainer = createRefetchContainer(
         filtered_artworks: artworksConnection(
           acquireable: $acquireable
           aggregations: $aggregations
+          attributionClass: $attributionClass
           atAuction: $atAuction
           color: $color
           forSale: $forSale

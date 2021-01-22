@@ -15,6 +15,7 @@ export const CollectionAppQuery = graphql`
       TOTAL
     ]
     $atAuction: Boolean
+    $attributionClass: [String]
     $color: String
     $forSale: Boolean
     $height: String
@@ -35,6 +36,7 @@ export const CollectionAppQuery = graphql`
           acquireable: $acquireable
           aggregations: $aggregations
           atAuction: $atAuction
+          attributionClass: $attributionClass
           color: $color
           forSale: $forSale
           height: $height

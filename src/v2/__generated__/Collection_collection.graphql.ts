@@ -113,6 +113,12 @@ return {
     {
       "defaultValue": null,
       "kind": "LocalArgument",
+      "name": "attributionClass",
+      "type": "[String]"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
       "name": "atAuction",
       "type": "Boolean"
     },
@@ -518,6 +524,11 @@ return {
         },
         {
           "kind": "Variable",
+          "name": "attributionClass",
+          "variableName": "attributionClass"
+        },
+        {
+          "kind": "Variable",
           "name": "color",
           "variableName": "color"
         },
@@ -605,5 +616,5 @@ return {
   "type": "MarketingCollection"
 };
 })();
-(node as any).hash = '383a1048ea33968c8a3759d311e13958';
+(node as any).hash = 'd6695b2b31d5a1ab79c364eeb32cb1aa';
 export default node;
