@@ -135,6 +135,7 @@ query ConsignInDemandNowQuery(
     smallLowRangeCents
     smallMidRangeCents
     updatedAt
+    id
   }
 }
 */
@@ -314,204 +315,194 @@ v13 = {
   ],
   "storageKey": null
 },
-v14 = {
+v14 = [
+  {
+    "kind": "Variable",
+    "name": "artistId",
+    "variableName": "artistInternalId"
+  },
+  {
+    "kind": "Variable",
+    "name": "medium",
+    "variableName": "medium"
+  }
+],
+v15 = {
   "alias": null,
-  "args": [
-    {
-      "kind": "Variable",
-      "name": "artistId",
-      "variableName": "artistInternalId"
-    },
-    {
-      "kind": "Variable",
-      "name": "medium",
-      "variableName": "medium"
-    }
-  ],
-  "concreteType": "MarketPriceInsights",
-  "kind": "LinkedField",
-  "name": "marketPriceInsights",
-  "plural": false,
-  "selections": [
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "annualLotsSold",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "annualValueSoldCents",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "artistId",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "artistName",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "artsyQInventory",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "createdAt",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "demandRank",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "demandTrend",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "highRangeCents",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "largeHighRangeCents",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "largeLowRangeCents",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "largeMidRangeCents",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "liquidityRank",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "lowRangeCents",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "medianSaleToEstimateRatio",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "medium",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "mediumHighRangeCents",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "mediumLowRangeCents",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "mediumMidRangeCents",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "midRangeCents",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "sellThroughRate",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "smallHighRangeCents",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "smallLowRangeCents",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "smallMidRangeCents",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "updatedAt",
-      "storageKey": null
-    }
-  ],
+  "args": null,
+  "kind": "ScalarField",
+  "name": "annualLotsSold",
   "storageKey": null
 },
-v15 = {
+v16 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "annualValueSoldCents",
+  "storageKey": null
+},
+v17 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "artistId",
+  "storageKey": null
+},
+v18 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "artistName",
+  "storageKey": null
+},
+v19 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "artsyQInventory",
+  "storageKey": null
+},
+v20 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "createdAt",
+  "storageKey": null
+},
+v21 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "demandRank",
+  "storageKey": null
+},
+v22 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "demandTrend",
+  "storageKey": null
+},
+v23 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "highRangeCents",
+  "storageKey": null
+},
+v24 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "largeHighRangeCents",
+  "storageKey": null
+},
+v25 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "largeLowRangeCents",
+  "storageKey": null
+},
+v26 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "largeMidRangeCents",
+  "storageKey": null
+},
+v27 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "liquidityRank",
+  "storageKey": null
+},
+v28 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "lowRangeCents",
+  "storageKey": null
+},
+v29 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "medianSaleToEstimateRatio",
+  "storageKey": null
+},
+v30 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "medium",
+  "storageKey": null
+},
+v31 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "mediumHighRangeCents",
+  "storageKey": null
+},
+v32 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "mediumLowRangeCents",
+  "storageKey": null
+},
+v33 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "mediumMidRangeCents",
+  "storageKey": null
+},
+v34 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "midRangeCents",
+  "storageKey": null
+},
+v35 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "sellThroughRate",
+  "storageKey": null
+},
+v36 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "smallHighRangeCents",
+  "storageKey": null
+},
+v37 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "smallLowRangeCents",
+  "storageKey": null
+},
+v38 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "smallMidRangeCents",
+  "storageKey": null
+},
+v39 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "updatedAt",
+  "storageKey": null
+},
+v40 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -580,7 +571,42 @@ return {
         ],
         "storageKey": null
       },
-      (v14/*: any*/)
+      {
+        "alias": null,
+        "args": (v14/*: any*/),
+        "concreteType": "MarketPriceInsights",
+        "kind": "LinkedField",
+        "name": "marketPriceInsights",
+        "plural": false,
+        "selections": [
+          (v15/*: any*/),
+          (v16/*: any*/),
+          (v17/*: any*/),
+          (v18/*: any*/),
+          (v19/*: any*/),
+          (v20/*: any*/),
+          (v21/*: any*/),
+          (v22/*: any*/),
+          (v23/*: any*/),
+          (v24/*: any*/),
+          (v25/*: any*/),
+          (v26/*: any*/),
+          (v27/*: any*/),
+          (v28/*: any*/),
+          (v29/*: any*/),
+          (v30/*: any*/),
+          (v31/*: any*/),
+          (v32/*: any*/),
+          (v33/*: any*/),
+          (v34/*: any*/),
+          (v35/*: any*/),
+          (v36/*: any*/),
+          (v37/*: any*/),
+          (v38/*: any*/),
+          (v39/*: any*/)
+        ],
+        "storageKey": null
+      }
     ],
     "type": "Query"
   },
@@ -633,7 +659,7 @@ return {
                       (v11/*: any*/),
                       (v12/*: any*/),
                       (v13/*: any*/),
-                      (v15/*: any*/)
+                      (v40/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -643,11 +669,47 @@ return {
             ],
             "storageKey": "auctionResultsConnection(first:1,sort:\"DATE_DESC\")"
           },
-          (v15/*: any*/)
+          (v40/*: any*/)
         ],
         "storageKey": null
       },
-      (v14/*: any*/)
+      {
+        "alias": null,
+        "args": (v14/*: any*/),
+        "concreteType": "MarketPriceInsights",
+        "kind": "LinkedField",
+        "name": "marketPriceInsights",
+        "plural": false,
+        "selections": [
+          (v15/*: any*/),
+          (v16/*: any*/),
+          (v17/*: any*/),
+          (v18/*: any*/),
+          (v19/*: any*/),
+          (v20/*: any*/),
+          (v21/*: any*/),
+          (v22/*: any*/),
+          (v23/*: any*/),
+          (v24/*: any*/),
+          (v25/*: any*/),
+          (v26/*: any*/),
+          (v27/*: any*/),
+          (v28/*: any*/),
+          (v29/*: any*/),
+          (v30/*: any*/),
+          (v31/*: any*/),
+          (v32/*: any*/),
+          (v33/*: any*/),
+          (v34/*: any*/),
+          (v35/*: any*/),
+          (v36/*: any*/),
+          (v37/*: any*/),
+          (v38/*: any*/),
+          (v39/*: any*/),
+          (v40/*: any*/)
+        ],
+        "storageKey": null
+      }
     ]
   },
   "params": {
@@ -655,7 +717,7 @@ return {
     "metadata": {},
     "name": "ConsignInDemandNowQuery",
     "operationKind": "query",
-    "text": "query ConsignInDemandNowQuery(\n  $artistInternalId: ID!\n  $artistSlug: String!\n  $medium: String!\n) {\n  artist(id: $artistSlug) {\n    birthday\n    nationality\n    auctionResultsConnection(first: 1, sort: DATE_DESC) {\n      edges {\n        node {\n          internalID\n          title\n          dimensionText\n          images {\n            larger {\n              url\n              resized {\n                srcSet\n              }\n            }\n          }\n          description\n          dateText\n          organization\n          saleDate\n          priceRealized {\n            display\n            centsUSD\n          }\n          id\n        }\n      }\n    }\n    id\n  }\n  marketPriceInsights(artistId: $artistInternalId, medium: $medium) {\n    annualLotsSold\n    annualValueSoldCents\n    artistId\n    artistName\n    artsyQInventory\n    createdAt\n    demandRank\n    demandTrend\n    highRangeCents\n    largeHighRangeCents\n    largeLowRangeCents\n    largeMidRangeCents\n    liquidityRank\n    lowRangeCents\n    medianSaleToEstimateRatio\n    medium\n    mediumHighRangeCents\n    mediumLowRangeCents\n    mediumMidRangeCents\n    midRangeCents\n    sellThroughRate\n    smallHighRangeCents\n    smallLowRangeCents\n    smallMidRangeCents\n    updatedAt\n  }\n}\n"
+    "text": "query ConsignInDemandNowQuery(\n  $artistInternalId: ID!\n  $artistSlug: String!\n  $medium: String!\n) {\n  artist(id: $artistSlug) {\n    birthday\n    nationality\n    auctionResultsConnection(first: 1, sort: DATE_DESC) {\n      edges {\n        node {\n          internalID\n          title\n          dimensionText\n          images {\n            larger {\n              url\n              resized {\n                srcSet\n              }\n            }\n          }\n          description\n          dateText\n          organization\n          saleDate\n          priceRealized {\n            display\n            centsUSD\n          }\n          id\n        }\n      }\n    }\n    id\n  }\n  marketPriceInsights(artistId: $artistInternalId, medium: $medium) {\n    annualLotsSold\n    annualValueSoldCents\n    artistId\n    artistName\n    artsyQInventory\n    createdAt\n    demandRank\n    demandTrend\n    highRangeCents\n    largeHighRangeCents\n    largeLowRangeCents\n    largeMidRangeCents\n    liquidityRank\n    lowRangeCents\n    medianSaleToEstimateRatio\n    medium\n    mediumHighRangeCents\n    mediumLowRangeCents\n    mediumMidRangeCents\n    midRangeCents\n    sellThroughRate\n    smallHighRangeCents\n    smallLowRangeCents\n    smallMidRangeCents\n    updatedAt\n    id\n  }\n}\n"
   }
 };
 })();

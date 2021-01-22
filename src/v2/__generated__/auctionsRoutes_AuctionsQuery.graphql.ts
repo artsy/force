@@ -39,7 +39,6 @@ query auctionsRoutes_AuctionsQuery {
 fragment AuctionTimer_sale on Sale {
   live_start_at: liveStartAt
   end_at: endAt
-  isLiveOpen
 }
 
 fragment AuctionsApp_currentSales on SaleConnection {
@@ -554,13 +553,6 @@ return {
                     "name": "endAt",
                     "storageKey": null
                   },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "isLiveOpen",
-                    "storageKey": null
-                  },
                   (v7/*: any*/),
                   {
                     "alias": null,
@@ -596,6 +588,13 @@ return {
                     "args": null,
                     "kind": "ScalarField",
                     "name": "isBenefit",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "isLiveOpen",
                     "storageKey": null
                   },
                   {
@@ -700,7 +699,7 @@ return {
     "metadata": {},
     "name": "auctionsRoutes_AuctionsQuery",
     "operationKind": "query",
-    "text": "query auctionsRoutes_AuctionsQuery {\n  me {\n    ...AuctionsApp_me\n    id\n  }\n  currentSales: salesConnection(first: 99, published: true, sort: START_AT_ASC) {\n    ...AuctionsApp_currentSales\n  }\n  pastSales: salesConnection(first: 20, published: true, live: false, sort: START_AT_ASC) {\n    ...AuctionsApp_pastSales\n  }\n}\n\nfragment AuctionTimer_sale on Sale {\n  live_start_at: liveStartAt\n  end_at: endAt\n  isLiveOpen\n}\n\nfragment AuctionsApp_currentSales on SaleConnection {\n  edges {\n    node {\n      ...SaleItem_sale\n      id\n    }\n  }\n}\n\nfragment AuctionsApp_me on Me {\n  ...MyBids_me\n}\n\nfragment AuctionsApp_pastSales on SaleConnection {\n  edges {\n    node {\n      name\n      formattedStartDateTime\n      href\n      id\n    }\n  }\n}\n\nfragment MyBids_me on Me {\n  name\n  auctionsLotStandingConnection(first: 25) {\n    edges {\n      node {\n        isHighestBidder\n        lot {\n          saleId\n          soldStatus\n          internalID\n          bidCount\n          reserveStatus\n          askingPrice: onlineAskingPrice {\n            display\n          }\n          sellingPrice: floorSellingPrice {\n            display\n          }\n          id\n        }\n        saleArtwork {\n          position\n          lotLabel\n          artwork {\n            artistNames\n            href\n            image {\n              cropped(width: 70, height: 70) {\n                url\n              }\n            }\n            id\n          }\n          sale {\n            internalID\n            liveStartAt\n            endAt\n            status\n            id\n          }\n          id\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment SaleItem_sale on Sale {\n  ...AuctionTimer_sale\n  id\n  slug\n  liveStartAt\n  isOpen\n  isPreview\n  isClosed\n  isBenefit\n  isLiveOpen\n  isAuction\n  status\n  startAt\n  endAt\n  saleType\n  name\n  href\n  coverImage {\n    imageURL\n  }\n}\n"
+    "text": "query auctionsRoutes_AuctionsQuery {\n  me {\n    ...AuctionsApp_me\n    id\n  }\n  currentSales: salesConnection(first: 99, published: true, sort: START_AT_ASC) {\n    ...AuctionsApp_currentSales\n  }\n  pastSales: salesConnection(first: 20, published: true, live: false, sort: START_AT_ASC) {\n    ...AuctionsApp_pastSales\n  }\n}\n\nfragment AuctionTimer_sale on Sale {\n  live_start_at: liveStartAt\n  end_at: endAt\n}\n\nfragment AuctionsApp_currentSales on SaleConnection {\n  edges {\n    node {\n      ...SaleItem_sale\n      id\n    }\n  }\n}\n\nfragment AuctionsApp_me on Me {\n  ...MyBids_me\n}\n\nfragment AuctionsApp_pastSales on SaleConnection {\n  edges {\n    node {\n      name\n      formattedStartDateTime\n      href\n      id\n    }\n  }\n}\n\nfragment MyBids_me on Me {\n  name\n  auctionsLotStandingConnection(first: 25) {\n    edges {\n      node {\n        isHighestBidder\n        lot {\n          saleId\n          soldStatus\n          internalID\n          bidCount\n          reserveStatus\n          askingPrice: onlineAskingPrice {\n            display\n          }\n          sellingPrice: floorSellingPrice {\n            display\n          }\n          id\n        }\n        saleArtwork {\n          position\n          lotLabel\n          artwork {\n            artistNames\n            href\n            image {\n              cropped(width: 70, height: 70) {\n                url\n              }\n            }\n            id\n          }\n          sale {\n            internalID\n            liveStartAt\n            endAt\n            status\n            id\n          }\n          id\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment SaleItem_sale on Sale {\n  ...AuctionTimer_sale\n  id\n  slug\n  liveStartAt\n  isOpen\n  isPreview\n  isClosed\n  isBenefit\n  isLiveOpen\n  isAuction\n  status\n  startAt\n  endAt\n  saleType\n  name\n  href\n  coverImage {\n    imageURL\n  }\n}\n"
   }
 };
 })();

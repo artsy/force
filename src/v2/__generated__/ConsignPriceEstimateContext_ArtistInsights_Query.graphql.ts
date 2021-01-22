@@ -37,6 +37,7 @@ query ConsignPriceEstimateContext_ArtistInsights_Query(
         lowRangeCents
         midRangeCents
         highRangeCents
+        id
       }
     }
   }
@@ -54,78 +55,93 @@ var v0 = [
 ],
 v1 = [
   {
-    "alias": null,
-    "args": [
-      {
-        "kind": "Variable",
-        "name": "artistId",
-        "variableName": "artistInternalID"
-      },
-      {
-        "kind": "Literal",
-        "name": "first",
-        "value": 20
-      },
-      {
-        "kind": "Literal",
-        "name": "sort",
-        "value": "DEMAND_RANK_DESC"
-      }
-    ],
-    "concreteType": "PriceInsightConnection",
-    "kind": "LinkedField",
-    "name": "priceInsights",
-    "plural": false,
+    "kind": "Variable",
+    "name": "artistId",
+    "variableName": "artistInternalID"
+  },
+  {
+    "kind": "Literal",
+    "name": "first",
+    "value": 20
+  },
+  {
+    "kind": "Literal",
+    "name": "sort",
+    "value": "DEMAND_RANK_DESC"
+  }
+],
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "artistName",
+  "storageKey": null
+},
+v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "medium",
+  "storageKey": null
+},
+v4 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "lowRangeCents",
+  "storageKey": null
+},
+v5 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "midRangeCents",
+  "storageKey": null
+},
+v6 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "highRangeCents",
+  "storageKey": null
+};
+return {
+  "fragment": {
+    "argumentDefinitions": (v0/*: any*/),
+    "kind": "Fragment",
+    "metadata": null,
+    "name": "ConsignPriceEstimateContext_ArtistInsights_Query",
     "selections": [
       {
         "alias": null,
-        "args": null,
-        "concreteType": "PriceInsightEdge",
+        "args": (v1/*: any*/),
+        "concreteType": "PriceInsightConnection",
         "kind": "LinkedField",
-        "name": "edges",
-        "plural": true,
+        "name": "priceInsights",
+        "plural": false,
         "selections": [
           {
             "alias": null,
             "args": null,
-            "concreteType": "MarketPriceInsights",
+            "concreteType": "PriceInsightEdge",
             "kind": "LinkedField",
-            "name": "node",
-            "plural": false,
+            "name": "edges",
+            "plural": true,
             "selections": [
               {
                 "alias": null,
                 "args": null,
-                "kind": "ScalarField",
-                "name": "artistName",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "medium",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "lowRangeCents",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "midRangeCents",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "highRangeCents",
+                "concreteType": "MarketPriceInsights",
+                "kind": "LinkedField",
+                "name": "node",
+                "plural": false,
+                "selections": [
+                  (v2/*: any*/),
+                  (v3/*: any*/),
+                  (v4/*: any*/),
+                  (v5/*: any*/),
+                  (v6/*: any*/)
+                ],
                 "storageKey": null
               }
             ],
@@ -135,16 +151,6 @@ v1 = [
         "storageKey": null
       }
     ],
-    "storageKey": null
-  }
-];
-return {
-  "fragment": {
-    "argumentDefinitions": (v0/*: any*/),
-    "kind": "Fragment",
-    "metadata": null,
-    "name": "ConsignPriceEstimateContext_ArtistInsights_Query",
-    "selections": (v1/*: any*/),
     "type": "Query"
   },
   "kind": "Request",
@@ -152,14 +158,60 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "ConsignPriceEstimateContext_ArtistInsights_Query",
-    "selections": (v1/*: any*/)
+    "selections": [
+      {
+        "alias": null,
+        "args": (v1/*: any*/),
+        "concreteType": "PriceInsightConnection",
+        "kind": "LinkedField",
+        "name": "priceInsights",
+        "plural": false,
+        "selections": [
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "PriceInsightEdge",
+            "kind": "LinkedField",
+            "name": "edges",
+            "plural": true,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "MarketPriceInsights",
+                "kind": "LinkedField",
+                "name": "node",
+                "plural": false,
+                "selections": [
+                  (v2/*: any*/),
+                  (v3/*: any*/),
+                  (v4/*: any*/),
+                  (v5/*: any*/),
+                  (v6/*: any*/),
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "id",
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
+          }
+        ],
+        "storageKey": null
+      }
+    ]
   },
   "params": {
     "id": null,
     "metadata": {},
     "name": "ConsignPriceEstimateContext_ArtistInsights_Query",
     "operationKind": "query",
-    "text": "query ConsignPriceEstimateContext_ArtistInsights_Query(\n  $artistInternalID: ID!\n) {\n  priceInsights(artistId: $artistInternalID, sort: DEMAND_RANK_DESC, first: 20) {\n    edges {\n      node {\n        artistName\n        medium\n        lowRangeCents\n        midRangeCents\n        highRangeCents\n      }\n    }\n  }\n}\n"
+    "text": "query ConsignPriceEstimateContext_ArtistInsights_Query(\n  $artistInternalID: ID!\n) {\n  priceInsights(artistId: $artistInternalID, sort: DEMAND_RANK_DESC, first: 20) {\n    edges {\n      node {\n        artistName\n        medium\n        lowRangeCents\n        midRangeCents\n        highRangeCents\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
