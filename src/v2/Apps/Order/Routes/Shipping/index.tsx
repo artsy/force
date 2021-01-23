@@ -50,7 +50,7 @@ import {
   emptyAddress,
 } from "v2/Components/AddressForm"
 import { Router } from "found"
-import { pick } from "lodash"
+import { pick, omit } from "lodash"
 import React, { Component } from "react"
 import { RelayProp, createFragmentContainer, graphql } from "react-relay"
 import { get } from "v2/Utils/get"
@@ -58,7 +58,6 @@ import createLogger from "v2/Utils/logger"
 import { Media } from "v2/Utils/Responsive"
 import { BuyerGuarantee } from "../../Components/BuyerGuarantee"
 import { Shipping_me } from "v2/__generated__/Shipping_me.graphql"
-import { omit } from "lodash"
 
 export interface ShippingProps {
   order: Shipping_order
@@ -106,9 +105,9 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
   }
 
   get startingPhoneNumber() {
-    const defaultPhoneNumber = this.defaultAddress?.phoneNumber
-    if (defaultPhoneNumber) {
-      return defaultPhoneNumber
+    const defaultSavedPhoneNumber = this.defaultAddress?.phoneNumber
+    if (defaultSavedPhoneNumber) {
+      return defaultSavedPhoneNumber
     } else {
       return this.props.order.requestedFulfillment &&
         (this.props.order.requestedFulfillment.__typename === "CommerceShip" ||
@@ -119,10 +118,10 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
   }
 
   get startingAddress() {
-    const defaultAddress = this.defaultAddress
-    if (defaultAddress) {
+    const defaultSavedAddress = this.defaultAddress
+    if (defaultSavedAddress) {
       const startingAddress = this.convertShippingAddressForExchange(
-        defaultAddress
+        defaultSavedAddress
       )
       return startingAddress
     } else {
@@ -443,7 +442,6 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
   }
 
   render() {
-    console.log(this.state)
     const { order, isCommittingMutation } = this.props
     const {
       address,
