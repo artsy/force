@@ -61,6 +61,7 @@ export const UserInformation: React.FC<UserInformationProps> = ({
         }
       } else {
         formikBag.resetForm()
+        relay.refetch({})
       }
     } catch (err) {
       formikBag.setErrors(err)
