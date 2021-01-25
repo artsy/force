@@ -97,7 +97,7 @@ export const ShowInstallShots: React.FC<ShowInstallShotsProps> = ({
                 width="100%"
                 height="100%"
                 alt={`${show.name}, installation view`}
-                style={{ position: "absolute" }}
+                style={{ position: "absolute", top: 0, left: 0 }}
               />
             </ResponsiveBox>
           </Clickable>

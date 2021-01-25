@@ -62,6 +62,7 @@ export function getAppNovoRoutes(): RouteConfig[] {
         routes: searchRoutes,
       },
       {
+        converted: true,
         routes: showRoutes,
       },
       {
