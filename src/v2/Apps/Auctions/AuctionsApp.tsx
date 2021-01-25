@@ -115,10 +115,7 @@ const AuctionsApp: React.FC<AuctionsAppProps> = ({
         </Flex>
       </HorizontalPadding>
       <HorizontalPadding>
-        <Box mt={4}>
-          <Separator my={4} />
-          <Footer />
-        </Box>
+        <Footer />
       </HorizontalPadding>
     </AppContainer>
   )
