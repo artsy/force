@@ -31,3 +31,10 @@ sd.AP = {
 }
 sd.APP_URL = "http://artsy.net"
 sd.RECAPTCHA_KEY = "RECAPTCHA_KEY"
+
+global.stitch = {
+  components: {
+    NavBar: x => x,
+    Footer: x => x,
+  },
+}

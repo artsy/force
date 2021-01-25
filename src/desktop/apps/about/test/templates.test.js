@@ -14,7 +14,6 @@ const fixture = require("./fixture/content.json")
 const resizer = require("../../../components/resizer")
 const data = _.extend({}, { asset() {}, sd: {} }, fixture, resizer, {
   nav: {},
-  stitch: { components: { NavBar() {} } },
 })
 
 const render = moreData => template(_.extend({}, data, moreData))

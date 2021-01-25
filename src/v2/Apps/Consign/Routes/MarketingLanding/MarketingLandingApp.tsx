@@ -37,7 +37,7 @@ export const MarketingLandingApp = () => {
         <ArtworkCredits />
 
         <SectionContainer>
-          <Footer />
+          <Footer omitSeparator />
         </SectionContainer>
       </AppContainer>
     </>

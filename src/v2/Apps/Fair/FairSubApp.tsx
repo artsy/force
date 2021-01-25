@@ -2,7 +2,6 @@ import React from "react"
 import { AppContainer } from "v2/Apps/Components/AppContainer"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FairSubApp_fair } from "v2/__generated__/FairSubApp_fair.graphql"
-import { Separator } from "@artsy/palette"
 import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
 import { Footer } from "v2/Components/Footer"
 import { BackLink } from "v2/Components/Links/BackLink"
@@ -34,8 +33,6 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
           </BackLink>
 
           {children}
-
-          <Separator as="hr" my={3} />
 
           <Footer />
         </HorizontalPadding>

@@ -1,4 +1,3 @@
-import { Separator } from "@artsy/palette"
 import { Box, Flex } from "@artsy/palette"
 import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
 import { useSystemContext } from "v2/Artsy"
@@ -26,7 +25,6 @@ export const FrameWithRecentlyViewed: React.SFC<Props> = ({ children }) => {
             <RecentlyViewed />
           </LazyLoadComponent>
         )}
-        <Separator mt={6} mb={3} />
 
         {showFooter && (
           <Box>

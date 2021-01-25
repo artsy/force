@@ -2,7 +2,7 @@ import React from "react"
 import { AppContainer } from "v2/Apps/Components/AppContainer"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FairApp_fair } from "v2/__generated__/FairApp_fair.graphql"
-import { Box, CSSGrid, Separator, Text } from "@artsy/palette"
+import { Box, CSSGrid, Text } from "@artsy/palette"
 import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
 import { Footer } from "v2/Components/Footer"
 import {
@@ -147,8 +147,6 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
           </RouteTabs>
 
           {children}
-
-          <Separator as="hr" my={3} />
 
           <Footer />
         </HorizontalPadding>

@@ -1,4 +1,4 @@
-import { Box, Col, Row, Separator, Spacer, Text } from "@artsy/palette"
+import { Box, Col, Row, Spacer, Text } from "@artsy/palette"
 import { SearchApp_viewer } from "v2/__generated__/SearchApp_viewer.graphql"
 import { AppContainer } from "v2/Apps/Components/AppContainer"
 import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
@@ -88,8 +88,6 @@ export class SearchApp extends React.Component<Props> {
             <RecentlyViewed />
           </Col>
         </Row>
-
-        <Separator mt={6} mb={3} />
 
         <Row>
           <Col>

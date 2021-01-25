@@ -109,8 +109,6 @@ export const ShowApp: React.FC<ShowAppProps> = ({ show }) => {
 
             <ShowContextCard show={show} />
 
-            <Separator as="hr" my={3} />
-
             <Footer />
           </HorizontalPadding>
         </AnalyticsContext.Provider>

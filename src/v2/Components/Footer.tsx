@@ -32,6 +32,7 @@ const Column = styled(Flex).attrs({
 
 interface Props {
   mediator?: Mediator
+  omitSeparator?: boolean
 }
 
 export const Footer: React.FC<Props> = props => {
@@ -39,141 +40,149 @@ export const Footer: React.FC<Props> = props => {
   return (
     <>
       <Media at="xs">
-        <SmallFooter mediator={mediator} />
+        <SmallFooter mediator={mediator} {...props} />
       </Media>
 
       <Media greaterThan="xs">
-        <LargeFooter mediator={mediator} />
+        <LargeFooter mediator={mediator} {...props} />
       </Media>
     </>
   )
 }
 
 export const LargeFooter = (props: Props) => (
-  <FooterContainer mediator={props.mediator} flexDirection="row" />
+  <FooterContainer mediator={props.mediator} flexDirection="row" {...props} />
 )
 
 export const SmallFooter = (props: Props) => (
-  <FooterContainer mediator={props.mediator} flexDirection="column" />
+  <FooterContainer
+    mediator={props.mediator}
+    flexDirection="column"
+    {...props}
+  />
 )
 
 const FooterContainer: React.FC<FlexDirectionProps & Props> = props => {
+  const { omitSeparator } = props
   return (
-    <footer>
-      <Flex
-        flexDirection={props.flexDirection}
-        justifyContent="space-between"
-        width="100%"
-        maxWidth={breakpoints.xl}
-        m="auto"
-      >
-        <Column>
-          <Text variant="mediumText" mb={1}>
-            Buy
-          </Text>
-          <Text variant="text">
-            <Link to="https://support.artsy.net/hc/en-us/categories/360003689513-Buy">
-              Buying on Artsy
-            </Link>
-            <Link to="/consign">Consign with Artsy</Link>
-          </Text>
-        </Column>
+    <>
+      {!omitSeparator && <Separator as="hr" mt={6} mb={3} />}
+      <footer>
+        <Flex
+          flexDirection={props.flexDirection}
+          justifyContent="space-between"
+          width="100%"
+          maxWidth={breakpoints.xl}
+          m="auto"
+        >
+          <Column>
+            <Text variant="mediumText" mb={1}>
+              Buy
+            </Text>
+            <Text variant="text">
+              <Link to="https://support.artsy.net/hc/en-us/categories/360003689513-Buy">
+                Buying on Artsy
+              </Link>
+              <Link to="/consign">Consign with Artsy</Link>
+            </Text>
+          </Column>
 
-        <Column>
-          <Text variant="mediumText" mb={1}>
-            Learn
-          </Text>
+          <Column>
+            <Text variant="mediumText" mb={1}>
+              Learn
+            </Text>
 
-          <Text variant="text">
-            <Link to="/artsy-education">Education</Link>
-            <Link to="/categories">The Art Genome Project</Link>
-          </Text>
-        </Column>
+            <Text variant="text">
+              <Link to="/artsy-education">Education</Link>
+              <Link to="/categories">The Art Genome Project</Link>
+            </Text>
+          </Column>
 
-        <Column>
-          <Text variant="mediumText" mb={1}>
-            About us
-          </Text>
+          <Column>
+            <Text variant="mediumText" mb={1}>
+              About us
+            </Text>
 
-          <Text variant="text">
-            <Link to="/about">About</Link>
-            <Link to="https://medium.com/artsy-blog">Blog</Link>
-            <Link to="/about/jobs">Jobs</Link>
-            <Link to="https://artsy.github.com/open-source">Open Source</Link>
-            <Link to="/about/press">Press</Link>
-            <Link to="/contact">Contact</Link>
-            <Link to="https://support.artsy.net">Visit our Help Center</Link>
-          </Text>
-        </Column>
+            <Text variant="text">
+              <Link to="/about">About</Link>
+              <Link to="https://medium.com/artsy-blog">Blog</Link>
+              <Link to="/about/jobs">Jobs</Link>
+              <Link to="https://artsy.github.com/open-source">Open Source</Link>
+              <Link to="/about/press">Press</Link>
+              <Link to="/contact">Contact</Link>
+              <Link to="https://support.artsy.net">Visit our Help Center</Link>
+            </Text>
+          </Column>
 
-        <Column>
-          <Text variant="mediumText" mb={1}>
-            Partners
-          </Text>
+          <Column>
+            <Text variant="mediumText" mb={1}>
+              Partners
+            </Text>
 
-          <Text variant="text">
-            <Link to="https://partners.artsy.net">Artsy for Galleries</Link>
+            <Text variant="text">
+              <Link to="https://partners.artsy.net">Artsy for Galleries</Link>
 
-            <Link to="/institution-partnerships">Artsy for Museums</Link>
+              <Link to="/institution-partnerships">Artsy for Museums</Link>
 
-            <Link to="/auction-partnerships">Artsy for Auctions</Link>
-          </Text>
-        </Column>
+              <Link to="/auction-partnerships">Artsy for Auctions</Link>
+            </Text>
+          </Column>
 
-        <Media at="xs">
-          <Flex mb={1} flexWrap="wrap">
-            <PolicyLinks />
-          </Flex>
-        </Media>
-      </Flex>
-
-      <Separator />
-
-      <Flex
-        justifyContent="space-between"
-        alignItems="center"
-        width="100%"
-        py={2}
-      >
-        <Flex>
           <Media at="xs">
-            <Flex>
-              <ArtsyMarkIcon width="20px" height="20px" mr={2} />
+            <Flex mb={1} flexWrap="wrap">
+              <PolicyLinks />
             </Flex>
           </Media>
+        </Flex>
 
-          <Media greaterThan="xs">
-            <Flex flexDirection="row">
-              <ArtsyMarkIcon width="30px" height="30px" mr={2} />
+        <Separator />
 
-              <Spacer mr={1} />
-
-              <Flex flexDirection="row">
-                <PolicyLinks />
+        <Flex
+          justifyContent="space-between"
+          alignItems="center"
+          width="100%"
+          py={2}
+        >
+          <Flex>
+            <Media at="xs">
+              <Flex>
+                <ArtsyMarkIcon width="20px" height="20px" mr={2} />
               </Flex>
-            </Flex>
-          </Media>
+            </Media>
+
+            <Media greaterThan="xs">
+              <Flex flexDirection="row">
+                <ArtsyMarkIcon width="30px" height="30px" mr={2} />
+
+                <Spacer mr={1} />
+
+                <Flex flexDirection="row">
+                  <PolicyLinks />
+                </Flex>
+              </Flex>
+            </Media>
+          </Flex>
+
+          <Flex alignItems="center">
+            <WeChat>
+              <WeChatIcon width={space(2)} height={space(2)} mr={1} />
+            </WeChat>
+
+            <Link to="https://twitter.com/artsy">
+              <TwitterIcon width={space(2)} height={space(2)} mr={1} />
+            </Link>
+
+            <Link to="https://www.facebook.com/artsy">
+              <FacebookIcon width={space(2)} height={space(2)} mr={1} />
+            </Link>
+
+            <Link to="https://www.instagram.com/artsy/">
+              <InstagramIcon width={space(2)} height={space(2)} />
+            </Link>
+          </Flex>
         </Flex>
-
-        <Flex alignItems="center">
-          <WeChat>
-            <WeChatIcon width={space(2)} height={space(2)} mr={1} />
-          </WeChat>
-
-          <Link to="https://twitter.com/artsy">
-            <TwitterIcon width={space(2)} height={space(2)} mr={1} />
-          </Link>
-
-          <Link to="https://www.facebook.com/artsy">
-            <FacebookIcon width={space(2)} height={space(2)} mr={1} />
-          </Link>
-
-          <Link to="https://www.instagram.com/artsy/">
-            <InstagramIcon width={space(2)} height={space(2)} />
-          </Link>
-        </Flex>
-      </Flex>
-    </footer>
+      </footer>
+    </>
   )
 }
 

@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from "react"
 import { AppContainer } from "v2/Apps/Components/AppContainer"
-import { Banner, Box, ClosedEyeIcon, Separator, Text } from "@artsy/palette"
+import { Banner, Box, ClosedEyeIcon, Text } from "@artsy/palette"
 import { ViewingRoomHeaderFragmentContainer as ViewingRoomHeader } from "./Components/ViewingRoomHeader"
 import { ViewingRoomContentNotAccessibleFragmentContainer as ViewingRoomContentNotAccessible } from "./Components/ViewingRoomContentNotAccessible"
 import { ViewingRoomTabBar } from "./Components/ViewingRoomTabBar"
@@ -93,7 +93,6 @@ const ViewingRoomApp: React.FC<ViewingRoomAppProps> = ({
         <ViewingRoomHeader viewingRoom={viewingRoom} />
         {user && getView()}
         <Box mx={2}>
-          <Separator mt={6} mb={3} />
           <Footer />
         </Box>
       </AppContainer>
