@@ -100,7 +100,6 @@
     "bem-cn-lite": "3.0.0",
     "blueimp-file-upload": "9.22.1",
     "body-parser": "1.18.3",
-    "caniuse-lite": "^1.0.30001165",
     "chalk": "4.1.0",
     "cheerio": "0.22.0",
     "classnames": "2.2.6",
