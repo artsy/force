@@ -9,7 +9,9 @@ import {
   Row,
   Sans,
   Spacer,
+  Text,
 } from "@artsy/palette"
+import styled from "styled-components"
 import { Shipping_order } from "v2/__generated__/Shipping_order.graphql"
 import {
   CommerceOrderFulfillmentTypeEnum,
@@ -48,16 +50,18 @@ import {
   emptyAddress,
 } from "v2/Components/AddressForm"
 import { Router } from "found"
-import { pick } from "lodash"
+import { pick, omit } from "lodash"
 import React, { Component } from "react"
 import { RelayProp, createFragmentContainer, graphql } from "react-relay"
 import { get } from "v2/Utils/get"
 import createLogger from "v2/Utils/logger"
 import { Media } from "v2/Utils/Responsive"
 import { BuyerGuarantee } from "../../Components/BuyerGuarantee"
+import { Shipping_me } from "v2/__generated__/Shipping_me.graphql"
 
 export interface ShippingProps {
   order: Shipping_order
+  me: Shipping_me
   relay?: RelayProp
   router: Router
   dialog: Dialog
@@ -73,9 +77,16 @@ export interface ShippingState {
   phoneNumberTouched: PhoneNumberTouched
   addressErrors: AddressErrors
   addressTouched: AddressTouched
+  showEditModal: boolean
 }
 
 const logger = createLogger("Order/Routes/Shipping/index.tsx")
+
+const EditButton = styled(Text)`
+  &:hover {
+    text-decoration: underline;
+  }
+`
 
 @track()
 export class ShippingRoute extends Component<ShippingProps, ShippingState> {
@@ -87,25 +98,59 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
     address: this.startingAddress,
     addressErrors: {},
     addressTouched: {},
-    phoneNumber:
-      this.props.order.requestedFulfillment &&
-      (this.props.order.requestedFulfillment.__typename === "CommerceShip" ||
-        this.props.order.requestedFulfillment.__typename === "CommercePickup")
-        ? this.props.order.requestedFulfillment.phoneNumber
-        : "",
+    phoneNumber: this.startingPhoneNumber,
     phoneNumberError: "",
     phoneNumberTouched: false,
+    showEditModal: false,
+  }
+
+  get startingPhoneNumber() {
+    const defaultSavedPhoneNumber = this.defaultAddress?.phoneNumber
+    if (defaultSavedPhoneNumber) {
+      return defaultSavedPhoneNumber
+    } else {
+      return this.props.order.requestedFulfillment &&
+        (this.props.order.requestedFulfillment.__typename === "CommerceShip" ||
+          this.props.order.requestedFulfillment.__typename === "CommercePickup")
+        ? this.props.order.requestedFulfillment.phoneNumber
+        : ""
+    }
   }
 
   get startingAddress() {
-    return {
-      ...emptyAddress,
-      country: this.props.order.lineItems.edges[0].node.artwork.shippingCountry,
+    const defaultSavedAddress = this.defaultAddress
+    if (defaultSavedAddress) {
+      const startingAddress = this.convertShippingAddressForExchange(
+        defaultSavedAddress
+      )
+      return startingAddress
+    } else {
+      const initialAddress = {
+        ...emptyAddress,
+        country: this.props.order.lineItems.edges[0].node.artwork
+          .shippingCountry,
 
-      // We need to pull out _only_ the values specified by the Address type,
-      // since our state will be used for Relay variables later on. The
-      // easiest way to do this is with the emptyAddress.
-      ...pick(this.props.order.requestedFulfillment, Object.keys(emptyAddress)),
+        // We need to pull out _only_ the values specified by the Address type,
+        // since our state will be used for Relay variables later on. The
+        // easiest way to do this is with the emptyAddress.
+        ...pick(
+          this.props.order.requestedFulfillment,
+          Object.keys(emptyAddress)
+        ),
+      }
+      return initialAddress
+    }
+  }
+
+  get defaultAddress() {
+    const addressList = this.props.me.addressConnection.edges
+    if (addressList.length > 0) {
+      const defaultAddress =
+        addressList.find(address => address.node.isDefault)?.node ||
+        addressList[0].node
+      return defaultAddress
+    } else {
+      return null
     }
   }
 
@@ -120,6 +165,11 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
       region: true,
       phoneNumber: true,
     }
+  }
+
+  // Gravity address has isDefault and addressLine3 but exchange does not
+  convertShippingAddressForExchange(address) {
+    return omit(address, ["isDefault", "addressLine3"])
   }
 
   setShipping(variables: ShippingOrderAddressUpdateMutation["variables"]) {
@@ -258,6 +308,10 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
     }
   }
 
+  handleClickEdit = () => {
+    // Open edit modal
+  }
+
   private validateAddress(address: Address) {
     const { name, addressLine1, city, region, country, postalCode } = address
     const usOrCanada = country === "US" || country === "CA"
@@ -311,6 +365,69 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
     })
   }
 
+  renderAddressList = addressList => {
+    return addressList.map((address, index) =>
+      this.formatAddressBox(address.node, index)
+    )
+  }
+
+  formatAddressBox = (address, index: number) => {
+    const {
+      addressLine1,
+      addressLine2,
+      addressLine3,
+      city,
+      country,
+      name,
+      phoneNumber,
+      postalCode,
+      region,
+    } = address
+
+    const formattedAddressLine = [city, region, country, postalCode]
+      .filter(el => el)
+      .join(", ")
+    return (
+      <BorderedRadio
+        value={`${index}`}
+        key={index}
+        position="relative"
+        data-test="savedAddress"
+      >
+        <Flex width="100%">
+          <Flex flexDirection="column">
+            {[name, addressLine1, addressLine2, addressLine3].map(
+              (line, index) =>
+                line && (
+                  <Text
+                    style={{ textTransform: "capitalize" }}
+                    variant="text"
+                    key={index}
+                  >
+                    {line}
+                  </Text>
+                )
+            )}
+            <Text textColor="black60" style={{ textTransform: "capitalize" }}>
+              {formattedAddressLine}
+            </Text>
+            <Text textColor="black60">{phoneNumber}</Text>
+          </Flex>
+          <EditButton
+            position="absolute"
+            top={"20px"}
+            right={"20px"}
+            onClick={() => this.handleClickEdit.bind(this)}
+            textColor="blue100"
+            size="2"
+          >
+            Edit
+          </EditButton>
+        </Flex>
+      </BorderedRadio>
+    )
+  }
+
   @track((props, state, args) => ({
     action_type: Schema.ActionType.Click,
     subject:
@@ -338,6 +455,27 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
       this.props,
       props => props.order.lineItems.edges[0].node.artwork
     )
+    const addressList = this.props.me.addressConnection.edges
+
+    const defaultAddressIndex = () => {
+      const indexOfDefaultAddress = addressList.findIndex(
+        address => address.node.isDefault
+      )
+      return `${indexOfDefaultAddress > -1 ? indexOfDefaultAddress : 0}`
+    }
+
+    const onSelectAddressOption = value => {
+      if (value == "NEW_ADDRESS") {
+        // opens address form
+        // this.setState({ openAddressForm: true })
+      } else {
+        const selectedAddress = this.convertShippingAddressForExchange(
+          addressList[parseInt(value)].node
+        )
+        this.setState({ address: selectedAddress })
+        this.setState({ phoneNumber: selectedAddress.phoneNumber })
+      }
+    }
 
     return (
       <Box data-test="orderShipping">
@@ -370,14 +508,15 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
                       onSelect={this.onSelectShippingOption.bind(this)}
                       defaultValue={this.state.shippingOption}
                     >
-                      <BorderedRadio
-                        value="SHIP"
-                        label="Add shipping address"
-                      />
+                      <Text variant="mediumText" mb="1">
+                        Delivery Method
+                      </Text>
+                      <BorderedRadio value="SHIP" label="Shipping" />
 
                       <BorderedRadio
                         value="PICKUP"
                         label="Arrange for pickup (free)"
+                        data-test="pickupOption"
                       >
                         <Collapse open={this.state.shippingOption === "PICKUP"}>
                           <Sans size="2" color="black60">
@@ -391,11 +530,12 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
                     <Spacer mb={3} />
                   </>
                 )}
-
                 <Collapse
+                  data-test="addressFormCollapse"
                   open={
                     !artwork.pickup_available ||
-                    this.state.shippingOption === "SHIP"
+                    (this.state.shippingOption === "SHIP" &&
+                      !addressList.length)
                   }
                 >
                   <AddressForm
@@ -418,8 +558,12 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
                   />
                 </Collapse>
 
-                <Collapse open={this.state.shippingOption === "PICKUP"}>
+                <Collapse
+                  data-test="phoneNumberCollapse"
+                  open={this.state.shippingOption === "PICKUP"}
+                >
                   <PhoneNumberForm
+                    data-test="pickupPhoneNumberForm"
                     value={phoneNumber}
                     errors={phoneNumberError}
                     touched={phoneNumberTouched}
@@ -427,7 +571,20 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
                     label="Number to contact you for pickup logistics"
                   />
                 </Collapse>
-
+                {addressList.length > 0 && (
+                  <>
+                    <RadioGroup
+                      onSelect={onSelectAddressOption.bind(this)}
+                      defaultValue={defaultAddressIndex()}
+                    >
+                      {this.renderAddressList(addressList)}
+                      <BorderedRadio value={"NEW_ADDRESS"}>
+                        <Text variant="text">Add a new shipping address</Text>
+                      </BorderedRadio>
+                    </RadioGroup>
+                    <Spacer p="2" />
+                  </>
+                )}
                 <Media greaterThan="xs">
                   <Button
                     onClick={this.onContinueButtonPressed}
@@ -507,6 +664,39 @@ export const ShippingFragmentContainer = createFragmentContainer(
         }
         ...ArtworkSummaryItem_order
         ...TransactionDetailsSummaryItem_order
+      }
+    `,
+    me: graphql`
+      fragment Shipping_me on Me
+        @argumentDefinitions(
+          first: { type: "Int", defaultValue: 30 }
+          last: { type: "Int" }
+          after: { type: "String" }
+          before: { type: "String" }
+        ) {
+        name
+        email
+        addressConnection(
+          first: $first
+          last: $last
+          before: $before
+          after: $after
+        ) {
+          edges {
+            node {
+              addressLine1
+              addressLine2
+              addressLine3
+              city
+              country
+              isDefault
+              name
+              phoneNumber
+              postalCode
+              region
+            }
+          }
+        }
       }
     `,
   }
