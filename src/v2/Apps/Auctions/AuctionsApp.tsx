@@ -68,7 +68,6 @@ const AuctionsApp: React.FC<AuctionsAppProps> = ({
                 <MyBidsFragmentContainer me={me} />
               </Box>
               <Box>
-                <Separator mb={4} />
                 <a
                   href="https://apps.apple.com/us/app/artsy-buy-sell-original-art/id703796080"
                   target="_blank"

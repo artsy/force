@@ -25,7 +25,11 @@ interface MyBidsProps {
 }
 
 const MyBids: React.FC<MyBidsProps> = ({ me }) => {
-  const lotStandings = extractNodes(me.auctionsLotStandingConnection)
+  const lotStandings = extractNodes(me?.auctionsLotStandingConnection)
+
+  if (!lotStandings.length) {
+    return null
+  }
 
   const activeBids = lotStandings
     .map(getSaleInfo)
@@ -38,6 +42,7 @@ const MyBids: React.FC<MyBidsProps> = ({ me }) => {
 
   return (
     <Box>
+      <Separator mb={4} />
       <Text variant="subtitle">Active Bids</Text>
       <Spacer my={2} />
       <Join separator={<Separator my={1} mb={15} />}>
