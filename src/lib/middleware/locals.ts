@@ -56,22 +56,5 @@ export function localsMiddleware(
   res.locals.sd.USER_AGENT = res.locals.userAgent = escape(ua)
   res.locals.sd.REQUEST_ID = req.id
 
-  // Determines device type for non-responsive pages.
-  res.locals.sd.IS_MOBILE = Boolean(
-    (ua.match(/iPhone/i) && !ua.match(/iPad/i)) ||
-      (ua.match(/Android/i) && ua.match(/Mobile/i)) ||
-      ua.match(/Windows Phone/i) ||
-      ua.match(/BB10/i) ||
-      ua.match(/BlackBerry/i)
-  )
-
-  res.locals.sd.IS_TABLET = Boolean(
-    (ua.match(/iPad/i) && ua.match(/Mobile/i)) ||
-      // specifically targets Vivo
-      (ua.match(/vivo/i) && ua.match(/Mobile/i)) ||
-      // targets android devices that are not mobile
-      (ua.match(/Android/i) && ua.match(/Mobile/i))
-  )
-
   next()
 }
