@@ -24,6 +24,7 @@ import bodyParser from "body-parser"
 import { csrfTokenMiddleware } from "./lib/middleware/csrfToken"
 import { sharifyLocalsMiddleware } from "./lib/middleware/sharifyLocals"
 import { collectionToArtistSeriesRedirect } from "./lib/middleware/artistSeriesRedirect"
+import { handleArtworkImageDownload } from "desktop/apps/artsy-v2/apps/artwork/artworkMiddleware"
 
 const CurrentUser = require("./lib/current_user.coffee")
 
@@ -146,4 +147,7 @@ export default function commonMiddlewareSetup(app) {
 
   // Redirects
   app.get("/collection/:collectionSlug", collectionToArtistSeriesRedirect)
+
+  // TODO: Figure out where this should go, currently just copied from artsy-v2/server
+  app.get("/artwork/:artworkID/download/:filename", handleArtworkImageDownload)
 }

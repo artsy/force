@@ -3,7 +3,7 @@ import { RouteConfig } from "found"
 import { artistRoutes } from "v2/Apps/Artist/artistRoutes"
 // import { artistSeriesRoutes } from "./ArtistSeries/artistSeriesRoutes"
 import { artistsRoutes } from "v2/Apps/Artists/artistsRoutes"
-import { artworkRoutes } from "v2/Apps/Artwork/artworkRoutes"
+// import { artworkRoutes } from "v2/Apps/Artwork/artworkRoutes"
 // import { collectRoutes } from "v2/Apps/Collect/collectRoutes"
 import { consignRoutes } from "v2/Apps/Consign/consignRoutes"
 import { conversationRoutes } from "v2/Apps/Conversation/conversationRoutes"
@@ -32,9 +32,10 @@ export function getAppRoutes(): RouteConfig[] {
     // {
     //   routes: artistSeriesRoutes,
     // },
-    {
-      routes: artworkRoutes,
-    },
+    // NOTE: Converted to use NOVO template.
+    // {
+    //   routes: artworkRoutes,
+    // },
     {
       routes: auctionsRoutes,
     },

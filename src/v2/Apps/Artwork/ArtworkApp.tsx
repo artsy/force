@@ -33,6 +33,15 @@ import {
   useAnalyticsContext,
 } from "v2/Artsy/Analytics/AnalyticsContext"
 import { Mediator } from "lib/mediator"
+import { ReCaptchaContainer } from "v2/Utils/ReCaptchaContainer"
+
+if (typeof window !== "undefined") {
+  import("desktop/apps/artsy-v2/apps/artwork/artworkClient").then(
+    ({ artworkClient }) => {
+      artworkClient()
+    }
+  )
+}
 
 export interface Props {
   artwork: ArtworkApp_artwork
@@ -56,13 +65,40 @@ export class ArtworkApp extends React.Component<Props> {
    * data that remains consistent with the rest of the app.
    */
   componentDidMount() {
+    this.addLegacyStyles()
     this.track()
+  }
+
+  componentWillUnmount() {
+    this.removeLegacyStyles()
   }
 
   componentDidUpdate() {
     if (this.props.shouldTrackPageView) {
       this.track()
     }
+  }
+
+  // TODO: Remove once inquiry flow is rebuilt in react
+  // We need to inject legacy CSS this way as the style set is too large to
+  // use styled components.
+  addLegacyStyles() {
+    if (!document.getElementById("legacyArtworkPageStyles")) {
+      import("./Components/legacyCSS").then(({ legacyCSS }) => {
+        document.head.insertAdjacentHTML(
+          "beforeend",
+          `<style id='legacyArtworkPageStyles'>${legacyCSS}</style>`
+        )
+      })
+    }
+  }
+
+  // TODO: Remove once inquiry flow is rebuilt in react
+  removeLegacyStyles() {
+    const legacyArtworkPageStyles = document.getElementById(
+      "legacyArtworkPageStyles"
+    )
+    legacyArtworkPageStyles?.parentNode.removeChild(legacyArtworkPageStyles)
   }
 
   track() {
@@ -172,8 +208,14 @@ export class ArtworkApp extends React.Component<Props> {
     const { artwork, me } = this.props
     return (
       <AppContainer>
+        {/* FIXME: remove once we refactor out legacy backbone code.
+            Add place to attach legacy flash message, used in legacy inquiry flow
+         */}
+        <div id="main-layout-flash" />
+
+        <ReCaptchaContainer />
+
         <HorizontalPadding>
-          {/* NOTE: react-head automatically moves these tags to the <head> element */}
           <ArtworkMeta artwork={artwork} />
 
           <Row>
