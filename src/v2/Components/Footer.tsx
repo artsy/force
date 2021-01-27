@@ -88,10 +88,10 @@ const FooterContainer: React.FC<FlexDirectionProps & Props> = props => {
             </Text>
 
             <Text variant="text">
-              <StyledFooterLink to="/about">About</StyledFooterLink>
-              <StyledFooterLink to="/about/jobs">Jobs</StyledFooterLink>
-              <StyledFooterLink to="/about/press">Press</StyledFooterLink>
-              <StyledFooterLink to="/contact">Contact</StyledFooterLink>
+              <Link to="/about">About</Link>
+              <Link to="/about/jobs">Jobs</Link>
+              <Link to="/about/press">Press</Link>
+              <Link to="/contact">Contact</Link>
             </Text>
           </Column>
 
@@ -100,18 +100,10 @@ const FooterContainer: React.FC<FlexDirectionProps & Props> = props => {
               Resources
             </Text>
             <Text variant="text">
-              <StyledFooterLink to="https://artsy.github.com/open-source">
-                Open Source
-              </StyledFooterLink>
-              <StyledFooterLink to="https://medium.com/artsy-blog">
-                Blog
-              </StyledFooterLink>
-              <StyledFooterLink to="/categories">
-                The Art Genome Project
-              </StyledFooterLink>
-              <StyledFooterLink to="/artsy-education">
-                Education
-              </StyledFooterLink>
+              <Link to="https://artsy.github.com/open-source">Open Source</Link>
+              <Link to="https://medium.com/artsy-blog">Blog</Link>
+              <Link to="/categories">The Art Genome Project</Link>
+              <Link to="/artsy-education">Education</Link>
             </Text>
           </Column>
 
@@ -121,15 +113,9 @@ const FooterContainer: React.FC<FlexDirectionProps & Props> = props => {
             </Text>
 
             <Text variant="text">
-              <StyledFooterLink to="https://partners.artsy.net">
-                Artsy for Galleries
-              </StyledFooterLink>
-              <StyledFooterLink to="/institution-partnerships">
-                Artsy for Museums
-              </StyledFooterLink>
-              <StyledFooterLink to="/auction-partnerships">
-                Artsy for Auctions
-              </StyledFooterLink>
+              <Link to="https://partners.artsy.net">Artsy for Galleries</Link>
+              <Link to="/institution-partnerships">Artsy for Museums</Link>
+              <Link to="/auction-partnerships">Artsy for Auctions</Link>
             </Text>
           </Column>
 
@@ -138,18 +124,10 @@ const FooterContainer: React.FC<FlexDirectionProps & Props> = props => {
               Support
             </Text>
             <Text variant="text">
-              <StyledFooterLink to="https://support.artsy.net">
-                Visit our Help Center
-              </StyledFooterLink>
-              <StyledFooterLink to="https://support.artsy.net/hc/en-us/categories/360003689513-Buy">
+              <Link to="https://support.artsy.net">Visit our Help Center</Link>
+              <Link to="https://support.artsy.net/hc/en-us/categories/360003689513-Buy">
                 Buying on Artsy
-              </StyledFooterLink>
-              <Media greaterThan="xs">
-                <Text variant="mediumText" mb={1} mt={3}>
-                  Get the iOS app
-                </Text>
-                <DownloadAppBadge contextModule={ContextModule.footer} />
-              </Media>
+              </Link>
             </Text>
           </Column>
 
@@ -193,17 +171,17 @@ const FooterContainer: React.FC<FlexDirectionProps & Props> = props => {
               <WeChatIcon width={space(2)} height={space(2)} mr={1} />
             </WeChat>
 
-            <StyledFooterLink to="https://twitter.com/artsy">
+            <Link to="https://twitter.com/artsy">
               <TwitterIcon width={space(2)} height={space(2)} mr={1} />
-            </StyledFooterLink>
+            </Link>
 
-            <StyledFooterLink to="https://www.facebook.com/artsy">
+            <Link to="https://www.facebook.com/artsy">
               <FacebookIcon width={space(2)} height={space(2)} mr={1} />
-            </StyledFooterLink>
+            </Link>
 
-            <StyledFooterLink to="https://www.instagram.com/artsy/">
+            <Link to="https://www.instagram.com/artsy/">
               <InstagramIcon width={space(2)} height={space(2)} />
-            </StyledFooterLink>
+            </Link>
           </Flex>
         </Flex>
       </footer>
@@ -217,7 +195,7 @@ const WeChat = styled(Flex)`
   }
 `
 
-const StyledFooterLink = styled(RouterLink)`
+const Link = styled(RouterLink)`
   display: flex;
   text-decoration: none;
   align-items: center;
@@ -236,28 +214,28 @@ const PolicyLinks = () => (
       © {new Date().getFullYear()} Artsy
     </Text>
 
-    <StyledFooterLink to="/terms">
+    <Link to="/terms">
       <Text variant="caption" color="black60" mr={1}>
         Terms of Use
       </Text>
-    </StyledFooterLink>
+    </Link>
 
-    <StyledFooterLink to="/privacy">
+    <Link to="/privacy">
       <Text variant="caption" color="black60" mr={1}>
         Privacy Policy
       </Text>
-    </StyledFooterLink>
+    </Link>
 
-    <StyledFooterLink to="/security">
+    <Link to="/security">
       <Text variant="caption" color="black60" mr={1}>
         Security
       </Text>
-    </StyledFooterLink>
+    </Link>
 
-    <StyledFooterLink to="/conditions-of-sale">
+    <Link to="/conditions-of-sale">
       <Text variant="caption" color="black60">
         Conditions of Sale
       </Text>
-    </StyledFooterLink>
+    </Link>
   </>
 )
