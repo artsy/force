@@ -86,4 +86,12 @@ const hardcodedMediums = [
     value: "performance-art",
     name: "Performance Art",
   },
+  {
+    value: "reproduction",
+    name: "Reproduction",
+  },
+  {
+    value: "ephemera-or-merchandise",
+    name: "Ephemera or Merchandise",
+  },
 ]
