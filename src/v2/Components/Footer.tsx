@@ -17,19 +17,16 @@ import {
   space,
 } from "@artsy/palette"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
+import { DownloadAppBadge } from "v2/Components/DownloadAppBadge"
 import { Mediator } from "lib/mediator"
+import { ContextModule } from "@artsy/cohesion"
 
 const Column = styled(Flex).attrs({
   flex: 1,
   flexDirection: "column",
   mr: 2,
   mb: 3,
-})`
-  a {
-    padding: ${space(1)}px 0;
-  }
-`
-
+})``
 interface Props {
   mediator?: Mediator
   omitSeparator?: boolean
@@ -64,6 +61,7 @@ export const SmallFooter = (props: Props) => (
 
 const FooterContainer: React.FC<FlexDirectionProps & Props> = props => {
   const { omitSeparator } = props
+
   return (
     <>
       {!omitSeparator && <Separator as="hr" mt={6} mb={3} />}
@@ -75,28 +73,14 @@ const FooterContainer: React.FC<FlexDirectionProps & Props> = props => {
           maxWidth={breakpoints.xl}
           m="auto"
         >
-          <Column>
-            <Text variant="mediumText" mb={1}>
-              Buy
-            </Text>
-            <Text variant="text">
-              <Link to="https://support.artsy.net/hc/en-us/categories/360003689513-Buy">
-                Buying on Artsy
-              </Link>
-              <Link to="/consign">Consign with Artsy</Link>
-            </Text>
-          </Column>
-
-          <Column>
-            <Text variant="mediumText" mb={1}>
-              Learn
-            </Text>
-
-            <Text variant="text">
-              <Link to="/artsy-education">Education</Link>
-              <Link to="/categories">The Art Genome Project</Link>
-            </Text>
-          </Column>
+          <Media at="xs">
+            <Column>
+              <Text variant="mediumText" mb={1}>
+                Get the iOS app
+              </Text>
+              <DownloadAppBadge contextModule={ContextModule.footer} />
+            </Column>
+          </Media>
 
           <Column>
             <Text variant="mediumText" mb={1}>
@@ -105,26 +89,45 @@ const FooterContainer: React.FC<FlexDirectionProps & Props> = props => {
 
             <Text variant="text">
               <Link to="/about">About</Link>
-              <Link to="https://medium.com/artsy-blog">Blog</Link>
               <Link to="/about/jobs">Jobs</Link>
-              <Link to="https://artsy.github.com/open-source">Open Source</Link>
               <Link to="/about/press">Press</Link>
               <Link to="/contact">Contact</Link>
-              <Link to="https://support.artsy.net">Visit our Help Center</Link>
             </Text>
           </Column>
 
           <Column>
             <Text variant="mediumText" mb={1}>
-              Partners
+              Resources
+            </Text>
+            <Text variant="text">
+              <Link to="https://artsy.github.com/open-source">Open Source</Link>
+              <Link to="https://medium.com/artsy-blog">Blog</Link>
+              <Link to="/categories">The Art Genome Project</Link>
+              <Link to="/artsy-education">Education</Link>
+            </Text>
+          </Column>
+
+          <Column>
+            <Text variant="mediumText" mb={1}>
+              Partnerships
             </Text>
 
             <Text variant="text">
               <Link to="https://partners.artsy.net">Artsy for Galleries</Link>
-
               <Link to="/institution-partnerships">Artsy for Museums</Link>
-
               <Link to="/auction-partnerships">Artsy for Auctions</Link>
+            </Text>
+          </Column>
+
+          <Column>
+            <Text variant="mediumText" mb={1}>
+              Support
+            </Text>
+            <Text variant="text">
+              <Link to="https://support.artsy.net">Visit our Help Center</Link>
+              <Link to="https://support.artsy.net/hc/en-us/categories/360003689513-Buy">
+                Buying on Artsy
+              </Link>
             </Text>
           </Column>
 
@@ -196,6 +199,7 @@ const Link = styled(RouterLink)`
   display: flex;
   text-decoration: none;
   align-items: center;
+  padding: ${space(1)}px 0;
 `
 
 const PolicyLinks = () => (
