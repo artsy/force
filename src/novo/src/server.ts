@@ -2,6 +2,7 @@ import sharify from "sharify"
 import type { NextFunction, Request, Response } from "express"
 import { buildServerApp } from "v2/Artsy/Router/server"
 import { getAppNovoRoutes } from "v2/Apps/getAppNovoRoutes"
+import { collectionToArtistSeriesRedirect } from "lib/middleware/artistSeriesRedirect"
 import { flatten } from "lodash"
 import ReactDOM from "react-dom/server"
 import loadAssetManifest from "lib/manifest"
@@ -16,6 +17,9 @@ const PUBLIC_DIR = path.resolve(__dirname, "../../../public")
 const NOVO_MANIFEST = loadAssetManifest("manifest-novo.json")
 
 const app = express()
+
+app.get("/collection/:collectionSlug", collectionToArtistSeriesRedirect)
+
 const routes = getAppNovoRoutes()
 
 /**

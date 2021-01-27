@@ -1,7 +1,7 @@
-import { NextFunction } from "express"
+import type { NextFunction } from "express"
 import { collectionToArtistSeriesSlugMap } from "v2/Apps/Collect/Utils/collectionToArtistSeriesSlugMap"
 
-export const handleCollectionToArtistSeriesRedirect = async (
+export const collectionToArtistSeriesRedirect = async (
   req,
   res,
   next: NextFunction
