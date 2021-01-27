@@ -1,4 +1,4 @@
-import { PageName, useAnalyticsContext, useSystemContext } from "v2/Artsy"
+import { useAnalyticsContext, useSystemContext } from "v2/Artsy"
 import React from "react"
 import styled from "styled-components"
 import { FlexDirectionProps } from "styled-system"
@@ -227,7 +227,7 @@ const StyledFooterLink = styled(RouterLink)`
   padding: ${space(1)}px 0;
 `
 
-const DownloadAppBadge: React.FC = track(
+export const DownloadAppBadge: React.FC = track(
   {},
   {
     dispatch: data => Events.postEvent(data),
