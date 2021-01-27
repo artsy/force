@@ -24,6 +24,7 @@ import bodyParser from "body-parser"
 import { csrfTokenMiddleware } from "./lib/middleware/csrfToken"
 import { sharifyLocalsMiddleware } from "./lib/middleware/sharifyLocals"
 import { collectionToArtistSeriesRedirect } from "./lib/middleware/artistSeriesRedirect"
+import { userRequiredMiddleware } from "lib/middleware/userRequiredMiddleware"
 
 const CurrentUser = require("./lib/current_user.coffee")
 
@@ -102,6 +103,9 @@ function applySecurityMiddleware(app) {
   // Add CSRF to the cookie and remove it from the page. This will allows the
   // caching on the html and is used by the Login Modal to make secure requests.
   app.use(csrfTokenMiddleware)
+
+  // Require a user for these routes
+  app.use(userRequiredMiddleware)
 }
 
 function applyStaticAssetMiddlewares(app) {

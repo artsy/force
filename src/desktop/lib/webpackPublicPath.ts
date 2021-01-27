@@ -30,6 +30,7 @@ if (process.env.NODE_ENV === "production") {
     "/collection",
     "/collect",
     "/show/",
+    "/user/conversations",
   ]
 
   function beenConverted() {
