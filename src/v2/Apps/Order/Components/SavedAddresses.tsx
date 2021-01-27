@@ -89,7 +89,7 @@ const SavedAddresses: React.FC<Props> = props => {
   return (
     <>
       <RadioGroup
-        onSelect={onSelect.bind(this)}
+        onSelect={onSelect}
         defaultValue={defaultAddressIndex(addressList)}
       >
         {renderAddressList(addressList, handleClickEdit)}
