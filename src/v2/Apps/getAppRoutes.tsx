@@ -1,7 +1,7 @@
 import { buildAppRoutes } from "v2/Artsy/Router/buildAppRoutes"
 import { RouteConfig } from "found"
 import { artistRoutes } from "v2/Apps/Artist/artistRoutes"
-import { artistSeriesRoutes } from "./ArtistSeries/artistSeriesRoutes"
+// import { artistSeriesRoutes } from "./ArtistSeries/artistSeriesRoutes"
 import { artistsRoutes } from "v2/Apps/Artists/artistsRoutes"
 import { artworkRoutes } from "v2/Apps/Artwork/artworkRoutes"
 // import { collectRoutes } from "v2/Apps/Collect/collectRoutes"
@@ -28,9 +28,10 @@ export function getAppRoutes(): RouteConfig[] {
     {
       routes: artistsRoutes,
     },
-    {
-      routes: artistSeriesRoutes,
-    },
+    // NOTE: Converted to use NOVO template.
+    // {
+    //   routes: artistSeriesRoutes,
+    // },
     {
       routes: artworkRoutes,
     },

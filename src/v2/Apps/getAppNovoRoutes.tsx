@@ -28,6 +28,7 @@ export function getAppNovoRoutes(): RouteConfig[] {
         routes: artistsRoutes,
       },
       {
+        converted: true,
         routes: artistSeriesRoutes,
       },
       {

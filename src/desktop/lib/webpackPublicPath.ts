@@ -23,7 +23,13 @@ if (process.env.NODE_ENV === "production") {
   }
 
   // TODO: Remove this as its temporary while routes are being converted.
-  const convertedRoutes = ["/collections", "/collection", "/collect", "/show/"]
+  const convertedRoutes = [
+    "/arist-series",
+    "/collections",
+    "/collection",
+    "/collect",
+    "/show/",
+  ]
 
   function beenConverted() {
     for (const convertedRoute of convertedRoutes) {
