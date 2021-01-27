@@ -9,12 +9,9 @@ interface DownloadAppBadgeProps {
   contextModule: ContextModule
 }
 
-export const DownloadAppBadge: React.FC<DownloadAppBadgeProps> = track(
-  {},
-  {
-    dispatch: data => Events.postEvent(data),
-  }
-)(({ contextModule }) => {
+export const DownloadAppBadge: React.FC<DownloadAppBadgeProps> = track(null, {
+  dispatch: data => Events.postEvent(data),
+})(({ contextModule }) => {
   const tracking = useTracking()
   const downloadAppUrl =
     "https://apps.apple.com/us/app/artsy-buy-sell-original-art/id703796080"
