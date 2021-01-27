@@ -47,10 +47,8 @@ import {
   AddressErrors,
   AddressForm,
   AddressTouched,
-  emptyAddress,
 } from "v2/Components/AddressForm"
 import { Router } from "found"
-import { pick, omit } from "lodash"
 import React, { Component } from "react"
 import { RelayProp, createFragmentContainer, graphql } from "react-relay"
 import { get } from "v2/Utils/get"
@@ -58,6 +56,11 @@ import createLogger from "v2/Utils/logger"
 import { Media } from "v2/Utils/Responsive"
 import { BuyerGuarantee } from "../../Components/BuyerGuarantee"
 import { Shipping_me } from "v2/__generated__/Shipping_me.graphql"
+import {
+  startingPhoneNumber,
+  startingAddress,
+  convertShippingAddressForExchange,
+} from "../../Utils/shippingAddressUtils"
 
 export interface ShippingProps {
   order: Shipping_order
@@ -95,63 +98,13 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
     this.props.order.requestedFulfillment.__typename !== "CommerceShip"
       ? "PICKUP"
       : "SHIP") as CommerceOrderFulfillmentTypeEnum,
-    address: this.startingAddress,
+    address: startingAddress(this.props.me, this.props.order),
     addressErrors: {},
     addressTouched: {},
-    phoneNumber: this.startingPhoneNumber,
+    phoneNumber: startingPhoneNumber(this.props.me, this.props.order),
     phoneNumberError: "",
     phoneNumberTouched: false,
     showEditModal: false,
-  }
-
-  get startingPhoneNumber() {
-    const defaultSavedPhoneNumber = this.defaultAddress?.phoneNumber
-    if (defaultSavedPhoneNumber) {
-      return defaultSavedPhoneNumber
-    } else {
-      return this.props.order.requestedFulfillment &&
-        (this.props.order.requestedFulfillment.__typename === "CommerceShip" ||
-          this.props.order.requestedFulfillment.__typename === "CommercePickup")
-        ? this.props.order.requestedFulfillment.phoneNumber
-        : ""
-    }
-  }
-
-  get startingAddress() {
-    const defaultSavedAddress = this.defaultAddress
-    if (defaultSavedAddress) {
-      const startingAddress = this.convertShippingAddressForExchange(
-        defaultSavedAddress
-      )
-      return startingAddress
-    } else {
-      const initialAddress = {
-        ...emptyAddress,
-        country: this.props.order.lineItems.edges[0].node.artwork
-          .shippingCountry,
-
-        // We need to pull out _only_ the values specified by the Address type,
-        // since our state will be used for Relay variables later on. The
-        // easiest way to do this is with the emptyAddress.
-        ...pick(
-          this.props.order.requestedFulfillment,
-          Object.keys(emptyAddress)
-        ),
-      }
-      return initialAddress
-    }
-  }
-
-  get defaultAddress() {
-    const addressList = this.props.me.addressConnection.edges
-    if (addressList.length > 0) {
-      const defaultAddress =
-        addressList.find(address => address.node.isDefault)?.node ||
-        addressList[0].node
-      return defaultAddress
-    } else {
-      return null
-    }
   }
 
   get touchedAddress() {
@@ -165,11 +118,6 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
       region: true,
       phoneNumber: true,
     }
-  }
-
-  // Gravity address has isDefault and addressLine3 but exchange does not
-  convertShippingAddressForExchange(address) {
-    return omit(address, ["isDefault", "addressLine3"])
   }
 
   setShipping(variables: ShippingOrderAddressUpdateMutation["variables"]) {
@@ -469,7 +417,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
         // opens address form
         // this.setState({ openAddressForm: true })
       } else {
-        const selectedAddress = this.convertShippingAddressForExchange(
+        const selectedAddress = convertShippingAddressForExchange(
           addressList[parseInt(value)].node
         )
         this.setState({ address: selectedAddress })
