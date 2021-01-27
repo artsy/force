@@ -38,7 +38,7 @@ export const AttributionClassFilter: React.FC = () => {
   }
 
   return (
-    <Toggle label="Classification" expanded>
+    <Toggle label="Rarity" expanded>
       <Flex flexDirection="column">
         {checkboxValues.map(({ name, value }, index) => {
           const props = {
