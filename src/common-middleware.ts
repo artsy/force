@@ -23,6 +23,7 @@ import { assetMiddleware } from "./lib/middleware/asset"
 import bodyParser from "body-parser"
 import { csrfTokenMiddleware } from "./lib/middleware/csrfToken"
 import { sharifyLocalsMiddleware } from "./lib/middleware/sharifyLocals"
+import { collectionToArtistSeriesRedirect } from "./lib/middleware/artistSeriesRedirect"
 
 const CurrentUser = require("./lib/current_user.coffee")
 
@@ -142,4 +143,7 @@ export default function commonMiddlewareSetup(app) {
 
   // Sharify locals
   app.use(sharifyLocalsMiddleware)
+
+  // Redirects
+  app.get("/collection/:collectionSlug", collectionToArtistSeriesRedirect)
 }
