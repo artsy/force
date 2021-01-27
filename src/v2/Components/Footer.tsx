@@ -1,4 +1,4 @@
-import { useSystemContext } from "v2/Artsy"
+import { PageName, useAnalyticsContext, useSystemContext } from "v2/Artsy"
 import React from "react"
 import styled from "styled-components"
 import { FlexDirectionProps } from "styled-system"
@@ -20,6 +20,9 @@ import {
 } from "@artsy/palette"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import { Mediator } from "lib/mediator"
+import track, { useTracking } from "react-tracking"
+import { clickedAppDownload, ContextModule } from "@artsy/cohesion"
+import Events from "v2/Utils/Events"
 
 const Column = styled(Flex).attrs({
   flex: 1,
@@ -224,18 +227,44 @@ const StyledFooterLink = styled(RouterLink)`
   padding: ${space(1)}px 0;
 `
 
-const DownloadAppBadge = () => {
+const DownloadAppBadge: React.FC = track(
+  {},
+  {
+    dispatch: data => Events.postEvent(data),
+  }
+)(() => {
+  const tracking = useTracking()
+  const downloadAppUrl =
+    "https://apps.apple.com/us/app/artsy-buy-sell-original-art/id703796080"
+  const {
+    contextPageOwnerId,
+    contextPageOwnerSlug,
+    contextPageOwnerType,
+  } = useAnalyticsContext()
+  const trackClickedDownloadAppBadge = () => {
+    tracking.trackEvent(
+      clickedAppDownload({
+        context_module: ContextModule.footer,
+        context_page_owner_type: contextPageOwnerType,
+        context_page_owner_slug: contextPageOwnerSlug,
+        context_page_owner_id: contextPageOwnerId,
+        destination_path: downloadAppUrl,
+        subject: "Download on the App Store",
+      })
+    )
+  }
   return (
     <Box width={120} height={40}>
       <Link
         padding={0}
-        href="https://apps.apple.com/us/app/artsy-buy-sell-original-art/id703796080"
+        href={downloadAppUrl}
+        onClick={trackClickedDownloadAppBadge}
       >
         <DownloadAppBadgeSVG />
       </Link>
     </Box>
   )
-}
+})
 
 const PolicyLinks = () => (
   <>
