@@ -3,9 +3,7 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type Shipping_me = {
-    readonly name: string | null;
-    readonly email: string | null;
+export type SavedAddresses_me = {
     readonly addressConnection: {
         readonly edges: ReadonlyArray<{
             readonly node: {
@@ -22,26 +20,17 @@ export type Shipping_me = {
             } | null;
         } | null> | null;
     } | null;
+    readonly " $refType": "SavedAddresses_me";
+};
+export type SavedAddresses_me$data = SavedAddresses_me;
+export type SavedAddresses_me$key = {
+    readonly " $data"?: SavedAddresses_me$data;
     readonly " $fragmentRefs": FragmentRefs<"SavedAddresses_me">;
-    readonly " $refType": "Shipping_me";
-};
-export type Shipping_me$data = Shipping_me;
-export type Shipping_me$key = {
-    readonly " $data"?: Shipping_me$data;
-    readonly " $fragmentRefs": FragmentRefs<"Shipping_me">;
 };
 
 
 
-const node: ReaderFragment = (function(){
-var v0 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "name",
-  "storageKey": null
-};
-return {
+const node: ReaderFragment = {
   "argumentDefinitions": [
     {
       "defaultValue": 30,
@@ -70,16 +59,8 @@ return {
   ],
   "kind": "Fragment",
   "metadata": null,
-  "name": "Shipping_me",
+  "name": "SavedAddresses_me",
   "selections": [
-    (v0/*: any*/),
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "email",
-      "storageKey": null
-    },
     {
       "alias": null,
       "args": [
@@ -167,7 +148,13 @@ return {
                   "name": "isDefault",
                   "storageKey": null
                 },
-                (v0/*: any*/),
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "name",
+                  "storageKey": null
+                },
                 {
                   "alias": null,
                   "args": null,
@@ -197,15 +184,9 @@ return {
         }
       ],
       "storageKey": null
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "SavedAddresses_me"
     }
   ],
   "type": "Me"
 };
-})();
-(node as any).hash = '6fd6a6287f747fbf3e0a3f0a04d2e070';
+(node as any).hash = '3442b7cf49d583cc0c27097487821f30';
 export default node;

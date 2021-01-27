@@ -11,7 +11,6 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import styled from "styled-components"
 import { Shipping_order } from "v2/__generated__/Shipping_order.graphql"
 import {
   CommerceOrderFulfillmentTypeEnum,
@@ -61,6 +60,7 @@ import {
   startingAddress,
   convertShippingAddressForExchange,
 } from "../../Utils/shippingAddressUtils"
+import { SavedAddressesFragmentContainer as SavedAddresses } from "../../Components/SavedAddresses"
 
 export interface ShippingProps {
   order: Shipping_order
@@ -84,13 +84,6 @@ export interface ShippingState {
 }
 
 const logger = createLogger("Order/Routes/Shipping/index.tsx")
-
-const EditButton = styled(Text)`
-  &:hover {
-    text-decoration: underline;
-  }
-`
-
 @track()
 export class ShippingRoute extends Component<ShippingProps, ShippingState> {
   state: ShippingState = {
@@ -313,69 +306,6 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
     })
   }
 
-  renderAddressList = addressList => {
-    return addressList.map((address, index) =>
-      this.formatAddressBox(address.node, index)
-    )
-  }
-
-  formatAddressBox = (address, index: number) => {
-    const {
-      addressLine1,
-      addressLine2,
-      addressLine3,
-      city,
-      country,
-      name,
-      phoneNumber,
-      postalCode,
-      region,
-    } = address
-
-    const formattedAddressLine = [city, region, country, postalCode]
-      .filter(el => el)
-      .join(", ")
-    return (
-      <BorderedRadio
-        value={`${index}`}
-        key={index}
-        position="relative"
-        data-test="savedAddress"
-      >
-        <Flex width="100%">
-          <Flex flexDirection="column">
-            {[name, addressLine1, addressLine2, addressLine3].map(
-              (line, index) =>
-                line && (
-                  <Text
-                    style={{ textTransform: "capitalize" }}
-                    variant="text"
-                    key={index}
-                  >
-                    {line}
-                  </Text>
-                )
-            )}
-            <Text textColor="black60" style={{ textTransform: "capitalize" }}>
-              {formattedAddressLine}
-            </Text>
-            <Text textColor="black60">{phoneNumber}</Text>
-          </Flex>
-          <EditButton
-            position="absolute"
-            top={"20px"}
-            right={"20px"}
-            onClick={() => this.handleClickEdit.bind(this)}
-            textColor="blue100"
-            size="2"
-          >
-            Edit
-          </EditButton>
-        </Flex>
-      </BorderedRadio>
-    )
-  }
-
   @track((props, state, args) => ({
     action_type: Schema.ActionType.Click,
     subject:
@@ -405,14 +335,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
     )
     const addressList = this.props.me.addressConnection.edges
 
-    const defaultAddressIndex = () => {
-      const indexOfDefaultAddress = addressList.findIndex(
-        address => address.node.isDefault
-      )
-      return `${indexOfDefaultAddress > -1 ? indexOfDefaultAddress : 0}`
-    }
-
-    const onSelectAddressOption = value => {
+    const onSelectAddressOption = (value: string) => {
       if (value == "NEW_ADDRESS") {
         // opens address form
         // this.setState({ openAddressForm: true })
@@ -520,18 +443,11 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
                   />
                 </Collapse>
                 {addressList.length > 0 && (
-                  <>
-                    <RadioGroup
-                      onSelect={onSelectAddressOption.bind(this)}
-                      defaultValue={defaultAddressIndex()}
-                    >
-                      {this.renderAddressList(addressList)}
-                      <BorderedRadio value={"NEW_ADDRESS"}>
-                        <Text variant="text">Add a new shipping address</Text>
-                      </BorderedRadio>
-                    </RadioGroup>
-                    <Spacer p="2" />
-                  </>
+                  <SavedAddresses
+                    me={this.props.me}
+                    onSelect={value => onSelectAddressOption(value)}
+                    handleClickEdit={this.handleClickEdit}
+                  />
                 )}
                 <Media greaterThan="xs">
                   <Button
@@ -624,6 +540,7 @@ export const ShippingFragmentContainer = createFragmentContainer(
         ) {
         name
         email
+        ...SavedAddresses_me
         addressConnection(
           first: $first
           last: $last
