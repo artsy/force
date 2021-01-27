@@ -15,6 +15,7 @@ import { Box } from "@artsy/palette"
 import { ArtistsFilter } from "v2/Components/v2/ArtworkFilter/ArtworkFilters/ArtistsFilter"
 import { useSystemContext } from "v2/Artsy"
 import { useRouter } from "v2/Artsy/Router/useRouter"
+import { AttributionClassFilter } from "v2/Components/v2/ArtworkFilter/ArtworkFilters/AttributionClassFilter"
 
 interface FairArtworksFilterProps {
   fair: FairArtworks_fair
@@ -46,6 +47,7 @@ const FairArtworksFilter: React.FC<FairArtworksFilterProps> = props => {
         user={user}
       />
       <MediumFilter />
+      <AttributionClassFilter />
       <PriceRangeFilter />
       <WaysToBuyFilter />
       <GalleryFilter />
@@ -92,6 +94,7 @@ export const FairArtworksRefetchContainer = createRefetchContainer(
           acquireable: { type: "Boolean" }
           aggregations: { type: "[ArtworkAggregation]" }
           artistIDs: { type: "[String]" }
+          attributionClass: { type: "[String]" }
           atAuction: { type: "Boolean" }
           color: { type: "String" }
           forSale: { type: "Boolean" }
@@ -113,6 +116,7 @@ export const FairArtworksRefetchContainer = createRefetchContainer(
           acquireable: $acquireable
           aggregations: $aggregations
           artistIDs: $artistIDs
+          attributionClass: $attributionClass
           atAuction: $atAuction
           color: $color
           forSale: $forSale
@@ -143,6 +147,7 @@ export const FairArtworksRefetchContainer = createRefetchContainer(
       $acquireable: Boolean
       $aggregations: [ArtworkAggregation] = [TOTAL]
       $artistIDs: [String]
+      $attributionClass: [String]
       $slug: String!
       $atAuction: Boolean
       $color: String
@@ -165,6 +170,7 @@ export const FairArtworksRefetchContainer = createRefetchContainer(
             aggregations: $aggregations
             artistIDs: $artistIDs
             atAuction: $atAuction
+            attributionClass: $attributionClass
             color: $color
             forSale: $forSale
             includeArtworksByFollowedArtists: $includeArtworksByFollowedArtists
