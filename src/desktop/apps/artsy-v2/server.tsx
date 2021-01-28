@@ -5,6 +5,7 @@ import { getAppRoutes } from "v2/Apps/getAppRoutes"
 import { stitch } from "@artsy/stitch"
 import { flatten } from "lodash"
 
+import { handleArtworkImageDownload } from "./apps/artwork/artworkMiddleware"
 import { artistMiddleware } from "./apps/artist/artistMiddleware"
 import { userRequiredMiddleware } from "./middleware/userRequiredMiddleware"
 import { searchMiddleware } from "./apps/search/searchMiddleware"
@@ -28,6 +29,11 @@ const allRoutes = flatten(
       : app.path
   })
 )
+
+/**
+ * Mount non-Reaction routes that are relevant to specific global router routes
+ */
+app.get("/artwork/:artworkID/download/:filename", handleArtworkImageDownload)
 
 /**
  * Mount routes that will connect to global SSR router

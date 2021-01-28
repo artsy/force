@@ -117,10 +117,12 @@ export class ArtworkActions extends React.Component<
         mediator,
       } = this.props
 
-      mediator?.trigger?.("openViewInRoom", {
-        dimensions,
-        image,
-      })
+      mediator &&
+        mediator.trigger &&
+        mediator.trigger("openViewInRoom", {
+          dimensions,
+          image,
+        })
     }, 300)
   }
 
