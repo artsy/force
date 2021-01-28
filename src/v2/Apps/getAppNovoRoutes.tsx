@@ -55,6 +55,7 @@ export function getAppNovoRoutes(): RouteConfig[] {
         routes: identityVerificationRoutes,
       },
       {
+        converted: true,
         routes: orderRoutes,
       },
       {

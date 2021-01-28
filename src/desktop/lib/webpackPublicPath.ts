@@ -29,6 +29,8 @@ if (process.env.NODE_ENV === "production") {
     "/collections",
     "/collection",
     "/collect",
+    "/order",
+    "/orders",
     "/show/",
   ]
 
