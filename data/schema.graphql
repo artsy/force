@@ -6840,10 +6840,22 @@ type LocationEdge {
 
 scalar Long
 
-type Lot {
-  internalID: String
+# A lot in an auction containing merged Sale artwork and Lot state data.
+type Lot implements Node {
+  # A globally unique ID.
+  id: ID!
+
+  # A type-specific ID likely used as a database ID.
+  internalID: ID!
+
+  # The current auction state of the lot.
   lot: AuctionsLotState!
+
+  # The saleArtwork object.
   saleArtwork: SaleArtwork
+
+  # A slug ID.
+  slug: ID!
 }
 
 # A connection to a list of items.
@@ -7349,12 +7361,14 @@ type Me implements Node {
 
   # A count of unread notifications.
   unreadNotificationsCount: Int!
+
+  # A list of lots a user is watching.
   watchedLotConnection(
     after: String
     before: String
     first: Int
     last: Int
-  ): LotConnection!
+  ): LotConnection
 }
 
 # A message in a conversation.
