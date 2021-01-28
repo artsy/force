@@ -13,7 +13,7 @@ import { fairRoutes } from "v2/Apps/Fair/fairRoutes"
 import { fairsRoutes } from "v2/Apps/Fairs/fairsRoutes"
 import { featureRoutes } from "v2/Apps/Feature/featureRoutes"
 import { identityVerificationRoutes } from "v2/Apps/IdentityVerification/identityVerificationRoutes"
-import { orderRoutes } from "v2/Apps/Order/orderRoutes"
+// import { orderRoutes } from "v2/Apps/Order/orderRoutes"
 import { purchaseRoutes } from "v2/Apps/Purchase/purchaseRoutes"
 import { searchRoutes } from "v2/Apps/Search/searchRoutes"
 // import { showRoutes } from "v2/Apps/Show/showRoutes"
@@ -64,9 +64,10 @@ export function getAppRoutes(): RouteConfig[] {
     {
       routes: identityVerificationRoutes,
     },
-    {
-      routes: orderRoutes,
-    },
+    // NOTE: Converted to use NOVO template.
+    // {
+    //   routes: orderRoutes,
+    // },
     {
       routes: purchaseRoutes,
     },
