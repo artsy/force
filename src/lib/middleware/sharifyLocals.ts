@@ -45,5 +45,7 @@ export function sharifyLocalsMiddleware(
       (ua.match(/Android/i) && ua.match(/Mobile/i))
   )
 
+  res.locals.sd.IS_GOOGLEBOT = Boolean(ua.match(/Googlebot/i))
+
   next()
 }
