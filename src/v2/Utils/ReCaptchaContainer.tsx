@@ -11,6 +11,7 @@ export class ReCaptchaContainer extends React.Component {
     if (document.getElementById("google-recaptcha")) {
       return
     }
+
     const css = document.createElement("style")
     css.setAttribute("type", "text/css")
     css.textContent = ".grecaptcha-badge { visibility: hidden; }"

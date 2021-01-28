@@ -32,6 +32,7 @@ export function getAppNovoRoutes(): RouteConfig[] {
         routes: artistSeriesRoutes,
       },
       {
+        converted: true,
         routes: artworkRoutes,
       },
       {
