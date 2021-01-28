@@ -37,7 +37,10 @@ import {
   CommitMutation,
   injectCommitMutation,
 } from "v2/Apps/Order/Utils/commitMutation"
-import { validatePresence } from "v2/Apps/Order/Utils/formValidators"
+import {
+  validateAddress,
+  validatePhoneNumber,
+} from "v2/Apps/Order/Utils/formValidators"
 import { track } from "v2/Artsy/Analytics"
 import * as Schema from "v2/Artsy/Analytics/Schema"
 import {
@@ -161,10 +164,8 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
     const { address, shippingOption, phoneNumber } = this.state
 
     if (shippingOption === "SHIP") {
-      const { errors, hasErrors } = this.validateAddress(this.state.address)
-      const { error, hasError } = this.validatePhoneNumber(
-        this.state.phoneNumber
-      )
+      const { errors, hasErrors } = validateAddress(this.state.address)
+      const { error, hasError } = validatePhoneNumber(this.state.phoneNumber)
       if (hasErrors && hasError) {
         this.setState({
           addressErrors: errors,
@@ -187,9 +188,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
         return
       }
     } else {
-      const { error, hasError } = this.validatePhoneNumber(
-        this.state.phoneNumber
-      )
+      const { error, hasError } = validatePhoneNumber(this.state.phoneNumber)
       if (hasError) {
         this.setState({
           phoneNumberError: error,
@@ -252,38 +251,9 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
   handleClickEdit = () => {
     // Open edit modal
   }
-
-  private validateAddress(address: Address) {
-    const { name, addressLine1, city, region, country, postalCode } = address
-    const usOrCanada = country === "US" || country === "CA"
-    const errors = {
-      name: validatePresence(name),
-      addressLine1: validatePresence(addressLine1),
-      city: validatePresence(city),
-      region: usOrCanada && validatePresence(region),
-      country: validatePresence(country),
-      postalCode: usOrCanada && validatePresence(postalCode),
-    }
-    const hasErrors = Object.keys(errors).filter(key => errors[key]).length > 0
-
-    return {
-      errors,
-      hasErrors,
-    }
-  }
-
-  private validatePhoneNumber(phoneNumber: string) {
-    const error = validatePresence(phoneNumber)
-    const hasError = error !== null
-
-    return {
-      error,
-      hasError,
-    }
-  }
-
+  
   onAddressChange: AddressChangeHandler = (address, key) => {
-    const { errors } = this.validateAddress(address)
+    const { errors } = validateAddress(address)
     this.setState({
       address,
       addressErrors: {
@@ -298,7 +268,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
   }
 
   onPhoneNumberChange: PhoneNumberChangeHandler = phoneNumber => {
-    const { error } = this.validatePhoneNumber(phoneNumber)
+    const { error } = validatePhoneNumber(phoneNumber)
     this.setState({
       phoneNumber,
       phoneNumberError: error,

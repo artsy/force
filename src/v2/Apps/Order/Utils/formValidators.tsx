@@ -26,3 +26,13 @@ export const validateAddress = (address: Address) => {
     hasErrors,
   }
 }
+
+export const validatePhoneNumber = (phoneNumber: string) => {
+  const error = validatePresence(phoneNumber)
+  const hasError = error !== null
+
+  return {
+    error,
+    hasError,
+  }
+}
