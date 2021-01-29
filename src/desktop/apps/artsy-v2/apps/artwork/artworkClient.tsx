@@ -1,3 +1,4 @@
+import { recordArtworkView } from "lib/components/record_artwork_view"
 import { data as sd } from "sharify"
 import { getContextPageFromClient } from "lib/getContextPage"
 import { OwnerType } from "@artsy/cohesion"
@@ -9,15 +10,6 @@ import {
 } from "typings/mediator"
 
 export const artworkClient = () => {
-  require("jquery.transition")
-  require("typeahead.js/dist/typeahead.bundle.min.js")
-  const $ = require("jquery")
-  const imagesLoaded = require("imagesloaded")
-  const jqueryFillwidthLite = require("jquery-fillwidth-lite")
-
-  imagesLoaded.makeJQueryPlugin($)
-  jqueryFillwidthLite($, window._, imagesLoaded)
-
   const User = require("desktop/models/user.coffee")
   const Artwork = require("desktop/models/artwork.coffee")
   const ArtworkInquiry = require("desktop/models/artwork_inquiry.coffee")
@@ -25,7 +17,8 @@ export const artworkClient = () => {
   const openAuctionBuyerPremium = require("desktop/components/artworkBuyersPremium/index.coffee")
   const ViewInRoomView = require("desktop/components/view_in_room/view.coffee")
   const openMultiPageModal = require("desktop/components/multi_page_modal/index.coffee")
-  const { recordArtworkView } = require("lib/components/record_artwork_view")
+
+  const $ = require("jquery")
   const { pageType, pageSlug } = getContextPageFromClient()
 
   if (pageType === OwnerType.artwork) {
@@ -81,6 +74,10 @@ export const artworkClient = () => {
     }
   )
 
+  mediator.on("openCollectorFAQModal", () => {
+    openMultiPageModal("collector-faqs")
+  })
+
   mediator.on("openAuctionFAQModal", () => {
     openMultiPageModal("auction-faqs")
   })
@@ -131,7 +128,7 @@ export const artworkClient = () => {
 
       $("body").prepend(viewInRoom.render().$el)
     } catch (error) {
-      console.error(error)
+      // TODO: Add some proper error handling
     }
   })
 

@@ -70,6 +70,7 @@ module.exports = ({ user, artwork, inquiry, bypass, state_attrs, ask_specialist 
 
     # End of complete flow
     .on 'done', ->
+
       if inquiry.send?
         # Send the inquiry immediately
         inquiry.send {},
