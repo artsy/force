@@ -36,10 +36,19 @@ const NavBarTier = styled(Flex)`
   border-bottom: 1px solid ${color("black10")};
 `
 
-const NavSection: React.FC<FlexProps> = ({ children, ...rest }) => {
+const NavSection: React.FC<FlexProps> = ({
+  children,
+  justifyContent,
+  ...rest
+}) => {
   return (
     <Flex alignItems="stretch" height="100%" bg={rest.bg} {...rest}>
-      <Flex width="100%" height="100%" alignItems="center">
+      <Flex
+        width="100%"
+        height="100%"
+        alignItems="center"
+        justifyContent={justifyContent}
+      >
         {children}
       </Flex>
     </Flex>
@@ -199,7 +208,11 @@ export const NavBar: React.FC = track(
             height={NAV_BAR_BOTTOM_TIER_HEIGHT}
             display={["none", "flex"]}
           >
-            <NavSection display={["none", "flex"]}>
+            <NavSection
+              width="100%"
+              justifyContent="space-between"
+              display={["none", "flex"]}
+            >
               <NavSection alignItems="center" ml={2}>
                 <SecondaryNavItem
                   label="Artists"
@@ -261,40 +274,9 @@ export const NavBar: React.FC = track(
                   Museums
                 </SecondaryNavItem>
               </NavSection>
-            </NavSection>
-
-            {/* Mobile. Triggers at the `xs` breakpoint. */}
-            <NavSection display={["flex", "none"]}>
-              <NavItem
-                className="mobileHamburgerButton"
-                borderLeft="1px solid"
-                borderColor="black10"
-                ml={1}
-                tabIndex={0}
-                role="button"
-                onClick={() => {
-                  const showMenu = !showMobileMenu
-                  if (showMenu) {
-                    trackEvent({
-                      action_type: AnalyticsSchema.ActionType.Click,
-                      subject:
-                        AnalyticsSchema.Subject.SmallScreenMenuSandwichIcon,
-                    })
-                  }
-
-                  toggleMobileNav(showMenu)
-                }}
-              >
-                <Box
-                  px={1}
-                  display="flex"
-                  alignItems="center"
-                  justifyContent="center"
-                >
-                  <MobileToggleIcon open={showMobileMenu} />
-                  {showNotificationCount && <InboxNotificationCount />}
-                </Box>
-              </NavItem>
+              <NavSection alignItems="right">
+                <PrimaryNavItem href="#">Download App</PrimaryNavItem>
+              </NavSection>
             </NavSection>
           </NavBarTier>
 
