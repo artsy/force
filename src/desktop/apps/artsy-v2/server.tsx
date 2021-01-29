@@ -7,7 +7,6 @@ import { flatten } from "lodash"
 
 import { handleArtworkImageDownload } from "./apps/artwork/artworkMiddleware"
 import { artistMiddleware } from "./apps/artist/artistMiddleware"
-import { userRequiredMiddleware } from "./middleware/userRequiredMiddleware"
 import { searchMiddleware } from "./apps/search/searchMiddleware"
 import { getContextPageFromReq } from "lib/getContextPage"
 
@@ -40,7 +39,6 @@ app.get("/artwork/:artworkID/download/:filename", handleArtworkImageDownload)
  */
 app.get(
   allRoutes,
-  userRequiredMiddleware,
 
   /**
    * Mount middleware for handling server-side portions of apps mounted into

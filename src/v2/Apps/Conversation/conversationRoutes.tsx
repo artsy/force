@@ -1,4 +1,3 @@
-/* eslint-disable sort-keys-fix/sort-keys-fix */
 import loadable from "@loadable/component"
 import { RouteConfig } from "found"
 import { graphql } from "react-relay"

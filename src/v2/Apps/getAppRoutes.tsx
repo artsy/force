@@ -6,7 +6,7 @@ import { artistsRoutes } from "v2/Apps/Artists/artistsRoutes"
 import { artworkRoutes } from "v2/Apps/Artwork/artworkRoutes"
 // import { collectRoutes } from "v2/Apps/Collect/collectRoutes"
 import { consignRoutes } from "v2/Apps/Consign/consignRoutes"
-import { conversationRoutes } from "v2/Apps/Conversation/conversationRoutes"
+// import { conversationRoutes } from "v2/Apps/Conversation/conversationRoutes"
 import { debugRoutes } from "./Debug/debugRoutes"
 import { exampleRoutes } from "./Example/exampleRoutes"
 import { fairRoutes } from "v2/Apps/Fair/fairRoutes"
@@ -45,9 +45,10 @@ export function getAppRoutes(): RouteConfig[] {
     {
       routes: consignRoutes,
     },
-    {
-      routes: conversationRoutes,
-    },
+    // NOTE: Converted to use NOVO template.
+    // {
+    //   routes: conversationRoutes,
+    // },
     {
       routes: exampleRoutes,
     },
