@@ -55,9 +55,14 @@ const renderAddressList = (addressList, handleClickEdit) => {
           </Flex>
           <EditButton
             position="absolute"
-            top={"20px"}
-            right={"20px"}
-            onClick={() => handleClickEdit.bind(this)}
+            top={2}
+            right={2}
+            onClick={e => {
+              // TODO: ideally we don't want the radio selection to change when clicking this
+              e.stopPropagation()
+              e.nativeEvent.stopImmediatePropagation()
+              handleClickEdit(index)
+            }}
             textColor="blue100"
             size="2"
           >
@@ -79,7 +84,7 @@ const defaultAddressIndex = addressList => {
 interface Props {
   me: SavedAddresses_me
   onSelect: (string) => void
-  handleClickEdit: () => void
+  handleClickEdit: (number) => void
 }
 
 const SavedAddresses: React.FC<Props> = props => {

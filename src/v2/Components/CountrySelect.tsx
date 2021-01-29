@@ -6,6 +6,7 @@ export interface CountrySelectProps extends PositionProps, SpaceProps {
   selected?: string
   disabled?: boolean
   euShippingOnly?: boolean
+  error?: string
   onSelect?: (value) => void
 }
 

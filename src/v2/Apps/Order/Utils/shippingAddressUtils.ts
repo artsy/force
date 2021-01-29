@@ -3,13 +3,13 @@ import { Shipping_me } from "v2/__generated__/Shipping_me.graphql"
 import { Shipping_order } from "v2/__generated__/Shipping_order.graphql"
 import { pick, omit } from "lodash"
 
-type AddressType = Shipping_me["addressConnection"]["edges"][number]["node"]
+export type SavedAddressType = Shipping_me["addressConnection"]["edges"][number]["node"]
 
 /**
  * Extracts
  * @param me relay Me object including addressConnection
  */
-const defaultShippingAddress = (me: Shipping_me): AddressType | null => {
+const defaultShippingAddress = (me: Shipping_me): SavedAddressType | null => {
   const addressList = me.addressConnection.edges
   if (addressList.length > 0) {
     const defaultAddress =
@@ -57,7 +57,7 @@ export const startingAddress = (me: Shipping_me, order: Shipping_order) => {
 
 // Gravity address has isDefault and addressLine3 but exchange does not
 export const convertShippingAddressForExchange = (
-  address: AddressType
-): Omit<AddressType, "addressLine3" | "isDefault"> => {
+  address: SavedAddressType
+): Omit<SavedAddressType, "addressLine3" | "isDefault"> => {
   return omit(address, ["isDefault", "addressLine3"])
 }

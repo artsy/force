@@ -64,6 +64,7 @@ import {
   convertShippingAddressForExchange,
 } from "../../Utils/shippingAddressUtils"
 import { SavedAddressesFragmentContainer as SavedAddresses } from "../../Components/SavedAddresses"
+import { AddressModal } from "../../Components/AddressModal"
 
 export interface ShippingProps {
   order: Shipping_order
@@ -83,7 +84,7 @@ export interface ShippingState {
   phoneNumberTouched: PhoneNumberTouched
   addressErrors: AddressErrors
   addressTouched: AddressTouched
-  showEditModal: boolean
+  editAddressIndex: number
 }
 
 const logger = createLogger("Order/Routes/Shipping/index.tsx")
@@ -100,7 +101,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
     phoneNumber: startingPhoneNumber(this.props.me, this.props.order),
     phoneNumberError: "",
     phoneNumberTouched: false,
-    showEditModal: false,
+    editAddressIndex: -1,
   }
 
   get touchedAddress() {
@@ -248,10 +249,10 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
     }
   }
 
-  handleClickEdit = () => {
-    // Open edit modal
+  handleClickEdit = (value: number) => {
+    this.setState({ editAddressIndex: value })
   }
-  
+
   onAddressChange: AddressChangeHandler = (address, key) => {
     const { errors } = validateAddress(address)
     this.setState({
@@ -317,9 +318,19 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
         this.setState({ phoneNumber: selectedAddress.phoneNumber })
       }
     }
-
+    const showModal = this.state.editAddressIndex > -1
     return (
       <Box data-test="orderShipping">
+        {showModal && (
+          <AddressModal
+            show={showModal}
+            onClose={() => this.setState({ editAddressIndex: -1 })}
+            address={
+              this.props.me.addressConnection.edges[this.state.editAddressIndex]
+                ?.node
+            }
+          />
+        )}
         <HorizontalPadding px={[0, 4]}>
           <Row>
             <Col>
