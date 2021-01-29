@@ -36,6 +36,7 @@ declare module "sharify" {
       readonly GENOME_URL: string
       readonly GOOGLE_ADWORDS_ID: string
       readonly IMAGE_LAZY_LOADING: boolean
+      IS_GOOGLEBOT: boolean
       IS_MOBILE: boolean
       readonly METAPHYSICS_ENDPOINT: string
       readonly NODE_ENV: string

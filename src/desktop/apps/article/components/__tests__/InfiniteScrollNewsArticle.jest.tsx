@@ -1,4 +1,5 @@
 import React from "react"
+import { getENV } from "v2/Utils/getENV"
 import { mount } from "enzyme"
 import { InfiniteScrollNewsArticle } from "../InfiniteScrollNewsArticle"
 import { NewsArticle } from "@artsy/reaction/dist/Components/Publishing/Fixtures/Articles"
@@ -37,9 +38,12 @@ jest.mock("sharify", () => {
 })
 const sd = require("sharify").data
 
+jest.mock("v2/Utils/getENV")
+
 describe("InfiniteScrollNewsArticle", () => {
   let props
   let nextArticle
+  let mockGetENV = getENV as jest.Mock
 
   const getWrapper = (passedProps = props) => {
     return mount(
@@ -69,6 +73,18 @@ describe("InfiniteScrollNewsArticle", () => {
     }
 
     sd.CURRENT_USER = { id: "123" }
+
+    mockGetENV.mockImplementation(() => {
+      return false
+    })
+  })
+
+  it("disables infinite scroll for googlebot", () => {
+    mockGetENV.mockImplementation(() => {
+      return true
+    })
+    const wrapper = getWrapper()
+    expect(wrapper.find("Waypoint[data-test='news']")).toHaveLength(0)
   })
 
   it("#hasNewDate returns true if article date is different from previous article", () => {
@@ -256,9 +272,8 @@ describe("InfiniteScrollNewsArticle", () => {
     })
   })
 
-  // FIXME: Reenable once scrolling date issue is resolved
   describe("#onDateChange", () => {
-    it("it sets date if it has a new one", () => {
+    it("sets date if it has a new one", () => {
       const component = getWrapper()
       const instance = component
         .find(InfiniteScrollNewsArticle)
@@ -267,7 +282,7 @@ describe("InfiniteScrollNewsArticle", () => {
       expect(instance.state.date).toBe("2018-07-20T17:19:55.909Z")
     })
 
-    it("it doesn't set date if it hasn't changed", () => {
+    it("doesn't set date if it hasn't changed", () => {
       const component = getWrapper()
       const instance = component
         .find(InfiniteScrollNewsArticle)

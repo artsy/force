@@ -1,4 +1,5 @@
 import { data as sd } from "sharify"
+import { getENV } from "v2/Utils/getENV"
 import moment from "moment"
 import styled from "styled-components"
 import React, { Component, Fragment } from "react"
@@ -129,11 +130,19 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
   }
 
   renderWaypoint = () => {
-    const { isEnabled, isLoading, error } = this.state
+    const { isLoading, error } = this.state
+    const isGooglebot = getENV("IS_GOOGLEBOT")
+    const isEnabled = !isGooglebot && this.state.isEnabled
 
     if (isEnabled) {
       if (!isLoading) {
-        return <Waypoint onEnter={this.fetchNextArticles} bottomOffset="-50%" />
+        return (
+          <Waypoint
+            data-test="news"
+            onEnter={this.fetchNextArticles}
+            bottomOffset="-50%"
+          />
+        )
       } else if (!error) {
         return (
           <LoadingSpinner>
