@@ -131,6 +131,7 @@ export const NavBar: React.FC = track(
                       ml={2}
                       mr={1}
                       variant="secondaryOutline"
+                      size="medium"
                       onClick={() => {
                         openAuthModal(mediator, {
                           mode: ModalType.login,
@@ -142,6 +143,7 @@ export const NavBar: React.FC = track(
                       Log in
                     </Button>
                     <Button
+                      size="medium"
                       onClick={() => {
                         openAuthModal(mediator, {
                           mode: ModalType.signup,

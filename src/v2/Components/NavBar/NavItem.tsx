@@ -89,7 +89,7 @@ export const NavItem: React.FC<NavItemProps> = ({
 
   const showMenu = Boolean(Menu && isVisible)
   const showOverlay = Boolean(Overlay)
-  const color = isVisible ? "purple100" : linkColor
+  const color = isVisible ? "blue100" : linkColor
 
   const trackClick = () => {
     if (href && isString(children)) {
