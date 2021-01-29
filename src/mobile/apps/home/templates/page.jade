@@ -1,5 +1,32 @@
 extends ../../../components/layout/templates/main
 
+block head
+  script(type='application/ld+json')
+    | {
+    |   "@context": "http://schema.org",
+    |   "@type": "Organization",
+    |   "name": "Artsy",
+    |   "url": "https://www.artsy.net/",
+    |   "description": "Discover, buy, and sell art by the world’s leading artists.",
+    |   "sameAs": [
+    |     "https://www.instagram.com/artsy",
+    |     "https://www.facebook.com/artsy",
+    |     "https://twitter.com/artsy",
+    |     "https://www.linkedin.com/company/artsyinc",
+    |     "https://www.youtube.com/channel/UCN413ScKXGZAVTk5GOl4tgw"
+    |   ],
+    |   "address": {
+    |     "@type": "PostalAddress",
+    |     "addressRegion": "NY",
+    |     "postalCode": "10013",
+    |     "addressCountry": "USA",
+    |     "addressLocality": "New York"
+    |   },
+    |   "email": "support@artsy.net",
+    |   "founder": "Carter Cleveland",
+    |   "logo": "https://en.wikipedia.org/wiki/File:Art.sylogo_2.tiff"
+    | }
+
 block content
   #home-page-hero-units.carousel
     if heroUnits && heroUnits.length > 0
