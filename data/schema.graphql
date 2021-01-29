@@ -10233,6 +10233,9 @@ type Show implements EntityWithFilterArtworksConnectionInterface & Node {
   # Is the user following this show
   isFollowed: Boolean
 
+  # Does the show exist soley online
+  isOnlineExclusive: Boolean!
+
   # Is it a show provided for historical reference?
   isReference: Boolean
 
