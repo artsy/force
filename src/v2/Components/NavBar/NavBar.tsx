@@ -3,12 +3,7 @@ import styled from "styled-components"
 import { Box, Button, Flex, FlexProps, color, themeProps } from "@artsy/palette"
 import { useSystemContext } from "v2/Artsy/SystemContext"
 import { SearchBarQueryRenderer as SearchBar } from "v2/Components/Search/SearchBar"
-import {
-  DropDownNavMenu,
-  MobileNavMenu,
-  MobileToggleIcon,
-  MoreNavMenu,
-} from "./Menus"
+import { DropDownNavMenu, MobileNavMenu, MobileToggleIcon } from "./Menus"
 import { InboxNotificationCountQueryRenderer as InboxNotificationCount } from "./Menus/MobileNavMenu/InboxNotificationCount"
 import { ModalType } from "v2/Components/Authentication/Types"
 import {
@@ -25,12 +20,19 @@ import { useMatchMedia } from "v2/Utils/Hooks/useMatchMedia"
 import { NavBarPrimaryLogo } from "./NavBarPrimaryLogo"
 import { NavBarSkipLink } from "./NavBarSkipLink"
 import { LoggedInActionsQueryRenderer as LoggedInActions } from "./LoggedInActions"
-import { NAV_BAR_HEIGHT } from "./constants"
+import {
+  NAV_BAR_TOP_TIER_HEIGHT,
+  NAV_BAR_BOTTOM_TIER_HEIGHT,
+} from "./constants"
 
 const NavBarContainer = styled(Flex)`
   position: relative;
-  height: ${NAV_BAR_HEIGHT}px;
   background-color: ${color("white100")};
+  flex-direction: column;
+`
+
+const NavBarTier = styled(Flex)`
+  position: relative;
   border-bottom: 1px solid ${color("black10")};
 `
 
@@ -89,167 +91,207 @@ export const NavBar: React.FC = track(
   return (
     <>
       <NavBarSkipLink />
-
       <header>
         <NavBarContainer as="nav">
-          <NavSection mx={0.5}>
-            <NavBarPrimaryLogo />
-          </NavSection>
-
-          <NavSection flex={1}>
-            <SearchBar width="100%" />
-          </NavSection>
-
-          {/* Desktop. Collapses into mobile at `sm` breakpoint. */}
-          <NavSection display={["none", "none", "flex"]}>
-            <NavSection alignItems="center" ml={2}>
-              <NavItem
-                label="Artists"
-                href="/artists"
-                menuAnchor="full"
-                Menu={({ setIsVisible }) => {
-                  return (
-                    <DropDownNavMenu
-                      width="100vw"
-                      menu={ARTISTS_SUBMENU_DATA.menu}
-                      contextModule={
-                        AnalyticsSchema.ContextModule.HeaderArtistsDropdown
-                      }
-                      onClick={() => {
-                        setIsVisible(false)
-                      }}
-                    />
-                  )
-                }}
-              >
-                Artists
-              </NavItem>
-
-              <NavItem
-                label="Artworks"
-                href="/collect"
-                menuAnchor="full"
-                Menu={({ setIsVisible }) => {
-                  return (
-                    <DropDownNavMenu
-                      width="100vw"
-                      menu={ARTWORKS_SUBMENU_DATA.menu}
-                      contextModule={
-                        AnalyticsSchema.ContextModule.HeaderArtworksDropdown
-                      }
-                      onClick={() => {
-                        setIsVisible(false)
-                      }}
-                    />
-                  )
-                }}
-              >
-                Artworks
-              </NavItem>
-
-              <NavItem href="/auctions">Auctions</NavItem>
-
-              <NavItem
-                // Hide link at smaller viewports — corresponding display inside of `MoreNavMenu`
-                // If we need to do this again, consider a more abstract solution
-                display={["none", "none", "none", "flex"]}
-                href="/viewing-rooms"
-              >
-                Viewing&nbsp;Rooms
-              </NavItem>
-
-              <NavItem href="/articles">Editorial</NavItem>
-
-              <NavItem
-                label="More"
-                menuAnchor="center"
-                Menu={() => {
-                  return <MoreNavMenu width={160} />
-                }}
-              >
-                More
-              </NavItem>
+          <NavBarTier height={NAV_BAR_TOP_TIER_HEIGHT}>
+            <NavSection mx={0.5}>
+              <NavBarPrimaryLogo />
             </NavSection>
 
-            <NavSection mr={1}>
-              {isLoggedIn ? (
-                <LoggedInActions />
-              ) : (
-                <>
-                  <Button
-                    ml={2}
-                    mr={1}
-                    variant="secondaryOutline"
-                    onClick={() => {
-                      openAuthModal(mediator, {
-                        mode: ModalType.login,
-                        intent: Intent.login,
-                        contextModule: ContextModule.header,
-                      })
-                    }}
-                  >
-                    Log in
-                  </Button>
-                  <Button
-                    onClick={() => {
-                      openAuthModal(mediator, {
-                        mode: ModalType.signup,
-                        intent: Intent.signup,
-                        contextModule: ContextModule.header,
-                      })
-                    }}
-                  >
-                    Sign up
-                  </Button>
-                </>
-              )}
+            <NavSection flex={1}>
+              <SearchBar width="100%" />
             </NavSection>
-          </NavSection>
 
-          {/* Mobile. Triggers at the `sm` breakpoint. */}
-          <NavSection display={["flex", "flex", "none"]}>
-            <NavItem
-              className="mobileHamburgerButton"
-              borderLeft="1px solid"
-              borderColor="black10"
-              ml={1}
-              tabIndex={0}
-              role="button"
-              onClick={() => {
-                const showMenu = !showMobileMenu
-                if (showMenu) {
-                  trackEvent({
-                    action_type: AnalyticsSchema.ActionType.Click,
-                    subject:
-                      AnalyticsSchema.Subject.SmallScreenMenuSandwichIcon,
-                  })
-                }
+            {/* Desktop. Collapses into mobile at `xs` breakpoint. */}
+            <NavSection display={["none", "flex"]}>
+              <NavSection alignItems="center" ml={2}>
+                <NavItem href="/collect">Buy Artwork</NavItem>
+                <NavItem href="/consign">Sell with Artsy</NavItem>
+                <NavItem href="/articles">Editorial</NavItem>
+              </NavSection>
 
-                toggleMobileNav(showMenu)
-              }}
-            >
-              <Box
-                px={1}
-                display="flex"
-                alignItems="center"
-                justifyContent="center"
+              <NavSection mr={1}>
+                {isLoggedIn ? (
+                  <LoggedInActions />
+                ) : (
+                  <>
+                    <Button
+                      ml={2}
+                      mr={1}
+                      variant="secondaryOutline"
+                      onClick={() => {
+                        openAuthModal(mediator, {
+                          mode: ModalType.login,
+                          intent: Intent.login,
+                          contextModule: ContextModule.header,
+                        })
+                      }}
+                    >
+                      Log in
+                    </Button>
+                    <Button
+                      onClick={() => {
+                        openAuthModal(mediator, {
+                          mode: ModalType.signup,
+                          intent: Intent.signup,
+                          contextModule: ContextModule.header,
+                        })
+                      }}
+                    >
+                      Sign up
+                    </Button>
+                  </>
+                )}
+              </NavSection>
+            </NavSection>
+
+            {/* Mobile. Triggers at the `xs` breakpoint. */}
+            <NavSection display={["flex", "none"]}>
+              <NavItem
+                className="mobileHamburgerButton"
+                borderLeft="1px solid"
+                borderColor="black10"
+                ml={1}
+                tabIndex={0}
+                role="button"
+                onClick={() => {
+                  const showMenu = !showMobileMenu
+                  if (showMenu) {
+                    trackEvent({
+                      action_type: AnalyticsSchema.ActionType.Click,
+                      subject:
+                        AnalyticsSchema.Subject.SmallScreenMenuSandwichIcon,
+                    })
+                  }
+
+                  toggleMobileNav(showMenu)
+                }}
               >
-                <MobileToggleIcon open={showMobileMenu} />
-                {showNotificationCount && <InboxNotificationCount />}
-              </Box>
-            </NavItem>
-          </NavSection>
+                <Box
+                  px={1}
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                >
+                  <MobileToggleIcon open={showMobileMenu} />
+                  {showNotificationCount && <InboxNotificationCount />}
+                </Box>
+              </NavItem>
+            </NavSection>
+          </NavBarTier>
+
+          {/* Desktop. Collapses into mobile at `xs` breakpoint. */}
+          <NavBarTier
+            height={NAV_BAR_BOTTOM_TIER_HEIGHT}
+            display={["none", "flex"]}
+          >
+            <NavSection display={["none", "flex"]}>
+              <NavSection alignItems="center" ml={2}>
+                <NavItem
+                  label="Artists"
+                  href="/artists"
+                  menuAnchor="full"
+                  Menu={({ setIsVisible }) => {
+                    return (
+                      <DropDownNavMenu
+                        width="100vw"
+                        menu={ARTISTS_SUBMENU_DATA.menu}
+                        contextModule={
+                          AnalyticsSchema.ContextModule.HeaderArtistsDropdown
+                        }
+                        onClick={() => {
+                          setIsVisible(false)
+                        }}
+                      />
+                    )
+                  }}
+                >
+                  Artists
+                </NavItem>
+
+                <NavItem
+                  label="Artworks"
+                  href="/collect"
+                  menuAnchor="full"
+                  Menu={({ setIsVisible }) => {
+                    return (
+                      <DropDownNavMenu
+                        width="100vw"
+                        menu={ARTWORKS_SUBMENU_DATA.menu}
+                        contextModule={
+                          AnalyticsSchema.ContextModule.HeaderArtworksDropdown
+                        }
+                        onClick={() => {
+                          setIsVisible(false)
+                        }}
+                      />
+                    )
+                  }}
+                >
+                  Artworks
+                </NavItem>
+
+                <NavItem href="/auctions">Auctions</NavItem>
+                <NavItem href="/viewing-rooms">Viewing&nbsp;Rooms</NavItem>
+                <NavItem href="/galleries">Galleries</NavItem>
+                <NavItem href="/fairs">Fairs</NavItem>
+                <NavItem href="/Shows">Shows</NavItem>
+                <NavItem
+                  // Hide link at smaller viewports — corresponding display inside of `MoreNavMenu`
+                  // If we need to do this again, consider a more abstract solution
+                  display={["none", "none", "flex", "flex"]}
+                  href="/institutions"
+                >
+                  Museums
+                </NavItem>
+              </NavSection>
+            </NavSection>
+
+            {/* Mobile. Triggers at the `xs` breakpoint. */}
+            <NavSection display={["flex", "none"]}>
+              <NavItem
+                className="mobileHamburgerButton"
+                borderLeft="1px solid"
+                borderColor="black10"
+                ml={1}
+                tabIndex={0}
+                role="button"
+                onClick={() => {
+                  const showMenu = !showMobileMenu
+                  if (showMenu) {
+                    trackEvent({
+                      action_type: AnalyticsSchema.ActionType.Click,
+                      subject:
+                        AnalyticsSchema.Subject.SmallScreenMenuSandwichIcon,
+                    })
+                  }
+
+                  toggleMobileNav(showMenu)
+                }}
+              >
+                <Box
+                  px={1}
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                >
+                  <MobileToggleIcon open={showMobileMenu} />
+                  {showNotificationCount && <InboxNotificationCount />}
+                </Box>
+              </NavItem>
+            </NavSection>
+          </NavBarTier>
+
+          {showMobileMenu && (
+            <>
+              <MobileNavMenu
+                onClose={() => toggleMobileNav(false)}
+                isOpen={showMobileMenu}
+                onNavButtonClick={handleMobileNavClick}
+              />
+            </>
+          )}
         </NavBarContainer>
-
-        {showMobileMenu && (
-          <>
-            <MobileNavMenu
-              onClose={() => toggleMobileNav(false)}
-              isOpen={showMobileMenu}
-              onNavButtonClick={handleMobileNavClick}
-            />
-          </>
-        )}
       </header>
     </>
   )
