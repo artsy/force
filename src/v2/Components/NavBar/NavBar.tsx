@@ -11,7 +11,7 @@ import {
   ARTWORKS_SUBMENU_DATA,
 } from "v2/Components/NavBar/menuData"
 import { openAuthModal } from "v2/Utils/openAuthModal"
-import { NavItem } from "./NavItem"
+import { NavItem, NavItemProps } from "./NavItem"
 import { ContextModule, Intent } from "@artsy/cohesion"
 import { AnalyticsSchema } from "v2/Artsy"
 import { track, useTracking } from "v2/Artsy/Analytics"
@@ -45,6 +45,18 @@ const NavSection: React.FC<FlexProps> = ({ children, ...rest }) => {
     </Flex>
   )
 }
+
+const PrimaryNavItem: React.FC<NavItemProps> = ({ children, ...rest }) => (
+  <NavItem linkColor="black100" {...rest}>
+    {children}
+  </NavItem>
+)
+
+const SecondaryNavItem: React.FC<NavItemProps> = ({ children, ...rest }) => (
+  <NavItem linkColor="black60" {...rest}>
+    {children}
+  </NavItem>
+)
 
 export const NavBar: React.FC = track(
   {
@@ -105,9 +117,9 @@ export const NavBar: React.FC = track(
             {/* Desktop. Collapses into mobile at `xs` breakpoint. */}
             <NavSection display={["none", "flex"]}>
               <NavSection alignItems="center" ml={2}>
-                <NavItem href="/collect">Buy Artwork</NavItem>
-                <NavItem href="/consign">Sell with Artsy</NavItem>
-                <NavItem href="/articles">Editorial</NavItem>
+                <PrimaryNavItem href="/collect">Buy Artwork</PrimaryNavItem>
+                <PrimaryNavItem href="/consign">Sell with Artsy</PrimaryNavItem>
+                <PrimaryNavItem href="/articles">Editorial</PrimaryNavItem>
               </NavSection>
 
               <NavSection mr={1}>
@@ -187,7 +199,7 @@ export const NavBar: React.FC = track(
           >
             <NavSection display={["none", "flex"]}>
               <NavSection alignItems="center" ml={2}>
-                <NavItem
+                <SecondaryNavItem
                   label="Artists"
                   href="/artists"
                   menuAnchor="full"
@@ -207,9 +219,9 @@ export const NavBar: React.FC = track(
                   }}
                 >
                   Artists
-                </NavItem>
+                </SecondaryNavItem>
 
-                <NavItem
+                <SecondaryNavItem
                   label="Artworks"
                   href="/collect"
                   menuAnchor="full"
@@ -229,21 +241,23 @@ export const NavBar: React.FC = track(
                   }}
                 >
                   Artworks
-                </NavItem>
+                </SecondaryNavItem>
 
-                <NavItem href="/auctions">Auctions</NavItem>
-                <NavItem href="/viewing-rooms">Viewing&nbsp;Rooms</NavItem>
-                <NavItem href="/galleries">Galleries</NavItem>
-                <NavItem href="/fairs">Fairs</NavItem>
-                <NavItem href="/Shows">Shows</NavItem>
-                <NavItem
+                <SecondaryNavItem href="/auctions">Auctions</SecondaryNavItem>
+                <SecondaryNavItem href="/viewing-rooms">
+                  Viewing&nbsp;Rooms
+                </SecondaryNavItem>
+                <SecondaryNavItem href="/galleries">Galleries</SecondaryNavItem>
+                <SecondaryNavItem href="/fairs">Fairs</SecondaryNavItem>
+                <SecondaryNavItem href="/Shows">Shows</SecondaryNavItem>
+                <SecondaryNavItem
                   // Hide link at smaller viewports — corresponding display inside of `MoreNavMenu`
                   // If we need to do this again, consider a more abstract solution
                   display={["none", "none", "flex", "flex"]}
                   href="/institutions"
                 >
                   Museums
-                </NavItem>
+                </SecondaryNavItem>
               </NavSection>
             </NavSection>
 
