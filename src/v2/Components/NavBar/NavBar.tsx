@@ -115,7 +115,7 @@ export const NavBar: React.FC = track(
       <header>
         <NavBarContainer as="nav">
           <NavBarTier height={NAV_BAR_TOP_TIER_HEIGHT}>
-            <NavSection mx={0.5}>
+            <NavSection ml={[0.5, 2]} mr={0.5}>
               <NavBarPrimaryLogo />
             </NavSection>
 
@@ -131,7 +131,7 @@ export const NavBar: React.FC = track(
                 <PrimaryNavItem href="/articles">Editorial</PrimaryNavItem>
               </NavSection>
 
-              <NavSection mr={1}>
+              <NavSection mr={2}>
                 {isLoggedIn ? (
                   <LoggedInActions />
                 ) : (
@@ -274,7 +274,7 @@ export const NavBar: React.FC = track(
                   Museums
                 </SecondaryNavItem>
               </NavSection>
-              <NavSection alignItems="right">
+              <NavSection alignItems="right" mr={2}>
                 <PrimaryNavItem href="#">Download App</PrimaryNavItem>
               </NavSection>
             </NavSection>
