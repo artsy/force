@@ -22,7 +22,7 @@
     "sourceMap": true,
     "target": "es2016",
     "typeRoots": [
-      "./typings",
+      "./src/typings",
       "./node_modules/@types"
     ],
     "types": [
