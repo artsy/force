@@ -1726,6 +1726,11 @@ type AuctionLotImages {
   thumbnail: Image
 }
 
+type AuctionLotPerformance {
+  # Percentage performance over mid-estimate
+  mid: String
+}
+
 type AuctionResult implements Node {
   artistID: String!
   boughtIn: Boolean
@@ -1753,6 +1758,7 @@ type AuctionResult implements Node {
   location: String
   mediumText: String
   organization: String
+  performance: AuctionLotPerformance
   priceRealized: AuctionResultPriceRealized
   saleDate(
     format: String
