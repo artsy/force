@@ -3,11 +3,11 @@ import { data as sd } from "sharify"
 import { getContextPageFromClient } from "lib/getContextPage"
 import { OwnerType } from "@artsy/cohesion"
 import { mediator } from "lib/mediator"
-import {
+import type {
   ArtworkEventOptions,
   BuyerPremiumEventOptions,
   ViewInRoomEventOptions,
-} from "typings/mediator"
+} from "lib/mediator"
 
 export const artworkClient = () => {
   const User = require("desktop/models/user.coffee")

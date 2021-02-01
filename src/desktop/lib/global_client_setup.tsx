@@ -12,7 +12,7 @@ import { Components } from "@artsy/stitch/dist/internal/types"
 import { omit } from "lodash"
 import syncAuth from "lib/syncAuth"
 import { mediator } from "lib/mediator"
-import { LogoutEventOptions } from "typings/mediator"
+import type { LogoutEventOptions } from "lib/mediator"
 import * as templateModules from "./template_modules"
 import { setupSentry } from "lib/setupSentry"
 
