@@ -129,6 +129,12 @@ const FooterContainer: React.FC<FlexDirectionProps & Props> = props => {
                 Buying on Artsy
               </Link>
             </Text>
+            <Media greaterThan="xs">
+              <Text variant="mediumText" mb={1} mt={3}>
+                Get the iOS app
+              </Text>
+              <DownloadAppBadge contextModule={ContextModule.footer} />
+            </Media>
           </Column>
 
           <Media at="xs">
