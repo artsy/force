@@ -4,11 +4,13 @@ import {
   ChevronIcon,
   Clickable,
   CloseIcon,
+  Color,
   Flex,
   MenuIcon,
   ModalBase,
   Sans,
   Separator,
+  Text,
   color,
   space,
 } from "@artsy/palette"
@@ -72,6 +74,7 @@ export const MobileNavMenu: React.FC<Props> = ({
 
           <AnimatingMenuWrapper isOpen={isOpen}>
             <ul>
+              <MobileMenuText color="black100">Buy Artwork</MobileMenuText>
               <MobileSubmenuLink menu={ARTISTS_SUBMENU_DATA.menu}>
                 {ARTISTS_SUBMENU_DATA.menu.title}
               </MobileSubmenuLink>
@@ -87,11 +90,13 @@ export const MobileNavMenu: React.FC<Props> = ({
               <MobileLink href="/fairs">Fairs</MobileLink>
               <MobileLink href="/shows">Shows</MobileLink>
               <MobileLink href="/institutions">Museums</MobileLink>
-              <MobileLink href="/consign">Consign</MobileLink>
-              <MobileLink href="/gallery-partnerships">
-                Artsy for Galleries
+              <Separator my={1} color={color("black10")} />
+              <MobileLink href="/consign" color="black100">
+                Sell with Artsy
               </MobileLink>
-
+              <MobileLink href="/articles" color="black100">
+                Editorial
+              </MobileLink>
               {user ? <LoggedInLinks /> : <AuthenticateLinks />}
             </ul>
           </AnimatingMenuWrapper>
@@ -265,15 +270,13 @@ export const MobileSubmenuLink: React.FC<any> = ({ children, menu }) => {
           })
         }}
       >
-        <Sans size={["5t", "6"]} color={color("black60")}>
-          {children}
-        </Sans>
+        <MobileMenuText color="black60">{children}</MobileMenuText>
         <ChevronIcon
           direction="right"
           color={color("black60")}
           height="14px"
           width="14px"
-          top="7px"
+          top="9px"
           left="5px"
         />
       </Flex>
@@ -306,4 +309,15 @@ const AuthenticateLinks: React.FC = () => {
 export const MobileToggleIcon: React.FC<{ open: boolean }> = ({ open }) => {
   const style = { transform: "scale(1.5)" }
   return open ? <CloseIcon style={style} /> : <MenuIcon style={style} />
+}
+
+export const MobileMenuText: React.FC<{
+  children: any
+  color?: Color
+}> = ({ children, color: linkColor }) => {
+  return (
+    <Text py={0.5} variant="title" color={color(linkColor)}>
+      {children}
+    </Text>
+  )
 }
