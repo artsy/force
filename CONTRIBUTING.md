@@ -98,11 +98,15 @@ that behavior even for subdomains (such as local.artsy.net).
 
 2. Fetch the local development Recaptcha key from 1Password.
 
-3. Update your `.env` file's `APP_URL` and `RECAPTCHA_KEY`:
+3. Update your `.env` file's `APP_URL`, `RECAPTCHA_KEY`, `ARTSY_ID`, and `ARTSY_SECRET`:
+   Note: You can pull the majority of the environment variables from staging config, running:
+   `hokusai staging env get`
 
 ```
 APP_URL=http://local.artsy.net:5000
 RECAPTCHA_KEY=REPLACE_ME
+ARTSY_ID=REPLACE_ME
+ARTSY_SECRET=REPLACE_ME
 ```
 
 4. Visit [`http://local.artsy.net:5000`](http://local.artsy.net:5000).
