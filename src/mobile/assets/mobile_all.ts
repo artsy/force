@@ -23,7 +23,6 @@ const routes = {
   "^/.*/contact.*": require("../apps/partner_profile/client/contact.ts"),
   "^/.*/(collection|shop)[/]?": require("../apps/partner_profile/client/artworks.coffee")
     .init,
-  "^/art-fairs": require("../apps/art_fairs/client/art_fairs.coffee").init,
   "^/auctions": require("../apps/auctions/client/auctions.coffee").init,
   "^/shows": require("../apps/shows/client/shows.coffee").init,
   "^/all-cities": require("../apps/shows/client/shows.coffee").init,
