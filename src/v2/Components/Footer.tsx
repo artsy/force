@@ -7,7 +7,6 @@ import {
   ArtsyMarkIcon,
   FacebookIcon,
   Flex,
-  Image,
   InstagramIcon,
   Separator,
   Spacer,
@@ -118,7 +117,7 @@ const DownloadAppBanner = () => {
 }
 
 const FooterContainer: React.FC<FlexDirectionProps & Props> = props => {
-  const { omitSeparator, omitDownloadAppBanner } = props
+  const { omitDownloadAppBanner } = props
 
   return (
     <>
