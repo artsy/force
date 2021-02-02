@@ -9249,10 +9249,14 @@ type Query {
   # A list of Shows
   showsConnection(
     after: String
+    atAFair: Boolean
     before: String
+    displayable: Boolean = true
     first: Int
+    hasLocation: Boolean
     ids: [String]
     last: Int
+    sort: ShowSorts
   ): ShowConnection
 
   # Content for a specific page or view
@@ -11512,10 +11516,14 @@ type Viewer {
   # A list of Shows
   showsConnection(
     after: String
+    atAFair: Boolean
     before: String
+    displayable: Boolean = true
     first: Int
+    hasLocation: Boolean
     ids: [String]
     last: Int
+    sort: ShowSorts
   ): ShowConnection
 
   # Content for a specific page or view
