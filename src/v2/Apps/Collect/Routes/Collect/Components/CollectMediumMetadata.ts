@@ -47,6 +47,14 @@ export function getMetadataForMedium(medium) {
       title = "Performance Art Works"
       mediumDescription = "3,000 performance art works"
       break
+    case "reproduction":
+      title = "Reproduction"
+      mediumDescription = "3,000 reproductions"
+      break
+    case "ephemera-or-merchandise":
+      title = "Ephemera or Merchandise"
+      mediumDescription = "5,000 ephemera or merchandise"
+      break
     default:
       null
   }
