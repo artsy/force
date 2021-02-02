@@ -7,6 +7,7 @@ import {
   ArtsyMarkIcon,
   FacebookIcon,
   Flex,
+  Image,
   InstagramIcon,
   Separator,
   Spacer,
@@ -15,11 +16,14 @@ import {
   WeChatIcon,
   breakpoints,
   space,
+  Box,
+  color,
 } from "@artsy/palette"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import { DownloadAppBadge } from "v2/Components/DownloadAppBadge"
 import { Mediator } from "lib/mediator"
 import { ContextModule } from "@artsy/cohesion"
+import { BooleanLiteral } from "typescript"
 
 const Column = styled(Flex).attrs({
   flex: 1,
@@ -30,6 +34,7 @@ const Column = styled(Flex).attrs({
 interface Props {
   mediator?: Mediator
   omitSeparator?: boolean
+  omitDownloadAppBanner?: BooleanLiteral
 }
 
 export const Footer: React.FC<Props> = props => {
@@ -59,12 +64,70 @@ export const SmallFooter = (props: Props) => (
   />
 )
 
+const DownloadAppBanner = () => {
+  return (
+    <Flex
+      flexDirection="row"
+      justifyContent="center"
+      borderTop={`1px solid ${color("black10")}`}
+      borderBottom={`1px solid ${color("black10")}`}
+      mb={3}
+      overflow="hidden"
+      id="download-app-banner"
+    >
+      <Flex
+        alignItems="center"
+        justifyContent="space-between"
+        width="100%"
+        maxWidth={breakpoints.xl}
+      >
+        <Box pr={6}>
+          <Box minWidth={[160, 183]}>
+            <Text variant="largeTitle" mb={1}>
+              Get the Artsy iOS app
+            </Text>
+            <Text variant="subtitle" color="black60" mb={2}>
+              Discover, buy, and sell art by the world’s leading artists
+            </Text>
+          </Box>
+          <Flex flexDirection="row" alignItems="center">
+            <Box
+              height={80}
+              width={80}
+              backgroundColor={color("black10")}
+              mr={2}
+              flexGrow={0}
+              flexShrink={0}
+            ></Box>
+            <Text color="black60">
+              To download, scan this code with your phone’s camera
+            </Text>
+          </Flex>
+        </Box>
+        <Box
+          height={320}
+          width="100%"
+          backgroundImage="url(https://files.artsy.net/consign/banner-large.jpg)"
+          backgroundSize="cover"
+          backgroundPosition="center"
+          backgroundRepeat="no-repeat"
+        ></Box>
+      </Flex>
+    </Flex>
+  )
+}
+
 const FooterContainer: React.FC<FlexDirectionProps & Props> = props => {
-  const { omitSeparator } = props
+  const { omitSeparator, omitDownloadAppBanner } = props
 
   return (
     <>
-      {!omitSeparator && <Separator as="hr" mt={6} mb={3} />}
+      {false && <Separator as="hr" mt={6} mb={3} />}
+      {!omitDownloadAppBanner && (
+        <Media greaterThan="xs">
+          <DownloadAppBanner />
+        </Media>
+      )}
       <footer>
         <Flex
           flexDirection={props.flexDirection}
