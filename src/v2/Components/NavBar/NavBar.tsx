@@ -275,7 +275,9 @@ export const NavBar: React.FC = track(
                 </SecondaryNavItem>
               </NavSection>
               <NavSection alignItems="right" mr={2}>
-                <PrimaryNavItem href="#">Download App</PrimaryNavItem>
+                <PrimaryNavItem href="#download-app-banner">
+                  Download App
+                </PrimaryNavItem>
               </NavSection>
             </NavSection>
           </NavBarTier>
