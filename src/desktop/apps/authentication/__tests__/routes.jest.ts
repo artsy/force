@@ -93,14 +93,6 @@ describe("Routes", () => {
             done()
           })
         })
-
-        it("Returns the correct modal.type for /forgot path", done => {
-          req.path = "/forgot"
-          index(req, res, next).then(() => {
-            expect(stitch.mock.calls[0][0].data.type).toBe("forgot")
-            done()
-          })
-        })
       })
 
       describe("Meta", () => {
@@ -118,16 +110,6 @@ describe("Routes", () => {
           index(req, res, next).then(() => {
             expect(stitch.mock.calls[0][0].data.meta.title).toBe(
               "Signup for Artsy"
-            )
-            done()
-          })
-        })
-
-        it("returns the correct title for forgot", done => {
-          req.path = "/forgot"
-          index(req, res, next).then(() => {
-            expect(stitch.mock.calls[0][0].data.meta.title).toBe(
-              "Reset your password"
             )
             done()
           })
@@ -182,19 +164,6 @@ describe("Routes", () => {
           index(req, res, next).then(() => {
             expect(stitch.mock.calls[0][0].data.options.copy).toBe(
               "Signup for Artsy"
-            )
-            done()
-          })
-        })
-
-        it("returns correct title when other intent provided", done => {
-          req.path = "/forgot"
-          req.query = {
-            set_password: "reset",
-          }
-          index(req, res, next).then(() => {
-            expect(stitch.mock.calls[0][0].data.options.copy).toBe(
-              "Set your password"
             )
             done()
           })
