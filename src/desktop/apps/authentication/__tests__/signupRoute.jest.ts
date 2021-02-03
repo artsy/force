@@ -61,14 +61,6 @@ describe("signup", () => {
           done()
         })
       })
-
-      it("Returns the correct modal.type for /sign_up path", done => {
-        req.path = "/sign_up"
-        signup(req, res, next).then(() => {
-          expect(stitch.mock.calls[0][0].data.type).toBe("signup")
-          done()
-        })
-      })
     })
 
     describe("Meta", () => {

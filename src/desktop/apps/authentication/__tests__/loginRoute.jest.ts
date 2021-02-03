@@ -68,14 +68,6 @@ describe("login", () => {
           done()
         })
       })
-
-      it("Returns the correct modal.type for /log_in path", done => {
-        req.path = "/log_in"
-        login(req, res, next).then(() => {
-          expect(stitch.mock.calls[0][0].data.type).toBe("login")
-          done()
-        })
-      })
     })
 
     describe("Meta", () => {
