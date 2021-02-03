@@ -18,7 +18,6 @@ const computeStitchOptions = (
     action,
     afterSignUpAction,
     contextModule,
-    copy,
     error,
     kind,
     objectId,
@@ -27,6 +26,7 @@ const computeStitchOptions = (
   } = req.query
 
   const template = FullPageAuthStatic
+  const copy = req.query.copy || title
 
   const options = {
     basePath: __dirname,
@@ -44,7 +44,7 @@ const computeStitchOptions = (
         action,
         afterSignUpAction,
         contextModule,
-        copy: copy || title,
+        copy,
         destination,
         error,
         intent,
