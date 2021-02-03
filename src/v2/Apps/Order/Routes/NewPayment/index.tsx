@@ -11,8 +11,7 @@ import { CountdownTimer } from "v2/Components/CountdownTimer"
 import { RouteConfig, Router } from "found"
 import React, { Component } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ReactStripeElements } from "react-stripe-elements"
-import { data as sd } from "sharify"
+import type { Stripe, StripeElements } from "@stripe/stripe-js"
 import createLogger from "v2/Utils/logger"
 import { Media } from "v2/Utils/Responsive"
 
@@ -28,6 +27,7 @@ import {
 } from "v2/Apps/Order/Utils/commitMutation"
 import { get } from "v2/Utils/get"
 import { BuyerGuarantee } from "../../Components/BuyerGuarantee"
+import { createStripeWrapper } from "v2/Utils/createStripeWrapper"
 
 export const ContinueButton = props => (
   <Button size="large" width="100%" {...props}>
@@ -35,8 +35,12 @@ export const ContinueButton = props => (
   </Button>
 )
 
-export interface NewPaymentProps
-  extends ReactStripeElements.InjectedStripeProps {
+export interface StripeProps {
+  stripe: Stripe
+  elements: StripeElements
+}
+
+export interface NewPaymentProps {
   order: NewPayment_order
   me: NewPayment_me
   router: Router
@@ -48,34 +52,18 @@ export interface NewPaymentProps
 
 interface NewPaymentState {
   isGettingCreditCardId: boolean
-  stripe: stripe.Stripe
 }
 
 const logger = createLogger("Order/Routes/NewPayment/index.tsx")
 
 @track()
 export class NewPaymentRoute extends Component<
-  NewPaymentProps,
+  NewPaymentProps & StripeProps,
   NewPaymentState
 > {
   paymentPicker = React.createRef<PaymentPicker>()
   state = {
     isGettingCreditCardId: false,
-    stripe: null,
-  }
-  componentDidMount() {
-    if (window.Stripe) {
-      this.setState({
-        stripe: window.Stripe(sd.STRIPE_PUBLISHABLE_KEY),
-      })
-    } else {
-      document.querySelector("#stripe-js").addEventListener("load", () => {
-        // Create Stripe instance once Stripe.js loads
-        this.setState({
-          stripe: window.Stripe(sd.STRIPE_PUBLISHABLE_KEY),
-        })
-      })
-    }
   }
 
   onContinue = async () => {
@@ -121,7 +109,7 @@ export class NewPaymentRoute extends Component<
         orderOrError.actionData &&
         orderOrError.actionData.clientSecret
       ) {
-        const scaResult = await this.state.stripe.handleCardAction(
+        const scaResult = await this.props.stripe.handleCardAction(
           orderOrError.actionData.clientSecret
         )
         if (scaResult.error) {
@@ -311,7 +299,7 @@ export class NewPaymentRoute extends Component<
 }
 
 export const NewPaymentFragmentContainer = createFragmentContainer(
-  injectCommitMutation(injectDialog(NewPaymentRoute)),
+  createStripeWrapper(injectCommitMutation(injectDialog(NewPaymentRoute)) as any),
   {
     me: graphql`
       fragment NewPayment_me on Me {

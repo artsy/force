@@ -15,6 +15,7 @@ interface Window {
     ) => void
     __artsyClientSideRoutingReferrer?: string
   }
+  sd: any
   __BOOTSTRAP__?: any
   PARSELY?: any
   Sailthru?: any

@@ -16,7 +16,13 @@ import { track } from "v2/Artsy/Analytics"
 import * as Schema from "v2/Artsy/Analytics/Schema"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ReactStripeElements, injectStripe } from "react-stripe-elements"
+import type {
+  StripeError,
+  CreateTokenCardData,
+  StripeElements,
+  Stripe,
+} from "@stripe/stripe-js"
+import { CardElement } from "@stripe/react-stripe-js"
 
 import {
   BorderedRadio,
@@ -35,9 +41,14 @@ import {
   SystemContextConsumer,
   SystemContextProps,
 } from "v2/Artsy/SystemContext"
+import { createStripeWrapper } from "v2/Utils/createStripeWrapper"
 
-export interface PaymentPickerProps
-  extends ReactStripeElements.InjectedStripeProps {
+export interface StripeProps {
+  stripe: Stripe
+  elements: StripeElements
+}
+
+export interface PaymentPickerProps {
   order: PaymentPicker_order
   me: PaymentPicker_me
   commitMutation: CommitMutation
@@ -49,14 +60,14 @@ interface PaymentPickerState {
   address: Address
   addressErrors: AddressErrors
   addressTouched: AddressTouched
-  stripeError: stripe.Error
+  stripeError: StripeError
   isCreatingStripeToken: boolean
   creditCardSelection: { type: "existing"; id: string } | { type: "new" }
   saveNewCreditCard: boolean
 }
 
 export class PaymentPicker extends React.Component<
-  PaymentPickerProps & SystemContextProps,
+  PaymentPickerProps & SystemContextProps & StripeProps,
   PaymentPickerState
 > {
   state = {
@@ -110,7 +121,8 @@ export class PaymentPicker extends React.Component<
     try {
       this.setState({ isCreatingStripeToken: true })
       const stripeBillingAddress = this.getStripeBillingAddress()
-      return await this.props.stripe.createToken(stripeBillingAddress)
+      const element = this.props.elements.getElement(CardElement)
+      return await this.props.stripe.createToken(element, stripeBillingAddress)
     } finally {
       this.setState({ isCreatingStripeToken: false })
     }
@@ -351,7 +363,7 @@ export class PaymentPicker extends React.Component<
     )
   }
 
-  private getStripeBillingAddress(): stripe.TokenOptions {
+  private getStripeBillingAddress(): CreateTokenCardData {
     const selectedBillingAddress = (this.needsAddress()
       ? this.state.address
       : this.props.order.requestedFulfillment) as Address
@@ -443,10 +455,9 @@ const PaymentPickerWithInnerRef: React.SFC<
 )
 
 export const PaymentPickerFragmentContainer = createFragmentContainer(
-  // 😭 HOCs
-  injectStripe(
-    track()(PaymentPickerWithInnerRef) as typeof PaymentPickerWithInnerRef
-  ),
+  track()(
+    createStripeWrapper(PaymentPickerWithInnerRef)
+  ) as typeof PaymentPickerWithInnerRef,
   {
     me: graphql`
       fragment PaymentPicker_me on Me {

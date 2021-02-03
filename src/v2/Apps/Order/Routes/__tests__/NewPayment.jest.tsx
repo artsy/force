@@ -18,12 +18,29 @@ import { NewPaymentFragmentContainer } from "../NewPayment"
 import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
 import { GlobalData } from "sharify"
 import { mockLocation } from "v2/DevTools/mockLocation"
+import { mockStripe } from "v2/DevTools/mockStripe"
 
 jest.unmock("react-tracking")
 jest.unmock("react-relay")
 jest.mock("v2/Utils/Events", () => ({
   postEvent: jest.fn(),
 }))
+
+jest.mock("@stripe/stripe-js", () => {
+  let mock = null
+  return {
+    loadStripe: () => {
+      if (mock === null) {
+        mock = mockStripe()
+      }
+      return mock
+    },
+    _mockStripe: () => mock,
+    _mockReset: () => mock = mockStripe(),
+  }
+})
+
+const { _mockStripe } = require("@stripe/stripe-js")
 
 jest.mock(
   "v2/Apps/Order/Components/PaymentPicker",
@@ -34,7 +51,6 @@ jest.mock(
   }
 )
 
-const handleCardAction = jest.fn()
 const realSetInterval = global.setInterval
 
 jest.mock("v2/Utils/getCurrentTimeAsIsoString")
@@ -54,11 +70,6 @@ const testOrder: NewPaymentTestQueryRawResponse["order"] = {
 
 describe("Payment", () => {
   beforeAll(() => {
-    // @ts-ignore
-    window.Stripe = () => {
-      return { handleCardAction }
-    }
-
     window.sd = { STRIPE_PUBLISHABLE_KEY: "" } as GlobalData
   })
   const { buildPage, mutations, routes } = createTestEnv({
@@ -209,6 +220,6 @@ describe("Payment", () => {
     mutations.useResultsOnce(fixFailedPaymentWithActionRequired)
 
     await page.clickSubmit()
-    expect(handleCardAction).toBeCalledWith("client-secret")
+    expect(_mockStripe().handleCardAction).toBeCalledWith("client-secret")
   })
 })

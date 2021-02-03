@@ -7,15 +7,6 @@ import { loadableReady } from "@loadable/component"
 import { logoutEventHandler } from "desktop/lib/logoutHandler"
 import { mediator } from "lib/mediator"
 import { beforeAnalyticsReady, onAnalyticsReady } from "lib/analytics/helpers"
-import { loadScript } from "lib/scriptLoader"
-import sharify from "sharify"
-
-async function loadStripe() {
-  if (sharify.data.THIRD_PARTIES_DISABLED) {
-    return
-  }
-  return loadScript("https://js.stripe.com/v3/")
-}
 
 ;(async () => {
   try {
@@ -47,10 +38,6 @@ async function loadStripe() {
     // Logout handler
     mediator.on("auth:logout", logoutEventHandler)
 
-    // Third party analytics
-    if (getParam("disableStripe") !== "true") {
-      await loadStripe()
-    }
   } catch (error) {
     console.error(error)
   }

@@ -13,14 +13,19 @@ import {
 import { ErrorModal } from "v2/Components/Modal/ErrorModal"
 import React, { Component } from "react"
 import { RelayProp, commitMutation, graphql } from "react-relay"
-import { ReactStripeElements, injectStripe } from "react-stripe-elements"
+import type { StripeError, CreateTokenCardData, Stripe, StripeElements} from '@stripe/stripe-js'
+import { CardElement, ElementsConsumer } from "@stripe/react-stripe-js"
 import { ConnectionHandler, RecordSourceSelectorProxy } from "relay-runtime"
 import { ErrorWithMetadata } from "v2/Utils/errors"
 import createLogger from "v2/Utils/logger"
 import { Responsive } from "v2/Utils/Responsive"
 
-export interface PaymentFormProps
-  extends ReactStripeElements.InjectedStripeProps {
+export interface StripeProps {
+  stripe: Stripe
+  elements: StripeElements
+}
+
+export interface PaymentFormProps {
   relay?: RelayProp
   me: UserSettingsPayments_me
 }
@@ -28,7 +33,7 @@ export interface PaymentFormProps
 interface PaymentFormState {
   address: Address
   hideBillingAddress: boolean
-  error: stripe.Error
+  error: StripeError
   isCommittingMutation: boolean
   isErrorModalOpen: boolean
   errorModalMessage: string
@@ -38,7 +43,7 @@ interface PaymentFormState {
 
 const logger = createLogger("Components/Payment/PaymentForm.tsx")
 
-class PaymentForm extends Component<PaymentFormProps, PaymentFormState> {
+export class PaymentForm extends Component<PaymentFormProps & StripeProps, PaymentFormState> {
   private cardElement
 
   state = {
@@ -79,7 +84,8 @@ class PaymentForm extends Component<PaymentFormProps, PaymentFormState> {
         return
       }
 
-      this.props.stripe.createToken(billingAddress).then(({ error, token }) => {
+      const cardElement = this.props.elements.getElement(CardElement)
+      this.props.stripe.createToken(cardElement, billingAddress).then(({ error, token }) => {
         if (error) {
           this.setState({
             error,
@@ -112,6 +118,7 @@ class PaymentForm extends Component<PaymentFormProps, PaymentFormState> {
                       >
                         Credit Card
                       </Serif>
+                      {/* // TODO: should this be this.props.elements.getElement(CardElement) */}
                       <CreditCardInput
                         error={error}
                         onChange={response =>
@@ -157,7 +164,7 @@ class PaymentForm extends Component<PaymentFormProps, PaymentFormState> {
     this.setState({ isErrorModalOpen: false })
   }
 
-  private getSelectedBillingAddress(): stripe.TokenOptions {
+  private getSelectedBillingAddress(): CreateTokenCardData {
     const {
       name,
       addressLine1,
@@ -280,4 +287,16 @@ class PaymentForm extends Component<PaymentFormProps, PaymentFormState> {
   }
 }
 
-export default injectStripe(PaymentForm)
+export class PaymentFormInjectedStripe extends Component<PaymentFormProps> {
+  render() {
+    return (
+      <ElementsConsumer>
+        {({stripe, elements}) => (
+          <PaymentForm stripe={stripe} elements={elements} {...this.props} />
+        )}
+      </ElementsConsumer>
+    )
+  }
+}
+
+export default PaymentFormInjectedStripe

@@ -37,6 +37,7 @@ import {
   initialValuesForBidding,
 } from "v2/Apps/Auction/Components/Form"
 import { AuctionErrorModal } from "v2/Apps/Auction/Components/AuctionErrorModal"
+import type { StripeError } from "@stripe/stripe-js"
 
 const {
   validationSchemaForRegisteredUsers,
@@ -147,7 +148,7 @@ export const BidForm: React.FC<Props> = ({
               </Serif>
 
               <CreditCardInput
-                error={{ message: errors.creditCard } as stripe.Error}
+                error={{ message: errors.creditCard } as StripeError}
                 onChange={({ error }) =>
                   setFieldError("creditCard", error?.message)
                 }

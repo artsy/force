@@ -32,7 +32,6 @@ import * as Schema from "v2/Artsy/Analytics/Schema"
 import { RouteConfig, Router } from "found"
 import React, { Component } from "react"
 import { RelayProp, createFragmentContainer, graphql } from "react-relay"
-import { data as sd } from "sharify"
 import { get } from "v2/Utils/get"
 import createLogger from "v2/Utils/logger"
 import { Media } from "v2/Utils/Responsive"
@@ -40,8 +39,12 @@ import { CreditCardSummaryItemFragmentContainer as CreditCardSummaryItem } from 
 import { OfferSummaryItemFragmentContainer as OfferSummaryItem } from "../../Components/OfferSummaryItem"
 import { TwoColumnLayout } from "../../Components/TwoColumnLayout"
 import { BuyerGuarantee } from "../../Components/BuyerGuarantee"
+import { createStripeWrapper } from "v2/Utils/createStripeWrapper"
+import type { Stripe, StripeElements } from "@stripe/stripe-js"
 
 export interface ReviewProps {
+  stripe: Stripe
+  elements: StripeElements
   order: Review_order
   relay?: RelayProp
   router: Router
@@ -51,30 +54,10 @@ export interface ReviewProps {
   isCommittingMutation: boolean
 }
 
-export interface ReviewState {
-  stripe: stripe.Stripe
-}
-
 const logger = createLogger("Order/Routes/Review/index.tsx")
 
 @track()
-export class ReviewRoute extends Component<ReviewProps, ReviewState> {
-  state = { stripe: null }
-  componentDidMount() {
-    if (window.Stripe) {
-      this.setState({
-        stripe: window.Stripe(sd.STRIPE_PUBLISHABLE_KEY),
-      })
-    } else {
-      document.querySelector("#stripe-js").addEventListener("load", () => {
-        // Create Stripe instance once Stripe.js loads
-        this.setState({
-          stripe: window.Stripe(sd.STRIPE_PUBLISHABLE_KEY),
-        })
-      })
-    }
-  }
-
+export class ReviewRoute extends Component<ReviewProps> {
   @track<ReviewProps>(props => ({
     action_type:
       props.order.mode === "BUY"
@@ -89,7 +72,7 @@ export class ReviewRoute extends Component<ReviewProps, ReviewState> {
       },
     ],
   }))
-  async onSubmit(setupIntentId?: null) {
+  async onSubmit(setupIntentId?: any) {
     try {
       const orderOrError =
         this.props.order.mode === "BUY"
@@ -105,7 +88,7 @@ export class ReviewRoute extends Component<ReviewProps, ReviewState> {
         orderOrError.actionData &&
         orderOrError.actionData.clientSecret
       ) {
-        this.state.stripe
+        this.props.stripe
           .handleCardAction(orderOrError.actionData.clientSecret)
           .then(result => {
             if (result.error) {
@@ -123,8 +106,8 @@ export class ReviewRoute extends Component<ReviewProps, ReviewState> {
         orderOrError.actionData &&
         orderOrError.actionData.clientSecret
       ) {
-        this.state.stripe
-          .handleCardSetup(orderOrError.actionData.clientSecret)
+        this.props.stripe
+          .confirmCardSetup(orderOrError.actionData.clientSecret)
           .then(result => {
             if (result.error) {
               this.props.dialog.showErrorDialog({
@@ -424,7 +407,7 @@ export class ReviewRoute extends Component<ReviewProps, ReviewState> {
 }
 
 export const ReviewFragmentContainer = createFragmentContainer(
-  injectCommitMutation(injectDialog(ReviewRoute)),
+  createStripeWrapper(injectCommitMutation(injectDialog(ReviewRoute)) as any),
   {
     order: graphql`
       fragment Review_order on CommerceOrder {

@@ -14,7 +14,7 @@ import { TwoColumnLayout } from "v2/Apps/Order/Components/TwoColumnLayout"
 import { Router } from "found"
 import React, { Component } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ReactStripeElements } from "react-stripe-elements"
+import type { Stripe, StripeElements } from "@stripe/stripe-js"
 import createLogger from "v2/Utils/logger"
 import { Media } from "v2/Utils/Responsive"
 
@@ -37,7 +37,12 @@ export const ContinueButton = props => (
   </Button>
 )
 
-export interface PaymentProps extends ReactStripeElements.InjectedStripeProps {
+export interface StripeProps {
+  stripe: Stripe
+  elements: StripeElements
+}
+
+export interface PaymentProps {
   order: Payment_order
   me: Payment_me
   router: Router
@@ -58,7 +63,8 @@ const logger = createLogger("Order/Routes/Payment/index.tsx")
       ? AnalyticsSchema.Flow.BuyNow
       : AnalyticsSchema.Flow.MakeOffer,
 }))
-export class PaymentRoute extends Component<PaymentProps, PaymentState> {
+
+export class PaymentRoute extends Component<PaymentProps & StripeProps, PaymentState> {
   state: PaymentState = { isGettingCreditCardId: false }
   paymentPicker = React.createRef<PaymentPicker>()
   onContinue = async () => {

@@ -22,12 +22,13 @@ import { TrackingProp } from "react-tracking"
 import { bidderNeedsIdentityVerification } from "v2/Utils/identityVerificationRequirements"
 import createLogger from "v2/Utils/logger"
 import {
-  createStripeWrapper,
   errorMessageForCard,
   saleConfirmRegistrationPath,
   toStripeAddress,
 } from "v2/Apps/Auction/Components/Form"
-import { ReactStripeElements } from "react-stripe-elements"
+import { createStripeWrapper } from "v2/Utils/createStripeWrapper"
+import type { Stripe, StripeElements } from "@stripe/stripe-js"
+import { CardElement } from "@stripe/react-stripe-js"
 
 const logger = createLogger("Apps/Auction/Routes/Register")
 
@@ -63,7 +64,9 @@ function createBidder(
 type OnSubmitType = ComponentProps<typeof RegistrationForm>["onSubmit"]
 type FormikHelpers = Parameters<OnSubmitType>[1]
 
-interface RegisterProps extends ReactStripeElements.InjectedStripeProps {
+interface RegisterProps {
+  stripe: Stripe
+  elements: StripeElements
   sale: Register_sale
   me: Register_me
   relay: RelayProp
@@ -71,7 +74,7 @@ interface RegisterProps extends ReactStripeElements.InjectedStripeProps {
 }
 
 export const RegisterRoute: React.FC<RegisterProps> = props => {
-  const { me, relay, sale, tracking, stripe } = props
+  const { me, relay, sale, tracking, stripe, elements } = props
   const { environment } = relay
 
   const commonProperties = {
@@ -121,9 +124,10 @@ export const RegisterRoute: React.FC<RegisterProps> = props => {
     const address = toStripeAddress(values.address)
     const { phoneNumber } = values.address
     const { setFieldError, setSubmitting } = helpers
+    const element = elements.getElement(CardElement)
 
     try {
-      const { error, token } = await stripe.createToken(address)
+      const { error, token } = await stripe.createToken(element, address)
 
       if (error) {
         setFieldError("creditCard", error.message)
