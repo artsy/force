@@ -49,6 +49,7 @@ export function getAppNovoRoutes(): RouteConfig[] {
         routes: fairRoutes,
       },
       {
+        converted: true,
         routes: featureRoutes,
       },
       {

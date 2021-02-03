@@ -28,6 +28,7 @@ if (process.env.NODE_ENV === "production") {
     "/collections",
     "/collection",
     "/collect",
+    "/feature/",
     "/show/",
     "/user/conversations",
   ]
