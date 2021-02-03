@@ -1,8 +1,0 @@
-.fairs__upcoming-fair
-  if fair.organizer && fair.organizer.profile && fair.organizer.profile.is_publically_visible && fair.organizer.profile.href
-    a(href="#{fair.organizer.profile.href}").fairs-fair__name #{fair.name}
-  else
-    .fairs-fair__name #{fair.name}
-  .fairs-fair__info #{ViewHelpers.formatDates(fair)}
-  if fair.location && (fair.location.city || fair.location.country)
-    .fairs-fair__info= fair.location.city ? fair.location.city : fair.location.country

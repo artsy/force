@@ -1,6 +1,6 @@
 import loadable from "@loadable/component"
 import { graphql } from "react-relay"
-import { RouteConfig } from "found"
+import { RedirectException, RouteConfig } from "found"
 
 const FairsApp = loadable(() => import("./FairsApp"), {
   resolveComponent: component => component.FairsApp,
@@ -12,7 +12,13 @@ const FairsIndexRoute = loadable(() => import("./Routes/FairsIndex"), {
 
 export const fairsRoutes: RouteConfig[] = [
   {
-    path: "/art-fairs2",
+    path: "/fairs",
+    render: _props => {
+      throw new RedirectException("/art-fairs", 302)
+    },
+  },
+  {
+    path: "/art-fairs",
     getComponent: () => FairsApp,
     prepare: () => {
       return FairsApp.preload()
