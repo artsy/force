@@ -24,10 +24,12 @@ if (process.env.NODE_ENV === "production") {
 
   // TODO: Remove this as its temporary while routes are being converted.
   const convertedRoutes = [
+    "/art-fairs",
     "/artist-series",
-    "/collections",
-    "/collection",
     "/collect",
+    "/collection",
+    "/collections",
+    "/fairs",
     "/feature/",
     "/show/",
     "/user/conversations",
