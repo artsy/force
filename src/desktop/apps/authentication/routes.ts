@@ -4,6 +4,62 @@ import { AuthenticationMeta } from "./components/meta"
 import { parse } from "url"
 import { FullPageAuthStatic } from "./components/FullPageAuthStatic"
 
+const computeStitchOptions = (
+  template,
+  error,
+  meta,
+  action,
+  afterSignUpAction,
+  contextModule,
+  copy,
+  title,
+  destination,
+  intent,
+  kind,
+  objectId,
+  redirectTo,
+  signupReferer,
+  trigger,
+  type,
+  res
+) => {
+  const options = {
+    basePath: __dirname,
+    blocks: {
+      body: template,
+      head: AuthenticationMeta,
+    },
+    config: {
+      styledComponents: true,
+    },
+    data: {
+      error,
+      meta,
+      options: {
+        action,
+        afterSignUpAction,
+        contextModule,
+        copy: copy || title,
+        destination,
+        error,
+        intent,
+        kind,
+        objectId,
+        redirectTo,
+        signupReferer,
+        trigger,
+      },
+      type,
+    },
+    layout: "../../components/main_layout/templates/react_blank_index.jade",
+    locals: {
+      ...res.locals,
+      assetPackage: "authentication",
+    },
+  }
+  return options
+}
+
 export const index = async (req, res, next) => {
   let type: ModalType
   const template = FullPageAuthStatic
@@ -88,40 +144,25 @@ export const index = async (req, res, next) => {
   }
 
   try {
-    const options = {
-      basePath: __dirname,
-      blocks: {
-        body: template,
-        head: AuthenticationMeta,
-      },
-      config: {
-        styledComponents: true,
-      },
-      data: {
-        error,
-        meta,
-        options: {
-          action,
-          afterSignUpAction,
-          contextModule,
-          copy: copy || title,
-          destination,
-          error,
-          intent,
-          kind,
-          objectId,
-          redirectTo,
-          signupReferer,
-          trigger,
-        },
-        type,
-      },
-      layout: "../../components/main_layout/templates/react_blank_index.jade",
-      locals: {
-        ...res.locals,
-        assetPackage: "authentication",
-      },
-    }
+    const options = computeStitchOptions(
+      template,
+      error,
+      meta,
+      action,
+      afterSignUpAction,
+      contextModule,
+      copy,
+      title,
+      destination,
+      intent,
+      kind,
+      objectId,
+      redirectTo,
+      signupReferer,
+      trigger,
+      type,
+      res
+    )
 
     const layout = await stitch(options)
     res.send(layout)
