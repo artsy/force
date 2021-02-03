@@ -88,7 +88,7 @@ export const index = async (req, res, next) => {
   }
 
   try {
-    const layout = await stitch({
+    const options = {
       basePath: __dirname,
       blocks: {
         body: template,
@@ -121,8 +121,9 @@ export const index = async (req, res, next) => {
         ...res.locals,
         assetPackage: "authentication",
       },
-    })
+    }
 
+    const layout = await stitch(options)
     res.send(layout)
   } catch (error) {
     next(error)
