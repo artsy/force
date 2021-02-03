@@ -5,7 +5,6 @@ import { parse } from "url"
 import { FullPageAuthStatic } from "./components/FullPageAuthStatic"
 
 const computeStitchOptions = (
-  template,
   meta,
   title,
   destination,
@@ -26,6 +25,8 @@ const computeStitchOptions = (
     intent,
     trigger,
   } = req.query
+
+  const template = FullPageAuthStatic
 
   const options = {
     basePath: __dirname,
@@ -66,7 +67,6 @@ const computeStitchOptions = (
 
 export const index = async (req, res, next) => {
   let type: ModalType
-  const template = FullPageAuthStatic
 
   switch (req.path) {
     case "/signup":
@@ -139,7 +139,6 @@ export const index = async (req, res, next) => {
 
   try {
     const options = computeStitchOptions(
-      template,
       meta,
       title,
       destination,
