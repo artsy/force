@@ -7,6 +7,39 @@ import {
   isStaticAuthRoute,
 } from "./routeHelpers"
 
+export const forgotPassword = async (req, res, next) => {
+  const type = ModalType.forgot
+  const pageTitle = "Reset your password"
+
+  const { action, kind, objectId, intent } = req.query
+  const copy = computeCopy(req, intent, pageTitle, type, res)
+  const redirectTo = getRedirectTo(req)
+  const destination = req.query.destination || (isStaticAuthRoute && "/")
+  const signupReferer = req.header("Referer") || req.hostname
+
+  if (action) {
+    res.cookie("afterSignUpAction", JSON.stringify({ action, kind, objectId }))
+  }
+
+  try {
+    const options = computeStitchOptions(
+      pageTitle,
+      copy,
+      destination,
+      redirectTo,
+      signupReferer,
+      type,
+      req,
+      res
+    )
+
+    const layout = await stitch(options)
+    res.send(layout)
+  } catch (error) {
+    next(error)
+  }
+}
+
 export const index = async (req, res, next) => {
   let type: ModalType
 
@@ -16,9 +49,6 @@ export const index = async (req, res, next) => {
       break
     case "/sign_up":
       type = ModalType.signup
-      break
-    case "/forgot":
-      type = ModalType.forgot
       break
     default:
       type = ModalType.login
@@ -32,9 +62,6 @@ export const index = async (req, res, next) => {
       break
     case ModalType.signup:
       pageTitle = "Signup for Artsy"
-      break
-    case ModalType.forgot:
-      pageTitle = "Reset your password"
       break
   }
 
