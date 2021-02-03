@@ -56,8 +56,6 @@ export const computeStitchOptions = (
     trigger,
   } = req.query
 
-  const template = FullPageAuthStatic
-
   const meta = {
     description: "",
     title: pageTitle,
@@ -66,7 +64,7 @@ export const computeStitchOptions = (
   const options = {
     basePath: __dirname,
     blocks: {
-      body: template,
+      body: FullPageAuthStatic,
       head: AuthenticationMeta,
     },
     config: {
@@ -98,7 +96,7 @@ export const computeStitchOptions = (
     },
   }
 
-  return options
+  return options as any
 }
 
 export const getRedirectTo = req => {
