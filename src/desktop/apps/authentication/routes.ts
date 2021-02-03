@@ -6,23 +6,27 @@ import { FullPageAuthStatic } from "./components/FullPageAuthStatic"
 
 const computeStitchOptions = (
   template,
-  error,
   meta,
-  action,
-  afterSignUpAction,
-  contextModule,
-  copy,
   title,
   destination,
-  intent,
-  kind,
-  objectId,
   redirectTo,
   signupReferer,
-  trigger,
   type,
+  req,
   res
 ) => {
+  const {
+    action,
+    afterSignUpAction,
+    contextModule,
+    copy,
+    error,
+    kind,
+    objectId,
+    intent,
+    trigger,
+  } = req.query
+
   const options = {
     basePath: __dirname,
     blocks: {
@@ -96,17 +100,7 @@ export const index = async (req, res, next) => {
     title: pageTitle,
   }
 
-  const {
-    action,
-    afterSignUpAction,
-    contextModule,
-    copy,
-    error,
-    kind,
-    objectId,
-    intent,
-    trigger,
-  } = req.query
+  const { action, kind, objectId, intent } = req.query
 
   let title
   switch (intent) {
@@ -146,21 +140,13 @@ export const index = async (req, res, next) => {
   try {
     const options = computeStitchOptions(
       template,
-      error,
       meta,
-      action,
-      afterSignUpAction,
-      contextModule,
-      copy,
       title,
       destination,
-      intent,
-      kind,
-      objectId,
       redirectTo,
       signupReferer,
-      trigger,
       type,
+      req,
       res
     )
 
