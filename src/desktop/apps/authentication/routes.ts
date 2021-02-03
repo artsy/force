@@ -7,9 +7,43 @@ import {
   isStaticAuthRoute,
 } from "./routeHelpers"
 
-export const forgotPassword = async (req, res, next) => {
-  const type = ModalType.forgot
-  const pageTitle = "Reset your password"
+export const login = async (req, res, next) => {
+  const type = ModalType.login
+  const pageTitle = "Login to Artsy"
+
+  const { action, kind, objectId, intent } = req.query
+
+  const copy = computeCopy(req, intent, pageTitle, type, res)
+  const redirectTo = getRedirectTo(req)
+  const destination = req.query.destination || (isStaticAuthRoute && "/")
+  const signupReferer = req.header("Referer") || req.hostname
+
+  if (action) {
+    res.cookie("afterSignUpAction", JSON.stringify({ action, kind, objectId }))
+  }
+
+  try {
+    const options = computeStitchOptions(
+      pageTitle,
+      copy,
+      destination,
+      redirectTo,
+      signupReferer,
+      type,
+      req,
+      res
+    )
+
+    const layout = await stitch(options)
+    res.send(layout)
+  } catch (error) {
+    next(error)
+  }
+}
+
+export const signup = async (req, res, next) => {
+  const type = ModalType.signup
+  const pageTitle = "Signup for Artsy"
 
   const { action, kind, objectId, intent } = req.query
   const copy = computeCopy(req, intent, pageTitle, type, res)
@@ -40,33 +74,11 @@ export const forgotPassword = async (req, res, next) => {
   }
 }
 
-export const index = async (req, res, next) => {
-  let type: ModalType
-
-  switch (req.path) {
-    case "/signup":
-      type = ModalType.signup
-      break
-    case "/sign_up":
-      type = ModalType.signup
-      break
-    default:
-      type = ModalType.login
-      break
-  }
-
-  let pageTitle = ""
-  switch (type) {
-    case ModalType.login:
-      pageTitle = "Login to Artsy"
-      break
-    case ModalType.signup:
-      pageTitle = "Signup for Artsy"
-      break
-  }
+export const forgotPassword = async (req, res, next) => {
+  const type = ModalType.forgot
+  const pageTitle = "Reset your password"
 
   const { action, kind, objectId, intent } = req.query
-
   const copy = computeCopy(req, intent, pageTitle, type, res)
   const redirectTo = getRedirectTo(req)
   const destination = req.query.destination || (isStaticAuthRoute && "/")
