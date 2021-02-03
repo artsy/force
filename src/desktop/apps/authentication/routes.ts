@@ -6,7 +6,7 @@ import { FullPageAuthStatic } from "./components/FullPageAuthStatic"
 
 const computeStitchOptions = (
   meta,
-  title,
+  copy,
   destination,
   redirectTo,
   signupReferer,
@@ -26,7 +26,6 @@ const computeStitchOptions = (
   } = req.query
 
   const template = FullPageAuthStatic
-  const copy = req.query.copy || title
 
   const options = {
     basePath: __dirname,
@@ -129,6 +128,7 @@ export const index = async (req, res, next) => {
     }
   }
 
+  const copy = req.query.copy || title
   const redirectTo = getRedirectTo(req)
   const destination = req.query.destination || (isStaticAuthRoute && "/")
   const signupReferer = req.header("Referer") || req.hostname
@@ -140,7 +140,7 @@ export const index = async (req, res, next) => {
   try {
     const options = computeStitchOptions(
       meta,
-      title,
+      copy,
       destination,
       redirectTo,
       signupReferer,
