@@ -4,6 +4,38 @@ import { AuthenticationMeta } from "./components/meta"
 import { parse } from "url"
 import { FullPageAuthStatic } from "./components/FullPageAuthStatic"
 
+const computeCopy = (req, intent, pageTitle, type, res) => {
+  let title
+
+  switch (intent) {
+    case "save artwork":
+      title = `Sign up to ${intent}s`
+      break
+    case "follow partner":
+      title = `Sign up to ${intent}s`
+      break
+    case "follow artist":
+      title = "Sign up to follow artists"
+      break
+    default:
+      title = pageTitle || `Sign up for Artsy`
+      break
+  }
+
+  if (type === ModalType.forgot) {
+    res.locals.sd.RESET_PASSWORD_REDIRECT_TO =
+      req.query.reset_password_redirect_to
+
+    // Used to customize reset copy/emails for partners etc
+    res.locals.sd.SET_PASSWORD = req.query.set_password
+    if (req.query.set_password) {
+      title = "Set your password"
+    }
+  }
+
+  return req.query.copy || title
+}
+
 const computeStitchOptions = (
   meta,
   copy,
@@ -101,34 +133,7 @@ export const index = async (req, res, next) => {
 
   const { action, kind, objectId, intent } = req.query
 
-  let title
-  switch (intent) {
-    case "save artwork":
-      title = `Sign up to ${intent}s`
-      break
-    case "follow partner":
-      title = `Sign up to ${intent}s`
-      break
-    case "follow artist":
-      title = "Sign up to follow artists"
-      break
-    default:
-      title = pageTitle || `Sign up for Artsy`
-      break
-  }
-
-  if (type === ModalType.forgot) {
-    res.locals.sd.RESET_PASSWORD_REDIRECT_TO =
-      req.query.reset_password_redirect_to
-
-    // Used to customize reset copy/emails for partners etc
-    res.locals.sd.SET_PASSWORD = req.query.set_password
-    if (req.query.set_password) {
-      title = "Set your password"
-    }
-  }
-
-  const copy = req.query.copy || title
+  const copy = computeCopy(req, intent, pageTitle, type, res)
   const redirectTo = getRedirectTo(req)
   const destination = req.query.destination || (isStaticAuthRoute && "/")
   const signupReferer = req.header("Referer") || req.hostname
