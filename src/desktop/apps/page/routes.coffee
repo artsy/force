@@ -12,6 +12,6 @@ Page = require '../../models/page'
     return res.redirect(301, "/consign")
   else
     return new Page(id: req.params.id).fetch
-    cache: true
-    success: (page) -> res.render 'template', page: page
-    error: res.backboneError
+      cache: true
+      success: (page) -> res.render 'template', page: page
+      error: res.backboneError
