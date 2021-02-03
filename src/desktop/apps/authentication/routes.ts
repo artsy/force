@@ -37,7 +37,7 @@ const computeCopy = (req, intent, pageTitle, type, res) => {
 }
 
 const computeStitchOptions = (
-  meta,
+  pageTitle,
   copy,
   destination,
   redirectTo,
@@ -58,6 +58,11 @@ const computeStitchOptions = (
   } = req.query
 
   const template = FullPageAuthStatic
+
+  const meta = {
+    description: "",
+    title: pageTitle,
+  }
 
   const options = {
     basePath: __dirname,
@@ -126,10 +131,6 @@ export const index = async (req, res, next) => {
       pageTitle = "Reset your password"
       break
   }
-  const meta = {
-    description: "",
-    title: pageTitle,
-  }
 
   const { action, kind, objectId, intent } = req.query
 
@@ -144,7 +145,7 @@ export const index = async (req, res, next) => {
 
   try {
     const options = computeStitchOptions(
-      meta,
+      pageTitle,
       copy,
       destination,
       redirectTo,
