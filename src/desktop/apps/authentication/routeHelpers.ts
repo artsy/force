@@ -3,7 +3,7 @@ import { parse } from "url"
 import { FullPageAuthStatic } from "./components/FullPageAuthStatic"
 import { AuthenticationMeta } from "./components/meta"
 
-export const computeCopy = (req, intent, pageTitle, type, res) => {
+export const computeCopy = ({ intent, pageTitle, req, res, type }) => {
   let title
 
   switch (intent) {
@@ -35,28 +35,35 @@ export const computeCopy = (req, intent, pageTitle, type, res) => {
   return req.query.copy || title
 }
 
-export const computeStitchOptions = (
+export const computeStitchOptions = ({
+  canonical,
   pageTitle,
-  copy,
-  destination,
-  redirectTo,
-  signupReferer,
-  type,
   req,
-  res
-) => {
+  res,
+  type,
+}) => {
   const {
     action,
     afterSignUpAction,
     contextModule,
     error,
+    intent,
     kind,
     objectId,
-    intent,
     trigger,
   } = req.query
 
+  const copy = computeCopy({ intent, pageTitle, req, res, type })
+  const redirectTo = getRedirectTo(req)
+  const destination = req.query.destination || (isStaticAuthRoute && "/")
+  const signupReferer = req.header("Referer") || req.hostname
+
+  if (action) {
+    res.cookie("afterSignUpAction", JSON.stringify({ action, kind, objectId }))
+  }
+
   const meta = {
+    canonical,
     description: "",
     title: pageTitle,
   }
