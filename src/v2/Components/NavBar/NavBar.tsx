@@ -126,8 +126,8 @@ export const NavBar: React.FC = track(
             {/* Desktop. Collapses into mobile at `xs` breakpoint. */}
             <NavSection display={["none", "flex"]}>
               <NavSection alignItems="center" ml={2}>
-                <PrimaryNavItem href="/collect">Buy Artwork</PrimaryNavItem>
-                <PrimaryNavItem href="/consign">Sell with Artsy</PrimaryNavItem>
+                <PrimaryNavItem href="/collect">Buy</PrimaryNavItem>
+                <PrimaryNavItem href="/consign">Sell</PrimaryNavItem>
                 <PrimaryNavItem href="/articles">Editorial</PrimaryNavItem>
               </NavSection>
 

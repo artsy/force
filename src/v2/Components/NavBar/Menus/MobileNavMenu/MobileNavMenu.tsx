@@ -74,7 +74,7 @@ export const MobileNavMenu: React.FC<Props> = ({
 
           <AnimatingMenuWrapper isOpen={isOpen}>
             <ul>
-              <MobileMenuText color="black100">Buy Artwork</MobileMenuText>
+              <MobileMenuText color="black100">Buy</MobileMenuText>
               <MobileSubmenuLink menu={ARTISTS_SUBMENU_DATA.menu}>
                 {ARTISTS_SUBMENU_DATA.menu.title}
               </MobileSubmenuLink>
@@ -92,7 +92,7 @@ export const MobileNavMenu: React.FC<Props> = ({
               <MobileLink href="/institutions">Museums</MobileLink>
               <Separator my={1} color={color("black10")} />
               <MobileLink href="/consign" color="black100">
-                Sell with Artsy
+                Sell
               </MobileLink>
               <MobileLink href="/articles" color="black100">
                 Editorial
