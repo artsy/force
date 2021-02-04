@@ -37,7 +37,7 @@ export const FairsPastFairs: React.FC<FairsPastFairsProps> = ({
 
   return (
     <>
-      <Box mb={3}>
+      <Box mb={3} data-test="pastFairs">
         {closedFairs.map(({ node: fair }) => {
           if (!fair.isPublished && !fair.profile?.isPublished) return null
 
