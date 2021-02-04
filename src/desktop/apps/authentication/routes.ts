@@ -1,7 +1,6 @@
 import { stitch } from "@artsy/stitch"
 import { ModalType } from "v2/Components/Authentication/Types"
 import {
-  computeCopy,
   computeStitchOptions,
   getRedirectTo,
   isStaticAuthRoute,
@@ -11,29 +10,8 @@ export const login = async (req, res, next) => {
   const type = ModalType.login
   const pageTitle = "Login to Artsy"
 
-  const { action, kind, objectId, intent } = req.query
-
-  const copy = computeCopy(req, intent, pageTitle, type, res)
-  const redirectTo = getRedirectTo(req)
-  const destination = req.query.destination || (isStaticAuthRoute && "/")
-  const signupReferer = req.header("Referer") || req.hostname
-
-  if (action) {
-    res.cookie("afterSignUpAction", JSON.stringify({ action, kind, objectId }))
-  }
-
   try {
-    const options = computeStitchOptions(
-      pageTitle,
-      copy,
-      destination,
-      redirectTo,
-      signupReferer,
-      type,
-      req,
-      res
-    )
-
+    const options = computeStitchOptions(pageTitle, req, res, type)
     const layout = await stitch(options)
     res.send(layout)
   } catch (error) {
@@ -45,28 +23,8 @@ export const signup = async (req, res, next) => {
   const type = ModalType.signup
   const pageTitle = "Signup for Artsy"
 
-  const { action, kind, objectId, intent } = req.query
-  const copy = computeCopy(req, intent, pageTitle, type, res)
-  const redirectTo = getRedirectTo(req)
-  const destination = req.query.destination || (isStaticAuthRoute && "/")
-  const signupReferer = req.header("Referer") || req.hostname
-
-  if (action) {
-    res.cookie("afterSignUpAction", JSON.stringify({ action, kind, objectId }))
-  }
-
   try {
-    const options = computeStitchOptions(
-      pageTitle,
-      copy,
-      destination,
-      redirectTo,
-      signupReferer,
-      type,
-      req,
-      res
-    )
-
+    const options = computeStitchOptions(pageTitle, req, res, type)
     const layout = await stitch(options)
     res.send(layout)
   } catch (error) {
@@ -78,28 +36,8 @@ export const forgotPassword = async (req, res, next) => {
   const type = ModalType.forgot
   const pageTitle = "Reset your password"
 
-  const { action, kind, objectId, intent } = req.query
-  const copy = computeCopy(req, intent, pageTitle, type, res)
-  const redirectTo = getRedirectTo(req)
-  const destination = req.query.destination || (isStaticAuthRoute && "/")
-  const signupReferer = req.header("Referer") || req.hostname
-
-  if (action) {
-    res.cookie("afterSignUpAction", JSON.stringify({ action, kind, objectId }))
-  }
-
   try {
-    const options = computeStitchOptions(
-      pageTitle,
-      copy,
-      destination,
-      redirectTo,
-      signupReferer,
-      type,
-      req,
-      res
-    )
-
+    const options = computeStitchOptions(pageTitle, req, res, type)
     const layout = await stitch(options)
     res.send(layout)
   } catch (error) {

@@ -35,26 +35,26 @@ export const computeCopy = (req, intent, pageTitle, type, res) => {
   return req.query.copy || title
 }
 
-export const computeStitchOptions = (
-  pageTitle,
-  copy,
-  destination,
-  redirectTo,
-  signupReferer,
-  type,
-  req,
-  res
-) => {
+export const computeStitchOptions = (pageTitle, req, res, type) => {
   const {
     action,
     afterSignUpAction,
     contextModule,
     error,
+    intent,
     kind,
     objectId,
-    intent,
     trigger,
   } = req.query
+
+  const copy = computeCopy(req, intent, pageTitle, type, res)
+  const redirectTo = getRedirectTo(req)
+  const destination = req.query.destination || (isStaticAuthRoute && "/")
+  const signupReferer = req.header("Referer") || req.hostname
+
+  if (action) {
+    res.cookie("afterSignUpAction", JSON.stringify({ action, kind, objectId }))
+  }
 
   const meta = {
     description: "",
