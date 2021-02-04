@@ -80,7 +80,7 @@ const testMe: ShippingTestQueryRawResponse["me"] = {
           phoneNumber: "555-555-5555",
           postalCode: "28001",
           region: "",
-          id: "addressID",
+          id: "addressID1",
         },
       },
       {
@@ -95,7 +95,7 @@ const testMe: ShippingTestQueryRawResponse["me"] = {
           phoneNumber: "422-424-4242",
           postalCode: "10013",
           region: "NY",
-          id: "addressID",
+          id: "addressID2",
         },
       },
     ],
