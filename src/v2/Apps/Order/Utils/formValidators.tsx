@@ -36,3 +36,13 @@ export const validatePhoneNumber = (phoneNumber: string) => {
     hasError,
   }
 }
+
+/**
+ * Removes attributes with empty value:
+ * `{name: null, address: 'invalid'} => {address: 'invalid'}`
+ */
+export const removeEmptyKeys = obj => {
+  return Object.entries(obj)
+    .filter(([_, v]) => v != null && v !== false)
+    .reduce((acc, [k, v]) => ({ ...acc, [k]: v }), {})
+}

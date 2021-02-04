@@ -324,11 +324,21 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
         {showModal && (
           <AddressModal
             show={showModal}
-            onClose={() => this.setState({ editAddressIndex: -1 })}
+            closeModal={() => this.setState({ editAddressIndex: -1 })}
             address={
               this.props.me.addressConnection.edges[this.state.editAddressIndex]
                 ?.node
             }
+            commitMutation={this.props.commitMutation}
+            onSuccess={updatedAddress => {
+              this.setState({ address: updatedAddress })
+            }}
+            onError={message => {
+              this.props.dialog.showErrorDialog({
+                title: "Address cannot be updated",
+                message: message,
+              })
+            }}
           />
         )}
         <HorizontalPadding px={[0, 4]}>
@@ -521,6 +531,7 @@ export const ShippingFragmentContainer = createFragmentContainer(
         ) {
         name
         email
+        id
         ...SavedAddresses_me
         addressConnection(
           first: $first
@@ -530,6 +541,8 @@ export const ShippingFragmentContainer = createFragmentContainer(
         ) {
           edges {
             node {
+              id
+              internalID
               addressLine1
               addressLine2
               addressLine3

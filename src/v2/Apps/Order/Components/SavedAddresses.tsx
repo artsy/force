@@ -123,9 +123,11 @@ export const SavedAddressesFragmentContainer = createFragmentContainer(
           last: $last
           before: $before
           after: $after
-        ) {
+        ) @connection(key: "SavedAddresses_addressConnection") {
           edges {
             node {
+              id
+              internalID
               addressLine1
               addressLine2
               addressLine3

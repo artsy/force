@@ -53,12 +53,20 @@ const testOrder: ShippingTestQueryRawResponse["order"] = {
   id: "1234",
 }
 
+const pageInfo = {
+  startCursor: "aaa",
+  endCursor: "bbb",
+  hasNextPage: false,
+  hasPreviousPage: false,
+}
+
 const emptyTestMe: ShippingTestQueryRawResponse["me"] = {
   name: "Test Name",
   email: "test@gmail.com",
   id: "4321",
   addressConnection: {
     edges: [],
+    pageInfo,
   },
 }
 
@@ -70,6 +78,8 @@ const testMe: ShippingTestQueryRawResponse["me"] = {
     edges: [
       {
         node: {
+          __typename: "UserAddress",
+          internalID: "1",
           addressLine1: "1 Main St",
           addressLine2: "",
           addressLine3: "",
@@ -82,9 +92,12 @@ const testMe: ShippingTestQueryRawResponse["me"] = {
           region: "",
           id: "addressID1",
         },
+        cursor: "aaa",
       },
       {
         node: {
+          __typename: "UserAddress",
+          internalID: "2",
           addressLine1: "401 Broadway",
           addressLine2: "Floor 25",
           addressLine3: "",
@@ -97,8 +110,10 @@ const testMe: ShippingTestQueryRawResponse["me"] = {
           region: "NY",
           id: "addressID2",
         },
+        cursor: "aaa",
       },
     ],
+    pageInfo,
   },
 }
 

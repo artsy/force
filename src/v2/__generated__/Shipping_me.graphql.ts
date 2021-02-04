@@ -6,9 +6,12 @@ import { FragmentRefs } from "relay-runtime";
 export type Shipping_me = {
     readonly name: string | null;
     readonly email: string | null;
+    readonly id: string;
     readonly addressConnection: {
         readonly edges: ReadonlyArray<{
             readonly node: {
+                readonly id: string;
+                readonly internalID: string;
                 readonly addressLine1: string;
                 readonly addressLine2: string | null;
                 readonly addressLine3: string | null;
@@ -39,6 +42,13 @@ var v0 = {
   "args": null,
   "kind": "ScalarField",
   "name": "name",
+  "storageKey": null
+},
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
   "storageKey": null
 };
 return {
@@ -80,6 +90,7 @@ return {
       "name": "email",
       "storageKey": null
     },
+    (v1/*: any*/),
     {
       "alias": null,
       "args": [
@@ -125,6 +136,14 @@ return {
               "name": "node",
               "plural": false,
               "selections": [
+                (v1/*: any*/),
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "internalID",
+                  "storageKey": null
+                },
                 {
                   "alias": null,
                   "args": null,
@@ -207,5 +226,5 @@ return {
   "type": "Me"
 };
 })();
-(node as any).hash = '6fd6a6287f747fbf3e0a3f0a04d2e070';
+(node as any).hash = '96b6c7e43b19453cb277783ef53e311c';
 export default node;

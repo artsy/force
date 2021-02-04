@@ -28,6 +28,8 @@ fragment SavedAddresses_me on Me {
   addressConnection(first: 30) {
     edges {
       node {
+        id
+        internalID
         addressLine1
         addressLine2
         addressLine3
@@ -38,13 +40,36 @@ fragment SavedAddresses_me on Me {
         phoneNumber
         postalCode
         region
+        __typename
       }
+      cursor
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+      hasPreviousPage
+      startCursor
     }
   }
 }
 */
 
-const node: ConcreteRequest = {
+const node: ConcreteRequest = (function(){
+var v0 = [
+  {
+    "kind": "Literal",
+    "name": "first",
+    "value": 30
+  }
+],
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+};
+return {
   "fragment": {
     "argumentDefinitions": [],
     "kind": "Fragment",
@@ -86,13 +111,7 @@ const node: ConcreteRequest = {
         "selections": [
           {
             "alias": null,
-            "args": [
-              {
-                "kind": "Literal",
-                "name": "first",
-                "value": 30
-              }
-            ],
+            "args": (v0/*: any*/),
             "concreteType": "UserAddressConnection",
             "kind": "LinkedField",
             "name": "addressConnection",
@@ -114,6 +133,14 @@ const node: ConcreteRequest = {
                     "name": "node",
                     "plural": false,
                     "selections": [
+                      (v1/*: any*/),
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "internalID",
+                        "storageKey": null
+                      },
                       {
                         "alias": null,
                         "args": null,
@@ -183,8 +210,61 @@ const node: ConcreteRequest = {
                         "kind": "ScalarField",
                         "name": "region",
                         "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "__typename",
+                        "storageKey": null
                       }
                     ],
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "cursor",
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "PageInfo",
+                "kind": "LinkedField",
+                "name": "pageInfo",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "endCursor",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "hasNextPage",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "hasPreviousPage",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "startCursor",
                     "storageKey": null
                   }
                 ],
@@ -195,11 +275,14 @@ const node: ConcreteRequest = {
           },
           {
             "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "id",
-            "storageKey": null
-          }
+            "args": (v0/*: any*/),
+            "filters": null,
+            "handle": "connection",
+            "key": "SavedAddresses_addressConnection",
+            "kind": "LinkedHandle",
+            "name": "addressConnection"
+          },
+          (v1/*: any*/)
         ],
         "storageKey": null
       }
@@ -210,8 +293,9 @@ const node: ConcreteRequest = {
     "metadata": {},
     "name": "SavedAddresses_Test_Query",
     "operationKind": "query",
-    "text": "query SavedAddresses_Test_Query {\n  me {\n    ...SavedAddresses_me\n    id\n  }\n}\n\nfragment SavedAddresses_me on Me {\n  addressConnection(first: 30) {\n    edges {\n      node {\n        addressLine1\n        addressLine2\n        addressLine3\n        city\n        country\n        isDefault\n        name\n        phoneNumber\n        postalCode\n        region\n      }\n    }\n  }\n}\n"
+    "text": "query SavedAddresses_Test_Query {\n  me {\n    ...SavedAddresses_me\n    id\n  }\n}\n\nfragment SavedAddresses_me on Me {\n  addressConnection(first: 30) {\n    edges {\n      node {\n        id\n        internalID\n        addressLine1\n        addressLine2\n        addressLine3\n        city\n        country\n        isDefault\n        name\n        phoneNumber\n        postalCode\n        region\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n"
   }
 };
+})();
 (node as any).hash = 'e350425adaf0c49e68945a506d18c23d';
 export default node;

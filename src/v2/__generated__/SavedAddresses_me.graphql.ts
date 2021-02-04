@@ -7,6 +7,8 @@ export type SavedAddresses_me = {
     readonly addressConnection: {
         readonly edges: ReadonlyArray<{
             readonly node: {
+                readonly id: string;
+                readonly internalID: string;
                 readonly addressLine1: string;
                 readonly addressLine2: string | null;
                 readonly addressLine3: string | null;
@@ -58,36 +60,26 @@ const node: ReaderFragment = {
     }
   ],
   "kind": "Fragment",
-  "metadata": null,
+  "metadata": {
+    "connection": [
+      {
+        "count": null,
+        "cursor": null,
+        "direction": "bidirectional",
+        "path": [
+          "addressConnection"
+        ]
+      }
+    ]
+  },
   "name": "SavedAddresses_me",
   "selections": [
     {
-      "alias": null,
-      "args": [
-        {
-          "kind": "Variable",
-          "name": "after",
-          "variableName": "after"
-        },
-        {
-          "kind": "Variable",
-          "name": "before",
-          "variableName": "before"
-        },
-        {
-          "kind": "Variable",
-          "name": "first",
-          "variableName": "first"
-        },
-        {
-          "kind": "Variable",
-          "name": "last",
-          "variableName": "last"
-        }
-      ],
+      "alias": "addressConnection",
+      "args": null,
       "concreteType": "UserAddressConnection",
       "kind": "LinkedField",
-      "name": "addressConnection",
+      "name": "__SavedAddresses_addressConnection_connection",
       "plural": false,
       "selections": [
         {
@@ -106,6 +98,20 @@ const node: ReaderFragment = {
               "name": "node",
               "plural": false,
               "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "id",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "internalID",
+                  "storageKey": null
+                },
                 {
                   "alias": null,
                   "args": null,
@@ -175,8 +181,61 @@ const node: ReaderFragment = {
                   "kind": "ScalarField",
                   "name": "region",
                   "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "__typename",
+                  "storageKey": null
                 }
               ],
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "cursor",
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "PageInfo",
+          "kind": "LinkedField",
+          "name": "pageInfo",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "endCursor",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "hasNextPage",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "hasPreviousPage",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "startCursor",
               "storageKey": null
             }
           ],
@@ -188,5 +247,5 @@ const node: ReaderFragment = {
   ],
   "type": "Me"
 };
-(node as any).hash = '3442b7cf49d583cc0c27097487821f30';
+(node as any).hash = '1a534e843aa563ac623718c1b7ad5745';
 export default node;

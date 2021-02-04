@@ -1,46 +1,128 @@
 import React from "react"
 import { Button, Input, Modal, Spacer } from "@artsy/palette"
-import { SavedAddressType } from "../Utils/shippingAddressUtils"
-import { useFormik } from "formik"
-import { validateAddress, validatePhoneNumber } from "../Utils/formValidators"
+import {
+  convertShippingAddressForExchange,
+  convertShippingAddressToMutationInput,
+  SavedAddressType,
+} from "../Utils/shippingAddressUtils"
+import { FormikProps, useFormik } from "formik"
+import {
+  removeEmptyKeys,
+  validateAddress,
+  validatePhoneNumber,
+} from "../Utils/formValidators"
 import { CountrySelect } from "v2/Components/CountrySelect"
+import { graphql } from "react-relay"
+import { AddressModalMutation } from "v2/__generated__/AddressModalMutation.graphql"
+import { CommitMutation } from "../Utils/commitMutation"
 
 interface Props {
   show: boolean
-  onClose: () => void
+  closeModal: () => void
   address: SavedAddressType
+  commitMutation: CommitMutation
+  onSuccess: (address) => void
+  onError: (message: string) => void
 }
 
-// type AddressAttrubytes = keyof SavedAddressType
-// type AddressErrors = Record<AddressAttrubytes, string>
+const saveAddress = async (
+  commitMutation: CommitMutation,
+  userAddressID: string,
+  values: any,
+  closeModal: () => void,
+  onSuccess: (address) => void,
+  onError: (message: string) => void
+) => {
+  const useArtrubutes = convertShippingAddressToMutationInput(values)
 
-const saveAddress = values => {
-  // TODO: call update mutation
-  console.log(values)
+  // TODO: add type <UpdateUserAddressMutation>
+  const result = await commitMutation<AddressModalMutation>({
+    variables: {
+      input: {
+        userAddressID: userAddressID,
+        attributes: useArtrubutes,
+      },
+    },
+    mutation: graphql`
+      mutation AddressModalMutation($input: UpdateUserAddressInput!) {
+        updateUserAddress(input: $input) {
+          userAddressOrErrors {
+            ... on UserAddress {
+              id
+              internalID
+              name
+              addressLine1
+              addressLine2
+              isDefault
+              phoneNumber
+              city
+              region
+              postalCode
+              country
+            }
+            ... on Errors {
+              errors {
+                code
+                message
+              }
+            }
+          }
+        }
+      }
+    `,
+  })
+  const errors = result.updateUserAddress.userAddressOrErrors.errors
+  if (errors) {
+    onError(errors.map(error => error.message).join(", "))
+  } else {
+    const address = convertShippingAddressForExchange(
+      result.updateUserAddress.userAddressOrErrors
+    )
+    onSuccess(address)
+  }
+  closeModal()
 }
 
 const validateor = (values: any) => {
   const validationResult = validateAddress(values)
   const phoneValidation = validatePhoneNumber(values.phoneNumber)
-  return Object.assign({}, validationResult.errors, {
+  const errors = Object.assign({}, validationResult.errors, {
     phoneNumber: phoneValidation.error,
   })
+  const errorsTrimmed = removeEmptyKeys(errors)
+  return errorsTrimmed
 }
 
-export const AddressModal: React.FC<Props> = ({ show, onClose, address }) => {
-  const formik = useFormik({
+export const AddressModal: React.FC<Props> = ({
+  show,
+  closeModal,
+  address,
+  commitMutation,
+  onSuccess,
+  onError,
+}) => {
+  const formik: FormikProps<SavedAddressType> = useFormik({
     initialValues: address,
     validate: validateor,
-    onSubmit: saveAddress,
+    onSubmit: values => {
+      saveAddress(
+        commitMutation,
+        address.internalID,
+        values,
+        closeModal,
+        onSuccess,
+        onError
+      )
+    },
   })
   return (
-    <Modal title="Edit address" show={show} onClose={onClose}>
+    <Modal title="Edit address" show={show} onClose={closeModal}>
       <form onSubmit={formik.handleSubmit}>
         <Input
           name="name"
           title="Full Name"
           onChange={formik.handleChange}
-          error={formik.errors.name as string}
+          error={formik.errors.name}
           value={formik.values.name}
         />
         <Spacer mb={1} />
@@ -48,7 +130,7 @@ export const AddressModal: React.FC<Props> = ({ show, onClose, address }) => {
           name="postalCode"
           title="Postal Code"
           onChange={formik.handleChange}
-          error={formik.errors.postalCode as string}
+          error={formik.errors.postalCode}
           value={formik.values.postalCode}
         />
         <Spacer mb={1} />
@@ -56,7 +138,7 @@ export const AddressModal: React.FC<Props> = ({ show, onClose, address }) => {
           title="Address Line 1"
           name="addressLine1"
           onChange={formik.handleChange}
-          error={formik.errors.addressLine as string}
+          error={formik.errors.addressLine1}
           value={formik.values.addressLine1}
         />
         <Spacer mb={1} />
@@ -64,7 +146,7 @@ export const AddressModal: React.FC<Props> = ({ show, onClose, address }) => {
           title="Address Line 2"
           name="addressLine2"
           onChange={formik.handleChange}
-          error={formik.errors.addressLine2 as string}
+          error={formik.errors.addressLine2}
           value={formik.values.addressLine2}
         />
         <Spacer mb={1} />
@@ -72,7 +154,7 @@ export const AddressModal: React.FC<Props> = ({ show, onClose, address }) => {
           title="City"
           name="city"
           onChange={formik.handleChange}
-          error={formik.errors.city as string}
+          error={formik.errors.city}
           value={formik.values.city}
         />
         <Spacer mb={1} />
@@ -80,7 +162,7 @@ export const AddressModal: React.FC<Props> = ({ show, onClose, address }) => {
           title="Region"
           name="region"
           onChange={formik.handleChange}
-          error={formik.errors.region as string}
+          error={formik.errors.region}
           value={formik.values.region}
         />
         <Spacer mb={1} />
@@ -89,7 +171,7 @@ export const AddressModal: React.FC<Props> = ({ show, onClose, address }) => {
           onSelect={countryCode => {
             formik.setFieldValue("country", countryCode)
           }}
-          error={formik.errors.country as string}
+          error={formik.errors.country}
         />
         <Spacer mb={1} />
         <Input
@@ -97,13 +179,14 @@ export const AddressModal: React.FC<Props> = ({ show, onClose, address }) => {
           name="phoneNumber"
           type="tel"
           onChange={formik.handleChange}
-          error={formik.errors.phoneNumber as string}
+          error={formik.errors.phoneNumber}
           value={formik.values.phoneNumber}
         />
         <Button
           type="submit"
           size="large"
           loading={formik.isSubmitting}
+          disabled={Object.keys(formik.errors).length > 0}
           width="100%"
           mt={2}
         >
