@@ -11,7 +11,7 @@ export const login = async (req, res, next) => {
   const pageTitle = "Login to Artsy"
 
   try {
-    const options = computeStitchOptions(pageTitle, req, res, type)
+    const options = computeStitchOptions({ pageTitle, req, res, type })
     const layout = await stitch(options)
     res.send(layout)
   } catch (error) {
@@ -24,7 +24,7 @@ export const signup = async (req, res, next) => {
   const pageTitle = "Signup for Artsy"
 
   try {
-    const options = computeStitchOptions(pageTitle, req, res, type)
+    const options = computeStitchOptions({ pageTitle, req, res, type })
     const layout = await stitch(options)
     res.send(layout)
   } catch (error) {
@@ -37,7 +37,7 @@ export const forgotPassword = async (req, res, next) => {
   const pageTitle = "Reset your password"
 
   try {
-    const options = computeStitchOptions(pageTitle, req, res, type)
+    const options = computeStitchOptions({ pageTitle, req, res, type })
     const layout = await stitch(options)
     res.send(layout)
   } catch (error) {

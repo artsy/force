@@ -3,7 +3,7 @@ import { parse } from "url"
 import { FullPageAuthStatic } from "./components/FullPageAuthStatic"
 import { AuthenticationMeta } from "./components/meta"
 
-export const computeCopy = (req, intent, pageTitle, type, res) => {
+export const computeCopy = ({ intent, pageTitle, req, res, type }) => {
   let title
 
   switch (intent) {
@@ -35,7 +35,7 @@ export const computeCopy = (req, intent, pageTitle, type, res) => {
   return req.query.copy || title
 }
 
-export const computeStitchOptions = (pageTitle, req, res, type) => {
+export const computeStitchOptions = ({ pageTitle, req, res, type }) => {
   const {
     action,
     afterSignUpAction,
@@ -47,7 +47,7 @@ export const computeStitchOptions = (pageTitle, req, res, type) => {
     trigger,
   } = req.query
 
-  const copy = computeCopy(req, intent, pageTitle, type, res)
+  const copy = computeCopy({ intent, pageTitle, req, res, type })
   const redirectTo = getRedirectTo(req)
   const destination = req.query.destination || (isStaticAuthRoute && "/")
   const signupReferer = req.header("Referer") || req.hostname
