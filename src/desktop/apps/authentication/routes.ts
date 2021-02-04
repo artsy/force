@@ -1,5 +1,6 @@
 import { stitch } from "@artsy/stitch"
 import { ModalType } from "v2/Components/Authentication/Types"
+import { data as sd } from "sharify"
 import {
   computeStitchOptions,
   getRedirectTo,
@@ -9,9 +10,16 @@ import {
 export const login = async (req, res, next) => {
   const type = ModalType.login
   const pageTitle = "Login to Artsy"
+  const canonical = `${sd.APP_URL}/login`
 
   try {
-    const options = computeStitchOptions({ pageTitle, req, res, type })
+    const options = computeStitchOptions({
+      canonical,
+      pageTitle,
+      req,
+      res,
+      type,
+    })
     const layout = await stitch(options)
     res.send(layout)
   } catch (error) {
@@ -22,9 +30,16 @@ export const login = async (req, res, next) => {
 export const signup = async (req, res, next) => {
   const type = ModalType.signup
   const pageTitle = "Signup for Artsy"
+  const canonical = `${sd.APP_URL}/signup`
 
   try {
-    const options = computeStitchOptions({ pageTitle, req, res, type })
+    const options = computeStitchOptions({
+      canonical,
+      pageTitle,
+      req,
+      res,
+      type,
+    })
     const layout = await stitch(options)
     res.send(layout)
   } catch (error) {
@@ -35,9 +50,16 @@ export const signup = async (req, res, next) => {
 export const forgotPassword = async (req, res, next) => {
   const type = ModalType.forgot
   const pageTitle = "Reset your password"
+  const canonical = `${sd.APP_URL}/forgot`
 
   try {
-    const options = computeStitchOptions({ pageTitle, req, res, type })
+    const options = computeStitchOptions({
+      canonical,
+      pageTitle,
+      req,
+      res,
+      type,
+    })
     const layout = await stitch(options)
     res.send(layout)
   } catch (error) {

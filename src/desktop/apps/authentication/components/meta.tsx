@@ -2,6 +2,7 @@ import React from "react"
 
 interface MetaProps {
   meta: {
+    canonical?: string
     title: string
     description: string
   }
@@ -9,7 +10,7 @@ interface MetaProps {
 
 export const AuthenticationMeta: React.SFC<MetaProps> = props => {
   const {
-    meta: { description, title },
+    meta: { canonical, description, title },
   } = props
 
   return (
@@ -19,6 +20,7 @@ export const AuthenticationMeta: React.SFC<MetaProps> = props => {
       <meta property="description" content={description} />
       <meta property="og:description" content={description} />
       <meta property="twitter:description" content={description} />
+      {canonical && <link rel="canonical" href={canonical} />}
       {/* Don't index or follow links on this page */}
       <meta name="robots" content="none" />
     </>

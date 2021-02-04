@@ -35,7 +35,13 @@ export const computeCopy = ({ intent, pageTitle, req, res, type }) => {
   return req.query.copy || title
 }
 
-export const computeStitchOptions = ({ pageTitle, req, res, type }) => {
+export const computeStitchOptions = ({
+  canonical,
+  pageTitle,
+  req,
+  res,
+  type,
+}) => {
   const {
     action,
     afterSignUpAction,
@@ -57,6 +63,7 @@ export const computeStitchOptions = ({ pageTitle, req, res, type }) => {
   }
 
   const meta = {
+    canonical,
     description: "",
     title: pageTitle,
   }
