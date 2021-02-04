@@ -64,7 +64,6 @@ export const FairsIndex: React.FC<FairsIndexProps> = ({
       <Media lessThan="sm">
         <ResponsiveBox aspectWidth={16} aspectHeight={9} maxWidth="100%">
           <Text
-            as="h1"
             variant="largeTitle"
             color="white100"
             mx={-2}
@@ -239,7 +238,7 @@ export const FairsIndex: React.FC<FairsIndexProps> = ({
         <GridColumns my={3}>
           <Column span={7}>
             <Text
-              as="h3"
+              as={currentFairs.length > 0 ? "h2" : "h1"}
               variant="title"
               pb={1}
               borderBottom="1px solid"
@@ -253,7 +252,7 @@ export const FairsIndex: React.FC<FairsIndexProps> = ({
 
           <Column start={9} span={4}>
             <Text
-              as="h3"
+              as="h2"
               variant="title"
               pb={1}
               borderBottom="1px solid"
