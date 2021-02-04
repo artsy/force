@@ -1,4 +1,5 @@
-import { Step, Stepper } from "@artsy/palette"
+import { Media } from "v2/Utils/Responsive"
+import { Box, Step, Stepper } from "@artsy/palette"
 import React from "react"
 
 function typedArray<T extends string>(...elems: T[]): T[] {
@@ -23,15 +24,33 @@ export function OrderStepper<Steps extends string[]>({
 }) {
   const stepIndex = steps.indexOf(currentStep)
   return (
-    <Stepper
-      initialTabIndex={stepIndex}
-      currentStepIndex={stepIndex}
-      disableNavigation
-      autoScroll
-    >
-      {steps.map(step => (
-        <Step name={step} key={step} />
-      ))}
-    </Stepper>
+    <>
+      <Media between={["xs", "md"]}>
+        <Box pl={2} pr={2}>
+          <Stepper
+            initialTabIndex={stepIndex}
+            currentStepIndex={stepIndex}
+            disableNavigation
+            autoScroll
+          >
+            {steps.map(step => (
+              <Step name={step} key={step} />
+            ))}
+          </Stepper>
+        </Box>
+      </Media>
+      <Media greaterThan="sm">
+        <Stepper
+          initialTabIndex={stepIndex}
+          currentStepIndex={stepIndex}
+          disableNavigation
+          autoScroll
+        >
+          {steps.map(step => (
+            <Step name={step} key={step} />
+          ))}
+        </Stepper>
+      </Media>
+    </>
   )
 }
