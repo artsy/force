@@ -107,6 +107,18 @@ RECAPTCHA_KEY=REPLACE_ME
 
 4. Visit [`http://local.artsy.net:5000`](http://local.artsy.net:5000).
 
+<details>
+   <summary>Do you see an error about not providing a secure connection?</summary>
+
+Your browser has probably cached a redirect from `http://*.artsy.net` to `https://...`. Clear your browser cache for this page: 
+
+- Browse to https://local.artsy.net:5000
+- Open Chrome Dev Tools (this adds a drop down menu to the reload icon)
+- Click and hold “Reload” icon until the drop down appears.
+- Select “Empty Cache and Hard Reload”
+- You may now browse to http://local.artsy.net:5000
+</details>
+
 ## Creating a Review App
 
 See [the docs](docs/creating_review_app.md).
