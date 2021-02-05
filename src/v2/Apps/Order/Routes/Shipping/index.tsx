@@ -265,7 +265,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
       ).commerceSetShipping.orderOrError
 
       if (this.state.saveAddress) {
-        await this.saveAddress(address)
+        await this.saveAddress({ ...address, phoneNumber: phoneNumber })
       }
 
       if (orderOrError.error) {
