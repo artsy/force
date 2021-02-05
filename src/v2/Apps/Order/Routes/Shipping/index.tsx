@@ -54,7 +54,6 @@ import {
   AddressErrors,
   AddressForm,
   AddressTouched,
-  emptyAddress,
 } from "v2/Components/AddressForm"
 import { Router } from "found"
 import React, { Component } from "react"
@@ -68,6 +67,7 @@ import {
   startingPhoneNumber,
   startingAddress,
   convertShippingAddressForExchange,
+  defaultShippingAddressIndex,
 } from "../../Utils/shippingAddressUtils"
 import {
   NEW_ADDRESS,
@@ -112,7 +112,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
     phoneNumber: startingPhoneNumber(this.props.me, this.props.order),
     phoneNumberError: "",
     phoneNumberTouched: false,
-    selectedSavedAddress: "",
+    selectedSavedAddress: defaultShippingAddressIndex(this.props.me),
     editAddressIndex: -1,
     saveAddress: true,
   }
@@ -217,29 +217,37 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
   onContinueButtonPressed = async () => {
     const { address, shippingOption, phoneNumber } = this.state
 
+    // TODO: dry this
+    const createNewAddress = this.state.selectedSavedAddress === NEW_ADDRESS
+    console.log(this.props)
+    const addressList = this.props.me.addressConnection.edges
+
     if (shippingOption === "SHIP") {
-      const { errors, hasErrors } = validateAddress(this.state.address)
-      const { error, hasError } = validatePhoneNumber(this.state.phoneNumber)
-      if (hasErrors && hasError) {
-        this.setState({
-          addressErrors: errors,
-          addressTouched: this.touchedAddress,
-          phoneNumberError: error,
-          phoneNumberTouched: true,
-        })
-        return
-      } else if (hasErrors) {
-        this.setState({
-          addressErrors: errors,
-          addressTouched: this.touchedAddress,
-        })
-        return
-      } else if (hasError) {
-        this.setState({
-          phoneNumberError: error,
-          phoneNumberTouched: true,
-        })
-        return
+      if (createNewAddress) {
+        // validate when order is not pickup and the address is new
+        const { errors, hasErrors } = validateAddress(this.state.address)
+        const { error, hasError } = validatePhoneNumber(this.state.phoneNumber)
+        if (hasErrors && hasError) {
+          this.setState({
+            addressErrors: errors,
+            addressTouched: this.touchedAddress,
+            phoneNumberError: error,
+            phoneNumberTouched: true,
+          })
+          return
+        } else if (hasErrors) {
+          this.setState({
+            addressErrors: errors,
+            addressTouched: this.touchedAddress,
+          })
+          return
+        } else if (hasError) {
+          this.setState({
+            phoneNumberError: error,
+            phoneNumberTouched: true,
+          })
+          return
+        }
       }
     } else {
       const { error, hasError } = validatePhoneNumber(this.state.phoneNumber)
@@ -253,18 +261,26 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
     }
 
     try {
+      // if not creating a new address, use the saved address selection for shipping
+      console.log(this.state.selectedSavedAddress, addressList)
+      const shipToAddress = createNewAddress
+        ? address
+        : convertShippingAddressForExchange(
+            addressList[parseInt(this.state.selectedSavedAddress)].node
+          )
       const orderOrError = (
         await this.setShipping({
           input: {
             id: this.props.order.internalID,
             fulfillmentType: shippingOption,
-            shipping: address,
+            shipping: shipToAddress,
             phoneNumber,
           },
         })
       ).commerceSetShipping.orderOrError
 
-      if (this.state.saveAddress) {
+      // save address when user is entering new address AND save checkbox is selected
+      if (createNewAddress && this.state.saveAddress) {
         await this.saveAddress({ ...address, phoneNumber: phoneNumber })
       }
 
@@ -376,16 +392,16 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
     // TODO: does it need to save the address in state?  can it just use the index and address list?
     const onSelectSavedAddress = (value: string) => {
       this.setState({ selectedSavedAddress: value })
-      if (value == NEW_ADDRESS) {
-        this.setState({ address: emptyAddress })
-        this.setState({ phoneNumber: "" })
-      } else {
-        const selectedAddress = convertShippingAddressForExchange(
-          addressList[parseInt(value)].node
-        )
-        this.setState({ address: selectedAddress })
-        this.setState({ phoneNumber: selectedAddress.phoneNumber })
-      }
+      // if (value == NEW_ADDRESS) {
+      //   this.setState({ address: emptyAddress })
+      //   this.setState({ phoneNumber: "" })
+      // } else {
+      //   const selectedAddress = convertShippingAddressForExchange(
+      //     addressList[parseInt(value)].node
+      //   )
+      //   this.setState({ address: selectedAddress })
+      //   this.setState({ phoneNumber: selectedAddress.phoneNumber })
+      // }
     }
     const showModal = this.state.editAddressIndex > -1
     return (
@@ -400,7 +416,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
             }
             commitMutation={this.props.commitMutation}
             onSuccess={updatedAddress => {
-              this.setState({ address: updatedAddress })
+              // this.setState({ address: updatedAddress })
             }}
             onError={message => {
               this.props.dialog.showErrorDialog({

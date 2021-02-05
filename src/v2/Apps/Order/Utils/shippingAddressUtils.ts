@@ -6,6 +6,7 @@ import {
   AddressModalMutationResponse,
   UserAddressAttributes,
 } from "v2/__generated__/AddressModalMutation.graphql"
+import { NEW_ADDRESS } from "../Components/SavedAddresses"
 
 export type SavedAddressType = Shipping_me["addressConnection"]["edges"][number]["node"]
 
@@ -13,7 +14,10 @@ export type SavedAddressType = Shipping_me["addressConnection"]["edges"][number]
  * Extracts
  * @param me relay Me object including addressConnection
  */
-const defaultShippingAddress = (me: Shipping_me): SavedAddressType | null => {
+// TODO: remove?
+export const defaultShippingAddress = (
+  me: Shipping_me
+): SavedAddressType | null => {
   const addressList = me.addressConnection.edges
   if (addressList.length > 0) {
     const defaultAddress =
@@ -25,38 +29,36 @@ const defaultShippingAddress = (me: Shipping_me): SavedAddressType | null => {
   }
 }
 
-export const startingPhoneNumber = (me: Shipping_me, order: Shipping_order) => {
-  const defaultSavedPhoneNumber = defaultShippingAddress(me)?.phoneNumber
-  if (defaultSavedPhoneNumber) {
-    return defaultSavedPhoneNumber
+export const defaultShippingAddressIndex = (me: Shipping_me): string => {
+  const addressList = me.addressConnection.edges
+  if (addressList.length > 0) {
+    const defaultAddressIndex =
+      addressList.findIndex(address => address.node.isDefault) || 0
+    return String(defaultAddressIndex)
   } else {
-    return order.requestedFulfillment &&
-      (order.requestedFulfillment.__typename === "CommerceShip" ||
-        order.requestedFulfillment.__typename === "CommercePickup")
-      ? order.requestedFulfillment.phoneNumber
-      : ""
+    return NEW_ADDRESS
   }
 }
 
-export const startingAddress = (me: Shipping_me, order: Shipping_order) => {
-  const defaultSavedAddress = defaultShippingAddress(me)
-  if (defaultSavedAddress) {
-    const startingAddress = convertShippingAddressForExchange(
-      defaultSavedAddress
-    )
-    return startingAddress
-  } else {
-    const initialAddress = {
-      ...emptyAddress,
-      country: order.lineItems.edges[0].node.artwork.shippingCountry,
+export const startingPhoneNumber = (me: Shipping_me, order: Shipping_order) => {
+  return order.requestedFulfillment &&
+    (order.requestedFulfillment.__typename === "CommerceShip" ||
+      order.requestedFulfillment.__typename === "CommercePickup")
+    ? order.requestedFulfillment.phoneNumber
+    : ""
+}
 
-      // We need to pull out _only_ the values specified by the Address type,
-      // since our state will be used for Relay variables later on. The
-      // easiest way to do this is with the emptyAddress.
-      ...pick(order.requestedFulfillment, Object.keys(emptyAddress)),
-    }
-    return initialAddress
+export const startingAddress = (me: Shipping_me, order: Shipping_order) => {
+  const initialAddress = {
+    ...emptyAddress,
+    country: order.lineItems.edges[0].node.artwork.shippingCountry,
+
+    // We need to pull out _only_ the values specified by the Address type,
+    // since our state will be used for Relay variables later on. The
+    // easiest way to do this is with the emptyAddress.
+    ...pick(order.requestedFulfillment, Object.keys(emptyAddress)),
   }
+  return initialAddress
 }
 
 type MutationAddressResponse = AddressModalMutationResponse["updateUserAddress"]["userAddressOrErrors"]
