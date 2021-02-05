@@ -7652,6 +7652,9 @@ type Mutation {
     input: CreateGeminiEntryForAssetInput!
   ): CreateGeminiEntryForAssetPayload
   createImage(input: CreateImageInput!): CreateImagePayload
+  createInquiryOfferOrder(
+    input: CommerceCreateInquiryOfferOrderWithArtworkInput!
+  ): CommerceCreateInquiryOfferOrderWithArtworkPayload
   createSmsSecondFactor(
     input: CreateSmsSecondFactorInput!
   ): CreateSmsSecondFactorPayload
