@@ -1,56 +1,37 @@
 import React from "react"
-import { MockBoot, renderRelayTree } from "v2/DevTools"
+import { MockBoot } from "v2/DevTools"
 import { FeatureAppFragmentContainer } from "../FeatureApp"
 import { graphql } from "react-relay"
-import { FeatureApp_Test_QueryRawResponse } from "v2/__generated__/FeatureApp_Test_Query.graphql"
-import { Breakpoint } from "@artsy/palette"
-import { FEATURE_APP_FIXTURE } from "./fixtures"
+import { FeatureApp_Test_Query } from "v2/__generated__/FeatureApp_Test_Query.graphql"
+import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
 
 jest.unmock("react-relay")
-jest.mock("v2/Artsy/Router/useRouter", () => ({
-  useIsRouteActive: () => false,
-  useRouter: () => ({
-    match: {
-      params: {
-        slug: "subscription-demo-gg-guy-yanai",
-      },
-    },
-  }),
-}))
+
+const { getWrapper } = setupTestWrapper<FeatureApp_Test_Query>({
+  Component: props => {
+    return (
+      <MockBoot>
+        <FeatureAppFragmentContainer {...props} />
+      </MockBoot>
+    )
+  },
+  query: graphql`
+    query FeatureApp_Test_Query {
+      feature(id: "example") {
+        ...FeatureApp_feature
+      }
+    }
+  `,
+})
 
 describe("FeatureApp", () => {
-  const slug = "subscription-demo-gg-guy-yanai"
-
-  const getWrapper = async (
-    breakpoint: Breakpoint = "lg",
-    response: FeatureApp_Test_QueryRawResponse = FEATURE_APP_FIXTURE
-  ) => {
-    return await renderRelayTree({
-      Component: ({ feature }) => {
-        return (
-          <MockBoot breakpoint={breakpoint}>
-            <FeatureAppFragmentContainer feature={feature} />
-          </MockBoot>
-        )
-      },
-      mockData: response,
-      query: graphql`
-        query FeatureApp_Test_Query($slug: ID!) @raw_response_type {
-          feature(id: $slug) {
-            ...FeatureApp_feature
-          }
-        }
-      `,
-      variables: { slug },
+  it("renders the correct components", () => {
+    const wrapper = getWrapper({
+      OrderedSet: () => ({ itemType: "Artwork" }),
     })
-  }
-
-  it("renders the correct components", async () => {
-    const wrapper = await getWrapper()
 
     expect(wrapper.find("AppContainer").length).toBe(1)
     expect(wrapper.find("FeatureHeader").length).toBe(1)
-    expect(wrapper.find("FeatureFeaturedLink").length).toBe(1)
     expect(wrapper.find("ArtworkGridItemContainer").length).toBe(1)
   })
 })
