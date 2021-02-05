@@ -47,6 +47,7 @@ export function getAppNovoRoutes(): RouteConfig[] {
         routes: conversationRoutes,
       },
       {
+        converted: true,
         routes: fairRoutes,
       },
       {
