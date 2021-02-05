@@ -368,7 +368,8 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
 
     const createNewAddress = this.state.selectedSavedAddress === NEW_ADDRESS
 
-    const showAddressForm = shippingSelected && createNewAddress
+    const showAddressForm =
+      shippingSelected && (createNewAddress || addressList.length === 0)
 
     const showSavedAddresses = shippingSelected && addressList.length > 0
 
