@@ -17,6 +17,11 @@ const Figure = styled(Flex)`
   flex-grow: 0;
   background-color: ${color("black10")};
   overflow: hidden;
+
+  > picture {
+    width: 100%;
+    height: 100%;
+  }
 `
 
 const Meta = styled(Flex)`
@@ -47,11 +52,12 @@ export const FeatureHeaderDefault: React.FC<FeatureHeaderDefaultProps> = ({
     >
       {image && (
         <Figure height={["50vh", "auto"]}>
-          <Image
-            src={image.cropped.src}
-            srcSet={image.cropped.srcSet}
-            alt={name}
-          />
+          <picture>
+            <source srcSet={image.sm.srcSet} media="(max-width: 400px)" />
+            <source srcSet={image.md.srcSet} media="(max-width: 1200px)" />
+            <source srcSet={image.lg.srcSet} media="(min-width: 1200px)" />
+            <Image src={image.sm.src} alt={name} loading="lazy" />
+          </picture>
         </Figure>
       )}
 
@@ -83,7 +89,15 @@ export const FeatureHeaderDefaultFragmentContainer = createFragmentContainer(
         name
         subheadline(format: HTML)
         defaultImage: image {
-          cropped(width: 1000, height: 1000, version: ["main", "wide"]) {
+          sm: cropped(width: 400, height: 400, version: ["main", "wide"]) {
+            src
+            srcSet
+          }
+          md: cropped(width: 600, height: 600, version: ["main", "wide"]) {
+            src
+            srcSet
+          }
+          lg: cropped(width: 1000, height: 1000, version: ["main", "wide"]) {
             src
             srcSet
           }

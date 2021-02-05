@@ -7,7 +7,15 @@ export type FeatureHeaderFull_feature = {
     readonly name: string;
     readonly subheadline: string | null;
     readonly fullImage: {
-        readonly cropped: {
+        readonly sm: {
+            readonly src: string;
+            readonly srcSet: string;
+        } | null;
+        readonly md: {
+            readonly src: string;
+            readonly srcSet: string;
+        } | null;
+        readonly lg: {
             readonly src: string;
             readonly srcSet: string;
         } | null;
@@ -22,7 +30,32 @@ export type FeatureHeaderFull_feature$key = {
 
 
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = {
+  "kind": "Literal",
+  "name": "version",
+  "value": [
+    "main",
+    "wide"
+  ]
+},
+v1 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "src",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "srcSet",
+    "storageKey": null
+  }
+];
+return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
@@ -57,21 +90,58 @@ const node: ReaderFragment = {
       "plural": false,
       "selections": [
         {
-          "alias": null,
+          "alias": "sm",
+          "args": [
+            {
+              "kind": "Literal",
+              "name": "height",
+              "value": 400
+            },
+            (v0/*: any*/),
+            {
+              "kind": "Literal",
+              "name": "width",
+              "value": 800
+            }
+          ],
+          "concreteType": "CroppedImageUrl",
+          "kind": "LinkedField",
+          "name": "cropped",
+          "plural": false,
+          "selections": (v1/*: any*/),
+          "storageKey": "cropped(height:400,version:[\"main\",\"wide\"],width:800)"
+        },
+        {
+          "alias": "md",
+          "args": [
+            {
+              "kind": "Literal",
+              "name": "height",
+              "value": 600
+            },
+            (v0/*: any*/),
+            {
+              "kind": "Literal",
+              "name": "width",
+              "value": 1200
+            }
+          ],
+          "concreteType": "CroppedImageUrl",
+          "kind": "LinkedField",
+          "name": "cropped",
+          "plural": false,
+          "selections": (v1/*: any*/),
+          "storageKey": "cropped(height:600,version:[\"main\",\"wide\"],width:1200)"
+        },
+        {
+          "alias": "lg",
           "args": [
             {
               "kind": "Literal",
               "name": "height",
               "value": 1000
             },
-            {
-              "kind": "Literal",
-              "name": "version",
-              "value": [
-                "main",
-                "wide"
-              ]
-            },
+            (v0/*: any*/),
             {
               "kind": "Literal",
               "name": "width",
@@ -82,22 +152,7 @@ const node: ReaderFragment = {
           "kind": "LinkedField",
           "name": "cropped",
           "plural": false,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "src",
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "srcSet",
-              "storageKey": null
-            }
-          ],
+          "selections": (v1/*: any*/),
           "storageKey": "cropped(height:1000,version:[\"main\",\"wide\"],width:2000)"
         }
       ],
@@ -106,5 +161,6 @@ const node: ReaderFragment = {
   ],
   "type": "Feature"
 };
-(node as any).hash = 'a0ed66431835bfd38c99fc6a27b0d1b5';
+})();
+(node as any).hash = 'dc3fc182dd2ed03d4af33ac63d0b50e2';
 export default node;
