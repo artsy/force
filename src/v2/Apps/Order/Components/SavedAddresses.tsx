@@ -9,6 +9,7 @@ const EditButton = styled(Text)`
     text-decoration: underline;
   }
 `
+export const NEW_ADDRESS = "NEW_ADDRESS"
 
 const renderAddressList = (addressList, handleClickEdit) => {
   return addressList.map((address, index) => {
@@ -98,7 +99,7 @@ const SavedAddresses: React.FC<Props> = props => {
         defaultValue={defaultAddressIndex(addressList)}
       >
         {renderAddressList(addressList, handleClickEdit)}
-        <BorderedRadio value={"NEW_ADDRESS"}>
+        <BorderedRadio value={NEW_ADDRESS}>
           <Text variant="text">Add a new shipping address</Text>
         </BorderedRadio>
       </RadioGroup>

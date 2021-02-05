@@ -35,7 +35,6 @@ const saveAddress = async (
 ) => {
   const useArtrubutes = convertShippingAddressToMutationInput(values)
 
-  // TODO: add type <UpdateUserAddressMutation>
   const result = await commitMutation<AddressModalMutation>({
     variables: {
       input: {

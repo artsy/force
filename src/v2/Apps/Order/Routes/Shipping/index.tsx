@@ -2,6 +2,7 @@ import {
   BorderedRadio,
   Box,
   Button,
+  Checkbox,
   Col,
   Collapse,
   Flex,
@@ -16,6 +17,10 @@ import {
   CommerceOrderFulfillmentTypeEnum,
   ShippingOrderAddressUpdateMutation,
 } from "v2/__generated__/ShippingOrderAddressUpdateMutation.graphql"
+import {
+  ShippingCreateUserAddressMutation,
+  UserAddressAttributes,
+} from "v2/__generated__/ShippingCreateUserAddressMutation.graphql"
 import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "v2/Apps/Order/Components/ArtworkSummaryItem"
 import {
@@ -49,6 +54,7 @@ import {
   AddressErrors,
   AddressForm,
   AddressTouched,
+  emptyAddress,
 } from "v2/Components/AddressForm"
 import { Router } from "found"
 import React, { Component } from "react"
@@ -63,7 +69,10 @@ import {
   startingAddress,
   convertShippingAddressForExchange,
 } from "../../Utils/shippingAddressUtils"
-import { SavedAddressesFragmentContainer as SavedAddresses } from "../../Components/SavedAddresses"
+import {
+  NEW_ADDRESS,
+  SavedAddressesFragmentContainer as SavedAddresses,
+} from "../../Components/SavedAddresses"
 import { AddressModal } from "../../Components/AddressModal"
 
 export interface ShippingProps {
@@ -84,7 +93,9 @@ export interface ShippingState {
   phoneNumberTouched: PhoneNumberTouched
   addressErrors: AddressErrors
   addressTouched: AddressTouched
+  selectedSavedAddress: string
   editAddressIndex: number
+  saveAddress: boolean
 }
 
 const logger = createLogger("Order/Routes/Shipping/index.tsx")
@@ -101,7 +112,9 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
     phoneNumber: startingPhoneNumber(this.props.me, this.props.order),
     phoneNumberError: "",
     phoneNumberTouched: false,
+    selectedSavedAddress: "",
     editAddressIndex: -1,
+    saveAddress: true,
   }
 
   get touchedAddress() {
@@ -117,6 +130,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
     }
   }
 
+  // TODO: move mutations to a different file?
   setShipping(variables: ShippingOrderAddressUpdateMutation["variables"]) {
     return this.props.commitMutation<ShippingOrderAddressUpdateMutation>({
       variables,
@@ -152,6 +166,45 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
                   type
                   code
                   data
+                }
+              }
+            }
+          }
+        }
+      `,
+    })
+  }
+
+  saveAddress(address: UserAddressAttributes) {
+    return this.props.commitMutation<ShippingCreateUserAddressMutation>({
+      variables: {
+        input: {
+          attributes: address,
+        },
+      },
+      mutation: graphql`
+        mutation ShippingCreateUserAddressMutation(
+          $input: CreateUserAddressInput!
+        ) {
+          createUserAddress(input: $input) {
+            userAddressOrErrors {
+              ... on UserAddress {
+                id
+                internalID
+                name
+                addressLine1
+                addressLine2
+                isDefault
+                phoneNumber
+                city
+                region
+                postalCode
+                country
+              }
+              ... on Errors {
+                errors {
+                  code
+                  message
                 }
               }
             }
@@ -210,6 +263,10 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
           },
         })
       ).commerceSetShipping.orderOrError
+
+      if (this.state.saveAddress) {
+        await this.saveAddress(address)
+      }
 
       if (orderOrError.error) {
         this.handleSubmitError(orderOrError.error)
@@ -306,10 +363,21 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
     )
     const addressList = this.props.me.addressConnection.edges
 
-    const onSelectAddressOption = (value: string) => {
-      if (value == "NEW_ADDRESS") {
-        // opens address form
-        // this.setState({ openAddressForm: true })
+    const shippingSelected =
+      !artwork.pickup_available || this.state.shippingOption === "SHIP"
+
+    const createNewAddress = this.state.selectedSavedAddress === NEW_ADDRESS
+
+    const showAddressForm = shippingSelected && createNewAddress
+
+    const showSavedAddresses = shippingSelected && addressList.length > 0
+
+    // TODO: does it need to save the address in state?  can it just use the index and address list?
+    const onSelectSavedAddress = (value: string) => {
+      this.setState({ selectedSavedAddress: value })
+      if (value == NEW_ADDRESS) {
+        this.setState({ address: emptyAddress })
+        this.setState({ phoneNumber: "" })
       } else {
         const selectedAddress = convertShippingAddressForExchange(
           addressList[parseInt(value)].node
@@ -392,13 +460,16 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
                     <Spacer mb={3} />
                   </>
                 )}
+                {showSavedAddresses && (
+                  <SavedAddresses
+                    me={this.props.me}
+                    onSelect={value => onSelectSavedAddress(value)}
+                    handleClickEdit={this.handleClickEdit}
+                  />
+                )}
                 <Collapse
                   data-test="addressFormCollapse"
-                  open={
-                    !artwork.pickup_available ||
-                    (this.state.shippingOption === "SHIP" &&
-                      !addressList.length)
-                  }
+                  open={showAddressForm}
                 >
                   <AddressForm
                     value={address}
@@ -418,6 +489,15 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
                     onChange={this.onPhoneNumberChange}
                     label="Required for shipping logistics"
                   />
+                  <Checkbox
+                    onSelect={selected =>
+                      this.setState({ saveAddress: selected })
+                    }
+                    selected={this.state.saveAddress}
+                  >
+                    Save Address
+                  </Checkbox>
+                  <Spacer mt={1} />
                 </Collapse>
 
                 <Collapse
@@ -433,13 +513,6 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
                     label="Number to contact you for pickup logistics"
                   />
                 </Collapse>
-                {addressList.length > 0 && (
-                  <SavedAddresses
-                    me={this.props.me}
-                    onSelect={value => onSelectAddressOption(value)}
-                    handleClickEdit={this.handleClickEdit}
-                  />
-                )}
                 <Media greaterThan="xs">
                   <Button
                     onClick={this.onContinueButtonPressed}
