@@ -1,4 +1,3 @@
-/* eslint-disable sort-keys-fix/sort-keys-fix */
 import loadable from "@loadable/component"
 import { RouteConfig } from "found"
 import { graphql } from "react-relay"
@@ -24,64 +23,16 @@ export const collectRoutes: RouteConfig[] = [
       CollectApp.preload()
     },
     prepareVariables: initializeVariablesWithFilterState,
-    query: graphql`
-      query collectRoutes_ArtworkFilterQuery(
-        $acquireable: Boolean
-        $aggregations: [ArtworkAggregation] = [TOTAL]
-        $artistID: String
-        $atAuction: Boolean
-        $attributionClass: [String]
-        $color: String
-        $forSale: Boolean
-        $height: String
-        $inquireableOnly: Boolean
-        $majorPeriods: [String]
-        $medium: String
-        $offerable: Boolean
-        $page: Int
-        $partnerID: ID
-        $priceRange: String
-        $sizes: [ArtworkSizes]
-        $sort: String
-        $keyword: String
-        $width: String
-      ) {
-        marketingHubCollections {
-          ...Collect_marketingHubCollections
-        }
-        filterArtworks: artworksConnection(
-          aggregations: $aggregations
-          sort: $sort
-          first: 30
-        ) {
-          ...SeoProductsForArtworks_artworks
-        }
-        viewer {
-          ...ArtworkFilter_viewer
-            @arguments(
-              acquireable: $acquireable
-              aggregations: $aggregations
-              artistID: $artistID
-              atAuction: $atAuction
-              attributionClass: $attributionClass
-              color: $color
-              forSale: $forSale
-              height: $height
-              inquireableOnly: $inquireableOnly
-              keyword: $keyword
-              majorPeriods: $majorPeriods
-              medium: $medium
-              offerable: $offerable
-              page: $page
-              partnerID: $partnerID
-              priceRange: $priceRange
-              sizes: $sizes
-              sort: $sort
-              width: $width
-            )
-        }
-      }
-    `,
+    query: getArtworkFilterQuery(),
+  },
+  {
+    path: "/collect/color/:color?",
+    getComponent: () => CollectApp,
+    prepare: () => {
+      CollectApp.preload()
+    },
+    prepareVariables: initializeVariablesWithFilterState,
+    query: getArtworkFilterQuery(),
   },
   {
     path: "/collections",
@@ -119,6 +70,14 @@ function initializeVariablesWithFilterState(params, props) {
     }
   }
 
+  if (params.color) {
+    initialFilterState.color = params.color
+
+    if (props.location.query) {
+      props.location.query.color = params.color
+    }
+  }
+
   const state = {
     sort: "-decayed_merch",
     ...paramsToCamelCase(initialFilterState),
@@ -126,4 +85,65 @@ function initializeVariablesWithFilterState(params, props) {
   }
 
   return state
+}
+
+function getArtworkFilterQuery() {
+  return graphql`
+    query collectRoutes_ArtworkFilterQuery(
+      $acquireable: Boolean
+      $aggregations: [ArtworkAggregation] = [TOTAL]
+      $artistID: String
+      $atAuction: Boolean
+      $attributionClass: [String]
+      $color: String
+      $forSale: Boolean
+      $height: String
+      $inquireableOnly: Boolean
+      $majorPeriods: [String]
+      $medium: String
+      $offerable: Boolean
+      $page: Int
+      $partnerID: ID
+      $priceRange: String
+      $sizes: [ArtworkSizes]
+      $sort: String
+      $keyword: String
+      $width: String
+    ) {
+      marketingHubCollections {
+        ...Collect_marketingHubCollections
+      }
+      filterArtworks: artworksConnection(
+        aggregations: $aggregations
+        sort: $sort
+        first: 30
+      ) {
+        ...SeoProductsForArtworks_artworks
+      }
+      viewer {
+        ...ArtworkFilter_viewer
+          @arguments(
+            acquireable: $acquireable
+            aggregations: $aggregations
+            artistID: $artistID
+            atAuction: $atAuction
+            attributionClass: $attributionClass
+            color: $color
+            forSale: $forSale
+            height: $height
+            inquireableOnly: $inquireableOnly
+            keyword: $keyword
+            majorPeriods: $majorPeriods
+            medium: $medium
+            offerable: $offerable
+            page: $page
+            partnerID: $partnerID
+            priceRange: $priceRange
+            sizes: $sizes
+            sort: $sort
+            width: $width
+          )
+      }
+    }
+  `
 }
