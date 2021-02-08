@@ -23,13 +23,21 @@ import { FarceRedirectResult } from "found/server"
 import { DateTime } from "luxon"
 import { Environment, RecordSource, Store } from "relay-runtime"
 import { GlobalData } from "sharify"
+import { mockStripe } from "v2/DevTools/mockStripe"
 
-jest.mock("react-stripe-elements", () => ({
-  CardElement: () => jest.fn(),
-  Elements: ({ children }) => children,
-  StripeProvider: ({ children }) => children,
-  injectStripe: () => jest.fn(),
-}))
+jest.mock("@stripe/stripe-js", () => {
+  let mock = null
+  return {
+    loadStripe: () => {
+      if (mock === null) {
+        mock = mockStripe()
+      }
+      return mock
+    },
+    _mockStripe: () => mock,
+    _mockReset: () => mock = mockStripe(),
+  }
+})
 
 describe("OrderApp routing redirects", () => {
   // FIXME: move to DevTools folder
@@ -475,10 +483,6 @@ describe("OrderApp", () => {
     )
   }
   beforeAll(() => {
-    // @ts-ignore
-    // tslint:disable-next-line:no-empty
-    window.Stripe = () => {}
-
     window.sd = { STRIPE_PUBLISHABLE_KEY: "" } as GlobalData
   })
 

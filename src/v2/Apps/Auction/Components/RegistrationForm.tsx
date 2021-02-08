@@ -16,6 +16,7 @@ import {
   OnSubmitValidationError,
   TrackErrors,
 } from "v2/Apps/Auction/Components/OnSubmitValidationError"
+import type { StripeError } from "@stripe/stripe-js"
 
 interface RegistrationFormProps {
   onSubmit: FormikConfig<FormValuesForRegistration>["onSubmit"]
@@ -63,7 +64,7 @@ export const RegistrationForm: React.FC<RegistrationFormProps> = props => (
         </Serif>
 
         <CreditCardInput
-          error={{ message: errors.creditCard } as stripe.Error}
+          error={{ message: errors.creditCard } as StripeError}
           onChange={({ error }) => setFieldError("creditCard", error?.message)}
         />
 

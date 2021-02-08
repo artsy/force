@@ -28,8 +28,25 @@ import { ReviewFragmentContainer } from "../Review"
 import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
 import { GlobalData } from "sharify"
 import { mockLocation } from "v2/DevTools/mockLocation"
+import { mockStripe } from "v2/DevTools/mockStripe"
 
 jest.unmock("react-relay")
+
+jest.mock("@stripe/stripe-js", () => {
+  let mock = null
+  return {
+    loadStripe: () => {
+      if (mock === null) {
+        mock = mockStripe()
+      }
+      return mock
+    },
+    _mockStripe: () => mock,
+    _mockReset: () => mock = mockStripe(),
+  }
+})
+
+const { _mockStripe } = require("@stripe/stripe-js")
 
 const testOrder: ReviewTestQueryRawResponse["order"] = {
   ...BuyOrderWithShippingDetails,
@@ -42,16 +59,8 @@ class ReviewTestPage extends OrderAppTestPage {
   }
 }
 
-const handleCardAction = jest.fn()
-const handleCardSetup = jest.fn()
-
 describe("Review", () => {
   beforeAll(() => {
-    // @ts-ignore
-    window.Stripe = () => {
-      return { handleCardAction, handleCardSetup }
-    }
-
     window.sd = { STRIPE_PUBLISHABLE_KEY: "" } as GlobalData
   })
 
@@ -169,7 +178,7 @@ describe("Review", () => {
       mutations.useResultsOnce(submitOrderWithActionRequired)
 
       await page.clickSubmit()
-      expect(handleCardAction).toBeCalledWith("client-secret")
+      expect(_mockStripe().handleCardAction).toBeCalledWith("client-secret")
     })
   })
 
@@ -272,7 +281,7 @@ describe("Review", () => {
       mutations.useResultsOnce(submitOfferOrderWithActionRequired)
 
       await page.clickSubmit()
-      expect(handleCardSetup).toBeCalledWith("client-secret")
+      expect(_mockStripe().confirmCardSetup).toBeCalledWith("client-secret")
     })
   })
 })

@@ -17,9 +17,16 @@ import { Address, AddressForm } from "v2/Components/AddressForm"
 import { Input } from "v2/Components/Input"
 import { createTestEnv } from "v2/DevTools/createTestEnv"
 import { RootTestPage } from "v2/DevTools/RootTestPage"
-import React from "react"
 import { graphql } from "react-relay"
 import { PaymentPicker, PaymentPickerFragmentContainer } from "../PaymentPicker"
+import type { Token, StripeError } from '@stripe/stripe-js'
+import { mockStripe } from "v2/DevTools/mockStripe"
+
+jest.mock("sharify", () => ({
+  data: {
+    STRIPE_PUBLISHABLE_KEY: "",
+  },
+}))
 
 jest.unmock("react-relay")
 jest.unmock("react-tracking")
@@ -29,39 +36,37 @@ jest.mock("v2/Utils/Events", () => ({
 
 const mockPostEvent = require("v2/Utils/Events").postEvent as jest.Mock
 
-jest.mock("react-stripe-elements", () => {
-  // tslint:disable-next-line:no-shadowed-variable
-  const stripeMock = {
-    createToken: jest.fn(),
-  }
+jest.mock("@stripe/stripe-js", () => {
+  let mock = null
   return {
-    CardElement: ({ onReady, hidePostalCode, ...props }) => <div {...props} />,
-    __stripeMock: stripeMock,
-    injectStripe: Component => props => (
-      <Component stripe={stripeMock} {...props} />
-    ),
+    loadStripe: () => {
+      if (mock === null) {
+        mock = mockStripe()
+      }
+      return mock
+    },
+    _mockStripe: () => mock,
+    _mockReset: () => mock = mockStripe(),
   }
 })
 
-const createTokenMock = require("react-stripe-elements").__stripeMock
-  .createToken as jest.Mock
+const { _mockStripe, _mockReset } = require("@stripe/stripe-js")
 
-createTokenMock.mockImplementation(() =>
+// const createTokenMock = require("@stripe/react-stripe-js").__stripeMock
+//   .createToken as jest.Mock
+
+_mockReset()
+console.log(_mockStripe)
+_mockStripe().createToken.mockImplementation(() =>
   Promise.resolve({ error: "bad error" })
 )
 
 const fillAddressForm = (component: any, address: Address) => {
   fillIn(component, { title: "Name on card", value: address.name })
   fillIn(component, { title: "Address line 1", value: address.addressLine1 })
-  fillIn(component, {
-    title: "Address line 2 (optional)",
-    value: address.addressLine2,
-  })
+  fillIn(component, { title: "Address line 2 (optional)", value: address.addressLine2 })
   fillIn(component, { title: "City", value: address.city })
-  fillIn(component, {
-    title: "State, province, or region",
-    value: address.region,
-  })
+  fillIn(component, { title: "State, province, or region", value: address.region })
   fillIn(component, { title: "Postal code", value: address.postalCode })
   fillCountrySelect(component, address.country)
 }
@@ -180,8 +185,8 @@ describe("PaymentPickerFragmentContainer", () => {
 
   beforeEach(() => {
     mockPostEvent.mockReset()
-    createTokenMock.mockReset()
-    createTokenMock.mockImplementation(() =>
+    _mockReset()
+    _mockStripe().createToken.mockImplementation(() =>
       Promise.resolve({ error: "bad error" })
     )
   })
@@ -295,7 +300,7 @@ describe("PaymentPickerFragmentContainer", () => {
 
     await page.getCreditCardId()
 
-    expect(createTokenMock).toHaveBeenCalledWith({
+    expect(_mockStripe().createToken).toHaveBeenLastCalledWith(null, {
       name: "Artsy UK Ltd",
       address_line1: "14 Gower's Walk",
       address_line2: "Suite 2.5, The Loom",
@@ -311,7 +316,7 @@ describe("PaymentPickerFragmentContainer", () => {
 
     await page.getCreditCardId()
 
-    expect(createTokenMock).toHaveBeenCalledWith({
+    expect(_mockStripe().createToken).toHaveBeenLastCalledWith(null, {
       name: "Joelle Van Dyne",
       address_line1: "401 Broadway",
       address_line2: "Suite 25",
@@ -328,7 +333,7 @@ describe("PaymentPickerFragmentContainer", () => {
     fillAddressForm(page.root, validAddress)
     await page.getCreditCardId()
 
-    expect(createTokenMock).toHaveBeenCalledWith({
+    expect(_mockStripe().createToken).toHaveBeenLastCalledWith(null, {
       name: "Artsy UK Ltd",
       address_line1: "14 Gower's Walk",
       address_line2: "Suite 2.5, The Loom",
@@ -340,7 +345,7 @@ describe("PaymentPickerFragmentContainer", () => {
   })
 
   it("commits createCreditCard mutation with stripe token id", async () => {
-    const stripeToken: stripe.TokenResponse = {
+    const stripeToken: { token: Token } = {
       token: {
         id: "tokenId",
         object: null,
@@ -352,7 +357,7 @@ describe("PaymentPickerFragmentContainer", () => {
       },
     }
 
-    createTokenMock.mockReturnValue(Promise.resolve(stripeToken))
+    _mockStripe().createToken.mockReturnValue(Promise.resolve(stripeToken))
 
     const page = await env.buildPage()
     await page.getCreditCardId()
@@ -365,7 +370,7 @@ describe("PaymentPickerFragmentContainer", () => {
   })
 
   it("shows an error message when CreateToken passes in an error", async () => {
-    const stripeError: stripe.TokenResponse = {
+    const stripeError: { error: StripeError } = {
       error: {
         type: null,
         charge: null,
@@ -376,7 +381,7 @@ describe("PaymentPickerFragmentContainer", () => {
       },
     }
 
-    createTokenMock.mockReturnValue(Promise.resolve(stripeError))
+    _mockStripe().createToken.mockReturnValue(Promise.resolve(stripeError))
 
     const page = await env.buildPage()
 
@@ -627,7 +632,7 @@ describe("PaymentPickerFragmentContainer", () => {
 
   describe("saving a card", () => {
     it("by default saves new cards", async () => {
-      createTokenMock.mockReturnValue(
+      _mockStripe().createToken.mockReturnValue(
         Promise.resolve({ token: { id: "tokenId", postalCode: "1324" } })
       )
       const page = await env.buildPage()
@@ -637,7 +642,7 @@ describe("PaymentPickerFragmentContainer", () => {
     })
 
     it("can also not save new cards", async () => {
-      createTokenMock.mockReturnValue(
+      _mockStripe().createToken.mockReturnValue(
         Promise.resolve({ token: { id: "tokenId" } })
       )
       const page = await env.buildPage()
@@ -744,7 +749,7 @@ describe("PaymentPickerFragmentContainer", () => {
     })
 
     it("allows a missing postal code if the selected country is not US or Canada", async () => {
-      createTokenMock.mockReturnValue(
+      _mockStripe().createToken.mockReturnValue(
         Promise.resolve({ token: { id: "tokenId" } })
       )
       const page = await env.buildPage()
@@ -763,12 +768,12 @@ describe("PaymentPickerFragmentContainer", () => {
 
       fillAddressForm(page.root, address)
       await page.getCreditCardId()
-      expect(createTokenMock).toBeCalled()
+      expect(_mockStripe().createToken).toBeCalled()
       expect(env.mutations.mockFetch).toBeCalledTimes(1)
     })
 
     it("allows a missing state/province if the selected country is not US or Canada", async () => {
-      createTokenMock.mockReturnValue(
+      _mockStripe().createToken.mockReturnValue(
         Promise.resolve({ token: { id: "tokenId" } })
       )
       const page = await env.buildPage()
@@ -788,7 +793,7 @@ describe("PaymentPickerFragmentContainer", () => {
 
       await page.getCreditCardId()
 
-      expect(createTokenMock).toBeCalled()
+      expect(_mockStripe().createToken).toBeCalled()
       expect(env.mutations.mockFetch).toBeCalledTimes(1)
     })
   })

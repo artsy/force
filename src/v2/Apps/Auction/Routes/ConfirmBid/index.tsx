@@ -26,17 +26,18 @@ import {
   createFragmentContainer,
   graphql,
 } from "react-relay"
-import { ReactStripeElements } from "react-stripe-elements"
+import type { Stripe, StripeElements } from "@stripe/stripe-js"
+import { CardElement } from "@stripe/react-stripe-js"
 import createLogger from "v2/Utils/logger"
 import {
   FormValuesForBidding,
-  createStripeWrapper,
   determineDisplayRequirements,
   errorMessageForBidding,
   errorMessageForCard,
   saleConfirmRegistrationPath,
   toStripeAddress,
 } from "v2/Apps/Auction/Components/Form"
+import { createStripeWrapper } from "v2/Utils/createStripeWrapper"
 
 const logger = createLogger("Apps/Auction/Routes/ConfirmBid")
 
@@ -47,7 +48,12 @@ interface BidderPosition {
   messageHeader: string
 }
 
-interface ConfirmBidProps extends ReactStripeElements.InjectedStripeProps {
+export interface StripeProps {
+  stripe: Stripe
+  elements: StripeElements
+}
+
+interface ConfirmBidProps {
   artwork: auctionRoutes_ConfirmBidQueryResponse["artwork"]
   me: ConfirmBid_me
   relay: RelayProp
@@ -56,11 +62,13 @@ interface ConfirmBidProps extends ReactStripeElements.InjectedStripeProps {
 
 const MAX_POLL_ATTEMPTS = 20
 
-export const ConfirmBidRoute: React.FC<ConfirmBidProps> = props => {
+export const ConfirmBidRoute: React.FC<
+  ConfirmBidProps & StripeProps
+> = props => {
   let pollCount = 0
   let registrationTracked = false
 
-  const { artwork, me, relay, stripe } = props
+  const { artwork, me, relay, stripe, elements } = props
   const { saleArtwork } = artwork
   const { sale } = saleArtwork
   const { environment } = relay
@@ -186,7 +194,11 @@ export const ConfirmBidRoute: React.FC<ConfirmBidProps> = props => {
       const { setFieldError, setSubmitting } = actions
 
       try {
-        const { error, token } = await stripe.createToken(stripeAddress)
+        const element = elements.getElement(CardElement)
+        const { error, token } = await stripe.createToken(
+          element,
+          stripeAddress
+        )
 
         if (error) {
           setFieldError("creditCard", error.message)
@@ -331,15 +343,14 @@ const TrackingWrappedConfirmBidRoute = track<ConfirmBidProps>(props => ({
   user_id: props.me.internalID,
 }))(StripeWrappedConfirmBidRoute)
 
-export const ConfirmBidRouteFragmentContainer = createFragmentContainer(
-  TrackingWrappedConfirmBidRoute,
-  {
-    me: graphql`
-      fragment ConfirmBid_me on Me {
-        internalID
-        hasQualifiedCreditCards
-        ...BidForm_me
-      }
-    `,
-  }
-)
+export const ConfirmBidRouteFragmentContainer = createFragmentContainer<
+  ConfirmBidProps
+>(TrackingWrappedConfirmBidRoute, {
+  me: graphql`
+    fragment ConfirmBid_me on Me {
+      internalID
+      hasQualifiedCreditCards
+      ...BidForm_me
+    }
+  `,
+})

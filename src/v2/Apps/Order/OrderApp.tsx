@@ -10,19 +10,13 @@ import { RouterState, withRouter } from "found"
 import React from "react"
 import { Meta, Title } from "react-head"
 import { graphql } from "react-relay"
-import { Elements, StripeProvider } from "react-stripe-elements"
+import { loadStripe } from '@stripe/stripe-js'
+import { Elements } from "@stripe/react-stripe-js"
 import styled from "styled-components"
 import { get } from "v2/Utils/get"
 import { ConnectedModalDialog } from "./Dialogs"
-import { GlobalData } from "sharify"
 import { Mediator } from "lib/mediator"
-
-declare global {
-  interface Window {
-    Stripe?: (key: string) => stripe.Stripe
-    sd: GlobalData
-  }
-}
+import { data as sd } from "sharify"
 
 export interface OrderAppProps extends RouterState {
   params: {
@@ -31,11 +25,7 @@ export interface OrderAppProps extends RouterState {
   order: OrderApp_order
 }
 
-interface OrderAppState {
-  stripe: stripe.Stripe
-}
-
-class OrderApp extends React.Component<OrderAppProps, OrderAppState> {
+class OrderApp extends React.Component<OrderAppProps, {}> {
   mediator: Mediator | null = null
   state = { stripe: null }
   removeNavigationListener: () => void
@@ -48,19 +38,6 @@ class OrderApp extends React.Component<OrderAppProps, OrderAppState> {
     }
 
     window.addEventListener("beforeunload", this.preventHardReload)
-
-    if (window.Stripe) {
-      this.setState({
-        stripe: window.Stripe(window.sd.STRIPE_PUBLISHABLE_KEY),
-      })
-    } else {
-      document.querySelector("#stripe-js").addEventListener("load", () => {
-        // Create Stripe instance once Stripe.js loads
-        this.setState({
-          stripe: window.Stripe(window.sd.STRIPE_PUBLISHABLE_KEY),
-        })
-      })
-    }
   }
 
   componentWillUnmount() {
@@ -110,6 +87,7 @@ class OrderApp extends React.Component<OrderAppProps, OrderAppState> {
       )
     }
 
+    const stripePromise = loadStripe(sd.STRIPE_PUBLISHABLE_KEY);
     return (
       <SystemContextConsumer>
         {({ isEigen, mediator }) => {
@@ -130,11 +108,9 @@ class OrderApp extends React.Component<OrderAppProps, OrderAppState> {
                   />
                 )}
                 <SafeAreaContainer>
-                  <StripeProvider stripe={this.state.stripe}>
-                    <Elements>
-                      <>{children}</>
-                    </Elements>
-                  </StripeProvider>
+                  <Elements stripe={stripePromise}>
+                    <>{children}</>
+                  </Elements>
                 </SafeAreaContainer>
                 <StickyFooter orderType={order.mode} artworkId={artworkId} />
                 <ConnectedModalDialog />

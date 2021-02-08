@@ -1,6 +1,6 @@
-import { ReactStripeElements } from "react-stripe-elements"
+import { Token } from "@stripe/stripe-js"
 
-export const stripeTokenResponse: ReactStripeElements.PatchedTokenResponse = {
+export const stripeTokenResponse: { token: Token } = {
   token: {
     id: "tok_abcabcabcabcabcabcabc",
     object: "token",

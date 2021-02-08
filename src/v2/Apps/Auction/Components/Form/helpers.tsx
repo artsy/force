@@ -1,9 +1,6 @@
 import { find } from "lodash"
-import { Elements, StripeProvider, injectStripe } from "react-stripe-elements"
-import React, { useEffect, useState } from "react"
-import { data as sd } from "sharify"
-
-import { Address } from "v2/Components/AddressForm"
+import type { CreateTokenCardData} from '@stripe/stripe-js';
+import type { Address } from "v2/Components/AddressForm"
 
 // TODO: Duplicate of `confirmRegistrationPath` in `src/v2/Apps/Auction/getRedirect.ts`
 export const saleConfirmRegistrationPath = (saleSlug: string) => {
@@ -50,7 +47,7 @@ export const errorMessageForBidding = (errorMessage: BiddingStatus) => {
   return BIDDING_STATE_TO_MESSAGE_MAPPING[errorMessage]
 }
 
-export const toStripeAddress = (address: Address): stripe.TokenOptions => {
+export const toStripeAddress = (address: Address): CreateTokenCardData => {
   return {
     name: address.name,
     address_line1: address.addressLine1,
@@ -93,41 +90,5 @@ export const determineDisplayRequirements = (
   return {
     requiresCheckbox: !isRegistered,
     requiresPaymentInformation: !(isRegistered || me.hasQualifiedCreditCards),
-  }
-}
-
-export function createStripeWrapper<T>(Component: React.FC<T>): React.FC<T> {
-  const StripeInjectedComponent = injectStripe(Component)
-
-  return props => {
-    const [stripe, setStripe] = useState(null)
-
-    function setupStripe() {
-      setStripe(window.Stripe(sd.STRIPE_PUBLISHABLE_KEY))
-    }
-
-    useEffect(() => {
-      if (window.Stripe) {
-        setStripe(window.Stripe(sd.STRIPE_PUBLISHABLE_KEY))
-      } else {
-        document
-          .querySelector("#stripe-js")
-          .addEventListener("load", setupStripe)
-
-        return () => {
-          document
-            .querySelector("#stripe-js")
-            .removeEventListener("load", setupStripe)
-        }
-      }
-    }, [])
-
-    return (
-      <StripeProvider stripe={stripe}>
-        <Elements>
-          <StripeInjectedComponent {...props} />
-        </Elements>
-      </StripeProvider>
-    )
   }
 }

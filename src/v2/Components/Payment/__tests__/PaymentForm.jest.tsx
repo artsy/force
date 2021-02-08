@@ -2,20 +2,8 @@ import { Button, Sans } from "@artsy/palette"
 import { CreditCardInput } from "v2/Apps/Order/Components/CreditCardInput"
 import { mount } from "enzyme"
 import React from "react"
-
+import type { Token, StripeError } from '@stripe/stripe-js'
 import { creatingCreditCardFailed } from "v2/Apps/Order/Routes/__fixtures__/MutationResults"
-
-jest.mock("react-relay", () => ({
-  commitMutation: jest.fn(),
-  createFragmentContainer: component => component,
-  createRefetchContainer: component => component,
-}))
-
-jest.mock("react-stripe-elements", () => ({
-  CardElement: ({ hidePostalCode, onReady, ...props }) => <div {...props} />,
-  injectStripe: args => args,
-}))
-
 import {
   fillCountrySelect,
   fillIn,
@@ -24,54 +12,76 @@ import {
 import { Address, AddressForm } from "v2/Components/AddressForm"
 import { ErrorModal } from "v2/Components/Modal/ErrorModal"
 import { ModalButton } from "v2/Components/Modal/ModalDialog"
-import PaymentForm, {
-  PaymentFormProps,
-} from "v2/Components/Payment/PaymentForm"
+import { PaymentFormInjectedStripe, PaymentFormProps, StripeProps } from "v2/Components/Payment/PaymentForm"
 import { MockBoot } from "v2/DevTools"
 import { RelayProp, commitMutation } from "react-relay"
 import Input from "../../Input"
+import { Elements } from "@stripe/react-stripe-js"
+import { mockStripe } from "v2/DevTools/mockStripe"
+
+jest.mock("react-relay", () => ({
+  commitMutation: jest.fn(),
+  createFragmentContainer: component => component,
+  createRefetchContainer: component => component,
+}))
+
+jest.mock("@stripe/stripe-js", () => {
+  let mock = null
+  return {
+    loadStripe: () => {
+      if (mock === null) {
+        mock = mockStripe()
+      }
+      return mock
+    },
+    _mockStripe: () => mock,
+    _mockReset: () => mock = mockStripe(),
+  }
+})
+
+const { _mockStripe, _mockReset, loadStripe } = require("@stripe/stripe-js")
+
 
 const mutationMock = commitMutation as jest.Mock<any>
 
 const fillAddressForm = (component: any, address: Address) => {
   fillIn(component, { title: "Name on card", value: address.name })
   fillIn(component, { title: "Address line 1", value: address.addressLine1 })
-  fillIn(component, {
-    title: "Address line 2 (optional)",
-    value: address.addressLine2,
-  })
+  fillIn(component, { title: "Address line 2 (optional)", value: address.addressLine2 })
   fillIn(component, { title: "City", value: address.city })
-  fillIn(component, {
-    title: "State, province, or region",
-    value: address.region,
-  })
+  fillIn(component, { title: "State, province, or region", value: address.region })
   fillIn(component, { title: "Postal code", value: address.postalCode })
   fillCountrySelect(component, address.country)
 }
 
 describe("PaymentForm", () => {
-  let stripeMock
-  let testPaymentFormProps: PaymentFormProps
+  let testPaymentFormProps: PaymentFormProps & StripeProps
 
   function getWrapper() {
+    const stripePromise = loadStripe('');
     return mount(
       <MockBoot breakpoint="xs">
-        <PaymentForm {...testPaymentFormProps} />
+        <Elements stripe={stripePromise}>
+          <PaymentFormInjectedStripe
+            {...testPaymentFormProps}
+          />
+        </Elements>
       </MockBoot>
     )
   }
 
   beforeEach(() => {
     mutationMock.mockReset()
-
-    stripeMock = {
-      createToken: jest.fn(),
-    }
+    _mockReset()
 
     testPaymentFormProps = {
-      me: { id: "1234", creditCards: [] },
+      me: {
+        id: "1234",
+        internalID: "1234",
+        creditCards: {} as any,
+        " $refType": "UserSettingsPayments_me",
+      },
       relay: { environment: {} } as RelayProp,
-      stripe: stripeMock,
     } as any
   })
 
@@ -92,13 +102,13 @@ describe("PaymentForm", () => {
 
   it("tokenizes the credit card with the entered address as the billing address", () => {
     const thenMock = jest.fn()
-    stripeMock.createToken.mockReturnValue({ then: thenMock })
+    _mockStripe().createToken.mockReturnValue({ then: thenMock })
 
     const paymentWrapper = getWrapper()
     fillAddressForm(paymentWrapper, validAddress)
     paymentWrapper.find(Button).simulate("click")
 
-    expect(stripeMock.createToken).toHaveBeenCalledWith({
+    expect(_mockStripe().createToken).toHaveBeenCalledWith(null, {
       name: "Artsy UK Ltd",
       address_line1: "14 Gower's Walk",
       address_line2: "Suite 2.5, The Loom",
@@ -111,7 +121,7 @@ describe("PaymentForm", () => {
   })
 
   it("commits createCreditCard mutation with stripe token id", () => {
-    const stripeToken: stripe.TokenResponse = {
+    const stripeToken: { token: Token } = {
       token: {
         id: "tokenId",
         object: null,
@@ -123,7 +133,7 @@ describe("PaymentForm", () => {
       },
     }
 
-    stripeMock.createToken.mockReturnValue({
+    _mockStripe().createToken.mockReturnValue({
       then: func => func(stripeToken),
     })
 
@@ -141,7 +151,7 @@ describe("PaymentForm", () => {
   })
 
   it("shows an error message if you do not enter a credit card number", () => {
-    const stripeError: stripe.TokenResponse = {
+    const stripeError: { error: StripeError } = {
       error: {
         type: null,
         charge: null,
@@ -152,7 +162,7 @@ describe("PaymentForm", () => {
       },
     }
 
-    stripeMock.createToken.mockReturnValue({
+    _mockStripe().createToken.mockReturnValue({
       then: func => func(stripeError),
     })
 
@@ -166,7 +176,7 @@ describe("PaymentForm", () => {
   })
 
   it("shows an error modal when there is an error in CreateCreditCardPayload", () => {
-    stripeMock.createToken.mockReturnValue({
+    _mockStripe().createToken.mockReturnValue({
       then: func => func({ token: { id: "tokenId" } }),
     })
 
@@ -189,7 +199,7 @@ describe("PaymentForm", () => {
   })
 
   it("shows an error modal when there is a network error", () => {
-    stripeMock.createToken.mockReturnValue({
+    _mockStripe().createToken.mockReturnValue({
       then: func => func({ token: { id: "tokenId" } }),
     })
 
@@ -244,7 +254,7 @@ describe("PaymentForm", () => {
 
     it("allows a missing postal code if the selected country is not US or Canada", () => {
       const paymentWrapper = getWrapper()
-      stripeMock.createToken.mockReturnValue({ then: jest.fn() })
+      _mockStripe().createToken.mockReturnValue({ then: jest.fn() })
 
       const address = {
         name: "Erik David",
@@ -258,12 +268,12 @@ describe("PaymentForm", () => {
       }
       fillAddressForm(paymentWrapper, address)
       paymentWrapper.find(Button).simulate("click")
-      expect(stripeMock.createToken).toBeCalled()
+      expect(_mockStripe().createToken).toBeCalled()
     })
 
     it("allows a missing state/province if the selected country is not US or Canada", () => {
       const paymentWrapper = getWrapper()
-      stripeMock.createToken.mockReturnValue({ then: jest.fn() })
+      _mockStripe().createToken.mockReturnValue({ then: jest.fn() })
       const address = {
         name: "Erik David",
         addressLine1: "401 Broadway",
@@ -276,7 +286,7 @@ describe("PaymentForm", () => {
       }
       fillAddressForm(paymentWrapper, address)
       paymentWrapper.find(Button).simulate("click")
-      expect(stripeMock.createToken).toBeCalled()
+      expect(_mockStripe().createToken).toBeCalled()
     })
   })
 })

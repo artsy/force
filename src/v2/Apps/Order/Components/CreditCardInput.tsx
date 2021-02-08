@@ -5,7 +5,11 @@ import {
   borderMixin as inputBorder,
 } from "v2/Components/Mixins"
 import React from "react"
-import { CardElement } from "react-stripe-elements"
+import type {
+  StripeCardNumberElementChangeEvent,
+  StripeError,
+} from "@stripe/stripe-js"
+import { CardElement } from "@stripe/react-stripe-js"
 import styled from "styled-components"
 
 export const StyledCardElement = styled(CardElement)`
@@ -21,8 +25,8 @@ const StyledBorderBox = styled(BorderBox)<InputBorderProps>`
 `
 
 interface CreditCardInputProps {
-  error?: stripe.Error
-  onChange?: (response: stripe.elements.ElementChangeResponse) => void
+  error?: StripeError
+  onChange?: (response: StripeCardNumberElementChangeEvent) => void
 }
 
 interface CreditCardInputState {
@@ -36,9 +40,8 @@ export class CreditCardInput extends React.Component<
   state = {
     focused: false,
   }
-  cardInputElement: any
 
-  onChange(response: stripe.elements.ElementChangeResponse) {
+  onChange(response: StripeCardNumberElementChangeEvent) {
     if (this.props.onChange) {
       this.props.onChange(response)
     }
@@ -55,7 +58,18 @@ export class CreditCardInput extends React.Component<
           p={1}
         >
           <StyledCardElement
-            hidePostalCode
+            options={{
+              hidePostalCode: true,
+              style: {
+                base: {
+                  "::placeholder": { color: color("black30") },
+                  fontFamily: fontFamily.serif.regular as string,
+                  fontSize: `${themeProps.typeSizes.serif["3t"].fontSize}px`,
+                  fontSmoothing: "antialiased",
+                  lineHeight: "20px",
+                },
+              },
+            }}
             onChange={this.onChange.bind(this)}
             onFocus={() => this.setState({ focused: true })}
             onBlur={() =>
@@ -63,16 +77,6 @@ export class CreditCardInput extends React.Component<
                 focused: false,
               })
             }
-            onReady={(el => (this.cardInputElement = el)) as any}
-            style={{
-              base: {
-                "::placeholder": { color: color("black30") },
-                fontFamily: fontFamily.serif.regular as string,
-                fontSize: `${themeProps.typeSizes.serif["3t"].fontSize}px`,
-                fontSmoothing: "antialiased",
-                lineHeight: "20px",
-              },
-            }}
           />
         </StyledBorderBox>
         {message && (

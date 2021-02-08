@@ -1,6 +1,4 @@
-import React from "react"
 import { graphql } from "react-relay"
-
 import * as Schema from "v2/Artsy/Analytics/Schema"
 import { createTestEnv } from "v2/DevTools/createTestEnv"
 
@@ -19,7 +17,8 @@ import { stripeTokenResponse } from "../__fixtures__/Stripe"
 import { RegisterRouteFragmentContainer } from "../Register"
 import { RegisterTestPage, ValidFormValues } from "./Utils/RegisterTestPage"
 import { CreditCardInput } from "v2/Apps/Order/Components/CreditCardInput"
-import { mockLocation } from "v2/DevTools/mockLocation"
+import { mockLocation, resetMockLocation } from "v2/DevTools/mockLocation"
+import { mockStripe } from "v2/DevTools/mockStripe"
 
 jest.unmock("react-relay")
 jest.unmock("react-tracking")
@@ -28,24 +27,21 @@ jest.mock("v2/Utils/Events", () => ({
 }))
 const mockPostEvent = require("v2/Utils/Events").postEvent as jest.Mock
 
-jest.mock("react-stripe-elements", () => {
-  const stripeMock = {
-    createToken: jest.fn(),
-  }
-
+jest.mock("@stripe/stripe-js", () => {
+  let mock = null
   return {
-    CardElement: ({ onReady, hidePostalCode, ...props }) => <div {...props} />,
-    Elements: ({ children }) => children,
-    StripeProvider: ({ children }) => children,
-    __stripeMock: stripeMock,
-    injectStripe: Component => props => (
-      <Component stripe={stripeMock} {...props} />
-    ),
+    loadStripe: () => {
+      if (mock === null) {
+        mock = mockStripe()
+      }
+      return mock
+    },
+    _mockStripe: () => mock,
+    _mockReset: () => mock = mockStripe(),
   }
 })
 
-const createTokenMock = require("react-stripe-elements").__stripeMock
-  .createToken as jest.Mock
+const { _mockStripe } = require("@stripe/stripe-js")
 
 jest.mock("sharify", () => ({
   data: {
@@ -80,17 +76,13 @@ const setupTestEnv = (
 
 describe("Routes/Register", () => {
   beforeAll(() => {
-    // @ts-ignore
-    // tslint:disable-next-line:no-empty
-    window.Stripe = () => {}
-  })
-
-  beforeEach(() => {
     mockLocation()
   })
 
-  afterEach(() => {
-    jest.resetAllMocks()
+
+  beforeEach(() => {
+    mockPostEvent.mockReset()
+    resetMockLocation()
   })
 
   it("emits a RegistrationSubmitFailed analytics event and halts submission", async () => {
@@ -155,7 +147,7 @@ describe("Routes/Register", () => {
     const env = setupTestEnv()
     const page = await env.buildPage()
 
-    createTokenMock.mockResolvedValue(stripeTokenResponse)
+    _mockStripe().createToken.mockResolvedValueOnce(stripeTokenResponse)
 
     env.mutations.useResultsOnce(createCreditCardAndUpdatePhoneSuccessful)
     env.mutations.useResultsOnce(createBidderSuccessful)
@@ -163,6 +155,7 @@ describe("Routes/Register", () => {
     await page.fillFormWithValidValues()
     await page.submitForm()
 
+    expect(mockPostEvent).toHaveBeenCalledTimes(1)
     expect(mockPostEvent).toBeCalledWith({
       action_type: Schema.ActionType.RegistrationSubmitted,
       auction_slug: RegisterQueryResponseFixture.sale.slug,
@@ -172,7 +165,6 @@ describe("Routes/Register", () => {
       sale_id: RegisterQueryResponseFixture.sale.internalID,
       user_id: RegisterQueryResponseFixture.me.internalID,
     })
-    expect(mockPostEvent).toHaveBeenCalledTimes(1)
 
     expect(window.location.assign).toHaveBeenCalledWith(
       `/auction/${RegisterQueryResponseFixture.sale.slug}/confirm-registration`
@@ -183,7 +175,7 @@ describe("Routes/Register", () => {
     const env = setupTestEnv()
     const page = await env.buildPage()
 
-    createTokenMock.mockResolvedValue(stripeTokenResponse)
+    _mockStripe().createToken.mockResolvedValueOnce(stripeTokenResponse)
     env.mutations.useResultsOnce(createCreditCardAndUpdatePhoneFailed)
 
     await page.fillFormWithValidValues()
@@ -242,7 +234,7 @@ describe("Routes/Register", () => {
     const env = setupTestEnv()
     const page = await env.buildPage()
 
-    createTokenMock.mockResolvedValue({
+    _mockStripe().createToken.mockResolvedValueOnce({
       error: { message: "Your card number is incomplete." },
     })
 
@@ -256,7 +248,7 @@ describe("Routes/Register", () => {
     const env = setupTestEnv()
     const page = await env.buildPage()
 
-    createTokenMock.mockRejectedValue(new TypeError("Network request failed"))
+    _mockStripe().createToken.mockRejectedValueOnce(new TypeError("Network request failed"))
 
     await page.fillFormWithValidValues()
     await page.submitForm()

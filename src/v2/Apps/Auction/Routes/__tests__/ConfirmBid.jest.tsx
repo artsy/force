@@ -3,27 +3,6 @@ import {
   createCreditCardAndUpdatePhoneFailed,
   createCreditCardAndUpdatePhoneSuccessful,
 } from "../__fixtures__/MutationResults/createCreditCardAndUpdatePhone"
-
-jest.mock("v2/Apps/Auction/Operations/BidderPositionQuery", () => ({
-  bidderPositionQuery: jest.fn(),
-}))
-
-jest.mock("react-stripe-elements", () => {
-  const stripeMock = {
-    createToken: jest.fn(),
-  }
-
-  return {
-    CardElement: ({ onReady, hidePostalCode, ...props }) => <div {...props} />,
-    Elements: ({ children }) => children,
-    StripeProvider: ({ children }) => children,
-    __stripeMock: stripeMock,
-    injectStripe: Component => props => (
-      <Component stripe={stripeMock} {...props} />
-    ),
-  }
-})
-
 import deepMerge from "deepmerge"
 import { createTestEnv } from "v2/DevTools/createTestEnv"
 import { Location, Match } from "found"
@@ -54,19 +33,40 @@ import { ConfirmBidTestPage } from "./Utils/ConfirmBidTestPage"
 import { ValidFormValues } from "./Utils/RegisterTestPage"
 import { CreditCardInput } from "v2/Apps/Order/Components/CreditCardInput"
 import { ErrorModal } from "v2/Components/Modal/ErrorModal"
-import { mockLocation } from "v2/DevTools/mockLocation"
+import { mockLocation, resetMockLocation } from "v2/DevTools/mockLocation"
+import { mockStripe } from "v2/DevTools/mockStripe"
+
+jest.mock("v2/Apps/Auction/Operations/BidderPositionQuery", () => ({
+  bidderPositionQuery: jest.fn(),
+}))
 
 jest.unmock("react-relay")
 jest.unmock("react-tracking")
 jest.mock("v2/Utils/Events", () => ({
   postEvent: jest.fn(),
 }))
-const mockBidderPositionQuery = bidderPositionQuery as jest.Mock
 const mockPostEvent = require("v2/Utils/Events").postEvent as jest.Mock
-const createTokenMock = require("react-stripe-elements").__stripeMock
-  .createToken as jest.Mock
+
+jest.mock("@stripe/stripe-js", () => {
+  let mock = null
+  return {
+    loadStripe: () => {
+      if (mock === null) {
+        mock = mockStripe()
+      }
+      return mock
+    },
+    _mockStripe: () => mock,
+    _mockReset: () => mock = mockStripe(),
+  }
+})
+
+const { _mockStripe, _mockReset } = require("@stripe/stripe-js")
+
+const mockBidderPositionQuery = bidderPositionQuery as jest.Mock
 
 const mockEnablePriceTransparency = jest.fn()
+
 const mockedLocation: Partial<Location> = {
   query: {
     bid: null,
@@ -130,18 +130,19 @@ const setupTestEnv = ({
 }
 
 describe("Routes/ConfirmBid", () => {
-  beforeEach(() => {
-    mockEnablePriceTransparency.mockReturnValue(false)
 
-    // @ts-ignore
-    // tslint:disable-next-line:no-empty
-    window.Stripe = () => {}
-
+  beforeAll(() => {
     mockLocation({ search: "" })
   })
 
-  afterEach(() => {
-    jest.resetAllMocks()
+  beforeEach(() => {
+    mockEnablePriceTransparency.mockReset()
+    mockEnablePriceTransparency.mockReturnValue(false)
+
+    _mockReset()
+    mockPostEvent.mockReset()
+    mockBidderPositionQuery.mockReset()
+    resetMockLocation()
   })
 
   describe("for registered users", () => {
@@ -150,7 +151,7 @@ describe("Routes/ConfirmBid", () => {
       const page = await env.buildPage()
 
       env.mutations.useResultsOnce(createBidderPositionSuccessful)
-      mockBidderPositionQuery.mockResolvedValue(
+      mockBidderPositionQuery.mockResolvedValueOnce(
         confirmBidBidderPositionQueryWithPending
       )
 
@@ -175,7 +176,7 @@ describe("Routes/ConfirmBid", () => {
       })
 
       mockBidderPositionQuery.mockReset()
-      mockBidderPositionQuery.mockResolvedValue(
+      mockBidderPositionQuery.mockResolvedValueOnce(
         confirmBidBidderPositionQueryWithWinning
       )
 
@@ -286,7 +287,7 @@ describe("Routes/ConfirmBid", () => {
       const env = setupTestEnv()
       const page = await env.buildPage()
       env.mutations.useResultsOnce(createBidderPositionSuccessful)
-      mockBidderPositionQuery.mockResolvedValue(
+      mockBidderPositionQuery.mockResolvedValueOnce(
         confirmBidBidderPositionQueryWithWinning
       )
 
@@ -376,7 +377,7 @@ describe("Routes/ConfirmBid", () => {
       const env = setupTestEnv()
       const page = await env.buildPage()
       env.mutations.useResultsOnce(createBidderPositionSuccessfulAndBidder)
-      mockBidderPositionQuery.mockResolvedValue(
+      mockBidderPositionQuery.mockResolvedValueOnce(
         confirmBidBidderPositionQueryWithOutbid
       )
 
@@ -447,7 +448,7 @@ describe("Routes/ConfirmBid", () => {
       const env = setupTestEnv()
       const page = await env.buildPage()
       env.mutations.useResultsOnce(createBidderPositionSuccessfulAndBidder)
-      mockBidderPositionQuery.mockResolvedValue(
+      mockBidderPositionQuery.mockResolvedValueOnce(
         confirmBidBidderPositionQueryWithOutbid
       )
 
@@ -491,7 +492,7 @@ describe("Routes/ConfirmBid", () => {
       })
 
       env.mutations.useResultsOnce(createBidderPositionSuccessfulAndBidder)
-      mockBidderPositionQuery.mockResolvedValue(
+      mockBidderPositionQuery.mockResolvedValueOnce(
         confirmBidBidderPositionQueryWithWinning
       )
 
@@ -518,7 +519,7 @@ describe("Routes/ConfirmBid", () => {
         mockData: FixtureForUnregisteredUserWithCreditCard,
       })
       env.mutations.useResultsOnce(createBidderPositionSuccessfulAndBidder)
-      mockBidderPositionQuery.mockResolvedValue(
+      mockBidderPositionQuery.mockResolvedValueOnce(
         confirmBidBidderPositionQueryWithWinning
       )
 
@@ -621,7 +622,7 @@ describe("Routes/ConfirmBid", () => {
         mockData: FixtureForUnregisteredUserWithCreditCard,
       })
       env.mutations.useResultsOnce(createBidderPositionSuccessfulAndBidder)
-      mockBidderPositionQuery.mockResolvedValue(
+      mockBidderPositionQuery.mockResolvedValueOnce(
         confirmBidBidderPositionQueryWithOutbid
       )
 
@@ -686,7 +687,7 @@ describe("Routes/ConfirmBid", () => {
         mockData: FixtureForUnregisteredUserWithCreditCard,
       })
       env.mutations.useResultsOnce(createBidderPositionSuccessfulAndBidder)
-      mockBidderPositionQuery.mockResolvedValue(
+      mockBidderPositionQuery.mockResolvedValueOnce(
         confirmBidBidderPositionQueryWithOutbid
       )
 
@@ -696,7 +697,7 @@ describe("Routes/ConfirmBid", () => {
       mockPostEvent.mockClear()
       mockBidderPositionQuery.mockReset()
       env.mutations.useResultsOnce(createBidderPositionSuccessfulAndBidder)
-      mockBidderPositionQuery.mockResolvedValue(
+      mockBidderPositionQuery.mockResolvedValueOnce(
         confirmBidBidderPositionQueryWithWinning
       )
 
@@ -749,10 +750,10 @@ describe("Routes/ConfirmBid", () => {
         mockData: FixtureForUnregisteredUserWithoutCreditCard,
       })
 
-      createTokenMock.mockResolvedValue(stripeTokenResponse)
+      _mockStripe().createToken.mockResolvedValueOnce(stripeTokenResponse)
       env.mutations.useResultsOnce(createCreditCardAndUpdatePhoneSuccessful)
       env.mutations.useResultsOnce(createBidderPositionSuccessfulAndBidder)
-      mockBidderPositionQuery.mockResolvedValue(
+      mockBidderPositionQuery.mockResolvedValueOnce(
         confirmBidBidderPositionQueryWithWinning
       )
 
@@ -760,7 +761,7 @@ describe("Routes/ConfirmBid", () => {
       await page.agreeToTerms()
       await page.submitForm()
 
-      expect(createTokenMock).toHaveBeenCalledWith({
+      expect(_mockStripe().createToken).toHaveBeenCalledWith(null, {
         address_city: "New York",
         address_country: "United States",
         address_line1: "123 Example Street",
@@ -806,7 +807,7 @@ describe("Routes/ConfirmBid", () => {
         mockData: FixtureForUnregisteredUserWithoutCreditCard,
       })
 
-      createTokenMock.mockResolvedValue(stripeTokenResponse)
+      _mockStripe().createToken.mockResolvedValueOnce(stripeTokenResponse)
 
       const address = Object.assign({}, ValidFormValues)
       address.phoneNumber = "    "
@@ -840,7 +841,7 @@ describe("Routes/ConfirmBid", () => {
         mockData: FixtureForUnregisteredUserWithoutCreditCard,
       })
 
-      createTokenMock.mockResolvedValue({
+      _mockStripe().createToken.mockResolvedValueOnce({
         error: { message: "Your card number is incomplete." },
       })
 
@@ -870,7 +871,7 @@ describe("Routes/ConfirmBid", () => {
         mockData: FixtureForUnregisteredUserWithoutCreditCard,
       })
 
-      createTokenMock.mockRejectedValue(new TypeError("Network request failed"))
+      _mockStripe().createToken.mockRejectedValueOnce(new TypeError("Network request failed"))
 
       await page.fillFormWithValidValues()
       await page.agreeToTerms()
@@ -900,7 +901,7 @@ describe("Routes/ConfirmBid", () => {
         mockData: FixtureForUnregisteredUserWithoutCreditCard,
       })
 
-      createTokenMock.mockResolvedValue(stripeTokenResponse)
+      _mockStripe().createToken.mockResolvedValueOnce(stripeTokenResponse)
       env.mutations.useResultsOnce(createCreditCardAndUpdatePhoneFailed)
 
       await page.fillFormWithValidValues()
@@ -933,7 +934,7 @@ describe("Routes/ConfirmBid", () => {
         mockData: FixtureForUnregisteredUserWithoutCreditCard,
       })
 
-      createTokenMock.mockResolvedValue(stripeTokenResponse)
+      _mockStripe().createToken.mockResolvedValueOnce(stripeTokenResponse)
 
       const address = Object.assign({}, ValidFormValues)
       address.phoneNumber = "    "
