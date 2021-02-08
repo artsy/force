@@ -27,7 +27,7 @@ export const TermsOfServiceCheckbox = ({
         >
           Privacy Policy
         </Link>
-        {", and to receive emails from Artsy."}
+        {"."}
       </Serif>
     </StyledCheckbox>
   )

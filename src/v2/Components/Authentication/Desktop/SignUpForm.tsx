@@ -3,6 +3,7 @@ import {
   Footer,
   FormContainer as Form,
   SubmitButton,
+  EmailSubscriptionCheckbox,
   TermsOfServiceCheckbox,
 } from "v2/Components/Authentication/commonElements"
 import {
@@ -41,6 +42,7 @@ export class SignUpForm extends Component<FormProps, SignUpFormState> {
       <Formik
         initialValues={{
           accepted_terms_of_service: false,
+          agreed_to_receive_emails: false,
           ...this.props.values,
         }}
         onSubmit={this.onSubmit}
@@ -109,6 +111,18 @@ export class SignUpForm extends Component<FormProps, SignUpFormState> {
                 value={values.accepted_terms_of_service}
                 type="checkbox"
                 name="accepted_terms_of_service"
+                onChange={handleChange}
+                onBlur={handleBlur}
+              />
+              <EmailSubscriptionCheckbox
+                error={
+                  touched.agreed_to_receive_emails &&
+                  errors.agreed_to_receive_emails
+                }
+                checked={values.agreed_to_receive_emails}
+                value={values.agreed_to_receive_emails}
+                type="checkbox"
+                name="agreed_to_receive_emails"
                 onChange={handleChange}
                 onBlur={handleBlur}
               />
