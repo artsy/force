@@ -34,6 +34,8 @@ if (process.env.NODE_ENV === "production") {
     "/feature/",
     "/show/",
     "/user/conversations",
+    "/viewing-rooms",
+    "/viewing-room/",
   ]
 
   function beenConverted() {
