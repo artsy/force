@@ -85,7 +85,7 @@ const testMe: ShippingTestQueryRawResponse["me"] = {
           addressLine3: "",
           city: "Madrid",
           country: "Spain",
-          isDefault: true,
+          isDefault: false,
           name: "Test Name",
           phoneNumber: "555-555-5555",
           postalCode: "28001",
@@ -103,7 +103,7 @@ const testMe: ShippingTestQueryRawResponse["me"] = {
           addressLine3: "",
           city: "New York",
           country: "USA",
-          isDefault: false,
+          isDefault: true,
           name: "Test Name",
           phoneNumber: "422-424-4242",
           postalCode: "10013",
@@ -476,7 +476,7 @@ describe("Shipping", () => {
         page.find(`[data-test="addressFormCollapse"]`).props().open
       ).toEqual(false)
     })
-    it("opens the phone number input and populates with correct phone number when 'Arrange for pickup' is selected", async () => {
+    it("opens the empty pick-up phone number input", async () => {
       const page = await buildPage({
         mockData: {
           me: testMe,
@@ -488,7 +488,7 @@ describe("Shipping", () => {
       ).toEqual(true)
       expect(
         page.find(`[data-test="pickupPhoneNumberForm"]`).props().value
-      ).toEqual("555-555-5555")
+      ).toEqual("")
     })
     it("lists the addresses and renders the add address option", async () => {
       const page = await buildPage({
@@ -509,15 +509,13 @@ describe("Shipping", () => {
         "Test Name401 BroadwayFloor 25New York, NY, USA, 10013422-424-4242"
       )
     })
-    it("saves the address into state", async () => {
+    it("saves the default address selection into state", async () => {
       const page = await buildPage({
         mockData: {
           me: testMe,
         },
       })
-      expect(
-        expect.objectContaining(page.find(ShippingRoute).state().address)
-      ).toEqual(testMe.addressConnection.edges[0].node)
+      expect(page.find(ShippingRoute).state().selectedSavedAddress).toEqual("1")
     })
     it("commits the mutation with selected address", async () => {
       const page = await buildPage({
@@ -533,16 +531,16 @@ describe("Shipping", () => {
           "input": Object {
             "fulfillmentType": "SHIP",
             "id": "1234",
-            "phoneNumber": "555-555-5555",
+            "phoneNumber": "",
             "shipping": Object {
-              "addressLine1": "1 Main St",
-              "addressLine2": "",
-              "city": "Madrid",
-              "country": "Spain",
+              "addressLine1": "401 Broadway",
+              "addressLine2": "Floor 25",
+              "city": "New York",
+              "country": "USA",
               "name": "Test Name",
-              "phoneNumber": "555-555-5555",
-              "postalCode": "28001",
-              "region": "",
+              "phoneNumber": "422-424-4242",
+              "postalCode": "10013",
+              "region": "NY",
             },
           },
         }
@@ -556,12 +554,10 @@ describe("Shipping", () => {
       })
       page
         .find(`Radio__BorderedRadio[data-test="savedAddress"]`)
-        .last()
+        .first()
         .simulate("click")
       await page.update()
-      expect(
-        expect.objectContaining(page.find(ShippingRoute).state().address)
-      ).toEqual(testMe.addressConnection.edges[1].node)
+      expect(page.find(ShippingRoute).state().selectedSavedAddress).toEqual("0")
       await page.clickSubmit()
 
       expect(mutations.mockFetch).toHaveBeenCalledTimes(1)
@@ -570,16 +566,16 @@ describe("Shipping", () => {
           "input": Object {
             "fulfillmentType": "SHIP",
             "id": "1234",
-            "phoneNumber": "422-424-4242",
+            "phoneNumber": "",
             "shipping": Object {
-              "addressLine1": "401 Broadway",
-              "addressLine2": "Floor 25",
-              "city": "New York",
-              "country": "USA",
+              "addressLine1": "1 Main St",
+              "addressLine2": "",
+              "city": "Madrid",
+              "country": "Spain",
               "name": "Test Name",
-              "phoneNumber": "422-424-4242",
-              "postalCode": "10013",
-              "region": "NY",
+              "phoneNumber": "555-555-5555",
+              "postalCode": "28001",
+              "region": "",
             },
           },
         }

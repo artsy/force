@@ -219,7 +219,6 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
 
     // TODO: dry this
     const createNewAddress = this.state.selectedSavedAddress === NEW_ADDRESS
-    console.log(this.props)
     const addressList = this.props.me.addressConnection.edges
 
     if (shippingOption === "SHIP") {
@@ -262,7 +261,6 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
 
     try {
       // if not creating a new address, use the saved address selection for shipping
-      console.log(this.state.selectedSavedAddress, addressList)
       const shipToAddress = createNewAddress
         ? address
         : convertShippingAddressForExchange(
