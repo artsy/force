@@ -1,6 +1,6 @@
 import React from "react"
 import { Box, Flex, Link, ResponsiveImage, Sans, color } from "@artsy/palette"
-import { NAV_BAR_HEIGHT } from "v2/Components/NavBar"
+import { NAV_BAR_HEIGHT, MOBILE_NAV_HEIGHT } from "v2/Components/NavBar"
 import { Media } from "v2/Utils/Responsive"
 import { createFragmentContainer, graphql } from "react-relay"
 
@@ -103,7 +103,7 @@ const ViewingRoomHeaderSmall: React.FC<ViewingRoomHeaderProps> = props => {
     viewingRoom: { image, title },
   } = props
 
-  const HeaderHeight = `calc(100vh - ${NAV_BAR_HEIGHT * 2.8}px)`
+  const HeaderHeight = `calc(100vh - ${MOBILE_NAV_HEIGHT * 2.8}px)`
   const heroImageURL = resize(image?.imageURLs?.normalized, {
     width: 1200,
     convert_to: "jpg",

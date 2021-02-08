@@ -2,12 +2,11 @@ import { Box } from "@artsy/palette"
 import { NetworkOfflineMonitor } from "v2/Artsy/Router/NetworkOfflineMonitor"
 import { findCurrentRoute } from "v2/Artsy/Router/Utils/findCurrentRoute"
 import { useMaybeReloadAfterInquirySignIn } from "v2/Artsy/Router/Utils/useMaybeReloadAfterInquirySignIn"
-import { NAV_BAR_HEIGHT, NavBar } from "v2/Components/NavBar"
+import { NAV_BAR_HEIGHT, NavBar, MOBILE_NAV_HEIGHT } from "v2/Components/NavBar"
 import { Match } from "found"
 import { isFunction } from "lodash"
 import React, { useEffect } from "react"
 import createLogger from "v2/Utils/logger"
-import { FlashBannerQueryRenderer as FlashBanner } from "v2/Components/FlashBanner"
 
 const logger = createLogger("Apps/Components/AppShell")
 
@@ -47,10 +46,9 @@ export const AppShell: React.FC<AppShellProps> = props => {
 
   return (
     <Box width="100%">
-      <Box pb={NAV_BAR_HEIGHT}>
+      <Box pb={[MOBILE_NAV_HEIGHT, NAV_BAR_HEIGHT]}>
         <Box left={0} position="fixed" width="100%" zIndex={100}>
           <NavBar />
-          <FlashBanner />
         </Box>
       </Box>
 

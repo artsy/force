@@ -1,10 +1,10 @@
 import styled, { css } from "styled-components"
 import { Box, Flex, color } from "@artsy/palette"
 import React, { useEffect, useRef, useState } from "react"
-import { NAV_BAR_HEIGHT } from "v2/Components/NavBar"
+import { NAV_BAR_HEIGHT, MOBILE_NAV_HEIGHT } from "v2/Components/NavBar"
 
 const Container = styled(Flex).attrs({
-  top: NAV_BAR_HEIGHT,
+  top: [MOBILE_NAV_HEIGHT, NAV_BAR_HEIGHT],
   py: 1,
   mx: -2,
   px: 2,
@@ -29,7 +29,7 @@ const Container = styled(Flex).attrs({
 // This <div> is positioned such that when it leaves the top of
 // the browser the <Container> reaches it's `top` value and sticking.
 const Sentinel = styled(Box).attrs({
-  top: -NAV_BAR_HEIGHT,
+  top: [-MOBILE_NAV_HEIGHT, -NAV_BAR_HEIGHT],
 })`
   position: relative;
   width: 100%;
