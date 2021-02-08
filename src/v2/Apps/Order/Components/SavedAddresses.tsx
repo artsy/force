@@ -59,13 +59,11 @@ const renderAddressList = (addressList, handleClickEdit) => {
             top={2}
             right={2}
             onClick={e => {
-              // TODO: ideally we don't want the radio selection to change when clicking this
-              e.stopPropagation()
-              e.nativeEvent.stopImmediatePropagation()
               handleClickEdit(index)
             }}
             textColor="blue100"
             size="2"
+            data-test="edit-address"
           >
             Edit
           </EditButton>

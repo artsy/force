@@ -191,15 +191,6 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
               ... on UserAddress {
                 id
                 internalID
-                name
-                addressLine1
-                addressLine2
-                isDefault
-                phoneNumber
-                city
-                region
-                postalCode
-                country
               }
               ... on Errors {
                 errors {
@@ -278,7 +269,11 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
       ).commerceSetShipping.orderOrError
 
       // save address when user is entering new address AND save checkbox is selected
-      if (createNewAddress && this.state.saveAddress) {
+      if (
+        this.state.shippingOption === "SHIP" &&
+        createNewAddress &&
+        this.state.saveAddress
+      ) {
         await this.saveAddress({ ...address, phoneNumber: phoneNumber })
       }
 
@@ -390,16 +385,6 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
     // TODO: does it need to save the address in state?  can it just use the index and address list?
     const onSelectSavedAddress = (value: string) => {
       this.setState({ selectedSavedAddress: value })
-      // if (value == NEW_ADDRESS) {
-      //   this.setState({ address: emptyAddress })
-      //   this.setState({ phoneNumber: "" })
-      // } else {
-      //   const selectedAddress = convertShippingAddressForExchange(
-      //     addressList[parseInt(value)].node
-      //   )
-      //   this.setState({ address: selectedAddress })
-      //   this.setState({ phoneNumber: selectedAddress.phoneNumber })
-      // }
     }
     const showModal = this.state.editAddressIndex > -1
     return (
@@ -509,6 +494,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
                       this.setState({ saveAddress: selected })
                     }
                     selected={this.state.saveAddress}
+                    data-test="save-address-checkbox"
                   >
                     Save Address
                   </Checkbox>
