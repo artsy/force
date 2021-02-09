@@ -33,6 +33,22 @@ describe("SignUpForm", () => {
     return mount(<SignUpForm {...passedProps} />)
   }
 
+  describe("email sub", () => {
+    it("the email subscription checkbox starts out unchecked", () => {
+      const wrapper = getWrapper()
+      const checkbox = wrapper.find("EmailSubscriptionCheckbox")
+      expect(checkbox.prop("agreed_to_receive_emails")).toEqual(false)
+    })
+
+    it("when checked, the agreed_to_receive_emails value is true", () => {
+      const wrapper = getWrapper()
+      const checkbox = wrapper.find("EmailSubscriptionCheckbox")
+      // how do we click again??
+      checkbox.simulate("click")
+      expect(checkbox.prop("agreed_to_receive_emails")).toEqual(true)
+    })
+  })
+
   describe("onSubmit", () => {
     it("calls handleSubmit with expected params", done => {
       props.values = SignupValues
@@ -47,6 +63,31 @@ describe("SignUpForm", () => {
             password: "password123",
             name: "John Doe",
             accepted_terms_of_service: true,
+            agreed_to_receive_emails: false,
+            recaptcha_token: "recaptcha-token",
+          },
+          expect.anything()
+        )
+        done()
+      })
+    })
+
+    it("sends email subscription agreement", done => {
+      props.values = SignupValues
+      const wrapper = getWrapper()
+      const checkbox = wrapper.find("EmailSubscriptionCheckbox")
+      checkbox.simulate("click")
+      const formik = wrapper.find("Formik")
+      formik.simulate("submit")
+
+      setTimeout(() => {
+        expect(props.handleSubmit).toBeCalledWith(
+          {
+            email: "foo@bar.com",
+            password: "password123",
+            name: "John Doe",
+            accepted_terms_of_service: true,
+            agreed_to_receive_emails: false,
             recaptcha_token: "recaptcha-token",
           },
           expect.anything()
