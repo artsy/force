@@ -10,25 +10,6 @@ import { NEW_ADDRESS } from "../Components/SavedAddresses"
 
 export type SavedAddressType = Shipping_me["addressConnection"]["edges"][number]["node"]
 
-/**
- * Extracts
- * @param me relay Me object including addressConnection
- */
-// TODO: remove?
-export const defaultShippingAddress = (
-  me: Shipping_me
-): SavedAddressType | null => {
-  const addressList = me.addressConnection.edges
-  if (addressList.length > 0) {
-    const defaultAddress =
-      addressList.find(address => address.node.isDefault)?.node ||
-      addressList[0].node
-    return defaultAddress
-  } else {
-    return null
-  }
-}
-
 export const defaultShippingAddressIndex = (me: Shipping_me): string => {
   const addressList = me.addressConnection.edges
   if (addressList.length > 0) {

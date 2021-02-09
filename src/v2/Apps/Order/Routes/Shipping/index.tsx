@@ -13,14 +13,7 @@ import {
   Text,
 } from "@artsy/palette"
 import { Shipping_order } from "v2/__generated__/Shipping_order.graphql"
-import {
-  CommerceOrderFulfillmentTypeEnum,
-  ShippingOrderAddressUpdateMutation,
-} from "v2/__generated__/ShippingOrderAddressUpdateMutation.graphql"
-import {
-  ShippingCreateUserAddressMutation,
-  UserAddressAttributes,
-} from "v2/__generated__/ShippingCreateUserAddressMutation.graphql"
+import { CommerceOrderFulfillmentTypeEnum } from "v2/__generated__/ShippingOrderAddressUpdateMutation.graphql"
 import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "v2/Apps/Order/Components/ArtworkSummaryItem"
 import {
@@ -74,6 +67,10 @@ import {
   SavedAddressesFragmentContainer as SavedAddresses,
 } from "../../Components/SavedAddresses"
 import { AddressModal } from "../../Components/AddressModal"
+import {
+  setShippingMutation,
+  saveUserAddressMutation,
+} from "../../Mutations/shippingMutations"
 
 export interface ShippingProps {
   order: Shipping_order
@@ -130,90 +127,15 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
     }
   }
 
-  // TODO: move mutations to a different file?
-  setShipping(variables: ShippingOrderAddressUpdateMutation["variables"]) {
-    return this.props.commitMutation<ShippingOrderAddressUpdateMutation>({
-      variables,
-      // TODO: Inputs to the mutation might have changed case of the keys!
-      mutation: graphql`
-        mutation ShippingOrderAddressUpdateMutation(
-          $input: CommerceSetShippingInput!
-        ) {
-          commerceSetShipping(input: $input) {
-            orderOrError {
-              ... on CommerceOrderWithMutationSuccess {
-                __typename
-                order {
-                  internalID
-                  state
-                  requestedFulfillment {
-                    __typename
-                    ... on CommerceShip {
-                      name
-                      addressLine1
-                      addressLine2
-                      city
-                      region
-                      country
-                      postalCode
-                      phoneNumber
-                    }
-                  }
-                }
-              }
-              ... on CommerceOrderWithMutationFailure {
-                error {
-                  type
-                  code
-                  data
-                }
-              }
-            }
-          }
-        }
-      `,
-    })
-  }
+  getAddressList = () => this.props.me.addressConnection.edges
 
-  saveAddress(address: UserAddressAttributes) {
-    return this.props.commitMutation<ShippingCreateUserAddressMutation>({
-      variables: {
-        input: {
-          attributes: address,
-        },
-      },
-      mutation: graphql`
-        mutation ShippingCreateUserAddressMutation(
-          $input: CreateUserAddressInput!
-        ) {
-          createUserAddress(input: $input) {
-            userAddressOrErrors {
-              ... on UserAddress {
-                id
-                internalID
-              }
-              ... on Errors {
-                errors {
-                  code
-                  message
-                }
-              }
-            }
-          }
-        }
-      `,
-    })
-  }
+  isCreateNewAddress = () => this.state.selectedSavedAddress === NEW_ADDRESS
 
   onContinueButtonPressed = async () => {
     const { address, shippingOption, phoneNumber } = this.state
 
-    // TODO: dry this
-    const createNewAddress = this.state.selectedSavedAddress === NEW_ADDRESS
-    const addressList = this.props.me.addressConnection.edges
-
     if (shippingOption === "SHIP") {
-      if (createNewAddress) {
+      if (this.isCreateNewAddress()) {
         // validate when order is not pickup and the address is new
         const { errors, hasErrors } = validateAddress(this.state.address)
         const { error, hasError } = validatePhoneNumber(this.state.phoneNumber)
@@ -252,13 +174,14 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
 
     try {
       // if not creating a new address, use the saved address selection for shipping
-      const shipToAddress = createNewAddress
+      const shipToAddress = this.isCreateNewAddress()
         ? address
         : convertShippingAddressForExchange(
-            addressList[parseInt(this.state.selectedSavedAddress)].node
+            this.getAddressList()[parseInt(this.state.selectedSavedAddress)]
+              .node
           )
       const orderOrError = (
-        await this.setShipping({
+        await setShippingMutation(this.props.commitMutation, {
           input: {
             id: this.props.order.internalID,
             fulfillmentType: shippingOption,
@@ -271,10 +194,13 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
       // save address when user is entering new address AND save checkbox is selected
       if (
         this.state.shippingOption === "SHIP" &&
-        createNewAddress &&
+        this.isCreateNewAddress() &&
         this.state.saveAddress
       ) {
-        await this.saveAddress({ ...address, phoneNumber: phoneNumber })
+        await saveUserAddressMutation(this.props.commitMutation, {
+          ...address,
+          phoneNumber: phoneNumber,
+        })
       }
 
       if (orderOrError.error) {
@@ -370,19 +296,17 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
       this.props,
       props => props.order.lineItems.edges[0].node.artwork
     )
-    const addressList = this.props.me.addressConnection.edges
+    const addressList = this.getAddressList()
 
     const shippingSelected =
       !artwork.pickup_available || this.state.shippingOption === "SHIP"
 
-    const createNewAddress = this.state.selectedSavedAddress === NEW_ADDRESS
-
     const showAddressForm =
-      shippingSelected && (createNewAddress || addressList.length === 0)
+      shippingSelected &&
+      (this.isCreateNewAddress() || addressList.length === 0)
 
     const showSavedAddresses = shippingSelected && addressList.length > 0
 
-    // TODO: does it need to save the address in state?  can it just use the index and address list?
     const onSelectSavedAddress = (value: string) => {
       this.setState({ selectedSavedAddress: value })
     }
@@ -393,12 +317,9 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
           <AddressModal
             show={showModal}
             closeModal={() => this.setState({ editAddressIndex: -1 })}
-            address={
-              this.props.me.addressConnection.edges[this.state.editAddressIndex]
-                ?.node
-            }
+            address={addressList[this.state.editAddressIndex]?.node}
             commitMutation={this.props.commitMutation}
-            onSuccess={updatedAddress => {
+            onSuccess={() => {
               // this.setState({ address: updatedAddress })
             }}
             onError={message => {
