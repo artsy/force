@@ -74,7 +74,9 @@ export const MobileNavMenu: React.FC<Props> = ({
 
           <AnimatingMenuWrapper isOpen={isOpen}>
             <ul>
-              <MobileMenuText color="black100">Buy</MobileMenuText>
+              <MobileLink href="/collect" color="black100">
+                Buy
+              </MobileLink>
               <MobileSubmenuLink menu={ARTISTS_SUBMENU_DATA.menu}>
                 {ARTISTS_SUBMENU_DATA.menu.title}
               </MobileSubmenuLink>
