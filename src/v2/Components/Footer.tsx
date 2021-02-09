@@ -22,7 +22,6 @@ import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import { DownloadAppBadge } from "v2/Components/DownloadAppBadge"
 import { Mediator } from "lib/mediator"
 import { ContextModule } from "@artsy/cohesion"
-import { BooleanLiteral } from "typescript"
 
 const Column = styled(Flex).attrs({
   flex: 1,
@@ -32,8 +31,7 @@ const Column = styled(Flex).attrs({
 })``
 interface Props {
   mediator?: Mediator
-  omitSeparator?: boolean
-  omitDownloadAppBanner?: BooleanLiteral
+  flushWithContent?: boolean
 }
 
 export const Footer: React.FC<Props> = props => {
@@ -68,9 +66,7 @@ const DownloadAppBanner = () => {
     <Flex
       flexDirection="row"
       justifyContent="center"
-      borderTop={`1px solid ${color("black10")}`}
       borderBottom={`1px solid ${color("black10")}`}
-      mt={6}
       mb={3}
       overflow="hidden"
       id="download-app-banner"
@@ -118,16 +114,16 @@ const DownloadAppBanner = () => {
 }
 
 const FooterContainer: React.FC<FlexDirectionProps & Props> = props => {
-  const { omitDownloadAppBanner } = props
+  const { flushWithContent } = props
 
   return (
-    <>
-      {false && <Separator as="hr" mt={6} mb={3} />}
-      {!omitDownloadAppBanner && (
-        <Media greaterThan="xs">
-          <DownloadAppBanner />
-        </Media>
-      )}
+    <Box
+      mt={flushWithContent ? 0 : 6}
+      borderTop={flushWithContent ? "" : `1px solid ${color("black10")}`}
+    >
+      <Media greaterThan="xs">
+        <DownloadAppBanner />
+      </Media>
       <footer>
         <Flex
           flexDirection={props.flexDirection}
@@ -138,7 +134,7 @@ const FooterContainer: React.FC<FlexDirectionProps & Props> = props => {
         >
           <Media at="xs">
             <Column>
-              <Text variant="mediumText" mb={1}>
+              <Text variant="mediumText" mb={1} mt={2}>
                 Get the iOS app
               </Text>
               <DownloadAppBadge contextModule={ContextModule.footer} />
@@ -213,6 +209,8 @@ const FooterContainer: React.FC<FlexDirectionProps & Props> = props => {
           justifyContent="space-between"
           alignItems="center"
           width="100%"
+          maxWidth={breakpoints.xl}
+          m="auto"
           py={2}
         >
           <Flex>
@@ -254,7 +252,7 @@ const FooterContainer: React.FC<FlexDirectionProps & Props> = props => {
           </Flex>
         </Flex>
       </footer>
-    </>
+    </Box>
   )
 }
 
