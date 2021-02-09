@@ -7,6 +7,7 @@ import {
   ArtsyMarkIcon,
   FacebookIcon,
   Flex,
+  Image,
   InstagramIcon,
   Separator,
   Spacer,
@@ -87,14 +88,10 @@ const DownloadAppBanner = () => {
             </Text>
           </Box>
           <Flex flexDirection="row" alignItems="center">
-            <Box
-              height={80}
-              width={80}
-              backgroundColor={color("black10")}
+            <Image
+              src="https://files.artsy.net/download-app-qr-code.png"
               mr={2}
-              flexGrow={0}
-              flexShrink={0}
-            ></Box>
+            />
             <Text color="black60">
               To download, scan this code with your phone’s camera
             </Text>
