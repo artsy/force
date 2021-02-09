@@ -31,7 +31,7 @@ import {
   NavigatorContextProvider,
   useNavigation,
 } from "./NavigatorContextProvider"
-import { NAV_BAR_BORDER_OFFSET, NAV_BAR_HEIGHT } from "v2/Components/NavBar"
+import { NAV_BAR_BORDER_OFFSET, MOBILE_NAV_HEIGHT } from "v2/Components/NavBar"
 
 const Close = styled(Clickable)`
   position: absolute;
@@ -42,7 +42,7 @@ const Close = styled(Clickable)`
   align-items: center;
   justify-content: center;
   width: ${space(6)}px;
-  height: ${NAV_BAR_HEIGHT - NAV_BAR_BORDER_OFFSET}px;
+  height: ${MOBILE_NAV_HEIGHT - NAV_BAR_BORDER_OFFSET}px;
 `
 
 interface Props {
