@@ -70,6 +70,7 @@ const DownloadAppBanner = () => {
       justifyContent="center"
       borderTop={`1px solid ${color("black10")}`}
       borderBottom={`1px solid ${color("black10")}`}
+      mt={6}
       mb={3}
       overflow="hidden"
       id="download-app-banner"
