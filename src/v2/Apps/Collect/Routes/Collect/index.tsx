@@ -43,7 +43,6 @@ export const CollectApp: React.FC<CollectAppProps> = ({
     canonicalHref = `${sd.APP_URL}/collect/${medium}`
   } else if (color) {
     canonicalHref = `${sd.APP_URL}/collect/color/${color}`
-    console.log("hi")
   } else {
     canonicalHref = `${sd.APP_URL}/collect`
   }
