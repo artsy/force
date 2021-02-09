@@ -496,9 +496,9 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
                     selected={this.state.saveAddress}
                     data-test="save-address-checkbox"
                   >
-                    Save Address
+                    Save shipping address for later use
                   </Checkbox>
-                  <Spacer mt={1} />
+                  <Spacer mt={3} />
                 </Collapse>
 
                 <Collapse
