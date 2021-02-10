@@ -12,7 +12,7 @@ import { AppContainer } from "v2/Apps/Components/AppContainer"
 import { FrameWithRecentlyViewed } from "v2/Components/FrameWithRecentlyViewed"
 import { BreadCrumbList } from "v2/Components/Seo"
 
-import { getMetadataForMedium } from "./Components/CollectMediumMetadata"
+import { getMetadata, Medium, Color } from "./Utils/getMetadata"
 
 import { Collect_marketingHubCollections } from "v2/__generated__/Collect_marketingHubCollections.graphql"
 import { collectRoutes_ArtworkFilterQueryResponse } from "v2/__generated__/collectRoutes_ArtworkFilterQuery.graphql"
@@ -34,9 +34,12 @@ export const CollectApp: React.FC<CollectAppProps> = ({
   match: { location, params },
   viewer,
 }) => {
-  const medium = params?.medium
-  const color = params?.color
-  const { description, breadcrumbTitle, title } = getMetadataForMedium(medium)
+  const medium = params?.medium as Medium
+  const color = params?.color as Color
+  const { description, breadcrumbTitle, title } = getMetadata({
+    medium,
+    color,
+  })
 
   let canonicalHref
   if (medium) {
