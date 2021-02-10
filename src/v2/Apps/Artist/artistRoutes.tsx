@@ -8,7 +8,6 @@ import { hasSections as showMarketInsights } from "v2/Apps/Artist/Components/Mar
 
 import { isDefaultFilter } from "v2/Components/v2/ArtworkFilter/Utils/isDefaultFilter"
 import { paramsToCamelCase } from "v2/Components/v2/ArtworkFilter/Utils/urlBuilder"
-import { getENV } from "v2/Utils/getENV"
 
 import { hasOverviewContent } from "./Components/NavigationTabs"
 
@@ -138,20 +137,18 @@ export const artistRoutes: RouteConfig[] = [
             }
           )
 
-          const aggregations = ["MEDIUM", "TOTAL", "MAJOR_PERIOD"]
-          const additionalAggregations = getENV("ENABLE_NEW_ARTWORK_FILTERS")
-            ? ["PARTNER"]
-            : ["GALLERY", "INSTITUTION"]
-
-          return {
-            ...filterParams,
-            aggregations: aggregations.concat(additionalAggregations),
-          }
+          return filterParams
         },
         query: graphql`
           query artistRoutes_WorksQuery(
             $acquireable: Boolean
-            $aggregations: [ArtworkAggregation]
+            $aggregations: [ArtworkAggregation] = [
+              MEDIUM
+              TOTAL
+              GALLERY
+              INSTITUTION
+              MAJOR_PERIOD
+            ]
             $artistID: String!
             $atAuction: Boolean
             $attributionClass: [String]
@@ -165,7 +162,6 @@ export const artistRoutes: RouteConfig[] = [
             $offerable: Boolean
             $page: Int
             $partnerID: ID
-            $partnerIDs: [String]
             $priceRange: String
             $sizes: [ArtworkSizes]
             $sort: String
@@ -189,7 +185,6 @@ export const artistRoutes: RouteConfig[] = [
                   offerable: $offerable
                   page: $page
                   partnerID: $partnerID
-                  partnerIDs: $partnerIDs
                   priceRange: $priceRange
                   sizes: $sizes
                   sort: $sort
