@@ -58,9 +58,33 @@ describe("MobileNavMenu", () => {
 
   describe("nav structure", () => {
     it("renders the correct items when logged out", () => {
-      const linkContainer = getMobileMenuLinkContainer()
-      const mobileSubmenuLinks = linkContainer.children(MobileSubmenuLink)
+      const defaultMobileMenuLinks = [
+        ["/collect", "Buy"],
+        ["/auctions", "Auctions"],
+        ["/viewing-rooms", "Viewing Rooms"],
+        ["/galleries", "Galleries"],
+        ["/fairs", "Fairs"],
+        ["/shows", "Shows"],
+        ["/institutions", "Museums"],
+        ["/consign", "Sell"],
+        ["/articles", "Editorial"],
+        ["/sign_up?intent=signup&contextModule=header", "Sign up"],
+        ["/log_in?intent=login&contextModule=header", "Log in"],
+      ].map(link => link.join(""))
 
+      const linkContainer = getMobileMenuLinkContainer()
+      const mobileMenuLinks = linkContainer.find("MobileLink")
+
+      // Exclude submenu links
+      const renderedMobileMenuLinks = mobileMenuLinks
+        .map(node => node.props().href + node.text())
+        .filter(link => defaultMobileMenuLinks.includes(link))
+
+      // Ensure that the mobile menu links at least include the links we expect
+      // and that they're in the right relative order
+      expect(renderedMobileMenuLinks).toEqual(defaultMobileMenuLinks)
+
+      const mobileSubmenuLinks = linkContainer.children(MobileSubmenuLink)
       expect(mobileSubmenuLinks.length).toBe(2)
 
       let linkText = mobileSubmenuLinks.first().text()
@@ -82,7 +106,6 @@ describe("MobileNavMenu", () => {
       //   })
 
       linkText = linkContainer.text()
-      expect(linkText).toContain("Sign up")
       expect(linkText).not.toContain("Works for you")
     })
 

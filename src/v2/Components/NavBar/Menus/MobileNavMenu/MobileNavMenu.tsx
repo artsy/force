@@ -87,7 +87,6 @@ export const MobileNavMenu: React.FC<Props> = ({
 
               <MobileLink href="/auctions">Auctions</MobileLink>
               <MobileLink href="/viewing-rooms">Viewing Rooms</MobileLink>
-              <MobileLink href="/articles">Editorial</MobileLink>
               <MobileLink href="/galleries">Galleries</MobileLink>
               <MobileLink href="/fairs">Fairs</MobileLink>
               <MobileLink href="/shows">Shows</MobileLink>
