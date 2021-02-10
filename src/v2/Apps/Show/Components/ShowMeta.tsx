@@ -22,13 +22,8 @@ const ShowMeta: React.FC<ShowMetaProps> = ({
   const title = `${name} | Artsy`
   const href = `${getENV("APP_URL")}/show/${slug}`
 
-  let description
-  if (metaDescription) {
-    description = metaDescription
-  } else {
-    description = `Explore ${name} from ${partner.name} on Artsy. ${formattedStartAt} - ${formattedEndAt}.`
-  }
-
+  const fallbackDescription = `Explore ${name} from ${partner.name} on Artsy. ${formattedStartAt} - ${formattedEndAt}.`
+  const description = metaDescription || fallbackDescription
   return (
     <>
       <Title>{title}</Title>
