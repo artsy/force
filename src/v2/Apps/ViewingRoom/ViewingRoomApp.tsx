@@ -44,7 +44,7 @@ const ViewingRoomApp: React.FC<ViewingRoomAppProps> = ({
         mode: ModalType.signup,
         redirectTo: window.location.href,
       })
-    }, 0)
+    }, 1000)
 
     return () => clearTimeout(timeoutID)
   }, [user, router, mediator])
