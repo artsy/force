@@ -38,8 +38,10 @@ export const handleSubmit = async (
     session_id: sd.SESSION_ID,
     signupIntent: intent,
     signupReferer,
-    agreed_to_receive_emails: values.accepted_terms_of_service,
+    agreed_to_receive_emails: values.agreed_to_receive_emails,
   })
+
+  console.log(userAttributes)
 
   const options = {
     success: async res => {
@@ -185,7 +187,7 @@ const loginUser = async (
     error: (err: any) => void
   }
 ) => {
-  const url = `${sd.APP_URL}${sd.AP.loginPagePath}`
+  const url = `${sd.APP_URL}${sd.AP.loginPagePath}/omg`
   const user = pick(userAttributes, [
     "email",
     "password",
