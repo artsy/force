@@ -88,9 +88,10 @@ describe("NavBar", () => {
       const topNavBarLinks = wrapper.find(NavBarTier).at(0).find("NavItem")
       const bottomNavBarLinks = wrapper.find(NavBarTier).at(1).find("NavItem")
 
-      topNavBarDefaultLinks.forEach(([href], index) => {
+      topNavBarDefaultLinks.forEach(([href, text], index) => {
         const navLink = topNavBarLinks.at(index)
         expect(href).toEqual(navLink.prop("href"))
+        expect(text).toEqual(navLink.text())
       })
 
       bottomNavBarDefaultLinks.forEach(([href], index) => {
