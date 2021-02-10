@@ -61,6 +61,7 @@ const ResultsWrapper = styled(Box)`
   display: flex;
   border: 1px solid ${colors.grayRegular};
   position: absolute;
+  z-index: 1;
 `
 
 const SuggestionContainer = ({ children, containerProps }) => {
