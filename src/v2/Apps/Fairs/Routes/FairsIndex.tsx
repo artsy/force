@@ -262,11 +262,15 @@ export const FairsIndex: React.FC<FairsIndexProps> = ({
             </Text>
 
             {upcomingFairs.map(fair => {
-              if (!fair.isPublished && !fair.profile?.isPublished) return null
+              if (!fair.isPublished || !fair.organizer?.profile?.href) {
+                return null
+              }
 
               return (
                 <Text key={fair.internalID} my={3}>
-                  <RouterLink to={fair.href}>{fair.name}</RouterLink>
+                  <RouterLink to={fair.organizer.profile.href}>
+                    {fair.name}
+                  </RouterLink>
 
                   <Box>
                     {fair.startAt} – {fair.endAt}
@@ -342,15 +346,19 @@ export const FairsIndexFragmentContainer = createFragmentContainer(FairsIndex, {
       ) {
         internalID
         name
-        href
         startAt(format: "MMM Do")
-        endAt(format: "Do YYYY")
+        endAt(format: "MMM Do YYYY")
         location {
           city
         }
         isPublished
         profile {
           isPublished
+        }
+        organizer {
+          profile {
+            href
+          }
         }
         ...FairsFairRow_fair
       }

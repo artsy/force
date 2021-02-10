@@ -67,12 +67,12 @@ const node: ReaderFragment = {
         {
           "kind": "Literal",
           "name": "format",
-          "value": "Do YYYY"
+          "value": "MMM Do YYYY"
         }
       ],
       "kind": "ScalarField",
       "name": "endAt",
-      "storageKey": "endAt(format:\"Do YYYY\")"
+      "storageKey": "endAt(format:\"MMM Do YYYY\")"
     },
     {
       "alias": null,
@@ -154,5 +154,5 @@ const node: ReaderFragment = {
   ],
   "type": "Fair"
 };
-(node as any).hash = 'c560b325a3ba188a0757ca57c0033610';
+(node as any).hash = '6b54f3e52e6034d24137c4973fbfa561';
 export default node;
