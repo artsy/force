@@ -172,12 +172,6 @@ return {
     {
       "defaultValue": null,
       "kind": "LocalArgument",
-      "name": "partnerIDs",
-      "type": "[String]"
-    },
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
       "name": "priceRange",
       "type": "String"
     },
@@ -471,11 +465,6 @@ return {
         },
         {
           "kind": "Variable",
-          "name": "partnerIDs",
-          "variableName": "partnerIDs"
-        },
-        {
-          "kind": "Variable",
           "name": "priceRange",
           "variableName": "priceRange"
         },
@@ -498,5 +487,5 @@ return {
   "type": "Artist"
 };
 })();
-(node as any).hash = 'd35e14f1b9d687863eb6414f4a6cc726';
+(node as any).hash = 'fe76faa9729b51368abaa2311dd18120';
 export default node;

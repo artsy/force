@@ -113,12 +113,6 @@ const node: ReaderFragment = {
     {
       "defaultValue": null,
       "kind": "LocalArgument",
-      "name": "partnerIDs",
-      "type": "[String]"
-    },
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
       "name": "priceRange",
       "type": "String"
     },
@@ -236,11 +230,6 @@ const node: ReaderFragment = {
         },
         {
           "kind": "Variable",
-          "name": "partnerIDs",
-          "variableName": "partnerIDs"
-        },
-        {
-          "kind": "Variable",
           "name": "priceRange",
           "variableName": "priceRange"
         },
@@ -283,5 +272,5 @@ const node: ReaderFragment = {
   ],
   "type": "Viewer"
 };
-(node as any).hash = 'e5b66e446b9be94c58520cf5c4f62863';
+(node as any).hash = 'ded84188972b759f5a8381ac45bb6b78';
 export default node;

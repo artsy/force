@@ -76,7 +76,6 @@ export const ArtistArtworkFilterRefetchContainer = createRefetchContainer(
           offerable: { type: "Boolean" }
           page: { type: "Int" }
           partnerID: { type: "ID" }
-          partnerIDs: { type: "[String]" }
           priceRange: { type: "String" }
           sizes: { type: "[ArtworkSizes]" }
           sort: { type: "String", defaultValue: "-partner_updated_at" }
@@ -109,7 +108,6 @@ export const ArtistArtworkFilterRefetchContainer = createRefetchContainer(
           offerable: $offerable
           page: $page
           partnerID: $partnerID
-          partnerIDs: $partnerIDs
           priceRange: $priceRange
           sizes: $sizes
           first: 30
@@ -126,7 +124,13 @@ export const ArtistArtworkFilterRefetchContainer = createRefetchContainer(
   graphql`
     query ArtistArtworkFilterQuery(
       $acquireable: Boolean
-      $aggregations: [ArtworkAggregation]
+      $aggregations: [ArtworkAggregation] = [
+        MEDIUM
+        TOTAL
+        GALLERY
+        INSTITUTION
+        MAJOR_PERIOD
+      ]
       $artistID: String!
       $atAuction: Boolean
       $attributionClass: [String]
@@ -140,7 +144,6 @@ export const ArtistArtworkFilterRefetchContainer = createRefetchContainer(
       $offerable: Boolean
       $page: Int
       $partnerID: ID
-      $partnerIDs: [String]
       $priceRange: String
       $sizes: [ArtworkSizes]
       $sort: String
@@ -164,7 +167,6 @@ export const ArtistArtworkFilterRefetchContainer = createRefetchContainer(
             offerable: $offerable
             page: $page
             partnerID: $partnerID
-            partnerIDs: $partnerIDs
             priceRange: $priceRange
             sizes: $sizes
             sort: $sort

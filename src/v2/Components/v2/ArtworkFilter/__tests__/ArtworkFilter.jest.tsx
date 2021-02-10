@@ -74,7 +74,6 @@ describe("ArtworkFilter", () => {
         sort: "-decayed_merch",
         artistIDs: [],
         attributionClass: [],
-        partnerIDs: [],
       })
     })
 
@@ -112,7 +111,6 @@ describe("ArtworkFilter", () => {
         sort: "-decayed_merch",
         artistIDs: [],
         attributionClass: [],
-        partnerIDs: [],
       })
     })
 
@@ -140,7 +138,6 @@ describe("ArtworkFilter", () => {
         sort: "-partner_updated_at",
         artistIDs: [],
         attributionClass: [],
-        partnerIDs: [],
       })
     })
 
@@ -166,7 +163,6 @@ describe("ArtworkFilter", () => {
           sort: "-decayed_merch",
           artistIDs: [],
           attributionClass: [],
-          partnerIDs: [],
         },
       })
     })
