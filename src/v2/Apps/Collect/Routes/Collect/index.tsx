@@ -34,12 +34,18 @@ export const CollectApp: React.FC<CollectAppProps> = ({
   match: { location, params },
   viewer,
 }) => {
-  const medium = params && params.medium
+  const medium = params?.medium
+  const color = params?.color
   const { description, breadcrumbTitle, title } = getMetadataForMedium(medium)
 
-  const canonicalHref = medium
-    ? `${sd.APP_URL}/collect/${medium}`
-    : `${sd.APP_URL}/collect`
+  let canonicalHref
+  if (medium) {
+    canonicalHref = `${sd.APP_URL}/collect/${medium}`
+  } else if (color) {
+    canonicalHref = `${sd.APP_URL}/collect/color/${color}`
+  } else {
+    canonicalHref = `${sd.APP_URL}/collect`
+  }
 
   const items = [{ name: "Collect", path: "/collect" }]
   if (medium) {

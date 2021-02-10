@@ -16,6 +16,7 @@ export const ArtworkQueryFilter = graphql`
     $offerable: Boolean
     $page: Int
     $partnerID: ID
+    $partnerIDs: [String]
     $priceRange: String
     $sizes: [ArtworkSizes]
     $sort: String
@@ -40,6 +41,7 @@ export const ArtworkQueryFilter = graphql`
           offerable: $offerable
           page: $page
           partnerID: $partnerID
+          partnerIDs: $partnerIDs
           priceRange: $priceRange
           sizes: $sizes
           sort: $sort
