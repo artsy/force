@@ -3,7 +3,7 @@ import { SystemContextProvider } from "v2/Artsy"
 import { useTracking } from "v2/Artsy/Analytics/useTracking"
 import { mount } from "enzyme"
 import React from "react"
-import { NavBar } from "../NavBar"
+import { NavBar, NavBarTier } from "../NavBar"
 import { InboxNotificationCount } from "../Menus/MobileNavMenu/InboxNotificationCount"
 import { mediator } from "lib/mediator"
 
@@ -57,15 +57,25 @@ describe("NavBar", () => {
   })
 
   describe("desktop", () => {
-    const defaultLinks = [
-      ["/artists", "Artists"],
-      ["/collect", "Artworks"],
-      ["/auctions", "Auctions"],
-      ["/viewing-rooms", "Viewing\xa0Rooms"],
+    const topNavBarDefaultLinks = [
+      ["/collect", "Buy"],
+      ["/consign", "Sell"],
       ["/articles", "Editorial"],
     ]
 
-    it("renders correct lg, xl nav items", () => {
+    const bottomNavBarDefaultLinks = [
+      ["/artists", "Artists"],
+      ["/collect", "Artworks"],
+      ["/auctions", "Auctions"],
+      ["/viewing-rooms", "Viewing Rooms"],
+      ["/galleries", "Galleries"],
+      ["/fairs", "Fairs"],
+      ["/Shows", "Shows"],
+      ["/institutions", "Museums"],
+      ["#download-app-banner", "Download App"],
+    ]
+
+    it("renders correct nav items above xs", () => {
       const wrapper = getWrapper()
 
       // Should always be first
@@ -75,10 +85,16 @@ describe("NavBar", () => {
         "/"
       )
 
-      const links = wrapper.find("NavItem")
+      const topNavBarLinks = wrapper.find(NavBarTier).at(0).find("NavItem")
+      const bottomNavBarLinks = wrapper.find(NavBarTier).at(1).find("NavItem")
 
-      defaultLinks.forEach(([href], index) => {
-        const navLink = links.at(index)
+      topNavBarDefaultLinks.forEach(([href], index) => {
+        const navLink = topNavBarLinks.at(index)
+        expect(href).toEqual(navLink.prop("href"))
+      })
+
+      bottomNavBarDefaultLinks.forEach(([href], index) => {
+        const navLink = bottomNavBarLinks.at(index)
         expect(href).toEqual(navLink.prop("href"))
       })
     })
@@ -145,7 +161,8 @@ describe("NavBar", () => {
 
       const toggle = () =>
         wrapper
-          .find("NavSection")
+          .find(NavBarTier)
+          .at(0)
           .find("NavItem")
           .find("a")
           .last()

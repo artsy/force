@@ -31,7 +31,7 @@ const NavBarContainer = styled(Flex)`
   flex-direction: column;
 `
 
-const NavBarTier = styled(Flex)`
+export const NavBarTier = styled(Flex)`
   position: relative;
   border-bottom: 1px solid ${color("black10")};
 `
