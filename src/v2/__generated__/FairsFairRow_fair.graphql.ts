@@ -6,6 +6,7 @@ import { FragmentRefs } from "relay-runtime";
 export type FairsFairRow_fair = {
     readonly href: string | null;
     readonly name: string | null;
+    readonly isoStartAt: string | null;
     readonly startAt: string | null;
     readonly endAt: string | null;
     readonly profile: {
@@ -18,6 +19,11 @@ export type FairsFairRow_fair = {
             } | null;
         } | null;
     } | null;
+    readonly organizer: {
+        readonly profile: {
+            readonly href: string | null;
+        } | null;
+    } | null;
     readonly " $refType": "FairsFairRow_fair";
 };
 export type FairsFairRow_fair$data = FairsFairRow_fair;
@@ -28,24 +34,33 @@ export type FairsFairRow_fair$key = {
 
 
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "href",
+  "storageKey": null
+};
+return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
   "name": "FairsFairRow_fair",
   "selections": [
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "href",
-      "storageKey": null
-    },
+    (v0/*: any*/),
     {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
       "name": "name",
+      "storageKey": null
+    },
+    {
+      "alias": "isoStartAt",
+      "args": null,
+      "kind": "ScalarField",
+      "name": "startAt",
       "storageKey": null
     },
     {
@@ -150,9 +165,33 @@ const node: ReaderFragment = {
         }
       ],
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "organizer",
+      "kind": "LinkedField",
+      "name": "organizer",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "Profile",
+          "kind": "LinkedField",
+          "name": "profile",
+          "plural": false,
+          "selections": [
+            (v0/*: any*/)
+          ],
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
     }
   ],
   "type": "Fair"
 };
-(node as any).hash = '6b54f3e52e6034d24137c4973fbfa561';
+})();
+(node as any).hash = 'a0b427ff1b06ef97c38a1c080e99b12e';
 export default node;
