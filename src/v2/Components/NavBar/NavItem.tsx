@@ -6,7 +6,6 @@ import {
   Link,
   Text,
   color,
-  Color,
 } from "@artsy/palette"
 import { AnalyticsSchema } from "v2/Artsy"
 import { useTracking } from "v2/Artsy/Analytics/useTracking"
@@ -66,7 +65,6 @@ export interface NavItemProps
   href?: string
   label?: string
   menuAnchor?: MenuAnchor
-  linkColor?: Color
   onClick?: () => void
 }
 
@@ -80,7 +78,6 @@ export const NavItem: React.FC<NavItemProps> = ({
   menuAnchor = "left",
   tabIndex,
   role,
-  linkColor = "black100",
   onClick,
   ...rest
 }) => {
@@ -89,7 +86,7 @@ export const NavItem: React.FC<NavItemProps> = ({
 
   const showMenu = Boolean(Menu && isVisible)
   const showOverlay = Boolean(Overlay)
-  const color = isVisible ? "blue100" : linkColor
+  const color = isVisible ? "blue100" : "black100"
 
   const trackClick = () => {
     if (href && isString(children)) {
