@@ -104,6 +104,7 @@ function getArtworkFilterQuery() {
       $offerable: Boolean
       $page: Int
       $partnerID: ID
+      $partnerIDs: [String]
       $priceRange: String
       $sizes: [ArtworkSizes]
       $sort: String
@@ -138,6 +139,7 @@ function getArtworkFilterQuery() {
             offerable: $offerable
             page: $page
             partnerID: $partnerID
+            partnerIDs: $partnerIDs
             priceRange: $priceRange
             sizes: $sizes
             sort: $sort
