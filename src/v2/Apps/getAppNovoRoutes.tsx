@@ -75,7 +75,6 @@ export function getAppNovoRoutes(): RouteConfig[] {
         routes: showRoutes,
       },
       {
-        converted: true,
         routes: viewingRoomRoutes,
       },
 
