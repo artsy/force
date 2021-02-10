@@ -17,7 +17,7 @@ import { orderRoutes } from "v2/Apps/Order/orderRoutes"
 import { purchaseRoutes } from "v2/Apps/Purchase/purchaseRoutes"
 import { searchRoutes } from "v2/Apps/Search/searchRoutes"
 // import { showRoutes } from "v2/Apps/Show/showRoutes"
-import { viewingRoomRoutes } from "./ViewingRoom/viewingRoomRoutes"
+// import { viewingRoomRoutes } from "./ViewingRoom/viewingRoomRoutes"
 import { auctionsRoutes } from "./Auctions/auctionsRoutes"
 
 export function getAppRoutes(): RouteConfig[] {
@@ -78,9 +78,9 @@ export function getAppRoutes(): RouteConfig[] {
     // {
     //   routes: showRoutes,
     // },
-    {
-      routes: viewingRoomRoutes,
-    },
+    // {
+    //   routes: viewingRoomRoutes,
+    // },
 
     // For debugging baseline app shell stuff
     {
