@@ -35,6 +35,20 @@ fragment ShowMeta_show on Show {
   metaImage {
     src: url(version: "large")
   }
+  partner {
+    __typename
+    ... on Partner {
+      name
+    }
+    ... on Node {
+      id
+    }
+    ... on ExternalPartner {
+      id
+    }
+  }
+  formattedStartAt: startAt(format: "MMMM D")
+  formattedEndAt: endAt(format: "MMMM D, YYYY")
 }
 
 fragment ShowSubApp_show on Show {
@@ -223,6 +237,32 @@ return {
               }
             ],
             "storageKey": null
+          },
+          {
+            "alias": "formattedStartAt",
+            "args": [
+              {
+                "kind": "Literal",
+                "name": "format",
+                "value": "MMMM D"
+              }
+            ],
+            "kind": "ScalarField",
+            "name": "startAt",
+            "storageKey": "startAt(format:\"MMMM D\")"
+          },
+          {
+            "alias": "formattedEndAt",
+            "args": [
+              {
+                "kind": "Literal",
+                "name": "format",
+                "value": "MMMM D, YYYY"
+              }
+            ],
+            "kind": "ScalarField",
+            "name": "endAt",
+            "storageKey": "endAt(format:\"MMMM D, YYYY\")"
           }
         ],
         "storageKey": null
@@ -234,7 +274,7 @@ return {
     "metadata": {},
     "name": "showRoutes_ShowSubAppQuery",
     "operationKind": "query",
-    "text": "query showRoutes_ShowSubAppQuery(\n  $slug: String!\n) {\n  show(id: $slug) @principalField {\n    ...ShowSubApp_show\n    id\n  }\n}\n\nfragment ShowMeta_show on Show {\n  name\n  slug\n  metaDescription: description\n  metaImage {\n    src: url(version: \"large\")\n  }\n}\n\nfragment ShowSubApp_show on Show {\n  id\n  internalID\n  slug\n  name\n  href\n  isFairBooth\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on ExternalPartner {\n      name\n      id\n    }\n    ... on Node {\n      id\n    }\n  }\n  ...ShowMeta_show\n}\n"
+    "text": "query showRoutes_ShowSubAppQuery(\n  $slug: String!\n) {\n  show(id: $slug) @principalField {\n    ...ShowSubApp_show\n    id\n  }\n}\n\nfragment ShowMeta_show on Show {\n  name\n  slug\n  metaDescription: description\n  metaImage {\n    src: url(version: \"large\")\n  }\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on Node {\n      id\n    }\n    ... on ExternalPartner {\n      id\n    }\n  }\n  formattedStartAt: startAt(format: \"MMMM D\")\n  formattedEndAt: endAt(format: \"MMMM D, YYYY\")\n}\n\nfragment ShowSubApp_show on Show {\n  id\n  internalID\n  slug\n  name\n  href\n  isFairBooth\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on ExternalPartner {\n      name\n      id\n    }\n    ... on Node {\n      id\n    }\n  }\n  ...ShowMeta_show\n}\n"
   }
 };
 })();
