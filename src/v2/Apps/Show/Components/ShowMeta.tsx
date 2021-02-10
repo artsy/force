@@ -9,22 +9,28 @@ interface ShowMetaProps {
 }
 
 const ShowMeta: React.FC<ShowMetaProps> = ({
-  show: { name, slug, metaDescription, metaImage },
+  show: {
+    name,
+    slug,
+    metaDescription,
+    metaImage,
+    partner,
+    formattedStartAt,
+    formattedEndAt,
+  },
 }) => {
   const title = `${name} | Artsy`
   const href = `${getENV("APP_URL")}/show/${slug}`
 
+  const fallbackDescription = `Explore ${name} from ${partner.name} on Artsy. ${formattedStartAt} - ${formattedEndAt}.`
+  const description = metaDescription || fallbackDescription
   return (
     <>
       <Title>{title}</Title>
       <Meta property="og:title" content={title} />
-      {metaDescription && (
-        <>
-          <Meta name="description" content={metaDescription} />
-          <Meta property="og:description" content={metaDescription} />
-          <Meta property="twitter:description" content={metaDescription} />
-        </>
-      )}
+      <Meta name="description" content={description} />
+      <Meta property="og:description" content={description} />
+      <Meta property="twitter:description" content={description} />
       <Link rel="canonical" href={href} />
       <Meta property="og:url" content={href} />
       <Meta property="og:type" content="website" />
@@ -43,6 +49,13 @@ export const ShowMetaFragmentContainer = createFragmentContainer(ShowMeta, {
       metaImage {
         src: url(version: "large")
       }
+      partner {
+        ... on Partner {
+          name
+        }
+      }
+      formattedStartAt: startAt(format: "MMMM D")
+      formattedEndAt: endAt(format: "MMMM D, YYYY")
     }
   `,
 })

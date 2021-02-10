@@ -10,6 +10,11 @@ export type ShowMeta_show = {
     readonly metaImage: {
         readonly src: string | null;
     } | null;
+    readonly partner: {
+        readonly name?: string | null;
+    } | null;
+    readonly formattedStartAt: string | null;
+    readonly formattedEndAt: string | null;
     readonly " $refType": "ShowMeta_show";
 };
 export type ShowMeta_show$data = ShowMeta_show;
@@ -20,19 +25,21 @@ export type ShowMeta_show$key = {
 
 
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "name",
+  "storageKey": null
+};
+return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
   "name": "ShowMeta_show",
   "selections": [
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "name",
-      "storageKey": null
-    },
+    (v0/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -70,9 +77,54 @@ const node: ReaderFragment = {
         }
       ],
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": null,
+      "kind": "LinkedField",
+      "name": "partner",
+      "plural": false,
+      "selections": [
+        {
+          "kind": "InlineFragment",
+          "selections": [
+            (v0/*: any*/)
+          ],
+          "type": "Partner"
+        }
+      ],
+      "storageKey": null
+    },
+    {
+      "alias": "formattedStartAt",
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "format",
+          "value": "MMMM D"
+        }
+      ],
+      "kind": "ScalarField",
+      "name": "startAt",
+      "storageKey": "startAt(format:\"MMMM D\")"
+    },
+    {
+      "alias": "formattedEndAt",
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "format",
+          "value": "MMMM D, YYYY"
+        }
+      ],
+      "kind": "ScalarField",
+      "name": "endAt",
+      "storageKey": "endAt(format:\"MMMM D, YYYY\")"
     }
   ],
   "type": "Show"
 };
-(node as any).hash = 'd46144fbf4488e2c24c393ca5fd8d678';
+})();
+(node as any).hash = 'd9ea358ac6d1415c8a4c4196e740634c';
 export default node;
