@@ -25,6 +25,7 @@ import { csrfTokenMiddleware } from "./lib/middleware/csrfToken"
 import { sharifyLocalsMiddleware } from "./lib/middleware/sharifyLocals"
 import { collectionToArtistSeriesRedirect } from "./lib/middleware/artistSeriesRedirect"
 import { userRequiredMiddleware } from "lib/middleware/userRequiredMiddleware"
+import { artistMiddleware } from "lib/middleware/artistMiddleware"
 
 const CurrentUser = require("./lib/current_user.coffee")
 
@@ -150,4 +151,10 @@ export default function commonMiddlewareSetup(app) {
 
   // Redirects
   app.get("/collection/:collectionSlug", collectionToArtistSeriesRedirect)
+
+  /**
+   * Mount middleware for handling server-side portions of apps mounted into
+   * global router.
+   */
+  app.get("/artist/*", artistMiddleware)
 }

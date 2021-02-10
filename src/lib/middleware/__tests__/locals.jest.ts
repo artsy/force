@@ -21,17 +21,6 @@ describe("locals middleware", () => {
     expect(res.locals.userAgent).toEqual("foobar%3Cscript%3Eomg%3C/script%3E")
   })
 
-  it('adds the referrer "medium"', () => {
-    req = {
-      get() {
-        return "https://www.google.com/"
-      },
-      url: "localhost:3000",
-    }
-    localsMiddleware(req, res, next)
-    expect(res.locals.sd.MEDIUM).toEqual("search")
-  })
-
   it("flags reflection", () => {
     req.get.mockReturnValueOnce("Artsy/Reflection")
     localsMiddleware(req, res, next)
