@@ -364,7 +364,7 @@
     "stylus-loader": "3.0.2",
     "supertest": "2.0.1",
     "terser-webpack-plugin": "4.1.0",
-    "typescript": "3.9.8",
+    "typescript": "3.9.9",
     "typescript-styled-plugin": "0.15.0",
     "vscode-apollo-relay": "1.5.1",
     "webpack": "4.44.1",
