@@ -100,7 +100,7 @@ export const FairsFairBannerFragmentContainer = createFragmentContainer(
         href
         name
         startAt(format: "MMM Do")
-        endAt(format: "Do YYYY")
+        endAt(format: "MMM Do YYYY")
         bannerSize
         image {
           large: cropped(width: 1112, height: 477, version: ["wide"]) {

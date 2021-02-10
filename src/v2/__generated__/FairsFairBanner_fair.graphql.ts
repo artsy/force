@@ -124,12 +124,12 @@ return {
         {
           "kind": "Literal",
           "name": "format",
-          "value": "Do YYYY"
+          "value": "MMM Do YYYY"
         }
       ],
       "kind": "ScalarField",
       "name": "endAt",
-      "storageKey": "endAt(format:\"Do YYYY\")"
+      "storageKey": "endAt(format:\"MMM Do YYYY\")"
     },
     {
       "alias": null,
@@ -250,5 +250,5 @@ return {
   "type": "Fair"
 };
 })();
-(node as any).hash = 'ca4899b3256f0949ebf5fbb84cb013f0';
+(node as any).hash = 'c43792b2d4bb82cff9dd76a7b06b1f70';
 export default node;

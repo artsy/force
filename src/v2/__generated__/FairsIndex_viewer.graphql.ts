@@ -24,7 +24,6 @@ export type FairsIndex_viewer = {
     readonly upcomingFairs: ReadonlyArray<{
         readonly internalID: string;
         readonly name: string | null;
-        readonly href: string | null;
         readonly startAt: string | null;
         readonly endAt: string | null;
         readonly location: {
@@ -33,6 +32,11 @@ export type FairsIndex_viewer = {
         readonly isPublished: boolean | null;
         readonly profile: {
             readonly isPublished: boolean | null;
+        } | null;
+        readonly organizer: {
+            readonly profile: {
+                readonly href: string | null;
+            } | null;
         } | null;
         readonly " $fragmentRefs": FragmentRefs<"FairsFairRow_fair">;
     } | null> | null;
@@ -199,13 +203,6 @@ return {
         },
         {
           "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "href",
-          "storageKey": null
-        },
-        {
-          "alias": null,
           "args": [
             {
               "kind": "Literal",
@@ -223,12 +220,12 @@ return {
             {
               "kind": "Literal",
               "name": "format",
-              "value": "Do YYYY"
+              "value": "MMM Do YYYY"
             }
           ],
           "kind": "ScalarField",
           "name": "endAt",
-          "storageKey": "endAt(format:\"Do YYYY\")"
+          "storageKey": "endAt(format:\"MMM Do YYYY\")"
         },
         {
           "alias": null,
@@ -250,6 +247,35 @@ return {
         },
         (v5/*: any*/),
         (v6/*: any*/),
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "organizer",
+          "kind": "LinkedField",
+          "name": "organizer",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "Profile",
+              "kind": "LinkedField",
+              "name": "profile",
+              "plural": false,
+              "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "href",
+                  "storageKey": null
+                }
+              ],
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        },
         (v7/*: any*/)
       ],
       "storageKey": "fairs(hasFullFeature:true,hasListing:true,size:25,sort:\"START_AT_ASC\",status:\"UPCOMING\")"
@@ -263,5 +289,5 @@ return {
   "type": "Viewer"
 };
 })();
-(node as any).hash = 'bbfdb22e28544001c8065400eeddc8b5';
+(node as any).hash = '4bf7c4475b0a6d845cc4543c6144b3ce';
 export default node;

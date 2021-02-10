@@ -96,7 +96,7 @@ export const FairsFairRowFragmentContainer = createFragmentContainer(
         href
         name
         startAt(format: "MMM Do")
-        endAt(format: "Do YYYY")
+        endAt(format: "MMM Do YYYY")
         profile {
           icon {
             resized(width: 80, height: 80, version: "square140") {
