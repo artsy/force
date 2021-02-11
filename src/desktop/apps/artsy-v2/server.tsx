@@ -6,7 +6,6 @@ import { stitch } from "@artsy/stitch"
 import { flatten } from "lodash"
 
 import { handleArtworkImageDownload } from "./apps/artwork/artworkMiddleware"
-import { artistMiddleware } from "./apps/artist/artistMiddleware"
 import { searchMiddleware } from "./apps/search/searchMiddleware"
 import { getContextPageFromReq } from "lib/getContextPage"
 
@@ -39,12 +38,6 @@ app.get("/artwork/:artworkID/download/:filename", handleArtworkImageDownload)
  */
 app.get(
   allRoutes,
-
-  /**
-   * Mount middleware for handling server-side portions of apps mounted into
-   * global router.
-   */
-  artistMiddleware,
 
   // Search exits early and renders its own page, since SSR is not needed
   searchMiddleware,

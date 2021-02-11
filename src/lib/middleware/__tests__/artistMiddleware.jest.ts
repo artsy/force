@@ -7,10 +7,17 @@ describe("artistMiddleware", () => {
       query: {
         "accepted-conditions": "true",
       },
+      get: jest.fn(),
     }
 
     const res = {
       redirect: jest.fn(),
+      locals: {
+        sd: {
+          APP_URL: "http://test.artsy.net",
+          IS_MOBILE: false,
+        },
+      },
     }
 
     const next = jest.fn()
@@ -24,6 +31,7 @@ describe("artistMiddleware", () => {
       user: {
         toJSON: () => null,
       },
+      get: jest.fn(),
     }
 
     const res: {
@@ -33,7 +41,6 @@ describe("artistMiddleware", () => {
         sd: {
           APP_URL: "http://test.artsy.net",
           IS_MOBILE: false,
-          REFERRER: "http://some.url",
         },
       },
     }
@@ -53,6 +60,7 @@ describe("artistMiddleware", () => {
           name: "foo",
         }),
       },
+      get: jest.fn(),
     }
 
     const res: {

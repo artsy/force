@@ -22,10 +22,11 @@ export function getAppNovoRoutes(): RouteConfig[] {
   return buildAppRoutes(
     [
       {
+        converted: true,
         routes: artistRoutes,
       },
       {
-        disabled: true,
+        converted: true,
         routes: artistsRoutes,
       },
       {
@@ -83,25 +84,19 @@ export function getAppNovoRoutes(): RouteConfig[] {
       {
         routes: debugRoutes,
       },
-    ].map(
-      (routeConfig: {
-        disabled?: boolean
-        routes: RouteConfig[]
-        converted?: boolean
-      }) => {
-        return {
-          ...routeConfig,
-          routes: routeConfig.routes.map(route => {
-            if (routeConfig.converted) {
-              return { ...route }
-            }
-            return {
-              ...route,
-              path: `/novo${route.path}`,
-            }
-          }),
-        }
+    ].map((routeConfig: { routes: RouteConfig[]; converted?: boolean }) => {
+      return {
+        ...routeConfig,
+        routes: routeConfig.routes.map(route => {
+          if (routeConfig.converted) {
+            return { ...route }
+          }
+          return {
+            ...route,
+            path: `/novo${route.path}`,
+          }
+        }),
       }
-    )
+    })
   )
 }

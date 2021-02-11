@@ -3,7 +3,6 @@ import type { ArtsyRequest, ArtsyResponse } from "./artsyExpress"
 
 import { string } from "underscore"
 import moment from "moment"
-import Referrer from "referer-parser"
 import * as helpers from "../template_helpers"
 import config from "../../config"
 import * as templateModules from "../../desktop/lib/template_modules"
@@ -18,7 +17,6 @@ export function localsMiddleware(
   res: ArtsyResponse,
   next: NextFunction
 ) {
-  let referrer
   const ua = req.get("user-agent") || ""
 
   // Attach libraries to locals, many of these are used in jade templates
@@ -44,10 +42,6 @@ export function localsMiddleware(
     res.locals.htmlClass += " layout-logged-in"
   }
 
-  res.locals.sd.REFERRER = referrer = req.get("Referrer")
-  if (referrer) {
-    res.locals.sd.MEDIUM = new Referrer(referrer).medium
-  }
   res.locals.sd.REFLECTION = ua.match("Artsy/Reflection") != null
   // TOOD: Determine where/if this is used.
   res.locals.sd.REQUEST_TIMESTAMP = Date.now()

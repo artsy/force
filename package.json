@@ -9,6 +9,7 @@
   },
   "scripts": {
     "build": "yarn build:assets && yarn build:assets:novo && yarn build:server",
+    "build:fast": "WEBPACK_DEBUG=true yarn build:assets && WEBPACK_DEBUG=true yarn build:assets:novo && WEBPACK_DEBUG=true yarn build:server",
     "build:assets": "NODE_ENV=production BUILD_CLIENT=true yarn webpack",
     "build:assets:novo": "NODE_ENV=production BUILD_NOVO_CLIENT=true yarn webpack",
     "build:server": "NODE_ENV=production BUILD_SERVER=true yarn webpack",
@@ -206,7 +207,6 @@
     "redux-logger": "2.10.2",
     "redux-mock-store": "1.2.3",
     "redux-thunk": "2.2.0",
-    "referer-parser": "0.0.3",
     "relay-mock-network-layer": "2.0.0",
     "relay-runtime": "9.1.0",
     "require-control": "2.1.1",

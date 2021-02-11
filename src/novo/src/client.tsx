@@ -7,11 +7,12 @@ import { loadableReady } from "@loadable/component"
 import { logoutEventHandler } from "desktop/lib/logoutHandler"
 import { mediator } from "lib/mediator"
 import { beforeAnalyticsReady, onAnalyticsReady } from "lib/analytics/helpers"
-
 ;(async () => {
   try {
     // Generate client
-    const { buildClientApp } = await import("v2/Artsy/Router/client")
+    const { buildClientApp } = await import(
+      /* webpackChunkName: "buildClientApp" */ "v2/Artsy/Router/client"
+    )
     const { ClientApp } = await buildClientApp({
       routes: getAppNovoRoutes(),
     })
@@ -31,13 +32,20 @@ import { beforeAnalyticsReady, onAnalyticsReady } from "lib/analytics/helpers"
 
     // Wire up auth modal
     const { initModalManager } = await import(
+      /* webpackChunkName: "initModalManager" */
       "desktop/apps/authentication/client/initModalManager"
     )
     initModalManager()
 
+    // Wire up artist modal
+    const { setupArtistSignUpModal } = await import(
+      /* webpackChunkName: "setupArtistSignUpModal" */
+      "desktop/components/artistSignupModal/artistSignupModal"
+    )
+    setupArtistSignUpModal()
+
     // Logout handler
     mediator.on("auth:logout", logoutEventHandler)
-
   } catch (error) {
     console.error(error)
   }

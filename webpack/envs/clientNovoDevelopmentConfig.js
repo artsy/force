@@ -91,6 +91,7 @@ export const clientNovoDevelopmentConfig = {
     runtimeChunk: "single",
     splitChunks: {
       cacheGroups: {
+        vendors: false,
         "arsty-common": {
           chunks: "all",
           enforce: true,
