@@ -2,7 +2,7 @@ import { growAndFadeIn } from "v2/Assets/Animations"
 import React from "react"
 import styled from "styled-components"
 export { Footer } from "./Footer"
-export { EmailSubscriptionCheckbox } from "./Desktop/EmailSubscriptionCheckbox"
+export { EmailSubscriptionCheckbox } from "./EmailSubscriptionCheckbox"
 export { TermsOfServiceCheckbox } from "./TermsOfServiceCheckbox"
 import {
   Box,
