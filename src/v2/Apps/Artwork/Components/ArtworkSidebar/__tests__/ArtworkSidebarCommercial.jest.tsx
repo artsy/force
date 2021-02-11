@@ -30,6 +30,10 @@ const commitMutation = _commitMutation as jest.Mock<any>
 
 describe("ArtworkSidebarCommercial", () => {
   let user
+  beforeAll(() => {
+    mediator.on("open:auth", () => {})
+  })
+
   const getWrapper = (artwork, otherProps = {}) => {
     return mount(
       <SystemContextProvider>

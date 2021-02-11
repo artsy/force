@@ -30,23 +30,17 @@ const ViewingRoomApp: React.FC<ViewingRoomAppProps> = ({
   const { router } = useRouter()
   useEffect(() => {
     if (user && user.id) return
-    // openAuthModal will fire off "open:auth" event before ModalContainer
-    // is mounted, use setTimeout to fire after next tick
-    const timeoutID = setTimeout(() => {
-      openAuthModal(mediator, {
-        afterClose: () => {
-          router.push("/viewing-rooms")
-        },
-        contextModule: ContextModule.viewingRoom,
-        copy: "Sign up to enter viewing rooms",
-        disableCloseOnBackgroundClick: true,
-        intent: Intent.viewViewingRoom,
-        mode: ModalType.signup,
-        redirectTo: window.location.href,
-      })
-    }, 1000)
-
-    return () => clearTimeout(timeoutID)
+    openAuthModal(mediator, {
+      afterClose: () => {
+        router.push("/viewing-rooms")
+      },
+      contextModule: ContextModule.viewingRoom,
+      copy: "Sign up to enter viewing rooms",
+      disableCloseOnBackgroundClick: true,
+      intent: Intent.viewViewingRoom,
+      mode: ModalType.signup,
+      redirectTo: window.location.href,
+    })
   }, [user, router, mediator])
 
   if (!viewingRoom) {

@@ -48,7 +48,11 @@ const setupTestEnv = () => {
   })
 }
 
-describe("RequestConditionReport ", () => {
+describe("RequestConditionReport", () => {
+  beforeAll(() => {
+    mediator.on("open:auth", () => {})
+  })
+
   beforeEach(() => {
     jest.spyOn(mediator, "trigger")
   })

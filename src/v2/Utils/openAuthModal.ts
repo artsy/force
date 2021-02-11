@@ -13,7 +13,21 @@ export interface AuthModalOptions extends ModalOptions {
 }
 
 export const openAuthModal = (mediator: Mediator, options: ModalOptions) => {
-  mediator.trigger("open:auth", options)
+  if (authModalReady(mediator)) {
+    mediator.trigger("open:auth", options)
+    return
+  }
+
+  const intervalId = setInterval(() => {
+    if (authModalReady(mediator)) {
+      mediator.trigger("open:auth", options)
+      clearInterval(intervalId)
+    }
+  }, 100)
+}
+
+const authModalReady = (mediator: Mediator): boolean => {
+  return mediator.ready("open:auth")
 }
 
 export const openAuthToFollowSave = (

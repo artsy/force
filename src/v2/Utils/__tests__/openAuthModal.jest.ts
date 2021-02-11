@@ -39,6 +39,9 @@ describe("openAuth Helpers", () => {
 
   beforeEach(() => {
     mediator = {
+      ready: () => {
+        return true
+      },
       trigger: jest.fn(),
     }
     mockLocation({ href: "http://localhost/" })
