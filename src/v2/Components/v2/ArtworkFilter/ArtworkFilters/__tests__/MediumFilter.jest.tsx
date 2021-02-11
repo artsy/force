@@ -43,10 +43,10 @@ describe("MediumFilter", () => {
 
   it("selects mediums", done => {
     const wrapper = getWrapper()
-    wrapper.find("Checkbox").first().simulate("click")
+    wrapper.find("Radio").first().find("Flex").first().simulate("click")
 
     setTimeout(() => {
-      expect(context.filters.geneIDs).toEqual(["painting"])
+      expect(context.filters.medium).toEqual("painting")
       done()
     }, 0)
   })

@@ -260,7 +260,6 @@ export const ArtworkFilterRefetchContainer = createRefetchContainer(
           attributionClass: { type: "[String]" }
           color: { type: "String" }
           forSale: { type: "Boolean" }
-          geneIDs: { type: "[String]" }
           height: { type: "String" }
           inquireableOnly: { type: "Boolean" }
           keyword: { type: "String" }
@@ -284,7 +283,6 @@ export const ArtworkFilterRefetchContainer = createRefetchContainer(
           attributionClass: $attributionClass
           color: $color
           forSale: $forSale
-          geneIDs: $geneIDs
           height: $height
           inquireableOnly: $inquireableOnly
           keyword: $keyword
