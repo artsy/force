@@ -76,12 +76,6 @@ const node: ReaderFragment = {
     {
       "defaultValue": null,
       "kind": "LocalArgument",
-      "name": "geneIDs",
-      "type": "[String]"
-    },
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
       "name": "height",
       "type": "String"
     },
@@ -286,11 +280,6 @@ const node: ReaderFragment = {
         },
         {
           "kind": "Variable",
-          "name": "geneIDs",
-          "variableName": "geneIDs"
-        },
-        {
-          "kind": "Variable",
           "name": "height",
           "variableName": "height"
         },
@@ -378,5 +367,5 @@ const node: ReaderFragment = {
   ],
   "type": "Artist"
 };
-(node as any).hash = 'd440601f6f4a76b88fbf5783526459bc';
+(node as any).hash = '3b39c70f53a2c713980b899827ef7ac1';
 export default node;

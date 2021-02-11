@@ -18,7 +18,6 @@ export const CollectionAppQuery = graphql`
     $attributionClass: [String]
     $color: String
     $forSale: Boolean
-    $geneIDs: [String]
     $height: String
     $inquireableOnly: Boolean
     $majorPeriods: [String]
@@ -40,7 +39,6 @@ export const CollectionAppQuery = graphql`
           attributionClass: $attributionClass
           color: $color
           forSale: $forSale
-          geneIDs: $geneIDs
           height: $height
           inquireableOnly: $inquireableOnly
           majorPeriods: $majorPeriods
