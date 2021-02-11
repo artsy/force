@@ -65,7 +65,7 @@ const node: ReaderFragment = {
     {
       "defaultValue": null,
       "kind": "LocalArgument",
-      "name": "geneIDs",
+      "name": "additionalGeneIDs",
       "type": "[String]"
     },
     {
@@ -167,6 +167,11 @@ const node: ReaderFragment = {
         },
         {
           "kind": "Variable",
+          "name": "additionalGeneIDs",
+          "variableName": "additionalGeneIDs"
+        },
+        {
+          "kind": "Variable",
           "name": "aggregations",
           "variableName": "aggregations"
         },
@@ -199,11 +204,6 @@ const node: ReaderFragment = {
           "kind": "Variable",
           "name": "forSale",
           "variableName": "forSale"
-        },
-        {
-          "kind": "Variable",
-          "name": "geneIDs",
-          "variableName": "geneIDs"
         },
         {
           "kind": "Variable",
@@ -294,5 +294,5 @@ const node: ReaderFragment = {
   ],
   "type": "Viewer"
 };
-(node as any).hash = 'd09188da9215d93c5c8acdf504f81515';
+(node as any).hash = 'c15fd2ae4d4441fa3ab852c0e78eba25';
 export default node;

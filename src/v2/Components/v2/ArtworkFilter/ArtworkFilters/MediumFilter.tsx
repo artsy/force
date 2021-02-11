@@ -15,13 +15,15 @@ export const MediumFilter: FC = () => {
   const isExpanded = !counts.artworks || counts.artworks > 0
 
   const toggleMediumSelection = (selected, slug) => {
-    let geneIDs = filterContext.currentlySelectedFilters().geneIDs.slice()
+    let geneIDs = filterContext
+      .currentlySelectedFilters()
+      .additionalGeneIDs.slice()
     if (selected) {
       geneIDs.push(slug)
     } else {
       geneIDs = geneIDs.filter(item => item !== slug)
     }
-    filterContext.setFilter("geneIDs", geneIDs)
+    filterContext.setFilter("additionalGeneIDs", geneIDs)
   }
 
   const currentFilters = filterContext.currentlySelectedFilters()
@@ -30,7 +32,7 @@ export const MediumFilter: FC = () => {
       <Flex flexDirection="column" alignItems="left">
         {allowedMediums.map(({ value: slug, name }, index) => {
           const selected =
-            currentFilters.geneIDs.includes(slug) ||
+            currentFilters.additionalGeneIDs.includes(slug) ||
             currentFilters.medium === slug
           const props = {
             key: index,

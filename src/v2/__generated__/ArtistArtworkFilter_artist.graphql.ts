@@ -76,7 +76,7 @@ const node: ReaderFragment = {
     {
       "defaultValue": null,
       "kind": "LocalArgument",
-      "name": "geneIDs",
+      "name": "additionalGeneIDs",
       "type": "[String]"
     },
     {
@@ -245,6 +245,11 @@ const node: ReaderFragment = {
           "variableName": "acquireable"
         },
         {
+          "kind": "Variable",
+          "name": "additionalGeneIDs",
+          "variableName": "additionalGeneIDs"
+        },
+        {
           "kind": "Literal",
           "name": "after",
           "value": ""
@@ -283,11 +288,6 @@ const node: ReaderFragment = {
           "kind": "Variable",
           "name": "forSale",
           "variableName": "forSale"
-        },
-        {
-          "kind": "Variable",
-          "name": "geneIDs",
-          "variableName": "geneIDs"
         },
         {
           "kind": "Variable",
@@ -378,5 +378,5 @@ const node: ReaderFragment = {
   ],
   "type": "Artist"
 };
-(node as any).hash = 'd440601f6f4a76b88fbf5783526459bc';
+(node as any).hash = '5d4f6428d96f3eb300fb7f94a3b212de';
 export default node;

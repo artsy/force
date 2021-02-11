@@ -75,7 +75,7 @@ describe("ArtworkFilter", () => {
         artistIDs: [],
         attributionClass: [],
         partnerIDs: [],
-        geneIDs: [],
+        additionalGeneIDs: [],
       })
     })
 
@@ -114,7 +114,7 @@ describe("ArtworkFilter", () => {
         artistIDs: [],
         attributionClass: [],
         partnerIDs: [],
-        geneIDs: [],
+        additionalGeneIDs: [],
       })
     })
 
@@ -143,7 +143,7 @@ describe("ArtworkFilter", () => {
         artistIDs: [],
         attributionClass: [],
         partnerIDs: [],
-        geneIDs: [],
+        additionalGeneIDs: [],
       })
     })
 
@@ -170,7 +170,7 @@ describe("ArtworkFilter", () => {
           artistIDs: [],
           attributionClass: [],
           partnerIDs: [],
-          geneIDs: [],
+          additionalGeneIDs: [],
         },
       })
     })

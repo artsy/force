@@ -46,7 +46,7 @@ describe("MediumFilter", () => {
     wrapper.find("Checkbox").first().simulate("click")
 
     setTimeout(() => {
-      expect(context.filters.geneIDs).toEqual(["painting"])
+      expect(context.filters.additionalGeneIDs).toEqual(["painting"])
       done()
     }, 0)
   })
