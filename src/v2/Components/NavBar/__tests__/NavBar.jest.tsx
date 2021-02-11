@@ -33,6 +33,10 @@ describe("NavBar", () => {
     )
   }
 
+  beforeAll(() => {
+    mediator.on("open:auth", () => {})
+  })
+
   beforeEach(() => {
     jest.spyOn(mediator, "trigger")
     ;(useTracking as jest.Mock).mockImplementation(() => {

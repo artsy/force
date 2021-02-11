@@ -16,6 +16,10 @@ import { mediator } from "lib/mediator"
 jest.unmock("react-relay")
 
 describe("ArtworkSidebarArtists", () => {
+  beforeAll(() => {
+    mediator.on("open:auth", () => {})
+  })
+
   beforeEach(() => {
     jest.spyOn(mediator, "trigger")
     mockLocation()

@@ -33,6 +33,7 @@ export interface ViewInRoomEventOptions {
 
 export interface Mediator {
   emitter: EventEmitter
+  ready: (eventName: string) => boolean
   trigger: (eventName: string, options?: unknown) => void
   on: (eventName: string, cb?: (options?: unknown) => void) => void
   off: (eventName: string) => void
@@ -44,6 +45,8 @@ declare global {
     __mediator: EventEmitter
   }
 }
+
+const REGISTERED_LISTENERS = new Set<string>()
 
 const emitter: EventEmitter =
   typeof window !== "undefined"
@@ -58,14 +61,20 @@ const trigger: Mediator["trigger"] = (
   emitter.emit(eventName, options, optionalData)
 }
 
+const ready = (eventName: string): boolean => {
+  return REGISTERED_LISTENERS.has(eventName)
+}
+
 const on: Mediator["on"] = (
   eventName: string,
   callback: (options?: unknown, optionalData?: unknown) => void
 ) => {
+  REGISTERED_LISTENERS.add(eventName)
   emitter.on(eventName, callback)
 }
 
 const off: Mediator["off"] = (eventName: string) => {
+  REGISTERED_LISTENERS.delete(eventName)
   emitter.off(eventName)
 }
 
@@ -73,7 +82,12 @@ const once: Mediator["once"] = (
   eventName: string,
   callback: (options?: unknown) => void
 ) => {
-  emitter.once(eventName, callback)
+  REGISTERED_LISTENERS.add(eventName)
+  emitter.once(eventName, () => {
+    const result = callback()
+    REGISTERED_LISTENERS.delete(eventName)
+    return result
+  })
 }
 
 /**
@@ -83,8 +97,9 @@ const once: Mediator["once"] = (
  */
 export const mediator: Mediator = {
   emitter,
-  on,
   off,
+  on,
   once,
+  ready,
   trigger,
 }

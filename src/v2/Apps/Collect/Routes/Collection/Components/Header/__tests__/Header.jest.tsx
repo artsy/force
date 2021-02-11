@@ -34,6 +34,10 @@ jest.mock("v2/Artsy/Analytics/useTracking", () => {
 })
 
 describe("collections header", () => {
+  beforeAll(() => {
+    mediator.on("open:auth", () => {})
+  })
+
   beforeEach(() => {
     jest.spyOn(mediator, "trigger")
   })

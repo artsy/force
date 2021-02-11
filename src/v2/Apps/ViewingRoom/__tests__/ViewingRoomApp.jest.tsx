@@ -30,6 +30,10 @@ describe("ViewingRoomApp", () => {
   let user
   const slug = "subscription-demo-gg-guy-yanai"
 
+  beforeAll(() => {
+    mediator.on("open:auth", () => {})
+  })
+
   beforeEach(() => {
     jest.spyOn(mediator, "trigger")
     mockLocation()

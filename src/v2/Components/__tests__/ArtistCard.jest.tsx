@@ -27,7 +27,10 @@ describe("ArtistCard", () => {
   }
 
   beforeEach(() => {
-    mediator = { trigger: jest.fn() }
+    mediator = {
+      ready: () => true,
+      trigger: jest.fn(),
+    }
     props = {
       contextModule: ContextModule.artistsToFollowRail,
       artist: {

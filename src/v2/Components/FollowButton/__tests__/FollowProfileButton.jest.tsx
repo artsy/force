@@ -36,7 +36,7 @@ describe("FollowProfileButton", () => {
   }
 
   beforeEach(() => {
-    mediator = { trigger: jest.fn() }
+    mediator = { ready: () => true, trigger: jest.fn() }
     props = {
       profile: { ...ArtworkDetailsFixture.partner.profile },
       relay: { environment: "" },

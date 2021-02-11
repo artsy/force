@@ -27,6 +27,10 @@ describe("Save artwork", () => {
   let trackEvent
   let Component
 
+  beforeAll(() => {
+    mediator.on("open:auth", () => {})
+  })
+
   beforeEach(() => {
     const artwork = {
       id: "foo",

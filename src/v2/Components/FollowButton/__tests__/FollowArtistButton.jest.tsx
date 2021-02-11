@@ -37,7 +37,7 @@ describe("FollowArtistButton", () => {
 
   beforeEach(() => {
     mockLocation()
-    mediator = { trigger: jest.fn() }
+    mediator = { ready: () => true, trigger: jest.fn() }
     props = {
       artist: {
         internalID: "12345",

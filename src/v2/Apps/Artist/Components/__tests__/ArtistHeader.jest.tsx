@@ -14,6 +14,10 @@ jest.mock("v2/Artsy/Analytics/useTracking")
 
 describe("ArtistHeader", () => {
   let trackEvent
+  beforeAll(() => {
+    mediator.on("open:auth", () => {})
+  })
+
   beforeEach(() => {
     jest.spyOn(mediator, "trigger")
     trackEvent = jest.fn()
@@ -116,7 +120,7 @@ describe("ArtistHeader", () => {
     expect(html).not.toContain("Auction Record")
   })
 
-  it("hides auction record indicator when data is not present", async () => {
+  it("hides auction record indicator when data is not present (Blue)", async () => {
     const artist = {
       ...ArtistHeaderFixture,
       artistHighlights: { partnersConnection: null },
