@@ -9,17 +9,21 @@ import {
 } from "@artsy/palette"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import styled from "styled-components"
+import styled, { css } from "styled-components"
 import { DateTime } from "luxon"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import { FairsFairRow_fair } from "v2/__generated__/FairsFairRow_fair.graphql"
 
-const Container = styled(Flex)`
-  transition: background-color 250ms;
+const Container = styled(Flex)<{ href?: string }>`
+  ${({ href }) =>
+    href &&
+    css`
+      transition: background-color 250ms;
 
-  &:hover {
-    background-color: ${color("black5")};
-  }
+      &:hover {
+        background-color: ${color("black5")};
+      }
+    `}
 `
 
 interface FairsFairRowProps extends BoxProps {
@@ -31,14 +35,16 @@ const FairsFairRow: React.FC<FairsFairRowProps> = ({ fair, ...rest }) => {
   const href =
     // If fair status is upcoming — link to the organizer profile
     // TODO: Extract this logic to Metaphysics `href`
-    DateTime.local() < DateTime.fromISO(fair.isoStartAt) &&
-    !!fair?.organizer?.profile?.href
-      ? fair.organizer.profile.href
+    DateTime.local() < DateTime.fromISO(fair.isoStartAt)
+      ? fair?.organizer?.profile?.href // possibly null
       : fair.href
 
+  const LinkOrBox = href ? RouterLink : Box
+
   return (
-    <RouterLink to={href} style={{ display: "block", textDecoration: "none" }}>
+    <LinkOrBox to={href} style={{ display: "block", textDecoration: "none" }}>
       <Container
+        href={href}
         alignItems="center"
         borderBottom="1px solid"
         borderColor="black10"
@@ -87,9 +93,9 @@ const FairsFairRow: React.FC<FairsFairRowProps> = ({ fair, ...rest }) => {
           </Text>
         </Flex>
 
-        <ChevronIcon direction="right" fill="black60" />
+        {href && <ChevronIcon direction="right" fill="black60" />}
       </Container>
-    </RouterLink>
+    </LinkOrBox>
   )
 }
 

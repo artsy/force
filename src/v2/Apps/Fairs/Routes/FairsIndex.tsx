@@ -43,7 +43,7 @@ export const FairsIndex: React.FC<FairsIndexProps> = ({
   const { runningFairs, closedFairs } = viewer
 
   const upcomingFairs = viewer.upcomingFairs.filter(fair => {
-    return fair.isPublished && !!fair.organizer?.profile?.href
+    return fair.isPublished
   })
 
   const currentFairs = [
@@ -268,9 +268,13 @@ export const FairsIndex: React.FC<FairsIndexProps> = ({
             {upcomingFairs.map(fair => {
               return (
                 <Text key={fair.internalID} my={3}>
-                  <RouterLink to={fair.organizer.profile.href}>
-                    {fair.name}
-                  </RouterLink>
+                  {fair.organizer?.profile?.href ? (
+                    <RouterLink to={fair.organizer.profile.href}>
+                      {fair.name}
+                    </RouterLink>
+                  ) : (
+                    fair.name
+                  )}
 
                   <Box>
                     {fair.startAt} – {fair.endAt}
