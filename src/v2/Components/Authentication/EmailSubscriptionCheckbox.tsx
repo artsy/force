@@ -16,7 +16,7 @@ export const EmailSubscriptionCheckbox = ({
     <StyledCheckbox {...{ checked: value, error, onChange, onBlur, name }}>
       <Serif color={color} size="3t" ml={0.5}>
         {
-          "Subscribe to receive email updates about Artsy's products, services, and events."
+          "Subscribe to Artsy emails and dive deeper into the art market with insights, auction alerts, and personalized updates."
         }
       </Serif>
     </StyledCheckbox>

@@ -4,7 +4,6 @@ import { mount } from "enzyme"
 import { Formik } from "formik"
 import React from "react"
 import { SignupValues } from "../fixtures"
-import { EmailSubscriptionCheckbox } from "../../EmailSubscriptionCheckbox"
 
 const mockEnableRequestSignInWithApple = jest.fn()
 
@@ -33,27 +32,6 @@ describe("SignUpForm", () => {
   const getWrapper = (passedProps = props) => {
     return mount(<SignUpForm {...passedProps} />)
   }
-
-  describe("email sub", () => {
-    it("the email subscription checkbox starts out unchecked", () => {
-      const wrapper = getWrapper()
-      const checkbox = wrapper.find("EmailSubscriptionCheckbox")
-      expect(checkbox.prop("checked")).toEqual(false)
-    })
-
-    it.only("when checked, the agreed_to_receive_emails value is true", () => {
-      const wrapper = getWrapper()
-      const checkbox = wrapper.find("EmailSubscriptionCheckbox")
-      const input = checkbox.find("input")
-      console.log(input.debug())
-      // input.simulate("change")
-      input.props().onChange({ currentTarget: { checked: true } })
-      wrapper.update()
-      expect(wrapper.find("EmailSubscriptionCheckbox").prop("checked")).toEqual(
-        true
-      )
-    })
-  })
 
   describe("onSubmit", () => {
     it("calls handleSubmit with expected params", done => {

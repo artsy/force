@@ -15,17 +15,13 @@ export const TermsOfServiceCheckbox = ({
   return (
     <StyledCheckbox {...{ checked: value, error, onChange, onBlur, name }}>
       <Serif color={color} size="3t" ml={0.5}>
-        {"I agree to Artsy’s "}
-        <Link href="https://www.artsy.net/terms" target="_blank" color={color}>
-          Terms of Use
-        </Link>
-        {" and "}
+        {"By checking this box, you consent to our "}
         <Link
           href="https://www.artsy.net/privacy"
           target="_blank"
           color={color}
         >
-          Privacy Policy
+          privacy policy
         </Link>
         {"."}
       </Serif>
