@@ -426,7 +426,7 @@ export class SearchBar extends Component<Props, State> {
         onSubmit={event => {
           if (router) {
             event.preventDefault()
-            router.push(`/search?term=${this.state.term}`)
+            window.location.assign(`/search?term=${this.state.term}`)
             this.onBlur(event)
           } else {
             console.error(
