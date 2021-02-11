@@ -24,7 +24,7 @@ export const countChangedFilters = (
   }
 
   // array-valued keys
-  for (key of ["sizes", "majorPeriods"]) {
+  for (key of ["sizes", "majorPeriods", "partnerIDs", "geneIDs", "artistIDs"]) {
     if (!isEqual(filtersBefore[key], filtersAfter[key])) {
       changedCount++
     }

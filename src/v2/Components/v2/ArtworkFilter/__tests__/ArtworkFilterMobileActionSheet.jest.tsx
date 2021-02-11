@@ -97,17 +97,6 @@ describe("ArtworkFilterMobileActionSheet", () => {
 
     expect(wrapper.find("ApplyButton").text()).toEqual("Apply (0)")
 
-    // Select a different medium
-    wrapper
-      .find("MediumFilter")
-      .find("label")
-      .findWhere(label => label.text() === "Sculpture")
-      .first()
-      .simulate("click")
-    await flushPromiseQueue()
-
-    expect(wrapper.find("ApplyButton").text()).toEqual("Apply (1)")
-
     // Select another way to buy
     wrapper
       .find("WaysToBuyFilter")
@@ -117,7 +106,7 @@ describe("ArtworkFilterMobileActionSheet", () => {
       .simulate("click")
     await flushPromiseQueue()
 
-    expect(wrapper.find("ApplyButton").text()).toEqual("Apply (2)")
+    expect(wrapper.find("ApplyButton").text()).toEqual("Apply (1)")
 
     // Select a price range
     wrapper
@@ -128,6 +117,6 @@ describe("ArtworkFilterMobileActionSheet", () => {
       .simulate("click")
     await flushPromiseQueue()
 
-    expect(wrapper.find("ApplyButton").text()).toEqual("Apply (3)")
+    expect(wrapper.find("ApplyButton").text()).toEqual("Apply (2)")
   })
 })
