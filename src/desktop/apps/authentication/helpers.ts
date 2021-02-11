@@ -41,8 +41,6 @@ export const handleSubmit = async (
     agreed_to_receive_emails: values.agreed_to_receive_emails,
   })
 
-  console.log(userAttributes)
-
   const options = {
     success: async res => {
       formikBag.setSubmitting(false)
@@ -187,7 +185,7 @@ const loginUser = async (
     error: (err: any) => void
   }
 ) => {
-  const url = `${sd.APP_URL}${sd.AP.loginPagePath}/omg`
+  const url = `${sd.APP_URL}${sd.AP.loginPagePath}`
   const user = pick(userAttributes, [
     "email",
     "password",

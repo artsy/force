@@ -148,7 +148,8 @@ describe("SignUpForm", () => {
     mockEnableRequestSignInWithApple.mockReturnValue(true)
     props.values = SignupValues
     const wrapper = getWrapper()
-
+    console.log()
+    console.log(wrapper.find(Link).at(2))
     wrapper.find(Link).at(2).simulate("click")
 
     setTimeout(() => {
