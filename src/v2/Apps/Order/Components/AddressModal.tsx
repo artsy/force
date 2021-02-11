@@ -126,6 +126,7 @@ export const AddressModal: React.FC<Props> = ({
           disabled={Object.keys(formik.errors).length > 0}
           width="100%"
           mt={2}
+          onClick={() => formik.handleSubmit()}
         >
           Save changes
         </Button>

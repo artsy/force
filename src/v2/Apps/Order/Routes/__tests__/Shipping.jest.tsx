@@ -24,6 +24,7 @@ import {
   settingOrderShipmentMissingRegionFailure,
   settingOrderShipmentSuccess,
   saveAddressSuccess,
+  updateAddressSuccess,
 } from "../__fixtures__/MutationResults"
 import { ShippingFragmentContainer, ShippingRoute } from "../Shipping"
 import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
@@ -133,6 +134,7 @@ describe("Shipping", () => {
     defaultMutationResults: {
       ...settingOrderShipmentSuccess,
       ...saveAddressSuccess,
+      ...updateAddressSuccess,
     },
     query: graphql`
       query ShippingTestQuery @raw_response_type {
@@ -614,7 +616,7 @@ describe("Shipping", () => {
       `)
     })
     describe("editing address", () => {
-      it("updates state and opens modal with address", async () => {
+      it("opens modal with current address values", async () => {
         expect(page.find(ShippingRoute).state().editAddressIndex).toBe(-1)
         await page.find(`[data-test="edit-address"]`).first().simulate("click")
         expect(page.find(ShippingRoute).state().editAddressIndex).toBe(0)
@@ -637,32 +639,38 @@ describe("Shipping", () => {
           ]
         `)
       })
-      // TODO: test updating address. Formik's useFormik is not easy
-      it.skip("sends mutation with updated values when modal form is submitted", async () => {
-        await page.find(`[data-test="edit-address"]`).first().simulate("click")
-        // const nameInput = page.find("AddressModal").find(paletteInput).at(0)
-        // console.log(nameInput.props())
-        // const form = page.find(`Formik`)
-        // // await nameInput.simulate("change", "aaa")
-        // // {
-        // //   target: {
-        // //     value: "Dr collector",
-        // //   },
-        // // })
-        // console.log(form.debug())
-        // console.log(form.length)
-        // // form.instance().setState({ name: "Dr Collector" })
-        // form.update()
-        // page.update()
-        // console.log("after", nameInput.props())
-        // console.log(
-        //   "after",
-        //   page.find("AddressModal").find("input").at(0).props()
-        // )
+      it("sends mutation with updated values when modal form is submitted", async () => {
+        page.find(`[data-test="edit-address"]`).first().simulate("click")
+        const inputs = page.find("AddressModal").find("input")
+        inputs.forEach(input => {
+          console.log(input)
+          input.instance().value = `Test input '${input.props().name}'`
+          input.simulate("change")
+        })
+        const countrySelect = page.find("AddressModal").find("select")
+        countrySelect.instance().value = `US`
+        countrySelect.simulate("change")
         const submit = page.find("AddressModal").find("button").at(0)
-        console.log("submit", submit.props(), submit.debug())
-        await submit.simulate("click")
-        expect(mutations.mockFetch).toHaveBeenCalledTimes(1)
+        submit.simulate("click")
+        await page.update()
+        expect(mutations.mockFetch.mock.calls[0][1]).toMatchInlineSnapshot(`
+          Object {
+            "input": Object {
+              "attributes": Object {
+                "addressLine1": "Test input 'addressLine1'",
+                "addressLine2": "Test input 'addressLine2'",
+                "addressLine3": "",
+                "city": "Test input 'city'",
+                "country": "US",
+                "name": "Test input 'name'",
+                "phoneNumber": "Test input 'phoneNumber'",
+                "postalCode": "Test input 'postalCode'",
+                "region": "Test input 'region'",
+              },
+              "userAddressID": "1",
+            },
+          }
+        `)
       })
     })
   })

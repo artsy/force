@@ -77,18 +77,4 @@ describe("SavedAddress", () => {
       "Add a new shipping address",
     ])
   })
-  // FIXME:
-  it.skip("calls change selection function when radio buttons clicked", async () => {
-    const radios = wrapper.find("Radio")
-    const handleClickMock = jest.fn()
-    wrapper.props("handleClickEdit", handleClickMock)
-    radios.at(0).simulate("click")
-    await wrapper.update()
-    expect(radios.map(radio => radio.props().selected)).toEqual([
-      true,
-      false,
-      false,
-    ])
-    expect(handleClickMock).toHaveBeenCalledWith("aaa")
-  })
 })
