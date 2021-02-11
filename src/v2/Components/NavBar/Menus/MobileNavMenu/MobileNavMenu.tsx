@@ -13,6 +13,7 @@ import {
   Text,
   color,
   space,
+  TextProps,
 } from "@artsy/palette"
 import { AnalyticsSchema, useSystemContext } from "v2/Artsy"
 import { useTracking } from "v2/Artsy/Analytics"
@@ -74,7 +75,7 @@ export const MobileNavMenu: React.FC<Props> = ({
 
           <AnimatingMenuWrapper isOpen={isOpen}>
             <ul>
-              <MobileLink href="/collect" color="black100">
+              <MobileLink href="/collect" color="black100" pt={0.5}>
                 Buy
               </MobileLink>
               <MobileSubmenuLink menu={ARTISTS_SUBMENU_DATA.menu}>
@@ -271,7 +272,9 @@ export const MobileSubmenuLink: React.FC<any> = ({ children, menu }) => {
           })
         }}
       >
-        <MobileMenuText color="black60">{children}</MobileMenuText>
+        <MobileMenuText py={0.5} color="black60">
+          {children}
+        </MobileMenuText>
         <ChevronIcon
           direction="right"
           color={color("black60")}
@@ -312,12 +315,19 @@ export const MobileToggleIcon: React.FC<{ open: boolean }> = ({ open }) => {
   return open ? <CloseIcon style={style} /> : <MenuIcon style={style} />
 }
 
-export const MobileMenuText: React.FC<{
+interface MobileMenuTextProps extends TextProps {
   children: any
   color?: Color
-}> = ({ children, color: linkColor }) => {
+  firstItem?: boolean
+}
+
+export const MobileMenuText: React.FC<MobileMenuTextProps> = ({
+  children,
+  color: linkColor,
+  ...props
+}) => {
   return (
-    <Text py={0.5} variant="title" color={color(linkColor)}>
+    <Text variant="title" color={color(linkColor)} {...props}>
       {children}
     </Text>
   )

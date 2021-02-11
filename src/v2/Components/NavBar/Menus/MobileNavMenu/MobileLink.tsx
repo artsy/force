@@ -3,9 +3,9 @@ import { useTracking } from "v2/Artsy/Analytics"
 import React, { useState } from "react"
 import styled from "styled-components"
 import { MobileMenuText } from "./MobileNavMenu"
-import { Box, Link, color, Color } from "@artsy/palette"
+import { Box, BoxProps, Link, color, Color } from "@artsy/palette"
 
-interface MobileLinkProps {
+interface MobileLinkProps extends BoxProps {
   contextModule?: any
   children: React.ReactNode
   href?: string
@@ -38,11 +38,11 @@ export const MobileLink: React.FC<MobileLinkProps> = ({
 
   return (
     <MobileLinkContainer
-      py={0.5}
       style={{ cursor: "pointer" }}
       bg={bg}
       onTouchStart={() => setPressed(true)}
       onTouchEnd={() => setPressed(false)}
+      py={1}
       {...props}
     >
       <Box>
