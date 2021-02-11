@@ -14,7 +14,8 @@ export const isDefaultFilter: (
     case name === "sizes" ||
       name === "artistIDs" ||
       name === "attributionClass" ||
-      name === "partnerIDs":
+      name === "partnerIDs" ||
+      name === "geneIDs":
       return value.length === 0
     case name === "sort":
       return value === "-decayed_merch"

@@ -137,6 +137,12 @@ return {
     {
       "defaultValue": null,
       "kind": "LocalArgument",
+      "name": "geneIDs",
+      "type": "[String]"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
       "name": "height",
       "type": "String"
     },
@@ -544,6 +550,11 @@ return {
         },
         {
           "kind": "Variable",
+          "name": "geneIDs",
+          "variableName": "geneIDs"
+        },
+        {
+          "kind": "Variable",
           "name": "height",
           "variableName": "height"
         },
@@ -616,5 +627,5 @@ return {
   "type": "MarketingCollection"
 };
 })();
-(node as any).hash = 'd6695b2b31d5a1ab79c364eeb32cb1aa';
+(node as any).hash = 'a2527080bfd94a0f10c1e45253ec713a';
 export default node;
