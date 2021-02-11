@@ -1,7 +1,7 @@
 import React from "react"
 import { Button, Input, Modal, Spacer } from "@artsy/palette"
 import { SavedAddressType } from "../Utils/shippingAddressUtils"
-import { FormikProps, useFormik } from "formik"
+import { Formik, FormikProps } from "formik"
 import {
   removeEmptyKeys,
   validateAddress,
@@ -20,7 +20,7 @@ interface Props {
   onError: (message: string) => void
 }
 
-const validateor = (values: any) => {
+const validator = (values: any) => {
   const validationResult = validateAddress(values)
   const phoneValidation = validatePhoneNumber(values.phoneNumber)
   const errors = Object.assign({}, validationResult.errors, {
@@ -38,99 +38,104 @@ export const AddressModal: React.FC<Props> = ({
   onSuccess,
   onError,
 }) => {
-  const formik: FormikProps<SavedAddressType> = useFormik({
-    initialValues: address,
-    validate: validateor,
-    onSubmit: values => {
-      updateUserAddress(
-        commitMutation,
-        address.internalID,
-        values,
-        closeModal,
-        onSuccess,
-        onError
-      )
-    },
-  })
   return (
     <Modal title="Edit address" show={show} onClose={closeModal}>
-      <form onSubmit={formik.handleSubmit}>
-        <Input
-          name="name"
-          title="Full Name"
-          onChange={formik.handleChange}
-          error={formik.errors.name}
-          value={formik.values.name}
-        />
-        <Spacer mb={1} />
-        <Input
-          name="postalCode"
-          title="Postal Code"
-          onChange={formik.handleChange}
-          error={formik.errors.postalCode}
-          value={formik.values.postalCode}
-        />
-        <Spacer mb={1} />
-        <Input
-          title="Address Line 1"
-          name="addressLine1"
-          onChange={formik.handleChange}
-          error={formik.errors.addressLine1}
-          value={formik.values.addressLine1}
-        />
-        <Spacer mb={1} />
-        <Input
-          title="Address Line 2"
-          name="addressLine2"
-          onChange={formik.handleChange}
-          error={formik.errors.addressLine2}
-          value={formik.values.addressLine2}
-        />
-        <Spacer mb={1} />
-        <Input
-          title="City"
-          name="city"
-          onChange={formik.handleChange}
-          error={formik.errors.city}
-          value={formik.values.city}
-        />
-        <Spacer mb={1} />
-        <Input
-          title="Region"
-          name="region"
-          onChange={formik.handleChange}
-          error={formik.errors.region}
-          value={formik.values.region}
-        />
-        <Spacer mb={1} />
-        <CountrySelect
-          selected={formik.values.country}
-          onSelect={countryCode => {
-            formik.setFieldValue("country", countryCode)
-          }}
-          error={formik.errors.country}
-        />
-        <Spacer mb={1} />
-        <Input
-          title="Phone number"
-          name="phoneNumber"
-          type="tel"
-          onChange={formik.handleChange}
-          error={formik.errors.phoneNumber}
-          value={formik.values.phoneNumber}
-        />
-        <Button
-          type="submit"
-          size="large"
-          loading={formik.isSubmitting}
-          disabled={Object.keys(formik.errors).length > 0}
-          width="100%"
-          mt={2}
-          onClick={() => formik.handleSubmit()}
-        >
-          Save changes
-        </Button>
-      </form>
+      <Formik
+        initialValues={address}
+        validate={validator}
+        onSubmit={values => {
+          updateUserAddress(
+            commitMutation,
+            address.internalID,
+            values,
+            closeModal,
+            onSuccess,
+            onError
+          )
+        }}
+      >
+        {(formik: FormikProps<SavedAddressType>) => (
+          <form onSubmit={formik.handleSubmit}>
+            <Input
+              id="name"
+              name="name"
+              type="text"
+              title="Full Name"
+              onChange={formik.handleChange}
+              error={formik.errors.name}
+              value={formik.values.name}
+            />
+            <Spacer mb={1} />
+            <Input
+              name="postalCode"
+              title="Postal Code"
+              onChange={formik.handleChange}
+              error={formik.errors.postalCode}
+              value={formik.values.postalCode}
+            />
+            <Spacer mb={1} />
+            <Input
+              title="Address Line 1"
+              name="addressLine1"
+              onChange={formik.handleChange}
+              error={formik.errors.addressLine1}
+              value={formik.values.addressLine1}
+            />
+            <Spacer mb={1} />
+            <Input
+              title="Address Line 2"
+              name="addressLine2"
+              onChange={formik.handleChange}
+              error={formik.errors.addressLine2}
+              value={formik.values.addressLine2}
+            />
+            <Spacer mb={1} />
+            <Input
+              title="City"
+              name="city"
+              onChange={formik.handleChange}
+              error={formik.errors.city}
+              value={formik.values.city}
+            />
+            <Spacer mb={1} />
+            <Input
+              title="Region"
+              name="region"
+              onChange={formik.handleChange}
+              error={formik.errors.region}
+              value={formik.values.region}
+            />
+            <Spacer mb={1} />
+            <CountrySelect
+              selected={formik.values.country}
+              onSelect={countryCode => {
+                formik.setFieldValue("country", countryCode)
+              }}
+              error={formik.errors.country}
+            />
+            <Spacer mb={1} />
+            <Input
+              title="Phone number"
+              name="phoneNumber"
+              type="tel"
+              onChange={formik.handleChange}
+              error={formik.errors.phoneNumber}
+              value={formik.values.phoneNumber}
+            />
+            <Button
+              type="submit"
+              size="large"
+              loading={formik.isSubmitting}
+              disabled={Object.keys(formik.errors).length > 0}
+              width="100%"
+              mt={2}
+              onClick={() => formik.handleSubmit()}
+            >
+              Save changes
+            </Button>
+          </form>
+        )}
+      </Formik>
     </Modal>
   )
 }
