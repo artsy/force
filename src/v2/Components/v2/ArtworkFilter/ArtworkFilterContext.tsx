@@ -17,6 +17,7 @@ export const initialArtworkFilterState: ArtworkFilters = {
   artistIDs: [],
   attributionClass: [],
   partnerIDs: [],
+  geneIDs: [],
 
   // TODO: Remove these unneeded default props
   // height: "*-*",
@@ -35,6 +36,7 @@ export interface ArtworkFilters {
   atAuction?: boolean
   color?: string
   forSale?: boolean
+  geneIDs?: string[]
   height?: string
   includeArtworksByFollowedArtists?: boolean
   inquireableOnly?: boolean
@@ -330,6 +332,7 @@ const artworkFilterReducer = (
     "artistIDs",
     "attributionClass",
     "partnerIDs",
+    "geneIDs",
   ]
 
   switch (action.type) {

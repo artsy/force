@@ -97,6 +97,7 @@ function getArtworkFilterQuery() {
       $attributionClass: [String]
       $color: String
       $forSale: Boolean
+      $geneIDs: [String]
       $height: String
       $inquireableOnly: Boolean
       $majorPeriods: [String]
@@ -131,6 +132,7 @@ function getArtworkFilterQuery() {
             attributionClass: $attributionClass
             color: $color
             forSale: $forSale
+            geneIDs: $geneIDs
             height: $height
             inquireableOnly: $inquireableOnly
             keyword: $keyword
