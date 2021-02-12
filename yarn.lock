@@ -63,10 +63,10 @@
   dependencies:
     uuid "^8.3.0"
 
-"@artsy/palette@13.31.0":
-  version "13.31.0"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-13.31.0.tgz#ff83a440275df441435323db60631031f43beed2"
-  integrity sha512-u58YGKAV3SBuipHAVc2BZufgWFxBiNYDbFe0Vnvd0TiuAZCQQhgGh/xCXcVmANQmKpNUjRWaHbQ5wKvG63C2MQ==
+"@artsy/palette@13.32.0":
+  version "13.32.0"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-13.32.0.tgz#9575622071d7635c86ded7930b0390caa16a2fc9"
+  integrity sha512-5hbX1DXbXnTN1LBnE4qWeJClowc72puSxrdx4fF3hLXEnxz7AVpISisWMoZH/fV24N638GcXygg+9znaG9rY9g==
   dependencies:
     "@styled-system/theme-get" "^5.1.2"
     d3-interpolate "^1.3.2"
