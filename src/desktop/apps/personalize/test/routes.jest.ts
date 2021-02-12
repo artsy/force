@@ -46,7 +46,9 @@ describe("Personalize routes", () => {
 
       ensureLoggedInUser(request, response, mockNext)
 
-      expect(mockRedirect).toBeCalledWith("/personalize")
+      expect(mockRedirect).toBeCalledWith(
+        "/login?redirect-to=/personalize/interests"
+      )
       expect(mockNext).not.toHaveBeenCalled()
     })
 
