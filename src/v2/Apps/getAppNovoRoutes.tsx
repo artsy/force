@@ -66,6 +66,7 @@ export function getAppNovoRoutes(): RouteConfig[] {
         routes: orderRoutes,
       },
       {
+        converted: true,
         routes: purchaseRoutes,
       },
       {
