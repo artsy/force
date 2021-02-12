@@ -137,6 +137,12 @@ return {
     {
       "defaultValue": null,
       "kind": "LocalArgument",
+      "name": "additionalGeneIDs",
+      "type": "[String]"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
       "name": "height",
       "type": "String"
     },
@@ -516,6 +522,11 @@ return {
           "name": "acquireable",
           "variableName": "acquireable"
         },
+        {
+          "kind": "Variable",
+          "name": "additionalGeneIDs",
+          "variableName": "additionalGeneIDs"
+        },
         (v1/*: any*/),
         {
           "kind": "Variable",
@@ -616,5 +627,5 @@ return {
   "type": "MarketingCollection"
 };
 })();
-(node as any).hash = 'd6695b2b31d5a1ab79c364eeb32cb1aa';
+(node as any).hash = '7b799bf3d4f7c95514d58a443abffa7d';
 export default node;

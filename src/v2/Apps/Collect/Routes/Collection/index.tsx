@@ -205,6 +205,7 @@ export const CollectionRefetchContainer = createRefetchContainer(
           atAuction: { type: "Boolean" }
           color: { type: "String" }
           forSale: { type: "Boolean" }
+          additionalGeneIDs: { type: "[String]" }
           height: { type: "String" }
           inquireableOnly: { type: "Boolean" }
           majorPeriods: { type: "[String]" }
@@ -297,6 +298,7 @@ export const CollectionRefetchContainer = createRefetchContainer(
           atAuction: $atAuction
           color: $color
           forSale: $forSale
+          additionalGeneIDs: $additionalGeneIDs
           height: $height
           inquireableOnly: $inquireableOnly
           majorPeriods: $majorPeriods
