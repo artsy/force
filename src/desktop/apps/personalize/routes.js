@@ -44,6 +44,14 @@ export const index = async (req, res, next) => {
   }
 }
 
+export const ensureValidStep = (request, response, next) => {
+  const validSteps = ["interests", "artists", "categories", "budget"]
+  const step = request.params.slug
+  const firstStep = "/personalize/interests"
+  if (!validSteps.includes(step)) return response.redirect(firstStep)
+  next()
+}
+
 export const ensureLoggedInUser = (request, response, next) => {
   const loginWithRedirect = "/login?redirect-to=/personalize/interests"
   const currentUser = response.locals.sd.CURRENT_USER

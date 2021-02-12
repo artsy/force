@@ -1,4 +1,4 @@
-import { index, ensureLoggedInUser } from "../routes"
+import { index, ensureLoggedInUser, ensureValidStep } from "../routes"
 
 jest.mock("@artsy/stitch", () => ({
   stitch: jest.fn(),
@@ -29,6 +29,33 @@ describe("Personalize routes", () => {
       expect(stichMock.mock.calls[0][0].data.title).toBe("Personalize | Artsy")
       expect(stichMock.mock.calls[0][0].locals.assetPackage).toBe("onboarding")
       expect(mockNext).not.toHaveBeenCalled()
+    })
+  })
+
+  describe("ensureValidStep route", () => {
+    const mockRedirect = jest.fn()
+
+    const request = { params: { slug: "" } }
+    const response = {
+      redirect: mockRedirect,
+    }
+
+    it("redirects when there is no current user", () => {
+      request.params.slug = "invalid"
+
+      ensureValidStep(request, response, mockNext)
+
+      expect(mockRedirect).toBeCalledWith("/personalize/interests")
+      expect(mockNext).not.toHaveBeenCalled()
+    })
+
+    it("calls next when there is a user", () => {
+      request.params.slug = "artists"
+
+      ensureValidStep(request, response, mockNext)
+
+      expect(mockRedirect).not.toHaveBeenCalled()
+      expect(mockNext).toHaveBeenCalled()
     })
   })
 
