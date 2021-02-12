@@ -3,8 +3,13 @@ import { stitch } from "@artsy/stitch"
 import { App } from "desktop/apps/personalize/components/App"
 
 const computeStitchOptions = (request, response) => {
+  const basePath = request.app.get("views")
+  const currentUser = response.locals.sd.CURRENT_USER
+  const redirectTo = request.query.redirectTo
+  const forceStep = request.params.slug
+
   const options = {
-    basePath: request.app.get("views"),
+    basePath,
     config: {
       styledComponents: true,
     },
@@ -18,10 +23,10 @@ const computeStitchOptions = (request, response) => {
       assetPackage: "onboarding",
     },
     data: {
+      currentUser,
+      forceStep,
+      redirectTo,
       title: "Personalize | Artsy",
-      currentUser: response.locals.sd.CURRENT_USER,
-      redirectTo: request.query.redirectTo,
-      forceStep: request.params.slug,
     },
   }
 
