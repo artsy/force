@@ -9,7 +9,7 @@ import {
 } from "../Utils/formValidators"
 import { CountrySelect } from "v2/Components/CountrySelect"
 import { CommitMutation } from "../Utils/commitMutation"
-import { updateUserAddress } from "../Mutations/shippingMutations"
+import { updateUserAddress } from "../Mutations/AddressModal"
 
 interface Props {
   show: boolean

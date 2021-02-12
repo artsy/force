@@ -23,11 +23,13 @@ import {
   settingOrderShipmentMissingCountryFailure,
   settingOrderShipmentMissingRegionFailure,
   settingOrderShipmentSuccess,
-  saveAddressSuccess,
-  updateAddressSuccess,
 } from "../__fixtures__/MutationResults"
 import { ShippingFragmentContainer, ShippingRoute } from "../Shipping"
 import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
+import {
+  saveAddressSuccess,
+  updateAddressSuccess,
+} from "../__fixtures__/MutationResults/saveAddress"
 
 jest.unmock("react-relay")
 
