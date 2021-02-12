@@ -1,5 +1,4 @@
 import { index, ensureLoggedInUser } from "../routes"
-const CurrentUser = require("desktop/models/current_user")
 
 jest.mock("@artsy/stitch", () => ({
   stitch: jest.fn(),
@@ -7,36 +6,24 @@ jest.mock("@artsy/stitch", () => ({
 const stichMock = require("@artsy/stitch").stitch as jest.Mock
 
 describe("Personalize routes", () => {
-  let req
-  let res
-  const next = jest.fn()
-
-  beforeEach(() => {
-    req = {
-      body: {},
-      params: { slug: "interests" },
-      redirect: jest.fn(),
-      user: new CurrentUser({
-        name: "user",
-      }),
-      app: { get: jest.fn() },
-      query: {
-        redirectTo: "",
-      },
-    }
-    res = {
-      send: jest.fn(),
-      locals: {
-        sd: {},
-      },
-    }
-  })
-
   describe("index route", () => {
+    const mockNext = jest.fn()
+    const request = {
+      app: { get: jest.fn() },
+      query: { redirectTo: "" },
+      params: { slug: "interests" },
+    }
+    const response = {
+      send: jest.fn(),
+      locals: { sd: {} },
+    }
+
     it("renders the personalize app", () => {
-      index(req, res, next)
+      index(request, response, mockNext)
+
       expect(stichMock.mock.calls[0][0].data.title).toBe("Personalize | Artsy")
       expect(stichMock.mock.calls[0][0].locals.assetPackage).toBe("onboarding")
+      expect(mockNext).not.toHaveBeenCalled()
     })
   })
 
