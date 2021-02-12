@@ -1,4 +1,4 @@
-import { Flex, Radio, RadioGroup, Toggle } from "@artsy/palette"
+import { Checkbox, Flex, Toggle } from "@artsy/palette"
 import React, { FC } from "react"
 import { useArtworkFilterContext } from "../ArtworkFilterContext"
 import { OptionText } from "./OptionText"
@@ -12,30 +12,41 @@ export const MediumFilter: FC = () => {
   const allowedMediums =
     mediums && mediums.counts.length ? mediums.counts : hardcodedMediums
 
-  const selectedMedium = filterContext.currentlySelectedFilters().medium
   const isExpanded = !counts.artworks || counts.artworks > 0
 
+  const toggleMediumSelection = (selected, slug) => {
+    let geneIDs = filterContext
+      .currentlySelectedFilters()
+      .additionalGeneIDs.slice()
+    if (selected) {
+      geneIDs.push(slug)
+    } else {
+      geneIDs = geneIDs.filter(item => item !== slug)
+    }
+    filterContext.setFilter("additionalGeneIDs", geneIDs)
+  }
+
+  const currentFilters = filterContext.currentlySelectedFilters()
   return (
     <Toggle label="Medium" expanded={isExpanded}>
       <Flex flexDirection="column" alignItems="left">
-        <RadioGroup
-          deselectable
-          defaultValue={selectedMedium}
-          onSelect={selectedOption => {
-            filterContext.setFilter("medium", selectedOption)
-          }}
-        >
-          {allowedMediums.map((medium, index) => {
-            return (
-              <Radio
-                key={index}
-                my={0.3}
-                value={medium.value.toLocaleLowerCase()}
-                label={<OptionText>{medium.name}</OptionText>}
-              />
-            )
-          })}
-        </RadioGroup>
+        {allowedMediums.map(({ value: slug, name }, index) => {
+          const selected =
+            currentFilters.additionalGeneIDs.includes(slug) ||
+            currentFilters.medium === slug
+          const props = {
+            key: index,
+            onSelect: selected => {
+              toggleMediumSelection(selected, slug)
+            },
+            selected,
+          }
+          return (
+            <Checkbox {...props}>
+              <OptionText>{name}</OptionText>
+            </Checkbox>
+          )
+        })}
       </Flex>
     </Toggle>
   )
@@ -59,7 +70,7 @@ const hardcodedMediums = [
     name: "Prints",
   },
   {
-    value: "work-on-Paper",
+    value: "work-on-paper",
     name: "Work on Paper",
   },
   {

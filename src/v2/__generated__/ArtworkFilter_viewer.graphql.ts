@@ -65,6 +65,12 @@ const node: ReaderFragment = {
     {
       "defaultValue": null,
       "kind": "LocalArgument",
+      "name": "additionalGeneIDs",
+      "type": "[String]"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
       "name": "height",
       "type": "String"
     },
@@ -158,6 +164,11 @@ const node: ReaderFragment = {
           "kind": "Variable",
           "name": "acquireable",
           "variableName": "acquireable"
+        },
+        {
+          "kind": "Variable",
+          "name": "additionalGeneIDs",
+          "variableName": "additionalGeneIDs"
         },
         {
           "kind": "Variable",
@@ -283,5 +294,5 @@ const node: ReaderFragment = {
   ],
   "type": "Viewer"
 };
-(node as any).hash = 'e5b66e446b9be94c58520cf5c4f62863';
+(node as any).hash = 'c15fd2ae4d4441fa3ab852c0e78eba25';
 export default node;

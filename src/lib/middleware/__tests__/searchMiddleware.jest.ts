@@ -1,30 +1,6 @@
 import { searchMiddleware } from "../searchMiddleware"
 
 describe("searchMiddleware", () => {
-  it("skips middleware if not correct pageType", async () => {
-    const req = {
-      path: "/do-not-match",
-      query: {
-        "accepted-conditions": "true",
-      },
-    }
-
-    const res = {
-      redirect: jest.fn(),
-      status: () => ({
-        send: jest.fn(),
-      }),
-      locals: {
-        sd: {},
-        asset: jest.fn(),
-      },
-    }
-
-    const next = jest.fn()
-    await searchMiddleware(req, res, next)
-    expect(next).toHaveBeenCalled()
-  })
-
   describe("missing query.term", () => {
     it("if query.q is present it redirects to search page", async () => {
       const req = {

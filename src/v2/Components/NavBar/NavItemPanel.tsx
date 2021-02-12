@@ -10,6 +10,7 @@ const AnimatedPanel = styled(animated.div)<{
 }>`
   position: absolute;
   top: 100%;
+  z-index: 1;
   ${({ ...props }) =>
     ({
       right: css`

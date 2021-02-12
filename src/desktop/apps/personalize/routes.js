@@ -2,29 +2,41 @@ import * as _ from "underscore"
 import { stitch } from "@artsy/stitch"
 import { App } from "desktop/apps/personalize/components/App"
 
+const computeStitchOptions = (request, response) => {
+  const basePath = request.app.get("views")
+  const currentUser = response.locals.sd.CURRENT_USER
+  const redirectTo = request.query.redirectTo
+  const forceStep = request.params.slug
+
+  const options = {
+    basePath,
+    config: {
+      styledComponents: true,
+    },
+    layout: "../../components/main_layout/templates/react_blank_index.jade",
+    blocks: {
+      head: "./meta.jade",
+      body: App,
+    },
+    locals: {
+      ...response.locals,
+      assetPackage: "onboarding",
+    },
+    data: {
+      currentUser,
+      forceStep,
+      redirectTo,
+      title: "Personalize | Artsy",
+    },
+  }
+
+  return options
+}
+
 export const index = async (req, res, next) => {
   try {
-    const layout = await stitch({
-      basePath: req.app.get("views"),
-      config: {
-        styledComponents: true,
-      },
-      layout: "../../components/main_layout/templates/react_blank_index.jade",
-      blocks: {
-        head: "./meta.jade",
-        body: App,
-      },
-      locals: {
-        ...res.locals,
-        assetPackage: "onboarding",
-      },
-      data: {
-        title: "Personalize | Artsy",
-        currentUser: res.locals.sd.CURRENT_USER,
-        redirectTo: req.query.redirectTo,
-        forceStep: req.params.slug,
-      },
-    })
+    const options = computeStitchOptions(req, res)
+    const layout = await stitch(options)
 
     res.send(layout)
   } catch (error) {
@@ -32,7 +44,17 @@ export const index = async (req, res, next) => {
   }
 }
 
-export const ensureLoggedInUser = (req, res, next) => {
-  if (!res.locals.sd.CURRENT_USER) return res.redirect("/personalize")
+export const ensureValidStep = (request, response, next) => {
+  const validSteps = ["interests", "artists", "categories", "budget"]
+  const step = request.params.slug
+  const firstStep = "/personalize/interests"
+  if (!validSteps.includes(step)) return response.redirect(firstStep)
+  next()
+}
+
+export const ensureLoggedInUser = (request, response, next) => {
+  const loginWithRedirect = "/login?redirect-to=/personalize/interests"
+  const currentUser = response.locals.sd.CURRENT_USER
+  if (!currentUser) return response.redirect(loginWithRedirect)
   next()
 }

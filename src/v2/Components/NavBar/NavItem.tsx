@@ -54,7 +54,9 @@ const UnfocusableAnchor = styled(RouterLink).attrs({
   z-index: 1;
 `
 
-interface NavItemProps extends BoxProps, React.HTMLAttributes<HTMLDivElement> {
+export interface NavItemProps
+  extends BoxProps,
+    React.HTMLAttributes<HTMLDivElement> {
   Menu?: React.FC<{
     setIsVisible: React.Dispatch<React.SetStateAction<boolean>>
   }>
@@ -84,7 +86,7 @@ export const NavItem: React.FC<NavItemProps> = ({
 
   const showMenu = Boolean(Menu && isVisible)
   const showOverlay = Boolean(Overlay)
-  const color = isVisible ? "purple100" : "black100"
+  const color = isVisible ? "blue100" : "black100"
 
   const trackClick = () => {
     if (href && isString(children)) {
@@ -181,7 +183,7 @@ export const NavItem: React.FC<NavItemProps> = ({
       >
         {!!Menu && href && <UnfocusableAnchor to={href} />}
         <Text variant="text" lineHeight="solid" color={color}>
-          <NavItemInner height={25}>
+          <NavItemInner height={25} color={color}>
             {isFunction(children)
               ? // NavItem children can be called as renderProps so that contents
                 // can operate on UI behaviors (such as changing the color of an

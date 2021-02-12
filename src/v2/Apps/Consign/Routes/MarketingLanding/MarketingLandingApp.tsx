@@ -10,7 +10,6 @@ import { SoldRecentlyQueryRenderer } from "./Components/SoldRecently"
 import { ReadMore } from "./Components/ReadMore"
 import { ContactUs } from "./Components/ContactUs"
 import { FAQ } from "./Components/FAQ"
-import { SellWithArtsy } from "./Components/SellWithArtsy"
 import { Footer } from "v2/Components/Footer"
 import { SectionContainer } from "./Components/SectionContainer"
 import { ArtworkCredits } from "./Components/ArtworkCredits"
@@ -33,11 +32,9 @@ export const MarketingLandingApp = () => {
         <ReadMore />
         <ContactUs darkVariant />
         <FAQ />
-        <SellWithArtsy />
         <ArtworkCredits />
-
-        <SectionContainer>
-          <Footer omitSeparator />
+        <SectionContainer py={0}>
+          <Footer flushWithContent />
         </SectionContainer>
       </AppContainer>
     </>

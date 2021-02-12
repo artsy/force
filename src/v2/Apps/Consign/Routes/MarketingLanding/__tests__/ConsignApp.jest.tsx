@@ -66,7 +66,6 @@ describe("MarketingLandingApp", () => {
     expect(wrapper.find("ReadMore").length).toBe(1)
     expect(wrapper.find("ContactUs").length).toBe(2)
     expect(wrapper.find("FAQ").length).toBe(1)
-    expect(wrapper.find("SellWithArtsy").length).toBe(1)
     expect(wrapper.find("ArtworkCredits").length).toBe(1)
     expect(wrapper.find("Footer").length).toBe(1)
   })

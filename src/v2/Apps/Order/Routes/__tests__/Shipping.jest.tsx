@@ -15,6 +15,7 @@ import {
 import { Address } from "v2/Components/AddressForm"
 import { CountrySelect } from "v2/Components/CountrySelect"
 import Input from "v2/Components/Input"
+import { Input as paletteInput } from "@artsy/palette"
 import { createTestEnv } from "v2/DevTools/createTestEnv"
 import { commitMutation as _commitMutation, graphql } from "react-relay"
 import {
@@ -22,6 +23,8 @@ import {
   settingOrderShipmentMissingCountryFailure,
   settingOrderShipmentMissingRegionFailure,
   settingOrderShipmentSuccess,
+  saveAddressSuccess,
+  updateAddressSuccess,
 } from "../__fixtures__/MutationResults"
 import { ShippingFragmentContainer, ShippingRoute } from "../Shipping"
 import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
@@ -53,12 +56,20 @@ const testOrder: ShippingTestQueryRawResponse["order"] = {
   id: "1234",
 }
 
+const pageInfo = {
+  startCursor: "aaa",
+  endCursor: "bbb",
+  hasNextPage: false,
+  hasPreviousPage: false,
+}
+
 const emptyTestMe: ShippingTestQueryRawResponse["me"] = {
   name: "Test Name",
   email: "test@gmail.com",
   id: "4321",
   addressConnection: {
     edges: [],
+    pageInfo,
   },
 }
 
@@ -70,35 +81,42 @@ const testMe: ShippingTestQueryRawResponse["me"] = {
     edges: [
       {
         node: {
+          __typename: "UserAddress",
+          internalID: "1",
           addressLine1: "1 Main St",
           addressLine2: "",
           addressLine3: "",
           city: "Madrid",
           country: "Spain",
-          isDefault: true,
+          isDefault: false,
           name: "Test Name",
           phoneNumber: "555-555-5555",
           postalCode: "28001",
           region: "",
           id: "addressID1",
         },
+        cursor: "aaa",
       },
       {
         node: {
+          __typename: "UserAddress",
+          internalID: "2",
           addressLine1: "401 Broadway",
           addressLine2: "Floor 25",
           addressLine3: "",
           city: "New York",
           country: "USA",
-          isDefault: false,
+          isDefault: true,
           name: "Test Name",
           phoneNumber: "422-424-4242",
           postalCode: "10013",
           region: "NY",
           id: "addressID2",
         },
+        cursor: "aaa",
       },
     ],
+    pageInfo,
   },
 }
 
@@ -115,6 +133,8 @@ describe("Shipping", () => {
     defaultData: { order: testOrder, me: emptyTestMe },
     defaultMutationResults: {
       ...settingOrderShipmentSuccess,
+      ...saveAddressSuccess,
+      ...updateAddressSuccess,
     },
     query: graphql`
       query ShippingTestQuery @raw_response_type {
@@ -158,12 +178,34 @@ describe("Shipping", () => {
       expect(page.find(CountrySelect).props().disabled).toBe(false)
     })
 
-    it("commits the mutation with the orderId", async () => {
+    it("commits set shipping mutation with the orderId and save address", async () => {
       const page = await buildPage()
 
       fillAddressForm(page.root, validAddress)
 
       expect(mutations.mockFetch).not.toHaveBeenCalled()
+
+      await page.clickSubmit()
+
+      expect(mutations.mockFetch).toHaveBeenCalledTimes(2)
+      expect(mutations.mockFetch.mock.calls.map(call => call[0].name)).toEqual([
+        "ShippingOrderAddressUpdateMutation",
+        "ShippingCreateUserAddressMutation",
+      ])
+      expect(mutations.mockFetch.mock.calls).toMatchSnapshot()
+    })
+
+    it("commits the mutation with the orderId when save address is not selected", async () => {
+      const page = await buildPage()
+
+      fillAddressForm(page.root, validAddress)
+
+      expect(mutations.mockFetch).not.toHaveBeenCalled()
+
+      page.find(`[data-test="save-address-checkbox"]`).first().simulate("click")
+
+      expect(page.find(ShippingRoute).state().saveAddress).toEqual(false)
+
       await page.clickSubmit()
 
       expect(mutations.mockFetch).toHaveBeenCalledTimes(1)
@@ -198,10 +240,38 @@ describe("Shipping", () => {
       })
 
       await page.clickSubmit()
-      expect(mutations.lastFetchVariables.input.shipping.region).toBe(
-        "New Brunswick"
-      )
-      expect(mutations.lastFetchVariables.input.shipping.country).toBe("US")
+      expect(mutations.mockFetch.mock.calls.map(call => call[1].input))
+        .toMatchInlineSnapshot(`
+        Array [
+          Object {
+            "fulfillmentType": "SHIP",
+            "id": "1234",
+            "phoneNumber": "8475937743",
+            "shipping": Object {
+              "addressLine1": "14 Gower's Walk",
+              "addressLine2": "Suite 2.5, The Loom",
+              "city": "Whitechapel",
+              "country": "US",
+              "name": "Artsy UK Ltd",
+              "phoneNumber": "",
+              "postalCode": "E1 8PY",
+              "region": "New Brunswick",
+            },
+          },
+          Object {
+            "attributes": Object {
+              "addressLine1": "14 Gower's Walk",
+              "addressLine2": "Suite 2.5, The Loom",
+              "city": "Whitechapel",
+              "country": "US",
+              "name": "Artsy UK Ltd",
+              "phoneNumber": "8475937743",
+              "postalCode": "E1 8PY",
+              "region": "New Brunswick",
+            },
+          },
+        ]
+      `)
     })
 
     it("commits the mutation with pickup option", async () => {
@@ -296,11 +366,12 @@ describe("Shipping", () => {
       it("includes already-filled-in data in mutation if re-sent", async () => {
         await page.clickSubmit()
         expect(mutations.mockFetch).toBeCalled()
-        expect(mutations.lastFetchVariables.input).toMatchObject({
-          shipping: {
-            name: "Dr Collector",
-          },
-        })
+        expect(
+          mutations.mockFetch.mock.calls[0][1].input.shipping.name
+        ).toEqual("Dr Collector")
+        expect(
+          mutations.mockFetch.mock.calls[1][1].input.attributes.name
+        ).toEqual("Dr Collector")
       })
     })
 
@@ -451,36 +522,29 @@ describe("Shipping", () => {
     })
   })
   describe("with saved addresses", () => {
-    it("does not show the new address form", async () => {
-      const page = await buildPage({
+    let page
+    beforeEach(async () => {
+      page = await buildPage({
         mockData: {
           me: testMe,
         },
       })
+    })
+    it("does not show the new address form", async () => {
       expect(
         page.find(`[data-test="addressFormCollapse"]`).props().open
       ).toEqual(false)
     })
-    it("opens the phone number input and populates with correct phone number when 'Arrange for pickup' is selected", async () => {
-      const page = await buildPage({
-        mockData: {
-          me: testMe,
-        },
-      })
+    it("opens the empty pick-up phone number input", async () => {
       await page.selectPickupOption()
       expect(
         page.find(`[data-test="phoneNumberCollapse"]`).props().open
       ).toEqual(true)
       expect(
         page.find(`[data-test="pickupPhoneNumberForm"]`).props().value
-      ).toEqual("555-555-5555")
+      ).toEqual("")
     })
     it("lists the addresses and renders the add address option", async () => {
-      const page = await buildPage({
-        mockData: {
-          me: testMe,
-        },
-      })
       expect(
         page.find(`Radio__BorderedRadio[value="NEW_ADDRESS"]`).length
       ).toEqual(1)
@@ -494,59 +558,10 @@ describe("Shipping", () => {
         "Test Name401 BroadwayFloor 25New York, NY, USA, 10013422-424-4242"
       )
     })
-    it("saves the address into state", async () => {
-      const page = await buildPage({
-        mockData: {
-          me: testMe,
-        },
-      })
-      expect(
-        expect.objectContaining(page.find(ShippingRoute).state().address)
-      ).toEqual(testMe.addressConnection.edges[0].node)
+    it("saves the default address selection into state", async () => {
+      expect(page.find(ShippingRoute).state().selectedSavedAddress).toEqual("1")
     })
-    it("commits the mutation with selected address", async () => {
-      const page = await buildPage({
-        mockData: {
-          me: testMe,
-        },
-      })
-      await page.clickSubmit()
-
-      expect(mutations.mockFetch).toHaveBeenCalledTimes(1)
-      expect(mutations.lastFetchVariables).toMatchInlineSnapshot(`
-        Object {
-          "input": Object {
-            "fulfillmentType": "SHIP",
-            "id": "1234",
-            "phoneNumber": "555-555-5555",
-            "shipping": Object {
-              "addressLine1": "1 Main St",
-              "addressLine2": "",
-              "city": "Madrid",
-              "country": "Spain",
-              "name": "Test Name",
-              "phoneNumber": "555-555-5555",
-              "postalCode": "28001",
-              "region": "",
-            },
-          },
-        }
-      `)
-    })
-    it("changes the address and saves when another address is selected", async () => {
-      const page = await buildPage({
-        mockData: {
-          me: testMe,
-        },
-      })
-      page
-        .find(`Radio__BorderedRadio[data-test="savedAddress"]`)
-        .last()
-        .simulate("click")
-      await page.update()
-      expect(
-        expect.objectContaining(page.find(ShippingRoute).state().address)
-      ).toEqual(testMe.addressConnection.edges[1].node)
+    it("commits the mutation with selected address and phone number", async () => {
       await page.clickSubmit()
 
       expect(mutations.mockFetch).toHaveBeenCalledTimes(1)
@@ -569,6 +584,97 @@ describe("Shipping", () => {
           },
         }
       `)
+    })
+    it("when another saved address is selected commits mutation with selected address and phone number", async () => {
+      page
+        .find(`Radio__BorderedRadio[data-test="savedAddress"]`)
+        .first()
+        .simulate("click")
+      await page.update()
+      expect(page.find(ShippingRoute).state().selectedSavedAddress).toEqual("0")
+      await page.clickSubmit()
+
+      expect(mutations.mockFetch).toHaveBeenCalledTimes(1)
+      expect(mutations.mockFetch.mock.calls[0][0].name).toEqual(
+        "ShippingOrderAddressUpdateMutation"
+      )
+      expect(mutations.lastFetchVariables).toMatchInlineSnapshot(`
+        Object {
+          "input": Object {
+            "fulfillmentType": "SHIP",
+            "id": "1234",
+            "phoneNumber": "555-555-5555",
+            "shipping": Object {
+              "addressLine1": "1 Main St",
+              "addressLine2": "",
+              "city": "Madrid",
+              "country": "Spain",
+              "name": "Test Name",
+              "phoneNumber": "555-555-5555",
+              "postalCode": "28001",
+              "region": "",
+            },
+          },
+        }
+      `)
+    })
+    describe("editing address", () => {
+      it("opens modal with current address values", async () => {
+        expect(page.find(ShippingRoute).state().editAddressIndex).toBe(-1)
+        await page.find(`[data-test="edit-address"]`).first().simulate("click")
+        expect(page.find(ShippingRoute).state().editAddressIndex).toBe(0)
+
+        expect(page.find("AddressModal").length).toBe(1)
+        expect(
+          page
+            .find("AddressModal")
+            .find(paletteInput)
+            .map(input => input.props().value)
+        ).toMatchInlineSnapshot(`
+          Array [
+            "Test Name",
+            "28001",
+            "1 Main St",
+            "",
+            "Madrid",
+            "",
+            "555-555-5555",
+          ]
+        `)
+      })
+      it("sends mutation with updated values when modal form is submitted", async () => {
+        page.find(`[data-test="edit-address"]`).first().simulate("click")
+        const inputs = page.find("AddressModal").find("input")
+        inputs.forEach(input => {
+          console.log(input)
+          input.instance().value = `Test input '${input.props().name}'`
+          input.simulate("change")
+        })
+        const countrySelect = page.find("AddressModal").find("select")
+        countrySelect.instance().value = `US`
+        countrySelect.simulate("change")
+        const submit = page.find("AddressModal").find("button").at(0)
+        submit.simulate("click")
+        await page.update()
+        expect(mutations.mockFetch.mock.calls[0][1]).toMatchInlineSnapshot(`
+          Object {
+            "input": Object {
+              "attributes": Object {
+                "addressLine1": "Test input 'addressLine1'",
+                "addressLine2": "Test input 'addressLine2'",
+                "addressLine3": "",
+                "city": "Test input 'city'",
+                "country": "US",
+                "name": "Test input 'name'",
+                "phoneNumber": "Test input 'phoneNumber'",
+                "postalCode": "Test input 'postalCode'",
+                "region": "Test input 'region'",
+              },
+              "userAddressID": "1",
+            },
+          }
+        `)
+      })
     })
   })
 })

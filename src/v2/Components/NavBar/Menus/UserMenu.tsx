@@ -40,14 +40,14 @@ export const UserMenu: React.FC = () => {
   return (
     <Menu>
       {isAdmin && (
-        <MenuItem variant="small" href={sd.ADMIN_URL} onClick={trackClick}>
+        <MenuItem variant="text" href={sd.ADMIN_URL} onClick={trackClick}>
           Admin
         </MenuItem>
       )}
 
       {(isAdmin || hasPartnerAccess) && (
         <>
-          <MenuItem variant="small" href={sd.CMS_URL} onClick={trackClick}>
+          <MenuItem variant="text" href={sd.CMS_URL} onClick={trackClick}>
             CMS
           </MenuItem>
 
@@ -58,7 +58,7 @@ export const UserMenu: React.FC = () => {
       )}
 
       <MenuItem
-        variant="small"
+        variant="text"
         aria-label="View your purchases"
         href="/user/purchases"
         onClick={trackClick}
@@ -67,7 +67,7 @@ export const UserMenu: React.FC = () => {
       </MenuItem>
 
       <MenuItem
-        variant="small"
+        variant="text"
         aria-label="View your Saves &amp; Follows"
         href="/user/saves"
         onClick={trackClick}
@@ -76,7 +76,7 @@ export const UserMenu: React.FC = () => {
       </MenuItem>
 
       <MenuItem
-        variant="small"
+        variant="text"
         aria-label="View your Collector Profile"
         href="/profile/edit"
         onClick={trackClick}
@@ -85,7 +85,7 @@ export const UserMenu: React.FC = () => {
       </MenuItem>
 
       <MenuItem
-        variant="small"
+        variant="text"
         aria-label="Edit your settings"
         href="/user/edit"
         onClick={trackClick}
@@ -94,7 +94,7 @@ export const UserMenu: React.FC = () => {
       </MenuItem>
 
       <MenuItem
-        variant="small"
+        variant="text"
         aria-label="Log out of your account"
         role="button"
         tabIndex={0}

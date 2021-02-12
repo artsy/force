@@ -70,10 +70,10 @@ export function getAppRoutes(): RouteConfig[] {
     {
       routes: orderRoutes,
     },
+    // NOTE: Converted to use NOVO template.
     // {
     //   routes: purchaseRoutes,
     // },
-    // NOTE: Converted to use NOVO template.
     // {
     //   routes: searchRoutes,
     // },

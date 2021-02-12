@@ -65,17 +65,23 @@ export const DropDownNavMenu: React.FC<DropDownNavMenuProps> = ({
       onClick()
     }
   }
-
   return (
     <Menu onClick={handleClick} width={width} py={0}>
-      <Flex justifyContent="center">
-        <Links py={3} mr={[3, 3, 3, "50px"]}>
+      <Flex
+        justifyContent={[
+          "space-evenly",
+          "space-evenly",
+          "space-evenly",
+          "center",
+        ]}
+      >
+        <Links py={3} mr={[3, 3, "50px", "50px"]}>
           <Box
             display="flex"
             flexDirection="column"
             height="100%"
             mr={[1, 1, 2, 2]}
-            width={[110, 110, 110, 135, 170]}
+            width={[110, 135, 135, 170, 170]}
           >
             {menu.links.map((menuItem, i) => {
               if (!("menu" in menuItem)) {

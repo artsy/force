@@ -9,6 +9,7 @@ export const ArtworkQueryFilter = graphql`
     $attributionClass: [String]
     $color: String
     $forSale: Boolean
+    $additionalGeneIDs: [String]
     $height: String
     $inquireableOnly: Boolean
     $majorPeriods: [String]
@@ -33,6 +34,7 @@ export const ArtworkQueryFilter = graphql`
           attributionClass: $attributionClass
           color: $color
           forSale: $forSale
+          additionalGeneIDs: $additionalGeneIDs
           height: $height
           inquireableOnly: $inquireableOnly
           keyword: $keyword

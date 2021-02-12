@@ -6,9 +6,12 @@ import { FragmentRefs } from "relay-runtime";
 export type Shipping_me = {
     readonly name: string | null;
     readonly email: string | null;
+    readonly id: string;
     readonly addressConnection: {
         readonly edges: ReadonlyArray<{
             readonly node: {
+                readonly id: string;
+                readonly internalID: string;
                 readonly addressLine1: string;
                 readonly addressLine2: string | null;
                 readonly addressLine3: string | null;
@@ -22,6 +25,7 @@ export type Shipping_me = {
             } | null;
         } | null> | null;
     } | null;
+    readonly " $fragmentRefs": FragmentRefs<"SavedAddresses_me">;
     readonly " $refType": "Shipping_me";
 };
 export type Shipping_me$data = Shipping_me;
@@ -38,6 +42,13 @@ var v0 = {
   "args": null,
   "kind": "ScalarField",
   "name": "name",
+  "storageKey": null
+},
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
   "storageKey": null
 };
 return {
@@ -79,6 +90,7 @@ return {
       "name": "email",
       "storageKey": null
     },
+    (v1/*: any*/),
     {
       "alias": null,
       "args": [
@@ -124,6 +136,14 @@ return {
               "name": "node",
               "plural": false,
               "selections": [
+                (v1/*: any*/),
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "internalID",
+                  "storageKey": null
+                },
                 {
                   "alias": null,
                   "args": null,
@@ -196,10 +216,15 @@ return {
         }
       ],
       "storageKey": null
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "SavedAddresses_me"
     }
   ],
   "type": "Me"
 };
 })();
-(node as any).hash = '9b2cb520622407152d0f763463898d56';
+(node as any).hash = '96b6c7e43b19453cb277783ef53e311c';
 export default node;

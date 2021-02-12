@@ -51,7 +51,7 @@ export const LoggedInActions: React.FC<
         {({ hover }) => {
           return (
             <BellIcon
-              fill={hover ? "purple100" : "black80"}
+              fill={hover ? "blue100" : "black80"}
               title="Notifications"
             />
           )
@@ -65,10 +65,7 @@ export const LoggedInActions: React.FC<
       >
         {({ hover }) => {
           return (
-            <EnvelopeIcon
-              title="Inbox"
-              fill={hover ? "purple100" : "black80"}
-            />
+            <EnvelopeIcon title="Inbox" fill={hover ? "blue100" : "black80"} />
           )
         }}
       </NavItem>
@@ -76,7 +73,7 @@ export const LoggedInActions: React.FC<
         {({ hover }) => {
           return (
             <SoloIcon
-              fill={hover ? "purple100" : "black80"}
+              fill={hover ? "blue100" : "black80"}
               title="Your account"
             />
           )
