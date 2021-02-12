@@ -67,10 +67,8 @@ import {
   SavedAddressesFragmentContainer as SavedAddresses,
 } from "../../Components/SavedAddresses"
 import { AddressModal } from "../../Components/AddressModal"
-import {
-  setShippingMutation,
-  saveUserAddressMutation,
-} from "../../Mutations/shippingMutations"
+import { saveUserAddressMutation } from "../../Mutations/ShippingCreateUserAddress"
+import { setShippingMutation } from "../../Mutations/ShippingOrderAddressUpdate"
 
 export interface ShippingProps {
   order: Shipping_order
