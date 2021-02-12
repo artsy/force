@@ -180,13 +180,17 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
             this.getAddressList()[parseInt(this.state.selectedSavedAddress)]
               .node
           )
+      const shipToPhoneNumber = this.isCreateNewAddress()
+        ? phoneNumber
+        : this.getAddressList()[parseInt(this.state.selectedSavedAddress)].node
+            .phoneNumber
       const orderOrError = (
         await setShippingMutation(this.props.commitMutation, {
           input: {
             id: this.props.order.internalID,
             fulfillmentType: shippingOption,
             shipping: shipToAddress,
-            phoneNumber,
+            phoneNumber: shipToPhoneNumber,
           },
         })
       ).commerceSetShipping.orderOrError
