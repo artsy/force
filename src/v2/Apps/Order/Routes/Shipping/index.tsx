@@ -2,6 +2,7 @@ import {
   BorderedRadio,
   Box,
   Button,
+  Checkbox,
   Col,
   Collapse,
   Flex,
@@ -11,12 +12,8 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import styled from "styled-components"
 import { Shipping_order } from "v2/__generated__/Shipping_order.graphql"
-import {
-  CommerceOrderFulfillmentTypeEnum,
-  ShippingOrderAddressUpdateMutation,
-} from "v2/__generated__/ShippingOrderAddressUpdateMutation.graphql"
+import { CommerceOrderFulfillmentTypeEnum } from "v2/__generated__/ShippingOrderAddressUpdateMutation.graphql"
 import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "v2/Apps/Order/Components/ArtworkSummaryItem"
 import {
@@ -38,7 +35,10 @@ import {
   CommitMutation,
   injectCommitMutation,
 } from "v2/Apps/Order/Utils/commitMutation"
-import { validatePresence } from "v2/Apps/Order/Utils/formValidators"
+import {
+  validateAddress,
+  validatePhoneNumber,
+} from "v2/Apps/Order/Utils/formValidators"
 import { track } from "v2/Artsy/Analytics"
 import * as Schema from "v2/Artsy/Analytics/Schema"
 import {
@@ -47,10 +47,8 @@ import {
   AddressErrors,
   AddressForm,
   AddressTouched,
-  emptyAddress,
 } from "v2/Components/AddressForm"
 import { Router } from "found"
-import { pick, omit } from "lodash"
 import React, { Component } from "react"
 import { RelayProp, createFragmentContainer, graphql } from "react-relay"
 import { get } from "v2/Utils/get"
@@ -58,6 +56,21 @@ import createLogger from "v2/Utils/logger"
 import { Media } from "v2/Utils/Responsive"
 import { BuyerGuarantee } from "../../Components/BuyerGuarantee"
 import { Shipping_me } from "v2/__generated__/Shipping_me.graphql"
+import {
+  startingPhoneNumber,
+  startingAddress,
+  convertShippingAddressForExchange,
+  defaultShippingAddressIndex,
+} from "../../Utils/shippingAddressUtils"
+import {
+  NEW_ADDRESS,
+  SavedAddressesFragmentContainer as SavedAddresses,
+} from "../../Components/SavedAddresses"
+import { AddressModal } from "../../Components/AddressModal"
+import {
+  setShippingMutation,
+  saveUserAddressMutation,
+} from "../../Mutations/shippingMutations"
 
 export interface ShippingProps {
   order: Shipping_order
@@ -77,17 +90,12 @@ export interface ShippingState {
   phoneNumberTouched: PhoneNumberTouched
   addressErrors: AddressErrors
   addressTouched: AddressTouched
-  showEditModal: boolean
+  selectedSavedAddress: string
+  editAddressIndex: number
+  saveAddress: boolean
 }
 
 const logger = createLogger("Order/Routes/Shipping/index.tsx")
-
-const EditButton = styled(Text)`
-  &:hover {
-    text-decoration: underline;
-  }
-`
-
 @track()
 export class ShippingRoute extends Component<ShippingProps, ShippingState> {
   state: ShippingState = {
@@ -95,63 +103,15 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
     this.props.order.requestedFulfillment.__typename !== "CommerceShip"
       ? "PICKUP"
       : "SHIP") as CommerceOrderFulfillmentTypeEnum,
-    address: this.startingAddress,
+    address: startingAddress(this.props.me, this.props.order),
     addressErrors: {},
     addressTouched: {},
-    phoneNumber: this.startingPhoneNumber,
+    phoneNumber: startingPhoneNumber(this.props.me, this.props.order),
     phoneNumberError: "",
     phoneNumberTouched: false,
-    showEditModal: false,
-  }
-
-  get startingPhoneNumber() {
-    const defaultSavedPhoneNumber = this.defaultAddress?.phoneNumber
-    if (defaultSavedPhoneNumber) {
-      return defaultSavedPhoneNumber
-    } else {
-      return this.props.order.requestedFulfillment &&
-        (this.props.order.requestedFulfillment.__typename === "CommerceShip" ||
-          this.props.order.requestedFulfillment.__typename === "CommercePickup")
-        ? this.props.order.requestedFulfillment.phoneNumber
-        : ""
-    }
-  }
-
-  get startingAddress() {
-    const defaultSavedAddress = this.defaultAddress
-    if (defaultSavedAddress) {
-      const startingAddress = this.convertShippingAddressForExchange(
-        defaultSavedAddress
-      )
-      return startingAddress
-    } else {
-      const initialAddress = {
-        ...emptyAddress,
-        country: this.props.order.lineItems.edges[0].node.artwork
-          .shippingCountry,
-
-        // We need to pull out _only_ the values specified by the Address type,
-        // since our state will be used for Relay variables later on. The
-        // easiest way to do this is with the emptyAddress.
-        ...pick(
-          this.props.order.requestedFulfillment,
-          Object.keys(emptyAddress)
-        ),
-      }
-      return initialAddress
-    }
-  }
-
-  get defaultAddress() {
-    const addressList = this.props.me.addressConnection.edges
-    if (addressList.length > 0) {
-      const defaultAddress =
-        addressList.find(address => address.node.isDefault)?.node ||
-        addressList[0].node
-      return defaultAddress
-    } else {
-      return null
-    }
+    selectedSavedAddress: defaultShippingAddressIndex(this.props.me),
+    editAddressIndex: -1,
+    saveAddress: true,
   }
 
   get touchedAddress() {
@@ -167,88 +127,42 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
     }
   }
 
-  // Gravity address has isDefault and addressLine3 but exchange does not
-  convertShippingAddressForExchange(address) {
-    return omit(address, ["isDefault", "addressLine3"])
-  }
+  getAddressList = () => this.props.me.addressConnection.edges
 
-  setShipping(variables: ShippingOrderAddressUpdateMutation["variables"]) {
-    return this.props.commitMutation<ShippingOrderAddressUpdateMutation>({
-      variables,
-      // TODO: Inputs to the mutation might have changed case of the keys!
-      mutation: graphql`
-        mutation ShippingOrderAddressUpdateMutation(
-          $input: CommerceSetShippingInput!
-        ) {
-          commerceSetShipping(input: $input) {
-            orderOrError {
-              ... on CommerceOrderWithMutationSuccess {
-                __typename
-                order {
-                  internalID
-                  state
-                  requestedFulfillment {
-                    __typename
-                    ... on CommerceShip {
-                      name
-                      addressLine1
-                      addressLine2
-                      city
-                      region
-                      country
-                      postalCode
-                      phoneNumber
-                    }
-                  }
-                }
-              }
-              ... on CommerceOrderWithMutationFailure {
-                error {
-                  type
-                  code
-                  data
-                }
-              }
-            }
-          }
-        }
-      `,
-    })
-  }
+  isCreateNewAddress = () => this.state.selectedSavedAddress === NEW_ADDRESS
 
   onContinueButtonPressed = async () => {
     const { address, shippingOption, phoneNumber } = this.state
 
     if (shippingOption === "SHIP") {
-      const { errors, hasErrors } = this.validateAddress(this.state.address)
-      const { error, hasError } = this.validatePhoneNumber(
-        this.state.phoneNumber
-      )
-      if (hasErrors && hasError) {
-        this.setState({
-          addressErrors: errors,
-          addressTouched: this.touchedAddress,
-          phoneNumberError: error,
-          phoneNumberTouched: true,
-        })
-        return
-      } else if (hasErrors) {
-        this.setState({
-          addressErrors: errors,
-          addressTouched: this.touchedAddress,
-        })
-        return
-      } else if (hasError) {
-        this.setState({
-          phoneNumberError: error,
-          phoneNumberTouched: true,
-        })
-        return
+      if (this.isCreateNewAddress()) {
+        // validate when order is not pickup and the address is new
+        const { errors, hasErrors } = validateAddress(this.state.address)
+        const { error, hasError } = validatePhoneNumber(this.state.phoneNumber)
+        if (hasErrors && hasError) {
+          this.setState({
+            addressErrors: errors,
+            addressTouched: this.touchedAddress,
+            phoneNumberError: error,
+            phoneNumberTouched: true,
+          })
+          return
+        } else if (hasErrors) {
+          this.setState({
+            addressErrors: errors,
+            addressTouched: this.touchedAddress,
+          })
+          return
+        } else if (hasError) {
+          this.setState({
+            phoneNumberError: error,
+            phoneNumberTouched: true,
+          })
+          return
+        }
       }
     } else {
-      const { error, hasError } = this.validatePhoneNumber(
-        this.state.phoneNumber
-      )
+      const { error, hasError } = validatePhoneNumber(this.state.phoneNumber)
       if (hasError) {
         this.setState({
           phoneNumberError: error,
@@ -259,16 +173,35 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
     }
 
     try {
+      // if not creating a new address, use the saved address selection for shipping
+      const shipToAddress = this.isCreateNewAddress()
+        ? address
+        : convertShippingAddressForExchange(
+            this.getAddressList()[parseInt(this.state.selectedSavedAddress)]
+              .node
+          )
       const orderOrError = (
-        await this.setShipping({
+        await setShippingMutation(this.props.commitMutation, {
           input: {
             id: this.props.order.internalID,
             fulfillmentType: shippingOption,
-            shipping: address,
+            shipping: shipToAddress,
             phoneNumber,
           },
         })
       ).commerceSetShipping.orderOrError
+
+      // save address when user is entering new address AND save checkbox is selected
+      if (
+        this.state.shippingOption === "SHIP" &&
+        this.isCreateNewAddress() &&
+        this.state.saveAddress
+      ) {
+        await saveUserAddressMutation(this.props.commitMutation, {
+          ...address,
+          phoneNumber: phoneNumber,
+        })
+      }
 
       if (orderOrError.error) {
         this.handleSubmitError(orderOrError.error)
@@ -308,41 +241,12 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
     }
   }
 
-  handleClickEdit = () => {
-    // Open edit modal
-  }
-
-  private validateAddress(address: Address) {
-    const { name, addressLine1, city, region, country, postalCode } = address
-    const usOrCanada = country === "US" || country === "CA"
-    const errors = {
-      name: validatePresence(name),
-      addressLine1: validatePresence(addressLine1),
-      city: validatePresence(city),
-      region: usOrCanada && validatePresence(region),
-      country: validatePresence(country),
-      postalCode: usOrCanada && validatePresence(postalCode),
-    }
-    const hasErrors = Object.keys(errors).filter(key => errors[key]).length > 0
-
-    return {
-      errors,
-      hasErrors,
-    }
-  }
-
-  private validatePhoneNumber(phoneNumber: string) {
-    const error = validatePresence(phoneNumber)
-    const hasError = error !== null
-
-    return {
-      error,
-      hasError,
-    }
+  handleClickEdit = (value: number) => {
+    this.setState({ editAddressIndex: value })
   }
 
   onAddressChange: AddressChangeHandler = (address, key) => {
-    const { errors } = this.validateAddress(address)
+    const { errors } = validateAddress(address)
     this.setState({
       address,
       addressErrors: {
@@ -357,75 +261,12 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
   }
 
   onPhoneNumberChange: PhoneNumberChangeHandler = phoneNumber => {
-    const { error } = this.validatePhoneNumber(phoneNumber)
+    const { error } = validatePhoneNumber(phoneNumber)
     this.setState({
       phoneNumber,
       phoneNumberError: error,
       phoneNumberTouched: true,
     })
-  }
-
-  renderAddressList = addressList => {
-    return addressList.map((address, index) =>
-      this.formatAddressBox(address.node, index)
-    )
-  }
-
-  formatAddressBox = (address, index: number) => {
-    const {
-      addressLine1,
-      addressLine2,
-      addressLine3,
-      city,
-      country,
-      name,
-      phoneNumber,
-      postalCode,
-      region,
-    } = address
-
-    const formattedAddressLine = [city, region, country, postalCode]
-      .filter(el => el)
-      .join(", ")
-    return (
-      <BorderedRadio
-        value={`${index}`}
-        key={index}
-        position="relative"
-        data-test="savedAddress"
-      >
-        <Flex width="100%">
-          <Flex flexDirection="column">
-            {[name, addressLine1, addressLine2, addressLine3].map(
-              (line, index) =>
-                line && (
-                  <Text
-                    style={{ textTransform: "capitalize" }}
-                    variant="text"
-                    key={index}
-                  >
-                    {line}
-                  </Text>
-                )
-            )}
-            <Text textColor="black60" style={{ textTransform: "capitalize" }}>
-              {formattedAddressLine}
-            </Text>
-            <Text textColor="black60">{phoneNumber}</Text>
-          </Flex>
-          <EditButton
-            position="absolute"
-            top={"20px"}
-            right={"20px"}
-            onClick={() => this.handleClickEdit.bind(this)}
-            textColor="blue100"
-            size="2"
-          >
-            Edit
-          </EditButton>
-        </Flex>
-      </BorderedRadio>
-    )
   }
 
   @track((props, state, args) => ({
@@ -455,30 +296,40 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
       this.props,
       props => props.order.lineItems.edges[0].node.artwork
     )
-    const addressList = this.props.me.addressConnection.edges
+    const addressList = this.getAddressList()
 
-    const defaultAddressIndex = () => {
-      const indexOfDefaultAddress = addressList.findIndex(
-        address => address.node.isDefault
-      )
-      return `${indexOfDefaultAddress > -1 ? indexOfDefaultAddress : 0}`
+    const shippingSelected =
+      !artwork.pickup_available || this.state.shippingOption === "SHIP"
+
+    const showAddressForm =
+      shippingSelected &&
+      (this.isCreateNewAddress() || addressList.length === 0)
+
+    const showSavedAddresses = shippingSelected && addressList.length > 0
+
+    const onSelectSavedAddress = (value: string) => {
+      this.setState({ selectedSavedAddress: value })
     }
-
-    const onSelectAddressOption = value => {
-      if (value == "NEW_ADDRESS") {
-        // opens address form
-        // this.setState({ openAddressForm: true })
-      } else {
-        const selectedAddress = this.convertShippingAddressForExchange(
-          addressList[parseInt(value)].node
-        )
-        this.setState({ address: selectedAddress })
-        this.setState({ phoneNumber: selectedAddress.phoneNumber })
-      }
-    }
-
+    const showModal = this.state.editAddressIndex > -1
     return (
       <Box data-test="orderShipping">
+        {showModal && (
+          <AddressModal
+            show={showModal}
+            closeModal={() => this.setState({ editAddressIndex: -1 })}
+            address={addressList[this.state.editAddressIndex]?.node}
+            commitMutation={this.props.commitMutation}
+            onSuccess={() => {
+              // this.setState({ address: updatedAddress })
+            }}
+            onError={message => {
+              this.props.dialog.showErrorDialog({
+                title: "Address cannot be updated",
+                message: message,
+              })
+            }}
+          />
+        )}
         <HorizontalPadding px={[0, 4]}>
           <Row>
             <Col>
@@ -530,13 +381,16 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
                     <Spacer mb={3} />
                   </>
                 )}
+                {showSavedAddresses && (
+                  <SavedAddresses
+                    me={this.props.me}
+                    onSelect={value => onSelectSavedAddress(value)}
+                    handleClickEdit={this.handleClickEdit}
+                  />
+                )}
                 <Collapse
                   data-test="addressFormCollapse"
-                  open={
-                    !artwork.pickup_available ||
-                    (this.state.shippingOption === "SHIP" &&
-                      !addressList.length)
-                  }
+                  open={showAddressForm}
                 >
                   <AddressForm
                     value={address}
@@ -556,6 +410,16 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
                     onChange={this.onPhoneNumberChange}
                     label="Required for shipping logistics"
                   />
+                  <Checkbox
+                    onSelect={selected =>
+                      this.setState({ saveAddress: selected })
+                    }
+                    selected={this.state.saveAddress}
+                    data-test="save-address-checkbox"
+                  >
+                    Save shipping address for later use
+                  </Checkbox>
+                  <Spacer mt={3} />
                 </Collapse>
 
                 <Collapse
@@ -571,20 +435,6 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
                     label="Number to contact you for pickup logistics"
                   />
                 </Collapse>
-                {addressList.length > 0 && (
-                  <>
-                    <RadioGroup
-                      onSelect={onSelectAddressOption.bind(this)}
-                      defaultValue={defaultAddressIndex()}
-                    >
-                      {this.renderAddressList(addressList)}
-                      <BorderedRadio value={"NEW_ADDRESS"}>
-                        <Text variant="text">Add a new shipping address</Text>
-                      </BorderedRadio>
-                    </RadioGroup>
-                    <Spacer p="2" />
-                  </>
-                )}
                 <Media greaterThan="xs">
                   <Button
                     onClick={this.onContinueButtonPressed}
@@ -676,6 +526,8 @@ export const ShippingFragmentContainer = createFragmentContainer(
         ) {
         name
         email
+        id
+        ...SavedAddresses_me
         addressConnection(
           first: $first
           last: $last
@@ -684,6 +536,8 @@ export const ShippingFragmentContainer = createFragmentContainer(
         ) {
           edges {
             node {
+              id
+              internalID
               addressLine1
               addressLine2
               addressLine3

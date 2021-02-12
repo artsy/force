@@ -1,5 +1,17 @@
 import { Address } from "v2/Components/AddressForm"
-import { validateAddress } from "../formValidators"
+import { validateAddress, validatePresence } from "../formValidators"
+
+describe("formValidators/validatePresence", () => {
+  it("returns error when field is null", () => {
+    expect(validatePresence(null)).toBe("This field is required")
+  })
+  it("returns error when field is undefined", () => {
+    expect(validatePresence(undefined)).toBe("This field is required")
+  })
+  it("returns error when field is empty", () => {
+    expect(validatePresence(" \t  ")).toBe("This field is required")
+  })
+})
 
 describe("formValidators/validateAddress", () => {
   function buildAddress(): Address {
