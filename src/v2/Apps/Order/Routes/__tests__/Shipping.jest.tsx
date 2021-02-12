@@ -561,7 +561,7 @@ describe("Shipping", () => {
     it("saves the default address selection into state", async () => {
       expect(page.find(ShippingRoute).state().selectedSavedAddress).toEqual("1")
     })
-    it("commits the mutation with selected address", async () => {
+    it("commits the mutation with selected address and phone number", async () => {
       await page.clickSubmit()
 
       expect(mutations.mockFetch).toHaveBeenCalledTimes(1)
@@ -570,7 +570,7 @@ describe("Shipping", () => {
           "input": Object {
             "fulfillmentType": "SHIP",
             "id": "1234",
-            "phoneNumber": "",
+            "phoneNumber": "422-424-4242",
             "shipping": Object {
               "addressLine1": "401 Broadway",
               "addressLine2": "Floor 25",
@@ -585,7 +585,7 @@ describe("Shipping", () => {
         }
       `)
     })
-    it("changes the address and saves when another address is selected", async () => {
+    it("when another saved address is selected commits mutation with selected address and phone number", async () => {
       page
         .find(`Radio__BorderedRadio[data-test="savedAddress"]`)
         .first()
@@ -595,12 +595,15 @@ describe("Shipping", () => {
       await page.clickSubmit()
 
       expect(mutations.mockFetch).toHaveBeenCalledTimes(1)
+      expect(mutations.mockFetch.mock.calls[0][0].name).toEqual(
+        "ShippingOrderAddressUpdateMutation"
+      )
       expect(mutations.lastFetchVariables).toMatchInlineSnapshot(`
         Object {
           "input": Object {
             "fulfillmentType": "SHIP",
             "id": "1234",
-            "phoneNumber": "",
+            "phoneNumber": "555-555-5555",
             "shipping": Object {
               "addressLine1": "1 Main St",
               "addressLine2": "",
