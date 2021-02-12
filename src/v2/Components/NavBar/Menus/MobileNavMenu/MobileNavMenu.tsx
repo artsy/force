@@ -4,13 +4,16 @@ import {
   ChevronIcon,
   Clickable,
   CloseIcon,
+  Color,
   Flex,
   MenuIcon,
   ModalBase,
   Sans,
   Separator,
+  Text,
   color,
   space,
+  TextProps,
 } from "@artsy/palette"
 import { AnalyticsSchema, useSystemContext } from "v2/Artsy"
 import { useTracking } from "v2/Artsy/Analytics"
@@ -29,7 +32,7 @@ import {
   NavigatorContextProvider,
   useNavigation,
 } from "./NavigatorContextProvider"
-import { NAV_BAR_BORDER_OFFSET, NAV_BAR_HEIGHT } from "v2/Components/NavBar"
+import { NAV_BAR_BORDER_OFFSET, MOBILE_NAV_HEIGHT } from "v2/Components/NavBar"
 
 const Close = styled(Clickable)`
   position: absolute;
@@ -40,7 +43,7 @@ const Close = styled(Clickable)`
   align-items: center;
   justify-content: center;
   width: ${space(6)}px;
-  height: ${NAV_BAR_HEIGHT - NAV_BAR_BORDER_OFFSET}px;
+  height: ${MOBILE_NAV_HEIGHT - NAV_BAR_BORDER_OFFSET}px;
 `
 
 interface Props {
@@ -72,6 +75,9 @@ export const MobileNavMenu: React.FC<Props> = ({
 
           <AnimatingMenuWrapper isOpen={isOpen}>
             <ul>
+              <MobileLink href="/collect" color="black100" pt={0.5}>
+                Buy
+              </MobileLink>
               <MobileSubmenuLink menu={ARTISTS_SUBMENU_DATA.menu}>
                 {ARTISTS_SUBMENU_DATA.menu.title}
               </MobileSubmenuLink>
@@ -82,16 +88,17 @@ export const MobileNavMenu: React.FC<Props> = ({
 
               <MobileLink href="/auctions">Auctions</MobileLink>
               <MobileLink href="/viewing-rooms">Viewing Rooms</MobileLink>
-              <MobileLink href="/articles">Editorial</MobileLink>
               <MobileLink href="/galleries">Galleries</MobileLink>
               <MobileLink href="/fairs">Fairs</MobileLink>
               <MobileLink href="/shows">Shows</MobileLink>
               <MobileLink href="/institutions">Museums</MobileLink>
-              <MobileLink href="/consign">Consign</MobileLink>
-              <MobileLink href="/gallery-partnerships">
-                Artsy for Galleries
+              <Separator my={1} color={color("black10")} />
+              <MobileLink href="/consign" color="black100">
+                Sell
               </MobileLink>
-
+              <MobileLink href="/articles" color="black100">
+                Editorial
+              </MobileLink>
               {user ? <LoggedInLinks /> : <AuthenticateLinks />}
             </ul>
           </AnimatingMenuWrapper>
@@ -265,15 +272,15 @@ export const MobileSubmenuLink: React.FC<any> = ({ children, menu }) => {
           })
         }}
       >
-        <Sans size={["5t", "6"]} color={color("black60")}>
+        <MobileMenuText py={0.5} color="black60">
           {children}
-        </Sans>
+        </MobileMenuText>
         <ChevronIcon
           direction="right"
           color={color("black60")}
           height="14px"
           width="14px"
-          top="7px"
+          top="9px"
           left="5px"
         />
       </Flex>
@@ -306,4 +313,22 @@ const AuthenticateLinks: React.FC = () => {
 export const MobileToggleIcon: React.FC<{ open: boolean }> = ({ open }) => {
   const style = { transform: "scale(1.5)" }
   return open ? <CloseIcon style={style} /> : <MenuIcon style={style} />
+}
+
+interface MobileMenuTextProps extends TextProps {
+  children: any
+  color?: Color
+  firstItem?: boolean
+}
+
+export const MobileMenuText: React.FC<MobileMenuTextProps> = ({
+  children,
+  color: linkColor,
+  ...props
+}) => {
+  return (
+    <Text variant="title" color={color(linkColor)} {...props}>
+      {children}
+    </Text>
+  )
 }

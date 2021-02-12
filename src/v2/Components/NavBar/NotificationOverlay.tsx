@@ -14,7 +14,7 @@ export const NotificationOverlay: FC<NotificationOverlayProps> = ({
 }
 
 const FloatingDot = styled(Flex)`
-  background-color: ${color("purple100")};
+  background-color: ${color("red100")};
   border-radius: 50%;
   width: 6px;
   height: 6px;

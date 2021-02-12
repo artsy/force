@@ -14,7 +14,7 @@ export const DropDownSection: React.FC<DropDownSectionProps> = ({
 
   return (
     <>
-      <Box width={[110, 110, 110, 135, 170]} py={4} mr={[1, 1, 2, 2]}>
+      <Box width={[110, 135, 135, 170, 170]} py={4} mr={[1, 1, 2, 2]}>
         <Text variant="small" mb={1} px={1}>
           {section.text}
         </Text>
