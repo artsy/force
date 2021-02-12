@@ -1,8 +1,6 @@
-_ = require 'underscore'
 Backbone = require 'backbone'
 require '../../../../../lib/promiseDone'
 template = -> require('./index.jade') arguments...
-{ API_URL } = require('sharify').data
 
 module.exports = class LocationsView extends Backbone.View
 

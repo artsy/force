@@ -4,7 +4,6 @@ Backbone = require 'backbone'
 moment = require 'moment'
 momentTimezone = require 'moment-timezone'
 { POSITRON_URL, APP_URL, ARTSY_EDITORIAL_CHANNEL } = sd = require('sharify').data
-request = require 'superagent'
 Artwork = require '../models/artwork.coffee'
 Artworks = require '../collections/artworks.coffee'
 Partner = require '../models/partner.coffee'

@@ -2,7 +2,6 @@ _ = require 'underscore'
 sd = require('sharify').data
 Backbone = require 'backbone'
 Icon = require './icon.coffee'
-PartnerLocations = require '../collections/partner_locations.coffee'
 Relations = require './mixins/relations/partner.coffee'
 
 module.exports = class Partner extends Backbone.Model

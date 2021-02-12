@@ -2,7 +2,6 @@ _ = require 'underscore'
 _s = require 'underscore.string'
 sd = require('sharify').data
 Backbone = require 'backbone'
-Artworks = require '../collections/artworks.coffee'
 { Markdown, Image, Fetch } = require '@artsy/backbone-mixins'
 { smartTruncate } = require '../components/util/string.coffee'
 { SECURE_IMAGES_URL, API_URL } = require('sharify').data

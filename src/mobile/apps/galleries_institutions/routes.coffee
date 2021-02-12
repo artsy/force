@@ -1,6 +1,5 @@
 _ = require 'underscore'
 sd = require('sharify').data
-Backbone = require 'backbone'
 require '../../../lib/promiseDone'
 { FeaturedCities, Cities } = require 'places'
 Profiles = require '../../collections/profiles'

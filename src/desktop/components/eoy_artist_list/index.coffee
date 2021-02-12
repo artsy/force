@@ -1,4 +1,3 @@
-_ = require 'underscore'
 Backbone = require 'backbone'
 CurrentUser = require '../../models/current_user'
 { Following, FollowButton } = require '../follow_button/index'

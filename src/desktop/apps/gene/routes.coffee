@@ -1,4 +1,3 @@
-Backbone = require 'backbone'
 Gene = require '../../models/gene'
 
 @index = (req, res, next) ->
@@ -18,5 +17,5 @@ Gene = require '../../models/gene'
 
       res.render 'index',
         gene: gene
-    
+
     .catch next

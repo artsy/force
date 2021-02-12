@@ -1,15 +1,9 @@
-/*
- * decaffeinate suggestions:
- * DS102: Remove unnecessary code created because of implicit returns
- * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
- */
 const { fabricate } = require("@artsy/antigravity")
 const sinon = require("sinon")
 const Backbone = require("backbone")
 const rewire = require("rewire")
 const routes = rewire("../routes")
 const moment = require("moment")
-const PartnerFeaturedCities = require("../../../collections/partner_featured_cities")
 
 describe("Sitemaps", function () {
   beforeEach(function () {

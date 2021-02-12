@@ -1,8 +1,5 @@
 _ = require 'underscore'
 _s = require 'underscore.string'
-qs = require 'querystring'
-sd = require('sharify').data
-Backbone = require 'backbone'
 { mediator } = require '../../../lib/mediator'
 bootstrap = require '../../components/layout/bootstrap.coffee'
 PoliteInfiniteScrollView = require '../../components/polite_infinite_scroll/client/view.coffee'

@@ -1,4 +1,3 @@
-Backbone = require 'backbone'
 Tag = require '../../models/tag'
 require '../../../lib/promiseDone'
 

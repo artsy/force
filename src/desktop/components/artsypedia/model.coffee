@@ -1,4 +1,3 @@
-_ = require 'underscore'
 moment = require 'moment'
 Backbone = require 'backbone'
 { crop, resize } = require '../resizer/index.coffee'

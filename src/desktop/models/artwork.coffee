@@ -3,7 +3,6 @@ _s = require 'underscore.string'
 sd = require('sharify').data
 Backbone = require 'backbone'
 Edition = require './edition.coffee'
-Partner = require './partner.coffee'
 AdditionalImage = require './additional_image.coffee'
 { compactObject } = require './mixins/compact_object.coffee'
 { Dimensions, Markdown, ArtworkHelpers } = require '@artsy/backbone-mixins'

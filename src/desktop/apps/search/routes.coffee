@@ -1,4 +1,3 @@
-Search = require '../../collections/search'
 GlobalSearchResults = require './collections/global_search_results'
 removeDiacritics = require('diacritics').remove
 { crop, fill } = require '../../components/resizer'

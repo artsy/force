@@ -1,6 +1,4 @@
-_ = require 'underscore'
 sd = require('sharify').data
-Backbone = require 'backbone'
 Item = require '../models/item.coffee'
 PageableCollection = require '../components/pageable_collection/index.coffee'
 

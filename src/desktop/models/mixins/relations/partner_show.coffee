@@ -1,5 +1,4 @@
 { API_URL, POSITRON_URL } = require('sharify').data
-Backbone = require 'backbone'
 
 module.exports =
   related: ->

@@ -1,8 +1,6 @@
 _ = require 'underscore'
-Backbone = require 'backbone'
 ContactView = require './view.coffee'
 { analyticsHooks } = require "../inquiry_questionnaire/analytics/analyticsHooks"
-CurrentUser = require '../../models/current_user'
 Cookies = require 'cookies-js'
 defaultMessage = require './default_message.coffee'
 { SESSION_ID, API_URL } = require('sharify').data

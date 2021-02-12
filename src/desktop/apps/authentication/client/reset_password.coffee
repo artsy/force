@@ -1,5 +1,4 @@
 _ = require 'underscore'
-qs = require 'querystring'
 Backbone = require 'backbone'
 { parse } = require 'url'
 { API_URL, RESET_PASWORD_REDIRECT_TO } = require('sharify').data

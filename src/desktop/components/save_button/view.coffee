@@ -1,4 +1,3 @@
-_ = require 'underscore'
 Backbone = require 'backbone'
 { openAuthModal } = require '../../lib/openAuthModal'
 { ModalType } = require "../../../v2/Components/Authentication/Types"

@@ -1,5 +1,4 @@
 path = require 'path'
-fs = require 'fs'
 
 module.exports = (page) ->
   data: (req, res, next) ->

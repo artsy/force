@@ -1,8 +1,5 @@
 _ = require 'underscore'
-sd = require('sharify').data
 Backbone = require 'backbone'
-CurrentUser = require '../../../models/current_user'
-Partner = require '../../../models/partner.coffee'
 overviewLayoutFactory = require './overview_layout_factory.coffee'
 template = -> require('../templates/overview.jade') arguments...
 

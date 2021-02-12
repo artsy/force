@@ -1,4 +1,3 @@
-_ = require 'underscore'
 Backbone = require 'backbone'
 
 module.exports = class State extends Backbone.Model

@@ -1,8 +1,5 @@
-_ = require 'underscore'
-sd = require('sharify').data
 benv = require 'benv'
 sinon = require 'sinon'
-rewire = require 'rewire'
 Backbone = require 'backbone'
 { resolve } = require 'path'
 { PasswordResetView } = require '../client/reset_password'

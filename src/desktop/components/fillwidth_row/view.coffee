@@ -2,7 +2,6 @@ _ = require 'underscore'
 Backbone = require 'backbone'
 template = -> require('./template.jade') arguments...
 SaveControls = require('../artwork_item/save_controls')
-sd = require('sharify').data
 
 module.exports = class FillwidthView extends Backbone.View
 

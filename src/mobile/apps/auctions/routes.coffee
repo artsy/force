@@ -1,6 +1,5 @@
 _ = require 'underscore'
 { API_URL } = require('sharify').data
-Backbone = require 'backbone'
 Sales = require '../../collections/sales'
 Artworks = require '../../collections/artworks'
 require '../../../lib/promiseDone'

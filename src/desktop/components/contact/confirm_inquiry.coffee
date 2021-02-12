@@ -1,5 +1,4 @@
 _ = require 'underscore'
-Backbone = require 'backbone'
 ContactView = require './view.coffee'
 { analyticsHooks } = require "../inquiry_questionnaire/analytics/analyticsHooks"
 Partner = require '../../models/partner.coffee'

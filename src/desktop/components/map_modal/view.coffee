@@ -1,7 +1,6 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 geo = require '../geo/index.coffee'
-colors = require '../stylus_lib/colors'
 { getMapLink } = require '../util/google_maps.coffee'
 
 module.exports = class MapModalView extends Backbone.View

@@ -1,8 +1,6 @@
 _ = require 'underscore'
 sd = require('sharify').data
-qs = require 'querystring'
 bootstrap = require '../../components/layout/bootstrap.coffee'
-Backbone = require 'backbone'
 Gene = require '../../models/gene.coffee'
 FilterArtworks = require '../../collections/filter_artworks.coffee'
 Artists = require '../../collections/artists.coffee'

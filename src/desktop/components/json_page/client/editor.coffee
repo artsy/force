@@ -1,4 +1,3 @@
-_ = require 'underscore'
 require 'hulk-editor'
 require 'jquery-ui'
 

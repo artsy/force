@@ -1,6 +1,4 @@
-_ = require 'underscore'
 Backbone = require 'backbone'
-FilterArtworks = require '../../../collections/filter_artworks.coffee'
 
 template = -> require('./template.jade') arguments...
 

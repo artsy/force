@@ -1,4 +1,3 @@
-_ = require 'underscore'
 ModalView = require './view.coffee'
 Page = require '../../models/page.coffee'
 

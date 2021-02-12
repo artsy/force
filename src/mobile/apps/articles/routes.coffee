@@ -1,4 +1,3 @@
-_ = require 'underscore'
 { toSentence } = require 'underscore.string'
 { SAILTHRU_KEY, SAILTHRU_SECRET, SAILTHRU_MASTER_LIST } = require '../../config'
 sd = require('sharify').data
@@ -6,8 +5,6 @@ request = require 'superagent'
 Article = require '../../models/article'
 Articles = require '../../collections/articles'
 Section = require '../../models/section'
-Sections = require '../../collections/sections'
-embed = require 'embed-video'
 { stringifyJSONForWeb } = require '../../components/util/json.coffee'
 sailthru = require('sailthru-client').createSailthruClient(SAILTHRU_KEY,SAILTHRU_SECRET)
 

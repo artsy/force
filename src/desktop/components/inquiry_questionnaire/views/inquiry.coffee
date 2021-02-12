@@ -2,7 +2,6 @@ _ = require 'underscore'
 StepView = require './step.coffee'
 Form = require '../../form/index.coffee'
 defaultMessage = require '../../contact/default_message.coffee'
-ArtworkInquiry = require '../../../models/artwork_inquiry.coffee'
 alertable = require '../../alertable_input/index.coffee'
 hasSeen = require '../../has_seen/index.coffee'
 sd = require('sharify').data

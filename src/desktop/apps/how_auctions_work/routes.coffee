@@ -1,6 +1,5 @@
 _ = require 'underscore'
 JSONPage = require '../../components/json_page'
-resizer = require '../../components/resizer'
 markdown = require '../../components/util/markdown'
 page = new JSONPage name: 'how-auctions-work'
 

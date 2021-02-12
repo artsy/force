@@ -1,4 +1,3 @@
-_ = require 'underscore'
 openMultiPage = require '../../../components/multi_page/index.coffee'
 ModalView = require '../../../components/modal/view.coffee'
 { mediator } = require '../../../../lib/mediator'

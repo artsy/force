@@ -4,11 +4,9 @@ sd = require('sharify').data
 moment = require 'moment'
 dateMixin = require './mixins/date.coffee'
 setItemsMixin = require './mixins/set_items.coffee'
-Profile = require '../models/profile.coffee'
 ShowsFeed = require '../collections/shows_feed.coffee'
 Partners = require '../collections/partners.coffee'
 PartnerLocation = require './partner_location.coffee'
-Artists = require '../collections/artists.coffee'
 { Markdown } = require '@artsy/backbone-mixins'
 Artworks = require '../collections/artworks.coffee'
 Relations = require './mixins/relations/fair.coffee'
@@ -33,9 +31,9 @@ module.exports = class Fair extends Backbone.Model
 
   imageUrl: (version = 'square') ->
     version = if version in (@get('image_versions') ? [])
-                version
-              else
-                @get('image_versions')?[0]
+      version
+    else
+      @get('image_versions')?[0]
     @get('image_url')?.replace ':version', version
 
   location: ->

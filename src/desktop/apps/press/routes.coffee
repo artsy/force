@@ -1,4 +1,3 @@
-_ = require 'underscore'
 JSONPage = require '../../components/json_page'
 { sortedNestedGroupByDate, sortedByDate } = require './util'
 

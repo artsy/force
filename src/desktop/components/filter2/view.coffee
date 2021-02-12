@@ -1,5 +1,4 @@
 _ = require 'underscore'
-_s = require 'underscore.string'
 Backbone = require 'backbone'
 FilterArtworks = require '../../collections/filter_artworks.coffee'
 ArtworkColumnsView = require '../artwork_columns/view.coffee'

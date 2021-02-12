@@ -5,7 +5,6 @@ Backbone = require 'backbone'
 React = require 'react'
 ReactDOM = require 'react-dom'
 { NewsPanel } = require '@artsy/reaction/dist/Components/Publishing/News/NewsPanel'
-Articles = require '../../../collections/articles.coffee'
 articleTemplate = -> require('../templates/articles_feed.jade') arguments...
 request = require 'superagent'
 { crop } = require '../../../components/resizer/index.coffee'

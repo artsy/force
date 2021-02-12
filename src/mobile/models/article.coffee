@@ -1,10 +1,7 @@
 _ = require 'underscore'
-_s = require 'underscore.string'
 sd = require('sharify').data
 moment = require 'moment'
 Backbone = require 'backbone'
-Artworks = require '../collections/artworks.coffee'
-Section = require './section.coffee'
 Partner = require './partner.coffee'
 Fair = require './fair.coffee'
 { crop, resize } = require '../components/resizer/index.coffee'

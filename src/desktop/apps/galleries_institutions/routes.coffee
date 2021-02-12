@@ -1,13 +1,9 @@
-Backbone = require 'backbone'
 _ = require 'underscore'
-qs = require 'qs'
 cache = require '../../lib/cache'
 { metaphysics } = require '../../../lib/metaphysics'
 { API_URL } = require('sharify').data
-Partners = require '../../collections/partners'
 PartnerCities = require '../../collections/partner_cities'
 PartnerFeaturedCities = require '../../collections/partner_featured_cities'
-Profiles = require '../../collections/profiles'
 ViewHelpers = require './components/partner_cell/view_helpers'
 query = require './queries/partner_categories_query'
 partnerTypes = require './queries/partner_types'

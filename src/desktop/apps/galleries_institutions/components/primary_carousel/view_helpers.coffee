@@ -1,4 +1,3 @@
-_ = require 'underscore'
 PartnerShows = require '../../../../collections/partner_shows.coffee'
 
 module.exports =

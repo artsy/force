@@ -1,4 +1,3 @@
-_ = require 'underscore'
 sd = require('sharify').data
 Backbone = require 'backbone'
 FeedView = require '../../../components/feed/client/shows_feed.coffee'

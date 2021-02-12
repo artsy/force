@@ -6,7 +6,6 @@ Backbone = require 'backbone'
 { resolve } = require 'path'
 Artwork = require '../../../models/artwork'
 Sale = require '../../../models/sale'
-CurrentUser = require '../../../models/current_user'
 { mediator } = require '../../../../lib/mediator'
 
 describe 'SaleArtworks', ->

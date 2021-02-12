@@ -1,6 +1,4 @@
 Backbone = require 'backbone'
-{ each } = require 'underscore'
-User = require '../../models/user.coffee'
 initCarousel = require '../merry_go_round/horizontal_nav_mgr.coffee'
 ArtworkBrickView = require '../artwork_brick/view.coffee'
 template = -> require('./templates/index.jade') arguments...

@@ -5,8 +5,6 @@ Fairs = require '../../collections/fairs.coffee'
 OrderedSets = require '../../collections/ordered_sets'
 Articles = require '../../collections/articles.coffee'
 require '../../../lib/promiseDone'
-ProfileFixture = require './fixtures/profile.json'
-FairFixture = require './fixtures/fair.json'
 moment = require 'moment'
 
 representation = (fair) ->
@@ -37,7 +35,7 @@ representation = (fair) ->
   fairOrg = new FairOrganizer profile.get('owner')
 
   fairs = new Fairs
-  options = 
+  options =
     data:
       fair_organizer_id: fairOrg.id
       sort: "-start_at"

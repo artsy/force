@@ -1,4 +1,3 @@
-_ = require 'underscore'
 sd = require('sharify').data
 Backbone = require 'backbone'
 

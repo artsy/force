@@ -1,5 +1,4 @@
 _ = require 'underscore'
-knox = require 'knox'
 url = require 'url'
 JSONPage = require '../../components/json_page'
 { crop } = require '../../components/resizer'

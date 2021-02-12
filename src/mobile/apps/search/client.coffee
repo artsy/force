@@ -1,5 +1,4 @@
 bootstrap = require '../../components/layout/bootstrap.coffee'
-_ = require 'underscore'
 Backbone = require 'backbone'
 sd = require('sharify').data
 Artwork = require '../../models/artwork.coffee'
