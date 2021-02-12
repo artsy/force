@@ -1,4 +1,4 @@
-import { Box, Color, Serif } from "@artsy/palette"
+import { Box, Color, Text } from "@artsy/palette"
 import React from "react"
 
 interface SubheaderProps {
@@ -12,9 +12,9 @@ export const Subheader: React.FC<SubheaderProps> = ({
 }) => {
   return (
     <Box maxWidth="80%" m="auto">
-      <Serif element="h2" size="10" color={color}>
+      <Text as="h2" variant="title" color={color}>
         {children}
-      </Serif>
+      </Text>
     </Box>
   )
 }

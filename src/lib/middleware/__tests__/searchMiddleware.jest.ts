@@ -1,7 +1,5 @@
 import { searchMiddleware } from "../searchMiddleware"
 
-jest.mock("@artsy/stitch")
-
 describe("searchMiddleware", () => {
   it("skips middleware if not correct pageType", async () => {
     const req = {

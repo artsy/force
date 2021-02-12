@@ -7,7 +7,7 @@
 export function shouldUpdateScroll(_prevRenderArgs, { routes }) {
   try {
     // If true, don't reset scroll position on route change
-    if (routes.some(route => route.ignoreScrollBehavior)) {
+    if (routes?.some(route => route.ignoreScrollBehavior)) {
       return false
     }
   } catch (error) {

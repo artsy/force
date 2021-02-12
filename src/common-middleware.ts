@@ -26,6 +26,7 @@ import { sharifyLocalsMiddleware } from "./lib/middleware/sharifyLocals"
 import { collectionToArtistSeriesRedirect } from "./lib/middleware/artistSeriesRedirect"
 import { userRequiredMiddleware } from "lib/middleware/userRequiredMiddleware"
 import { artistMiddleware } from "lib/middleware/artistMiddleware"
+import { searchMiddleware } from "lib/middleware/searchMiddleware"
 
 const CurrentUser = require("./lib/current_user.coffee")
 
@@ -157,4 +158,5 @@ export default function commonMiddlewareSetup(app) {
    * global router.
    */
   app.get("/artist/*", artistMiddleware)
+  app.get("/search*", searchMiddleware)
 }
