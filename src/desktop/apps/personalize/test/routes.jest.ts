@@ -9,7 +9,7 @@ const stichMock = require("@artsy/stitch").stitch as jest.Mock
 describe("Personalize routes", () => {
   let req
   let res
-  let next
+  const next = jest.fn()
 
   beforeEach(() => {
     req = {
@@ -30,14 +30,11 @@ describe("Personalize routes", () => {
         sd: {},
       },
     }
-    next = jest.fn()
   })
 
-  it("renders the personalize app", done => {
-    index(req, res, next).then(() => {
-      expect(stichMock.mock.calls[0][0].data.title).toBe("Personalize | Artsy")
-      expect(stichMock.mock.calls[0][0].locals.assetPackage).toBe("onboarding")
-      done()
-    })
+  it("renders the personalize app", () => {
+    index(req, res, next)
+    expect(stichMock.mock.calls[0][0].data.title).toBe("Personalize | Artsy")
+    expect(stichMock.mock.calls[0][0].locals.assetPackage).toBe("onboarding")
   })
 })
