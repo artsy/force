@@ -14,7 +14,7 @@ import { exampleRoutes } from "./Example/exampleRoutes"
 // import { featureRoutes } from "v2/Apps/Feature/featureRoutes"
 import { identityVerificationRoutes } from "v2/Apps/IdentityVerification/identityVerificationRoutes"
 import { orderRoutes } from "v2/Apps/Order/orderRoutes"
-import { purchaseRoutes } from "v2/Apps/Purchase/purchaseRoutes"
+// import { purchaseRoutes } from "v2/Apps/Purchase/purchaseRoutes"
 import { searchRoutes } from "v2/Apps/Search/searchRoutes"
 // import { showRoutes } from "v2/Apps/Show/showRoutes"
 // import { viewingRoomRoutes } from "./ViewingRoom/viewingRoomRoutes"
@@ -70,9 +70,10 @@ export function getAppRoutes(): RouteConfig[] {
     {
       routes: orderRoutes,
     },
-    {
-      routes: purchaseRoutes,
-    },
+    // NOTE: Converted to use NOVO template.
+    // {
+    //   routes: purchaseRoutes,
+    // },
     {
       routes: searchRoutes,
     },
