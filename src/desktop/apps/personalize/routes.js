@@ -4,7 +4,7 @@ import { App } from "desktop/apps/personalize/components/App"
 
 export const index = async (req, res, next) => {
   try {
-    const layout = await stitch({
+    const options = {
       basePath: req.app.get("views"),
       config: {
         styledComponents: true,
@@ -24,8 +24,9 @@ export const index = async (req, res, next) => {
         redirectTo: req.query.redirectTo,
         forceStep: req.params.slug,
       },
-    })
+    }
 
+    const layout = await stitch(options)
     res.send(layout)
   } catch (error) {
     next(error)
