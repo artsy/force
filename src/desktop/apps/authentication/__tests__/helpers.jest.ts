@@ -168,6 +168,7 @@ describe("Authentication Helpers", () => {
           email: "foo@foo.com",
           password: "password",
           accepted_terms_of_service: true,
+          agreed_to_receive_emails: true,
         },
         formikBag
       ).then(() => {

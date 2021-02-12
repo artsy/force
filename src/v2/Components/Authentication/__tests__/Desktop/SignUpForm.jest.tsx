@@ -47,6 +47,31 @@ describe("SignUpForm", () => {
             password: "password123",
             name: "John Doe",
             accepted_terms_of_service: true,
+            agreed_to_receive_emails: false,
+            recaptcha_token: "recaptcha-token",
+          },
+          expect.anything()
+        )
+        done()
+      })
+    })
+
+    it("sends email subscription agreement", done => {
+      props.values = SignupValues
+      const wrapper = getWrapper()
+      const checkbox = wrapper.find("EmailSubscriptionCheckbox")
+      checkbox.simulate("click")
+      const formik = wrapper.find("Formik")
+      formik.simulate("submit")
+
+      setTimeout(() => {
+        expect(props.handleSubmit).toBeCalledWith(
+          {
+            email: "foo@bar.com",
+            password: "password123",
+            name: "John Doe",
+            accepted_terms_of_service: true,
+            agreed_to_receive_emails: false,
             recaptcha_token: "recaptcha-token",
           },
           expect.anything()
@@ -123,8 +148,7 @@ describe("SignUpForm", () => {
     mockEnableRequestSignInWithApple.mockReturnValue(true)
     props.values = SignupValues
     const wrapper = getWrapper()
-
-    wrapper.find(Link).at(2).simulate("click")
+    wrapper.find(Link).at(1).simulate("click")
 
     setTimeout(() => {
       expect(props.onAppleLogin).toBeCalled()
@@ -156,7 +180,7 @@ describe("SignUpForm", () => {
     props.values.accepted_terms_of_service = false
     const wrapper = getWrapper()
 
-    wrapper.find(Link).at(2).simulate("click")
+    wrapper.find(Link).at(1).simulate("click")
 
     wrapper.update()
 

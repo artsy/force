@@ -38,7 +38,7 @@ export const handleSubmit = async (
     session_id: sd.SESSION_ID,
     signupIntent: intent,
     signupReferer,
-    agreed_to_receive_emails: values.accepted_terms_of_service,
+    agreed_to_receive_emails: values.agreed_to_receive_emails,
   })
 
   const options = {

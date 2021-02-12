@@ -13,6 +13,7 @@ export interface InputValues {
   password?: string
   otp_attempt?: string
   accepted_terms_of_service?: boolean
+  agreed_to_receive_emails?: boolean
 }
 
 export type SubmitHandler = (
