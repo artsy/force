@@ -6,8 +6,13 @@ jest.mock("@artsy/stitch", () => ({
 const stichMock = require("@artsy/stitch").stitch as jest.Mock
 
 describe("Personalize routes", () => {
+  const mockNext = jest.fn()
+
+  beforeEach(() => {
+    jest.clearAllMocks()
+  })
+
   describe("index route", () => {
-    const mockNext = jest.fn()
     const request = {
       app: { get: jest.fn() },
       query: { redirectTo: "" },
@@ -28,7 +33,6 @@ describe("Personalize routes", () => {
   })
 
   describe("ensureLoggedInUser route", () => {
-    const mockNext = jest.fn()
     const mockRedirect = jest.fn()
 
     const request = {}
@@ -36,10 +40,6 @@ describe("Personalize routes", () => {
       locals: { sd: { CURRENT_USER: undefined } },
       redirect: mockRedirect,
     }
-
-    beforeEach(() => {
-      jest.clearAllMocks()
-    })
 
     it("redirects when there is no current user", () => {
       response.locals.sd.CURRENT_USER = undefined
