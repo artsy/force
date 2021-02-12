@@ -115,10 +115,6 @@ export class SignUpForm extends Component<FormProps, SignUpFormState> {
                 onBlur={handleBlur}
               />
               <EmailSubscriptionCheckbox
-                error={
-                  touched.agreed_to_receive_emails &&
-                  errors.agreed_to_receive_emails
-                }
                 checked={values.agreed_to_receive_emails}
                 value={values.agreed_to_receive_emails}
                 type="checkbox"
