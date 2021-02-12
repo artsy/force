@@ -2534,6 +2534,7 @@ type CommerceBuyOrder implements CommerceOrder {
   displayCommissionRate: String
   id: ID!
   internalID: ID!
+  isInquiryOrder: Boolean!
   itemsTotal(
     decimal: String = "."
 
@@ -3110,6 +3111,7 @@ type CommerceOfferOrder implements CommerceOrder {
   id: ID!
   impulseConversationId: String
   internalID: ID!
+  isInquiryOrder: Boolean!
   itemsTotal(
     decimal: String = "."
 
@@ -3291,6 +3293,7 @@ interface CommerceOrder {
   displayCommissionRate: String
   id: ID!
   internalID: ID!
+  isInquiryOrder: Boolean!
   itemsTotal(
     decimal: String = "."
 
