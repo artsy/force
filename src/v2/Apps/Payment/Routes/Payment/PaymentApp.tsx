@@ -5,7 +5,7 @@ import { Title } from "react-head"
 import { PaymentApp_me } from "v2/__generated__/PaymentApp_me.graphql"
 import { data as sd } from "sharify"
 import { Box } from "@artsy/palette"
-import { UserSettingsPaymentsFragmentContainer } from "v2/Components/Payment/UserSettingsPayments"
+import { UserSettingsPaymentsFragmentContainer as UserSettingsPayments } from "v2/Components/Payment/UserSettingsPayments"
 import { UserSettingsTabs } from "v2/Components/UserSettings/UserSettingsTabs"
 
 export interface PaymentAppProps {
@@ -26,7 +26,7 @@ const PaymentApp: React.FC<PaymentAppProps> = props => {
           <UserSettingsTabs route={sd.CURRENT_PATH} username={me.name} />
         </Box>
 
-        <UserSettingsPaymentsFragmentContainer me={me} />
+        <UserSettingsPayments me={me} />
       </Box>
     </AppContainer>
   )
