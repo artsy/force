@@ -191,8 +191,8 @@ describe("Shipping", () => {
 
       expect(mutations.mockFetch).toHaveBeenCalledTimes(2)
       expect(mutations.mockFetch.mock.calls.map(call => call[0].name)).toEqual([
-        "ShippingOrderAddressUpdateMutation",
-        "ShippingCreateUserAddressMutation",
+        "SetShippingMutation",
+        "CreateUserAddressMutation",
       ])
       expect(mutations.mockFetch.mock.calls).toMatchSnapshot()
     })
@@ -598,7 +598,7 @@ describe("Shipping", () => {
 
       expect(mutations.mockFetch).toHaveBeenCalledTimes(1)
       expect(mutations.mockFetch.mock.calls[0][0].name).toEqual(
-        "ShippingOrderAddressUpdateMutation"
+        "SetShippingMutation"
       )
       expect(mutations.lastFetchVariables).toMatchInlineSnapshot(`
         Object {

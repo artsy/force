@@ -6,9 +6,9 @@ Array [
     Object {
       "id": null,
       "metadata": Object {},
-      "name": "ShippingOrderAddressUpdateMutation",
+      "name": "SetShippingMutation",
       "operationKind": "mutation",
-      "text": "mutation ShippingOrderAddressUpdateMutation(
+      "text": "mutation SetShippingMutation(
   $input: CommerceSetShippingInput!
 ) {
   commerceSetShipping(input: $input) {
@@ -70,9 +70,9 @@ Array [
     Object {
       "id": null,
       "metadata": Object {},
-      "name": "ShippingCreateUserAddressMutation",
+      "name": "CreateUserAddressMutation",
       "operationKind": "mutation",
-      "text": "mutation ShippingCreateUserAddressMutation(
+      "text": "mutation CreateUserAddressMutation(
   $input: CreateUserAddressInput!
 ) {
   createUserAddress(input: $input) {

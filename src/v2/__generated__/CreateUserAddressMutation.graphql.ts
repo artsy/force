@@ -2,10 +2,9 @@
 /* eslint-disable */
 
 import { ConcreteRequest } from "relay-runtime";
-export type UpdateUserAddressInput = {
+export type CreateUserAddressInput = {
     attributes: UserAddressAttributes;
     clientMutationId?: string | null;
-    userAddressID: string;
 };
 export type UserAddressAttributes = {
     addressLine1: string;
@@ -18,23 +17,14 @@ export type UserAddressAttributes = {
     postalCode?: string | null;
     region?: string | null;
 };
-export type AddressModalMutationVariables = {
-    input: UpdateUserAddressInput;
+export type CreateUserAddressMutationVariables = {
+    input: CreateUserAddressInput;
 };
-export type AddressModalMutationResponse = {
-    readonly updateUserAddress: {
+export type CreateUserAddressMutationResponse = {
+    readonly createUserAddress: {
         readonly userAddressOrErrors: {
             readonly id?: string;
             readonly internalID?: string;
-            readonly name?: string | null;
-            readonly addressLine1?: string;
-            readonly addressLine2?: string | null;
-            readonly isDefault?: boolean;
-            readonly phoneNumber?: string | null;
-            readonly city?: string;
-            readonly region?: string | null;
-            readonly postalCode?: string | null;
-            readonly country?: string;
             readonly errors?: ReadonlyArray<{
                 readonly code: string;
                 readonly message: string;
@@ -42,32 +32,23 @@ export type AddressModalMutationResponse = {
         };
     } | null;
 };
-export type AddressModalMutation = {
-    readonly response: AddressModalMutationResponse;
-    readonly variables: AddressModalMutationVariables;
+export type CreateUserAddressMutation = {
+    readonly response: CreateUserAddressMutationResponse;
+    readonly variables: CreateUserAddressMutationVariables;
 };
 
 
 
 /*
-mutation AddressModalMutation(
-  $input: UpdateUserAddressInput!
+mutation CreateUserAddressMutation(
+  $input: CreateUserAddressInput!
 ) {
-  updateUserAddress(input: $input) {
+  createUserAddress(input: $input) {
     userAddressOrErrors {
       __typename
       ... on UserAddress {
         id
         internalID
-        name
-        addressLine1
-        addressLine2
-        isDefault
-        phoneNumber
-        city
-        region
-        postalCode
-        country
       }
       ... on Errors {
         errors {
@@ -86,7 +67,7 @@ var v0 = [
     "defaultValue": null,
     "kind": "LocalArgument",
     "name": "input",
-    "type": "UpdateUserAddressInput!"
+    "type": "CreateUserAddressInput!"
   }
 ],
 v1 = [
@@ -111,69 +92,6 @@ v2 = {
       "args": null,
       "kind": "ScalarField",
       "name": "internalID",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "name",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "addressLine1",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "addressLine2",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "isDefault",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "phoneNumber",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "city",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "region",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "postalCode",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "country",
       "storageKey": null
     }
   ],
@@ -215,14 +133,14 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "AddressModalMutation",
+    "name": "CreateUserAddressMutation",
     "selections": [
       {
         "alias": null,
         "args": (v1/*: any*/),
-        "concreteType": "UpdateUserAddressPayload",
+        "concreteType": "CreateUserAddressPayload",
         "kind": "LinkedField",
-        "name": "updateUserAddress",
+        "name": "createUserAddress",
         "plural": false,
         "selections": [
           {
@@ -248,14 +166,14 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "AddressModalMutation",
+    "name": "CreateUserAddressMutation",
     "selections": [
       {
         "alias": null,
         "args": (v1/*: any*/),
-        "concreteType": "UpdateUserAddressPayload",
+        "concreteType": "CreateUserAddressPayload",
         "kind": "LinkedField",
-        "name": "updateUserAddress",
+        "name": "createUserAddress",
         "plural": false,
         "selections": [
           {
@@ -286,11 +204,11 @@ return {
   "params": {
     "id": null,
     "metadata": {},
-    "name": "AddressModalMutation",
+    "name": "CreateUserAddressMutation",
     "operationKind": "mutation",
-    "text": "mutation AddressModalMutation(\n  $input: UpdateUserAddressInput!\n) {\n  updateUserAddress(input: $input) {\n    userAddressOrErrors {\n      __typename\n      ... on UserAddress {\n        id\n        internalID\n        name\n        addressLine1\n        addressLine2\n        isDefault\n        phoneNumber\n        city\n        region\n        postalCode\n        country\n      }\n      ... on Errors {\n        errors {\n          code\n          message\n        }\n      }\n    }\n  }\n}\n"
+    "text": "mutation CreateUserAddressMutation(\n  $input: CreateUserAddressInput!\n) {\n  createUserAddress(input: $input) {\n    userAddressOrErrors {\n      __typename\n      ... on UserAddress {\n        id\n        internalID\n      }\n      ... on Errors {\n        errors {\n          code\n          message\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '2a9bfef04f8a6dd09c0a9dcd7dddebf3';
+(node as any).hash = 'd58253f3b92c3b1e89906b6212869648';
 export default node;

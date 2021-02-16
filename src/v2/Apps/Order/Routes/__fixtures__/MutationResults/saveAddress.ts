@@ -1,7 +1,7 @@
-import { AddressModalMutationResponse } from "v2/__generated__/AddressModalMutation.graphql"
-import { ShippingCreateUserAddressMutationResponse } from "v2/__generated__/ShippingCreateUserAddressMutation.graphql"
+import { UpdateUserAddressMutationResponse } from "v2/__generated__/UpdateUserAddressMutation.graphql"
+import { CreateUserAddressMutationResponse } from "v2/__generated__/CreateUserAddressMutation.graphql"
 
-export const saveAddressSuccess: ShippingCreateUserAddressMutationResponse = {
+export const saveAddressSuccess: CreateUserAddressMutationResponse = {
   createUserAddress: {
     userAddressOrErrors: {
       internalID: "address-id",
@@ -10,7 +10,7 @@ export const saveAddressSuccess: ShippingCreateUserAddressMutationResponse = {
   },
 }
 
-export const updateAddressSuccess: AddressModalMutationResponse = {
+export const updateAddressSuccess: UpdateUserAddressMutationResponse = {
   updateUserAddress: {
     userAddressOrErrors: {
       internalID: "address-id",

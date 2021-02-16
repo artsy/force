@@ -13,7 +13,7 @@ import {
   Text,
 } from "@artsy/palette"
 import { Shipping_order } from "v2/__generated__/Shipping_order.graphql"
-import { CommerceOrderFulfillmentTypeEnum } from "v2/__generated__/ShippingOrderAddressUpdateMutation.graphql"
+import { CommerceOrderFulfillmentTypeEnum } from "v2/__generated__/SetShippingMutation.graphql"
 import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "v2/Apps/Order/Components/ArtworkSummaryItem"
 import {
@@ -67,8 +67,8 @@ import {
   SavedAddressesFragmentContainer as SavedAddresses,
 } from "../../Components/SavedAddresses"
 import { AddressModal } from "../../Components/AddressModal"
-import { saveUserAddressMutation } from "../../Mutations/ShippingCreateUserAddress"
-import { setShippingMutation } from "../../Mutations/ShippingOrderAddressUpdate"
+import { createUserAddress } from "../../Mutations/CreateUserAddress"
+import { setShipping } from "../../Mutations/SetShipping"
 
 export interface ShippingProps {
   order: Shipping_order
@@ -183,7 +183,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
         : this.getAddressList()[parseInt(this.state.selectedSavedAddress)].node
             .phoneNumber
       const orderOrError = (
-        await setShippingMutation(this.props.commitMutation, {
+        await setShipping(this.props.commitMutation, {
           input: {
             id: this.props.order.internalID,
             fulfillmentType: shippingOption,
@@ -199,7 +199,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
         this.isCreateNewAddress() &&
         this.state.saveAddress
       ) {
-        await saveUserAddressMutation(this.props.commitMutation, {
+        await createUserAddress(this.props.commitMutation, {
           ...address,
           phoneNumber: phoneNumber,
         })

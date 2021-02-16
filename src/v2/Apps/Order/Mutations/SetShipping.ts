@@ -1,18 +1,16 @@
 import { graphql } from "react-relay"
-import { ShippingOrderAddressUpdateMutation } from "v2/__generated__/ShippingOrderAddressUpdateMutation.graphql"
+import { SetShippingMutation } from "v2/__generated__/SetShippingMutation.graphql"
 import { CommitMutation } from "../Utils/commitMutation"
 
-export const setShippingMutation = (
+export const setShipping = (
   commitMutation: CommitMutation,
-  variables: ShippingOrderAddressUpdateMutation["variables"]
+  variables: SetShippingMutation["variables"]
 ) => {
-  return commitMutation<ShippingOrderAddressUpdateMutation>({
+  return commitMutation<SetShippingMutation>({
     variables,
     // TODO: Inputs to the mutation might have changed case of the keys!
     mutation: graphql`
-      mutation ShippingOrderAddressUpdateMutation(
-        $input: CommerceSetShippingInput!
-      ) {
+      mutation SetShippingMutation($input: CommerceSetShippingInput!) {
         commerceSetShipping(input: $input) {
           orderOrError {
             ... on CommerceOrderWithMutationSuccess {
