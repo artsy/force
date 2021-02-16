@@ -1,5 +1,5 @@
 import { graphql } from "react-relay"
-import { AddressModalMutation } from "v2/__generated__/AddressModalMutation.graphql"
+import { UpdateUserAddressMutation } from "v2/__generated__/UpdateUserAddressMutation.graphql"
 import { CommitMutation } from "../Utils/commitMutation"
 import {
   convertShippingAddressToMutationInput,
@@ -16,7 +16,7 @@ export const updateUserAddress = async (
 ) => {
   const useArtrubutes = convertShippingAddressToMutationInput(values)
 
-  const result = await commitMutation<AddressModalMutation>({
+  const result = await commitMutation<UpdateUserAddressMutation>({
     variables: {
       input: {
         userAddressID: userAddressID,
@@ -24,7 +24,7 @@ export const updateUserAddress = async (
       },
     },
     mutation: graphql`
-      mutation AddressModalMutation($input: UpdateUserAddressInput!) {
+      mutation UpdateUserAddressMutation($input: UpdateUserAddressInput!) {
         updateUserAddress(input: $input) {
           userAddressOrErrors {
             ... on UserAddress {

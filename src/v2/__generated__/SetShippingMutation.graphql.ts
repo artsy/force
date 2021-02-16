@@ -21,10 +21,10 @@ export type CommerceShippingAttributes = {
     postalCode?: string | null;
     region?: string | null;
 };
-export type ShippingOrderAddressUpdateMutationVariables = {
+export type SetShippingMutationVariables = {
     input: CommerceSetShippingInput;
 };
-export type ShippingOrderAddressUpdateMutationResponse = {
+export type SetShippingMutationResponse = {
     readonly commerceSetShipping: {
         readonly orderOrError: {
             readonly __typename: "CommerceOrderWithMutationSuccess";
@@ -55,15 +55,15 @@ export type ShippingOrderAddressUpdateMutationResponse = {
         };
     } | null;
 };
-export type ShippingOrderAddressUpdateMutation = {
-    readonly response: ShippingOrderAddressUpdateMutationResponse;
-    readonly variables: ShippingOrderAddressUpdateMutationVariables;
+export type SetShippingMutation = {
+    readonly response: SetShippingMutationResponse;
+    readonly variables: SetShippingMutationVariables;
 };
 
 
 
 /*
-mutation ShippingOrderAddressUpdateMutation(
+mutation SetShippingMutation(
   $input: CommerceSetShippingInput!
 ) {
   commerceSetShipping(input: $input) {
@@ -257,7 +257,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "ShippingOrderAddressUpdateMutation",
+    "name": "SetShippingMutation",
     "selections": [
       {
         "alias": null,
@@ -310,7 +310,7 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "ShippingOrderAddressUpdateMutation",
+    "name": "SetShippingMutation",
     "selections": [
       {
         "alias": null,
@@ -370,11 +370,11 @@ return {
   "params": {
     "id": null,
     "metadata": {},
-    "name": "ShippingOrderAddressUpdateMutation",
+    "name": "SetShippingMutation",
     "operationKind": "mutation",
-    "text": "mutation ShippingOrderAddressUpdateMutation(\n  $input: CommerceSetShippingInput!\n) {\n  commerceSetShipping(input: $input) {\n    orderOrError {\n      __typename\n      ... on CommerceOrderWithMutationSuccess {\n        __typename\n        order {\n          __typename\n          internalID\n          state\n          requestedFulfillment {\n            __typename\n            ... on CommerceShip {\n              name\n              addressLine1\n              addressLine2\n              city\n              region\n              country\n              postalCode\n              phoneNumber\n            }\n          }\n          id\n        }\n      }\n      ... on CommerceOrderWithMutationFailure {\n        error {\n          type\n          code\n          data\n        }\n      }\n    }\n  }\n}\n"
+    "text": "mutation SetShippingMutation(\n  $input: CommerceSetShippingInput!\n) {\n  commerceSetShipping(input: $input) {\n    orderOrError {\n      __typename\n      ... on CommerceOrderWithMutationSuccess {\n        __typename\n        order {\n          __typename\n          internalID\n          state\n          requestedFulfillment {\n            __typename\n            ... on CommerceShip {\n              name\n              addressLine1\n              addressLine2\n              city\n              region\n              country\n              postalCode\n              phoneNumber\n            }\n          }\n          id\n        }\n      }\n      ... on CommerceOrderWithMutationFailure {\n        error {\n          type\n          code\n          data\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'b01b849a4040a3d42a3535fdc70caeef';
+(node as any).hash = '402fccfd9aeebd5393b111281e478735';
 export default node;

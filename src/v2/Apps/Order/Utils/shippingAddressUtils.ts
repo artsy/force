@@ -3,9 +3,9 @@ import { Shipping_me } from "v2/__generated__/Shipping_me.graphql"
 import { Shipping_order } from "v2/__generated__/Shipping_order.graphql"
 import { pick, omit } from "lodash"
 import {
-  AddressModalMutationResponse,
+  UpdateUserAddressMutationResponse,
   UserAddressAttributes,
-} from "v2/__generated__/AddressModalMutation.graphql"
+} from "v2/__generated__/UpdateUserAddressMutation.graphql"
 import { NEW_ADDRESS } from "../Components/SavedAddresses"
 
 export type SavedAddressType = Shipping_me["addressConnection"]["edges"][number]["node"]
@@ -42,7 +42,7 @@ export const startingAddress = (me: Shipping_me, order: Shipping_order) => {
   return initialAddress
 }
 
-type MutationAddressResponse = AddressModalMutationResponse["updateUserAddress"]["userAddressOrErrors"]
+type MutationAddressResponse = UpdateUserAddressMutationResponse["updateUserAddress"]["userAddressOrErrors"]
 
 // Gravity address has isDefault and addressLine3 but exchange does not
 export const convertShippingAddressForExchange = (
