@@ -427,6 +427,10 @@ export class SearchBar extends Component<Props, State> {
         onSubmit={event => {
           if (router) {
             event.preventDefault()
+            // TODO: Reenable in-router push once all routes have been moved over
+            // to new novo app
+            // router.push(`/search?term=${this.state.term}`)
+
             window.location.assign(`/search?term=${this.state.term}`)
             this.onBlur(event)
           } else {
