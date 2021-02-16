@@ -1,3 +1,8 @@
+export const MyBidsFragmentContainer: any = () => null
+
+// The below will eventually move to MP, so that display logic can be shared
+// between Eigen and Force.
+/*
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { MyBids_me } from "v2/__generated__/MyBids_me.graphql"
@@ -210,3 +215,5 @@ function getSaleInfo(lot: LotStandings) {
     lot,
   }
 }
+
+*/

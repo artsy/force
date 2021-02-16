@@ -45,10 +45,6 @@ export function getAppNovoRoutes(): RouteConfig[] {
       },
       {
         converted: true,
-        routes: auctionsRoutes,
-      },
-      {
-        converted: true,
         routes: collectRoutes,
       },
       {
@@ -58,14 +54,6 @@ export function getAppNovoRoutes(): RouteConfig[] {
       {
         converted: true,
         routes: conversationRoutes,
-      },
-      {
-        converted: true,
-        routes: exampleRoutes,
-      },
-      {
-        converted: true,
-        routes: debugRoutes,
       },
       {
         converted: true,

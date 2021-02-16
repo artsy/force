@@ -1,3 +1,7 @@
+export const SaleItemFragmentContainer: any = () => null
+
+// The below will eventually be refactored, moving timer logic to MP
+/*
 import React from "react"
 import moment from "moment-timezone"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -37,7 +41,6 @@ const SaleItem: React.FC<SaleItemProps> = ({ sale }) => {
           maxWidth={1200}
           maxHeight={533}
         >
-          {/* Dark cover */}
           <Box
             bg="black100"
             width="100%"
@@ -162,3 +165,5 @@ function getUpcomingLabel(sale: SaleItemProps["sale"]) {
     return label
   }
 }
+
+*/

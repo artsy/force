@@ -125,14 +125,16 @@ export const AuctionsAppFragmentContainer = createFragmentContainer(
   {
     me: graphql`
       fragment AuctionsApp_me on Me {
-        ...MyBids_me
+        id
+        # ...MyBids_me
       }
     `,
     currentSales: graphql`
       fragment AuctionsApp_currentSales on SaleConnection {
         edges {
           node {
-            ...SaleItem_sale
+            id
+            # ...SaleItem_sale
           }
         }
       }
