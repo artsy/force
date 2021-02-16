@@ -5,6 +5,7 @@ import styled from "styled-components"
 
 import { useArtworkFilterContext } from "../ArtworkFilterContext"
 import { OptionText } from "./OptionText"
+import { PartnerAutosuggest } from "./PartnerAutosuggest"
 
 const ToggleLink = styled(Text)`
   cursor: pointer;
@@ -80,6 +81,7 @@ export const PartnersFilter: FC = () => {
   return (
     <Toggle label="Galleries and institutions" expanded>
       <Flex flexDirection="column">
+        <PartnerAutosuggest partners={partners.counts} />
         {renderPartnerGroup(initialPartnersGroup)}
 
         {!expanded && remainingPartnersGroup.length && <ExpandControl />}
