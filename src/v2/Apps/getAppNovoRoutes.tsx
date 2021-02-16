@@ -19,6 +19,7 @@ import { purchaseRoutes } from "v2/Apps/Purchase/purchaseRoutes"
 import { searchRoutes } from "v2/Apps/Search/searchRoutes"
 import { showRoutes } from "v2/Apps/Show/showRoutes"
 import { viewingRoomRoutes } from "./ViewingRoom/viewingRoomRoutes"
+import { paymentRoutes } from "v2/Apps/Payment/paymentRoutes"
 
 export function getAppNovoRoutes(): RouteConfig[] {
   return buildAppRoutes(
@@ -90,6 +91,10 @@ export function getAppNovoRoutes(): RouteConfig[] {
       {
         converted: true,
         routes: viewingRoomRoutes,
+      },
+      {
+        converted: true,
+        routes: paymentRoutes,
       },
 
       // For debugging baseline app shell stuff
