@@ -9,7 +9,11 @@ import { data as sd } from "sharify"
 import { ArticleProps } from "@artsy/reaction/dist/Components/Publishing/Article"
 import { ClassicArticleLayout } from "desktop/apps/article/components/layouts/Classic"
 import { mediator } from "lib/mediator"
+import styled from "styled-components"
 
+const StyledHeader = styled.h1`
+  visibility: hidden;
+`
 export interface AppProps extends ArticleProps {
   templates?: {
     SuperArticleFooter: string
@@ -50,10 +54,8 @@ export class App extends React.Component<AppProps> {
       }
     }
   }
-
   render() {
     const { article } = this.props
-
     return (
       <Fragment>
         <EditPortal article={article} />
@@ -61,7 +63,7 @@ export class App extends React.Component<AppProps> {
           user={sd.CURRENT_USER}
           mediator={mediator as Mediator}
         >
-          {this.getArticleLayout()}
+          <StyledHeader>{this.getArticleLayout()}</StyledHeader>
         </SystemContextProvider>
       </Fragment>
     )
