@@ -43,7 +43,8 @@ export class Wizard extends React.Component<Props, State> {
 
   onFinish = () => {
     this.setState({ finished: true })
-    setTimeout(() => (window.location.href = this.props.redirectTo || "/"), 500)
+    const redirectTo = this.props.redirectTo || "/"
+    setTimeout(() => window.location.assign(redirectTo), 500)
 
     this.props.tracking.trackEvent({
       action: "Completed Onboarding",
