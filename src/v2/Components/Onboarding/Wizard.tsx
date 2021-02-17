@@ -2,10 +2,8 @@ import React from "react"
 import { Route } from "react-router"
 import { TrackingProp } from "react-tracking"
 import Artists from "./Steps/Artists"
-import Budget, { BudgetComponent } from "./Steps/Budget"
-import CollectorIntent, {
-  CollectorIntentComponent,
-} from "./Steps/CollectorIntent"
+import Budget from "./Steps/Budget"
+import CollectorIntent from "./Steps/CollectorIntent"
 import Genes from "./Steps/Genes"
 
 export interface Props {
@@ -17,19 +15,19 @@ export const Wizard: React.FC<Props> = props => {
   return (
     <div>
       <Route
-        path={`/personalize/${CollectorIntentComponent.slug}`}
+        path="/personalize/interests"
         render={routeProps => <CollectorIntent {...routeProps} {...props} />}
       />
       <Route
-        path={`/personalize/${Artists.slug}`}
+        path="/personalize/artists"
         render={routeProps => <Artists {...routeProps} {...props} />}
       />
       <Route
-        path={`/personalize/${Genes.slug}`}
+        path="/personalize/categories"
         render={routeProps => <Genes {...routeProps} {...props} />}
       />
       <Route
-        path={`/personalize/${BudgetComponent.slug}`}
+        path="/personalize/budget"
         render={routeProps => <Budget {...routeProps} {...props} />}
       />
     </div>

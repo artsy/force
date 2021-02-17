@@ -36,8 +36,6 @@ export class BudgetComponent extends React.Component<
   Props & StepProps & SystemContextProps,
   State
 > {
-  static slug: "budget" = "budget"
-
   options = {
     "UNDER $500": 500,
     "UNDER $2,500": 2500,
@@ -124,7 +122,4 @@ export class BudgetComponent extends React.Component<
 }
 
 const Budget = withSystemContext(BudgetComponent)
-// tslint:disable:no-string-literal
-Budget["slug"] = BudgetComponent.slug
-
 export default Budget

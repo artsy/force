@@ -28,8 +28,6 @@ interface State {
 }
 
 export default class Artists extends React.Component<StepProps, State> {
-  static slug: "artists" = "artists"
-
   state = {
     inputText: "",
     inputTextQuery: "",

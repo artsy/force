@@ -34,8 +34,6 @@ interface State {
 }
 
 export class CollectorIntentComponent extends React.Component<Props, State> {
-  static slug: "interests" = "interests"
-
   static intentEnum = {
     "buy art & design": "BUY_ART_AND_DESIGN",
     "sell art & design": "SELL_ART_AND_DESIGN",
@@ -128,7 +126,4 @@ export class CollectorIntentComponent extends React.Component<Props, State> {
 }
 
 const CollectorIntent = withSystemContext(CollectorIntentComponent)
-// tslint:disable:no-string-literal
-CollectorIntent["slug"] = CollectorIntentComponent.slug
-
 export default CollectorIntent
