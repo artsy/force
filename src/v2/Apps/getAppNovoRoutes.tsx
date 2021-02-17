@@ -72,6 +72,7 @@ export function getAppNovoRoutes(): RouteConfig[] {
         routes: featureRoutes,
       },
       {
+        converted: true,
         routes: identityVerificationRoutes,
       },
       {
