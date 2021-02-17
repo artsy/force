@@ -51,19 +51,15 @@ export class Wizard extends React.Component<Props, State> {
   }
 
   render() {
+    const percentComplete = this.state.finished
+      ? 1
+      : STEPS.indexOf(location.pathname) / STEPS.length
+
     return (
       <div>
         <Route
           path="/personalize/*"
-          render={() => (
-            <ProgressIndicator
-              percentComplete={
-                this.state.finished
-                  ? 1
-                  : STEPS.indexOf(location.pathname) / STEPS.length
-              }
-            />
-          )}
+          render={() => <ProgressIndicator percentComplete={percentComplete} />}
         />
 
         <Route
