@@ -7,9 +7,12 @@ import { SystemContextProps, withSystemContext } from "v2/Artsy"
 import Colors from "../../../Assets/Colors"
 import { MultiButtonState } from "../../Buttons/MultiStateButton"
 import { media } from "../../Helpers"
+import { Props } from "../Wizard"
 import SelectableToggle from "../SelectableToggle"
 import { StepProps } from "../Types"
 import { Layout } from "./Layout"
+import track from "react-tracking"
+import Events from "../../../Utils/Events"
 
 const OptionsContainer = styled.div`
   width: 450px;
@@ -28,8 +31,9 @@ interface State {
   selection: number | null
 }
 
+@track({}, { dispatch: data => Events.postEvent(data) })
 export class BudgetComponent extends React.Component<
-  StepProps & SystemContextProps,
+  Props & StepProps & SystemContextProps,
   State
 > {
   static slug: "budget" = "budget"
@@ -80,7 +84,12 @@ export class BudgetComponent extends React.Component<
       }
     )
 
-    this.props.onNextButtonPressed()
+    const redirectTo = this.props.redirectTo || "/"
+    setTimeout(() => window.location.assign(redirectTo), 500)
+
+    this.props.tracking.trackEvent({
+      action: "Completed Onboarding",
+    })
   }
 
   render() {

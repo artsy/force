@@ -1,10 +1,7 @@
 import React from "react"
 import { Route } from "react-router"
-
-import track, { TrackingProp } from "react-tracking"
-import Events from "../../Utils/Events"
+import { TrackingProp } from "react-tracking"
 import { ProgressIndicator } from "../ProgressIndicator"
-
 import Artists from "./Steps/Artists"
 import Budget, { BudgetComponent } from "./Steps/Budget"
 import CollectorIntent, {
@@ -24,37 +21,13 @@ export interface Props {
   tracking?: TrackingProp
 }
 
-export interface State {
-  finished: boolean
-}
-
-@track({}, { dispatch: data => Events.postEvent(data) })
-export class Wizard extends React.Component<Props, State> {
-  constructor(props) {
-    super(props)
-    this.state = {
-      finished: false,
-    }
-  }
-
+export class Wizard extends React.Component<Props> {
   onNextButtonPressed = (increaseBy: number, history) => {
     history.push(STEPS[STEPS.indexOf(location.pathname) + increaseBy])
   }
 
-  onFinish = () => {
-    this.setState({ finished: true })
-    const redirectTo = this.props.redirectTo || "/"
-    setTimeout(() => window.location.assign(redirectTo), 500)
-
-    this.props.tracking.trackEvent({
-      action: "Completed Onboarding",
-    })
-  }
-
   render() {
-    const percentComplete = this.state.finished
-      ? 1
-      : STEPS.indexOf(location.pathname) / STEPS.length
+    const percentComplete = STEPS.indexOf(location.pathname) / STEPS.length
 
     return (
       <div>
@@ -95,9 +68,7 @@ export class Wizard extends React.Component<Props, State> {
         />
         <Route
           path={`/personalize/${BudgetComponent.slug}`}
-          render={props => (
-            <Budget {...props} onNextButtonPressed={() => this.onFinish()} />
-          )}
+          render={routeProps => <Budget {...routeProps} {...this.props} />}
         />
       </div>
     )
