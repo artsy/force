@@ -6,7 +6,7 @@ import { FragmentRefs } from "relay-runtime";
 export type AuctionsApp_currentSales = {
     readonly edges: ReadonlyArray<{
         readonly node: {
-            readonly " $fragmentRefs": FragmentRefs<"SaleItem_sale">;
+            readonly id: string;
         } | null;
     } | null> | null;
     readonly " $refType": "AuctionsApp_currentSales";
@@ -42,9 +42,11 @@ const node: ReaderFragment = {
           "plural": false,
           "selections": [
             {
+              "alias": null,
               "args": null,
-              "kind": "FragmentSpread",
-              "name": "SaleItem_sale"
+              "kind": "ScalarField",
+              "name": "id",
+              "storageKey": null
             }
           ],
           "storageKey": null
@@ -55,5 +57,5 @@ const node: ReaderFragment = {
   ],
   "type": "SaleConnection"
 };
-(node as any).hash = '70f92e9cec94a591c560b788980f15e9';
+(node as any).hash = 'd7aa66ea5d9d041686fc1498df806a3e';
 export default node;

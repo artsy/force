@@ -5,10 +5,10 @@ import { RouteConfig } from "found"
 // import { artistsRoutes } from "v2/Apps/Artists/artistsRoutes"
 import { artworkRoutes } from "v2/Apps/Artwork/artworkRoutes"
 // import { collectRoutes } from "v2/Apps/Collect/collectRoutes"
-import { consignRoutes } from "v2/Apps/Consign/consignRoutes"
+// import { consignRoutes } from "v2/Apps/Consign/consignRoutes"
 // import { conversationRoutes } from "v2/Apps/Conversation/conversationRoutes"
-import { debugRoutes } from "./Debug/debugRoutes"
-import { exampleRoutes } from "./Example/exampleRoutes"
+// import { debugRoutes } from "./Debug/debugRoutes"
+// import { exampleRoutes } from "./Example/exampleRoutes"
 // import { fairRoutes } from "v2/Apps/Fair/fairRoutes"
 // import { fairsRoutes } from "v2/Apps/Fairs/fairsRoutes"
 // import { featureRoutes } from "v2/Apps/Feature/featureRoutes"
@@ -18,7 +18,7 @@ import { orderRoutes } from "v2/Apps/Order/orderRoutes"
 // import { searchRoutes } from "v2/Apps/Search/searchRoutes"
 // import { showRoutes } from "v2/Apps/Show/showRoutes"
 // import { viewingRoomRoutes } from "./ViewingRoom/viewingRoomRoutes"
-import { auctionsRoutes } from "./Auctions/auctionsRoutes"
+// import { auctionsRoutes } from "./Auctions/auctionsRoutes"
 
 export function getAppRoutes(): RouteConfig[] {
   return buildAppRoutes([
@@ -37,23 +37,23 @@ export function getAppRoutes(): RouteConfig[] {
     {
       routes: artworkRoutes,
     },
-    {
-      routes: auctionsRoutes,
-    },
+    // {
+    //   routes: auctionsRoutes,
+    // },
     // NOTE: Converted to use NOVO template.
     // {
     //   routes: collectRoutes,
     // },
-    {
-      routes: consignRoutes,
-    },
+    // {
+    //   routes: consignRoutes,
+    // },
     // NOTE: Converted to use NOVO template.
     // {
     //   routes: conversationRoutes,
     // },
-    {
-      routes: exampleRoutes,
-    },
+    // {
+    //   routes: exampleRoutes,
+    // },
     // NOTE: Converted to use NOVO template.
     // {
     //   routes: fairRoutes,
@@ -85,8 +85,8 @@ export function getAppRoutes(): RouteConfig[] {
     // },
 
     // For debugging baseline app shell stuff
-    {
-      routes: debugRoutes,
-    },
+    // {
+    //   routes: debugRoutes,
+    // },
   ])
 }
