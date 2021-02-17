@@ -7,7 +7,7 @@ import Genes from "./Steps/Genes"
  * The props interface that the step needs to implement for the wizard.
  */
 export interface StepProps {
-  onNextButtonPressed: (increaseBy?) => void
+  history
 }
 
 export interface StepComponent extends React.ComponentClass<StepProps> {

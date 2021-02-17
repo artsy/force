@@ -22,10 +22,6 @@ export interface Props {
 }
 
 export class Wizard extends React.Component<Props> {
-  onNextButtonPressed = (increaseBy: number, history) => {
-    history.push(STEPS[STEPS.indexOf(location.pathname) + increaseBy])
-  }
-
   render() {
     const percentComplete = STEPS.indexOf(location.pathname) / STEPS.length
 
@@ -35,36 +31,17 @@ export class Wizard extends React.Component<Props> {
 
         <Route
           path={`/personalize/${CollectorIntentComponent.slug}`}
-          render={props => (
-            <CollectorIntent
-              {...props}
-              onNextButtonPressed={(increaseBy = 1) =>
-                this.onNextButtonPressed(increaseBy, props.history)
-              }
-            />
+          render={routeProps => (
+            <CollectorIntent {...routeProps} {...this.props} />
           )}
         />
         <Route
           path={`/personalize/${Artists.slug}`}
-          render={props => (
-            <Artists
-              {...props}
-              onNextButtonPressed={(increaseBy = 1) =>
-                this.onNextButtonPressed(increaseBy, props.history)
-              }
-            />
-          )}
+          render={routeProps => <Artists {...routeProps} {...this.props} />}
         />
         <Route
           path={`/personalize/${Genes.slug}`}
-          render={props => (
-            <Genes
-              {...props}
-              onNextButtonPressed={(increaseBy = 1) =>
-                this.onNextButtonPressed(increaseBy, props.history)
-              }
-            />
-          )}
+          render={routeProps => <Genes {...routeProps} {...this.props} />}
         />
         <Route
           path={`/personalize/${BudgetComponent.slug}`}

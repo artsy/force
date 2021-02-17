@@ -92,7 +92,7 @@ export class CollectorIntentComponent extends React.Component<Props, State> {
       }
     )
 
-    this.props.onNextButtonPressed()
+    this.props.history.push("/personalize/artists")
   }
 
   render() {

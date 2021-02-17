@@ -60,8 +60,7 @@ export default class Genes extends React.Component<StepProps, State> {
   }
 
   handleNextButtonClick() {
-    const increaseBy = 1
-    this.props.onNextButtonPressed(increaseBy)
+    this.props.history.push("/personalize/budget")
   }
 
   render() {
