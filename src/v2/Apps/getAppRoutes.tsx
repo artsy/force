@@ -12,7 +12,7 @@ import { artworkRoutes } from "v2/Apps/Artwork/artworkRoutes"
 // import { fairRoutes } from "v2/Apps/Fair/fairRoutes"
 // import { fairsRoutes } from "v2/Apps/Fairs/fairsRoutes"
 // import { featureRoutes } from "v2/Apps/Feature/featureRoutes"
-import { identityVerificationRoutes } from "v2/Apps/IdentityVerification/identityVerificationRoutes"
+// import { identityVerificationRoutes } from "v2/Apps/IdentityVerification/identityVerificationRoutes"
 import { orderRoutes } from "v2/Apps/Order/orderRoutes"
 // import { purchaseRoutes } from "v2/Apps/Purchase/purchaseRoutes"
 // import { searchRoutes } from "v2/Apps/Search/searchRoutes"
@@ -64,9 +64,9 @@ export function getAppRoutes(): RouteConfig[] {
     // {
     //   routes: featureRoutes,
     // },
-    {
-      routes: identityVerificationRoutes,
-    },
+    // {
+    //   routes: identityVerificationRoutes,
+    // },
     {
       routes: orderRoutes,
     },
