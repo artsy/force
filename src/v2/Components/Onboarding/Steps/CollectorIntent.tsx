@@ -14,6 +14,24 @@ import SelectableToggle from "../SelectableToggle"
 import { StepProps } from "../Types"
 import { Layout } from "./Layout"
 
+const updateCollectorProfile = (intents, relayEnvironment) => {
+  commitMutation<CollectorIntentUpdateCollectorProfileMutation>(
+    relayEnvironment,
+    {
+      mutation: graphql`
+        mutation CollectorIntentUpdateCollectorProfileMutation(
+          $input: UpdateCollectorProfileInput!
+        ) {
+          updateCollectorProfile(input: $input) {
+            intents
+          }
+        }
+      `,
+      variables: { input: { intents } },
+    }
+  )
+}
+
 const OptionsContainer = styled.div`
   width: 450px;
   margin: 0 auto 100px;
@@ -28,12 +46,19 @@ const OptionsContainer = styled.div`
 
 type Props = StepProps & SystemContextProps
 
+interface CollectorIntentComponentProps extends Props {
+  updateProfile
+}
+
 interface State {
   selectedOptions: { [option: string]: boolean }
   error?: string
 }
 
-export class CollectorIntentComponent extends React.Component<Props, State> {
+export class CollectorIntentComponent extends React.Component<
+  CollectorIntentComponentProps,
+  State
+> {
   static intentEnum = {
     "buy art & design": "BUY_ART_AND_DESIGN",
     "sell art & design": "SELL_ART_AND_DESIGN",
@@ -41,6 +66,10 @@ export class CollectorIntentComponent extends React.Component<Props, State> {
     "learn about art": "LEARN_ABOUT_ART",
     "find out about new exhibitions": "FIND_ART_EXHIBITS",
     "read art market news": "READ_ART_MARKET_NEWS",
+  }
+
+  static defaultProps = {
+    updateProfile: updateCollectorProfile,
   }
 
   constructor(props) {
@@ -69,26 +98,11 @@ export class CollectorIntentComponent extends React.Component<Props, State> {
   }
 
   submit() {
-    commitMutation<CollectorIntentUpdateCollectorProfileMutation>(
-      this.props.relayEnvironment,
-      {
-        // TODO: Inputs to the mutation might have changed case of the keys!
-        mutation: graphql`
-          mutation CollectorIntentUpdateCollectorProfileMutation(
-            $input: UpdateCollectorProfileInput!
-          ) {
-            updateCollectorProfile(input: $input) {
-              intents
-            }
-          }
-        `,
-        variables: {
-          input: {
-            intents: this.selectedIntents(),
-          },
-        },
-      }
-    )
+    const selected = this.selectedIntents()
+
+    if (selected.length > 0) {
+      this.props.updateProfile(selected, this.props.relayEnvironment)
+    }
 
     this.props.history.push("/personalize/artists")
   }
