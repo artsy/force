@@ -23,6 +23,7 @@ import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import { DownloadAppBadge } from "v2/Components/DownloadAppBadge"
 import { Mediator } from "lib/mediator"
 import { ContextModule } from "@artsy/cohesion"
+import { CCPARequest } from "./CCPARequest"
 
 const Column = styled(Flex).attrs({
   flex: 1,
@@ -301,5 +302,7 @@ const PolicyLinks = () => (
         Conditions of Sale
       </Text>
     </Link>
+
+    <CCPARequest />
   </>
 )
