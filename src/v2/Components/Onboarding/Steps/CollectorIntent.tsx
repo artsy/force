@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import { commitMutation, graphql } from "react-relay"
 import styled from "styled-components"
 import { ProgressIndicator } from "v2/Components/ProgressIndicator"
@@ -6,13 +6,21 @@ import {
   CollectorIntentUpdateCollectorProfileMutation,
   Intents,
 } from "v2/__generated__/CollectorIntentUpdateCollectorProfileMutation.graphql"
-import { SystemContextProps, withSystemContext } from "v2/Artsy"
+import { withSystemContext } from "v2/Artsy"
 import Colors from "../../../Assets/Colors"
 import { MultiButtonState } from "../../Buttons/MultiStateButton"
 import { media } from "../../Helpers"
 import SelectableToggle from "../SelectableToggle"
-import { StepProps } from "../Types"
 import { Layout } from "./Layout"
+
+const intentEnum = {
+  "buy art & design": "BUY_ART_AND_DESIGN",
+  "sell art & design": "SELL_ART_AND_DESIGN",
+  "research art prices": "RESEARCH_ART_PRICES",
+  "learn about art": "LEARN_ABOUT_ART",
+  "find out about new exhibitions": "FIND_ART_EXHIBITS",
+  "read art market news": "READ_ART_MARKET_NEWS",
+}
 
 const updateCollectorProfile = (intents, relayEnvironment) => {
   commitMutation<CollectorIntentUpdateCollectorProfileMutation>(
@@ -44,100 +52,62 @@ const OptionsContainer = styled.div`
   `};
 `
 
-type Props = StepProps & SystemContextProps
+export const CollectorIntentComponent = props => {
+  const updateProfile = props.updateProfile || updateCollectorProfile
 
-interface CollectorIntentComponentProps extends Props {
-  updateProfile
-}
+  const [selectedOptions, setSelectedOptions] = useState({})
 
-interface State {
-  selectedOptions: { [option: string]: boolean }
-  error?: string
-}
-
-export class CollectorIntentComponent extends React.Component<
-  CollectorIntentComponentProps,
-  State
-> {
-  static intentEnum = {
-    "buy art & design": "BUY_ART_AND_DESIGN",
-    "sell art & design": "SELL_ART_AND_DESIGN",
-    "research art prices": "RESEARCH_ART_PRICES",
-    "learn about art": "LEARN_ABOUT_ART",
-    "find out about new exhibitions": "FIND_ART_EXHIBITS",
-    "read art market news": "READ_ART_MARKET_NEWS",
+  const onOptionSelected = index => {
+    const updatedSelectedOptions = Object.assign({}, selectedOptions)
+    updatedSelectedOptions[index] = !updatedSelectedOptions[index]
+    setSelectedOptions(updatedSelectedOptions)
   }
 
-  static defaultProps = {
-    updateProfile: updateCollectorProfile,
-  }
+  const submit = () => {
+    const selected = selectedIntents()
 
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      selectedOptions: {},
+    if (selected.length > 0) {
+      updateProfile(selected, props.relayEnvironment)
     }
+
+    props.history.push("/personalize/artists")
   }
 
-  onOptionSelected = index => {
-    const selectedOptions = Object.assign({}, this.state.selectedOptions)
-    selectedOptions[index] = !selectedOptions[index]
+  const optionTags = Object.keys(intentEnum).map((text, index) => (
+    <SelectableToggle
+      key={index}
+      text={text}
+      onSelect={() => onOptionSelected(index)}
+      selected={selectedOptions[index]}
+    />
+  ))
 
-    this.setState({
-      selectedOptions,
-    })
-  }
-
-  selectedIntents() {
-    const intents = Object.values(CollectorIntentComponent.intentEnum).filter(
-      (_, index) => this.state.selectedOptions[index]
+  const selectedIntents = () => {
+    const intents = Object.values(intentEnum).filter(
+      (_, index) => selectedOptions[index]
     ) as Intents[]
 
     return intents
   }
 
-  submit() {
-    const selected = this.selectedIntents()
+  const buttonState =
+    selectedIntents().length > 0
+      ? MultiButtonState.Highlighted
+      : MultiButtonState.Default
 
-    if (selected.length > 0) {
-      this.props.updateProfile(selected, this.props.relayEnvironment)
-    }
-
-    this.props.history.push("/personalize/artists")
-  }
-
-  render() {
-    const options = Object.keys(
-      CollectorIntentComponent.intentEnum
-    ).map((text, index) => (
-      <SelectableToggle
-        key={index}
-        text={text}
-        onSelect={this.onOptionSelected.bind(this, index)}
-        selected={this.state.selectedOptions[index]}
-      />
-    ))
-
-    const buttonState =
-      this.selectedIntents().length > 0
-        ? MultiButtonState.Highlighted
-        : MultiButtonState.Default
-
-    return (
-      <>
-        <ProgressIndicator />
-        <Layout
-          buttonState={buttonState}
-          onNextButtonPressed={this.submit.bind(this)}
-          subtitle="Select all that apply"
-          title="How would you like to use Artsy?"
-        >
-          <OptionsContainer>{options}</OptionsContainer>
-        </Layout>
-      </>
-    )
-  }
+  return (
+    <>
+      <ProgressIndicator />
+      <Layout
+        buttonState={buttonState}
+        onNextButtonPressed={submit}
+        subtitle="Select all that apply"
+        title="How would you like to use Artsy?"
+      >
+        <OptionsContainer>{optionTags}</OptionsContainer>
+      </Layout>
+    </>
+  )
 }
 
 const CollectorIntent = withSystemContext(CollectorIntentComponent)
