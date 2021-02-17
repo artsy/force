@@ -57,10 +57,7 @@ export class Wizard extends React.Component<Props, State> {
 
     return (
       <div>
-        <Route
-          path="/personalize/*"
-          render={() => <ProgressIndicator percentComplete={percentComplete} />}
-        />
+        <ProgressIndicator percentComplete={percentComplete} />
 
         <Route
           path={`/personalize/${CollectorIntentComponent.slug}`}
