@@ -1,5 +1,5 @@
 import React from "react"
-import { Redirect, Route } from "react-router"
+import { Route } from "react-router"
 
 import track, { TrackingProp } from "react-tracking"
 import Events from "../../Utils/Events"
@@ -105,12 +105,6 @@ export class Wizard extends React.Component<Props, State> {
             <Budget {...props} onNextButtonPressed={() => this.onFinish()} />
           )}
         />
-
-        {new RegExp(
-          `^/personalize(?!(/${CollectorIntentComponent.slug}|/${Artists.slug}|/${Genes.slug}|/${BudgetComponent.slug})).*$`
-        ).exec(location.pathname) && (
-          <Redirect to={`/personalize/${CollectorIntentComponent.slug}`} />
-        )}
       </div>
     )
   }
