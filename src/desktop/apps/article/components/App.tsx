@@ -50,10 +50,8 @@ export class App extends React.Component<AppProps> {
       }
     }
   }
-
   render() {
     const { article } = this.props
-
     return (
       <Fragment>
         <EditPortal article={article} />
