@@ -1,7 +1,7 @@
 import { throttle } from "lodash"
 import React from "react"
 import styled from "styled-components"
-
+import { ProgressIndicator } from "../../../ProgressIndicator"
 import Colors from "../../../../Assets/Colors"
 import Input from "../../../Input"
 
@@ -71,32 +71,35 @@ export default class Artists extends React.Component<StepProps, State> {
 
   render() {
     return (
-      <Layout
-        title="Who are your favorite artists?"
-        subtitle="Follow one or more"
-        onNextButtonPressed={this.submit.bind(this)}
-        buttonState={
-          this.state.followCount > 0
-            ? MultiButtonState.Highlighted
-            : MultiButtonState.Default
-        }
-      >
-        <OnboardingSearchBox>
-          <Input
-            placeholder={"Search artists..."}
-            block
-            onInput={this.searchTextChanged.bind(this)}
-            onPaste={this.searchTextChanged.bind(this)}
-            onCut={this.searchTextChanged.bind(this)}
-            autoFocus
-          />
-          <div style={{ marginBottom: "35px" }} />
-          <ArtistList
-            searchQuery={this.state.inputTextQuery}
-            updateFollowCount={this.updateFollowCount.bind(this)}
-          />
-        </OnboardingSearchBox>
-      </Layout>
+      <>
+        <ProgressIndicator percentComplete={0.25} />
+        <Layout
+          title="Who are your favorite artists?"
+          subtitle="Follow one or more"
+          onNextButtonPressed={this.submit.bind(this)}
+          buttonState={
+            this.state.followCount > 0
+              ? MultiButtonState.Highlighted
+              : MultiButtonState.Default
+          }
+        >
+          <OnboardingSearchBox>
+            <Input
+              placeholder={"Search artists..."}
+              block
+              onInput={this.searchTextChanged.bind(this)}
+              onPaste={this.searchTextChanged.bind(this)}
+              onCut={this.searchTextChanged.bind(this)}
+              autoFocus
+            />
+            <div style={{ marginBottom: "35px" }} />
+            <ArtistList
+              searchQuery={this.state.inputTextQuery}
+              updateFollowCount={this.updateFollowCount.bind(this)}
+            />
+          </OnboardingSearchBox>
+        </Layout>
+      </>
     )
   }
 }

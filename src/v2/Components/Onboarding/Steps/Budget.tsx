@@ -1,7 +1,7 @@
 import React from "react"
 import { commitMutation, graphql } from "react-relay"
 import styled from "styled-components"
-
+import { ProgressIndicator } from "../../ProgressIndicator"
 import { BudgetUpdateMyUserProfileMutation } from "v2/__generated__/BudgetUpdateMyUserProfileMutation.graphql"
 import { SystemContextProps, withSystemContext } from "v2/Artsy"
 import Colors from "../../../Assets/Colors"
@@ -103,19 +103,22 @@ export class BudgetComponent extends React.Component<
     ))
 
     return (
-      <Layout
-        title="What’s your maximum artwork budget?"
-        subtitle="Select one"
-        onNextButtonPressed={this.state.selection && this.submit.bind(this)}
-        isLastStep
-        buttonState={
-          this.state.selection
-            ? MultiButtonState.Highlighted
-            : MultiButtonState.Default
-        }
-      >
-        <OptionsContainer>{options}</OptionsContainer>
-      </Layout>
+      <>
+        <ProgressIndicator percentComplete={0.75} />
+        <Layout
+          title="What’s your maximum artwork budget?"
+          subtitle="Select one"
+          onNextButtonPressed={this.state.selection && this.submit.bind(this)}
+          isLastStep
+          buttonState={
+            this.state.selection
+              ? MultiButtonState.Highlighted
+              : MultiButtonState.Default
+          }
+        >
+          <OptionsContainer>{options}</OptionsContainer>
+        </Layout>
+      </>
     )
   }
 }

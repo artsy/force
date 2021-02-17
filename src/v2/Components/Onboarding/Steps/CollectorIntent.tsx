@@ -1,7 +1,7 @@
 import React from "react"
 import { commitMutation, graphql } from "react-relay"
 import styled from "styled-components"
-
+import { ProgressIndicator } from "../../ProgressIndicator"
 import {
   CollectorIntentUpdateCollectorProfileMutation,
   Intents,
@@ -108,18 +108,21 @@ export class CollectorIntentComponent extends React.Component<Props, State> {
     ))
 
     return (
-      <Layout
-        title="How would you like to use Artsy?"
-        subtitle="Select all that apply"
-        onNextButtonPressed={this.submit.bind(this)}
-        buttonState={
-          this.selectedIntents().length > 0
-            ? MultiButtonState.Highlighted
-            : MultiButtonState.Default
-        }
-      >
-        <OptionsContainer>{options}</OptionsContainer>
-      </Layout>
+      <>
+        <ProgressIndicator percentComplete={0} />
+        <Layout
+          title="How would you like to use Artsy?"
+          subtitle="Select all that apply"
+          onNextButtonPressed={this.submit.bind(this)}
+          buttonState={
+            this.selectedIntents().length > 0
+              ? MultiButtonState.Highlighted
+              : MultiButtonState.Default
+          }
+        >
+          <OptionsContainer>{options}</OptionsContainer>
+        </Layout>
+      </>
     )
   }
 }

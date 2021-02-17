@@ -1,20 +1,12 @@
 import React from "react"
 import { Route } from "react-router"
 import { TrackingProp } from "react-tracking"
-import { ProgressIndicator } from "../ProgressIndicator"
 import Artists from "./Steps/Artists"
 import Budget, { BudgetComponent } from "./Steps/Budget"
 import CollectorIntent, {
   CollectorIntentComponent,
 } from "./Steps/CollectorIntent"
 import Genes from "./Steps/Genes"
-
-const STEPS = [
-  `/personalize/${CollectorIntentComponent.slug}`,
-  `/personalize/${Artists.slug}`,
-  `/personalize/${Genes.slug}`,
-  `/personalize/${BudgetComponent.slug}`,
-]
 
 export interface Props {
   redirectTo?: string
@@ -23,12 +15,8 @@ export interface Props {
 
 export class Wizard extends React.Component<Props> {
   render() {
-    const percentComplete = STEPS.indexOf(location.pathname) / STEPS.length
-
     return (
       <div>
-        <ProgressIndicator percentComplete={percentComplete} />
-
         <Route
           path={`/personalize/${CollectorIntentComponent.slug}`}
           render={routeProps => (
