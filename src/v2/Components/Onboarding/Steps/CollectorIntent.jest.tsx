@@ -1,6 +1,7 @@
 import React from "react"
 import { mount } from "enzyme"
 import CollectorIntent from "./CollectorIntent"
+import { MultiButtonState } from "../../Buttons/MultiStateButton"
 
 describe("CollectorIntent", () => {
   const mockRelay = {}
@@ -42,6 +43,21 @@ describe("CollectorIntent", () => {
       const expectedIntents = ["BUY_ART_AND_DESIGN", "READ_ART_MARKET_NEWS"]
       expect(mockUpdateProfile).toHaveBeenCalledWith(expectedIntents, mockRelay)
       expect(mockHistory.push).toHaveBeenCalledWith("/personalize/artists")
+    })
+  })
+
+  describe("button state", () => {
+    it("starts out with default state", () => {
+      const wrapper = mount(<CollectorIntent {...props} />)
+      const buttonState = wrapper.find("Layout").prop("buttonState")
+      expect(buttonState).toEqual(MultiButtonState.Default)
+    })
+
+    it("uses highlighted state after an option is selected", () => {
+      const wrapper = mount(<CollectorIntent {...props} />)
+      wrapper.find("Link").first().simulate("click")
+      const buttonState = wrapper.find("Layout").prop("buttonState")
+      expect(buttonState).toEqual(MultiButtonState.Highlighted)
     })
   })
 })
