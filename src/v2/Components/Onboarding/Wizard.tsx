@@ -5,13 +5,17 @@ import Artists from "./Steps/Artists"
 import Budget from "./Steps/Budget"
 import CollectorIntent from "./Steps/CollectorIntent"
 import Genes from "./Steps/Genes"
+import { track } from "v2/Artsy"
+import Events from "v2/Utils/Events"
 
 export interface Props {
   redirectTo?: string
   tracking?: TrackingProp
 }
 
-export const Wizard: React.FC<Props> = props => {
+export const Wizard = track(null, {
+  dispatch: Events.postEvent,
+})((props: Props) => {
   return (
     <div>
       <Route
@@ -32,4 +36,4 @@ export const Wizard: React.FC<Props> = props => {
       />
     </div>
   )
-}
+})

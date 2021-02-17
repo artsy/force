@@ -2,6 +2,9 @@ import React from "react"
 import { mount } from "enzyme"
 import CollectorIntent from "./CollectorIntent"
 import { MultiButtonState } from "../../Buttons/MultiStateButton"
+import { useTracking } from "v2/Artsy/Analytics/useTracking"
+
+jest.mock("v2/Artsy/Analytics/useTracking")
 
 describe("CollectorIntent", () => {
   const mockRelay = {}
@@ -9,6 +12,9 @@ describe("CollectorIntent", () => {
     push: jest.fn(),
   }
   const mockUpdateProfile = jest.fn()
+  const mockTrackEvent = jest.fn()
+  const mockTracking = useTracking as jest.Mock
+  mockTracking.mockImplementation(() => ({ trackEvent: mockTrackEvent }))
   const props = {
     history: mockHistory,
     relayEnvironment: mockRelay,
@@ -26,21 +32,23 @@ describe("CollectorIntent", () => {
   })
 
   describe("with no selected intents", () => {
-    it("skips the update and advances to next step", () => {
+    it("skips the update and tracking but does advance to next step", () => {
       const wrapper = mount(<CollectorIntent {...props} />)
       wrapper.find("NextButton").simulate("click")
+      expect(mockTrackEvent).not.toHaveBeenCalled()
       expect(mockUpdateProfile).not.toHaveBeenCalled()
       expect(mockHistory.push).toHaveBeenCalledWith("/personalize/artists")
     })
   })
 
   describe("with some selected intents", () => {
-    it("sends the update and advances to next step", () => {
+    it("sends the update and tracks and also advances to next step", () => {
       const wrapper = mount(<CollectorIntent {...props} />)
       wrapper.find("Link").first().simulate("click")
       wrapper.find("Link").last().simulate("click")
       wrapper.find("NextButton").simulate("click")
       const expectedIntents = ["BUY_ART_AND_DESIGN", "READ_ART_MARKET_NEWS"]
+      expect(mockTrackEvent).toHaveBeenCalled()
       expect(mockUpdateProfile).toHaveBeenCalledWith(expectedIntents, mockRelay)
       expect(mockHistory.push).toHaveBeenCalledWith("/personalize/artists")
     })

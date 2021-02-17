@@ -1,4 +1,5 @@
 import React, { useState } from "react"
+import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { commitMutation, graphql } from "react-relay"
 import styled from "styled-components"
 import { ProgressIndicator } from "v2/Components/ProgressIndicator"
@@ -12,6 +13,7 @@ import { MultiButtonState } from "../../Buttons/MultiStateButton"
 import { media } from "../../Helpers"
 import SelectableToggle from "../SelectableToggle"
 import { Layout } from "./Layout"
+import { useTracking } from "v2/Artsy/Analytics/useTracking"
 
 const intentEnum = {
   "buy art & design": "BUY_ART_AND_DESIGN",
@@ -53,6 +55,7 @@ const OptionsContainer = styled.div`
 `
 
 export const CollectorIntentComponent = props => {
+  const tracking = useTracking()
   const updateProfile = props.updateProfile || updateCollectorProfile
 
   const [selectedOptions, setSelectedOptions] = useState({})
@@ -68,6 +71,14 @@ export const CollectorIntentComponent = props => {
 
     if (selected.length > 0) {
       updateProfile(selected, props.relayEnvironment)
+
+      const dataInput = selected.join(" ")
+      const event = {
+        context_module: ContextModule.onboardingInterests,
+        context_owner_type: OwnerType.onboarding,
+        data_input: dataInput,
+      }
+      tracking.trackEvent(event)
     }
 
     props.history.push("/personalize/artists")
