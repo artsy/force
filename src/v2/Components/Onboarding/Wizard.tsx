@@ -13,29 +13,25 @@ export interface Props {
   tracking?: TrackingProp
 }
 
-export class Wizard extends React.Component<Props> {
-  render() {
-    return (
-      <div>
-        <Route
-          path={`/personalize/${CollectorIntentComponent.slug}`}
-          render={routeProps => (
-            <CollectorIntent {...routeProps} {...this.props} />
-          )}
-        />
-        <Route
-          path={`/personalize/${Artists.slug}`}
-          render={routeProps => <Artists {...routeProps} {...this.props} />}
-        />
-        <Route
-          path={`/personalize/${Genes.slug}`}
-          render={routeProps => <Genes {...routeProps} {...this.props} />}
-        />
-        <Route
-          path={`/personalize/${BudgetComponent.slug}`}
-          render={routeProps => <Budget {...routeProps} {...this.props} />}
-        />
-      </div>
-    )
-  }
+export const Wizard: React.FC<Props> = props => {
+  return (
+    <div>
+      <Route
+        path={`/personalize/${CollectorIntentComponent.slug}`}
+        render={routeProps => <CollectorIntent {...routeProps} {...props} />}
+      />
+      <Route
+        path={`/personalize/${Artists.slug}`}
+        render={routeProps => <Artists {...routeProps} {...props} />}
+      />
+      <Route
+        path={`/personalize/${Genes.slug}`}
+        render={routeProps => <Genes {...routeProps} {...props} />}
+      />
+      <Route
+        path={`/personalize/${BudgetComponent.slug}`}
+        render={routeProps => <Budget {...routeProps} {...props} />}
+      />
+    </div>
+  )
 }

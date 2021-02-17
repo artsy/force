@@ -109,7 +109,7 @@ export class CollectorIntentComponent extends React.Component<Props, State> {
 
     return (
       <>
-        <ProgressIndicator percentComplete={0} />
+        <ProgressIndicator />
         <Layout
           title="How would you like to use Artsy?"
           subtitle="Select all that apply"
