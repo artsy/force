@@ -14,6 +14,28 @@ import { Layout } from "./Layout"
 import track from "react-tracking"
 import Events from "../../../Utils/Events"
 
+const updateUserProfile = (priceRangeMax, relayEnvironment) => {
+  const input = {
+    priceRangeMin: -1,
+    priceRangeMax,
+  }
+
+  commitMutation<BudgetUpdateMyUserProfileMutation>(relayEnvironment, {
+    mutation: graphql`
+      mutation BudgetUpdateMyUserProfileMutation(
+        $input: UpdateMyProfileInput!
+      ) {
+        updateMyUserProfile(input: $input) {
+          user {
+            name
+          }
+        }
+      }
+    `,
+    variables: { input },
+  })
+}
+
 const OptionsContainer = styled.div`
   width: 450px;
   margin: 0 auto 100px;
@@ -27,15 +49,23 @@ const OptionsContainer = styled.div`
   `};
 `
 
+type GeneralProps = Props & StepProps & SystemContextProps
+
+interface BudgetComponentProps extends GeneralProps {
+  updateUserProfile
+}
+
 interface State {
   selection: number | null
 }
 
 @track({}, { dispatch: data => Events.postEvent(data) })
 export class BudgetComponent extends React.Component<
-  Props & StepProps & SystemContextProps,
+  BudgetComponentProps,
   State
 > {
+  static defaultProps = { updateUserProfile }
+
   options = {
     "UNDER $500": 500,
     "UNDER $2,500": 2500,
@@ -57,30 +87,7 @@ export class BudgetComponent extends React.Component<
 
   submit() {
     const priceRangeMax = this.state.selection
-
-    commitMutation<BudgetUpdateMyUserProfileMutation>(
-      this.props.relayEnvironment,
-      {
-        // TODO: Inputs to the mutation might have changed case of the keys!
-        mutation: graphql`
-          mutation BudgetUpdateMyUserProfileMutation(
-            $input: UpdateMyProfileInput!
-          ) {
-            updateMyUserProfile(input: $input) {
-              user {
-                name
-              }
-            }
-          }
-        `,
-        variables: {
-          input: {
-            priceRangeMin: -1,
-            priceRangeMax,
-          },
-        },
-      }
-    )
+    this.props.updateUserProfile(priceRangeMax, this.props.relayEnvironment)
 
     const redirectTo = this.props.redirectTo || "/"
     setTimeout(() => window.location.assign(redirectTo), 500)
