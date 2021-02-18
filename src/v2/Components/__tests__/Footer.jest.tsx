@@ -1,7 +1,7 @@
 import { MockBoot } from "v2/DevTools/MockBoot"
 import { mount } from "enzyme"
 import React from "react"
-import { Footer, LargeFooter, SmallFooter } from "../Footer"
+import { Footer } from "../Footer"
 import { DownloadAppBadge } from "v2/Components/DownloadAppBadge"
 
 describe("Footer", () => {
@@ -22,14 +22,6 @@ describe("Footer", () => {
         <Footer />
       </MockBoot>
     )
-
-  it("is responsive", () => {
-    const small = getSmallFooterWrapper()
-    expect(small.find(SmallFooter).length).toEqual(1)
-
-    const large = getLargeFooterWrapper()
-    expect(large.find(LargeFooter).length).toEqual(1)
-  })
 
   it("renders prompts to download the app", () => {
     const small = getSmallFooterWrapper()
