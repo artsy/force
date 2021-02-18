@@ -1,4 +1,5 @@
 import React, { useState } from "react"
+import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { commitMutation, graphql } from "react-relay"
 import styled from "styled-components"
 import { ProgressIndicator } from "v2/Components/ProgressIndicator"
@@ -84,11 +85,17 @@ export const BudgetComponent = props => {
     const redirectTo = props.redirectTo || "/"
     setTimeout(() => window.location.assign(redirectTo), 500)
 
-    const event: any = {
+    const event = {
+      context_module: ContextModule.onboardingInterests,
+      context_owner_type: OwnerType.onboarding,
+      data_input: selectedOption,
+    }
+    tracking.trackEvent(event)
+
+    const completedEvent: any = {
       action: "Completed Onboarding",
     }
-
-    tracking.trackEvent(event)
+    tracking.trackEvent(completedEvent)
   }
 
   return (

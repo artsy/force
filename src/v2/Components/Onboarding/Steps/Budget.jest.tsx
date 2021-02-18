@@ -43,13 +43,13 @@ describe("Budget", () => {
   })
 
   describe("with a budget selected", () => {
-    it("sends the update, tracks and redirects", () => {
+    it("sends the update, tracks twice and redirects", () => {
       const wrapper = mount(<Budget {...defaultProps} />)
       wrapper.find("Link").first().simulate("click")
       wrapper.find("NextButton").simulate("click")
       jest.runAllTimers()
       expect(mockUpdateProfile).toHaveBeenCalledWith(500, mockRelay)
-      expect(mockTrackEvent).toHaveBeenCalled()
+      expect(mockTrackEvent.mock.calls.length).toEqual(2)
       expect(window.location.assign).toHaveBeenCalledWith("/")
     })
   })
