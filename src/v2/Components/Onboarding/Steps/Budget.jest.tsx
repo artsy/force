@@ -1,17 +1,21 @@
 import React from "react"
 import { mount } from "enzyme"
 import Budget from "./Budget"
+import { useTracking } from "v2/Artsy/Analytics/useTracking"
+
+jest.mock("v2/Artsy/Analytics/useTracking")
 
 jest.useFakeTimers()
 
 describe("Budget", () => {
   const mockRelay = {}
-  const mockTracking = { trackEvent: jest.fn() }
+  const mockTrackEvent = jest.fn()
+  const mockTracking = useTracking as jest.Mock
+  mockTracking.mockImplementation(() => ({ trackEvent: mockTrackEvent }))
   const mockUpdateProfile = jest.fn()
 
   const defaultProps = {
     relayEnvironment: mockRelay,
-    tracking: mockTracking,
     updateUserProfile: mockUpdateProfile,
   }
 
@@ -33,7 +37,7 @@ describe("Budget", () => {
       wrapper.find("NextButton").simulate("click")
       jest.runAllTimers()
       expect(mockUpdateProfile).not.toHaveBeenCalled()
-      expect(mockTracking.trackEvent).not.toHaveBeenCalled()
+      expect(mockTrackEvent).not.toHaveBeenCalled()
       expect(window.location.assign).not.toHaveBeenCalled()
     })
   })
@@ -45,7 +49,7 @@ describe("Budget", () => {
       wrapper.find("NextButton").simulate("click")
       jest.runAllTimers()
       expect(mockUpdateProfile).toHaveBeenCalledWith(500, mockRelay)
-      expect(mockTracking.trackEvent).toHaveBeenCalled()
+      expect(mockTrackEvent).toHaveBeenCalled()
       expect(window.location.assign).toHaveBeenCalledWith("/")
     })
   })
