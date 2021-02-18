@@ -266,6 +266,12 @@ const Link = styled(RouterLink)`
   align-items: center;
   padding: ${space(1)}px 0;
 `
+const CCPAWrapper = styled.p`
+  display: flex;
+  text-decoration: none;
+  align-items: center;
+  padding: ${space(1)}px 0;
+`
 
 const PolicyLinks = () => (
   <>
@@ -298,11 +304,13 @@ const PolicyLinks = () => (
     </Link>
 
     <Link to="/conditions-of-sale">
-      <Text variant="caption" color="black60">
+      <Text variant="caption" color="black60" mr={1}>
         Conditions of Sale
       </Text>
     </Link>
 
-    <CCPARequest />
+    <CCPAWrapper>
+      <CCPARequest />
+    </CCPAWrapper>
   </>
 )
