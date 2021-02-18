@@ -25,6 +25,18 @@ import {
   NAV_BAR_BOTTOM_TIER_HEIGHT,
 } from "./constants"
 
+/**
+ * Old Force pages have the navbar height hardcoded in several places. If
+ * you're modifying the navbar you may need to update these files:
+ *
+ * src/desktop/apps/articles/stylesheets/articles.styl
+ * src/desktop/apps/fair_organizer/stylesheets/index.styl
+ * src/desktop/components/stylus_lib/index.styl
+ *
+ * Additional context:
+ * https://github.com/artsy/force/pull/6991
+ */
+
 const NavBarContainer = styled(Flex)`
   position: relative;
   background-color: ${color("white100")};
