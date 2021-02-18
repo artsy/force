@@ -11,9 +11,10 @@ import { RelayProp, commitMutation, graphql } from "react-relay"
 import { ConnectionHandler, RecordSourceSelectorProxy } from "relay-runtime"
 import styled from "styled-components"
 import { CreditCardType } from "./UserSettingsPayments"
+import { PaymentSection_me } from "v2/__generated__/PaymentSection_me.graphql"
 interface SavedCreditCardsProps {
   creditCards: CreditCardType[]
-  me: UserSettingsPayments_me
+  me: UserSettingsPayments_me | PaymentSection_me
   relay?: RelayProp
 }
 
@@ -24,7 +25,7 @@ interface CreditCardsState {
 
 interface CreditCardProps {
   creditCard?: CreditCardType
-  me: UserSettingsPayments_me
+  me: UserSettingsPayments_me | PaymentSection_me
   relay?: RelayProp
 }
 
