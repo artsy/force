@@ -2522,7 +2522,6 @@ type CommerceBuyOrder implements CommerceOrder {
   ): String
   commissionFeeCents: Int
   commissionRate: Float
-  conversation: Conversation
   createdAt(
     format: String
 
@@ -2535,7 +2534,6 @@ type CommerceBuyOrder implements CommerceOrder {
   displayCommissionRate: String
   id: ID!
   internalID: ID!
-  isInquiryOrder: Boolean!
   itemsTotal(
     decimal: String = "."
 
@@ -3283,7 +3281,6 @@ interface CommerceOrder {
   ): String
   commissionFeeCents: Int
   commissionRate: Float
-  conversation: Conversation
   createdAt(
     format: String
 
@@ -3296,7 +3293,6 @@ interface CommerceOrder {
   displayCommissionRate: String
   id: ID!
   internalID: ID!
-  isInquiryOrder: Boolean!
   itemsTotal(
     decimal: String = "."
 
@@ -8728,7 +8724,10 @@ type PublishViewingRoomPayload {
 
 type Query {
   # Do not use (only used internally for stitching)
-  _do_not_use_conversation: Conversation
+  _do_not_use_conversation(
+    # The ID of the Conversation
+    id: String!
+  ): Conversation
 
   # Do not use (only used internally for stitching)
   _do_not_use_image: Image
@@ -11322,7 +11321,10 @@ union VanityURLEntityType = Fair | Partner
 # A wildcard used to support complex root queries in Relay
 type Viewer {
   # Do not use (only used internally for stitching)
-  _do_not_use_conversation: Conversation
+  _do_not_use_conversation(
+    # The ID of the Conversation
+    id: String!
+  ): Conversation
 
   # Do not use (only used internally for stitching)
   _do_not_use_image: Image
