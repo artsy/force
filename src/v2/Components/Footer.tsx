@@ -266,11 +266,8 @@ const Link = styled(RouterLink)`
   align-items: center;
   padding: ${space(1)}px 0;
 `
-const CCPAWrapper = styled.p`
-  display: flex;
+const CCPAWrapper = styled(Flex)`
   text-decoration: none;
-  align-items: center;
-  padding: ${space(1)}px 0;
 `
 
 const PolicyLinks = () => (
@@ -309,7 +306,7 @@ const PolicyLinks = () => (
       </Text>
     </Link>
 
-    <CCPAWrapper>
+    <CCPAWrapper py={1} justifyContent="center">
       <CCPARequest />
     </CCPAWrapper>
   </>
