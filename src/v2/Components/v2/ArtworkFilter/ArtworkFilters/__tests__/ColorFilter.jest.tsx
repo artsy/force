@@ -22,9 +22,23 @@ describe("ColorFilter", () => {
     return <ColorFilter expanded />
   }
 
-  it("selects a color based on svg swatch click", () => {
+  it("initially renders the primary colors", () => {
     const wrapper = getWrapper()
-    wrapper.find('[fill="#F7923A"]').simulate("click")
-    expect(context.filters.color).toEqual("orange")
+
+    expect(wrapper.find("Checkbox")).toHaveLength(7)
+  })
+
+  it("selects a color when clicked", () => {
+    const wrapper = getWrapper()
+
+    expect(context.filters.color).toBeUndefined()
+
+    wrapper.find("Checkbox").first().simulate("click")
+
+    expect(context.filters.color).toEqual("black-and-white")
+
+    wrapper.find("Checkbox").last().simulate("click")
+
+    expect(context.filters.color).toEqual("gold")
   })
 })
