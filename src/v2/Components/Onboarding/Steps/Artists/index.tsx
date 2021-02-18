@@ -1,10 +1,10 @@
 import { throttle } from "lodash"
 import React from "react"
 import styled from "styled-components"
-
+import { ProgressIndicator } from "v2/Components/ProgressIndicator"
 import Colors from "../../../../Assets/Colors"
 import Input from "../../../Input"
-
+import { Spacer } from "@artsy/palette"
 import { MultiButtonState } from "../../../Buttons/MultiStateButton"
 import { media } from "../../../Helpers"
 import { StepProps } from "../../Types"
@@ -28,8 +28,6 @@ interface State {
 }
 
 export default class Artists extends React.Component<StepProps, State> {
-  static slug: "artists" = "artists"
-
   state = {
     inputText: "",
     inputTextQuery: "",
@@ -43,8 +41,7 @@ export default class Artists extends React.Component<StepProps, State> {
   }
 
   submit() {
-    const increaseBy = this.state.followCount >= 4 ? 2 : 1
-    this.props.onNextButtonPressed(increaseBy)
+    this.props.history.push("/personalize/categories")
   }
 
   componentDidMount() {
@@ -72,32 +69,35 @@ export default class Artists extends React.Component<StepProps, State> {
 
   render() {
     return (
-      <Layout
-        title="Who are your favorite artists?"
-        subtitle="Follow one or more"
-        onNextButtonPressed={this.submit.bind(this)}
-        buttonState={
-          this.state.followCount > 0
-            ? MultiButtonState.Highlighted
-            : MultiButtonState.Default
-        }
-      >
-        <OnboardingSearchBox>
-          <Input
-            placeholder={"Search artists..."}
-            block
-            onInput={this.searchTextChanged.bind(this)}
-            onPaste={this.searchTextChanged.bind(this)}
-            onCut={this.searchTextChanged.bind(this)}
-            autoFocus
-          />
-          <div style={{ marginBottom: "35px" }} />
-          <ArtistList
-            searchQuery={this.state.inputTextQuery}
-            updateFollowCount={this.updateFollowCount.bind(this)}
-          />
-        </OnboardingSearchBox>
-      </Layout>
+      <>
+        <ProgressIndicator percentComplete={0.25} />
+        <Layout
+          title="Who are your favorite artists?"
+          subtitle="Follow one or more"
+          onNextButtonPressed={this.submit.bind(this)}
+          buttonState={
+            this.state.followCount > 0
+              ? MultiButtonState.Highlighted
+              : MultiButtonState.Default
+          }
+        >
+          <OnboardingSearchBox>
+            <Input
+              placeholder={"Search artists..."}
+              block
+              onInput={this.searchTextChanged.bind(this)}
+              onPaste={this.searchTextChanged.bind(this)}
+              onCut={this.searchTextChanged.bind(this)}
+              autoFocus
+            />
+            <Spacer my={2} />
+            <ArtistList
+              searchQuery={this.state.inputTextQuery}
+              updateFollowCount={this.updateFollowCount.bind(this)}
+            />
+          </OnboardingSearchBox>
+        </Layout>
+      </>
     )
   }
 }

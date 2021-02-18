@@ -1,15 +1,18 @@
 import React from "react"
 import { commitMutation, graphql } from "react-relay"
 import styled from "styled-components"
-
+import { ProgressIndicator } from "v2/Components/ProgressIndicator"
 import { BudgetUpdateMyUserProfileMutation } from "v2/__generated__/BudgetUpdateMyUserProfileMutation.graphql"
 import { SystemContextProps, withSystemContext } from "v2/Artsy"
 import Colors from "../../../Assets/Colors"
 import { MultiButtonState } from "../../Buttons/MultiStateButton"
 import { media } from "../../Helpers"
+import { Props } from "../Wizard"
 import SelectableToggle from "../SelectableToggle"
 import { StepProps } from "../Types"
 import { Layout } from "./Layout"
+import track from "react-tracking"
+import Events from "../../../Utils/Events"
 
 const OptionsContainer = styled.div`
   width: 450px;
@@ -28,12 +31,11 @@ interface State {
   selection: number | null
 }
 
+@track({}, { dispatch: data => Events.postEvent(data) })
 export class BudgetComponent extends React.Component<
-  StepProps & SystemContextProps,
+  Props & StepProps & SystemContextProps,
   State
 > {
-  static slug: "budget" = "budget"
-
   options = {
     "UNDER $500": 500,
     "UNDER $2,500": 2500,
@@ -80,7 +82,12 @@ export class BudgetComponent extends React.Component<
       }
     )
 
-    this.props.onNextButtonPressed()
+    const redirectTo = this.props.redirectTo || "/"
+    setTimeout(() => window.location.assign(redirectTo), 500)
+
+    this.props.tracking.trackEvent({
+      action: "Completed Onboarding",
+    })
   }
 
   render() {
@@ -94,25 +101,25 @@ export class BudgetComponent extends React.Component<
     ))
 
     return (
-      <Layout
-        title="What’s your maximum artwork budget?"
-        subtitle="Select one"
-        onNextButtonPressed={this.state.selection && this.submit.bind(this)}
-        isLastStep
-        buttonState={
-          this.state.selection
-            ? MultiButtonState.Highlighted
-            : MultiButtonState.Default
-        }
-      >
-        <OptionsContainer>{options}</OptionsContainer>
-      </Layout>
+      <>
+        <ProgressIndicator percentComplete={0.75} />
+        <Layout
+          title="What’s your maximum artwork budget?"
+          subtitle="Select one"
+          onNextButtonPressed={this.state.selection && this.submit.bind(this)}
+          isLastStep
+          buttonState={
+            this.state.selection
+              ? MultiButtonState.Highlighted
+              : MultiButtonState.Default
+          }
+        >
+          <OptionsContainer>{options}</OptionsContainer>
+        </Layout>
+      </>
     )
   }
 }
 
 const Budget = withSystemContext(BudgetComponent)
-// tslint:disable:no-string-literal
-Budget["slug"] = BudgetComponent.slug
-
 export default Budget

@@ -1,7 +1,7 @@
 import React from "react"
 import { commitMutation, graphql } from "react-relay"
 import styled from "styled-components"
-
+import { ProgressIndicator } from "v2/Components/ProgressIndicator"
 import {
   CollectorIntentUpdateCollectorProfileMutation,
   Intents,
@@ -34,8 +34,6 @@ interface State {
 }
 
 export class CollectorIntentComponent extends React.Component<Props, State> {
-  static slug: "interests" = "interests"
-
   static intentEnum = {
     "buy art & design": "BUY_ART_AND_DESIGN",
     "sell art & design": "SELL_ART_AND_DESIGN",
@@ -92,7 +90,7 @@ export class CollectorIntentComponent extends React.Component<Props, State> {
       }
     )
 
-    this.props.onNextButtonPressed()
+    this.props.history.push("/personalize/artists")
   }
 
   render() {
@@ -108,24 +106,24 @@ export class CollectorIntentComponent extends React.Component<Props, State> {
     ))
 
     return (
-      <Layout
-        title="How would you like to use Artsy?"
-        subtitle="Select all that apply"
-        onNextButtonPressed={this.submit.bind(this)}
-        buttonState={
-          this.selectedIntents().length > 0
-            ? MultiButtonState.Highlighted
-            : MultiButtonState.Default
-        }
-      >
-        <OptionsContainer>{options}</OptionsContainer>
-      </Layout>
+      <>
+        <ProgressIndicator />
+        <Layout
+          title="How would you like to use Artsy?"
+          subtitle="Select all that apply"
+          onNextButtonPressed={this.submit.bind(this)}
+          buttonState={
+            this.selectedIntents().length > 0
+              ? MultiButtonState.Highlighted
+              : MultiButtonState.Default
+          }
+        >
+          <OptionsContainer>{options}</OptionsContainer>
+        </Layout>
+      </>
     )
   }
 }
 
 const CollectorIntent = withSystemContext(CollectorIntentComponent)
-// tslint:disable:no-string-literal
-CollectorIntent["slug"] = CollectorIntentComponent.slug
-
 export default CollectorIntent

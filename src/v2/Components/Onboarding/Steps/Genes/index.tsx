@@ -1,7 +1,7 @@
 import { throttle } from "lodash"
 import React from "react"
 import styled from "styled-components"
-
+import { ProgressIndicator } from "v2/Components/ProgressIndicator"
 import Colors from "../../../../Assets/Colors"
 import Input from "../../../Input"
 
@@ -28,8 +28,6 @@ interface State {
 }
 
 export default class Genes extends React.Component<StepProps, State> {
-  static slug = "categories"
-
   state = { inputText: "", inputTextQuery: "", followCount: 0 }
 
   updateFollowCount(count: number) {
@@ -60,41 +58,43 @@ export default class Genes extends React.Component<StepProps, State> {
   }
 
   handleNextButtonClick() {
-    const increaseBy = 1
-    this.props.onNextButtonPressed(increaseBy)
+    this.props.history.push("/personalize/budget")
   }
 
   render() {
     return (
-      <Layout
-        title="What categories most interest you?"
-        subtitle="Follow one or more"
-        onNextButtonPressed={this.handleNextButtonClick.bind(this)}
-        buttonState={
-          this.state.followCount > 0
-            ? MultiButtonState.Highlighted
-            : MultiButtonState.Default
-        }
-      >
-        <OnboardingSearchBox>
-          <Input
-            placeholder={"Search categories..."}
-            block
-            onInput={this.searchTextChanged}
-            onPaste={this.searchTextChanged}
-            onCut={this.searchTextChanged}
-            value={this.state.inputText}
-            autoFocus
-          />
-          <div style={{ marginBottom: "35px" }} />
-          {
-            <GeneList
-              searchQuery={this.state.inputTextQuery}
-              updateFollowCount={this.updateFollowCount.bind(this)}
-            />
+      <>
+        <ProgressIndicator percentComplete={0.5} />
+        <Layout
+          title="What categories most interest you?"
+          subtitle="Follow one or more"
+          onNextButtonPressed={this.handleNextButtonClick.bind(this)}
+          buttonState={
+            this.state.followCount > 0
+              ? MultiButtonState.Highlighted
+              : MultiButtonState.Default
           }
-        </OnboardingSearchBox>
-      </Layout>
+        >
+          <OnboardingSearchBox>
+            <Input
+              placeholder={"Search categories..."}
+              block
+              onInput={this.searchTextChanged}
+              onPaste={this.searchTextChanged}
+              onCut={this.searchTextChanged}
+              value={this.state.inputText}
+              autoFocus
+            />
+            <div style={{ marginBottom: "35px" }} />
+            {
+              <GeneList
+                searchQuery={this.state.inputTextQuery}
+                updateFollowCount={this.updateFollowCount.bind(this)}
+              />
+            }
+          </OnboardingSearchBox>
+        </Layout>
+      </>
     )
   }
 }
