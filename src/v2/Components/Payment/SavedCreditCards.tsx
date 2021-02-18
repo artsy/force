@@ -135,10 +135,17 @@ export class CreditCard extends React.Component<
       const creditCardEdge = creditCardOrErrorEdge.getLinkedRecord("creditCard")
       const creditCardId = creditCardEdge.getValue("id")
       const meStore = store.get(this.props.me.id)
-      const connection = ConnectionHandler.getConnection(
+      let connection = null
+      connection = ConnectionHandler.getConnection(
         meStore,
         "UserSettingsPayments_creditCards"
       )
+      if (!connection) {
+        connection = ConnectionHandler.getConnection(
+          meStore,
+          "PaymentSection_creditCards"
+        )
+      }
       ConnectionHandler.deleteNode(connection, creditCardId)
     }
   }
