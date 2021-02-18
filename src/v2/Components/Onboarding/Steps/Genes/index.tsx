@@ -1,7 +1,7 @@
 import { throttle } from "lodash"
 import React from "react"
 import styled from "styled-components"
-import { ProgressIndicator } from "../../../ProgressIndicator"
+import { ProgressIndicator } from "v2/Components/ProgressIndicator"
 import Colors from "../../../../Assets/Colors"
 import Input from "../../../Input"
 

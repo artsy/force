@@ -1,7 +1,7 @@
 import React from "react"
 import { commitMutation, graphql } from "react-relay"
 import styled from "styled-components"
-import { ProgressIndicator } from "../../ProgressIndicator"
+import { ProgressIndicator } from "v2/Components/ProgressIndicator"
 import { BudgetUpdateMyUserProfileMutation } from "v2/__generated__/BudgetUpdateMyUserProfileMutation.graphql"
 import { SystemContextProps, withSystemContext } from "v2/Artsy"
 import Colors from "../../../Assets/Colors"

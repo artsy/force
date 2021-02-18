@@ -1,7 +1,7 @@
 import React from "react"
 import { commitMutation, graphql } from "react-relay"
 import styled from "styled-components"
-import { ProgressIndicator } from "../../ProgressIndicator"
+import { ProgressIndicator } from "v2/Components/ProgressIndicator"
 import {
   CollectorIntentUpdateCollectorProfileMutation,
   Intents,
