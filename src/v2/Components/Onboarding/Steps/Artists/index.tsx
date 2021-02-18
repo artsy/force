@@ -4,7 +4,7 @@ import styled from "styled-components"
 import { ProgressIndicator } from "v2/Components/ProgressIndicator"
 import Colors from "../../../../Assets/Colors"
 import Input from "../../../Input"
-
+import { Spacer } from "@artsy/palette"
 import { MultiButtonState } from "../../../Buttons/MultiStateButton"
 import { media } from "../../../Helpers"
 import { StepProps } from "../../Types"
@@ -90,7 +90,7 @@ export default class Artists extends React.Component<StepProps, State> {
               onCut={this.searchTextChanged.bind(this)}
               autoFocus
             />
-            <div style={{ marginBottom: "35px" }} />
+            <Spacer my={2} />
             <ArtistList
               searchQuery={this.state.inputTextQuery}
               updateFollowCount={this.updateFollowCount.bind(this)}
