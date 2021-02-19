@@ -26,7 +26,46 @@ query paymentRoutes_PaymentQuery {
 
 fragment PaymentApp_me on Me {
   name
+  ...UserSettingsAddresses_me
   ...UserSettingsPayments_me
+  addressCount: addressConnection {
+    totalCount
+  }
+}
+
+fragment SavedAddresses_me on Me {
+  addressConnection(first: 30) {
+    edges {
+      node {
+        id
+        internalID
+        addressLine1
+        addressLine2
+        addressLine3
+        city
+        country
+        isDefault
+        name
+        phoneNumber
+        postalCode
+        region
+        __typename
+      }
+      cursor
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+      hasPreviousPage
+      startCursor
+    }
+  }
+}
+
+fragment UserSettingsAddresses_me on Me {
+  ...SavedAddresses_me
+  id
+  internalID
 }
 
 fragment UserSettingsPayments_me on Me {
@@ -58,17 +97,59 @@ var v0 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
+  "name": "name",
+  "storageKey": null
+},
+v1 = [
+  {
+    "kind": "Literal",
+    "name": "first",
+    "value": 30
+  }
+],
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v1 = {
+v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "internalID",
   "storageKey": null
 },
-v2 = [
+v4 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "__typename",
+  "storageKey": null
+},
+v5 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "cursor",
+  "storageKey": null
+},
+v6 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "endCursor",
+  "storageKey": null
+},
+v7 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "hasNextPage",
+  "storageKey": null
+},
+v8 = [
   {
     "kind": "Literal",
     "name": "first",
@@ -115,18 +196,149 @@ return {
         "name": "me",
         "plural": false,
         "selections": [
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "name",
-            "storageKey": null
-          },
           (v0/*: any*/),
-          (v1/*: any*/),
           {
             "alias": null,
-            "args": (v2/*: any*/),
+            "args": (v1/*: any*/),
+            "concreteType": "UserAddressConnection",
+            "kind": "LinkedField",
+            "name": "addressConnection",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "UserAddressEdge",
+                "kind": "LinkedField",
+                "name": "edges",
+                "plural": true,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "UserAddress",
+                    "kind": "LinkedField",
+                    "name": "node",
+                    "plural": false,
+                    "selections": [
+                      (v2/*: any*/),
+                      (v3/*: any*/),
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "addressLine1",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "addressLine2",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "addressLine3",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "city",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "country",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "isDefault",
+                        "storageKey": null
+                      },
+                      (v0/*: any*/),
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "phoneNumber",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "postalCode",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "region",
+                        "storageKey": null
+                      },
+                      (v4/*: any*/)
+                    ],
+                    "storageKey": null
+                  },
+                  (v5/*: any*/)
+                ],
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "PageInfo",
+                "kind": "LinkedField",
+                "name": "pageInfo",
+                "plural": false,
+                "selections": [
+                  (v6/*: any*/),
+                  (v7/*: any*/),
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "hasPreviousPage",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "startCursor",
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              }
+            ],
+            "storageKey": "addressConnection(first:30)"
+          },
+          {
+            "alias": null,
+            "args": (v1/*: any*/),
+            "filters": null,
+            "handle": "connection",
+            "key": "SavedAddresses_addressConnection",
+            "kind": "LinkedHandle",
+            "name": "addressConnection"
+          },
+          (v2/*: any*/),
+          (v3/*: any*/),
+          {
+            "alias": null,
+            "args": (v8/*: any*/),
             "concreteType": "CreditCardConnection",
             "kind": "LinkedField",
             "name": "creditCards",
@@ -148,8 +360,8 @@ return {
                     "name": "node",
                     "plural": false,
                     "selections": [
-                      (v0/*: any*/),
-                      (v1/*: any*/),
+                      (v2/*: any*/),
+                      (v3/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -178,23 +390,11 @@ return {
                         "name": "expirationMonth",
                         "storageKey": null
                       },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "__typename",
-                        "storageKey": null
-                      }
+                      (v4/*: any*/)
                     ],
                     "storageKey": null
                   },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "cursor",
-                    "storageKey": null
-                  }
+                  (v5/*: any*/)
                 ],
                 "storageKey": null
               },
@@ -206,20 +406,8 @@ return {
                 "name": "pageInfo",
                 "plural": false,
                 "selections": [
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "endCursor",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "hasNextPage",
-                    "storageKey": null
-                  }
+                  (v6/*: any*/),
+                  (v7/*: any*/)
                 ],
                 "storageKey": null
               }
@@ -228,12 +416,30 @@ return {
           },
           {
             "alias": null,
-            "args": (v2/*: any*/),
+            "args": (v8/*: any*/),
             "filters": [],
             "handle": "connection",
             "key": "UserSettingsPayments_creditCards",
             "kind": "LinkedHandle",
             "name": "creditCards"
+          },
+          {
+            "alias": "addressCount",
+            "args": null,
+            "concreteType": "UserAddressConnection",
+            "kind": "LinkedField",
+            "name": "addressConnection",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "totalCount",
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
           }
         ],
         "storageKey": null
@@ -245,7 +451,7 @@ return {
     "metadata": {},
     "name": "paymentRoutes_PaymentQuery",
     "operationKind": "query",
-    "text": "query paymentRoutes_PaymentQuery {\n  me {\n    ...PaymentApp_me\n    id\n  }\n}\n\nfragment PaymentApp_me on Me {\n  name\n  ...UserSettingsPayments_me\n}\n\nfragment UserSettingsPayments_me on Me {\n  id\n  internalID\n  creditCards(first: 100) {\n    edges {\n      node {\n        id\n        internalID\n        brand\n        lastDigits\n        expirationYear\n        expirationMonth\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query paymentRoutes_PaymentQuery {\n  me {\n    ...PaymentApp_me\n    id\n  }\n}\n\nfragment PaymentApp_me on Me {\n  name\n  ...UserSettingsAddresses_me\n  ...UserSettingsPayments_me\n  addressCount: addressConnection {\n    totalCount\n  }\n}\n\nfragment SavedAddresses_me on Me {\n  addressConnection(first: 30) {\n    edges {\n      node {\n        id\n        internalID\n        addressLine1\n        addressLine2\n        addressLine3\n        city\n        country\n        isDefault\n        name\n        phoneNumber\n        postalCode\n        region\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n\nfragment UserSettingsAddresses_me on Me {\n  ...SavedAddresses_me\n  id\n  internalID\n}\n\nfragment UserSettingsPayments_me on Me {\n  id\n  internalID\n  creditCards(first: 100) {\n    edges {\n      node {\n        id\n        internalID\n        brand\n        lastDigits\n        expirationYear\n        expirationMonth\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();

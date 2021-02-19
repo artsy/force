@@ -1,4 +1,4 @@
-import { Box, Serif, Theme } from "@artsy/palette"
+import { Box, Serif, Theme, Text } from "@artsy/palette"
 import { UserSettingsPayments_me } from "v2/__generated__/UserSettingsPayments_me.graphql"
 import { UserSettingsPaymentsCreditCard } from "v2/__generated__/UserSettingsPaymentsCreditCard.graphql"
 import { UserSettingsPaymentsQuery } from "v2/__generated__/UserSettingsPaymentsQuery.graphql"
@@ -21,7 +21,10 @@ export class UserSettingsPayments extends React.Component<
   UserSettingsPaymentsProps
 > {
   render() {
-    const creditCardEdges = get(this.props, props => props.me.creditCards.edges)
+    const creditCardEdges = get(
+      this.props,
+      props => props?.me?.creditCards?.edges ?? []
+    )
     const creditCards = creditCardEdges.map(({ node: creditCard }) => {
       return creditCard
     })
@@ -30,16 +33,21 @@ export class UserSettingsPayments extends React.Component<
       <Theme>
         <>
           {creditCards && creditCards.length ? (
-            <Box maxWidth={542}>
-              <SavedCreditCards
-                creditCards={creditCards as UserSettingsPaymentsCreditCard[]}
-                relay={this.props.relay}
-                me={this.props.me}
-              />
-              <Serif size="6" pb={3} pt={2}>
-                Add new card
-              </Serif>
-            </Box>
+            <>
+              <Text variant="subtitle" mb={3}>
+                Saved Cards
+              </Text>
+              <Box maxWidth={542}>
+                <SavedCreditCards
+                  creditCards={creditCards as UserSettingsPaymentsCreditCard[]}
+                  relay={this.props.relay}
+                  me={this.props.me}
+                />
+                <Serif size="6" pb={3} pt={2}>
+                  Add new card
+                </Serif>
+              </Box>
+            </>
           ) : null}
           <PaymentFormWrapper relay={this.props.relay} me={this.props.me} />
         </>

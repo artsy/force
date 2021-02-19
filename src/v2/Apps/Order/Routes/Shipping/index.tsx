@@ -97,7 +97,7 @@ const logger = createLogger("Order/Routes/Shipping/index.tsx")
 @track()
 export class ShippingRoute extends Component<ShippingProps, ShippingState> {
   state: ShippingState = {
-    shippingOption: (this.props.order.requestedFulfillment &&
+    shippingOption: (this.props?.order?.requestedFulfillment &&
     this.props.order.requestedFulfillment.__typename !== "CommerceShip"
       ? "PICKUP"
       : "SHIP") as CommerceOrderFulfillmentTypeEnum,
@@ -388,6 +388,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
                     me={this.props.me}
                     onSelect={value => onSelectSavedAddress(value)}
                     handleClickEdit={this.handleClickEdit}
+                    inCollectorProfile={false}
                   />
                 )}
                 <Collapse

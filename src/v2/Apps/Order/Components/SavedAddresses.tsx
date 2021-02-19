@@ -1,10 +1,12 @@
 import {
+  Box,
   RadioGroup,
   BorderedRadio,
   Spacer,
   Flex,
   Text,
   RadioProps,
+  BorderBox,
 } from "@artsy/palette"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -29,37 +31,39 @@ interface AddressListProps {
 const SavedAddressItem: React.FC<AddressListProps> = (
   props
 ): React.ReactElement<RadioProps> => {
-  const { address, handleClickEdit, index } = props
-  const {
-    addressLine1,
-    addressLine2,
-    addressLine3,
-    city,
-    country,
-    name,
-    phoneNumber,
-    postalCode,
-    region,
-  } = address
-
+  const handleClickEdit = props?.handleClickEdit
+  const index = props?.index
+  const address = props?.address
+  const addressLine1 = address?.addressLine1 ?? ""
+  const addressLine2 = address?.addressLine2 ?? ""
+  const addressLine3 = address?.addressLine3 ?? ""
+  const city = address?.city ?? ""
+  const country = address?.country ?? ""
+  const name = address?.name ?? ""
+  const phoneNumber = address?.phoneNumber ?? ""
+  const postalCode = address?.postalCode ?? ""
+  const region = address?.region ?? ""
   const formattedAddressLine = [city, region, country, postalCode]
     .filter(el => el)
     .join(", ")
+  const nameAndAddressLine = [name, addressLine1, addressLine2, addressLine3]
+
   return (
     <Flex width="100%">
       <Flex flexDirection="column">
-        {[name, addressLine1, addressLine2, addressLine3].map(
-          (line, index) =>
-            line && (
-              <Text
-                style={{ textTransform: "capitalize" }}
-                variant="text"
-                key={index}
-              >
-                {line}
-              </Text>
-            )
-        )}
+        {nameAndAddressLine ??
+          [].map(
+            (line: string, index: number) =>
+              line && (
+                <Text
+                  style={{ textTransform: "capitalize" }}
+                  variant="text"
+                  key={index}
+                >
+                  {line}
+                </Text>
+              )
+          )}
         <Text textColor="black60" style={{ textTransform: "capitalize" }}>
           {formattedAddressLine}
         </Text>
@@ -91,13 +95,26 @@ const defaultAddressIndex = addressList => {
 
 interface Props {
   me: SavedAddresses_me
-  onSelect: (string) => void
+  onSelect?: (string) => void
   handleClickEdit: (number) => void
+  inCollectorProfile: boolean
 }
 
 const SavedAddresses: React.FC<Props> = props => {
-  const { onSelect, handleClickEdit, me } = props
-  const addressList = me.addressConnection.edges
+  const { onSelect, handleClickEdit, me, inCollectorProfile } = props
+  const addressList = me?.addressConnection?.edges ?? []
+
+  const collectorProfileAddressItems = addressList.map((address, index) => {
+    return (
+      <BorderBox p={2} width="100%">
+        <SavedAddressItem
+          index={index}
+          address={address.node}
+          handleClickEdit={handleClickEdit}
+        />
+      </BorderBox>
+    )
+  })
 
   const addressItems = addressList
     .map((address, index) => {
@@ -122,7 +139,9 @@ const SavedAddresses: React.FC<Props> = props => {
       </BorderedRadio>,
     ])
 
-  return (
+  return inCollectorProfile ? (
+    <Box>{collectorProfileAddressItems}</Box>
+  ) : (
     <>
       <RadioGroup
         onSelect={onSelect}
