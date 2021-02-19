@@ -5,10 +5,10 @@ import {
   Input,
   Link,
   Modal,
-  Sans,
   Separator,
   Serif,
   TextArea,
+  Text,
 } from "@artsy/palette"
 import { CCPARequestMutation } from "v2/__generated__/CCPARequestMutation.graphql"
 import { useSystemContext } from "v2/Artsy"
@@ -39,9 +39,7 @@ const IconContainer = styled(Box)`
 const Feedback = ({ setNotes, notes, triggeredValidation }) => {
   return (
     <>
-      <Sans weight="medium" size="3">
-        Your message
-      </Sans>
+      <Text variant="mediumText">Your message</Text>
       <FeedbackTextAreaContainer mt={1}>
         <TextArea
           onChange={({ value }) => {
@@ -312,7 +310,9 @@ export const CCPARequest: React.SFC<Props> = props => {
   return (
     <>
       <Box style={{ cursor: "pointer" }} onClick={() => setShowModal(true)}>
-        Do not sell my personal information
+        <Text variant="caption" color="black60">
+          Do not sell my personal information
+        </Text>
       </Box>
       <Modal
         title={title}

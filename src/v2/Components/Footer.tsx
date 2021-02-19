@@ -20,6 +20,7 @@ import {
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import { DownloadAppBadge } from "v2/Components/DownloadAppBadge"
 import { ContextModule } from "@artsy/cohesion"
+import { CCPARequest } from "./CCPARequest"
 
 const Column = styled(Flex).attrs({
   flex: 1,
@@ -234,6 +235,9 @@ const Link = styled(RouterLink)`
   align-items: center;
   padding: ${space(1)}px 0;
 `
+const CCPAWrapper = styled(Flex)`
+  text-decoration: none;
+`
 
 const PolicyLinks = () => (
   <>
@@ -266,9 +270,13 @@ const PolicyLinks = () => (
     </Link>
 
     <Link to="/conditions-of-sale">
-      <Text variant="caption" color="black60">
+      <Text variant="caption" color="black60" mr={1}>
         Conditions of Sale
       </Text>
     </Link>
+
+    <CCPAWrapper py={1} justifyContent="center">
+      <CCPARequest />
+    </CCPAWrapper>
   </>
 )
