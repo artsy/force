@@ -5,6 +5,18 @@ const AuctionsApp = loadable(() => import("./AuctionsApp"), {
   resolveComponent: component => component.AuctionsAppFragmentContainer,
 })
 
+const CurrentAuctions = loadable(() => import("./Routes/CurrentAuctions"), {
+  resolveComponent: component => component.CurrentAuctionsFragmentContainer,
+})
+
+const UpcomingAuctions = loadable(() => import("./Routes/UpcomingAuctions"), {
+  resolveComponent: component => component.UpcomingAuctionsFragmentContainer,
+})
+
+const PastAuctions = loadable(() => import("./Routes/PastAuctions"), {
+  resolveComponent: component => component.PastAuctionsFragmentContainer,
+})
+
 export const auctionsRoutes = [
   {
     path: "/auctions2",
@@ -12,27 +24,70 @@ export const auctionsRoutes = [
     prepare: () => {
       AuctionsApp.preload()
     },
+
     query: graphql`
       query auctionsRoutes_AuctionsQuery {
         me {
           ...AuctionsApp_me
         }
-        currentSales: salesConnection(
-          first: 99
-          published: true
-          sort: START_AT_ASC
-        ) {
-          ...AuctionsApp_currentSales
-        }
-        pastSales: salesConnection(
-          first: 20
-          published: true
-          live: false
-          sort: START_AT_ASC
-        ) {
-          ...AuctionsApp_pastSales
-        }
       }
     `,
+    children: [
+      {
+        path: "", // represents current auctions aka /auctions/current
+        getComponent: () => CurrentAuctions,
+        prepare: () => {
+          CurrentAuctions.preload()
+        },
+        query: graphql`
+          query auctionsRoutes_Current_AuctionsQuery {
+            currentAuctions: salesConnection(
+              first: 99
+              published: true
+              sort: START_AT_ASC
+            ) {
+              ...CurrentAuctions_currentAuctions
+            }
+          }
+        `,
+      },
+      {
+        path: "upcoming",
+        getComponent: () => UpcomingAuctions,
+        prepare: () => {
+          UpcomingAuctions.preload()
+        },
+        query: graphql`
+          query auctionsRoutes_Upcoming_AuctionsQuery {
+            upcomingAuctions: salesConnection(
+              first: 99
+              published: true
+              sort: START_AT_ASC
+            ) {
+              ...UpcomingAuctions_upcomingAuctions
+            }
+          }
+        `,
+      },
+      {
+        path: "past",
+        getComponent: () => PastAuctions,
+        prepare: () => {
+          PastAuctions.preload()
+        },
+        query: graphql`
+          query auctionsRoutes_Past_AuctionsQuery {
+            pastAuctions: salesConnection(
+              first: 20
+              published: true
+              live: false
+              sort: START_AT_ASC
+            ) {
+              ...PastAuctions_pastAuctions
+            }
+          }
+        `,
+      },
+    ],
   },
 ]

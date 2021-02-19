@@ -3,18 +3,18 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type AuctionsApp_currentSales = {
+export type UpcomingAuctions_upcomingAuctions = {
     readonly edges: ReadonlyArray<{
         readonly node: {
             readonly id: string;
         } | null;
     } | null> | null;
-    readonly " $refType": "AuctionsApp_currentSales";
+    readonly " $refType": "UpcomingAuctions_upcomingAuctions";
 };
-export type AuctionsApp_currentSales$data = AuctionsApp_currentSales;
-export type AuctionsApp_currentSales$key = {
-    readonly " $data"?: AuctionsApp_currentSales$data;
-    readonly " $fragmentRefs": FragmentRefs<"AuctionsApp_currentSales">;
+export type UpcomingAuctions_upcomingAuctions$data = UpcomingAuctions_upcomingAuctions;
+export type UpcomingAuctions_upcomingAuctions$key = {
+    readonly " $data"?: UpcomingAuctions_upcomingAuctions$data;
+    readonly " $fragmentRefs": FragmentRefs<"UpcomingAuctions_upcomingAuctions">;
 };
 
 
@@ -23,7 +23,7 @@ const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "AuctionsApp_currentSales",
+  "name": "UpcomingAuctions_upcomingAuctions",
   "selections": [
     {
       "alias": null,
@@ -57,5 +57,5 @@ const node: ReaderFragment = {
   ],
   "type": "SaleConnection"
 };
-(node as any).hash = 'd7aa66ea5d9d041686fc1498df806a3e';
+(node as any).hash = 'fb61d6e85fd8eccdbc14994dc2762824';
 export default node;
