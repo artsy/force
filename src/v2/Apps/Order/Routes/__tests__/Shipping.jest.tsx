@@ -648,7 +648,6 @@ describe("Shipping", () => {
         page.find(`[data-test="edit-address"]`).first().simulate("click")
         const inputs = page.find("AddressModal").find("input")
         inputs.forEach(input => {
-          console.log(input)
           input.instance().value = `Test input '${input.props().name}'`
           input.simulate("change")
         })

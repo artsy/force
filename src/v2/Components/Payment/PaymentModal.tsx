@@ -18,6 +18,9 @@ import {
 } from "relay-runtime"
 import { CreateTokenCardData } from "@stripe/stripe-js"
 import { PaymentSection_me } from "v2/__generated__/PaymentSection_me.graphql"
+import createLogger from "v2/Utils/logger"
+
+const logger = createLogger("Components/Payment/PaymentModal.tsx")
 
 const onCreditCardAdded = (
   me: PaymentSection_me,
@@ -74,16 +77,16 @@ const mutation = graphql`
     }
   }
 `
-interface Props {
+export interface PaymentModalProps {
   show: boolean
   closeModal: () => void
-  onSuccess: () => void
-  onError: (message: string) => void
+  onSuccess?: () => void
+  onError?: (message: string) => void
   me: PaymentSection_me
   relay: RelayProp
 }
 
-export const PaymentModal: React.FC<Props> = props => {
+export const PaymentModal: React.FC<PaymentModalProps> = props => {
   const { show, closeModal, relay } = props
   const stripe = useStripe()
   const elements = useElements()
@@ -130,6 +133,10 @@ export const PaymentModal: React.FC<Props> = props => {
             }
           }
         },
+        onError: error => {
+          logger.error(error)
+          setCreateError("Failed.")
+        },
         mutation,
         variables: {
           input: { token: token.id },
@@ -140,7 +147,6 @@ export const PaymentModal: React.FC<Props> = props => {
       })
     }
   }
-
   return (
     <Modal title="Add credit card" show={show} onClose={closeModal}>
       <Formik
@@ -154,7 +160,7 @@ export const PaymentModal: React.FC<Props> = props => {
       >
         {(formik: FormikProps<SavedAddressType>) => (
           <form onSubmit={formik.handleSubmit}>
-            <Text color="red" my={2}>
+            <Text data-test="credit-card-error" color="red" my={2}>
               {createError}
             </Text>
             <Text>Credit Card</Text>

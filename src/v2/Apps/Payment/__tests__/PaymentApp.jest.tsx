@@ -45,8 +45,8 @@ describe("PaymentApp", () => {
       }),
     })
 
-    const paymentSettings = wrapper.find("UserSettingsPayments")
-    const savedCreditCardText = paymentSettings.find("SavedCreditCards").text()
+    const paymentSection = wrapper.find("PaymentSection")
+    const savedCreditCardText = paymentSection.find("SavedCreditCards").text()
 
     expect(savedCreditCardText).toContain(
       'credit card•••• <mock-value-for-field-"lastDigits">'
@@ -54,6 +54,5 @@ describe("PaymentApp", () => {
     expect(savedCreditCardText).toContain(
       'Exp <mock-value-for-field-"expirationMonth">/">Remove'
     )
-    expect(paymentSettings.find("PaymentFormWrapper").length).toBe(1)
   })
 })

@@ -1,6 +1,5 @@
 import { Box, Button, Theme } from "@artsy/palette"
 import { SystemContextProps } from "v2/Artsy"
-import { get } from "v2/Utils/get"
 
 import React, { useState } from "react"
 import { RelayProp, createFragmentContainer, graphql } from "react-relay"
@@ -18,7 +17,7 @@ interface PaymentSectionProps extends SystemContextProps {
 }
 
 export const PaymentSection: React.FC<PaymentSectionProps> = props => {
-  const creditCardEdges = get(props, props => props.me.creditCards.edges)
+  const creditCardEdges = props.me?.creditCards?.edges
   const creditCards = creditCardEdges.map(({ node: creditCard }) => {
     return creditCard
   })
@@ -28,7 +27,7 @@ export const PaymentSection: React.FC<PaymentSectionProps> = props => {
   return (
     <Theme>
       <>
-        {creditCards && creditCards.length ? (
+        {creditCards?.length ? (
           <Box maxWidth={542}>
             <SavedCreditCards
               creditCards={creditCards as UserSettingsPaymentsCreditCard[]}
@@ -42,8 +41,6 @@ export const PaymentSection: React.FC<PaymentSectionProps> = props => {
           <PaymentModal
             show={showPaymentModal}
             closeModal={() => setShowPatymentModal(false)}
-            onError={() => null}
-            onSuccess={() => null}
             relay={props.relay}
             me={props.me}
           />

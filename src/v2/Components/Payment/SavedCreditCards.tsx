@@ -151,7 +151,6 @@ export class CreditCard extends React.Component<
   }
 
   private onMutationError(errors) {
-    console.error("SavedCreditCards.tsx", errors)
     this.setState({ isErrorModalOpen: true, isCommittingMutation: false })
   }
 }

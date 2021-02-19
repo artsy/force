@@ -15,8 +15,6 @@ export interface PaymentAppProps {
 const PaymentApp: React.FC<PaymentAppProps> = props => {
   const { me } = props
 
-  console.log(props)
-
   // FIXME: the margins for Boxes below are added to make it consistent with
   // the purchase app. We need to move these to a component when we move all tabs
   // to apps
