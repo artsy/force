@@ -30,7 +30,7 @@ type SetupTestWrapper<T extends OperationType> = {
       return <ShowMetaFragmentContainer show={props.show} />
     },
     query: graphql`
-      query OverviewRoute_Test_Query($showID: String!) {
+      query ExampleOverviewRoute_Test_Query($showID: String!) {
         show(id: $showID) {
           description
         }
