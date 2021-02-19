@@ -67,7 +67,7 @@ export const fairRoutes: RouteConfig[] = [
             $artistIDs: [String]
             $atAuction: Boolean
             $attributionClass: [String]
-            $color: String
+            $colors: [String]
             $forSale: Boolean
             $includeArtworksByFollowedArtists: Boolean
             $inquireableOnly: Boolean
@@ -89,7 +89,7 @@ export const fairRoutes: RouteConfig[] = [
                   artistIDs: $artistIDs
                   atAuction: $atAuction
                   attributionClass: $attributionClass
-                  color: $color
+                  colors: $colors
                   forSale: $forSale
                   partnerID: $partnerID
                   includeArtworksByFollowedArtists: $includeArtworksByFollowedArtists

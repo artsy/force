@@ -16,7 +16,7 @@ export const CollectionAppQuery = graphql`
     ]
     $atAuction: Boolean
     $attributionClass: [String]
-    $color: String
+    $colors: [String]
     $forSale: Boolean
     $additionalGeneIDs: [String]
     $height: String
@@ -38,7 +38,7 @@ export const CollectionAppQuery = graphql`
           aggregations: $aggregations
           atAuction: $atAuction
           attributionClass: $attributionClass
-          color: $color
+          colors: $colors
           forSale: $forSale
           additionalGeneIDs: $additionalGeneIDs
           height: $height

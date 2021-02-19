@@ -125,7 +125,7 @@ export const ShowAppFragmentContainer = createFragmentContainer(ShowApp, {
         acquireable: { type: "Boolean" }
         aggregations: { type: "[ArtworkAggregation]" }
         atAuction: { type: "Boolean" }
-        color: { type: "String" }
+        colors: { type: "[String]" }
         forSale: { type: "Boolean" }
         inquireableOnly: { type: "Boolean" }
         majorPeriods: { type: "[String]" }
@@ -162,7 +162,7 @@ export const ShowAppFragmentContainer = createFragmentContainer(ShowApp, {
           acquireable: $acquireable
           aggregations: $aggregations
           atAuction: $atAuction
-          color: $color
+          colors: $colors
           forSale: $forSale
           inquireableOnly: $inquireableOnly
           majorPeriods: $majorPeriods

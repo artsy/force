@@ -203,7 +203,7 @@ export const CollectionRefetchContainer = createRefetchContainer(
           aggregations: { type: "[ArtworkAggregation]" }
           attributionClass: { type: "[String]" }
           atAuction: { type: "Boolean" }
-          color: { type: "String" }
+          colors: { type: "[String]" }
           forSale: { type: "Boolean" }
           additionalGeneIDs: { type: "[String]" }
           height: { type: "String" }
@@ -296,7 +296,7 @@ export const CollectionRefetchContainer = createRefetchContainer(
           aggregations: $aggregations
           attributionClass: $attributionClass
           atAuction: $atAuction
-          color: $color
+          colors: $colors
           forSale: $forSale
           additionalGeneIDs: $additionalGeneIDs
           height: $height

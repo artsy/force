@@ -66,7 +66,7 @@ export const ArtistArtworkFilterRefetchContainer = createRefetchContainer(
           artistID: { type: "String" }
           atAuction: { type: "Boolean" }
           attributionClass: { type: "[String]" }
-          color: { type: "String" }
+          colors: { type: "[String]" }
           forSale: { type: "Boolean" }
           additionalGeneIDs: { type: "[String]" }
           height: { type: "String" }
@@ -100,7 +100,7 @@ export const ArtistArtworkFilterRefetchContainer = createRefetchContainer(
           artistID: $artistID
           atAuction: $atAuction
           attributionClass: $attributionClass
-          color: $color
+          colors: $colors
           forSale: $forSale
           additionalGeneIDs: $additionalGeneIDs
           height: $height
@@ -132,7 +132,7 @@ export const ArtistArtworkFilterRefetchContainer = createRefetchContainer(
       $artistID: String!
       $atAuction: Boolean
       $attributionClass: [String]
-      $color: String
+      $colors: [String]
       $forSale: Boolean
       $additionalGeneIDs: [String]
       $height: String
@@ -157,7 +157,7 @@ export const ArtistArtworkFilterRefetchContainer = createRefetchContainer(
             artistID: $artistID
             atAuction: $atAuction
             attributionClass: $attributionClass
-            color: $color
+            colors: $colors
             forSale: $forSale
             additionalGeneIDs: $additionalGeneIDs
             height: $height

@@ -27,7 +27,7 @@ export const showRoutes: RouteConfig[] = [
         $acquireable: Boolean
         $aggregations: [ArtworkAggregation] = [MEDIUM, TOTAL, MAJOR_PERIOD]
         $atAuction: Boolean
-        $color: String
+        $colors: [String]
         $forSale: Boolean
         $inquireableOnly: Boolean
         $majorPeriods: [String]
@@ -45,7 +45,7 @@ export const showRoutes: RouteConfig[] = [
               acquireable: $acquireable
               aggregations: $aggregations
               atAuction: $atAuction
-              color: $color
+              colors: $colors
               forSale: $forSale
               partnerID: $partnerID
               inquireableOnly: $inquireableOnly

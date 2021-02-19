@@ -85,7 +85,7 @@ export const ArtistSeriesAppFragmentContainer = createFragmentContainer(
           aggregations: { type: "[ArtworkAggregation]" }
           atAuction: { type: "Boolean" }
           attributionClass: { type: "[String]" }
-          color: { type: "String" }
+          colors: { type: "[String]" }
           forSale: { type: "Boolean" }
           height: { type: "String" }
           inquireableOnly: { type: "Boolean" }
@@ -113,7 +113,7 @@ export const ArtistSeriesAppFragmentContainer = createFragmentContainer(
             aggregations: $aggregations
             atAuction: $atAuction
             attributionClass: $attributionClass
-            color: $color
+            colors: $colors
             forSale: $forSale
             height: $height
             inquireableOnly: $inquireableOnly

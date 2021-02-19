@@ -11,7 +11,7 @@ export type ArtworkQueryFilterQueryVariables = {
     artistID?: string | null;
     atAuction?: boolean | null;
     attributionClass?: Array<string | null> | null;
-    color?: string | null;
+    colors?: Array<string | null> | null;
     forSale?: boolean | null;
     additionalGeneIDs?: Array<string | null> | null;
     height?: string | null;
@@ -143,7 +143,7 @@ query ArtworkQueryFilterQuery(
   $artistID: String
   $atAuction: Boolean
   $attributionClass: [String]
-  $color: String
+  $colors: [String]
   $forSale: Boolean
   $additionalGeneIDs: [String]
   $height: String
@@ -161,7 +161,7 @@ query ArtworkQueryFilterQuery(
   $width: String
 ) {
   viewer {
-    ...ArtworkFilter_viewer_wQ5MW
+    ...ArtworkFilter_viewer_3TQ6d3
   }
 }
 
@@ -190,8 +190,8 @@ fragment ArtworkFilterArtworkGrid_filtered_artworks on FilterArtworksConnection 
   ...ArtworkGrid_artworks
 }
 
-fragment ArtworkFilter_viewer_wQ5MW on Viewer {
-  filtered_artworks: artworksConnection(acquireable: $acquireable, aggregations: $aggregations, artistID: $artistID, atAuction: $atAuction, attributionClass: $attributionClass, color: $color, forSale: $forSale, additionalGeneIDs: $additionalGeneIDs, height: $height, inquireableOnly: $inquireableOnly, keyword: $keyword, majorPeriods: $majorPeriods, medium: $medium, offerable: $offerable, page: $page, partnerID: $partnerID, partnerIDs: $partnerIDs, priceRange: $priceRange, sizes: $sizes, sort: $sort, width: $width, first: 30) {
+fragment ArtworkFilter_viewer_3TQ6d3 on Viewer {
+  filtered_artworks: artworksConnection(acquireable: $acquireable, aggregations: $aggregations, artistID: $artistID, atAuction: $atAuction, attributionClass: $attributionClass, colors: $colors, forSale: $forSale, additionalGeneIDs: $additionalGeneIDs, height: $height, inquireableOnly: $inquireableOnly, keyword: $keyword, majorPeriods: $majorPeriods, medium: $medium, offerable: $offerable, page: $page, partnerID: $partnerID, partnerIDs: $partnerIDs, priceRange: $priceRange, sizes: $sizes, sort: $sort, width: $width, first: 30) {
     id
     ...ArtworkFilterArtworkGrid_filtered_artworks
   }
@@ -379,8 +379,8 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "color",
-    "type": "String"
+    "name": "colors",
+    "type": "[String]"
   },
   {
     "defaultValue": null,
@@ -505,8 +505,8 @@ v6 = {
 },
 v7 = {
   "kind": "Variable",
-  "name": "color",
-  "variableName": "color"
+  "name": "colors",
+  "variableName": "colors"
 },
 v8 = {
   "kind": "Variable",
@@ -1153,9 +1153,9 @@ return {
     "metadata": {},
     "name": "ArtworkQueryFilterQuery",
     "operationKind": "query",
-    "text": "query ArtworkQueryFilterQuery(\n  $acquireable: Boolean\n  $aggregations: [ArtworkAggregation] = [TOTAL]\n  $artistID: String\n  $atAuction: Boolean\n  $attributionClass: [String]\n  $color: String\n  $forSale: Boolean\n  $additionalGeneIDs: [String]\n  $height: String\n  $inquireableOnly: Boolean\n  $majorPeriods: [String]\n  $medium: String\n  $offerable: Boolean\n  $page: Int\n  $partnerID: ID\n  $partnerIDs: [String]\n  $priceRange: String\n  $sizes: [ArtworkSizes]\n  $sort: String\n  $keyword: String\n  $width: String\n) {\n  viewer {\n    ...ArtworkFilter_viewer_wQ5MW\n  }\n}\n\nfragment ArtworkFilterArtworkGrid_filtered_artworks on FilterArtworksConnection {\n  id\n  aggregations {\n    slice\n    counts {\n      value\n      name\n      count\n    }\n  }\n  pageInfo {\n    hasNextPage\n    endCursor\n  }\n  pageCursors {\n    ...Pagination_pageCursors\n  }\n  edges {\n    node {\n      id\n    }\n  }\n  ...ArtworkGrid_artworks\n}\n\nfragment ArtworkFilter_viewer_wQ5MW on Viewer {\n  filtered_artworks: artworksConnection(acquireable: $acquireable, aggregations: $aggregations, artistID: $artistID, atAuction: $atAuction, attributionClass: $attributionClass, color: $color, forSale: $forSale, additionalGeneIDs: $additionalGeneIDs, height: $height, inquireableOnly: $inquireableOnly, keyword: $keyword, majorPeriods: $majorPeriods, medium: $medium, offerable: $offerable, page: $page, partnerID: $partnerID, partnerIDs: $partnerIDs, priceRange: $priceRange, sizes: $sizes, sort: $sort, width: $width, first: 30) {\n    id\n    ...ArtworkFilterArtworkGrid_filtered_artworks\n  }\n}\n\nfragment ArtworkGrid_artworks on ArtworkConnectionInterface {\n  edges {\n    __typename\n    node {\n      id\n      slug\n      href\n      internalID\n      image {\n        aspect_ratio: aspectRatio\n      }\n      ...GridItem_artwork\n    }\n    ... on Node {\n      id\n    }\n  }\n}\n\nfragment Badge_artwork on Artwork {\n  is_biddable: isBiddable\n  href\n  sale {\n    is_preview: isPreview\n    display_timely_at: displayTimelyAt\n    id\n  }\n}\n\nfragment Contact_artwork on Artwork {\n  href\n  is_inquireable: isInquireable\n  sale {\n    is_auction: isAuction\n    is_live_open: isLiveOpen\n    is_open: isOpen\n    is_closed: isClosed\n    id\n  }\n  partner(shallow: true) {\n    type\n    id\n  }\n  sale_artwork: saleArtwork {\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    counts {\n      bidder_positions: bidderPositions\n    }\n    id\n  }\n}\n\nfragment Details_artwork on Artwork {\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n}\n\nfragment GridItem_artwork on Artwork {\n  internalID\n  title\n  image_title: imageTitle\n  image {\n    placeholder\n    url(version: \"large\")\n    aspect_ratio: aspectRatio\n  }\n  href\n  ...Metadata_artwork\n  ...SaveButton_artwork\n  ...Badge_artwork\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  ...Contact_artwork\n  href\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n"
+    "text": "query ArtworkQueryFilterQuery(\n  $acquireable: Boolean\n  $aggregations: [ArtworkAggregation] = [TOTAL]\n  $artistID: String\n  $atAuction: Boolean\n  $attributionClass: [String]\n  $colors: [String]\n  $forSale: Boolean\n  $additionalGeneIDs: [String]\n  $height: String\n  $inquireableOnly: Boolean\n  $majorPeriods: [String]\n  $medium: String\n  $offerable: Boolean\n  $page: Int\n  $partnerID: ID\n  $partnerIDs: [String]\n  $priceRange: String\n  $sizes: [ArtworkSizes]\n  $sort: String\n  $keyword: String\n  $width: String\n) {\n  viewer {\n    ...ArtworkFilter_viewer_3TQ6d3\n  }\n}\n\nfragment ArtworkFilterArtworkGrid_filtered_artworks on FilterArtworksConnection {\n  id\n  aggregations {\n    slice\n    counts {\n      value\n      name\n      count\n    }\n  }\n  pageInfo {\n    hasNextPage\n    endCursor\n  }\n  pageCursors {\n    ...Pagination_pageCursors\n  }\n  edges {\n    node {\n      id\n    }\n  }\n  ...ArtworkGrid_artworks\n}\n\nfragment ArtworkFilter_viewer_3TQ6d3 on Viewer {\n  filtered_artworks: artworksConnection(acquireable: $acquireable, aggregations: $aggregations, artistID: $artistID, atAuction: $atAuction, attributionClass: $attributionClass, colors: $colors, forSale: $forSale, additionalGeneIDs: $additionalGeneIDs, height: $height, inquireableOnly: $inquireableOnly, keyword: $keyword, majorPeriods: $majorPeriods, medium: $medium, offerable: $offerable, page: $page, partnerID: $partnerID, partnerIDs: $partnerIDs, priceRange: $priceRange, sizes: $sizes, sort: $sort, width: $width, first: 30) {\n    id\n    ...ArtworkFilterArtworkGrid_filtered_artworks\n  }\n}\n\nfragment ArtworkGrid_artworks on ArtworkConnectionInterface {\n  edges {\n    __typename\n    node {\n      id\n      slug\n      href\n      internalID\n      image {\n        aspect_ratio: aspectRatio\n      }\n      ...GridItem_artwork\n    }\n    ... on Node {\n      id\n    }\n  }\n}\n\nfragment Badge_artwork on Artwork {\n  is_biddable: isBiddable\n  href\n  sale {\n    is_preview: isPreview\n    display_timely_at: displayTimelyAt\n    id\n  }\n}\n\nfragment Contact_artwork on Artwork {\n  href\n  is_inquireable: isInquireable\n  sale {\n    is_auction: isAuction\n    is_live_open: isLiveOpen\n    is_open: isOpen\n    is_closed: isClosed\n    id\n  }\n  partner(shallow: true) {\n    type\n    id\n  }\n  sale_artwork: saleArtwork {\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    counts {\n      bidder_positions: bidderPositions\n    }\n    id\n  }\n}\n\nfragment Details_artwork on Artwork {\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n}\n\nfragment GridItem_artwork on Artwork {\n  internalID\n  title\n  image_title: imageTitle\n  image {\n    placeholder\n    url(version: \"large\")\n    aspect_ratio: aspectRatio\n  }\n  href\n  ...Metadata_artwork\n  ...SaveButton_artwork\n  ...Badge_artwork\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  ...Contact_artwork\n  href\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n"
   }
 };
 })();
-(node as any).hash = '967121d0e24106510416f01e2c59f04a';
+(node as any).hash = '93118e03a1794acd8a62328d92cd8c6c';
 export default node;

@@ -96,7 +96,7 @@ export const FairArtworksRefetchContainer = createRefetchContainer(
           artistIDs: { type: "[String]" }
           attributionClass: { type: "[String]" }
           atAuction: { type: "Boolean" }
-          color: { type: "String" }
+          colors: { type: "[String]" }
           forSale: { type: "Boolean" }
           includeArtworksByFollowedArtists: { type: "Boolean" }
           inquireableOnly: { type: "Boolean" }
@@ -118,7 +118,7 @@ export const FairArtworksRefetchContainer = createRefetchContainer(
           artistIDs: $artistIDs
           attributionClass: $attributionClass
           atAuction: $atAuction
-          color: $color
+          colors: $colors
           forSale: $forSale
           includeArtworksByFollowedArtists: $includeArtworksByFollowedArtists
           inquireableOnly: $inquireableOnly
@@ -150,7 +150,7 @@ export const FairArtworksRefetchContainer = createRefetchContainer(
       $attributionClass: [String]
       $slug: String!
       $atAuction: Boolean
-      $color: String
+      $colors: [String]
       $forSale: Boolean
       $includeArtworksByFollowedArtists: Boolean
       $inquireableOnly: Boolean
@@ -171,7 +171,7 @@ export const FairArtworksRefetchContainer = createRefetchContainer(
             artistIDs: $artistIDs
             atAuction: $atAuction
             attributionClass: $attributionClass
-            color: $color
+            colors: $colors
             forSale: $forSale
             includeArtworksByFollowedArtists: $includeArtworksByFollowedArtists
             inquireableOnly: $inquireableOnly

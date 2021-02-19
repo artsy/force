@@ -71,10 +71,10 @@ function initializeVariablesWithFilterState(params, props) {
   }
 
   if (params.color) {
-    initialFilterState.color = params.color
+    initialFilterState.colors = [params.color]
 
     if (props.location.query) {
-      props.location.query.color = params.color
+      props.location.query.colors = [params.color]
     }
   }
 
@@ -95,7 +95,7 @@ function getArtworkFilterQuery() {
       $artistID: String
       $atAuction: Boolean
       $attributionClass: [String]
-      $color: String
+      $colors: [String]
       $forSale: Boolean
       $additionalGeneIDs: [String]
       $height: String
@@ -130,7 +130,7 @@ function getArtworkFilterQuery() {
             artistID: $artistID
             atAuction: $atAuction
             attributionClass: $attributionClass
-            color: $color
+            colors: $colors
             forSale: $forSale
             additionalGeneIDs: $additionalGeneIDs
             height: $height

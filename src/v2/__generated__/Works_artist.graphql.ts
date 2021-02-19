@@ -112,8 +112,8 @@ return {
     {
       "defaultValue": null,
       "kind": "LocalArgument",
-      "name": "color",
-      "type": "String"
+      "name": "colors",
+      "type": "[String]"
     },
     {
       "defaultValue": null,
@@ -425,8 +425,8 @@ return {
         },
         {
           "kind": "Variable",
-          "name": "color",
-          "variableName": "color"
+          "name": "colors",
+          "variableName": "colors"
         },
         {
           "kind": "Variable",
@@ -498,5 +498,5 @@ return {
   "type": "Artist"
 };
 })();
-(node as any).hash = 'd35e14f1b9d687863eb6414f4a6cc726';
+(node as any).hash = '7d7c0212029f6439880a2d16ea220af9';
 export default node;

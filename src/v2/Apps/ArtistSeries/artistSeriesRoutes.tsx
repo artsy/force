@@ -28,7 +28,7 @@ export const artistSeriesRoutes: RouteConfig[] = [
         ]
         $atAuction: Boolean
         $attributionClass: [String]
-        $color: String
+        $colors: [String]
         $forSale: Boolean
         $height: String
         $inquireableOnly: Boolean
@@ -50,7 +50,7 @@ export const artistSeriesRoutes: RouteConfig[] = [
               aggregations: $aggregations
               atAuction: $atAuction
               attributionClass: $attributionClass
-              color: $color
+              colors: $colors
               forSale: $forSale
               height: $height
               inquireableOnly: $inquireableOnly

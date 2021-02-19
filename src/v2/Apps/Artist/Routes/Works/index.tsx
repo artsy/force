@@ -79,7 +79,7 @@ export const WorksRouteFragmentContainer = createFragmentContainer(WorksRoute, {
         artistID: { type: "String" }
         atAuction: { type: "Boolean" }
         attributionClass: { type: "[String]" }
-        color: { type: "String" }
+        colors: { type: "[String]" }
         forSale: { type: "Boolean" }
         height: { type: "String" }
         inquireableOnly: { type: "Boolean" }
@@ -165,7 +165,7 @@ export const WorksRouteFragmentContainer = createFragmentContainer(WorksRoute, {
           artistID: $artistID
           atAuction: $atAuction
           attributionClass: $attributionClass
-          color: $color
+          colors: $colors
           forSale: $forSale
           height: $height
           inquireableOnly: $inquireableOnly
