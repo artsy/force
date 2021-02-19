@@ -4,6 +4,35 @@ import styled, { css } from "styled-components"
 
 export type MenuAnchor = "left" | "right" | "center" | "full"
 
+interface NavItemPanelProps {
+  visible: boolean
+  menuAnchor: MenuAnchor
+  relativeTo: React.MutableRefObject<HTMLDivElement>
+}
+
+export const NavItemPanel: React.FC<NavItemPanelProps> = ({
+  visible,
+  menuAnchor,
+  relativeTo,
+  children,
+}) => {
+  const animation = useSpring({
+    ...(visible ? ANIMATION_STATES.visible : ANIMATION_STATES.hidden),
+    config: name =>
+      name === "opacity" ? config.stiff : { friction: 10, mass: 0.1 },
+  })
+
+  return (
+    <AnimatedPanel
+      style={animation}
+      data-menuanchor={menuAnchor}
+      data-offsetleft={relativeTo.current?.offsetLeft}
+    >
+      {children}
+    </AnimatedPanel>
+  )
+}
+
 const AnimatedPanel = styled(animated.div)<{
   "data-menuanchor": MenuAnchor
   "data-offsetleft"?: number
@@ -42,33 +71,4 @@ const ANIMATION_STATES = {
     opacity: 1,
     transform: "translate3d(0, 0, 0)",
   },
-}
-
-interface NavItemPanelProps {
-  visible: boolean
-  menuAnchor: MenuAnchor
-  relativeTo: React.MutableRefObject<HTMLDivElement>
-}
-
-export const NavItemPanel: React.FC<NavItemPanelProps> = ({
-  visible,
-  menuAnchor,
-  relativeTo,
-  children,
-}) => {
-  const animation = useSpring({
-    ...(visible ? ANIMATION_STATES.visible : ANIMATION_STATES.hidden),
-    config: name =>
-      name === "opacity" ? config.stiff : { friction: 10, mass: 0.1 },
-  })
-
-  return (
-    <AnimatedPanel
-      style={animation}
-      data-menuanchor={menuAnchor}
-      data-offsetleft={relativeTo.current?.offsetLeft}
-    >
-      {children}
-    </AnimatedPanel>
-  )
 }

@@ -2,6 +2,16 @@ import React from "react"
 import styled from "styled-components"
 import { Text, color, space } from "@artsy/palette"
 
+export const NavBarSkipLink: React.FC = () => {
+  return (
+    <Container href="#main">
+      <Text variant="text">Skip to Main Content</Text>
+    </Container>
+  )
+}
+
+NavBarSkipLink.displayName = "NavBarSkipLink"
+
 const Container = styled.a`
   display: block;
   position: absolute;
@@ -16,13 +26,3 @@ const Container = styled.a`
     top: 0;
   }
 `
-
-export const NavBarSkipLink: React.FC = () => {
-  return (
-    <Container href="#main">
-      <Text variant="text">Skip to Main Content</Text>
-    </Container>
-  )
-}
-
-NavBarSkipLink.displayName = "NavBarSkipLink"

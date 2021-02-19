@@ -3,6 +3,19 @@ import { ArtsyMarkIcon, color, space } from "@artsy/palette"
 import styled from "styled-components"
 import { RouterLink, RouterLinkProps } from "v2/Artsy/Router/RouterLink"
 
+export const NavBarPrimaryLogo: React.FC<Omit<
+  Partial<RouterLinkProps>,
+  "children"
+>> = props => {
+  return (
+    <HitArea to="/" {...props}>
+      <ArtsyMarkIcon height={40} width={40} name="Artsy" />
+    </HitArea>
+  )
+}
+
+NavBarPrimaryLogo.displayName = "NavBarPrimaryLogo"
+
 const HitArea = styled(RouterLink)`
   display: flex;
   align-items: center;
@@ -21,16 +34,3 @@ const HitArea = styled(RouterLink)`
     }
   }
 `
-
-export const NavBarPrimaryLogo: React.FC<Omit<
-  Partial<RouterLinkProps>,
-  "children"
->> = props => {
-  return (
-    <HitArea to="/" {...props}>
-      <ArtsyMarkIcon height={40} width={40} name="Artsy" />
-    </HitArea>
-  )
-}
-
-NavBarPrimaryLogo.displayName = "NavBarPrimaryLogo"

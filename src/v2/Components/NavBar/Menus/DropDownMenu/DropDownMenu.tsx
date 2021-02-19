@@ -1,4 +1,4 @@
-import { Box, Flex, color } from "@artsy/palette"
+import { Box, Flex, color, breakpoints } from "@artsy/palette"
 import { AnalyticsSchema, ContextModule } from "v2/Artsy"
 import { useTracking } from "v2/Artsy/Analytics/useTracking"
 import React from "react"
@@ -6,33 +6,6 @@ import styled from "styled-components"
 import { DropDownSection } from "./DropDownSection"
 import { Menu, MenuItem } from "v2/Components/Menu"
 import { MenuData } from "../../menuData"
-
-const LinkMenuItem = styled(MenuItem).attrs({
-  px: 1,
-  py: 0.5,
-  color: "black60",
-  variant: "text",
-  hasLighterTextColor: true,
-})``
-
-LinkMenuItem.displayName = "LinkMenuItem"
-
-const ViewAllMenuItem = styled(MenuItem).attrs({
-  px: 1,
-  py: 0.5,
-  color: "black100",
-  variant: "text",
-  hasLighterTextColor: true,
-})`
-  margin-top: auto;
-  text-decoration: underline;
-`
-
-ViewAllMenuItem.displayName = "ViewAllMenuItem"
-
-const Links = styled(Box)`
-  border-right: 1px solid ${color("black10")};
-`
 
 interface DropDownNavMenuProps {
   width?: string
@@ -75,38 +48,67 @@ export const DropDownNavMenu: React.FC<DropDownNavMenuProps> = ({
           "center",
         ]}
       >
-        <Links py={3} mr={[3, 3, "50px", "50px"]}>
-          <Box
-            display="flex"
-            flexDirection="column"
-            height="100%"
-            mr={[1, 1, 2, 2]}
-            width={[110, 135, 135, 170, 170]}
-          >
-            {menu.links.map((menuItem, i) => {
-              if (!("menu" in menuItem)) {
-                const isLast = menu.links.length - 1 === i
+        <Flex width={breakpoints.xl} px={3}>
+          <Links py={3} mr={[3, 3, 5, 5]}>
+            <Box
+              display="flex"
+              flexDirection="column"
+              height="100%"
+              mr={[1, 1, 2, 2]}
+              width={[110, 135, 135, 170, 170]}
+            >
+              {menu.links.map((menuItem, i) => {
+                if (!("menu" in menuItem)) {
+                  const isLast = menu.links.length - 1 === i
 
-                return isLast ? (
-                  <ViewAllMenuItem key={menuItem.text} href={menuItem.href}>
-                    {menuItem.text}
-                  </ViewAllMenuItem>
-                ) : (
-                  <LinkMenuItem key={menuItem.text} href={menuItem.href}>
-                    {menuItem.text}
-                  </LinkMenuItem>
-                )
-              }
-            })}
-          </Box>
-        </Links>
+                  return isLast ? (
+                    <ViewAllMenuItem key={menuItem.text} href={menuItem.href}>
+                      {menuItem.text}
+                    </ViewAllMenuItem>
+                  ) : (
+                    <LinkMenuItem key={menuItem.text} href={menuItem.href}>
+                      {menuItem.text}
+                    </LinkMenuItem>
+                  )
+                }
+              })}
+            </Box>
+          </Links>
 
-        {menu.links.map(subMenu => {
-          if ("menu" in subMenu) {
-            return <DropDownSection key={subMenu.text} section={subMenu} />
-          }
-        })}
+          {menu.links.map(subMenu => {
+            if ("menu" in subMenu) {
+              return <DropDownSection key={subMenu.text} section={subMenu} />
+            }
+          })}
+        </Flex>
       </Flex>
     </Menu>
   )
 }
+
+const LinkMenuItem = styled(MenuItem).attrs({
+  px: 1,
+  py: 0.5,
+  color: "black60",
+  variant: "text",
+  hasLighterTextColor: true,
+})``
+
+LinkMenuItem.displayName = "LinkMenuItem"
+
+const ViewAllMenuItem = styled(MenuItem).attrs({
+  px: 1,
+  py: 0.5,
+  color: "black100",
+  variant: "text",
+  hasLighterTextColor: true,
+})`
+  margin-top: auto;
+  text-decoration: underline;
+`
+
+ViewAllMenuItem.displayName = "ViewAllMenuItem"
+
+const Links = styled(Box)`
+  border-right: 1px solid ${color("black10")};
+`

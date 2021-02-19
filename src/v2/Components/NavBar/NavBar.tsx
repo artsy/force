@@ -37,36 +37,6 @@ import {
  * https://github.com/artsy/force/pull/6991
  */
 
-const NavBarContainer = styled(Flex)`
-  position: relative;
-  background-color: ${color("white100")};
-  flex-direction: column;
-`
-
-export const NavBarTier = styled(Flex)`
-  position: relative;
-  border-bottom: 1px solid ${color("black10")};
-`
-
-const NavSection: React.FC<FlexProps> = ({
-  children,
-  justifyContent,
-  ...rest
-}) => {
-  return (
-    <Flex alignItems="stretch" height="100%" bg={rest.bg} {...rest}>
-      <Flex
-        width="100%"
-        height="100%"
-        alignItems="center"
-        justifyContent={justifyContent}
-      >
-        {children}
-      </Flex>
-    </Flex>
-  )
-}
-
 export const NavBar: React.FC = track(
   {
     flow: AnalyticsSchema.Flow.Header,
@@ -292,3 +262,33 @@ export const NavBar: React.FC = track(
     </>
   )
 })
+
+const NavBarContainer = styled(Flex)`
+  position: relative;
+  background-color: ${color("white100")};
+  flex-direction: column;
+`
+
+export const NavBarTier = styled(Flex)`
+  position: relative;
+  border-bottom: 1px solid ${color("black10")};
+`
+
+const NavSection: React.FC<FlexProps> = ({
+  children,
+  justifyContent,
+  ...rest
+}) => {
+  return (
+    <Flex alignItems="stretch" height="100%" bg={rest.bg} {...rest}>
+      <Flex
+        width="100%"
+        height="100%"
+        alignItems="center"
+        justifyContent={justifyContent}
+      >
+        {children}
+      </Flex>
+    </Flex>
+  )
+}
