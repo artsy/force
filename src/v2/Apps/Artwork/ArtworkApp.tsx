@@ -33,6 +33,8 @@ import {
   useAnalyticsContext,
 } from "v2/Artsy/Analytics/AnalyticsContext"
 import { Mediator } from "lib/mediator"
+// import { data } from "sharify"
+import { ReCaptchaContainer } from "v2/Utils/ReCaptchaContainer"
 
 export interface Props {
   artwork: ArtworkApp_artwork
@@ -46,6 +48,30 @@ export interface Props {
 
 declare const window: any
 
+export class LegacyArtworkDllContainer extends React.Component {
+  componentDidMount() {
+    // if (
+    //   sd.NODE_ENV === "production" &&
+    //   !document.getElementById("legacy-artwork-dll")
+    // ) {
+    //   const script = document.createElement("script")
+    //   script.id = "legacy-artwork-dll"
+    //   script.src = `/assets-novo/${data.ASSET_LEGACY_ARTWORK_DLL}`
+    //   document.body.appendChild(script)
+    // }
+
+    import(/* webpackChunkName: 'legacy-assets-dll' */ "desktop/apps/artsy-v2/apps/artwork/artworkClient").then(
+      ({ artworkClient }) => {
+        artworkClient()
+      }
+    )
+  }
+
+  render() {
+    return null
+  }
+}
+
 export class ArtworkApp extends React.Component<Props> {
   /**
    * On mount, trigger a page view and product view
@@ -56,12 +82,21 @@ export class ArtworkApp extends React.Component<Props> {
    * data that remains consistent with the rest of the app.
    */
   componentDidMount() {
+    this.addLegacyStyles()
     this.track()
   }
 
   componentDidUpdate() {
     if (this.props.shouldTrackPageView) {
       this.track()
+    }
+  }
+
+  addLegacyStyles() {
+    if (!document.getElementById("legacyArtworkPageStyles")) {
+      import("./Components/legacyCssModal").then(({ legacyCSS }) => {
+        document.head.insertAdjacentHTML("beforeend", `<style id='legacyCSS'>${legacyCSS}</style>`)
+      })
     }
   }
 
@@ -172,6 +207,12 @@ export class ArtworkApp extends React.Component<Props> {
     const { artwork, me } = this.props
     return (
       <AppContainer>
+        <LegacyArtworkDllContainer />
+        {/* FIXME: remove once we refactor out legacy backbone code.
+            Add place to attach legacy flash message, used in legacy inquiry flow
+         */}
+        <div id="main-layout-flash" />
+        <ReCaptchaContainer />
         <HorizontalPadding>
           {/* NOTE: react-head automatically moves these tags to the <head> element */}
           <ArtworkMeta artwork={artwork} />

@@ -25,6 +25,7 @@ const OrderApp = loadable(() => import("./OrderApp"), {
 // * `render` functions requires casting
 export const orderRoutes: RouteConfig[] = [
   {
+    // TODO: Still need order2?
     path: "/order(2|s)/:orderID",
     Component: OrderApp,
     prepare: () => {

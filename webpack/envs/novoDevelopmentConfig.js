@@ -9,7 +9,7 @@ const webpack = require("webpack")
 const WebpackManifestPlugin = require("webpack-manifest-plugin")
 const { basePath, env } = require("../utils/env")
 
-export const clientNovoDevelopmentConfig = {
+export const novoDevelopmentConfig = {
   devtool: "source-map",
   entry: {
     "artsy-novo": [
@@ -87,6 +87,7 @@ export const clientNovoDevelopmentConfig = {
   },
   name: "novo",
   optimization: {
+    concatenateModules: env.webpackConcatenate,
     // Extract webpack runtime code into it's own file
     runtimeChunk: "single",
     splitChunks: {
@@ -118,24 +119,6 @@ export const clientNovoDevelopmentConfig = {
           name: "common-backbone",
           reuseExistingChunk: true,
           test: /.*node_modules[\\/](backbone.*)[\\/]/,
-        },
-        "common-jquery": {
-          chunks: "all",
-          enforce: true,
-          minChunks: 1,
-          minSize: 0,
-          name: "common-jquery",
-          reuseExistingChunk: true,
-          test: /.*node_modules[\\/](jquery.*)[\\/]/,
-        },
-        "common-react": {
-          chunks: "all",
-          enforce: true,
-          minChunks: 1,
-          minSize: 0,
-          name: "common-react",
-          reuseExistingChunk: true,
-          test: /.*node_modules[\\/](react|react-dom)[\\/]/,
         },
         "common-utility": {
           chunks: "all",

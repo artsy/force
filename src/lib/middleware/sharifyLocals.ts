@@ -4,6 +4,7 @@ import type { ArtsyRequest, ArtsyResponse } from "./artsyExpress"
 import { parse } from "url"
 import artsyXapp from "@artsy/xapp"
 import uuid from "node-uuid"
+import fs from "fs"
 
 /**
  * Contains the subset of sharify locals that are required for all force routes.
@@ -47,5 +48,24 @@ export function sharifyLocalsMiddleware(
 
   res.locals.sd.IS_GOOGLEBOT = Boolean(ua.match(/Googlebot/i))
 
+  // Required to know the hashed dll name.try
+  res.locals.sd.ASSET_LEGACY_ARTWORK_DLL = assetLegacyArtworkDllName()
+
   next()
+}
+
+function assetLegacyArtworkDllName(): string {
+  let dllName
+  if (dllName) {
+    return dllName
+  }
+  try {
+    const dllManifest = JSON.parse(
+      fs.readFileSync("./manifest-legacy-artwork-dll.json", "utf-8")
+    ) as any
+    dllName = `legacy-artwork-dll.${dllManifest.name}.js`
+  } catch {
+    dllName = "legacy-artwork-dll.js"
+  }
+  return dllName
 }

@@ -9,9 +9,7 @@ const env = {
   buildServer: yn(process.env.BUILD_SERVER, { default: false }),
   enableWebpackAnalyze: yn(process.env.WEBPACK_ANALYZE, { default: false }),
   enableWebpackDumpConfig: process.env.WEBPACK_DUMP_CONFIG,
-  enableWebpackDuplicates: yn(process.env.WEBPACK_DUPLICATES, {
-    default: false,
-  }),
+  enableWebpackDuplicates: yn(process.env.WEBPACK_DUPLICATES, { default: false }),
   enableWebpackMeasure: yn(process.env.WEBPACK_MEASURE, { default: false }),
   isDevelopment: process.env.NODE_ENV === "development",
   isProduction: process.env.NODE_ENV === "production",
@@ -20,6 +18,7 @@ const env = {
   onCi: yn(process.env.CI, { default: false }),
   port: process.env.PORT || "5000",
   webpackCiCpuLimit: Number.parseInt(process.env.WEBPACK_CI_CPU_LIMIT) || 4,
+  webpackConcatenate: yn(process.env.WEBPACK_CONCATENATE, { default: true }),
   webpackDebug: yn(process.env.WEBPACK_DEBUG),
   webpackDevtool: process.env.WEBPACK_DEVTOOL,
   webpackStats: process.env.WEBPACK_STATS,
@@ -41,6 +40,7 @@ console.log("  NODE_ENV".padEnd(30), chalk.yellow(env.nodeEnv))
 console.log("  PORT".padEnd(30), chalk.yellow(env.port))
 console.log("  WEBPACK_ANALYZE".padEnd(30), chalk.yellow(env.enableWebpackAnalyze))
 console.log("  WEBPACK_CI_CPU_LIMIT".padEnd(30), chalk.yellow(env.webpackCiCpuLimit))
+console.log("  WEBPACK_CONCATENATE".padEnd(30), chalk.yellow(env.webpackConcatenate))
 console.log("  WEBPACK_DEBUG".padEnd(30), chalk.yellow(env.webpackDebug))
 console.log("  WEBPACK_DEVTOOL".padEnd(30), chalk.yellow(env.webpackDevtool))
 console.log("  WEBPACK_DUMP_CONFIG".padEnd(30), chalk.yellow(env.enableWebpackDumpConfig))

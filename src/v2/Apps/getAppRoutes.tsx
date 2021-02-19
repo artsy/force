@@ -3,7 +3,7 @@ import { RouteConfig } from "found"
 // import { artistRoutes } from "v2/Apps/Artist/artistRoutes"
 // import { artistSeriesRoutes } from "./ArtistSeries/artistSeriesRoutes"
 // import { artistsRoutes } from "v2/Apps/Artists/artistsRoutes"
-import { artworkRoutes } from "v2/Apps/Artwork/artworkRoutes"
+// import { artworkRoutes } from "v2/Apps/Artwork/artworkRoutes"
 // import { collectRoutes } from "v2/Apps/Collect/collectRoutes"
 // import { consignRoutes } from "v2/Apps/Consign/consignRoutes"
 // import { conversationRoutes } from "v2/Apps/Conversation/conversationRoutes"
@@ -13,7 +13,7 @@ import { artworkRoutes } from "v2/Apps/Artwork/artworkRoutes"
 // import { fairsRoutes } from "v2/Apps/Fairs/fairsRoutes"
 // import { featureRoutes } from "v2/Apps/Feature/featureRoutes"
 // import { identityVerificationRoutes } from "v2/Apps/IdentityVerification/identityVerificationRoutes"
-import { orderRoutes } from "v2/Apps/Order/orderRoutes"
+// import { orderRoutes } from "v2/Apps/Order/orderRoutes"
 // import { purchaseRoutes } from "v2/Apps/Purchase/purchaseRoutes"
 // import { searchRoutes } from "v2/Apps/Search/searchRoutes"
 // import { showRoutes } from "v2/Apps/Show/showRoutes"
@@ -34,9 +34,9 @@ export function getAppRoutes(): RouteConfig[] {
     // {
     //   routes: artistSeriesRoutes,
     // },
-    {
-      routes: artworkRoutes,
-    },
+    // {
+    //   routes: artworkRoutes,
+    // },
     // {
     //   routes: auctionsRoutes,
     // },
@@ -67,9 +67,9 @@ export function getAppRoutes(): RouteConfig[] {
     // {
     //   routes: identityVerificationRoutes,
     // },
-    {
-      routes: orderRoutes,
-    },
+    // {
+    //   routes: orderRoutes,
+    // },
     // NOTE: Converted to use NOVO template.
     // {
     //   routes: purchaseRoutes,
@@ -83,7 +83,6 @@ export function getAppRoutes(): RouteConfig[] {
     // {
     //   routes: viewingRoomRoutes,
     // },
-
     // For debugging baseline app shell stuff
     // {
     //   routes: debugRoutes,
