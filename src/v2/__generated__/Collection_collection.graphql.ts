@@ -125,8 +125,8 @@ return {
     {
       "defaultValue": null,
       "kind": "LocalArgument",
-      "name": "color",
-      "type": "String"
+      "name": "colors",
+      "type": "[String]"
     },
     {
       "defaultValue": null,
@@ -540,8 +540,8 @@ return {
         },
         {
           "kind": "Variable",
-          "name": "color",
-          "variableName": "color"
+          "name": "colors",
+          "variableName": "colors"
         },
         {
           "kind": "Variable",
@@ -627,5 +627,5 @@ return {
   "type": "MarketingCollection"
 };
 })();
-(node as any).hash = '7b799bf3d4f7c95514d58a443abffa7d';
+(node as any).hash = 'ba50c0dc822a75df9f2944f1278a7bf4';
 export default node;

@@ -258,7 +258,6 @@ export const ArtworkFilterRefetchContainer = createRefetchContainer(
           artistID: { type: "String" }
           atAuction: { type: "Boolean" }
           attributionClass: { type: "[String]" }
-          color: { type: "String" }
           colors: { type: "[String]" }
           forSale: { type: "Boolean" }
           additionalGeneIDs: { type: "[String]" }
@@ -283,7 +282,6 @@ export const ArtworkFilterRefetchContainer = createRefetchContainer(
           artistID: $artistID
           atAuction: $atAuction
           attributionClass: $attributionClass
-          color: $color
           colors: $colors
           forSale: $forSale
           additionalGeneIDs: $additionalGeneIDs

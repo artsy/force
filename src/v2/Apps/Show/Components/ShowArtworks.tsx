@@ -85,7 +85,7 @@ export const ShowArtworksRefetchContainer = createRefetchContainer(
           acquireable: { type: "Boolean" }
           aggregations: { type: "[ArtworkAggregation]" }
           atAuction: { type: "Boolean" }
-          color: { type: "String" }
+          colors: { type: "[String]" }
           forSale: { type: "Boolean" }
           inquireableOnly: { type: "Boolean" }
           majorPeriods: { type: "[String]" }
@@ -101,7 +101,7 @@ export const ShowArtworksRefetchContainer = createRefetchContainer(
           acquireable: $acquireable
           aggregations: $aggregations
           atAuction: $atAuction
-          color: $color
+          colors: $colors
           forSale: $forSale
           inquireableOnly: $inquireableOnly
           majorPeriods: $majorPeriods
@@ -127,7 +127,7 @@ export const ShowArtworksRefetchContainer = createRefetchContainer(
       $aggregations: [ArtworkAggregation] = [TOTAL]
       $slug: String!
       $atAuction: Boolean
-      $color: String
+      $colors: [String]
       $forSale: Boolean
       $inquireableOnly: Boolean
       $majorPeriods: [String]
@@ -145,7 +145,7 @@ export const ShowArtworksRefetchContainer = createRefetchContainer(
             acquireable: $acquireable
             aggregations: $aggregations
             atAuction: $atAuction
-            color: $color
+            colors: $colors
             forSale: $forSale
             inquireableOnly: $inquireableOnly
             majorPeriods: $majorPeriods

@@ -51,8 +51,8 @@ const node: ReaderFragment = {
     {
       "defaultValue": null,
       "kind": "LocalArgument",
-      "name": "color",
-      "type": "String"
+      "name": "colors",
+      "type": "[String]"
     },
     {
       "defaultValue": null,
@@ -255,8 +255,8 @@ const node: ReaderFragment = {
         },
         {
           "kind": "Variable",
-          "name": "color",
-          "variableName": "color"
+          "name": "colors",
+          "variableName": "colors"
         },
         {
           "kind": "Variable",
@@ -320,5 +320,5 @@ const node: ReaderFragment = {
   ],
   "type": "Show"
 };
-(node as any).hash = '9ec0b438bd6802c25dbae621a3ed9500';
+(node as any).hash = 'a13353ff5cc67bd74b2d6b8c2e2018ed';
 export default node;

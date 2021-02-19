@@ -59,7 +59,7 @@ export const ArtistSeriesArtworksFilterRefetchContainer = createRefetchContainer
           aggregations: { type: "[ArtworkAggregation]" }
           atAuction: { type: "Boolean" }
           attributionClass: { type: "[String]" }
-          color: { type: "String" }
+          colors: { type: "[String]" }
           forSale: { type: "Boolean" }
           height: { type: "String" }
           inquireableOnly: { type: "Boolean" }
@@ -79,7 +79,7 @@ export const ArtistSeriesArtworksFilterRefetchContainer = createRefetchContainer
           aggregations: $aggregations
           atAuction: $atAuction
           attributionClass: $attributionClass
-          color: $color
+          colors: $colors
           forSale: $forSale
           height: $height
           inquireableOnly: $inquireableOnly
@@ -115,7 +115,7 @@ export const ArtistSeriesArtworksFilterRefetchContainer = createRefetchContainer
       $slug: ID!
       $atAuction: Boolean
       $attributionClass: [String]
-      $color: String
+      $colors: [String]
       $forSale: Boolean
       $height: String
       $inquireableOnly: Boolean
@@ -137,7 +137,7 @@ export const ArtistSeriesArtworksFilterRefetchContainer = createRefetchContainer
             aggregations: $aggregations
             atAuction: $atAuction
             attributionClass: $attributionClass
-            color: $color
+            colors: $colors
             forSale: $forSale
             height: $height
             inquireableOnly: $inquireableOnly
