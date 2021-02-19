@@ -9,13 +9,12 @@ export const isDefaultFilter: (
   }
 
   switch (true) {
-    case name === "majorPeriods":
-      return value.length === 0
     case name === "sizes" ||
       name === "artistIDs" ||
       name === "attributionClass" ||
       name === "partnerIDs" ||
-      name === "additionalGeneIDs":
+      name === "additionalGeneIDs" ||
+      name === "majorPeriods":
       return value.length === 0
     case name === "sort":
       return value === "-decayed_merch"

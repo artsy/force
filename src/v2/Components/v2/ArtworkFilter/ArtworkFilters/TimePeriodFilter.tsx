@@ -1,6 +1,5 @@
-import { Flex, Radio, RadioGroup, Toggle } from "@artsy/palette"
+import { Checkbox, Flex, Toggle } from "@artsy/palette"
 import React, { FC } from "react"
-import { get } from "v2/Utils/get"
 import { useArtworkFilterContext } from "../ArtworkFilterContext"
 import { OptionText } from "./OptionText"
 
@@ -23,32 +22,38 @@ export const TimePeriodFilter: FC<TimePeriodFilterProps> = ({
     periods = allowedPeriods.map(name => ({ name }))
   }
 
-  const selectedPeriod = get(
-    filterContext.currentlySelectedFilters(),
-    f => f.majorPeriods[0] || ""
-  )
+  const togglePeriodSelection = (selected, period) => {
+    let majorPeriods = filterContext
+      .currentlySelectedFilters()
+      .majorPeriods.slice()
+    if (selected) {
+      majorPeriods.push(period)
+    } else {
+      majorPeriods = majorPeriods.filter(item => item !== period)
+    }
+    filterContext.setFilter("majorPeriods", majorPeriods)
+  }
+
+  const currentFilters = filterContext.currentlySelectedFilters()
 
   return (
     <Toggle label="Time period" expanded={expanded}>
       <Flex flexDirection="column">
-        <RadioGroup
-          deselectable
-          defaultValue={selectedPeriod}
-          onSelect={selectedOption => {
-            filterContext.setFilter("majorPeriods", selectedOption)
-          }}
-        >
-          {periods.map((timePeriod, index) => {
-            return (
-              <Radio
-                my={0.3}
-                value={timePeriod.name}
-                key={index}
-                label={<OptionText>{timePeriod.name}</OptionText>}
-              />
-            )
-          })}
-        </RadioGroup>
+        {periods.map(({ name }, index) => {
+          const selected = currentFilters.majorPeriods.includes(name)
+          const props = {
+            key: index,
+            onSelect: selected => {
+              togglePeriodSelection(selected, name)
+            },
+            selected,
+          }
+          return (
+            <Checkbox {...props}>
+              <OptionText>{name}</OptionText>
+            </Checkbox>
+          )
+        })}
       </Flex>
     </Toggle>
   )

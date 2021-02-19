@@ -333,6 +333,7 @@ const artworkFilterReducer = (
     "attributionClass",
     "partnerIDs",
     "additionalGeneIDs",
+    "majorPeriods",
   ]
 
   switch (action.type) {
@@ -346,11 +347,6 @@ const artworkFilterReducer = (
         page: 1,
       }
 
-      if (name === "majorPeriods") {
-        filterState = {
-          majorPeriods: value ? [value] : [],
-        }
-      }
       if (name === "page") {
         filterState[name] = Number(value)
       }
@@ -410,11 +406,6 @@ const artworkFilterReducer = (
         page: 1,
       }
 
-      if (name === "majorPeriods") {
-        filterState = {
-          majorPeriods: [],
-        }
-      }
       if (name === "medium") {
         filterState = {
           medium: "*",
