@@ -8,6 +8,7 @@ export const ArtworkQueryFilter = graphql`
     $atAuction: Boolean
     $attributionClass: [String]
     $color: String
+    $colors: [String]
     $forSale: Boolean
     $additionalGeneIDs: [String]
     $height: String
@@ -33,6 +34,7 @@ export const ArtworkQueryFilter = graphql`
           atAuction: $atAuction
           attributionClass: $attributionClass
           color: $color
+          colors: $colors
           forSale: $forSale
           additionalGeneIDs: $additionalGeneIDs
           height: $height

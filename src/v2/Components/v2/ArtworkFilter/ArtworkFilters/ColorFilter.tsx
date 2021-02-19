@@ -56,18 +56,17 @@ const ColorFilterOption: React.FC<{ colorOption: ColorOption }> = ({
 }) => {
   const { name, value, hex } = colorOption
 
-  const {
-    currentlySelectedFilters,
-    setFilter,
-    unsetFilter,
-  } = useArtworkFilterContext()
-  const { color: selectedColorOption } = currentlySelectedFilters()
+  const { currentlySelectedFilters, setFilter } = useArtworkFilterContext()
+  const { colors: selectedColorOptions } = currentlySelectedFilters()
 
   const toggleColor = (color: string) => {
-    if (selectedColorOption === color) {
-      unsetFilter("color")
+    if (selectedColorOptions.includes(color)) {
+      setFilter(
+        "colors",
+        selectedColorOptions.filter(selectedColor => color !== selectedColor)
+      )
     } else {
-      setFilter("color", color)
+      setFilter("colors", [...selectedColorOptions, color])
     }
   }
 
@@ -75,7 +74,7 @@ const ColorFilterOption: React.FC<{ colorOption: ColorOption }> = ({
     <Checkbox
       key={name}
       onSelect={() => toggleColor(value)}
-      selected={selectedColorOption === value}
+      selected={selectedColorOptions.includes(value)}
     >
       <OptionText display="flex" width="65%" justifyContent="space-between">
         <Box textAlign="left">{name}</Box>
