@@ -48,7 +48,7 @@ describe("TimePeriodFilter", () => {
 
   it("updates context on filter change", done => {
     const wrapper = getWrapper()
-    wrapper.find("Radio").first().find("Flex").first().simulate("click")
+    wrapper.find("Checkbox").first().simulate("click")
 
     setTimeout(() => {
       expect(context.filters.majorPeriods).toEqual(["2020"])
