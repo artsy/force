@@ -5,7 +5,7 @@ import { useArtworkFilterContext } from "../ArtworkFilterContext"
 import { OptionText } from "./OptionText"
 import { ShowMore } from "./ShowMore"
 
-const PRIMARY_COLOR_OPTIONS = [
+const COLOR_OPTIONS = [
   { hex: "#ffffff", value: "black-and-white", name: "Black and white" },
   { hex: "#ff0000", value: "red", name: "Red" },
   { hex: "#fbe854", value: "yellow", name: "Yellow" },
@@ -13,11 +13,6 @@ const PRIMARY_COLOR_OPTIONS = [
   { hex: "#fb81cd", value: "pink", name: "Pink" },
   { hex: "#b82c83", value: "violet", name: "Violet" },
   { hex: "#daa520", value: "gold", name: "Gold" },
-]
-
-type ColorOption = typeof PRIMARY_COLOR_OPTIONS[number]
-
-const SECONDARY_COLOR_OPTIONS: ColorOption[] = [
   { hex: "#f1572c", value: "darkorange", name: "Dark orange" },
   { hex: "#217c44", value: "darkgreen", name: "Dark green" },
   { hex: "#0a1ab4", value: "darkblue", name: "Dark blue" },
@@ -25,6 +20,8 @@ const SECONDARY_COLOR_OPTIONS: ColorOption[] = [
   { hex: "#bccc46", value: "lightgreen", name: "Light green" },
   { hex: "#c2d5f1", value: "lightblue", name: "Light blue" },
 ]
+
+type ColorOption = typeof COLOR_OPTIONS[number]
 
 const ColorSwatch = styled.div`
   width: ${space(2)}px;
@@ -98,17 +95,8 @@ export const ColorFilter: React.FC<ColorFilterProps> = ({
 }) => {
   return (
     <Toggle label="Color" expanded={expanded}>
-      {PRIMARY_COLOR_OPTIONS.map(colorOption => {
-        return (
-          <ColorFilterOption
-            key={colorOption.value}
-            colorOption={colorOption}
-          />
-        )
-      })}
-
-      <ShowMore>
-        {SECONDARY_COLOR_OPTIONS.map(colorOption => {
+      <ShowMore initial={7}>
+        {COLOR_OPTIONS.map(colorOption => {
           return (
             <ColorFilterOption
               key={colorOption.value}

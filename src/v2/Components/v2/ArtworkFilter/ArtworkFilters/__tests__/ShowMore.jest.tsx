@@ -4,24 +4,38 @@ import { mount } from "enzyme"
 
 describe("ShowMore", () => {
   it("shows more when clicked", () => {
-    const wrapper = mount(<ShowMore>even if it was hidden from me</ShowMore>)
+    const wrapper = mount(
+      <ShowMore initial={2}>
+        <div>is visible</div>
+        <div>is visible</div>
+        <div>is hidden</div>
+      </ShowMore>
+    )
 
-    expect(wrapper.html()).not.toContain("even if it was hidden from me")
+    expect(wrapper.html()).toContain("is visible")
+    expect(wrapper.html()).not.toContain("is hidden")
 
     wrapper.find("button").simulate("click")
 
-    expect(wrapper.html()).toContain("even if it was hidden from me")
+    expect(wrapper.html()).toContain("is visible")
+    expect(wrapper.html()).toContain("is hidden")
   })
 
   it("and hides it", () => {
     const wrapper = mount(
-      <ShowMore expanded>even if it was hidden from me</ShowMore>
+      <ShowMore initial={2} expanded>
+        <div>is visible</div>
+        <div>is visible</div>
+        <div>is hidden</div>
+      </ShowMore>
     )
 
-    expect(wrapper.html()).toContain("even if it was hidden from me")
+    expect(wrapper.html()).toContain("is visible")
+    expect(wrapper.html()).toContain("is hidden")
 
     wrapper.find("button").simulate("click")
 
-    expect(wrapper.html()).not.toContain("even if it was hidden from me")
+    expect(wrapper.html()).toContain("is visible")
+    expect(wrapper.html()).not.toContain("is hidden")
   })
 })
