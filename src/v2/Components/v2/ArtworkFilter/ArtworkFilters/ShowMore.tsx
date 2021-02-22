@@ -1,27 +1,32 @@
 import { Clickable, Text } from "@artsy/palette"
-import React, { useState } from "react"
+import React, { Children, isValidElement, useState } from "react"
 
 interface ShowMoreProps {
+  initial: number
   expanded?: boolean
+  children: JSX.Element[]
 }
 
 export const ShowMore: React.FC<ShowMoreProps> = ({
+  initial,
   children,
   expanded = false,
 }) => {
-  const [isVisible, setVisible] = useState(expanded)
+  const nodes = Children.toArray(children).filter(isValidElement)
+
+  const [isExpanded, setExpanded] = useState(expanded)
 
   return (
     <>
-      {isVisible && children}
+      {isExpanded ? nodes : nodes.slice(0, initial)}
 
       <Clickable
         mt={1}
         textDecoration="underline"
         textAlign="left"
-        onClick={() => setVisible(visibility => !visibility)}
+        onClick={() => setExpanded(visibility => !visibility)}
       >
-        <Text variant="small">{isVisible ? "Hide" : "Show more"}</Text>
+        <Text variant="small">{isExpanded ? "Hide" : "Show more"}</Text>
       </Clickable>
     </>
   )
