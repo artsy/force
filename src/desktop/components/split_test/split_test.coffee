@@ -1,4 +1,4 @@
-_ = require 'underscore'
+_ = require 'lodash'
 { CURRENT_USER, REFLECTION } = require('sharify').data
 IS_TEST_ENV = require('sharify').data.NODE_ENV not in ['production', 'staging', 'development']
 
@@ -60,7 +60,7 @@ module.exports = class SplitTest
     , 0
 
   outcome: ->
-    outcome = 
+    outcome =
       if (@admin() and @edge?)
         @edge
       else if @reflection()

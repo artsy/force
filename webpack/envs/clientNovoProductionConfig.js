@@ -85,7 +85,6 @@ export const clientNovoProductionConfig = {
   },
   optimization: {
     minimize: !env.webpackDebug,
-
     minimizer: [
       new TerserPlugin({
         cache: false,
@@ -254,4 +253,7 @@ export const clientNovoProductionConfig = {
     symlinks: false,
   },
   stats: "normal",
+  node: {
+    global: true,
+  },
 }

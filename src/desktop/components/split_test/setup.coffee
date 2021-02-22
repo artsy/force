@@ -1,4 +1,4 @@
-_ = require 'underscore'
+_ = require 'lodash'
 runningTests = require './running_tests.coffee'
 SplitTest = require './split_test.coffee'
 

@@ -1,4 +1,4 @@
-_ = require 'underscore'
+_ = require 'lodash'
 IS_TEST_ENV = require('sharify').data.NODE_ENV not in ['production', 'staging', 'development']
 methods = ['get', 'set', 'expire']
 

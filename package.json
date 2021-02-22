@@ -53,6 +53,7 @@
     "test:ci:mocha": "NODE_ENV=test yarn mocha src/**/*.test.js src/**/*.test.ts",
     "type-check": "tsc",
     "unlink-all": "yalc remove --all && yarn --check-files",
+    "stats:novo": "NODE_ENV=production BUILD_NOVO_CLIENT=true node --max_old_space_size=4096 -r dotenv/config -r @babel/register node_modules/.bin/webpack --profile --json --config ./webpack > stats.json",
     "webpack": "node --max_old_space_size=4096 -r dotenv/config -r @babel/register node_modules/.bin/webpack --config ./webpack"
   },
   "resolutions": {
@@ -146,7 +147,6 @@
     "http-shutdown": "1.2.1",
     "insane": "2.6.1",
     "invariant": "2.2.4",
-    "ip": "1.1.5",
     "jade": "1.11.0",
     "jquery": "2.2.4",
     "jquery-fillwidth-lite": "1.0.8",
