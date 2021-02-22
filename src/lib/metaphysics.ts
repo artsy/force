@@ -1,14 +1,14 @@
 import qs from "qs"
 import request from "superagent"
 import { some } from "lodash"
-import ip from "ip"
 import { data as sd } from "sharify"
 import { Request } from "express"
+import { isV6Format } from "./ip"
 
 const { METAPHYSICS_ENDPOINT, API_REQUEST_TIMEOUT, REQUEST_ID } = sd
 
 const resolveIPv4 = function (ipAddress) {
-  if (ip.isV6Format(ipAddress) != null && ipAddress.indexOf("::ffff") >= 0) {
+  if (isV6Format(ipAddress) != null && ipAddress.indexOf("::ffff") >= 0) {
     ipAddress.split("::ffff:")[1]
   }
   return ipAddress

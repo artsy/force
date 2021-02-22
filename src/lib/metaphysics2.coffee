@@ -1,12 +1,11 @@
 qs = require 'qs'
 request = require 'superagent'
-{ extend, some } = require 'underscore'
+{ extend, some } = require 'lodash'
 { METAPHYSICS_ENDPOINT, API_REQUEST_TIMEOUT, REQUEST_ID } = require('sharify').data
-ip = require 'ip'
-chalk = require 'chalk'
+{ isV6Format } = require './ip'
 
 resolveIPv4 = (ipAddress) ->
-  if ip.isV6Format(ipAddress)? and ipAddress.indexOf('::ffff') >= 0
+  if isV6Format(ipAddress)? and ipAddress.indexOf('::ffff') >= 0
     return ipAddress.split('::ffff:')[1]
   return ipAddress
 
@@ -45,10 +44,10 @@ metaphysics2 = ({ query, variables, req } = {}) ->
             try
               errorObject = JSON.parse(err?.response?.text)
             catch
-              console.error chalk.red('Failed to JSON.parse `err.response.text`')
+              console.error 'Failed to JSON.parse `err.response.text`'
 
           formattedError = JSON.stringify(errorObject, null, 2)
-          console.error chalk.red(formattedError)
+          console.error formattedError
           return reject err
 
         if response.body.errors?
