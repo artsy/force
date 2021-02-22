@@ -31,14 +31,36 @@ describe("ColorFilter", () => {
   it("selects a color when clicked", () => {
     const wrapper = getWrapper()
 
-    expect(context.filters.color).toBeUndefined()
+    expect(context.filters.colors).toEqual([])
 
     wrapper.find("Checkbox").first().simulate("click")
 
-    expect(context.filters.color).toEqual("black-and-white")
+    expect(context.filters.colors).toEqual(["black-and-white"])
+  })
+
+  it("selects multiple colors when clicked", () => {
+    const wrapper = getWrapper()
+
+    expect(context.filters.colors).toEqual([])
+
+    wrapper.find("Checkbox").first().simulate("click")
+    wrapper.find("Checkbox").last().simulate("click")
+
+    expect(context.filters.colors).toEqual(["black-and-white", "gold"])
+  })
+
+  it("unselects a selected a color when clicked", () => {
+    const wrapper = getWrapper()
+
+    expect(context.filters.colors).toEqual([])
+
+    wrapper.find("Checkbox").first().simulate("click")
+    wrapper.find("Checkbox").last().simulate("click")
+
+    expect(context.filters.colors).toEqual(["black-and-white", "gold"])
 
     wrapper.find("Checkbox").last().simulate("click")
 
-    expect(context.filters.color).toEqual("gold")
+    expect(context.filters.colors).toEqual(["black-and-white"])
   })
 })
