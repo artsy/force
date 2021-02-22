@@ -76,6 +76,7 @@ describe("ArtworkFilter", () => {
         attributionClass: [],
         partnerIDs: [],
         additionalGeneIDs: [],
+        colors: [],
       })
     })
 
@@ -115,6 +116,7 @@ describe("ArtworkFilter", () => {
         attributionClass: [],
         partnerIDs: [],
         additionalGeneIDs: [],
+        colors: [],
       })
     })
 
@@ -144,6 +146,7 @@ describe("ArtworkFilter", () => {
         attributionClass: [],
         partnerIDs: [],
         additionalGeneIDs: [],
+        colors: [],
       })
     })
 
@@ -171,6 +174,7 @@ describe("ArtworkFilter", () => {
           attributionClass: [],
           partnerIDs: [],
           additionalGeneIDs: [],
+          colors: [],
         },
       })
     })
