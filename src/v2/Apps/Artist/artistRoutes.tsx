@@ -139,7 +139,7 @@ export const artistRoutes: RouteConfig[] = [
 
           const aggregations = ["MEDIUM", "TOTAL", "MAJOR_PERIOD"]
           const additionalAggregations = getENV("ENABLE_NEW_ARTWORK_FILTERS")
-            ? ["PARTNER"]
+            ? ["PARTNER", "LOCATION_CITY"]
             : ["GALLERY", "INSTITUTION"]
 
           return {
@@ -169,6 +169,8 @@ export const artistRoutes: RouteConfig[] = [
             $sizes: [ArtworkSizes]
             $sort: String
             $width: String
+            $locationCities: [String]
+            $additionalGeneIDs: [String]
           ) @raw_response_type {
             artist(id: $artistID) {
               ...Works_artist
@@ -193,6 +195,8 @@ export const artistRoutes: RouteConfig[] = [
                   sizes: $sizes
                   sort: $sort
                   width: $width
+                  locationCities: $locationCities
+                  additionalGeneIDs: $additionalGeneIDs
                 )
             }
           }

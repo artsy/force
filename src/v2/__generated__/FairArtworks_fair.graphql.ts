@@ -132,6 +132,12 @@ const node: ReaderFragment = {
       "kind": "LocalArgument",
       "name": "shouldFetchCounts",
       "type": "Boolean"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "additionalGeneIDs",
+      "type": "[String]"
     }
   ],
   "kind": "Fragment",
@@ -159,6 +165,11 @@ const node: ReaderFragment = {
           "kind": "Variable",
           "name": "acquireable",
           "variableName": "acquireable"
+        },
+        {
+          "kind": "Variable",
+          "name": "additionalGeneIDs",
+          "variableName": "additionalGeneIDs"
         },
         {
           "kind": "Literal",
@@ -299,5 +310,5 @@ const node: ReaderFragment = {
   ],
   "type": "Fair"
 };
-(node as any).hash = '4212db9bd6cc8836e174045143cbb4c9';
+(node as any).hash = 'c44632db701d9b2f5317cab102f8fba1';
 export default node;

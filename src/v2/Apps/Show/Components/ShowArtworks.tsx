@@ -96,6 +96,7 @@ export const ShowArtworksRefetchContainer = createRefetchContainer(
           priceRange: { type: "String" }
           sizes: { type: "[ArtworkSizes]" }
           sort: { type: "String", defaultValue: "-decayed_merch" }
+          additionalGeneIDs: { type: "[String]" }
         ) {
         filtered_artworks: filterArtworksConnection(
           acquireable: $acquireable
@@ -114,6 +115,7 @@ export const ShowArtworksRefetchContainer = createRefetchContainer(
           first: 20
           after: ""
           sort: $sort
+          additionalGeneIDs: $additionalGeneIDs
         ) {
           id
           ...ArtworkFilterArtworkGrid_filtered_artworks
@@ -138,6 +140,7 @@ export const ShowArtworksRefetchContainer = createRefetchContainer(
       $priceRange: String
       $sizes: [ArtworkSizes]
       $sort: String
+      $additionalGeneIDs: [String]
     ) {
       show(id: $slug) {
         ...ShowArtworks_show
@@ -156,6 +159,7 @@ export const ShowArtworksRefetchContainer = createRefetchContainer(
             priceRange: $priceRange
             sizes: $sizes
             sort: $sort
+            additionalGeneIDs: $additionalGeneIDs
           )
       }
     }

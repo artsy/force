@@ -136,6 +136,7 @@ export const ShowAppFragmentContainer = createFragmentContainer(ShowApp, {
         priceRange: { type: "String" }
         sizes: { type: "[ArtworkSizes]" }
         sort: { type: "String", defaultValue: "-decayed_merch" }
+        additionalGeneIDs: { type: "[String]" }
       ) {
       name
       href
@@ -173,6 +174,7 @@ export const ShowAppFragmentContainer = createFragmentContainer(ShowApp, {
           priceRange: $priceRange
           sizes: $sizes
           sort: $sort
+          additionalGeneIDs: $additionalGeneIDs
         )
       ...ShowContextCard_show
     }

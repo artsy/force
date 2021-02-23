@@ -77,6 +77,7 @@ describe("ArtworkFilter", () => {
         partnerIDs: [],
         additionalGeneIDs: [],
         colors: [],
+        locationCities: [],
       })
     })
 
@@ -117,6 +118,7 @@ describe("ArtworkFilter", () => {
         partnerIDs: [],
         additionalGeneIDs: [],
         colors: [],
+        locationCities: [],
       })
     })
 
@@ -147,6 +149,7 @@ describe("ArtworkFilter", () => {
         partnerIDs: [],
         additionalGeneIDs: [],
         colors: [],
+        locationCities: [],
       })
     })
 
@@ -175,6 +178,7 @@ describe("ArtworkFilter", () => {
           partnerIDs: [],
           additionalGeneIDs: [],
           colors: [],
+          locationCities: [],
         },
       })
     })

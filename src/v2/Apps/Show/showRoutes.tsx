@@ -38,6 +38,7 @@ export const showRoutes: RouteConfig[] = [
         $priceRange: String
         $sizes: [ArtworkSizes]
         $sort: String
+        $additionalGeneIDs: [String]
       ) {
         show(id: $slug) @principalField {
           ...ShowApp_show
@@ -56,6 +57,7 @@ export const showRoutes: RouteConfig[] = [
               priceRange: $priceRange
               sizes: $sizes
               sort: $sort
+              additionalGeneIDs: $additionalGeneIDs
             )
         }
       }

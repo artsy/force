@@ -26,7 +26,7 @@ export const PartnersFilter: FC = () => {
     return null
   }
 
-  const partnersSorted = sortBy(partners.counts, ["count"])
+  const partnersSorted = sortBy(partners.counts, ["count"]).reverse()
   const initialPartnersGroup = partnersSorted.slice(0, INITIAL_PARTNERS_TO_SHOW)
   const remainingPartnersGroup =
     partnersSorted.length > INITIAL_PARTNERS_TO_SHOW

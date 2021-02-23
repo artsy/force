@@ -15,7 +15,8 @@ export const isDefaultFilter: (
       name === "partnerIDs" ||
       name === "additionalGeneIDs" ||
       name === "majorPeriods" ||
-      name === "colors":
+      name === "colors" ||
+      name === "locationCities":
       return value.length === 0
     case name === "sort":
       return value === "-decayed_merch"

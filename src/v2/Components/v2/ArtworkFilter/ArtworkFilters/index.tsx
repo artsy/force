@@ -12,6 +12,7 @@ import { WaysToBuyFilter } from "./WaysToBuyFilter"
 import { AttributionClassFilter } from "./AttributionClassFilter"
 import { getENV } from "v2/Utils/getENV"
 import { PartnersFilter } from "./PartnersFilter"
+import { ArtworkLocationFilter } from "./ArtworkLocationFilter"
 
 export const ArtworkFilters: React.FC = () => {
   const PartnerFilters = () => {
@@ -34,6 +35,7 @@ export const ArtworkFilters: React.FC = () => {
       <PriceRangeFilter />
       <WaysToBuyFilter />
       <PartnerFilters />
+      {getENV("ENABLE_NEW_ARTWORK_FILTERS") && <ArtworkLocationFilter />}
       <SizeFilter />
       <TimePeriodFilter />
       <ColorFilter />

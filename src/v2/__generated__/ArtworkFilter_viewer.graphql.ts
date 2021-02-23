@@ -151,6 +151,12 @@ const node: ReaderFragment = {
       "kind": "LocalArgument",
       "name": "first",
       "type": "Int"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "locationCities",
+      "type": "[String]"
     }
   ],
   "kind": "Fragment",
@@ -219,6 +225,11 @@ const node: ReaderFragment = {
           "kind": "Variable",
           "name": "keyword",
           "variableName": "keyword"
+        },
+        {
+          "kind": "Variable",
+          "name": "locationCities",
+          "variableName": "locationCities"
         },
         {
           "kind": "Variable",
@@ -294,5 +305,5 @@ const node: ReaderFragment = {
   ],
   "type": "Viewer"
 };
-(node as any).hash = '8466c330f111b557102cc29ad4771e38';
+(node as any).hash = '5f70d16dc25908c47fb9267f1acae66c';
 export default node;

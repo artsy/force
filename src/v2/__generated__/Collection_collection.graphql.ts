@@ -205,6 +205,12 @@ return {
       "kind": "LocalArgument",
       "name": "first",
       "type": "Int"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "locationCities",
+      "type": "[String]"
     }
   ],
   "kind": "Fragment",
@@ -565,6 +571,11 @@ return {
         },
         {
           "kind": "Variable",
+          "name": "locationCities",
+          "variableName": "locationCities"
+        },
+        {
+          "kind": "Variable",
           "name": "majorPeriods",
           "variableName": "majorPeriods"
         },
@@ -627,5 +638,5 @@ return {
   "type": "MarketingCollection"
 };
 })();
-(node as any).hash = 'ba50c0dc822a75df9f2944f1278a7bf4';
+(node as any).hash = '5b9360cf150369bbac14e35254f76a28';
 export default node;

@@ -73,6 +73,8 @@ export const ArtistSeriesArtworksFilterRefetchContainer = createRefetchContainer
           sizes: { type: "[ArtworkSizes]" }
           sort: { type: "String", defaultValue: "-partner_updated_at" }
           width: { type: "String" }
+          locationCities: { type: "[String]" }
+          additionalGeneIDs: { type: "[String]" }
         ) {
         filtered_artworks: filterArtworksConnection(
           acquireable: $acquireable
@@ -95,6 +97,8 @@ export const ArtistSeriesArtworksFilterRefetchContainer = createRefetchContainer
           after: ""
           sort: $sort
           width: $width
+          locationCities: $locationCities
+          additionalGeneIDs: $additionalGeneIDs
         ) {
           id
           ...ArtworkFilterArtworkGrid_filtered_artworks
@@ -105,13 +109,7 @@ export const ArtistSeriesArtworksFilterRefetchContainer = createRefetchContainer
   graphql`
     query ArtistSeriesArtworksFilterQuery(
       $acquireable: Boolean
-      $aggregations: [ArtworkAggregation] = [
-        MEDIUM
-        TOTAL
-        GALLERY
-        INSTITUTION
-        MAJOR_PERIOD
-      ]
+      $aggregations: [ArtworkAggregation]
       $slug: ID!
       $atAuction: Boolean
       $attributionClass: [String]
@@ -129,6 +127,8 @@ export const ArtistSeriesArtworksFilterRefetchContainer = createRefetchContainer
       $sizes: [ArtworkSizes]
       $sort: String
       $width: String
+      $locationCities: [String]
+      $additionalGeneIDs: [String]
     ) {
       artistSeries(id: $slug) {
         ...ArtistSeriesArtworksFilter_artistSeries
@@ -151,6 +151,8 @@ export const ArtistSeriesArtworksFilterRefetchContainer = createRefetchContainer
             sizes: $sizes
             sort: $sort
             width: $width
+            locationCities: $locationCities
+            additionalGeneIDs: $additionalGeneIDs
           )
       }
     }

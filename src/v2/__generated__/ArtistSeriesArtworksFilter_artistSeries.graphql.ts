@@ -127,6 +127,18 @@ const node: ReaderFragment = {
       "kind": "LocalArgument",
       "name": "width",
       "type": "String"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "locationCities",
+      "type": "[String]"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "additionalGeneIDs",
+      "type": "[String]"
     }
   ],
   "kind": "Fragment",
@@ -140,6 +152,11 @@ const node: ReaderFragment = {
           "kind": "Variable",
           "name": "acquireable",
           "variableName": "acquireable"
+        },
+        {
+          "kind": "Variable",
+          "name": "additionalGeneIDs",
+          "variableName": "additionalGeneIDs"
         },
         {
           "kind": "Literal",
@@ -190,6 +207,11 @@ const node: ReaderFragment = {
           "kind": "Variable",
           "name": "keyword",
           "variableName": "keyword"
+        },
+        {
+          "kind": "Variable",
+          "name": "locationCities",
+          "variableName": "locationCities"
         },
         {
           "kind": "Variable",
@@ -260,5 +282,5 @@ const node: ReaderFragment = {
   ],
   "type": "ArtistSeries"
 };
-(node as any).hash = 'b929227f21ead43e9831d0c540b0f266';
+(node as any).hash = 'ade68f5b9809a6e7e39aec377e02f615';
 export default node;

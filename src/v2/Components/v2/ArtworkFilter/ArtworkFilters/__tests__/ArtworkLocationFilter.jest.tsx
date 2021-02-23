@@ -1,36 +1,43 @@
 import { mount } from "enzyme"
 import React from "react"
 import { ArtworkFilterContextProvider } from "../../ArtworkFilterContext"
-import { PartnersFilter } from "../PartnersFilter"
+import { ArtworkLocationFilter } from "../ArtworkLocationFilter"
 
-describe("PartnersFilter", () => {
+describe("ArtworkLocationFilter", () => {
   const getWrapper = (contextProps = {}) => {
     return mount(
       <ArtworkFilterContextProvider {...contextProps}>
-        <PartnersFilter />
+        <ArtworkLocationFilter />
       </ArtworkFilterContextProvider>
     )
   }
 
-  describe("partners", () => {
-    it("renders partners", () => {
+  describe("locations", () => {
+    it("renders locations", () => {
       const wrapper = getWrapper({
         aggregations: [
           {
-            slice: "PARTNER",
-            counts: [{ name: "Percy Z", count: 10, value: "percy-z" }],
+            slice: "LOCATION_CITY",
+            counts: [
+              {
+                name: "Cattown, Cat City, Nowhere USA",
+                count: 10,
+                value: "percy-z",
+              },
+            ],
           },
         ],
       })
-      expect(wrapper.find("Checkbox").first().text()).toContain("Percy Z")
+      expect(wrapper.find("Checkbox").first().text()).toContain(
+        "Cattown, Cat City, Nowhere USA"
+      )
     })
 
     describe("show more", () => {
       const wrapper = getWrapper({
-        counts: { followedArtists: 0 },
         aggregations: [
           {
-            slice: "PARTNER",
+            slice: "LOCATION_CITY",
             counts: [
               { name: "Percy A", count: 10, value: "percy-a" },
               { name: "Percy B", count: 9, value: "percy-b" },

@@ -82,6 +82,7 @@ export const ArtistArtworkFilterRefetchContainer = createRefetchContainer(
           sizes: { type: "[ArtworkSizes]" }
           sort: { type: "String", defaultValue: "-partner_updated_at" }
           width: { type: "String" }
+          locationCities: { type: "[String]" }
         ) {
         is_followed: isFollowed
         counts {
@@ -118,6 +119,7 @@ export const ArtistArtworkFilterRefetchContainer = createRefetchContainer(
           after: ""
           sort: $sort
           width: $width
+          locationCities: $locationCities
         ) {
           id
           ...ArtworkFilterArtworkGrid_filtered_artworks
@@ -148,6 +150,7 @@ export const ArtistArtworkFilterRefetchContainer = createRefetchContainer(
       $sizes: [ArtworkSizes]
       $sort: String
       $width: String
+      $locationCities: [String]
     ) {
       artist(id: $artistID) {
         ...ArtistArtworkFilter_artist
@@ -173,6 +176,7 @@ export const ArtistArtworkFilterRefetchContainer = createRefetchContainer(
             sizes: $sizes
             sort: $sort
             width: $width
+            locationCities: $locationCities
           )
       }
     }

@@ -2,6 +2,7 @@ import loadable from "@loadable/component"
 import { graphql } from "react-relay"
 import { RouteConfig } from "found"
 import { paramsToCamelCase } from "v2/Components/v2/ArtworkFilter/Utils/urlBuilder"
+import { getENV } from "v2/Utils/getENV"
 
 const ArtistSeriesApp = loadable(() => import("./ArtistSeriesApp"), {
   resolveComponent: component => component.ArtistSeriesAppFragmentContainer,
@@ -19,13 +20,7 @@ export const artistSeriesRoutes: RouteConfig[] = [
       query artistSeriesRoutes_ArtistSeriesQuery(
         $slug: ID!
         $acquireable: Boolean
-        $aggregations: [ArtworkAggregation] = [
-          MEDIUM
-          TOTAL
-          GALLERY
-          INSTITUTION
-          MAJOR_PERIOD
-        ]
+        $aggregations: [ArtworkAggregation]
         $atAuction: Boolean
         $attributionClass: [String]
         $colors: [String]
@@ -42,6 +37,8 @@ export const artistSeriesRoutes: RouteConfig[] = [
         $sizes: [ArtworkSizes]
         $sort: String
         $width: String
+        $locationCities: [String]
+        $additionalGeneIDs: [String]
       ) {
         artistSeries(id: $slug) {
           ...ArtistSeriesApp_artistSeries
@@ -64,6 +61,8 @@ export const artistSeriesRoutes: RouteConfig[] = [
               sizes: $sizes
               sort: $sort
               width: $width
+              locationCities: $locationCities
+              additionalGeneIDs: $additionalGeneIDs
             )
         }
       }
@@ -74,10 +73,16 @@ export const artistSeriesRoutes: RouteConfig[] = [
 function initializeVariablesWithFilterState(params, props) {
   const initialFilterState = props.location ? props.location.query : {}
 
+  const aggregations = ["MEDIUM", "TOTAL", "MAJOR_PERIOD"]
+  const additionalAggregations = getENV("ENABLE_NEW_ARTWORK_FILTERS")
+    ? ["PARTNER", "LOCATION_CITY"]
+    : ["GALLERY", "INSTITUTION"]
+
   const state = {
     sort: "-decayed_merch",
     ...paramsToCamelCase(initialFilterState),
     ...params,
+    aggregations: aggregations.concat(additionalAggregations),
   }
 
   return state
