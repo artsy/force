@@ -94,9 +94,6 @@ export const BudgetComponent: React.FC<Props> = props => {
 
     updateProfile(priceRangeMax, props.relayEnvironment)
 
-    const redirectTo = props.redirectTo || "/"
-    setTimeout(() => window.location.assign(redirectTo), 500)
-
     const event = {
       context_module: ContextModule.onboardingInterests,
       context_owner_type: OwnerType.onboarding,
@@ -108,6 +105,9 @@ export const BudgetComponent: React.FC<Props> = props => {
       action: "Completed Onboarding",
     }
     tracking.trackEvent(completedEvent)
+
+    const redirectTo = props.redirectTo || "/"
+    setTimeout(() => window.location.assign(redirectTo), 500)
   }
 
   return (
