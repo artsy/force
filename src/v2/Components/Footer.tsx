@@ -21,6 +21,7 @@ import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import { DownloadAppBadge } from "v2/Components/DownloadAppBadge"
 import { ContextModule } from "@artsy/cohesion"
 import { CCPARequest } from "./CCPARequest"
+import { LazyLoadComponent } from "react-lazy-load-image-component"
 
 const Column = styled(Flex).attrs({
   flex: 1,
@@ -89,7 +90,9 @@ export const Footer: React.FC<Props> = props => {
       borderTop={flushWithContent ? "" : `1px solid ${color("black10")}`}
     >
       <Media greaterThan="xs">
-        <DownloadAppBanner />
+        <LazyLoadComponent threshold={1000}>
+          <DownloadAppBanner />
+        </LazyLoadComponent>
       </Media>
       <footer>
         <Flex
