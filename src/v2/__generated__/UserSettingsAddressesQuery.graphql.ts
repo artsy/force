@@ -25,7 +25,7 @@ query UserSettingsAddressesQuery {
 }
 
 fragment SavedAddresses_me on Me {
-  addressConnection(first: 30) {
+  addressConnection(first: 100) {
     edges {
       node {
         id
@@ -65,7 +65,7 @@ var v0 = [
   {
     "kind": "Literal",
     "name": "first",
-    "value": 30
+    "value": 100
   }
 ],
 v1 = {
@@ -278,7 +278,7 @@ return {
                 "storageKey": null
               }
             ],
-            "storageKey": "addressConnection(first:30)"
+            "storageKey": "addressConnection(first:100)"
           },
           {
             "alias": null,
@@ -301,7 +301,7 @@ return {
     "metadata": {},
     "name": "UserSettingsAddressesQuery",
     "operationKind": "query",
-    "text": "query UserSettingsAddressesQuery {\n  me {\n    ...UserSettingsAddresses_me\n    id\n  }\n}\n\nfragment SavedAddresses_me on Me {\n  addressConnection(first: 30) {\n    edges {\n      node {\n        id\n        internalID\n        addressLine1\n        addressLine2\n        addressLine3\n        city\n        country\n        isDefault\n        name\n        phoneNumber\n        postalCode\n        region\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n\nfragment UserSettingsAddresses_me on Me {\n  ...SavedAddresses_me\n  id\n  internalID\n}\n"
+    "text": "query UserSettingsAddressesQuery {\n  me {\n    ...UserSettingsAddresses_me\n    id\n  }\n}\n\nfragment SavedAddresses_me on Me {\n  addressConnection(first: 100) {\n    edges {\n      node {\n        id\n        internalID\n        addressLine1\n        addressLine2\n        addressLine3\n        city\n        country\n        isDefault\n        name\n        phoneNumber\n        postalCode\n        region\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n\nfragment UserSettingsAddresses_me on Me {\n  ...SavedAddresses_me\n  id\n  internalID\n}\n"
   }
 };
 })();

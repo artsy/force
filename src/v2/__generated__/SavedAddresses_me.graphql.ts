@@ -35,7 +35,7 @@ export type SavedAddresses_me$key = {
 const node: ReaderFragment = {
   "argumentDefinitions": [
     {
-      "defaultValue": 30,
+      "defaultValue": 100,
       "kind": "LocalArgument",
       "name": "first",
       "type": "Int"
@@ -247,5 +247,5 @@ const node: ReaderFragment = {
   ],
   "type": "Me"
 };
-(node as any).hash = '1a534e843aa563ac623718c1b7ad5745';
+(node as any).hash = '918313bab48c439bef5be1117502d88c';
 export default node;

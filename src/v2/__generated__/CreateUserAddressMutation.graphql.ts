@@ -26,7 +26,6 @@ export type CreateUserAddressMutationResponse = {
             readonly id?: string;
             readonly internalID?: string;
             readonly errors?: ReadonlyArray<{
-                readonly code: string;
                 readonly message: string;
             }>;
         };
@@ -52,7 +51,6 @@ mutation CreateUserAddressMutation(
       }
       ... on Errors {
         errors {
-          code
           message
         }
       }
@@ -108,13 +106,6 @@ v3 = {
       "name": "errors",
       "plural": true,
       "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "code",
-          "storageKey": null
-        },
         {
           "alias": null,
           "args": null,
@@ -206,9 +197,9 @@ return {
     "metadata": {},
     "name": "CreateUserAddressMutation",
     "operationKind": "mutation",
-    "text": "mutation CreateUserAddressMutation(\n  $input: CreateUserAddressInput!\n) {\n  createUserAddress(input: $input) {\n    userAddressOrErrors {\n      __typename\n      ... on UserAddress {\n        id\n        internalID\n      }\n      ... on Errors {\n        errors {\n          code\n          message\n        }\n      }\n    }\n  }\n}\n"
+    "text": "mutation CreateUserAddressMutation(\n  $input: CreateUserAddressInput!\n) {\n  createUserAddress(input: $input) {\n    userAddressOrErrors {\n      __typename\n      ... on UserAddress {\n        id\n        internalID\n      }\n      ... on Errors {\n        errors {\n          message\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'd58253f3b92c3b1e89906b6212869648';
+(node as any).hash = '9848d21cae95092bfb31e59c4278044b';
 export default node;

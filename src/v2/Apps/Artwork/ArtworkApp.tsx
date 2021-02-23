@@ -90,7 +90,7 @@ export class ArtworkApp extends React.Component<Props> {
       }
 
       const clientSideRoutingReferrer =
-        window.analytics.__artsyClientSideRoutingReferrer
+        window.analytics?.__artsyClientSideRoutingReferrer
 
       if (clientSideRoutingReferrer) {
         properties.referrer = clientSideRoutingReferrer

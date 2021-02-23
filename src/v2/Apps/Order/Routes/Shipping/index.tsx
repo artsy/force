@@ -199,10 +199,15 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
         this.isCreateNewAddress() &&
         this.state.saveAddress
       ) {
-        await createUserAddress(this.props.commitMutation, {
-          ...address,
-          phoneNumber: phoneNumber,
-        })
+        await createUserAddress(
+          this.props.commitMutation,
+          {
+            ...address,
+            phoneNumber,
+          },
+          () => {}, // onSuccess
+          () => {} // onError
+        )
       }
 
       if (orderOrError.error) {
@@ -317,6 +322,10 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
       <Box data-test="orderShipping">
         {showModal && (
           <AddressModal
+            modalDetails={{
+              addressModalTitle: "Edit address",
+              inCollectorProfile: false,
+            }}
             show={showModal}
             closeModal={() => this.setState({ editAddressIndex: -1 })}
             address={addressList[this.state.editAddressIndex]?.node}
@@ -522,7 +531,7 @@ export const ShippingFragmentContainer = createFragmentContainer(
     me: graphql`
       fragment Shipping_me on Me
         @argumentDefinitions(
-          first: { type: "Int", defaultValue: 30 }
+          first: { type: "Int", defaultValue: 100 }
           last: { type: "Int" }
           after: { type: "String" }
           before: { type: "String" }

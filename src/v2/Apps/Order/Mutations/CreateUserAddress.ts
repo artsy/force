@@ -1,13 +1,18 @@
 import { graphql } from "react-relay"
 import { UserAddressAttributes } from "v2/__generated__/UpdateUserAddressMutation.graphql"
-import { CreateUserAddressMutation } from "v2/__generated__/CreateUserAddressMutation.graphql"
+import {
+  CreateUserAddressMutation,
+  CreateUserAddressMutationResponse,
+} from "v2/__generated__/CreateUserAddressMutation.graphql"
 import { CommitMutation } from "../Utils/commitMutation"
 
-export const createUserAddress = (
+export const createUserAddress = async (
   commitMutation: CommitMutation,
-  address: UserAddressAttributes
+  address: UserAddressAttributes,
+  onSuccess: (address: CreateUserAddressMutationResponse | null) => void,
+  onError: (message: string | null) => void
 ) => {
-  return commitMutation<CreateUserAddressMutation>({
+  const response = await commitMutation<CreateUserAddressMutation>({
     variables: {
       input: {
         attributes: address,
@@ -23,7 +28,6 @@ export const createUserAddress = (
             }
             ... on Errors {
               errors {
-                code
                 message
               }
             }
@@ -32,4 +36,14 @@ export const createUserAddress = (
       }
     `,
   })
+
+  const errors = response?.createUserAddress?.userAddressOrErrors?.errors
+  console.log("🚀 ~ file: CreateUserAddress.ts ~ line 41 ~ response", response)
+  console.log("🚀 ~ file: CreateUserAddress.ts ~ line 41 ~ errors", errors)
+
+  if (errors) {
+    onError(errors.map(error => error.message).join(", "))
+  } else {
+    onSuccess(response)
+  }
 }

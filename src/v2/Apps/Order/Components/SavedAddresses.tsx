@@ -1,5 +1,6 @@
 import {
   Box,
+  Button,
   RadioGroup,
   BorderedRadio,
   Spacer,
@@ -7,25 +8,31 @@ import {
   Text,
   RadioProps,
   BorderBox,
+  Separator,
 } from "@artsy/palette"
-import React from "react"
-import { createFragmentContainer, graphql } from "react-relay"
+import React, { useState } from "react"
+import { createFragmentContainer, graphql, RelayRefetchProp } from "react-relay"
 import styled from "styled-components"
 import { SavedAddresses_me } from "v2/__generated__/SavedAddresses_me.graphql"
+import { AddressModal } from "v2/Apps/Order/Components/AddressModal"
+import { CommitMutation } from "v2/Apps/Order/Utils/commitMutation"
+import { Dialog } from "v2/Apps/Order/Dialogs"
 
-const EditButton = styled(Text)`
-  &:hover {
-    text-decoration: underline;
-  }
-`
 export const NEW_ADDRESS = "NEW_ADDRESS"
-
 type AddressNode = SavedAddresses_me["addressConnection"]["edges"][number]["node"]
-
 interface AddressListProps {
   address: AddressNode
   handleClickEdit: (number) => void
   index: number
+}
+interface SavedAddressesProps {
+  me: SavedAddresses_me
+  onSelect?: (string) => void
+  handleClickEdit: (number) => void
+  inCollectorProfile: boolean
+  commitMutation?: CommitMutation
+  dialog?: Dialog
+  relay: RelayRefetchProp
 }
 
 const SavedAddressItem: React.FC<AddressListProps> = (
@@ -73,7 +80,7 @@ const SavedAddressItem: React.FC<AddressListProps> = (
         position="absolute"
         top={2}
         right={2}
-        onClick={e => {
+        onClick={() => {
           handleClickEdit(index)
         }}
         textColor="blue100"
@@ -93,28 +100,89 @@ const defaultAddressIndex = addressList => {
   return `${indexOfDefaultAddress > -1 ? indexOfDefaultAddress : 0}`
 }
 
-interface Props {
-  me: SavedAddresses_me
-  onSelect?: (string) => void
-  handleClickEdit: (number) => void
-  inCollectorProfile: boolean
-}
-
-const SavedAddresses: React.FC<Props> = props => {
-  const { onSelect, handleClickEdit, me, inCollectorProfile } = props
+const SavedAddresses: React.FC<SavedAddressesProps> = props => {
+  // React.useEffect(() => {
+  //   props.relay.refetch
+  // }, [])
+  const [showAddressModal, setShowAddressModal] = useState(false)
+  const { onSelect, handleClickEdit, me, inCollectorProfile, dialog } = props
   const addressList = me?.addressConnection?.edges ?? []
-
+  const handleModifyAddressModal = () => {
+    setShowAddressModal(!showAddressModal)
+  }
   const collectorProfileAddressItems = addressList.map((address, index) => {
+    const isDefaultAddress = address?.node?.isDefault
     return (
-      <BorderBox p={2} width="100%">
+      <BorderBox
+        p={2}
+        width="100%"
+        flexDirection="column"
+        key={address.node.internalID}
+      >
         <SavedAddressItem
           index={index}
           address={address.node}
           handleClickEdit={handleClickEdit}
         />
+        <Separator my={1} />
+        <ModifyAddressWrapper>
+          {!isDefaultAddress && (
+            <Box mr={1}>
+              <Text variant="text" color="black60">
+                Set as Default
+              </Text>
+            </Box>
+          )}
+          <Box mr={1}>
+            <Text variant="text" color="blue100">
+              Edit
+            </Text>
+          </Box>
+          <Box>
+            <Text variant="text" color="red100">
+              Delete
+            </Text>
+          </Box>
+        </ModifyAddressWrapper>
       </BorderBox>
     )
   })
+
+  const addAddressButton = (
+    <>
+      <Button
+        mt={addressList.length > 0 ? 3 : 0}
+        variant="primaryBlack"
+        size="large"
+        onClick={() => handleModifyAddressModal()}
+      >
+        Add new address
+      </Button>
+      {showAddressModal && (
+        <AddressModal
+          show={showAddressModal}
+          modalDetails={{
+            addressModalTitle: "Add new address",
+            inCollectorProfile: true,
+          }}
+          closeModal={() => handleModifyAddressModal()}
+          address={null}
+          onSuccess={() => {
+            handleModifyAddressModal()
+
+            props.relay.refetch
+          }}
+          commitMutation={props.commitMutation}
+          onError={message => {
+            dialog.showErrorDialog({
+              title: "Address cannot be added",
+              message: message,
+            })
+          }}
+        />
+      )}
+    </>
+  )
 
   const addressItems = addressList
     .map((address, index) => {
@@ -140,9 +208,13 @@ const SavedAddresses: React.FC<Props> = props => {
     ])
 
   return inCollectorProfile ? (
-    <Box>{collectorProfileAddressItems}</Box>
+    <>
+      <Flex flexDirection="column">{collectorProfileAddressItems}</Flex>
+      {addAddressButton}
+    </>
   ) : (
     <>
+      {addAddressButton}
       <RadioGroup
         onSelect={onSelect}
         defaultValue={defaultAddressIndex(addressList)}
@@ -154,13 +226,23 @@ const SavedAddresses: React.FC<Props> = props => {
   )
 }
 
+const EditButton = styled(Text)`
+  &:hover {
+    text-decoration: underline;
+  }
+`
+const ModifyAddressWrapper = styled(Flex)`
+  align-self: flex-end;
+  justify-content: space-between;
+`
+
 export const SavedAddressesFragmentContainer = createFragmentContainer(
   SavedAddresses,
   {
     me: graphql`
       fragment SavedAddresses_me on Me
         @argumentDefinitions(
-          first: { type: "Int", defaultValue: 30 }
+          first: { type: "Int", defaultValue: 100 }
           last: { type: "Int" }
           after: { type: "String" }
           before: { type: "String" }
