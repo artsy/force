@@ -216,6 +216,24 @@ describe("The respond page", () => {
       expect(radios.at(1).text()).toMatch("Send counteroffer")
       expect(radios.at(2).text()).toMatch("Decline seller's offer")
     })
+
+    it("shows offer note button", () => {
+      const offerNote = page.find("OfferNote")
+      expect(offerNote).toHaveLength(1)
+    })
+
+    it("hides offer note button for inquiry order", async () => {
+      const inquiryOrderPage = await buildPage({
+        mockData: {
+          order: {
+            ...testOrder,
+            isInquiryOrder: true,
+          },
+        },
+      })
+
+      expect(inquiryOrderPage.find("OfferNote")).toHaveLength(0)
+    })
   })
 
   describe("taking action", () => {

@@ -254,15 +254,19 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
                     List price: {offerItem.price}
                   </Sans>
                 )}
-                <Spacer mb={[2, 3]} />
-                <RevealButton align="left" buttonLabel="Add note to seller">
-                  <OfferNote
-                    onChange={offerNoteValue =>
-                      this.setState({ offerNoteValue })
-                    }
-                    artworkId={artworkId}
-                  />
-                </RevealButton>
+                {!order.isInquiryOrder && (
+                  <>
+                    <Spacer mb={[2, 3]} />
+                    <RevealButton align="left" buttonLabel="Add note to seller">
+                      <OfferNote
+                        onChange={offerNoteValue =>
+                          this.setState({ offerNoteValue })
+                        }
+                        artworkId={artworkId}
+                      />
+                    </RevealButton>
+                  </>
+                )}
                 <Spacer mb={[2, 3]} />
                 <Message p={[2, 3]}>
                   If your offer is accepted, your payment will be processed
@@ -351,6 +355,9 @@ export const OfferFragmentContainer = createFragmentContainer(
               }
             }
           }
+        }
+        ... on CommerceOfferOrder {
+          isInquiryOrder
         }
         ...ArtworkSummaryItem_order
         ...TransactionDetailsSummaryItem_order

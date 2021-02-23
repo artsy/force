@@ -33,6 +33,7 @@ export type Offer_order = {
             } | null;
         } | null> | null;
     } | null;
+    readonly isInquiryOrder?: boolean;
     readonly " $fragmentRefs": FragmentRefs<"ArtworkSummaryItem_order" | "TransactionDetailsSummaryItem_order">;
     readonly " $refType": "Offer_order";
 };
@@ -182,6 +183,19 @@ return {
       "storageKey": null
     },
     {
+      "kind": "InlineFragment",
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "isInquiryOrder",
+          "storageKey": null
+        }
+      ],
+      "type": "CommerceOfferOrder"
+    },
+    {
       "args": null,
       "kind": "FragmentSpread",
       "name": "ArtworkSummaryItem_order"
@@ -195,5 +209,5 @@ return {
   "type": "CommerceOrder"
 };
 })();
-(node as any).hash = 'f11a48dea3912df6a019d310ff64d25e';
+(node as any).hash = 'f824ba50f69378b1569b865e30f91196';
 export default node;

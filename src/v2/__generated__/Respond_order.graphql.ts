@@ -22,6 +22,7 @@ export type Respond_order = {
             } | null;
         } | null> | null;
     } | null;
+    readonly isInquiryOrder?: boolean;
     readonly lastOffer?: {
         readonly createdAt: string;
         readonly internalID: string;
@@ -168,6 +169,13 @@ return {
         {
           "alias": null,
           "args": null,
+          "kind": "ScalarField",
+          "name": "isInquiryOrder",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
           "concreteType": "CommerceOffer",
           "kind": "LinkedField",
           "name": "lastOffer",
@@ -229,5 +237,5 @@ return {
   "type": "CommerceOrder"
 };
 })();
-(node as any).hash = 'f8e18cf18bcd3fdc517a9e12b40c73d6';
+(node as any).hash = 'bbd091ab5575798ec842fd1ec4cb70fb';
 export default node;

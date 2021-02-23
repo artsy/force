@@ -277,20 +277,24 @@ export class RespondRoute extends Component<RespondProps, RespondState> {
                         onChange={offerValue => this.setState({ offerValue })}
                         onFocus={this.onOfferInputFocus.bind(this)}
                       />
-                      <Spacer mb={0.5} />
-                      <RevealButton
-                        align="left"
-                        buttonLabel="Add note to seller"
-                      >
-                        <Spacer mb={1} />
-                        <OfferNote
-                          onChange={offerNoteValue =>
-                            this.setState({ offerNoteValue })
-                          }
-                          artworkId={artworkId}
-                          counteroffer
-                        />
-                      </RevealButton>
+                      {!order.isInquiryOrder && (
+                        <>
+                          <Spacer mb={0.5} />
+                          <RevealButton
+                            align="left"
+                            buttonLabel="Add note to seller"
+                          >
+                            <Spacer mb={1} />
+                            <OfferNote
+                              onChange={offerNoteValue =>
+                                this.setState({ offerNoteValue })
+                              }
+                              artworkId={artworkId}
+                              counteroffer
+                            />
+                          </RevealButton>
+                        </>
+                      )}
                     </Collapse>
                   </BorderedRadio>
                   <BorderedRadio
@@ -376,6 +380,7 @@ export const RespondFragmentContainer = createFragmentContainer(
           }
         }
         ... on CommerceOfferOrder {
+          isInquiryOrder
           lastOffer {
             createdAt
             internalID

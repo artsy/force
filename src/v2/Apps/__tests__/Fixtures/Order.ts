@@ -236,6 +236,7 @@ export const UntouchedOfferOrder = {
       },
     ],
   },
+  isInquiryOrder: false,
   mode: "OFFER",
   myLastOffer: null,
   offers: {
