@@ -3,24 +3,13 @@ import ReactDOM from "react-dom"
 import { Router } from "react-router"
 import createHistory from "history/createBrowserHistory"
 import Cookies from "cookies-js"
-
 import { SystemContextProvider } from "v2/Artsy"
 import { Wizard } from "v2/Components/Onboarding/Wizard"
+import { computeRedirectTo } from "v2/Components/Onboarding/helpers"
 import { data as sd } from "sharify"
 
 const bootstrapData = window.__BOOTSTRAP__
-
-let redirectTo = "/"
-// Check the cookie for a destination
-if (Cookies.get("destination")) {
-  redirectTo = Cookies.get("destination")
-  Cookies.expire("destination")
-
-  // Also check the redirectTo from query params
-} else if (bootstrapData.redirectTo) {
-  redirectTo = bootstrapData.redirectTo
-}
-
+const redirectTo = computeRedirectTo(Cookies, bootstrapData)
 const history = createHistory()
 
 history.listen(ev => {
