@@ -59,11 +59,13 @@ class PopularArtistsContent extends React.Component<Props, null> {
     )
     this.excludedArtistIds.add(artistToSuggest.getValue("internalID") as string)
 
-    const popularArtistsRootField = store
-      .get("client:root")
-      .getLinkedRecords("popular_artists", { exclude_followed_artists: true })
+    const popularArtistsRootField = store.get("client:root")
+    const popularArtists =
+      popularArtistsRootField.getLinkedRecords("popular_artists", {
+        exclude_followed_artists: true,
+      }) || []
 
-    const updatedPopularArtists = popularArtistsRootField
+    const updatedPopularArtists = popularArtists
       .filter(Boolean)
       .map(artistItem =>
         artistItem.getDataID() === artist.id ? artistToSuggest : artistItem
