@@ -8,7 +8,7 @@ jest.mock("v2/Artsy/Analytics/useTracking")
 
 describe("CollectorIntent", () => {
   const mockRelay = {}
-  const mockHistory = {
+  const mockRouter = {
     push: jest.fn(),
   }
   const mockUpdateProfile = jest.fn()
@@ -16,7 +16,7 @@ describe("CollectorIntent", () => {
   const mockTracking = useTracking as jest.Mock
   mockTracking.mockImplementation(() => ({ trackEvent: mockTrackEvent }))
   const props = {
-    history: mockHistory,
+    router: mockRouter,
     relayEnvironment: mockRelay,
     updateProfile: mockUpdateProfile,
   }
@@ -37,7 +37,7 @@ describe("CollectorIntent", () => {
       wrapper.find("NextButton").simulate("click")
       expect(mockTrackEvent).not.toHaveBeenCalled()
       expect(mockUpdateProfile).not.toHaveBeenCalled()
-      expect(mockHistory.push).toHaveBeenCalledWith("/personalize/artists")
+      expect(mockRouter.push).toHaveBeenCalledWith("/personalize/artists")
     })
   })
 
@@ -50,7 +50,7 @@ describe("CollectorIntent", () => {
       const expectedIntents = ["BUY_ART_AND_DESIGN", "READ_ART_MARKET_NEWS"]
       expect(mockTrackEvent).toHaveBeenCalled()
       expect(mockUpdateProfile).toHaveBeenCalledWith(expectedIntents, mockRelay)
-      expect(mockHistory.push).toHaveBeenCalledWith("/personalize/artists")
+      expect(mockRouter.push).toHaveBeenCalledWith("/personalize/artists")
     })
   })
 

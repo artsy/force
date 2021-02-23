@@ -15,6 +15,7 @@ import SelectableToggle from "../SelectableToggle"
 import { Layout } from "./Layout"
 import { useTracking } from "v2/Artsy/Analytics/useTracking"
 import { Environment } from "relay-runtime"
+import { routerShape } from "found/PropTypes"
 
 const intentEnum = {
   "buy art & design": "BUY_ART_AND_DESIGN",
@@ -61,8 +62,8 @@ const OptionsContainer = styled.div`
 `
 
 interface Props {
-  history
   relayEnvironment: Environment
+  router: routerShape
   updateProfile: ProfileUpdater
 }
 
@@ -93,7 +94,7 @@ export const CollectorIntentComponent: React.FC<Props> = props => {
       tracking.trackEvent(event)
     }
 
-    props.history.push("/personalize/artists")
+    props.router.push("/personalize/artists")
   }
 
   const optionTags = Object.keys(intentEnum).map((text, index) => (

@@ -1,30 +1,38 @@
 import React from "react"
 import ReactDOM from "react-dom"
-import { Router } from "react-router"
-import createHistory from "history/createBrowserHistory"
 import { SystemContextProvider } from "v2/Artsy"
-import { Wizard } from "v2/Components/Onboarding/Wizard"
+import CollectorIntent from "v2/Components/Onboarding/Steps/CollectorIntent"
+import Artists from "v2/Components/Onboarding/Steps/Artists"
+import Genes from "v2/Components/Onboarding/Steps/Genes"
+import Budget from "v2/Components/Onboarding/Steps/Budget"
 import { data as sd } from "sharify"
+import { createBrowserRouter, makeRouteConfig, Route } from "found"
+import { track } from "v2/Artsy"
+import Events from "v2/Utils/Events"
 
 const bootstrapData = window.__BOOTSTRAP__
-const history = createHistory()
 
-history.listen(ev => {
-  window.scrollTo(0, 0)
+const BrowserRouter = createBrowserRouter({
+  routeConfig: makeRouteConfig(
+    <>
+      <Route path="/personalize/interests" Component={CollectorIntent} />
+      <Route path="/personalize/artists" Component={Artists} />
+      <Route path="/personalize/categories" Component={Genes} />
+      <Route path="/personalize/budget" Component={Budget} />
+    </>
+  ),
+})
 
-  // track pageviews when react-router updates the url
-  window.analytics.page(
-    { path: ev.pathname },
-    { integrations: { Marketo: false } }
+const Onboarding = track(null, {
+  dispatch: Events.postEvent,
+})(() => {
+  return (
+    <div>
+      <SystemContextProvider {...bootstrapData} user={sd.CURRENT_USER}>
+        <BrowserRouter />
+      </SystemContextProvider>
+    </div>
   )
 })
 
-// Start app
-ReactDOM.hydrate(
-  <Router history={history}>
-    <SystemContextProvider {...bootstrapData} user={sd.CURRENT_USER}>
-      <Wizard />
-    </SystemContextProvider>
-  </Router>,
-  document.getElementById("react-root")
-)
+ReactDOM.hydrate(<Onboarding />, document.getElementById("react-root"))
