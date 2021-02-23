@@ -41,7 +41,6 @@ const DownloadAppBanner = () => {
       borderBottom={`1px solid ${color("black10")}`}
       mb={3}
       overflow="hidden"
-      id="download-app-banner"
     >
       <Flex
         alignItems="center"

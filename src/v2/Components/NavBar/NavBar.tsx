@@ -24,6 +24,7 @@ import {
   NAV_BAR_TOP_TIER_HEIGHT,
   NAV_BAR_BOTTOM_TIER_HEIGHT,
 } from "./constants"
+import { ScrollIntoView } from "v2/Utils"
 
 /**
  * Old Force pages have the navbar height hardcoded in several places. If
@@ -243,7 +244,17 @@ export const NavBar: React.FC = track(
                 </NavItem>
               </NavSection>
               <NavSection alignItems="right" mr={2}>
-                <NavItem href="#download-app-banner">Download App</NavItem>
+                <ScrollIntoView
+                  selector="#download-app-banner"
+                  behavior="smooth"
+                >
+                  <NavItem
+                    href="#download-app-banner"
+                    onClick={event => event.preventDefault()}
+                  >
+                    Download App
+                  </NavItem>
+                </ScrollIntoView>
               </NavSection>
             </NavSection>
           </NavBarTier>
