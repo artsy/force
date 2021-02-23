@@ -1,10 +1,19 @@
 import React from "react"
-import { Box, BoxProps, CSSGrid, HTML, Text } from "@artsy/palette"
+import {
+  Box,
+  BoxProps,
+  GridColumns,
+  Column,
+  Flex,
+  HTML,
+  Text,
+} from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FairHeader_fair } from "v2/__generated__/FairHeader_fair.graphql"
 import { ForwardLink } from "v2/Components/Links/ForwardLink"
 import { FairTimingFragmentContainer as FairTiming } from "./FairTiming"
 import { FairHeaderImageFragmentContainer as FairHeaderImage } from "./FairHeaderImage"
+import { FairHeaderIconFragmentContainer } from "./FairHeaderIcon"
 
 interface FairHeaderProps extends BoxProps {
   fair: FairHeader_fair
@@ -42,23 +51,20 @@ const FairHeader: React.FC<FairHeaderProps> = ({ fair, ...rest }) => {
     <Box {...rest}>
       <FairHeaderImage fair={fair} />
 
-      <CSSGrid
-        mt={[2, 4]}
-        gridAutoFlow="row"
-        gridColumnGap={3}
-        gridRowGap={2}
-        gridTemplateColumns={["repeat(1, 1fr)", `repeat(${columnCount}, 1fr)`]}
-        textAlign={columnCount === 1 ? "center" : undefined}
-      >
-        <Box>
-          <Text as="h1" variant="largeTitle">
-            {fair.name}
-          </Text>
+      <GridColumns mt={[2, 4]}>
+        <Column span={6}>
+          <Flex mb={2}>
+            <FairHeaderIconFragmentContainer fair={fair} mr={2} />
+
+            <Text as="h1" variant="largeTitle">
+              {fair.name}
+            </Text>
+          </Flex>
 
           <FairTiming fair={fair} />
-        </Box>
+        </Column>
 
-        <Box>
+        <Column span={6}>
           <HTML variant="subtitle" lineHeight="body" html={previewText} />
 
           {canShowMoreInfoLink && (
@@ -70,8 +76,8 @@ const FairHeader: React.FC<FairHeaderProps> = ({ fair, ...rest }) => {
               More info
             </ForwardLink>
           )}
-        </Box>
-      </CSSGrid>
+        </Column>
+      </GridColumns>
     </Box>
   )
 }
@@ -81,6 +87,7 @@ export const FairHeaderFragmentContainer = createFragmentContainer(FairHeader, {
     fragment FairHeader_fair on Fair {
       ...FairTiming_fair
       ...FairHeaderImage_fair
+      ...FairHeaderIcon_fair
       about(format: HTML)
       summary(format: HTML)
       name
