@@ -68,14 +68,17 @@ const DownloadAppBanner = () => {
             </Text>
           </Flex>
         </Box>
-        <Box
-          height={320}
-          width="100%"
-          backgroundImage="url(https://files.artsy.net/consign/banner-large.jpg)"
-          backgroundSize="cover"
-          backgroundPosition="center"
-          backgroundRepeat="no-repeat"
-        ></Box>
+        <Box height={320} width="100%" textAlign="center">
+          <Image
+            height={320}
+            width="102%"
+            src="https://files.artsy.net/consign/banner-large.jpg"
+            mr={2}
+            style={{
+              objectFit: "cover",
+            }}
+          />
+        </Box>
       </Flex>
     </Flex>
   )
@@ -90,6 +93,7 @@ export const Footer: React.FC<Props> = props => {
       borderTop={flushWithContent ? "" : `1px solid ${color("black10")}`}
     >
       <Media greaterThan="xs">
+        <Box id="download-app-banner"></Box>
         <LazyLoadComponent threshold={1000}>
           <DownloadAppBanner />
         </LazyLoadComponent>
