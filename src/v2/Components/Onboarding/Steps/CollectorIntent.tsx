@@ -14,6 +14,7 @@ import { media } from "../../Helpers"
 import SelectableToggle from "../SelectableToggle"
 import { Layout } from "./Layout"
 import { useTracking } from "v2/Artsy/Analytics/useTracking"
+import { Environment } from "relay-runtime"
 
 const intentEnum = {
   "buy art & design": "BUY_ART_AND_DESIGN",
@@ -24,7 +25,12 @@ const intentEnum = {
   "read art market news": "READ_ART_MARKET_NEWS",
 }
 
-const updateCollectorProfile = (intents, relayEnvironment) => {
+type ProfileUpdater = (
+  intents: Intents[],
+  relayEnvironment: Environment
+) => void
+
+const updateCollectorProfile: ProfileUpdater = (intents, relayEnvironment) => {
   commitMutation<CollectorIntentUpdateCollectorProfileMutation>(
     relayEnvironment,
     {
@@ -54,7 +60,13 @@ const OptionsContainer = styled.div`
   `};
 `
 
-export const CollectorIntentComponent = props => {
+interface Props {
+  history
+  relayEnvironment: Environment
+  updateProfile: ProfileUpdater
+}
+
+export const CollectorIntentComponent: React.FC<Props> = props => {
   const tracking = useTracking()
   const updateProfile = props.updateProfile || updateCollectorProfile
 

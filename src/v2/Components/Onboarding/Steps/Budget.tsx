@@ -11,8 +11,14 @@ import { media } from "../../Helpers"
 import SelectableToggle from "../SelectableToggle"
 import { Layout } from "./Layout"
 import { useTracking } from "v2/Artsy/Analytics/useTracking"
+import { Environment } from "relay-runtime"
 
-const updateUserProfile = (priceRangeMax, relayEnvironment) => {
+type UserUpdater = (
+  priceRangeMax: number,
+  relayEnvironment: Environment
+) => void
+
+const updateUserProfile: UserUpdater = (priceRangeMax, relayEnvironment) => {
   const input = {
     priceRangeMin: -1,
     priceRangeMax,
@@ -57,7 +63,13 @@ const budgetOptions = {
   "NO BUDGET IN MIND": 1000000000000,
 }
 
-export const BudgetComponent = props => {
+interface Props {
+  redirectTo: string
+  relayEnvironment: Environment
+  updateUserProfile: UserUpdater
+}
+
+export const BudgetComponent: React.FC<Props> = props => {
   const tracking = useTracking()
   const updateProfile = props.updateUserProfile || updateUserProfile
   const [selectedOption, setSelectedOption] = useState(null)
