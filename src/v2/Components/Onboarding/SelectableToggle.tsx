@@ -30,6 +30,7 @@ const Link = styled.a`
     padding: 0 5px;
   `};
 `
+Link.displayName = "Link"
 
 const FullWidthCol = styled.div`
   flex: 1;

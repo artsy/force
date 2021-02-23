@@ -89,6 +89,7 @@ const NextButton = styled(MultiStateButton)`
     margin: 25px 0 0;
   `};
 `
+NextButton.displayName = "NextButton"
 
 export class Layout extends React.Component<Props, null> {
   render() {
