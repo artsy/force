@@ -58,7 +58,7 @@ export default class Genes extends React.Component<StepProps, State> {
   }
 
   handleNextButtonClick() {
-    this.props.history.push("/personalize/budget")
+    this.props.router.push("/personalize/budget")
   }
 
   render() {

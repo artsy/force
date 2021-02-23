@@ -12,6 +12,11 @@ import SelectableToggle from "../SelectableToggle"
 import { Layout } from "./Layout"
 import { useTracking } from "v2/Artsy/Analytics/useTracking"
 import { Environment } from "relay-runtime"
+import { computeRedirectTo } from "v2/Components/Onboarding/helpers"
+import Cookies from "cookies-js"
+
+const bootstrapData = window.__BOOTSTRAP__ || {}
+const computedRedirectTo = computeRedirectTo(Cookies, bootstrapData)
 
 type UserUpdater = (
   priceRangeMax: number,
@@ -72,6 +77,7 @@ interface Props {
 export const BudgetComponent: React.FC<Props> = props => {
   const tracking = useTracking()
   const updateProfile = props.updateUserProfile || updateUserProfile
+  const redirectTo = props.redirectTo || computedRedirectTo
   const [selectedOption, setSelectedOption] = useState(null)
 
   const onOptionSelected = (index: number) => {
@@ -106,7 +112,6 @@ export const BudgetComponent: React.FC<Props> = props => {
     }
     tracking.trackEvent(completedEvent)
 
-    const redirectTo = props.redirectTo || "/"
     setTimeout(() => window.location.assign(redirectTo), 500)
   }
 

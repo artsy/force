@@ -41,7 +41,7 @@ export default class Artists extends React.Component<StepProps, State> {
   }
 
   submit() {
-    this.props.history.push("/personalize/categories")
+    this.props.router.push("/personalize/categories")
   }
 
   componentDidMount() {
