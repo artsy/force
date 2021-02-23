@@ -3,20 +3,18 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type AuctionsApp_pastSales = {
+export type CurrentAuctions_currentAuctions = {
     readonly edges: ReadonlyArray<{
         readonly node: {
-            readonly name: string | null;
-            readonly formattedStartDateTime: string | null;
-            readonly href: string | null;
+            readonly id: string;
         } | null;
     } | null> | null;
-    readonly " $refType": "AuctionsApp_pastSales";
+    readonly " $refType": "CurrentAuctions_currentAuctions";
 };
-export type AuctionsApp_pastSales$data = AuctionsApp_pastSales;
-export type AuctionsApp_pastSales$key = {
-    readonly " $data"?: AuctionsApp_pastSales$data;
-    readonly " $fragmentRefs": FragmentRefs<"AuctionsApp_pastSales">;
+export type CurrentAuctions_currentAuctions$data = CurrentAuctions_currentAuctions;
+export type CurrentAuctions_currentAuctions$key = {
+    readonly " $data"?: CurrentAuctions_currentAuctions$data;
+    readonly " $fragmentRefs": FragmentRefs<"CurrentAuctions_currentAuctions">;
 };
 
 
@@ -25,7 +23,7 @@ const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "AuctionsApp_pastSales",
+  "name": "CurrentAuctions_currentAuctions",
   "selections": [
     {
       "alias": null,
@@ -47,21 +45,7 @@ const node: ReaderFragment = {
               "alias": null,
               "args": null,
               "kind": "ScalarField",
-              "name": "name",
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "formattedStartDateTime",
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "href",
+              "name": "id",
               "storageKey": null
             }
           ],
@@ -73,5 +57,5 @@ const node: ReaderFragment = {
   ],
   "type": "SaleConnection"
 };
-(node as any).hash = '2ec338ea19f9780f534f5668601a02dd';
+(node as any).hash = 'c24dc634615bf1c4819aa69868edeca4';
 export default node;
