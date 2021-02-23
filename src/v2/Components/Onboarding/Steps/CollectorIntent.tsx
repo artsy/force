@@ -23,7 +23,7 @@ const intentEnum = {
   "learn about art": "LEARN_ABOUT_ART",
   "find out about new exhibitions": "FIND_ART_EXHIBITS",
   "read art market news": "READ_ART_MARKET_NEWS",
-}
+} as const
 
 type ProfileUpdater = (
   intents: Intents[],

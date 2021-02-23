@@ -61,7 +61,7 @@ const budgetOptions = {
   "UNDER $25,000": 25000,
   "UNDER $50,000": 50000,
   "NO BUDGET IN MIND": 1000000000000,
-}
+} as const
 
 interface Props {
   redirectTo: string
