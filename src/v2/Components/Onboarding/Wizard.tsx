@@ -9,7 +9,6 @@ import { track } from "v2/Artsy"
 import Events from "v2/Utils/Events"
 
 export interface Props {
-  redirectTo?: string
   tracking?: TrackingProp
 }
 
