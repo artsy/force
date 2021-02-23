@@ -4,23 +4,20 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type FairHeaderImage_fair = {
-    readonly name: string | null;
     readonly image: {
-        readonly small: {
-            readonly src: string;
-            readonly srcSet: string;
-            readonly width: number;
-            readonly height: number;
-        } | null;
-        readonly medium: {
+        readonly sm: {
             readonly src: string;
             readonly srcSet: string;
         } | null;
-        readonly large: {
+        readonly md: {
+            readonly src: string;
+            readonly srcSet: string;
+        } | null;
+        readonly lg: {
+            readonly src: string;
             readonly srcSet: string;
         } | null;
     } | null;
-    readonly " $fragmentRefs": FragmentRefs<"FairHeaderIcon_fair">;
     readonly " $refType": "FairHeaderImage_fair";
 };
 export type FairHeaderImage_fair$data = FairHeaderImage_fair;
@@ -34,23 +31,30 @@ export type FairHeaderImage_fair$key = {
 const node: ReaderFragment = (function(){
 var v0 = {
   "kind": "Literal",
+  "name": "height",
+  "value": 600
+},
+v1 = {
+  "kind": "Literal",
   "name": "version",
   "value": "wide"
 },
-v1 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "src",
-  "storageKey": null
-},
-v2 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "srcSet",
-  "storageKey": null
-};
+v2 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "src",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "srcSet",
+    "storageKey": null
+  }
+];
 return {
   "argumentDefinitions": [],
   "kind": "Fragment",
@@ -60,91 +64,34 @@ return {
     {
       "alias": null,
       "args": null,
-      "kind": "ScalarField",
-      "name": "name",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
       "concreteType": "Image",
       "kind": "LinkedField",
       "name": "image",
       "plural": false,
       "selections": [
         {
-          "alias": "small",
+          "alias": "sm",
           "args": [
-            {
-              "kind": "Literal",
-              "name": "height",
-              "value": 500
-            },
             (v0/*: any*/),
+            (v1/*: any*/),
             {
               "kind": "Literal",
               "name": "width",
-              "value": 375
+              "value": 480
             }
           ],
           "concreteType": "CroppedImageUrl",
           "kind": "LinkedField",
           "name": "cropped",
           "plural": false,
-          "selections": [
-            (v1/*: any*/),
-            (v2/*: any*/),
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "width",
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "height",
-              "storageKey": null
-            }
-          ],
-          "storageKey": "cropped(height:500,version:\"wide\",width:375)"
+          "selections": (v2/*: any*/),
+          "storageKey": "cropped(height:600,version:\"wide\",width:480)"
         },
         {
-          "alias": "medium",
+          "alias": "md",
           "args": [
-            {
-              "kind": "Literal",
-              "name": "height",
-              "value": 800
-            },
             (v0/*: any*/),
-            {
-              "kind": "Literal",
-              "name": "width",
-              "value": 600
-            }
-          ],
-          "concreteType": "CroppedImageUrl",
-          "kind": "LinkedField",
-          "name": "cropped",
-          "plural": false,
-          "selections": [
             (v1/*: any*/),
-            (v2/*: any*/)
-          ],
-          "storageKey": "cropped(height:800,version:\"wide\",width:600)"
-        },
-        {
-          "alias": "large",
-          "args": [
-            {
-              "kind": "Literal",
-              "name": "height",
-              "value": 1200
-            },
-            (v0/*: any*/),
             {
               "kind": "Literal",
               "name": "width",
@@ -155,22 +102,33 @@ return {
           "kind": "LinkedField",
           "name": "cropped",
           "plural": false,
-          "selections": [
-            (v2/*: any*/)
+          "selections": (v2/*: any*/),
+          "storageKey": "cropped(height:600,version:\"wide\",width:900)"
+        },
+        {
+          "alias": "lg",
+          "args": [
+            (v0/*: any*/),
+            (v1/*: any*/),
+            {
+              "kind": "Literal",
+              "name": "width",
+              "value": 1600
+            }
           ],
-          "storageKey": "cropped(height:1200,version:\"wide\",width:900)"
+          "concreteType": "CroppedImageUrl",
+          "kind": "LinkedField",
+          "name": "cropped",
+          "plural": false,
+          "selections": (v2/*: any*/),
+          "storageKey": "cropped(height:600,version:\"wide\",width:1600)"
         }
       ],
       "storageKey": null
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "FairHeaderIcon_fair"
     }
   ],
   "type": "Fair"
 };
 })();
-(node as any).hash = '0a84a5f72f842bca3df95a50ef9fd2c4';
+(node as any).hash = '3dc345ccfcbe7c6919d58dd5fd138088';
 export default node;

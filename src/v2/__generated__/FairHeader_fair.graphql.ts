@@ -17,7 +17,7 @@ export type FairHeader_fair = {
     readonly links: string | null;
     readonly tickets: string | null;
     readonly contact: string | null;
-    readonly " $fragmentRefs": FragmentRefs<"FairTiming_fair" | "FairHeaderImage_fair">;
+    readonly " $fragmentRefs": FragmentRefs<"FairTiming_fair" | "FairHeaderImage_fair" | "FairHeaderIcon_fair">;
     readonly " $refType": "FairHeader_fair";
 };
 export type FairHeader_fair$data = FairHeader_fair;
@@ -139,10 +139,15 @@ return {
       "args": null,
       "kind": "FragmentSpread",
       "name": "FairHeaderImage_fair"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "FairHeaderIcon_fair"
     }
   ],
   "type": "Fair"
 };
 })();
-(node as any).hash = 'aef5f85e7bb13eff5895a86fc2a0b059';
+(node as any).hash = '18fadeb57a181e7029adbdce72fea83d';
 export default node;

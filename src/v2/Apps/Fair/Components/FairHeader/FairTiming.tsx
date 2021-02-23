@@ -14,7 +14,7 @@ const FairTiming: React.FC<Props> = ({
 }) => {
   return (
     <>
-      <Text variant="mediumText" color="black100">
+      <Text variant="title" color="black100" mb={1}>
         {exhibitionPeriod}
       </Text>
 
