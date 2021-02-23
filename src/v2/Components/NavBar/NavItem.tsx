@@ -65,7 +65,7 @@ export interface NavItemProps
   href?: string
   label?: string
   menuAnchor?: MenuAnchor
-  onClick?: () => void
+  onClick?: (event: React.MouseEvent<any>) => void
 }
 
 export const NavItem: React.FC<NavItemProps> = ({
@@ -118,9 +118,13 @@ export const NavItem: React.FC<NavItemProps> = ({
     }
   }, [isVisible])
 
-  const handleClick = () => {
-    onClick && onClick()
-    !!Menu && setIsVisible(prevIsVisible => !prevIsVisible)
+  const handleClick = event => {
+    if (onClick) {
+      onClick(event)
+    }
+    if (!!Menu) {
+      setIsVisible(prevIsVisible => !prevIsVisible)
+    }
     trackClick()
   }
 

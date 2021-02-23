@@ -21,6 +21,7 @@ import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import { DownloadAppBadge } from "v2/Components/DownloadAppBadge"
 import { ContextModule } from "@artsy/cohesion"
 import { CCPARequest } from "./CCPARequest"
+import { LazyLoadComponent } from "react-lazy-load-image-component"
 
 const Column = styled(Flex).attrs({
   flex: 1,
@@ -40,7 +41,6 @@ const DownloadAppBanner = () => {
       borderBottom={`1px solid ${color("black10")}`}
       mb={3}
       overflow="hidden"
-      id="download-app-banner"
     >
       <Flex
         alignItems="center"
@@ -67,14 +67,17 @@ const DownloadAppBanner = () => {
             </Text>
           </Flex>
         </Box>
-        <Box
-          height={320}
-          width="100%"
-          backgroundImage="url(https://files.artsy.net/consign/banner-large.jpg)"
-          backgroundSize="cover"
-          backgroundPosition="center"
-          backgroundRepeat="no-repeat"
-        ></Box>
+        <Box height={320} width="100%" textAlign="center">
+          <Image
+            height={320}
+            width="102%"
+            src="https://files.artsy.net/consign/banner-large.jpg"
+            mr={2}
+            style={{
+              objectFit: "cover",
+            }}
+          />
+        </Box>
       </Flex>
     </Flex>
   )
@@ -89,7 +92,10 @@ export const Footer: React.FC<Props> = props => {
       borderTop={flushWithContent ? "" : `1px solid ${color("black10")}`}
     >
       <Media greaterThan="xs">
-        <DownloadAppBanner />
+        <Box id="download-app-banner"></Box>
+        <LazyLoadComponent threshold={1000}>
+          <DownloadAppBanner />
+        </LazyLoadComponent>
       </Media>
       <footer>
         <Flex
