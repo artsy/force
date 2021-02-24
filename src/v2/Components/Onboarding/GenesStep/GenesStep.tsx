@@ -8,7 +8,8 @@ import { MultiButtonState } from "../../Buttons/MultiStateButton"
 import { media } from "../../Helpers"
 import { StepProps } from "../Types"
 import { Layout } from "../Steps/Layout"
-import GeneList from "./GeneList"
+import { GeneSearchResults } from "./GeneSearchResults"
+import { SuggestedGenes } from "./SuggestedGenes"
 
 const OnboardingSearchBox = styled.div`
   width: 450px;
@@ -61,6 +62,8 @@ export class GenesStep extends React.Component<StepProps, State> {
   }
 
   render() {
+    const showGeneResults = this.state.inputTextQuery.length > 0
+
     return (
       <>
         <ProgressIndicator percentComplete={0.5} />
@@ -84,12 +87,16 @@ export class GenesStep extends React.Component<StepProps, State> {
               placeholder={"Search categories..."}
             />
             <div style={{ marginBottom: "35px" }} />
-            {
-              <GeneList
-                searchQuery={this.state.inputTextQuery}
+            {showGeneResults ? (
+              <GeneSearchResults
+                term={this.state.inputTextQuery}
                 updateFollowCount={this.updateFollowCount.bind(this)}
               />
-            }
+            ) : (
+              <SuggestedGenes
+                updateFollowCount={this.updateFollowCount.bind(this)}
+              />
+            )}
           </OnboardingSearchBox>
         </Layout>
       </>
