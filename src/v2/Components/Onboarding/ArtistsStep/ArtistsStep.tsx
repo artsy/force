@@ -1,5 +1,5 @@
+import React, { useState } from "react"
 import { throttle } from "lodash"
-import React from "react"
 import styled from "styled-components"
 import { ProgressIndicator } from "v2/Components/ProgressIndicator"
 import Colors from "../../../Assets/Colors"
@@ -7,7 +7,6 @@ import Input from "../../Input"
 import { Spacer } from "@artsy/palette"
 import { MultiButtonState } from "../../Buttons/MultiStateButton"
 import { media } from "../../Helpers"
-import { StepProps } from "../Types"
 import { Layout } from "../Steps/Layout"
 import { ArtistSearchResults } from "./ArtistSearchResults"
 import { PopularArtists } from "./PopularArtists"
@@ -22,91 +21,65 @@ const OnboardingSearchBox = styled.div`
   `};
 `
 
-interface State {
-  inputText: string
-  followCount: number
-  inputTextQuery: string
+interface Props {
+  router
 }
 
-export class ArtistsStep extends React.Component<StepProps, State> {
-  state = {
-    inputText: "",
-    inputTextQuery: "",
-    followCount: 0,
+export const ArtistsStep: React.FC<Props> = props => {
+  const { router } = props
+  const [followCount, setFollowCount] = useState(0)
+  const [inputTextQuery, setInputTextQuery] = useState("")
+  const throttledTextChange = throttle(setInputTextQuery, 500, {
+    leading: true,
+  })
+
+  const handleFollowCountChange = newCount => {
+    setFollowCount(newCount)
   }
 
-  updateFollowCount(count: number) {
-    const updatedFollowCount = this.state.followCount + count
-
-    this.setState({ followCount: updatedFollowCount })
-  }
-
-  submit() {
-    this.props.router.push("/personalize/categories")
-  }
-
-  componentDidMount() {
-    this.throttledTextChange = throttle(this.throttledTextChange, 500, {
-      leading: true,
-    })
-  }
-
-  searchTextChanged = e => {
+  const handleSearchTextChange = e => {
     const updatedInputText = e.target.value
-    this.setState({ inputText: updatedInputText })
-    this.throttledTextChange(updatedInputText)
+    throttledTextChange(updatedInputText)
   }
 
-  throttledTextChange = inputText => {
-    this.setState({ inputTextQuery: inputText })
+  const handleNextButtonPress = () => {
+    router.push("/personalize/categories")
   }
 
-  clearSearch(e) {
-    this.setState({
-      inputText: "",
-      inputTextQuery: "",
-    })
-  }
+  const buttonState =
+    followCount > 0 ? MultiButtonState.Highlighted : MultiButtonState.Default
 
-  render() {
-    const showSearchResults = this.state.inputTextQuery.length > 0
+  const showSearchResults = inputTextQuery.length > 0
 
-    return (
-      <>
-        <ProgressIndicator percentComplete={0.25} />
-        <Layout
-          title="Who are your favorite artists?"
-          subtitle="Follow one or more"
-          onNextButtonPressed={this.submit.bind(this)}
-          buttonState={
-            this.state.followCount > 0
-              ? MultiButtonState.Highlighted
-              : MultiButtonState.Default
-          }
-        >
-          <OnboardingSearchBox>
-            <Input
-              placeholder={"Search artists..."}
-              block
-              onInput={this.searchTextChanged.bind(this)}
-              onPaste={this.searchTextChanged.bind(this)}
-              onCut={this.searchTextChanged.bind(this)}
-              autoFocus
+  return (
+    <>
+      <ProgressIndicator percentComplete={0.25} />
+      <Layout
+        buttonState={buttonState}
+        onNextButtonPressed={handleNextButtonPress}
+        subtitle="Follow one or more"
+        title="Who are your favorite artists?"
+      >
+        <OnboardingSearchBox>
+          <Input
+            autoFocus
+            block
+            onCut={handleSearchTextChange}
+            onInput={handleSearchTextChange}
+            onPaste={handleSearchTextChange}
+            placeholder="Search artists..."
+          />
+          <Spacer my={2} />
+          {showSearchResults ? (
+            <ArtistSearchResults
+              term={inputTextQuery}
+              updateFollowCount={handleFollowCountChange}
             />
-            <Spacer my={2} />
-            {showSearchResults ? (
-              <ArtistSearchResults
-                term={this.state.inputTextQuery}
-                updateFollowCount={this.updateFollowCount.bind(this)}
-              />
-            ) : (
-              <PopularArtists
-                updateFollowCount={this.updateFollowCount.bind(this)}
-              />
-            )}
-          </OnboardingSearchBox>
-        </Layout>
-      </>
-    )
-  }
+          ) : (
+            <PopularArtists updateFollowCount={handleFollowCountChange} />
+          )}
+        </OnboardingSearchBox>
+      </Layout>
+    </>
+  )
 }
