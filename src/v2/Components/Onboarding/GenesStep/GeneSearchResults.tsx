@@ -24,6 +24,7 @@ type Gene = GeneSearchResults_viewer["match_gene"]["edges"][number]["node"]
 
 interface ContainerProps {
   onGeneFollow
+  onNoResults
   term: string
 }
 
@@ -149,7 +150,8 @@ class GeneSearchResultsContent extends React.Component<Props, null> {
       }
     )
 
-    if (items.length < 1) {
+    if (items.length === 0) {
+      this.props.onNoResults()
       return <NoResultsContainer>No Results Found</NoResultsContainer>
     }
 
@@ -191,7 +193,7 @@ const GeneSearchResultsContentContainer = createFragmentContainer(
 
 const GeneSearchResultsComponent: React.SFC<
   ContainerProps & SystemContextProps
-> = ({ onGeneFollow, relayEnvironment, term }) => {
+> = ({ onGeneFollow, onNoResults, relayEnvironment, term }) => {
   return (
     <QueryRenderer<GeneSearchResultsQuery>
       environment={relayEnvironment}
@@ -208,6 +210,7 @@ const GeneSearchResultsComponent: React.SFC<
           return (
             <GeneSearchResultsContentContainer
               onGeneFollow={onGeneFollow}
+              onNoResults={onNoResults}
               term={term}
               viewer={props.viewer}
             />

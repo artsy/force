@@ -50,6 +50,17 @@ export const GenesStep: React.FC<Props> = props => {
     tracking.trackEvent(event)
   }
 
+  const handleNoResults = () => {
+    const event = {
+      action_type: ActionType.searchedWithNoResults,
+      context_module: ContextModule.onboardingGenes,
+      context_owner_type: OwnerType.onboarding,
+      query: inputTextQuery,
+    }
+
+    tracking.trackEvent(event)
+  }
+
   const handleSearchTextChange = e => {
     const updatedInputText = e.target.value
     throttledTextChange(updatedInputText)
@@ -86,6 +97,7 @@ export const GenesStep: React.FC<Props> = props => {
           {showGeneResults ? (
             <GeneSearchResults
               onGeneFollow={handleGeneFollow}
+              onNoResults={handleNoResults}
               term={inputTextQuery}
             />
           ) : (
