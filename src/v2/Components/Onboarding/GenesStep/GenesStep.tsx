@@ -9,6 +9,8 @@ import { media } from "../../Helpers"
 import { Layout } from "../Steps/Layout"
 import { GeneSearchResults } from "./GeneSearchResults"
 import { SuggestedGenes } from "./SuggestedGenes"
+import { useTracking } from "v2/Artsy/Analytics/useTracking"
+import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
 
 const OnboardingSearchBox = styled.div`
   width: 450px;
@@ -26,14 +28,26 @@ interface Props {
 
 export const GenesStep: React.FC<Props> = props => {
   const { router } = props
+  const tracking = useTracking()
   const [followCount, setFollowCount] = useState(0)
   const [inputTextQuery, setInputTextQuery] = useState("")
   const throttledTextChange = throttle(setInputTextQuery, 500, {
     leading: true,
   })
 
-  const handleFollowCountChange = newCount => {
+  const handleGeneFollow = (newCount, gene) => {
     setFollowCount(newCount)
+
+    const event = {
+      action_type: ActionType.followedGene,
+      context_module: ContextModule.onboardingGenes,
+      context_owner_type: OwnerType.onboarding,
+      owner_id: gene.internalID,
+      owner_slug: gene.slug,
+      owner_type: OwnerType.gene,
+    }
+
+    tracking.trackEvent(event)
   }
 
   const handleSearchTextChange = e => {
@@ -71,11 +85,11 @@ export const GenesStep: React.FC<Props> = props => {
           <div style={{ marginBottom: "35px" }} />
           {showGeneResults ? (
             <GeneSearchResults
+              onGeneFollow={handleGeneFollow}
               term={inputTextQuery}
-              updateFollowCount={handleFollowCountChange}
             />
           ) : (
-            <SuggestedGenes updateFollowCount={handleFollowCountChange} />
+            <SuggestedGenes onGeneFollow={handleGeneFollow} />
           )}
         </OnboardingSearchBox>
       </Layout>

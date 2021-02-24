@@ -14,24 +14,20 @@ import {
   createFragmentContainer,
   graphql,
 } from "react-relay"
-import track, { TrackingProp } from "react-tracking"
 import { RecordSourceSelectorProxy } from "relay-runtime"
 import styled from "styled-components"
 import { get } from "v2/Utils/get"
-import Events from "../../../Utils/Events"
 import ReplaceTransition from "../../Animation/ReplaceTransition"
 import ItemLink, { LinkContainer } from "../ItemLink"
-import { FollowProps } from "../Types"
 
 type Gene = GeneSearchResults_viewer["match_gene"]["edges"][number]["node"]
 
-interface ContainerProps extends FollowProps {
+interface ContainerProps {
+  onGeneFollow
   term: string
-  updateFollowCount
 }
 
 interface Props extends React.HTMLProps<HTMLAnchorElement>, ContainerProps {
-  tracking?: TrackingProp
   relay?: RelayProp
   viewer: GeneSearchResults_viewer
 }
@@ -44,7 +40,6 @@ const NoResultsContainer = styled.div`
   font-weight: lighter;
 `
 
-@track({}, { dispatch: data => Events.postEvent(data) })
 class GeneSearchResultsContent extends React.Component<Props, null> {
   private excludedGeneIds: Set<string>
   followCount: number = 0
@@ -61,6 +56,9 @@ class GeneSearchResultsContent extends React.Component<Props, null> {
     store: RecordSourceSelectorProxy,
     data: GeneSearchResultsFollowGeneMutationResponse
   ): void {
+    this.followCount += 1
+    this.props.onGeneFollow(this.followCount, gene)
+
     const suggestedGene = store.get(
       data.followGene.gene.similar.edges[0].node.id
     )
@@ -80,17 +78,6 @@ class GeneSearchResultsContent extends React.Component<Props, null> {
       "match_gene",
       { term: this.props.term }
     )
-
-    this.followCount += 1
-
-    this.props.updateFollowCount(this.followCount)
-
-    this.props.tracking.trackEvent({
-      action: "Followed Gene",
-      entity_id: gene.internalID,
-      entity_slug: gene.slug,
-      context_module: "onboarding search",
-    })
   }
 
   followedGene(gene: Gene) {
@@ -204,7 +191,7 @@ const GeneSearchResultsContentContainer = createFragmentContainer(
 
 const GeneSearchResultsComponent: React.SFC<
   ContainerProps & SystemContextProps
-> = ({ term, relayEnvironment, updateFollowCount }) => {
+> = ({ onGeneFollow, relayEnvironment, term }) => {
   return (
     <QueryRenderer<GeneSearchResultsQuery>
       environment={relayEnvironment}
@@ -220,9 +207,9 @@ const GeneSearchResultsComponent: React.SFC<
         if (props) {
           return (
             <GeneSearchResultsContentContainer
-              viewer={props.viewer}
+              onGeneFollow={onGeneFollow}
               term={term}
-              updateFollowCount={updateFollowCount}
+              viewer={props.viewer}
             />
           )
         } else {
