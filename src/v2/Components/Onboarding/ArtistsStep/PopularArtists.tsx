@@ -13,28 +13,22 @@ import {
   createFragmentContainer,
   graphql,
 } from "react-relay"
-import track, { TrackingProp } from "react-tracking"
 import { RecordSourceSelectorProxy } from "relay-runtime"
 import { get } from "v2/Utils/get"
-import Events from "../../../Utils/Events"
 import ReplaceTransition from "../../Animation/ReplaceTransition"
 import ItemLink, { LinkContainer } from "../ItemLink"
-import { FollowProps } from "../Types"
 
 type Artist = PopularArtists_popular_artists[number]
 
-export interface RelayProps {
-  tracking?: TrackingProp
+interface ContainerProps {
+  onArtistFollow
+}
+
+interface Props extends React.HTMLProps<HTMLAnchorElement>, ContainerProps {
   relay?: RelayProp
   popular_artists: PopularArtists_popular_artists
 }
 
-interface Props
-  extends React.HTMLProps<HTMLAnchorElement>,
-    RelayProps,
-    FollowProps {}
-
-@track({}, { dispatch: data => Events.postEvent(data) })
 class PopularArtistsContent extends React.Component<Props, null> {
   private excludedArtistIds: Set<string>
   followCount: number = 0
@@ -51,6 +45,9 @@ class PopularArtistsContent extends React.Component<Props, null> {
     store: RecordSourceSelectorProxy,
     data: PopularArtistsFollowArtistMutationResponse
   ): void {
+    this.followCount += 1
+    this.props.onArtistFollow(this.followCount, artist)
+
     const suggestedArtistEdge =
       data.followArtist.artist.related.suggestedConnection.edges[0]
     const popularArtist = data.followArtist.popular_artists[0]
@@ -74,17 +71,6 @@ class PopularArtistsContent extends React.Component<Props, null> {
     store
       .get("client:root")
       .setLinkedRecords(updatedPopularArtists, "popular_artists")
-
-    this.followCount += 1
-
-    this.props.updateFollowCount(this.followCount)
-
-    this.props.tracking.trackEvent({
-      action: "Followed Artist",
-      entity_id: artist.internalID,
-      entity_slug: artist.slug,
-      context_module: "onboarding recommended",
-    })
   }
 
   onFollowedArtist(artist: Artist) {
@@ -200,10 +186,9 @@ const PopularArtistContentContainer = createFragmentContainer(
   }
 )
 
-const PopularArtistsComponent: React.SFC<SystemContextProps & FollowProps> = ({
-  relayEnvironment,
-  updateFollowCount,
-}) => {
+const PopularArtistsComponent: React.SFC<
+  ContainerProps & SystemContextProps
+> = ({ onArtistFollow, relayEnvironment }) => {
   return (
     <QueryRenderer<PopularArtistsQuery>
       environment={relayEnvironment}
@@ -221,8 +206,8 @@ const PopularArtistsComponent: React.SFC<SystemContextProps & FollowProps> = ({
         if (props) {
           return (
             <PopularArtistContentContainer
+              onArtistFollow={onArtistFollow}
               popular_artists={props.highlights.popular_artists}
-              updateFollowCount={updateFollowCount}
             />
           )
         } else {

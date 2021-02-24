@@ -13,18 +13,15 @@ import {
   createFragmentContainer,
   graphql,
 } from "react-relay"
-import track, { TrackingProp } from "react-tracking"
 import { RecordSourceSelectorProxy } from "relay-runtime"
-import Events from "../../../Utils/Events"
 import ReplaceTransition from "../../Animation/ReplaceTransition"
 import ItemLink, { LinkContainer } from "../ItemLink"
-import { FollowProps } from "../Types"
 
 type Artist = ArtistSearchResults_viewer["searchConnection"]["edges"][number]["node"]
 
-export interface ContainerProps extends FollowProps {
+export interface ContainerProps {
+  onArtistFollow
   term: string
-  tracking?: TrackingProp
 }
 
 interface Props extends React.HTMLProps<HTMLAnchorElement>, ContainerProps {
@@ -32,7 +29,6 @@ interface Props extends React.HTMLProps<HTMLAnchorElement>, ContainerProps {
   viewer: ArtistSearchResults_viewer
 }
 
-@track({}, { dispatch: data => Events.postEvent(data) })
 class ArtistSearchResultsContent extends React.Component<Props, null> {
   private excludedArtistIds: Set<string>
   followCount: number = 0
@@ -51,6 +47,9 @@ class ArtistSearchResultsContent extends React.Component<Props, null> {
     store: RecordSourceSelectorProxy,
     data: ArtistSearchResultsArtistMutationResponse
   ): void {
+    this.followCount += 1
+    this.props.onArtistFollow(this.followCount, artist)
+
     const suggestedArtistEdge =
       data.followArtist.artist.related.suggestedConnection.edges[0]
     const popularArtist = data.followArtist.popular_artists[0]
@@ -60,10 +59,10 @@ class ArtistSearchResultsContent extends React.Component<Props, null> {
     this.excludedArtistIds.add(artistToSuggest.getValue("internalID") as string)
 
     const popularArtistsRootField = store.get("client:root:viewer")
-    const popularArtists = popularArtistsRootField.getLinkedRecords(
-      "match_artist",
-      { term: this.props.term }
-    )
+    const popularArtists =
+      popularArtistsRootField.getLinkedRecords("match_artist", {
+        term: this.props.term,
+      }) || []
     const updatedPopularArtists = popularArtists.map(artistItem =>
       artistItem.getDataID() === artist.id ? artistToSuggest : artistItem
     )
@@ -73,17 +72,6 @@ class ArtistSearchResultsContent extends React.Component<Props, null> {
       "match_artist",
       { term: this.props.term }
     )
-
-    this.followCount += 1
-
-    this.props.updateFollowCount(this.followCount)
-
-    this.props.tracking.trackEvent({
-      action: "Followed Artist",
-      entity_id: artist.internalID,
-      entity_slug: artist.slug,
-      context_module: "onboarding search",
-    })
   }
 
   onFollowedArtist(artist: Artist) {
@@ -207,7 +195,7 @@ const ArtistSearchResultsContentContainer = createFragmentContainer(
 
 const ArtistSearchResultsComponent: React.SFC<
   ContainerProps & SystemContextProps
-> = ({ term, relayEnvironment, updateFollowCount }) => {
+> = ({ onArtistFollow, relayEnvironment, term }) => {
   return (
     <QueryRenderer<ArtistSearchResultsQuery>
       environment={relayEnvironment}
@@ -223,9 +211,9 @@ const ArtistSearchResultsComponent: React.SFC<
         if (props) {
           return (
             <ArtistSearchResultsContentContainer
-              viewer={props.viewer}
+              onArtistFollow={onArtistFollow}
               term={term}
-              updateFollowCount={updateFollowCount}
+              viewer={props.viewer}
             />
           )
         } else {

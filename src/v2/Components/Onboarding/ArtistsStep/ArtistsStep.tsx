@@ -10,6 +10,8 @@ import { media } from "../../Helpers"
 import { Layout } from "../Steps/Layout"
 import { ArtistSearchResults } from "./ArtistSearchResults"
 import { PopularArtists } from "./PopularArtists"
+import { useTracking } from "v2/Artsy/Analytics/useTracking"
+import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
 
 const OnboardingSearchBox = styled.div`
   width: 450px;
@@ -27,14 +29,26 @@ interface Props {
 
 export const ArtistsStep: React.FC<Props> = props => {
   const { router } = props
+  const tracking = useTracking()
   const [followCount, setFollowCount] = useState(0)
   const [inputTextQuery, setInputTextQuery] = useState("")
   const throttledTextChange = throttle(setInputTextQuery, 500, {
     leading: true,
   })
 
-  const handleFollowCountChange = newCount => {
+  const handleArtistFollow = (newCount, artist) => {
     setFollowCount(newCount)
+
+    const event = {
+      action_type: ActionType.followedArtist,
+      context_module: ContextModule.onboardingArtists,
+      context_owner_type: OwnerType.onboarding,
+      owner_id: artist.internalID,
+      owner_slug: artist.slug,
+      owner_type: OwnerType.artist,
+    }
+
+    tracking.trackEvent(event)
   }
 
   const handleSearchTextChange = e => {
@@ -72,11 +86,11 @@ export const ArtistsStep: React.FC<Props> = props => {
           <Spacer my={2} />
           {showSearchResults ? (
             <ArtistSearchResults
+              onArtistFollow={handleArtistFollow}
               term={inputTextQuery}
-              updateFollowCount={handleFollowCountChange}
             />
           ) : (
-            <PopularArtists updateFollowCount={handleFollowCountChange} />
+            <PopularArtists onArtistFollow={handleArtistFollow} />
           )}
         </OnboardingSearchBox>
       </Layout>
