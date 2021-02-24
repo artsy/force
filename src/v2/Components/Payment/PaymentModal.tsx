@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { Button, Input, Modal, Spacer, Text } from "@artsy/palette"
-import { Formik, FormikProps } from "formik"
+import { Formik, FormikHelpers, FormikProps } from "formik"
 import { CountrySelect } from "v2/Components/CountrySelect"
 import {
   validateAddress,
@@ -92,7 +92,10 @@ export const PaymentModal: React.FC<PaymentModalProps> = props => {
   const elements = useElements()
   const [createError, setCreateError] = useState(null)
 
-  const addCreditCard = async values => {
+  const addCreditCard = async (
+    values: SavedAddressType,
+    actions: FormikHelpers<SavedAddressType>
+  ) => {
     const billingAddress: CreateTokenCardData = {
       name: values.name,
       address_line1: values.addressLine1,
@@ -109,15 +112,13 @@ export const PaymentModal: React.FC<PaymentModalProps> = props => {
     if (error) {
       setCreateError(error.message)
     } else {
-      // TODO: potentially dry the redundant code in PaymentForm?
       commitMutation<PaymentModalCreateCreditCardMutation>(relay.environment, {
         onCompleted: (data, errors) => {
           const {
             createCreditCard: { creditCardOrError },
           } = data
-
+          actions?.setSubmitting(false)
           if (creditCardOrError.creditCardEdge) {
-            // TODO
             closeModal()
           } else {
             if (errors) {
@@ -134,6 +135,7 @@ export const PaymentModal: React.FC<PaymentModalProps> = props => {
           }
         },
         onError: error => {
+          actions?.setSubmitting(false)
           logger.error(error)
           setCreateError("Failed.")
         },
@@ -154,8 +156,8 @@ export const PaymentModal: React.FC<PaymentModalProps> = props => {
           country: "US",
         }}
         validate={validator}
-        onSubmit={values => {
-          addCreditCard(values)
+        onSubmit={(values, actions) => {
+          addCreditCard(values, actions)
         }}
       >
         {(formik: FormikProps<SavedAddressType>) => (
