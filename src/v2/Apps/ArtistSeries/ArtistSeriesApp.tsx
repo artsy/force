@@ -99,6 +99,8 @@ export const ArtistSeriesAppFragmentContainer = createFragmentContainer(
           sizes: { type: "[ArtworkSizes]" }
           sort: { type: "String", defaultValue: "-partner_updated_at" }
           width: { type: "String" }
+          locationCities: { type: "[String]" }
+          additionalGeneIDs: { type: "[String]" }
         ) {
         ...ArtistSeriesMeta_artistSeries
         ...ArtistSeriesHeader_artistSeries
@@ -127,6 +129,8 @@ export const ArtistSeriesAppFragmentContainer = createFragmentContainer(
             sizes: $sizes
             sort: $sort
             width: $width
+            locationCities: $locationCities
+            additionalGeneIDs: $additionalGeneIDs
           )
       }
     `,

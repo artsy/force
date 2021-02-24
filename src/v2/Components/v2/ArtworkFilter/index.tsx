@@ -275,6 +275,7 @@ export const ArtworkFilterRefetchContainer = createRefetchContainer(
           sort: { type: "String", defaultValue: "-partner_updated_at" }
           width: { type: "String" }
           first: { type: "Int", defaultValue: 30 }
+          locationCities: { type: "[String]" }
         ) {
         filtered_artworks: artworksConnection(
           acquireable: $acquireable
@@ -299,6 +300,7 @@ export const ArtworkFilterRefetchContainer = createRefetchContainer(
           sort: $sort
           width: $width
           first: $first
+          locationCities: $locationCities
         ) {
           id
           ...ArtworkFilterArtworkGrid_filtered_artworks

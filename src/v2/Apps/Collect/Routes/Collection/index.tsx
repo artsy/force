@@ -217,6 +217,7 @@ export const CollectionRefetchContainer = createRefetchContainer(
           sort: { type: "String", defaultValue: "-partner_updated_at" }
           width: { type: "String" }
           first: { type: "Int" }
+          locationCities: { type: "[String]" }
         ) {
         ...Header_collection
         description
@@ -310,6 +311,7 @@ export const CollectionRefetchContainer = createRefetchContainer(
           first: $first
           sort: $sort
           width: $width
+          locationCities: $locationCities
         ) {
           id
           ...ArtworkFilterArtworkGrid_filtered_artworks

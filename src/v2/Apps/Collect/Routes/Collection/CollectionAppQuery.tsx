@@ -8,12 +8,7 @@ import { graphql } from "react-relay"
 export const CollectionAppQuery = graphql`
   query CollectionAppQuery(
     $acquireable: Boolean
-    $aggregations: [ArtworkAggregation] = [
-      MERCHANDISABLE_ARTISTS
-      MEDIUM
-      MAJOR_PERIOD
-      TOTAL
-    ]
+    $aggregations: [ArtworkAggregation]
     $atAuction: Boolean
     $attributionClass: [String]
     $colors: [String]
@@ -30,6 +25,7 @@ export const CollectionAppQuery = graphql`
     $sort: String
     $slug: String!
     $width: String
+    $locationCities: [String]
   ) {
     collection: marketingCollection(slug: $slug) {
       ...Collection_collection
@@ -52,6 +48,7 @@ export const CollectionAppQuery = graphql`
           sort: $sort
           width: $width
           first: 30
+          locationCities: $locationCities
         )
     }
   }

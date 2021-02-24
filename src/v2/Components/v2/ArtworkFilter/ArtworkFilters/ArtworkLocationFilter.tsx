@@ -4,12 +4,11 @@ import React, { FC } from "react"
 
 import { useArtworkFilterContext } from "../ArtworkFilterContext"
 import { OptionText } from "./OptionText"
-import { PartnerAutosuggest } from "./PartnerAutosuggest"
 import { ShowMore } from "./ShowMore"
 
-const INITIAL_PARTNERS_TO_SHOW = 6
+const INITIAL_ITEMS_TO_SHOW = 6
 
-const PartnerOption: React.FC<{ name: string }> = ({ name }) => {
+const ArtworkLocationOption: React.FC<{ name: string }> = ({ name }) => {
   const { currentlySelectedFilters, setFilter } = useArtworkFilterContext()
 
   const toggleLocationSelection = (selected, slug) => {
@@ -19,9 +18,9 @@ const PartnerOption: React.FC<{ name: string }> = ({ name }) => {
     } else {
       locations = locations.filter(item => item !== slug)
     }
-    setFilter("partnerIDs", locations)
+    setFilter("locationCities", locations)
   }
-  const selected = currentlySelectedFilters().partnerIDs.includes(name)
+  const selected = currentlySelectedFilters().locationCities.includes(name)
   const props = {
     onSelect: selected => {
       toggleLocationSelection(selected, name)
@@ -37,23 +36,22 @@ const PartnerOption: React.FC<{ name: string }> = ({ name }) => {
   )
 }
 
-export const PartnersFilter: FC = () => {
+export const ArtworkLocationFilter: FC = () => {
   const { aggregations } = useArtworkFilterContext()
-  const partners = aggregations.find(agg => agg.slice === "PARTNER")
+  const locations = aggregations.find(agg => agg.slice === "LOCATION_CITY")
 
-  if (!(partners && partners.counts)) {
+  if (!(locations && locations.counts)) {
     return null
   }
 
-  const partnersSorted = sortBy(partners.counts, ["count"]).reverse()
+  const locationsSorted = sortBy(locations.counts, ["count"]).reverse()
 
   return (
-    <Toggle label="Galleries and institutions" expanded>
+    <Toggle label="Artwork location" expanded>
       <Flex flexDirection="column">
-        <PartnerAutosuggest partners={partners.counts} />
-        <ShowMore initial={INITIAL_PARTNERS_TO_SHOW}>
-          {partnersSorted.map(({ name }) => {
-            return <PartnerOption key={name} name={name} />
+        <ShowMore initial={INITIAL_ITEMS_TO_SHOW}>
+          {locationsSorted.map(({ name }) => {
+            return <ArtworkLocationOption key={name} name={name} />
           })}
         </ShowMore>
       </Flex>

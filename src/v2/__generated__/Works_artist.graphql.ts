@@ -33,6 +33,7 @@ export type Works_artist = {
             readonly counts: ReadonlyArray<{
                 readonly name: string;
                 readonly value: string;
+                readonly count: number;
             } | null> | null;
         } | null> | null;
     } | null;
@@ -198,6 +199,18 @@ return {
       "kind": "LocalArgument",
       "name": "width",
       "type": "String"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "locationCities",
+      "type": "[String]"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "additionalGeneIDs",
+      "type": "[String]"
     }
   ],
   "kind": "Fragment",
@@ -380,6 +393,13 @@ return {
                   "kind": "ScalarField",
                   "name": "value",
                   "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "count",
+                  "storageKey": null
                 }
               ],
               "storageKey": null
@@ -406,6 +426,11 @@ return {
           "kind": "Variable",
           "name": "acquireable",
           "variableName": "acquireable"
+        },
+        {
+          "kind": "Variable",
+          "name": "additionalGeneIDs",
+          "variableName": "additionalGeneIDs"
         },
         (v2/*: any*/),
         {
@@ -447,6 +472,11 @@ return {
           "kind": "Variable",
           "name": "keyword",
           "variableName": "keyword"
+        },
+        {
+          "kind": "Variable",
+          "name": "locationCities",
+          "variableName": "locationCities"
         },
         {
           "kind": "Variable",
@@ -498,5 +528,5 @@ return {
   "type": "Artist"
 };
 })();
-(node as any).hash = '7d7c0212029f6439880a2d16ea220af9';
+(node as any).hash = '5dd3ed27c4814bd7207de41af42d2e38';
 export default node;

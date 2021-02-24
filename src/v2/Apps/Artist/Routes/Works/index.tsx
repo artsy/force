@@ -94,6 +94,8 @@ export const WorksRouteFragmentContainer = createFragmentContainer(WorksRoute, {
         sizes: { type: "[ArtworkSizes]" }
         sort: { type: "String", defaultValue: "-partner_updated_at" }
         width: { type: "String" }
+        locationCities: { type: "[String]" }
+        additionalGeneIDs: { type: "[String]" }
       ) {
       internalID
       slug
@@ -140,6 +142,7 @@ export const WorksRouteFragmentContainer = createFragmentContainer(WorksRoute, {
           counts {
             name
             value
+            count
           }
         }
         # FIXME: Might need to reenable the below.
@@ -180,6 +183,8 @@ export const WorksRouteFragmentContainer = createFragmentContainer(WorksRoute, {
           sizes: $sizes
           sort: $sort
           width: $width
+          locationCities: $locationCities
+          additionalGeneIDs: $additionalGeneIDs
         )
     }
   `,

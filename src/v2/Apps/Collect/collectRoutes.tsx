@@ -3,6 +3,7 @@ import { RouteConfig } from "found"
 import { graphql } from "react-relay"
 
 import { paramsToCamelCase } from "v2/Components/v2/ArtworkFilter/Utils/urlBuilder"
+import { getENV } from "v2/Utils/getENV"
 import { CollectionAppQuery } from "./Routes/Collection/CollectionAppQuery"
 
 const CollectApp = loadable(() => import("./Routes/Collect"), {
@@ -78,10 +79,23 @@ function initializeVariablesWithFilterState(params, props) {
     }
   }
 
+  const aggregations = ["TOTAL"]
+  // TODO: Does the `location_city` aggregation accomplish much on /collect, and
+  // should it be a hard-coded list of featured cities?
+  const additionalAggregations = getENV("ENABLE_NEW_ARTWORK_FILTERS")
+    ? ["LOCATION_CITY"]
+    : []
+  const collectionOnlyAggregations = params.slug
+    ? ["MERCHANDISABLE_ARTISTS", "MEDIUM", "MAJOR_PERIOD"]
+    : []
+
   const state = {
     sort: "-decayed_merch",
     ...paramsToCamelCase(initialFilterState),
     ...params,
+    aggregations: aggregations
+      .concat(additionalAggregations)
+      .concat(collectionOnlyAggregations),
   }
 
   return state
@@ -111,6 +125,7 @@ function getArtworkFilterQuery() {
       $sort: String
       $keyword: String
       $width: String
+      $locationCities: [String]
     ) {
       marketingHubCollections {
         ...Collect_marketingHubCollections
@@ -146,6 +161,7 @@ function getArtworkFilterQuery() {
             sizes: $sizes
             sort: $sort
             width: $width
+            locationCities: $locationCities
           )
       }
     }

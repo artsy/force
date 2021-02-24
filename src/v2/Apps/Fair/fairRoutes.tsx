@@ -80,6 +80,7 @@ export const fairRoutes: RouteConfig[] = [
             $sizes: [ArtworkSizes]
             $sort: String
             $shouldFetchCounts: Boolean!
+            $additionalGeneIDs: [String]
           ) {
             fair(id: $slug) @principalField {
               ...FairArtworks_fair
@@ -102,6 +103,7 @@ export const fairRoutes: RouteConfig[] = [
                   sizes: $sizes
                   sort: $sort
                   shouldFetchCounts: $shouldFetchCounts
+                  additionalGeneIDs: $additionalGeneIDs
                 )
             }
           }

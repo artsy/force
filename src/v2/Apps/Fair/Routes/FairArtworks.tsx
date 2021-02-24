@@ -109,6 +109,7 @@ export const FairArtworksRefetchContainer = createRefetchContainer(
           sizes: { type: "[ArtworkSizes]" }
           sort: { type: "String", defaultValue: "-partner_updated_at" }
           shouldFetchCounts: { type: "Boolean", defaultValue: false }
+          additionalGeneIDs: { type: "[String]" }
         ) {
         slug
         internalID
@@ -132,6 +133,7 @@ export const FairArtworksRefetchContainer = createRefetchContainer(
           first: 20
           after: ""
           sort: $sort
+          additionalGeneIDs: $additionalGeneIDs
         ) {
           id
           counts @include(if: $shouldFetchCounts) {
@@ -162,6 +164,7 @@ export const FairArtworksRefetchContainer = createRefetchContainer(
       $priceRange: String
       $sizes: [ArtworkSizes]
       $sort: String
+      $additionalGeneIDs: [String]
     ) {
       fair(id: $slug) {
         ...FairArtworks_fair
@@ -183,6 +186,7 @@ export const FairArtworksRefetchContainer = createRefetchContainer(
             priceRange: $priceRange
             sizes: $sizes
             sort: $sort
+            additionalGeneIDs: $additionalGeneIDs
           )
       }
     }
