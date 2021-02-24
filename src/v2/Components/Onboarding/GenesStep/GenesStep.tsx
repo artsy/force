@@ -1,12 +1,11 @@
+import React, { useState } from "react"
 import { throttle } from "lodash"
-import React from "react"
 import styled from "styled-components"
 import { ProgressIndicator } from "v2/Components/ProgressIndicator"
 import Colors from "../../../Assets/Colors"
 import Input from "../../Input"
 import { MultiButtonState } from "../../Buttons/MultiStateButton"
 import { media } from "../../Helpers"
-import { StepProps } from "../Types"
 import { Layout } from "../Steps/Layout"
 import { GeneSearchResults } from "./GeneSearchResults"
 import { SuggestedGenes } from "./SuggestedGenes"
@@ -21,85 +20,65 @@ const OnboardingSearchBox = styled.div`
   `};
 `
 
-interface State {
-  inputText: string
-  followCount: number
-  inputTextQuery: string
+interface Props {
+  router
 }
 
-export class GenesStep extends React.Component<StepProps, State> {
-  state = { inputText: "", inputTextQuery: "", followCount: 0 }
+export const GenesStep: React.FC<Props> = props => {
+  const { router } = props
+  const [followCount, setFollowCount] = useState(0)
+  const [inputTextQuery, setInputTextQuery] = useState("")
+  const throttledTextChange = throttle(setInputTextQuery, 500, {
+    leading: true,
+  })
 
-  updateFollowCount(count: number) {
-    this.setState({ followCount: count })
+  const handleFollowCountChange = newCount => {
+    setFollowCount(newCount)
   }
 
-  componentDidMount() {
-    this.throttledTextChange = throttle(this.throttledTextChange, 500, {
-      leading: true,
-    })
-  }
-
-  searchTextChanged = e => {
+  const handleSearchTextChange = e => {
     const updatedInputText = e.target.value
-    this.setState({ inputText: updatedInputText })
-    this.throttledTextChange(updatedInputText)
+    throttledTextChange(updatedInputText)
   }
 
-  throttledTextChange = inputText => {
-    this.setState({ inputTextQuery: inputText })
+  const handleNextButtonPress = () => {
+    router.push("/personalize/budget")
   }
 
-  clearSearch(e) {
-    this.setState({
-      inputText: "",
-      inputTextQuery: "",
-    })
-  }
+  const buttonState =
+    followCount > 0 ? MultiButtonState.Highlighted : MultiButtonState.Default
 
-  handleNextButtonClick() {
-    this.props.router.push("/personalize/budget")
-  }
+  const showGeneResults = inputTextQuery.length > 0
 
-  render() {
-    const showGeneResults = this.state.inputTextQuery.length > 0
-
-    return (
-      <>
-        <ProgressIndicator percentComplete={0.5} />
-        <Layout
-          title="What categories most interest you?"
-          subtitle="Follow one or more"
-          onNextButtonPressed={this.handleNextButtonClick.bind(this)}
-          buttonState={
-            this.state.followCount > 0
-              ? MultiButtonState.Highlighted
-              : MultiButtonState.Default
-          }
-        >
-          <OnboardingSearchBox>
-            <Input
-              autoFocus
-              block
-              onCut={this.searchTextChanged}
-              onInput={this.searchTextChanged}
-              onPaste={this.searchTextChanged}
-              placeholder={"Search categories..."}
+  return (
+    <>
+      <ProgressIndicator percentComplete={0.5} />
+      <Layout
+        buttonState={buttonState}
+        onNextButtonPressed={handleNextButtonPress}
+        subtitle="Follow one or more"
+        title="What categories most interest you?"
+      >
+        <OnboardingSearchBox>
+          <Input
+            autoFocus
+            block
+            onCut={handleSearchTextChange}
+            onInput={handleSearchTextChange}
+            onPaste={handleSearchTextChange}
+            placeholder={"Search categories..."}
+          />
+          <div style={{ marginBottom: "35px" }} />
+          {showGeneResults ? (
+            <GeneSearchResults
+              term={inputTextQuery}
+              updateFollowCount={handleFollowCountChange}
             />
-            <div style={{ marginBottom: "35px" }} />
-            {showGeneResults ? (
-              <GeneSearchResults
-                term={this.state.inputTextQuery}
-                updateFollowCount={this.updateFollowCount.bind(this)}
-              />
-            ) : (
-              <SuggestedGenes
-                updateFollowCount={this.updateFollowCount.bind(this)}
-              />
-            )}
-          </OnboardingSearchBox>
-        </Layout>
-      </>
-    )
-  }
+          ) : (
+            <SuggestedGenes updateFollowCount={handleFollowCountChange} />
+          )}
+        </OnboardingSearchBox>
+      </Layout>
+    </>
+  )
 }

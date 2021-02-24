@@ -27,6 +27,7 @@ type Gene = GeneSearchResults_viewer["match_gene"]["edges"][number]["node"]
 
 interface ContainerProps extends FollowProps {
   term: string
+  updateFollowCount
 }
 
 interface Props extends React.HTMLProps<HTMLAnchorElement>, ContainerProps {
@@ -66,10 +67,10 @@ class GeneSearchResultsContent extends React.Component<Props, null> {
     this.excludedGeneIds.add(suggestedGene.getValue("internalID") as string)
 
     const suggestedGenesRootField = store.get("client:root:viewer")
-    const suggestedGenes = suggestedGenesRootField.getLinkedRecords(
-      "match_gene",
-      { term: this.props.term }
-    )
+    const suggestedGenes =
+      suggestedGenesRootField.getLinkedRecords("match_gene", {
+        term: this.props.term,
+      }) || []
     const updatedSuggestedGenes = suggestedGenes.map(geneItem =>
       geneItem.getValue("id") === gene.id ? suggestedGene : geneItem
     )

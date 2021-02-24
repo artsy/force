@@ -52,9 +52,8 @@ class SuggestedGenesContent extends React.Component<Props> {
     this.excludedGeneIds.add(suggestedGene.getValue("internalID") as string)
 
     const suggestedGenesRootField = store.get("client:root")
-    const suggestedGenes = suggestedGenesRootField.getLinkedRecords(
-      "suggested_genes"
-    )
+    const suggestedGenes =
+      suggestedGenesRootField.getLinkedRecords("suggested_genes") || []
     const updatedSuggestedGenes = suggestedGenes.map(geneItem =>
       geneItem.getValue("id") === gene.id ? suggestedGene : geneItem
     )
