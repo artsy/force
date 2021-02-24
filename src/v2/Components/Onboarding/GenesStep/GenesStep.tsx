@@ -2,13 +2,12 @@ import { throttle } from "lodash"
 import React from "react"
 import styled from "styled-components"
 import { ProgressIndicator } from "v2/Components/ProgressIndicator"
-import Colors from "../../../../Assets/Colors"
-import Input from "../../../Input"
-
-import { MultiButtonState } from "../../../Buttons/MultiStateButton"
-import { media } from "../../../Helpers"
-import { StepProps } from "../../Types"
-import { Layout } from "../Layout"
+import Colors from "../../../Assets/Colors"
+import Input from "../../Input"
+import { MultiButtonState } from "../../Buttons/MultiStateButton"
+import { media } from "../../Helpers"
+import { StepProps } from "../Types"
+import { Layout } from "../Steps/Layout"
 import GeneList from "./GeneList"
 
 const OnboardingSearchBox = styled.div`
@@ -27,7 +26,7 @@ interface State {
   inputTextQuery: string
 }
 
-export default class Genes extends React.Component<StepProps, State> {
+export class GenesStep extends React.Component<StepProps, State> {
   state = { inputText: "", inputTextQuery: "", followCount: 0 }
 
   updateFollowCount(count: number) {

@@ -18,10 +18,10 @@ import track, { TrackingProp } from "react-tracking"
 import { RecordSourceSelectorProxy } from "relay-runtime"
 import styled from "styled-components"
 import { get } from "v2/Utils/get"
-import Events from "../../../../Utils/Events"
-import ReplaceTransition from "../../../Animation/ReplaceTransition"
-import ItemLink, { LinkContainer } from "../../ItemLink"
-import { FollowProps } from "../../Types"
+import Events from "../../../Utils/Events"
+import ReplaceTransition from "../../Animation/ReplaceTransition"
+import ItemLink, { LinkContainer } from "../ItemLink"
+import { FollowProps } from "../Types"
 
 type Gene = GeneSearchResults_viewer["match_gene"]["edges"][number]["node"]
 

@@ -1,6 +1,5 @@
 import React from "react"
-
-import { FollowProps } from "../../Types"
+import { FollowProps } from "../Types"
 import { GeneSearchResults } from "./GeneSearchResults"
 import { SuggestedGenes } from "./SuggestedGenes"
 

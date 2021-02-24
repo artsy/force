@@ -16,10 +16,10 @@ import {
 import track, { TrackingProp } from "react-tracking"
 import { RecordSourceSelectorProxy } from "relay-runtime"
 import { get } from "v2/Utils/get"
-import Events from "../../../../Utils/Events"
-import ReplaceTransition from "../../../Animation/ReplaceTransition"
-import ItemLink, { LinkContainer } from "../../ItemLink"
-import { FollowProps } from "../../Types"
+import Events from "../../../Utils/Events"
+import ReplaceTransition from "../../Animation/ReplaceTransition"
+import ItemLink, { LinkContainer } from "../ItemLink"
+import { FollowProps } from "../Types"
 
 type Gene = SuggestedGenes_suggested_genes[0]
 
