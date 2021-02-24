@@ -9,7 +9,8 @@ import { MultiButtonState } from "../../Buttons/MultiStateButton"
 import { media } from "../../Helpers"
 import { StepProps } from "../Types"
 import { Layout } from "../Steps/Layout"
-import ArtistList from "./ArtistList"
+import { ArtistSearchResults } from "./ArtistSearchResults"
+import { PopularArtists } from "./PopularArtists"
 
 const OnboardingSearchBox = styled.div`
   width: 450px;
@@ -68,6 +69,8 @@ export class ArtistsStep extends React.Component<StepProps, State> {
   }
 
   render() {
+    const showSearchResults = this.state.inputTextQuery.length > 0
+
     return (
       <>
         <ProgressIndicator percentComplete={0.25} />
@@ -91,10 +94,16 @@ export class ArtistsStep extends React.Component<StepProps, State> {
               autoFocus
             />
             <Spacer my={2} />
-            <ArtistList
-              searchQuery={this.state.inputTextQuery}
-              updateFollowCount={this.updateFollowCount.bind(this)}
-            />
+            {showSearchResults ? (
+              <ArtistSearchResults
+                term={this.state.inputTextQuery}
+                updateFollowCount={this.updateFollowCount.bind(this)}
+              />
+            ) : (
+              <PopularArtists
+                updateFollowCount={this.updateFollowCount.bind(this)}
+              />
+            )}
           </OnboardingSearchBox>
         </Layout>
       </>
