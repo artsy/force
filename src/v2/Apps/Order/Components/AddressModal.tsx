@@ -1,5 +1,5 @@
 import React from "react"
-import { Button, Input, Modal, Spacer } from "@artsy/palette"
+import { Button, Input, Modal, Spacer, Text } from "@artsy/palette"
 import { SavedAddressType } from "../Utils/shippingAddressUtils"
 import { Formik, FormikProps } from "formik"
 import {
@@ -106,6 +106,7 @@ export const AddressModal: React.FC<Props> = ({
               value={formik.values.region}
             />
             <Spacer mb={1} />
+            <Text>Country</Text>
             <CountrySelect
               selected={formik.values.country}
               onSelect={countryCode => {

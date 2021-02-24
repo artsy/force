@@ -11,10 +11,10 @@ import { RelayProp, commitMutation, graphql } from "react-relay"
 import { ConnectionHandler, RecordSourceSelectorProxy } from "relay-runtime"
 import styled from "styled-components"
 import { CreditCardType } from "./UserSettingsPayments"
-
+import { PaymentSection_me } from "v2/__generated__/PaymentSection_me.graphql"
 interface SavedCreditCardsProps {
   creditCards: CreditCardType[]
-  me: UserSettingsPayments_me
+  me: UserSettingsPayments_me | PaymentSection_me
   relay?: RelayProp
 }
 
@@ -25,7 +25,7 @@ interface CreditCardsState {
 
 interface CreditCardProps {
   creditCard?: CreditCardType
-  me: UserSettingsPayments_me
+  me: UserSettingsPayments_me | PaymentSection_me
   relay?: RelayProp
 }
 
@@ -135,16 +135,22 @@ export class CreditCard extends React.Component<
       const creditCardEdge = creditCardOrErrorEdge.getLinkedRecord("creditCard")
       const creditCardId = creditCardEdge.getValue("id")
       const meStore = store.get(this.props.me.id)
-      const connection = ConnectionHandler.getConnection(
+      let connection = null
+      connection = ConnectionHandler.getConnection(
         meStore,
         "UserSettingsPayments_creditCards"
       )
+      if (!connection) {
+        connection = ConnectionHandler.getConnection(
+          meStore,
+          "PaymentSection_creditCards"
+        )
+      }
       ConnectionHandler.deleteNode(connection, creditCardId)
     }
   }
 
   private onMutationError(errors) {
-    console.error("SavedCreditCards.tsx", errors)
     this.setState({ isErrorModalOpen: true, isCommittingMutation: false })
   }
 }

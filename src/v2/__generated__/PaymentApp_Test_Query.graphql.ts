@@ -26,10 +26,10 @@ query PaymentApp_Test_Query {
 
 fragment PaymentApp_me on Me {
   name
-  ...UserSettingsPayments_me
+  ...PaymentSection_me
 }
 
-fragment UserSettingsPayments_me on Me {
+fragment PaymentSection_me on Me {
   id
   internalID
   creditCards(first: 100) {
@@ -231,7 +231,7 @@ return {
             "args": (v2/*: any*/),
             "filters": [],
             "handle": "connection",
-            "key": "UserSettingsPayments_creditCards",
+            "key": "PaymentSection_creditCards",
             "kind": "LinkedHandle",
             "name": "creditCards"
           }
@@ -245,7 +245,7 @@ return {
     "metadata": {},
     "name": "PaymentApp_Test_Query",
     "operationKind": "query",
-    "text": "query PaymentApp_Test_Query {\n  me {\n    ...PaymentApp_me\n    id\n  }\n}\n\nfragment PaymentApp_me on Me {\n  name\n  ...UserSettingsPayments_me\n}\n\nfragment UserSettingsPayments_me on Me {\n  id\n  internalID\n  creditCards(first: 100) {\n    edges {\n      node {\n        id\n        internalID\n        brand\n        lastDigits\n        expirationYear\n        expirationMonth\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query PaymentApp_Test_Query {\n  me {\n    ...PaymentApp_me\n    id\n  }\n}\n\nfragment PaymentApp_me on Me {\n  name\n  ...PaymentSection_me\n}\n\nfragment PaymentSection_me on Me {\n  id\n  internalID\n  creditCards(first: 100) {\n    edges {\n      node {\n        id\n        internalID\n        brand\n        lastDigits\n        expirationYear\n        expirationMonth\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();

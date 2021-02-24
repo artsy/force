@@ -82,6 +82,7 @@ export const UserSettingsPaymentsFragmentContainer = createFragmentContainer(
   }
 )
 
+// TODO remove after retiring old payment tab?
 export const UserSettingsPaymentsQueryRenderer = () => {
   const { user, relayEnvironment } = useContext(SystemContext)
   if (!user) {
