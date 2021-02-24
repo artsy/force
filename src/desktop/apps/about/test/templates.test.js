@@ -40,24 +40,4 @@ describe("About templates", function () {
         .html()
         .should.not.containEql("Text me a download link"))
   })
-
-  describe("logged out", () =>
-    it("displays the sign up CTA", () =>
-      $(render())
-        .find("#the-art-world-online")
-        .html()
-        .should.containEql("Sign up to save")))
-
-  return describe("logged in", function () {
-    beforeEach(function () {
-      return (this.user = new CurrentUser(fabricate("user")))
-    })
-
-    return it("hides the sign up CTA", function () {
-      return $(render({ user: this.user }))
-        .find("#the-art-world-online")
-        .html()
-        .should.not.containEql("Sign up to save")
-    })
-  })
 })
