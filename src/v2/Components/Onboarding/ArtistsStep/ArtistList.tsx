@@ -1,6 +1,6 @@
 import React from "react"
 
-import { FollowProps } from "../../Types"
+import { FollowProps } from "../Types"
 import { ArtistSearchResults } from "./ArtistSearchResults"
 import { PopularArtists } from "./PopularArtists"
 

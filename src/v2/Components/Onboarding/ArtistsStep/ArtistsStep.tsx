@@ -2,13 +2,13 @@ import { throttle } from "lodash"
 import React from "react"
 import styled from "styled-components"
 import { ProgressIndicator } from "v2/Components/ProgressIndicator"
-import Colors from "../../../../Assets/Colors"
-import Input from "../../../Input"
+import Colors from "../../../Assets/Colors"
+import Input from "../../Input"
 import { Spacer } from "@artsy/palette"
-import { MultiButtonState } from "../../../Buttons/MultiStateButton"
-import { media } from "../../../Helpers"
-import { StepProps } from "../../Types"
-import { Layout } from "../Layout"
+import { MultiButtonState } from "../../Buttons/MultiStateButton"
+import { media } from "../../Helpers"
+import { StepProps } from "../Types"
+import { Layout } from "../Steps/Layout"
 import ArtistList from "./ArtistList"
 
 const OnboardingSearchBox = styled.div`
@@ -27,7 +27,7 @@ interface State {
   inputTextQuery: string
 }
 
-export default class Artists extends React.Component<StepProps, State> {
+export class ArtistsStep extends React.Component<StepProps, State> {
   state = {
     inputText: "",
     inputTextQuery: "",

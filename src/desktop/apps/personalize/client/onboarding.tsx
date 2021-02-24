@@ -2,7 +2,7 @@ import React from "react"
 import ReactDOM from "react-dom"
 import { SystemContextProvider } from "v2/Artsy"
 import CollectorIntent from "v2/Components/Onboarding/Steps/CollectorIntent"
-import Artists from "v2/Components/Onboarding/Steps/Artists"
+import { ArtistsStep } from "v2/Components/Onboarding/ArtistsStep"
 import Genes from "v2/Components/Onboarding/Steps/Genes"
 import Budget from "v2/Components/Onboarding/Steps/Budget"
 import { data as sd } from "sharify"
@@ -16,7 +16,7 @@ const BrowserRouter = createBrowserRouter({
   routeConfig: makeRouteConfig(
     <>
       <Route path="/personalize/interests" Component={CollectorIntent} />
-      <Route path="/personalize/artists" Component={Artists} />
+      <Route path="/personalize/artists" Component={ArtistsStep} />
       <Route path="/personalize/categories" Component={Genes} />
       <Route path="/personalize/budget" Component={Budget} />
     </>
