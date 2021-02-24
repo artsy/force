@@ -76,13 +76,12 @@ export class GenesStep extends React.Component<StepProps, State> {
         >
           <OnboardingSearchBox>
             <Input
-              placeholder={"Search categories..."}
+              autoFocus
               block
+              onCut={this.searchTextChanged}
               onInput={this.searchTextChanged}
               onPaste={this.searchTextChanged}
-              onCut={this.searchTextChanged}
-              value={this.state.inputText}
-              autoFocus
+              placeholder={"Search categories..."}
             />
             <div style={{ marginBottom: "35px" }} />
             {
