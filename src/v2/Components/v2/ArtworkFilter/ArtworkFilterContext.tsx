@@ -20,6 +20,7 @@ export const initialArtworkFilterState: ArtworkFilters = {
   additionalGeneIDs: [],
   colors: [],
   locationCities: [],
+  artistNationalities: [],
 
   // TODO: Remove these unneeded default props
   // height: "*-*",
@@ -56,6 +57,7 @@ export interface ArtworkFilters {
   term?: string
   width?: string
   locationCities?: string[]
+  artistNationalities?: string[]
 }
 
 interface ArtworkFiltersState extends ArtworkFilters {
@@ -81,6 +83,7 @@ export type Aggregations = Array<{
     | "ARTIST"
     | "PARTNER"
     | "LOCATION_CITY"
+    | "ARTIST_NATIONALITY"
   counts: Array<{
     count: number
     value: string
@@ -341,6 +344,7 @@ const artworkFilterReducer = (
     "majorPeriods",
     "colors",
     "locationCities",
+    "artistNationalities",
   ]
 
   switch (action.type) {

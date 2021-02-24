@@ -26,6 +26,7 @@ export const CollectionAppQuery = graphql`
     $slug: String!
     $width: String
     $locationCities: [String]
+    $artistNationalities: [String]
   ) {
     collection: marketingCollection(slug: $slug) {
       ...Collection_collection
@@ -49,6 +50,7 @@ export const CollectionAppQuery = graphql`
           width: $width
           first: 30
           locationCities: $locationCities
+          artistNationalities: $artistNationalities
         )
     }
   }

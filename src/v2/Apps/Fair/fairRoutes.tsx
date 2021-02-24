@@ -2,6 +2,7 @@ import loadable from "@loadable/component"
 import { graphql } from "react-relay"
 import { RouteConfig } from "found"
 import { paramsToCamelCase } from "v2/Components/v2/ArtworkFilter/Utils/urlBuilder"
+import { getENV } from "v2/Utils/getENV"
 
 const FairApp = loadable(() => import("./FairApp"), {
   resolveComponent: component => component.FairAppFragmentContainer,
@@ -81,6 +82,7 @@ export const fairRoutes: RouteConfig[] = [
             $sort: String
             $shouldFetchCounts: Boolean!
             $additionalGeneIDs: [String]
+            $artistNationalities: [String]
           ) {
             fair(id: $slug) @principalField {
               ...FairArtworks_fair
@@ -104,6 +106,7 @@ export const fairRoutes: RouteConfig[] = [
                   sort: $sort
                   shouldFetchCounts: $shouldFetchCounts
                   additionalGeneIDs: $additionalGeneIDs
+                  artistNationalities: $artistNationalities
                 )
             }
           }
@@ -165,14 +168,16 @@ function initializeVariablesWithFilterState(params, props) {
     initialFilterStateFromUrl
   )
 
-  let aggregations: string[] = ["TOTAL", "GALLERY", "MAJOR_PERIOD", "ARTIST"]
+  let aggregations: string[] = ["TOTAL", "MAJOR_PERIOD", "ARTIST"]
   if (props.context.user) aggregations = aggregations.concat("FOLLOWED_ARTISTS")
-
+  const additionalAggregations = getENV("ENABLE_NEW_ARTWORK_FILTERS")
+    ? ["PARTNER", "ARTIST_NATIONALITY"]
+    : ["GALLERY"]
   const state = {
     sort: "-decayed_merch",
     ...camelCasedFilterStateFromUrl,
     ...params,
-    aggregations,
+    aggregations: aggregations.concat(additionalAggregations),
     shouldFetchCounts: !!props.context.user,
     includeArtworksByFollowedArtists:
       !!props.context.user &&

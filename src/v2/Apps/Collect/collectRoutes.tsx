@@ -83,7 +83,7 @@ function initializeVariablesWithFilterState(params, props) {
   // TODO: Does the `location_city` aggregation accomplish much on /collect, and
   // should it be a hard-coded list of featured cities?
   const additionalAggregations = getENV("ENABLE_NEW_ARTWORK_FILTERS")
-    ? ["LOCATION_CITY"]
+    ? ["LOCATION_CITY", "ARTIST_NATIONALITY"]
     : []
   const collectionOnlyAggregations = params.slug
     ? ["MERCHANDISABLE_ARTISTS", "MEDIUM", "MAJOR_PERIOD"]
@@ -105,7 +105,7 @@ function getArtworkFilterQuery() {
   return graphql`
     query collectRoutes_ArtworkFilterQuery(
       $acquireable: Boolean
-      $aggregations: [ArtworkAggregation] = [TOTAL]
+      $aggregations: [ArtworkAggregation]
       $artistID: String
       $atAuction: Boolean
       $attributionClass: [String]
@@ -126,6 +126,7 @@ function getArtworkFilterQuery() {
       $keyword: String
       $width: String
       $locationCities: [String]
+      $artistNationalities: [String]
     ) {
       marketingHubCollections {
         ...Collect_marketingHubCollections
@@ -162,6 +163,7 @@ function getArtworkFilterQuery() {
             sort: $sort
             width: $width
             locationCities: $locationCities
+            artistNationalities: $artistNationalities
           )
       }
     }

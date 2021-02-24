@@ -12,6 +12,8 @@ import { TimePeriodFilter } from "v2/Components/v2/ArtworkFilter/ArtworkFilters/
 import { ColorFilter } from "v2/Components/v2/ArtworkFilter/ArtworkFilters/ColorFilter"
 import { Box, BoxProps } from "@artsy/palette"
 import { useRouter } from "v2/Artsy/Router/useRouter"
+import { getENV } from "v2/Utils/getENV"
+import { ArtistNationalityFilter } from "v2/Components/v2/ArtworkFilter/ArtworkFilters/ArtistNationalityFilter"
 
 interface ShowArtworksFilterProps extends BoxProps {
   show: ShowArtworks_show
@@ -35,6 +37,7 @@ const ShowArtworksFilter: React.FC<ShowArtworksFilterProps> = ({
       <MediumFilter />
       <PriceRangeFilter />
       <WaysToBuyFilter />
+      {getENV("ENABLE_NEW_ARTWORK_FILTERS") && <ArtistNationalityFilter />}
       <SizeFilter />
       <TimePeriodFilter />
       <ColorFilter />
@@ -97,6 +100,7 @@ export const ShowArtworksRefetchContainer = createRefetchContainer(
           sizes: { type: "[ArtworkSizes]" }
           sort: { type: "String", defaultValue: "-decayed_merch" }
           additionalGeneIDs: { type: "[String]" }
+          artistNationalities: { type: "[String]" }
         ) {
         filtered_artworks: filterArtworksConnection(
           acquireable: $acquireable
@@ -116,6 +120,7 @@ export const ShowArtworksRefetchContainer = createRefetchContainer(
           after: ""
           sort: $sort
           additionalGeneIDs: $additionalGeneIDs
+          artistNationalities: $artistNationalities
         ) {
           id
           ...ArtworkFilterArtworkGrid_filtered_artworks
@@ -141,6 +146,7 @@ export const ShowArtworksRefetchContainer = createRefetchContainer(
       $sizes: [ArtworkSizes]
       $sort: String
       $additionalGeneIDs: [String]
+      $artistNationalities: [String]
     ) {
       show(id: $slug) {
         ...ShowArtworks_show
@@ -160,6 +166,7 @@ export const ShowArtworksRefetchContainer = createRefetchContainer(
             sizes: $sizes
             sort: $sort
             additionalGeneIDs: $additionalGeneIDs
+            artistNationalities: $artistNationalities
           )
       }
     }

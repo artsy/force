@@ -276,6 +276,7 @@ export const ArtworkFilterRefetchContainer = createRefetchContainer(
           width: { type: "String" }
           first: { type: "Int", defaultValue: 30 }
           locationCities: { type: "[String]" }
+          artistNationalities: { type: "[String]" }
         ) {
         filtered_artworks: artworksConnection(
           acquireable: $acquireable
@@ -301,6 +302,7 @@ export const ArtworkFilterRefetchContainer = createRefetchContainer(
           width: $width
           first: $first
           locationCities: $locationCities
+          artistNationalities: $artistNationalities
         ) {
           id
           ...ArtworkFilterArtworkGrid_filtered_artworks
