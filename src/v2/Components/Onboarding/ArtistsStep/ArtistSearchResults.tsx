@@ -21,6 +21,7 @@ type Artist = ArtistSearchResults_viewer["searchConnection"]["edges"][number]["n
 
 export interface ContainerProps {
   onArtistFollow
+  onNoResults
   term: string
 }
 
@@ -161,6 +162,10 @@ class ArtistSearchResultsContent extends React.Component<Props, null> {
       }
     )
 
+    if (artistItems.length === 0) {
+      this.props.onNoResults()
+    }
+
     return <div>{artistItems}</div>
   }
 }
@@ -195,7 +200,7 @@ const ArtistSearchResultsContentContainer = createFragmentContainer(
 
 const ArtistSearchResultsComponent: React.SFC<
   ContainerProps & SystemContextProps
-> = ({ onArtistFollow, relayEnvironment, term }) => {
+> = ({ onArtistFollow, onNoResults, relayEnvironment, term }) => {
   return (
     <QueryRenderer<ArtistSearchResultsQuery>
       environment={relayEnvironment}
@@ -212,6 +217,7 @@ const ArtistSearchResultsComponent: React.SFC<
           return (
             <ArtistSearchResultsContentContainer
               onArtistFollow={onArtistFollow}
+              onNoResults={onNoResults}
               term={term}
               viewer={props.viewer}
             />

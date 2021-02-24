@@ -51,6 +51,17 @@ export const ArtistsStep: React.FC<Props> = props => {
     tracking.trackEvent(event)
   }
 
+  const handleNoResults = () => {
+    const event = {
+      action_type: ActionType.searchedWithNoResults,
+      context_module: ContextModule.onboardingArtists,
+      context_owner_type: OwnerType.onboarding,
+      query: inputTextQuery,
+    }
+
+    tracking.trackEvent(event)
+  }
+
   const handleSearchTextChange = e => {
     const updatedInputText = e.target.value
     throttledTextChange(updatedInputText)
@@ -87,6 +98,7 @@ export const ArtistsStep: React.FC<Props> = props => {
           {showSearchResults ? (
             <ArtistSearchResults
               onArtistFollow={handleArtistFollow}
+              onNoResults={handleNoResults}
               term={inputTextQuery}
             />
           ) : (
