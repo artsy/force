@@ -25,6 +25,7 @@ type UserUpdater = (
 
 const updateUserProfile: UserUpdater = (priceRangeMax, relayEnvironment) => {
   const input = {
+    completedOnboarding: true,
     priceRangeMin: -1,
     priceRangeMax,
   }
