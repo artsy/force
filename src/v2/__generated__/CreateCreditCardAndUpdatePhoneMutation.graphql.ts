@@ -10,6 +10,7 @@ export type CreditCardInput = {
 export type UpdateMyProfileInput = {
     clientMutationId?: string | null;
     collectorLevel?: number | null;
+    completedOnboarding?: boolean | null;
     email?: string | null;
     emailFrequency?: string | null;
     location?: EditableLocation | null;
