@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { ContextModule, OwnerType } from "@artsy/cohesion"
+import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
 import { commitMutation, graphql } from "react-relay"
 import styled from "styled-components"
 import { ProgressIndicator } from "v2/Components/ProgressIndicator"
@@ -87,6 +87,7 @@ export const CollectorIntentComponent: React.FC<Props> = props => {
 
       const dataInput = selected.join(" ")
       const event = {
+        action_type: ActionType.onboardingUserInputData,
         context_module: ContextModule.onboardingInterests,
         context_owner_type: OwnerType.onboarding,
         data_input: dataInput,

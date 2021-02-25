@@ -13,23 +13,22 @@ import {
   createFragmentContainer,
   graphql,
 } from "react-relay"
-import track, { TrackingProp } from "react-tracking"
 import { RecordSourceSelectorProxy } from "relay-runtime"
 import { get } from "v2/Utils/get"
-import Events from "../../../../Utils/Events"
-import ReplaceTransition from "../../../Animation/ReplaceTransition"
-import ItemLink, { LinkContainer } from "../../ItemLink"
-import { FollowProps } from "../../Types"
+import ReplaceTransition from "../../Animation/ReplaceTransition"
+import ItemLink, { LinkContainer } from "../ItemLink"
 
 type Gene = SuggestedGenes_suggested_genes[0]
 
-interface Props extends React.HTMLProps<HTMLAnchorElement>, FollowProps {
-  relay?: RelayProp
-  suggested_genes: SuggestedGenes_suggested_genes
-  tracking?: TrackingProp
+interface ContainerProps {
+  onGeneFollow
 }
 
-@track({}, { dispatch: data => Events.postEvent(data) })
+interface Props extends React.HTMLProps<HTMLAnchorElement>, ContainerProps {
+  relay?: RelayProp
+  suggested_genes: SuggestedGenes_suggested_genes
+}
+
 class SuggestedGenesContent extends React.Component<Props> {
   private excludedGeneIds: Set<string>
   followCount: number = 0
@@ -46,15 +45,17 @@ class SuggestedGenesContent extends React.Component<Props> {
     store: RecordSourceSelectorProxy,
     data: SuggestedGenesFollowGeneMutationResponse
   ): void {
+    this.followCount += 1
+    this.props.onGeneFollow(this.followCount, gene)
+
     const suggestedGene = store.get(
       data.followGene.gene.similar.edges[0].node.id
     )
     this.excludedGeneIds.add(suggestedGene.getValue("internalID") as string)
 
     const suggestedGenesRootField = store.get("client:root")
-    const suggestedGenes = suggestedGenesRootField.getLinkedRecords(
-      "suggested_genes"
-    )
+    const suggestedGenes =
+      suggestedGenesRootField.getLinkedRecords("suggested_genes") || []
     const updatedSuggestedGenes = suggestedGenes.map(geneItem =>
       geneItem.getValue("id") === gene.id ? suggestedGene : geneItem
     )
@@ -63,17 +64,6 @@ class SuggestedGenesContent extends React.Component<Props> {
       updatedSuggestedGenes,
       "suggested_genes"
     )
-
-    this.followCount += 1
-
-    this.props.updateFollowCount(this.followCount)
-
-    this.props.tracking.trackEvent({
-      action: "Followed Gene",
-      entity_id: gene.internalID,
-      entity_slug: gene.slug,
-      context_module: "onboarding recommended",
-    })
   }
 
   followedGene(gene: Gene) {
@@ -163,10 +153,9 @@ const SuggestedGenesContainer = createFragmentContainer(SuggestedGenesContent, {
   `,
 })
 
-const SuggestedGenesComponent: React.SFC<SystemContextProps & FollowProps> = ({
-  relayEnvironment,
-  updateFollowCount,
-}) => {
+const SuggestedGenesComponent: React.SFC<
+  ContainerProps & SystemContextProps
+> = ({ onGeneFollow, relayEnvironment }) => {
   return (
     <QueryRenderer<SuggestedGenesQuery>
       environment={relayEnvironment}
@@ -184,8 +173,8 @@ const SuggestedGenesComponent: React.SFC<SystemContextProps & FollowProps> = ({
         if (props) {
           return (
             <SuggestedGenesContainer
+              onGeneFollow={onGeneFollow}
               suggested_genes={props.highlights.suggested_genes}
-              updateFollowCount={updateFollowCount}
             />
           )
         } else {
