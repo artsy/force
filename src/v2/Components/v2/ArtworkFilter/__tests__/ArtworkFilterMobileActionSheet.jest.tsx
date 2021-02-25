@@ -112,7 +112,7 @@ describe("ArtworkFilterMobileActionSheet", () => {
     wrapper
       .find("PriceRangeFilter")
       .find("label")
-      .findWhere(label => label.text() === "$10k – $25k")
+      .findWhere(label => label.text() === "$10K – $25K")
       .first()
       .simulate("click")
     await flushPromiseQueue()
