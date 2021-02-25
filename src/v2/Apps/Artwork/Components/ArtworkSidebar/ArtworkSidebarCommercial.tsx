@@ -225,15 +225,16 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
                     const {
                       commerceCreateOrderWithArtwork: { orderOrError },
                     } = data
-                    if (orderOrError.error) {
+
+                    if (orderOrError?.error) {
                       this.onMutationError(
                         new ErrorWithMetadata(
-                          orderOrError.error.code,
-                          orderOrError.error
+                          orderOrError?.error?.code,
+                          orderOrError?.error
                         )
                       )
                     } else {
-                      const url = `/orders/${orderOrError.order.internalID}`
+                      const url = `/orders/${orderOrError?.order?.internalID}`
                       this.props.router.push(url)
                     }
                   }

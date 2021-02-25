@@ -4,7 +4,7 @@ import {
   GraphQLTaggedNode,
   commitMutation as relayCommitMutation,
 } from "react-relay"
-import { Environment } from "relay-runtime"
+import { Environment, MutationConfig, MutationParameters } from "relay-runtime"
 
 interface OperationBase {
   variables: object
@@ -12,10 +12,14 @@ interface OperationBase {
   rawResponse?: object
 }
 
-export type CommitMutation = <MutationType extends OperationBase>(args: {
-  mutation: GraphQLTaggedNode
-  variables: MutationType["variables"]
-}) => Promise<MutationType["response"]>
+type CommitMutationArgs = Omit<
+  MutationConfig<MutationParameters>,
+  "onCompleted" | "onError"
+>
+
+export type CommitMutation = <MutationType extends OperationBase>(
+  args: CommitMutationArgs
+) => Promise<MutationType["response"]>
 
 interface CommitMutationProps {
   commitMutation: CommitMutation
@@ -35,7 +39,7 @@ class ProvideMutationContext extends React.Component<
 > {
   execQueue: Array<() => Promise<any>> = []
   state = { isCommittingMutation: false }
-  commitMutation: CommitMutation = ({ variables, mutation }) => {
+  commitMutation: CommitMutation = ({ variables, mutation, ...rest }) => {
     if (this.state.isCommittingMutation) {
       throw new Error(
         "Mutliple simulataneous mutations is not currently supported"
@@ -61,6 +65,7 @@ class ProvideMutationContext extends React.Component<
               reject(e)
             })
           },
+          ...rest,
         })
       } catch (e) {
         reject(e)

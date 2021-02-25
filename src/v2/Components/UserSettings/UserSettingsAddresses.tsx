@@ -3,12 +3,7 @@ import { SavedAddressesFragmentContainer as SavedAddresses } from "v2/Apps/Order
 import { renderWithLoadProgress } from "v2/Artsy/Relay/renderWithLoadProgress"
 import { SystemContextProps } from "v2/Artsy"
 import React, { useContext } from "react"
-import {
-  createFragmentContainer,
-  graphql,
-  QueryRenderer,
-  RelayRefetchProp,
-} from "react-relay"
+import { createFragmentContainer, graphql, QueryRenderer } from "react-relay"
 import { SystemContext } from "v2/Artsy"
 import { UserSettingsAddressesQuery } from "v2/__generated__/UserSettingsAddressesQuery.graphql"
 import { UserSettingsAddresses_me } from "v2/__generated__/UserSettingsAddresses_me.graphql"
@@ -16,21 +11,19 @@ import {
   CommitMutation,
   injectCommitMutation,
 } from "v2/Apps/Order/Utils/commitMutation"
-import { Dialog, injectDialog } from "v2/Apps/Order/Dialogs"
 
 interface UserSettingsAddressesProps extends SystemContextProps {
   me: UserSettingsAddresses_me
   addressCount: number
   commitMutation: CommitMutation
   isCommittingMutation: boolean
-  dialog: Dialog
 }
 
 export const UserSettingsAddresses: React.FC<UserSettingsAddressesProps> = props => {
   const handleClickEdit = () => {}
-  const { me, addressCount } = props
+  const { me } = props
 
-  return addressCount > 0 ? (
+  return (
     <Theme>
       <Box maxWidth={940} mb={3}>
         <Text variant="subtitle" mb={3}>
@@ -44,11 +37,11 @@ export const UserSettingsAddresses: React.FC<UserSettingsAddressesProps> = props
         />
       </Box>
     </Theme>
-  ) : null
+  )
 }
 
 export const UserSettingsAddressesFragmentContainer = createFragmentContainer(
-  injectCommitMutation(injectDialog(UserSettingsAddresses)),
+  injectCommitMutation(UserSettingsAddresses),
   {
     me: graphql`
       fragment UserSettingsAddresses_me on Me {

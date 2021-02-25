@@ -11,12 +11,11 @@ import {
   Separator,
 } from "@artsy/palette"
 import React, { useState } from "react"
-import { createFragmentContainer, graphql, RelayRefetchProp } from "react-relay"
+import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import styled from "styled-components"
 import { SavedAddresses_me } from "v2/__generated__/SavedAddresses_me.graphql"
 import { AddressModal } from "v2/Apps/Order/Components/AddressModal"
 import { CommitMutation } from "v2/Apps/Order/Utils/commitMutation"
-import { Dialog } from "v2/Apps/Order/Dialogs"
 
 export const NEW_ADDRESS = "NEW_ADDRESS"
 type AddressNode = SavedAddresses_me["addressConnection"]["edges"][number]["node"]
@@ -31,8 +30,8 @@ interface SavedAddressesProps {
   handleClickEdit: (number) => void
   inCollectorProfile: boolean
   commitMutation?: CommitMutation
-  dialog?: Dialog
   relay: RelayRefetchProp
+  addressCount?: number
 }
 
 const SavedAddressItem: React.FC<AddressListProps> = (
@@ -101,11 +100,8 @@ const defaultAddressIndex = addressList => {
 }
 
 const SavedAddresses: React.FC<SavedAddressesProps> = props => {
-  // React.useEffect(() => {
-  //   props.relay.refetch
-  // }, [])
   const [showAddressModal, setShowAddressModal] = useState(false)
-  const { onSelect, handleClickEdit, me, inCollectorProfile, dialog } = props
+  const { onSelect, handleClickEdit, me, inCollectorProfile, relay } = props
   const addressList = me?.addressConnection?.edges ?? []
   const handleModifyAddressModal = () => {
     setShowAddressModal(!showAddressModal)
@@ -117,7 +113,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
         p={2}
         width="100%"
         flexDirection="column"
-        key={address.node.internalID}
+        key={address?.node?.internalID}
       >
         <SavedAddressItem
           index={index}
@@ -168,17 +164,24 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
           closeModal={() => handleModifyAddressModal()}
           address={null}
           onSuccess={() => {
-            handleModifyAddressModal()
+            const relayRefetchVariables = {
+              first: null,
+              last: 100,
+              after: null,
+              before: null,
+            }
 
-            props.relay.refetch
+            relay.refetch(
+              relayRefetchVariables,
+              null,
+              error => console.log("Refetch done", showAddressModal),
+              { force: true }
+            )
           }}
           commitMutation={props.commitMutation}
-          onError={message => {
-            dialog.showErrorDialog({
-              title: "Address cannot be added",
-              message: message,
-            })
-          }}
+          // handle the error state
+          onError={() => {}}
+          me={me}
         />
       )}
     </>
@@ -236,7 +239,7 @@ const ModifyAddressWrapper = styled(Flex)`
   justify-content: space-between;
 `
 
-export const SavedAddressesFragmentContainer = createFragmentContainer(
+export const SavedAddressesFragmentContainer = createRefetchContainer(
   SavedAddresses,
   {
     me: graphql`
@@ -247,6 +250,7 @@ export const SavedAddressesFragmentContainer = createFragmentContainer(
           after: { type: "String" }
           before: { type: "String" }
         ) {
+        id
         addressConnection(
           first: $first
           last: $last
@@ -272,5 +276,12 @@ export const SavedAddressesFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
+  graphql`
+    query SavedAddressesRefetchQuery {
+      me {
+        ...SavedAddresses_me
+      }
+    }
+  `
 )

@@ -11,6 +11,7 @@ import { CountrySelect } from "v2/Components/CountrySelect"
 import { CommitMutation } from "../Utils/commitMutation"
 import { updateUserAddress } from "../Mutations/UpdateUserAddress"
 import { createUserAddress } from "v2/Apps/Order/Mutations/CreateUserAddress"
+import { SavedAddresses_me } from "v2/__generated__/SavedAddresses_me.graphql"
 
 interface Props {
   show: boolean
@@ -23,6 +24,7 @@ interface Props {
     addressModalTitle: string
     inCollectorProfile: boolean
   }
+  me: SavedAddresses_me
 }
 
 export const AddressModal: React.FC<Props> = ({
@@ -33,6 +35,7 @@ export const AddressModal: React.FC<Props> = ({
   onSuccess,
   onError,
   modalDetails,
+  me,
 }) => {
   const title = modalDetails?.addressModalTitle
   const inCollectorProfile = modalDetails?.inCollectorProfile
@@ -77,7 +80,9 @@ export const AddressModal: React.FC<Props> = ({
                   postalCode,
                 },
                 onSuccess,
-                onError
+                onError,
+                closeModal,
+                me
               )
             : updateUserAddress(
                 commitMutation,
