@@ -157,6 +157,12 @@ const node: ReaderFragment = {
       "kind": "LocalArgument",
       "name": "locationCities",
       "type": "[String]"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "artistNationalities",
+      "type": "[String]"
     }
   ],
   "kind": "Fragment",
@@ -185,6 +191,11 @@ const node: ReaderFragment = {
           "kind": "Variable",
           "name": "artistID",
           "variableName": "artistID"
+        },
+        {
+          "kind": "Variable",
+          "name": "artistNationalities",
+          "variableName": "artistNationalities"
         },
         {
           "kind": "Variable",
@@ -305,5 +316,5 @@ const node: ReaderFragment = {
   ],
   "type": "Viewer"
 };
-(node as any).hash = '5f70d16dc25908c47fb9267f1acae66c';
+(node as any).hash = '928d12109a9520344d9f863e85124bfc';
 export default node;

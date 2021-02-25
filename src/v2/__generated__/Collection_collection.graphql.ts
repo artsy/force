@@ -211,6 +211,12 @@ return {
       "kind": "LocalArgument",
       "name": "locationCities",
       "type": "[String]"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "artistNationalities",
+      "type": "[String]"
     }
   ],
   "kind": "Fragment",
@@ -536,6 +542,11 @@ return {
         (v1/*: any*/),
         {
           "kind": "Variable",
+          "name": "artistNationalities",
+          "variableName": "artistNationalities"
+        },
+        {
+          "kind": "Variable",
           "name": "atAuction",
           "variableName": "atAuction"
         },
@@ -638,5 +649,5 @@ return {
   "type": "MarketingCollection"
 };
 })();
-(node as any).hash = '5b9360cf150369bbac14e35254f76a28';
+(node as any).hash = 'b70d3ed3aa14f4885d78bd4ea8135b19';
 export default node;

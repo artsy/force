@@ -218,6 +218,7 @@ export const CollectionRefetchContainer = createRefetchContainer(
           width: { type: "String" }
           first: { type: "Int" }
           locationCities: { type: "[String]" }
+          artistNationalities: { type: "[String]" }
         ) {
         ...Header_collection
         description
@@ -312,6 +313,7 @@ export const CollectionRefetchContainer = createRefetchContainer(
           sort: $sort
           width: $width
           locationCities: $locationCities
+          artistNationalities: $artistNationalities
         ) {
           id
           ...ArtworkFilterArtworkGrid_filtered_artworks

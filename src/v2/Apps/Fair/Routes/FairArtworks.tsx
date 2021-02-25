@@ -16,6 +16,10 @@ import { ArtistsFilter } from "v2/Components/v2/ArtworkFilter/ArtworkFilters/Art
 import { useSystemContext } from "v2/Artsy"
 import { useRouter } from "v2/Artsy/Router/useRouter"
 import { AttributionClassFilter } from "v2/Components/v2/ArtworkFilter/ArtworkFilters/AttributionClassFilter"
+import { getENV } from "v2/Utils/getENV"
+import { PartnersFilter } from "v2/Components/v2/ArtworkFilter/ArtworkFilters/PartnersFilter"
+import { ArtworkLocationFilter } from "v2/Components/v2/ArtworkFilter/ArtworkFilters/ArtworkLocationFilter"
+import { ArtistNationalityFilter } from "v2/Components/v2/ArtworkFilter/ArtworkFilters/ArtistNationalityFilter"
 
 interface FairArtworksFilterProps {
   fair: FairArtworks_fair
@@ -50,7 +54,17 @@ const FairArtworksFilter: React.FC<FairArtworksFilterProps> = props => {
       <AttributionClassFilter />
       <PriceRangeFilter />
       <WaysToBuyFilter />
-      <GalleryFilter />
+      {getENV("ENABLE_NEW_ARTWORK_FILTERS") ? (
+        <>
+          <PartnersFilter />
+          <ArtworkLocationFilter />
+          <ArtistNationalityFilter />
+        </>
+      ) : (
+        <>
+          <GalleryFilter />
+        </>
+      )}
       <SizeFilter />
       <TimePeriodFilter />
       <ColorFilter />
@@ -110,6 +124,7 @@ export const FairArtworksRefetchContainer = createRefetchContainer(
           sort: { type: "String", defaultValue: "-partner_updated_at" }
           shouldFetchCounts: { type: "Boolean", defaultValue: false }
           additionalGeneIDs: { type: "[String]" }
+          artistNationalities: { type: "[String]" }
         ) {
         slug
         internalID
@@ -134,6 +149,7 @@ export const FairArtworksRefetchContainer = createRefetchContainer(
           after: ""
           sort: $sort
           additionalGeneIDs: $additionalGeneIDs
+          artistNationalities: $artistNationalities
         ) {
           id
           counts @include(if: $shouldFetchCounts) {
@@ -165,6 +181,7 @@ export const FairArtworksRefetchContainer = createRefetchContainer(
       $sizes: [ArtworkSizes]
       $sort: String
       $additionalGeneIDs: [String]
+      $artistNationalities: [String]
     ) {
       fair(id: $slug) {
         ...FairArtworks_fair
@@ -187,6 +204,7 @@ export const FairArtworksRefetchContainer = createRefetchContainer(
             sizes: $sizes
             sort: $sort
             additionalGeneIDs: $additionalGeneIDs
+            artistNationalities: $artistNationalities
           )
       }
     }

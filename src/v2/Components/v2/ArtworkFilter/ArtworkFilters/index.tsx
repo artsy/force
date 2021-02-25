@@ -13,29 +13,27 @@ import { AttributionClassFilter } from "./AttributionClassFilter"
 import { getENV } from "v2/Utils/getENV"
 import { PartnersFilter } from "./PartnersFilter"
 import { ArtworkLocationFilter } from "./ArtworkLocationFilter"
+import { ArtistNationalityFilter } from "./ArtistNationalityFilter"
 
 export const ArtworkFilters: React.FC = () => {
-  const PartnerFilters = () => {
-    if (getENV("ENABLE_NEW_ARTWORK_FILTERS")) {
-      return <PartnersFilter />
-    } else {
-      return (
-        <>
-          <GalleryFilter />
-          <InstitutionFilter />
-        </>
-      )
-    }
-  }
-
   return (
     <Box pr={2}>
       <MediumFilter />
       <AttributionClassFilter />
       <PriceRangeFilter />
       <WaysToBuyFilter />
-      <PartnerFilters />
-      {getENV("ENABLE_NEW_ARTWORK_FILTERS") && <ArtworkLocationFilter />}
+      {getENV("ENABLE_NEW_ARTWORK_FILTERS") ? (
+        <>
+          <PartnersFilter />
+          <ArtworkLocationFilter />
+          <ArtistNationalityFilter />
+        </>
+      ) : (
+        <>
+          <GalleryFilter />
+          <InstitutionFilter />
+        </>
+      )}
       <SizeFilter />
       <TimePeriodFilter />
       <ColorFilter />

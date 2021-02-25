@@ -24,6 +24,7 @@ export const ArtworkQueryFilter = graphql`
     $keyword: String
     $width: String
     $locationCities: [String]
+    $artistNationalities: [String]
   ) @raw_response_type {
     viewer {
       ...ArtworkFilter_viewer
@@ -50,6 +51,7 @@ export const ArtworkQueryFilter = graphql`
           sort: $sort
           width: $width
           locationCities: $locationCities
+          artistNationalities: $artistNationalities
         )
     }
   }

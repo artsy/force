@@ -2,6 +2,7 @@ import loadable from "@loadable/component"
 import { graphql } from "react-relay"
 import { RedirectException, RouteConfig } from "found"
 import { paramsToCamelCase } from "v2/Components/v2/ArtworkFilter/Utils/urlBuilder"
+import { getENV } from "v2/Utils/getENV"
 
 const ShowApp = loadable(() => import("./ShowApp"), {
   resolveComponent: component => component.ShowAppFragmentContainer,
@@ -25,7 +26,7 @@ export const showRoutes: RouteConfig[] = [
       query showRoutes_ShowQuery(
         $slug: String!
         $acquireable: Boolean
-        $aggregations: [ArtworkAggregation] = [MEDIUM, TOTAL, MAJOR_PERIOD]
+        $aggregations: [ArtworkAggregation]
         $atAuction: Boolean
         $colors: [String]
         $forSale: Boolean
@@ -39,6 +40,7 @@ export const showRoutes: RouteConfig[] = [
         $sizes: [ArtworkSizes]
         $sort: String
         $additionalGeneIDs: [String]
+        $artistNationalities: [String]
       ) {
         show(id: $slug) @principalField {
           ...ShowApp_show
@@ -58,6 +60,7 @@ export const showRoutes: RouteConfig[] = [
               sizes: $sizes
               sort: $sort
               additionalGeneIDs: $additionalGeneIDs
+              artistNationalities: $artistNationalities
             )
         }
       }
@@ -105,11 +108,15 @@ export const showRoutes: RouteConfig[] = [
 
 function initializeVariablesWithFilterState(params, props) {
   const initialFilterState = props.location ? props.location.query : {}
-
+  const aggregations = ["MEDIUM", "TOTAL", "MAJOR_PERIOD"]
+  const additionalAggregations = getENV("ENABLE_NEW_ARTWORK_FILTERS")
+    ? ["ARTIST_NATIONALITY"]
+    : []
   const state = {
     sort: "partner_show_position",
     ...paramsToCamelCase(initialFilterState),
     ...params,
+    aggregations: aggregations.concat(additionalAggregations),
   }
 
   return state

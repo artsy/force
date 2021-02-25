@@ -78,6 +78,7 @@ describe("ArtworkFilter", () => {
         additionalGeneIDs: [],
         colors: [],
         locationCities: [],
+        artistNationalities: [],
       })
     })
 
@@ -119,6 +120,7 @@ describe("ArtworkFilter", () => {
         additionalGeneIDs: [],
         colors: [],
         locationCities: [],
+        artistNationalities: [],
       })
     })
 
@@ -150,6 +152,7 @@ describe("ArtworkFilter", () => {
         additionalGeneIDs: [],
         colors: [],
         locationCities: [],
+        artistNationalities: [],
       })
     })
 
@@ -179,6 +182,7 @@ describe("ArtworkFilter", () => {
           additionalGeneIDs: [],
           colors: [],
           locationCities: [],
+          artistNationalities: [],
         },
       })
     })

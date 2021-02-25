@@ -119,6 +119,12 @@ const node: ReaderFragment = {
       "kind": "LocalArgument",
       "name": "additionalGeneIDs",
       "type": "[String]"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "artistNationalities",
+      "type": "[String]"
     }
   ],
   "kind": "Fragment",
@@ -261,6 +267,11 @@ const node: ReaderFragment = {
         },
         {
           "kind": "Variable",
+          "name": "artistNationalities",
+          "variableName": "artistNationalities"
+        },
+        {
+          "kind": "Variable",
           "name": "atAuction",
           "variableName": "atAuction"
         },
@@ -331,5 +342,5 @@ const node: ReaderFragment = {
   ],
   "type": "Show"
 };
-(node as any).hash = 'fe2e791d526965aef3e15d8c47f47664';
+(node as any).hash = 'c222236be22e596161048ca2cb23c551';
 export default node;

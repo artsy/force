@@ -13,6 +13,7 @@ export const ShowMore: React.FC<ShowMoreProps> = ({
   expanded = false,
 }) => {
   const nodes = Children.toArray(children).filter(isValidElement)
+  const hasMore = nodes.length > initial
 
   const [isExpanded, setExpanded] = useState(expanded)
 
@@ -20,14 +21,16 @@ export const ShowMore: React.FC<ShowMoreProps> = ({
     <>
       {isExpanded ? nodes : nodes.slice(0, initial)}
 
-      <Clickable
-        mt={1}
-        textDecoration="underline"
-        textAlign="left"
-        onClick={() => setExpanded(visibility => !visibility)}
-      >
-        <Text variant="small">{isExpanded ? "Hide" : "Show more"}</Text>
-      </Clickable>
+      {hasMore && (
+        <Clickable
+          mt={1}
+          textDecoration="underline"
+          textAlign="left"
+          onClick={() => setExpanded(visibility => !visibility)}
+        >
+          <Text variant="small">{isExpanded ? "Hide" : "Show more"}</Text>
+        </Clickable>
+      )}
     </>
   )
 }
