@@ -137,6 +137,39 @@ describe("Offer InitialMutation", () => {
     })
   })
 
+  describe("a offer note", () => {
+    let page: OrderAppTestPage
+
+    describe("non inquiry order offer", () => {
+      beforeAll(async () => {
+        page = await buildPage()
+      })
+
+      it("displays OfferNote button", () => {
+        const offerNote = page.find("OfferNote")
+        expect(offerNote).toHaveLength(1)
+      })
+    })
+
+    describe("inquiry order offer", () => {
+      beforeAll(async () => {
+        page = await buildPage({
+          mockData: {
+            order: {
+              ...testOffer,
+              isInquiryOrder: true,
+            },
+          },
+        })
+      })
+
+      it("hides the OfferNote button for an inquiry order", () => {
+        const offerNote = page.find("OfferNote")
+        expect(offerNote).toHaveLength(0)
+      })
+    })
+  })
+
   describe("mutation", () => {
     let page: OrderAppTestPage
     beforeEach(async () => {
