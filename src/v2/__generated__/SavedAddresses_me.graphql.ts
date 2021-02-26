@@ -4,6 +4,7 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type SavedAddresses_me = {
+    readonly id: string;
     readonly addressConnection: {
         readonly edges: ReadonlyArray<{
             readonly node: {
@@ -32,7 +33,15 @@ export type SavedAddresses_me$key = {
 
 
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+};
+return {
   "argumentDefinitions": [
     {
       "defaultValue": 30,
@@ -74,6 +83,7 @@ const node: ReaderFragment = {
   },
   "name": "SavedAddresses_me",
   "selections": [
+    (v0/*: any*/),
     {
       "alias": "addressConnection",
       "args": null,
@@ -98,13 +108,7 @@ const node: ReaderFragment = {
               "name": "node",
               "plural": false,
               "selections": [
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "id",
-                  "storageKey": null
-                },
+                (v0/*: any*/),
                 {
                   "alias": null,
                   "args": null,
@@ -247,5 +251,6 @@ const node: ReaderFragment = {
   ],
   "type": "Me"
 };
-(node as any).hash = '1a534e843aa563ac623718c1b7ad5745';
+})();
+(node as any).hash = '46883f06b60e1f3aea03559da940fae7';
 export default node;

@@ -17,7 +17,7 @@ interface PaymentSectionProps extends SystemContextProps {
 }
 
 export const PaymentSection: React.FC<PaymentSectionProps> = props => {
-  const creditCardEdges = props.me?.creditCards?.edges
+  const creditCardEdges = props.me?.creditCards?.edges ?? []
   const creditCards = creditCardEdges.map(({ node: creditCard }) => {
     return creditCard
   })
@@ -36,7 +36,13 @@ export const PaymentSection: React.FC<PaymentSectionProps> = props => {
             />
           </Box>
         ) : null}
-        <Button onClick={() => setShowPatymentModal(true)}>Add new card</Button>
+        <Button
+          variant="primaryBlack"
+          size="large"
+          onClick={() => setShowPatymentModal(true)}
+        >
+          Add new card
+        </Button>
         <Elements stripe={stripePromise}>
           <PaymentModal
             show={showPaymentModal}

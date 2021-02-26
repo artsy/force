@@ -199,10 +199,19 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
         this.isCreateNewAddress() &&
         this.state.saveAddress
       ) {
-        await createUserAddress(this.props.commitMutation, {
-          ...address,
-          phoneNumber: phoneNumber,
-        })
+        await createUserAddress(
+          this.props.commitMutation,
+          {
+            ...address,
+            phoneNumber: phoneNumber,
+          },
+          () => {}, // onSuccess
+          () => {
+            message => {
+              logger.error(message)
+            }
+          }
+        )
       }
 
       if (orderOrError.error) {
@@ -317,6 +326,10 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
       <Box data-test="orderShipping">
         {showModal && (
           <AddressModal
+            modalDetails={{
+              addressModalTitle: "Edit address",
+              addressModalAction: "editUserAddress",
+            }}
             show={showModal}
             closeModal={() => this.setState({ editAddressIndex: -1 })}
             address={addressList[this.state.editAddressIndex]?.node}

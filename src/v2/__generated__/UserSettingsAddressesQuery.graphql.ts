@@ -3,23 +3,23 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type SavedAddresses_Test_QueryVariables = {};
-export type SavedAddresses_Test_QueryResponse = {
+export type UserSettingsAddressesQueryVariables = {};
+export type UserSettingsAddressesQueryResponse = {
     readonly me: {
-        readonly " $fragmentRefs": FragmentRefs<"SavedAddresses_me">;
+        readonly " $fragmentRefs": FragmentRefs<"UserSettingsAddresses_me">;
     } | null;
 };
-export type SavedAddresses_Test_Query = {
-    readonly response: SavedAddresses_Test_QueryResponse;
-    readonly variables: SavedAddresses_Test_QueryVariables;
+export type UserSettingsAddressesQuery = {
+    readonly response: UserSettingsAddressesQueryResponse;
+    readonly variables: UserSettingsAddressesQueryVariables;
 };
 
 
 
 /*
-query SavedAddresses_Test_Query {
+query UserSettingsAddressesQuery {
   me {
-    ...SavedAddresses_me
+    ...UserSettingsAddresses_me
     id
   }
 }
@@ -53,6 +53,12 @@ fragment SavedAddresses_me on Me {
     }
   }
 }
+
+fragment UserSettingsAddresses_me on Me {
+  ...SavedAddresses_me
+  id
+  internalID
+}
 */
 
 const node: ConcreteRequest = (function(){
@@ -69,13 +75,20 @@ v1 = [
     "name": "first",
     "value": 30
   }
-];
+],
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+};
 return {
   "fragment": {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "SavedAddresses_Test_Query",
+    "name": "UserSettingsAddressesQuery",
     "selections": [
       {
         "alias": null,
@@ -88,7 +101,7 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "SavedAddresses_me"
+            "name": "UserSettingsAddresses_me"
           }
         ],
         "storageKey": null
@@ -100,7 +113,7 @@ return {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "SavedAddresses_Test_Query",
+    "name": "UserSettingsAddressesQuery",
     "selections": [
       {
         "alias": null,
@@ -136,13 +149,7 @@ return {
                     "plural": false,
                     "selections": [
                       (v0/*: any*/),
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "internalID",
-                        "storageKey": null
-                      },
+                      (v2/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -283,7 +290,8 @@ return {
             "key": "SavedAddresses_addressConnection",
             "kind": "LinkedHandle",
             "name": "addressConnection"
-          }
+          },
+          (v2/*: any*/)
         ],
         "storageKey": null
       }
@@ -292,11 +300,11 @@ return {
   "params": {
     "id": null,
     "metadata": {},
-    "name": "SavedAddresses_Test_Query",
+    "name": "UserSettingsAddressesQuery",
     "operationKind": "query",
-    "text": "query SavedAddresses_Test_Query {\n  me {\n    ...SavedAddresses_me\n    id\n  }\n}\n\nfragment SavedAddresses_me on Me {\n  id\n  addressConnection(first: 30) {\n    edges {\n      node {\n        id\n        internalID\n        addressLine1\n        addressLine2\n        addressLine3\n        city\n        country\n        isDefault\n        name\n        phoneNumber\n        postalCode\n        region\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n"
+    "text": "query UserSettingsAddressesQuery {\n  me {\n    ...UserSettingsAddresses_me\n    id\n  }\n}\n\nfragment SavedAddresses_me on Me {\n  id\n  addressConnection(first: 30) {\n    edges {\n      node {\n        id\n        internalID\n        addressLine1\n        addressLine2\n        addressLine3\n        city\n        country\n        isDefault\n        name\n        phoneNumber\n        postalCode\n        region\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n\nfragment UserSettingsAddresses_me on Me {\n  ...SavedAddresses_me\n  id\n  internalID\n}\n"
   }
 };
 })();
-(node as any).hash = 'e350425adaf0c49e68945a506d18c23d';
+(node as any).hash = '97c78d58a3257d7fbbba3073230db79f';
 export default node;
