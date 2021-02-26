@@ -26,7 +26,7 @@ query UserSettingsAddressesQuery {
 
 fragment SavedAddresses_me on Me {
   id
-  addressConnection(first: 100) {
+  addressConnection(first: 30) {
     edges {
       node {
         id
@@ -73,7 +73,7 @@ v1 = [
   {
     "kind": "Literal",
     "name": "first",
-    "value": 100
+    "value": 30
   }
 ],
 v2 = {
@@ -280,7 +280,7 @@ return {
                 "storageKey": null
               }
             ],
-            "storageKey": "addressConnection(first:100)"
+            "storageKey": "addressConnection(first:30)"
           },
           {
             "alias": null,
@@ -302,7 +302,7 @@ return {
     "metadata": {},
     "name": "UserSettingsAddressesQuery",
     "operationKind": "query",
-    "text": "query UserSettingsAddressesQuery {\n  me {\n    ...UserSettingsAddresses_me\n    id\n  }\n}\n\nfragment SavedAddresses_me on Me {\n  id\n  addressConnection(first: 100) {\n    edges {\n      node {\n        id\n        internalID\n        addressLine1\n        addressLine2\n        addressLine3\n        city\n        country\n        isDefault\n        name\n        phoneNumber\n        postalCode\n        region\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n\nfragment UserSettingsAddresses_me on Me {\n  ...SavedAddresses_me\n  id\n  internalID\n}\n"
+    "text": "query UserSettingsAddressesQuery {\n  me {\n    ...UserSettingsAddresses_me\n    id\n  }\n}\n\nfragment SavedAddresses_me on Me {\n  id\n  addressConnection(first: 30) {\n    edges {\n      node {\n        id\n        internalID\n        addressLine1\n        addressLine2\n        addressLine3\n        city\n        country\n        isDefault\n        name\n        phoneNumber\n        postalCode\n        region\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n\nfragment UserSettingsAddresses_me on Me {\n  ...SavedAddresses_me\n  id\n  internalID\n}\n"
   }
 };
 })();

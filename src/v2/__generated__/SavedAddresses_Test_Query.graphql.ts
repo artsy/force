@@ -26,7 +26,7 @@ query SavedAddresses_Test_Query {
 
 fragment SavedAddresses_me on Me {
   id
-  addressConnection(first: 100) {
+  addressConnection(first: 30) {
     edges {
       node {
         id
@@ -67,7 +67,7 @@ v1 = [
   {
     "kind": "Literal",
     "name": "first",
-    "value": 100
+    "value": 30
   }
 ];
 return {
@@ -273,7 +273,7 @@ return {
                 "storageKey": null
               }
             ],
-            "storageKey": "addressConnection(first:100)"
+            "storageKey": "addressConnection(first:30)"
           },
           {
             "alias": null,
@@ -294,7 +294,7 @@ return {
     "metadata": {},
     "name": "SavedAddresses_Test_Query",
     "operationKind": "query",
-    "text": "query SavedAddresses_Test_Query {\n  me {\n    ...SavedAddresses_me\n    id\n  }\n}\n\nfragment SavedAddresses_me on Me {\n  id\n  addressConnection(first: 100) {\n    edges {\n      node {\n        id\n        internalID\n        addressLine1\n        addressLine2\n        addressLine3\n        city\n        country\n        isDefault\n        name\n        phoneNumber\n        postalCode\n        region\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n"
+    "text": "query SavedAddresses_Test_Query {\n  me {\n    ...SavedAddresses_me\n    id\n  }\n}\n\nfragment SavedAddresses_me on Me {\n  id\n  addressConnection(first: 30) {\n    edges {\n      node {\n        id\n        internalID\n        addressLine1\n        addressLine2\n        addressLine3\n        city\n        country\n        isDefault\n        name\n        phoneNumber\n        postalCode\n        region\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n"
   }
 };
 })();

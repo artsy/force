@@ -206,7 +206,11 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
             phoneNumber,
           },
           () => {}, // onSuccess
-          () => {} // onError
+          () => {
+            message => {
+              logger.error(message)
+            }
+          }
         )
       }
 
@@ -324,7 +328,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
           <AddressModal
             modalDetails={{
               addressModalTitle: "Edit address",
-              inCollectorProfile: false,
+              addressModalAction: "editUserAddress",
             }}
             show={showModal}
             closeModal={() => this.setState({ editAddressIndex: -1 })}
@@ -397,7 +401,6 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
                     me={this.props.me}
                     onSelect={value => onSelectSavedAddress(value)}
                     handleClickEdit={this.handleClickEdit}
-                    inCollectorProfile={false}
                   />
                 )}
                 <Collapse
@@ -531,7 +534,7 @@ export const ShippingFragmentContainer = createFragmentContainer(
     me: graphql`
       fragment Shipping_me on Me
         @argumentDefinitions(
-          first: { type: "Int", defaultValue: 100 }
+          first: { type: "Int", defaultValue: 30 }
           last: { type: "Int" }
           after: { type: "String" }
           before: { type: "String" }

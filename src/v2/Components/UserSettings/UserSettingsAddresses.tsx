@@ -2,19 +2,18 @@ import { Box, Theme, Text } from "@artsy/palette"
 import { SavedAddressesFragmentContainer as SavedAddresses } from "v2/Apps/Order/Components/SavedAddresses"
 import { renderWithLoadProgress } from "v2/Artsy/Relay/renderWithLoadProgress"
 import { SystemContextProps } from "v2/Artsy"
-import React, { useContext } from "react"
+import React from "react"
 import { createFragmentContainer, graphql, QueryRenderer } from "react-relay"
-import { SystemContext } from "v2/Artsy"
 import { UserSettingsAddressesQuery } from "v2/__generated__/UserSettingsAddressesQuery.graphql"
 import { UserSettingsAddresses_me } from "v2/__generated__/UserSettingsAddresses_me.graphql"
 import {
   CommitMutation,
   injectCommitMutation,
 } from "v2/Apps/Order/Utils/commitMutation"
+import { useSystemContext } from "v2/Artsy"
 
 interface UserSettingsAddressesProps extends SystemContextProps {
   me: UserSettingsAddresses_me
-  addressCount: number
   commitMutation: CommitMutation
   isCommittingMutation: boolean
 }
@@ -54,7 +53,8 @@ export const UserSettingsAddressesFragmentContainer = createFragmentContainer(
 )
 
 export const UserSettingsAddressesQueryRenderer = () => {
-  const { user, relayEnvironment } = useContext(SystemContext)
+  const { relayEnvironment, user } = useSystemContext()
+
   if (!user) {
     return null
   }

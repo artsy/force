@@ -23,7 +23,7 @@ export class UserSettingsPayments extends React.Component<
   render() {
     const creditCardEdges = get(
       this.props,
-      props => props?.me?.creditCards?.edges ?? []
+      props => props.me?.creditCards?.edges ?? []
     )
     const creditCards = creditCardEdges.map(({ node: creditCard }) => {
       return creditCard

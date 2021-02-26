@@ -28,14 +28,11 @@ fragment PaymentApp_me on Me {
   name
   ...UserSettingsAddresses_me
   ...UserSettingsPayments_me
-  addressCount: addressConnection {
-    totalCount
-  }
 }
 
 fragment SavedAddresses_me on Me {
   id
-  addressConnection(first: 100) {
+  addressConnection(first: 30) {
     edges {
       node {
         id
@@ -112,7 +109,7 @@ v2 = [
   {
     "kind": "Literal",
     "name": "first",
-    "value": 100
+    "value": 30
   }
 ],
 v3 = {
@@ -149,7 +146,14 @@ v7 = {
   "kind": "ScalarField",
   "name": "hasNextPage",
   "storageKey": null
-};
+},
+v8 = [
+  {
+    "kind": "Literal",
+    "name": "first",
+    "value": 100
+  }
+];
 return {
   "fragment": {
     "argumentDefinitions": [],
@@ -318,7 +322,7 @@ return {
                 "storageKey": null
               }
             ],
-            "storageKey": "addressConnection(first:100)"
+            "storageKey": "addressConnection(first:30)"
           },
           {
             "alias": null,
@@ -332,7 +336,7 @@ return {
           (v3/*: any*/),
           {
             "alias": null,
-            "args": (v2/*: any*/),
+            "args": (v8/*: any*/),
             "concreteType": "CreditCardConnection",
             "kind": "LinkedField",
             "name": "creditCards",
@@ -410,30 +414,12 @@ return {
           },
           {
             "alias": null,
-            "args": (v2/*: any*/),
+            "args": (v8/*: any*/),
             "filters": [],
             "handle": "connection",
             "key": "UserSettingsPayments_creditCards",
             "kind": "LinkedHandle",
             "name": "creditCards"
-          },
-          {
-            "alias": "addressCount",
-            "args": null,
-            "concreteType": "UserAddressConnection",
-            "kind": "LinkedField",
-            "name": "addressConnection",
-            "plural": false,
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "totalCount",
-                "storageKey": null
-              }
-            ],
-            "storageKey": null
           }
         ],
         "storageKey": null
@@ -445,7 +431,7 @@ return {
     "metadata": {},
     "name": "paymentRoutes_PaymentQuery",
     "operationKind": "query",
-    "text": "query paymentRoutes_PaymentQuery {\n  me {\n    ...PaymentApp_me\n    id\n  }\n}\n\nfragment PaymentApp_me on Me {\n  name\n  ...UserSettingsAddresses_me\n  ...UserSettingsPayments_me\n  addressCount: addressConnection {\n    totalCount\n  }\n}\n\nfragment SavedAddresses_me on Me {\n  id\n  addressConnection(first: 100) {\n    edges {\n      node {\n        id\n        internalID\n        addressLine1\n        addressLine2\n        addressLine3\n        city\n        country\n        isDefault\n        name\n        phoneNumber\n        postalCode\n        region\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n\nfragment UserSettingsAddresses_me on Me {\n  ...SavedAddresses_me\n  id\n  internalID\n}\n\nfragment UserSettingsPayments_me on Me {\n  id\n  internalID\n  creditCards(first: 100) {\n    edges {\n      node {\n        id\n        internalID\n        brand\n        lastDigits\n        expirationYear\n        expirationMonth\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query paymentRoutes_PaymentQuery {\n  me {\n    ...PaymentApp_me\n    id\n  }\n}\n\nfragment PaymentApp_me on Me {\n  name\n  ...UserSettingsAddresses_me\n  ...UserSettingsPayments_me\n}\n\nfragment SavedAddresses_me on Me {\n  id\n  addressConnection(first: 30) {\n    edges {\n      node {\n        id\n        internalID\n        addressLine1\n        addressLine2\n        addressLine3\n        city\n        country\n        isDefault\n        name\n        phoneNumber\n        postalCode\n        region\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n\nfragment UserSettingsAddresses_me on Me {\n  ...SavedAddresses_me\n  id\n  internalID\n}\n\nfragment UserSettingsPayments_me on Me {\n  id\n  internalID\n  creditCards(first: 100) {\n    edges {\n      node {\n        id\n        internalID\n        brand\n        lastDigits\n        expirationYear\n        expirationMonth\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();

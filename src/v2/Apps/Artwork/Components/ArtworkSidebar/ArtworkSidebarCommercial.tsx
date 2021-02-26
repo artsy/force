@@ -222,19 +222,18 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
                 this.setState(
                   { isCommittingCreateOrderMutation: false },
                   () => {
-                    const {
-                      commerceCreateOrderWithArtwork: { orderOrError },
-                    } = data
+                    const response =
+                      data?.commerceCreateOrderWithArtwork?.orderOrError
 
-                    if (orderOrError?.error) {
+                    if (response?.error) {
                       this.onMutationError(
                         new ErrorWithMetadata(
-                          orderOrError?.error?.code,
-                          orderOrError?.error
+                          response?.error?.code,
+                          response?.error
                         )
                       )
                     } else {
-                      const url = `/orders/${orderOrError?.order?.internalID}`
+                      const url = `/orders/${response?.order?.internalID}`
                       this.props.router.push(url)
                     }
                   }
@@ -308,18 +307,18 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
                 this.setState(
                   { isCommittingCreateOfferOrderMutation: false },
                   () => {
-                    const {
-                      commerceCreateOfferOrderWithArtwork: { orderOrError },
-                    } = data
-                    if (orderOrError.error) {
+                    const response =
+                      data?.commerceCreateOfferOrderWithArtwork?.orderOrError
+
+                    if (response?.error) {
                       this.onMutationError(
                         new ErrorWithMetadata(
-                          orderOrError.error.code,
-                          orderOrError.error
+                          response?.error?.code,
+                          response?.error
                         )
                       )
                     } else {
-                      const url = `/orders/${orderOrError.order.internalID}/offer`
+                      const url = `/orders/${response?.order?.internalID}/offer`
                       this.props.router.push(url)
                     }
                   }

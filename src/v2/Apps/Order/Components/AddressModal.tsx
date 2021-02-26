@@ -16,16 +16,22 @@ import { SavedAddresses_me } from "v2/__generated__/SavedAddresses_me.graphql"
 interface Props {
   show: boolean
   closeModal: () => void
-  address: SavedAddressType | null
+  address?: SavedAddressType
   commitMutation: CommitMutation
   onSuccess: (address) => void
   onError: (message: string) => void
   modalDetails: {
     addressModalTitle: string
-    inCollectorProfile: boolean
+    addressModalAction: AddressModalAction
   }
-  me: SavedAddresses_me
+  me?: SavedAddresses_me
 }
+
+type AddressModalAction =
+  | "createUserAddress"
+  | "updateUserAddress"
+  | "deleteUserAddress"
+  | "editUserAddress"
 
 export const AddressModal: React.FC<Props> = ({
   show,
@@ -38,7 +44,7 @@ export const AddressModal: React.FC<Props> = ({
   me,
 }) => {
   const title = modalDetails?.addressModalTitle
-  const inCollectorProfile = modalDetails?.inCollectorProfile
+  const modalAction = modalDetails?.addressModalAction === "createUserAddress"
   const validator = (values: any) => {
     const validationResult = validateAddress(values)
     const phoneValidation = validatePhoneNumber(values.phoneNumber)
@@ -52,33 +58,13 @@ export const AddressModal: React.FC<Props> = ({
   return (
     <Modal title={title} show={show} onClose={closeModal}>
       <Formik
-        initialValues={inCollectorProfile ? {} : address}
+        initialValues={modalAction ? {} : address}
         validate={validator}
         onSubmit={values => {
-          const addressLine1 = values?.addressLine1
-          const name = values?.name
-          const city = values?.city
-          const country = values?.country
-          const phoneNumber = values?.phoneNumber
-          const addressLine2 = values?.addressLine2 ?? null
-          const addressLine3 = values?.addressLine3 ?? null
-          const postalCode = values?.postalCode ?? null
-          const region = values?.region ?? null
-
-          inCollectorProfile
+          modalAction
             ? createUserAddress(
                 commitMutation,
-                {
-                  addressLine1,
-                  addressLine2,
-                  addressLine3,
-                  city,
-                  region,
-                  country,
-                  name,
-                  phoneNumber,
-                  postalCode,
-                },
+                values,
                 onSuccess,
                 onError,
                 closeModal,

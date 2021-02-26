@@ -1,8 +1,8 @@
 import { graphql } from "react-relay"
-import { UserAddressAttributes } from "v2/__generated__/UpdateUserAddressMutation.graphql"
 import {
   CreateUserAddressMutation,
   CreateUserAddressMutationResponse,
+  UserAddressAttributes,
 } from "v2/__generated__/CreateUserAddressMutation.graphql"
 import { CommitMutation } from "../Utils/commitMutation"
 import { RecordSourceSelectorProxy, ConnectionHandler } from "relay-runtime"
@@ -26,9 +26,6 @@ const onAddressAdded = (
     const createUserAddressOrError = mutationPayload.getLinkedRecord(
       "userAddressOrErrors"
     )
-    // const createUserAddressEdge = createUserAddressOrError.getLinkedRecord(
-    //   "edges"
-    // )
     ConnectionHandler.insertEdgeAfter(connection, createUserAddressOrError)
   }
 }
@@ -74,15 +71,12 @@ export const createUserAddress = async (
         }
       }
     `,
-    updater: (store, data) => {
-      console.log("🚀 ~ file: CreateUserAddress.ts ~ line 51 ~ data", data)
+    updater: (store, data: CreateUserAddressMutationResponse) => {
       onAddressAdded(me, store, data)
     },
   })
-
   const errors = response?.createUserAddress?.userAddressOrErrors?.errors
   closeModal()
-
   if (errors) {
     onError(errors.map(error => error.message).join(", "))
   } else {

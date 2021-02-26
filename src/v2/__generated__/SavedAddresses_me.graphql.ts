@@ -44,7 +44,7 @@ var v0 = {
 return {
   "argumentDefinitions": [
     {
-      "defaultValue": 100,
+      "defaultValue": 30,
       "kind": "LocalArgument",
       "name": "first",
       "type": "Int"
@@ -252,5 +252,5 @@ return {
   "type": "Me"
 };
 })();
-(node as any).hash = '32a8cbb622e6a8a4710a615ce08f7955';
+(node as any).hash = '46883f06b60e1f3aea03559da940fae7';
 export default node;

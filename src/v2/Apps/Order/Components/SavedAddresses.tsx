@@ -16,8 +16,10 @@ import styled from "styled-components"
 import { SavedAddresses_me } from "v2/__generated__/SavedAddresses_me.graphql"
 import { AddressModal } from "v2/Apps/Order/Components/AddressModal"
 import { CommitMutation } from "v2/Apps/Order/Utils/commitMutation"
+import createLogger from "v2/Utils/logger"
 
 export const NEW_ADDRESS = "NEW_ADDRESS"
+const PAGE_SIZE = 30
 type AddressNode = SavedAddresses_me["addressConnection"]["edges"][number]["node"]
 interface AddressListProps {
   address: AddressNode
@@ -28,7 +30,7 @@ interface SavedAddressesProps {
   me: SavedAddresses_me
   onSelect?: (string) => void
   handleClickEdit: (number) => void
-  inCollectorProfile: boolean
+  inCollectorProfile?: boolean
   commitMutation?: CommitMutation
   relay: RelayRefetchProp
   addressCount?: number
@@ -40,15 +42,15 @@ const SavedAddressItem: React.FC<AddressListProps> = (
   const handleClickEdit = props?.handleClickEdit
   const index = props?.index
   const address = props?.address
-  const addressLine1 = address?.addressLine1 ?? ""
-  const addressLine2 = address?.addressLine2 ?? ""
-  const addressLine3 = address?.addressLine3 ?? ""
-  const city = address?.city ?? ""
-  const country = address?.country ?? ""
-  const name = address?.name ?? ""
-  const phoneNumber = address?.phoneNumber ?? ""
-  const postalCode = address?.postalCode ?? ""
-  const region = address?.region ?? ""
+  const addressLine1 = address?.addressLine1
+  const addressLine2 = address?.addressLine2
+  const addressLine3 = address?.addressLine3
+  const city = address?.city
+  const country = address?.country
+  const name = address?.name
+  const phoneNumber = address?.phoneNumber
+  const postalCode = address?.postalCode
+  const region = address?.region
   const formattedAddressLine = [city, region, country, postalCode]
     .filter(el => el)
     .join(", ")
@@ -57,8 +59,8 @@ const SavedAddressItem: React.FC<AddressListProps> = (
   return (
     <Flex width="100%">
       <Flex flexDirection="column">
-        {nameAndAddressLine ??
-          [].map(
+        {nameAndAddressLine.length > 0 &&
+          nameAndAddressLine.map(
             (line: string, index: number) =>
               line && (
                 <Text
@@ -101,19 +103,26 @@ const defaultAddressIndex = addressList => {
 
 const SavedAddresses: React.FC<SavedAddressesProps> = props => {
   const [showAddressModal, setShowAddressModal] = useState(false)
+  const logger = createLogger("SavedAddresses.tsx")
+
   const { onSelect, handleClickEdit, me, inCollectorProfile, relay } = props
   const addressList = me?.addressConnection?.edges ?? []
-  const handleModifyAddressModal = () => {
+  const handleModal = () => {
     setShowAddressModal(!showAddressModal)
   }
   const collectorProfileAddressItems = addressList.map((address, index) => {
-    const isDefaultAddress = address?.node?.isDefault
+    if (!address.node) {
+      return null
+    }
+
+    const isDefaultAddress = address.node.isDefault
+
     return (
       <BorderBox
         p={2}
         width="100%"
         flexDirection="column"
-        key={address?.node?.internalID}
+        key={address.node.internalID}
       >
         <SavedAddressItem
           index={index}
@@ -150,7 +159,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
         mt={addressList.length > 0 ? 3 : 0}
         variant="primaryBlack"
         size="large"
-        onClick={() => handleModifyAddressModal()}
+        onClick={() => handleModal()}
       >
         Add new address
       </Button>
@@ -159,28 +168,27 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
           show={showAddressModal}
           modalDetails={{
             addressModalTitle: "Add new address",
-            inCollectorProfile: true,
+            addressModalAction: "createUserAddress",
           }}
-          closeModal={() => handleModifyAddressModal()}
+          closeModal={() => handleModal()}
           address={null}
           onSuccess={() => {
-            const relayRefetchVariables = {
-              first: null,
-              last: 100,
-              after: null,
-              before: null,
-            }
-
             relay.refetch(
-              relayRefetchVariables,
+              {
+                first: PAGE_SIZE,
+              },
               null,
-              error => console.log("Refetch done", showAddressModal),
-              { force: true }
+              error => {
+                if (error) {
+                  logger.error(error)
+                }
+              }
             )
           }}
           commitMutation={props.commitMutation}
-          // handle the error state
-          onError={() => {}}
+          onError={message => {
+            logger.error(message)
+          }}
           me={me}
         />
       )}
@@ -245,7 +253,7 @@ export const SavedAddressesFragmentContainer = createRefetchContainer(
     me: graphql`
       fragment SavedAddresses_me on Me
         @argumentDefinitions(
-          first: { type: "Int", defaultValue: 100 }
+          first: { type: "Int", defaultValue: 30 }
           last: { type: "Int" }
           after: { type: "String" }
           before: { type: "String" }

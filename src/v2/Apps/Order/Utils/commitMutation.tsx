@@ -1,9 +1,6 @@
 import { SystemContext } from "v2/Artsy"
 import React, { useContext } from "react"
-import {
-  GraphQLTaggedNode,
-  commitMutation as relayCommitMutation,
-} from "react-relay"
+import { commitMutation as relayCommitMutation } from "react-relay"
 import { Environment, MutationConfig, MutationParameters } from "relay-runtime"
 
 interface OperationBase {

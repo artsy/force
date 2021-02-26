@@ -5,9 +5,6 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type PaymentApp_me = {
     readonly name: string | null;
-    readonly addressCount: {
-        readonly totalCount: number;
-    } | null;
     readonly " $fragmentRefs": FragmentRefs<"UserSettingsAddresses_me" | "UserSettingsPayments_me">;
     readonly " $refType": "PaymentApp_me";
 };
@@ -33,24 +30,6 @@ const node: ReaderFragment = {
       "storageKey": null
     },
     {
-      "alias": "addressCount",
-      "args": null,
-      "concreteType": "UserAddressConnection",
-      "kind": "LinkedField",
-      "name": "addressConnection",
-      "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "totalCount",
-          "storageKey": null
-        }
-      ],
-      "storageKey": null
-    },
-    {
       "args": null,
       "kind": "FragmentSpread",
       "name": "UserSettingsAddresses_me"
@@ -63,5 +42,5 @@ const node: ReaderFragment = {
   ],
   "type": "Me"
 };
-(node as any).hash = '1e43809ee46581aefef914e74d5f6173';
+(node as any).hash = 'e24228d518416bffe30b8251823439f9';
 export default node;
