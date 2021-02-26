@@ -37,42 +37,6 @@
           em= image.caption.split(' - ')[1]
         .about-garamond-caption: em!= image.credit
 
-//- "We cover international show..."
-.about-container
-  #about-section1-images2-left.span3
-    for image in section.pullBlurb2.leftImages
-      a.about-image-container.is-pin-right( href= image.href )
-        img( data-src= image.src )
-        .about-garamond-caption: em= image.caption
-  .span3
-    +pull-blurb(section.pullBlurb2)
-    for image in section.pullBlurb2.rightImages
-      a.about-image-container.span2( href=image.href )
-        img( data-src= image.src )
-        .about-avant-garde-caption= image.author
-        p= image.caption
-
-//- "Save works and curate sets on Artsy..."
-.about-container
-  .span2
-    +pull-blurb(section.pullBlurb3)
-    unless user
-      button.avant-garde-button-white.about-signup-button
-        = section.pullBlurb3.button
-  #about-section1-pull-blurb-3-artworks.span4
-    .span2
-      for artwork in firstHalf(section.pullBlurb3.artworks)
-        a.about-image-container( href= artwork.href )
-          img( data-src=artwork.src )
-          .icon-heart
-          include artwork_details
-    .span2
-      for artwork in secondHalf(section.pullBlurb3.artworks)
-        a.about-image-container( href= artwork.href )
-          img( data-src=artwork.src )
-          .icon-heart
-          include artwork_details
-
 //- "Access from anywhere..."
 .about-container
   .span2
