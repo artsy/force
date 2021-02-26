@@ -18,14 +18,14 @@ const AuctionsApp: React.FC<AuctionsAppProps> = ({ children }) => {
     <AppContainer>
       <AuctionsMeta />
       <Box ml={[2, 4]}>
-        <Text pt="20px" pb="10px" variant="largeTitle">
+        <Text pt={2} pb={1} variant="largeTitle">
           Auctions
         </Text>
-        <Text py="10px">
+        <Text py={1}>
           Bid on thousands of new works every week in leading online auctions.
         </Text>
         <RouterLink to="/how-auctions-work" noUnderline>
-          <Text variant="mediumText" py="10px">
+          <Text variant="mediumText" py={1}>
             How to bid on Artsy{" "}
             <ChevronIcon
               title={null}
