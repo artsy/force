@@ -16,7 +16,7 @@ const AuctionsApp: React.FC<AuctionsAppProps> = ({ children }) => {
   return (
     <AppContainer>
       <AuctionsMeta />
-      <Box mt={3} ml={4}>
+      <Box ml={[2, 4]}>
         <Text variant="largeTitle">Auctions</Text>
         <Text pt="15px" pb="15px">
           Bid on thousands of new works every week in leading online auctions.
