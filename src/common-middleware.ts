@@ -27,6 +27,7 @@ import { collectionToArtistSeriesRedirect } from "./lib/middleware/artistSeriesR
 import { userRequiredMiddleware } from "lib/middleware/userRequiredMiddleware"
 import { artistMiddleware } from "lib/middleware/artistMiddleware"
 import { searchMiddleware } from "lib/middleware/searchMiddleware"
+import { handleArtworkImageDownload } from "lib/middleware/artworkMiddleware"
 
 const CurrentUser = require("./lib/current_user.coffee")
 
@@ -159,4 +160,7 @@ export default function commonMiddlewareSetup(app) {
    */
   app.get("/artist/*", artistMiddleware)
   app.get("/search*", searchMiddleware)
+
+  // TODO: Artwork download, does this belong here.
+  app.get("/artwork/:artworkID/download/:filename", handleArtworkImageDownload)
 }

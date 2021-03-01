@@ -18,7 +18,15 @@ export const artworkClient = () => {
   const ViewInRoomView = require("desktop/components/view_in_room/view.coffee")
   const openMultiPageModal = require("desktop/components/multi_page_modal/index.coffee")
 
+  require("jquery.transition")
+  require("typeahead.js/dist/typeahead.bundle.min.js")
   const $ = require("jquery")
+  const imagesLoaded = require("imagesloaded")
+  const jqueryFillwidthLite = require("jquery-fillwidth-lite")
+
+  imagesLoaded.makeJQueryPlugin($)
+  jqueryFillwidthLite($, window._, imagesLoaded)
+
   const { pageType, pageSlug } = getContextPageFromClient()
 
   if (pageType === OwnerType.artwork) {
@@ -128,7 +136,7 @@ export const artworkClient = () => {
 
       $("body").prepend(viewInRoom.render().$el)
     } catch (error) {
-      // TODO: Add some proper error handling
+      console.error(error)
     }
   })
 

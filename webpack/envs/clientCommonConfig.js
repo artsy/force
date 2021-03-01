@@ -136,6 +136,7 @@ export const clientCommonConfig = {
   },
   optimization: {
     // Extract webpack runtime code into it's own file
+    concatenateModules: env.webpackConcatenate,
     runtimeChunk: "single",
     splitChunks: {
       maxInitialRequests: Infinity,

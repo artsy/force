@@ -87,7 +87,8 @@ app.use(require("./apps/page"))
 app.use(require("./apps/shortcuts"))
 
 // Mount all `v2/Apps`.
-app.use(require("./apps/artsy-v2/server").app)
+// TODO: Remove this post NOVO conversion
+// app.use(require("./apps/artsy-v2/server").app)
 
 // User profiles
 app.use(require("./apps/user"))
@@ -102,5 +103,6 @@ app.use(require("./apps/ssr-experiments/server").app)
 app.use(require("./apps/profile"))
 app.use(require("./apps/partner2"))
 app.use(require("./apps/partner"))
+// TODO: Move this post NOVO conversion
 app.use(require("./apps/artsy-v2/apps/fair").app)
 app.use(require("./apps/fair_organizer"))

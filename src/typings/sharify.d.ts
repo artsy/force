@@ -60,14 +60,15 @@ declare module "sharify" {
         signupPagePath?: string
         loginPagePath?: string
       }
-      API_URL: string
       API_REQUEST_TIMEOUT?: number
+      API_URL: string
       APPLICATION_NAME: string
       ARTIST_PAGE_CTA_ARTIST_ID: string
       ARTIST_PAGE_CTA_ENABLED: string
       ARTSY_EDITORIAL_CHANNEL: string
       ARTSY_XAPP_TOKEN: string
       ARTWORK?: any // mobile artist app data
+      ASSET_LEGACY_ARTWORK_DLL: string
       AUCTION?: any
       CSRF_TOKEN: string
       CHANNEL?: { slug?: string } // Articles
@@ -75,6 +76,7 @@ declare module "sharify" {
       FAIR_ORGANIZER?: any
       GALLERY_INSIGHTS_CHANNEL: string
       JSON_PAGE_DATA: any
+      LEGACY_MAIN_CSS: string
       MARKETING_SIGNUP_MODALS: any
       MARKETING_SIGNUP_MODALS: any[]
       PAGE_TYPE?: string

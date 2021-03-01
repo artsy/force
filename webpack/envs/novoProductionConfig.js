@@ -10,7 +10,7 @@ const webpack = require("webpack")
 const WebpackManifestPlugin = require("webpack-manifest-plugin")
 const { basePath, env } = require("../utils/env")
 
-export const clientNovoProductionConfig = {
+export const novoProductionConfig = {
   devtool: "source-map",
   entry: {
     "artsy-novo": [path.resolve(process.cwd(), "src/novo/src/client.tsx")],
@@ -84,6 +84,7 @@ export const clientNovoProductionConfig = {
     ],
   },
   optimization: {
+    concatenateModules: env.webpackConcatenate,
     minimize: !env.webpackDebug,
     minimizer: [
       new TerserPlugin({
@@ -106,6 +107,15 @@ export const clientNovoProductionConfig = {
           reuseExistingChunk: true,
           test: /.*src[\\/]/,
         },
+        // "arsty-graphql-common": {
+        //   chunks: "all",
+        //   enforce: true,
+        //   priority: 50,
+        //   minChunks: 1,
+        //   minSize: 0,
+        //   name: "arsty-graphql-common",
+        //   test: /.*src[\\/]v2[\\/]__generated__[\\/]/,
+        // },
         artsy: {
           chunks: "all",
           enforce: true,
@@ -114,24 +124,6 @@ export const clientNovoProductionConfig = {
           name: "artsy",
           reuseExistingChunk: true,
           test: /.*node_modules[\\/](@artsy)[\\/]/,
-        },
-        "common-backbone": {
-          chunks: "all",
-          enforce: true,
-          minChunks: 1,
-          minSize: 0,
-          name: "common-backbone",
-          reuseExistingChunk: true,
-          test: /.*node_modules[\\/](backbone.*)[\\/]/,
-        },
-        "common-jquery": {
-          chunks: "all",
-          enforce: true,
-          minChunks: 1,
-          minSize: 0,
-          name: "common-jquery",
-          reuseExistingChunk: true,
-          test: /.*node_modules[\\/](jquery.*)[\\/]/,
         },
         "common-react": {
           chunks: "all",
@@ -149,7 +141,7 @@ export const clientNovoProductionConfig = {
           minSize: 0,
           name: "common-utility",
           reuseExistingChunk: true,
-          test: /.*node_modules[\\/](lodash.*|moment.*|luxon.*)[\\/]/,
+          test: /.*node_modules[\\/](lodash.*|luxon.*)[\\/]/,
         },
         commons: {
           chunks: "all",
@@ -157,6 +149,7 @@ export const clientNovoProductionConfig = {
           minChunks: 2,
           minSize: 0,
           name: "common",
+          priority: 10,
           reuseExistingChunk: true,
           test: /.*node_modules[\\/](?!(@artsy[\\/]|react[\\/]|react-dom[\\/]|backbone.*[\\/]|lodash.*[\\/]|moment.*[\\/]|luxon.*[\\/]|jquery.*[\\/]))/,
         },
@@ -253,7 +246,4 @@ export const clientNovoProductionConfig = {
     symlinks: false,
   },
   stats: "normal",
-  node: {
-    global: true,
-  },
 }
