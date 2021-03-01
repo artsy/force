@@ -63,6 +63,11 @@ export class SearchResultsEntityRoute extends React.Component<Props, State> {
 
   loadAfter = (cursor: string, page: number) => {
     this.toggleLoading(true)
+    const {
+      match: { location },
+    } = this.props
+    const { query } = location
+    const { term } = query
 
     this.props.relay.refetch(
       {
@@ -71,6 +76,7 @@ export class SearchResultsEntityRoute extends React.Component<Props, State> {
         first: PAGE_SIZE,
         last: null,
         page: null,
+        term,
       },
       null,
       error => {
