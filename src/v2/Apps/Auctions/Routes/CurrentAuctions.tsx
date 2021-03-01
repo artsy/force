@@ -3,6 +3,7 @@ import { Box, Text, Separator } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 
 import { CurrentAuctions_currentAuctions } from "v2/__generated__/CurrentAuctions_currentAuctions.graphql"
+import { AuctionArtworksRailFragmentContainer } from "../Components/AuctionArtworksRail"
 
 export interface CurrentAuctionsProps {
   currentAuctions: CurrentAuctions_currentAuctions
@@ -16,7 +17,11 @@ const CurrentAuctions: React.FC<CurrentAuctionsProps> = ({
       <Text variant="largeTitle">Current Auctions</Text>
       <Separator mt={1} mb={3} />
       {currentAuctions.edges.map(({ node }, index) => {
-        return <Box my={4} key={index}></Box>
+        return (
+          <Box my={4} key={index}>
+            <AuctionArtworksRailFragmentContainer auction={node} />
+          </Box>
+        )
       })}
     </Box>
   )
@@ -29,7 +34,13 @@ export const CurrentAuctionsFragmentContainer = createFragmentContainer(
       fragment CurrentAuctions_currentAuctions on SaleConnection {
         edges {
           node {
-            id
+            slug
+            name
+            href
+            startAt
+            endAt
+            liveStartAt
+            ...AuctionArtworksRail_auction
           }
         }
       }
