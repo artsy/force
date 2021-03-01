@@ -13,7 +13,7 @@ describe("UserSettingsTabs", () => {
     ["/user/purchases", "Order History"],
     ["/user/auctions", "Bids"],
     ["/user/edit", "Settings"],
-    ["/user/payments", "Payments & Shipping"],
+    ["/user/payments", "Payments"],
   ]
 
   it("renders user's name", () => {

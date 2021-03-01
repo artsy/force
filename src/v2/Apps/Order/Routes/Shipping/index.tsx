@@ -204,13 +204,15 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
           {
             ...address,
             phoneNumber: phoneNumber,
-          },
+          }, // address
           () => {}, // onSuccess
           () => {
             message => {
               logger.error(message)
             }
-          }
+          }, // onError
+          this.props.me, // me
+          () => this.setState({ editAddressIndex: -1 }) // closeModal
         )
       }
 
@@ -401,6 +403,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
                     me={this.props.me}
                     onSelect={value => onSelectSavedAddress(value)}
                     handleClickEdit={this.handleClickEdit}
+                    inCollectorProfile={false}
                   />
                 )}
                 <Collapse

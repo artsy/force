@@ -25,7 +25,7 @@ interface SavedAddressesProps {
   me: SavedAddresses_me
   onSelect?: (string) => void
   handleClickEdit: (number) => void
-  inCollectorProfile?: boolean
+  inCollectorProfile: boolean
   commitMutation?: CommitMutation
   relay: RelayRefetchProp
   addressCount?: number
@@ -59,7 +59,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
         p={2}
         width="100%"
         flexDirection="column"
-        key={address.node.internalID}
+        key={"addressIndex" + index}
       >
         <SavedAddressItem
           index={index}
@@ -162,7 +162,6 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
     </>
   ) : (
     <>
-      {addAddressButton}
       <RadioGroup
         onSelect={onSelect}
         defaultValue={defaultAddressIndex(addressList)}

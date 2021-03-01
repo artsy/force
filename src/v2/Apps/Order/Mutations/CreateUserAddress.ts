@@ -7,9 +7,10 @@ import {
 import { CommitMutation } from "../Utils/commitMutation"
 import { RecordSourceSelectorProxy, ConnectionHandler } from "relay-runtime"
 import { SavedAddresses_me } from "v2/__generated__/SavedAddresses_me.graphql"
+import { Shipping_me } from "v2/__generated__/Shipping_me.graphql"
 
 const onAddressAdded = (
-  me: SavedAddresses_me,
+  me: SavedAddresses_me | Shipping_me,
   store: RecordSourceSelectorProxy<any>,
   data: CreateUserAddressMutationResponse
 ): void => {
@@ -35,8 +36,8 @@ export const createUserAddress = async (
   address: UserAddressAttributes,
   onSuccess: (address: CreateUserAddressMutationResponse | null) => void,
   onError: (message: string | null) => void,
-  closeModal?: () => void,
-  me?: SavedAddresses_me
+  me: SavedAddresses_me | Shipping_me,
+  closeModal: () => void
 ) => {
   const response = await commitMutation<CreateUserAddressMutation>({
     variables: {
