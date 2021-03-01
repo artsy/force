@@ -76,6 +76,7 @@ declare module "sharify" {
       FAIR_ORGANIZER?: any
       GALLERY_INSIGHTS_CHANNEL: string
       JSON_PAGE_DATA: any
+      LEGACY_MAIN_CSS: string
       MARKETING_SIGNUP_MODALS: any
       MARKETING_SIGNUP_MODALS: any[]
       PAGE_TYPE?: string

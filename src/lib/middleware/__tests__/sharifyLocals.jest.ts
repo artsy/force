@@ -12,7 +12,7 @@ describe("locals middleware", () => {
       session: {},
       url: "localhost:3000",
     }
-    res = { locals: { sd: {} } }
+    res = { locals: { sd: {}, asset: () => {} } }
   })
 
   it("adds a session id", () => {

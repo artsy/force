@@ -51,6 +51,8 @@ export function sharifyLocalsMiddleware(
   // Required to know the hashed dll name.try
   res.locals.sd.ASSET_LEGACY_ARTWORK_DLL = assetLegacyArtworkDllName()
 
+  res.locals.sd.LEGACY_MAIN_CSS = res.locals.asset("/assets/main_layout.css")
+
   next()
 }
 

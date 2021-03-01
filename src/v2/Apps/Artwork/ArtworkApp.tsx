@@ -33,7 +33,7 @@ import {
   useAnalyticsContext,
 } from "v2/Artsy/Analytics/AnalyticsContext"
 import { Mediator } from "lib/mediator"
-// import { data } from "sharify"
+import { data } from "sharify"
 import { ReCaptchaContainer } from "v2/Utils/ReCaptchaContainer"
 
 export interface Props {
@@ -60,11 +60,17 @@ export class LegacyArtworkDllContainer extends React.Component {
     //   document.body.appendChild(script)
     // }
 
-    import(/* webpackChunkName: 'legacy-assets-dll' */ "desktop/apps/artsy-v2/apps/artwork/artworkClient").then(
-      ({ artworkClient }) => {
+    if (!document.getElementById("legacy-assets-dll")) {
+      import(
+        /* webpackChunkName: 'legacy-assets-dll' */ "desktop/apps/artsy-v2/apps/artwork/artworkClient"
+      ).then(({ artworkClient }) => {
         artworkClient()
-      }
-    )
+      })
+      document.body.insertAdjacentHTML(
+        "beforeend",
+        `<div id='legacy-assets-dll' />`
+      )
+    }
   }
 
   render() {
@@ -93,10 +99,18 @@ export class ArtworkApp extends React.Component<Props> {
   }
 
   addLegacyStyles() {
+    if (!document.getElementById("legacyIconFont")) {
+      document.head.insertAdjacentHTML(
+        "beforeend",
+        `<link id="legacyIconFont" rel="preload" href="${data.WEBFONT_URL}/artsy-icons.woff2" as="font" type="font/woff2" crossorigin />`
+      )
+    }
+
     if (!document.getElementById("legacyArtworkPageStyles")) {
-      import("./Components/legacyCssModal").then(({ legacyCSS }) => {
-        document.head.insertAdjacentHTML("beforeend", `<style id='legacyCSS'>${legacyCSS}</style>`)
-      })
+      document.head.insertAdjacentHTML(
+        "beforeend",
+        `<link id='legacyArtworkPageStyles' rel="stylesheet" href="${data.LEGACY_MAIN_CSS}" />`
+      )
     }
   }
 
