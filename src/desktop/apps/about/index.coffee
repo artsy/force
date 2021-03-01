@@ -10,6 +10,15 @@ app.set 'view engine', 'jade'
 page = new JSONPage name: 'about', paths: show: '/about', edit: '/about/edit'
 { data, edit, upload } = require('../../components/json_page/routes')(page)
 
+sections = [
+  '/about/collecting',
+  '/about/education',
+  '/about/the-art-genome-project',
+  '/about/the-art-world-online',
+]
+sections.forEach (section) =>
+  app.get section, (_request, response) => response.redirect(301, '/about')
+
 app.get page.paths.show, routes.index
 app.get /^\/about((?!\/edit).)*$/, routes.index # Scroll routes
 app.get page.paths.show + '/data', data
