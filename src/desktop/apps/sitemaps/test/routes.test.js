@@ -66,7 +66,6 @@ Sitemap: https://www.artsy.net/sitemap-features.xml
 Sitemap: https://www.artsy.net/sitemap-genes.xml
 Sitemap: https://www.artsy.net/sitemap-images.xml
 Sitemap: https://www.artsy.net/sitemap-misc.xml
-Sitemap: https://www.artsy.net/sitemap-news.xml
 Sitemap: https://www.artsy.net/sitemap-partners.xml
 Sitemap: https://www.artsy.net/sitemap-shows.xml
 Sitemap: https://www.artsy.net/sitemap-tags.xml
@@ -78,49 +77,6 @@ Sitemap: https://www.artsy.net/sitemap-videos.xml
       return it("includes a CR/LF at the end of robots.txt", function () {
         return this.res.send.args[0][0].slice(-1).should.eql("\n")
       })
-    })
-  })
-
-  describe("#news", function () {
-    it("displays the sitemap for articles that are < 2 days old", function () {
-      const today = new Date()
-      const oneDayAgo = new Date()
-      const twoDaysAgo = new Date()
-
-      oneDayAgo.setDate(today.getDate() - 1)
-      twoDaysAgo.setDate(today.getDate() - 2)
-
-      routes.news(this.req, this.res)
-      Backbone.sync.args[0][2].success({
-        total: 16088,
-        count: 12,
-        results: [
-          fabricate("article", {
-            layout: "standard",
-            published_at: today.toISOString(),
-          }),
-          fabricate("article", {
-            layout: "news",
-            published_at: oneDayAgo.toISOString(),
-          }),
-          fabricate("article", {
-            layout: "classic",
-            published_at: oneDayAgo.toISOString(),
-          }),
-          fabricate("article", { published_at: twoDaysAgo.toISOString() }),
-        ],
-      })
-
-      this.res.render.args[0][0].should.equal("news")
-      return this.res.render.args[0][1].articles.length.should.equal(2)
-    })
-
-    return it("fetches with correct news data", function () {
-      routes.news(this.req, this.res)
-      Backbone.sync.args[0][2].data.published.should.be.true()
-      Backbone.sync.args[0][2].data.sort.should.equal("-published_at")
-      Backbone.sync.args[0][2].data.exclude_google_news.should.be.false()
-      return Backbone.sync.args[0][2].data.limit.should.equal(100)
     })
   })
 
