@@ -1,32 +1,8 @@
 _ = require 'underscore'
-Articles = require '../../collections/articles'
-request = require 'superagent'
-moment = require 'moment'
-async = require 'async'
-PartnerFeaturedCities = require '../../collections/partner_featured_cities'
-{ API_URL, POSITRON_URL, APP_URL, ARTSY_EDITORIAL_CHANNEL, ENABLE_WEB_CRAWLING, SITEMAP_BASE_URL } = require('sharify').data
-artsyXapp = require '@artsy/xapp'
-PAGE_SIZE = 100
+{ APP_URL, ENABLE_WEB_CRAWLING, SITEMAP_BASE_URL } = require('sharify').data
 { parse } = require 'url'
-sd = require 'sharify'
 httpProxy = require 'http-proxy'
 sitemapProxy = httpProxy.createProxyServer(target: SITEMAP_BASE_URL)
-getFullEditorialHref = require("@artsy/reaction/dist/Components/Publishing/Constants").getFullEditorialHref
-
-@news = (req, res, next) ->
-  new Articles().fetch
-    data:
-      channel_id: sd.ARTSY_EDITORIAL_CHANNEL
-      published: true
-      sort: '-published_at'
-      exclude_google_news: false
-      limit: PAGE_SIZE
-    error: res.backboneError
-    success: (articles) ->
-      recentArticles = articles.filter (article) ->
-        moment(article.get 'published_at').isAfter(moment().subtract(2, 'days')) && article.get("layout") != 'classic'
-      res.set 'Content-Type', 'text/xml'
-      res.render('news', { pretty: true, articles: recentArticles, getFullEditorialHref: getFullEditorialHref })
 
 @misc = (req, res, next) ->
   res.set 'Content-Type', 'text/xml'
@@ -60,7 +36,6 @@ getFullEditorialHref = require("@artsy/reaction/dist/Components/Publishing/Const
     Sitemap: #{APP_URL}/sitemap-genes.xml
     Sitemap: #{APP_URL}/sitemap-images.xml
     Sitemap: #{APP_URL}/sitemap-misc.xml
-    Sitemap: #{APP_URL}/sitemap-news.xml
     Sitemap: #{APP_URL}/sitemap-partners.xml
     Sitemap: #{APP_URL}/sitemap-shows.xml
     Sitemap: #{APP_URL}/sitemap-tags.xml

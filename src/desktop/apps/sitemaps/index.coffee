@@ -19,7 +19,6 @@ app.get ['/sitemap-features.xml', '/sitemap-features-:timestamp.xml'], routes.si
 app.get '/sitemap-genes.xml', routes.sitemaps
 app.get ['/sitemap-images.xml', '/sitemap-images-:timestamp.xml'], routes.sitemaps
 app.get '/sitemap-misc.xml', routes.misc
-app.get '/sitemap-news.xml', routes.news
 app.get ['/sitemap-partners.xml', '/sitemap-partners-:timestamp.xml'], routes.sitemaps
 app.get ['/sitemap-shows.xml', '/sitemap-shows-:timestamp.xml'], routes.sitemaps
 app.get '/sitemap-tags.xml', routes.sitemaps
