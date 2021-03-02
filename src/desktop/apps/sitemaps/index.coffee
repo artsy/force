@@ -6,6 +6,7 @@ app.set 'views', __dirname + '/templates'
 app.set 'view engine', 'jade'
 
 app.get '/robots.txt', routes.robots
+app.get '/sitemap-misc.xml', routes.misc
 
 app.get ['/sitemap-articles.xml', '/sitemap-articles-:timestamp.xml'], routes.sitemaps
 app.get ['/sitemap-artists.xml', '/sitemap-artists-:timestamp.xml'], routes.sitemaps
@@ -18,7 +19,6 @@ app.get ['/sitemap-fairs.xml', '/sitemap-fairs-:timestamp.xml'], routes.sitemaps
 app.get ['/sitemap-features.xml', '/sitemap-features-:timestamp.xml'], routes.sitemaps
 app.get '/sitemap-genes.xml', routes.sitemaps
 app.get ['/sitemap-images.xml', '/sitemap-images-:timestamp.xml'], routes.sitemaps
-app.get '/sitemap-misc.xml', routes.misc
 app.get ['/sitemap-partners.xml', '/sitemap-partners-:timestamp.xml'], routes.sitemaps
 app.get ['/sitemap-shows.xml', '/sitemap-shows-:timestamp.xml'], routes.sitemaps
 app.get '/sitemap-tags.xml', routes.sitemaps
