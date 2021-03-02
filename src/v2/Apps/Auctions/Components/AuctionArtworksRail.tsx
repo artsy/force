@@ -60,6 +60,7 @@ export const AuctionArtworksRail: React.FC<AuctionArtworksRailProps> = ({
         <Box height={AUCTION_ARTWORKS_RAIL_HEIGHT}>
           <Carousel arrowHeight={AUCTION_ARTWORKS_IMAGE_HEIGHT}>
             {auction.artworksConnection.edges.map(({ node }, index) => {
+              console.log(node)
               return (
                 <FillwidthItem
                   contextModule={null as any}
@@ -91,12 +92,9 @@ export const AuctionArtworksRailFragmentContainer = createFragmentContainer(
         internalID
         slug
         href
-        artworksConnection(first: 99) {
+        artworksConnection(first: 20) {
           edges {
             node {
-              imageUrl
-              artistNames
-              price
               internalID
               slug
               ...FillwidthItem_artwork

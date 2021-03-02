@@ -10,9 +10,6 @@ export type AuctionArtworksRail_auction = {
     readonly artworksConnection: {
         readonly edges: ReadonlyArray<{
             readonly node: {
-                readonly imageUrl: string | null;
-                readonly artistNames: string | null;
-                readonly price: string | null;
                 readonly internalID: string;
                 readonly slug: string;
                 readonly " $fragmentRefs": FragmentRefs<"FillwidthItem_artwork">;
@@ -65,7 +62,7 @@ return {
         {
           "kind": "Literal",
           "name": "first",
-          "value": 99
+          "value": 20
         }
       ],
       "concreteType": "ArtworkConnection",
@@ -89,27 +86,6 @@ return {
               "name": "node",
               "plural": false,
               "selections": [
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "imageUrl",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "artistNames",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "price",
-                  "storageKey": null
-                },
                 (v0/*: any*/),
                 (v1/*: any*/),
                 {
@@ -124,11 +100,11 @@ return {
           "storageKey": null
         }
       ],
-      "storageKey": "artworksConnection(first:99)"
+      "storageKey": "artworksConnection(first:20)"
     }
   ],
   "type": "Sale"
 };
 })();
-(node as any).hash = 'f191f226bdde7716ace787735841127d';
+(node as any).hash = 'de480424d482b15a4ecc8a2d964c099b';
 export default node;
