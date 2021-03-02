@@ -14,8 +14,6 @@ const CurrentAuctions: React.FC<CurrentAuctionsProps> = ({
 }) => {
   return (
     <Box>
-      <Text variant="largeTitle">Current Auctions</Text>
-      <Separator mt={1} mb={3} />
       {currentAuctions.edges.map(({ node }, index) => {
         return (
           <Box my={4} key={index}>

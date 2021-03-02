@@ -7,6 +7,8 @@ export type AuctionArtworksRail_auction = {
     readonly internalID: string;
     readonly slug: string;
     readonly href: string | null;
+    readonly name: string | null;
+    readonly formattedStartDateTime: string | null;
     readonly artworksConnection: {
         readonly edges: ReadonlyArray<{
             readonly node: {
@@ -54,6 +56,20 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "href",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "name",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "formattedStartDateTime",
       "storageKey": null
     },
     {
@@ -106,5 +122,5 @@ return {
   "type": "Sale"
 };
 })();
-(node as any).hash = 'de480424d482b15a4ecc8a2d964c099b';
+(node as any).hash = '24828604e479630edb64618e5919e54e';
 export default node;

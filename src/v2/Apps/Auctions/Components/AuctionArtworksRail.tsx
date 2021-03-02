@@ -7,7 +7,7 @@ import { AuctionArtworksRail_auction } from "v2/__generated__/AuctionArtworksRai
 // import { AuctionArtworksRailPlaceholder } from "./AuctionArtworksRailPlaceholder"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import { Carousel } from "v2/Components/Carousel"
-import { FillwidthItem } from "v2/Components/Artwork/FillwidthItem"
+import FillwidthItem from "v2/Components/Artwork/FillwidthItem"
 
 interface AuctionArtworksRailProps extends BoxProps {
   auction: AuctionArtworksRail_auction
@@ -26,26 +26,18 @@ export const AuctionArtworksRail: React.FC<AuctionArtworksRailProps> = ({
   ...rest
 }) => {
   const ref = useRef<HTMLDivElement | null>(null)
-  // const { isEnteredView, Waypoint } = useLazyLoadComponent()
 
   return (
     <>
-      {/* <Waypoint /> */}
-
       <Box ref={ref as any} {...rest}>
         <Box display="flex" mb={1}>
           <Box flex="1">
-            <Text as="h3" variant="subtitle">
+            <Text as="h3" variant="subtitle" fontWeight="bold">
               <RouterLink to={auction.href} noUnderline>
-                TODO: NAME
-                {/* {auction.partner.name} */}
+                {auction.name}
               </RouterLink>
             </Text>
-
-            {/* <Text variant="text" color="black60" mb={1}>
-              {auction.counts.artworks} work
-              {auction.counts.artworks === 1 ? "" : "s"}
-            </Text> */}
+            <Text mb={1}>{auction.formattedStartDateTime}</Text>
           </Box>
 
           {auction.href && (
@@ -92,6 +84,8 @@ export const AuctionArtworksRailFragmentContainer = createFragmentContainer(
         internalID
         slug
         href
+        name
+        formattedStartDateTime
         artworksConnection(first: 20) {
           edges {
             node {
