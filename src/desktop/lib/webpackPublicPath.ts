@@ -29,6 +29,8 @@ if (process.env.NODE_ENV === "production") {
     "/artist/",
     "/artists",
     "/artwork",
+    // FIXME: Swap with /auctions when new page launches
+    "/auctions2",
     "/collect",
     "/collection",
     "/collections",
