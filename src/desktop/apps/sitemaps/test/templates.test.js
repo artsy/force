@@ -42,28 +42,3 @@ describe("misc sitemap template", () =>
     xml.should.containEql("/sign_up")
     return xml.should.containEql("/terms")
   }))
-
-describe("news sitemap template", () =>
-  it("renders article info", function () {
-    const articles = [
-      new Article(fabricate("article", { layout: "standard" })),
-      new Article(
-        fabricate("article", {
-          layout: "news",
-          slug: "banksys-half-shredded-painting-will-view-german-museum",
-        })
-      ),
-    ]
-
-    const xml = render("news")({ articles, getFullEditorialHref })
-
-    xml.should.containEql("/article/editorial-on-the-heels-of-a-stellar-year")
-    xml.should.containEql(
-      "/news/banksys-half-shredded-painting-will-view-german-museum"
-    )
-    xml.should.containEql("<news:name>Artsy</news:name>")
-    xml.should.containEql("2014-09-24T23:24:54.000Z")
-    return xml.should.containEql(
-      "On The Heels of A Stellar Year in the West, Sterling Ruby Makes His Vivid Mark on Asia"
-    )
-  }))
