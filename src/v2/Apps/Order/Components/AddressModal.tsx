@@ -82,7 +82,7 @@ export const AddressModal: React.FC<Props> = ({
         }}
       >
         {(formik: FormikProps<SavedAddressType>) => (
-          <form onSubmit={formik.handleSubmit}>
+          <form onSubmit={null}>
             <Input
               id="name"
               name="name"
