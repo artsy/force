@@ -142,7 +142,7 @@ export interface ArtworkFilterContextProps {
   shouldStageFilterChanges?: boolean
   setShouldStageFilterChanges?: (value: boolean) => void
   setStagedFilters?: (state: ArtworkFilters) => void
-  setFilters?: (state: ArtworkFilters) => void
+  setFilters?: (state: ArtworkFilters, opts?: { force: boolean }) => void
 
   // Has the ArtworkFilterContext been mounted in the tree
   mountedContext?: boolean
@@ -310,12 +310,13 @@ export const ArtworkFilterContextProvider: React.FC<
       stage(action)
     },
 
-    setFilters: newState => {
+    setFilters: (newState, opts = { force: true }) => {
       const action: ArtworkFiltersAction = {
         type: "SET_FILTERS",
         payload: newState,
       }
-      dispatch(action)
+      const { force } = opts
+      force ? dispatch(action) : dispatchOrStage(action)
     },
   }
 

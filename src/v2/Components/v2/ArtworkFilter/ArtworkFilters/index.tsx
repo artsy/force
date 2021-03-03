@@ -7,6 +7,7 @@ import { InstitutionFilter } from "./InstitutionFilter"
 import { MediumFilter } from "./MediumFilter"
 import { PriceRangeFilter } from "./PriceRangeFilter"
 import { SizeFilter } from "./SizeFilter"
+import { SizeFilter2 } from "./SizeFilter2"
 import { TimePeriodFilter } from "./TimePeriodFilter"
 import { WaysToBuyFilter } from "./WaysToBuyFilter"
 import { AttributionClassFilter } from "./AttributionClassFilter"
@@ -34,7 +35,7 @@ export const ArtworkFilters: React.FC = () => {
           <InstitutionFilter />
         </>
       )}
-      <SizeFilter />
+      {getENV("ENABLE_NEW_ARTWORK_FILTERS") ? <SizeFilter2 /> : <SizeFilter />}
       <TimePeriodFilter />
       <ColorFilter />
     </Box>
