@@ -1,8 +1,9 @@
-import { Box, Link, Text } from "@artsy/palette"
+import { Box, Link, Text, Separator } from "@artsy/palette"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Media } from "v2/Utils/Responsive"
 import { ShowContextualLink_show } from "v2/__generated__/ShowContextualLink_show.graphql"
+import styled from "styled-components"
 
 interface Props {
   show: ShowContextualLink_show
@@ -33,24 +34,34 @@ export const ContextualLink: React.FC<Props> = ({ show }) => {
   const fairName = fair?.name
   const fairHref = fair?.href
 
-  const PartnerLink = (
-    <Text variant="caption">
-      Presented by&nbsp;
-      {!!partnerHref ? (
-        <Link href={partnerHref}>{partnerName}</Link>
-      ) : (
-        partnerName
-      )}
-    </Text>
-  )
+  if (isFairBooth) {
+    return (
+      <>
+        {fair.isActive && (
+          <Box my={2}>
+            <Text variant="caption">
+              Part of <Link href={fairHref}>{fairName}</Link>
+            </Text>
+            <FullScreenSeparator as="hr" my={2} />
+          </Box>
+        )}
+      </>
+    )
+  }
 
-  const FairLink = (
-    <Text variant="caption">
-      Part of <Link href={fairHref}>{fairName}</Link>
-    </Text>
+  return (
+    <Box my={2}>
+      <Text variant="caption">
+        Presented by&nbsp;
+        {!!partnerHref ? (
+          <Link href={partnerHref}>{partnerName}</Link>
+        ) : (
+          partnerName
+        )}
+      </Text>
+      <FullScreenSeparator as="hr" my={2} />
+    </Box>
   )
-
-  return isFairBooth ? FairLink : !!partner && PartnerLink
 }
 
 export const ShowContextualLinkFragmentContainer = createFragmentContainer(
@@ -61,6 +72,7 @@ export const ShowContextualLinkFragmentContainer = createFragmentContainer(
         isFairBooth
         fair {
           href
+          isActive
           name
         }
         partner {
@@ -74,3 +86,13 @@ export const ShowContextualLinkFragmentContainer = createFragmentContainer(
     `,
   }
 )
+
+const FullScreenSeparator = styled(Separator)`
+  left: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  max-width: 100vw;
+  position: relative;
+  right: 50%;
+  width: 100vw;
+`

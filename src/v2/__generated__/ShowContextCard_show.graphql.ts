@@ -25,6 +25,7 @@ export type ShowContextCard_show = {
     } | null;
     readonly fair: {
         readonly internalID: string;
+        readonly isActive: boolean | null;
         readonly slug: string;
         readonly href: string | null;
         readonly name: string | null;
@@ -198,6 +199,13 @@ return {
       "plural": false,
       "selections": [
         (v0/*: any*/),
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "isActive",
+          "storageKey": null
+        },
         (v1/*: any*/),
         (v2/*: any*/),
         (v3/*: any*/),
@@ -218,5 +226,5 @@ return {
   "type": "Show"
 };
 })();
-(node as any).hash = '4a7b702ff782b0ab05a7c4baaec36f72';
+(node as any).hash = '6ac05f1e4151a1c743f8bc935deedc7b';
 export default node;

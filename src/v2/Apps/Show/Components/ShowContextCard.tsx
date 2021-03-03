@@ -69,9 +69,11 @@ export const ShowContextCard: React.FC<Props> = ({ show }) => {
 
     return (
       <GridColumns>
-        <Column span={6}>
-          <Text variant="subtitle">Part of {fair.name}</Text>
-        </Column>
+        {fair.isActive && (
+          <Column span={6}>
+            <Text variant="subtitle">Part of {fair.name}</Text>
+          </Column>
+        )}
         <Column span={6}>
           <StyledLink noUnderline to={fair.href} onClick={handleClick}>
             <FairCard fair={fair} />
@@ -170,6 +172,7 @@ export const ShowContextCardFragmentContainer = createFragmentContainer(
         }
         fair {
           internalID
+          isActive
           slug
           href
           name

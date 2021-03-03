@@ -28,6 +28,7 @@ fragment ShowContextualLink_show on Show {
   isFairBooth
   fair {
     href
+    isActive
     name
     id
   }
@@ -133,6 +134,13 @@ return {
             "plural": false,
             "selections": [
               (v1/*: any*/),
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "isActive",
+                "storageKey": null
+              },
               (v2/*: any*/),
               (v3/*: any*/)
             ],
@@ -183,7 +191,7 @@ return {
     "metadata": {},
     "name": "ShowContextualLink_Test_Query",
     "operationKind": "query",
-    "text": "query ShowContextualLink_Test_Query {\n  show(id: \"catty-show\") {\n    ...ShowContextualLink_show\n    id\n  }\n}\n\nfragment ShowContextualLink_show on Show {\n  isFairBooth\n  fair {\n    href\n    name\n    id\n  }\n  partner {\n    __typename\n    ... on Partner {\n      isLinkable\n      name\n      href\n    }\n    ... on Node {\n      id\n    }\n    ... on ExternalPartner {\n      id\n    }\n  }\n}\n"
+    "text": "query ShowContextualLink_Test_Query {\n  show(id: \"catty-show\") {\n    ...ShowContextualLink_show\n    id\n  }\n}\n\nfragment ShowContextualLink_show on Show {\n  isFairBooth\n  fair {\n    href\n    isActive\n    name\n    id\n  }\n  partner {\n    __typename\n    ... on Partner {\n      isLinkable\n      name\n      href\n    }\n    ... on Node {\n      id\n    }\n    ... on ExternalPartner {\n      id\n    }\n  }\n}\n"
   }
 };
 })();
