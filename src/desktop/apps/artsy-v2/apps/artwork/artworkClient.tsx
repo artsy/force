@@ -143,6 +143,12 @@ export const artworkClient = () => {
   mediator.on(
     "openAuctionBuyerPremium",
     ({ auctionId }: BuyerPremiumEventOptions) => {
+      $.ajaxSettings.headers = {
+        "X-ACCESS-TOKEN":
+          sd.CURRENT_USER != null ? sd.CURRENT_USER.accessToken : undefined,
+        "X-XAPP-TOKEN": sd.ARTSY_XAPP_TOKEN,
+      }
+
       openAuctionBuyerPremium(auctionId)
     }
   )
