@@ -1,5 +1,5 @@
 import React from "react"
-import { Box, Text, Separator } from "@artsy/palette"
+import { Box } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 
 import { CurrentAuctions_currentAuctions } from "v2/__generated__/CurrentAuctions_currentAuctions.graphql"
