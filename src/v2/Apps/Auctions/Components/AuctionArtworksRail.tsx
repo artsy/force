@@ -61,6 +61,7 @@ export const AuctionArtworksRail: React.FC<AuctionArtworksRailProps> = ({
               )
             })}
           </Carousel>
+          {/* TODO: Implement Rail Lazy Loading JIRA GRO-229 */}
           {/* <AuctionArtworksRailArtworks id={auction.internalID} /> */}
           {/* {isEnteredView ? (
           //   <AuctionArtworksRailArtworks id={auction.internalID} />

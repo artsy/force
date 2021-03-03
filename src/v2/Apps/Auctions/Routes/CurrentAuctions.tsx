@@ -35,8 +35,6 @@ export const CurrentAuctionsFragmentContainer = createFragmentContainer(
             slug
             name
             href
-            startAt
-            endAt
             liveStartAt
             ...AuctionArtworksRail_auction
           }
