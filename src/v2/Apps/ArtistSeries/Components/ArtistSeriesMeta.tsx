@@ -3,6 +3,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { Meta, Title } from "react-head"
 import { ArtistSeriesMeta_artistSeries } from "v2/__generated__/ArtistSeriesMeta_artistSeries.graphql"
 import { truncate } from "lodash"
+import { Link } from "react-head"
 
 interface ArtistSeriesMetaProps {
   artistSeries: ArtistSeriesMeta_artistSeries
@@ -18,7 +19,7 @@ export const ArtistSeriesMeta: React.FC<ArtistSeriesMetaProps> = props => {
     `${descriptionFirstSentence}${artistSeries.description}`,
     { length: 160, separator: " " }
   )
-
+  const canonicalRef = `/artist-series/${artistSeries.slug}`
   return (
     <>
       <Title>{title}</Title>
@@ -27,6 +28,7 @@ export const ArtistSeriesMeta: React.FC<ArtistSeriesMetaProps> = props => {
       <Meta property="og:description" content={description} />
       <Meta property="twitter:title" content={title} />
       <Meta property="twitter:description" content={description} />
+      <Link rel="canonical" href={canonicalRef} />
     </>
   )
 }
@@ -38,6 +40,7 @@ export const ArtistSeriesMetaFragmentContainer = createFragmentContainer(
       fragment ArtistSeriesMeta_artistSeries on ArtistSeries {
         title
         description
+        slug
         artists(size: 1) {
           name
         }
