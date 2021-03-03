@@ -1,85 +1,34 @@
 import {
+  Box,
+  Button,
   RadioGroup,
   BorderedRadio,
   Spacer,
   Flex,
   Text,
-  RadioProps,
+  BorderBox,
+  Separator,
 } from "@artsy/palette"
-import React from "react"
-import { createFragmentContainer, graphql } from "react-relay"
+import React, { useState } from "react"
+import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import styled from "styled-components"
 import { SavedAddresses_me } from "v2/__generated__/SavedAddresses_me.graphql"
+import { AddressModal } from "v2/Apps/Order/Components/AddressModal"
+import { CommitMutation } from "v2/Apps/Order/Utils/commitMutation"
+import createLogger from "v2/Utils/logger"
+import { SavedAddressItem } from "v2/Apps/Order/Components/SavedAddressItem"
 
-const EditButton = styled(Text)`
-  &:hover {
-    text-decoration: underline;
-  }
-`
 export const NEW_ADDRESS = "NEW_ADDRESS"
+const PAGE_SIZE = 30
 
-type AddressNode = SavedAddresses_me["addressConnection"]["edges"][number]["node"]
-
-interface AddressListProps {
-  address: AddressNode
+interface SavedAddressesProps {
+  me: SavedAddresses_me
+  onSelect?: (string) => void
   handleClickEdit: (number) => void
-  index: number
-}
-
-const SavedAddressItem: React.FC<AddressListProps> = (
-  props
-): React.ReactElement<RadioProps> => {
-  const { address, handleClickEdit, index } = props
-  const {
-    addressLine1,
-    addressLine2,
-    addressLine3,
-    city,
-    country,
-    name,
-    phoneNumber,
-    postalCode,
-    region,
-  } = address
-
-  const formattedAddressLine = [city, region, country, postalCode]
-    .filter(el => el)
-    .join(", ")
-  return (
-    <Flex width="100%">
-      <Flex flexDirection="column">
-        {[name, addressLine1, addressLine2, addressLine3].map(
-          (line, index) =>
-            line && (
-              <Text
-                style={{ textTransform: "capitalize" }}
-                variant="text"
-                key={index}
-              >
-                {line}
-              </Text>
-            )
-        )}
-        <Text textColor="black60" style={{ textTransform: "capitalize" }}>
-          {formattedAddressLine}
-        </Text>
-        <Text textColor="black60">{phoneNumber}</Text>
-      </Flex>
-      <EditButton
-        position="absolute"
-        top={2}
-        right={2}
-        onClick={e => {
-          handleClickEdit(index)
-        }}
-        textColor="blue100"
-        size="2"
-        data-test="edit-address"
-      >
-        Edit
-      </EditButton>
-    </Flex>
-  )
+  inCollectorProfile: boolean
+  commitMutation?: CommitMutation
+  relay: RelayRefetchProp
+  addressCount?: number
 }
 
 const defaultAddressIndex = addressList => {
@@ -89,15 +38,99 @@ const defaultAddressIndex = addressList => {
   return `${indexOfDefaultAddress > -1 ? indexOfDefaultAddress : 0}`
 }
 
-interface Props {
-  me: SavedAddresses_me
-  onSelect: (string) => void
-  handleClickEdit: (number) => void
-}
+const SavedAddresses: React.FC<SavedAddressesProps> = props => {
+  const [showAddressModal, setShowAddressModal] = useState(false)
+  const logger = createLogger("SavedAddresses.tsx")
 
-const SavedAddresses: React.FC<Props> = props => {
-  const { onSelect, handleClickEdit, me } = props
-  const addressList = me.addressConnection.edges
+  const { onSelect, handleClickEdit, me, inCollectorProfile, relay } = props
+  const addressList = me?.addressConnection?.edges ?? []
+  const handleModal = () => {
+    setShowAddressModal(!showAddressModal)
+  }
+  const collectorProfileAddressItems = addressList.map((address, index) => {
+    if (!address.node) {
+      return null
+    }
+
+    const isDefaultAddress = address.node.isDefault
+
+    return (
+      <BorderBox
+        p={2}
+        width="100%"
+        flexDirection="column"
+        key={"addressIndex" + index}
+      >
+        <SavedAddressItem
+          index={index}
+          address={address.node}
+          handleClickEdit={handleClickEdit}
+        />
+        <Separator my={1} />
+        <ModifyAddressWrapper>
+          {!isDefaultAddress && (
+            <Box mr={1}>
+              <Text variant="text" color="black60">
+                Set as Default
+              </Text>
+            </Box>
+          )}
+          <Box mr={1}>
+            <Text variant="text" color="blue100">
+              Edit
+            </Text>
+          </Box>
+          <Box>
+            <Text variant="text" color="red100">
+              Delete
+            </Text>
+          </Box>
+        </ModifyAddressWrapper>
+      </BorderBox>
+    )
+  })
+
+  const addAddressButton = (
+    <>
+      <Button
+        mt={addressList.length > 0 ? 3 : 0}
+        variant="primaryBlack"
+        size="large"
+        onClick={() => handleModal()}
+      >
+        Add new address
+      </Button>
+      {showAddressModal && (
+        <AddressModal
+          show={showAddressModal}
+          modalDetails={{
+            addressModalTitle: "Add new address",
+            addressModalAction: "createUserAddress",
+          }}
+          closeModal={() => handleModal()}
+          address={null}
+          onSuccess={() => {
+            relay.refetch(
+              {
+                first: PAGE_SIZE,
+              },
+              null,
+              error => {
+                if (error) {
+                  logger.error(error)
+                }
+              }
+            )
+          }}
+          commitMutation={props.commitMutation}
+          onError={message => {
+            logger.error(message)
+          }}
+          me={me}
+        />
+      )}
+    </>
+  )
 
   const addressItems = addressList
     .map((address, index) => {
@@ -122,7 +155,12 @@ const SavedAddresses: React.FC<Props> = props => {
       </BorderedRadio>,
     ])
 
-  return (
+  return inCollectorProfile ? (
+    <>
+      <Flex flexDirection="column">{collectorProfileAddressItems}</Flex>
+      {addAddressButton}
+    </>
+  ) : (
     <>
       <RadioGroup
         onSelect={onSelect}
@@ -135,7 +173,12 @@ const SavedAddresses: React.FC<Props> = props => {
   )
 }
 
-export const SavedAddressesFragmentContainer = createFragmentContainer(
+const ModifyAddressWrapper = styled(Flex)`
+  align-self: flex-end;
+  justify-content: space-between;
+`
+
+export const SavedAddressesFragmentContainer = createRefetchContainer(
   SavedAddresses,
   {
     me: graphql`
@@ -146,6 +189,7 @@ export const SavedAddressesFragmentContainer = createFragmentContainer(
           after: { type: "String" }
           before: { type: "String" }
         ) {
+        id
         addressConnection(
           first: $first
           last: $last
@@ -171,5 +215,12 @@ export const SavedAddressesFragmentContainer = createFragmentContainer(
         }
       }
     `,
-  }
+  },
+  graphql`
+    query SavedAddressesRefetchQuery {
+      me {
+        ...SavedAddresses_me
+      }
+    }
+  `
 )

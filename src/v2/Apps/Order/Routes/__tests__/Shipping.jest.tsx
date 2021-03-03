@@ -7,12 +7,11 @@ import {
   UntouchedOfferOrder,
 } from "v2/Apps/__tests__/Fixtures/Order"
 import {
-  fillCountrySelect,
+  fillAddressForm,
   fillIn,
   fillInPhoneNumber,
   validAddress,
 } from "v2/Components/__tests__/Utils/addressForm"
-import { Address } from "v2/Components/AddressForm"
 import { CountrySelect } from "v2/Components/CountrySelect"
 import Input from "v2/Components/Input"
 import { Input as paletteInput } from "@artsy/palette"
@@ -32,25 +31,6 @@ import {
 } from "../__fixtures__/MutationResults/saveAddress"
 
 jest.unmock("react-relay")
-
-const fillAddressForm = (component: any, address: Address) => {
-  fillIn(component, { title: "Full name", value: address.name })
-  fillIn(component, { title: "Address line 1", value: address.addressLine1 })
-  fillIn(component, {
-    title: "Address line 2 (optional)",
-    value: address.addressLine2,
-  })
-  fillIn(component, { title: "City", value: address.city })
-  fillIn(component, {
-    title: "State, province, or region",
-    value: address.region,
-  })
-  fillIn(component, { title: "Postal code", value: address.postalCode })
-  fillInPhoneNumber(component, {
-    value: address.phoneNumber,
-  })
-  fillCountrySelect(component, address.country)
-}
 
 const testOrder: ShippingTestQueryRawResponse["order"] = {
   ...UntouchedBuyOrder,
@@ -621,6 +601,15 @@ describe("Shipping", () => {
       `)
     })
     describe("editing address", () => {
+      it("opens modal with correct title and action properties", async () => {
+        await page.find(`[data-test="edit-address"]`).first().simulate("click")
+        expect(page.find(ShippingRoute).state().editAddressIndex).toBe(0)
+        expect(page.find("AddressModal").props().modalDetails).toStrictEqual({
+          addressModalTitle: "Edit address",
+          addressModalAction: "editUserAddress",
+        })
+      })
+
       it("opens modal with current address values", async () => {
         expect(page.find(ShippingRoute).state().editAddressIndex).toBe(-1)
         await page.find(`[data-test="edit-address"]`).first().simulate("click")

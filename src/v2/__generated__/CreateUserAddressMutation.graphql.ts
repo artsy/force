@@ -25,8 +25,17 @@ export type CreateUserAddressMutationResponse = {
         readonly userAddressOrErrors: {
             readonly id?: string;
             readonly internalID?: string;
+            readonly addressLine1?: string;
+            readonly addressLine2?: string | null;
+            readonly addressLine3?: string | null;
+            readonly city?: string;
+            readonly country?: string;
+            readonly isDefault?: boolean;
+            readonly name?: string | null;
+            readonly phoneNumber?: string | null;
+            readonly postalCode?: string | null;
+            readonly region?: string | null;
             readonly errors?: ReadonlyArray<{
-                readonly code: string;
                 readonly message: string;
             }>;
         };
@@ -49,10 +58,19 @@ mutation CreateUserAddressMutation(
       ... on UserAddress {
         id
         internalID
+        addressLine1
+        addressLine2
+        addressLine3
+        city
+        country
+        isDefault
+        name
+        phoneNumber
+        postalCode
+        region
       }
       ... on Errors {
         errors {
-          code
           message
         }
       }
@@ -93,6 +111,76 @@ v2 = {
       "kind": "ScalarField",
       "name": "internalID",
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "addressLine1",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "addressLine2",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "addressLine3",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "city",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "country",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "isDefault",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "name",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "phoneNumber",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "postalCode",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "region",
+      "storageKey": null
     }
   ],
   "type": "UserAddress"
@@ -108,13 +196,6 @@ v3 = {
       "name": "errors",
       "plural": true,
       "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "code",
-          "storageKey": null
-        },
         {
           "alias": null,
           "args": null,
@@ -206,9 +287,9 @@ return {
     "metadata": {},
     "name": "CreateUserAddressMutation",
     "operationKind": "mutation",
-    "text": "mutation CreateUserAddressMutation(\n  $input: CreateUserAddressInput!\n) {\n  createUserAddress(input: $input) {\n    userAddressOrErrors {\n      __typename\n      ... on UserAddress {\n        id\n        internalID\n      }\n      ... on Errors {\n        errors {\n          code\n          message\n        }\n      }\n    }\n  }\n}\n"
+    "text": "mutation CreateUserAddressMutation(\n  $input: CreateUserAddressInput!\n) {\n  createUserAddress(input: $input) {\n    userAddressOrErrors {\n      __typename\n      ... on UserAddress {\n        id\n        internalID\n        addressLine1\n        addressLine2\n        addressLine3\n        city\n        country\n        isDefault\n        name\n        phoneNumber\n        postalCode\n        region\n      }\n      ... on Errors {\n        errors {\n          message\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'd58253f3b92c3b1e89906b6212869648';
+(node as any).hash = '28b6758809d33bd8ca1ebefa73b51d49';
 export default node;

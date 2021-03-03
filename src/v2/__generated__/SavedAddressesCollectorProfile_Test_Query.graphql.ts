@@ -3,21 +3,21 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type SavedAddresses_Test_QueryVariables = {};
-export type SavedAddresses_Test_QueryResponse = {
+export type SavedAddressesCollectorProfile_Test_QueryVariables = {};
+export type SavedAddressesCollectorProfile_Test_QueryResponse = {
     readonly me: {
         readonly " $fragmentRefs": FragmentRefs<"SavedAddresses_me">;
     } | null;
 };
-export type SavedAddresses_Test_Query = {
-    readonly response: SavedAddresses_Test_QueryResponse;
-    readonly variables: SavedAddresses_Test_QueryVariables;
+export type SavedAddressesCollectorProfile_Test_Query = {
+    readonly response: SavedAddressesCollectorProfile_Test_QueryResponse;
+    readonly variables: SavedAddressesCollectorProfile_Test_QueryVariables;
 };
 
 
 
 /*
-query SavedAddresses_Test_Query {
+query SavedAddressesCollectorProfile_Test_Query {
   me {
     ...SavedAddresses_me
     id
@@ -75,7 +75,7 @@ return {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "SavedAddresses_Test_Query",
+    "name": "SavedAddressesCollectorProfile_Test_Query",
     "selections": [
       {
         "alias": null,
@@ -100,7 +100,7 @@ return {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "SavedAddresses_Test_Query",
+    "name": "SavedAddressesCollectorProfile_Test_Query",
     "selections": [
       {
         "alias": null,
@@ -292,11 +292,11 @@ return {
   "params": {
     "id": null,
     "metadata": {},
-    "name": "SavedAddresses_Test_Query",
+    "name": "SavedAddressesCollectorProfile_Test_Query",
     "operationKind": "query",
-    "text": "query SavedAddresses_Test_Query {\n  me {\n    ...SavedAddresses_me\n    id\n  }\n}\n\nfragment SavedAddresses_me on Me {\n  id\n  addressConnection(first: 30) {\n    edges {\n      node {\n        id\n        internalID\n        addressLine1\n        addressLine2\n        addressLine3\n        city\n        country\n        isDefault\n        name\n        phoneNumber\n        postalCode\n        region\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n"
+    "text": "query SavedAddressesCollectorProfile_Test_Query {\n  me {\n    ...SavedAddresses_me\n    id\n  }\n}\n\nfragment SavedAddresses_me on Me {\n  id\n  addressConnection(first: 30) {\n    edges {\n      node {\n        id\n        internalID\n        addressLine1\n        addressLine2\n        addressLine3\n        city\n        country\n        isDefault\n        name\n        phoneNumber\n        postalCode\n        region\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'e350425adaf0c49e68945a506d18c23d';
+(node as any).hash = '19363533c576fb9fb5243181156195e3';
 export default node;

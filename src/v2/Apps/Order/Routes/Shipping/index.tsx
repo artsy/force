@@ -199,10 +199,21 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
         this.isCreateNewAddress() &&
         this.state.saveAddress
       ) {
-        await createUserAddress(this.props.commitMutation, {
-          ...address,
-          phoneNumber: phoneNumber,
-        })
+        await createUserAddress(
+          this.props.commitMutation,
+          {
+            ...address,
+            phoneNumber: phoneNumber,
+          }, // address
+          () => {}, // onSuccess
+          () => {
+            message => {
+              logger.error(message)
+            }
+          }, // onError
+          this.props.me, // me
+          () => this.setState({ editAddressIndex: -1 }) // closeModal
+        )
       }
 
       if (orderOrError.error) {
@@ -317,6 +328,10 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
       <Box data-test="orderShipping">
         {showModal && (
           <AddressModal
+            modalDetails={{
+              addressModalTitle: "Edit address",
+              addressModalAction: "editUserAddress",
+            }}
             show={showModal}
             closeModal={() => this.setState({ editAddressIndex: -1 })}
             address={addressList[this.state.editAddressIndex]?.node}
@@ -388,6 +403,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
                     me={this.props.me}
                     onSelect={value => onSelectSavedAddress(value)}
                     handleClickEdit={this.handleClickEdit}
+                    inCollectorProfile={false}
                   />
                 )}
                 <Collapse

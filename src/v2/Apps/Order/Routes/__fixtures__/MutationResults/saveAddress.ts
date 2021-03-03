@@ -6,6 +6,16 @@ export const saveAddressSuccess: CreateUserAddressMutationResponse = {
     userAddressOrErrors: {
       internalID: "address-id",
       id: "graphql-id",
+      isDefault: false,
+      name: "Bob Ross",
+      addressLine1: "foo",
+      addressLine2: "bar",
+      addressLine3: "whatever",
+      phoneNumber: "111-111-1111",
+      city: "Brooklyn",
+      region: "NY",
+      country: "US",
+      postalCode: "11111",
     },
   },
 }

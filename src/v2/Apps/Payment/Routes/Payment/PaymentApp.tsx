@@ -7,6 +7,7 @@ import { data as sd } from "sharify"
 import { Box } from "@artsy/palette"
 import { PaymentSectionFragmentContainer as PaymentSection } from "./../../Components/PaymentSection"
 import { UserSettingsTabs } from "v2/Components/UserSettings/UserSettingsTabs"
+import { UserSettingsAddressesFragmentContainer as UserSettingsAddresses } from "v2/Components/UserSettings/UserSettingsAddresses"
 
 export interface PaymentAppProps {
   me: PaymentApp_me
@@ -23,9 +24,9 @@ const PaymentApp: React.FC<PaymentAppProps> = props => {
       <Title>My payments | Artsy</Title>
       <Box mx={[1, 4]}>
         <Box mb={2} mt={1}>
-          <UserSettingsTabs route={sd.CURRENT_PATH} username={me.name} />
+          <UserSettingsTabs route={sd.CURRENT_PATH} username={me?.name} />
         </Box>
-
+        <UserSettingsAddresses me={me} />
         <PaymentSection me={me} />
       </Box>
     </AppContainer>
@@ -37,6 +38,7 @@ export const PaymentAppFragmentContainer = createFragmentContainer(PaymentApp, {
     fragment PaymentApp_me on Me {
       name
       ...PaymentSection_me
+      ...UserSettingsAddresses_me
     }
   `,
 })

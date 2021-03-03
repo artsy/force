@@ -81,10 +81,19 @@ Array [
       ... on UserAddress {
         id
         internalID
+        addressLine1
+        addressLine2
+        addressLine3
+        city
+        country
+        isDefault
+        name
+        phoneNumber
+        postalCode
+        region
       }
       ... on Errors {
         errors {
-          code
           message
         }
       }

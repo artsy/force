@@ -14,13 +14,13 @@ export const updateUserAddress = async (
   onSuccess: (address) => void,
   onError: (message: string) => void
 ) => {
-  const useArtrubutes = convertShippingAddressToMutationInput(values)
+  const useAttributes = convertShippingAddressToMutationInput(values)
 
   const result = await commitMutation<UpdateUserAddressMutation>({
     variables: {
       input: {
         userAddressID: userAddressID,
-        attributes: useArtrubutes,
+        attributes: useAttributes,
       },
     },
     mutation: graphql`
