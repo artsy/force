@@ -15,6 +15,7 @@ export type ArtistSeriesMeta_TestQueryRawResponse = {
     readonly artistSeries: ({
         readonly title: string;
         readonly description: string | null;
+        readonly slug: string;
         readonly artists: ReadonlyArray<({
             readonly name: string | null;
             readonly id: string | null;
@@ -41,6 +42,7 @@ query ArtistSeriesMeta_TestQuery(
 fragment ArtistSeriesMeta_artistSeries on ArtistSeries {
   title
   description
+  slug
   artists(size: 1) {
     name
     id
@@ -120,6 +122,13 @@ return {
           },
           {
             "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "slug",
+            "storageKey": null
+          },
+          {
+            "alias": null,
             "args": [
               {
                 "kind": "Literal",
@@ -159,7 +168,7 @@ return {
     "metadata": {},
     "name": "ArtistSeriesMeta_TestQuery",
     "operationKind": "query",
-    "text": "query ArtistSeriesMeta_TestQuery(\n  $slug: ID!\n) {\n  artistSeries(id: $slug) {\n    ...ArtistSeriesMeta_artistSeries\n  }\n}\n\nfragment ArtistSeriesMeta_artistSeries on ArtistSeries {\n  title\n  description\n  artists(size: 1) {\n    name\n    id\n  }\n}\n"
+    "text": "query ArtistSeriesMeta_TestQuery(\n  $slug: ID!\n) {\n  artistSeries(id: $slug) {\n    ...ArtistSeriesMeta_artistSeries\n  }\n}\n\nfragment ArtistSeriesMeta_artistSeries on ArtistSeries {\n  title\n  description\n  slug\n  artists(size: 1) {\n    name\n    id\n  }\n}\n"
   }
 };
 })();

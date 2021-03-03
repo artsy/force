@@ -68,6 +68,12 @@ describe("ArtistSeriesMeta", () => {
       expectedDescription
     )
   })
+
+  it("creates cannonical tags for the artist series", async () => {
+    const wrapper = await getWrapper(ArtistSeriesMetaFixture)
+    const expectedHref = "/artist-series/pumpkins"
+    expect(wrapper.debug()).toContain(expectedHref)
+  })
 })
 
 const ArtistSeriesMetaFixture: ArtistSeriesMeta_TestQueryRawResponse = {
@@ -75,6 +81,7 @@ const ArtistSeriesMetaFixture: ArtistSeriesMeta_TestQueryRawResponse = {
     title: "Pumpkins",
     description:
       "Yayoi Kusama's instantly recognizable pumpkins have become fixtures of contemporary art and popular culture—and have helped make her one of the world’s most expensive living female artists. Kusama began drawing pumpkins as a child in pre-war Japan, where her family owned a plant nursery that farmed kabocha squash. Her obsession only grew with time. Kusama’s signature dotted pumpkins have since appeared as works on paper, handheld figurines, towering sculptures, and in the artist’s immersive infinity room installations. To Kusama, the pumpkins are warm and humorous motifs with figures that, at times, feel human. “I was enchanted by their charming and winsome form,” Kusama once said. “What appealed to me most was the pumpkin's generous unpretentiousness.”",
+    slug: "pumpkins",
     artists: [
       {
         name: "Yayoi Kusama",
@@ -89,6 +96,7 @@ const ArtistSeriesMetaFixtureNoArtist: ArtistSeriesMeta_TestQueryRawResponse = {
     title: "Squashes",
     description:
       "Squashes are a lot like pumpkins except that they don't belong to any particular holiday. The most independent gourd, they always remain in style throughout the year.",
+    slug: "squashes",
     artists: [],
   },
 }
