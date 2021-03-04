@@ -643,8 +643,10 @@ describe("Shipping", () => {
         const countrySelect = page.find("AddressModal").find("select")
         countrySelect.instance().value = `US`
         countrySelect.simulate("change")
-        const submit = page.find("AddressModal").find("button").at(0)
-        submit.simulate("click")
+
+        const form = page.find("form").first()
+        form.props().onSubmit()
+
         await page.update()
         expect(mutations.mockFetch.mock.calls[0][1]).toMatchInlineSnapshot(`
           Object {

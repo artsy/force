@@ -36,7 +36,7 @@ describe("SavedAddress button interactions", () => {
   it("renders modal when button is clicked", () => {
     const button = wrapper.find(Button)
     const modal = wrapper.find(AddressModal)
-    expect(modal).toHaveLength(0)
+    expect(modal.props().show).toBe(false)
     button.props().onClick({} as any)
 
     setTimeout(() => {
@@ -47,7 +47,7 @@ describe("SavedAddress button interactions", () => {
   it("opens Create Address modal when as expected", () => {
     const button = wrapper.find(Button)
     const modal = wrapper.find(AddressModal)
-    expect(modal).toHaveLength(0)
+    expect(modal.props().show).toBe(false)
     button.props().onClick({} as any)
 
     setTimeout(() => {
