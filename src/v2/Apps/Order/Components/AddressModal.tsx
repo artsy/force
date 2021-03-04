@@ -59,7 +59,7 @@ export const AddressModal: React.FC<Props> = ({
   return (
     <Modal title={title} show={show} onClose={closeModal}>
       <Formik
-        initialValues={createAddressModalAction ? {} : address}
+        initialValues={createAddressModalAction ? { country: "US" } : address}
         validate={validator}
         onSubmit={values => {
           createAddressModalAction
