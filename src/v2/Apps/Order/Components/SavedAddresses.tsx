@@ -44,9 +44,6 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
 
   const { onSelect, handleClickEdit, me, inCollectorProfile, relay } = props
   const addressList = me?.addressConnection?.edges ?? []
-  const handleModal = () => {
-    setShowAddressModal(!showAddressModal)
-  }
   const collectorProfileAddressItems = addressList.map((address, index) => {
     if (!address.node) {
       return null
@@ -96,39 +93,37 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
         mt={addressList.length > 0 ? 3 : 0}
         variant="primaryBlack"
         size="large"
-        onClick={() => handleModal()}
+        onClick={() => setShowAddressModal(true)}
       >
         Add new address
       </Button>
-      {showAddressModal && (
-        <AddressModal
-          show={showAddressModal}
-          modalDetails={{
-            addressModalTitle: "Add new address",
-            addressModalAction: "createUserAddress",
-          }}
-          closeModal={() => handleModal()}
-          address={null}
-          onSuccess={() => {
-            relay.refetch(
-              {
-                first: PAGE_SIZE,
-              },
-              null,
-              error => {
-                if (error) {
-                  logger.error(error)
-                }
+      <AddressModal
+        show={showAddressModal}
+        modalDetails={{
+          addressModalTitle: "Add new address",
+          addressModalAction: "createUserAddress",
+        }}
+        closeModal={() => setShowAddressModal(false)}
+        address={null}
+        onSuccess={() => {
+          relay.refetch(
+            {
+              first: PAGE_SIZE,
+            },
+            null,
+            error => {
+              if (error) {
+                logger.error(error)
               }
-            )
-          }}
-          commitMutation={props.commitMutation}
-          onError={message => {
-            logger.error(message)
-          }}
-          me={me}
-        />
-      )}
+            }
+          )
+        }}
+        commitMutation={props.commitMutation}
+        onError={message => {
+          logger.error(message)
+        }}
+        me={me}
+      />
     </>
   )
 

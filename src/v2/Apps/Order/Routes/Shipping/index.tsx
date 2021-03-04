@@ -91,6 +91,7 @@ export interface ShippingState {
   selectedSavedAddress: string
   editAddressIndex: number
   saveAddress: boolean
+  showModal: boolean
 }
 
 const logger = createLogger("Order/Routes/Shipping/index.tsx")
@@ -110,6 +111,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
     selectedSavedAddress: defaultShippingAddressIndex(this.props.me),
     editAddressIndex: -1,
     saveAddress: true,
+    showModal: false,
   }
 
   get touchedAddress() {
@@ -212,7 +214,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
             }
           }, // onError
           this.props.me, // me
-          () => this.setState({ editAddressIndex: -1 }) // closeModal
+          () => this.setState({ showModal: false }) // closeModal
         )
       }
 
@@ -255,7 +257,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
   }
 
   handleClickEdit = (value: number) => {
-    this.setState({ editAddressIndex: value })
+    this.setState({ editAddressIndex: value, showModal: true })
   }
 
   onAddressChange: AddressChangeHandler = (address, key) => {
@@ -304,6 +306,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
       phoneNumber,
       phoneNumberError,
       phoneNumberTouched,
+      showModal,
     } = this.state
     const artwork = get(
       this.props,
@@ -323,30 +326,28 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
     const onSelectSavedAddress = (value: string) => {
       this.setState({ selectedSavedAddress: value })
     }
-    const showModal = this.state.editAddressIndex > -1
+
     return (
       <Box data-test="orderShipping">
-        {showModal && (
-          <AddressModal
-            modalDetails={{
-              addressModalTitle: "Edit address",
-              addressModalAction: "editUserAddress",
-            }}
-            show={showModal}
-            closeModal={() => this.setState({ editAddressIndex: -1 })}
-            address={addressList[this.state.editAddressIndex]?.node}
-            commitMutation={this.props.commitMutation}
-            onSuccess={() => {
-              // this.setState({ address: updatedAddress })
-            }}
-            onError={message => {
-              this.props.dialog.showErrorDialog({
-                title: "Address cannot be updated",
-                message: message,
-              })
-            }}
-          />
-        )}
+        <AddressModal
+          modalDetails={{
+            addressModalTitle: "Edit address",
+            addressModalAction: "editUserAddress",
+          }}
+          show={showModal}
+          closeModal={() => this.setState({ showModal: false })}
+          address={addressList[this.state.editAddressIndex]?.node}
+          commitMutation={this.props.commitMutation}
+          onSuccess={() => {
+            // this.setState({ address: updatedAddress })
+          }}
+          onError={message => {
+            this.props.dialog.showErrorDialog({
+              title: "Address cannot be updated",
+              message: message,
+            })
+          }}
+        />
         <HorizontalPadding px={[0, 4]}>
           <Row>
             <Col>
