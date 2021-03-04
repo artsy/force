@@ -7,6 +7,7 @@ export type ShowContextualLink_show = {
     readonly isFairBooth: boolean | null;
     readonly fair: {
         readonly href: string | null;
+        readonly isActive: boolean | null;
         readonly name: string | null;
     } | null;
     readonly partner: {
@@ -61,6 +62,13 @@ return {
       "plural": false,
       "selections": [
         (v0/*: any*/),
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "isActive",
+          "storageKey": null
+        },
         (v1/*: any*/)
       ],
       "storageKey": null
@@ -95,5 +103,5 @@ return {
   "type": "Show"
 };
 })();
-(node as any).hash = '4dd16abb702d65c9512ea98d3a81e13b';
+(node as any).hash = '650b5a3e83cb5f0cd65c87b33c8db18e';
 export default node;

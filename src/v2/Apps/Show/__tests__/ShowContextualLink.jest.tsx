@@ -1,13 +1,19 @@
+import React from "react"
 import { ShowContextualLinkFragmentContainer } from "../Components/ShowContextualLink"
 import { Link } from "@artsy/palette"
 import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
 import { ShowContextualLink_Test_Query } from "v2/__generated__/ShowContextualLink_Test_Query.graphql"
+import { MockBoot } from "v2/DevTools"
 
 jest.unmock("react-relay")
 
 const { getWrapper } = setupTestWrapper<ShowContextualLink_Test_Query>({
-  Component: ShowContextualLinkFragmentContainer,
+  Component: props => (
+    <MockBoot breakpoint="lg">
+      <ShowContextualLinkFragmentContainer {...props} />
+    </MockBoot>
+  ),
   query: graphql`
     query ShowContextualLink_Test_Query {
       show(id: "catty-show") {
@@ -17,7 +23,7 @@ const { getWrapper } = setupTestWrapper<ShowContextualLink_Test_Query>({
   `,
 })
 
-describe("ShowInstallShots", () => {
+describe("ShowContextualLink", () => {
   describe("is a fair booth", () => {
     it("renders the fair link", () => {
       const wrapper = getWrapper({
@@ -26,6 +32,15 @@ describe("ShowInstallShots", () => {
       })
 
       expect(wrapper.text()).toContain("Part of Catty Fair")
+    })
+
+    it("hides link if show.isActive = false", () => {
+      const wrapper = getWrapper({
+        Show: () => ({ isFairBooth: true }),
+        Fair: () => ({ name: "Catty Fair", isActive: false }),
+      })
+
+      expect(wrapper.text()).not.toContain("Part of Catty Fair")
     })
   })
 

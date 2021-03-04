@@ -1,10 +1,9 @@
 import React from "react"
-import styled from "styled-components"
 import { createFragmentContainer, graphql } from "react-relay"
 import { AppContainer } from "v2/Apps/Components/AppContainer"
 import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
 import { Footer } from "v2/Components/Footer"
-import { Box, Column, GridColumns, Separator } from "@artsy/palette"
+import { Column, GridColumns, Separator } from "@artsy/palette"
 import { ShowMetaFragmentContainer as ShowMeta } from "v2/Apps/Show/Components/ShowMeta"
 import { ShowHeaderFragmentContainer as ShowHeader } from "./Components/ShowHeader"
 import { ShowAboutFragmentContainer as ShowAbout } from "./Components/ShowAbout"
@@ -24,16 +23,6 @@ import { ShowArtworksEmptyStateFragmentContainer as ShowArtworksEmptyState } fro
 interface ShowAppProps {
   show: ShowApp_show
 }
-
-const FullScreenSeparator = styled(Separator)`
-  left: 50%;
-  margin-left: -50vw;
-  margin-right: -50vw;
-  max-width: 100vw;
-  position: relative;
-  right: 50%;
-  width: 100vw;
-`
 
 export const ShowApp: React.FC<ShowAppProps> = ({ show }) => {
   const { contextPageOwnerSlug, contextPageOwnerType } = useAnalyticsContext()
@@ -56,11 +45,7 @@ export const ShowApp: React.FC<ShowAppProps> = ({ show }) => {
           }}
         >
           <HorizontalPadding>
-            <Box my={2}>
-              <ShowContextualLink show={show} />
-              <FullScreenSeparator as="hr" my={2} />
-            </Box>
-
+            <ShowContextualLink show={show} />
             <ShowInstallShots show={show} my={2} />
 
             <GridColumns>
