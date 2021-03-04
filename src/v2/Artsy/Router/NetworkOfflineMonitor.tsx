@@ -29,11 +29,7 @@ export const NetworkOfflineMonitor: React.FC = () => {
       width="100%"
       style={{ opacity: 0.9 }}
     >
-      <Banner
-        backgroundColor="black10"
-        textColor="black100"
-        message="Network offline"
-      />
+      <Banner variant="defaultLight">Network offline</Banner>
     </Box>
   )
 }
