@@ -45,7 +45,7 @@ export const UserEmailPreferences: React.FC<UserEmailPreferencesQueryResponse> =
       </Serif>
       {updated && (
         <Box mt="2">
-          <Banner backgroundColor="green10" dismissable textColor="black100">
+          <Banner variant="success" dismissable>
             Preferences updated
           </Banner>
         </Box>

@@ -12,10 +12,9 @@ export const StagingBanner = () => {
 
   return (
     <Container onClick={() => toggleVisible(false)}>
-      <Banner
-        backgroundColor="purple100"
-        message={sd.APP_URL.replace("https://", "").replace("http://", "")}
-      />
+      <Banner variant="brand">
+        {sd.APP_URL.replace("https://", "").replace("http://", "")}
+      </Banner>
     </Container>
   )
 }

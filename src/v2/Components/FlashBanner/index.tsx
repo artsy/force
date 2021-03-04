@@ -1,7 +1,7 @@
 import React from "react"
 import qs from "qs"
 import { graphql } from "react-relay"
-import { Banner, Flex, Sans } from "@artsy/palette"
+import { Banner } from "@artsy/palette"
 import { useSystemContext } from "v2/Artsy"
 import { EmailConfirmationCTA } from "v2/Components/FlashBanner/EmailConfirmationCTA"
 import { AnalyticsSchema as Schema, track } from "v2/Artsy/Analytics"
@@ -67,12 +67,8 @@ export const FlashBanner: React.FC<FlashBannerProps> = props => {
   }
 
   return (
-    <Banner dismissable backgroundColor="black100">
-      <Sans color="white100" size="3" lineHeight={1} weight="medium">
-        <Flex justifyContent="center" alignItems="center">
-          {content}
-        </Flex>
-      </Sans>
+    <Banner dismissable variant="defaultDark">
+      {content}
     </Banner>
   )
 }
