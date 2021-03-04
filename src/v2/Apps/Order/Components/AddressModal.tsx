@@ -27,7 +27,7 @@ interface Props {
   me?: SavedAddresses_me
 }
 
-type AddressModalAction =
+export type AddressModalAction =
   | "editUserAddress"
   | "deleteUserAddress"
   | "updateUserAddress"
@@ -44,11 +44,11 @@ export const AddressModal: React.FC<Props> = ({
   me,
 }) => {
   const title = modalDetails?.addressModalTitle
-  const createAddressModalAction =
-    modalDetails.addressModalAction === "createUserAddress"
+  const createMutation = modalDetails.addressModalAction === "createUserAddress"
+
   const validator = (values: any) => {
     const validationResult = validateAddress(values)
-    const phoneValidation = validatePhoneNumber(values.phoneNumber)
+    const phoneValidation = validatePhoneNumber(values?.phoneNumber)
     const errors = Object.assign({}, validationResult.errors, {
       phoneNumber: phoneValidation.error,
     })
@@ -59,10 +59,10 @@ export const AddressModal: React.FC<Props> = ({
   return (
     <Modal title={title} show={show} onClose={closeModal}>
       <Formik
-        initialValues={createAddressModalAction ? { country: "US" } : address}
+        initialValues={createMutation ? { country: "US" } : address}
         validate={validator}
         onSubmit={values => {
-          createAddressModalAction
+          createMutation
             ? createUserAddress(
                 commitMutation,
                 values,
@@ -90,8 +90,8 @@ export const AddressModal: React.FC<Props> = ({
               title="Full Name"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              error={formik.touched.name && formik.errors.name}
-              value={formik.values.name}
+              error={formik.touched?.name && formik.errors?.name}
+              value={formik.values?.name}
             />
             <Spacer mb={1} />
             <Input
@@ -99,8 +99,8 @@ export const AddressModal: React.FC<Props> = ({
               title="Postal Code"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              error={formik.touched.postalCode && formik.errors.postalCode}
-              value={formik.values.postalCode}
+              error={formik.touched?.postalCode && formik.errors?.postalCode}
+              value={formik.values?.postalCode}
             />
             <Spacer mb={1} />
             <Input
@@ -108,8 +108,10 @@ export const AddressModal: React.FC<Props> = ({
               name="addressLine1"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              error={formik.touched.addressLine1 && formik.errors.addressLine1}
-              value={formik.values.addressLine1}
+              error={
+                formik.touched?.addressLine1 && formik.errors?.addressLine1
+              }
+              value={formik.values?.addressLine1}
             />
             <Spacer mb={1} />
             <Input
@@ -117,8 +119,10 @@ export const AddressModal: React.FC<Props> = ({
               name="addressLine2"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              error={formik.touched.addressLine2 && formik.errors.addressLine2}
-              value={formik.values.addressLine2}
+              error={
+                formik.touched?.addressLine2 && formik.errors?.addressLine2
+              }
+              value={formik.values?.addressLine2}
             />
             <Spacer mb={1} />
             <Input
@@ -126,8 +130,8 @@ export const AddressModal: React.FC<Props> = ({
               name="city"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              error={formik.touched.city && formik.errors.city}
-              value={formik.values.city}
+              error={formik.touched?.city && formik.errors?.city}
+              value={formik.values?.city}
             />
             <Spacer mb={1} />
             <Input
@@ -135,17 +139,17 @@ export const AddressModal: React.FC<Props> = ({
               name="region"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              error={formik.touched.region && formik.errors.region}
-              value={formik.values.region}
+              error={formik.touched?.region && formik.errors?.region}
+              value={formik.values?.region}
             />
             <Spacer mb={1} />
             <Text>Country</Text>
             <CountrySelect
-              selected={formik.values.country}
+              selected={formik.values?.country}
               onSelect={countryCode => {
                 formik.setFieldValue("country", countryCode)
               }}
-              error={formik.touched.country && formik.errors.country}
+              error={formik.touched?.country && formik.errors?.country}
             />
             <Spacer mb={1} />
             <Input
@@ -154,8 +158,8 @@ export const AddressModal: React.FC<Props> = ({
               type="tel"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              error={formik.touched.phoneNumber && formik.errors.phoneNumber}
-              value={formik.values.phoneNumber}
+              error={formik.touched?.phoneNumber && formik.errors?.phoneNumber}
+              value={formik.values?.phoneNumber}
             />
             <Button
               type="submit"
