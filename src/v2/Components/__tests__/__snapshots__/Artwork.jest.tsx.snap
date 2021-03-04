@@ -6,27 +6,21 @@ exports[`Artwork renders correctly 1`] = `
   margin-top: 4px;
 }
 
-.c6 {
-  font-size: size4;
-  line-height: body;
-  font-weight: bold;
-  font-family: sans;
-}
-
-.c7 {
-  color: black60;
-  font-size: size4;
-  line-height: body;
-  font-weight: normal;
-  color: black60;
-  font-family: sans;
-}
-
 .c8 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+}
+
+.c6 {
+  font-family: sans;
+}
+
+.c7 {
+  color: black60;
+  color: black60;
+  font-family: sans;
 }
 
 .c3 {
@@ -91,25 +85,6 @@ exports[`Artwork renders correctly 1`] = `
   top: 0;
   bottom: 0;
   right: 0;
-}
-
-@media (min-width:) {
-  .c6 {
-    font-size: size3;
-    line-height: body;
-    font-weight: bold;
-    font-family: sans;
-  }
-}
-
-@media (min-width:) {
-  .c7 {
-    font-size: size3;
-    line-height: body;
-    font-weight: normal;
-    color: black60;
-    font-family: sans;
-  }
 }
 
 @media (min-width:769px) {
