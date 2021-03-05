@@ -2,8 +2,7 @@ import Cookies from "cookies-js"
 import { ModalOptions, ModalType } from "v2/Components/Authentication/Types"
 import { data as sd } from "sharify"
 import * as qs from "query-string"
-import { Response } from "express"
-import { captureException } from "@sentry/browser"
+import type { Response } from "express"
 import {
   AuthService,
   createdAccount,
@@ -12,6 +11,7 @@ import {
 } from "@artsy/cohesion"
 import { omit, pick } from "lodash"
 import { mediator } from "lib/mediator"
+import { reportError } from "v2/Utils/errors"
 
 export const handleSubmit = async (
   type: ModalType,
@@ -154,7 +154,7 @@ export async function apiAuthWithRedirectUrl(
       return appRedirectURL
     }
   } catch (error) {
-    captureException(error)
+    reportError(error)
     return appRedirectURL
   }
 }
@@ -212,7 +212,7 @@ const loginUser = async (
         options.error(data)
       }
     })
-    .catch(e => captureException(e))
+    .catch(e => reportError(e))
 }
 
 const signupUser = async (
@@ -254,7 +254,7 @@ const signupUser = async (
         options.error(data)
       }
     })
-    .catch(e => captureException(e))
+    .catch(e => reportError(e))
 }
 
 const forgotUserPassword = async (
@@ -294,5 +294,5 @@ const forgotUserPassword = async (
         options.error(data)
       }
     })
-    .catch(e => captureException(e))
+    .catch(e => reportError(e))
 }

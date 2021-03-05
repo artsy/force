@@ -1,5 +1,5 @@
-import * as Sentry from "@sentry/browser"
-import { ErrorWithMetadata, reportError } from "v2/Utils/errors"
+import { captureException } from "@sentry/browser"
+import { ErrorWithMetadata, reportErrorWithScope } from "v2/Utils/errors"
 
 jest.mock("@sentry/browser")
 
@@ -16,18 +16,18 @@ describe("errors", () => {
     })
 
     it("does not call setExtra on scope if the error has no metadata", () => {
-      reportError(err)(scope)
+      reportErrorWithScope(err)(scope)
       expect(scope.setExtra).not.toBeCalled()
     })
 
     it("calls setExtra on scope for errors with metadata", () => {
-      reportError(errWithMetadata)(scope)
+      reportErrorWithScope(errWithMetadata)(scope)
       expect(scope.setExtra).toBeCalledWith("foo", "bar")
     })
 
     it("sends the error to Sentry", () => {
-      reportError(errWithMetadata)(scope)
-      expect(Sentry.captureException).toBeCalledWith(err)
+      reportErrorWithScope(errWithMetadata)(scope)
+      expect(captureException).toBeCalledWith(err)
     })
   })
 })

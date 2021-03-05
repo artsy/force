@@ -3,7 +3,7 @@ import $ from "jquery"
 import Backbone from "backbone"
 import _ from "underscore"
 import Cookies from "cookies-js"
-import * as Sentry from "@sentry/browser"
+import { configureScope } from "@sentry/browser"
 import { data as sd } from "sharify"
 import * as globalReactModules from "./global_react_modules"
 import { hydrate as hydrateStitch } from "@artsy/stitch/dist/internal/hydrate"
@@ -112,7 +112,7 @@ function setupErrorReporting() {
     const user = sd && sd.CURRENT_USER
 
     if (sd.CURRENT_USER) {
-      Sentry.configureScope(scope => {
+      configureScope(scope => {
         scope.setUser(_.pick(user, "id", "email"))
       })
     }
