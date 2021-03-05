@@ -1,5 +1,4 @@
 _ = require 'underscore'
-Backbone = require 'backbone'
 MerryGoRoundNavView = require './view.coffee'
 MerryGoRoundFlickity = require './wrapper.coffee'
 

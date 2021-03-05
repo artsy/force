@@ -1,4 +1,3 @@
-_ = require 'underscore'
 Backbone = require 'backbone'
 { FOLLOWING, API_URL } = sd = require('sharify').data
 qs = require 'querystring'

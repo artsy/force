@@ -1,6 +1,5 @@
 express = require 'express'
 routes = require './routes'
-sd = require('sharify').data
 
 app = module.exports = express()
 app.set 'views', __dirname + '/templates'

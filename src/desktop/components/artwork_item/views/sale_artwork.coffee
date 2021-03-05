@@ -1,5 +1,3 @@
-_ = require 'underscore'
-sd = require('sharify').data
 Backbone = require 'backbone'
 ContactPartnerView = require '../../contact/contact_partner.coffee'
 { openAuthModal } = require '../../../lib/openAuthModal'

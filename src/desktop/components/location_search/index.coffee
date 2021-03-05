@@ -1,4 +1,3 @@
-_ = require 'underscore'
 Backbone = require 'backbone'
 geo = require '../geo/index.coffee'
 { isTouchDevice } = require '../util/device.coffee'

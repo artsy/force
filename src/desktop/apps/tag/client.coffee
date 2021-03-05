@@ -1,5 +1,3 @@
-_ = require 'underscore'
-Backbone = require 'backbone'
 Tag = require '../../models/tag.coffee'
 scrollFrame = require 'scroll-frame'
 ShareView = require '../../components/share/view.coffee'

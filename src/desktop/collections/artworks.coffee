@@ -2,7 +2,6 @@ _ = require 'underscore'
 _s = require 'underscore.string'
 Artwork = require '../models/artwork.coffee'
 Backbone = require 'backbone'
-SaleArtwork = require '../models/sale_artwork.coffee'
 { API_URL } = require('sharify').data
 { Fetch } = require '@artsy/backbone-mixins'
 

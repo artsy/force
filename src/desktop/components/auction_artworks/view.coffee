@@ -1,4 +1,3 @@
-_ = require 'underscore'
 Backbone = require 'backbone'
 State = require './models/state.coffee'
 ContactPartnerView = require '../contact/contact_partner.coffee'

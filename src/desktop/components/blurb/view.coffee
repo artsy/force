@@ -1,5 +1,4 @@
 Backbone = require 'backbone'
-_ = require 'underscore'
 
 module.exports = class BlurbView extends Backbone.View
 

@@ -1,4 +1,3 @@
-_ = require 'underscore'
 React = require 'react'
 ReactDOM = require 'react-dom'
 { NewsPanel } = require '@artsy/reaction/dist/Components/Publishing/News/NewsPanel'

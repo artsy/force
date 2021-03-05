@@ -1,5 +1,4 @@
 Backbone = require 'backbone'
-{ API_URL } = require('sharify').data
 
 module.exports =
   related: ->

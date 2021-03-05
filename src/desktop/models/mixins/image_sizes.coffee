@@ -1,5 +1,4 @@
 _ = require 'underscore'
-sd = require('sharify').data
 resizer = require '../../components/resizer/index.coffee'
 
 # requires the image mixin

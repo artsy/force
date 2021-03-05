@@ -1,4 +1,3 @@
-_ = require 'underscore'
 Backbone = require 'backbone'
 AboutView = require './view.coffee'
 JumpView = require '../../../components/jump/view.coffee'

@@ -1,8 +1,4 @@
-_ = require 'underscore'
 Backbone = require 'backbone'
-sd = require('sharify').data
-Profile = require '../../../models/profile.coffee'
-Fair = require '../../../models/fair.coffee'
 { openAuthModal } = require '../../../lib/openAuthModal'
 { ModalType } = require "../../../../v2/Components/Authentication/Types"
 CurrentUser = require '../../../models/current_user'

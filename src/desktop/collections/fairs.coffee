@@ -1,6 +1,5 @@
 _ = require 'underscore'
 sd = require('sharify').data
-moment = require 'moment'
 Backbone = require 'backbone'
 Fair = require '../models/fair.coffee'
 { API_URL } = require('sharify').data

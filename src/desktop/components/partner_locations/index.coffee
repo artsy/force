@@ -1,6 +1,5 @@
 _ = require 'underscore'
 _s = require 'underscore.string'
-Partner = require '../../models/partner.coffee'
 PartnerPhoneNumberView = require '../partner_phone_number/view.coffee'
 
 # Sets up the partner phone numbers while simultaneously rendering

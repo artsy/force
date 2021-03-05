@@ -3,7 +3,6 @@ Backbone = require 'backbone'
 PartnerShow = require '../../../../models/partner_show.coffee'
 PartnerShows = require '../../../../collections/partner_shows.coffee'
 PartnerShowEvents = require '../../../../collections/partner_show_events.coffee'
-initCarousel = require '../../../../components/merry_go_round/bottom_nav_mgr.coffee'
 require '../../../../../lib/promiseDone'
 template = -> require('./index.jade') arguments...
 { API_URL } = require('sharify').data

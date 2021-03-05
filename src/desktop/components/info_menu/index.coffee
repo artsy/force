@@ -1,5 +1,4 @@
 _ = require 'underscore'
-Backbone = require 'backbone'
 cache = require '../../lib/cache'
 FairEvents = require '../../collections/fair_events'
 Articles = require '../../collections/articles'

@@ -1,6 +1,4 @@
 _ = require 'underscore'
-Backbone = require 'backbone'
-Partners = require '../../../../collections/partners.coffee'
 { metaphysics } = require '../../../../../lib/metaphysics'
 partnerTypes = require '../../queries/partner_types'
 query = require '../../queries/location_carousel_query.coffee'

@@ -1,5 +1,3 @@
-_ = require 'underscore'
-sd = require('sharify').data
 sanitizeRedirect = require '@artsy/passport/sanitize-redirect'
 
 #

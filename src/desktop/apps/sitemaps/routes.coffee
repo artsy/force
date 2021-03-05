@@ -1,4 +1,3 @@
-_ = require 'underscore'
 { APP_URL, ENABLE_WEB_CRAWLING, SITEMAP_BASE_URL } = require('sharify').data
 { parse } = require 'url'
 httpProxy = require 'http-proxy'

@@ -1,13 +1,9 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-Artworks = require '../../../models/artwork.coffee'
 sd = require('sharify').data
 { mediator } = require '../../../../lib/mediator'
 CurrentUser = require '../../../models/current_user'
-FeedItems = require '../collections/feed_items.coffee'
-Profile = require '../../../models/profile.coffee'
 FollowProfiles = require '../../../collections/follow_profiles.coffee'
-FeedItem = require '../models/feed_item.coffee'
 FeedItemView = require('./feed_item.coffee').FeedItemView
 feedItemsTemplate = -> require('../templates/feed_items.jade') arguments...
 feedItemsContainerTemplate = -> require('../templates/feed_items_container.jade') arguments...

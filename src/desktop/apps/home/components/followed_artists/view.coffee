@@ -2,11 +2,8 @@ Backbone = require 'backbone'
 { map, take, defaults } = require 'underscore'
 { API_URL } = require('sharify').data
 Artist = require '../../../../models/artist.coffee'
-Artists = require '../../../../collections/artists.coffee'
-Items = require '../../../../collections/items.coffee'
 initCarousel = require '../../../../components/merry_go_round/horizontal_nav_mgr.coffee'
 ArtworkBrickView = require '../../../../components/artwork_brick/view.coffee'
-FollowedArtistsView = require './followed_artists_view.coffee'
 template = -> require('./templates/index.jade') arguments...
 
 module.exports = class FollowedArtistsRailView extends Backbone.View

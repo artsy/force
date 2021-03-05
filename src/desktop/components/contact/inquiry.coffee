@@ -1,5 +1,4 @@
 _ = require 'underscore'
-Backbone = require 'backbone'
 Cookies = require '../cookies/index.coffee'
 ContactView = require './view.coffee'
 formTemplate = -> require('./templates/inquiry_form.jade') arguments...

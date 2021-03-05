@@ -1,7 +1,6 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 Profile = require '../../../../models/profile.coffee'
-PartnerCellView = require '../partner_cell/view.coffee'
 FollowButtonView = require '../../../../components/follow_button/view.coffee'
 ViewHelpers = require '../partner_cell/view_helpers.coffee'
 template = -> require('./template.jade') arguments...

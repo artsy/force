@@ -1,6 +1,5 @@
 _ = require 'underscore'
 qs = require 'qs'
-Backbone = require 'backbone'
 Artworks = require '../collections/artworks.coffee'
 { API_URL } = require('sharify').data
 

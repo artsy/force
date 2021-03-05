@@ -1,7 +1,5 @@
 Backbone = require 'backbone'
-_ = require 'underscore'
 sd = require('sharify').data
-moment = require 'moment'
 noUiSlider = require 'nouislider'
 
 module.exports = class VeniceVideoView extends Backbone.View

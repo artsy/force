@@ -1,7 +1,5 @@
 _ = require 'underscore'
-Backbone = require 'backbone'
 sd = require('sharify').data
-Artists = require '../../collections/artists.coffee'
 qs = require 'qs'
 
 @worksForYou = (req, res) ->

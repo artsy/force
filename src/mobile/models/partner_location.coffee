@@ -1,9 +1,7 @@
 _ = require 'underscore'
 sd = require('sharify').data
 querystring = require 'querystring'
-Backbone = require 'backbone'
 { Markdown } = require '@artsy/backbone-mixins'
-Relations = require './mixins/relations/location.coffee'
 Location = require './location.coffee'
 
 module.exports = class PartnerLocation extends Location

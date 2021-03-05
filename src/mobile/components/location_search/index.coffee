@@ -1,4 +1,3 @@
-_ = require 'underscore'
 Backbone = require 'backbone'
 template = -> require('./template.jade') arguments...
 

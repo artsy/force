@@ -1,5 +1,3 @@
-Backbone = require 'backbone'
-_ = require 'underscore'
 sd = require('sharify').data
 markdown = require '../../components/util/markdown.coffee'
 httpProxy = require 'http-proxy'

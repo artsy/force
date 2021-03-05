@@ -1,9 +1,7 @@
 sd = require('sharify').data
 _ = require 'underscore'
-_s = require 'underscore.string'
 Backbone = require 'backbone'
 moment = require 'moment'
-DateHelpers = require '../components/util/date_helpers.coffee'
 { CalendarUrls, Markdown } = require '@artsy/backbone-mixins'
 
 module.exports = class FairEvent extends Backbone.Model

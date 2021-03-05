@@ -1,6 +1,5 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-sd = require('sharify').data
 Artist = require '../../../models/artist.coffee'
 template = -> require('../templates/image_set.jade') arguments...
 { Following, FollowButton } = Follow = require '../../follow_button/index'

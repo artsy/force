@@ -1,4 +1,3 @@
-_ = require 'underscore'
 Cookies = require 'cookies-js'
 { USER_AGENT } = require('sharify').data
 excluded = require './excluded.coffee'

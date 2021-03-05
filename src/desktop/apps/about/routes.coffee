@@ -1,5 +1,4 @@
 _ = require 'underscore'
-cache = require '../../lib/cache'
 resizer = require '../../components/resizer'
 JSONPage = require '../../components/json_page'
 

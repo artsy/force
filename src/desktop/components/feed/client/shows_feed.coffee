@@ -1,4 +1,3 @@
-_ = require 'underscore'
 FeedView = require('./feed.coffee')
 PartnerShowButtons = require '../../partner_buttons/show_buttons.coffee'
 feedItemsContainerTemplate = -> require('../templates/feed_items_container.jade') arguments...

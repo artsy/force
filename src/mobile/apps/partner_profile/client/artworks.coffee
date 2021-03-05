@@ -1,7 +1,6 @@
 bootstrap = require '../../../components/layout/bootstrap.coffee'
 sd = require('sharify').data
 Backbone = require 'backbone'
-Partner = require '../../../models/partner.coffee'
 Artworks = require '../../../collections/artworks.coffee'
 artworkColumnsTemplate = -> require('../../../components/artwork_columns/template.jade') arguments...
 

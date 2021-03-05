@@ -1,5 +1,4 @@
 _ = require 'underscore'
-_s = require 'underscore.string'
 Backbone = require 'backbone'
 Form = require '../form/index.coffee'
 User = require '../../models/user.coffee'

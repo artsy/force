@@ -5,7 +5,6 @@ ArticleView = require '../../../components/article/client/view.coffee'
 Articles = require '../../../collections/articles.coffee'
 Article = require '../../../models/article.coffee'
 articleTemplate = -> require('../../../components/article/templates/index.jade') arguments...
-sd = require('sharify').data
 { resize } = require '../../../components/resizer/index.coffee'
 embed = require 'particle'
 moment = require 'moment'

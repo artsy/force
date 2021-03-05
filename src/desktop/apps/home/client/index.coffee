@@ -1,9 +1,6 @@
 Backbone = require 'backbone'
-Cookies = require 'cookies-js'
 CurrentUser = require '../../../models/current_user'
 HeroUnitView = require './hero_unit_view.coffee'
-JumpView = require '../../../components/jump/view.coffee'
-SearchBarView = require '../../../components/search_bar/view.coffee'
 setupHomePageModules = require './setup_home_page_modules.coffee'
 maybeShowBubble = require '../components/new_for_you/index.coffee'
 setupArtistsToFollow = require '../components/artists_to_follow/index.coffee'
@@ -12,9 +9,6 @@ Items = require '../../../collections/items'
 featuredArticlesTemplate = -> require('../templates/featured_articles.jade') arguments...
 featuredShowsTemplate = -> require('../templates/featured_shows.jade') arguments...
 { resize } = require '../../../components/resizer/index.coffee'
-sd = require('sharify').data
-_ = require 'underscore'
-_s = require 'underscore.string'
 
 setupAnalytics = () ->
   window.analytics.trackLink($("#hpm-recommended_works-6 a"), "Clicked recommendation on homepage")

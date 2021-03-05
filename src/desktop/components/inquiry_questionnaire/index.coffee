@@ -1,6 +1,5 @@
 _ = require 'underscore'
 modalize = require '../modalize/index.coffee'
-FlashMessage = require '../flash/index.coffee'
 State = require '../branching_state/index.coffee'
 StateView = require '../branching_state/view.coffee'
 Logger = require '../logger/index.coffee'

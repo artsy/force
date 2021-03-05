@@ -1,4 +1,3 @@
-qs = require 'qs'
 JSONPage = require '../../components/json_page'
 page = new JSONPage name: 'eoy_2016'
 

@@ -1,6 +1,5 @@
 _ = require 'underscore'
 { API_URL } = require('sharify').data
-Backbone = require 'backbone'
 RelatedLinksView = require '../view.coffee'
 Partners = require '../../../collections/partners.coffee'
 CurrentUser = require '../../../models/current_user'

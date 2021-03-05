@@ -1,9 +1,4 @@
-_ = require 'underscore'
-sd = require('sharify').data
 Backbone = require 'backbone'
-CurrentUser = require '../../../models/current_user'
-Partner = require '../../../models/partner.coffee'
-PartnerShows = require '../../../collections/partner_shows.coffee'
 PartnerShowsGrid = require './shows_grid.coffee'
 template = -> require('../templates/shows.jade') arguments...
 

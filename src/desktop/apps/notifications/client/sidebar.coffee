@@ -1,6 +1,4 @@
-_ = require 'underscore'
 Backbone = require 'backbone'
-qs = require 'querystring'
 TypeaheadView = require '../../../components/typeahead/view.coffee'
 filterArtistTemplate = -> require('../templates/filter_artist.jade') arguments...
 grid = require('./react_grid.js').default

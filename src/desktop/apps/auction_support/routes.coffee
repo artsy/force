@@ -1,7 +1,6 @@
 Analytics = require 'analytics-node'
 Sale = require '../../models/sale.coffee'
 buyersPremium = require '../../components/buyers_premium/index.coffee'
-DateHelpers = require '../../components/util/date_helpers.coffee'
 
 registerAndRedirect = (sale, req, res, next) ->
   req.user.fetchCreditCards

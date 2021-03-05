@@ -1,8 +1,6 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 { CURRENT_USER } = require('sharify').data
-Partners = require '../../../../collections/partners.coffee'
-Profile = require '../../../../models/profile.coffee'
 fetchLocationCarousel = require '../../components/location_carousel/index.coffee'
 carouselTemplate = -> require('../../components/partner_cell_carousel/template.jade') arguments...
 PartnerCellCarouselView = require '../../components/partner_cell_carousel/view.coffee'

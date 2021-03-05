@@ -9,7 +9,6 @@
 #
 # Don't forget to call super on your view's initialize!
 
-_ = require 'underscore'
 Backbone = require 'backbone'
 
 module.exports = class PoliteInfiniteScrollView extends Backbone.View

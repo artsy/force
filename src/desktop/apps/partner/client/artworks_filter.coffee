@@ -3,7 +3,6 @@ sd = require('sharify').data
 qs = require 'querystring'
 scrollFrame = require 'scroll-frame'
 Backbone = require 'backbone'
-Partner = require '../../../models/partner.coffee'
 { setupFilter } = require '../../../components/filter2/index.coffee'
 { ContextModule } = require "@artsy/cohesion"
 

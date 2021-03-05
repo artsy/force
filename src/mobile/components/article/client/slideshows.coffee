@@ -1,6 +1,5 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-Artwork = require '../../../models/artwork.coffee'
 Artworks = require '../../../collections/artworks.coffee'
 Flickity = require 'flickity'
 carouselTemplate = -> require('../templates/sections/slideshow/carousel.jade') arguments...

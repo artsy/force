@@ -16,7 +16,6 @@ Artworks = require '../desktop/collections/artworks.coffee'
 Genes = require '../desktop/collections/genes.coffee'
 User = require '../desktop/models/user.coffee'
 ArtworkCollection = require '../desktop/models/artwork_collection.coffee'
-SaleArtwork = require '../mobile/models/sale_artwork.coffee'
 Location = require '../mobile/models/location.coffee'
 
 module.exports = class CurrentUser extends Backbone.Model

@@ -1,4 +1,3 @@
-sd = require('sharify').data
 _ = require 'underscore'
 _s = require 'underscore.string'
 { API_URL } = require('sharify').data

@@ -1,5 +1,4 @@
 Backbone = require 'backbone'
-_ = require 'underscore'
 sd = require('sharify').data
 Article = require '../../../models/article.coffee'
 SlideshowsView = require './slideshows.coffee'

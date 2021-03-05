@@ -1,6 +1,5 @@
 FlashMessage = require '../flash/index.coffee'
 Errors = require '../form/errors.coffee'
-sd = require('sharify').data
 
 module.exports = (error) ->
   parser = new Errors $('<form></form>')

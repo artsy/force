@@ -1,4 +1,3 @@
-_ = require 'underscore'
 Backbone = require 'backbone'
 sd = require('sharify').data
 Artist = require '../../../models/artist.coffee'

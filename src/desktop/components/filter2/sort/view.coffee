@@ -1,4 +1,3 @@
-_ = require 'underscore'
 Backbone = require 'backbone'
 BorderedPulldown = require '../../bordered_pulldown/view.coffee'
 
