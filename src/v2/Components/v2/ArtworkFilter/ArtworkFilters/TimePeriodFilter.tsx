@@ -42,16 +42,12 @@ export const TimePeriodFilter: FC<TimePeriodFilterProps> = ({
       <Flex flexDirection="column">
         <ShowMore>
           {periods.map(({ name }, index) => {
-            const selected = currentFilters.majorPeriods.includes(name)
-            const props = {
-              key: index,
-              onSelect: selected => {
-                togglePeriodSelection(selected, name)
-              },
-              selected,
-            }
             return (
-              <Checkbox {...props}>
+              <Checkbox
+                selected={currentFilters.majorPeriods.includes(name)}
+                key={index}
+                onSelect={selected => togglePeriodSelection(selected, name)}
+              >
                 <OptionText>{name}</OptionText>
               </Checkbox>
             )

@@ -47,18 +47,17 @@ const ArtistItem: React.FC<{
   }
 
   const isFollowedArtist = followedArtistSlugs.includes(slug)
-  const selected =
-    currentlySelectedFilters().artistIDs.includes(slug) ||
-    (isFollowedArtistCheckboxSelected && isFollowedArtist)
-  const props = {
-    onSelect: selected => {
-      toggleArtistSelection(selected, slug)
-    },
-    selected,
-  }
 
   return (
-    <Checkbox {...props}>
+    <Checkbox
+      selected={
+        currentlySelectedFilters().artistIDs.includes(slug) ||
+        (isFollowedArtistCheckboxSelected && isFollowedArtist)
+      }
+      onSelect={selected => {
+        return toggleArtistSelection(selected, slug)
+      }}
+    >
       <OptionText>{name}</OptionText>
     </Checkbox>
   )
@@ -94,11 +93,6 @@ export const ArtistsFilter: FC<ArtistsFilterProps> = ({
   const isFollowedArtistCheckboxSelected =
     !!user &&
     filterContext.currentlySelectedFilters()["includeArtworksByFollowedArtists"]
-  const followedArtistCheckboxProps = {
-    onSelect: value =>
-      filterContext.setFilter("includeArtworksByFollowedArtists", value),
-    selected: isFollowedArtistCheckboxSelected,
-  }
   const followedArtistArtworkCount = filterContext?.counts?.followedArtists ?? 0
 
   return (
@@ -106,7 +100,10 @@ export const ArtistsFilter: FC<ArtistsFilterProps> = ({
       <Flex flexDirection="column">
         <Checkbox
           disabled={!followedArtistArtworkCount}
-          {...followedArtistCheckboxProps}
+          selected={isFollowedArtistCheckboxSelected}
+          onSelect={value =>
+            filterContext.setFilter("includeArtworksByFollowedArtists", value)
+          }
         >
           <OptionText>
             Artists I follow ({followedArtistArtworkCount})

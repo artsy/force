@@ -33,18 +33,15 @@ export const MediumFilter: FC = () => {
       <Flex flexDirection="column" alignItems="left">
         <ShowMore>
           {allowedMediums.map(({ value: slug, name }, index) => {
-            const selected =
-              currentFilters.additionalGeneIDs.includes(slug) ||
-              currentFilters.medium === slug
-            const props = {
-              key: index,
-              onSelect: selected => {
-                toggleMediumSelection(selected, slug)
-              },
-              selected,
-            }
             return (
-              <Checkbox {...props}>
+              <Checkbox
+                selected={
+                  currentFilters.additionalGeneIDs.includes(slug) ||
+                  currentFilters.medium === slug
+                }
+                key={index}
+                onSelect={selected => toggleMediumSelection(selected, slug)}
+              >
                 <OptionText>{name}</OptionText>
               </Checkbox>
             )
