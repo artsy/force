@@ -2,6 +2,7 @@ import { Checkbox, Flex, Toggle } from "@artsy/palette"
 import React, { FC } from "react"
 import { useArtworkFilterContext } from "../ArtworkFilterContext"
 import { OptionText } from "./OptionText"
+import { ShowMore } from "./ShowMore"
 
 interface TimePeriodFilterProps {
   expanded?: boolean
@@ -39,21 +40,19 @@ export const TimePeriodFilter: FC<TimePeriodFilterProps> = ({
   return (
     <Toggle label="Time period" expanded={expanded}>
       <Flex flexDirection="column">
-        {periods.map(({ name }, index) => {
-          const selected = currentFilters.majorPeriods.includes(name)
-          const props = {
-            key: index,
-            onSelect: selected => {
-              togglePeriodSelection(selected, name)
-            },
-            selected,
-          }
-          return (
-            <Checkbox {...props}>
-              <OptionText>{name}</OptionText>
-            </Checkbox>
-          )
-        })}
+        <ShowMore>
+          {periods.map(({ name }, index) => {
+            return (
+              <Checkbox
+                selected={currentFilters.majorPeriods.includes(name)}
+                key={index}
+                onSelect={selected => togglePeriodSelection(selected, name)}
+              >
+                <OptionText>{name}</OptionText>
+              </Checkbox>
+            )
+          })}
+        </ShowMore>
       </Flex>
     </Toggle>
   )

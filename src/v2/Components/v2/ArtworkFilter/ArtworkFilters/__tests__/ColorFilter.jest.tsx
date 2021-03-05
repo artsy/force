@@ -25,7 +25,7 @@ describe("ColorFilter", () => {
   it("initially renders the primary colors", () => {
     const wrapper = getWrapper()
 
-    expect(wrapper.find("Checkbox")).toHaveLength(7)
+    expect(wrapper.find("Checkbox")).toHaveLength(6)
   })
 
   it("selects a color when clicked", () => {
@@ -46,7 +46,7 @@ describe("ColorFilter", () => {
     wrapper.find("Checkbox").first().simulate("click")
     wrapper.find("Checkbox").last().simulate("click")
 
-    expect(context.filters.colors).toEqual(["black-and-white", "gold"])
+    expect(context.filters.colors).toEqual(["black-and-white", "violet"])
   })
 
   it("unselects a selected a color when clicked", () => {
@@ -57,7 +57,7 @@ describe("ColorFilter", () => {
     wrapper.find("Checkbox").first().simulate("click")
     wrapper.find("Checkbox").last().simulate("click")
 
-    expect(context.filters.colors).toEqual(["black-and-white", "gold"])
+    expect(context.filters.colors).toEqual(["black-and-white", "violet"])
 
     wrapper.find("Checkbox").last().simulate("click")
 

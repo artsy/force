@@ -2,6 +2,7 @@ import { Checkbox, Flex, Toggle } from "@artsy/palette"
 import React, { FC } from "react"
 import { useArtworkFilterContext } from "../ArtworkFilterContext"
 import { OptionText } from "./OptionText"
+import { ShowMore } from "./ShowMore"
 
 export const MediumFilter: FC = () => {
   const { aggregations, counts, ...filterContext } = useArtworkFilterContext()
@@ -30,23 +31,22 @@ export const MediumFilter: FC = () => {
   return (
     <Toggle label="Medium" expanded={isExpanded}>
       <Flex flexDirection="column" alignItems="left">
-        {allowedMediums.map(({ value: slug, name }, index) => {
-          const selected =
-            currentFilters.additionalGeneIDs.includes(slug) ||
-            currentFilters.medium === slug
-          const props = {
-            key: index,
-            onSelect: selected => {
-              toggleMediumSelection(selected, slug)
-            },
-            selected,
-          }
-          return (
-            <Checkbox {...props}>
-              <OptionText>{name}</OptionText>
-            </Checkbox>
-          )
-        })}
+        <ShowMore>
+          {allowedMediums.map(({ value: slug, name }, index) => {
+            return (
+              <Checkbox
+                selected={
+                  currentFilters.additionalGeneIDs.includes(slug) ||
+                  currentFilters.medium === slug
+                }
+                key={index}
+                onSelect={selected => toggleMediumSelection(selected, slug)}
+              >
+                <OptionText>{name}</OptionText>
+              </Checkbox>
+            )
+          })}
+        </ShowMore>
       </Flex>
     </Toggle>
   )

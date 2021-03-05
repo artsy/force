@@ -5,8 +5,7 @@ import React, { FC } from "react"
 import { useArtworkFilterContext } from "../ArtworkFilterContext"
 import { OptionText } from "./OptionText"
 import { ShowMore } from "./ShowMore"
-
-const INITIAL_ITEMS_TO_SHOW = 6
+import { FacetAutosuggest } from "./FacetAutosuggest"
 
 const ArtistNationalityOption: React.FC<{ name: string }> = ({ name }) => {
   const { currentlySelectedFilters, setFilter } = useArtworkFilterContext()
@@ -51,7 +50,12 @@ export const ArtistNationalityFilter: FC = () => {
   return (
     <Toggle label="Artist nationality or ethnicity" expanded>
       <Flex flexDirection="column">
-        <ShowMore initial={INITIAL_ITEMS_TO_SHOW}>
+        <FacetAutosuggest
+          facetName="artistNationalities"
+          placeholder="Enter a nationality"
+          facets={nationalities.counts}
+        />
+        <ShowMore>
           {nationalitiesSorted.map(({ name }) => {
             return <ArtistNationalityOption key={name} name={name} />
           })}

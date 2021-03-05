@@ -2,13 +2,15 @@ import { Clickable, Text } from "@artsy/palette"
 import React, { Children, isValidElement, useState } from "react"
 
 interface ShowMoreProps {
-  initial: number
+  initial?: number
   expanded?: boolean
   children: JSX.Element[]
 }
 
+const INITIAL_ITEMS_TO_SHOW = 6
+
 export const ShowMore: React.FC<ShowMoreProps> = ({
-  initial,
+  initial = INITIAL_ITEMS_TO_SHOW,
   children,
   expanded = false,
 }) => {

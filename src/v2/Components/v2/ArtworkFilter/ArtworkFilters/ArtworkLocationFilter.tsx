@@ -3,10 +3,9 @@ import { sortBy } from "lodash"
 import React, { FC } from "react"
 
 import { useArtworkFilterContext } from "../ArtworkFilterContext"
+import { FacetAutosuggest } from "./FacetAutosuggest"
 import { OptionText } from "./OptionText"
 import { ShowMore } from "./ShowMore"
-
-const INITIAL_ITEMS_TO_SHOW = 6
 
 const ArtworkLocationOption: React.FC<{ name: string }> = ({ name }) => {
   const { currentlySelectedFilters, setFilter } = useArtworkFilterContext()
@@ -49,7 +48,12 @@ export const ArtworkLocationFilter: FC = () => {
   return (
     <Toggle label="Artwork location" expanded>
       <Flex flexDirection="column">
-        <ShowMore initial={INITIAL_ITEMS_TO_SHOW}>
+        <FacetAutosuggest
+          facetName="locationCities"
+          placeholder="Enter a location"
+          facets={locations.counts}
+        />
+        <ShowMore>
           {locationsSorted.map(({ name }) => {
             return <ArtworkLocationOption key={name} name={name} />
           })}

@@ -4,10 +4,8 @@ import React, { FC } from "react"
 
 import { useArtworkFilterContext } from "../ArtworkFilterContext"
 import { OptionText } from "./OptionText"
-import { PartnerAutosuggest } from "./PartnerAutosuggest"
+import { FacetAutosuggest } from "./FacetAutosuggest"
 import { ShowMore } from "./ShowMore"
-
-const INITIAL_PARTNERS_TO_SHOW = 6
 
 const PartnerOption: React.FC<{ name: string }> = ({ name }) => {
   const { currentlySelectedFilters, setFilter } = useArtworkFilterContext()
@@ -50,8 +48,12 @@ export const PartnersFilter: FC = () => {
   return (
     <Toggle label="Galleries and institutions" expanded>
       <Flex flexDirection="column">
-        <PartnerAutosuggest partners={partners.counts} />
-        <ShowMore initial={INITIAL_PARTNERS_TO_SHOW}>
+        <FacetAutosuggest
+          facetName="partnerIDs"
+          placeholder="Enter a gallery"
+          facets={partners.counts}
+        />
+        <ShowMore>
           {partnersSorted.map(({ name }) => {
             return <PartnerOption key={name} name={name} />
           })}

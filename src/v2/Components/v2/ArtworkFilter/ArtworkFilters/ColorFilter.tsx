@@ -95,7 +95,7 @@ export const ColorFilter: React.FC<ColorFilterProps> = ({
 }) => {
   return (
     <Toggle label="Color" expanded={expanded}>
-      <ShowMore initial={7}>
+      <ShowMore>
         {COLOR_OPTIONS.map(colorOption => {
           return (
             <ColorFilterOption
