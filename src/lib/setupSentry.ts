@@ -1,4 +1,4 @@
-import * as Sentry from "@sentry/browser"
+import { init } from "@sentry/browser"
 
 let INITIALIZED = false
 
@@ -24,7 +24,7 @@ export function setupSentry(sd) {
   if (INITIALIZED) {
     return
   }
-  Sentry.init({
+  init({
     dsn: sd.SENTRY_PUBLIC_DSN,
     beforeSend(event, hint) {
       const error = hint.originalException
