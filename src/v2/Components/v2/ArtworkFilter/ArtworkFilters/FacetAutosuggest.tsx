@@ -2,10 +2,13 @@ import { BorderBox, Box, Checkbox } from "@artsy/palette"
 import React, { FC, useState } from "react"
 import Autosuggest from "react-autosuggest"
 import { SearchInputContainer } from "v2/Components/Search/SearchInputContainer"
-import { useArtworkFilterContext } from "../ArtworkFilterContext"
+import {
+  ArrayArtworkFilter,
+  useArtworkFilterContext,
+} from "../ArtworkFilterContext"
 import { OptionText } from "./OptionText"
 
-type Partner = {
+type Facet = {
   name: string
   count: number
   value: string
@@ -13,22 +16,24 @@ type Partner = {
 
 const MAX_SUGGESTIONS = 10
 
-export const PartnerAutosuggest: FC<{ partners: Array<Partner> }> = ({
-  partners,
-}) => {
+export const FacetAutosuggest: FC<{
+  facets: Array<Facet>
+  facetName: ArrayArtworkFilter
+  placeholder: string
+}> = ({ facets, facetName, placeholder }) => {
   const getSuggestions = ({ value }) => {
     const inputValue = value.trim().toLowerCase()
     const inputLength = inputValue.length
 
     return inputLength === 0
       ? []
-      : partners
+      : facets
           .filter(
-            partner =>
+            facet =>
               !filterContext
                 .currentlySelectedFilters()
-                .partnerIDs.includes(partner.value) &&
-              partner.name.toLowerCase().slice(0, inputLength) === inputValue
+                [facetName].includes(facet.value) &&
+              facet.name.toLowerCase().slice(0, inputLength) === inputValue
           )
           .sort()
           .slice(0, MAX_SUGGESTIONS)
@@ -49,7 +54,7 @@ export const PartnerAutosuggest: FC<{ partners: Array<Partner> }> = ({
   const [focused, setFocus] = useState(false)
 
   const inputProps = {
-    placeholder: "Enter a gallery",
+    placeholder,
     value,
     onChange: (_e, { newValue }) => setValue(newValue),
     onFocus: () => setFocus(true),
@@ -59,9 +64,11 @@ export const PartnerAutosuggest: FC<{ partners: Array<Partner> }> = ({
   const filterContext = useArtworkFilterContext()
 
   const onSuggestionSelected = ({ suggestion: { value } }) => {
-    let partnerIDs = filterContext.currentlySelectedFilters().partnerIDs.slice()
-    partnerIDs.push(value)
-    filterContext.setFilter("partnerIDs", partnerIDs)
+    let selectedValues = filterContext
+      .currentlySelectedFilters()
+      [facetName].slice()
+    selectedValues.push(value)
+    filterContext.setFilter(facetName, selectedValues)
   }
 
   const renderInputComponent = props => <SearchInputContainer {...props} />

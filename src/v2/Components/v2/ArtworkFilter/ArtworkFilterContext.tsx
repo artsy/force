@@ -332,6 +332,12 @@ interface ArtworkFiltersAction {
   payload: { name: keyof ArtworkFilters; value?: any }
 }
 
+export type ArrayArtworkFilter =
+  | "artistIDs"
+  | "partnerIDs"
+  | "locationCities"
+  | "artistNationalities"
+
 const artworkFilterReducer = (
   state: ArtworkFiltersState,
   action: ArtworkFiltersAction

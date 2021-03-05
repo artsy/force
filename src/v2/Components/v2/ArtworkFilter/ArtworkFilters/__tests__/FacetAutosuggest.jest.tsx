@@ -1,4 +1,4 @@
-import { PartnerAutosuggest } from "../PartnerAutosuggest"
+import { FacetAutosuggest } from "../FacetAutosuggest"
 import { ReactWrapper, mount } from "enzyme"
 import React from "react"
 import { ArtworkFilterContextProvider } from "../../ArtworkFilterContext"
@@ -27,7 +27,11 @@ const simulateTyping = (wrapper: ReactWrapper, text: string) => {
 const getWrapper = suggestions => {
   return mount(
     <ArtworkFilterContextProvider>
-      <PartnerAutosuggest partners={suggestions} />
+      <FacetAutosuggest
+        placeholder="Enter a gallery"
+        facets={suggestions}
+        facetName="partnerIDs"
+      />
     </ArtworkFilterContextProvider>
   )
 }

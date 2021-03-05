@@ -4,7 +4,7 @@ import React, { FC } from "react"
 
 import { useArtworkFilterContext } from "../ArtworkFilterContext"
 import { OptionText } from "./OptionText"
-import { PartnerAutosuggest } from "./PartnerAutosuggest"
+import { FacetAutosuggest } from "./FacetAutosuggest"
 import { ShowMore } from "./ShowMore"
 
 const PartnerOption: React.FC<{ name: string }> = ({ name }) => {
@@ -48,7 +48,11 @@ export const PartnersFilter: FC = () => {
   return (
     <Toggle label="Galleries and institutions" expanded>
       <Flex flexDirection="column">
-        <PartnerAutosuggest partners={partners.counts} />
+        <FacetAutosuggest
+          facetName="partnerIDs"
+          placeholder="Enter a gallery"
+          facets={partners.counts}
+        />
         <ShowMore>
           {partnersSorted.map(({ name }) => {
             return <PartnerOption key={name} name={name} />
