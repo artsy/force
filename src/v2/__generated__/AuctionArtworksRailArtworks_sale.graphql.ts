@@ -3,12 +3,7 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type AuctionArtworksRail_auction = {
-    readonly internalID: string;
-    readonly slug: string;
-    readonly href: string | null;
-    readonly name: string | null;
-    readonly formattedStartDateTime: string | null;
+export type AuctionArtworksRailArtworks_sale = {
     readonly artworksConnection: {
         readonly edges: ReadonlyArray<{
             readonly node: {
@@ -18,60 +13,22 @@ export type AuctionArtworksRail_auction = {
             } | null;
         } | null> | null;
     } | null;
-    readonly " $refType": "AuctionArtworksRail_auction";
+    readonly " $refType": "AuctionArtworksRailArtworks_sale";
 };
-export type AuctionArtworksRail_auction$data = AuctionArtworksRail_auction;
-export type AuctionArtworksRail_auction$key = {
-    readonly " $data"?: AuctionArtworksRail_auction$data;
-    readonly " $fragmentRefs": FragmentRefs<"AuctionArtworksRail_auction">;
+export type AuctionArtworksRailArtworks_sale$data = AuctionArtworksRailArtworks_sale;
+export type AuctionArtworksRailArtworks_sale$key = {
+    readonly " $data"?: AuctionArtworksRailArtworks_sale$data;
+    readonly " $fragmentRefs": FragmentRefs<"AuctionArtworksRailArtworks_sale">;
 };
 
 
 
-const node: ReaderFragment = (function(){
-var v0 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "internalID",
-  "storageKey": null
-},
-v1 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "slug",
-  "storageKey": null
-};
-return {
+const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "AuctionArtworksRail_auction",
+  "name": "AuctionArtworksRailArtworks_sale",
   "selections": [
-    (v0/*: any*/),
-    (v1/*: any*/),
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "href",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "name",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "formattedStartDateTime",
-      "storageKey": null
-    },
     {
       "alias": null,
       "args": [
@@ -102,8 +59,20 @@ return {
               "name": "node",
               "plural": false,
               "selections": [
-                (v0/*: any*/),
-                (v1/*: any*/),
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "internalID",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "slug",
+                  "storageKey": null
+                },
                 {
                   "args": null,
                   "kind": "FragmentSpread",
@@ -121,6 +90,5 @@ return {
   ],
   "type": "Sale"
 };
-})();
-(node as any).hash = '24828604e479630edb64618e5919e54e';
+(node as any).hash = '79dd4798b58a3582d9f1ff9cc4319bc6';
 export default node;

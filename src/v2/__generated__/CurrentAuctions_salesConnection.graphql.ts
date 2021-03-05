@@ -3,22 +3,22 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type CurrentAuctions_currentAuctions = {
+export type CurrentAuctions_salesConnection = {
     readonly edges: ReadonlyArray<{
         readonly node: {
             readonly slug: string;
             readonly name: string | null;
             readonly href: string | null;
             readonly liveStartAt: string | null;
-            readonly " $fragmentRefs": FragmentRefs<"AuctionArtworksRail_auction">;
+            readonly " $fragmentRefs": FragmentRefs<"AuctionArtworksRail_sale">;
         } | null;
     } | null> | null;
-    readonly " $refType": "CurrentAuctions_currentAuctions";
+    readonly " $refType": "CurrentAuctions_salesConnection";
 };
-export type CurrentAuctions_currentAuctions$data = CurrentAuctions_currentAuctions;
-export type CurrentAuctions_currentAuctions$key = {
-    readonly " $data"?: CurrentAuctions_currentAuctions$data;
-    readonly " $fragmentRefs": FragmentRefs<"CurrentAuctions_currentAuctions">;
+export type CurrentAuctions_salesConnection$data = CurrentAuctions_salesConnection;
+export type CurrentAuctions_salesConnection$key = {
+    readonly " $data"?: CurrentAuctions_salesConnection$data;
+    readonly " $fragmentRefs": FragmentRefs<"CurrentAuctions_salesConnection">;
 };
 
 
@@ -27,7 +27,7 @@ const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "CurrentAuctions_currentAuctions",
+  "name": "CurrentAuctions_salesConnection",
   "selections": [
     {
       "alias": null,
@@ -76,7 +76,7 @@ const node: ReaderFragment = {
             {
               "args": null,
               "kind": "FragmentSpread",
-              "name": "AuctionArtworksRail_auction"
+              "name": "AuctionArtworksRail_sale"
             }
           ],
           "storageKey": null
@@ -87,5 +87,5 @@ const node: ReaderFragment = {
   ],
   "type": "SaleConnection"
 };
-(node as any).hash = '4abc662dee3d796a2219696633b7605c';
+(node as any).hash = '9254f1dd7c67b06461ec838874289c25';
 export default node;

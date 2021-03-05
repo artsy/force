@@ -41,12 +41,8 @@ export const auctionsRoutes = [
         },
         query: graphql`
           query auctionsRoutes_Current_AuctionsQuery {
-            currentAuctions: salesConnection(
-              first: 99
-              published: true
-              sort: START_AT_ASC
-            ) {
-              ...CurrentAuctions_currentAuctions
+            salesConnection(first: 99, published: true, sort: START_AT_ASC) {
+              ...CurrentAuctions_salesConnection
             }
           }
         `,
