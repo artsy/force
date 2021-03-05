@@ -6,8 +6,6 @@ import { useArtworkFilterContext } from "../ArtworkFilterContext"
 import { OptionText } from "./OptionText"
 import { ShowMore } from "./ShowMore"
 
-const INITIAL_ITEMS_TO_SHOW = 6
-
 const ArtworkLocationOption: React.FC<{ name: string }> = ({ name }) => {
   const { currentlySelectedFilters, setFilter } = useArtworkFilterContext()
 
@@ -49,7 +47,7 @@ export const ArtworkLocationFilter: FC = () => {
   return (
     <Toggle label="Artwork location" expanded>
       <Flex flexDirection="column">
-        <ShowMore initial={INITIAL_ITEMS_TO_SHOW}>
+        <ShowMore>
           {locationsSorted.map(({ name }) => {
             return <ArtworkLocationOption key={name} name={name} />
           })}

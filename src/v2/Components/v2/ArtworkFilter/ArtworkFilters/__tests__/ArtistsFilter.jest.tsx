@@ -57,26 +57,26 @@ describe("ArtistsFilter", () => {
 
       it("renders the first 6 and includes a show more expand link", () => {
         expect(wrapper.text()).toContain("Percy F")
-        expect(wrapper.text()).toContain("Show 1 more")
+        expect(wrapper.text()).toContain("Show more")
         expect(wrapper.text()).not.toContain("Percy G")
       })
 
       it("reveals the rest of the list when 'Show more' is clicked, and can then hide the list again", done => {
         wrapper
-          .findWhere(t => t.text() === "Show 1 more")
+          .findWhere(t => t.text() === "Show more")
           .first()
           .simulate("click")
 
         setTimeout(() => {
           expect(wrapper.text()).toContain("Percy G")
-          expect(wrapper.text()).toContain("Hide list")
+          expect(wrapper.text()).toContain("Hide")
           wrapper
-            .findWhere(t => t.text() === "Hide list")
+            .findWhere(t => t.text() === "Hide")
             .first()
             .simulate("click")
 
           setTimeout(() => {
-            expect(wrapper.text()).toContain("Show 1 more")
+            expect(wrapper.text()).toContain("Show more")
             expect(wrapper.text()).not.toContain("Percy G")
             done()
           }, 0)
