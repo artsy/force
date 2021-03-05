@@ -1,4 +1,5 @@
 import { BorderBox, Box, Checkbox } from "@artsy/palette"
+import { uniq } from "lodash"
 import React, { FC, useState } from "react"
 import Autosuggest from "react-autosuggest"
 import { SearchInputContainer } from "v2/Components/Search/SearchInputContainer"
@@ -15,12 +16,14 @@ type Facet = {
 }
 
 const MAX_SUGGESTIONS = 10
+const MIN_ITEMS = 7
 
 export const FacetAutosuggest: FC<{
   facets: Array<Facet>
   facetName: ArrayArtworkFilter
   placeholder: string
-}> = ({ facets, facetName, placeholder }) => {
+  alwaysShow?: boolean
+}> = ({ facets, facetName, placeholder, alwaysShow = false }) => {
   const getSuggestions = ({ value }) => {
     const inputValue = value.trim().toLowerCase()
     const inputLength = inputValue.length
@@ -30,9 +33,6 @@ export const FacetAutosuggest: FC<{
       : facets
           .filter(
             facet =>
-              !filterContext
-                .currentlySelectedFilters()
-                [facetName].includes(facet.value) &&
               facet.name.toLowerCase().slice(0, inputLength) === inputValue
           )
           .sort()
@@ -68,7 +68,7 @@ export const FacetAutosuggest: FC<{
       .currentlySelectedFilters()
       [facetName].slice()
     selectedValues.push(value)
-    filterContext.setFilter(facetName, selectedValues)
+    filterContext.setFilter(facetName, uniq(selectedValues))
   }
 
   const renderInputComponent = props => <SearchInputContainer {...props} />
@@ -86,6 +86,8 @@ export const FacetAutosuggest: FC<{
       <BorderBox {...containerProps}>{children}</BorderBox>
     )
   }
+
+  if (!alwaysShow && facets.length < MIN_ITEMS) return null
 
   return (
     <Autosuggest

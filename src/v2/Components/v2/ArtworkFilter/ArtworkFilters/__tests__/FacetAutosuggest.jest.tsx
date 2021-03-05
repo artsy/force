@@ -31,6 +31,7 @@ const getWrapper = suggestions => {
         placeholder="Enter a gallery"
         facets={suggestions}
         facetName="partnerIDs"
+        alwaysShow
       />
     </ArtworkFilterContextProvider>
   )
