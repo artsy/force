@@ -21,6 +21,7 @@ import { CommitMutation } from "v2/Apps/Order/Utils/commitMutation"
 import createLogger from "v2/Utils/logger"
 import { SavedAddressItem } from "v2/Apps/Order/Components/SavedAddressItem"
 import { deleteUserAddress } from "v2/Apps/Order/Mutations/DeleteUserAddress"
+import { updateUserDefaultAddress } from "v2/Apps/Order/Mutations/UpdateUserDefaultAddress"
 
 export const NEW_ADDRESS = "NEW_ADDRESS"
 const PAGE_SIZE = 30
@@ -85,6 +86,15 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
     setAddress(address)
   }
 
+  const handleSetDefaultAddress = (addressID: string) => {
+    updateUserDefaultAddress(
+      props.commitMutation,
+      addressID,
+      onSuccess,
+      onError
+    )
+  }
+
   const collectorProfileAddressItems = addressList.map((address, index) => {
     if (!address.node) {
       return null
@@ -109,6 +119,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
           {!isDefaultAddress && (
             <Box mr={1}>
               <Text
+                onClick={() => handleSetDefaultAddress(address.node.internalID)}
                 variant="text"
                 color="black60"
                 style={{
