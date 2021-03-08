@@ -2,35 +2,8 @@ doctype xml
 urlset(
   xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'
 )
-  url
-    loc=sd.APP_URL
-    priority='1'
-  url
-    loc=sd.APP_URL + '/about'
-    priority='1'
-  url
-    loc=sd.APP_URL + '/press/in-the-media'
-  url
-    loc=sd.APP_URL + '/press/press-releases'
-  url
-    loc=sd.APP_URL + '/collect'
-    priority='1'
-  url
-    loc=sd.APP_URL + '/log_in'
-  url
-    loc=sd.APP_URL + '/security'
-  url
-    loc=sd.APP_URL + '/privacy'
-  url
-    loc=sd.APP_URL + '/shows'
-    priority='1'
-  url
-    loc=sd.APP_URL + '/artists'
-    priority='1'
-  url
-    loc=sd.APP_URL + '/categories'
-  url
-    loc=sd.APP_URL + '/sign_up'
-  url
-    loc=sd.APP_URL + '/terms'
-
+  each url in urls
+    url
+      loc=url.loc
+      if url.priority
+        priority=url.priority

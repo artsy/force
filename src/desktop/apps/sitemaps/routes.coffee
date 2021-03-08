@@ -1,3 +1,4 @@
+{ computeLandingPages } = require('./helpers')
 { APP_URL, ENABLE_WEB_CRAWLING, SITEMAP_BASE_URL } = require('sharify').data
 { parse } = require 'url'
 httpProxy = require 'http-proxy'
@@ -5,7 +6,8 @@ sitemapProxy = httpProxy.createProxyServer(target: SITEMAP_BASE_URL)
 
 @misc = (req, res, next) ->
   res.set 'Content-Type', 'text/xml'
-  res.render('misc', pretty: true)
+  urls = computeLandingPages(APP_URL)
+  res.render('misc', pretty: true, urls: urls)
 
 # sitemaps for artworks and images are generated in Spark by Cinder and written to the artsy-sitemaps s3 bucket
 # see https://github.com/artsy/cinder/blob/master/doc/sitemaps.md for more information
