@@ -4735,6 +4735,7 @@ type Conversation implements Node {
     first: Int
     last: Int
     participantType: CommerceOrderParticipantEnum!
+    state: CommerceOrderStateEnum
   ): CommerceOrderConnectionWithTotalCount
 
   # The participant(s) responding to the conversation
