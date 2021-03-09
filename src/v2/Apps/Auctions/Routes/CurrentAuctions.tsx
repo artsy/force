@@ -1,22 +1,25 @@
 import React from "react"
-import { Box, Text, Separator } from "@artsy/palette"
+import { Box } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 
-import { CurrentAuctions_currentAuctions } from "v2/__generated__/CurrentAuctions_currentAuctions.graphql"
+import { CurrentAuctions_salesConnection } from "v2/__generated__/CurrentAuctions_salesConnection.graphql"
+import { AuctionArtworksRailFragmentContainer } from "../Components/AuctionArtworksRail/AuctionArtworksRail"
 
 export interface CurrentAuctionsProps {
-  currentAuctions: CurrentAuctions_currentAuctions
+  salesConnection: CurrentAuctions_salesConnection
 }
 
 const CurrentAuctions: React.FC<CurrentAuctionsProps> = ({
-  currentAuctions,
+  salesConnection,
 }) => {
   return (
     <Box>
-      <Text variant="largeTitle">Current Auctions</Text>
-      <Separator mt={1} mb={3} />
-      {currentAuctions.edges.map(({ node }, index) => {
-        return <Box my={4} key={index}></Box>
+      {salesConnection.edges.map(({ node }, index) => {
+        return (
+          <Box my={4} key={index}>
+            <AuctionArtworksRailFragmentContainer sale={node} />
+          </Box>
+        )
       })}
     </Box>
   )
@@ -25,11 +28,15 @@ const CurrentAuctions: React.FC<CurrentAuctionsProps> = ({
 export const CurrentAuctionsFragmentContainer = createFragmentContainer(
   CurrentAuctions,
   {
-    currentAuctions: graphql`
-      fragment CurrentAuctions_currentAuctions on SaleConnection {
+    salesConnection: graphql`
+      fragment CurrentAuctions_salesConnection on SaleConnection {
         edges {
           node {
-            id
+            slug
+            name
+            href
+            liveStartAt
+            ...AuctionArtworksRail_sale
           }
         }
       }

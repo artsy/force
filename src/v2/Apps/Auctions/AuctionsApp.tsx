@@ -8,12 +8,15 @@ import { HorizontalPadding } from "../Components/HorizontalPadding"
 import { Footer } from "v2/Components/Footer"
 import { RouteTabs, RouteTab } from "v2/Components/RouteTabs"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
-
+import { LazyLoadComponent } from "react-lazy-load-image-component"
+import { RecentlyViewedQueryRenderer as RecentlyViewed } from "v2/Components/RecentlyViewed"
 export interface AuctionsAppProps {
   me: AuctionsApp_me
 }
 
-const AuctionsApp: React.FC<AuctionsAppProps> = ({ children }) => {
+const AuctionsApp: React.FC<AuctionsAppProps> = props => {
+  const { children } = props
+
   return (
     <AppContainer>
       <AuctionsMeta />
@@ -49,6 +52,13 @@ const AuctionsApp: React.FC<AuctionsAppProps> = ({ children }) => {
         </RouteTabs>
 
         <Box>{children}</Box>
+        {typeof window !== "undefined" && (
+          <>
+            <LazyLoadComponent threshold={1000}>
+              <RecentlyViewed />
+            </LazyLoadComponent>
+          </>
+        )}
         <Footer />
       </HorizontalPadding>
     </AppContainer>
