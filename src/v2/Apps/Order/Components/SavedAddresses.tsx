@@ -73,11 +73,11 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
     logger.error(message)
   }
 
-  const handleDelete = (addressID: string) => {
+  const handleDeleteAddress = (addressID: string) => {
     deleteUserAddress(props.commitMutation, addressID, onSuccess, onError)
   }
 
-  const handleEdit = (address: Address) => {
+  const handleEditAddress = (address: Address) => {
     setShowAddressModal(true)
     setModalDetails({
       addressModalTitle: "Edit address",
@@ -132,19 +132,20 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
           )}
           <Box mr={1}>
             <Text
-              onClick={() => handleEdit(address.node)}
+              onClick={() => handleEditAddress(address.node)}
               variant="text"
               color="blue100"
               style={{
                 cursor: "pointer",
               }}
+              data-test="editAddress"
             >
               Edit
             </Text>
           </Box>
           <Box>
             <Text
-              onClick={() => handleDelete(address.node.internalID)}
+              onClick={() => handleDeleteAddress(address.node.internalID)}
               variant="text"
               color="red100"
               style={{

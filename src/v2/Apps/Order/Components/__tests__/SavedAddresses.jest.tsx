@@ -4,12 +4,51 @@ import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
 import { Button } from "@artsy/palette"
 import { AddressModal } from "v2/Apps/Order/Components/AddressModal"
 import React from "react"
+import { createTestEnv } from "v2/DevTools/createTestEnv"
+import { RootTestPage } from "v2/DevTools/RootTestPage"
+import { userAddressMutation } from "v2/Apps/__tests__/Fixtures/Order/MutationResults"
+import { SavedAddressItem } from "v2/Apps/Order/Components/SavedAddressItem"
 
 jest.unmock("react-relay")
 
-beforeEach(() => {
-  afterEach(() => {
-    jest.clearAllMocks()
+class SavedAddressesTestPage extends RootTestPage {
+  async selectEdit() {
+    this.find(`[data-test="addressModal"]`).simulate("click")
+    await this.update()
+  }
+}
+
+describe("Saved Addresses mutations", () => {
+  const { mutations, buildPage } = createTestEnv({
+    Component: (props: any) => (
+      <SavedAddressesFragmentContainer inCollectorProfile {...props} />
+    ),
+    defaultData: userAddressMutation,
+    TestPage: SavedAddressesTestPage,
+    query: graphql`
+      query SavedAddresses_Test_Query {
+        me {
+          ...SavedAddresses_me
+        }
+      }
+    `,
+  })
+
+  it("edits the saved addresses after calling edit address mutation", async () => {
+    const page = await buildPage()
+    const editButton = page.find(`[data-test="editAddress"]`).first()
+    editButton
+      .props()
+      .onClick(userAddressMutation.me.addressConnection.edges[0].node as any)
+    const addresses = page.find(SavedAddressItem).first().text()
+
+    setTimeout(() => {
+      expect(mutations.mockFetch).toHaveBeenCalledTimes(1)
+
+      expect(addresses).toBe(
+        "Test Name1 Main StMadrid, Spain, 28001555-555-5555Edit"
+      )
+    }, 0)
   })
 })
 
@@ -44,7 +83,7 @@ describe("SavedAddress button interactions", () => {
     }, 0)
   })
 
-  it("opens Create Address modal when as expected", () => {
+  it("opens address modal in create mode with expected props", () => {
     const button = wrapper.find(Button)
     const modal = wrapper.find(AddressModal)
     expect(modal.props().show).toBe(false)
@@ -54,6 +93,20 @@ describe("SavedAddress button interactions", () => {
       expect(modal.props().modalDetails).toBe({
         addressModalTitle: "Add new address",
         addressModalAction: "createUserAddress",
+      })
+    }, 0)
+  })
+
+  it("opens address modal in edit mode with expected props", () => {
+    const editAddressComponent = wrapper.find("[data-test='editAddress']").at(0)
+    expect(editAddressComponent).toHaveLength(1)
+    const modal = wrapper.find(AddressModal)
+    expect(modal.props().show).toBe(false)
+    editAddressComponent.props().onClick({} as any)
+    setTimeout(() => {
+      expect(modal.props().modalDetails).toBe({
+        addressModalTitle: "Edit address",
+        addressModalAction: "editUserAddress",
       })
     }, 0)
   })
@@ -111,6 +164,7 @@ describe("SavedAddress", () => {
 const mockAddressConnection = {
   edges: [
     {
+      cursor: "aaaabbbb",
       node: {
         addressLine1: "1 Main St",
         addressLine2: "",
@@ -125,6 +179,7 @@ const mockAddressConnection = {
       },
     },
     {
+      cursor: "bbbbbcccc",
       node: {
         addressLine1: "401 Broadway",
         addressLine2: "Floor 25",
