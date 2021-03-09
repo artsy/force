@@ -69,7 +69,7 @@ const ViewingRoomApp: React.FC<ViewingRoomAppProps> = ({
       <ViewingRoomMeta viewingRoom={viewingRoom} />
       {showPreview && (
         <Box position="fixed" left={0} top={58} width="100%" zIndex={1}>
-          <Banner backgroundColor="black10" textColor="black100">
+          <Banner variant="defaultLight">
             <ClosedEyeIcon />
             <Text
               display="inline"
