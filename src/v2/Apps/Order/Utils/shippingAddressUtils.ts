@@ -58,5 +58,5 @@ export const convertShippingAddressForExchange = (
 export const convertShippingAddressToMutationInput = (
   address: SavedAddressType
 ): UserAddressAttributes => {
-  return omit(address, ["isDefault", "internalID", "id"])
+  return omit(address, ["isDefault", "internalID", "id", "__typename"])
 }

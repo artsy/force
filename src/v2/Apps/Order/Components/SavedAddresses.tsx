@@ -13,10 +13,15 @@ import React, { useState } from "react"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import styled from "styled-components"
 import { SavedAddresses_me } from "v2/__generated__/SavedAddresses_me.graphql"
-import { AddressModal } from "v2/Apps/Order/Components/AddressModal"
+import {
+  AddressModal,
+  AddressModalAction,
+} from "v2/Apps/Order/Components/AddressModal"
 import { CommitMutation } from "v2/Apps/Order/Utils/commitMutation"
 import createLogger from "v2/Utils/logger"
 import { SavedAddressItem } from "v2/Apps/Order/Components/SavedAddressItem"
+import { deleteUserAddress } from "v2/Apps/Order/Mutations/DeleteUserAddress"
+import { updateUserDefaultAddress } from "v2/Apps/Order/Mutations/UpdateUserDefaultAddress"
 
 export const NEW_ADDRESS = "NEW_ADDRESS"
 const PAGE_SIZE = 30
@@ -30,6 +35,7 @@ interface SavedAddressesProps {
   relay: RelayRefetchProp
   addressCount?: number
 }
+type Address = SavedAddresses_me["addressConnection"]["edges"][0]["node"]
 
 const defaultAddressIndex = addressList => {
   const indexOfDefaultAddress = addressList.findIndex(
@@ -39,11 +45,56 @@ const defaultAddressIndex = addressList => {
 }
 
 const SavedAddresses: React.FC<SavedAddressesProps> = props => {
+  const [modalDetails, setModalDetails] = useState({
+    addressModalTitle: null as string,
+    addressModalAction: null as AddressModalAction,
+  })
   const [showAddressModal, setShowAddressModal] = useState(false)
+  const [address, setAddress] = useState(null as Address)
   const logger = createLogger("SavedAddresses.tsx")
-
   const { onSelect, handleClickEdit, me, inCollectorProfile, relay } = props
   const addressList = me?.addressConnection?.edges ?? []
+
+  const onSuccess = () => {
+    relay.refetch(
+      {
+        first: PAGE_SIZE,
+      },
+      null,
+      error => {
+        if (error) {
+          logger.error(error)
+        }
+      }
+    )
+  }
+
+  const onError = (message: string) => {
+    logger.error(message)
+  }
+
+  const handleDeleteAddress = (addressID: string) => {
+    deleteUserAddress(props.commitMutation, addressID, onSuccess, onError)
+  }
+
+  const handleEditAddress = (address: Address) => {
+    setShowAddressModal(true)
+    setModalDetails({
+      addressModalTitle: "Edit address",
+      addressModalAction: "editUserAddress",
+    })
+    setAddress(address)
+  }
+
+  const handleSetDefaultAddress = (addressID: string) => {
+    updateUserDefaultAddress(
+      props.commitMutation,
+      addressID,
+      onSuccess,
+      onError
+    )
+  }
+
   const collectorProfileAddressItems = addressList.map((address, index) => {
     if (!address.node) {
       return null
@@ -67,18 +118,40 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
         <ModifyAddressWrapper>
           {!isDefaultAddress && (
             <Box mr={1}>
-              <Text variant="text" color="black60">
+              <Text
+                onClick={() => handleSetDefaultAddress(address.node.internalID)}
+                variant="text"
+                color="black60"
+                style={{
+                  cursor: "pointer",
+                }}
+              >
                 Set as Default
               </Text>
             </Box>
           )}
           <Box mr={1}>
-            <Text variant="text" color="blue100">
+            <Text
+              onClick={() => handleEditAddress(address.node)}
+              variant="text"
+              color="blue100"
+              style={{
+                cursor: "pointer",
+              }}
+              data-test="editAddress"
+            >
               Edit
             </Text>
           </Box>
           <Box>
-            <Text variant="text" color="red100">
+            <Text
+              onClick={() => handleDeleteAddress(address.node.internalID)}
+              variant="text"
+              color="red100"
+              style={{
+                cursor: "pointer",
+              }}
+            >
               Delete
             </Text>
           </Box>
@@ -93,35 +166,24 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
         mt={addressList.length > 0 ? 3 : 0}
         variant="primaryBlack"
         size="large"
-        onClick={() => setShowAddressModal(true)}
+        onClick={() => {
+          setShowAddressModal(true),
+            setModalDetails({
+              addressModalTitle: "Add new address",
+              addressModalAction: "createUserAddress",
+            })
+        }}
       >
         Add new address
       </Button>
       <AddressModal
         show={showAddressModal}
-        modalDetails={{
-          addressModalTitle: "Add new address",
-          addressModalAction: "createUserAddress",
-        }}
+        modalDetails={modalDetails}
         closeModal={() => setShowAddressModal(false)}
-        address={null}
-        onSuccess={() => {
-          relay.refetch(
-            {
-              first: PAGE_SIZE,
-            },
-            null,
-            error => {
-              if (error) {
-                logger.error(error)
-              }
-            }
-          )
-        }}
+        address={address}
+        onSuccess={() => onSuccess}
         commitMutation={props.commitMutation}
-        onError={message => {
-          logger.error(message)
-        }}
+        onError={onError}
         me={me}
       />
     </>
