@@ -1,20 +1,23 @@
 import React from "react"
-import { Box, Text, Separator } from "@artsy/palette"
+import { Box } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 
-import { PastAuctions_pastAuctions } from "v2/__generated__/PastAuctions_pastAuctions.graphql"
+import { PastAuctions_salesConnection } from "v2/__generated__/PastAuctions_salesConnection.graphql"
+import { AuctionArtworksRailFragmentContainer } from "../Components/AuctionArtworksRail/AuctionArtworksRail"
 
 export interface PastAuctionsProps {
-  pastAuctions: PastAuctions_pastAuctions
+  salesConnection: PastAuctions_salesConnection
 }
 
-export const PastAuctions: React.FC<PastAuctionsProps> = ({ pastAuctions }) => {
+const PastAuctions: React.FC<PastAuctionsProps> = ({ salesConnection }) => {
   return (
     <Box>
-      <Text variant="largeTitle">Past Auctions</Text>
-      <Separator mt={1} mb={3} />
-      {pastAuctions.edges.map(({ node }, index) => {
-        return <Box my={4} key={index}></Box>
+      {salesConnection.edges.map(({ node }, index) => {
+        return (
+          <Box my={4} key={index}>
+            <AuctionArtworksRailFragmentContainer sale={node} />
+          </Box>
+        )
       })}
     </Box>
   )
@@ -23,11 +26,15 @@ export const PastAuctions: React.FC<PastAuctionsProps> = ({ pastAuctions }) => {
 export const PastAuctionsFragmentContainer = createFragmentContainer(
   PastAuctions,
   {
-    pastAuctions: graphql`
-      fragment PastAuctions_pastAuctions on SaleConnection {
+    salesConnection: graphql`
+      fragment PastAuctions_salesConnection on SaleConnection {
         edges {
           node {
-            id
+            slug
+            name
+            href
+            liveStartAt
+            ...AuctionArtworksRail_sale
           }
         }
       }

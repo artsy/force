@@ -5,8 +5,8 @@ import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type auctionsRoutes_Past_AuctionsQueryVariables = {};
 export type auctionsRoutes_Past_AuctionsQueryResponse = {
-    readonly pastAuctions: {
-        readonly " $fragmentRefs": FragmentRefs<"PastAuctions_pastAuctions">;
+    readonly salesConnection: {
+        readonly " $fragmentRefs": FragmentRefs<"PastAuctions_salesConnection">;
     } | null;
 };
 export type auctionsRoutes_Past_AuctionsQuery = {
@@ -18,14 +18,27 @@ export type auctionsRoutes_Past_AuctionsQuery = {
 
 /*
 query auctionsRoutes_Past_AuctionsQuery {
-  pastAuctions: salesConnection(first: 20, published: true, live: false, sort: START_AT_ASC) {
-    ...PastAuctions_pastAuctions
+  salesConnection(first: 99, published: true, sort: START_AT_ASC) {
+    ...PastAuctions_salesConnection
   }
 }
 
-fragment PastAuctions_pastAuctions on SaleConnection {
+fragment AuctionArtworksRail_sale on Sale {
+  internalID
+  slug
+  href
+  name
+  formattedStartDateTime
+}
+
+fragment PastAuctions_salesConnection on SaleConnection {
   edges {
     node {
+      slug
+      name
+      href
+      liveStartAt
+      ...AuctionArtworksRail_sale
       id
     }
   }
@@ -37,12 +50,7 @@ var v0 = [
   {
     "kind": "Literal",
     "name": "first",
-    "value": 20
-  },
-  {
-    "kind": "Literal",
-    "name": "live",
-    "value": false
+    "value": 99
   },
   {
     "kind": "Literal",
@@ -63,7 +71,7 @@ return {
     "name": "auctionsRoutes_Past_AuctionsQuery",
     "selections": [
       {
-        "alias": "pastAuctions",
+        "alias": null,
         "args": (v0/*: any*/),
         "concreteType": "SaleConnection",
         "kind": "LinkedField",
@@ -73,10 +81,10 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "PastAuctions_pastAuctions"
+            "name": "PastAuctions_salesConnection"
           }
         ],
-        "storageKey": "salesConnection(first:20,live:false,published:true,sort:\"START_AT_ASC\")"
+        "storageKey": "salesConnection(first:99,published:true,sort:\"START_AT_ASC\")"
       }
     ],
     "type": "Query"
@@ -88,7 +96,7 @@ return {
     "name": "auctionsRoutes_Past_AuctionsQuery",
     "selections": [
       {
-        "alias": "pastAuctions",
+        "alias": null,
         "args": (v0/*: any*/),
         "concreteType": "SaleConnection",
         "kind": "LinkedField",
@@ -115,6 +123,48 @@ return {
                     "alias": null,
                     "args": null,
                     "kind": "ScalarField",
+                    "name": "slug",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "name",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "href",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "liveStartAt",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "internalID",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "formattedStartDateTime",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
                     "name": "id",
                     "storageKey": null
                   }
@@ -125,7 +175,7 @@ return {
             "storageKey": null
           }
         ],
-        "storageKey": "salesConnection(first:20,live:false,published:true,sort:\"START_AT_ASC\")"
+        "storageKey": "salesConnection(first:99,published:true,sort:\"START_AT_ASC\")"
       }
     ]
   },
@@ -134,9 +184,9 @@ return {
     "metadata": {},
     "name": "auctionsRoutes_Past_AuctionsQuery",
     "operationKind": "query",
-    "text": "query auctionsRoutes_Past_AuctionsQuery {\n  pastAuctions: salesConnection(first: 20, published: true, live: false, sort: START_AT_ASC) {\n    ...PastAuctions_pastAuctions\n  }\n}\n\nfragment PastAuctions_pastAuctions on SaleConnection {\n  edges {\n    node {\n      id\n    }\n  }\n}\n"
+    "text": "query auctionsRoutes_Past_AuctionsQuery {\n  salesConnection(first: 99, published: true, sort: START_AT_ASC) {\n    ...PastAuctions_salesConnection\n  }\n}\n\nfragment AuctionArtworksRail_sale on Sale {\n  internalID\n  slug\n  href\n  name\n  formattedStartDateTime\n}\n\nfragment PastAuctions_salesConnection on SaleConnection {\n  edges {\n    node {\n      slug\n      name\n      href\n      liveStartAt\n      ...AuctionArtworksRail_sale\n      id\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'c4715ab43289e0d26a31cec182dfebe9';
+(node as any).hash = '0d10abf90bce57d87d2b2a141c5049ae';
 export default node;
