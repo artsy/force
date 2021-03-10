@@ -55,12 +55,13 @@ export const auctionsRoutes = [
         },
         query: graphql`
           query auctionsRoutes_Upcoming_AuctionsQuery {
-            upcomingAuctions: salesConnection(
+            salesConnection(
               first: 99
-              published: true
-              sort: START_AT_ASC
+              live: true
+              published: false
+              sort: END_AT_ASC
             ) {
-              ...UpcomingAuctions_upcomingAuctions
+              ...UpcomingAuctions_salesConnection
             }
           }
         `,
