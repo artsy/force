@@ -10,6 +10,11 @@ export const serverConfig = {
   devtool: "source-map",
   entry: path.join(basePath, "src/index.js"),
   externals: [nodeExternals()],
+  output: {
+    chunkFilename: "[name].bundle.js",
+    filename: "server.dist.js",
+    path: path.resolve(basePath),
+  },
   mode: env.nodeEnv,
   module: {
     rules: [
@@ -55,16 +60,9 @@ export const serverConfig = {
     minimize: env.isProduction && !env.webpackDebug,
     minimizer: [
       new TerserPlugin({
-        cache: false,
         parallel: env.onCi ? env.webpackCiCpuLimit : true, // Only use 4 cpus (default) in CircleCI, by default it will try using 36 and OOM
-        sourceMap: true, // Must be set to true if using source-maps in production
       }),
     ],
-  },
-  output: {
-    chunkFilename: "[name].bundle.js",
-    filename: "server.dist.js",
-    path: path.resolve(basePath),
   },
   plugins: [
     new webpack.optimize.LimitChunkCountPlugin({
@@ -75,5 +73,6 @@ export const serverConfig = {
     extensions: [".js", ".jsx", ".ts", ".tsx", ".json", ".coffee"],
     modules: [path.resolve(basePath, "src"), "node_modules"],
   },
+  stats: env.webpackStats || "normal",
   target: "node",
 }

@@ -1,9 +1,8 @@
 import PropTypes from "prop-types"
 import React from "react"
 import block from "bem-cn-lite"
-import renderTemplate from "../../utils/renderTemplate"
 import { connect } from "react-redux"
-import { first } from "underscore"
+import { first } from "lodash"
 
 function Footer(props) {
   const { articles, footerItem, showArticles, showFooterItems, sd } = props
@@ -29,6 +28,7 @@ function Footer(props) {
             // Serverside
             if (typeof window === "undefined") {
               const path = require("path")
+              const renderTemplate = require("../../utils/renderTemplate")
 
               articleFigureHTML = renderTemplate(
                 path.resolve(

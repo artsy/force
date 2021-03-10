@@ -17,9 +17,9 @@ export function useRouteTracking() {
 
       // Wait till after the next tick to set to false, to give react tree
       // ability to execute related tracking handlers
-      setImmediate(() => {
+      setTimeout(() => {
         setShouldTrack(false)
-      })
+      }, 0)
     }
   }, [isFetching, prevFetching])
 

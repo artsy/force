@@ -2,7 +2,6 @@ require("dotenv/config")
 require("coffeescript/register")
 require("@babel/register")({
   extensions: [".ts", ".js", ".tsx", ".jsx"],
-  plugins: ["babel-plugin-dynamic-import-node"],
 })
 
 // Workaround until more appropriate methods for generating an individual config
@@ -40,8 +39,6 @@ function startServer() {
 
   const app = express()
   const wdm = webpackDevMiddleware(compiler, {
-    publicPath: clientForceConfig.output.publicPath,
-    quiet: true,
     serverSideRender: true,
     stats: clientForceConfig.stats,
     writeToDisk(filePath) {

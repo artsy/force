@@ -1,6 +1,5 @@
 // @ts-check
 
-const { HashedModuleIdsPlugin } = require("webpack")
 const { RetryChunkLoadPlugin } = require("webpack-retry-chunk-load-plugin")
 const HtmlWebpackPlugin = require("html-webpack-plugin")
 const LoadablePlugin = require("@loadable/webpack-plugin")
@@ -8,9 +7,16 @@ const path = require("path")
 const webpack = require("webpack")
 const WebpackManifestPlugin = require("webpack-manifest-plugin")
 const { basePath, env } = require("../utils/env")
+const {
+  babelLoader,
+  coffeeLoader,
+  ejsLoader,
+  jadeLoader,
+  mjsLoader,
+} = require("./commonLoaders")
 
 export const novoDevelopmentConfig = {
-  devtool: "source-map",
+  devtool: env.webpackDevtool || "eval",
   entry: {
     "artsy-novo": [
       "webpack-hot-middleware/client?name=novo&reload=true",
@@ -18,72 +24,14 @@ export const novoDevelopmentConfig = {
     ],
   },
   externals: {
+    // Required because the cacheMiddleware include redis
     redis: "redis",
+    // TODO: Needs research to determine if if this is still required
     request: "request",
   },
   mode: env.webpackDebug ? "development" : env.nodeEnv,
   module: {
-    rules: [
-      {
-        exclude: /(node_modules)/,
-        include: path.resolve(basePath, "src"),
-        test: /\.coffee$/,
-        use: [
-          {
-            loader: "cache-loader",
-            options: {
-              cacheDirectory: ".cache",
-            },
-          },
-          "coffee-loader",
-        ],
-      },
-      {
-        include: path.resolve(basePath, "src"),
-        test: /\.(jade|pug)$/,
-        use: [
-          {
-            loader: "pug-loader",
-            options: {
-              doctype: "html",
-              root: __dirname,
-            },
-          },
-        ],
-      },
-      {
-        exclude: /(node_modules)/,
-        include: path.resolve(basePath, "src"),
-        test: /(\.(js|ts)x?$)/,
-        use: [
-          {
-            loader: "babel-loader",
-            options: {
-              cacheDirectory:
-                !env.onCi && path.join(basePath, ".cache", "babel/force"),
-            },
-          },
-        ],
-      },
-      {
-        test: /\.mjs$/,
-        type: "javascript/auto",
-        use: [],
-      },
-      // https://github.com/bazilio91/ejs-compiled-loader/issues/46
-      {
-        test: /\.ejs$/,
-        use: {
-          loader: "ejs-compiled-loader",
-          options: {
-            htmlmin: true,
-            htmlminOptions: {
-              removeComments: true,
-            },
-          },
-        },
-      },
-    ],
+    rules: [coffeeLoader, jadeLoader, babelLoader, ejsLoader, mjsLoader],
   },
   name: "novo",
   optimization: {
@@ -102,6 +50,15 @@ export const novoDevelopmentConfig = {
           reuseExistingChunk: true,
           test: /.*src[\\/]/,
         },
+        // "arsty-graphql-common": {
+        //   chunks: "all",
+        //   enforce: true,
+        //   priority: 50,
+        //   minChunks: 1,
+        //   minSize: 0,
+        //   name: "arsty-graphql-common",
+        //   test: /.*src[\\/]v2[\\/]__generated__[\\/]/,
+        // },
         artsy: {
           chunks: "all",
           enforce: true,
@@ -111,14 +68,14 @@ export const novoDevelopmentConfig = {
           reuseExistingChunk: true,
           test: /.*node_modules[\\/](@artsy)[\\/]/,
         },
-        "common-backbone": {
+        "common-react": {
           chunks: "all",
           enforce: true,
           minChunks: 1,
           minSize: 0,
-          name: "common-backbone",
+          name: "common-react",
           reuseExistingChunk: true,
-          test: /.*node_modules[\\/](backbone.*)[\\/]/,
+          test: /.*node_modules[\\/](react|react-dom)[\\/]/,
         },
         "common-utility": {
           chunks: "all",
@@ -127,7 +84,7 @@ export const novoDevelopmentConfig = {
           minSize: 0,
           name: "common-utility",
           reuseExistingChunk: true,
-          test: /.*node_modules[\\/](lodash.*|moment.*)[\\/]/,
+          test: /.*node_modules[\\/](lodash.*|luxon.*)[\\/]/,
         },
         commons: {
           chunks: "all",
@@ -135,8 +92,9 @@ export const novoDevelopmentConfig = {
           minChunks: 2,
           minSize: 0,
           name: "common",
+          priority: 10,
           reuseExistingChunk: true,
-          test: /.*node_modules[\\/](?!(@artsy[\\/]|react[\\/]|react-dom[\\/]|backbone.*[\\/]|lodash.*[\\/]|moment.*[\\/]|jquery.*[\\/]))/,
+          test: /.*node_modules[\\/](?!(@artsy[\\/]|react[\\/]|react-dom[\\/]|backbone.*[\\/]|lodash.*[\\/]|moment.*[\\/]|luxon.*[\\/]|jquery.*[\\/]))/,
         },
       },
       maxInitialRequests: Infinity,
@@ -147,7 +105,6 @@ export const novoDevelopmentConfig = {
     path: path.resolve(basePath, "public/assets-novo"),
     publicPath: "/assets-novo/",
   },
-  parallelism: 100,
   plugins: [
     new webpack.DefinePlugin({
       "process.env": {
@@ -155,16 +112,13 @@ export const novoDevelopmentConfig = {
       },
     }),
     // Remove moment.js localization files
-    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+    new webpack.IgnorePlugin({
+      resourceRegExp: /^\.\/locale$/,
+      contextRegExp: /moment$/,
+    }),
     // Remove server-only modules from client bundles
-    // Remove server side of relay network layer.
-    new webpack.IgnorePlugin(/^react-relay-network-modern-ssr\/node8\/server/),
-    // No matter what, we don't want the graphql-js package in client
-    // bundles. This /may/ lead to a broken build when e.g. a reaction
-    // module that's used on the client side imports something from
-    // graphql-js, but that's better than silently including this.
-    new webpack.IgnorePlugin(/^graphql(\/.*)?$/),
-    new webpack.NamedModulesPlugin(),
+    // TODO: Why would these end up in the client bundle?
+    new webpack.IgnorePlugin({ resourceRegExp: /^graphql(\/.*)?$/ }),
     new webpack.ProvidePlugin({
       $: "jquery",
       jQuery: "jquery",
@@ -189,7 +143,7 @@ export const novoDevelopmentConfig = {
       filename: "loadable-novo-stats.json",
       path: path.resolve(basePath, "public", "assets-novo"),
     }),
-    new HashedModuleIdsPlugin(),
+    new webpack.ids.HashedModuleIdsPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new WebpackManifestPlugin({
       basePath: "/assets-novo/",
@@ -224,5 +178,5 @@ export const novoDevelopmentConfig = {
     modules: [path.resolve(basePath, "src"), "node_modules"],
     symlinks: false,
   },
-  stats: "normal",
+  stats: env.webpackStats || "normal",
 }

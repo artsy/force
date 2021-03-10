@@ -4,12 +4,8 @@ const chalk = require("chalk")
 const fs = require("fs")
 const path = require("path")
 const webpack = require("webpack")
-const ForkTsCheckerNotifierWebpackPlugin = require("fork-ts-checker-notifier-webpack-plugin")
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin")
-const FriendlyErrorsWebpackPlugin = require("friendly-errors-webpack-plugin")
 const WebpackNotifierPlugin = require("webpack-notifier")
-const SimpleProgressWebpackPlugin = require("simple-progress-webpack-plugin")
-const CaseSensitivePathsPlugin = require("case-sensitive-paths-webpack-plugin")
 const { basePath, env } = require("../utils/env")
 const { getEntrypoints } = require("../utils/getEntrypoints")
 
@@ -25,9 +21,6 @@ if (!env.onCi && !fs.existsSync(cacheDirectory)) {
 }
 
 export const clientDevelopmentConfig = {
-  devServer: {
-    hot: true,
-  },
   devtool: env.webpackDevtool || "eval",
   entry: getEntrypoints(),
   module: {
@@ -76,29 +69,18 @@ export const clientDevelopmentConfig = {
   },
   name: "force",
   plugins: [
-    new CaseSensitivePathsPlugin(),
     new webpack.HotModuleReplacementPlugin(),
-    new SimpleProgressWebpackPlugin({
-      format: "compact",
-    }),
     new ForkTsCheckerWebpackPlugin({
-      checkSyntacticErrors: true,
-      formatter: "codeframe",
-      formatterOptions: "highlightCode",
-      watch: ["./src"],
-    }),
-    new ForkTsCheckerNotifierWebpackPlugin({
-      excludeWarnings: true,
-      skipFirstNotification: true,
-    }),
-    new FriendlyErrorsWebpackPlugin({
-      clearConsole: false,
-      compilationSuccessInfo: {
-        messages: [`[Force] Listening on http://localhost:${env.port} \n`],
-        notes: [""],
+      typescript: {
+        diagnosticOptions: {
+          syntactic: true,
+          semantic: true,
+          declaration: false,
+          global: false,
+        },
       },
+      formatter: { type: "codeframe", options: { highlightCode: true } },
     }),
     new WebpackNotifierPlugin(),
   ],
-  stats: env.webpackStats || "errors-only",
 }

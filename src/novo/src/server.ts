@@ -38,6 +38,7 @@ const flatRoutes = flatten(
   })
 )
 
+// TODO: Novoe remove
 app.get("/novo", (req, res) => {
   res.send(`
     <!doctype html>

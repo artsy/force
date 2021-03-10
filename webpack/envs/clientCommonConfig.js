@@ -7,14 +7,13 @@ const { RetryChunkLoadPlugin } = require("webpack-retry-chunk-load-plugin")
 const { basePath, env } = require("../utils/env")
 
 export const clientCommonConfig = {
-  mode: env.nodeEnv,
-  devtool: "source-map",
-  stats: "normal",
-  output: {
-    filename: "[name].js",
-    path: path.resolve(basePath, "public/assets"),
-    publicPath: "/assets/",
+  externals: {
+    // Required because the cacheMiddleware include redis
+    redis: "redis",
+    // TODO: Needs research to determine if if this is still required
+    request: "request",
   },
+  mode: env.webpackDebug ? "development" : env.nodeEnv,
   module: {
     rules: [
       {
@@ -58,81 +57,15 @@ export const clientCommonConfig = {
           },
         ],
       },
-      // ESM support. See: https://github.com/apollographql/react-apollo/issues/1737#issuecomment-371178602
+      // Required for webpack 5 to allow interop with with non-ESM modules is handled.
+      // TODO: This may be removed once all dependant references to @babel/runtime-corejs3 are removed.
       {
-        type: "javascript/auto",
-        test: /\.mjs$/,
-        use: [],
+        test: /\.m?js/,
+        resolve: {
+          fullySpecified: false,
+        },
       },
     ],
-  },
-  plugins: [
-    new webpack.DefinePlugin({
-      "process.env": {
-        NODE_ENV: JSON.stringify(env.nodeEnv),
-      },
-    }),
-    // Remove moment.js localization files
-    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
-    // Remove server-only modules from client bundles
-    ...[
-      // Remove server side of relay network layer.
-      new webpack.IgnorePlugin(
-        /^react-relay-network-modern-ssr\/node8\/server/
-      ),
-      // No matter what, we don't want the graphql-js package in client
-      // bundles. This /may/ lead to a broken build when e.g. a reaction
-      // module that's used on the client side imports something from
-      // graphql-js, but that's better than silently including this.
-      new webpack.IgnorePlugin(/^graphql(\/.*)?$/),
-    ],
-    new webpack.NamedModulesPlugin(),
-    new webpack.ProvidePlugin({
-      $: "jquery",
-      jQuery: "jquery",
-      "window.jQuery": "jquery",
-      jade: "jade/runtime.js",
-      waypoints: "jquery-waypoints/waypoints.js",
-    }),
-    new LoadablePlugin(),
-
-    /**
-     * If something goes wrong while loading a dynmic split chunk (import())
-     * retry the fetch once per second up to `maxRetries`.
-     *
-     * NOTE: Since this plugin patches the native loading mechanism from webpack
-     * we (may) need to revist once we upgrade to Webpack 5.
-     */
-    new RetryChunkLoadPlugin({
-      maxRetries: 5,
-      cacheBust: `function() {
-        return "cache-bust=" + Date.now();
-      }`,
-    }),
-  ],
-  resolve: {
-    alias: {
-      "jquery.ui.widget": "blueimp-file-upload/js/vendor/jquery.ui.widget.js",
-
-      // The following packages need to be resolved to the host app (force) to get
-      // around issues involving `yarn link` and multiple instances. A  similar
-      // configuration has been setup for SSR in `src/index`, via `require-control`.
-      "styled-components": require.resolve("styled-components"),
-      react: require.resolve("react"),
-    },
-    extensions: [
-      ".mjs",
-      ".js",
-      ".jsx",
-      ".ts",
-      ".tsx",
-      ".json",
-      ".jade",
-      ".coffee",
-    ],
-    // Symlink issues should be fixed via `yarn --pnp`
-    modules: [path.resolve(basePath, "src"), "node_modules"],
-    symlinks: false,
   },
   optimization: {
     // Extract webpack runtime code into it's own file
@@ -207,9 +140,76 @@ export const clientCommonConfig = {
       },
     },
   },
-  externals: {
-    // Don't bundle modules and consider them external
-    redis: "redis",
-    request: "request",
+  output: {
+    filename: "[name].js",
+    path: path.resolve(basePath, "public/assets"),
+    publicPath: "/assets/",
   },
+  plugins: [
+    new webpack.DefinePlugin({
+      "process.env": {
+        NODE_ENV: JSON.stringify(env.nodeEnv),
+      },
+    }),
+    // Remove moment.js localization files
+    new webpack.IgnorePlugin({
+      resourceRegExp: /^\.\/locale$/,
+      contextRegExp: /moment$/,
+    }),
+    // Remove server-only modules from client bundles
+    // TODO: Why would these end up in the client bundle?
+    new webpack.IgnorePlugin({ resourceRegExp: /^graphql(\/.*)?$/ }),
+    new webpack.ProvidePlugin({
+      $: "jquery",
+      jQuery: "jquery",
+      "window.jQuery": "jquery",
+      jade: "jade/runtime.js",
+      waypoints: "jquery-waypoints/waypoints.js",
+    }),
+    new LoadablePlugin(),
+
+    /**
+     * If something goes wrong while loading a dynmic split chunk (import())
+     * retry the fetch once per second up to `maxRetries`.
+     *
+     * NOTE: Since this plugin patches the native loading mechanism from webpack
+     * we (may) need to revist once we upgrade to Webpack 5.
+     */
+    new RetryChunkLoadPlugin({
+      maxRetries: 5,
+      cacheBust: `function() {
+        return "cache-bust=" + Date.now();
+      }`,
+    }),
+  ],
+  resolve: {
+    alias: {
+      "jquery.ui.widget": "blueimp-file-upload/js/vendor/jquery.ui.widget.js",
+
+      // The following packages need to be resolved to the host app (force) to get
+      // around issues involving `yarn link` and multiple instances. A  similar
+      // configuration has been setup for SSR in `src/index`, via `require-control`.
+      "styled-components": require.resolve("styled-components"),
+      react: require.resolve("react"),
+    },
+    extensions: [
+      ".mjs",
+      ".js",
+      ".jsx",
+      ".ts",
+      ".tsx",
+      ".json",
+      ".jade",
+      ".coffee",
+    ],
+    // Symlink issues should be fixed via `yarn --pnp`
+    modules: [path.resolve(basePath, "src"), "node_modules"],
+    symlinks: false,
+    fallback: {
+      path: false,
+      os: require.resolve("os-browserify/browser"),
+      buffer: require.resolve("buffer/"),
+    },
+  },
+  stats: env.webpackStats || "normal",
 }

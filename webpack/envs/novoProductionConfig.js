@@ -1,6 +1,5 @@
 // @ts-check
 
-const { HashedModuleIdsPlugin } = require("webpack")
 const { RetryChunkLoadPlugin } = require("webpack-retry-chunk-load-plugin")
 const HtmlWebpackPlugin = require("html-webpack-plugin")
 const LoadablePlugin = require("@loadable/webpack-plugin")
@@ -9,88 +8,35 @@ const TerserPlugin = require("terser-webpack-plugin")
 const webpack = require("webpack")
 const WebpackManifestPlugin = require("webpack-manifest-plugin")
 const { basePath, env } = require("../utils/env")
+const {
+  babelLoader,
+  coffeeLoader,
+  ejsLoader,
+  jadeLoader,
+  mjsLoader,
+} = require("./commonLoaders")
 
 export const novoProductionConfig = {
-  devtool: "source-map",
+  devtool: env.webpackDevtool || "source-map",
   entry: {
     "artsy-novo": [path.resolve(process.cwd(), "src/novo/src/client.tsx")],
   },
   externals: {
+    // Required because the cacheMiddleware include redis
     redis: "redis",
+    // TODO: Needs research to determine if if this is still required
     request: "request",
   },
   mode: env.webpackDebug ? "development" : env.nodeEnv,
   module: {
-    rules: [
-      {
-        exclude: /(node_modules)/,
-        include: path.resolve(basePath, "src"),
-        test: /\.coffee$/,
-        use: [
-          {
-            loader: "cache-loader",
-            options: {
-              cacheDirectory: ".cache",
-            },
-          },
-          "coffee-loader",
-        ],
-      },
-      {
-        include: path.resolve(basePath, "src"),
-        test: /\.(jade|pug)$/,
-        use: [
-          {
-            loader: "pug-loader",
-            options: {
-              doctype: "html",
-              root: __dirname,
-            },
-          },
-        ],
-      },
-      {
-        exclude: /(node_modules)/,
-        include: path.resolve(basePath, "src"),
-        test: /(\.(js|ts)x?$)/,
-        use: [
-          {
-            loader: "babel-loader",
-            options: {
-              cacheDirectory:
-                !env.onCi && path.join(basePath, ".cache", "babel/force"),
-            },
-          },
-        ],
-      },
-      {
-        test: /\.mjs$/,
-        type: "javascript/auto",
-        use: [],
-      },
-      // https://github.com/bazilio91/ejs-compiled-loader/issues/46
-      {
-        test: /\.ejs$/,
-        use: {
-          loader: "ejs-compiled-loader",
-          options: {
-            htmlmin: true,
-            htmlminOptions: {
-              removeComments: true,
-            },
-          },
-        },
-      },
-    ],
+    rules: [coffeeLoader, jadeLoader, babelLoader, ejsLoader, mjsLoader],
   },
   optimization: {
     concatenateModules: env.webpackConcatenate,
     minimize: !env.webpackDebug,
     minimizer: [
       new TerserPlugin({
-        cache: false,
         parallel: env.onCi ? env.webpackCiCpuLimit : true, // Only use 4 cpus (default) in CircleCI, by default it will try using 36 and OOM
-        sourceMap: true, // Must be set to true if using source-maps in production
       }),
     ],
     // Extract webpack runtime code into it's own file
@@ -162,7 +108,6 @@ export const novoProductionConfig = {
     path: path.resolve(basePath, "public/assets-novo"),
     publicPath: "/assets-novo/",
   },
-  parallelism: 100,
   plugins: [
     new webpack.DefinePlugin({
       "process.env": {
@@ -170,16 +115,13 @@ export const novoProductionConfig = {
       },
     }),
     // Remove moment.js localization files
-    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+    new webpack.IgnorePlugin({
+      resourceRegExp: /^\.\/locale$/,
+      contextRegExp: /moment$/,
+    }),
     // Remove server-only modules from client bundles
-    // Remove server side of relay network layer.
-    new webpack.IgnorePlugin(/^react-relay-network-modern-ssr\/node8\/server/),
-    // No matter what, we don't want the graphql-js package in client
-    // bundles. This /may/ lead to a broken build when e.g. a reaction
-    // module that's used on the client side imports something from
-    // graphql-js, but that's better than silently including this.
-    new webpack.IgnorePlugin(/^graphql(\/.*)?$/),
-    new webpack.NamedModulesPlugin(),
+    // TODO: Why would these end up in the client bundle?
+    new webpack.IgnorePlugin({ resourceRegExp: /^graphql(\/.*)?$/ }),
     new webpack.ProvidePlugin({
       $: "jquery",
       jQuery: "jquery",
@@ -205,7 +147,7 @@ export const novoProductionConfig = {
       filename: "loadable-novo-stats.json",
       path: path.resolve(basePath, "public", "assets-novo"),
     }),
-    new HashedModuleIdsPlugin(),
+    new webpack.ids.HashedModuleIdsPlugin(),
     new WebpackManifestPlugin({
       basePath: "/assets-novo/",
       fileName: path.resolve(basePath, "manifest-novo.json"),
@@ -213,11 +155,11 @@ export const novoProductionConfig = {
     new HtmlWebpackPlugin({
       filename: path.resolve(basePath, "public", "index.ejs"),
       inject: false,
-      minify: {
-        collapseWhitespace: true,
-        conservativeCollapse: true,
-        removeComments: true,
-      },
+      // minify: {
+      //   collapseWhitespace: true,
+      //   conservativeCollapse: true,
+      //   removeComments: true,
+      // },
       template: path.resolve(basePath, "src", "novo", "src", "index.ejs"),
     }),
   ],
@@ -245,5 +187,5 @@ export const novoProductionConfig = {
     modules: [path.resolve(basePath, "src"), "node_modules"],
     symlinks: false,
   },
-  stats: "normal",
+  stats: env.webpackStats || "normal",
 }
