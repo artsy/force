@@ -9,7 +9,7 @@ export type PastAuctions_salesConnection = {
             readonly slug: string;
             readonly name: string | null;
             readonly href: string | null;
-            readonly liveStartAt: string | null;
+            readonly endAt: string | null;
             readonly " $fragmentRefs": FragmentRefs<"AuctionArtworksRail_sale">;
         } | null;
     } | null> | null;
@@ -70,7 +70,7 @@ const node: ReaderFragment = {
               "alias": null,
               "args": null,
               "kind": "ScalarField",
-              "name": "liveStartAt",
+              "name": "endAt",
               "storageKey": null
             },
             {
@@ -87,5 +87,5 @@ const node: ReaderFragment = {
   ],
   "type": "SaleConnection"
 };
-(node as any).hash = 'c7e6f195b9bea4057e79d089dfe89e78';
+(node as any).hash = '0b9c85684771d57adb7a12d8cc8a8e49';
 export default node;

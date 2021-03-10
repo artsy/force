@@ -73,23 +73,16 @@ export const auctionsRoutes = [
         },
         query: graphql`
           query auctionsRoutes_Past_AuctionsQuery {
-            salesConnection(first: 99, published: true, sort: START_AT_ASC) {
+            salesConnection(
+              first: 30
+              published: true
+              live: false
+              sort: START_AT_ASC
+            ) {
               ...PastAuctions_salesConnection
             }
           }
         `,
-        // query: graphql`
-        //   query auctionsRoutes_Past_AuctionsQuery {
-        //     pastAuctions: salesConnection(
-        //       first: 20
-        //       published: true
-        //       live: false
-        //       sort: START_AT_ASC
-        //     ) {
-        //       ...PastAuctions_pastAuctions
-        //     }
-        //   }
-        // `,
       },
     ],
   },

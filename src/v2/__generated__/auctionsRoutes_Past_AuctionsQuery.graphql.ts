@@ -18,7 +18,7 @@ export type auctionsRoutes_Past_AuctionsQuery = {
 
 /*
 query auctionsRoutes_Past_AuctionsQuery {
-  salesConnection(first: 99, published: true, sort: START_AT_ASC) {
+  salesConnection(first: 30, published: true, live: false, sort: START_AT_ASC) {
     ...PastAuctions_salesConnection
   }
 }
@@ -37,7 +37,7 @@ fragment PastAuctions_salesConnection on SaleConnection {
       slug
       name
       href
-      liveStartAt
+      endAt
       ...AuctionArtworksRail_sale
       id
     }
@@ -50,7 +50,12 @@ var v0 = [
   {
     "kind": "Literal",
     "name": "first",
-    "value": 99
+    "value": 30
+  },
+  {
+    "kind": "Literal",
+    "name": "live",
+    "value": false
   },
   {
     "kind": "Literal",
@@ -84,7 +89,7 @@ return {
             "name": "PastAuctions_salesConnection"
           }
         ],
-        "storageKey": "salesConnection(first:99,published:true,sort:\"START_AT_ASC\")"
+        "storageKey": "salesConnection(first:30,live:false,published:true,sort:\"START_AT_ASC\")"
       }
     ],
     "type": "Query"
@@ -144,7 +149,7 @@ return {
                     "alias": null,
                     "args": null,
                     "kind": "ScalarField",
-                    "name": "liveStartAt",
+                    "name": "endAt",
                     "storageKey": null
                   },
                   {
@@ -175,7 +180,7 @@ return {
             "storageKey": null
           }
         ],
-        "storageKey": "salesConnection(first:99,published:true,sort:\"START_AT_ASC\")"
+        "storageKey": "salesConnection(first:30,live:false,published:true,sort:\"START_AT_ASC\")"
       }
     ]
   },
@@ -184,9 +189,9 @@ return {
     "metadata": {},
     "name": "auctionsRoutes_Past_AuctionsQuery",
     "operationKind": "query",
-    "text": "query auctionsRoutes_Past_AuctionsQuery {\n  salesConnection(first: 99, published: true, sort: START_AT_ASC) {\n    ...PastAuctions_salesConnection\n  }\n}\n\nfragment AuctionArtworksRail_sale on Sale {\n  internalID\n  slug\n  href\n  name\n  formattedStartDateTime\n}\n\nfragment PastAuctions_salesConnection on SaleConnection {\n  edges {\n    node {\n      slug\n      name\n      href\n      liveStartAt\n      ...AuctionArtworksRail_sale\n      id\n    }\n  }\n}\n"
+    "text": "query auctionsRoutes_Past_AuctionsQuery {\n  salesConnection(first: 30, published: true, live: false, sort: START_AT_ASC) {\n    ...PastAuctions_salesConnection\n  }\n}\n\nfragment AuctionArtworksRail_sale on Sale {\n  internalID\n  slug\n  href\n  name\n  formattedStartDateTime\n}\n\nfragment PastAuctions_salesConnection on SaleConnection {\n  edges {\n    node {\n      slug\n      name\n      href\n      endAt\n      ...AuctionArtworksRail_sale\n      id\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '0d10abf90bce57d87d2b2a141c5049ae';
+(node as any).hash = '38c2f8954cc1343e94079bf7d52fea01';
 export default node;
