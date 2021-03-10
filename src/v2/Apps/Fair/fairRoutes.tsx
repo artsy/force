@@ -63,51 +63,12 @@ export const fairRoutes: RouteConfig[] = [
         query: graphql`
           query fairRoutes_FairArtworksQuery(
             $slug: String!
-            $acquireable: Boolean
-            $aggregations: [ArtworkAggregation]
-            $artistIDs: [String]
-            $atAuction: Boolean
-            $attributionClass: [String]
-            $colors: [String]
-            $forSale: Boolean
-            $includeArtworksByFollowedArtists: Boolean
-            $inquireableOnly: Boolean
-            $majorPeriods: [String]
-            $medium: String
-            $offerable: Boolean
-            $page: Int
-            $partnerID: ID
-            $priceRange: String
-            $sizes: [ArtworkSizes]
-            $sort: String
+            $input: FilterArtworksInput
             $shouldFetchCounts: Boolean!
-            $additionalGeneIDs: [String]
-            $artistNationalities: [String]
           ) {
             fair(id: $slug) @principalField {
               ...FairArtworks_fair
-                @arguments(
-                  acquireable: $acquireable
-                  aggregations: $aggregations
-                  artistIDs: $artistIDs
-                  atAuction: $atAuction
-                  attributionClass: $attributionClass
-                  colors: $colors
-                  forSale: $forSale
-                  partnerID: $partnerID
-                  includeArtworksByFollowedArtists: $includeArtworksByFollowedArtists
-                  inquireableOnly: $inquireableOnly
-                  majorPeriods: $majorPeriods
-                  medium: $medium
-                  offerable: $offerable
-                  page: $page
-                  priceRange: $priceRange
-                  sizes: $sizes
-                  sort: $sort
-                  shouldFetchCounts: $shouldFetchCounts
-                  additionalGeneIDs: $additionalGeneIDs
-                  artistNationalities: $artistNationalities
-                )
+                @arguments(input: $input, shouldFetchCounts: $shouldFetchCounts)
             }
           }
         `,
@@ -162,7 +123,7 @@ export const fairRoutes: RouteConfig[] = [
   },
 ]
 
-function initializeVariablesWithFilterState(params, props) {
+function initializeVariablesWithFilterState({ slug }, props) {
   const initialFilterStateFromUrl = props.location ? props.location.query : {}
   const camelCasedFilterStateFromUrl = paramsToCamelCase(
     initialFilterStateFromUrl
@@ -173,16 +134,18 @@ function initializeVariablesWithFilterState(params, props) {
   const additionalAggregations = getENV("ENABLE_NEW_ARTWORK_FILTERS")
     ? ["PARTNER", "ARTIST_NATIONALITY"]
     : ["GALLERY"]
-  const state = {
+  const input = {
     sort: "-decayed_merch",
     ...camelCasedFilterStateFromUrl,
-    ...params,
-    aggregations: aggregations.concat(additionalAggregations),
-    shouldFetchCounts: !!props.context.user,
     includeArtworksByFollowedArtists:
       !!props.context.user &&
       camelCasedFilterStateFromUrl["includeArtworksByFollowedArtists"],
+    aggregations: aggregations.concat(additionalAggregations),
   }
 
-  return state
+  return {
+    slug,
+    input,
+    shouldFetchCounts: !!props.context.user,
+  }
 }

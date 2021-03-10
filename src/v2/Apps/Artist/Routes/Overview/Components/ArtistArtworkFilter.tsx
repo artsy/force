@@ -60,30 +60,7 @@ export const ArtistArtworkFilterRefetchContainer = createRefetchContainer(
   {
     artist: graphql`
       fragment ArtistArtworkFilter_artist on Artist
-        @argumentDefinitions(
-          acquireable: { type: "Boolean" }
-          aggregations: { type: "[ArtworkAggregation]" }
-          artistID: { type: "String" }
-          atAuction: { type: "Boolean" }
-          attributionClass: { type: "[String]" }
-          colors: { type: "[String]" }
-          forSale: { type: "Boolean" }
-          additionalGeneIDs: { type: "[String]" }
-          height: { type: "String" }
-          inquireableOnly: { type: "Boolean" }
-          keyword: { type: "String" }
-          majorPeriods: { type: "[String]" }
-          medium: { type: "String", defaultValue: "*" }
-          offerable: { type: "Boolean" }
-          page: { type: "Int" }
-          partnerID: { type: "ID" }
-          partnerIDs: { type: "[String]" }
-          priceRange: { type: "String" }
-          sizes: { type: "[ArtworkSizes]" }
-          sort: { type: "String", defaultValue: "-partner_updated_at" }
-          width: { type: "String" }
-          locationCities: { type: "[String]" }
-        ) {
+        @argumentDefinitions(input: { type: "FilterArtworksInput" }) {
         is_followed: isFollowed
         counts {
           partner_shows: partnerShows
@@ -95,32 +72,7 @@ export const ArtistArtworkFilterRefetchContainer = createRefetchContainer(
         }
         slug
         internalID
-        filtered_artworks: filterArtworksConnection(
-          acquireable: $acquireable
-          aggregations: $aggregations
-          artistID: $artistID
-          atAuction: $atAuction
-          attributionClass: $attributionClass
-          colors: $colors
-          forSale: $forSale
-          additionalGeneIDs: $additionalGeneIDs
-          height: $height
-          inquireableOnly: $inquireableOnly
-          keyword: $keyword
-          majorPeriods: $majorPeriods
-          medium: $medium
-          offerable: $offerable
-          page: $page
-          partnerID: $partnerID
-          partnerIDs: $partnerIDs
-          priceRange: $priceRange
-          sizes: $sizes
-          first: 30
-          after: ""
-          sort: $sort
-          width: $width
-          locationCities: $locationCities
-        ) {
+        filtered_artworks: filterArtworksConnection(input: $input, first: 30) {
           id
           ...ArtworkFilterArtworkGrid_filtered_artworks
         }
@@ -129,55 +81,11 @@ export const ArtistArtworkFilterRefetchContainer = createRefetchContainer(
   },
   graphql`
     query ArtistArtworkFilterQuery(
-      $acquireable: Boolean
-      $aggregations: [ArtworkAggregation]
       $artistID: String!
-      $atAuction: Boolean
-      $attributionClass: [String]
-      $colors: [String]
-      $forSale: Boolean
-      $additionalGeneIDs: [String]
-      $height: String
-      $inquireableOnly: Boolean
-      $keyword: String
-      $majorPeriods: [String]
-      $medium: String
-      $offerable: Boolean
-      $page: Int
-      $partnerID: ID
-      $partnerIDs: [String]
-      $priceRange: String
-      $sizes: [ArtworkSizes]
-      $sort: String
-      $width: String
-      $locationCities: [String]
+      $input: FilterArtworksInput
     ) {
       artist(id: $artistID) {
-        ...ArtistArtworkFilter_artist
-          @arguments(
-            acquireable: $acquireable
-            aggregations: $aggregations
-            artistID: $artistID
-            atAuction: $atAuction
-            attributionClass: $attributionClass
-            colors: $colors
-            forSale: $forSale
-            additionalGeneIDs: $additionalGeneIDs
-            height: $height
-            inquireableOnly: $inquireableOnly
-            keyword: $keyword
-            majorPeriods: $majorPeriods
-            medium: $medium
-            offerable: $offerable
-            page: $page
-            partnerID: $partnerID
-            partnerIDs: $partnerIDs
-            priceRange: $priceRange
-            sizes: $sizes
-            sort: $sort
-            width: $width
-            locationCities: $locationCities
-          )
+        ...ArtistArtworkFilter_artist @arguments(input: $input)
       }
     }
   `

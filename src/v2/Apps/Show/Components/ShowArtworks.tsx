@@ -14,6 +14,7 @@ import { Box, BoxProps } from "@artsy/palette"
 import { useRouter } from "v2/Artsy/Router/useRouter"
 import { getENV } from "v2/Utils/getENV"
 import { ArtistNationalityFilter } from "v2/Components/v2/ArtworkFilter/ArtworkFilters/ArtistNationalityFilter"
+import { omit } from "lodash"
 
 interface ShowArtworksFilterProps extends BoxProps {
   show: ShowArtworks_show
@@ -45,10 +46,13 @@ const ShowArtworksFilter: React.FC<ShowArtworksFilterProps> = ({
   )
 
   // Inject custom default sort into artwork filter.
-  const filters = {
-    sort: "partner_show_position",
-    ...(match && match.location.query),
-  }
+  const filters = omit(
+    {
+      sort: "partner_show_position",
+      ...(match && match.location.query),
+    },
+    "from_show_guide" // TODO: Investigate if we need this param.
+  )
 
   return (
     <ArtworkFilterContextProvider
@@ -84,44 +88,8 @@ export const ShowArtworksRefetchContainer = createRefetchContainer(
   {
     show: graphql`
       fragment ShowArtworks_show on Show
-        @argumentDefinitions(
-          acquireable: { type: "Boolean" }
-          aggregations: { type: "[ArtworkAggregation]" }
-          atAuction: { type: "Boolean" }
-          colors: { type: "[String]" }
-          forSale: { type: "Boolean" }
-          inquireableOnly: { type: "Boolean" }
-          majorPeriods: { type: "[String]" }
-          medium: { type: "String", defaultValue: "*" }
-          offerable: { type: "Boolean" }
-          page: { type: "Int" }
-          partnerID: { type: "ID" }
-          priceRange: { type: "String" }
-          sizes: { type: "[ArtworkSizes]" }
-          sort: { type: "String", defaultValue: "-decayed_merch" }
-          additionalGeneIDs: { type: "[String]" }
-          artistNationalities: { type: "[String]" }
-        ) {
-        filtered_artworks: filterArtworksConnection(
-          acquireable: $acquireable
-          aggregations: $aggregations
-          atAuction: $atAuction
-          colors: $colors
-          forSale: $forSale
-          inquireableOnly: $inquireableOnly
-          majorPeriods: $majorPeriods
-          medium: $medium
-          offerable: $offerable
-          page: $page
-          partnerID: $partnerID
-          priceRange: $priceRange
-          sizes: $sizes
-          first: 20
-          after: ""
-          sort: $sort
-          additionalGeneIDs: $additionalGeneIDs
-          artistNationalities: $artistNationalities
-        ) {
+        @argumentDefinitions(input: { type: "FilterArtworksInput" }) {
+        filtered_artworks: filterArtworksConnection(first: 20, input: $input) {
           id
           ...ArtworkFilterArtworkGrid_filtered_artworks
         }
@@ -129,45 +97,9 @@ export const ShowArtworksRefetchContainer = createRefetchContainer(
     `,
   },
   graphql`
-    query ShowArtworksQuery(
-      $acquireable: Boolean
-      $aggregations: [ArtworkAggregation] = [TOTAL]
-      $slug: String!
-      $atAuction: Boolean
-      $colors: [String]
-      $forSale: Boolean
-      $inquireableOnly: Boolean
-      $majorPeriods: [String]
-      $medium: String
-      $offerable: Boolean
-      $page: Int
-      $partnerID: ID
-      $priceRange: String
-      $sizes: [ArtworkSizes]
-      $sort: String
-      $additionalGeneIDs: [String]
-      $artistNationalities: [String]
-    ) {
+    query ShowArtworksQuery($slug: String!, $input: FilterArtworksInput) {
       show(id: $slug) {
-        ...ShowArtworks_show
-          @arguments(
-            acquireable: $acquireable
-            aggregations: $aggregations
-            atAuction: $atAuction
-            colors: $colors
-            forSale: $forSale
-            inquireableOnly: $inquireableOnly
-            majorPeriods: $majorPeriods
-            medium: $medium
-            offerable: $offerable
-            page: $page
-            partnerID: $partnerID
-            priceRange: $priceRange
-            sizes: $sizes
-            sort: $sort
-            additionalGeneIDs: $additionalGeneIDs
-            artistNationalities: $artistNationalities
-          )
+        ...ShowArtworks_show @arguments(input: $input)
       }
     }
   `

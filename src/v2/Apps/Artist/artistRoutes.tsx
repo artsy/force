@@ -5,16 +5,12 @@ import { graphql } from "react-relay"
 
 import { hasSections as showMarketInsights } from "v2/Apps/Artist/Components/MarketInsights/MarketInsights"
 
-import { isDefaultFilter } from "v2/Components/v2/ArtworkFilter/Utils/isDefaultFilter"
 import { paramsToCamelCase } from "v2/Components/v2/ArtworkFilter/Utils/urlBuilder"
 import { getENV } from "v2/Utils/getENV"
 
 import { hasOverviewContent } from "./Components/NavigationTabs"
 
-import {
-  ArtworkFilters,
-  initialArtworkFilterState,
-} from "v2/Components/v2/ArtworkFilter/ArtworkFilterContext"
+import { initialArtworkFilterState } from "v2/Components/v2/ArtworkFilter/ArtworkFilterContext"
 
 graphql`
   fragment artistRoutes_Artist on Artist {
@@ -120,7 +116,7 @@ export const artistRoutes: RouteConfig[] = [
         prepare: () => {
           WorksForSaleRoute.preload()
         },
-        prepareVariables: (params, props) => {
+        prepareVariables: ({ artistID }, props) => {
           // FIXME: The initial render includes `location` in props, but subsequent
           // renders (such as tabbing back to this route in your browser) will not.
           const filterStateFromUrl = props.location ? props.location.query : {}
@@ -128,14 +124,13 @@ export const artistRoutes: RouteConfig[] = [
           const filterParams = {
             ...initialArtworkFilterState,
             ...paramsToCamelCase(filterStateFromUrl),
-            ...params,
           }
 
-          filterParams.hasFilter = Object.entries(filterParams).some(
-            ([k, v]: [keyof ArtworkFilters, any]) => {
-              return !isDefaultFilter(k, v)
-            }
-          )
+          // filterParams.hasFilter = Object.entries(filterParams).some(
+          //   ([k, v]: [keyof ArtworkFilters, any]) => {
+          //     return !isDefaultFilter(k, v)
+          //   }
+          // )
 
           const aggregations = ["MEDIUM", "TOTAL", "MAJOR_PERIOD"]
           const additionalAggregations = getENV("ENABLE_NEW_ARTWORK_FILTERS")
@@ -143,61 +138,20 @@ export const artistRoutes: RouteConfig[] = [
             : ["GALLERY", "INSTITUTION"]
 
           return {
-            ...filterParams,
-            aggregations: aggregations.concat(additionalAggregations),
+            input: {
+              ...filterParams,
+              aggregations: aggregations.concat(additionalAggregations),
+            },
+            artistID,
           }
         },
         query: graphql`
           query artistRoutes_WorksQuery(
-            $acquireable: Boolean
-            $aggregations: [ArtworkAggregation]
             $artistID: String!
-            $atAuction: Boolean
-            $attributionClass: [String]
-            $colors: [String]
-            $forSale: Boolean
-            $height: String
-            $inquireableOnly: Boolean
-            $keyword: String
-            $majorPeriods: [String]
-            $medium: String
-            $offerable: Boolean
-            $page: Int
-            $partnerID: ID
-            $partnerIDs: [String]
-            $priceRange: String
-            $sizes: [ArtworkSizes]
-            $sort: String
-            $width: String
-            $locationCities: [String]
-            $additionalGeneIDs: [String]
+            $input: FilterArtworksInput
           ) @raw_response_type {
             artist(id: $artistID) {
-              ...Works_artist
-                @arguments(
-                  acquireable: $acquireable
-                  aggregations: $aggregations
-                  artistID: $artistID
-                  atAuction: $atAuction
-                  attributionClass: $attributionClass
-                  colors: $colors
-                  forSale: $forSale
-                  height: $height
-                  inquireableOnly: $inquireableOnly
-                  keyword: $keyword
-                  majorPeriods: $majorPeriods
-                  medium: $medium
-                  offerable: $offerable
-                  page: $page
-                  partnerID: $partnerID
-                  partnerIDs: $partnerIDs
-                  priceRange: $priceRange
-                  sizes: $sizes
-                  sort: $sort
-                  width: $width
-                  locationCities: $locationCities
-                  additionalGeneIDs: $additionalGeneIDs
-                )
+              ...Works_artist @arguments(input: $input)
             }
           }
         `,
