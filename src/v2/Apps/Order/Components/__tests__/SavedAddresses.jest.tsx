@@ -26,7 +26,7 @@ describe("Saved Addresses mutations", () => {
     defaultData: userAddressMutation,
     TestPage: SavedAddressesTestPage,
     query: graphql`
-      query SavedAddresses_Test_Query {
+      query SavedAddressesMutation_Test_Query {
         me {
           ...SavedAddresses_me
         }
