@@ -54,17 +54,25 @@ export const auctionsRoutes = [
           UpcomingAuctions.preload()
         },
         query: graphql`
-          query auctionsRoutes_Upcoming_AuctionsQuery {
-            upcomingAuctions: salesConnection(
-              first: 99
-              published: true
-              sort: START_AT_ASC
-            ) {
-              ...UpcomingAuctions_upcomingAuctions
+          query auctionsRoutes_Current_AuctionsQuery {
+            salesConnection(first: 99, published: true, sort: START_AT_ASC) {
+              ...CurrentAuctions_salesConnection
             }
           }
         `,
       },
+      //   query: graphql`
+      //     query auctionsRoutes_Upcoming_AuctionsQuery {
+      //       upcomingAuctions: salesConnection(
+      //         first: 99
+      //         published: true
+      //         sort: START_AT_ASC
+      //       ) {
+      //         ...UpcomingAuctions_upcomingAuctions
+      //       }
+      //     }
+      //   `,
+      // },
       {
         path: "past",
         getComponent: () => PastAuctions,

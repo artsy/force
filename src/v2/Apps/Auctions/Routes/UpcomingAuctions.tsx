@@ -3,20 +3,24 @@ import { Box, Text, Separator } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 
 import { UpcomingAuctions_upcomingAuctions } from "v2/__generated__/UpcomingAuctions_upcomingAuctions.graphql"
+import { CurrentAuctions_salesConnection } from "v2/__generated__/CurrentAuctions_salesConnection.graphql"
+import { AuctionArtworksRailFragmentContainer } from "../Components/AuctionArtworksRail/AuctionArtworksRail"
 
 export interface UpcomingAuctionsProps {
-  upcomingAuctions: UpcomingAuctions_upcomingAuctions
+  salesConnection: CurrentAuctions_salesConnection
 }
 
 const UpcomingAuctions: React.FC<UpcomingAuctionsProps> = ({
-  upcomingAuctions,
+  salesConnection,
 }) => {
   return (
     <Box>
-      <Text variant="largeTitle">Upcoming Auctions</Text>
-      <Separator mt={1} mb={3} />
-      {upcomingAuctions.edges.map(({ node }, index) => {
-        return <Box my={4} key={index}></Box>
+      {salesConnection.edges.map(({ node }, index) => {
+        return (
+          <Box my={4} key={index}>
+            <AuctionArtworksRailFragmentContainer sale={node} />
+          </Box>
+        )
       })}
     </Box>
   )
@@ -25,11 +29,15 @@ const UpcomingAuctions: React.FC<UpcomingAuctionsProps> = ({
 export const UpcomingAuctionsFragmentContainer = createFragmentContainer(
   UpcomingAuctions,
   {
-    upcomingAuctions: graphql`
-      fragment UpcomingAuctions_upcomingAuctions on SaleConnection {
+    salesConnection: graphql`
+      fragment CurrentAuctions_salesConnection on SaleConnection {
         edges {
           node {
-            id
+            slug
+            name
+            href
+            liveStartAt
+            ...AuctionArtworksRail_sale
           }
         }
       }
