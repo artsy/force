@@ -1,13 +1,12 @@
 import React from "react"
-import { Box, Text, Separator } from "@artsy/palette"
+import { Box } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 
-import { UpcomingAuctions_upcomingAuctions } from "v2/__generated__/UpcomingAuctions_upcomingAuctions.graphql"
-import { CurrentAuctions_salesConnection } from "v2/__generated__/CurrentAuctions_salesConnection.graphql"
+import { UpcomingAuctions_salesConnection } from "v2/__generated__/UpcomingAuctions_salesConnection.graphql"
 import { AuctionArtworksRailFragmentContainer } from "../Components/AuctionArtworksRail/AuctionArtworksRail"
 
 export interface UpcomingAuctionsProps {
-  salesConnection: CurrentAuctions_salesConnection
+  salesConnection: UpcomingAuctions_salesConnection
 }
 
 const UpcomingAuctions: React.FC<UpcomingAuctionsProps> = ({
@@ -30,13 +29,15 @@ export const UpcomingAuctionsFragmentContainer = createFragmentContainer(
   UpcomingAuctions,
   {
     salesConnection: graphql`
-      fragment CurrentAuctions_salesConnection on SaleConnection {
+      fragment UpcomingAuctions_salesConnection on SaleConnection {
         edges {
           node {
             slug
             name
             href
-            liveStartAt
+            status
+            formattedStartDateTime
+            eventStartAt
             ...AuctionArtworksRail_sale
           }
         }

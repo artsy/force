@@ -5,8 +5,8 @@ import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type auctionsRoutes_Upcoming_AuctionsQueryVariables = {};
 export type auctionsRoutes_Upcoming_AuctionsQueryResponse = {
-    readonly upcomingAuctions: {
-        readonly " $fragmentRefs": FragmentRefs<"UpcomingAuctions_upcomingAuctions">;
+    readonly salesConnection: {
+        readonly " $fragmentRefs": FragmentRefs<"UpcomingAuctions_salesConnection">;
     } | null;
 };
 export type auctionsRoutes_Upcoming_AuctionsQuery = {
@@ -18,14 +18,29 @@ export type auctionsRoutes_Upcoming_AuctionsQuery = {
 
 /*
 query auctionsRoutes_Upcoming_AuctionsQuery {
-  upcomingAuctions: salesConnection(first: 99, published: true, sort: START_AT_ASC) {
-    ...UpcomingAuctions_upcomingAuctions
+  salesConnection(first: 99, live: true, published: false, sort: END_AT_ASC) {
+    ...UpcomingAuctions_salesConnection
   }
 }
 
-fragment UpcomingAuctions_upcomingAuctions on SaleConnection {
+fragment AuctionArtworksRail_sale on Sale {
+  internalID
+  slug
+  href
+  name
+  formattedStartDateTime
+}
+
+fragment UpcomingAuctions_salesConnection on SaleConnection {
   edges {
     node {
+      slug
+      name
+      href
+      status
+      formattedStartDateTime
+      eventStartAt
+      ...AuctionArtworksRail_sale
       id
     }
   }
@@ -41,13 +56,18 @@ var v0 = [
   },
   {
     "kind": "Literal",
-    "name": "published",
+    "name": "live",
     "value": true
   },
   {
     "kind": "Literal",
+    "name": "published",
+    "value": false
+  },
+  {
+    "kind": "Literal",
     "name": "sort",
-    "value": "START_AT_ASC"
+    "value": "END_AT_ASC"
   }
 ];
 return {
@@ -58,7 +78,7 @@ return {
     "name": "auctionsRoutes_Upcoming_AuctionsQuery",
     "selections": [
       {
-        "alias": "upcomingAuctions",
+        "alias": null,
         "args": (v0/*: any*/),
         "concreteType": "SaleConnection",
         "kind": "LinkedField",
@@ -68,10 +88,10 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "UpcomingAuctions_upcomingAuctions"
+            "name": "UpcomingAuctions_salesConnection"
           }
         ],
-        "storageKey": "salesConnection(first:99,published:true,sort:\"START_AT_ASC\")"
+        "storageKey": "salesConnection(first:99,live:true,published:false,sort:\"END_AT_ASC\")"
       }
     ],
     "type": "Query"
@@ -83,7 +103,7 @@ return {
     "name": "auctionsRoutes_Upcoming_AuctionsQuery",
     "selections": [
       {
-        "alias": "upcomingAuctions",
+        "alias": null,
         "args": (v0/*: any*/),
         "concreteType": "SaleConnection",
         "kind": "LinkedField",
@@ -110,6 +130,55 @@ return {
                     "alias": null,
                     "args": null,
                     "kind": "ScalarField",
+                    "name": "slug",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "name",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "href",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "status",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "formattedStartDateTime",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "eventStartAt",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "internalID",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
                     "name": "id",
                     "storageKey": null
                   }
@@ -120,7 +189,7 @@ return {
             "storageKey": null
           }
         ],
-        "storageKey": "salesConnection(first:99,published:true,sort:\"START_AT_ASC\")"
+        "storageKey": "salesConnection(first:99,live:true,published:false,sort:\"END_AT_ASC\")"
       }
     ]
   },
@@ -129,9 +198,9 @@ return {
     "metadata": {},
     "name": "auctionsRoutes_Upcoming_AuctionsQuery",
     "operationKind": "query",
-    "text": "query auctionsRoutes_Upcoming_AuctionsQuery {\n  upcomingAuctions: salesConnection(first: 99, published: true, sort: START_AT_ASC) {\n    ...UpcomingAuctions_upcomingAuctions\n  }\n}\n\nfragment UpcomingAuctions_upcomingAuctions on SaleConnection {\n  edges {\n    node {\n      id\n    }\n  }\n}\n"
+    "text": "query auctionsRoutes_Upcoming_AuctionsQuery {\n  salesConnection(first: 99, live: true, published: false, sort: END_AT_ASC) {\n    ...UpcomingAuctions_salesConnection\n  }\n}\n\nfragment AuctionArtworksRail_sale on Sale {\n  internalID\n  slug\n  href\n  name\n  formattedStartDateTime\n}\n\nfragment UpcomingAuctions_salesConnection on SaleConnection {\n  edges {\n    node {\n      slug\n      name\n      href\n      status\n      formattedStartDateTime\n      eventStartAt\n      ...AuctionArtworksRail_sale\n      id\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '14dd637a87c0f8035a46ebb135ef9d1e';
+(node as any).hash = '6488d948222619c17f6b50719d32cf09';
 export default node;
