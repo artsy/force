@@ -75,7 +75,7 @@ export const auctionsRoutes = [
           query auctionsRoutes_Past_AuctionsQuery {
             salesConnection(
               first: 30
-              published: true
+              published: false
               live: false
               sort: START_AT_ASC
             ) {
