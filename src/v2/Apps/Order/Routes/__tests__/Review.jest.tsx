@@ -42,7 +42,7 @@ jest.mock("@stripe/stripe-js", () => {
       return mock
     },
     _mockStripe: () => mock,
-    _mockReset: () => mock = mockStripe(),
+    _mockReset: () => (mock = mockStripe()),
   }
 })
 
@@ -197,7 +197,7 @@ describe("Review", () => {
 
     it("shows an active offer stepper if the order is an Offer Order", () => {
       expect(page.orderStepper.text()).toMatchInlineSnapshot(
-        `"CheckOffer Navigate rightCheckShipping Navigate rightCheckPayment Navigate rightReview"`
+        `"CheckOfferNavigate rightCheckShippingNavigate rightCheckPaymentNavigate rightReview"`
       )
       expect(page.orderStepperCurrentStep).toBe("Review")
     })
