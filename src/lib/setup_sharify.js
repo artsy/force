@@ -99,7 +99,8 @@ sharify.data = _.extend(
     "THIRD_PARTIES_DISABLED",
     "TRACK_PAGELOAD_PATHS",
     "VOLLEY_ENDPOINT",
-    "WEBFONT_URL"
+    "WEBFONT_URL",
+    "ZENDESK_KEY"
   ),
   {
     CSS_EXT: ["production", "staging"].includes(config.NODE_ENV)

@@ -52,6 +52,7 @@ declare module "sharify" {
       readonly VOLLEY_ENDPOINT: string
       readonly WEBFONT_URL: string
       readonly XAPP_TOKEN: string
+      readonly ZENDESK_KEY: string
 
       // FORCE Tokens
       AP: {
