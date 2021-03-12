@@ -10,13 +10,14 @@ import { RouterState, withRouter } from "found"
 import React from "react"
 import { Meta, Title } from "react-head"
 import { graphql } from "react-relay"
-import { loadStripe } from '@stripe/stripe-js'
+import { loadStripe } from "@stripe/stripe-js"
 import { Elements } from "@stripe/react-stripe-js"
 import styled from "styled-components"
 import { get } from "v2/Utils/get"
 import { ConnectedModalDialog } from "./Dialogs"
 import { Mediator } from "lib/mediator"
 import { data as sd } from "sharify"
+import { ZendeskWrapper } from "v2/Components/ZendeskWrapper"
 
 export interface OrderAppProps extends RouterState {
   params: {
@@ -38,6 +39,11 @@ class OrderApp extends React.Component<OrderAppProps, {}> {
     }
 
     window.addEventListener("beforeunload", this.preventHardReload)
+
+    // zEmbed represents the Zendesk object
+    if (window.zEmbed) {
+      window.zEmbed.show()
+    }
   }
 
   componentWillUnmount() {
@@ -46,6 +52,11 @@ class OrderApp extends React.Component<OrderAppProps, {}> {
     }
 
     window.removeEventListener("beforeunload", this.preventHardReload)
+
+    // zEmbed represents the Zendesk object
+    if (window.zEmbed) {
+      window.zEmbed.hide()
+    }
   }
 
   preventHardReload = event => {
@@ -69,6 +80,12 @@ class OrderApp extends React.Component<OrderAppProps, {}> {
     return true
   }
 
+  renderZendeskScript() {
+    if (typeof window !== "undefined" && window.zEmbed) return
+
+    return <ZendeskWrapper />
+  }
+
   render() {
     const { children, order } = this.props
     let artworkId
@@ -87,7 +104,7 @@ class OrderApp extends React.Component<OrderAppProps, {}> {
       )
     }
 
-    const stripePromise = loadStripe(sd.STRIPE_PUBLISHABLE_KEY);
+    const stripePromise = loadStripe(sd.STRIPE_PUBLISHABLE_KEY)
     return (
       <SystemContextConsumer>
         {({ isEigen, mediator }) => {
@@ -107,6 +124,7 @@ class OrderApp extends React.Component<OrderAppProps, {}> {
                     content="width=device-width, initial-scale=1, maximum-scale=5 viewport-fit=cover"
                   />
                 )}
+                {!isEigen && this.renderZendeskScript()}
                 <SafeAreaContainer>
                   <Elements stripe={stripePromise}>
                     <>{children}</>
