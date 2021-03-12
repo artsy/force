@@ -6,7 +6,7 @@ const AuctionsApp = loadable(() => import("./AuctionsApp"), {
 })
 
 const CurrentAuctions = loadable(() => import("./Routes/CurrentAuctions"), {
-  resolveComponent: component => component.CurrentAuctionsFragmentContainer,
+  resolveComponent: component => component.CurrentAuctionsPaginationContainer,
 })
 
 const UpcomingAuctions = loadable(() => import("./Routes/UpcomingAuctions"), {
@@ -41,8 +41,10 @@ export const auctionsRoutes = [
         },
         query: graphql`
           query auctionsRoutes_Current_AuctionsQuery {
-            salesConnection(first: 99, published: true, sort: START_AT_ASC) {
-              ...CurrentAuctions_salesConnection
+            viewer {
+              ...CurrentAuctions_viewer
+              # salesConnection(first: 25, published: true, sort: START_AT_ASC) {
+              # }
             }
           }
         `,
@@ -56,7 +58,7 @@ export const auctionsRoutes = [
         query: graphql`
           query auctionsRoutes_Upcoming_AuctionsQuery {
             salesConnection(
-              first: 99
+              first: 25
               live: true
               published: false
               sort: END_AT_ASC
@@ -75,7 +77,7 @@ export const auctionsRoutes = [
         query: graphql`
           query auctionsRoutes_Past_AuctionsQuery {
             salesConnection(
-              first: 30
+              first: 25
               published: false
               live: false
               sort: START_AT_ASC

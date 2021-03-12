@@ -18,7 +18,7 @@ export type auctionsRoutes_Past_AuctionsQuery = {
 
 /*
 query auctionsRoutes_Past_AuctionsQuery {
-  salesConnection(first: 30, published: false, live: false, sort: START_AT_ASC) {
+  salesConnection(first: 25, published: false, live: false, sort: START_AT_ASC) {
     ...PastAuctions_salesConnection
   }
 }
@@ -50,7 +50,7 @@ var v0 = [
   {
     "kind": "Literal",
     "name": "first",
-    "value": 30
+    "value": 25
   },
   {
     "kind": "Literal",
@@ -89,7 +89,7 @@ return {
             "name": "PastAuctions_salesConnection"
           }
         ],
-        "storageKey": "salesConnection(first:30,live:false,published:false,sort:\"START_AT_ASC\")"
+        "storageKey": "salesConnection(first:25,live:false,published:false,sort:\"START_AT_ASC\")"
       }
     ],
     "type": "Query"
@@ -180,7 +180,7 @@ return {
             "storageKey": null
           }
         ],
-        "storageKey": "salesConnection(first:30,live:false,published:false,sort:\"START_AT_ASC\")"
+        "storageKey": "salesConnection(first:25,live:false,published:false,sort:\"START_AT_ASC\")"
       }
     ]
   },
@@ -189,9 +189,9 @@ return {
     "metadata": {},
     "name": "auctionsRoutes_Past_AuctionsQuery",
     "operationKind": "query",
-    "text": "query auctionsRoutes_Past_AuctionsQuery {\n  salesConnection(first: 30, published: false, live: false, sort: START_AT_ASC) {\n    ...PastAuctions_salesConnection\n  }\n}\n\nfragment AuctionArtworksRail_sale on Sale {\n  internalID\n  slug\n  href\n  name\n  formattedStartDateTime\n}\n\nfragment PastAuctions_salesConnection on SaleConnection {\n  edges {\n    node {\n      slug\n      name\n      href\n      endAt\n      ...AuctionArtworksRail_sale\n      id\n    }\n  }\n}\n"
+    "text": "query auctionsRoutes_Past_AuctionsQuery {\n  salesConnection(first: 25, published: false, live: false, sort: START_AT_ASC) {\n    ...PastAuctions_salesConnection\n  }\n}\n\nfragment AuctionArtworksRail_sale on Sale {\n  internalID\n  slug\n  href\n  name\n  formattedStartDateTime\n}\n\nfragment PastAuctions_salesConnection on SaleConnection {\n  edges {\n    node {\n      slug\n      name\n      href\n      endAt\n      ...AuctionArtworksRail_sale\n      id\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'b3b3dd6e22e8373f4d10c5edb8d823af';
+(node as any).hash = 'e0bb13c0fd204c76cdf8675321cb27aa';
 export default node;

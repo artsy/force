@@ -18,7 +18,7 @@ export type auctionsRoutes_Upcoming_AuctionsQuery = {
 
 /*
 query auctionsRoutes_Upcoming_AuctionsQuery {
-  salesConnection(first: 99, live: true, published: false, sort: END_AT_ASC) {
+  salesConnection(first: 25, live: true, published: false, sort: END_AT_ASC) {
     ...UpcomingAuctions_salesConnection
   }
 }
@@ -52,7 +52,7 @@ var v0 = [
   {
     "kind": "Literal",
     "name": "first",
-    "value": 99
+    "value": 25
   },
   {
     "kind": "Literal",
@@ -91,7 +91,7 @@ return {
             "name": "UpcomingAuctions_salesConnection"
           }
         ],
-        "storageKey": "salesConnection(first:99,live:true,published:false,sort:\"END_AT_ASC\")"
+        "storageKey": "salesConnection(first:25,live:true,published:false,sort:\"END_AT_ASC\")"
       }
     ],
     "type": "Query"
@@ -189,7 +189,7 @@ return {
             "storageKey": null
           }
         ],
-        "storageKey": "salesConnection(first:99,live:true,published:false,sort:\"END_AT_ASC\")"
+        "storageKey": "salesConnection(first:25,live:true,published:false,sort:\"END_AT_ASC\")"
       }
     ]
   },
@@ -198,9 +198,9 @@ return {
     "metadata": {},
     "name": "auctionsRoutes_Upcoming_AuctionsQuery",
     "operationKind": "query",
-    "text": "query auctionsRoutes_Upcoming_AuctionsQuery {\n  salesConnection(first: 99, live: true, published: false, sort: END_AT_ASC) {\n    ...UpcomingAuctions_salesConnection\n  }\n}\n\nfragment AuctionArtworksRail_sale on Sale {\n  internalID\n  slug\n  href\n  name\n  formattedStartDateTime\n}\n\nfragment UpcomingAuctions_salesConnection on SaleConnection {\n  edges {\n    node {\n      slug\n      name\n      href\n      status\n      formattedStartDateTime\n      eventStartAt\n      ...AuctionArtworksRail_sale\n      id\n    }\n  }\n}\n"
+    "text": "query auctionsRoutes_Upcoming_AuctionsQuery {\n  salesConnection(first: 25, live: true, published: false, sort: END_AT_ASC) {\n    ...UpcomingAuctions_salesConnection\n  }\n}\n\nfragment AuctionArtworksRail_sale on Sale {\n  internalID\n  slug\n  href\n  name\n  formattedStartDateTime\n}\n\nfragment UpcomingAuctions_salesConnection on SaleConnection {\n  edges {\n    node {\n      slug\n      name\n      href\n      status\n      formattedStartDateTime\n      eventStartAt\n      ...AuctionArtworksRail_sale\n      id\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '6488d948222619c17f6b50719d32cf09';
+(node as any).hash = 'c91583182ed4335ec9cdaf69b09e887a';
 export default node;
