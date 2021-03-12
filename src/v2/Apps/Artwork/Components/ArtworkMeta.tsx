@@ -7,6 +7,7 @@ import { get } from "v2/Utils/get"
 
 import { withSystemContext } from "v2/Artsy"
 import { SeoDataForArtworkFragmentContainer as SeoDataForArtwork } from "./Seo/SeoDataForArtwork"
+import { ZendeskWrapper } from "v2/Components/ZendeskWrapper"
 
 interface ArtworkMetaProps {
   artwork: ArtworkMeta_artwork
@@ -14,6 +15,19 @@ interface ArtworkMetaProps {
 }
 
 export class ArtworkMeta extends Component<ArtworkMetaProps> {
+  componentDidMount() {
+    // zEmbed represents the Zendesk object
+    if (window.zEmbed) {
+      window.zEmbed.show()
+    }
+  }
+
+  componentWillUnmount() {
+    if (window.zEmbed) {
+      window.zEmbed.hide()
+    }
+  }
+
   renderImageMetaTags() {
     const { artwork } = this.props
     const { meta_image, is_shareable } = artwork
@@ -111,6 +125,14 @@ export class ArtworkMeta extends Component<ArtworkMetaProps> {
     )
   }
 
+  renderZendeskScript() {
+    const { artwork } = this.props
+    if (artwork.is_in_auction || !artwork.is_acquireable) return
+    if (typeof window !== "undefined" && window.zEmbed) return
+
+    return <ZendeskWrapper />
+  }
+
   render() {
     const { artwork } = this.props
     const imageURL = get(artwork, a => a.meta_image.resized.url)
@@ -137,6 +159,7 @@ export class ArtworkMeta extends Component<ArtworkMetaProps> {
         {this.renderImageMetaTags()}
         {this.renderSailthruTags()}
         {this.renderGoogleAdSnippet()}
+        {this.renderZendeskScript()}
       </>
     )
   }

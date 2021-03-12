@@ -15794,6 +15794,13 @@ react-waypoint@^7.3.3:
     consolidated-events "^1.1.0"
     prop-types "^15.0.0"
 
+react-zendesk@^0.1.10:
+  version "0.1.10"
+  resolved "https://registry.yarnpkg.com/react-zendesk/-/react-zendesk-0.1.10.tgz#3f2ebe45e06b006b2ceadc09af7bed58cdd015b2"
+  integrity sha512-QDqHfk2tK1QzWubOnNEWxmyexKIXV3j0w7LjZ161z2K2DmkaPErIDwtBokQVgvzDvM7S657S2DbQY9vIYQsf0g==
+  dependencies:
+    prop-types "^15.7.2"
+
 react@16.8.6:
   version "16.8.6"
   resolved "https://registry.yarnpkg.com/react/-/react-16.8.6.tgz#ad6c3a9614fd3a4e9ef51117f54d888da01f2bbe"
