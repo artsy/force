@@ -3,7 +3,7 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type UpcomingAuctions_viewer = {
+export type PastAuctions_viewer = {
     readonly salesConnection: {
         readonly totalCount: number | null;
         readonly edges: ReadonlyArray<{
@@ -11,19 +11,17 @@ export type UpcomingAuctions_viewer = {
                 readonly slug: string;
                 readonly name: string | null;
                 readonly href: string | null;
-                readonly status: string | null;
-                readonly formattedStartDateTime: string | null;
-                readonly eventStartAt: string | null;
+                readonly endAt: string | null;
                 readonly " $fragmentRefs": FragmentRefs<"AuctionArtworksRail_sale">;
             } | null;
         } | null> | null;
     } | null;
-    readonly " $refType": "UpcomingAuctions_viewer";
+    readonly " $refType": "PastAuctions_viewer";
 };
-export type UpcomingAuctions_viewer$data = UpcomingAuctions_viewer;
-export type UpcomingAuctions_viewer$key = {
-    readonly " $data"?: UpcomingAuctions_viewer$data;
-    readonly " $fragmentRefs": FragmentRefs<"UpcomingAuctions_viewer">;
+export type PastAuctions_viewer$data = PastAuctions_viewer;
+export type PastAuctions_viewer$key = {
+    readonly " $data"?: PastAuctions_viewer$data;
+    readonly " $fragmentRefs": FragmentRefs<"PastAuctions_viewer">;
 };
 
 
@@ -56,7 +54,7 @@ const node: ReaderFragment = {
       }
     ]
   },
-  "name": "UpcomingAuctions_viewer",
+  "name": "PastAuctions_viewer",
   "selections": [
     {
       "alias": "salesConnection",
@@ -64,7 +62,7 @@ const node: ReaderFragment = {
         {
           "kind": "Literal",
           "name": "live",
-          "value": true
+          "value": false
         },
         {
           "kind": "Literal",
@@ -74,12 +72,12 @@ const node: ReaderFragment = {
         {
           "kind": "Literal",
           "name": "sort",
-          "value": "END_AT_ASC"
+          "value": "START_AT_ASC"
         }
       ],
       "concreteType": "SaleConnection",
       "kind": "LinkedField",
-      "name": "__UpcomingAuctions_salesConnection_connection",
+      "name": "__PastAuctions_salesConnection_connection",
       "plural": false,
       "selections": [
         {
@@ -130,21 +128,7 @@ const node: ReaderFragment = {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
-                  "name": "status",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "formattedStartDateTime",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "eventStartAt",
+                  "name": "endAt",
                   "storageKey": null
                 },
                 {
@@ -198,10 +182,10 @@ const node: ReaderFragment = {
           "storageKey": null
         }
       ],
-      "storageKey": "__UpcomingAuctions_salesConnection_connection(live:true,published:false,sort:\"END_AT_ASC\")"
+      "storageKey": "__PastAuctions_salesConnection_connection(live:false,published:false,sort:\"START_AT_ASC\")"
     }
   ],
   "type": "Viewer"
 };
-(node as any).hash = 'fd4828e32861f80fb4d3836c0d2dce22';
+(node as any).hash = 'ed433be15fb4999bc429159eba18cecf';
 export default node;

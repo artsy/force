@@ -61,6 +61,11 @@ const node: ReaderFragment = {
       "args": [
         {
           "kind": "Literal",
+          "name": "live",
+          "value": true
+        },
+        {
+          "kind": "Literal",
           "name": "published",
           "value": true
         },
@@ -177,10 +182,10 @@ const node: ReaderFragment = {
           "storageKey": null
         }
       ],
-      "storageKey": "__CurrentAuctions_salesConnection_connection(published:true,sort:\"START_AT_ASC\")"
+      "storageKey": "__CurrentAuctions_salesConnection_connection(live:true,published:true,sort:\"START_AT_ASC\")"
     }
   ],
   "type": "Viewer"
 };
-(node as any).hash = '2edf08f0417e0aecb75ff1da58b693bf';
+(node as any).hash = '64b36f368fa032011dd93431f6b0d13f';
 export default node;

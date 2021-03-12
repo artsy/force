@@ -32,14 +32,16 @@ fragment AuctionArtworksRail_sale on Sale {
 }
 
 fragment UpcomingAuctions_viewer on Viewer {
-  salesConnection(first: 15, published: true, sort: START_AT_ASC) {
+  salesConnection(first: 15, live: true, published: false, sort: END_AT_ASC) {
     totalCount
     edges {
       node {
         slug
         name
         href
-        liveStartAt
+        status
+        formattedStartDateTime
+        eventStartAt
         ...AuctionArtworksRail_sale
         id
         __typename
@@ -63,13 +65,18 @@ var v0 = [
   },
   {
     "kind": "Literal",
-    "name": "published",
+    "name": "live",
     "value": true
   },
   {
     "kind": "Literal",
+    "name": "published",
+    "value": false
+  },
+  {
+    "kind": "Literal",
     "name": "sort",
-    "value": "START_AT_ASC"
+    "value": "END_AT_ASC"
   }
 ];
 return {
@@ -168,14 +175,7 @@ return {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
-                        "name": "liveStartAt",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "internalID",
+                        "name": "status",
                         "storageKey": null
                       },
                       {
@@ -183,6 +183,20 @@ return {
                         "args": null,
                         "kind": "ScalarField",
                         "name": "formattedStartDateTime",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "eventStartAt",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "internalID",
                         "storageKey": null
                       },
                       {
@@ -238,12 +252,13 @@ return {
                 "storageKey": null
               }
             ],
-            "storageKey": "salesConnection(first:15,published:true,sort:\"START_AT_ASC\")"
+            "storageKey": "salesConnection(first:15,live:true,published:false,sort:\"END_AT_ASC\")"
           },
           {
             "alias": null,
             "args": (v0/*: any*/),
             "filters": [
+              "live",
               "published",
               "sort"
             ],
@@ -262,7 +277,7 @@ return {
     "metadata": {},
     "name": "auctionsRoutes_Upcoming_AuctionsQuery",
     "operationKind": "query",
-    "text": "query auctionsRoutes_Upcoming_AuctionsQuery {\n  viewer {\n    ...UpcomingAuctions_viewer\n  }\n}\n\nfragment AuctionArtworksRail_sale on Sale {\n  internalID\n  slug\n  href\n  name\n  formattedStartDateTime\n}\n\nfragment UpcomingAuctions_viewer on Viewer {\n  salesConnection(first: 15, published: true, sort: START_AT_ASC) {\n    totalCount\n    edges {\n      node {\n        slug\n        name\n        href\n        liveStartAt\n        ...AuctionArtworksRail_sale\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query auctionsRoutes_Upcoming_AuctionsQuery {\n  viewer {\n    ...UpcomingAuctions_viewer\n  }\n}\n\nfragment AuctionArtworksRail_sale on Sale {\n  internalID\n  slug\n  href\n  name\n  formattedStartDateTime\n}\n\nfragment UpcomingAuctions_viewer on Viewer {\n  salesConnection(first: 15, live: true, published: false, sort: END_AT_ASC) {\n    totalCount\n    edges {\n      node {\n        slug\n        name\n        href\n        status\n        formattedStartDateTime\n        eventStartAt\n        ...AuctionArtworksRail_sale\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();

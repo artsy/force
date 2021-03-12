@@ -14,7 +14,7 @@ const UpcomingAuctions = loadable(() => import("./Routes/UpcomingAuctions"), {
 })
 
 const PastAuctions = loadable(() => import("./Routes/PastAuctions"), {
-  resolveComponent: component => component.PastAuctionsFragmentContainer,
+  resolveComponent: component => component.PastAuctionsPaginationContainer,
 })
 
 export const auctionsRoutes = [
@@ -69,13 +69,8 @@ export const auctionsRoutes = [
         },
         query: graphql`
           query auctionsRoutes_Past_AuctionsQuery {
-            salesConnection(
-              first: 25
-              published: false
-              live: false
-              sort: START_AT_ASC
-            ) {
-              ...PastAuctions_salesConnection
+            viewer {
+              ...PastAuctions_viewer
             }
           }
         `,

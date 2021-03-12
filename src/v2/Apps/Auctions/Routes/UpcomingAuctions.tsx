@@ -86,8 +86,9 @@ export const UpcomingAuctionsPaginationContainer = createPaginationContainer(
         salesConnection(
           first: $first
           after: $after
-          published: true
-          sort: START_AT_ASC
+          live: true
+          published: false
+          sort: END_AT_ASC
         ) @connection(key: "UpcomingAuctions_salesConnection") {
           totalCount
           edges {
@@ -95,7 +96,9 @@ export const UpcomingAuctionsPaginationContainer = createPaginationContainer(
               slug
               name
               href
-              liveStartAt
+              status
+              formattedStartDateTime
+              eventStartAt
               ...AuctionArtworksRail_sale
             }
           }
@@ -127,24 +130,3 @@ export const UpcomingAuctionsPaginationContainer = createPaginationContainer(
     `,
   }
 )
-
-// export const UpcomingAuctionsFragmentContainer = createFragmentContainer(
-//   UpcomingAuctions,
-//   {
-//     salesConnection: graphql`
-//       fragment UpcomingAuctions_salesConnection on SaleConnection {
-//         edges {
-//           node {
-//             slug
-//             name
-//             href
-//             status
-//             formattedStartDateTime
-//             eventStartAt
-//             ...AuctionArtworksRail_sale
-//           }
-//         }
-//       }
-//     `,
-//   }
-// )

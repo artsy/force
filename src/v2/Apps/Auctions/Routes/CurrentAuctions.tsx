@@ -84,6 +84,7 @@ export const CurrentAuctionsPaginationContainer = createPaginationContainer(
           first: $first
           after: $after
           published: true
+          live: true
           sort: START_AT_ASC
         ) @connection(key: "CurrentAuctions_salesConnection") {
           totalCount
