@@ -125,22 +125,3 @@ export const PastAuctionsPaginationContainer = createPaginationContainer(
     `,
   }
 )
-
-// export const PastAuctionsFragmentContainer = createFragmentContainer(
-//   PastAuctions,
-//   {
-//     salesConnection: graphql`
-//       fragment PastAuctions_salesConnection on SaleConnection {
-//         edges {
-//           node {
-//             slug
-//             name
-//             href
-//             endAt
-//             ...AuctionArtworksRail_sale
-//           }
-//         }
-//       }
-//     `,
-//   }
-// )
