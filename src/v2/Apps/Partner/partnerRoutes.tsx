@@ -5,6 +5,14 @@ const PartnerApp = loadable(() => import("./PartnerApp"), {
   resolveComponent: component => component.PartnerApp,
 })
 
+const ArticlesRoute = loadable(() => import("./Routes/Articles"), {
+  resolveComponent: component => component.ArticlesRoute,
+})
+
+const OverviewRoute = loadable(() => import("./Routes/Overview"), {
+  resolveComponent: component => component.OverviewRoute,
+})
+
 export const partnerRoutes: RouteConfig[] = [
   {
     getComponent: () => PartnerApp,
@@ -12,5 +20,21 @@ export const partnerRoutes: RouteConfig[] = [
     prepare: () => {
       PartnerApp.preload()
     },
+    children: [
+      {
+        getComponent: () => OverviewRoute,
+        path: "",
+        prepare: () => {
+          OverviewRoute.preload()
+        },
+      },
+      {
+        getComponent: () => ArticlesRoute,
+        path: "articles",
+        prepare: () => {
+          ArticlesRoute.preload()
+        },
+      },
+    ],
   },
 ]
