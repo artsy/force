@@ -38,7 +38,7 @@ fragment AuctionArtworksRail_sale on Sale {
 }
 
 fragment PastAuctions_viewer_2HEEH6 on Viewer {
-  salesConnection(first: $first, after: $after, published: false, live: false, sort: START_AT_ASC) {
+  salesConnection(first: $first, after: $after, published: false, live: false, sort: START_AT_DESC) {
     totalCount
     edges {
       node {
@@ -101,7 +101,7 @@ v3 = [
   {
     "kind": "Literal",
     "name": "sort",
-    "value": "START_AT_ASC"
+    "value": "START_AT_DESC"
   }
 ];
 return {
@@ -298,7 +298,7 @@ return {
     "metadata": {},
     "name": "PastAuctionsQuery",
     "operationKind": "query",
-    "text": "query PastAuctionsQuery(\n  $first: Int!\n  $after: String\n) {\n  viewer {\n    ...PastAuctions_viewer_2HEEH6\n  }\n}\n\nfragment AuctionArtworksRail_sale on Sale {\n  internalID\n  slug\n  href\n  name\n  formattedStartDateTime\n}\n\nfragment PastAuctions_viewer_2HEEH6 on Viewer {\n  salesConnection(first: $first, after: $after, published: false, live: false, sort: START_AT_ASC) {\n    totalCount\n    edges {\n      node {\n        slug\n        name\n        href\n        endAt\n        ...AuctionArtworksRail_sale\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query PastAuctionsQuery(\n  $first: Int!\n  $after: String\n) {\n  viewer {\n    ...PastAuctions_viewer_2HEEH6\n  }\n}\n\nfragment AuctionArtworksRail_sale on Sale {\n  internalID\n  slug\n  href\n  name\n  formattedStartDateTime\n}\n\nfragment PastAuctions_viewer_2HEEH6 on Viewer {\n  salesConnection(first: $first, after: $after, published: false, live: false, sort: START_AT_DESC) {\n    totalCount\n    edges {\n      node {\n        slug\n        name\n        href\n        endAt\n        ...AuctionArtworksRail_sale\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();

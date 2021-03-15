@@ -72,7 +72,7 @@ const node: ReaderFragment = {
         {
           "kind": "Literal",
           "name": "sort",
-          "value": "START_AT_ASC"
+          "value": "START_AT_DESC"
         }
       ],
       "concreteType": "SaleConnection",
@@ -182,10 +182,10 @@ const node: ReaderFragment = {
           "storageKey": null
         }
       ],
-      "storageKey": "__PastAuctions_salesConnection_connection(live:false,published:false,sort:\"START_AT_ASC\")"
+      "storageKey": "__PastAuctions_salesConnection_connection(live:false,published:false,sort:\"START_AT_DESC\")"
     }
   ],
   "type": "Viewer"
 };
-(node as any).hash = 'ed433be15fb4999bc429159eba18cecf';
+(node as any).hash = '03524c350dce5a35c6adfeead19c781d';
 export default node;
