@@ -3,23 +3,29 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type auctionsRoutes_Past_AuctionsQueryVariables = {};
-export type auctionsRoutes_Past_AuctionsQueryResponse = {
+export type PastAuctionsQueryVariables = {
+    first: number;
+    after?: string | null;
+};
+export type PastAuctionsQueryResponse = {
     readonly viewer: {
         readonly " $fragmentRefs": FragmentRefs<"PastAuctions_viewer">;
     } | null;
 };
-export type auctionsRoutes_Past_AuctionsQuery = {
-    readonly response: auctionsRoutes_Past_AuctionsQueryResponse;
-    readonly variables: auctionsRoutes_Past_AuctionsQueryVariables;
+export type PastAuctionsQuery = {
+    readonly response: PastAuctionsQueryResponse;
+    readonly variables: PastAuctionsQueryVariables;
 };
 
 
 
 /*
-query auctionsRoutes_Past_AuctionsQuery {
+query PastAuctionsQuery(
+  $first: Int!
+  $after: String
+) {
   viewer {
-    ...PastAuctions_viewer
+    ...PastAuctions_viewer_2HEEH6
   }
 }
 
@@ -31,8 +37,8 @@ fragment AuctionArtworksRail_sale on Sale {
   formattedStartDateTime
 }
 
-fragment PastAuctions_viewer on Viewer {
-  salesConnection(first: 15, published: false, live: false, sort: START_AT_ASC) {
+fragment PastAuctions_viewer_2HEEH6 on Viewer {
+  salesConnection(first: $first, after: $after, published: false, live: false, sort: START_AT_ASC) {
     totalCount
     edges {
       node {
@@ -57,10 +63,31 @@ fragment PastAuctions_viewer on Viewer {
 const node: ConcreteRequest = (function(){
 var v0 = [
   {
-    "kind": "Literal",
+    "defaultValue": null,
+    "kind": "LocalArgument",
     "name": "first",
-    "value": 15
+    "type": "Int!"
   },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "after",
+    "type": "String"
+  }
+],
+v1 = {
+  "kind": "Variable",
+  "name": "after",
+  "variableName": "after"
+},
+v2 = {
+  "kind": "Variable",
+  "name": "first",
+  "variableName": "first"
+},
+v3 = [
+  (v1/*: any*/),
+  (v2/*: any*/),
   {
     "kind": "Literal",
     "name": "live",
@@ -79,10 +106,10 @@ var v0 = [
 ];
 return {
   "fragment": {
-    "argumentDefinitions": [],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "auctionsRoutes_Past_AuctionsQuery",
+    "name": "PastAuctionsQuery",
     "selections": [
       {
         "alias": null,
@@ -93,7 +120,10 @@ return {
         "plural": false,
         "selections": [
           {
-            "args": null,
+            "args": [
+              (v1/*: any*/),
+              (v2/*: any*/)
+            ],
             "kind": "FragmentSpread",
             "name": "PastAuctions_viewer"
           }
@@ -105,9 +135,9 @@ return {
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": [],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "auctionsRoutes_Past_AuctionsQuery",
+    "name": "PastAuctionsQuery",
     "selections": [
       {
         "alias": null,
@@ -119,7 +149,7 @@ return {
         "selections": [
           {
             "alias": null,
-            "args": (v0/*: any*/),
+            "args": (v3/*: any*/),
             "concreteType": "SaleConnection",
             "kind": "LinkedField",
             "name": "salesConnection",
@@ -243,11 +273,11 @@ return {
                 "storageKey": null
               }
             ],
-            "storageKey": "salesConnection(first:15,live:false,published:false,sort:\"START_AT_ASC\")"
+            "storageKey": null
           },
           {
             "alias": null,
-            "args": (v0/*: any*/),
+            "args": (v3/*: any*/),
             "filters": [
               "published",
               "live",
@@ -266,11 +296,11 @@ return {
   "params": {
     "id": null,
     "metadata": {},
-    "name": "auctionsRoutes_Past_AuctionsQuery",
+    "name": "PastAuctionsQuery",
     "operationKind": "query",
-    "text": "query auctionsRoutes_Past_AuctionsQuery {\n  viewer {\n    ...PastAuctions_viewer\n  }\n}\n\nfragment AuctionArtworksRail_sale on Sale {\n  internalID\n  slug\n  href\n  name\n  formattedStartDateTime\n}\n\nfragment PastAuctions_viewer on Viewer {\n  salesConnection(first: 15, published: false, live: false, sort: START_AT_ASC) {\n    totalCount\n    edges {\n      node {\n        slug\n        name\n        href\n        endAt\n        ...AuctionArtworksRail_sale\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query PastAuctionsQuery(\n  $first: Int!\n  $after: String\n) {\n  viewer {\n    ...PastAuctions_viewer_2HEEH6\n  }\n}\n\nfragment AuctionArtworksRail_sale on Sale {\n  internalID\n  slug\n  href\n  name\n  formattedStartDateTime\n}\n\nfragment PastAuctions_viewer_2HEEH6 on Viewer {\n  salesConnection(first: $first, after: $after, published: false, live: false, sort: START_AT_ASC) {\n    totalCount\n    edges {\n      node {\n        slug\n        name\n        href\n        endAt\n        ...AuctionArtworksRail_sale\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'a53e63540ff1c718c6966e6d9fa92698';
+(node as any).hash = '0f11957b86a583aa7ba15fb199867fc7';
 export default node;

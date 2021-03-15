@@ -3,23 +3,29 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type auctionsRoutes_Past_AuctionsQueryVariables = {};
-export type auctionsRoutes_Past_AuctionsQueryResponse = {
+export type CurrentAuctionsQueryVariables = {
+    first: number;
+    after?: string | null;
+};
+export type CurrentAuctionsQueryResponse = {
     readonly viewer: {
-        readonly " $fragmentRefs": FragmentRefs<"PastAuctions_viewer">;
+        readonly " $fragmentRefs": FragmentRefs<"CurrentAuctions_viewer">;
     } | null;
 };
-export type auctionsRoutes_Past_AuctionsQuery = {
-    readonly response: auctionsRoutes_Past_AuctionsQueryResponse;
-    readonly variables: auctionsRoutes_Past_AuctionsQueryVariables;
+export type CurrentAuctionsQuery = {
+    readonly response: CurrentAuctionsQueryResponse;
+    readonly variables: CurrentAuctionsQueryVariables;
 };
 
 
 
 /*
-query auctionsRoutes_Past_AuctionsQuery {
+query CurrentAuctionsQuery(
+  $first: Int!
+  $after: String
+) {
   viewer {
-    ...PastAuctions_viewer
+    ...CurrentAuctions_viewer_2HEEH6
   }
 }
 
@@ -31,15 +37,15 @@ fragment AuctionArtworksRail_sale on Sale {
   formattedStartDateTime
 }
 
-fragment PastAuctions_viewer on Viewer {
-  salesConnection(first: 15, published: false, live: false, sort: START_AT_ASC) {
+fragment CurrentAuctions_viewer_2HEEH6 on Viewer {
+  salesConnection(first: $first, after: $after, published: true, live: true, sort: START_AT_ASC) {
     totalCount
     edges {
       node {
         slug
         name
         href
-        endAt
+        liveStartAt
         ...AuctionArtworksRail_sale
         id
         __typename
@@ -57,19 +63,40 @@ fragment PastAuctions_viewer on Viewer {
 const node: ConcreteRequest = (function(){
 var v0 = [
   {
-    "kind": "Literal",
+    "defaultValue": null,
+    "kind": "LocalArgument",
     "name": "first",
-    "value": 15
+    "type": "Int!"
   },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "after",
+    "type": "String"
+  }
+],
+v1 = {
+  "kind": "Variable",
+  "name": "after",
+  "variableName": "after"
+},
+v2 = {
+  "kind": "Variable",
+  "name": "first",
+  "variableName": "first"
+},
+v3 = [
+  (v1/*: any*/),
+  (v2/*: any*/),
   {
     "kind": "Literal",
     "name": "live",
-    "value": false
+    "value": true
   },
   {
     "kind": "Literal",
     "name": "published",
-    "value": false
+    "value": true
   },
   {
     "kind": "Literal",
@@ -79,10 +106,10 @@ var v0 = [
 ];
 return {
   "fragment": {
-    "argumentDefinitions": [],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "auctionsRoutes_Past_AuctionsQuery",
+    "name": "CurrentAuctionsQuery",
     "selections": [
       {
         "alias": null,
@@ -93,9 +120,12 @@ return {
         "plural": false,
         "selections": [
           {
-            "args": null,
+            "args": [
+              (v1/*: any*/),
+              (v2/*: any*/)
+            ],
             "kind": "FragmentSpread",
-            "name": "PastAuctions_viewer"
+            "name": "CurrentAuctions_viewer"
           }
         ],
         "storageKey": null
@@ -105,9 +135,9 @@ return {
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": [],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "auctionsRoutes_Past_AuctionsQuery",
+    "name": "CurrentAuctionsQuery",
     "selections": [
       {
         "alias": null,
@@ -119,7 +149,7 @@ return {
         "selections": [
           {
             "alias": null,
-            "args": (v0/*: any*/),
+            "args": (v3/*: any*/),
             "concreteType": "SaleConnection",
             "kind": "LinkedField",
             "name": "salesConnection",
@@ -173,7 +203,7 @@ return {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
-                        "name": "endAt",
+                        "name": "liveStartAt",
                         "storageKey": null
                       },
                       {
@@ -243,18 +273,18 @@ return {
                 "storageKey": null
               }
             ],
-            "storageKey": "salesConnection(first:15,live:false,published:false,sort:\"START_AT_ASC\")"
+            "storageKey": null
           },
           {
             "alias": null,
-            "args": (v0/*: any*/),
+            "args": (v3/*: any*/),
             "filters": [
               "published",
               "live",
               "sort"
             ],
             "handle": "connection",
-            "key": "PastAuctions_salesConnection",
+            "key": "CurrentAuctions_salesConnection",
             "kind": "LinkedHandle",
             "name": "salesConnection"
           }
@@ -266,11 +296,11 @@ return {
   "params": {
     "id": null,
     "metadata": {},
-    "name": "auctionsRoutes_Past_AuctionsQuery",
+    "name": "CurrentAuctionsQuery",
     "operationKind": "query",
-    "text": "query auctionsRoutes_Past_AuctionsQuery {\n  viewer {\n    ...PastAuctions_viewer\n  }\n}\n\nfragment AuctionArtworksRail_sale on Sale {\n  internalID\n  slug\n  href\n  name\n  formattedStartDateTime\n}\n\nfragment PastAuctions_viewer on Viewer {\n  salesConnection(first: 15, published: false, live: false, sort: START_AT_ASC) {\n    totalCount\n    edges {\n      node {\n        slug\n        name\n        href\n        endAt\n        ...AuctionArtworksRail_sale\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query CurrentAuctionsQuery(\n  $first: Int!\n  $after: String\n) {\n  viewer {\n    ...CurrentAuctions_viewer_2HEEH6\n  }\n}\n\nfragment AuctionArtworksRail_sale on Sale {\n  internalID\n  slug\n  href\n  name\n  formattedStartDateTime\n}\n\nfragment CurrentAuctions_viewer_2HEEH6 on Viewer {\n  salesConnection(first: $first, after: $after, published: true, live: true, sort: START_AT_ASC) {\n    totalCount\n    edges {\n      node {\n        slug\n        name\n        href\n        liveStartAt\n        ...AuctionArtworksRail_sale\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'a53e63540ff1c718c6966e6d9fa92698';
+(node as any).hash = '2ff1187013cf7c6afe0e301b7524b7c8';
 export default node;
