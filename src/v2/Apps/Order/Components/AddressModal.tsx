@@ -7,11 +7,11 @@ import {
   validateAddress,
   validatePhoneNumber,
 } from "../Utils/formValidators"
-import { CountrySelect } from "v2/Components/CountrySelect"
 import { CommitMutation } from "../Utils/commitMutation"
 import { updateUserAddress } from "../Mutations/UpdateUserAddress"
 import { createUserAddress } from "v2/Apps/Order/Mutations/CreateUserAddress"
 import { SavedAddresses_me } from "v2/__generated__/SavedAddresses_me.graphql"
+import { AddressModalFields } from "v2/Components/Address/AddressModalFields"
 
 interface Props {
   show: boolean
@@ -79,73 +79,13 @@ export const AddressModal: React.FC<Props> = ({
       >
         {(formik: FormikProps<SavedAddressType>) => (
           <form onSubmit={formik.handleSubmit}>
-            <Input
-              id="name"
-              name="name"
-              type="text"
-              title="Full Name"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              error={formik.touched.name && formik.errors.name}
-              value={formik.values?.name}
-            />
+            <Text color="black60" mb={1}>
+              All fields marked * are mandatory
+            </Text>
+            <AddressModalFields formik={formik} />
             <Spacer mb={1} />
             <Input
-              name="postalCode"
-              title="Postal Code"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              error={formik.touched.postalCode && formik.errors.postalCode}
-              value={formik.values?.postalCode}
-            />
-            <Spacer mb={1} />
-            <Input
-              title="Address Line 1"
-              name="addressLine1"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              error={formik.touched.addressLine1 && formik.errors.addressLine1}
-              value={formik.values?.addressLine1}
-            />
-            <Spacer mb={1} />
-            <Input
-              title="Address Line 2"
-              name="addressLine2"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              error={formik.touched.addressLine2 && formik.errors.addressLine2}
-              value={formik.values?.addressLine2}
-            />
-            <Spacer mb={1} />
-            <Input
-              title="City"
-              name="city"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              error={formik.touched.city && formik.errors.city}
-              value={formik.values?.city}
-            />
-            <Spacer mb={1} />
-            <Input
-              title="Region"
-              name="region"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              error={formik.touched.region && formik.errors.region}
-              value={formik.values?.region}
-            />
-            <Spacer mb={1} />
-            <Text>Country</Text>
-            <CountrySelect
-              selected={formik.values?.country}
-              onSelect={countryCode => {
-                formik.setFieldValue("country", countryCode)
-              }}
-              error={formik.touched.country && formik.errors.country}
-            />
-            <Spacer mb={1} />
-            <Input
-              title="Phone number"
+              title="Phone number *"
               name="phoneNumber"
               type="tel"
               onChange={formik.handleChange}

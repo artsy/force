@@ -1,7 +1,6 @@
 import React, { useState } from "react"
-import { Button, Input, Modal, Spacer, Text } from "@artsy/palette"
+import { Button, Modal, Spacer, Text } from "@artsy/palette"
 import { Formik, FormikHelpers, FormikProps } from "formik"
-import { CountrySelect } from "v2/Components/CountrySelect"
 import {
   validateAddress,
   removeEmptyKeys,
@@ -19,6 +18,7 @@ import {
 import { CreateTokenCardData } from "@stripe/stripe-js"
 import { PaymentSection_me } from "v2/__generated__/PaymentSection_me.graphql"
 import createLogger from "v2/Utils/logger"
+import { AddressModalFields } from "../Address/AddressModalFields"
 
 const logger = createLogger("Components/Payment/PaymentModal.tsx")
 
@@ -165,72 +165,13 @@ export const PaymentModal: React.FC<PaymentModalProps> = props => {
             <Text data-test="credit-card-error" color="red" my={2}>
               {createError}
             </Text>
-            <Text>Credit Card</Text>
+            <Text color="black60" mb={1}>
+              All fields marked * are mandatory
+            </Text>
+            <Text>Credit Card *</Text>
             <CreditCardInput />
             <Spacer mt={1} />
-            <Input
-              id="name"
-              name="name"
-              title="Name on card"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              error={formik.touched.name && formik.errors.name}
-              value={formik.values.name}
-            />
-            <Spacer mb={1} />
-            <Input
-              name="postalCode"
-              title="Postal Code"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              error={formik.touched.postalCode && formik.errors.postalCode}
-              value={formik.values.postalCode}
-            />
-            <Spacer mb={1} />
-            <Input
-              title="Address Line 1"
-              name="addressLine1"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              error={formik.touched.addressLine1 && formik.errors.addressLine1}
-              value={formik.values.addressLine1}
-            />
-            <Spacer mb={1} />
-            <Input
-              title="Address Line 2"
-              name="addressLine2"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              error={formik.touched.addressLine2 && formik.errors.addressLine2}
-              value={formik.values.addressLine2}
-            />
-            <Spacer mb={1} />
-            <Input
-              title="City"
-              name="city"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              error={formik.touched.city && formik.errors.city}
-              value={formik.values.city}
-            />
-            <Spacer mb={1} />
-            <Input
-              title="Region"
-              name="region"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              error={formik.touched.region && formik.errors.region}
-              value={formik.values.region}
-            />
-            <Spacer mb={1} />
-            <Text>Country</Text>
-            <CountrySelect
-              selected={formik.values.country}
-              onSelect={countryCode => {
-                formik.setFieldValue("country", countryCode)
-              }}
-              error={formik.errors.country}
-            />
+            <AddressModalFields formik={formik} />
             <Spacer mb={1} />
             <Button
               type="submit"
