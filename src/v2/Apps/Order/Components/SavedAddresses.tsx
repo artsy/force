@@ -117,7 +117,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
         <Separator my={1} />
         <ModifyAddressWrapper>
           {!isDefaultAddress && (
-            <Box mr={1}>
+            <Box mr={[3, 1]}>
               <Text
                 onClick={() => handleSetDefaultAddress(address.node.internalID)}
                 variant="text"
@@ -130,7 +130,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
               </Text>
             </Box>
           )}
-          <Box mr={1}>
+          <Box mr={[3, 1]}>
             <Text
               onClick={() => handleEditAddress(address.node)}
               variant="text"
