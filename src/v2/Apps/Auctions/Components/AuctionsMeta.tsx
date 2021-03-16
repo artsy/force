@@ -11,7 +11,6 @@ export const AuctionsMeta: React.FC = () => {
       <Title>{title}</Title>
       <Meta property="og:title" content={title} />
 
-      <Meta name="fragment" content="!" />
       <Meta name="description" content={description} />
       <Meta property="og:description" content={description} />
 
