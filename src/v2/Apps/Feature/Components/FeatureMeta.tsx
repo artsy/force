@@ -27,7 +27,6 @@ const FeatureMeta: React.FC<FeatureMetaProps> = ({
       <Meta property="og:url" content={href} />
       <Meta property="og:type" content="website" />
       <Meta property="twitter:card" content="summary" />
-      <Meta name="fragment" content="!" />
       {image && <Meta property="og:image" content={image} />}
     </>
   )
