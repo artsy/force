@@ -75,9 +75,8 @@ describe("Works Route", () => {
 
     it("includes the correct sort options", () => {
       const wrapper = getWrapper()
-      const sortOptions = wrapper
-        .find("div[title='Sort'] select option")
-        .map(el => el.text())
+
+      const sortOptions = wrapper.find("option").map(el => el.text())
 
       expect(sortOptions).toEqual([
         "Default",
