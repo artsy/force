@@ -27,7 +27,7 @@ const UpcomingAuctions: React.FC<UpcomingAuctionsProps> = ({
 
     const previousScrollY = window.scrollY
 
-    relay.loadMore(15, err => {
+    relay.loadMore(5, err => {
       setIsLoading(false)
 
       if (window.scrollY > previousScrollY) {
@@ -80,7 +80,7 @@ export const UpcomingAuctionsPaginationContainer = createPaginationContainer(
     viewer: graphql`
       fragment UpcomingAuctions_viewer on Viewer
         @argumentDefinitions(
-          first: { type: "Int", defaultValue: 15 }
+          first: { type: "Int", defaultValue: 5 }
           after: { type: "String" }
         ) {
         salesConnection(

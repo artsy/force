@@ -34,7 +34,7 @@ fragment AuctionArtworksRail_sale on Sale {
 }
 
 fragment UpcomingAuctions_viewer on Viewer {
-  salesConnection(first: 15, published: true, live: false, sort: START_AT_DESC) {
+  salesConnection(first: 5, published: true, live: false, sort: START_AT_DESC) {
     totalCount
     edges {
       node {
@@ -64,7 +64,7 @@ var v0 = [
   {
     "kind": "Literal",
     "name": "first",
-    "value": 15
+    "value": 5
   },
   {
     "kind": "Literal",
@@ -262,7 +262,7 @@ return {
                 "storageKey": null
               }
             ],
-            "storageKey": "salesConnection(first:15,live:false,published:true,sort:\"START_AT_DESC\")"
+            "storageKey": "salesConnection(first:5,live:false,published:true,sort:\"START_AT_DESC\")"
           },
           {
             "alias": null,
@@ -287,7 +287,7 @@ return {
     "metadata": {},
     "name": "auctionsRoutes_Upcoming_AuctionsQuery",
     "operationKind": "query",
-    "text": "query auctionsRoutes_Upcoming_AuctionsQuery {\n  viewer {\n    ...UpcomingAuctions_viewer\n  }\n}\n\nfragment AuctionArtworksRail_sale on Sale {\n  internalID\n  slug\n  href\n  name\n  formattedStartDateTime\n  isLiveOpen\n  status\n}\n\nfragment UpcomingAuctions_viewer on Viewer {\n  salesConnection(first: 15, published: true, live: false, sort: START_AT_DESC) {\n    totalCount\n    edges {\n      node {\n        slug\n        name\n        href\n        status\n        formattedStartDateTime\n        eventStartAt\n        isLiveOpen\n        ...AuctionArtworksRail_sale\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query auctionsRoutes_Upcoming_AuctionsQuery {\n  viewer {\n    ...UpcomingAuctions_viewer\n  }\n}\n\nfragment AuctionArtworksRail_sale on Sale {\n  internalID\n  slug\n  href\n  name\n  formattedStartDateTime\n  isLiveOpen\n  status\n}\n\nfragment UpcomingAuctions_viewer on Viewer {\n  salesConnection(first: 5, published: true, live: false, sort: START_AT_DESC) {\n    totalCount\n    edges {\n      node {\n        slug\n        name\n        href\n        status\n        formattedStartDateTime\n        eventStartAt\n        isLiveOpen\n        ...AuctionArtworksRail_sale\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
