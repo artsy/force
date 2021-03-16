@@ -171,7 +171,7 @@ export const PaymentModal: React.FC<PaymentModalProps> = props => {
             <Text>Credit Card *</Text>
             <CreditCardInput />
             <Spacer mt={1} />
-            <AddressModalFields formik={formik} />
+            <AddressModalFields />
             <Spacer mb={1} />
             <Button
               type="submit"

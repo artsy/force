@@ -82,7 +82,7 @@ export const AddressModal: React.FC<Props> = ({
             <Text color="black60" mb={1}>
               All fields marked * are mandatory
             </Text>
-            <AddressModalFields formik={formik} />
+            <AddressModalFields />
             <Spacer mb={1} />
             <Input
               title="Phone number *"
