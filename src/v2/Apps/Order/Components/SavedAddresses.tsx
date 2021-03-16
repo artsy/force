@@ -6,8 +6,8 @@ import {
   Spacer,
   Flex,
   Text,
-  BorderBox,
   Separator,
+  StackableBorderBox,
 } from "@artsy/palette"
 import React, { useState } from "react"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
@@ -103,7 +103,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
     const isDefaultAddress = address.node.isDefault
 
     return (
-      <BorderBox
+      <StackableBorderBox
         p={2}
         width="100%"
         flexDirection="column"
@@ -117,7 +117,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
         <Separator my={1} />
         <ModifyAddressWrapper>
           {!isDefaultAddress && (
-            <Box mr={1}>
+            <Box mr={[3, 1]}>
               <Text
                 onClick={() => handleSetDefaultAddress(address.node.internalID)}
                 variant="text"
@@ -130,7 +130,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
               </Text>
             </Box>
           )}
-          <Box mr={1}>
+          <Box mr={[3, 1]}>
             <Text
               onClick={() => handleEditAddress(address.node)}
               variant="text"
@@ -156,7 +156,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
             </Text>
           </Box>
         </ModifyAddressWrapper>
-      </BorderBox>
+      </StackableBorderBox>
     )
   })
 
@@ -181,7 +181,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
         modalDetails={modalDetails}
         closeModal={() => setShowAddressModal(false)}
         address={address}
-        onSuccess={() => onSuccess}
+        onSuccess={() => onSuccess()}
         commitMutation={props.commitMutation}
         onError={onError}
         me={me}
