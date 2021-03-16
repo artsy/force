@@ -83,9 +83,9 @@ export const CurrentAuctionsPaginationContainer = createPaginationContainer(
         salesConnection(
           first: $first
           after: $after
-          published: true
           live: true
-          sort: START_AT_ASC
+          published: true
+          sort: END_AT_DESC
         ) @connection(key: "CurrentAuctions_salesConnection") {
           totalCount
           edges {
@@ -94,6 +94,7 @@ export const CurrentAuctionsPaginationContainer = createPaginationContainer(
               name
               href
               liveStartAt
+              isLiveOpen
               ...AuctionArtworksRail_sale
             }
           }

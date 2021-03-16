@@ -49,14 +49,18 @@ export const AuctionArtworksRail: React.FC<AuctionArtworksRailProps> = ({
             </Text>
           )}
         </Box>
-
-        <Box height={AUCTION_ARTWORKS_RAIL_HEIGHT}>
-          {isEnteredView ? (
-            <AuctionArtworksRailArtworksQueryRenderer id={sale.internalID} />
-          ) : (
-            <AuctionArtworksRailPlaceholder />
-          )}
-        </Box>
+        {(!sale.isLiveOpen && sale.status == "open") ||
+        (!sale.isLiveOpen && sale.status == "closed") ? (
+          <Box height={AUCTION_ARTWORKS_RAIL_HEIGHT}>
+            {isEnteredView ? (
+              <AuctionArtworksRailArtworksQueryRenderer id={sale.internalID} />
+            ) : (
+              <AuctionArtworksRailPlaceholder />
+            )}
+          </Box>
+        ) : (
+          <></>
+        )}
       </Box>
     </>
   )
@@ -72,6 +76,8 @@ export const AuctionArtworksRailFragmentContainer = createFragmentContainer(
         href
         name
         formattedStartDateTime
+        isLiveOpen
+        status
       }
     `,
   }

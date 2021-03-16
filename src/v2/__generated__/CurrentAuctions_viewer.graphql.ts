@@ -12,6 +12,7 @@ export type CurrentAuctions_viewer = {
                 readonly name: string | null;
                 readonly href: string | null;
                 readonly liveStartAt: string | null;
+                readonly isLiveOpen: boolean | null;
                 readonly " $fragmentRefs": FragmentRefs<"AuctionArtworksRail_sale">;
             } | null;
         } | null> | null;
@@ -72,7 +73,7 @@ const node: ReaderFragment = {
         {
           "kind": "Literal",
           "name": "sort",
-          "value": "START_AT_ASC"
+          "value": "END_AT_DESC"
         }
       ],
       "concreteType": "SaleConnection",
@@ -135,6 +136,13 @@ const node: ReaderFragment = {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
+                  "name": "isLiveOpen",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
                   "name": "__typename",
                   "storageKey": null
                 },
@@ -182,10 +190,10 @@ const node: ReaderFragment = {
           "storageKey": null
         }
       ],
-      "storageKey": "__CurrentAuctions_salesConnection_connection(live:true,published:true,sort:\"START_AT_ASC\")"
+      "storageKey": "__CurrentAuctions_salesConnection_connection(live:true,published:true,sort:\"END_AT_DESC\")"
     }
   ],
   "type": "Viewer"
 };
-(node as any).hash = '64b36f368fa032011dd93431f6b0d13f';
+(node as any).hash = 'ccd41a1f919cd9a3e24eca9a71cb06d1';
 export default node;

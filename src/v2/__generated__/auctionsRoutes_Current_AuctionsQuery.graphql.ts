@@ -29,10 +29,12 @@ fragment AuctionArtworksRail_sale on Sale {
   href
   name
   formattedStartDateTime
+  isLiveOpen
+  status
 }
 
 fragment CurrentAuctions_viewer on Viewer {
-  salesConnection(first: 15, published: true, live: true, sort: START_AT_ASC) {
+  salesConnection(first: 15, live: true, published: true, sort: END_AT_DESC) {
     totalCount
     edges {
       node {
@@ -40,6 +42,7 @@ fragment CurrentAuctions_viewer on Viewer {
         name
         href
         liveStartAt
+        isLiveOpen
         ...AuctionArtworksRail_sale
         id
         __typename
@@ -74,7 +77,7 @@ var v0 = [
   {
     "kind": "Literal",
     "name": "sort",
-    "value": "START_AT_ASC"
+    "value": "END_AT_DESC"
   }
 ];
 return {
@@ -180,6 +183,13 @@ return {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
+                        "name": "isLiveOpen",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
                         "name": "internalID",
                         "storageKey": null
                       },
@@ -188,6 +198,13 @@ return {
                         "args": null,
                         "kind": "ScalarField",
                         "name": "formattedStartDateTime",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "status",
                         "storageKey": null
                       },
                       {
@@ -243,14 +260,14 @@ return {
                 "storageKey": null
               }
             ],
-            "storageKey": "salesConnection(first:15,live:true,published:true,sort:\"START_AT_ASC\")"
+            "storageKey": "salesConnection(first:15,live:true,published:true,sort:\"END_AT_DESC\")"
           },
           {
             "alias": null,
             "args": (v0/*: any*/),
             "filters": [
-              "published",
               "live",
+              "published",
               "sort"
             ],
             "handle": "connection",
@@ -268,7 +285,7 @@ return {
     "metadata": {},
     "name": "auctionsRoutes_Current_AuctionsQuery",
     "operationKind": "query",
-    "text": "query auctionsRoutes_Current_AuctionsQuery {\n  viewer {\n    ...CurrentAuctions_viewer\n  }\n}\n\nfragment AuctionArtworksRail_sale on Sale {\n  internalID\n  slug\n  href\n  name\n  formattedStartDateTime\n}\n\nfragment CurrentAuctions_viewer on Viewer {\n  salesConnection(first: 15, published: true, live: true, sort: START_AT_ASC) {\n    totalCount\n    edges {\n      node {\n        slug\n        name\n        href\n        liveStartAt\n        ...AuctionArtworksRail_sale\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query auctionsRoutes_Current_AuctionsQuery {\n  viewer {\n    ...CurrentAuctions_viewer\n  }\n}\n\nfragment AuctionArtworksRail_sale on Sale {\n  internalID\n  slug\n  href\n  name\n  formattedStartDateTime\n  isLiveOpen\n  status\n}\n\nfragment CurrentAuctions_viewer on Viewer {\n  salesConnection(first: 15, live: true, published: true, sort: END_AT_DESC) {\n    totalCount\n    edges {\n      node {\n        slug\n        name\n        href\n        liveStartAt\n        isLiveOpen\n        ...AuctionArtworksRail_sale\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();

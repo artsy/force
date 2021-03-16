@@ -86,9 +86,9 @@ export const UpcomingAuctionsPaginationContainer = createPaginationContainer(
         salesConnection(
           first: $first
           after: $after
-          live: true
-          published: false
-          sort: END_AT_ASC
+          published: true
+          live: false
+          sort: START_AT_DESC
         ) @connection(key: "UpcomingAuctions_salesConnection") {
           totalCount
           edges {
@@ -99,6 +99,7 @@ export const UpcomingAuctionsPaginationContainer = createPaginationContainer(
               status
               formattedStartDateTime
               eventStartAt
+              isLiveOpen
               ...AuctionArtworksRail_sale
             }
           }
