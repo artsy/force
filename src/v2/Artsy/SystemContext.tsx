@@ -100,7 +100,7 @@ export const SystemContextProvider: SFC<SystemContextProps> = ({
     relayEnvironment,
     user,
     setUser,
-    isEigen: sd.EIGEN,
+    isEigen: sd.EIGEN || props.isEigen,
   }
 
   return (

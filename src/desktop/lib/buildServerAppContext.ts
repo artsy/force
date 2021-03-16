@@ -19,7 +19,7 @@ export const buildServerAppContext = (
   return {
     initialMatchingMediaQueries: res.locals.sd.IS_MOBILE ? ["xs"] : undefined,
     user: req.user && req.user.toJSON(),
-    isEigen: res.locals.sd.EIGEN,
+    isEigen: req.header("User-Agent")?.match("Artsy-Mobile") != null,
     mediator,
     analytics: {
       contextPageOwnerType: pageType,
