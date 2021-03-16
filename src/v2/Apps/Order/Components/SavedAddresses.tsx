@@ -181,7 +181,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
         modalDetails={modalDetails}
         closeModal={() => setShowAddressModal(false)}
         address={address}
-        onSuccess={() => onSuccess}
+        onSuccess={() => onSuccess()}
         commitMutation={props.commitMutation}
         onError={onError}
         me={me}

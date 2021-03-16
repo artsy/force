@@ -1,5 +1,5 @@
 import React from "react"
-import { Button, Input, Spacer, Text } from "@artsy/palette"
+import { Input, Spacer, Text } from "@artsy/palette"
 import { FormikProps } from "formik"
 import { SavedAddressType } from "v2/Apps/Order/Utils/shippingAddressUtils"
 import { CountrySelect } from "../CountrySelect"
