@@ -28,6 +28,7 @@
     "docker:force": "yarn docker -t force",
     "docker:clean": "docker rmi force force:builder force:electron",
     "jest": "node_modules/.bin/jest --config jest.config.js",
+    "jest:debug": "node --inspect node_modules/.bin/jest --runInBand",
     "lint": "eslint --cache --cache-location '.cache/eslint/' --ext ts,tsx --ignore-pattern 'src/v2/__generated__'",
     "mocha": "scripts/mocha.sh",
     "prepare": "patch-package",
