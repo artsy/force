@@ -132,7 +132,7 @@ function initializeVariablesWithFilterState({ slug }, props) {
   let aggregations: string[] = ["TOTAL", "MAJOR_PERIOD", "ARTIST"]
   if (props.context.user) aggregations = aggregations.concat("FOLLOWED_ARTISTS")
   const additionalAggregations = getENV("ENABLE_NEW_ARTWORK_FILTERS")
-    ? ["PARTNER", "ARTIST_NATIONALITY"]
+    ? ["PARTNER", "ARTIST_NATIONALITY", "MATERIALS_TERMS"]
     : ["GALLERY"]
   const input = {
     sort: "-decayed_merch",
