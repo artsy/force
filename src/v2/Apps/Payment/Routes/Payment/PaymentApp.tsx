@@ -22,7 +22,7 @@ const PaymentApp: React.FC<PaymentAppProps> = props => {
   return (
     <AppContainer>
       <Title>My payments | Artsy</Title>
-      <Box mx={[1, 4]}>
+      <Box mx={[1, 4]} pb={[2, 4]}>
         <Box mb={2} mt={1}>
           <UserSettingsTabs route={sd.CURRENT_PATH} username={me?.name} />
         </Box>
