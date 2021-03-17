@@ -41,6 +41,7 @@ const ArtistSeriesArtworksFilter: React.FC<ArtistSeriesArtworksFilterProps> = pr
         viewer={artistSeries}
         relayVariables={{
           aggregations: ["TOTAL"],
+          first: 20,
         }}
       ></BaseArtworkFilter>
     </ArtworkFilterContextProvider>
@@ -54,52 +55,8 @@ export const ArtistSeriesArtworksFilterRefetchContainer = createRefetchContainer
   {
     artistSeries: graphql`
       fragment ArtistSeriesArtworksFilter_artistSeries on ArtistSeries
-        @argumentDefinitions(
-          acquireable: { type: "Boolean" }
-          aggregations: { type: "[ArtworkAggregation]" }
-          atAuction: { type: "Boolean" }
-          attributionClass: { type: "[String]" }
-          colors: { type: "[String]" }
-          forSale: { type: "Boolean" }
-          height: { type: "String" }
-          inquireableOnly: { type: "Boolean" }
-          keyword: { type: "String" }
-          majorPeriods: { type: "[String]" }
-          medium: { type: "String", defaultValue: "*" }
-          offerable: { type: "Boolean" }
-          page: { type: "Int" }
-          partnerID: { type: "ID" }
-          priceRange: { type: "String" }
-          sizes: { type: "[ArtworkSizes]" }
-          sort: { type: "String", defaultValue: "-partner_updated_at" }
-          width: { type: "String" }
-          locationCities: { type: "[String]" }
-          additionalGeneIDs: { type: "[String]" }
-        ) {
-        filtered_artworks: filterArtworksConnection(
-          acquireable: $acquireable
-          aggregations: $aggregations
-          atAuction: $atAuction
-          attributionClass: $attributionClass
-          colors: $colors
-          forSale: $forSale
-          height: $height
-          inquireableOnly: $inquireableOnly
-          keyword: $keyword
-          majorPeriods: $majorPeriods
-          medium: $medium
-          offerable: $offerable
-          page: $page
-          partnerID: $partnerID
-          priceRange: $priceRange
-          sizes: $sizes
-          first: 20
-          after: ""
-          sort: $sort
-          width: $width
-          locationCities: $locationCities
-          additionalGeneIDs: $additionalGeneIDs
-        ) {
+        @argumentDefinitions(input: { type: "FilterArtworksInput" }) {
+        filtered_artworks: filterArtworksConnection(input: $input) {
           id
           ...ArtworkFilterArtworkGrid_filtered_artworks
         }
@@ -108,52 +65,11 @@ export const ArtistSeriesArtworksFilterRefetchContainer = createRefetchContainer
   },
   graphql`
     query ArtistSeriesArtworksFilterQuery(
-      $acquireable: Boolean
-      $aggregations: [ArtworkAggregation]
+      $input: FilterArtworksInput
       $slug: ID!
-      $atAuction: Boolean
-      $attributionClass: [String]
-      $colors: [String]
-      $forSale: Boolean
-      $height: String
-      $inquireableOnly: Boolean
-      $keyword: String
-      $majorPeriods: [String]
-      $medium: String
-      $offerable: Boolean
-      $page: Int
-      $partnerID: ID
-      $priceRange: String
-      $sizes: [ArtworkSizes]
-      $sort: String
-      $width: String
-      $locationCities: [String]
-      $additionalGeneIDs: [String]
     ) {
       artistSeries(id: $slug) {
-        ...ArtistSeriesArtworksFilter_artistSeries
-          @arguments(
-            acquireable: $acquireable
-            aggregations: $aggregations
-            atAuction: $atAuction
-            attributionClass: $attributionClass
-            colors: $colors
-            forSale: $forSale
-            height: $height
-            inquireableOnly: $inquireableOnly
-            keyword: $keyword
-            majorPeriods: $majorPeriods
-            medium: $medium
-            offerable: $offerable
-            page: $page
-            partnerID: $partnerID
-            priceRange: $priceRange
-            sizes: $sizes
-            sort: $sort
-            width: $width
-            locationCities: $locationCities
-            additionalGeneIDs: $additionalGeneIDs
-          )
+        ...ArtistSeriesArtworksFilter_artistSeries @arguments(input: $input)
       }
     }
   `

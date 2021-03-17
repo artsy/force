@@ -1,4 +1,5 @@
 import { RouteConfig } from "found"
+import { omit } from "lodash"
 import React from "react"
 import { graphql } from "react-relay"
 
@@ -18,7 +19,7 @@ const prepareVariables = (_params, { location }) => {
     ? ["ARTIST_NATIONALITY", "LOCATION_CITY"]
     : []
   return {
-    ...paramsToCamelCase(location.query),
+    ...paramsToCamelCase(omit(location.query, "term")),
     keyword: location.query.term.toString(),
     aggregations: aggregations.concat(additionalAggregations),
   }
@@ -87,7 +88,11 @@ export const searchRoutes: RouteConfig[] = [
       {
         path: "/",
         Component: SearchResultsArtworksRoute,
-        prepareVariables,
+        prepareVariables: (params, { location }) => {
+          return {
+            input: { ...prepareVariables(params, { location }), first: 20 },
+          }
+        },
         query: ArtworkQueryFilter,
       },
       {

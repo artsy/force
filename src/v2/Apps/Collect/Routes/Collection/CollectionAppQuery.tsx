@@ -7,51 +7,13 @@ import { graphql } from "react-relay"
 // for Metaphysics to propagate.
 export const CollectionAppQuery = graphql`
   query CollectionAppQuery(
-    $acquireable: Boolean
-    $aggregations: [ArtworkAggregation]
-    $atAuction: Boolean
-    $attributionClass: [String]
-    $colors: [String]
-    $forSale: Boolean
-    $additionalGeneIDs: [String]
-    $height: String
-    $inquireableOnly: Boolean
-    $majorPeriods: [String]
-    $medium: String
-    $offerable: Boolean
-    $page: Int
-    $priceRange: String
-    $sizes: [ArtworkSizes]
-    $sort: String
+    $input: FilterArtworksInput
     $slug: String!
-    $width: String
-    $locationCities: [String]
-    $artistNationalities: [String]
+    $aggregations: [ArtworkAggregation]
   ) {
     collection: marketingCollection(slug: $slug) {
       ...Collection_collection
-        @arguments(
-          acquireable: $acquireable
-          aggregations: $aggregations
-          atAuction: $atAuction
-          attributionClass: $attributionClass
-          colors: $colors
-          forSale: $forSale
-          additionalGeneIDs: $additionalGeneIDs
-          height: $height
-          inquireableOnly: $inquireableOnly
-          majorPeriods: $majorPeriods
-          medium: $medium
-          offerable: $offerable
-          page: $page
-          priceRange: $priceRange
-          sizes: $sizes
-          sort: $sort
-          width: $width
-          first: 30
-          locationCities: $locationCities
-          artistNationalities: $artistNationalities
-        )
+        @arguments(input: $input, aggregations: $aggregations)
     }
   }
 `

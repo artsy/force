@@ -80,28 +80,7 @@ export const ArtistSeriesAppFragmentContainer = createFragmentContainer(
   {
     artistSeries: graphql`
       fragment ArtistSeriesApp_artistSeries on ArtistSeries
-        @argumentDefinitions(
-          acquireable: { type: "Boolean" }
-          aggregations: { type: "[ArtworkAggregation]" }
-          atAuction: { type: "Boolean" }
-          attributionClass: { type: "[String]" }
-          colors: { type: "[String]" }
-          forSale: { type: "Boolean" }
-          height: { type: "String" }
-          inquireableOnly: { type: "Boolean" }
-          keyword: { type: "String" }
-          majorPeriods: { type: "[String]" }
-          medium: { type: "String", defaultValue: "*" }
-          offerable: { type: "Boolean" }
-          page: { type: "Int" }
-          partnerID: { type: "ID" }
-          priceRange: { type: "String" }
-          sizes: { type: "[ArtworkSizes]" }
-          sort: { type: "String", defaultValue: "-partner_updated_at" }
-          width: { type: "String" }
-          locationCities: { type: "[String]" }
-          additionalGeneIDs: { type: "[String]" }
-        ) {
+        @argumentDefinitions(input: { type: "FilterArtworksInput" }) {
         ...ArtistSeriesMeta_artistSeries
         ...ArtistSeriesHeader_artistSeries
         railArtist: artists(size: 1) {
@@ -109,29 +88,7 @@ export const ArtistSeriesAppFragmentContainer = createFragmentContainer(
         }
         internalID
         slug
-        ...ArtistSeriesArtworksFilter_artistSeries
-          @arguments(
-            acquireable: $acquireable
-            aggregations: $aggregations
-            atAuction: $atAuction
-            attributionClass: $attributionClass
-            colors: $colors
-            forSale: $forSale
-            height: $height
-            inquireableOnly: $inquireableOnly
-            keyword: $keyword
-            majorPeriods: $majorPeriods
-            medium: $medium
-            offerable: $offerable
-            page: $page
-            partnerID: $partnerID
-            priceRange: $priceRange
-            sizes: $sizes
-            sort: $sort
-            width: $width
-            locationCities: $locationCities
-            additionalGeneIDs: $additionalGeneIDs
-          )
+        ...ArtistSeriesArtworksFilter_artistSeries @arguments(input: $input)
       }
     `,
   }
