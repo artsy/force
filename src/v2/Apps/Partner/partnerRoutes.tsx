@@ -1,8 +1,9 @@
 import loadable from "@loadable/component"
 import { RouteConfig } from "found"
+import { graphql } from "react-relay"
 
 const PartnerApp = loadable(() => import("./PartnerApp"), {
-  resolveComponent: component => component.PartnerApp,
+  resolveComponent: component => component.PartnerAppFragmentContainer,
 })
 
 const ArticlesRoute = loadable(() => import("./Routes/Articles"), {
@@ -20,6 +21,13 @@ export const partnerRoutes: RouteConfig[] = [
     prepare: () => {
       PartnerApp.preload()
     },
+    query: graphql`
+      query partnerRoutes_PartnerQuery($partnerId: String!) {
+        partner(id: $partnerId) {
+          ...PartnerApp_partner
+        }
+      }
+    `,
     children: [
       {
         getComponent: () => OverviewRoute,

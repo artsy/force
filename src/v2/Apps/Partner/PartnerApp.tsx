@@ -4,10 +4,11 @@ import { Footer } from "v2/Components/Footer"
 import { AppContainer } from "../Components/AppContainer"
 import { HorizontalPadding } from "../Components/HorizontalPadding"
 import { NavigationTabs } from "./Components/NavigationTabs"
-import { Match } from "found"
+import { createFragmentContainer, graphql } from "react-relay"
+import { PartnerApp_partner } from "v2/__generated__/PartnerApp_partner.graphql"
 
 export interface PartnerAppProps {
-  match: Match
+  partner: PartnerApp_partner
 }
 
 export const PartnerApp: React.FC<PartnerAppProps> = props => {
@@ -15,10 +16,10 @@ export const PartnerApp: React.FC<PartnerAppProps> = props => {
     <AppContainer>
       <Box mx={[2, 4]}>
         <Text pt={2} pb={1} variant="largeTitle">
-          Partner: {props.match.params.partnerId}
+          Partner: {props.partner.name}
         </Text>
 
-        <NavigationTabs partnerId={props.match.params.partnerId} />
+        <NavigationTabs partnerId={props.partner.slug} />
 
         {props.children}
       </Box>
@@ -29,3 +30,13 @@ export const PartnerApp: React.FC<PartnerAppProps> = props => {
     </AppContainer>
   )
 }
+
+export const PartnerAppFragmentContainer = createFragmentContainer(PartnerApp, {
+  partner: graphql`
+    fragment PartnerApp_partner on Partner {
+      id
+      slug
+      name
+    }
+  `,
+})
