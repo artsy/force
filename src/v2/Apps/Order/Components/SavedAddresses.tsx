@@ -7,7 +7,8 @@ import {
   Flex,
   Text,
   Separator,
-  StackableBorderBox,
+  BorderBox,
+  Join,
 } from "@artsy/palette"
 import React, { useState } from "react"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
@@ -103,7 +104,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
     const isDefaultAddress = address.node.isDefault
 
     return (
-      <StackableBorderBox
+      <BorderBox
         p={2}
         width="100%"
         flexDirection="column"
@@ -156,7 +157,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
             </Text>
           </Box>
         </ModifyAddressWrapper>
-      </StackableBorderBox>
+      </BorderBox>
     )
   })
 
@@ -214,7 +215,11 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
 
   return inCollectorProfile ? (
     <>
-      <Flex flexDirection="column">{collectorProfileAddressItems}</Flex>
+      <Flex flexDirection="column">
+        <Join separator={<Spacer mb="1" />}>
+          {collectorProfileAddressItems}
+        </Join>
+      </Flex>
       {addAddressButton}
     </>
   ) : (
