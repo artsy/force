@@ -75,7 +75,7 @@ function initializeVariablesWithFilterState({ slug }, props) {
   const initialFilterState = props.location ? props.location.query : {}
   const aggregations = ["MEDIUM", "TOTAL", "MAJOR_PERIOD"]
   const additionalAggregations = getENV("ENABLE_NEW_ARTWORK_FILTERS")
-    ? ["ARTIST_NATIONALITY"]
+    ? ["ARTIST_NATIONALITY", "MATERIALS_TERMS"]
     : []
   const input = {
     sort: "partner_show_position",
