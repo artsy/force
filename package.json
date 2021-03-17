@@ -289,7 +289,7 @@
     "@types/relay-runtime": "9.1.6",
     "@types/relay-test-utils": "6.0.3",
     "@types/styled-components": "4.0.3",
-    "@types/styled-system": "5.1.9",
+    "@types/styled-system": "^5.1.10",
     "@types/styled-system__theme-get": "5.0.0",
     "@types/underscore.string": "0.0.32",
     "@types/webpack": "4.4.24",
