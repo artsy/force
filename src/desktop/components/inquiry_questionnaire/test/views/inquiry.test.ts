@@ -1,3 +1,4 @@
+/* eslint-disable jest/expect-expect, jest/valid-expect-in-promise, jest/no-disabled-tests, jest/valid-describe */
 import benv from "benv"
 import sinon from "sinon"
 import Backbone from "backbone"
@@ -103,7 +104,7 @@ describe(
         view.$('textarea[name="message"]').val("I wish to buy the foo bar")
         view.$("button").click()
 
-        view.__serialize__.then(() => {
+        view.__serialize__.then(function (this: any) {
           // Sets up the inquiry
           this.inquiry.get("message").should.equal("I wish to buy the foo bar")
           this.inquiry.get("contact_gallery").should.be.true()
@@ -150,7 +151,7 @@ describe(
         view.$('textarea[name="message"]').val("I wish to buy the foo bar")
         view.$("button").click()
 
-        view.__serialize__.then(() => {
+        view.__serialize__.then(function (this: any) {
           // Sets up the inquiry
           this.inquiry.get("message").should.equal("I wish to buy the foo bar")
           this.inquiry.get("contact_gallery").should.be.true()
@@ -268,7 +269,7 @@ describe(
           })
         })
 
-        xit("continues on to the next state even when the UserFairAction errors", async () => {
+        it.skip("continues on to the next state even when the UserFairAction errors", async () => {
           // FIXME: promise mocking does not catch error or make it to callback
           Backbone.sync
             .onCall(0)
