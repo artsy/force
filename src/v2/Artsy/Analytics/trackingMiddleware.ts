@@ -90,6 +90,10 @@ export function trackingMiddleware(options: TrackingMiddlewareOptions = {}) {
                 Marketo: false,
               },
             })
+
+            if (typeof window._sift !== "undefined") {
+              window._sift.push(["_trackPageview"])
+            }
           }
 
           // Reset timers that track time on page since we're tracking each order

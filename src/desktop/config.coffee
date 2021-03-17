@@ -117,6 +117,7 @@ module.exports =
   SESSION_COOKIE_KEY: 'force.sess'
   SESSION_COOKIE_MAX_AGE: 31536000000
   SESSION_SECRET: 'change-me'
+  SIFT_BEACON_KEY: null
   SITEMAP_BASE_URL: 'http://artsy-sitemaps.s3-website-us-east-1.amazonaws.com'
   SHOW_ANALYTICS_CALLS: false
   STRIPE_PUBLISHABLE_KEY: null
