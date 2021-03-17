@@ -51,7 +51,7 @@ export class DialogContainer extends Container<DialogState> {
       await new Promise(r => setTimeout(r, 400))
     }
 
-    return new Promise(resolve => {
+    return new Promise<void>(resolve => {
       this.setState({ props, onForceClose }, resolve)
     })
   }

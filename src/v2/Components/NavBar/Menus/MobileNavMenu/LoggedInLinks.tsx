@@ -9,7 +9,7 @@ import { SystemQueryRenderer as QueryRenderer } from "v2/Artsy/Relay/SystemQuery
 import {
   LoggedInLinksQuery,
   LoggedInLinksQueryResponse,
-} from "v2/__generated__/LoggedInLinksQuery.graphql.ts"
+} from "v2/__generated__/LoggedInLinksQuery.graphql"
 import { getConversationCount, updateConversationCache } from "../../helpers"
 
 export const LoggedInLinks: React.FC<

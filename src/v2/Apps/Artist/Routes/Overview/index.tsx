@@ -42,7 +42,7 @@ export interface OverviewRouteProps {
   tracking?: TrackingProp
 }
 
-const carouselSlideTrack: Track<null, null, [any]> = track
+const carouselSlideTrack: Track<{}, null, [any]> = track
 
 interface NavLinkProps {
   path: string

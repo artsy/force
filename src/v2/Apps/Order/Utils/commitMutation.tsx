@@ -18,7 +18,7 @@ export type CommitMutation = <MutationType extends OperationBase>(
   args: CommitMutationArgs
 ) => Promise<MutationType["response"]>
 
-interface CommitMutationProps {
+export interface CommitMutationProps {
   commitMutation: CommitMutation
   isCommittingMutation: boolean
 }

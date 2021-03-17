@@ -6,7 +6,7 @@ import { SystemQueryRenderer as QueryRenderer } from "v2/Artsy/Relay/SystemQuery
 import {
   UserEmailPreferencesQuery,
   UserEmailPreferencesQueryResponse,
-} from "v2/__generated__/UserEmailPreferencesQuery.graphql.ts"
+} from "v2/__generated__/UserEmailPreferencesQuery.graphql"
 import { UpdateUserEmailPreferencesMutation } from "./UserEmailPreferencesMutation"
 import { renderWithLoadProgress } from "v2/Artsy/Relay/renderWithLoadProgress"
 

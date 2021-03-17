@@ -9,7 +9,7 @@ import { SavedAddressType } from "v2/Apps/Order/Utils/shippingAddressUtils"
 import { CreditCardInput } from "v2/Apps/Order/Components/CreditCardInput"
 import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js"
 import { commitMutation, graphql, RelayProp } from "react-relay"
-import { PaymentModalCreateCreditCardMutation } from "v2/__generated__/PaymentModalCreateCreditCardMutation.graphql.ts"
+import { PaymentModalCreateCreditCardMutation } from "v2/__generated__/PaymentModalCreateCreditCardMutation.graphql"
 import {
   ConnectionHandler,
   PayloadError,
