@@ -1,11 +1,11 @@
 // @ts-check
 
-const { clientCommonConfig } = require("./clientCommonConfig")
-const { clientDevelopmentConfig } = require("./clientDevelopmentConfig")
-const { clientProductionConfig } = require("./clientProductionConfig")
-const { novoDevelopmentConfig } = require("./novoDevelopmentConfig")
-const { novoProductionConfig } = require("./novoProductionConfig")
-const { serverConfig } = require("./serverConfig")
+import { clientCommonConfig } from "./clientCommonConfig"
+import { clientDevelopmentConfig } from "./clientDevelopmentConfig"
+import { clientProductionConfig } from "./clientProductionConfig"
+import { novoDevelopmentConfig } from "./novoDevelopmentConfig"
+import { novoProductionConfig } from "./novoProductionConfig"
+import { serverConfig } from "./serverConfig"
 
 export {
   clientCommonConfig,

@@ -35,12 +35,27 @@ const clientForceConfig = createConfig("force.dev")
 const force = require("./common-app")
 
 function startServer() {
-  const compiler = webpack([clientNovoConfig, clientForceConfig])
+  const compiler = webpack(
+    [clientNovoConfig, clientForceConfig],
+    (err, stats) => {
+      if (err) {
+        console.error(err)
+        return
+      }
+
+      console.log(
+        stats.toString({
+          chunks: false, // Makes the build much quieter
+          colors: true, // Shows colors in the console
+        })
+      )
+    }
+  )
 
   const app = express()
   const wdm = webpackDevMiddleware(compiler, {
     serverSideRender: true,
-    stats: clientForceConfig.stats,
+    // stats: clientForceConfig.stats,
     writeToDisk(filePath) {
       /**
        * Emit the stats file to disk during dev so that loadable-compoents can
@@ -62,7 +77,8 @@ function startServer() {
   app.use(wdm)
   app.use(
     webpackHotMiddleware(compiler, {
-      log: false,
+      // log: false,
+      // noInfo: true,
     })
   )
   app.use(force)

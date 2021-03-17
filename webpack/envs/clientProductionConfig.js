@@ -1,12 +1,12 @@
 // @ts-check
 
-const path = require("path")
-const WebpackManifestPlugin = require("webpack-manifest-plugin")
-const webpack = require("webpack")
-const { getCSSManifest } = require("../utils/getCSSManifest")
-const TerserPlugin = require("terser-webpack-plugin")
-const { basePath, env } = require("../utils/env")
-const { getEntrypoints } = require("../utils/getEntrypoints")
+import path from "path"
+import { WebpackManifestPlugin } from "webpack-manifest-plugin"
+import webpack from "webpack"
+import { getCSSManifest } from "../utils/getCSSManifest"
+import TerserPlugin from "terser-webpack-plugin"
+import { basePath, env } from "../utils/env"
+import { getEntrypoints } from "../utils/getEntrypoints"
 
 export const clientProductionConfig = {
   devtool: env.webpackDevtool || "source-map",

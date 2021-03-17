@@ -1,20 +1,20 @@
 // @ts-check
 
-const { RetryChunkLoadPlugin } = require("webpack-retry-chunk-load-plugin")
-const HtmlWebpackPlugin = require("html-webpack-plugin")
-const LoadablePlugin = require("@loadable/webpack-plugin")
-const path = require("path")
-const TerserPlugin = require("terser-webpack-plugin")
-const webpack = require("webpack")
-const WebpackManifestPlugin = require("webpack-manifest-plugin")
-const { basePath, env } = require("../utils/env")
-const {
+import { RetryChunkLoadPlugin } from "webpack-retry-chunk-load-plugin"
+import HtmlWebpackPlugin from "html-webpack-plugin"
+import LoadablePlugin from "@loadable/webpack-plugin"
+import path from "path"
+import TerserPlugin from "terser-webpack-plugin"
+import webpack from "webpack"
+import { WebpackManifestPlugin } from "webpack-manifest-plugin"
+import { basePath, env } from "../utils/env"
+import {
   babelLoader,
   coffeeLoader,
   ejsLoader,
   jadeLoader,
   mjsLoader,
-} = require("./commonLoaders")
+} from "./commonLoaders"
 
 export const novoProductionConfig = {
   devtool: env.webpackDevtool || "source-map",

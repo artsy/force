@@ -1,10 +1,10 @@
 // @ts-check
 
-const nodeExternals = require("webpack-node-externals")
-const path = require("path")
-const webpack = require("webpack")
-const TerserPlugin = require("terser-webpack-plugin")
-const { basePath, env } = require("../utils/env")
+import nodeExternals from "webpack-node-externals"
+import path from "path"
+import { optimize } from "webpack"
+import TerserPlugin from "terser-webpack-plugin"
+import { basePath, env } from "../utils/env"
 
 export const serverConfig = {
   devtool: "source-map",
@@ -65,7 +65,7 @@ export const serverConfig = {
     ],
   },
   plugins: [
-    new webpack.optimize.LimitChunkCountPlugin({
+    new optimize.LimitChunkCountPlugin({
       maxChunks: 1,
     }),
   ],

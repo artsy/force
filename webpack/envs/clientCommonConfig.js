@@ -1,10 +1,10 @@
 // @ts-check
 
-const path = require("path")
-const webpack = require("webpack")
-const LoadablePlugin = require("@loadable/webpack-plugin")
-const { RetryChunkLoadPlugin } = require("webpack-retry-chunk-load-plugin")
-const { basePath, env } = require("../utils/env")
+import path from "path"
+import webpack from "webpack"
+import LoadablePlugin from "@loadable/webpack-plugin"
+import { RetryChunkLoadPlugin } from "webpack-retry-chunk-load-plugin"
+import { basePath, env } from "../utils/env"
 
 export const clientCommonConfig = {
   externals: {

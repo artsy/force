@@ -18,6 +18,8 @@ export interface FeatureSetProps extends Omit<BoxProps, "color"> {
 
 const SUPPORTED_ITEM_TYPES = ["FeaturedLink", "Artwork"]
 
+type SIZE = "small" | "medium" | "large"
+
 export const FeatureSet: React.FC<FeatureSetProps> = ({ set, ...rest }) => {
   const count = set.orderedItems.edges.length
   const size =
@@ -48,7 +50,11 @@ export const FeatureSet: React.FC<FeatureSetProps> = ({ set, ...rest }) => {
       <FeatureSetContainer set={set}>
         {set.orderedItems.edges.map(({ node: setItem }) => {
           return (
-            <FeatureSetItem key={setItem.id} setItem={setItem} size={size} />
+            <FeatureSetItem
+              key={setItem.id}
+              setItem={setItem}
+              size={size as SIZE}
+            />
           )
         })}
       </FeatureSetContainer>

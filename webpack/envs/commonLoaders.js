@@ -1,7 +1,7 @@
 // @ts-check
 
-const path = require("path")
-const { basePath, env } = require("../utils/env")
+import path from "path"
+import { basePath, env } from "../utils/env"
 
 export const coffeeLoader = {
   exclude: /(node_modules)/,

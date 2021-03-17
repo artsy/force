@@ -1,13 +1,15 @@
 // @ts-check
 
-const chalk = require("chalk")
-const fs = require("fs")
-const path = require("path")
-const webpack = require("webpack")
-const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin")
-const WebpackNotifierPlugin = require("webpack-notifier")
-const { basePath, env } = require("../utils/env")
-const { getEntrypoints } = require("../utils/getEntrypoints")
+import chalk from "chalk"
+import fs from "fs"
+import path from "path"
+import webpack from "webpack"
+import ForkTsCheckerNotifierWebpackPlugin from "fork-ts-checker-notifier-webpack-plugin"
+import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin"
+import WebpackNotifierPlugin from "webpack-notifier"
+import CaseSensitivePathsPlugin from "case-sensitive-paths-webpack-plugin"
+import { basePath, env } from "../utils/env"
+import { getEntrypoints } from "../utils/getEntrypoints"
 
 const cacheDirectory = path.resolve(basePath, ".cache")
 
@@ -69,6 +71,7 @@ export const clientDevelopmentConfig = {
   },
   name: "force",
   plugins: [
+    new CaseSensitivePathsPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new ForkTsCheckerWebpackPlugin({
       typescript: {
@@ -80,6 +83,10 @@ export const clientDevelopmentConfig = {
         },
       },
       formatter: { type: "codeframe", options: { highlightCode: true } },
+    }),
+    new ForkTsCheckerNotifierWebpackPlugin({
+      excludeWarnings: true,
+      skipFirstNotification: true,
     }),
     new WebpackNotifierPlugin(),
   ],

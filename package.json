@@ -288,10 +288,9 @@
     "@types/relay-runtime": "9.1.6",
     "@types/relay-test-utils": "6.0.3",
     "@types/styled-components": "4.0.3",
-    "@types/styled-system": "^5.1.10",
+    "@types/styled-system": "5.1.10",
     "@types/styled-system__theme-get": "5.0.0",
     "@types/underscore.string": "0.0.32",
-    "@types/webpack": "4.41.26",
     "@types/webpack-env": "1.16.0",
     "@typescript-eslint/eslint-plugin": "2.30.0",
     "@typescript-eslint/parser": "4.18.0",
@@ -305,7 +304,7 @@
     "benv": "3.3.0",
     "buffer": "6.0.3",
     "cache-loader": "1.2.2",
-    "case-sensitive-paths-webpack-plugin": "2.3.0",
+    "case-sensitive-paths-webpack-plugin": "2.4.0",
     "coffee-loader": "0.8.0",
     "coffeescript": "1.11.1",
     "cypress": "5.1.0",
@@ -320,6 +319,7 @@
     "eslint-plugin-react": "7.19.0",
     "eslint-plugin-react-hooks": "4.0.4",
     "eslint-plugin-styled-components-a11y": "0.0.16",
+    "fork-ts-checker-notifier-webpack-plugin": "3.0.0",
     "fork-ts-checker-webpack-plugin": "6.1.1",
     "graphql-tag": "2.10.3",
     "graphql-tools": "4.0.3",
@@ -378,15 +378,12 @@
     "webpack-cli": "4.5.0",
     "webpack-dev-middleware": "4.1.0",
     "webpack-hot-middleware": "2.25.0",
-    "webpack-manifest-plugin": "3.0.0-rc.0",
+    "webpack-manifest-plugin": "^3.1.0",
     "webpack-merge": "4.2.1",
     "webpack-node-externals": "2.5.2",
     "webpack-notifier": "1.7.0",
     "webpack-retry-chunk-load-plugin": "2.0.3",
     "yn": "4.0.0"
-  },
-  "optionalDependencies": {
-    "fsevents": "*"
   },
   "husky": {
     "hooks": {

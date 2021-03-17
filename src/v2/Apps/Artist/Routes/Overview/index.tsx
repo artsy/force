@@ -17,7 +17,7 @@ import { ArtistCollectionsRailContent as ArtistCollectionsRail } from "v2/Apps/A
 import { hasSections as showMarketInsights } from "v2/Apps/Artist/Components/MarketInsights/MarketInsights"
 import { GenesFragmentContainer as Genes } from "v2/Apps/Artist/Routes/Overview/Components/Genes"
 import { useTracking, withSystemContext } from "v2/Artsy"
-import { track } from "v2/Artsy/Analytics"
+import { Track as TrackType, track } from "v2/Artsy/Analytics"
 import * as Schema from "v2/Artsy/Analytics/Schema"
 import { ArtistBioFragmentContainer as ArtistBio } from "v2/Components/ArtistBio"
 import { Carousel } from "v2/Components/Carousel"
@@ -29,7 +29,7 @@ import { WorksForSaleRailQueryRenderer as WorksForSaleRail } from "v2/Apps/Artis
 import { pMedia } from "v2/Components/Helpers"
 import React from "react"
 import { RelayRefetchProp, createFragmentContainer, graphql } from "react-relay"
-import { Track, TrackingProp } from "react-tracking"
+import { TrackingProp } from "react-tracking"
 import styled from "styled-components"
 import { get } from "v2/Utils/get"
 import { Media } from "v2/Utils/Responsive"
@@ -42,7 +42,7 @@ export interface OverviewRouteProps {
   tracking?: TrackingProp
 }
 
-const carouselSlideTrack: Track<{}, null, [any]> = track
+const carouselSlideTrack: TrackType = track
 
 interface NavLinkProps {
   path: string

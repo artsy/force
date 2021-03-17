@@ -15,6 +15,7 @@ import { get } from "v2/Utils/get"
  */
 export type RouterLinkProps = LinkProps &
   React.HTMLAttributes<HTMLAnchorElement> & {
+    activeClassName?: string
     noUnderline?: boolean
   }
 
