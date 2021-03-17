@@ -79,6 +79,7 @@ describe("ArtworkFilter", () => {
         colors: [],
         locationCities: [],
         artistNationalities: [],
+        materialsTerms: [],
       })
     })
 
@@ -121,6 +122,7 @@ describe("ArtworkFilter", () => {
         colors: [],
         locationCities: [],
         artistNationalities: [],
+        materialsTerms: [],
       })
     })
 
@@ -153,6 +155,7 @@ describe("ArtworkFilter", () => {
         colors: [],
         locationCities: [],
         artistNationalities: [],
+        materialsTerms: [],
       })
     })
 
@@ -183,6 +186,7 @@ describe("ArtworkFilter", () => {
           colors: [],
           locationCities: [],
           artistNationalities: [],
+          materialsTerms: [],
         },
       })
     })

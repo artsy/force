@@ -20,6 +20,7 @@ import { getENV } from "v2/Utils/getENV"
 import { PartnersFilter } from "v2/Components/v2/ArtworkFilter/ArtworkFilters/PartnersFilter"
 import { ArtworkLocationFilter } from "v2/Components/v2/ArtworkFilter/ArtworkFilters/ArtworkLocationFilter"
 import { ArtistNationalityFilter } from "v2/Components/v2/ArtworkFilter/ArtworkFilters/ArtistNationalityFilter"
+import { MaterialsFilter } from "v2/Components/v2/ArtworkFilter/ArtworkFilters/MaterialsFilter"
 
 interface FairArtworksFilterProps {
   fair: FairArtworks_fair
@@ -51,6 +52,7 @@ const FairArtworksFilter: React.FC<FairArtworksFilterProps> = props => {
         user={user}
       />
       <MediumFilter />
+      {getENV("ENABLE_NEW_ARTWORK_FILTERS") && <MaterialsFilter />}
       <AttributionClassFilter />
       <PriceRangeFilter />
       <WaysToBuyFilter />

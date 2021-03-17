@@ -15,11 +15,13 @@ import { getENV } from "v2/Utils/getENV"
 import { PartnersFilter } from "./PartnersFilter"
 import { ArtworkLocationFilter } from "./ArtworkLocationFilter"
 import { ArtistNationalityFilter } from "./ArtistNationalityFilter"
+import { MaterialsFilter } from "./MaterialsFilter"
 
 export const ArtworkFilters: React.FC = () => {
   return (
     <Box pr={2}>
       <MediumFilter />
+      {getENV("ENABLE_NEW_ARTWORK_FILTERS") && <MaterialsFilter />}
       <AttributionClassFilter />
       <PriceRangeFilter />
       <WaysToBuyFilter />

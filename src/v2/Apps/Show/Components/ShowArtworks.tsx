@@ -14,6 +14,7 @@ import { Box, BoxProps } from "@artsy/palette"
 import { useRouter } from "v2/Artsy/Router/useRouter"
 import { getENV } from "v2/Utils/getENV"
 import { ArtistNationalityFilter } from "v2/Components/v2/ArtworkFilter/ArtworkFilters/ArtistNationalityFilter"
+import { MaterialsFilter } from "v2/Components/v2/ArtworkFilter/ArtworkFilters/MaterialsFilter"
 import { omit } from "lodash"
 
 interface ShowArtworksFilterProps extends BoxProps {
@@ -36,6 +37,7 @@ const ShowArtworksFilter: React.FC<ShowArtworksFilterProps> = ({
   const Filters = () => (
     <Box pr={2}>
       <MediumFilter />
+      {getENV("ENABLE_NEW_ARTWORK_FILTERS") && <MaterialsFilter />}
       <PriceRangeFilter />
       <WaysToBuyFilter />
       {getENV("ENABLE_NEW_ARTWORK_FILTERS") && <ArtistNationalityFilter />}

@@ -17,7 +17,8 @@ export const isDefaultFilter: (
       name === "majorPeriods" ||
       name === "colors" ||
       name === "locationCities" ||
-      name === "artistNationalities":
+      name === "artistNationalities" ||
+      name === "materialsTerms":
       return value.length === 0
     case name === "sort":
       return value === "-decayed_merch"

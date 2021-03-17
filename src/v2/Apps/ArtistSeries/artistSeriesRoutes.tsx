@@ -34,7 +34,7 @@ function initializeVariablesWithFilterState({ slug }, props) {
 
   const aggregations = ["MEDIUM", "TOTAL", "MAJOR_PERIOD"]
   const additionalAggregations = getENV("ENABLE_NEW_ARTWORK_FILTERS")
-    ? ["PARTNER", "LOCATION_CITY"]
+    ? ["PARTNER", "LOCATION_CITY", "MATERIALS_TERMS"]
     : ["GALLERY", "INSTITUTION"]
 
   const input = {

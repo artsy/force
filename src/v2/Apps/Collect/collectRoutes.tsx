@@ -85,7 +85,7 @@ function initializeVariablesWithFilterState(params, props) {
   // TODO: Does the `location_city` aggregation accomplish much on /collect, and
   // should it be a hard-coded list of featured cities?
   const additionalAggregations = getENV("ENABLE_NEW_ARTWORK_FILTERS")
-    ? ["LOCATION_CITY", "ARTIST_NATIONALITY"]
+    ? ["LOCATION_CITY", "ARTIST_NATIONALITY", "MATERIALS_TERMS"]
     : []
   const collectionOnlyAggregations = collectionSlug
     ? ["MERCHANDISABLE_ARTISTS", "MEDIUM", "MAJOR_PERIOD"]
