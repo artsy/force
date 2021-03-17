@@ -14,6 +14,22 @@ const OverviewRoute = loadable(() => import("./Routes/Overview"), {
   resolveComponent: component => component.OverviewRoute,
 })
 
+const ShowsRoute = loadable(() => import("./Routes/Shows"), {
+  resolveComponent: component => component.ShowsRoute,
+})
+
+const WorksRoute = loadable(() => import("./Routes/Works"), {
+  resolveComponent: component => component.WorksRoute,
+})
+
+const ArtistsRoute = loadable(() => import("./Routes/Artists"), {
+  resolveComponent: component => component.ArtistsRoute,
+})
+
+const ContactRoute = loadable(() => import("./Routes/Contact"), {
+  resolveComponent: component => component.ContactRoute,
+})
+
 export const partnerRoutes: RouteConfig[] = [
   {
     getComponent: () => PartnerApp,
@@ -41,6 +57,34 @@ export const partnerRoutes: RouteConfig[] = [
         path: "articles",
         prepare: () => {
           ArticlesRoute.preload()
+        },
+      },
+      {
+        getComponent: () => ShowsRoute,
+        path: "shows",
+        prepare: () => {
+          ShowsRoute.preload()
+        },
+      },
+      {
+        getComponent: () => WorksRoute,
+        path: "works",
+        prepare: () => {
+          WorksRoute.preload()
+        },
+      },
+      {
+        getComponent: () => ArtistsRoute,
+        path: "artists",
+        prepare: () => {
+          ArtistsRoute.preload()
+        },
+      },
+      {
+        getComponent: () => ContactRoute,
+        path: "contact",
+        prepare: () => {
+          ContactRoute.preload()
         },
       },
     ],

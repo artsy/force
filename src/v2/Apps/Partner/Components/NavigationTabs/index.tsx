@@ -26,6 +26,26 @@ export class NavigationTabs extends React.Component<NavigationTabsProps> {
         href: route("/articles"),
         exact: false,
       },
+      {
+        name: "Shows",
+        href: route("/shows"),
+        exact: false,
+      },
+      {
+        name: "Works",
+        href: route("/works"),
+        exact: false,
+      },
+      {
+        name: "Artists",
+        href: route("/artists"),
+        exact: false,
+      },
+      {
+        name: "Contact",
+        href: route("/contact"),
+        exact: false,
+      },
     ]
 
     return routes.map(route => (
