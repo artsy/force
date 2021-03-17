@@ -3,7 +3,7 @@ import { Box, Text } from "@artsy/palette"
 import { Footer } from "v2/Components/Footer"
 import { AppContainer } from "../Components/AppContainer"
 import { HorizontalPadding } from "../Components/HorizontalPadding"
-import { NavigationTabs } from "./Components/NavigationTabs"
+import { NavigationTabsFragmentContainer as NavigationTabs } from "v2/Apps/Partner/Components/NavigationTabs"
 import { createFragmentContainer, graphql } from "react-relay"
 import { PartnerApp_partner } from "v2/__generated__/PartnerApp_partner.graphql"
 
@@ -16,10 +16,10 @@ export const PartnerApp: React.FC<PartnerAppProps> = props => {
     <AppContainer>
       <Box mx={[2, 4]}>
         <Text pt={2} pb={1} variant="largeTitle">
-          Partner: {props.partner.name}
+          {props.partner.name}
         </Text>
 
-        <NavigationTabs partnerId={props.partner.slug} />
+        <NavigationTabs partner={props.partner} />
 
         {props.children}
       </Box>
@@ -34,9 +34,8 @@ export const PartnerApp: React.FC<PartnerAppProps> = props => {
 export const PartnerAppFragmentContainer = createFragmentContainer(PartnerApp, {
   partner: graphql`
     fragment PartnerApp_partner on Partner {
-      id
-      slug
       name
+      ...NavigationTabs_partner
     }
   `,
 })

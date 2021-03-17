@@ -28,10 +28,13 @@ query partnerRoutes_PartnerQuery(
   }
 }
 
-fragment PartnerApp_partner on Partner {
-  id
+fragment NavigationTabs_partner on Partner {
   slug
+}
+
+fragment PartnerApp_partner on Partner {
   name
+  ...NavigationTabs_partner
 }
 */
 
@@ -95,7 +98,7 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "id",
+            "name": "name",
             "storageKey": null
           },
           {
@@ -109,7 +112,7 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "name",
+            "name": "id",
             "storageKey": null
           }
         ],
@@ -122,7 +125,7 @@ return {
     "metadata": {},
     "name": "partnerRoutes_PartnerQuery",
     "operationKind": "query",
-    "text": "query partnerRoutes_PartnerQuery(\n  $partnerId: String!\n) {\n  partner(id: $partnerId) {\n    ...PartnerApp_partner\n    id\n  }\n}\n\nfragment PartnerApp_partner on Partner {\n  id\n  slug\n  name\n}\n"
+    "text": "query partnerRoutes_PartnerQuery(\n  $partnerId: String!\n) {\n  partner(id: $partnerId) {\n    ...PartnerApp_partner\n    id\n  }\n}\n\nfragment NavigationTabs_partner on Partner {\n  slug\n}\n\nfragment PartnerApp_partner on Partner {\n  name\n  ...NavigationTabs_partner\n}\n"
   }
 };
 })();
