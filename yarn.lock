@@ -15795,9 +15795,9 @@ react-waypoint@^7.3.3:
     prop-types "^15.0.0"
 
 react-zendesk@^0.1.10:
-  version "0.1.10"
-  resolved "https://registry.yarnpkg.com/react-zendesk/-/react-zendesk-0.1.10.tgz#3f2ebe45e06b006b2ceadc09af7bed58cdd015b2"
-  integrity sha512-QDqHfk2tK1QzWubOnNEWxmyexKIXV3j0w7LjZ161z2K2DmkaPErIDwtBokQVgvzDvM7S657S2DbQY9vIYQsf0g==
+  version "0.1.11"
+  resolved "https://registry.yarnpkg.com/react-zendesk/-/react-zendesk-0.1.11.tgz#2348d5048cfc6b3b6ada1ff5e2ae24aa54149bb0"
+  integrity sha512-40u0rWhKfcA4rGVKNoXSnLMZu/ytsF/T1/0+EU/pm6zCMHuOzNSM3sTxMStDAsBY7YGqWb+weI4HnUfhs/Gn7w==
   dependencies:
     prop-types "^15.7.2"
 
