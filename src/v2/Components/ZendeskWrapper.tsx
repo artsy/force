@@ -4,5 +4,5 @@ import { data as sd } from "sharify"
 
 export const ZendeskWrapper = () => {
   if (!sd.ZENDESK_KEY) return null
-  return <Zendesk zendeskKey={sd.ZENDESK_KEY} />
+  return <Zendesk defer zendeskKey={sd.ZENDESK_KEY} />
 }
