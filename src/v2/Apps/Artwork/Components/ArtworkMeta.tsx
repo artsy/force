@@ -126,14 +126,15 @@ export class ArtworkMeta extends Component<ArtworkMetaProps> {
   }
 
   renderZendeskScript() {
-    const { artwork } = this.props
-    if (
-      artwork.is_in_auction ||
-      !artwork.is_acquireable ||
-      !artwork.isOfferable ||
-      !artwork.isInquireable
-    )
-      return
+    const {
+      is_acquireable,
+      is_in_auction,
+      isInquireable,
+      isOfferable,
+    } = this.props.artwork
+
+    if (is_in_auction) return null
+    if (!is_acquireable && !isOfferable && !isInquireable) return
     if (typeof window !== "undefined" && window.zEmbed) return
 
     return <ZendeskWrapper />
