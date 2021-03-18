@@ -1,3 +1,4 @@
+import { Text } from "@artsy/palette"
 import React from "react"
 import { States } from "storybook-states"
 
@@ -8,9 +9,16 @@ export default {
 export const Example = () => {
   return (
     <States
-      states={[{ size: "xxs" }, { size: "xs" }, { size: "sm" }, { size: "md" }]}
+      states={[
+        { variant: "xs" },
+        { variant: "sm" },
+        { variant: "md" },
+        { variant: "lg" },
+        { variant: "xl" },
+        { variant: "xxl" },
+      ]}
     >
-      <div>hi</div>
+      <Text>Hello world</Text>
     </States>
   )
 }
