@@ -7,7 +7,7 @@
 //- "Buy works from thousands of galleries..."
 #about-section2-pull-blurb-1.about-container
   .span2: +pull-blurb(section.pullBlurb1)
-  .span4: img( data-src= section.pullBlurb1.src )
+  .span4: img( src= section.pullBlurb1.src )
 
 //- "We’re here to help you find art..."
 #about-section2-pull-blurb-4.about-container
@@ -15,7 +15,7 @@
     #about-section2-specialists-left
       for specialist in firstHalf(section.pullBlurb4.specialists)
         .about-image-container.is-pin-right
-          img( data-src= specialist.src )
+          img( src= specialist.src )
           .about-avant-garde-caption
             = specialist.name
   .span3
@@ -23,7 +23,7 @@
     #about-section2-specialists-right
       for specialist in secondHalf(section.pullBlurb4.specialists)
         .about-image-container
-          img( data-src= specialist.src )
+          img( src= specialist.src )
           .about-avant-garde-caption
             = specialist.name
       span#about-section2-cta
