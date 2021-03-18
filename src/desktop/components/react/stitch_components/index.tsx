@@ -13,10 +13,6 @@
 export { StitchWrapper } from "./StitchWrapper"
 export { NavBar } from "./NavBar"
 export { CollectionsHubsHomepageNav } from "./CollectionsHubsHomepageNav"
-// TODO remove after finishing new purchase app
-export {
-  UserSettingsPaymentsQueryRenderer as UserSettingsPayments,
-} from "v2/Components/Payment/UserSettingsPayments"
 export {
   TwoFactorAuthenticationQueryRenderer as TwoFactorAuthentication,
 } from "v2/Components/UserSettings/TwoFactorAuthentication"

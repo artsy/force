@@ -4,9 +4,9 @@ import { SystemContextProps } from "v2/Artsy"
 import React, { useState } from "react"
 import { RelayProp, createFragmentContainer, graphql } from "react-relay"
 import { SavedCreditCards } from "v2/Components/Payment/SavedCreditCards"
+import { PaymentSectionCreditCard } from "v2/__generated__/PaymentSectionCreditCard.graphql"
 import { PaymentModal } from "v2/Components/Payment/PaymentModal"
 import { PaymentSection_me } from "v2/__generated__/PaymentSection_me.graphql"
-import { UserSettingsPaymentsCreditCard } from "v2/__generated__/UserSettingsPaymentsCreditCard.graphql"
 import { loadStripe } from "@stripe/stripe-js"
 import { Elements } from "@stripe/react-stripe-js"
 import { data as sd } from "sharify"
@@ -30,7 +30,7 @@ export const PaymentSection: React.FC<PaymentSectionProps> = props => {
         {creditCards?.length ? (
           <Box maxWidth={542}>
             <SavedCreditCards
-              creditCards={creditCards as UserSettingsPaymentsCreditCard[]}
+              creditCards={creditCards as CreditCardType[]}
               relay={props.relay}
               me={props.me}
             />
@@ -55,6 +55,8 @@ export const PaymentSection: React.FC<PaymentSectionProps> = props => {
     </Theme>
   )
 }
+
+export type CreditCardType = PaymentSectionCreditCard
 
 graphql`
   fragment PaymentSectionCreditCard on CreditCard {

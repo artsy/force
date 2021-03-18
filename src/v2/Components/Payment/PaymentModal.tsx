@@ -62,7 +62,7 @@ const mutation = graphql`
         ... on CreditCardMutationSuccess {
           creditCardEdge {
             node {
-              ...UserSettingsPaymentsCreditCard @relay(mask: false)
+              ...PaymentSectionCreditCard @relay(mask: false)
             }
           }
         }
