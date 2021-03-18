@@ -1,6 +1,11 @@
 import { Box } from "@artsy/palette"
 import styled from "styled-components"
-import { GridColumnGapProps, gridColumnGap, style } from "styled-system"
+import {
+  GridColumnGapProps,
+  gridColumnGap,
+  style,
+  compose,
+} from "styled-system"
 
 const columnCount = style({
   prop: "columnCount",
@@ -10,10 +15,13 @@ const columnCount = style({
 export const Masonry = styled(Box)<
   { columnCount?: number[] | number } & GridColumnGapProps
 >`
-  ${columnCount};
-  ${gridColumnGap};
+  ${compose(columnCount, gridColumnGap)};
 
   > * {
     break-inside: avoid;
   }
 `
+
+Masonry.defaultProps = {
+  gridColumnGap: 2,
+}
