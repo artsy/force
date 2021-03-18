@@ -1,5 +1,5 @@
 import loadable from "@loadable/component"
-import { RouteConfig } from "found"
+import { RedirectException, RouteConfig } from "found"
 import { graphql } from "react-relay"
 
 const PartnerApp = loadable(() => import("./PartnerApp"), {
@@ -50,6 +50,15 @@ export const partnerRoutes: RouteConfig[] = [
         path: "",
         prepare: () => {
           OverviewRoute.preload()
+        },
+      },
+      {
+        path: "overview",
+        render: props => {
+          throw new RedirectException(
+            `/partner2/${props.match.params.partnerId}`,
+            302
+          )
         },
       },
       {
