@@ -39,7 +39,7 @@ export const partnerRoutes: RouteConfig[] = [
     },
     query: graphql`
       query partnerRoutes_PartnerQuery($partnerId: String!) {
-        partner(id: $partnerId) {
+        partner(id: $partnerId) @principalField {
           ...PartnerApp_partner
         }
       }

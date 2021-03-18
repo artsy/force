@@ -22,7 +22,7 @@ export type partnerRoutes_PartnerQuery = {
 query partnerRoutes_PartnerQuery(
   $partnerId: String!
 ) {
-  partner(id: $partnerId) {
+  partner(id: $partnerId) @principalField {
     ...PartnerApp_partner
     id
   }
@@ -125,9 +125,9 @@ return {
     "metadata": {},
     "name": "partnerRoutes_PartnerQuery",
     "operationKind": "query",
-    "text": "query partnerRoutes_PartnerQuery(\n  $partnerId: String!\n) {\n  partner(id: $partnerId) {\n    ...PartnerApp_partner\n    id\n  }\n}\n\nfragment NavigationTabs_partner on Partner {\n  slug\n}\n\nfragment PartnerApp_partner on Partner {\n  name\n  ...NavigationTabs_partner\n}\n"
+    "text": "query partnerRoutes_PartnerQuery(\n  $partnerId: String!\n) {\n  partner(id: $partnerId) @principalField {\n    ...PartnerApp_partner\n    id\n  }\n}\n\nfragment NavigationTabs_partner on Partner {\n  slug\n}\n\nfragment PartnerApp_partner on Partner {\n  name\n  ...NavigationTabs_partner\n}\n"
   }
 };
 })();
-(node as any).hash = '4aac554a98b73b85261806b9b20494e8';
+(node as any).hash = 'b065b69c18af67164cd46d476357078f';
 export default node;

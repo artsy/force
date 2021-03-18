@@ -6,7 +6,6 @@ import { HorizontalPadding } from "../Components/HorizontalPadding"
 import { NavigationTabsFragmentContainer as NavigationTabs } from "v2/Apps/Partner/Components/NavigationTabs"
 import { createFragmentContainer, graphql } from "react-relay"
 import { PartnerApp_partner } from "v2/__generated__/PartnerApp_partner.graphql"
-import { HttpError } from "found"
 
 export interface PartnerAppProps {
   partner: PartnerApp_partner
@@ -16,10 +15,6 @@ export const PartnerApp: React.FC<PartnerAppProps> = ({
   partner,
   children,
 }) => {
-  if (!partner) {
-    throw new HttpError(404)
-  }
-
   return (
     <AppContainer>
       <Box mx={[2, 4]}>
