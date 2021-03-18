@@ -7,11 +7,9 @@ interface NavigationTabsProps {
   partner: NavigationTabs_partner
 }
 
-export class NavigationTabs extends React.Component<NavigationTabsProps> {
-  renderTabs = () => {
-    const {
-      partner: { slug },
-    } = this.props
+export const NavigationTabs: React.FC<NavigationTabsProps> = ({ partner }) => {
+  const renderTabs = () => {
+    const { slug } = partner
 
     const route = (path?: string) => `/partner2/${slug}${path ? path : ""}`
 
@@ -55,9 +53,7 @@ export class NavigationTabs extends React.Component<NavigationTabsProps> {
     ))
   }
 
-  render() {
-    return <RouteTabs fill>{this.renderTabs()}</RouteTabs>
-  }
+  return <RouteTabs fill>{renderTabs()}</RouteTabs>
 }
 
 export const NavigationTabsFragmentContainer = createFragmentContainer(
