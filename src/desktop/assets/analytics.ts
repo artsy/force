@@ -26,6 +26,7 @@ const excludedRoutes = [
   "/user/conversations(.*)",
   "/user/purchases(.*)",
   "/viewing-room(.*)",
+  "/user/payments(.*)",
 ]
 
 beforeAnalyticsReady()
