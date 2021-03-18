@@ -1,35 +1,30 @@
-import { NavigationTabs_Test_PartnerQueryRawResponse } from "v2/__generated__/NavigationTabs_Test_PartnerQuery.graphql"
-import { NavigationTabsFragmentContainer as NavigationTabs } from "v2/Apps/Partner/Components/NavigationTabs"
-import { renderRelayTree } from "v2/DevTools"
 import React from "react"
 import { graphql } from "react-relay"
+import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
+import { NavigationTabs_Test_PartnerQuery } from "v2/__generated__/NavigationTabs_Test_PartnerQuery.graphql"
+import { NavigationTabsFragmentContainer as NavigationTabs } from "v2/Apps/Partner/Components/NavigationTabs"
 
 jest.unmock("react-relay")
 jest.mock("v2/Components/RouteTabs")
 
-describe("PartnerNavigationTabs", () => {
-  const getWrapper = async (
-    response: NavigationTabs_Test_PartnerQueryRawResponse["partner"] = NavigationTabsFixture
-  ) => {
-    return await renderRelayTree({
-      Component: ({ partner }: any) => {
-        return <NavigationTabs partner={partner} />
-      },
-      query: graphql`
-        query NavigationTabs_Test_PartnerQuery @raw_response_type {
-          partner(id: "white-cube") {
-            ...NavigationTabs_partner
-          }
-        }
-      `,
-      mockData: {
-        partner: response,
-      } as NavigationTabs_Test_PartnerQueryRawResponse,
-    })
-  }
+const { getWrapper } = setupTestWrapper<NavigationTabs_Test_PartnerQuery>({
+  Component: ({ partner }: any) => {
+    return <NavigationTabs partner={partner} />
+  },
+  query: graphql`
+    query NavigationTabs_Test_PartnerQuery @raw_response_type {
+      partner(id: "white-cube") {
+        ...NavigationTabs_partner
+      }
+    }
+  `,
+})
 
+describe("PartnerNavigationTabs", () => {
   it("renders all tabs by default", async () => {
-    const wrapper = await getWrapper()
+    const wrapper = await getWrapper({
+      Partner: () => ({ id: "white-cube", slug: "white-cube" }),
+    })
     const html = wrapper.html()
 
     expect(html).toContain("Overview")
@@ -40,8 +35,3 @@ describe("PartnerNavigationTabs", () => {
     expect(html).toContain("Contact")
   })
 })
-
-const NavigationTabsFixture: NavigationTabs_Test_PartnerQueryRawResponse["partner"] = {
-  id: "white-cube",
-  slug: "white-cube",
-}
