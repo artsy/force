@@ -33,7 +33,7 @@ const ContactRoute = loadable(() => import("./Routes/Contact"), {
 export const partnerRoutes: RouteConfig[] = [
   {
     getComponent: () => PartnerApp,
-    path: "/partner/:partnerId",
+    path: "/partner2/:partnerId",
     prepare: () => {
       PartnerApp.preload()
     },

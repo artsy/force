@@ -13,7 +13,7 @@ export class NavigationTabs extends React.Component<NavigationTabsProps> {
       partner: { slug },
     } = this.props
 
-    const route = (path?: string) => `/novo/partner/${slug}${path ? path : ""}`
+    const route = (path?: string) => `/partner2/${slug}${path ? path : ""}`
 
     const routes = [
       {
@@ -24,27 +24,27 @@ export class NavigationTabs extends React.Component<NavigationTabsProps> {
       {
         name: "Articles",
         href: route("/articles"),
-        exact: false,
+        exact: true,
       },
       {
         name: "Shows",
         href: route("/shows"),
-        exact: false,
+        exact: true,
       },
       {
         name: "Works",
         href: route("/works"),
-        exact: false,
+        exact: true,
       },
       {
         name: "Artists",
         href: route("/artists"),
-        exact: false,
+        exact: true,
       },
       {
         name: "Contact",
         href: route("/contact"),
-        exact: false,
+        exact: true,
       },
     ]
 

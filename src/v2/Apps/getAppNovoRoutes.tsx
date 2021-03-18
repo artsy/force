@@ -102,7 +102,7 @@ export function getAppNovoRoutes(): RouteConfig[] {
         routes: paymentRoutes,
       },
       {
-        // converted: true,
+        converted: true,
         routes: partnerRoutes,
       },
 
