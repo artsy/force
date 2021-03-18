@@ -22,11 +22,6 @@ export class NavigationTabs extends React.Component<NavigationTabsProps> {
         exact: true,
       },
       {
-        name: "Articles",
-        href: route("/articles"),
-        exact: true,
-      },
-      {
         name: "Shows",
         href: route("/shows"),
         exact: true,
@@ -39,6 +34,11 @@ export class NavigationTabs extends React.Component<NavigationTabsProps> {
       {
         name: "Artists",
         href: route("/artists"),
+        exact: true,
+      },
+      {
+        name: "Articles",
+        href: route("/articles"),
         exact: true,
       },
       {
