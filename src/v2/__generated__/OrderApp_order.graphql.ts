@@ -14,6 +14,14 @@ export type OrderApp_order = {
                     readonly slug: string;
                     readonly is_acquireable: boolean | null;
                     readonly is_offerable: boolean | null;
+                    readonly isInquireable: boolean | null;
+                    readonly priceCurrency: string | null;
+                    readonly listPrice: {
+                        readonly major?: number;
+                        readonly minPrice?: {
+                            readonly major: number;
+                        } | null;
+                    } | null;
                 } | null;
             } | null;
         } | null> | null;
@@ -28,7 +36,17 @@ export type OrderApp_order$key = {
 
 
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "major",
+    "storageKey": null
+  }
+];
+return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
@@ -100,6 +118,52 @@ const node: ReaderFragment = {
                       "kind": "ScalarField",
                       "name": "isOfferable",
                       "storageKey": null
+                    },
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "isInquireable",
+                      "storageKey": null
+                    },
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "priceCurrency",
+                      "storageKey": null
+                    },
+                    {
+                      "alias": null,
+                      "args": null,
+                      "concreteType": null,
+                      "kind": "LinkedField",
+                      "name": "listPrice",
+                      "plural": false,
+                      "selections": [
+                        {
+                          "kind": "InlineFragment",
+                          "selections": (v0/*: any*/),
+                          "type": "Money"
+                        },
+                        {
+                          "kind": "InlineFragment",
+                          "selections": [
+                            {
+                              "alias": null,
+                              "args": null,
+                              "concreteType": "Money",
+                              "kind": "LinkedField",
+                              "name": "minPrice",
+                              "plural": false,
+                              "selections": (v0/*: any*/),
+                              "storageKey": null
+                            }
+                          ],
+                          "type": "PriceRange"
+                        }
+                      ],
+                      "storageKey": null
                     }
                   ],
                   "storageKey": null
@@ -116,5 +180,6 @@ const node: ReaderFragment = {
   ],
   "type": "CommerceOrder"
 };
-(node as any).hash = '22f0547ca97d2ba0d33dbc5db1aa4c77';
+})();
+(node as any).hash = '46b9cbabdb9bb6d77ab883053976b9d1';
 export default node;
