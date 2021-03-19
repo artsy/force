@@ -2,7 +2,7 @@
 const chalk = require("chalk")
 const merge = require("webpack-merge")
 const fs = require("fs")
-const { bundleAnalyzer, duplicatesReport, measureSpeed } = require("./plugins")
+const { bundleAnalyzer, measureSpeed } = require("./plugins")
 const { env } = require("./utils/env")
 
 const {
@@ -92,9 +92,6 @@ function generateEnvBasedConfig() {
 
   // Optionally analyze the bundle
   config = bundleAnalyzer(config)
-
-  // Optionally check for duplicates
-  config = duplicatesReport(config)
 
   // Optionally configuration wrapper
   config = measureSpeed(config)

@@ -6672,7 +6672,7 @@ chalk@2.3.x:
     escape-string-regexp "^1.0.5"
     supports-color "^5.3.0"
 
-chalk@2.4.2, chalk@^2.0.0, chalk@^2.0.1, chalk@^2.1.0, chalk@^2.3.0, chalk@^2.3.1, chalk@^2.4.0, chalk@^2.4.1, chalk@^2.4.2:
+chalk@2.4.2, chalk@^2.0.0, chalk@^2.0.1, chalk@^2.1.0, chalk@^2.3.0, chalk@^2.3.1, chalk@^2.4.1, chalk@^2.4.2:
   version "2.4.2"
   resolved "https://registry.yarnpkg.com/chalk/-/chalk-2.4.2.tgz#cd42541677a54333cf541a49108c1432b44c9424"
   integrity sha512-Mti+f9lpJNcwF4tWV8/OrTTtF1gZi+f8FqlyAdouralcFWFQWF2+NgCHShjkCb+IFBLq9buZwE1xckQU4peSuQ==
@@ -10663,11 +10663,6 @@ found@0.5.5:
     redux "^4.0.4"
     warning "^4.0.3"
 
-fp-ts@^1.0.0, fp-ts@^1.0.1:
-  version "1.13.0"
-  resolved "https://registry.yarnpkg.com/fp-ts/-/fp-ts-1.13.0.tgz#004803434e6c92021232746a621d3c2429c3d5cc"
-  integrity sha512-QDPtCkuLay+dX3zinnvt0ER+j8mdWZZSpM//DIY3GycgwUTDPBKFD7CxX5DU/mIDstcWqGuuUSrMNtB6MWluCQ==
-
 fragment-cache@^0.2.1:
   version "0.2.1"
   resolved "https://registry.yarnpkg.com/fragment-cache/-/fragment-cache-0.2.1.tgz#4290fad27f13e89be7f33799c6bc5a0abfff0d19"
@@ -12252,18 +12247,6 @@ insane@2.6.1:
     assignment "2.0.0"
     he "0.5.0"
 
-inspectpack@4.1.2:
-  version "4.1.2"
-  resolved "https://registry.yarnpkg.com/inspectpack/-/inspectpack-4.1.2.tgz#b07dd10f1131c290d2076270470787d61b47097e"
-  integrity sha512-bd0iIr5P2xRMtjQQkPnUYJSNa3mUFYER/2eQOPAoXrWBnZXMeFVAgRt/Dny8XVdSkkFoNKhumPjjV9QgTDcVxQ==
-  dependencies:
-    chalk "^2.4.0"
-    io-ts "^1.0.5"
-    io-ts-reporters "^0.0.20"
-    pify "^3.0.0"
-    semver-compare "^1.0.0"
-    yargs "^11.0.0"
-
 int64-buffer@^0.1.9:
   version "0.1.10"
   resolved "https://registry.yarnpkg.com/int64-buffer/-/int64-buffer-0.1.10.tgz#277b228a87d95ad777d07c13832022406a473423"
@@ -12318,21 +12301,6 @@ invert-kv@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/invert-kv/-/invert-kv-2.0.0.tgz#7393f5afa59ec9ff5f67a27620d11c226e3eec02"
   integrity sha512-wPVv/y/QQ/Uiirj/vh3oP+1Ww+AWehmi1g5fFWGPF6IpCBCDVrhgHRMvrLfdYcwDh3QJbGXDW4JAuzxElLSqKA==
-
-io-ts-reporters@^0.0.20:
-  version "0.0.20"
-  resolved "https://registry.yarnpkg.com/io-ts-reporters/-/io-ts-reporters-0.0.20.tgz#2b8cbb6a2bc4562dae6917a3a413fa2c9851a644"
-  integrity sha512-ZGyPkto96U8exipqA915ZqxIJsaFLavgZIQOEgg4Pa8qgq1Hl9ZKBtN708ZXPzlAGR/jxofrD4QNT8SHowIDVA==
-  dependencies:
-    fp-ts "^1.0.1"
-    io-ts "^1.0.2"
-
-io-ts@^1.0.2, io-ts@^1.0.5:
-  version "1.8.2"
-  resolved "https://registry.yarnpkg.com/io-ts/-/io-ts-1.8.2.tgz#4fe3878c147c9851604d36982ee6f64d3e6a4a1e"
-  integrity sha512-BvP7iC4bgum5e3Fh82xCUrKWt739osKjmQBMORGij2AOMfTmevj8SEqBhN8EeI0GEwIMHb2bXe4fuikN0lsTWg==
-  dependencies:
-    fp-ts "^1.0.0"
 
 ip-regex@^2.1.0:
   version "2.1.0"
@@ -21013,13 +20981,6 @@ stringstream@~0.0.5:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/stringstream/-/stringstream-0.0.6.tgz#7880225b0d4ad10e30927d167a1d6f2fd3b33a72"
   integrity sha512-87GEBAkegbBcweToUrdzf3eLhWNg06FJTebl4BVJz/JgWy8CvEr9dRtX5qWphiynMSQlxxi+QqN0z5T32SLlhA==
-
-strip-ansi@5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/strip-ansi/-/strip-ansi-5.0.0.tgz#f78f68b5d0866c20b2c9b8c61b5298508dc8756f"
-  integrity sha512-Uu7gQyZI7J7gn5qLn1Np3G9vcYGTVqB+lFTytnDJv83dd8T22aGH451P3jueT2/QemInJDfxHB5Tde5OzgG1Ow==
-  dependencies:
-    ansi-regex "^4.0.0"
 
 strip-ansi@6.0.0, strip-ansi@^6.0.0:
   version "6.0.0"
