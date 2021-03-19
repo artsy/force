@@ -2,7 +2,10 @@ import React from "react"
 import { mount } from "enzyme"
 import { HeadProvider } from "react-head"
 import { ArtistMetaCanonicalLink_artist } from "v2/__generated__/ArtistMetaCanonicalLink_artist.graphql"
-import { ArtistMetaCanonicalLink } from "../ArtistMetaCanonicalLink"
+import {
+  ArtistMetaCanonicalLink,
+  computeCanonicalPath,
+} from "../ArtistMetaCanonicalLink"
 
 jest.mock("v2/Artsy/Router/useRouter", () => ({
   useRouter: () => ({
@@ -178,8 +181,9 @@ describe("ArtistMetaCanonicalLink", () => {
       </HeadProvider>
     )
 
-    expect(wrapper.html()).toEqual(
-      '<link rel="canonical" href="https://www.artsy-test.net/artist/damon-zucconi">'
+    const canonicalUrl = wrapper.find("link[rel='canonical']").prop("href")
+    expect(canonicalUrl).toEqual(
+      "https://www.artsy-test.net/artist/damon-zucconi"
     )
   })
 
@@ -190,8 +194,27 @@ describe("ArtistMetaCanonicalLink", () => {
       </HeadProvider>
     )
 
-    expect(wrapper.html()).toEqual(
-      '<link rel="canonical" href="https://www.artsy-test.net/artist/gina-lombardi-bratter/works-for-sale">'
+    const canonicalUrl = wrapper.find("link[rel='canonical']").prop("href")
+    expect(canonicalUrl).toEqual(
+      "https://www.artsy-test.net/artist/gina-lombardi-bratter/works-for-sale"
     )
+  })
+})
+
+describe("computeCanonicalPath", () => {
+  it("appends consign for those pages", () => {
+    const appUrl = "https://www.artsy.net"
+    const artistSlug = "damon-zucconi"
+    const canShowOverview = true
+    const path = "/artist/damon-zucconi/consign"
+
+    const canonicalUrl = computeCanonicalPath(
+      appUrl,
+      artistSlug,
+      path,
+      canShowOverview
+    )
+
+    expect(canonicalUrl).toMatch("consign")
   })
 })
