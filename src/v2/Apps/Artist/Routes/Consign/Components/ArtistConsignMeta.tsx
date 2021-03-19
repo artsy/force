@@ -6,11 +6,11 @@ import { getENV } from "v2/Utils/getENV"
 import { ArtistConsignMeta_artist } from "v2/__generated__/ArtistConsignMeta_artist.graphql"
 import { get } from "v2/Utils/get"
 
-interface ArtistConsignMeta {
+interface ArtistConsignMetaProps {
   artist: ArtistConsignMeta_artist
 }
 
-export const ArtistConsignMeta: React.FC<ArtistConsignMeta> = props => {
+export const ArtistConsignMeta: React.FC<ArtistConsignMetaProps> = props => {
   const {
     artist: { name, href, targetSupply },
   } = props
