@@ -9,7 +9,6 @@ const env = {
   buildServer: yn(process.env.BUILD_SERVER, { default: false }),
   enableWebpackAnalyze: yn(process.env.WEBPACK_ANALYZE, { default: false }),
   enableWebpackDumpConfig: process.env.WEBPACK_DUMP_CONFIG,
-  enableWebpackDuplicates: yn(process.env.WEBPACK_DUPLICATES, { default: false }),
   enableWebpackMeasure: yn(process.env.WEBPACK_MEASURE, { default: false }),
   isDevelopment: process.env.NODE_ENV === "development",
   isProduction: process.env.NODE_ENV === "production",
@@ -44,7 +43,6 @@ console.log("  WEBPACK_CONCATENATE".padEnd(30), chalk.yellow(env.webpackConcaten
 console.log("  WEBPACK_DEBUG".padEnd(30), chalk.yellow(env.webpackDebug))
 console.log("  WEBPACK_DEVTOOL".padEnd(30), chalk.yellow(env.webpackDevtool))
 console.log("  WEBPACK_DUMP_CONFIG".padEnd(30), chalk.yellow(env.enableWebpackDumpConfig))
-console.log("  WEBPACK_DUPLICATES".padEnd(30), chalk.yellow(env.enableWebpackDuplicates))
 console.log("  WEBPACK_MEASURE".padEnd(30), chalk.yellow(env.enableWebpackMeasure))
 console.log("  WEBPACK_STATS".padEnd(30), chalk.yellow(env.webpackStats))
 console.log("")
