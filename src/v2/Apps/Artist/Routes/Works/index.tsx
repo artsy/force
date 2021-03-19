@@ -10,6 +10,7 @@ import { ArtistSeriesRailFragmentContainer as ArtistSeriesRail } from "v2/Compon
 import { ContextModule } from "@artsy/cohesion"
 import { ArtistCollectionsRailContent as ArtistCollectionsRail } from "v2/Apps/Artist/Components/ArtistCollectionsRail"
 import { Title } from "react-head"
+import { computeTitle } from "../../Utils/computeTitle"
 
 export interface WorksRouteProps {
   artist: Works_artist
@@ -27,7 +28,7 @@ export const WorksRoute: React.FC<WorksRouteProps> = props => {
   const hasArtistSeries =
     get(artist, a => a.artistSeriesConnection.edges.length, 0) > 0
 
-  const titleString = `${artist.name} - ${artist.counts.forSaleArtworks} Artworks for Sale on Artsy`
+  const titleString = computeTitle(artist.name, artist.counts.forSaleArtworks)
 
   return (
     <>
