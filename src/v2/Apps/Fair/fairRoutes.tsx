@@ -3,6 +3,7 @@ import { graphql } from "react-relay"
 import { RouteConfig } from "found"
 import { paramsToCamelCase } from "v2/Components/v2/ArtworkFilter/Utils/urlBuilder"
 import { getENV } from "v2/Utils/getENV"
+import { allowedFilters } from "v2/Components/v2/ArtworkFilter/Utils/allowedFilters"
 
 const FairApp = loadable(() => import("./FairApp"), {
   resolveComponent: component => component.FairAppFragmentContainer,
@@ -136,7 +137,7 @@ function initializeVariablesWithFilterState({ slug }, props) {
     : ["GALLERY"]
   const input = {
     sort: "-decayed_merch",
-    ...camelCasedFilterStateFromUrl,
+    ...allowedFilters(camelCasedFilterStateFromUrl),
     includeArtworksByFollowedArtists:
       !!props.context.user &&
       camelCasedFilterStateFromUrl["includeArtworksByFollowedArtists"],

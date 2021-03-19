@@ -1,4 +1,4 @@
-import { isEqual, omit } from "lodash"
+import { isEqual } from "lodash"
 import React, { useEffect, useState } from "react"
 import useDeepCompareEffect from "use-deep-compare-effect"
 
@@ -45,6 +45,7 @@ import { FairArtworks_fair } from "v2/__generated__/FairArtworks_fair.graphql"
 import { ShowArtworks_show } from "v2/__generated__/ShowArtworks_show.graphql"
 import { useAnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
 import { commercialFilterParamsChanged } from "@artsy/cohesion"
+import { allowedFilters } from "./Utils/allowedFilters"
 
 /**
  * Primary ArtworkFilter which is wrapped with a context and refetch container.
@@ -165,7 +166,7 @@ export const BaseArtworkFilter: React.FC<
 
     const relayRefetchVariables = {
       first: 30,
-      ...omit(filterContext.filters, "term", "fromShowGuide"),
+      ...allowedFilters(filterContext.filters),
       keyword: filterContext.filters.term,
     }
 

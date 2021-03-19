@@ -3,6 +3,7 @@ import { graphql } from "react-relay"
 import { RouteConfig } from "found"
 import { paramsToCamelCase } from "v2/Components/v2/ArtworkFilter/Utils/urlBuilder"
 import { getENV } from "v2/Utils/getENV"
+import { allowedFilters } from "v2/Components/v2/ArtworkFilter/Utils/allowedFilters"
 
 const ArtistSeriesApp = loadable(() => import("./ArtistSeriesApp"), {
   resolveComponent: component => component.ArtistSeriesAppFragmentContainer,
@@ -39,7 +40,7 @@ function initializeVariablesWithFilterState({ slug }, props) {
 
   const input = {
     sort: "-decayed_merch",
-    ...paramsToCamelCase(initialFilterState),
+    ...allowedFilters(paramsToCamelCase(initialFilterState)),
     aggregations: aggregations.concat(additionalAggregations),
     first: 20,
   }
