@@ -8,32 +8,26 @@ import { hasOverviewContent } from "v2/Apps/Artist/Components/NavigationTabs"
 import { useRouter } from "v2/Artsy/Router/useRouter"
 
 export const computeCanonicalPath = (
-  artist: ArtistMetaCanonicalLink_artist,
-  path: string
+  appUrl: string,
+  artistSlug: string,
+  path: string,
+  canShowOverview: boolean
 ) => {
-  const basePath = `/artist/${artist.slug}`
-  const pathParts = [basePath]
+  const urlParts = [appUrl, "artist", artistSlug]
 
-  const isConsignPage = path === "consign"
+  const isConsignPage = path.endsWith("consign")
   const isWorksForSalePage = path.endsWith("works-for-sale")
   const isAuctionResultsPage = path.endsWith("auction-results")
 
-  const hasArtistInsights =
-    showMarketInsights(artist) ||
-    (artist.insights && artist.insights.length > 0)
-
-  const hasArtistContent = hasOverviewContent(artist)
-  const canShowOverview = hasArtistInsights || hasArtistContent
-
   if (isConsignPage) {
-    pathParts.push("/consign")
+    urlParts.push("consign")
   } else if (isWorksForSalePage || !canShowOverview) {
-    pathParts.push("/works-for-sale")
+    urlParts.push("works-for-sale")
   } else if (isAuctionResultsPage) {
-    pathParts.push("/auction-results")
+    urlParts.push("auction-results")
   }
 
-  return pathParts.join("")
+  return urlParts.join("/")
 }
 
 export type ArtistMetaCanonicalLinkProps = {
@@ -44,8 +38,20 @@ export const ArtistMetaCanonicalLink: React.FC<ArtistMetaCanonicalLinkProps> = (
   artist,
 }) => {
   const { pathname } = useRouter().match.location
-  const canonicalPath = computeCanonicalPath(artist, pathname)
-  const canonicalUrl = `${sd.APP_URL}${canonicalPath}`
+  const hasArtistInsights =
+    showMarketInsights(artist) ||
+    (artist.insights && artist.insights.length > 0)
+
+  const hasArtistContent = hasOverviewContent(artist)
+  const canShowOverview = hasArtistInsights || hasArtistContent
+
+  const canonicalUrl = computeCanonicalPath(
+    sd.APP_URL,
+    artist.slug,
+    pathname,
+    canShowOverview
+  )
+
   return <Link rel="canonical" href={canonicalUrl} />
 }
 
