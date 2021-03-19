@@ -4,15 +4,21 @@ import { useArtworkFilterContext } from "../ArtworkFilterContext"
 import { OptionText } from "./OptionText"
 import { ShowMore } from "./ShowMore"
 
-const MaterialsTermOption: React.FC<{ name: string }> = ({ name }) => {
+const MaterialsTermOption: React.FC<{
+  /** Display value (capitalized) for this term */
+  name: string
+
+  /** Database value for this term */
+  value: string
+}> = ({ name, value }) => {
   const { currentlySelectedFilters, setFilter } = useArtworkFilterContext()
 
-  const toggleMaterialsTermSelection = (selected, name) => {
+  const toggleMaterialsTermSelection = (selected, value) => {
     let materialsTerms = currentlySelectedFilters().materialsTerms.slice()
     if (selected) {
-      materialsTerms.push(name)
+      materialsTerms.push(value)
     } else {
-      materialsTerms = materialsTerms.filter(item => item !== name)
+      materialsTerms = materialsTerms.filter(item => item !== value)
     }
     setFilter("materialsTerms", materialsTerms)
   }
@@ -20,10 +26,10 @@ const MaterialsTermOption: React.FC<{ name: string }> = ({ name }) => {
   return (
     <Checkbox
       onSelect={selected => {
-        toggleMaterialsTermSelection(selected, name)
+        toggleMaterialsTermSelection(selected, value)
       }}
-      selected={currentlySelectedFilters().materialsTerms.includes(name)}
-      key={name}
+      selected={currentlySelectedFilters().materialsTerms.includes(value)}
+      key={value}
     >
       <OptionText>{name}</OptionText>
     </Checkbox>
@@ -43,8 +49,8 @@ export const MaterialsFilter = () => {
   return (
     <Toggle label="Materials" expanded>
       <ShowMore>
-        {materialsTerms.counts.map(({ name, value, count }) => {
-          return <MaterialsTermOption key={name} name={name} />
+        {materialsTerms.counts.map(({ name, value }) => {
+          return <MaterialsTermOption key={value} name={name} value={value} />
         })}
       </ShowMore>
     </Toggle>
