@@ -1,21 +1,23 @@
 import React from "react"
 import { AppContainer } from "v2/Apps/Components/AppContainer"
-import { createFragmentContainer, graphql } from "react-relay"
 import { AuctionsApp_me } from "v2/__generated__/AuctionsApp_me.graphql"
-import { ChevronIcon, Box, Text } from "@artsy/palette"
 import { AuctionsMeta } from "./Components/AuctionsMeta"
-import { HorizontalPadding } from "../Components/HorizontalPadding"
+import { ChevronIcon, Box, Text, Separator, Spacer } from "@artsy/palette"
+import { createFragmentContainer, graphql } from "react-relay"
 import { Footer } from "v2/Components/Footer"
-import { RouteTabs, RouteTab } from "v2/Components/RouteTabs"
-import { RouterLink } from "v2/Artsy/Router/RouterLink"
+import { HorizontalPadding } from "../Components/HorizontalPadding"
 import { LazyLoadComponent } from "react-lazy-load-image-component"
 import { RecentlyViewedQueryRenderer as RecentlyViewed } from "v2/Components/RecentlyViewed"
+import { RouterLink } from "v2/Artsy/Router/RouterLink"
+import { RouteTabs, RouteTab } from "v2/Components/RouteTabs"
+import { useSystemContext } from "v2/Artsy"
 export interface AuctionsAppProps {
   me: AuctionsApp_me
 }
 
 const AuctionsApp: React.FC<AuctionsAppProps> = props => {
   const { children } = props
+  const { user } = useSystemContext()
 
   return (
     <AppContainer>
@@ -47,6 +49,16 @@ const AuctionsApp: React.FC<AuctionsAppProps> = props => {
           </Text>
         </RouterLink>
       </Box>
+
+      {user && (
+        <Box m={[2, 4]}>
+          <Spacer m={4} />
+          <Separator pr={4} />
+          <Text py={3}>Active Bids and Watched Lots</Text>
+          PLACEHOLDER FOR MY BIDS
+          {/* <MyBids /> */}
+        </Box>
+      )}
       <HorizontalPadding mt={4}>
         <RouteTabs mb={2}>
           <RouteTab exact to="/auctions2">
