@@ -19,71 +19,30 @@ export const artistSeriesRoutes: RouteConfig[] = [
     query: graphql`
       query artistSeriesRoutes_ArtistSeriesQuery(
         $slug: ID!
-        $acquireable: Boolean
-        $aggregations: [ArtworkAggregation]
-        $atAuction: Boolean
-        $attributionClass: [String]
-        $colors: [String]
-        $forSale: Boolean
-        $height: String
-        $inquireableOnly: Boolean
-        $keyword: String
-        $majorPeriods: [String]
-        $medium: String
-        $offerable: Boolean
-        $page: Int
-        $partnerID: ID
-        $priceRange: String
-        $sizes: [ArtworkSizes]
-        $sort: String
-        $width: String
-        $locationCities: [String]
-        $additionalGeneIDs: [String]
+        $input: FilterArtworksInput
       ) {
         artistSeries(id: $slug) {
-          ...ArtistSeriesApp_artistSeries
-            @arguments(
-              acquireable: $acquireable
-              aggregations: $aggregations
-              atAuction: $atAuction
-              attributionClass: $attributionClass
-              colors: $colors
-              forSale: $forSale
-              height: $height
-              inquireableOnly: $inquireableOnly
-              keyword: $keyword
-              majorPeriods: $majorPeriods
-              medium: $medium
-              offerable: $offerable
-              page: $page
-              partnerID: $partnerID
-              priceRange: $priceRange
-              sizes: $sizes
-              sort: $sort
-              width: $width
-              locationCities: $locationCities
-              additionalGeneIDs: $additionalGeneIDs
-            )
+          ...ArtistSeriesApp_artistSeries @arguments(input: $input)
         }
       }
     `,
   },
 ]
 
-function initializeVariablesWithFilterState(params, props) {
+function initializeVariablesWithFilterState({ slug }, props) {
   const initialFilterState = props.location ? props.location.query : {}
 
   const aggregations = ["MEDIUM", "TOTAL", "MAJOR_PERIOD"]
   const additionalAggregations = getENV("ENABLE_NEW_ARTWORK_FILTERS")
-    ? ["PARTNER", "LOCATION_CITY"]
+    ? ["PARTNER", "LOCATION_CITY", "MATERIALS_TERMS"]
     : ["GALLERY", "INSTITUTION"]
 
-  const state = {
+  const input = {
     sort: "-decayed_merch",
     ...paramsToCamelCase(initialFilterState),
-    ...params,
     aggregations: aggregations.concat(additionalAggregations),
+    first: 20,
   }
 
-  return state
+  return { slug, input }
 }

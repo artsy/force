@@ -2,6 +2,7 @@ import { ArtsyLogoBlackIcon, Box } from "@artsy/palette"
 import { AppContainer } from "v2/Apps/Components/AppContainer"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import React from "react"
+import { useSystemContext } from "v2/Artsy"
 
 interface MinimalNavBarProps {
   to: string
@@ -9,6 +10,7 @@ interface MinimalNavBarProps {
 }
 
 export const MinimalNavBar: React.FC<MinimalNavBarProps> = props => {
+  const { isEigen } = useSystemContext()
   return (
     <Box
       zIndex={1000}
@@ -19,19 +21,21 @@ export const MinimalNavBar: React.FC<MinimalNavBarProps> = props => {
       width="100%"
       pt={4}
     >
-      <AppContainer>
-        <Box height={70} px={[2, 4]}>
-          <RouterLink
-            to={props.to}
-            // TODO: figure out a minimal example of the underlying cause of this error
-            // and submit an issue to TS 😓
-            // @ts-ignore
-            data-test="logoLink"
-          >
-            <ArtsyLogoBlackIcon />
-          </RouterLink>
-        </Box>
-      </AppContainer>
+      {!isEigen && (
+        <AppContainer>
+          <Box height={70} px={[2, 4]}>
+            <RouterLink
+              to={props.to}
+              // TODO: figure out a minimal example of the underlying cause of this error
+              // and submit an issue to TS 😓
+              // @ts-ignore
+              data-test="logoLink"
+            >
+              <ArtsyLogoBlackIcon />
+            </RouterLink>
+          </Box>
+        </AppContainer>
+      )}
 
       {props.children}
     </Box>

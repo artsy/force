@@ -3,6 +3,7 @@ import { graphql } from "react-relay"
 import { RedirectException, RouteConfig } from "found"
 import { paramsToCamelCase } from "v2/Components/v2/ArtworkFilter/Utils/urlBuilder"
 import { getENV } from "v2/Utils/getENV"
+import { omit } from "lodash"
 
 const ShowApp = loadable(() => import("./ShowApp"), {
   resolveComponent: component => component.ShowAppFragmentContainer,
@@ -23,45 +24,9 @@ export const showRoutes: RouteConfig[] = [
     },
     prepareVariables: initializeVariablesWithFilterState,
     query: graphql`
-      query showRoutes_ShowQuery(
-        $slug: String!
-        $acquireable: Boolean
-        $aggregations: [ArtworkAggregation]
-        $atAuction: Boolean
-        $colors: [String]
-        $forSale: Boolean
-        $inquireableOnly: Boolean
-        $majorPeriods: [String]
-        $medium: String
-        $offerable: Boolean
-        $page: Int
-        $partnerID: ID
-        $priceRange: String
-        $sizes: [ArtworkSizes]
-        $sort: String
-        $additionalGeneIDs: [String]
-        $artistNationalities: [String]
-      ) {
+      query showRoutes_ShowQuery($slug: String!, $input: FilterArtworksInput) {
         show(id: $slug) @principalField {
-          ...ShowApp_show
-            @arguments(
-              acquireable: $acquireable
-              aggregations: $aggregations
-              atAuction: $atAuction
-              colors: $colors
-              forSale: $forSale
-              partnerID: $partnerID
-              inquireableOnly: $inquireableOnly
-              majorPeriods: $majorPeriods
-              medium: $medium
-              offerable: $offerable
-              page: $page
-              priceRange: $priceRange
-              sizes: $sizes
-              sort: $sort
-              additionalGeneIDs: $additionalGeneIDs
-              artistNationalities: $artistNationalities
-            )
+          ...ShowApp_show @arguments(input: $input)
         }
       }
     `,
@@ -106,18 +71,17 @@ export const showRoutes: RouteConfig[] = [
   },
 ]
 
-function initializeVariablesWithFilterState(params, props) {
+function initializeVariablesWithFilterState({ slug }, props) {
   const initialFilterState = props.location ? props.location.query : {}
   const aggregations = ["MEDIUM", "TOTAL", "MAJOR_PERIOD"]
   const additionalAggregations = getENV("ENABLE_NEW_ARTWORK_FILTERS")
-    ? ["ARTIST_NATIONALITY"]
+    ? ["ARTIST_NATIONALITY", "MATERIALS_TERMS"]
     : []
-  const state = {
+  const input = {
     sort: "partner_show_position",
-    ...paramsToCamelCase(initialFilterState),
-    ...params,
+    ...omit(paramsToCamelCase(initialFilterState), "fromShowGuide"), // TODO: Investigate if this param is needed.
     aggregations: aggregations.concat(additionalAggregations),
   }
 
-  return state
+  return { slug, input }
 }

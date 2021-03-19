@@ -22,10 +22,11 @@ const excludedRoutes = [
   "/identity-verification(.*)",
   "/orders(.*)",
   "/search(.*)",
-  "/show(.*)",
+  "/show/(.*)",
   "/user/conversations(.*)",
   "/user/purchases(.*)",
   "/viewing-room(.*)",
+  "/user/payments(.*)",
 ]
 
 beforeAnalyticsReady()

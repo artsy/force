@@ -5,6 +5,7 @@ import {
   BuyOrderPickup,
   BuyOrderWithShippingDetails,
   OfferOrderWithShippingDetails,
+  ShippingDetails,
 } from "v2/Apps/__tests__/Fixtures/Order"
 import { creatingCreditCardSuccess } from "v2/Apps/Order/Routes/__fixtures__/MutationResults"
 import { injectCommitMutation } from "v2/Apps/Order/Utils/commitMutation"
@@ -19,7 +20,7 @@ import { createTestEnv } from "v2/DevTools/createTestEnv"
 import { RootTestPage } from "v2/DevTools/RootTestPage"
 import { graphql } from "react-relay"
 import { PaymentPicker, PaymentPickerFragmentContainer } from "../PaymentPicker"
-import type { Token, StripeError } from '@stripe/stripe-js'
+import type { Token, StripeError } from "@stripe/stripe-js"
 import { mockStripe } from "v2/DevTools/mockStripe"
 
 jest.mock("sharify", () => ({
@@ -46,17 +47,13 @@ jest.mock("@stripe/stripe-js", () => {
       return mock
     },
     _mockStripe: () => mock,
-    _mockReset: () => mock = mockStripe(),
+    _mockReset: () => (mock = mockStripe()),
   }
 })
 
 const { _mockStripe, _mockReset } = require("@stripe/stripe-js")
 
-// const createTokenMock = require("@stripe/react-stripe-js").__stripeMock
-//   .createToken as jest.Mock
-
 _mockReset()
-console.log(_mockStripe)
 _mockStripe().createToken.mockImplementation(() =>
   Promise.resolve({ error: "bad error" })
 )
@@ -64,9 +61,15 @@ _mockStripe().createToken.mockImplementation(() =>
 const fillAddressForm = (component: any, address: Address) => {
   fillIn(component, { title: "Name on card", value: address.name })
   fillIn(component, { title: "Address line 1", value: address.addressLine1 })
-  fillIn(component, { title: "Address line 2 (optional)", value: address.addressLine2 })
+  fillIn(component, {
+    title: "Address line 2 (optional)",
+    value: address.addressLine2,
+  })
   fillIn(component, { title: "City", value: address.city })
-  fillIn(component, { title: "State, province, or region", value: address.region })
+  fillIn(component, {
+    title: "State, province, or region",
+    value: address.region,
+  })
   fillIn(component, { title: "Postal code", value: address.postalCode })
   fillCountrySelect(component, address.country)
 }
@@ -795,6 +798,31 @@ describe("PaymentPickerFragmentContainer", () => {
 
       expect(_mockStripe().createToken).toBeCalled()
       expect(env.mutations.mockFetch).toBeCalledTimes(1)
+    })
+    it("overwrites null shipping address items with empty string when shipping address is selected for billing", async () => {
+      const defaultDataWithIncompleteShipping = {
+        ...defaultData,
+        order: {
+          ...BuyOrderWithShippingDetails,
+          creditCard: null,
+          buyerPhoneNumber: 123456,
+          requestedFulfillment: {
+            ...ShippingDetails.requestedFulfillment,
+            addressLine2: null,
+          },
+        },
+      }
+      const page = await env.buildPage({
+        mockData: defaultDataWithIncompleteShipping,
+      })
+      await page.getCreditCardId()
+
+      expect(_mockStripe().createToken).toHaveBeenCalledWith(
+        null,
+        expect.objectContaining({
+          address_line2: "",
+        })
+      )
     })
   })
 })

@@ -26,7 +26,7 @@ export const ConfirmPassword = (
             reject(err)
           } else if (data.confirmPassword) {
             if (data.confirmPassword.valid) {
-              resolve()
+              resolve(data)
             } else {
               reject({ error: "Invalid password." })
             }

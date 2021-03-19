@@ -77,10 +77,10 @@ export const createUserAddress = async (
     },
   })
   const errors = response.createUserAddress.userAddressOrErrors.errors
-  closeModal()
   if (errors) {
     onError(errors.map(error => error.message).join(", "))
   } else {
     onSuccess(response)
   }
+  closeModal()
 }

@@ -14,3 +14,5 @@ export default {
   InvertedButton,
   MultiStateButton,
 }
+
+export { default as Button } from "./Default"

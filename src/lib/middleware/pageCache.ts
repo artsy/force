@@ -80,7 +80,7 @@ export async function pageCacheMiddleware(
   })
 
   try {
-    await new Promise((resolve, reject) => {
+    await new Promise<void>((resolve, reject) => {
       // Cache timeout handler, will reject if hit.
       let timeoutId = setTimeout(() => {
         timeoutId = null

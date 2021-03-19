@@ -106,24 +106,7 @@ export const ShowApp: React.FC<ShowAppProps> = ({ show }) => {
 export const ShowAppFragmentContainer = createFragmentContainer(ShowApp, {
   show: graphql`
     fragment ShowApp_show on Show
-      @argumentDefinitions(
-        acquireable: { type: "Boolean" }
-        aggregations: { type: "[ArtworkAggregation]" }
-        atAuction: { type: "Boolean" }
-        colors: { type: "[String]" }
-        forSale: { type: "Boolean" }
-        inquireableOnly: { type: "Boolean" }
-        majorPeriods: { type: "[String]" }
-        medium: { type: "String", defaultValue: "*" }
-        offerable: { type: "Boolean" }
-        page: { type: "Int" }
-        partnerID: { type: "ID" }
-        priceRange: { type: "String" }
-        sizes: { type: "[ArtworkSizes]" }
-        sort: { type: "String", defaultValue: "-decayed_merch" }
-        additionalGeneIDs: { type: "[String]" }
-        artistNationalities: { type: "[String]" }
-      ) {
+      @argumentDefinitions(input: { type: "FilterArtworksInput" }) {
       name
       href
       internalID
@@ -144,25 +127,7 @@ export const ShowAppFragmentContainer = createFragmentContainer(ShowApp, {
       ...ShowInstallShots_show
       ...ShowViewingRoom_show
       ...ShowArtworksEmptyState_show
-      ...ShowArtworks_show
-        @arguments(
-          acquireable: $acquireable
-          aggregations: $aggregations
-          atAuction: $atAuction
-          colors: $colors
-          forSale: $forSale
-          inquireableOnly: $inquireableOnly
-          majorPeriods: $majorPeriods
-          medium: $medium
-          offerable: $offerable
-          page: $page
-          partnerID: $partnerID
-          priceRange: $priceRange
-          sizes: $sizes
-          sort: $sort
-          additionalGeneIDs: $additionalGeneIDs
-          artistNationalities: $artistNationalities
-        )
+      ...ShowArtworks_show @arguments(input: $input)
       ...ShowContextCard_show
     }
   `,

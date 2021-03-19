@@ -5,7 +5,7 @@ import styled from "styled-components"
 import { block } from "../Helpers"
 import { IconProps } from "../Icon"
 
-export interface ButtonProps extends React.HTMLProps<Button> {
+export interface ButtonProps extends React.HTMLProps<"button"> {
   state?: ButtonState
   block?: boolean
   icon?: React.ReactElement<IconProps>
@@ -47,7 +47,7 @@ export class Button extends React.Component<ButtonProps, any> {
   }
 }
 
-export const StyledButton = styled(Button)`
+export const StyledButton = styled(Button)<ButtonProps>`
   ${avantgarde("s13")};
   background: ${props => {
     if (props.state === ButtonState.Success) return colors.greenRegular

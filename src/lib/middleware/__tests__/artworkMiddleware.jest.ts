@@ -3,7 +3,7 @@ import { handleArtworkImageDownload } from "../artworkMiddleware"
 jest.mock("desktop/models/artwork.coffee", () => {
   return class {
     fetch() {
-      return new Promise(resolve => {
+      return new Promise<void>(resolve => {
         resolve()
       })
     }

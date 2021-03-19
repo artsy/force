@@ -16,7 +16,7 @@ export enum MultiButtonState {
   Highlighted = "Highlighted",
 }
 
-class Button extends React.Component<ButtonProps, any> {
+export class Button extends React.Component<ButtonProps, any> {
   public static defaultProps: ButtonProps
 
   render(): JSX.Element {

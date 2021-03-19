@@ -1,4 +1,5 @@
 import { RouteConfig } from "found"
+import { omit } from "lodash"
 import React from "react"
 import { graphql } from "react-relay"
 
@@ -15,10 +16,10 @@ import { SearchAppFragmentContainer } from "./SearchApp"
 const prepareVariables = (_params, { location }) => {
   const aggregations = ["TOTAL"]
   const additionalAggregations = getENV("ENABLE_NEW_ARTWORK_FILTERS")
-    ? ["ARTIST_NATIONALITY", "LOCATION_CITY"]
+    ? ["ARTIST_NATIONALITY", "LOCATION_CITY", "MATERIALS_TERMS"]
     : []
   return {
-    ...paramsToCamelCase(location.query),
+    ...paramsToCamelCase(omit(location.query, "term")),
     keyword: location.query.term.toString(),
     aggregations: aggregations.concat(additionalAggregations),
   }
@@ -87,7 +88,11 @@ export const searchRoutes: RouteConfig[] = [
       {
         path: "/",
         Component: SearchResultsArtworksRoute,
-        prepareVariables,
+        prepareVariables: (params, { location }) => {
+          return {
+            input: { ...prepareVariables(params, { location }), first: 20 },
+          }
+        },
         query: ArtworkQueryFilter,
       },
       {

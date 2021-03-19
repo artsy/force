@@ -65,8 +65,8 @@ export class ArtworkSidebarBidAction extends React.Component<
     selectedMaxBidCents: null,
   }
 
-  setMaxBid = (newVal: number) => {
-    this.setState({ selectedMaxBidCents: newVal })
+  setMaxBid = (newVal: string) => {
+    this.setState({ selectedMaxBidCents: parseInt(newVal, 10) })
   }
 
   redirectToRegister = () => {

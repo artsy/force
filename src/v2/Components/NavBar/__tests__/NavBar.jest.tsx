@@ -25,9 +25,9 @@ jest.mock("lib/isServer", () => ({
 describe("NavBar", () => {
   const trackEvent = jest.fn()
 
-  const getWrapper = ({ user = null } = {}) => {
+  const getWrapper = ({ user = null, isEigen = false } = {}) => {
     return mount(
-      <SystemContextProvider user={user}>
+      <SystemContextProvider user={user} isEigen={isEigen}>
         <NavBar />
       </SystemContextProvider>
     )
@@ -180,6 +180,17 @@ describe("NavBar", () => {
         user: { type: "NotAdmin", lab_features: ["User Conversations View"] },
       })
       expect(wrapper.find(InboxNotificationCount).length).toBe(1)
+    })
+  })
+
+  describe("eigen", () => {
+    it("renders null", () => {
+      expect(
+        getWrapper({ isEigen: false }).find(NavBar).isEmptyRender()
+      ).toBeFalsy()
+      expect(
+        getWrapper({ isEigen: true }).find(NavBar).isEmptyRender()
+      ).toBeTruthy()
     })
   })
 })

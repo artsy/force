@@ -27,11 +27,16 @@ const AuctionsApp: React.FC<AuctionsAppProps> = props => {
           Auctions
         </Text>
         <Text py={1}>
-          Bid on thousands of new works every week in leading online auctions.
+          Bid on works you love with auctions on Artsy. With live bidding
+          opening every week, Artsy connects collectors like you to art from
+          leading auction houses and sellers across the globe. We feature
+          premium artworks including modern, contemporary, and street art, so
+          you can find works by your favorite artists—and discover new ones—all
+          in one place.
         </Text>
         <RouterLink to="/how-auctions-work" noUnderline>
           <Text variant="mediumText" py={1}>
-            How to bid on Artsy{" "}
+            Learn more about bidding on Artsy{" "}
             <ChevronIcon
               title={null}
               direction="right"

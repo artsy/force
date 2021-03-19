@@ -3,7 +3,7 @@ import {
   UpdateMyProfileInput,
   UserEmailPreferencesMutation,
   UserEmailPreferencesMutationResponse,
-} from "v2/__generated__/UserEmailPreferencesMutation.graphql.ts"
+} from "v2/__generated__/UserEmailPreferencesMutation.graphql"
 
 export const UpdateUserEmailPreferencesMutation = (
   environment: Environment,

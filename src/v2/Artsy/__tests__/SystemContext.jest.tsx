@@ -61,6 +61,25 @@ describe("Artsy context", () => {
     )
   })
 
+  describe("isEigen", () => {
+    it("does not get overwritten by sharify if truthy", () => {
+      jest.mock("sharify", () => ({
+        data: { EIGEN: false },
+      }))
+      render(
+        <Artsy.SystemContextProvider isEigen={true}>
+          <Artsy.SystemContextConsumer>
+            {props => {
+              expect(props.isEigen).toBe(true)
+              return null
+            }}
+          </Artsy.SystemContextConsumer>
+        </Artsy.SystemContextProvider>
+      )
+      expect.assertions(1)
+    })
+  })
+
   describe("concerning the current user", () => {
     let originalEnv = null
 

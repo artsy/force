@@ -79,54 +79,40 @@ function initializeVariablesWithFilterState(params, props) {
     }
   }
 
+  const collectionSlug = params.slug
+
   const aggregations = ["TOTAL"]
   // TODO: Does the `location_city` aggregation accomplish much on /collect, and
   // should it be a hard-coded list of featured cities?
   const additionalAggregations = getENV("ENABLE_NEW_ARTWORK_FILTERS")
-    ? ["LOCATION_CITY", "ARTIST_NATIONALITY"]
+    ? ["LOCATION_CITY", "ARTIST_NATIONALITY", "MATERIALS_TERMS"]
     : []
-  const collectionOnlyAggregations = params.slug
+  const collectionOnlyAggregations = collectionSlug
     ? ["MERCHANDISABLE_ARTISTS", "MEDIUM", "MAJOR_PERIOD"]
     : []
 
-  const state = {
+  const input = {
     sort: "-decayed_merch",
     ...paramsToCamelCase(initialFilterState),
-    ...params,
+    first: 30,
+  }
+
+  return {
+    input,
     aggregations: aggregations
       .concat(additionalAggregations)
       .concat(collectionOnlyAggregations),
+    slug: collectionSlug,
+    sort: "-decayed_merch",
   }
-
-  return state
 }
 
 function getArtworkFilterQuery() {
   return graphql`
     query collectRoutes_ArtworkFilterQuery(
-      $acquireable: Boolean
       $aggregations: [ArtworkAggregation]
-      $artistID: String
-      $atAuction: Boolean
-      $attributionClass: [String]
-      $colors: [String]
-      $forSale: Boolean
-      $additionalGeneIDs: [String]
-      $height: String
-      $inquireableOnly: Boolean
-      $majorPeriods: [String]
-      $medium: String
-      $offerable: Boolean
-      $page: Int
-      $partnerID: ID
-      $partnerIDs: [String]
-      $priceRange: String
-      $sizes: [ArtworkSizes]
       $sort: String
-      $keyword: String
-      $width: String
-      $locationCities: [String]
-      $artistNationalities: [String]
+      $input: FilterArtworksInput
     ) {
       marketingHubCollections {
         ...Collect_marketingHubCollections
@@ -139,32 +125,7 @@ function getArtworkFilterQuery() {
         ...SeoProductsForArtworks_artworks
       }
       viewer {
-        ...ArtworkFilter_viewer
-          @arguments(
-            acquireable: $acquireable
-            aggregations: $aggregations
-            artistID: $artistID
-            atAuction: $atAuction
-            attributionClass: $attributionClass
-            colors: $colors
-            forSale: $forSale
-            additionalGeneIDs: $additionalGeneIDs
-            height: $height
-            inquireableOnly: $inquireableOnly
-            keyword: $keyword
-            majorPeriods: $majorPeriods
-            medium: $medium
-            offerable: $offerable
-            page: $page
-            partnerID: $partnerID
-            partnerIDs: $partnerIDs
-            priceRange: $priceRange
-            sizes: $sizes
-            sort: $sort
-            width: $width
-            locationCities: $locationCities
-            artistNationalities: $artistNationalities
-          )
+        ...ArtworkFilter_viewer @arguments(input: $input)
       }
     }
   `

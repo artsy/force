@@ -71,7 +71,11 @@ export function buildClientApp(config: RouterConfig): Promise<Resolve> {
           stringify: qs.stringify,
         }),
         trackingMiddleware({
-          excludePaths: ["/artwork(.*)"],
+          excludePaths: [
+            // Due to special needs, this page has its own page-view tracking implementation.
+            // @see https://github.com/artsy/force/blob/2c0db041fa6cb50e9f747ea95860ad5c38290653/src/v2/Apps/Artwork/ArtworkApp.tsx#L117-L121
+            "/artwork(.*)" 
+          ],
         }),
       ]
       const resolver = new Resolver(relayEnvironment)

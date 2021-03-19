@@ -23,7 +23,10 @@ export const FeatureSet: React.FC<FeatureSetProps> = ({ set, ...rest }) => {
   const size =
     set.layout === "FULL"
       ? "full"
-      : { 1: "large", 2: "medium" }[set.orderedItems.edges.length] ?? "small"
+      : ({ 1: "large", 2: "medium" }[set.orderedItems.edges.length] as
+          | "medium"
+          | "large"
+          | undefined) ?? "small"
 
   if (
     // Nothing to render: it's possible to have a completely empty yet valid set
