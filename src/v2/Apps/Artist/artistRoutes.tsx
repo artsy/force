@@ -11,6 +11,7 @@ import { getENV } from "v2/Utils/getENV"
 import { hasOverviewContent } from "./Components/NavigationTabs"
 
 import { initialArtworkFilterState } from "v2/Components/v2/ArtworkFilter/ArtworkFilterContext"
+import { allowedFilters } from "v2/Components/v2/ArtworkFilter/Utils/allowedFilters"
 
 graphql`
   fragment artistRoutes_Artist on Artist {
@@ -139,7 +140,7 @@ export const artistRoutes: RouteConfig[] = [
 
           return {
             input: {
-              ...filterParams,
+              ...allowedFilters(filterParams),
               aggregations: aggregations.concat(additionalAggregations),
             },
             artistID,

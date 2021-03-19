@@ -3,7 +3,7 @@ import { graphql } from "react-relay"
 import { RedirectException, RouteConfig } from "found"
 import { paramsToCamelCase } from "v2/Components/v2/ArtworkFilter/Utils/urlBuilder"
 import { getENV } from "v2/Utils/getENV"
-import { omit } from "lodash"
+import { allowedFilters } from "v2/Components/v2/ArtworkFilter/Utils/allowedFilters"
 
 const ShowApp = loadable(() => import("./ShowApp"), {
   resolveComponent: component => component.ShowAppFragmentContainer,
@@ -79,7 +79,7 @@ function initializeVariablesWithFilterState({ slug }, props) {
     : []
   const input = {
     sort: "partner_show_position",
-    ...omit(paramsToCamelCase(initialFilterState), "fromShowGuide"), // TODO: Investigate if this param is needed.
+    ...allowedFilters(paramsToCamelCase(initialFilterState)),
     aggregations: aggregations.concat(additionalAggregations),
   }
 

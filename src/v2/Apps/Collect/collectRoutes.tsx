@@ -1,6 +1,7 @@
 import loadable from "@loadable/component"
 import { RouteConfig } from "found"
 import { graphql } from "react-relay"
+import { allowedFilters } from "v2/Components/v2/ArtworkFilter/Utils/allowedFilters"
 
 import { paramsToCamelCase } from "v2/Components/v2/ArtworkFilter/Utils/urlBuilder"
 import { getENV } from "v2/Utils/getENV"
@@ -93,7 +94,7 @@ function initializeVariablesWithFilterState(params, props) {
 
   const input = {
     sort: "-decayed_merch",
-    ...paramsToCamelCase(initialFilterState),
+    ...allowedFilters(paramsToCamelCase(initialFilterState)),
     first: 30,
   }
 

@@ -5,6 +5,7 @@ import { graphql } from "react-relay"
 
 import { RouteSpinner } from "v2/Artsy/Relay/renderWithLoadProgress"
 import { ArtworkQueryFilter } from "v2/Components/v2/ArtworkFilter/ArtworkQueryFilter"
+import { allowedFilters } from "v2/Components/v2/ArtworkFilter/Utils/allowedFilters"
 import { paramsToCamelCase } from "v2/Components/v2/ArtworkFilter/Utils/urlBuilder"
 import { getENV } from "v2/Utils/getENV"
 
@@ -90,7 +91,10 @@ export const searchRoutes: RouteConfig[] = [
         Component: SearchResultsArtworksRoute,
         prepareVariables: (params, { location }) => {
           return {
-            input: { ...prepareVariables(params, { location }), first: 20 },
+            input: {
+              ...allowedFilters(prepareVariables(params, { location })),
+              first: 20,
+            },
           }
         },
         query: ArtworkQueryFilter,
