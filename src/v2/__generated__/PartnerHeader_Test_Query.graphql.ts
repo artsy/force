@@ -3,27 +3,51 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type partnerRoutes_PartnerQueryVariables = {
-    partnerId: string;
-};
-export type partnerRoutes_PartnerQueryResponse = {
+export type PartnerHeader_Test_QueryVariables = {};
+export type PartnerHeader_Test_QueryResponse = {
     readonly partner: {
-        readonly " $fragmentRefs": FragmentRefs<"PartnerApp_partner">;
+        readonly " $fragmentRefs": FragmentRefs<"PartnerHeader_partner">;
     } | null;
 };
-export type partnerRoutes_PartnerQuery = {
-    readonly response: partnerRoutes_PartnerQueryResponse;
-    readonly variables: partnerRoutes_PartnerQueryVariables;
+export type PartnerHeader_Test_QueryRawResponse = {
+    readonly partner: ({
+        readonly name: string | null;
+        readonly type: string | null;
+        readonly href: string | null;
+        readonly profile: ({
+            readonly icon: ({
+                readonly url: string | null;
+            }) | null;
+            readonly id: string;
+            readonly slug: string;
+            readonly name: string | null;
+            readonly internalID: string;
+            readonly is_followed: boolean | null;
+        }) | null;
+        readonly locations: ({
+            readonly totalCount: number | null;
+            readonly edges: ReadonlyArray<({
+                readonly node: ({
+                    readonly city: string | null;
+                    readonly id: string | null;
+                }) | null;
+            }) | null> | null;
+        }) | null;
+        readonly id: string | null;
+    }) | null;
+};
+export type PartnerHeader_Test_Query = {
+    readonly response: PartnerHeader_Test_QueryResponse;
+    readonly variables: PartnerHeader_Test_QueryVariables;
+    readonly rawResponse: PartnerHeader_Test_QueryRawResponse;
 };
 
 
 
 /*
-query partnerRoutes_PartnerQuery(
-  $partnerId: String!
-) {
-  partner(id: $partnerId) @principalField {
-    ...PartnerApp_partner
+query PartnerHeader_Test_Query {
+  partner(id: "white-cube") {
+    ...PartnerHeader_partner
     id
   }
 }
@@ -34,15 +58,6 @@ fragment FollowProfileButton_profile on Profile {
   name
   internalID
   is_followed: isFollowed
-}
-
-fragment NavigationTabs_partner on Partner {
-  slug
-}
-
-fragment PartnerApp_partner on Partner {
-  ...PartnerHeader_partner
-  ...NavigationTabs_partner
 }
 
 fragment PartnerHeader_partner on Partner {
@@ -71,50 +86,35 @@ fragment PartnerHeader_partner on Partner {
 const node: ConcreteRequest = (function(){
 var v0 = [
   {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "partnerId",
-    "type": "String!"
-  }
-],
-v1 = [
-  {
-    "kind": "Variable",
+    "kind": "Literal",
     "name": "id",
-    "variableName": "partnerId"
+    "value": "white-cube"
   }
 ],
-v2 = {
+v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "name",
   "storageKey": null
 },
-v3 = {
+v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
-},
-v4 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "slug",
-  "storageKey": null
 };
 return {
   "fragment": {
-    "argumentDefinitions": (v0/*: any*/),
+    "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "partnerRoutes_PartnerQuery",
+    "name": "PartnerHeader_Test_Query",
     "selections": [
       {
         "alias": null,
-        "args": (v1/*: any*/),
+        "args": (v0/*: any*/),
         "concreteType": "Partner",
         "kind": "LinkedField",
         "name": "partner",
@@ -123,29 +123,29 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "PartnerApp_partner"
+            "name": "PartnerHeader_partner"
           }
         ],
-        "storageKey": null
+        "storageKey": "partner(id:\"white-cube\")"
       }
     ],
     "type": "Query"
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": (v0/*: any*/),
+    "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "partnerRoutes_PartnerQuery",
+    "name": "PartnerHeader_Test_Query",
     "selections": [
       {
         "alias": null,
-        "args": (v1/*: any*/),
+        "args": (v0/*: any*/),
         "concreteType": "Partner",
         "kind": "LinkedField",
         "name": "partner",
         "plural": false,
         "selections": [
-          (v2/*: any*/),
+          (v1/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -192,9 +192,15 @@ return {
                 ],
                 "storageKey": null
               },
-              (v3/*: any*/),
-              (v4/*: any*/),
               (v2/*: any*/),
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "slug",
+                "storageKey": null
+              },
+              (v1/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -256,7 +262,7 @@ return {
                         "name": "city",
                         "storageKey": null
                       },
-                      (v3/*: any*/)
+                      (v2/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -266,21 +272,20 @@ return {
             ],
             "storageKey": "locationsConnection(first:20)"
           },
-          (v4/*: any*/),
-          (v3/*: any*/)
+          (v2/*: any*/)
         ],
-        "storageKey": null
+        "storageKey": "partner(id:\"white-cube\")"
       }
     ]
   },
   "params": {
     "id": null,
     "metadata": {},
-    "name": "partnerRoutes_PartnerQuery",
+    "name": "PartnerHeader_Test_Query",
     "operationKind": "query",
-    "text": "query partnerRoutes_PartnerQuery(\n  $partnerId: String!\n) {\n  partner(id: $partnerId) @principalField {\n    ...PartnerApp_partner\n    id\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  is_followed: isFollowed\n}\n\nfragment NavigationTabs_partner on Partner {\n  slug\n}\n\nfragment PartnerApp_partner on Partner {\n  ...PartnerHeader_partner\n  ...NavigationTabs_partner\n}\n\nfragment PartnerHeader_partner on Partner {\n  name\n  type\n  href\n  profile {\n    icon {\n      url(version: \"square140\")\n    }\n    ...FollowProfileButton_profile\n    id\n  }\n  locations: locationsConnection(first: 20) {\n    totalCount\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query PartnerHeader_Test_Query {\n  partner(id: \"white-cube\") {\n    ...PartnerHeader_partner\n    id\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  is_followed: isFollowed\n}\n\nfragment PartnerHeader_partner on Partner {\n  name\n  type\n  href\n  profile {\n    icon {\n      url(version: \"square140\")\n    }\n    ...FollowProfileButton_profile\n    id\n  }\n  locations: locationsConnection(first: 20) {\n    totalCount\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'b065b69c18af67164cd46d476357078f';
+(node as any).hash = '6d448fea989962f873735f54cd4c8cc1';
 export default node;
