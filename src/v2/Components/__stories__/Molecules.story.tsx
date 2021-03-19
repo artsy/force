@@ -47,8 +47,7 @@ const Page: React.FC<BoxProps> = ({ children, ...rest }) => {
 const HeadersMetadataExample = () => {
   return (
     <>
-      {/* TODO: Mixin a textTransform prop to text */}
-      <Text variant="xs" style={{ textTransform: "uppercase" }} mb={1}>
+      <Text variant="xs" textTransform="uppercase" mb={1}>
         Category Title
       </Text>
 
@@ -80,7 +79,7 @@ const HeadersMetadataExample = () => {
 const BioExample = () => {
   return (
     <>
-      <Text variant="xs" style={{ textTransform: "uppercase" }} mb={1}>
+      <Text variant="xs" textTransform="uppercase" mb={1}>
         Bio
       </Text>
 
@@ -96,7 +95,7 @@ const BioExample = () => {
         XXIV (2006).
       </Text>
 
-      <Text variant="xs" style={{ textTransform: "uppercase" }} mb={1}>
+      <Text variant="xs" textTransform="uppercase" mb={1}>
         Stats
       </Text>
 
@@ -232,8 +231,7 @@ const HeaderExample: React.FC<BoxProps> = props => {
 const ContentMetadataExample = () => {
   return (
     <>
-      {/* TODO: Mixin a textTransform prop to text */}
-      <Text variant="xs" style={{ textTransform: "uppercase" }} mb={1}>
+      <Text variant="xs" textTransform="uppercase" mb={1}>
         Category Title
       </Text>
 
@@ -387,7 +385,7 @@ export const Content = () => {
             <Box mb={6}>
               <Box bg="black30" height={420} mb={1} />
 
-              <Text variant="xs" style={{ textTransform: "uppercase" }} mb={1}>
+              <Text variant="xs" textTransform="uppercase" mb={1}>
                 Category
               </Text>
 
@@ -400,7 +398,7 @@ export const Content = () => {
             </Box>
 
             <Box mb={6}>
-              <Text variant="xs" style={{ textTransform: "uppercase" }} mb={1}>
+              <Text variant="xs" textTransform="uppercase" mb={1}>
                 Category
               </Text>
 
@@ -414,7 +412,7 @@ export const Content = () => {
             <Box mb={6}>
               <Box bg="black30" height={320} mb={1} />
 
-              <Text variant="xs" style={{ textTransform: "uppercase" }} mb={1}>
+              <Text variant="xs" textTransform="uppercase" mb={1}>
                 Category
               </Text>
 
@@ -428,7 +426,7 @@ export const Content = () => {
             <Box mb={6}>
               <Box bg="black30" height={260} mb={1} />
 
-              <Text variant="xs" style={{ textTransform: "uppercase" }} mb={1}>
+              <Text variant="xs" textTransform="uppercase" mb={1}>
                 Category
               </Text>
 
@@ -441,7 +439,7 @@ export const Content = () => {
             </Box>
 
             <Box mb={6}>
-              <Text variant="xs" style={{ textTransform: "uppercase" }} mb={1}>
+              <Text variant="xs" textTransform="uppercase" mb={1}>
                 Category
               </Text>
 
@@ -456,7 +454,7 @@ export const Content = () => {
             <Box mb={6}>
               <Box bg="black30" height={200} mb={1} />
 
-              <Text variant="xs" style={{ textTransform: "uppercase" }} mb={1}>
+              <Text variant="xs" textTransform="uppercase" mb={1}>
                 Category
               </Text>
 
@@ -604,7 +602,7 @@ export const Carousels = () => {
         <Box width={220}>
           <Box bg="black30" height={122} mb={1} />
 
-          <Text variant="xs" style={{ textTransform: "uppercase" }} mb={0.5}>
+          <Text variant="xs" textTransform="uppercase" mb={0.5}>
             Category
           </Text>
 
@@ -623,7 +621,7 @@ export const Carousels = () => {
         </Box>
 
         <Box width={340}>
-          <Text variant="xs" style={{ textTransform: "uppercase" }} mb={0.5}>
+          <Text variant="xs" textTransform="uppercase" mb={0.5}>
             Category
           </Text>
 
@@ -644,7 +642,7 @@ export const Carousels = () => {
         <Box width={220}>
           <Box bg="black30" height={223} mb={1} />
 
-          <Text variant="xs" style={{ textTransform: "uppercase" }} mb={0.5}>
+          <Text variant="xs" textTransform="uppercase" mb={0.5}>
             Category
           </Text>
 
@@ -665,7 +663,7 @@ export const Carousels = () => {
         <Box width={220}>
           <Box bg="black30" height={268} mb={1} />
 
-          <Text variant="xs" style={{ textTransform: "uppercase" }} mb={0.5}>
+          <Text variant="xs" textTransform="uppercase" mb={0.5}>
             Category
           </Text>
 
@@ -683,7 +681,7 @@ export const Carousels = () => {
         </Box>
 
         <Box width={340}>
-          <Text variant="xs" style={{ textTransform: "uppercase" }} mb={0.5}>
+          <Text variant="xs" textTransform="uppercase" mb={0.5}>
             Category
           </Text>
 
@@ -703,7 +701,7 @@ export const Carousels = () => {
         <Box width={220}>
           <Box bg="black30" height={169} mb={1} />
 
-          <Text variant="xs" style={{ textTransform: "uppercase" }} mb={0.5}>
+          <Text variant="xs" textTransform="uppercase" mb={0.5}>
             Category
           </Text>
 
