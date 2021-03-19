@@ -35,7 +35,7 @@ jest.mock("@stripe/stripe-js", () => {
       return mock
     },
     _mockStripe: () => mock,
-    _mockReset: () => mock = mockStripe(),
+    _mockReset: () => (mock = mockStripe()),
   }
 })
 
@@ -101,6 +101,12 @@ describe("OrderApp routing redirects", () => {
                   id: "artwork-id",
                   is_acquireable: true,
                   is_offerable: true,
+                  isInquireable: false,
+                  listPrice: {
+                    __typename: "Money",
+                    major: 12000,
+                  },
+                  priceCurrency: "USD",
                   slug: "artwork-id",
                 },
                 id: "node id",
