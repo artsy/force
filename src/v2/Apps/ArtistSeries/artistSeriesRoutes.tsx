@@ -42,7 +42,7 @@ function initializeVariablesWithFilterState({ slug }, props) {
     sort: "-decayed_merch",
     ...allowedFilters(paramsToCamelCase(initialFilterState)),
     aggregations: aggregations.concat(additionalAggregations),
-    first: 20,
+    first: 30,
   }
 
   return { slug, input }

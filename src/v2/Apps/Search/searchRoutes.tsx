@@ -93,7 +93,7 @@ export const searchRoutes: RouteConfig[] = [
           return {
             input: {
               ...allowedFilters(prepareVariables(params, { location })),
-              first: 20,
+              first: 30,
             },
           }
         },
