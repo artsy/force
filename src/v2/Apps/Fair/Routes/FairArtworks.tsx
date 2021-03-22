@@ -113,7 +113,7 @@ export const FairArtworksRefetchContainer = createRefetchContainer(
         ) {
         slug
         internalID
-        filtered_artworks: filterArtworksConnection(first: 20, input: $input) {
+        filtered_artworks: filterArtworksConnection(first: 30, input: $input) {
           id
           counts @include(if: $shouldFetchCounts) {
             followedArtists

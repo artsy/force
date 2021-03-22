@@ -91,7 +91,7 @@ export const ShowArtworksRefetchContainer = createRefetchContainer(
     show: graphql`
       fragment ShowArtworks_show on Show
         @argumentDefinitions(input: { type: "FilterArtworksInput" }) {
-        filtered_artworks: filterArtworksConnection(first: 20, input: $input) {
+        filtered_artworks: filterArtworksConnection(first: 30, input: $input) {
           id
           ...ArtworkFilterArtworkGrid_filtered_artworks
         }
