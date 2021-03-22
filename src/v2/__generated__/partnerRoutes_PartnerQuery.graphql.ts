@@ -51,7 +51,10 @@ fragment PartnerHeader_partner on Partner {
   href
   profile {
     icon {
-      url(version: "square140")
+      cropped(width: 80, height: 80, version: "square140") {
+        src
+        srcSet
+      }
     }
     ...FollowProfileButton_profile
     id
@@ -181,13 +184,41 @@ return {
                     "args": [
                       {
                         "kind": "Literal",
+                        "name": "height",
+                        "value": 80
+                      },
+                      {
+                        "kind": "Literal",
                         "name": "version",
                         "value": "square140"
+                      },
+                      {
+                        "kind": "Literal",
+                        "name": "width",
+                        "value": 80
                       }
                     ],
-                    "kind": "ScalarField",
-                    "name": "url",
-                    "storageKey": "url(version:\"square140\")"
+                    "concreteType": "CroppedImageUrl",
+                    "kind": "LinkedField",
+                    "name": "cropped",
+                    "plural": false,
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "src",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "srcSet",
+                        "storageKey": null
+                      }
+                    ],
+                    "storageKey": "cropped(height:80,version:\"square140\",width:80)"
                   }
                 ],
                 "storageKey": null
@@ -278,7 +309,7 @@ return {
     "metadata": {},
     "name": "partnerRoutes_PartnerQuery",
     "operationKind": "query",
-    "text": "query partnerRoutes_PartnerQuery(\n  $partnerId: String!\n) {\n  partner(id: $partnerId) @principalField {\n    ...PartnerApp_partner\n    id\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  is_followed: isFollowed\n}\n\nfragment NavigationTabs_partner on Partner {\n  slug\n}\n\nfragment PartnerApp_partner on Partner {\n  ...PartnerHeader_partner\n  ...NavigationTabs_partner\n}\n\nfragment PartnerHeader_partner on Partner {\n  name\n  type\n  href\n  profile {\n    icon {\n      url(version: \"square140\")\n    }\n    ...FollowProfileButton_profile\n    id\n  }\n  locations: locationsConnection(first: 20) {\n    totalCount\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query partnerRoutes_PartnerQuery(\n  $partnerId: String!\n) {\n  partner(id: $partnerId) @principalField {\n    ...PartnerApp_partner\n    id\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  is_followed: isFollowed\n}\n\nfragment NavigationTabs_partner on Partner {\n  slug\n}\n\nfragment PartnerApp_partner on Partner {\n  ...PartnerHeader_partner\n  ...NavigationTabs_partner\n}\n\nfragment PartnerHeader_partner on Partner {\n  name\n  type\n  href\n  profile {\n    icon {\n      cropped(width: 80, height: 80, version: \"square140\") {\n        src\n        srcSet\n      }\n    }\n    ...FollowProfileButton_profile\n    id\n  }\n  locations: locationsConnection(first: 20) {\n    totalCount\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();

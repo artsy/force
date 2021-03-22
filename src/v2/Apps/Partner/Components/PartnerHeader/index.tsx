@@ -27,7 +27,6 @@ export const HeaderImage = styled(Image)`
 
 export const PartnerHeader: React.FC<PartnerHeaderProps> = ({ partner }) => {
   const { user } = useSystemContext()
-  const partnerIconUrl = partner.profile?.icon?.url
   const hasLocations = partner.locations?.totalCount > 0
   const canFollow =
     partner && partner.type !== "Auction House" && !!partner.profile
@@ -36,14 +35,15 @@ export const PartnerHeader: React.FC<PartnerHeaderProps> = ({ partner }) => {
     <GridColumns gridRowGap={2} my={[2, 4]}>
       <Column span={[12, 10]}>
         <Flex>
-          {partnerIconUrl && (
+          {partner.profile?.icon && (
             <Flex mr={2}>
               <RouterLink
                 to={partner.href}
                 style={{ display: "flex", textDecoration: "none" }}
               >
                 <HeaderImage
-                  src={partnerIconUrl}
+                  src={partner.profile.icon.cropped.src}
+                  srcSet={partner.profile.icon.cropped.srcSet}
                   alt={partner.name}
                   width={[60, 80]}
                   height={[60, 80]}
@@ -97,7 +97,10 @@ export const PartnerHeaderFragmentContainer = createFragmentContainer(
         href
         profile {
           icon {
-            url(version: "square140")
+            cropped(width: 80, height: 80, version: "square140") {
+              src
+              srcSet
+            }
           }
           ...FollowProfileButton_profile
         }

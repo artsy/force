@@ -9,7 +9,10 @@ export type PartnerHeader_partner = {
     readonly href: string | null;
     readonly profile: {
         readonly icon: {
-            readonly url: string | null;
+            readonly cropped: {
+                readonly src: string;
+                readonly srcSet: string;
+            } | null;
         } | null;
         readonly " $fragmentRefs": FragmentRefs<"FollowProfileButton_profile">;
     } | null;
@@ -79,13 +82,41 @@ const node: ReaderFragment = {
               "args": [
                 {
                   "kind": "Literal",
+                  "name": "height",
+                  "value": 80
+                },
+                {
+                  "kind": "Literal",
                   "name": "version",
                   "value": "square140"
+                },
+                {
+                  "kind": "Literal",
+                  "name": "width",
+                  "value": 80
                 }
               ],
-              "kind": "ScalarField",
-              "name": "url",
-              "storageKey": "url(version:\"square140\")"
+              "concreteType": "CroppedImageUrl",
+              "kind": "LinkedField",
+              "name": "cropped",
+              "plural": false,
+              "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "src",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "srcSet",
+                  "storageKey": null
+                }
+              ],
+              "storageKey": "cropped(height:80,version:\"square140\",width:80)"
             }
           ],
           "storageKey": null
@@ -154,5 +185,5 @@ const node: ReaderFragment = {
   ],
   "type": "Partner"
 };
-(node as any).hash = '00027a53462c1123e368852d1bee7721';
+(node as any).hash = 'a7741b78c4d7da9422c10356dae26fad';
 export default node;

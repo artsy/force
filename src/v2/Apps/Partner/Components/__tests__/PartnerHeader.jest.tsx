@@ -32,8 +32,9 @@ describe("PartnerHeader", () => {
       Partner: () => ({
         name: "White cube",
         profile: {
-          icon: {
-            url: "/img.png",
+          cropped: {
+            src: "/img.png",
+            srcSet: "/img.png",
           },
         },
         locations: {
@@ -79,8 +80,9 @@ describe("PartnerHeader", () => {
         name: "White cube",
         href: "/white-cube",
         profile: {
-          icon: {
-            url: "/img.png",
+          cropped: {
+            src: "/img.png",
+            srcSet: "/img.png",
           },
         },
       }),
