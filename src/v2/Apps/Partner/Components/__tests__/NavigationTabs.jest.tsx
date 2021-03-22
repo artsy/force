@@ -21,8 +21,8 @@ const { getWrapper } = setupTestWrapper<NavigationTabs_Test_PartnerQuery>({
 })
 
 describe("PartnerNavigationTabs", () => {
-  it("renders all tabs by default", async () => {
-    const wrapper = await getWrapper({
+  it("renders all tabs by default", () => {
+    const wrapper = getWrapper({
       Partner: () => ({ id: "white-cube", slug: "white-cube" }),
     })
     const html = wrapper.html()
