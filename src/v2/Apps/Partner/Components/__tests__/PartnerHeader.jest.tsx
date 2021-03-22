@@ -27,7 +27,7 @@ const { getWrapper } = setupTestWrapper<PartnerHeader_Test_Query>({
 })
 
 describe("PartnerHeader", () => {
-  it("displays basic information about partner profile", async () => {
+  it("displays basic information about partner profile", () => {
     const wrapper = getWrapper({
       Partner: () => ({
         name: "White cube",
