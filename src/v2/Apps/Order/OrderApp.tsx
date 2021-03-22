@@ -95,7 +95,7 @@ class OrderApp extends React.Component<OrderAppProps, {}> {
     }
 
     // This accounts for exact price and price ranges
-    const artworkPrice = listPrice.major
+    const artworkPrice = listPrice?.major
       ? listPrice.major
       : listPrice.minPrice?.major
 
