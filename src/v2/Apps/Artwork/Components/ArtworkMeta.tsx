@@ -143,9 +143,9 @@ export class ArtworkMeta extends Component<ArtworkMetaProps> {
     }
 
     // This accounts for exact price and price ranges
-    const artworkPrice = listPrice.major
+    const artworkPrice = listPrice?.major
       ? listPrice.major
-      : listPrice.minPrice?.major
+      : listPrice?.minPrice?.major
 
     if (is_in_auction) return
     if (!is_acquireable && !isOfferable && !isInquireable) return
