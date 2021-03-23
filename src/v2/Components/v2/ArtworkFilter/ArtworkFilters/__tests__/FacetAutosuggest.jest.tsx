@@ -52,6 +52,6 @@ describe("SearchBar", () => {
 
     simulateTyping(component, "magic")
 
-    expect(component.text()).toContain("No results found.")
+    expect(component.text()).toContain("No results.")
   })
 })

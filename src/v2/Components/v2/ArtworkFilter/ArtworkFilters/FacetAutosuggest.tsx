@@ -1,4 +1,4 @@
-import { BorderBox, Box, Checkbox } from "@artsy/palette"
+import { BorderBox, Box, Checkbox, Text } from "@artsy/palette"
 import { uniq } from "lodash"
 import React, { FC, useState } from "react"
 import Autosuggest from "react-autosuggest"
@@ -77,7 +77,7 @@ export const FacetAutosuggest: FC<{
     const noResults = suggestions.length === 0
 
     if (focused && noResults && value) {
-      return "No results found."
+      return <Text pt={0.5}>No results.</Text>
     }
 
     return noResults ? (
