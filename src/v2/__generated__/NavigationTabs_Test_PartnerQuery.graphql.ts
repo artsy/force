@@ -12,6 +12,12 @@ export type NavigationTabs_Test_PartnerQueryResponse = {
 export type NavigationTabs_Test_PartnerQueryRawResponse = {
     readonly partner: ({
         readonly slug: string;
+        readonly locations: ({
+            readonly totalCount: number | null;
+        }) | null;
+        readonly articles: ({
+            readonly totalCount: number | null;
+        }) | null;
         readonly id: string | null;
     }) | null;
 };
@@ -33,6 +39,12 @@ query NavigationTabs_Test_PartnerQuery {
 
 fragment NavigationTabs_partner on Partner {
   slug
+  locations: locationsConnection(first: 20) {
+    totalCount
+  }
+  articles: articlesConnection(first: 20) {
+    totalCount
+  }
 }
 */
 
@@ -42,6 +54,22 @@ var v0 = [
     "kind": "Literal",
     "name": "id",
     "value": "white-cube"
+  }
+],
+v1 = [
+  {
+    "kind": "Literal",
+    "name": "first",
+    "value": 20
+  }
+],
+v2 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "totalCount",
+    "storageKey": null
   }
 ];
 return {
@@ -92,6 +120,26 @@ return {
             "storageKey": null
           },
           {
+            "alias": "locations",
+            "args": (v1/*: any*/),
+            "concreteType": "LocationConnection",
+            "kind": "LinkedField",
+            "name": "locationsConnection",
+            "plural": false,
+            "selections": (v2/*: any*/),
+            "storageKey": "locationsConnection(first:20)"
+          },
+          {
+            "alias": "articles",
+            "args": (v1/*: any*/),
+            "concreteType": "ArticleConnection",
+            "kind": "LinkedField",
+            "name": "articlesConnection",
+            "plural": false,
+            "selections": (v2/*: any*/),
+            "storageKey": "articlesConnection(first:20)"
+          },
+          {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
@@ -108,7 +156,7 @@ return {
     "metadata": {},
     "name": "NavigationTabs_Test_PartnerQuery",
     "operationKind": "query",
-    "text": "query NavigationTabs_Test_PartnerQuery {\n  partner(id: \"white-cube\") {\n    ...NavigationTabs_partner\n    id\n  }\n}\n\nfragment NavigationTabs_partner on Partner {\n  slug\n}\n"
+    "text": "query NavigationTabs_Test_PartnerQuery {\n  partner(id: \"white-cube\") {\n    ...NavigationTabs_partner\n    id\n  }\n}\n\nfragment NavigationTabs_partner on Partner {\n  slug\n  locations: locationsConnection(first: 20) {\n    totalCount\n  }\n  articles: articlesConnection(first: 20) {\n    totalCount\n  }\n}\n"
   }
 };
 })();
