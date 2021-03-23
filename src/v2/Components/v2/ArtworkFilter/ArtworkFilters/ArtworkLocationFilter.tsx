@@ -50,7 +50,7 @@ export const ArtworkLocationFilter: FC = () => {
       <Flex flexDirection="column">
         <FacetAutosuggest
           facetName="locationCities"
-          placeholder="Enter a location"
+          placeholder="Enter a city"
           facets={locations.counts}
         />
         <ShowMore>

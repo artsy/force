@@ -11,8 +11,7 @@ export const PartnerHeaderAddress: React.FC<
 > = ({ edges }) => {
   return (
     <>
-      {uniq(edges.map(edge => edge.node.city))
-        .map(city => city.trim())
+      {uniq(edges.map(edge => edge.node.city.trim()))
         .map<React.ReactNode>((city, index) => (
           <TextWithNoWrap key={`${city}${index}`}>{city}</TextWithNoWrap>
         ))

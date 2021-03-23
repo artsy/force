@@ -45,6 +45,30 @@ describe("PartnerHeader", () => {
           },
         },
         locations: {
+          totalCount: 1,
+          edges: [
+            {
+              node: {
+                city: "Jeddah",
+              },
+            },
+          ],
+        },
+      }),
+    })
+    const text = wrapper.text()
+
+    expect(wrapper.find(PartnerHeaderImage).length).toEqual(1)
+    expect(wrapper.find(HeaderImage).length).toEqual(1)
+    expect(wrapper.find(FollowProfileButton).length).toEqual(1)
+    expect(text).toContain("White cube")
+    expect(text).toContain("Jeddah")
+  })
+
+  it("displays unique address value", () => {
+    const wrapper = getWrapper({
+      Partner: () => ({
+        locations: {
           totalCount: 4,
           edges: [
             {
@@ -71,14 +95,44 @@ describe("PartnerHeader", () => {
         },
       }),
     })
-    const text = wrapper.text()
 
-    expect(wrapper.find(PartnerHeaderImage).length).toEqual(1)
-    expect(wrapper.find(HeaderImage).length).toEqual(1)
-    expect(wrapper.find(FollowProfileButton).length).toEqual(1)
-    expect(text).toContain("White cube")
-    expect(text).toContain(
-      "Jeddah\u00a0\u00a0•\u00a0 Jeddah\u00a0\u00a0•\u00a0 Jeddah"
+    const Address = wrapper.find(PartnerHeaderAddress)
+
+    expect(Address.length).toEqual(1)
+    expect(Address.text()).toContain("Jeddah")
+  })
+
+  it("displays few addresses", () => {
+    const wrapper = getWrapper({
+      Partner: () => ({
+        locations: {
+          totalCount: 4,
+          edges: [
+            {
+              node: {
+                city: "Jeddah",
+              },
+            },
+            {
+              node: {
+                city: "New York",
+              },
+            },
+            {
+              node: {
+                city: "San Francisco",
+              },
+            },
+          ],
+        },
+      }),
+    })
+
+    const Address = wrapper.find(PartnerHeaderAddress)
+
+    expect(Address.length).toEqual(1)
+    expect(Address.text()).toContain(
+      "Jeddah\u00a0\u00a0•\u00a0 New York\u00a0\u00a0•\u00a0 San Francisco"
     )
   })
 
