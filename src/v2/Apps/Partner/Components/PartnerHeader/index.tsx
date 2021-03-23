@@ -28,6 +28,8 @@ export const HeaderImage = styled(Image)`
 export const PartnerHeader: React.FC<PartnerHeaderProps> = ({ partner }) => {
   const { user } = useSystemContext()
   const hasLocations = partner.locations?.totalCount > 0
+  // TODO: Remove after page migration.
+  const partnerUrl = `/partner2${partner.href}`
   const canFollow =
     partner && partner.type !== "Auction House" && !!partner.profile
 
@@ -38,7 +40,7 @@ export const PartnerHeader: React.FC<PartnerHeaderProps> = ({ partner }) => {
           {partner.profile?.icon && (
             <Flex mr={2}>
               <RouterLink
-                to={partner.href}
+                to={partnerUrl}
                 style={{ display: "flex", textDecoration: "none" }}
               >
                 <HeaderImage
@@ -57,7 +59,7 @@ export const PartnerHeader: React.FC<PartnerHeaderProps> = ({ partner }) => {
                 style={{
                   textDecoration: "none",
                 }}
-                to={partner.href}
+                to={partnerUrl}
               >
                 {partner.name}
               </RouterLink>
