@@ -67,7 +67,7 @@ export const PartnerHeader: React.FC<PartnerHeaderProps> = ({ partner }) => {
                 </RouterLink>
               </Text>
               {hasLocations && (
-                <Text color={color("black60")} variant="text">
+                <Text color="black60" variant="text">
                   <PartnerHeaderAddress {...partner.locations} />
                 </Text>
               )}
