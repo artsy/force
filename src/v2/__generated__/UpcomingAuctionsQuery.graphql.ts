@@ -31,13 +31,9 @@ query UpcomingAuctionsQuery(
 
 fragment AuctionArtworksRail_sale on Sale {
   internalID
-  slug
   href
   name
   formattedStartDateTime
-  isLiveOpen
-  status
-  isPreliminary
 }
 
 fragment UpcomingAuctions_viewer_2HEEH6 on Viewer {
@@ -239,13 +235,6 @@ return {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
-                        "name": "isPreliminary",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
                         "name": "id",
                         "storageKey": null
                       },
@@ -319,7 +308,7 @@ return {
     "metadata": {},
     "name": "UpcomingAuctionsQuery",
     "operationKind": "query",
-    "text": "query UpcomingAuctionsQuery(\n  $first: Int!\n  $after: String\n) {\n  viewer {\n    ...UpcomingAuctions_viewer_2HEEH6\n  }\n}\n\nfragment AuctionArtworksRail_sale on Sale {\n  internalID\n  slug\n  href\n  name\n  formattedStartDateTime\n  isLiveOpen\n  status\n  isPreliminary\n}\n\nfragment UpcomingAuctions_viewer_2HEEH6 on Viewer {\n  salesConnection(first: $first, after: $after, sort: START_AT_ASC, auctionState: UPCOMING) {\n    totalCount\n    edges {\n      node {\n        slug\n        name\n        href\n        status\n        formattedStartDateTime\n        eventStartAt\n        isLiveOpen\n        ...AuctionArtworksRail_sale\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query UpcomingAuctionsQuery(\n  $first: Int!\n  $after: String\n) {\n  viewer {\n    ...UpcomingAuctions_viewer_2HEEH6\n  }\n}\n\nfragment AuctionArtworksRail_sale on Sale {\n  internalID\n  href\n  name\n  formattedStartDateTime\n}\n\nfragment UpcomingAuctions_viewer_2HEEH6 on Viewer {\n  salesConnection(first: $first, after: $after, sort: START_AT_ASC, auctionState: UPCOMING) {\n    totalCount\n    edges {\n      node {\n        slug\n        name\n        href\n        status\n        formattedStartDateTime\n        eventStartAt\n        isLiveOpen\n        ...AuctionArtworksRail_sale\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();

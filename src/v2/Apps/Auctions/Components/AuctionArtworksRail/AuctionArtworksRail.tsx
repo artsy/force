@@ -67,13 +67,9 @@ export const AuctionArtworksRailFragmentContainer = createFragmentContainer(
     sale: graphql`
       fragment AuctionArtworksRail_sale on Sale {
         internalID
-        slug
         href
         name
         formattedStartDateTime
-        isLiveOpen
-        status
-        isPreliminary
       }
     `,
   }

@@ -5,13 +5,9 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type AuctionArtworksRail_sale = {
     readonly internalID: string;
-    readonly slug: string;
     readonly href: string | null;
     readonly name: string | null;
     readonly formattedStartDateTime: string | null;
-    readonly isLiveOpen: boolean | null;
-    readonly status: string | null;
-    readonly isPreliminary: boolean | null;
     readonly " $refType": "AuctionArtworksRail_sale";
 };
 export type AuctionArtworksRail_sale$data = AuctionArtworksRail_sale;
@@ -39,13 +35,6 @@ const node: ReaderFragment = {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "slug",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
       "name": "href",
       "storageKey": null
     },
@@ -62,30 +51,9 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "formattedStartDateTime",
       "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "isLiveOpen",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "status",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "isPreliminary",
-      "storageKey": null
     }
   ],
   "type": "Sale"
 };
-(node as any).hash = '8b0d3f928e933ba9dbbc6d6a903c7168';
+(node as any).hash = 'ae274ff3add76e5adbfd77d0c0054975';
 export default node;
