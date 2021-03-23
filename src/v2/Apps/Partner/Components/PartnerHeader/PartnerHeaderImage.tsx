@@ -7,15 +7,13 @@ import styled from "styled-components"
 const Container = styled(FullBleed)`
   position: relative;
   overflow: hidden;
-  background-attachment: fixed;
 `
 
-const Image = styled.img<{ scrollPosition: number }>`
+const Image = styled.img`
   display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transform: translate(0px, ${props => props.scrollPosition}px);
 `
 
 interface PartnerHeaderImageProps {
@@ -28,7 +26,7 @@ export const PartnerHeaderImage: React.FC<PartnerHeaderImageProps> = ({
   const [scrollPosition, setScrollPosition] = useState(0)
 
   useEffect(() => {
-    window.addEventListener("scroll", handleScroll)
+    window.addEventListener("scroll", handleScroll, { passive: true })
     return () => {
       window.removeEventListener("scroll", handleScroll)
     }
@@ -48,7 +46,7 @@ export const PartnerHeaderImage: React.FC<PartnerHeaderImageProps> = ({
         <source srcSet={image.md.srcSet} media="(min-width: 700px)" />
         <source srcSet={image.sm.srcSet} media="(max-width: 700px)" />
         <Image
-          scrollPosition={scrollPosition}
+          style={{ transform: `translate(0px, ${scrollPosition}px)` }}
           src={image.sm.src}
           alt=""
           loading="lazy"
