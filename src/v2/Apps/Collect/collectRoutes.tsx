@@ -1,6 +1,7 @@
 import loadable from "@loadable/component"
 import { RouteConfig } from "found"
 import { graphql } from "react-relay"
+import { allowedFilters } from "v2/Components/v2/ArtworkFilter/Utils/allowedFilters"
 
 import { paramsToCamelCase } from "v2/Components/v2/ArtworkFilter/Utils/urlBuilder"
 import { getENV } from "v2/Utils/getENV"
@@ -79,92 +80,48 @@ function initializeVariablesWithFilterState(params, props) {
     }
   }
 
-  const aggregations = ["TOTAL"]
-  // TODO: Does the `location_city` aggregation accomplish much on /collect, and
-  // should it be a hard-coded list of featured cities?
+  const collectionSlug = params.slug
+
+  // TODO: Do these aggregations accomplish much on /collect?
   const additionalAggregations = getENV("ENABLE_NEW_ARTWORK_FILTERS")
-    ? ["LOCATION_CITY", "ARTIST_NATIONALITY"]
+    ? ["LOCATION_CITY", "ARTIST_NATIONALITY", "MATERIALS_TERMS"]
     : []
-  const collectionOnlyAggregations = params.slug
+  const collectionOnlyAggregations = collectionSlug
     ? ["MERCHANDISABLE_ARTISTS", "MEDIUM", "MAJOR_PERIOD"]
     : []
+  const aggregations = ["TOTAL"]
+    .concat(additionalAggregations)
+    .concat(collectionOnlyAggregations)
 
-  const state = {
+  const input = {
     sort: "-decayed_merch",
-    ...paramsToCamelCase(initialFilterState),
-    ...params,
-    aggregations: aggregations
-      .concat(additionalAggregations)
-      .concat(collectionOnlyAggregations),
+    ...allowedFilters(paramsToCamelCase(initialFilterState)),
+    first: 30,
+    aggregations,
   }
 
-  return state
+  return {
+    input,
+    aggregations,
+    slug: collectionSlug,
+    sort: "-decayed_merch",
+  }
 }
 
 function getArtworkFilterQuery() {
   return graphql`
     query collectRoutes_ArtworkFilterQuery(
-      $acquireable: Boolean
-      $aggregations: [ArtworkAggregation]
-      $artistID: String
-      $atAuction: Boolean
-      $attributionClass: [String]
-      $colors: [String]
-      $forSale: Boolean
-      $additionalGeneIDs: [String]
-      $height: String
-      $inquireableOnly: Boolean
-      $majorPeriods: [String]
-      $medium: String
-      $offerable: Boolean
-      $page: Int
-      $partnerID: ID
-      $partnerIDs: [String]
-      $priceRange: String
-      $sizes: [ArtworkSizes]
       $sort: String
-      $keyword: String
-      $width: String
-      $locationCities: [String]
-      $artistNationalities: [String]
+      $input: FilterArtworksInput
     ) {
       marketingHubCollections {
         ...Collect_marketingHubCollections
       }
-      filterArtworks: artworksConnection(
-        aggregations: $aggregations
-        sort: $sort
-        first: 30
-      ) {
+      filterArtworks: artworksConnection(sort: $sort, first: 30) {
         ...SeoProductsForArtworks_artworks
       }
       viewer {
-        ...ArtworkFilter_viewer
-          @arguments(
-            acquireable: $acquireable
-            aggregations: $aggregations
-            artistID: $artistID
-            atAuction: $atAuction
-            attributionClass: $attributionClass
-            colors: $colors
-            forSale: $forSale
-            additionalGeneIDs: $additionalGeneIDs
-            height: $height
-            inquireableOnly: $inquireableOnly
-            keyword: $keyword
-            majorPeriods: $majorPeriods
-            medium: $medium
-            offerable: $offerable
-            page: $page
-            partnerID: $partnerID
-            partnerIDs: $partnerIDs
-            priceRange: $priceRange
-            sizes: $sizes
-            sort: $sort
-            width: $width
-            locationCities: $locationCities
-            artistNationalities: $artistNationalities
-          )
+        ...ArtworkFilter_viewer @arguments(input: $input)
       }
     }
   `

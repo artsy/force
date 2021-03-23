@@ -21,6 +21,7 @@ export const initialArtworkFilterState: ArtworkFilters = {
   colors: [],
   locationCities: [],
   artistNationalities: [],
+  materialsTerms: [],
 
   // TODO: Remove these unneeded default props
   // height: "*-*",
@@ -58,6 +59,7 @@ export interface ArtworkFilters {
   width?: string
   locationCities?: string[]
   artistNationalities?: string[]
+  materialsTerms?: string[]
 }
 
 interface ArtworkFiltersState extends ArtworkFilters {
@@ -84,6 +86,7 @@ export type Aggregations = Array<{
     | "PARTNER"
     | "LOCATION_CITY"
     | "ARTIST_NATIONALITY"
+    | "MATERIALS_TERMS"
   counts: Array<{
     count: number
     value: string
@@ -337,6 +340,7 @@ export type ArrayArtworkFilter =
   | "partnerIDs"
   | "locationCities"
   | "artistNationalities"
+  | "materialsTerms"
 
 const artworkFilterReducer = (
   state: ArtworkFiltersState,
@@ -352,6 +356,7 @@ const artworkFilterReducer = (
     "colors",
     "locationCities",
     "artistNationalities",
+    "materialsTerms",
   ]
 
   switch (action.type) {

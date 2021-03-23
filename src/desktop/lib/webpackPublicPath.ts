@@ -44,8 +44,9 @@ if (process.env.NODE_ENV === "production") {
     "/order",
     "/search",
     "/show/",
+    "/partner2/",
     "/user/conversations",
-    "/user/payments2", // TODO: change to payment to release the app
+    "/user/payments",
     "/user/purchases",
     "/viewing-room/",
     "/viewing-rooms",

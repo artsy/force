@@ -20,6 +20,7 @@ import { getENV } from "v2/Utils/getENV"
 import { PartnersFilter } from "v2/Components/v2/ArtworkFilter/ArtworkFilters/PartnersFilter"
 import { ArtworkLocationFilter } from "v2/Components/v2/ArtworkFilter/ArtworkFilters/ArtworkLocationFilter"
 import { ArtistNationalityFilter } from "v2/Components/v2/ArtworkFilter/ArtworkFilters/ArtistNationalityFilter"
+import { MaterialsFilter } from "v2/Components/v2/ArtworkFilter/ArtworkFilters/MaterialsFilter"
 
 interface FairArtworksFilterProps {
   fair: FairArtworks_fair
@@ -51,6 +52,7 @@ const FairArtworksFilter: React.FC<FairArtworksFilterProps> = props => {
         user={user}
       />
       <MediumFilter />
+      {getENV("ENABLE_NEW_ARTWORK_FILTERS") && <MaterialsFilter />}
       <AttributionClassFilter />
       <PriceRangeFilter />
       <WaysToBuyFilter />
@@ -92,6 +94,7 @@ const FairArtworksFilter: React.FC<FairArtworksFilterProps> = props => {
         viewer={fair}
         relayVariables={{
           aggregations: ["TOTAL"],
+          shouldFetchCounts: false, // We don't need to refetch counts.
         }}
         Filters={Filters}
       ></BaseArtworkFilter>
@@ -105,52 +108,12 @@ export const FairArtworksRefetchContainer = createRefetchContainer(
     fair: graphql`
       fragment FairArtworks_fair on Fair
         @argumentDefinitions(
-          acquireable: { type: "Boolean" }
-          aggregations: { type: "[ArtworkAggregation]" }
-          artistIDs: { type: "[String]" }
-          attributionClass: { type: "[String]" }
-          atAuction: { type: "Boolean" }
-          colors: { type: "[String]" }
-          forSale: { type: "Boolean" }
-          includeArtworksByFollowedArtists: { type: "Boolean" }
-          inquireableOnly: { type: "Boolean" }
-          majorPeriods: { type: "[String]" }
-          medium: { type: "String", defaultValue: "*" }
-          offerable: { type: "Boolean" }
-          page: { type: "Int" }
-          partnerID: { type: "ID" }
-          priceRange: { type: "String" }
-          sizes: { type: "[ArtworkSizes]" }
-          sort: { type: "String", defaultValue: "-partner_updated_at" }
-          shouldFetchCounts: { type: "Boolean", defaultValue: false }
-          additionalGeneIDs: { type: "[String]" }
-          artistNationalities: { type: "[String]" }
+          shouldFetchCounts: { type: "Boolean!", defaultValue: false }
+          input: { type: "FilterArtworksInput" }
         ) {
         slug
         internalID
-        filtered_artworks: filterArtworksConnection(
-          acquireable: $acquireable
-          aggregations: $aggregations
-          artistIDs: $artistIDs
-          attributionClass: $attributionClass
-          atAuction: $atAuction
-          colors: $colors
-          forSale: $forSale
-          includeArtworksByFollowedArtists: $includeArtworksByFollowedArtists
-          inquireableOnly: $inquireableOnly
-          majorPeriods: $majorPeriods
-          medium: $medium
-          offerable: $offerable
-          page: $page
-          partnerID: $partnerID
-          priceRange: $priceRange
-          sizes: $sizes
-          first: 20
-          after: ""
-          sort: $sort
-          additionalGeneIDs: $additionalGeneIDs
-          artistNationalities: $artistNationalities
-        ) {
+        filtered_artworks: filterArtworksConnection(first: 30, input: $input) {
           id
           counts @include(if: $shouldFetchCounts) {
             followedArtists
@@ -162,50 +125,13 @@ export const FairArtworksRefetchContainer = createRefetchContainer(
   },
   graphql`
     query FairArtworksQuery(
-      $acquireable: Boolean
-      $aggregations: [ArtworkAggregation] = [TOTAL]
-      $artistIDs: [String]
-      $attributionClass: [String]
       $slug: String!
-      $atAuction: Boolean
-      $colors: [String]
-      $forSale: Boolean
-      $includeArtworksByFollowedArtists: Boolean
-      $inquireableOnly: Boolean
-      $majorPeriods: [String]
-      $medium: String
-      $offerable: Boolean
-      $page: Int
-      $partnerID: ID
-      $priceRange: String
-      $sizes: [ArtworkSizes]
-      $sort: String
-      $additionalGeneIDs: [String]
-      $artistNationalities: [String]
+      $input: FilterArtworksInput
+      $shouldFetchCounts: Boolean!
     ) {
       fair(id: $slug) {
         ...FairArtworks_fair
-          @arguments(
-            acquireable: $acquireable
-            aggregations: $aggregations
-            artistIDs: $artistIDs
-            atAuction: $atAuction
-            attributionClass: $attributionClass
-            colors: $colors
-            forSale: $forSale
-            includeArtworksByFollowedArtists: $includeArtworksByFollowedArtists
-            inquireableOnly: $inquireableOnly
-            majorPeriods: $majorPeriods
-            medium: $medium
-            offerable: $offerable
-            page: $page
-            partnerID: $partnerID
-            priceRange: $priceRange
-            sizes: $sizes
-            sort: $sort
-            additionalGeneIDs: $additionalGeneIDs
-            artistNationalities: $artistNationalities
-          )
+          @arguments(input: $input, shouldFetchCounts: $shouldFetchCounts)
       }
     }
   `

@@ -47,8 +47,11 @@ export const NavBar: React.FC = track(
     dispatch: data => Events.postEvent(data),
   }
 )(() => {
+  const { mediator, user, isEigen } = useSystemContext()
+  if (isEigen) {
+    return null
+  }
   const { trackEvent } = useTracking()
-  const { mediator, user } = useSystemContext()
   const [showMobileMenu, toggleMobileNav] = useState(false)
   const xs = useMatchMedia(themeProps.mediaQueries.xs)
   const sm = useMatchMedia(themeProps.mediaQueries.sm)

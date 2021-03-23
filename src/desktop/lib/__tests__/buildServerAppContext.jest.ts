@@ -2,12 +2,15 @@ import { buildServerAppContext } from "../buildServerAppContext"
 
 describe("buildServerAppContext", () => {
   let req, res
+  let headers = {}
   beforeEach(() => {
+    headers = {}
     req = {
       user: {
         toJSON: () => ({ id: "user-id" }),
       },
       path: "/",
+      header: header => headers[header],
     }
     res = {
       locals: {
@@ -42,9 +45,20 @@ describe("buildServerAppContext", () => {
     expect(subject.isEigen).toBeFalsy()
   })
 
-  it("isEigen is true when specified", () => {
-    res.locals.sd.EIGEN = true
-    const subject = buildServerAppContext(req, res)
-    expect(subject.isEigen).toBeTruthy()
+  it("isEigen is true only when the user agent includes 'Artsy-Mobile'", () => {
+    headers["User-Agent"] = "blah blah blah Artsy-Mobile blah blah blah"
+    expect(buildServerAppContext(req, res).isEigen).toBeTruthy()
+
+    headers["User-Agent"] = "Artsy-Mobile blah blah blah"
+    expect(buildServerAppContext(req, res).isEigen).toBeTruthy()
+
+    headers["User-Agent"] = "blah blah blah Artsy-Mobile"
+    expect(buildServerAppContext(req, res).isEigen).toBeTruthy()
+
+    headers["User-Agent"] = "blah blah blah"
+    expect(buildServerAppContext(req, res).isEigen).toBeFalsy()
+
+    delete headers["User-Agent"]
+    expect(buildServerAppContext(req, res).isEigen).toBeFalsy()
   })
 })

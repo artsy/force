@@ -56,15 +56,17 @@ export const PriceRangeFilter: React.FC = () => {
     const isMax = index === 1
 
     setCustomRange(prevCustomRange => {
+      const nextCustomRange = [...prevCustomRange]
+
       if (isOpenEnded && isMin) {
-        prevCustomRange[index] = 0
+        nextCustomRange[index] = "*"
       } else if (isOpenEnded && isMax) {
-        prevCustomRange[index] = "*"
+        nextCustomRange[index] = "*"
       } else {
-        prevCustomRange[index] = parseInt(value, 10)
+        nextCustomRange[index] = parseInt(value, 10)
       }
 
-      return [...prevCustomRange]
+      return nextCustomRange
     })
   }
 

@@ -6,8 +6,9 @@ import {
   Spacer,
   Flex,
   Text,
-  BorderBox,
   Separator,
+  BorderBox,
+  Join,
 } from "@artsy/palette"
 import React, { useState } from "react"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
@@ -117,7 +118,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
         <Separator my={1} />
         <ModifyAddressWrapper>
           {!isDefaultAddress && (
-            <Box mr={1}>
+            <Box mr={[3, 1]}>
               <Text
                 onClick={() => handleSetDefaultAddress(address.node.internalID)}
                 variant="text"
@@ -130,7 +131,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
               </Text>
             </Box>
           )}
-          <Box mr={1}>
+          <Box mr={[3, 1]}>
             <Text
               onClick={() => handleEditAddress(address.node)}
               variant="text"
@@ -181,7 +182,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
         modalDetails={modalDetails}
         closeModal={() => setShowAddressModal(false)}
         address={address}
-        onSuccess={() => onSuccess}
+        onSuccess={() => onSuccess()}
         commitMutation={props.commitMutation}
         onError={onError}
         me={me}
@@ -214,7 +215,11 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
 
   return inCollectorProfile ? (
     <>
-      <Flex flexDirection="column">{collectorProfileAddressItems}</Flex>
+      <Flex flexDirection="column">
+        <Join separator={<Spacer mb="1" />}>
+          {collectorProfileAddressItems}
+        </Join>
+      </Flex>
       {addAddressButton}
     </>
   ) : (

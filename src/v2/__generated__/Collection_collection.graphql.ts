@@ -72,26 +72,16 @@ var v0 = {
   "storageKey": null
 },
 v1 = {
-  "kind": "Variable",
-  "name": "aggregations",
-  "variableName": "aggregations"
-},
-v2 = {
   "kind": "Literal",
   "name": "first",
   "value": 1
 },
-v3 = {
+v2 = {
   "kind": "Literal",
   "name": "includeMediumFilterInAggregation",
   "value": true
 },
-v4 = {
-  "kind": "Literal",
-  "name": "size",
-  "value": 1
-},
-v5 = {
+v3 = {
   "kind": "Literal",
   "name": "sort",
   "value": "-decayed_merch"
@@ -101,122 +91,14 @@ return {
     {
       "defaultValue": null,
       "kind": "LocalArgument",
-      "name": "acquireable",
-      "type": "Boolean"
-    },
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
       "name": "aggregations",
       "type": "[ArtworkAggregation]"
     },
     {
       "defaultValue": null,
       "kind": "LocalArgument",
-      "name": "attributionClass",
-      "type": "[String]"
-    },
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "atAuction",
-      "type": "Boolean"
-    },
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "colors",
-      "type": "[String]"
-    },
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "forSale",
-      "type": "Boolean"
-    },
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "additionalGeneIDs",
-      "type": "[String]"
-    },
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "height",
-      "type": "String"
-    },
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "inquireableOnly",
-      "type": "Boolean"
-    },
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "majorPeriods",
-      "type": "[String]"
-    },
-    {
-      "defaultValue": "*",
-      "kind": "LocalArgument",
-      "name": "medium",
-      "type": "String"
-    },
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "offerable",
-      "type": "Boolean"
-    },
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "page",
-      "type": "Int"
-    },
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "priceRange",
-      "type": "String"
-    },
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "sizes",
-      "type": "[ArtworkSizes]"
-    },
-    {
-      "defaultValue": "-partner_updated_at",
-      "kind": "LocalArgument",
-      "name": "sort",
-      "type": "String"
-    },
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "width",
-      "type": "String"
-    },
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "first",
-      "type": "Int"
-    },
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "locationCities",
-      "type": "[String]"
-    },
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "artistNationalities",
-      "type": "[String]"
+      "name": "input",
+      "type": "FilterArtworksInput"
     }
   ],
   "kind": "Fragment",
@@ -320,9 +202,7 @@ return {
       "args": [
         (v1/*: any*/),
         (v2/*: any*/),
-        (v3/*: any*/),
-        (v4/*: any*/),
-        (v5/*: any*/)
+        (v3/*: any*/)
       ],
       "concreteType": "FilterArtworksConnection",
       "kind": "LinkedField",
@@ -387,24 +267,23 @@ return {
           "storageKey": null
         }
       ],
-      "storageKey": null
+      "storageKey": "artworksConnection(first:1,includeMediumFilterInAggregation:true,sort:\"-decayed_merch\")"
     },
     {
       "alias": null,
       "args": [
-        (v1/*: any*/),
+        {
+          "kind": "Variable",
+          "name": "aggregations",
+          "variableName": "aggregations"
+        },
         {
           "kind": "Literal",
           "name": "first",
           "value": 20
         },
-        (v3/*: any*/),
-        {
-          "kind": "Literal",
-          "name": "size",
-          "value": 20
-        },
-        (v5/*: any*/)
+        (v2/*: any*/),
+        (v3/*: any*/)
       ],
       "concreteType": "FilterArtworksConnection",
       "kind": "LinkedField",
@@ -479,8 +358,6 @@ return {
       "args": [
         (v1/*: any*/),
         (v2/*: any*/),
-        (v3/*: any*/),
-        (v4/*: any*/),
         {
           "kind": "Literal",
           "name": "sort",
@@ -498,15 +375,13 @@ return {
           "name": "SeoProductsForCollections_descending_artworks"
         }
       ],
-      "storageKey": null
+      "storageKey": "artworksConnection(first:1,includeMediumFilterInAggregation:true,sort:\"sold,-has_price,-prices\")"
     },
     {
       "alias": "ascending_artworks",
       "args": [
         (v1/*: any*/),
         (v2/*: any*/),
-        (v3/*: any*/),
-        (v4/*: any*/),
         {
           "kind": "Literal",
           "name": "sort",
@@ -524,106 +399,15 @@ return {
           "name": "SeoProductsForCollections_ascending_artworks"
         }
       ],
-      "storageKey": null
+      "storageKey": "artworksConnection(first:1,includeMediumFilterInAggregation:true,sort:\"sold,-has_price,prices\")"
     },
     {
       "alias": "filtered_artworks",
       "args": [
         {
           "kind": "Variable",
-          "name": "acquireable",
-          "variableName": "acquireable"
-        },
-        {
-          "kind": "Variable",
-          "name": "additionalGeneIDs",
-          "variableName": "additionalGeneIDs"
-        },
-        (v1/*: any*/),
-        {
-          "kind": "Variable",
-          "name": "artistNationalities",
-          "variableName": "artistNationalities"
-        },
-        {
-          "kind": "Variable",
-          "name": "atAuction",
-          "variableName": "atAuction"
-        },
-        {
-          "kind": "Variable",
-          "name": "attributionClass",
-          "variableName": "attributionClass"
-        },
-        {
-          "kind": "Variable",
-          "name": "colors",
-          "variableName": "colors"
-        },
-        {
-          "kind": "Variable",
-          "name": "first",
-          "variableName": "first"
-        },
-        {
-          "kind": "Variable",
-          "name": "forSale",
-          "variableName": "forSale"
-        },
-        {
-          "kind": "Variable",
-          "name": "height",
-          "variableName": "height"
-        },
-        {
-          "kind": "Variable",
-          "name": "inquireableOnly",
-          "variableName": "inquireableOnly"
-        },
-        {
-          "kind": "Variable",
-          "name": "locationCities",
-          "variableName": "locationCities"
-        },
-        {
-          "kind": "Variable",
-          "name": "majorPeriods",
-          "variableName": "majorPeriods"
-        },
-        {
-          "kind": "Variable",
-          "name": "medium",
-          "variableName": "medium"
-        },
-        {
-          "kind": "Variable",
-          "name": "offerable",
-          "variableName": "offerable"
-        },
-        {
-          "kind": "Variable",
-          "name": "page",
-          "variableName": "page"
-        },
-        {
-          "kind": "Variable",
-          "name": "priceRange",
-          "variableName": "priceRange"
-        },
-        {
-          "kind": "Variable",
-          "name": "sizes",
-          "variableName": "sizes"
-        },
-        {
-          "kind": "Variable",
-          "name": "sort",
-          "variableName": "sort"
-        },
-        {
-          "kind": "Variable",
-          "name": "width",
-          "variableName": "width"
+          "name": "input",
+          "variableName": "input"
         }
       ],
       "concreteType": "FilterArtworksConnection",
@@ -649,5 +433,5 @@ return {
   "type": "MarketingCollection"
 };
 })();
-(node as any).hash = 'b70d3ed3aa14f4885d78bd4ea8135b19';
+(node as any).hash = '360adf1045a85a674a06328896cb0140';
 export default node;

@@ -152,6 +152,10 @@ export class ArtworkApp extends React.Component<Props> {
       // or trackEvent() patterns as used in other apps?
       // See trackingMiddleware.ts
       window.analytics.page(properties, { integrations: { Marketo: false } })
+
+      if (typeof window._sift !== "undefined") {
+        window._sift.push(["_trackPageview"])
+      }
     }
   }
 

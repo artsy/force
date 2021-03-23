@@ -1,4 +1,4 @@
-import React from "react"
+import React, { ComponentProps } from "react"
 import { Box } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FeatureFeaturedLinkFragmentContainer as FeatureFeaturedLink } from "../FeatureFeaturedLink"
@@ -7,7 +7,7 @@ import { FeatureSetItem_setItem } from "v2/__generated__/FeatureSetItem_setItem.
 
 export interface FeatureSetItemProps {
   setItem: FeatureSetItem_setItem
-  size: "large" | "medium" | "small"
+  size: ComponentProps<typeof FeatureFeaturedLink>["size"]
 }
 
 export const FeatureSetItem: React.FC<FeatureSetItemProps> = ({

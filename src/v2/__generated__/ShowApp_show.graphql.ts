@@ -33,98 +33,8 @@ const node: ReaderFragment = {
     {
       "defaultValue": null,
       "kind": "LocalArgument",
-      "name": "acquireable",
-      "type": "Boolean"
-    },
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "aggregations",
-      "type": "[ArtworkAggregation]"
-    },
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "atAuction",
-      "type": "Boolean"
-    },
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "colors",
-      "type": "[String]"
-    },
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "forSale",
-      "type": "Boolean"
-    },
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "inquireableOnly",
-      "type": "Boolean"
-    },
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "majorPeriods",
-      "type": "[String]"
-    },
-    {
-      "defaultValue": "*",
-      "kind": "LocalArgument",
-      "name": "medium",
-      "type": "String"
-    },
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "offerable",
-      "type": "Boolean"
-    },
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "page",
-      "type": "Int"
-    },
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "partnerID",
-      "type": "ID"
-    },
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "priceRange",
-      "type": "String"
-    },
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "sizes",
-      "type": "[ArtworkSizes]"
-    },
-    {
-      "defaultValue": "-decayed_merch",
-      "kind": "LocalArgument",
-      "name": "sort",
-      "type": "String"
-    },
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "additionalGeneIDs",
-      "type": "[String]"
-    },
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "artistNationalities",
-      "type": "[String]"
+      "name": "input",
+      "type": "FilterArtworksInput"
     }
   ],
   "kind": "Fragment",
@@ -252,83 +162,8 @@ const node: ReaderFragment = {
       "args": [
         {
           "kind": "Variable",
-          "name": "acquireable",
-          "variableName": "acquireable"
-        },
-        {
-          "kind": "Variable",
-          "name": "additionalGeneIDs",
-          "variableName": "additionalGeneIDs"
-        },
-        {
-          "kind": "Variable",
-          "name": "aggregations",
-          "variableName": "aggregations"
-        },
-        {
-          "kind": "Variable",
-          "name": "artistNationalities",
-          "variableName": "artistNationalities"
-        },
-        {
-          "kind": "Variable",
-          "name": "atAuction",
-          "variableName": "atAuction"
-        },
-        {
-          "kind": "Variable",
-          "name": "colors",
-          "variableName": "colors"
-        },
-        {
-          "kind": "Variable",
-          "name": "forSale",
-          "variableName": "forSale"
-        },
-        {
-          "kind": "Variable",
-          "name": "inquireableOnly",
-          "variableName": "inquireableOnly"
-        },
-        {
-          "kind": "Variable",
-          "name": "majorPeriods",
-          "variableName": "majorPeriods"
-        },
-        {
-          "kind": "Variable",
-          "name": "medium",
-          "variableName": "medium"
-        },
-        {
-          "kind": "Variable",
-          "name": "offerable",
-          "variableName": "offerable"
-        },
-        {
-          "kind": "Variable",
-          "name": "page",
-          "variableName": "page"
-        },
-        {
-          "kind": "Variable",
-          "name": "partnerID",
-          "variableName": "partnerID"
-        },
-        {
-          "kind": "Variable",
-          "name": "priceRange",
-          "variableName": "priceRange"
-        },
-        {
-          "kind": "Variable",
-          "name": "sizes",
-          "variableName": "sizes"
-        },
-        {
-          "kind": "Variable",
-          "name": "sort",
-          "variableName": "sort"
+          "name": "input",
+          "variableName": "input"
         }
       ],
       "kind": "FragmentSpread",
@@ -342,5 +177,5 @@ const node: ReaderFragment = {
   ],
   "type": "Show"
 };
-(node as any).hash = 'c222236be22e596161048ca2cb23c551';
+(node as any).hash = '288f0fca9a220b1002d45315d73014cf';
 export default node;

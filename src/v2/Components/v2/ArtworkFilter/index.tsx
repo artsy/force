@@ -45,6 +45,7 @@ import { FairArtworks_fair } from "v2/__generated__/FairArtworks_fair.graphql"
 import { ShowArtworks_show } from "v2/__generated__/ShowArtworks_show.graphql"
 import { useAnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
 import { commercialFilterParamsChanged } from "@artsy/cohesion"
+import { allowedFilters } from "./Utils/allowedFilters"
 
 /**
  * Primary ArtworkFilter which is wrapped with a context and refetch container.
@@ -164,18 +165,22 @@ export const BaseArtworkFilter: React.FC<
     toggleFetching(true)
 
     const relayRefetchVariables = {
-      ...filterContext.filters,
-      ...relayVariables,
       first: 30,
+      ...allowedFilters(filterContext.filters),
+      keyword: filterContext.filters.term,
     }
 
-    relay.refetch(relayRefetchVariables, null, error => {
-      if (error) {
-        console.error(error)
-      }
+    relay.refetch(
+      { input: relayRefetchVariables, ...relayVariables },
+      null,
+      error => {
+        if (error) {
+          console.error(error)
+        }
 
-      toggleFetching(false)
-    })
+        toggleFetching(false)
+      }
+    )
   }
 
   const ArtworkGrid = () => {
@@ -252,58 +257,8 @@ export const ArtworkFilterRefetchContainer = createRefetchContainer(
   {
     viewer: graphql`
       fragment ArtworkFilter_viewer on Viewer
-        @argumentDefinitions(
-          acquireable: { type: "Boolean" }
-          aggregations: { type: "[ArtworkAggregation]" }
-          artistID: { type: "String" }
-          atAuction: { type: "Boolean" }
-          attributionClass: { type: "[String]" }
-          colors: { type: "[String]" }
-          forSale: { type: "Boolean" }
-          additionalGeneIDs: { type: "[String]" }
-          height: { type: "String" }
-          inquireableOnly: { type: "Boolean" }
-          keyword: { type: "String" }
-          majorPeriods: { type: "[String]" }
-          medium: { type: "String" }
-          offerable: { type: "Boolean" }
-          page: { type: "Int" }
-          partnerID: { type: "ID" }
-          partnerIDs: { type: "[String]" }
-          priceRange: { type: "String" }
-          sizes: { type: "[ArtworkSizes]" }
-          sort: { type: "String", defaultValue: "-partner_updated_at" }
-          width: { type: "String" }
-          first: { type: "Int", defaultValue: 30 }
-          locationCities: { type: "[String]" }
-          artistNationalities: { type: "[String]" }
-        ) {
-        filtered_artworks: artworksConnection(
-          acquireable: $acquireable
-          aggregations: $aggregations
-          artistID: $artistID
-          atAuction: $atAuction
-          attributionClass: $attributionClass
-          colors: $colors
-          forSale: $forSale
-          additionalGeneIDs: $additionalGeneIDs
-          height: $height
-          inquireableOnly: $inquireableOnly
-          keyword: $keyword
-          majorPeriods: $majorPeriods
-          medium: $medium
-          offerable: $offerable
-          page: $page
-          partnerID: $partnerID
-          partnerIDs: $partnerIDs
-          priceRange: $priceRange
-          sizes: $sizes
-          sort: $sort
-          width: $width
-          first: $first
-          locationCities: $locationCities
-          artistNationalities: $artistNationalities
-        ) {
+        @argumentDefinitions(input: { type: "FilterArtworksInput" }) {
+        filtered_artworks: artworksConnection(input: $input) {
           id
           ...ArtworkFilterArtworkGrid_filtered_artworks
         }

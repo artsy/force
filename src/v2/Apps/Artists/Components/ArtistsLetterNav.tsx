@@ -1,7 +1,7 @@
 import { Box, BoxProps, color, space, Text } from "@artsy/palette"
 import React from "react"
 import styled from "styled-components"
-import { RouterLink } from "v2/Artsy/Router/RouterLink"
+import { RouterLink, RouterLinkProps } from "v2/Artsy/Router/RouterLink"
 
 export const LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("")
 
@@ -12,7 +12,7 @@ const Container = styled(Box)`
   justify-content: flex-start;
 `
 
-const Letter = styled(RouterLink)`
+const Letter = styled(RouterLink)<RouterLinkProps>`
   display: block;
   padding: ${space(0.5)}px ${space(1)}px;
   text-align: center;

@@ -3,18 +3,17 @@ import {
   SavedCreditCardsDeleteCreditCardMutation,
   SavedCreditCardsDeleteCreditCardMutationResponse,
 } from "v2/__generated__/SavedCreditCardsDeleteCreditCardMutation.graphql"
-import { UserSettingsPayments_me } from "v2/__generated__/UserSettingsPayments_me.graphql"
 import { CreditCardDetails } from "v2/Apps/Order/Components/CreditCardDetails"
 import { ErrorModal } from "v2/Components/Modal/ErrorModal"
 import React, { SFC } from "react"
 import { RelayProp, commitMutation, graphql } from "react-relay"
 import { ConnectionHandler, RecordSourceSelectorProxy } from "relay-runtime"
 import styled from "styled-components"
-import { CreditCardType } from "./UserSettingsPayments"
 import { PaymentSection_me } from "v2/__generated__/PaymentSection_me.graphql"
+import { CreditCardType } from "v2/Apps/Payment/Components/PaymentSection"
 interface SavedCreditCardsProps {
   creditCards: CreditCardType[]
-  me: UserSettingsPayments_me | PaymentSection_me
+  me: PaymentSection_me
   relay?: RelayProp
 }
 
@@ -25,7 +24,7 @@ interface CreditCardsState {
 
 interface CreditCardProps {
   creditCard?: CreditCardType
-  me: UserSettingsPayments_me | PaymentSection_me
+  me: PaymentSection_me
   relay?: RelayProp
 }
 

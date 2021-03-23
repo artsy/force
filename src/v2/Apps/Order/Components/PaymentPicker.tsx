@@ -42,6 +42,7 @@ import {
   SystemContextProps,
 } from "v2/Artsy/SystemContext"
 import { createStripeWrapper } from "v2/Utils/createStripeWrapper"
+import { isNull, mergeWith } from "lodash"
 
 export interface StripeProps {
   stripe: Stripe
@@ -364,9 +365,16 @@ export class PaymentPicker extends React.Component<
   }
 
   private getStripeBillingAddress(): CreateTokenCardData {
+    // replace null items in requestedFulfillment with empty string to keep stripe happy
+    const shippingAddress = mergeWith(
+      {},
+      emptyAddress,
+      this.props.order.requestedFulfillment,
+      (o, s) => (isNull(s) ? o : s)
+    )
     const selectedBillingAddress = (this.needsAddress()
       ? this.state.address
-      : this.props.order.requestedFulfillment) as Address
+      : shippingAddress) as Address
     const {
       name,
       addressLine1,

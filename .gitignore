@@ -30,6 +30,7 @@ yalc.lock
 /public
 /src/desktop/public/assets
 /src/mobile/public/assets
+/storybook-static
 node_modules
 
 # Compiled server code

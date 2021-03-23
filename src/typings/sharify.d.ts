@@ -46,6 +46,7 @@ declare module "sharify" {
       readonly RECAPTCHA_KEY: string
       readonly SENTRY_PUBLIC_DSN: string
       readonly SHOW_ANALYTICS_CALLS: boolean
+      readonly SIFT_BEACON_KEY: string
       readonly STRIPE_PUBLISHABLE_KEY: string
       readonly THIRD_PARTIES_DISABLED: boolean
       readonly VOLLEY_ENDPOINT: string

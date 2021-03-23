@@ -144,8 +144,8 @@ export const CollectionApp: React.FC<CollectionAppProps> = props => {
                   relay={relay}
                   viewer={collection}
                   relayVariables={{
-                    first: 30,
                     slug: collection.slug,
+                    aggregations: ["TOTAL"],
                   }}
                 />
               </ArtworkFilterContextProvider>
@@ -199,26 +199,8 @@ export const CollectionRefetchContainer = createRefetchContainer(
     collection: graphql`
       fragment Collection_collection on MarketingCollection
         @argumentDefinitions(
-          acquireable: { type: "Boolean" }
           aggregations: { type: "[ArtworkAggregation]" }
-          attributionClass: { type: "[String]" }
-          atAuction: { type: "Boolean" }
-          colors: { type: "[String]" }
-          forSale: { type: "Boolean" }
-          additionalGeneIDs: { type: "[String]" }
-          height: { type: "String" }
-          inquireableOnly: { type: "Boolean" }
-          majorPeriods: { type: "[String]" }
-          medium: { type: "String", defaultValue: "*" }
-          offerable: { type: "Boolean" }
-          page: { type: "Int" }
-          priceRange: { type: "String" }
-          sizes: { type: "[ArtworkSizes]" }
-          sort: { type: "String", defaultValue: "-partner_updated_at" }
-          width: { type: "String" }
-          first: { type: "Int" }
-          locationCities: { type: "[String]" }
-          artistNationalities: { type: "[String]" }
+          input: { type: "FilterArtworksInput" }
         ) {
         ...Header_collection
         description
@@ -237,9 +219,7 @@ export const CollectionRefetchContainer = createRefetchContainer(
           ...CollectionsHubRails_linkedCollections
         }
         fallbackHeaderImage: artworksConnection(
-          aggregations: $aggregations
           includeMediumFilterInAggregation: true
-          size: 1
           first: 1
           sort: "-decayed_merch"
         ) {
@@ -256,7 +236,6 @@ export const CollectionRefetchContainer = createRefetchContainer(
         artworksConnection(
           aggregations: $aggregations
           includeMediumFilterInAggregation: true
-          size: 20
           first: 20
           sort: "-decayed_merch"
         ) {
@@ -274,47 +253,22 @@ export const CollectionRefetchContainer = createRefetchContainer(
 
         #These two things are going to get highest price and lowest price of the artwork on the collection page.
         descending_artworks: artworksConnection(
-          aggregations: $aggregations
           includeMediumFilterInAggregation: true
           first: 1
-          size: 1
           sort: "sold,-has_price,-prices"
         ) {
           ...SeoProductsForCollections_descending_artworks
         }
 
         ascending_artworks: artworksConnection(
-          aggregations: $aggregations
           includeMediumFilterInAggregation: true
           first: 1
-          size: 1
           sort: "sold,-has_price,prices"
         ) {
           ...SeoProductsForCollections_ascending_artworks
         }
 
-        filtered_artworks: artworksConnection(
-          acquireable: $acquireable
-          aggregations: $aggregations
-          attributionClass: $attributionClass
-          atAuction: $atAuction
-          colors: $colors
-          forSale: $forSale
-          additionalGeneIDs: $additionalGeneIDs
-          height: $height
-          inquireableOnly: $inquireableOnly
-          majorPeriods: $majorPeriods
-          medium: $medium
-          offerable: $offerable
-          page: $page
-          priceRange: $priceRange
-          sizes: $sizes
-          first: $first
-          sort: $sort
-          width: $width
-          locationCities: $locationCities
-          artistNationalities: $artistNationalities
-        ) {
+        filtered_artworks: artworksConnection(input: $input) {
           id
           ...ArtworkFilterArtworkGrid_filtered_artworks
         }

@@ -35,6 +35,7 @@ import { get } from "v2/Utils/get"
 import { Media } from "v2/Utils/Responsive"
 import { ArtistRecommendationsQueryRenderer as ArtistRecommendations } from "./Components/ArtistRecommendations"
 import { Title } from "react-head"
+import { computeTitle } from "v2/Apps/Artist/Utils/computeTitle"
 
 export interface OverviewRouteProps {
   artist: Overview_artist
@@ -42,7 +43,7 @@ export interface OverviewRouteProps {
   tracking?: TrackingProp
 }
 
-const carouselSlideTrack: Track<null, null, [any]> = track
+const carouselSlideTrack: Track<{}, null, [any]> = track
 
 interface NavLinkProps {
   path: string
@@ -181,7 +182,7 @@ export class OverviewRoute extends React.Component<OverviewRouteProps, {}> {
       get(artist, a => a.articlesConnection.edges.length) &&
       artist.articlesConnection.edges.map(({ node }) => node)
 
-    const titleString = `${artist.name} - ${artist.counts.artworks} Artworks, Bio & Shows on Artsy`
+    const titleString = computeTitle(artist.name, artist.counts.artworks)
 
     return (
       <>

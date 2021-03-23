@@ -7,22 +7,25 @@ import { OptionText } from "./OptionText"
 import { FacetAutosuggest } from "./FacetAutosuggest"
 import { ShowMore } from "./ShowMore"
 
-const PartnerOption: React.FC<{ name: string }> = ({ name }) => {
+const PartnerOption: React.FC<{ name: string; slug: string }> = ({
+  name,
+  slug,
+}) => {
   const { currentlySelectedFilters, setFilter } = useArtworkFilterContext()
 
-  const toggleLocationSelection = (selected, slug) => {
-    let locations = currentlySelectedFilters().locationCities.slice()
+  const togglePartnerSelection = (selected, slug) => {
+    let partnerIDs = currentlySelectedFilters().partnerIDs.slice()
     if (selected) {
-      locations.push(slug)
+      partnerIDs.push(slug)
     } else {
-      locations = locations.filter(item => item !== slug)
+      partnerIDs = partnerIDs.filter(item => item !== slug)
     }
-    setFilter("partnerIDs", locations)
+    setFilter("partnerIDs", partnerIDs)
   }
-  const selected = currentlySelectedFilters().partnerIDs.includes(name)
+  const selected = currentlySelectedFilters().partnerIDs.includes(slug)
   const props = {
     onSelect: selected => {
-      toggleLocationSelection(selected, name)
+      togglePartnerSelection(selected, slug)
     },
     selected,
     key: name,
@@ -54,8 +57,8 @@ export const PartnersFilter: FC = () => {
           facets={partners.counts}
         />
         <ShowMore>
-          {partnersSorted.map(({ name }) => {
-            return <PartnerOption key={name} name={name} />
+          {partnersSorted.map(({ name, value }) => {
+            return <PartnerOption slug={value} key={name} name={name} />
           })}
         </ShowMore>
       </Flex>

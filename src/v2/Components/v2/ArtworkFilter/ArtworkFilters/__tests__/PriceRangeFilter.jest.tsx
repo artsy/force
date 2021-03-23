@@ -86,8 +86,7 @@ describe("PriceRangeFilter", () => {
     expect(wrapper.find(Input).last().html()).toContain('value="1000"')
   })
 
-  // TODO: Unable to trigger this changes correctly
-  it.skip("updates the filter when the custom input is applied", async () => {
+  it("updates the filter when the custom input is applied", () => {
     const wrapper = getWrapper()
 
     wrapper
@@ -95,23 +94,44 @@ describe("PriceRangeFilter", () => {
       .filterWhere(n => n.text() === "Show custom price")
       .simulate("click")
 
-    wrapper
-      .find(Input)
-      .first()
-      .find("input")
-      .simulate("change", { currentTarget: { value: "400" } })
+    wrapper.find(Input).first().find("input").prop("onChange")({
+      currentTarget: { value: "400" },
+    } as any)
 
-    wrapper
-      .find(Input)
-      .last()
-      .find("input")
-      .simulate("change", { currentTarget: { value: "7500" } })
+    wrapper.find(Input).last().find("input").prop("onChange")({
+      currentTarget: { value: "7500" },
+    } as any)
 
-    await flushPromiseQueue()
-
-    wrapper.find("Button").last().simulate("click")
-    await flushPromiseQueue()
+    wrapper.update()
+    wrapper.find("Button").last().prop("onClick")({} as any)
 
     expect(context.filters.priceRange).toEqual("400-7500")
+  })
+
+  it("deleting the min sets a wildcard value", () => {
+    const wrapper = getWrapper()
+
+    wrapper
+      .find("button")
+      .filterWhere(n => n.text() === "Show custom price")
+      .simulate("click")
+
+    wrapper.find(Input).first().find("input").prop("onChange")({
+      currentTarget: { value: "400" },
+    } as any)
+
+    wrapper.update()
+    wrapper.find("Button").last().prop("onClick")({} as any)
+
+    expect(context.filters.priceRange).toEqual("400-*")
+
+    wrapper.find(Input).first().find("input").prop("onChange")({
+      currentTarget: { value: "" },
+    } as any)
+
+    wrapper.update()
+    wrapper.find("Button").last().prop("onClick")({} as any)
+
+    expect(context.filters.priceRange).toEqual("*-*")
   })
 })

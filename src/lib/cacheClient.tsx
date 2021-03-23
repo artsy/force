@@ -20,7 +20,7 @@ const cacheAccessTimeoutMs =
 const safeCacheCommand = async (func, ...args) => {
   try {
     let data
-    await new Promise((resolve, reject) => {
+    await new Promise<void>((resolve, reject) => {
       // Will reject promise after configured timeout if the
       // cache command has not completed yet.
       let timeoutId = setTimeout(() => {

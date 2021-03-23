@@ -1,9 +1,11 @@
 import { RouteConfig } from "found"
+import { omit } from "lodash"
 import React from "react"
 import { graphql } from "react-relay"
 
 import { RouteSpinner } from "v2/Artsy/Relay/renderWithLoadProgress"
 import { ArtworkQueryFilter } from "v2/Components/v2/ArtworkFilter/ArtworkQueryFilter"
+import { allowedFilters } from "v2/Components/v2/ArtworkFilter/Utils/allowedFilters"
 import { paramsToCamelCase } from "v2/Components/v2/ArtworkFilter/Utils/urlBuilder"
 import { getENV } from "v2/Utils/getENV"
 
@@ -15,10 +17,10 @@ import { SearchAppFragmentContainer } from "./SearchApp"
 const prepareVariables = (_params, { location }) => {
   const aggregations = ["TOTAL"]
   const additionalAggregations = getENV("ENABLE_NEW_ARTWORK_FILTERS")
-    ? ["ARTIST_NATIONALITY", "LOCATION_CITY"]
+    ? ["ARTIST_NATIONALITY", "LOCATION_CITY", "MATERIALS_TERMS"]
     : []
   return {
-    ...paramsToCamelCase(location.query),
+    ...paramsToCamelCase(omit(location.query, "term")),
     keyword: location.query.term.toString(),
     aggregations: aggregations.concat(additionalAggregations),
   }
@@ -87,7 +89,14 @@ export const searchRoutes: RouteConfig[] = [
       {
         path: "/",
         Component: SearchResultsArtworksRoute,
-        prepareVariables,
+        prepareVariables: (params, { location }) => {
+          return {
+            input: {
+              ...allowedFilters(prepareVariables(params, { location })),
+              first: 30,
+            },
+          }
+        },
         query: ArtworkQueryFilter,
       },
       {

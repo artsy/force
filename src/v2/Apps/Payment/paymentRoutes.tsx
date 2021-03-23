@@ -8,7 +8,7 @@ const PaymentApp = loadable(() => import("./Routes/Payment/PaymentApp"), {
 export const paymentRoutes = [
   {
     // TODO: update route to /user/payments and remove stitched route to launch
-    path: "/user/payments2",
+    path: "/user/payments",
     getComponent: () => PaymentApp,
     prepare: () => {
       PaymentApp.preload()
