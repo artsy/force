@@ -219,9 +219,7 @@ export const CollectionRefetchContainer = createRefetchContainer(
           ...CollectionsHubRails_linkedCollections
         }
         fallbackHeaderImage: artworksConnection(
-          aggregations: $aggregations
           includeMediumFilterInAggregation: true
-          size: 1
           first: 1
           sort: "-decayed_merch"
         ) {
@@ -238,7 +236,6 @@ export const CollectionRefetchContainer = createRefetchContainer(
         artworksConnection(
           aggregations: $aggregations
           includeMediumFilterInAggregation: true
-          size: 20
           first: 20
           sort: "-decayed_merch"
         ) {
@@ -256,29 +253,22 @@ export const CollectionRefetchContainer = createRefetchContainer(
 
         #These two things are going to get highest price and lowest price of the artwork on the collection page.
         descending_artworks: artworksConnection(
-          aggregations: $aggregations
           includeMediumFilterInAggregation: true
           first: 1
-          size: 1
           sort: "sold,-has_price,-prices"
         ) {
           ...SeoProductsForCollections_descending_artworks
         }
 
         ascending_artworks: artworksConnection(
-          aggregations: $aggregations
           includeMediumFilterInAggregation: true
           first: 1
-          size: 1
           sort: "sold,-has_price,prices"
         ) {
           ...SeoProductsForCollections_ascending_artworks
         }
 
-        filtered_artworks: artworksConnection(
-          aggregations: $aggregations
-          input: $input
-        ) {
+        filtered_artworks: artworksConnection(input: $input) {
           id
           ...ArtworkFilterArtworkGrid_filtered_artworks
         }

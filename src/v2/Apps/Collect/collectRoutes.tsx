@@ -82,27 +82,27 @@ function initializeVariablesWithFilterState(params, props) {
 
   const collectionSlug = params.slug
 
-  const aggregations = ["TOTAL"]
-  // TODO: Does the `location_city` aggregation accomplish much on /collect, and
-  // should it be a hard-coded list of featured cities?
+  // TODO: Do these aggregations accomplish much on /collect?
   const additionalAggregations = getENV("ENABLE_NEW_ARTWORK_FILTERS")
     ? ["LOCATION_CITY", "ARTIST_NATIONALITY", "MATERIALS_TERMS"]
     : []
   const collectionOnlyAggregations = collectionSlug
     ? ["MERCHANDISABLE_ARTISTS", "MEDIUM", "MAJOR_PERIOD"]
     : []
+  const aggregations = ["TOTAL"]
+    .concat(additionalAggregations)
+    .concat(collectionOnlyAggregations)
 
   const input = {
     sort: "-decayed_merch",
     ...allowedFilters(paramsToCamelCase(initialFilterState)),
     first: 30,
+    aggregations,
   }
 
   return {
     input,
-    aggregations: aggregations
-      .concat(additionalAggregations)
-      .concat(collectionOnlyAggregations),
+    aggregations,
     slug: collectionSlug,
     sort: "-decayed_merch",
   }
@@ -111,18 +111,13 @@ function initializeVariablesWithFilterState(params, props) {
 function getArtworkFilterQuery() {
   return graphql`
     query collectRoutes_ArtworkFilterQuery(
-      $aggregations: [ArtworkAggregation]
       $sort: String
       $input: FilterArtworksInput
     ) {
       marketingHubCollections {
         ...Collect_marketingHubCollections
       }
-      filterArtworks: artworksConnection(
-        aggregations: $aggregations
-        sort: $sort
-        first: 30
-      ) {
+      filterArtworks: artworksConnection(sort: $sort, first: 30) {
         ...SeoProductsForArtworks_artworks
       }
       viewer {
