@@ -3,7 +3,7 @@ import {
   Button,
   Clickable,
   Flex,
-  Input,
+  LabeledInput,
   Radio,
   RadioGroup,
   Spacer,
@@ -12,6 +12,22 @@ import {
 } from "@artsy/palette"
 import { useArtworkFilterContext } from "../ArtworkFilterContext"
 import { OptionText } from "./OptionText"
+import styled from "styled-components"
+
+// Disables arrows in numeric inputs
+const NumericInput = styled(LabeledInput).attrs({ type: "number" })`
+  /* Chrome, Safari, Edge, Opera */
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  /* Firefox */
+  input[type="number"] {
+    -moz-appearance: textfield;
+  }
+`
 
 const PRICE_RANGES = [
   { name: "$50K+", value: "50000-*" },
@@ -108,9 +124,9 @@ export const PriceRangeFilter: React.FC = () => {
       {showCustom && (
         <>
           <Flex mt={1} alignItems="flex-end">
-            <Input
-              placeholder="$ Min"
-              type="number"
+            <NumericInput
+              label="$USD"
+              placeholder="Min"
               min="0"
               step="1"
               value={customRange[0]}
@@ -119,9 +135,9 @@ export const PriceRangeFilter: React.FC = () => {
 
             <Spacer mx={0.5} />
 
-            <Input
-              placeholder="$ Max"
-              type="number"
+            <NumericInput
+              label="$USD"
+              placeholder="Max"
               min="0"
               step="1"
               value={customRange[1]}
