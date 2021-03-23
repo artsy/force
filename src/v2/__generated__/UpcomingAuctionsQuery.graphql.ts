@@ -37,10 +37,11 @@ fragment AuctionArtworksRail_sale on Sale {
   formattedStartDateTime
   isLiveOpen
   status
+  isPreliminary
 }
 
 fragment UpcomingAuctions_viewer_2HEEH6 on Viewer {
-  salesConnection(first: $first, after: $after, published: true, live: false, sort: START_AT_DESC) {
+  salesConnection(first: $first, after: $after, sort: START_AT_ASC, auctionState: UPCOMING) {
     totalCount
     edges {
       node {
@@ -92,21 +93,16 @@ v2 = {
 },
 v3 = [
   (v1/*: any*/),
+  {
+    "kind": "Literal",
+    "name": "auctionState",
+    "value": "UPCOMING"
+  },
   (v2/*: any*/),
   {
     "kind": "Literal",
-    "name": "live",
-    "value": false
-  },
-  {
-    "kind": "Literal",
-    "name": "published",
-    "value": true
-  },
-  {
-    "kind": "Literal",
     "name": "sort",
-    "value": "START_AT_DESC"
+    "value": "START_AT_ASC"
   }
 ];
 return {
@@ -243,6 +239,13 @@ return {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
+                        "name": "isPreliminary",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
                         "name": "id",
                         "storageKey": null
                       },
@@ -298,9 +301,8 @@ return {
             "alias": null,
             "args": (v3/*: any*/),
             "filters": [
-              "published",
-              "live",
-              "sort"
+              "sort",
+              "auctionState"
             ],
             "handle": "connection",
             "key": "UpcomingAuctions_salesConnection",
@@ -317,7 +319,7 @@ return {
     "metadata": {},
     "name": "UpcomingAuctionsQuery",
     "operationKind": "query",
-    "text": "query UpcomingAuctionsQuery(\n  $first: Int!\n  $after: String\n) {\n  viewer {\n    ...UpcomingAuctions_viewer_2HEEH6\n  }\n}\n\nfragment AuctionArtworksRail_sale on Sale {\n  internalID\n  slug\n  href\n  name\n  formattedStartDateTime\n  isLiveOpen\n  status\n}\n\nfragment UpcomingAuctions_viewer_2HEEH6 on Viewer {\n  salesConnection(first: $first, after: $after, published: true, live: false, sort: START_AT_DESC) {\n    totalCount\n    edges {\n      node {\n        slug\n        name\n        href\n        status\n        formattedStartDateTime\n        eventStartAt\n        isLiveOpen\n        ...AuctionArtworksRail_sale\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query UpcomingAuctionsQuery(\n  $first: Int!\n  $after: String\n) {\n  viewer {\n    ...UpcomingAuctions_viewer_2HEEH6\n  }\n}\n\nfragment AuctionArtworksRail_sale on Sale {\n  internalID\n  slug\n  href\n  name\n  formattedStartDateTime\n  isLiveOpen\n  status\n  isPreliminary\n}\n\nfragment UpcomingAuctions_viewer_2HEEH6 on Viewer {\n  salesConnection(first: $first, after: $after, sort: START_AT_ASC, auctionState: UPCOMING) {\n    totalCount\n    edges {\n      node {\n        slug\n        name\n        href\n        status\n        formattedStartDateTime\n        eventStartAt\n        isLiveOpen\n        ...AuctionArtworksRail_sale\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();

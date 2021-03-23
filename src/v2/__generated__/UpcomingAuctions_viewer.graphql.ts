@@ -32,7 +32,7 @@ export type UpcomingAuctions_viewer$key = {
 const node: ReaderFragment = {
   "argumentDefinitions": [
     {
-      "defaultValue": 5,
+      "defaultValue": 2,
       "kind": "LocalArgument",
       "name": "first",
       "type": "Int"
@@ -64,18 +64,13 @@ const node: ReaderFragment = {
       "args": [
         {
           "kind": "Literal",
-          "name": "live",
-          "value": false
-        },
-        {
-          "kind": "Literal",
-          "name": "published",
-          "value": true
+          "name": "auctionState",
+          "value": "UPCOMING"
         },
         {
           "kind": "Literal",
           "name": "sort",
-          "value": "START_AT_DESC"
+          "value": "START_AT_ASC"
         }
       ],
       "concreteType": "SaleConnection",
@@ -206,10 +201,10 @@ const node: ReaderFragment = {
           "storageKey": null
         }
       ],
-      "storageKey": "__UpcomingAuctions_salesConnection_connection(live:false,published:true,sort:\"START_AT_DESC\")"
+      "storageKey": "__UpcomingAuctions_salesConnection_connection(auctionState:\"UPCOMING\",sort:\"START_AT_ASC\")"
     }
   ],
   "type": "Viewer"
 };
-(node as any).hash = 'f50b33da9b6b4dae9cd23ea527f9e05a';
+(node as any).hash = 'e8c032cb9617cd5000f234837b67c0a6';
 export default node;

@@ -49,19 +49,13 @@ export const AuctionArtworksRail: React.FC<AuctionArtworksRailProps> = ({
             </Text>
           )}
         </Box>
-        {/* Only showing Artwork Images for Current and Past Auctions */}
-        {(!sale.isLiveOpen && sale.status == "open") ||
-        (!sale.isLiveOpen && sale.status == "closed") ? (
-          <Box height={AUCTION_ARTWORKS_RAIL_HEIGHT}>
-            {isEnteredView ? (
-              <AuctionArtworksRailArtworksQueryRenderer id={sale.internalID} />
-            ) : (
-              <AuctionArtworksRailPlaceholder />
-            )}
-          </Box>
-        ) : (
-          <></>
-        )}
+        <Box height={AUCTION_ARTWORKS_RAIL_HEIGHT}>
+          {isEnteredView ? (
+            <AuctionArtworksRailArtworksQueryRenderer id={sale.internalID} />
+          ) : (
+            <AuctionArtworksRailPlaceholder />
+          )}
+        </Box>
       </Box>
     </>
   )
@@ -79,6 +73,7 @@ export const AuctionArtworksRailFragmentContainer = createFragmentContainer(
         formattedStartDateTime
         isLiveOpen
         status
+        isPreliminary
       }
     `,
   }

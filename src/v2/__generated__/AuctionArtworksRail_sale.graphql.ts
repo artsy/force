@@ -11,6 +11,7 @@ export type AuctionArtworksRail_sale = {
     readonly formattedStartDateTime: string | null;
     readonly isLiveOpen: boolean | null;
     readonly status: string | null;
+    readonly isPreliminary: boolean | null;
     readonly " $refType": "AuctionArtworksRail_sale";
 };
 export type AuctionArtworksRail_sale$data = AuctionArtworksRail_sale;
@@ -75,9 +76,16 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "status",
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "isPreliminary",
+      "storageKey": null
     }
   ],
   "type": "Sale"
 };
-(node as any).hash = 'f1071821f2bcf4495aabcf9f3d9d99d1';
+(node as any).hash = '8b0d3f928e933ba9dbbc6d6a903c7168';
 export default node;

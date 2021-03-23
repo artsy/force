@@ -83,10 +83,9 @@ export const PastAuctionsPaginationContainer = createPaginationContainer(
         salesConnection(
           first: $first
           after: $after
-          published: false
           live: false
           sort: START_AT_DESC
-          auctionStatus: CLOSED
+          auctionState: CLOSED
         ) @connection(key: "PastAuctions_salesConnection") {
           totalCount
           edges {
