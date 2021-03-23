@@ -69,8 +69,9 @@ import {
 import { AddressModal } from "../../Components/AddressModal"
 import { createUserAddress } from "../../Mutations/CreateUserAddress"
 import { setShipping } from "../../Mutations/SetShipping"
+import { SystemContextProps, withSystemContext } from "v2/Artsy/SystemContext"
 
-export interface ShippingProps {
+export interface ShippingProps extends SystemContextProps {
   order: Shipping_order
   me: Shipping_me
   relay?: RelayProp
@@ -201,8 +202,9 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
         this.isCreateNewAddress() &&
         this.state.saveAddress
       ) {
+        const { relayEnvironment } = this.props
         await createUserAddress(
-          this.props.commitMutation,
+          relayEnvironment,
           {
             ...address,
             phoneNumber: phoneNumber,
@@ -312,6 +314,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
       this.props,
       props => props.order.lineItems.edges[0].node.artwork
     )
+    console.log(this.props.relayEnvironment)
     const addressList = this.getAddressList()
 
     const shippingSelected =
@@ -337,7 +340,6 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
           show={showModal}
           closeModal={() => this.setState({ showModal: false })}
           address={addressList[this.state.editAddressIndex]?.node}
-          commitMutation={this.props.commitMutation}
           onSuccess={() => {
             // this.setState({ address: updatedAddress })
           }}
@@ -495,7 +497,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
 }
 
 export const ShippingFragmentContainer = createFragmentContainer(
-  injectCommitMutation(injectDialog(ShippingRoute)),
+  withSystemContext(injectCommitMutation(injectDialog(ShippingRoute))),
   {
     order: graphql`
       fragment Shipping_order on CommerceOrder {

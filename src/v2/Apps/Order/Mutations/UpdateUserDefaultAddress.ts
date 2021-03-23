@@ -1,14 +1,13 @@
-import { graphql } from "react-relay"
+import { commitMutation, Environment, graphql } from "react-relay"
 import { UpdateUserDefaultAddressMutation } from "v2/__generated__/UpdateUserDefaultAddressMutation.graphql"
-import { CommitMutation } from "../Utils/commitMutation"
 
 export const updateUserDefaultAddress = async (
-  commitMutation: CommitMutation,
+  environment: Environment,
   userAddressID: string,
   onSuccess: () => void,
   onError: (message: string) => void
 ) => {
-  const result = await commitMutation<UpdateUserDefaultAddressMutation>({
+  commitMutation<UpdateUserDefaultAddressMutation>(environment, {
     variables: {
       input: {
         userAddressID: userAddressID,
@@ -43,11 +42,16 @@ export const updateUserDefaultAddress = async (
         }
       }
     `,
+    onError: e => {
+      onError(e.message)
+    },
+    onCompleted: (data, e) => {
+      const errors = data.updateUserDefaultAddress.userAddressOrErrors.errors
+      if (errors) {
+        onError(errors.map(error => error.message).join(", "))
+      } else {
+        onSuccess()
+      }
+    },
   })
-  const errors = result.updateUserDefaultAddress.userAddressOrErrors.errors
-  if (errors) {
-    onError(errors.map(error => error.message).join(", "))
-  } else {
-    onSuccess()
-  }
 }

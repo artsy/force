@@ -1,13 +1,12 @@
-import { graphql } from "react-relay"
+import { commitMutation, Environment, graphql } from "react-relay"
 import { UpdateUserAddressMutation } from "v2/__generated__/UpdateUserAddressMutation.graphql"
-import { CommitMutation } from "../Utils/commitMutation"
 import {
   convertShippingAddressToMutationInput,
   convertShippingAddressForExchange,
 } from "../Utils/shippingAddressUtils"
 
 export const updateUserAddress = async (
-  commitMutation: CommitMutation,
+  environment: Environment,
   userAddressID: string,
   values: any,
   closeModal: () => void,
@@ -16,7 +15,7 @@ export const updateUserAddress = async (
 ) => {
   const useAttributes = convertShippingAddressToMutationInput(values)
 
-  const result = await commitMutation<UpdateUserAddressMutation>({
+  commitMutation<UpdateUserAddressMutation>(environment, {
     variables: {
       input: {
         userAddressID: userAddressID,
@@ -50,15 +49,20 @@ export const updateUserAddress = async (
         }
       }
     `,
+    onCompleted: (data, e) => {
+      const errors = data.updateUserAddress.userAddressOrErrors.errors
+      if (errors) {
+        onError(errors.map(error => error.message).join(", "))
+      } else {
+        const address = convertShippingAddressForExchange(
+          data.updateUserAddress.userAddressOrErrors
+        )
+        onSuccess(address)
+      }
+      closeModal()
+    },
+    onError: e => {
+      onError(e.message)
+    },
   })
-  const errors = result.updateUserAddress.userAddressOrErrors.errors
-  if (errors) {
-    onError(errors.map(error => error.message).join(", "))
-  } else {
-    const address = convertShippingAddressForExchange(
-      result.updateUserAddress.userAddressOrErrors
-    )
-    onSuccess(address)
-  }
-  closeModal()
 }

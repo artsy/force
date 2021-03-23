@@ -7,17 +7,16 @@ import {
   validateAddress,
   validatePhoneNumber,
 } from "../Utils/formValidators"
-import { CommitMutation } from "../Utils/commitMutation"
 import { updateUserAddress } from "../Mutations/UpdateUserAddress"
 import { createUserAddress } from "v2/Apps/Order/Mutations/CreateUserAddress"
 import { SavedAddresses_me } from "v2/__generated__/SavedAddresses_me.graphql"
 import { AddressModalFields } from "v2/Components/Address/AddressModalFields"
+import { useSystemContext } from "v2/Artsy/SystemContext"
 
 interface Props {
   show: boolean
   closeModal: () => void
   address?: SavedAddressType
-  commitMutation: CommitMutation
   onSuccess: (address) => void
   onError: (message: string) => void
   modalDetails?: {
@@ -33,7 +32,6 @@ export const AddressModal: React.FC<Props> = ({
   show,
   closeModal,
   address,
-  commitMutation,
   onSuccess,
   onError,
   modalDetails,
@@ -51,7 +49,8 @@ export const AddressModal: React.FC<Props> = ({
     const errorsTrimmed = removeEmptyKeys(errors)
     return errorsTrimmed
   }
-
+  const { relayEnvironment } = useSystemContext()
+  console.log("relay", relayEnvironment)
   return (
     <Modal title={title} show={show} onClose={closeModal}>
       <Formik
@@ -60,7 +59,7 @@ export const AddressModal: React.FC<Props> = ({
         onSubmit={values => {
           createMutation
             ? createUserAddress(
-                commitMutation,
+                relayEnvironment,
                 values,
                 onSuccess,
                 onError,
@@ -68,7 +67,7 @@ export const AddressModal: React.FC<Props> = ({
                 closeModal
               )
             : updateUserAddress(
-                commitMutation,
+                relayEnvironment,
                 address.internalID,
                 values,
                 closeModal,
