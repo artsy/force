@@ -50,7 +50,8 @@ type AnalyticsArtworksPublishedStats {
   totalCount: Int!
 }
 
-# An ISO 8601 datetime
+# An ISO 8601 datetime -- second one is because of moving price insights
+# from Diffusion to Vortex.
 scalar AnalyticsDateTime
 
 # Visitor countries, device, referals and session page
@@ -2103,6 +2104,12 @@ enum AuctionsSoldStatus {
   ForSale
   Passed
   Sold
+}
+
+enum AuctionState {
+  CLOSED
+  OPEN
+  UPCOMING
 }
 
 # An Artsy User
@@ -7011,7 +7018,6 @@ enum InvoiceState {
   VOID
 }
 
-# An ISO 8601-encoded datetime
 scalar ISO8601DateTime
 
 # Represents untyped JSON
@@ -7569,6 +7575,7 @@ type Me implements Node {
   ): ArtworkConnection
   saleRegistrationsConnection(
     after: String
+    auctionState: AuctionState
     before: String
     first: Int
 
@@ -8672,7 +8679,7 @@ type PriceInsightConnection {
   pageCursors: PageCursors
 
   # Information to aid in pagination.
-  pageInfo: PageInfo!
+  pageInfo: AnalyticsPageInfo!
   totalCount: Int
   totalPages: Int
 }
@@ -9520,6 +9527,7 @@ type Query {
   # A list of Sales
   salesConnection(
     after: String
+    auctionState: AuctionState
     before: String
     first: Int
 
@@ -11895,6 +11903,7 @@ type Viewer {
   # A list of Sales
   salesConnection(
     after: String
+    auctionState: AuctionState
     before: String
     first: Int
 
