@@ -26,6 +26,20 @@ export type PartnerHeader_Test_QueryRawResponse = {
             readonly name: string | null;
             readonly internalID: string;
             readonly is_followed: boolean | null;
+            readonly image: ({
+                readonly sm: ({
+                    readonly src: string;
+                    readonly srcSet: string;
+                }) | null;
+                readonly md: ({
+                    readonly src: string;
+                    readonly srcSet: string;
+                }) | null;
+                readonly lg: ({
+                    readonly src: string;
+                    readonly srcSet: string;
+                }) | null;
+            }) | null;
         }) | null;
         readonly locations: ({
             readonly totalCount: number | null;
@@ -63,6 +77,23 @@ fragment FollowProfileButton_profile on Profile {
   is_followed: isFollowed
 }
 
+fragment PartnerHeaderImage_profile on Profile {
+  image {
+    sm: cropped(width: 480, height: 280, version: "wide") {
+      src
+      srcSet
+    }
+    md: cropped(width: 900, height: 600, version: "wide") {
+      src
+      srcSet
+    }
+    lg: cropped(width: 1600, height: 600, version: "wide") {
+      src
+      srcSet
+    }
+  }
+}
+
 fragment PartnerHeader_partner on Partner {
   name
   type
@@ -75,6 +106,7 @@ fragment PartnerHeader_partner on Partner {
       }
     }
     ...FollowProfileButton_profile
+    ...PartnerHeaderImage_profile
     id
   }
   locations: locationsConnection(first: 20) {
@@ -104,12 +136,38 @@ v1 = {
   "name": "name",
   "storageKey": null
 },
-v2 = {
+v2 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "src",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "srcSet",
+    "storageKey": null
+  }
+],
+v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
+},
+v4 = {
+  "kind": "Literal",
+  "name": "version",
+  "value": "wide"
+},
+v5 = {
+  "kind": "Literal",
+  "name": "height",
+  "value": 600
 };
 return {
   "fragment": {
@@ -205,28 +263,13 @@ return {
                     "kind": "LinkedField",
                     "name": "cropped",
                     "plural": false,
-                    "selections": [
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "src",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "srcSet",
-                        "storageKey": null
-                      }
-                    ],
+                    "selections": (v2/*: any*/),
                     "storageKey": "cropped(height:80,version:\"square140\",width:80)"
                   }
                 ],
                 "storageKey": null
               },
-              (v2/*: any*/),
+              (v3/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -247,6 +290,75 @@ return {
                 "args": null,
                 "kind": "ScalarField",
                 "name": "isFollowed",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "Image",
+                "kind": "LinkedField",
+                "name": "image",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": "sm",
+                    "args": [
+                      {
+                        "kind": "Literal",
+                        "name": "height",
+                        "value": 280
+                      },
+                      (v4/*: any*/),
+                      {
+                        "kind": "Literal",
+                        "name": "width",
+                        "value": 480
+                      }
+                    ],
+                    "concreteType": "CroppedImageUrl",
+                    "kind": "LinkedField",
+                    "name": "cropped",
+                    "plural": false,
+                    "selections": (v2/*: any*/),
+                    "storageKey": "cropped(height:280,version:\"wide\",width:480)"
+                  },
+                  {
+                    "alias": "md",
+                    "args": [
+                      (v5/*: any*/),
+                      (v4/*: any*/),
+                      {
+                        "kind": "Literal",
+                        "name": "width",
+                        "value": 900
+                      }
+                    ],
+                    "concreteType": "CroppedImageUrl",
+                    "kind": "LinkedField",
+                    "name": "cropped",
+                    "plural": false,
+                    "selections": (v2/*: any*/),
+                    "storageKey": "cropped(height:600,version:\"wide\",width:900)"
+                  },
+                  {
+                    "alias": "lg",
+                    "args": [
+                      (v5/*: any*/),
+                      (v4/*: any*/),
+                      {
+                        "kind": "Literal",
+                        "name": "width",
+                        "value": 1600
+                      }
+                    ],
+                    "concreteType": "CroppedImageUrl",
+                    "kind": "LinkedField",
+                    "name": "cropped",
+                    "plural": false,
+                    "selections": (v2/*: any*/),
+                    "storageKey": "cropped(height:600,version:\"wide\",width:1600)"
+                  }
+                ],
                 "storageKey": null
               }
             ],
@@ -296,7 +408,7 @@ return {
                         "name": "city",
                         "storageKey": null
                       },
-                      (v2/*: any*/)
+                      (v3/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -306,7 +418,7 @@ return {
             ],
             "storageKey": "locationsConnection(first:20)"
           },
-          (v2/*: any*/)
+          (v3/*: any*/)
         ],
         "storageKey": "partner(id:\"white-cube\")"
       }
@@ -317,7 +429,7 @@ return {
     "metadata": {},
     "name": "PartnerHeader_Test_Query",
     "operationKind": "query",
-    "text": "query PartnerHeader_Test_Query {\n  partner(id: \"white-cube\") {\n    ...PartnerHeader_partner\n    id\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  is_followed: isFollowed\n}\n\nfragment PartnerHeader_partner on Partner {\n  name\n  type\n  href\n  profile {\n    icon {\n      cropped(width: 80, height: 80, version: \"square140\") {\n        src\n        srcSet\n      }\n    }\n    ...FollowProfileButton_profile\n    id\n  }\n  locations: locationsConnection(first: 20) {\n    totalCount\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query PartnerHeader_Test_Query {\n  partner(id: \"white-cube\") {\n    ...PartnerHeader_partner\n    id\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  is_followed: isFollowed\n}\n\nfragment PartnerHeaderImage_profile on Profile {\n  image {\n    sm: cropped(width: 480, height: 280, version: \"wide\") {\n      src\n      srcSet\n    }\n    md: cropped(width: 900, height: 600, version: \"wide\") {\n      src\n      srcSet\n    }\n    lg: cropped(width: 1600, height: 600, version: \"wide\") {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment PartnerHeader_partner on Partner {\n  name\n  type\n  href\n  profile {\n    icon {\n      cropped(width: 80, height: 80, version: \"square140\") {\n        src\n        srcSet\n      }\n    }\n    ...FollowProfileButton_profile\n    ...PartnerHeaderImage_profile\n    id\n  }\n  locations: locationsConnection(first: 20) {\n    totalCount\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();

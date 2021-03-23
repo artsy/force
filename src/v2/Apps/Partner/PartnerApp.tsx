@@ -19,7 +19,7 @@ export const PartnerApp: React.FC<PartnerAppProps> = ({
 }) => {
   return (
     <AppContainer>
-      <HorizontalPadding mt={[2, 4]}>
+      <HorizontalPadding>
         <PartnerHeader partner={partner} />
 
         <FullBleed>

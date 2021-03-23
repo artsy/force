@@ -16,6 +16,7 @@ import { useSystemContext } from "v2/Artsy"
 import { ContextModule } from "@artsy/cohesion"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import { PartnerHeader_partner } from "v2/__generated__/PartnerHeader_partner.graphql"
+import { PartnerHeaderImageFragmentContainer as PartnerHeaderImage } from "./PartnerHeaderImage"
 
 export interface PartnerHeaderProps {
   partner: PartnerHeader_partner
@@ -32,58 +33,62 @@ export const PartnerHeader: React.FC<PartnerHeaderProps> = ({ partner }) => {
     partner && partner.type !== "Auction House" && !!partner.profile
 
   return (
-    <GridColumns gridRowGap={2} my={[2, 4]}>
-      <Column span={[12, 10]}>
-        <Flex>
-          {partner.profile?.icon && (
-            <Flex mr={2}>
-              <RouterLink
-                to={partner.href}
-                style={{ display: "flex", textDecoration: "none" }}
-              >
-                <HeaderImage
-                  src={partner.profile.icon.cropped.src}
-                  srcSet={partner.profile.icon.cropped.srcSet}
-                  alt={partner.name}
-                  width={[60, 80]}
-                  height={[60, 80]}
-                />
-              </RouterLink>
-            </Flex>
-          )}
-          <Box>
-            <Text variant="largeTitle">
-              <RouterLink
-                style={{
-                  textDecoration: "none",
-                }}
-                to={partner.href}
-              >
-                {partner.name}
-              </RouterLink>
-            </Text>
-            {hasLocations && (
-              <Text color={color("black60")} variant="text">
-                <PartnerHeaderAddress {...partner.locations} />
-              </Text>
+    <>
+      <PartnerHeaderImage profile={partner.profile} />
+
+      <GridColumns gridRowGap={2} my={[2, 4]}>
+        <Column span={[12, 10]}>
+          <Flex>
+            {partner.profile?.icon && (
+              <Flex mr={2}>
+                <RouterLink
+                  to={partner.href}
+                  style={{ display: "flex", textDecoration: "none" }}
+                >
+                  <HeaderImage
+                    src={partner.profile.icon.cropped.src}
+                    srcSet={partner.profile.icon.cropped.srcSet}
+                    alt={partner.name}
+                    width={[60, 80]}
+                    height={[60, 80]}
+                  />
+                </RouterLink>
+              </Flex>
             )}
-          </Box>
-        </Flex>
-      </Column>
-      <Column span={[12, 2]}>
-        {canFollow && (
-          <FollowProfileButton
-            profile={partner.profile}
-            user={user}
-            contextModule={ContextModule.partnerHeader}
-            buttonProps={{
-              variant: "secondaryOutline",
-              width: "100%",
-            }}
-          />
-        )}
-      </Column>
-    </GridColumns>
+            <Box>
+              <Text variant="largeTitle">
+                <RouterLink
+                  style={{
+                    textDecoration: "none",
+                  }}
+                  to={partner.href}
+                >
+                  {partner.name}
+                </RouterLink>
+              </Text>
+              {hasLocations && (
+                <Text color={color("black60")} variant="text">
+                  <PartnerHeaderAddress {...partner.locations} />
+                </Text>
+              )}
+            </Box>
+          </Flex>
+        </Column>
+        <Column span={[12, 2]}>
+          {canFollow && (
+            <FollowProfileButton
+              profile={partner.profile}
+              user={user}
+              contextModule={ContextModule.partnerHeader}
+              buttonProps={{
+                variant: "secondaryOutline",
+                width: "100%",
+              }}
+            />
+          )}
+        </Column>
+      </GridColumns>
+    </>
   )
 }
 
@@ -103,6 +108,7 @@ export const PartnerHeaderFragmentContainer = createFragmentContainer(
             }
           }
           ...FollowProfileButton_profile
+          ...PartnerHeaderImage_profile
         }
         locations: locationsConnection(first: 20) {
           totalCount
