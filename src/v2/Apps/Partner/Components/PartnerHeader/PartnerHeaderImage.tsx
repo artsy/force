@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { PartnerHeaderImage_profile } from "v2/__generated__/PartnerHeaderImage_profile.graphql"
 import { FullBleed } from "v2/Components/FullBleed"
@@ -7,13 +7,15 @@ import styled from "styled-components"
 const Container = styled(FullBleed)`
   position: relative;
   overflow: hidden;
+  background-attachment: fixed;
 `
 
-const Image = styled.img`
+const Image = styled.img<{ scrollPosition: number }>`
   display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transform: translate(0px, ${props => props.scrollPosition}px);
 `
 
 interface PartnerHeaderImageProps {
@@ -23,8 +25,21 @@ interface PartnerHeaderImageProps {
 export const PartnerHeaderImage: React.FC<PartnerHeaderImageProps> = ({
   profile,
 }) => {
+  const [scrollPosition, setScrollPosition] = useState(0)
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll)
+    return () => {
+      window.removeEventListener("scroll", handleScroll)
+    }
+  }, [])
+
   if (!profile || !profile.image) return null
   const { image } = profile
+
+  const handleScroll = () => {
+    setScrollPosition(window.scrollY)
+  }
 
   return (
     <Container bg="black10" height={[280, 600]}>
@@ -32,7 +47,12 @@ export const PartnerHeaderImage: React.FC<PartnerHeaderImageProps> = ({
         <source srcSet={image.lg.srcSet} media="(min-width: 1200px)" />
         <source srcSet={image.md.srcSet} media="(min-width: 700px)" />
         <source srcSet={image.sm.srcSet} media="(max-width: 700px)" />
-        <Image src={image.sm.src} alt="" loading="lazy" />
+        <Image
+          scrollPosition={scrollPosition}
+          src={image.sm.src}
+          alt=""
+          loading="lazy"
+        />
       </picture>
     </Container>
   )
