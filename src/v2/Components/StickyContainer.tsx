@@ -3,18 +3,26 @@ import { Box, Flex, color } from "@artsy/palette"
 import React, { useEffect, useRef, useState } from "react"
 import { NAV_BAR_HEIGHT, MOBILE_NAV_HEIGHT } from "v2/Components/NavBar"
 
-const Container = styled(Flex).attrs({
+export interface BaseContainerProps {
+  stuck?: boolean
+}
+
+export const BaseContainer = styled(Flex).attrs({
   top: [MOBILE_NAV_HEIGHT, NAV_BAR_HEIGHT],
+  bg: "white100",
+})<BaseContainerProps>`
+  position: sticky;
+  z-index: 1;
+`
+
+export const DefaultContainer = styled(BaseContainer).attrs({
   py: 1,
   mx: -2,
   px: 2,
-  bg: "white100",
   borderBottom: "1px solid",
-})<{ stuck?: boolean }>`
+})<BaseContainerProps>`
   justify-content: space-between;
   align-items: center;
-  position: sticky;
-  z-index: 1;
 
   ${({ stuck }) =>
     stuck
@@ -36,7 +44,14 @@ const Sentinel = styled(Box).attrs({
   height: 0;
 `
 
-export const StickyContainer: React.FC = ({ children }) => {
+export interface StickyContainerProps {
+  ContainerComponent?: React.ComponentType<BaseContainerProps>
+}
+
+export const StickyContainer: React.FC<StickyContainerProps> = ({
+  children,
+  ContainerComponent = DefaultContainer,
+}) => {
   const ref = useRef<HTMLDivElement | null>(null)
 
   const [stuck, setStuck] = useState(false)
@@ -66,7 +81,7 @@ export const StickyContainer: React.FC = ({ children }) => {
   return (
     <>
       <Sentinel ref={ref as any} />
-      <Container stuck={stuck}>{children}</Container>
+      <ContainerComponent stuck={stuck}>{children}</ContainerComponent>
     </>
   )
 }
