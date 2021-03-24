@@ -24,93 +24,62 @@ query MyBidsQuery {
   }
 }
 
+fragment MyBidsBidHeader_sale on Sale {
+  coverImage {
+    resized(width: 300, height: 100) {
+      src
+      srcSet
+    }
+  }
+  displayTimelyAt
+  endAt
+  formattedStartDateTime
+  liveStartAt
+  name
+  partner {
+    name
+    id
+  }
+  requireIdentityVerification
+  slug
+}
+
+fragment MyBidsBidItem_saleArtwork on SaleArtwork {
+  artwork {
+    artistNames
+    image {
+      resized(width: 50, height: 50) {
+        src
+        srcSet
+      }
+    }
+    id
+  }
+  estimate
+  highestBid {
+    amount
+  }
+  isHighestBidder
+  isWatching
+  lot {
+    bidCount
+    sellingPrice {
+      display
+    }
+  }
+  position
+  slug
+}
+
 fragment MyBids_me on Me {
   myBids {
     active {
       sale {
-        name
-        slug
-        liveStartAt
-        endAt
-        displayTimelyAt
-        formattedStartDateTime
-        requireIdentityVerification
-        partner {
-          name
-          id
-        }
-        coverImage {
-          resized(width: 300, height: 100) {
-            src
-            srcSet
-          }
-        }
+        ...MyBidsBidHeader_sale
         id
       }
       saleArtworks {
-        artwork {
-          artistNames
-          image {
-            resized(width: 50, height: 50) {
-              src
-              srcSet
-            }
-          }
-          id
-        }
-        slug
-        position
-        isHighestBidder
-        isWatching
-        highestBid {
-          amount
-        }
-        estimate
-        lot {
-          bidCount
-          floorSellingPrice {
-            display
-          }
-          internalID
-          onlineAskingPrice {
-            display
-          }
-          reserveStatus
-          saleId
-          sellingPrice {
-            display
-          }
-          soldStatus
-        }
-        id
-      }
-    }
-    closed {
-      sale {
-        liveStartAt
-        endAt
-        requireIdentityVerification
-        id
-      }
-      saleArtworks {
-        position
-        lot {
-          bidCount
-          floorSellingPrice {
-            display
-          }
-          internalID
-          onlineAskingPrice {
-            display
-          }
-          reserveStatus
-          saleId
-          sellingPrice {
-            display
-          }
-          soldStatus
-        }
-        slug
+        ...MyBidsBidItem_saleArtwork
         id
       }
     }
@@ -119,49 +88,7 @@ fragment MyBids_me on Me {
 */
 
 const node: ConcreteRequest = (function(){
-var v0 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "name",
-  "storageKey": null
-},
-v1 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "slug",
-  "storageKey": null
-},
-v2 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "liveStartAt",
-  "storageKey": null
-},
-v3 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "endAt",
-  "storageKey": null
-},
-v4 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "requireIdentityVerification",
-  "storageKey": null
-},
-v5 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "id",
-  "storageKey": null
-},
-v6 = [
+var v0 = [
   {
     "alias": null,
     "args": null,
@@ -177,96 +104,25 @@ v6 = [
     "storageKey": null
   }
 ],
-v7 = {
+v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "position",
+  "name": "name",
   "storageKey": null
 },
-v8 = [
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "display",
-    "storageKey": null
-  }
-],
-v9 = {
+v2 = {
   "alias": null,
   "args": null,
-  "concreteType": "CausalityLotState",
-  "kind": "LinkedField",
-  "name": "lot",
-  "plural": false,
-  "selections": [
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "bidCount",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "concreteType": "Money",
-      "kind": "LinkedField",
-      "name": "floorSellingPrice",
-      "plural": false,
-      "selections": (v8/*: any*/),
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "internalID",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "concreteType": "Money",
-      "kind": "LinkedField",
-      "name": "onlineAskingPrice",
-      "plural": false,
-      "selections": (v8/*: any*/),
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "reserveStatus",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "saleId",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "concreteType": "Money",
-      "kind": "LinkedField",
-      "name": "sellingPrice",
-      "plural": false,
-      "selections": (v8/*: any*/),
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "soldStatus",
-      "storageKey": null
-    }
-  ],
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "slug",
   "storageKey": null
 };
 return {
@@ -333,38 +189,6 @@ return {
                     "name": "sale",
                     "plural": false,
                     "selections": [
-                      (v0/*: any*/),
-                      (v1/*: any*/),
-                      (v2/*: any*/),
-                      (v3/*: any*/),
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "displayTimelyAt",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "formattedStartDateTime",
-                        "storageKey": null
-                      },
-                      (v4/*: any*/),
-                      {
-                        "alias": null,
-                        "args": null,
-                        "concreteType": "Partner",
-                        "kind": "LinkedField",
-                        "name": "partner",
-                        "plural": false,
-                        "selections": [
-                          (v0/*: any*/),
-                          (v5/*: any*/)
-                        ],
-                        "storageKey": null
-                      },
                       {
                         "alias": null,
                         "args": null,
@@ -391,13 +215,63 @@ return {
                             "kind": "LinkedField",
                             "name": "resized",
                             "plural": false,
-                            "selections": (v6/*: any*/),
+                            "selections": (v0/*: any*/),
                             "storageKey": "resized(height:100,width:300)"
                           }
                         ],
                         "storageKey": null
                       },
-                      (v5/*: any*/)
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "displayTimelyAt",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "endAt",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "formattedStartDateTime",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "liveStartAt",
+                        "storageKey": null
+                      },
+                      (v1/*: any*/),
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "Partner",
+                        "kind": "LinkedField",
+                        "name": "partner",
+                        "plural": false,
+                        "selections": [
+                          (v1/*: any*/),
+                          (v2/*: any*/)
+                        ],
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "requireIdentityVerification",
+                        "storageKey": null
+                      },
+                      (v3/*: any*/),
+                      (v2/*: any*/)
                     ],
                     "storageKey": null
                   },
@@ -450,30 +324,21 @@ return {
                                 "kind": "LinkedField",
                                 "name": "resized",
                                 "plural": false,
-                                "selections": (v6/*: any*/),
+                                "selections": (v0/*: any*/),
                                 "storageKey": "resized(height:50,width:50)"
                               }
                             ],
                             "storageKey": null
                           },
-                          (v5/*: any*/)
+                          (v2/*: any*/)
                         ],
                         "storageKey": null
                       },
-                      (v1/*: any*/),
-                      (v7/*: any*/),
                       {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
-                        "name": "isHighestBidder",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "isWatching",
+                        "name": "estimate",
                         "storageKey": null
                       },
                       {
@@ -498,52 +363,61 @@ return {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
-                        "name": "estimate",
+                        "name": "isHighestBidder",
                         "storageKey": null
                       },
-                      (v9/*: any*/),
-                      (v5/*: any*/)
-                    ],
-                    "storageKey": null
-                  }
-                ],
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": "MyBid",
-                "kind": "LinkedField",
-                "name": "closed",
-                "plural": true,
-                "selections": [
-                  {
-                    "alias": null,
-                    "args": null,
-                    "concreteType": "Sale",
-                    "kind": "LinkedField",
-                    "name": "sale",
-                    "plural": false,
-                    "selections": [
-                      (v2/*: any*/),
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "isWatching",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "CausalityLotState",
+                        "kind": "LinkedField",
+                        "name": "lot",
+                        "plural": false,
+                        "selections": [
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "bidCount",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "concreteType": "Money",
+                            "kind": "LinkedField",
+                            "name": "sellingPrice",
+                            "plural": false,
+                            "selections": [
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "display",
+                                "storageKey": null
+                              }
+                            ],
+                            "storageKey": null
+                          }
+                        ],
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "position",
+                        "storageKey": null
+                      },
                       (v3/*: any*/),
-                      (v4/*: any*/),
-                      (v5/*: any*/)
-                    ],
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "concreteType": "SaleArtwork",
-                    "kind": "LinkedField",
-                    "name": "saleArtworks",
-                    "plural": true,
-                    "selections": [
-                      (v7/*: any*/),
-                      (v9/*: any*/),
-                      (v1/*: any*/),
-                      (v5/*: any*/)
+                      (v2/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -553,7 +427,7 @@ return {
             ],
             "storageKey": null
           },
-          (v5/*: any*/)
+          (v2/*: any*/)
         ],
         "storageKey": null
       }
@@ -564,7 +438,7 @@ return {
     "metadata": {},
     "name": "MyBidsQuery",
     "operationKind": "query",
-    "text": "query MyBidsQuery {\n  me {\n    ...MyBids_me\n    id\n  }\n}\n\nfragment MyBids_me on Me {\n  myBids {\n    active {\n      sale {\n        name\n        slug\n        liveStartAt\n        endAt\n        displayTimelyAt\n        formattedStartDateTime\n        requireIdentityVerification\n        partner {\n          name\n          id\n        }\n        coverImage {\n          resized(width: 300, height: 100) {\n            src\n            srcSet\n          }\n        }\n        id\n      }\n      saleArtworks {\n        artwork {\n          artistNames\n          image {\n            resized(width: 50, height: 50) {\n              src\n              srcSet\n            }\n          }\n          id\n        }\n        slug\n        position\n        isHighestBidder\n        isWatching\n        highestBid {\n          amount\n        }\n        estimate\n        lot {\n          bidCount\n          floorSellingPrice {\n            display\n          }\n          internalID\n          onlineAskingPrice {\n            display\n          }\n          reserveStatus\n          saleId\n          sellingPrice {\n            display\n          }\n          soldStatus\n        }\n        id\n      }\n    }\n    closed {\n      sale {\n        liveStartAt\n        endAt\n        requireIdentityVerification\n        id\n      }\n      saleArtworks {\n        position\n        lot {\n          bidCount\n          floorSellingPrice {\n            display\n          }\n          internalID\n          onlineAskingPrice {\n            display\n          }\n          reserveStatus\n          saleId\n          sellingPrice {\n            display\n          }\n          soldStatus\n        }\n        slug\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query MyBidsQuery {\n  me {\n    ...MyBids_me\n    id\n  }\n}\n\nfragment MyBidsBidHeader_sale on Sale {\n  coverImage {\n    resized(width: 300, height: 100) {\n      src\n      srcSet\n    }\n  }\n  displayTimelyAt\n  endAt\n  formattedStartDateTime\n  liveStartAt\n  name\n  partner {\n    name\n    id\n  }\n  requireIdentityVerification\n  slug\n}\n\nfragment MyBidsBidItem_saleArtwork on SaleArtwork {\n  artwork {\n    artistNames\n    image {\n      resized(width: 50, height: 50) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n  estimate\n  highestBid {\n    amount\n  }\n  isHighestBidder\n  isWatching\n  lot {\n    bidCount\n    sellingPrice {\n      display\n    }\n  }\n  position\n  slug\n}\n\nfragment MyBids_me on Me {\n  myBids {\n    active {\n      sale {\n        ...MyBidsBidHeader_sale\n        id\n      }\n      saleArtworks {\n        ...MyBidsBidItem_saleArtwork\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
