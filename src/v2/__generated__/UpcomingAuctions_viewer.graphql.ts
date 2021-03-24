@@ -32,7 +32,7 @@ export type UpcomingAuctions_viewer$key = {
 const node: ReaderFragment = {
   "argumentDefinitions": [
     {
-      "defaultValue": 2,
+      "defaultValue": 30,
       "kind": "LocalArgument",
       "name": "first",
       "type": "Int"
@@ -206,5 +206,5 @@ const node: ReaderFragment = {
   ],
   "type": "Viewer"
 };
-(node as any).hash = 'e8c032cb9617cd5000f234837b67c0a6';
+(node as any).hash = '8cd03baa48705295b46808427e67ab54';
 export default node;
