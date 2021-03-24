@@ -29,7 +29,7 @@ describe("PriceRangeFilter", () => {
     const wrapper = getWrapper()
     const options = wrapper.find("Radio")
 
-    expect(options).toHaveLength(6)
+    expect(options).toHaveLength(7)
   })
 
   it("updates the filter on select", async () => {
@@ -49,50 +49,48 @@ describe("PriceRangeFilter", () => {
 
     expect(wrapper.find(Input)).toHaveLength(0)
 
-    wrapper
-      .find("button")
-      .filterWhere(n => n.text() === "Show custom price")
-      .simulate("click")
-
-    expect(
-      wrapper.find("button").filterWhere(n => n.text() === "Hide custom price")
-    ).toHaveLength(1)
+    wrapper.find("Radio").last().simulate("click")
+    await flushPromiseQueue()
+    wrapper.update()
 
     expect(wrapper.find(Input)).toHaveLength(2)
+    expect(wrapper.find("Button").last().text()).toEqual("Set price")
   })
 
   it("updates the input values when the radio selected option updates", async () => {
     const wrapper = getWrapper()
     const options = wrapper.find("Radio")
 
-    wrapper
-      .find("button")
-      .filterWhere(n => n.text() === "Show custom price")
-      .simulate("click")
+    const showCustomPrice = async () => {
+      options.last().simulate("click")
+      await flushPromiseQueue()
+      wrapper.update()
+    }
+
+    await showCustomPrice()
 
     expect(wrapper.find(Input).first().html()).toContain('value="*"')
     expect(wrapper.find(Input).last().html()).toContain('value="*"')
 
     options.first().simulate("click")
-    await flushPromiseQueue()
+    await showCustomPrice()
 
     expect(wrapper.find(Input).first().html()).toContain('value="50000"')
     expect(wrapper.find(Input).last().html()).toContain('value="*"')
 
-    options.last().simulate("click")
-    await flushPromiseQueue()
+    options.at(1).simulate("click")
+    await showCustomPrice()
 
-    expect(wrapper.find(Input).first().html()).toContain('value="0"')
-    expect(wrapper.find(Input).last().html()).toContain('value="1000"')
+    expect(wrapper.find(Input).first().html()).toContain('value="25000"')
+    expect(wrapper.find(Input).last().html()).toContain('value="50000"')
   })
 
-  it("updates the filter when the custom input is applied", () => {
+  it("updates the filter when the custom input is applied", async () => {
     const wrapper = getWrapper()
 
-    wrapper
-      .find("button")
-      .filterWhere(n => n.text() === "Show custom price")
-      .simulate("click")
+    wrapper.find("Radio").last().simulate("click")
+    await flushPromiseQueue()
+    wrapper.update()
 
     wrapper.find(Input).first().find("input").prop("onChange")({
       currentTarget: { value: "400" },
@@ -103,18 +101,17 @@ describe("PriceRangeFilter", () => {
     } as any)
 
     wrapper.update()
-    wrapper.find("Button").last().prop("onClick")({} as any)
+    wrapper.find("Button").last().simulate("click")
 
     expect(context.filters.priceRange).toEqual("400-7500")
   })
 
-  it("deleting the min sets a wildcard value", () => {
+  it("deleting the min sets a wildcard value", async () => {
     const wrapper = getWrapper()
 
-    wrapper
-      .find("button")
-      .filterWhere(n => n.text() === "Show custom price")
-      .simulate("click")
+    wrapper.find("Radio").last().simulate("click")
+    await flushPromiseQueue()
+    wrapper.update()
 
     wrapper.find(Input).first().find("input").prop("onChange")({
       currentTarget: { value: "400" },
