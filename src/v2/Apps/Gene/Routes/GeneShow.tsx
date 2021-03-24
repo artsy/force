@@ -14,13 +14,13 @@ export const GeneShow: React.FC<GeneShowProps> = ({ gene }) => {
       <GeneMetaFragmentContainer gene={gene} />
 
       <GridColumns my={4}>
-        <Column span={6}>
-          <Text as="h1" variant="largeTitle" mb={2}>
+        <Column span={6} mb={2}>
+          <Text as="h1" variant="xl" mb={2}>
             {gene.name}
           </Text>
 
           <Button
-            variant="primaryBlack"
+            variant="secondaryOutline"
             onClick={() => {
               alert("TODO")
             }}
@@ -29,20 +29,22 @@ export const GeneShow: React.FC<GeneShowProps> = ({ gene }) => {
           </Button>
         </Column>
 
-        <Column span={6}>
-          <Text as="h2" variant="subtitle">
+        <Column span={6} mb={2}>
+          <Text as="h2" variant="xs" textTransform="uppercase" mb={1}>
             About
           </Text>
 
-          <Text>{gene.description}</Text>
+          <Text variant="sm" mb={2}>
+            {gene.description}
+          </Text>
 
           {gene.similar?.edges.length > 0 && (
             <>
-              <Text as="h2" variant="subtitle" mt={2}>
+              <Text as="h2" variant="xs" textTransform="uppercase" mb={1}>
                 Related Categories
               </Text>
 
-              <Text>
+              <Text variant="sm" mb={2}>
                 {gene.similar.edges.map(({ node }, i) => {
                   return (
                     <React.Fragment key={node.internalID}>
@@ -57,11 +59,11 @@ export const GeneShow: React.FC<GeneShowProps> = ({ gene }) => {
 
           {gene.artistsConnection?.edges.length > 0 && (
             <>
-              <Text as="h2" variant="subtitle" mt={2}>
+              <Text as="h2" variant="xs" textTransform="uppercase" mb={1}>
                 Related Artists
               </Text>
 
-              <Text>
+              <Text variant="sm" mb={2}>
                 {gene.artistsConnection.edges.map(({ node }, i) => {
                   return (
                     <React.Fragment key={node.internalID}>
@@ -83,6 +85,7 @@ export const GeneShowFragmentContainer = createFragmentContainer(GeneShow, {
     fragment GeneShow_gene on Gene {
       ...GeneMeta_gene
       name
+      # TODO: use (format: HTML) once added in Metaphysics
       description
       similar(first: 10) {
         edges {
