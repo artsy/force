@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react"
+import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { PartnerHeaderImage_profile } from "v2/__generated__/PartnerHeaderImage_profile.graphql"
 import { FullBleed } from "v2/Components/FullBleed"
 import styled from "styled-components"
+import { useParallaxScroll } from "./useParalaxScroll"
 
 const Container = styled(FullBleed)`
   position: relative;
@@ -23,21 +24,12 @@ interface PartnerHeaderImageProps {
 export const PartnerHeaderImage: React.FC<PartnerHeaderImageProps> = ({
   profile,
 }) => {
-  const [scrollPosition, setScrollPosition] = useState(0)
-
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll, { passive: true })
-    return () => {
-      window.removeEventListener("scroll", handleScroll)
-    }
-  }, [])
+  const ref = useParallaxScroll<HTMLImageElement>((el, position) => {
+    el.style.transform = `translate(0px, ${position}px)`
+  })
 
   if (!profile || !profile.image) return null
   const { image } = profile
-
-  const handleScroll = () => {
-    setScrollPosition(window.scrollY)
-  }
 
   return (
     <Container bg="black10" height={[280, 600]}>
@@ -45,12 +37,7 @@ export const PartnerHeaderImage: React.FC<PartnerHeaderImageProps> = ({
         <source srcSet={image.lg.srcSet} media="(min-width: 1200px)" />
         <source srcSet={image.md.srcSet} media="(min-width: 700px)" />
         <source srcSet={image.sm.srcSet} media="(max-width: 700px)" />
-        <Image
-          style={{ transform: `translate(0px, ${scrollPosition}px)` }}
-          src={image.sm.src}
-          alt=""
-          loading="lazy"
-        />
+        <Image ref={ref as any} src={image.sm.src} alt="" loading="lazy" />
       </picture>
     </Container>
   )
