@@ -80,6 +80,7 @@ export const createUserAddress = async (
       onAddressAdded(me, store, data)
     },
     onCompleted: (data, e) => {
+      console.log("//// complete")
       const errors = data.createUserAddress.userAddressOrErrors.errors
       if (errors) {
         onError(errors.map(error => error.message).join(", "))

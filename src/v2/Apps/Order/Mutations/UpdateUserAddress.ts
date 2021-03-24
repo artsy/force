@@ -58,8 +58,8 @@ export const updateUserAddress = async (
           data.updateUserAddress.userAddressOrErrors
         )
         onSuccess(address)
+        closeModal()
       }
-      closeModal()
     },
     onError: e => {
       onError(e.message)

@@ -1,7 +1,7 @@
-import React from "react"
+import React, { useState } from "react"
 import { Button, Input, Modal, Spacer, Text } from "@artsy/palette"
 import { SavedAddressType } from "../Utils/shippingAddressUtils"
-import { Formik, FormikProps } from "formik"
+import { Formik, FormikHelpers, FormikProps } from "formik"
 import {
   removeEmptyKeys,
   validateAddress,
@@ -13,7 +13,7 @@ import { SavedAddresses_me } from "v2/__generated__/SavedAddresses_me.graphql"
 import { AddressModalFields } from "v2/Components/Address/AddressModalFields"
 import { useSystemContext } from "v2/Artsy/SystemContext"
 
-interface Props {
+export interface Props {
   show: boolean
   closeModal: () => void
   address?: SavedAddressType
@@ -39,7 +39,6 @@ export const AddressModal: React.FC<Props> = ({
 }) => {
   const title = modalDetails?.addressModalTitle
   const createMutation = modalDetails.addressModalAction === "createUserAddress"
-
   const validator = (values: any) => {
     const validationResult = validateAddress(values)
     const phoneValidation = validatePhoneNumber(values.phoneNumber)
@@ -50,19 +49,30 @@ export const AddressModal: React.FC<Props> = ({
     return errorsTrimmed
   }
   const { relayEnvironment } = useSystemContext()
-  console.log("relay", relayEnvironment)
+  const [createUpdateError, setCreateUpdateError] = useState<string>(null)
+
   return (
     <Modal title={title} show={show} onClose={closeModal}>
       <Formik
         initialValues={createMutation ? { country: "US" } : address}
         validate={validator}
-        onSubmit={values => {
+        onSubmit={(
+          values: SavedAddressType,
+          actions: FormikHelpers<SavedAddressType>
+        ) => {
           createMutation
             ? createUserAddress(
                 relayEnvironment,
                 values,
-                onSuccess,
-                onError,
+                address => {
+                  setCreateUpdateError(null)
+                  onSuccess && onSuccess(address)
+                },
+                message => {
+                  setCreateUpdateError(message)
+                  actions?.setSubmitting(false)
+                  onError && onError(message)
+                },
                 me,
                 closeModal
               )
@@ -71,13 +81,23 @@ export const AddressModal: React.FC<Props> = ({
                 address.internalID,
                 values,
                 closeModal,
-                onSuccess,
-                onError
+                address => {
+                  setCreateUpdateError(null)
+                  onSuccess && onSuccess(address)
+                },
+                message => {
+                  setCreateUpdateError(message)
+                  actions?.setSubmitting(false)
+                  onError && onError(message)
+                }
               )
         }}
       >
         {(formik: FormikProps<SavedAddressType>) => (
           <form onSubmit={formik.handleSubmit}>
+            <Text data-test="credit-card-error" color="red" my={2}>
+              {createUpdateError}
+            </Text>
             <Text color="black60" mb={1}>
               All fields marked * are mandatory
             </Text>
