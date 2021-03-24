@@ -27,7 +27,7 @@ const UpcomingAuctions: React.FC<UpcomingAuctionsProps> = ({
 
     const previousScrollY = window.scrollY
 
-    relay.loadMore(15, err => {
+    relay.loadMore(5, err => {
       setIsLoading(false)
 
       if (window.scrollY > previousScrollY) {
@@ -80,15 +80,14 @@ export const UpcomingAuctionsPaginationContainer = createPaginationContainer(
     viewer: graphql`
       fragment UpcomingAuctions_viewer on Viewer
         @argumentDefinitions(
-          first: { type: "Int", defaultValue: 15 }
+          first: { type: "Int", defaultValue: 30 }
           after: { type: "String" }
         ) {
         salesConnection(
           first: $first
           after: $after
-          live: true
-          published: false
-          sort: END_AT_ASC
+          sort: START_AT_ASC
+          auctionState: UPCOMING
         ) @connection(key: "UpcomingAuctions_salesConnection") {
           totalCount
           edges {
@@ -99,6 +98,7 @@ export const UpcomingAuctionsPaginationContainer = createPaginationContainer(
               status
               formattedStartDateTime
               eventStartAt
+              isLiveOpen
               ...AuctionArtworksRail_sale
             }
           }
