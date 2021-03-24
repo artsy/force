@@ -1,7 +1,8 @@
-import { Checkbox, Toggle } from "@artsy/palette"
 import { intersection } from "lodash"
+import { Checkbox, Flex, Toggle } from "@artsy/palette"
 import React from "react"
 import { useArtworkFilterContext } from "../ArtworkFilterContext"
+import { FacetAutosuggest } from "./FacetAutosuggest"
 import { OptionText } from "./OptionText"
 import { INITIAL_ITEMS_TO_SHOW, ShowMore } from "./ShowMore"
 
@@ -57,11 +58,18 @@ export const MaterialsFilter = () => {
 
   return (
     <Toggle label="Materials" expanded>
-      <ShowMore expanded={hasBelowTheFoldMaterialsFilter}>
-        {materialsTerms.counts.map(({ name, value }) => {
-          return <MaterialsTermOption key={value} name={name} value={value} />
-        })}
-      </ShowMore>
+      <Flex flexDirection="column">
+        <FacetAutosuggest
+          facetName="materialsTerms"
+          placeholder="Enter a material"
+          facets={materialsTerms.counts}
+        />
+        <ShowMore expanded={hasBelowTheFoldMaterialsFilter}>
+          {materialsTerms.counts.map(({ name, value }) => {
+            return <MaterialsTermOption key={value} name={name} value={value} />
+          })}
+        </ShowMore>
+      </Flex>
     </Toggle>
   )
 }
