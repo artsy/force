@@ -154,6 +154,7 @@ export const novoDevelopmentConfig = {
         NODE_ENV: JSON.stringify(env.nodeEnv),
       },
     }),
+    new webpack.HotModuleReplacementPlugin(),
     // Remove moment.js localization files
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
     // Remove server-only modules from client bundles
@@ -190,7 +191,6 @@ export const novoDevelopmentConfig = {
       path: path.resolve(basePath, "public", "assets-novo"),
     }),
     new HashedModuleIdsPlugin(),
-    new webpack.HotModuleReplacementPlugin(),
     new WebpackManifestPlugin({
       basePath: "/assets-novo/",
       fileName: path.resolve(basePath, "manifest-novo.json"),

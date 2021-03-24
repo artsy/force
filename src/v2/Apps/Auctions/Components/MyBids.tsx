@@ -1,157 +1,227 @@
-export const MyBidsFragmentContainer: any = () => null
-
-// The below will eventually move to MP, so that display logic can be shared
-// between Eigen and Force.
-/*
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
+import { SystemQueryRenderer } from "v2/Artsy/Relay/SystemQueryRenderer"
+import { useSystemContext } from "v2/Artsy"
 import { MyBids_me } from "v2/__generated__/MyBids_me.graphql"
-import { extractNodes } from "v2/Utils/extractNodes"
-import moment from "moment-timezone"
-import { RouterLink } from "v2/Artsy/Router/RouterLink"
 
 import {
-  Box,
-  Text,
-  Button,
-  Image,
-  Flex,
+  AlertIcon,
   ArrowDownCircleIcon,
   ArrowUpCircleIcon,
-  AlertIcon,
+  Box,
+  CalendarIcon,
+  Flex,
+  Image,
   Join,
   Separator,
   Spacer,
+  StackableBorderBox,
+  Text,
+  WatchingIcon,
 } from "@artsy/palette"
-import { sortBy } from "lodash"
+import { Carousel } from "v2/Components/Carousel"
 
 interface MyBidsProps {
   me: MyBids_me
 }
 
-const MyBids: React.FC<MyBidsProps> = ({ me }) => {
-  const lotStandings = extractNodes(me?.auctionsLotStandingConnection)
+export const MyBids: React.FC<MyBidsProps> = props => {
+  const {
+    me: { myBids },
+  } = props
 
-  if (!lotStandings.length) {
-    return null
-  }
-
-  const activeBids = lotStandings
-    .map(getSaleInfo)
-    .filter(sale => !sale.isClosed)
-
-  const sortedActiveBids = sortBy(
-    activeBids,
-    "lot.saleArtwork.artwork.artistNames"
-  )
+  const active = myBids?.active ?? []
 
   return (
-    <Box>
-      <Separator mb={4} />
-      <Text variant="subtitle">Active Bids</Text>
-      <Spacer my={2} />
-      <Join separator={<Separator my={1} mb={15} />}>
-        {sortedActiveBids.map(({ lot, isLiveAuction }) => {
-          const {
-            lot: { reserveStatus, sellingPrice, bidCount },
-            saleArtwork: {
-              artwork: { artistNames, href, image },
-              lotLabel,
-            },
-          } = lot
+    <Carousel arrowHeight={240}>
+      {active.map(activeSale => {
+        return (
+          <Box width={330}>
+            <StackableBorderBox flexDirection="column" overflow="hidden" p={0}>
+              <Box minHeight={100}>
+                <Image
+                  width="100%"
+                  height={100}
+                  style={{ objectFit: "cover" }}
+                  src={activeSale.sale.coverImage?.resized.src}
+                  srcSet={activeSale.sale.coverImage?.resized.srcSet}
+                />
+              </Box>
+              <Box px={2} pb={2} pt={1}>
+                <Text variant="small" color="black60">
+                  {activeSale.sale.partner?.name}
+                  Tate Ward
+                </Text>
+                <Text variant="title">{activeSale.sale.name}</Text>
+                <Flex>
+                  <CalendarIcon width={15} height={15} top="1px" mr={0.3} />
+                  <Text variant="text" color="black60">
+                    {activeSale.sale.formattedStartDateTime}
+                  </Text>
+                </Flex>
+              </Box>
+            </StackableBorderBox>
+            <StackableBorderBox p={2} flexDirection="column">
+              <Join separator={<Separator my={1} />}>
+                {activeSale.saleArtworks.map(saleArtwork => {
+                  return (
+                    <Flex width="100%">
+                      <Flex alignItems="center" width="100%">
+                        <Box backgroundColor="black60" width={50} height={50}>
+                          <Image
+                            src={saleArtwork.artwork.image?.resized.src}
+                            srcSet={saleArtwork.artwork.image?.resized.srcSet}
+                          />
+                        </Box>
+                        <Spacer mr={1} />
+                        <Flex justifyContent="space-between" width="100%">
+                          <Box>
+                            <Text variant="text">
+                              {saleArtwork.artwork.artistNames}
+                            </Text>
+                            <Text variant="caption" color="black60">
+                              Lot {saleArtwork.position}
+                            </Text>
+                          </Box>
 
-          const reserveNotMet =
-            reserveStatus === "ReserveNotMet" && !isLiveAuction
+                          <Box>
+                            {saleArtwork.isWatching ? (
+                              <>
+                                <Text
+                                  variant="text"
+                                  display="inline-block"
+                                  pr={0.3}
+                                >
+                                  {saleArtwork.highestBid.amount ||
+                                    saleArtwork.estimate}
+                                </Text>
+                                <Watching />
+                              </>
+                            ) : (
+                              <>
+                                <Box style={{ whiteSpace: "nowrap" }}>
+                                  <Text
+                                    variant="text"
+                                    display="inline-block"
+                                    pr={0.3}
+                                  >
+                                    {saleArtwork.lot?.sellingPrice.display}
+                                  </Text>
+                                  <Text color="black60" display="inline-block">
+                                    {saleArtwork.lot?.bidCount === 1
+                                      ? `${saleArtwork.lot?.bidCount} bid`
+                                      : `${saleArtwork.lot?.bidCount} bids`}
+                                  </Text>
+                                </Box>
 
-          return (
-            <RouterLink to={href} noUnderline>
-              <Flex alignItems="center">
-                <Box pr={0.5}>
-                  <Image src={image.cropped.url} />
-                </Box>
-                <Box width="100%">
-                  <Flex justifyContent="space-between" alignItems="center">
-                    <Box>
-                      <Text variant="caption">Lot {lotLabel}</Text>
-                      <Text variant="caption">{artistNames}</Text>
-                      <Flex>
-                        <Text variant="caption" mr={0.5}>
-                          {sellingPrice.display}
-                        </Text>
-                        <Text variant="caption" color="black60">
-                          ({bidCount} {bidCount === 1 ? "bid" : "bids"})
-                        </Text>
-                      </Flex>
-                    </Box>
-                    <Box textAlign="right">
-                      <Box>
-                        <Flex>
-                          {reserveNotMet ? (
-                            <ReserveNotMet />
-                          ) : lot.isHighestBidder ? (
-                            <HighestBid />
-                          ) : (
-                            <Outbid />
-                          )}
+                                {saleArtwork.isHighestBidder ? (
+                                  <HighestBid />
+                                ) : (
+                                  <Outbid />
+                                )}
+                              </>
+                            )}
+                          </Box>
                         </Flex>
-                        <Spacer my={0.5} />
-                        <Button variant="secondaryOutline" size="small">
-                          Bid
-                        </Button>
-                      </Box>
-                    </Box>
-                  </Flex>
-                </Box>
-              </Flex>
-            </RouterLink>
-          )
-        })}
-      </Join>
-    </Box>
+                      </Flex>
+                    </Flex>
+                  )
+                })}
+              </Join>
+            </StackableBorderBox>
+          </Box>
+        )
+      })}
+    </Carousel>
   )
 }
 
 export const MyBidsFragmentContainer = createFragmentContainer(MyBids, {
   me: graphql`
     fragment MyBids_me on Me {
-      name
-      auctionsLotStandingConnection(first: 25) {
-        edges {
-          node {
-            isHighestBidder
-            lot {
-              saleId
-              soldStatus
-              internalID
-              bidCount
-              reserveStatus
-              soldStatus
-              askingPrice: onlineAskingPrice {
-                display
-              }
-              sellingPrice: floorSellingPrice {
-                display
+      myBids {
+        active {
+          sale {
+            name
+            slug
+            liveStartAt
+            endAt
+            displayTimelyAt
+            formattedStartDateTime
+            requireIdentityVerification
+            partner {
+              name
+            }
+            coverImage {
+              resized(width: 300, height: 100) {
+                src
+                srcSet
               }
             }
-            saleArtwork {
-              position
-              lotLabel
-              artwork {
-                artistNames
-                href
-                image {
-                  cropped(width: 70, height: 70) {
-                    url
-                  }
+          }
+          saleArtworks {
+            artwork {
+              artistNames
+              image {
+                resized(width: 50, height: 50) {
+                  src
+                  srcSet
                 }
               }
-              sale {
-                internalID
-                liveStartAt
-                endAt
-                status
-              }
             }
+
+            slug
+            position
+            isHighestBidder
+            isWatching
+            highestBid {
+              amount
+            }
+            estimate
+
+            lot {
+              bidCount
+              floorSellingPrice {
+                display
+              }
+              internalID
+              onlineAskingPrice {
+                display
+              }
+              reserveStatus
+              saleId
+              sellingPrice {
+                display
+              }
+              soldStatus
+            }
+          }
+        }
+        closed {
+          sale {
+            liveStartAt
+            endAt
+            requireIdentityVerification
+          }
+          saleArtworks {
+            position
+            lot {
+              bidCount
+              floorSellingPrice {
+                display
+              }
+              internalID
+              onlineAskingPrice {
+                display
+              }
+              reserveStatus
+              saleId
+              sellingPrice {
+                display
+              }
+              soldStatus
+            }
+            slug
           }
         }
       }
@@ -159,61 +229,74 @@ export const MyBidsFragmentContainer = createFragmentContainer(MyBids, {
   `,
 })
 
+export const MyBidsQueryRenderer: React.FC = () => {
+  const { relayEnvironment } = useSystemContext()
+
+  return (
+    <>
+      <Text py={3}>Active Bids and Watched Lots</Text>
+      <SystemQueryRenderer
+        environment={relayEnvironment}
+        query={graphql`
+          query MyBidsQuery {
+            me {
+              ...MyBids_me
+            }
+          }
+        `}
+        variables={{}}
+        render={({ props }) => {
+          if (props) {
+            return <MyBidsFragmentContainer me={props.me} />
+          } else {
+            return <Text>Loading...</Text>
+          }
+        }}
+      />
+    </>
+  )
+}
+
 const ReserveNotMet: React.FC = () => (
-  <>
-    <Text variant="caption" color="black60" pr={0.3}>
+  <Flex>
+    <Box pr={0.3}>
+      <AlertIcon />
+    </Box>
+    <Text variant="text" color="black60">
       Reserve not met
     </Text>
-    <AlertIcon />
-  </>
+  </Flex>
 )
 
 const HighestBid: React.FC = () => (
-  <>
-    <Text variant="caption" color="green100" pr={0.3}>
+  <Flex>
+    <Box pr={0.3}>
+      <ArrowUpCircleIcon fill="green100" />
+    </Box>
+    <Text variant="text" color="green100">
       Highest bid
     </Text>
-    <ArrowUpCircleIcon fill="green100" />
-  </>
+  </Flex>
 )
 
 const Outbid: React.FC = () => (
-  <>
-    <Text variant="caption" color="red100" pr={0.3}>
+  <Flex>
+    <Box pr={0.3}>
+      <ArrowDownCircleIcon fill="red100" />
+    </Box>
+    <Text variant="text" color="red100">
       Outbid
     </Text>
-    <ArrowDownCircleIcon fill="red100" />
-  </>
+  </Flex>
 )
 
-type LotStandings = MyBids_me["auctionsLotStandingConnection"]["edges"][0]["node"]
-
-function getSaleInfo(lot: LotStandings) {
-  const { sale } = lot.saleArtwork
-  const isLiveAuction = Boolean(sale.liveStartAt)
-  const isClosed = sale.status === "closed"
-  const isActive = Boolean(sale.status.match(/(open|preview)/).length)
-  const endAt = isLiveAuction ? sale.liveStartAt : sale.endAt
-
-  const liveBiddingStarted = () => {
-    if (isLiveAuction || isClosed) {
-      return false
-    }
-    const tz = moment.tz.guess(true)
-    const now = moment().tz(tz)
-    const liveStartMoment = moment(sale.liveStartAt).tz(tz)
-    const started = now.isAfter(liveStartMoment)
-    return started
-  }
-
-  return {
-    isLiveAuction,
-    isClosed,
-    isActive,
-    endAt,
-    liveBiddingStarted,
-    lot,
-  }
-}
-
-*/
+const Watching: React.FC = () => (
+  <Flex>
+    <Box pr={0.3}>
+      <WatchingIcon width={12} height={12} top="1px" />
+    </Box>
+    <Text variant="text" color="black60">
+      Watching
+    </Text>
+  </Flex>
+)

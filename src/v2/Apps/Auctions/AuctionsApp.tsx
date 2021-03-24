@@ -2,7 +2,8 @@ import React from "react"
 import { AppContainer } from "v2/Apps/Components/AppContainer"
 import { AuctionsApp_me } from "v2/__generated__/AuctionsApp_me.graphql"
 import { AuctionsMeta } from "./Components/AuctionsMeta"
-import { ChevronIcon, Box, Text, Separator, Spacer } from "@artsy/palette"
+import { MyBidsQueryRenderer } from "./Components/MyBids"
+import { ChevronIcon, Box, Text, Separator } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Footer } from "v2/Components/Footer"
 import { HorizontalPadding } from "../Components/HorizontalPadding"
@@ -52,11 +53,8 @@ const AuctionsApp: React.FC<AuctionsAppProps> = props => {
 
       {user && (
         <Box m={[2, 4]}>
-          <Spacer m={4} />
-          <Separator pr={4} />
-          <Text py={3}>Active Bids and Watched Lots</Text>
-          PLACEHOLDER FOR MY BIDS
-          {/* <MyBids /> */}
+          <Separator />
+          <MyBidsQueryRenderer />
         </Box>
       )}
       <HorizontalPadding mt={4}>
