@@ -7,7 +7,7 @@ interface ShowMoreProps {
   children: JSX.Element[]
 }
 
-const INITIAL_ITEMS_TO_SHOW = 6
+export const INITIAL_ITEMS_TO_SHOW = 6
 
 export const ShowMore: React.FC<ShowMoreProps> = ({
   initial = INITIAL_ITEMS_TO_SHOW,

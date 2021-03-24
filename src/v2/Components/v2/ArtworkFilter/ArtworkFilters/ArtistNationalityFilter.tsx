@@ -1,10 +1,10 @@
 import { Checkbox, Flex, Toggle } from "@artsy/palette"
-import { sortBy } from "lodash"
+import { intersection, sortBy } from "lodash"
 import React, { FC } from "react"
 
 import { useArtworkFilterContext } from "../ArtworkFilterContext"
 import { OptionText } from "./OptionText"
-import { ShowMore } from "./ShowMore"
+import { INITIAL_ITEMS_TO_SHOW, ShowMore } from "./ShowMore"
 import { FacetAutosuggest } from "./FacetAutosuggest"
 
 const ArtistNationalityOption: React.FC<{ name: string }> = ({ name }) => {
@@ -36,7 +36,7 @@ const ArtistNationalityOption: React.FC<{ name: string }> = ({ name }) => {
 }
 
 export const ArtistNationalityFilter: FC = () => {
-  const { aggregations } = useArtworkFilterContext()
+  const { aggregations, currentlySelectedFilters } = useArtworkFilterContext()
   const nationalities = aggregations.find(
     agg => agg.slice === "ARTIST_NATIONALITY"
   )
@@ -46,6 +46,11 @@ export const ArtistNationalityFilter: FC = () => {
   }
 
   const nationalitiesSorted = sortBy(nationalities.counts, ["count"]).reverse()
+  const hasBelowTheFoldNationalityFilter =
+    intersection(
+      currentlySelectedFilters().artistNationalities,
+      nationalities.counts.slice(INITIAL_ITEMS_TO_SHOW).map(({ name }) => name)
+    ).length > 0
 
   return (
     <Toggle label="Artist nationality or ethnicity" expanded>
@@ -55,7 +60,7 @@ export const ArtistNationalityFilter: FC = () => {
           placeholder="Enter a nationality"
           facets={nationalities.counts}
         />
-        <ShowMore>
+        <ShowMore expanded={hasBelowTheFoldNationalityFilter}>
           {nationalitiesSorted.map(({ name }) => {
             return <ArtistNationalityOption key={name} name={name} />
           })}

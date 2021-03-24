@@ -1,11 +1,12 @@
 import { Checkbox, Flex, Toggle } from "@artsy/palette"
 import React, { FC } from "react"
+import { intersection } from "underscore"
 import { useArtworkFilterContext } from "../ArtworkFilterContext"
 import { OptionText } from "./OptionText"
-import { ShowMore } from "./ShowMore"
+import { INITIAL_ITEMS_TO_SHOW, ShowMore } from "./ShowMore"
 
 interface TimePeriodFilterProps {
-  expanded?: boolean
+  expanded?: boolean // set to true to force expansion
 }
 
 export const TimePeriodFilter: FC<TimePeriodFilterProps> = ({
@@ -36,11 +37,17 @@ export const TimePeriodFilter: FC<TimePeriodFilterProps> = ({
   }
 
   const currentFilters = filterContext.currentlySelectedFilters()
+  const hasBelowTheFoldMajorPeriodFilter =
+    intersection(
+      currentFilters.majorPeriods,
+      periods.slice(INITIAL_ITEMS_TO_SHOW).map(({ name }) => name)
+    ).length > 0
+  const hasMajorPeriodFilter = currentFilters.majorPeriods.length > 0
 
   return (
-    <Toggle label="Time period" expanded={expanded}>
+    <Toggle label="Time period" expanded={hasMajorPeriodFilter || expanded}>
       <Flex flexDirection="column">
-        <ShowMore>
+        <ShowMore expanded={hasBelowTheFoldMajorPeriodFilter}>
           {periods.map(({ name }, index) => {
             return (
               <Checkbox
