@@ -314,7 +314,6 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
       this.props,
       props => props.order.lineItems.edges[0].node.artwork
     )
-    console.log(this.props.relayEnvironment)
     const addressList = this.getAddressList()
 
     const shippingSelected =
