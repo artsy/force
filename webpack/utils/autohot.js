@@ -1,3 +1,5 @@
+// @ts-check
+
 /**
  * Quickly make all of our entry points hot reloadable without a ton of code.
  */

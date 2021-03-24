@@ -1,18 +1,19 @@
 // @ts-check
 
-const path = require("path")
-const WebpackManifestPlugin = require("webpack-manifest-plugin")
-const { HashedModuleIdsPlugin } = require("webpack")
-const { getCSSManifest } = require("../utils/getCSSManifest")
-const TerserPlugin = require("terser-webpack-plugin")
-const { basePath, env } = require("../utils/env")
-const { getEntrypoints } = require("../utils/getEntrypoints")
+import path from "path"
+import WebpackManifestPlugin from "webpack-manifest-plugin"
+import { HashedModuleIdsPlugin } from "webpack"
+import { getCSSManifest } from "../utils/getCSSManifest"
+import { basePath, env } from "../utils/env"
+import { getEntrypoints } from "../utils/getEntrypoints"
+import { standardMinimizer } from "./commonEnv"
 
 export const clientProductionConfig = {
-  parallelism: 100,
-  mode: env.webpackDebug ? "development" : env.nodeEnv,
-  devtool: "source-map",
   entry: getEntrypoints(),
+  optimization: {
+    minimize: !env.webpackDebug,
+    minimizer: standardMinimizer,
+  },
   output: {
     filename: "[name].22820.[contenthash].js",
     // NOTE: On the client, we're setting `publicPath` during runtime in order to
@@ -27,14 +28,4 @@ export const clientProductionConfig = {
       seed: env.isProduction ? getCSSManifest() : {},
     }),
   ],
-  optimization: {
-    minimize: !env.webpackDebug,
-    minimizer: [
-      new TerserPlugin({
-        cache: false,
-        parallel: env.onCi ? env.webpackCiCpuLimit : true, // Only use 4 cpus (default) in CircleCI, by default it will try using 36 and OOM
-        sourceMap: true, // Must be set to true if using source-maps in production
-      }),
-    ],
-  },
 }

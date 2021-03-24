@@ -1,18 +1,17 @@
 // @ts-check
-const chalk = require("chalk")
-const merge = require("webpack-merge")
-const fs = require("fs")
-const { bundleAnalyzer } = require("./plugins")
-const { env } = require("./utils/env")
 
-const {
-  clientCommonConfig,
-  clientDevelopmentConfig,
-  clientProductionConfig,
-  novoDevelopmentConfig,
-  novoProductionConfig,
-  serverConfig,
-} = require("./envs")
+import chalk from "chalk"
+import merge from "webpack-merge"
+import fs from "fs"
+import path from "path"
+import { bundleAnalyzer } from "./plugins/bundleAnalyzer"
+import { env, basePath } from "./utils/env"
+import { clientCommonConfig } from "./envs/clientCommonConfig"
+import { clientDevelopmentConfig } from "./envs/clientDevelopmentConfig"
+import { clientProductionConfig } from "./envs/clientProductionConfig"
+import { novoDevelopmentConfig } from "./envs/novoDevelopmentConfig"
+import { novoProductionConfig } from "./envs/novoProductionConfig"
+import { serverConfig } from "./envs/serverConfig"
 
 const getServerConfig = () => {
   console.log(chalk.green(`\n[Force] NODE_ENV=${env.nodeEnv} \n`))
@@ -31,6 +30,17 @@ const getClientConfig = () => {
 
   switch (true) {
     case env.isDevelopment:
+      const cacheDirectory = path.resolve(basePath, ".cache")
+
+      if (!env.onCi && !fs.existsSync(cacheDirectory)) {
+        console.log(
+          chalk.yellow(
+            "\n[!] No existing `.cache` directory detected, initial " +
+              "launch will take a while.\n"
+          )
+        )
+      }
+
       return merge.smart(clientCommonConfig, clientDevelopmentConfig)
 
     case env.isProduction:

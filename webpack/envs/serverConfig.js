@@ -1,16 +1,17 @@
 // @ts-check
 
-const nodeExternals = require("webpack-node-externals")
-const path = require("path")
-const webpack = require("webpack")
-const TerserPlugin = require("terser-webpack-plugin")
-const { basePath, env } = require("../utils/env")
+import nodeExternals from "webpack-node-externals"
+import path from "path"
+import webpack from "webpack"
+import { basePath, env } from "../utils/env"
+import { standardMinimizer } from "./commonEnv"
+import { jadeLoader } from "./commonLoaders"
 
 export const serverConfig = {
-  devtool: "source-map",
+  devtool: env.webpackDevtool || "source-map",
   entry: path.join(basePath, "src/index.js"),
   externals: [nodeExternals()],
-  mode: env.nodeEnv,
+  mode: env.webpackDebug ? "development" : env.nodeEnv,
   module: {
     rules: [
       {
@@ -33,19 +34,7 @@ export const serverConfig = {
           },
         ],
       },
-      {
-        include: path.resolve(basePath, "src"),
-        test: /\.(jade|pug)$/,
-        use: [
-          {
-            loader: "pug-loader",
-            options: {
-              doctype: "html",
-              root: __dirname,
-            },
-          },
-        ],
-      },
+      jadeLoader,
     ],
   },
   node: {
@@ -53,13 +42,7 @@ export const serverConfig = {
   },
   optimization: {
     minimize: env.isProduction && !env.webpackDebug,
-    minimizer: [
-      new TerserPlugin({
-        cache: false,
-        parallel: env.onCi ? env.webpackCiCpuLimit : true, // Only use 4 cpus (default) in CircleCI, by default it will try using 36 and OOM
-        sourceMap: true, // Must be set to true if using source-maps in production
-      }),
-    ],
+    minimizer: standardMinimizer,
   },
   output: {
     chunkFilename: "[name].bundle.js",
