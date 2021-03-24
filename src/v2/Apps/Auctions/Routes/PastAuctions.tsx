@@ -77,7 +77,7 @@ export const PastAuctionsPaginationContainer = createPaginationContainer(
     viewer: graphql`
       fragment PastAuctions_viewer on Viewer
         @argumentDefinitions(
-          first: { type: "Int", defaultValue: 15 }
+          first: { type: "Int", defaultValue: 30 }
           after: { type: "String" }
         ) {
         salesConnection(

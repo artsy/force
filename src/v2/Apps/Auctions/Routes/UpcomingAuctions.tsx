@@ -80,7 +80,7 @@ export const UpcomingAuctionsPaginationContainer = createPaginationContainer(
     viewer: graphql`
       fragment UpcomingAuctions_viewer on Viewer
         @argumentDefinitions(
-          first: { type: "Int", defaultValue: 2 }
+          first: { type: "Int", defaultValue: 30 }
           after: { type: "String" }
         ) {
         salesConnection(
