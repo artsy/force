@@ -16,7 +16,7 @@ export type PartnerHeader_Test_QueryRawResponse = {
         readonly href: string | null;
         readonly profile: ({
             readonly icon: ({
-                readonly cropped: ({
+                readonly resized: ({
                     readonly src: string;
                     readonly srcSet: string;
                 }) | null;
@@ -69,7 +69,7 @@ fragment PartnerHeader_partner on Partner {
   href
   profile {
     icon {
-      cropped(width: 80, height: 80, version: "square140") {
+      resized(width: 80, height: 80, version: "square140") {
         src
         srcSet
       }
@@ -201,9 +201,9 @@ return {
                         "value": 80
                       }
                     ],
-                    "concreteType": "CroppedImageUrl",
+                    "concreteType": "ResizedImageUrl",
                     "kind": "LinkedField",
-                    "name": "cropped",
+                    "name": "resized",
                     "plural": false,
                     "selections": [
                       {
@@ -221,7 +221,7 @@ return {
                         "storageKey": null
                       }
                     ],
-                    "storageKey": "cropped(height:80,version:\"square140\",width:80)"
+                    "storageKey": "resized(height:80,version:\"square140\",width:80)"
                   }
                 ],
                 "storageKey": null
@@ -317,7 +317,7 @@ return {
     "metadata": {},
     "name": "PartnerHeader_Test_Query",
     "operationKind": "query",
-    "text": "query PartnerHeader_Test_Query {\n  partner(id: \"white-cube\") {\n    ...PartnerHeader_partner\n    id\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  is_followed: isFollowed\n}\n\nfragment PartnerHeader_partner on Partner {\n  name\n  type\n  href\n  profile {\n    icon {\n      cropped(width: 80, height: 80, version: \"square140\") {\n        src\n        srcSet\n      }\n    }\n    ...FollowProfileButton_profile\n    id\n  }\n  locations: locationsConnection(first: 20) {\n    totalCount\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query PartnerHeader_Test_Query {\n  partner(id: \"white-cube\") {\n    ...PartnerHeader_partner\n    id\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  is_followed: isFollowed\n}\n\nfragment PartnerHeader_partner on Partner {\n  name\n  type\n  href\n  profile {\n    icon {\n      resized(width: 80, height: 80, version: \"square140\") {\n        src\n        srcSet\n      }\n    }\n    ...FollowProfileButton_profile\n    id\n  }\n  locations: locationsConnection(first: 20) {\n    totalCount\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();

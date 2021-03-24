@@ -23,6 +23,7 @@ export interface PartnerHeaderProps {
 
 export const HeaderImage = styled(Image)`
   border: 1px solid ${color("black10")};
+  object-fit: contain;
 `
 
 export const PartnerHeader: React.FC<PartnerHeaderProps> = ({ partner }) => {
@@ -42,8 +43,8 @@ export const PartnerHeader: React.FC<PartnerHeaderProps> = ({ partner }) => {
                 style={{ display: "flex", textDecoration: "none" }}
               >
                 <HeaderImage
-                  src={partner.profile.icon.cropped.src}
-                  srcSet={partner.profile.icon.cropped.srcSet}
+                  src={partner.profile.icon.resized.src}
+                  srcSet={partner.profile.icon.resized.srcSet}
                   alt={partner.name}
                   width={[60, 80]}
                   height={[60, 80]}
@@ -97,7 +98,7 @@ export const PartnerHeaderFragmentContainer = createFragmentContainer(
         href
         profile {
           icon {
-            cropped(width: 80, height: 80, version: "square140") {
+            resized(width: 80, height: 80, version: "square140") {
               src
               srcSet
             }
