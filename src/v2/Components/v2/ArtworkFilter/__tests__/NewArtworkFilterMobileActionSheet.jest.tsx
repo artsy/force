@@ -132,5 +132,15 @@ describe("the new artwork filters", () => {
     await flushPromiseQueue()
 
     expect(wrapper.find("ApplyButton").text()).toEqual("Apply (1)")
+
+    wrapper
+      .find("ArtistNationalityFilter")
+      .find("div")
+      .findWhere(label => label.text() === "Schenectadian")
+      .first()
+      .simulate("click")
+    await flushPromiseQueue()
+
+    expect(wrapper.find("ApplyButton").text()).toEqual("Apply (1)")
   })
 })
