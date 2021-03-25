@@ -119,4 +119,134 @@ describe("ArtworkFilterMobileActionSheet", () => {
 
     expect(wrapper.find("ApplyButton").text()).toEqual("Apply (2)")
   })
+
+  describe("the count on the `Apply` button", () => {
+    it("is 1 when 1 medium is selected", async () => {
+      const wrapper = getWrapper()
+
+      wrapper
+        .find("MediumFilter")
+        .find("div")
+        .findWhere(label => label.text() === "Painting")
+        .first()
+        .simulate("click")
+      await flushPromiseQueue()
+
+      expect(wrapper.find("ApplyButton").text()).toEqual("Apply (1)")
+    })
+
+    it("is 1 when 2 mediums are selected", async () => {
+      const wrapper = getWrapper()
+
+      wrapper
+        .find("MediumFilter")
+        .find("div")
+        .findWhere(label => label.text() === "Painting")
+        .first()
+        .simulate("click")
+      await flushPromiseQueue()
+
+      expect(wrapper.find("ApplyButton").text()).toEqual("Apply (1)")
+
+      wrapper
+        .find("MediumFilter")
+        .find("div")
+        .findWhere(label => label.text() === "Photography")
+        .first()
+        .simulate("click")
+      await flushPromiseQueue()
+
+      expect(wrapper.find("ApplyButton").text()).toEqual("Apply (1)")
+    })
+
+    it("is 1 when 1 rarity is selected", async () => {
+      const wrapper = getWrapper()
+
+      wrapper
+        .find("AttributionClassFilter")
+        .find("div")
+        .findWhere(label => label.text() === "Unique")
+        .first()
+        .simulate("click")
+      await flushPromiseQueue()
+
+      expect(wrapper.find("ApplyButton").text()).toEqual("Apply (1)")
+    })
+
+    it("is 1 when 2 rarities are selected", async () => {
+      const wrapper = getWrapper()
+
+      wrapper
+        .find("AttributionClassFilter")
+        .find("div")
+        .findWhere(label => label.text() === "Unique")
+        .first()
+        .simulate("click")
+      await flushPromiseQueue()
+
+      expect(wrapper.find("ApplyButton").text()).toEqual("Apply (1)")
+
+      wrapper
+        .find("AttributionClassFilter")
+        .find("div")
+        .findWhere(label => label.text() === "Limited Edition")
+        .first()
+        .simulate("click")
+      await flushPromiseQueue()
+
+      expect(wrapper.find("ApplyButton").text()).toEqual("Apply (1)")
+    })
+
+    it("is 1 when 1 color is selected", async () => {
+      const wrapper = getWrapper()
+
+      wrapper
+        .find("button")
+        .findWhere(label => label.text() === "Color")
+        .first()
+        .simulate("click")
+      await flushPromiseQueue()
+
+      wrapper
+        .find("ColorFilter")
+        .find("Checkbox")
+        .findWhere(label => label.text() === "Red")
+        .first()
+        .simulate("click")
+      await flushPromiseQueue()
+
+      expect(wrapper.find("ApplyButton").text()).toEqual("Apply (1)")
+    })
+
+    it("is 1 when 2 colors are selected", async () => {
+      const wrapper = getWrapper()
+
+      wrapper
+        .find("button")
+        .findWhere(label => label.text() === "Color")
+        .first()
+        .simulate("click")
+      await flushPromiseQueue()
+
+      wrapper
+        .find("ColorFilter")
+        .find("Checkbox")
+        .findWhere(label => label.text() === "Red")
+        .first()
+        .simulate("click")
+      await flushPromiseQueue()
+
+      expect(wrapper.find("ApplyButton").text()).toEqual("Apply (1)")
+
+      wrapper
+        .find("ColorFilter")
+        .find("Checkbox")
+        .findWhere(label => label.text() === "Black and white")
+        .first()
+        .simulate("click")
+      await flushPromiseQueue()
+
+      expect(wrapper.find("ApplyButton").text()).toEqual("Apply (1)")
+    })
+  })
 })

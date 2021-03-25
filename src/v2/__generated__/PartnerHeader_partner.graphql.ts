@@ -9,7 +9,7 @@ export type PartnerHeader_partner = {
     readonly href: string | null;
     readonly profile: {
         readonly icon: {
-            readonly cropped: {
+            readonly resized: {
                 readonly src: string;
                 readonly srcSet: string;
             } | null;
@@ -96,9 +96,9 @@ const node: ReaderFragment = {
                   "value": 80
                 }
               ],
-              "concreteType": "CroppedImageUrl",
+              "concreteType": "ResizedImageUrl",
               "kind": "LinkedField",
-              "name": "cropped",
+              "name": "resized",
               "plural": false,
               "selections": [
                 {
@@ -116,7 +116,7 @@ const node: ReaderFragment = {
                   "storageKey": null
                 }
               ],
-              "storageKey": "cropped(height:80,version:\"square140\",width:80)"
+              "storageKey": "resized(height:80,version:\"square140\",width:80)"
             }
           ],
           "storageKey": null
@@ -185,5 +185,5 @@ const node: ReaderFragment = {
   ],
   "type": "Partner"
 };
-(node as any).hash = 'a7741b78c4d7da9422c10356dae26fad';
+(node as any).hash = '99d589f4b03544db5c03be1d2475f509';
 export default node;

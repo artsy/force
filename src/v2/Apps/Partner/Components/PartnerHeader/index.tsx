@@ -23,6 +23,7 @@ export interface PartnerHeaderProps {
 
 export const HeaderImage = styled(Image)`
   border: 1px solid ${color("black10")};
+  object-fit: contain;
 `
 
 export const PartnerHeader: React.FC<PartnerHeaderProps> = ({ partner }) => {
@@ -34,7 +35,7 @@ export const PartnerHeader: React.FC<PartnerHeaderProps> = ({ partner }) => {
     partner && partner.type !== "Auction House" && !!partner.profile
 
   return (
-    <GridColumns gridRowGap={2} my={[2, 4]}>
+    <GridColumns gridRowGap={2} py={[2, 4]}>
       <Column span={[12, 10]}>
         <Flex>
           {partner.profile?.icon && (
@@ -44,8 +45,8 @@ export const PartnerHeader: React.FC<PartnerHeaderProps> = ({ partner }) => {
                 style={{ display: "flex", textDecoration: "none" }}
               >
                 <HeaderImage
-                  src={partner.profile.icon.cropped.src}
-                  srcSet={partner.profile.icon.cropped.srcSet}
+                  src={partner.profile.icon.resized.src}
+                  srcSet={partner.profile.icon.resized.srcSet}
                   alt={partner.name}
                   width={[60, 80]}
                   height={[60, 80]}
@@ -65,7 +66,7 @@ export const PartnerHeader: React.FC<PartnerHeaderProps> = ({ partner }) => {
               </RouterLink>
             </Text>
             {hasLocations && (
-              <Text color={color("black60")} variant="text">
+              <Text color="black60" variant="text">
                 <PartnerHeaderAddress {...partner.locations} />
               </Text>
             )}
@@ -99,7 +100,7 @@ export const PartnerHeaderFragmentContainer = createFragmentContainer(
         href
         profile {
           icon {
-            cropped(width: 80, height: 80, version: "square140") {
+            resized(width: 80, height: 80, version: "square140") {
               src
               srcSet
             }

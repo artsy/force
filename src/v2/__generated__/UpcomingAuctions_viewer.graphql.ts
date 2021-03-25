@@ -14,6 +14,7 @@ export type UpcomingAuctions_viewer = {
                 readonly status: string | null;
                 readonly formattedStartDateTime: string | null;
                 readonly eventStartAt: string | null;
+                readonly isLiveOpen: boolean | null;
                 readonly " $fragmentRefs": FragmentRefs<"AuctionArtworksRail_sale">;
             } | null;
         } | null> | null;
@@ -31,7 +32,7 @@ export type UpcomingAuctions_viewer$key = {
 const node: ReaderFragment = {
   "argumentDefinitions": [
     {
-      "defaultValue": 15,
+      "defaultValue": 30,
       "kind": "LocalArgument",
       "name": "first",
       "type": "Int"
@@ -63,18 +64,13 @@ const node: ReaderFragment = {
       "args": [
         {
           "kind": "Literal",
-          "name": "live",
-          "value": true
-        },
-        {
-          "kind": "Literal",
-          "name": "published",
-          "value": false
+          "name": "auctionState",
+          "value": "UPCOMING"
         },
         {
           "kind": "Literal",
           "name": "sort",
-          "value": "END_AT_ASC"
+          "value": "START_AT_ASC"
         }
       ],
       "concreteType": "SaleConnection",
@@ -151,6 +147,13 @@ const node: ReaderFragment = {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
+                  "name": "isLiveOpen",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
                   "name": "__typename",
                   "storageKey": null
                 },
@@ -198,10 +201,10 @@ const node: ReaderFragment = {
           "storageKey": null
         }
       ],
-      "storageKey": "__UpcomingAuctions_salesConnection_connection(live:true,published:false,sort:\"END_AT_ASC\")"
+      "storageKey": "__UpcomingAuctions_salesConnection_connection(auctionState:\"UPCOMING\",sort:\"START_AT_ASC\")"
     }
   ],
   "type": "Viewer"
 };
-(node as any).hash = 'fd4828e32861f80fb4d3836c0d2dce22';
+(node as any).hash = '8cd03baa48705295b46808427e67ab54';
 export default node;

@@ -17,11 +17,9 @@ const searchResults = [
 ]
 
 const simulateTyping = (wrapper: ReactWrapper, text: string) => {
-  const textArea = wrapper.find("input")
-  textArea.simulate("focus")
-  // @ts-ignore
-  textArea.getDOMNode().value = text
-  textArea.simulate("change")
+  const input = wrapper.find("input")
+  input.simulate("focus")
+  input.simulate("change", { target: { value: text } })
 }
 
 const getWrapper = suggestions => {
@@ -52,6 +50,6 @@ describe("SearchBar", () => {
 
     simulateTyping(component, "magic")
 
-    expect(component.text()).toContain("No results found.")
+    expect(component.text()).toContain("No results.")
   })
 })

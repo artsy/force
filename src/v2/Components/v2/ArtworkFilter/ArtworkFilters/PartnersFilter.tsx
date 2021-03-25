@@ -1,11 +1,11 @@
 import { Checkbox, Flex, Toggle } from "@artsy/palette"
-import { sortBy } from "lodash"
+import { intersection, sortBy } from "lodash"
 import React, { FC } from "react"
 
 import { useArtworkFilterContext } from "../ArtworkFilterContext"
 import { OptionText } from "./OptionText"
 import { FacetAutosuggest } from "./FacetAutosuggest"
-import { ShowMore } from "./ShowMore"
+import { INITIAL_ITEMS_TO_SHOW, ShowMore } from "./ShowMore"
 
 const PartnerOption: React.FC<{ name: string; slug: string }> = ({
   name,
@@ -39,7 +39,7 @@ const PartnerOption: React.FC<{ name: string; slug: string }> = ({
 }
 
 export const PartnersFilter: FC = () => {
-  const { aggregations } = useArtworkFilterContext()
+  const { aggregations, currentlySelectedFilters } = useArtworkFilterContext()
   const partners = aggregations.find(agg => agg.slice === "PARTNER")
 
   if (!(partners && partners.counts)) {
@@ -47,6 +47,11 @@ export const PartnersFilter: FC = () => {
   }
 
   const partnersSorted = sortBy(partners.counts, ["count"]).reverse()
+  const hasBelowTheFoldPartnersFilter =
+    intersection(
+      currentlySelectedFilters().partnerIDs,
+      partners.counts.slice(INITIAL_ITEMS_TO_SHOW).map(({ value }) => value)
+    ).length > 0
 
   return (
     <Toggle label="Galleries and institutions" expanded>
@@ -56,7 +61,7 @@ export const PartnersFilter: FC = () => {
           placeholder="Enter a gallery"
           facets={partners.counts}
         />
-        <ShowMore>
+        <ShowMore expanded={hasBelowTheFoldPartnersFilter}>
           {partnersSorted.map(({ name, value }) => {
             return <PartnerOption slug={value} key={name} name={name} />
           })}

@@ -5,7 +5,6 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type AuctionArtworksRail_sale = {
     readonly internalID: string;
-    readonly slug: string;
     readonly href: string | null;
     readonly name: string | null;
     readonly formattedStartDateTime: string | null;
@@ -36,13 +35,6 @@ const node: ReaderFragment = {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "slug",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
       "name": "href",
       "storageKey": null
     },
@@ -63,5 +55,5 @@ const node: ReaderFragment = {
   ],
   "type": "Sale"
 };
-(node as any).hash = 'e7cb4d2b2b4bddc550000797d5563d24';
+(node as any).hash = 'ae274ff3add76e5adbfd77d0c0054975';
 export default node;

@@ -1,9 +1,10 @@
 import { Checkbox, space, color, Toggle, Box } from "@artsy/palette"
+import { intersection } from "lodash"
 import React from "react"
 import styled from "styled-components"
 import { useArtworkFilterContext } from "../ArtworkFilterContext"
 import { OptionText } from "./OptionText"
-import { ShowMore } from "./ShowMore"
+import { INITIAL_ITEMS_TO_SHOW, ShowMore } from "./ShowMore"
 
 const COLOR_OPTIONS = [
   { hex: "#ffffff", value: "black-and-white", name: "Black and white" },
@@ -85,17 +86,24 @@ const ColorFilterOption: React.FC<{ colorOption: ColorOption }> = ({
     </Checkbox>
   )
 }
-
 interface ColorFilterProps {
-  expanded?: boolean
+  expanded?: boolean // set to true to force expansion
 }
 
 export const ColorFilter: React.FC<ColorFilterProps> = ({
   expanded = false,
 }) => {
+  const { currentlySelectedFilters } = useArtworkFilterContext()
+  const hasBelowTheFoldColorFilter =
+    intersection(
+      currentlySelectedFilters().colors,
+      COLOR_OPTIONS.slice(INITIAL_ITEMS_TO_SHOW).map(({ value }) => value)
+    ).length > 0
+  const hasColorFilter = currentlySelectedFilters().colors.length > 0
+
   return (
-    <Toggle label="Color" expanded={expanded}>
-      <ShowMore>
+    <Toggle label="Color" expanded={hasColorFilter || expanded}>
+      <ShowMore expanded={hasBelowTheFoldColorFilter}>
         {COLOR_OPTIONS.map(colorOption => {
           return (
             <ColorFilterOption

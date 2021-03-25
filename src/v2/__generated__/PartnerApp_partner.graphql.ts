@@ -4,6 +4,9 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type PartnerApp_partner = {
+    readonly profile: {
+        readonly " $fragmentRefs": FragmentRefs<"PartnerHeaderImage_profile">;
+    } | null;
     readonly " $fragmentRefs": FragmentRefs<"PartnerHeader_partner" | "NavigationTabs_partner">;
     readonly " $refType": "PartnerApp_partner";
 };
@@ -22,6 +25,22 @@ const node: ReaderFragment = {
   "name": "PartnerApp_partner",
   "selections": [
     {
+      "alias": null,
+      "args": null,
+      "concreteType": "Profile",
+      "kind": "LinkedField",
+      "name": "profile",
+      "plural": false,
+      "selections": [
+        {
+          "args": null,
+          "kind": "FragmentSpread",
+          "name": "PartnerHeaderImage_profile"
+        }
+      ],
+      "storageKey": null
+    },
+    {
       "args": null,
       "kind": "FragmentSpread",
       "name": "PartnerHeader_partner"
@@ -34,5 +53,5 @@ const node: ReaderFragment = {
   ],
   "type": "Partner"
 };
-(node as any).hash = 'a08e8e56e66d826adfc080c2ea7f5ce3';
+(node as any).hash = 'a864ccfb753be5b51d70bf8379a6da29';
 export default node;

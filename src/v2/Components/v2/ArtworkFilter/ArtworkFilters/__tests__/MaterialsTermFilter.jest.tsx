@@ -78,5 +78,38 @@ describe("MaterialsTermFilter", () => {
       expect(context.filters.materialsTerms).toContain("oil")
       expect(context.filters.materialsTerms).toContain("canvas")
     })
+
+    it("autocompletes available options", () => {
+      const wrapper = getWrapper({
+        aggregations: [
+          {
+            slice: "MATERIALS_TERMS",
+            counts: [
+              { name: "Acrylic", value: "acrylic", count: 42 },
+              { name: "Brass", value: "brass", count: 42 },
+              { name: "Bronze", value: "bronze", count: 42 },
+              { name: "Canvas", value: "canvas", count: 42 },
+              { name: "Drypoint", value: "drypoint", count: 42 },
+              { name: "Enamel", value: "enamel", count: 42 },
+              { name: "Foam", value: "foam", count: 42 },
+              { name: "Glass", value: "glass", count: 42 },
+            ],
+          },
+        ],
+      })
+
+      const input = wrapper.find("input")
+      input.simulate("focus").simulate("change", { target: { value: "b" } })
+
+      expect(wrapper.find("ItemsList").text()).toContain("Brass")
+      expect(wrapper.find("ItemsList").text()).toContain("Bronze")
+
+      expect(wrapper.find("ItemsList").text()).not.toContain("Acrylic")
+      expect(wrapper.find("ItemsList").text()).not.toContain("Canvas")
+      expect(wrapper.find("ItemsList").text()).not.toContain("Drypoint")
+      expect(wrapper.find("ItemsList").text()).not.toContain("Enamel")
+      expect(wrapper.find("ItemsList").text()).not.toContain("Foam")
+      expect(wrapper.find("ItemsList").text()).not.toContain("Glass")
+    })
   })
 })

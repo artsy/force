@@ -1,8 +1,8 @@
-import { BorderBox, Box, Checkbox } from "@artsy/palette"
+import { BorderBox, Box, Checkbox, Text } from "@artsy/palette"
 import { uniq } from "lodash"
 import React, { FC, useState } from "react"
 import Autosuggest from "react-autosuggest"
-import { SearchInputContainer } from "v2/Components/Search/SearchInputContainer"
+import { FilterInput } from "v2/Components/FilterInput/FilterInput"
 import {
   ArrayArtworkFilter,
   useArtworkFilterContext,
@@ -53,14 +53,6 @@ export const FacetAutosuggest: FC<{
   const [suggestions, setSuggestions] = useState([])
   const [focused, setFocus] = useState(false)
 
-  const inputProps = {
-    placeholder,
-    value,
-    onChange: (_e, { newValue }) => setValue(newValue),
-    onFocus: () => setFocus(true),
-    onBlur: () => setFocus(false),
-  }
-
   const filterContext = useArtworkFilterContext()
 
   const onSuggestionSelected = ({ suggestion: { value } }) => {
@@ -71,13 +63,23 @@ export const FacetAutosuggest: FC<{
     filterContext.setFilter(facetName, uniq(selectedValues))
   }
 
-  const renderInputComponent = props => <SearchInputContainer {...props} />
+  const inputProps = {
+    placeholder,
+    value,
+    onChange: (_e, { newValue }) => {
+      setValue(newValue)
+    },
+    onFocus: () => setFocus(true),
+    onBlur: () => setFocus(false),
+  }
+
+  const renderInputComponent = props => <FilterInput {...props} />
 
   const renderSuggestionsContainer = ({ children, containerProps }) => {
     const noResults = suggestions.length === 0
 
     if (focused && noResults && value) {
-      return "No results found."
+      return <Text pt={0.5}>No results.</Text>
     }
 
     return noResults ? (
@@ -104,7 +106,7 @@ export const FacetAutosuggest: FC<{
         onSuggestionSelected(selection)
       }}
       renderInputComponent={renderInputComponent}
-      renderSuggestionsContainer={props => renderSuggestionsContainer(props)}
+      renderSuggestionsContainer={renderSuggestionsContainer}
     />
   )
 }
