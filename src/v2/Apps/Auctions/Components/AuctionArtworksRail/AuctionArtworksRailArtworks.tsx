@@ -72,6 +72,7 @@ const AuctionArtworksRailArtworks: React.FC<AuctionArtworksRailArtworksProps> = 
       {sale.artworksConnection.edges.map(({ node }, index) => {
         return (
           <FillwidthItem
+            key={index}
             // contextModule={ContextModule.}
             artwork={node}
             imageHeight={AUCTION_ARTWORKS_IMAGE_HEIGHT}

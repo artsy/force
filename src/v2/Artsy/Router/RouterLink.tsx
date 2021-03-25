@@ -74,6 +74,7 @@ export const RouterLink: React.ForwardRefExoticComponent<RouterLinkProps> = Reac
             "activeClassName",
             "alignItems",
             "hasLighterTextColor",
+            "noUnderline",
             "underlineBehavior",
           ])}
         >
