@@ -19,4 +19,5 @@ interface Window {
   __BOOTSTRAP__?: any
   PARSELY?: any
   Sailthru?: any
+  _sift: any
 }

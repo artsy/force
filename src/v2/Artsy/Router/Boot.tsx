@@ -20,6 +20,7 @@ import {
 import { AnalyticsContext } from "../Analytics/AnalyticsContext"
 import { ClientContext } from "desktop/lib/buildClientAppContext"
 import { FlashMessage } from "v2/Components/Modal/FlashModal"
+import { SiftContainer } from "v2/Utils/SiftContainer"
 import { setupSentry } from "lib/setupSentry"
 
 export interface BootProps {
@@ -78,6 +79,7 @@ export const Boot = track(null, {
                       <GlobalStyles />
                       <FlashMessage />
                       <FocusVisible />
+                      <SiftContainer />
                       {children}
                       {process.env.NODE_ENV === "development" && (
                         <BreakpointVisualizer />

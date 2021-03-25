@@ -180,3 +180,25 @@ if options.grecaptcha && sd.RECAPTCHA_KEY && !sd.EIGEN && !sd.THIRD_PARTIES_DISA
       }
     }
   script(id="google-recaptcha" src="https://www.google.com/recaptcha/api.js?onload=loadGrecaptchaOnHome&render=#{sd.RECAPTCHA_KEY}" async defer)
+
+
+if !sd.THIRD_PARTIES_DISABLED && sd.SIFT_BEACON_KEY
+  script( type="text/javascript" ).
+    var _sift = window._sift = window._sift || [];
+    _sift.push(['_setAccount', '#{sd.SIFT_BEACON_KEY}']);
+    _sift.push(['_setUserId', '#{sd.CURRENT_USER ? sd.CURRENT_USER.id : ''}']);
+    _sift.push(['_setSessionId', '#{sd.SESSION_ID}']);
+    _sift.push(['_trackPageview']);
+
+    (function() {
+      function ls() {
+        var e = document.createElement('script');
+        e.src = 'https://cdn.sift.com/s.js';
+        document.body.appendChild(e);
+      }
+      if (window.attachEvent) {
+        window.attachEvent('onload', ls);
+      } else {
+        window.addEventListener('load', ls, false);
+      }
+    })();

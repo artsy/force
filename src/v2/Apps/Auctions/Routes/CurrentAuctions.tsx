@@ -77,15 +77,16 @@ export const CurrentAuctionsPaginationContainer = createPaginationContainer(
     viewer: graphql`
       fragment CurrentAuctions_viewer on Viewer
         @argumentDefinitions(
-          first: { type: "Int", defaultValue: 15 }
+          first: { type: "Int", defaultValue: 30 }
           after: { type: "String" }
         ) {
         salesConnection(
           first: $first
           after: $after
-          published: true
           live: true
-          sort: START_AT_ASC
+          published: true
+          sort: END_AT_DESC
+          auctionState: OPEN
         ) @connection(key: "CurrentAuctions_salesConnection") {
           totalCount
           edges {
@@ -94,6 +95,7 @@ export const CurrentAuctionsPaginationContainer = createPaginationContainer(
               name
               href
               liveStartAt
+              isLiveOpen
               ...AuctionArtworksRail_sale
             }
           }

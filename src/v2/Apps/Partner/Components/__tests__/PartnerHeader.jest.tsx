@@ -32,9 +32,11 @@ describe("PartnerHeader", () => {
       Partner: () => ({
         name: "White cube",
         profile: {
-          cropped: {
-            src: "/img.png",
-            srcSet: "/img.png",
+          icon: {
+            resized: {
+              src: "/img.png",
+              srcSet: "/img.png",
+            },
           },
         },
         locations: {
@@ -52,6 +54,7 @@ describe("PartnerHeader", () => {
     const text = wrapper.text()
 
     expect(wrapper.find(HeaderImage).length).toEqual(1)
+    expect(wrapper.find(HeaderImage).prop("src")).toEqual("/img.png")
     expect(wrapper.find(FollowProfileButton).length).toEqual(1)
     expect(text).toContain("White cube")
     expect(text).toContain("Jeddah")
@@ -134,9 +137,10 @@ describe("PartnerHeader", () => {
         name: "White cube",
         href: "/white-cube",
         profile: {
-          cropped: {
-            src: "/img.png",
-            srcSet: "/img.png",
+          icon: {
+            resized: {
+              src: "/img.png",
+            },
           },
         },
       }),
@@ -148,7 +152,11 @@ describe("PartnerHeader", () => {
 
     const PartnerIconLink = wrapper
       .find(RouterLink)
-      .filterWhere(c => c.children().find(HeaderImage).length > 0)
+      .filterWhere(
+        c =>
+          c.children().find(HeaderImage).length > 0 &&
+          c.children().find(HeaderImage).prop("src") === "/img.png"
+      )
 
     expect(PartnerNameLink.length).toEqual(1)
     expect(PartnerNameLink.first().prop("to")).toEqual("/white-cube")

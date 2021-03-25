@@ -2,7 +2,8 @@ import { Checkbox, Flex, Toggle } from "@artsy/palette"
 import React, { FC } from "react"
 import { useArtworkFilterContext } from "../ArtworkFilterContext"
 import { OptionText } from "./OptionText"
-import { ShowMore } from "./ShowMore"
+import { ShowMore, INITIAL_ITEMS_TO_SHOW } from "./ShowMore"
+import { intersection } from "lodash"
 
 export const MediumFilter: FC = () => {
   const { aggregations, counts, ...filterContext } = useArtworkFilterContext()
@@ -28,10 +29,16 @@ export const MediumFilter: FC = () => {
   }
 
   const currentFilters = filterContext.currentlySelectedFilters()
+  const hasBelowTheFoldMediumFilter =
+    intersection(
+      currentFilters.additionalGeneIDs,
+      allowedMediums.slice(INITIAL_ITEMS_TO_SHOW).map(({ value }) => value)
+    ).length > 0
+
   return (
     <Toggle label="Medium" expanded={isExpanded}>
       <Flex flexDirection="column" alignItems="left">
-        <ShowMore>
+        <ShowMore expanded={hasBelowTheFoldMediumFilter}>
           {allowedMediums.map(({ value: slug, name }, index) => {
             return (
               <Checkbox

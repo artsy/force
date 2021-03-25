@@ -25,6 +25,11 @@ export const countChangedFilters = (
 
   // array-valued keys
   for (key of [
+    "additionalGeneIDs",
+    "artistNationalities",
+    "attributionClass",
+    "colors",
+    "locationCities",
     "sizes",
     "majorPeriods",
     "partnerIDs",

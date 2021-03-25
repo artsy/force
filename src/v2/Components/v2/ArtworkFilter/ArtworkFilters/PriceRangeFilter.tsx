@@ -3,7 +3,8 @@ import {
   Button,
   Clickable,
   Flex,
-  Input,
+  LabeledInput,
+  Message,
   Radio,
   RadioGroup,
   Spacer,
@@ -12,6 +13,23 @@ import {
 } from "@artsy/palette"
 import { useArtworkFilterContext } from "../ArtworkFilterContext"
 import { OptionText } from "./OptionText"
+import styled from "styled-components"
+import { Media } from "v2/Utils/Responsive"
+
+// Disables arrows in numeric inputs
+const NumericInput = styled(LabeledInput).attrs({ type: "number" })`
+  /* Chrome, Safari, Edge, Opera */
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  /* Firefox */
+  input[type="number"] {
+    -moz-appearance: textfield;
+  }
+`
 
 const PRICE_RANGES = [
   { name: "$50K+", value: "50000-*" },
@@ -34,33 +52,37 @@ const parseRange = (range?: string) => {
 }
 
 export const PriceRangeFilter: React.FC = () => {
+  const [mode, setMode] = useState<"resting" | "done">("resting")
+
   const { currentlySelectedFilters, setFilter } = useArtworkFilterContext()
   const { priceRange: initialRange, atAuction } = currentlySelectedFilters()
 
   const numericInitialRange = parseRange(initialRange)
 
-  const [showCustom, setShowCustom] = useState(false)
+  const isCustomRange =
+    // Has some kind of price range set (isn't blank)
+    !!initialRange &&
+    // And isn't a pre-defined price range option
+    PRICE_RANGES.find(range => range.value === initialRange) === undefined
+
+  const [showCustom, setShowCustom] = useState(isCustomRange)
   const [customRange, setCustomRange] = useState<CustomRange>(
     numericInitialRange ?? DEFAULT_CUSTOM_RANGE
   )
 
   const handleClick = () => {
     setFilter("priceRange", customRange.join("-"))
+    setMode("done")
   }
 
   const handleChange = (index: number) => ({
     currentTarget: { value },
   }: React.FormEvent<HTMLInputElement>) => {
     const isOpenEnded = value === "" || value === "0"
-    const isMin = index === 0
-    const isMax = index === 1
-
     setCustomRange(prevCustomRange => {
       const nextCustomRange = [...prevCustomRange]
 
-      if (isOpenEnded && isMin) {
-        nextCustomRange[index] = "*"
-      } else if (isOpenEnded && isMax) {
+      if (isOpenEnded) {
         nextCustomRange[index] = "*"
       } else {
         nextCustomRange[index] = parseInt(value, 10)
@@ -71,69 +93,105 @@ export const PriceRangeFilter: React.FC = () => {
   }
 
   const handleSelect = (selectedOption: string) => {
+    if (selectedOption === "custom") {
+      setShowCustom(true)
+      return
+    }
+
+    if (selectedOption !== null) {
+      setCustomRange(parseRange(selectedOption))
+    }
+
+    setShowCustom(false)
     setFilter("priceRange", selectedOption)
-    setCustomRange(parseRange(selectedOption))
   }
 
   return (
-    <Toggle label="Price" expanded>
-      <Flex flexDirection="column" alignItems="left">
-        <RadioGroup
-          deselectable
-          defaultValue={initialRange}
-          onSelect={handleSelect}
-          disabled={atAuction}
-          disabledText="Disabled for biddable works"
-        >
-          {PRICE_RANGES.map((range, index) => (
-            <Radio
-              key={`${index}`}
-              my={0.3}
-              label={<OptionText>{range.name}</OptionText>}
-              value={range.value}
-            />
-          ))}
-        </RadioGroup>
-      </Flex>
+    <>
+      <Toggle label="Price" expanded>
+        {mode === "done" && (
+          <Media lessThan="sm">
+            <Message variant="info" my={2}>
+              Price set; select apply to see full results
+            </Message>
+          </Media>
+        )}
 
-      <Clickable
-        mt={1}
-        textDecoration="underline"
-        textAlign="left"
-        onClick={() => setShowCustom(prevShowCustom => !prevShowCustom)}
-      >
-        <Text>{showCustom ? "Hide" : "Show"} custom price</Text>
-      </Clickable>
+        <Flex flexDirection="column" alignItems="left">
+          <RadioGroup
+            deselectable
+            defaultValue={isCustomRange ? "custom" : initialRange}
+            onSelect={handleSelect}
+            disabled={atAuction}
+            disabledText="Disabled for biddable works"
+          >
+            {[
+              ...PRICE_RANGES.map((range, index) => (
+                <Radio
+                  key={`${index}`}
+                  my={0.3}
+                  label={<OptionText>{range.name}</OptionText>}
+                  value={range.value}
+                />
+              )),
 
-      {showCustom && (
-        <>
-          <Flex mt={1} alignItems="flex-end">
-            <Input
-              placeholder="$ Min"
-              type="number"
-              min="0"
-              step="1"
-              value={customRange[0]}
-              onChange={handleChange(0)}
-            />
+              <Radio
+                key="custom"
+                my={0.3}
+                label={<OptionText>Custom price</OptionText>}
+                value="custom"
+              />,
+            ]}
+          </RadioGroup>
+        </Flex>
 
-            <Spacer mx={0.5} />
+        {showCustom && (
+          <>
+            <Flex mt={1} alignItems="flex-end">
+              <NumericInput
+                label="$USD"
+                placeholder="Min"
+                min="0"
+                step="1"
+                value={customRange[0]}
+                onChange={handleChange(0)}
+              />
 
-            <Input
-              placeholder="$ Max"
-              type="number"
-              min="0"
-              step="1"
-              value={customRange[1]}
-              onChange={handleChange(1)}
-            />
-          </Flex>
+              <Spacer mx={0.5} />
 
-          <Button mt={1} variant="secondaryGray" onClick={handleClick}>
-            Set price
-          </Button>
-        </>
-      )}
-    </Toggle>
+              <NumericInput
+                label="$USD"
+                placeholder="Max"
+                min="0"
+                step="1"
+                value={customRange[1]}
+                onChange={handleChange(1)}
+              />
+            </Flex>
+
+            <Media lessThan="sm">
+              <Clickable
+                mt={2}
+                textDecoration="underline"
+                onClick={handleClick}
+              >
+                <Text>Set price</Text>
+              </Clickable>
+            </Media>
+
+            <Media greaterThanOrEqual="sm">
+              <Button
+                mt={1}
+                variant="secondaryGray"
+                onClick={handleClick}
+                width="100%"
+              >
+                Set price
+              </Button>
+            </Media>
+          </>
+        )}
+      </Toggle>
+    </>
   )
 }

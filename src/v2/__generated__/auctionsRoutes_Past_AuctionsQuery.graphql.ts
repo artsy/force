@@ -25,14 +25,13 @@ query auctionsRoutes_Past_AuctionsQuery {
 
 fragment AuctionArtworksRail_sale on Sale {
   internalID
-  slug
   href
   name
   formattedStartDateTime
 }
 
 fragment PastAuctions_viewer on Viewer {
-  salesConnection(first: 15, published: false, live: false, sort: START_AT_ASC) {
+  salesConnection(first: 30, live: false, sort: START_AT_DESC, auctionState: CLOSED) {
     totalCount
     edges {
       node {
@@ -58,8 +57,13 @@ const node: ConcreteRequest = (function(){
 var v0 = [
   {
     "kind": "Literal",
+    "name": "auctionState",
+    "value": "CLOSED"
+  },
+  {
+    "kind": "Literal",
     "name": "first",
-    "value": 15
+    "value": 30
   },
   {
     "kind": "Literal",
@@ -68,13 +72,8 @@ var v0 = [
   },
   {
     "kind": "Literal",
-    "name": "published",
-    "value": false
-  },
-  {
-    "kind": "Literal",
     "name": "sort",
-    "value": "START_AT_ASC"
+    "value": "START_AT_DESC"
   }
 ];
 return {
@@ -243,15 +242,15 @@ return {
                 "storageKey": null
               }
             ],
-            "storageKey": "salesConnection(first:15,live:false,published:false,sort:\"START_AT_ASC\")"
+            "storageKey": "salesConnection(auctionState:\"CLOSED\",first:30,live:false,sort:\"START_AT_DESC\")"
           },
           {
             "alias": null,
             "args": (v0/*: any*/),
             "filters": [
-              "published",
               "live",
-              "sort"
+              "sort",
+              "auctionState"
             ],
             "handle": "connection",
             "key": "PastAuctions_salesConnection",
@@ -268,7 +267,7 @@ return {
     "metadata": {},
     "name": "auctionsRoutes_Past_AuctionsQuery",
     "operationKind": "query",
-    "text": "query auctionsRoutes_Past_AuctionsQuery {\n  viewer {\n    ...PastAuctions_viewer\n  }\n}\n\nfragment AuctionArtworksRail_sale on Sale {\n  internalID\n  slug\n  href\n  name\n  formattedStartDateTime\n}\n\nfragment PastAuctions_viewer on Viewer {\n  salesConnection(first: 15, published: false, live: false, sort: START_AT_ASC) {\n    totalCount\n    edges {\n      node {\n        slug\n        name\n        href\n        endAt\n        ...AuctionArtworksRail_sale\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query auctionsRoutes_Past_AuctionsQuery {\n  viewer {\n    ...PastAuctions_viewer\n  }\n}\n\nfragment AuctionArtworksRail_sale on Sale {\n  internalID\n  href\n  name\n  formattedStartDateTime\n}\n\nfragment PastAuctions_viewer on Viewer {\n  salesConnection(first: 30, live: false, sort: START_AT_DESC, auctionState: CLOSED) {\n    totalCount\n    edges {\n      node {\n        slug\n        name\n        href\n        endAt\n        ...AuctionArtworksRail_sale\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();

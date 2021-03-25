@@ -49,7 +49,6 @@ export const AuctionArtworksRail: React.FC<AuctionArtworksRailProps> = ({
             </Text>
           )}
         </Box>
-
         <Box height={AUCTION_ARTWORKS_RAIL_HEIGHT}>
           {isEnteredView ? (
             <AuctionArtworksRailArtworksQueryRenderer id={sale.internalID} />
@@ -68,7 +67,6 @@ export const AuctionArtworksRailFragmentContainer = createFragmentContainer(
     sale: graphql`
       fragment AuctionArtworksRail_sale on Sale {
         internalID
-        slug
         href
         name
         formattedStartDateTime

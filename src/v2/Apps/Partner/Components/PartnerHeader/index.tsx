@@ -23,6 +23,7 @@ export interface PartnerHeaderProps {
 
 export const HeaderImage = styled(Image)`
   border: 1px solid ${color("black10")};
+  object-fit: contain;
 `
 
 export const PartnerHeader: React.FC<PartnerHeaderProps> = ({ partner }) => {
@@ -32,60 +33,58 @@ export const PartnerHeader: React.FC<PartnerHeaderProps> = ({ partner }) => {
     partner && partner.type !== "Auction House" && !!partner.profile
 
   return (
-    <>
-      <GridColumns gridRowGap={2} py={[2, 4]}>
-        <Column span={[12, 10]}>
-          <Flex>
-            {partner.profile?.icon && (
-              <Flex mr={2}>
-                <RouterLink
-                  to={partner.href}
-                  style={{ display: "flex", textDecoration: "none" }}
-                >
-                  <HeaderImage
-                    src={partner.profile.icon.cropped.src}
-                    srcSet={partner.profile.icon.cropped.srcSet}
-                    alt={partner.name}
-                    width={[60, 80]}
-                    height={[60, 80]}
-                  />
-                </RouterLink>
-              </Flex>
-            )}
-            <Box>
-              <Text variant="largeTitle">
-                <RouterLink
-                  style={{
-                    textDecoration: "none",
-                  }}
-                  to={partner.href}
-                >
-                  {partner.name}
-                </RouterLink>
-              </Text>
-              {hasLocations && (
-                <Text color="black60" variant="text">
-                  <PartnerHeaderAddress {...partner.locations} />
-                </Text>
-              )}
-            </Box>
-          </Flex>
-        </Column>
-        <Column span={[12, 2]}>
-          {canFollow && (
-            <FollowProfileButton
-              profile={partner.profile}
-              user={user}
-              contextModule={ContextModule.partnerHeader}
-              buttonProps={{
-                variant: "secondaryOutline",
-                width: "100%",
-              }}
-            />
+    <GridColumns gridRowGap={2} py={[2, 4]}>
+      <Column span={[12, 10]}>
+        <Flex>
+          {partner.profile?.icon && (
+            <Flex mr={2}>
+              <RouterLink
+                to={partner.href}
+                style={{ display: "flex", textDecoration: "none" }}
+              >
+                <HeaderImage
+                  src={partner.profile.icon.resized.src}
+                  srcSet={partner.profile.icon.resized.srcSet}
+                  alt={partner.name}
+                  width={[60, 80]}
+                  height={[60, 80]}
+                />
+              </RouterLink>
+            </Flex>
           )}
-        </Column>
-      </GridColumns>
-    </>
+          <Box>
+            <Text variant="largeTitle">
+              <RouterLink
+                style={{
+                  textDecoration: "none",
+                }}
+                to={partner.href}
+              >
+                {partner.name}
+              </RouterLink>
+            </Text>
+            {hasLocations && (
+              <Text color="black60" variant="text">
+                <PartnerHeaderAddress {...partner.locations} />
+              </Text>
+            )}
+          </Box>
+        </Flex>
+      </Column>
+      <Column span={[12, 2]}>
+        {canFollow && (
+          <FollowProfileButton
+            profile={partner.profile}
+            user={user}
+            contextModule={ContextModule.partnerHeader}
+            buttonProps={{
+              variant: "secondaryOutline",
+              width: "100%",
+            }}
+          />
+        )}
+      </Column>
+    </GridColumns>
   )
 }
 
@@ -99,7 +98,7 @@ export const PartnerHeaderFragmentContainer = createFragmentContainer(
         href
         profile {
           icon {
-            cropped(width: 80, height: 80, version: "square140") {
+            resized(width: 80, height: 80, version: "square140") {
               src
               srcSet
             }

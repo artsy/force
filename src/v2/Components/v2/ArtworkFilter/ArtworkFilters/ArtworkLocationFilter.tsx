@@ -1,11 +1,11 @@
 import { Checkbox, Flex, Toggle } from "@artsy/palette"
-import { sortBy } from "lodash"
+import { intersection, sortBy } from "lodash"
 import React, { FC } from "react"
 
 import { useArtworkFilterContext } from "../ArtworkFilterContext"
 import { FacetAutosuggest } from "./FacetAutosuggest"
 import { OptionText } from "./OptionText"
-import { ShowMore } from "./ShowMore"
+import { INITIAL_ITEMS_TO_SHOW, ShowMore } from "./ShowMore"
 
 const ArtworkLocationOption: React.FC<{ name: string }> = ({ name }) => {
   const { currentlySelectedFilters, setFilter } = useArtworkFilterContext()
@@ -36,7 +36,7 @@ const ArtworkLocationOption: React.FC<{ name: string }> = ({ name }) => {
 }
 
 export const ArtworkLocationFilter: FC = () => {
-  const { aggregations } = useArtworkFilterContext()
+  const { aggregations, currentlySelectedFilters } = useArtworkFilterContext()
   const locations = aggregations.find(agg => agg.slice === "LOCATION_CITY")
 
   if (!(locations && locations.counts)) {
@@ -44,6 +44,11 @@ export const ArtworkLocationFilter: FC = () => {
   }
 
   const locationsSorted = sortBy(locations.counts, ["count"]).reverse()
+  const hasBelowTheFoldLocationFilter =
+    intersection(
+      currentlySelectedFilters().locationCities,
+      locations.counts.slice(INITIAL_ITEMS_TO_SHOW).map(({ name }) => name)
+    ).length > 0
 
   return (
     <Toggle label="Artwork location" expanded>
@@ -53,7 +58,7 @@ export const ArtworkLocationFilter: FC = () => {
           placeholder="Enter a city"
           facets={locations.counts}
         />
-        <ShowMore>
+        <ShowMore expanded={hasBelowTheFoldLocationFilter}>
           {locationsSorted.map(({ name }) => {
             return <ArtworkLocationOption key={name} name={name} />
           })}
