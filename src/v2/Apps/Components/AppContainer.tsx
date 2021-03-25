@@ -8,9 +8,9 @@ export const AppContainer: React.FC<AppContainerProps> = ({
   children,
   ...rest
 }) => {
-  const {
-    theme: { breakpoints },
-  } = useTheme<ThemeV2 & ThemeV3>()
+  const { theme: { breakpoints = { lg: null, xl: null } } = {} } = useTheme<
+    ThemeV2 & ThemeV3
+  >()
 
   const maxWidth = useThemeConfig({ v2: breakpoints.xl, v3: breakpoints.lg })
 
