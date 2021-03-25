@@ -26,6 +26,16 @@ export interface Props {
   me?: SavedAddresses_me
 }
 
+const SERVER_ERROR_MAP: Record<string, Record<string, string>> = {
+  "Validation failed for phone: not a valid phone number": {
+    field: "phoneNumber",
+    message: "Please enter a valid phone number",
+  },
+}
+
+export const GENERIC_FAIL_MESSAGE =
+  "Sorry there has been an issue saving your address. Please try again."
+
 export type AddressModalAction = "editUserAddress" | "createUserAddress"
 
 export const AddressModal: React.FC<Props> = ({
@@ -60,19 +70,29 @@ export const AddressModal: React.FC<Props> = ({
           values: SavedAddressType,
           actions: FormikHelpers<SavedAddressType>
         ) => {
+          const handleError = message => {
+            const userMessage: Record<string, string> | null =
+              SERVER_ERROR_MAP[message]
+            if (userMessage) {
+              actions.setFieldError(userMessage.field, userMessage.message)
+            } else {
+              setCreateUpdateError(GENERIC_FAIL_MESSAGE)
+            }
+            actions?.setSubmitting(false)
+            onError && onError(message)
+          }
+
+          const handleSuccess = address => {
+            setCreateUpdateError(null)
+            onSuccess && onSuccess(address)
+          }
+
           createMutation
             ? createUserAddress(
                 relayEnvironment,
                 values,
-                address => {
-                  setCreateUpdateError(null)
-                  onSuccess && onSuccess(address)
-                },
-                message => {
-                  setCreateUpdateError(message)
-                  actions?.setSubmitting(false)
-                  onError && onError(message)
-                },
+                handleSuccess,
+                handleError,
                 me,
                 closeModal
               )
@@ -81,15 +101,8 @@ export const AddressModal: React.FC<Props> = ({
                 address.internalID,
                 values,
                 closeModal,
-                address => {
-                  setCreateUpdateError(null)
-                  onSuccess && onSuccess(address)
-                },
-                message => {
-                  setCreateUpdateError(message)
-                  actions?.setSubmitting(false)
-                  onError && onError(message)
-                }
+                handleSuccess,
+                handleError
               )
         }}
       >

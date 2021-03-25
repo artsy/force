@@ -73,7 +73,6 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
   }
 
   const onError = (message: string) => {
-    // TODO: actually handle error
     logger.error(message)
   }
 

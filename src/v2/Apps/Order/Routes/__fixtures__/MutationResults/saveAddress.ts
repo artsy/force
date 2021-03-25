@@ -44,7 +44,7 @@ export const updateAddressFailure: UpdateUserAddressMutationResponse = {
       errors: [
         {
           code: "100",
-          message: "Invalid phone number",
+          message: "Invalid address",
         },
       ],
     },

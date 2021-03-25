@@ -1,6 +1,6 @@
 import React from "react"
 import { commitMutation as _commitMutation } from "react-relay"
-import { AddressModal, Props } from "../AddressModal"
+import { AddressModal, Props, GENERIC_FAIL_MESSAGE } from "../AddressModal"
 import { mount } from "enzyme"
 import { validAddress } from "v2/Components/__tests__/Utils/addressForm"
 import {
@@ -114,11 +114,9 @@ describe("AddressModal", () => {
 
       expect(wrapper.find(AddressModal).props().onError).toHaveBeenCalled()
 
-      expect(wrapper.find(errorBoxQuery).text()).toContain(
-        "Network request failed"
-      )
+      expect(wrapper.find(errorBoxQuery).text()).toContain(GENERIC_FAIL_MESSAGE)
     })
-    it("shows error when mutation returns error", async () => {
+    it("shows generic error when mutation returns error", async () => {
       let wrapper = getWrapper(testAddressModalProps)
 
       commitMutation.mockImplementationOnce((_, { onCompleted }) =>
@@ -130,21 +128,45 @@ describe("AddressModal", () => {
 
       await wrapper.update()
 
-      expect(commitMutation.mock.calls[0][1]).toMatchObject({
-        variables: {
-          input: {
-            attributes: {
-              ...validAddress,
-            },
+      await tick()
+
+      expect(wrapper.find(errorBoxQuery).text()).toContain(GENERIC_FAIL_MESSAGE)
+    })
+  })
+  it("sets formik error when mutation returns phone validation error", async () => {
+    let wrapper = getWrapper(testAddressModalProps)
+
+    commitMutation.mockImplementationOnce((_, { onCompleted }) =>
+      onCompleted({
+        updateUserAddress: {
+          userAddressOrErrors: {
+            errors: [
+              {
+                message:
+                  "Validation failed for phone: not a valid phone number",
+              },
+            ],
           },
         },
       })
+    )
 
-      await tick()
+    const formik = wrapper.find("Formik").first()
+    const setFieldError = jest.fn()
 
-      expect(wrapper.find(errorBoxQuery).text()).toContain(
-        "Invalid phone number"
-      )
+    const onSubmit = formik.props().onSubmit as any
+    onSubmit(validAddress as any, {
+      setFieldError: setFieldError,
+      setSubmitting: jest.fn(),
     })
+
+    await wrapper.update()
+
+    await tick()
+
+    expect(setFieldError).toHaveBeenCalledWith(
+      "phoneNumber",
+      "Please enter a valid phone number"
+    )
   })
 })
