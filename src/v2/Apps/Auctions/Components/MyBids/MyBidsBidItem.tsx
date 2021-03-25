@@ -54,12 +54,12 @@ export const MyBidsBidItem: React.FC<MyBidsBidItemProps> = ({
                 <>
                   <Box style={{ whiteSpace: "nowrap" }}>
                     <Text variant="text" display="inline-block" pr={0.3}>
-                      {saleArtwork.lot.sellingPrice.display}
+                      {saleArtwork.lotState.sellingPrice.display}
                     </Text>
                     <Text color="black60" display="inline-block">
-                      {saleArtwork.lot.bidCount === 1
-                        ? `${saleArtwork.lot.bidCount} bid`
-                        : `${saleArtwork.lot.bidCount} bids`}
+                      {saleArtwork.lotState.bidCount === 1
+                        ? `${saleArtwork.lotState.bidCount} bid`
+                        : `${saleArtwork.lotState.bidCount} bids`}
                     </Text>
                   </Box>
 
