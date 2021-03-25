@@ -9,8 +9,8 @@ import { env, basePath } from "./utils/env"
 import { legacyCommonConfig } from "./envs/legacyCommonConfig"
 import { legacyDevelopmentConfig } from "./envs/legacyDevelopmentConfig"
 import { legacyProductionConfig } from "./envs/legacyProductionConfig"
-import { novoDevelopmentConfig } from "./envs/novoDevelopmentConfig"
-import { novoProductionConfig } from "./envs/novoProductionConfig"
+import { clientDevelopmentConfig } from "./envs/clientDevelopmentConfig"
+import { clientProductionConfig } from "./envs/clientProductionConfig"
 import { serverConfig } from "./envs/serverConfig"
 
 const getServerConfig = () => {
@@ -44,25 +44,27 @@ const getLegacyConfig = () => {
       return merge.smart(legacyCommonConfig, legacyDevelopmentConfig)
 
     case env.isProduction:
-      console.log("[Force Client] Building client-side production code...")
+      console.log(
+        "[Force Client] Building legacy client-side production code..."
+      )
       return merge.smart(legacyCommonConfig, legacyProductionConfig)
   }
 
   throw new Error(`[Force Client] Unsupported environment ${env.nodeEnv}`)
 }
 
-const getNovoClientConfig = () => {
+const getClientConfig = () => {
   switch (true) {
     case env.isDevelopment:
-      console.log("[Force Novo] Building client-side development code...")
-      return novoDevelopmentConfig
+      console.log("[Force] Building client-side development code...")
+      return clientDevelopmentConfig
 
     case env.isProduction:
-      console.log("[Force Novo] Building client-side production code...")
-      return novoProductionConfig
+      console.log("[Force] Building client-side production code...")
+      return clientProductionConfig
   }
 
-  throw new Error(`[Force Novo] Unsupported environment ${env.nodeEnv}`)
+  throw new Error(`[Force] Unsupported environment ${env.nodeEnv}`)
 }
 
 function generateEnvBasedConfig() {
@@ -74,14 +76,14 @@ function generateEnvBasedConfig() {
   if (
     !env.buildLegacyClient &&
     !env.buildServer &&
-    !env.buildNovoClient &&
+    !env.buildClient &&
     !env.buildNovoServer
   ) {
     console.log("Must build either the CLIENT or SERVER.")
     process.exit(1)
   } else if (
     (env.buildLegacyClient && env.buildServer) ||
-    (env.buildNovoClient && env.buildNovoServer)
+    (env.buildClient && env.buildNovoServer)
   ) {
     console.log("Must only build CLIENT or SERVER.")
     process.exit(1)
@@ -93,8 +95,8 @@ function generateEnvBasedConfig() {
     config = getLegacyConfig()
   } else if (env.buildServer) {
     config = getServerConfig()
-  } else if (env.buildNovoClient) {
-    config = getNovoClientConfig()
+  } else if (env.buildClient) {
+    config = getClientConfig()
   } else {
     console.log(chalk.red("No build selected."))
     process.exit(1)
@@ -118,13 +120,13 @@ module.exports = generateEnvBasedConfig()
 
 if (process.env.AUTO_CONFIGURE) {
   module.exports.createConfig = function (config, options) {
-    if (config === "novo.dev") {
-      return novoDevelopmentConfig
-    } else if (config === "novo.prod") {
-      return novoProductionConfig
-    } else if (config === "force.dev") {
+    if (config === "client.dev") {
+      return clientDevelopmentConfig
+    } else if (config === "client.prod") {
+      return clientProductionConfig
+    } else if (config === "legacy.dev") {
       return merge.smart(legacyCommonConfig, legacyDevelopmentConfig)
-    } else if (config === "force.prod") {
+    } else if (config === "legacy.prod") {
       return merge.smart(legacyCommonConfig, legacyProductionConfig)
     } else if (config === "server.dev") {
       return serverConfig

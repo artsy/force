@@ -7,7 +7,7 @@ import os from "os"
 
 const env = {
   buildLegacyClient: yn(process.env.BUILD_LEGACY_CLIENT, { default: false }),
-  buildNovoClient: yn(process.env.BUILD_NOVO_CLIENT, { default: false }),
+  buildClient: yn(process.env.BUILD_CLIENT, { default: false }),
   buildServer: yn(process.env.BUILD_SERVER, { default: false }),
   enableWebpackAnalyze: yn(process.env.WEBPACK_ANALYZE, { default: false }),
   enableWebpackDumpConfig: process.env.WEBPACK_DUMP_CONFIG,
@@ -39,10 +39,7 @@ if (env.onCi || env.logConfig) {
     chalk.yellow(env.buildLegacyClient)
   )
   console.log("  BUILD_SERVER".padEnd(30), chalk.yellow(env.buildServer))
-  console.log(
-    "  BUILD_NOVO_CLIENT".padEnd(30),
-    chalk.yellow(env.buildNovoClient)
-  )
+  console.log("  BUILD_CLIENT".padEnd(30), chalk.yellow(env.buildClient))
   console.log("  CI".padEnd(30), chalk.yellow(env.onCi))
   console.log(
     "  NODE_ENV == 'isDevelopment'".padEnd(30),

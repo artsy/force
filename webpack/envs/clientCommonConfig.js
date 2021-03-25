@@ -1,6 +1,6 @@
 // @ts-check
 
-export const novoChunks = {
+export const clientChunks = {
   cacheGroups: {
     vendors: false,
     "arsty-common": {

@@ -4,8 +4,16 @@ import { HashedModuleIdsPlugin } from "webpack"
 import HtmlWebpackPlugin from "html-webpack-plugin"
 import LoadablePlugin from "@loadable/webpack-plugin"
 import path from "path"
+import webpack from "webpack"
 import WebpackManifestPlugin from "webpack-manifest-plugin"
 import { basePath, env } from "../utils/env"
+import {
+  clientExternals,
+  standardDevtool,
+  standardMode,
+  standardResolve,
+  standardStats,
+} from "./commonEnv"
 import {
   babelLoader,
   coffeeLoader,
@@ -13,42 +21,37 @@ import {
   jadeLoader,
   mjsLoader,
 } from "./commonLoaders"
-import {
-  clientExternals,
-  standardDevtool,
-  standardMinimizer,
-  standardMode,
-  standardResolve,
-  standardStats,
-} from "./commonEnv"
 import { standardPlugins } from "./commonPlugins"
-import { novoChunks } from "./novoCommonConfig"
+import { clientChunks } from "./clientCommonConfig"
 
-export const novoProductionConfig = {
+export const clientDevelopmentConfig = {
   devtool: standardDevtool,
   entry: {
-    "artsy-novo": [path.resolve(process.cwd(), "src/novo/src/client.tsx")],
+    "artsy-novo": [
+      "webpack-hot-middleware/client?name=novo&reload=true",
+      path.resolve(process.cwd(), "src/novo/src/client.tsx"),
+    ],
   },
   externals: clientExternals,
   mode: standardMode,
   module: {
     rules: [coffeeLoader, jadeLoader, babelLoader, ejsLoader, mjsLoader],
   },
+  name: "novo",
   optimization: {
     concatenateModules: env.webpackConcatenate,
-    minimize: !env.webpackDebug,
-    minimizer: standardMinimizer,
     // Extract webpack runtime code into it's own file
     runtimeChunk: "single",
-    splitChunks: novoChunks,
+    splitChunks: clientChunks,
   },
   output: {
-    filename: "novo-[name].22820.[contenthash].js",
+    filename: "novo-[name].js",
     path: path.resolve(basePath, "public/assets-novo"),
     publicPath: "/assets-novo/",
   },
   plugins: [
     ...standardPlugins,
+    new webpack.HotModuleReplacementPlugin(),
     new LoadablePlugin({
       filename: "loadable-novo-stats.json",
       path: path.resolve(basePath, "public", "assets-novo"),
@@ -61,11 +64,6 @@ export const novoProductionConfig = {
     new HtmlWebpackPlugin({
       filename: path.resolve(basePath, "public", "index.ejs"),
       inject: false,
-      minify: {
-        collapseWhitespace: true,
-        conservativeCollapse: true,
-        removeComments: true,
-      },
       template: path.resolve(basePath, "src", "novo", "src", "index.ejs"),
     }),
   ],

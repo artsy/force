@@ -9,7 +9,7 @@ if [ ! -d public/assets ]; then
 fi
 
 if [ ! -d public/assets-novo ]; then
-  yarn build:assets:novo
+  yarn build:assets
 fi
 
 mocha \
