@@ -10,9 +10,6 @@ import * as sharify from "sharify"
 type MediaQuery = keyof typeof themeProps["mediaQueries"]
 
 const ResponsiveComponents = createResponsiveComponents<MediaQuery>()
-ResponsiveComponents.Consumer.displayName = "DeprecatedResponsive.Context"
-;(ResponsiveComponents.Provider as any).displayName =
-  "DeprecatedResponsive.Context"
 
 export class Responsive extends React.Component<
   React.ConsumerProps<MediaQueryMatches<MediaQuery>>
