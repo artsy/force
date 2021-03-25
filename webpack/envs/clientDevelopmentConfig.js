@@ -1,34 +1,17 @@
 // @ts-check
 
-const chalk = require("chalk")
-const fs = require("fs")
-const path = require("path")
-const webpack = require("webpack")
-const ForkTsCheckerNotifierWebpackPlugin = require("fork-ts-checker-notifier-webpack-plugin")
-const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin")
-const FriendlyErrorsWebpackPlugin = require("friendly-errors-webpack-plugin")
-const WebpackNotifierPlugin = require("webpack-notifier")
-const SimpleProgressWebpackPlugin = require("simple-progress-webpack-plugin")
-const CaseSensitivePathsPlugin = require("case-sensitive-paths-webpack-plugin")
-const { basePath, env } = require("../utils/env")
-const { getEntrypoints } = require("../utils/getEntrypoints")
-
-const cacheDirectory = path.resolve(basePath, ".cache")
-
-if (!env.onCi && !fs.existsSync(cacheDirectory)) {
-  console.log(
-    chalk.yellow(
-      "\n[!] No existing `.cache` directory detected, initial " +
-        "launch will take a while.\n"
-    )
-  )
-}
+import path from "path"
+import webpack from "webpack"
+import ForkTsCheckerNotifierWebpackPlugin from "fork-ts-checker-notifier-webpack-plugin"
+import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin"
+import FriendlyErrorsWebpackPlugin from "friendly-errors-webpack-plugin"
+import WebpackNotifierPlugin from "webpack-notifier"
+import SimpleProgressWebpackPlugin from "simple-progress-webpack-plugin"
+import CaseSensitivePathsPlugin from "case-sensitive-paths-webpack-plugin"
+import { basePath, env } from "../utils/env"
+import { getEntrypoints } from "../utils/getEntrypoints"
 
 export const clientDevelopmentConfig = {
-  devServer: {
-    hot: true,
-  },
-  devtool: env.webpackDevtool || "eval",
   entry: getEntrypoints(),
   module: {
     // Why do we only compile css in development mode?
