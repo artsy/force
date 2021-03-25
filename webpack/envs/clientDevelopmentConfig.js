@@ -29,7 +29,7 @@ export const clientDevelopmentConfig = {
   entry: {
     "artsy-novo": [
       "webpack-hot-middleware/client?name=novo&reload=true",
-      path.resolve(process.cwd(), "src/novo/src/client.tsx"),
+      path.resolve(process.cwd(), "src/v2/client.tsx"),
     ],
   },
   externals: clientExternals,
@@ -54,7 +54,7 @@ export const clientDevelopmentConfig = {
     new webpack.HotModuleReplacementPlugin(),
     new LoadablePlugin({
       filename: "loadable-novo-stats.json",
-      path: path.resolve(basePath, "public", "assets-novo"),
+      path: path.resolve(basePath, "public/assets-novo"),
     }),
     new HashedModuleIdsPlugin(),
     new WebpackManifestPlugin({
@@ -62,9 +62,9 @@ export const clientDevelopmentConfig = {
       fileName: path.resolve(basePath, "manifest-novo.json"),
     }),
     new HtmlWebpackPlugin({
-      filename: path.resolve(basePath, "public", "index.ejs"),
+      filename: path.resolve(basePath, "public/index.ejs"),
       inject: false,
-      template: path.resolve(basePath, "src", "novo", "src", "index.ejs"),
+      template: path.resolve(basePath, "src/v2/index.ejs"),
     }),
   ],
   resolve: standardResolve,
