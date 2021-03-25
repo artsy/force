@@ -8,6 +8,7 @@ import { MyBidsBidHeaderFragmentContainer } from "./MyBidsBidHeader"
 import { MyBidsBidItemFragmentContainer } from "./MyBidsBidItem"
 import { Box, Join, Separator, StackableBorderBox, Text } from "@artsy/palette"
 import { MyBidsPlaceholder } from "./MyBidsPlaceholder"
+import styled from "styled-components"
 
 interface MyBidsProps {
   me: MyBids_me
@@ -22,27 +23,36 @@ const MyBids: React.FC<MyBidsProps> = props => {
 
   return (
     <Carousel arrowHeight={240}>
-      {active.map(activeSale => {
+      {active.map((activeSale, index) => {
         return (
-          <Box width={330}>
+          <SaleContainer key={index}>
             <StackableBorderBox flexDirection="column" overflow="hidden" p={0}>
               <MyBidsBidHeaderFragmentContainer sale={activeSale.sale} />
             </StackableBorderBox>
             <StackableBorderBox p={2} flexDirection="column">
               <Join separator={<Separator my={1} />}>
-                {activeSale.saleArtworks.map(saleArtwork => {
-                  return (
-                    <MyBidsBidItemFragmentContainer saleArtwork={saleArtwork} />
-                  )
-                })}
+                {activeSale.saleArtworks.map(
+                  (saleArtwork, saleArtworkIndex) => {
+                    return (
+                      <MyBidsBidItemFragmentContainer
+                        saleArtwork={saleArtwork}
+                        key={saleArtworkIndex}
+                      />
+                    )
+                  }
+                )}
               </Join>
             </StackableBorderBox>
-          </Box>
+          </SaleContainer>
         )
       })}
     </Carousel>
   )
 }
+
+const SaleContainer = styled(Box).attrs({
+  width: 330,
+})``
 
 const MyBidsFragmentContainer = createFragmentContainer(MyBids, {
   me: graphql`
@@ -87,4 +97,8 @@ export const MyBidsQueryRenderer: React.FC = () => {
       />
     </>
   )
+}
+
+export const tests = {
+  MyBidsFragmentContainer,
 }

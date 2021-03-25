@@ -3,21 +3,21 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type MyBidsQueryVariables = {};
-export type MyBidsQueryResponse = {
+export type MyBids_Test_QueryVariables = {};
+export type MyBids_Test_QueryResponse = {
     readonly me: {
         readonly " $fragmentRefs": FragmentRefs<"MyBids_me">;
     } | null;
 };
-export type MyBidsQuery = {
-    readonly response: MyBidsQueryResponse;
-    readonly variables: MyBidsQueryVariables;
+export type MyBids_Test_Query = {
+    readonly response: MyBids_Test_QueryResponse;
+    readonly variables: MyBids_Test_QueryVariables;
 };
 
 
 
 /*
-query MyBidsQuery {
+query MyBids_Test_Query {
   me {
     ...MyBids_me
     id
@@ -126,7 +126,7 @@ return {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "MyBidsQuery",
+    "name": "MyBids_Test_Query",
     "selections": [
       {
         "alias": null,
@@ -151,7 +151,7 @@ return {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "MyBidsQuery",
+    "name": "MyBids_Test_Query",
     "selections": [
       {
         "alias": null,
@@ -404,11 +404,11 @@ return {
   "params": {
     "id": null,
     "metadata": {},
-    "name": "MyBidsQuery",
+    "name": "MyBids_Test_Query",
     "operationKind": "query",
-    "text": "query MyBidsQuery {\n  me {\n    ...MyBids_me\n    id\n  }\n}\n\nfragment MyBidsBidHeader_sale on Sale {\n  coverImage {\n    resized(width: 300, height: 100) {\n      src\n      srcSet\n    }\n  }\n  formattedStartDateTime\n  name\n  partner {\n    name\n    id\n  }\n  slug\n}\n\nfragment MyBidsBidItem_saleArtwork on SaleArtwork {\n  artwork {\n    artistNames\n    image {\n      resized(width: 50, height: 50) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n  estimate\n  highestBid {\n    amount\n  }\n  isHighestBidder\n  isWatching\n  lotState {\n    bidCount\n    sellingPrice {\n      display\n    }\n  }\n  position\n  slug\n}\n\nfragment MyBids_me on Me {\n  myBids {\n    active {\n      sale {\n        ...MyBidsBidHeader_sale\n        id\n      }\n      saleArtworks {\n        ...MyBidsBidItem_saleArtwork\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query MyBids_Test_Query {\n  me {\n    ...MyBids_me\n    id\n  }\n}\n\nfragment MyBidsBidHeader_sale on Sale {\n  coverImage {\n    resized(width: 300, height: 100) {\n      src\n      srcSet\n    }\n  }\n  formattedStartDateTime\n  name\n  partner {\n    name\n    id\n  }\n  slug\n}\n\nfragment MyBidsBidItem_saleArtwork on SaleArtwork {\n  artwork {\n    artistNames\n    image {\n      resized(width: 50, height: 50) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n  estimate\n  highestBid {\n    amount\n  }\n  isHighestBidder\n  isWatching\n  lotState {\n    bidCount\n    sellingPrice {\n      display\n    }\n  }\n  position\n  slug\n}\n\nfragment MyBids_me on Me {\n  myBids {\n    active {\n      sale {\n        ...MyBidsBidHeader_sale\n        id\n      }\n      saleArtworks {\n        ...MyBidsBidItem_saleArtwork\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '981b9c40ce8be1aaa7b0e0ee02952b42';
+(node as any).hash = 'f5404f5f973a91da4f43cbd18f97b02b';
 export default node;
