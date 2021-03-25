@@ -1,109 +1,63 @@
 // @ts-check
 
-import LoadablePlugin from "@loadable/webpack-plugin"
-import path from "path"
-import { basePath, env } from "../utils/env"
-import {
-  clientExternals,
-  standardDevtool,
-  standardMode,
-  standardResolve,
-  standardStats,
-} from "./commonEnv"
-import {
-  babelLoader,
-  coffeeLoader,
-  jadeLoader,
-  mjsLoader,
-} from "./commonLoaders"
-import { standardPlugins } from "./commonPlugins"
-
-export const clientCommonConfig = {
-  devtool: standardDevtool,
-  externals: clientExternals,
-  mode: standardMode,
-  module: {
-    rules: [coffeeLoader, jadeLoader, babelLoader, mjsLoader],
-  },
-  optimization: {
-    // Extract webpack runtime code into it's own file
-    concatenateModules: env.webpackConcatenate,
-    runtimeChunk: "single",
-    splitChunks: {
-      maxInitialRequests: Infinity,
-      cacheGroups: {
-        artsy: {
-          test: /.*node_modules[\\/](@artsy)[\\/]/,
-          name: "artsy",
-          chunks: "all",
-          minSize: 0,
-          minChunks: 1,
-          reuseExistingChunk: true,
-          enforce: true,
-        },
-        "arsty-common": {
-          test: /.*src[\\/]/,
-          name: "artsy-common",
-          chunks: "all",
-          minSize: 0,
-          minChunks: 5,
-          reuseExistingChunk: true,
-          enforce: true,
-        },
-        "common-backbone": {
-          test: /.*node_modules[\\/](backbone.*)[\\/]/,
-          name: "common-backbone",
-          chunks: "all",
-          minSize: 0,
-          minChunks: 1,
-          reuseExistingChunk: true,
-          enforce: true,
-        },
-        "common-jquery": {
-          test: /.*node_modules[\\/](jquery.*)[\\/]/,
-          name: "common-jquery",
-          chunks: "all",
-          minSize: 0,
-          minChunks: 1,
-          reuseExistingChunk: true,
-          enforce: true,
-        },
-        "common-react": {
-          test: /.*node_modules[\\/](react|react-dom)[\\/]/,
-          name: "common-react",
-          chunks: "all",
-          minSize: 0,
-          minChunks: 1,
-          reuseExistingChunk: true,
-          enforce: true,
-        },
-        "common-utility": {
-          test: /.*node_modules[\\/](lodash.*|moment.*)[\\/]/,
-          name: "common-utility",
-          chunks: "all",
-          minSize: 0,
-          minChunks: 1,
-          reuseExistingChunk: true,
-          enforce: true,
-        },
-        commons: {
-          test: /.*node_modules[\\/](?!(@artsy[\\/]|react[\\/]|react-dom[\\/]|backbone.*[\\/]|lodash.*[\\/]|moment.*[\\/]|jquery.*[\\/]))/,
-          name: "common",
-          chunks: "all",
-          minSize: 0,
-          minChunks: 2,
-          reuseExistingChunk: true,
-          enforce: true,
-        },
-      },
+export const clientChunks = {
+  cacheGroups: {
+    vendors: false,
+    "arsty-common": {
+      chunks: "all",
+      enforce: true,
+      minChunks: 5,
+      minSize: 0,
+      name: "artsy-common",
+      reuseExistingChunk: true,
+      test: /.*src[\\/]/,
+    },
+    // "arsty-graphql-common": {
+    //   chunks: "all",
+    //   enforce: true,
+    //   priority: 50,
+    //   minChunks: 1,
+    //   minSize: 0,
+    //   name: "arsty-graphql-common",
+    //   test: /.*src[\\/]v2[\\/]__generated__[\\/]/,
+    // },
+    artsy: {
+      chunks: "all",
+      enforce: true,
+      minChunks: 1,
+      minSize: 0,
+      name: "artsy",
+      reuseExistingChunk: true,
+      test: /.*node_modules[\\/](@artsy)[\\/]/,
+    },
+    "common-react": {
+      chunks: "all",
+      enforce: true,
+      minChunks: 1,
+      minSize: 0,
+      name: "common-react",
+      reuseExistingChunk: true,
+      test: /.*node_modules[\\/](react|react-dom)[\\/]/,
+    },
+    "common-utility": {
+      chunks: "all",
+      enforce: true,
+      minChunks: 1,
+      minSize: 0,
+      name: "common-utility",
+      reuseExistingChunk: true,
+      test: /.*node_modules[\\/](lodash.*|luxon.*)[\\/]/,
+    },
+    commons: {
+      chunks: "all",
+      enforce: true,
+      minChunks: 2,
+      minSize: 0,
+      name: "common",
+      priority: 10,
+      reuseExistingChunk: true,
+      test: /.*node_modules[\\/](?!(@artsy[\\/]|react[\\/]|react-dom[\\/]|backbone.*[\\/]|lodash.*[\\/]|moment.*[\\/]|luxon.*[\\/]|jquery.*[\\/]))/,
     },
   },
-  output: {
-    filename: "[name].js",
-    path: path.resolve(basePath, "public/assets"),
-    publicPath: "/assets/",
-  },
-  plugins: [...standardPlugins, new LoadablePlugin()],
-  resolve: standardResolve,
-  stats: standardStats,
+  maxInitialRequests: Infinity,
 }

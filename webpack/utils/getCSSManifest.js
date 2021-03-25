@@ -6,7 +6,7 @@ import fs from "fs"
 import path from "path"
 import crypto from "crypto"
 import { execSync } from "child_process"
-import { clientCommonConfig } from "../envs/clientCommonConfig"
+import { legacyCommonConfig } from "../envs/legacyCommonConfig"
 import { env } from "./env"
 
 // Ouput
@@ -57,7 +57,7 @@ function fingerprint(file) {
 function createManifest() {
   const manifest = glob.sync(`${DEST}/*.css`).reduce((acc, file) => {
     const { original, fingerprinted } = fingerprint(file)
-    const { publicPath } = clientCommonConfig.output
+    const { publicPath } = legacyCommonConfig.output
     return {
       ...acc,
       [original]: publicPath + fingerprinted,
