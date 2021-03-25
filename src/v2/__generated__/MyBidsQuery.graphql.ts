@@ -61,7 +61,7 @@ fragment MyBidsBidItem_saleArtwork on SaleArtwork {
   }
   isHighestBidder
   isWatching
-  lot {
+  lotState {
     bidCount
     sellingPrice {
       display
@@ -378,7 +378,7 @@ return {
                         "args": null,
                         "concreteType": "CausalityLotState",
                         "kind": "LinkedField",
-                        "name": "lot",
+                        "name": "lotState",
                         "plural": false,
                         "selections": [
                           {
@@ -438,7 +438,7 @@ return {
     "metadata": {},
     "name": "MyBidsQuery",
     "operationKind": "query",
-    "text": "query MyBidsQuery {\n  me {\n    ...MyBids_me\n    id\n  }\n}\n\nfragment MyBidsBidHeader_sale on Sale {\n  coverImage {\n    resized(width: 300, height: 100) {\n      src\n      srcSet\n    }\n  }\n  displayTimelyAt\n  endAt\n  formattedStartDateTime\n  liveStartAt\n  name\n  partner {\n    name\n    id\n  }\n  requireIdentityVerification\n  slug\n}\n\nfragment MyBidsBidItem_saleArtwork on SaleArtwork {\n  artwork {\n    artistNames\n    image {\n      resized(width: 50, height: 50) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n  estimate\n  highestBid {\n    amount\n  }\n  isHighestBidder\n  isWatching\n  lot {\n    bidCount\n    sellingPrice {\n      display\n    }\n  }\n  position\n  slug\n}\n\nfragment MyBids_me on Me {\n  myBids {\n    active {\n      sale {\n        ...MyBidsBidHeader_sale\n        id\n      }\n      saleArtworks {\n        ...MyBidsBidItem_saleArtwork\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query MyBidsQuery {\n  me {\n    ...MyBids_me\n    id\n  }\n}\n\nfragment MyBidsBidHeader_sale on Sale {\n  coverImage {\n    resized(width: 300, height: 100) {\n      src\n      srcSet\n    }\n  }\n  displayTimelyAt\n  endAt\n  formattedStartDateTime\n  liveStartAt\n  name\n  partner {\n    name\n    id\n  }\n  requireIdentityVerification\n  slug\n}\n\nfragment MyBidsBidItem_saleArtwork on SaleArtwork {\n  artwork {\n    artistNames\n    image {\n      resized(width: 50, height: 50) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n  estimate\n  highestBid {\n    amount\n  }\n  isHighestBidder\n  isWatching\n  lotState {\n    bidCount\n    sellingPrice {\n      display\n    }\n  }\n  position\n  slug\n}\n\nfragment MyBids_me on Me {\n  myBids {\n    active {\n      sale {\n        ...MyBidsBidHeader_sale\n        id\n      }\n      saleArtworks {\n        ...MyBidsBidItem_saleArtwork\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
