@@ -7,8 +7,8 @@ import {
   PartnerHeaderFragmentContainer as PartnerHeader,
 } from "v2/Apps/Partner/Components/PartnerHeader"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
-import { FollowProfileButtonFragmentContainer as FollowProfileButton } from "v2/Components/FollowButton/FollowProfileButton"
 import { PartnerHeaderAddress } from "../PartnerHeader/PartnerHeaderAddress"
+import { FollowProfileButtonFragmentContainer as FollowProfileButton } from "v2/Components/FollowButton/FollowProfileButton"
 
 jest.unmock("react-relay")
 jest.mock("v2/Components/RouteTabs")

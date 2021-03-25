@@ -33,7 +33,7 @@ export const PartnerHeader: React.FC<PartnerHeaderProps> = ({ partner }) => {
     partner && partner.type !== "Auction House" && !!partner.profile
 
   return (
-    <GridColumns gridRowGap={2} my={[2, 4]}>
+    <GridColumns gridRowGap={2} py={[2, 4]}>
       <Column span={[12, 10]}>
         <Flex>
           {partner.profile?.icon && (
@@ -64,7 +64,7 @@ export const PartnerHeader: React.FC<PartnerHeaderProps> = ({ partner }) => {
               </RouterLink>
             </Text>
             {hasLocations && (
-              <Text color={color("black60")} variant="text">
+              <Text color="black60" variant="text">
                 <PartnerHeaderAddress {...partner.locations} />
               </Text>
             )}
