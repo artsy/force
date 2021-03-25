@@ -108,7 +108,7 @@ describe("AuctionResults", () => {
     })
 
     it("renders proper elements", () => {
-      expect(wrapper.find("SelectSmall").length).toBe(1)
+      expect(wrapper.find("select")).toHaveLength(3) // year created earliest, year created latest, sale date
       expect(wrapper.find("Pagination").length).toBe(1)
       expect(wrapper.find("ArtistAuctionResultItem").length).toBe(10)
     })
@@ -124,7 +124,7 @@ describe("AuctionResults", () => {
     })
 
     it("renders proper select options", () => {
-      const html = wrapper.find("SelectSmall").html()
+      const html = wrapper.find("select").last().html()
       expect(html).toContain("Most recent")
       expect(html).toContain("Estimate")
       expect(html).toContain("Sale price")
@@ -378,7 +378,7 @@ describe("AuctionResults", () => {
 
       describe("sort", () => {
         it("triggers relay refetch with correct params, and re-shows sign up to see price", done => {
-          const sort = wrapper.find("SortSelect SelectSmall")
+          const sort = wrapper.find("SortSelect select")
 
           sort.find("option").at(1).simulate("change")
 
