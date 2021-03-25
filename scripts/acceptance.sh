@@ -5,7 +5,7 @@ set -ex
 export NODE_ENV=production
 
 if [ ! -d public/assets ]; then
-  yarn build:assets
+  yarn build:assets:legacy
 fi
 
 if [ ! -d public/assets-novo ]; then

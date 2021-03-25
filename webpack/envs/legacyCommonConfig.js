@@ -18,7 +18,7 @@ import {
 } from "./commonLoaders"
 import { standardPlugins } from "./commonPlugins"
 
-export const clientCommonConfig = {
+export const legacyCommonConfig = {
   devtool: standardDevtool,
   externals: clientExternals,
   mode: standardMode,

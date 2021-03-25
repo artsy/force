@@ -11,7 +11,7 @@ import CaseSensitivePathsPlugin from "case-sensitive-paths-webpack-plugin"
 import { basePath, env } from "../utils/env"
 import { getEntrypoints } from "../utils/getEntrypoints"
 
-export const clientDevelopmentConfig = {
+export const legacyDevelopmentConfig = {
   entry: getEntrypoints(),
   module: {
     // Why do we only compile css in development mode?

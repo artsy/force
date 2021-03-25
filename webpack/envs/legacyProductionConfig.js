@@ -8,7 +8,7 @@ import { basePath, env } from "../utils/env"
 import { getEntrypoints } from "../utils/getEntrypoints"
 import { standardMinimizer } from "./commonEnv"
 
-export const clientProductionConfig = {
+export const legacyProductionConfig = {
   entry: getEntrypoints(),
   optimization: {
     minimize: !env.webpackDebug,

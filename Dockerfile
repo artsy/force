@@ -134,7 +134,7 @@ COPY .env.oss \
 FROM builder-src as builder-assets
 
 # Build application
-RUN yarn build:assets
+RUN yarn build:assets:legacy
 
 # ---------------------------------------------------------
 # Compile novo assets
