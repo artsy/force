@@ -21,7 +21,13 @@ const checkboxValues = [
   },
 ]
 
-export const AttributionClassFilter: React.FC = () => {
+export interface AttributionClassFilterProps {
+  expanded?: boolean
+}
+
+export const AttributionClassFilter: React.FC<AttributionClassFilterProps> = ({
+  expanded,
+}) => {
   const filterContext = useArtworkFilterContext()
 
   const toggleSelection = (selected, name) => {
@@ -42,7 +48,7 @@ export const AttributionClassFilter: React.FC = () => {
   })
 
   return (
-    <Expandable mb={1} label="Rarity" expanded>
+    <Expandable mb={1} label="Rarity" expanded={expanded}>
       <Flex flexDirection="column">
         {checkboxValues.map(({ name, value }, index) => {
           return (

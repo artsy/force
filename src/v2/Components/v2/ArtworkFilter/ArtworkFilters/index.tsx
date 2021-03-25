@@ -12,34 +12,34 @@ import { TimePeriodFilter } from "./TimePeriodFilter"
 import { WaysToBuyFilter } from "./WaysToBuyFilter"
 import { AttributionClassFilter } from "./AttributionClassFilter"
 import { getENV } from "v2/Utils/getENV"
-import { PartnersFilter } from "./PartnersFilter"
 import { ArtworkLocationFilter } from "./ArtworkLocationFilter"
 import { ArtistNationalityFilter } from "./ArtistNationalityFilter"
 import { MaterialsFilter } from "./MaterialsFilter"
+import { PartnersFilter } from "./PartnersFilter"
 
 export const ArtworkFilters: React.FC = () => {
+  const showNewFilters = getENV("ENABLE_NEW_ARTWORK_FILTERS")
+
   return (
     <Box pr={2}>
-      <MediumFilter />
-      {getENV("ENABLE_NEW_ARTWORK_FILTERS") && <MaterialsFilter />}
-      <AttributionClassFilter />
+      <MediumFilter expanded />
+      {showNewFilters && <MaterialsFilter expanded />}
       <PriceRangeFilter />
+      <AttributionClassFilter expanded />
+      {showNewFilters ? <SizeFilter2 /> : <SizeFilter />}
       <WaysToBuyFilter />
-      {getENV("ENABLE_NEW_ARTWORK_FILTERS") ? (
-        <>
-          <PartnersFilter />
-          <ArtworkLocationFilter />
-          <ArtistNationalityFilter />
-        </>
+      {showNewFilters && <ArtworkLocationFilter expanded />}
+      {showNewFilters && <ArtistNationalityFilter expanded />}
+      <TimePeriodFilter />
+      <ColorFilter />
+      {showNewFilters ? (
+        <PartnersFilter />
       ) : (
         <>
           <GalleryFilter />
           <InstitutionFilter />
         </>
       )}
-      {getENV("ENABLE_NEW_ARTWORK_FILTERS") ? <SizeFilter2 /> : <SizeFilter />}
-      <TimePeriodFilter />
-      <ColorFilter />
     </Box>
   )
 }

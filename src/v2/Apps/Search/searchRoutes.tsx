@@ -17,7 +17,7 @@ import { SearchAppFragmentContainer } from "./SearchApp"
 const prepareVariables = (_params, { location }) => {
   const aggregations = ["TOTAL"]
   const additionalAggregations = getENV("ENABLE_NEW_ARTWORK_FILTERS")
-    ? ["ARTIST_NATIONALITY", "LOCATION_CITY", "MATERIALS_TERMS"]
+    ? ["ARTIST_NATIONALITY", "LOCATION_CITY", "MATERIALS_TERMS", "PARTNER"]
     : []
   return {
     ...paramsToCamelCase(omit(location.query, "term")),

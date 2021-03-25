@@ -1,5 +1,5 @@
 import { Flex, Expandable } from "@artsy/palette"
-import { intersection, sortBy } from "lodash"
+import { intersection, orderBy } from "lodash"
 import React from "react"
 import {
   MultiSelectArtworkFilters,
@@ -38,7 +38,7 @@ export const ResultsFilter: React.FC<ResultsFilterProps> = ({
   slice,
   label,
   placeholder,
-  expanded = true,
+  expanded,
 }) => {
   const { aggregations, currentlySelectedFilters } = useArtworkFilterContext()
   const { isFiltered, handleFilterChange } = useFacetFilter()
@@ -51,10 +51,8 @@ export const ResultsFilter: React.FC<ResultsFilterProps> = ({
     return null
   }
 
-  const resultsSorted = sortResults(
-    selectedValues,
-    sortBy(results, ["count"]).reverse()
-  )
+  const resultsOrdered = orderBy(results, ["count", "name"], ["desc", "asc"])
+  const resultsSorted = sortResults(selectedValues, resultsOrdered)
 
   const isBelowTheFoldFilterSelected =
     intersection(

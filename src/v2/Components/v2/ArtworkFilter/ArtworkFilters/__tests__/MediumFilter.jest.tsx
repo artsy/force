@@ -4,22 +4,25 @@ import {
   ArtworkFilterContextProvider,
   useArtworkFilterContext,
 } from "../../ArtworkFilterContext"
-import { MediumFilter } from "../MediumFilter"
+import { MediumFilter, MediumFilterProps } from "../MediumFilter"
 
 describe("MediumFilter", () => {
   let context
 
-  const getWrapper = (props = {}) => {
+  const getWrapper = (
+    contextProps = {},
+    filterProps: MediumFilterProps = { expanded: true }
+  ) => {
     return mount(
-      <ArtworkFilterContextProvider {...props}>
-        <MediumFilterTest />
+      <ArtworkFilterContextProvider {...contextProps}>
+        <MediumFilterTest {...filterProps} />
       </ArtworkFilterContextProvider>
     )
   }
 
-  const MediumFilterTest = () => {
+  const MediumFilterTest = (props: MediumFilterProps) => {
     context = useArtworkFilterContext()
-    return <MediumFilter />
+    return <MediumFilter {...props} />
   }
 
   it("shows custom mediums if aggregations passed to context", () => {
@@ -41,13 +44,29 @@ describe("MediumFilter", () => {
     expect(wrapper.html()).not.toContain("Painting")
   })
 
-  it("selects mediums", done => {
+  it("selects mediums", () => {
     const wrapper = getWrapper()
     wrapper.find("Checkbox").first().simulate("click")
+    expect(context.filters.additionalGeneIDs).toEqual(["painting"])
+  })
 
-    setTimeout(() => {
-      expect(context.filters.additionalGeneIDs).toEqual(["painting"])
-      done()
-    }, 0)
+  describe("the `expanded` prop", () => {
+    it("hides the filter controls when not set", () => {
+      const wrapper = getWrapper({}, {})
+
+      expect(wrapper.find("Checkbox").length).toBe(0)
+    })
+
+    it("hides the filter controls when `false`", () => {
+      const wrapper = getWrapper({}, { expanded: false })
+
+      expect(wrapper.find("Checkbox").length).toBe(0)
+    })
+
+    it("shows the filter controls when `true`", () => {
+      const wrapper = getWrapper({}, { expanded: true })
+
+      expect(wrapper.find("Checkbox").length).not.toBe(0)
+    })
   })
 })

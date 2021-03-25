@@ -13,9 +13,9 @@ import { ColorFilter } from "v2/Components/v2/ArtworkFilter/ArtworkFilters/Color
 import { Box, BoxProps } from "@artsy/palette"
 import { useRouter } from "v2/Artsy/Router/useRouter"
 import { getENV } from "v2/Utils/getENV"
-import { ArtistNationalityFilter } from "v2/Components/v2/ArtworkFilter/ArtworkFilters/ArtistNationalityFilter"
 import { MaterialsFilter } from "v2/Components/v2/ArtworkFilter/ArtworkFilters/MaterialsFilter"
 import { omit } from "lodash"
+import { SizeFilter2 } from "v2/Components/v2/ArtworkFilter/ArtworkFilters/SizeFilter2"
 
 interface ShowArtworksFilterProps extends BoxProps {
   show: ShowArtworks_show
@@ -34,18 +34,21 @@ const ShowArtworksFilter: React.FC<ShowArtworksFilterProps> = ({
 
   if (!hasFilter) return null
 
-  const Filters = () => (
-    <Box pr={2}>
-      <MediumFilter />
-      {getENV("ENABLE_NEW_ARTWORK_FILTERS") && <MaterialsFilter />}
-      <PriceRangeFilter />
-      <WaysToBuyFilter />
-      {getENV("ENABLE_NEW_ARTWORK_FILTERS") && <ArtistNationalityFilter />}
-      <SizeFilter />
-      <TimePeriodFilter />
-      <ColorFilter />
-    </Box>
-  )
+  const Filters = () => {
+    const showNewFilters = getENV("ENABLE_NEW_ARTWORK_FILTERS")
+
+    return (
+      <Box pr={2}>
+        <MediumFilter expanded />
+        {showNewFilters && <MaterialsFilter expanded />}
+        <PriceRangeFilter />
+        {showNewFilters ? <SizeFilter2 /> : <SizeFilter />}
+        <WaysToBuyFilter />
+        <TimePeriodFilter />
+        <ColorFilter />
+      </Box>
+    )
+  }
 
   // Inject custom default sort into artwork filter.
   const filters = omit(

@@ -64,6 +64,8 @@ describe("ArtworkFilter", () => {
       const wrapper = await getWrapper("lg", {
         onFilterClick,
       })
+
+      wrapper.find("WaysToBuyFilter").find("ChevronIcon").simulate("click")
       wrapper.find("WaysToBuyFilter").find("Checkbox").first().simulate("click")
 
       expect(onFilterClick).toHaveBeenCalledWith("acquireable", true, {
@@ -107,6 +109,8 @@ describe("ArtworkFilter", () => {
       const wrapper = await getWrapper("lg", {
         onChange,
       })
+
+      wrapper.find("WaysToBuyFilter").find("ChevronIcon").simulate("click")
       wrapper.find("WaysToBuyFilter").find("Checkbox").first().simulate("click")
 
       expect(onChange).toHaveBeenCalledWith({
@@ -164,6 +168,8 @@ describe("ArtworkFilter", () => {
       const wrapper = await getWrapper("lg", {
         onFilterClick,
       })
+
+      wrapper.find("WaysToBuyFilter").find("ChevronIcon").simulate("click")
       wrapper.find("WaysToBuyFilter").find("Checkbox").first().simulate("click")
 
       expect(trackEvent).toHaveBeenCalledWith({

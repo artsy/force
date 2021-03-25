@@ -108,13 +108,11 @@ const ColorFilterOption: React.FC<{ colorOption: ColorOption }> = ({
     </Checkbox>
   )
 }
-interface ColorFilterProps {
+export interface ColorFilterProps {
   expanded?: boolean // set to true to force expansion
 }
 
-export const ColorFilter: React.FC<ColorFilterProps> = ({
-  expanded = false,
-}) => {
+export const ColorFilter: React.FC<ColorFilterProps> = ({ expanded }) => {
   const { currentlySelectedFilters } = useArtworkFilterContext()
   const hasBelowTheFoldColorFilter =
     intersection(

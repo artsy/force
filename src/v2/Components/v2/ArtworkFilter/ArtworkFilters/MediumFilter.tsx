@@ -5,7 +5,11 @@ import { ShowMore, INITIAL_ITEMS_TO_SHOW } from "./ShowMore"
 import { intersection } from "lodash"
 import { sortResults } from "./ResultsFilter"
 
-export const MediumFilter: FC = () => {
+export interface MediumFilterProps {
+  expanded?: boolean
+}
+
+export const MediumFilter: FC<MediumFilterProps> = ({ expanded }) => {
   const { aggregations, counts, ...filterContext } = useArtworkFilterContext()
   const mediums = aggregations.find(agg => agg.slice === "MEDIUM") || {
     slice: "",
@@ -13,8 +17,6 @@ export const MediumFilter: FC = () => {
   }
   const allowedMediums =
     mediums && mediums.counts.length ? mediums.counts : hardcodedMediums
-
-  const isExpanded = !counts.artworks || counts.artworks > 0
 
   const toggleMediumSelection = (selected, slug) => {
     let geneIDs = filterContext
@@ -45,7 +47,7 @@ export const MediumFilter: FC = () => {
   )
 
   return (
-    <Expandable mb={1} label="Medium" expanded={isExpanded}>
+    <Expandable mb={1} label="Medium" expanded={(!counts.artworks || counts.artworks > 0) && expanded}>
       <Flex flexDirection="column" alignItems="left">
         <ShowMore expanded={hasBelowTheFoldMediumFilter}>
           {resultsSorted.map(({ value: slug, name }, index) => {

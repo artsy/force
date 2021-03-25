@@ -12,7 +12,11 @@ interface WayToBuy {
   state: keyof ArtworkFilters
 }
 
-export const WaysToBuyFilter: FC = () => {
+export interface WaysToBuyFilterProps {
+  expanded?: boolean
+}
+
+export const WaysToBuyFilter: FC<WaysToBuyFilterProps> = ({ expanded }) => {
   const filterContext = useArtworkFilterContext()
 
   /**
@@ -58,7 +62,7 @@ export const WaysToBuyFilter: FC = () => {
   })
 
   return (
-    <Expandable mb={1} label="Ways to buy" expanded>
+    <Expandable mb={1} label="Ways to buy" expanded={expanded}>
       <Flex flexDirection="column">
         {checkboxes.map((checkbox, index) => {
           return (
