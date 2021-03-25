@@ -1,4 +1,4 @@
-import { SelectSmall } from "@artsy/palette"
+import { Select } from "@artsy/palette"
 import React from "react"
 import { useAuctionResultsFilterContext } from "../AuctionResultsFilterContext"
 
@@ -22,7 +22,9 @@ export const SortSelect = () => {
   const filterContext = useAuctionResultsFilterContext()
 
   return (
-    <SelectSmall
+    <Select
+      width="auto"
+      variant="inline"
       options={SORTS}
       selected={filterContext.filters.sort}
       onSelect={sort => {
