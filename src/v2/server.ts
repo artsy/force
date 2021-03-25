@@ -12,10 +12,10 @@ import path from "path"
 // have a default CDN_URL while this does not.
 const { CDN_URL, NODE_ENV } = process.env
 
-const PUBLIC_DIR = path.resolve(__dirname, "../../../public")
+const PUBLIC_DIR = path.resolve(__dirname, "../../public")
 const NOVO_MANIFEST = loadAssetManifest("manifest-novo.json")
 
-const app = express()
+export const app = express()
 const routes = getAppNovoRoutes()
 
 /**

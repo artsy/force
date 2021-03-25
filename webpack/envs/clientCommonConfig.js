@@ -3,24 +3,6 @@
 export const clientChunks = {
   cacheGroups: {
     vendors: false,
-    "arsty-common": {
-      chunks: "all",
-      enforce: true,
-      minChunks: 5,
-      minSize: 0,
-      name: "artsy-common",
-      reuseExistingChunk: true,
-      test: /.*src[\\/]/,
-    },
-    // "arsty-graphql-common": {
-    //   chunks: "all",
-    //   enforce: true,
-    //   priority: 50,
-    //   minChunks: 1,
-    //   minSize: 0,
-    //   name: "arsty-graphql-common",
-    //   test: /.*src[\\/]v2[\\/]__generated__[\\/]/,
-    // },
     artsy: {
       chunks: "all",
       enforce: true,
@@ -29,6 +11,15 @@ export const clientChunks = {
       name: "artsy",
       reuseExistingChunk: true,
       test: /.*node_modules[\\/](@artsy)[\\/]/,
+    },
+    "arsty-common": {
+      chunks: "all",
+      enforce: true,
+      minChunks: 5,
+      minSize: 0,
+      name: "artsy-common",
+      reuseExistingChunk: true,
+      test: /.*src[\\/]/,
     },
     "common-react": {
       chunks: "all",

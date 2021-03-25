@@ -27,7 +27,7 @@ import { clientChunks } from "./clientCommonConfig"
 export const clientProductionConfig = {
   devtool: standardDevtool,
   entry: {
-    "artsy-novo": [path.resolve(process.cwd(), "src/novo/src/client.tsx")],
+    "artsy-novo": [path.resolve(process.cwd(), "src/v2/client.tsx")],
   },
   externals: clientExternals,
   mode: standardMode,
@@ -59,14 +59,14 @@ export const clientProductionConfig = {
       fileName: path.resolve(basePath, "manifest-novo.json"),
     }),
     new HtmlWebpackPlugin({
-      filename: path.resolve(basePath, "public", "index.ejs"),
+      filename: path.resolve(basePath, "public/index.ejs"),
       inject: false,
       minify: {
         collapseWhitespace: true,
         conservativeCollapse: true,
         removeComments: true,
       },
-      template: path.resolve(basePath, "src", "novo", "src", "index.ejs"),
+      template: path.resolve(basePath, "src/v2/index.ejs"),
     }),
   ],
   resolve: standardResolve,
