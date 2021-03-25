@@ -94,7 +94,7 @@ export const MyBidsBidItemFragmentContainer = createFragmentContainer(
         }
         isHighestBidder
         isWatching
-        lot {
+        lotState {
           bidCount
           sellingPrice {
             display
