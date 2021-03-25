@@ -118,6 +118,11 @@ describe("PartnerHeader", () => {
                 city: "San Francisco",
               },
             },
+            {
+              node: {
+                city: null,
+              },
+            },
           ],
         },
       }),
