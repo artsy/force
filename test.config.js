@@ -11,7 +11,7 @@ require("coffeescript/register")
 // require('source-map-support/register')
 
 const path = require("path")
-const Adapter = require("enzyme-adapter-react-16")
+const Adapter = require('@wojtekmaj/enzyme-adapter-react-17')
 const Enzyme = require("enzyme")
 
 // TODO: Look into why this bumps user off of other node command-line tab

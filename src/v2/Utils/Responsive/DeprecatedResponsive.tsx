@@ -110,5 +110,3 @@ export const ResponsiveProvider: React.SFC<ResponsiveProviderProps> = props => {
     </ResponsiveComponents.Provider>
   )
 }
-
-ResponsiveProvider.displayName = "DeprecatedResponsiveProvider"

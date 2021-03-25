@@ -1,5 +1,0 @@
-describe("DemandRank", () => {
-  it("works", () => {
-    //
-  })
-})

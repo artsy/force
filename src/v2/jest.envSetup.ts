@@ -1,6 +1,6 @@
 import chalk from "chalk"
 import Enzyme from "enzyme"
-import Adapter from "enzyme-adapter-react-16"
+import Adapter from "@wojtekmaj/enzyme-adapter-react-17"
 import "regenerator-runtime/runtime"
 import { format } from "util"
 
@@ -104,6 +104,13 @@ if (process.env.ALLOW_CONSOLE_LOGS !== "true") {
             // FIXME: Ignore this warning which stems from using refs on RouterLinks
             !args[0].includes(
               "Warning: Function components cannot be given refs."
+            ) &&
+            !args[0].includes(
+              "Warning: componentWillReceiveProps has been renamed"
+            ) &&
+            !args[0].includes("Warning: componentWillMount has been renamed") &&
+            !args[0].includes(
+              "Warning: unstable_flushDiscreteUpdates: Cannot flush updates when React is already rendering"
             )
           ) {
             done.fail(logToError(type, args, handler))
