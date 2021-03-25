@@ -9,7 +9,6 @@ import {
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import { PartnerHeaderAddress } from "../PartnerHeader/PartnerHeaderAddress"
 import { FollowProfileButtonFragmentContainer as FollowProfileButton } from "v2/Components/FollowButton/FollowProfileButton"
-import { PartnerHeaderImageFragmentContainer as PartnerHeaderImage } from "../PartnerHeader/PartnerHeaderImage"
 
 jest.unmock("react-relay")
 jest.mock("v2/Components/RouteTabs")
@@ -37,12 +36,6 @@ describe("PartnerHeader", () => {
             src: "/img.png",
             srcSet: "/img.png",
           },
-          image: {
-            sm: {
-              url: "img.jpg",
-              srcSet: "img.jpg",
-            },
-          },
         },
         locations: {
           totalCount: 1,
@@ -58,7 +51,6 @@ describe("PartnerHeader", () => {
     })
     const text = wrapper.text()
 
-    expect(wrapper.find(PartnerHeaderImage).length).toEqual(1)
     expect(wrapper.find(HeaderImage).length).toEqual(1)
     expect(wrapper.find(FollowProfileButton).length).toEqual(1)
     expect(text).toContain("White cube")
@@ -174,19 +166,6 @@ describe("PartnerHeader", () => {
     })
 
     expect(wrapper.find(PartnerHeaderAddress).length).toEqual(0)
-  })
-
-  it("doesn't display profile image if there is no info", () => {
-    const wrapper = getWrapper({
-      Partner: () => ({
-        profile: {
-          image: null,
-        },
-      }),
-    })
-    const profileImageHtml = wrapper.find(PartnerHeaderImage).html()
-
-    expect(profileImageHtml).toBe("")
   })
 
   it("doesn't display profile icon if there is no info", () => {

@@ -37,6 +37,10 @@ fragment NavigationTabs_partner on Partner {
 }
 
 fragment PartnerApp_partner on Partner {
+  profile {
+    ...PartnerHeaderImage_profile
+    id
+  }
   ...PartnerHeader_partner
   ...NavigationTabs_partner
 }
@@ -70,7 +74,6 @@ fragment PartnerHeader_partner on Partner {
       }
     }
     ...FollowProfileButton_profile
-    ...PartnerHeaderImage_profile
     id
   }
   locations: locationsConnection(first: 20) {
@@ -94,11 +97,9 @@ var v0 = [
   }
 ],
 v1 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "name",
-  "storageKey": null
+  "kind": "Literal",
+  "name": "version",
+  "value": "wide"
 },
 v2 = [
   {
@@ -117,28 +118,30 @@ v2 = [
   }
 ],
 v3 = {
+  "kind": "Literal",
+  "name": "height",
+  "value": 600
+},
+v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v4 = {
+v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "slug",
   "storageKey": null
 },
-v5 = {
-  "kind": "Literal",
-  "name": "version",
-  "value": "wide"
-},
 v6 = {
-  "kind": "Literal",
-  "name": "height",
-  "value": 600
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "name",
+  "storageKey": null
 };
 return {
   "fragment": {
@@ -180,21 +183,6 @@ return {
         "name": "partner",
         "plural": false,
         "selections": [
-          (v1/*: any*/),
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "type",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "href",
-            "storageKey": null
-          },
           {
             "alias": null,
             "args": null,
@@ -203,6 +191,76 @@ return {
             "name": "profile",
             "plural": false,
             "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "Image",
+                "kind": "LinkedField",
+                "name": "image",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": "sm",
+                    "args": [
+                      {
+                        "kind": "Literal",
+                        "name": "height",
+                        "value": 280
+                      },
+                      (v1/*: any*/),
+                      {
+                        "kind": "Literal",
+                        "name": "width",
+                        "value": 480
+                      }
+                    ],
+                    "concreteType": "CroppedImageUrl",
+                    "kind": "LinkedField",
+                    "name": "cropped",
+                    "plural": false,
+                    "selections": (v2/*: any*/),
+                    "storageKey": "cropped(height:280,version:\"wide\",width:480)"
+                  },
+                  {
+                    "alias": "md",
+                    "args": [
+                      (v3/*: any*/),
+                      (v1/*: any*/),
+                      {
+                        "kind": "Literal",
+                        "name": "width",
+                        "value": 900
+                      }
+                    ],
+                    "concreteType": "CroppedImageUrl",
+                    "kind": "LinkedField",
+                    "name": "cropped",
+                    "plural": false,
+                    "selections": (v2/*: any*/),
+                    "storageKey": "cropped(height:600,version:\"wide\",width:900)"
+                  },
+                  {
+                    "alias": "lg",
+                    "args": [
+                      (v3/*: any*/),
+                      (v1/*: any*/),
+                      {
+                        "kind": "Literal",
+                        "name": "width",
+                        "value": 1600
+                      }
+                    ],
+                    "concreteType": "CroppedImageUrl",
+                    "kind": "LinkedField",
+                    "name": "cropped",
+                    "plural": false,
+                    "selections": (v2/*: any*/),
+                    "storageKey": "cropped(height:600,version:\"wide\",width:1600)"
+                  }
+                ],
+                "storageKey": null
+              },
+              (v4/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -240,9 +298,8 @@ return {
                 ],
                 "storageKey": null
               },
-              (v3/*: any*/),
-              (v4/*: any*/),
-              (v1/*: any*/),
+              (v5/*: any*/),
+              (v6/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -256,77 +313,23 @@ return {
                 "kind": "ScalarField",
                 "name": "isFollowed",
                 "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": "Image",
-                "kind": "LinkedField",
-                "name": "image",
-                "plural": false,
-                "selections": [
-                  {
-                    "alias": "sm",
-                    "args": [
-                      {
-                        "kind": "Literal",
-                        "name": "height",
-                        "value": 280
-                      },
-                      (v5/*: any*/),
-                      {
-                        "kind": "Literal",
-                        "name": "width",
-                        "value": 480
-                      }
-                    ],
-                    "concreteType": "CroppedImageUrl",
-                    "kind": "LinkedField",
-                    "name": "cropped",
-                    "plural": false,
-                    "selections": (v2/*: any*/),
-                    "storageKey": "cropped(height:280,version:\"wide\",width:480)"
-                  },
-                  {
-                    "alias": "md",
-                    "args": [
-                      (v6/*: any*/),
-                      (v5/*: any*/),
-                      {
-                        "kind": "Literal",
-                        "name": "width",
-                        "value": 900
-                      }
-                    ],
-                    "concreteType": "CroppedImageUrl",
-                    "kind": "LinkedField",
-                    "name": "cropped",
-                    "plural": false,
-                    "selections": (v2/*: any*/),
-                    "storageKey": "cropped(height:600,version:\"wide\",width:900)"
-                  },
-                  {
-                    "alias": "lg",
-                    "args": [
-                      (v6/*: any*/),
-                      (v5/*: any*/),
-                      {
-                        "kind": "Literal",
-                        "name": "width",
-                        "value": 1600
-                      }
-                    ],
-                    "concreteType": "CroppedImageUrl",
-                    "kind": "LinkedField",
-                    "name": "cropped",
-                    "plural": false,
-                    "selections": (v2/*: any*/),
-                    "storageKey": "cropped(height:600,version:\"wide\",width:1600)"
-                  }
-                ],
-                "storageKey": null
               }
             ],
+            "storageKey": null
+          },
+          (v6/*: any*/),
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "type",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "href",
             "storageKey": null
           },
           {
@@ -373,7 +376,7 @@ return {
                         "name": "city",
                         "storageKey": null
                       },
-                      (v3/*: any*/)
+                      (v4/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -383,8 +386,8 @@ return {
             ],
             "storageKey": "locationsConnection(first:20)"
           },
-          (v4/*: any*/),
-          (v3/*: any*/)
+          (v5/*: any*/),
+          (v4/*: any*/)
         ],
         "storageKey": "partner(id:\"example\")"
       }
@@ -395,7 +398,7 @@ return {
     "metadata": {},
     "name": "PartnerApp_Test_Query",
     "operationKind": "query",
-    "text": "query PartnerApp_Test_Query {\n  partner(id: \"example\") {\n    ...PartnerApp_partner\n    id\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  is_followed: isFollowed\n}\n\nfragment NavigationTabs_partner on Partner {\n  slug\n}\n\nfragment PartnerApp_partner on Partner {\n  ...PartnerHeader_partner\n  ...NavigationTabs_partner\n}\n\nfragment PartnerHeaderImage_profile on Profile {\n  image {\n    sm: cropped(width: 480, height: 280, version: \"wide\") {\n      src\n      srcSet\n    }\n    md: cropped(width: 900, height: 600, version: \"wide\") {\n      src\n      srcSet\n    }\n    lg: cropped(width: 1600, height: 600, version: \"wide\") {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment PartnerHeader_partner on Partner {\n  name\n  type\n  href\n  profile {\n    icon {\n      cropped(width: 80, height: 80, version: \"square140\") {\n        src\n        srcSet\n      }\n    }\n    ...FollowProfileButton_profile\n    ...PartnerHeaderImage_profile\n    id\n  }\n  locations: locationsConnection(first: 20) {\n    totalCount\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query PartnerApp_Test_Query {\n  partner(id: \"example\") {\n    ...PartnerApp_partner\n    id\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  is_followed: isFollowed\n}\n\nfragment NavigationTabs_partner on Partner {\n  slug\n}\n\nfragment PartnerApp_partner on Partner {\n  profile {\n    ...PartnerHeaderImage_profile\n    id\n  }\n  ...PartnerHeader_partner\n  ...NavigationTabs_partner\n}\n\nfragment PartnerHeaderImage_profile on Profile {\n  image {\n    sm: cropped(width: 480, height: 280, version: \"wide\") {\n      src\n      srcSet\n    }\n    md: cropped(width: 900, height: 600, version: \"wide\") {\n      src\n      srcSet\n    }\n    lg: cropped(width: 1600, height: 600, version: \"wide\") {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment PartnerHeader_partner on Partner {\n  name\n  type\n  href\n  profile {\n    icon {\n      cropped(width: 80, height: 80, version: \"square140\") {\n        src\n        srcSet\n      }\n    }\n    ...FollowProfileButton_profile\n    id\n  }\n  locations: locationsConnection(first: 20) {\n    totalCount\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();

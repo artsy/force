@@ -14,7 +14,7 @@ export type PartnerHeader_partner = {
                 readonly srcSet: string;
             } | null;
         } | null;
-        readonly " $fragmentRefs": FragmentRefs<"FollowProfileButton_profile" | "PartnerHeaderImage_profile">;
+        readonly " $fragmentRefs": FragmentRefs<"FollowProfileButton_profile">;
     } | null;
     readonly locations: {
         readonly totalCount: number | null;
@@ -125,11 +125,6 @@ const node: ReaderFragment = {
           "args": null,
           "kind": "FragmentSpread",
           "name": "FollowProfileButton_profile"
-        },
-        {
-          "args": null,
-          "kind": "FragmentSpread",
-          "name": "PartnerHeaderImage_profile"
         }
       ],
       "storageKey": null
@@ -190,5 +185,5 @@ const node: ReaderFragment = {
   ],
   "type": "Partner"
 };
-(node as any).hash = '24cb32d853d8cae17f91bf12bc428dd0';
+(node as any).hash = 'a7741b78c4d7da9422c10356dae26fad';
 export default node;

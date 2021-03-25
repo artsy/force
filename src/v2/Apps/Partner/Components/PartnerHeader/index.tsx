@@ -16,7 +16,6 @@ import { useSystemContext } from "v2/Artsy"
 import { ContextModule } from "@artsy/cohesion"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import { PartnerHeader_partner } from "v2/__generated__/PartnerHeader_partner.graphql"
-import { PartnerHeaderImageFragmentContainer as PartnerHeaderImage } from "./PartnerHeaderImage"
 
 export interface PartnerHeaderProps {
   partner: PartnerHeader_partner
@@ -34,9 +33,7 @@ export const PartnerHeader: React.FC<PartnerHeaderProps> = ({ partner }) => {
 
   return (
     <>
-      <PartnerHeaderImage profile={partner.profile} />
-
-      <GridColumns gridRowGap={2} my={[2, 4]}>
+      <GridColumns gridRowGap={2} py={[2, 4]}>
         <Column span={[12, 10]}>
           <Flex>
             {partner.profile?.icon && (
@@ -108,7 +105,6 @@ export const PartnerHeaderFragmentContainer = createFragmentContainer(
             }
           }
           ...FollowProfileButton_profile
-          ...PartnerHeaderImage_profile
         }
         locations: locationsConnection(first: 20) {
           totalCount

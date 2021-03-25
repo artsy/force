@@ -3,11 +3,13 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { PartnerHeaderImage_profile } from "v2/__generated__/PartnerHeaderImage_profile.graphql"
 import { FullBleed } from "v2/Components/FullBleed"
 import styled from "styled-components"
-import { useParallaxScroll } from "./useParalaxScroll"
+import { Box } from "@artsy/palette"
+import { MOBILE_NAV_HEIGHT, NAV_BAR_HEIGHT } from "v2/Components/NavBar"
 
 const Container = styled(FullBleed)`
-  position: relative;
+  position: fixed;
   overflow: hidden;
+  z-index: -1;
 `
 
 const Image = styled.img`
@@ -24,22 +26,26 @@ interface PartnerHeaderImageProps {
 export const PartnerHeaderImage: React.FC<PartnerHeaderImageProps> = ({
   profile,
 }) => {
-  const ref = useParallaxScroll<HTMLImageElement>((el, position) => {
-    el.style.transform = `translate(0px, ${position}px)`
-  })
-
   if (!profile || !profile.image) return null
   const { image } = profile
 
   return (
-    <Container bg="black10" height={[280, 600]}>
-      <picture>
-        <source srcSet={image.lg.srcSet} media="(min-width: 1200px)" />
-        <source srcSet={image.md.srcSet} media="(min-width: 700px)" />
-        <source srcSet={image.sm.srcSet} media="(max-width: 700px)" />
-        <Image ref={ref as any} src={image.sm.src} alt="" loading="lazy" />
-      </picture>
-    </Container>
+    <>
+      <Box height={[280, 600]} />
+
+      <Container
+        top={[MOBILE_NAV_HEIGHT, NAV_BAR_HEIGHT]}
+        bg="black10"
+        height={[280, 600]}
+      >
+        <picture>
+          <source srcSet={image.lg.srcSet} media="(min-width: 1200px)" />
+          <source srcSet={image.md.srcSet} media="(min-width: 700px)" />
+          <source srcSet={image.sm.srcSet} media="(max-width: 700px)" />
+          <Image src={image.sm.src} alt="" loading="lazy" />
+        </picture>
+      </Container>
+    </>
   )
 }
 

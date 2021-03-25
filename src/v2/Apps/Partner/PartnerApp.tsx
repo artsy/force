@@ -8,39 +8,56 @@ import { NavigationTabsFragmentContainer as NavigationTabs } from "v2/Apps/Partn
 import { PartnerHeaderFragmentContainer as PartnerHeader } from "./Components/PartnerHeader"
 import { PartnerApp_partner } from "v2/__generated__/PartnerApp_partner.graphql"
 import { FullBleed } from "v2/Components/FullBleed"
+import { PartnerHeaderImageFragmentContainer as PartnerHeaderImage } from "./Components/PartnerHeader/PartnerHeaderImage"
+import styled from "styled-components"
 
 export interface PartnerAppProps {
   partner: PartnerApp_partner
 }
+
+const Foreground = styled.div`
+  background-color: white;
+  z-index: 1;
+  width: 100%;
+`
 
 export const PartnerApp: React.FC<PartnerAppProps> = ({
   partner,
   children,
 }) => {
   return (
-    <AppContainer>
-      <HorizontalPadding>
-        <PartnerHeader partner={partner} />
+    <>
+      <PartnerHeaderImage profile={partner.profile} />
 
-        <FullBleed>
-          <Separator />
-        </FullBleed>
+      <Foreground>
+        <AppContainer>
+          <HorizontalPadding>
+            <PartnerHeader partner={partner} />
 
-        <Box py={2} mt={[2, 4]}>
-          <NavigationTabs partner={partner} />
-        </Box>
+            <FullBleed>
+              <Separator />
+            </FullBleed>
 
-        {children}
+            <Box py={2} mt={[2, 4]}>
+              <NavigationTabs partner={partner} />
+            </Box>
 
-        <Footer />
-      </HorizontalPadding>
-    </AppContainer>
+            {children}
+
+            <Footer />
+          </HorizontalPadding>
+        </AppContainer>
+      </Foreground>
+    </>
   )
 }
 
 export const PartnerAppFragmentContainer = createFragmentContainer(PartnerApp, {
   partner: graphql`
     fragment PartnerApp_partner on Partner {
+      profile {
+        ...PartnerHeaderImage_profile
+      }
       ...PartnerHeader_partner
       ...NavigationTabs_partner
     }
