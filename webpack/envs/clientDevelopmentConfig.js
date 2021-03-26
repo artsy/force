@@ -3,7 +3,6 @@
 import { HashedModuleIdsPlugin } from "webpack"
 import HtmlWebpackPlugin from "html-webpack-plugin"
 import LoadablePlugin from "@loadable/webpack-plugin"
-import FriendlyErrorsWebpackPlugin from "friendly-errors-webpack-plugin"
 import ReactRefreshWebpackPlugin from "@pmmmwh/react-refresh-webpack-plugin"
 import WebpackManifestPlugin from "webpack-manifest-plugin"
 import path from "path"
@@ -58,13 +57,6 @@ export const clientDevelopmentConfig = {
       filename: "loadable-novo-stats.json",
       path: path.resolve(basePath, "public", "assets-novo"),
     }),
-    new FriendlyErrorsWebpackPlugin({
-      clearConsole: false,
-      compilationSuccessInfo: {
-        messages: [`[Force] Listening on http://localhost:${env.port} \n`],
-        notes: [""],
-      },
-    }),
     new HashedModuleIdsPlugin(),
     new WebpackManifestPlugin({
       basePath: "/assets-novo/",
@@ -75,7 +67,11 @@ export const clientDevelopmentConfig = {
       inject: false,
       template: path.resolve(basePath, "src", "v2", "index.ejs"),
     }),
-    new ReactRefreshWebpackPlugin(),
+    new ReactRefreshWebpackPlugin({
+      overlay: {
+        sockIntegration: "whm",
+      },
+    }),
   ],
   resolve: standardResolve,
   stats: standardStats,

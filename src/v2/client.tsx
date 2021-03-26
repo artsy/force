@@ -2,7 +2,7 @@ import "desktop/lib/webpackPublicPath"
 
 import React from "react"
 import ReactDOM from "react-dom"
-import { getAppNovoRoutes } from "v2/Apps/getAppNovoRoutes"
+import { getAppRoutes } from "v2/Apps/getAppRoutes"
 import { loadableReady } from "@loadable/component"
 import { logoutEventHandler } from "desktop/lib/logoutHandler"
 import { mediator } from "lib/mediator"
@@ -14,7 +14,7 @@ import { beforeAnalyticsReady, onAnalyticsReady } from "lib/analytics/helpers"
       /* webpackChunkName: "buildClientApp" */ "v2/Artsy/Router/client"
     )
     const { ClientApp } = await buildClientApp({
-      routes: getAppNovoRoutes(),
+      routes: getAppRoutes(),
     })
 
     // Rehydrate

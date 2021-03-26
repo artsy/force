@@ -1,14 +1,14 @@
-//
-// A library of common cache helpers. If you need to do something more complex
-// than the naive query caching in Backbone Super Sync
-// (https://github.com/artsy/backbone-super-sync#built-in-request-caching)
-// provides then it's recommended to wrap it up in a function in this lib.
-//
-// This also providers a safe wrapper around redis calls so the app can function
-// without redis when necessary.
-//
+/**
+ * A library of common cache helpers. If you need to do something more complex
+ * than the naive query caching in Backbone Super Sync
+ * (https://github.com/artsy/backbone-super-sync#built-in-request-caching)
+ * provides then it's recommended to wrap it up in a function in this lib.
+ *
+ * This also providers a safe wrapper around redis calls so the app can function
+ * without redis when necessary.
+ */
+
 const _ = require("underscore")
-const redis = require("redis")
 const { NODE_ENV, OPENREDIS_URL, DEFAULT_CACHE_TIME } = process.env
 
 class Cache {
@@ -20,6 +20,7 @@ class Cache {
       return callback()
     }
     if (OPENREDIS_URL) {
+      const redis = require("redis")
       this.client = redis.createClient(OPENREDIS_URL)
     } else {
       this.client = null
@@ -129,5 +130,4 @@ class Cache {
 }
 
 const cache = new Cache()
-
-module.exports = cache
+export default cache
