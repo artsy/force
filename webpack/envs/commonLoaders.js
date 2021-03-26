@@ -13,6 +13,9 @@ export const babelLoader = {
       options: {
         cacheDirectory:
           !env.onCi && path.join(basePath, ".cache", "babel/force"),
+        plugins: [
+          env.isDevelopment && require.resolve("react-refresh/babel"),
+        ].filter(Boolean),
       },
     },
   ],

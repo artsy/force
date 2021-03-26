@@ -11,7 +11,7 @@ require("should")
 require("./src/lib/jade_hook")
 
 const path = require("path")
-const Adapter = require("enzyme-adapter-react-16")
+const Adapter = require('@wojtekmaj/enzyme-adapter-react-17')
 const Enzyme = require("enzyme")
 const sd = require("sharify").data
 

@@ -8,32 +8,16 @@ import FriendlyErrorsWebpackPlugin from "friendly-errors-webpack-plugin"
 import WebpackNotifierPlugin from "webpack-notifier"
 import SimpleProgressWebpackPlugin from "simple-progress-webpack-plugin"
 import CaseSensitivePathsPlugin from "case-sensitive-paths-webpack-plugin"
+import ReactRefreshWebpackPlugin from "@pmmmwh/react-refresh-webpack-plugin"
 import { basePath, env } from "../utils/env"
 import { getEntrypoints } from "../utils/getEntrypoints"
 
 export const legacyDevelopmentConfig = {
   entry: getEntrypoints(),
   module: {
-    // Why do we only compile css in development mode?
+    // CSS is compiled in dev for in-memory refreshing; in prod its compiled
+    // by separate stylus binary
     rules: [
-      {
-        include: path.resolve(basePath, "src/desktop/assets"),
-        test: /\.ts$/,
-        use: [
-          {
-            loader: path.resolve(basePath, "webpack/utils/autohot.js"),
-          },
-        ],
-      },
-      {
-        include: path.resolve(basePath, "src/mobile/assets"),
-        test: /\.ts$/,
-        use: [
-          {
-            loader: path.resolve(basePath, "webpack/utils/autohot.js"),
-          },
-        ],
-      },
       {
         include: path.resolve(basePath, "src"),
         test: /\.styl$/,
@@ -82,6 +66,7 @@ export const legacyDevelopmentConfig = {
       },
     }),
     new WebpackNotifierPlugin(),
+    new ReactRefreshWebpackPlugin(),
   ],
   stats: env.webpackStats || "errors-only",
 }
