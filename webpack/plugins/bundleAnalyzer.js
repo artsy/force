@@ -1,8 +1,8 @@
 // @ts-check
 
-const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer")
-const merge = require("webpack-merge")
-const { env } = require("../utils/env")
+import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer"
+import merge from "webpack-merge"
+import { env } from "../utils/env"
 
 export function bundleAnalyzer(config) {
   if (!env.enableWebpackAnalyze) {
@@ -10,7 +10,7 @@ export function bundleAnalyzer(config) {
   }
 
   return merge.smart(config, {
-    devtool: "none",
+    devtool: false,
     stats: "normal",
     optimization: {
       concatenateModules: false,

@@ -1,8 +1,8 @@
 // @ts-check
 
-const path = require("path")
-const fs = require("fs")
-const { basePath, env } = require("./env")
+import path from "path"
+import fs from "fs"
+import { basePath, env } from "./env"
 
 export function getEntrypoints() {
   return {

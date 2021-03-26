@@ -133,15 +133,15 @@ COPY .env.oss \
 # ---------------------------------------------------------
 FROM builder-src as builder-assets
 
-# Build application
-RUN yarn build:assets
+# Build legacy application
+RUN yarn build:assets:legacy
 
 # ---------------------------------------------------------
-# Compile novo assets
+# Compile assets
 # ---------------------------------------------------------
 FROM builder-src as builder-assets-novo
 
-RUN yarn build:assets:novo
+RUN yarn build:assets
 
 # ---------------------------------------------------------
 # Compile server

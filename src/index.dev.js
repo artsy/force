@@ -5,6 +5,8 @@ require("@babel/register")({
   plugins: ["babel-plugin-dynamic-import-node"],
 })
 
+// @ts-check
+
 // Workaround until more appropriate methods for generating an individual config
 // are implemented.
 process.env.AUTO_CONFIGURE = true
@@ -30,20 +32,20 @@ setAliases({
   ),
 })
 
-const clientNovoConfig = createConfig("novo.dev")
-const clientForceConfig = createConfig("force.dev")
+const clientConfig = createConfig("client.dev")
+const clientLegacyConfig = createConfig("legacy.dev")
 
 const force = require("./common-app")
 
 function startServer() {
-  const compiler = webpack([clientNovoConfig, clientForceConfig])
+  const compiler = webpack([clientConfig, clientLegacyConfig])
 
   const app = express()
   const wdm = webpackDevMiddleware(compiler, {
-    publicPath: clientForceConfig.output.publicPath,
+    publicPath: clientLegacyConfig.output.publicPath,
     quiet: true,
     serverSideRender: true,
-    stats: clientForceConfig.stats,
+    stats: clientLegacyConfig.stats,
     writeToDisk(filePath) {
       /**
        * Emit the stats file to disk during dev so that loadable-compoents can

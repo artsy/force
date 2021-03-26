@@ -1,104 +1,72 @@
 // @ts-check
 
-const chalk = require("chalk")
-const fs = require("fs")
-const path = require("path")
-const webpack = require("webpack")
-const ForkTsCheckerNotifierWebpackPlugin = require("fork-ts-checker-notifier-webpack-plugin")
-const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin")
-const FriendlyErrorsWebpackPlugin = require("friendly-errors-webpack-plugin")
-const WebpackNotifierPlugin = require("webpack-notifier")
-const SimpleProgressWebpackPlugin = require("simple-progress-webpack-plugin")
-const CaseSensitivePathsPlugin = require("case-sensitive-paths-webpack-plugin")
-const { basePath, env } = require("../utils/env")
-const { getEntrypoints } = require("../utils/getEntrypoints")
-
-const cacheDirectory = path.resolve(basePath, ".cache")
-
-if (!env.onCi && !fs.existsSync(cacheDirectory)) {
-  console.log(
-    chalk.yellow(
-      "\n[!] No existing `.cache` directory detected, initial " +
-        "launch will take a while.\n"
-    )
-  )
-}
+import { HashedModuleIdsPlugin } from "webpack"
+import HtmlWebpackPlugin from "html-webpack-plugin"
+import LoadablePlugin from "@loadable/webpack-plugin"
+import path from "path"
+import webpack from "webpack"
+import WebpackManifestPlugin from "webpack-manifest-plugin"
+import { basePath, env } from "../utils/env"
+import {
+  clientExternals,
+  standardDevtool,
+  standardMode,
+  standardResolve,
+  standardStats,
+} from "./commonEnv"
+import {
+  babelLoader,
+  coffeeLoader,
+  ejsLoader,
+  jadeLoader,
+  mjsLoader,
+} from "./commonLoaders"
+import { standardPlugins } from "./commonPlugins"
+import { clientChunks } from "./clientCommonConfig"
 
 export const clientDevelopmentConfig = {
-  devServer: {
-    hot: true,
-  },
-  devtool: env.webpackDevtool || "eval",
-  entry: getEntrypoints(),
-  module: {
-    // Why do we only compile css in development mode?
-    rules: [
-      {
-        include: path.resolve(basePath, "src/desktop/assets"),
-        test: /\.ts$/,
-        use: [
-          {
-            loader: path.resolve(basePath, "webpack/utils/autohot.js"),
-          },
-        ],
-      },
-      {
-        include: path.resolve(basePath, "src/mobile/assets"),
-        test: /\.ts$/,
-        use: [
-          {
-            loader: path.resolve(basePath, "webpack/utils/autohot.js"),
-          },
-        ],
-      },
-      {
-        include: path.resolve(basePath, "src"),
-        test: /\.styl$/,
-        use: [
-          {
-            loader: "style-loader",
-            options: {
-              singleton: true,
-            },
-          },
-          "css-loader",
-          {
-            loader: "stylus-loader",
-            options: {
-              import: ["~nib/lib/nib/index.styl"],
-              paths: ["node_modules/nib/lib/nib"],
-              use: [require("nib")()],
-            },
-          },
-        ],
-      },
+  devtool: standardDevtool,
+  entry: {
+    "artsy-novo": [
+      "webpack-hot-middleware/client?name=novo&reload=true",
+      path.resolve(process.cwd(), "src/v2/client.tsx"),
     ],
   },
-  name: "force",
+  externals: clientExternals,
+  mode: standardMode,
+  module: {
+    rules: [coffeeLoader, jadeLoader, babelLoader, ejsLoader, mjsLoader],
+  },
+  name: "novo",
+  optimization: {
+    concatenateModules: env.webpackConcatenate,
+    // Extract webpack runtime code into it's own file
+    runtimeChunk: "single",
+    splitChunks: clientChunks,
+  },
+  output: {
+    filename: "novo-[name].js",
+    path: path.resolve(basePath, "public/assets-novo"),
+    publicPath: "/assets-novo/",
+  },
   plugins: [
-    new CaseSensitivePathsPlugin(),
+    ...standardPlugins,
     new webpack.HotModuleReplacementPlugin(),
-    new SimpleProgressWebpackPlugin({
-      format: "compact",
+    new LoadablePlugin({
+      filename: "loadable-novo-stats.json",
+      path: path.resolve(basePath, "public/assets-novo"),
     }),
-    new ForkTsCheckerWebpackPlugin({
-      checkSyntacticErrors: true,
-      formatter: "codeframe",
-      formatterOptions: "highlightCode",
-      watch: ["./src"],
+    new HashedModuleIdsPlugin(),
+    new WebpackManifestPlugin({
+      basePath: "/assets-novo/",
+      fileName: path.resolve(basePath, "manifest-novo.json"),
     }),
-    new ForkTsCheckerNotifierWebpackPlugin({
-      excludeWarnings: true,
-      skipFirstNotification: true,
+    new HtmlWebpackPlugin({
+      filename: path.resolve(basePath, "public/index.ejs"),
+      inject: false,
+      template: path.resolve(basePath, "src/v2/index.ejs"),
     }),
-    new FriendlyErrorsWebpackPlugin({
-      clearConsole: false,
-      compilationSuccessInfo: {
-        messages: [`[Force] Listening on http://localhost:${env.port} \n`],
-        notes: [""],
-      },
-    }),
-    new WebpackNotifierPlugin(),
   ],
-  stats: env.webpackStats || "errors-only",
+  resolve: standardResolve,
+  stats: standardStats,
 }

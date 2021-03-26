@@ -1,40 +1,74 @@
 // @ts-check
 
-const path = require("path")
-const WebpackManifestPlugin = require("webpack-manifest-plugin")
-const { HashedModuleIdsPlugin } = require("webpack")
-const { getCSSManifest } = require("../utils/getCSSManifest")
-const TerserPlugin = require("terser-webpack-plugin")
-const { basePath, env } = require("../utils/env")
-const { getEntrypoints } = require("../utils/getEntrypoints")
+import { HashedModuleIdsPlugin } from "webpack"
+import HtmlWebpackPlugin from "html-webpack-plugin"
+import LoadablePlugin from "@loadable/webpack-plugin"
+import path from "path"
+import WebpackManifestPlugin from "webpack-manifest-plugin"
+import { basePath, env } from "../utils/env"
+import {
+  babelLoader,
+  coffeeLoader,
+  ejsLoader,
+  jadeLoader,
+  mjsLoader,
+} from "./commonLoaders"
+import {
+  clientExternals,
+  standardDevtool,
+  standardMinimizer,
+  standardMode,
+  standardResolve,
+  standardStats,
+} from "./commonEnv"
+import { standardPlugins } from "./commonPlugins"
+import { clientChunks } from "./clientCommonConfig"
 
 export const clientProductionConfig = {
-  parallelism: 100,
-  mode: env.webpackDebug ? "development" : env.nodeEnv,
-  devtool: "source-map",
-  entry: getEntrypoints(),
+  devtool: standardDevtool,
+  entry: {
+    "artsy-novo": [path.resolve(process.cwd(), "src/v2/client.tsx")],
+  },
+  externals: clientExternals,
+  mode: standardMode,
+  module: {
+    rules: [coffeeLoader, jadeLoader, babelLoader, ejsLoader, mjsLoader],
+  },
+  optimization: {
+    concatenateModules: env.webpackConcatenate,
+    minimize: !env.webpackDebug,
+    minimizer: standardMinimizer,
+    // Extract webpack runtime code into it's own file
+    runtimeChunk: "single",
+    splitChunks: clientChunks,
+  },
   output: {
-    filename: "[name].22820.[contenthash].js",
-    // NOTE: On the client, we're setting `publicPath` during runtime in order to
-    // ensure that dynamically loaded split chunks are being pulled from CDN.
-    // @see: https://github.com/artsy/force/blob/master/src/desktop/lib/global_client_setup.tsx#L7
+    filename: "novo-[name].22820.[contenthash].js",
+    path: path.resolve(basePath, "public/assets-novo"),
+    publicPath: "/assets-novo/",
   },
   plugins: [
+    ...standardPlugins,
+    new LoadablePlugin({
+      filename: "loadable-novo-stats.json",
+      path: path.resolve(basePath, "public", "assets-novo"),
+    }),
     new HashedModuleIdsPlugin(),
     new WebpackManifestPlugin({
-      fileName: path.resolve(basePath, "manifest.json"),
-      basePath: "/assets/",
-      seed: env.isProduction ? getCSSManifest() : {},
+      basePath: "/assets-novo/",
+      fileName: path.resolve(basePath, "manifest-novo.json"),
+    }),
+    new HtmlWebpackPlugin({
+      filename: path.resolve(basePath, "public/index.ejs"),
+      inject: false,
+      minify: {
+        collapseWhitespace: true,
+        conservativeCollapse: true,
+        removeComments: true,
+      },
+      template: path.resolve(basePath, "src/v2/index.ejs"),
     }),
   ],
-  optimization: {
-    minimize: !env.webpackDebug,
-    minimizer: [
-      new TerserPlugin({
-        cache: false,
-        parallel: env.onCi ? env.webpackCiCpuLimit : true, // Only use 4 cpus (default) in CircleCI, by default it will try using 36 and OOM
-        sourceMap: true, // Must be set to true if using source-maps in production
-      }),
-    ],
-  },
+  resolve: standardResolve,
+  stats: standardStats,
 }

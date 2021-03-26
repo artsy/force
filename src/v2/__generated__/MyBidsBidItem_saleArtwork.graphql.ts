@@ -19,7 +19,7 @@ export type MyBidsBidItem_saleArtwork = {
     } | null;
     readonly isHighestBidder: boolean | null;
     readonly isWatching: boolean | null;
-    readonly lot: {
+    readonly lotState: {
         readonly bidCount: number | null;
         readonly sellingPrice: {
             readonly display: string | null;
@@ -152,7 +152,7 @@ const node: ReaderFragment = {
       "args": null,
       "concreteType": "CausalityLotState",
       "kind": "LinkedField",
-      "name": "lot",
+      "name": "lotState",
       "plural": false,
       "selections": [
         {
@@ -200,5 +200,5 @@ const node: ReaderFragment = {
   ],
   "type": "SaleArtwork"
 };
-(node as any).hash = '4f45cb690ba89080610451503d193018';
+(node as any).hash = '629a3e0a94ff40ee0871d2085a279efb';
 export default node;

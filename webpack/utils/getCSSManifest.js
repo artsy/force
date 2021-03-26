@@ -1,12 +1,13 @@
 // @ts-check
-const chalk = require("chalk")
-const glob = require("glob")
-const fs = require("fs")
-const path = require("path")
-const crypto = require("crypto")
-const { execSync } = require("child_process")
-const { clientCommonConfig } = require("../envs")
-const { env } = require("./env")
+
+import chalk from "chalk"
+import glob from "glob"
+import fs from "fs"
+import path from "path"
+import crypto from "crypto"
+import { execSync } from "child_process"
+import { legacyCommonConfig } from "../envs/legacyCommonConfig"
+import { env } from "./env"
 
 // Ouput
 const DEST = "public/assets"
@@ -56,7 +57,7 @@ function fingerprint(file) {
 function createManifest() {
   const manifest = glob.sync(`${DEST}/*.css`).reduce((acc, file) => {
     const { original, fingerprinted } = fingerprint(file)
-    const { publicPath } = clientCommonConfig.output
+    const { publicPath } = legacyCommonConfig.output
     return {
       ...acc,
       [original]: publicPath + fingerprinted,
