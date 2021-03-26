@@ -1,4 +1,4 @@
-import { breakpoints } from "@artsy/palette"
+import { breakpoints, DROP_SHADOW } from "@artsy/palette"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled, { css } from "styled-components"
@@ -17,9 +17,7 @@ export const Container = styled(BaseContainer)`
     stuck
       ? css`
           & > div {
-            // TODO: Will be replaced with DROP_SHADOW constant from Palette.
-            box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.08),
-              0px 2px 8px rgba(0, 0, 0, 0.12);
+            box-shadow: ${DROP_SHADOW};
           }
         `
       : css`
