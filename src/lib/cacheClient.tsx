@@ -1,5 +1,5 @@
 import createLogger from "v2/Utils/logger"
-
+import artsyCache from "./cache"
 interface RedisCache {
   get: (key: string) => Promise<string>
   set: (
@@ -53,7 +53,7 @@ const safeCacheCommand = async (func, ...args) => {
   }
 }
 
-export const setup = (cb: () => void) => {
+const redisCacheSetup = cb => {
   const redis = require("redis")
 
   redisClient = redis.createClient({
@@ -92,3 +92,15 @@ export const setup = (cb: () => void) => {
 }
 
 export { cache }
+
+/**
+ * Connect to Redis
+ * TODO: Should we still hold off the server spin up until after the cache is loaded?
+ */
+export function initializeCache() {
+  console.log("[Force] Initializing cache...")
+
+  return new Promise(resolve => {
+    artsyCache.setup(() => redisCacheSetup(resolve))
+  })
+}

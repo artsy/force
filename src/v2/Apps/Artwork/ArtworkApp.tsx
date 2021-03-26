@@ -50,16 +50,6 @@ declare const window: any
 
 export class LegacyArtworkDllContainer extends React.Component {
   componentDidMount() {
-    // if (
-    //   sd.NODE_ENV === "production" &&
-    //   !document.getElementById("legacy-artwork-dll")
-    // ) {
-    //   const script = document.createElement("script")
-    //   script.id = "legacy-artwork-dll"
-    //   script.src = `/assets-novo/${data.ASSET_LEGACY_ARTWORK_DLL}`
-    //   document.body.appendChild(script)
-    // }
-
     if (!document.getElementById("legacy-assets-dll")) {
       import(
         /* webpackChunkName: 'legacy-assets-dll' */ "desktop/apps/artsy-v2/apps/artwork/artworkClient"
