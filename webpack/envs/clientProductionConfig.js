@@ -59,14 +59,14 @@ export const clientProductionConfig = {
       fileName: path.resolve(basePath, "manifest-novo.json"),
     }),
     new HtmlWebpackPlugin({
-      filename: path.resolve(basePath, "public/index.ejs"),
+      filename: path.resolve(basePath, "public", "index.ejs"),
       inject: false,
       minify: {
         collapseWhitespace: true,
         conservativeCollapse: true,
         removeComments: true,
       },
-      template: path.resolve(basePath, "src/v2/index.ejs"),
+      template: path.resolve(basePath, "src", "v2", "index.ejs"),
     }),
   ],
   resolve: standardResolve,
