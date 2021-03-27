@@ -30,7 +30,7 @@ describe("#cache", () => {
       OPENREDIS_URL: "test",
       NODE_ENV: "production",
     }
-    cache = await import("../cache")
+    cache = (await import("../cache")).cache
     cache.setup(() => {})
   })
 

@@ -68,7 +68,7 @@ function getClientConfig() {
 }
 
 function generateEnvBasedConfig() {
-  if (process.env.AUTO_CONFIGURE) {
+  if (env.isDevelopment) {
     return {}
   }
 
@@ -118,22 +118,21 @@ function generateEnvBasedConfig() {
 
 // Currently used only in dev.ts
 export function createConfig(config, _options) {
-  if (process.env.AUTO_CONFIGURE) {
-    if (config === "client.dev") {
-      return clientDevelopmentConfig
-    } else if (config === "client.prod") {
-      return clientProductionConfig
-    } else if (config === "legacy.dev") {
-      return merge.smart(legacyCommonConfig, legacyDevelopmentConfig)
-    } else if (config === "legacy.prod") {
-      return merge.smart(legacyCommonConfig, legacyProductionConfig)
-    } else if (config === "server.dev") {
-      return serverConfig
-    } else if (config === "server.prod") {
-      return serverConfig
-    }
+  if (config === "client.dev") {
+    return clientDevelopmentConfig
+  } else if (config === "client.prod") {
+    return clientProductionConfig
+  } else if (config === "legacy.dev") {
+    return merge.smart(legacyCommonConfig, legacyDevelopmentConfig)
+  } else if (config === "legacy.prod") {
+    return merge.smart(legacyCommonConfig, legacyProductionConfig)
+  } else if (config === "server.dev") {
+    return serverConfig
+  } else if (config === "server.prod") {
+    return serverConfig
   }
 }
 
+// Currently only used for prod
 const webpackConfig = generateEnvBasedConfig()
 export default webpackConfig

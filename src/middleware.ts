@@ -44,8 +44,6 @@ import { pageCacheMiddleware } from "./lib/middleware/pageCache"
 import { proxyReflectionMiddleware } from "./lib/middleware/proxyReflection"
 import { sameOriginMiddleware } from "./lib/middleware/sameOrigin"
 import { unsupportedBrowserMiddleware } from "./lib/middleware/unsupportedBrowser"
-import { app as blankPageForEigen } from "lib/middleware/blankPageForEigen"
-import { app as healthCheck } from "lib/middleware/healthCheck"
 import { backboneSync } from "lib/backboneSync"
 
 // FIXME: When deploying new Sentry SDK to prod we quickly start to see errors
@@ -111,8 +109,23 @@ export function initializeMiddleware(app) {
   app.use(escapedFragmentMiddleware)
   app.use(unsupportedBrowserMiddleware)
   app.use(pageCacheMiddleware)
-  app.use(blankPageForEigen)
-  app.use(healthCheck)
+
+  /**
+   * Blank page used by Eigen for caching web views.
+   * See: https://github.com/artsy/microgravity-private/pull/1138
+   * TODO: Does this need to come before middleware?
+   */
+  app.use(require("./desktop/apps/blank"))
+
+  /**
+   * Routes for pinging system time and up
+   */
+  app.get("/system/time", (req, res) =>
+    res.status(200).send({ time: Date.now() })
+  )
+  app.get("/system/up", (req, res) => {
+    res.status(200).send({ nodejs: true })
+  })
 
   // Sets up mobile marketing signup modal
   app.use(marketingModalsMiddleware)

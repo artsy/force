@@ -2,7 +2,7 @@ import superSync from "backbone-super-sync"
 import config from "../config"
 import Backbone from "backbone"
 import artsyXapp from "@artsy/xapp"
-import cache from "./cache"
+import { cache } from "./cache"
 
 const { API_REQUEST_TIMEOUT, DEFAULT_CACHE_TIME } = config
 
