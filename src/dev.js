@@ -7,11 +7,6 @@ require("@babel/register")({
   plugins: ["babel-plugin-dynamic-import-node"],
 })
 
-// Workaround until more appropriate methods for generating an individual config
-// are implemented.
-// @ts-ignore
-process.env.AUTO_CONFIGURE = true
-
 const express = require("express")
 const path = require("path")
 const webpack = require("webpack")
@@ -26,10 +21,12 @@ const { initializeMiddleware } = require("./middleware")
 // @ts-ignore
 const { APP_URL, PORT } = require("./config")
 
-// Force resolution of potentially `yarn link`'d modules to the local node_modules
-// folder. This gets around SSR issues involving single react context requirements,
-// amongst other things. This is server-side only. Client-side must be resolved
-// via webpack.
+/**
+ * Force resolution of potentially `yarn link`'d modules to the local i
+ * node_modules folder. This gets around SSR issues involving single react
+ * context requirements, amongst other things. This is server-side only.
+ * Client-side must be resolved via webpack.
+ */
 setAliases({
   react: path.resolve(path.join(__dirname, "../node_modules/react")),
   "react-dom": path.resolve(path.join(__dirname, "../node_modules/react-dom")),
@@ -67,7 +64,7 @@ const wdm = webpackDevMiddleware(compiler, {
 // Mount webpack dev middleware
 app.use(wdm)
 
-// // Mount not loader. Note that react-fast-refresh automatically taps into this.
+// Mount hot loader. Note that react-fast-refresh automatically taps into this.
 app.use(
   webpackHotMiddleware(compiler, {
     log: false,

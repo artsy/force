@@ -12,14 +12,13 @@ import express from "express"
 import config from "./config"
 import chalk from "chalk"
 import { startServer } from "./lib/startServer"
-import { app as errorHandling } from "lib/middleware/errorHandling"
 import legacyDesktopApp from "./desktop"
 import legacyMobileApp from "./mobile"
 import forceV2 from "./v2/server"
 
 console.log(chalk.green(`\n[Force] NODE_ENV=${config.NODE_ENV}\n`))
 
-const app = express()
+export const app = express()
 
 initializeMiddleware(app)
 
@@ -38,9 +37,6 @@ app.use((req, res, next) => {
 
 // Mount legacy desktop apps
 app.use(legacyDesktopApp)
-
-// Error handling goes last
-app.use(errorHandling)
 
 // Boot server
 startServer(app)

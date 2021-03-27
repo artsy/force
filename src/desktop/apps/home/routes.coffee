@@ -1,7 +1,7 @@
 { parse } = require 'url'
 sd = require('sharify').data
 Items = require '../../collections/items'
-{ client } = require '../../lib/cache'
+{ client } = require('../../lib/cache').cache
 metaphysics = require '../../../lib/metaphysics2.coffee'
 viewHelpers = require './view_helpers.coffee'
 welcomeHero = require './welcome'

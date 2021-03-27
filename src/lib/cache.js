@@ -129,5 +129,4 @@ class Cache {
   }
 }
 
-const cache = new Cache()
-export default cache
+export const cache = new Cache()

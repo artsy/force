@@ -3,6 +3,7 @@ import withGracefulShutdown from "http-shutdown"
 import { once } from "lodash"
 import { initializeArtsyXapp } from "./artsyXapp"
 import { initializeCache } from "./cacheClient"
+import { setupErrorHandling } from "./middleware/errorHandler"
 
 const {
   APP_URL,
@@ -18,6 +19,8 @@ const {
  */
 export async function startServer(app) {
   await initializeCache()
+
+  setupErrorHandling(app)
 
   initializeArtsyXapp(() => {
     const message =
