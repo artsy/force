@@ -56,7 +56,7 @@ export const clientDevelopmentConfig = {
     new webpack.HotModuleReplacementPlugin(),
     new LoadablePlugin({
       filename: "loadable-novo-stats.json",
-      path: path.resolve(basePath, "public/assets-novo"),
+      path: path.resolve(basePath, "public", "assets-novo"),
     }),
     new FriendlyErrorsWebpackPlugin({
       clearConsole: false,
@@ -71,7 +71,9 @@ export const clientDevelopmentConfig = {
       fileName: path.resolve(basePath, "manifest-novo.json"),
     }),
     new HtmlWebpackPlugin({
-      template: path.resolve(basePath, "src/v2/index.ejs"),
+      filename: path.resolve(basePath, "public", "index.ejs"),
+      inject: false,
+      template: path.resolve(basePath, "src", "v2", "index.ejs"),
     }),
     new ReactRefreshWebpackPlugin(),
   ],
