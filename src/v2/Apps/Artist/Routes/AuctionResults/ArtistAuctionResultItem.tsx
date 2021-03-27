@@ -14,7 +14,7 @@ import { ArtistAuctionResultItem_auctionResult } from "v2/__generated__/ArtistAu
 import { AnalyticsSchema, SystemContextProps } from "v2/Artsy"
 import { SystemContext } from "v2/Artsy"
 import { ModalType } from "v2/Components/Authentication/Types"
-import { DateTime } from "luxon"
+import { DateTime, LocaleOptions } from "luxon"
 import React, { SFC, useContext, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
@@ -320,7 +320,7 @@ const getProps = (props: Props) => {
 
 const getDisplaySaleDate = saleDate => {
   return DateTime.fromISO(saleDate, { zone: "utc" }).toLocaleString(
-    DateTime.DATE_MED
+    DateTime.DATE_MED as LocaleOptions
   )
 }
 
