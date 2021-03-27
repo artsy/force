@@ -19,6 +19,7 @@ import styled from "styled-components"
 import { Media } from "v2/Utils/Responsive"
 import { OrderRow_order } from "v2/__generated__/OrderRow_order.graphql"
 import { getOrderColor, getOrderIcon } from "../Utils/orderHelper"
+import { LocaleOptions } from "luxon"
 
 interface OrderRowProps {
   order: OrderRow_order
@@ -91,7 +92,9 @@ const OrderRow: React.FC<OrderRowProps> = props => {
             {partnerName}
           </Text>
           <Text variant="text" color="black60" letterSpacing="tight">
-            {orderCreatedAt.toLocaleString(DateTime.DATE_SHORT)}
+            {orderCreatedAt.toLocaleString(
+              DateTime.DATE_SHORT as LocaleOptions
+            )}
           </Text>
         </Flex>
         <Flex flexDirection="column" alignItems="flex-end">
@@ -157,7 +160,7 @@ const OrderRow: React.FC<OrderRowProps> = props => {
       >
         <Text variant="text">
           {" "}
-          {orderCreatedAt.toLocaleString(DateTime.DATE_MED)}
+          {orderCreatedAt.toLocaleString(DateTime.DATE_MED as LocaleOptions)}
         </Text>
         <Flex alignItems="center">
           {getOrderIcon(order.state.toLowerCase())}
