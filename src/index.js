@@ -22,13 +22,12 @@ export const app = express()
 
 initializeMiddleware(app)
 
-// Mount v2 Force
+// Mount latest force
 app.use("/", forceV2)
 
 // Mount legacy mobile apps
 app.use((req, res, next) => {
   if (res.locals.sd.IS_MOBILE) {
-    // Mount mobile app
     legacyMobileApp(req, res, next)
   } else {
     next()
@@ -38,5 +37,5 @@ app.use((req, res, next) => {
 // Mount legacy desktop apps
 app.use(legacyDesktopApp)
 
-// Boot server
+// Boot
 startServer(app)

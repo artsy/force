@@ -1,4 +1,4 @@
-import { getBidderStatus } from "../../../../utils/domain/auctions/getBidderStatus"
+import { getBidderStatus } from "../../../../desktop/apps/auctions/utils/getBidderStatus"
 
 describe("getBidderStatus", () => {
   it("returns qualified if you are qualfied", () => {
