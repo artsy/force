@@ -8,7 +8,9 @@ const template = require("jade").compileFile(
 )
 const cheerio = require("cheerio")
 const moment = require("moment")
-const { getLiveAuctionUrl } = require("../../../../utils/domain/auctions/urls")
+const {
+  getLiveAuctionUrl,
+} = require("../../../../desktop/apps/auctions/utils/urls")
 
 const fixture = () => [
   {

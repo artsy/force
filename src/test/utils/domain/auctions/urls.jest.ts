@@ -1,4 +1,4 @@
-import * as urls from "../../../../utils/domain/auctions/urls"
+import * as urls from "desktop/apps/auctions/utils/urls"
 
 jest.mock("sharify", () => {
   return {
@@ -8,7 +8,7 @@ jest.mock("sharify", () => {
   }
 })
 
-describe("utils/domain/auctions/urls.js", () => {
+describe("desktop/apps/auctions/utils/urls.js", () => {
   describe("#getLiveAuctionUrl", () => {
     const PREDICTION_URL = "http://www.liveauctions.com"
 

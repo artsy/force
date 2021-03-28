@@ -2,7 +2,7 @@ import PropTypes from "prop-types"
 import React from "react"
 import block from "bem-cn-lite"
 import { connect } from "react-redux"
-import { getLiveAuctionUrl } from "utils/domain/auctions/urls"
+import { getLiveAuctionUrl } from "desktop/apps/auctions/utils/urls"
 import { get } from "lodash"
 
 function ActiveBidItem(props) {
