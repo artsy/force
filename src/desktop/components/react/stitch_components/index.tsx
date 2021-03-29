@@ -10,6 +10,9 @@
  * jade / pug components.
  */
 
+import { Box } from "@artsy/palette"
+import React from "react"
+
 export { StitchWrapper } from "./StitchWrapper"
 export { NavBar } from "./NavBar"
 export { CollectionsHubsHomepageNav } from "./CollectionsHubsHomepageNav"
@@ -20,4 +23,12 @@ export { UserEmailPreferencesQueryRenderer as UserEmailPreferences, } from "v2/C
 export { UserInformationQueryRenderer as UserInformation } from "v2/Components/UserSettings/UserInformation"
 export { ReactionCCPARequest as CCPARequest } from "./CCPARequest"
 export { UserSettingsTabs } from "v2/Components/UserSettings/UserSettingsTabs"
-export { Footer } from "v2/Components/Footer"
+import { Footer as BaseFooter } from "v2/Components/Footer"
+
+export const Footer = () => {
+  return (
+    <Box px={2}>
+      <BaseFooter />
+    </Box>
+  )
+}
