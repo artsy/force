@@ -41,4 +41,11 @@ describe("AuctionsApp", () => {
     const wrapper = getWrapper()
     expect(wrapper.find("AuctionsMeta").length).toBe(1)
   })
+
+  it("renders the Current Auctions tab by default", () => {
+    const wrapper = getWrapper()
+    const html = wrapper.html()
+
+    expect(html).toContain("Current Auctions")
+  })
 })
