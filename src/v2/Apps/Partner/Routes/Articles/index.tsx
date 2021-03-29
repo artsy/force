@@ -6,7 +6,7 @@ import {
   RelayPaginationProp,
 } from "react-relay"
 import { Articles_partner } from "v2/__generated__/Articles_partner.graphql"
-import ArticleCard from "../../Components/PartnerArticles/ArticleCard"
+import { ArticleCardFragmentContainer } from "../../Components/PartnerArticles/ArticleCard"
 
 interface ArticlesProps {
   partner: Articles_partner
@@ -24,14 +24,7 @@ const Articles: React.FC<ArticlesProps> = ({ partner, relay }) => {
         {articles.map(({ node: article }) => {
           return (
             <Column key={article.internalID} span={4}>
-              <ArticleCard
-                author={article.author}
-                channelID={article.channelID}
-                href={article.href}
-                thumbnailImage={article.thumbnailImage}
-                title={article.title}
-                contributingAuthors={article.contributingAuthors}
-              />
+              <ArticleCardFragmentContainer article={article} />
             </Column>
           )
         })}
@@ -63,24 +56,8 @@ export const ArticlesPaginationContainer = createPaginationContainer(
           totalCount
           edges {
             node {
-              channelID
               internalID
-              title
-              href
-              author {
-                name
-              }
-              contributingAuthors {
-                name
-              }
-              thumbnailImage {
-                medium: cropped(width: 357, height: 320) {
-                  width
-                  height
-                  src
-                  srcSet
-                }
-              }
+              ...ArticleCard_article
             }
           }
         }

@@ -1,5 +1,1 @@
-import { getAuthors } from "./articlesCard"
-
-export default {
-  getAuthors,
-}
+export * from "./articlesCard"

@@ -1,38 +1,23 @@
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import { Image, ResponsiveBox, Text } from "@artsy/palette"
 import React from "react"
-import helpers from "./helpers"
-
-const { getAuthors } = helpers
+import { getAuthors } from "./helpers"
+import { createFragmentContainer, graphql } from "react-relay"
+import { ArticleCard_article } from "v2/__generated__/ArticleCard_article.graphql"
 
 interface ArticleCardProps {
-  readonly channelID: string | null
-  readonly title: string | null
-  readonly href: string | null
-  readonly author: {
-    readonly name: string | null
-  } | null
-  readonly contributingAuthors: ReadonlyArray<{
-    readonly name: string | null
-  } | null> | null
-  readonly thumbnailImage: {
-    readonly medium: {
-      readonly width: number
-      readonly height: number
-      readonly src: string
-      readonly srcSet: string
-    } | null
-  } | null
+  article: ArticleCard_article
 }
 
-const ArticleCard: React.FC<ArticleCardProps> = ({
-  title,
-  author,
-  href,
-  channelID,
-  thumbnailImage,
-  contributingAuthors,
-}): JSX.Element => {
+const ArticleCard: React.FC<ArticleCardProps> = ({ article }): JSX.Element => {
+  const {
+    title,
+    author,
+    href,
+    channelID,
+    thumbnailImage,
+    contributingAuthors,
+  } = article
   const { authorName, editorialName } = getAuthors(
     channelID,
     author,
@@ -52,8 +37,8 @@ const ArticleCard: React.FC<ArticleCardProps> = ({
               src={thumbnailImage.medium.src}
               srcSet={thumbnailImage.medium.srcSet}
               alt=""
-              width={thumbnailImage.medium.width}
-              height={thumbnailImage.medium.height}
+              width="100%"
+              height="100%"
               lazyLoad
             />
           </ResponsiveBox>
@@ -86,4 +71,29 @@ const ArticleCard: React.FC<ArticleCardProps> = ({
   )
 }
 
-export default ArticleCard
+export const ArticleCardFragmentContainer = createFragmentContainer(
+  ArticleCard,
+  {
+    article: graphql`
+      fragment ArticleCard_article on Article {
+        channelID
+        title
+        href
+        author {
+          name
+        }
+        contributingAuthors {
+          name
+        }
+        thumbnailImage {
+          medium: cropped(width: 357, height: 320) {
+            width
+            height
+            src
+            srcSet
+          }
+        }
+      }
+    `,
+  }
+)
