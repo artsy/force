@@ -1,10 +1,12 @@
 import { pageCacheMiddleware } from "../pageCache"
 
-const cache = require("lib/cache")
+const { cache } = require("lib/cache")
 
 jest.mock("lib/cache", () => ({
-  get: jest.fn().mockResolvedValue(true),
-  set: jest.fn(),
+  cache: {
+    get: jest.fn().mockResolvedValue(true),
+    set: jest.fn(),
+  },
 }))
 
 jest.mock("config", () => ({

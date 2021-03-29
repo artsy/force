@@ -2,7 +2,7 @@ _ = require 'underscore'
 moment = require 'moment'
 Profile = require '../../models/profile.coffee'
 Fairs = require '../../collections/fairs.coffee'
-cache = require '../../lib/cache'
+{ cache } = require('../../lib/cache')
 OrderedSets = require '../../collections/ordered_sets'
 Articles = require '../../collections/articles'
 

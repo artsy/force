@@ -1,7 +1,8 @@
+import express from "express"
 import { middleware as stitchMiddleware } from "@artsy/stitch/dist/internal/middleware"
 import * as globalReactModules from "desktop/components/react/stitch_components"
 
-const app = (module.exports = require("express")())
+const app = express()
 
 /**
  * -----------------------------------------------------------------------------
@@ -86,10 +87,6 @@ app.use(require("./apps/articles").app)
 app.use(require("./apps/page"))
 app.use(require("./apps/shortcuts"))
 
-// Mount all `v2/Apps`.
-// TODO: Remove this post NOVO conversion
-// app.use(require("./apps/artsy-v2/server").app)
-
 // User profiles
 app.use(require("./apps/user"))
 
@@ -106,3 +103,7 @@ app.use(require("./apps/partner"))
 // TODO: Move this post NOVO conversion
 app.use(require("./apps/artsy-v2/apps/fair").app)
 app.use(require("./apps/fair_organizer"))
+
+// Export for hot reloading
+module.exports = app
+export default app

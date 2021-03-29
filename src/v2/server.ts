@@ -1,7 +1,7 @@
 import sharify from "sharify"
 import type { NextFunction, Request, Response } from "express"
 import { buildServerApp } from "v2/Artsy/Router/server"
-import { getAppNovoRoutes } from "v2/Apps/getAppNovoRoutes"
+import { getAppRoutes } from "v2/Apps/getAppRoutes"
 import { flatten } from "lodash"
 import ReactDOM from "react-dom/server"
 import loadAssetManifest from "lib/manifest"
@@ -15,8 +15,8 @@ const { CDN_URL, NODE_ENV } = process.env
 const PUBLIC_DIR = path.resolve(__dirname, "../../public")
 const NOVO_MANIFEST = loadAssetManifest("manifest-novo.json")
 
-export const app = express()
-const routes = getAppNovoRoutes()
+const app = express()
+const routes = getAppRoutes()
 
 /**
  * We can't use a wildcard route because of gallery vanity urls, so iterate
@@ -37,21 +37,6 @@ const flatRoutes = flatten(
     return allRoutes
   })
 )
-
-app.get("/novo", (req, res) => {
-  res.send(`
-    <!doctype html>
-      <body>
-        <ul>
-          <li><a href='/novo/debug/baseline'>Baseline</a></li>
-          <li><a href='/novo/feature/artsy-vanguard-2020'>Feature Page</a></li>
-          <li><a href='/novo/artist/pablo-picasso'>Artist</a></li>
-          <li><a href='/novo/artwork/pablo-picasso-couple-posant-pour-un-portrait-en-medaillon-couple-posing-for-a-medallion-portrait'>Artwork</a></li>
-        </ul>
-      </body>
-    </html>
-  `)
-})
 
 /**
  * Mount routes that will connect to global SSR router
@@ -128,9 +113,7 @@ app.get(flatRoutes, async (req: Request, res: Response, next: NextFunction) => {
       sd: sharify.data,
     }
 
-    res.render(`${PUBLIC_DIR}/index.ejs`, {
-      ...options,
-    })
+    res.render(`${PUBLIC_DIR}/index.ejs`, options)
   } catch (error) {
     console.error(error)
     next(error)
@@ -147,3 +130,4 @@ function getParam(req, name): string | null {
 // This export form is required for express-reloadable
 // TODO: Remove when no longer needed for hot reloading
 module.exports = app
+export default app

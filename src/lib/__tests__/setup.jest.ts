@@ -18,8 +18,8 @@ describe("setup", () => {
       })
 
       const app = express()
-      const setup = require("../../common-middleware").default
-      setup(app)
+      const { initializeMiddleware } = require("../../middleware")
+      initializeMiddleware(app)
 
       expect(artsyPassport.options.ARTSY_ID).toEqual("client-id-123")
       expect(artsyPassport.options.ARTSY_SECRET).toEqual("client-secret-123")

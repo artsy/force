@@ -13,7 +13,7 @@ import { clientDevelopmentConfig } from "./envs/clientDevelopmentConfig"
 import { clientProductionConfig } from "./envs/clientProductionConfig"
 import { serverConfig } from "./envs/serverConfig"
 
-const getServerConfig = () => {
+function getServerConfig() {
   console.log(chalk.green(`\n[Force] NODE_ENV=${env.nodeEnv} \n`))
 
   switch (true) {
@@ -25,7 +25,7 @@ const getServerConfig = () => {
   throw new Error(`[Force Server] Unsupported environment ${env.nodeEnv}`)
 }
 
-const getLegacyConfig = () => {
+function getLegacyConfig() {
   console.log(chalk.green(`\n[Force] NODE_ENV=${env.nodeEnv} \n`))
 
   switch (true) {
@@ -53,7 +53,7 @@ const getLegacyConfig = () => {
   throw new Error(`[Force Client] Unsupported environment ${env.nodeEnv}`)
 }
 
-const getClientConfig = () => {
+function getClientConfig() {
   switch (true) {
     case env.isDevelopment:
       console.log("[Force] Building client-side development code...")
@@ -68,7 +68,7 @@ const getClientConfig = () => {
 }
 
 function generateEnvBasedConfig() {
-  if (process.env.AUTO_CONFIGURE) {
+  if (env.isDevelopment) {
     return {}
   }
 
@@ -116,22 +116,23 @@ function generateEnvBasedConfig() {
   return config
 }
 
-module.exports = generateEnvBasedConfig()
-
-if (process.env.AUTO_CONFIGURE) {
-  module.exports.createConfig = function (config, options) {
-    if (config === "client.dev") {
-      return clientDevelopmentConfig
-    } else if (config === "client.prod") {
-      return clientProductionConfig
-    } else if (config === "legacy.dev") {
-      return merge.smart(legacyCommonConfig, legacyDevelopmentConfig)
-    } else if (config === "legacy.prod") {
-      return merge.smart(legacyCommonConfig, legacyProductionConfig)
-    } else if (config === "server.dev") {
-      return serverConfig
-    } else if (config === "server.prod") {
-      return serverConfig
-    }
+// Currently used only in dev.ts
+export function createConfig(config, _options) {
+  if (config === "client.dev") {
+    return clientDevelopmentConfig
+  } else if (config === "client.prod") {
+    return clientProductionConfig
+  } else if (config === "legacy.dev") {
+    return merge.smart(legacyCommonConfig, legacyDevelopmentConfig)
+  } else if (config === "legacy.prod") {
+    return merge.smart(legacyCommonConfig, legacyProductionConfig)
+  } else if (config === "server.dev") {
+    return serverConfig
+  } else if (config === "server.prod") {
+    return serverConfig
   }
 }
+
+// Currently only used for prod
+const webpackConfig = generateEnvBasedConfig()
+export default webpackConfig
