@@ -1,9 +1,9 @@
 import http from "http"
 import withGracefulShutdown from "http-shutdown"
+import RavenServer from "raven"
 import { once } from "lodash"
 import { initializeArtsyXapp } from "./artsyXapp"
 import { initializeCache } from "./cacheClient"
-import { setupErrorHandling } from "./middleware/errorHandler"
 
 const {
   APP_URL,
@@ -20,7 +20,18 @@ const {
 export async function startServer(app) {
   await initializeCache()
 
-  setupErrorHandling(app)
+  // Setup exception reporting
+  // TODO: This is a deprecated lib; replace with @sentry/node
+  app.use(RavenServer.errorHandler())
+
+  // And error handling
+  app.get("*", (req, res, next) => {
+    const err = new Error()
+    // @ts-ignore -- FIXME: status does not exist on err
+    err.status = 404
+    err.message = "Not Found"
+    next(err)
+  })
 
   initializeArtsyXapp(() => {
     const message =

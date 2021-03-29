@@ -19,6 +19,7 @@ import sharify from "sharify"
 import siteAssociation from "artsy-eigen-web-association"
 import timeout from "connect-timeout"
 import bodyParser from "body-parser"
+import RavenServer from "raven"
 import config from "./config"
 
 import { morganMiddleware } from "./lib/middleware/morgan"
@@ -62,10 +63,18 @@ const {
   CLIENT_SECRET,
   API_URL,
   SEGMENT_WRITE_KEY_SERVER,
+  SENTRY_PRIVATE_DSN,
 } = config
 
 export function initializeMiddleware(app) {
   app.set("trust proxy", true)
+
+  // Setup error handling
+  // TODO: This is a deprecated lib; replace with @sentry/node
+  if (SENTRY_PRIVATE_DSN) {
+    RavenServer.config(SENTRY_PRIVATE_DSN).install()
+    app.use(RavenServer.requestHandler())
+  }
 
   // Inject sharify data and asset middleware before any app code so that when
   // crashing errors occur we'll at least get a 500 error page.
