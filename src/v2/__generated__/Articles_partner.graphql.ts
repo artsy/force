@@ -9,24 +9,8 @@ export type Articles_partner = {
         readonly totalCount: number | null;
         readonly edges: ReadonlyArray<{
             readonly node: {
-                readonly channelID: string | null;
                 readonly internalID: string;
-                readonly title: string | null;
-                readonly href: string | null;
-                readonly author: {
-                    readonly name: string | null;
-                } | null;
-                readonly contributingAuthors: ReadonlyArray<{
-                    readonly name: string | null;
-                } | null> | null;
-                readonly thumbnailImage: {
-                    readonly medium: {
-                        readonly width: number;
-                        readonly height: number;
-                        readonly src: string;
-                        readonly srcSet: string;
-                    } | null;
-                } | null;
+                readonly " $fragmentRefs": FragmentRefs<"ArticleCard_article">;
             } | null;
         } | null> | null;
     } | null;
@@ -40,20 +24,10 @@ export type Articles_partner$key = {
 
 
 
-const node: ReaderFragment = (function(){
-var v0 = [
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "name",
-    "storageKey": null
-  }
-];
-return {
+const node: ReaderFragment = {
   "argumentDefinitions": [
     {
-      "defaultValue": 10,
+      "defaultValue": 18,
       "kind": "LocalArgument",
       "name": "first",
       "type": "Int"
@@ -122,109 +96,7 @@ return {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
-                  "name": "channelID",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
                   "name": "internalID",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "title",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "href",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "concreteType": "Author",
-                  "kind": "LinkedField",
-                  "name": "author",
-                  "plural": false,
-                  "selections": (v0/*: any*/),
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "concreteType": "Author",
-                  "kind": "LinkedField",
-                  "name": "contributingAuthors",
-                  "plural": true,
-                  "selections": (v0/*: any*/),
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "concreteType": "Image",
-                  "kind": "LinkedField",
-                  "name": "thumbnailImage",
-                  "plural": false,
-                  "selections": [
-                    {
-                      "alias": "medium",
-                      "args": [
-                        {
-                          "kind": "Literal",
-                          "name": "height",
-                          "value": 320
-                        },
-                        {
-                          "kind": "Literal",
-                          "name": "width",
-                          "value": 357
-                        }
-                      ],
-                      "concreteType": "CroppedImageUrl",
-                      "kind": "LinkedField",
-                      "name": "cropped",
-                      "plural": false,
-                      "selections": [
-                        {
-                          "alias": null,
-                          "args": null,
-                          "kind": "ScalarField",
-                          "name": "width",
-                          "storageKey": null
-                        },
-                        {
-                          "alias": null,
-                          "args": null,
-                          "kind": "ScalarField",
-                          "name": "height",
-                          "storageKey": null
-                        },
-                        {
-                          "alias": null,
-                          "args": null,
-                          "kind": "ScalarField",
-                          "name": "src",
-                          "storageKey": null
-                        },
-                        {
-                          "alias": null,
-                          "args": null,
-                          "kind": "ScalarField",
-                          "name": "srcSet",
-                          "storageKey": null
-                        }
-                      ],
-                      "storageKey": "cropped(height:320,width:357)"
-                    }
-                  ],
                   "storageKey": null
                 },
                 {
@@ -233,6 +105,11 @@ return {
                   "kind": "ScalarField",
                   "name": "__typename",
                   "storageKey": null
+                },
+                {
+                  "args": null,
+                  "kind": "FragmentSpread",
+                  "name": "ArticleCard_article"
                 }
               ],
               "storageKey": null
@@ -278,6 +155,5 @@ return {
   ],
   "type": "Partner"
 };
-})();
-(node as any).hash = '52bd4e1a49442c8992ce5b1eb1d52748';
+(node as any).hash = '92af750ecb64d591949e96519f141cae';
 export default node;

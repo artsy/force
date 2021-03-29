@@ -28,32 +28,36 @@ query partnerRoutes_ArticlesQuery(
   }
 }
 
+fragment ArticleCard_article on Article {
+  channelID
+  title
+  href
+  author {
+    name
+    id
+  }
+  contributingAuthors {
+    name
+    id
+  }
+  thumbnailImage {
+    medium: cropped(width: 357, height: 320) {
+      width
+      height
+      src
+      srcSet
+    }
+  }
+}
+
 fragment Articles_partner on Partner {
   slug
-  articlesConnection(first: 10) {
+  articlesConnection(first: 18) {
     totalCount
     edges {
       node {
-        channelID
         internalID
-        title
-        href
-        author {
-          name
-          id
-        }
-        contributingAuthors {
-          name
-          id
-        }
-        thumbnailImage {
-          medium: cropped(width: 357, height: 320) {
-            width
-            height
-            src
-            srcSet
-          }
-        }
+        ...ArticleCard_article
         id
         __typename
       }
@@ -87,7 +91,7 @@ v2 = [
   {
     "kind": "Literal",
     "name": "first",
-    "value": 10
+    "value": 18
   }
 ],
 v3 = {
@@ -189,14 +193,14 @@ return {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
-                        "name": "channelID",
+                        "name": "internalID",
                         "storageKey": null
                       },
                       {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
-                        "name": "internalID",
+                        "name": "channelID",
                         "storageKey": null
                       },
                       {
@@ -341,7 +345,7 @@ return {
                 "storageKey": null
               }
             ],
-            "storageKey": "articlesConnection(first:10)"
+            "storageKey": "articlesConnection(first:18)"
           },
           {
             "alias": null,
@@ -363,7 +367,7 @@ return {
     "metadata": {},
     "name": "partnerRoutes_ArticlesQuery",
     "operationKind": "query",
-    "text": "query partnerRoutes_ArticlesQuery(\n  $partnerId: String!\n) {\n  partner(id: $partnerId) @principalField {\n    ...Articles_partner\n    id\n  }\n}\n\nfragment Articles_partner on Partner {\n  slug\n  articlesConnection(first: 10) {\n    totalCount\n    edges {\n      node {\n        channelID\n        internalID\n        title\n        href\n        author {\n          name\n          id\n        }\n        contributingAuthors {\n          name\n          id\n        }\n        thumbnailImage {\n          medium: cropped(width: 357, height: 320) {\n            width\n            height\n            src\n            srcSet\n          }\n        }\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query partnerRoutes_ArticlesQuery(\n  $partnerId: String!\n) {\n  partner(id: $partnerId) @principalField {\n    ...Articles_partner\n    id\n  }\n}\n\nfragment ArticleCard_article on Article {\n  channelID\n  title\n  href\n  author {\n    name\n    id\n  }\n  contributingAuthors {\n    name\n    id\n  }\n  thumbnailImage {\n    medium: cropped(width: 357, height: 320) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment Articles_partner on Partner {\n  slug\n  articlesConnection(first: 18) {\n    totalCount\n    edges {\n      node {\n        internalID\n        ...ArticleCard_article\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
