@@ -5,6 +5,12 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type NavigationTabs_partner = {
     readonly slug: string;
+    readonly locations: {
+        readonly totalCount: number | null;
+    } | null;
+    readonly articles: {
+        readonly totalCount: number | null;
+    } | null;
     readonly " $refType": "NavigationTabs_partner";
 };
 export type NavigationTabs_partner$data = NavigationTabs_partner;
@@ -15,7 +21,24 @@ export type NavigationTabs_partner$key = {
 
 
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = [
+  {
+    "kind": "Literal",
+    "name": "first",
+    "value": 20
+  }
+],
+v1 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "totalCount",
+    "storageKey": null
+  }
+];
+return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
@@ -27,9 +50,30 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "slug",
       "storageKey": null
+    },
+    {
+      "alias": "locations",
+      "args": (v0/*: any*/),
+      "concreteType": "LocationConnection",
+      "kind": "LinkedField",
+      "name": "locationsConnection",
+      "plural": false,
+      "selections": (v1/*: any*/),
+      "storageKey": "locationsConnection(first:20)"
+    },
+    {
+      "alias": "articles",
+      "args": (v0/*: any*/),
+      "concreteType": "ArticleConnection",
+      "kind": "LinkedField",
+      "name": "articlesConnection",
+      "plural": false,
+      "selections": (v1/*: any*/),
+      "storageKey": "articlesConnection(first:20)"
     }
   ],
   "type": "Partner"
 };
-(node as any).hash = '3888bb95277e684179a4f599ccb31044';
+})();
+(node as any).hash = '7a78122675cec43a1d306483c71a63fe';
 export default node;

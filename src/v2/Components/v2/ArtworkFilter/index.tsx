@@ -40,12 +40,12 @@ import { Collection_collection } from "v2/__generated__/Collection_collection.gr
 import { SystemQueryRenderer as QueryRenderer } from "v2/Artsy/Relay/SystemQueryRenderer"
 import { ArtworkQueryFilter } from "./ArtworkQueryFilter"
 import { ArtistSeriesArtworksFilter_artistSeries } from "v2/__generated__/ArtistSeriesArtworksFilter_artistSeries.graphql"
-import { StickyContainer } from "./StickyContainer"
 import { FairArtworks_fair } from "v2/__generated__/FairArtworks_fair.graphql"
 import { ShowArtworks_show } from "v2/__generated__/ShowArtworks_show.graphql"
 import { useAnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
 import { commercialFilterParamsChanged } from "@artsy/cohesion"
 import { allowedFilters } from "./Utils/allowedFilters"
+import { StickyContainer } from "v2/Components/StickyContainer"
 
 /**
  * Primary ArtworkFilter which is wrapped with a context and refetch container.

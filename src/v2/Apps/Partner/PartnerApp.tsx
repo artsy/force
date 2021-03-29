@@ -1,5 +1,5 @@
 import React from "react"
-import { Box, Separator } from "@artsy/palette"
+import { Separator } from "@artsy/palette"
 import { Footer } from "v2/Components/Footer"
 import { AppContainer } from "../Components/AppContainer"
 import { HorizontalPadding } from "../Components/HorizontalPadding"
@@ -34,13 +34,11 @@ export const PartnerApp: React.FC<PartnerAppProps> = ({
           <HorizontalPadding>
             <PartnerHeader partner={partner} />
 
-            <FullBleed>
+            <FullBleed mb={[2, 4]}>
               <Separator />
             </FullBleed>
 
-            <Box py={2} mt={[2, 4]}>
-              <NavigationTabs partner={partner} />
-            </Box>
+            <NavigationTabs partner={partner} />
 
             {children}
 

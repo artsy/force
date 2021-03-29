@@ -34,4 +34,22 @@ describe("PartnerNavigationTabs", () => {
     expect(html).toContain("Articles")
     expect(html).toContain("Contact")
   })
+
+  it("doesn't display contact tab if no locations", () => {
+    const wrapper = getWrapper({
+      Partner: () => ({ locations: { totalCount: null } }),
+    })
+    const html = wrapper.html()
+
+    expect(html).not.toContain("Contact")
+  })
+
+  it("doesn't display articles tab if no locations", () => {
+    const wrapper = getWrapper({
+      Partner: () => ({ articles: { totalCount: null } }),
+    })
+    const html = wrapper.html()
+
+    expect(html).not.toContain("Articles")
+  })
 })

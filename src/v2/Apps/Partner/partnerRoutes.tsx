@@ -52,15 +52,7 @@ export const partnerRoutes: RouteConfig[] = [
           OverviewRoute.preload()
         },
       },
-      {
-        path: "overview",
-        render: props => {
-          throw new RedirectException(
-            `/partner2/${props.match.params.partnerId}`,
-            302
-          )
-        },
-      },
+
       {
         getComponent: () => ArticlesRoute,
         path: "articles",
@@ -94,6 +86,15 @@ export const partnerRoutes: RouteConfig[] = [
         path: "contact",
         prepare: () => {
           ContactRoute.preload()
+        },
+      },
+      {
+        path: "overview",
+        render: props => {
+          throw new RedirectException(
+            `/partner2/${props.match.params.partnerId}`,
+            302
+          )
         },
       },
     ],
