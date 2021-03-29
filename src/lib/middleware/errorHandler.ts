@@ -5,9 +5,8 @@ import { argv } from "yargs"
 import { IpDeniedError } from "express-ipfilter"
 import config from "../../config"
 import path from "path"
-import RavenServer from "raven"
 
-const { NODE_ENV, SENTRY_PRIVATE_DSN, VERBOSE_LOGGING } = config
+const { NODE_ENV, VERBOSE_LOGGING } = config
 
 export function errorHandlerMiddleware(
   err: any,
@@ -47,24 +46,4 @@ export function errorHandlerMiddleware(
   }
 
   res.status(code).render(file, { code, detail, message })
-}
-
-export function setupErrorHandling(app) {
-  app.get("*", (req, res, next) => {
-    const err = new Error()
-    // @ts-ignore -- FIXME: status does not exist on err
-    err.status = 404
-    err.message = "Not Found"
-    next(err)
-  })
-
-  if (SENTRY_PRIVATE_DSN) {
-    // Old Sentry SDK.
-    app.use(RavenServer.errorHandler())
-
-    RavenServer.config(SENTRY_PRIVATE_DSN).install()
-    app.use(RavenServer.requestHandler())
-  }
-
-  app.use(errorHandlerMiddleware)
 }
