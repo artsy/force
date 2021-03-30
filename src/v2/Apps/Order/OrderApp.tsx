@@ -85,7 +85,7 @@ class OrderApp extends React.Component<OrderAppProps, {}> {
       this.props,
       props => props.order.lineItems.edges[0].node.artwork
     )
-    const { isInquireable, listPrice, priceCurrency } = artwork
+    const { listPrice, priceCurrency } = artwork
 
     const BNMO_CURRENCY_THRESHOLDS = {
       USD: 10000,
@@ -184,7 +184,6 @@ graphql`
             slug
             is_acquireable: isAcquireable
             is_offerable: isOfferable
-            isInquireable
             priceCurrency
             listPrice {
               ... on Money {
