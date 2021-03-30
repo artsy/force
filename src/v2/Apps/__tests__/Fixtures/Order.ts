@@ -64,7 +64,6 @@ const OrderArtworkNode = {
     },
     internalID: "artworkId",
     is_acquireable: true as boolean,
-    isInquireable: false as boolean,
     is_offerable: true as boolean,
     listPrice: {
       __typename: "Money",

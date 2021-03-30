@@ -14,7 +14,6 @@ export type OrderApp_order = {
                     readonly slug: string;
                     readonly is_acquireable: boolean | null;
                     readonly is_offerable: boolean | null;
-                    readonly isInquireable: boolean | null;
                     readonly priceCurrency: string | null;
                     readonly listPrice: {
                         readonly major?: number;
@@ -123,13 +122,6 @@ return {
                       "alias": null,
                       "args": null,
                       "kind": "ScalarField",
-                      "name": "isInquireable",
-                      "storageKey": null
-                    },
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
                       "name": "priceCurrency",
                       "storageKey": null
                     },
@@ -181,5 +173,5 @@ return {
   "type": "CommerceOrder"
 };
 })();
-(node as any).hash = '46b9cbabdb9bb6d77ab883053976b9d1';
+(node as any).hash = '1435cbb481415bcd88f4a1c3cbe81bbf';
 export default node;

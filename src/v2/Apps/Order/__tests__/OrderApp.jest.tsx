@@ -101,7 +101,6 @@ describe("OrderApp routing redirects", () => {
                   id: "artwork-id",
                   is_acquireable: true,
                   is_offerable: true,
-                  isInquireable: false,
                   listPrice: {
                     __typename: "Money",
                     major: 12000,
