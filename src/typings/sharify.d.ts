@@ -52,6 +52,7 @@ declare module "sharify" {
       readonly VOLLEY_ENDPOINT: string
       readonly WEBFONT_URL: string
       readonly XAPP_TOKEN: string
+      readonly GOOGLE_MAPS_API_KEY: string
 
       // FORCE Tokens
       AP: {
