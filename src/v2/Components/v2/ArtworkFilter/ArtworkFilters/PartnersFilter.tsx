@@ -4,7 +4,7 @@ import React, { FC } from "react"
 
 import { useArtworkFilterContext } from "../ArtworkFilterContext"
 import { OptionText } from "./OptionText"
-import { FacetAutosuggest } from "./FacetAutosuggest"
+import { FacetAutosuggest, orderedFacets } from "./FacetAutosuggest"
 import { INITIAL_ITEMS_TO_SHOW, ShowMore } from "./ShowMore"
 
 const PartnerOption: React.FC<{ name: string; slug: string }> = ({
@@ -47,10 +47,15 @@ export const PartnersFilter: FC = () => {
   }
 
   const partnersSorted = sortBy(partners.counts, ["count"]).reverse()
+
+  const items = orderedFacets(
+    currentlySelectedFilters().partnerIDs,
+    partnersSorted
+  )
   const hasBelowTheFoldPartnersFilter =
     intersection(
       currentlySelectedFilters().partnerIDs,
-      partners.counts.slice(INITIAL_ITEMS_TO_SHOW).map(({ value }) => value)
+      items.slice(INITIAL_ITEMS_TO_SHOW).map(({ value }) => value)
     ).length > 0
 
   return (
@@ -62,7 +67,7 @@ export const PartnersFilter: FC = () => {
           facets={partners.counts}
         />
         <ShowMore expanded={hasBelowTheFoldPartnersFilter}>
-          {partnersSorted.map(({ name, value }) => {
+          {items.map(({ name, value }) => {
             return <PartnerOption slug={value} key={name} name={name} />
           })}
         </ShowMore>

@@ -18,6 +18,24 @@ type Facet = {
 const MAX_SUGGESTIONS = 10
 const MIN_ITEMS = 7
 
+// utility for constructing a full list of options
+// where selected items from the list will appear first,
+// followed by the remainining options.
+export const orderedFacets = (
+  selectedValues: Array<string>,
+  allItems: Array<Facet>
+) => {
+  const selectedFacets = allItems.filter(({ value }) => {
+    return selectedValues.includes(value)
+  })
+
+  return selectedFacets.concat(
+    allItems.filter(({ value }) => {
+      return !selectedValues.includes(value)
+    })
+  )
+}
+
 export const FacetAutosuggest: FC<{
   facets: Array<Facet>
   facetName: ArrayArtworkFilter
@@ -94,6 +112,7 @@ export const FacetAutosuggest: FC<{
   return (
     <Autosuggest
       suggestions={suggestions}
+      focusInputOnSuggestionClick={false}
       getSuggestionValue={getSuggestionValue}
       renderSuggestion={renderSuggestion}
       inputProps={inputProps}

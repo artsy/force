@@ -3,7 +3,7 @@ import { intersection, sortBy } from "lodash"
 import React, { FC } from "react"
 
 import { useArtworkFilterContext } from "../ArtworkFilterContext"
-import { FacetAutosuggest } from "./FacetAutosuggest"
+import { FacetAutosuggest, orderedFacets } from "./FacetAutosuggest"
 import { OptionText } from "./OptionText"
 import { INITIAL_ITEMS_TO_SHOW, ShowMore } from "./ShowMore"
 
@@ -44,10 +44,16 @@ export const ArtworkLocationFilter: FC = () => {
   }
 
   const locationsSorted = sortBy(locations.counts, ["count"]).reverse()
+
+  const items = orderedFacets(
+    currentlySelectedFilters().locationCities,
+    locationsSorted
+  )
+
   const hasBelowTheFoldLocationFilter =
     intersection(
       currentlySelectedFilters().locationCities,
-      locations.counts.slice(INITIAL_ITEMS_TO_SHOW).map(({ name }) => name)
+      items.slice(INITIAL_ITEMS_TO_SHOW).map(({ name }) => name)
     ).length > 0
 
   return (
@@ -59,7 +65,7 @@ export const ArtworkLocationFilter: FC = () => {
           facets={locations.counts}
         />
         <ShowMore expanded={hasBelowTheFoldLocationFilter}>
-          {locationsSorted.map(({ name }) => {
+          {items.map(({ name }) => {
             return <ArtworkLocationOption key={name} name={name} />
           })}
         </ShowMore>
