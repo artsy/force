@@ -37,3 +37,16 @@ export const updateAddressSuccess: UpdateUserAddressMutationResponse = {
     },
   },
 }
+
+export const updateAddressFailure: UpdateUserAddressMutationResponse = {
+  updateUserAddress: {
+    userAddressOrErrors: {
+      errors: [
+        {
+          code: "100",
+          message: "Invalid address",
+        },
+      ],
+    },
+  },
+}

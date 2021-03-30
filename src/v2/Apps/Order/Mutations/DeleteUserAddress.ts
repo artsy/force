@@ -1,14 +1,13 @@
-import { graphql } from "react-relay"
+import { commitMutation, Environment, graphql } from "react-relay"
 import { DeleteUserAddressMutation } from "v2/__generated__/DeleteUserAddressMutation.graphql"
-import { CommitMutation } from "../Utils/commitMutation"
 
 export const deleteUserAddress = async (
-  commitMutation: CommitMutation,
+  environment: Environment,
   userAddressID: string,
   onSuccess: () => void,
   onError: (message: string) => void
 ) => {
-  const result = await commitMutation<DeleteUserAddressMutation>({
+  await commitMutation<DeleteUserAddressMutation>(environment, {
     variables: {
       input: {
         userAddressID: userAddressID,
@@ -41,11 +40,16 @@ export const deleteUserAddress = async (
         }
       }
     `,
+    onError: e => {
+      onError(e.message)
+    },
+    onCompleted: (data, e) => {
+      const errors = data.deleteUserAddress.userAddressOrErrors.errors
+      if (errors) {
+        onError(errors.map(error => error.message).join(", "))
+      } else {
+        onSuccess()
+      }
+    },
   })
-  const errors = result.deleteUserAddress.userAddressOrErrors.errors
-  if (errors) {
-    onError(errors.map(error => error.message).join(", "))
-  } else {
-    onSuccess()
-  }
 }

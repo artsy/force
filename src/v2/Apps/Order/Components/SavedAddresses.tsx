@@ -23,6 +23,7 @@ import createLogger from "v2/Utils/logger"
 import { SavedAddressItem } from "v2/Apps/Order/Components/SavedAddressItem"
 import { deleteUserAddress } from "v2/Apps/Order/Mutations/DeleteUserAddress"
 import { updateUserDefaultAddress } from "v2/Apps/Order/Mutations/UpdateUserDefaultAddress"
+import { useSystemContext } from "v2/Artsy/SystemContext"
 
 export const NEW_ADDRESS = "NEW_ADDRESS"
 const PAGE_SIZE = 30
@@ -55,6 +56,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
   const logger = createLogger("SavedAddresses.tsx")
   const { onSelect, handleClickEdit, me, inCollectorProfile, relay } = props
   const addressList = me?.addressConnection?.edges ?? []
+  const { relayEnvironment } = useSystemContext()
 
   const onSuccess = () => {
     relay.refetch(
@@ -75,7 +77,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
   }
 
   const handleDeleteAddress = (addressID: string) => {
-    deleteUserAddress(props.commitMutation, addressID, onSuccess, onError)
+    deleteUserAddress(relayEnvironment, addressID, onSuccess, onError)
   }
 
   const handleEditAddress = (address: Address) => {
@@ -88,12 +90,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
   }
 
   const handleSetDefaultAddress = (addressID: string) => {
-    updateUserDefaultAddress(
-      props.commitMutation,
-      addressID,
-      onSuccess,
-      onError
-    )
+    updateUserDefaultAddress(relayEnvironment, addressID, onSuccess, onError)
   }
 
   const collectorProfileAddressItems = addressList.map((address, index) => {
@@ -183,7 +180,6 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
         closeModal={() => setShowAddressModal(false)}
         address={address}
         onSuccess={() => onSuccess()}
-        commitMutation={props.commitMutation}
         onError={onError}
         me={me}
       />
