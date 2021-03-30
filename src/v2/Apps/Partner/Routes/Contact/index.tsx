@@ -10,7 +10,7 @@ export interface ContactRouteProps {
 
 export const ContactRoute: React.FC<ContactRouteProps> = ({ partner }) => {
   return (
-    <Box mt={[40, 60]}>
+    <Box mt={[4, 6]}>
       <Text variant="title">Locations</Text>
       <PartnerContacts edges={partner.locations.edges} />
     </Box>

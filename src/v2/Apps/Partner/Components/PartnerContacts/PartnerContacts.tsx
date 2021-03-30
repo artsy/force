@@ -12,7 +12,7 @@ export const PartnerContacts: React.FC<ContactRouteProps> = ({ edges }) => {
   if (!edges) return null
 
   return (
-    <GridColumns mt={40} gridRowGap={4}>
+    <GridColumns mt={4} gridRowGap={4}>
       {edges
         .filter(edge => !!edge && !!edge.node)
         .map(edge => {
