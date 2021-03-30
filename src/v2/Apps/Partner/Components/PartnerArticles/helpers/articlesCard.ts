@@ -1,4 +1,3 @@
-import lodashMap from "lodash/map"
 import { getENV } from "v2/Utils/getENV"
 
 export const toHumanSentence = (list): string => {
