@@ -7,7 +7,7 @@ import { AuctionArtworksRail } from "../../Components/AuctionArtworksRail/Auctio
 
 jest.unmock("react-relay")
 
-describe("CurrentAuctons", () => {
+describe("CurrentAuctions", () => {
   const getWrapper = async (
     response: CurrentAuctions_QueryRawResponse = CURRENT_AUCTIONS_FIXTURE
   ) => {
@@ -26,7 +26,6 @@ describe("CurrentAuctons", () => {
           }
         }
       `,
-      variables: { slug: " " },
       mockData: response,
     })
   }
