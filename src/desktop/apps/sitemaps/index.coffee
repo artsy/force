@@ -19,6 +19,7 @@ standardSitemapRoutes = [
   '/sitemap-artists.xml',
   '/sitemap-artworks-:timestamp.xml',
   '/sitemap-artworks.xml',
+  '/sitemap-auctions.xml',
   '/sitemap-cities.xml',
   '/sitemap-collect.xml',
   '/sitemap-fairs-:timestamp.xml',
