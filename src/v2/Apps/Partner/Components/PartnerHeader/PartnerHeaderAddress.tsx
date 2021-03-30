@@ -1,10 +1,15 @@
 import React from "react"
 import styled from "styled-components"
 import { uniq } from "lodash"
+import { media } from "@artsy/palette"
 import { PartnerHeader_partner } from "v2/__generated__/PartnerHeader_partner.graphql"
 
 export const TextWithNoWrap = styled.span`
   white-space: nowrap;
+
+  ${media.sm`
+    white-space: normal;
+  `};
 `
 export const PartnerHeaderAddress: React.FC<
   PartnerHeader_partner["locations"]
