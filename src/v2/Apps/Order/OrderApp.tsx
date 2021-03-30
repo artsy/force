@@ -99,10 +99,8 @@ class OrderApp extends React.Component<OrderAppProps, {}> {
       ? listPrice.major
       : listPrice.minPrice?.major
 
-    if (
-      (!artworkPrice && !isInquireable) ||
-      artworkPrice < BNMO_CURRENCY_THRESHOLDS[priceCurrency]
-    )
+    if (!BNMO_CURRENCY_THRESHOLDS[priceCurrency]) return
+    if (!artworkPrice || artworkPrice < BNMO_CURRENCY_THRESHOLDS[priceCurrency])
       return
 
     if (typeof window !== "undefined" && window.zEmbed) return
