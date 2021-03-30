@@ -1,8 +1,15 @@
-import _ from "underscore"
-import _s from "underscore.string"
+import lodashMap from "lodash/map"
 import { getENV } from "v2/Utils/getENV"
 
-export const getAuthors = (channelID, author, contributingAuthors) => {
+export const toHumanSentence = (list): string => {
+  return list.join(", ").replace(/,\s([^,]+)$/, ", and $1")
+}
+
+export const getAuthors = (
+  channelID: string,
+  author: { name: string },
+  contributingAuthors: readonly { readonly name: string }[]
+): { authorName: string; editorialName: string | null } => {
   const authorNameObj = {
     authorName: null,
     editorialName: "artsy editorial",
@@ -15,9 +22,9 @@ export const getAuthors = (channelID, author, contributingAuthors) => {
   }
 
   if (contributingAuthors.length) {
-    authorNameObj.authorName = _s.toSentence(
-      _.pluck(contributingAuthors, "name")
-    )
+    const authorName = lodashMap(contributingAuthors, "name")
+
+    authorNameObj.authorName = toHumanSentence(authorName)
   }
 
   if (!contributingAuthors.length) {
