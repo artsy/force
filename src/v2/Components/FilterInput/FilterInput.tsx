@@ -7,6 +7,8 @@ import {
 } from "@artsy/palette"
 import React, { useRef, useState } from "react"
 
+export type FilterInputProps = InputProps
+
 export const FilterInput: React.FC<InputProps> = ({
   onChange,
   value = "",
