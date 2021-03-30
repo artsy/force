@@ -48,4 +48,31 @@ describe("AuctionsApp", () => {
 
     expect(html).toContain("Current Auctions")
   })
+
+  it("renders the Upcoming tab by default", () => {
+    const wrapper = getWrapper()
+    const html = wrapper.html()
+
+    expect(html).toContain("Upcoming")
+  })
+
+  it("renders the Past tab by default", () => {
+    const wrapper = getWrapper()
+    const html = wrapper.html()
+
+    expect(html).toContain("Past")
+  })
+
+  it("does not render auctions if they are not present", () => {
+    const wrapper = getWrapper({
+      salesConnection: () => ({ edges: [] }),
+    })
+
+    const html = wrapper.html()
+
+    expect(html).not.toContain("Starts")
+    expect(html).not.toContain("Ends")
+    expect(html).not.toContain("Ended")
+    expect(html).not.toContain("In Progress")
+  })
 })
