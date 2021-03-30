@@ -1,7 +1,7 @@
 import { mount } from "enzyme"
 import React from "react"
 import { ArtworkFilterContextProvider } from "../../ArtworkFilterContext"
-import { ResultsFilter } from "../ResultsFilter"
+import { ResultsFilter, sortResults } from "../ResultsFilter"
 
 describe("ArtworkLocationFilter", () => {
   const getWrapper = (contextProps = {}) => {
@@ -53,5 +53,67 @@ describe("ArtworkLocationFilter", () => {
       ],
     })
     expect(wrapper.html()).not.toBeTruthy()
+  })
+})
+
+describe("sortResults", () => {
+  it("returns the original list, but with selected items moved to the front", () => {
+    const results = [
+      {
+        value: "cat1",
+        name: "Cat 1",
+        count: 10,
+      },
+      {
+        value: "cat2",
+        name: "Cat 2",
+        count: 10,
+      },
+      {
+        value: "cat3",
+        name: "Cat 3",
+        count: 10,
+      },
+      {
+        value: "cat4",
+        name: "Cat 4",
+        count: 10,
+      },
+      {
+        value: "cat5",
+        name: "Cat 5",
+        count: 10,
+      },
+    ]
+
+    const selected = ["cat4", "cat5"]
+
+    expect(sortResults(selected, results)).toEqual([
+      {
+        value: "cat4",
+        name: "Cat 4",
+        count: 10,
+      },
+      {
+        value: "cat5",
+        name: "Cat 5",
+        count: 10,
+      },
+      {
+        value: "cat1",
+        name: "Cat 1",
+        count: 10,
+      },
+      {
+        value: "cat2",
+        name: "Cat 2",
+        count: 10,
+      },
+      {
+        value: "cat3",
+        name: "Cat 3",
+        count: 10,
+      },
+    ])
   })
 })

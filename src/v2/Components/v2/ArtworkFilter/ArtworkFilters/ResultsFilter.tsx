@@ -8,7 +8,22 @@ import {
 } from "../ArtworkFilterContext"
 import { INITIAL_ITEMS_TO_SHOW, ShowMore } from "./ShowMore"
 import { FacetFilter, useFacetFilter } from "./FacetFilter"
-import { ResultOption } from "./ResultOption"
+import { Result, ResultOption } from "./ResultOption"
+
+export const sortResults = (
+  selectedValues: Array<string>,
+  allResults: Array<Result>
+) => {
+  const selectedFacets = allResults.filter(({ value }) => {
+    return selectedValues.includes(value)
+  })
+
+  return selectedFacets.concat(
+    allResults.filter(({ value }) => {
+      return !selectedValues.includes(value)
+    })
+  )
+}
 
 interface ResultsFilterProps {
   facetName: keyof MultiSelectArtworkFilters
@@ -36,12 +51,15 @@ export const ResultsFilter: React.FC<ResultsFilterProps> = ({
     return null
   }
 
-  const resultsSorted = sortBy(results, ["count"]).reverse()
+  const resultsSorted = sortResults(
+    selectedValues,
+    sortBy(results, ["count"]).reverse()
+  )
 
   const isBelowTheFoldFilterSelected =
     intersection(
       selectedValues,
-      results.slice(INITIAL_ITEMS_TO_SHOW).map(({ value }) => value)
+      resultsSorted.slice(INITIAL_ITEMS_TO_SHOW).map(({ value }) => value)
     ).length > 0
 
   return (

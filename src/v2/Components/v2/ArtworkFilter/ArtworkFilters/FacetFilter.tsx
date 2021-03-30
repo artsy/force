@@ -19,7 +19,7 @@ export const FacetFilter: React.FC<FacetFilterProps> = ({
   ...rest
 }) => {
   const [query, setQuery] = useState("")
-  const [filteredResults, setFitleredResults] = useState<Result[]>([])
+  const [filteredResults, setFilteredResults] = useState<Result[]>([])
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const {
@@ -31,11 +31,11 @@ export const FacetFilter: React.FC<FacetFilterProps> = ({
     onChange && onChange(event)
 
     if (value === "") {
-      setFitleredResults([])
+      setFilteredResults([])
       return
     }
 
-    setFitleredResults(() =>
+    setFilteredResults(() =>
       results.filter(({ name }) =>
         name.toLowerCase().includes(value.toLowerCase())
       )
