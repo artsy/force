@@ -19,7 +19,7 @@ const Articles: React.FC<ArticlesProps> = ({ partner, relay }) => {
   } = partner
 
   return (
-    <Box mt={60}>
+    <Box mt={6}>
       <GridColumns gridRowGap={[2, 4]}>
         {articles.map(({ node: article }) => {
           return (
