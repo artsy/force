@@ -22,7 +22,7 @@ export const getAuthors = (
   }
 
   if (contributingAuthors.length) {
-    const authorName = lodashMap(contributingAuthors, "name")
+    const authorName = contributingAuthors.map(author => author.name)
 
     authorNameObj.authorName = toHumanSentence(authorName)
   }
