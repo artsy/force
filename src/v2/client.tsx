@@ -2,7 +2,7 @@ import "desktop/lib/webpackPublicPath"
 
 import React from "react"
 import ReactDOM from "react-dom"
-import { getAppRoutes } from "v2/Apps/getAppRoutes"
+import { getAppRoutes } from "v2/routes"
 import { loadableReady } from "@loadable/component"
 import { logoutEventHandler } from "desktop/lib/logoutHandler"
 import { mediator } from "lib/mediator"

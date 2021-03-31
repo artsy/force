@@ -52,9 +52,9 @@ export class LegacyArtworkDllContainer extends React.Component {
   componentDidMount() {
     if (!document.getElementById("legacy-assets-dll")) {
       import(
-        /* webpackChunkName: 'legacy-assets-dll' */ "./artworkClient"
-      ).then(({ artworkClient }) => {
-        artworkClient()
+        /* webpackChunkName: 'legacy-assets-dll' */ "./Utils/legacyArtworkClient"
+      ).then(({ artworkLegacyClient }) => {
+        artworkLegacyClient()
       })
       document.body.insertAdjacentHTML(
         "beforeend",
