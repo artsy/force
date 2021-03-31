@@ -100,8 +100,7 @@ app.use(require("./apps/ssr-experiments/server").app)
 app.use(require("./apps/profile"))
 app.use(require("./apps/partner2"))
 app.use(require("./apps/partner"))
-// TODO: Move this post NOVO conversion
-app.use(require("./apps/artsy-v2/apps/fair").app)
+app.use(require("./apps/fair_redirect").app)
 app.use(require("./apps/fair_organizer"))
 
 // Export for hot reloading
