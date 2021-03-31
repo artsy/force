@@ -343,7 +343,7 @@ export class ReviewRoute extends Component<ReviewProps> {
                     <Message p={[2, 3]} mb={[2, 3]}>
                       Disruptions caused by COVID-19 may cause delays — we
                       appreciate your understanding.
-                      <br />
+                      <Spacer mb={1} />
                       Please note that all offers are binding.
                     </Message>
                     {order.mode === "OFFER" && (
