@@ -55,7 +55,7 @@ export const TimePeriodFilter: FC<TimePeriodFilterProps> = ({
                 key={index}
                 onSelect={selected => togglePeriodSelection(selected, name)}
               >
-                <OptionText>{name}</OptionText>
+                <OptionText>{isNaN(name) ? name : `${name}s`}</OptionText>
               </Checkbox>
             )
           })}

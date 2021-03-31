@@ -29,6 +29,10 @@ describe("TimePeriodFilter", () => {
           slice: "MAJOR_PERIOD",
           counts: [
             {
+              name: "2000",
+              value: "2000-period",
+            },
+            {
               name: "Late 19th Century",
               value: "foo-period",
             },
@@ -43,6 +47,7 @@ describe("TimePeriodFilter", () => {
 
     expect(wrapper.html()).toContain("Late 19th Century")
     expect(wrapper.html()).toContain("18th Century &amp; Earlier")
+    expect(wrapper.html()).toContain("2000s")
     expect(wrapper.html()).not.toContain("2010")
   })
 
