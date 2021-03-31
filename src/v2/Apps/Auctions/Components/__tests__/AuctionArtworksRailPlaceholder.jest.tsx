@@ -1,7 +1,5 @@
 import React from "react"
 import { mount } from "enzyme"
-import { graphql } from "relay-runtime"
-import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
 import { AuctionArtworksRailPlaceholder } from "../AuctionArtworksRail/AuctionArtworksRailPlaceholder"
 
 jest.unmock("react-relay")
