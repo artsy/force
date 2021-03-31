@@ -1,91 +1,50 @@
 import React from "react"
 import { QueryRenderer, createFragmentContainer, graphql } from "react-relay"
-import { useSystemContext } from "v2/Artsy"
+import { useAnalyticsContext, useSystemContext } from "v2/Artsy"
 import { AuctionArtworksRailArtworksQuery } from "v2/__generated__/AuctionArtworksRailArtworksQuery.graphql"
 import { AuctionArtworksRailArtworks_sale } from "v2/__generated__/AuctionArtworksRailArtworks_sale.graphql"
 import { Carousel } from "v2/Components/Carousel"
 import FillwidthItem from "v2/Components/Artwork/FillwidthItem"
-// import {
-//   ActionType,
-//   ClickedArtworkGroup,
-//   ContextModule,
-//   OwnerType,
-// } from "@artsy/cohesion"
-import {
-  AUCTION_ARTWORKS_RAIL_HEIGHT,
-  AUCTION_ARTWORKS_IMAGE_HEIGHT,
-} from "./AuctionArtworksRail"
-import { AuctionArtworksRailPlaceholder } from "./AuctionArtworksRailPlaceholder"
-// import { useTracking } from "react-tracking"
-// import { useAnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
+import { AUCTION_ARTWORKS_IMAGE_HEIGHT, TabType } from "./AuctionArtworksRail"
+import { AuctionArtworksRailPlaceholder } from "../AuctionArtworksRailPlaceholder"
+import { useTracking } from "react-tracking"
+import { clickedArtworkGroup } from "@artsy/cohesion"
+import { getContextModule } from "../../Utils/getContextModule"
 
 export interface AuctionArtworksRailArtworksProps {
   sale: AuctionArtworksRailArtworks_sale
+  tabType: TabType
 }
 
 const AuctionArtworksRailArtworks: React.FC<AuctionArtworksRailArtworksProps> = ({
   sale,
+  tabType,
 }) => {
-  // const tracking = useTracking()
-
-  // const {
-  //   contextPageOwnerId,
-  //   contextPageOwnerSlug,
-  //   contextPageOwnerType,
-  // } = useAnalyticsContext()
-
-  // const clickedFairArtworkData = ({
-  //   artworkID,
-  //   artworkSlug,
-  //   carouselIndex,
-  // }): ClickedArtworkGroup => {
-  //   return {
-  //     context_module: ContextModule.galleryBoothRail,
-  //     context_page_owner_type: contextPageOwnerType,
-  //     context_page_owner_id: contextPageOwnerId,
-  //     context_page_owner_slug: contextPageOwnerSlug,
-  //     destination_page_owner_type: OwnerType.artwork,
-  //     destination_page_owner_id: artworkID,
-  //     destination_page_owner_slug: artworkSlug,
-  //     horizontal_slide_position: carouselIndex,
-  //     type: "thumbnail",
-  //     action: ActionType.clickedArtworkGroup,
-  //   }
-  // }
+  const tracking = useTracking()
+  const { contextPageOwnerType } = useAnalyticsContext()
+  const contextModule = getContextModule(tabType)
 
   return (
-    /* <Carousel arrowHeight={AUCTION_ARTWORKS_IMAGE_HEIGHT}>
-            {auction.artworksConnection.edges.map(({ node }, index) => {
-              return (
-                <FillwidthItem
-                  contextModule={null as any}
-                  artwork={node}
-                  imageHeight={AUCTION_ARTWORKS_IMAGE_HEIGHT}
-                  hidePartnerName
-                  lazyLoad
-                />
-              )
-            })}
-          </Carousel> */
-
-    <Carousel arrowHeight={AUCTION_ARTWORKS_RAIL_HEIGHT}>
+    <Carousel arrowHeight={AUCTION_ARTWORKS_IMAGE_HEIGHT}>
       {sale.artworksConnection.edges.map(({ node }, index) => {
         return (
           <FillwidthItem
             key={index}
-            // contextModule={ContextModule.}
+            contextModule={contextModule}
             artwork={node}
             imageHeight={AUCTION_ARTWORKS_IMAGE_HEIGHT}
             hidePartnerName
             lazyLoad
             onClick={() => {
-              // tracking.trackEvent(
-              //   clickedFairArtworkData({
-              //     artworkID: artwork.internalID,
-              //     artworkSlug: artwork.slug,
-              //     carouselIndex: index,
-              //   })
-              // )
+              tracking.trackEvent(
+                clickedArtworkGroup({
+                  contextModule,
+                  contextPageOwnerType,
+                  artworkID: node.internalID,
+                  artworkSlug: node.slug,
+                  horizontalSlidePosition: index,
+                })
+              )
             }}
           />
         )
@@ -115,6 +74,7 @@ export const AuctionArtworksRailArtworksFragmentContainer = createFragmentContai
 
 export const AuctionArtworksRailArtworksQueryRenderer: React.FC<{
   id: string
+  tabType: TabType
 }> = ({ id, ...rest }) => {
   const { relayEnvironment } = useSystemContext()
 

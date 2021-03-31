@@ -3,14 +3,33 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { MyBidsBidHeader_sale } from "v2/__generated__/MyBidsBidHeader_sale.graphql"
 import { Box, CalendarIcon, Flex, Image, Text } from "@artsy/palette"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
+import { useTracking } from "react-tracking"
+import { ContextModule, clickedEntityGroup, OwnerType } from "@artsy/cohesion"
+import { useAnalyticsContext } from "v2/Artsy"
 
 interface MyBidsBidHeaderProps {
   sale: MyBidsBidHeader_sale
 }
 
 export const MyBidsBidHeader: React.FC<MyBidsBidHeaderProps> = ({ sale }) => {
+  const { trackEvent } = useTracking()
+  const { contextPageOwnerType } = useAnalyticsContext()
+
   return (
-    <RouterLink to={`/auction/${sale.slug}`} noUnderline>
+    <RouterLink
+      to={`/auction/${sale.slug}`}
+      noUnderline
+      onClick={() => {
+        trackEvent(
+          clickedEntityGroup({
+            contextModule: ContextModule.yourActiveBids,
+            contextPageOwnerType,
+            destinationPageOwnerType: OwnerType.sale,
+            type: "thumbnail",
+          })
+        )
+      }}
+    >
       {sale.coverImage && (
         <Box minHeight={100}>
           <Image

@@ -25,6 +25,7 @@ query auctionsRoutes_Past_AuctionsQuery {
 
 fragment AuctionArtworksRail_sale on Sale {
   internalID
+  slug
   href
   name
   formattedStartDateTime
@@ -267,7 +268,7 @@ return {
     "metadata": {},
     "name": "auctionsRoutes_Past_AuctionsQuery",
     "operationKind": "query",
-    "text": "query auctionsRoutes_Past_AuctionsQuery {\n  viewer {\n    ...PastAuctions_viewer\n  }\n}\n\nfragment AuctionArtworksRail_sale on Sale {\n  internalID\n  href\n  name\n  formattedStartDateTime\n}\n\nfragment PastAuctions_viewer on Viewer {\n  salesConnection(first: 30, live: false, sort: START_AT_DESC, auctionState: CLOSED) {\n    totalCount\n    edges {\n      node {\n        slug\n        name\n        href\n        endAt\n        ...AuctionArtworksRail_sale\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query auctionsRoutes_Past_AuctionsQuery {\n  viewer {\n    ...PastAuctions_viewer\n  }\n}\n\nfragment AuctionArtworksRail_sale on Sale {\n  internalID\n  slug\n  href\n  name\n  formattedStartDateTime\n}\n\nfragment PastAuctions_viewer on Viewer {\n  salesConnection(first: 30, live: false, sort: START_AT_DESC, auctionState: CLOSED) {\n    totalCount\n    edges {\n      node {\n        slug\n        name\n        href\n        endAt\n        ...AuctionArtworksRail_sale\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();

@@ -13,16 +13,40 @@ import {
   WatchingIcon,
 } from "@artsy/palette"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
+import { useTracking } from "react-tracking"
+import { useAnalyticsContext } from "v2/Artsy"
+import { clickedArtworkGroup } from "@artsy/cohesion"
+import { getContextModule } from "../../Utils/getContextModule"
 
 interface MyBidsBidItemProps {
+  horizontalSlidePosition: number
   saleArtwork: MyBidsBidItem_saleArtwork
 }
 
 export const MyBidsBidItem: React.FC<MyBidsBidItemProps> = ({
+  horizontalSlidePosition,
   saleArtwork,
 }) => {
+  const { trackEvent } = useTracking()
+  const { contextPageOwnerType } = useAnalyticsContext()
+  const contextModule = getContextModule("myBids")
+
   return (
-    <RouterLink to={`/artwork/${saleArtwork.slug}`} noUnderline>
+    <RouterLink
+      to={`/artwork/${saleArtwork.slug}`}
+      noUnderline
+      onClick={() => {
+        trackEvent(
+          clickedArtworkGroup({
+            contextModule,
+            contextPageOwnerType,
+            artworkID: saleArtwork.internalID,
+            artworkSlug: saleArtwork.slug,
+            horizontalSlidePosition,
+          })
+        )
+      }}
+    >
       <Flex width="100%">
         <Flex alignItems="center" width="100%">
           <Box backgroundColor="black60" width={50} height={50}>
@@ -92,6 +116,7 @@ export const MyBidsBidItemFragmentContainer = createFragmentContainer(
         highestBid {
           amount
         }
+        internalID
         isHighestBidder
         isWatching
         lotState {

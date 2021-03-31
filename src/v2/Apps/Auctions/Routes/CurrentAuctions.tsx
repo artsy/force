@@ -46,7 +46,10 @@ const CurrentAuctions: React.FC<CurrentAuctionsProps> = ({ viewer, relay }) => {
         {viewer.salesConnection.edges.map(({ node }, index) => {
           return (
             <Box my={4} key={index}>
-              <AuctionArtworksRailFragmentContainer sale={node} />
+              <AuctionArtworksRailFragmentContainer
+                sale={node}
+                tabType="current"
+              />
             </Box>
           )
         })}

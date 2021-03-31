@@ -3,7 +3,7 @@ import { AppContainer } from "v2/Apps/Components/AppContainer"
 import { AuctionsApp_me } from "v2/__generated__/AuctionsApp_me.graphql"
 import { AuctionsMeta } from "./Components/AuctionsMeta"
 import { MyBidsQueryRenderer } from "./Components/MyBids/MyBids"
-import { ChevronIcon, Box, Text, Separator } from "@artsy/palette"
+import { ChevronIcon, Box, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Footer } from "v2/Components/Footer"
 import { HorizontalPadding } from "../Components/HorizontalPadding"
@@ -12,6 +12,7 @@ import { RecentlyViewedQueryRenderer as RecentlyViewed } from "v2/Components/Rec
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import { RouteTabs, RouteTab } from "v2/Components/RouteTabs"
 import { useSystemContext } from "v2/Artsy"
+import { WorksByArtistsYouFollowRailQueryRenderer } from "./Components/WorksByArtistsYouFollowRail/WorksByArtistsYouFollowRail"
 export interface AuctionsAppProps {
   me: AuctionsApp_me
 }
@@ -52,10 +53,15 @@ const AuctionsApp: React.FC<AuctionsAppProps> = props => {
       </Box>
 
       {user && (
-        <Box m={[2, 4]}>
-          <Separator />
-          <MyBidsQueryRenderer />
-        </Box>
+        <>
+          <Box m={[2, 4]}>
+            <MyBidsQueryRenderer />
+          </Box>
+
+          <Box m={[2, 4]} pb={2}>
+            <WorksByArtistsYouFollowRailQueryRenderer />
+          </Box>
+        </>
       )}
       <HorizontalPadding mt={4}>
         <RouteTabs mb={2}>

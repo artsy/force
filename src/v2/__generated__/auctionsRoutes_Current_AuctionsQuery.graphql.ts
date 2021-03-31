@@ -25,6 +25,7 @@ query auctionsRoutes_Current_AuctionsQuery {
 
 fragment AuctionArtworksRail_sale on Sale {
   internalID
+  slug
   href
   name
   formattedStartDateTime
@@ -281,7 +282,7 @@ return {
     "metadata": {},
     "name": "auctionsRoutes_Current_AuctionsQuery",
     "operationKind": "query",
-    "text": "query auctionsRoutes_Current_AuctionsQuery {\n  viewer {\n    ...CurrentAuctions_viewer\n  }\n}\n\nfragment AuctionArtworksRail_sale on Sale {\n  internalID\n  href\n  name\n  formattedStartDateTime\n}\n\nfragment CurrentAuctions_viewer on Viewer {\n  salesConnection(first: 30, live: true, published: true, sort: END_AT_DESC, auctionState: OPEN) {\n    totalCount\n    edges {\n      node {\n        slug\n        name\n        href\n        liveStartAt\n        isLiveOpen\n        ...AuctionArtworksRail_sale\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query auctionsRoutes_Current_AuctionsQuery {\n  viewer {\n    ...CurrentAuctions_viewer\n  }\n}\n\nfragment AuctionArtworksRail_sale on Sale {\n  internalID\n  slug\n  href\n  name\n  formattedStartDateTime\n}\n\nfragment CurrentAuctions_viewer on Viewer {\n  salesConnection(first: 30, live: true, published: true, sort: END_AT_DESC, auctionState: OPEN) {\n    totalCount\n    edges {\n      node {\n        slug\n        name\n        href\n        liveStartAt\n        isLiveOpen\n        ...AuctionArtworksRail_sale\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();

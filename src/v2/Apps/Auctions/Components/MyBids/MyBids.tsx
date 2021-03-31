@@ -15,38 +15,49 @@ interface MyBidsProps {
 }
 
 const MyBids: React.FC<MyBidsProps> = props => {
-  const {
-    me: { myBids },
-  } = props
+  const { me } = props
+  const active = me?.myBids?.active ?? []
 
-  const active = myBids?.active ?? []
+  if (active.length === 0) {
+    return null
+  }
 
   return (
-    <Carousel arrowHeight={240}>
-      {active.map((activeSale, index) => {
-        return (
-          <SaleContainer key={index}>
-            <StackableBorderBox flexDirection="column" overflow="hidden" p={0}>
-              <MyBidsBidHeaderFragmentContainer sale={activeSale.sale} />
-            </StackableBorderBox>
-            <StackableBorderBox p={2} flexDirection="column">
-              <Join separator={<Separator my={1} />}>
-                {activeSale.saleArtworks.map(
-                  (saleArtwork, saleArtworkIndex) => {
-                    return (
-                      <MyBidsBidItemFragmentContainer
-                        saleArtwork={saleArtwork}
-                        key={saleArtworkIndex}
-                      />
-                    )
-                  }
-                )}
-              </Join>
-            </StackableBorderBox>
-          </SaleContainer>
-        )
-      })}
-    </Carousel>
+    <>
+      <Separator />
+      <Text py={3}>Active Bids and Watched Lots</Text>
+
+      <Carousel arrowHeight={240}>
+        {active.map((activeSale, index) => {
+          return (
+            <SaleContainer key={index}>
+              <StackableBorderBox
+                flexDirection="column"
+                overflow="hidden"
+                p={0}
+              >
+                <MyBidsBidHeaderFragmentContainer sale={activeSale.sale} />
+              </StackableBorderBox>
+              <StackableBorderBox p={2} flexDirection="column">
+                <Join separator={<Separator my={1} />}>
+                  {activeSale.saleArtworks.map(
+                    (saleArtwork, saleArtworkIndex) => {
+                      return (
+                        <MyBidsBidItemFragmentContainer
+                          horizontalSlidePosition={saleArtworkIndex}
+                          key={saleArtworkIndex}
+                          saleArtwork={saleArtwork}
+                        />
+                      )
+                    }
+                  )}
+                </Join>
+              </StackableBorderBox>
+            </SaleContainer>
+          )
+        })}
+      </Carousel>
+    </>
   )
 }
 
@@ -76,7 +87,6 @@ export const MyBidsQueryRenderer: React.FC = () => {
 
   return (
     <>
-      <Text py={3}>Active Bids and Watched Lots</Text>
       <SystemQueryRenderer
         environment={relayEnvironment}
         query={graphql`

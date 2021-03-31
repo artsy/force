@@ -17,6 +17,7 @@ export type MyBidsBidItem_saleArtwork = {
     readonly highestBid: {
         readonly amount: string | null;
     } | null;
+    readonly internalID: string;
     readonly isHighestBidder: boolean | null;
     readonly isWatching: boolean | null;
     readonly lotState: {
@@ -137,6 +138,13 @@ const node: ReaderFragment = {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
+      "name": "internalID",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "isHighestBidder",
       "storageKey": null
     },
@@ -200,5 +208,5 @@ const node: ReaderFragment = {
   ],
   "type": "SaleArtwork"
 };
-(node as any).hash = '629a3e0a94ff40ee0871d2085a279efb';
+(node as any).hash = '86cb6e753d304a5f52a67aa97ed94667';
 export default node;
