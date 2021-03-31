@@ -68,7 +68,13 @@ export const PartnerContactMapFragmentContainer = createFragmentContainer(
   {
     location: graphql`
       fragment PartnerContactMap_location on Location {
-        ...PartnerContactAddress_Fragment @relay(mask: false)
+        city
+        phone
+        state
+        country
+        address
+        address2
+        postalCode
         coordinates {
           lat
           lng

@@ -1,12 +1,11 @@
 import { compact } from "lodash"
-import { PartnerContactMap_location } from "v2/__generated__/PartnerContactMap_location.graphql"
-import { PartnerContactAddress_Fragment } from "v2/__generated__/PartnerContactAddress_Fragment.graphql"
 import { data as sd } from "sharify"
 import qs from "qs"
-import { DeFraged } from "v2/Utils/typeSupport"
+import { PartnerContactMap_location } from "v2/__generated__/PartnerContactMap_location.graphql"
+import { PartnerContactAddress_location } from "v2/__generated__/PartnerContactAddress_location.graphql"
 
 export function getContactAddressLines(
-  location: DeFraged<PartnerContactAddress_Fragment>
+  location: PartnerContactMap_location | PartnerContactAddress_location
 ) {
   if (!location) return []
 

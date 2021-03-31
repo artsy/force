@@ -23,24 +23,18 @@ export const PartnerContactAddress: React.FC<PartnerContactAddressProps> = ({
   )
 }
 
-graphql`
-  fragment PartnerContactAddress_Fragment on Location {
-    city
-    phone
-    state
-    country
-    address
-    address2
-    postalCode
-  }
-`
-
 export const PartnerContactAddressFragmentContainer = createFragmentContainer(
   PartnerContactAddress,
   {
     location: graphql`
       fragment PartnerContactAddress_location on Location {
-        ...PartnerContactAddress_Fragment @relay(mask: false)
+        city
+        phone
+        state
+        country
+        address
+        address2
+        postalCode
       }
     `,
   }
