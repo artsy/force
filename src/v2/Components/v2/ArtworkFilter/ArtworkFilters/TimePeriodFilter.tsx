@@ -24,6 +24,8 @@ export const TimePeriodFilter: FC<TimePeriodFilterProps> = ({
     periods = allowedPeriods.map(name => ({ name }))
   }
 
+  if (!periods.length) return null
+
   const togglePeriodSelection = (selected, period) => {
     let majorPeriods = filterContext
       .currentlySelectedFilters()

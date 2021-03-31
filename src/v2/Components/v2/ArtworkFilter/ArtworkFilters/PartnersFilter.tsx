@@ -42,7 +42,7 @@ export const PartnersFilter: FC = () => {
   const { aggregations, currentlySelectedFilters } = useArtworkFilterContext()
   const partners = aggregations.find(agg => agg.slice === "PARTNER")
 
-  if (!(partners && partners.counts)) {
+  if (!partners?.counts?.length) {
     return null
   }
 

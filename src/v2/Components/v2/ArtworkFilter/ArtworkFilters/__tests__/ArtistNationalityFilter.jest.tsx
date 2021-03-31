@@ -12,8 +12,8 @@ describe("ArtworkLocationFilter", () => {
     )
   }
 
-  describe("locations", () => {
-    it("renders locations", () => {
+  describe("nationalities", () => {
+    it("renders nationalities", () => {
       const wrapper = getWrapper({
         aggregations: [
           {
@@ -35,6 +35,18 @@ describe("ArtworkLocationFilter", () => {
       })
       expect(wrapper.find("Checkbox").first().text()).toContain("Cat")
       expect(wrapper.find("Checkbox").last().text()).toContain("Dog")
+    })
+
+    it("renders nothing when there are no nationalities", () => {
+      const wrapper = getWrapper({
+        aggregations: [
+          {
+            slice: "ARTIST_NATIONALITY",
+            counts: [],
+          },
+        ],
+      })
+      expect(wrapper.html()).not.toBeTruthy()
     })
   })
 })

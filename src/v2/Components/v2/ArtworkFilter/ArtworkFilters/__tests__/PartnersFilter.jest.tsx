@@ -24,5 +24,17 @@ describe("PartnersFilter", () => {
       })
       expect(wrapper.find("Checkbox").first().text()).toContain("Percy Z")
     })
+
+    it("renders nothing when there are no partners", () => {
+      const wrapper = getWrapper({
+        aggregations: [
+          {
+            slice: "PARTNER",
+            counts: [],
+          },
+        ],
+      })
+      expect(wrapper.html()).not.toBeTruthy()
+    })
   })
 })

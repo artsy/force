@@ -41,7 +41,7 @@ export const ArtistNationalityFilter: FC = () => {
     agg => agg.slice === "ARTIST_NATIONALITY"
   )
 
-  if (!(nationalities && nationalities.counts)) {
+  if (!nationalities?.counts?.length) {
     return null
   }
 

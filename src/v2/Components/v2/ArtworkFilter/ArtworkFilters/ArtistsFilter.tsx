@@ -84,7 +84,7 @@ export const ArtistsFilter: FC<ArtistsFilterProps> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  if (!(artists && artists.counts)) {
+  if (!artists?.counts?.length) {
     return null
   }
 

@@ -48,6 +48,18 @@ describe("MaterialsTermFilter", () => {
       expect(wrapper.find("Checkbox").last().text()).toContain("Canvas")
     })
 
+    it("renders nothing when there are no material terms", () => {
+      const wrapper = getWrapper({
+        aggregations: [
+          {
+            slice: "MATERIALS_TERMS",
+            counts: [],
+          },
+        ],
+      })
+      expect(wrapper.html()).not.toBeTruthy()
+    })
+
     it("acts on material term values", async () => {
       const wrapper = getWrapper({
         aggregations: [

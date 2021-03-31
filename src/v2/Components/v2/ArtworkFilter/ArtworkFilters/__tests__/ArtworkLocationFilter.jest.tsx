@@ -32,5 +32,17 @@ describe("ArtworkLocationFilter", () => {
         "Cattown, Cat City, Nowhere USA"
       )
     })
+
+    it("renders nothing when there are no locations", () => {
+      const wrapper = getWrapper({
+        aggregations: [
+          {
+            slice: "LOCATION_CITY",
+            counts: [],
+          },
+        ],
+      })
+      expect(wrapper.html()).not.toBeTruthy()
+    })
   })
 })

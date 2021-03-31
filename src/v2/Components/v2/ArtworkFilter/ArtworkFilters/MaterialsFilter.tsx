@@ -44,7 +44,7 @@ export const MaterialsFilter = () => {
     agg => agg.slice === "MATERIALS_TERMS"
   )
 
-  if (!(materialsTerms && materialsTerms.counts)) {
+  if (!materialsTerms?.counts?.length) {
     return null
   }
 

@@ -41,6 +41,18 @@ describe("MediumFilter", () => {
     expect(wrapper.html()).not.toContain("Painting")
   })
 
+  it("renders the standard mediums when there are no medium aggregations", () => {
+    const wrapper = getWrapper({
+      aggregations: [
+        {
+          slice: "MEDIUM",
+          counts: [],
+        },
+      ],
+    })
+    expect(wrapper.html()).toContain("Painting")
+  })
+
   it("selects mediums", done => {
     const wrapper = getWrapper()
     wrapper.find("Checkbox").first().simulate("click")

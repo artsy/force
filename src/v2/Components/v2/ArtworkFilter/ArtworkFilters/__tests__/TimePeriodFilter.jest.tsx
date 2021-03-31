@@ -51,6 +51,18 @@ describe("TimePeriodFilter", () => {
     expect(wrapper.html()).not.toContain("2010")
   })
 
+  it("renders nothing when there are no time periods", () => {
+    const wrapper = getWrapper({
+      aggregations: [
+        {
+          slice: "MAJOR_PERIOD",
+          counts: [],
+        },
+      ],
+    })
+    expect(wrapper.html()).not.toBeTruthy()
+  })
+
   it("updates context on filter change", done => {
     const wrapper = getWrapper()
     wrapper.find("Checkbox").first().simulate("click")

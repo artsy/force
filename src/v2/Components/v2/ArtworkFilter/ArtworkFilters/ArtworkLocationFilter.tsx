@@ -39,7 +39,7 @@ export const ArtworkLocationFilter: FC = () => {
   const { aggregations, currentlySelectedFilters } = useArtworkFilterContext()
   const locations = aggregations.find(agg => agg.slice === "LOCATION_CITY")
 
-  if (!(locations && locations.counts)) {
+  if (!locations?.counts?.length) {
     return null
   }
 

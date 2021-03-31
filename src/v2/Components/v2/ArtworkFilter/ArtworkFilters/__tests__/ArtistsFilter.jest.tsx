@@ -83,6 +83,18 @@ describe("ArtistsFilter", () => {
         }, 0)
       })
     })
+
+    it("renders nothing when there are no artists", () => {
+      const wrapper = getWrapper({
+        aggregations: [
+          {
+            slice: "ARTIST",
+            counts: [],
+          },
+        ],
+      })
+      expect(wrapper.html()).not.toBeTruthy()
+    })
   })
 
   describe("followed artists", () => {
