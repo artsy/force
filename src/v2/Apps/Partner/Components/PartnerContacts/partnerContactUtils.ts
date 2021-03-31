@@ -1,9 +1,7 @@
 import { compact } from "lodash"
 import { PartnerContactCard_location } from "v2/__generated__/PartnerContactCard_location.graphql"
-import sharify from "sharify"
+import { data as sd } from "sharify"
 import qs from "qs"
-
-const sd = sharify.data
 
 export function getContactAddressLines(location: PartnerContactCard_location) {
   if (!location) return []
