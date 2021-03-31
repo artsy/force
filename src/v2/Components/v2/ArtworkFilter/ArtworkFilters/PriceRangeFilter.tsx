@@ -112,7 +112,7 @@ export const PriceRangeFilter: React.FC = () => {
         {mode === "done" && (
           <Media lessThan="sm">
             <Message variant="info" my={2}>
-              Price set; select apply to see full results
+              Price set, select apply to see full results
             </Message>
           </Media>
         )}

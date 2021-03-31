@@ -121,7 +121,7 @@ export const SizeFilter2: React.FC = () => {
       {mode === "done" && (
         <Media lessThan="sm">
           <Message variant="info" my={2}>
-            Size set; select apply to see full results
+            Size set, select apply to see full results
           </Message>
         </Media>
       )}
