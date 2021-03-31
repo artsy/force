@@ -30,6 +30,7 @@ import {
   Box,
   BoxProps,
   Button,
+  color,
   FilterIcon,
   Flex,
   Separator,
@@ -45,7 +46,27 @@ import { ShowArtworks_show } from "v2/__generated__/ShowArtworks_show.graphql"
 import { useAnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
 import { commercialFilterParamsChanged } from "@artsy/cohesion"
 import { allowedFilters } from "./Utils/allowedFilters"
-import { StickyContainer } from "v2/Components/StickyContainer"
+import { BaseContainer, StickyContainer } from "v2/Components/StickyContainer"
+import styled, { css } from "styled-components"
+
+export const Container = styled(BaseContainer).attrs({
+  py: 1,
+  mx: -2,
+  px: 2,
+  borderBottom: "1px solid",
+})`
+  justify-content: space-between;
+  align-items: center;
+
+  ${({ stuck }) =>
+    stuck
+      ? css`
+          border-bottom-color: ${color("black10")};
+        `
+      : css`
+          border-bottom-color: transparent;
+        `};
+`
 
 /**
  * Primary ArtworkFilter which is wrapped with a context and refetch container.
@@ -210,7 +231,7 @@ export const BaseArtworkFilter: React.FC<
             </ArtworkFilterMobileActionSheet>
           )}
 
-          <StickyContainer>
+          <StickyContainer ContainerComponent={Container}>
             <Button size="small" onClick={() => toggleMobileActionSheet(true)}>
               <Flex justifyContent="space-between" alignItems="center">
                 <FilterIcon fill="white100" />
