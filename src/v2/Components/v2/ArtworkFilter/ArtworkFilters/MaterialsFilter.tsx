@@ -57,7 +57,7 @@ export const MaterialsFilter = () => {
     ).length > 0
 
   return (
-    <Toggle label="Materials" expanded>
+    <Toggle label="Material" expanded>
       <Flex flexDirection="column">
         <FacetAutosuggest
           facetName="materialsTerms"
