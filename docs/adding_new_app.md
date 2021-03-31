@@ -1,6 +1,6 @@
 ## Adding a new App to Force
 
-> Revised 5/27/2020
+> Revised 3/30/2021
 
 To add a new app to force we can leverage our React-based SSR router.
 
@@ -39,7 +39,7 @@ export const routes = [
 ]
 ```
 
-- Then add your routes to the [main route list](https://github.com/artsy/force/blob/master/src/v2/Apps/getAppRoutes.tsx):
+- Then add your routes to the [main route list](https://github.com/artsy/force/blob/master/src/v2/routes.tsx):
 
 ```tsx
 import { routes as myNewAppRoutes } from "v2/Apps/MyNewApp/routes"
@@ -61,9 +61,9 @@ For most apps we don't need more than the above to get a new route and SSR rende
 
 Extending the example above, lets add a server-side redirect if the user isn't logged in:
 
-- Create a new folder that matches the above name in our [artsy-v2](https://github.com/artsy/force/tree/master/src/desktop/apps/artsy-v2) folder -- `apps/artsy-v2/apps/myNewAppName`
-- Create a file called `myNewAppNameMiddleware.tsx`
-- Add the following:
+- Create a co-located `/Server` folder -- `v2/Apps/MyNewApp/Server`
+- Create a file inside of it called `myNewAppNameMiddleware.tsx`
+- Add the following to our new middleware file:
 
 ```tsx
 export function myNewAppNameMiddleware(req, res, next) {
@@ -79,7 +79,6 @@ export function myNewAppNameMiddleware(req, res, next) {
 }
 ```
 
-- Then finally, add your middleware to [`apps/artsy-v2/apps/server.tsx`](https://github.com/artsy/force/blob/master/src/desktop/apps/artsy-v2/server.tsx)
-- The same principle applies to client-side functionality. (Dig around [`artsy-v2/apps`](https://github.com/artsy/force/tree/master/src/desktop/apps/artsy-v2/apps) for a few examples.)
+- Then finally, mount your middleware inside `src/middleware.tsx` alongside other similar middleware.
 
 This pattern is still evolving, but thats the gist. Middleware can be mounted in the same way that express subapps are mounted, so its just a matter of checking whether we're currently at a certain route and performing an action.
