@@ -67,9 +67,7 @@ export const legacyDevelopmentConfig = {
     }),
     new WebpackNotifierPlugin(),
     new ReactRefreshWebpackPlugin({
-      overlay: {
-        sockIntegration: "whm",
-      },
+      overlay: false,
     }),
   ],
   stats: env.webpackStats || "errors-only",
