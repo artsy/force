@@ -5,7 +5,7 @@ import React, { FC } from "react"
 import { useArtworkFilterContext } from "../ArtworkFilterContext"
 import { OptionText } from "./OptionText"
 import { INITIAL_ITEMS_TO_SHOW, ShowMore } from "./ShowMore"
-import { FacetAutosuggest } from "./FacetAutosuggest"
+import { FacetAutosuggest, orderedFacets } from "./FacetAutosuggest"
 
 const ArtistNationalityOption: React.FC<{ name: string }> = ({ name }) => {
   const { currentlySelectedFilters, setFilter } = useArtworkFilterContext()
@@ -46,10 +46,14 @@ export const ArtistNationalityFilter: FC = () => {
   }
 
   const nationalitiesSorted = sortBy(nationalities.counts, ["count"]).reverse()
+  const items = orderedFacets(
+    currentlySelectedFilters().artistNationalities,
+    nationalitiesSorted
+  )
   const hasBelowTheFoldNationalityFilter =
     intersection(
       currentlySelectedFilters().artistNationalities,
-      nationalities.counts.slice(INITIAL_ITEMS_TO_SHOW).map(({ name }) => name)
+      items.slice(INITIAL_ITEMS_TO_SHOW).map(({ name }) => name)
     ).length > 0
 
   return (
@@ -61,7 +65,7 @@ export const ArtistNationalityFilter: FC = () => {
           facets={nationalities.counts}
         />
         <ShowMore expanded={hasBelowTheFoldNationalityFilter}>
-          {nationalitiesSorted.map(({ name }) => {
+          {items.map(({ name }) => {
             return <ArtistNationalityOption key={name} name={name} />
           })}
         </ShowMore>
