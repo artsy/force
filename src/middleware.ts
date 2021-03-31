@@ -30,7 +30,6 @@ import { sessionMiddleware } from "./lib/middleware/session"
 import { assetMiddleware } from "./lib/middleware/asset"
 import { csrfTokenMiddleware } from "./lib/middleware/csrfToken"
 import { sharifyLocalsMiddleware } from "./lib/middleware/sharifyLocals"
-import { collectionToArtistSeriesRedirect } from "v2/Apps/Collect/Server/artistSeriesRedirect"
 import { userRequiredMiddleware } from "lib/middleware/userRequiredMiddleware"
 import { backboneErrorHandlerMiddleware } from "./lib/middleware/backboneErrorHandler"
 import { downcaseMiddleware } from "./lib/middleware/downcase"
@@ -45,10 +44,10 @@ import { unsupportedBrowserMiddleware } from "./lib/middleware/unsupportedBrowse
 import { backboneSync } from "lib/backboneSync"
 
 // App-specific V2 server-side functionality
-import { artistMiddleware } from "v2/Apps/Artist/Server/artistMiddleware"
-import { handleArtworkImageDownload } from "v2/Apps/Artwork/Server/artworkMiddleware"
-import { legacyFairRedirects } from "v2/Apps/Fair/Server/legacyFairRedirects"
-import { searchMiddleware } from "v2/Apps/Search/Server/searchMiddleware"
+import { artistMiddleware } from "lib/middleware/artistMiddleware"
+import { collectionToArtistSeriesRedirect } from "lib/middleware/artistSeriesRedirect"
+import { handleArtworkImageDownload } from "lib/middleware/artworkMiddleware"
+import { searchMiddleware } from "lib/middleware/searchMiddleware"
 
 // FIXME: When deploying new Sentry SDK to prod we quickly start to see errors
 // like "`CURRENT_USER` is undefined". We need more investigation because this
@@ -151,7 +150,6 @@ export function initializeMiddleware(app) {
 
   // Redirects
   app.get("/collection/:collectionSlug", collectionToArtistSeriesRedirect)
-  legacyFairRedirects(app)
 
   /**
    * FIXME: Move this into function
