@@ -1,4 +1,4 @@
-import { compact } from "underscore"
+import { compact } from "lodash"
 import { PartnerContactCard_location } from "v2/__generated__/PartnerContactCard_location.graphql"
 import sharify from "sharify"
 import qs from "qs"
