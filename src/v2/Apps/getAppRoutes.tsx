@@ -13,6 +13,7 @@ import { exampleRoutes } from "./Example/exampleRoutes"
 import { fairRoutes } from "v2/Apps/Fair/fairRoutes"
 import { fairsRoutes } from "v2/Apps/Fairs/fairsRoutes"
 import { featureRoutes } from "v2/Apps/Feature/featureRoutes"
+import { geneRoutes } from "v2/Apps/Gene/geneRoutes"
 import { identityVerificationRoutes } from "v2/Apps/IdentityVerification/identityVerificationRoutes"
 import { orderRoutes } from "v2/Apps/Order/orderRoutes"
 import { purchaseRoutes } from "v2/Apps/Purchase/purchaseRoutes"
@@ -59,6 +60,9 @@ export function getAppRoutes(): RouteConfig[] {
     },
     {
       routes: featureRoutes,
+    },
+    {
+      routes: geneRoutes,
     },
     {
       routes: identityVerificationRoutes,
