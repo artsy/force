@@ -1,9 +1,13 @@
 import { compact } from "lodash"
-import { PartnerContactCard_location } from "v2/__generated__/PartnerContactCard_location.graphql"
+import { PartnerContactMap_location } from "v2/__generated__/PartnerContactMap_location.graphql"
+import { PartnerContactAddress_Fragment } from "v2/__generated__/PartnerContactAddress_Fragment.graphql"
 import { data as sd } from "sharify"
 import qs from "qs"
+import { DeFraged } from "v2/Utils/typeSupport"
 
-export function getContactAddressLines(location: PartnerContactCard_location) {
+export function getContactAddressLines(
+  location: DeFraged<PartnerContactAddress_Fragment>
+) {
   if (!location) return []
 
   return compact([
@@ -17,7 +21,7 @@ export function getContactAddressLines(location: PartnerContactCard_location) {
   ])
 }
 
-export function getGoogleMapUrl(location: PartnerContactCard_location) {
+export function getGoogleMapUrl(location: PartnerContactMap_location) {
   if (!location) return null
 
   const locationString = location.coordinates
@@ -35,7 +39,7 @@ export function getGoogleMapUrl(location: PartnerContactCard_location) {
 }
 
 export function getGoogleStaticMapImageUrl(
-  location: PartnerContactCard_location,
+  location: PartnerContactMap_location,
   width: number = 480,
   height: number = 480
 ) {

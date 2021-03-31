@@ -1,6 +1,6 @@
 import { mount } from "enzyme"
 import React from "react"
-import { PartnerContactCard_location } from "v2/__generated__/PartnerContactCard_location.graphql"
+import { PartnerContactAddress_location } from "v2/__generated__/PartnerContactAddress_location.graphql"
 import { PartnerContactAddress } from "../../PartnerContacts"
 
 describe("PartnerContactAddress", () => {
@@ -11,7 +11,7 @@ describe("PartnerContactAddress", () => {
           {
             address: "address",
             phone: "123",
-          } as PartnerContactCard_location
+          } as PartnerContactAddress_location
         }
       />
     )
@@ -28,7 +28,7 @@ describe("PartnerContactAddress", () => {
         location={
           {
             address: "address",
-          } as PartnerContactCard_location
+          } as PartnerContactAddress_location
         }
       />
     )

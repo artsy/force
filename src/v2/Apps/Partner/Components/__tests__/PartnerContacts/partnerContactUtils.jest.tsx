@@ -1,4 +1,4 @@
-import { PartnerContactCard_location } from "v2/__generated__/PartnerContactCard_location.graphql"
+import { PartnerContactMap_location } from "v2/__generated__/PartnerContactMap_location.graphql"
 import {
   getContactAddressLines,
   getGoogleMapUrl,
@@ -81,7 +81,7 @@ describe("PartnerContactUtils", () => {
     "getContactAddressLines returns correct value %s",
     (
       name: string,
-      location: PartnerContactCard_location,
+      location: PartnerContactMap_location,
       addressLines: Array<string>
     ) => {
       expect(getContactAddressLines(location)).toEqual(addressLines)
@@ -100,7 +100,7 @@ describe("PartnerContactUtils", () => {
         country: "country",
         address: "address",
         postalCode: "postalCode",
-      } as PartnerContactCard_location)
+      } as PartnerContactMap_location)
     ).toEqual("https://maps.google.com/maps?q=1%2C2")
   })
 
@@ -110,7 +110,7 @@ describe("PartnerContactUtils", () => {
         country: "country",
         address: "address",
         postalCode: "postalCode",
-      } as PartnerContactCard_location)
+      } as PartnerContactMap_location)
     ).toEqual(
       "https://maps.google.com/maps?q=address%2C%20postalCode%2C%20country&hnear=address%2C%20postalCode%2C%20country"
     )
@@ -127,7 +127,7 @@ describe("PartnerContactUtils", () => {
       country: "country",
       address: "address",
       postalCode: "postalCode",
-    } as PartnerContactCard_location)
+    } as PartnerContactMap_location)
 
     expect(result).toContain("https://maps.googleapis.com/maps/api/staticmap")
     expect(result).toContain("center=1%2C2")
@@ -139,7 +139,7 @@ describe("PartnerContactUtils", () => {
       country: "country",
       address: "address",
       postalCode: "postalCode",
-    } as PartnerContactCard_location)
+    } as PartnerContactMap_location)
 
     expect(result).toContain("center=address%2C%20postalCode%2C%20country")
     expect(result).toContain(

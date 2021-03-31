@@ -1,8 +1,8 @@
 import React from "react"
 import { Column, GridColumns } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { PartnerContactAddress } from "./PartnerContactAddress"
-import { PartnerContactMap } from "./PartnerContactMap"
+import { PartnerContactAddressFragmentContainer as PartnerContactAddress } from "./PartnerContactAddress"
+import { PartnerContactMapFragmentContainer as PartnerContactMap } from "./PartnerContactMap"
 import { PartnerContactCard_location } from "v2/__generated__/PartnerContactCard_location.graphql"
 
 export interface PartnerContactCardProps {
@@ -29,17 +29,8 @@ export const PartnerContactCardFragmentContainer = createFragmentContainer(
   {
     location: graphql`
       fragment PartnerContactCard_location on Location {
-        city
-        phone
-        state
-        country
-        address
-        address2
-        postalCode
-        coordinates {
-          lat
-          lng
-        }
+        ...PartnerContactAddress_location
+        ...PartnerContactMap_location
       }
     `,
   }

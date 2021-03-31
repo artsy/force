@@ -4,17 +4,7 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type PartnerContactCard_location = {
-    readonly city: string | null;
-    readonly phone: string | null;
-    readonly state: string | null;
-    readonly country: string | null;
-    readonly address: string | null;
-    readonly address2: string | null;
-    readonly postalCode: string | null;
-    readonly coordinates: {
-        readonly lat: number | null;
-        readonly lng: number | null;
-    } | null;
+    readonly " $fragmentRefs": FragmentRefs<"PartnerContactAddress_location" | "PartnerContactMap_location">;
     readonly " $refType": "PartnerContactCard_location";
 };
 export type PartnerContactCard_location$data = PartnerContactCard_location;
@@ -32,81 +22,17 @@ const node: ReaderFragment = {
   "name": "PartnerContactCard_location",
   "selections": [
     {
-      "alias": null,
       "args": null,
-      "kind": "ScalarField",
-      "name": "city",
-      "storageKey": null
+      "kind": "FragmentSpread",
+      "name": "PartnerContactAddress_location"
     },
     {
-      "alias": null,
       "args": null,
-      "kind": "ScalarField",
-      "name": "phone",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "state",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "country",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "address",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "address2",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "postalCode",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "concreteType": "LatLng",
-      "kind": "LinkedField",
-      "name": "coordinates",
-      "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "lat",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "lng",
-          "storageKey": null
-        }
-      ],
-      "storageKey": null
+      "kind": "FragmentSpread",
+      "name": "PartnerContactMap_location"
     }
   ],
   "type": "Location"
 };
-(node as any).hash = '2ceefb0506d7e03456131cd3427c2d60';
+(node as any).hash = '380b7adcdeaedee53a0dee4b2d67e526';
 export default node;

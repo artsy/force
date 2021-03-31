@@ -5,11 +5,12 @@ import {
   getGoogleMapUrl,
   getGoogleStaticMapImageUrl,
 } from "./partnerContactUtils"
-import { PartnerContactCard_location } from "v2/__generated__/PartnerContactCard_location.graphql"
+import { PartnerContactMap_location } from "v2/__generated__/PartnerContactMap_location.graphql"
 import { Media } from "v2/Utils/Responsive"
+import { createFragmentContainer, graphql } from "react-relay"
 
 export interface PartnerContactMapProps {
-  location: PartnerContactCard_location
+  location: PartnerContactMap_location
 }
 
 const StaticMapImage = styled(Image)`
@@ -61,3 +62,18 @@ export const PartnerContactMap: React.FC<PartnerContactMapProps> = ({
     </Link>
   )
 }
+
+export const PartnerContactMapFragmentContainer = createFragmentContainer(
+  PartnerContactMap,
+  {
+    location: graphql`
+      fragment PartnerContactMap_location on Location {
+        ...PartnerContactAddress_Fragment @relay(mask: false)
+        coordinates {
+          lat
+          lng
+        }
+      }
+    `,
+  }
+)

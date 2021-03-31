@@ -42,7 +42,22 @@ fragment Contact_partner on Partner {
   }
 }
 
+fragment PartnerContactAddress_location on Location {
+  city
+  phone
+  state
+  country
+  address
+  address2
+  postalCode
+}
+
 fragment PartnerContactCard_location on Location {
+  ...PartnerContactAddress_location
+  ...PartnerContactMap_location
+}
+
+fragment PartnerContactMap_location on Location {
   city
   phone
   state
@@ -273,7 +288,7 @@ return {
     "metadata": {},
     "name": "partnerRoutes_ContactQuery",
     "operationKind": "query",
-    "text": "query partnerRoutes_ContactQuery(\n  $partnerId: String!\n) {\n  partner(id: $partnerId) @principalField {\n    ...Contact_partner\n    locations: locationsConnection(first: 50) {\n      totalCount\n    }\n    id\n  }\n}\n\nfragment Contact_partner on Partner {\n  locations: locationsConnection(first: 50) {\n    edges {\n      ...PartnerContacts_edges\n    }\n  }\n}\n\nfragment PartnerContactCard_location on Location {\n  city\n  phone\n  state\n  country\n  address\n  address2\n  postalCode\n  coordinates {\n    lat\n    lng\n  }\n}\n\nfragment PartnerContacts_edges on LocationEdge {\n  node {\n    id\n    ...PartnerContactCard_location\n  }\n}\n"
+    "text": "query partnerRoutes_ContactQuery(\n  $partnerId: String!\n) {\n  partner(id: $partnerId) @principalField {\n    ...Contact_partner\n    locations: locationsConnection(first: 50) {\n      totalCount\n    }\n    id\n  }\n}\n\nfragment Contact_partner on Partner {\n  locations: locationsConnection(first: 50) {\n    edges {\n      ...PartnerContacts_edges\n    }\n  }\n}\n\nfragment PartnerContactAddress_location on Location {\n  city\n  phone\n  state\n  country\n  address\n  address2\n  postalCode\n}\n\nfragment PartnerContactCard_location on Location {\n  ...PartnerContactAddress_location\n  ...PartnerContactMap_location\n}\n\nfragment PartnerContactMap_location on Location {\n  city\n  phone\n  state\n  country\n  address\n  address2\n  postalCode\n  coordinates {\n    lat\n    lng\n  }\n}\n\nfragment PartnerContacts_edges on LocationEdge {\n  node {\n    id\n    ...PartnerContactCard_location\n  }\n}\n"
   }
 };
 })();
