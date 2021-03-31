@@ -1,3 +1,4 @@
+import React from "react"
 import loadable from "@loadable/component"
 import { RedirectException, RouteConfig } from "found"
 import { graphql } from "react-relay"
@@ -27,7 +28,7 @@ const ArtistsRoute = loadable(() => import("./Routes/Artists"), {
 })
 
 const ContactRoute = loadable(() => import("./Routes/Contact"), {
-  resolveComponent: component => component.ContactRoute,
+  resolveComponent: component => component.ContactRouteFragmentContainer,
 })
 
 export const partnerRoutes: RouteConfig[] = [
@@ -93,6 +94,36 @@ export const partnerRoutes: RouteConfig[] = [
         path: "contact",
         prepare: () => {
           ContactRoute.preload()
+        },
+        query: graphql`
+          query partnerRoutes_ContactQuery($partnerId: String!) {
+            partner(id: $partnerId) @principalField {
+              ...Contact_partner
+              locations: locationsConnection(first: 50) {
+                totalCount
+              }
+            }
+          }
+        `,
+        render: ({ Component, props, match }) => {
+          if (!(Component && props)) {
+            return undefined
+          }
+
+          const { partner } = props as any
+
+          if (!partner) {
+            return undefined
+          }
+
+          if (partner.locations.totalCount === 0) {
+            throw new RedirectException(
+              `/partner2/${match.params.partnerId}`,
+              302
+            )
+          }
+
+          return <Component {...props} />
         },
       },
       {
