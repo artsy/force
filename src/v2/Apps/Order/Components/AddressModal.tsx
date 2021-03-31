@@ -1,23 +1,22 @@
-import React from "react"
+import React, { useState } from "react"
 import { Button, Input, Modal, Spacer, Text } from "@artsy/palette"
 import { SavedAddressType } from "../Utils/shippingAddressUtils"
-import { Formik, FormikProps } from "formik"
+import { Formik, FormikHelpers, FormikProps } from "formik"
 import {
   removeEmptyKeys,
   validateAddress,
   validatePhoneNumber,
 } from "../Utils/formValidators"
-import { CommitMutation } from "../Utils/commitMutation"
 import { updateUserAddress } from "../Mutations/UpdateUserAddress"
 import { createUserAddress } from "v2/Apps/Order/Mutations/CreateUserAddress"
 import { SavedAddresses_me } from "v2/__generated__/SavedAddresses_me.graphql"
 import { AddressModalFields } from "v2/Components/Address/AddressModalFields"
+import { useSystemContext } from "v2/Artsy/SystemContext"
 
-interface Props {
+export interface Props {
   show: boolean
   closeModal: () => void
   address?: SavedAddressType
-  commitMutation: CommitMutation
   onSuccess: (address) => void
   onError: (message: string) => void
   modalDetails?: {
@@ -27,13 +26,22 @@ interface Props {
   me?: SavedAddresses_me
 }
 
+const SERVER_ERROR_MAP: Record<string, Record<string, string>> = {
+  "Validation failed for phone: not a valid phone number": {
+    field: "phoneNumber",
+    message: "Please enter a valid phone number",
+  },
+}
+
+export const GENERIC_FAIL_MESSAGE =
+  "Sorry there has been an issue saving your address. Please try again."
+
 export type AddressModalAction = "editUserAddress" | "createUserAddress"
 
 export const AddressModal: React.FC<Props> = ({
   show,
   closeModal,
   address,
-  commitMutation,
   onSuccess,
   onError,
   modalDetails,
@@ -41,7 +49,6 @@ export const AddressModal: React.FC<Props> = ({
 }) => {
   const title = modalDetails?.addressModalTitle
   const createMutation = modalDetails.addressModalAction === "createUserAddress"
-
   const validator = (values: any) => {
     const validationResult = validateAddress(values)
     const phoneValidation = validatePhoneNumber(values.phoneNumber)
@@ -51,34 +58,59 @@ export const AddressModal: React.FC<Props> = ({
     const errorsTrimmed = removeEmptyKeys(errors)
     return errorsTrimmed
   }
+  const { relayEnvironment } = useSystemContext()
+  const [createUpdateError, setCreateUpdateError] = useState<string>(null)
 
   return (
     <Modal title={title} show={show} onClose={closeModal}>
       <Formik
         initialValues={createMutation ? { country: "US" } : address}
         validate={validator}
-        onSubmit={values => {
+        onSubmit={(
+          values: SavedAddressType,
+          actions: FormikHelpers<SavedAddressType>
+        ) => {
+          const handleError = message => {
+            const userMessage: Record<string, string> | null =
+              SERVER_ERROR_MAP[message]
+            if (userMessage) {
+              actions.setFieldError(userMessage.field, userMessage.message)
+            } else {
+              setCreateUpdateError(GENERIC_FAIL_MESSAGE)
+            }
+            actions?.setSubmitting(false)
+            onError && onError(message)
+          }
+
+          const handleSuccess = address => {
+            setCreateUpdateError(null)
+            onSuccess && onSuccess(address)
+          }
+
           createMutation
             ? createUserAddress(
-                commitMutation,
+                relayEnvironment,
                 values,
-                onSuccess,
-                onError,
+                handleSuccess,
+                handleError,
                 me,
                 closeModal
               )
             : updateUserAddress(
-                commitMutation,
+                relayEnvironment,
                 address.internalID,
                 values,
                 closeModal,
-                onSuccess,
-                onError
+                handleSuccess,
+                handleError
               )
         }}
       >
         {(formik: FormikProps<SavedAddressType>) => (
           <form onSubmit={formik.handleSubmit}>
+            <Text data-test="credit-card-error" color="red" my={2}>
+              {createUpdateError}
+            </Text>
             <Text color="black60" mb={1}>
               All fields marked * are mandatory
             </Text>

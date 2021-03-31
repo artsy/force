@@ -7,7 +7,7 @@ const PartnerApp = loadable(() => import("./PartnerApp"), {
 })
 
 const ArticlesRoute = loadable(() => import("./Routes/Articles"), {
-  resolveComponent: component => component.ArticlesRoute,
+  resolveComponent: component => component.ArticlesPaginationContainer,
 })
 
 const OverviewRoute = loadable(() => import("./Routes/Overview"), {
@@ -59,6 +59,13 @@ export const partnerRoutes: RouteConfig[] = [
         prepare: () => {
           ArticlesRoute.preload()
         },
+        query: graphql`
+          query partnerRoutes_ArticlesQuery($partnerId: String!) {
+            partner(id: $partnerId) @principalField {
+              ...Articles_partner
+            }
+          }
+        `,
       },
       {
         getComponent: () => ShowsRoute,

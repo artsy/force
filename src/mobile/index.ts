@@ -1,7 +1,8 @@
+import express from "express"
 import { middleware as stitchMiddleware } from "@artsy/stitch/dist/internal/middleware"
 import * as globalReactModules from "desktop/components/react/stitch_components"
 
-const app = (module.exports = require("express")())
+const app = express()
 
 // Configure stitch SSR functionality. Mounted here (rather than in setup) so
 // changes to stitched code can be hot reloaded.
@@ -33,3 +34,7 @@ app.use(require("./apps/favorites_following"))
 app.use(require("./apps/auctions"))
 app.use(require("./apps/shows"))
 app.use(require("./apps/dev"))
+
+// Export for hot reloading
+module.exports = app
+export default app

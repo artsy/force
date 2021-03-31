@@ -51,15 +51,11 @@ export const MyBidsBidHeaderFragmentContainer = createFragmentContainer(
             srcSet
           }
         }
-        displayTimelyAt
-        endAt
         formattedStartDateTime
-        liveStartAt
         name
         partner {
           name
         }
-        requireIdentityVerification
         slug
       }
     `,

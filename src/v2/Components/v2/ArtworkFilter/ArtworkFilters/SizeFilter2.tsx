@@ -6,13 +6,15 @@ import {
   Checkbox,
   Clickable,
   Flex,
-  Input,
   Sans,
   Spacer,
   Toggle,
+  Message,
 } from "@artsy/palette"
 import { useArtworkFilterContext } from "../ArtworkFilterContext"
 import { OptionText } from "./OptionText"
+import { NumericInput } from "./PriceRangeFilter"
+import { Media } from "v2/Utils/Responsive"
 
 const sizeMap = [
   { displayName: "Small (under 40cm)", name: "SMALL" },
@@ -63,6 +65,7 @@ export const SizeFilter2: React.FC = () => {
   const [customSize, setCustomSize] = useState<CustomSize>(
     hasValue(initialCustomSize) ? initialCustomSize : DEFAULT_CUSTOM_SIZE
   )
+  const [mode, setMode] = useState<"resting" | "done">("resting")
 
   const handleInputChange = (dimension: "height" | "width", index: number) => ({
     currentTarget: { value },
@@ -110,10 +113,18 @@ export const SizeFilter2: React.FC = () => {
       ...mapSizeToRange(customSize),
     }
     setFilters(newFilters, { force: false })
+    setMode("done")
   }
 
   return (
     <Toggle label="Size" expanded>
+      {mode === "done" && (
+        <Media lessThan="sm">
+          <Message variant="info" my={2}>
+            Size set; select apply to see full results
+          </Message>
+        </Media>
+      )}
       <Flex flexDirection="column" alignItems="left">
         <Sans size="2" color="black60">
           This is based on the artwork’s average dimension.
@@ -150,10 +161,9 @@ export const SizeFilter2: React.FC = () => {
         <>
           <Text mt={1}>Width</Text>
           <Flex alignItems="flex-end">
-            <Input
-              placeholder="Inch Min"
+            <NumericInput
+              label="Inches"
               name="width_min"
-              type="number"
               min="0"
               step="1"
               value={customSize.width[0]}
@@ -162,10 +172,9 @@ export const SizeFilter2: React.FC = () => {
 
             <Spacer mx={0.5} />
 
-            <Input
-              placeholder="Inch Max"
+            <NumericInput
+              label="Inches"
               name="width_max"
-              type="number"
               min="0"
               step="1"
               value={customSize.width[1]}
@@ -175,10 +184,9 @@ export const SizeFilter2: React.FC = () => {
 
           <Text mt={1}>Height</Text>
           <Flex alignItems="flex-end">
-            <Input
-              placeholder="Inch Min"
+            <NumericInput
+              label="Inches"
               name="height_min"
-              type="number"
               min="0"
               step="1"
               value={customSize.height[0]}
@@ -187,10 +195,9 @@ export const SizeFilter2: React.FC = () => {
 
             <Spacer mx={0.5} />
 
-            <Input
-              placeholder="Inch Max"
+            <NumericInput
+              label="Inches"
               name="height_max"
-              type="number"
               min="0"
               step="1"
               value={customSize.height[1]}

@@ -2,7 +2,7 @@ import type { NextFunction } from "express"
 import type { ArtsyRequest, ArtsyResponse } from "./artsyExpress"
 
 import { getContextPageFromReq } from "lib/getContextPage"
-import cache from "lib/cache"
+import { cache } from "lib/cache"
 import config from "../../config"
 
 const {

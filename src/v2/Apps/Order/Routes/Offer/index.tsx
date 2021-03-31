@@ -269,9 +269,8 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
                 )}
                 <Spacer mb={[2, 3]} />
                 <Message p={[2, 3]}>
-                  If your offer is accepted, your payment will be processed
-                  immediately. Keep in mind making an offer doesn’t guarantee
-                  you the work, as the seller might be receiving higher offers.
+                  Please note that all offers are binding. If your offer is
+                  accepted, your payment will be processed immediately.
                 </Message>
                 <Spacer mb={[2, 3]} />
                 <Media greaterThan="xs">

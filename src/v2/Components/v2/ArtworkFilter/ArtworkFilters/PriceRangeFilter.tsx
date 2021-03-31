@@ -17,7 +17,7 @@ import styled from "styled-components"
 import { Media } from "v2/Utils/Responsive"
 
 // Disables arrows in numeric inputs
-const NumericInput = styled(LabeledInput).attrs({ type: "number" })`
+export const NumericInput = styled(LabeledInput).attrs({ type: "number" })`
   /* Chrome, Safari, Edge, Opera */
   input::-webkit-outer-spin-button,
   input::-webkit-inner-spin-button {

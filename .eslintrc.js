@@ -84,6 +84,13 @@ module.exports = {
   },
   overrides: [
     {
+      files: ["src/**/*.test.js", "src/**/*.test.ts"],
+      rules: {
+        "jest/expect-expect": "off",
+        "jest/valid-describe": "off",
+      },
+    },
+    {
       files: ["webpack/**/*"],
       rules: {
         "no-console": "off",

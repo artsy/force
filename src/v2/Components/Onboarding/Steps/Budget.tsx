@@ -103,7 +103,7 @@ export const BudgetComponent: React.FC<Props> = props => {
 
     const event = {
       action_type: ActionType.onboardingUserInputData,
-      context_module: ContextModule.onboardingInterests,
+      context_module: ContextModule.onboardingBudget,
       context_owner_type: OwnerType.onboarding,
       data_input: selectedOption,
     }

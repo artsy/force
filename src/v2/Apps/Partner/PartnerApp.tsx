@@ -15,10 +15,9 @@ export interface PartnerAppProps {
   partner: PartnerApp_partner
 }
 
-const Foreground = styled.div`
+const Foreground = styled(FullBleed)`
   background-color: white;
   z-index: 1;
-  width: 100%;
 `
 
 export const PartnerApp: React.FC<PartnerAppProps> = ({

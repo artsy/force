@@ -10,15 +10,11 @@ export type MyBidsBidHeader_sale = {
             readonly srcSet: string;
         } | null;
     } | null;
-    readonly displayTimelyAt: string | null;
-    readonly endAt: string | null;
     readonly formattedStartDateTime: string | null;
-    readonly liveStartAt: string | null;
     readonly name: string | null;
     readonly partner: {
         readonly name: string | null;
     } | null;
-    readonly requireIdentityVerification: boolean | null;
     readonly slug: string;
     readonly " $refType": "MyBidsBidHeader_sale";
 };
@@ -95,28 +91,7 @@ return {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "displayTimelyAt",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "endAt",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
       "name": "formattedStartDateTime",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "liveStartAt",
       "storageKey": null
     },
     (v0/*: any*/),
@@ -136,13 +111,6 @@ return {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "requireIdentityVerification",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
       "name": "slug",
       "storageKey": null
     }
@@ -150,5 +118,5 @@ return {
   "type": "Sale"
 };
 })();
-(node as any).hash = '2611bf1d441579a6bf9fdf40da95cb47';
+(node as any).hash = '83f241014bcbaf8de7ee1c8a25f4e9cd';
 export default node;

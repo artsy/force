@@ -1,3 +1,4 @@
+/* eslint-disable jest/no-done-callback */
 jest.mock("redis", () => ({
   createClient: () => {
     const localCache = new Map()
@@ -30,7 +31,7 @@ describe("#cache", () => {
       OPENREDIS_URL: "test",
       NODE_ENV: "production",
     }
-    cache = await import("../cache")
+    cache = (await import("../cache")).cache
     cache.setup(() => {})
   })
 
