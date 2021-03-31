@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React from "react"
 import styled from "styled-components"
 import { Link, Image, ResponsiveBox } from "@artsy/palette"
 import {
@@ -6,8 +6,7 @@ import {
   getGoogleStaticMapImageUrl,
 } from "./partnerContactUtils"
 import { PartnerContactCard_location } from "v2/__generated__/PartnerContactCard_location.graphql"
-import { useWindowSize } from "v2/Utils/Hooks/useWindowSize"
-import { unitlessBreakpoints } from "@artsy/palette/dist/themes/v3"
+import { Media } from "v2/Utils/Responsive"
 
 export interface PartnerContactMapProps {
   location: PartnerContactCard_location
@@ -19,31 +18,46 @@ const StaticMapImage = styled(Image)`
   height: 100%;
 `
 
+const getAspectWidth = (isMobile: boolean) => (isMobile ? 2 : 1.2)
+const getImageHeight = (isMobile: boolean) => (isMobile ? 300 : 480)
+
 export const PartnerContactMap: React.FC<PartnerContactMapProps> = ({
   location,
 }) => {
-  const [mapImageUrl, setMapImageUrl] = useState<string>()
-  const { width } = useWindowSize()
-  const isMobile = width <= unitlessBreakpoints.xs
-  const aspectWidth = isMobile ? 2 : 1.2
   const mapUrl = getGoogleMapUrl(location)
+  const mobileMapImageUrl = getGoogleStaticMapImageUrl(
+    location,
+    getImageHeight(true) * getAspectWidth(true),
+    getImageHeight(true)
+  )
+  const desktopMapImageUrl = getGoogleStaticMapImageUrl(
+    location,
+    getImageHeight(false) * getAspectWidth(false),
+    getImageHeight(false)
+  )
 
-  useEffect(() => {
-    const imageHeight = isMobile ? 300 : 480
-    const imageWidth = imageHeight * aspectWidth
-
-    setMapImageUrl(
-      getGoogleStaticMapImageUrl(location, imageWidth, imageHeight)
-    )
-  }, [isMobile])
-
-  if (!mapImageUrl || !mapUrl) return null
+  if (!mobileMapImageUrl || !desktopMapImageUrl || !mapUrl) return null
 
   return (
     <Link href={mapUrl} target="_blank">
-      <ResponsiveBox aspectWidth={aspectWidth} aspectHeight={1} maxWidth="100%">
-        <StaticMapImage src={mapImageUrl} alt="" lazyLoad />
-      </ResponsiveBox>
+      <Media greaterThan="xs">
+        <ResponsiveBox
+          aspectWidth={getAspectWidth(false)}
+          aspectHeight={1}
+          maxWidth="100%"
+        >
+          <StaticMapImage src={desktopMapImageUrl} alt="" lazyLoad />
+        </ResponsiveBox>
+      </Media>
+      <Media at="xs">
+        <ResponsiveBox
+          aspectWidth={getAspectWidth(true)}
+          aspectHeight={1}
+          maxWidth="100%"
+        >
+          <StaticMapImage src={mobileMapImageUrl} alt="" lazyLoad />
+        </ResponsiveBox>
+      </Media>
     </Link>
   )
 }
