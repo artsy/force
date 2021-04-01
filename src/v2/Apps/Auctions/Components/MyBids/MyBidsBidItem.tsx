@@ -16,7 +16,7 @@ import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import { useTracking } from "react-tracking"
 import { useAnalyticsContext } from "v2/Artsy"
 import { clickedArtworkGroup } from "@artsy/cohesion"
-import { getContextModule } from "../../Utils/getContextModule"
+import { tabTypeToContextModuleMap } from "../../Utils/tabTypeToContextModuleMap"
 
 interface MyBidsBidItemProps {
   horizontalSlidePosition: number
@@ -29,7 +29,7 @@ export const MyBidsBidItem: React.FC<MyBidsBidItemProps> = ({
 }) => {
   const { trackEvent } = useTracking()
   const { contextPageOwnerType } = useAnalyticsContext()
-  const contextModule = getContextModule("myBids")
+  const contextModule = tabTypeToContextModuleMap.myBids
 
   return (
     <RouterLink

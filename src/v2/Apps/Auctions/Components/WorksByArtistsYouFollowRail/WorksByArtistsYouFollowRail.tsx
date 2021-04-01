@@ -12,7 +12,7 @@ import {
 import { AuctionArtworksRailPlaceholder } from "../AuctionArtworksRailPlaceholder"
 import { useTracking } from "react-tracking"
 import { clickedArtworkGroup } from "@artsy/cohesion"
-import { getContextModule } from "../../Utils/getContextModule"
+import { tabTypeToContextModuleMap } from "../../Utils/tabTypeToContextModuleMap"
 import { SystemQueryRenderer } from "v2/Artsy/Relay/SystemQueryRenderer"
 import { Text } from "@artsy/palette"
 
@@ -23,11 +23,10 @@ export interface WorksByArtistsYouFollowRailProps {
 
 const WorksByArtistsYouFollowRail: React.FC<WorksByArtistsYouFollowRailProps> = ({
   viewer,
-  tabType,
 }) => {
   const { trackEvent } = useTracking()
   const { contextPageOwnerType } = useAnalyticsContext()
-  const contextModule = getContextModule(tabType)
+  const contextModule = tabTypeToContextModuleMap.worksByArtistsYouFollow
 
   return (
     <>
@@ -105,12 +104,7 @@ export const WorksByArtistsYouFollowRailQueryRenderer: React.FC = () => {
         if (error || !props) {
           return <AuctionArtworksRailPlaceholder />
         }
-        return (
-          <WorksByArtistsYouFollowRailFragmentContainer
-            {...props}
-            tabType="worksByArtistsYouFollow"
-          />
-        )
+        return <WorksByArtistsYouFollowRailFragmentContainer {...props} />
       }}
     />
   )

@@ -9,7 +9,7 @@ import { AUCTION_ARTWORKS_IMAGE_HEIGHT, TabType } from "./AuctionArtworksRail"
 import { AuctionArtworksRailPlaceholder } from "../AuctionArtworksRailPlaceholder"
 import { useTracking } from "react-tracking"
 import { clickedArtworkGroup } from "@artsy/cohesion"
-import { getContextModule } from "../../Utils/getContextModule"
+import { tabTypeToContextModuleMap } from "../../Utils/tabTypeToContextModuleMap"
 
 export interface AuctionArtworksRailArtworksProps {
   sale: AuctionArtworksRailArtworks_sale
@@ -22,7 +22,7 @@ const AuctionArtworksRailArtworks: React.FC<AuctionArtworksRailArtworksProps> = 
 }) => {
   const tracking = useTracking()
   const { contextPageOwnerType } = useAnalyticsContext()
-  const contextModule = getContextModule(tabType)
+  const contextModule = tabTypeToContextModuleMap[tabType]
 
   return (
     <Carousel arrowHeight={AUCTION_ARTWORKS_IMAGE_HEIGHT}>

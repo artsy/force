@@ -6,7 +6,7 @@ import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import { useLazyLoadComponent } from "v2/Utils/Hooks/useLazyLoadComponent"
 import { AuctionArtworksRailArtworksQueryRenderer } from "./AuctionArtworksRailArtworks"
 import { AuctionArtworksRailPlaceholder } from "../AuctionArtworksRailPlaceholder"
-import { getContextModule } from "../../Utils/getContextModule"
+import { tabTypeToContextModuleMap } from "../../Utils/tabTypeToContextModuleMap"
 import { useTracking } from "react-tracking"
 import {
   clickedArtworkGroupHeader,
@@ -44,7 +44,7 @@ export const AuctionArtworksRail: React.FC<AuctionArtworksRailProps> = ({
   const { trackEvent } = useTracking()
   const { isEnteredView, Waypoint } = useLazyLoadComponent()
   const { contextPageOwnerType } = useAnalyticsContext()
-  const contextModule = getContextModule(tabType)
+  const contextModule = tabTypeToContextModuleMap[tabType]
 
   const trackViewSaleClick = () => {
     trackEvent(
