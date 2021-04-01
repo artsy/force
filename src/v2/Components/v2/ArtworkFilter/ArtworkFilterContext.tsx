@@ -30,63 +30,71 @@ export const initialArtworkFilterState: ArtworkFilters = {
 }
 
 /**
- * A list of all possible artwork filters across all apps
+ * A list of filters that support multiple selections
  */
-export interface ArtworkFilters {
-  acquireable?: boolean
-  artist_id?: string
+export interface MultiSelectArtworkFilters {
   attributionClass?: string[]
   artistIDs?: string[]
+  colors?: string[]
+  additionalGeneIDs?: string[]
+  majorPeriods?: string[]
+  partnerIDs?: string[]
+  sizes?: string[]
+  locationCities?: string[]
+  artistNationalities?: string[]
+  materialsTerms?: string[]
+}
+
+/**
+ * A list of all possible artwork filters across all apps
+ */
+export interface ArtworkFilters extends MultiSelectArtworkFilters {
+  acquireable?: boolean
+  artist_id?: string
   atAuction?: boolean
   color?: string
-  colors?: string[]
   forSale?: boolean
-  additionalGeneIDs?: string[]
   height?: string
   includeArtworksByFollowedArtists?: boolean
   inquireableOnly?: boolean
   keyword?: string
-  majorPeriods?: string[]
   medium?: string
   offerable?: boolean
   page?: number
   partnerID?: string
-  partnerIDs?: string[]
   priceRange?: string
-  sizes?: string[]
   sort?: string
   term?: string
   width?: string
-  locationCities?: string[]
-  artistNationalities?: string[]
-  materialsTerms?: string[]
 }
 
 interface ArtworkFiltersState extends ArtworkFilters {
   reset?: boolean
 }
 
+export type Slice =
+  | "COLOR"
+  | "DIMENSION_RANGE"
+  | "GALLERY"
+  | "INSTITUTION"
+  | "MAJOR_PERIOD"
+  | "MEDIUM"
+  | "MERCHANDISABLE_ARTISTS"
+  | "PARTNER_CITY"
+  | "PERIOD"
+  | "PRICE_RANGE"
+  | "TOTAL"
+  | "ARTIST"
+  | "PARTNER"
+  | "LOCATION_CITY"
+  | "ARTIST_NATIONALITY"
+  | "MATERIALS_TERMS"
+
 /**
  * Possible aggregations that can be passed
  */
 export type Aggregations = Array<{
-  slice:
-    | "COLOR"
-    | "DIMENSION_RANGE"
-    | "GALLERY"
-    | "INSTITUTION"
-    | "MAJOR_PERIOD"
-    | "MEDIUM"
-    | "MERCHANDISABLE_ARTISTS"
-    | "PARTNER_CITY"
-    | "PERIOD"
-    | "PRICE_RANGE"
-    | "TOTAL"
-    | "ARTIST"
-    | "PARTNER"
-    | "LOCATION_CITY"
-    | "ARTIST_NATIONALITY"
-    | "MATERIALS_TERMS"
+  slice: Slice
   counts: Array<{
     count: number
     value: string
