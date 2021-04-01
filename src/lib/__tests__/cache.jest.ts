@@ -1,3 +1,4 @@
+/* eslint-disable jest/no-done-callback */
 jest.mock("redis", () => ({
   createClient: () => {
     const localCache = new Map()
