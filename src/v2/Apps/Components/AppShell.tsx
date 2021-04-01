@@ -45,7 +45,7 @@ export const AppShell: React.FC<AppShellProps> = props => {
   useMaybeReloadAfterInquirySignIn()
 
   return (
-    <Box width="100%">
+    <Box width="100%" overflowX="hidden">
       <Box pb={[MOBILE_NAV_HEIGHT, NAV_BAR_HEIGHT]}>
         <Box left={0} position="fixed" width="100%" zIndex={100}>
           <NavBar />
