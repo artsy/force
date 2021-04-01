@@ -5,13 +5,13 @@ import { AuctionArtworksRailFragmentContainer } from "../AuctionArtworksRail/Auc
 
 jest.unmock("react-relay")
 
-describe("AuctionArtworksRails", () => {
+describe("AuctionArtworksRail", () => {
   const { getWrapper } = setupTestWrapper({
     Component: (props: any) => {
       return <AuctionArtworksRailFragmentContainer sale={props.sale} />
     },
     query: graphql`
-      query AuctionArtworksRails_Test_Query {
+      query AuctionArtworksRail_Test_Query {
         sale(id: "xxx") {
           ...AuctionArtworksRail_sale
         }
@@ -37,5 +37,6 @@ describe("AuctionArtworksRails", () => {
 
     const text = wrapper.text()
     expect(text).toContain("Test Href")
+    expect(text).toContain("Ends Apr 10 at 8:27pm UTC")
   })
 })
