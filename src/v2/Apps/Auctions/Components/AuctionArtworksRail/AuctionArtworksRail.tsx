@@ -5,10 +5,26 @@ import { AuctionArtworksRail_sale } from "v2/__generated__/AuctionArtworksRail_s
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import { useLazyLoadComponent } from "v2/Utils/Hooks/useLazyLoadComponent"
 import { AuctionArtworksRailArtworksQueryRenderer } from "./AuctionArtworksRailArtworks"
-import { AuctionArtworksRailPlaceholder } from "./AuctionArtworksRailPlaceholder"
+import { AuctionArtworksRailPlaceholder } from "../AuctionArtworksRailPlaceholder"
+import { tabTypeToContextModuleMap } from "../../Utils/tabTypeToContextModuleMap"
+import { useTracking } from "react-tracking"
+import {
+  clickedArtworkGroupHeader,
+  ClickedArtworkGroupHeaderArgs,
+  OwnerType,
+} from "@artsy/cohesion"
+import { useAnalyticsContext } from "v2/Artsy"
+
+export type TabType =
+  | "current"
+  | "myBids"
+  | "upcoming"
+  | "past"
+  | "worksByArtistsYouFollow"
 
 interface AuctionArtworksRailProps extends BoxProps {
   sale: AuctionArtworksRail_sale
+  tabType: TabType
 }
 
 /**
@@ -21,10 +37,28 @@ export const AUCTION_ARTWORKS_IMAGE_HEIGHT = 160
 
 export const AuctionArtworksRail: React.FC<AuctionArtworksRailProps> = ({
   sale,
+  tabType,
   ...rest
 }) => {
   const ref = useRef<HTMLDivElement | null>(null)
+  const { trackEvent } = useTracking()
   const { isEnteredView, Waypoint } = useLazyLoadComponent()
+  const { contextPageOwnerType } = useAnalyticsContext()
+  const contextModule = tabTypeToContextModuleMap[tabType]
+
+  const trackViewSaleClick = () => {
+    trackEvent(
+      clickedArtworkGroupHeader({
+        contextModule,
+        contextPageOwnerType,
+        destinationPageOwnerId: sale.internalID,
+        destinationPageOwnerSlug: sale.slug,
+        destinationPageOwnerType: OwnerType.sale,
+        type: "viewAll",
+        // FIXME: Remove this once cohesion pr has been automerged
+      } as ClickedArtworkGroupHeaderArgs)
+    )
+  }
 
   return (
     <>
@@ -33,25 +67,30 @@ export const AuctionArtworksRail: React.FC<AuctionArtworksRailProps> = ({
       <Box ref={ref as any} {...rest}>
         <Box display="flex" mb={1}>
           <Box flex="1">
-            <Text as="h3" variant="subtitle" fontWeight="bold">
-              <RouterLink to={sale.href} noUnderline>
+            <Text as="h3" variant="title">
+              <RouterLink
+                to={sale.href}
+                noUnderline
+                onClick={trackViewSaleClick}
+              >
                 {sale.name}
               </RouterLink>
             </Text>
             <Text mb={1}>{sale.formattedStartDateTime}</Text>
           </Box>
 
-          {sale.href && (
-            <Text variant="subtitle" color="black60">
-              <RouterLink to={sale.href} noUnderline>
-                View
-              </RouterLink>
-            </Text>
-          )}
+          <Text variant="subtitle" color="black60">
+            <RouterLink to={sale.href} noUnderline onClick={trackViewSaleClick}>
+              View all
+            </RouterLink>
+          </Text>
         </Box>
         <Box height={AUCTION_ARTWORKS_RAIL_HEIGHT}>
           {isEnteredView ? (
-            <AuctionArtworksRailArtworksQueryRenderer id={sale.internalID} />
+            <AuctionArtworksRailArtworksQueryRenderer
+              id={sale.internalID}
+              tabType={tabType}
+            />
           ) : (
             <AuctionArtworksRailPlaceholder />
           )}
@@ -67,6 +106,7 @@ export const AuctionArtworksRailFragmentContainer = createFragmentContainer(
     sale: graphql`
       fragment AuctionArtworksRail_sale on Sale {
         internalID
+        slug
         href
         name
         formattedStartDateTime

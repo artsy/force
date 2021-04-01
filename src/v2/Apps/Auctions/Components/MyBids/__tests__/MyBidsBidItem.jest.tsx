@@ -2,13 +2,23 @@ import React from "react"
 import { graphql } from "relay-runtime"
 import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
 import { MyBidsBidItemFragmentContainer } from "../MyBidsBidItem"
+import { useTracking as baseUseTracking } from "react-tracking"
 
+jest.mock("react-tracking")
 jest.unmock("react-relay")
 
 describe("MyBidsBidItem", () => {
+  const useTracking = baseUseTracking as jest.Mock
+  const trackEvent = jest.fn()
+
   const { getWrapper } = setupTestWrapper({
     Component: (props: any) => {
-      return <MyBidsBidItemFragmentContainer saleArtwork={props.saleArtwork} />
+      return (
+        <MyBidsBidItemFragmentContainer
+          saleArtwork={props.saleArtwork}
+          horizontalSlidePosition={2}
+        />
+      )
     },
     query: graphql`
       query MyBidsBidItem_Test_Query {
@@ -17,6 +27,18 @@ describe("MyBidsBidItem", () => {
         }
       }
     `,
+  })
+
+  beforeEach(() => {
+    useTracking.mockImplementation(() => {
+      return {
+        trackEvent,
+      }
+    })
+  })
+
+  afterEach(() => {
+    trackEvent.mockReset()
   })
 
   it("renders correct components and data", () => {

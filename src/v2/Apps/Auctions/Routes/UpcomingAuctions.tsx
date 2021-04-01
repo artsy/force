@@ -49,7 +49,10 @@ const UpcomingAuctions: React.FC<UpcomingAuctionsProps> = ({
         {viewer.salesConnection.edges.map(({ node }, index) => {
           return (
             <Box my={4} key={index}>
-              <AuctionArtworksRailFragmentContainer sale={node} />
+              <AuctionArtworksRailFragmentContainer
+                sale={node}
+                tabType="upcoming"
+              />
             </Box>
           )
         })}

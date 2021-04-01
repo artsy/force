@@ -1,10 +1,7 @@
 import React from "react"
 import { Box, SkeletonBox, SkeletonText } from "@artsy/palette"
 import { Carousel } from "v2/Components/Carousel"
-import {
-  AUCTION_ARTWORKS_RAIL_HEIGHT,
-  AUCTION_ARTWORKS_IMAGE_HEIGHT,
-} from "./AuctionArtworksRail"
+import { AUCTION_ARTWORKS_IMAGE_HEIGHT } from "./AuctionArtworksRail/AuctionArtworksRail"
 
 interface FairExhibitorRailPlaceholderProps {
   done?: boolean
@@ -13,7 +10,7 @@ interface FairExhibitorRailPlaceholderProps {
 export const AuctionArtworksRailPlaceholder: React.FC<FairExhibitorRailPlaceholderProps> = ({
   done = true,
 }) => (
-  <Carousel arrowHeight={AUCTION_ARTWORKS_RAIL_HEIGHT}>
+  <Carousel arrowHeight={AUCTION_ARTWORKS_IMAGE_HEIGHT}>
     {[...new Array(10)].map((_, i) => {
       return (
         <Box key={i}>

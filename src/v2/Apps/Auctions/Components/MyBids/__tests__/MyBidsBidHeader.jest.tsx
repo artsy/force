@@ -2,10 +2,15 @@ import React from "react"
 import { graphql } from "relay-runtime"
 import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
 import { MyBidsBidHeaderFragmentContainer } from "../MyBidsBidHeader"
+import { useTracking as baseUseTracking } from "react-tracking"
 
+jest.mock("react-tracking")
 jest.unmock("react-relay")
 
 describe("MyBidsBidHeaderFragmentContainer", () => {
+  const useTracking = baseUseTracking as jest.Mock
+  const trackEvent = jest.fn()
+
   const { getWrapper } = setupTestWrapper({
     Component: (props: any) => {
       return <MyBidsBidHeaderFragmentContainer sale={props.sale} />
@@ -17,6 +22,18 @@ describe("MyBidsBidHeaderFragmentContainer", () => {
         }
       }
     `,
+  })
+
+  beforeEach(() => {
+    useTracking.mockImplementation(() => {
+      return {
+        trackEvent,
+      }
+    })
+  })
+
+  afterEach(() => {
+    trackEvent.mockReset()
   })
 
   it("renders correct components and data", () => {
