@@ -1,9 +1,16 @@
-import { Checkbox, space, color, Box, Expandable } from "@artsy/palette"
+import {
+  Checkbox,
+  space,
+  color,
+  Box,
+  Expandable,
+  Text,
+  Flex,
+} from "@artsy/palette"
 import { intersection } from "lodash"
 import React from "react"
 import styled from "styled-components"
 import { useArtworkFilterContext } from "../ArtworkFilterContext"
-import { OptionText } from "./OptionText"
 import { INITIAL_ITEMS_TO_SHOW, ShowMore } from "./ShowMore"
 
 const COLOR_OPTIONS = [
@@ -74,15 +81,22 @@ const ColorFilterOption: React.FC<{ colorOption: ColorOption }> = ({
       onSelect={() => toggleColor(value)}
       selected={selectedColorOptions.includes(value)}
     >
-      <OptionText display="flex" width="65%" justifyContent="space-between">
-        <Box textAlign="left">{name}</Box>
+      <Box
+        display="flex"
+        width="65%"
+        justifyContent="space-between"
+        alignItems="center"
+      >
+        <Text textAlign="left" variant="text" lineHeight={1}>
+          {name}
+        </Text>
 
         {value === "black-and-white" ? (
           <BlackAndWhiteSwatch />
         ) : (
           <ColorSwatch style={{ backgroundColor: hex }} />
         )}
-      </OptionText>
+      </Box>
     </Checkbox>
   )
 }
@@ -102,17 +116,19 @@ export const ColorFilter: React.FC<ColorFilterProps> = ({
   const hasColorFilter = currentlySelectedFilters().colors.length > 0
 
   return (
-    <Expandable label="Color" expanded={hasColorFilter || expanded}>
-      <ShowMore expanded={hasBelowTheFoldColorFilter}>
-        {COLOR_OPTIONS.map(colorOption => {
-          return (
-            <ColorFilterOption
-              key={colorOption.value}
-              colorOption={colorOption}
-            />
-          )
-        })}
-      </ShowMore>
+    <Expandable mb={1} label="Color" expanded={hasColorFilter || expanded}>
+      <Flex flexDirection="column">
+        <ShowMore expanded={hasBelowTheFoldColorFilter}>
+          {COLOR_OPTIONS.map(colorOption => {
+            return (
+              <ColorFilterOption
+                key={colorOption.value}
+                colorOption={colorOption}
+              />
+            )
+          })}
+        </ShowMore>
+      </Flex>
     </Expandable>
   )
 }

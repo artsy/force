@@ -1,18 +1,15 @@
 import React, { useState } from "react"
 import {
-  Box,
   Button,
   Text,
   Checkbox,
   Clickable,
   Flex,
-  Sans,
   Spacer,
   Expandable,
   Message,
 } from "@artsy/palette"
 import { useArtworkFilterContext } from "../ArtworkFilterContext"
-import { OptionText } from "./OptionText"
 import { NumericInput } from "./PriceRangeFilter"
 import { Media } from "v2/Utils/Responsive"
 
@@ -117,7 +114,7 @@ export const SizeFilter2: React.FC = () => {
   }
 
   return (
-    <Expandable label="Size" expanded>
+    <Expandable mb={1} label="Size" expanded>
       {mode === "done" && (
         <Media lessThan="sm">
           <Message variant="info" my={2}>
@@ -126,26 +123,23 @@ export const SizeFilter2: React.FC = () => {
         </Media>
       )}
       <Flex flexDirection="column" alignItems="left">
-        <Sans size="2" color="black60">
+        <Text variant="small" color="black60" mb={1}>
           This is based on the artwork’s average dimension.
-        </Sans>
-        <Box mt={0.25}>
-          {sizeMap.map((checkbox, index) => {
-            const { name, displayName } = checkbox
-            const props = {
-              key: index,
-              onSelect: selected => {
-                toggleSizeSelection(selected, name)
-              },
-              selected: currentlySelectedFilters().sizes.includes(name),
-            }
+        </Text>
+
+        <Flex flexDirection="column">
+          {sizeMap.map(({ name, displayName }, index) => {
             return (
-              <Checkbox {...props}>
-                <OptionText>{displayName}</OptionText>
+              <Checkbox
+                key={index}
+                onSelect={selected => toggleSizeSelection(selected, name)}
+                selected={currentlySelectedFilters().sizes.includes(name)}
+              >
+                {displayName}
               </Checkbox>
             )
           })}
-        </Box>
+        </Flex>
       </Flex>
 
       <Clickable
@@ -154,7 +148,7 @@ export const SizeFilter2: React.FC = () => {
         textAlign="left"
         onClick={() => setShowCustom(prevShowCustom => !prevShowCustom)}
       >
-        <Text>{showCustom ? "Hide" : "Show"} custom size</Text>
+        <Text variant="small">{showCustom ? "Hide" : "Show"} custom size</Text>
       </Clickable>
 
       {showCustom && (

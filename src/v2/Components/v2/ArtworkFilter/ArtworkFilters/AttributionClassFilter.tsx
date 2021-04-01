@@ -1,7 +1,6 @@
 import React from "react"
 import { Checkbox, Expandable, Flex } from "@artsy/palette"
 import { useArtworkFilterContext } from "../ArtworkFilterContext"
-import { OptionText } from "./OptionText"
 
 const checkboxValues = [
   {
@@ -38,7 +37,7 @@ export const AttributionClassFilter: React.FC = () => {
   }
 
   return (
-    <Expandable label="Rarity" expanded>
+    <Expandable mb={1} label="Rarity" expanded>
       <Flex flexDirection="column">
         {checkboxValues.map(({ name, value }, index) => {
           const props = {
@@ -50,11 +49,7 @@ export const AttributionClassFilter: React.FC = () => {
               .currentlySelectedFilters()
               .attributionClass.includes(value),
           }
-          return (
-            <Checkbox {...props}>
-              <OptionText>{name}</OptionText>
-            </Checkbox>
-          )
+          return <Checkbox {...props}>{name}</Checkbox>
         })}
       </Flex>
     </Expandable>

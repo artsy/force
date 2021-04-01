@@ -1,7 +1,6 @@
 import React from "react"
-import { Box, Checkbox, Flex, Sans, Expandable } from "@artsy/palette"
+import { Checkbox, Flex, Expandable, Text } from "@artsy/palette"
 import { useArtworkFilterContext } from "../ArtworkFilterContext"
-import { OptionText } from "./OptionText"
 
 const sizeMap = [
   { displayName: "Small (under 40cm)", name: "SMALL" },
@@ -28,30 +27,27 @@ export const SizeFilter: React.FC = () => {
   }
 
   return (
-    <Expandable label="Size" expanded>
+    <Expandable mb={1} label="Size" expanded>
       <Flex flexDirection="column" alignItems="left">
-        <Sans size="2" color="black60">
+        <Text variant="small" color="black60" mb={1}>
           This is based on the artwork’s average dimension.
-        </Sans>
-        <Box mt={0.25}>
-          {sizeMap.map((checkbox, index) => {
-            const { name, displayName } = checkbox
-            const props = {
-              key: index,
-              onSelect: selected => {
-                toggleSelection(selected, name)
-              },
-              selected: filterContext
-                .currentlySelectedFilters()
-                .sizes.includes(name),
-            }
+        </Text>
+
+        <Flex flexDirection="column">
+          {sizeMap.map(({ name, displayName }, index) => {
             return (
-              <Checkbox {...props}>
-                <OptionText>{displayName}</OptionText>
+              <Checkbox
+                key={index}
+                onSelect={selected => toggleSelection(selected, name)}
+                selected={filterContext
+                  .currentlySelectedFilters()
+                  .sizes.includes(name)}
+              >
+                {displayName}
               </Checkbox>
             )
           })}
-        </Box>
+        </Flex>
       </Flex>
     </Expandable>
   )

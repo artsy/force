@@ -63,7 +63,7 @@ export const ResultsFilter: React.FC<ResultsFilterProps> = ({
     ).length > 0
 
   return (
-    <Expandable label={label} expanded={expanded}>
+    <Expandable mb={1} label={label} expanded={expanded}>
       <Flex flexDirection="column">
         <FacetFilter
           facetName={facetName}

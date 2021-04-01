@@ -2,7 +2,6 @@ import { Flex, Radio, RadioGroup, Expandable } from "@artsy/palette"
 import { sortBy } from "lodash"
 import React, { FC } from "react"
 import { useArtworkFilterContext } from "../ArtworkFilterContext"
-import { OptionText } from "./OptionText"
 
 export const InstitutionFilter: FC = () => {
   const { aggregations, ...filterContext } = useArtworkFilterContext()
@@ -15,7 +14,7 @@ export const InstitutionFilter: FC = () => {
   const selectedItem = filterContext.currentlySelectedFilters().partnerID
 
   return (
-    <Expandable label="Institution">
+    <Expandable mb={1} label="Institution">
       <Flex flexDirection="column" alignItems="left">
         <RadioGroup
           deselectable
@@ -30,7 +29,7 @@ export const InstitutionFilter: FC = () => {
                 key={index}
                 my={0.3}
                 value={item.value.toLocaleLowerCase()}
-                label={<OptionText>{item.name}</OptionText>}
+                label={item.name}
               />
             )
           })}

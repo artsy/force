@@ -1,12 +1,10 @@
 import { Checkbox, Flex, Expandable } from "@artsy/palette"
 import { isEmpty } from "lodash"
 import React, { FC } from "react"
-
 import {
   ArtworkFilters,
   useArtworkFilterContext,
 } from "../ArtworkFilterContext"
-import { OptionText } from "./OptionText"
 
 interface WayToBuy {
   disabled: any
@@ -55,7 +53,7 @@ export const WaysToBuyFilter: FC = () => {
   ]
 
   return (
-    <Expandable label="Ways to buy" expanded>
+    <Expandable mb={1} label="Ways to buy" expanded>
       <Flex flexDirection="column">
         {checkboxes.map((checkbox, index) => {
           const props = {
@@ -66,11 +64,7 @@ export const WaysToBuyFilter: FC = () => {
               filterContext.currentlySelectedFilters()[checkbox.state]
             ),
           }
-          return (
-            <Checkbox {...props}>
-              <OptionText>{checkbox.name}</OptionText>
-            </Checkbox>
-          )
+          return <Checkbox {...props}>{checkbox.name}</Checkbox>
         })}
       </Flex>
     </Expandable>

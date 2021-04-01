@@ -1,7 +1,6 @@
 import { Checkbox, Flex, Expandable } from "@artsy/palette"
 import React, { FC } from "react"
 import { useArtworkFilterContext } from "../ArtworkFilterContext"
-import { OptionText } from "./OptionText"
 import { ShowMore, INITIAL_ITEMS_TO_SHOW } from "./ShowMore"
 import { intersection } from "lodash"
 
@@ -36,7 +35,7 @@ export const MediumFilter: FC = () => {
     ).length > 0
 
   return (
-    <Expandable label="Medium" expanded={isExpanded}>
+    <Expandable mb={1} label="Medium" expanded={isExpanded}>
       <Flex flexDirection="column" alignItems="left">
         <ShowMore expanded={hasBelowTheFoldMediumFilter}>
           {allowedMediums.map(({ value: slug, name }, index) => {
@@ -49,7 +48,7 @@ export const MediumFilter: FC = () => {
                 key={index}
                 onSelect={selected => toggleMediumSelection(selected, slug)}
               >
-                <OptionText>{name}</OptionText>
+                {name}
               </Checkbox>
             )
           })}
