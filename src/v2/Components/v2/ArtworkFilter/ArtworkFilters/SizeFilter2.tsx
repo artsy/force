@@ -43,8 +43,8 @@ const parseRange = (range?: string) => {
 
 const mapSizeToRange = (size: CustomSize) => {
   return {
-    height: size.height.join("-"),
-    width: size.width.join("-"),
+    height: size.height?.join("-"),
+    width: size.width?.join("-"),
   }
 }
 
@@ -61,7 +61,7 @@ export const SizeFilter2: React.FC = () => {
     width: parseRange(width),
   }
 
-  const [showCustom, setShowCustom] = useState(false)
+  const [showCustom, setShowCustom] = useState(!!hasValue(initialCustomSize))
   const [customSize, setCustomSize] = useState<CustomSize>(
     hasValue(initialCustomSize) ? initialCustomSize : DEFAULT_CUSTOM_SIZE
   )
@@ -121,7 +121,7 @@ export const SizeFilter2: React.FC = () => {
       {mode === "done" && (
         <Media lessThan="sm">
           <Message variant="info" my={2}>
-            Size set; select apply to see full results
+            Size set, select apply to see full results
           </Message>
         </Media>
       )}
@@ -166,7 +166,7 @@ export const SizeFilter2: React.FC = () => {
               name="width_min"
               min="0"
               step="1"
-              value={customSize.width[0]}
+              value={customSize.width && customSize.width[0]}
               onChange={handleInputChange("width", 0)}
             />
 
@@ -177,7 +177,7 @@ export const SizeFilter2: React.FC = () => {
               name="width_max"
               min="0"
               step="1"
-              value={customSize.width[1]}
+              value={customSize.width && customSize.width[1]}
               onChange={handleInputChange("width", 1)}
             />
           </Flex>
@@ -189,7 +189,7 @@ export const SizeFilter2: React.FC = () => {
               name="height_min"
               min="0"
               step="1"
-              value={customSize.height[0]}
+              value={customSize.height && customSize.height[0]}
               onChange={handleInputChange("height", 0)}
             />
 
@@ -200,7 +200,7 @@ export const SizeFilter2: React.FC = () => {
               name="height_max"
               min="0"
               step="1"
-              value={customSize.height[1]}
+              value={customSize.height && customSize.height[1]}
               onChange={handleInputChange("height", 1)}
             />
           </Flex>

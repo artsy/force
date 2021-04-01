@@ -1,49 +1,45 @@
-import { Box, Input, MagnifyingGlassIcon, color, space } from "@artsy/palette"
+import {
+  MagnifyingGlassIcon,
+  LabeledInput,
+  Clickable,
+  LabeledInputProps,
+} from "@artsy/palette"
+import { themeGet } from "@styled-system/theme-get"
 import { isEmpty } from "lodash"
 import React from "react"
 import styled from "styled-components"
 
-const SearchButton = styled.button`
-  position: absolute;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  border: none;
+const SearchButton = styled(Clickable)`
   width: 24px;
   height: 24px;
-  margin-right: 10px;
-  background: none;
-  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
 
   &:focus {
-    background: ${color("purple100")};
-    border-radius: 50%;
+    background: ${themeGet("colors.purple100")};
     outline: none;
 
     svg > path {
-      fill: ${color("white100")};
+      fill: ${themeGet("colors.white100")};
     }
   }
 `
 
-const SearchInput = styled(Input)`
-  width: 100%;
-  padding-right: ${space(4)}px;
-
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-`
-
-export const SearchInputContainer: React.ForwardRefExoticComponent<any> = React.forwardRef(
-  (props, ref) => {
-    return (
-      <Box position="relative">
-        <SearchInput ref={ref} {...props} />
-
+export const SearchInputContainer: React.ForwardRefExoticComponent<
+  Omit<LabeledInputProps, "label"> & { ref?: React.Ref<HTMLInputElement> }
+> = React.forwardRef((props, ref) => {
+  return (
+    <LabeledInput
+      ref={ref}
+      width="100%"
+      label={
         <SearchButton
+          type="submit"
           onClick={event => {
             ;(event.target as HTMLElement).parentElement.blur()
+
             if (isEmpty(props.value)) {
               event.preventDefault()
             }
@@ -51,7 +47,8 @@ export const SearchInputContainer: React.ForwardRefExoticComponent<any> = React.
         >
           <MagnifyingGlassIcon />
         </SearchButton>
-      </Box>
-    )
-  }
-)
+      }
+      {...props}
+    />
+  )
+})

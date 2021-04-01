@@ -90,4 +90,24 @@ describe("SizeFilter2", () => {
     expect(context.filters.height).toEqual("12-16")
     expect(context.filters.width).toEqual("12-16")
   })
+
+  it("updates the filter values when only one dimension is added", async () => {
+    const wrapper = getWrapper()
+
+    wrapper
+      .find("button")
+      .filterWhere(n => n.text() === "Show custom size")
+      .simulate("click")
+
+    simulateTyping(wrapper, "height_min", "12")
+    simulateTyping(wrapper, "height_max", "24")
+
+    await wrapper
+      .find("button")
+      .filterWhere(n => n.text() === "Set size")
+      .simulate("click")
+    expect(context.filters.sizes).toEqual([])
+    expect(context.filters.height).toEqual("12-24")
+    expect(context.filters.width).toEqual("*-*")
+  })
 })

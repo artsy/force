@@ -68,9 +68,7 @@ export const clientDevelopmentConfig = {
       template: path.resolve(basePath, "src", "v2", "index.ejs"),
     }),
     new ReactRefreshWebpackPlugin({
-      overlay: {
-        sockIntegration: "whm",
-      },
+      overlay: false,
     }),
   ],
   resolve: standardResolve,

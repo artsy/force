@@ -9,7 +9,7 @@ import type {
   ViewInRoomEventOptions,
 } from "lib/mediator"
 
-export const artworkClient = () => {
+export const legacyArtworkClient = () => {
   const User = require("desktop/models/user.coffee")
   const Artwork = require("desktop/models/artwork.coffee")
   const ArtworkInquiry = require("desktop/models/artwork_inquiry.coffee")

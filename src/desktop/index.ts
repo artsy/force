@@ -9,9 +9,9 @@ const app = express()
  *
  * Developers! Wait!
  *
- * Before adding a new app to this file, can it live in  `v2/Apps/getAppRoutes?
+ * Before adding a new app to this file, can it live in  `v2/routes?
  * In most cases, apps built after Jan 2020 can take advantage of our Relay-based
- * SSR router (./apps/artsy-v2) which requires no additional server-side setup.
+ * SSR router (v2/server) which requires no additional server-side setup.
  *
  * ----------------------------------------------------------------------------
  */
@@ -100,8 +100,7 @@ app.use(require("./apps/ssr-experiments/server").app)
 app.use(require("./apps/profile"))
 app.use(require("./apps/partner2"))
 app.use(require("./apps/partner"))
-// TODO: Move this post NOVO conversion
-app.use(require("./apps/artsy-v2/apps/fair").app)
+app.use(require("./apps/fair_redirect").app)
 app.use(require("./apps/fair_organizer"))
 
 // Export for hot reloading
