@@ -1,10 +1,10 @@
 import React from "react"
-import { Box, Flex, Sans, Text } from "@artsy/palette"
+import { Box, Flex, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Carousel } from "v2/Components/Carousel"
 import { ArticleCardFragmentContainer as ArticleCard } from "v2/Apps/Partner/Components/PartnerArticles/ArticleCard"
-import { data as sd } from "sharify"
 import { ArticlesRail_articles } from "v2/__generated__/ArticlesRail_articles.graphql"
+import { RouterLink } from "v2/Artsy/Router/RouterLink"
 
 interface ArticlesRailProps {
   articles: ArticlesRail_articles
@@ -19,11 +19,11 @@ const ArticlesRail: React.FC<ArticlesRailProps> = ({
     <>
       <Flex justifyContent="space-between" alignItems="center">
         <Text variant="title">Articles</Text>
-        <Sans fontSize={14} size="2" color="black60">
-          <a href={`${sd.APP_URL}/partner2/${partnerSlug}/articles`}>
+        <RouterLink to={`/partner2/${partnerSlug}/articles`}>
+          <Text variant="text" color="black">
             View all
-          </a>
-        </Sans>
+          </Text>
+        </RouterLink>
       </Flex>
 
       <Carousel arrowHeight={320} mt={4}>
