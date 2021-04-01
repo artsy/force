@@ -23,6 +23,13 @@ import { searchRoutes } from "v2/Apps/Search/searchRoutes"
 import { showRoutes } from "v2/Apps/Show/showRoutes"
 import { viewingRoomRoutes } from "v2/Apps/ViewingRoom/viewingRoomRoutes"
 
+/**
+ * **WARNING***
+ *
+ * When adding a new route to this file, be sure to add route to
+ * `src/desktop/lib/webpackPublicPath.ts` as well. This is temporary until the
+ * assets paths have stabilized.
+ */
 export function getAppRoutes(): RouteConfig[] {
   return buildAppRoutes([
     {
