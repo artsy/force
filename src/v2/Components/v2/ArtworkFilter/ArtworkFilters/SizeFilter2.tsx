@@ -8,7 +8,7 @@ import {
   Flex,
   Sans,
   Spacer,
-  Toggle,
+  Expandable,
   Message,
 } from "@artsy/palette"
 import { useArtworkFilterContext } from "../ArtworkFilterContext"
@@ -117,7 +117,7 @@ export const SizeFilter2: React.FC = () => {
   }
 
   return (
-    <Toggle label="Size" expanded>
+    <Expandable label="Size" expanded>
       {mode === "done" && (
         <Media lessThan="sm">
           <Message variant="info" my={2}>
@@ -210,6 +210,6 @@ export const SizeFilter2: React.FC = () => {
           </Button>
         </>
       )}
-    </Toggle>
+    </Expandable>
   )
 }

@@ -1,4 +1,4 @@
-import { Checkbox, Flex, Toggle } from "@artsy/palette"
+import { Checkbox, Flex, Expandable } from "@artsy/palette"
 import React, { FC } from "react"
 import { intersection } from "underscore"
 import { useArtworkFilterContext } from "../ArtworkFilterContext"
@@ -47,7 +47,7 @@ export const TimePeriodFilter: FC<TimePeriodFilterProps> = ({
   const hasMajorPeriodFilter = currentFilters.majorPeriods.length > 0
 
   return (
-    <Toggle label="Time period" expanded={hasMajorPeriodFilter || expanded}>
+    <Expandable label="Time period" expanded={hasMajorPeriodFilter || expanded}>
       <Flex flexDirection="column">
         <ShowMore expanded={hasBelowTheFoldMajorPeriodFilter}>
           {periods.map(({ name }, index) => {
@@ -63,7 +63,7 @@ export const TimePeriodFilter: FC<TimePeriodFilterProps> = ({
           })}
         </ShowMore>
       </Flex>
-    </Toggle>
+    </Expandable>
   )
 }
 

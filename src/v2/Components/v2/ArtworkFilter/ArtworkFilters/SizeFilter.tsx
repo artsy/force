@@ -1,5 +1,5 @@
 import React from "react"
-import { Box, Checkbox, Flex, Sans, Toggle } from "@artsy/palette"
+import { Box, Checkbox, Flex, Sans, Expandable } from "@artsy/palette"
 import { useArtworkFilterContext } from "../ArtworkFilterContext"
 import { OptionText } from "./OptionText"
 
@@ -28,7 +28,7 @@ export const SizeFilter: React.FC = () => {
   }
 
   return (
-    <Toggle label="Size" expanded>
+    <Expandable label="Size" expanded>
       <Flex flexDirection="column" alignItems="left">
         <Sans size="2" color="black60">
           This is based on the artwork’s average dimension.
@@ -53,6 +53,6 @@ export const SizeFilter: React.FC = () => {
           })}
         </Box>
       </Flex>
-    </Toggle>
+    </Expandable>
   )
 }

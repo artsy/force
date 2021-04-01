@@ -1,4 +1,4 @@
-import { Checkbox, space, color, Toggle, Box } from "@artsy/palette"
+import { Checkbox, space, color, Box, Expandable } from "@artsy/palette"
 import { intersection } from "lodash"
 import React from "react"
 import styled from "styled-components"
@@ -102,7 +102,7 @@ export const ColorFilter: React.FC<ColorFilterProps> = ({
   const hasColorFilter = currentlySelectedFilters().colors.length > 0
 
   return (
-    <Toggle label="Color" expanded={hasColorFilter || expanded}>
+    <Expandable label="Color" expanded={hasColorFilter || expanded}>
       <ShowMore expanded={hasBelowTheFoldColorFilter}>
         {COLOR_OPTIONS.map(colorOption => {
           return (
@@ -113,6 +113,6 @@ export const ColorFilter: React.FC<ColorFilterProps> = ({
           )
         })}
       </ShowMore>
-    </Toggle>
+    </Expandable>
   )
 }

@@ -1,4 +1,4 @@
-import { Flex, Radio, RadioGroup, Toggle } from "@artsy/palette"
+import { Flex, Radio, RadioGroup, Expandable } from "@artsy/palette"
 import { sortBy } from "lodash"
 import React, { FC } from "react"
 import { useArtworkFilterContext } from "../ArtworkFilterContext"
@@ -15,7 +15,7 @@ export const InstitutionFilter: FC = () => {
   const selectedItem = filterContext.currentlySelectedFilters().partnerID
 
   return (
-    <Toggle label="Institution">
+    <Expandable label="Institution">
       <Flex flexDirection="column" alignItems="left">
         <RadioGroup
           deselectable
@@ -36,6 +36,6 @@ export const InstitutionFilter: FC = () => {
           })}
         </RadioGroup>
       </Flex>
-    </Toggle>
+    </Expandable>
   )
 }

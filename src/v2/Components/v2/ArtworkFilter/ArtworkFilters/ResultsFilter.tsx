@@ -1,4 +1,4 @@
-import { Flex, Toggle } from "@artsy/palette"
+import { Flex, Expandable } from "@artsy/palette"
 import { intersection, sortBy } from "lodash"
 import React from "react"
 import {
@@ -63,7 +63,7 @@ export const ResultsFilter: React.FC<ResultsFilterProps> = ({
     ).length > 0
 
   return (
-    <Toggle label={label} expanded={expanded}>
+    <Expandable label={label} expanded={expanded}>
       <Flex flexDirection="column">
         <FacetFilter
           facetName={facetName}
@@ -87,6 +87,6 @@ export const ResultsFilter: React.FC<ResultsFilterProps> = ({
           </ShowMore>
         )}
       </Flex>
-    </Toggle>
+    </Expandable>
   )
 }

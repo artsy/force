@@ -9,7 +9,7 @@ import {
   RadioGroup,
   Spacer,
   Text,
-  Toggle,
+  Expandable,
 } from "@artsy/palette"
 import { useArtworkFilterContext } from "../ArtworkFilterContext"
 import { OptionText } from "./OptionText"
@@ -108,7 +108,7 @@ export const PriceRangeFilter: React.FC = () => {
 
   return (
     <>
-      <Toggle label="Price" expanded>
+      <Expandable label="Price" expanded>
         {mode === "done" && (
           <Media lessThan="sm">
             <Message variant="info" my={2}>
@@ -191,7 +191,7 @@ export const PriceRangeFilter: React.FC = () => {
             </Media>
           </>
         )}
-      </Toggle>
+      </Expandable>
     </>
   )
 }

@@ -1,4 +1,4 @@
-import { Checkbox, Flex, Toggle } from "@artsy/palette"
+import { Checkbox, Flex, Expandable } from "@artsy/palette"
 import { isEmpty } from "lodash"
 import React, { FC } from "react"
 
@@ -55,7 +55,7 @@ export const WaysToBuyFilter: FC = () => {
   ]
 
   return (
-    <Toggle label="Ways to buy" expanded>
+    <Expandable label="Ways to buy" expanded>
       <Flex flexDirection="column">
         {checkboxes.map((checkbox, index) => {
           const props = {
@@ -73,6 +73,6 @@ export const WaysToBuyFilter: FC = () => {
           )
         })}
       </Flex>
-    </Toggle>
+    </Expandable>
   )
 }

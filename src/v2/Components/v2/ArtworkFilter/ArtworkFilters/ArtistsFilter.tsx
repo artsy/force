@@ -1,4 +1,4 @@
-import { Checkbox, Flex, Toggle } from "@artsy/palette"
+import { Checkbox, Expandable, Flex } from "@artsy/palette"
 import { sortBy } from "lodash"
 import React, { FC, useEffect, useState } from "react"
 
@@ -96,7 +96,7 @@ export const ArtistsFilter: FC<ArtistsFilterProps> = ({
   const followedArtistArtworkCount = filterContext?.counts?.followedArtists ?? 0
 
   return (
-    <Toggle label="Artists" expanded>
+    <Expandable label="Artists" expanded>
       <Flex flexDirection="column">
         <Checkbox
           disabled={!followedArtistArtworkCount}
@@ -126,6 +126,6 @@ export const ArtistsFilter: FC<ArtistsFilterProps> = ({
           })}
         </ShowMore>
       </Flex>
-    </Toggle>
+    </Expandable>
   )
 }

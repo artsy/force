@@ -1,5 +1,5 @@
 import React from "react"
-import { Checkbox, Flex, Toggle } from "@artsy/palette"
+import { Checkbox, Expandable, Flex } from "@artsy/palette"
 import { useArtworkFilterContext } from "../ArtworkFilterContext"
 import { OptionText } from "./OptionText"
 
@@ -38,7 +38,7 @@ export const AttributionClassFilter: React.FC = () => {
   }
 
   return (
-    <Toggle label="Rarity" expanded>
+    <Expandable label="Rarity" expanded>
       <Flex flexDirection="column">
         {checkboxValues.map(({ name, value }, index) => {
           const props = {
@@ -57,6 +57,6 @@ export const AttributionClassFilter: React.FC = () => {
           )
         })}
       </Flex>
-    </Toggle>
+    </Expandable>
   )
 }

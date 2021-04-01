@@ -1,4 +1,4 @@
-import { Checkbox, Flex, Toggle } from "@artsy/palette"
+import { Checkbox, Flex, Expandable } from "@artsy/palette"
 import React, { FC } from "react"
 import { useArtworkFilterContext } from "../ArtworkFilterContext"
 import { OptionText } from "./OptionText"
@@ -36,7 +36,7 @@ export const MediumFilter: FC = () => {
     ).length > 0
 
   return (
-    <Toggle label="Medium" expanded={isExpanded}>
+    <Expandable label="Medium" expanded={isExpanded}>
       <Flex flexDirection="column" alignItems="left">
         <ShowMore expanded={hasBelowTheFoldMediumFilter}>
           {allowedMediums.map(({ value: slug, name }, index) => {
@@ -55,7 +55,7 @@ export const MediumFilter: FC = () => {
           })}
         </ShowMore>
       </Flex>
-    </Toggle>
+    </Expandable>
   )
 }
 
