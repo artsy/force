@@ -47,7 +47,7 @@ export const TimePeriodFilter: FC<TimePeriodFilterProps> = ({
 
   return (
     <Expandable
-      mb={2}
+      mb={1}
       label="Time period"
       expanded={hasMajorPeriodFilter || expanded}
     >
