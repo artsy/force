@@ -1,4 +1,4 @@
-import { Checkbox, Flex, Expandable } from "@artsy/palette"
+import { Checkbox, Flex, Expandable, useThemeConfig } from "@artsy/palette"
 import React, { FC } from "react"
 import { useArtworkFilterContext } from "../ArtworkFilterContext"
 import { ShowMore, INITIAL_ITEMS_TO_SHOW } from "./ShowMore"
@@ -34,6 +34,11 @@ export const MediumFilter: FC = () => {
       allowedMediums.slice(INITIAL_ITEMS_TO_SHOW).map(({ value }) => value)
     ).length > 0
 
+  const tokens = useThemeConfig({
+    v2: { my: 0.5 },
+    v3: { my: 1 },
+  })
+
   return (
     <Expandable mb={1} label="Medium" expanded={isExpanded}>
       <Flex flexDirection="column" alignItems="left">
@@ -47,6 +52,7 @@ export const MediumFilter: FC = () => {
                 }
                 key={index}
                 onSelect={selected => toggleMediumSelection(selected, slug)}
+                my={tokens.my}
               >
                 {name}
               </Checkbox>

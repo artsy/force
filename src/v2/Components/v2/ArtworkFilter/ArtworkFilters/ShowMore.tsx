@@ -1,4 +1,4 @@
-import { Clickable, Text } from "@artsy/palette"
+import { Clickable, Text, TextVariant, useThemeConfig } from "@artsy/palette"
 import React, { Children, isValidElement, useState } from "react"
 
 interface ShowMoreProps {
@@ -19,6 +19,11 @@ export const ShowMore: React.FC<ShowMoreProps> = ({
 
   const [isExpanded, setExpanded] = useState(expanded)
 
+  const tokens = useThemeConfig({
+    v2: { variant: "small" as TextVariant },
+    v3: { variant: "xs" as TextVariant },
+  })
+
   return (
     <>
       {isExpanded ? nodes : nodes.slice(0, initial)}
@@ -30,7 +35,9 @@ export const ShowMore: React.FC<ShowMoreProps> = ({
           textAlign="left"
           onClick={() => setExpanded(visibility => !visibility)}
         >
-          <Text variant="small">{isExpanded ? "Hide" : "Show more"}</Text>
+          <Text variant={tokens.variant}>
+            {isExpanded ? "Hide" : "Show more"}
+          </Text>
         </Clickable>
       )}
     </>

@@ -1,4 +1,4 @@
-import { Checkbox, Flex, Expandable } from "@artsy/palette"
+import { Checkbox, Flex, Expandable, useThemeConfig } from "@artsy/palette"
 import { isEmpty } from "lodash"
 import React, { FC } from "react"
 import {
@@ -52,19 +52,28 @@ export const WaysToBuyFilter: FC = () => {
     },
   ]
 
+  const tokens = useThemeConfig({
+    v2: { my: 0.5 },
+    v3: { my: 1 },
+  })
+
   return (
     <Expandable mb={1} label="Ways to buy" expanded>
       <Flex flexDirection="column">
         {checkboxes.map((checkbox, index) => {
-          const props = {
-            disabled: checkbox.disabled,
-            key: index,
-            onSelect: value => filterContext.setFilter(checkbox.state, value),
-            selected: Boolean(
-              filterContext.currentlySelectedFilters()[checkbox.state]
-            ),
-          }
-          return <Checkbox {...props}>{checkbox.name}</Checkbox>
+          return (
+            <Checkbox
+              key={index}
+              disabled={checkbox.disabled}
+              onSelect={value => filterContext.setFilter(checkbox.state, value)}
+              selected={Boolean(
+                filterContext.currentlySelectedFilters()[checkbox.state]
+              )}
+              my={tokens.my}
+            >
+              {checkbox.name}
+            </Checkbox>
+          )
         })}
       </Flex>
     </Expandable>

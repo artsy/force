@@ -1,4 +1,4 @@
-import { Checkbox, Flex, Expandable } from "@artsy/palette"
+import { Checkbox, Flex, Expandable, useThemeConfig } from "@artsy/palette"
 import React, { FC } from "react"
 import { intersection } from "underscore"
 import { useArtworkFilterContext } from "../ArtworkFilterContext"
@@ -22,6 +22,11 @@ export const TimePeriodFilter: FC<TimePeriodFilterProps> = ({
   } else {
     periods = allowedPeriods.map(name => ({ name }))
   }
+
+  const tokens = useThemeConfig({
+    v2: { my: 0.5 },
+    v3: { my: 1 },
+  })
 
   if (!periods.length) return null
 
@@ -59,6 +64,7 @@ export const TimePeriodFilter: FC<TimePeriodFilterProps> = ({
                 selected={currentFilters.majorPeriods.includes(name)}
                 key={index}
                 onSelect={selected => togglePeriodSelection(selected, name)}
+                my={tokens.my}
               >
                 {isNaN(name) ? name : `${name}s`}
               </Checkbox>

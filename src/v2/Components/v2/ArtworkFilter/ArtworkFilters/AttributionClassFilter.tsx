@@ -1,5 +1,5 @@
 import React from "react"
-import { Checkbox, Expandable, Flex } from "@artsy/palette"
+import { Checkbox, Expandable, Flex, useThemeConfig } from "@artsy/palette"
 import { useArtworkFilterContext } from "../ArtworkFilterContext"
 
 const checkboxValues = [
@@ -36,20 +36,27 @@ export const AttributionClassFilter: React.FC = () => {
     filterContext.setFilter("attributionClass", attributions)
   }
 
+  const tokens = useThemeConfig({
+    v2: { my: 0.5 },
+    v3: { my: 1 },
+  })
+
   return (
     <Expandable mb={1} label="Rarity" expanded>
       <Flex flexDirection="column">
         {checkboxValues.map(({ name, value }, index) => {
-          const props = {
-            key: index,
-            onSelect: selected => {
-              toggleSelection(selected, value)
-            },
-            selected: filterContext
-              .currentlySelectedFilters()
-              .attributionClass.includes(value),
-          }
-          return <Checkbox {...props}>{name}</Checkbox>
+          return (
+            <Checkbox
+              key={index}
+              my={tokens.my}
+              onSelect={selected => toggleSelection(selected, value)}
+              selected={filterContext
+                .currentlySelectedFilters()
+                .attributionClass.includes(value)}
+            >
+              {name}
+            </Checkbox>
+          )
         })}
       </Flex>
     </Expandable>
