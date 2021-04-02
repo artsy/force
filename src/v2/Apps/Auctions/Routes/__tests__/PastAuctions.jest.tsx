@@ -3,10 +3,15 @@ import { PastAuctionsPaginationContainer } from "../PastAuctions"
 import { graphql } from "react-relay"
 import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
 import { MockBoot } from "v2/DevTools"
+import { useTracking as baseUseTracking } from "react-tracking"
 
+jest.mock("react-tracking")
 jest.unmock("react-relay")
 
 describe("PastAuctions", () => {
+  const useTracking = baseUseTracking as jest.Mock
+  const trackEvent = jest.fn()
+
   const { getWrapper } = setupTestWrapper({
     Component: (props: any) => {
       return (
@@ -22,6 +27,14 @@ describe("PastAuctions", () => {
         }
       }
     `,
+  })
+
+  beforeEach(() => {
+    useTracking.mockImplementation(() => {
+      return {
+        trackEvent,
+      }
+    })
   })
 
   it("renders past auctions and correct components", async () => {
