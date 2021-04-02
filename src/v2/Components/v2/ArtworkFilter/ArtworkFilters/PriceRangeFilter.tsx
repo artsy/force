@@ -14,6 +14,7 @@ import {
 import { useArtworkFilterContext } from "../ArtworkFilterContext"
 import styled from "styled-components"
 import { Media } from "v2/Utils/Responsive"
+import { themeGet } from "@styled-system/theme-get"
 
 // Disables arrows in numeric inputs
 export const NumericInput = styled(LabeledInput).attrs({ type: "number" })`
@@ -27,6 +28,14 @@ export const NumericInput = styled(LabeledInput).attrs({ type: "number" })`
   /* Firefox */
   input[type="number"] {
     -moz-appearance: textfield;
+  }
+
+  /* HACK: Setting the font-size to a minimum 16px prevents iOS from zooming on focus */
+  /* This won't be necessary when upgraded to Palette v3 */
+  @media ${themeGet("mediaQueries.xs")} {
+    input {
+      font-size: 16px;
+    }
   }
 `
 
