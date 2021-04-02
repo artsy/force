@@ -25,7 +25,9 @@ const MyBids: React.FC<MyBidsProps> = props => {
   return (
     <>
       <Separator />
-      <Text py={3}>Active Bids and Watched Lots</Text>
+      <Text variant="subtitle" mt={3} mb={2}>
+        Active Bids and Watched Lots
+      </Text>
 
       <Carousel arrowHeight={240}>
         {active.map((activeSale, index) => {
@@ -65,7 +67,7 @@ const SaleContainer = styled(Box).attrs({
   width: 330,
 })``
 
-const MyBidsFragmentContainer = createFragmentContainer(MyBids, {
+export const MyBidsFragmentContainer = createFragmentContainer(MyBids, {
   me: graphql`
     fragment MyBids_me on Me {
       myBids {

@@ -1,8 +1,8 @@
 import React from "react"
 import { AppContainer } from "v2/Apps/Components/AppContainer"
-import { AuctionsApp_me } from "v2/__generated__/AuctionsApp_me.graphql"
+import { AuctionsApp_viewer } from "v2/__generated__/AuctionsApp_viewer.graphql"
 import { AuctionsMeta } from "./Components/AuctionsMeta"
-import { MyBidsQueryRenderer } from "./Components/MyBids/MyBids"
+import { MyBidsFragmentContainer } from "./Components/MyBids/MyBids"
 import { ChevronIcon, Box, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Footer } from "v2/Components/Footer"
@@ -12,20 +12,20 @@ import { RecentlyViewedQueryRenderer as RecentlyViewed } from "v2/Components/Rec
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import { RouteTabs, RouteTab } from "v2/Components/RouteTabs"
 import { useSystemContext } from "v2/Artsy"
-import { WorksByArtistsYouFollowRailQueryRenderer } from "./Components/WorksByArtistsYouFollowRail/WorksByArtistsYouFollowRail"
+import { WorksByArtistsYouFollowRailFragmentContainer } from "./Components/WorksByArtistsYouFollowRail/WorksByArtistsYouFollowRail"
 export interface AuctionsAppProps {
-  me: AuctionsApp_me
+  viewer: AuctionsApp_viewer
 }
 
 const AuctionsApp: React.FC<AuctionsAppProps> = props => {
-  const { children } = props
+  const { children, viewer } = props
   const { user } = useSystemContext()
 
   return (
     <AppContainer>
       <AuctionsMeta />
       <Box ml={[2, 4]}>
-        <Text pt={2} pb={1} variant="largeTitle">
+        <Text mt={3} mb={1} variant="largeTitle">
           Auctions
         </Text>
         <Text py={1}>
@@ -58,11 +58,11 @@ const AuctionsApp: React.FC<AuctionsAppProps> = props => {
       {user && (
         <>
           <Box m={[2, 4]}>
-            <MyBidsQueryRenderer />
+            <MyBidsFragmentContainer me={viewer.me} />
           </Box>
 
           <Box m={[2, 4]} pb={2}>
-            <WorksByArtistsYouFollowRailQueryRenderer />
+            <WorksByArtistsYouFollowRailFragmentContainer viewer={viewer} />
           </Box>
         </>
       )}
@@ -92,10 +92,13 @@ const AuctionsApp: React.FC<AuctionsAppProps> = props => {
 export const AuctionsAppFragmentContainer = createFragmentContainer(
   AuctionsApp,
   {
-    me: graphql`
-      fragment AuctionsApp_me on Me {
-        id
-        # ...MyBids_me
+    viewer: graphql`
+      fragment AuctionsApp_viewer on Viewer {
+        ...WorksByArtistsYouFollowRail_viewer
+
+        me {
+          ...MyBids_me
+        }
       }
     `,
   }

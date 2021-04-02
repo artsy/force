@@ -27,8 +27,8 @@ export const auctionsRoutes = [
 
     query: graphql`
       query auctionsRoutes_AuctionsQuery {
-        me {
-          ...AuctionsApp_me
+        viewer {
+          ...AuctionsApp_viewer
         }
       }
     `,

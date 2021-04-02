@@ -3,38 +3,43 @@ import React from "react"
 import { AuctionsAppFragmentContainer } from "../AuctionsApp"
 import { graphql } from "react-relay"
 import { AuctionsApp_Test_Query } from "v2/__generated__/AuctionsApp_Test_Query.graphql"
-import { useTracking } from "react-tracking"
+import { useTracking as baseUseTracking } from "react-tracking"
 import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
 
-const { getWrapper } = setupTestWrapper<AuctionsApp_Test_Query>({
-  Component: props => {
-    return (
-      <MockBoot>
-        <AuctionsAppFragmentContainer {...props} />
-      </MockBoot>
-    )
-  },
-  query: graphql`
-    query AuctionsApp_Test_Query {
-      me {
-        ...AuctionsApp_me
-      }
-    }
-  `,
-})
-
 describe("AuctionsApp", () => {
+  const { getWrapper } = setupTestWrapper<AuctionsApp_Test_Query>({
+    Component: (props: any) => {
+      return (
+        <MockBoot>
+          <AuctionsAppFragmentContainer viewer={props.viewer} />
+        </MockBoot>
+      )
+    },
+    query: graphql`
+      query AuctionsApp_Test_Query {
+        viewer {
+          ...AuctionsApp_viewer
+        }
+      }
+    `,
+  })
+
+  const useTracking = baseUseTracking as jest.Mock
   const trackEvent = jest.fn()
 
   beforeEach(() => {
-    ;(useTracking as jest.Mock).mockImplementation(() => ({ trackEvent }))
+    useTracking.mockImplementation(() => {
+      return {
+        trackEvent,
+      }
+    })
   })
 
   afterEach(() => {
-    trackEvent.mockClear()
+    trackEvent.mockReset()
   })
 
   it("displays the auctions landing page", () => {

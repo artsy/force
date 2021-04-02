@@ -46,6 +46,11 @@ const node: ReaderFragment = {
           "kind": "Literal",
           "name": "isAuction",
           "value": true
+        },
+        {
+          "kind": "Literal",
+          "name": "liveSale",
+          "value": true
         }
       ],
       "concreteType": "SaleArtworksConnection",
@@ -95,10 +100,10 @@ const node: ReaderFragment = {
           "storageKey": null
         }
       ],
-      "storageKey": "saleArtworksConnection(first:50,includeArtworksByFollowedArtists:true,isAuction:true)"
+      "storageKey": "saleArtworksConnection(first:50,includeArtworksByFollowedArtists:true,isAuction:true,liveSale:true)"
     }
   ],
   "type": "Viewer"
 };
-(node as any).hash = '63700e6bcc142853330e1f0f0c2535b4';
+(node as any).hash = '4b8d379b98ebcfa9fe2c7d29ce18024c';
 export default node;
