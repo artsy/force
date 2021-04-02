@@ -4,6 +4,10 @@ module.exports = {
 
   webpackFinal: async config => {
     config.stats = "errors-only"
+    config.externals = {
+      redis: "redis",
+      request: "request",
+    }
     return config
   },
 }
