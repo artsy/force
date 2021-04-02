@@ -203,7 +203,7 @@ export const CollectionHeader: FC<Props> = ({ artworks, collection }) => {
                               {smallerScreen ? (
                                 <ReadMore
                                   maxChars={chars}
-                                  content={htmlUnsafeDescription || ""}
+                                  content={collection.description || ""}
                                 />
                               ) : (
                                 htmlUnsafeDescription
