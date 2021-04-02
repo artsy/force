@@ -8,6 +8,8 @@ import {
   Spacer,
   Expandable,
   Message,
+  TextVariant,
+  useThemeConfig,
 } from "@artsy/palette"
 import { useArtworkFilterContext } from "../ArtworkFilterContext"
 import { NumericInput } from "./PriceRangeFilter"
@@ -113,6 +115,11 @@ export const SizeFilter2: React.FC = () => {
     setMode("done")
   }
 
+  const tokens = useThemeConfig({
+    v2: { my: 0.5, secondaryVariant: "small" as TextVariant },
+    v3: { my: 1, secondaryVariant: "xs" as TextVariant },
+  })
+
   return (
     <Expandable mb={1} label="Size" expanded>
       {mode === "done" && (
@@ -123,7 +130,7 @@ export const SizeFilter2: React.FC = () => {
         </Media>
       )}
       <Flex flexDirection="column" alignItems="left">
-        <Text variant="small" color="black60" mb={1}>
+        <Text variant={tokens.secondaryVariant} color="black60" mb={1}>
           This is based on the artwork’s average dimension.
         </Text>
 
@@ -134,6 +141,7 @@ export const SizeFilter2: React.FC = () => {
                 key={index}
                 onSelect={selected => toggleSizeSelection(selected, name)}
                 selected={currentlySelectedFilters().sizes.includes(name)}
+                my={tokens.my}
               >
                 {displayName}
               </Checkbox>

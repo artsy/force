@@ -10,6 +10,7 @@ import {
   Spacer,
   Text,
   Expandable,
+  useThemeConfig,
 } from "@artsy/palette"
 import { useArtworkFilterContext } from "../ArtworkFilterContext"
 import styled from "styled-components"
@@ -114,6 +115,11 @@ export const PriceRangeFilter: React.FC = () => {
     setFilter("priceRange", selectedOption)
   }
 
+  const tokens = useThemeConfig({
+    v2: { my: 0.5 },
+    v3: { my: 1 },
+  })
+
   return (
     <>
       <Expandable mb={1} label="Price" expanded>
@@ -137,7 +143,7 @@ export const PriceRangeFilter: React.FC = () => {
               ...PRICE_RANGES.map((range, index) => (
                 <Radio
                   key={`${index}`}
-                  my={0.5}
+                  my={tokens.my}
                   label={range.name}
                   value={range.value}
                 />
@@ -145,7 +151,7 @@ export const PriceRangeFilter: React.FC = () => {
 
               <Radio
                 key="custom"
-                my={0.3}
+                my={tokens.my}
                 label="Custom price"
                 value="custom"
               />,

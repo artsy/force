@@ -1,4 +1,4 @@
-import { Checkbox } from "@artsy/palette"
+import { Checkbox, useThemeConfig } from "@artsy/palette"
 import React from "react"
 import {
   MultiSelectArtworkFilters,
@@ -34,11 +34,17 @@ export const ResultOption: React.FC<ResultOptionProps> = ({
     )
   }
 
+  const tokens = useThemeConfig({
+    v2: { my: 0.5 },
+    v3: { my: 1 },
+  })
+
   return (
     <Checkbox
       onSelect={handleSelect(value)}
       selected={results.includes(value)}
       key={value}
+      my={tokens.my}
     >
       {name}
     </Checkbox>

@@ -6,6 +6,7 @@ import {
   Expandable,
   Text,
   Flex,
+  useThemeConfig,
 } from "@artsy/palette"
 import { intersection } from "lodash"
 import React from "react"
@@ -75,11 +76,17 @@ const ColorFilterOption: React.FC<{ colorOption: ColorOption }> = ({
     }
   }
 
+  const tokens = useThemeConfig({
+    v2: { my: 0.5 },
+    v3: { my: 1 },
+  })
+
   return (
     <Checkbox
       key={name}
       onSelect={() => toggleColor(value)}
       selected={selectedColorOptions.includes(value)}
+      my={tokens.my}
     >
       <Box
         display="flex"
