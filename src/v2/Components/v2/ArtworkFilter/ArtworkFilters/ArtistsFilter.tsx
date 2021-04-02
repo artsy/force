@@ -1,13 +1,11 @@
-import { Checkbox, Flex, Toggle } from "@artsy/palette"
+import { Checkbox, Expandable, Flex } from "@artsy/palette"
 import { sortBy } from "lodash"
 import React, { FC, useEffect, useState } from "react"
-
 import { useArtworkFilterContext } from "../ArtworkFilterContext"
 import {
   FollowedArtistList,
   fetchFollowedArtists,
 } from "../Utils/fetchFollowedArtists"
-import { OptionText } from "./OptionText"
 import { ShowMore } from "./ShowMore"
 
 interface ArtistsFilterProps {
@@ -58,7 +56,7 @@ const ArtistItem: React.FC<{
         return toggleArtistSelection(selected, slug)
       }}
     >
-      <OptionText>{name}</OptionText>
+      {name}
     </Checkbox>
   )
 }
@@ -96,7 +94,7 @@ export const ArtistsFilter: FC<ArtistsFilterProps> = ({
   const followedArtistArtworkCount = filterContext?.counts?.followedArtists ?? 0
 
   return (
-    <Toggle label="Artists" expanded>
+    <Expandable mb={1} label="Artists" expanded>
       <Flex flexDirection="column">
         <Checkbox
           disabled={!followedArtistArtworkCount}
@@ -105,9 +103,7 @@ export const ArtistsFilter: FC<ArtistsFilterProps> = ({
             filterContext.setFilter("includeArtworksByFollowedArtists", value)
           }
         >
-          <OptionText>
-            Artists I follow ({followedArtistArtworkCount})
-          </OptionText>
+          Artists I follow ({followedArtistArtworkCount})
         </Checkbox>
 
         <ShowMore>
@@ -126,6 +122,6 @@ export const ArtistsFilter: FC<ArtistsFilterProps> = ({
           })}
         </ShowMore>
       </Flex>
-    </Toggle>
+    </Expandable>
   )
 }

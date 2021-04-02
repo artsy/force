@@ -126,8 +126,9 @@ class PaymentPickerTestPage extends RootTestPage {
   async clickRadio(atIndex: number) {
     this.find(BorderedRadio)
       .at(atIndex)
-      .find('input[type="radio"]')
-      .simulate("change")
+      .find('[role="radio"]')
+      .hostNodes()
+      .simulate("click")
     await this.update()
   }
 }

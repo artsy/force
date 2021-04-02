@@ -1,8 +1,7 @@
-import { Checkbox, Flex, Toggle } from "@artsy/palette"
+import { Checkbox, Flex, Expandable } from "@artsy/palette"
 import React, { FC } from "react"
 import { intersection } from "underscore"
 import { useArtworkFilterContext } from "../ArtworkFilterContext"
-import { OptionText } from "./OptionText"
 import { INITIAL_ITEMS_TO_SHOW, ShowMore } from "./ShowMore"
 
 interface TimePeriodFilterProps {
@@ -23,6 +22,8 @@ export const TimePeriodFilter: FC<TimePeriodFilterProps> = ({
   } else {
     periods = allowedPeriods.map(name => ({ name }))
   }
+
+  if (!periods.length) return null
 
   const togglePeriodSelection = (selected, period) => {
     let majorPeriods = filterContext
@@ -45,7 +46,11 @@ export const TimePeriodFilter: FC<TimePeriodFilterProps> = ({
   const hasMajorPeriodFilter = currentFilters.majorPeriods.length > 0
 
   return (
-    <Toggle label="Time period" expanded={hasMajorPeriodFilter || expanded}>
+    <Expandable
+      mb={2}
+      label="Time period"
+      expanded={hasMajorPeriodFilter || expanded}
+    >
       <Flex flexDirection="column">
         <ShowMore expanded={hasBelowTheFoldMajorPeriodFilter}>
           {periods.map(({ name }, index) => {
@@ -55,13 +60,13 @@ export const TimePeriodFilter: FC<TimePeriodFilterProps> = ({
                 key={index}
                 onSelect={selected => togglePeriodSelection(selected, name)}
               >
-                <OptionText>{isNaN(name) ? name : `${name}s`}</OptionText>
+                {isNaN(name) ? name : `${name}s`}
               </Checkbox>
             )
           })}
         </ShowMore>
       </Flex>
-    </Toggle>
+    </Expandable>
   )
 }
 

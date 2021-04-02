@@ -4,7 +4,6 @@ import {
   MultiSelectArtworkFilters,
   useArtworkFilterContext,
 } from "../ArtworkFilterContext"
-import { OptionText } from "./OptionText"
 
 export type Result = {
   name: string
@@ -41,7 +40,7 @@ export const ResultOption: React.FC<ResultOptionProps> = ({
       selected={results.includes(value)}
       key={value}
     >
-      <OptionText>{name}</OptionText>
+      {name}
     </Checkbox>
   )
 }

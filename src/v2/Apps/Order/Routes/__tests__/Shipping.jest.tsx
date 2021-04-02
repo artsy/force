@@ -526,13 +526,21 @@ describe("Shipping", () => {
         page.find(`[data-test="pickupPhoneNumberForm"]`).props().value
       ).toEqual("")
     })
+
     it("lists the addresses and renders the add address option", async () => {
       expect(
-        page.find(`Radio__BorderedRadio[value="NEW_ADDRESS"]`).length
-      ).toEqual(1)
-      expect(
-        page.find(`Radio__BorderedRadio[data-test="savedAddress"]`).length
-      ).toEqual(2)
+        page
+          .find('[role="radio"]')
+          .hostNodes()
+          .map(node => node.text())
+      ).toEqual([
+        "Shipping",
+        "Arrange for pickup (free)After your order is confirmed, a specialist will contact you within 2 business days to coordinate pickup.",
+        "Test Name1 Main StMadrid, Spain, 28001555-555-5555Edit",
+        "Test Name401 BroadwayFloor 25New York, NY, USA, 10013422-424-4242Edit",
+        "Add a new shipping address",
+      ])
+
       expect(page.text()).toContain(
         "Test Name1 Main StMadrid, Spain, 28001555-555-5555"
       )
@@ -540,6 +548,7 @@ describe("Shipping", () => {
         "Test Name401 BroadwayFloor 25New York, NY, USA, 10013422-424-4242"
       )
     })
+
     it("saves the default address selection into state", async () => {
       expect(page.find(ShippingRoute).state().selectedSavedAddress).toEqual("1")
     })
@@ -568,10 +577,7 @@ describe("Shipping", () => {
       `)
     })
     it("when another saved address is selected commits mutation with selected address and phone number", async () => {
-      page
-        .find(`Radio__BorderedRadio[data-test="savedAddress"]`)
-        .first()
-        .simulate("click")
+      page.find(`[data-test="savedAddress"]`).first().simulate("click")
       await page.update()
       expect(page.find(ShippingRoute).state().selectedSavedAddress).toEqual("0")
       await page.clickSubmit()
