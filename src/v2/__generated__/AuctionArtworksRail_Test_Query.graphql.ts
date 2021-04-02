@@ -26,6 +26,7 @@ query AuctionArtworksRail_Test_Query {
 
 fragment AuctionArtworksRail_sale on Sale {
   internalID
+  slug
   href
   name
   formattedStartDateTime
@@ -91,6 +92,13 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
+            "name": "slug",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
             "name": "href",
             "storageKey": null
           },
@@ -125,7 +133,7 @@ return {
     "metadata": {},
     "name": "AuctionArtworksRail_Test_Query",
     "operationKind": "query",
-    "text": "query AuctionArtworksRail_Test_Query {\n  sale(id: \"xxx\") {\n    ...AuctionArtworksRail_sale\n    id\n  }\n}\n\nfragment AuctionArtworksRail_sale on Sale {\n  internalID\n  href\n  name\n  formattedStartDateTime\n}\n"
+    "text": "query AuctionArtworksRail_Test_Query {\n  sale(id: \"xxx\") {\n    ...AuctionArtworksRail_sale\n    id\n  }\n}\n\nfragment AuctionArtworksRail_sale on Sale {\n  internalID\n  slug\n  href\n  name\n  formattedStartDateTime\n}\n"
   }
 };
 })();
