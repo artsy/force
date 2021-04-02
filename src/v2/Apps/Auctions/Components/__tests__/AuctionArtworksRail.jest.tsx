@@ -2,11 +2,12 @@ import React from "react"
 import { graphql } from "relay-runtime"
 import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
 import { AuctionArtworksRailFragmentContainer } from "../AuctionArtworksRail/AuctionArtworksRail"
+import { useTracking as baseUseTracking } from "react-tracking"
 
 jest.unmock("react-relay")
+jest.mock("react-tracking")
 
-// FIXME: TypeError: Cannot read property 'trackEvent' of undefined
-describe.skip("AuctionArtworksRail", () => {
+describe("AuctionArtworksRail", () => {
   const { getWrapper } = setupTestWrapper({
     Component: (props: any) => {
       return (
@@ -23,6 +24,21 @@ describe.skip("AuctionArtworksRail", () => {
         }
       }
     `,
+  })
+
+  const useTracking = baseUseTracking as jest.Mock
+  const trackEvent = jest.fn()
+
+  beforeEach(() => {
+    useTracking.mockImplementation(() => {
+      return {
+        trackEvent,
+      }
+    })
+  })
+
+  afterEach(() => {
+    trackEvent.mockReset()
   })
 
   it("renders correct components and data", () => {

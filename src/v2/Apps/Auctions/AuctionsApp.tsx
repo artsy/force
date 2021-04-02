@@ -11,7 +11,7 @@ import { LazyLoadComponent } from "react-lazy-load-image-component"
 import { RecentlyViewedQueryRenderer as RecentlyViewed } from "v2/Components/RecentlyViewed"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import { RouteTabs, RouteTab } from "v2/Components/RouteTabs"
-import { useSystemContext } from "v2/Artsy"
+import { useSystemContext } from "v2/Artsy/useSystemContext"
 import { WorksByArtistsYouFollowRailFragmentContainer } from "./Components/WorksByArtistsYouFollowRail/WorksByArtistsYouFollowRail"
 export interface AuctionsAppProps {
   viewer: AuctionsApp_viewer
@@ -20,6 +20,8 @@ export interface AuctionsAppProps {
 const AuctionsApp: React.FC<AuctionsAppProps> = props => {
   const { children, viewer } = props
   const { user } = useSystemContext()
+
+  console.log(user)
 
   return (
     <AppContainer>
@@ -57,6 +59,7 @@ const AuctionsApp: React.FC<AuctionsAppProps> = props => {
 
       {user && (
         <>
+          {console.log("here")}
           <Box m={[2, 4]}>
             <MyBidsFragmentContainer me={viewer.me} />
           </Box>

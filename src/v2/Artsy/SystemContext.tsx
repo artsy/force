@@ -1,11 +1,13 @@
 import { Router } from "found"
-import React, { SFC, useContext, useState } from "react"
+import React, { FC, useState } from "react"
 import { data as sd } from "sharify"
 import { Environment } from "relay-runtime"
 
 import { createRelaySSREnvironment } from "v2/Artsy/Relay/createRelaySSREnvironment"
 import { getUser } from "v2/Utils/user"
 import { Mediator, mediator } from "lib/mediator"
+
+export * from "./useSystemContext"
 
 /**
  * FIXME: Use a proper state management library. Ran into problems with useReducer
@@ -80,7 +82,7 @@ export const SystemContext = React.createContext<SystemContextProps>({})
  * Creates a new Context.Provider with a user and Relay environment, or defaults
  * if not passed in as props.
  */
-export const SystemContextProvider: SFC<SystemContextProps> = ({
+export const SystemContextProvider: FC<SystemContextProps> = ({
   children,
   ...props
 }) => {
@@ -125,12 +127,4 @@ export const withSystemContext = Component => {
       </SystemContextConsumer>
     )
   }
-}
-
-/**
- * Custom hook to access SystemContext
- */
-export const useSystemContext = () => {
-  const systemContext = useContext(SystemContext)
-  return systemContext
 }

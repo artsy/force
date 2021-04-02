@@ -4,10 +4,12 @@ import { AuctionsAppFragmentContainer } from "../AuctionsApp"
 import { graphql } from "react-relay"
 import { AuctionsApp_Test_Query } from "v2/__generated__/AuctionsApp_Test_Query.graphql"
 import { useTracking as baseUseTracking } from "react-tracking"
+import { useSystemContext as baseUseSystemContext } from "v2/Artsy/useSystemContext"
 import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
+jest.mock("v2/Artsy/useSystemContext")
 
 describe("AuctionsApp", () => {
   const { getWrapper } = setupTestWrapper<AuctionsApp_Test_Query>({
@@ -28,12 +30,21 @@ describe("AuctionsApp", () => {
   })
 
   const useTracking = baseUseTracking as jest.Mock
+  let useSystemContext = baseUseSystemContext as jest.Mock
   const trackEvent = jest.fn()
 
   beforeEach(() => {
     useTracking.mockImplementation(() => {
       return {
         trackEvent,
+      }
+    })
+    useSystemContext.mockImplementation(() => {
+      return {
+        mediator: {
+          on: jest.fn(),
+          off: jest.fn(),
+        },
       }
     })
   })
@@ -87,5 +98,22 @@ describe("AuctionsApp", () => {
     expect(html).not.toContain("Ends")
     expect(html).not.toContain("Ended")
     expect(html).not.toContain("In Progress")
+  })
+
+  it("does not render MyBids or WorksByFollowedArtists if user logged out", () => {
+    useSystemContext.mockImplementation(() => ({
+      user: null,
+      mediator: {
+        on: jest.fn(),
+        off: jest.fn(),
+      },
+    }))
+
+    const wrapper = getWrapper()
+
+    expect(wrapper.find("MyBidsFragmentContainer").length).toBe(0)
+    expect(
+      wrapper.find("WorksByArtistsYouFollowRailFragmentContainer").length
+    ).toBe(0)
   })
 })
