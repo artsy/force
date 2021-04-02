@@ -8,7 +8,12 @@ jest.unmock("react-relay")
 describe("AuctionArtworksRail", () => {
   const { getWrapper } = setupTestWrapper({
     Component: (props: any) => {
-      return <AuctionArtworksRailFragmentContainer sale={props.sale} />
+      return (
+        <AuctionArtworksRailFragmentContainer
+          sale={props.sale}
+          tabType="current"
+        />
+      )
     },
     query: graphql`
       query AuctionArtworksRail_Test_Query {

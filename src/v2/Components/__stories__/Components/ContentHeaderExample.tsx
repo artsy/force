@@ -1,0 +1,20 @@
+import { Box, BoxProps, Flex, Text } from "@artsy/palette"
+import React from "react"
+
+export const ContentHeaderExample: React.FC<BoxProps> = props => {
+  return (
+    <Box {...props}>
+      <Flex justifyContent="space-between">
+        <Text variant="lg">Headline Text</Text>
+
+        <Text variant="sm">
+          <a href="#example">Text Link</a>
+        </Text>
+      </Flex>
+
+      <Text variant="lg" color="black60">
+        Supporting Copy Line
+      </Text>
+    </Box>
+  )
+}
