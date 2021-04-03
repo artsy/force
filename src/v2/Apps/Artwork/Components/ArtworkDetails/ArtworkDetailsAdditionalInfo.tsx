@@ -141,7 +141,7 @@ export const ArtworkDetailsAdditionalInfo: React.FC<ArtworkDetailsAdditionalInfo
                 {React.isValidElement(value) ? (
                   value
                 ) : (
-                  <ReadMore maxChars={140} content={value} />
+                  <ReadMore maxChars={140} content={value as string} />
                 )}
               </HTML>
             </Col>
