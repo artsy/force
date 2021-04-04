@@ -7,57 +7,62 @@ import { loadableReady } from "@loadable/component"
 import { logoutEventHandler } from "desktop/lib/logoutHandler"
 import { mediator } from "lib/mediator"
 import { beforeAnalyticsReady, onAnalyticsReady } from "lib/analytics/helpers"
-;(async () => {
-  try {
-    // Generate client
-    const { buildClientApp } = await import(
-      /* webpackChunkName: "buildClientApp" */ "v2/Artsy/Router/client"
-    )
-    const { ClientApp } = await buildClientApp({
-      routes: getAppRoutes(),
-    })
+import { getClientParam } from "./Utils/getParam"
 
-    // Rehydrate
-    await loadableReady(() => {
-      ReactDOM.hydrate(<ClientApp />, document.getElementById("react-root"))
-    })
-
-    // Attach analytics
-    if (getParam("disableAnalytics") !== "true") {
-      beforeAnalyticsReady()
-      window.analytics.ready(() => {
-        onAnalyticsReady()
-      })
-    }
-
-    // Wire up auth modal
-    const { initModalManager } = await import(
+async function setupClient() {
+  const clientImports = await Promise.all([
+    import(
+      /* webpackChunkName: "buildClientApp" */
+      "v2/Artsy/Router/client"
+    ),
+    import(
       /* webpackChunkName: "initModalManager" */
       "desktop/apps/authentication/client/initModalManager"
-    )
-    initModalManager()
-
-    // Wire up artist modal
-    const { setupArtistSignUpModal } = await import(
+    ),
+    import(
       /* webpackChunkName: "setupArtistSignUpModal" */
       "desktop/components/artistSignupModal/artistSignupModal"
-    )
-    setupArtistSignUpModal()
+    ),
+  ])
 
-    // Logout handler
-    mediator.on("auth:logout", logoutEventHandler)
+  const [
+    { buildClientApp },
+    { initModalManager },
+    { setupArtistSignUpModal },
+  ] = clientImports
+
+  const { ClientApp } = await buildClientApp({
+    routes: getAppRoutes(),
+  })
+
+  // Rehydrate
+  await loadableReady(() => {
+    ReactDOM.hydrate(<ClientApp />, document.getElementById("react-root"))
+  })
+
+  // Attach analytics
+  if (getClientParam("disableAnalytics") !== "true") {
+    beforeAnalyticsReady()
+    window.analytics.ready(() => {
+      onAnalyticsReady()
+    })
+  }
+
+  initModalManager()
+  setupArtistSignUpModal()
+
+  // Logout handler
+  mediator.on("auth:logout", logoutEventHandler)
+}
+
+// Initialze clent
+;(async () => {
+  try {
+    await setupClient()
   } catch (error) {
-    console.error(error)
+    console.error("[v2/client.tsx] Error loading client:", error)
   }
 })()
-
-function getParam(name: string): string | null {
-  const urlParams = new URLSearchParams(window.location.search)
-  if (urlParams.has(name)) {
-    return urlParams.get(name)
-  }
-  return null
-}
 
 // Enable hot-reloading if available.
 if (module.hot) {
