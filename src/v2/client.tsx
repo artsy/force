@@ -12,15 +12,15 @@ import { getClientParam } from "./Utils/getClientParam"
 async function setupClient() {
   const clientImports = await Promise.all([
     import(
-      /* webpackChunkName: "buildClientApp" */
+      /* webpackChunkName: "clientAppMain" */
       "v2/Artsy/Router/client"
     ),
     import(
-      /* webpackChunkName: "initModalManager" */
+      /* webpackChunkName: "clientAppModals" */
       "desktop/apps/authentication/client/initModalManager"
     ),
     import(
-      /* webpackChunkName: "setupArtistSignUpModal" */
+      /* webpackChunkName: "clientAppModals" */
       "desktop/components/artistSignupModal/artistSignupModal"
     ),
   ])
