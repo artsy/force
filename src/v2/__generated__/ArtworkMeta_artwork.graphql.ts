@@ -15,12 +15,21 @@ export type ArtworkMeta_artwork = {
     readonly image_rights: string | null;
     readonly is_in_auction: boolean | null;
     readonly is_acquireable: boolean | null;
+    readonly isInquireable: boolean | null;
+    readonly isOfferable: boolean | null;
     readonly is_shareable: boolean | null;
     readonly meta_image: {
         readonly resized: {
             readonly width: number | null;
             readonly height: number | null;
             readonly url: string;
+        } | null;
+    } | null;
+    readonly priceCurrency: string | null;
+    readonly listPrice: {
+        readonly major?: number;
+        readonly minPrice?: {
+            readonly major: number;
         } | null;
     } | null;
     readonly meta: {
@@ -55,7 +64,16 @@ var v0 = {
   "kind": "ScalarField",
   "name": "name",
   "storageKey": null
-};
+},
+v1 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "major",
+    "storageKey": null
+  }
+];
 return {
   "argumentDefinitions": [],
   "kind": "Fragment",
@@ -131,6 +149,20 @@ return {
       "storageKey": null
     },
     {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "isInquireable",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "isOfferable",
+      "storageKey": null
+    },
+    {
       "alias": "is_shareable",
       "args": null,
       "kind": "ScalarField",
@@ -196,6 +228,45 @@ return {
             }
           ],
           "storageKey": "resized(height:640,version:[\"large\",\"medium\",\"tall\"],width:640)"
+        }
+      ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "priceCurrency",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": null,
+      "kind": "LinkedField",
+      "name": "listPrice",
+      "plural": false,
+      "selections": [
+        {
+          "kind": "InlineFragment",
+          "selections": (v1/*: any*/),
+          "type": "Money"
+        },
+        {
+          "kind": "InlineFragment",
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "Money",
+              "kind": "LinkedField",
+              "name": "minPrice",
+              "plural": false,
+              "selections": (v1/*: any*/),
+              "storageKey": null
+            }
+          ],
+          "type": "PriceRange"
         }
       ],
       "storageKey": null
@@ -285,5 +356,5 @@ return {
   "type": "Artwork"
 };
 })();
-(node as any).hash = '3270b3c87f1d4d01b50b768608dc420e';
+(node as any).hash = '1a8a5814d0bf1e8d48e8001871db95ca';
 export default node;

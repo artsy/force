@@ -65,6 +65,10 @@ const OrderArtworkNode = {
     internalID: "artworkId",
     is_acquireable: true as boolean,
     is_offerable: true as boolean,
+    listPrice: {
+      __typename: "Money",
+      major: 10000,
+    },
     medium: "Oil and pencil on panel",
     onlyShipsDomestically: false,
     partner: {
@@ -80,6 +84,7 @@ const OrderArtworkNode = {
       slug: "a-g",
     },
     pickup_available: true,
+    priceCurrency: "USD",
     shippingCountry: "US",
     shippingOrigin: "New York, NY",
     slug: "artworkId",

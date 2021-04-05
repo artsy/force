@@ -7,6 +7,7 @@ import { get } from "v2/Utils/get"
 
 import { withSystemContext } from "v2/Artsy"
 import { SeoDataForArtworkFragmentContainer as SeoDataForArtwork } from "./Seo/SeoDataForArtwork"
+import { ZendeskWrapper } from "v2/Components/ZendeskWrapper"
 
 interface ArtworkMetaProps {
   artwork: ArtworkMeta_artwork
@@ -14,6 +15,19 @@ interface ArtworkMetaProps {
 }
 
 export class ArtworkMeta extends Component<ArtworkMetaProps> {
+  componentDidMount() {
+    // zEmbed represents the Zendesk object
+    if (window.zEmbed) {
+      window.zEmbed.show()
+    }
+  }
+
+  componentWillUnmount() {
+    if (window.zEmbed) {
+      window.zEmbed.hide()
+    }
+  }
+
   renderImageMetaTags() {
     const { artwork } = this.props
     const { meta_image, is_shareable } = artwork
@@ -111,6 +125,38 @@ export class ArtworkMeta extends Component<ArtworkMetaProps> {
     )
   }
 
+  renderZendeskScript() {
+    const {
+      is_acquireable,
+      is_in_auction,
+      isInquireable,
+      isOfferable,
+      listPrice,
+      priceCurrency,
+    } = this.props.artwork
+
+    const BNMO_CURRENCY_THRESHOLDS = {
+      USD: 10000,
+      EUR: 8000,
+      HKD: 77000,
+      GBP: 7000,
+    }
+
+    // This accounts for exact price and price ranges
+    const artworkPrice = listPrice?.major
+      ? listPrice.major
+      : listPrice?.minPrice?.major
+
+    if (is_in_auction) return
+    if (!is_acquireable && !isOfferable && !isInquireable) return
+    if (!BNMO_CURRENCY_THRESHOLDS[priceCurrency]) return
+    if (!artworkPrice || artworkPrice < BNMO_CURRENCY_THRESHOLDS[priceCurrency])
+      return
+    if (typeof window !== "undefined" && window.zEmbed) return
+
+    return <ZendeskWrapper />
+  }
+
   render() {
     const { artwork } = this.props
     const imageURL = get(artwork, a => a.meta_image.resized.url)
@@ -137,6 +183,7 @@ export class ArtworkMeta extends Component<ArtworkMetaProps> {
         {this.renderImageMetaTags()}
         {this.renderSailthruTags()}
         {this.renderGoogleAdSnippet()}
+        {this.renderZendeskScript()}
       </>
     )
   }
@@ -158,6 +205,8 @@ export const ArtworkMetaFragmentContainer = createFragmentContainer(
         image_rights: imageRights
         is_in_auction: isInAuction
         is_acquireable: isAcquireable
+        isInquireable
+        isOfferable
         is_shareable: isShareable
         meta_image: image {
           resized(
@@ -168,6 +217,17 @@ export const ArtworkMetaFragmentContainer = createFragmentContainer(
             width
             height
             url
+          }
+        }
+        priceCurrency
+        listPrice {
+          ... on Money {
+            major
+          }
+          ... on PriceRange {
+            minPrice {
+              major
+            }
           }
         }
         meta {

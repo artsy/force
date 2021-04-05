@@ -23,6 +23,11 @@ declare global {
         reset: (path) => void
       }
     ]
+    // Zendesk integration for artwork app
+    zEmbed: {
+      show: () => void
+      hide: () => void
+    }
   }
 }
 
