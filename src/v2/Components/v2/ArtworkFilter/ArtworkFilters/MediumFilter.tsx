@@ -3,6 +3,7 @@ import React, { FC } from "react"
 import { useArtworkFilterContext } from "../ArtworkFilterContext"
 import { ShowMore, INITIAL_ITEMS_TO_SHOW } from "./ShowMore"
 import { intersection } from "lodash"
+import { sortResults } from "./ResultsFilter"
 
 export const MediumFilter: FC = () => {
   const { aggregations, counts, ...filterContext } = useArtworkFilterContext()
@@ -38,12 +39,16 @@ export const MediumFilter: FC = () => {
     v2: { my: 0.5 },
     v3: { my: 1 },
   })
+  const resultsSorted = sortResults(
+    currentFilters.additionalGeneIDs,
+    allowedMediums
+  )
 
   return (
     <Expandable mb={1} label="Medium" expanded={isExpanded}>
       <Flex flexDirection="column" alignItems="left">
         <ShowMore expanded={hasBelowTheFoldMediumFilter}>
-          {allowedMediums.map(({ value: slug, name }, index) => {
+          {resultsSorted.map(({ value: slug, name }, index) => {
             return (
               <Checkbox
                 selected={
