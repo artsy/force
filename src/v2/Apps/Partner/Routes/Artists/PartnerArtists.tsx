@@ -18,6 +18,10 @@ export interface ArtistsRouteProps {
   relay: RelayPaginationProp
 }
 
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms))
+}
+
 export const ArtistsRoute: React.FC<ArtistsRouteProps> = ({
   partner: { artists, distinguishRepresentedArtists, slug },
   relay,
@@ -33,18 +37,18 @@ export const ArtistsRoute: React.FC<ArtistsRouteProps> = ({
   }
 
   const loadMoreArtists = () => {
-    relay.loadMore(PAGE_SIZE, error => {
+    relay.loadMore(PAGE_SIZE, async error => {
       if (error) {
         console.error(error)
         errCounter.current += 1
+        // Wait before next try.
+        await sleep(500)
       } else {
         errCounter.current = 0
       }
 
       if (errCounter.current >= 3) {
-        setTimeout(() => {
-          setArtistsLoaded(true)
-        }, 300)
+        setArtistsLoaded(true)
 
         return
       }
@@ -62,8 +66,6 @@ export const ArtistsRoute: React.FC<ArtistsRouteProps> = ({
       loadMoreArtists()
     }
   }, [])
-
-  console.log(artistsLoaded, artists)
 
   return (
     <Box mt={4}>
