@@ -7,6 +7,7 @@ import ReactDOM from "react-dom/server"
 import loadAssetManifest from "lib/manifest"
 import express from "express"
 import path from "path"
+import { getServerParam } from "./Utils/getParam"
 
 // TODO: Use the same variables as the asset middleware. Both config and sharify
 // have a default CDN_URL while this does not.
@@ -81,10 +82,10 @@ app.get(flatRoutes, async (req: Request, res: Response, next: NextFunction) => {
         style: styleTags,
       },
       disable: {
-        segment: getParam(req, "disableSegment") === "true",
-        sailthru: getParam(req, "disableSailthru") === "true",
-        stripe: getParam(req, "disableStripe") === "true",
-        analytics: getParam(req, "disableAnalytics") === "true",
+        segment: getServerParam(req, "disableSegment") === "true",
+        sailthru: getServerParam(req, "disableSailthru") === "true",
+        stripe: getServerParam(req, "disableStripe") === "true",
+        analytics: getServerParam(req, "disableAnalytics") === "true",
       },
       env: NODE_ENV,
       fontUrl: WEBFONT_URL,
@@ -119,13 +120,6 @@ app.get(flatRoutes, async (req: Request, res: Response, next: NextFunction) => {
     next(error)
   }
 })
-
-function getParam(req, name): string | null {
-  if (req.query && req.query.hasOwnProperty(name)) {
-    return req.query[name]
-  }
-  return null
-}
 
 // This export form is required for express-reloadable
 // TODO: Remove when no longer needed for hot reloading
