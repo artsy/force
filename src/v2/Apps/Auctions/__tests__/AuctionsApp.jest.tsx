@@ -63,6 +63,14 @@ describe("AuctionsApp", () => {
     expect(html).toContain("Past")
   })
 
+  it("redirects to the Bid At Auction page", () => {
+    const wrapper = getWrapper()
+    expect(wrapper.find("RouterLink")).toBeDefined()
+    expect(wrapper.find("RouterLink").first().props().to).toBe(
+      "https://support.artsy.net/hc/en-us/sections/360008298773-Bid-at-Auction"
+    )
+  })
+
   it("does not render auctions if they are not present", () => {
     const wrapper = getWrapper({
       salesConnection: () => ({ edges: [] }),
