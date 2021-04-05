@@ -53,7 +53,15 @@ fragment ArticleCard_article on Article {
 fragment Articles_partner on Partner {
   slug
   articlesConnection(first: 18) {
-    totalCount
+    pageInfo {
+      hasNextPage
+      endCursor
+      hasPreviousPage
+      startCursor
+    }
+    pageCursors {
+      ...Pagination_pageCursors
+    }
     edges {
       node {
         internalID
@@ -63,10 +71,28 @@ fragment Articles_partner on Partner {
       }
       cursor
     }
-    pageInfo {
-      endCursor
-      hasNextPage
-    }
+  }
+}
+
+fragment Pagination_pageCursors on PageCursors {
+  around {
+    cursor
+    page
+    isCurrent
+  }
+  first {
+    cursor
+    page
+    isCurrent
+  }
+  last {
+    cursor
+    page
+    isCurrent
+  }
+  previous {
+    cursor
+    page
   }
 }
 */
@@ -98,10 +124,35 @@ v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
+  "name": "cursor",
+  "storageKey": null
+},
+v4 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "page",
+  "storageKey": null
+},
+v5 = [
+  (v3/*: any*/),
+  (v4/*: any*/),
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "isCurrent",
+    "storageKey": null
+  }
+],
+v6 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v4 = [
+v7 = [
   {
     "alias": null,
     "args": null,
@@ -109,7 +160,7 @@ v4 = [
     "name": "name",
     "storageKey": null
   },
-  (v3/*: any*/)
+  (v6/*: any*/)
 ];
 return {
   "fragment": {
@@ -169,8 +220,94 @@ return {
               {
                 "alias": null,
                 "args": null,
-                "kind": "ScalarField",
-                "name": "totalCount",
+                "concreteType": "PageInfo",
+                "kind": "LinkedField",
+                "name": "pageInfo",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "hasNextPage",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "endCursor",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "hasPreviousPage",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "startCursor",
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "PageCursors",
+                "kind": "LinkedField",
+                "name": "pageCursors",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "PageCursor",
+                    "kind": "LinkedField",
+                    "name": "around",
+                    "plural": true,
+                    "selections": (v5/*: any*/),
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "PageCursor",
+                    "kind": "LinkedField",
+                    "name": "first",
+                    "plural": false,
+                    "selections": (v5/*: any*/),
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "PageCursor",
+                    "kind": "LinkedField",
+                    "name": "last",
+                    "plural": false,
+                    "selections": (v5/*: any*/),
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "PageCursor",
+                    "kind": "LinkedField",
+                    "name": "previous",
+                    "plural": false,
+                    "selections": [
+                      (v3/*: any*/),
+                      (v4/*: any*/)
+                    ],
+                    "storageKey": null
+                  }
+                ],
                 "storageKey": null
               },
               {
@@ -224,7 +361,7 @@ return {
                         "kind": "LinkedField",
                         "name": "author",
                         "plural": false,
-                        "selections": (v4/*: any*/),
+                        "selections": (v7/*: any*/),
                         "storageKey": null
                       },
                       {
@@ -234,7 +371,7 @@ return {
                         "kind": "LinkedField",
                         "name": "contributingAuthors",
                         "plural": true,
-                        "selections": (v4/*: any*/),
+                        "selections": (v7/*: any*/),
                         "storageKey": null
                       },
                       {
@@ -298,7 +435,7 @@ return {
                         ],
                         "storageKey": null
                       },
-                      (v3/*: any*/),
+                      (v6/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -309,38 +446,7 @@ return {
                     ],
                     "storageKey": null
                   },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "cursor",
-                    "storageKey": null
-                  }
-                ],
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": "PageInfo",
-                "kind": "LinkedField",
-                "name": "pageInfo",
-                "plural": false,
-                "selections": [
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "endCursor",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "hasNextPage",
-                    "storageKey": null
-                  }
+                  (v3/*: any*/)
                 ],
                 "storageKey": null
               }
@@ -356,7 +462,7 @@ return {
             "kind": "LinkedHandle",
             "name": "articlesConnection"
           },
-          (v3/*: any*/)
+          (v6/*: any*/)
         ],
         "storageKey": null
       }
@@ -367,7 +473,7 @@ return {
     "metadata": {},
     "name": "partnerRoutes_ArticlesQuery",
     "operationKind": "query",
-    "text": "query partnerRoutes_ArticlesQuery(\n  $partnerId: String!\n) {\n  partner(id: $partnerId) @principalField {\n    ...Articles_partner\n    id\n  }\n}\n\nfragment ArticleCard_article on Article {\n  channelID\n  title\n  href\n  author {\n    name\n    id\n  }\n  contributingAuthors {\n    name\n    id\n  }\n  thumbnailImage {\n    medium: cropped(width: 357, height: 320) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment Articles_partner on Partner {\n  slug\n  articlesConnection(first: 18) {\n    totalCount\n    edges {\n      node {\n        internalID\n        ...ArticleCard_article\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query partnerRoutes_ArticlesQuery(\n  $partnerId: String!\n) {\n  partner(id: $partnerId) @principalField {\n    ...Articles_partner\n    id\n  }\n}\n\nfragment ArticleCard_article on Article {\n  channelID\n  title\n  href\n  author {\n    name\n    id\n  }\n  contributingAuthors {\n    name\n    id\n  }\n  thumbnailImage {\n    medium: cropped(width: 357, height: 320) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment Articles_partner on Partner {\n  slug\n  articlesConnection(first: 18) {\n    pageInfo {\n      hasNextPage\n      endCursor\n      hasPreviousPage\n      startCursor\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        internalID\n        ...ArticleCard_article\n        id\n        __typename\n      }\n      cursor\n    }\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n"
   }
 };
 })();
