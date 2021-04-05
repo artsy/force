@@ -7,7 +7,7 @@ import { loadableReady } from "@loadable/component"
 import { logoutEventHandler } from "desktop/lib/logoutHandler"
 import { mediator } from "lib/mediator"
 import { beforeAnalyticsReady, onAnalyticsReady } from "lib/analytics/helpers"
-import { getClientParam } from "./Utils/getParam"
+import { getClientParam } from "./Utils/getClientParam"
 
 async function setupClient() {
   const clientImports = await Promise.all([

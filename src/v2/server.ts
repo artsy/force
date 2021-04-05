@@ -7,7 +7,7 @@ import ReactDOM from "react-dom/server"
 import loadAssetManifest from "lib/manifest"
 import express from "express"
 import path from "path"
-import { getServerParam } from "./Utils/getParam"
+import { getServerParam } from "./Utils/getServerParam"
 
 // TODO: Use the same variables as the asset middleware. Both config and sharify
 // have a default CDN_URL while this does not.
