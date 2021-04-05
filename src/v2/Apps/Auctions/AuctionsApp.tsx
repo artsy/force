@@ -21,8 +21,6 @@ const AuctionsApp: React.FC<AuctionsAppProps> = props => {
   const { children, viewer } = props
   const { user } = useSystemContext()
 
-  console.log(user)
-
   return (
     <AppContainer>
       <AuctionsMeta />
@@ -59,7 +57,6 @@ const AuctionsApp: React.FC<AuctionsAppProps> = props => {
 
       {user && (
         <>
-          {console.log("here")}
           <Box m={[2, 4]}>
             <MyBidsFragmentContainer me={viewer.me} />
           </Box>

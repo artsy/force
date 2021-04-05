@@ -1,6 +1,6 @@
 import React from "react"
 import { mount } from "enzyme"
-import { AuctionArtworksRailPlaceholder } from "../AuctionArtworksRailPlaceholder"
+import { AuctionArtworksRailPlaceholder } from "../../AuctionArtworksRailPlaceholder"
 
 jest.unmock("react-relay")
 

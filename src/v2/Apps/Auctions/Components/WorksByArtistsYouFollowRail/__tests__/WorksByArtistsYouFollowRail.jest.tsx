@@ -56,4 +56,18 @@ describe("WorksByArtistsYouFollowRail", () => {
     expect(wrapper.find("Carousel")).toBeDefined()
     expect(wrapper.find("FillwidthItem")).toBeDefined()
   })
+
+  it("tracks clicks", () => {
+    const wrapper = getWrapper()
+    wrapper.find("RouterLink").first().simulate("click")
+    expect(trackEvent).toHaveBeenCalledWith({
+      action: "clickedArtworkGroup",
+      context_module: "worksByArtistsYouFollowRail",
+      destination_page_owner_id: '<mock-value-for-field-"internalID">',
+      destination_page_owner_slug: '<mock-value-for-field-"slug">',
+      destination_page_owner_type: "artwork",
+      horizontal_slide_position: 0,
+      type: "thumbnail",
+    })
+  })
 })

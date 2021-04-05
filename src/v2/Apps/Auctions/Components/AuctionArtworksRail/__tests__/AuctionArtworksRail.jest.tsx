@@ -1,7 +1,7 @@
 import React from "react"
 import { graphql } from "relay-runtime"
 import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
-import { AuctionArtworksRailFragmentContainer } from "../AuctionArtworksRail/AuctionArtworksRail"
+import { AuctionArtworksRailFragmentContainer } from "../AuctionArtworksRail"
 import { useTracking as baseUseTracking } from "react-tracking"
 
 jest.unmock("react-relay")
@@ -60,5 +60,18 @@ describe("AuctionArtworksRail", () => {
     const text = wrapper.text()
     expect(text).toContain("Test Href")
     expect(text).toContain("Ends Apr 10 at 8:27pm UTC")
+  })
+
+  it("tracks clicks", () => {
+    const wrapper = getWrapper()
+    wrapper.find("RouterLink").first().simulate("click")
+    expect(trackEvent).toHaveBeenCalledWith({
+      action: "clickedArtworkGroup",
+      context_module: "currentAuctions",
+      destination_page_owner_id: '<mock-value-for-field-"internalID">',
+      destination_page_owner_slug: '<mock-value-for-field-"slug">',
+      destination_page_owner_type: "sale",
+      type: "viewAll",
+    })
   })
 })

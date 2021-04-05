@@ -37,16 +37,6 @@ describe("CurrentAuctions", () => {
     })
   })
 
-  it("renders zero-state if no current auctions", () => {
-    const wrapper = getWrapper({
-      SaleConnection: () => ({
-        edges: [],
-      }),
-    })
-
-    expect(wrapper.find("AuctionArtworksRailFragmentContainer")).toBeDefined()
-  })
-
   it("renders zerostate if no auctions", () => {
     const wrapper = getWrapper({
       SaleConnection: () => ({
