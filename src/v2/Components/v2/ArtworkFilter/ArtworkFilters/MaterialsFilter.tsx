@@ -12,7 +12,7 @@ export const MaterialsFilter: React.FC<MaterialsFilterProps> = ({
     <ResultsFilter
       facetName="materialsTerms"
       slice="MATERIALS_TERMS"
-      label="Materials"
+      label="Material"
       placeholder="Enter a material"
       expanded={expanded}
     />
