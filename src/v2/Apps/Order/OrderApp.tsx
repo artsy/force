@@ -28,6 +28,7 @@ export interface OrderAppProps extends RouterState {
 
 class OrderApp extends React.Component<OrderAppProps, {}> {
   mediator: Mediator | null = null
+  user: any
   state = { stripe: null }
   removeNavigationListener: () => void
 
@@ -45,10 +46,12 @@ class OrderApp extends React.Component<OrderAppProps, {}> {
       window.zEmbed.show()
     }
 
-    this.mediator.on(
-      "openOrdersContactArtsyModal",
-      this.openAskSpecialistInquireableModal
-    )
+    if (this.mediator) {
+      this.mediator.on(
+        "openOrdersContactArtsyModal",
+        this.openAskSpecialistInquireableModal
+      )
+    }
   }
 
   componentWillUnmount() {
@@ -63,7 +66,9 @@ class OrderApp extends React.Component<OrderAppProps, {}> {
       window.zEmbed.hide()
     }
 
-    this.mediator.off("openOrdersContactArtsyModal")
+    if (this.mediator) {
+      this.mediator.off("openOrdersContactArtsyModal")
+    }
   }
 
   openAskSpecialistInquireableModal = () => {
@@ -168,8 +173,9 @@ class OrderApp extends React.Component<OrderAppProps, {}> {
     const stripePromise = loadStripe(sd.STRIPE_PUBLISHABLE_KEY)
     return (
       <SystemContextConsumer>
-        {({ isEigen, mediator }) => {
+        {({ isEigen, mediator, user }) => {
           this.mediator = mediator
+          this.user = user
           return (
             <MinimalNavBar to={artworkHref}>
               <AppContainer>
