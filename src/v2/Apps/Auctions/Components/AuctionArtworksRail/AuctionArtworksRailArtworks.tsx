@@ -16,7 +16,6 @@ export interface AuctionArtworksRailArtworksProps {
   sale: AuctionArtworksRailArtworks_sale
   tabType: TabType
 }
-//TODO: Need to put in conditional check to return no artwork images if the artworks is empty
 
 const AuctionArtworksRailArtworks: React.FC<AuctionArtworksRailArtworksProps> = ({
   sale,
