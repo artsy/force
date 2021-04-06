@@ -28,7 +28,7 @@ fragment MyBidsBidItem_saleArtwork on SaleArtwork {
   artwork {
     artistNames
     image {
-      resized(width: 50, height: 50) {
+      resized(width: 55, height: 55) {
         src
         srcSet
       }
@@ -137,12 +137,12 @@ return {
                       {
                         "kind": "Literal",
                         "name": "height",
-                        "value": 50
+                        "value": 55
                       },
                       {
                         "kind": "Literal",
                         "name": "width",
-                        "value": 50
+                        "value": 55
                       }
                     ],
                     "concreteType": "ResizedImageUrl",
@@ -165,7 +165,7 @@ return {
                         "storageKey": null
                       }
                     ],
-                    "storageKey": "resized(height:50,width:50)"
+                    "storageKey": "resized(height:55,width:55)"
                   }
                 ],
                 "storageKey": null
@@ -281,7 +281,7 @@ return {
     "metadata": {},
     "name": "MyBidsBidItem_Test_Query",
     "operationKind": "query",
-    "text": "query MyBidsBidItem_Test_Query {\n  saleArtwork(id: \"foo\") {\n    ...MyBidsBidItem_saleArtwork\n    id\n  }\n}\n\nfragment MyBidsBidItem_saleArtwork on SaleArtwork {\n  artwork {\n    artistNames\n    image {\n      resized(width: 50, height: 50) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n  estimate\n  highestBid {\n    amount\n  }\n  internalID\n  isHighestBidder\n  isWatching\n  lotState {\n    bidCount\n    sellingPrice {\n      display\n    }\n  }\n  position\n  slug\n}\n"
+    "text": "query MyBidsBidItem_Test_Query {\n  saleArtwork(id: \"foo\") {\n    ...MyBidsBidItem_saleArtwork\n    id\n  }\n}\n\nfragment MyBidsBidItem_saleArtwork on SaleArtwork {\n  artwork {\n    artistNames\n    image {\n      resized(width: 55, height: 55) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n  estimate\n  highestBid {\n    amount\n  }\n  internalID\n  isHighestBidder\n  isWatching\n  lotState {\n    bidCount\n    sellingPrice {\n      display\n    }\n  }\n  position\n  slug\n}\n"
   }
 };
 })();

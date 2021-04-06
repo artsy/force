@@ -38,7 +38,7 @@ describe("MyBidsBidItem", () => {
   })
 
   afterEach(() => {
-    trackEvent.mockReset()
+    jest.clearAllMocks()
   })
 
   it("renders correct components and data", () => {

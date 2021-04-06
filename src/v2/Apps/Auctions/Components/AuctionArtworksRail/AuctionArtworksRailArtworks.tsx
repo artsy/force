@@ -1,6 +1,5 @@
 import React from "react"
 import { Box } from "@artsy/palette"
-import { auctionHeights } from "../../Helpers/auctionsHelpers"
 import { QueryRenderer, createFragmentContainer, graphql } from "react-relay"
 import { useAnalyticsContext, useSystemContext } from "v2/Artsy"
 import { AuctionArtworksRailArtworksQuery } from "v2/__generated__/AuctionArtworksRailArtworksQuery.graphql"
@@ -12,6 +11,7 @@ import { AuctionArtworksRailPlaceholder } from "../AuctionArtworksRailPlaceholde
 import { useTracking } from "react-tracking"
 import { clickedArtworkGroup } from "@artsy/cohesion"
 import { tabTypeToContextModuleMap } from "../../Utils/tabTypeToContextModuleMap"
+import { auctionHeights } from "../../Utils/auctionsHelpers"
 
 export interface AuctionArtworksRailArtworksProps {
   sale: AuctionArtworksRailArtworks_sale
