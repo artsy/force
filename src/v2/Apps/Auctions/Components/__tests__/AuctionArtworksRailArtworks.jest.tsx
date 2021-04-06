@@ -1,4 +1,3 @@
-import { ReactWrapper } from "enzyme"
 import React from "react"
 import { graphql } from "relay-runtime"
 import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
