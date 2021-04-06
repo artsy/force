@@ -76,6 +76,10 @@ describe("ArtworkFilterMobileActionSheet", () => {
   it("mutates staged filter state instead of 'real' filter state", () => {
     const wrapper = getWrapper()
 
+    // Expand the filters we want to make assertions about
+    wrapper.find("WaysToBuyFilter").find("ChevronIcon").simulate("click")
+    wrapper.find("SizeFilter").find("ChevronIcon").simulate("click")
+
     wrapper.find("WaysToBuyFilter").find("Checkbox").first().simulate("click")
     wrapper.find("SizeFilter").find("Checkbox").first().simulate("click")
 
@@ -96,6 +100,10 @@ describe("ArtworkFilterMobileActionSheet", () => {
     })
 
     expect(wrapper.find("ApplyButton").text()).toEqual("Apply (0)")
+
+    // Expand the filters we want to make assertions about
+    wrapper.find("WaysToBuyFilter").find("ChevronIcon").simulate("click")
+    wrapper.find("PriceRangeFilter").find("ChevronIcon").simulate("click")
 
     // Select another way to buy
     wrapper

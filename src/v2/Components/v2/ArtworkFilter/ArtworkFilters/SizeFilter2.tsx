@@ -51,7 +51,11 @@ const hasValue = (size: CustomSize) => {
   return size.height || size.width
 }
 
-export const SizeFilter2: React.FC = () => {
+export interface SizeFilter2Props {
+  expanded?: boolean
+}
+
+export const SizeFilter2: React.FC<SizeFilter2Props> = ({ expanded }) => {
   const { currentlySelectedFilters, setFilters } = useArtworkFilterContext()
   const { height, width } = currentlySelectedFilters()
 
@@ -121,7 +125,7 @@ export const SizeFilter2: React.FC = () => {
   })
 
   return (
-    <Expandable mb={1} label="Size" expanded>
+    <Expandable mb={1} label="Size" expanded={expanded}>
       {mode === "done" && (
         <Media lessThan="sm">
           <Message variant="info" my={2}>

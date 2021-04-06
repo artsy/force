@@ -5,22 +5,27 @@ import {
   ArtworkFilterContextProvider,
   useArtworkFilterContext,
 } from "v2/Components/v2/ArtworkFilter/ArtworkFilterContext"
-import { AttributionClassFilter } from "../AttributionClassFilter"
+import {
+  AttributionClassFilter,
+  AttributionClassFilterProps,
+} from "../AttributionClassFilter"
 
 describe("AttributionClassFilter", () => {
   let context: ArtworkFilterContextProps
 
-  const getWrapper = () => {
+  const getWrapper = (
+    props: AttributionClassFilterProps = { expanded: true }
+  ) => {
     return mount(
       <ArtworkFilterContextProvider>
-        <AttributionClassFilterTest />
+        <AttributionClassFilterTest {...props} />
       </ArtworkFilterContextProvider>
     )
   }
 
-  const AttributionClassFilterTest = () => {
+  const AttributionClassFilterTest = (props: AttributionClassFilterProps) => {
     context = useArtworkFilterContext()
-    return <AttributionClassFilter />
+    return <AttributionClassFilter {...props} />
   }
 
   it("updates context on filter change", async () => {
@@ -31,5 +36,22 @@ describe("AttributionClassFilter", () => {
 
     await wrapper.find("Checkbox").at(2).simulate("click")
     expect(context.filters.attributionClass).toEqual(["unique", "open edition"])
+  })
+
+  describe("the `expanded` prop", () => {
+    it("hides the filter controls when not set", () => {
+      const wrapper = getWrapper({})
+      expect(wrapper.find("Checkbox").length).toBe(0)
+    })
+
+    it("hides the filter controls when `false`", () => {
+      const wrapper = getWrapper({ expanded: false })
+      expect(wrapper.find("Checkbox").length).toBe(0)
+    })
+
+    it("shows the filter controls when `true`", () => {
+      const wrapper = getWrapper({ expanded: true })
+      expect(wrapper.find("Checkbox").length).not.toBe(0)
+    })
   })
 })

@@ -1,28 +1,51 @@
 import { mount } from "enzyme"
 import React from "react"
-import { ArtworkFilterContextProvider } from "../../ArtworkFilterContext"
-import { PartnersFilter } from "../PartnersFilter"
+import {
+  Aggregations,
+  ArtworkFilterContextProvider,
+} from "../../ArtworkFilterContext"
+import { PartnersFilter, PartnersFilterProps } from "../PartnersFilter"
 
 describe("PartnersFilter", () => {
-  const getWrapper = (contextProps = {}) => {
+  const aggregations: Aggregations = [
+    {
+      slice: "PARTNER",
+      counts: [{ name: "Percy Z", count: 10, value: "percy-z" }],
+    },
+  ]
+
+  const getWrapper = (
+    contextProps = {},
+    filterProps: PartnersFilterProps = { expanded: true }
+  ) => {
     return mount(
       <ArtworkFilterContextProvider {...contextProps}>
-        <PartnersFilter />
+        <PartnersFilter {...filterProps} />
       </ArtworkFilterContextProvider>
     )
   }
 
   describe("partners", () => {
     it("renders partners", () => {
-      const wrapper = getWrapper({
-        aggregations: [
-          {
-            slice: "PARTNER",
-            counts: [{ name: "Percy Z", count: 10, value: "percy-z" }],
-          },
-        ],
-      })
+      const wrapper = getWrapper({ aggregations })
       expect(wrapper.find("Checkbox").first().text()).toContain("Percy Z")
+    })
+  })
+
+  describe("the `expanded` prop", () => {
+    it("hides the filter controls when not set", () => {
+      const wrapper = getWrapper({ aggregations }, {})
+      expect(wrapper.find("Checkbox").length).toBe(0)
+    })
+
+    it("hides the filter controls when `false`", () => {
+      const wrapper = getWrapper({ aggregations }, { expanded: false })
+      expect(wrapper.find("Checkbox").length).toBe(0)
+    })
+
+    it("shows the filter controls when `true`", () => {
+      const wrapper = getWrapper({ aggregations }, { expanded: true })
+      expect(wrapper.find("Checkbox").length).not.toBe(0)
     })
   })
 })

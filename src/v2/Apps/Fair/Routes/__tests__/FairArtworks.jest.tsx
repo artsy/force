@@ -58,6 +58,7 @@ describe("FairArtworks", () => {
   it("includes the artist filter", async () => {
     const wrapper = await getWrapper()
     expect(wrapper.find("ArtistsFilter").length).toBe(1)
+    wrapper.find("ArtistsFilter").find("ChevronIcon").simulate("click")
     expect(wrapper.find("ArtistsFilter").text()).toMatch(
       "Artists I follow (10)"
     )

@@ -12,6 +12,7 @@ describe("ArtworkLocationFilter", () => {
           slice="LOCATION_CITY"
           placeholder="Enter a city"
           label="Artwork location"
+          expanded
         />
       </ArtworkFilterContextProvider>
     )

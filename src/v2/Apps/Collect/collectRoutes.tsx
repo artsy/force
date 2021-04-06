@@ -84,7 +84,7 @@ function initializeVariablesWithFilterState(params, props) {
 
   // TODO: Do these aggregations accomplish much on /collect?
   const additionalAggregations = getENV("ENABLE_NEW_ARTWORK_FILTERS")
-    ? ["LOCATION_CITY", "ARTIST_NATIONALITY", "MATERIALS_TERMS"]
+    ? ["ARTIST_NATIONALITY", "LOCATION_CITY", "MATERIALS_TERMS", "PARTNER"]
     : []
   const collectionOnlyAggregations = collectionSlug
     ? ["MERCHANDISABLE_ARTISTS", "MEDIUM", "MAJOR_PERIOD"]

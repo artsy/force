@@ -5,13 +5,11 @@ import { useArtworkFilterContext } from "../ArtworkFilterContext"
 import { INITIAL_ITEMS_TO_SHOW, ShowMore } from "./ShowMore"
 import { sortResults } from "./ResultsFilter"
 
-interface TimePeriodFilterProps {
+export interface TimePeriodFilterProps {
   expanded?: boolean // set to true to force expansion
 }
 
-export const TimePeriodFilter: FC<TimePeriodFilterProps> = ({
-  expanded = false,
-}) => {
+export const TimePeriodFilter: FC<TimePeriodFilterProps> = ({ expanded }) => {
   const { aggregations, ...filterContext } = useArtworkFilterContext()
   const timePeriods = aggregations.find(agg => agg.slice === "MAJOR_PERIOD")
 
