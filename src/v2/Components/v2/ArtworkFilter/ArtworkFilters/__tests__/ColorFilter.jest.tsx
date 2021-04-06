@@ -59,8 +59,8 @@ describe("ColorFilter", () => {
 
     expect(context.filters.colors).toEqual(["black-and-white", "violet"])
 
-    wrapper.find("Checkbox").last().simulate("click")
+    wrapper.find("Checkbox").first().simulate("click")
 
-    expect(context.filters.colors).toEqual(["black-and-white"])
+    expect(context.filters.colors).toEqual(["violet"])
   })
 })
