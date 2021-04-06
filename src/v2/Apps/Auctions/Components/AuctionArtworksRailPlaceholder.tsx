@@ -1,5 +1,5 @@
 import React from "react"
-import { auctionHeights } from "../Helpers/auctionsHelpers"
+import { auctionHeights } from "../Utils/auctionsHelpers"
 import { Box, SkeletonBox, SkeletonText } from "@artsy/palette"
 import { Carousel } from "v2/Components/Carousel"
 
