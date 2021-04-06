@@ -35,7 +35,7 @@ describe("WorksByArtistsYouFollowRail", () => {
   })
 
   afterEach(() => {
-    trackEvent.mockReset()
+    jest.clearAllMocks()
   })
 
   it("does not render if no followed artists", () => {

@@ -38,7 +38,7 @@ describe("AuctionArtworksRailArtworks", () => {
   })
 
   afterEach(() => {
-    trackEvent.mockReset()
+    jest.clearAllMocks()
   })
 
   it("renders correct components and data", () => {
