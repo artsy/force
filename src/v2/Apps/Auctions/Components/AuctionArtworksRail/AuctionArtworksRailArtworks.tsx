@@ -1,4 +1,5 @@
 import React from "react"
+import { Box } from "@artsy/palette"
 import { QueryRenderer, createFragmentContainer, graphql } from "react-relay"
 import { useAnalyticsContext, useSystemContext } from "v2/Artsy"
 import { AuctionArtworksRailArtworksQuery } from "v2/__generated__/AuctionArtworksRailArtworksQuery.graphql"
@@ -15,6 +16,7 @@ export interface AuctionArtworksRailArtworksProps {
   sale: AuctionArtworksRailArtworks_sale
   tabType: TabType
 }
+//TODO: Need to put in conditional check to return no artwork images if the artworks is empty
 
 const AuctionArtworksRailArtworks: React.FC<AuctionArtworksRailArtworksProps> = ({
   sale,
@@ -24,32 +26,40 @@ const AuctionArtworksRailArtworks: React.FC<AuctionArtworksRailArtworksProps> = 
   const { contextPageOwnerType } = useAnalyticsContext()
   const contextModule = tabTypeToContextModuleMap[tabType]
 
+  const AUCTION_ARTWORKS_RAIL_HEIGHT = 233
+
+  if (sale.artworksConnection.edges.length === 0) {
+    return null
+  }
+
   return (
-    <Carousel arrowHeight={AUCTION_ARTWORKS_IMAGE_HEIGHT}>
-      {sale.artworksConnection.edges.map(({ node }, index) => {
-        return (
-          <FillwidthItem
-            key={index}
-            contextModule={contextModule}
-            artwork={node}
-            imageHeight={AUCTION_ARTWORKS_IMAGE_HEIGHT}
-            hidePartnerName
-            lazyLoad
-            onClick={() => {
-              tracking.trackEvent(
-                clickedArtworkGroup({
-                  contextModule,
-                  contextPageOwnerType,
-                  artworkID: node.internalID,
-                  artworkSlug: node.slug,
-                  horizontalSlidePosition: index,
-                })
-              )
-            }}
-          />
-        )
-      })}
-    </Carousel>
+    <Box height={AUCTION_ARTWORKS_RAIL_HEIGHT}>
+      <Carousel arrowHeight={AUCTION_ARTWORKS_IMAGE_HEIGHT}>
+        {sale.artworksConnection.edges.map(({ node }, index) => {
+          return (
+            <FillwidthItem
+              key={index}
+              contextModule={contextModule}
+              artwork={node}
+              imageHeight={AUCTION_ARTWORKS_IMAGE_HEIGHT}
+              hidePartnerName
+              lazyLoad
+              onClick={() => {
+                tracking.trackEvent(
+                  clickedArtworkGroup({
+                    contextModule,
+                    contextPageOwnerType,
+                    artworkID: node.internalID,
+                    artworkSlug: node.slug,
+                    horizontalSlidePosition: index,
+                  })
+                )
+              }}
+            />
+          )
+        })}
+      </Carousel>
+    </Box>
   )
 }
 

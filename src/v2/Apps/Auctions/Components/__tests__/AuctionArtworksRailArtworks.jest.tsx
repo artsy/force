@@ -1,3 +1,4 @@
+import { ReactWrapper } from "enzyme"
 import React from "react"
 import { graphql } from "relay-runtime"
 import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
@@ -40,5 +41,20 @@ describe("AuctionArtworksRailArtworks", () => {
 
     expect(wrapper.find("Carousel")).toBeDefined()
     expect(wrapper.find("FillwidthItem")).toBeDefined()
+  })
+
+  it("returns no artworks if there are no published artworks to return", () => {
+    const wrapper = getWrapper({
+      Sale: () => ({
+        internalID: "testID123",
+        slug: "test-auction",
+      }),
+      ArtworkConnection: () => ({
+        edges: [],
+      }),
+    })
+
+    console.log(wrapper.find("Carousel").length)
+    expect(wrapper.find("Carousel")).toHaveLength(0)
   })
 })

@@ -85,16 +85,14 @@ export const AuctionArtworksRail: React.FC<AuctionArtworksRailProps> = ({
             </RouterLink>
           </Text>
         </Box>
-        <Box height={AUCTION_ARTWORKS_RAIL_HEIGHT}>
-          {isEnteredView ? (
-            <AuctionArtworksRailArtworksQueryRenderer
-              id={sale.internalID}
-              tabType={tabType}
-            />
-          ) : (
-            <AuctionArtworksRailPlaceholder />
-          )}
-        </Box>
+        {isEnteredView ? (
+          <AuctionArtworksRailArtworksQueryRenderer
+            id={sale.internalID}
+            tabType={tabType}
+          />
+        ) : (
+          <AuctionArtworksRailPlaceholder />
+        )}
       </Box>
     </>
   )

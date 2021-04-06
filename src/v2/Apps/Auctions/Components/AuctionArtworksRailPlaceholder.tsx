@@ -7,33 +7,37 @@ interface FairExhibitorRailPlaceholderProps {
   done?: boolean
 }
 
+const AUCTION_ARTWORKS_RAIL_HEIGHT = 233
+
 export const AuctionArtworksRailPlaceholder: React.FC<FairExhibitorRailPlaceholderProps> = ({
   done = true,
 }) => (
-  <Carousel arrowHeight={AUCTION_ARTWORKS_IMAGE_HEIGHT}>
-    {[...new Array(10)].map((_, i) => {
-      return (
-        <Box key={i}>
-          <SkeletonBox
-            width={220}
-            height={AUCTION_ARTWORKS_IMAGE_HEIGHT}
-            mb={1}
-            done={done}
-          />
+  <Box height={AUCTION_ARTWORKS_RAIL_HEIGHT}>
+    <Carousel arrowHeight={AUCTION_ARTWORKS_IMAGE_HEIGHT}>
+      {[...new Array(10)].map((_, i) => {
+        return (
+          <Box key={i}>
+            <SkeletonBox
+              width={220}
+              height={AUCTION_ARTWORKS_IMAGE_HEIGHT}
+              mb={1}
+              done={done}
+            />
 
-          <SkeletonText variant="mediumText" done={done}>
-            Artist Name
-          </SkeletonText>
+            <SkeletonText variant="mediumText" done={done}>
+              Artist Name
+            </SkeletonText>
 
-          <SkeletonText variant="text" done={done}>
-            Artwork Title
-          </SkeletonText>
+            <SkeletonText variant="text" done={done}>
+              Artwork Title
+            </SkeletonText>
 
-          <SkeletonText variant="text" done={done}>
-            Price
-          </SkeletonText>
-        </Box>
-      )
-    })}
-  </Carousel>
+            <SkeletonText variant="text" done={done}>
+              Price
+            </SkeletonText>
+          </Box>
+        )
+      })}
+    </Carousel>
+  </Box>
 )
