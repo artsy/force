@@ -47,7 +47,11 @@ export const MediumFilter: FC<MediumFilterProps> = ({ expanded }) => {
   )
 
   return (
-    <Expandable mb={1} label="Medium" expanded={(!counts.artworks || counts.artworks > 0) && expanded}>
+    <Expandable
+      mb={1}
+      label="Medium"
+      expanded={(!counts.artworks || counts.artworks > 0) && expanded}
+    >
       <Flex flexDirection="column" alignItems="left">
         <ShowMore expanded={hasBelowTheFoldMediumFilter}>
           {resultsSorted.map(({ value: slug, name }, index) => {

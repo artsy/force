@@ -59,6 +59,21 @@ describe("AuctionArtworksRailArtworks", () => {
     expect(wrapper.find("FillwidthItem")).toBeDefined()
   })
 
+  it("returns no artworks if there are no published artworks to return", () => {
+    const wrapper = getWrapper({
+      Sale: () => ({
+        internalID: "testID123",
+        slug: "test-auction",
+      }),
+      ArtworkConnection: () => ({
+        edges: [],
+      }),
+    })
+
+    console.log(wrapper.find("Carousel").length)
+    expect(wrapper.find("Carousel")).toHaveLength(0)
+  })
+
   it("tracks clicks", () => {
     const wrapper = getWrapper()
     wrapper.find("RouterLink").first().simulate("click")

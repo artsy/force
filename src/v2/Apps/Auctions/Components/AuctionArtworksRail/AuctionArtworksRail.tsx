@@ -32,8 +32,6 @@ interface AuctionArtworksRailProps extends BoxProps {
  * In order to avoid the page shifting between the loading state and the ready state,
  * we need to hardcode the height.
  */
-export const AUCTION_ARTWORKS_RAIL_HEIGHT = 233
-export const AUCTION_ARTWORKS_IMAGE_HEIGHT = 160
 
 export const AuctionArtworksRail: React.FC<AuctionArtworksRailProps> = ({
   sale,
@@ -85,16 +83,14 @@ export const AuctionArtworksRail: React.FC<AuctionArtworksRailProps> = ({
             </RouterLink>
           </Text>
         </Box>
-        <Box height={AUCTION_ARTWORKS_RAIL_HEIGHT}>
-          {isEnteredView ? (
-            <AuctionArtworksRailArtworksQueryRenderer
-              id={sale.internalID}
-              tabType={tabType}
-            />
-          ) : (
-            <AuctionArtworksRailPlaceholder />
-          )}
-        </Box>
+        {isEnteredView ? (
+          <AuctionArtworksRailArtworksQueryRenderer
+            id={sale.internalID}
+            tabType={tabType}
+          />
+        ) : (
+          <AuctionArtworksRailPlaceholder />
+        )}
       </Box>
     </>
   )
