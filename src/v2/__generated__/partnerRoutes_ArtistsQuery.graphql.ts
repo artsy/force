@@ -49,7 +49,7 @@ fragment PartnerArtistList_artists on ArtistPartnerEdge {
 fragment PartnerArtists_partner on Partner {
   slug
   distinguishRepresentedArtists
-  artists: artistsConnection(first: 20) {
+  artistsConnection(first: 20) {
     edges {
       ...PartnerArtistList_artists
       cursor
@@ -153,7 +153,7 @@ return {
             "storageKey": null
           },
           {
-            "alias": "artists",
+            "alias": null,
             "args": (v3/*: any*/),
             "concreteType": "ArtistPartnerConnection",
             "kind": "LinkedField",
@@ -274,11 +274,11 @@ return {
             "storageKey": "artistsConnection(first:20)"
           },
           {
-            "alias": "artists",
+            "alias": null,
             "args": (v3/*: any*/),
             "filters": null,
             "handle": "connection",
-            "key": "PartnerArtistsQuery_artists",
+            "key": "PartnerArtistsQuery_artistsConnection",
             "kind": "LinkedHandle",
             "name": "artistsConnection"
           },
@@ -293,7 +293,7 @@ return {
     "metadata": {},
     "name": "partnerRoutes_ArtistsQuery",
     "operationKind": "query",
-    "text": "query partnerRoutes_ArtistsQuery(\n  $partnerId: String!\n) {\n  partner(id: $partnerId) @principalField {\n    ...PartnerArtists_partner\n    id\n  }\n}\n\nfragment PartnerArtistItem_artist on Artist {\n  name\n  slug\n}\n\nfragment PartnerArtistList_artists on ArtistPartnerEdge {\n  representedBy\n  isDisplayOnPartnerProfile\n  counts {\n    artworks\n  }\n  node {\n    internalID\n    ...PartnerArtistItem_artist\n    id\n  }\n}\n\nfragment PartnerArtists_partner on Partner {\n  slug\n  distinguishRepresentedArtists\n  artists: artistsConnection(first: 20) {\n    edges {\n      ...PartnerArtistList_artists\n      cursor\n      node {\n        __typename\n        id\n      }\n      id\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query partnerRoutes_ArtistsQuery(\n  $partnerId: String!\n) {\n  partner(id: $partnerId) @principalField {\n    ...PartnerArtists_partner\n    id\n  }\n}\n\nfragment PartnerArtistItem_artist on Artist {\n  name\n  slug\n}\n\nfragment PartnerArtistList_artists on ArtistPartnerEdge {\n  representedBy\n  isDisplayOnPartnerProfile\n  counts {\n    artworks\n  }\n  node {\n    internalID\n    ...PartnerArtistItem_artist\n    id\n  }\n}\n\nfragment PartnerArtists_partner on Partner {\n  slug\n  distinguishRepresentedArtists\n  artistsConnection(first: 20) {\n    edges {\n      ...PartnerArtistList_artists\n      cursor\n      node {\n        __typename\n        id\n      }\n      id\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();

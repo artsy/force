@@ -53,7 +53,7 @@ fragment PartnerArtistList_artists on ArtistPartnerEdge {
 fragment PartnerArtists_partner_2HEEH6 on Partner {
   slug
   distinguishRepresentedArtists
-  artists: artistsConnection(first: $first, after: $after) {
+  artistsConnection(first: $first, after: $after) {
     edges {
       ...PartnerArtistList_artists
       cursor
@@ -174,7 +174,7 @@ return {
             "storageKey": null
           },
           {
-            "alias": "artists",
+            "alias": null,
             "args": (v2/*: any*/),
             "concreteType": "ArtistPartnerConnection",
             "kind": "LinkedField",
@@ -295,11 +295,11 @@ return {
             "storageKey": null
           },
           {
-            "alias": "artists",
+            "alias": null,
             "args": (v2/*: any*/),
             "filters": null,
             "handle": "connection",
-            "key": "PartnerArtistsQuery_artists",
+            "key": "PartnerArtistsQuery_artistsConnection",
             "kind": "LinkedHandle",
             "name": "artistsConnection"
           },
@@ -314,7 +314,7 @@ return {
     "metadata": {},
     "name": "PartnerArtistsQuery",
     "operationKind": "query",
-    "text": "query PartnerArtistsQuery(\n  $partnerId: String!\n  $first: Int!\n  $after: String\n) {\n  partner(id: $partnerId) {\n    ...PartnerArtists_partner_2HEEH6\n    id\n  }\n}\n\nfragment PartnerArtistItem_artist on Artist {\n  name\n  slug\n}\n\nfragment PartnerArtistList_artists on ArtistPartnerEdge {\n  representedBy\n  isDisplayOnPartnerProfile\n  counts {\n    artworks\n  }\n  node {\n    internalID\n    ...PartnerArtistItem_artist\n    id\n  }\n}\n\nfragment PartnerArtists_partner_2HEEH6 on Partner {\n  slug\n  distinguishRepresentedArtists\n  artists: artistsConnection(first: $first, after: $after) {\n    edges {\n      ...PartnerArtistList_artists\n      cursor\n      node {\n        __typename\n        id\n      }\n      id\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query PartnerArtistsQuery(\n  $partnerId: String!\n  $first: Int!\n  $after: String\n) {\n  partner(id: $partnerId) {\n    ...PartnerArtists_partner_2HEEH6\n    id\n  }\n}\n\nfragment PartnerArtistItem_artist on Artist {\n  name\n  slug\n}\n\nfragment PartnerArtistList_artists on ArtistPartnerEdge {\n  representedBy\n  isDisplayOnPartnerProfile\n  counts {\n    artworks\n  }\n  node {\n    internalID\n    ...PartnerArtistItem_artist\n    id\n  }\n}\n\nfragment PartnerArtists_partner_2HEEH6 on Partner {\n  slug\n  distinguishRepresentedArtists\n  artistsConnection(first: $first, after: $after) {\n    edges {\n      ...PartnerArtistList_artists\n      cursor\n      node {\n        __typename\n        id\n      }\n      id\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();

@@ -23,14 +23,29 @@ function sleep(ms) {
 }
 
 export const ArtistsRoute: React.FC<ArtistsRouteProps> = ({
-  partner: { artists, distinguishRepresentedArtists, slug },
+  partner: { artistsConnection, distinguishRepresentedArtists, slug },
   relay,
 }) => {
-  const [artistsLoaded, setArtistsLoaded] = useState(!relay.hasMore())
+  const [artistsLoading, setArtistsLoading] = useState(relay.hasMore())
+  const [isRefetching, setIsRefetching] = useState(false)
+  const [artists, setArtists] = useState(artistsConnection)
   const errCounter = useRef(0)
 
+  useEffect(() => {
+    if (relay.hasMore()) {
+      loadMoreArtists()
+    }
+  }, [])
+
+  useEffect(() => {
+    if ((!isRefetching || !artistsLoading) && artists !== artistsConnection) {
+      setArtists(artistsConnection)
+    }
+  }, [artistsConnection, isRefetching, artistsLoading])
+
   const refetchArtists = () => {
-    setArtistsLoaded(false)
+    setArtistsLoading(true)
+    setIsRefetching(true)
     errCounter.current = 0
 
     loadMoreArtists()
@@ -48,7 +63,9 @@ export const ArtistsRoute: React.FC<ArtistsRouteProps> = ({
       }
 
       if (errCounter.current >= 3) {
-        setArtistsLoaded(true)
+        setIsRefetching(false)
+        setArtistsLoading(false)
+        setArtists(artistsConnection)
 
         return
       }
@@ -56,40 +73,41 @@ export const ArtistsRoute: React.FC<ArtistsRouteProps> = ({
       if (relay.hasMore()) {
         loadMoreArtists()
       } else {
-        setArtistsLoaded(true)
+        setIsRefetching(false)
+        setArtistsLoading(false)
       }
     })
   }
 
-  useEffect(() => {
-    if (relay.hasMore()) {
-      loadMoreArtists()
-    }
-  }, [])
+  const isFirstLoading = !isRefetching && artistsLoading
 
   return (
     <Box mt={4}>
       <Text variant="title" mb={6}>
         Artists
       </Text>
-      {artistsLoaded ? (
+      {!isFirstLoading && (
         <>
           <PartnerArtistList
             partnerSlug={slug}
             artists={artists.edges}
             distinguishRepresentedArtists={distinguishRepresentedArtists}
           />
-          {errCounter.current > 0 && (
+          {(errCounter.current > 0 || isRefetching) && (
             <Flex flexDirection="column" mt={2} alignItems="center">
-              <Button variant="secondaryOutline" onClick={refetchArtists}>
+              <Button
+                variant="secondaryOutline"
+                loading={isRefetching}
+                onClick={refetchArtists}
+              >
                 Load more artists
               </Button>
             </Flex>
           )}
         </>
-      ) : (
-        <PartnerArtistListPlaceholder />
       )}
+
+      {isFirstLoading && <PartnerArtistListPlaceholder />}
     </Box>
   )
 }
@@ -113,8 +131,8 @@ export const ArtistsPaginationContainer = createPaginationContainer(
         ) {
         slug
         distinguishRepresentedArtists
-        artists: artistsConnection(first: $first, after: $after)
-          @connection(key: "PartnerArtistsQuery_artists") {
+        artistsConnection(first: $first, after: $after)
+          @connection(key: "PartnerArtistsQuery_artistsConnection") {
           edges {
             ...PartnerArtistList_artists
           }
