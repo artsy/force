@@ -1,6 +1,12 @@
 import React from "react"
-import { Column, GridColumns, SkeletonBox, SkeletonText } from "@artsy/palette"
-import { CssColumns, PartnerArtistListContainer } from "./PartnerArtistList"
+import {
+  Box,
+  Column,
+  GridColumns,
+  SkeletonBox,
+  SkeletonText,
+} from "@artsy/palette"
+import { PartnerArtistListContainer } from "./PartnerArtistList"
 
 interface PartnerArtistListPlaceholderProps {
   done?: boolean
@@ -15,7 +21,7 @@ export const PartnerArtistListPlaceholder: React.FC<PartnerArtistListPlaceholder
         <SkeletonText variant="mediumText" done={done}>
           Represented Artists
         </SkeletonText>
-        <CssColumns columnCount={6} mt={2}>
+        <Box style={{ columnCount: 6 }} mt={2}>
           {[...new Array(60)].map((_, i) => {
             return (
               <SkeletonBox key={i} mb={1} done={done}>
@@ -23,7 +29,7 @@ export const PartnerArtistListPlaceholder: React.FC<PartnerArtistListPlaceholder
               </SkeletonBox>
             )
           })}
-        </CssColumns>
+        </Box>
       </Column>
     </GridColumns>
   </PartnerArtistListContainer>

@@ -1,20 +1,12 @@
 import React from "react"
 import { PartnerArtistList_artists } from "v2/__generated__/PartnerArtistList_artists.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
-import styled, { css } from "styled-components"
 import { Box, Column, GridColumns, Text } from "@artsy/palette"
 import { groupArtists } from "./partnerArtistsUtils"
 import { ColumnSpan } from "@artsy/palette/dist/elements/GridColumns/calculateGridColumn"
 import { Media } from "v2/Utils/Responsive"
 import { PartnerArtistItemFragmentContainer as PartnerArtistItem } from "./PartnerArtistItem"
 import { Carousel } from "v2/Components/Carousel"
-
-export const CssColumns = styled(Box)<{ columnCount }>`
-  ${({ columnCount }) =>
-    css`
-      column-count: ${columnCount};
-    `}
-`
 
 export interface PartnerArtistListProps {
   artists: PartnerArtistList_artists
@@ -44,7 +36,7 @@ export const PartnerArtistList: React.FC<PartnerArtistListProps> = ({
 
   return (
     <PartnerArtistListContainer>
-      <GridColumns minWidth={[1100, "auto"]} pr={[1, 0]} gridColumnGap={1}>
+      <GridColumns minWidth={[1100, "auto"]} pr={[2, 0]} gridColumnGap={1}>
         {groups.map((group, i) => {
           return (
             <Column key={i} span={[(group.columnSize * 2) as ColumnSpan]}>
@@ -53,7 +45,7 @@ export const PartnerArtistList: React.FC<PartnerArtistListProps> = ({
                   {group.columnName}
                 </Text>
               )}
-              <CssColumns columnCount={group.columnSize}>
+              <Box style={{ columnCount: group.columnSize }}>
                 {group.artists.map(({ node, counts: { artworks } }) => {
                   return (
                     <PartnerArtistItem
@@ -64,7 +56,7 @@ export const PartnerArtistList: React.FC<PartnerArtistListProps> = ({
                     />
                   )
                 })}
-              </CssColumns>
+              </Box>
             </Column>
           )
         })}

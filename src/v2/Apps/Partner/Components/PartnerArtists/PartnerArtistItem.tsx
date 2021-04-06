@@ -5,10 +5,7 @@ import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import { PartnerArtistItem_artist } from "v2/__generated__/PartnerArtistItem_artist.graphql"
 import { Text } from "@artsy/palette"
 
-const Name = styled(Text)`
-  display: block;
-  padding: 5px 0;
-`
+const Name = styled(Text).attrs({ py: 0.5 })``
 
 export interface PartnerArtistItemProps {
   artist: PartnerArtistItem_artist
