@@ -1,12 +1,13 @@
 import React from "react"
 import { Box } from "@artsy/palette"
+import { auctionHeights } from "../../Helpers/auctionsHelpers"
 import { QueryRenderer, createFragmentContainer, graphql } from "react-relay"
 import { useAnalyticsContext, useSystemContext } from "v2/Artsy"
 import { AuctionArtworksRailArtworksQuery } from "v2/__generated__/AuctionArtworksRailArtworksQuery.graphql"
 import { AuctionArtworksRailArtworks_sale } from "v2/__generated__/AuctionArtworksRailArtworks_sale.graphql"
 import { Carousel } from "v2/Components/Carousel"
 import FillwidthItem from "v2/Components/Artwork/FillwidthItem"
-import { AUCTION_ARTWORKS_IMAGE_HEIGHT, TabType } from "./AuctionArtworksRail"
+import { TabType } from "./AuctionArtworksRail"
 import { AuctionArtworksRailPlaceholder } from "../AuctionArtworksRailPlaceholder"
 import { useTracking } from "react-tracking"
 import { clickedArtworkGroup } from "@artsy/cohesion"
@@ -25,22 +26,20 @@ const AuctionArtworksRailArtworks: React.FC<AuctionArtworksRailArtworksProps> = 
   const { contextPageOwnerType } = useAnalyticsContext()
   const contextModule = tabTypeToContextModuleMap[tabType]
 
-  const AUCTION_ARTWORKS_RAIL_HEIGHT = 233
-
   if (sale.artworksConnection.edges.length === 0) {
     return null
   }
 
   return (
-    <Box height={AUCTION_ARTWORKS_RAIL_HEIGHT}>
-      <Carousel arrowHeight={AUCTION_ARTWORKS_IMAGE_HEIGHT}>
+    <Box height={auctionHeights.artworksRail}>
+      <Carousel arrowHeight={auctionHeights.artworksImage}>
         {sale.artworksConnection.edges.map(({ node }, index) => {
           return (
             <FillwidthItem
               key={index}
               contextModule={contextModule}
               artwork={node}
-              imageHeight={AUCTION_ARTWORKS_IMAGE_HEIGHT}
+              imageHeight={auctionHeights.artworksImage}
               hidePartnerName
               lazyLoad
               onClick={() => {

@@ -4,7 +4,7 @@ import { useAnalyticsContext } from "v2/Artsy"
 import { WorksByArtistsYouFollowRail_viewer } from "v2/__generated__/WorksByArtistsYouFollowRail_viewer.graphql"
 import { Carousel } from "v2/Components/Carousel"
 import FillwidthItem from "v2/Components/Artwork/FillwidthItem"
-import { AUCTION_ARTWORKS_IMAGE_HEIGHT } from "../AuctionArtworksRail/AuctionArtworksRail"
+import { auctionHeights } from "../../Helpers/auctionsHelpers"
 import { useTracking } from "react-tracking"
 import { clickedArtworkGroup } from "@artsy/cohesion"
 import { tabTypeToContextModuleMap } from "../../Utils/tabTypeToContextModuleMap"
@@ -31,14 +31,14 @@ const WorksByArtistsYouFollowRail: React.FC<WorksByArtistsYouFollowRailProps> = 
         Works by artists you follow
       </Text>
 
-      <Carousel arrowHeight={AUCTION_ARTWORKS_IMAGE_HEIGHT}>
+      <Carousel arrowHeight={auctionHeights.artworksImage}>
         {viewer.saleArtworksConnection.edges.map(({ node }, index) => {
           return (
             <FillwidthItem
               key={index}
               contextModule={contextModule}
               artwork={node}
-              imageHeight={AUCTION_ARTWORKS_IMAGE_HEIGHT}
+              imageHeight={auctionHeights.artworksImage}
               hidePartnerName
               lazyLoad
               onClick={() => {
