@@ -79,6 +79,7 @@ export const NavigationTabs: React.FC<NavigationTabsProps> = ({ partner }) => {
 
   return (
     <StickyContainer ContainerComponent={Container}>
+      <span id="jumpto-PartnerNavBar" />
       <FullBleed py={2}>
         <HorizontalPadding maxWidth={breakpoints.xl}>
           <RouteTabs fill>{renderTabs()}</RouteTabs>

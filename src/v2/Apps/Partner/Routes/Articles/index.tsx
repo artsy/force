@@ -10,7 +10,7 @@ interface ArticlesProps {
   relay: RelayRefetchProp
 }
 
-const Articles: React.FC<ArticlesProps> = ({ partner, relay, ...rest }) => {
+const Articles: React.FC<ArticlesProps> = ({ partner, relay }) => {
   if (!partner.articlesConnection) {
     return null
   }
@@ -24,13 +24,7 @@ const Articles: React.FC<ArticlesProps> = ({ partner, relay, ...rest }) => {
     slug,
   } = partner
 
-  const scrollToTop = () => {
-    window.scrollTo(0, 0)
-  }
-
   const loadAfter = cursor => {
-    scrollToTop()
-
     relay.refetch(
       {
         first: 18,
@@ -49,18 +43,14 @@ const Articles: React.FC<ArticlesProps> = ({ partner, relay, ...rest }) => {
   }
 
   const loadNext = () => {
-    scrollToTop()
-
     if (hasNextPage) {
       loadAfter(endCursor)
     }
   }
 
   return (
-    <Box mt={6}>
-      <span id="jumpto-ArticlesPageTop" />
-
-      <GridColumns gridRowGap={[2, 4]}>
+    <Box>
+      <GridColumns mt={6} gridRowGap={[2, 4]}>
         {articles.map(({ node: article }) => {
           return (
             <Column key={article.internalID} span={4}>
@@ -71,14 +61,14 @@ const Articles: React.FC<ArticlesProps> = ({ partner, relay, ...rest }) => {
       </GridColumns>
       <Row>
         <Col>
-          <Box>
+          <Box mt={9}>
             <Pagination
               getHref={() => ""}
               hasNextPage={hasNextPage}
               pageCursors={pageCursors}
               onClick={loadAfter}
               onNext={loadNext}
-              scrollTo="#jumpto-ArticlesPageTop"
+              scrollTo="#jumpto-PartnerNavBar"
             />
           </Box>
         </Col>
