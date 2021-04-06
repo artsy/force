@@ -73,12 +73,12 @@ const node: ReaderFragment = {
                 {
                   "kind": "Literal",
                   "name": "height",
-                  "value": 50
+                  "value": 55
                 },
                 {
                   "kind": "Literal",
                   "name": "width",
-                  "value": 50
+                  "value": 55
                 }
               ],
               "concreteType": "ResizedImageUrl",
@@ -101,7 +101,7 @@ const node: ReaderFragment = {
                   "storageKey": null
                 }
               ],
-              "storageKey": "resized(height:50,width:50)"
+              "storageKey": "resized(height:55,width:55)"
             }
           ],
           "storageKey": null
@@ -208,5 +208,5 @@ const node: ReaderFragment = {
   ],
   "type": "SaleArtwork"
 };
-(node as any).hash = '86cb6e753d304a5f52a67aa97ed94667';
+(node as any).hash = '6c0923162fe684b3f6480a175056bc8c';
 export default node;

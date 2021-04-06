@@ -17,6 +17,7 @@ import { useTracking } from "react-tracking"
 import { useAnalyticsContext } from "v2/Artsy"
 import { clickedArtworkGroup } from "@artsy/cohesion"
 import { tabTypeToContextModuleMap } from "../../Utils/tabTypeToContextModuleMap"
+import styled from "styled-components"
 
 interface MyBidsBidItemProps {
   horizontalSlidePosition: number
@@ -49,11 +50,14 @@ export const MyBidsBidItem: React.FC<MyBidsBidItemProps> = ({
     >
       <Flex width="100%">
         <Flex alignItems="center" width="100%">
-          <Box backgroundColor="black60" width={50} height={50}>
+          <Box backgroundColor="black60" width={55} height={55}>
             {saleArtwork.artwork.image && (
               <Image
                 src={saleArtwork.artwork.image.resized.src}
                 srcSet={saleArtwork.artwork.image.resized.srcSet}
+                width={55}
+                height={55}
+                style={{ objectFit: "cover" }}
                 lazyLoad
               />
             )}
@@ -77,7 +81,7 @@ export const MyBidsBidItem: React.FC<MyBidsBidItemProps> = ({
                 </>
               ) : (
                 <>
-                  <Box style={{ whiteSpace: "nowrap" }}>
+                  <StatusContainer>
                     <Text variant="text" display="inline-block" pr={0.3}>
                       {saleArtwork.lotState.sellingPrice.display}
                     </Text>
@@ -86,7 +90,7 @@ export const MyBidsBidItem: React.FC<MyBidsBidItemProps> = ({
                         ? `${saleArtwork.lotState.bidCount} bid`
                         : `${saleArtwork.lotState.bidCount} bids`}
                     </Text>
-                  </Box>
+                  </StatusContainer>
 
                   {saleArtwork.isHighestBidder ? <HighestBid /> : <Outbid />}
                 </>
@@ -107,7 +111,7 @@ export const MyBidsBidItemFragmentContainer = createFragmentContainer(
         artwork {
           artistNames
           image {
-            resized(width: 50, height: 50) {
+            resized(width: 55, height: 55) {
               src
               srcSet
             }
@@ -134,34 +138,40 @@ export const MyBidsBidItemFragmentContainer = createFragmentContainer(
 )
 
 const HighestBid: React.FC = () => (
-  <Flex>
+  <StatusContainer>
     <Box pr={0.3}>
       <ArrowUpCircleIcon fill="green100" />
     </Box>
     <Text variant="text" color="green100">
       Highest bid
     </Text>
-  </Flex>
+  </StatusContainer>
 )
 
 const Outbid: React.FC = () => (
-  <Flex>
+  <StatusContainer>
     <Box pr={0.3}>
       <ArrowDownCircleIcon fill="red100" />
     </Box>
     <Text variant="text" color="red100">
       Outbid
     </Text>
-  </Flex>
+  </StatusContainer>
 )
 
 const Watching: React.FC = () => (
-  <Flex>
+  <StatusContainer>
     <Box pr={0.3}>
       <WatchingIcon width={12} height={12} top="1px" />
     </Box>
     <Text variant="text" color="black60">
       Watching
     </Text>
-  </Flex>
+  </StatusContainer>
 )
+
+const StatusContainer = styled(Flex).attrs({
+  justifyContent: "flex-end",
+})`
+  white-space: nowrap;
+`
