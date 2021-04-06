@@ -1,9 +1,11 @@
 import React from "react"
 import { graphql } from "relay-runtime"
 import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
-import { AuctionArtworksRailArtworksFragmentContainer } from "../AuctionArtworksRail/AuctionArtworksRailArtworks"
+import { AuctionArtworksRailArtworksFragmentContainer } from "../AuctionArtworksRailArtworks"
+import { useTracking as baseUseTracking } from "react-tracking"
 
 jest.unmock("react-relay")
+jest.mock("react-tracking")
 
 describe("AuctionArtworksRailArtworks", () => {
   const { getWrapper } = setupTestWrapper({
@@ -11,7 +13,7 @@ describe("AuctionArtworksRailArtworks", () => {
       return (
         <AuctionArtworksRailArtworksFragmentContainer
           sale={props.sale}
-          tabType="myBids"
+          tabType="current"
         />
       )
     },
@@ -22,6 +24,21 @@ describe("AuctionArtworksRailArtworks", () => {
         }
       }
     `,
+  })
+
+  const useTracking = baseUseTracking as jest.Mock
+  const trackEvent = jest.fn()
+
+  beforeEach(() => {
+    useTracking.mockImplementation(() => {
+      return {
+        trackEvent,
+      }
+    })
+  })
+
+  afterEach(() => {
+    trackEvent.mockReset()
   })
 
   it("renders correct components and data", () => {
@@ -40,5 +57,19 @@ describe("AuctionArtworksRailArtworks", () => {
 
     expect(wrapper.find("Carousel")).toBeDefined()
     expect(wrapper.find("FillwidthItem")).toBeDefined()
+  })
+
+  it("tracks clicks", () => {
+    const wrapper = getWrapper()
+    wrapper.find("RouterLink").first().simulate("click")
+    expect(trackEvent).toHaveBeenCalledWith({
+      action: "clickedArtworkGroup",
+      context_module: "currentAuctions",
+      destination_page_owner_id: '<mock-value-for-field-"internalID">',
+      destination_page_owner_slug: '<mock-value-for-field-"slug">',
+      destination_page_owner_type: "artwork",
+      horizontal_slide_position: 0,
+      type: "thumbnail",
+    })
   })
 })
