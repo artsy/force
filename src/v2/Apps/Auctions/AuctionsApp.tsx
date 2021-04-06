@@ -13,6 +13,7 @@ import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import { RouteTabs, RouteTab } from "v2/Components/RouteTabs"
 import { useSystemContext } from "v2/Artsy/useSystemContext"
 import { WorksByArtistsYouFollowRailFragmentContainer } from "./Components/WorksByArtistsYouFollowRail/WorksByArtistsYouFollowRail"
+import { Separator } from "@artsy/palette"
 export interface AuctionsAppProps {
   viewer: AuctionsApp_viewer
 }
@@ -24,7 +25,7 @@ const AuctionsApp: React.FC<AuctionsAppProps> = props => {
   return (
     <AppContainer>
       <AuctionsMeta />
-      <Box ml={[2, 4]}>
+      <HorizontalPadding>
         <Text mt={3} mb={1} variant="largeTitle">
           Auctions
         </Text>
@@ -53,18 +54,20 @@ const AuctionsApp: React.FC<AuctionsAppProps> = props => {
             />
           </Text>
         </RouterLink>
-      </Box>
+      </HorizontalPadding>
 
       {user && (
-        <>
-          <Box m={[2, 4]}>
+        <HorizontalPadding>
+          <Box my={[2, 4]}>
             <MyBidsFragmentContainer me={viewer.me} />
           </Box>
 
-          <Box m={[2, 4]} pb={2}>
+          <Separator />
+
+          <Box my={[2, 4]} pb={2}>
             <WorksByArtistsYouFollowRailFragmentContainer viewer={viewer} />
           </Box>
-        </>
+        </HorizontalPadding>
       )}
       <HorizontalPadding mt={4}>
         <RouteTabs mb={2}>
