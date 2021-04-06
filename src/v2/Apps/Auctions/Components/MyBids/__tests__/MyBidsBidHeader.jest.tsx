@@ -68,4 +68,15 @@ describe("MyBidsBidHeaderFragmentContainer", () => {
     expect(text).toContain("saleName")
     expect(text).toContain("formattedStartDateTime")
   })
+
+  it("tracks clicks", () => {
+    const wrapper = getWrapper()
+    wrapper.find("RouterLink").first().simulate("click")
+    expect(trackEvent).toHaveBeenCalledWith({
+      action: "clickedAuctionGroup",
+      context_module: "yourActiveBids",
+      destination_page_owner_type: "sale",
+      type: "thumbnail",
+    })
+  })
 })

@@ -1,14 +1,14 @@
 import React from "react"
-import { CurrentAuctionsPaginationContainer } from "../CurrentAuctions"
 import { graphql } from "react-relay"
 import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
 import { MockBoot } from "v2/DevTools"
 import { useTracking as baseUseTracking } from "react-tracking"
+import { UpcomingAuctionsPaginationContainer } from "../UpcomingAuctions"
 
 jest.mock("react-tracking")
 jest.unmock("react-relay")
 
-describe("CurrentAuctions", () => {
+describe("UpcomingAuctions", () => {
   const useTracking = baseUseTracking as jest.Mock
   const trackEvent = jest.fn()
 
@@ -16,14 +16,14 @@ describe("CurrentAuctions", () => {
     Component: (props: any) => {
       return (
         <MockBoot>
-          <CurrentAuctionsPaginationContainer {...props} />
+          <UpcomingAuctionsPaginationContainer {...props} />
         </MockBoot>
       )
     },
     query: graphql`
-      query CurrentAuctions_Test_Query {
+      query UpcomingAuctions_Test_Query {
         viewer {
-          ...CurrentAuctions_viewer
+          ...UpcomingAuctions_viewer
         }
       }
     `,
@@ -44,10 +44,10 @@ describe("CurrentAuctions", () => {
       }),
     })
 
-    expect(wrapper.html()).toContain("No current auctions.")
+    expect(wrapper.html()).toContain("No upcoming auctions.")
   })
 
-  it("renders current auctions and correct components", () => {
+  it("renders upcoming auctions and correct components", async () => {
     const wrapper = getWrapper({
       SaleConnection: () => ({
         totalCount: 5,

@@ -38,6 +38,7 @@ export const MyBidsBidHeader: React.FC<MyBidsBidHeaderProps> = ({ sale }) => {
             style={{ objectFit: "cover" }}
             src={sale.coverImage.resized.src}
             srcSet={sale.coverImage.resized.srcSet}
+            lazyLoad
           />
         </Box>
       )}

@@ -1,31 +1,15 @@
 import { breakpoints, DROP_SHADOW } from "@artsy/palette"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import styled, { css } from "styled-components"
 import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
 import { FullBleed } from "v2/Components/FullBleed"
 import { RouteTab, RouteTabs } from "v2/Components/RouteTabs"
-import { BaseContainer, StickyContainer } from "v2/Components/StickyContainer"
+import { StickyContainer } from "v2/Components/StickyContainer"
 import { NavigationTabs_partner } from "v2/__generated__/NavigationTabs_partner.graphql"
 
 interface NavigationTabsProps {
   partner: NavigationTabs_partner
 }
-
-export const Container = styled(BaseContainer)`
-  ${({ stuck }) =>
-    stuck
-      ? css`
-          & > div {
-            box-shadow: ${DROP_SHADOW};
-          }
-        `
-      : css`
-          & > div {
-            box-shadow: none;
-          }
-        `};
-`
 
 export const NavigationTabs: React.FC<NavigationTabsProps> = ({ partner }) => {
   const renderTabs = () => {
@@ -78,12 +62,19 @@ export const NavigationTabs: React.FC<NavigationTabsProps> = ({ partner }) => {
   }
 
   return (
-    <StickyContainer ContainerComponent={Container}>
-      <FullBleed py={2}>
-        <HorizontalPadding maxWidth={breakpoints.xl}>
-          <RouteTabs fill>{renderTabs()}</RouteTabs>
-        </HorizontalPadding>
-      </FullBleed>
+    <StickyContainer>
+      {({ stuck }) => {
+        return (
+          <FullBleed
+            py={2}
+            style={stuck ? { boxShadow: DROP_SHADOW } : undefined}
+          >
+            <HorizontalPadding maxWidth={breakpoints.xl}>
+              <RouteTabs fill>{renderTabs()}</RouteTabs>
+            </HorizontalPadding>
+          </FullBleed>
+        )
+      }}
     </StickyContainer>
   )
 }

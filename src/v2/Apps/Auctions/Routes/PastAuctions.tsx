@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { Box, Grid, Row, Col, Button } from "@artsy/palette"
+import { Box, Grid, Row, Col, Button, Text } from "@artsy/palette"
 import {
   createPaginationContainer,
   graphql,
@@ -38,6 +38,14 @@ const PastAuctions: React.FC<PastAuctionsProps> = ({ viewer, relay }) => {
         console.error(err)
       }
     })
+  }
+
+  if (viewer.salesConnection.edges.length === 0) {
+    return (
+      <Box>
+        <Text>No past auctions.</Text>
+      </Box>
+    )
   }
 
   return (

@@ -54,6 +54,7 @@ export const MyBidsBidItem: React.FC<MyBidsBidItemProps> = ({
               <Image
                 src={saleArtwork.artwork.image.resized.src}
                 srcSet={saleArtwork.artwork.image.resized.srcSet}
+                lazyLoad
               />
             )}
           </Box>

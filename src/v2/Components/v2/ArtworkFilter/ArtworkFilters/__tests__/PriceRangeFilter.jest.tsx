@@ -7,22 +7,22 @@ import {
   ArtworkFilterContextProvider,
   useArtworkFilterContext,
 } from "../../ArtworkFilterContext"
-import { PriceRangeFilter } from "../PriceRangeFilter"
+import { PriceRangeFilter, PriceRangeFilterProps } from "../PriceRangeFilter"
 
 describe("PriceRangeFilter", () => {
   let context: ArtworkFilterContextProps
 
-  const getWrapper = () => {
+  const getWrapper = (props: PriceRangeFilterProps = { expanded: true }) => {
     return mount(
       <ArtworkFilterContextProvider>
-        <PriceRangeFilterTest />
+        <PriceRangeFilterTest {...props} />
       </ArtworkFilterContextProvider>
     )
   }
 
-  const PriceRangeFilterTest = () => {
+  const PriceRangeFilterTest = (props: PriceRangeFilterProps) => {
     context = useArtworkFilterContext()
-    return <PriceRangeFilter />
+    return <PriceRangeFilter {...props} />
   }
 
   it("renders the options", () => {
@@ -130,5 +130,29 @@ describe("PriceRangeFilter", () => {
     wrapper.find("Button").last().prop("onClick")({} as any)
 
     expect(context.filters.priceRange).toEqual("*-*")
+  })
+
+  describe("the `expanded` prop", () => {
+    it("hides the filter controls when not set", () => {
+      const wrapper = getWrapper({})
+
+      expect(wrapper.find("RadioGroup").length).toBe(0)
+    })
+
+    it("hides the filter controls when `false`", () => {
+      const wrapper = getWrapper({
+        expanded: false,
+      })
+
+      expect(wrapper.find("RadioGroup").length).toBe(0)
+    })
+
+    it("shows the filter controls when `true`", () => {
+      const wrapper = getWrapper({
+        expanded: true,
+      })
+
+      expect(wrapper.find("RadioGroup").length).not.toBe(0)
+    })
   })
 })

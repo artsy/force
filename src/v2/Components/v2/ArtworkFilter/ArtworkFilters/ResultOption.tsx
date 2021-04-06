@@ -7,11 +7,10 @@ import {
 
 export type Result = {
   name: string
-  count: number
   value: string
 }
 
-type ResultOptionProps = Omit<Result, "count"> & {
+type ResultOptionProps = Result & {
   facetName: keyof MultiSelectArtworkFilters
 }
 

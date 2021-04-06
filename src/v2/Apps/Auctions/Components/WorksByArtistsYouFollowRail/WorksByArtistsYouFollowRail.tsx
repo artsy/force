@@ -1,24 +1,17 @@
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { useAnalyticsContext, useSystemContext } from "v2/Artsy"
-import { WorksByArtistsYouFollowRailQuery } from "v2/__generated__/WorksByArtistsYouFollowRailQuery.graphql"
+import { useAnalyticsContext } from "v2/Artsy"
 import { WorksByArtistsYouFollowRail_viewer } from "v2/__generated__/WorksByArtistsYouFollowRail_viewer.graphql"
 import { Carousel } from "v2/Components/Carousel"
 import FillwidthItem from "v2/Components/Artwork/FillwidthItem"
-import {
-  AUCTION_ARTWORKS_IMAGE_HEIGHT,
-  TabType,
-} from "../AuctionArtworksRail/AuctionArtworksRail"
-import { AuctionArtworksRailPlaceholder } from "../AuctionArtworksRailPlaceholder"
+import { AUCTION_ARTWORKS_IMAGE_HEIGHT } from "../AuctionArtworksRail/AuctionArtworksRail"
 import { useTracking } from "react-tracking"
 import { clickedArtworkGroup } from "@artsy/cohesion"
 import { tabTypeToContextModuleMap } from "../../Utils/tabTypeToContextModuleMap"
-import { SystemQueryRenderer } from "v2/Artsy/Relay/SystemQueryRenderer"
 import { Text } from "@artsy/palette"
 
 export interface WorksByArtistsYouFollowRailProps {
   viewer: WorksByArtistsYouFollowRail_viewer
-  tabType: TabType
 }
 
 const WorksByArtistsYouFollowRail: React.FC<WorksByArtistsYouFollowRailProps> = ({
@@ -27,6 +20,10 @@ const WorksByArtistsYouFollowRail: React.FC<WorksByArtistsYouFollowRailProps> = 
   const { trackEvent } = useTracking()
   const { contextPageOwnerType } = useAnalyticsContext()
   const contextModule = tabTypeToContextModuleMap.worksByArtistsYouFollow
+
+  if (viewer.saleArtworksConnection.edges.length === 0) {
+    return null
+  }
 
   return (
     <>
@@ -71,6 +68,7 @@ export const WorksByArtistsYouFollowRailFragmentContainer = createFragmentContai
         saleArtworksConnection(
           includeArtworksByFollowedArtists: true
           isAuction: true
+          liveSale: true
           first: 50
         ) {
           edges {
@@ -85,27 +83,3 @@ export const WorksByArtistsYouFollowRailFragmentContainer = createFragmentContai
     `,
   }
 )
-
-export const WorksByArtistsYouFollowRailQueryRenderer: React.FC = () => {
-  const { relayEnvironment } = useSystemContext()
-
-  return (
-    <SystemQueryRenderer<WorksByArtistsYouFollowRailQuery>
-      environment={relayEnvironment}
-      query={graphql`
-        query WorksByArtistsYouFollowRailQuery {
-          viewer {
-            ...WorksByArtistsYouFollowRail_viewer
-          }
-        }
-      `}
-      variables={{}}
-      render={({ error, props }) => {
-        if (error || !props) {
-          return <AuctionArtworksRailPlaceholder />
-        }
-        return <WorksByArtistsYouFollowRailFragmentContainer {...props} />
-      }}
-    />
-  )
-}

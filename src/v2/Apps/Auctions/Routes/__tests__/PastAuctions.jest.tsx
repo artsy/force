@@ -37,6 +37,16 @@ describe("PastAuctions", () => {
     })
   })
 
+  it("renders zerostate if no auctions", () => {
+    const wrapper = getWrapper({
+      SaleConnection: () => ({
+        edges: [],
+      }),
+    })
+
+    expect(wrapper.html()).toContain("No past auctions.")
+  })
+
   it("renders past auctions and correct components", async () => {
     const wrapper = getWrapper({
       SaleConnection: () => ({

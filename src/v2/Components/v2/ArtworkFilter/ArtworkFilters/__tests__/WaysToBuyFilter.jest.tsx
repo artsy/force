@@ -4,31 +4,45 @@ import {
   ArtworkFilterContextProvider,
   useArtworkFilterContext,
 } from "../../ArtworkFilterContext"
-import { WaysToBuyFilter } from "../WaysToBuyFilter"
+import { WaysToBuyFilter, WaysToBuyFilterProps } from "../WaysToBuyFilter"
 
 describe("WaysToBuyFilter", () => {
   let context
 
-  const getWrapper = () => {
+  const getWrapper = (props: WaysToBuyFilterProps = { expanded: true }) => {
     return mount(
       <ArtworkFilterContextProvider>
-        <WaysToBuyFilterFilterTest />
+        <WaysToBuyFilterFilterTest {...props} />
       </ArtworkFilterContextProvider>
     )
   }
 
-  const WaysToBuyFilterFilterTest = () => {
+  const WaysToBuyFilterFilterTest = (props: WaysToBuyFilterProps) => {
     context = useArtworkFilterContext()
-    return <WaysToBuyFilter />
+    return <WaysToBuyFilter {...props} />
   }
 
-  it("updates context on filter change", done => {
+  it("updates context on filter change", () => {
     const wrapper = getWrapper()
     wrapper.find("Checkbox").first().simulate("click")
 
-    setTimeout(() => {
-      expect(context.filters.acquireable).toEqual(true)
-      done()
-    }, 0)
+    expect(context.filters.acquireable).toEqual(true)
+  })
+
+  describe("the `expanded` prop", () => {
+    it("hides the filter controls when not set", () => {
+      const wrapper = getWrapper({})
+      expect(wrapper.find("Checkbox").length).toBe(0)
+    })
+
+    it("hides the filter controls when `false`", () => {
+      const wrapper = getWrapper({ expanded: false })
+      expect(wrapper.find("Checkbox").length).toBe(0)
+    })
+
+    it("shows the filter controls when `true`", () => {
+      const wrapper = getWrapper({ expanded: true })
+      expect(wrapper.find("Checkbox").length).not.toBe(0)
+    })
   })
 })

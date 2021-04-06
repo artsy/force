@@ -12,6 +12,7 @@ import { intersection } from "lodash"
 import React from "react"
 import styled from "styled-components"
 import { useArtworkFilterContext } from "../ArtworkFilterContext"
+import { sortResults } from "./ResultsFilter"
 import { INITIAL_ITEMS_TO_SHOW, ShowMore } from "./ShowMore"
 
 const COLOR_OPTIONS = [
@@ -107,13 +108,11 @@ const ColorFilterOption: React.FC<{ colorOption: ColorOption }> = ({
     </Checkbox>
   )
 }
-interface ColorFilterProps {
+export interface ColorFilterProps {
   expanded?: boolean // set to true to force expansion
 }
 
-export const ColorFilter: React.FC<ColorFilterProps> = ({
-  expanded = false,
-}) => {
+export const ColorFilter: React.FC<ColorFilterProps> = ({ expanded }) => {
   const { currentlySelectedFilters } = useArtworkFilterContext()
   const hasBelowTheFoldColorFilter =
     intersection(
@@ -121,16 +120,19 @@ export const ColorFilter: React.FC<ColorFilterProps> = ({
       COLOR_OPTIONS.slice(INITIAL_ITEMS_TO_SHOW).map(({ value }) => value)
     ).length > 0
   const hasColorFilter = currentlySelectedFilters().colors.length > 0
-
+  const resultsSorted = sortResults(
+    currentlySelectedFilters().colors,
+    COLOR_OPTIONS
+  )
   return (
     <Expandable mb={1} label="Color" expanded={hasColorFilter || expanded}>
       <Flex flexDirection="column">
         <ShowMore expanded={hasBelowTheFoldColorFilter}>
-          {COLOR_OPTIONS.map(colorOption => {
+          {resultsSorted.map(colorOption => {
             return (
               <ColorFilterOption
                 key={colorOption.value}
-                colorOption={colorOption}
+                colorOption={colorOption as any}
               />
             )
           })}

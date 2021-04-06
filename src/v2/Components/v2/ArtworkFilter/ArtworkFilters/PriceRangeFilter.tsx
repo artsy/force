@@ -60,7 +60,13 @@ const parseRange = (range?: string) => {
   })
 }
 
-export const PriceRangeFilter: React.FC = () => {
+export interface PriceRangeFilterProps {
+  expanded?: boolean
+}
+
+export const PriceRangeFilter: React.FC<PriceRangeFilterProps> = ({
+  expanded,
+}) => {
   const [mode, setMode] = useState<"resting" | "done">("resting")
 
   const { currentlySelectedFilters, setFilter } = useArtworkFilterContext()
@@ -122,7 +128,7 @@ export const PriceRangeFilter: React.FC = () => {
 
   return (
     <>
-      <Expandable mb={1} label="Price" expanded>
+      <Expandable mb={1} label="Price" expanded={expanded}>
         {mode === "done" && (
           <Media lessThan="sm">
             <Message variant="info" my={2}>

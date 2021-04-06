@@ -1,14 +1,20 @@
 import React from "react"
 import { ResultsFilter } from "./ResultsFilter"
 
-export const ArtworkLocationFilter: React.FC = () => {
+export interface ArtworkLocationFilterProps {
+  expanded?: boolean
+}
+
+export const ArtworkLocationFilter: React.FC<ArtworkLocationFilterProps> = ({
+  expanded,
+}) => {
   return (
     <ResultsFilter
       facetName="locationCities"
       slice="LOCATION_CITY"
       label="Artwork location"
       placeholder="Enter a city"
-      expanded
+      expanded={expanded}
     />
   )
 }

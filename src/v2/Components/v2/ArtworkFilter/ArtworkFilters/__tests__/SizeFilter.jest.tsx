@@ -5,22 +5,22 @@ import {
   ArtworkFilterContextProvider,
   useArtworkFilterContext,
 } from "v2/Components/v2/ArtworkFilter/ArtworkFilterContext"
-import { SizeFilter } from "../SizeFilter"
+import { SizeFilter, SizeFilterProps } from "../SizeFilter"
 
 describe("SizeFilter", () => {
   let context: ArtworkFilterContextProps
 
-  const getWrapper = () => {
+  const getWrapper = (props: SizeFilterProps = { expanded: true }) => {
     return mount(
       <ArtworkFilterContextProvider>
-        <SizeFilterTest />
+        <SizeFilterTest {...props} />
       </ArtworkFilterContextProvider>
     )
   }
 
-  const SizeFilterTest = () => {
+  const SizeFilterTest = (props: SizeFilterProps) => {
     context = useArtworkFilterContext()
-    return <SizeFilter />
+    return <SizeFilter {...props} />
   }
 
   it("updates context on filter change", async () => {
@@ -31,5 +31,22 @@ describe("SizeFilter", () => {
 
     await wrapper.find("Checkbox").at(2).simulate("click")
     expect(context.filters.sizes).toEqual(["SMALL", "LARGE"])
+  })
+
+  describe("the `expanded` prop", () => {
+    it("hides the filter controls when not set", () => {
+      const wrapper = getWrapper({})
+      expect(wrapper.find("Checkbox").length).toBe(0)
+    })
+
+    it("hides the filter controls when `false`", () => {
+      const wrapper = getWrapper({ expanded: false })
+      expect(wrapper.find("Checkbox").length).toBe(0)
+    })
+
+    it("shows the filter controls when `true`", () => {
+      const wrapper = getWrapper({ expanded: true })
+      expect(wrapper.find("Checkbox").length).not.toBe(0)
+    })
   })
 })
