@@ -2,8 +2,8 @@ import React from "react"
 import { Column, GridColumns, Box, Col, Row } from "@artsy/palette"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import { Articles_partner } from "v2/__generated__/Articles_partner.graphql"
-import { ArticleCardFragmentContainer as ArticleCard } from "../../Components/PartnerArticles/ArticleCard"
-import { PaginationFragmentContainer as Pagination } from "v2/Components/Pagination"
+import { ArticleCardFragmentContainer } from "../../Components/PartnerArticles/ArticleCard"
+import { PaginationFragmentContainer } from "v2/Components/Pagination"
 
 interface ArticlesProps {
   partner: Articles_partner
@@ -54,7 +54,7 @@ const Articles: React.FC<ArticlesProps> = ({ partner, relay }) => {
         {articles.map(({ node: article }) => {
           return (
             <Column key={article.internalID} span={4}>
-              <ArticleCard article={article} />
+              <ArticleCardFragmentContainer article={article} />
             </Column>
           )
         })}
@@ -62,7 +62,7 @@ const Articles: React.FC<ArticlesProps> = ({ partner, relay }) => {
       <Row>
         <Col>
           <Box mt={9}>
-            <Pagination
+            <PaginationFragmentContainer
               getHref={() => ""}
               hasNextPage={hasNextPage}
               pageCursors={pageCursors}
