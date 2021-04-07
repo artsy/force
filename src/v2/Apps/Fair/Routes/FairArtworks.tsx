@@ -11,7 +11,6 @@ import { GalleryFilter } from "v2/Components/v2/ArtworkFilter/ArtworkFilters/Gal
 import { SizeFilter } from "v2/Components/v2/ArtworkFilter/ArtworkFilters/SizeFilter"
 import { TimePeriodFilter } from "v2/Components/v2/ArtworkFilter/ArtworkFilters/TimePeriodFilter"
 import { ColorFilter } from "v2/Components/v2/ArtworkFilter/ArtworkFilters/ColorFilter"
-import { Box } from "@artsy/palette"
 import { ArtistsFilter } from "v2/Components/v2/ArtworkFilter/ArtworkFilters/ArtistsFilter"
 import { useSystemContext } from "v2/Artsy"
 import { useRouter } from "v2/Artsy/Router/useRouter"
@@ -48,7 +47,7 @@ const FairArtworksFilter: React.FC<FairArtworksFilterProps> = props => {
     const showNewFilters = getENV("ENABLE_NEW_ARTWORK_FILTERS")
 
     return (
-      <Box pr={2}>
+      <>
         <ArtistsFilter
           fairID={fair.internalID}
           relayEnvironment={relayEnvironment}
@@ -64,7 +63,7 @@ const FairArtworksFilter: React.FC<FairArtworksFilterProps> = props => {
         <TimePeriodFilter />
         <ColorFilter />
         {showNewFilters ? <PartnersFilter /> : <GalleryFilter />}
-      </Box>
+      </>
     )
   }
 

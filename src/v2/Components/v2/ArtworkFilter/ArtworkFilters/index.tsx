@@ -1,6 +1,4 @@
-import { Box } from "@artsy/palette"
 import React from "react"
-
 import { ColorFilter } from "./ColorFilter"
 import { GalleryFilter } from "./GalleryFilter"
 import { InstitutionFilter } from "./InstitutionFilter"
@@ -21,7 +19,7 @@ export const ArtworkFilters: React.FC = () => {
   const showNewFilters = getENV("ENABLE_NEW_ARTWORK_FILTERS")
 
   return (
-    <Box pr={2}>
+    <>
       <MediumFilter expanded />
       {showNewFilters && <MaterialsFilter expanded />}
       <PriceRangeFilter />
@@ -40,6 +38,6 @@ export const ArtworkFilters: React.FC = () => {
           <InstitutionFilter />
         </>
       )}
-    </Box>
+    </>
   )
 }
