@@ -25,9 +25,12 @@ export const geneRoutes: RouteConfig[] = [
           return GeneShowRoute.preload()
         },
         query: graphql`
-          query geneRoutes_GeneShowQuery($slug: String!) {
+          query geneRoutes_GeneShowQuery(
+            $slug: String!
+            $input: FilterArtworksInput
+          ) {
             gene(id: $slug) @principalField {
-              ...GeneShow_gene
+              ...GeneShow_gene @arguments(input: $input)
             }
           }
         `,

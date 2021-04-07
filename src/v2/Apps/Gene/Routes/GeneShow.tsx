@@ -2,6 +2,7 @@ import { Button, Column, GridColumns, Text } from "@artsy/palette"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { GeneShow_gene } from "v2/__generated__/GeneShow_gene.graphql"
+import { GeneArtworkFilterRefetchContainer } from "../Components/GeneArtworkFilter"
 import { GeneMetaFragmentContainer } from "../Components/GeneMeta"
 
 interface GeneShowProps {
@@ -13,8 +14,8 @@ export const GeneShow: React.FC<GeneShowProps> = ({ gene }) => {
     <>
       <GeneMetaFragmentContainer gene={gene} />
 
-      <GridColumns my={4}>
-        <Column span={6} mb={2}>
+      <GridColumns my={4} gridRowGap={[2, 0]}>
+        <Column span={6}>
           <Text as="h1" variant="xl" mb={2}>
             {gene.name}
           </Text>
@@ -29,7 +30,7 @@ export const GeneShow: React.FC<GeneShowProps> = ({ gene }) => {
           </Button>
         </Column>
 
-        <Column span={6} mb={2}>
+        <Column span={6}>
           <Text as="h2" variant="xs" textTransform="uppercase" mb={1}>
             About
           </Text>
@@ -63,7 +64,7 @@ export const GeneShow: React.FC<GeneShowProps> = ({ gene }) => {
                 Related Artists
               </Text>
 
-              <Text variant="sm" mb={2}>
+              <Text variant="sm">
                 {gene.artistsConnection.edges.map(({ node }, i) => {
                   return (
                     <React.Fragment key={node.internalID}>
@@ -77,13 +78,17 @@ export const GeneShow: React.FC<GeneShowProps> = ({ gene }) => {
           )}
         </Column>
       </GridColumns>
+
+      <GeneArtworkFilterRefetchContainer gene={gene} />
     </>
   )
 }
 export const GeneShowFragmentContainer = createFragmentContainer(GeneShow, {
   gene: graphql`
-    fragment GeneShow_gene on Gene {
+    fragment GeneShow_gene on Gene
+      @argumentDefinitions(input: { type: "FilterArtworksInput" }) {
       ...GeneMeta_gene
+      ...GeneArtworkFilter_gene @arguments(input: $input)
       name
       # TODO: use (format: HTML) once added in Metaphysics
       description

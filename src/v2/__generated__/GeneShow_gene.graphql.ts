@@ -22,7 +22,7 @@ export type GeneShow_gene = {
             } | null;
         } | null> | null;
     } | null;
-    readonly " $fragmentRefs": FragmentRefs<"GeneMeta_gene">;
+    readonly " $fragmentRefs": FragmentRefs<"GeneMeta_gene" | "GeneArtworkFilter_gene">;
     readonly " $refType": "GeneShow_gene";
 };
 export type GeneShow_gene$data = GeneShow_gene;
@@ -59,7 +59,14 @@ v2 = [
   (v0/*: any*/)
 ];
 return {
-  "argumentDefinitions": [],
+  "argumentDefinitions": [
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "input",
+      "type": "FilterArtworksInput"
+    }
+  ],
   "kind": "Fragment",
   "metadata": null,
   "name": "GeneShow_gene",
@@ -140,10 +147,21 @@ return {
       "args": null,
       "kind": "FragmentSpread",
       "name": "GeneMeta_gene"
+    },
+    {
+      "args": [
+        {
+          "kind": "Variable",
+          "name": "input",
+          "variableName": "input"
+        }
+      ],
+      "kind": "FragmentSpread",
+      "name": "GeneArtworkFilter_gene"
     }
   ],
   "type": "Gene"
 };
 })();
-(node as any).hash = '890e299763d636afde12a8e8c664b308';
+(node as any).hash = 'ff6c6879fdb69b581b9ae8c88d977204';
 export default node;
