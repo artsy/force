@@ -17,7 +17,7 @@ export function getColumnsCountForEachArtistType(
     }
   }
 
-  const autistsInColumn = Math.ceil(
+  const artistsInColumn = Math.ceil(
     (representedArtistCount + worksAvailableByCount) / columnCount
   )
   const isRepresentedArtistSmaller =
@@ -26,7 +26,7 @@ export function getColumnsCountForEachArtistType(
   const smallerColumnCount = Math.ceil(
     (isRepresentedArtistSmaller
       ? representedArtistCount
-      : worksAvailableByCount) / autistsInColumn
+      : worksAvailableByCount) / artistsInColumn
   )
 
   return isRepresentedArtistSmaller
