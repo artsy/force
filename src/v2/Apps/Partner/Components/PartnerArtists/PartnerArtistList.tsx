@@ -52,7 +52,7 @@ export const PartnerArtistList: React.FC<PartnerArtistListProps> = ({
                       key={node.internalID}
                       artist={node}
                       partnerSlug={partnerSlug}
-                      hasPablishedArtworks={artworks > 0}
+                      hasPublishedArtworks={artworks > 0}
                     />
                   )
                 })}

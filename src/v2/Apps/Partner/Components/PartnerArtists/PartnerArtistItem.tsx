@@ -13,16 +13,16 @@ const Name = styled(Text).attrs({ py: 0.5 })`
 
 export interface PartnerArtistItemProps {
   artist: PartnerArtistItem_artist
-  hasPablishedArtworks: boolean
+  hasPublishedArtworks: boolean
   partnerSlug: string
 }
 
 export const PartnerArtistItem: React.FC<PartnerArtistItemProps> = ({
   artist: { name, slug },
-  hasPablishedArtworks,
+  hasPublishedArtworks,
   partnerSlug,
 }) => {
-  return hasPablishedArtworks ? (
+  return hasPublishedArtworks ? (
     <RouterLink noUnderline to={`/partner2/${partnerSlug}/artist/${slug}`}>
       <Name color="black100">{name}</Name>
     </RouterLink>
