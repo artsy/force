@@ -28,7 +28,6 @@ export interface OrderAppProps extends RouterState {
 
 class OrderApp extends React.Component<OrderAppProps, {}> {
   mediator: Mediator | null = null
-  user: any
   state = { stripe: null }
   removeNavigationListener: () => void
 
@@ -173,34 +172,38 @@ class OrderApp extends React.Component<OrderAppProps, {}> {
     const stripePromise = loadStripe(sd.STRIPE_PUBLISHABLE_KEY)
     return (
       <SystemContextConsumer>
-        {({ isEigen, mediator, user }) => {
+        {({ isEigen, mediator }) => {
           this.mediator = mediator
-          this.user = user
           return (
-            <MinimalNavBar to={artworkHref}>
-              <AppContainer>
-                <Title>Checkout | Artsy</Title>
-                {isEigen ? (
-                  <Meta
-                    name="viewport"
-                    content="width=device-width, user-scalable=no"
-                  />
-                ) : (
-                  <Meta
-                    name="viewport"
-                    content="width=device-width, initial-scale=1, maximum-scale=5 viewport-fit=cover"
-                  />
-                )}
-                {!isEigen && this.renderZendeskScript()}
-                <SafeAreaContainer>
-                  <Elements stripe={stripePromise}>
-                    <>{children}</>
-                  </Elements>
-                </SafeAreaContainer>
-                <StickyFooter orderType={order.mode} artworkId={artworkId} />
-                <ConnectedModalDialog />
-              </AppContainer>
-            </MinimalNavBar>
+            <Box>
+              {/* FIXME: remove once we refactor out legacy backbone code.
+                  Add place to attach legacy flash message, used in legacy inquiry flow
+              */}
+              <div id="main-layout-flash" />
+              <MinimalNavBar to={artworkHref}>
+                <AppContainer>
+                  <Title>Checkout | Artsy</Title>
+                  {isEigen ? (
+                    <Meta
+                      name="viewport"
+                      content="width=device-width, user-scalable=no"
+                    />
+                  ) : (
+                    <Meta
+                      name="viewport"
+                      content="width=device-width, initial-scale=1, maximum-scale=5 viewport-fit=cover"
+                    />
+                  )}
+                  <SafeAreaContainer>
+                    <Elements stripe={stripePromise}>
+                      <>{children}</>
+                    </Elements>
+                  </SafeAreaContainer>
+                  <StickyFooter orderType={order.mode} artworkId={artworkId} />
+                  <ConnectedModalDialog />
+                </AppContainer>
+              </MinimalNavBar>
+            </Box>
           )
         }}
       </SystemContextConsumer>
