@@ -3,7 +3,6 @@ import {
   space,
   color,
   Box,
-  Expandable,
   Text,
   Flex,
   useThemeConfig,
@@ -13,6 +12,7 @@ import React from "react"
 import styled from "styled-components"
 import { useArtworkFilterContext } from "../ArtworkFilterContext"
 import { sortResults } from "./ResultsFilter"
+import { FilterExpandable } from "./FilterExpandable"
 import { INITIAL_ITEMS_TO_SHOW, ShowMore } from "./ShowMore"
 
 const COLOR_OPTIONS = [
@@ -125,7 +125,7 @@ export const ColorFilter: React.FC<ColorFilterProps> = ({ expanded }) => {
     COLOR_OPTIONS
   )
   return (
-    <Expandable mb={1} label="Color" expanded={hasColorFilter || expanded}>
+    <FilterExpandable label="Color" expanded={hasColorFilter || expanded}>
       <Flex flexDirection="column">
         <ShowMore expanded={hasBelowTheFoldColorFilter}>
           {resultsSorted.map(colorOption => {
@@ -138,6 +138,6 @@ export const ColorFilter: React.FC<ColorFilterProps> = ({ expanded }) => {
           })}
         </ShowMore>
       </Flex>
-    </Expandable>
+    </FilterExpandable>
   )
 }

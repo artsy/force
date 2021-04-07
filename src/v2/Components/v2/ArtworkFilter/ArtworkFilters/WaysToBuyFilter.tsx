@@ -1,10 +1,11 @@
-import { Checkbox, Flex, Expandable, useThemeConfig } from "@artsy/palette"
+import { Checkbox, Flex, useThemeConfig } from "@artsy/palette"
 import { isEmpty } from "lodash"
 import React, { FC } from "react"
 import {
   ArtworkFilters,
   useArtworkFilterContext,
 } from "../ArtworkFilterContext"
+import { FilterExpandable } from "./FilterExpandable"
 
 interface WayToBuy {
   disabled: any
@@ -62,7 +63,7 @@ export const WaysToBuyFilter: FC<WaysToBuyFilterProps> = ({ expanded }) => {
   })
 
   return (
-    <Expandable mb={1} label="Ways to buy" expanded={expanded}>
+    <FilterExpandable label="Ways to buy" expanded={expanded}>
       <Flex flexDirection="column">
         {checkboxes.map((checkbox, index) => {
           return (
@@ -80,6 +81,6 @@ export const WaysToBuyFilter: FC<WaysToBuyFilterProps> = ({ expanded }) => {
           )
         })}
       </Flex>
-    </Expandable>
+    </FilterExpandable>
   )
 }
