@@ -32,14 +32,14 @@ const AuctionsApp: React.FC<AuctionsAppProps> = props => {
     <AppContainer>
       <AuctionsMeta />
       <GridColumns>
-        <Column span={6}>
+        <Column span={[12, 6]}>
           <HorizontalPadding>
             <Text mt={3} mb={1} variant="largeTitle">
               Auctions
             </Text>
           </HorizontalPadding>
         </Column>
-        <Column span={6}>
+        <Column span={[12, 6]}>
           <HorizontalPadding>
             <Text mt={3} py={1}>
               Bid on works you love with auctions on Artsy. With bidding opening
