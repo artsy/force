@@ -1,10 +1,15 @@
-import { Flex, Link, Text } from "@artsy/palette"
+import {
+  Flex,
+  Link,
+  Text,
+  LinkProps,
+  useThemeConfig,
+  TextVariant,
+} from "@artsy/palette"
 import { Details_artwork } from "v2/__generated__/Details_artwork.graphql"
-import { SystemContextConsumer } from "v2/Artsy"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
-import { get } from "v2/Utils/get"
 
 const TruncatedLine = styled.div`
   overflow: hidden;
@@ -14,209 +19,217 @@ const TruncatedLine = styled.div`
   -webkit-box-orient: vertical;
 `
 
-export interface Props extends React.HTMLProps<Details> {
-  includeLinks: boolean
+interface DetailsProps {
   artwork: Details_artwork
+  includeLinks: boolean
   hideSaleInfo?: boolean
   hideArtistName?: boolean
   hidePartnerName?: boolean
 }
 
-export class Details extends React.Component<Props, null> {
-  static defaultProps = {
-    includeLinks: true,
-    hideSaleInfo: false,
-  }
+const ConditionalLink: React.FC<
+  Pick<DetailsProps, "includeLinks"> &
+    LinkProps &
+    React.AnchorHTMLAttributes<HTMLAnchorElement>
+> = ({ includeLinks, children, ...rest }) => {
+  return includeLinks ? <Link {...rest}>{children}</Link> : <>{children}</>
+}
 
-  artistLine() {
-    const cultural_maker = this.props.artwork?.cultural_maker
-    const artists = this.props.artwork?.artists
-    const { includeLinks, hideArtistName } = this.props
+const ArtistLine: React.FC<DetailsProps> = ({
+  artwork: { cultural_maker, artists },
+  includeLinks,
+}) => {
+  const tokens = useThemeConfig({
+    v2: {
+      variant: "mediumText" as TextVariant,
+    },
+    v3: {
+      variant: "md" as TextVariant,
+    },
+  })
 
-    if (hideArtistName) {
-      return
-    }
-
-    if (cultural_maker) {
-      return (
-        <TruncatedLine>
-          <Text variant="mediumText">{cultural_maker}</Text>
-        </TruncatedLine>
-      )
-    } else if (artists && artists.length) {
-      const artistLine = artists
-        .reduce((acc, artist, index) => {
-          return acc.concat([
-            ", ",
-            includeLinks
-              ? this.link(artist.name, artist.href, artist.id + "-" + index)
-              : artist.name,
-          ])
-        }, [])
-        .slice(1)
-      return (
-        <TruncatedLine>
-          <Text variant="mediumText">{artistLine}</Text>
-        </TruncatedLine>
-      )
-    }
-  }
-
-  titleLine() {
-    const { includeLinks } = this.props
-    const title = this.props?.artwork?.title
-    const date = this.props?.artwork?.date
-    const href = this.props?.artwork?.href
-
-    const artworkText = (
-      <TruncatedLine>
-        <Text variant="text" color="black60">
-          {date ? title + ", " + date : title}
-        </Text>
-      </TruncatedLine>
-    )
-    const artworkTextWithLink = <Link href={href}>{artworkText}</Link>
-
-    return includeLinks ? artworkTextWithLink : artworkText
-  }
-
-  line(text) {
+  if (cultural_maker) {
     return (
       <TruncatedLine>
-        <Text variant="text" color="black60">
-          {text}
+        <Text variant={tokens.variant}>{cultural_maker}</Text>
+      </TruncatedLine>
+    )
+  }
+
+  if (artists && artists.length) {
+    return (
+      <TruncatedLine>
+        <Text variant={tokens.variant}>
+          {artists
+            .reduce((acc, artist, index) => {
+              return acc.concat([
+                ", ",
+                <ConditionalLink
+                  includeLinks={includeLinks}
+                  href={artist.href}
+                  key={index}
+                >
+                  <Text variant={tokens.variant}>{artist.name}</Text>
+                </ConditionalLink>,
+              ])
+            }, [])
+            .slice(1)}
         </Text>
       </TruncatedLine>
     )
   }
 
-  link(text, href, key) {
-    return (
-      <Link href={href} key={key}>
-        <Text variant="text" color="black60">
-          {text}
+  return null
+}
+
+const TitleLine: React.FC<DetailsProps> = ({
+  includeLinks,
+  artwork: { title, date, href },
+}) => {
+  const tokens = useThemeConfig({
+    v2: {
+      variant: "text" as TextVariant,
+    },
+    v3: {
+      variant: "md" as TextVariant,
+    },
+  })
+
+  return (
+    <ConditionalLink includeLinks={includeLinks} href={href}>
+      <TruncatedLine>
+        <Text variant={tokens.variant} color="black60">
+          {date ? `${title}, ${date}` : title}
         </Text>
-      </Link>
+      </TruncatedLine>
+    </ConditionalLink>
+  )
+}
+
+const PartnerLine: React.FC<DetailsProps> = ({
+  includeLinks,
+  artwork: { collecting_institution, partner },
+}) => {
+  const tokens = useThemeConfig({
+    v2: {
+      variant: "text" as TextVariant,
+    },
+    v3: {
+      variant: "xs" as TextVariant,
+    },
+  })
+
+  if (collecting_institution) {
+    return (
+      <TruncatedLine>
+        <Text variant={tokens.variant} color="black60">
+          {collecting_institution}
+        </Text>
+      </TruncatedLine>
     )
   }
 
-  partnerLine() {
-    const { hidePartnerName, includeLinks } = this.props
-    const collecting_institution = this.props?.artwork?.collecting_institution
-    const partner = this.props?.artwork?.partner
-    const href = partner?.href
-    const name = partner?.name
-
-    if (hidePartnerName) {
-      return
-    }
-
-    if (collecting_institution) {
-      return this.line(collecting_institution)
-    } else if (partner) {
-      // TODO: We wrap the entire Metadata comp in an anchor tag linking to the artwork page, so why is there a link here?
-      if (includeLinks) {
-        return (
-          <TruncatedLine>
-            <Link href={href}>
-              <Text variant="text" color="black60">
-                {name}
-              </Text>
-            </Link>
-          </TruncatedLine>
-        )
-      } else {
-        return this.line(name)
-      }
-    }
-  }
-
-  saleInfoLine() {
-    const { hideSaleInfo } = this.props
-    if (hideSaleInfo) {
-      return null
-    }
+  if (partner) {
     return (
-      <Flex>
-        <TruncatedLine>
-          <Text variant="text" color="black60">
-            {this.saleMessage()} {this.bidInfo()}
+      <TruncatedLine>
+        <ConditionalLink includeLinks={includeLinks} href={partner.href}>
+          <Text variant={tokens.variant} color="black60">
+            {partner.name}
           </Text>
-        </TruncatedLine>
-      </Flex>
+        </ConditionalLink>
+      </TruncatedLine>
     )
   }
 
-  bidInfo() {
-    const { artwork } = this.props
-    const { sale } = this.props.artwork
+  return null
+}
 
-    const inRunningAuction = sale && sale.is_auction && !sale.is_closed
-    if (!inRunningAuction) {
-      return undefined
-    }
+const SaleInfoLine: React.FC<DetailsProps> = props => {
+  const tokens = useThemeConfig({
+    v2: {
+      variant: "text" as TextVariant,
+      color: "black60",
+      fontWeight: "normal",
+    },
+    v3: {
+      variant: "xs" as TextVariant,
+      color: "black100",
+      fontWeight: "bold",
+    },
+  })
 
-    const bidderPositionCounts = get(
-      artwork,
-      a => a.sale_artwork.counts.bidder_positions,
-      0
-    )
+  return (
+    <Flex>
+      <TruncatedLine>
+        <Text
+          variant={tokens.variant}
+          color={tokens.color}
+          fontWeight={tokens.fontWeight}
+        >
+          <SaleMessage {...props} /> <BidInfo {...props} />
+        </Text>
+      </TruncatedLine>
+    </Flex>
+  )
+}
 
-    if (bidderPositionCounts === 0) {
-      return undefined
-    }
-
-    const s = bidderPositionCounts > 1 ? "s" : ""
-    return `(${bidderPositionCounts} bid${s})`
+const SaleMessage: React.FC<DetailsProps> = ({
+  artwork: { sale, sale_message, sale_artwork },
+}) => {
+  if (sale?.is_auction && sale?.is_closed) {
+    return <>Bidding closed</>
   }
 
-  saleMessage() {
-    const { artwork } = this.props
-    const { sale } = artwork
-    const isAuction = sale && sale.is_auction
+  if (sale?.is_auction) {
+    const highest_bid_display = sale_artwork?.highest_bid?.display
+    const opening_bid_display = sale_artwork?.opening_bid?.display
 
-    if (isAuction) {
-      const showBiddingClosed = sale.is_closed
-      if (showBiddingClosed) {
-        return "Bidding closed"
-      } else {
-        const highestBidDisplay = get(
-          artwork,
-          p => p.sale_artwork.highest_bid.display
-        )
-        const openingBidDisplay = get(
-          artwork,
-          p => p.sale_artwork.opening_bid.display
-        )
-
-        return highestBidDisplay || openingBidDisplay || ""
-      }
-    }
-
-    // TODO: Extract this sentence-cased version and apply everywhere.
-    if (artwork.sale_message === "Contact For Price") {
-      return "Contact for price"
-    }
-
-    return artwork.sale_message
+    return <>{highest_bid_display || opening_bid_display || ""}</>
   }
 
-  render() {
-    return (
-      <SystemContextConsumer>
-        {({ user }) => {
-          return (
-            <div>
-              {this.artistLine()}
-              {this.titleLine()}
-              {this.partnerLine()}
-              {this.saleInfoLine()}
-            </div>
-          )
-        }}
-      </SystemContextConsumer>
-    )
+  if (sale_message === "Contact For Price") {
+    return <>Contact for price</>
   }
+
+  return <>{sale_message}</>
+}
+
+const BidInfo: React.FC<DetailsProps> = ({
+  artwork: { sale, sale_artwork },
+}) => {
+  const inRunningAuction = sale?.is_auction && !sale?.is_closed
+
+  if (!inRunningAuction) {
+    return null
+  }
+
+  const bidderPositionCounts = sale_artwork.counts.bidder_positions ?? 0
+
+  if (bidderPositionCounts === 0) {
+    return null
+  }
+
+  return (
+    <>
+      ({bidderPositionCounts} bid{bidderPositionCounts === 1 ? "" : "s"})
+    </>
+  )
+}
+
+export const Details: React.FC<DetailsProps> = ({
+  hideArtistName,
+  hidePartnerName,
+  hideSaleInfo,
+  ...rest
+}) => {
+  return (
+    <>
+      {!hideArtistName && <ArtistLine {...rest} />}
+      <TitleLine {...rest} />
+      {!hidePartnerName && <PartnerLine {...rest} />}
+      {!hideSaleInfo && <SaleInfoLine {...rest} />}
+    </>
+  )
 }
 
 export const DetailsFragmentContainer = createFragmentContainer(Details, {

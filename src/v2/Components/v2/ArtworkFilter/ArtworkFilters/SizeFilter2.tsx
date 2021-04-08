@@ -6,7 +6,6 @@ import {
   Clickable,
   Flex,
   Spacer,
-  Expandable,
   Message,
   TextVariant,
   useThemeConfig,
@@ -14,6 +13,7 @@ import {
 import { useArtworkFilterContext } from "../ArtworkFilterContext"
 import { NumericInput } from "./PriceRangeFilter"
 import { Media } from "v2/Utils/Responsive"
+import { FilterExpandable } from "./FilterExpandable"
 
 const sizeMap = [
   { displayName: "Small (under 40cm)", name: "SMALL" },
@@ -125,7 +125,7 @@ export const SizeFilter2: React.FC<SizeFilter2Props> = ({ expanded }) => {
   })
 
   return (
-    <Expandable mb={1} label="Size" expanded={expanded}>
+    <FilterExpandable label="Size" expanded={expanded}>
       {mode === "done" && (
         <Media lessThan="sm">
           <Message variant="info" my={2}>
@@ -216,6 +216,6 @@ export const SizeFilter2: React.FC<SizeFilter2Props> = ({ expanded }) => {
           </Button>
         </>
       )}
-    </Expandable>
+    </FilterExpandable>
   )
 }

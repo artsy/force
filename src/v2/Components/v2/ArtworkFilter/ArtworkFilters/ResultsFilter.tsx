@@ -1,5 +1,5 @@
-import { Flex, Expandable } from "@artsy/palette"
 import { intersection, orderBy } from "lodash"
+import { Flex } from "@artsy/palette"
 import React from "react"
 import {
   MultiSelectArtworkFilters,
@@ -9,6 +9,7 @@ import {
 import { INITIAL_ITEMS_TO_SHOW, ShowMore } from "./ShowMore"
 import { FacetFilter, useFacetFilter } from "./FacetFilter"
 import { Result, ResultOption } from "./ResultOption"
+import { FilterExpandable } from "./FilterExpandable"
 
 export const sortResults = (
   selectedValues: Array<string>,
@@ -61,7 +62,7 @@ export const ResultsFilter: React.FC<ResultsFilterProps> = ({
     ).length > 0
 
   return (
-    <Expandable mb={1} label={label} expanded={expanded}>
+    <FilterExpandable label={label} expanded={expanded}>
       <Flex flexDirection="column">
         <FacetFilter
           facetName={facetName}
@@ -85,6 +86,6 @@ export const ResultsFilter: React.FC<ResultsFilterProps> = ({
           </ShowMore>
         )}
       </Flex>
-    </Expandable>
+    </FilterExpandable>
   )
 }

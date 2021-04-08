@@ -2,12 +2,12 @@ import React from "react"
 import {
   Checkbox,
   Flex,
-  Expandable,
   Text,
   useThemeConfig,
   TextVariant,
 } from "@artsy/palette"
 import { useArtworkFilterContext } from "../ArtworkFilterContext"
+import { FilterExpandable } from "./FilterExpandable"
 
 const sizeMap = [
   { displayName: "Small (under 40cm)", name: "SMALL" },
@@ -43,7 +43,7 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
   })
 
   return (
-    <Expandable mb={1} label="Size" expanded={expanded}>
+    <FilterExpandable label="Size" expanded={expanded}>
       <Flex flexDirection="column" alignItems="left">
         <Text variant={tokens.secondaryVariant} color="black60" mb={1}>
           This is based on the artwork’s average dimension.
@@ -66,6 +66,6 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
           })}
         </Flex>
       </Flex>
-    </Expandable>
+    </FilterExpandable>
   )
 }

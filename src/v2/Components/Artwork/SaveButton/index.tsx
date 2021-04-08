@@ -17,6 +17,7 @@ import {
   space,
 } from "@artsy/palette"
 import { SaveArtwork } from "./SaveArtworkMutation"
+import { themeGet } from "@styled-system/theme-get"
 
 const SIZE = 40
 const ICON_SIZE = "24px"
@@ -196,7 +197,7 @@ export const Container = styled(Flex)<{ isSaved: boolean }>`
   width: ${SIZE}px;
   height: ${SIZE}px;
   background-color: ${({ isSaved }) =>
-    isSaved ? color("purple100") : "rgba(0, 0, 0, 0.4)"};
+    isSaved ? themeGet("colors.brand") : "rgba(0, 0, 0, 0.4)"};
   border-radius: 50%;
   justify-content: center;
   align-items: center;

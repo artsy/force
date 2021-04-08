@@ -23,6 +23,13 @@ exports[`Artwork renders correctly 1`] = `
   font-family: sans;
 }
 
+.c9 {
+  color: black60;
+  color: black60;
+  font-weight: normal;
+  font-family: sans;
+}
+
 .c3 {
   color: #000;
   -webkit-transition: color 0.25s;
@@ -116,9 +123,12 @@ exports[`Artwork renders correctly 1`] = `
     <div
       className="c4"
     >
-      <div>
+      <div
+        className="c5"
+      >
         <div
-          className="c5"
+          className="c6"
+          fontFamily="sans"
         >
           <div
             className="c6"
@@ -127,43 +137,44 @@ exports[`Artwork renders correctly 1`] = `
             Mikael Olson
           </div>
         </div>
+      </div>
+      <div
+        className="c5"
+      >
+        <div
+          className="c7"
+          color="black60"
+          fontFamily="sans"
+        >
+          Some Kind of Dinosaur, 2015
+        </div>
+      </div>
+      <div
+        className="c5"
+      >
+        <div
+          className="c7"
+          color="black60"
+          fontFamily="sans"
+        >
+          Gallery 1261
+        </div>
+      </div>
+      <div
+        className="c8"
+        display="flex"
+      >
         <div
           className="c5"
         >
           <div
-            className="c7"
+            className="c9"
             color="black60"
             fontFamily="sans"
+            fontWeight="normal"
           >
-            Some Kind of Dinosaur, 2015
-          </div>
-        </div>
-        <div
-          className="c5"
-        >
-          <div
-            className="c7"
-            color="black60"
-            fontFamily="sans"
-          >
-            Gallery 1261
-          </div>
-        </div>
-        <div
-          className="c8"
-          display="flex"
-        >
-          <div
-            className="c5"
-          >
-            <div
-              className="c7"
-              color="black60"
-              fontFamily="sans"
-            >
-              $875
-               
-            </div>
+            $875
+             
           </div>
         </div>
       </div>
