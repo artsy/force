@@ -27,28 +27,27 @@ function sleep(ms) {
 }
 
 export const ArtistsRoute: React.FC<ArtistsRouteProps> = ({
-  partner: { artistsConnection, distinguishRepresentedArtists, slug },
+  partner: { artistsConnection: artists, distinguishRepresentedArtists, slug },
   relay,
   match,
 }) => {
   const [artistsLoading, setArtistsLoading] = useState(relay.hasMore())
   const [isRefetching, setIsRefetching] = useState(false)
-  const [artists, setArtists] = useState(artistsConnection)
+  const [tempArtists, setTempArtists] = useState(undefined)
   const errCounter = useRef(0)
 
   useEffect(() => {
-    if (relay.hasMore()) {
+    if (
+      relay.hasMore() &&
+      (!artistsLoading || !isRefetching) &&
+      errCounter.current === 0
+    ) {
       loadMoreArtists()
     }
-  }, [])
-
-  useEffect(() => {
-    if ((!isRefetching || !artistsLoading) && artists !== artistsConnection) {
-      setArtists(artistsConnection)
-    }
-  }, [isRefetching, artistsLoading])
+  }, [artists, artistsLoading, isRefetching])
 
   const refetchArtists = () => {
+    setTempArtists(artists)
     setArtistsLoading(true)
     setIsRefetching(true)
     errCounter.current = 0
@@ -70,7 +69,6 @@ export const ArtistsRoute: React.FC<ArtistsRouteProps> = ({
       if (errCounter.current >= 3) {
         setIsRefetching(false)
         setArtistsLoading(false)
-        setArtists(artistsConnection)
 
         return
       }
@@ -80,6 +78,7 @@ export const ArtistsRoute: React.FC<ArtistsRouteProps> = ({
       } else {
         setIsRefetching(false)
         setArtistsLoading(false)
+        setTempArtists(undefined)
       }
     })
   }
@@ -95,7 +94,7 @@ export const ArtistsRoute: React.FC<ArtistsRouteProps> = ({
         <>
           <PartnerArtistList
             partnerSlug={slug}
-            artists={artists.edges}
+            artists={isRefetching ? tempArtists.edges : artists.edges}
             distinguishRepresentedArtists={distinguishRepresentedArtists}
           />
           {(errCounter.current > 0 || isRefetching) && (
