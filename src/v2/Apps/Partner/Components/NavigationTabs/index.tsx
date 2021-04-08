@@ -66,6 +66,7 @@ export const NavigationTabs: React.FC<NavigationTabsProps> = ({ partner }) => {
       {({ stuck }) => {
         return (
           <FullBleed
+            id="jumpto-PartnerNavBar"
             py={2}
             style={stuck ? { boxShadow: DROP_SHADOW } : undefined}
           >

@@ -26,7 +26,7 @@ export const getAuthors = (
     authorNameObj.authorName = toHumanSentence(authorName)
   }
 
-  if (!contributingAuthors.length) {
+  if (!contributingAuthors.length && author) {
     authorNameObj.authorName = author.name
   }
 
