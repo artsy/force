@@ -32,7 +32,10 @@ export const PartnerArtistList: React.FC<PartnerArtistListProps> = ({
 }) => {
   if (!artists) return null
 
-  const groups = groupArtists(artists, distinguishRepresentedArtists)
+  const groups = groupArtists(
+    artists.filter(artist => !!artist), // TODO: Remove filter after artists loading fix
+    distinguishRepresentedArtists
+  )
 
   return (
     <PartnerArtistListContainer>

@@ -1,21 +1,25 @@
-import { Box, Text, Button, Flex } from "@artsy/palette"
 import React, { useEffect, useRef, useState } from "react"
+import { Box, Text, Button, Flex } from "@artsy/palette"
+import { Match } from "found"
 import {
   createPaginationContainer,
   graphql,
   RelayPaginationProp,
 } from "react-relay"
-import { PartnerArtists_partner } from "v2/__generated__/PartnerArtists_partner.graphql"
 import {
+  PartnerArtistDetailsListRenderer,
+  PartnerArtistDetailsRenderer,
   PartnerArtistListFragmentContainer as PartnerArtistList,
   PartnerArtistListPlaceholder,
 } from "../../Components/PartnerArtists"
+import { PartnerArtists_partner } from "v2/__generated__/PartnerArtists_partner.graphql"
 
 const PAGE_SIZE = 20
 
 export interface ArtistsRouteProps {
   partner: PartnerArtists_partner
   relay: RelayPaginationProp
+  match: Match
 }
 
 function sleep(ms) {
@@ -25,6 +29,7 @@ function sleep(ms) {
 export const ArtistsRoute: React.FC<ArtistsRouteProps> = ({
   partner: { artistsConnection, distinguishRepresentedArtists, slug },
   relay,
+  match,
 }) => {
   const [artistsLoading, setArtistsLoading] = useState(relay.hasMore())
   const [isRefetching, setIsRefetching] = useState(false)
@@ -41,7 +46,7 @@ export const ArtistsRoute: React.FC<ArtistsRouteProps> = ({
     if ((!isRefetching || !artistsLoading) && artists !== artistsConnection) {
       setArtists(artistsConnection)
     }
-  }, [artistsConnection, isRefetching, artistsLoading])
+  }, [isRefetching, artistsLoading])
 
   const refetchArtists = () => {
     setArtistsLoading(true)
@@ -108,6 +113,15 @@ export const ArtistsRoute: React.FC<ArtistsRouteProps> = ({
       )}
 
       {isFirstLoading && <PartnerArtistListPlaceholder />}
+
+      {match.params.artistId ? (
+        <PartnerArtistDetailsRenderer
+          partnerId={match.params.partnerId}
+          artistId={match.params.artistId}
+        />
+      ) : (
+        <PartnerArtistDetailsListRenderer partnerId={match.params.partnerId} />
+      )}
     </Box>
   )
 }

@@ -60,7 +60,6 @@ export const partnerRoutes: RouteConfig[] = [
           }
         `,
       },
-
       {
         getComponent: () => ArticlesRoute,
         path: "articles",
@@ -91,10 +90,11 @@ export const partnerRoutes: RouteConfig[] = [
       },
       {
         getComponent: () => ArtistsRoute,
-        path: "artists",
+        path: "artist(s|/):artistId?",
         prepare: () => {
           ArtistsRoute.preload()
         },
+        ignoreScrollBehavior: true,
         query: graphql`
           query partnerRoutes_ArtistsQuery($partnerId: String!) {
             partner(id: $partnerId) @principalField {
