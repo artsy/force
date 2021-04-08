@@ -6,7 +6,7 @@ module.exports = """
           node {
             is_registered: isRegistered
             sale {
-              id
+              id: internalID
               name
               href
               start_at: startAt(format: "MMMM D, h:mmA")
