@@ -1,8 +1,8 @@
 import React from "react"
 import { AppContainer } from "v2/Apps/Components/AppContainer"
-import { AuctionsApp_me } from "v2/__generated__/AuctionsApp_me.graphql"
+import { AuctionsApp_viewer } from "v2/__generated__/AuctionsApp_viewer.graphql"
 import { AuctionsMeta } from "./Components/AuctionsMeta"
-import { MyBidsQueryRenderer } from "./Components/MyBids/MyBids"
+import { MyBidsFragmentContainer } from "./Components/MyBids/MyBids"
 import { ChevronIcon, Box, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Footer } from "v2/Components/Footer"
@@ -11,32 +11,36 @@ import { LazyLoadComponent } from "react-lazy-load-image-component"
 import { RecentlyViewedQueryRenderer as RecentlyViewed } from "v2/Components/RecentlyViewed"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import { RouteTabs, RouteTab } from "v2/Components/RouteTabs"
-import { useSystemContext } from "v2/Artsy"
-import { WorksByArtistsYouFollowRailQueryRenderer } from "./Components/WorksByArtistsYouFollowRail/WorksByArtistsYouFollowRail"
+import { useSystemContext } from "v2/Artsy/useSystemContext"
+import { WorksByArtistsYouFollowRailFragmentContainer } from "./Components/WorksByArtistsYouFollowRail/WorksByArtistsYouFollowRail"
+import { Separator } from "@artsy/palette"
 export interface AuctionsAppProps {
-  me: AuctionsApp_me
+  viewer: AuctionsApp_viewer
 }
 
 const AuctionsApp: React.FC<AuctionsAppProps> = props => {
-  const { children } = props
+  const { children, viewer } = props
   const { user } = useSystemContext()
 
   return (
     <AppContainer>
       <AuctionsMeta />
-      <Box ml={[2, 4]}>
-        <Text pt={2} pb={1} variant="largeTitle">
+      <HorizontalPadding>
+        <Text mt={3} mb={1} variant="largeTitle">
           Auctions
         </Text>
         <Text py={1}>
-          Bid on works you love with auctions on Artsy. With live bidding
-          opening every week, Artsy connects collectors like you to art from
-          leading auction houses and sellers across the globe. We feature
-          premium artworks including modern, contemporary, and street art, so
-          you can find works by your favorite artists—and discover new ones—all
-          in one place.
+          Bid on works you love with auctions on Artsy. With bidding opening
+          daily, Artsy connects collectors like you to art from leading auction
+          houses, nonprofit organizations, and sellers across the globe. We
+          feature premium artworks including modern, contemporary, and street
+          art, so you can find works by your favorite artists—and discover new
+          ones—all in one place.
         </Text>
-        <RouterLink to="/how-auctions-work" noUnderline>
+        <RouterLink
+          to="https://support.artsy.net/hc/en-us/sections/360008298773-Bid-at-Auction"
+          noUnderline
+        >
           <Text variant="mediumText" py={1}>
             Learn more about bidding on Artsy{" "}
             <ChevronIcon
@@ -50,18 +54,20 @@ const AuctionsApp: React.FC<AuctionsAppProps> = props => {
             />
           </Text>
         </RouterLink>
-      </Box>
+      </HorizontalPadding>
 
       {user && (
-        <>
-          <Box m={[2, 4]}>
-            <MyBidsQueryRenderer />
+        <HorizontalPadding>
+          <Box my={[2, 4]}>
+            <MyBidsFragmentContainer me={viewer.me} />
           </Box>
 
-          <Box m={[2, 4]} pb={2}>
-            <WorksByArtistsYouFollowRailQueryRenderer />
+          <Separator />
+
+          <Box my={[2, 4]} pb={2}>
+            <WorksByArtistsYouFollowRailFragmentContainer viewer={viewer} />
           </Box>
-        </>
+        </HorizontalPadding>
       )}
       <HorizontalPadding mt={4}>
         <RouteTabs mb={2}>
@@ -89,10 +95,13 @@ const AuctionsApp: React.FC<AuctionsAppProps> = props => {
 export const AuctionsAppFragmentContainer = createFragmentContainer(
   AuctionsApp,
   {
-    me: graphql`
-      fragment AuctionsApp_me on Me {
-        id
-        # ...MyBids_me
+    viewer: graphql`
+      fragment AuctionsApp_viewer on Viewer {
+        ...WorksByArtistsYouFollowRail_viewer
+
+        me {
+          ...MyBids_me
+        }
       }
     `,
   }

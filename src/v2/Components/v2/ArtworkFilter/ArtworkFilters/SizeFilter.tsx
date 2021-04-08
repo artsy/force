@@ -15,12 +15,16 @@ const sizeMap = [
   { displayName: "Large (over 100cm)", name: "LARGE" },
 ]
 
+export interface SizeFilterProps {
+  expanded?: boolean
+}
+
 /**
  * Note: This is a clone of the implementation at
  * src/v2/Apps/Artist/Routes/AuctionResults/Components/AuctionFilters/SizeFilter.tsx
  * adapted to work with the common ArtworkFilter.
  */
-export const SizeFilter: React.FC = () => {
+export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
   const filterContext = useArtworkFilterContext()
 
   const toggleSelection = (selected, name) => {
@@ -39,7 +43,7 @@ export const SizeFilter: React.FC = () => {
   })
 
   return (
-    <Expandable mb={1} label="Size" expanded>
+    <Expandable mb={1} label="Size" expanded={expanded}>
       <Flex flexDirection="column" alignItems="left">
         <Text variant={tokens.secondaryVariant} color="black60" mb={1}>
           This is based on the artwork’s average dimension.

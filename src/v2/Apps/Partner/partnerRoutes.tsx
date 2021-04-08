@@ -12,7 +12,7 @@ const ArticlesRoute = loadable(() => import("./Routes/Articles"), {
 })
 
 const OverviewRoute = loadable(() => import("./Routes/Overview"), {
-  resolveComponent: component => component.OverviewRoute,
+  resolveComponent: component => component.OverviewFragmentContainer,
 })
 
 const ShowsRoute = loadable(() => import("./Routes/Shows"), {
@@ -23,8 +23,8 @@ const WorksRoute = loadable(() => import("./Routes/Works"), {
   resolveComponent: component => component.WorksRoute,
 })
 
-const ArtistsRoute = loadable(() => import("./Routes/Artists"), {
-  resolveComponent: component => component.ArtistsRoute,
+const ArtistsRoute = loadable(() => import("./Routes/Artists/PartnerArtists"), {
+  resolveComponent: component => component.ArtistsPaginationContainer,
 })
 
 const ContactRoute = loadable(() => import("./Routes/Contact"), {
@@ -52,6 +52,13 @@ export const partnerRoutes: RouteConfig[] = [
         prepare: () => {
           OverviewRoute.preload()
         },
+        query: graphql`
+          query partnerRoutes_OverviewQuery($partnerId: String!) {
+            partner(id: $partnerId) @principalField {
+              ...Overview_partner
+            }
+          }
+        `,
       },
 
       {
@@ -88,6 +95,13 @@ export const partnerRoutes: RouteConfig[] = [
         prepare: () => {
           ArtistsRoute.preload()
         },
+        query: graphql`
+          query partnerRoutes_ArtistsQuery($partnerId: String!) {
+            partner(id: $partnerId) @principalField {
+              ...PartnerArtists_partner
+            }
+          }
+        `,
       },
       {
         getComponent: () => ContactRoute,

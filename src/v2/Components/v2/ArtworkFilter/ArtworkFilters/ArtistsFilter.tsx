@@ -8,7 +8,8 @@ import {
 } from "../Utils/fetchFollowedArtists"
 import { ShowMore } from "./ShowMore"
 
-interface ArtistsFilterProps {
+export interface ArtistsFilterProps {
+  expanded?: boolean
   relayEnvironment?: any
   fairID?: string
   user?: User
@@ -62,6 +63,7 @@ const ArtistItem: React.FC<{
 }
 
 export const ArtistsFilter: FC<ArtistsFilterProps> = ({
+  expanded,
   fairID,
   relayEnvironment,
   user,
@@ -94,7 +96,7 @@ export const ArtistsFilter: FC<ArtistsFilterProps> = ({
   const followedArtistArtworkCount = filterContext?.counts?.followedArtists ?? 0
 
   return (
-    <Expandable mb={1} label="Artists" expanded>
+    <Expandable mb={1} label="Artists" expanded={expanded}>
       <Flex flexDirection="column">
         <Checkbox
           disabled={!followedArtistArtworkCount}

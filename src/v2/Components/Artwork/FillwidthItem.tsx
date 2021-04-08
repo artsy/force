@@ -53,11 +53,17 @@ export class FillwidthItemContainer extends React.Component<
   }
 
   get imageWidth() {
-    const {
+    let {
       artwork: {
         image: { aspectRatio },
       },
     } = this.props
+
+    // Our relay testing layer often mocks props with strings; this makes it a
+    // little safer and less confusing when that happens.
+    if (typeof aspectRatio !== "number") {
+      aspectRatio = 1
+    }
 
     // NOTE: `aspectRatio` will default to `1` if image geometry is missing.
     // Given that `imageHeight` is required, this means that any missing geometry

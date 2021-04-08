@@ -38,7 +38,7 @@ describe("MyBidsBidItem", () => {
   })
 
   afterEach(() => {
-    trackEvent.mockReset()
+    jest.clearAllMocks()
   })
 
   it("renders correct components and data", () => {
@@ -155,6 +155,20 @@ describe("MyBidsBidItem", () => {
         const text = wrapper.text()
         expect(text).toContain("2 bids")
       })
+    })
+  })
+
+  it("tracks clicks", () => {
+    const wrapper = getWrapper()
+    wrapper.find("RouterLink").first().simulate("click")
+    expect(trackEvent).toHaveBeenCalledWith({
+      action: "clickedArtworkGroup",
+      context_module: "yourActiveBids",
+      destination_page_owner_id: '<mock-value-for-field-"internalID">',
+      destination_page_owner_slug: '<mock-value-for-field-"slug">',
+      destination_page_owner_type: "artwork",
+      horizontal_slide_position: 2,
+      type: "thumbnail",
     })
   })
 })

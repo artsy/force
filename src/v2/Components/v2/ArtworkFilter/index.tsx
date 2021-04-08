@@ -211,15 +211,35 @@ export const BaseArtworkFilter: React.FC<
           )}
 
           <StickyContainer>
-            <Button size="small" onClick={() => toggleMobileActionSheet(true)}>
-              <Flex justifyContent="space-between" alignItems="center">
-                <FilterIcon fill="white100" />
-                <Spacer mr={0.5} />
-                Filter
-              </Flex>
-            </Button>
+            {({ stuck }) => {
+              return (
+                <Flex
+                  justifyContent="space-between"
+                  alignItems="center"
+                  py={1}
+                  {...(stuck
+                    ? {
+                        px: 2,
+                        borderBottom: "1px solid",
+                        borderColor: "black10",
+                      }
+                    : {})}
+                >
+                  <Button
+                    size="small"
+                    onClick={() => toggleMobileActionSheet(true)}
+                  >
+                    <Flex justifyContent="space-between" alignItems="center">
+                      <FilterIcon fill="white100" />
+                      <Spacer mr={0.5} />
+                      Filter
+                    </Flex>
+                  </Button>
 
-            <SortFilter />
+                  <SortFilter />
+                </Flex>
+              )
+            }}
           </StickyContainer>
 
           <Spacer mb={2} />

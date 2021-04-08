@@ -4,22 +4,22 @@ import {
   ArtworkFilterContextProvider,
   useArtworkFilterContext,
 } from "../../ArtworkFilterContext"
-import { ColorFilter } from "../ColorFilter"
+import { ColorFilter, ColorFilterProps } from "../ColorFilter"
 
 describe("ColorFilter", () => {
   let context
 
-  const getWrapper = () => {
+  const getWrapper = (filterProps: ColorFilterProps = { expanded: true }) => {
     return mount(
       <ArtworkFilterContextProvider>
-        <ColorFilterTest />
+        <ColorFilterTest {...filterProps} />
       </ArtworkFilterContextProvider>
     )
   }
 
-  const ColorFilterTest = () => {
+  const ColorFilterTest = (props: ColorFilterProps) => {
     context = useArtworkFilterContext()
-    return <ColorFilter expanded />
+    return <ColorFilter {...props} />
   }
 
   it("initially renders the primary colors", () => {
@@ -59,8 +59,25 @@ describe("ColorFilter", () => {
 
     expect(context.filters.colors).toEqual(["black-and-white", "violet"])
 
-    wrapper.find("Checkbox").last().simulate("click")
+    wrapper.find("Checkbox").first().simulate("click")
 
-    expect(context.filters.colors).toEqual(["black-and-white"])
+    expect(context.filters.colors).toEqual(["violet"])
+  })
+
+  describe("the `expanded` prop", () => {
+    it("hides the filter controls when not set", () => {
+      const wrapper = getWrapper({})
+      expect(wrapper.find("Checkbox").length).toBe(0)
+    })
+
+    it("hides the filter controls when `false`", () => {
+      const wrapper = getWrapper({ expanded: false })
+      expect(wrapper.find("Checkbox").length).toBe(0)
+    })
+
+    it("shows the filter controls when `true`", () => {
+      const wrapper = getWrapper({ expanded: true })
+      expect(wrapper.find("Checkbox").length).not.toBe(0)
+    })
   })
 })

@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { Box, Grid, Row, Col, Button } from "@artsy/palette"
+import { Box, Grid, Row, Col, Button, Text } from "@artsy/palette"
 import {
   createPaginationContainer,
   graphql,
@@ -38,6 +38,14 @@ const CurrentAuctions: React.FC<CurrentAuctionsProps> = ({ viewer, relay }) => {
         console.error(err)
       }
     })
+  }
+
+  if (viewer.salesConnection.edges.length === 0) {
+    return (
+      <Box>
+        <Text>No current auctions.</Text>
+      </Box>
+    )
   }
 
   return (
@@ -88,7 +96,7 @@ export const CurrentAuctionsPaginationContainer = createPaginationContainer(
           after: $after
           live: true
           published: true
-          sort: END_AT_DESC
+          sort: START_AT_ASC
           auctionState: OPEN
         ) @connection(key: "CurrentAuctions_salesConnection") {
           totalCount

@@ -4,46 +4,49 @@ import {
   ArtworkFilterContextProvider,
   useArtworkFilterContext,
 } from "../../ArtworkFilterContext"
-import { TimePeriodFilter } from "../TimePeriodFilter"
+import { TimePeriodFilter, TimePeriodFilterProps } from "../TimePeriodFilter"
 
 describe("TimePeriodFilter", () => {
   let context
 
-  const getWrapper = (props = {}) => {
+  const aggregations = [
+    {
+      slice: "MAJOR_PERIOD",
+      counts: [
+        {
+          name: "2000",
+          value: "2000-period",
+        },
+        {
+          name: "Late 19th Century",
+          value: "foo-period",
+        },
+        {
+          name: "18th Century & Earlier",
+          value: "bar-period",
+        },
+      ],
+    },
+  ]
+
+  const getWrapper = (
+    contextProps = {},
+    filterProps: TimePeriodFilterProps = { expanded: true }
+  ) => {
     return mount(
-      <ArtworkFilterContextProvider {...props}>
-        <TimePeriodFilterFilterTest />
+      <ArtworkFilterContextProvider {...contextProps}>
+        <TimePeriodFilterFilterTest {...filterProps} />
       </ArtworkFilterContextProvider>
     )
   }
 
-  const TimePeriodFilterFilterTest = () => {
+  const TimePeriodFilterFilterTest = (props: TimePeriodFilterProps) => {
     context = useArtworkFilterContext()
-    return <TimePeriodFilter expanded />
+    return <TimePeriodFilter {...props} />
   }
 
   it("shows specific time periods if aggregations passed to context", () => {
-    const wrapper = getWrapper({
-      aggregations: [
-        {
-          slice: "MAJOR_PERIOD",
-          counts: [
-            {
-              name: "2000",
-              value: "2000-period",
-            },
-            {
-              name: "Late 19th Century",
-              value: "foo-period",
-            },
-            {
-              name: "18th Century & Earlier",
-              value: "bar-period",
-            },
-          ],
-        },
-      ],
-    })
+    const wrapper = getWrapper({ aggregations })
 
     expect(wrapper.html()).toContain("Late 19th Century")
     expect(wrapper.html()).toContain("18th Century &amp; Earlier")
@@ -51,13 +54,40 @@ describe("TimePeriodFilter", () => {
     expect(wrapper.html()).not.toContain("2010")
   })
 
-  it("updates context on filter change", done => {
+  it("doesn't render if there are no periods", () => {
+    const wrapper = getWrapper({
+      aggregations: [
+        {
+          slice: "MAJOR_PERIOD",
+          counts: [],
+        },
+      ],
+    })
+
+    expect(wrapper.html()).not.toBeTruthy()
+  })
+
+  it("updates context on filter change", () => {
     const wrapper = getWrapper()
     wrapper.find("Checkbox").first().simulate("click")
 
-    setTimeout(() => {
-      expect(context.filters.majorPeriods).toEqual(["2020"])
-      done()
-    }, 0)
+    expect(context.filters.majorPeriods).toEqual(["2020"])
+  })
+
+  describe("the `expanded` prop", () => {
+    it("hides the filter controls when not set", () => {
+      const wrapper = getWrapper({}, {})
+      expect(wrapper.find("Checkbox").length).toBe(0)
+    })
+
+    it("hides the filter controls when `false`", () => {
+      const wrapper = getWrapper({}, { expanded: false })
+      expect(wrapper.find("Checkbox").length).toBe(0)
+    })
+
+    it("shows the filter controls when `true`", () => {
+      const wrapper = getWrapper({}, { expanded: true })
+      expect(wrapper.find("Checkbox").length).not.toBe(0)
+    })
   })
 })

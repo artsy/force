@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react"
-import { useSystemContext } from "v2/Artsy"
+import { useSystemContext } from "v2/Artsy/useSystemContext"
 import { ErrorModal, ErrorModalProps } from "./ErrorModal"
 
-export interface FlashMessage {
+export interface FlashMessageProps {
   message: ErrorModalProps["detailText"]
 }
 
@@ -14,7 +14,7 @@ export const FlashMessage: React.FC = () => {
   const [message, setMessage] = useState(null)
 
   useEffect(() => {
-    mediator.on("modal:error:show", (options: FlashMessage) => {
+    mediator.on("modal:error:show", (options: FlashMessageProps) => {
       setShow(true)
       setMessage(options.message)
     })

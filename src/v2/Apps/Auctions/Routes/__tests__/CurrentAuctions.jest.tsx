@@ -37,7 +37,17 @@ describe("CurrentAuctions", () => {
     })
   })
 
-  it("renders current auctions and correct components", async () => {
+  it("renders zerostate if no auctions", () => {
+    const wrapper = getWrapper({
+      SaleConnection: () => ({
+        edges: [],
+      }),
+    })
+
+    expect(wrapper.html()).toContain("No current auctions.")
+  })
+
+  it("renders current auctions and correct components", () => {
     const wrapper = getWrapper({
       SaleConnection: () => ({
         totalCount: 5,
@@ -52,6 +62,3 @@ describe("CurrentAuctions", () => {
     expect(wrapper.text()).toContain("Show more")
   })
 })
-
-// TODO: JIRA GRO-263 We need functionality for a zero state with no availale auctions
-// it("skips return auctions if we have no current auctions", async () => {})

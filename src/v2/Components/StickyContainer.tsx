@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components"
-import { Box, Flex, color } from "@artsy/palette"
+import { Box, color } from "@artsy/palette"
 import React, { useEffect, useRef, useState } from "react"
 import { NAV_BAR_HEIGHT, MOBILE_NAV_HEIGHT } from "v2/Components/NavBar"
 
@@ -7,29 +7,22 @@ export interface BaseContainerProps {
   stuck?: boolean
 }
 
-export const BaseContainer = styled(Flex).attrs({
-  top: [MOBILE_NAV_HEIGHT, NAV_BAR_HEIGHT],
+export const Container = styled(Box).attrs({
   bg: "white100",
+  top: [MOBILE_NAV_HEIGHT, NAV_BAR_HEIGHT],
 })<BaseContainerProps>`
-  position: sticky;
   z-index: 1;
-`
-
-export const DefaultContainer = styled(BaseContainer).attrs({
-  py: 1,
-  mx: -2,
-  px: 2,
-  borderBottom: "1px solid",
-})<BaseContainerProps>`
-  justify-content: space-between;
-  align-items: center;
+  left: 0;
+  right: 0;
 
   ${({ stuck }) =>
     stuck
       ? css`
+          position: fixed;
           border-bottom-color: ${color("black10")};
         `
       : css`
+          position: static;
           border-bottom-color: transparent;
         `};
 `
@@ -44,34 +37,35 @@ const Sentinel = styled(Box).attrs({
   height: 0;
 `
 
-export interface StickyContainerProps {
-  ContainerComponent?: React.ComponentType<BaseContainerProps>
-}
-
-export const StickyContainer: React.FC<StickyContainerProps> = ({
-  children,
-  ContainerComponent = DefaultContainer,
-}) => {
-  const ref = useRef<HTMLDivElement | null>(null)
+export const StickyContainer: React.FC = ({ children }) => {
+  const sentinelRef = useRef<HTMLDivElement | null>(null)
+  const containerRef = useRef<HTMLDivElement | null>(null)
 
   const [stuck, setStuck] = useState(false)
 
   useEffect(() => {
-    if (!ref.current) return
+    if (sentinelRef.current === null) return
+
     if (!("IntersectionObserver" in window)) return
 
     const observer = new IntersectionObserver(
       entries => {
-        if (entries[0].intersectionRatio === 0) {
+        const [entry] = entries
+        if (
+          // Intersecting
+          entry.intersectionRatio === 0 &&
+          // Only stick when scrolling down
+          entry.boundingClientRect.y < 0
+        ) {
           setStuck(true)
-        } else if (entries[0].intersectionRatio === 1) {
+        } else if (entry.intersectionRatio === 1) {
           setStuck(false)
         }
       },
       { threshold: [0, 1] }
     )
 
-    observer.observe(ref.current)
+    observer.observe(sentinelRef.current)
 
     return () => {
       observer.disconnect()
@@ -80,8 +74,16 @@ export const StickyContainer: React.FC<StickyContainerProps> = ({
 
   return (
     <>
-      <Sentinel ref={ref as any} />
-      <ContainerComponent stuck={stuck}>{children}</ContainerComponent>
+      <Sentinel ref={sentinelRef as any} />
+
+      <Container ref={containerRef as any} stuck={stuck}>
+        {typeof children === "function" ? children({ stuck }) : children}
+      </Container>
+
+      {stuck && (
+        // Insert placeholder the same height as the container to prevent scroll from changing
+        <div style={{ height: containerRef.current?.offsetHeight }} />
+      )}
     </>
   )
 }

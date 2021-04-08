@@ -1,73 +1,58 @@
 import { mount } from "enzyme"
 import React from "react"
 import {
+  Aggregations,
   ArtworkFilterContextProps,
   ArtworkFilterContextProvider,
   useArtworkFilterContext,
 } from "../../ArtworkFilterContext"
-import { MaterialsFilter } from "../MaterialsFilter"
+import { MaterialsFilter, MaterialsFilterProps } from "../MaterialsFilter"
 
 describe("MaterialsTermFilter", () => {
   let context: ArtworkFilterContextProps
 
-  const getWrapper = (contextProps = {}) => {
+  const aggregations: Aggregations = [
+    {
+      slice: "MATERIALS_TERMS",
+      counts: [
+        { name: "Acrylic", value: "acrylic", count: 42 },
+        { name: "Brass", value: "brass", count: 42 },
+        { name: "Bronze", value: "bronze", count: 42 },
+        { name: "Canvas", value: "canvas", count: 42 },
+        { name: "Drypoint", value: "drypoint", count: 42 },
+        { name: "Enamel", value: "enamel", count: 42 },
+        { name: "Foam", value: "foam", count: 42 },
+        { name: "Glass", value: "glass", count: 42 },
+      ],
+    },
+  ]
+
+  const getWrapper = (
+    contextProps = {},
+    filterProps: MaterialsFilterProps = { expanded: true }
+  ) => {
     return mount(
       <ArtworkFilterContextProvider {...contextProps}>
-        <MaterialsFilterTest />
+        <MaterialsFilterTest {...filterProps} />
       </ArtworkFilterContextProvider>
     )
   }
 
-  const MaterialsFilterTest = () => {
+  const MaterialsFilterTest = (props: MaterialsFilterProps) => {
     context = useArtworkFilterContext()
-    return <MaterialsFilter />
+    return <MaterialsFilter {...props} />
   }
 
   describe("materials", () => {
-    it("renders material term names", () => {
-      const wrapper = getWrapper({
-        aggregations: [
-          {
-            slice: "MATERIALS_TERMS",
-            counts: [
-              {
-                name: "Oil",
-                count: 10,
-                value: "oil",
-              },
-              {
-                name: "Canvas",
-                count: 5,
-                value: "canvas",
-              },
-            ],
-          },
-        ],
-      })
-      expect(wrapper.find("Checkbox").first().text()).toContain("Oil")
-      expect(wrapper.find("Checkbox").last().text()).toContain("Canvas")
+    it("renders the first 6 material term names", () => {
+      const wrapper = getWrapper({ aggregations })
+
+      expect(wrapper.find("Checkbox").first().text()).toContain("Acrylic")
+      expect(wrapper.find("Checkbox").last().text()).toContain("Enamel")
     })
 
     it("acts on material term values", async () => {
-      const wrapper = getWrapper({
-        aggregations: [
-          {
-            slice: "MATERIALS_TERMS",
-            counts: [
-              {
-                name: "Oil",
-                count: 10,
-                value: "oil",
-              },
-              {
-                name: "Canvas",
-                count: 5,
-                value: "canvas",
-              },
-            ],
-          },
-        ],
-      })
+      const wrapper = getWrapper({ aggregations })
 
       expect(context.filters.materialsTerms).toHaveLength(0)
 
@@ -75,28 +60,12 @@ describe("MaterialsTermFilter", () => {
       await wrapper.find("Checkbox").last().simulate("click")
 
       expect(context.filters.materialsTerms).toHaveLength(2)
-      expect(context.filters.materialsTerms).toContain("oil")
-      expect(context.filters.materialsTerms).toContain("canvas")
+      expect(context.filters.materialsTerms).toContain("acrylic")
+      expect(context.filters.materialsTerms).toContain("enamel")
     })
 
     it("autocompletes available options", () => {
-      const wrapper = getWrapper({
-        aggregations: [
-          {
-            slice: "MATERIALS_TERMS",
-            counts: [
-              { name: "Acrylic", value: "acrylic", count: 42 },
-              { name: "Brass", value: "brass", count: 42 },
-              { name: "Bronze", value: "bronze", count: 42 },
-              { name: "Canvas", value: "canvas", count: 42 },
-              { name: "Drypoint", value: "drypoint", count: 42 },
-              { name: "Enamel", value: "enamel", count: 42 },
-              { name: "Foam", value: "foam", count: 42 },
-              { name: "Glass", value: "glass", count: 42 },
-            ],
-          },
-        ],
-      })
+      const wrapper = getWrapper({ aggregations })
 
       const input = wrapper.find("input")
       input.simulate("focus").simulate("change", { target: { value: "b" } })
@@ -110,6 +79,23 @@ describe("MaterialsTermFilter", () => {
       expect(wrapper.text()).not.toContain("Enamel")
       expect(wrapper.text()).not.toContain("Foam")
       expect(wrapper.text()).not.toContain("Glass")
+    })
+  })
+
+  describe("the `expanded` prop", () => {
+    it("hides the filter controls when not set", () => {
+      const wrapper = getWrapper({ aggregations }, {})
+      expect(wrapper.find("Checkbox").length).toBe(0)
+    })
+
+    it("hides the filter controls when `false`", () => {
+      const wrapper = getWrapper({ aggregations }, { expanded: false })
+      expect(wrapper.find("Checkbox").length).toBe(0)
+    })
+
+    it("shows the filter controls when `true`", () => {
+      const wrapper = getWrapper({ aggregations }, { expanded: true })
+      expect(wrapper.find("Checkbox").length).not.toBe(0)
     })
   })
 })

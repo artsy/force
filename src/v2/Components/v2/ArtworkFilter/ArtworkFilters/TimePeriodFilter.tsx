@@ -3,14 +3,13 @@ import React, { FC } from "react"
 import { intersection } from "underscore"
 import { useArtworkFilterContext } from "../ArtworkFilterContext"
 import { INITIAL_ITEMS_TO_SHOW, ShowMore } from "./ShowMore"
+import { sortResults } from "./ResultsFilter"
 
-interface TimePeriodFilterProps {
+export interface TimePeriodFilterProps {
   expanded?: boolean // set to true to force expansion
 }
 
-export const TimePeriodFilter: FC<TimePeriodFilterProps> = ({
-  expanded = false,
-}) => {
+export const TimePeriodFilter: FC<TimePeriodFilterProps> = ({ expanded }) => {
   const { aggregations, ...filterContext } = useArtworkFilterContext()
   const timePeriods = aggregations.find(agg => agg.slice === "MAJOR_PERIOD")
 
@@ -20,7 +19,7 @@ export const TimePeriodFilter: FC<TimePeriodFilterProps> = ({
       return allowedPeriods.includes(timePeriod.name)
     })
   } else {
-    periods = allowedPeriods.map(name => ({ name }))
+    periods = allowedPeriods.map(name => ({ name, value: name }))
   }
 
   const tokens = useThemeConfig({
@@ -50,6 +49,8 @@ export const TimePeriodFilter: FC<TimePeriodFilterProps> = ({
     ).length > 0
   const hasMajorPeriodFilter = currentFilters.majorPeriods.length > 0
 
+  const resultsSorted = sortResults(currentFilters.majorPeriods, periods)
+
   return (
     <Expandable
       mb={1}
@@ -58,7 +59,7 @@ export const TimePeriodFilter: FC<TimePeriodFilterProps> = ({
     >
       <Flex flexDirection="column">
         <ShowMore expanded={hasBelowTheFoldMajorPeriodFilter}>
-          {periods.map(({ name }, index) => {
+          {resultsSorted.map(({ name }, index) => {
             return (
               <Checkbox
                 selected={currentFilters.majorPeriods.includes(name)}
@@ -66,7 +67,7 @@ export const TimePeriodFilter: FC<TimePeriodFilterProps> = ({
                 onSelect={selected => togglePeriodSelection(selected, name)}
                 my={tokens.my}
               >
-                {isNaN(name) ? name : `${name}s`}
+                {isNaN(name as any) ? name : `${name}s`}
               </Checkbox>
             )
           })}
