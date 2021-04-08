@@ -34,14 +34,14 @@ const AuctionsApp: React.FC<AuctionsAppProps> = props => {
       <GridColumns>
         <Column span={[12, 6]}>
           <HorizontalPadding>
-            <Text mt={3} mb={1} variant="largeTitle">
+            <Text mt={3} mb={[0, 1]} variant="largeTitle">
               Auctions
             </Text>
           </HorizontalPadding>
         </Column>
         <Column span={[12, 6]}>
           <HorizontalPadding>
-            <Text mt={3} py={1}>
+            <Text mt={[0, 3]} py={1}>
               Bid on works you love with auctions on Artsy. With bidding opening
               daily, Artsy connects collectors like you to art from leading
               auction houses, nonprofit organizations, and sellers across the
@@ -72,13 +72,13 @@ const AuctionsApp: React.FC<AuctionsAppProps> = props => {
 
       {user && (
         <HorizontalPadding>
-          <Box my={[2, 4]}>
+          <Box mt={[2, 4]}>
             <MyBidsFragmentContainer me={viewer.me} />
           </Box>
 
           <Separator />
 
-          <Box my={[2, 4]} pb={2}>
+          <Box my={[2]} pb={2}>
             <WorksByArtistsYouFollowRailFragmentContainer viewer={viewer} />
           </Box>
         </HorizontalPadding>
