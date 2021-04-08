@@ -69,14 +69,14 @@ describe("PriceRangeFilter", () => {
 
     await showCustomPrice()
 
-    expect(wrapper.find(Input).first().html()).toContain('value="*"')
-    expect(wrapper.find(Input).last().html()).toContain('value="*"')
+    expect(wrapper.find(Input).first().html()).toContain('value=""')
+    expect(wrapper.find(Input).last().html()).toContain('value=""')
 
     options.first().simulate("click")
     await showCustomPrice()
 
     expect(wrapper.find(Input).first().html()).toContain('value="50000"')
-    expect(wrapper.find(Input).last().html()).toContain('value="*"')
+    expect(wrapper.find(Input).last().html()).toContain('value=""')
 
     options.at(1).simulate("click")
     await showCustomPrice()

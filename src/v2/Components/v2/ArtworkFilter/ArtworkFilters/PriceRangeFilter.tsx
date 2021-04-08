@@ -58,6 +58,10 @@ const parseRange = (range?: string) => {
   })
 }
 
+const getValue = (value: CustomRange[number]) => {
+  return value === "*" || value === 0 ? "" : value
+}
+
 export interface PriceRangeFilterProps {
   expanded?: boolean
 }
@@ -171,7 +175,7 @@ export const PriceRangeFilter: React.FC<PriceRangeFilterProps> = ({
               placeholder="Min"
               min="0"
               step="1"
-              value={customRange[0]}
+              value={getValue(customRange[0])}
               onChange={handleChange(0)}
             />
 
@@ -182,7 +186,7 @@ export const PriceRangeFilter: React.FC<PriceRangeFilterProps> = ({
               placeholder="Max"
               min="0"
               step="1"
-              value={customRange[1]}
+              value={getValue(customRange[1])}
               onChange={handleChange(1)}
             />
           </Flex>

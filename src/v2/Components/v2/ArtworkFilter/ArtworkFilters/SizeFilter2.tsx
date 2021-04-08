@@ -15,7 +15,7 @@ import { NumericInput } from "./PriceRangeFilter"
 import { Media } from "v2/Utils/Responsive"
 import { FilterExpandable } from "./FilterExpandable"
 
-const sizeMap = [
+const SIZES = [
   { displayName: "Small (under 40cm)", name: "SMALL" },
   { displayName: "Medium (40 – 100cm)", name: "MEDIUM" },
   { displayName: "Large (over 100cm)", name: "LARGE" },
@@ -49,6 +49,10 @@ const mapSizeToRange = (size: CustomSize) => {
 
 const hasValue = (size: CustomSize) => {
   return size.height || size.width
+}
+
+const getValue = (value: CustomRange[number]) => {
+  return value === "*" || value === 0 ? "" : value
 }
 
 export interface SizeFilter2Props {
@@ -94,7 +98,7 @@ export const SizeFilter2: React.FC<SizeFilter2Props> = ({ expanded }) => {
     })
   }
 
-  const toggleSizeSelection = (selected, name) => {
+  const toggleSizeSelection = (selected: boolean, name: string) => {
     let sizes = currentlySelectedFilters().sizes.slice()
     if (selected) {
       sizes.push(name)
@@ -151,7 +155,7 @@ export const SizeFilter2: React.FC<SizeFilter2Props> = ({ expanded }) => {
         </Text>
 
         <Flex flexDirection="column">
-          {sizeMap.map(({ name, displayName }, index) => {
+          {SIZES.map(({ name, displayName }, index) => {
             return (
               <Checkbox
                 key={index}
@@ -184,18 +188,24 @@ export const SizeFilter2: React.FC<SizeFilter2Props> = ({ expanded }) => {
               name="width_min"
               min="0"
               step="1"
-              value={customSize.width && customSize.width[0]}
+              value={
+                customSize.width !== undefined
+                  ? getValue(customSize.width[0])
+                  : undefined
+              }
               onChange={handleInputChange("width", 0)}
             />
-
             <Spacer mx={0.5} />
-
             <NumericInput
               label="Inches"
               name="width_max"
               min="0"
               step="1"
-              value={customSize.width && customSize.width[1]}
+              value={
+                customSize.width !== undefined
+                  ? getValue(customSize.width[1])
+                  : undefined
+              }
               onChange={handleInputChange("width", 1)}
             />
           </Flex>
@@ -207,7 +217,11 @@ export const SizeFilter2: React.FC<SizeFilter2Props> = ({ expanded }) => {
               name="height_min"
               min="0"
               step="1"
-              value={customSize.height && customSize.height[0]}
+              value={
+                customSize.height !== undefined
+                  ? getValue(customSize.height[0])
+                  : undefined
+              }
               onChange={handleInputChange("height", 0)}
             />
 
@@ -218,7 +232,11 @@ export const SizeFilter2: React.FC<SizeFilter2Props> = ({ expanded }) => {
               name="height_max"
               min="0"
               step="1"
-              value={customSize.height && customSize.height[1]}
+              value={
+                customSize.height !== undefined
+                  ? getValue(customSize.height[1])
+                  : undefined
+              }
               onChange={handleInputChange("height", 1)}
             />
           </Flex>
