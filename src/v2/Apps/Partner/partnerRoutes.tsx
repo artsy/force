@@ -20,7 +20,7 @@ const ShowsRoute = loadable(() => import("./Routes/Shows"), {
 })
 
 const WorksRoute = loadable(() => import("./Routes/Works"), {
-  resolveComponent: component => component.WorksRoute,
+  resolveComponent: component => component.WorksFragmentContainer,
 })
 
 const ArtistsRoute = loadable(() => import("./Routes/Artists/PartnerArtists"), {
@@ -88,6 +88,13 @@ export const partnerRoutes: RouteConfig[] = [
         prepare: () => {
           WorksRoute.preload()
         },
+        query: graphql`
+          query partnerRoutes_WorksQuery($partnerId: String!) {
+            partner(id: $partnerId) @principalField {
+              ...Works_partner
+            }
+          }
+        `,
       },
       {
         getComponent: () => ArtistsRoute,
