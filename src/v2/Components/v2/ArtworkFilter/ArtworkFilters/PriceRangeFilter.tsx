@@ -1,14 +1,12 @@
 import React, { useState } from "react"
 import {
   Button,
-  Clickable,
   Flex,
   LabeledInput,
   Message,
   Radio,
   RadioGroup,
   Spacer,
-  Text,
   useThemeConfig,
 } from "@artsy/palette"
 import { useArtworkFilterContext } from "../ArtworkFilterContext"
@@ -188,22 +186,14 @@ export const PriceRangeFilter: React.FC<PriceRangeFilterProps> = ({
             />
           </Flex>
 
-          <Media lessThan="sm">
-            <Clickable mt={2} textDecoration="underline" onClick={handleClick}>
-              <Text>Set price</Text>
-            </Clickable>
-          </Media>
-
-          <Media greaterThanOrEqual="sm">
-            <Button
-              mt={1}
-              variant="secondaryGray"
-              onClick={handleClick}
-              width="100%"
-            >
-              Set price
-            </Button>
-          </Media>
+          <Button
+            mt={1}
+            variant="secondaryGray"
+            onClick={handleClick}
+            width="100%"
+          >
+            Set price
+          </Button>
         </>
       )}
     </FilterExpandable>
