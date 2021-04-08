@@ -211,7 +211,12 @@ export const SizeFilter2: React.FC<SizeFilter2Props> = ({ expanded }) => {
             />
           </Flex>
 
-          <Button mt={1} variant="secondaryGray" onClick={handleClick}>
+          <Button
+            mt={1}
+            variant="secondaryGray"
+            onClick={handleClick}
+            width="100%"
+          >
             Set size
           </Button>
         </>
