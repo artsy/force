@@ -1,10 +1,6 @@
 import $ from "jquery"
 
 const routes = {
-  [`\
-/auctions\
-`]: require("../apps/auctions/client/index.coffee").init,
-
   // TODO: refactor to check paths in order.
   // Discussion here: https://github.com/artsy/force/pull/1126
   [`\
