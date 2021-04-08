@@ -75,15 +75,19 @@ export const SizeFilter2: React.FC<SizeFilter2Props> = ({ expanded }) => {
   }: React.FormEvent<HTMLInputElement>) => {
     const isOpenEnded = value === "" || value === "0"
     const isMin = index === 0
-    const isMax = index === 1
 
     setCustomSize(prevCustomSize => {
-      if (isOpenEnded && isMin) {
-        prevCustomSize[dimension][index] = 0
-      } else if (isOpenEnded && isMax) {
+      if (isOpenEnded) {
         prevCustomSize[dimension][index] = "*"
       } else {
-        prevCustomSize[dimension][index] = parseInt(value, 10)
+        const parsedValue = parseInt(value, 10)
+        if (prevCustomSize[dimension])
+          prevCustomSize[dimension][index] = parsedValue
+        else if (isMin) {
+          prevCustomSize[dimension] = [parsedValue, "*"]
+        } else {
+          prevCustomSize[dimension] = ["*", parsedValue]
+        }
       }
 
       return { ...prevCustomSize }
