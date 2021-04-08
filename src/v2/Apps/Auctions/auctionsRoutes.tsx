@@ -36,6 +36,7 @@ export const auctionsRoutes = [
       {
         path: "", // represents current auctions aka /auctions/current
         getComponent: () => CurrentAuctions,
+        ignoreScrollBehavior: true,
         prepare: () => {
           CurrentAuctions.preload()
         },
@@ -50,6 +51,7 @@ export const auctionsRoutes = [
       {
         path: "upcoming",
         getComponent: () => UpcomingAuctions,
+        ignoreScrollBehavior: true,
         prepare: () => {
           UpcomingAuctions.preload()
         },
@@ -64,6 +66,7 @@ export const auctionsRoutes = [
       {
         path: "past",
         getComponent: () => PastAuctions,
+        ignoreScrollBehavior: true,
         prepare: () => {
           PastAuctions.preload()
         },
