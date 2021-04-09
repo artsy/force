@@ -24,8 +24,9 @@ mixin auction_audience(section)
       img( src=section.images[0].src )
     .audience-quotes
       - q = section.quotes[0]
-      .quote
-        .text= q.quote
+      if q
+        .quote
+          .text= q.quote
 
 mixin access(section)
   .partnerships-section-header.access
