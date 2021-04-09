@@ -68,7 +68,7 @@ export const PriceRangeFilter: React.FC<PriceRangeFilterProps> = ({
   const [mode, setMode] = useState<"resting" | "done">("resting")
 
   const { currentlySelectedFilters, setFilter } = useArtworkFilterContext()
-  const { priceRange: initialRange, atAuction } = currentlySelectedFilters()
+  const { priceRange: initialRange } = currentlySelectedFilters()
 
   const numericInitialRange = parseRange(initialRange)
 
@@ -139,8 +139,6 @@ export const PriceRangeFilter: React.FC<PriceRangeFilterProps> = ({
           deselectable
           defaultValue={isCustomRange ? "custom" : initialRange}
           onSelect={handleSelect}
-          disabled={atAuction}
-          disabledText="Disabled for biddable works"
         >
           {[
             ...PRICE_RANGES.map((range, index) => (
