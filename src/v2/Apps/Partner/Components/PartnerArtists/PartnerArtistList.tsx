@@ -12,6 +12,7 @@ export interface PartnerArtistListProps {
   artists: PartnerArtistList_artists
   distinguishRepresentedArtists: boolean
   partnerSlug: string
+  onArtistClick?: () => void
 }
 
 export const PartnerArtistListContainer: React.FC = ({ children }) => {
@@ -29,6 +30,7 @@ export const PartnerArtistList: React.FC<PartnerArtistListProps> = ({
   artists,
   distinguishRepresentedArtists,
   partnerSlug,
+  onArtistClick,
 }) => {
   if (!artists) return null
 
@@ -52,6 +54,7 @@ export const PartnerArtistList: React.FC<PartnerArtistListProps> = ({
                 {group.artists.map(({ node, counts: { artworks } }) => {
                   return (
                     <PartnerArtistItem
+                      onArtistClick={onArtistClick}
                       key={node.internalID}
                       artist={node}
                       partnerSlug={partnerSlug}

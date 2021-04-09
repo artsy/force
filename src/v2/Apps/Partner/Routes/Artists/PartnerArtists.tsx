@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react"
-import { Box, Text, Button, Flex } from "@artsy/palette"
+import { Box, Text, Button, Flex, themeProps } from "@artsy/palette"
 import { Match } from "found"
 import {
   createPaginationContainer,
@@ -13,6 +13,10 @@ import {
   PartnerArtistListPlaceholder,
 } from "../../Components/PartnerArtists"
 import { PartnerArtists_partner } from "v2/__generated__/PartnerArtists_partner.graphql"
+import { scrollIntoView } from "v2/Utils/scrollHelpers"
+import { useMatchMedia } from "v2/Utils/Hooks/useMatchMedia"
+import { MOBILE_NAV_HEIGHT, NAV_BAR_HEIGHT } from "v2/Components/NavBar"
+import { PARTHER_NAV_BAR_HEIGHT } from "../../Components/NavigationTabs"
 
 const PAGE_SIZE = 20
 
@@ -35,6 +39,7 @@ export const ArtistsRoute: React.FC<ArtistsRouteProps> = ({
   const [isRefetching, setIsRefetching] = useState(false)
   const [tempArtists, setTempArtists] = useState(undefined)
   const errCounter = useRef(0)
+  const isMobile = useMatchMedia(themeProps.mediaQueries.xs)
 
   useEffect(() => {
     if (
@@ -83,6 +88,18 @@ export const ArtistsRoute: React.FC<ArtistsRouteProps> = ({
     })
   }
 
+  const handleArtistClick = () => {
+    const offset =
+      PARTHER_NAV_BAR_HEIGHT +
+      (isMobile ? MOBILE_NAV_HEIGHT : NAV_BAR_HEIGHT) +
+      20
+
+    scrollIntoView({
+      offset: offset,
+      selector: "#jump--PartnerArtistDetails",
+    })
+  }
+
   const isFirstLoading = !isRefetching && artistsLoading
 
   return (
@@ -94,6 +111,7 @@ export const ArtistsRoute: React.FC<ArtistsRouteProps> = ({
         <>
           <PartnerArtistList
             partnerSlug={slug}
+            onArtistClick={handleArtistClick}
             artists={isRefetching ? tempArtists.edges : artists.edges}
             distinguishRepresentedArtists={distinguishRepresentedArtists}
           />

@@ -7,6 +7,9 @@ import { RouteTab, RouteTabs } from "v2/Components/RouteTabs"
 import { StickyContainer } from "v2/Components/StickyContainer"
 import { NavigationTabs_partner } from "v2/__generated__/NavigationTabs_partner.graphql"
 
+// TODO: Update value in component heigth changed
+export const PARTHER_NAV_BAR_HEIGHT = 78
+
 interface NavigationTabsProps {
   partner: NavigationTabs_partner
 }
