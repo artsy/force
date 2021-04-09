@@ -92,7 +92,7 @@ export const BaseArtworkFilter: React.FC<
       | ArtistSeriesArtworksFilter_artistSeries
       | FairArtworks_fair
       | ShowArtworks_show
-    Filters?: React.FC
+    Filters?: JSX.Element
   }
 > = ({ relay, viewer, Filters, relayVariables = {}, children, ...rest }) => {
   const { filtered_artworks } = viewer
@@ -213,7 +213,7 @@ export const BaseArtworkFilter: React.FC<
             <ArtworkFilterMobileActionSheet
               onClose={() => toggleMobileActionSheet(false)}
             >
-              {Filters ? <Filters /> : <ArtworkFilters />}
+              {Filters ? Filters : <ArtworkFilters />}
             </ArtworkFilterMobileActionSheet>
           )}
 
@@ -269,7 +269,7 @@ export const BaseArtworkFilter: React.FC<
 
         <GridColumns>
           <Column span={3} pr={tokens.pr}>
-            {Filters ? <Filters /> : <ArtworkFilters />}
+            {Filters ? Filters : <ArtworkFilters />}
           </Column>
 
           <Column span={9}>

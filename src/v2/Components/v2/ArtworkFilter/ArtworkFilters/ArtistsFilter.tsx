@@ -96,8 +96,12 @@ export const ArtistsFilter: FC<ArtistsFilterProps> = ({
     filterContext.currentlySelectedFilters()["includeArtworksByFollowedArtists"]
   const followedArtistArtworkCount = filterContext?.counts?.followedArtists ?? 0
 
+  const selection = filterContext.currentlySelectedFilters().artistIDs
+  const hasSelection =
+    (selection && selection.length > 0) || isFollowedArtistCheckboxSelected
+
   return (
-    <FilterExpandable label="Artists" expanded={expanded}>
+    <FilterExpandable label="Artists" expanded={hasSelection || expanded}>
       <Flex flexDirection="column">
         <Checkbox
           disabled={!followedArtistArtworkCount}
