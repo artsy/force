@@ -128,8 +128,16 @@ export const SizeFilter2: React.FC<SizeFilter2Props> = ({ expanded }) => {
     v3: { my: 1, secondaryVariant: "xs" as TextVariant },
   })
 
+  const selection = currentlySelectedFilters().sizes
+  const customHeight = currentlySelectedFilters().height
+  const customWidth = currentlySelectedFilters().width
+  const hasSelection =
+    (selection && selection.length > 0) ||
+    (customHeight && customHeight !== "*-*") ||
+    (customWidth && customWidth !== "*-*")
+
   return (
-    <FilterExpandable label="Size" expanded={expanded}>
+    <FilterExpandable label="Size" expanded={hasSelection || expanded}>
       {mode === "done" && (
         <Media lessThan="sm">
           <Message variant="info" my={2}>

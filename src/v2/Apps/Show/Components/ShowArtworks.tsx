@@ -34,21 +34,18 @@ const ShowArtworksFilter: React.FC<ShowArtworksFilterProps> = ({
 
   if (!hasFilter) return null
 
-  const Filters = () => {
-    const showNewFilters = getENV("ENABLE_NEW_ARTWORK_FILTERS")
-
-    return (
-      <>
-        <MediumFilter expanded />
-        {showNewFilters && <MaterialsFilter expanded />}
-        <PriceRangeFilter />
-        {showNewFilters ? <SizeFilter2 /> : <SizeFilter />}
-        <WaysToBuyFilter />
-        <TimePeriodFilter />
-        <ColorFilter />
-      </>
-    )
-  }
+  const showNewFilters = getENV("ENABLE_NEW_ARTWORK_FILTERS")
+  const Filters = (
+    <>
+      <MediumFilter expanded />
+      {showNewFilters && <MaterialsFilter expanded />}
+      <PriceRangeFilter />
+      {showNewFilters ? <SizeFilter2 /> : <SizeFilter />}
+      <WaysToBuyFilter />
+      <TimePeriodFilter />
+      <ColorFilter />
+    </>
+  )
 
   // Inject custom default sort into artwork filter.
   const filters = omit(

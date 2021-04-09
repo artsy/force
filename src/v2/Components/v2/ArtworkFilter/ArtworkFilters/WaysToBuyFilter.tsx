@@ -59,8 +59,15 @@ export const WaysToBuyFilter: FC<WaysToBuyFilterProps> = ({ expanded }) => {
     v3: { my: 1 },
   })
 
+  const selection = filterContext.currentlySelectedFilters()
+  const hasSelection =
+    !!selection.acquireable ||
+    !!selection.offerable ||
+    !!selection.atAuction ||
+    !!selection.inquireableOnly
+
   return (
-    <FilterExpandable label="Ways to buy" expanded={expanded}>
+    <FilterExpandable label="Ways to buy" expanded={hasSelection || expanded}>
       <Flex flexDirection="column">
         {checkboxes.map((checkbox, index) => {
           return (

@@ -124,8 +124,11 @@ export const PriceRangeFilter: React.FC<PriceRangeFilterProps> = ({
     v3: { my: 1 },
   })
 
+  const selection = currentlySelectedFilters().priceRange
+  const hasSelection = selection && selection.length > 0
+
   return (
-    <FilterExpandable label="Price" expanded={expanded}>
+    <FilterExpandable label="Price" expanded={hasSelection || expanded}>
       {mode === "done" && (
         <Media lessThan="sm">
           <Message variant="info" my={2}>

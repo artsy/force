@@ -61,8 +61,10 @@ export const ResultsFilter: React.FC<ResultsFilterProps> = ({
       resultsSorted.slice(INITIAL_ITEMS_TO_SHOW).map(({ value }) => value)
     ).length > 0
 
+  const hasSelection = selectedValues && selectedValues.length > 0
+
   return (
-    <FilterExpandable label={label} expanded={expanded}>
+    <FilterExpandable label={label} expanded={hasSelection || expanded}>
       <Flex flexDirection="column">
         <FacetFilter
           facetName={facetName}
