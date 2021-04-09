@@ -10,6 +10,7 @@ import { ContextModule } from "@artsy/cohesion"
 import { getBriefArtistInfo } from "./partnerArtistsUtils"
 import { useSystemContext } from "v2/Artsy"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
+import { PartnerArtistDetailsPlaceholder } from "./PartnerArtistDetailsPlaceholder"
 
 export interface PartnerArtistDetailsProps {
   artist: PartnerArtistDetails_artist
@@ -122,7 +123,7 @@ export const PartnerArtistDetailsRenderer: React.FC<{
       `}
       variables={{ partnerId, artistId }}
       render={({ error, props }) => {
-        if (error || !props) return undefined // TODO: Add placeholder
+        if (error || !props) return <PartnerArtistDetailsPlaceholder />
         return <PartnerArtistDetailsFragmentContainer {...rest} {...props} />
       }}
     />
