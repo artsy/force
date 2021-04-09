@@ -43,10 +43,7 @@ export const WaysToBuyFilter: FC<WaysToBuyFilterProps> = ({ expanded }) => {
       state: "offerable",
     },
     {
-      disabled: isDisabled(
-        filterContext.counts.auction_artworks ||
-          !filterContext.isDefaultValue("priceRange")
-      ),
+      disabled: isDisabled(filterContext.counts.auction_artworks),
       name: "Bid",
       state: "atAuction",
     },
