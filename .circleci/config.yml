@@ -116,6 +116,16 @@ jobs:
     steps:
       - run: yarn type-check
 
+  relay-check:
+    docker:
+      - image: 585031190124.dkr.ecr.us-east-1.amazonaws.com/force:$CIRCLE_SHA1-builder
+        aws_auth:
+          aws_access_key_id: $AWS_ACCESS_KEY_ID
+          aws_secret_access_key: $AWS_SECRET_ACCESS_KEY
+    working_directory: /app
+    steps:
+      - run: yarn relay
+
   acceptance:
     docker:
       - image: 585031190124.dkr.ecr.us-east-1.amazonaws.com/force:$CIRCLE_SHA1-electron-runner
@@ -240,6 +250,12 @@ workflows:
           requires:
             - builder-image-push
 
+      - relay-check:
+          <<: *not_staging_or_release
+          context: hokusai
+          requires:
+            - builder-image-push
+
       - acceptance:
           <<: *not_staging_or_release
           context: hokusai
@@ -269,6 +285,7 @@ workflows:
             - jest-v1
             - jest-v2
             - type-check
+            - relay-check
             - acceptance
             - acceptance-cypress
             - production-image-build
