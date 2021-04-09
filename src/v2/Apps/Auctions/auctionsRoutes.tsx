@@ -19,7 +19,7 @@ const PastAuctions = loadable(() => import("./Routes/PastAuctions"), {
 
 export const auctionsRoutes = [
   {
-    path: "/auctions2",
+    path: "/auctions",
     getComponent: () => AuctionsApp,
     prepare: () => {
       AuctionsApp.preload()

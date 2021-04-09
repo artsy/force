@@ -9,8 +9,7 @@ const excludedRoutes = [
   "/artist(.*)",
   "/artists",
   "/artwork(.*)",
-  // FIXME: Replace when /auctions2 => /auctions
-  "/auctions2(.*)",
+  "/auctions(.*)",
   "/auction-faq",
   "/auction-registration(2)?/:saleID",
   "/auction/:saleID/bid(2)?/:artworkID",

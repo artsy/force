@@ -85,11 +85,11 @@ const AuctionsApp: React.FC<AuctionsAppProps> = props => {
       )}
       <HorizontalPadding mt={4}>
         <RouteTabs mb={2}>
-          <RouteTab exact to="/auctions2">
+          <RouteTab exact to="/auctions">
             Current Auctions
           </RouteTab>
-          <RouteTab to="/auctions2/upcoming">Upcoming</RouteTab>
-          <RouteTab to="/auctions2/past">Past</RouteTab>
+          <RouteTab to="/auctions/upcoming">Upcoming</RouteTab>
+          <RouteTab to="/auctions/past">Past</RouteTab>
         </RouteTabs>
 
         <Box>{children}</Box>
