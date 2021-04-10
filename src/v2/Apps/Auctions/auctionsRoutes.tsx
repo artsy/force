@@ -1,20 +1,11 @@
 import loadable from "@loadable/component"
 import { graphql } from "react-relay"
+import { CurrentAuctionsPaginationContainer } from "./Routes/CurrentAuctions"
+import { PastAuctionsPaginationContainer } from "./Routes/PastAuctions"
+import { UpcomingAuctionsPaginationContainer } from "./Routes/UpcomingAuctions"
 
 const AuctionsApp = loadable(() => import("./AuctionsApp"), {
   resolveComponent: component => component.AuctionsAppFragmentContainer,
-})
-
-const CurrentAuctions = loadable(() => import("./Routes/CurrentAuctions"), {
-  resolveComponent: component => component.CurrentAuctionsPaginationContainer,
-})
-
-const UpcomingAuctions = loadable(() => import("./Routes/UpcomingAuctions"), {
-  resolveComponent: component => component.UpcomingAuctionsPaginationContainer,
-})
-
-const PastAuctions = loadable(() => import("./Routes/PastAuctions"), {
-  resolveComponent: component => component.PastAuctionsPaginationContainer,
 })
 
 export const auctionsRoutes = [
@@ -35,11 +26,8 @@ export const auctionsRoutes = [
     children: [
       {
         path: "", // represents current auctions aka /auctions/current
-        getComponent: () => CurrentAuctions,
+        Component: CurrentAuctionsPaginationContainer,
         ignoreScrollBehavior: true,
-        prepare: () => {
-          CurrentAuctions.preload()
-        },
         query: graphql`
           query auctionsRoutes_Current_AuctionsQuery {
             viewer {
@@ -50,11 +38,8 @@ export const auctionsRoutes = [
       },
       {
         path: "upcoming",
-        getComponent: () => UpcomingAuctions,
+        Component: UpcomingAuctionsPaginationContainer,
         ignoreScrollBehavior: true,
-        prepare: () => {
-          UpcomingAuctions.preload()
-        },
         query: graphql`
           query auctionsRoutes_Upcoming_AuctionsQuery {
             viewer {
@@ -65,11 +50,8 @@ export const auctionsRoutes = [
       },
       {
         path: "past",
-        getComponent: () => PastAuctions,
+        Component: PastAuctionsPaginationContainer,
         ignoreScrollBehavior: true,
-        prepare: () => {
-          PastAuctions.preload()
-        },
         query: graphql`
           query auctionsRoutes_Past_AuctionsQuery {
             viewer {

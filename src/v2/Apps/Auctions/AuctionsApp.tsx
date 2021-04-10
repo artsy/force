@@ -8,6 +8,7 @@ import {
   ChevronIcon,
   Column,
   GridColumns,
+  Join,
   Separator,
   Text,
 } from "@artsy/palette"
@@ -71,16 +72,16 @@ const AuctionsApp: React.FC<AuctionsAppProps> = props => {
       </GridColumns>
 
       {user && (
-        <HorizontalPadding>
-          <Box mt={[2, 4]}>
-            <MyBidsFragmentContainer me={viewer.me} />
-          </Box>
+        <HorizontalPadding pb={2} my={[2, 4]}>
+          <Join separator={<Separator my={[2, 4]} />}>
+            <Box>
+              <MyBidsFragmentContainer me={viewer.me} />
+            </Box>
 
-          <Separator />
-
-          <Box my={[2]} pb={2}>
-            <WorksByArtistsYouFollowRailFragmentContainer viewer={viewer} />
-          </Box>
+            <Box>
+              <WorksByArtistsYouFollowRailFragmentContainer viewer={viewer} />
+            </Box>
+          </Join>
         </HorizontalPadding>
       )}
       <HorizontalPadding mt={4}>
