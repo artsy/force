@@ -24,10 +24,10 @@ export const PartnerArtistDetailsPlaceholder: React.FC<PartnerArtistDetailsPlace
           <GridColumns gridRowGap={2}>
             <Column span={12}>
               <SkeletonText done={done} variant="largeTitle">
-                Darren Almond
+                Artist name
               </SkeletonText>
               <SkeletonText done={done} variant="title">
-                British, b. 1971
+                Artist brief info
               </SkeletonText>
             </Column>
             <Column span={[12, 6]}>
@@ -53,15 +53,15 @@ export const PartnerArtistDetailsPlaceholder: React.FC<PartnerArtistDetailsPlace
                   <SkeletonBox width={220} height={160} mb={1} done={done} />
 
                   <SkeletonText variant="mediumText" done={done}>
-                    Darren Almond
+                    Artist name
                   </SkeletonText>
 
                   <SkeletonText variant="text" done={done}>
-                    Cristal Baroque, 1959
+                    Artwork name
                   </SkeletonText>
 
                   <SkeletonText variant="text" done={done}>
-                    White Cube
+                    Partner name
                   </SkeletonText>
 
                   <SkeletonText variant="text" done={done}>
