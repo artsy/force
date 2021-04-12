@@ -75,52 +75,6 @@ const FAIR_ARTWORKS_FIXTURE: FairArtworks_QueryRawResponse = {
       counts: {
         followedArtists: 10,
       },
-      aggregations: [
-        {
-          slice: "INSTITUTION",
-          counts: [],
-        },
-        {
-          slice: "MEDIUM",
-          counts: [
-            {
-              value: "sculpture",
-              name: "Sculpture",
-              count: 22222,
-            },
-          ],
-        },
-        {
-          slice: "MAJOR_PERIOD",
-          counts: [
-            {
-              value: "2020",
-              name: "2020",
-              count: 1,
-            },
-          ],
-        },
-        {
-          slice: "GALLERY",
-          counts: [
-            {
-              value: "important-gallery",
-              name: "Important Gallery",
-              count: 4,
-            },
-          ],
-        },
-        {
-          slice: "ARTIST",
-          counts: [
-            {
-              value: "catty-artst",
-              name: "Catty Artist",
-              count: 4,
-            },
-          ],
-        },
-      ],
       pageInfo: {
         hasNextPage: true,
         endCursor: "endCursor",
@@ -237,6 +191,21 @@ const FAIR_ARTWORKS_FIXTURE: FairArtworks_QueryRawResponse = {
             is_biddable: false,
           },
           id: "nodeid123",
+        },
+      ],
+    },
+    sidebarAggregations: {
+      id: "sidebar-id",
+      aggregations: [
+        {
+          slice: "ARTIST",
+          counts: [
+            {
+              count: 100,
+              value: "cats",
+              name: "Cats",
+            },
+          ],
         },
       ],
     },

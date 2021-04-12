@@ -66,10 +66,15 @@ export const fairRoutes: RouteConfig[] = [
             $slug: String!
             $input: FilterArtworksInput
             $shouldFetchCounts: Boolean!
+            $aggregations: [ArtworkAggregation]
           ) {
             fair(id: $slug) @principalField {
               ...FairArtworks_fair
-                @arguments(input: $input, shouldFetchCounts: $shouldFetchCounts)
+                @arguments(
+                  input: $input
+                  shouldFetchCounts: $shouldFetchCounts
+                  aggregations: $aggregations
+                )
             }
           }
         `,
@@ -135,18 +140,19 @@ function initializeVariablesWithFilterState({ slug }, props) {
   const additionalAggregations = getENV("ENABLE_NEW_ARTWORK_FILTERS")
     ? ["ARTIST_NATIONALITY", "MATERIALS_TERMS", "PARTNER"]
     : ["GALLERY"]
+  const allAggregations = aggregations.concat(additionalAggregations)
   const input = {
     sort: "-decayed_merch",
     ...allowedFilters(camelCasedFilterStateFromUrl),
     includeArtworksByFollowedArtists:
       !!props.context.user &&
       camelCasedFilterStateFromUrl["includeArtworksByFollowedArtists"],
-    aggregations: aggregations.concat(additionalAggregations),
   }
 
   return {
     slug,
     input,
     shouldFetchCounts: !!props.context.user,
+    aggregations: allAggregations,
   }
 }

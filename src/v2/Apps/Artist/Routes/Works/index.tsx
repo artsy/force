@@ -117,7 +117,7 @@ export const WorksRouteFragmentContainer = createFragmentContainer(WorksRoute, {
         sort: $sort
         page: $page
         aggregations: $aggregations
-        first: 30
+        first: 1
         after: ""
       ) {
         aggregations {

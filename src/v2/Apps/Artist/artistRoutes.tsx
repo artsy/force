@@ -137,12 +137,13 @@ export const artistRoutes: RouteConfig[] = [
           const additionalAggregations = getENV("ENABLE_NEW_ARTWORK_FILTERS")
             ? ["PARTNER", "LOCATION_CITY", "MATERIALS_TERMS"]
             : ["GALLERY", "INSTITUTION"]
+          const allAggregations = aggregations.concat(additionalAggregations)
 
           return {
             input: {
               ...allowedFilters(filterParams),
-              aggregations: aggregations.concat(additionalAggregations),
             },
+            aggregations: allAggregations,
             artistID,
           }
         },
@@ -150,9 +151,11 @@ export const artistRoutes: RouteConfig[] = [
           query artistRoutes_WorksQuery(
             $artistID: String!
             $input: FilterArtworksInput
+            $aggregations: [ArtworkAggregation]
           ) @raw_response_type {
             artist(id: $artistID) {
-              ...Works_artist @arguments(input: $input)
+              ...Works_artist
+                @arguments(input: $input, aggregations: $aggregations)
             }
           }
         `,

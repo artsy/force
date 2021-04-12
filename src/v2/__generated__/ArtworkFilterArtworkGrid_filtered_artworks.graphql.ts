@@ -3,17 +3,8 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type ArtworkAggregation = "ARTIST" | "ARTIST_NATIONALITY" | "ATTRIBUTION_CLASS" | "COLOR" | "DIMENSION_RANGE" | "FOLLOWED_ARTISTS" | "GALLERY" | "INSTITUTION" | "LOCATION_CITY" | "MAJOR_PERIOD" | "MATERIALS_TERMS" | "MEDIUM" | "MERCHANDISABLE_ARTISTS" | "PARTNER" | "PARTNER_CITY" | "PERIOD" | "PRICE_RANGE" | "TOTAL" | "%future added value";
 export type ArtworkFilterArtworkGrid_filtered_artworks = {
     readonly id: string;
-    readonly aggregations: ReadonlyArray<{
-        readonly slice: ArtworkAggregation | null;
-        readonly counts: ReadonlyArray<{
-            readonly value: string;
-            readonly name: string;
-            readonly count: number;
-        } | null> | null;
-    } | null> | null;
     readonly pageInfo: {
         readonly hasNextPage: boolean;
         readonly endCursor: string | null;
@@ -52,56 +43,6 @@ return {
   "name": "ArtworkFilterArtworkGrid_filtered_artworks",
   "selections": [
     (v0/*: any*/),
-    {
-      "alias": null,
-      "args": null,
-      "concreteType": "ArtworksAggregationResults",
-      "kind": "LinkedField",
-      "name": "aggregations",
-      "plural": true,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "slice",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "concreteType": "AggregationCount",
-          "kind": "LinkedField",
-          "name": "counts",
-          "plural": true,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "value",
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "name",
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "count",
-              "storageKey": null
-            }
-          ],
-          "storageKey": null
-        }
-      ],
-      "storageKey": null
-    },
     {
       "alias": null,
       "args": null,
@@ -175,5 +116,5 @@ return {
   "type": "FilterArtworksConnection"
 };
 })();
-(node as any).hash = '7e8fc516dbd99a441ba323c173b47077';
+(node as any).hash = '04cd49aefae4484840f678821ea905e1';
 export default node;

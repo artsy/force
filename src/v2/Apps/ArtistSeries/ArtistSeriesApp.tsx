@@ -17,6 +17,7 @@ import {
   AnalyticsContext,
   useAnalyticsContext,
 } from "v2/Artsy/Analytics/AnalyticsContext"
+import { SharedArtworkFilterContextProps } from "v2/Components/v2/ArtworkFilter/ArtworkFilterContext"
 
 interface ArtistSeriesAppProps {
   artistSeries: ArtistSeriesApp_artistSeries
@@ -26,7 +27,8 @@ const ArtistSeriesApp: React.FC<ArtistSeriesAppProps> = ({ artistSeries }) => {
   const { contextPageOwnerType, contextPageOwnerSlug } = useAnalyticsContext()
 
   if (artistSeries) {
-    const { railArtist, internalID } = artistSeries
+    const { railArtist, internalID, sidebarAggregations } = artistSeries
+
     return (
       <AnalyticsContext.Provider
         value={{
@@ -47,7 +49,12 @@ const ArtistSeriesApp: React.FC<ArtistSeriesAppProps> = ({ artistSeries }) => {
               <Separator my={2} />
             </Media>
             <AppContainer>
-              <ArtistSeriesArtworksFilter artistSeries={artistSeries} />
+              <ArtistSeriesArtworksFilter
+                aggregations={
+                  sidebarAggregations.aggregations as SharedArtworkFilterContextProps["aggregations"]
+                }
+                artistSeries={artistSeries}
+              />
               <Separator mt={6} mb={3} />
 
               {/* HOTFIX FIXME: This rail was causing an error if included in SSR render
@@ -80,7 +87,10 @@ export const ArtistSeriesAppFragmentContainer = createFragmentContainer(
   {
     artistSeries: graphql`
       fragment ArtistSeriesApp_artistSeries on ArtistSeries
-        @argumentDefinitions(input: { type: "FilterArtworksInput" }) {
+        @argumentDefinitions(
+          input: { type: "FilterArtworksInput" }
+          aggregations: { type: "[ArtworkAggregation]" }
+        ) {
         ...ArtistSeriesMeta_artistSeries
         ...ArtistSeriesHeader_artistSeries
         railArtist: artists(size: 1) {
@@ -89,6 +99,19 @@ export const ArtistSeriesAppFragmentContainer = createFragmentContainer(
         internalID
         slug
         ...ArtistSeriesArtworksFilter_artistSeries @arguments(input: $input)
+        sidebarAggregations: filterArtworksConnection(
+          aggregations: $aggregations
+          first: 1
+        ) {
+          aggregations {
+            slice
+            counts {
+              name
+              value
+              count
+            }
+          }
+        }
       }
     `,
   }

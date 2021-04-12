@@ -1,15 +1,13 @@
 import { Box, Spacer } from "@artsy/palette"
-import { isEmpty } from "lodash"
-import React, { useEffect } from "react"
+import React from "react"
 import { RelayProp, createFragmentContainer, graphql } from "react-relay"
 
 import { ArtworkFilterArtworkGrid_filtered_artworks } from "v2/__generated__/ArtworkFilterArtworkGrid_filtered_artworks.graphql"
 import { useSystemContext, useTracking } from "v2/Artsy"
 import ArtworkGrid from "v2/Components/ArtworkGrid"
 import { PaginationFragmentContainer as Pagination } from "v2/Components/Pagination"
-import { get } from "v2/Utils/get"
 import { LoadingArea } from "../../LoadingArea"
-import { Aggregations, useArtworkFilterContext } from "./ArtworkFilterContext"
+import { useArtworkFilterContext } from "./ArtworkFilterContext"
 import { ContextModule, clickedMainArtworkGrid } from "@artsy/cohesion"
 import { useAnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
 
@@ -29,17 +27,6 @@ const ArtworkFilterArtworkGrid: React.FC<ArtworkFilterArtworkGridProps> = props 
     contextPageOwnerId,
   } = useAnalyticsContext()
   const context = useArtworkFilterContext()
-  const aggregations = get(props, p => p.filtered_artworks.aggregations)
-
-  /**
-   * If aggregations have not been passed as props when instantiating the
-   * <ArtworkFilter> component then populate.
-   */
-  useEffect(() => {
-    if (isEmpty(context.aggregations) && aggregations.length) {
-      context.setAggregations(aggregations as Aggregations)
-    }
-  }, [aggregations, context])
 
   const {
     columnCount,
@@ -115,14 +102,6 @@ export const ArtworkFilterArtworkGridRefetchContainer = createFragmentContainer(
     filtered_artworks: graphql`
       fragment ArtworkFilterArtworkGrid_filtered_artworks on FilterArtworksConnection {
         id
-        aggregations {
-          slice
-          counts {
-            value
-            name
-            count
-          }
-        }
         pageInfo {
           hasNextPage
           endCursor

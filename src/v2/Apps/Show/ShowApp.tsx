@@ -19,6 +19,7 @@ import {
   useAnalyticsContext,
 } from "v2/Artsy/Analytics/AnalyticsContext"
 import { ShowArtworksEmptyStateFragmentContainer as ShowArtworksEmptyState } from "./Components/ShowArtworksEmptyState"
+import { SharedArtworkFilterContextProps } from "v2/Components/v2/ArtworkFilter/ArtworkFilterContext"
 
 interface ShowAppProps {
   show: ShowApp_show
@@ -31,7 +32,7 @@ export const ShowApp: React.FC<ShowAppProps> = ({ show }) => {
   const hasAbout = !!show.about
   const hasWideHeader =
     (hasAbout && hasViewingRoom) || (!hasAbout && !hasViewingRoom)
-
+  const { sidebarAggregations } = show
   return (
     <>
       <ShowMeta show={show} />
@@ -82,7 +83,13 @@ export const ShowApp: React.FC<ShowAppProps> = ({ show }) => {
             </GridColumns>
 
             {show.counts.eligibleArtworks > 0 ? (
-              <ShowArtworks show={show} my={3} />
+              <ShowArtworks
+                aggregations={
+                  sidebarAggregations.aggregations as SharedArtworkFilterContextProps["aggregations"]
+                }
+                show={show}
+                my={3}
+              />
             ) : (
               <>
                 <Separator my={3} />
@@ -106,7 +113,10 @@ export const ShowApp: React.FC<ShowAppProps> = ({ show }) => {
 export const ShowAppFragmentContainer = createFragmentContainer(ShowApp, {
   show: graphql`
     fragment ShowApp_show on Show
-      @argumentDefinitions(input: { type: "FilterArtworksInput" }) {
+      @argumentDefinitions(
+        input: { type: "FilterArtworksInput" }
+        aggregations: { type: "[ArtworkAggregation]" }
+      ) {
       name
       href
       internalID
@@ -119,6 +129,19 @@ export const ShowAppFragmentContainer = createFragmentContainer(ShowApp, {
       }
       counts {
         eligibleArtworks
+      }
+      sidebarAggregations: filterArtworksConnection(
+        aggregations: $aggregations
+        first: 1
+      ) {
+        aggregations {
+          slice
+          counts {
+            name
+            value
+            count
+          }
+        }
       }
       ...ShowContextualLink_show
       ...ShowHeader_show

@@ -19,6 +19,7 @@ import { collectRoutes_ArtworkFilterQueryResponse } from "v2/__generated__/colle
 import { CollectionsHubsNavFragmentContainer as CollectionsHubsNav } from "v2/Components/CollectionsHubsNav"
 import { ArtworkFilter } from "v2/Components/v2/ArtworkFilter"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
+import { SharedArtworkFilterContextProps } from "v2/Components/v2/ArtworkFilter/ArtworkFilterContext"
 
 export interface CollectAppProps {
   match: Match
@@ -101,6 +102,10 @@ export const CollectApp: React.FC<CollectAppProps> = ({
         <Box>
           <ArtworkFilter
             viewer={viewer}
+            aggregations={
+              viewer.artworksConnection
+                .aggregations as SharedArtworkFilterContextProps["aggregations"]
+            }
             filters={location.query as any}
             sortOptions={[
               { text: "Default", value: "-decayed_merch" },

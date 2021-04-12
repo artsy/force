@@ -15,7 +15,7 @@ jest.mock("v2/Artsy/Analytics/useTracking")
 const { getWrapper } = setupTestWrapper<ShowArtworks_Test_Query>({
   Component: props => (
     <MockBoot>
-      <ShowArtworksRefetchContainer {...props} />
+      <ShowArtworksRefetchContainer aggregations={[]} {...props} />
     </MockBoot>
   ),
   query: graphql`
