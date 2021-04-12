@@ -43,4 +43,50 @@ describe("MyBids", () => {
     expect(wrapper.find("MyBidsBidHeaderFragmentContainer")).toBeDefined()
     expect(wrapper.find("MyBidsBidItemFragmentContainer")).toBeDefined()
   })
+
+  it("renders the Bid Now button if only user interaction is registration and button links out to sale", () => {
+    const wrapper = getWrapper({
+      Me: () => ({
+        myBids: {
+          active: [
+            {
+              sale: {
+                slug: "some-sale",
+              },
+              saleArtworks: [],
+            },
+          ],
+        },
+      }),
+    })
+
+    const btn = wrapper.find("[data-test='registeredOnlyButton']").first()
+    expect(btn.props().to).toBe("/auction/some-sale")
+  })
+
+  it("tracks clicks on the only registered button", () => {
+    const wrapper = getWrapper({
+      Me: () => ({
+        myBids: {
+          active: [
+            {
+              sale: {
+                slug: "some-sale",
+              },
+              saleArtworks: [],
+            },
+          ],
+        },
+      }),
+    })
+
+    const btn = wrapper.find("[data-test='registeredOnlyButton']").first()
+    btn.simulate("click")
+    expect(trackEvent).toHaveBeenCalledWith({
+      action: "clickedAuctionGroup",
+      context_module: "yourActiveBids",
+      destination_page_owner_type: "sale",
+      type: "thumbnail",
+    })
+  })
 })

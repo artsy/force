@@ -7,6 +7,7 @@ export type MyBids_me = {
     readonly myBids: {
         readonly active: ReadonlyArray<{
             readonly sale: {
+                readonly slug: string;
                 readonly " $fragmentRefs": FragmentRefs<"MyBidsBidHeader_sale">;
             } | null;
             readonly saleArtworks: ReadonlyArray<{
@@ -55,6 +56,13 @@ const node: ReaderFragment = {
               "plural": false,
               "selections": [
                 {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "slug",
+                  "storageKey": null
+                },
+                {
                   "args": null,
                   "kind": "FragmentSpread",
                   "name": "MyBidsBidHeader_sale"
@@ -87,5 +95,5 @@ const node: ReaderFragment = {
   ],
   "type": "Me"
 };
-(node as any).hash = '0872c831773e2f64e29ad1d94cd0cd6d';
+(node as any).hash = 'cfac86169241a72deeba877e77134538';
 export default node;
