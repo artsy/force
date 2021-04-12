@@ -11,7 +11,7 @@ interface ArticleCardProps {
 
 const ArticleCard: React.FC<ArticleCardProps> = ({ article }): JSX.Element => {
   const {
-    title,
+    thumbnailTitle,
     author,
     href,
     channelID,
@@ -58,7 +58,7 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ article }): JSX.Element => {
 
       <RouterLink to={href} style={{ textDecoration: "none" }}>
         <Text as="h3" variant="title" color="black" mt={1}>
-          {title}
+          {thumbnailTitle}
         </Text>
       </RouterLink>
 
@@ -77,7 +77,7 @@ export const ArticleCardFragmentContainer = createFragmentContainer(
     article: graphql`
       fragment ArticleCard_article on Article {
         channelID
-        title
+        thumbnailTitle
         href
         author {
           name
