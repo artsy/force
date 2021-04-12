@@ -72,6 +72,7 @@ fragment MyBids_me on Me {
   myBids {
     active {
       sale {
+        slug
         ...MyBidsBidHeader_sale
         id
       }
@@ -85,7 +86,14 @@ fragment MyBids_me on Me {
 */
 
 const node: ConcreteRequest = (function(){
-var v0 = [
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "slug",
+  "storageKey": null
+},
+v1 = [
   {
     "alias": null,
     "args": null,
@@ -101,25 +109,18 @@ var v0 = [
     "storageKey": null
   }
 ],
-v1 = {
+v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "name",
   "storageKey": null
 },
-v2 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "id",
-  "storageKey": null
-},
 v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "slug",
+  "name": "id",
   "storageKey": null
 };
 return {
@@ -186,6 +187,7 @@ return {
                     "name": "sale",
                     "plural": false,
                     "selections": [
+                      (v0/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -212,7 +214,7 @@ return {
                             "kind": "LinkedField",
                             "name": "resized",
                             "plural": false,
-                            "selections": (v0/*: any*/),
+                            "selections": (v1/*: any*/),
                             "storageKey": "resized(height:100,width:300)"
                           }
                         ],
@@ -225,7 +227,7 @@ return {
                         "name": "formattedStartDateTime",
                         "storageKey": null
                       },
-                      (v1/*: any*/),
+                      (v2/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -234,13 +236,12 @@ return {
                         "name": "partner",
                         "plural": false,
                         "selections": [
-                          (v1/*: any*/),
-                          (v2/*: any*/)
+                          (v2/*: any*/),
+                          (v3/*: any*/)
                         ],
                         "storageKey": null
                       },
-                      (v3/*: any*/),
-                      (v2/*: any*/)
+                      (v3/*: any*/)
                     ],
                     "storageKey": null
                   },
@@ -293,13 +294,13 @@ return {
                                 "kind": "LinkedField",
                                 "name": "resized",
                                 "plural": false,
-                                "selections": (v0/*: any*/),
+                                "selections": (v1/*: any*/),
                                 "storageKey": "resized(height:55,width:55)"
                               }
                             ],
                             "storageKey": null
                           },
-                          (v2/*: any*/)
+                          (v3/*: any*/)
                         ],
                         "storageKey": null
                       },
@@ -392,8 +393,8 @@ return {
                         "name": "position",
                         "storageKey": null
                       },
-                      (v3/*: any*/),
-                      (v2/*: any*/)
+                      (v0/*: any*/),
+                      (v3/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -403,7 +404,7 @@ return {
             ],
             "storageKey": null
           },
-          (v2/*: any*/)
+          (v3/*: any*/)
         ],
         "storageKey": null
       }
@@ -414,7 +415,7 @@ return {
     "metadata": {},
     "name": "MyBids_Test_Query",
     "operationKind": "query",
-    "text": "query MyBids_Test_Query {\n  me {\n    ...MyBids_me\n    id\n  }\n}\n\nfragment MyBidsBidHeader_sale on Sale {\n  coverImage {\n    resized(width: 300, height: 100) {\n      src\n      srcSet\n    }\n  }\n  formattedStartDateTime\n  name\n  partner {\n    name\n    id\n  }\n  slug\n}\n\nfragment MyBidsBidItem_saleArtwork on SaleArtwork {\n  artwork {\n    artistNames\n    image {\n      resized(width: 55, height: 55) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n  estimate\n  highestBid {\n    amount\n  }\n  internalID\n  isHighestBidder\n  isWatching\n  lotState {\n    bidCount\n    sellingPrice {\n      display\n    }\n  }\n  position\n  slug\n}\n\nfragment MyBids_me on Me {\n  myBids {\n    active {\n      sale {\n        ...MyBidsBidHeader_sale\n        id\n      }\n      saleArtworks {\n        ...MyBidsBidItem_saleArtwork\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query MyBids_Test_Query {\n  me {\n    ...MyBids_me\n    id\n  }\n}\n\nfragment MyBidsBidHeader_sale on Sale {\n  coverImage {\n    resized(width: 300, height: 100) {\n      src\n      srcSet\n    }\n  }\n  formattedStartDateTime\n  name\n  partner {\n    name\n    id\n  }\n  slug\n}\n\nfragment MyBidsBidItem_saleArtwork on SaleArtwork {\n  artwork {\n    artistNames\n    image {\n      resized(width: 55, height: 55) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n  estimate\n  highestBid {\n    amount\n  }\n  internalID\n  isHighestBidder\n  isWatching\n  lotState {\n    bidCount\n    sellingPrice {\n      display\n    }\n  }\n  position\n  slug\n}\n\nfragment MyBids_me on Me {\n  myBids {\n    active {\n      sale {\n        slug\n        ...MyBidsBidHeader_sale\n        id\n      }\n      saleArtworks {\n        ...MyBidsBidItem_saleArtwork\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
