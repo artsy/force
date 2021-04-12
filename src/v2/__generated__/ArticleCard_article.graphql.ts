@@ -5,7 +5,7 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ArticleCard_article = {
     readonly channelID: string | null;
-    readonly title: string | null;
+    readonly thumbnailTitle: string | null;
     readonly href: string | null;
     readonly author: {
         readonly name: string | null;
@@ -58,7 +58,7 @@ return {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "title",
+      "name": "thumbnailTitle",
       "storageKey": null
     },
     {
@@ -153,5 +153,5 @@ return {
   "type": "Article"
 };
 })();
-(node as any).hash = 'f36ea09873e5b934972fe3c42cde3f42';
+(node as any).hash = 'a9b0ec177274cb745cf0eac203a64b8b';
 export default node;
