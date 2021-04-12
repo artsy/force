@@ -1,7 +1,7 @@
 import React from "react"
 import { graphql } from "relay-runtime"
 import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
-import { tests } from "../MyBids"
+import { MyBidsFragmentContainer } from "../MyBids"
 import { useTracking as baseUseTracking } from "react-tracking"
 
 jest.mock("react-tracking")
@@ -13,7 +13,7 @@ describe("MyBids", () => {
 
   const { getWrapper } = setupTestWrapper({
     Component: (props: any) => {
-      return <tests.MyBidsFragmentContainer me={props.me} />
+      return <MyBidsFragmentContainer me={props.me} />
     },
     query: graphql`
       query MyBids_Test_Query {

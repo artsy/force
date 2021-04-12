@@ -101,10 +101,6 @@ describe("ArtworkFilterMobileActionSheet", () => {
 
     expect(wrapper.find("ApplyButton").text()).toEqual("Apply (0)")
 
-    // Expand the filters we want to make assertions about
-    wrapper.find("WaysToBuyFilter").find("ChevronIcon").simulate("click")
-    wrapper.find("PriceRangeFilter").find("ChevronIcon").simulate("click")
-
     // Select another way to buy
     wrapper
       .find("WaysToBuyFilter")
@@ -115,6 +111,9 @@ describe("ArtworkFilterMobileActionSheet", () => {
     await flushPromiseQueue()
 
     expect(wrapper.find("ApplyButton").text()).toEqual("Apply (1)")
+
+    // Expand the collapsed filters we want to make assertions about
+    wrapper.find("PriceRangeFilter").find("ChevronIcon").simulate("click")
 
     // Select a price range
     wrapper

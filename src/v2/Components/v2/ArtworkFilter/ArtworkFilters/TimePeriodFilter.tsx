@@ -1,7 +1,8 @@
-import { Checkbox, Flex, Expandable, useThemeConfig } from "@artsy/palette"
+import { Checkbox, Flex, useThemeConfig } from "@artsy/palette"
 import React, { FC } from "react"
 import { intersection } from "underscore"
 import { useArtworkFilterContext } from "../ArtworkFilterContext"
+import { FilterExpandable } from "./FilterExpandable"
 import { INITIAL_ITEMS_TO_SHOW, ShowMore } from "./ShowMore"
 import { sortResults } from "./ResultsFilter"
 
@@ -52,8 +53,7 @@ export const TimePeriodFilter: FC<TimePeriodFilterProps> = ({ expanded }) => {
   const resultsSorted = sortResults(currentFilters.majorPeriods, periods)
 
   return (
-    <Expandable
-      mb={1}
+    <FilterExpandable
       label="Time period"
       expanded={hasMajorPeriodFilter || expanded}
     >
@@ -73,7 +73,7 @@ export const TimePeriodFilter: FC<TimePeriodFilterProps> = ({ expanded }) => {
           })}
         </ShowMore>
       </Flex>
-    </Expandable>
+    </FilterExpandable>
   )
 }
 

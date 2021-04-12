@@ -1,39 +1,35 @@
 import { isEqual } from "lodash"
 import React, { useEffect, useState } from "react"
 import useDeepCompareEffect from "use-deep-compare-effect"
-
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
-
 import { useSystemContext } from "v2/Artsy"
 import { useTracking } from "v2/Artsy/Analytics/useTracking"
 import { renderWithLoadProgress } from "v2/Artsy/Relay/renderWithLoadProgress"
 import { usePrevious } from "v2/Utils/Hooks/usePrevious"
 import { Media } from "v2/Utils/Responsive"
-
 import { ArtworkFilter_viewer } from "v2/__generated__/ArtworkFilter_viewer.graphql"
 import { ArtworkQueryFilterQuery as ArtworkFilterQueryType } from "v2/__generated__/ArtworkQueryFilterQuery.graphql"
-
 import { ArtworkFilterArtworkGridRefetchContainer as ArtworkFilterArtworkGrid } from "./ArtworkFilterArtworkGrid"
 import { SortFilter } from "./ArtworkFilters/SortFilter"
-
 import {
   ArtworkFilterContextProvider,
   SharedArtworkFilterContextProps,
   initialArtworkFilterState,
   useArtworkFilterContext,
 } from "./ArtworkFilterContext"
-
 import { ArtworkFilterMobileActionSheet } from "./ArtworkFilterMobileActionSheet"
 import { ArtworkFilters } from "./ArtworkFilters"
-
 import {
   Box,
   BoxProps,
   Button,
+  Column,
   FilterIcon,
   Flex,
-  Separator,
+  GridColumns,
   Spacer,
+  Text,
+  useThemeConfig,
 } from "@artsy/palette"
 import { ArtistArtworkFilter_artist } from "v2/__generated__/ArtistArtworkFilter_artist.graphql"
 import { Collection_collection } from "v2/__generated__/Collection_collection.graphql"
@@ -96,7 +92,7 @@ export const BaseArtworkFilter: React.FC<
       | ArtistSeriesArtworksFilter_artistSeries
       | FairArtworks_fair
       | ShowArtworks_show
-    Filters?: React.FC
+    Filters?: JSX.Element
   }
 > = ({ relay, viewer, Filters, relayVariables = {}, children, ...rest }) => {
   const { filtered_artworks } = viewer
@@ -157,6 +153,19 @@ export const BaseArtworkFilter: React.FC<
     )
   }, [filterContext.filters])
 
+  const tokens = useThemeConfig({
+    v2: {
+      version: "v2",
+      mt: [0, 0.5],
+      pr: [0, 2],
+    },
+    v3: {
+      version: "v3",
+      mt: undefined,
+      pr: undefined,
+    },
+  })
+
   // If there was an error fetching the filter,
   // we still want to render the rest of the page.
   if (!hasFilter) return null
@@ -194,19 +203,17 @@ export const BaseArtworkFilter: React.FC<
   }
 
   return (
-    <Box mt={[0, 0.5]} {...rest}>
+    <Box mt={tokens.mt} {...rest}>
       <Box id="jump--artworkFilter" />
 
-      {/*
-        Mobile Artwork Filter
-      */}
+      {/* Mobile Artwork Filter */}
       <Media at="xs">
         <Box mb={1}>
           {showMobileActionSheet && (
             <ArtworkFilterMobileActionSheet
               onClose={() => toggleMobileActionSheet(false)}
             >
-              {Filters ? <Filters /> : <ArtworkFilters />}
+              {Filters ? Filters : <ArtworkFilters />}
             </ArtworkFilterMobileActionSheet>
           )}
 
@@ -248,25 +255,33 @@ export const BaseArtworkFilter: React.FC<
         </Box>
       </Media>
 
-      {/*
-        Desktop Artwork Filter
-      */}
+      {/* Desktop Artwork Filter */}
       <Media greaterThan="xs">
-        <Flex>
-          <Box width="25%" mr={2}>
-            {Filters ? <Filters /> : <ArtworkFilters />}
-          </Box>
-          <Box width="75%">
-            <Box mb={2}>
-              <Box pb={2}>
-                <Separator />
+        {tokens.version === "v3" && (
+          <Flex justifyContent="space-between" alignItems="flex-start" pb={4}>
+            <Text variant="xs" textTransform="uppercase">
+              Filter by
+            </Text>
+
+            <SortFilter />
+          </Flex>
+        )}
+
+        <GridColumns>
+          <Column span={3} pr={tokens.pr}>
+            {Filters ? Filters : <ArtworkFilters />}
+          </Column>
+
+          <Column span={9}>
+            {tokens.version === "v2" && (
+              <Box mb={2} pt={2} borderTop="1px solid" borderTopColor="black10">
+                <SortFilter />
               </Box>
-              <SortFilter />
-            </Box>
+            )}
 
             {children || <ArtworkGrid />}
-          </Box>
-        </Flex>
+          </Column>
+        </GridColumns>
       </Media>
     </Box>
   )

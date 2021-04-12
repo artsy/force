@@ -1,10 +1,11 @@
-import { Checkbox, Flex, Expandable, useThemeConfig } from "@artsy/palette"
+import { Checkbox, Flex, useThemeConfig } from "@artsy/palette"
 import { isEmpty } from "lodash"
 import React, { FC } from "react"
 import {
   ArtworkFilters,
   useArtworkFilterContext,
 } from "../ArtworkFilterContext"
+import { FilterExpandable } from "./FilterExpandable"
 
 interface WayToBuy {
   disabled: any
@@ -42,10 +43,7 @@ export const WaysToBuyFilter: FC<WaysToBuyFilterProps> = ({ expanded }) => {
       state: "offerable",
     },
     {
-      disabled: isDisabled(
-        filterContext.counts.auction_artworks ||
-          !filterContext.isDefaultValue("priceRange")
-      ),
+      disabled: isDisabled(filterContext.counts.auction_artworks),
       name: "Bid",
       state: "atAuction",
     },
@@ -61,8 +59,15 @@ export const WaysToBuyFilter: FC<WaysToBuyFilterProps> = ({ expanded }) => {
     v3: { my: 1 },
   })
 
+  const selection = filterContext.currentlySelectedFilters()
+  const hasSelection =
+    !!selection.acquireable ||
+    !!selection.offerable ||
+    !!selection.atAuction ||
+    !!selection.inquireableOnly
+
   return (
-    <Expandable mb={1} label="Ways to buy" expanded={expanded}>
+    <FilterExpandable label="Ways to buy" expanded={hasSelection || expanded}>
       <Flex flexDirection="column">
         {checkboxes.map((checkbox, index) => {
           return (
@@ -80,6 +85,6 @@ export const WaysToBuyFilter: FC<WaysToBuyFilterProps> = ({ expanded }) => {
           )
         })}
       </Flex>
-    </Expandable>
+    </FilterExpandable>
   )
 }

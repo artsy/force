@@ -1,11 +1,23 @@
 import { Text, VisuallyHidden } from "@artsy/palette"
+import { themeGet } from "@styled-system/theme-get"
 import React, { useState } from "react"
+import styled from "styled-components"
 import {
   FilterInput,
   FilterInputProps,
 } from "v2/Components/FilterInput/FilterInput"
 import { MultiSelectArtworkFilters } from "../ArtworkFilterContext"
 import { Result, ResultOption } from "./ResultOption"
+
+const FacetFilterInput = styled(FilterInput)`
+  /* HACK: Setting the font-size to a minimum 16px prevents iOS from zooming on focus */
+  /* This won't be necessary when upgraded to Palette v3 */
+  @media ${themeGet("mediaQueries.xs")} {
+    input {
+      font-size: 16px;
+    }
+  }
+`
 
 interface FacetFilterProps extends Omit<FilterInputProps, "results"> {
   facetName: keyof MultiSelectArtworkFilters
@@ -44,7 +56,7 @@ export const FacetFilter: React.FC<FacetFilterProps> = ({
 
   return (
     <>
-      <FilterInput onChange={handleChange} mb={1} {...rest} />
+      <FacetFilterInput onChange={handleChange} mb={1} {...rest} />
 
       {query !== "" && (
         <VisuallyHidden aria-live="polite">

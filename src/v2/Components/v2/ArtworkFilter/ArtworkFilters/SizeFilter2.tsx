@@ -6,7 +6,6 @@ import {
   Clickable,
   Flex,
   Spacer,
-  Expandable,
   Message,
   TextVariant,
   useThemeConfig,
@@ -14,6 +13,7 @@ import {
 import { useArtworkFilterContext } from "../ArtworkFilterContext"
 import { NumericInput } from "./PriceRangeFilter"
 import { Media } from "v2/Utils/Responsive"
+import { FilterExpandable } from "./FilterExpandable"
 
 const sizeMap = [
   { displayName: "Small (under 40cm)", name: "SMALL" },
@@ -75,15 +75,19 @@ export const SizeFilter2: React.FC<SizeFilter2Props> = ({ expanded }) => {
   }: React.FormEvent<HTMLInputElement>) => {
     const isOpenEnded = value === "" || value === "0"
     const isMin = index === 0
-    const isMax = index === 1
 
     setCustomSize(prevCustomSize => {
-      if (isOpenEnded && isMin) {
-        prevCustomSize[dimension][index] = 0
-      } else if (isOpenEnded && isMax) {
+      if (isOpenEnded) {
         prevCustomSize[dimension][index] = "*"
       } else {
-        prevCustomSize[dimension][index] = parseInt(value, 10)
+        const parsedValue = parseInt(value, 10)
+        if (prevCustomSize[dimension])
+          prevCustomSize[dimension][index] = parsedValue
+        else if (isMin) {
+          prevCustomSize[dimension] = [parsedValue, "*"]
+        } else {
+          prevCustomSize[dimension] = ["*", parsedValue]
+        }
       }
 
       return { ...prevCustomSize }
@@ -124,8 +128,16 @@ export const SizeFilter2: React.FC<SizeFilter2Props> = ({ expanded }) => {
     v3: { my: 1, secondaryVariant: "xs" as TextVariant },
   })
 
+  const selection = currentlySelectedFilters().sizes
+  const customHeight = currentlySelectedFilters().height
+  const customWidth = currentlySelectedFilters().width
+  const hasSelection =
+    (selection && selection.length > 0) ||
+    (customHeight && customHeight !== "*-*") ||
+    (customWidth && customWidth !== "*-*")
+
   return (
-    <Expandable mb={1} label="Size" expanded={expanded}>
+    <FilterExpandable label="Size" expanded={hasSelection || expanded}>
       {mode === "done" && (
         <Media lessThan="sm">
           <Message variant="info" my={2}>
@@ -211,11 +223,16 @@ export const SizeFilter2: React.FC<SizeFilter2Props> = ({ expanded }) => {
             />
           </Flex>
 
-          <Button mt={1} variant="secondaryGray" onClick={handleClick}>
+          <Button
+            mt={1}
+            variant="secondaryGray"
+            onClick={handleClick}
+            width="100%"
+          >
             Set size
           </Button>
         </>
       )}
-    </Expandable>
+    </FilterExpandable>
   )
 }

@@ -1,21 +1,19 @@
 import React, { useState } from "react"
 import {
   Button,
-  Clickable,
   Flex,
   LabeledInput,
   Message,
   Radio,
   RadioGroup,
   Spacer,
-  Text,
-  Expandable,
   useThemeConfig,
 } from "@artsy/palette"
 import { useArtworkFilterContext } from "../ArtworkFilterContext"
 import styled from "styled-components"
 import { Media } from "v2/Utils/Responsive"
 import { themeGet } from "@styled-system/theme-get"
+import { FilterExpandable } from "./FilterExpandable"
 
 // Disables arrows in numeric inputs
 export const NumericInput = styled(LabeledInput).attrs({ type: "number" })`
@@ -70,7 +68,7 @@ export const PriceRangeFilter: React.FC<PriceRangeFilterProps> = ({
   const [mode, setMode] = useState<"resting" | "done">("resting")
 
   const { currentlySelectedFilters, setFilter } = useArtworkFilterContext()
-  const { priceRange: initialRange, atAuction } = currentlySelectedFilters()
+  const { priceRange: initialRange } = currentlySelectedFilters()
 
   const numericInitialRange = parseRange(initialRange)
 
@@ -126,92 +124,79 @@ export const PriceRangeFilter: React.FC<PriceRangeFilterProps> = ({
     v3: { my: 1 },
   })
 
+  const selection = currentlySelectedFilters().priceRange
+  const hasSelection = selection && selection.length > 0
+
   return (
-    <>
-      <Expandable mb={1} label="Price" expanded={expanded}>
-        {mode === "done" && (
-          <Media lessThan="sm">
-            <Message variant="info" my={2}>
-              Price set, select apply to see full results
-            </Message>
-          </Media>
-        )}
+    <FilterExpandable label="Price" expanded={hasSelection || expanded}>
+      {mode === "done" && (
+        <Media lessThan="sm">
+          <Message variant="info" my={2}>
+            Price set, select apply to see full results
+          </Message>
+        </Media>
+      )}
 
-        <Flex flexDirection="column" alignItems="left">
-          <RadioGroup
-            deselectable
-            defaultValue={isCustomRange ? "custom" : initialRange}
-            onSelect={handleSelect}
-            disabled={atAuction}
-            disabledText="Disabled for biddable works"
-          >
-            {[
-              ...PRICE_RANGES.map((range, index) => (
-                <Radio
-                  key={`${index}`}
-                  my={tokens.my}
-                  label={range.name}
-                  value={range.value}
-                />
-              )),
-
+      <Flex flexDirection="column" alignItems="left">
+        <RadioGroup
+          deselectable
+          defaultValue={isCustomRange ? "custom" : initialRange}
+          onSelect={handleSelect}
+        >
+          {[
+            ...PRICE_RANGES.map((range, index) => (
               <Radio
-                key="custom"
+                key={`${index}`}
                 my={tokens.my}
-                label="Custom price"
-                value="custom"
-              />,
-            ]}
-          </RadioGroup>
-        </Flex>
-
-        {showCustom && (
-          <>
-            <Flex mt={1} alignItems="flex-end">
-              <NumericInput
-                label="$USD"
-                placeholder="Min"
-                min="0"
-                step="1"
-                value={customRange[0]}
-                onChange={handleChange(0)}
+                label={range.name}
+                value={range.value}
               />
+            )),
 
-              <Spacer mx={0.5} />
+            <Radio
+              key="custom"
+              my={tokens.my}
+              label="Custom price"
+              value="custom"
+            />,
+          ]}
+        </RadioGroup>
+      </Flex>
 
-              <NumericInput
-                label="$USD"
-                placeholder="Max"
-                min="0"
-                step="1"
-                value={customRange[1]}
-                onChange={handleChange(1)}
-              />
-            </Flex>
+      {showCustom && (
+        <>
+          <Flex mt={1} alignItems="flex-end">
+            <NumericInput
+              label="$USD"
+              placeholder="Min"
+              min="0"
+              step="1"
+              value={customRange[0]}
+              onChange={handleChange(0)}
+            />
 
-            <Media lessThan="sm">
-              <Clickable
-                mt={2}
-                textDecoration="underline"
-                onClick={handleClick}
-              >
-                <Text>Set price</Text>
-              </Clickable>
-            </Media>
+            <Spacer mx={0.5} />
 
-            <Media greaterThanOrEqual="sm">
-              <Button
-                mt={1}
-                variant="secondaryGray"
-                onClick={handleClick}
-                width="100%"
-              >
-                Set price
-              </Button>
-            </Media>
-          </>
-        )}
-      </Expandable>
-    </>
+            <NumericInput
+              label="$USD"
+              placeholder="Max"
+              min="0"
+              step="1"
+              value={customRange[1]}
+              onChange={handleChange(1)}
+            />
+          </Flex>
+
+          <Button
+            mt={1}
+            variant="secondaryGray"
+            onClick={handleClick}
+            width="100%"
+          >
+            Set price
+          </Button>
+        </>
+      )}
+    </FilterExpandable>
   )
 }

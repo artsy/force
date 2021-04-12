@@ -1,9 +1,10 @@
-import { Checkbox, Flex, Expandable, useThemeConfig } from "@artsy/palette"
+import { Checkbox, Flex, useThemeConfig } from "@artsy/palette"
 import React, { FC } from "react"
 import { useArtworkFilterContext } from "../ArtworkFilterContext"
 import { ShowMore, INITIAL_ITEMS_TO_SHOW } from "./ShowMore"
 import { intersection } from "lodash"
 import { sortResults } from "./ResultsFilter"
+import { FilterExpandable } from "./FilterExpandable"
 
 export interface MediumFilterProps {
   expanded?: boolean
@@ -47,8 +48,7 @@ export const MediumFilter: FC<MediumFilterProps> = ({ expanded }) => {
   )
 
   return (
-    <Expandable
-      mb={1}
+    <FilterExpandable
       label="Medium"
       expanded={(!counts.artworks || counts.artworks > 0) && expanded}
     >
@@ -71,7 +71,7 @@ export const MediumFilter: FC<MediumFilterProps> = ({ expanded }) => {
           })}
         </ShowMore>
       </Flex>
-    </Expandable>
+    </FilterExpandable>
   )
 }
 

@@ -11,7 +11,6 @@ import { GalleryFilter } from "v2/Components/v2/ArtworkFilter/ArtworkFilters/Gal
 import { SizeFilter } from "v2/Components/v2/ArtworkFilter/ArtworkFilters/SizeFilter"
 import { TimePeriodFilter } from "v2/Components/v2/ArtworkFilter/ArtworkFilters/TimePeriodFilter"
 import { ColorFilter } from "v2/Components/v2/ArtworkFilter/ArtworkFilters/ColorFilter"
-import { Box } from "@artsy/palette"
 import { ArtistsFilter } from "v2/Components/v2/ArtworkFilter/ArtworkFilters/ArtistsFilter"
 import { useSystemContext } from "v2/Artsy"
 import { useRouter } from "v2/Artsy/Router/useRouter"
@@ -40,33 +39,30 @@ const FairArtworksFilter: React.FC<FairArtworksFilterProps> = props => {
   if (!hasFilter) return null
 
   const { counts } = filtered_artworks
+  const showNewFilters = getENV("ENABLE_NEW_ARTWORK_FILTERS")
 
   // TODO: You shouldn't have to pass `relayEnvironment` and `user` through below.
   // For some reason, they are undefined when `useSystemContext()` is referenced
   // in <ArtistsFilter />. So, pass as props for now.
-  const Filters = () => {
-    const showNewFilters = getENV("ENABLE_NEW_ARTWORK_FILTERS")
-
-    return (
-      <Box pr={2}>
-        <ArtistsFilter
-          fairID={fair.internalID}
-          relayEnvironment={relayEnvironment}
-          user={user}
-        />
-        <MediumFilter expanded />
-        {showNewFilters && <MaterialsFilter expanded />}
-        <PriceRangeFilter />
-        <AttributionClassFilter expanded />
-        {showNewFilters ? <SizeFilter2 /> : <SizeFilter />}
-        <WaysToBuyFilter />
-        {showNewFilters && <ArtistNationalityFilter expanded />}
-        <TimePeriodFilter />
-        <ColorFilter />
-        {showNewFilters ? <PartnersFilter /> : <GalleryFilter />}
-      </Box>
-    )
-  }
+  const Filters = (
+    <>
+      <ArtistsFilter
+        fairID={fair.internalID}
+        relayEnvironment={relayEnvironment}
+        user={user}
+      />
+      <MediumFilter expanded />
+      {showNewFilters && <MaterialsFilter expanded />}
+      <PriceRangeFilter />
+      <AttributionClassFilter expanded />
+      {showNewFilters ? <SizeFilter2 /> : <SizeFilter />}
+      <WaysToBuyFilter />
+      {showNewFilters && <ArtistNationalityFilter expanded />}
+      <TimePeriodFilter />
+      <ColorFilter />
+      {showNewFilters ? <PartnersFilter /> : <GalleryFilter />}
+    </>
+  )
 
   return (
     <ArtworkFilterContextProvider

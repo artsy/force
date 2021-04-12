@@ -6,6 +6,9 @@ import { GeneShow_Test_Query } from "v2/__generated__/GeneShow_Test_Query.graphq
 import { MockBoot } from "v2/DevTools"
 
 jest.unmock("react-relay")
+jest.mock("../../Components/GeneArtworkFilter", () => ({
+  GeneArtworkFilterRefetchContainer: () => <div />,
+}))
 
 const { getWrapper } = setupTestWrapper<GeneShow_Test_Query>({
   Component: props => {

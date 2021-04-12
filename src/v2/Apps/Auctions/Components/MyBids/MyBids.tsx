@@ -1,13 +1,10 @@
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { SystemQueryRenderer } from "v2/Artsy/Relay/SystemQueryRenderer"
-import { useSystemContext } from "v2/Artsy"
 import { MyBids_me } from "v2/__generated__/MyBids_me.graphql"
 import { Carousel } from "v2/Components/Carousel"
 import { MyBidsBidHeaderFragmentContainer } from "./MyBidsBidHeader"
 import { MyBidsBidItemFragmentContainer } from "./MyBidsBidItem"
 import { Box, Join, Separator, StackableBorderBox, Text } from "@artsy/palette"
-import { MyBidsPlaceholder } from "./MyBidsPlaceholder"
 import styled from "styled-components"
 
 interface MyBidsProps {
@@ -83,34 +80,3 @@ export const MyBidsFragmentContainer = createFragmentContainer(MyBids, {
     }
   `,
 })
-
-export const MyBidsQueryRenderer: React.FC = () => {
-  const { relayEnvironment } = useSystemContext()
-
-  return (
-    <>
-      <SystemQueryRenderer
-        environment={relayEnvironment}
-        query={graphql`
-          query MyBidsQuery {
-            me {
-              ...MyBids_me
-            }
-          }
-        `}
-        variables={{}}
-        render={({ props }) => {
-          if (props) {
-            return <MyBidsFragmentContainer me={props.me} />
-          } else {
-            return <MyBidsPlaceholder />
-          }
-        }}
-      />
-    </>
-  )
-}
-
-export const tests = {
-  MyBidsFragmentContainer,
-}

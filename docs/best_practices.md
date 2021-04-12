@@ -21,7 +21,7 @@ Our design system [Palette](https://github.com/artsy/palette) is used for most U
 
 ### For routing, use our framework
 
-Individual sub-apps (represented by routes like `/artist/:id` or `/collect`) are built on top of a home-grown SSR (server-side-rendering) framework based around [Found](https://github.com/4Catalyzer/found), a routing library. Sub-apps are mounted within the [global routes file](https://github.com/artsy/force/blob/1842553ad34475bc3b804f00c6410d7f23d64f65/src/v2/Apps/getAppRoutes.tsx).
+Individual sub-apps (represented by routes like `/artist/:id` or `/collect`) are built on top of a home-grown SSR (server-side-rendering) framework based around [Found](https://github.com/4Catalyzer/found), a routing library. Sub-apps are mounted within the [global routes file](https://github.com/artsy/force/blob/master/src/v2/routes.tsx).
 
 To learn how to create a new sub-app, see [the docs](https://github.com/artsy/force/blob/1842553ad34475bc3b804f00c6410d7f23d64f65/docs/adding_new_app.md).
 

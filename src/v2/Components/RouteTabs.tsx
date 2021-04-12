@@ -8,9 +8,18 @@ export const RouteTab: React.FC<BaseTabProps & RouterLinkProps> = ({
   to,
   ...rest
 }) => {
+  const options = {
+    exact: rest.exact !== undefined ? rest.exact : true,
+  }
+
   return (
-    // @ts-ignore
-    <BaseTab as={RouterLink} to={to} active={useIsRouteActive(to)} {...rest}>
+    <BaseTab
+      as={RouterLink}
+      // @ts-ignore
+      to={to}
+      active={useIsRouteActive(to, options)}
+      {...rest}
+    >
       {children}
     </BaseTab>
   )

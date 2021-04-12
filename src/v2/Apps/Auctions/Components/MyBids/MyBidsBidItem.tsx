@@ -74,7 +74,12 @@ export const MyBidsBidItem: React.FC<MyBidsBidItemProps> = ({
             <Box>
               {saleArtwork.isWatching ? (
                 <>
-                  <Text variant="text" display="inline-block" pr={0.3}>
+                  <Text
+                    variant="text"
+                    display="inline-block"
+                    pr={0.3}
+                    style={{ whiteSpace: "nowrap" }}
+                  >
                     {saleArtwork.highestBid.amount || saleArtwork.estimate}
                   </Text>
                   <Watching />
