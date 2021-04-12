@@ -116,13 +116,13 @@ interface Counts {
 // and `BaseFilterContext<AuctionResultFilters>`.
 export interface ArtworkFilterContextProps {
   /** The current artwork filter state (which determines the network request and the url querystring) */
-  filters?: ArtworkFilters
+  filters?: ArtworkFiltersState
 
   /** Interim filter state, to be manipulated before being applied to the current filter state */
-  stagedFilters?: ArtworkFilters
+  stagedFilters?: ArtworkFiltersState
 
   /** Getter for the appropriate source of truth to render in the filter UI */
-  currentlySelectedFilters?: () => ArtworkFilters
+  currentlySelectedFilters?: () => ArtworkFiltersState
 
   // Components
   ZeroState?: React.FC

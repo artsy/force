@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import {
   Button,
   Text,
@@ -57,7 +57,7 @@ export interface SizeFilter2Props {
 
 export const SizeFilter2: React.FC<SizeFilter2Props> = ({ expanded }) => {
   const { currentlySelectedFilters, setFilters } = useArtworkFilterContext()
-  const { height, width } = currentlySelectedFilters()
+  const { height, width, reset } = currentlySelectedFilters()
 
   const initialCustomSize = {
     height: parseRange(height),
@@ -127,6 +127,13 @@ export const SizeFilter2: React.FC<SizeFilter2Props> = ({ expanded }) => {
     v2: { my: 0.5, secondaryVariant: "small" as TextVariant },
     v3: { my: 1, secondaryVariant: "xs" as TextVariant },
   })
+
+  useEffect(() => {
+    // if filter state is being reset, then also clear local input state
+    if (reset) {
+      setCustomSize({ height: ["*", "*"], width: ["*", "*"] })
+    }
+  }, [reset])
 
   const selection = currentlySelectedFilters().sizes
   const customHeight = currentlySelectedFilters().height
