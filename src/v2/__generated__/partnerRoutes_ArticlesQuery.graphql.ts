@@ -30,7 +30,7 @@ query partnerRoutes_ArticlesQuery(
 
 fragment ArticleCard_article on Article {
   channelID
-  title
+  thumbnailTitle
   href
   author {
     name
@@ -344,7 +344,7 @@ return {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
-                        "name": "title",
+                        "name": "thumbnailTitle",
                         "storageKey": null
                       },
                       {
@@ -473,7 +473,7 @@ return {
     "metadata": {},
     "name": "partnerRoutes_ArticlesQuery",
     "operationKind": "query",
-    "text": "query partnerRoutes_ArticlesQuery(\n  $partnerId: String!\n) {\n  partner(id: $partnerId) @principalField {\n    ...Articles_partner\n    id\n  }\n}\n\nfragment ArticleCard_article on Article {\n  channelID\n  title\n  href\n  author {\n    name\n    id\n  }\n  contributingAuthors {\n    name\n    id\n  }\n  thumbnailImage {\n    medium: cropped(width: 357, height: 320) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment Articles_partner on Partner {\n  slug\n  articlesConnection(first: 18) {\n    pageInfo {\n      hasNextPage\n      endCursor\n      hasPreviousPage\n      startCursor\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        internalID\n        ...ArticleCard_article\n        id\n        __typename\n      }\n      cursor\n    }\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n"
+    "text": "query partnerRoutes_ArticlesQuery(\n  $partnerId: String!\n) {\n  partner(id: $partnerId) @principalField {\n    ...Articles_partner\n    id\n  }\n}\n\nfragment ArticleCard_article on Article {\n  channelID\n  thumbnailTitle\n  href\n  author {\n    name\n    id\n  }\n  contributingAuthors {\n    name\n    id\n  }\n  thumbnailImage {\n    medium: cropped(width: 357, height: 320) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment Articles_partner on Partner {\n  slug\n  articlesConnection(first: 18) {\n    pageInfo {\n      hasNextPage\n      endCursor\n      hasPreviousPage\n      startCursor\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        internalID\n        ...ArticleCard_article\n        id\n        __typename\n      }\n      cursor\n    }\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n"
   }
 };
 })();
