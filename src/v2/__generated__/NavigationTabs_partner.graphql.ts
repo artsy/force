@@ -5,10 +5,16 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type NavigationTabs_partner = {
     readonly slug: string;
+    readonly profile: {
+        readonly displayArtistsSection: boolean | null;
+    } | null;
     readonly locations: {
         readonly totalCount: number | null;
     } | null;
     readonly articles: {
+        readonly totalCount: number | null;
+    } | null;
+    readonly artists: {
         readonly totalCount: number | null;
     } | null;
     readonly " $refType": "NavigationTabs_partner";
@@ -52,6 +58,24 @@ return {
       "storageKey": null
     },
     {
+      "alias": null,
+      "args": null,
+      "concreteType": "Profile",
+      "kind": "LinkedField",
+      "name": "profile",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "displayArtistsSection",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
+    },
+    {
       "alias": "locations",
       "args": (v0/*: any*/),
       "concreteType": "LocationConnection",
@@ -70,10 +94,20 @@ return {
       "plural": false,
       "selections": (v1/*: any*/),
       "storageKey": "articlesConnection(first:20)"
+    },
+    {
+      "alias": "artists",
+      "args": (v0/*: any*/),
+      "concreteType": "ArtistPartnerConnection",
+      "kind": "LinkedField",
+      "name": "artistsConnection",
+      "plural": false,
+      "selections": (v1/*: any*/),
+      "storageKey": "artistsConnection(first:20)"
     }
   ],
   "type": "Partner"
 };
 })();
-(node as any).hash = '7a78122675cec43a1d306483c71a63fe';
+(node as any).hash = 'c9c604da179ef317e769dbcbd78b5309';
 export default node;

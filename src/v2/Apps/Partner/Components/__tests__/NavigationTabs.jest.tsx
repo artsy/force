@@ -23,7 +23,12 @@ const { getWrapper } = setupTestWrapper<NavigationTabs_Test_PartnerQuery>({
 describe("PartnerNavigationTabs", () => {
   it("renders all tabs by default", () => {
     const wrapper = getWrapper({
-      Partner: () => ({ id: "white-cube", slug: "white-cube" }),
+      Partner: () => ({
+        id: "white-cube",
+        slug: "white-cube",
+        profile: { displayArtistsSection: true },
+        artists: { totalCount: 10 },
+      }),
     })
     const html = wrapper.html()
 
@@ -51,5 +56,29 @@ describe("PartnerNavigationTabs", () => {
     const html = wrapper.html()
 
     expect(html).not.toContain("Articles")
+  })
+
+  it("doesn't display artists tab if no artists", () => {
+    const wrapper = getWrapper({
+      Partner: () => ({
+        profile: { displayArtistsSection: true },
+        artists: { totalCount: 0 },
+      }),
+    })
+    const html = wrapper.html()
+
+    expect(html).not.toContain("Artists")
+  })
+
+  it("doesn't display artists tab if displayArtistsSection is false", () => {
+    const wrapper = getWrapper({
+      Partner: () => ({
+        profile: { displayArtistsSection: false },
+        artists: { totalCount: 10 },
+      }),
+    })
+    const html = wrapper.html()
+
+    expect(html).not.toContain("Artists")
   })
 })

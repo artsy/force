@@ -12,10 +12,17 @@ export type NavigationTabs_Test_PartnerQueryResponse = {
 export type NavigationTabs_Test_PartnerQueryRawResponse = {
     readonly partner: ({
         readonly slug: string;
+        readonly profile: ({
+            readonly displayArtistsSection: boolean | null;
+            readonly id: string | null;
+        }) | null;
         readonly locations: ({
             readonly totalCount: number | null;
         }) | null;
         readonly articles: ({
+            readonly totalCount: number | null;
+        }) | null;
+        readonly artists: ({
             readonly totalCount: number | null;
         }) | null;
         readonly id: string | null;
@@ -39,10 +46,17 @@ query NavigationTabs_Test_PartnerQuery {
 
 fragment NavigationTabs_partner on Partner {
   slug
+  profile {
+    displayArtistsSection
+    id
+  }
   locations: locationsConnection(first: 20) {
     totalCount
   }
   articles: articlesConnection(first: 20) {
+    totalCount
+  }
+  artists: artistsConnection(first: 20) {
     totalCount
   }
 }
@@ -56,14 +70,21 @@ var v0 = [
     "value": "white-cube"
   }
 ],
-v1 = [
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v2 = [
   {
     "kind": "Literal",
     "name": "first",
     "value": 20
   }
 ],
-v2 = [
+v3 = [
   {
     "alias": null,
     "args": null,
@@ -120,32 +141,55 @@ return {
             "storageKey": null
           },
           {
+            "alias": null,
+            "args": null,
+            "concreteType": "Profile",
+            "kind": "LinkedField",
+            "name": "profile",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "displayArtistsSection",
+                "storageKey": null
+              },
+              (v1/*: any*/)
+            ],
+            "storageKey": null
+          },
+          {
             "alias": "locations",
-            "args": (v1/*: any*/),
+            "args": (v2/*: any*/),
             "concreteType": "LocationConnection",
             "kind": "LinkedField",
             "name": "locationsConnection",
             "plural": false,
-            "selections": (v2/*: any*/),
+            "selections": (v3/*: any*/),
             "storageKey": "locationsConnection(first:20)"
           },
           {
             "alias": "articles",
-            "args": (v1/*: any*/),
+            "args": (v2/*: any*/),
             "concreteType": "ArticleConnection",
             "kind": "LinkedField",
             "name": "articlesConnection",
             "plural": false,
-            "selections": (v2/*: any*/),
+            "selections": (v3/*: any*/),
             "storageKey": "articlesConnection(first:20)"
           },
           {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "id",
-            "storageKey": null
-          }
+            "alias": "artists",
+            "args": (v2/*: any*/),
+            "concreteType": "ArtistPartnerConnection",
+            "kind": "LinkedField",
+            "name": "artistsConnection",
+            "plural": false,
+            "selections": (v3/*: any*/),
+            "storageKey": "artistsConnection(first:20)"
+          },
+          (v1/*: any*/)
         ],
         "storageKey": "partner(id:\"white-cube\")"
       }
@@ -156,7 +200,7 @@ return {
     "metadata": {},
     "name": "NavigationTabs_Test_PartnerQuery",
     "operationKind": "query",
-    "text": "query NavigationTabs_Test_PartnerQuery {\n  partner(id: \"white-cube\") {\n    ...NavigationTabs_partner\n    id\n  }\n}\n\nfragment NavigationTabs_partner on Partner {\n  slug\n  locations: locationsConnection(first: 20) {\n    totalCount\n  }\n  articles: articlesConnection(first: 20) {\n    totalCount\n  }\n}\n"
+    "text": "query NavigationTabs_Test_PartnerQuery {\n  partner(id: \"white-cube\") {\n    ...NavigationTabs_partner\n    id\n  }\n}\n\nfragment NavigationTabs_partner on Partner {\n  slug\n  profile {\n    displayArtistsSection\n    id\n  }\n  locations: locationsConnection(first: 20) {\n    totalCount\n  }\n  articles: articlesConnection(first: 20) {\n    totalCount\n  }\n  artists: artistsConnection(first: 20) {\n    totalCount\n  }\n}\n"
   }
 };
 })();

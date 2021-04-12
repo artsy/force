@@ -99,9 +99,41 @@ export const partnerRoutes: RouteConfig[] = [
           query partnerRoutes_ArtistsQuery($partnerId: String!) {
             partner(id: $partnerId) @principalField {
               ...PartnerArtists_partner
+              profile {
+                displayArtistsSection
+              }
+              artistsConnection(first: 20, after: null) {
+                totalCount
+              }
             }
           }
         `,
+        render: ({ Component, props, match }) => {
+          if (!(Component && props)) {
+            return undefined
+          }
+
+          const { partner } = props as any
+
+          if (!partner) {
+            return undefined
+          }
+
+          if (
+            !(
+              partner.profile.displayArtistsSection &&
+              partner.artistsConnection &&
+              partner.artistsConnection.totalCount > 0
+            )
+          ) {
+            throw new RedirectException(
+              `/partner2/${match.params.partnerId}`,
+              302
+            )
+          }
+
+          return <Component {...props} />
+        },
       },
       {
         getComponent: () => ContactRoute,
