@@ -7,7 +7,6 @@ import FillwidthItem from "v2/Components/Artwork/FillwidthItem"
 import { Column, GridColumns, ReadMore, Separator, Text } from "@artsy/palette"
 import { FollowArtistButtonFragmentContainer as FollowArtistButton } from "v2/Components/FollowButton/FollowArtistButton"
 import { ContextModule } from "@artsy/cohesion"
-import { getBriefArtistInfo } from "./partnerArtistsUtils"
 import { useSystemContext } from "v2/Artsy"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import { PartnerArtistDetailsPlaceholder } from "./PartnerArtistDetailsPlaceholder"
@@ -19,8 +18,12 @@ export interface PartnerArtistDetailsProps {
 export const PartnerArtistDetails: React.FC<PartnerArtistDetailsProps> = ({
   artist,
 }) => {
-  const { name, filterArtworksConnection, href } = artist
-  const brief = getBriefArtistInfo(artist)
+  const {
+    name,
+    filterArtworksConnection,
+    href,
+    formattedNationalityAndBirthday,
+  } = artist
 
   return (
     <>
@@ -32,7 +35,7 @@ export const PartnerArtistDetails: React.FC<PartnerArtistDetailsProps> = ({
               <RouterLink to={href} noUnderline>
                 <Text variant="largeTitle">{name}</Text>
               </RouterLink>
-              <Text variant="title">{brief}</Text>
+              <Text variant="title">{formattedNationalityAndBirthday}</Text>
             </Column>
             <Column span={[12, 6]}>
               <FollowArtistButton
@@ -82,9 +85,7 @@ export const PartnerArtistDetailsFragmentContainer = createFragmentContainer(
       fragment PartnerArtistDetails_artist on Artist {
         name
         href
-        nationality
-        birthday
-        deathday
+        formattedNationalityAndBirthday
         biographyBlurb(format: HTML, partnerBio: true) {
           text
         }

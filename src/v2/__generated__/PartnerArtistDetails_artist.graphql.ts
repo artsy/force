@@ -6,9 +6,7 @@ import { FragmentRefs } from "relay-runtime";
 export type PartnerArtistDetails_artist = {
     readonly name: string | null;
     readonly href: string | null;
-    readonly nationality: string | null;
-    readonly birthday: string | null;
-    readonly deathday: string | null;
+    readonly formattedNationalityAndBirthday: string | null;
     readonly biographyBlurb: {
         readonly text: string | null;
     } | null;
@@ -61,21 +59,7 @@ const node: ReaderFragment = {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "nationality",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "birthday",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "deathday",
+      "name": "formattedNationalityAndBirthday",
       "storageKey": null
     },
     {
@@ -177,5 +161,5 @@ const node: ReaderFragment = {
   ],
   "type": "Artist"
 };
-(node as any).hash = '4c232222b0d7d9b3c04884a6a37e757f';
+(node as any).hash = '1000b80a10c4adf0ecb964332292eca2';
 export default node;

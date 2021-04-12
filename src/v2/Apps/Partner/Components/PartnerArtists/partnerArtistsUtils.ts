@@ -1,4 +1,3 @@
-import { PartnerArtistDetails_artist } from "v2/__generated__/PartnerArtistDetails_artist.graphql"
 import { PartnerArtistList_artists } from "v2/__generated__/PartnerArtistList_artists.graphql"
 
 export interface ArtistListColumnSizes {
@@ -93,16 +92,4 @@ export function groupArtists(
   ]
     .filter(group => group.artists.length > 0)
     .sort((a, b) => b.artists.length - a.artists.length)
-}
-
-export function getBriefArtistInfo(artist: PartnerArtistDetails_artist) {
-  const { birthday, deathday, nationality } = artist
-
-  const years = birthday
-    ? deathday
-      ? `${birthday}-${deathday}`
-      : `b. ${birthday}`
-    : undefined
-
-  return [nationality, years].filter(item => !!item).join(", ")
 }
