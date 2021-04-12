@@ -1,46 +1,32 @@
 import { ArtworkFilters } from "../ArtworkFilterContext"
-import { isEqual } from "lodash"
+import { isEqual, transform, isObject } from "lodash"
+
+const difference = (initial: {}, next: {}) => {
+  return transform(next, (result, value, key) => {
+    if (!isEqual(value, initial[key])) {
+      result[key] =
+        isObject(value) && isObject(initial[key])
+          ? difference(value, initial[key])
+          : value
+    }
+  })
+}
 
 export const countChangedFilters = (
   filtersBefore: ArtworkFilters,
   filtersAfter: ArtworkFilters
 ) => {
-  let changedCount = 0
-  let key
-
-  // simple keys
-  for (key of [
-    "medium",
-    "priceRange",
-    "offerable",
-    "acquireable",
-    "atAuction",
-    "inquireableOnly",
-    "color",
-  ]) {
-    if (filtersAfter[key] != filtersBefore[key]) {
-      changedCount++
-    }
+  // Backfill the boolean filters with `false` values.
+  // Initially these are `undefined`.
+  const filtersInitial = {
+    offerable: false,
+    acquireable: false,
+    atAuction: false,
+    inquireableOnly: false,
+    ...filtersBefore,
   }
 
-  // array-valued keys
-  for (key of [
-    "additionalGeneIDs",
-    "artistNationalities",
-    "attributionClass",
-    "colors",
-    "locationCities",
-    "sizes",
-    "majorPeriods",
-    "partnerIDs",
-    "geneIDs",
-    "artistIDs",
-    "materialsTerms",
-  ]) {
-    if (!isEqual(filtersBefore[key], filtersAfter[key])) {
-      changedCount++
-    }
-  }
-
-  return changedCount
+  // We take the difference but just look at the number of keys changed,
+  // which is equivalent to the number of filters changing.
+  return Object.keys(difference(filtersInitial, filtersAfter)).length
 }
