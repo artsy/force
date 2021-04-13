@@ -22,6 +22,7 @@ import createLogger from "v2/Utils/logger"
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "../../Components/ArtworkSummaryItem"
 import { CreditCardSummaryItemFragmentContainer as CreditCardSummaryItem } from "../../Components/CreditCardSummaryItem"
 import { ShippingSummaryItemFragmentContainer as ShippingSummaryItem } from "../../Components/ShippingSummaryItem"
+import { SystemContextConsumer } from "v2/Artsy/SystemContext"
 
 const logger = createLogger("Order/Routes/Status/index.tsx")
 
@@ -248,56 +249,62 @@ export class StatusRoute extends Component<StatusProps> {
     const showOfferNote = order.mode === "OFFER" && order.state === "SUBMITTED"
 
     return (
-      <>
-        <HorizontalPadding>
-          <Serif size="6" weight="regular" color="black100">
-            {title}
-          </Serif>
-          <Sans size="2" weight="regular" color="black60" mb={[2, 3]}>
-            {flowName} <span data-test="OrderCode">#{order.code}</span>
-          </Sans>
-          <TwoColumnLayout
-            Content={
-              <>
-                <Title>{flowName} status | Artsy</Title>
-                <Join separator={<Spacer mb={[2, 3]} />}>
-                  {description && <Message p={[2, 3]}>{description}</Message>}
-                  {showTransactionSummary ? (
+      <SystemContextConsumer>
+        {({ isEigen }) => {
+          return (
+            <HorizontalPadding>
+              <Serif size="6" weight="regular" color="black100">
+                {title}
+              </Serif>
+              <Sans size="2" weight="regular" color="black60" mb={[2, 3]}>
+                {flowName} <span data-test="OrderCode">#{order.code}</span>
+              </Sans>
+              <TwoColumnLayout
+                Content={
+                  <>
+                    <Title>{flowName} status | Artsy</Title>
+                    <Join separator={<Spacer mb={[2, 3]} />}>
+                      {description && (
+                        <Message p={[2, 3]}>{description}</Message>
+                      )}
+                      {showTransactionSummary ? (
+                        <Flex flexDirection="column">
+                          <ArtworkSummaryItem order={order} />
+                          <StyledTransactionDetailsSummaryItem
+                            order={order}
+                            useLastSubmittedOffer
+                            showOfferNote={showOfferNote}
+                          />
+                        </Flex>
+                      ) : isEigen ? null : (
+                        <Button
+                          onClick={() => {
+                            window.location.href = "/"
+                          }}
+                          size="large"
+                          width="100%"
+                        >
+                          Back to Artsy
+                        </Button>
+                      )}
+                    </Join>
+                  </>
+                }
+                Sidebar={
+                  showTransactionSummary && (
                     <Flex flexDirection="column">
-                      <ArtworkSummaryItem order={order} />
-                      <StyledTransactionDetailsSummaryItem
-                        order={order}
-                        useLastSubmittedOffer
-                        showOfferNote={showOfferNote}
-                      />
+                      <Flex flexDirection="column">
+                        <StyledShippingSummaryItem order={order} />
+                        <CreditCardSummaryItem order={order} />
+                      </Flex>
                     </Flex>
-                  ) : (
-                    <Button
-                      onClick={() => {
-                        window.location.href = "/"
-                      }}
-                      size="large"
-                      width="100%"
-                    >
-                      Back to Artsy
-                    </Button>
-                  )}
-                </Join>
-              </>
-            }
-            Sidebar={
-              showTransactionSummary && (
-                <Flex flexDirection="column">
-                  <Flex flexDirection="column">
-                    <StyledShippingSummaryItem order={order} />
-                    <CreditCardSummaryItem order={order} />
-                  </Flex>
-                </Flex>
-              )
-            }
-          />
-        </HorizontalPadding>
-      </>
+                  )
+                }
+              />
+            </HorizontalPadding>
+          )
+        }}
+      </SystemContextConsumer>
     )
   }
 }
