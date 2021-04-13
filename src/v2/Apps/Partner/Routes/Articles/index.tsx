@@ -1,6 +1,7 @@
 import React from "react"
-import { Column, GridColumns, Box, Col, Row } from "@artsy/palette"
+import { Column, GridColumns, Box } from "@artsy/palette"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
+import { useRouter } from "v2/Artsy/Router/useRouter"
 import { Articles_partner } from "v2/__generated__/Articles_partner.graphql"
 import { ArticleCardFragmentContainer } from "../../Components/PartnerArticles/ArticleCard"
 import { PaginationFragmentContainer } from "v2/Components/Pagination"
@@ -11,6 +12,11 @@ interface ArticlesProps {
 }
 
 const Articles: React.FC<ArticlesProps> = ({ partner, relay }) => {
+  const {
+    match: { location },
+    router,
+  } = useRouter()
+
   if (!partner.articlesConnection) {
     return null
   }
@@ -24,7 +30,7 @@ const Articles: React.FC<ArticlesProps> = ({ partner, relay }) => {
     slug,
   } = partner
 
-  const loadAfter = cursor => {
+  const handleClick = (cursor: string, page: number) => {
     relay.refetch(
       {
         first: 18,
@@ -40,12 +46,15 @@ const Articles: React.FC<ArticlesProps> = ({ partner, relay }) => {
         }
       }
     )
+
+    router.push({
+      pathname: location.pathname,
+      query: { ...location.query, page },
+    })
   }
 
-  const loadNext = () => {
-    if (hasNextPage) {
-      loadAfter(endCursor)
-    }
+  const handleNext = (page: number) => {
+    handleClick(endCursor, page)
   }
 
   return (
@@ -59,20 +68,14 @@ const Articles: React.FC<ArticlesProps> = ({ partner, relay }) => {
           )
         })}
       </GridColumns>
-      <Row>
-        <Col>
-          <Box mt={9}>
-            <PaginationFragmentContainer
-              getHref={() => ""}
-              hasNextPage={hasNextPage}
-              pageCursors={pageCursors}
-              onClick={loadAfter}
-              onNext={loadNext}
-              scrollTo="#jumpto-PartnerNavBar"
-            />
-          </Box>
-        </Col>
-      </Row>
+      <Box mt={9}>
+        <PaginationFragmentContainer
+          hasNextPage={hasNextPage}
+          pageCursors={pageCursors}
+          onClick={handleClick}
+          onNext={handleNext}
+        />
+      </Box>
     </Box>
   )
 }
@@ -94,7 +97,7 @@ export const ArticlesPaginationContainer = createRefetchContainer(
           last: $last
           after: $after
           before: $before
-        ) @connection(key: "ArticlesQuery_articlesConnection") {
+        ) {
           pageInfo {
             hasNextPage
             endCursor
