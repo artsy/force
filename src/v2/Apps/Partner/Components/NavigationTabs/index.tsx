@@ -39,6 +39,7 @@ export const NavigationTabs: React.FC<NavigationTabsProps> = ({ partner }) => {
       {
         name: "Artists",
         href: route("/artists"),
+        exact: false,
         hidden: !(
           profile.displayArtistsSection &&
           artists &&

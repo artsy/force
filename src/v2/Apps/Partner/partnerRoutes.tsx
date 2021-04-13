@@ -90,7 +90,7 @@ export const partnerRoutes: RouteConfig[] = [
       },
       {
         getComponent: () => ArtistsRoute,
-        path: "artist(s|/):artistId?",
+        path: "artists/:artistId?",
         prepare: () => {
           ArtistsRoute.preload()
         },

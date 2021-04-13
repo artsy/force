@@ -28,7 +28,7 @@ export const PartnerArtistItem: React.FC<PartnerArtistItemProps> = ({
     <RouterLink
       onClick={onArtistClick}
       noUnderline
-      to={`/partner2/${partnerSlug}/artist/${slug}`}
+      to={`/partner2/${partnerSlug}/artists/${slug}`}
     >
       <Name color="black100">{name}</Name>
     </RouterLink>
