@@ -1,49 +1,50 @@
-import { Box, Text, Button, Flex } from "@artsy/palette"
 import React, { useEffect, useRef, useState } from "react"
+import { Box, Button, Flex } from "@artsy/palette"
 import {
   createPaginationContainer,
   graphql,
   RelayPaginationProp,
 } from "react-relay"
-import { PartnerArtists_partner } from "v2/__generated__/PartnerArtists_partner.graphql"
 import {
-  PartnerArtistListFragmentContainer as PartnerArtistList,
+  PartnerArtistListFragmentContainer,
   PartnerArtistListPlaceholder,
 } from "../../Components/PartnerArtists"
+import { PartnerArtists_partner } from "v2/__generated__/PartnerArtists_partner.graphql"
 
 const PAGE_SIZE = 20
 
-export interface ArtistsRouteProps {
+export interface PartnerArtistsProps {
   partner: PartnerArtists_partner
   relay: RelayPaginationProp
+  onArtistClick?: () => void
 }
 
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms))
 }
 
-export const ArtistsRoute: React.FC<ArtistsRouteProps> = ({
-  partner: { artistsConnection, distinguishRepresentedArtists, slug },
+export const PartnerArtists: React.FC<PartnerArtistsProps> = ({
+  partner: { artistsConnection: artists, distinguishRepresentedArtists, slug },
   relay,
+  onArtistClick,
 }) => {
   const [artistsLoading, setArtistsLoading] = useState(relay.hasMore())
   const [isRefetching, setIsRefetching] = useState(false)
-  const [artists, setArtists] = useState(artistsConnection)
+  const [tempArtists, setTempArtists] = useState(undefined)
   const errCounter = useRef(0)
 
   useEffect(() => {
-    if (relay.hasMore()) {
+    if (
+      relay.hasMore() &&
+      (!artistsLoading || !isRefetching) &&
+      errCounter.current === 0
+    ) {
       loadMoreArtists()
     }
-  }, [])
-
-  useEffect(() => {
-    if ((!isRefetching || !artistsLoading) && artists !== artistsConnection) {
-      setArtists(artistsConnection)
-    }
-  }, [artistsConnection, isRefetching, artistsLoading])
+  }, [artists, artistsLoading, isRefetching])
 
   const refetchArtists = () => {
+    setTempArtists(artists)
     setArtistsLoading(true)
     setIsRefetching(true)
     errCounter.current = 0
@@ -65,7 +66,6 @@ export const ArtistsRoute: React.FC<ArtistsRouteProps> = ({
       if (errCounter.current >= 3) {
         setIsRefetching(false)
         setArtistsLoading(false)
-        setArtists(artistsConnection)
 
         return
       }
@@ -75,6 +75,7 @@ export const ArtistsRoute: React.FC<ArtistsRouteProps> = ({
       } else {
         setIsRefetching(false)
         setArtistsLoading(false)
+        setTempArtists(undefined)
       }
     })
   }
@@ -83,14 +84,12 @@ export const ArtistsRoute: React.FC<ArtistsRouteProps> = ({
 
   return (
     <Box mt={4}>
-      <Text variant="title" mb={6}>
-        Artists
-      </Text>
       {!isFirstLoading && (
         <>
-          <PartnerArtistList
+          <PartnerArtistListFragmentContainer
             partnerSlug={slug}
-            artists={artists.edges}
+            onArtistClick={onArtistClick}
+            artists={isRefetching ? tempArtists.edges : artists.edges}
             distinguishRepresentedArtists={distinguishRepresentedArtists}
           />
           {(errCounter.current > 0 || isRefetching) && (
@@ -120,8 +119,8 @@ export const ARTISTS_QUERY = graphql`
   }
 `
 
-export const ArtistsPaginationContainer = createPaginationContainer(
-  ArtistsRoute,
+export const PartnerArtistsPaginationContainer = createPaginationContainer(
+  PartnerArtists,
   {
     partner: graphql`
       fragment PartnerArtists_partner on Partner

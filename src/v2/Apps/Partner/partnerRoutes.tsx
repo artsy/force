@@ -23,8 +23,8 @@ const WorksRoute = loadable(() => import("./Routes/Works"), {
   resolveComponent: component => component.WorksRoute,
 })
 
-const ArtistsRoute = loadable(() => import("./Routes/Artists/PartnerArtists"), {
-  resolveComponent: component => component.ArtistsPaginationContainer,
+const ArtistsRoute = loadable(() => import("./Routes/Artists"), {
+  resolveComponent: component => component.ArtistsRouteFragmentContainer,
 })
 
 const ContactRoute = loadable(() => import("./Routes/Contact"), {
@@ -60,7 +60,6 @@ export const partnerRoutes: RouteConfig[] = [
           }
         `,
       },
-
       {
         getComponent: () => ArticlesRoute,
         path: "articles",
@@ -91,17 +90,50 @@ export const partnerRoutes: RouteConfig[] = [
       },
       {
         getComponent: () => ArtistsRoute,
-        path: "artists",
+        path: "artists/:artistId?",
         prepare: () => {
           ArtistsRoute.preload()
         },
+        ignoreScrollBehavior: true,
         query: graphql`
           query partnerRoutes_ArtistsQuery($partnerId: String!) {
             partner(id: $partnerId) @principalField {
-              ...PartnerArtists_partner
+              ...Artists_partner
+              profile {
+                displayArtistsSection
+              }
+              artists: artistsConnection(first: 20, after: null) {
+                totalCount
+              }
             }
           }
         `,
+        render: ({ Component, props, match }) => {
+          if (!(Component && props)) {
+            return undefined
+          }
+
+          const { partner } = props as any
+
+          if (!partner) {
+            return undefined
+          }
+
+          if (
+            !(
+              partner.profile.displayArtistsSection &&
+              partner.artists &&
+              partner.artists.totalCount > 0
+            )
+          ) {
+            throw new RedirectException(
+              `/partner2/${match.params.partnerId}`,
+              302
+            )
+          }
+
+          return <Component {...props} />
+        },
       },
       {
         getComponent: () => ContactRoute,

@@ -15,15 +15,21 @@ export interface PartnerArtistItemProps {
   artist: PartnerArtistItem_artist
   hasPublishedArtworks: boolean
   partnerSlug: string
+  onArtistClick?: () => void
 }
 
 export const PartnerArtistItem: React.FC<PartnerArtistItemProps> = ({
   artist: { name, slug },
   hasPublishedArtworks,
   partnerSlug,
+  onArtistClick,
 }) => {
   return hasPublishedArtworks ? (
-    <RouterLink noUnderline to={`/partner2/${partnerSlug}/artist/${slug}`}>
+    <RouterLink
+      onClick={onArtistClick}
+      noUnderline
+      to={`/partner2/${partnerSlug}/artists/${slug}`}
+    >
       <Name color="black100">{name}</Name>
     </RouterLink>
   ) : (

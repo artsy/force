@@ -7,13 +7,16 @@ import { RouteTab, RouteTabs } from "v2/Components/RouteTabs"
 import { StickyContainer } from "v2/Components/StickyContainer"
 import { NavigationTabs_partner } from "v2/__generated__/NavigationTabs_partner.graphql"
 
+// TODO: Update value in component heigth changed
+export const PARTHER_NAV_BAR_HEIGHT = 78
+
 interface NavigationTabsProps {
   partner: NavigationTabs_partner
 }
 
 export const NavigationTabs: React.FC<NavigationTabsProps> = ({ partner }) => {
   const renderTabs = () => {
-    const { slug, locations, articles } = partner
+    const { slug, locations, articles, profile, artists } = partner
 
     const route = (path?: string) => `/partner2/${slug}${path ? path : ""}`
 
@@ -36,7 +39,12 @@ export const NavigationTabs: React.FC<NavigationTabsProps> = ({ partner }) => {
       {
         name: "Artists",
         href: route("/artists"),
-        exact: true,
+        exact: false,
+        hidden: !(
+          profile.displayArtistsSection &&
+          artists &&
+          artists.totalCount
+        ),
       },
       {
         name: "Articles",
@@ -85,10 +93,16 @@ export const NavigationTabsFragmentContainer = createFragmentContainer(
     partner: graphql`
       fragment NavigationTabs_partner on Partner {
         slug
+        profile {
+          displayArtistsSection
+        }
         locations: locationsConnection(first: 20) {
           totalCount
         }
         articles: articlesConnection(first: 20) {
+          totalCount
+        }
+        artists: artistsConnection(first: 20) {
           totalCount
         }
       }
