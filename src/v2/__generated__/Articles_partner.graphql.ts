@@ -58,18 +58,7 @@ const node: ReaderFragment = {
     }
   ],
   "kind": "Fragment",
-  "metadata": {
-    "connection": [
-      {
-        "count": null,
-        "cursor": null,
-        "direction": "bidirectional",
-        "path": [
-          "articlesConnection"
-        ]
-      }
-    ]
-  },
+  "metadata": null,
   "name": "Articles_partner",
   "selections": [
     {
@@ -80,11 +69,32 @@ const node: ReaderFragment = {
       "storageKey": null
     },
     {
-      "alias": "articlesConnection",
-      "args": null,
+      "alias": null,
+      "args": [
+        {
+          "kind": "Variable",
+          "name": "after",
+          "variableName": "after"
+        },
+        {
+          "kind": "Variable",
+          "name": "before",
+          "variableName": "before"
+        },
+        {
+          "kind": "Variable",
+          "name": "first",
+          "variableName": "first"
+        },
+        {
+          "kind": "Variable",
+          "name": "last",
+          "variableName": "last"
+        }
+      ],
       "concreteType": "ArticleConnection",
       "kind": "LinkedField",
-      "name": "__ArticlesQuery_articlesConnection_connection",
+      "name": "articlesConnection",
       "plural": false,
       "selections": [
         {
@@ -107,20 +117,6 @@ const node: ReaderFragment = {
               "args": null,
               "kind": "ScalarField",
               "name": "endCursor",
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "hasPreviousPage",
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "startCursor",
               "storageKey": null
             }
           ],
@@ -166,25 +162,11 @@ const node: ReaderFragment = {
                   "storageKey": null
                 },
                 {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "__typename",
-                  "storageKey": null
-                },
-                {
                   "args": null,
                   "kind": "FragmentSpread",
                   "name": "ArticleCard_article"
                 }
               ],
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "cursor",
               "storageKey": null
             }
           ],
@@ -196,5 +178,5 @@ const node: ReaderFragment = {
   ],
   "type": "Partner"
 };
-(node as any).hash = '6e0d57b3f5bc13e09d45e6007b571f12';
+(node as any).hash = '7c8d8b02a5e3ef11187904b129efe3a8';
 export default node;
