@@ -23,8 +23,8 @@ const WorksRoute = loadable(() => import("./Routes/Works"), {
   resolveComponent: component => component.WorksRoute,
 })
 
-const ArtistsRoute = loadable(() => import("./Routes/Artists/PartnerArtists"), {
-  resolveComponent: component => component.ArtistsPaginationContainer,
+const ArtistsRoute = loadable(() => import("./Routes/Artists"), {
+  resolveComponent: component => component.ArtistsRouteFragmentContainer,
 })
 
 const ContactRoute = loadable(() => import("./Routes/Contact"), {
@@ -98,11 +98,11 @@ export const partnerRoutes: RouteConfig[] = [
         query: graphql`
           query partnerRoutes_ArtistsQuery($partnerId: String!) {
             partner(id: $partnerId) @principalField {
-              ...PartnerArtists_partner
+              ...Artists_partner
               profile {
                 displayArtistsSection
               }
-              artistsConnection(first: 20, after: null) {
+              artists: artistsConnection(first: 20, after: null) {
                 totalCount
               }
             }
@@ -122,8 +122,8 @@ export const partnerRoutes: RouteConfig[] = [
           if (
             !(
               partner.profile.displayArtistsSection &&
-              partner.artistsConnection &&
-              partner.artistsConnection.totalCount > 0
+              partner.artists &&
+              partner.artists.totalCount > 0
             )
           ) {
             throw new RedirectException(

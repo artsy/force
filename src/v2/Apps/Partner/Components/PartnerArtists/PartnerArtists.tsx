@@ -1,45 +1,37 @@
 import React, { useEffect, useRef, useState } from "react"
-import { Box, Text, Button, Flex, themeProps } from "@artsy/palette"
-import { Match } from "found"
+import { Box, Button, Flex } from "@artsy/palette"
 import {
   createPaginationContainer,
   graphql,
   RelayPaginationProp,
 } from "react-relay"
 import {
-  PartnerArtistDetailsListRenderer,
-  PartnerArtistDetailsRenderer,
-  PartnerArtistListFragmentContainer as PartnerArtistList,
+  PartnerArtistListFragmentContainer,
   PartnerArtistListPlaceholder,
 } from "../../Components/PartnerArtists"
 import { PartnerArtists_partner } from "v2/__generated__/PartnerArtists_partner.graphql"
-import { scrollIntoView } from "v2/Utils/scrollHelpers"
-import { useMatchMedia } from "v2/Utils/Hooks/useMatchMedia"
-import { MOBILE_NAV_HEIGHT, NAV_BAR_HEIGHT } from "v2/Components/NavBar"
-import { PARTHER_NAV_BAR_HEIGHT } from "../../Components/NavigationTabs"
 
 const PAGE_SIZE = 20
 
-export interface ArtistsRouteProps {
+export interface PartnerArtistsProps {
   partner: PartnerArtists_partner
   relay: RelayPaginationProp
-  match: Match
+  onArtistClick?: () => void
 }
 
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms))
 }
 
-export const ArtistsRoute: React.FC<ArtistsRouteProps> = ({
+export const PartnerArtists: React.FC<PartnerArtistsProps> = ({
   partner: { artistsConnection: artists, distinguishRepresentedArtists, slug },
   relay,
-  match,
+  onArtistClick,
 }) => {
   const [artistsLoading, setArtistsLoading] = useState(relay.hasMore())
   const [isRefetching, setIsRefetching] = useState(false)
   const [tempArtists, setTempArtists] = useState(undefined)
   const errCounter = useRef(0)
-  const isMobile = useMatchMedia(themeProps.mediaQueries.xs)
 
   useEffect(() => {
     if (
@@ -88,30 +80,15 @@ export const ArtistsRoute: React.FC<ArtistsRouteProps> = ({
     })
   }
 
-  const handleArtistClick = () => {
-    const offset =
-      PARTHER_NAV_BAR_HEIGHT +
-      (isMobile ? MOBILE_NAV_HEIGHT : NAV_BAR_HEIGHT) +
-      20
-
-    scrollIntoView({
-      offset: offset,
-      selector: "#jump--PartnerArtistDetails",
-    })
-  }
-
   const isFirstLoading = !isRefetching && artistsLoading
 
   return (
     <Box mt={4}>
-      <Text variant="title" mb={6}>
-        Artists
-      </Text>
       {!isFirstLoading && (
         <>
-          <PartnerArtistList
+          <PartnerArtistListFragmentContainer
             partnerSlug={slug}
-            onArtistClick={handleArtistClick}
+            onArtistClick={onArtistClick}
             artists={isRefetching ? tempArtists.edges : artists.edges}
             distinguishRepresentedArtists={distinguishRepresentedArtists}
           />
@@ -130,15 +107,6 @@ export const ArtistsRoute: React.FC<ArtistsRouteProps> = ({
       )}
 
       {isFirstLoading && <PartnerArtistListPlaceholder />}
-
-      {match.params.artistId ? (
-        <PartnerArtistDetailsRenderer
-          partnerId={match.params.partnerId}
-          artistId={match.params.artistId}
-        />
-      ) : (
-        <PartnerArtistDetailsListRenderer partnerId={match.params.partnerId} />
-      )}
     </Box>
   )
 }
@@ -151,8 +119,8 @@ export const ARTISTS_QUERY = graphql`
   }
 `
 
-export const ArtistsPaginationContainer = createPaginationContainer(
-  ArtistsRoute,
+export const PartnerArtistsPaginationContainer = createPaginationContainer(
+  PartnerArtists,
   {
     partner: graphql`
       fragment PartnerArtists_partner on Partner
