@@ -32,7 +32,7 @@ fragment AuctionArtworksRail_sale on Sale {
 }
 
 fragment PastAuctions_viewer on Viewer {
-  salesConnection(first: 30, live: false, sort: START_AT_DESC, auctionState: CLOSED) {
+  salesConnection(first: 30, live: false, sort: TIMELY_AT_NAME_DESC, auctionState: CLOSED) {
     totalCount
     edges {
       node {
@@ -74,7 +74,7 @@ var v0 = [
   {
     "kind": "Literal",
     "name": "sort",
-    "value": "START_AT_DESC"
+    "value": "TIMELY_AT_NAME_DESC"
   }
 ];
 return {
@@ -243,7 +243,7 @@ return {
                 "storageKey": null
               }
             ],
-            "storageKey": "salesConnection(auctionState:\"CLOSED\",first:30,live:false,sort:\"START_AT_DESC\")"
+            "storageKey": "salesConnection(auctionState:\"CLOSED\",first:30,live:false,sort:\"TIMELY_AT_NAME_DESC\")"
           },
           {
             "alias": null,
@@ -268,7 +268,7 @@ return {
     "metadata": {},
     "name": "PastAuctions_Test_Query",
     "operationKind": "query",
-    "text": "query PastAuctions_Test_Query {\n  viewer {\n    ...PastAuctions_viewer\n  }\n}\n\nfragment AuctionArtworksRail_sale on Sale {\n  internalID\n  slug\n  href\n  name\n  formattedStartDateTime\n}\n\nfragment PastAuctions_viewer on Viewer {\n  salesConnection(first: 30, live: false, sort: START_AT_DESC, auctionState: CLOSED) {\n    totalCount\n    edges {\n      node {\n        slug\n        name\n        href\n        endAt\n        ...AuctionArtworksRail_sale\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query PastAuctions_Test_Query {\n  viewer {\n    ...PastAuctions_viewer\n  }\n}\n\nfragment AuctionArtworksRail_sale on Sale {\n  internalID\n  slug\n  href\n  name\n  formattedStartDateTime\n}\n\nfragment PastAuctions_viewer on Viewer {\n  salesConnection(first: 30, live: false, sort: TIMELY_AT_NAME_DESC, auctionState: CLOSED) {\n    totalCount\n    edges {\n      node {\n        slug\n        name\n        href\n        endAt\n        ...AuctionArtworksRail_sale\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
