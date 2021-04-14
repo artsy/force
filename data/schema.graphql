@@ -8309,6 +8309,7 @@ type Partner implements Node {
   collectingInstitution: String
   counts: PartnerCounts
   defaultProfileID: String
+  displayArtistsSection: Boolean
   distinguishRepresentedArtists: Boolean
 
   # Artworks Elastic Search results
@@ -8401,6 +8402,7 @@ type Partner implements Node {
   ): LocationConnection
   name: String
   profile: Profile
+  profileArtistsLayout: String
 
   # A connection of shows from a Partner.
   showsConnection(
@@ -8860,6 +8862,7 @@ type Profile {
   cached: Int
   counts: ProfileCounts
   displayArtistsSection: Boolean
+    @deprecated(reason: "Prefer displayArtistsSection in Partner type")
   href: String
   icon: Image
 
@@ -8875,6 +8878,7 @@ type Profile {
   isPublished: Boolean
   name: String
   profileArtistsLayout: String
+    @deprecated(reason: "Prefer profileArtistsLayout in Partner type")
 
   # A slug ID.
   slug: ID!
