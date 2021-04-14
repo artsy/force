@@ -32,7 +32,7 @@ fragment AuctionArtworksRail_sale on Sale {
 }
 
 fragment CurrentAuctions_viewer on Viewer {
-  salesConnection(first: 30, live: true, published: true, sort: START_AT_ASC, auctionState: OPEN) {
+  salesConnection(first: 30, live: true, published: true, sort: TIMELY_AT_NAME_ASC, auctionState: OPEN) {
     totalCount
     edges {
       node {
@@ -80,7 +80,7 @@ var v0 = [
   {
     "kind": "Literal",
     "name": "sort",
-    "value": "START_AT_ASC"
+    "value": "TIMELY_AT_NAME_ASC"
   }
 ];
 return {
@@ -256,7 +256,7 @@ return {
                 "storageKey": null
               }
             ],
-            "storageKey": "salesConnection(auctionState:\"OPEN\",first:30,live:true,published:true,sort:\"START_AT_ASC\")"
+            "storageKey": "salesConnection(auctionState:\"OPEN\",first:30,live:true,published:true,sort:\"TIMELY_AT_NAME_ASC\")"
           },
           {
             "alias": null,
@@ -282,7 +282,7 @@ return {
     "metadata": {},
     "name": "auctionsRoutes_Current_AuctionsQuery",
     "operationKind": "query",
-    "text": "query auctionsRoutes_Current_AuctionsQuery {\n  viewer {\n    ...CurrentAuctions_viewer\n  }\n}\n\nfragment AuctionArtworksRail_sale on Sale {\n  internalID\n  slug\n  href\n  name\n  formattedStartDateTime\n}\n\nfragment CurrentAuctions_viewer on Viewer {\n  salesConnection(first: 30, live: true, published: true, sort: START_AT_ASC, auctionState: OPEN) {\n    totalCount\n    edges {\n      node {\n        slug\n        name\n        href\n        liveStartAt\n        isLiveOpen\n        ...AuctionArtworksRail_sale\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query auctionsRoutes_Current_AuctionsQuery {\n  viewer {\n    ...CurrentAuctions_viewer\n  }\n}\n\nfragment AuctionArtworksRail_sale on Sale {\n  internalID\n  slug\n  href\n  name\n  formattedStartDateTime\n}\n\nfragment CurrentAuctions_viewer on Viewer {\n  salesConnection(first: 30, live: true, published: true, sort: TIMELY_AT_NAME_ASC, auctionState: OPEN) {\n    totalCount\n    edges {\n      node {\n        slug\n        name\n        href\n        liveStartAt\n        isLiveOpen\n        ...AuctionArtworksRail_sale\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
