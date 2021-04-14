@@ -35,7 +35,7 @@ const AuctionsApp: React.FC<AuctionsAppProps> = props => {
       <GridColumns>
         <Column span={[12, 6]}>
           <HorizontalPadding>
-            <Text mt={3} mb={[0, 1]} variant="largeTitle">
+            <Text mt={3} mb={[0, 1]} variant="largeTitle" as="h1">
               Auctions
             </Text>
           </HorizontalPadding>
