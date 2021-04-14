@@ -192,7 +192,7 @@ const InDemandNowLarge: React.FC<
 
           <Box>
             <Text>Sell-Through Rate</Text>
-            <Text variant="largeTitle">{sellThroughRate}%</Text>
+            <Text variant="largeTitle">{sellThroughRate * 100}%</Text>
           </Box>
 
           <Spacer my={1} />
@@ -335,7 +335,7 @@ const InDemandNowSmall: React.FC<
 
           <Box>
             <Text>Sell-Through Rate</Text>
-            <Text variant="largeTitle">{sellThroughRate}%</Text>
+            <Text variant="largeTitle">{sellThroughRate * 100}%</Text>
           </Box>
 
           <Spacer my={1} />
