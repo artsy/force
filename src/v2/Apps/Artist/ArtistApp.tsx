@@ -8,7 +8,6 @@ import { useTracking } from "v2/Artsy"
 import { track } from "v2/Artsy/Analytics"
 import * as Schema from "v2/Artsy/Analytics/Schema"
 import { findCurrentRoute } from "v2/Artsy/Router/Utils/findCurrentRoute"
-import { Footer } from "v2/Components/Footer"
 import { RecentlyViewedQueryRenderer as RecentlyViewed } from "v2/Components/RecentlyViewed"
 import { Match } from "found"
 import React from "react"
@@ -117,12 +116,6 @@ export const ArtistApp: React.FC<ArtistAppProps> = props => {
             </LazyLoadComponent>
           </>
         )}
-
-        <Row>
-          <Col>
-            <Footer />
-          </Col>
-        </Row>
       </HorizontalPaddingArea>
     </AppContainer>
   )

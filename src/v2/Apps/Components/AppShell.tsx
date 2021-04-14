@@ -1,10 +1,11 @@
-import { Box } from "@artsy/palette"
+import { Box, Col, Row } from "@artsy/palette"
 import { NetworkOfflineMonitor } from "v2/Artsy/Router/NetworkOfflineMonitor"
 import { findCurrentRoute } from "v2/Artsy/Router/Utils/findCurrentRoute"
 import { useMaybeReloadAfterInquirySignIn } from "v2/Artsy/Router/Utils/useMaybeReloadAfterInquirySignIn"
 import { NAV_BAR_HEIGHT, NavBar, MOBILE_NAV_HEIGHT } from "v2/Components/NavBar"
 import { Match } from "found"
 import { isFunction } from "lodash"
+import { Footer } from "v2/Components/Footer"
 import React, { useEffect } from "react"
 import createLogger from "v2/Utils/logger"
 
@@ -61,6 +62,12 @@ export const AppShell: React.FC<AppShellProps> = props => {
       </Box>
 
       <NetworkOfflineMonitor />
+
+      <Row>
+        <Col>
+          <Footer />
+        </Col>
+      </Row>
     </Box>
   )
 }
