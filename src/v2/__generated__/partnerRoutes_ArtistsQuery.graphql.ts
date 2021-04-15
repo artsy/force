@@ -8,9 +8,7 @@ export type partnerRoutes_ArtistsQueryVariables = {
 };
 export type partnerRoutes_ArtistsQueryResponse = {
     readonly partner: {
-        readonly profile: {
-            readonly displayArtistsSection: boolean | null;
-        } | null;
+        readonly displayArtistsSection: boolean | null;
         readonly artists: {
             readonly totalCount: number | null;
         } | null;
@@ -30,10 +28,7 @@ query partnerRoutes_ArtistsQuery(
 ) {
   partner(id: $partnerId) @principalField {
     ...Artists_partner
-    profile {
-      displayArtistsSection
-      id
-    }
+    displayArtistsSection
     artists: artistsConnection(first: 20) {
       totalCount
     }
@@ -161,18 +156,7 @@ return {
         "name": "partner",
         "plural": false,
         "selections": [
-          {
-            "alias": null,
-            "args": null,
-            "concreteType": "Profile",
-            "kind": "LinkedField",
-            "name": "profile",
-            "plural": false,
-            "selections": [
-              (v2/*: any*/)
-            ],
-            "storageKey": null
-          },
+          (v2/*: any*/),
           (v4/*: any*/),
           {
             "args": null,
@@ -337,19 +321,7 @@ return {
             "kind": "LinkedHandle",
             "name": "artistsConnection"
           },
-          {
-            "alias": null,
-            "args": null,
-            "concreteType": "Profile",
-            "kind": "LinkedField",
-            "name": "profile",
-            "plural": false,
-            "selections": [
-              (v2/*: any*/),
-              (v6/*: any*/)
-            ],
-            "storageKey": null
-          },
+          (v2/*: any*/),
           (v4/*: any*/),
           (v6/*: any*/)
         ],
@@ -362,9 +334,9 @@ return {
     "metadata": {},
     "name": "partnerRoutes_ArtistsQuery",
     "operationKind": "query",
-    "text": "query partnerRoutes_ArtistsQuery(\n  $partnerId: String!\n) {\n  partner(id: $partnerId) @principalField {\n    ...Artists_partner\n    profile {\n      displayArtistsSection\n      id\n    }\n    artists: artistsConnection(first: 20) {\n      totalCount\n    }\n    id\n  }\n}\n\nfragment Artists_partner on Partner {\n  ...PartnerArtists_partner\n}\n\nfragment PartnerArtistItem_artist on Artist {\n  name\n  slug\n}\n\nfragment PartnerArtistList_artists on ArtistPartnerEdge {\n  representedBy\n  isDisplayOnPartnerProfile\n  counts {\n    artworks\n  }\n  node {\n    internalID\n    ...PartnerArtistItem_artist\n    id\n  }\n}\n\nfragment PartnerArtists_partner on Partner {\n  slug\n  distinguishRepresentedArtists\n  artistsConnection(first: 20) {\n    edges {\n      ...PartnerArtistList_artists\n      cursor\n      node {\n        __typename\n        id\n      }\n      id\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query partnerRoutes_ArtistsQuery(\n  $partnerId: String!\n) {\n  partner(id: $partnerId) @principalField {\n    ...Artists_partner\n    displayArtistsSection\n    artists: artistsConnection(first: 20) {\n      totalCount\n    }\n    id\n  }\n}\n\nfragment Artists_partner on Partner {\n  ...PartnerArtists_partner\n}\n\nfragment PartnerArtistItem_artist on Artist {\n  name\n  slug\n}\n\nfragment PartnerArtistList_artists on ArtistPartnerEdge {\n  representedBy\n  isDisplayOnPartnerProfile\n  counts {\n    artworks\n  }\n  node {\n    internalID\n    ...PartnerArtistItem_artist\n    id\n  }\n}\n\nfragment PartnerArtists_partner on Partner {\n  slug\n  distinguishRepresentedArtists\n  artistsConnection(first: 20) {\n    edges {\n      ...PartnerArtistList_artists\n      cursor\n      node {\n        __typename\n        id\n      }\n      id\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '95e5f52b6350569db6f716eeed1b45fd';
+(node as any).hash = '11fc4d6bf4baf9149e8afbe3c1bad460';
 export default node;

@@ -99,9 +99,7 @@ export const partnerRoutes: RouteConfig[] = [
           query partnerRoutes_ArtistsQuery($partnerId: String!) {
             partner(id: $partnerId) @principalField {
               ...Artists_partner
-              profile {
-                displayArtistsSection
-              }
+              displayArtistsSection
               artists: artistsConnection(first: 20, after: null) {
                 totalCount
               }
@@ -121,7 +119,7 @@ export const partnerRoutes: RouteConfig[] = [
 
           if (
             !(
-              partner.profile.displayArtistsSection &&
+              partner.displayArtistsSection &&
               partner.artists &&
               partner.artists.totalCount > 0
             )
