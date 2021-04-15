@@ -8,7 +8,6 @@ import { createFragmentContainer, graphql } from "react-relay"
 
 import { ViewingRoomApp_viewingRoom } from "v2/__generated__/ViewingRoomApp_viewingRoom.graphql"
 import { ViewingRoomMetaFragmentContainer as ViewingRoomMeta } from "./Components/ViewingRoomMeta"
-import { Footer } from "v2/Components/Footer"
 import { ErrorPage } from "v2/Components/ErrorPage"
 import { openAuthModal } from "v2/Utils/openAuthModal"
 import { SystemContext } from "v2/Artsy"
@@ -86,9 +85,6 @@ const ViewingRoomApp: React.FC<ViewingRoomAppProps> = ({
       <AppContainer maxWidth="100%">
         <ViewingRoomHeader viewingRoom={viewingRoom} />
         {user && getView()}
-        <Box mx={2}>
-          <Footer />
-        </Box>
       </AppContainer>
     </>
   )

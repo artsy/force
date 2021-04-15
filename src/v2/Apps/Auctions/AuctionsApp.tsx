@@ -13,7 +13,6 @@ import {
   Text,
 } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { Footer } from "v2/Components/Footer"
 import { HorizontalPadding } from "../Components/HorizontalPadding"
 import { LazyLoadComponent } from "react-lazy-load-image-component"
 import { RecentlyViewedQueryRenderer as RecentlyViewed } from "v2/Components/RecentlyViewed"

@@ -2,7 +2,6 @@ import React from "react"
 import { AppContainer } from "v2/Apps/Components/AppContainer"
 import { Box, Sans, breakpoints } from "@artsy/palette"
 import { ViewingRoomsLatestGridFragmentContainer as ViewingRoomsLatestGrid } from "./Components/ViewingRoomsLatestGrid"
-import { Footer } from "v2/Components/Footer"
 import { ViewingRoomsMeta } from "./Components/ViewingRoomsMeta"
 import { ViewingRoomsApp_allViewingRooms } from "v2/__generated__/ViewingRoomsApp_allViewingRooms.graphql"
 import { ViewingRoomsApp_featuredViewingRooms } from "v2/__generated__/ViewingRoomsApp_featuredViewingRooms.graphql"
@@ -31,9 +30,6 @@ const ViewingRoomsApp: React.FC<ViewingRoomsAppProps> = props => {
             />
             <ViewingRoomsLatestGrid viewingRooms={allViewingRooms} />
           </Box>
-        </Box>
-        <Box mx={2}>
-          <Footer />
         </Box>
       </AppContainer>
     </>
