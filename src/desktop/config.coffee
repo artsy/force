@@ -17,6 +17,9 @@ module.exports =
   ARTSY_EDITORIAL_CHANNEL: '5759e3efb5989e6f98f77993'
   BIDDER_INFO_COPY_P1: 'Please enter your credit card information below. The name on your Artsy account must match the name on the card, and a valid credit card is required in order to bid.'
   BIDDER_INFO_COPY_P2: 'Registration is free. Artsy will never charge this card without your permission, and you are not required to use this card to pay if you win.'
+  BRAZE_API_KEY: null
+  BRAZE_API_URL: null
+  BRAZE_LOGGING: false
   CDN_URL: 'https://d1s2w0upia4e9w.cloudfront.net'
   CLIENT_ID: null
   CLIENT_SECRET: null
@@ -137,9 +140,6 @@ module.exports =
   APPLE_KEY_ID: null
   APPLE_PRIVATE_KEY: null
   ZENDESK_KEY: null
-  BRAZE_API_KEY: null
-  BRAZE_API_URL: null
-  BRAZE_LOGGING: false
 
 # Override any values with env variables if they exist.
 # You can set JSON-y values for env variables as well such as "true" or

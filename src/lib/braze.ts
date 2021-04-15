@@ -1,12 +1,13 @@
-import { data as sd } from "sharify"
+import { getENV } from "v2/Utils/getENV"
 
-export const setup = async () => {
-  if (
-    typeof window === "undefined" ||
-    !sd.BRAZE_API_KEY ||
-    !sd.BRAZE_API_URL ||
-    process.env.NODE_ENV !== "production"
-  ) {
+export const setupBraze = async () => {
+  const isClient = typeof window === "undefined"
+  const BRAZE_API_KEY = getENV("BRAZE_API_KEY")
+  const BRAZE_API_URL = getENV("BRAZE_API_URL")
+  const BRAZE_LOGGING = Boolean(getENV("BRAZE_LOGGING"))
+
+  const shouldInit = Boolean(isClient && BRAZE_API_KEY && BRAZE_API_URL)
+  if (!shouldInit) {
     return
   }
 
@@ -15,9 +16,9 @@ export const setup = async () => {
     /* webpackChunkName: "brazeSDK" */
     "@braze/web-sdk"
   )
-  braze.initialize(process.env.BRAZE_API_KEY, {
-    baseUrl: process.env.BRAZE_API_URL,
-    enableLogging: Boolean(process.env.BRAZE_LOGGING),
+  braze.initialize(BRAZE_API_KEY, {
+    baseUrl: BRAZE_API_URL,
+    enableLogging: BRAZE_LOGGING,
   })
   braze.display.automaticallyShowNewInAppMessages()
 }

@@ -8,7 +8,7 @@ import { logoutEventHandler } from "desktop/lib/logoutHandler"
 import { mediator } from "lib/mediator"
 import { beforeAnalyticsReady, onAnalyticsReady } from "lib/analytics/helpers"
 import { getClientParam } from "./Utils/getClientParam"
-import { setup as setupMarketing } from "lib/braze"
+import { setupBraze } from "lib/braze"
 
 async function setupClient() {
   const clientImports = await Promise.all([
@@ -64,7 +64,7 @@ async function setupClient() {
     console.error("[v2/client.tsx] Error loading client:", error)
   }
   try {
-    setupMarketing()
+    await setupBraze()
   } catch (error) {
     console.error("Braze marketing sdk setup failed:", error)
   }
