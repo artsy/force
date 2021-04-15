@@ -2,7 +2,6 @@ import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { AppContainer } from "v2/Apps/Components/AppContainer"
 import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
-import { Footer } from "v2/Components/Footer"
 import { Column, GridColumns, Separator } from "@artsy/palette"
 import { ShowMetaFragmentContainer as ShowMeta } from "v2/Apps/Show/Components/ShowMeta"
 import { ShowHeaderFragmentContainer as ShowHeader } from "./Components/ShowHeader"
@@ -93,8 +92,6 @@ export const ShowApp: React.FC<ShowAppProps> = ({ show }) => {
             <Separator as="hr" my={3} />
 
             <ShowContextCard show={show} />
-
-            <Footer />
           </HorizontalPadding>
         </AnalyticsContext.Provider>
       </AppContainer>
