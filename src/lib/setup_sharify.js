@@ -100,7 +100,10 @@ sharify.data = _.extend(
     "TRACK_PAGELOAD_PATHS",
     "VOLLEY_ENDPOINT",
     "WEBFONT_URL",
-    "ZENDESK_KEY"
+    "ZENDESK_KEY",
+    "BRAZE_API_KEY",
+    "BRAZE_API_URL",
+    "BRAZE_LOGGING"
   ),
   {
     CSS_EXT: ["production", "staging"].includes(config.NODE_ENV)

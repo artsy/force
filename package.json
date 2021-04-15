@@ -87,6 +87,7 @@
     "@artsy/stitch": "6.2.0",
     "@artsy/xapp": "1.0.6",
     "@babel/runtime": "7.13.10",
+    "@braze/web-sdk": "^3.2.0",
     "@loadable/component": "5.14.1",
     "@loadable/server": "5.14.0",
     "@sentry/browser": "4.5.4",

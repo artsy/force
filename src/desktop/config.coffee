@@ -137,6 +137,9 @@ module.exports =
   APPLE_KEY_ID: null
   APPLE_PRIVATE_KEY: null
   ZENDESK_KEY: null
+  BRAZE_API_KEY: null
+  BRAZE_API_URL: null
+  BRAZE_LOGGING: false
 
 # Override any values with env variables if they exist.
 # You can set JSON-y values for env variables as well such as "true" or
