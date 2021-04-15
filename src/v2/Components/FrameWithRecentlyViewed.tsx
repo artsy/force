@@ -1,6 +1,5 @@
 import { Flex } from "@artsy/palette"
 import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
-// import { useSystemContext } from "v2/Artsy"
 import React from "react"
 import { LazyLoadComponent } from "react-lazy-load-image-component"
 
@@ -11,9 +10,6 @@ export interface Props {
 }
 
 export const FrameWithRecentlyViewed: React.SFC<Props> = ({ children }) => {
-  // const { isEigen } = useSystemContext()
-  // const showFooter = !isEigen
-
   return (
     <HorizontalPadding>
       <Flex flexDirection="column">
