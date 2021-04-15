@@ -11,6 +11,7 @@ import {
   Join,
   Separator,
   Text,
+  ThemeProviderV3,
 } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { HorizontalPadding } from "../Components/HorizontalPadding"
@@ -29,79 +30,81 @@ const AuctionsApp: React.FC<AuctionsAppProps> = props => {
   const { user } = useSystemContext()
 
   return (
-    <AppContainer>
-      <AuctionsMeta />
-      <GridColumns>
-        <Column span={[12, 6]}>
-          <HorizontalPadding>
-            <Text mt={3} mb={[0, 1]} variant="largeTitle" as="h1">
-              Auctions
-            </Text>
-          </HorizontalPadding>
-        </Column>
-        <Column span={[12, 6]}>
-          <HorizontalPadding>
-            <Text mt={[0, 3]} py={1}>
-              Bid on works you love with auctions on Artsy. With bidding opening
-              daily, Artsy connects collectors like you to art from leading
-              auction houses, nonprofit organizations, and sellers across the
-              globe. We feature premium artworks including modern, contemporary,
-              and street art, so you can find works by your favorite artists—and
-              discover new ones—all in one place.
-            </Text>
-            <RouterLink
-              to="https://support.artsy.net/hc/en-us/sections/360008298773-Bid-at-Auction"
-              noUnderline
-            >
-              <Text variant="mediumText" py={1}>
-                Learn more about bidding on Artsy{" "}
-                <ChevronIcon
-                  title={null}
-                  direction="right"
-                  color="black"
-                  height="15px"
-                  width="14px"
-                  top="3px"
-                  left="3px"
-                />
+    <ThemeProviderV3>
+      <AppContainer>
+        <AuctionsMeta />
+        <GridColumns>
+          <Column span={[12, 6]}>
+            <HorizontalPadding>
+              <Text mt={4} mb={[0, 1]} variant="xxl" as="h1">
+                Auctions
               </Text>
-            </RouterLink>
+            </HorizontalPadding>
+          </Column>
+          <Column span={[12, 6]}>
+            <HorizontalPadding>
+              <Text variant="md" mt={[0, 4]}>
+                Bid on works you love with auctions on Artsy. With bidding
+                opening daily, Artsy connects collectors like you to art from
+                leading auction houses, nonprofit organizations, and sellers
+                across the globe. We feature premium artworks including modern,
+                contemporary, and street art, so you can find works by your
+                favorite artists—and discover new ones—all in one place.
+              </Text>
+              <RouterLink
+                to="https://support.artsy.net/hc/en-us/sections/360008298773-Bid-at-Auction"
+                noUnderline
+              >
+                <Text variant="md" fontWeight="bold" py={1}>
+                  Learn more about bidding on Artsy{" "}
+                  <ChevronIcon
+                    title={null}
+                    direction="right"
+                    color="black"
+                    height="15px"
+                    width="14px"
+                    top="3px"
+                    left="3px"
+                  />
+                </Text>
+              </RouterLink>
+            </HorizontalPadding>
+          </Column>
+        </GridColumns>
+
+        {user && (
+          <HorizontalPadding pb={2} my={[2, 4]}>
+            <Join separator={<Separator my={[2, 4]} />}>
+              <Box>
+                <MyBidsFragmentContainer me={viewer.me} />
+              </Box>
+
+              <Box>
+                <WorksByArtistsYouFollowRailFragmentContainer viewer={viewer} />
+              </Box>
+            </Join>
           </HorizontalPadding>
-        </Column>
-      </GridColumns>
-
-      {user && (
-        <HorizontalPadding pb={2} my={[2, 4]}>
-          <Join separator={<Separator my={[2, 4]} />}>
-            <Box>
-              <MyBidsFragmentContainer me={viewer.me} />
-            </Box>
-
-            <Box>
-              <WorksByArtistsYouFollowRailFragmentContainer viewer={viewer} />
-            </Box>
-          </Join>
-        </HorizontalPadding>
-      )}
-      <HorizontalPadding mt={4}>
-        <RouteTabs mb={2}>
-          <RouteTab exact to="/auctions">
-            Current Auctions
-          </RouteTab>
-          <RouteTab to="/auctions/upcoming">Upcoming</RouteTab>
-          <RouteTab to="/auctions/past">Past</RouteTab>
-        </RouteTabs>
-
-        <Box>{children}</Box>
-        {typeof window !== "undefined" && (
-          <>
-            <LazyLoadComponent threshold={1000}>
-              <RecentlyViewed />
-            </LazyLoadComponent>
-          </>
         )}
-      </HorizontalPadding>
-    </AppContainer>
+        <HorizontalPadding mt={4}>
+          <RouteTabs mb={2}>
+            <RouteTab exact to="/auctions">
+              Current Auctions
+            </RouteTab>
+            <RouteTab to="/auctions/upcoming">Upcoming</RouteTab>
+            <RouteTab to="/auctions/past">Past</RouteTab>
+          </RouteTabs>
+
+          <Box>{children}</Box>
+          {typeof window !== "undefined" && (
+            <>
+              <LazyLoadComponent threshold={1000}>
+                <RecentlyViewed />
+              </LazyLoadComponent>
+            </>
+          )}
+        </HorizontalPadding>
+      </AppContainer>
+    </ThemeProviderV3>
   )
 }
 
