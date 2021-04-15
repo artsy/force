@@ -4,7 +4,6 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { FairApp_fair } from "v2/__generated__/FairApp_fair.graphql"
 import { Box, CSSGrid, Text } from "@artsy/palette"
 import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
-import { Footer } from "v2/Components/Footer"
 import {
   FairEditorialFragmentContainer,
   FAIR_EDITORIAL_AMOUNT,
@@ -147,8 +146,6 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
           </RouteTabs>
 
           {children}
-
-          <Footer />
         </HorizontalPadding>
       </AppContainer>
     </>
