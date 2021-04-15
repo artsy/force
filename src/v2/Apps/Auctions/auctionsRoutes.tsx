@@ -11,6 +11,7 @@ const AuctionsApp = loadable(() => import("./AuctionsApp"), {
 export const auctionsRoutes = [
   {
     path: "/auctions",
+    theme: "v3",
     getComponent: () => AuctionsApp,
     prepare: () => {
       AuctionsApp.preload()
@@ -26,6 +27,7 @@ export const auctionsRoutes = [
     children: [
       {
         path: "", // represents current auctions aka /auctions/current
+        theme: "v3",
         Component: CurrentAuctionsPaginationContainer,
         ignoreScrollBehavior: true,
         query: graphql`
@@ -38,6 +40,7 @@ export const auctionsRoutes = [
       },
       {
         path: "upcoming",
+        theme: "v3",
         Component: UpcomingAuctionsPaginationContainer,
         ignoreScrollBehavior: true,
         query: graphql`
@@ -50,6 +53,7 @@ export const auctionsRoutes = [
       },
       {
         path: "past",
+        theme: "v3",
         Component: PastAuctionsPaginationContainer,
         ignoreScrollBehavior: true,
         query: graphql`

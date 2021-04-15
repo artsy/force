@@ -40,7 +40,7 @@ export const AuctionArtworksRail: React.FC<AuctionArtworksRailProps> = ({
 }) => {
   const ref = useRef<HTMLDivElement | null>(null)
   const { trackEvent } = useTracking()
-  const { isEnteredView, Waypoint } = useLazyLoadComponent()
+  const { isEnteredView, Waypoint } = useLazyLoadComponent({ threshold: 2000 })
   const { contextPageOwnerType } = useAnalyticsContext()
   const contextModule = tabTypeToContextModuleMap[tabType]
 
@@ -63,9 +63,9 @@ export const AuctionArtworksRail: React.FC<AuctionArtworksRailProps> = ({
       <Waypoint />
 
       <Box ref={ref as any} {...rest}>
-        <Box display="flex" mb={1}>
+        <Box display="flex" mb={4}>
           <Box flex="1">
-            <Text as="h3" variant="title">
+            <Text as="h3" variant="lg" color="black100">
               <RouterLink
                 to={sale.href}
                 noUnderline
@@ -74,15 +74,18 @@ export const AuctionArtworksRail: React.FC<AuctionArtworksRailProps> = ({
                 {sale.name}
               </RouterLink>
             </Text>
-            <Text mb={1}>{sale.formattedStartDateTime}</Text>
+            <Text as="h3" variant="lg" color="black60" mb={1}>
+              {sale.formattedStartDateTime}
+            </Text>
           </Box>
 
-          <Text variant="subtitle" color="black60">
-            <RouterLink to={sale.href} noUnderline onClick={trackViewSaleClick}>
+          <Text variant="sm" color="black100">
+            <RouterLink to={sale.href} onClick={trackViewSaleClick}>
               View all
             </RouterLink>
           </Text>
         </Box>
+
         {isEnteredView ? (
           <AuctionArtworksRailArtworksQueryRenderer
             id={sale.internalID}

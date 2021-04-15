@@ -2,13 +2,11 @@ import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useAnalyticsContext } from "v2/Artsy"
 import { WorksByArtistsYouFollowRail_viewer } from "v2/__generated__/WorksByArtistsYouFollowRail_viewer.graphql"
-import { Carousel } from "v2/Components/Carousel"
-import FillwidthItem from "v2/Components/Artwork/FillwidthItem"
 import { useTracking } from "react-tracking"
-import { clickedArtworkGroup } from "@artsy/cohesion"
-import { auctionHeights } from "../../Utils/auctionsHelpers"
+import { AuthContextModule, clickedArtworkGroup } from "@artsy/cohesion"
 import { tabTypeToContextModuleMap } from "../../Utils/tabTypeToContextModuleMap"
-import { Text } from "@artsy/palette"
+import { Box, Shelf, Spacer, Text } from "@artsy/palette"
+import { ShelfArtworkFragmentContainer } from "v2/Components/Artwork/ShelfArtwork"
 
 export interface WorksByArtistsYouFollowRailProps {
   viewer: WorksByArtistsYouFollowRail_viewer
@@ -19,7 +17,7 @@ const WorksByArtistsYouFollowRail: React.FC<WorksByArtistsYouFollowRailProps> = 
 }) => {
   const { trackEvent } = useTracking()
   const { contextPageOwnerType } = useAnalyticsContext()
-  const contextModule = tabTypeToContextModuleMap.worksByArtistsYouFollow
+  const contextModule = tabTypeToContextModuleMap.worksByArtistsYouFollow as AuthContextModule
 
   if (viewer.saleArtworksConnection.edges.length === 0) {
     return null
@@ -27,20 +25,31 @@ const WorksByArtistsYouFollowRail: React.FC<WorksByArtistsYouFollowRailProps> = 
 
   return (
     <>
-      <Text as="h3" variant="subtitle" mb={2}>
-        Works by artists you follow
-      </Text>
+      <Box>
+        <Text as="h3" variant="lg" color="black100">
+          Works for you{" "}
+          <sup>
+            <Text as="span" variant="xs" color="brand">
+              {viewer.saleArtworksConnection.edges.length}
+            </Text>
+          </sup>
+        </Text>
 
-      <Carousel arrowHeight={auctionHeights.artworksImage}>
+        <Text as="h3" variant="lg" color="black60" mb={2}>
+          Works at auction by artists you follow
+        </Text>
+      </Box>
+
+      <Spacer mb={4} />
+
+      <Shelf>
         {viewer.saleArtworksConnection.edges.map(({ node }, index) => {
           return (
-            <FillwidthItem
-              key={index}
-              contextModule={contextModule}
+            <ShelfArtworkFragmentContainer
               artwork={node}
-              imageHeight={auctionHeights.artworksImage}
+              key={node.slug}
+              contextModule={contextModule}
               hidePartnerName
-              lazyLoad
               onClick={() => {
                 trackEvent(
                   clickedArtworkGroup({
@@ -55,7 +64,7 @@ const WorksByArtistsYouFollowRail: React.FC<WorksByArtistsYouFollowRailProps> = 
             />
           )
         })}
-      </Carousel>
+      </Shelf>
     </>
   )
 }
@@ -75,7 +84,7 @@ export const WorksByArtistsYouFollowRailFragmentContainer = createFragmentContai
             node {
               internalID
               slug
-              ...FillwidthItem_artwork
+              ...ShelfArtwork_artwork @arguments(width: 325)
             }
           }
         }

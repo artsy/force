@@ -3,8 +3,8 @@ import { sendErrorToService } from "v2/Utils/errors"
 export const shouldCaptureError = (environment: string) =>
   environment === "staging" || environment === "production"
 
-export default function createLogger(namespace = "reaction") {
-  const formattedNamespace = `${namespace} |`
+export default function createLogger(namespace = "") {
+  const formattedNamespace = namespace ? `${namespace} |` : ""
 
   return {
     log: (...messages) => {

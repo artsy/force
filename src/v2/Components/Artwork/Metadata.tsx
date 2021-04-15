@@ -2,7 +2,8 @@ import { Metadata_artwork } from "v2/__generated__/Metadata_artwork.graphql"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { DetailsFragmentContainer as Details } from "./Details"
-import { Box, BoxProps, Link } from "@artsy/palette"
+import { Box, BoxProps } from "@artsy/palette"
+import { RouterLink } from "v2/Artsy/Router/RouterLink"
 
 export interface MetadataProps extends BoxProps {
   artwork: Metadata_artwork
@@ -31,7 +32,7 @@ export class Metadata extends React.Component<MetadataProps> {
     } = this.props
 
     return (
-      <Link href={artwork.href} underlineBehavior="none">
+      <RouterLink to={artwork.href} noUnderline>
         <Box textAlign="left" className={className} {...(boxProps as any)}>
           <Details
             includeLinks={false}
@@ -41,7 +42,7 @@ export class Metadata extends React.Component<MetadataProps> {
             hideArtistName={hideArtistName}
           />
         </Box>
-      </Link>
+      </RouterLink>
     )
   }
 }
