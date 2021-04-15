@@ -101,7 +101,6 @@ const AuctionsApp: React.FC<AuctionsAppProps> = props => {
             </LazyLoadComponent>
           </>
         )}
-        <Footer />
       </HorizontalPadding>
     </AppContainer>
   )
