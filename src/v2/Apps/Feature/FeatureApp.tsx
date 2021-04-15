@@ -7,7 +7,6 @@ import { FeatureApp_feature } from "v2/__generated__/FeatureApp_feature.graphql"
 import { Col, Grid, HTML, Join, Row, Spacer } from "@artsy/palette"
 import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
 import { FeatureSetFragmentContainer as FeatureSet } from "./Components/FeatureSet"
-import { Footer } from "v2/Components/Footer"
 
 interface FeatureAppProps {
   feature: FeatureApp_feature
@@ -46,8 +45,6 @@ const FeatureApp: React.FC<FeatureAppProps> = ({ feature }) => {
             feature.sets.edges.map(
               ({ node: set }) => set && <FeatureSet key={set.id} set={set} />
             )}
-
-          <Footer />
         </HorizontalPadding>
       </AppContainer>
     </>
