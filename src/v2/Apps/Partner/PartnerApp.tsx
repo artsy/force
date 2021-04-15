@@ -40,8 +40,6 @@ export const PartnerApp: React.FC<PartnerAppProps> = ({
             <NavigationTabs partner={partner} />
 
             {children}
-
-            <Footer />
           </HorizontalPadding>
         </AppContainer>
       </Foreground>
