@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import {
   Button,
   Flex,
@@ -72,7 +72,7 @@ export const PriceRangeFilter: React.FC<PriceRangeFilterProps> = ({
   const [mode, setMode] = useState<"resting" | "done">("resting")
 
   const { currentlySelectedFilters, setFilter } = useArtworkFilterContext()
-  const { priceRange: initialRange } = currentlySelectedFilters()
+  const { priceRange: initialRange, reset } = currentlySelectedFilters()
 
   const numericInitialRange = parseRange(initialRange)
 
@@ -131,6 +131,13 @@ export const PriceRangeFilter: React.FC<PriceRangeFilterProps> = ({
   const selection = currentlySelectedFilters().priceRange
   const hasSelection = selection && selection.length > 0
 
+  useEffect(() => {
+    // if filter state is being reset, then also clear local input state
+    if (reset) {
+      setCustomRange(["*", "*"])
+    }
+  }, [reset])
+
   return (
     <FilterExpandable label="Price" expanded={hasSelection || expanded}>
       {mode === "done" && (
@@ -172,6 +179,7 @@ export const PriceRangeFilter: React.FC<PriceRangeFilterProps> = ({
           <Flex mt={1} alignItems="flex-end">
             <NumericInput
               label="$USD"
+              name="price_min"
               placeholder="Min"
               min="0"
               step="1"
@@ -183,6 +191,7 @@ export const PriceRangeFilter: React.FC<PriceRangeFilterProps> = ({
 
             <NumericInput
               label="$USD"
+              name="price_max"
               placeholder="Max"
               min="0"
               step="1"
