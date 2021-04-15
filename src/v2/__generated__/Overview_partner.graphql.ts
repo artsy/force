@@ -5,12 +5,14 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type Overview_partner = {
     readonly slug: string;
+    readonly displayArtistsSection: boolean | null;
     readonly articlesConnection: {
         readonly totalCount: number | null;
         readonly edges: ReadonlyArray<{
             readonly " $fragmentRefs": FragmentRefs<"ArticlesRail_articles">;
         } | null> | null;
     } | null;
+    readonly " $fragmentRefs": FragmentRefs<"ArtistsRail_partner">;
     readonly " $refType": "Overview_partner";
 };
 export type Overview_partner$data = Overview_partner;
@@ -43,6 +45,13 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "ScalarField",
       "name": "slug",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "displayArtistsSection",
       "storageKey": null
     },
     {
@@ -128,9 +137,14 @@ const node: ReaderFragment = {
         }
       ],
       "storageKey": null
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArtistsRail_partner"
     }
   ],
   "type": "Partner"
 };
-(node as any).hash = '67bc7fbc26682a7949ea0c4c8bce15ea';
+(node as any).hash = '1c3613e69cf48eed24750c84a894e690';
 export default node;

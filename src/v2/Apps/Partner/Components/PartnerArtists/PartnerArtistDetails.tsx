@@ -4,7 +4,14 @@ import { PartnerArtistDetails_artist } from "v2/__generated__/PartnerArtistDetai
 import { PartnerArtistDetailsQuery } from "v2/__generated__/PartnerArtistDetailsQuery.graphql"
 import { Carousel } from "v2/Components/Carousel"
 import FillwidthItem from "v2/Components/Artwork/FillwidthItem"
-import { Column, GridColumns, ReadMore, Separator, Text } from "@artsy/palette"
+import {
+  Box,
+  Column,
+  GridColumns,
+  ReadMore,
+  Separator,
+  Text,
+} from "@artsy/palette"
 import { FollowArtistButtonFragmentContainer as FollowArtistButton } from "v2/Components/FollowButton/FollowArtistButton"
 import { ContextModule } from "@artsy/cohesion"
 import { useSystemContext } from "v2/Artsy"
@@ -18,6 +25,8 @@ export interface PartnerArtistDetailsProps {
 export const PartnerArtistDetails: React.FC<PartnerArtistDetailsProps> = ({
   artist,
 }) => {
+  if (!artist) return null
+
   const {
     name,
     filterArtworksConnection,
@@ -26,7 +35,7 @@ export const PartnerArtistDetails: React.FC<PartnerArtistDetailsProps> = ({
   } = artist
 
   return (
-    <>
+    <Box>
       <Separator id="jump--PartnerArtistDetails" mt={4} />
       <GridColumns gridRowGap={[2, 4]} my={4}>
         <Column span={6}>
@@ -49,16 +58,16 @@ export const PartnerArtistDetails: React.FC<PartnerArtistDetailsProps> = ({
             </Column>
           </GridColumns>
         </Column>
-        {artist.biographyBlurb?.text && (
-          <Column span={6}>
+        <Column span={6}>
+          {artist.biographyBlurb?.text && (
             <Text>
               <ReadMore
                 maxChars={320}
                 content={artist.biographyBlurb.text}
               ></ReadMore>
             </Text>
-          </Column>
-        )}
+          )}
+        </Column>
         <Column span={12}>
           <Carousel arrowHeight={160}>
             {filterArtworksConnection.edges.map((artwork, i) => {
@@ -74,7 +83,7 @@ export const PartnerArtistDetails: React.FC<PartnerArtistDetailsProps> = ({
           </Carousel>
         </Column>
       </GridColumns>
-    </>
+    </Box>
   )
 }
 

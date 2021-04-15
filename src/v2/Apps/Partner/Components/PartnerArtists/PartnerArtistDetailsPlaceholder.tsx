@@ -18,7 +18,7 @@ export const PartnerArtistDetailsPlaceholder: React.FC<PartnerArtistDetailsPlace
 }) => {
   return (
     <Box>
-      <Separator mt={4} />
+      <Separator id="jump--PartnerArtistDetails" mt={4} />
       <GridColumns gridRowGap={[2, 4]} my={4}>
         <Column span={6}>
           <GridColumns gridRowGap={2}>

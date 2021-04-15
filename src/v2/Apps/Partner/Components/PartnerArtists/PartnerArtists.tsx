@@ -10,6 +10,7 @@ import {
   PartnerArtistListPlaceholder,
 } from "../../Components/PartnerArtists"
 import { PartnerArtists_partner } from "v2/__generated__/PartnerArtists_partner.graphql"
+import { usePartnerArtistsLoadingContext } from "../../Utils/PartnerArtistsLoadingContext"
 
 const PAGE_SIZE = 20
 
@@ -32,11 +33,13 @@ export const PartnerArtists: React.FC<PartnerArtistsProps> = ({
   const [isRefetching, setIsRefetching] = useState(false)
   const [tempArtists, setTempArtists] = useState(undefined)
   const errCounter = useRef(0)
+  const { setIsLoaded } = usePartnerArtistsLoadingContext()
 
   useEffect(() => {
     if (
       relay.hasMore() &&
-      (!artistsLoading || !isRefetching) &&
+      !relay.isLoading() &&
+      !isRefetching &&
       errCounter.current === 0
     ) {
       loadMoreArtists()
@@ -76,6 +79,7 @@ export const PartnerArtists: React.FC<PartnerArtistsProps> = ({
         setIsRefetching(false)
         setArtistsLoading(false)
         setTempArtists(undefined)
+        setIsLoaded && setIsLoaded(true)
       }
     })
   }
