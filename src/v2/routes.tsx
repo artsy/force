@@ -4,6 +4,7 @@ import { artistsRoutes } from "v2/Apps/Artists/artistsRoutes"
 import { artworkRoutes } from "v2/Apps/Artwork/artworkRoutes"
 import { auctionsRoutes } from "v2/Apps/Auctions/auctionsRoutes"
 import { buildAppRoutes } from "v2/Artsy/Router/buildAppRoutes"
+import { buyerGuaranteeRoutes } from "v2/Apps/BuyerGuarantee/buyerGuaranteeRoutes"
 import { collectRoutes } from "v2/Apps/Collect/collectRoutes"
 import { consignRoutes } from "v2/Apps/Consign/consignRoutes"
 import { conversationRoutes } from "v2/Apps/Conversation/conversationRoutes"
@@ -46,6 +47,9 @@ export function getAppRoutes(): RouteConfig[] {
     },
     {
       routes: auctionsRoutes,
+    },
+    {
+      routes: buyerGuaranteeRoutes,
     },
     {
       routes: collectRoutes,
