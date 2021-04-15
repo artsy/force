@@ -155,4 +155,27 @@ describe("PriceRangeFilter", () => {
       expect(wrapper.find("RadioGroup").length).not.toBe(0)
     })
   })
+
+  it("stages the filter changes", async () => {
+    const wrapper = getWrapper()
+    context.setShouldStageFilterChanges(true)
+
+    expect(wrapper.find("Button")).toHaveLength(0)
+
+    wrapper.find("Radio").last().simulate("click")
+    await flushPromiseQueue()
+    wrapper.update()
+
+    wrapper.find(Input).first().find("input").prop("onChange")({
+      currentTarget: { value: "400" },
+    } as any)
+
+    wrapper.find(Input).last().find("input").prop("onChange")({
+      currentTarget: { value: "7500" },
+    } as any)
+
+    await flushPromiseQueue()
+
+    expect(context.stagedFilters.priceRange).toEqual("400-7500")
+  })
 })

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import {
   Button,
   Text,
@@ -6,13 +6,11 @@ import {
   Clickable,
   Flex,
   Spacer,
-  Message,
   TextVariant,
   useThemeConfig,
 } from "@artsy/palette"
 import { useArtworkFilterContext } from "../ArtworkFilterContext"
 import { NumericInput } from "./PriceRangeFilter"
-import { Media } from "v2/Utils/Responsive"
 import { FilterExpandable } from "./FilterExpandable"
 
 const SIZES = [
@@ -86,7 +84,12 @@ export interface SizeFilter2Props {
 }
 
 export const SizeFilter2: React.FC<SizeFilter2Props> = ({ expanded }) => {
-  const { currentlySelectedFilters, setFilters } = useArtworkFilterContext()
+  const {
+    currentlySelectedFilters,
+    setFilters,
+    shouldStageFilterChanges,
+  } = useArtworkFilterContext()
+
   const { height, width, reset } = currentlySelectedFilters()
 
   const initialCustomSize = {
@@ -98,34 +101,48 @@ export const SizeFilter2: React.FC<SizeFilter2Props> = ({ expanded }) => {
   const [customSize, setCustomSize] = useState<CustomSize>(
     hasValue(initialCustomSize) ? initialCustomSize : DEFAULT_CUSTOM_SIZE
   )
-  const [mode, setMode] = useState<"resting" | "done">("resting")
 
   const handleInputChange = (dimension: "height" | "width", index: number) => ({
     currentTarget: { value },
   }: React.FormEvent<HTMLInputElement>) => {
+    isInteractiveRef.current = true
+
     const isOpenEnded = value === "" || value === "0"
     const isMin = index === 0
 
     setCustomSize(prevCustomSize => {
+      const nextCustomSize = { ...prevCustomSize }
+
       if (isOpenEnded) {
-        prevCustomSize[dimension][index] = "*"
+        nextCustomSize[dimension][index] = "*"
       } else {
         const parsedValue = parseInt(value, 10)
-        if (prevCustomSize[dimension])
-          prevCustomSize[dimension][index] = parsedValue
+
+        if (nextCustomSize[dimension])
+          nextCustomSize[dimension][index] = parsedValue
         else if (isMin) {
-          prevCustomSize[dimension] = [parsedValue, "*"]
+          nextCustomSize[dimension] = [parsedValue, "*"]
         } else {
-          prevCustomSize[dimension] = ["*", parsedValue]
+          nextCustomSize[dimension] = ["*", parsedValue]
         }
       }
 
-      return { ...prevCustomSize }
+      return nextCustomSize
     })
   }
 
+  const isInteractiveRef = useRef(false)
+
+  useEffect(() => {
+    if (shouldStageFilterChanges && isInteractiveRef.current) {
+      stageFilterChanges()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [customSize, shouldStageFilterChanges])
+
   const toggleSizeSelection = (selected: boolean, name: string) => {
     let sizes = currentlySelectedFilters().sizes.slice()
+
     if (selected) {
       sizes.push(name)
     } else {
@@ -143,14 +160,18 @@ export const SizeFilter2: React.FC<SizeFilter2Props> = ({ expanded }) => {
     setCustomSize({ height: ["*", "*"], width: ["*", "*"] })
   }
 
-  const handleClick = () => {
+  const stageFilterChanges = () => {
     const newFilters = {
       ...currentlySelectedFilters(),
       sizes: [],
       ...mapSizeToRange(convertSizeToInches(customSize)),
     }
+
     setFilters(newFilters, { force: false })
-    setMode("done")
+  }
+
+  const handleClick = () => {
+    stageFilterChanges()
   }
 
   const tokens = useThemeConfig({
@@ -165,9 +186,12 @@ export const SizeFilter2: React.FC<SizeFilter2Props> = ({ expanded }) => {
     }
   }, [reset])
 
-  const selection = currentlySelectedFilters().sizes
-  const customHeight = currentlySelectedFilters().height
-  const customWidth = currentlySelectedFilters().width
+  const {
+    sizes: selection = [],
+    height: customHeight,
+    width: customWidth,
+  } = currentlySelectedFilters()
+
   const hasSelection =
     (selection && selection.length > 0) ||
     (customHeight && customHeight !== "*-*") ||
@@ -175,13 +199,6 @@ export const SizeFilter2: React.FC<SizeFilter2Props> = ({ expanded }) => {
 
   return (
     <FilterExpandable label="Size" expanded={hasSelection || expanded}>
-      {mode === "done" && (
-        <Media lessThan="sm">
-          <Message variant="info" my={2}>
-            Size set, select apply to see full results
-          </Message>
-        </Media>
-      )}
       <Flex flexDirection="column" alignItems="left">
         <Text variant={tokens.secondaryVariant} color="black60" mb={1}>
           This is based on the artwork’s average dimension.
@@ -193,7 +210,7 @@ export const SizeFilter2: React.FC<SizeFilter2Props> = ({ expanded }) => {
               <Checkbox
                 key={index}
                 onSelect={selected => toggleSizeSelection(selected, name)}
-                selected={currentlySelectedFilters().sizes.includes(name)}
+                selected={selection.includes(name)}
                 my={tokens.my}
               >
                 {displayName}
@@ -230,7 +247,9 @@ export const SizeFilter2: React.FC<SizeFilter2Props> = ({ expanded }) => {
               }
               onChange={handleInputChange("width", 0)}
             />
+
             <Spacer mx={0.5} />
+
             <NumericInput
               label="cm"
               name="width_max"
@@ -246,6 +265,7 @@ export const SizeFilter2: React.FC<SizeFilter2Props> = ({ expanded }) => {
           </Flex>
 
           <Text mt={1}>Height</Text>
+
           <Flex alignItems="flex-end">
             <NumericInput
               label="cm"
@@ -276,14 +296,16 @@ export const SizeFilter2: React.FC<SizeFilter2Props> = ({ expanded }) => {
             />
           </Flex>
 
-          <Button
-            mt={1}
-            variant="secondaryGray"
-            onClick={handleClick}
-            width="100%"
-          >
-            Set size
-          </Button>
+          {!shouldStageFilterChanges && (
+            <Button
+              mt={1}
+              variant="secondaryGray"
+              onClick={handleClick}
+              width="100%"
+            >
+              Set size
+            </Button>
+          )}
         </>
       )}
     </FilterExpandable>

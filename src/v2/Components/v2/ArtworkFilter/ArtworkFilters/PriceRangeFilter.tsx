@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useMemo, useRef, useState } from "react"
 import {
   Button,
   Flex,
   LabeledInput,
-  Message,
   Radio,
   RadioGroup,
   Spacer,
@@ -11,7 +10,6 @@ import {
 } from "@artsy/palette"
 import { useArtworkFilterContext } from "../ArtworkFilterContext"
 import styled from "styled-components"
-import { Media } from "v2/Utils/Responsive"
 import { themeGet } from "@styled-system/theme-get"
 import { FilterExpandable } from "./FilterExpandable"
 
@@ -69,33 +67,40 @@ export interface PriceRangeFilterProps {
 export const PriceRangeFilter: React.FC<PriceRangeFilterProps> = ({
   expanded,
 }) => {
-  const [mode, setMode] = useState<"resting" | "done">("resting")
-
-  const { currentlySelectedFilters, setFilter } = useArtworkFilterContext()
+  const {
+    currentlySelectedFilters,
+    setFilter,
+    shouldStageFilterChanges,
+  } = useArtworkFilterContext()
   const { priceRange: initialRange, reset } = currentlySelectedFilters()
 
   const numericInitialRange = parseRange(initialRange)
 
-  const isCustomRange =
-    // Has some kind of price range set (isn't blank)
-    !!initialRange &&
-    // And isn't a pre-defined price range option
-    PRICE_RANGES.find(range => range.value === initialRange) === undefined
+  const isCustomInitialRange = useMemo(() => {
+    return (
+      // Has some kind of price range set (isn't blank)
+      !!initialRange &&
+      // And isn't a pre-defined price range option
+      PRICE_RANGES.find(range => range.value === initialRange) === undefined
+    )
+  }, [initialRange])
 
-  const [showCustom, setShowCustom] = useState(isCustomRange)
+  const [showCustom, setShowCustom] = useState(isCustomInitialRange)
   const [customRange, setCustomRange] = useState<CustomRange>(
     numericInitialRange ?? DEFAULT_CUSTOM_RANGE
   )
 
   const handleClick = () => {
     setFilter("priceRange", customRange.join("-"))
-    setMode("done")
   }
 
   const handleChange = (index: number) => ({
     currentTarget: { value },
   }: React.FormEvent<HTMLInputElement>) => {
+    isInteractiveRef.current = true
+
     const isOpenEnded = value === "" || value === "0"
+
     setCustomRange(prevCustomRange => {
       const nextCustomRange = [...prevCustomRange]
 
@@ -108,6 +113,15 @@ export const PriceRangeFilter: React.FC<PriceRangeFilterProps> = ({
       return nextCustomRange
     })
   }
+
+  const isInteractiveRef = useRef(false)
+
+  useEffect(() => {
+    if (shouldStageFilterChanges && isInteractiveRef.current) {
+      setFilter("priceRange", customRange.join("-"))
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [customRange, shouldStageFilterChanges])
 
   const handleSelect = (selectedOption: string) => {
     if (selectedOption === "custom") {
@@ -140,18 +154,10 @@ export const PriceRangeFilter: React.FC<PriceRangeFilterProps> = ({
 
   return (
     <FilterExpandable label="Price" expanded={hasSelection || expanded}>
-      {mode === "done" && (
-        <Media lessThan="sm">
-          <Message variant="info" my={2}>
-            Price set, select apply to see full results
-          </Message>
-        </Media>
-      )}
-
       <Flex flexDirection="column" alignItems="left">
         <RadioGroup
           deselectable
-          defaultValue={isCustomRange ? "custom" : initialRange}
+          defaultValue={isCustomInitialRange ? "custom" : initialRange}
           onSelect={handleSelect}
         >
           {[
@@ -200,14 +206,16 @@ export const PriceRangeFilter: React.FC<PriceRangeFilterProps> = ({
             />
           </Flex>
 
-          <Button
-            mt={1}
-            variant="secondaryGray"
-            onClick={handleClick}
-            width="100%"
-          >
-            Set price
-          </Button>
+          {!shouldStageFilterChanges && (
+            <Button
+              mt={1}
+              variant="secondaryGray"
+              onClick={handleClick}
+              width="100%"
+            >
+              Set price
+            </Button>
+          )}
         </>
       )}
     </FilterExpandable>

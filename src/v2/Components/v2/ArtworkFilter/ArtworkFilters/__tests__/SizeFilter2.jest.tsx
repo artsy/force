@@ -129,4 +129,22 @@ describe("SizeFilter2", () => {
       expect(wrapper.find("Checkbox").length).not.toBe(0)
     })
   })
+
+  it("stages the filter changes", async () => {
+    const wrapper = getWrapper()
+    context.setShouldStageFilterChanges(true)
+
+    wrapper
+      .find("button")
+      .filterWhere(n => n.text() === "Show custom size")
+      .simulate("click")
+
+    simulateTyping(wrapper, "height_min", "12")
+    simulateTyping(wrapper, "height_max", "16")
+    simulateTyping(wrapper, "width_min", "12")
+    simulateTyping(wrapper, "width_max", "16")
+
+    expect(context.stagedFilters.height).toEqual("12-16")
+    expect(context.stagedFilters.width).toEqual("12-16")
+  })
 })
