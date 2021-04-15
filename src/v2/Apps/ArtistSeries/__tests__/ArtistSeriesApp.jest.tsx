@@ -225,42 +225,6 @@ const ArtistSeriesAppFixture: ArtistSeriesApp_QueryRawResponse = {
     description: "All of the pumpkins",
     descriptionFormatted: "All of the pumpkins",
     filtered_artworks: {
-      aggregations: [
-        {
-          counts: [],
-          slice: "INSTITUTION",
-        },
-        {
-          counts: [
-            {
-              count: 22222,
-              name: "Sculpture",
-              value: "sculpture",
-            },
-          ],
-          slice: "MEDIUM",
-        },
-        {
-          counts: [
-            {
-              count: 1,
-              name: "2020",
-              value: "2020",
-            },
-          ],
-          slice: "MAJOR_PERIOD",
-        },
-        {
-          counts: [
-            {
-              count: 4,
-              name: "Important Gallery",
-              value: "important-gallery",
-            },
-          ],
-          slice: "GALLERY",
-        },
-      ],
       edges: [
         {
           id: "nodeidabc",
@@ -380,6 +344,21 @@ const ArtistSeriesAppFixture: ArtistSeriesApp_QueryRawResponse = {
         endCursor: "endCursor",
         hasNextPage: true,
       },
+    },
+    sidebarAggregations: {
+      id: "sidebar-id",
+      aggregations: [
+        {
+          slice: "MATERIALS_TERMS",
+          counts: [
+            {
+              count: 100,
+              value: "cats",
+              name: "Cats",
+            },
+          ],
+        },
+      ],
     },
     image: {
       sm: {

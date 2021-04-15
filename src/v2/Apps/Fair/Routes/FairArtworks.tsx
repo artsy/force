@@ -1,6 +1,9 @@
 import { FairArtworks_fair } from "v2/__generated__/FairArtworks_fair.graphql"
 import { BaseArtworkFilter } from "v2/Components/v2/ArtworkFilter"
-import { ArtworkFilterContextProvider } from "v2/Components/v2/ArtworkFilter/ArtworkFilterContext"
+import {
+  ArtworkFilterContextProvider,
+  SharedArtworkFilterContextProps,
+} from "v2/Components/v2/ArtworkFilter/ArtworkFilterContext"
 import { updateUrl } from "v2/Components/v2/ArtworkFilter/Utils/urlBuilder"
 import React from "react"
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
@@ -29,7 +32,7 @@ interface FairArtworksFilterProps {
 const FairArtworksFilter: React.FC<FairArtworksFilterProps> = props => {
   const { relay, fair } = props
   const { match } = useRouter()
-  const { filtered_artworks } = fair
+  const { filtered_artworks, sidebarAggregations } = fair
   const { relayEnvironment, user } = useSystemContext()
 
   const hasFilter = filtered_artworks && filtered_artworks.id
@@ -78,6 +81,9 @@ const FairArtworksFilter: React.FC<FairArtworksFilterProps> = props => {
         { text: "Artwork year (asc.)", value: "year" },
       ]}
       onChange={updateUrl}
+      aggregations={
+        sidebarAggregations.aggregations as SharedArtworkFilterContextProps["aggregations"]
+      }
     >
       <BaseArtworkFilter
         mt={[0, "-1px"]}
@@ -101,9 +107,23 @@ export const FairArtworksRefetchContainer = createRefetchContainer(
         @argumentDefinitions(
           shouldFetchCounts: { type: "Boolean!", defaultValue: false }
           input: { type: "FilterArtworksInput" }
+          aggregations: { type: "[ArtworkAggregation]" }
         ) {
         slug
         internalID
+        sidebarAggregations: filterArtworksConnection(
+          aggregations: $aggregations
+          first: 1
+        ) {
+          aggregations {
+            slice
+            counts {
+              name
+              value
+              count
+            }
+          }
+        }
         filtered_artworks: filterArtworksConnection(first: 30, input: $input) {
           id
           counts @include(if: $shouldFetchCounts) {

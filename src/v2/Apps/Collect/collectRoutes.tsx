@@ -97,7 +97,6 @@ function initializeVariablesWithFilterState(params, props) {
     sort: "-decayed_merch",
     ...allowedFilters(paramsToCamelCase(initialFilterState)),
     first: 30,
-    aggregations,
   }
 
   return {
@@ -113,6 +112,7 @@ function getArtworkFilterQuery() {
     query collectRoutes_ArtworkFilterQuery(
       $sort: String
       $input: FilterArtworksInput
+      $aggregations: [ArtworkAggregation]
     ) {
       marketingHubCollections {
         ...Collect_marketingHubCollections
@@ -122,6 +122,16 @@ function getArtworkFilterQuery() {
       }
       viewer {
         ...ArtworkFilter_viewer @arguments(input: $input)
+        artworksConnection(aggregations: $aggregations, input: $input) {
+          aggregations {
+            slice
+            counts {
+              value
+              name
+              count
+            }
+          }
+        }
       }
     }
   `

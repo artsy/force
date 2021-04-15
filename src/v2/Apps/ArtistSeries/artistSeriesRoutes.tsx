@@ -21,9 +21,11 @@ export const artistSeriesRoutes: RouteConfig[] = [
       query artistSeriesRoutes_ArtistSeriesQuery(
         $slug: ID!
         $input: FilterArtworksInput
+        $aggregations: [ArtworkAggregation]
       ) {
         artistSeries(id: $slug) {
-          ...ArtistSeriesApp_artistSeries @arguments(input: $input)
+          ...ArtistSeriesApp_artistSeries
+            @arguments(input: $input, aggregations: $aggregations)
         }
       }
     `,
@@ -37,13 +39,13 @@ function initializeVariablesWithFilterState({ slug }, props) {
   const additionalAggregations = getENV("ENABLE_NEW_ARTWORK_FILTERS")
     ? ["PARTNER", "LOCATION_CITY", "MATERIALS_TERMS"]
     : ["GALLERY", "INSTITUTION"]
+  const allAggregations = aggregations.concat(additionalAggregations)
 
   const input = {
     sort: "-decayed_merch",
     ...allowedFilters(paramsToCamelCase(initialFilterState)),
-    aggregations: aggregations.concat(additionalAggregations),
     first: 30,
   }
 
-  return { slug, input }
+  return { slug, input, aggregations: allAggregations }
 }

@@ -1,6 +1,9 @@
 import { ArtistSeriesArtworksFilter_artistSeries } from "v2/__generated__/ArtistSeriesArtworksFilter_artistSeries.graphql"
 import { BaseArtworkFilter } from "v2/Components/v2/ArtworkFilter"
-import { ArtworkFilterContextProvider } from "v2/Components/v2/ArtworkFilter/ArtworkFilterContext"
+import {
+  ArtworkFilterContextProvider,
+  SharedArtworkFilterContextProps,
+} from "v2/Components/v2/ArtworkFilter/ArtworkFilterContext"
 import { updateUrl } from "v2/Components/v2/ArtworkFilter/Utils/urlBuilder"
 import { Match, RouterState, withRouter } from "found"
 import React from "react"
@@ -10,10 +13,11 @@ interface ArtistSeriesArtworksFilterProps {
   artistSeries: ArtistSeriesArtworksFilter_artistSeries
   relay: RelayRefetchProp
   match?: Match
+  aggregations: SharedArtworkFilterContextProps["aggregations"]
 }
 
 const ArtistSeriesArtworksFilter: React.FC<ArtistSeriesArtworksFilterProps> = props => {
-  const { match, relay, artistSeries } = props
+  const { match, relay, artistSeries, aggregations } = props
   const { filtered_artworks } = artistSeries
 
   const hasFilter = filtered_artworks && filtered_artworks.id
@@ -25,6 +29,7 @@ const ArtistSeriesArtworksFilter: React.FC<ArtistSeriesArtworksFilterProps> = pr
   return (
     <ArtworkFilterContextProvider
       filters={match && match.location.query}
+      aggregations={aggregations}
       sortOptions={[
         { value: "-decayed_merch", text: "Default" },
         { value: "-has_price,-prices", text: "Price (desc.)" },

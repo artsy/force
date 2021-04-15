@@ -57,6 +57,11 @@ var v0 = {
   "storageKey": null
 },
 v1 = {
+  "kind": "Literal",
+  "name": "first",
+  "value": 1
+},
+v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -153,11 +158,7 @@ return {
         {
           "alias": null,
           "args": [
-            {
-              "kind": "Literal",
-              "name": "first",
-              "value": 1
-            }
+            (v1/*: any*/)
           ],
           "concreteType": "ArtistConnection",
           "kind": "LinkedField",
@@ -199,7 +200,7 @@ return {
       ],
       "storageKey": null
     },
-    (v1/*: any*/),
+    (v2/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -231,11 +232,7 @@ return {
           "name": "aggregations",
           "variableName": "aggregations"
         },
-        {
-          "kind": "Literal",
-          "name": "first",
-          "value": 30
-        },
+        (v1/*: any*/),
         {
           "kind": "Variable",
           "name": "page",
@@ -275,7 +272,7 @@ return {
               "name": "counts",
               "plural": true,
               "selections": [
-                (v1/*: any*/),
+                (v2/*: any*/),
                 {
                   "alias": null,
                   "args": null,
@@ -324,5 +321,5 @@ return {
   "type": "Artist"
 };
 })();
-(node as any).hash = '1453f2d55e286e58f23407f4cbce795f';
+(node as any).hash = '5142fc3ea4590475d4164497231e50f2';
 export default node;

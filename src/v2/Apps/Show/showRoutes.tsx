@@ -24,9 +24,13 @@ export const showRoutes: RouteConfig[] = [
     },
     prepareVariables: initializeVariablesWithFilterState,
     query: graphql`
-      query showRoutes_ShowQuery($slug: String!, $input: FilterArtworksInput) {
+      query showRoutes_ShowQuery(
+        $slug: String!
+        $input: FilterArtworksInput
+        $aggregations: [ArtworkAggregation]
+      ) {
         show(id: $slug) @principalField {
-          ...ShowApp_show @arguments(input: $input)
+          ...ShowApp_show @arguments(input: $input, aggregations: $aggregations)
         }
       }
     `,
@@ -77,11 +81,11 @@ function initializeVariablesWithFilterState({ slug }, props) {
   const additionalAggregations = getENV("ENABLE_NEW_ARTWORK_FILTERS")
     ? ["ARTIST_NATIONALITY", "MATERIALS_TERMS"]
     : []
+  const allAggregations = aggregations.concat(additionalAggregations)
   const input = {
     sort: "partner_show_position",
     ...allowedFilters(paramsToCamelCase(initialFilterState)),
-    aggregations: aggregations.concat(additionalAggregations),
   }
 
-  return { slug, input }
+  return { slug, input, aggregations: allAggregations }
 }

@@ -1,6 +1,9 @@
 import { ShowArtworks_show } from "v2/__generated__/ShowArtworks_show.graphql"
 import { BaseArtworkFilter } from "v2/Components/v2/ArtworkFilter"
-import { ArtworkFilterContextProvider } from "v2/Components/v2/ArtworkFilter/ArtworkFilterContext"
+import {
+  ArtworkFilterContextProvider,
+  SharedArtworkFilterContextProps,
+} from "v2/Components/v2/ArtworkFilter/ArtworkFilterContext"
 import { updateUrl } from "v2/Components/v2/ArtworkFilter/Utils/urlBuilder"
 import React from "react"
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
@@ -20,11 +23,13 @@ import { SizeFilter2 } from "v2/Components/v2/ArtworkFilter/ArtworkFilters/SizeF
 interface ShowArtworksFilterProps extends BoxProps {
   show: ShowArtworks_show
   relay: RelayRefetchProp
+  aggregations: SharedArtworkFilterContextProps["aggregations"]
 }
 
 const ShowArtworksFilter: React.FC<ShowArtworksFilterProps> = ({
   relay,
   show,
+  aggregations,
   ...rest
 }) => {
   const { match } = useRouter()
@@ -70,6 +75,7 @@ const ShowArtworksFilter: React.FC<ShowArtworksFilterProps> = ({
         { text: "Artwork year (asc.)", value: "year" },
       ]}
       onChange={updateUrl}
+      aggregations={aggregations}
     >
       <BaseArtworkFilter
         mt={0}

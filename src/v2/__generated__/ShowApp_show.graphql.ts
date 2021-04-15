@@ -3,6 +3,7 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
+export type ArtworkAggregation = "ARTIST" | "ARTIST_NATIONALITY" | "ATTRIBUTION_CLASS" | "COLOR" | "DIMENSION_RANGE" | "FOLLOWED_ARTISTS" | "GALLERY" | "INSTITUTION" | "LOCATION_CITY" | "MAJOR_PERIOD" | "MATERIALS_TERMS" | "MEDIUM" | "MERCHANDISABLE_ARTISTS" | "PARTNER" | "PARTNER_CITY" | "PERIOD" | "PRICE_RANGE" | "TOTAL" | "%future added value";
 export type ShowApp_show = {
     readonly name: string | null;
     readonly href: string | null;
@@ -17,6 +18,16 @@ export type ShowApp_show = {
     readonly counts: {
         readonly eligibleArtworks: number | null;
     } | null;
+    readonly sidebarAggregations: {
+        readonly aggregations: ReadonlyArray<{
+            readonly slice: ArtworkAggregation | null;
+            readonly counts: ReadonlyArray<{
+                readonly name: string;
+                readonly value: string;
+                readonly count: number;
+            } | null> | null;
+        } | null> | null;
+    } | null;
     readonly " $fragmentRefs": FragmentRefs<"ShowContextualLink_show" | "ShowHeader_show" | "ShowAbout_show" | "ShowMeta_show" | "ShowInstallShots_show" | "ShowViewingRoom_show" | "ShowArtworksEmptyState_show" | "ShowArtworks_show" | "ShowContextCard_show">;
     readonly " $refType": "ShowApp_show";
 };
@@ -28,26 +39,34 @@ export type ShowApp_show$key = {
 
 
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "name",
+  "storageKey": null
+};
+return {
   "argumentDefinitions": [
     {
       "defaultValue": null,
       "kind": "LocalArgument",
       "name": "input",
       "type": "FilterArtworksInput"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "aggregations",
+      "type": "[ArtworkAggregation]"
     }
   ],
   "kind": "Fragment",
   "metadata": null,
   "name": "ShowApp_show",
   "selections": [
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "name",
-      "storageKey": null
-    },
+    (v0/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -124,6 +143,72 @@ const node: ReaderFragment = {
       "storageKey": null
     },
     {
+      "alias": "sidebarAggregations",
+      "args": [
+        {
+          "kind": "Variable",
+          "name": "aggregations",
+          "variableName": "aggregations"
+        },
+        {
+          "kind": "Literal",
+          "name": "first",
+          "value": 1
+        }
+      ],
+      "concreteType": "FilterArtworksConnection",
+      "kind": "LinkedField",
+      "name": "filterArtworksConnection",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "ArtworksAggregationResults",
+          "kind": "LinkedField",
+          "name": "aggregations",
+          "plural": true,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "slice",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "AggregationCount",
+              "kind": "LinkedField",
+              "name": "counts",
+              "plural": true,
+              "selections": [
+                (v0/*: any*/),
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "value",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "count",
+                  "storageKey": null
+                }
+              ],
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
+    },
+    {
       "args": null,
       "kind": "FragmentSpread",
       "name": "ShowContextualLink_show"
@@ -177,5 +262,6 @@ const node: ReaderFragment = {
   ],
   "type": "Show"
 };
-(node as any).hash = '288f0fca9a220b1002d45315d73014cf';
+})();
+(node as any).hash = '4e60b05ef155ee2feffc18782e66b084';
 export default node;
