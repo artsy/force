@@ -33,11 +33,37 @@ const DEFAULT_CUSTOM_SIZE: CustomSize = {
   width: ["*", "*"],
 }
 
+const convertToCentimeters = (element: number) => Math.round(element * 2.54)
+
 const parseRange = (range?: string) => {
   return range?.split("-").map(s => {
     if (s === "*") return s
-    return parseInt(s, 10)
+    return convertToCentimeters(parseFloat(s))
   })
+}
+
+const convertRangeElementToInches = (element: number | "*") => {
+  if (element === "*") {
+    return element
+  }
+
+  return Math.round((element / 2.54) * 100) / 100
+}
+
+const convertRangeToInches = (range: CustomRange) => {
+  return [
+    convertRangeElementToInches(range[0]),
+    convertRangeElementToInches(range[1]),
+  ]
+}
+
+const convertSizeToInches = (size: CustomSize) => {
+  return {
+    height:
+      size.height !== undefined ? convertRangeToInches(size.height) : undefined,
+    width:
+      size.width !== undefined ? convertRangeToInches(size.width) : undefined,
+  }
 }
 
 const mapSizeToRange = (size: CustomSize) => {
@@ -121,7 +147,7 @@ export const SizeFilter2: React.FC<SizeFilter2Props> = ({ expanded }) => {
     const newFilters = {
       ...currentlySelectedFilters(),
       sizes: [],
-      ...mapSizeToRange(customSize),
+      ...mapSizeToRange(convertSizeToInches(customSize)),
     }
     setFilters(newFilters, { force: false })
     setMode("done")
@@ -177,6 +203,8 @@ export const SizeFilter2: React.FC<SizeFilter2Props> = ({ expanded }) => {
         </Flex>
       </Flex>
 
+      <Text></Text>
+
       <Clickable
         mt={1}
         textDecoration="underline"
@@ -191,7 +219,7 @@ export const SizeFilter2: React.FC<SizeFilter2Props> = ({ expanded }) => {
           <Text mt={1}>Width</Text>
           <Flex alignItems="flex-end">
             <NumericInput
-              label="Inches"
+              label="cm"
               name="width_min"
               min="0"
               step="1"
@@ -204,7 +232,7 @@ export const SizeFilter2: React.FC<SizeFilter2Props> = ({ expanded }) => {
             />
             <Spacer mx={0.5} />
             <NumericInput
-              label="Inches"
+              label="cm"
               name="width_max"
               min="0"
               step="1"
@@ -220,7 +248,7 @@ export const SizeFilter2: React.FC<SizeFilter2Props> = ({ expanded }) => {
           <Text mt={1}>Height</Text>
           <Flex alignItems="flex-end">
             <NumericInput
-              label="Inches"
+              label="cm"
               name="height_min"
               min="0"
               step="1"
@@ -235,7 +263,7 @@ export const SizeFilter2: React.FC<SizeFilter2Props> = ({ expanded }) => {
             <Spacer mx={0.5} />
 
             <NumericInput
-              label="Inches"
+              label="cm"
               name="height_max"
               min="0"
               step="1"

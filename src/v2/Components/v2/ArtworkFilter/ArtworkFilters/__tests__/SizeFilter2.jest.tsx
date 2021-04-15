@@ -87,8 +87,9 @@ describe("SizeFilter2", () => {
       .filterWhere(n => n.text() === "Set size")
       .simulate("click")
     expect(context.filters.sizes).toEqual([])
-    expect(context.filters.height).toEqual("12-16")
-    expect(context.filters.width).toEqual("12-16")
+    // assert conversion from centimeters to inches
+    expect(context.filters.height).toEqual("4.72-6.3")
+    expect(context.filters.width).toEqual("4.72-6.3")
   })
 
   it("updates the filter values when only one dimension is added", async () => {
@@ -107,7 +108,8 @@ describe("SizeFilter2", () => {
       .filterWhere(n => n.text() === "Set size")
       .simulate("click")
     expect(context.filters.sizes).toEqual([])
-    expect(context.filters.height).toEqual("12-24")
+    // assert conversion centimeters to inches
+    expect(context.filters.height).toEqual("4.72-9.45")
     expect(context.filters.width).toEqual("*-*")
   })
 
