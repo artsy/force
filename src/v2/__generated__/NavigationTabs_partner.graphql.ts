@@ -5,9 +5,7 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type NavigationTabs_partner = {
     readonly slug: string;
-    readonly profile: {
-        readonly displayArtistsSection: boolean | null;
-    } | null;
+    readonly displayArtistsSection: boolean | null;
     readonly locations: {
         readonly totalCount: number | null;
     } | null;
@@ -60,19 +58,8 @@ return {
     {
       "alias": null,
       "args": null,
-      "concreteType": "Profile",
-      "kind": "LinkedField",
-      "name": "profile",
-      "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "displayArtistsSection",
-          "storageKey": null
-        }
-      ],
+      "kind": "ScalarField",
+      "name": "displayArtistsSection",
       "storageKey": null
     },
     {
@@ -109,5 +96,5 @@ return {
   "type": "Partner"
 };
 })();
-(node as any).hash = 'c9c604da179ef317e769dbcbd78b5309';
+(node as any).hash = '07da3865f2f665ac7cdcf2d11fbf925a';
 export default node;

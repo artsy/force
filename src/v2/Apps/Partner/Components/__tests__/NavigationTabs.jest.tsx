@@ -26,7 +26,7 @@ describe("PartnerNavigationTabs", () => {
       Partner: () => ({
         id: "white-cube",
         slug: "white-cube",
-        profile: { displayArtistsSection: true },
+        displayArtistsSection: true,
         artists: { totalCount: 10 },
       }),
     })
@@ -61,7 +61,7 @@ describe("PartnerNavigationTabs", () => {
   it("doesn't display artists tab if no artists", () => {
     const wrapper = getWrapper({
       Partner: () => ({
-        profile: { displayArtistsSection: true },
+        displayArtistsSection: true,
         artists: { totalCount: 0 },
       }),
     })
@@ -73,7 +73,7 @@ describe("PartnerNavigationTabs", () => {
   it("doesn't display artists tab if displayArtistsSection is false", () => {
     const wrapper = getWrapper({
       Partner: () => ({
-        profile: { displayArtistsSection: false },
+        displayArtistsSection: false,
         artists: { totalCount: 10 },
       }),
     })

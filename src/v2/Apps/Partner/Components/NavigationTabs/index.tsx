@@ -16,7 +16,13 @@ interface NavigationTabsProps {
 
 export const NavigationTabs: React.FC<NavigationTabsProps> = ({ partner }) => {
   const renderTabs = () => {
-    const { slug, locations, articles, profile, artists } = partner
+    const {
+      slug,
+      locations,
+      articles,
+      displayArtistsSection,
+      artists,
+    } = partner
 
     const route = (path?: string) => `/partner2/${slug}${path ? path : ""}`
 
@@ -40,11 +46,7 @@ export const NavigationTabs: React.FC<NavigationTabsProps> = ({ partner }) => {
         name: "Artists",
         href: route("/artists"),
         exact: false,
-        hidden: !(
-          profile.displayArtistsSection &&
-          artists &&
-          artists.totalCount
-        ),
+        hidden: !(displayArtistsSection && artists && artists.totalCount),
       },
       {
         name: "Articles",
@@ -93,9 +95,7 @@ export const NavigationTabsFragmentContainer = createFragmentContainer(
     partner: graphql`
       fragment NavigationTabs_partner on Partner {
         slug
-        profile {
-          displayArtistsSection
-        }
+        displayArtistsSection
         locations: locationsConnection(first: 20) {
           totalCount
         }
