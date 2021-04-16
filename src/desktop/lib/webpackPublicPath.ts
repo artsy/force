@@ -30,6 +30,7 @@ if (process.env.NODE_ENV === "production") {
     "/artists",
     "/artwork",
     "/auctions",
+    "/buyer-guarantee",
     "/collect",
     "/collection",
     "/collections",
