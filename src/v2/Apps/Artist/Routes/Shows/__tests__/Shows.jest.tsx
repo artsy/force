@@ -73,9 +73,9 @@ describe("Shows Route", () => {
       const getPaginationAt = index =>
         wrapper.find(Pagination).at(index).find("a")
 
-      expect(getPaginationAt(0).length).toBe(4)
-      expect(getPaginationAt(1).length).toBe(5)
-      expect(getPaginationAt(2).length).toBe(7)
+      expect(getPaginationAt(0).length).toBe(3)
+      expect(getPaginationAt(1).length).toBe(4)
+      expect(getPaginationAt(2).length).toBe(6)
     })
   })
 })

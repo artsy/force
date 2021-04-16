@@ -1,18 +1,17 @@
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Media } from "v2/Utils/Responsive"
-import { ScrollIntoView } from "v2/Utils/ScrollIntoView"
 import { Pagination_pageCursors } from "v2/__generated__/Pagination_pageCursors.graphql"
-
 import {
-  Box,
-  LargePagination,
+  Pagination as PaginationBase,
   Separator,
   SmallPagination,
   PaginationProps,
+  useThemeConfig,
 } from "@artsy/palette"
 import { useComputeHref } from "./useComputeHref"
 import { userIsForcingNavigation } from "v2/Artsy/Router/Utils/catchLinks"
+import { scrollIntoView } from "v2/Utils/scrollHelpers"
 
 interface Props {
   hasNextPage: boolean
@@ -33,6 +32,11 @@ export const Pagination: React.FC<Props> = ({
 }) => {
   const getHref = __getHref__ ?? useComputeHref()
 
+  const tokens = useThemeConfig({
+    v2: { version: "v2" },
+    v3: { version: "v3" },
+  })
+
   if (pageCursors.around.length === 1) {
     return null
   }
@@ -45,12 +49,14 @@ export const Pagination: React.FC<Props> = ({
     if (userIsForcingNavigation(event)) return
     event.preventDefault()
     onClick(cursor, page)
+    scrollIntoView({ selector: scrollTo, offset: 40 })
   }
 
   const handleNext = (event: React.MouseEvent, page: number) => {
     if (userIsForcingNavigation(event)) return
     event.preventDefault()
     onNext(page)
+    scrollIntoView({ selector: scrollTo, offset: 40 })
   }
 
   const paginationProps: PaginationProps = {
@@ -63,17 +69,24 @@ export const Pagination: React.FC<Props> = ({
   }
 
   return (
-    <ScrollIntoView selector={scrollTo}>
-      <Media at="xs">
-        <SmallPagination {...paginationProps} />
-      </Media>
-      <Media greaterThan="xs">
-        <Box>
-          <Separator mb={3} pr={2} />
-          <LargePagination {...paginationProps} />
-        </Box>
-      </Media>
-    </ScrollIntoView>
+    <>
+      {tokens.version === "v2" && (
+        <>
+          <Media at="xs">
+            <SmallPagination {...paginationProps} />
+          </Media>
+
+          <Media greaterThan="xs">
+            <Separator mb={3} />
+            <PaginationBase {...paginationProps} />
+          </Media>
+        </>
+      )}
+
+      {tokens.version === "v3" && (
+        <PaginationBase mt={6} {...paginationProps} />
+      )}
+    </>
   )
 }
 
